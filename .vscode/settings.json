@@ -1,0 +1,7 @@
+{
+  "files.exclude": {
+    "*.egg-info/": true,
+    "build/": true,
+    "dist/": true
+  }
+}
