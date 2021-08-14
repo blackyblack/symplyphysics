@@ -10,4 +10,4 @@ def print():
     return sympy.pretty(law, use_unicode=False)
 
 def calculate_force(mass, acceleration):
-    return sympy.solvers.solve(law.subs(mass_, mass).subs(acceleration_, acceleration))[0]
+    return sympy.solvers.solve(law.subs(mass_, mass).subs(acceleration_, acceleration))[0].evalf()
