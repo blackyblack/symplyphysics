@@ -8,7 +8,7 @@ Physics laws implemented as code. Based on [SymPy](https://github.com/sympy/symp
 python3 setup.py install --user
 ```
 
-Install _matplotlib_ for plotting support:
+Install **matplotlib** for plotting support:
 
 ```sh
 pip install matplotlib
@@ -16,14 +16,14 @@ pip install matplotlib
 
 # How to run
 
-With _symplyphysics_ installed:
+With **symplyphysics** installed:
 
 ```sh
 cd examples/force_from_acceleration
 python3 main.py
 ```
 
-Without _symplyphysics_ installed:
+Without **symplyphysics** installed:
 
 ```sh
 PYTHONPATH=. python3 ./examples/force_from_acceleration/main.py
