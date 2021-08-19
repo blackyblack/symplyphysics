@@ -23,6 +23,7 @@ REQUIRED = [
 
 # What packages are optional?
 EXTRAS = {
+    'plots': ['matplotlib']
 }
 
 # The rest you shouldn't have to touch too much :)

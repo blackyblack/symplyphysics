@@ -8,6 +8,12 @@ Physics laws implemented as code. Based on [SymPy](https://github.com/sympy/symp
 python3 setup.py install --user
 ```
 
+Install _matplotlib_ for plotting support:
+
+```sh
+pip install matplotlib
+```
+
 # How to run
 
 With _symplyphysics_ installed:
