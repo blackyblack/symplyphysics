@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from symplyphysics.force_from_acceleration import module as newton_law2
+from symplyphysics.laws.dynamics import acceleration_from_force as newton_law2
 
 m = 1
 a = 3
