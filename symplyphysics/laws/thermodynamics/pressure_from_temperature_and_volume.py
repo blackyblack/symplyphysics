@@ -1,5 +1,5 @@
 from sympy import symbols, Eq, pretty, solve
-from symplyphysics.constants.ideal_gas import value as ideal_gas_constant
+from sympy.physics.units import molar_gas_constant
 
 # Description
 ## Ideal gas law: P * V = n * R * T
@@ -18,7 +18,7 @@ def print():
 
 def calculate_pressure(volume_, temperature_, mole_count_):
     return solve(law
-      .subs(R_constant, ideal_gas_constant)
+      .subs(R_constant, molar_gas_constant)
       .subs(volume, volume_)
       .subs(temperature, temperature_)
       .subs(mole_count, mole_count_))[0].evalf()

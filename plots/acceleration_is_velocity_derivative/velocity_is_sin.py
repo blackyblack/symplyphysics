@@ -7,7 +7,7 @@ from sympy.plotting.plot import MatplotlibBackend
 print("Formula is:\n{}".format(acceleration.print()))
 
 velocity_function = sin
-applied_law = acceleration.law.subs(acceleration.velocity_function, velocity_function)
+applied_law = acceleration.definition.subs(acceleration.velocity_function, velocity_function)
 dsolved = dsolve(applied_law, acceleration.acceleration(acceleration.time))
 
 print("Velocity function is:\n{}".format(pretty(velocity_function(acceleration.time), use_unicode=False)))
