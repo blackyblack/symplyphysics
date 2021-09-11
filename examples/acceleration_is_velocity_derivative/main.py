@@ -17,9 +17,13 @@ SI.set_quantity_scale_factor(t, 5 * phy_units.second)
 print("Formula is:\n{}".format(acceleration.print()))
 print("Unit is:\n{}".format(acceleration.print_dimension()))
 result = acceleration.calculate_linear_acceleration(v0, v1, t)
-print("Acceleration = {}; for initial velocity = {}, terminal velocity = {}, time period = {}"
+print("Acceleration = {} {}; for initial velocity = {} {}, terminal velocity = {} {}, time period = {} {}"
     .format(
-        convert_to(result, acceleration.dim_definition_SI).subs(phy_units.meter, 1).subs(phy_units.second, 1).evalf(),
-        convert_to(v0, phy_units.meter / phy_units.second).subs(phy_units.meter, 1).subs(phy_units.second, 1).evalf(),
-        convert_to(v1, phy_units.meter / phy_units.second).subs(phy_units.meter, 1).subs(phy_units.second, 1).evalf(),
-        convert_to(t, phy_units.second).subs(phy_units.second, 1).evalf()))
+        convert_to(result, acceleration.definition_dimension_SI).subs(phy_units.meter, 1).subs(phy_units.second, 1).evalf(2),
+        acceleration.definition_dimension_SI,
+        convert_to(v0, phy_units.meter / phy_units.second).subs(phy_units.meter, 1).subs(phy_units.second, 1).evalf(2),
+        phy_units.meter / phy_units.second,
+        convert_to(v1, phy_units.meter / phy_units.second).subs(phy_units.meter, 1).subs(phy_units.second, 1).evalf(2),
+        phy_units.meter / phy_units.second,
+        convert_to(t, phy_units.second).subs(phy_units.second, 1).evalf(2),
+        phy_units.second))

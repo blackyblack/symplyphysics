@@ -10,13 +10,13 @@ from sympy.physics.units.systems.si import SI
 time = symbols('time')
 acceleration, velocity_function = symbols('acceleration velocity', cls = Function)
 definition = Eq(acceleration(time), velocity_function(time).diff(time))
-dim_definition_SI = phy_units.meter/phy_units.second**2
+definition_dimension_SI = phy_units.meter / phy_units.second**2
 
 def print():
     return pretty(definition, use_unicode=False)
 
 def print_dimension():
-    return pretty(dim_definition_SI, use_unicode=False)
+    return pretty(definition_dimension_SI, use_unicode=False)
 
 def calculate_linear_acceleration(velocity_start_: Quantity, velocity_end_: Quantity, time_: Quantity) -> Quantity:
     dimsys_SI = SI.get_dimension_system()
@@ -35,8 +35,8 @@ def calculate_linear_acceleration(velocity_start_: Quantity, velocity_end_: Quan
     result_expr = solved[0][acceleration(time_)]
 
     quantity_scale = SI._collect_factor_and_dimension(result_expr)
-    result_quantity = Quantity('acceleration')
-    dimsys_SI.set_quantity_dimension(result_quantity, quantity_scale[1])
-    dimsys_SI.set_quantity_scale_factor(result_quantity, quantity_scale[0])
-    assert dimsys_SI.equivalent_dims(result_quantity.dimension, phy_units.acceleration)
-    return result_quantity
+    result_acceleration = Quantity('acceleration')
+    dimsys_SI.set_quantity_dimension(result_acceleration, quantity_scale[1])
+    dimsys_SI.set_quantity_scale_factor(result_acceleration, quantity_scale[0])
+    assert dimsys_SI.equivalent_dims(result_acceleration.dimension, phy_units.acceleration)
+    return result_acceleration
