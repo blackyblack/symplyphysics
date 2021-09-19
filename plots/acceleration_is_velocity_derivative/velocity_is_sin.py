@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-from symplyphysics.definitions import acceleration_is_velocity_derivative as acceleration
 from sympy import sin, solve, dsolve, pretty
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
+from symplyphysics.definitions import acceleration_is_velocity_derivative as acceleration
 
 print("Formula is:\n{}".format(acceleration.print()))
 

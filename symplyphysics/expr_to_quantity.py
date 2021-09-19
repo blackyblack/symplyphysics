@@ -2,7 +2,7 @@ from sympy import Expr
 from sympy.physics.units import Quantity
 from sympy.physics.units.systems.si import SI
 
-def convert(expr: Expr, quantity_name: str) -> Quantity:
+def expr_to_quantity(expr: Expr, quantity_name: str) -> Quantity:
   quantity_scale = SI._collect_factor_and_dimension(expr)
   result = Quantity(quantity_name)
   dimsys_SI = SI.get_dimension_system()

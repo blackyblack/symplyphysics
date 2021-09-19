@@ -1,9 +1,8 @@
-from sympy import symbols, Function, Eq, pretty, solve, dsolve
-from sympy.utilities.lambdify import lambdify, implemented_function
-from sympy.physics.units import Quantity
-import sympy.physics.units as phy_units
-from symplyphysics.quantity_decorator import validate_input, validate_output
-import symplyphysics.expr_to_quantity
+from symplyphysics import (
+    symbols, Function, Eq, pretty, solve, dsolve,
+    lambdify, implemented_function, Quantity, units,
+    validate_input, validate_output, expr_to_quantity
+)
 
 # Description
 ## Acceleration definition: A = dv/dt
@@ -11,7 +10,7 @@ import symplyphysics.expr_to_quantity
 time = symbols('time')
 acceleration, velocity_function = symbols('acceleration velocity', cls = Function)
 definition = Eq(acceleration(time), velocity_function(time).diff(time))
-definition_dimension_SI = phy_units.meter / phy_units.second**2
+definition_dimension_SI = units.meter / units.second**2
 
 def print():
     return pretty(definition, use_unicode=False)
@@ -19,8 +18,8 @@ def print():
 def print_dimension():
     return pretty(definition_dimension_SI, use_unicode=False)
 
-@validate_input(velocity_start_=phy_units.velocity, velocity_end_=phy_units.velocity, time_=phy_units.time)
-@validate_output(phy_units.acceleration)
+@validate_input(velocity_start_=units.velocity, velocity_end_=units.velocity, time_=units.time)
+@validate_output(units.acceleration)
 def calculate_linear_acceleration(velocity_start_: Quantity, velocity_end_: Quantity, time_: Quantity) -> Quantity:
     velocity_function_ = implemented_function('velocity_function', lambda x: x * (velocity_end_ - velocity_start_) / time_)
     velocity_function_lambda = lambdify(time, velocity_function_(time))
@@ -31,4 +30,4 @@ def calculate_linear_acceleration(velocity_start_: Quantity, velocity_end_: Quan
     ## For nonlinear functions 'time' should be passed for a correct answer.
     solved = solve(dsolved.subs(time, time_))
     result_expr = solved[0][acceleration(time_)]
-    return symplyphysics.expr_to_quantity.convert(result_expr, 'acceleration')
+    return expr_to_quantity(result_expr, 'acceleration')
