@@ -2,7 +2,7 @@ from symplyphysics import (
     symbols, Eq, pretty, solve, Quantity, units,
     validate_input, validate_output, expr_to_quantity
 )
-import .pressure_from_temperature_and_volume as thermodynamics_law
+from . import pressure_from_temperature_and_volume as thermodynamics_law
 
 # Description
 ## Gay-Lussac's law: P = const, T1 / V1 = T2 / V2

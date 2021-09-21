@@ -23,4 +23,5 @@ jobs:
       - name: Install symplyphysics
         run: python3 setup.py install
       - name: Run tests with pytest
+        if: success()
         run: pytest 
