@@ -43,4 +43,4 @@ Run tests:
 pytest
 ```
 
-## Note: for Windows users **Python/Scripts** folder should be added to the PATH environment variable
+> **_NOTE:_**  for Windows users **Python/Scripts** folder should be added to the PATH environment variable
