@@ -29,3 +29,18 @@ Without **symplyphysics** installed:
 PYTHONPATH=. python3 ./examples/force_from_acceleration/main.py
 ```
 
+# How to test
+
+Install **pytest**:
+
+```sh
+pip install pytest
+```
+
+Run tests:
+
+```sh
+pytest
+```
+
+## Note: for Windows users **Python/Scripts** folder should be added to the PATH environment variable

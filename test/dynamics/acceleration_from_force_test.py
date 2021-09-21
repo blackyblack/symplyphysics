@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 from symplyphysics import (
     units, convert_to, SI
 )
