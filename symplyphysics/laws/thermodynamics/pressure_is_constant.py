@@ -33,7 +33,7 @@ assert solve(law, temperature_end) == solve(derived_law, temperature_end)
 def print():
     return pretty(law, use_unicode=False)
 
-@validate_input(temperature_=units.temperature, volume_=units.volume)
+@validate_input(temperature_start_=units.temperature, temperature_end_=units.temperature, volume_start_=units.volume)
 @validate_output(units.volume)
 def calculate_volume(temperature_start_: Quantity, volume_start_: Quantity, temperature_end_: Quantity) -> Quantity:
     result_expr = solve(law.subs({
