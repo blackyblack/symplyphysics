@@ -5,7 +5,7 @@ from symplyphysics import (
 from . import pressure_from_temperature_and_volume as thermodynamics_law
 
 # Description
-## Gay-Lussac's law: P = const, T1 / V1 = T2 / V2
+## Gay-Lussac's law (Isobaric process): P = const, T1 / V1 = T2 / V2
 ## Where:
 ## P is pressure,
 ## V is volume,
