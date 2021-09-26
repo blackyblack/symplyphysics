@@ -23,20 +23,19 @@ pressure_start, pressure_end = symbols('pressure_start pressure_end')
 isobaric_condition = Eq(pressure_start, pressure_end)
 
 eq_start = thermodynamics_law.law.subs({
-  thermodynamics_law.temperature: temperature_start,
-  thermodynamics_law.volume: volume_start,
-  thermodynamics_law.pressure: pressure_start})
+    thermodynamics_law.temperature: temperature_start,
+    thermodynamics_law.volume: volume_start,
+    thermodynamics_law.pressure: pressure_start})
 
 eq_end = thermodynamics_law.law.subs({
-  thermodynamics_law.temperature: temperature_end,
-  thermodynamics_law.volume: volume_end,
-  thermodynamics_law.pressure: pressure_end})
+    thermodynamics_law.temperature: temperature_end,
+    thermodynamics_law.volume: volume_end,
+    thermodynamics_law.pressure: pressure_end})
 
 derived_law = [eq_start, eq_end, isobaric_condition]
 
-derived_temperature_end = solve(derived_law, (pressure_start, pressure_end, temperature_end))[temperature_end]
-
 ## Check the equivalence of 'law' and 'derived_law'
+derived_temperature_end = solve(derived_law, (pressure_start, pressure_end, temperature_end))[temperature_end]
 assert solve(law, temperature_end)[0] == derived_temperature_end
 
 def print():

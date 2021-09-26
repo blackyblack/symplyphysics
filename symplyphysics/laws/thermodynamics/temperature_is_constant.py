@@ -18,17 +18,25 @@ volume_start, volume_end = symbols('volume_start volume_end')
 law = Eq(pressure_start * volume_start, pressure_end * volume_end)
 
 ## Derive the same law from the general ideal gas law
+temperature_start, temperature_end = symbols('temperature_start temperature_end')
+
+isothermal_condition = Eq(temperature_start, temperature_end)
+
 eq_start = thermodynamics_law.law.subs({
-    thermodynamics_law.pressure: pressure_start,
-    thermodynamics_law.volume: volume_start})
+    thermodynamics_law.temperature: temperature_start,
+    thermodynamics_law.volume: volume_start,
+    thermodynamics_law.pressure: pressure_start})
+
 eq_end = thermodynamics_law.law.subs({
-    thermodynamics_law.pressure: pressure_end,
-    thermodynamics_law.volume: volume_end})
-pressure_start_law = solve([eq_start, eq_end], (thermodynamics_law.temperature, pressure_start))[pressure_start]
-derived_law = Eq(pressure_start, pressure_start_law)
+    thermodynamics_law.temperature: temperature_end,
+    thermodynamics_law.volume: volume_end,
+    thermodynamics_law.pressure: pressure_end})
+
+derived_law = [eq_start, eq_end, isothermal_condition]
 
 ## Check the equivalence of 'law' and 'derived_law'
-assert solve(law, pressure_end) == solve(derived_law, pressure_end)
+derived_pressure_end = solve(derived_law, (temperature_start, temperature_end, pressure_end))[pressure_end]
+assert solve(law, pressure_end)[0] == derived_pressure_end
 
 def print():
     return pretty(law, use_unicode=False)
@@ -36,8 +44,9 @@ def print():
 @validate_input(pressure_start_=units.pressure, pressure_end_=units.pressure, volume_start_=units.volume)
 @validate_output(units.volume)
 def calculate_volume(pressure_start_: Quantity, volume_start_: Quantity, pressure_end_: Quantity) -> Quantity:
-    result_expr = solve(law.subs({
+    result_volume_expr = solve(law, volume_end)[0]
+    result_expr = result_volume_expr.subs({
         pressure_start: pressure_start_,
         volume_start: volume_start_,
-        pressure_end: pressure_end_}))[0]
+        pressure_end: pressure_end_})
     return expr_to_quantity(result_expr, 'volume_end')

@@ -20,7 +20,7 @@ def test_basic_acceleration():
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.acceleration)
 
     result_acceleration = convert_to(result, acceleration.definition_dimension_SI).subs({
-            units.meter: 1, units.second: 1}).evalf(2)
+        units.meter: 1, units.second: 1}).evalf(2)
     assert result_acceleration == approx(3.8, 0.01)
 
 def test_bad_velocity():

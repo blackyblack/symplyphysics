@@ -23,7 +23,7 @@ def print():
 def calculate_pressure(volume_: Quantity, temperature_: Quantity, mole_count_: Quantity) -> Quantity:
     result_pressure_expr = solve(law, pressure)[0]
     result_expr = result_pressure_expr.subs({
-      volume: volume_,
-      temperature: temperature_,
-      mole_count: mole_count_})
+        volume: volume_,
+        temperature: temperature_,
+        mole_count: mole_count_})
     return expr_to_quantity(result_expr, 'pressure')
