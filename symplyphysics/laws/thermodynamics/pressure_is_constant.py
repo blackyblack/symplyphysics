@@ -18,17 +18,26 @@ volume_start, volume_end = symbols('volume_start volume_end')
 law = Eq(temperature_start / volume_start, temperature_end / volume_end)
 
 ## Derive the same law from the general ideal gas law
+pressure_start, pressure_end = symbols('pressure_start pressure_end')
+
+isobaric_condition = Eq(pressure_start, pressure_end)
+
 eq_start = thermodynamics_law.law.subs({
-    thermodynamics_law.temperature: temperature_start,
-    thermodynamics_law.volume: volume_start})
+  thermodynamics_law.temperature: temperature_start,
+  thermodynamics_law.volume: volume_start,
+  thermodynamics_law.pressure: pressure_start})
+
 eq_end = thermodynamics_law.law.subs({
-    thermodynamics_law.temperature: temperature_end,
-    thermodynamics_law.volume: volume_end})
-temperature_start_law = solve([eq_start, eq_end], (thermodynamics_law.pressure, temperature_start))[temperature_start]
-derived_law = Eq(temperature_start, temperature_start_law)
+  thermodynamics_law.temperature: temperature_end,
+  thermodynamics_law.volume: volume_end,
+  thermodynamics_law.pressure: pressure_end})
+
+derived_law = [eq_start, eq_end, isobaric_condition]
+
+derived_temperature_end = solve(derived_law, (pressure_start, pressure_end, temperature_end))[temperature_end]
 
 ## Check the equivalence of 'law' and 'derived_law'
-assert solve(law, temperature_end) == solve(derived_law, temperature_end)
+assert solve(law, temperature_end)[0] == derived_temperature_end
 
 def print():
     return pretty(law, use_unicode=False)
@@ -36,8 +45,9 @@ def print():
 @validate_input(temperature_start_=units.temperature, temperature_end_=units.temperature, volume_start_=units.volume)
 @validate_output(units.volume)
 def calculate_volume(temperature_start_: Quantity, volume_start_: Quantity, temperature_end_: Quantity) -> Quantity:
-    result_expr = solve(law.subs({
+    result_volume_expr = solve(law, volume_end)[0]
+    result_expr = result_volume_expr.subs({
         temperature_start: temperature_start_,
         volume_start: volume_start_,
-        temperature_end: temperature_end_}))[0]
+        temperature_end: temperature_end_})
     return expr_to_quantity(result_expr, 'volume_end')

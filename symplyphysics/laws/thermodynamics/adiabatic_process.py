@@ -1,6 +1,6 @@
 from symplyphysics import (
     symbols, Eq, pretty, solve, Quantity, units,
-    validate_input, validate_output, assert_equivalent_dimension, expr_to_quantity
+    validate_input, validate_output, expr_to_quantity
 )
 from . import pressure_from_temperature_and_volume as thermodynamics_law
 
