@@ -10,7 +10,8 @@ from . import pressure_from_temperature_and_volume as thermodynamics_law
 ## Q is amount of transferred heat between system and environment
 ## P is pressure,
 ## V is volume,
-## y is the ratio of specific heats or heat capacity ratio (https://en.wikipedia.org/wiki/Heat_capacity_ratio)
+## y is the ratio of specific heats (also known as heat capacity
+##   ratio) (https://en.wikipedia.org/wiki/Heat_capacity_ratio)
 
 specific_heats_ratio = symbols('specific_heats_ratio')
 temperature_start, temperature_end = symbols('temperature_start temperature_end')

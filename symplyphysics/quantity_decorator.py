@@ -14,6 +14,10 @@ def assert_equivalent_dimension(arg: Quantity, decorator_name, param_name, func_
     if not SI.get_dimension_system().equivalent_dims(arg.dimension, expected_unit):
         raise UnitsError(f"Argument '{param_name}' to function '{func_name}' must "
             f"be in units equivalent to '{expected_unit.name}'")
+    scale_factor = SI.get_quantity_scale_factor(arg)
+    if scale_factor.free_symbols:
+        raise UnitsError(f"Argument '{param_name}' to function '{func_name}' should "
+            f"not contain free symbols")
 
 def validate_input(**decorator_kwargs):
     def validate_func(func):

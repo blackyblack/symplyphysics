@@ -5,23 +5,23 @@ from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics.laws.thermodynamics import temperature_is_constant as boyles_law
 
 print("Formula is:\n{}".format(boyles_law.print()))
-
 volume = symbols('volume')
 solved = solve(boyles_law.law.subs({
-        boyles_law.pressure_start: 1,
-        boyles_law.volume_start: 1,
-        boyles_law.volume_end: volume}),
+    boyles_law.pressure_start: 1,
+    boyles_law.volume_start: 1,
+    boyles_law.volume_end: volume}),
     boyles_law.pressure_end)
 result_pressure = solved[0]
 
-print("Pressure function is:\n{}".format(pretty(result_pressure, use_unicode=False)))
+print("Pressure function is:\n{}".format(
+    pretty(result_pressure, use_unicode=False)))
 
 p1 = plot(
     result_pressure,
     (volume, 0.01, 1),
     title='Pressure(Volume)',
-    xlabel = 'Volume',
-    ylabel = 'Pressure',
+    xlabel='Volume',
+    ylabel='Pressure',
     backend=MatplotlibBackend,
     show=False)
 
