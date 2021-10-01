@@ -5,7 +5,7 @@ from symplyphysics import (
 from . import pressure_from_temperature_and_volume as thermodynamics_law
 
 # Description
-## Boyle's law (Isotermic process): T = const, P1 * V1 = P2 * V2
+## Boyle's law (Isothermal process): T = const, P1 * V1 = P2 * V2
 ## Where:
 ## P is pressure,
 ## V is volume,
@@ -35,8 +35,9 @@ eq_end = thermodynamics_law.law.subs({
 derived_law = [eq_start, eq_end, isothermal_condition]
 
 ## Check the equivalence of 'law' and 'derived_law'
-derived_pressure_end = solve(derived_law, (temperature_start, temperature_end, pressure_end))[pressure_end]
-assert solve(law, pressure_end)[0] == derived_pressure_end
+derived_pressure_end = solve(derived_law,
+    (temperature_start, temperature_end, pressure_end), dict=True)[0][pressure_end]
+assert solve(law, pressure_end, dict=True)[0][pressure_end] == derived_pressure_end
 
 def print():
     return pretty(law, use_unicode=False)
@@ -44,8 +45,8 @@ def print():
 @validate_input(pressure_start_=units.pressure, pressure_end_=units.pressure, volume_start_=units.volume)
 @validate_output(units.volume)
 def calculate_volume(pressure_start_: Quantity, volume_start_: Quantity, pressure_end_: Quantity) -> Quantity:
-    result_volume_expr = solve(law, volume_end)[0]
-    result_expr = result_volume_expr.subs({
+    solved = solve(law, volume_end, dict=True)[0][volume_end]
+    result_expr = solved.subs({
         pressure_start: pressure_start_,
         volume_start: volume_start_,
         pressure_end: pressure_end_})

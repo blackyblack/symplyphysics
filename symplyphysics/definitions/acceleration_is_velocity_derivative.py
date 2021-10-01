@@ -25,9 +25,7 @@ def calculate_linear_acceleration(velocity_start_: Quantity, velocity_end_: Quan
     velocity_function_lambda = lambdify(time, velocity_function_(time))
     # solve differential equation with custom function
     dsolved = dsolve(definition.subs(velocity_function(time), velocity_function_lambda(time)), acceleration(time))
-    # calculate acceleration at the given point of time
-    ## Note: since acceleration is constant, any time argument can be passed here.
-    ## For nonlinear functions 'time' should be passed for a correct answer.
-    solved = solve(dsolved.subs(time, time_))
-    result_expr = solved[0][acceleration(time_)]
+    # calculate acceleration
+    solved = solve(dsolved, acceleration(time), dict=True)[0][acceleration(time)]
+    result_expr = solved.subs(time, time_)
     return expr_to_quantity(result_expr, 'acceleration')

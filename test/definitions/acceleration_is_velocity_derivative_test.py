@@ -19,35 +19,44 @@ def test_args():
     SI.set_quantity_scale_factor(t, 5 * units.second)
 
     Args = namedtuple('Args', ['v0', 'v1', 't'])
-    return Args(v0 = v0, v1 = v1, t = t)
+    return Args(v0=v0, v1=v1, t=t)
+
 
 def test_basic_acceleration(test_args):
-    result = acceleration.calculate_linear_acceleration(test_args.v0, test_args.v1, test_args.t)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.acceleration)
+    result = acceleration.calculate_linear_acceleration(
+        test_args.v0, test_args.v1, test_args.t)
+    assert SI.get_dimension_system().equivalent_dims(
+        result.dimension, units.acceleration)
 
     result_acceleration = convert_to(result, acceleration.definition_dimension_SI).subs({
         units.meter: 1, units.second: 1}).evalf(2)
     assert result_acceleration == approx(3.8, 0.01)
+
 
 def test_bad_velocity(test_args):
     v0b = units.Quantity('v0b')
     SI.set_quantity_dimension(v0b, units.length)
     SI.set_quantity_scale_factor(v0b, 1 * units.meter)
     with raises(errors.UnitsError):
-        acceleration.calculate_linear_acceleration(v0b, test_args.v1, test_args.t)
+        acceleration.calculate_linear_acceleration(
+            v0b, test_args.v1, test_args.t)
 
     # Make v1 invalid
     v1b = units.Quantity('v1b')
     SI.set_quantity_dimension(v1b, units.length)
     SI.set_quantity_scale_factor(v1b, 1 * units.meter)
     with raises(errors.UnitsError):
-        acceleration.calculate_linear_acceleration(test_args.v0, v1b, test_args.t)
+        acceleration.calculate_linear_acceleration(
+            test_args.v0, v1b, test_args.t)
 
     with raises(TypeError):
-        acceleration.calculate_linear_acceleration(100, test_args.v1, test_args.t)
+        acceleration.calculate_linear_acceleration(
+            100, test_args.v1, test_args.t)
 
     with raises(TypeError):
-        acceleration.calculate_linear_acceleration(test_args.v0, 100, test_args.t)
+        acceleration.calculate_linear_acceleration(
+            test_args.v0, 100, test_args.t)
+
 
 def test_bad_time(test_args):
     tb = units.Quantity('tb')
@@ -55,7 +64,9 @@ def test_bad_time(test_args):
     SI.set_quantity_scale_factor(tb, 1 * units.meter)
 
     with raises(errors.UnitsError):
-        acceleration.calculate_linear_acceleration(test_args.v0, test_args.v1, tb)
-    
+        acceleration.calculate_linear_acceleration(
+            test_args.v0, test_args.v1, tb)
+
     with raises(TypeError):
-        acceleration.calculate_linear_acceleration(test_args.v0, test_args.v1, 100)
+        acceleration.calculate_linear_acceleration(
+            test_args.v0, test_args.v1, 100)

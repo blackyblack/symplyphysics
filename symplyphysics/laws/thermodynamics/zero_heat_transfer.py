@@ -46,8 +46,8 @@ def calculate_pressure(
     volume_end_: Quantity,
     specific_heats_ratio_: float) :
 
-    result_pressure_expr = solve(law, (pressure_start, temperature_end, pressure_end))[pressure_end]
-    result_pressure = result_pressure_expr.subs({
+    solved = solve(law, (pressure_start, temperature_end, pressure_end), dict=True)[0][pressure_end]
+    result_pressure = solved.subs({
         thermodynamics_law.mole_count: mole_count_,
         temperature_start: temperature_start_,
         volume_start: volume_start_,

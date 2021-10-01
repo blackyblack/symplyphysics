@@ -6,12 +6,11 @@ from symplyphysics.laws.thermodynamics import temperature_is_constant as boyles_
 
 print("Formula is:\n{}".format(boyles_law.print()))
 volume = symbols('volume')
-solved = solve(boyles_law.law.subs({
+solved = solve(boyles_law.law, boyles_law.pressure_end, dict=True)[0][boyles_law.pressure_end]
+result_pressure = solved.subs({
     boyles_law.pressure_start: 1,
     boyles_law.volume_start: 1,
-    boyles_law.volume_end: volume}),
-    boyles_law.pressure_end)
-result_pressure = solved[0]
+    boyles_law.volume_end: volume})
 
 print("Pressure function is:\n{}".format(
     pretty(result_pressure, use_unicode=False)))

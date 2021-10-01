@@ -15,6 +15,6 @@ def print():
 @validate_input(mass_=units.mass, acceleration_=units.acceleration)
 @validate_output(units.force)
 def calculate_force(mass_: Quantity, acceleration_: Quantity) -> Quantity:
-    result_force_expr = solve(law, force)[0]
+    result_force_expr = solve(law, force, dict=True)[0][force]
     result_expr = result_force_expr.subs({mass: mass_, acceleration: acceleration_})
     return expr_to_quantity(result_expr, 'force')
