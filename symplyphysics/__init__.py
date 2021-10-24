@@ -5,6 +5,7 @@ from sympy.physics.units import convert_to, Quantity
 from sympy.physics.units.systems.si import SI
 from .quantity_decorator import validate_input, validate_output, assert_equivalent_dimension
 from .expr_to_quantity import expr_to_quantity
+from .probability import Probability
 
 __all__ = [
     'validate_input',
