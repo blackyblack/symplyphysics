@@ -12,6 +12,7 @@ from symplyphysics import (
 ## Σs (macroscopic scattering cross-section) is the macroscopic cross-section for scattering interaction.
 ## μ (average_scattering_angle_cosine) is average value of the cosine of the angle in the lab system at which
 ##   neutrons are scattered in the medium.
+##   See [most_neutron_energies_scattering_angle_average_cosine](./most_neutron_energies_scattering_angle_average_cosine.py)
 ## Σtr (macroscopic transport cross-section) is the macroscopic cross-section for transport mean free path.
 
 macroscopic_scattering_cross_section = symbols('macroscopic_scattering_cross_section')
