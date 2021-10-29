@@ -30,4 +30,4 @@ def calculate_cross_section(microscopic_cross_section_: Quantity, atomic_number_
     result_expr = result_cross_section_expr.subs({
         microscopic_cross_section: microscopic_cross_section_,
         atomic_number_density: atomic_number_density_})
-    return expr_to_quantity(result_expr, 'macro-cross-section')
+    return expr_to_quantity(result_expr, 'macro_cross_section')

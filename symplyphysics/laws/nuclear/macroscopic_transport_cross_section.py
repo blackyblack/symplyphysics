@@ -25,11 +25,11 @@ law = Eq(macroscopic_transport_cross_section,
 def print():
     return pretty(law, use_unicode=False)
 
-@validate_input(macroscopic_scattering_cross_section=(1 / units.length))
+@validate_input(macroscopic_scattering_cross_section_=(1 / units.length))
 @validate_output(1 / units.length)
 def calculate_cross_section(macroscopic_scattering_cross_section_: Quantity, average_scattering_angle_cosine_: float) -> Quantity:
     result_cross_section_expr = solve(law, macroscopic_transport_cross_section, dict=True)[0][macroscopic_transport_cross_section]
     result_expr = result_cross_section_expr.subs({
         macroscopic_scattering_cross_section: macroscopic_scattering_cross_section_,
         average_scattering_angle_cosine: average_scattering_angle_cosine_})
-    return expr_to_quantity(result_expr, 'macro-transport-cross-section')
+    return expr_to_quantity(result_expr, 'macro_transport_cross_section')
