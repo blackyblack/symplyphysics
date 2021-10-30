@@ -4,6 +4,9 @@ from symplyphysics import (
 )
 
 from symplyphysics.definitions import volume_number_density
+from symplyphysics.definitions import density_from_mass_volume
+from symplyphysics.laws.chemistry import avogadro_number_from_mole_count
+from symplyphysics.laws.chemistry import atomic_weight_from_mass_mole_count
 
 # Description
 ## The atomic number density (N; atoms/cm^3) is the number of atoms of a given type per unit volume (V; cm^3)
@@ -20,17 +23,25 @@ atomic_number_density, material_density, atomic_weight = symbols('atomic_number_
 law = Eq(atomic_number_density, material_density * units.avogadro / atomic_weight)
 
 # Derive the same law from volume number density law
-material_mass = symbols('material_mass')
+density_law = density_from_mass_volume.definition.subs({
+    density_from_mass_volume.volume: volume_number_density.volume,
+    density_from_mass_volume.density: material_density})
 
-#TODO: import from definitions
-density_law = Eq(material_density, material_mass / volume_number_density.volume)
-avogadro_law = Eq(volume_number_density.objects, material_mass * units.avogadro / atomic_weight)
+avogadro_law = avogadro_number_from_mole_count.law.subs({
+    avogadro_number_from_mole_count.particles_count: volume_number_density.objects})
 
-derived_law = [volume_number_density.definition, density_law, avogadro_law]
+atomic_weight_law = atomic_weight_from_mass_mole_count.law.subs({
+    atomic_weight_from_mass_mole_count.atomic_weight: atomic_weight,
+    atomic_weight_from_mass_mole_count.substance_mass: density_from_mass_volume.mass,
+    atomic_weight_from_mass_mole_count.mole_count: avogadro_number_from_mole_count.mole_count
+})
+
+derived_law = [volume_number_density.definition, density_law, avogadro_law, atomic_weight_law]
 
 ## Check the equivalence of 'law' and 'derived_law'
 derived_number_density = solve(derived_law,
-    (material_mass, volume_number_density.objects, volume_number_density.number_density),
+    (density_from_mass_volume.mass, volume_number_density.objects,
+    volume_number_density.number_density, avogadro_number_from_mole_count.mole_count),
     dict=True)[0][volume_number_density.number_density]
 assert solve(law, atomic_number_density, dict=True)[0][atomic_number_density] == derived_number_density
 
