@@ -12,6 +12,7 @@ from symplyphysics import (
 ## Where:
 ## σ (microscopic cross-section) is the effective `target area` that a nucleus interacts with an incident neutron.
 ## N (atomic number density) is the number of atoms of a given type per unit volume of the material.
+##   See [atomic number density](../chemistry/atomic_number_density_from_material_density_atomic_weight.py) implementation.
 ## Σ is the macroscopic cross-section.
 
 microscopic_cross_section = symbols('microscopic_cross_section')

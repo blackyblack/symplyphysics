@@ -4,7 +4,7 @@ from pytest import approx, fixture, raises
 from symplyphysics import (
     units, convert_to, SI, errors
 )
-from symplyphysics.laws.chemistry import atomic_number_density
+from symplyphysics.laws.chemistry import atomic_number_density_from_material_density_atomic_weight as atomic_number_density
 
 @fixture
 def test_args():

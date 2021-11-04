@@ -17,6 +17,7 @@ def test_args():
 
 def test_basic_particles_count(test_args):
     result = avogadro_number_from_mole_count.calculate_particles_count(test_args.M)
+    assert isinstance(result, int)
     assert result == approx(3.011E+24, 0.01)
 
 def test_bad_mole_count():
