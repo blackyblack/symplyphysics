@@ -14,10 +14,13 @@ from symplyphysics.laws.chemistry import atomic_weight_from_mass_mole_count
 
 ## Law: N = ⍴ * Na / M
 ## Where:
-## ⍴ (material density) is density of the material
-## Na is Avogadro's number
-## M (atomic or molecular weight) - total weight of an atom
-## N is the atomic number density
+## ⍴ (material density) is density of the material.
+##   See [material density](symplyphysics/definitions/density_from_mass_volume.py) implementation.
+## Na is Avogadro's number.
+##   See [avogadro number](./avogadro_number_from_mole_count.py) implementation.
+## M (atomic or molecular weight) - total weight of an atom.
+##   See [atomic weight](./atomic_weight_from_mass_mole_count.py) implementation.
+## N is the atomic number density.
 
 atomic_number_density, material_density, atomic_weight = symbols('atomic_number_density material_density atomic_weight')
 law = Eq(atomic_number_density, material_density * units.avogadro / atomic_weight)

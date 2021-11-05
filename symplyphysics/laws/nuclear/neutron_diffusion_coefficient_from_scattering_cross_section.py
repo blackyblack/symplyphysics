@@ -10,7 +10,8 @@ from symplyphysics import (
 # Conditions
 ## - Low absorbing medium (Σa << Σs)
 ##   Fick’s law derivation assumes that the neutron flux, φ, is slowly varying.
-##   Large variations in φ occur when Σa (neutron absorption) is large (compared to Σs).
+##   Large variations in φ occur when Σa (macroscopic absorption cross-section) is large compared to
+##   Σs (macroscopic scattering cross-section).
 
 ## Law: D = 1 / 3 * Σtr
 ## Where:

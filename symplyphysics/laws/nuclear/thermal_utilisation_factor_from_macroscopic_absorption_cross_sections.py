@@ -12,6 +12,7 @@ from symplyphysics import (
 ## Law: f = Σa_fuel / Σa_total
 ## Where:
 ## Σa_fuel - macroscopic absorption cross-section of the fuel.
+##   See [macroscopic transport cross-section](./macroscopic_transport_cross_section.py) implementation.
 ## Σa_total - macroscopic absorption cross-section of the fuel, moderator, cladding, etc, combined.
 ## f - thermal neutron utilisation factor
 
