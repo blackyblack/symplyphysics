@@ -8,9 +8,9 @@ from symplyphysics import (
 ## Infinite multiplication factor: k_infinite = v * Σf / Σa
 ## Where:
 ## v - average number of neutrons produced per fission.
-## Σf - macroscopic fission cross-section of the fuel.
+## Σf - overall macroscopic fission cross-section.
 ##   See [macroscopic transport cross-section](./macroscopic_transport_cross_section.py) implementation.
-## Σa - macroscopic absorption cross-section of the fuel.
+## Σa - overall macroscopic absorption cross-section.
 ## k_infinite - infinite multiplication factor.
 ##   See [infinite multiplication factor](./infinite_multiplication_factor.py)
 
