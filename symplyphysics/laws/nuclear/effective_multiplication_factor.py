@@ -5,10 +5,10 @@ from symplyphysics import (
 # Description
 ## Effective multiplication factor: k_effective = k_infinite * Pf * Pt
 ## Where:
-## Pf (fast non-leakage factor) is the ratio of the number of fast neutrons that do not leak from the reactor
-##   core during the slowing down process to the number of fast neutrons produced by fissions at all energies.
-## Pt (thermal non-leakage factor) is the ratio of the number of thermal neutrons that do not leak from the
-##   reactor core during the neutron diffusion process to the number of neutrons that reach thermal energies.
+## Pf - fast non-leakage factor.
+##   See [fast non_leakage probability](./fast_non_leakage_probability_from_fermi_age.py)
+## Pt - thermal non-leakage factor.
+##   See [thermal non_leakage probability](./thermal_non_leakage_probability_from_diffusion_length.py)
 ## k_infinite (infinite multiplication factor) is the ratio of the neutrons produced by fission in one neutron
 ##   generation to the number of neutrons lost through absorption in the preceding neutron generation.
 ##   See [infinite multiplication factor](./infinite_multiplication_factor.py) implementation.

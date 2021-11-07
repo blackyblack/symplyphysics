@@ -39,7 +39,7 @@ def test_bad_diffusion_area(test_args):
     with raises(TypeError):
         migration_area.calculate_migration_area(100, test_args.th)
 
-def test_bad_macroscopic_cross_section(test_args):
+def test_bad_fermi_age(test_args):
     thb = units.Quantity('thb')
     SI.set_quantity_dimension(thb, units.time)
     SI.set_quantity_scale_factor(thb, 3 * units.second)

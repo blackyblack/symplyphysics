@@ -4,7 +4,7 @@ from symplyphysics import (
 )
 
 # Description
-## Material buckling (Bm^2) describes the characteristics of the fuel material in an infinite medium.
+## Material buckling (Bm^2) describes the difference between neutron production and neutron absorption.
 
 ## Law: Bm^2 = (v * Σf - Σa) / (k_effective * D)
 ## Where:
