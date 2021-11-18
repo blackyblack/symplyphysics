@@ -1,4 +1,4 @@
-from sympy import pi, sin, simplify
+from sympy import pi, sin
 from sympy.vector import CoordSys3D
 from symplyphysics import (
     symbols, Function, Eq, pretty, solve, Quantity, units,

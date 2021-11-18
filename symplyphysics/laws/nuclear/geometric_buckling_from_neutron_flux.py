@@ -34,6 +34,10 @@ law = Eq(geometric_buckling,
 def print():
     return pretty(law, use_unicode=False)
 
+# This is mostly internal method for solving derived laws. End-user is unlikely to define
+# neutron flux function and pass it here. See geometric_buckling_for_uniform_sphere.py as an example
+# of such derived law.
+# neutron_flux_function_ should be a function on CoordSys3D
 def calculate_geometric_buckling(neutron_flux_function_: Function) -> Expr:
     applied_law = law.subs(neutron_flux_function(flux_position), neutron_flux_function_)
     return simplify(applied_law.doit())
