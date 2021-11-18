@@ -1,5 +1,6 @@
 from sympy import simplify
-from sympy.vector import laplacian
+from sympy.core.expr import Expr
+from sympy.vector import Laplacian
 from symplyphysics import (
     symbols, Function, Eq, pretty
 )
@@ -8,7 +9,10 @@ from symplyphysics import (
 ## The quantity Bg^2 is called the geometrical buckling of the reactor and depends only on the geometry.
 ## This term is derived from the notion that the neutron flux distribution is somehow "buckled" in a homogeneous
 ## finite reactor. The neutron flux has more concave downward or "buckled" curvature (higher Bg^2) in a small
-## reactor than in a large one. 
+## reactor than in a large one.
+
+# Conditions
+## - Neutron flux can be represented as a function of a single parameter - f(flux_position)
 
 ## Law: Bg^2 = ∇^2(Ф(x)) / Ф(x)
 ## Where:
@@ -18,14 +22,18 @@ from symplyphysics import (
 ## Bg^2 - geometric buckling.
 
 geometric_buckling = symbols('geometric_buckling')
-distance_from_center = symbols('distance_from_center')
+flux_position = symbols('flux_position')
 neutron_flux_function = symbols('neutron_flux_function', cls = Function)
 
-flux_laplacian_function = laplacian(neutron_flux_function)
-
-# see geometric buckling definition
-law = simplify(Eq(geometric_buckling,
-    -1 * flux_laplacian_function / neutron_flux_function(distance_from_center)))
+# neutron_flux_function should be a function on CoordSys3D, eg:
+#   spherical_coordinates = CoordSys3D('spherical_coordinates', transformation='spherical')
+#   neutron_flux_function(spherical_coordinates.r)
+law = Eq(geometric_buckling,
+    -1 * Laplacian(neutron_flux_function(flux_position)) / neutron_flux_function(flux_position))
 
 def print():
     return pretty(law, use_unicode=False)
+
+def calculate_geometric_buckling(neutron_flux_function_: Function) -> Expr:
+    applied_law = law.subs(neutron_flux_function(flux_position), neutron_flux_function_)
+    return simplify(applied_law.doit())
