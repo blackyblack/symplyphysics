@@ -13,6 +13,7 @@ from symplyphysics import (
 ## Lth - diffusion length of thermal neutrons.
 ##   See [diffusion area](./diffusion_area_from_diffusion_coefficient.py) implementation.
 ## Bg^2 - geometric buckling.
+##   See [geometric buckling](./buckling/geometric_buckling_from_neutron_flux.py)
 ## Ptnl - thermal non-leakage probability.
 
 thermal_diffusion_area = symbols('thermal_diffusion_area')

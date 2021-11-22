@@ -4,7 +4,7 @@ from pytest import approx, fixture, raises
 from symplyphysics import (
     units, convert_to, SI, errors
 )
-from symplyphysics.laws.nuclear import geometric_buckling_for_uniform_slab as buckling
+from symplyphysics.laws.nuclear.buckling import geometric_buckling_for_uniform_slab as buckling
 
 @fixture
 def test_args():

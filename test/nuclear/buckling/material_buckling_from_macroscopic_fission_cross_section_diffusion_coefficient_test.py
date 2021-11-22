@@ -4,7 +4,7 @@ from pytest import approx, fixture, raises
 from symplyphysics import (
     units, convert_to, SI, errors
 )
-from symplyphysics.laws.nuclear import material_buckling_from_macroscopic_fission_cross_section_diffusion_coefficient as material_buckling
+from symplyphysics.laws.nuclear.buckling import material_buckling_from_macroscopic_fission_cross_section_diffusion_coefficient as material_buckling
 
 @fixture
 def test_args():

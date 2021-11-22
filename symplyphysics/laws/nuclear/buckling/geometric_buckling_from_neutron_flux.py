@@ -21,14 +21,14 @@ from symplyphysics import (
 ##   directions per unit time.
 ## Bg^2 - geometric buckling.
 
-geometric_buckling = symbols('geometric_buckling')
+geometric_buckling_squared = symbols('geometric_buckling_squared')
 flux_position = symbols('flux_position')
 neutron_flux_function = symbols('neutron_flux_function', cls = Function)
 
 # neutron_flux_function should be a function on CoordSys3D, eg:
 #   spherical_coordinates = CoordSys3D('spherical_coordinates', transformation='spherical')
 #   neutron_flux_function(spherical_coordinates.r)
-law = Eq(geometric_buckling,
+law = Eq(geometric_buckling_squared,
     -1 * Laplacian(neutron_flux_function(flux_position)) / neutron_flux_function(flux_position))
 
 def print():
@@ -38,6 +38,6 @@ def print():
 # neutron flux function and pass it here. See geometric_buckling_for_uniform_sphere.py as an example
 # of such derived law.
 # neutron_flux_function_ should be a function on CoordSys3D
-def calculate_geometric_buckling(neutron_flux_function_: Function) -> Expr:
+def calculate_geometric_buckling_squared(neutron_flux_function_: Function) -> Expr:
     applied_law = law.subs(neutron_flux_function(flux_position), neutron_flux_function_)
     return simplify(applied_law.doit())
