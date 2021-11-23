@@ -1,5 +1,6 @@
 import functools
 import inspect
+from sympy.core.singleton import S
 from sympy.physics.units import Quantity, Dimension
 from sympy.physics.units.systems.si import SI
 from .errors import UnitsError
@@ -8,13 +9,18 @@ def assert_equivalent_dimension(arg: Quantity, decorator_name, param_name, func_
     if not isinstance(arg, Quantity):
         raise TypeError(f"Argument '{param_name}' to function '{func_name}'"
             f" should be sympy.physics.units.Quantity.")
+
+    scale_factor = SI.get_quantity_scale_factor(arg)
+    # zero can be of any dimension
+    if scale_factor == S.Zero:
+        return
+
     if not isinstance(expected_unit, Dimension):
         raise TypeError(f"Argument '{expected_unit.name}' to decorator '{decorator_name}'"
             f" should be sympy.physics.units.Dimension.")
     if not SI.get_dimension_system().equivalent_dims(arg.dimension, expected_unit):
         raise UnitsError(f"Argument '{param_name}' to function '{func_name}' must "
             f"be in units equivalent to '{expected_unit.name}'")
-    scale_factor = SI.get_quantity_scale_factor(arg)
     if scale_factor.free_symbols:
         raise UnitsError(f"Argument '{param_name}' to function '{func_name}' should "
             f"not contain free symbols")

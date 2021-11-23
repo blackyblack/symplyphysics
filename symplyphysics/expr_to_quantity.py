@@ -4,7 +4,7 @@ from sympy.functions import exp
 from sympy.physics.units import Quantity
 from sympy.physics.units.systems.si import SI
 
-def expr_to_quantity(expr: Expr, quantity_name: str) -> Quantity:
+def expr_to_quantity(expr: Expr, quantity_name: str) -> Quantity:    
     quantity_scale = SI._collect_factor_and_dimension(expr)
     dimension = quantity_scale[1]
     if isinstance(dimension, exp):

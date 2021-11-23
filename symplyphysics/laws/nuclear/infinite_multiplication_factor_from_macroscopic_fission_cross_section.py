@@ -1,7 +1,7 @@
 from sympy.core.singleton import S
 from symplyphysics import (
     symbols, Eq, pretty, solve, Quantity, units,
-    validate_input, validate_output, expr_to_quantity, convert_to
+    validate_input, expr_to_quantity, convert_to
 )
 
 # Description
