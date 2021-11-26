@@ -1,7 +1,7 @@
 from sympy import pi
 from symplyphysics import (
     symbols, Eq, pretty, solve, Quantity, units,
-    validate_input, validate_output, expr_to_quantity, filter_map_zeroes
+    validate_input, validate_output, expr_to_quantity
 )
 from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_cylinder as cylinder_flux
 
@@ -23,14 +23,7 @@ geometric_buckling_squared = symbols('geometric_buckling_squared')
 law = Eq(geometric_buckling_squared, (2.405 / cylinder_radius)**2 + (pi / cylinder_height)**2)
 
 # This law is derived from geometric buckling definition (see geometric_buckling_from_neutron_flux.py),
-# neutron flux laplacian in cylindrical coordinates and boundary condtitions.
-
-# Boundary conditions:
-# - vacuum boundary condition: Ф(R + d) =  Ф(Re) = 0
-# - finite flux condition: 0 <= Ф(r) < ∞
-# - interface condition: the neutron flux and the normal component of the neutron current must be continuous
-# - source condition: all neutrons flowing through the bounding area of the source must come from the neutron source
-# - albedo boundary condition: Ф(Ralbedo) = 0
+# neutron flux laplacian in cylindrical coordinates and boundary conditions.
 
 # Unfortunately sympy does not support solving with complex boundary conditions so we simply check with known
 # solution for the neutron flux:
@@ -40,7 +33,7 @@ geometric_buckling_cylinder_solved = geometric_buckling_cylinder_squared.subs({
     cylinder_flux.cylinder_radius: cylinder_radius,
     cylinder_flux.cylinder_height: cylinder_height
 })
-assert geometric_buckling_cylinder_squared.evalf(7) == law.rhs.evalf(7)
+assert geometric_buckling_cylinder_solved.evalf(7) == law.rhs.evalf(7)
 
 def print():
     return pretty(law, use_unicode=False)

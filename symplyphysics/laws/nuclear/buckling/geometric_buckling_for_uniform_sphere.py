@@ -1,7 +1,7 @@
 from sympy import pi
 from symplyphysics import (
     symbols, Eq, pretty, solve, Quantity, units,
-    validate_input, validate_output, expr_to_quantity, filter_map_zeroes
+    validate_input, validate_output, expr_to_quantity
 )
 from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_sphere as sphere_flux
 
@@ -24,27 +24,12 @@ law = Eq(geometric_buckling_squared, (pi / sphere_radius)**2)
 # This law is derived from geometric buckling definition (see geometric_buckling_from_neutron_flux.py),
 # neutron flux laplacian in spherical coordinates and boundary condtitions.
 
-# Boundary conditions:
-# - vacuum boundary condition: Ф(R + d) =  Ф(Re) = 0
-# - finite flux condition: 0 <= Ф(r) < ∞
-# - interface condition: the neutron flux and the normal component of the neutron current must be continuous
-# - source condition: all neutrons flowing through the bounding area of the source must come from the neutron source
-# - albedo boundary condition: Ф(Ralbedo) = 0
-
 # Unfortunately sympy does not support solving with complex boundary conditions so we simply check with known
 # solution for the neutron flux:
 # See [neutron flux for uniform sphere](./neutron_flux_for_uniform_sphere.py)
-vacuum_boundary_condition = Eq(sphere_flux.neutron_flux_function(sphere_radius), 0)
-vacuum_boundary_neutron_flux_function = sphere_flux.law.subs(sphere_flux.distance_from_center, sphere_radius)
-
-geometric_buckling_solved = solve([vacuum_boundary_neutron_flux_function, vacuum_boundary_condition],
-    (sphere_flux.neutron_flux_function(sphere_radius), sphere_flux.geometric_buckling_sphere), dict=True)
-
-# first solution is zero. We do not need it due to boundary conditions.
-geometric_buckling_solved = filter_map_zeroes(sphere_flux.geometric_buckling_sphere, geometric_buckling_solved)
-
-geometric_buckling_solution = geometric_buckling_solved[0][sphere_flux.geometric_buckling_sphere]
-assert geometric_buckling_solution**2 == law.rhs
+geometric_buckling_sphere_squared = sphere_flux.radial_constant**2
+geometric_buckling_sphere_flux_solved = geometric_buckling_sphere_squared.subs(sphere_flux.sphere_radius, sphere_radius)
+assert geometric_buckling_sphere_flux_solved == law.rhs
 
 def print():
     return pretty(law, use_unicode=False)
