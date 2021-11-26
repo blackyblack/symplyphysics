@@ -15,6 +15,7 @@ from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_
 ## r - distance from the center of sphere.
 ## Bgsphere - geometric buckling for sphere.
 ##   See [geometric buckling](./geometric_buckling_from_neutron_flux.py) implementation.
+## Ф(x) - neutron flux density.
 
 neutron_flux_power_constant = symbols('C1', constant=True)
 distance_from_center = symbols('distance_from_center')

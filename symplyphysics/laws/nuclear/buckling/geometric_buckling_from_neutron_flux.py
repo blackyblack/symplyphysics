@@ -11,9 +11,6 @@ from symplyphysics import (
 ## finite reactor. The neutron flux has more concave downward or "buckled" curvature (higher Bg^2) in a small
 ## reactor than in a large one.
 
-# Conditions
-## - Neutron flux can be represented as a function of a single parameter - f(flux_position)
-
 ## Law: Bg^2 = ∇^2(Ф(x)) / Ф(x)
 ## Where:
 ## ∇^2 - Laplacian operator.
