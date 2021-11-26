@@ -33,7 +33,7 @@ law = Eq(neutron_flux_function(distance_from_center),
 # Neutron flux is a function of x coordinate in the cartesian coordinates.
 
 # Boundary conditions:
-# - vacuum boundary condition: Ф(a / 2 + d) =  Ф(ae / 2) = 0
+# - vacuum boundary condition: Ф(a / 2 + d) = Ф(ae / 2) = 0
 # - finite flux condition: 0 <= Ф(x) < ∞
 # - interface condition: the neutron flux and the normal component of the neutron current must be continuous
 # - source condition: all neutrons flowing through the bounding area of the source must come from the neutron source

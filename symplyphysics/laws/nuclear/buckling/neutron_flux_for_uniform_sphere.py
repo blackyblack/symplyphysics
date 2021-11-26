@@ -33,7 +33,7 @@ law = Eq(neutron_flux_function(distance_from_center),
 # Neutron flux is a function of radius in the spherical coordinates.
 
 # Boundary conditions:
-# - vacuum boundary condition: Ф(R + d) =  Ф(Re) = 0
+# - vacuum boundary condition: Ф(R + d) = Ф(Re) = 0
 # - finite flux condition: 0 <= Ф(r) < ∞
 # - interface condition: the neutron flux and the normal component of the neutron current must be continuous
 # - source condition: all neutrons flowing through the bounding area of the source must come from the neutron source

@@ -1,4 +1,4 @@
-from sympy import cos
+from sympy import cos, pi
 from sympy.functions.special.bessel import besselj
 from sympy.vector import CoordSys3D
 from symplyphysics import (
@@ -31,7 +31,10 @@ neutron_flux_function = symbols('neutron_flux_function', cls = Function)
 # These constants are being used for geometric buckling calculation
 # See: [geometric buckling for uniform cylinder](geometric_buckling_for_uniform_cylinder.py)
 radial_constant = 2.405 / cylinder_radius
-axial_constant = neutron_flux_for_uniform_slab.axial_constant.subs(neutron_flux_for_uniform_slab.slab_width, cylinder_height)
+axial_constant = pi / cylinder_height
+
+# derived the same way as uniform slab axial_constant
+assert axial_constant == neutron_flux_for_uniform_slab.axial_constant.subs(neutron_flux_for_uniform_slab.slab_width, cylinder_height)
 
 law = Eq(neutron_flux_function(radial_distance_from_center, axial_distance_from_center),
     neutron_flux_power_constant * besselj(0, radial_constant * radial_distance_from_center) *
@@ -41,14 +44,11 @@ law = Eq(neutron_flux_function(radial_distance_from_center, axial_distance_from_
 # Neutron flux is a function of radius and height in the cylindrical coordinates.
 
 # Boundary conditions:
-# - vacuum boundary condition: Ф(R + d) =  Ф(Re) = 0
-# - finite flux condition: 0 <= Ф(r) < ∞
+# - vacuum boundary condition: Ф(R + d) = Ф(Re) = Ф(a + d) = Ф(ae) = 0
+# - finite flux condition: 0 <= Ф(r, x) < ∞
 # - interface condition: the neutron flux and the normal component of the neutron current must be continuous
 # - source condition: all neutrons flowing through the bounding area of the source must come from the neutron source
 # - albedo boundary condition: Ф(Ralbedo) = 0
-
-# axial_constant is derived the same way as uniform slab neutron flux is derived.
-# See: [geometric buckling for uniform slab](geometric_buckling_for_uniform_slab.py)
 
 # radial_constant is the solution of the Bessel function J0, with a condition the neutron flux cannot
 # have negative values (finite flux condition) and with zero flux boundary condition
