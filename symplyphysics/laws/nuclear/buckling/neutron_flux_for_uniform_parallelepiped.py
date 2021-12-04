@@ -65,7 +65,7 @@ neutron_flux_function_cartesian = law.subs({
     y_distance_from_center: cartesian_coordinates.y,
     z_distance_from_center: cartesian_coordinates.z})
 
-solved = geometric_buckling_from_neutron_flux.calculate_geometric_buckling_squared(neutron_flux_function_cartesian.rhs)
+solved = geometric_buckling_from_neutron_flux.apply_neutron_flux_function(neutron_flux_function_cartesian.rhs)
 
 # check with the derived law: Bg^2 = width_constant**2 + length_constant**2 + height_constant**2
 assert solved.rhs == (width_constant**2 + length_constant**2 + height_constant**2)

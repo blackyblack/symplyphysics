@@ -43,7 +43,7 @@ law = Eq(neutron_flux_function(distance_from_center),
 spherical_coordinates = CoordSys3D('spherical_coordinates', transformation='spherical')
 neutron_flux_function_spherical = law.subs(distance_from_center, spherical_coordinates.r)
 
-solved = geometric_buckling_from_neutron_flux.calculate_geometric_buckling_squared(neutron_flux_function_spherical.rhs)
+solved = geometric_buckling_from_neutron_flux.apply_neutron_flux_function(neutron_flux_function_spherical.rhs)
 
 # check with the derived law: Bg^2 = radial_constant**2
 assert solved.rhs == radial_constant**2

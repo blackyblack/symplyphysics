@@ -60,7 +60,7 @@ neutron_flux_function_cylindrical = law.subs({
     radial_distance_from_center: cylindrical_coordinates.r,
     axial_distance_from_center: cylindrical_coordinates.z})
 
-solved = geometric_buckling_from_neutron_flux.calculate_geometric_buckling_squared(neutron_flux_function_cylindrical.rhs)
+solved = geometric_buckling_from_neutron_flux.apply_neutron_flux_function(neutron_flux_function_cylindrical.rhs)
 
 # check with the derived law: Bg^2 = radial_constant**2 + axial_constant**2
 # limit decimals to bypass rounding errors

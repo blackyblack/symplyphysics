@@ -2,7 +2,8 @@ from sympy import simplify
 from sympy.core.expr import Expr
 from sympy.vector import Laplacian
 from symplyphysics import (
-    symbols, Function, Eq, pretty
+    symbols, Function, Eq, pretty, solve, Quantity, units,
+    validate_output, expr_to_quantity
 )
 
 # Description
@@ -11,11 +12,12 @@ from symplyphysics import (
 ## finite reactor. The neutron flux has more concave downward or "buckled" curvature (higher Bg^2) in a small
 ## reactor than in a large one.
 
-## Law: Bg^2 = ∇^2(Ф(x)) / Ф(x)
+## Law: Bg^2 = -1 * Δ(Ф(x)) / Ф(x)
 ## Where:
-## ∇^2 - Laplacian operator.
+## Δ - Laplacian operator.
 ## Ф(x) (neutron flux density) - number of neutrons crossing through some arbitrary cross-sectional unit area in all
 ##   directions per unit time.
+## x - coordinates for the neutron flux density.
 ## Bg^2 - geometric buckling.
 
 geometric_buckling_squared = symbols('geometric_buckling_squared')
@@ -35,6 +37,14 @@ def print():
 # neutron flux function and pass it here. See geometric_buckling_for_uniform_sphere.py as an example
 # of such derived law.
 # neutron_flux_function_ should be a function on CoordSys3D
-def calculate_geometric_buckling_squared(neutron_flux_function_: Function) -> Expr:
+def apply_neutron_flux_function(neutron_flux_function_: Function) -> Expr:
     applied_law = law.subs(neutron_flux_function(flux_position), neutron_flux_function_)
     return simplify(applied_law.doit())
+
+# neutron_flux_function_ should be a function on CoordSys3D
+# neutron_flux_function_ geometry should be defined with Quantity, eg width.dimension == units.length
+@validate_output(1 / units.length**2)
+def calculate_geometric_buckling_squared(neutron_flux_function_: Function) -> Quantity:
+    result_expr = apply_neutron_flux_function(neutron_flux_function_)
+    result_buckling_expr = solve(result_expr, geometric_buckling_squared, dict=True)[0][geometric_buckling_squared]
+    return expr_to_quantity(result_buckling_expr, 'geometric_buckling_squared')

@@ -4,8 +4,8 @@ from symplyphysics import (
 )
 
 # Description
-## Geometric buckling can be derived from the diffusion equation. Another geometric buckling definition
-## depends on neutron flux: see [geometric buckling](./geometric_buckling_from_neutron_flux.py) implementation.
+## Geometric buckling can be derived from the diffusion equation: see [diffusion equation](../diffusion_equation_from_neutron_flux.py).
+## Another geometric buckling definition depends on neutron flux: see [geometric buckling](./geometric_buckling_from_neutron_flux.py) implementation.
 
 ## Law: Bg^2 = (k_infinite / k_effective - 1) / L^2
 ## Where:
