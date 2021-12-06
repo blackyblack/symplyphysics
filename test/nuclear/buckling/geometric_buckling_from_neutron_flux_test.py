@@ -1,10 +1,9 @@
 from collections import namedtuple
 from pytest import approx, fixture
 
-from sympy import sin, pi
 from sympy.vector import CoordSys3D
 from symplyphysics import (
-    units, convert_to, SI
+    units, convert_to, SI, sin, pi
 )
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_flux as buckling
 

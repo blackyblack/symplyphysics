@@ -1,8 +1,7 @@
-from sympy import simplify
 from sympy.core.expr import Expr
 from sympy.vector import Laplacian
 from symplyphysics import (
-    symbols, Function, Eq, pretty, solve, Quantity, units,
+    symbols, Function, Eq, pretty, solve, Quantity, units, simplify,
     validate_output, expr_to_quantity
 )
 

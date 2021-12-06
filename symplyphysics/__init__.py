@@ -1,5 +1,6 @@
-from sympy import symbols, Function, Eq, pretty, solve, dsolve
+from sympy import simplify, symbols, Function, Eq, pretty, solve, dsolve, sin, cos, pi
 from sympy.utilities.lambdify import lambdify, implemented_function
+from sympy.core.singleton import S
 from sympy.physics import units
 from sympy.physics.units import convert_to, Quantity
 from sympy.physics.units.systems.si import SI

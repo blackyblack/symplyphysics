@@ -1,8 +1,7 @@
-from sympy import cos, pi
 from sympy.functions.special.bessel import besselj
 from sympy.vector import CoordSys3D
 from symplyphysics import (
-    symbols, Function, Eq, pretty
+    symbols, Function, Eq, pretty, cos, pi
 )
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_flux
 from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_slab
@@ -52,7 +51,6 @@ law = Eq(neutron_flux_function(radial_distance_from_center, axial_distance_from_
 
 # radial_constant is the solution of the Bessel function J0, with a condition the neutron flux cannot
 # have negative values (finite flux condition) and with zero flux boundary condition
-# See: [geometric buckling for uniform cylinder](geometric_buckling_for_uniform_cylinder.py)
 
 # define flux function in cylindrical coordinates as a function of cylinder radius and height
 cylindrical_coordinates = CoordSys3D('cylindrical_coordinates', transformation='cylindrical')
@@ -69,4 +67,4 @@ assert solved.rhs.evalf(7) == (radial_constant**2 + axial_constant**2).evalf(7)
 def print():
     return pretty(law, use_unicode=False)
 
-# There is no calculate() method. Neutron flux is usually being used internally to pass to the other laws.
+# There is no calculate() method. Neutron flux is usually being used internally to pass to other laws.

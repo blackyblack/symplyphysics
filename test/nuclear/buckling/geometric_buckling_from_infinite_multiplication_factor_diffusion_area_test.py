@@ -1,10 +1,9 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
 
-from sympy.core.singleton import S
 from sympy.physics.units import Dimension
 from symplyphysics import (
-    units, convert_to, SI, errors
+    S, units, convert_to, SI, errors
 )
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_infinite_multiplication_factor_diffusion_area as buckling
 

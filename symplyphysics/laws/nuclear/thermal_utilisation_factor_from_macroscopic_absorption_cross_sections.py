@@ -1,7 +1,6 @@
-from sympy.core.singleton import S
 from symplyphysics import (
-    symbols, Eq, pretty, solve, Probability, Quantity, units,
-    validate_input, expr_to_quantity, convert_to
+    symbols, Eq, pretty, solve, Quantity, units, S,
+    Probability, validate_input, expr_to_quantity, convert_to
 )
 
 # Description
@@ -12,7 +11,7 @@ from symplyphysics import (
 ## Law: f = Σa_fuel / Σa_total
 ## Where:
 ## Σa_fuel - macroscopic absorption cross-section of the fuel.
-##   See [macroscopic transport cross-section](./macroscopic_transport_cross_section.py) implementation.
+##   See [macroscopic cross-section](./macroscopic_cross_section_from_free_mean_path.py) implementation.
 ## Σa_total - macroscopic absorption cross-section of the fuel, moderator, cladding, etc, combined.
 ## f - thermal neutron utilisation factor
 

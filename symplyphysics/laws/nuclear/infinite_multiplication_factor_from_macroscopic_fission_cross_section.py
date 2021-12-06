@@ -1,6 +1,5 @@
-from sympy.core.singleton import S
 from symplyphysics import (
-    symbols, Eq, pretty, solve, Quantity, units,
+    symbols, Eq, pretty, solve, Quantity, units, S,
     validate_input, expr_to_quantity, convert_to
 )
 
@@ -9,7 +8,7 @@ from symplyphysics import (
 ## Where:
 ## v - average number of neutrons produced per fission.
 ## Σf - overall macroscopic fission cross-section.
-##   See [macroscopic transport cross-section](./macroscopic_transport_cross_section.py) implementation.
+##   See [macroscopic cross-section](./macroscopic_cross_section_from_free_mean_path.py) implementation.
 ## Σa - overall macroscopic absorption cross-section.
 ## k_infinite - infinite multiplication factor.
 ##   See [infinite multiplication factor](./infinite_multiplication_factor.py)

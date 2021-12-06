@@ -1,10 +1,9 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
 
-from sympy import cos, pi
 from sympy.vector import CoordSys3D
 from symplyphysics import (
-    units, SI, errors
+    units, SI, errors, cos, pi
 )
 from symplyphysics.laws.nuclear import diffusion_equation_from_neutron_flux as diffusion_equation
 

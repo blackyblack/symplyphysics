@@ -2,7 +2,7 @@ from symplyphysics import (
     symbols, Eq, pretty, solve, Quantity, units,
     validate_input, validate_output, expr_to_quantity
 )
-from . import pressure_from_temperature_and_volume as thermodynamics_law
+from symplyphysics.laws.thermodynamics import pressure_from_temperature_and_volume as thermodynamics_law
 
 # Description
 ## Boyle's law (Isothermal process): T = const, P1 * V1 = P2 * V2
@@ -18,6 +18,7 @@ volume_start, volume_end = symbols('volume_start volume_end')
 law = Eq(pressure_start * volume_start, pressure_end * volume_end)
 
 ## Derive the same law from the general ideal gas law
+
 temperature_start, temperature_end = symbols('temperature_start temperature_end')
 
 isothermal_condition = Eq(temperature_start, temperature_end)

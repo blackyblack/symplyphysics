@@ -1,6 +1,5 @@
-from sympy import pi
 from symplyphysics import (
-    symbols, Eq, pretty, solve, Quantity, units,
+    symbols, Eq, pretty, solve, Quantity, units, pi,
     validate_input, validate_output, expr_to_quantity
 )
 from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_sphere as sphere_flux

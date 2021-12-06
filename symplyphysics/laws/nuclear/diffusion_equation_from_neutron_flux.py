@@ -1,9 +1,7 @@
-from sympy import simplify
 from sympy.core.expr import Expr
-from sympy.core.singleton import S
 from sympy.vector import Laplacian
 from symplyphysics import (
-    symbols, Eq, solve, pretty, Function, Quantity, units,
+    symbols, Eq, solve, pretty, Function, Quantity, units, simplify, S,
     validate_input, expr_to_quantity, convert_to
 )
 
@@ -11,7 +9,7 @@ from symplyphysics import (
 ## The diffusion equation, based on Fick's law, provides an analytical solution of spatial neutron flux
 ## distribution in the multiplying system.
 
-## Law: -D * Δ(Ф(x)) + Σa * Ф(x) = (1 / k) * Σf * Ф(x)
+## Law: -D * Δ(Ф(x)) + Σa * Ф(x) = (1 / k) * v * Σf * Ф(x)
 ## Where:
 ## D - diffusion coefficient.
 ##   See [diffusion coefficient](./neutron_diffusion_coefficient_from_scattering_cross_section.py) implementation.
@@ -69,13 +67,12 @@ def calculate_multiplication_factor(
     macroscopic_absorption_cross_section_: Quantity,
     diffusion_coefficient_: Quantity) -> float:
 
-    result_expr = law.subs({
-        neutron_flux_function(flux_position): neutron_flux_function_,
+    applied_law = apply_neutron_flux_function(neutron_flux_function_)
+    result_expr = applied_law.subs({
         neutrons_per_fission: neutrons_per_fission_,
         macroscopic_fission_cross_section: macroscopic_fission_cross_section_,
         macroscopic_absorption_cross_section: macroscopic_absorption_cross_section_,
         diffusion_coefficient: diffusion_coefficient_})
-
     result_factor_expr = solve(result_expr, effective_multiplication_factor, dict=True)[0][effective_multiplication_factor]
     result_factor = expr_to_quantity(result_factor_expr, 'eff_multiplication_factor')
     return convert_to(result_factor, S.One).n()

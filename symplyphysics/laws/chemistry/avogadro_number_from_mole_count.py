@@ -1,6 +1,5 @@
-from sympy.core.singleton import S
 from symplyphysics import (
-    symbols, Eq, pretty, solve, Quantity, units,
+    symbols, Eq, pretty, solve, Quantity, units, S,
     validate_input, expr_to_quantity, convert_to
 )
 

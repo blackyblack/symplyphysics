@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import approx, fixture, raises
 
 from symplyphysics import (
-    units, convert_to, SI, errors, Probability
+    units, SI, errors, Probability
 )
 from symplyphysics.laws.nuclear import thermal_utilisation_factor_from_macroscopic_absorption_cross_sections as utilisation_factor
 

@@ -1,8 +1,7 @@
-from sympy.core.singleton import S
 from sympy.functions import exp
 from symplyphysics import (
-    symbols, Eq, pretty, solve, Quantity, units, Probability,
-    validate_input, expr_to_quantity, convert_to
+    symbols, Eq, pretty, solve, Quantity, units, S,
+    Probability, validate_input, expr_to_quantity, convert_to
 )
 
 # Description

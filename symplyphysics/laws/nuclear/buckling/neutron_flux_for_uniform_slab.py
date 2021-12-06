@@ -1,7 +1,6 @@
-from sympy import cos, pi
 from sympy.vector import CoordSys3D
 from symplyphysics import (
-    symbols, Function, Eq, pretty
+    symbols, Function, Eq, pretty, cos, pi
 )
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_flux
 
@@ -50,4 +49,4 @@ assert solved.rhs == axial_constant**2
 def print():
     return pretty(law, use_unicode=False)
 
-# There is no calculate() method. Neutron flux is usually being used internally to pass to the other laws.
+# There is no calculate() method. Neutron flux is usually being used internally to pass to other laws.

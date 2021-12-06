@@ -2,7 +2,7 @@ from symplyphysics import (
     symbols, Eq, pretty, solve, Quantity, units,
     validate_input, validate_output, expr_to_quantity
 )
-from . import pressure_from_temperature_and_volume as thermodynamics_law
+from symplyphysics.laws.thermodynamics import pressure_from_temperature_and_volume as thermodynamics_law
 
 # Description
 ## Isochoric process: V = const, P1 * T2 = P2 * T1
@@ -18,6 +18,7 @@ temperature_start, temperature_end = symbols('temperature_start temperature_end'
 law = Eq(pressure_start * temperature_end, pressure_end * temperature_start)
 
 ## Derive the same law from the general ideal gas law
+
 volume_start, volume_end = symbols('volume_start volume_end')
 
 isochoric_condition = Eq(volume_start, volume_end)

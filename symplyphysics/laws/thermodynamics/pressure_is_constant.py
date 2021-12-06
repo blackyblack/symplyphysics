@@ -2,7 +2,7 @@ from symplyphysics import (
     symbols, Eq, pretty, solve, Quantity, units,
     validate_input, validate_output, expr_to_quantity
 )
-from . import pressure_from_temperature_and_volume as thermodynamics_law
+from symplyphysics.laws.thermodynamics import pressure_from_temperature_and_volume as thermodynamics_law
 
 # Description
 ## Gay-Lussac's law (Isobaric process): P = const, T1 / V1 = T2 / V2
@@ -18,6 +18,7 @@ volume_start, volume_end = symbols('volume_start volume_end')
 law = Eq(temperature_start / volume_start, temperature_end / volume_end)
 
 ## Derive the same law from the general ideal gas law
+
 pressure_start, pressure_end = symbols('pressure_start pressure_end')
 
 isobaric_condition = Eq(pressure_start, pressure_end)
