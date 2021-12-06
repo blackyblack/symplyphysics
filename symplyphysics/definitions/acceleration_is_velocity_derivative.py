@@ -1,6 +1,5 @@
 from symplyphysics import (
-    symbols, Function, Eq, pretty, solve, dsolve,
-    lambdify, implemented_function, Quantity, units,
+    symbols, Function, Derivative, Eq, pretty, solve, Quantity, units,
     validate_input, validate_output, expr_to_quantity
 )
 
@@ -9,7 +8,7 @@ from symplyphysics import (
 
 time = symbols('time')
 acceleration, velocity_function = symbols('acceleration velocity', cls = Function)
-definition = Eq(acceleration(time), velocity_function(time).diff(time))
+definition = Eq(acceleration(time), Derivative(velocity_function(time), time))
 definition_dimension_SI = units.meter / units.second**2
 
 def print():
@@ -21,11 +20,8 @@ def print_dimension():
 @validate_input(velocity_start_=units.velocity, velocity_end_=units.velocity, time_=units.time)
 @validate_output(units.acceleration)
 def calculate_linear_acceleration(velocity_start_: Quantity, velocity_end_: Quantity, time_: Quantity) -> Quantity:
-    velocity_function_ = implemented_function('velocity_function', lambda x: x * (velocity_end_ - velocity_start_) / time_)
-    velocity_function_lambda = lambdify(time, velocity_function_(time))
-    # solve differential equation with custom function
-    dsolved = dsolve(definition.subs(velocity_function(time), velocity_function_lambda(time)), acceleration(time))
+    velocity_function_ = time * (velocity_end_ - velocity_start_) / time_
+    applied_definition = definition.subs(velocity_function(time), velocity_function_)
     # calculate acceleration
-    solved = solve(dsolved, acceleration(time), dict=True)[0][acceleration(time)]
-    result_expr = solved.subs(time, time_)
+    result_expr = solve(applied_definition, acceleration(time), dict=True)[0][acceleration(time)]
     return expr_to_quantity(result_expr, 'acceleration')
