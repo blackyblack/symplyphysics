@@ -7,10 +7,10 @@ from symplyphysics import (
 ## Where:
 ## η - neutron reproduction factor.
 ##   See [neutron reproduction factor](./reproduction_factor_from_macroscopic_fission_cross_section.py) implementation.
-## ε (fast fission factor) is the ratio of the fast neutrons produced by fissions at all energies
-##   to the number of fast neutrons produced in thermal fission
-## p (resonance escape probability) is the ratio of the number of neutrons that reach thermal energies
-##   to the number of fast neutrons that start to slow down
+## ε - fast fission factor.
+##   See [fast fission factor](./fast_fission_factor_from_resonance_escape_probability.py) implementation.
+## p - resonance escape probability.
+##   See [resonance escape probability](./resonance_escape_probability_from_resonance_absorption_integral.py) implementation.
 ## f - thermal utilisation factor.
 ##   See [thermal utilisation factor](./thermal_utilisation_factor_from_macroscopic_absorption_cross_sections.py) implementation.
 ## k_infinite (infinite multiplication factor) is the ratio of the neutrons produced by fission in one neutron

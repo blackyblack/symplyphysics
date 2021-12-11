@@ -27,18 +27,18 @@ def test_basic_reproduction_factor(test_args):
     assert result == approx(1.96, 0.01)
 
 def test_bad_macroscopic_cross_section(test_args):
-    Sfb = units.Quantity('Sfb')
-    SI.set_quantity_dimension(Sfb, units.length)
-    SI.set_quantity_scale_factor(Sfb, 3 * units.meter)
+    Sb = units.Quantity('Sb')
+    SI.set_quantity_dimension(Sb, units.length)
+    SI.set_quantity_scale_factor(Sb, 3 * units.meter)
 
     with raises(errors.UnitsError):
-        reproduction_factor.calculate_reproduction_factor(test_args.v, Sfb, test_args.Sa)
+        reproduction_factor.calculate_reproduction_factor(test_args.v, Sb, test_args.Sa)
 
     with raises(TypeError):
         reproduction_factor.calculate_reproduction_factor(test_args.v, 100, test_args.Sa)
 
     with raises(errors.UnitsError):
-        reproduction_factor.calculate_reproduction_factor(test_args.v, test_args.Sf, Sfb)
+        reproduction_factor.calculate_reproduction_factor(test_args.v, test_args.Sf, Sb)
 
     with raises(TypeError):
         reproduction_factor.calculate_reproduction_factor(test_args.v, test_args.Sf, 100)

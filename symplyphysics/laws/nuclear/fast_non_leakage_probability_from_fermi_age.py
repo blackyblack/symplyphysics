@@ -10,8 +10,9 @@ from symplyphysics import (
 
 ## Law: Pfnl ≈ e^(-Bg^2 * τth)
 ## Where:
+## e - exponent.
 ## Bg^2 - geometric buckling.
-##   See [geometric buckling](./buckling/geometric_buckling_from_neutron_flux.py)
+##   See [geometric buckling](./buckling/geometric_buckling_from_neutron_flux.py) implementation.
 ## τth - neutron Fermi age.
 ##   The Fermi age is related to the distance traveled during moderation, just as the diffusion length is for
 ##   thermal neutrons. The Fermi age is the same quantity as the slowing-down length squared, Ls^2, but the
