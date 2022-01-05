@@ -15,8 +15,7 @@ from symplyphysics import (
 ##   See [geometric buckling](./buckling/geometric_buckling_from_neutron_flux.py) implementation.
 ## τth - neutron Fermi age.
 ##   The Fermi age is related to the distance traveled during moderation, just as the diffusion length is for
-##   thermal neutrons. The Fermi age is the same quantity as the slowing-down length squared, Ls^2, but the
-##   slowing-down length is the square root of the Fermi age, τth = Ls^2. 
+##   thermal neutrons. The Fermi age is the same quantity as the slowing-down length squared (Ls^2). 
 ## Pfnl - fast non-leakage probability.
 
 geometric_buckling = symbols('geometric_buckling')
