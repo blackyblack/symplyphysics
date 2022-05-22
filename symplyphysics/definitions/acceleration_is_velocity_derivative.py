@@ -9,6 +9,7 @@ from symplyphysics import (
 time = symbols('time')
 acceleration, velocity_function = symbols('acceleration velocity', cls = Function)
 definition = Eq(acceleration(time), Derivative(velocity_function(time), time))
+
 definition_dimension_SI = units.meter / units.second**2
 
 def print():

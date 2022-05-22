@@ -25,6 +25,10 @@ def test_basic_force():
 
     # force action and force reaction should compensate each other
     assert (result + Faction) == 0
+    # vector components should compensate each other
+    assert result.coeff(cartesian_coordinates.x) == -1 * Faction.coeff(cartesian_coordinates.x)
+    assert result.coeff(cartesian_coordinates.y) == -1 * Faction.coeff(cartesian_coordinates.y)
+    assert result.coeff(cartesian_coordinates.z) == -1 * Faction.coeff(cartesian_coordinates.z)
 
 def test_basic_force_quantity(test_args):
     result = newton_third_law.calculate_force_reaction(test_args.F)
