@@ -5,6 +5,7 @@ Physics laws implemented as code. Based on [SymPy](https://github.com/sympy/symp
 # Sample generated plots
 
 ![Carnot Cycle](./img/carnot_cycle.png)
+![Floating Body](./img/floating_body.png)
 
 # How to install
 
