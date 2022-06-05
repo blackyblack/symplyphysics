@@ -35,7 +35,7 @@ def test_basic_force_quantity(test_args):
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
 
     result_force = convert_to(result, units.newton).subs(units.newton, 1).evalf(2)
-    assert result_force == approx(-2.0, 0.01)
+    assert result_force == approx(2.0, 0.01)
 
 def test_bad_force():
     Fb = units.Quantity('Fb')
