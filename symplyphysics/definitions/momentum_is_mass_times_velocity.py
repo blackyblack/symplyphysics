@@ -26,9 +26,23 @@ def print_dimension():
 @validate_input(mass_=units.mass)
 @validate_output(units.kilogram * units.meter / units.second)
 
-def calculate_momuntum(mass_: Quantity, velocity_: Quantity) -> Quantity:
+def calculate_momentum(mass_: Quantity, velocity_: Quantity) -> Quantity:
     solved = solve(definition, momentum, dict=True)[0][momentum]
     result_expr = solved.subs({
         mass: mass_,
         velocity: velocity_})
     return expr_to_quantity(result_expr, 'momentum')
+
+def calculate_mass(momentum_: Quantity, velocity_: Quantity) -> Quantity:
+    solved = solve(definition, mass, dict=True)[0][mass]
+    result_expr = solved.subs({
+        momentum: momentum_,
+        velocity: velocity_})
+    return expr_to_quantity(result_expr, 'mass')
+
+def calculate_velocity(momentum_: Quantity, mass_: Quantity) -> Quantity:
+    solved = solve(definition, velocity, dict=True)[0][velocity]
+    result_expr = solved.subs({
+        momentum: momentum_,
+        mass: mass_})
+    return expr_to_quantity(result_expr, 'velocity')    
