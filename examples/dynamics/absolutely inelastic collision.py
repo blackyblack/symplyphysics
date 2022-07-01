@@ -30,7 +30,7 @@ SI.set_quantity_scale_factor(v1, 700 * units.meter / units.second)
 SI.set_quantity_scale_factor(v2, 0 * units.meter / units.second)
 
 print("Formula is:\n{}".format(momentum_law.print()))
-momentum_of_system = momentum_law.calculate_momentum(m1, v1, m2, v2)
+momentum_of_system = momentum_law.calculate_momentum_after(m1, v1, m2, v2)
 result = momentum_law.calculate_velocity(momentum_of_system, m)
 
 print("Velocity = {} {}; for two inelasticly collided objects with masses = {} {}, velocities = {} {}"

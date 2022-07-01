@@ -17,3 +17,7 @@ def print():
 @validate_input(momentum_before = units.kilogram * units.meter / units.second, momentum_after = units.kilogram * units.meter / units.second)
 @validate_output(units.momentum)
 
+def calculate_momentum_after(momentum_before_: Quantity) -> Quantity:
+    solved = solve(law, momentum_before, dict=True)[0][momentum_after]
+    result_expr = solved.subs()
+    return expr_to_quantity(result_expr, 'momentum after')
