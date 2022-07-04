@@ -1,8 +1,8 @@
-#inelastic collision transforms two objects with masses m1, m2 and velocities v1 and v2 to one object with mass m = m1+m2 and unknown velocity to be resolved
+#!/usr/bin/env python3
+
+# Inelastic collision transforms two objects with masses m1, m2 and velocities v1 and v2 to one object with mass m = m1+m2 and unknown velocity to be resolved
 #assert 1-dimentional env
 
-
-#!/usr/bin/env python3
 from symplyphysics import (
     units, convert_to, SI
 )
@@ -14,6 +14,8 @@ v1 = units.Quantity('v1')
 m2 = units.Quantity('m2')
 v2 = units.Quantity('v2')
 m = units.Quantity('m3')
+
+#The bullet with mass of 10gram and velocity of 700m/s hith the steady 75kg piece of plasticine, stucks in it and makes this plasticine move with some unknown velocity.
 
 SI.set_quantity_dimension(m1, units.mass)
 SI.set_quantity_dimension(m2, units.mass)
@@ -41,6 +43,5 @@ print("Velocity = {} {}; for two inelasticly collided objects with masses = {} {
         units.kilogram,
         convert_to(m2, units.kilogram).subs(units.kilogram, 1).evalf(2),
         units.kilogram,
-
         convert_to(v1, units.meter / units.second).subs({units.meter: 1, units.second: 1}).evalf(2),
         units.meter / units.second))

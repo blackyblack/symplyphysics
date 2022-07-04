@@ -5,11 +5,11 @@ from symplyphysics import (
 
 # Description
 ## Momentum is the multiplication of velocity and mass
-
-## Definition: M = m * V
+## Definition: P = m * V
 ## Where:
 ## m is a mass of the object
 ## V is it's velocity
+## P is momentum
 
 momentum, mass, velocity = symbols('momentum mass velocity')
 definition = Eq(momentum, mass * velocity)
@@ -25,7 +25,6 @@ def print_dimension():
 @validate_input(velocity_=units.velocity)
 @validate_input(mass_=units.mass)
 @validate_output(units.kilogram * units.meter / units.second)
-
 def calculate_momentum(mass_: Quantity, velocity_: Quantity) -> Quantity:
     solved = solve(definition, momentum, dict=True)[0][momentum]
     result_expr = solved.subs({
@@ -45,4 +44,4 @@ def calculate_velocity(momentum_: Quantity, mass_: Quantity) -> Quantity:
     result_expr = solved.subs({
         momentum: momentum_,
         mass: mass_})
-    return expr_to_quantity(result_expr, 'velocity')    
+    return expr_to_quantity(result_expr, 'velocity')
