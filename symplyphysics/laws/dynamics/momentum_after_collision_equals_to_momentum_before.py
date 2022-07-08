@@ -2,6 +2,7 @@ from symplyphysics import (
     symbols, Eq, pretty, solve, Quantity, units,
     validate_input, validate_output, expr_to_quantity
 )
+from symplyphysics.definitions import momentum_is_mass_times_velocity as momentum_def
 
 # Description
 ##P_after = P_before
@@ -15,9 +16,9 @@ law = Eq(momentum_after, momentum_before)
 def print():
     return pretty(law, use_unicode=False)
 
-@validate_input(momentum_before = units.kilogram * units.meter / units.second, momentum_after = units.kilogram * units.meter / units.second)
+@validate_input(momentum_before = units.momentum)
 @validate_output(units.momentum)
 def calculate_momentum_after(momentum_before_: Quantity) -> Quantity:
-    solved = solve(law, momentum_before, dict=True)[0][momentum_after]
-    result_expr = solved.subs()
+    solved = solve(law, momentum_before, dict=True)[0][momentum_before]
+    result_expr = solved.subs(units.momentum, 1)
     return expr_to_quantity(result_expr, 'momentum after')
