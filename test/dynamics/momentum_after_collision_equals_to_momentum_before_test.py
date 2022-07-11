@@ -20,6 +20,17 @@ def test_basic_conservation(test_args):
     result = momentum_law.calculate_momentum_after(test_args.P_before)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.momentum)
 
-    result_ = convert_to(result, units.kilogram * units.meter / units.second).subs(units.momentum, 1).evalf(2)
+    result_ = convert_to(result, units.kilogram * units.meter / units.second).subs({units.kilogram: 1, units.meter: 1, units.second: 1}).evalf(2)
     assert result_ == approx(5.0, 0.01)
 
+
+def test_bad_momentum(test_args):
+    Pb = units.Quantity('Pb')
+    SI.set_quantity_dimension(Pb, units.length)
+    SI.set_quantity_scale_factor(Pb, 1 * units.meter)
+
+    with raises(errors.UnitsError):
+        momentum_law.calculate_momentum_after(Pb)
+
+    with raises(TypeError):
+        momentum_law.calculate_momentum_after(100)
