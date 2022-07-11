@@ -22,8 +22,7 @@ def print():
 def print_dimension():
     return pretty(definition_dimension_SI, use_unicode=False)
 
-@validate_input(velocity_=units.velocity)
-@validate_input(mass_=units.mass)
+@validate_input(velocity_=units.velocity, mass_=units.mass)
 @validate_output(units.momentum)
 def calculate_momentum(mass_: Quantity, velocity_: Quantity) -> Quantity:
     solved = solve(definition, momentum, dict=True)[0][momentum]
@@ -32,8 +31,7 @@ def calculate_momentum(mass_: Quantity, velocity_: Quantity) -> Quantity:
         velocity: velocity_})
     return expr_to_quantity(result_expr, 'momentum')
 
-@validate_input(velocity_ =units.velocity)
-@validate_input(momentum_ =units.momentum)
+@validate_input(velocity_ =units.velocity, momentum_ =units.momentum)
 @validate_output(units.mass)
 def calculate_mass(momentum_: Quantity, velocity_: Quantity) -> Quantity:
     solved = solve(definition, mass, dict=True)[0][mass]
@@ -42,8 +40,7 @@ def calculate_mass(momentum_: Quantity, velocity_: Quantity) -> Quantity:
         velocity: velocity_})
     return expr_to_quantity(result_expr, 'mass')
 
-@validate_input(momentum_ = units.momentum)
-@validate_input(mass_ = units.mass)
+@validate_input(momentum_ = units.momentum, mass_ = units.mass)
 @validate_output(units.velocity)
 def calculate_velocity(momentum_: Quantity, mass_: Quantity) -> Quantity:
     solved = solve(definition, velocity, dict=True)[0][velocity]

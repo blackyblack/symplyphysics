@@ -41,7 +41,7 @@ def test_bad_mass(test_args):
 def test_bad_velocity(test_args):
     vb = units.Quantity('vb')
     SI.set_quantity_dimension(vb, units.length)
-    SI.set_quantity_scale_factor(vb, 3 * units.meter)
+    SI.set_quantity_scale_factor(vb, 1 * units.meter)
 
     with raises(errors.UnitsError):
         momentum_def.calculate_momentum(test_args.m, vb)
