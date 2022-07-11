@@ -4,7 +4,7 @@ from symplyphysics import (
 )
 
 # Description
-## Any object, totally or partially immersed in a fluid or liquid, is buoyed up by a force equal to the
+## Any object, totally or partially immersed in a fluid or liquid (or gas), is buoyed up by a force equal to the
 ## weight of the fluid displaced by the object. Also known as Archimedes principle. Buoyant force
 ## vector goes against gravity vector.
 
