@@ -18,7 +18,7 @@ def test_args():
     SI.set_quantity_dimension(t, units.time)
     SI.set_quantity_scale_factor(t, 5 * units.second)
 
-    Args = namedtuple('Args', ['v0', 'v1', 't'])
+    Args = namedtuple('Args', ['Q0', 'Q1', 't'])
     return Args(Q0=Q0, Q1=Q1, t=t)
 
 
@@ -66,8 +66,8 @@ def test_bad_time(test_args):
 
     with raises(errors.UnitsError):
         current_def.calculate_current(
-            test_args.v0, test_args.v1, tb)
+            test_args.Q0, test_args.Q1, tb)
 
     with raises(TypeError):
         current_def.calculate_current(
-            test_args.v0, test_args.v1, 100)
+            test_args.Q0, test_args.Q1, 100)
