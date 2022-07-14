@@ -22,8 +22,7 @@ def print_dimension():
 @validate_input(charge_start_=units.charge, charge_end_=units.charge, time_=units.time)
 @validate_output(units.current)
 def calculate_current(charge_start_: Quantity, charge_end_: Quantity, time_: Quantity) -> Quantity:
-    transferred_charge_ = charge_end_ - charge_start_
-    charge_function_ = time * transferred_charge_ / time_
+    charge_function_ = time * (charge_end_ - charge_start_) / time_
     applied_definition = definition.subs(charge_function(time), charge_function_)
     
     result_expr = solve(applied_definition, current(time), dict=True)[0][current(time)]
