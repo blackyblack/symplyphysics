@@ -24,5 +24,6 @@ def calculate_linear_acceleration(velocity_start_: Quantity, velocity_end_: Quan
     velocity_function_ = time * (velocity_end_ - velocity_start_) / time_
     applied_definition = definition.subs(velocity_function(time), velocity_function_)
     # calculate acceleration
-    result_expr = solve(applied_definition, acceleration(time), dict=True)[0][acceleration(time)]
+    dsolved = applied_definition.doit()
+    result_expr = dsolved.rhs
     return expr_to_quantity(result_expr, 'acceleration')

@@ -24,6 +24,6 @@ def print_dimension():
 def calculate_current(charge_start_: Quantity, charge_end_: Quantity, time_: Quantity) -> Quantity:
     charge_function_ = time * (charge_end_ - charge_start_) / time_
     applied_definition = definition.subs(charge_function(time), charge_function_)
-    
-    result_expr = solve(applied_definition, current(time), dict=True)[0][current(time)]
+    dsolved = applied_definition.doit()
+    result_expr = dsolved.rhs
     return expr_to_quantity(result_expr, 'current')
