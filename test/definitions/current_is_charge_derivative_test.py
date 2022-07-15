@@ -41,14 +41,10 @@ def test_bad_charge(test_args):
         current_def.calculate_current(
             Q0b, test_args.Q1, test_args.t)
 
-    # Make Q1 invalid
-    Q1b = units.Quantity('Q1b')
-    SI.set_quantity_dimension(Q1b, units.length)
-    SI.set_quantity_scale_factor(Q1b, 1 * units.meter)
-
+    # Let Q1 be invalid    
     with raises(errors.UnitsError):
         current_def.calculate_current(
-            test_args.Q0, Q1b, test_args.t)
+            test_args.Q0, Q0b, test_args.t)
 
     with raises(TypeError):
         current_def.calculate_current(

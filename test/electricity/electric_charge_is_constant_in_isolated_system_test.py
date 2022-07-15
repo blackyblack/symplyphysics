@@ -22,7 +22,7 @@ def test_basic_charge_conservation(test_args):
     result_charge = convert_to(result, units.coulomb).subs(units.coulomb, 1).evalf(2)
     assert result_charge == approx(1.0, 0.001)
 
-def test_bad_mass(test_args):
+def test_bad_charge(test_args):
     Qb = units.Quantity('Qb')
     SI.set_quantity_dimension(Qb, units.length)
     SI.set_quantity_scale_factor(Qb, 1 * units.meter)
