@@ -1,11 +1,8 @@
-from collections import namedtuple
-from re import I, X
+from sympy import Idx, IndexedBase, Sum
 from symplyphysics import (
     symbols, Eq, pretty, solve, Quantity, units,
     validate_input, validate_output, expr_to_quantity
 )
-from symplyphysics.laws.electricity import electric_charge_is_constant_in_isolated_system as charge_conservation_law
-from sympy import Sum, Function
 
 # Description
 ## sum(I) = 0
@@ -15,28 +12,19 @@ from sympy import Sum, Function
 ## This property of electrical node is called Kirchhoff law #1.
 ## Assert there are minimum 2 currents flowing through any node
 
-I0, I1, I2, I3, I4, I5 = symbols('I0, I1, I2, I3, I4, I5')
-i = symbols('i', integer = True)
-I = Function('I')
-def I(x):
-    if x == '0':
-        return I0
-    if x == '1':
-        return I1
-    if x == '2':
-        return I2
-    if x == '3':
-        return I3
-    if x == '4':
-        return I4
-    if x == '5':
-        return I5                    
+current = IndexedBase('current')
+currents_total = symbols('currents_total')
+i = symbols('i', cls=Idx)
 
-law = Eq(0, Sum(I(i), (i, 0, 5)).doit())
+law = Eq(Sum(current[i], (i, 1, currents_total)), 0)
 
 def print():
     return pretty(law, use_unicode=False)
 
-# @validate_input(I_known_0 = units.current)
-# @validate_output(units.current)
-# def calculate_current(unknown_current_: Quantity) -> Quantity:
+@validate_input(current_in = units.current)
+@validate_output(units.current)
+def calculate_current(current_in: Quantity) -> Quantity:
+    two_currents_law = law.subs(currents_total, 2).doit()
+    solved = solve(two_currents_law, current[2], dict=True)[0][current[2]]
+    result_expr = solved.subs(current[1], current_in)
+    return expr_to_quantity(result_expr, 'current_out')
