@@ -23,8 +23,9 @@ def print():
 
 @validate_input(current_in = units.current)
 @validate_output(units.current)
-def calculate_current(current_in: Quantity) -> Quantity:
+def calculate_current_1(current_in: Quantity) -> Quantity:
     two_currents_law = law.subs(currents_total, 2).doit()
-    solved = solve(two_currents_law, current[2], dict=True)[0][current[2]]
-    result_expr = solved.subs(current[1], current_in)
+    solved = solve(two_currents_law, current[1], dict=True)[0][current[2]]
+    result_expr = solved.subs(current[2], current_in)
     return expr_to_quantity(result_expr, 'current_out')
+
