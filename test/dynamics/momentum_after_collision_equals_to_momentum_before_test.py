@@ -24,7 +24,7 @@ def test_basic_conservation(test_args):
     assert result_ == approx(5.0, 0.01)
 
 
-def test_bad_momentum(test_args):
+def test_bad_momentum():
     Pb = units.Quantity('Pb')
     SI.set_quantity_dimension(Pb, units.length)
     SI.set_quantity_scale_factor(Pb, 1 * units.meter)
