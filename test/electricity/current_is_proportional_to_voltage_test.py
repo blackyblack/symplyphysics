@@ -8,7 +8,7 @@ from pytest import approx, fixture, raises
 from symplyphysics import (
     units, convert_to, SI, errors
 )
-from symplyphysics.laws.electricity import current_through_element_is_proporional_to_voltage_und_reversly_proportional_to_resistance as ohms_law
+from symplyphysics.laws.electricity import current_is_proportional_to_voltage as ohms_law
 
 @fixture
 def test_args():
