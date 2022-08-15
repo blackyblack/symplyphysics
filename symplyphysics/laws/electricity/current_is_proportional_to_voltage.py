@@ -4,8 +4,11 @@ from symplyphysics import (
 )
 
 # Description
-## Ohm's law - I = U / R
 ## Current flowing through the resistor is proportional to applied voltage and reversly proportional to impedance of that resistor
+## Ohm's law: I = U / R
+## Where I is the current flowing through element
+## U - is voltage drop on this element
+## R is impedance of this element
 
 current, voltage, resistance = symbols('current voltage resistance')
 law = Eq(current, voltage / resistance)

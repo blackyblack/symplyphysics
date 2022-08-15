@@ -1,3 +1,7 @@
+# Description
+## Assert we have 3 Volts applied to 2-Ohm resistor.
+## According to Ohm's Law we should have 3/2 = 1.5Amps current flowing through this resistor.
+
 from collections import namedtuple
 from pytest import approx, fixture, raises
 

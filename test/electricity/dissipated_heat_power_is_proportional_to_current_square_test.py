@@ -1,3 +1,7 @@
+# Description
+## Assert we are having 1Amp flowing through 2-Ohm resistor.
+## According to Joule-Lenz law we should have amount of heat dissipated on this resistor equals to 1^2 * 2 = 2 Watts.
+
 from collections import namedtuple
 from pytest import approx, fixture, raises
 
