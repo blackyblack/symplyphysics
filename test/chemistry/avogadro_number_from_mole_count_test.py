@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import approx, fixture, raises
 
 from symplyphysics import (
-    units, convert_to, SI, errors
+    units, SI, errors
 )
 from symplyphysics.laws.chemistry import avogadro_number_from_mole_count
 
