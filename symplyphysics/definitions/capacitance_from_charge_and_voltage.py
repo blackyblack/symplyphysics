@@ -43,7 +43,7 @@ def calculate_voltage(capacitance_: Quantity, charge_: Quantity) -> Quantity:
     return expr_to_quantity(result_expr, 'voltage')
 
 @validate_input(capacitance_=units.capacitance, voltage_=units.voltage)
-@validate_output(units.capacitance)
+@validate_output(units.charge)
 def calculate_charge(capacitance_: Quantity, voltage_: Quantity) -> Quantity:
     solved = solve(definition, charge, dict=True)[0][charge]
     result_expr = solved.subs({
