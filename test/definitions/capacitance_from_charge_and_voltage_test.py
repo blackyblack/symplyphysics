@@ -32,7 +32,7 @@ def test_basic_capacitance(test_args):
     assert result_cap == approx(2, 0.01)
 
 
-def test_bad_charge(test_args):
+def test_capacitance_from_bad_charge(test_args):
     Qb = units.Quantity('Qb')
     SI.set_quantity_dimension(Qb, units.length)
     SI.set_quantity_scale_factor(Qb, 1 * units.meter)
@@ -43,7 +43,7 @@ def test_bad_charge(test_args):
     with raises(TypeError):
         capacitance_def.calculate_capacitance(100, test_args.U)
 
-def test_bad_voltage(test_args):
+def test_capacitance_from_bad_voltage(test_args):
     Vb = units.Quantity('Vb')
     SI.set_quantity_dimension(Vb, units.length)
     SI.set_quantity_scale_factor(Vb, 1 * units.meter)
@@ -57,10 +57,10 @@ def test_bad_voltage(test_args):
 def test_basic_voltage(test_args):
     result = capacitance_def.calculate_voltage(test_args.C, test_args.Q)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.voltage)
-    result_vlt = convert_to(result, units.volt).subs(units.volt, 1).evalf(4)
-    assert result_vlt == approx(3, 0.01)
+    result_voltage = convert_to(result, units.volt).subs(units.volt, 1).evalf(4)
+    assert result_voltage == approx(3, 0.01)
 
-def test_bad_charge(test_args):
+def test_voltage_from_bad_charge(test_args):
     Qb = units.Quantity('Qb')
     SI.set_quantity_dimension(Qb, units.length)
     SI.set_quantity_scale_factor(Qb, 1 * units.meter)
@@ -71,7 +71,7 @@ def test_bad_charge(test_args):
     with raises(TypeError):
         capacitance_def.calculate_voltage(test_args.C, 100)
 
-def test_bad_cap(test_args):
+def test_voltage_from_bad_capacitance(test_args):
     Cb = units.Quantity('Cb')
     SI.set_quantity_dimension(Cb, units.length)
     SI.set_quantity_scale_factor(Cb, 1 * units.meter)
@@ -86,10 +86,10 @@ def test_bad_cap(test_args):
 def test_basic_charge(test_args):
     result = capacitance_def.calculate_charge(test_args.C, test_args.U)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.charge)
-    result_chrg = convert_to(result, units.coulomb).subs(units.coulomb, 1).evalf(4)
-    assert result_chrg == approx(6, 0.01)
+    result_charge = convert_to(result, units.coulomb).subs(units.coulomb, 1).evalf(4)
+    assert result_charge == approx(6, 0.01)
 
-def test_bad_vlt(test_args):
+def test_charge_from_bad_voltage(test_args):
     Ub = units.Quantity('Ub')
     SI.set_quantity_dimension(Ub, units.length)
     SI.set_quantity_scale_factor(Ub, 1 * units.meter)
@@ -100,7 +100,7 @@ def test_bad_vlt(test_args):
     with raises(TypeError):
         capacitance_def.calculate_charge(test_args.C, 100)
 
-def test_bad_cap(test_args):
+def test_charge_from_bad_capacitance(test_args):
     Cb = units.Quantity('Cb')
     SI.set_quantity_dimension(Cb, units.length)
     SI.set_quantity_scale_factor(Cb, 1 * units.meter)
