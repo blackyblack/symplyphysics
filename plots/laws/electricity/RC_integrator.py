@@ -15,6 +15,7 @@ from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics.definitions import current_is_charge_derivative as charge_definition
 from symplyphysics.definitions import capacitance_from_charge_and_voltage as capacitance_definition
 from symplyphysics.laws.electricity import current_is_proportional_to_voltage as ohms_law
+from symplyphysics.laws.electricity import sums_of_all_voltages_in_loop_is_zero as kirchhof_law_2
 
 time = symbols('time')
 voltage_initial, resistance = symbols('voltage_initial resistance')
@@ -44,13 +45,12 @@ example_impedance = 48000
 
 tau = example_capacitance * example_impedance
 
-
-
 capacitor_voltage = capacitance_definition.calculate_voltage()
 
 tau_lim1 = symbols('tau_lim1')
 tau_lim3 = symbols('tau_lim3')
 
+# U(t) shoud be U0(1 - e**(-t/RC))
 p1 = plot(
     capacitor_voltage(time),
     (time, 0, 10),
