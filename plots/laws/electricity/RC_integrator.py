@@ -10,8 +10,7 @@
 ## and externally bypassed to ground with 0.1uF capacitor. MCU starts after Reset pin reaches 2.5V.
 ## We'll try to estimate this period of time with lelp of diagrams.
 
-from cmath import exp
-from sympy import solve, dsolve, symbols, Function, Eq
+from sympy import solve, dsolve, symbols, Function, Eq, exp
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics.definitions import current_is_charge_derivative as charge_definition
@@ -56,8 +55,8 @@ tau_lim3 = symbols('tau_lim3')
 # capacitor_voltage = initial_voltage * (1 - exp(-time/(example_capacitance * example_impedance)))
 
 voltage_function = symbols('voltage_function', cls = Function)
-definition = Eq(voltage_function, initial_voltage * (1 - exp(-time/(example_capacitance * example_impedance))))
-plot_func = solve(definition, voltage_function, dict=True)[0][voltage_function]
+definition = Eq(voltage_function(time), initial_voltage * (1 - exp(-time/(example_capacitance * example_impedance))))
+plot_func = solve(definition, voltage_function(time), dict=True)[0][voltage_function(time)]
 
 UC = plot(
     plot_func,
