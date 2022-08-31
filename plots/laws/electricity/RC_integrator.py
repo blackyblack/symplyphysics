@@ -54,9 +54,7 @@ tau_lim3 = symbols('tau_lim3')
 # U(t) shoud be U0(1 - e**(-t/RC))
 # capacitor_voltage = initial_voltage * (1 - exp(-time/(example_capacitance * example_impedance)))
 
-voltage_function = symbols('voltage_function', cls = Function)
-definition = Eq(voltage_function(time), initial_voltage * (1 - exp(-time/(example_capacitance * example_impedance))))
-plot_func = solve(definition, voltage_function(time), dict=True)[0][voltage_function(time)]
+plot_func = initial_voltage * (1 - exp(-time/(example_capacitance * example_impedance)))
 
 UC = plot(
     plot_func,
