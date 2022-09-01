@@ -6,9 +6,6 @@
 ## Capacitor voltage will never reach initial voltage.
 ## Voltage on the capacitor reaches 63% of initial voltage after 1*Tau seconds, and reaches 95% after 3*Tau seconds
 ## independently of initial voltage.
-## For example, MCU is power-supplied with 3.3V. It's Reset pin is pulled up to power rail with internal resistor of 48kOhm
-## and externally bypassed to ground with 0.1uF capacitor. MCU starts after Reset pin reaches 2.5V.
-## We'll try to estimate this period of time with lelp of diagrams.
 
 from sympy import solve, dsolve, symbols, Function, Eq, exp
 from sympy.plotting import plot
@@ -42,46 +39,81 @@ charge_on_capacitor_function = solve(charge_on_capacitor_eq, charge_definition.c
 
 initial_voltage = 3.3
 example_capacitance = 0.0001
-example_impedance = 48000
+example_impedance = 3000
 
 tau = example_capacitance * example_impedance
 
 # capacitor_voltage = capacitance_definition.calculate_voltage()
 
-tau_lim1 = symbols('tau_lim1')
-tau_lim3 = symbols('tau_lim3')
-
 # U(t) shoud be U0(1 - e**(-t/RC))
 # capacitor_voltage = initial_voltage * (1 - exp(-time/(example_capacitance * example_impedance)))
 
-plot_func = initial_voltage * (1 - exp(-time/(example_capacitance * example_impedance)))
+UC_func = initial_voltage * (1 - exp(-time/(example_capacitance * example_impedance)))
+IC_func   = (initial_voltage / example_impedance) * exp(-time/(example_capacitance * example_impedance)) * 2500 #2500 is to scale curve of current to voltage plot
 
 UC = plot(
-    plot_func,
-    (time, 0, 10 * tau),
-    line_color='blue',
+    UC_func,
+    (time, 0, 8 * tau),
+    line_color='blue',    
     title='Capacitor voltage',    
-    legend=True,
+    label = 'Capacitor voltage',    
+    legend=True,    
+    annotations = {},
+    backend=MatplotlibBackend,    
+    show=False)        
+
+IC = plot(
+    IC_func,
+    (time, 0, 8 * tau),
+    line_color='orange',    
+    label='Capacitor current',    
+    legend=True,    
     backend=MatplotlibBackend,
     show=False)
-
+UC.append(IC[0])    
 
 voltage063 = plot(
     0.63 * initial_voltage,
-    (time, 0, 8 * tau),
-    line_color='red',    
-    suptitle='0.63 of U0',    
+    (time, 0, tau),
+    line_color='yellow',        
+    label='U = 0.63 of U0',    
     backend=MatplotlibBackend,
     show=False)
 UC.append(voltage063[0])    
 
+tau_line = plot(
+    1000 * (time - tau) * 0.63 * initial_voltage,
+    (time, tau, tau + 0.001),
+    label = 'time = tau',
+    line_color='yellow',
+    show=False,
+    )
+UC.append(tau_line[0])
+
 voltage095 = plot(
     0.95 * initial_voltage,
-    (time, 0, 8 * tau),
-    line_color='red',    
-    suptitle='0.95 of U0',
+    (time, 0, 3 * tau),
+    line_color='green',     
+    label='U = 0.95 of U0',
     backend=MatplotlibBackend,
     show=False)
 UC.append(voltage095[0])
+tau3_line = plot(
+    1000 * (time - 3 * tau) * 0.95 * initial_voltage,
+    (time, 3 * tau, 3 * tau + 0.001),
+    label = 'time = 3 * tau',
+    line_color='green',
+    show=False,
+    )
+UC.append(tau3_line[0])
+
+voltageFull = plot(
+    initial_voltage,
+    (time, 0, 6 * tau),
+    line_color='red',      
+    label='U0',
+    backend=MatplotlibBackend,
+    show=False)
+UC.append(voltageFull[0])
 
 UC.show()
