@@ -37,19 +37,16 @@ C1 = symbols('C1')
 charge_on_capacitor_eq = dsolve(charge_diff_eq).subs(C1, 1)
 charge_on_capacitor_function = solve(charge_on_capacitor_eq, charge_definition.charge_function(time), dict=True)[0][charge_definition.charge_function(time)]
 
-initial_voltage = 3.3
-example_capacitance = 0.0001
-example_impedance = 3000
+initial_voltage = 1
+example_capacitance = 1
+example_impedance = 1
 
 tau = example_capacitance * example_impedance
 
 # capacitor_voltage = capacitance_definition.calculate_voltage()
 
-# U(t) shoud be U0(1 - e**(-t/RC))
-# capacitor_voltage = initial_voltage * (1 - exp(-time/(example_capacitance * example_impedance)))
-
 UC_func = initial_voltage * (1 - exp(-time/(example_capacitance * example_impedance)))
-IC_func   = (initial_voltage / example_impedance) * exp(-time/(example_capacitance * example_impedance)) * 2500 #2500 is to scale curve of current to voltage plot
+IC_func   = (initial_voltage - UC_func) / example_impedance
 
 UC = plot(
     UC_func,
@@ -109,7 +106,7 @@ UC.append(tau3_line[0])
 
 voltageFull = plot(
     initial_voltage,
-    (time, 0, 6 * tau),
+    (time, 0, 8 * tau),
     line_color='red',      
     label='U0',
     backend=MatplotlibBackend,
