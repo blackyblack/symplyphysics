@@ -51,7 +51,7 @@ example_impedance = 1
 tau = example_capacitance * example_impedance
 
 capacitor_voltage_function_example = initial_voltage * (1 - exp(-time/(example_capacitance * example_impedance)))
-capacitor_current_function_example   = (initial_voltage - capacitor_voltage_function_example) / example_impedance
+capacitor_current_function_example = (initial_voltage - capacitor_voltage_function_example) / example_impedance
 
 UC = plot(
     capacitor_voltage_function_example,
