@@ -8,8 +8,8 @@ from symplyphysics import (
 ## Where I is current through the conductor, Q is the electrical charge transferred
 
 time = symbols('time')
-current, charge_function = symbols('current charge', cls = Function)
-definition = Eq(current(time), Derivative(charge_function(time), time))
+current_function, charge_function = symbols('current charge', cls = Function)
+definition = Eq(current_function(time), Derivative(charge_function(time), time))
 
 definition_dimension_SI = units.ampere
 
