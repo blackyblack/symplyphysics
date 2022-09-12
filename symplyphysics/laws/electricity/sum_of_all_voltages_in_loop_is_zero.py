@@ -7,8 +7,9 @@ from symplyphysics import (
 )
 
 # Description
+## Loop is a closed sub-circuit in an alectrical circuit.
 ## sum(U) = 0
-## Where U is a voltage on th eelement of an electrical loop.
+## Where U is a voltage on the element of an electrical loop.
 ## In other words, sum of all voltage sources in the loop equals to sum of all voltage consumers in this loop.
 ## This property of electrical loop is called Kirchhoff law #2.
 ## This law also demonstrates that work to move the unit of charge in electrical field along the closed path is zero.
