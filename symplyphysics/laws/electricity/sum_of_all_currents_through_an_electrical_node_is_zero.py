@@ -10,7 +10,7 @@ from symplyphysics import (
 ## sum(I) = 0
 ## Where I is a current flowing through electrical node.
 ## In other words, as electrical charge is being neither created nor accumulated in electrical node,
-## sum of all input currents are equal to sum of output current. If we asset input current is positive and output is negative, we gain summary current as 0.
+## sum of all input currents are equal to sum of output current. If we assert input current is positive and output is negative, we gain summary current as 0.
 ## This property of electrical node is called Kirchhoff law #1.
 ## Assert there are minimum 2 currents flowing through any node
 
