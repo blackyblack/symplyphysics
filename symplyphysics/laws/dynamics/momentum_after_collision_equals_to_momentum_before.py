@@ -2,7 +2,6 @@ from symplyphysics import (
     symbols, Eq, pretty, solve, Quantity, units,
     validate_input, validate_output, expr_to_quantity
 )
-from symplyphysics.definitions import momentum_is_mass_times_velocity as momentum_def
 
 # Description
 ## P_after = P_before

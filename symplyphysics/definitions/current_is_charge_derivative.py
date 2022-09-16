@@ -1,5 +1,5 @@
 from symplyphysics import (
-    symbols, Function, Derivative, Eq, pretty, solve, Quantity, units,
+    symbols, Function, Derivative, Eq, pretty, Quantity, units,
     validate_input, validate_output, expr_to_quantity
 )
 

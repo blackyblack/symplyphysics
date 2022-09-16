@@ -4,7 +4,7 @@ from pytest import approx, fixture, raises
 from symplyphysics import (
     units, convert_to, SI, errors, S
 )
-from symplyphysics.laws.electricity import sum_of_all_voltages_in_loop_is_zero as kirchhoff_law_2
+from symplyphysics.laws.electricity.circuits import sum_of_all_voltages_in_loop_is_zero as kirchhoff_law_2
 
 @fixture
 def test_args():
