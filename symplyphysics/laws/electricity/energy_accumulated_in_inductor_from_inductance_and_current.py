@@ -4,7 +4,7 @@ from symplyphysics import (
 )
 
 # Description
-## inductor can accumlate energy in the magnetic field inside it.
+## Inductor can accumlate energy in the magnetic field inside it.
 ## Law: Q = L * I^2 / 2
 ## Q is accumulated energy
 ## L is inductance of inductor

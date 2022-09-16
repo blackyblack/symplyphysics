@@ -25,8 +25,8 @@ def test_args():
 def test_basic_energy(test_args):
     result = capacitor_law.calculate_accumulated_energy(test_args.Capacitance, test_args.Voltage)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_power = convert_to(result, units.joule).subs(units.joule, 1).evalf(2)
-    assert result_power == approx(0.011, 0.01)
+    result_power = convert_to(result, units.joule).subs(units.joule, 1).evalf(5)
+    assert result_power == approx(0.011, 0.00001)
 
 def test_bad_capacitance(test_args):
     Cb = units.Quantity('Cb')

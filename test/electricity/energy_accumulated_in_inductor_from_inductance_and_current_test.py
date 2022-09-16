@@ -1,5 +1,5 @@
 # Description
-## Assert we have 150mH  inductor with 0.5A current flowing through it.
+## Assert we have 150mH inductor with 0.5A current flowing through it.
 ## According to law we should have amount of energy accumulated in this inductor equals to 0.150 * 0.5**2 / 2 = 0.01875 Joules.
 
 from collections import namedtuple
@@ -25,8 +25,8 @@ def test_args():
 def test_basic_energy(test_args):
     result = inductor_law.calculate_accumulated_energy(test_args.Inductance, test_args.Current)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_power = convert_to(result, units.joule).subs(units.joule, 1).evalf(2)
-    assert result_power == approx(0.01875, 0.01)
+    result_power = convert_to(result, units.joule).subs(units.joule, 1).evalf(5)
+    assert result_power == approx(0.01875, 0.00001)
 
 def test_bad_Inductance(test_args):
     Lb = units.Quantity('Lb')
