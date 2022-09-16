@@ -7,7 +7,6 @@ from sympy.core.add import Add
 from sympy.core.function import (Derivative, Function)
 from sympy.core.mul import Mul
 from sympy.core.power import Pow
-from sympy.functions.elementary.exponential import ExpBase
 from sympy.physics.units.dimensions import Dimension
 
 def expr_to_quantity(expr: Expr, quantity_name: str) -> Quantity:    
@@ -46,13 +45,6 @@ def collect_factor_and_dimension(expr):
         if SI.get_dimension_system().is_dimensionless(exp_dim):
             exp_dim = 1
         return factor ** exp_factor, dim ** (exp_factor * exp_dim)
-    elif isinstance(expr, ExpBase):
-        base, expr_exp = expr.as_base_exp()
-        factor, dim = collect_factor_and_dimension(base)
-        exp_factor, exp_dim = collect_factor_and_dimension(expr_exp)
-        if SI.get_dimension_system().is_dimensionless(exp_dim):
-            exp_dim = 1
-        return factor ** exp_factor, dim ** (exp_factor * exp_dim)
     elif isinstance(expr, Add):
         factor, dim = collect_factor_and_dimension(expr.args[0])
         for addend in expr.args[1:]:
@@ -74,8 +66,8 @@ def collect_factor_and_dimension(expr):
         return factor, dim
     elif isinstance(expr, Function):
         fds = [collect_factor_and_dimension(arg) for arg in expr.args]
-        return (expr.func(*(f[0] for f in fds)),
-                *(d[1] for d in fds))
+        dims = [Dimension(1) if SI.get_dimension_system().is_dimensionless(d[1]) else d[1] for d in fds]
+        return (expr.func(*(f[0] for f in fds)), *dims)
     elif isinstance(expr, Dimension):
         return S.One, expr
     else:
