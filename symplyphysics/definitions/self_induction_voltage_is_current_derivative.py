@@ -12,7 +12,7 @@ from symplyphysics import (
 time = symbols('time')
 voltage_function, current_function = symbols('voltage current', cls = Function)
 inductance = symbols('inductance')
-definition = Eq(voltage_function(time), - inductance * Derivative(current_function(time), time))
+definition = Eq(voltage_function(time), -1 * inductance * Derivative(current_function(time), time))
 
 definition_dimension_SI = units.volt
 
@@ -25,8 +25,8 @@ def print_dimension():
 @validate_input(inductance_=units.inductance, current_start_=units.current, current_end_=units.current, time_=units.time)
 @validate_output(units.voltage)
 def calculate_voltage(inductance_: Quantity, current_start_: Quantity, current_end_: Quantity, time_: Quantity) -> Quantity:
-    voltage_function_ = - inductance_ * time * (current_end_ - current_start_) / time_
-    applied_definition = definition.subs(voltage_function(time), voltage_function_)
+    current_function_ = (current_end_ - current_start_) / time_
+    applied_definition = definition.subs(current_function(time), current_function_)
     dsolved = applied_definition.doit()
     result_expr = dsolved.rhs
     return expr_to_quantity(result_expr, 'voltage')

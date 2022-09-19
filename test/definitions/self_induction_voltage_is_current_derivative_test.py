@@ -8,7 +8,7 @@ from symplyphysics.definitions import self_induction_voltage_is_current_derivati
 
 # Description
 ## Current through 0.0025 henry inductor increases from 0 to 0.5A in 5 seconds. 
-## Self- induction voltage should be 0.00025 volts
+## Self- induction voltage should be -0.00025 volts
 
 @fixture
 def test_args():
@@ -40,7 +40,7 @@ def test_basic_voltage(test_args):
 
     result_current = convert_to(result, self_induction_def.definition_dimension_SI).subs({
         units.voltage: 1}).evalf(6)
-    assert result_current == approx(0.00025, 0.000001)
+    assert result_current == approx(-0.00025, 0.000001)
 
 '''
 def test_current_with_bad_charge(test_args):
