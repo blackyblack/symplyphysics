@@ -1,5 +1,5 @@
 from symplyphysics import (
-    symbols, Function, Derivative, Eq, pretty, solve, Quantity, units,
+    symbols, Function, Derivative, Eq, pretty, Quantity, units,
     validate_input, validate_output, expr_to_quantity
 )
 
@@ -10,9 +10,9 @@ from symplyphysics import (
 ## I(t) is the current through the inductor
 
 time = symbols('time')
-voltage_function, current_function = symbols('voltage current', cls = Function)
+self_induction_voltage_function, current_function = symbols('voltage current', cls = Function)
 inductance = symbols('inductance')
-definition = Eq(voltage_function(time), -1 * inductance * Derivative(current_function(time), time))
+definition = Eq(self_induction_voltage_function(time), -1 * inductance * Derivative(current_function(time), time))
 
 definition_dimension_SI = units.volt
 
@@ -25,8 +25,8 @@ def print_dimension():
 @validate_input(inductance_=units.inductance, current_start_=units.current, current_end_=units.current, time_=units.time)
 @validate_output(units.voltage)
 def calculate_voltage(inductance_: Quantity, current_start_: Quantity, current_end_: Quantity, time_: Quantity) -> Quantity:
-    current_function_ = (current_end_ - current_start_) / time_
-    applied_definition = definition.subs(current_function(time), current_function_)
+    current_function_ = time * (current_end_ - current_start_) / time_
+    applied_definition = definition.subs({current_function(time): current_function_, inductance: inductance_})
     dsolved = applied_definition.doit()
     result_expr = dsolved.rhs
-    return expr_to_quantity(result_expr, 'voltage')
+    return expr_to_quantity(result_expr, 'self_induction_voltage')

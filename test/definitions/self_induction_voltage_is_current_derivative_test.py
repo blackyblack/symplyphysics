@@ -39,7 +39,7 @@ def test_basic_voltage(test_args):
         result.dimension, units.voltage)
 
     result_current = convert_to(result, self_induction_def.definition_dimension_SI).subs({
-        units.voltage: 1}).evalf(6)
+        units.volt: 1}).evalf(6)
     assert result_current == approx(-0.00025, 0.000001)
 
 '''
