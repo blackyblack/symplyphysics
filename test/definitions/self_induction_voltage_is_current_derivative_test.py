@@ -42,40 +42,53 @@ def test_basic_voltage(test_args):
         units.volt: 1}).evalf(6)
     assert result_current == approx(-0.00025, 0.000001)
 
-'''
-def test_current_with_bad_charge(test_args):
-    Q0b = units.Quantity('Q0b')
-    SI.set_quantity_dimension(Q0b, units.length)
-    SI.set_quantity_scale_factor(Q0b, 1 * units.meter)
-    with raises(errors.UnitsError):
-        current_def.calculate_current(
-            Q0b, test_args.Q1, test_args.t)
+def test_voltage_with_bad_induction(test_args):
+    Lb = units.Quantity('Lb')
+    SI.set_quantity_dimension(Lb, units.length)
+    SI.set_quantity_scale_factor(Lb, 1 * units.meter)
 
-    # Let Q1 be invalid    
     with raises(errors.UnitsError):
-        current_def.calculate_current(
-            test_args.Q0, Q0b, test_args.t)
+        self_induction_def.calculate_voltage(
+            Lb, test_args.I0, test_args.I1, test_args.t)
 
     with raises(TypeError):
-        current_def.calculate_current(
-            100, test_args.Q1, test_args.t)
+        self_induction_def.calculate_voltage(
+            100, test_args.I0, test_args.I1, test_args.t)
+
+
+def test_voltage_with_bad_current(test_args):
+    I0b = units.Quantity('I0b')
+    SI.set_quantity_dimension(I0b, units.length)
+    SI.set_quantity_scale_factor(I0b, 1 * units.meter)
+
+    with raises(errors.UnitsError):
+        self_induction_def.calculate_voltage(
+            test_args.L, I0b, test_args.I1, test_args.t)
+     
+    with raises(errors.UnitsError):
+        self_induction_def.calculate_voltage(
+            test_args.L, test_args.I0, I0b, test_args.t)
 
     with raises(TypeError):
-        current_def.calculate_current(
-            test_args.Q0, 100, test_args.t)
+        self_induction_def.calculate_voltage(
+            test_args.L, 100, test_args.I1, test_args.t)
+
+    with raises(TypeError):
+        self_induction_def.calculate_voltage(
+            test_args.L, test_args.I0, 100, test_args.t)
 
 
-def test_current_with_bad_time(test_args):
+def test_voltage_with_bad_time(test_args):
     tb = units.Quantity('tb')
     SI.set_quantity_dimension(tb, units.length)
     SI.set_quantity_scale_factor(tb, 1 * units.meter)
 
     with raises(errors.UnitsError):
-        current_def.calculate_current(
-            test_args.Q0, test_args.Q1, tb)
+        self_induction_def.calculate_voltage(
+            test_args.L, test_args.I0, test_args.I1, tb)
 
     with raises(TypeError):
-        current_def.calculate_current(
-            test_args.Q0, test_args.Q1, 100)
+        self_induction_def.calculate_voltage(
+            test_args.L, test_args.I0, test_args.I1, 100)
 
-'''
+
