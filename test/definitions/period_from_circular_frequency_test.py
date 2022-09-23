@@ -1,5 +1,4 @@
 from collections import namedtuple
-from turtle import radians
 from pytest import approx, fixture, raises
 
 from symplyphysics import (
@@ -17,8 +16,7 @@ def test_args():
     return Args(w = w)
 
 def test_basic_period(test_args):
-    result = period_def.calculate_period(
-    test_args.w)
+    result = period_def.calculate_period(test_args.w)
     assert SI.get_dimension_system().equivalent_dims(
         result.dimension, units.time)
     result_period = convert_to(result, period_def.definition_dimension_SI).subs({
@@ -26,7 +24,7 @@ def test_basic_period(test_args):
     assert result_period == approx(1.0, 0.01)
 
 
-def test_bad_frequency(test_args):
+def test_bad_frequency():
     wb = units.Quantity('wb')
     SI.set_quantity_dimension(wb, units.length)
     SI.set_quantity_scale_factor(wb, 1 * units.meter)
@@ -36,4 +34,3 @@ def test_bad_frequency(test_args):
 
     with raises(TypeError):
         period_def.calculate_period(100)
-

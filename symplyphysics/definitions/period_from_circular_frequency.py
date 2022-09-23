@@ -24,10 +24,9 @@ def print():
 def print_dimension():
     return pretty(definition_dimension_SI, use_unicode=False)
 
-@validate_input(circular_frequency_ = units.radian / units.second)
+@validate_input(circular_frequency_ = units.frequency)
 @validate_output(units.time)
 def calculate_period(frequency_: Quantity) -> Quantity:
     solved = solve(definition, period, dict=True)[0][period]
-    result_expr = solved.subs({
-        circular_frequency: frequency_})
+    result_expr = solved.subs({circular_frequency: frequency_})
     return expr_to_quantity(result_expr, 'period')
