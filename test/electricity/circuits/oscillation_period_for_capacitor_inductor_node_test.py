@@ -8,7 +8,7 @@ from pytest import approx, fixture, raises
 from symplyphysics import (
     units, convert_to, SI, errors
 )
-from symplyphysics.laws.electricity.circuits import LC_oscillator as lc
+from symplyphysics.laws.electricity.circuits import oscillation_period_for_capacitor_inductor_node as lc
 
 @fixture
 def test_args():    
