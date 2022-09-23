@@ -10,7 +10,7 @@ from symplyphysics import (
 ## inductor's magnetic field and capacitor's electric field.
 ## The interchange process is harmonical oscillation with the oscillation period T.
 ## Tomson's formula defines this period.
-## T = 2* pi * sqrt(L * C), where
+## T = 2 * pi * sqrt(L * C), where
 ## T is the oscillation period
 ## L is the inductance of inductor
 ## C is the capacitance of capacitor
