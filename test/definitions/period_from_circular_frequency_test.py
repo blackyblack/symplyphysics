@@ -17,10 +17,8 @@ def test_args():
 
 def test_basic_period(test_args):
     result = period_def.calculate_period(test_args.w)
-    assert SI.get_dimension_system().equivalent_dims(
-        result.dimension, units.time)
-    result_period = convert_to(result, period_def.definition_dimension_SI).subs({
-        units.second: 1}).evalf(2)    
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.time)
+    result_period = convert_to(result, period_def.definition_dimension_SI).subs(units.second, 1).evalf(2)    
     assert result_period == approx(1.0, 0.01)
 
 
@@ -31,7 +29,6 @@ def test_bad_frequency():
 
     with raises(errors.UnitsError):
         period_def.calculate_period(wb)
-''' doesnt work
+
     with raises(TypeError):
         period_def.calculate_period(100)
-'''
