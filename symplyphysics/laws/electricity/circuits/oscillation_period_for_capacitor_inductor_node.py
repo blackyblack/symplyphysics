@@ -1,6 +1,6 @@
-from sympy import sqrt, pi, Derivative
+from sympy import sqrt, pi, cos, Derivative
 from symplyphysics import (
-    symbols, Eq, pretty, solve, Quantity, units, Function,
+    symbols, Eq, pretty, solve, simplify, Quantity, units, Function,
     validate_input, validate_output, expr_to_quantity
 )
 
@@ -9,6 +9,7 @@ from symplyphysics.laws.electricity.circuits import sum_of_all_voltages_in_loop_
 from symplyphysics.definitions import capacitance_from_charge_and_voltage as capacitance_definition
 from symplyphysics.definitions import self_induction_voltage_is_current_derivative as induction_voltage_definition
 from symplyphysics.definitions import current_is_charge_derivative as charge_definition
+from symplyphysics.definitions import period_from_circular_frequency as period_definition
 
 # Description
 ## LC-oscillator is the circuit of inductor and capacitor.
@@ -32,6 +33,10 @@ def print():
 
 ## Let's assume we initially have capacitor charged to U0 voltage. In the zero time we connect this capacitor to inductor in a closed loop.
 ## So voltage on capacitor is always equals to voltage on inductor and the current through capacitor equals to current through inductor.
+
+#NOTE: this proof is valid for capacitor and inductor in a closed loop without additional voltage source.
+#      There are 2 more options: serial connection with external voltage source and parallel connection with external voltage source.
+#      Additional proof can be added to show that oscillation period stays the same.
 
 ## 1. Prove that capacitor_current_function(time) = inductor_current_function(time)
 
@@ -76,7 +81,7 @@ capacitor_current_law = charge_definition.definition.subs({charge_definition.tim
 ## I_c'(t) = C * U_c"(t)
 capacitor_current_law_derivative = Eq(Derivative(capacitor_current_law.lhs, time), Derivative(capacitor_current_law.rhs, time))
 
-## 3. Prove that inductor voltage equals to -1 * capacitance * inductance * (second order derivative of voltage of capacitor)
+## 4. Prove that inductor voltage equals to -1 * capacitance * inductance * (second order derivative of voltage of capacitor)
 
 ## Inductor voltage is the self-inductance.
 inductor_voltage_law = induction_voltage_definition.definition.subs(
@@ -90,9 +95,28 @@ derived_law = [inductor_voltage_law, capacitor_current_law_derivative]
 capacitor_voltage_solved = solve(derived_law, (Derivative(charge_definition.current_function(time)), capacitor_voltage_function(time)), dict=True)[0][capacitor_voltage_function(time)]
 voltage_diff_eq = Eq(capacitor_voltage_function(time), capacitor_voltage_solved)
 
-## 4. Solve differential equation and find period of the harmonic oscillator
+## 5. Solve differential equation and find period of the harmonic oscillator
 
-## U(t) = U0 * cos(wt), where w = 1/sqrt(LC) and the period T is 2*pi/w = 2 * pi * sqrt(LC)
+## Expected solution for U"(t) = - 1/LC * U(t) is:
+## A * e^(i * w * t) + B * e^(-i * w * t), where w = 1 / sqrt(LC)
+## This form is known to be represented as cosine function:
+## A * cos(w * t + phi), or sine function:
+## A * sin(w * t + phi + pi / 2)
+
+## Let's check this solution:
+amplitude, phase = symbols('amplitude phase')
+frequency = 1 / sqrt(inductance * capacitance)
+voltage_diff_solution = amplitude * cos(frequency * time + phase)
+voltage_diff_solved = voltage_diff_eq.subs({capacitor_voltage_function(time): voltage_diff_solution})
+
+assert simplify(voltage_diff_solved.lhs - voltage_diff_solved.rhs) == 0
+
+# 6. Derive period from frequency
+period_law = period_definition.definition.subs(period_definition.circular_frequency, frequency)
+period_solved = solve(period_law, period_definition.period, dict=True)[0][period_definition.period]
+
+assert simplify(period_solved - law.rhs) == 0
+
 
 @validate_input(inductance_=units.inductance, capacitance_=units.capacitance)
 @validate_output(units.time)
