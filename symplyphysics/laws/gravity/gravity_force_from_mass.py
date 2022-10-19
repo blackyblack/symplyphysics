@@ -16,7 +16,7 @@ from sympy.physics.units import gravitational_constant as G
 ## So gravity field strength in any point is gravity acceleration in this point.
 
 gravity_force, generator_mass, object_mass, r_distance  = symbols('gravity_force generator_mass object_mass distance')
-law = Eq(gravity_force, G * generator_mass * object_mass / r_distance^2)
+law = Eq(gravity_force, G * generator_mass * object_mass / (r_distance * r_distance))
 
 def print():
     return pretty(law, use_unicode=False)
