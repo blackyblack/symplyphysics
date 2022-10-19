@@ -28,7 +28,6 @@ gravity_force = gravity_law.calculate_force(M, m, R)
 
 # According to Newton's law 2 acceleration a = F / m.
 
-result = gravity_force / m
+result = convert_to(gravity_force / m, units.meter / (units.second * units.second)).subs(units.meter / (units.second * units.second), 1).evalf(4)
 
-print("Gravity acceleration on Earth is {}"
-   .format(convert_to(result, units.acceleration).subs(units.acceleration, 1).evalf(3), units.acceleration))
+print(f"Gravity acceleration on Earth is {result}")
