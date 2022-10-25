@@ -29,16 +29,16 @@ g = 9.806
 ## Flight ends when h == 0
 
 end_of_flight = Eq(0, V_vertical * time - g * time**2 /2)
-flight_time = solve(end_of_flight, time, dict=True)[0][time]
-
-print(flight_time) #should be 2 solvations, we need one which is not zero
-##kostil
-flight_time = 2 * V_vertical / g
+flight_time = solve(end_of_flight, time, dict=True)[1][time] 
+# there are 2 points of the trajectory with h = 0, the first one is the start point, and the second one is at destination
+# We need the second one
 
 Length = symbols('Length', cls = Function)
 Length = (V_horizontal * flight_time).subs({V0: 1})
 
-print(Length)
+# Let's find needed angle analytically.
+# Maximum of Length function is where it's derivation becomes zero.
+
 
 Len = plot(
     Length,
