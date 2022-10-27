@@ -2,10 +2,6 @@
 
 # Description
 ## You throw the grenade to enemies. Which angle of throwing should you choose to hit the farest enemy?
-## Flying velocity V0 vector is the sum of two orthogonal - vertical and horizontal speed vectors V_vert and V_hor.
-## If alfa is throwing angle, V_vert = V0 * sin(alpha) and V_hor = V0 * cos(alpha)
-## Vertical speed is accelerated by the gravitational acceleration.
-## Horizontal speed is constant.
 
 from math import pi
 from sympy import sin, cos
@@ -14,31 +10,28 @@ from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import symbols, Eq, pretty, solve, Function
 
 flight_time = symbols('flight_time')
-V0 = symbols('V0')
+throwing_velocity = symbols('throwing')
 alpha = symbols('alpha')
 Distance = symbols('Distance')
-V_vertical = symbols('v_vertical')
-V_horizontal = symbols('v_horizontal')
-V_vertical = V0 * sin(alpha)
-V_horizontal = V0 * cos(alpha)
+velocity_vertical = symbols('v_vertical')
+velocity_horizontal = symbols('v_horizontal')
+velocity_vertical = throwing_velocity * sin(alpha)
+velocity_horizontal = throwing_velocity * cos(alpha)
 time = symbols('time')
-Length = symbols('Length')
-g = 9.806
+gravitational_constant = symbols('gravitational_constant')
 
 ## Height function of time is h = V_vertical * t - g * t**2 /2
 ## Flight ends when h == 0
 
-end_of_flight = Eq(0, V_vertical * time - g * time**2 /2)
+end_of_flight = Eq(0, velocity_vertical * time - gravitational_constant * time**2 /2)
 flight_time = solve(end_of_flight, time, dict=True)[1][time] 
 # there are 2 points of the trajectory with h = 0, the first one is the start point, and the second one is at destination
 # We need the second one
 
-Length = symbols('Length', cls = Function)
-Length = (V_horizontal * flight_time).subs({V0: 1})
+Length = (velocity_horizontal * flight_time).subs({throwing_velocity: 1, gravitational_constant: 1})
 
 # Let's find needed angle analytically.
 # Maximum of Length function is where it's derivation becomes zero.
-
 
 Len = plot(
     Length,
@@ -52,7 +45,7 @@ Len = plot(
     show=False)
 
 tau_line = plot(
-    100 * (time - pi / 4),
+    1000 * (time - pi / 4),
     (time, pi / 4, pi / 4 + 0.001),
     label = 'angle = pi / 4',
     line_color='yellow',
