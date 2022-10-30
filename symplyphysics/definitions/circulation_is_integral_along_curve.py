@@ -24,7 +24,7 @@ from symplyphysics import (
 
 # Conditions
 ## - Curve is a function of a single parameter (eg y(x) = x**2), or parametrized with a single parameter
-## (eg x(t) = cos(t), y(t) = sin(y))
+## (eg x(t) = cos(t), y(t) = sin(t))
 ## - Curve is smooth and continuous
 
 # trajectory is a function of the moving particle
