@@ -3,7 +3,7 @@ from pytest import approx, fixture
 
 from math import pi
 from sympy import sin, cos, sqrt
-from sympy.vector import CoordSys3D, ParametricRegion
+from sympy.vector import CoordSys3D
 from symplyphysics import (
     units, convert_to, SI, expr_to_quantity, symbols
 )
@@ -12,7 +12,6 @@ from symplyphysics.definitions import circulation_is_integral_along_curve as cir
 @fixture
 def test_args():
     C = CoordSys3D('C')
-    theta = symbols('theta')
     force_unit = units.Quantity('force_unit')
     SI.set_quantity_dimension(force_unit, units.force)
     SI.set_quantity_scale_factor(force_unit, 1 * units.newton)
@@ -25,8 +24,8 @@ def test_args():
     # let k = 1
     field = 0 * C.i + -1 * force_unit * radius_unit**2 / C.y**2 * C.j
 
-    Args = namedtuple('Args', ['C', 'theta', 'force_unit', 'radius_unit', 'field'])
-    return Args(C=C, theta=theta, force_unit=force_unit, radius_unit=radius_unit, field=field)
+    Args = namedtuple('Args', ['C', 'force_unit', 'radius_unit', 'field'])
+    return Args(C=C, force_unit=force_unit, radius_unit=radius_unit, field=field)
 
 
 def test_basic_circulation(test_args):
