@@ -5,7 +5,7 @@ from math import pi
 from sympy import sin, cos, sqrt
 from sympy.vector import CoordSys3D
 from symplyphysics import (
-    units, convert_to, SI, expr_to_quantity, symbols
+    units, convert_to, SI, expr_to_quantity
 )
 from symplyphysics.definitions import circulation_is_integral_along_curve as circulation_def
 

@@ -6,7 +6,7 @@ from collections import namedtuple
 from pytest import approx, fixture, raises
 
 from symplyphysics import (
-    units, convert_to, SI, errors, solve
+    units, convert_to, SI, errors
 )
 from symplyphysics.definitions import capacitance_from_charge_and_voltage as capacitance_def
 
