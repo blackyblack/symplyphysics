@@ -8,6 +8,7 @@ from .quantity_decorator import validate_input, validate_output, assert_equivale
 from .expr_to_quantity import expr_to_quantity
 from .probability import Probability
 from .filters import (filter_zeroes, filter_map_zeroes, filter_negative, filter_map_negative)
+from .fields import apply_field
 
 __all__ = [
     'validate_input',

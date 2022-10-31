@@ -7,7 +7,6 @@
 from symplyphysics import (
     units, convert_to, SI
 )
-from symplyphysics.definitions   import  momentum_is_mass_times_velocity as momentum_defined
 from symplyphysics.laws.dynamics import  momentum_after_collision_equals_to_momentum_before as momentum_law
 
 m1 = units.Quantity('m1')
