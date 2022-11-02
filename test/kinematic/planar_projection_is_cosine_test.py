@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import approx, fixture, raises
 
 from symplyphysics import (
-    units, convert_to, SI
+    units, convert_to, SI, errors
 )
 
 from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
@@ -15,12 +15,12 @@ def test_args():
     force_vector_amplitude = units.Quantity('force_vector_amplitude')
     SI.set_quantity_dimension(force_vector_amplitude, units.force)
     SI.set_quantity_scale_factor(force_vector_amplitude, 3 * units.newton)
-    angle_between_vector_and_horizontal_axis = units.Quantity('angle_between_vector_and_horizontal_axis')
-    SI.set_quantity_dimension(angle_between_vector_and_horizontal_axis, angle_type)
-    SI.set_quantity_scale_factor(angle_between_vector_and_horizontal_axis, 60 * units.degree)
+    angle_between_vector_and_axis = units.Quantity('angle_between_vector_and_axis')
+    SI.set_quantity_dimension(angle_between_vector_and_axis, angle_type)
+    SI.set_quantity_scale_factor(angle_between_vector_and_axis, 60 * units.degree)
 
     Args = namedtuple('Args', ['force_vector_amplitude', 'angle_between_vector_and_horizontal_axis'])
-    return Args(force_vector_amplitude = force_vector_amplitude, angle_between_vector_and_horizontal_axis = angle_between_vector_and_horizontal_axis)
+    return Args(force_vector_amplitude = force_vector_amplitude, angle_between_vector_and_horizontal_axis = angle_between_vector_and_axis)
 
 def test_basic_projection(test_args):
     result = projection_law.calculate_projection(test_args.force_vector_amplitude, test_args.angle_between_vector_and_horizontal_axis)
@@ -28,3 +28,13 @@ def test_basic_projection(test_args):
     result_vector = convert_to(result, units.newton).subs(units.newton, 1).evalf(2)
     assert result_vector == approx(1.5, 0.01)
 
+def test_bad_angle(test_args):    
+    ab = units.Quantity('Rb')
+    SI.set_quantity_dimension(ab, units.length)
+    SI.set_quantity_scale_factor(ab, 1 * units.meter)
+
+    with raises(errors.UnitsError):
+        projection_law.calculate_projection(test_args.force_vector_amplitude, ab)
+
+    with raises(TypeError):
+        projection_law.calculate_projection(test_args.force_vector_amplitude, 100)
