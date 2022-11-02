@@ -16,11 +16,10 @@ law = Eq(velocity, initial_velocity + acceleration * time)
 
 def print():
     return pretty(law, use_unicode=False)
-'''
-@validate_input(generator_mass_=units.mass, object_mass_=units.mass, distance_between_mass_centers_=units.length)
-@validate_output(units.force)
-def calculate_force(generator_mass_: Quantity, object_mass_: Quantity, distance_between_mass_centers_: Quantity) -> Quantity:
-    result_force_expr = solve(law, gravity_force, dict=True)[0][gravity_force]
-    result_expr = result_force_expr.subs({generator_mass: generator_mass_, object_mass: object_mass_, distance_between_mass_centers: distance_between_mass_centers_})
-    return expr_to_quantity(result_expr, 'gravity_force')
-'''
+
+@validate_input(initial_velocity_ = units.velocity, acceleration_ = units.acceleration, time_ = units.time)
+@validate_output(units.velocity)
+def calculate_velocity(initial_velocity_: Quantity, acceleration_: Quantity, time_: Quantity) -> Quantity:
+    result_velocity_expression = solve(law, velocity, dict=True)[0][velocity]
+    result_expr = result_velocity_expression.subs({initial_velocity: initial_velocity_, acceleration: acceleration_, time: time_})
+    return expr_to_quantity(result_expr, 'accelerated_velocity')
