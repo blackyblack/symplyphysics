@@ -7,7 +7,7 @@ from symplyphysics import (
 
 from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
 
-from symplyphysics.laws.kinematic import planar_horizontal_projection_is_cosine as projection_law
+from symplyphysics.laws.kinematic import planar_projection_is_cosine as projection_law
 
 #We are having force vector of 3 Newtons with angle 60 degrees to horizontal axis. Projection of this vector to horizontal axis should be 2 times less than the vector.
 @fixture

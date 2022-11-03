@@ -1,8 +1,8 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import approx, fixture
 
 from symplyphysics import (
-    units, convert_to, SI, errors
+    units, convert_to, SI
 )
 
 from symplyphysics.laws.kinematic import accelerated_velocity_from_time as accelerated_velocity_law
@@ -13,37 +13,23 @@ from symplyphysics.laws.kinematic import accelerated_velocity_from_time as accel
 
 @fixture
 def test_args():
-    initial_velocity1 = units.Quantity('initial_velocity1')
-    SI.set_quantity_dimension(initial_velocity1, units.velocity)
-    SI.set_quantity_scale_factor(initial_velocity1, 2 * units.meter / units.second)
+    V1 = units.Quantity('V1')
+    SI.set_quantity_dimension(V1, units.velocity)
+    SI.set_quantity_scale_factor(V1, 2 * units.meter / units.second)
 
-    acceleration = units.Quantity('acceleration')
-    SI.set_quantity_dimension(acceleration, units.acceleration)
-    SI.set_quantity_scale_factor(acceleration, -9.8 * units.meter / units.second**2)
+    A1 = units.Quantity('A1')
+    SI.set_quantity_dimension(A1, units.acceleration)
+    SI.set_quantity_scale_factor(A1, -9.8 * units.meter / units.second**2)
 
-    time = units.Quantity('time')
-    SI.set_quantity_dimension(time, units.time)
-    SI.set_quantity_scale_factor(time, 5 * units.second)
+    T1 = units.Quantity('T1')
+    SI.set_quantity_dimension(T1, units.time)
+    SI.set_quantity_scale_factor(T1, 5 * units.second)
 
-    Args = namedtuple('Args', ['initial_velocity1', 'acceleration', 'time'])
-    return Args(initial_velocity1 = initial_velocity1, acceleration = acceleration, time = time)
+    Args = namedtuple('Args', ['V1', 'A1', 'T1'])
+    return Args(V1 = V1, A1 = A1, T1 = T1)
 
 def test_basic_velocity(test_args):
-    result = accelerated_velocity_law.calculate_velocity(test_args.initial_velocity1, test_args.acceleration, test_args.time)
+    result = accelerated_velocity_law.calculate_velocity(test_args.V1, test_args.A1, test_args.T1)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.velocity)
     result_vector = convert_to(result, units.meter/units.second).subs(units.meter/units.second, 1).evalf(2)
     assert result_vector == approx(-47, 0.01)
-
-'''
-def test_bad_angle(test_args):    
-    ab = units.Quantity('Rb')
-    SI.set_quantity_dimension(ab, units.length)
-    SI.set_quantity_scale_factor(ab, 1 * units.meter)
-
-    with raises(errors.UnitsError):
-        projection_law.calculate_projection(test_args.force_vector_amplitude, ab)
-
-    with raises(TypeError):
-        projection_law.calculate_projection(test_args.force_vector_amplitude, 100)
-
-        '''
