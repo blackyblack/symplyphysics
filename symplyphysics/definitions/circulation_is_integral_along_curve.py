@@ -19,7 +19,7 @@ from symplyphysics import (
 ## C = CurveIntegral(F * dl, Curve), where
 ## C is circulation
 ## F is vector field
-## l if radius-vector of the curve
+## l is radius-vector of the curve
 ## * is dot product
 
 # Conditions
