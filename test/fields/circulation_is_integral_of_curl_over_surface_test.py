@@ -5,9 +5,10 @@ from math import pi
 from sympy import sin, cos, sqrt
 from sympy.vector import CoordSys3D, VectorZero
 from symplyphysics import (
-    units, convert_to, SI, expr_to_quantity
+    units, SI, expr_to_quantity, convert_to
 )
 from symplyphysics.laws.fields import circulation_is_integral_of_curl_over_surface as circulation_def
+
 
 @fixture
 def test_args():
@@ -44,16 +45,14 @@ def test_gravitational_field_is_conservative(test_args):
 
 def test_force_field_circulation(test_args):
     distance = sqrt(test_args.C.x**2 + test_args.C.y**2 + test_args.C.z**2)
-    # we use gravitational force as reference
-    # G = force * length**2 / mass**2
-    #TODO: explain E
-    #TODO: explain distance**3
-    # E = G * m * M / r**2 = force * length**2 / r**2
-    field_unit = (test_args.force_unit * test_args.radius_unit**2) / (distance**2 * distance)
-    field = -test_args.C.y * field_unit * test_args.C.i + test_args.C.x * field_unit * test_args.C.j + test_args.C.z * field_unit * test_args.C.k
+    # we use lorentz force in magnetic field as reference
+    # B = mass / (current * time**2) = mass / (charge * time)
+    # Lorentz force is: F = q * v * B = charge * (length / time) * B = force
+    field_unit = test_args.force_unit / distance
+    field = -test_args.C.y * field_unit * test_args.C.i + test_args.C.x * field_unit * test_args.C.j
     surface = circulation_def.parameter1 * cos(circulation_def.parameter2) * test_args.C.i +  circulation_def.parameter1 * sin(circulation_def.parameter2) * test_args.C.j
     result_expr = circulation_def.calculate_circulation(field, surface, 1 * test_args.radius_unit, 2 * test_args.radius_unit, 0, pi / 2)
     result = expr_to_quantity(result_expr, 'force_work')
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_work = convert_to(result, units.joule).subs({units.joule: 1}).evalf(4)
-    assert result_work == approx(-pi / 4, 0.001)
+    result_work = convert_to(result, units.joule).subs({units.joule: 1}).evalf(2)
+    assert result_work > 0
