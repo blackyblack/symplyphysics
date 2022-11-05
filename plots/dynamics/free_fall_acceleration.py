@@ -8,12 +8,12 @@ from symplyphysics.laws.dynamics import free_fall_acceleration_from_height as ac
 
 print("Formula is:\n{}".format(acceleration.print()))
 height = symbols('height')
-solved = solve(acceleration.law, acceleration.acceleration, dict=True)[0][acceleration.acceleration]
+solved = solve(acceleration.law, acceleration.acceleration_free_fall, dict=True)[0][acceleration.acceleration_free_fall]
 result_accel = solved.subs({
              acceleration.height: acceleration.height,
-             acceleration.unigravconst: 6.672e-11,
-             acceleration.earthmass: 5.976e+24,
-             acceleration.earthradius: 6.371e+6})
+             acceleration.constant_gravitation: 6.672e-11,
+             acceleration.earth_mass: 5.976e+24,
+             acceleration.earth_radius: 6.371e+6})
 
 print("\nFree fall accelleration on Earth surface function is:\n{}".format(
     pretty(result_accel, use_unicode=False)))

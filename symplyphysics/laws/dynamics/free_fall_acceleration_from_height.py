@@ -11,8 +11,8 @@ from symplyphysics import (
 # R - Earth radius constant       6.371e+6 m
 # h - height
 
-acceleration, unigravconst, earthmass, earthradius, height = symbols('acceleration unigravconst earthmass earthradius height')
-law = Eq(acceleration, unigravconst*earthmass / (earthradius+height)**2)
+acceleration_free_fall, constant_gravitation, earth_mass, earth_radius, height = symbols('acceleration_free_fall constant_gravitation earth_mass earth_radius height')
+law = Eq(acceleration_free_fall, constant_gravitation*earth_mass / (earth_radius+height)**2)
 
 def print():
     return pretty(law, use_unicode=False)
@@ -20,6 +20,6 @@ def print():
 @validate_input(height_=units.meter)
 @validate_output(units.acceleration)
 def calculate_acceleration(height_: Quantity) -> Quantity:
-    result_accel_expr = solve(law, acceleration, dict=True)[0][acceleration]
+    result_accel_expr = solve(law, acceleration_free_fall, dict=True)[0][acceleration_free_fall]
     result_expr = result_accel_expr.subs({height: height_})
-    return expr_to_quantity(result_expr, 'acceleration')
+    return expr_to_quantity(result_expr, 'acceleration_free_fall')
