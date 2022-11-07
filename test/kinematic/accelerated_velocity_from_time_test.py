@@ -1,8 +1,8 @@
 from collections import namedtuple
-from pytest import approx, fixture
+from pytest import approx, fixture, raises
 
 from symplyphysics import (
-    units, convert_to, SI
+    units, convert_to, SI, errors
 )
 
 from symplyphysics.laws.kinematic import accelerated_velocity_from_time as accelerated_velocity_law
@@ -33,3 +33,36 @@ def test_basic_velocity(test_args):
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.velocity)
     result_vector = convert_to(result, units.meter/units.second).subs(units.meter/units.second, 1).evalf(2)
     assert result_vector == approx(-47, 0.01)
+
+def test_bad_velocity(test_args):
+    Vb = units.Quantity('Vb')
+    SI.set_quantity_dimension(Vb, units.length)
+    SI.set_quantity_scale_factor(Vb, 1 * units.meter)
+
+    with raises(errors.UnitsError):
+        accelerated_velocity_law.calculate_velocity(Vb, test_args.A1, test_args.T1)
+
+    with raises(TypeError):
+        accelerated_velocity_law.calculate_velocity(100, test_args.A1, test_args.T1)
+
+def test_bad_acceleration(test_args):
+    Ab = units.Quantity('Ab')
+    SI.set_quantity_dimension(Ab, units.length)
+    SI.set_quantity_scale_factor(Ab, 1 * units.meter)
+
+    with raises(errors.UnitsError):
+        accelerated_velocity_law.calculate_velocity(test_args.V1, Ab, test_args.T1)
+
+    with raises(TypeError):
+        accelerated_velocity_law.calculate_velocity(test_args.V1, 100, test_args.T1)   
+
+def test_bad_time(test_args):
+    Tb = units.Quantity('Ab')
+    SI.set_quantity_dimension(Tb, units.length)
+    SI.set_quantity_scale_factor(Tb, 1 * units.meter)
+
+    with raises(errors.UnitsError):
+        accelerated_velocity_law.calculate_velocity(test_args.V1, test_args.A1, Tb)
+
+    with raises(TypeError):
+        accelerated_velocity_law.calculate_velocity(test_args.V1, test_args.A1, 100)              
