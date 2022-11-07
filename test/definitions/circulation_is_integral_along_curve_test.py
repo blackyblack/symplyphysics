@@ -20,9 +20,8 @@ def test_args():
     SI.set_quantity_scale_factor(radius_unit, 1 * units.meter)
     # field is a field of gravitational forces, force is directed down by the Y coordinate
     # field is (0, -1 * G * m * M / y**2)
-    # G * m * M = k * force * length**2 / mass**2
-    # let k = 1
-    field = 0 * C.i + -1 * force_unit * radius_unit**2 / C.y**2 * C.j
+    # G * m * M = force * length**2 / mass**2 * mass**2 = force * length**2
+    field = -1 * force_unit * radius_unit**2 / C.y**2 * C.j
 
     Args = namedtuple('Args', ['C', 'force_unit', 'radius_unit', 'field'])
     return Args(C=C, force_unit=force_unit, radius_unit=radius_unit, field=field)
