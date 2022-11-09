@@ -50,7 +50,7 @@ def collect_factor_and_dimension(expr):
         for addend in expr.args[1:]:
             addend_factor, addend_dim = \
                 collect_factor_and_dimension(addend)
-            if dim != addend_dim:
+            if dim != addend_dim and not SI.get_dimension_system().equivalent_dims(dim, addend_dim):
                 raise ValueError(
                     'Dimension of "{}" is {}, '
                     'but it should be {}'.format(
