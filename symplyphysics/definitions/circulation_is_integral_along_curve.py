@@ -1,7 +1,7 @@
 from sympy import Integral, Derivative
 from sympy.vector import Dot
 from symplyphysics import (
-    symbols, Eq, pretty, simplify, apply_field
+    symbols, Eq, pretty, simplify, apply_field, array_to_sympy_vector
 )
 
 # Description
@@ -40,16 +40,19 @@ definition = Eq(circulation, Integral(Dot(field, trajectory_element), (parameter
 def print():
     return pretty(definition, use_unicode=False)
 
-# field_ should be instance of CoordSys3D, eg C.y * C.i + -1 * C.x * C.j
-# trajectory_ should be instance of CoordSys3D, eg 3 * cos(parameter) * C.i + 3 * sin(parameter) * C.j
+# field_ should be be array with mappings of coordinates to vectors, eg [P(x, y), Q(x, y)]
+# trajectory_ should be array with projections to coordinates, eg [3 * cos(parameter), 3 * sin(parameter)]
 def calculate_circulation(
+    coord_system_,
     field_,
     trajectory_,
     parameter_from_,
     parameter_to_):
 
-    field_app = apply_field(field_, trajectory_)
-    trajectory_element_result = trajectory_element_definition.rhs.subs(trajectory, trajectory_).doit()
-    result_expr = definition.rhs.subs({field: field_app, trajectory_element: trajectory_element_result, parameter_from: parameter_from_, parameter_to: parameter_to_}).doit()
+    field_app = apply_field(coord_system_, field_, trajectory_)
+    field_as_vector = array_to_sympy_vector(coord_system_, field_app)
+    trajectory_as_vector = array_to_sympy_vector(coord_system_, trajectory_)
+    trajectory_element_result = trajectory_element_definition.rhs.subs(trajectory, trajectory_as_vector).doit()
+    result_expr = definition.rhs.subs({field: field_as_vector, trajectory_element: trajectory_element_result, parameter_from: parameter_from_, parameter_to: parameter_to_}).doit()
     # some expressions are invalid without simplifying them first
     return simplify(result_expr)

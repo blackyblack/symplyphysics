@@ -9,6 +9,7 @@ from .expr_to_quantity import expr_to_quantity
 from .probability import Probability
 from .filters import (filter_zeroes, filter_map_zeroes, filter_negative, filter_map_negative)
 from .fields import apply_field
+from .vectors import array_to_sympy_vector
 
 __all__ = [
     'validate_input',

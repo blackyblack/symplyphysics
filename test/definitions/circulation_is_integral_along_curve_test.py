@@ -28,38 +28,38 @@ def test_args():
 
 
 def test_basic_circulation(test_args):
-    field = test_args.C.y * test_args.C.i + (test_args.C.z + test_args.C.x) * test_args.C.k
-    curve = cos(circulation_def.parameter) * test_args.C.i + sin(circulation_def.parameter) * test_args.C.j
-    result_expr = circulation_def.calculate_circulation(field, curve, 0, pi / 2)
+    field = [lambda _x, y, _z: y, 0, lambda x, _y, z: z + x]
+    curve = [cos(circulation_def.parameter), sin(circulation_def.parameter)]
+    result_expr = circulation_def.calculate_circulation(test_args.C, field, curve, 0, pi / 2)
     assert result_expr.evalf(4) == approx(-pi / 4, 0.001)
 
 def test_two_parameters_circulation(test_args):
-    field = test_args.C.y * test_args.C.i + -1 * test_args.C.x * test_args.C.j
+    field = [lambda _x, y, _z: y, lambda x, _y, _z: -x]
     # circle function is: x**2 + y**2 = 9
     # parametrize by circulation_def.parameter
-    circle = 3 * cos(circulation_def.parameter) * test_args.C.i + 3 * sin(circulation_def.parameter) * test_args.C.j
-    result_expr = circulation_def.calculate_circulation(field, circle, 0, 2 * pi)
+    circle = [3 * cos(circulation_def.parameter), 3 * sin(circulation_def.parameter)]
+    result_expr = circulation_def.calculate_circulation(test_args.C, field, circle, 0, 2 * pi)
     assert result_expr.evalf(4) == approx(-18 * pi, 0.001)
     # now try to define trajectory without parametrization
     # parametrized solution uses angle [0, 2*pi] that corresponds to the counter-clockwise direction
     # so we should integrate in the same direction: [r, -r] for upper part of the circle and [-r, r] for lower
     # y = sqrt(9 - x**2) for upper part of the circle
     # y = -sqrt(9 - x**2) for lower part of the circle
-    circle_implicit_up = circulation_def.parameter * test_args.C.i + sqrt(9 - circulation_def.parameter**2) * test_args.C.j
-    result_expr_up = circulation_def.calculate_circulation(field, circle_implicit_up, 3, -3)
-    circle_implicit_down = circulation_def.parameter * test_args.C.i - sqrt(9 - circulation_def.parameter**2) * test_args.C.j
-    result_expr_down = circulation_def.calculate_circulation(field, circle_implicit_down, -3, 3)
+    circle_implicit_up = [circulation_def.parameter, sqrt(9 - circulation_def.parameter**2)]
+    result_expr_up = circulation_def.calculate_circulation(test_args.C, field, circle_implicit_up, 3, -3)
+    circle_implicit_down = [circulation_def.parameter, -sqrt(9 - circulation_def.parameter**2)]
+    result_expr_down = circulation_def.calculate_circulation(test_args.C, field, circle_implicit_down, -3, 3)
     assert (result_expr_up + result_expr_down).evalf(4) == approx(-18 * pi, 0.001)
 
 def test_orthogonal_movement_circulation(test_args):
-    field = test_args.C.y * test_args.C.i + -1 * test_args.C.x * test_args.C.j + test_args.C.k
+    field = [lambda _x, y, _z: y, lambda x, _y, _z: -x, lambda _x, _y, _z: 1]
     # trajectory is upwards helix
-    helix = cos(circulation_def.parameter) * test_args.C.i + sin(circulation_def.parameter) * test_args.C.j + circulation_def.parameter * test_args.C.k
-    result_expr = circulation_def.calculate_circulation(field, helix, 0, 2 * pi)
+    helix = [cos(circulation_def.parameter), sin(circulation_def.parameter), circulation_def.parameter]
+    result_expr = circulation_def.calculate_circulation(test_args.C, field, helix, 0, 2 * pi)
     assert result_expr == 0
     # trajectory is upwards straight line
-    trajectory_vertical = 1 * test_args.C.i + circulation_def.parameter * test_args.C.k
-    result_expr = circulation_def.calculate_circulation(field, trajectory_vertical, 0, 2 * pi)
+    trajectory_vertical = [1, 0, circulation_def.parameter]
+    result_expr = circulation_def.calculate_circulation(test_args.C, field, trajectory_vertical, 0, 2 * pi)
     assert result_expr.evalf(4) == approx(2 * pi, 0.001)
 
 def test_force_circulation(test_args):
