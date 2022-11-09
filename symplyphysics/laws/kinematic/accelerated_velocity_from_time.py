@@ -6,6 +6,10 @@ from symplyphysics import (
 # Description
 ## Accelerated velocity is time dependent and increases with time if acceleration is co-directed with velocity and decreases if they are counter-directed.
 ## Initial velocity is velocity at the start of observation, when time is 0.
+## In other words, velocity V = V0 + at, where
+## V is the velocity in the moment of time t
+## V0 is the initial velocity (in the moment of time 0)
+## a is the acceleration.
 
 velocity = symbols('velocity')
 time = symbols('time')

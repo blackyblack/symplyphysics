@@ -57,7 +57,7 @@ def test_bad_acceleration(test_args):
         accelerated_velocity_law.calculate_velocity(test_args.V1, 100, test_args.T1)   
 
 def test_bad_time(test_args):
-    Tb = units.Quantity('Ab')
+    Tb = units.Quantity('Tb')
     SI.set_quantity_dimension(Tb, units.length)
     SI.set_quantity_scale_factor(Tb, 1 * units.meter)
 
