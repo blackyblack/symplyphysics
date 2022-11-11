@@ -18,13 +18,13 @@ print("\nFree fall accelleration function on Earth surface  is:\n{}".format(
     pretty(result_acceleration, use_unicode=False)))
 p1 = plot(
     result_acceleration,
-    (acceleration.height, 0, 10000),
-    ylim=(9.74,9.85),
-    axis_center=(0.0,9.75),
+    (height, 0, 10000),
+    ylim=(9.74, 9.85),
+    axis_center=(0.0, 9.75),
     line_color='red',
     title='Acceleration free fall (height)',
-    xlabel = 'height , m',
-    ylabel = 'acceleration, m / s^2',
+    xlabel = 'height,m',
+    ylabel = 'acceleration,m/s^2',
     label = 'Acceleration(height)',
     legend=True,
     backend = MatplotlibBackend,

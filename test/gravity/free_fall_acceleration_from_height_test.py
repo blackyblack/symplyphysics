@@ -31,7 +31,7 @@ def test_basic_acceleration(test_args):
 def test_bad_height(test_args):
     hb = units.Quantity('hb')
     SI.set_quantity_dimension(hb, units.mass)
-    SI.set_quantity_scale_factor(hb, 5 * units.kilogram)
+    SI.set_quantity_scale_factor(hb, 1 * units.kilogram)
     with raises(errors.UnitsError):
         free_fall_acceleration.calculate_acceleration(hb, test_args.earth_mass, test_args.earth_radius)
     with raises(TypeError):
@@ -40,7 +40,7 @@ def test_bad_height(test_args):
 def test_bad_earth_mass(test_args):
     emb = units.Quantity('emb')
     SI.set_quantity_dimension(emb, units.length)
-    SI.set_quantity_scale_factor(emb, 10 * units.meter)
+    SI.set_quantity_scale_factor(emb, 1 * units.meter)
     with raises(errors.UnitsError):
         free_fall_acceleration.calculate_acceleration(test_args.height, emb, test_args.earth_radius)
     with raises(TypeError):
@@ -49,7 +49,7 @@ def test_bad_earth_mass(test_args):
 def test_bad_earth_radius(test_args):
     erb = units.Quantity('erb')
     SI.set_quantity_dimension(erb, units.mass)
-    SI.set_quantity_scale_factor(erb, 10 * units.kilogram)
+    SI.set_quantity_scale_factor(erb, 1 * units.kilogram)
     with raises(errors.UnitsError):
         free_fall_acceleration.calculate_acceleration(test_args.height, test_args.earth_mass, erb)
     with raises(TypeError):
