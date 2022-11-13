@@ -5,6 +5,7 @@ from symplyphysics import (
     units, convert_to, SI, errors
 )
 from symplyphysics.laws.gravity import free_fall_acceleration_from_height as free_fall_acceleration
+
 # G - universal gravity constant  6.672e-11 N*m^2/kg^2
 # M - Earth mass constant         5.976e+24 kg
 # R - Earth radius constant       6.371e+6 m

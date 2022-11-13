@@ -2,13 +2,14 @@ from symplyphysics import (
     symbols, Eq, pretty, solve, Quantity, units,
     validate_input, validate_output, expr_to_quantity
 )
+
 # Description
 # Acceleration free fall law: g(h)=(G*M)/(R+h)**2
 # where :
 # G - universal gravity constant  6.672e-11 N*m^2/kg^2
 # M - Earth mass constant         5.976e+24 kg
 # R - Earth radius constant       6.371e+6 m
-# h - height
+# h - height from Earth surface
 gravity_constant = units.gravitational_constant
 acceleration_free_fall, earth_mass, earth_radius, height = symbols('acceleration_free_fall earth_mass earth_radius height')
 law = Eq(acceleration_free_fall, gravity_constant * earth_mass / (earth_radius + height)**2)
