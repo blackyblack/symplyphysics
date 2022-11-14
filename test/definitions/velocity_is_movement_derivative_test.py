@@ -7,7 +7,7 @@ from symplyphysics import (
 from symplyphysics.definitions import velocity_is_movement_derivative as velocity_def
 
 # Description
-## Assume object starts moving with some velocity. After 5 seconds it's movement is 80 meters.
+## Assume object starts moving with some velocity. After 5 seconds it's distance is 80 meters.
 ## Velocity should be  16 m/s.
 
 @fixture
@@ -37,7 +37,7 @@ def test_basic_velocity(test_args):
     assert result_current == approx(16, 0.01)
 
 
-def test_velocity_with_bad_argument(test_args):
+def test_velocity_with_bad_distance(test_args):
     S0b = units.Quantity('S0b')
     SI.set_quantity_dimension(S0b, units.charge)
     SI.set_quantity_scale_factor(S0b, 1 * units.coulomb)
@@ -47,11 +47,7 @@ def test_velocity_with_bad_argument(test_args):
     
     with raises(errors.UnitsError):
         velocity_def.calculate_velocity(
-            test_args.S0, S0b, test_args.t)
-
-    with raises(errors.UnitsError):
-        velocity_def.calculate_velocity(
-            test_args.S0, test_args.S1, S0b)       
+            test_args.S0, S0b, test_args.t)           
 
     with raises(TypeError):
         velocity_def.calculate_velocity(
@@ -61,6 +57,15 @@ def test_velocity_with_bad_argument(test_args):
         velocity_def.calculate_velocity(
             test_args.S0, 100, test_args.t)
 
+    
+def test_velocity_with_bad_time(test_args):
+    tb = units.Quantity('tb')
+    SI.set_quantity_dimension(tb, units.charge)
+    SI.set_quantity_scale_factor(tb, 1 * units.coulomb)
+    with raises(errors.UnitsError):
+        velocity_def.calculate_velocity(
+            test_args.S0, test_args.S1, tb)
+    
     with raises(TypeError):
         velocity_def.calculate_velocity(
             test_args.S0, test_args.S1, 100)
