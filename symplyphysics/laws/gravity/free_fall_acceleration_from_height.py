@@ -21,5 +21,5 @@ def print():
 @validate_output(units.acceleration)
 def calculate_acceleration(height_: Quantity, earth_mass_: Quantity, earth_radius_: Quantity) -> Quantity:
     result_accel_expr = solve(law, acceleration_free_fall, dict=True)[0][acceleration_free_fall]
-    result_expr = result_accel_expr.subs({earth_mass: earth_mass_,earth_radius: earth_radius_,height: height_})
+    result_expr = result_accel_expr.subs({earth_mass: earth_mass_, earth_radius: earth_radius_, height: height_})
     return expr_to_quantity(result_expr, 'acceleration_free_fall')
