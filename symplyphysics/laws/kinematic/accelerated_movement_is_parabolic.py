@@ -1,5 +1,5 @@
 from symplyphysics import (
-    symbols, Function, Eq, pretty, dsolve
+    symbols, Function, Eq, pretty, dsolve, solve, units, Quantity, validate_input, validate_output, expr_to_quantity
 )
 
 from symplyphysics.definitions import velocity_is_movement_derivative as velocity_definition
@@ -14,6 +14,7 @@ from symplyphysics.definitions import acceleration_is_velocity_derivative as acc
 ## V0 is the velocity in the moment of time 0 (initial velocity)
 ## a is acceleration
 ## and t is time.
+## Also assuming initial coordinate is 0 (object starts moving from the zero position).
 
 moving_time = symbols('moving_time')
 constant_acceleration = symbols('constant_acceleration', constant=True)
@@ -32,18 +33,21 @@ constant_accelerated_movement_definition = velocity_definition.definition.subs({
 dsolved_movement = dsolve(constant_accelerated_movement_definition, velocity_definition.movement_function(moving_time))
 constant_accelerated_movement_function = dsolved_movement.rhs
 
+derived_law = Eq(distance_function(moving_time), constant_accelerated_movement_function)
+
 #TODO: prove that constant_accelerated_movement_function equals to law.rhs, given C1 = initial_velocity, C2 = 0
+def proof():
+    C1 = symbols('C1')
+    C2 = symbols('C2')
+    difference =  initial_velocity * moving_time + constant_acceleration * moving_time**2 / 2 - constant_accelerated_movement_function.subs({C1: initial_velocity, C2: 0})
+    return pretty(difference, use_unicode=False)
+# Proof() returns 0
 
 def print():
-    return pretty(law, use_unicode=False)
+    return pretty(derived_law, use_unicode=False)
 
-'''
-@validate_input(charge_start_=units.charge, charge_end_=units.charge, time_=units.time)
-@validate_output(units.current)
-def calculate_distance(charge_start_: Quantity, charge_end_: Quantity, time_: Quantity) -> Quantity:
-    charge_function_ = time * (charge_end_ - charge_start_) / time_
-    applied_definition = definition.subs(charge_function(time), charge_function_)
-    dsolved = applied_definition.doit()
-    result_expr = dsolved.rhs
-    return expr_to_quantity(result_expr, 'current')
-'''
+@validate_input(initial_velocity_=units.velocity, acceleration_=units.velocity / units.time, time_=units.time)
+@validate_output(units.length)
+def calculate_distance(initial_velocity_: Quantity, acceleration_: Quantity, time_: Quantity) -> Quantity:        
+    result_expr = solve(law, distance_function, dict=True)[0][distance_function].subs({initial_velocity: initial_velocity_, constant_acceleration: acceleration_, moving_time: time_})
+    return expr_to_quantity(result_expr, 'distance')
