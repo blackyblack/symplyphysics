@@ -1,6 +1,5 @@
 from symplyphysics import (
-    symbols, Function, Derivative, Eq, pretty, Quantity, units,
-    validate_input, validate_output, expr_to_quantity
+    symbols, Function, Eq, pretty, dsolve
 )
 
 from symplyphysics.definitions import velocity_is_movement_derivative as velocity_definition
@@ -17,32 +16,26 @@ from symplyphysics.definitions import acceleration_is_velocity_derivative as acc
 ## and t is time.
 
 moving_time = symbols('moving_time')
-constant_acceleration = symbols('constant_acceleration')
+constant_acceleration = symbols('constant_acceleration', constant=True)
 initial_velocity = symbols('initial_velocity')
-theoretical_distance_function, distance_function, velocity_function, acceleration_function = symbols('theoretical_distance_function distance_function velocity_function acceleration_function', cls = Function)
+distance_function = symbols('distance_function', cls=Function)
 
-law = Eq(theoretical_distance_function(moving_time), initial_velocity * moving_time + constant_acceleration * moving_time * moving_time / 2)
+law = Eq(distance_function(moving_time), initial_velocity * moving_time + constant_acceleration * moving_time**2 / 2)
 
-constant_acceleration_definition = acceleration_definition.definition.subs({acceleration_definition.acceleration: constant_acceleration, acceleration_definition.time: moving_time})
-dsolved_velocity = constant_acceleration_definition.doit()
+# Derive the same law from velocity and acceleration definitions
+
+constant_acceleration_definition = acceleration_definition.definition.subs({acceleration_definition.acceleration(acceleration_definition.time): constant_acceleration, acceleration_definition.time: moving_time})
+dsolved_velocity = dsolve(constant_acceleration_definition, acceleration_definition.velocity_function(moving_time))
 constant_accelerated_velocity_function = dsolved_velocity.rhs
 
-constant_accelerated_movement_definition = velocity_definition.definition.subs(velocity_function(moving_time), constant_accelerated_velocity_function)
-dsolved_movement = constant_accelerated_movement_definition.doit()
+constant_accelerated_movement_definition = velocity_definition.definition.subs({velocity_definition.velocity_function(velocity_definition.moving_time): constant_accelerated_velocity_function, velocity_definition.moving_time: moving_time})
+dsolved_movement = dsolve(constant_accelerated_movement_definition, velocity_definition.movement_function(moving_time))
 constant_accelerated_movement_function = dsolved_movement.rhs
 
-definition_dimension_SI = units.meter
-
-def print1():
-    return pretty(constant_accelerated_velocity_function, use_unicode=False)
+#TODO: prove that constant_accelerated_movement_function equals to law.rhs, given C1 = initial_velocity, C2 = 0
 
 def print():
-    return pretty(constant_accelerated_movement_function, use_unicode=False)
-
-def print_dimension():
-    return pretty(definition_dimension_SI, use_unicode=False)
-
-
+    return pretty(law, use_unicode=False)
 
 '''
 @validate_input(charge_start_=units.charge, charge_end_=units.charge, time_=units.time)
