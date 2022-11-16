@@ -8,35 +8,35 @@ from symplyphysics.laws.kinematic import kinetic_energy_from_mass_and_velocity a
 
 @fixture
 def test_args():
-    mass = units.Quantity('mass')
-    SI.set_quantity_dimension(mass, units.mass)
-    SI.set_quantity_scale_factor(mass, 0.5 * units.kilogram)
-    velocity = units.Quantity('velocity')
-    SI.set_quantity_dimension(velocity, units.velocity)
-    SI.set_quantity_scale_factor(velocity, 0.5 * units.meter / units.second)
-    Args = namedtuple('Args', ['mass', 'velocity'])
-    return Args(mass=mass, velocity=velocity)
+    m = units.Quantity('m')
+    SI.set_quantity_dimension(m, units.mass)
+    SI.set_quantity_scale_factor(m, 0.5 * units.kilogram)
+    v = units.Quantity('v')
+    SI.set_quantity_dimension(v, units.velocity)
+    SI.set_quantity_scale_factor(v, 0.5 * units.meter / units.second)
+    Args = namedtuple('Args', ['m', 'v'])
+    return Args(m=m, v=v)
 
 def test_basic_kinetic_energy(test_args):
-    result = kinetic_energy.calculate_kinetic_energy(test_args.mass, test_args.velocity)
+    result = kinetic_energy.calculate_kinetic_energy(test_args.m, test_args.v)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
     result_energy = convert_to(result, units.joule).subs(units.joule, 1).evalf(3)
     assert result_energy == approx(0.0625, 0.005)
 
 def test_bad_body_mass(test_args):
-    bbm = units.Quantity('bbm')
-    SI.set_quantity_dimension(bbm, units.velocity)
-    SI.set_quantity_scale_factor(bbm, 1 * units.meter)
+    bm = units.Quantity('bm')
+    SI.set_quantity_dimension(bm, units.velocity)
+    SI.set_quantity_scale_factor(bm, 1 * units.meter)
     with raises(errors.UnitsError):
-        kinetic_energy.calculate_kinetic_energy(bbm, test_args.velocity)
+        kinetic_energy.calculate_kinetic_energy(bm, test_args.v)
     with raises(TypeError):
-        kinetic_energy.calculate_kinetic_energy(100, test_args.velocity)
+        kinetic_energy.calculate_kinetic_energy(100, test_args.v)
 
 def test_bad_body_velocity(test_args):
-    bbv = units.Quantity('bbv')
-    SI.set_quantity_dimension(bbv, units.mass)
-    SI.set_quantity_scale_factor(bbv, 1 * units.meter)
+    bv = units.Quantity('bv')
+    SI.set_quantity_dimension(bv, units.mass)
+    SI.set_quantity_scale_factor(bv, 1 * units.meter)
     with raises(errors.UnitsError):
-        kinetic_energy.calculate_kinetic_energy(test_args.mass, bbv)
+        kinetic_energy.calculate_kinetic_energy(test_args.m, bv)
     with raises(TypeError):
-        kinetic_energy.calculate_kinetic_energy(test_args.mass, 100)
+        kinetic_energy.calculate_kinetic_energy(test_args.m, 100)
