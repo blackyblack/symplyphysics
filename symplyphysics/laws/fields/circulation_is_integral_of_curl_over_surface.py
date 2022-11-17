@@ -1,10 +1,10 @@
 from typing import List
 from sympy import Integral, Derivative
-from sympy.vector import Dot, Curl, Cross, CoordSys3D
+from sympy.vector import Dot, Curl, Cross
 from symplyphysics import (
-    symbols, Eq, pretty, simplify, field_from_unit_vector, array_to_sympy_vector, sympy_vector_to_array
+    symbols, Eq, pretty, simplify,
+    CoordSys3D, field_from_unit_vector, array_to_sympy_vector, sympy_vector_to_array, VectorField
 )
-from symplyphysics.fields import VectorField
 
 # Description
 ## Circulation of the field along the closed curve is flow of the rotor (or curl) of this field 

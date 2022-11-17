@@ -1,4 +1,5 @@
 from sympy import simplify, symbols, Function, Derivative, Eq, pretty, solve, dsolve, sin, cos, pi
+from sympy.vector import CoordSys3D, VectorZero
 from sympy.utilities.lambdify import lambdify, implemented_function
 from sympy.core.singleton import S
 from sympy.physics import units
@@ -8,7 +9,7 @@ from .quantity_decorator import validate_input, validate_output, validate_output
 from .expr_to_quantity import expr_to_quantity
 from .probability import Probability
 from .filters import (filter_zeroes, filter_map_zeroes, filter_negative, filter_map_negative)
-from .fields import field_from_unit_vector
+from .fields import field_from_unit_vector, FieldPoint, VectorField
 from .vectors import array_to_sympy_vector, sympy_vector_to_array
 
 __all__ = [

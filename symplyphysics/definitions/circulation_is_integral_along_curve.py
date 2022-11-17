@@ -1,10 +1,9 @@
 from typing import List
 from sympy import Integral, Derivative
-from sympy.vector import Dot, CoordSys3D
+from sympy.vector import Dot
 from symplyphysics import (
-    symbols, Eq, pretty, simplify, array_to_sympy_vector
+    symbols, Eq, pretty, simplify, CoordSys3D, array_to_sympy_vector, VectorField
 )
-from symplyphysics.fields import VectorField
 
 # Description
 ## Field circulation along closed curve is curvilinear integral of field by this curve.
