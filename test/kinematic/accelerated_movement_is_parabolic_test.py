@@ -32,37 +32,38 @@ def test_basic_distance(test_args):
     result_vector = convert_to(result, units.meter).subs(units.meter, 1).evalf(2)
     assert result_vector == approx(95, 0.01)
 
-'''
+
 def test_bad_velocity(test_args):
     Vb = units.Quantity('Vb')
     SI.set_quantity_dimension(Vb, units.length)
     SI.set_quantity_scale_factor(Vb, 1 * units.meter)
 
     with raises(errors.UnitsError):
-        accelerated_velocity_law.calculate_velocity(Vb, test_args.A1, test_args.T1)
+        movement_law.calculate_distance(Vb, test_args.a, test_args.t)
 
     with raises(TypeError):
-        accelerated_velocity_law.calculate_velocity(100, test_args.A1, test_args.T1)
+        movement_law.calculate_distance(100, test_args.a, test_args.t)
+
 
 def test_bad_acceleration(test_args):
-    Ab = units.Quantity('Ab')
-    SI.set_quantity_dimension(Ab, units.length)
-    SI.set_quantity_scale_factor(Ab, 1 * units.meter)
+    ab = units.Quantity('ab')
+    SI.set_quantity_dimension(ab, units.length)
+    SI.set_quantity_scale_factor(ab, 1 * units.meter)
 
     with raises(errors.UnitsError):
-        accelerated_velocity_law.calculate_velocity(test_args.V1, Ab, test_args.T1)
+        movement_law.calculate_distance(test_args.V0, ab, test_args.t)
 
     with raises(TypeError):
-        accelerated_velocity_law.calculate_velocity(test_args.V1, 100, test_args.T1)   
+        movement_law.calculate_distance(test_args.V0, 100, test_args.t) 
 
 def test_bad_time(test_args):
-    Tb = units.Quantity('Tb')
-    SI.set_quantity_dimension(Tb, units.length)
-    SI.set_quantity_scale_factor(Tb, 1 * units.meter)
+    tb = units.Quantity('tb')
+    SI.set_quantity_dimension(tb, units.length)
+    SI.set_quantity_scale_factor(tb, 1 * units.meter)
 
     with raises(errors.UnitsError):
-        accelerated_velocity_law.calculate_velocity(test_args.V1, test_args.A1, Tb)
+        movement_law.calculate_distance(test_args.V0, test_args.a, tb)
 
     with raises(TypeError):
-        accelerated_velocity_law.calculate_velocity(test_args.V1, test_args.A1, 100)              
-        '''
+        movement_law.calculate_distance(test_args.V0, test_args.a, 100)         
+ 

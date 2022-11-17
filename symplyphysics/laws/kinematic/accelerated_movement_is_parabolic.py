@@ -49,5 +49,5 @@ def print():
 @validate_input(initial_velocity_=units.velocity, acceleration_=units.velocity / units.time, time_=units.time)
 @validate_output(units.length)
 def calculate_distance(initial_velocity_: Quantity, acceleration_: Quantity, time_: Quantity) -> Quantity:        
-    result_expr = solve(law, distance_function, dict=True)[0][distance_function].subs({initial_velocity: initial_velocity_, constant_acceleration: acceleration_, moving_time: time_})
+    result_expr = solve(law, distance_function(moving_time), dict=True)[0][distance_function(moving_time)].subs({initial_velocity: initial_velocity_, constant_acceleration: acceleration_, moving_time: time_})
     return expr_to_quantity(result_expr, 'distance')
