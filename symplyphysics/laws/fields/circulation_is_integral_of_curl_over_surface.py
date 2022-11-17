@@ -1,8 +1,10 @@
+from typing import List
 from sympy import Integral, Derivative
-from sympy.vector import Dot, Curl, Cross
+from sympy.vector import Dot, Curl, Cross, CoordSys3D
 from symplyphysics import (
-    symbols, Eq, pretty, simplify, apply_field
+    symbols, Eq, pretty, simplify, field_from_unit_vector, array_to_sympy_vector, sympy_vector_to_array
 )
+from symplyphysics.fields import VectorField
 
 # Description
 ## Circulation of the field along the closed curve is flow of the rotor (or curl) of this field 
@@ -45,21 +47,30 @@ definition = Eq(circulation, Integral(Dot(field_rotor, surface_element), (parame
 def print():
     return pretty(definition, use_unicode=False)
 
-# field_ should be instance of CoordSys3D, eg C.y * C.i + -1 * C.x * C.j
-# surface_ should be instance of CoordSys3D, eg parameter1 * cos(parameter2) * C.i + parameter1 * sin(parameter2) * C.j
+# field_ should be VectorField
+# surface_ should be array with projections to coordinates, eg [parameter1 * cos(parameter2), parameter1 * sin(parameter2)]
 def calculate_circulation(
-    field_,
-    surface_,
+    coord_system_: CoordSys3D,
+    field_: VectorField,
+    surface_: List,
     parameter1_from_,
     parameter1_to_,
     parameter2_from_,
     parameter2_to_):
 
-    field_rotor_applied = field_rotor_definition.rhs.subs(field, field_).doit()
-    field_applied = apply_field(field_rotor_applied, surface_)
-    surface_element_x = surface_element_by_parameter1_definition.rhs.subs(surface, surface_).doit()
-    surface_element_y = surface_element_by_parameter2_definition.rhs.subs(surface, surface_).doit()
+    unit_coordinates = coord_system_.base_scalars()
+    unit_trajectory = [unit_coordinates[0], unit_coordinates[1], unit_coordinates[2]]
+    field_unit_app = field_.apply(coord_system_, unit_trajectory)
+    field_unit_sympy_vector = array_to_sympy_vector(coord_system_, field_unit_app)
+    field_rotor_applied = field_rotor_definition.rhs.subs(field, field_unit_sympy_vector).doit()
+    field_rotor_vector = sympy_vector_to_array(field_rotor_applied)
+    field_rotor_lambda = field_from_unit_vector(coord_system_, field_rotor_vector)
+    field_applied = field_rotor_lambda.apply(coord_system_, surface_)
+    field_as_vector = array_to_sympy_vector(coord_system_, field_applied)
+    surface_sympy_vector = array_to_sympy_vector(coord_system_, surface_)
+    surface_element_x = surface_element_by_parameter1_definition.rhs.subs(surface, surface_sympy_vector).doit()
+    surface_element_y = surface_element_by_parameter2_definition.rhs.subs(surface, surface_sympy_vector).doit()
     surface_element_result = surface_element_definition.rhs.subs({surface_element_by_parameter1: surface_element_x, surface_element_by_parameter2: surface_element_y}).doit()
-    result_expr = definition.rhs.subs({field_rotor: field_applied, surface_element: surface_element_result, parameter1_from: parameter1_from_, parameter1_to: parameter1_to_, parameter2_from: parameter2_from_, parameter2_to: parameter2_to_}).doit()
+    result_expr = definition.rhs.subs({field_rotor: field_as_vector, surface_element: surface_element_result, parameter1_from: parameter1_from_, parameter1_to: parameter1_to_, parameter2_from: parameter2_from_, parameter2_to: parameter2_to_}).doit()
     # some expressions are invalid without simplifying them first
     return simplify(result_expr)
