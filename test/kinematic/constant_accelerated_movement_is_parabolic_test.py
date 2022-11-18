@@ -32,7 +32,6 @@ def test_basic_distance(test_args):
     result_vector = convert_to(result, units.meter).subs(units.meter, 1).evalf(2)
     assert result_vector == approx(95, 0.01)
 
-
 def test_bad_velocity(test_args):
     Vb = units.Quantity('Vb')
     SI.set_quantity_dimension(Vb, units.length)
@@ -43,7 +42,6 @@ def test_bad_velocity(test_args):
 
     with raises(TypeError):
         movement_law.calculate_distance(100, test_args.a, test_args.t)
-
 
 def test_bad_acceleration(test_args):
     ab = units.Quantity('ab')
