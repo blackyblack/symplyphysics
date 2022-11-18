@@ -5,7 +5,7 @@ from symplyphysics import (
     units, convert_to, SI, errors
 )
 
-from symplyphysics.laws.kinematic import accelerated_movement_is_parabolic as movement_law
+from symplyphysics.laws.kinematic import constant_acceleration_movement_is_parabolic as movement_law
 # Description
 ## The man starts running with initial speed 10m/s and is getting tired while running (decreases his velocity) with -0.1 m/s/s. How far this man can run away in 10 seconds?
 
