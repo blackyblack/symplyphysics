@@ -7,15 +7,13 @@ from symplyphysics import (
 from symplyphysics.laws.kinematic import potential_energy_from_mass_and_height as potential_energy
 
 # A body with a mass of 9 grams at an altitude of 1500 meters has a potential
-# energy of 132.57 joules.How much potential energy will remain in the body at
-# an altitude of 500 if the body began to fall at
-# an initial velocity of 0 m/s?
-
+# energy of 132.57 joules. How much potential energy will remain in the body at
+# an altitude of 500 if the body began to fall at an initial velocity of 0 m/s?
 @fixture
 def test_args():
     m = units.Quantity('m')
     SI.set_quantity_dimension(m, units.mass)
-    SI.set_quantity_scale_factor(m, 0.009 * units.kilogram)
+    SI.set_quantity_scale_factor(m, 9 * units.gram)
     h = units.Quantity('h')
     SI.set_quantity_dimension(h, units.length)
     SI.set_quantity_scale_factor(h, 500 * units.meter)
@@ -31,8 +29,8 @@ def test_basic_energy(test_args):
 
 def test_bad_body_mass(test_args):
     bm = units.Quantity('bm')
-    SI.set_quantity_dimension(bm, units.acceleration)
-    SI.set_quantity_scale_factor(bm, 1 * units.meter/units.second**2)
+    SI.set_quantity_dimension(bm, units.length)
+    SI.set_quantity_scale_factor(bm, 1 * units.meter)
     with raises(errors.UnitsError):
         potential_energy.calculate_potential_energy(bm, test_args.h)
     with raises(TypeError):
