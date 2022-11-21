@@ -26,7 +26,6 @@ def test_basic_energy(test_args):
     result_energy = convert_to(result, units.joule).subs(units.joule, 1).evalf(3)
     assert result_energy == approx(44.19, 0.01)
 
-
 def test_bad_body_mass(test_args):
     bm = units.Quantity('bm')
     SI.set_quantity_dimension(bm, units.length)
