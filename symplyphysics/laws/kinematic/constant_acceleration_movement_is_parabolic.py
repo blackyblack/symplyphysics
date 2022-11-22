@@ -7,9 +7,8 @@ from symplyphysics.definitions import acceleration_is_velocity_derivative as acc
 
 # Description
 ## Accelerated movement is the kind of movement when object has constant acceleration (e.g with the constant force applied to object).
-## The movement is S = S0 + V0*t + a * t**2/2, where
+## The movement is S = V0*t + a * t**2/2, where
 ## S is distance in the moment of time t,
-## S0 is distance at the start of observation (the moment of time 0). Usually it is assumed as 0.
 ## V0 is the velocity in the moment of time 0 (initial velocity),
 ## a is acceleration,
 ## and t is time.
@@ -34,8 +33,11 @@ constant_accelerated_movement_function = dsolved_movement.rhs
 derived_law = Eq(distance_function(movement_time), constant_accelerated_movement_function)
 
 # Prove that constant_accelerated_movement_function equals to law.rhs, given C1 = initial_velocity, C2 = 0
-difference = simplify(solve(law, distance_function(movement_time), dict=True)[0][distance_function(movement_time)] - constant_accelerated_movement_function.subs({'C1': initial_velocity, 'C2': 0}))
+difference = simplify(derived_law.rhs.subs({'C1': initial_velocity, 'C2': 0}) - law.rhs)
 assert(difference == 0)
+
+def print():
+    return pretty(law, use_unicode=False)
 
 @validate_input(initial_velocity_=units.velocity, acceleration_=units.acceleration, time_=units.time)
 @validate_output(units.length)
