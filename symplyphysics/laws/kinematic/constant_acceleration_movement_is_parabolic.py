@@ -15,9 +15,8 @@ from symplyphysics.definitions import acceleration_is_velocity_derivative as acc
 ## and t is time.
 
 # Conditions
-## - Space is 1-dimentional
+## - Space is 1-dimensional
 ## - At the start of observation object is in zero position
-## - If space has more dimentions, law is applicable to projections independently.
 
 movement_time = symbols('movement_time')
 constant_acceleration = symbols('constant_acceleration', constant=True)
