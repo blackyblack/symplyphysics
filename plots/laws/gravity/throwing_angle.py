@@ -4,19 +4,19 @@
 ## You throw the grenade to enemies. Which angle of throwing should you choose to hit the farest enemy?
 
 from math import pi
-from sympy import sin, cos
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import symbols, Eq, pretty, solve, Function
+from symplyphysics.laws.kinematic import constant_acceleration_movement_is_parabolic as movement_law
+from symplyphysics.laws.kinematic import planar_projection_is_cosine as projector
 
 flight_time = symbols('flight_time')
-throwing_velocity = symbols('throwing')
+throwing_velocity = symbols('throwing_velocity')
 alpha = symbols('alpha')
 Distance = symbols('Distance')
-velocity_vertical = symbols('v_vertical')
-velocity_horizontal = symbols('v_horizontal')
-velocity_vertical = throwing_velocity * sin(alpha)
-velocity_horizontal = throwing_velocity * cos(alpha)
+
+velocity_vertical = projector.calculate_projection(throwing_velocity, pi / 2 - alpha)
+velocity_horizontal = projector.calculate_projection(throwing_velocity, alpha)
 time = symbols('time')
 gravitational_constant = symbols('gravitational_constant')
 
@@ -31,7 +31,7 @@ flight_time = solve(end_of_flight, time, dict=True)[1][time]
 Length = (velocity_horizontal * flight_time).subs({throwing_velocity: 1, gravitational_constant: 1})
 
 # Let's find needed angle analytically.
-# Maximum of Length function is where it's derivation becomes zero.
+
 
 Len = plot(
     Length,
