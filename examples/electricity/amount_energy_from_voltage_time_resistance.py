@@ -1,12 +1,10 @@
 from symplyphysics import (
-    units, convert_to,solve, SI,Quantity, expr_to_quantity
+    expr_to_quantity, units, convert_to,solve, SI, Eq, pretty
 )
-from symplyphysics import (
-    symbols, Eq, pretty
-)
+
 from symplyphysics.laws.electricity import amount_energy_from_voltage_time_resistance as joule_lenz_law
 from symplyphysics.definitions import amount_energy_from_mass_and_temperature as operate_energy
-from symplyphysics.definitions import density_from_mass_volume as density
+from symplyphysics.definitions import density_from_mass_volume as density_law
 from symplyphysics.laws.electricity import current_is_proportional_to_voltage as ohm_law
 from symplyphysics.definitions import power_is_proportional_voltage_and_current as operate_power
 
@@ -14,52 +12,57 @@ from symplyphysics.definitions import power_is_proportional_voltage_and_current 
 # The power of the kettle is 1500 watts. How long will it take for the
 # temperature of the water to drop to a comfortable 35 degrees Celsius?
 # Since physics uses Kelvin temperature units, we must consider that 0 degrees Celsius = 273 Kelvin.
-# Density of water 1000 kilogram / meter**3
-density_example = units.Quantity('density_example')
-SI.set_quantity_dimension(density_example, units.mass / units.volume)
-SI.set_quantity_scale_factor(density_example, 1000 * units.kilogram / units.meter**3)
-power_example = units.Quantity('power_example')
-SI.set_quantity_dimension(power_example, units.power)
-SI.set_quantity_scale_factor(power_example, 1500 * units.watt)
-v_example = units.Quantity('v_example')
-SI.set_quantity_dimension(v_example, units.volume)
-SI.set_quantity_scale_factor(v_example, 0.5 * units.liter)
-C_example = units.Quantity('C_example')
-SI.set_quantity_dimension(C_example, units.energy / (units.mass * units.temperature))
-SI.set_quantity_scale_factor(C_example, 4200 * units.joule / (units.kilogram * units.kelvin))
-t1_example = units.Quantity('t1_example')
-SI.set_quantity_dimension(t1_example, units.temperature)
-SI.set_quantity_scale_factor(t1_example, (100 + 273) * units.kelvin)
-t2_example = units.Quantity('t2_example')
-SI.set_quantity_dimension(t2_example, units.temperature)
-SI.set_quantity_scale_factor(t2_example, (35 + 273) * units.kelvin)
-Celsius = symbols('Celsius')
-body_mass = solve(density.definition, density.mass, dict=True)[0][density.mass]
-current_1 = solve(ohm_law.law, ohm_law.current, dict=True)[0][ohm_law.current]
-current_2 = solve(operate_power.law,operate_power.current, dict=True)[0][operate_power.current]
-current = Eq(current_1, current_2)
-resistance_solved = solve(current, ohm_law.resistance, dict=True)[0][ohm_law.resistance]
-law = Eq(operate_energy.law.subs({operate_energy.body_mass: body_mass}),
-    joule_lenz_law.law.subs({joule_lenz_law.resistance: resistance_solved}))
-solved = solve(law, joule_lenz_law.time, dict=True)[0][joule_lenz_law.time]
-time = Eq(joule_lenz_law.time, solved)
-print("\nFormula is:\n\n {}".format(pretty(time, use_unicode=False)))
-law = law.subs({operate_power.power: power_example, operate_energy.body_mass: body_mass,
-    operate_energy.specific_heat_capacity:C_example,
-    operate_energy.temperature_begin: t1_example, operate_energy.temperature_end: t2_example,
-    density.density: density_example, density.volume: v_example
+
+CELSIUS_TO_KELVIN_OFFSET = int(273)
+
+# water parameters: density and specific heat capacity
+water_density = units.Quantity('water_density')
+SI.set_quantity_dimension(water_density, units.mass / units.volume)
+SI.set_quantity_scale_factor(water_density, 1000 * units.kilogram / units.meter**3)
+water_heat_capacity = units.Quantity('water_heat_capacity')
+SI.set_quantity_dimension(water_heat_capacity, units.energy / (units.mass * units.temperature))
+SI.set_quantity_scale_factor(water_heat_capacity, 4200 * units.joule / (units.kilogram * units.kelvin))
+
+# kettle parameters: power and volume
+kettle_power = units.Quantity('kettle_power')
+SI.set_quantity_dimension(kettle_power, units.power)
+SI.set_quantity_scale_factor(kettle_power, 1500 * units.watt)
+kettle_volume = units.Quantity('kettle_volume')
+SI.set_quantity_dimension(kettle_volume, units.volume)
+SI.set_quantity_scale_factor(kettle_volume, 0.5 * units.liter)
+
+# heating parameters
+initial_temperature = units.Quantity('initial_temperature')
+SI.set_quantity_dimension(initial_temperature, units.temperature)
+SI.set_quantity_scale_factor(initial_temperature, (100 + CELSIUS_TO_KELVIN_OFFSET) * units.kelvin)
+final_temperature = units.Quantity('final_temperature')
+SI.set_quantity_dimension(final_temperature, units.temperature)
+SI.set_quantity_scale_factor(final_temperature, (35 + CELSIUS_TO_KELVIN_OFFSET) * units.kelvin)
+
+ohm_law_applied = ohm_law.law.subs({ohm_law.current: operate_power.current, ohm_law.resistance: joule_lenz_law.resistance, ohm_law.voltage: joule_lenz_law.voltage})
+operate_power_applied = operate_power.law.subs(operate_power.voltage, joule_lenz_law.voltage)
+density_applied = density_law.definition.subs(density_law.mass, operate_energy.body_mass)
+
+law = [density_applied, ohm_law_applied, operate_power_applied, operate_energy.law, joule_lenz_law.law]
+cooling_time_solved = solve(law, (joule_lenz_law.amount_energy, joule_lenz_law.resistance, operate_power.current, operate_energy.body_mass, joule_lenz_law.time), dict=True)[0][joule_lenz_law.time]
+cooling_time_eq = Eq(joule_lenz_law.time, cooling_time_solved)
+
+print("\nFormula is:\n\n {}".format(pretty(cooling_time_eq, use_unicode=False)))
+
+cooling_time_expr = cooling_time_solved.subs({
+    operate_power.power: kettle_power,
+    density_law.density: water_density,
+    density_law.volume: kettle_volume,
+    operate_energy.specific_heat_capacity: water_heat_capacity,
+    operate_energy.temperature_begin: initial_temperature, operate_energy.temperature_end: final_temperature
 })
-solved_example = solve(law, joule_lenz_law.time, dict=True)[0][joule_lenz_law.time]
-print("\n For Power = {} {}, water volume = {} {}, temperature_begin = {} {}, temperature_end = {} {}: cooling time = {} {}\n"
-    .format(
-        convert_to(power_example, units.watt).subs(units.watt, 1).evalf(5),
-        units.watt,
-        convert_to(v_example, units.liter).subs(units.liter, 1).evalf(3),
-        units.liter,
-        convert_to(t1_example - 273, units.kelvin).subs(units.kelvin, 1).evalf(3),
-        Celsius,
-        convert_to(t2_example - 273, units.kelvin).subs(units.kelvin, 1).evalf(3),
-        Celsius,
-        convert_to(solved_example, units.second).subs(units.second, 1).evalf(3),
-        units.second
-))
+cooling_time = expr_to_quantity(cooling_time_expr, "cooling_time")
+
+kettle_power_value = convert_to(kettle_power, units.watt).subs(units.watt, 1).evalf(5)
+kettle_volume_value = convert_to(kettle_volume, units.liter).subs(units.liter, 1).evalf(3)
+kettle_t1_value = convert_to(initial_temperature, units.kelvin).subs(units.kelvin, 1).evalf(3) - CELSIUS_TO_KELVIN_OFFSET
+kettle_t2_value = convert_to(final_temperature, units.kelvin).subs(units.kelvin, 1).evalf(3) - CELSIUS_TO_KELVIN_OFFSET
+cooling_time_value = convert_to(cooling_time, units.second).subs(units.second, 1).evalf(3)
+
+print(f"\nPower = {kettle_power_value} {units.watt}, water volume = {kettle_volume_value} {units.liter}, temperature_begin = {kettle_t1_value} celsius degrees, temperature_end = {kettle_t2_value} celsius degrees: cooling time = {cooling_time_value} {units.second}\n")
+print(f"\nSolution: cooling time = {cooling_time_value} {units.second}\n")

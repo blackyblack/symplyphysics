@@ -7,11 +7,15 @@ from symplyphysics import (
 # The amount of energy released by a conductor with a current is directly proportional
 # to the square of the applied voltage, the time of the current and inversely proportional
 # to the resistance of the conductor. This is the differential form of the law
-# Amount of energy Q = U**2 *t / R
+## This Joule-Lenz law is derived from more generic law:
+## See: [dissipated_heat_power](./dissipated_heat_power_is_proportional_to_current_square.py) implementation.
+
+# Amount of energy Q = U**2 * t / R
 # where:
 # U - voltage to conductor
 # t - time of current action
 # R - resistance of conductor
+
 amount_energy, voltage, time, resistance = symbols(
     'amount_energy voltage time resistance')
 law = Eq(amount_energy, (voltage**2 * time) / resistance)
