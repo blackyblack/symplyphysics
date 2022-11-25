@@ -3,22 +3,26 @@ from symplyphysics import (
     validate_input, validate_output, expr_to_quantity,
 )
 # Description
-# Amount heat energy of current Q = U**2 *t / R
+
+# The amount of energy released by a conductor with a current is directly proportional
+# to the square of the applied voltage, the time of the current and inversely proportional
+# to the resistance of the conductor. This is the differential form of the law
+# Amount of energy Q = U**2 *t / R
 # where:
-# U - voltage
-# t - time
-# R - resistance
-amount_energy, operating_voltage, operating_time, resistance_heater = symbols(
-    'amount_energy operating_voltage operating_time resistance_heater')
-law = Eq(amount_energy, (operating_voltage**2 * operating_time) / resistance_heater)
+# U - voltage to conductor
+# t - time of current action
+# R - resistance of conductor
+amount_energy, voltage, time, resistance = symbols(
+    'amount_energy voltage time resistance')
+law = Eq(amount_energy, (voltage**2 * time) / resistance)
 
 def print():
     return pretty(law, use_unicode=False)
 
-@validate_input(operating_voltage_=units.voltage, operating_time_=units.time, resistance_heater_=units.impedance)
+@validate_input(voltage_=units.voltage, time_=units.time, resistance_=units.impedance)
 @validate_output(units.energy)
-def calculate_amount_energy(operating_voltage_: Quantity, operating_time_: Quantity, resistance_heater_: Quantity) -> Quantity:
+def calculate_amount_energy(voltage_: Quantity, time_: Quantity, resistance_: Quantity) -> Quantity:
     result_energy_expr = solve(law, amount_energy, dict=True)[0][amount_energy]
     result_expr = result_energy_expr.subs({
-        operating_voltage: operating_voltage_, operating_time: operating_time_, resistance_heater: resistance_heater_})
+        voltage: voltage_, time: time_, resistance: resistance_})
     return expr_to_quantity(result_expr, 'amount_energy')

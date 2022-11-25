@@ -5,7 +5,7 @@ from symplyphysics import (
     units, convert_to, SI, errors
 )
 from symplyphysics.definitions import power_is_proportional_voltage_and_current as power_def
-# What is the power can release the battery at 9 V and a current of 0.5 A?
+# What is the power can be released the battery at 9 V and a current of 0.5 A?
 @fixture
 def test_args():
     I = units.Quantity('I')

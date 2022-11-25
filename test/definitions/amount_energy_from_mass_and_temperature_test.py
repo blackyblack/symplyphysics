@@ -6,8 +6,9 @@ from symplyphysics import (
 )
 from symplyphysics.definitions import amount_energy_from_mass_and_temperature as amount_energy
 
-# How much energy does it take to heat 0.5 kilograms of water to 50 kelvin?
+# How much energy does it take to heat 0.5 liter of water to 50 Celsius degree?
 # Specific heat capacity of water is 4200 J/kg*K , ignore losses.
+# Density of water - 1000 kilogram / meter**3, 273 Kelvin == 0 Celsius_degree
 @fixture
 def test_args():
     C = units.Quantity('C')
@@ -15,13 +16,13 @@ def test_args():
     SI.set_quantity_scale_factor(C, 4200 * units.joule / (units.kilogram * units.kelvin))
     m = units.Quantity('m')
     SI.set_quantity_dimension(m, units.mass)
-    SI.set_quantity_scale_factor(m, 0.5 * units.kilogram)
+    SI.set_quantity_scale_factor(m, 0.5 * units.liter * 1000 * units.kilogram / units.meter**3)
     t1 = units.Quantity('t1')
     SI.set_quantity_dimension(t1, units.temperature)
-    SI.set_quantity_scale_factor(t1, 323 * units.kelvin)
+    SI.set_quantity_scale_factor(t1, (323 - 273) * units.kelvin)
     t2 = units.Quantity('t2')
     SI.set_quantity_dimension(t2, units.temperature)
-    SI.set_quantity_scale_factor(t2, 273 * units.kelvin)
+    SI.set_quantity_scale_factor(t2, (273 - 273) * units.kelvin)
     Args = namedtuple('Args', ['C', 'm', 't1', 't2'])
     return Args(C=C, m=m, t2=t2, t1=t1)
 
