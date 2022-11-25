@@ -1,7 +1,4 @@
 from symplyphysics import (
-    units, convert_to,solve, SI
-)
-from symplyphysics import (
     symbols, Eq, pretty, solve
 )
 from symplyphysics.laws.kinematic import potential_energy_from_mass_and_height as potential_energy
@@ -14,6 +11,7 @@ Ep2 = potential_energy.law.subs({potential_energy.body_mass: 2 * body_mass_1, po
 law = Eq(Ep2, Ep1)
 solved = solve(law, height_1, dict=True)[0][height_1]
 answer = Eq(height_1, solved)
+
 print("\nFormula is:\n{}".format(potential_energy.print()))
 print("\nSolution:\nIF potential_energy_1 = potential_energy_2 AND body_mass_2 = 2 * body_mass_1 THEN {}".
       format(pretty(answer, use_unicode=False)))

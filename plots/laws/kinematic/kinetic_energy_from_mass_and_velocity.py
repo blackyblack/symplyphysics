@@ -4,8 +4,10 @@ from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics.laws.kinematic import kinetic_energy_from_mass_and_velocity as kinetic_energy
 
 print("Formula is:\n{}".format(kinetic_energy.print()))
+
 solved = solve(kinetic_energy.law, kinetic_energy.kinetic_energy_of_body, dict=True)[0][kinetic_energy.kinetic_energy_of_body]
-result_energy = solved.subs({kinetic_energy.body_mass: 1})
+result_energy = solved.subs(kinetic_energy.body_mass, 1)
+
 p1 = plot(
     result_energy,
     (kinetic_energy.body_velocity, 0, 6),

@@ -1,5 +1,6 @@
 from symplyphysics import (
-    symbols, Function, Eq, pretty, dsolve, solve, units, Quantity, validate_input, validate_output, expr_to_quantity, simplify
+    symbols, Function, Eq, pretty, dsolve, solve, units, Quantity,
+    validate_input, validate_output, expr_to_quantity, simplify
 )
 
 from symplyphysics.definitions import velocity_is_movement_derivative as velocity_definition
