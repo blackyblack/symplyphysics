@@ -34,7 +34,7 @@ def test_basic_force(test_args):
     assert result_force == approx(0.27809583, 0.0000001)
 
 
-def test_bad_mass_1(test_args):
+def test_bad_mass(test_args):
     mb = units.Quantity('mb')
     SI.set_quantity_dimension(mb, units.length)
     SI.set_quantity_scale_factor(mb, 1 * units.meter)
@@ -45,17 +45,11 @@ def test_bad_mass_1(test_args):
     with raises(TypeError):
         gravity_law.calculate_force(100, test_args.m2, test_args.R)
 
-
-def test_bad_mass_2(test_args):
-    mb = units.Quantity('mb')
-    SI.set_quantity_dimension(mb, units.length)
-    SI.set_quantity_scale_factor(mb, 1 * units.meter)
-
     with raises(errors.UnitsError):
         gravity_law.calculate_force(test_args.m1, mb, test_args.R)
 
-    with raises(TypeError):
-        gravity_law.calculate_force(test_args.m1, 100, test_args.R)        
+    with raises(TypeError): 
+        gravity_law.calculate_force(test_args.m1, 100, test_args.R)            
 
 
 def test_bad_distance(test_args):
