@@ -6,8 +6,8 @@ from symplyphysics import (
 )
 from symplyphysics.laws.electricity import amount_energy_from_voltage_time_resistance as joule_lenz_law
 
-# How much energy does it take to heat 0.5 kilograms of water to 50 kelvin?
-# Specific heat capacity of water is 4200 J/kg*K , ignore losses.
+#How much energy can a household electric kettle produce to heat water in one minute
+#at 220 volts and a heater resistance of 36 ohms?
 @fixture
 def test_args():
     U = units.Quantity('U')
@@ -15,7 +15,7 @@ def test_args():
     SI.set_quantity_scale_factor(U, 220 * units.volt)
     t = units.Quantity('t')
     SI.set_quantity_dimension(t, units.time)
-    SI.set_quantity_scale_factor(t, 100 * units.second)
+    SI.set_quantity_scale_factor(t, 60 * units.second)
     R = units.Quantity('R')
     SI.set_quantity_dimension(R, units.impedance)
     SI.set_quantity_scale_factor(R, 36 * units.ohm)
@@ -25,8 +25,8 @@ def test_args():
 def test_basic_amount(test_args):
     result = joule_lenz_law.calculate_amount_energy(test_args.U, test_args.t, test_args.R)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_energy = convert_to(result, units.joule).subs(units.joule, 1).evalf(7)
-    assert result_energy == approx(134444.0, 0.00005)
+    result_energy = convert_to(result, units.joule).subs(units.joule, 1).evalf(6)
+    assert result_energy == approx(80666.6, 0.000001)
 
 def test_bad_voltage(test_args):
     bU = units.Quantity('bU')

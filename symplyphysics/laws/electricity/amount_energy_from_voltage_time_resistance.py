@@ -3,13 +3,13 @@ from symplyphysics import (
     validate_input, validate_output, expr_to_quantity,
 )
 # Description
-# Amount heat energy of current Q = U^2 *t / R
+# Amount heat energy of current Q = U**2 *t / R
 # where:
 # U - voltage
 # t - time
 # R - resistance
 amount_energy, operating_voltage, operating_time, resistance_heater = symbols(
-    'amount_energy, operating_voltage, operating_time, resistance_heater')
+    'amount_energy operating_voltage operating_time resistance_heater')
 law = Eq(amount_energy, (operating_voltage**2 * operating_time) / resistance_heater)
 
 def print():

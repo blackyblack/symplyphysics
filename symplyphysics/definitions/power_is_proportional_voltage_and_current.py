@@ -4,7 +4,7 @@ from symplyphysics import (
 )
 
 # Description
-# Power of current is proportional current and voltage
+# Power of current is proportional to current and voltage
 # P = I * U
 # where:
 # I -the current flowing through element
