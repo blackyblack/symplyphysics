@@ -7,7 +7,7 @@ from math import pi
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import symbols, Eq, solve, Function
-from symplyphysics.laws.kinematic import constant_acceleration_movement_is_parabolic as vertical_movement_law
+from symplyphysics.laws.kinematic import constant_acceleration_movement_is_parabolic as movement_law
 from symplyphysics.laws.kinematic import planar_projection_is_cosine as projector
 
 flight_time = symbols('flight_time')
@@ -35,38 +35,34 @@ initial_horizontal_velocity = solve(projector.law, projector.projection, dict=Tr
     })
 
 x_function = symbols('x_function', cls=Function)
-x_function = vertical_movement_law.constant_accelerated_movement_function.subs(
-    {
-        'C1': initial_horizontal_velocity, 
-        vertical_movement_law.initial_velocity: initial_horizontal_velocity, 
-        vertical_movement_law.movement_time: time_argument, 
-        vertical_movement_law.constant_acceleration: 0,
-        'C2':0
+x_function = movement_law.law.rhs.subs(
+    {        
+        movement_law.initial_velocity: initial_horizontal_velocity, 
+        movement_law.movement_time: time_argument, 
+        movement_law.constant_acceleration: 0
     })
 
 y_function = symbols('y_function', cls=Function)
-y_function = vertical_movement_law.constant_accelerated_movement_function.subs(
-    {
-        'C1': initial_vertical_velocity, 
-        vertical_movement_law.movement_time: time_argument, 
-        vertical_movement_law.constant_acceleration: -gravitational_acceleration,
-        'C2':0
+y_function = movement_law.law.rhs.subs(
+    {         
+        movement_law.movement_time: time_argument, 
+        movement_law.constant_acceleration: -gravitational_acceleration        
     })
 
-print(x_function)
-print(y_function)
+end_of_flight = Eq(0, y_function)
 
-end_of_flight = Eq(0, y_function(flight_time))
-#flight_time = solve(end_of_flight, time_argument, dict=True)[1][time_argument] 
 # there are 2 points of the trajectory with h = 0, the first one is the start point, and the second one is at destination
 # We need the second one
+flight_time = solve(end_of_flight, time_argument, dict=True)[1][time_argument]
 
-length = x_function(flight_time)
+flight_distance = x_function.subs({time_argument: flight_time})
+print(flight_distance)
 
 # Let's find needed angle analytically.
 
+'''
 Len = plot(
-    length,
+    flight_distance,
     (throwing_angle, 0, pi / 2),
     line_color='blue',    
     title='Length',    
@@ -85,3 +81,4 @@ tau_line = plot(
 )
 Len.append(tau_line[0])
 Len.show()
+'''
