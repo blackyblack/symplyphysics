@@ -31,7 +31,7 @@ def test_basic_amount(test_args):
     result = amount_energy.calculate_amount_energy(test_args.C, test_args.m, test_args.t1, test_args.t2)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
     result_energy = convert_to(result, units.joule).subs(units.joule, 1).evalf(7)
-    assert result_energy == approx(-105000.1, 0.000001)
+    assert result_energy == approx(105000.1, 0.000001)
 
 
 def test_bad_specific_heat(test_args):
