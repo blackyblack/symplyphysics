@@ -53,7 +53,7 @@ cooling_time_expr = cooling_time_solved.subs({
     density_law.density: water_density,
     density_law.volume: kettle_volume,
     operate_energy.specific_heat_capacity: water_heat_capacity,
-    operate_energy.temperature_begin: initial_temperature, operate_energy.temperature_end: final_temperature
+    operate_energy.temperature_origin: initial_temperature, operate_energy.temperature_end: final_temperature
 })
 cooling_time = expr_to_quantity(cooling_time_expr, "cooling_time")
 
