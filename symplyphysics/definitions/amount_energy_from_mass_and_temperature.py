@@ -4,14 +4,16 @@ from symplyphysics import (
 )
 
 # Description
-# Amount of energy for body heat Q = C * m * (t2 - t1)
+# Amount of energy for body heat Q = C * m * (t1 - t2)
 # where:
 # C - specific heat capacity
 # m - body mass
-# t2 - final temperature
-# t1 - initial temperature
+# t1 - temperature_begin (origin process)
+# t2 - temperature_end ( end process)
 # Note: specific heat capacity C is parameter indicates how much energy in joules
 # must be expended to heat a unit mass of a substance by one unit temperature.
+# Note: the resultant energy is the energy consumed for changing body temperature from value t1 to value t2
+# Negative value Q is for absorbed energy( heating), positive - for released energy(cooling)
 amount_energy, specific_heat_capacity, body_mass, temperature_begin, temperature_end = symbols(
     'amount_energy specific_heat_capacity body_mass temperature_begin temperature_end'
 )

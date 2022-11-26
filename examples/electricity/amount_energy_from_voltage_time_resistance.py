@@ -8,9 +8,8 @@ from symplyphysics.definitions import density_from_mass_volume as density_law
 from symplyphysics.laws.electricity import current_is_proportional_to_voltage as ohm_law
 from symplyphysics.definitions import power_is_proportional_voltage_and_current as operate_power
 
-# The household electric kettle heated 0.5 liters of water to boiling.
-# The power of the kettle is 1500 watts. How long will it take for the
-# temperature of the water to drop to a comfortable 35 degrees Celsius?
+# The household electric kettle heated 0.5 liters of water from 20 degree Celsius to boiling.
+# The power of the kettle is 1500 watts. How long did the heating process take?
 # Since physics uses Kelvin temperature units, we must consider that 0 degrees Celsius = 273 Kelvin.
 
 CELSIUS_TO_KELVIN_OFFSET = int(273)
@@ -34,10 +33,10 @@ SI.set_quantity_scale_factor(kettle_volume, 0.5 * units.liter)
 # heating parameters
 initial_temperature = units.Quantity('initial_temperature')
 SI.set_quantity_dimension(initial_temperature, units.temperature)
-SI.set_quantity_scale_factor(initial_temperature, (100 + CELSIUS_TO_KELVIN_OFFSET) * units.kelvin)
+SI.set_quantity_scale_factor(initial_temperature, (20 + CELSIUS_TO_KELVIN_OFFSET) * units.kelvin)
 final_temperature = units.Quantity('final_temperature')
 SI.set_quantity_dimension(final_temperature, units.temperature)
-SI.set_quantity_scale_factor(final_temperature, (35 + CELSIUS_TO_KELVIN_OFFSET) * units.kelvin)
+SI.set_quantity_scale_factor(final_temperature, (100 + CELSIUS_TO_KELVIN_OFFSET) * units.kelvin)
 
 ohm_law_applied = ohm_law.law.subs({ohm_law.current: operate_power.current, ohm_law.resistance: joule_lenz_law.resistance, ohm_law.voltage: joule_lenz_law.voltage})
 operate_power_applied = operate_power.law.subs(operate_power.voltage, joule_lenz_law.voltage)

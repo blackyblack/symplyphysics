@@ -6,8 +6,8 @@ from symplyphysics import (
 )
 from symplyphysics.laws.electricity import amount_energy_from_voltage_time_resistance as joule_lenz_law
 
-#How much energy can a household electric kettle produce to heat water in one minute
-# at 220 volts and a heater resistance of 36 ohms?
+#  How much energy can a household electric kettle produce to heat water in one minute
+#  at 220 volts and a heater resistance of 36 ohms?
 @fixture
 def test_args():
     U = units.Quantity('U')
