@@ -13,7 +13,7 @@ from symplyphysics import (
 # Note: specific heat capacity C is parameter indicates how much energy in joules
 # must be expended to heat a unit mass of a substance by one unit temperature.
 # Note: the resultant energy is the energy consumed for changing body temperature from value t1 to value t2
-# Positive value Q is for absorbed energy (heating), - negative for released energy (cooling)
+# Positive value Q is for absorbed energy (heating), negative for released energy (cooling)
 
 amount_energy, specific_heat_capacity, body_mass, temperature_origin, temperature_end = symbols(
     'amount_energy specific_heat_capacity body_mass temperature_origin temperature_end'
