@@ -7,8 +7,9 @@ from symplyphysics import (
 # Power of current is proportional to current and voltage
 # P = I * U
 # where:
-# I -the current flowing through element
+# I - the current flowing through element
 # U - is voltage  on this element
+
 power, current, voltage = symbols('power current voltage')
 law = Eq(power, current * voltage)
 
