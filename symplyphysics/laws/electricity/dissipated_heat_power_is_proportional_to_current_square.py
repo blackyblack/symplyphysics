@@ -5,7 +5,7 @@ from symplyphysics import (
 
 # Description
 ## Dissipated heat power is proportional to current square and resistance
-## Joule-Lenz law: P = I^2 * R
+## Joule-Lenz law: P = I**2 * R
 ## P - is dissipated heat power of the element
 ## I is current flowing through this element
 ## R is impedance of this element
