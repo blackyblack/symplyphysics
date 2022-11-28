@@ -20,7 +20,8 @@ gravitational_acceleration = symbols('gravitational_acceleration')
 ## Choose coordinates: object starts its flight from (0, 0), vertical axis is upwards, horisontal axis is toward object's destination.
 ## So the angle between X-axis and initial speed is throwing_angle, and the angle between Y-axis and gravitational acceleration is pi / 2 - throwing_angle.
 ## Both X and Y projections of movement are constant acceleration movements. 
-## The vertical initial speed is projection of throwing_velocity to Y, acceleration is projection of gravitational acceleration to Y and it is -g.
+## The vertical initial speed is projection of throwing_velocity to Y, acceleration is projection of gravitational acceleration to Y and it is -g
+## (-g is the projection of free fall acceleration which is downwards to the Y axis which is upwards, so angle between acceleration and Axis is 180°)
 ## The horizontal initial speed is projection of throwing_velocity to X, acceleration is 0.
 ## Flight ends when y == 0 again.
 
@@ -38,7 +39,6 @@ initial_vertical_velocity = solve(projector.law, projector.projection, dict=True
 
 print(f"Initial vertical velocity: {initial_vertical_velocity}")
 
-x_function = symbols('x_function', cls=Function)
 x_function = movement_law.law.rhs.subs(
     {        
         movement_law.initial_velocity: initial_horizontal_velocity, 
@@ -47,7 +47,6 @@ x_function = movement_law.law.rhs.subs(
     })
 print(f"x(t): {x_function}")
 
-y_function = symbols('y_function', cls=Function)
 y_function = movement_law.law.rhs.subs(
     {         
         movement_law.movement_time: time_argument, 
@@ -66,7 +65,6 @@ flight_distance = x_function.subs({time_argument: flight_time})
 print(f"Flight distance: {flight_distance}")
 
 # for plotting purposes we don't care about scale and may substitute constants with 1
-flight_distance_plotted = symbols('flight_distance_plotted', cls=Function)
 flight_distance_plotted = flight_distance.subs(
     {
         throwing_velocity: 1,
