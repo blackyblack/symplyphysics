@@ -6,7 +6,7 @@
 from math import pi
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
-from symplyphysics import symbols, Eq, solve, Function, Derivative, simplify, dsolve, sin
+from symplyphysics import symbols, Eq, solve, Function, Derivative, simplify, sin
 from symplyphysics.laws.kinematic import constant_acceleration_movement_is_parabolic as movement_law
 from symplyphysics.laws.kinematic import planar_projection_is_cosine as projector
 
@@ -28,17 +28,15 @@ initial_horizontal_velocity = solve(projector.law, projector.projection, dict=Tr
     {
         projector.vector_length: throwing_velocity, projector.vector_angle: throwing_angle
     })
+print(f"Initial horizontal velocity: {initial_horizontal_velocity}")
 
-print('Initial horizontal velocity:')
-print(initial_horizontal_velocity)    
-
+# the angle between initial velocity and Y axis is (pi/2 - throwing angle) (that's because of pi/2 angle between X and Y axis)
 initial_vertical_velocity = solve(projector.law, projector.projection, dict=True)[0][projector.projection].subs(
     {
         projector.vector_length: throwing_velocity, projector.vector_angle: pi / 2 - throwing_angle
     })
 
-print('Initial vertical velocity:')
-print(initial_vertical_velocity)    
+print(f"Initial vertical velocity: {initial_vertical_velocity}")
 
 x_function = symbols('x_function', cls=Function)
 x_function = movement_law.law.rhs.subs(
@@ -47,9 +45,7 @@ x_function = movement_law.law.rhs.subs(
         movement_law.movement_time: time_argument, 
         movement_law.constant_acceleration: 0
     })
-
-print('x(t)')
-print(x_function)
+print(f"x(t): {x_function}")
 
 y_function = symbols('y_function', cls=Function)
 y_function = movement_law.law.rhs.subs(
@@ -58,39 +54,36 @@ y_function = movement_law.law.rhs.subs(
         movement_law.constant_acceleration: -gravitational_acceleration,
         movement_law.initial_velocity: initial_vertical_velocity        
     })
-
-print('y(t)')    
-print(y_function)
+print(f"y(t): {y_function}")
 
 end_of_flight = Eq(0, y_function)
 # there are 2 points of the trajectory with h = 0, the first one is the start point, and the second one is at destination
 # We need the second one
 flight_time = solve(end_of_flight, time_argument, dict=True)[1][time_argument]
-print('Flight time:')
-print(flight_time)
+print(f"Flight time: {flight_time}")
 
 flight_distance = x_function.subs({time_argument: flight_time})
-print('Flight distance')
-print(flight_distance)
+print(f"Flight distance: {flight_distance}")
 
+# for plotting purposes we don't care about scale and may substitute constants with 1
 flight_distance_plotted = symbols('flight_distance_plotted', cls=Function)
 flight_distance_plotted = flight_distance.subs(
     {
         throwing_velocity: 1,
-        gravitational_acceleration: 0.5    
+        gravitational_acceleration: 1
     })
 flight_distance_plotted = simplify(flight_distance_plotted)
-print('Plotted flight distance')
-print(flight_distance_plotted)
+print(f"Plotted flight distance: {flight_distance_plotted}")
 
 # Let's find needed angle analytically.
-# We are to find maximum of flight_distance(throwing_angle) function with time_argument in (0, pi/2) interval.
-flight_distance_plotted = sin(2 * throwing_angle)
-distance_derivative = Derivative(flight_distance_plotted, throwing_angle).doit()
-max_law = Eq(0, distance_derivative)
+# We are to find maximum of flight_distance(throwing_angle) function with angle in (0, pi/2) interval.
+# So the flight distance is the function of angle like k*cos(angle)*cos(pi/2 - angle).
+# cos(pi/2 - angle) is sin(angle), and sin(angle)*cos(angle) is 0.5*sin(2 * angle)
+flight_distance_manually_simplified = sin(2 * throwing_angle)
+distance_diff = Derivative(flight_distance_manually_simplified, throwing_angle).doit()
+max_law = Eq(0, distance_diff)
 max_angle = solve(max_law, throwing_angle, dict=True)[0][throwing_angle]
-print('max_angle')
-print(max_angle)
+print(f"Angle to achieve maximum distance: {max_angle}")
 
 Len = plot(
     flight_distance_plotted,
@@ -104,8 +97,8 @@ Len = plot(
     show=False)
 
 peak_line = plot(
-    1000 * (time_argument - max_angle),
-    (time_argument, pi / 4, max_angle + 0.001),
+    1000 * (throwing_angle - max_angle),
+    (throwing_angle, max_angle, max_angle + 0.001),
     label = 'angle = 45°',
     line_color='yellow',
     show=False,
