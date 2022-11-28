@@ -1,23 +1,29 @@
-from sympy import solve, pretty, symbols
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import (
-    units, convert_to
+    units, symbols, convert_to, solve, pretty
 )
 from symplyphysics.laws.gravity import free_fall_acceleration_from_height as acceleration
 
 print("Formula is:\n{}".format(acceleration.print()))
-gravity_constant = convert_to(acceleration.gravity_constant, units.newton * units.meter**2 / units.kilogram**2).subs(units.newton * units.meter**2 / units.kilogram**2, 1).evalf(5)
+
+height_above_ground = symbols('height_above_ground')
+gravity_constant = convert_to(units.gravitational_constant, units.newton * units.meter**2 / units.kilogram**2).subs(units.newton * units.meter**2 / units.kilogram**2, 1).evalf(5)
+earth_mass = 5.976e+24  # kilogram
+earth_radius = 6.371e+6 # meter
+
 solved = solve(acceleration.law, acceleration.acceleration_free_fall, dict=True)[0][acceleration.acceleration_free_fall]
 result_acceleration = solved.subs({
-     acceleration.gravity_constant: gravity_constant,
-     acceleration.earth_mass: 5.976e+24,
-     acceleration.earth_radius: 6.371e+6})
+    acceleration.generator_mass: earth_mass,
+    acceleration.generator_radius: earth_radius + height_above_ground,
+    acceleration.units.gravitational_constant: gravity_constant})
+
 print("\nFree fall accelleration function on Earth surface  is:\n{}".format(
     pretty(result_acceleration, use_unicode=False)))
+
 p1 = plot(
     result_acceleration,
-    (acceleration.height, 0, 10000),
+    (height_above_ground, 0, 10000),
     ylim=(9.74, 9.85),
     axis_center=(0.0, 9.75),
     line_color='red',
