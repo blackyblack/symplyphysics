@@ -4,9 +4,10 @@
 ## You throw the grenade to enemies. Which angle of throwing should you choose to hit the farest enemy?
 
 from math import pi
+from sympy import diff
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
-from symplyphysics import symbols, Eq, solve, Function, Derivative, simplify, sin
+from symplyphysics import symbols, Eq, solve, simplify, sin
 from symplyphysics.laws.kinematic import constant_acceleration_movement_is_parabolic as movement_law
 from symplyphysics.laws.kinematic import planar_projection_is_cosine as projector
 
@@ -78,17 +79,17 @@ print(f"Plotted flight distance: {flight_distance_plotted}")
 # So the flight distance is the function of angle like k*cos(angle)*cos(pi/2 - angle).
 # cos(pi/2 - angle) is sin(angle), and sin(angle)*cos(angle) is 0.5*sin(2 * angle)
 flight_distance_manually_simplified = sin(2 * throwing_angle)
-distance_diff = Derivative(flight_distance_manually_simplified, throwing_angle).doit()
+distance_diff = diff(flight_distance_manually_simplified, throwing_angle)
 max_law = Eq(0, distance_diff)
 max_angle = solve(max_law, throwing_angle, dict=True)[0][throwing_angle]
 print(f"Angle to achieve maximum distance: {max_angle}")
 
-Len = plot(
+p0 = plot(
     flight_distance_plotted,
     (throwing_angle, 0, pi / 2),
-    line_color='blue',    
-    title='Length',    
-    label = 'Length',    
+    line_color="blue",    
+    title="Length",    
+    label = "Length",    
     legend=True,    
     annotations = {},
     backend=MatplotlibBackend,    
@@ -97,9 +98,9 @@ Len = plot(
 peak_line = plot(
     1000 * (throwing_angle - max_angle),
     (throwing_angle, max_angle, max_angle + 0.001),
-    label = 'angle = 45°',
-    line_color='yellow',
+    label = "angle = 45°",
+    line_color="yellow",
     show=False,
 )
-Len.append(peak_line[0])
-Len.show()
+p0.append(peak_line[0])
+p0.show()
