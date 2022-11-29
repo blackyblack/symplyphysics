@@ -1,7 +1,7 @@
 # Description
 ## For example we are calculatiing gravity force for objects with masses 3000 and 5000 kilos
 ## with 0.06 meters of distance betweem their centers of mass.
-## accroding to matematika-club.ru gravity calculator, force should be equal to 0.27809583 Newtons.
+## according to matematika-club.ru gravity calculator, force should be equal to 0.27809583 Newtons.
 
 from collections import namedtuple
 from pytest import approx, fixture, raises
