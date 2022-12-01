@@ -9,7 +9,7 @@ from pytest import approx, fixture, raises
 from symplyphysics import (
     units, convert_to, SI, errors
 )
-from symplyphysics.laws.gravity import gravity_force_from_mass as gravity_law
+from symplyphysics.laws.gravity import gravity_force_from_mass_and_distance as gravity_law
 
 @fixture
 def test_args():
