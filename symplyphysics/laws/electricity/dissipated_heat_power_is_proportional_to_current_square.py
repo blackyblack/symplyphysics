@@ -24,4 +24,4 @@ def print():
 def calculate_heat_power(current_: Quantity, resistance_: Quantity) -> Quantity:
     result_power_expr = solve(law, heat_power, dict=True)[0][heat_power]
     result_expr = result_power_expr.subs({current: current_, resistance: resistance_})
-    return expr_to_quantity(result_expr, 'heat_power')
+    return expr_to_quantity(result_expr, 'power')
