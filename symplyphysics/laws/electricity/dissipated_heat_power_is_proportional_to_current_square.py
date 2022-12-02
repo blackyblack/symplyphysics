@@ -4,7 +4,7 @@ from symplyphysics import (
 )
 from symplyphysics.definitions import power_from_energy_time as power_and_time
 from symplyphysics.electricity.laws import current_is_proportional_to_voltage as ohm_law
-from symplyphysics.electricity.laws amount_energy_from_voltage_time_resistance as joule_lenz_law
+from symplyphysics.electricity.laws import amount_energy_from_voltage_time_resistance as joule_lenz_law
 
 # Description
 ## Dissipated heat power is proportional to current square and resistance
