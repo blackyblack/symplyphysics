@@ -25,14 +25,13 @@ law = Eq(free_fall_acceleration, gravitational_constant * planet_mass / (planet_
 # This law might be easily derived from gravitational law via Newton's law #2
 ## Distance between mass centers is radius of the planet plus height above it's surface.
 gravitational_force = gravity_law.law.rhs.subs({
-    gravity_law.mass1: planet_mass,
-    gravity_law.mass2: "object_mass",
-    gravity_law.distance_between_objects: planet_radius + height_above_surface
+    gravity_law.first_object_mass: planet_mass,    
+    gravity_law.distance_between_mass_centers: planet_radius + height_above_surface
     })
 
 derived_free_fall_acceleration = newton2_law.law.rhs.subs({
     newton2_law.force: gravitational_force,
-    newton2_law.mass: "object_mass"
+    newton2_law.mass: gravity_law.second_object_mass
     })
 
 # Check if derived acceleration is same as declared    
@@ -47,5 +46,5 @@ def print():
 def calculate_acceleration(planet_mass_: Quantity, planet_radius_: Quantity, height_above_surface_: Quantity) -> Quantity:
     result_accel_expr = solve(law, free_fall_acceleration, dict=True)[0][free_fall_acceleration]
     result_expr = result_accel_expr.subs({planet_mass: planet_mass_, planet_radius: planet_radius_, height_above_surface: height_above_surface_})
-    return expr_to_quantity(result_expr, 'free_fall_acceleration')
+    return expr_to_quantity(result_expr, "free_fall_acceleration")
     

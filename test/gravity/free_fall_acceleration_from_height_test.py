@@ -32,7 +32,7 @@ def test_basic_acceleration(test_args):
 def test_bad_earth_mass(test_args):
     emb = units.Quantity('emb')
     SI.set_quantity_dimension(emb, units.length)
-    SI.set_quantity_scale_factor(emb, 1 * units.meter)
+    SI.set_quantity_scale_factor(emb, 1 * units.meter)  
     with raises(errors.UnitsError):
         free_fall_acceleration.calculate_acceleration(emb, test_args.earth_radius, test_args.height_from_surface)
     with raises(TypeError):
