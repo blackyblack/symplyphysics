@@ -13,8 +13,8 @@ from symplyphysics.laws.electricity import amount_energy_from_voltage_time_resis
 ## I is current flowing through this element
 ## R is impedance of this element
 
-power = joule_lenz_law.law.subs({joule_lenz_law.amount_energy: power_and_time.energy, joule_lenz_law.voltage: ohm_law.voltage })
-law = solve(power, power_and_time.energy, dict=True)[0][power_and_time.energy]
+heat_power = joule_lenz_law.law.subs({joule_lenz_law.amount_energy: power_and_time.energy, joule_lenz_law.voltage: ohm_law.voltage })
+law = solve(heat_power, power_and_time.energy, dict=True)[0][power_and_time.energy]
 
 def print():
     return pretty(law, use_unicode=False)
@@ -22,6 +22,6 @@ def print():
 @validate_input(current_=units.current, resistance_=units.impedance)
 @validate_output(units.power)
 def calculate_heat_power(current_: Quantity, resistance_: Quantity) -> Quantity:
-    result_power_expr = solve(law, heat_power, dict=True)[0][heat_power]
-    result_expr = result_power_expr.subs({current: current_, resistance: resistance_})
-    return expr_to_quantity(result_expr, 'power')
+    result_heat_power_expr = solve(law, heat_power, dict=True)[0][heat_power]
+    result_expr = result_heat_power_expr.subs({current: current_, resistance: resistance_})
+    return expr_to_quantity(result_expr, 'heat_power')
