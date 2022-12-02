@@ -12,10 +12,11 @@ gravity_constant = convert_to(units.gravitational_constant, units.newton * units
 earth_mass = 5.976e+24  # kilogram
 earth_radius = 6.371e+6 # meter
 
-solved = solve(acceleration.law, acceleration.acceleration_free_fall, dict=True)[0][acceleration.acceleration_free_fall]
+solved = solve(acceleration.law, acceleration.free_fall_acceleration, dict=True)[0][acceleration.free_fall_acceleration]
 result_acceleration = solved.subs({
-    acceleration.generator_mass: earth_mass,
-    acceleration.generator_radius: earth_radius + height_above_ground,
+    acceleration.planet_mass: earth_mass,
+    acceleration.planet_radius: earth_radius,
+    acceleration.height_above_surface: height_above_ground,
     acceleration.units.gravitational_constant: gravity_constant})
 
 print("\nFree fall accelleration function on Earth surface  is:\n{}".format(
