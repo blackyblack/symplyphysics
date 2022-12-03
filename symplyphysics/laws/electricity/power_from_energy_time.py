@@ -9,7 +9,7 @@ from symplyphysics import (
 # where:
 # Q  - some energy (work)
 # t -  energy action time
-
+# TODO: this law should be derived from definition power_is_energy_derivative
 power, energy, time = symbols('power energy time')
 law = Eq(power, energy / time)
 
