@@ -4,7 +4,7 @@ from pytest import approx, fixture, raises
 from symplyphysics import (
     units, convert_to, SI, errors
 )
-from symplyphysics.definitions import power_from_energy_time as power_def
+from symplyphysics.laws.electricity import power_from_energy_time as power_def
 # How much power did the heater use if it is known that it gave off 20,000 joules
 # of energy in 35 seconds? Consider that all energy consumed equals energy given up.
 @fixture
