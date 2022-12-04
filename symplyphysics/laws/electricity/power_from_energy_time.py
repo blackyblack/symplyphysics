@@ -2,7 +2,7 @@ from symplyphysics import (
     symbols, Eq, pretty, solve, Quantity, units,
     validate_input, validate_output, expr_to_quantity
 )
-
+from symplyphysics.definitions import power_is_energy_derivative as power_derivative
 # Description
 # Power directly proportional to energy (work) and inversely proportional to time
 # P = Q / t
