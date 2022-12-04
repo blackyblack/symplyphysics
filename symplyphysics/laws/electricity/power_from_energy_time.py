@@ -2,7 +2,7 @@ from symplyphysics import (
     symbols, Eq, pretty, solve, Quantity, units,
     validate_input, validate_output, expr_to_quantity
 )
-
+from symplyphysics.definitions import power_is_energy_derivative as power_derivative
 # Description
 # Power directly proportional to energy (work) and inversely proportional to time
 # P = Q / t
@@ -14,7 +14,7 @@ power, energy, time = symbols('power energy time')
 law = Eq(power, energy / time)
 
 def print():
-    return pretty(law, use_unicode=False)
+    return pretty(law, use_unicode=False)2
 
 @validate_input(energy_=units.energy, time_=units.time)
 @validate_output(units.power)
