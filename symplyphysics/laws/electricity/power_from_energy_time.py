@@ -14,7 +14,7 @@ power, energy, time = symbols('power energy time')
 law = Eq(power, energy / time)
 
 def print():
-    return pretty(law, use_unicode=False)2
+    return pretty(law, use_unicode=False)
 
 @validate_input(energy_=units.energy, time_=units.time)
 @validate_output(units.power)
