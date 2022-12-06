@@ -4,7 +4,7 @@ from symplyphysics import (
 )
 
 # Description
-## Momentum is the multiplication of velocity and mass
+## Momentum is the multiplication of velocity and mass. As velocity is vector, momentum is vector as well and it is collinear with velocity.
 ## Definition: P = m * V
 ## Where:
 ## m is a mass of the object
