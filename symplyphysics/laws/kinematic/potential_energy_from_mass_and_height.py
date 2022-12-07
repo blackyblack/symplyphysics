@@ -2,12 +2,14 @@ from symplyphysics import (
     symbols, Eq, pretty, solve, Quantity, units,
     validate_input, validate_output, expr_to_quantity,
 )
+
 # Description
-# Potential energy of body EP = m * g * h
-# where:
-# m - body mass
-# h - height from Earth surface
-# g - free fall acceleration
+## Potential energy of body EP = m * g * h
+## Where:
+## m - body mass
+## h - height from Earth surface
+## g - free fall acceleration
+
 free_fall_acceleration = units.acceleration_due_to_gravity
 potential_energy_of_body, height, body_mass = symbols('potential_energy_of_body height body_mass')
 law = Eq(potential_energy_of_body, body_mass * free_fall_acceleration * height)
