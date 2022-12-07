@@ -9,6 +9,7 @@ from symplyphysics import (
 
 time = symbols('time')
 power_function, energy_function = symbols('power energy', cls = Function)
+
 definition = Eq(power_function(time), Derivative(energy_function(time), time))
 
 definition_dimension_SI = units.watt
