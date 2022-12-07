@@ -48,4 +48,3 @@ def calculate_acceleration(planet_mass_: Quantity, planet_radius_: Quantity, hei
     result_accel_expr = solve(law, free_fall_acceleration, dict=True)[0][free_fall_acceleration]
     result_expr = result_accel_expr.subs({planet_mass: planet_mass_, planet_radius: planet_radius_, height_above_surface: height_above_surface_})
     return expr_to_quantity(result_expr, "free_fall_acceleration")
-    
