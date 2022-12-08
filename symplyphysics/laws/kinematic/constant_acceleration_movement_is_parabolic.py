@@ -8,8 +8,9 @@ from symplyphysics.definitions import acceleration_is_velocity_derivative as acc
 
 # Description
 ## Accelerated movement is the kind of movement when object has constant acceleration (e.g with the constant force applied to object).
-## 
-## The movement is S = V0*t + a * t**2/2, where
+
+## Law: S = V0 * t + a * t**2 / 2
+## Where:
 ## S is distance in the moment of time t,
 ## V0 is the velocity in the moment of time 0 (initial velocity),
 ## a is acceleration,

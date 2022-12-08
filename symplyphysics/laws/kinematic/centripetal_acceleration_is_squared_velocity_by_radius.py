@@ -6,7 +6,9 @@ from symplyphysics import (
 # Description
 ## Centripetal acceleration is type of acceleration which is perpendicular to velocity vector and directed to the curve center.
 ## Centripetal acceleration only changes the velocity vector direction and not the velocity vector length.
-## Definition: an = V**2 / R, where
+
+## Law: an = V**2 / R
+## Where:
 ## an is centripetal acceleration (aka normal acceleration),
 ## V is linear velocity,
 ## R is curve radius.

@@ -46,7 +46,7 @@ print("Velocity = {} {}; for two inelasticly collided objects with masses = {} {
         units.gram,
         convert_to(body_mass, units.kilogram).subs(units.kilogram, 1).evalf(2),
         units.kilogram,
-        convert_to(bullet_velocity, units.meter / units.second).subs({units.meter: 1, units.second: 1}).evalf(2),
+        convert_to(bullet_velocity, units.meter / units.second).subs({units.meter: 1, units.second: 1}).evalf(3),
         units.meter / units.second),
         convert_to(body_velocity, units.meter / units.second).subs({units.meter: 1, units.second: 1}).evalf(2),
         units.meter / units.second)

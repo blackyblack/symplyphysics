@@ -8,7 +8,8 @@ from symplyphysics.laws.dynamics import acceleration_from_force as newton2_law
 
 # Description
 ## Every planet generates gravity field whichs causes free falling. Free fall acceleration depends on heigth above the planet surface.
-## Law: g = G * M / (R+h)**2, where
+## Law: g = G * M / (R + h)**2
+## Where:
 ## g is free fall acceleration
 ## G is gravitational constant
 ## M is mass of the planet
@@ -47,4 +48,3 @@ def calculate_acceleration(planet_mass_: Quantity, planet_radius_: Quantity, hei
     result_accel_expr = solve(law, free_fall_acceleration, dict=True)[0][free_fall_acceleration]
     result_expr = result_accel_expr.subs({planet_mass: planet_mass_, planet_radius: planet_radius_, height_above_surface: height_above_surface_})
     return expr_to_quantity(result_expr, "free_fall_acceleration")
-    
