@@ -12,13 +12,14 @@ from symplyphysics.laws.gravity import free_fall_acceleration_from_height as fre
 ## Satellite has no any support so it freely falls with free fall acceleration.
 ## On another hand this object moves along circle. It has velocity which is tangent to trajectory and it has acceleration which is perpendicular to trajectory and directed towards the center of the circle.
 ## This acceleration only change direction of the velocity vector, not it's length. So this free fall acceleration is the centripetal acceleration of the satellite.
-## Note, that centripetal acceleration is the result of free fall acceleration, not an addition to it. Centripetal acceleration has an exact value for a moving object to stay on the same elliptic curve (orbit).
-## Therefore, despite non-zero gravity force vector, object stays on the orbit.
+## Note, that centripetal acceleration is the result of free fall acceleration, not an addition to it. Equivalence of centripetal and free fall acceleration is valid only for circular orbit or
+## in points of minimum and maximum distance of elliptic orbit. We assume circular orbit for the sake of simplicity.
+## Note, that satellite is non-inertial system, so we cannot apply first Newton's law to solve this problem.
 
 solution = Eq(centripetal_acceleration_law.definition.rhs, free_fall_law.law.rhs)
 solution_applied = solution.subs(centripetal_acceleration_law.curve_radius, free_fall_law.planet_radius + free_fall_law.height_above_surface)
 
-# first solution is negative - ignore it
+# first solution is negative and corresponds to the backwards direction of velocity - ignore it
 satellite_velocity = solve(solution_applied, centripetal_acceleration_law.linear_velocity, dict = True)[1][centripetal_acceleration_law.linear_velocity]
 
 print(f"The formula for satellite linear velocity is: {simplify(satellite_velocity)}")
