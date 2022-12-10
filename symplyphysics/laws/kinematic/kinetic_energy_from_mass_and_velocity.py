@@ -4,10 +4,11 @@ from symplyphysics import (
 )
 
 # Description
-# Kinetic energy of body EK = (m * v^2) / 2
-# where:
+# Kinetic energy of body: EK = (m * v**2) / 2
+# Where:
 # m - body mass
 # v - body velocity
+
 kinetic_energy_of_body, body_mass, body_velocity = symbols('kinetic_energy_of_body body_mass body_velocity')
 law = Eq(kinetic_energy_of_body, body_mass * body_velocity**2 / 2)
 

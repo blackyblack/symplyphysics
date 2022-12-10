@@ -43,25 +43,25 @@ operate_power_applied = operate_power.law.subs(operate_power.voltage, joule_lenz
 density_applied = density_law.definition.subs(density_law.mass, operate_energy.body_mass)
 
 law = [density_applied, ohm_law_applied, operate_power_applied, operate_energy.law, joule_lenz_law.law]
-cooling_time_solved = solve(law, (joule_lenz_law.amount_energy, joule_lenz_law.resistance, operate_power.current, operate_energy.body_mass, joule_lenz_law.time), dict=True)[0][joule_lenz_law.time]
-cooling_time_eq = Eq(joule_lenz_law.time, cooling_time_solved)
+heating_time_solved = solve(law, (joule_lenz_law.amount_energy, joule_lenz_law.resistance, operate_power.current, operate_energy.body_mass, joule_lenz_law.time), dict=True)[0][joule_lenz_law.time]
+heating_time_eq = Eq(joule_lenz_law.time, heating_time_solved)
 
-print("\nFormula is:\n\n {}".format(pretty(cooling_time_eq, use_unicode=False)))
+print("\nFormula is:\n\n {}".format(pretty(heating_time_eq, use_unicode=False)))
 
-cooling_time_expr = cooling_time_solved.subs({
+heating_time_expr = heating_time_solved.subs({
     operate_power.power: kettle_power,
     density_law.density: water_density,
     density_law.volume: kettle_volume,
     operate_energy.specific_heat_capacity: water_heat_capacity,
     operate_energy.temperature_origin: initial_temperature, operate_energy.temperature_end: final_temperature
 })
-cooling_time = expr_to_quantity(cooling_time_expr, "cooling_time")
+heating_time = expr_to_quantity(heating_time_expr, "heating_time")
 
 kettle_power_value = convert_to(kettle_power, units.watt).subs(units.watt, 1).evalf(5)
 kettle_volume_value = convert_to(kettle_volume, units.liter).subs(units.liter, 1).evalf(3)
 kettle_t1_value = convert_to(initial_temperature, units.kelvin).subs(units.kelvin, 1).evalf(3) - CELSIUS_TO_KELVIN_OFFSET
 kettle_t2_value = convert_to(final_temperature, units.kelvin).subs(units.kelvin, 1).evalf(3) - CELSIUS_TO_KELVIN_OFFSET
-cooling_time_value = convert_to(cooling_time, units.second).subs(units.second, 1).evalf(3)
+heating_time_value = convert_to(heating_time, units.second).subs(units.second, 1).evalf(3)
 
-print(f"\nPower = {kettle_power_value} {units.watt}, water volume = {kettle_volume_value} {units.liter}, temperature_begin = {kettle_t1_value} celsius degrees, temperature_end = {kettle_t2_value} celsius degrees: cooling time = {cooling_time_value} {units.second}\n")
-print(f"\nSolution: cooling time = {cooling_time_value} {units.second}\n")
+print(f"\nPower = {kettle_power_value} {units.watt}, water volume = {kettle_volume_value} {units.liter}, temperature_begin = {kettle_t1_value} celsius degrees, temperature_end = {kettle_t2_value} celsius degrees: heating time = {heating_time_value} {units.second}\n")
+print(f"\nSolution: heating time = {heating_time_value} {units.second}\n")
