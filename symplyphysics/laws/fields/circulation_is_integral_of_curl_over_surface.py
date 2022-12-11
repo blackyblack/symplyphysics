@@ -3,7 +3,7 @@ from sympy import Integral, Derivative
 from sympy.vector import Dot, Curl, Cross
 from symplyphysics import (
     symbols, Eq, pretty, simplify,
-    CoordSys3D, field_from_unit_vector, array_to_sympy_vector, sympy_vector_to_array, VectorField
+    CoordSys3D, field_from_unit_vector, array_to_sympy_vector, sympy_vector_to_array, apply_field, VectorField
 )
 
 # Description
@@ -60,12 +60,12 @@ def calculate_circulation(
 
     unit_coordinates = coord_system_.base_scalars()
     unit_trajectory = [unit_coordinates[0], unit_coordinates[1], unit_coordinates[2]]
-    field_unit_app = field_.apply(coord_system_, unit_trajectory)
+    field_unit_app = apply_field(coord_system_, field_, unit_trajectory)
     field_unit_sympy_vector = array_to_sympy_vector(coord_system_, field_unit_app)
     field_rotor_applied = field_rotor_definition.rhs.subs(field, field_unit_sympy_vector).doit()
     field_rotor_vector = sympy_vector_to_array(field_rotor_applied)
     field_rotor_lambda = field_from_unit_vector(coord_system_, field_rotor_vector)
-    field_applied = field_rotor_lambda.apply(coord_system_, surface_)
+    field_applied = apply_field(coord_system_, field_rotor_lambda, surface_)
     field_as_vector = array_to_sympy_vector(coord_system_, field_applied)
     surface_sympy_vector = array_to_sympy_vector(coord_system_, surface_)
     surface_element_x = surface_element_by_parameter1_definition.rhs.subs(surface, surface_sympy_vector).doit()

@@ -5,7 +5,7 @@ from math import pi
 from sympy import Expr, sin, cos, sqrt
 from symplyphysics import (
     units, SI, expr_to_quantity, convert_to,
-    array_to_sympy_vector, CoordSys3D, VectorZero, FieldPoint, VectorField
+    array_to_sympy_vector, CoordSys3D, VectorZero, FieldPoint, VectorField, apply_field
 )
 from symplyphysics.laws.fields import circulation_is_integral_of_curl_over_surface as circulation_def
 
@@ -44,7 +44,7 @@ def test_gravitational_field_is_conservative(test_args):
     field = VectorField(lambda point: -point.x / _distance(point)**3, lambda point: -point.y / _distance(point)**3, lambda point: -point.z / _distance(point)**3)
     unit_coordinates = test_args.C.base_scalars()
     unit_trajectory = [unit_coordinates[0], unit_coordinates[1], unit_coordinates[2]]
-    field_unit_app = field.apply(test_args.C, unit_trajectory)
+    field_unit_app = apply_field(test_args.C, field, unit_trajectory)
     field_unit_sympy_vector = array_to_sympy_vector(test_args.C, field_unit_app)
     field_rotor_applied = circulation_def.field_rotor_definition.rhs.subs(field, field_unit_sympy_vector).doit()
     assert field_rotor_applied == VectorZero.zero
