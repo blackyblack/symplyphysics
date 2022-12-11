@@ -14,28 +14,27 @@ from symplyphysics.laws.electricity import amount_energy_from_voltage_time_resis
 # I is current flowing through this element
 # R is impedance of this element
 
-heat_power, current, resistance = symbols('heat_power current resistance')
+heat_power, current, resistance = symbols("heat_power current resistance")
 law = Eq(heat_power, current**2 * resistance)
 
-# This law might be easily derived via Joule-Lenz law and dependence power from energy and time
+# This law might be easily derived via Joule-Lenz law and dependence of power from energy and time
 
-voltage_applied = solve(ohm_law.law, ohm_law.voltage, dict=True)[0][ohm_law.voltage]
-energy_applied =  solve(power_and_time.law, power_and_time.energy, dict=True)[0][power_and_time.energy]
-law_applied = joule_lenz_law.law.subs({joule_lenz_law.amount_energy: energy_applied,
-    joule_lenz_law.voltage: voltage_applied
-})
-law_derived = solve(law_applied, power_and_time.power, dict=True)[0][power_and_time.power]
+ohm_law_applied = ohm_law.law.subs({ohm_law.voltage: joule_lenz_law.voltage, ohm_law.current: current, ohm_law.resistance: resistance})
+power_and_time_applied = power_and_time.law.subs({power_and_time.energy: joule_lenz_law.amount_energy, power_and_time.time: joule_lenz_law.time})
+joule_lenz_law_applied = joule_lenz_law.law.subs({joule_lenz_law.resistance: resistance})
+
+law_derived = [ohm_law_applied, power_and_time_applied, joule_lenz_law_applied]
+power_derived = solve(law_derived, (joule_lenz_law.voltage, joule_lenz_law.amount_energy, power_and_time.power), dict=True)[0][power_and_time.power]
 
 # Check if derived power is same as declared
-difference = simplify(law_derived - law.rhs)
-assert(difference == 0)
+assert(simplify(power_derived - law.rhs) == 0)
 
 def print():
-    return pretty(law_derived, use_unicode=False)
+    return pretty(law, use_unicode=False)
 
 @validate_input(current_=units.current, resistance_=units.impedance)
 @validate_output(units.power)
 def calculate_heat_power(current_: Quantity, resistance_: Quantity) -> Quantity:
     result_power_expr = solve(law, heat_power, dict=True)[0][heat_power]
     result_expr = result_power_expr.subs({current: current_, resistance: resistance_})
-    return expr_to_quantity(result_expr, 'heat_power')
+    return expr_to_quantity(result_expr, "heat_power")
