@@ -5,29 +5,39 @@ from symplyphysics import (
 from symplyphysics.definitions import power_is_energy_derivative as power_derivative
 
 # Description
-# Power directly proportional to energy (work) and inversely proportional to time
-# P = Q / t
-# where:
-# Q  - some energy (work)
-# t -  energy action time
-# TODO: this law should be derived from definition power_is_energy_derivative
-power, energy, time = symbols('power energy time')
+## Power directly proportional to energy (work) and inversely proportional to time
+## P = Q / t
+## Where:
+## Q - some energy (work)
+## t - energy action time
+
+# Conditions:
+## - Energy is linear function, or power is constant
+## - Initial energy is 0
+
+power, energy, time = symbols("power energy time")
 law = Eq(power, energy / time)
-constant_1, constant_2 = symbols('constant_1 constant_2')
-# Where :
-# constant_1, constant_2 are formal parameters for the linear energy function condition
-# constant_1 - constant_power
-# constant_2 - initial energy.It is equal 0.
-energy_applied = constant_1 * power_derivative.time +constant_2
-energy_applied = energy_applied.subs(constant_2, 0)
-definition_applied = power_derivative.definition.rhs.subs(power_derivative.energy_function(power_derivative.time), energy_applied)
-power_applied = definition_applied.doit()
-power_applied_law = Eq(power, power_applied)
-energy_applied_law = Eq(energy, energy_applied)
-applied_law = solve([power_applied_law,energy_applied_law], (power,constant_1), dict=True)[0][constant_1]
-# Check : derived power is same as declared
-difference = simplify(applied_law - law.rhs)
-assert(difference == 0)
+
+# Derive the same law from definition of power as energy derivative
+
+linear_function_coefficient, initial_energy_constant = symbols("linear_function_coefficient initial_energy_constant")
+
+energy_linear_function = linear_function_coefficient * time + initial_energy_constant
+
+power_definition_applied = power_derivative.definition.subs({
+    power_derivative.energy_function(power_derivative.time): energy_linear_function,
+    power_derivative.power_function(power_derivative.time): power})
+
+power_applied_eq = power_definition_applied.doit()
+energy_eq = Eq(energy, energy_linear_function)
+derived_power = solve([power_applied_eq, energy_eq], (power, linear_function_coefficient), dict=True)[0][power]
+
+# derived_power = (energy - initial_energy_constant)/time
+# Assume initial_energy_constant = 0, according to law conditions
+derived_power_without_initial_energy = derived_power.subs(initial_energy_constant, 0)
+
+# Check that derived power is same as declared
+assert(simplify(derived_power_without_initial_energy - law.rhs) == 0)
 
 def print():
     return pretty(law, use_unicode=False)
@@ -37,4 +47,4 @@ def print():
 def calculate_power(energy_: Quantity, time_: Quantity) -> Quantity:
     result_power_expr = solve(law, power, dict=True)[0][power]
     result_expr = result_power_expr.subs({energy: energy_, time: time_})
-    return expr_to_quantity(result_expr, 'power')
+    return expr_to_quantity(result_expr, "power")
