@@ -2,6 +2,7 @@ from types import FunctionType
 from typing import Any, List
 from sympy import Expr
 from sympy.vector import CoordSys3D
+from sympy.vector.operators import _get_coord_systems
 
 
 class FieldPoint:
@@ -43,7 +44,11 @@ class FieldPoint:
         self._coordinates[index] = value
 
 
-# Contains mappings of point to vectors in components[], eg [P(FieldPoint), Q(FieldPoint)]
+# Contains mappings of point to vectors in components[], eg [P(FieldPoint), Q(FieldPoint)].
+# Therefore vector field can be represented as vector of scalar fields.
+# Vector field can also be represented as a mapping of point to vector of values, eg
+# lambda point: [point.x, point.y, point.z]. This way it is very similar to scalar field,
+# where point is mapped to a value, eg lambda point: point.x
 class VectorField:
     _components: List[FunctionType] = []
 
@@ -85,8 +90,8 @@ def apply_field(coord_system_: CoordSys3D, field_: VectorField, trajectory_: Lis
         result_vector.append(vector_function(field_point) if callable(vector_function) else vector_function)
     return result_vector
 
-# Converts vector with unit scalars (C.x, C.y) as parameters to field
-def field_from_unit_vector(coord_system_: CoordSys3D, vector_: List) -> VectorField:
+# Converts vector with unit scalars (C.x, C.y) as parameters to a field
+def field_from_unit_vector(vector_: List) -> VectorField:
     # Better replacement for lambda
     def subs_with_point(coord_system_: CoordSys3D, expr_):
         def _(point_: FieldPoint):
@@ -100,9 +105,12 @@ def field_from_unit_vector(coord_system_: CoordSys3D, vector_: List) -> VectorFi
             return expr
         return _
 
-    base_scalars = coord_system_.base_scalars()
-    dimensions = len(base_scalars)
     field = VectorField()
-    for i in range(min(dimensions, len(vector_))):
-        field.set_component(i, subs_with_point(coord_system_, vector_[i]))
+    for i in range(len(vector_)):
+        coord_system_set = _get_coord_systems(vector_[i])
+        if len(coord_system_set) == 0:
+            field.set_component(i, vector_[i])
+            continue
+        coord_system = next(iter(coord_system_set))
+        field.set_component(i, subs_with_point(coord_system, vector_[i]))
     return field

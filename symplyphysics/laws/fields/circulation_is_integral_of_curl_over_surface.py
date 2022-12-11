@@ -64,7 +64,7 @@ def calculate_circulation(
     field_unit_sympy_vector = array_to_sympy_vector(coord_system_, field_unit_app)
     field_rotor_applied = field_rotor_definition.rhs.subs(field, field_unit_sympy_vector).doit()
     field_rotor_vector = sympy_vector_to_array(field_rotor_applied)
-    field_rotor_lambda = field_from_unit_vector(coord_system_, field_rotor_vector)
+    field_rotor_lambda = field_from_unit_vector(field_rotor_vector)
     field_applied = apply_field(coord_system_, field_rotor_lambda, surface_)
     field_as_vector = array_to_sympy_vector(coord_system_, field_applied)
     surface_sympy_vector = array_to_sympy_vector(coord_system_, surface_)
