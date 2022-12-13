@@ -48,3 +48,4 @@ def calculate_power(energy_: Quantity, time_: Quantity) -> Quantity:
     result_power_expr = solve(law, power, dict=True)[0][power]
     result_expr = result_power_expr.subs({energy: energy_, time: time_})
     return expr_to_quantity(result_expr, "power")
+    
