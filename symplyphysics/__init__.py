@@ -9,7 +9,7 @@ from .quantity_decorator import validate_input, validate_output, validate_output
 from .expr_to_quantity import expr_to_quantity
 from .probability import Probability
 from .filters import (filter_zeroes, filter_map_zeroes, filter_negative, filter_map_negative)
-from .fields import field_from_unit_vector, FieldPoint, VectorField, apply_field
+from .fields import sympy_vector_to_field, FieldPoint, VectorField, apply_field, coord_system_to_space
 from .vectors import array_to_sympy_vector, sympy_vector_to_array
 
 __all__ = [

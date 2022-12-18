@@ -1,8 +1,10 @@
 from types import FunctionType
 from typing import Any, List
 from sympy import Expr
-from sympy.vector import CoordSys3D
+from sympy.vector import CoordSys3D, Vector
 from sympy.vector.operators import _get_coord_systems
+
+from symplyphysics.vectors import sympy_vector_to_array
 
 
 class FieldPoint:
@@ -72,45 +74,44 @@ class VectorField:
         self._components[index] = value
 
 
-# Applies field to a trajectory (surface) - calls field functions with each element of the trajectory as parameter.
-# coord_system_ - CoordSys3D coordinate system to work with. Supports Cartesian, Spherical, Cylindrical coordinates.
-# field_ - VectorField with functions that map base coordinates to a vector. Each function should have the same number of 
-#          parameters as base coordinates in coord_system_. Can contain 0 instead of empty function.
-# trajectory_ - list of expressions that correspond to a function in some space. Each element of list
-#               corresponds to base coordinate in coord_system_.
-# return - list that represents vector parametrized by trajectory parameters.
-def apply_field(coord_system_: CoordSys3D, field_: VectorField, trajectory_: List) -> List:
-    base_scalars = coord_system_.base_scalars()
-    dimensions = len(base_scalars)
-    field_point = FieldPoint()
-    for i in range(min(dimensions, len(trajectory_))):
-        field_point.set_coordinate(i, trajectory_[i])
-    result_vector = []
-    for vector_function in field_.components:
-        result_vector.append(vector_function(field_point) if callable(vector_function) else vector_function)
-    return result_vector
-
-# Converts vector with unit scalars (C.x, C.y) as parameters to a field
-def field_from_unit_vector(vector_: List) -> VectorField:
+# Converts SymPy vector, eg C.x * C.i + C.y * C.j, where C is CoordSys3D, to a field
+def sympy_vector_to_field(sympy_vector_: Vector) -> VectorField:
     # Better replacement for lambda
     def subs_with_point(coord_system_: CoordSys3D, expr_):
         def _(point_: FieldPoint):
-            if not isinstance(expr_, Expr):
-                return expr_
             base_scalars = coord_system_.base_scalars()
             # make a copy of expression
             expr = expr_
             for i in range(len(base_scalars)):
                 expr = expr.subs(base_scalars[i], point_.coordinate(i))
             return expr
-        return _
+
+        if not isinstance(expr_, Expr):
+            return expr_
+        return expr_ if coord_system_ is None else _
 
     field = VectorField()
-    for i in range(len(vector_)):
-        coord_system_set = _get_coord_systems(vector_[i])
-        if len(coord_system_set) == 0:
-            field.set_component(i, vector_[i])
-            continue
-        coord_system = next(iter(coord_system_set))
-        field.set_component(i, subs_with_point(coord_system, vector_[i]))
+    field_array = sympy_vector_to_array(sympy_vector_)
+    coord_system_set = _get_coord_systems(sympy_vector_)
+    coord_system = None if len(coord_system_set) == 0 else next(iter(coord_system_set))
+    for i in range(len(field_array)):
+        field.set_component(i, subs_with_point(coord_system, field_array[i]))
     return field
+
+# Convert coordinate system to space. Field can be applied to this space, eg apply_field(field, space).
+# Applying field to entire space is necessary for SymPy field operators like Curl.
+def coord_system_to_space(coord_system_: CoordSys3D) -> List:
+    return list(coord_system_.base_scalars())
+
+# Applies field to a trajectory / surface / volume - calls field functions with each element of the trajectory as parameter.
+# field_ - VectorField with functions that map base coordinates to a vector. Can contain 0 instead of empty function.
+# trajectory_ - list of expressions that correspond to a function in some space, eg [param, param] for a linear function y = x
+# return - list that represents vector parametrized by trajectory parameters.
+def apply_field(field_: VectorField, trajectory_: List) -> List:
+    field_point = FieldPoint()
+    for idx, element in enumerate(trajectory_):
+        field_point.set_coordinate(idx, element)
+    result_vector = []
+    for vector_function in field_.components:
+        result_vector.append(vector_function(field_point) if callable(vector_function) else vector_function)
+    return result_vector

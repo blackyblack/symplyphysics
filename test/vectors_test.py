@@ -51,6 +51,11 @@ def test_empty_sympy_to_array_conversion():
     result_array = sympy_vector_to_array(Vector.zero)
     assert result_array == []
 
+# Expression should represent vector, so it should contain one of coordinate system base vectors, eg C.i
+def test_only_scalar_sympy_to_array_conversion(test_args):
+    with raises(TypeError):
+        sympy_vector_to_array(test_args.C.x)
+
 def test_free_variable_sympy_to_array_conversion(test_args):
     x1 = symbols("x1")
     result_array = sympy_vector_to_array(test_args.C.i * x1)
@@ -89,3 +94,10 @@ def test_rotate_coordinates_sympy_to_array_conversion(test_args):
     assert sympy_vector == B.i + 2 * B.j
     transformed_vector = express(sympy_vector, test_args.C)
     assert transformed_vector == ((-2 * sin(theta) + cos(theta)) * test_args.C.i + (sin(theta) + 2 * cos(theta)) * test_args.C.j)
+
+def test_multiple_coord_systems_sympy_to_array_conversion(test_args):
+    C1 = CoordSys3D("C1", variable_names=("r", "phi", "z"))
+    with raises(TypeError):
+        sympy_vector_to_array(test_args.C.i + 2 * C1.k)
+    with raises(TypeError):
+        sympy_vector_to_array(test_args.C.i + C1.r * test_args.C.k)

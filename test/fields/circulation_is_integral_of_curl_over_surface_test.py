@@ -1,12 +1,12 @@
 from collections import namedtuple
 from pytest import approx, fixture
 
-from math import pi
-from sympy import Expr, sin, cos, sqrt
+from sympy import Expr, sin, cos, sqrt, pi
 from symplyphysics import (
     units, SI, expr_to_quantity, convert_to,
-    array_to_sympy_vector, CoordSys3D, VectorZero, FieldPoint, VectorField, apply_field
+    array_to_sympy_vector, CoordSys3D, VectorZero, FieldPoint, VectorField
 )
+from symplyphysics.fields import apply_field, coord_system_to_space
 from symplyphysics.laws.fields import circulation_is_integral_of_curl_over_surface as circulation_def
 
 
@@ -26,7 +26,7 @@ def test_basic_circulation(test_args):
     field = VectorField(lambda point: point.y, 0, lambda point: point.x + point.z)
     surface = [circulation_def.parameter1 * cos(circulation_def.parameter2), circulation_def.parameter1 * sin(circulation_def.parameter2)]
     result_expr = circulation_def.calculate_circulation(test_args.C, field, surface, 0, 1, 0, pi / 2)
-    assert result_expr.evalf(4) == approx(-pi / 4, 0.001)
+    assert result_expr.evalf(4) == approx((-pi / 4).evalf(4), 0.001)
 
 def test_two_parameters_circulation(test_args):
     field = VectorField(lambda point: point.y, lambda point: -point.x)
@@ -35,18 +35,17 @@ def test_two_parameters_circulation(test_args):
     # let's check with cone surface
     cone = [3 * circulation_def.parameter1 * cos(circulation_def.parameter2), 3 * circulation_def.parameter1 * sin(circulation_def.parameter2), circulation_def.parameter1]
     result_expr = circulation_def.calculate_circulation(test_args.C, field, cone, 0, 1, 0, 2 * pi)
-    assert result_expr.evalf(4) == approx(-18 * pi, 0.001)
+    assert result_expr.evalf(4) == approx((-18 * pi).evalf(4), 0.001)
 
 def _distance(point: FieldPoint) -> Expr:
     return sqrt(point.x**2 + point.y**2 + point.z**2)
 
 def test_gravitational_field_is_conservative(test_args):
     field = VectorField(lambda point: -point.x / _distance(point)**3, lambda point: -point.y / _distance(point)**3, lambda point: -point.z / _distance(point)**3)
-    unit_coordinates = test_args.C.base_scalars()
-    unit_trajectory = [unit_coordinates[0], unit_coordinates[1], unit_coordinates[2]]
-    field_unit_app = apply_field(test_args.C, field, unit_trajectory)
-    field_unit_sympy_vector = array_to_sympy_vector(test_args.C, field_unit_app)
-    field_rotor_applied = circulation_def.field_rotor_definition.rhs.subs(field, field_unit_sympy_vector).doit()
+    space_3d = coord_system_to_space(test_args.C)
+    field_space_app = apply_field(field, space_3d)
+    field_space_sympy = array_to_sympy_vector(test_args.C, field_space_app)
+    field_rotor_applied = circulation_def.field_rotor_definition.rhs.subs(field, field_space_sympy).doit()
     assert field_rotor_applied == VectorZero.zero
 
 def test_force_field_circulation(test_args):

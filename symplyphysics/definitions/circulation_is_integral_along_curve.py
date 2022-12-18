@@ -50,7 +50,7 @@ def calculate_circulation(
     parameter_from_,
     parameter_to_):
 
-    field_app = apply_field(coord_system_, field_, trajectory_)
+    field_app = apply_field(field_, trajectory_)
     field_as_vector = array_to_sympy_vector(coord_system_, field_app)
     trajectory_as_vector = array_to_sympy_vector(coord_system_, trajectory_)
     trajectory_element_result = trajectory_element_definition.rhs.subs(trajectory, trajectory_as_vector).doit()
