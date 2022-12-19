@@ -1,10 +1,10 @@
 from symplyphysics import (
-    symbols, Eq, pretty, Quantity, units, solve, diff, sqrt, simplify, arctan,
+    symbols, Eq, pretty, Quantity, units, solve, simplify,
     validate_input, validate_output, expr_to_quantity
 )
 from symplyphysics.laws.kinematic import planar_projection_is_cosine as projector
 from symplyphysics import pi
-
+from sympy import diff, sqrt, atan
 
 # Description
 ## Centripetal acceleration is type of acceleration which is perpendicular to velocity vector and directed to the curve center.
@@ -38,7 +38,7 @@ y_coordinate = projector.law.rhs.subs({projector.vector_length:curve_radius, pro
 x_velocity = diff(x_coordinate, alpha)
 y_velocity = diff(y_coordinate, alpha)
 velocity_vector_length = simplify(sqrt(x_velocity**2 + y_velocity**2))
-velocity_vector_angle = arctan(y_velocity / x_velocity)
+velocity_vector_angle = atan(y_velocity / x_velocity)
 ## Velocity vector length is independent from alpha
 
 ## Acceleration projections are derivatives of respective velocities.
@@ -46,7 +46,7 @@ x_acceleration = diff(x_velocity, alpha)
 y_acceleration = diff(y_velocity, alpha)
 
 total_acceleration = sqrt(x_acceleration**2 + y_acceleration**2)
-acceleration_angle = arctan(y_acceleration / x_acceleration)
+acceleration_angle = atan(y_acceleration / x_acceleration)
 
 ## We can prove angle between velocity and acceleration is pi/2
 ## also we can prove velocity is tangent.
