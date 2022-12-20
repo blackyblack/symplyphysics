@@ -12,7 +12,7 @@ def array_to_sympy_vector(coord_system_: CoordSys3D, array_: List) -> Vector:
     return result_vector
 
 # Converts SymPy Vector to Python List
-# SumPy vector is an expression that looks like C.i + C.j, where C is CoordSys3D
+# SymPy vector is an expression that looks like C.i + C.j, where C is CoordSys3D
 def sympy_vector_to_array(sympy_vector_: Vector) -> List:
     result_vector = []
     coord_system_set = _get_coord_systems(sympy_vector_)

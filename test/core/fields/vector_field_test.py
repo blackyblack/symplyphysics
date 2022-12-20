@@ -157,8 +157,6 @@ def test_rotate_coordinates_vector_to_field_conversion(test_args):
     B = test_args.C.orient_new_axis('B', theta, test_args.C.k)
     transformed_vector = express(sympy_vector_field, B, variables=True)
     result_transformed_field = sympy_vector_to_field(transformed_vector)
-    _assert_callable(result_transformed_field, 3)
-
     _assert_point(result_transformed_field, field_point,
         [(sin(theta) + 2 * cos(theta)) * sin(theta) + (cos(theta) - 2 * sin(theta)) * cos(theta),
         (sin(theta) + 2 * cos(theta)) * cos(theta) - (cos(theta) - 2 * sin(theta)) * sin(theta),
