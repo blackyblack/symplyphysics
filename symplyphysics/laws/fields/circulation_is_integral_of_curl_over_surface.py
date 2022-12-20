@@ -3,9 +3,9 @@ from sympy import Integral, Derivative
 from sympy.vector import Dot, Curl, Cross
 from symplyphysics import (
     symbols, Eq, pretty, simplify,
-    CoordSys3D, array_to_sympy_vector, apply_field, VectorField
+    CoordSys3D, array_to_sympy_vector, apply_field, VectorField,
+    apply_field_to_coord_system, sympy_vector_to_field
 )
-from symplyphysics.fields import coord_system_to_space, sympy_vector_to_field
 
 # Description
 ## Circulation of the field along the closed curve is flow of the rotor (or curl) of this field 
@@ -59,9 +59,8 @@ def calculate_circulation(
     parameter2_from_,
     parameter2_to_):
 
-    space_3d = coord_system_to_space(coord_system_)
-    field_space_app = apply_field(field_, space_3d)
-    field_space_sympy = array_to_sympy_vector(coord_system_, field_space_app)
+    field_space = apply_field_to_coord_system(field_, coord_system_)
+    field_space_sympy = array_to_sympy_vector(coord_system_, field_space)
     field_rotor_sympy = field_rotor_definition.rhs.subs(field, field_space_sympy).doit()
     field_rotor_lambda = sympy_vector_to_field(field_rotor_sympy)
     field_applied = apply_field(field_rotor_lambda, surface_)

@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy import symbols, sin, cos
 from sympy.vector import Vector, CoordSys3D, express
-from symplyphysics.vectors import array_to_sympy_vector, sympy_vector_to_array
+from symplyphysics.core.vectors import array_to_sympy_vector, sympy_vector_to_array
 
 
 @fixture

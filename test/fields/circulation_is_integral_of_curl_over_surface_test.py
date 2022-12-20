@@ -4,11 +4,9 @@ from pytest import approx, fixture
 from sympy import Expr, sin, cos, sqrt, pi
 from symplyphysics import (
     units, SI, expr_to_quantity, convert_to,
-    array_to_sympy_vector, CoordSys3D, VectorZero, FieldPoint, VectorField
+    array_to_sympy_vector, CoordSys3D, VectorZero, FieldPoint, VectorField, apply_field_to_coord_system
 )
-from symplyphysics.fields import apply_field, coord_system_to_space
 from symplyphysics.laws.fields import circulation_is_integral_of_curl_over_surface as circulation_def
-
 
 @fixture
 def test_args():
@@ -42,9 +40,8 @@ def _distance(point: FieldPoint) -> Expr:
 
 def test_gravitational_field_is_conservative(test_args):
     field = VectorField(lambda point: -point.x / _distance(point)**3, lambda point: -point.y / _distance(point)**3, lambda point: -point.z / _distance(point)**3)
-    space_3d = coord_system_to_space(test_args.C)
-    field_space_app = apply_field(field, space_3d)
-    field_space_sympy = array_to_sympy_vector(test_args.C, field_space_app)
+    field_space = apply_field_to_coord_system(field, test_args.C)
+    field_space_sympy = array_to_sympy_vector(test_args.C, field_space)
     field_rotor_applied = circulation_def.field_rotor_definition.rhs.subs(field, field_space_sympy).doit()
     assert field_rotor_applied == VectorZero.zero
 
