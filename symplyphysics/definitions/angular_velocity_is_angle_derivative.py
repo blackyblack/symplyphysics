@@ -21,36 +21,20 @@ definition = Eq(angular_velocity_function(time), Derivative(angle_function(time)
 
 definition_dimension_SI = units.radian / units.second
 
-#def print():
-#    return pretty(definition, use_unicode=False)
+def print():
+    return pretty(definition, use_unicode=False)
 
 def print_dimension():
     return pretty(definition_dimension_SI, use_unicode=False)
 
 @validate_input(phase_start_= angle_type, phase_end_= angle_type, moving_time_=units.time)
-@validate_output(angle_type / units.time)
+@validate_output(1 / units.time)
 def calculate_velocity(phase_start_: Quantity, phase_end_: Quantity, moving_time_: Quantity) -> Quantity:
-    phase_function_ = time * (phase_end_ - phase_start_) / moving_time_
-    print(f"{phase_function_}")
+    #HACK: sympy angles are always in radians
+    phase_start_radians = phase_start_.scale_factor
+    phase_end_radians = phase_end_.scale_factor
+    phase_function_ = time * (phase_end_radians - phase_start_radians) / moving_time_
     applied_definition = definition.subs(angle_function(time), phase_function_)
-    print(f"{applied_definition}")
     dsolved = applied_definition.doit()
-    print(f"{dsolved}")
     result_expr = dsolved.rhs
-    print(f"{result_expr}")
-    result_qty = expr_to_quantity(result_expr, 'angular_velocity')
-    print(f"{result_qty}")
-    return result_qty
-
-
-a0 = units.Quantity('a0')
-SI.set_quantity_dimension(a0, angle_type)
-SI.set_quantity_scale_factor(a0, 0 * units.radian)
-a1 = units.Quantity('a1')
-SI.set_quantity_dimension(a1, angle_type)
-SI.set_quantity_scale_factor(a1, pi * units.radian)    
-t = units.Quantity('t')
-SI.set_quantity_dimension(t, units.time)
-SI.set_quantity_scale_factor(t, 5 * units.second)
-
-calculate_velocity(a0, a1, t)
+    return expr_to_quantity(result_expr, "angular_velocity")

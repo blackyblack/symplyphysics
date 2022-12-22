@@ -13,7 +13,7 @@ from sympy.physics.units.definitions.dimension_definitions import angle as angle
 ## V is length of projected vector
 ## alpha is the angle between vector and axis
 
-vector_length  = symbols('vector_length')
+vector_length = symbols('vector_length')
 vector_angle = symbols('vector_angle')
 projection = symbols('projection')
 
