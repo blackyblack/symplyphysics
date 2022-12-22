@@ -1,9 +1,8 @@
 from typing import List
 from sympy import Idx, IndexedBase, Sum
-from symplyphysics.quantity_decorator import assert_equivalent_dimension
 from symplyphysics import (
     symbols, Eq, pretty, solve, Quantity, units,
-    validate_input, validate_output, expr_to_quantity
+    validate_input, validate_output, expr_to_quantity, assert_equivalent_dimension
 )
 
 # Description
