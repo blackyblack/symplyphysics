@@ -1,9 +1,9 @@
 from collections import namedtuple
-import functools
 from typing import Any, List
 from pytest import fixture, raises
 from sympy import cos, sin, symbols
 from sympy.vector import CoordSys3D, express
+from test.test_decorators import unsupported_usage
 from symplyphysics.core.fields.field_point import FieldPoint
 from symplyphysics.core.fields.vector_field import VectorField, apply_field, apply_field_to_coord_system, sympy_vector_to_field
 
@@ -16,16 +16,6 @@ def _assert_point(field_: VectorField, point_: FieldPoint, expected_: List[Any])
     for idx, c in enumerate(field_.components):
         value = c(point_) if callable(c) else c
         assert value == expected_[idx]
-
-# This decorator is used to mark tests that show unsupported usage of VectorField.
-# You're not supposed to use VectorField this way, but we cannot enforce it by Python code.
-# Use tests marked with `unsupported_usage` as a reference on how field behaves when passed incorrect input.
-def unsupported_usage(func):
-    @functools.wraps(func)
-    def wrapper_(*args, **kwargs):
-        return func(*args, **kwargs)
-    return wrapper_
-
 
 @fixture
 def test_args():
@@ -103,30 +93,30 @@ def test_effect_in_lambda_field():
 # Test sympy_vector_to_field()
 
 def test_basic_vector_to_field_conversion(test_args):
-    result_field = sympy_vector_to_field(test_args.C.x * test_args.C.i + test_args.C.y * test_args.C.j)
-    _assert_callable(result_field, 3)
+    field = sympy_vector_to_field(test_args.C.x * test_args.C.i + test_args.C.y * test_args.C.j)
+    _assert_callable(field, 3)
     field_point = FieldPoint(1, 2, 3)
-    _assert_point(result_field, field_point, [1, 2, 0])
+    _assert_point(field, field_point, [1, 2, 0])
 
 def test_skip_dimension_vector_to_field_conversion(test_args):
-    result_field = sympy_vector_to_field(1 * test_args.C.i + 2 * test_args.C.k)
-    assert len(list(result_field.components)) == 3
+    field = sympy_vector_to_field(1 * test_args.C.i + 2 * test_args.C.k)
+    assert len(list(field.components)) == 3
     field_point = FieldPoint(1, 2, 3)
-    _assert_point(result_field, field_point, [1, 0, 2])
+    _assert_point(field, field_point, [1, 0, 2])
 
 def test_empty_vector_to_field_conversion():
-    result_field = sympy_vector_to_field(0)
-    assert len(list(result_field.components)) == 0
+    field = sympy_vector_to_field(0)
+    assert len(list(field.components)) == 0
     # applying empty field to a point results in all zeroes
     field_point = FieldPoint(1, 2, 3)
-    _assert_point(result_field, field_point, [0, 0, 0])
+    _assert_point(field, field_point, [0, 0, 0])
 
 def test_only_integer_vector_to_field_conversion():
-    result_field = sympy_vector_to_field(1)
+    field = sympy_vector_to_field(1)
     # no coordinate system is available from this SymPy vector, so resulting field is empty
-    assert len(list(result_field.components)) == 0
+    assert len(list(field.components)) == 0
     field_point = FieldPoint(1, 2, 3)
-    _assert_point(result_field, field_point, [0, 0, 0])
+    _assert_point(field, field_point, [0, 0, 0])
 
 def test_only_scalar_to_field_conversion(test_args):
     with raises(TypeError):
@@ -142,17 +132,17 @@ def test_different_coord_systems_vector_to_field_conversion(test_args):
 
 def test_custom_names_vector_to_field_conversion():
     C1 = CoordSys3D("C1", variable_names=("r", "phi", "z"))
-    result_field = sympy_vector_to_field(C1.r * C1.i + 2 * C1.phi * C1.j)
-    _assert_callable(result_field, 3)
+    field = sympy_vector_to_field(C1.r * C1.i + 2 * C1.phi * C1.j)
+    _assert_callable(field, 3)
     field_point = FieldPoint(1, 2, 3)
-    _assert_point(result_field, field_point, [1, 4, 0])
+    _assert_point(field, field_point, [1, 4, 0])
 
 def test_rotate_coordinates_vector_to_field_conversion(test_args):
     sympy_vector_field = test_args.C.x * test_args.C.i + test_args.C.y * test_args.C.j
-    result_field = sympy_vector_to_field(sympy_vector_field)
-    _assert_callable(result_field, 3)
+    field = sympy_vector_to_field(sympy_vector_field)
+    _assert_callable(field, 3)
     field_point = FieldPoint(1, 2, 3)
-    _assert_point(result_field, field_point, [1, 2, 0])
+    _assert_point(field, field_point, [1, 2, 0])
     theta = symbols("theta")
     B = test_args.C.orient_new_axis('B', theta, test_args.C.k)
     transformed_vector = express(sympy_vector_field, B, variables=True)
@@ -162,7 +152,7 @@ def test_rotate_coordinates_vector_to_field_conversion(test_args):
         (sin(theta) + 2 * cos(theta)) * cos(theta) - (cos(theta) - 2 * sin(theta)) * sin(theta),
         0])
 
-# when we express sympy vector field to another coordinate system and base scalars (C.x, C.y) are
+# when we express SymPy vector field to another coordinate system and base scalars (C.x, C.y) are
 # not transformed, we get multiple coordinate systems, which is unsupported by sympy_vector_to_field
 def test_rotate_coordinates_without_variables_vector_to_field_conversion(test_args):
     theta = symbols("theta")
@@ -217,17 +207,17 @@ def test_parametrized_no_coord_system_field_apply():
     assert trajectory_vectors == [-parameter, parameter]
 
 def test_parametrized_field_apply(test_args):
-    result_field = sympy_vector_to_field(-test_args.C.y * test_args.C.i + test_args.C.x * test_args.C.j)
+    field = sympy_vector_to_field(-test_args.C.y * test_args.C.i + test_args.C.x * test_args.C.j)
     parameter = symbols("parameter")
     # represents y = x trajectory
     trajectory = [parameter, parameter]
-    trajectory_vectors = apply_field(result_field, trajectory)
+    trajectory_vectors = apply_field(field, trajectory)
     assert len(trajectory_vectors) == 3
     assert trajectory_vectors == [-parameter, parameter, 0]
 
 def test_sympy_field_apply(test_args):
-    result_field = sympy_vector_to_field(-test_args.C.y * test_args.C.i + test_args.C.x * test_args.C.j)
+    field = sympy_vector_to_field(-test_args.C.y * test_args.C.i + test_args.C.x * test_args.C.j)
     trajectory = [test_args.C.x, test_args.C.y]
-    trajectory_vectors = apply_field(result_field, trajectory)
+    trajectory_vectors = apply_field(field, trajectory)
     assert len(trajectory_vectors) == 3
     assert trajectory_vectors == [-test_args.C.y, test_args.C.x, 0]
