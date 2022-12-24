@@ -15,6 +15,7 @@ from symplyphysics.definitions import power_is_energy_derivative as power_deriva
 ## - Initial energy is 0
 power, energy, time = symbols("power energy time")
 law = Eq(power, energy / time)
+
 # Derive the same law from definition of power as energy derivative
 linear_function_coefficient, initial_energy_constant = symbols("linear_function_coefficient initial_energy_constant")
 energy_linear_function = linear_function_coefficient * time + initial_energy_constant

@@ -7,7 +7,8 @@ from sympy.physics.units.definitions.dimension_definitions import angle as angle
 # Description
 ## Most of cases might be represented in 2-dimensional space with two orthogonal axis - vertical Y and horizontal X. Any vector in this space (velocity, force etc) can be easily
 ## transformed to sum of two orthogonal vectors - projections of this vector to axis with help of angle between the vector and the axis.
-## So the formula is: Vaxis = V * cos(alpha), where
+## Law: Vaxis = V * cos(alpha)
+## Where:
 ## Vaxis is the projection of vector V to the axis
 ## V is length of projected vector
 ## alpha is the angle between vector and axis

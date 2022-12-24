@@ -7,11 +7,12 @@ from sympy.physics.units import gravitational_constant
 # Description
 ## Every object generates gravity field around it. Any other object in this field is pulled toward generator.
 ## Gravitational force between two object if proportional to masses of objects and counter-proportional to distance between their mass centers.
-## Law: F = G * m1 * m2 / R**2, where
+## Law: F = G * m1 * m2 / R**2
+## Where:
 ## F - gravitational force
 ## m1 and m2 - masses of objects
-## R is distance between mass centers of objects
-## G is gravitational constant
+## R - distance between mass centers of objects
+## G - gravitational constant
 
 gravitational_force= symbols("gravitational_force")
 first_object_mass, second_object_mass = symbols("first_object_mass second_object_mass")

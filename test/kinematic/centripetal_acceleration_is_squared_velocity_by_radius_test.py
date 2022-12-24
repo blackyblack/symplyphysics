@@ -25,7 +25,7 @@ def test_args():
 def test_basic_acceleration(test_args):
     result = centripetal_acceleration_def.calculate_acceleration(test_args.lin_velocity, test_args.curve_radius)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.acceleration)
-    result_acceleration = convert_to(result, units.meter / units.second**2).subs({units.meter: 1, units.second: 1}).evalf(2)    
+    result_acceleration = convert_to(result, units.meter / units.second**2).subs({units.meter: 1, units.second: 1}).evalf(2)
     assert result_acceleration == approx(200.0, 0.01)
 
 def test_bad_velocity(test_args):
