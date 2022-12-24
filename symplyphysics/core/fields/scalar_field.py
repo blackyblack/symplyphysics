@@ -3,7 +3,7 @@ from typing import Any, List
 from sympy import Expr
 from sympy.vector import CoordSys3D, Vector
 from sympy.vector.operators import _get_coord_systems
-from symplyphysics.core.fields.field_point import FieldPoint
+from .field_point import FieldPoint
 
 
 # Contains mapping of point to a scalar value in _function, eg P(FieldPoint).
