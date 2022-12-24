@@ -1,6 +1,9 @@
 from typing import Any, List
 
 
+# This class not only represents point in space, but any trajectory in any-dimensional space.
+# One should set it's coordinate to SymPy variable whenever it should be used as a trajectory, eg FieldPoint(C.x, C.y)
+# represents a plane in 3D-space, where C is SympPy CoordSys3D.
 class FieldPoint:
     # may contain not number but sympy expression, eg C.x
     _coordinates: List[Any] = []

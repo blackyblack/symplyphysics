@@ -4,7 +4,7 @@ from sympy import cos, sin, symbols
 from sympy.vector import CoordSys3D, express
 from test.test_decorators import unsupported_usage
 from symplyphysics.core.fields.field_point import FieldPoint
-from symplyphysics.core.fields.scalar_field import ScalarField, apply_field, sympy_expression_to_field_function, sympy_vector_to_field
+from symplyphysics.core.fields.scalar_field import ScalarField, apply_field, sympy_expression_to_field_function, sympy_vector_to_field, extract_coord_system_from_sympy_vector
 
 
 @fixture
@@ -67,7 +67,51 @@ def test_basic_sympy_expression_to_field_function(test_args):
     field_point = FieldPoint(1, 2, 3)
     assert field_function(field_point) == 3
 
-#TODO: add more tests
+def test_empty_sympy_expression_to_field_function(test_args):
+    field_function = sympy_expression_to_field_function(test_args.C, 0)
+    assert field_function == 0
+
+# Empty coordinate system results to unchanged original expression
+def test_empty_coord_system_sympy_expression_to_field_function(test_args):
+    field_function = sympy_expression_to_field_function(None, test_args.C.x + test_args.C.y)
+    assert field_function == test_args.C.x + test_args.C.y
+
+# Any non SymPy expression is returned without modification
+def test_integer_sympy_expression_to_field_function(test_args):
+    field_function = sympy_expression_to_field_function(test_args.C, 1)
+    assert field_function == 1
+
+# This should not happen as coordinate system is detected automatically with extract_coord_system_from_sympy_vector(),
+# but as public method it can be called with wrong parameters. In this case, only correct coordinates of SymPy expression
+# will be modified.
+def test_different_coord_systems_sympy_expression_to_field_function(test_args):
+    C1 = CoordSys3D("C1", variable_names=("r", "phi", "z"))
+    field_function = sympy_expression_to_field_function(test_args.C, C1.r + 2 * C1.phi)
+    field_point = FieldPoint(1, 2, 3)
+    assert field_function(field_point) == C1.r + 2 * C1.phi
+
+def test_partially_different_coord_systems_sympy_expression_to_field_function(test_args):
+    C1 = CoordSys3D("C1", variable_names=("r", "phi", "z"))
+    field_function = sympy_expression_to_field_function(test_args.C, test_args.C.x + 2 * C1.phi)
+    field_point = FieldPoint(1, 2, 3)
+    assert field_function(field_point) == 1 + 2 * C1.phi
+
+# Test extract_coord_system_from_sympy_vector()
+
+def test_basic_extract_coord_system_from_sympy_vector(test_args):
+    coord_system = extract_coord_system_from_sympy_vector(test_args.C.x + test_args.C.y)
+    assert coord_system == test_args.C
+
+def test_empty_extract_coord_system_from_sympy_vector():
+    coord_system = extract_coord_system_from_sympy_vector(1)
+    assert coord_system is None
+
+def test_different_coord_systems_extract_coord_system_from_sympy_vector(test_args):
+    C1 = CoordSys3D("C1", variable_names=("r", "phi", "z"))
+    with raises(TypeError):
+        extract_coord_system_from_sympy_vector(test_args.C.x + 2 * C1.phi)
+    with raises(TypeError):
+        extract_coord_system_from_sympy_vector(test_args.C.x * C1.i)
 
 # Test sympy_vector_to_field()
 
@@ -93,14 +137,6 @@ def test_only_integer_vector_to_field_conversion():
     field = sympy_vector_to_field(1)
     field_point = FieldPoint(1, 2, 3)
     assert field(field_point) == 1
-
-# different coordinate systems in parameters are not supported
-def test_different_coord_systems_vector_to_field_conversion(test_args):
-    C1 = CoordSys3D("C1", variable_names=("r", "phi", "z"))
-    with raises(TypeError):
-        sympy_vector_to_field(test_args.C.x + 2 * C1.phi)
-    with raises(TypeError):
-        sympy_vector_to_field(test_args.C.x * C1.i)
 
 def test_custom_names_vector_to_field_conversion():
     C1 = CoordSys3D("C1", variable_names=("r", "phi", "z"))
