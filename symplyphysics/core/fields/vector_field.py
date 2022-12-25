@@ -1,9 +1,10 @@
 from types import FunctionType
 from typing import List
-from sympy.vector import CoordSys3D, Vector
+from sympy import Derivative, diff
+from sympy.vector import CoordSys3D, Vector, Curl
 from .field_point import FieldPoint
 from .scalar_field import sympy_expression_to_field_function, extract_coord_system_from_sympy_vector
-from ..vectors import sympy_vector_to_array
+from ..vectors import array_to_sympy_vector, sympy_vector_to_array
 
 
 # Contains mappings of point to vectors in components[], eg [P(FieldPoint), Q(FieldPoint)].
@@ -52,11 +53,30 @@ def apply_field(field_: VectorField, trajectory_: List) -> List:
     for idx, element in enumerate(trajectory_):
         field_point.set_coordinate(idx, element)
     result_vector = []
-    for vector_function in field_.components:
-        result_vector.append(vector_function(field_point) if callable(vector_function) else vector_function)
+    for i in range(max(len(trajectory_), len(list(field_.components)))):
+        result_vector.append(field_.component(i)(field_point) if callable(field_.component(i)) else field_.component(i))
     return result_vector
 
 # Convert coordinate system to space and apply field.
 # Applying field to entire space is necessary for SymPy field operators like Curl.
 def apply_field_to_coord_system(field_: VectorField, coord_system_: CoordSys3D) -> List:
     return apply_field(field_, list(coord_system_.base_scalars()))
+
+def curl_operator(coord_system_: CoordSys3D, field_: VectorField) -> VectorField:
+    if len(list(field_.components)) > 3:
+        raise TypeError(f"Curl operator is defined only for 3 dimensions, got: {len(list(field_.components))}")
+    field_space = apply_field_to_coord_system(field_, coord_system_)
+    x = coord_system_.base_scalars()[0]
+    y = coord_system_.base_scalars()[1]
+    z = coord_system_.base_scalars()[2]
+    field_x = field_space[0]
+    field_y = field_space[1]
+    field_z = field_space[2]
+    field_rotor_array = [
+        diff(field_z, y) - diff(field_y, z),
+        diff(field_x, z) - diff(field_z, x),
+        diff(field_y, x) - diff(field_x, y)]
+    field_result = VectorField()
+    for i in range(len(field_rotor_array)):
+        field_result.set_component(i, sympy_expression_to_field_function(coord_system_, field_rotor_array[i]))
+    return field_result

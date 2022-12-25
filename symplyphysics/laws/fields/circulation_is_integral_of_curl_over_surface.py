@@ -6,6 +6,7 @@ from symplyphysics import (
     CoordSys3D, array_to_sympy_vector, apply_field, VectorField,
     apply_field_to_coord_system, sympy_vector_to_field
 )
+from symplyphysics.core.fields.vector_field import curl_operator
 
 # Description
 ## Circulation of the field along the closed curve is flow of the rotor (or curl) of this field 
@@ -59,10 +60,7 @@ def calculate_circulation(
     parameter2_from_,
     parameter2_to_):
 
-    field_space = apply_field_to_coord_system(field_, coord_system_)
-    field_space_sympy = array_to_sympy_vector(coord_system_, field_space)
-    field_rotor_sympy = field_rotor_definition.rhs.subs(field, field_space_sympy).doit()
-    field_rotor_lambda = sympy_vector_to_field(field_rotor_sympy)
+    field_rotor_lambda = curl_operator(coord_system_, field_)
     field_applied = apply_field(field_rotor_lambda, surface_)
     field_as_vector = array_to_sympy_vector(coord_system_, field_applied)
     surface_sympy_vector = array_to_sympy_vector(coord_system_, surface_)

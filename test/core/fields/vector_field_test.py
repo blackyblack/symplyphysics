@@ -166,7 +166,7 @@ def test_rotate_coordinates_without_variables_vector_to_field_conversion(test_ar
 def test_basic_apply_field_to_coord_system(test_args):
     field = VectorField(lambda p: p.y, lambda p: p.x)
     field_space = apply_field_to_coord_system(field, test_args.C)
-    assert field_space == [test_args.C.y, test_args.C.x]
+    assert field_space == [test_args.C.y, test_args.C.x, 0]
 
 def test_custom_names_apply_field_to_coord_system():
     C1 = CoordSys3D("C1", variable_names=("r", "phi", "z"))
@@ -221,3 +221,26 @@ def test_sympy_field_apply(test_args):
     trajectory_vectors = apply_field(field, trajectory)
     assert len(trajectory_vectors) == 3
     assert trajectory_vectors == [-test_args.C.y, test_args.C.x, 0]
+
+def test_4d_field_apply(test_args):
+    field = VectorField(lambda p: p.y, lambda p: p.x, lambda p: p.z)
+    field.set_component(3, lambda p: p.coordinate(3))
+    trajectory = [test_args.C.x, test_args.C.y, 2, 3]
+    trajectory_vectors = apply_field(field, trajectory)
+    assert len(trajectory_vectors) == 4
+    assert trajectory_vectors == [test_args.C.y, test_args.C.x, 2, 3]
+
+def test_4d_trajectory_field_apply(test_args):
+    field = VectorField(lambda p: p.y, lambda p: p.x, lambda p: p.z)
+    trajectory = [test_args.C.x, test_args.C.y, 2, 3]
+    trajectory_vectors = apply_field(field, trajectory)
+    assert len(trajectory_vectors) == 4
+    assert trajectory_vectors == [test_args.C.y, test_args.C.x, 2, 0]
+
+def test_3d_trajectory_4d_field_apply(test_args):
+    field = VectorField(lambda p: p.y, lambda p: p.x, lambda p: p.z)
+    field.set_component(3, lambda p: p.coordinate(3))
+    trajectory = [test_args.C.x, test_args.C.y, 2]
+    trajectory_vectors = apply_field(field, trajectory)
+    assert len(trajectory_vectors) == 4
+    assert trajectory_vectors == [test_args.C.y, test_args.C.x, 2, 0]
