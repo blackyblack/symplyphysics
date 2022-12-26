@@ -1,9 +1,8 @@
 from types import FunctionType
 from typing import List
-from sympy import Expr
 from sympy.vector import CoordSys3D, Vector
-from sympy.vector.operators import _get_coord_systems
 from .field_point import FieldPoint
+from .scalar_field import sympy_expression_to_field_function, extract_coord_system_from_sympy_vector
 from ..vectors import sympy_vector_to_array
 
 
@@ -37,26 +36,11 @@ class VectorField:
 
 # Converts SymPy vector, eg C.x * C.i + C.y * C.j, where C is CoordSys3D, to a field
 def sympy_vector_to_field(sympy_vector_: Vector) -> VectorField:
-    # Better replacement for lambda
-    def subs_with_point(coord_system_: CoordSys3D, expr_):
-        def _(point_: FieldPoint):
-            base_scalars = coord_system_.base_scalars()
-            # make a copy of expression
-            expr = expr_
-            for i in range(len(base_scalars)):
-                expr = expr.subs(base_scalars[i], point_.coordinate(i))
-            return expr
-
-        if not isinstance(expr_, Expr):
-            return expr_
-        return expr_ if coord_system_ is None else _
-
     field = VectorField()
     field_array = sympy_vector_to_array(sympy_vector_)
-    coord_system_set = _get_coord_systems(sympy_vector_)
-    coord_system = None if len(coord_system_set) == 0 else next(iter(coord_system_set))
+    coord_system = extract_coord_system_from_sympy_vector(sympy_vector_)
     for i in range(len(field_array)):
-        field.set_component(i, subs_with_point(coord_system, field_array[i]))
+        field.set_component(i, sympy_expression_to_field_function(coord_system, field_array[i]))
     return field
 
 # Applies field to a trajectory / surface / volume - calls field functions with each element of the trajectory as parameter.

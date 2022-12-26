@@ -1,4 +1,5 @@
 from typing import Any, List
+from sympy import symbols
 from sympy.vector import CoordSys3D
 from symplyphysics.core.fields.field_point import FieldPoint
 
@@ -28,7 +29,16 @@ def test_4d_point():
     point.set_coordinate(3, 4)
     _assert_point(point, [1, 2, 3, 4])
 
+# This kind of FieldPoint represents a surface, so it can contain any point in XY-plane
+# and it's Z-coordinate = 3
 def test_coord_system_point():
     C = CoordSys3D("C")
     point = FieldPoint(C.x, C.y, 3)
     _assert_point(point, [C.x, C.y, 3])
+
+# This kind of FieldPoint represents a straight line in 2D space. It's function is Y = X,
+# as X = param and Y = param. It's Z-coordinate = 0.
+def test_parametrized_point():
+    param = symbols("param")
+    point = FieldPoint(param, param)
+    _assert_point(point, [param, param, 0])
