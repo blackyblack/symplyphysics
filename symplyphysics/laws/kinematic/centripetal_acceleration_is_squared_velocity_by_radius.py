@@ -29,6 +29,7 @@ definition = Eq(centripetal_acceleration, linear_velocity**2 / curve_radius)
 # Proof
 ## Let's assume we are having movement in 2-D space.
 ## Object position is described with it's radius-vector R - the vector from zero coordinates to the object and with angle alpha between X-axis and this radius-vector.
+## Let's also assume we are having object is on the X-axis at the start of observation (alpha == 0, V(0) == linear_velocity), so movental velocity vector is upwards.
 
 time = symbols("time")
 alpha = symbols("alpha", cls = Function)
@@ -40,6 +41,7 @@ y_coordinate = projector.law.rhs.subs({projector.vector_length:curve_radius, pro
 x_velocity = diff(x_coordinate, time)
 y_velocity = diff(y_coordinate, time)
 velocity_vector_length = sqrt(x_velocity**2 + y_velocity**2)
+## 
 velocity_vector_angle = atan(y_velocity / x_velocity)
 
 ## Acceleration projections are derivatives of respective velocities.
