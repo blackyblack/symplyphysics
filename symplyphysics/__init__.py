@@ -1,4 +1,4 @@
-from sympy import simplify, symbols, Function, Derivative, Eq, pretty, solve, dsolve, sin, cos, pi
+from sympy import simplify, symbols, Function, Derivative, Eq, pretty, solve, dsolve, sin, cos, pi, diff, sqrt, atan
 from sympy.utilities.lambdify import lambdify, implemented_function
 from sympy.core.singleton import S
 from sympy.physics import units
