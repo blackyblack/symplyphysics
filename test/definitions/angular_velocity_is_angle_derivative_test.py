@@ -28,7 +28,7 @@ def test_args():
 
 
 def test_basic_velocity(test_args):
-    result = angular_velocity_def.calculate_velocity(test_args.a0, test_args.a1, test_args.t)
+    result = angular_velocity_def.calculate_angular_velocity(test_args.a0, test_args.a1, test_args.t)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, 1 / units.time)
     result_velocity = convert_to(result, angular_velocity_def.definition_dimension_SI).subs({units.radian: 1, units.second: 1}).evalf(2)
     assert result_velocity == approx(0.63, 0.01)
@@ -39,19 +39,19 @@ def test_velocity_with_bad_angle(test_args):
     SI.set_quantity_dimension(a0b, units.charge)
     SI.set_quantity_scale_factor(a0b, 1 * units.coulomb)
     with raises(errors.UnitsError):
-        angular_velocity_def.calculate_velocity(
+        angular_velocity_def.calculate_angular_velocity(
             a0b, test_args.a1, test_args.t)
     
     with raises(errors.UnitsError):
-        angular_velocity_def.calculate_velocity(
+        angular_velocity_def.calculate_angular_velocity(
             test_args.a0, a0b, test_args.t)           
 
     with raises(TypeError):
-        angular_velocity_def.calculate_velocity(
+        angular_velocity_def.calculate_angular_velocity(
             100, test_args.a1, test_args.t)
 
     with raises(TypeError):
-        angular_velocity_def.calculate_velocity(
+        angular_velocity_def.calculate_angular_velocity(
             test_args.a0, 100, test_args.t)
 
     
@@ -60,10 +60,10 @@ def test_velocity_with_bad_time(test_args):
     SI.set_quantity_dimension(tb, units.charge)
     SI.set_quantity_scale_factor(tb, 1 * units.coulomb)
     with raises(errors.UnitsError):
-        angular_velocity_def.calculate_velocity(
+        angular_velocity_def.calculate_angular_velocity(
             test_args.a0, test_args.a1, tb)
     
     with raises(TypeError):
-        angular_velocity_def.calculate_velocity(
+        angular_velocity_def.calculate_angular_velocity(
             test_args.a0, test_args.a1, 100)
 
