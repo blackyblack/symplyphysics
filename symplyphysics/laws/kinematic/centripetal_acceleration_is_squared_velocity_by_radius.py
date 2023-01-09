@@ -1,16 +1,20 @@
 from symplyphysics import (
-    symbols, Eq, pretty, Quantity, units, solve, simplify,
+    symbols, Eq, pretty, Quantity, units, solve, expr_equals, expr_equals_abs,
     validate_input, validate_output, expr_to_quantity, Function, Derivative,
-    pi, sin, cos, diff, sqrt, atan
+    pi, sin, cos, diff
 )
 from symplyphysics.laws.kinematic import planar_projection_is_cosine as projector
+from symplyphysics.definitions import acceleration_is_velocity_derivative as acceleration_def
+from symplyphysics.definitions import angular_velocity_is_angle_derivative as angular_acceleration_def
+from symplyphysics.laws.kinematic import linear_velocity_from_angular_velocity_and_radius as linear_velocity_law
 
 # Description
 ## When the object moves not straight but along some curve, acceleration not only changes the magnitude of velocity, but also the velocity direction.
 ## Velocity vector in any moment of observation is tangential to trajectory.
 ## In every moment of observation acceleration vector might be represented as sum of two vectors. One of them is tangential to velocity and the other one is normal and directed to the center of curve.
 ## The tangential acceleration affects the velocity vector length and it is known as tangential acceleration. 
-## Normal acceleration afects the velocity direction and also known as centripetal (that's because it's directed to the center of curve).
+## Normal (radial) acceleration afects the velocity direction and also known as centripetal (that's because it's directed to the center of curve).
+## 3-D and higher dimensional motion also have centripetal acceleration but a generalized form of the law should be applied.
 
 # Law: an(t) = V(t)**2 / R
 ## Where:
@@ -18,6 +22,10 @@ from symplyphysics.laws.kinematic import planar_projection_is_cosine as projecto
 ## an is momental centripetal (normal) acceleration
 ## V is momental linear velocity
 ## R is curve radius in this point of trajectory.
+
+# Conditions
+## - Curve is smooth and continuous. Does not have 0 or infinite radius.
+## - Motion is in 2-D space.
 
 centripetal_acceleration = symbols("centripetal_acceleration")
 linear_velocity = symbols("linear_velocity")
@@ -41,36 +49,31 @@ curve_radius_vertical = projector.law.rhs.subs({projector.vector_length: curve_r
 #TODO: use velocity definition as soon as it is added to symplyphysics
 velocity_horisontal = diff(curve_radius_horisontal, time)
 velocity_vertical = diff(curve_radius_vertical, time)
-velocity_vector_length = sqrt(velocity_horisontal**2 + velocity_vertical**2)
-#TODO: explain why
-velocity_vector_angle = atan(velocity_vertical / velocity_horisontal)
-
-## velocity_vector_angle = -atan(cos(alpha(time))/sin(alpha(time)))
-## velocity_vector_angle = -atan(sin(pi/2 - alpha(time)) / cos(pi/2 - alpha(time))) = -atan(tan(pi/2 - alpha(time)))
-## velocity_vector_angle = alpha(time) - pi/2, for alpha(time) in range (0, pi)
-velocity_vector_angle = alpha(time) - pi/2
-
-## Acceleration projections are derivatives of respective velocities.
-
 velocity_vector = [velocity_horisontal, velocity_vertical]
-#TODO: derive from projector
+
+## These unit vectors should not necessary be derived. We can choose them at will and prove that
+## they are orthogonal to each other and radial_unit_vector is orthogonal to 'velocity_vector'.
+## One can also show that 'tangential_unit_vector' is 'radial_unit_vector' derivative.
 radial_unit_vector = [cos(alpha(time)), sin(alpha(time))]
 tangential_unit_vector = [-sin(alpha(time)), cos(alpha(time))]
 
-## Tangential unit vector is radial unit vector derivative
-#TODO: use Derivative operator and Vector class
-assert diff(radial_unit_vector[0], alpha(time)) == tangential_unit_vector[0]
-assert diff(radial_unit_vector[1], alpha(time)) == tangential_unit_vector[1]
-
 ## This is Dot product of radial vector and velocity vector. Radial vector is orthogonal to velocity hence vector
 ## multiplication result should be zero.
+## Radial vector is orthogonal to tangential vector hence tangential vector should be parallel to velocity vector.
 #TODO: use Dot operator and Vector class
-assert velocity_vector[0] * radial_unit_vector[0] + velocity_vector[1] * radial_unit_vector[1] == 0
+assert expr_equals(tangential_unit_vector[0] * radial_unit_vector[0] + tangential_unit_vector[1] * radial_unit_vector[1], 0)
+assert expr_equals(velocity_vector[0] * radial_unit_vector[0] + velocity_vector[1] * radial_unit_vector[1], 0)
 
-#TODO: use acceleration definition
-acceleration_horisontal = diff(velocity_horisontal, time)
-acceleration_vertical = diff(velocity_vertical, time)
+## Use acceleration definition to calculate 'acceleration_vector'
+acceleration_horisontal = acceleration_def.definition.rhs.subs({
+    acceleration_def.velocity_function(acceleration_def.time): velocity_horisontal,
+    acceleration_def.time: time}).doit()
+acceleration_vertical = acceleration_def.definition.rhs.subs({
+    acceleration_def.velocity_function(acceleration_def.time): velocity_vertical,
+    acceleration_def.time: time}).doit()
 acceleration_vector = [acceleration_horisontal, acceleration_vertical]
+
+## Prove that 'acceleration_vector' has tangential and radial parts.
 
 tangential_acceleration_magnitude = curve_radius * Derivative(alpha(time), (time, 2))
 radial_acceleration_magnitude = -curve_radius * Derivative(alpha(time), time)**2
@@ -79,23 +82,27 @@ tangential_acceleration = [tangential_acceleration_magnitude * tangential_unit_v
 radial_acceleration = [radial_acceleration_magnitude * radial_unit_vector[0], radial_acceleration_magnitude * radial_unit_vector[1]]
 
 #TODO: use vector addition and Vector class
-assert simplify(acceleration_vector[0] - (tangential_acceleration[0] + radial_acceleration[0])) == 0
-assert simplify(acceleration_vector[1] - (tangential_acceleration[1] + radial_acceleration[1])) == 0
+assert expr_equals(acceleration_vector[0], tangential_acceleration[0] + radial_acceleration[0])
+assert expr_equals(acceleration_vector[1], tangential_acceleration[1] + radial_acceleration[1])
 
 ## Here we've proven that tangential_acceleration + radial_acceleration equals to acceleration_vector. It means, we've
 ## changed basis of acceleration_vector to tangential and radial vectors instead of cartesian coordinates.
-## Same result could be achieved by rotating coordinate system to 'velocity_vector_angle'
+## Same result could be achieved by rotating coordinate system by velocity vector angle.
 
 ## We are not interested in tangential_acceleration as we are looking for centripetal acceleration which is 'radial_acceleration'
 ## in our proof.
 
-#TODO: add law with linear_velocity == Derivative(alpha(time), time) * curve_radius
-law_acceleration = law.rhs.subs(linear_velocity, Derivative(alpha(time), time) * curve_radius)
+angular_acceleration_applied = angular_acceleration_def.definition.rhs.subs({
+    angular_acceleration_def.angle_function(angular_acceleration_def.time): alpha(time),
+    angular_acceleration_def.time: time})
+linear_velocity_applied = linear_velocity_law.law.rhs.subs({
+    linear_velocity_law.angular_velocity: angular_acceleration_applied,
+    linear_velocity_law.curve_radius: curve_radius})
+law_acceleration = law.rhs.subs(linear_velocity, linear_velocity_applied)
 
 ## radial_acceleration_magnitude has minus sign. It means it is directed towards the center of the curve. The centripetal
 ## acceleration law is not defined in vector terms so we should only compare acceleration magnitudes (absolute values).
-## And for some reason, sympy does not allow to compare Abs with non-Abs values so we apply abs() to both sides.
-assert simplify(abs(radial_acceleration_magnitude) - abs(law_acceleration)) == 0
+assert expr_equals_abs(radial_acceleration_magnitude, law_acceleration)
 
 
 def print():
@@ -106,7 +113,7 @@ def print():
 def calculate_acceleration(linear_velocity_: Quantity, curve_radius_: Quantity) -> Quantity:        
     solved = solve(law, centripetal_acceleration, dict=True)[0][centripetal_acceleration]
     result_expr = solved.subs({
-        linear_velocity:linear_velocity_,
-        curve_radius:curve_radius_
+        linear_velocity: linear_velocity_,
+        curve_radius: curve_radius_
     })
     return expr_to_quantity(result_expr, "centripetal_acceleration")

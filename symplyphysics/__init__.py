@@ -8,6 +8,7 @@ from sympy.physics.units.systems.si import SI
 from .core import errors
 from .core.quantity_decorator import validate_input, validate_output, validate_output_same, assert_equivalent_dimension
 from .core.expr_to_quantity import expr_to_quantity
+from .core.expr_comparisons import expr_equals, expr_equals_abs
 from .core.probability import Probability
 from .core.filters import filter_zeroes, filter_map_zeroes, filter_negative, filter_map_negative
 from .core.fields.field_point import FieldPoint

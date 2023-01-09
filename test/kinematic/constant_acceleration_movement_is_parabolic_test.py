@@ -63,4 +63,4 @@ def test_bad_time(test_args):
         movement_law.calculate_distance(test_args.V0, test_args.a, tb)
 
     with raises(TypeError):
-        movement_law.calculate_distance(test_args.V0, test_args.a, 100)         
+        movement_law.calculate_distance(test_args.V0, test_args.a, 100)
