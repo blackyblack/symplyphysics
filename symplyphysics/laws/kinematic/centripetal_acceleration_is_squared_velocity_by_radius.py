@@ -5,7 +5,7 @@ from symplyphysics import (
 )
 from symplyphysics.laws.kinematic import planar_projection_is_cosine as projector
 from symplyphysics.definitions import acceleration_is_velocity_derivative as acceleration_def
-from symplyphysics.definitions import angular_velocity_is_angle_derivative as angular_acceleration_def
+from symplyphysics.definitions import angular_velocity_is_angle_derivative as angular_velocity_def
 from symplyphysics.laws.kinematic import linear_velocity_from_angular_velocity_and_radius as linear_velocity_law
 
 # Description
@@ -24,7 +24,7 @@ from symplyphysics.laws.kinematic import linear_velocity_from_angular_velocity_a
 ## R is curve radius in this point of trajectory.
 
 # Conditions
-## - Curve is smooth and continuous. Does not have 0 or infinite radius.
+## - Curve is smooth and continuous. Does not have 0 radius.
 ## - Motion is in 2-D space.
 
 centripetal_acceleration = symbols("centripetal_acceleration")
@@ -92,11 +92,11 @@ assert expr_equals(acceleration_vector[1], tangential_acceleration[1] + radial_a
 ## We are not interested in tangential_acceleration as we are looking for centripetal acceleration which is 'radial_acceleration'
 ## in our proof.
 
-angular_acceleration_applied = angular_acceleration_def.definition.rhs.subs({
-    angular_acceleration_def.angle_function(angular_acceleration_def.time): alpha(time),
-    angular_acceleration_def.time: time})
+angular_velocity_applied = angular_velocity_def.definition.rhs.subs({
+    angular_velocity_def.angle_function(angular_velocity_def.time): alpha(time),
+    angular_velocity_def.time: time})
 linear_velocity_applied = linear_velocity_law.law.rhs.subs({
-    linear_velocity_law.angular_velocity: angular_acceleration_applied,
+    linear_velocity_law.angular_velocity: angular_velocity_applied,
     linear_velocity_law.curve_radius: curve_radius})
 law_acceleration = law.rhs.subs(linear_velocity, linear_velocity_applied)
 
@@ -116,4 +116,4 @@ def calculate_acceleration(linear_velocity_: Quantity, curve_radius_: Quantity) 
         linear_velocity: linear_velocity_,
         curve_radius: curve_radius_
     })
-    return expr_to_quantity(result_expr, "centripetal_acceleration")
+    return expr_to_quantity(result_expr, "centripetal_acceleration_out")
