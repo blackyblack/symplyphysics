@@ -28,7 +28,7 @@ def test_basic_projection(test_args):
     result_vector = convert_to(result, units.newton).subs(units.newton, 1).evalf(2)
     assert result_vector == approx(1.5, 0.01)
 
-def test_bad_angle(test_args):    
+def test_bad_angle(test_args):
     ab = units.Quantity('ab')
     SI.set_quantity_dimension(ab, units.length)
     SI.set_quantity_scale_factor(ab, 1 * units.meter)

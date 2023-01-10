@@ -31,8 +31,8 @@ def test_args():
 def test_basic_velocity(test_args):
     result = accelerated_velocity_law.calculate_velocity(test_args.V1, test_args.A1, test_args.T1)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.velocity)
-    result_vector = convert_to(result, units.meter/units.second).subs(units.meter/units.second, 1).evalf(2)
-    assert result_vector == approx(-47, 0.01)
+    result_velocity = convert_to(result, units.meter/units.second).subs(units.meter/units.second, 1).evalf(2)
+    assert result_velocity == approx(-47, 0.01)
 
 def test_bad_velocity(test_args):
     Vb = units.Quantity('Vb')
@@ -54,7 +54,7 @@ def test_bad_acceleration(test_args):
         accelerated_velocity_law.calculate_velocity(test_args.V1, Ab, test_args.T1)
 
     with raises(TypeError):
-        accelerated_velocity_law.calculate_velocity(test_args.V1, 100, test_args.T1)   
+        accelerated_velocity_law.calculate_velocity(test_args.V1, 100, test_args.T1)
 
 def test_bad_time(test_args):
     Tb = units.Quantity('Tb')
@@ -65,4 +65,4 @@ def test_bad_time(test_args):
         accelerated_velocity_law.calculate_velocity(test_args.V1, test_args.A1, Tb)
 
     with raises(TypeError):
-        accelerated_velocity_law.calculate_velocity(test_args.V1, test_args.A1, 100)              
+        accelerated_velocity_law.calculate_velocity(test_args.V1, test_args.A1, 100)
