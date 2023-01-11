@@ -10,14 +10,16 @@ from symplyphysics import (
 ## Where I is moment of inertia,
 ## m is mass of particle,
 ## R is distance to spin axle.
+# Conditions
+## Particle is zero-sized, rigid and uniform.
 
 moment_of_inertia, particle_mass, spinning_radius = symbols('moment_of_inertia particle_mass spinning_radius')
 definition = Eq(moment_of_inertia, particle_mass * spinning_radius**2)
 
 definition_dimension_SI = units.kilogram * units.meter**2
 
-#def print():
-#    return pretty(definition, use_unicode=False)
+def print():
+    return pretty(definition, use_unicode=False)
 
 @validate_input(mass_=units.mass, radius_=units.length)
 @validate_output(units.mass * units.length**2)

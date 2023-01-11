@@ -8,7 +8,7 @@ from symplyphysics.definitions import moment_of_inertia_is_mass_times_squared_ra
 
 # Description
 ## Assume particle with 5kgs of mass is about to spin around axle, and a distance to this axle is 3m. 
-## Moment of inertia of this system shpold be 45kg*m**2.
+## Moment of inertia of this system should be 45kg*m**2.
 
 @fixture
 def test_args():
