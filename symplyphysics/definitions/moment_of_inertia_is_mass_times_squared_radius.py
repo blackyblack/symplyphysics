@@ -4,21 +4,24 @@ from symplyphysics import (
 )
 
 # Description
-## If the particle rotates around axle, 
+## If the particle is about to spin around axle, it has moment of inertia.
+## Moment of inertia describes object's ability to be inertial to spinning, as object has mass to be inertial to linear movement.
 ## Definition: I = m * R**2
 ## Where I is moment of inertia,
 ## m is mass of particle,
-## R is distance to rotation axle.
+## R is distance to spin axle.
 
-moment_of_inertia, particle_mass, radius = symbols('moment_of_inertia particle_mass radius')
-definition = Eq(moment_of_inertia, particle_mass * radius**2)
+moment_of_inertia, particle_mass, spinning_radius = symbols('moment_of_inertia particle_mass spinning_radius')
+definition = Eq(moment_of_inertia, particle_mass * spinning_radius**2)
 
-def print():
-    return pretty(definition, use_unicode=False)
+definition_dimension_SI = units.kilogram * units.meter**2
+
+#def print():
+#    return pretty(definition, use_unicode=False)
 
 @validate_input(mass_=units.mass, radius_=units.length)
 @validate_output(units.mass * units.length**2)
 def calculate_moment_of_inertia(mass_: Quantity, radius_: Quantity) -> Quantity:
     result_inertia_expr = solve(definition, moment_of_inertia, dict=True)[0][moment_of_inertia]
-    result_expr = result_inertia_expr.subs({particle_mass: mass_, radius: radius_})
+    result_expr = result_inertia_expr.subs({particle_mass: mass_, spinning_radius: radius_})
     return expr_to_quantity(result_expr, 'moment_of_inertia')
