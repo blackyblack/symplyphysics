@@ -4,7 +4,7 @@ from pytest import approx, fixture, raises
 from symplyphysics import (
     units, convert_to, SI, errors
 )
-from symplyphysics.laws.dynamics import kinetic_energy_of_spinning_body_is_moment_of_inertia_times_half_of_squared_angular_velocity as kinetic_energy_law
+from symplyphysics.laws.dynamics import spinning_kinetic_energy_from_moment_of_inertia_and_angular_velocity as kinetic_energy_law
 from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
 
 # Description
