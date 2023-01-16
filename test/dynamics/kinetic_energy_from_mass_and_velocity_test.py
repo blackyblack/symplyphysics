@@ -4,7 +4,7 @@ from pytest import approx, fixture, raises
 from symplyphysics import (
     units, convert_to, SI, errors
 )
-from symplyphysics.laws.kinematic import kinetic_energy_from_mass_and_velocity as kinetic_energy
+from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_velocity as kinetic_energy
 
 @fixture
 def test_args():
