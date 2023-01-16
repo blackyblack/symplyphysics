@@ -7,7 +7,7 @@ from sympy.physics.units.definitions.dimension_definitions import angle as angle
 # Description
 ## If an object has a inertia moment and spins with some angular velocity, it bears kinetic energy.
 ## Law: E = I * w**2 / 2, where
-## E is kinetic energy of moving object
+## E is kinetic energy of spinning object
 ## I is inertia moment of this object
 ## V is angular velocity
 

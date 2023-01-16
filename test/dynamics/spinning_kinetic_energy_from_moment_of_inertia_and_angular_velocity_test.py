@@ -4,11 +4,11 @@ from pytest import approx, fixture, raises
 from symplyphysics import (
     units, convert_to, SI, errors
 )
-from symplyphysics.laws.dynamics import spinning_kinetic_energy_from_moment_of_inertia_and_angular_velocity as kinetic_energy_law
+from symplyphysics.laws.dynamics import kinetic_energy_from_moment_of_inertia_and_angular_velocity as kinetic_energy_law
 from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
 
 # Description
-## If we have a stone with 2kg*m2 of moment_of_inertia spinning with 3rad/s angular velocity, this stone should bear 9 Joules of kinetic energy.
+## If we have a stone with 2kg*m^2 of moment of inertia spinning with 3rad/s angular velocity, this stone should bear 9 joules of kinetic energy.
 
 @fixture
 def test_args():
