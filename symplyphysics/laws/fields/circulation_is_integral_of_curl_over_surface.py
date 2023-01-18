@@ -4,7 +4,7 @@ from sympy.vector import Dot, Curl, Cross
 from symplyphysics import (
     symbols, Eq, pretty, simplify,
     CoordSys3D, array_to_sympy_vector, apply_field, VectorField,
-    apply_field_to_coord_system, sympy_vector_to_field
+    sympy_vector_to_field
 )
 
 # Description

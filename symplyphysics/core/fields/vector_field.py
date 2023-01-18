@@ -55,8 +55,3 @@ def apply_field(field_: VectorField, trajectory_: List) -> List:
     for vector_function in field_.components:
         result_vector.append(vector_function(field_point) if callable(vector_function) else vector_function)
     return result_vector
-
-# Convert coordinate system to space and apply field.
-# Applying field to entire space is necessary for SymPy field operators like Curl.
-def apply_field_to_coord_system(field_: VectorField, coord_system_: CoordSys3D) -> List:
-    return apply_field(field_, list(coord_system_.base_scalars()))

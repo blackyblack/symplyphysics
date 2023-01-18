@@ -4,7 +4,7 @@ from pytest import approx, fixture
 from sympy import Expr, sin, cos, sqrt, pi
 from symplyphysics import (
     units, SI, expr_to_quantity, convert_to,
-    array_to_sympy_vector, CoordSys3D, VectorZero, FieldPoint, VectorField, apply_field_to_coord_system
+    array_to_sympy_vector, CoordSys3D, VectorZero, FieldPoint, VectorField
 )
 from symplyphysics.laws.fields import circulation_is_integral_of_curl_over_surface as circulation_def
 

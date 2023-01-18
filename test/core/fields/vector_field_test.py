@@ -5,7 +5,7 @@ from sympy import cos, sin, symbols
 from sympy.vector import CoordSys3D, express
 from test.test_decorators import unsupported_usage
 from symplyphysics.core.fields.field_point import FieldPoint
-from symplyphysics.core.fields.vector_field import VectorField, apply_field, apply_field_to_coord_system, sympy_vector_to_field
+from symplyphysics.core.fields.vector_field import VectorField, apply_field, sympy_vector_to_field
 
 
 def _assert_callable(field_: VectorField, size_: int):
