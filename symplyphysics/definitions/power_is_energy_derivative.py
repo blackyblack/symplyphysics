@@ -4,8 +4,11 @@ from symplyphysics import (
 )
 
 # Description
-# Power definition: P = dQ/dt
-# Where Q is energy (work), t - energy duration time
+## Power has to be applied to casue any energy change.
+# Definition: P = dQ/dt, where
+# P is power which has been applied
+# Q is energy
+# t is time while power has been applied.
 
 time = symbols('time')
 power_function, energy_function = symbols('power energy', cls = Function)
