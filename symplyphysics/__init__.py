@@ -12,7 +12,7 @@ from .core.expr_comparisons import expr_equals, expr_equals_abs
 from .core.probability import Probability
 from .core.filters import filter_zeroes, filter_map_zeroes, filter_negative, filter_map_negative
 from .core.fields.field_point import FieldPoint
-from .core.fields.vector_field import sympy_vector_to_field, VectorField, apply_field
+from .core.fields.vector_field import VectorField
 from .core.vectors import array_to_sympy_vector, sympy_vector_to_array
 
 __all__ = [

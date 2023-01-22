@@ -2,7 +2,7 @@ from typing import List
 from sympy import Integral, Derivative
 from sympy.vector import Dot
 from symplyphysics import (
-    symbols, Eq, pretty, simplify, CoordSys3D, array_to_sympy_vector, VectorField, apply_field
+    symbols, Eq, pretty, simplify, CoordSys3D, array_to_sympy_vector, VectorField
 )
 
 # Description
@@ -50,7 +50,7 @@ def calculate_circulation(
     parameter_from_,
     parameter_to_):
 
-    field_app = apply_field(field_, trajectory_)
+    field_app = field_.apply(trajectory_)
     field_as_vector = array_to_sympy_vector(coord_system_, field_app)
     trajectory_as_vector = array_to_sympy_vector(coord_system_, trajectory_)
     trajectory_element_result = trajectory_element_definition.rhs.subs(trajectory, trajectory_as_vector).doit()

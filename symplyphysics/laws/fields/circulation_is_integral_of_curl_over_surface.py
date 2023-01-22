@@ -3,9 +3,9 @@ from sympy import Integral, Derivative
 from sympy.vector import Dot, Curl, Cross
 from symplyphysics import (
     symbols, Eq, pretty, simplify,
-    CoordSys3D, array_to_sympy_vector, apply_field, VectorField,
-    sympy_vector_to_field
+    array_to_sympy_vector, VectorField
 )
+from symplyphysics.core.fields.vector_field import field_from_sympy_vector, field_to_sympy_vector
 
 # Description
 ## Circulation of the field along the closed curve is flow of the rotor (or curl) of this field 
@@ -51,7 +51,6 @@ def print():
 # field_ should be VectorField
 # surface_ should be array with projections to coordinates, eg [parameter1 * cos(parameter2), parameter1 * sin(parameter2)]
 def calculate_circulation(
-    coord_system_: CoordSys3D,
     field_: VectorField,
     surface_: List,
     parameter1_from_,
@@ -59,13 +58,12 @@ def calculate_circulation(
     parameter2_from_,
     parameter2_to_):
 
-    field_space = apply_field_to_coord_system(field_, coord_system_)
-    field_space_sympy = array_to_sympy_vector(coord_system_, field_space)
-    field_rotor_sympy = field_rotor_definition.rhs.subs(field, field_space_sympy).doit()
-    field_rotor_lambda = sympy_vector_to_field(field_rotor_sympy)
-    field_applied = apply_field(field_rotor_lambda, surface_)
-    field_as_vector = array_to_sympy_vector(coord_system_, field_applied)
-    surface_sympy_vector = array_to_sympy_vector(coord_system_, surface_)
+    field_space = field_to_sympy_vector(field_)
+    field_rotor_sympy = field_rotor_definition.rhs.subs(field, field_space).doit()
+    field_rotor_applied = field_from_sympy_vector(field_rotor_sympy)
+    field_applied = field_rotor_applied.apply(surface_)
+    field_as_vector = array_to_sympy_vector(field_.coord_system, field_applied)
+    surface_sympy_vector = array_to_sympy_vector(field_.coord_system, surface_)
     surface_element_x = surface_element_by_parameter1_definition.rhs.subs(surface, surface_sympy_vector).doit()
     surface_element_y = surface_element_by_parameter2_definition.rhs.subs(surface, surface_sympy_vector).doit()
     surface_element_result = surface_element_definition.rhs.subs({surface_element_by_parameter1: surface_element_x, surface_element_by_parameter2: surface_element_y}).doit()

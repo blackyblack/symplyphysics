@@ -6,6 +6,7 @@ from sympy.vector.operators import _get_coord_systems
 # Converts Python List to SymPy Vector
 def array_to_sympy_vector(coord_system_: CoordSys3D, array_: List) -> Vector:
     result_vector = Vector.zero
+    if coord_system_ is None: return result_vector
     base_vectors = coord_system_.base_vectors()
     for idx in range(min(len(base_vectors), len(array_))):
         result_vector = result_vector + base_vectors[idx] * array_[idx]

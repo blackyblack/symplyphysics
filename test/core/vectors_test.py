@@ -31,6 +31,10 @@ def test_empty_array_to_sympy_conversion(test_args):
     assert sympy_vector != 0
     assert sympy_vector is not None
 
+def test_empty_coord_sys_to_sympy_conversion():
+    sympy_vector = array_to_sympy_vector(None, [1, 2])
+    assert sympy_vector == Vector.zero
+
 def test_string_array_to_sympy_conversion(test_args):
     with raises(TypeError):
         array_to_sympy_vector(test_args.C, ["test"])
