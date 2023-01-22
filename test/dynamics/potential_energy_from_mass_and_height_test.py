@@ -4,7 +4,7 @@ from pytest import approx, fixture, raises
 from symplyphysics import (
     units, convert_to, SI, errors
 )
-from symplyphysics.laws.kinematic import potential_energy_from_mass_and_height as potential_energy
+from symplyphysics.laws.dynamics import potential_energy_from_mass_and_height as potential_energy
 
 # A body with a mass of 9 grams at an altitude of 1500 meters has a potential
 # energy of 132.57 joules. How much potential energy will remain in the body at

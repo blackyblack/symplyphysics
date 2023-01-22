@@ -1,11 +1,12 @@
 from symplyphysics import (
     symbols, Eq, pretty, Quantity, units, solve, expr_equals, expr_equals_abs,
     validate_input, validate_output, expr_to_quantity, Function, Derivative,
-    pi, sin, cos, diff
+    pi, sin, cos
 )
-from symplyphysics.laws.kinematic import planar_projection_is_cosine as projector
-from symplyphysics.definitions import acceleration_is_velocity_derivative as acceleration_def
+from symplyphysics.definitions import velocity_is_movement_derivative as velocity_def
 from symplyphysics.definitions import angular_velocity_is_angle_derivative as angular_velocity_def
+from symplyphysics.definitions import acceleration_is_velocity_derivative as acceleration_def
+from symplyphysics.laws.kinematic import planar_projection_is_cosine as projector
 from symplyphysics.laws.kinematic import linear_velocity_from_angular_velocity_and_radius as linear_velocity_law
 
 # Description
@@ -46,9 +47,9 @@ curve_radius_vertical = projector.law.rhs.subs({projector.vector_length: curve_r
 
 ## Velocity projections are derivatives of respective coordinates.
 
-#TODO: use velocity definition as soon as it is added to symplyphysics
-velocity_horisontal = diff(curve_radius_horisontal, time)
-velocity_vertical = diff(curve_radius_vertical, time)
+#NOTE: replace 'moving_time' first as Derivative can have difficulties when processing both substitutions at once
+velocity_horisontal = velocity_def.definition.rhs.subs(velocity_def.moving_time, time).subs(velocity_def.movement_function(time), curve_radius_horisontal).doit()
+velocity_vertical = velocity_def.definition.rhs.subs(velocity_def.moving_time, time).subs(velocity_def.movement_function(time), curve_radius_vertical).doit()
 velocity_vector = [velocity_horisontal, velocity_vertical]
 
 ## These unit vectors should not necessary be derived. We can choose them at will and prove that
