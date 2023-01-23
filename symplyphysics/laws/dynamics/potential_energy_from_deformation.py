@@ -9,6 +9,8 @@ from symplyphysics import (
 ## E is potential energy of deformated spring
 ## k is elastic koefficient
 ## x is deformation
+# Conditions.
+## Deformation is elactic (reversible).
 
 spring_energy, elastic_koefficient, deformation = symbols('spring_energy elastic_koefficient deformation')
 law = Eq(spring_energy, elastic_koefficient * deformation**2 / 2)
