@@ -9,7 +9,7 @@ from sympy.physics.units.definitions.dimension_definitions import angle as angle
 ## Law: E = I * w**2 / 2, where
 ## E is kinetic energy of spinning object
 ## I is inertia moment of this object
-## V is angular velocity
+## w is angular velocity
 
 kinetic_energy, object_inertia_moment, angular_velocity = symbols('kinetic_energy object_inertia_moment angular_velocity')
 law = Eq(kinetic_energy, object_inertia_moment * angular_velocity**2 / 2)

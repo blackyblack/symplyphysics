@@ -1,0 +1,53 @@
+from collections import namedtuple
+from pytest import approx, fixture, raises
+
+from symplyphysics import (
+    units, convert_to, SI, errors
+)
+from symplyphysics.laws.dynamics import potential_energy_from_deformation as hookes_law
+
+# Description
+## If we have spring with elastic koefficient 100 N/m deformated for 2cm, it handles potential energy of 0.02 joules.
+## Result is independently calculated with https://www.center-pss.ru/math/raschet-potencialnoi-energii-pruzhini.htm
+
+@fixture
+def test_args():
+    k = units.Quantity('k')
+    SI.set_quantity_dimension(k, units.force / units.length)
+    SI.set_quantity_scale_factor(k, 100 * units.newton / units.meter)
+
+    x = units.Quantity('x')
+    SI.set_quantity_dimension(x, units.length)
+    SI.set_quantity_scale_factor(x, 2 * units.centimeter)
+
+    Args = namedtuple('Args', ['k', 'x'])
+    return Args(k = k, x = x)
+
+def test_basic_energy(test_args):
+    result = hookes_law.calculate_energy(test_args.k, test_args.x)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
+    result_energy = convert_to(result, units.joule).subs(units.joule, 1).evalf(5)
+    assert result_energy == approx(0.02, 0.0001)
+
+def test_bad_elastic_koefficient(test_args):
+    kb = units.Quantity('kb')
+    SI.set_quantity_dimension(kb, units.length)
+    SI.set_quantity_scale_factor(kb, 1 * units.meter)
+
+    with raises(errors.UnitsError):
+        hookes_law.calculate_energy(kb, test_args.x)
+
+    with raises(TypeError):
+        hookes_law.calculate_energy(100, test_args.x)
+
+def test_bad_deformation(test_args):
+    xb = units.Quantity('xb')
+    SI.set_quantity_dimension(xb, units.charge)
+    SI.set_quantity_scale_factor(xb, 1 * units.coulomb)
+
+    with raises(errors.UnitsError):
+        hookes_law.calculate_energy(test_args.k, xb)
+
+    with raises(TypeError):
+        hookes_law.calculate_energy(test_args.k, 100)
+        
