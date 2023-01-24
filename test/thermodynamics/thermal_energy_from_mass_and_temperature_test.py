@@ -4,7 +4,7 @@ from pytest import approx, fixture, raises
 from symplyphysics import (
     units, convert_to, SI, errors
 )
-from symplyphysics.laws.electricity import thermal_energy_from_mass_and_temperature as amount_energy
+from symplyphysics.laws.thermodynamics import thermal_energy_from_mass_and_temperature as amount_energy
 
 # How much energy does it take to heat some volume of water weighing 0.5 kilograms то 50 Celsius degree?
 # Specific heat capacity of water is 4200 J/kg*K , ignore losses.
