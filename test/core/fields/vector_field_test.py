@@ -247,6 +247,16 @@ def test_sympy_field_apply(test_args):
     assert len(trajectory_vectors) == 3
     assert trajectory_vectors == [-test_args.C.y, test_args.C.x, 0]
 
+# VectorField checks that coordinate systems of field and trajectory should be same, if they
+# are set. VectorField is not rebased automatically and should be rebased to the same coordinate
+# system as in trajectory with 'field_rebase'.
+def test_different_coord_systems_field_apply(test_args):
+    result_field = VectorField(lambda p: p.y * p.x, 0, 0, test_args.C)
+    C1 = CoordSys3D("C1", variable_names=("r", "phi", "z"))
+    trajectory = [C1.r, C1.phi]
+    with raises(TypeError):
+        result_field.apply(trajectory)
+
 # Test field_rebase()
 
 def test_basic_field_rebase(test_args):
@@ -268,7 +278,7 @@ def test_basic_field_rebase(test_args):
     assert transformed_point_vector == [6, 0, 0]
 
 # VectorField invariant does not hold, when applied to some fixed point in space. Use
-# 'rebase_to' to let VectorField know about new coordinate system.
+# 'field_rebase' to let VectorField know about new coordinate system.
 def test_invariant_field_rebase_and_apply(test_args):
     field = VectorField(lambda p: p.x**2 + 2 * p.y**2, 0, 0, test_args.C)
     point = [1, 2]

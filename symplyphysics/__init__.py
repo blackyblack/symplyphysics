@@ -13,7 +13,7 @@ from .core.probability import Probability
 from .core.filters import filter_zeroes, filter_map_zeroes, filter_negative, filter_map_negative
 from .core.fields.field_point import FieldPoint
 from .core.fields.vector_field import VectorField
-from .core.vectors import array_to_sympy_vector, sympy_vector_to_array
+from .core.vectors.vectors import array_to_sympy_vector, sympy_vector_to_array
 
 __all__ = [
     'validate_input',

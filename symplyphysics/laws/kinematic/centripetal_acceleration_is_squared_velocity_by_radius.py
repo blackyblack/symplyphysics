@@ -3,6 +3,7 @@ from symplyphysics import (
     validate_input, validate_output, expr_to_quantity, Function, Derivative,
     pi, sin, cos
 )
+from symplyphysics.core.vectors.vector_arithmetics import add_vectors, dot_vectors, equal_vectors, multiply_vector
 from symplyphysics.definitions import velocity_is_movement_derivative as velocity_def
 from symplyphysics.definitions import angular_velocity_is_angle_derivative as angular_velocity_def
 from symplyphysics.definitions import acceleration_is_velocity_derivative as acceleration_def
@@ -61,9 +62,7 @@ tangential_unit_vector = [-sin(alpha(time)), cos(alpha(time))]
 ## This is Dot product of radial vector and velocity vector. Radial vector is orthogonal to velocity hence vector
 ## multiplication result should be zero.
 ## Radial vector is orthogonal to tangential vector hence tangential vector should be parallel to velocity vector.
-#TODO: use Dot operator and Vector class
-assert expr_equals(tangential_unit_vector[0] * radial_unit_vector[0] + tangential_unit_vector[1] * radial_unit_vector[1], 0)
-assert expr_equals(velocity_vector[0] * radial_unit_vector[0] + velocity_vector[1] * radial_unit_vector[1], 0)
+assert expr_equals(dot_vectors(tangential_unit_vector, radial_unit_vector), 0)
 
 ## Use acceleration definition to calculate 'acceleration_vector'
 acceleration_horisontal = acceleration_def.definition.rhs.subs({
@@ -78,13 +77,11 @@ acceleration_vector = [acceleration_horisontal, acceleration_vertical]
 
 tangential_acceleration_magnitude = curve_radius * Derivative(alpha(time), (time, 2))
 radial_acceleration_magnitude = -curve_radius * Derivative(alpha(time), time)**2
-#TODO: use scalar multiplication and Vector class
-tangential_acceleration = [tangential_acceleration_magnitude * tangential_unit_vector[0], tangential_acceleration_magnitude * tangential_unit_vector[1]]
-radial_acceleration = [radial_acceleration_magnitude * radial_unit_vector[0], radial_acceleration_magnitude * radial_unit_vector[1]]
+tangential_acceleration = multiply_vector(tangential_acceleration_magnitude, tangential_unit_vector)
+radial_acceleration = multiply_vector(radial_acceleration_magnitude, radial_unit_vector)
 
-#TODO: use vector addition and Vector class
-assert expr_equals(acceleration_vector[0], tangential_acceleration[0] + radial_acceleration[0])
-assert expr_equals(acceleration_vector[1], tangential_acceleration[1] + radial_acceleration[1])
+sum_acceleration = add_vectors(tangential_acceleration, radial_acceleration)
+assert equal_vectors(acceleration_vector, sum_acceleration)
 
 ## Here we've proven that tangential_acceleration + radial_acceleration equals to acceleration_vector. It means, we've
 ## changed basis of acceleration_vector to tangential and radial vectors instead of cartesian coordinates.

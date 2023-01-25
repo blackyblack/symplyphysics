@@ -214,6 +214,16 @@ def test_uncallable_field_apply(test_args):
     trajectory_value = result_field.apply(trajectory)
     assert trajectory_value == 1
 
+# ScalarField checks that coordinate systems of field and trajectory should be same, if they
+# are set. ScalarField is not rebased automatically and should be rebased to the same coordinate
+# system as in trajectory with 'field_rebase'.
+def test_different_coord_systems_field_apply(test_args):
+    result_field = ScalarField(lambda p: p.y * p.x, test_args.C)
+    C1 = CoordSys3D("C1", variable_names=("r", "phi", "z"))
+    trajectory = [C1.r, C1.phi]
+    with raises(TypeError):
+        result_field.apply(trajectory)
+
 # While ScalarField should contain information about coordinate system and
 # can be rebased to new coordinate system with ScalarField invariance, it is not
 # necessary to do so. Instead user can define a trajectory, that contains this point, transform
@@ -278,7 +288,7 @@ def test_basic_field_rebase(test_args):
     assert transformed_point_value == 6
 
 # ScalarField invariant does not hold, when applied to some fixed point in space. Use
-# 'rebase_to' to let ScalarField know about new coordinate system.
+# 'field_rebase' to let ScalarField know about new coordinate system.
 def test_invariant_field_rebase_and_apply(test_args):
     field = ScalarField(lambda p: p.x**2 + 2 * p.y**2, test_args.C)
     point = [1, 2]

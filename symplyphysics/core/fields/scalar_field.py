@@ -72,6 +72,10 @@ class ScalarField:
     def apply(self, trajectory_: List) -> Any:
         field_point = FieldPoint()
         for idx, element in enumerate(trajectory_):
+            if self._coord_system is not None:
+                element_coord_system = extract_coord_system_from_sympy_vector(element)
+                if element_coord_system is not None and element_coord_system != self._coord_system:
+                    raise TypeError(f"Different coordinate systems in field and expression: {str(self._coord_system)} vs {str(element_coord_system)}")
             field_point.set_coordinate(idx, element)
         return self(field_point)
 

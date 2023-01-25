@@ -2,7 +2,7 @@ from typing import Any, List
 from sympy.vector import Vector, CoordSys3D, express
 from .field_point import FieldPoint
 from .scalar_field import sympy_expression_to_field_function, extract_coord_system_from_sympy_vector
-from ..vectors import array_to_sympy_vector, sympy_vector_to_array
+from ..vectors.vectors import array_to_sympy_vector, sympy_vector_to_array
 
 
 # Contains mappings of point to vectors in components[], eg [P(FieldPoint), Q(FieldPoint)].
@@ -60,6 +60,10 @@ class VectorField:
     def apply(self, trajectory_: List) -> List:
         field_point = FieldPoint()
         for idx, element in enumerate(trajectory_):
+            if self._coord_system is not None:
+                element_coord_system = extract_coord_system_from_sympy_vector(element)
+                if element_coord_system is not None and element_coord_system != self._coord_system:
+                    raise TypeError(f"Different coordinate systems in field and expression: {str(self._coord_system)} vs {str(element_coord_system)}")
             field_point.set_coordinate(idx, element)
         return self(field_point)
 
