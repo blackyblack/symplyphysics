@@ -4,6 +4,7 @@ from symplyphysics import (
     pi, sin, cos
 )
 from symplyphysics.core.vectors.vector_arithmetics import add_vectors, dot_vectors, equal_vectors, multiply_vector
+from symplyphysics.core.vectors.vectors import Vector
 from symplyphysics.definitions import velocity_is_movement_derivative as velocity_def
 from symplyphysics.definitions import angular_velocity_is_angle_derivative as angular_velocity_def
 from symplyphysics.definitions import acceleration_is_velocity_derivative as acceleration_def
@@ -51,16 +52,17 @@ curve_radius_vertical = projector.law.rhs.subs({projector.vector_length: curve_r
 #NOTE: replace 'moving_time' first as Derivative can have difficulties when processing both substitutions at once
 velocity_horisontal = velocity_def.definition.rhs.subs(velocity_def.moving_time, time).subs(velocity_def.movement_function(time), curve_radius_horisontal).doit()
 velocity_vertical = velocity_def.definition.rhs.subs(velocity_def.moving_time, time).subs(velocity_def.movement_function(time), curve_radius_vertical).doit()
-velocity_vector = [velocity_horisontal, velocity_vertical]
+velocity_vector = Vector([velocity_horisontal, velocity_vertical])
 
 ## These unit vectors should not necessary be derived. We can choose them at will and prove that
 ## they are orthogonal to each other and radial_unit_vector is orthogonal to 'velocity_vector'.
 ## One can also show that 'tangential_unit_vector' is 'radial_unit_vector' derivative.
-radial_unit_vector = [cos(alpha(time)), sin(alpha(time))]
-tangential_unit_vector = [-sin(alpha(time)), cos(alpha(time))]
+radial_unit_vector = Vector([cos(alpha(time)), sin(alpha(time))])
+tangential_unit_vector = Vector([-sin(alpha(time)), cos(alpha(time))])
 
 ## This is Dot product of radial vector and velocity vector. Radial vector is orthogonal to velocity hence vector
 ## multiplication result should be zero.
+assert expr_equals(dot_vectors(radial_unit_vector, velocity_vector), 0)
 ## Radial vector is orthogonal to tangential vector hence tangential vector should be parallel to velocity vector.
 assert expr_equals(dot_vectors(tangential_unit_vector, radial_unit_vector), 0)
 
@@ -71,7 +73,7 @@ acceleration_horisontal = acceleration_def.definition.rhs.subs({
 acceleration_vertical = acceleration_def.definition.rhs.subs({
     acceleration_def.velocity_function(acceleration_def.time): velocity_vertical,
     acceleration_def.time: time}).doit()
-acceleration_vector = [acceleration_horisontal, acceleration_vertical]
+acceleration_vector = Vector([acceleration_horisontal, acceleration_vertical])
 
 ## Prove that 'acceleration_vector' has tangential and radial parts.
 

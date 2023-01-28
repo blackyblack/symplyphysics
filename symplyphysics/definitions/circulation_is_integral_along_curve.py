@@ -2,8 +2,9 @@ from typing import List
 from sympy import Integral, Derivative
 from sympy.vector import Dot
 from symplyphysics import (
-    symbols, Eq, pretty, simplify, CoordSys3D, array_to_sympy_vector, VectorField
+    symbols, Eq, pretty, simplify, CoordSys3D, VectorField
 )
+from symplyphysics.core.vectors.vectors import Vector, sympy_vector_from_vector
 
 # Description
 ## Field circulation along closed curve is curvilinear integral of field by this curve.
@@ -51,8 +52,8 @@ def calculate_circulation(
     parameter_to_):
 
     field_app = field_.apply(trajectory_)
-    field_as_vector = array_to_sympy_vector(coord_system_, field_app)
-    trajectory_as_vector = array_to_sympy_vector(coord_system_, trajectory_)
+    field_as_vector = sympy_vector_from_vector(field_app)
+    trajectory_as_vector = sympy_vector_from_vector(Vector(trajectory_, coord_system_))
     trajectory_element_result = trajectory_element_definition.rhs.subs(trajectory, trajectory_as_vector).doit()
     result_expr = definition.rhs.subs({field: field_as_vector, trajectory_element: trajectory_element_result, parameter_from: parameter_from_, parameter_to: parameter_to_}).doit()
     # some expressions are invalid without simplifying them first

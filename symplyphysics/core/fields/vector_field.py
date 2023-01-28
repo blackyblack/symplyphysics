@@ -1,8 +1,8 @@
 from typing import Any, List
-from sympy.vector import Vector, CoordSys3D, express
+from sympy.vector import Vector as SympyVector, CoordSys3D
 from .field_point import FieldPoint
-from .scalar_field import sympy_expression_to_field_function, extract_coord_system_from_sympy_vector
-from ..vectors.vectors import array_to_sympy_vector, sympy_vector_to_array
+from .scalar_field import sympy_expression_to_field_function
+from ..vectors.vectors import Vector, extract_coord_system_from_sympy_vector, vector_from_sympy_vector, sympy_vector_from_vector, vector_rebase
 
 
 # Contains mappings of point to vectors in components[], eg [P(FieldPoint), Q(FieldPoint)].
@@ -27,11 +27,11 @@ class VectorField:
         if vector_function_y_ != 0: self.set_component(1, vector_function_y_)
         if vector_function_z_ != 0: self.set_component(2, vector_function_z_)
 
-    def __call__(self, point_: FieldPoint):
-        result_vector = []
+    def __call__(self, point_: FieldPoint) -> Vector:
+        vector_components = []
         for vector_function in self.components:
-            result_vector.append(vector_function(point_) if callable(vector_function) else vector_function)
-        return result_vector
+            vector_components.append(vector_function(point_) if callable(vector_function) else vector_function)
+        return Vector(vector_components, self._coord_system)
 
     @property
     def basis(self) -> List[Any]:
@@ -43,7 +43,7 @@ class VectorField:
 
     @property
     def components(self):
-        return iter(self._components)
+        return self._components
 
     def component(self, index: int) -> Any:
         if len(self._components) <= index: return 0
@@ -56,8 +56,8 @@ class VectorField:
 
     # Applies field to a trajectory / surface / volume - calls field functions with each element of the trajectory as parameter.
     # trajectory_ - list of expressions that correspond to a function in some space, eg [param, param] for a linear function y = x
-    # return - list that represents vector parametrized by trajectory parameters.
-    def apply(self, trajectory_: List) -> List:
+    # return - vector parametrized by trajectory parameters.
+    def apply(self, trajectory_: List) -> Vector:
         field_point = FieldPoint()
         for idx, element in enumerate(trajectory_):
             if self._coord_system is not None:
@@ -70,33 +70,37 @@ class VectorField:
     # Convert coordinate system to space and apply field.
     # Applying field to entire space is necessary for SymPy field operators like Curl.
     # return - vector that depends on basis parameters.
-    def apply_to_basis(self) -> List[Any]:
+    def apply_to_basis(self) -> Vector:
         return self.apply(self.basis)
 
-# Constructs new VectorField from SymPy expression using 'sympy_expression_to_field_function'.
-def field_from_sympy_vector(sympy_vector_):
-    field = VectorField()
-    field_array = sympy_vector_to_array(sympy_vector_)
-    field._coord_system = extract_coord_system_from_sympy_vector(sympy_vector_)
-    for i in range(len(field_array)):
-        field.set_component(i, sympy_expression_to_field_function(field_array[i]))
-    return field
-
-# Apply field to entire coordinate system and convert to SymPy vector
-def field_to_sympy_vector(field_: VectorField) -> Vector:
-    field_space = field_.apply_to_basis()
-    return array_to_sympy_vector(field_.coord_system, field_space)
+# Constructs new VectorField from Vector
+def field_from_vector(vector_: Vector) -> VectorField:
+    vector_components = []
+    for component in vector_.components:
+        vector_components.append(sympy_expression_to_field_function(component, vector_.coord_system))
+    if len(vector_components) < 3:
+        vector_components.extend([0] * (3 - len(vector_components)))
+    return VectorField(vector_components[0], vector_components[1], vector_components[2], vector_.coord_system)
 
 # Convert field coordinate system to new basis and construct new field.
 def field_rebase(field_: VectorField, coord_system: CoordSys3D=None) -> VectorField:
     # Simply set new coordinate system if field cannot be rebased
     if coord_system is None or field_.coord_system is None:
-        field = VectorField(0, 0, 0, coord_system)
-        for idx, c in enumerate(field_.components):
-            field.set_component(idx, c)
-        return field
-    # We do not want to maintain own vector transformation functions, so
-    # we convert our field to SymPy format, transform it and convert back to VectorField.
-    field_space_sympy = field_to_sympy_vector(field_)
-    transformed_field_space = express(field_space_sympy, coord_system, variables=True)
-    return field_from_sympy_vector(transformed_field_space)
+        return field_from_vector(Vector(field_.components, coord_system))
+    # Transform field to vector and use vector_rebase to rebase field. Transform
+    # back to field after rebasing.
+    field_space = field_.apply_to_basis()
+    transformed_field_space = vector_rebase(field_space, coord_system)
+    return field_from_vector(transformed_field_space)
+
+# Helpers to support SymPy field manipulations, eg Curl
+
+# Constructs new VectorField from SymPy expression using 'vector_from_sympy_vector'.
+def field_from_sympy_vector(sympy_vector_: Any) -> VectorField:
+    field_vector = vector_from_sympy_vector(sympy_vector_)
+    return field_from_vector(field_vector)
+
+# Apply field to entire coordinate system and convert to SymPy vector
+def sympy_vector_from_field(field_: VectorField) -> SympyVector:
+    field_space = field_.apply_to_basis()
+    return sympy_vector_from_vector(field_space)

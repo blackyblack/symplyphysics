@@ -1,27 +1,16 @@
-from functools import partial
 from typing import Any, List
 from sympy import Expr
-from sympy.vector import CoordSys3D, Vector, express
-from sympy.vector.operators import _get_coord_systems
+from sympy.vector import CoordSys3D, express
+from ..vectors.vectors import extract_coord_system_from_sympy_vector
 from .field_point import FieldPoint
 
 
-# Detects coordinate system being used in SymPy Vector.
-# Throws an exception if multiple coordinate systems are detected.
-def extract_coord_system_from_sympy_vector(sympy_vector_: Vector) -> CoordSys3D:
-    coord_system_set = _get_coord_systems(sympy_vector_)
-    if len(coord_system_set) > 1:
-        coord_sys_names = [str(c) for c in coord_system_set]
-        raise TypeError(f"Different coordinate systems in expression: {str(coord_sys_names)}")
-    return None if len(coord_system_set) == 0 else next(iter(coord_system_set))
-
 # Converts SymPy expression to a lambda function to use in some field, eg
 # converts expression C.x + C.y to lambda p: p.x + p.y
-# If coordinate system or SymPy expression cannot be detected, argument is
-# returned as is, without conversion to lambda.
+# If coord_system_ is not set, argument is returned as is, without conversion to lambda.
 # Can contain value instead of SymPy Vector, eg 0.5.
-def sympy_expression_to_field_function(sympy_vector_) -> Any:
-    def _(coord_system_: CoordSys3D, point_: FieldPoint):
+def sympy_expression_to_field_function(sympy_vector_: Any, coord_system_: CoordSys3D=None) -> Any:
+    def _(point_: FieldPoint):
         base_scalars = coord_system_.base_scalars()
         # make a copy of expression
         expression = sympy_vector_
@@ -29,10 +18,14 @@ def sympy_expression_to_field_function(sympy_vector_) -> Any:
             expression = expression.subs(base_scalars[i], point_.coordinate(i))
         return expression
 
-    coord_system = extract_coord_system_from_sympy_vector(sympy_vector_)
-    if coord_system is None:
+    if coord_system_ is None:
         return sympy_vector_
-    return sympy_vector_ if not isinstance(sympy_vector_, Expr) else partial(_, coord_system)
+    element_coord_system = extract_coord_system_from_sympy_vector(sympy_vector_)
+    if element_coord_system is None:
+        return sympy_vector_
+    if element_coord_system != coord_system_:
+        raise TypeError(f"Different coordinate systems in field and expression: {str(coord_system_)} vs {str(element_coord_system)}")
+    return sympy_vector_ if not isinstance(sympy_vector_, Expr) else _
 
 
 # Contains mapping of point to a scalar value in _function, eg P(FieldPoint).
@@ -64,7 +57,7 @@ class ScalarField:
 
     @property
     def components(self):
-        return iter([self._point_function])
+        return [self._point_function]
 
     # Applies field to a trajectory / surface / volume - calls field function with each element of the trajectory as parameter.
     # trajectory_ - list of expressions that correspond to a function in some space, eg [param, param] for a linear function y = x
@@ -87,20 +80,18 @@ class ScalarField:
 
 # Constructs new ScalarField from SymPy expression using 'sympy_expression_to_field_function'.
 def field_from_sympy_vector(sympy_vector_):
-    field = ScalarField()
-    field._point_function = sympy_expression_to_field_function(sympy_vector_)
-    field._coord_system = extract_coord_system_from_sympy_vector(sympy_vector_)
-    return field
+    coord_system = extract_coord_system_from_sympy_vector(sympy_vector_)
+    return ScalarField(sympy_expression_to_field_function(sympy_vector_, coord_system), coord_system)
 
 # Convert field coordinate system to new basis and construct new field.
 # Scalar field invariant (coordinate system independence) should hold.
 def field_rebase(field_: ScalarField, coord_system: CoordSys3D=None) -> ScalarField:
     # Simply set new coordinate system if field cannot be rebased
     if coord_system is None or field_.coord_system is None:
-        field_function = 0 if len(list(field_.components)) == 0 else next(field_.components)
-        field = ScalarField(field_function, coord_system)
-        return field
+        field_function = 0 if len(field_.components) == 0 else field_.components[0]
+        return ScalarField(field_function, coord_system)
 
+    # Similar to VectorField field_rebase but cannot implement generic rebase algorithm.
     field_space = field_.apply_to_basis()
     transformed_field_space = express(field_space, coord_system, variables=True)
     return field_from_sympy_vector(transformed_field_space)

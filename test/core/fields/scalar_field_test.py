@@ -4,7 +4,7 @@ from sympy import cos, pi, sin, symbols
 from sympy.vector import CoordSys3D, express
 from test.test_decorators import unsupported_usage
 from symplyphysics.core.fields.field_point import FieldPoint
-from symplyphysics.core.fields.scalar_field import ScalarField, field_from_sympy_vector, field_rebase, sympy_expression_to_field_function, extract_coord_system_from_sympy_vector
+from symplyphysics.core.fields.scalar_field import ScalarField, field_from_sympy_vector, field_rebase, sympy_expression_to_field_function
 
 
 @fixture
@@ -16,7 +16,7 @@ def test_args():
 # Test sympy_expression_to_field_function()
 
 def test_basic_sympy_expression_to_field_function(test_args):
-    field_function = sympy_expression_to_field_function(test_args.C.x + test_args.C.y)
+    field_function = sympy_expression_to_field_function(test_args.C.x + test_args.C.y, test_args.C)
     assert callable(field_function)
     field_point = FieldPoint(1, 2, 3)
     assert field_function(field_point) == 3
@@ -30,27 +30,11 @@ def test_integer_sympy_expression_to_field_function():
     field_function = sympy_expression_to_field_function(1)
     assert field_function == 1
 
+# There is a check for incompatible coordinate systems
 def test_partially_different_coord_systems_sympy_expression_to_field_function(test_args):
     C1 = CoordSys3D("C1", variable_names=("r", "phi", "z"))
     with raises(TypeError):
-        sympy_expression_to_field_function(test_args.C.x + 2 * C1.phi)
-
-# Test extract_coord_system_from_sympy_vector()
-
-def test_basic_extract_coord_system_from_sympy_vector(test_args):
-    coord_system = extract_coord_system_from_sympy_vector(test_args.C.x + test_args.C.y)
-    assert coord_system == test_args.C
-
-def test_empty_extract_coord_system_from_sympy_vector():
-    coord_system = extract_coord_system_from_sympy_vector(1)
-    assert coord_system is None
-
-def test_different_coord_systems_extract_coord_system_from_sympy_vector(test_args):
-    C1 = CoordSys3D("C1", variable_names=("r", "phi", "z"))
-    with raises(TypeError):
-        extract_coord_system_from_sympy_vector(test_args.C.x + 2 * C1.phi)
-    with raises(TypeError):
-        extract_coord_system_from_sympy_vector(test_args.C.x * C1.i)
+        sympy_expression_to_field_function(test_args.C.x + 2 * C1.phi, test_args.C)
 
 # Test ScalarField constructor
 
@@ -60,16 +44,16 @@ def test_basic_field():
     assert field(field_point) == 6
     assert field.basis == []
     assert field.coord_system is None
-    assert len(list(field.components)) == 1
-    assert callable(next(field.components))
+    assert len(field.components) == 1
+    assert callable(field.components[0])
 
 def test_empty_field():
     field = ScalarField()
     field_point = FieldPoint(1, 2, 3)
     assert field(field_point) == 0
     # Scalar field components size is always 1
-    assert len(list(field.components)) == 1
-    assert next(field.components) == 0
+    assert len(field.components) == 1
+    assert field.components[0] == 0
 
 def test_4d_point_field():
     field = ScalarField(lambda p: p.coordinate(3))
