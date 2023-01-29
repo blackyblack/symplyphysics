@@ -208,7 +208,7 @@ def test_no_target_coord_system_vector_rebase(test_args):
     assert vector_rebased.coord_system == None
     assert vector_rebased.components == [test_args.C.x, test_args.C.y]
 
-# For some reason, rotation does not require vector defined with base scalars.
+# Rotation does not require vector defined with base scalars.
 def test_rotate_vector_rebase(test_args):
     vector = Vector([1, 2], test_args.C)
     point = [1, 2]

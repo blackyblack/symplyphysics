@@ -17,6 +17,11 @@ def extract_coord_system_from_sympy_vector(sympy_vector_: SympyVector) -> CoordS
 # Contains list of SymPy expressions or any numbers as components.
 # Contains coordinate system to prevent using vector arithmetics with non compatible
 # coordinate systems.
+# Vector assumes to have [0, 0, 0] point of origin. All vector related laws work with this assumption
+# add do not differentiate between position shifted vectors. But it does not allow to properly rebase
+# vectors to another coordinate system.
+# Therefore for all physical applications vectors should assume various origin point and should be
+# defined dynamically, eg [C.x, C.y] or [parameter1, parameter2].
 class Vector:
     _components: List[Any] = []
     #NOTE: 4 and higher dimensional vectors are not supported cause of using CoordSys3D

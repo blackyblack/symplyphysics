@@ -3,6 +3,10 @@ from .vectors import Vector
 from ..expr_comparisons import expr_equals
 
 
+## Only works for Cartesian coordinates!
+#TODO: rework to support other coordinate systems.
+#TODO: add vector_length implementation
+
 # Compare two Python vectors
 def equal_vectors(vector_left: Vector, vector_right: Vector) -> bool:
     if vector_left.coord_system != vector_right.coord_system:
@@ -14,6 +18,8 @@ def equal_vectors(vector_left: Vector, vector_right: Vector) -> bool:
     return True
 
 # Sum of two Python vectors
+# Sum of two vectors can be seen as a diagonal of the parallelogram, where vectors are adjacent sides of this parallelogram.
+# To subtract vectors, multiply one of the vectors to -1 and add them.
 def add_vectors(vector_left: Vector, vector_right: Vector) -> Vector:
     if vector_left.coord_system != vector_right.coord_system:
         raise TypeError(f"Different coordinate systems in vectors: {str(vector_left.coord_system)} vs {str(vector_right.coord_system)}")
@@ -25,11 +31,15 @@ def add_vectors(vector_left: Vector, vector_right: Vector) -> Vector:
     return Vector(result, vector_left.coord_system)
 
 # Scalar Python vector multiplication
+# Scalar multiplication changes the magnitude of the vector and does not change it's direction.
 def multiply_vector(scalar_value: Expr, vector: Vector) -> Vector:
     vector_components = [scalar_value * e for e in vector.components]
     return Vector(vector_components, vector.coord_system)
 
 # Dot product of two Python vectors
+# Dot product equals to magnitudes of both vectors multiplied * cos(phi), where
+# phi is angle between vectors.
+# Hence vectors are orthogonal (perpendicular) when dot product is zero.
 def dot_vectors(vector_left: Vector, vector_right: Vector) -> Expr:
     if vector_left.coord_system != vector_right.coord_system:
         raise TypeError(f"Different coordinate systems in vectors: {str(vector_left.coord_system)} vs {str(vector_right.coord_system)}")
