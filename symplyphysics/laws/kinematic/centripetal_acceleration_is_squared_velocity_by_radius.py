@@ -3,7 +3,7 @@ from symplyphysics import (
     validate_input, validate_output, expr_to_quantity, Function, Derivative,
     pi, sin, cos
 )
-from symplyphysics.core.vectors.vector_arithmetics import add_vectors, dot_vectors, equal_vectors, multiply_vector
+from symplyphysics.core.vectors.vector_arithmetics import add_vectors, dot_vectors, equal_vectors, scale_vector
 from symplyphysics.core.vectors.vectors import Vector
 from symplyphysics.definitions import velocity_is_movement_derivative as velocity_def
 from symplyphysics.definitions import angular_velocity_is_angle_derivative as angular_velocity_def
@@ -79,8 +79,8 @@ acceleration_vector = Vector([acceleration_horisontal, acceleration_vertical])
 
 tangential_acceleration_magnitude = curve_radius * Derivative(alpha(time), (time, 2))
 radial_acceleration_magnitude = -curve_radius * Derivative(alpha(time), time)**2
-tangential_acceleration = multiply_vector(tangential_acceleration_magnitude, tangential_unit_vector)
-radial_acceleration = multiply_vector(radial_acceleration_magnitude, radial_unit_vector)
+tangential_acceleration = scale_vector(tangential_acceleration_magnitude, tangential_unit_vector)
+radial_acceleration = scale_vector(radial_acceleration_magnitude, radial_unit_vector)
 
 sum_acceleration = add_vectors(tangential_acceleration, radial_acceleration)
 assert equal_vectors(acceleration_vector, sum_acceleration)

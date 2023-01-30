@@ -5,7 +5,8 @@ from ..expr_comparisons import expr_equals
 
 ## Only works for Cartesian coordinates!
 #TODO: rework to support other coordinate systems.
-#TODO: add vector_length implementation
+#TODO: add vector_magnitude implementation
+#TODO: add cross_product implementation
 
 # Compare two Python vectors
 def equal_vectors(vector_left: Vector, vector_right: Vector) -> bool:
@@ -30,9 +31,9 @@ def add_vectors(vector_left: Vector, vector_right: Vector) -> Vector:
         result.append(val1 + val2)
     return Vector(result, vector_left.coord_system)
 
-# Scalar Python vector multiplication
+# Change Vector magnitude (length)
 # Scalar multiplication changes the magnitude of the vector and does not change it's direction.
-def multiply_vector(scalar_value: Expr, vector: Vector) -> Vector:
+def scale_vector(scalar_value: Expr, vector: Vector) -> Vector:
     vector_components = [scalar_value * e for e in vector.components]
     return Vector(vector_components, vector.coord_system)
 

@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy import atan, cos, pi, sin, sqrt
 from sympy.vector import  CoordSys3D
-from symplyphysics.core.vectors.vector_arithmetics import add_vectors, dot_vectors, equal_vectors, multiply_vector
+from symplyphysics.core.vectors.vector_arithmetics import add_vectors, dot_vectors, equal_vectors, scale_vector
 from symplyphysics.core.vectors.vectors import Vector
 from test.test_decorators import unsupported_usage
 
@@ -78,8 +78,8 @@ def test_strings_add_vectors():
         add_vectors(Vector(["hello", 2]), Vector([2, 1]))
     assert add_vectors(Vector(["hello", 2]), Vector([" world"])).components == ["hello world", 2]
 
-def test_basic_multiply_vector(test_args):
-    assert multiply_vector(2, Vector([1, 2])).components == [2, 4]
+def test_basic_scale_vector(test_args):
+    assert scale_vector(2, Vector([1, 2])).components == [2, 4]
     # Verify that magnitude has changed times scalar value, angle hasn't changed
     initial_vector_magnitude = sqrt(1**2 + 2**2)
     result_vector_magnitude = sqrt(2**2 + 4**2)
@@ -87,29 +87,29 @@ def test_basic_multiply_vector(test_args):
     initial_vector_angle = atan(2 / 1)
     result_vector_angle = atan(4 / 2)
     assert initial_vector_angle == result_vector_angle
-    assert multiply_vector(1, Vector([2, 1])).components == [2, 1]
-    assert multiply_vector(0.1, Vector([1, 4])).components == [0.1, 0.4]
-    assert multiply_vector(2, Vector([1])).components == [2]
-    assert multiply_vector(2, Vector([])).components == []
-    assert multiply_vector(0, Vector([1, 4])).components == [0, 0]
-    assert multiply_vector(-1, Vector([1, 4])).components == [-1, -4]
-    assert multiply_vector(2, Vector([test_args.C.x, 2])).components == [2 * test_args.C.x, 4]
-    assert multiply_vector(test_args.C.x, Vector([test_args.C.y, 2])).components == [test_args.C.x * test_args.C.y, test_args.C.x * 2]
-    result_vector = multiply_vector(2, Vector([1, 2], test_args.C))
+    assert scale_vector(1, Vector([2, 1])).components == [2, 1]
+    assert scale_vector(0.1, Vector([1, 4])).components == [0.1, 0.4]
+    assert scale_vector(2, Vector([1])).components == [2]
+    assert scale_vector(2, Vector([])).components == []
+    assert scale_vector(0, Vector([1, 4])).components == [0, 0]
+    assert scale_vector(-1, Vector([1, 4])).components == [-1, -4]
+    assert scale_vector(2, Vector([test_args.C.x, 2])).components == [2 * test_args.C.x, 4]
+    assert scale_vector(test_args.C.x, Vector([test_args.C.y, 2])).components == [test_args.C.x * test_args.C.y, test_args.C.x * 2]
+    result_vector = scale_vector(2, Vector([1, 2], test_args.C))
     assert result_vector.components == [2, 4]
     assert result_vector.coord_system == test_args.C
 
-def test_invalid_multiply_vector():
+def test_invalid_scale_vector():
     with raises(AttributeError):
-        multiply_vector(2, [1, 2])
+        scale_vector(2, [1, 2])
     with raises(TypeError):
-        multiply_vector(Vector([1, 2]), Vector([1, 2]))
+        scale_vector(Vector([1, 2]), Vector([1, 2]))
 
 @unsupported_usage
-def test_unsupported_multiply_vector():
-    assert multiply_vector(2, Vector(["hello", 2])).components == ["hellohello", 4]
-    assert multiply_vector(2, Vector([[1, 2], 1])).components == [[1, 2, 1, 2], 2]
-    assert multiply_vector([1, 2], Vector([1, 2])).components == [[1, 2], [1, 2, 1, 2]]
+def test_unsupported_scale_vector():
+    assert scale_vector(2, Vector(["hello", 2])).components == ["hellohello", 4]
+    assert scale_vector(2, Vector([[1, 2], 1])).components == [[1, 2, 1, 2], 2]
+    assert scale_vector([1, 2], Vector([1, 2])).components == [[1, 2], [1, 2, 1, 2]]
 
 def test_basic_dot_product(test_args):
     assert dot_vectors(Vector([1, 2]), Vector([1, 2])) == 5
