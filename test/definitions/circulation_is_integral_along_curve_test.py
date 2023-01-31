@@ -20,20 +20,20 @@ def test_args():
     # field is a field of gravitational forces, force is directed down by the Y coordinate
     # field is (0, -1 * G * m * M / y**2)
     # G * m * M = force * length**2 / mass**2 * mass**2 = force * length**2
-    field = VectorField(0, lambda point: -1 * force_unit * radius_unit**2 / point.y**2)
+    field = VectorField(0, lambda point: -1 * force_unit * radius_unit**2 / point.y**2, 0, C)
 
     Args = namedtuple('Args', ['C', 'force_unit', 'radius_unit', 'field'])
     return Args(C=C, force_unit=force_unit, radius_unit=radius_unit, field=field)
 
 
 def test_basic_circulation(test_args):
-    field = VectorField(lambda point: point.y, 0, lambda point: point.x + point.z)
+    field = VectorField(lambda point: point.y, 0, lambda point: point.x + point.z, test_args.C)
     curve = [cos(circulation_def.parameter), sin(circulation_def.parameter)]
     result_expr = circulation_def.calculate_circulation(test_args.C, field, curve, 0, pi / 2)
     assert result_expr.evalf(4) == approx(-pi / 4, 0.001)
 
 def test_two_parameters_circulation(test_args):
-    field = VectorField(lambda point: point.y, lambda point: -point.x)
+    field = VectorField(lambda point: point.y, lambda point: -point.x, 0, test_args.C)
     # circle function is: x**2 + y**2 = 9
     # parametrize by circulation_def.parameter
     circle = [3 * cos(circulation_def.parameter), 3 * sin(circulation_def.parameter)]
@@ -51,7 +51,7 @@ def test_two_parameters_circulation(test_args):
     assert (result_expr_up + result_expr_down).evalf(4) == approx(-18 * pi, 0.001)
 
 def test_orthogonal_movement_circulation(test_args):
-    field = VectorField(lambda point: point.y, lambda point: -point.x, 1)
+    field = VectorField(lambda point: point.y, lambda point: -point.x, 1, test_args.C)
     # trajectory is upwards helix
     helix = [cos(circulation_def.parameter), sin(circulation_def.parameter), circulation_def.parameter]
     result_expr = circulation_def.calculate_circulation(test_args.C, field, helix, 0, 2 * pi)
