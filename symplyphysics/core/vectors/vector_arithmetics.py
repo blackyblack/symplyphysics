@@ -18,6 +18,7 @@ def equal_vectors(vector_left: Vector, vector_right: Vector) -> bool:
         if not expr_equals(val1, val2): return False
     return True
 
+#TODO: does not work in polar coordinates
 # Sum of two Python vectors
 # Sum of two vectors can be seen as a diagonal of the parallelogram, where vectors are adjacent sides of this parallelogram.
 # To subtract vectors, multiply one of the vectors to -1 and add them.
@@ -31,6 +32,7 @@ def add_vectors(vector_left: Vector, vector_right: Vector) -> Vector:
         result.append(val1 + val2)
     return Vector(result, vector_left.coord_system)
 
+#TODO: does not work in polar coordinates
 # Change Vector magnitude (length)
 # Scalar multiplication changes the magnitude of the vector and does not change it's direction.
 def scale_vector(scalar_value: Expr, vector: Vector) -> Vector:

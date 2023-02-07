@@ -1,10 +1,15 @@
 from collections import namedtuple
-from pytest import approx, fixture
+from pytest import approx, fixture, raises
 from symplyphysics import (
-    units, convert_to, SI
+    units, convert_to, SI, errors
 )
 from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
 from symplyphysics.laws.dynamics import mechanical_work_from_force_and_move as work_law
+
+# Description
+## Force of 100N is applied to heavy object lying oh horizontal table. Force is directed 60 degrees up.
+## Object slides on the table with no friction and is been moved to 3m far.
+## As cosine of 60 degrees is 1/2, work should be 100 * 3 / 2 = 150 Joules.
 
 @fixture
 def test_args():
@@ -13,8 +18,7 @@ def test_args():
     SI.set_quantity_scale_factor(F, 100 * units.newton)
     S = units.Quantity('S')
     SI.set_quantity_dimension(S, units.length)
-    SI.set_quantity_scale_factor(S, 3 * units.meter)
-    # Force is applied at 60 degrees angle but body moves horisontally
+    SI.set_quantity_scale_factor(S, 3 * units.meter)    
     angle_between_force_and_axis = units.Quantity('angle_between_force_and_axis')
     SI.set_quantity_dimension(angle_between_force_and_axis, angle_type)
     SI.set_quantity_scale_factor(angle_between_force_and_axis, 60 * units.degree)
@@ -32,21 +36,34 @@ def test_basic_work(test_args):
     result_work = convert_to(result, units.joule).subs(units.joule, 1).evalf(4)
     assert result_work == approx(150, 0.01)
 
-"""
-def test_bad_mass(test_args):
-    mb = units.Quantity('mb')
-    SI.set_quantity_dimension(mb, units.length)
-    SI.set_quantity_scale_factor(mb, 1 * units.meter)
+
+def test_bad_force(test_args):
+    Fb = units.Quantity('Fb')
+    SI.set_quantity_dimension(Fb, units.charge)
+    SI.set_quantity_scale_factor(Fb, 1 * units.coulomb)
     with raises(errors.UnitsError):
-        newton_second_law.calculate_force(mb, test_args.a)
+        work_law.calculate_work(Fb, test_args.S, test_args.Fa, test_args.Sa)
     with raises(TypeError):
-        newton_second_law.calculate_force(100, test_args.a)
-def test_bad_acceleration(test_args):
+        work_law.calculate_work(100, test_args.S, test_args.Fa, test_args.Sa)
+
+def test_bad_move(test_args):
+    Sb = units.Quantity('Sb')
+    SI.set_quantity_dimension(Sb, units.charge)
+    SI.set_quantity_scale_factor(Sb, 1 * units.coulomb)
+    with raises(errors.UnitsError):
+        work_law.calculate_work(test_args.F, Sb, test_args.Fa, test_args.Sa)
+    with raises(TypeError):
+        work_law.calculate_work(test_args.F, 100, test_args.Fa, test_args.Sa)
+
+def test_bad_angle(test_args):
     ab = units.Quantity('ab')
-    SI.set_quantity_dimension(ab, units.length)
-    SI.set_quantity_scale_factor(ab, 3 * units.meter)
+    SI.set_quantity_dimension(ab, units.charge)
+    SI.set_quantity_scale_factor(ab, 1 * units.coulomb)
     with raises(errors.UnitsError):
-        newton_second_law.calculate_force(test_args.m, ab)
+        work_law.calculate_work(test_args.F, test_args.S, ab, test_args.Sa)
     with raises(TypeError):
-        newton_second_law.calculate_force(test_args.m, 100)
-"""
+        work_law.calculate_work(test_args.F, test_args.S, 100, test_args.Sa)
+    with raises(errors.UnitsError):
+        work_law.calculate_work(test_args.F, test_args.S, test_args.Fa, ab)
+    with raises(TypeError):
+        work_law.calculate_work(test_args.F, test_args.S, test_args.Fa, 100)
