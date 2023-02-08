@@ -2,18 +2,18 @@ from symplyphysics import (
     symbols, Eq, pretty, solve, Quantity, units,
     validate_input, validate_output, expr_to_quantity
 )
-from symplyphysics.core.vectors.vectors import extended_express # cannot import this
+from symplyphysics.core.vectors.vectors import extended_express
 from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
 from sympy.vector import CoordSys3D, Dot
 
 # Description
 ## Work is measured result of force applied. Mechanical work is the only reason for the object energy to be changed.
-## Work is scalar value equal to force multiplied by movement and by cosine of angle between work and movement vectors. 
+## Work is scalar value equal to force multiplied by movement and by cosine of angle between force and movement vectors. 
 ## Law: A = F * S, where
 ## A is mechanical work
-## F is force applied to object
-## S is movement caused by this force
-## * is a scalar multiplication of vectors operator
+## F is force vector applied to object
+## S is movement vector caused by this force
+## * is a scalar multiplication of vectors (dot product)
 
 
 work, force, distance = symbols('work force distance')
