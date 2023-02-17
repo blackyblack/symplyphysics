@@ -229,7 +229,7 @@ def test_rotate_vector_rebase(test_args):
 
 # Test non-cartesian coordinate systems
 
-#TODO: this test should pass of non-cartesian rebase is allowed. SymPy does not support such thing yet.
+#TODO: this test should pass if non-cartesian rebase is allowed. SymPy does not support such thing yet.
 def test_spherical_vector_create(test_args):
     vector = Vector([1, 2], test_args.C)
     B = test_args.C.create_new('B', transformation="spherical")
