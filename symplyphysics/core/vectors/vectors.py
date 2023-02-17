@@ -80,6 +80,9 @@ def extended_express(expr: Expr, system: CoordSys3D, system2: CoordSys3D=None, v
         return _extended_express(expr, system)
     return express(expr, system, system2, variables)
 
+#TODO: this transformation does not properly work for coordinate system translations and rotations. Should be
+#      rewritten to support both standard express functionality and non-cartesian coordinate system
+#      transformations.
 # This is experimental feature from SymPy (not merged yet)
 def _extended_express(expr: Expr, coordsys: CoordSys3D):
     """
