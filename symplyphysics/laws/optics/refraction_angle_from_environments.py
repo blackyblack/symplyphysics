@@ -1,13 +1,13 @@
 from symplyphysics import (
-    symbols, Eq, pretty, solve, units, Quantity, sin,
-    validate_input, validate_output, expr_to_quantity
+    symbols, Eq, pretty, solve, units, Quantity, sin, pi,
+    validate_input, validate_output, expr_to_quantity, SI
 )
 
 from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
 
 # Description
 ## If ray of light comes from one media to another, it refracts.
-## Incoming ray, refracted ray and perpendicular to media boundary are within the same flat.
+## Incoming ray, refracted ray and perpendicular to media boundary are within the same plane.
 
 ## Law: n1 * sin(alpha) = n2 * sin(beta)
 ## Where:
@@ -19,21 +19,33 @@ from sympy.physics.units.definitions.dimension_definitions import angle as angle
 # Conditions
 ## For the sake of sanity alfa and beta are from 0 to pi/2.
 
-refractive_index_1 = symbols('refractive_index_1')
-refractive_index_2 = symbols('refractive_index_2')
-incoming_angle = symbols('incoming_angle')
+incedence_refractive_index = symbols('incedence_refractive_index')
+resulting_refractive_index = symbols('resulting_refractive_index')
+incedence_angle = symbols('incedence_angle')
 refraction_angle = symbols('refraction_angle')
 
-law = Eq(refractive_index_1 * sin(incoming_angle), refractive_index_2 * sin(refraction_angle))
-
+law = Eq(incedence_refractive_index * sin(incedence_angle), resulting_refractive_index * sin(refraction_angle))
+'''
 def print():
     return pretty(law, use_unicode=False)
+'''
+incedence_angle_ = units.Quantity('incedence_angle')
+SI.set_quantity_dimension(incedence_angle_, angle_type)
+SI.set_quantity_scale_factor(incedence_angle_, 30 * units.degree)
 
-@validate_input(index_1_=units.amount, incoming_angle_=angle_type, index_2_=units.amount)
+result_expr = solve(law, refraction_angle, dict=True)[0][refraction_angle]
+print(result_expr)
+incoming_angle_radians = incedence_angle_.scale_factor    
+print(incoming_angle_radians)
+angle_applied = result_expr.subs({incedence_refractive_index: 1.003, incedence_angle: incoming_angle_radians, resulting_refractive_index: 1.333})
+print(angle_applied)
+# 
+
+@validate_input(incoming_angle_=angle_type)
 @validate_output(angle_type)
-def calculate_angle(index_1_: Quantity, incoming_angle_: Quantity, index_2_: Quantity) -> Quantity:        
+def calculate_angle(index_1_, incoming_angle_: Quantity, index_2_) -> Quantity:        
     result_expr = solve(law, refraction_angle, dict=True)[0][refraction_angle]
     #HACK: sympy angles are always in radians
     incoming_angle_radians = incoming_angle_.scale_factor    
-    angle_applied = result_expr.subs({refractive_index_1: index_1_, incoming_angle: incoming_angle_radians, refractive_index_2: index_2_})
+    angle_applied = result_expr.subs({incedence_refractive_index: index_1_, incedence_angle: incoming_angle_radians, resulting_refractive_index: index_2_})
     return expr_to_quantity(angle_applied, 'refraction_angle')
