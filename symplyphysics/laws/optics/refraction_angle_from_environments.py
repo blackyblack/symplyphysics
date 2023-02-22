@@ -29,32 +29,21 @@ law = Eq(incedence_refractive_index * sin(incedence_angle), resulting_refractive
 def print():
     return pretty(law, use_unicode=False)
 
-incedence_angle_ = units.Quantity('incedence_angle')
-SI.set_quantity_dimension(incedence_angle_, angle_type)
-SI.set_quantity_scale_factor(incedence_angle_, 30 * units.degree)
-'''
-result_expr = solve(law, refraction_angle, dict=True)[0][refraction_angle]
-print(result_expr)
-incoming_angle_radians = incedence_angle_.scale_factor    
-print(incoming_angle_radians)
-angle_applied = result_expr.subs({incedence_refractive_index: 1.003, incedence_angle: incoming_angle_radians, resulting_refractive_index: 1.333})
-print(angle_applied)
-ang = expr_to_quantity(angle_applied, 'refraction_angle')
-SI.set_quantity_dimension(ang, angle_type)
-SI.set_quantity_scale_factor(ang, angle_applied)
-print(ang.scale_factor)
-'''
-
-@validate_input(incoming_angle_=angle_type)
+@validate_input(incedence_angle_=angle_type)
 @validate_output(angle_type)
-def calculate_angle(index_1_, incoming_angle_: Quantity, index_2_) -> Quantity:        
+def calculate_refraction_angle(incedence_angle_: Quantity, incedence_refractive_index_, resulting_refractive_index_) -> Quantity:
     result_expr = solve(law, refraction_angle, dict=True)[0][refraction_angle]
     #HACK: sympy angles are always in radians
-    incoming_angle_radians = incoming_angle_.scale_factor    
-    angle_applied = result_expr.subs({incedence_refractive_index: index_1_, incedence_angle: incoming_angle_radians, resulting_refractive_index: index_2_})
+    incedence_angle_radians = incedence_angle_.scale_factor
+    angle_applied = result_expr.subs({
+        incedence_angle: incedence_angle_radians,
+        incedence_refractive_index: incedence_refractive_index_,
+        resulting_refractive_index: resulting_refractive_index_})
+    #HACK: there are 2 solutions for refraction_angle: asin() and pi - asin(). We choose latter and make a sanity
+    #      check for resulting angle.
     if(angle_applied > pi/2):
         angle_applied = pi - angle_applied
-    output_result = expr_to_quantity(angle_applied, 'refraction_angle')
-    SI.set_quantity_dimension(output_result, angle_type)
-    SI.set_quantity_scale_factor(output_result, angle_applied * units.radian)
-    return output_result
+    resulting_angle = units.Quantity('resulting_angle')
+    SI.set_quantity_dimension(resulting_angle, angle_type)
+    SI.set_quantity_scale_factor(resulting_angle, angle_applied * units.radian)
+    return resulting_angle
