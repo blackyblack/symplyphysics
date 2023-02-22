@@ -4,7 +4,7 @@ from symplyphysics import (
     units, convert_to, SI, errors
 )
 from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
-from symplyphysics.laws.optics import refraction_angle_from_environments as refraction_law
+from symplyphysics.laws.optics import refraction_angle_from_incedence_angle_and_refraction as refraction_law
 
 # Ray of light transfers from air (refractive coefficient is 1.003) to water (refractive coefficient is 1.333) with incedence angle 30 degrees. What is refraction angle?
 ## We have online calculator which gives us 22.1 refraction angle. https://matematika-club.ru/kalkulyator-otrazheniya-i-prelomleniya-sveta
