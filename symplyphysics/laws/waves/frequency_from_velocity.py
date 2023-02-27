@@ -5,7 +5,7 @@ from symplyphysics import (
 
 # Description
 ## If wave source moves in media, observed wave frequency differs from real. 
-## If observer moves in media, observed wave frequency differs from real as well. This effect is also known as irrelative Dopler effect.
+## If observer moves in media, observed wave frequency differs from real as well. This effect is also known as irrelative Doppler effect.
 
 # Law: fo = fs * (v + vo)/(v + vs), where
 ## fo is observed frequency,
@@ -15,8 +15,8 @@ from symplyphysics import (
 ## vs is source velocity related to media.
 
 # Conditions:
-## 1. velocities vs and vo are much smaller than v.
-## 2. Positive velocity direction is observer to source.
+## 1. Velocities vs and vo are much smaller than v.
+## 2. Positive velocity direction means observer moving towards a source or source moving away from observer.
 
 observed_frequency = symbols('observed_frequency')
 real_frequency = symbols('real_frequency')
@@ -31,7 +31,7 @@ def print():
 
 @validate_input(real_freq_=units.frequency, wave_vel_=units.velocity, source_vel_=units.velocity, observer_vel_=units.velocity)
 @validate_output(units.frequency)
-def calculate_frequency(real_freq_: Quantity, wave_vel_: Quantity, source_vel_: Quantity, observer_vel_: Quantity) -> Quantity:        
+def calculate_observed_frequency(real_freq_: Quantity, wave_vel_: Quantity, source_vel_: Quantity, observer_vel_: Quantity) -> Quantity:        
     result_expr = solve(law, observed_frequency, dict=True)[0][observed_frequency]
     frequency_applied = result_expr.subs({real_frequency: real_freq_, 
                                           wave_velocity: wave_vel_,
