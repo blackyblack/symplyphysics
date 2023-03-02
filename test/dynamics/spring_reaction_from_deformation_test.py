@@ -35,7 +35,7 @@ def test_basic_force(test_args):
     result_force_y = convert_to(result.components[1], units.newton).subs(units.newton, 1).evalf(2)
     assert result_force_y == approx(-0.1, 0.01)
 
-def test_bad_elasticy(test_args):
+def test_bad_elastic_coefficient(test_args):
     eb = units.Quantity('eb')
     SI.set_quantity_dimension(eb, units.length)
     SI.set_quantity_scale_factor(eb, 1 * units.meter)
