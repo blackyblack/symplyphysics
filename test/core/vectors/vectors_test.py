@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from sympy import pi, sqrt, symbols, sin, cos
+from sympy import atan, pi, sqrt, symbols, sin, cos
 from sympy.vector import Vector as SympyVector, CoordSys3D, express
 from symplyphysics.core.vectors.vectors import Vector, extract_coord_system_from_sympy_vector, sympy_vector_from_vector, vector_from_sympy_vector, vector_rebase
 
@@ -226,3 +226,16 @@ def test_rotate_vector_rebase(test_args):
     assert vector_rebased.coord_system == B
     assert vector_rebased.components == [3 * sqrt(2) / 2, sqrt(2) / 2, 0]
     assert vector_rebased.components == transformed_point
+
+# Test non-cartesian coordinate systems
+
+#TODO: this test should pass if non-cartesian rebase is allowed. SymPy does not support such thing yet.
+def test_spherical_vector_create(test_args):
+    vector = Vector([1, 2], test_args.C)
+    B = test_args.C.create_new('B', transformation="spherical")
+    # vector should have r = sqrt(5) in polar coordinates
+    # vector is in XY-plane, so theta angle should be pi/2
+    # phi angle is atan(2/1)
+    vector_rebased = vector_rebase(vector, B)
+    assert vector_rebased.coord_system == B
+    assert vector_rebased.components != [sqrt(5), pi/2, atan(2)]

@@ -8,6 +8,8 @@ from sympy.core.function import (Derivative, Function)
 from sympy.core.mul import Mul
 from sympy.core.power import Pow
 from sympy.physics.units.dimensions import Dimension
+from sympy.vector import VectorAdd
+from symplyphysics.core.vectors.vectors import Vector, vector_from_sympy_vector
 
 def expr_to_quantity(expr: Expr, quantity_name: str) -> Quantity:    
     quantity_scale = collect_factor_and_dimension(expr)
@@ -22,6 +24,18 @@ def expr_to_quantity(expr: Expr, quantity_name: str) -> Quantity:
     dimsys_SI.set_quantity_dimension(result, dimension)
     dimsys_SI.set_quantity_scale_factor(result, quantity_scale[0])
     return result
+
+def expr_to_vector_of_quantities(expr: Expr, quantity_name: str) -> Vector:    
+    if isinstance(expr, Mul):
+        expr = expr.expand()
+    if isinstance(expr, Add):
+        expr = VectorAdd(expr)
+    vector = vector_from_sympy_vector(expr)
+    components = []
+    for idx, c in enumerate(vector.components):
+        d = expr_to_quantity(c, f"{quantity_name}[{idx + 1}]")
+        components.append(d)
+    return Vector(components, vector.coord_system)
 
 # HACK: copy of SI._collect_factor_and_dimension with fixed exp() dimension evaluation
 def collect_factor_and_dimension(expr):
