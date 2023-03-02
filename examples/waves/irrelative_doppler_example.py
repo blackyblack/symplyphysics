@@ -41,7 +41,7 @@ applied_solution = solution.subs({doppler_law.observed_frequency: signal_frequen
 result_velocity = expr_to_quantity(applied_solution, "result_velocity")
 result = convert_to(result_velocity, units.kilometer / units.hour).subs({units.kilometer / units.hour: 1}).evalf(3)
 if(result < 0):
-    print(f"Object moving towards radar with {-result} km/h velocity")
+    print(f"Object is moving towards radar with {-result} km/h velocity")
 else:
     if(result == 0):
         print(f"Object is not moving")        
