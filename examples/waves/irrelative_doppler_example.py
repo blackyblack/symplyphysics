@@ -28,20 +28,22 @@ SI.set_quantity_scale_factor(emitter_frequency, 40000 * units.hertz)
 # Choose any frequency and obtain the result
 signal_frequency = units.Quantity('signal_frequency')
 SI.set_quantity_dimension(signal_frequency, units.frequency)
-SI.set_quantity_scale_factor(signal_frequency, 40500 * units.hertz)
+SI.set_quantity_scale_factor(signal_frequency, 41200 * units.hertz)
 
-solution = solve(doppler_law, doppler_law.source_velocity, dict = True)[0][doppler_law.source_velocity]
+solution = solve(doppler_law.law, doppler_law.source_velocity, dict=True)[0][doppler_law.source_velocity]
 
 applied_solution = solution.subs({doppler_law.observed_frequency: signal_frequency,
                                   doppler_law.real_frequency: emitter_frequency,
                                   doppler_law.wave_velocity:sound_velocity,
-                                  doppler_law.observed_frequency:zero_velocity
+                                  doppler_law.observer_velocity:zero_velocity
                                   })
 
-print(applied_solution)
-
-'''
 result_velocity = expr_to_quantity(applied_solution, "result_velocity")
 result = convert_to(result_velocity, units.kilometer / units.hour).subs({units.kilometer / units.hour: 1}).evalf(3)
-print(f"Object velocity is {result} km/h")
-'''
+if(result < 0):
+    print(f"Object moving towards radar with {-result} km/h velocity")
+else:
+    if(result == 0):
+        print(f"Object is not moving")        
+    else:    
+        print(f"Object moving away from radar with {result} km/h velocity")    
