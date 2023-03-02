@@ -1,8 +1,8 @@
 from collections import namedtuple
-from pytest import approx, fixture
+from pytest import approx, fixture, raises
 from sympy.vector import CoordSys3D
 from symplyphysics import (
-    units, convert_to, SI
+    units, convert_to, SI, errors
 )
 from symplyphysics.core.vectors.vectors import Vector
 from symplyphysics.laws.dynamics import spring_reaction_from_deformation as spring_law
@@ -35,26 +35,15 @@ def test_basic_force(test_args):
     result_force_y = convert_to(result.components[1], units.newton).subs(units.newton, 1).evalf(2)
     assert result_force_y == approx(-0.1, 0.01)
 
-"""
-def test_bad_mass(test_args):
-    mb = units.Quantity('mb')
-    SI.set_quantity_dimension(mb, units.length)
-    SI.set_quantity_scale_factor(mb, 1 * units.meter)
+def test_bad_elasticy(test_args):
+    eb = units.Quantity('eb')
+    SI.set_quantity_dimension(eb, units.length)
+    SI.set_quantity_scale_factor(eb, 1 * units.meter)
 
     with raises(errors.UnitsError):
-        newton_second_law.calculate_force(mb, test_args.a)
+        result = spring_law.calculate_force(eb, test_args.df)
 
     with raises(TypeError):
-        newton_second_law.calculate_force(100, test_args.a)
+        result = spring_law.calculate_force(100, test_args.df)
 
-def test_bad_acceleration(test_args):
-    ab = units.Quantity('ab')
-    SI.set_quantity_dimension(ab, units.length)
-    SI.set_quantity_scale_factor(ab, 3 * units.meter)
 
-    with raises(errors.UnitsError):
-        newton_second_law.calculate_force(test_args.m, ab)
-
-    with raises(TypeError):
-        newton_second_law.calculate_force(test_args.m, 100)
-"""
