@@ -46,4 +46,4 @@ else:
     if(result == 0):
         print(f"Object is not moving")        
     else:    
-        print(f"Object moving away from radar with {result} km/h velocity")    
+        print(f"Object is moving away from radar with {result} km/h velocity")
