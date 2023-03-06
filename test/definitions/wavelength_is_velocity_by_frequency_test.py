@@ -7,14 +7,14 @@ from symplyphysics import (
 from symplyphysics.definitions import wavelength_is_velocity_by_frequency as wavelength_definition
 
 # Description.
-## Spreading speed of light is the air is 299704 m/s. Refraction factor of air is 1.003. Frequency of radio Europa+ is 101.6 MHz. 
-## According to online calculator https://vpayaem.ru/inf_wave1.html wavelength should be 2.94mm.
+## Spreading speed of light is the air is 299704 km/s. Refraction factor of air is 1.003. Frequency of radio Europa+ is 101.6 MHz. 
+## According to online calculator https://vpayaem.ru/inf_wave1.html wavelength should be 2.94m.
 
 @fixture
 def test_args():
     v = units.Quantity('v')
     SI.set_quantity_dimension(v, units.velocity)
-    SI.set_quantity_scale_factor(v, 299704 * units.meter / units.second)
+    SI.set_quantity_scale_factor(v, 299704 * units.kilometer / units.second)
     
     refraction_factor = 1.003
 
@@ -32,7 +32,7 @@ def test_basic_wavelength(test_args):
 
     result_wavelength = convert_to(result, wavelength_definition.definition_dimension_SI).subs({
         units.meter: 1}).evalf(3)
-    assert result_wavelength == approx(0.00294, 0.001)
+    assert result_wavelength == approx(2.94, 0.001)
 
 
 def test_bad_velocity(test_args):
