@@ -34,4 +34,4 @@ def calculate_wavelength(spreading_velocity_: Quantity, refraction_factor_: Quan
     result_expr = solved.subs({spreading_velocity: spreading_velocity_,
                                refraction_factor: refraction_factor_,
                                wave_frequency: frequency_})
-    return expr_to_quantity(result_expr, 'wavewlength')
+    return expr_to_quantity(result_expr, 'wavelength')
