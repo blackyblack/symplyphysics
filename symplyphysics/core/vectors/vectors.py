@@ -1,11 +1,14 @@
 from typing import Any, List
-from sympy import Expr, nan
-from sympy.vector import CoordSys3D, Vector as SympyVector, express
+from sympy import Expr
+from sympy.vector import Vector as SympyVector, express
 from sympy.vector.operators import _get_coord_systems
+
+from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
 
 
 # Detects coordinate system being used in SymPy Vector.
 # Throws an exception if multiple coordinate systems are detected.
+"""
 def extract_coord_system_from_sympy_vector(sympy_vector_: SympyVector) -> CoordSys3D:
     if not isinstance(sympy_vector_, Expr): return None
     coord_system_set = _get_coord_systems(sympy_vector_)
@@ -13,6 +16,8 @@ def extract_coord_system_from_sympy_vector(sympy_vector_: SympyVector) -> CoordS
         coord_sys_names = [str(c) for c in coord_system_set]
         raise TypeError(f"Different coordinate systems in expression: {str(coord_sys_names)}")
     return None if len(coord_system_set) == 0 else next(iter(coord_system_set))
+"""
+
 
 # Contains list of SymPy expressions or any numbers as components.
 # Contains coordinate system to prevent using vector arithmetics with non compatible
@@ -26,15 +31,15 @@ class Vector:
     _components: List[Any] = []
     #NOTE: 4 and higher dimensional vectors are not supported cause of using CoordSys3D
     #      to allow vector coordinate system rebasing.
-    _coord_system: CoordSys3D = None
+    _coordinate_system: CoordinateSystem = None
 
-    def __init__(self, components: List[Any]=[], coord_system: CoordSys3D=None):
+    def __init__(self, components: List[Any]=[], coordinate_system: CoordinateSystem=None):
         self._components = components
-        self._coord_system = coord_system
+        self._coordinate_system = coordinate_system
 
     @property
-    def coord_system(self) -> CoordSys3D:
-        return self._coord_system
+    def coordinate_system(self) -> CoordinateSystem:
+        return self._coordinate_system
 
     @property
     def components(self):
@@ -42,143 +47,56 @@ class Vector:
 
 # Converts SymPy Vector to Vector
 # SymPy vector is an expression that looks like C.i + C.j, where C is CoordSys3D
-def vector_from_sympy_vector(sympy_vector_: Any) -> Vector:
+def vector_from_sympy_vector(sympy_vector_: Any, coordinate_system: CoordinateSystem) -> Vector:
     if sympy_vector_ == SympyVector.zero: return Vector([])
-    coord_system = extract_coord_system_from_sympy_vector(sympy_vector_)
-    # Do not convert if cannot detect SymPy Vector class
-    if coord_system is None or not sympy_vector_.is_Vector: return Vector([sympy_vector_])
-    as_matrix = sympy_vector_.to_matrix(coord_system)
-    components = []
-    for e in as_matrix:
-        components.append(e)
-    return Vector(components, coord_system)
+    if not isinstance(sympy_vector_, Expr): return None
+    coord_system_set = _get_coord_systems(sympy_vector_)
+    if len(coord_system_set) > 1:
+        coord_sys_names = [str(c) for c in coord_system_set]
+        raise TypeError(f"Different coordinate systems in expression: {str(coord_sys_names)}")
+    if len(coord_system_set) > 1:
+        coord_system = next(iter(coord_system_set))
+        if coord_system != coordinate_system.coord_system:
+            raise TypeError(f"Different coordinate systems in expression and argument: {str(coord_system)} vs {str(coordinate_system.coord_system)}")
+    as_matrix = sympy_vector_.to_matrix(coordinate_system.coord_system)
+    components = [e for e in as_matrix]
+    return Vector(components, coordinate_system)
 
 # Converts Vector to SymPy Vector
 def sympy_vector_from_vector(vector_: Vector) -> SympyVector:
     result_vector = SympyVector.zero
-    if vector_.coord_system is None: return result_vector
-    base_vectors = vector_.coord_system.base_vectors()
+    if vector_.coordinate_system is None: return result_vector
+    if vector_.coordinate_system.coord_system is None: return result_vector
+    base_vectors = vector_.coordinate_system.coord_system.base_vectors()
     for idx in range(min(len(base_vectors), len(vector_.components))):
         result_vector = result_vector + base_vectors[idx] * vector_.components[idx]
     return result_vector
 
 # Convert vector coordinate system to new basis and construct new vector.
 # Rebased vector should be the same as old vector but in new coordinate system.
-def vector_rebase(vector_: Vector, coord_system: CoordSys3D=None) -> Vector:
+def vector_rebase(vector_: Vector, coordinate_system: CoordinateSystem=None) -> Vector:
     # Simply set new coordinate system if vector cannot be rebased
-    if coord_system is None or vector_.coord_system is None:
-        return Vector(vector_.components, coord_system)
+    if coordinate_system is None or vector_.coordinate_system is None:
+        return Vector(vector_.components, coordinate_system)
+    if coordinate_system.coord_system is None or vector_.coordinate_system.coord_system is None:
+        return Vector(vector_.components, coordinate_system)
+
+    return _extended_express(vector_, coordinate_system, variables=True)
+
+def _extended_express(vector_: Vector, system_to: CoordinateSystem=None, variables=False):
+    if vector_.coordinate_system.coord_system_type != system_to.coord_system_type:
+        new_scalars = list(vector_.coordinate_system.transformation_to_system(system_to.coord_system_type))
+        # now take each component of vector and assign them to base_scalars, eg x, y, z
+        # replace each component of new_scalars with assigned x, y, z, eg r -> x, theta -> y
+        # build new vector from these components
+        for i, scalar in enumerate(vector_.coordinate_system.coord_system.base_scalars()):
+            new_component = 0 if i >= len(vector_.components) else vector_.components[i]
+            for j in range(len(new_scalars)):
+                new_scalars[j] = new_scalars[j].subs(scalar, new_component)
+        vector_ = Vector(list(new_scalars), vector_.coordinate_system)
 
     # We do not want to maintain own vector transformation functions, so
     # we convert our vector to SymPy format, transform it and convert back to Vector.
     sympy_vector = sympy_vector_from_vector(vector_)
-    transformed_vector = express(sympy_vector, coord_system, variables=True)
-    return vector_from_sympy_vector(transformed_vector)
-
-def extended_express(expr: Expr, system: CoordSys3D, system2: CoordSys3D=None, variables=False):
-    if system._transformation_from_parent_lambda is not None:
-        return _extended_express(expr, system)
-    return express(expr, system, system2, variables)
-
-#TODO: this transformation does not properly work for coordinate system translations and rotations. Should be
-#      rewritten to support both standard express functionality and non-cartesian coordinate system
-#      transformations.
-# This is experimental feature from SymPy (not merged yet)
-def _extended_express(expr: Expr, coordsys: CoordSys3D):
-    """
-    express for vectors allowing transformation between
-    cartesian (x,y,z) and non-cartesian frames (eg cylindrical)
-    Parameters
-    ==========
-    expr : Vector
-        The expression to re-express in CoordSys3D 'coordsys'
-    system: CoordSys3D
-        The coordinate system the expr is to be expressed in
-    Examples
-    =========
-    >>> from sympy.vector import extended_express, CoordSys3D
-    >>> from sympy import pi
-    >>> N = CoordSys3D('N')
-    >>> C = N.create_new('C', transformation='cylindrical', \
-        vector_names = ('r', 'theta', 'z'))
-    >>> extended_express(5*N.i,C)
-    5*C.r
-    >>> extended_express(5*N.j,C)
-    5*C.r + pi/2*C.theta
-    >>> extended_express(10*N.k,C)
-    10*C.z
-    >>> extended_express(6*C.r,N)
-    6*N.i
-    >>> extended_express(6*C.r + pi/2*C.theta,N)
-    6*N.j
-    Where a coordinate is undefined (eg theta with
-    extended_express(N.k), it is mapped to zero.
-    The non-cartesian frame must be defined as a child of the
-    cartesian frame as above.
-    The output is expressed in terms of the base vectors of the
-    derived coordinate systems. Currently they default to i,j
-    and k which are confusing for non-cartesian systems so it
-    is recommended to explicitly name them as above.
-    See Also
-    ========
-    CoordSys3D.transformation_from_parent,
-    CoordSys3D.transformation_to_parent
-    """
-    if not isinstance(coordsys, CoordSys3D):
-        raise TypeError("system should be a CoordSys3D instance")
-
-    parts = expr.separate()
-
-    # get different coordinate frames in vector, cry if more than one
-    if isinstance(parts, dict):
-        # we have been given zero vector
-        if(len(parts) == 0): return SympyVector.zero
-        if(len(parts) > 1):  raise ValueError("Does not support \
-            expressions containing multiple base coordinate frames")
-
-        foundframe = tuple(parts.keys())[0]
-        foundvector = tuple(parts.values())[0]
-    else:
-        foundframe = parts.system
-        foundvector = parts
-
-    # we should now have found the only frame in the vector,
-    # and we now have to convert it to the given frame
-
-    from_frame = foundframe
-    to_frame = coordsys
-
-    from_coeffs1 = from_frame.base_vectors()
-    from_coeffs2 = from_frame.base_scalars()
-    to_coeffs = to_frame.base_vectors()    # output with vectors
-
-    if from_frame._parent == to_frame:
-        transform_function = from_frame._transformation_lambda
-    else:
-        if to_frame._parent == from_frame:
-            transform_function =  \
-                to_frame._transformation_from_parent_lambda
-        else:
-            raise ValueError("Cannot link Coordinate frames")
-    args = []
-
-    for i, j in zip(from_coeffs1, from_coeffs2):
-        # could be expressed in either for inertial frame
-        coeff1 = foundvector.coeff(i)
-        # understand both N.i and N.x (or C.r and C.i)
-        coeff2 = foundvector.coeff(j)
-        if coeff1 != 0 and coeff2 != 0:
-            raise ValueError("Cannot express vector with both base \
-                    vectors and base scalars - check your vector")
-        args.append(coeff1 + coeff2) # only one can be non-zero
-
-    vals = transform_function(*args)
-
-    ans = SympyVector.zero
-    for v, c in zip(vals, to_coeffs):
-        if v is nan:  # v is nan ie infinity from an arctan
-            v = 0
-        # use to solve for cylindrical coords
-        # where theta is undefined
-        ans += v * c
-    return ans
+    transformed_vector_sympy = express(sympy_vector, system_to.coord_system, None, variables)
+    return vector_from_sympy_vector(transformed_vector_sympy, system_to)
