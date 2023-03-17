@@ -7,7 +7,7 @@ from symplyphysics.laws.gravity import gravity_force_from_mass_and_distance as g
 from symplyphysics.laws.dynamics import acceleration_from_force as newton2_law
 
 # Description
-## Every planet generates gravity field whichs causes free falling. Free fall acceleration depends on height above the planet surface.
+## Every planet generates gravity field which causes free falling. Free fall acceleration depends on height above the planet surface.
 ## Law: g = G * M / (R + h)**2
 ## Where:
 ## g is free fall acceleration

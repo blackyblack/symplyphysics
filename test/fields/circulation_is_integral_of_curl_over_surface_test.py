@@ -6,6 +6,7 @@ from symplyphysics import (
     units, SI, expr_to_quantity, convert_to,
     CoordSys3D, VectorZero, FieldPoint, VectorField
 )
+from symplyphysics.core.vectors.vectors import sympy_vector_from_vector
 from symplyphysics.laws.fields import circulation_is_integral_of_curl_over_surface as circulation_def
 
 @fixture
@@ -41,7 +42,8 @@ def _distance(point: FieldPoint) -> Expr:
 def test_gravitational_field_is_conservative(test_args):
     field = VectorField(lambda point: -point.x / _distance(point)**3, lambda point: -point.y / _distance(point)**3, lambda point: -point.z / _distance(point)**3, test_args.C)
     field_space = field.apply_to_basis()
-    field_rotor_applied = circulation_def.field_rotor_definition.rhs.subs(field, field_space).doit()
+    field_space_sympy = sympy_vector_from_vector(field_space)
+    field_rotor_applied = circulation_def.field_rotor_definition.rhs.subs(circulation_def.field, field_space_sympy).doit()
     assert field_rotor_applied == VectorZero.zero
 
 def test_force_field_circulation(test_args):
