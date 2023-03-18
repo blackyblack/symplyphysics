@@ -6,19 +6,6 @@ from sympy.vector.operators import _get_coord_systems
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
 
 
-# Detects coordinate system being used in SymPy Vector.
-# Throws an exception if multiple coordinate systems are detected.
-"""
-def extract_coord_system_from_sympy_vector(sympy_vector_: SympyVector) -> CoordSys3D:
-    if not isinstance(sympy_vector_, Expr): return None
-    coord_system_set = _get_coord_systems(sympy_vector_)
-    if len(coord_system_set) > 1:
-        coord_sys_names = [str(c) for c in coord_system_set]
-        raise TypeError(f"Different coordinate systems in expression: {str(coord_sys_names)}")
-    return None if len(coord_system_set) == 0 else next(iter(coord_system_set))
-"""
-
-
 # Contains list of SymPy expressions or any numbers as components.
 # Contains coordinate system to prevent using vector arithmetics with non compatible
 # coordinate systems.
@@ -30,7 +17,7 @@ def extract_coord_system_from_sympy_vector(sympy_vector_: SympyVector) -> CoordS
 class Vector:
     _components: List[Any] = []
     #NOTE: 4 and higher dimensional vectors are not supported cause of using CoordSys3D
-    #      to allow vector coordinate system rebasing.
+    #      to allow rebasing vector coordinate system.
     _coordinate_system: CoordinateSystem = None
 
     def __init__(self, components: List[Any]=[], coordinate_system: CoordinateSystem=None):
@@ -80,10 +67,9 @@ def vector_rebase(vector_: Vector, coordinate_system: CoordinateSystem=None) -> 
         return Vector(vector_.components, coordinate_system)
     if coordinate_system.coord_system is None or vector_.coordinate_system.coord_system is None:
         return Vector(vector_.components, coordinate_system)
+    return _extended_express(vector_, coordinate_system)
 
-    return _extended_express(vector_, coordinate_system, variables=True)
-
-def _extended_express(vector_: Vector, system_to: CoordinateSystem=None, variables=False):
+def _extended_express(vector_: Vector, system_to: CoordinateSystem=None):
     if vector_.coordinate_system.coord_system_type != system_to.coord_system_type:
         new_scalars = list(vector_.coordinate_system.transformation_to_system(system_to.coord_system_type))
         # now take each component of vector and assign them to base_scalars, eg x, y, z
@@ -98,5 +84,5 @@ def _extended_express(vector_: Vector, system_to: CoordinateSystem=None, variabl
     # We do not want to maintain own vector transformation functions, so
     # we convert our vector to SymPy format, transform it and convert back to Vector.
     sympy_vector = sympy_vector_from_vector(vector_)
-    transformed_vector_sympy = express(sympy_vector, system_to.coord_system, None, variables)
+    transformed_vector_sympy = express(sympy_vector, system_to.coord_system, None, variables=True)
     return vector_from_sympy_vector(transformed_vector_sympy, system_to)

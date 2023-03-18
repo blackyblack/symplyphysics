@@ -1,6 +1,7 @@
 from enum import Enum, unique
 import random
 import string
+from typing import List
 from sympy import acos, atan2, cos, sin, sqrt
 from sympy.vector import CoordSys3D
 
@@ -16,7 +17,7 @@ class CoordinateSystem:
     _coord_system_type: System = None
 
     @staticmethod
-    def _system_to_transformation_name(coord_system_type: System) -> str:
+    def system_to_transformation_name(coord_system_type: System) -> str:
             if coord_system_type == CoordinateSystem.System.CARTESIAN:
                 return "cartesian"
             if coord_system_type == CoordinateSystem.System.CYLINDRICAL:
@@ -26,18 +27,23 @@ class CoordinateSystem:
             return "none"
     
     @staticmethod
+    def system_to_base_scalars(coord_system_type: System) -> List[str]:
+            if coord_system_type == CoordinateSystem.System.CYLINDRICAL:
+                return ["r", "theta", "z"]
+            if coord_system_type == CoordinateSystem.System.SPHERICAL:
+                return ["r", "theta", "phi"]
+            return ["x", "y", "z"]
+    
+    @staticmethod
     def random_name() -> str:
         return "C" + "".join(random.choices(string.digits, k = 10))
 
-    def __init__(self, coord_system_type=System.CARTESIAN, parent=None):
-        if parent is None:
-            self._coord_system_type = coord_system_type
-            self._coord_system = CoordSys3D(CoordinateSystem.random_name(), transformation=CoordinateSystem._system_to_transformation_name(coord_system_type))
-            return
-        if coord_system_type == None:
-            coord_system_type = parent.coord_system_type
+    def __init__(self, coord_system_type=System.CARTESIAN, inner: CoordSys3D=None):
         self._coord_system_type = coord_system_type
-        self._coord_system = parent.coord_system.create_new(CoordinateSystem.random_name(), transformation=CoordinateSystem._system_to_transformation_name(coord_system_type))
+        if inner is None:
+            self._coord_system = CoordSys3D(CoordinateSystem.random_name(), variable_names=CoordinateSystem.system_to_base_scalars(coord_system_type))
+            return
+        self._coord_system = inner
 
     @property
     def coord_system(self) -> CoordSys3D:
@@ -46,12 +52,6 @@ class CoordinateSystem:
     @property
     def coord_system_type(self) -> System:
         return self._coord_system_type
-
-    def rotate(self, angle, axis):
-        if self._coord_system_type != self.System.CARTESIAN:
-            coord_name_from = self._system_to_transformation_name(self._coord_system_type)
-            raise ValueError(f"Rotation only supported for cartesian coordinates: got {coord_name_from}")
-        self._coord_system = self._coord_system.orient_new_axis(self.random_name(), angle, axis)
 
     def transformation_to_system(self, coord_system_type: System):
         if self._coord_system_type == self.System.CYLINDRICAL:
@@ -77,6 +77,18 @@ class CoordinateSystem:
             if coord_system_type == self.System.CARTESIAN:
                 return (x, y, z)
 
-        coord_name_from = self._system_to_transformation_name(self._coord_system_type)
-        coord_name_to = self._system_to_transformation_name(coord_system_type)
+        coord_name_from = self.system_to_transformation_name(self._coord_system_type)
+        coord_name_to = self.system_to_transformation_name(coord_system_type)
         raise ValueError(f"Transformation is not supported: from {coord_name_from} to {coord_name_to}")
+    
+def transform_type(self: CoordinateSystem, coord_system_type=CoordinateSystem.System.CARTESIAN) -> CoordinateSystem:
+        if coord_system_type == None:
+            coord_system_type = self.coord_system_type
+        new_coord_system = self.coord_system.create_new(CoordinateSystem.random_name(), variable_names=CoordinateSystem.system_to_base_scalars(coord_system_type), transformation=None)
+        return CoordinateSystem(coord_system_type, new_coord_system)
+    
+def rotate(self: CoordinateSystem, angle, axis) -> CoordinateSystem:
+    if self.coord_system_type != CoordinateSystem.System.CARTESIAN:
+        coord_name_from = CoordinateSystem.system_to_transformation_name(self.coord_system_type)
+        raise ValueError(f"Rotation only supported for cartesian coordinates: got {coord_name_from}")
+    return CoordinateSystem(self.coord_system_type, self.coord_system.orient_new_axis(CoordinateSystem.random_name(), angle, axis))

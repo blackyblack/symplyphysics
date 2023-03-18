@@ -2,6 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy import atan, cos, pi, sin, sqrt
 from sympy.vector import  CoordSys3D
+from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
 from symplyphysics.core.vectors.vector_arithmetics import add_vectors, dot_vectors, equal_vectors, scale_vector
 from symplyphysics.core.vectors.vectors import Vector
 from test.test_decorators import unsupported_usage
@@ -9,7 +10,7 @@ from test.test_decorators import unsupported_usage
 
 @fixture
 def test_args():
-    C = CoordSys3D("C")
+    C = CoordinateSystem()
     Args = namedtuple("Args", ["C"])
     return Args(C=C)
 
@@ -22,15 +23,19 @@ def test_basic_equal_vectors(test_args):
     assert equal_vectors(Vector([]), Vector([]))
     assert equal_vectors(Vector([0, 0]), Vector([]))
     assert equal_vectors(Vector([]), Vector([0, 0]))
-    assert equal_vectors(Vector([test_args.C.x, 2]), Vector([test_args.C.x, 2]))
-    assert not equal_vectors(Vector([test_args.C.x, 2]), Vector([test_args.C.y, 2]))
-    assert equal_vectors(Vector([test_args.C.x - test_args.C.x, 2]), Vector([0, 2]))
-    assert equal_vectors(Vector([test_args.C.x * test_args.C.i, 2]), Vector([test_args.C.x * test_args.C.i, 2]))
-    assert not equal_vectors(Vector([test_args.C.x * test_args.C.i, 2]), Vector([test_args.C.x * test_args.C.j, 2]))
+    assert equal_vectors(Vector([test_args.C.coord_system.x, 2]), Vector([test_args.C.coord_system.x, 2]))
+    assert not equal_vectors(Vector([test_args.C.coord_system.x, 2]), Vector([test_args.C.coord_system.y, 2]))
+    assert equal_vectors(Vector([test_args.C.coord_system.x - test_args.C.coord_system.x, 2]), Vector([0, 2]))
+    assert equal_vectors(
+        Vector([test_args.C.coord_system.x * test_args.C.coord_system.i, 2]),
+        Vector([test_args.C.coord_system.x * test_args.C.coord_system.i, 2]))
+    assert not equal_vectors(
+        Vector([test_args.C.coord_system.x * test_args.C.coord_system.i, 2]),
+        Vector([test_args.C.coord_system.x * test_args.C.coord_system.j, 2]))
     assert equal_vectors(Vector([1, 2], test_args.C), Vector([1, 2], test_args.C))
 
 def test_invalid_equal_vectors(test_args):
-    C1 = CoordSys3D("C1")
+    C1 = CoordinateSystem()
     with raises(TypeError):
         equal_vectors(Vector(["hello", 2]), Vector([2, 1]))
     with raises(AttributeError):
@@ -48,17 +53,25 @@ def test_basic_add_vectors(test_args):
     assert add_vectors(Vector([1, 2 * 2]), Vector([1, 4])).components == [2, 8]
     assert add_vectors(Vector([1, 0]), Vector([1])).components == [2, 0]
     assert add_vectors(Vector([]), Vector([])).components == []
-    assert add_vectors(Vector([test_args.C.x, 2]), Vector([test_args.C.x, 2])).components == [2 * test_args.C.x, 4]
-    assert add_vectors(Vector([test_args.C.x, 2]), Vector([test_args.C.y, 2])).components == [test_args.C.x + test_args.C.y, 4]
-    assert add_vectors(Vector([test_args.C.x - test_args.C.x, 2]), Vector([1, 2])).components == [1, 4]
-    assert add_vectors(Vector([test_args.C.x * test_args.C.i, 2]), Vector([test_args.C.x * test_args.C.i, 2])).components == [2 * test_args.C.x * test_args.C.i, 4]
-    assert add_vectors(Vector([test_args.C.x * test_args.C.i, 2]), Vector([test_args.C.x * test_args.C.j, 2])).components == [test_args.C.x * test_args.C.i + test_args.C.x * test_args.C.j, 4]
+    assert add_vectors(Vector([test_args.C.coord_system.x, 2]), Vector([test_args.C.coord_system.x, 2])).components == [2 * test_args.C.coord_system.x, 4]
+    assert add_vectors(Vector([test_args.C.coord_system.x, 2]), Vector([test_args.C.coord_system.y, 2])).components == [test_args.C.coord_system.x + test_args.C.coord_system.y, 4]
+    assert add_vectors(
+        Vector([test_args.C.coord_system.x - test_args.C.coord_system.x, 2]),
+        Vector([1, 2])).components == [1, 4]
+    assert add_vectors(
+        Vector([test_args.C.coord_system.x * test_args.C.coord_system.i, 2]),
+        Vector([test_args.C.coord_system.x * test_args.C.coord_system.i, 2])
+        ).components == [2 * test_args.C.coord_system.x * test_args.C.coord_system.i, 4]
+    assert add_vectors(
+        Vector([test_args.C.coord_system.x * test_args.C.coord_system.i, 2]),
+        Vector([test_args.C.coord_system.x * test_args.C.coord_system.j, 2])
+        ).components == [test_args.C.coord_system.x * test_args.C.coord_system.i + test_args.C.coord_system.x * test_args.C.coord_system.j, 4]
     result_vector = add_vectors(Vector([1, 2], test_args.C), Vector([1, 2], test_args.C))
     assert result_vector.components == [2, 4]
-    assert result_vector.coord_system == test_args.C
+    assert result_vector.coordinate_system == test_args.C
 
 def test_invalid_add_vectors(test_args):
-    C1 = CoordSys3D("C1")
+    C1 = CoordinateSystem()
     with raises(TypeError):
         add_vectors(Vector(["hello", 2]), Vector([2, 1]))
     with raises(TypeError):
@@ -93,11 +106,14 @@ def test_basic_scale_vector(test_args):
     assert scale_vector(2, Vector([])).components == []
     assert scale_vector(0, Vector([1, 4])).components == [0, 0]
     assert scale_vector(-1, Vector([1, 4])).components == [-1, -4]
-    assert scale_vector(2, Vector([test_args.C.x, 2])).components == [2 * test_args.C.x, 4]
-    assert scale_vector(test_args.C.x, Vector([test_args.C.y, 2])).components == [test_args.C.x * test_args.C.y, test_args.C.x * 2]
+    assert scale_vector(2, Vector([test_args.C.coord_system.x, 2])).components == [2 * test_args.C.coord_system.x, 4]
+    assert scale_vector(
+        test_args.C.coord_system.x,
+        Vector([test_args.C.coord_system.y, 2])
+        ).components == [test_args.C.coord_system.x * test_args.C.coord_system.y, test_args.C.coord_system.x * 2]
     result_vector = scale_vector(2, Vector([1, 2], test_args.C))
     assert result_vector.components == [2, 4]
-    assert result_vector.coord_system == test_args.C
+    assert result_vector.coordinate_system == test_args.C
 
 def test_invalid_scale_vector():
     with raises(AttributeError):
@@ -117,10 +133,22 @@ def test_basic_dot_product(test_args):
     assert dot_vectors(Vector([1, 2 * 2]), Vector([1, 4])) == 17
     assert dot_vectors(Vector([1, 0]), Vector([1])) == 1
     assert dot_vectors(Vector([]), Vector([])) == 0
-    assert dot_vectors(Vector([test_args.C.x, 2]), Vector([test_args.C.x, 2])) == test_args.C.x**2 + 4
-    assert dot_vectors(Vector([test_args.C.x, 2]), Vector([test_args.C.y, 2])) == test_args.C.x * test_args.C.y + 4
-    assert dot_vectors(Vector([test_args.C.x - test_args.C.x, 2]), Vector([1, 2])) == 4
-    assert dot_vectors(Vector([1, 2], test_args.C), Vector([1, 2], test_args.C)) == 5
+    assert dot_vectors(
+        Vector([test_args.C.coord_system.x, 2]),
+        Vector([test_args.C.coord_system.x, 2])
+        ) == test_args.C.coord_system.x**2 + 4
+    assert dot_vectors(
+        Vector([test_args.C.coord_system.x, 2]),
+        Vector([test_args.C.coord_system.y, 2])
+        ) == test_args.C.coord_system.x * test_args.C.coord_system.y + 4
+    assert dot_vectors(
+        Vector([test_args.C.coord_system.x - test_args.C.coord_system.x, 2]),
+        Vector([1, 2])
+        ) == 4
+    assert dot_vectors(
+        Vector([1, 2], test_args.C),
+        Vector([1, 2], test_args.C)
+        ) == 5
     # Verify that orthogonal vectors have zero dot product
     assert dot_vectors(Vector([1, 0]), Vector([0, 1])) == 0
     initial_vector_angle = atan(3 / 2)
@@ -134,10 +162,14 @@ def test_basic_dot_product(test_args):
 
 def test_invalid_dot_product(test_args):
     with raises(ValueError):
-        dot_vectors(Vector([test_args.C.x * test_args.C.i, 2]), Vector([test_args.C.x * test_args.C.i, 2]))
+        dot_vectors(
+            Vector([test_args.C.coord_system.x * test_args.C.coord_system.i, 2]),
+            Vector([test_args.C.coord_system.x * test_args.C.coord_system.i, 2]))
     with raises(ValueError):
-        dot_vectors(Vector([test_args.C.x * test_args.C.i, 2]), Vector([test_args.C.x * test_args.C.j, 2]))
-    C1 = CoordSys3D("C1")
+        dot_vectors(
+            Vector([test_args.C.coord_system.x * test_args.C.coord_system.i, 2]),
+            Vector([test_args.C.coord_system.x * test_args.C.coord_system.j, 2]))
+    C1 = CoordinateSystem()
     with raises(TypeError):
         dot_vectors(Vector(["hello", 2]), Vector([2, 1]))
     with raises(TypeError):

@@ -1,6 +1,6 @@
 from typing import Any, List
 from sympy import Expr
-from sympy.vector import CoordSys3D, express
+from sympy.vector import express
 
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
 from .field_point import FieldPoint
@@ -36,9 +36,9 @@ class ScalarField:
     #      to maintain ScalarField invariant.
     _coordinate_system: CoordinateSystem = None
 
-    def __init__(self, point_function=0, coord_system: CoordSys3D=None):
+    def __init__(self, point_function=0, coordinate_system: CoordinateSystem=None):
         self._point_function = point_function
-        self._coord_system = coord_system
+        self._coordinate_system = coordinate_system
 
     def __call__(self, point_: FieldPoint):
         return self._point_function(point_) if callable(self._point_function) else self._point_function
@@ -71,7 +71,7 @@ class ScalarField:
         return self.apply(self.basis)
 
 # Constructs new ScalarField from SymPy expression using 'sympy_expression_to_field_function'.
-def field_from_sympy_vector(sympy_vector_, coordinate_system: CoordinateSystem):
+def field_from_sympy_vector(sympy_vector_, coordinate_system: CoordinateSystem=None):
     return ScalarField(sympy_expression_to_field_function(sympy_vector_, coordinate_system), coordinate_system)
 
 # Convert field coordinate system to new basis and construct new field.
@@ -84,5 +84,8 @@ def field_rebase(field_: ScalarField, coordinate_system: CoordinateSystem=None) 
 
     # Similar to VectorField field_rebase but cannot implement generic rebase algorithm.
     field_space_sympy = field_.apply_to_basis()
+    #TODO: does not work for non-cartesian coordinates.
+    #TODO: how does scalar field transformation to cylindrical coordinates should look like?
+    #TODO: maybe convert field_space_sympy to vector and rebase it? But field_space_sympy is scalar, not a vector.
     transformed_field_space = express(field_space_sympy, coordinate_system, variables=True)
     return field_from_sympy_vector(transformed_field_space)
