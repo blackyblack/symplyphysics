@@ -82,10 +82,10 @@ def field_rebase(field_: ScalarField, coordinate_system: CoordinateSystem=None) 
         field_function = 0 if len(field_.components) == 0 else field_.components[0]
         return ScalarField(field_function, coordinate_system)
 
-    # Similar to VectorField field_rebase but cannot implement generic rebase algorithm.
+    # Similar to VectorField field_rebase
     field_space_sympy = field_.apply_to_basis()
     #TODO: does not work for non-cartesian coordinates.
     #TODO: how does scalar field transformation to cylindrical coordinates should look like?
     #TODO: maybe convert field_space_sympy to vector and rebase it? But field_space_sympy is scalar, not a vector.
-    transformed_field_space = express(field_space_sympy, coordinate_system, variables=True)
-    return field_from_sympy_vector(transformed_field_space)
+    transformed_field_space = express(field_space_sympy, coordinate_system.coord_system, variables=True)
+    return field_from_sympy_vector(transformed_field_space, coordinate_system)

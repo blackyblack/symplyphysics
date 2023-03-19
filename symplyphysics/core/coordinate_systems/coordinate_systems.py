@@ -80,14 +80,15 @@ class CoordinateSystem:
         coord_name_from = self.system_to_transformation_name(self._coord_system_type)
         coord_name_to = self.system_to_transformation_name(coord_system_type)
         raise ValueError(f"Transformation is not supported: from {coord_name_from} to {coord_name_to}")
-    
-def transform_type(self: CoordinateSystem, coord_system_type=CoordinateSystem.System.CARTESIAN) -> CoordinateSystem:
+
+# Change coordinate system type, eg from cartesian to cylindrical
+def coordinates_transform(self: CoordinateSystem, coord_system_type=CoordinateSystem.System.CARTESIAN) -> CoordinateSystem:
         if coord_system_type == None:
             coord_system_type = self.coord_system_type
         new_coord_system = self.coord_system.create_new(CoordinateSystem.random_name(), variable_names=CoordinateSystem.system_to_base_scalars(coord_system_type), transformation=None)
         return CoordinateSystem(coord_system_type, new_coord_system)
     
-def rotate(self: CoordinateSystem, angle, axis) -> CoordinateSystem:
+def coordinates_rotate(self: CoordinateSystem, angle, axis) -> CoordinateSystem:
     if self.coord_system_type != CoordinateSystem.System.CARTESIAN:
         coord_name_from = CoordinateSystem.system_to_transformation_name(self.coord_system_type)
         raise ValueError(f"Rotation only supported for cartesian coordinates: got {coord_name_from}")

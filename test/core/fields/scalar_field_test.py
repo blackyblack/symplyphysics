@@ -203,15 +203,15 @@ def test_uncallable_field_apply(test_args):
     trajectory_value = result_field.apply(trajectory)
     assert trajectory_value == 1
 
-# ScalarField checks that coordinate systems of field and trajectory should be same, if they
-# are set. ScalarField is not rebased automatically and should be rebased to the same coordinate
+# ScalarField does not process different coordinate systems.
+# ScalarField is not rebased automatically and should be rebased to the same coordinate
 # system as in trajectory with 'field_rebase'.
 def test_different_coord_systems_field_apply(test_args):
     result_field = ScalarField(lambda p: p.y * p.x, test_args.C)
-    C1 = CoordSys3D("C1", variable_names=("r", "phi", "z"))
-    trajectory = [C1.r, C1.phi]
-    with raises(TypeError):
-        result_field.apply(trajectory)
+    C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
+    trajectory = [C1.coord_system.r, C1.coord_system.theta]
+    trajectory_value = result_field.apply(trajectory)
+    assert trajectory_value == C1.coord_system.theta * C1.coord_system.r
 
 # While ScalarField should contain information about coordinate system and
 # can be rebased to new coordinate system with ScalarField invariance, it is not
@@ -221,33 +221,33 @@ def test_different_coord_systems_field_apply(test_args):
 def test_invariant_transformed_trajectory_field_apply(test_args):
     field = ScalarField(lambda p: p.x**2 + 2 * p.y**2)
     point = [1, 2]
-    trajectory = [test_args.C.x, test_args.C.y + 5]
+    trajectory = [test_args.C.coord_system.x, test_args.C.coord_system.y + 5]
     trajectory_value = field.apply(trajectory)
-    assert trajectory_value == test_args.C.x**2 + 2 * (test_args.C.y + 5)**2
-    assert trajectory_value.subs({test_args.C.x: point[0], test_args.C.y: point[1]}) == 99
+    assert trajectory_value == test_args.C.coord_system.x**2 + 2 * (test_args.C.coord_system.y + 5)**2
+    assert trajectory_value.subs({test_args.C.coord_system.x: point[0], test_args.C.coord_system.y: point[1]}) == 99
 
-    B = test_args.C.orient_new_axis('B', pi/4, test_args.C.k)
+    B_inner = test_args.C.coord_system.orient_new_axis('B', pi/4, test_args.C.coord_system.k)
     transformed_trajectory = [
-        express(trajectory[0], B, variables=True),
-        express(trajectory[1], B, variables=True)]
+        express(trajectory[0], B_inner, variables=True),
+        express(trajectory[1], B_inner, variables=True)]
     transformed_trajectory_value = field.apply(transformed_trajectory)
 
-    p1 = test_args.C.origin.locate_new('p1', point[0] * test_args.C.i + point[1] * test_args.C.j)
-    p1_coordinates = p1.express_coordinates(test_args.C)
+    p1 = test_args.C.coord_system.origin.locate_new('p1', point[0] * test_args.C.coord_system.i + point[1] * test_args.C.coord_system.j)
+    p1_coordinates = p1.express_coordinates(test_args.C.coord_system)
     assert p1_coordinates[0] == point[0]
     assert p1_coordinates[1] == point[1]
 
-    p1_coordinates_in_b = p1.express_coordinates(B)
+    p1_coordinates_in_b = p1.express_coordinates(B_inner)
     assert p1_coordinates_in_b[0] != point[0]
 
-    assert transformed_trajectory_value.subs({B.x: p1_coordinates_in_b[0], B.y: p1_coordinates_in_b[1]}) == 99
+    assert transformed_trajectory_value.subs({B_inner.x: p1_coordinates_in_b[0], B_inner.y: p1_coordinates_in_b[1]}) == 99
 
 # Test field.apply_to_basis()
 
 def test_basic_field_apply_to_basis(test_args):
     field = ScalarField(lambda p: p.y * p.x, test_args.C)
     field_space = field.apply_to_basis()
-    assert field_space == test_args.C.y * test_args.C.x
+    assert field_space == test_args.C.coord_system.y * test_args.C.coord_system.x
 
 def test_empty_basis_apply_to_basis():
     field = ScalarField(lambda p: p.y * p.x)
@@ -261,16 +261,17 @@ def test_basic_field_rebase(test_args):
     point = [1, 2]
     point_value = field.apply(point)
     assert point_value == 3
-    assert field.coord_system == test_args.C
+    assert field.coordinate_system == test_args.C
 
     # B is located at [1, 2] origin instead of [0, 0] of test_args.C
-    B = test_args.C.locate_new('B', test_args.C.i + 2 * test_args.C.j)
+    B_inner = test_args.C.coord_system.locate_new('B', test_args.C.coord_system.i + 2 * test_args.C.coord_system.j)
+    B = CoordinateSystem(test_args.C.coord_system_type, B_inner)
     field_rebased = field_rebase(field, B)
-    assert field_rebased.basis == [B.x, B.y, B.z]
-    assert field_rebased.coord_system == B
+    assert field_rebased.basis == [B.coord_system.x, B.coord_system.y, B.coord_system.z]
+    assert field_rebased.coordinate_system == B
     # Original field is not changed
-    assert field.basis == [test_args.C.x, test_args.C.y, test_args.C.z]
-    assert field.coord_system == test_args.C
+    assert field.basis == [test_args.C.coord_system.x, test_args.C.coord_system.y, test_args.C.coord_system.z]
+    assert field.coordinate_system == test_args.C
 
     transformed_point_value = field_rebased.apply(point)
     assert transformed_point_value != point_value
@@ -281,16 +282,17 @@ def test_basic_field_rebase(test_args):
 def test_invariant_field_rebase_and_apply(test_args):
     field = ScalarField(lambda p: p.x**2 + 2 * p.y**2, test_args.C)
     point = [1, 2]
-    p1 = test_args.C.origin.locate_new('p1', point[0] * test_args.C.i + point[1] * test_args.C.j)
-    p1_coordinates = p1.express_coordinates(test_args.C)
+    p1 = test_args.C.coord_system.origin.locate_new('p1', point[0] * test_args.C.coord_system.i + point[1] * test_args.C.coord_system.j)
+    p1_coordinates = p1.express_coordinates(test_args.C.coord_system)
     assert p1_coordinates[0] == point[0]
     assert p1_coordinates[1] == point[1]
 
     point_value = field.apply(point)
     assert point_value == 9
 
-    B = test_args.C.orient_new_axis('B', pi/4, test_args.C.k)
-    p1_coordinates_in_b = p1.express_coordinates(B)
+    B_inner = test_args.C.coord_system.orient_new_axis('B', pi/4, test_args.C.coord_system.k)
+    B = CoordinateSystem(test_args.C.coord_system_type, B_inner)
+    p1_coordinates_in_b = p1.express_coordinates(B_inner)
     assert p1_coordinates_in_b[0] != point[0]
 
     transformed_point = [ p1_coordinates_in_b[0], p1_coordinates_in_b[1] ]
@@ -305,15 +307,16 @@ def test_invariant_field_rebase_and_apply(test_args):
 # Field is not rebased if no original coordinate system was set.
 def test_no_coord_system_field_rebase(test_args):
     field = ScalarField(lambda p: p.x + p.y)
-    assert field.coord_system is None
+    assert field.coordinate_system is None
     point = [1, 2]
     point_value = field.apply(point)
     assert point_value == 3
 
-    B = test_args.C.locate_new('B', test_args.C.i + 2 * test_args.C.j)
+    B_inner = test_args.C.coord_system.locate_new('B', test_args.C.coord_system.i + 2 * test_args.C.coord_system.j)
+    B = CoordinateSystem(test_args.C.coord_system_type, B_inner)
     field_rebased = field_rebase(field, B)
-    assert field_rebased.basis == [B.x, B.y, B.z]
-    assert field_rebased.coord_system == B
+    assert field_rebased.basis == [B.coord_system.x, B.coord_system.y, B.coord_system.z]
+    assert field_rebased.coordinate_system == B
 
     point_value = field_rebased.apply(point)
     assert point_value == 3
@@ -321,13 +324,15 @@ def test_no_coord_system_field_rebase(test_args):
 # Field is not rebased if no target coordinate system was set.
 def test_no_target_coord_system_field_rebase(test_args):
     field = ScalarField(lambda p: p.x + p.y, test_args.C)
-    assert field.coord_system == test_args.C
+    assert field.coordinate_system == test_args.C
     point = [1, 2]
     point_value = field.apply(point)
     assert point_value == 3
 
     field_rebased = field_rebase(field, None)
-    assert field_rebased.coord_system == None
+    assert field_rebased.coordinate_system == None
 
     point_value = field_rebased.apply(point)
     assert point_value == 3
+
+#TODO: test for field_rebase to/from non-cartesian coordinates

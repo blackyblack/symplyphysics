@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy import atan, pi, sqrt, symbols, sin, cos
 from sympy.vector import Vector as SympyVector, express
-from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, rotate, transform_type
+from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_rotate, coordinates_transform
 from symplyphysics.core.vectors.vectors import Vector, sympy_vector_from_vector, vector_from_sympy_vector, vector_rebase
 
 
@@ -75,12 +75,15 @@ def test_rotate_coordinates_array_to_sympy_conversion(test_args):
     vector = vector_from_sympy_vector(sympy_vector, test_args.C)
     assert vector.components == [1, 1, 0]
     theta = symbols("theta")
-    B = rotate(test_args.C, theta, test_args.C.coord_system.k)
+    B = coordinates_rotate(test_args.C, theta, test_args.C.coord_system.k)
     sympy_transformed_vector = express(sympy_vector, B.coord_system)
     assert sympy_transformed_vector == ((sin(theta) + cos(theta)) * B.coord_system.i + (-sin(theta) + cos(theta)) * B.coord_system.j)
     transformed_vector = vector_from_sympy_vector(sympy_transformed_vector, B)
     assert transformed_vector.components == [sin(theta) + cos(theta), -sin(theta) + cos(theta), 0]
     assert transformed_vector.coordinate_system == B
+    # Do the same via vector_rebase
+    vector_rebased = vector_rebase(vector, B)
+    assert vector_rebased.components == [sin(theta) + cos(theta), -sin(theta) + cos(theta), 0]
 
 # Test sympy_vector_from_vector()
 
@@ -120,11 +123,14 @@ def test_string_array_to_sympy_conversion(test_args):
 
 def test_rotate_coordinates_sympy_to_array_conversion(test_args):
     theta = symbols("theta")
-    B = rotate(test_args.C, theta, test_args.C.coord_system.k)
+    B = coordinates_rotate(test_args.C, theta, test_args.C.coord_system.k)
     sympy_vector = sympy_vector_from_vector(Vector([1, 2], B))
     assert sympy_vector == B.coord_system.i + 2 * B.coord_system.j
     transformed_vector = express(sympy_vector, test_args.C.coord_system)
     assert transformed_vector == ((-2 * sin(theta) + cos(theta)) * test_args.C.coord_system.i + (sin(theta) + 2 * cos(theta)) * test_args.C.coord_system.j)
+    # Do the same via vector_rebase
+    vector_rebased = vector_rebase(Vector([1, 2], B), test_args.C)
+    assert vector_rebased.components == [-2 * sin(theta) + cos(theta), sin(theta) + 2 * cos(theta), 0]
 
 # Test vector_rebase()
 
@@ -196,9 +202,8 @@ def test_rotate_vector_rebase(test_args):
     assert p1_coordinates[0] == point[0]
     assert p1_coordinates[1] == point[1]
 
-    B_inner = test_args.C.coord_system.orient_new_axis('B', pi/4, test_args.C.coord_system.k)
-    B = CoordinateSystem(test_args.C.coord_system_type, B_inner)
-    p1_coordinates_in_b = p1.express_coordinates(B_inner)
+    B = coordinates_rotate(test_args.C, pi/4, test_args.C.coord_system.k)
+    p1_coordinates_in_b = p1.express_coordinates(B.coord_system)
     assert p1_coordinates_in_b[0] != point[0]
 
     transformed_point = [ p1_coordinates_in_b[0], p1_coordinates_in_b[1], 0 ]
@@ -211,7 +216,7 @@ def test_rotate_vector_rebase(test_args):
 
 def test_spherical_vector_create(test_args):
     vector = Vector([1, 2], test_args.C)
-    B = transform_type(test_args.C, CoordinateSystem.System.SPHERICAL)
+    B = coordinates_transform(test_args.C, CoordinateSystem.System.SPHERICAL)
     # vector should have r = sqrt(5) in polar coordinates
     # vector is in XY-plane, so theta angle should be pi/2
     # phi angle is atan(2/1)

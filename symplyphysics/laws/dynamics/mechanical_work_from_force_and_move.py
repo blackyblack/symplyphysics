@@ -5,7 +5,7 @@ from symplyphysics import (
 from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
 from sympy.vector import Dot
 
-from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
+from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_transform
 from symplyphysics.core.vectors.vectors import Vector, vector_rebase, sympy_vector_from_vector
 
 # Description
@@ -28,23 +28,17 @@ def print():
 @validate_output(units.energy)
 def calculate_work(force_: Quantity, distance_: Quantity, force_angle: Quantity, distance_angle: Quantity) -> Quantity:
     result_work_expr = solve(law, work, dict=True)[0][work]
-    Ca = CoordinateSystem()
-    Cy = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL, Ca)
-    #Ca = CoordSys3D("Ca")
-    #Cy = Ca.create_new("Cy", transformation="cylindrical")
+    coordinates_polar = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
+    coordinates_cartesian = coordinates_transform(coordinates_polar, CoordinateSystem.System.CARTESIAN)
     #HACK: sympy angles are always in radians
     force_angle_radians = force_angle.scale_factor
     distance_angle_radians = distance_angle.scale_factor
 
     # Convert to Cartesian coordinates as Dot product does not work properly for Cylindrical coordinates
-    force_vector = Vector([force_, force_angle_radians], Cy)
-    #force_vector = force_ * Cy.i + force_angle_radians * Cy.j
-    #distance_vector = distance_ * Cy.i + distance_angle_radians * Cy.j
-    distance_vector = Vector([distance_, distance_angle_radians], Cy)
-    #force_vector_cartesian = extended_express(force_vector, Ca)
-    force_vector_cartesian = vector_rebase(force_vector, Ca)
-    #distance_vector_cartesian = extended_express(distance_vector, Ca)
-    distance_vector_cartesian = vector_rebase(distance_vector, Ca)
+    force_vector = Vector([force_, force_angle_radians], coordinates_polar)
+    distance_vector = Vector([distance_, distance_angle_radians], coordinates_polar)
+    force_vector_cartesian = vector_rebase(force_vector, coordinates_cartesian)
+    distance_vector_cartesian = vector_rebase(distance_vector, coordinates_cartesian)
     force_vector_cartesian_sympy = sympy_vector_from_vector(force_vector_cartesian)
     distance_vector_cartesian_sympy = sympy_vector_from_vector(distance_vector_cartesian)
     result_expr = result_work_expr.subs({force: force_vector_cartesian_sympy, distance: distance_vector_cartesian_sympy}).doit()
