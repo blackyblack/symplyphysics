@@ -4,10 +4,11 @@ from symplyphysics import (
 )
 
 # Description
-## Wavelength is distance which point with constant phase overcomes during oscillation period.
-## Definition: lambda = v*T, where
-## lambda is wavelength,
-## v is wave spreading velocity,
+## Wavelength is the spatial period of a periodic wave—the distance over which the wave's shape repeats.
+## It is the distance between consecutive corresponding points of the same phase on the wave.
+## Definition: λ = v * T, where
+## λ is wavelength,
+## v is wave spreading velocity (phase speed),
 ## T is oscillation period.
 
 wavelength = symbols('wavelength')
