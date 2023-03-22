@@ -3,6 +3,8 @@ import inspect
 from sympy.core.singleton import S
 from sympy.physics.units import Quantity, Dimension
 from sympy.physics.units.systems.si import SI
+
+from symplyphysics.core.vectors.vectors import Vector
 from .errors import UnitsError
 
 def assert_equivalent_dimension(arg: Quantity, decorator_name, param_name, func_name, expected_unit: Dimension):
@@ -43,6 +45,28 @@ def validate_input(**decorator_kwargs):
         return wrapper_validate
     return validate_func
 
+# Validates the input quantities for vectors. Input parameters should be Vector that contains sympy.physics.units.Quantity as components.
+# Example:
+# @validate_vector_input(param1_=units.length, param2_=(1 / units.length))
+def validate_vector_input(**decorator_kwargs):
+    def validate_func(func):
+        @functools.wraps(func)
+        def wrapper_validate(*args, **kwargs):
+            wrapped_signature = inspect.signature(func)
+            bound_args = wrapped_signature.bind(*args, **kwargs)
+            for param in wrapped_signature.parameters.values():
+                if param.name in decorator_kwargs:
+                    expected_unit = decorator_kwargs[param.name]
+                    arg = bound_args.arguments[param.name]
+                    if not isinstance(arg, Vector):
+                        raise TypeError(f"Argument '{arg}' to function '{func.__name__}'"
+                            f" should be Vector.")
+                    for idx, c in enumerate(arg.components):
+                        assert_equivalent_dimension(c, "validate_input", f"{param.name}[{idx}]", func.__name__, expected_unit)
+            return func(*args, **kwargs)
+        return wrapper_validate
+    return validate_func
+
 # Validates the output quantity. Output should be sympy.physics.units.Quantity type.
 # Example:
 # @validate_output(units.length**2)
@@ -52,6 +76,20 @@ def validate_output(expected_unit):
         def wrapper_validate(*args, **kwargs):
             ret = func(*args, **kwargs)
             assert_equivalent_dimension(ret, 'validate_output', 'return', func.__name__, expected_unit)
+            return ret
+        return wrapper_validate
+    return validate_func
+
+# Validates the output quantities for vector. Output should be Vector that contains sympy.physics.units.Quantity as components.
+# Example:
+# @validate_vector_output(units.length**2)
+def validate_vector_output(expected_unit):
+    def validate_func(func):
+        @functools.wraps(func)
+        def wrapper_validate(*args, **kwargs):
+            ret = func(*args, **kwargs)
+            for idx, c in enumerate(ret.components):
+                assert_equivalent_dimension(c, "validate_output", f"return[{idx}]", func.__name__, expected_unit)
             return ret
         return wrapper_validate
     return validate_func
