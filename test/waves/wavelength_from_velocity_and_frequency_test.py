@@ -4,7 +4,7 @@ from pytest import approx, fixture, raises
 from symplyphysics import (
     units, convert_to, SI, errors
 )
-from symplyphysics.definitions import wavelength_is_velocity_by_frequency as wavelength_definition
+from symplyphysics.laws.waves import wavelength_from_velocity_and_frequency as wavelength_definition
 
 # Description.
 ## Speed of light in air is 299704 km/s. Refraction factor of air is 1.003. Frequency of radio Europa+ is 101.6 MHz. 
