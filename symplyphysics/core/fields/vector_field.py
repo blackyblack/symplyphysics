@@ -51,6 +51,7 @@ class VectorField:
         if len(self._components) <= index: return 0
         return self._components[index]
 
+    # Useful for adding higher than 3 dimension field components
     def set_component(self, index: int, value: Any):
         if len(self._components) <= index:
             self._components.extend([0] * (index + 1 - len(self._components)))

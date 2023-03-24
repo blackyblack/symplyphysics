@@ -81,11 +81,20 @@ def field_rebase(field_: ScalarField, coordinate_system: CoordinateSystem=None) 
     if coordinate_system is None or field_.coordinate_system is None:
         field_function = 0 if len(field_.components) == 0 else field_.components[0]
         return ScalarField(field_function, coordinate_system)
+    if coordinate_system.coord_system is None or field_.coordinate_system.coord_system is None:
+        field_function = 0 if len(field_.components) == 0 else field_.components[0]
+        return ScalarField(field_function, coordinate_system)
+    return _extended_express(field_, coordinate_system)
 
-    # Similar to VectorField field_rebase
+def _extended_express(field_: ScalarField, system_to: CoordinateSystem=None):
     field_space_sympy = field_.apply_to_basis()
-    #TODO: does not work for non-cartesian coordinates.
-    #TODO: how does scalar field transformation to cylindrical coordinates should look like?
-    #TODO: maybe convert field_space_sympy to vector and rebase it? But field_space_sympy is scalar, not a vector.
-    transformed_field_space = express(field_space_sympy, coordinate_system.coord_system, variables=True)
-    return field_from_sympy_vector(transformed_field_space, coordinate_system)
+    if field_.coordinate_system.coord_system_type != system_to.coord_system_type:
+        # This is a reverse transformation, if compared with Vector._extended_express()
+        new_scalars = list(system_to.transformation_to_system(field_.coordinate_system.coord_system_type))
+        for i, scalar in enumerate(field_.coordinate_system.coord_system.base_scalars()):
+            field_space_sympy = field_space_sympy.subs(scalar, new_scalars[i])
+        field_ = field_from_sympy_vector(field_space_sympy, system_to)
+    # We do not want to maintain own field transformation functions, so
+    # we convert our field to SymPy format, transform it and convert back to ScalarField.
+    transformed_vector_sympy = express(field_space_sympy, system_to.coord_system, None, variables=True)
+    return field_from_sympy_vector(transformed_vector_sympy, system_to)

@@ -1,8 +1,8 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from sympy import cos, pi, sin, symbols
+from sympy import atan, cos, pi, sin, sqrt, symbols, simplify
 from sympy.vector import CoordSys3D, express
-from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
+from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_transform
 from test.test_decorators import unsupported_usage
 from symplyphysics.core.fields.field_point import FieldPoint
 from symplyphysics.core.fields.scalar_field import ScalarField, field_from_sympy_vector, field_rebase, sympy_expression_to_field_function
@@ -203,7 +203,6 @@ def test_uncallable_field_apply(test_args):
     trajectory_value = result_field.apply(trajectory)
     assert trajectory_value == 1
 
-# ScalarField does not process different coordinate systems.
 # ScalarField is not rebased automatically and should be rebased to the same coordinate
 # system as in trajectory with 'field_rebase'.
 def test_different_coord_systems_field_apply(test_args):
@@ -335,4 +334,22 @@ def test_no_target_coord_system_field_rebase(test_args):
     point_value = field_rebased.apply(point)
     assert point_value == 3
 
-#TODO: test for field_rebase to/from non-cartesian coordinates
+# Test non-cartesian coordinate systems
+
+def test_cylindrical_field_create(test_args):
+    field = ScalarField(lambda p: p.x + p.y, test_args.C)
+    point = [1, 2]
+    point_value = field.apply(point)
+    assert point_value == 3
+
+    B = coordinates_transform(test_args.C, CoordinateSystem.System.CYLINDRICAL)
+    field_rebased = field_rebase(field, B)
+    assert field_rebased.coordinate_system == B
+
+    # point should have r = sqrt(5) in polar coordinates
+    # theta angle is atan(2/1)
+    point_polar = [sqrt(5), atan(2)]
+    point_polar_value = field_rebased.apply(point_polar)
+    assert simplify(point_polar_value) == 3
+
+#TODO: use coordinates_rotate instead of orient_new_axis
