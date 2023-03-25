@@ -4,9 +4,8 @@ from pytest import approx, fixture
 from math import pi
 from sympy import sin, cos, sqrt
 from symplyphysics import (
-    units, convert_to, SI, expr_to_quantity, VectorField
+    units, convert_to, SI, expr_to_quantity, VectorField, CoordinateSystem
 )
-from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
 from symplyphysics.definitions import circulation_is_integral_along_curve as circulation_def
 
 @fixture

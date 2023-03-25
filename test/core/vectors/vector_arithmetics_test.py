@@ -1,7 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from sympy import atan, cos, pi, sin, sqrt
-from sympy.vector import  CoordSys3D
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
 from symplyphysics.core.vectors.vector_arithmetics import add_vectors, dot_vectors, equal_vectors, scale_vector
 from symplyphysics.core.vectors.vectors import Vector

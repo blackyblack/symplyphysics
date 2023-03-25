@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy import atan, cos, pi, sin, sqrt, symbols, simplify
 from sympy.vector import CoordSys3D, express
-from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_transform
+from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_rotate, coordinates_transform
 from test.test_decorators import unsupported_usage
 from symplyphysics.core.fields.field_point import FieldPoint
 from symplyphysics.core.fields.scalar_field import ScalarField, field_from_sympy_vector, field_rebase, sympy_expression_to_field_function
@@ -142,9 +142,8 @@ def test_rotate_coordinates_vector_to_field_conversion(test_args):
     field_point = FieldPoint(1, 2, 3)
     assert field(field_point) == 3
     theta = symbols("theta")
-    B_inner = test_args.C.coord_system.orient_new_axis('B', theta, test_args.C.coord_system.k)
-    B = CoordinateSystem(test_args.C.coord_system_type, B_inner)
-    transformed_vector = express(sympy_vector_field, B_inner, variables=True)
+    B = coordinates_rotate(test_args.C, theta, test_args.C.coord_system.k)
+    transformed_vector = express(sympy_vector_field, B.coord_system, variables=True)
     result_transformed_field = field_from_sympy_vector(transformed_vector, B)
     assert transformed_vector == B.coord_system.x * sin(theta) + B.coord_system.x * cos(theta) - B.coord_system.y * sin(theta) + B.coord_system.y * cos(theta)
     assert result_transformed_field(field_point) == sin(theta) + cos(theta) - 2 * sin(theta) + 2 * cos(theta)
@@ -155,9 +154,8 @@ def test_rotate_coordinates_vector_to_field_conversion(test_args):
 # not transformed, we have same base scalars as before.
 def test_rotate_coordinates_without_variables_vector_to_field_conversion(test_args):
     theta = symbols("theta")
-    B_inner = test_args.C.coord_system.orient_new_axis('B', theta, test_args.C.coord_system.k)
-    B = CoordinateSystem(test_args.C.coord_system_type, B_inner)
-    transformed_field = express(test_args.C.coord_system.x + test_args.C.coord_system.y, B_inner)
+    B = coordinates_rotate(test_args.C, theta, test_args.C.coord_system.k)
+    transformed_field = express(test_args.C.coord_system.x + test_args.C.coord_system.y, B.coord_system)
     field = field_from_sympy_vector(transformed_field, B)
     field_point = FieldPoint(1, 2, 3)
     assert field(field_point) == test_args.C.coord_system.x + test_args.C.coord_system.y
@@ -225,10 +223,10 @@ def test_invariant_transformed_trajectory_field_apply(test_args):
     assert trajectory_value == test_args.C.coord_system.x**2 + 2 * (test_args.C.coord_system.y + 5)**2
     assert trajectory_value.subs({test_args.C.coord_system.x: point[0], test_args.C.coord_system.y: point[1]}) == 99
 
-    B_inner = test_args.C.coord_system.orient_new_axis('B', pi/4, test_args.C.coord_system.k)
+    B = coordinates_rotate(test_args.C, pi/4, test_args.C.coord_system.k)
     transformed_trajectory = [
-        express(trajectory[0], B_inner, variables=True),
-        express(trajectory[1], B_inner, variables=True)]
+        express(trajectory[0], B.coord_system, variables=True),
+        express(trajectory[1], B.coord_system, variables=True)]
     transformed_trajectory_value = field.apply(transformed_trajectory)
 
     p1 = test_args.C.coord_system.origin.locate_new('p1', point[0] * test_args.C.coord_system.i + point[1] * test_args.C.coord_system.j)
@@ -236,10 +234,10 @@ def test_invariant_transformed_trajectory_field_apply(test_args):
     assert p1_coordinates[0] == point[0]
     assert p1_coordinates[1] == point[1]
 
-    p1_coordinates_in_b = p1.express_coordinates(B_inner)
+    p1_coordinates_in_b = p1.express_coordinates(B.coord_system)
     assert p1_coordinates_in_b[0] != point[0]
 
-    assert transformed_trajectory_value.subs({B_inner.x: p1_coordinates_in_b[0], B_inner.y: p1_coordinates_in_b[1]}) == 99
+    assert transformed_trajectory_value.subs({B.coord_system.x: p1_coordinates_in_b[0], B.coord_system.y: p1_coordinates_in_b[1]}) == 99
 
 # Test field.apply_to_basis()
 
@@ -289,9 +287,8 @@ def test_invariant_field_rebase_and_apply(test_args):
     point_value = field.apply(point)
     assert point_value == 9
 
-    B_inner = test_args.C.coord_system.orient_new_axis('B', pi/4, test_args.C.coord_system.k)
-    B = CoordinateSystem(test_args.C.coord_system_type, B_inner)
-    p1_coordinates_in_b = p1.express_coordinates(B_inner)
+    B = coordinates_rotate(test_args.C, pi/4, test_args.C.coord_system.k)
+    p1_coordinates_in_b = p1.express_coordinates(B.coord_system)
     assert p1_coordinates_in_b[0] != point[0]
 
     transformed_point = [ p1_coordinates_in_b[0], p1_coordinates_in_b[1] ]
@@ -351,5 +348,3 @@ def test_cylindrical_field_create(test_args):
     point_polar = [sqrt(5), atan(2)]
     point_polar_value = field_rebased.apply(point_polar)
     assert simplify(point_polar_value) == 3
-
-#TODO: use coordinates_rotate instead of orient_new_axis

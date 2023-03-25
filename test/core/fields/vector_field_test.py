@@ -1,10 +1,10 @@
 from collections import namedtuple
 from typing import Any, List
 from pytest import fixture, raises
-from sympy import cos, pi, sin, sqrt, symbols
+from sympy import atan, cos, pi, sin, sqrt, symbols, simplify
 from sympy.vector import express, Vector as SympyVector
-from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
-from symplyphysics.core.vectors.vectors import Vector
+from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_rotate, coordinates_transform
+from symplyphysics.core.vectors.vectors import Vector, vector_rebase
 from test.test_decorators import unsupported_usage
 from symplyphysics.core.fields.field_point import FieldPoint
 from symplyphysics.core.fields.vector_field import VectorField, field_from_sympy_vector, field_from_vector, field_rebase, sympy_vector_from_field
@@ -190,9 +190,8 @@ def test_rotate_coordinates_vector_to_field_conversion(test_args):
     field_point = FieldPoint(1, 2, 3)
     _assert_point(field, field_point, [1, 2, 0])
     theta = symbols("theta")
-    B_inner = test_args.C.coord_system.orient_new_axis('B', theta, test_args.C.coord_system.k)
-    B = CoordinateSystem(test_args.C.coord_system_type, B_inner)
-    transformed_vector = express(sympy_vector_field, B_inner, variables=True)
+    B = coordinates_rotate(test_args.C, theta, test_args.C.coord_system.k)
+    transformed_vector = express(sympy_vector_field, B.coord_system, variables=True)
     result_transformed_field = field_from_sympy_vector(transformed_vector, B)
     _assert_point(result_transformed_field, field_point,
         [(sin(theta) + 2 * cos(theta)) * sin(theta) + (cos(theta) - 2 * sin(theta)) * cos(theta),
@@ -205,9 +204,8 @@ def test_rotate_coordinates_vector_to_field_conversion(test_args):
 # not transformed, we get multiple coordinate systems, which is unsupported by sympy_vector_to_field
 def test_rotate_coordinates_without_variables_vector_to_field_conversion(test_args):
     theta = symbols("theta")
-    B_inner = test_args.C.coord_system.orient_new_axis('B', theta, test_args.C.coord_system.k)
-    B = CoordinateSystem(test_args.C.coord_system_type, B_inner)
-    transformed_field = express(test_args.C.coord_system.x * test_args.C.coord_system.i + test_args.C.coord_system.y * test_args.C.coord_system.j, B_inner)
+    B = coordinates_rotate(test_args.C, theta, test_args.C.coord_system.k)
+    transformed_field = express(test_args.C.coord_system.x * test_args.C.coord_system.i + test_args.C.coord_system.y * test_args.C.coord_system.j, B.coord_system)
     with raises(TypeError):
         field_from_sympy_vector(transformed_field, B)
 
@@ -336,9 +334,8 @@ def test_invariant_field_rebase_and_apply(test_args):
     point_vector = field.apply(point)
     assert point_vector.components == [9]
 
-    B_inner = test_args.C.coord_system.orient_new_axis('B', pi/4, test_args.C.coord_system.k)
-    p1_coordinates_in_b = p1.express_coordinates(B_inner)
-    B = CoordinateSystem(test_args.C.coord_system_type, B_inner)
+    B = coordinates_rotate(test_args.C, pi/4, test_args.C.coord_system.k)
+    p1_coordinates_in_b = p1.express_coordinates(B.coord_system)
     assert p1_coordinates_in_b[0] != point[0]
 
     transformed_point = [ p1_coordinates_in_b[0], p1_coordinates_in_b[1] ]
@@ -384,5 +381,25 @@ def test_no_target_coord_system_field_rebase(test_args):
     transformed_point_vector = field_rebased.apply(point)
     assert transformed_point_vector.components == [3]
 
-#TODO: Test non-cartesian coordinate systems
-#TODO: use coordinates_rotate instead of orient_new_axis
+# Test non-cartesian coordinate systems
+
+def test_cylindrical_field_create(test_args):
+    field = VectorField(lambda p: p.x, lambda p: p.y, 0, test_args.C)
+    point = [1, 2]
+    point_vector = field.apply(point)
+    assert point_vector.components == [1, 2]
+
+    B = coordinates_transform(test_args.C, CoordinateSystem.System.CYLINDRICAL)
+    field_rebased = field_rebase(field, B)
+    assert field_rebased.coordinate_system == B
+
+    # point should have r = sqrt(5) in polar coordinates
+    # theta angle is atan(2/1)
+    point_polar = [sqrt(5), atan(2)]
+    point_polar_vector = field_rebased.apply(point_polar)
+    assert point_polar_vector.components == [sqrt(5), atan(2), 0]
+
+    # now rebase polar vector back to cartesian coordinates and confirm
+    # it is the same as original vector
+    vector_rebased = vector_rebase(point_polar_vector, test_args.C)
+    assert vector_rebased.components == [1, 2, 0]

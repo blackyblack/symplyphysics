@@ -1,10 +1,10 @@
 from typing import Any, List
-from sympy.vector import Vector as SympyVector
+from sympy.vector import Vector as SympyVector, express
 
-from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
+from ..coordinate_systems.coordinate_systems import CoordinateSystem
 from .field_point import FieldPoint
 from .scalar_field import sympy_expression_to_field_function
-from ..vectors.vectors import Vector, vector_from_sympy_vector, sympy_vector_from_vector, vector_rebase
+from ..vectors.vectors import Vector, vector_from_sympy_vector, sympy_vector_from_vector
 
 
 # Contains mappings of point to vectors in components[], eg [P(FieldPoint), Q(FieldPoint)].
@@ -86,11 +86,22 @@ def field_rebase(field_: VectorField, coordinate_system: CoordinateSystem=None) 
     # Simply set new coordinate system if field cannot be rebased
     if coordinate_system is None or field_.coordinate_system is None:
         return field_from_vector(Vector(field_.components, coordinate_system))
-    # Transform field to vector and use vector_rebase to rebase field. Transform
-    # back to field after rebasing.
-    field_space = field_.apply_to_basis()
-    transformed_field_space = vector_rebase(field_space, coordinate_system)
-    return field_from_vector(transformed_field_space)
+    # Simply set new coordinate system if field cannot be rebased
+    if coordinate_system.coord_system is None or field_.coordinate_system.coord_system is None:
+        return field_from_vector(Vector(field_.components, coordinate_system))
+    return _extended_express(field_, coordinate_system)
+
+def _extended_express(field_: VectorField, system_to: CoordinateSystem=None):
+    field_space_sympy = sympy_vector_from_vector(field_.apply_to_basis())
+    if field_.coordinate_system.coord_system_type != system_to.coord_system_type:
+        # This is ScalarField._extended_express() but without transformation_to_system()
+        new_scalars = list(system_to.coord_system.base_scalars())
+        for i, scalar in enumerate(field_.coordinate_system.coord_system.base_scalars()):
+            field_space_sympy = field_space_sympy.subs(scalar, new_scalars[i])
+    # We do not want to maintain own field transformation functions, so
+    # we convert our field to SymPy format, transform it and convert back to VectorField.
+    transformed_vector_sympy = express(field_space_sympy, system_to.coord_system, None, variables=True)
+    return field_from_sympy_vector(transformed_vector_sympy, system_to)
 
 # Helpers to support SymPy field manipulations, eg Curl
 

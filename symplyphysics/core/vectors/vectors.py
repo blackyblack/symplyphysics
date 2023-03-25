@@ -3,7 +3,7 @@ from sympy import Expr
 from sympy.vector import Vector as SympyVector, express
 from sympy.vector.operators import _get_coord_systems
 
-from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
+from ..coordinate_systems.coordinate_systems import CoordinateSystem
 
 
 # Contains list of SymPy expressions or any numbers as components.

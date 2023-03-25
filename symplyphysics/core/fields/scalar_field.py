@@ -2,7 +2,7 @@ from typing import Any, List
 from sympy import Expr
 from sympy.vector import express
 
-from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
+from ..coordinate_systems.coordinate_systems import CoordinateSystem
 from .field_point import FieldPoint
 
 
@@ -93,7 +93,6 @@ def _extended_express(field_: ScalarField, system_to: CoordinateSystem=None):
         new_scalars = list(system_to.transformation_to_system(field_.coordinate_system.coord_system_type))
         for i, scalar in enumerate(field_.coordinate_system.coord_system.base_scalars()):
             field_space_sympy = field_space_sympy.subs(scalar, new_scalars[i])
-        field_ = field_from_sympy_vector(field_space_sympy, system_to)
     # We do not want to maintain own field transformation functions, so
     # we convert our field to SymPy format, transform it and convert back to ScalarField.
     transformed_vector_sympy = express(field_space_sympy, system_to.coord_system, None, variables=True)

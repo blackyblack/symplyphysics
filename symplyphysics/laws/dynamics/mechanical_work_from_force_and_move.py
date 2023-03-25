@@ -1,12 +1,10 @@
 from symplyphysics import (
     symbols, Eq, pretty, solve, Quantity, units,
-    validate_input, validate_output, expr_to_quantity
+    validate_input, validate_output, expr_to_quantity,
+    CoordinateSystem, coordinates_transform, Vector, vector_rebase, sympy_vector_from_vector
 )
 from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
 from sympy.vector import Dot
-
-from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_transform
-from symplyphysics.core.vectors.vectors import Vector, vector_rebase, sympy_vector_from_vector
 
 # Description
 ## Work is measured result of force applied. Mechanical work is the only reason for the object energy to be changed.

@@ -1,6 +1,6 @@
 from sympy import Expr
 
-from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
+from ..coordinate_systems.coordinate_systems import CoordinateSystem
 from .vectors import Vector
 from ..expr_comparisons import expr_equals
 
