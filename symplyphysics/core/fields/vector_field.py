@@ -92,7 +92,7 @@ def field_rebase(field_: VectorField, coordinate_system: CoordinateSystem=None) 
     return _extended_express(field_, coordinate_system)
 
 def _extended_express(field_: VectorField, system_to: CoordinateSystem=None):
-    field_space_sympy = sympy_vector_from_vector(field_.apply_to_basis())
+    field_space_sympy = sympy_vector_from_field(field_)
     if field_.coordinate_system.coord_system_type != system_to.coord_system_type:
         # This is ScalarField._extended_express() but without transformation_to_system()
         new_scalars = list(system_to.coord_system.base_scalars())

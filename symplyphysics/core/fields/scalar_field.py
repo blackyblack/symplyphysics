@@ -70,10 +70,6 @@ class ScalarField:
     def apply_to_basis(self) -> Any:
         return self.apply(self.basis)
 
-# Constructs new ScalarField from SymPy expression using 'sympy_expression_to_field_function'.
-def field_from_sympy_vector(sympy_vector_, coordinate_system: CoordinateSystem=None):
-    return ScalarField(sympy_expression_to_field_function(sympy_vector_, coordinate_system), coordinate_system)
-
 # Convert field coordinate system to new basis and construct new field.
 # Scalar field invariant (coordinate system independence) should hold.
 def field_rebase(field_: ScalarField, coordinate_system: CoordinateSystem=None) -> ScalarField:
@@ -97,3 +93,11 @@ def _extended_express(field_: ScalarField, system_to: CoordinateSystem=None):
     # we convert our field to SymPy format, transform it and convert back to ScalarField.
     transformed_vector_sympy = express(field_space_sympy, system_to.coord_system, None, variables=True)
     return field_from_sympy_vector(transformed_vector_sympy, system_to)
+
+# Helpers to support SymPy field manipulations
+
+# Constructs new ScalarField from SymPy expression using 'sympy_expression_to_field_function'.
+def field_from_sympy_vector(sympy_vector_, coordinate_system: CoordinateSystem=None):
+    return ScalarField(sympy_expression_to_field_function(sympy_vector_, coordinate_system), coordinate_system)
+
+# sympy_vector_from_field is identical to field.apply_to_basis()

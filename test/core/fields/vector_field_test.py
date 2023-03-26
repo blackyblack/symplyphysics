@@ -1,7 +1,7 @@
 from collections import namedtuple
 from typing import Any, List
 from pytest import fixture, raises
-from sympy import atan, cos, pi, sin, sqrt, symbols, simplify
+from sympy import atan, cos, pi, sin, sqrt, symbols
 from sympy.vector import express, Vector as SympyVector
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_rotate, coordinates_transform
 from symplyphysics.core.vectors.vectors import Vector, vector_rebase

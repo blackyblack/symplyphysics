@@ -4,7 +4,7 @@ from symplyphysics import (
     pi, sin, cos
 )
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
-from symplyphysics.core.vectors.vector_arithmetics import add_vectors, dot_vectors, equal_vectors, scale_vector
+from symplyphysics.core.vectors.vector_arithmetics import dot_vectors
 from symplyphysics.core.vectors.vectors import Vector
 from symplyphysics.definitions import velocity_is_movement_derivative as velocity_def
 from symplyphysics.definitions import angular_velocity_is_angle_derivative as angular_velocity_def
@@ -81,11 +81,13 @@ acceleration_vector = Vector([acceleration_horisontal, acceleration_vertical], c
 
 tangential_acceleration_magnitude = curve_radius * Derivative(alpha(time), (time, 2))
 radial_acceleration_magnitude = -curve_radius * Derivative(alpha(time), time)**2
-tangential_acceleration = scale_vector(tangential_acceleration_magnitude, tangential_unit_vector)
-radial_acceleration = scale_vector(radial_acceleration_magnitude, radial_unit_vector)
 
-sum_acceleration = add_vectors(tangential_acceleration, radial_acceleration)
-assert equal_vectors(acceleration_vector, sum_acceleration)
+## Use Dot product to find tangential and radial components of acceleration. Confirm they are
+## equal to expected value: tangential_acceleration_magnitude, radial_acceleration_magnitude
+tangential_acceleration_component = dot_vectors(acceleration_vector, tangential_unit_vector)
+radial_acceleration_component = dot_vectors(acceleration_vector, radial_unit_vector)
+assert expr_equals(tangential_acceleration_component, tangential_acceleration_magnitude)
+assert expr_equals(radial_acceleration_component, radial_acceleration_magnitude)
 
 ## Here we've proven that tangential_acceleration + radial_acceleration equals to acceleration_vector. It means, we've
 ## changed basis of acceleration_vector to tangential and radial vectors instead of cartesian coordinates.
