@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy import atan2, cos, pi, sin, sqrt
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_transform
-from symplyphysics.core.vectors.vector_arithmetics import add_cartesian_vectors, dot_vectors, equal_vectors, scale_vector, vector_magnitude
+from symplyphysics.core.vectors.vector_arithmetics import add_cartesian_vectors, cross_cartesian_vectors, dot_vectors, equal_vectors, scale_vector, vector_magnitude
 from symplyphysics.core.vectors.vectors import Vector, vector_rebase
 from test.test_decorators import unsupported_usage
 
@@ -324,3 +324,95 @@ def test_non_cartesian_magnitude_vectors():
     assert vector_magnitude(Vector([3, 0], C2)) == 3
     assert vector_magnitude(Vector([3, 0, 2], C2)) == 3
     assert vector_magnitude(Vector([3, pi/4, 2], C2)) == 3
+
+def test_basic_cross_product(test_args):
+    # Parallel vectors have zero cross product
+    assert cross_cartesian_vectors(Vector([1, 2]), Vector([1, 2])).components == [0, 0, 0]
+    assert cross_cartesian_vectors(Vector([1, 2]), Vector([2, 1])).components == [0, 0, -3]
+    assert cross_cartesian_vectors(Vector([1, 2 * 2]), Vector([1, 4])).components == [0, 0, 0]
+    assert cross_cartesian_vectors(Vector([1, 0]), Vector([1])).components == [0, 0, 0]
+    assert cross_cartesian_vectors(Vector([]), Vector([])).components == [0, 0, 0]
+    assert cross_cartesian_vectors(Vector([1, 2, 3]), Vector([3, 2, 1])).components == [-4, 8, -4]
+    assert cross_cartesian_vectors(
+        Vector([test_args.C.coord_system.x, 2]),
+        Vector([test_args.C.coord_system.x, 2])
+        ).components == [0, 0, 0]
+    assert cross_cartesian_vectors(
+        Vector([test_args.C.coord_system.x, 2]),
+        Vector([test_args.C.coord_system.y, 2])
+        ).components == [0, 0, 2 * test_args.C.coord_system.x - 2 * test_args.C.coord_system.y]
+    assert cross_cartesian_vectors(
+        Vector([test_args.C.coord_system.x - test_args.C.coord_system.x, 2]),
+        Vector([1, 2])
+        ).components == [0, 0, -2]
+    assert cross_cartesian_vectors(
+        Vector([1, 2], test_args.C),
+        Vector([1, 2], test_args.C)
+        ).components == [0, 0, 0]
+    # Verify that cross product vector is orthogonal to both input vectors
+    input_vector1 = Vector([1, 0])
+    input_vector2 = Vector([0, 1])
+    result_cross = cross_cartesian_vectors(input_vector1, input_vector2)
+    assert result_cross.components == [0, 0, 1]
+    assert dot_vectors(result_cross, input_vector1) == 0
+    assert dot_vectors(result_cross, input_vector2) == 0
+
+    # For orthogonal vectors cross product magnitude equals to input vector magnitudes multiplication
+    input_vector1 = Vector([2, 0])
+    input_vector2 = Vector([0, 3])
+    result_cross = cross_cartesian_vectors(input_vector1, input_vector2)
+    assert vector_magnitude(result_cross) == vector_magnitude(input_vector1) * vector_magnitude(input_vector2)
+
+    # For cross product magnitude equals to area of parallelogram spanned by input vectors
+    input_vector1 = Vector([2, 3, 4])
+    input_vector2 = Vector([3, 4, 5])
+    result_cross = cross_cartesian_vectors(input_vector1, input_vector2)
+    assert vector_magnitude(result_cross)**2 == vector_magnitude(input_vector1)**2 * vector_magnitude(input_vector2)**2 - dot_vectors(input_vector1, input_vector2)**2
+
+def test_invalid_cross_product(test_args):
+    with raises(TypeError):
+        cross_cartesian_vectors(
+            Vector([test_args.C.coord_system.x * test_args.C.coord_system.i, 2]),
+            Vector([2, test_args.C.coord_system.x * test_args.C.coord_system.i]))
+    with raises(TypeError):
+        cross_cartesian_vectors(
+            Vector([test_args.C.coord_system.x * test_args.C.coord_system.i, 2]),
+            Vector([2, test_args.C.coord_system.x * test_args.C.coord_system.j]))
+    C1 = CoordinateSystem()
+    with raises(TypeError):
+        cross_cartesian_vectors(Vector(["hello", 2]), Vector([2, 1]))
+    with raises(TypeError):
+        cross_cartesian_vectors(Vector([2, 2]), Vector(["hello", "world"]))
+    with raises(TypeError):
+        cross_cartesian_vectors(Vector([1, 2]), Vector([[1, 2], 1]))
+    with raises(AttributeError):
+        cross_cartesian_vectors(Vector([1, 2]), [1, 2])
+    with raises(TypeError):
+        cross_cartesian_vectors(Vector([1, 2], test_args.C), Vector([1, 2]))
+    with raises(TypeError):
+        cross_cartesian_vectors(Vector([1, 2], test_args.C), Vector([1, 2], C1))
+    with raises(TypeError):
+        cross_cartesian_vectors(Vector([1, 2]), Vector([1, 2], test_args.C))
+    with raises(ValueError):
+        cross_cartesian_vectors(Vector([1, 2, 3, 4], test_args.C), Vector([1, 2], test_args.C))
+
+    # non-cartesian addition is not supported
+    C2 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
+    with raises(ValueError):
+        cross_cartesian_vectors(Vector([1, 2], C2), Vector([1, 2], C2))
+    C3 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
+    with raises(ValueError):
+        cross_cartesian_vectors(Vector([1, 2], C3), Vector([1, 2], C3))
+
+def test_rebased_cross_product(test_args):
+    Cy = coordinates_transform(test_args.C, CoordinateSystem.System.CYLINDRICAL)
+    # First vector has r = 5 and theta = 0
+    vector1 = Vector([5, 0, 1], Cy)
+    # Second vector has r = 5 and theta = pi/2
+    vector2 = Vector([5, pi/2, 1], Cy)
+    # Their product should be a vector with r = sqrt(50), theta = -3 * pi/4, z = 25
+    vector1_cartesian = vector_rebase(vector1, test_args.C)
+    vector2_cartesian = vector_rebase(vector2, test_args.C)
+    vector_cartesian_cross = cross_cartesian_vectors(vector1_cartesian, vector2_cartesian)
+    vector_cross = vector_rebase(vector_cartesian_cross, Cy)
+    assert vector_cross.components == [sqrt(50), -3 * pi/4, 25]

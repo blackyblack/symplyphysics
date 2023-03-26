@@ -94,4 +94,31 @@ def dot_vectors(vector_left: Vector, vector_right: Vector) -> Expr:
 def vector_magnitude(vector_: Vector) -> Expr:
     return sqrt(dot_vectors(vector_, vector_))
 
-#TODO: add cross_product implementation
+#NOTE: vector multiplication of two non-cartesian vectors is not a trivial task. We suggest to convert them to cartesian
+#      vectors, multiply them and convert back.
+#NOTE: cross product with all 3 basic properties:
+#      - Cross product is bilinear function of input vectors;
+#      - Resulting vector is perpendicular to both input vectors;
+#      - Magnitude of resulting vector equals to the area of the parallelogram spanned by input vectors;
+#      is defined only in 3 and 7 dimensional Euclidean space.
+def cross_cartesian_vectors(vector_left: Vector, vector_right: Vector) -> Vector:
+    if vector_left.coordinate_system != vector_right.coordinate_system:
+        raise TypeError(f"Different coordinate systems in vectors: {str(vector_left.coordinate_system)} vs {str(vector_right.coordinate_system)}")
+    if vector_left.coordinate_system is not None and vector_left.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
+        coord_name_from = CoordinateSystem.system_to_transformation_name(vector_left.coordinate_system.coord_system_type)
+        raise ValueError(f"Cross product only supported for cartesian coordinates: got {coord_name_from}")
+    if vector_right.coordinate_system is not None and vector_right.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
+        coord_name_from = CoordinateSystem.system_to_transformation_name(vector_right.coordinate_system.coord_system_type)
+        raise ValueError(f"Cross product only supported for cartesian coordinates: got {coord_name_from}")
+    if len(vector_left.components) > 3:
+        raise ValueError(f"Cross product is only defined for 3 dimensions. Got: {len(vector_left.components)}")
+    if len(vector_right.components) > 3:
+        raise ValueError(f"Cross product is only defined for 3 dimensions. Got: {len(vector_right.components)}")
+    
+    left_components = vector_left.components
+    left_components.extend([0] * (3 - len(left_components)))
+    right_components = vector_right.components
+    right_components.extend([0] * (3 - len(right_components)))
+    ax, ay, az = left_components
+    bx, by, bz = right_components
+    return Vector([ay * bz - az * by, az * bx - ax * bz, ax * by - ay * bx], vector_left.coordinate_system)
