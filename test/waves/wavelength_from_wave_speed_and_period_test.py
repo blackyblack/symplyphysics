@@ -4,7 +4,7 @@ from pytest import approx, fixture, raises
 from symplyphysics import (
     units, convert_to, SI, errors
 )
-from symplyphysics.definitions import wavelength_is_gap_between_peaks as wavelength_definition
+from symplyphysics.laws.waves import wavelength_from_wave_speed_and_period as wavelength_law
 
 # Description.
 ## Speed of light in air is 299910 km/s. Frequency of radio Europa+ is 101.6 MHz and therefore has oscillation period of 9,84252e-9 seconds. 
@@ -24,9 +24,9 @@ def test_args():
     return Args(v1=v1, period1=period1)
 
 def test_basic_wavelength(test_args):
-    result = wavelength_definition.calculate_wavelength(test_args.v1, test_args.period1)
+    result = wavelength_law.calculate_wavelength(test_args.v1, test_args.period1)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
-    result_wavelength = convert_to(result, wavelength_definition.definition_dimension_SI).subs({units.meter: 1}).evalf(6)    
+    result_wavelength = convert_to(result, wavelength_law.definition_dimension_SI).subs({units.meter: 1}).evalf(6)    
     assert result_wavelength == approx(2.95, 0.001)
 
 def test_bad_velocity(test_args):
@@ -34,10 +34,10 @@ def test_bad_velocity(test_args):
     SI.set_quantity_dimension(vb, units.length)
     SI.set_quantity_scale_factor(vb, 1 * units.meter)
     with raises(errors.UnitsError):
-        wavelength_definition.calculate_wavelength(vb, test_args.period1)
+        wavelength_law.calculate_wavelength(vb, test_args.period1)
 
     with raises(TypeError):
-        wavelength_definition.calculate_wavelength(100, test_args.period1)
+        wavelength_law.calculate_wavelength(100, test_args.period1)
 
 def test_bad_period(test_args):
     pb = units.Quantity('pb')
@@ -45,7 +45,7 @@ def test_bad_period(test_args):
     SI.set_quantity_scale_factor(pb, 1 * units.meter)
 
     with raises(errors.UnitsError):
-        wavelength_definition.calculate_wavelength(test_args.v1, pb)
+        wavelength_law.calculate_wavelength(test_args.v1, pb)
 
     with raises(TypeError):
-        wavelength_definition.calculate_wavelength(test_args.v1, 100)
+        wavelength_law.calculate_wavelength(test_args.v1, 100)

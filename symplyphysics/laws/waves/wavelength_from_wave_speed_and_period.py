@@ -11,6 +11,8 @@ from symplyphysics import (
 ## v is wave spreading velocity (phase speed),
 ## T is oscillation period.
 
+#TODO derive this from velocity and period definitions
+
 wavelength = symbols('wavelength')
 spreading_velocity, oscillation_period = symbols('spreading_velocity oscillation_period')
 
