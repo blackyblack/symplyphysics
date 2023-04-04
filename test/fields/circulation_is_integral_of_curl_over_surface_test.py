@@ -4,14 +4,13 @@ from pytest import approx, fixture
 from sympy import Expr, sin, cos, sqrt, pi
 from symplyphysics import (
     units, SI, expr_to_quantity, convert_to,
-    CoordSys3D, VectorZero, FieldPoint, VectorField
+    VectorZero, FieldPoint, VectorField, CoordinateSystem, sympy_vector_from_vector
 )
-from symplyphysics.core.vectors.vectors import sympy_vector_from_vector
 from symplyphysics.laws.fields import circulation_is_integral_of_curl_over_surface as circulation_def
 
 @fixture
 def test_args():
-    C = CoordSys3D('C')
+    C = CoordinateSystem()
     force_unit = units.Quantity('force_unit')
     SI.set_quantity_dimension(force_unit, units.force)
     SI.set_quantity_scale_factor(force_unit, 1 * units.newton)

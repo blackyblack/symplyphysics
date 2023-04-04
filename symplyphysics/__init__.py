@@ -13,7 +13,8 @@ from .core.probability import Probability
 from .core.filters import filter_zeroes, filter_map_zeroes, filter_negative, filter_map_negative
 from .core.fields.field_point import FieldPoint
 from .core.fields.vector_field import VectorField
-from .core.vectors.vectors import vector_from_sympy_vector, sympy_vector_from_vector
+from .core.vectors.vectors import Vector, vector_rebase, vector_from_sympy_vector, sympy_vector_from_vector
+from .core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_transform
 
 __all__ = [
     'validate_input',

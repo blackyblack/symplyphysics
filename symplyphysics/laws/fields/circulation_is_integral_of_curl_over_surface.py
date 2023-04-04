@@ -60,10 +60,10 @@ def calculate_circulation(
 
     field_space = sympy_vector_from_field(field_)
     field_rotor_sympy = field_rotor_definition.rhs.subs(field, field_space).doit()
-    field_rotor_applied = field_from_sympy_vector(field_rotor_sympy)
+    field_rotor_applied = field_from_sympy_vector(field_rotor_sympy, field_.coordinate_system)
     field_applied = field_rotor_applied.apply(surface_)
     field_as_vector = sympy_vector_from_vector(field_applied)
-    surface_sympy_vector = sympy_vector_from_vector(Vector(surface_, field_.coord_system))
+    surface_sympy_vector = sympy_vector_from_vector(Vector(surface_, field_.coordinate_system))
     surface_element_x = surface_element_by_parameter1_definition.rhs.subs(surface, surface_sympy_vector).doit()
     surface_element_y = surface_element_by_parameter2_definition.rhs.subs(surface, surface_sympy_vector).doit()
     surface_element_result = surface_element_definition.rhs.subs({surface_element_by_parameter1: surface_element_x, surface_element_by_parameter2: surface_element_y}).doit()

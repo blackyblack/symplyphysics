@@ -4,13 +4,14 @@ from sympy.vector import CoordSys3D
 from symplyphysics import (
     units, convert_to, SI, errors
 )
+from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
 from symplyphysics.core.vectors.vectors import Vector
 from symplyphysics.laws.dynamics import spring_reaction_from_deformation as spring_law
 
 
 @fixture
 def test_args():
-    C = CoordSys3D("C")
+    C = CoordinateSystem()
     k = units.Quantity('k')
     SI.set_quantity_dimension(k, units.force / units.length)
     SI.set_quantity_scale_factor(k, 0.1 * units.newton / units.meter)
@@ -41,9 +42,9 @@ def test_bad_elastic_coefficient(test_args):
     SI.set_quantity_scale_factor(eb, 1 * units.meter)
 
     with raises(errors.UnitsError):
-        result = spring_law.calculate_force(eb, test_args.df)
+        spring_law.calculate_force(eb, test_args.df)
 
     with raises(TypeError):
-        result = spring_law.calculate_force(100, test_args.df)
+        spring_law.calculate_force(100, test_args.df)
 
 
