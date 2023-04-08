@@ -45,7 +45,6 @@ def print():
 # field_ should be VectorField
 # trajectory_ should be array with projections to coordinates, eg [3 * cos(parameter), 3 * sin(parameter)]
 def calculate_circulation(
-    coord_system_: CoordSys3D,
     field_: VectorField,
     trajectory_: List,
     parameter_from_,
@@ -53,7 +52,7 @@ def calculate_circulation(
 
     field_app = field_.apply(trajectory_)
     field_as_vector = sympy_vector_from_vector(field_app)
-    trajectory_as_vector = sympy_vector_from_vector(Vector(trajectory_, coord_system_))
+    trajectory_as_vector = sympy_vector_from_vector(Vector(trajectory_, field_.coordinate_system))
     trajectory_element_result = trajectory_element_definition.rhs.subs(trajectory, trajectory_as_vector).doit()
     result_expr = definition.rhs.subs({field: field_as_vector, trajectory_element: trajectory_element_result, parameter_from: parameter_from_, parameter_to: parameter_to_}).doit()
     # some expressions are invalid without simplifying them first

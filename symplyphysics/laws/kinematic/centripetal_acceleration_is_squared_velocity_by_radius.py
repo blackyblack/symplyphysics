@@ -3,7 +3,8 @@ from symplyphysics import (
     validate_input, validate_output, expr_to_quantity, Function, Derivative,
     pi, sin, cos
 )
-from symplyphysics.core.vectors.vector_arithmetics import add_vectors, dot_vectors, equal_vectors, scale_vector
+from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
+from symplyphysics.core.vectors.vector_arithmetics import dot_vectors
 from symplyphysics.core.vectors.vectors import Vector
 from symplyphysics.definitions import velocity_is_movement_derivative as velocity_def
 from symplyphysics.definitions import angular_velocity_is_angle_derivative as angular_velocity_def
@@ -43,6 +44,7 @@ law = Eq(centripetal_acceleration, linear_velocity**2 / curve_radius)
 
 time = symbols("time")
 alpha = symbols("alpha", cls = Function, positive=True)
+cartesian_coordinates = CoordinateSystem()
 
 curve_radius_horisontal = projector.law.rhs.subs({projector.vector_length: curve_radius, projector.vector_angle: alpha(time)})
 curve_radius_vertical = projector.law.rhs.subs({projector.vector_length: curve_radius, projector.vector_angle: pi/2 - alpha(time)})
@@ -52,13 +54,13 @@ curve_radius_vertical = projector.law.rhs.subs({projector.vector_length: curve_r
 #NOTE: replace 'moving_time' first as Derivative can have difficulties when processing both substitutions at once
 velocity_horisontal = velocity_def.definition.rhs.subs(velocity_def.moving_time, time).subs(velocity_def.movement_function(time), curve_radius_horisontal).doit()
 velocity_vertical = velocity_def.definition.rhs.subs(velocity_def.moving_time, time).subs(velocity_def.movement_function(time), curve_radius_vertical).doit()
-velocity_vector = Vector([velocity_horisontal, velocity_vertical])
+velocity_vector = Vector([velocity_horisontal, velocity_vertical], cartesian_coordinates)
 
 ## These unit vectors should not necessary be derived. We can choose them at will and prove that
 ## they are orthogonal to each other and radial_unit_vector is orthogonal to 'velocity_vector'.
 ## One can also show that 'tangential_unit_vector' is 'radial_unit_vector' derivative.
-radial_unit_vector = Vector([cos(alpha(time)), sin(alpha(time))])
-tangential_unit_vector = Vector([-sin(alpha(time)), cos(alpha(time))])
+radial_unit_vector = Vector([cos(alpha(time)), sin(alpha(time))], cartesian_coordinates)
+tangential_unit_vector = Vector([-sin(alpha(time)), cos(alpha(time))], cartesian_coordinates)
 
 ## This is Dot product of radial vector and velocity vector. Radial vector is orthogonal to velocity hence vector
 ## multiplication result should be zero.
@@ -71,17 +73,19 @@ acceleration_horisontal = acceleration_def.definition.rhs.subs(acceleration_def.
 acceleration_horisontal = acceleration_horisontal.subs(acceleration_def.velocity_function(time), velocity_horisontal).doit()
 acceleration_vertical = acceleration_def.definition.rhs.subs(acceleration_def.time, time)
 acceleration_vertical = acceleration_vertical.subs(acceleration_def.velocity_function(time), velocity_vertical).doit()
-acceleration_vector = Vector([acceleration_horisontal, acceleration_vertical])
+acceleration_vector = Vector([acceleration_horisontal, acceleration_vertical], cartesian_coordinates)
 
 ## Prove that 'acceleration_vector' has tangential and radial parts.
 
 tangential_acceleration_magnitude = curve_radius * Derivative(alpha(time), (time, 2))
 radial_acceleration_magnitude = -curve_radius * Derivative(alpha(time), time)**2
-tangential_acceleration = scale_vector(tangential_acceleration_magnitude, tangential_unit_vector)
-radial_acceleration = scale_vector(radial_acceleration_magnitude, radial_unit_vector)
 
-sum_acceleration = add_vectors(tangential_acceleration, radial_acceleration)
-assert equal_vectors(acceleration_vector, sum_acceleration)
+## Use Dot product to find tangential and radial components of acceleration. Confirm they are
+## equal to expected value: tangential_acceleration_magnitude, radial_acceleration_magnitude
+tangential_acceleration_component = dot_vectors(acceleration_vector, tangential_unit_vector)
+radial_acceleration_component = dot_vectors(acceleration_vector, radial_unit_vector)
+assert expr_equals(tangential_acceleration_component, tangential_acceleration_magnitude)
+assert expr_equals(radial_acceleration_component, radial_acceleration_magnitude)
 
 ## Here we've proven that tangential_acceleration + radial_acceleration equals to acceleration_vector. It means, we've
 ## changed basis of acceleration_vector to tangential and radial vectors instead of cartesian coordinates.

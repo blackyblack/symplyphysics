@@ -9,8 +9,9 @@ from sympy.core.mul import Mul
 from sympy.core.power import Pow
 from sympy.physics.units.dimensions import Dimension
 from sympy.vector import VectorAdd
-from ..core.symbols.symbols import Symbol
+from ..core.coordinate_systems.coordinate_systems import CoordinateSystem
 from ..core.vectors.vectors import Vector, vector_from_sympy_vector
+from ..core.symbols.symbols import Symbol
 
 def expr_to_quantity(expr: Expr, quantity_name: str=None, randomize: bool=True) -> Quantity:
     quantity_scale = collect_factor_and_dimension(expr)
@@ -27,18 +28,18 @@ def expr_to_quantity(expr: Expr, quantity_name: str=None, randomize: bool=True) 
     dimsys_SI.set_quantity_scale_factor(result, quantity_scale[0])
     return result
 
-def expr_to_vector_of_quantities(expr: Expr, quantity_name: str=None) -> Vector:    
+def expr_to_vector_of_quantities(expr: Expr, quantity_name: str=None, coordinate_system: CoordinateSystem=None) -> Vector:    
     if isinstance(expr, Mul):
         expr = expr.expand()
     if isinstance(expr, Add):
         expr = VectorAdd(expr)
-    vector = vector_from_sympy_vector(expr)
+    vector = vector_from_sympy_vector(expr, coordinate_system)
     components = []
     name = Symbol.random_name("Q", 8) if quantity_name is None else quantity_name
     for idx, c in enumerate(vector.components):
         d = expr_to_quantity(c, f"{name}[{idx + 1}]", False)
         components.append(d)
-    return Vector(components, vector.coord_system)
+    return Vector(components, coordinate_system)
 
 # HACK: copy of SI._collect_factor_and_dimension with fixed exp() dimension evaluation
 def collect_factor_and_dimension(expr):

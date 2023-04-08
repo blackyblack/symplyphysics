@@ -29,5 +29,5 @@ def calculate_force(coefficient_: Quantity, deformation_: Vector) -> Vector:
     result_force_expr = solve(law, response_force, dict=True)[0][response_force]
     sympy_vector_deformation = sympy_vector_from_vector(deformation_)
     result_expr = result_force_expr.subs({elastic_coefficient: coefficient_, deformation: sympy_vector_deformation})
-    return expr_to_vector_of_quantities(result_expr, "result_force")
+    return expr_to_vector_of_quantities(result_expr, "result_force", deformation_.coordinate_system)
     
