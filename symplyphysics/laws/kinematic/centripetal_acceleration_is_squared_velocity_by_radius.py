@@ -67,12 +67,10 @@ assert expr_equals(dot_vectors(radial_unit_vector, velocity_vector), 0)
 assert expr_equals(dot_vectors(tangential_unit_vector, radial_unit_vector), 0)
 
 ## Use acceleration definition to calculate 'acceleration_vector'
-acceleration_horisontal = acceleration_def.definition.rhs.subs({
-    acceleration_def.velocity_function(acceleration_def.time): velocity_horisontal,
-    acceleration_def.time: time}).doit()
-acceleration_vertical = acceleration_def.definition.rhs.subs({
-    acceleration_def.velocity_function(acceleration_def.time): velocity_vertical,
-    acceleration_def.time: time}).doit()
+acceleration_horisontal = acceleration_def.definition.rhs.subs(acceleration_def.time, time)
+acceleration_horisontal = acceleration_horisontal.subs(acceleration_def.velocity_function(time), velocity_horisontal).doit()
+acceleration_vertical = acceleration_def.definition.rhs.subs(acceleration_def.time, time)
+acceleration_vertical = acceleration_vertical.subs(acceleration_def.velocity_function(time), velocity_vertical).doit()
 acceleration_vector = Vector([acceleration_horisontal, acceleration_vertical])
 
 ## Prove that 'acceleration_vector' has tangential and radial parts.

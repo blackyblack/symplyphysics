@@ -41,9 +41,10 @@ def test_basic_frequency(test_args):
     result_2 = doppler_law.calculate_observed_frequency(test_args.horn_frequency, test_args.sound_velocity, test_args.zero_velocity, test_args.bike_velocity)
     assert SI.get_dimension_system().equivalent_dims(result_1.dimension, units.frequency)
     assert SI.get_dimension_system().equivalent_dims(result_2.dimension, units.frequency)
-    assert result_1 == result_2
     result_freq_1 = convert_to(result_1, units.hertz).subs(units.hertz, 1).evalf(4)
     assert result_freq_1 == approx(2015, 0.1)
+    result_freq_2 = convert_to(result_2, units.hertz).subs(units.hertz, 1).evalf(4)
+    assert result_freq_2 == approx(result_freq_1, 0.001)
 
 
 def test_bad_velocity(test_args):

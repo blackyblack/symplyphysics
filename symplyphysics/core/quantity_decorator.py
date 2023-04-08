@@ -117,3 +117,34 @@ def validate_output_same(param_name):
             return ret
         return wrapper_validate
     return validate_func
+
+# Validates the input quantities. Input parameters should be Symbols with dimension property.
+# Example:
+# @validate_input_symbols(param1_=body_mass, param2_=body_volume)
+def validate_input_symbols(**decorator_kwargs):
+    def validate_func(func):
+        @functools.wraps(func)
+        def wrapper_validate(*args, **kwargs):
+            wrapped_signature = inspect.signature(func)
+            bound_args = wrapped_signature.bind(*args, **kwargs)
+            for param in wrapped_signature.parameters.values():
+                if param.name in decorator_kwargs:
+                    expected_symbol = decorator_kwargs[param.name]
+                    arg = bound_args.arguments[param.name]
+                    assert_equivalent_dimension(arg, 'validate_input', param.name, func.__name__, expected_symbol.dimension)
+            return func(*args, **kwargs)
+        return wrapper_validate
+    return validate_func
+
+# Validates the output quantity. Output should be should be Symbol with dimension property.
+# Example:
+# @validate_output_symbol(body_volume)
+def validate_output_symbol(expected_symbol):
+    def validate_func(func):
+        @functools.wraps(func)
+        def wrapper_validate(*args, **kwargs):
+            ret = func(*args, **kwargs)
+            assert_equivalent_dimension(ret, 'validate_output', 'return', func.__name__, expected_symbol.dimension)
+            return ret
+        return wrapper_validate
+    return validate_func
