@@ -1,5 +1,6 @@
 import functools
 import inspect
+import numbers
 from sympy.core.singleton import S
 from sympy.physics.units import Quantity, Dimension
 from sympy.physics.units.systems.si import SI
@@ -8,6 +9,8 @@ from symplyphysics.core.vectors.vectors import Vector
 from .errors import UnitsError
 
 def assert_equivalent_dimension(arg: Quantity, decorator_name, param_name, func_name, expected_unit: Dimension):
+    if isinstance(arg, numbers.Number) and SI.get_dimension_system().is_dimensionless(expected_unit):
+        return
     if not isinstance(arg, Quantity):
         raise TypeError(f"Argument '{param_name}' to function '{func_name}'"
             f" should be sympy.physics.units.Quantity.")

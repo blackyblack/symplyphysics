@@ -28,21 +28,22 @@ def expr_to_quantity(expr: Expr, quantity_name: str=None, randomize: bool=True) 
     dimsys_SI.set_quantity_scale_factor(result, quantity_scale[0])
     return result
 
-def expr_to_vector_of_quantities(expr: Expr, quantity_name: str=None, coordinate_system: CoordinateSystem=None) -> Vector:    
+def expr_to_vector_of_quantities(expr: Expr, quantity_name: str=None, coordinate_system: CoordinateSystem=None, randomize: bool=True) -> Vector:    
     if isinstance(expr, Mul):
         expr = expr.expand()
     if isinstance(expr, Add):
         expr = VectorAdd(expr)
     vector = vector_from_sympy_vector(expr, coordinate_system)
     components = []
-    name = Symbol.random_name("Q", 8) if quantity_name is None else quantity_name
+    base_name = "Q" if quantity_name is None else quantity_name
+    name = Symbol.random_name(base_name, 8) if randomize else base_name
     for idx, c in enumerate(vector.components):
         d = expr_to_quantity(c, f"{name}[{idx + 1}]", False)
         components.append(d)
     return Vector(components, coordinate_system)
 
 # HACK: copy of SI._collect_factor_and_dimension with fixed exp() dimension evaluation
-def collect_factor_and_dimension(expr):
+def collect_factor_and_dimension(expr: Expr):
     """
     Return tuple with scale factor expression and dimension expression.
     """

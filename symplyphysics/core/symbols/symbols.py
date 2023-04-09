@@ -11,7 +11,7 @@ class DimensionSymbol:
 
     @staticmethod
     def random_name(base: str=None, digits: int=4) -> str:
-        return ("" if base is None else base) + "".join(random.choices(string.digits, k = digits))
+        return ("" if base is None else base) + "".join(random.choices(string.digits, k=digits))
     
     @property
     def dimension(self) -> Dimension:
@@ -19,25 +19,27 @@ class DimensionSymbol:
     
     @property
     def display_name(self) -> str:
-        return self.name if self._display_name is None else self._display_name
+        return self._display_name
     
     def __repr__(self) -> str:
         return self.display_name
 
 
 class Symbol(DimensionSymbol, sympy.Symbol):    
-    def __new__(cls, dimension: Dimension=1, display_name: str=None, **assumptions):
-        self = super().__new__(cls, DimensionSymbol.random_name(display_name), **assumptions)
+    def __new__(cls, display_name: str=None, dimension: Dimension=1, **assumptions):
+        name = DimensionSymbol.random_name("S", 8) if display_name is None else DimensionSymbol.random_name(display_name)
+        self = super().__new__(cls, name, **assumptions)
         self._dimension = dimension
-        self._display_name = display_name
+        self._display_name = name if display_name is None else display_name
         return self
     
 
 class Function(DimensionSymbol, UndefinedFunction):    
-    def __new__(cls, dimension: Dimension=1, display_name: str=None, **options):
-        self = super().__new__(cls, (DimensionSymbol.random_name(display_name)), **options)
+    def __new__(cls, display_name: str=None, dimension: Dimension=1, **options):
+        name = DimensionSymbol.random_name("F", 8) if display_name is None else DimensionSymbol.random_name(display_name)
+        self = super().__new__(cls, name, **options)
         self._dimension = dimension
-        self._display_name = display_name
+        self._display_name = name if display_name is None else display_name
         return self
 
 
