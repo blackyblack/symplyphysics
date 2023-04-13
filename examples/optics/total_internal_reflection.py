@@ -17,19 +17,30 @@ from sympy.physics.units.definitions.dimension_definitions import angle as angle
 ## If we enlarge aplpha, beta enlarges as well. There is such value of alpha when beta reaches it's max possible value - 90grads, it means refracted ray goes along mediums border.
 ## If we continue enlarging alpha, there will be no more refraction anymore, the whole ray will be only reflected.
  
-incedence_angle = solve(refraction_law.law, refraction_law.incedence_angle, dict=True)[0][refraction_law.incedence_angle]
+solutions = solve(refraction_law.law, refraction_law.incedence_angle, dict=True)
+result_expr = solutions[0][refraction_law.incedence_angle]
 
 ## Optical fiber usually consists of core with refractive index
 core_refractive_index = 1.479
 ## and coating with refractive index
 coat_refractive_index = 1.474
 
-
-extreme_angle = incedence_angle.subs({
+angle_applied = result_expr.subs({
     refraction_law.incedence_refractive_index: core_refractive_index,
     refraction_law.resulting_refractive_index: coat_refractive_index,
-    refraction_law.refraction_angle: pi/2}).evalf(3)
-extreme_angle_degrees = extreme_angle / math.pi * 180
+    refraction_law.refraction_angle: pi/2})
+
+if(angle_applied > pi/2 or angle_applied < -pi/2):
+    result_expr = solutions[1][refraction_law.incedence_angle]
+    angle_applied = result_expr.subs({
+        refraction_law.incedence_refractive_index: core_refractive_index,
+        refraction_law.resulting_refractive_index: coat_refractive_index,
+        refraction_law.refraction_angle: pi/2})
+    
+assert angle_applied <= pi/2
+assert angle_applied >= -pi/2
+        
+extreme_angle_degrees = angle_applied.evalf(3) / math.pi * 180
 
 print(f"Angle for full internal reflection: {extreme_angle_degrees.round(3)} degrees")
 
