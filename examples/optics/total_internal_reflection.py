@@ -14,8 +14,8 @@ from sympy.physics.units.definitions.dimension_definitions import angle as angle
 ## This phenomenon is utilized by fiber optics technology.
 
 ## As law says, if alpha is accidence angle, beta is refraction angle, n1*sin(alpha) = n2*sin(beta), or sin(beta) / sin(alpha) = n1/n2. If n1 > n2, beta will be always more then alpha.
-## If we enlarge aplpha, beta enlarges as well. There is such value of alpha when beta reaches it's max possible value - 90grads, it means refracted ray goes along mediums border.
-## If we continue enlarging alpha, there will be no more refraction anymore, the whole ray will be only reflected.
+## If we increase alpha, beta increases as well. There is such value of alpha when beta reaches it's max possible value - 90 degrees, it means refracted ray goes along mediums border.
+## If we continue increasing alpha, there will be no more refraction anymore, the whole ray will be only reflected.
  
 solutions = solve(refraction_law.law, refraction_law.incedence_angle, dict=True)
 result_expr = solutions[0][refraction_law.incedence_angle]
