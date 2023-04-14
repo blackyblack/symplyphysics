@@ -37,10 +37,8 @@ if(angle_applied > pi/2 or angle_applied < -pi/2):
         refraction_law.resulting_refractive_index: coat_refractive_index,
         refraction_law.refraction_angle: pi/2})
     
-assert angle_applied <= pi/2
+assert angle_applied <= pi/2 
 assert angle_applied >= -pi/2
-        
+
 extreme_angle_degrees = angle_applied.evalf(3) / math.pi * 180
-
-print(f"Angle for full internal reflection: {extreme_angle_degrees.round(3)} degrees")
-
+print(f"For full internal reflection angle should be above {extreme_angle_degrees.round(3)} degrees")
