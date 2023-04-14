@@ -3,7 +3,7 @@ from symplyphysics import (
 )
 
 from symplyphysics.laws.electricity import amount_energy_from_voltage_time_resistance as joule_lenz_law
-from symplyphysics.definitions import amount_energy_from_mass_and_temperature as operate_energy
+from symplyphysics.laws.thermodynamics import thermal_energy_from_mass_and_temperature as operate_energy
 from symplyphysics.definitions import density_from_mass_volume as density_law
 from symplyphysics.laws.electricity import current_is_proportional_to_voltage as ohm_law
 from symplyphysics.definitions import power_is_proportional_voltage_and_current as operate_power

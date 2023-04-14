@@ -61,26 +61,26 @@ assert resistor_voltage_eq.rhs == initial_voltage - capacitor_voltage_function(t
 
 # use resistor_voltage as proven in resistor_voltage_eq
 # use charge_definition.current_function since it is same on resistor and capacitor as proven in capacitor_current_eq
-resistor_ohm_eq = ohms_law.law.subs({ohms_law.voltage: initial_voltage - capacitor_voltage_function(time), ohms_law.resistance: resistance, ohms_law.current: charge_definition.current_function(time)})
+resistor_ohm_eq = ohms_law.law.subs({ohms_law.voltage: initial_voltage - capacitor_voltage_function(time), ohms_law.resistance: resistance, ohms_law.current: charge_definition.current(time)})
 capacitance_eq = capacitance_definition.definition.subs({
     capacitance_definition.capacitance: capacitance,
-    capacitance_definition.charge: charge_definition.charge_function(time),
+    capacitance_definition.charge: charge_definition.charge(time),
     capacitance_definition.voltage: capacitor_voltage_function(time)})
 charge_eq = charge_definition.definition.subs(charge_definition.time, time)
 
 derived_law = [resistor_ohm_eq, capacitance_eq, charge_eq]
 
-solved_charge_function = solve(derived_law, (capacitor_voltage_function(time), charge_definition.current_function(time), charge_definition.charge_function(time)), dict=True)[0][charge_definition.charge_function(time)]
-charge_diff_eq = Eq(charge_definition.charge_function(time), solved_charge_function)
+solved_charge_function = solve(derived_law, (capacitor_voltage_function(time), charge_definition.current(time), charge_definition.charge(time)), dict=True)[0][charge_definition.charge(time)]
+charge_diff_eq = Eq(charge_definition.charge(time), solved_charge_function)
 
 ## 3. Prove that charge(time) = capacitance * initial_voltage - capacitance * resistance * Derivative(charge(time), time))
 ## Q(t) = U0 * C - R * C * dQ(t) / dt
-capacitor_charge_function = initial_voltage * capacitance - resistance * capacitance * Derivative(charge_definition.charge_function(time), time)
+capacitor_charge_function = initial_voltage * capacitance - resistance * capacitance * Derivative(charge_definition.charge(time), time)
 assert simplify(charge_diff_eq.rhs - capacitor_charge_function) == 0
 
 ## 4. Convert charge to capacitor voltage
-capacitor_voltage_solved = solve(capacitance_eq, charge_definition.charge_function(time), dict=True)[0][charge_definition.charge_function(time)]
-voltage_diff_eq = charge_diff_eq.subs(charge_definition.charge_function(time), capacitor_voltage_solved)
+capacitor_voltage_solved = solve(capacitance_eq, charge_definition.charge(time), dict=True)[0][charge_definition.charge(time)]
+voltage_diff_eq = charge_diff_eq.subs(charge_definition.charge(time), capacitor_voltage_solved)
 
 ## 5. Solve differential equation
 # HACK: use known solution since sympy.dsolve() gives us another result

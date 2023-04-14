@@ -16,7 +16,7 @@ from symplyphysics.laws.gravity import free_fall_acceleration_from_height as fre
 ## in points of minimum and maximum distance of elliptic orbit. We assume circular orbit for the sake of simplicity.
 ## Note, that satellite is non-inertial system, so we cannot apply first Newton's law to solve this problem.
 
-solution = Eq(centripetal_acceleration_law.definition.rhs, free_fall_law.law.rhs)
+solution = Eq(centripetal_acceleration_law.law.rhs, free_fall_law.law.rhs)
 solution_applied = solution.subs(centripetal_acceleration_law.curve_radius, free_fall_law.planet_radius + free_fall_law.height_above_surface)
 
 # first solution is negative and corresponds to the backwards direction of velocity - ignore it

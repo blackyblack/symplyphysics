@@ -1,7 +1,7 @@
 from sympy import solve
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
-from symplyphysics.laws.kinematic import kinetic_energy_from_mass_and_velocity as kinetic_energy
+from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_velocity as kinetic_energy
 
 print("Formula is:\n{}".format(kinetic_energy.print()))
 

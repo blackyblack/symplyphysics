@@ -2,7 +2,7 @@
 
 import math
 from symplyphysics import (
-    Eq, units, convert_to, SI, solve, expr_to_quantity, pi
+    solve, pi
 )
 from symplyphysics.laws.optics import refraction_angle_from_environments as refraction_law
 from sympy.physics.units.definitions.dimension_definitions import angle as angle_type

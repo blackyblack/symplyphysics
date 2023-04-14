@@ -13,7 +13,7 @@ def test_args():
     v1 = Quantity(units.velocity, 20 * units.meter / units.second)
     t = Quantity(units.time, 5 * units.second)
 
-    Args = namedtuple('Args', ['v0', 'v1', 't'])
+    Args = namedtuple("Args", ["v0", "v1", "t"])
     return Args(v0=v0, v1=v1, t=t)
 
 

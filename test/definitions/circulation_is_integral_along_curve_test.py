@@ -6,23 +6,20 @@ from sympy import sin, cos, sqrt
 from symplyphysics import (
     units, convert_to, SI, expr_to_quantity, VectorField, CoordinateSystem
 )
+from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.definitions import circulation_is_integral_along_curve as circulation_def
 
 @fixture
 def test_args():
     C = CoordinateSystem()
-    force_unit = units.Quantity('force_unit')
-    SI.set_quantity_dimension(force_unit, units.force)
-    SI.set_quantity_scale_factor(force_unit, 1 * units.newton)
-    radius_unit = units.Quantity('radius_unit')
-    SI.set_quantity_dimension(radius_unit, units.length)
-    SI.set_quantity_scale_factor(radius_unit, 1 * units.meter)
+    force_unit = Quantity(units.force, 1 * units.newton)
+    radius_unit = Quantity(units.length, 1 * units.meter)
     # field is a field of gravitational forces, force is directed down by the Y coordinate
     # field is (0, -1 * G * m * M / y**2)
     # G * m * M = force * length**2 / mass**2 * mass**2 = force * length**2
     field = VectorField(0, lambda point: -1 * force_unit * radius_unit**2 / point.y**2, 0, C)
 
-    Args = namedtuple('Args', ['C', 'force_unit', 'radius_unit', 'field'])
+    Args = namedtuple("Args", ["C", "force_unit", "radius_unit", "field"])
     return Args(C=C, force_unit=force_unit, radius_unit=radius_unit, field=field)
 
 
@@ -66,7 +63,7 @@ def test_force_circulation(test_args):
     #HACK: gravitational force is undefined at 0 distance, use any non-zero value
     trajectory = [circulation_def.parameter, circulation_def.parameter]
     result_expr = circulation_def.calculate_circulation(test_args.field, trajectory, 1 * test_args.radius_unit, 2 * test_args.radius_unit)
-    result = expr_to_quantity(result_expr, 'force_work')
+    result = expr_to_quantity(result_expr)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
     result_work = convert_to(result, units.joule).subs({units.joule: 1}).evalf(2)
     assert result_work == approx(-0.5, 0.01)
@@ -81,7 +78,7 @@ def test_force_circulation_horizontal_up(test_args):
     # trajectory is vertical line: x = 5
     trajectory_vertical = [5 * test_args.radius_unit, circulation_def.parameter]
     result_expr = circulation_def.calculate_circulation(test_args.field, trajectory_vertical, 1 * test_args.radius_unit, 2 * test_args.radius_unit)
-    result = expr_to_quantity(result_expr, 'force_work_vertical_up')
+    result = expr_to_quantity(result_expr)
     result_work = convert_to(result, units.joule).subs({units.joule: 1}).evalf(2)
     assert result_work == approx(-0.5, 0.01)
 
@@ -89,7 +86,7 @@ def test_force_circulation_horizontal_down(test_args):
     # trajectory is vertical line, but with down direction: x = 6
     trajectory_vertical = [6 * test_args.radius_unit, circulation_def.parameter]
     result_expr = circulation_def.calculate_circulation(test_args.field, trajectory_vertical, 2 * test_args.radius_unit, 1 * test_args.radius_unit)
-    result = expr_to_quantity(result_expr, 'force_work_vertical_down')
+    result = expr_to_quantity(result_expr)
     result_work = convert_to(result, units.joule).subs({units.joule: 1}).evalf(2)
     assert result_work == approx(0.5, 0.01)
 

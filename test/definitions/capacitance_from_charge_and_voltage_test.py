@@ -17,7 +17,7 @@ def test_args():
     Q = Quantity(units.charge, 6 * units.coulomb)
     U = Quantity(units.voltage, 3 * units.volts)
 
-    Args = namedtuple('Args', ['C', 'Q', 'U'])
+    Args = namedtuple("Args", ["C", "Q", "U"])
     return Args(C=C, Q=Q, U=U)
 
 def test_basic_capacitance(test_args):

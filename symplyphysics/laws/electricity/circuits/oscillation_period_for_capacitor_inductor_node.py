@@ -73,13 +73,13 @@ assert inductor_voltage_applied == capacitor_voltage_function(time)
 ## charge of capacitor is voltage of capacitor * capacitance
 capacitor_charge_law = capacitance_definition.definition.subs(
     {capacitance_definition.capacitance: capacitance,
-    capacitance_definition.charge: charge_definition.charge_function(time),
+    capacitance_definition.charge: charge_definition.charge(time),
     capacitance_definition.voltage: capacitor_voltage_function(time)})
-capacitor_charge_applied = solve(capacitor_charge_law, charge_definition.charge_function(time), dict=True)[0][charge_definition.charge_function(time)]
+capacitor_charge_applied = solve(capacitor_charge_law, charge_definition.charge(time), dict=True)[0][charge_definition.charge(time)]
 
 ## I_c(t) = C * U_c'(t)
 capacitor_current_law = charge_definition.definition.subs(charge_definition.time, time)
-capacitor_current_law = capacitor_current_law.subs(charge_definition.charge_function(time), capacitor_charge_applied)
+capacitor_current_law = capacitor_current_law.subs(charge_definition.charge(time), capacitor_charge_applied)
 ## I_c'(t) = C * U_c"(t)
 capacitor_current_law_derivative = Eq(Derivative(capacitor_current_law.lhs, time), Derivative(capacitor_current_law.rhs, time))
 
@@ -89,12 +89,12 @@ capacitor_current_law_derivative = Eq(Derivative(capacitor_current_law.lhs, time
 inductor_voltage_law = induction_voltage_definition.definition.subs(induction_voltage_definition.time, time)
 inductor_voltage_law = inductor_voltage_law.subs(
     {induction_voltage_definition.self_induction_voltage_function(time): capacitor_voltage_function(time),
-    induction_voltage_definition.current_function(time): charge_definition.current_function(time)})
+    induction_voltage_definition.current_function(time): charge_definition.current(time)})
 
 derived_law = [inductor_voltage_law, capacitor_current_law_derivative]
 
 ## U"(t) = - 1/LC * U(t)
-capacitor_voltage_solved = solve(derived_law, (Derivative(charge_definition.current_function(time)), capacitor_voltage_function(time)), dict=True)[0][capacitor_voltage_function(time)]
+capacitor_voltage_solved = solve(derived_law, (Derivative(charge_definition.current(time)), capacitor_voltage_function(time)), dict=True)[0][capacitor_voltage_function(time)]
 voltage_diff_eq = Eq(capacitor_voltage_function(time), capacitor_voltage_solved)
 
 ## 5. Solve differential equation and find period of the harmonic oscillator

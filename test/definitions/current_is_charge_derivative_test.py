@@ -4,29 +4,18 @@ from pytest import approx, fixture, raises
 from symplyphysics import (
     units, convert_to, SI, errors
 )
+from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.definitions import current_is_charge_derivative as current_def
 
 @fixture
 def test_args():
-    Q0 = units.Quantity('Q0')
-    SI.set_quantity_dimension(Q0, units.charge)
-    SI.set_quantity_scale_factor(Q0, 0 * units.coulomb)
-    Q1 = units.Quantity('Q1')
-    SI.set_quantity_dimension(Q1, units.charge)
-    SI.set_quantity_scale_factor(Q1, 20 * units.coulomb)
-    
-    I0 = units.Quantity('I0')
-    SI.set_quantity_dimension(I0, units.current)
-    SI.set_quantity_scale_factor(I0, 0.5 * units.ampere)
-    I1 = units.Quantity('I1')
-    SI.set_quantity_dimension(I1, units.current)
-    SI.set_quantity_scale_factor(I1, 0.6 * units.ampere)
+    Q0 = Quantity(units.charge, 0 * units.coulomb)
+    Q1 = Quantity(units.charge, 20 * units.coulomb)    
+    I0 = Quantity(units.current, 0.5 * units.ampere)
+    I1 = Quantity(units.current, 0.6 * units.ampere)
+    t = Quantity(units.time, 5 * units.second)
 
-    t = units.Quantity('t')
-    SI.set_quantity_dimension(t, units.time)
-    SI.set_quantity_scale_factor(t, 5 * units.second)
-
-    Args = namedtuple('Args', ['Q0', 'Q1', 'I0', 'I1', 't'])
+    Args = namedtuple("Args", ["Q0", "Q1", "I0", "I1", "t"])
     return Args(Q0=Q0, Q1=Q1, I0=I0, I1=I1, t=t)
 
 
@@ -36,23 +25,20 @@ def test_basic_current(test_args):
     assert SI.get_dimension_system().equivalent_dims(
         result.dimension, units.current)
 
-    result_current = convert_to(result, current_def.definition_dimension_SI).subs({
-        units.ampere: 1}).evalf(2)
+    result_current = convert_to(result, current_def.definition_units_SI).subs(units.ampere, 1).evalf(2)
     assert result_current == approx(4, 0.01)
 
 
 def test_current_with_bad_charge(test_args):
-    Q0b = units.Quantity('Q0b')
-    SI.set_quantity_dimension(Q0b, units.length)
-    SI.set_quantity_scale_factor(Q0b, 1 * units.meter)
+    Qb = Quantity(units.length)
     with raises(errors.UnitsError):
         current_def.calculate_current(
-            Q0b, test_args.Q1, test_args.t)
+            Qb, test_args.Q1, test_args.t)
 
     # Let Q1 be invalid    
     with raises(errors.UnitsError):
         current_def.calculate_current(
-            test_args.Q0, Q0b, test_args.t)
+            test_args.Q0, Qb, test_args.t)
 
     with raises(TypeError):
         current_def.calculate_current(
@@ -64,10 +50,7 @@ def test_current_with_bad_charge(test_args):
 
 
 def test_current_with_bad_time(test_args):
-    tb = units.Quantity('tb')
-    SI.set_quantity_dimension(tb, units.length)
-    SI.set_quantity_scale_factor(tb, 1 * units.meter)
-
+    tb = Quantity(units.length)
     with raises(errors.UnitsError):
         current_def.calculate_current(
             test_args.Q0, test_args.Q1, tb)

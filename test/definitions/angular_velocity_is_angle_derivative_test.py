@@ -18,7 +18,7 @@ def test_args():
     a1 = Quantity(angle_type, pi * units.radian)
     t = Quantity(units.time, 5 * units.second)
 
-    Args = namedtuple('Args', ['a0', 'a1', 't'])
+    Args = namedtuple("Args", ["a0", "a1", "t"])
     return Args(a0=a0, a1=a1, t=t)
 
 
