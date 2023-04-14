@@ -32,7 +32,7 @@ class Symbol(DimensionSymbol, sympy.Symbol):
         self._dimension = dimension
         self._display_name = name if display_name is None else display_name
         return self
-    
+
 
 class Function(DimensionSymbol, UndefinedFunction):    
     def __new__(cls, display_name: str=None, dimension: Dimension=1, **options):

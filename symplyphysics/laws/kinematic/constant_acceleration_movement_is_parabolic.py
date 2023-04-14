@@ -30,7 +30,7 @@ law = Eq(distance_function(movement_time), initial_velocity * movement_time + co
 # Derive the same law from velocity and acceleration definitions
 
 constant_acceleration_definition = acceleration_definition.definition.subs({acceleration_definition.acceleration(acceleration_definition.time): constant_acceleration, acceleration_definition.time: movement_time})
-dsolved_velocity = dsolve(constant_acceleration_definition, acceleration_definition.velocity_function(movement_time))
+dsolved_velocity = dsolve(constant_acceleration_definition, acceleration_definition.velocity(movement_time))
 constant_accelerated_velocity_function = dsolved_velocity.rhs
 
 constant_accelerated_movement_definition = velocity_definition.definition.subs({velocity_definition.velocity_function(velocity_definition.moving_time): constant_accelerated_velocity_function, velocity_definition.moving_time: movement_time})

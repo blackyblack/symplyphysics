@@ -7,7 +7,7 @@ from symplyphysics.definitions import acceleration_is_velocity_derivative as acc
 print("Formula is:\n{}".format(acceleration.print(acceleration.definition)))
 
 velocity_function = sin
-applied_law = acceleration.definition.subs(acceleration.velocity_function, velocity_function)
+applied_law = acceleration.definition.subs(acceleration.velocity, velocity_function)
 dsolved = applied_law.doit()
 
 print("Velocity function is:\n{}".format(acceleration.print(velocity_function(acceleration.time))))

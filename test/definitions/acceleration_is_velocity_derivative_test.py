@@ -9,9 +9,9 @@ from symplyphysics.definitions import acceleration_is_velocity_derivative as acc
 
 @fixture
 def test_args():
-    v0 = Quantity("v0", units.velocity, 1 * units.meter / units.second)
-    v1 = Quantity("v1", units.velocity, 20 * units.meter / units.second)
-    t = Quantity("t", units.time, 5 * units.second)
+    v0 = Quantity(units.velocity, 1 * units.meter / units.second)
+    v1 = Quantity(units.velocity, 20 * units.meter / units.second)
+    t = Quantity(units.time, 5 * units.second)
 
     Args = namedtuple('Args', ['v0', 'v1', 't'])
     return Args(v0=v0, v1=v1, t=t)
@@ -29,7 +29,7 @@ def test_basic_acceleration(test_args):
 
 
 def test_bad_velocity(test_args):
-    vb = Quantity("", units.length, 1 * units.meter)
+    vb = Quantity(units.length, 1 * units.meter)
     with raises(errors.UnitsError):
         acceleration.calculate_linear_acceleration(
             vb, test_args.v1, test_args.t)
@@ -48,7 +48,7 @@ def test_bad_velocity(test_args):
 
 
 def test_bad_time(test_args):
-    tb = Quantity("", units.length, 1 * units.meter)
+    tb = Quantity(units.length, 1 * units.meter)
 
     with raises(errors.UnitsError):
         acceleration.calculate_linear_acceleration(

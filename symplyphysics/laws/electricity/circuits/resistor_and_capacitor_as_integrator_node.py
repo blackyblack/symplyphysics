@@ -62,8 +62,11 @@ assert resistor_voltage_eq.rhs == initial_voltage - capacitor_voltage_function(t
 # use resistor_voltage as proven in resistor_voltage_eq
 # use charge_definition.current_function since it is same on resistor and capacitor as proven in capacitor_current_eq
 resistor_ohm_eq = ohms_law.law.subs({ohms_law.voltage: initial_voltage - capacitor_voltage_function(time), ohms_law.resistance: resistance, ohms_law.current: charge_definition.current_function(time)})
-capacitance_eq = capacitance_definition.definition.subs({capacitance_definition.charge: charge_definition.charge_function(time), capacitance_definition.voltage: capacitor_voltage_function(time)})
-charge_eq = charge_definition.definition.subs({charge_definition.time: time})
+capacitance_eq = capacitance_definition.definition.subs({
+    capacitance_definition.capacitance: capacitance,
+    capacitance_definition.charge: charge_definition.charge_function(time),
+    capacitance_definition.voltage: capacitor_voltage_function(time)})
+charge_eq = charge_definition.definition.subs(charge_definition.time, time)
 
 derived_law = [resistor_ohm_eq, capacitance_eq, charge_eq]
 

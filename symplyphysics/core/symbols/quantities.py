@@ -5,7 +5,7 @@ from .symbols import DimensionSymbol
 
 
 class Quantity(DimensionSymbol, SymQuantity):
-    def __new__(cls, display_name: str=None, dimension: Dimension=1, scale: Expr=1, **assumptions):
+    def __new__(cls, dimension: Dimension=1, scale: Expr=1, *, display_name: str=None, **assumptions):
         name = DimensionSymbol.random_name("Q", 8) if display_name is None else DimensionSymbol.random_name(display_name)
         self = super().__new__(cls, name, None, None, None, None, None, False, **assumptions)
         self._dimension = dimension
