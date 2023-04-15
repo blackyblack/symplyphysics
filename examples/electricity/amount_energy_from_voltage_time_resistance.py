@@ -1,5 +1,5 @@
 from symplyphysics import (
-    expr_to_quantity, units, convert_to,solve, SI, Eq, pretty
+    expr_to_quantity, units, convert_to,solve, Eq, pretty
 )
 from symplyphysics.core.symbols.quantities import Quantity
 
