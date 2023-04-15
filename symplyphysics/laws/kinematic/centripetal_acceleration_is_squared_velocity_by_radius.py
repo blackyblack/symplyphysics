@@ -52,8 +52,8 @@ curve_radius_vertical = projector.law.rhs.subs({projector.vector_length: curve_r
 ## Velocity projections are derivatives of respective coordinates.
 
 #NOTE: replace 'moving_time' first as Derivative can have difficulties when processing both substitutions at once
-velocity_horisontal = velocity_def.definition.rhs.subs(velocity_def.moving_time, time).subs(velocity_def.movement_function(time), curve_radius_horisontal).doit()
-velocity_vertical = velocity_def.definition.rhs.subs(velocity_def.moving_time, time).subs(velocity_def.movement_function(time), curve_radius_vertical).doit()
+velocity_horisontal = velocity_def.definition.rhs.subs(velocity_def.moving_time, time).subs(velocity_def.movement(time), curve_radius_horisontal).doit()
+velocity_vertical = velocity_def.definition.rhs.subs(velocity_def.moving_time, time).subs(velocity_def.movement(time), curve_radius_vertical).doit()
 velocity_vector = Vector([velocity_horisontal, velocity_vertical], cartesian_coordinates)
 
 ## These unit vectors should not necessary be derived. We can choose them at will and prove that

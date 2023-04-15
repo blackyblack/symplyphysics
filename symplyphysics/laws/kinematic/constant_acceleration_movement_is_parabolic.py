@@ -33,8 +33,8 @@ constant_acceleration_definition = acceleration_definition.definition.subs({acce
 dsolved_velocity = dsolve(constant_acceleration_definition, acceleration_definition.velocity(movement_time))
 constant_accelerated_velocity_function = dsolved_velocity.rhs
 
-constant_accelerated_movement_definition = velocity_definition.definition.subs({velocity_definition.velocity_function(velocity_definition.moving_time): constant_accelerated_velocity_function, velocity_definition.moving_time: movement_time})
-dsolved_movement = dsolve(constant_accelerated_movement_definition, velocity_definition.movement_function(movement_time))
+constant_accelerated_movement_definition = velocity_definition.definition.subs({velocity_definition.velocity(velocity_definition.moving_time): constant_accelerated_velocity_function, velocity_definition.moving_time: movement_time})
+dsolved_movement = dsolve(constant_accelerated_movement_definition, velocity_definition.movement(movement_time))
 constant_accelerated_movement_function = dsolved_movement.rhs
 
 derived_law = Eq(distance_function(movement_time), constant_accelerated_movement_function)

@@ -7,7 +7,7 @@ from symplyphysics.laws.gravity import free_fall_acceleration_from_height as acc
 
 print("Formula is:\n{}".format(acceleration.print()))
 
-height_above_ground = symbols('height_above_ground')
+height_above_ground = symbols("height_above_ground")
 gravity_constant = convert_to(units.gravitational_constant, units.newton * units.meter**2 / units.kilogram**2).subs(units.newton * units.meter**2 / units.kilogram**2, 1).evalf(5)
 earth_mass = 5.976e+24  # kilogram
 earth_radius = 6.371e+6 # meter
@@ -19,7 +19,7 @@ result_acceleration = solved.subs({
     acceleration.height_above_surface: height_above_ground,
     acceleration.units.gravitational_constant: gravity_constant})
 
-print("\nFree fall accelleration function on Earth surface  is:\n{}".format(
+print("\nFree fall accelleration function on Earth surface is:\n{}".format(
     pretty(result_acceleration, use_unicode=False)))
 
 p1 = plot(
@@ -27,11 +27,11 @@ p1 = plot(
     (height_above_ground, 0, 10000),
     ylim=(9.74, 9.85),
     axis_center=(0.0, 9.75),
-    line_color='red',
-    title='Acceleration free fall (height)',
-    xlabel='height,m',
-    ylabel='acceleration,m/s^2',
-    label='Acceleration(height)',
+    line_color="red",
+    title="Free fall acceleration",
+    xlabel="height, m",
+    ylabel="acceleration, m/s**2",
+    label="Acceleration(height)",
     legend=True,
     backend=MatplotlibBackend,
     show=False)

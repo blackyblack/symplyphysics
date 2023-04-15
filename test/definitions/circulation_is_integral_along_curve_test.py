@@ -18,7 +18,6 @@ def test_args():
     # field is (0, -1 * G * m * M / y**2)
     # G * m * M = force * length**2 / mass**2 * mass**2 = force * length**2
     field = VectorField(0, lambda point: -1 * force_unit * radius_unit**2 / point.y**2, 0, C)
-
     Args = namedtuple("Args", ["C", "force_unit", "radius_unit", "field"])
     return Args(C=C, force_unit=force_unit, radius_unit=radius_unit, field=field)
 

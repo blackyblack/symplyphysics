@@ -2,7 +2,7 @@ from typing import List
 from sympy import Integral, Derivative
 from sympy.vector import Dot
 from symplyphysics import (
-    symbols, Eq, pretty, VectorField
+    symbols, Eq, pretty, VectorField, simplify
 )
 from symplyphysics.core.vectors.vectors import Vector, sympy_vector_from_vector
 
@@ -18,7 +18,8 @@ from symplyphysics.core.vectors.vectors import Vector, sympy_vector_from_vector
 ## (eg sum of sides of a square).
 
 # Definition
-## C = CurveIntegral(F * dl, Curve), where
+## C = CurveIntegral(F * dl, Curve)
+# Where:
 ## C is circulation
 ## F is vector field
 ## l is radius-vector of the curve
@@ -61,4 +62,4 @@ def calculate_circulation(
         trajectory_element: trajectory_element_result,
         parameter_from: parameter_from_,
         parameter_to: parameter_to_}).doit()
-    return result_expr
+    return simplify(result_expr)

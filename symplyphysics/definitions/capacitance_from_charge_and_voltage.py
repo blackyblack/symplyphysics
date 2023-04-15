@@ -10,8 +10,8 @@ from symplyphysics.core.symbols.symbols import Symbol, to_printable
 ## The electrical capacitance of a capacitor is
 ## charge accumulated in this capacitor divided to voltage on it
 
-## Definition: C = Q / U
-## Where:
+# Definition: C = Q / U
+# Where:
 ## C is capacitance
 ## Q is charge
 ## U is voltage

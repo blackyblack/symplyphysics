@@ -22,9 +22,6 @@ definition = Eq(current(time), Derivative(charge(time), time))
 
 definition_units_SI = units.ampere
 
-def print():
-    return pretty(definition, use_unicode=False)
-
 def print(expr: Expr) -> str:
     symbols = [time, current, charge]
     return pretty(to_printable(expr, symbols), use_unicode=False)

@@ -16,11 +16,11 @@ print("Acceleration function is:\n{}".format(acceleration.print(dsolved)))
 p1 = plot(
     velocity_function(acceleration.time),
     (acceleration.time, 0, 10),
-    line_color='blue',
-    title='Acceleration(time), Velocity(time)',
-    label='Velocity(time)',
-    xlabel='time',
-    ylabel='f(time)',
+    line_color="blue",
+    title="Acceleration(time), Velocity(time)",
+    label="Velocity(time)",
+    xlabel="time",
+    ylabel="f(time)",
     legend=True,
     backend=MatplotlibBackend,
     show=False)
@@ -28,8 +28,8 @@ p1 = plot(
 p2 = plot(
     dsolved.rhs,
     (acceleration.time, 0, 10),
-    line_color='red',
-    label='Acceleration(time)',
+    line_color="red",
+    label="Acceleration(time)",
     backend=MatplotlibBackend,
     show=False)
 

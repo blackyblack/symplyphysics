@@ -6,18 +6,15 @@ from symplyphysics import (
     units, SI, expr_to_quantity, convert_to,
     VectorZero, FieldPoint, VectorField, CoordinateSystem, sympy_vector_from_vector
 )
+from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.laws.fields import circulation_is_integral_of_curl_over_surface as circulation_def
 
 @fixture
 def test_args():
     C = CoordinateSystem()
-    force_unit = units.Quantity('force_unit')
-    SI.set_quantity_dimension(force_unit, units.force)
-    SI.set_quantity_scale_factor(force_unit, 1 * units.newton)
-    radius_unit = units.Quantity('radius_unit')
-    SI.set_quantity_dimension(radius_unit, units.length)
-    SI.set_quantity_scale_factor(radius_unit, 1 * units.meter)
-    Args = namedtuple('Args', ['C', 'force_unit', 'radius_unit'])
+    force_unit = Quantity(units.force, 1 * units.newton)
+    radius_unit = Quantity(units.length, 1 * units.meter)
+    Args = namedtuple("Args", ["C", "force_unit", "radius_unit"])
     return Args(C=C, force_unit=force_unit, radius_unit=radius_unit)
 
 def test_basic_circulation(test_args):
@@ -52,7 +49,7 @@ def test_force_field_circulation(test_args):
     field = VectorField(lambda point: -point.y * test_args.force_unit / _distance(point), lambda point: point.x * test_args.force_unit / _distance(point), 0, test_args.C)
     surface = [circulation_def.parameter1 * cos(circulation_def.parameter2), circulation_def.parameter1 * sin(circulation_def.parameter2)]
     result_expr = circulation_def.calculate_circulation(field, surface, 1 * test_args.radius_unit, 2 * test_args.radius_unit, 0, pi / 2)
-    result = expr_to_quantity(result_expr, 'force_work')
+    result = expr_to_quantity(result_expr)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_work = convert_to(result, units.joule).subs({units.joule: 1}).evalf(2)
+    result_work = convert_to(result, units.joule).subs(units.joule, 1).evalf(2)
     assert result_work > 0

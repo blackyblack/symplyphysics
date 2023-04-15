@@ -88,8 +88,9 @@ capacitor_current_law_derivative = Eq(Derivative(capacitor_current_law.lhs, time
 ## Inductor voltage is the self-inductance.
 inductor_voltage_law = induction_voltage_definition.definition.subs(induction_voltage_definition.time, time)
 inductor_voltage_law = inductor_voltage_law.subs(
-    {induction_voltage_definition.self_induction_voltage_function(time): capacitor_voltage_function(time),
-    induction_voltage_definition.current_function(time): charge_definition.current(time)})
+    {induction_voltage_definition.inductance: inductance,
+    induction_voltage_definition.self_induction_voltage(time): capacitor_voltage_function(time),
+    induction_voltage_definition.current(time): charge_definition.current(time)})
 
 derived_law = [inductor_voltage_law, capacitor_current_law_derivative]
 

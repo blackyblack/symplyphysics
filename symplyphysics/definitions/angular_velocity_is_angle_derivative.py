@@ -14,7 +14,8 @@ from symplyphysics.core.symbols.symbols import Function, Symbol, to_printable
 ## Object position is described by radius-vector from pole to object. 
 ## Magnitude of this vector is radius of circle. Angle between this vector and X axis it is also known as movement phase.
 
-# Definition: ω(t) = φ(t)/dt, where
+# Definition: ω(t) = φ(t)/dt
+# Where:
 ## ω(t) is angular velocity function of time
 ## φ(t) is angle function of time
 

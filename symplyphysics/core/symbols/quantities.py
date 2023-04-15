@@ -1,3 +1,4 @@
+from functools import partial
 from sympy import Expr
 from sympy.physics.units import Dimension, Quantity as SymQuantity
 from sympy.physics.units.systems.si import SI
@@ -12,4 +13,12 @@ class Quantity(DimensionSymbol, SymQuantity):
         self._display_name = name if display_name is None else display_name
         SI.set_quantity_dimension(self, dimension)
         SI.set_quantity_scale_factor(self, scale)
+        return self
+    
+    # This is required for integration to work properly
+    @property
+    def func(self):
+        return partial(Quantity.identity, self)
+
+    def identity(self, *_args):
         return self

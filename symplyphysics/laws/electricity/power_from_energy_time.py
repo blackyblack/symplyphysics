@@ -23,9 +23,10 @@ law = Eq(power, energy / time)
 linear_function_coefficient, initial_energy_constant = symbols("linear_function_coefficient initial_energy_constant")
 energy_linear_function = linear_function_coefficient * time + initial_energy_constant
 
-power_definition_applied = power_derivative.definition.subs({
-    power_derivative.energy_function(power_derivative.time): energy_linear_function,
-    power_derivative.power_function(power_derivative.time): power})
+power_definition_applied = power_derivative.definition.subs(power_derivative.time, time)
+power_definition_applied = power_definition_applied.subs({
+    power_derivative.energy(time): energy_linear_function,
+    power_derivative.power(time): power})
 power_applied_eq = power_definition_applied.doit()
 energy_eq = Eq(energy, energy_linear_function)
 
