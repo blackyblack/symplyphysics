@@ -5,7 +5,7 @@ from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics.laws.dynamics import buoyant_force_from_density_and_volume as archimedes_law
 from symplyphysics.laws.dynamics import acceleration_from_force as gravity_law
 
-print("Formula is:\n{}".format(archimedes_law.print()))
+print("Formula is:\n{}".format(archimedes_law.print(archimedes_law.law)))
 
 height = symbols("height")
 

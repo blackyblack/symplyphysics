@@ -1,8 +1,9 @@
 from sympy import Expr
 from symplyphysics import (
-    Eq, pretty, solve, Quantity, units, expr_to_quantity
+    Eq, pretty, solve, units, expr_to_quantity
 )
 from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
+from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description

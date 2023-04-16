@@ -14,6 +14,6 @@ law = [Ep2, Ep1]
 solved = solve(law, (height_1, potential_energy.potential_energy_of_body), dict=True)[0][height_1]
 answer = Eq(height_1, solved)
 
-print("\nFormula is:\n{}".format(potential_energy.print()))
+print("\nFormula is:\n{}".format(potential_energy.print(potential_energy.law)))
 print("\nSolution:\nIF potential_energy_1 = potential_energy_2 AND body_mass_2 = 2 * body_mass_1 THEN {}".
       format(pretty(answer, use_unicode=False)))

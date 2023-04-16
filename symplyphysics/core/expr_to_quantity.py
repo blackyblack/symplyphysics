@@ -16,6 +16,8 @@ from ..core.symbols.symbols import Symbol
 def expr_to_quantity(expr: Expr, quantity_name: str=None, randomize: bool=True) -> Quantity:
     quantity_scale = collect_factor_and_dimension(expr)
     dimension = quantity_scale[1]
+    #HACK: this allows to treat angle type as dimensionless
+    dimension = dimension.subs("angle", S.One)
     if isinstance(dimension, exp):
         dimension_args = dimension.nargs.args[0]
         # power of the exponent should be dimensionless
