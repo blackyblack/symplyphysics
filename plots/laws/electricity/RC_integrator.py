@@ -22,7 +22,7 @@ example_impedance = 1
 rc_time_constant = example_capacitance * example_impedance
 
 applied_law = rc_node.law.subs({rc_node.time: time, rc_node.resistance: example_impedance, rc_node.capacitance: example_capacitance, rc_node.initial_voltage: initial_voltage})
-capacitor_voltage_function = solve(applied_law, rc_node.capacitor_voltage_function(time), dict=True)[0][rc_node.capacitor_voltage_function(time)]
+capacitor_voltage_function = solve(applied_law, rc_node.capacitor_voltage(time), dict=True)[0][rc_node.capacitor_voltage(time)]
 
 # see resistor_and_capacitor_as_integrator_node.capacitor_current_eq for a proof the current on resistor equals to current on capacitor
 # see resistor_and_capacitor_as_integrator_node.resistor_voltage_eq for a proof the voltage on resistor is (initial_voltage - capacitor_voltage_function)

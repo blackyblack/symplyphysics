@@ -8,19 +8,15 @@ from pytest import approx, fixture, raises
 from symplyphysics import (
     units, convert_to, SI, errors
 )
+from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.laws.electricity import energy_accumulated_in_inductor_from_inductance_and_current as inductor_law
 
 @fixture
 def test_args():
-    Inductance = units.Quantity('Inductance')
-    Current = units.Quantity('Current')
-    SI.set_quantity_dimension(Inductance, units.inductance)
-    SI.set_quantity_scale_factor(Inductance, 0.15 * units.henry)
-    SI.set_quantity_dimension(Current, units.current)
-    SI.set_quantity_scale_factor(Current, 0.5 * units.ampere)
-
-    Args = namedtuple('Args', ['Inductance', 'Current'])
-    return Args(Inductance = Inductance, Current = Current)
+    Inductance = Quantity(units.inductance, 0.15 * units.henry)
+    Current = Quantity(units.current, 0.5 * units.ampere)
+    Args = namedtuple("Args", ["Inductance", "Current"])
+    return Args(Inductance=Inductance, Current=Current)
 
 def test_basic_energy(test_args):
     result = inductor_law.calculate_accumulated_energy(test_args.Inductance, test_args.Current)
@@ -29,24 +25,15 @@ def test_basic_energy(test_args):
     assert result_power == approx(0.01875, 0.00001)
 
 def test_bad_Inductance(test_args):
-    Lb = units.Quantity('Lb')
-    SI.set_quantity_dimension(Lb, units.length)
-    SI.set_quantity_scale_factor(Lb, 1 * units.meter)
-
+    Lb = Quantity(units.length)
     with raises(errors.UnitsError):
         inductor_law.calculate_accumulated_energy(Lb, test_args.Current)
-
     with raises(TypeError):
         inductor_law.calculate_accumulated_energy(100, test_args.Current)
 
 def test_bad_Current(test_args):
-    Ib = units.Quantity('Ib')
-    SI.set_quantity_dimension(Ib, units.length)
-    SI.set_quantity_scale_factor(Ib, 1 * units.meter)
-
+    Ib = Quantity(units.length)
     with raises(errors.UnitsError):
         inductor_law.calculate_accumulated_energy(test_args.Inductance, Ib)
-
     with raises(TypeError):
         inductor_law.calculate_accumulated_energy(test_args.Inductance, 100)
-        

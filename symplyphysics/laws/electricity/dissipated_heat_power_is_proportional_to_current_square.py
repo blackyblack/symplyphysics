@@ -1,7 +1,10 @@
+from sympy import Expr
 from symplyphysics import (
-    symbols, Eq, pretty, solve, Quantity, simplify, units,
-    validate_input, validate_output, expr_to_quantity
+    Eq, pretty, solve, simplify, units, expr_to_quantity
 )
+from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
+from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.symbols import Symbol, to_printable
 from symplyphysics.laws.electricity import power_from_energy_time as power_and_time
 from symplyphysics.laws.electricity import current_is_proportional_to_voltage as ohm_law
 from symplyphysics.laws.electricity import amount_energy_from_voltage_time_resistance as joule_lenz_law
@@ -14,7 +17,10 @@ from symplyphysics.laws.electricity import amount_energy_from_voltage_time_resis
 # I is current flowing through this element
 # R is impedance of this element
 
-heat_power, current, resistance = symbols("heat_power current resistance")
+heat_power = Symbol("heat_power", units.power)
+current = Symbol("current", units.current)
+resistance = Symbol("resistance", units.impedance)
+
 law = Eq(heat_power, current**2 * resistance)
 
 # This law might be easily derived via Joule-Lenz law and dependence of power from energy and time
@@ -29,12 +35,13 @@ power_derived = solve(law_derived, (joule_lenz_law.voltage, joule_lenz_law.amoun
 # Check if derived power is same as declared
 assert(simplify(power_derived - law.rhs) == 0)
 
-def print():
-    return pretty(law, use_unicode=False)
+def print(expr: Expr) -> str:
+    symbols = [heat_power, current, resistance]
+    return pretty(to_printable(expr, symbols), use_unicode=False)
 
-@validate_input(current_=units.current, resistance_=units.impedance)
-@validate_output(units.power)
+@validate_input_symbols(current_=current, resistance_=resistance)
+@validate_output_symbol(heat_power)
 def calculate_heat_power(current_: Quantity, resistance_: Quantity) -> Quantity:
     result_power_expr = solve(law, heat_power, dict=True)[0][heat_power]
     result_expr = result_power_expr.subs({current: current_, resistance: resistance_})
-    return expr_to_quantity(result_expr, "heat_power")
+    return expr_to_quantity(result_expr)

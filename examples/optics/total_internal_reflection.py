@@ -5,7 +5,6 @@ from symplyphysics import (
     solve, pi
 )
 from symplyphysics.laws.optics import refraction_angle_from_environments as refraction_law
-from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
 
 # This example show usefulness of refraction law.
 ## If ray of light tries to transfer from one medium to another, part of it transfers and refracts and another part reflects.
