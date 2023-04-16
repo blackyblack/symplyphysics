@@ -2,7 +2,6 @@ from symplyphysics import (
     expr_to_quantity, units, convert_to,solve, Eq, pretty
 )
 from symplyphysics.core.symbols.quantities import Quantity
-
 from symplyphysics.laws.electricity import amount_energy_from_voltage_time_resistance as joule_lenz_law
 from symplyphysics.laws.thermodynamics import thermal_energy_from_mass_and_temperature as operate_energy
 from symplyphysics.definitions import density_from_mass_volume as density_law
@@ -34,9 +33,10 @@ final_temperature = Quantity(units.temperature, (100 + CELSIUS_TO_KELVIN_OFFSET)
 ohm_law_applied = ohm_law.law.subs({ohm_law.current: operate_power.current, ohm_law.resistance: joule_lenz_law.resistance, ohm_law.voltage: joule_lenz_law.voltage})
 operate_power_applied = operate_power.law.subs(operate_power.voltage, joule_lenz_law.voltage)
 density_applied = density_law.definition.subs(density_law.mass, operate_energy.body_mass)
+joule_lenz_applied = joule_lenz_law.law.subs(joule_lenz_law.amount_energy, operate_energy.amount_energy)
 
-law = [density_applied, ohm_law_applied, operate_power_applied, operate_energy.law, joule_lenz_law.law]
-heating_time_solved = solve(law, (joule_lenz_law.amount_energy, joule_lenz_law.resistance, operate_power.current, operate_energy.body_mass, joule_lenz_law.time), dict=True)[0][joule_lenz_law.time]
+law = [density_applied, ohm_law_applied, operate_power_applied, operate_energy.law, joule_lenz_applied]
+heating_time_solved = solve(law, (operate_energy.amount_energy, joule_lenz_law.resistance, operate_power.current, operate_energy.body_mass, joule_lenz_law.time), dict=True)[0][joule_lenz_law.time]
 heating_time_eq = Eq(joule_lenz_law.time, heating_time_solved)
 
 print("\nFormula is:\n\n {}".format(pretty(heating_time_eq, use_unicode=False)))

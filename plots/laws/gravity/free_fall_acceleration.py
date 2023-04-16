@@ -5,10 +5,11 @@ from symplyphysics import (
 )
 from symplyphysics.laws.gravity import free_fall_acceleration_from_height as acceleration
 
-print("Formula is:\n{}".format(acceleration.print()))
+print("Formula is:\n{}".format(acceleration.print(acceleration.law)))
 
 height_above_ground = symbols("height_above_ground")
-gravity_constant = convert_to(units.gravitational_constant, units.newton * units.meter**2 / units.kilogram**2).subs(units.newton * units.meter**2 / units.kilogram**2, 1).evalf(5)
+gravity_constant_value = convert_to(units.gravitational_constant, units.newton * units.meter**2 / units.kilogram**2).evalf(5)
+gravity_constant = gravity_constant_value.subs(units.newton * units.meter**2 / units.kilogram**2, 1).evalf(5)
 earth_mass = 5.976e+24  # kilogram
 earth_radius = 6.371e+6 # meter
 
