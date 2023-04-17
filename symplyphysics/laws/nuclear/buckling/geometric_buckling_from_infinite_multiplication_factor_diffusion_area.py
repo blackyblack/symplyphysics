@@ -1,10 +1,9 @@
 from sympy import Expr
-from sympy.physics.units.dimensions import Dimension
 from symplyphysics import (
-    Eq, pretty, solve, units, simplify, S, expr_to_quantity
+    Eq, pretty, solve, units, simplify, expr_to_quantity
 )
 from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.quantities import Dimensionless, Quantity
 from symplyphysics.core.symbols.symbols import Symbol, to_printable
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_macroscopic_fission_cross_section_diffusion_coefficient as buckling_law
 from symplyphysics.laws.nuclear import diffusion_area_from_diffusion_coefficient as diffusion_area_law
@@ -26,8 +25,8 @@ from symplyphysics.laws.nuclear import infinite_multiplication_factor_from_macro
 ## Bg^2 - geometric buckling.
 ##   See [geometric buckling](./geometric_buckling_from_neutron_flux.py) implementation.
 
-infinite_multiplication_factor = Symbol("infinite_multiplication_factor", Dimension(S.One))
-effective_multiplication_factor = Symbol("effective_multiplication_factor", Dimension(S.One))
+infinite_multiplication_factor = Symbol("infinite_multiplication_factor", Dimensionless)
+effective_multiplication_factor = Symbol("effective_multiplication_factor", Dimensionless)
 diffusion_area = Symbol("diffusion_area", units.length**2)
 geometric_buckling_squared = Symbol("geometric_buckling_squared", 1 / units.length**2)
 

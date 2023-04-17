@@ -1,11 +1,10 @@
 from sympy import Expr
-from sympy.physics.units.dimensions import Dimension
 from symplyphysics import (
     assert_equivalent_dimension, Eq, pretty, solve, units, S,
     expr_to_quantity, convert_to
 )
 from symplyphysics.core.quantity_decorator import validate_input_symbols
-from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.quantities import Dimensionless, Quantity
 from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
@@ -18,7 +17,7 @@ from symplyphysics.core.symbols.symbols import Symbol, to_printable
 ## mole_count is the number of moles of the substance
 ## Na is Avogadro's number
 
-particles_count = Symbol("particles_count", Dimension(S.One))
+particles_count = Symbol("particles_count", Dimensionless)
 mole_count = Symbol("mole_count", units.amount_of_substance)
 
 law = Eq(units.avogadro, particles_count / mole_count)

@@ -1,11 +1,10 @@
 from sympy import Expr
-from sympy.physics.units.dimensions import Dimension
 from symplyphysics import (
-    Eq, pretty, solve, units, expr_to_quantity, S
+    Eq, pretty, solve, units, expr_to_quantity
 )
 from sympy.physics.units import speed_of_light
 from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.quantities import Dimensionless, Quantity
 from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
@@ -18,7 +17,7 @@ from symplyphysics.core.symbols.symbols import Symbol, to_printable
 ## n is refraction factor of medium.
 
 wave_speed_in_medium = Symbol("wave_speed_in_medium", units.velocity)
-refraction_factor = Symbol("refraction_factor", Dimension(S.One))
+refraction_factor = Symbol("refraction_factor", Dimensionless)
 
 law = Eq(wave_speed_in_medium, speed_of_light / refraction_factor)
 

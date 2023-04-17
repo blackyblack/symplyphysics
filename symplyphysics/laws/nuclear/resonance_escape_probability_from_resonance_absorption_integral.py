@@ -1,11 +1,10 @@
 from sympy import Expr
 from sympy.functions import exp
-from sympy.physics.units.dimensions import Dimension
 from symplyphysics import (
     Eq, pretty, solve, units, S, Probability, expr_to_quantity, convert_to
 )
 from symplyphysics.core.quantity_decorator import validate_input_symbols
-from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.quantities import Dimensionless, Quantity
 from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
@@ -33,9 +32,9 @@ from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 absorber_atomic_number_density = Symbol("absorber_atomic_number_density", 1 / units.length**3)
 effective_resonance_integral = Symbol("effective_resonance_integral", units.length**2)
-average_lethargy_change = Symbol("average_lethargy_change", Dimension(S.One))
+average_lethargy_change = Symbol("average_lethargy_change", Dimensionless)
 macroscopic_scattering_cross_section_moderator = Symbol("macroscopic_scattering_cross_section_moderator", 1 / units.length)
-resonance_escape_probability = Symbol("resonance_escape_probability", Dimension(S.One))
+resonance_escape_probability = Symbol("resonance_escape_probability", Dimensionless)
 
 law = Eq(resonance_escape_probability,
     exp(-1 * (absorber_atomic_number_density * effective_resonance_integral) /

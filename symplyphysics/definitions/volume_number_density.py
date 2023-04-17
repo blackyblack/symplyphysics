@@ -1,10 +1,9 @@
 from sympy import Expr
-from sympy.physics.units.dimensions import Dimension
 from symplyphysics import (
-    S, Eq, pretty, solve, units, expr_to_quantity
+    Eq, pretty, solve, units, expr_to_quantity
 )
 from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.quantities import Dimensionless, Quantity
 from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
@@ -16,7 +15,7 @@ from symplyphysics.core.symbols.symbols import Symbol, to_printable
 ## V is volume
 
 number_density = Symbol("number_density", 1 / units.volume)
-objects = Symbol("objects", Dimension(S.One))
+objects = Symbol("objects", Dimensionless)
 volume = Symbol("volume", units.volume)
 
 definition = Eq(number_density, objects / volume)

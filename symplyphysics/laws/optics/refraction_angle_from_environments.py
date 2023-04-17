@@ -1,11 +1,10 @@
 from sympy import Expr
-from sympy.physics.units.dimensions import Dimension
 from symplyphysics import (
-    Eq, pretty, solve, units, sin, pi, S
+    Eq, pretty, solve, units, sin, pi
 )
 from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
 from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.quantities import Dimensionless, Quantity
 from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
@@ -25,8 +24,8 @@ from symplyphysics.core.symbols.symbols import Symbol, to_printable
 ## - light is monochromic, as refactive index depends on the light frequency.
 ## - refracting media is uniform, so refracting index does not change over ray path.
 
-incedence_refractive_index = Symbol("incedence_refractive_index", Dimension(S.One))
-resulting_refractive_index = Symbol("resulting_refractive_index", Dimension(S.One))
+incedence_refractive_index = Symbol("incedence_refractive_index", Dimensionless)
+resulting_refractive_index = Symbol("resulting_refractive_index", Dimensionless)
 incedence_angle = Symbol("incedence_angle", angle_type)
 refraction_angle = Symbol("refraction_angle", angle_type)
 

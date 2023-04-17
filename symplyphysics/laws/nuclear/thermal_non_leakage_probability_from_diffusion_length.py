@@ -1,11 +1,10 @@
 from sympy import Expr
-from sympy.physics.units.dimensions import Dimension
 from symplyphysics import (
     Eq, pretty, solve, units, S,
     Probability, expr_to_quantity, convert_to
 )
 from symplyphysics.core.quantity_decorator import validate_input_symbols
-from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.quantities import Dimensionless, Quantity
 from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
@@ -22,7 +21,7 @@ from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 thermal_diffusion_area = Symbol("thermal_diffusion_area", units.length**2)
 geometric_buckling = Symbol("geometric_buckling", 1 / units.length**2)
-thermal_non_leakage_probability = Symbol("thermal_non_leakage_probability", Dimension(S.One))
+thermal_non_leakage_probability = Symbol("thermal_non_leakage_probability", Dimensionless)
 
 law = Eq(thermal_non_leakage_probability, 1 / (1 + thermal_diffusion_area * geometric_buckling))
 

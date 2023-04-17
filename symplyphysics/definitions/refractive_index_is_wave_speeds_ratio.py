@@ -1,10 +1,9 @@
 from sympy import Expr
-from sympy.physics.units.dimensions import Dimension
 from symplyphysics import (
     Eq, assert_equivalent_dimension, pretty, solve, units, convert_to, S, expr_to_quantity
 )
 from symplyphysics.core.quantity_decorator import validate_input_symbols
-from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.quantities import Dimensionless, Quantity
 from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
@@ -21,7 +20,7 @@ from symplyphysics.core.symbols.symbols import Symbol, to_printable
 ## - Mediums are isotropic and transparent.
 ## - Wave is monochromic as propagation speed depends on frequency.
 
-refractive_index = Symbol("refractive_index", Dimension(S.One))
+refractive_index = Symbol("refractive_index", Dimensionless)
 outer_speed = Symbol("outer_speed", units.velocity)
 refracting_speed = Symbol("refracting_speed", units.velocity)
 

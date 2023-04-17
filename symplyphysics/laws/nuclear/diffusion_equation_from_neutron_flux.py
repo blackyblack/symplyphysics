@@ -1,12 +1,11 @@
 from sympy.core.expr import Expr
 from sympy.vector import Laplacian
-from sympy.physics.units.dimensions import Dimension
 from symplyphysics import (
     symbols, Eq, solve, pretty, Function, units, simplify, S,
     expr_to_quantity, convert_to
 )
 from symplyphysics.core.quantity_decorator import validate_input_symbols
-from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.quantities import Dimensionless, Quantity
 from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
@@ -31,8 +30,8 @@ from symplyphysics.core.symbols.symbols import Symbol, to_printable
 diffusion_coefficient = Symbol("diffusion_coefficient", units.length)
 macroscopic_absorption_cross_section = Symbol("macroscopic_absorption_cross_section", 1 / units.length)
 macroscopic_fission_cross_section = Symbol("macroscopic_fission_cross_section", 1 / units.length)
-effective_multiplication_factor = Symbol("effective_multiplication_factor", Dimension(S.One))
-neutrons_per_fission = Symbol("neutrons_per_fission", Dimension(S.One))
+effective_multiplication_factor = Symbol("effective_multiplication_factor", Dimensionless)
+neutrons_per_fission = Symbol("neutrons_per_fission", Dimensionless)
 
 flux_position = symbols("flux_position")
 neutron_flux = symbols("neutron_flux", cls = Function)

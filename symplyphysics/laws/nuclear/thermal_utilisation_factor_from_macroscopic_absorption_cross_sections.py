@@ -1,10 +1,9 @@
 from sympy import Expr
-from sympy.physics.units.dimensions import Dimension
 from symplyphysics import (
     Eq, pretty, solve, units, S, Probability, expr_to_quantity, convert_to
 )
 from symplyphysics.core.quantity_decorator import validate_input_symbols
-from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.quantities import Dimensionless, Quantity
 from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
@@ -21,7 +20,7 @@ from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 macroscopic_fuel_absorption_cross_section = Symbol("macroscopic_fuel_absorption_cross_section", 1 / units.length)
 macroscopic_total_absorption_cross_section = Symbol("macroscopic_total_absorption_cross_section", 1 / units.length)
-thermal_utilisation_factor = Symbol("thermal_utilisation_factor", Dimension(S.One))
+thermal_utilisation_factor = Symbol("thermal_utilisation_factor", Dimensionless)
 
 law = Eq(thermal_utilisation_factor,
     macroscopic_fuel_absorption_cross_section / macroscopic_total_absorption_cross_section)

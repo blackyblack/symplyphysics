@@ -1,12 +1,11 @@
 from functools import partial
-from sympy import Expr
+from sympy import S, Expr
 from sympy.physics.units import Dimension, Quantity as SymQuantity
 from sympy.physics.units.systems.si import SI
 from .symbols import DimensionSymbol
 
 
 #TODO: maybe derive dimension automatically from the expression
-#TODO: define Dimension(S.One) as dimensionless type
 
 class Quantity(DimensionSymbol, SymQuantity):
     def __new__(cls, dimension: Dimension=1, scale: Expr=1, *, display_name: str=None, **assumptions):
@@ -25,3 +24,6 @@ class Quantity(DimensionSymbol, SymQuantity):
 
     def identity(self, *_args):
         return self
+    
+
+Dimensionless = Dimension(S.One)

@@ -1,11 +1,10 @@
 from sympy import Expr
 from sympy.functions import exp
-from sympy.physics.units.dimensions import Dimension
 from symplyphysics import (
     Eq, pretty, solve, units, S, Probability, expr_to_quantity, convert_to
 )
 from symplyphysics.core.quantity_decorator import validate_input_symbols
-from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.quantities import Dimensionless, Quantity
 from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
@@ -24,7 +23,7 @@ from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 geometric_buckling = Symbol("geometric_buckling", 1 / units.length**2)
 neutron_fermi_age = Symbol("neutron_fermi_age", units.length**2)
-fast_non_leakage_probability = Symbol("fast_non_leakage_probability", Dimension(S.One))
+fast_non_leakage_probability = Symbol("fast_non_leakage_probability", Dimensionless)
 
 law = Eq(fast_non_leakage_probability, exp(-1 * geometric_buckling * neutron_fermi_age))
 
