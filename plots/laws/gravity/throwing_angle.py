@@ -14,7 +14,6 @@ flight_time = symbols("flight_time")
 throwing_velocity = symbols("throwing_velocity")
 # hint sympy that we are not interested in negative throwing angles
 throwing_angle = symbols("throwing_angle", positive=True)
-
 time_argument = symbols("time_argument")
 gravitational_acceleration = symbols("gravitational_acceleration")
 
@@ -77,7 +76,7 @@ p0 = plot(
     title="Throwing distance depending on angle",
     label = "distance",
     xlabel="throwing angle, radians",
-    ylabel="distance, m",
+    ylabel="distance",
     legend=True,
     annotations = {},
     backend=MatplotlibBackend,

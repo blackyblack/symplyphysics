@@ -1,7 +1,10 @@
+from sympy import Expr
 from symplyphysics import (
-    symbols, Eq, pretty, solve, Quantity, units,
-    validate_input, validate_output, expr_to_quantity
+    Eq, pretty, solve, units, expr_to_quantity
 )
+from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
+from symplyphysics.core.symbols.quantities import Dimensionless, Quantity
+from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## The transport mean free path (λtr) is an average distance a neutron will move in its original direction
@@ -16,21 +19,22 @@ from symplyphysics import (
 ##   See [average scattering angle cosine](./most_neutron_energies_scattering_angle_average_cosine.py) implementation.
 ## Σtr (macroscopic transport cross-section) is the macroscopic cross-section for transport mean free path.
 
-macroscopic_scattering_cross_section = symbols('macroscopic_scattering_cross_section')
-average_scattering_angle_cosine = symbols('average_scattering_angle_cosine')
-macroscopic_transport_cross_section = symbols('macroscopic_transport_cross_section')
+macroscopic_scattering_cross_section = Symbol("macroscopic_scattering_cross_section", 1 / units.length)
+average_scattering_angle_cosine = Symbol("average_scattering_angle_cosine", Dimensionless)
+macroscopic_transport_cross_section = Symbol("macroscopic_transport_cross_section", 1 / units.length)
 
 law = Eq(macroscopic_transport_cross_section,
     macroscopic_scattering_cross_section * (1 - average_scattering_angle_cosine))
 
-def print():
-    return pretty(law, use_unicode=False)
+def print(expr: Expr) -> str:
+    symbols = [macroscopic_scattering_cross_section, average_scattering_angle_cosine, macroscopic_transport_cross_section]
+    return pretty(to_printable(expr, symbols), use_unicode=False)
 
-@validate_input(macroscopic_scattering_cross_section_=(1 / units.length))
-@validate_output(1 / units.length)
+@validate_input_symbols(macroscopic_scattering_cross_section_=macroscopic_scattering_cross_section, average_scattering_angle_cosine_=average_scattering_angle_cosine)
+@validate_output_symbol(macroscopic_transport_cross_section)
 def calculate_cross_section(macroscopic_scattering_cross_section_: Quantity, average_scattering_angle_cosine_: float) -> Quantity:
     result_cross_section_expr = solve(law, macroscopic_transport_cross_section, dict=True)[0][macroscopic_transport_cross_section]
     result_expr = result_cross_section_expr.subs({
         macroscopic_scattering_cross_section: macroscopic_scattering_cross_section_,
         average_scattering_angle_cosine: average_scattering_angle_cosine_})
-    return expr_to_quantity(result_expr, 'macro_transport_cross_section')
+    return expr_to_quantity(result_expr)

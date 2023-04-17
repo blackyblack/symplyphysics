@@ -1,7 +1,10 @@
+from sympy import Expr
 from symplyphysics import (
-    symbols, Eq, pretty, solve, Quantity, units, pi,
-    validate_input, validate_output, expr_to_quantity
+    Eq, pretty, solve, units, pi, expr_to_quantity
 )
+from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
+from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.symbols import Symbol, to_printable
 from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_parallelepiped as parallelepiped_flux
 
 # Description
@@ -17,10 +20,10 @@ from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_paralle
 ## Bg^2parallelepiped - squared geometric buckling for parallelepiped.
 ##   See [geometric buckling](./geometric_buckling_from_neutron_flux.py) implementation.
 
-parallelepiped_width = symbols('parallelepiped_width')
-parallelepiped_length = symbols('parallelepiped_length')
-parallelepiped_height = symbols('parallelepiped_height')
-geometric_buckling_squared = symbols('geometric_buckling_squared')
+parallelepiped_width = Symbol("parallelepiped_width", units.length)
+parallelepiped_length = Symbol("parallelepiped_length", units.length)
+parallelepiped_height = Symbol("parallelepiped_height", units.length)
+geometric_buckling_squared = Symbol("geometric_buckling_squared", 1 / units.length**2)
 
 law = Eq(geometric_buckling_squared,
     (pi / parallelepiped_width)**2 + (pi / parallelepiped_length)**2 + (pi / parallelepiped_height)**2)
@@ -40,11 +43,12 @@ geometric_buckling_parallelepiped_solved = geometric_buckling_parallelepiped_squ
 })
 assert geometric_buckling_parallelepiped_solved == law.rhs
 
-def print():
-    return pretty(law, use_unicode=False)
+def print(expr: Expr) -> str:
+    symbols = [parallelepiped_width, parallelepiped_length, parallelepiped_height, geometric_buckling_squared]
+    return pretty(to_printable(expr, symbols), use_unicode=False)
 
-@validate_input(parallelepiped_width_=units.length, parallelepiped_length_=units.length, parallelepiped_height_=units.length)
-@validate_output(1 / units.length**2)
+@validate_input_symbols(parallelepiped_width_=parallelepiped_width, parallelepiped_length_=parallelepiped_length, parallelepiped_height_=parallelepiped_height)
+@validate_output_symbol(geometric_buckling_squared)
 def calculate_geometric_buckling_squared(
     parallelepiped_width_: Quantity, parallelepiped_length_: Quantity, parallelepiped_height_: Quantity) -> Quantity:
     solved = solve(law, geometric_buckling_squared, dict=True)[0][geometric_buckling_squared]
@@ -52,4 +56,4 @@ def calculate_geometric_buckling_squared(
         parallelepiped_width: parallelepiped_width_,
         parallelepiped_length: parallelepiped_length_,
         parallelepiped_height: parallelepiped_height_})
-    return expr_to_quantity(result_expr, 'parallelepiped_geometric_buckling_squared')
+    return expr_to_quantity(result_expr)

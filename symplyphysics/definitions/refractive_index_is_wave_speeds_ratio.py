@@ -1,12 +1,17 @@
+from sympy import Expr
 from symplyphysics import (
-    symbols, Eq, pretty, solve, Quantity, units,
-    validate_input, convert_to, S, expr_to_quantity
+    Eq, assert_equivalent_dimension, pretty, solve, units, convert_to, S, expr_to_quantity
 )
+from symplyphysics.core.quantity_decorator import validate_input_symbols
+from symplyphysics.core.symbols.quantities import Dimensionless, Quantity
+from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## If wave transfers from one medium to another, it refracts. That's because of different propagation speeds in different mediums.
 ## This factor shows how much slower wave propagates in refracting medium related to outer medium.
-## Definition: n = Vouter/Vrefraction, where
+
+# Definition: n = Vouter/Vrefraction
+# Where:
 ## n is refractive index,
 ## Vouter is wave propagation speed in outer medium,
 ## Vrefracting is wave propagation speed in refracting medium.
@@ -15,14 +20,22 @@ from symplyphysics import (
 ## - Mediums are isotropic and transparent.
 ## - Wave is monochromic as propagation speed depends on frequency.
 
-refractive_index, outer_speed, refracting_speed = symbols("refractive_index, outer_speed, refracting_speed")
+refractive_index = Symbol("refractive_index", Dimensionless)
+outer_speed = Symbol("outer_speed", units.velocity)
+refracting_speed = Symbol("refracting_speed", units.velocity)
+
 definition = Eq(refractive_index, outer_speed / refracting_speed)
 
-def print():
-    return pretty(definition, use_unicode=False)
+definition_units_SI = S.One
 
-@validate_input(outer_speed_=units.velocity, refracting_speed_=units.velocity)
+def print(expr: Expr) -> str:
+    symbols = [refractive_index, outer_speed, refracting_speed]
+    return pretty(to_printable(expr, symbols), use_unicode=False)
+
+@validate_input_symbols(outer_speed_=outer_speed, refracting_speed_=refracting_speed)
 def calculate_refractive_index(outer_speed_: Quantity, refracting_speed_: Quantity) -> float:
     result_index_expr = solve(definition, refractive_index, dict=True)[0][refractive_index]    
     result_expr = result_index_expr.subs({outer_speed: outer_speed_, refracting_speed: refracting_speed_})
-    return convert_to(expr_to_quantity(result_expr, 'refractive_index'), S.One)
+    result = expr_to_quantity(result_expr)
+    assert_equivalent_dimension(result, "validate_output", "return", "calculate_refractive_index", refractive_index.dimension)
+    return convert_to(result, S.One).evalf()

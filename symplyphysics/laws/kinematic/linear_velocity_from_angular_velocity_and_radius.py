@@ -1,8 +1,11 @@
+from sympy import Expr
 from symplyphysics import (
-    symbols, Eq, pretty, Quantity, units, solve, SI,
-    validate_input, validate_output, expr_to_quantity
+    Eq, pretty, units, solve, expr_to_quantity
 )
 from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
+from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
+from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## Angular velocity is the rate of change of the angular position of a rotating body. We can define the angular velocity of a particle as the rate
@@ -15,20 +18,19 @@ from sympy.physics.units.definitions.dimension_definitions import angle as angle
 ## ω is angular velocity
 ## R is curve radius in this point of trajectory.
 
-linear_velocity, angular_velocity = symbols("linear_velocity angular_velocity")
-curve_radius = symbols("curve_radius")
+linear_velocity = Symbol("linear_velocity", units.velocity)
+angular_velocity = Symbol("angular_velocity", angle_type / units.time)
+curve_radius = Symbol("curve_radius", units.length)
 
 law = Eq(linear_velocity, angular_velocity * curve_radius)
 
+def print(expr: Expr) -> str:
+    symbols = [linear_velocity, angular_velocity, curve_radius]
+    return pretty(to_printable(expr, symbols), use_unicode=False)
 
-def print():
-    return pretty(law, use_unicode=False)
-
-@validate_input(angular_velocity_=(angle_type / units.time), curve_radius_=units.length)
-@validate_output(units.velocity)
-def calculate_linear_velocity(angular_velocity_: Quantity, curve_radius_: Quantity) -> Quantity:        
+@validate_input_symbols(angular_velocity_=angular_velocity, curve_radius_=curve_radius)
+@validate_output_symbol(linear_velocity)
+def calculate_linear_velocity(angular_velocity_: Quantity, curve_radius_: Quantity) -> Quantity:
     solved = solve(law, linear_velocity, dict=True)[0][linear_velocity]
-    #HACK: sympy angles are always in radians and angular velocity cannot be properly converted to velocity
-    SI.set_quantity_dimension(angular_velocity_, 1 / units.time)
     result_expr = solved.subs({angular_velocity: angular_velocity_, curve_radius: curve_radius_})
-    return expr_to_quantity(result_expr, "linear_velocity_out")
+    return expr_to_quantity(result_expr)

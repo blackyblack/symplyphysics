@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
 from symplyphysics import (
-    Eq, units, convert_to, SI, solve, expr_to_quantity, simplify
+    Eq, units, convert_to, solve, expr_to_quantity, simplify
 )
+from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.laws.kinematic import centripetal_acceleration_is_squared_velocity_by_radius as centripetal_acceleration_law
 from symplyphysics.laws.gravity import free_fall_acceleration_from_height as free_fall_law
 
@@ -16,7 +17,7 @@ from symplyphysics.laws.gravity import free_fall_acceleration_from_height as fre
 ## in points of minimum and maximum distance of elliptic orbit. We assume circular orbit for the sake of simplicity.
 ## Note, that satellite is non-inertial system, so we cannot apply first Newton's law to solve this problem.
 
-solution = Eq(centripetal_acceleration_law.definition.rhs, free_fall_law.law.rhs)
+solution = Eq(centripetal_acceleration_law.law.rhs, free_fall_law.law.rhs)
 solution_applied = solution.subs(centripetal_acceleration_law.curve_radius, free_fall_law.planet_radius + free_fall_law.height_above_surface)
 
 # first solution is negative and corresponds to the backwards direction of velocity - ignore it
@@ -25,24 +26,15 @@ satellite_velocity = solve(solution_applied, centripetal_acceleration_law.linear
 print(f"The formula for satellite linear velocity is: {simplify(satellite_velocity)}")
 
 ## As a curve radius we are having radius of the planet plus desired height of the orbit. Let's take Earth as an example and 100km height.
-planet_radius_ = units.Quantity("planet_radius") 
-SI.set_quantity_dimension(planet_radius_, units.length)
-SI.set_quantity_scale_factor(planet_radius_, 6400 * units.kilometer)
-
-planet_mass_ = units.Quantity("planet_mass")
-SI.set_quantity_dimension(planet_mass_, units.mass)
-SI.set_quantity_scale_factor(planet_mass_, 5.9742e24 * units.kilogram)
-
-height_above_surface_ = units.Quantity("height_above_surface")
-SI.set_quantity_dimension(height_above_surface_, units.length)
-SI.set_quantity_scale_factor(height_above_surface_, 100 * units.kilometer)
+planet_radius_ = Quantity(6400 * units.kilometer) 
+planet_mass = Quantity(5.9742e24 * units.kilogram)
+height_above_surface_ = Quantity(100 * units.kilometer)
 
 required_velocity_expression = satellite_velocity.subs({
-    free_fall_law.planet_mass: planet_mass_,
+    free_fall_law.planet_mass: planet_mass,
     free_fall_law.planet_radius : planet_radius_,
-    free_fall_law.height_above_surface: height_above_surface_
-    })
+    free_fall_law.height_above_surface: height_above_surface_})
 
-result_velocity = expr_to_quantity(required_velocity_expression, "result_velocity")
+result_velocity = expr_to_quantity(required_velocity_expression)
 result = convert_to(result_velocity, units.kilometer / units.second).subs({units.kilometer / units.second: 1}).evalf(3)
 print(f"Required velocity to launch satellite is {result} kilometer/sec")

@@ -15,10 +15,10 @@ from symplyphysics import (
 ## k_effective (effective multiplication factor) is ratio of the neutrons produced by fission in one neutron
 ##   generation to the number of neutrons lost through absorption and leakage in the preceding neutron generation.
 
-fast_non_leakage_probability = symbols('fast_non_leakage_probability')
-thermal_non_leakage_probability = symbols('thermal_non_leakage_probability')
-infinite_multiplication_factor = symbols('infinite_multiplication_factor')
-effective_multiplication_factor = symbols('effective_multiplication_factor')
+fast_non_leakage_probability = symbols("fast_non_leakage_probability")
+thermal_non_leakage_probability = symbols("thermal_non_leakage_probability")
+infinite_multiplication_factor = symbols("infinite_multiplication_factor")
+effective_multiplication_factor = symbols("effective_multiplication_factor")
 
 law = Eq(effective_multiplication_factor,
     infinite_multiplication_factor * fast_non_leakage_probability * thermal_non_leakage_probability)
@@ -26,8 +26,10 @@ law = Eq(effective_multiplication_factor,
 def print():
     return pretty(law, use_unicode=False)
 
-def calculate_multiplication_factor(infinite_multiplication_factor_: float,
-    fast_non_leakage_probability_: Probability, thermal_non_leakage_probability_: Probability) -> float:
+def calculate_multiplication_factor(
+    infinite_multiplication_factor_: float,
+    fast_non_leakage_probability_: Probability,
+    thermal_non_leakage_probability_: Probability) -> float:
 
     result_factor_expr = solve(law, effective_multiplication_factor, dict=True)[0][effective_multiplication_factor]
     result_expr = result_factor_expr.subs({

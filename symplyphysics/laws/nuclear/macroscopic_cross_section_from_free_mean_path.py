@@ -1,7 +1,10 @@
+from sympy import Expr
 from symplyphysics import (
-    symbols, Eq, pretty, solve, Quantity, units,
-    validate_input, validate_output, expr_to_quantity
+    Eq, pretty, solve, units, expr_to_quantity
 )
+from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
+from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## Macroscopic cross-section - represents the effective target area of all of the nuclei contained
@@ -14,18 +17,18 @@ from symplyphysics import (
 ## interaction, over the interaction probability distribution.
 ## Σ is the macroscopic cross-section.
 
-mean_free_path = symbols('mean_free_path')
-macroscopic_cross_section = symbols('macroscopic_cross_section')
+mean_free_path = Symbol("mean_free_path", units.length)
+macroscopic_cross_section = Symbol("macroscopic_cross_section", 1 / units.length)
 
 law = Eq(macroscopic_cross_section, 1 / mean_free_path)
 
-def print():
-    return pretty(law, use_unicode=False)
+def print(expr: Expr) -> str:
+    symbols = [mean_free_path, macroscopic_cross_section]
+    return pretty(to_printable(expr, symbols), use_unicode=False)
 
-@validate_input(mean_free_path_=units.length)
-@validate_output(1 / units.length)
+@validate_input_symbols(mean_free_path_=mean_free_path)
+@validate_output_symbol(macroscopic_cross_section)
 def calculate_cross_section(mean_free_path_: Quantity) -> Quantity:
     result_cross_section_expr = solve(law, macroscopic_cross_section, dict=True)[0][macroscopic_cross_section]
-    result_expr = result_cross_section_expr.subs({
-        mean_free_path: mean_free_path_})
-    return expr_to_quantity(result_expr, 'macro_cross_section')
+    result_expr = result_cross_section_expr.subs(mean_free_path, mean_free_path_)
+    return expr_to_quantity(result_expr)

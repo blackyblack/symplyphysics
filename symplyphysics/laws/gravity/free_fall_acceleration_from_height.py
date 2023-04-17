@@ -1,8 +1,11 @@
+from sympy import Expr
 from symplyphysics import (
-    symbols, Eq, pretty, solve, Quantity, units, simplify,
-    validate_input, validate_output, expr_to_quantity
+    Eq, pretty, solve, units, simplify, expr_to_quantity
 )
 from sympy.physics.units import gravitational_constant
+from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
+from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.symbols import Symbol, to_printable
 from symplyphysics.laws.gravity import gravity_force_from_mass_and_distance as gravity_law
 from symplyphysics.laws.dynamics import acceleration_from_force as newton2_law
 
@@ -16,10 +19,10 @@ from symplyphysics.laws.dynamics import acceleration_from_force as newton2_law
 ## R is radius of the planet
 ## h is height above the planet surface
 
-free_fall_acceleration = symbols("free_fall_acceleration")
-planet_mass = symbols("planet_mass")
-planet_radius = symbols("planet_radius")
-height_above_surface = symbols("height_above_surface")
+free_fall_acceleration = Symbol("free_fall_acceleration", units.acceleration)
+planet_mass = Symbol("planet_mass", units.mass)
+planet_radius = Symbol("planet_radius", units.length)
+height_above_surface = Symbol("height_above_surface", units.length)
 
 law = Eq(free_fall_acceleration, gravitational_constant * planet_mass / (planet_radius + height_above_surface)**2)
 
@@ -39,12 +42,13 @@ derived_free_fall_acceleration = newton2_law.law.rhs.subs({
 difference = simplify(derived_free_fall_acceleration - law.rhs)
 assert(difference == 0)
 
-def print():
-    return pretty(law, use_unicode=False)
-    
-@validate_input(planet_mass_=units.mass, planet_radius_=units.length, height_above_surface_=units.length)
-@validate_output(units.acceleration)
+def print(expr: Expr) -> str:
+    symbols = [free_fall_acceleration, planet_mass, planet_radius, height_above_surface]
+    return pretty(to_printable(expr, symbols), use_unicode=False)
+
+@validate_input_symbols(planet_mass_=planet_mass, planet_radius_=planet_radius, height_above_surface_=height_above_surface)
+@validate_output_symbol(free_fall_acceleration)
 def calculate_acceleration(planet_mass_: Quantity, planet_radius_: Quantity, height_above_surface_: Quantity) -> Quantity:
     result_accel_expr = solve(law, free_fall_acceleration, dict=True)[0][free_fall_acceleration]
     result_expr = result_accel_expr.subs({planet_mass: planet_mass_, planet_radius: planet_radius_, height_above_surface: height_above_surface_})
-    return expr_to_quantity(result_expr, "free_fall_acceleration")
+    return expr_to_quantity(result_expr)

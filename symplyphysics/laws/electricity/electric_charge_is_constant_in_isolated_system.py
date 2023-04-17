@@ -1,7 +1,10 @@
+from sympy import Expr
 from symplyphysics import (
-    symbols, Eq, pretty, solve, Quantity, units,
-    validate_input, validate_output, expr_to_quantity
+    Eq, pretty, solve, units, expr_to_quantity
 )
+from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
+from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## Q_after = Q_before
@@ -9,15 +12,18 @@ from symplyphysics import (
 ## In other words, with no external charge flowing thougth the bouds of system the summary electric charge of all system components remains constant
 ## during any current flows (charge interchanges) between components. Charge is neither being created in isolated system nor dissapearing.
 
-charge_before, charge_after = symbols('charge_before charge_after')
+charge_before = Symbol("charge_before", units.charge)
+charge_after = Symbol("charge_after", units.charge)
+
 law = Eq(charge_after, charge_before)
 
-def print():
-    return pretty(law, use_unicode=False)
+def print(expr: Expr) -> str:
+    symbols = [charge_before, charge_after]
+    return pretty(to_printable(expr, symbols), use_unicode=False)
 
-@validate_input(charge_before_ = units.charge)
-@validate_output(units.charge)
+@validate_input_symbols(charge_before_=charge_before)
+@validate_output_symbol(charge_after)
 def calculate_charge_after(charge_before_: Quantity) -> Quantity:
     solved = solve(law, charge_after, dict=True)[0][charge_after]    
     result_expr = solved.subs(charge_before, charge_before_)
-    return expr_to_quantity(result_expr, 'charge_after')
+    return expr_to_quantity(result_expr)

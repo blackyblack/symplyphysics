@@ -1,7 +1,10 @@
+from sympy import Expr
 from symplyphysics import (
-    symbols, Eq, pretty, solve, Quantity, units,
-    validate_input, validate_output, expr_to_quantity
+    Eq, pretty, solve, units, expr_to_quantity
 )
+from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
+from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## P_after = P_before
@@ -13,15 +16,18 @@ from symplyphysics import (
 ## Summary momentum of the system is the sum of momentums of every member of this system.
 ## Also applicable for reactive engine simulation
 
-momentum_before, momentum_after = symbols('momentum_before momentum_after')
+momentum_before = Symbol("momentum_before", units.momentum)
+momentum_after = Symbol("momentum_after", units.momentum)
+
 law = Eq(momentum_after, momentum_before)
 
-def print():
-    return pretty(law, use_unicode=False)
+def print(expr: Expr) -> str:
+    symbols = [momentum_before, momentum_after]
+    return pretty(to_printable(expr, symbols), use_unicode=False)
 
-@validate_input(momentum_before_ = units.momentum)
-@validate_output(units.momentum)
+@validate_input_symbols(momentum_before_=momentum_before)
+@validate_output_symbol(momentum_after)
 def calculate_momentum_after(momentum_before_: Quantity) -> Quantity:
     solved = solve(law, momentum_after, dict=True)[0][momentum_after]    
-    result_expr = solved.subs({momentum_before : momentum_before_})
-    return expr_to_quantity(result_expr, 'momentum_after')
+    result_expr = solved.subs(momentum_before, momentum_before_)
+    return expr_to_quantity(result_expr)

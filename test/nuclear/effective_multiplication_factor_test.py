@@ -9,9 +9,8 @@ def test_args():
     infinite_multiplication_factor = 1.092
     fast_non_leakage_probability = Probability(0.95)
     thermal_non_leakage_probability = Probability(0.96)
-
-    Args = namedtuple('Args', ['kinf', 'Pf', 'Pt'])
-    return Args(kinf = infinite_multiplication_factor, Pf = fast_non_leakage_probability, Pt = thermal_non_leakage_probability)
+    Args = namedtuple("Args", ["kinf", "Pf", "Pt"])
+    return Args(kinf=infinite_multiplication_factor, Pf=fast_non_leakage_probability, Pt=thermal_non_leakage_probability)
 
 # Expected to get k_effective = 1 (critical state)
 def test_basic_multiplication_factor(test_args):

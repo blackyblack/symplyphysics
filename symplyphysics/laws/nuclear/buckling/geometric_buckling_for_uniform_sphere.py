@@ -1,7 +1,10 @@
+from sympy import Expr
 from symplyphysics import (
-    symbols, Eq, pretty, solve, Quantity, units, pi,
-    validate_input, validate_output, expr_to_quantity
+    Eq, pretty, solve, units, pi, expr_to_quantity
 )
+from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
+from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.symbols import Symbol, to_printable
 from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_sphere as sphere_flux
 
 # Description
@@ -15,8 +18,8 @@ from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_sphere 
 ## Bg^2sphere - squared geometric buckling for sphere.
 ##   See [geometric buckling](./geometric_buckling_from_neutron_flux.py) implementation.
 
-sphere_radius = symbols('sphere_radius')
-geometric_buckling_squared = symbols('geometric_buckling_squared')
+sphere_radius = Symbol("sphere_radius", units.length)
+geometric_buckling_squared = Symbol("geometric_buckling_squared", 1 / units.length**2)
 
 law = Eq(geometric_buckling_squared, (pi / sphere_radius)**2)
 
@@ -30,12 +33,13 @@ geometric_buckling_sphere_squared = sphere_flux.radial_constant**2
 geometric_buckling_sphere_flux_solved = geometric_buckling_sphere_squared.subs(sphere_flux.sphere_radius, sphere_radius)
 assert geometric_buckling_sphere_flux_solved == law.rhs
 
-def print():
-    return pretty(law, use_unicode=False)
+def print(expr: Expr) -> str:
+    symbols = [sphere_radius,  geometric_buckling_squared]
+    return pretty(to_printable(expr, symbols), use_unicode=False)
 
-@validate_input(sphere_radius_=units.length)
-@validate_output(1 / units.length**2)
+@validate_input_symbols(sphere_radius_=sphere_radius)
+@validate_output_symbol(geometric_buckling_squared)
 def calculate_geometric_buckling_squared(sphere_radius_: Quantity) -> Quantity:
     solved = solve(law, geometric_buckling_squared, dict=True)[0][geometric_buckling_squared]
     result_expr = solved.subs(sphere_radius, sphere_radius_)
-    return expr_to_quantity(result_expr, 'sphere_geometric_buckling_squared')
+    return expr_to_quantity(result_expr)

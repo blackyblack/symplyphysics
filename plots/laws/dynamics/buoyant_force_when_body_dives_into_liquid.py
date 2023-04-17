@@ -5,9 +5,9 @@ from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics.laws.dynamics import buoyant_force_from_density_and_volume as archimedes_law
 from symplyphysics.laws.dynamics import acceleration_from_force as gravity_law
 
-print("Formula is:\n{}".format(archimedes_law.print()))
+print("Formula is:\n{}".format(archimedes_law.print(archimedes_law.law)))
 
-height = symbols('height')
+height = symbols("height")
 
 fluid_density = 0.6
 cylinder_mass = 30
@@ -41,11 +41,11 @@ print("Buoyant force below liquid function is:\n{}".format(
 p1 = plot(
     result_buoyant_force_above_liquid,
     (height, 0, cylinder_height),
-    line_color='blue',
-    title='Floating body',
-    xlabel='Height below water',
-    ylabel='Force',
-    label='Buoyant',
+    line_color="blue",
+    title="Floating body",
+    xlabel="Height below water",
+    ylabel="Force",
+    label="Buoyant",
     backend=MatplotlibBackend,
     legend=True,
     show=False)
@@ -53,20 +53,20 @@ p1 = plot(
 p2 = plot(
     result_gravity_force,
     (height, 0, 8),
-    line_color='red',
-    label='Gravity',
+    line_color="red",
+    label="Gravity",
     backend=MatplotlibBackend,
     show=False)
 
 p3 = plot(
     result_buoyant_force_below_liquid,
     (height, cylinder_height, 8),
-    line_color='blue',
-    label='',
+    line_color="blue",
+    label="",
     backend=MatplotlibBackend,
     show=False)
 
 p1.append(p2[0])
 p1.append(p3[0])
-p1[2].label = ''
+p1[2].label = ""
 p1.show()

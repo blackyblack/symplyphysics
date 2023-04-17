@@ -1,29 +1,36 @@
+from sympy import Expr
 from symplyphysics import (
-    symbols, Function, Derivative, Eq, pretty, Quantity, units,
-    validate_input, validate_output, expr_to_quantity
+    Derivative, Eq, pretty, units, expr_to_quantity
 )
+from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
+from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.symbols import Function, Symbol, to_printable
 
 # Description
-## Electrical current definition: I = dQ/dt
-## Where I is current through the conductor, Q is the electrical charge transferred
+## The instantaneous electrical current, or simply the electrical current, is the time derivative of the charge that flows.
 
-time = symbols('time')
-current_function, charge_function = symbols('current charge', cls = Function)
-definition = Eq(current_function(time), Derivative(charge_function(time), time))
+# Definition: I = dQ/dt
+# Where:
+## I is current through the conductor
+## Q is the electrical charge transferred
 
-definition_dimension_SI = units.ampere
+time = Symbol("time", units.time)
+current = Function("current", units.current)
+charge = Function("charge", units.charge)
 
-def print():
-    return pretty(definition, use_unicode=False)
+definition = Eq(current(time), Derivative(charge(time), time))
 
-def print_dimension():
-    return pretty(definition_dimension_SI, use_unicode=False)
+definition_units_SI = units.ampere
 
-@validate_input(charge_start_=units.charge, charge_end_=units.charge, time_=units.time)
-@validate_output(units.current)
+def print(expr: Expr) -> str:
+    symbols = [time, current, charge]
+    return pretty(to_printable(expr, symbols), use_unicode=False)
+
+@validate_input_symbols(charge_start_=charge, charge_end_=charge, time_=time)
+@validate_output_symbol(current)
 def calculate_current(charge_start_: Quantity, charge_end_: Quantity, time_: Quantity) -> Quantity:
     charge_function_ = time * (charge_end_ - charge_start_) / time_
-    applied_definition = definition.subs(charge_function(time), charge_function_)
+    applied_definition = definition.subs(charge(time), charge_function_)
     dsolved = applied_definition.doit()
     result_expr = dsolved.rhs
-    return expr_to_quantity(result_expr, 'current')
+    return expr_to_quantity(result_expr)

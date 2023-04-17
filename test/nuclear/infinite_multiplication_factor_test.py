@@ -10,9 +10,8 @@ def test_args():
     fast_fission = 1.03
     resonance_escape_probability = Probability(0.75)
     thermal_utilisation = Probability(0.7)
-
-    Args = namedtuple('Args', ['n', 'e', 'p', 'f'])
-    return Args(n = neutron_reproduction, e = fast_fission, p = resonance_escape_probability, f =  thermal_utilisation)
+    Args = namedtuple("Args", ["n", "e", "p", "f"])
+    return Args(n=neutron_reproduction, e=fast_fission, p=resonance_escape_probability, f=thermal_utilisation)
 
 def test_basic_multiplication_factor(test_args):
     result = infinite_multiplication_factor.calculate_multiplication_factor(test_args.n, test_args.e, test_args.p, test_args.f)

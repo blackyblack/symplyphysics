@@ -1,7 +1,10 @@
+from sympy import Expr
 from symplyphysics import (
-    symbols, Eq, pretty, solve, units, Quantity,
-    validate_input, validate_output, expr_to_quantity
+    Eq, pretty, solve, units, expr_to_quantity
 )
+from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
+from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## If wave source moves in media, observed wave frequency differs from real. 
@@ -18,23 +21,25 @@ from symplyphysics import (
 ## 1. Velocities vs and vo are much smaller than v.
 ## 2. Positive velocity direction means observer moving towards a source or source moving away from observer.
 
-observed_frequency = symbols('observed_frequency')
-real_frequency = symbols('real_frequency')
-wave_velocity = symbols('wave_velocity')
-source_velocity = symbols('source_velocity')
-observer_velocity = symbols('observer_velocity')
+observed_frequency = Symbol("observed_frequency", units.frequency)
+real_frequency = Symbol("real_frequency", units.frequency)
+wave_velocity = Symbol("wave_velocity", units.velocity)
+source_velocity = Symbol("source_velocity", units.velocity)
+observer_velocity = Symbol("observer_velocity", units.velocity)
 
 law = Eq(observed_frequency, real_frequency * (wave_velocity + observer_velocity) / (wave_velocity + source_velocity))
 
-def print():
-    return pretty(law, use_unicode=False)
+def print(expr: Expr) -> str:
+    symbols = [observed_frequency, real_frequency, wave_velocity, source_velocity, observer_velocity]
+    return pretty(to_printable(expr, symbols), use_unicode=False)
 
-@validate_input(real_freq_=units.frequency, wave_vel_=units.velocity, source_vel_=units.velocity, observer_vel_=units.velocity)
-@validate_output(units.frequency)
-def calculate_observed_frequency(real_freq_: Quantity, wave_vel_: Quantity, source_vel_: Quantity, observer_vel_: Quantity) -> Quantity:        
+@validate_input_symbols(real_frequency_=real_frequency, wave_velocity_=wave_velocity, source_velocity_=source_velocity, observer_velocity_=observer_velocity)
+@validate_output_symbol(observed_frequency)
+def calculate_observed_frequency(real_frequency_: Quantity, wave_velocity_: Quantity, source_velocity_: Quantity, observer_velocity_: Quantity) -> Quantity:        
     result_expr = solve(law, observed_frequency, dict=True)[0][observed_frequency]
-    frequency_applied = result_expr.subs({real_frequency: real_freq_, 
-                                          wave_velocity: wave_vel_,
-                                          source_velocity: source_vel_,
-                                          observer_velocity: observer_vel_})
-    return expr_to_quantity(frequency_applied, 'observed_frequency')
+    frequency_applied = result_expr.subs({
+        real_frequency: real_frequency_, 
+        wave_velocity: wave_velocity_,
+        source_velocity: source_velocity_,
+        observer_velocity: observer_velocity_})
+    return expr_to_quantity(frequency_applied)

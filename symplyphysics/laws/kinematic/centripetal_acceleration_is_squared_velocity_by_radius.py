@@ -1,9 +1,13 @@
+from sympy import Expr
+from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
 from symplyphysics import (
-    symbols, Eq, pretty, Quantity, units, solve, expr_equals, expr_equals_abs,
-    validate_input, validate_output, expr_to_quantity, Function, Derivative,
-    pi, sin, cos
+    Eq, pretty, units, solve, expr_equals, expr_equals_abs, expr_to_quantity,
+    Derivative, pi, sin, cos
 )
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
+from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
+from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.symbols import Function, Symbol, to_printable
 from symplyphysics.core.vectors.vector_arithmetics import dot_vectors
 from symplyphysics.core.vectors.vectors import Vector
 from symplyphysics.definitions import velocity_is_movement_derivative as velocity_def
@@ -31,9 +35,9 @@ from symplyphysics.laws.kinematic import linear_velocity_from_angular_velocity_a
 ## - Curve is smooth and continuous. Does not have 0 radius.
 ## - Motion is in 2-D space.
 
-centripetal_acceleration = symbols("centripetal_acceleration")
-linear_velocity = symbols("linear_velocity")
-curve_radius = symbols("curve_radius")
+centripetal_acceleration = Symbol("centripetal_acceleration", units.acceleration)
+linear_velocity = Symbol("linear_velocity", units.velocity)
+curve_radius = Symbol("curve_radius", units.length)
 
 law = Eq(centripetal_acceleration, linear_velocity**2 / curve_radius)
 
@@ -42,8 +46,8 @@ law = Eq(centripetal_acceleration, linear_velocity**2 / curve_radius)
 ## Let's assume we are having movement in 2-D space.
 ## Object position is described with it's radius-vector R - the vector from zero coordinates to the object and with angle 'alpha' between X-axis and this radius-vector.
 
-time = symbols("time")
-alpha = symbols("alpha", cls = Function, positive=True)
+time = Symbol("time", units.time)
+alpha = Function("alpha", angle_type, positive=True)
 cartesian_coordinates = CoordinateSystem()
 
 curve_radius_horisontal = projector.law.rhs.subs({projector.vector_length: curve_radius, projector.vector_angle: alpha(time)})
@@ -52,8 +56,8 @@ curve_radius_vertical = projector.law.rhs.subs({projector.vector_length: curve_r
 ## Velocity projections are derivatives of respective coordinates.
 
 #NOTE: replace 'moving_time' first as Derivative can have difficulties when processing both substitutions at once
-velocity_horisontal = velocity_def.definition.rhs.subs(velocity_def.moving_time, time).subs(velocity_def.movement_function(time), curve_radius_horisontal).doit()
-velocity_vertical = velocity_def.definition.rhs.subs(velocity_def.moving_time, time).subs(velocity_def.movement_function(time), curve_radius_vertical).doit()
+velocity_horisontal = velocity_def.definition.rhs.subs(velocity_def.moving_time, time).subs(velocity_def.movement(time), curve_radius_horisontal).doit()
+velocity_vertical = velocity_def.definition.rhs.subs(velocity_def.moving_time, time).subs(velocity_def.movement(time), curve_radius_vertical).doit()
 velocity_vector = Vector([velocity_horisontal, velocity_vertical], cartesian_coordinates)
 
 ## These unit vectors should not necessary be derived. We can choose them at will and prove that
@@ -69,12 +73,10 @@ assert expr_equals(dot_vectors(radial_unit_vector, velocity_vector), 0)
 assert expr_equals(dot_vectors(tangential_unit_vector, radial_unit_vector), 0)
 
 ## Use acceleration definition to calculate 'acceleration_vector'
-acceleration_horisontal = acceleration_def.definition.rhs.subs({
-    acceleration_def.velocity_function(acceleration_def.time): velocity_horisontal,
-    acceleration_def.time: time}).doit()
-acceleration_vertical = acceleration_def.definition.rhs.subs({
-    acceleration_def.velocity_function(acceleration_def.time): velocity_vertical,
-    acceleration_def.time: time}).doit()
+acceleration_horisontal = acceleration_def.definition.rhs.subs(acceleration_def.time, time)
+acceleration_horisontal = acceleration_horisontal.subs(acceleration_def.velocity(time), velocity_horisontal).doit()
+acceleration_vertical = acceleration_def.definition.rhs.subs(acceleration_def.time, time)
+acceleration_vertical = acceleration_vertical.subs(acceleration_def.velocity(time), velocity_vertical).doit()
 acceleration_vector = Vector([acceleration_horisontal, acceleration_vertical], cartesian_coordinates)
 
 ## Prove that 'acceleration_vector' has tangential and radial parts.
@@ -96,9 +98,8 @@ assert expr_equals(radial_acceleration_component, radial_acceleration_magnitude)
 ## We are not interested in tangential_acceleration as we are looking for centripetal acceleration which is 'radial_acceleration'
 ## in our proof.
 
-angular_velocity_applied = angular_velocity_def.definition.rhs.subs({
-    angular_velocity_def.angle_function(angular_velocity_def.time): alpha(time),
-    angular_velocity_def.time: time})
+angular_velocity_applied = angular_velocity_def.definition.rhs.subs(angular_velocity_def.time, time)
+angular_velocity_applied = angular_velocity_applied.subs(angular_velocity_def.angle_function(time), alpha(time))
 linear_velocity_applied = linear_velocity_law.law.rhs.subs({
     linear_velocity_law.angular_velocity: angular_velocity_applied,
     linear_velocity_law.curve_radius: curve_radius})
@@ -109,15 +110,15 @@ law_acceleration = law.rhs.subs(linear_velocity, linear_velocity_applied)
 assert expr_equals_abs(radial_acceleration_magnitude, law_acceleration)
 
 
-def print():
-    return pretty(law, use_unicode=False)
+def print(expr: Expr) -> str:
+    symbols = [centripetal_acceleration, linear_velocity, curve_radius]
+    return pretty(to_printable(expr, symbols), use_unicode=False)
 
-@validate_input(linear_velocity_=units.velocity, curve_radius_=units.length)
-@validate_output(units.acceleration)
+@validate_input_symbols(linear_velocity_=linear_velocity, curve_radius_=curve_radius)
+@validate_output_symbol(centripetal_acceleration)
 def calculate_acceleration(linear_velocity_: Quantity, curve_radius_: Quantity) -> Quantity:        
     solved = solve(law, centripetal_acceleration, dict=True)[0][centripetal_acceleration]
     result_expr = solved.subs({
         linear_velocity: linear_velocity_,
-        curve_radius: curve_radius_
-    })
-    return expr_to_quantity(result_expr, "centripetal_acceleration_out")
+        curve_radius: curve_radius_})
+    return expr_to_quantity(result_expr)

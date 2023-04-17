@@ -13,8 +13,7 @@ from symplyphysics.laws.waves import wavespeed_from_medium as speed_law
 @fixture
 def test_args():
     refraction_factor = 1.0003
-       
-    Args = namedtuple('Args', ['refraction_factor'])
+    Args = namedtuple("Args", ["refraction_factor"])
     return Args(refraction_factor=refraction_factor)
 
 def test_basic_speed(test_args):

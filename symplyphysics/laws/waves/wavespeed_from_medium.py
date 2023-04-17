@@ -1,8 +1,11 @@
+from sympy import Expr
 from symplyphysics import (
-    symbols, Eq, pretty, solve, units, Quantity, validate_output, expr_to_quantity
+    Eq, pretty, solve, units, expr_to_quantity
 )
-
-from sympy.physics.units import speed_of_light as C
+from sympy.physics.units import speed_of_light
+from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
+from symplyphysics.core.symbols.quantities import Dimensionless, Quantity
+from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## Wavespeed differs in different medium. Electromagnetic wave propagation speed depends on refraction factor of medium.
@@ -13,16 +16,18 @@ from sympy.physics.units import speed_of_light as C
 ## C is speed of light in vacuum (it is a fundamental constant),
 ## n is refraction factor of medium.
 
-wave_speed_in_medium = symbols("wavespeed_in_medium")
-refraction_factor = symbols("refraction_factor")
+wave_speed_in_medium = Symbol("wave_speed_in_medium", units.velocity)
+refraction_factor = Symbol("refraction_factor", Dimensionless)
 
-law = Eq(wave_speed_in_medium, C / refraction_factor)
+law = Eq(wave_speed_in_medium, speed_of_light / refraction_factor)
 
-def print():
-    return pretty(law, use_unicode=False)
+def print(expr: Expr) -> str:
+    symbols = [wave_speed_in_medium, refraction_factor]
+    return pretty(to_printable(expr, symbols), use_unicode=False)
 
-@validate_output(units.velocity)
-def calculate_wavespeed(refraction_factor_: Quantity) -> Quantity:        
-    result_expr = solve(law, wave_speed_in_medium, dict=True)[0][wave_speed_in_medium]    
-    wavespeed_applied = result_expr.subs({refraction_factor: refraction_factor_})    
-    return expr_to_quantity(wavespeed_applied, 'wavespeed_in_medium')
+@validate_input_symbols(refraction_factor_=refraction_factor)
+@validate_output_symbol(wave_speed_in_medium)
+def calculate_wavespeed(refraction_factor_: float) -> Quantity:
+    result_expr = solve(law, wave_speed_in_medium, dict=True)[0][wave_speed_in_medium]
+    wavespeed_applied = result_expr.subs(refraction_factor, refraction_factor_)
+    return expr_to_quantity(wavespeed_applied)

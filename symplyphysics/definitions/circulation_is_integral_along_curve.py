@@ -2,7 +2,7 @@ from typing import List
 from sympy import Integral, Derivative
 from sympy.vector import Dot
 from symplyphysics import (
-    symbols, Eq, pretty, simplify, CoordSys3D, VectorField
+    symbols, Eq, pretty, VectorField, simplify
 )
 from symplyphysics.core.vectors.vectors import Vector, sympy_vector_from_vector
 
@@ -18,7 +18,8 @@ from symplyphysics.core.vectors.vectors import Vector, sympy_vector_from_vector
 ## (eg sum of sides of a square).
 
 # Definition
-## C = CurveIntegral(F * dl, Curve), where
+## C = CurveIntegral(F * dl, Curve)
+# Where:
 ## C is circulation
 ## F is vector field
 ## l is radius-vector of the curve
@@ -29,12 +30,14 @@ from symplyphysics.core.vectors.vectors import Vector, sympy_vector_from_vector
 ## (eg x(t) = cos(t), y(t) = sin(t))
 ## - Curve is smooth and continuous
 
+# These are not physical symbols - SymPy 'symbols' is good enough.
+
 # trajectory is a function of the moving particle
-circulation, field, trajectory, = symbols('circulation field trajectory')
+circulation, field, trajectory = symbols("circulation field trajectory")
 # trajectory_element (dl) is trajectory derivative by parameter
 # parameter is an argument of trajectory function, eg x coordinate
-trajectory_element, parameter = symbols('trajectory_element parameter')
-parameter_from, parameter_to = symbols('parameter_from parameter_to')
+trajectory_element, parameter = symbols("trajectory_element parameter")
+parameter_from, parameter_to = symbols("parameter_from parameter_to")
 
 trajectory_element_definition = Eq(trajectory_element, Derivative(trajectory, parameter))
 definition = Eq(circulation, Integral(Dot(field, trajectory_element), (parameter, parameter_from, parameter_to)))
@@ -54,6 +57,9 @@ def calculate_circulation(
     field_as_vector = sympy_vector_from_vector(field_app)
     trajectory_as_vector = sympy_vector_from_vector(Vector(trajectory_, field_.coordinate_system))
     trajectory_element_result = trajectory_element_definition.rhs.subs(trajectory, trajectory_as_vector).doit()
-    result_expr = definition.rhs.subs({field: field_as_vector, trajectory_element: trajectory_element_result, parameter_from: parameter_from_, parameter_to: parameter_to_}).doit()
-    # some expressions are invalid without simplifying them first
+    result_expr = definition.rhs.subs({
+        field: field_as_vector,
+        trajectory_element: trajectory_element_result,
+        parameter_from: parameter_from_,
+        parameter_to: parameter_to_}).doit()
     return simplify(result_expr)

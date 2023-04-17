@@ -4,6 +4,7 @@ from symplyphysics import (
     units, convert_to, SI, errors
 )
 from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
+from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.laws.kinematic import linear_velocity_from_angular_velocity_and_radius as linear_velocity_law
 
 # Description
@@ -12,16 +13,10 @@ from symplyphysics.laws.kinematic import linear_velocity_from_angular_velocity_a
 
 @fixture
 def test_args():
-    VA1 = units.Quantity('VA1')
-    SI.set_quantity_dimension(VA1, angle_type / units.time)
-    SI.set_quantity_scale_factor(VA1, 0.6 * units.radian / units.second)
-
-    R1 = units.Quantity('R1')
-    SI.set_quantity_dimension(R1, units.length)
-    SI.set_quantity_scale_factor(R1, 5 * units.centimeter)
-
-    Args = namedtuple('Args', ['VA1', 'R1'])
-    return Args(VA1 = VA1, R1 = R1)
+    VA1 = Quantity(0.6 * units.radian / units.second)
+    R1 = Quantity(5 * units.centimeter)
+    Args = namedtuple("Args", ["VA1", "R1"])
+    return Args(VA1=VA1, R1=R1)
 
 def test_basic_velocity(test_args):
     result = linear_velocity_law.calculate_linear_velocity(test_args.VA1, test_args.R1)
@@ -30,23 +25,15 @@ def test_basic_velocity(test_args):
     assert result_velocity == approx(3, 0.01)
 
 def test_bad_angular_velocity(test_args):
-    Vb = units.Quantity('Vb')
-    SI.set_quantity_dimension(Vb, units.length)
-    SI.set_quantity_scale_factor(Vb, 1 * units.meter)
-
+    Vb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         linear_velocity_law.calculate_linear_velocity(Vb, test_args.R1)
-
     with raises(TypeError):
         linear_velocity_law.calculate_linear_velocity(100, test_args.R1)
 
 def test_bad_radius(test_args):
-    Rb = units.Quantity('Rb')
-    SI.set_quantity_dimension(Rb, units.time)
-    SI.set_quantity_scale_factor(Rb, 1 * units.second)
-
+    Rb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         linear_velocity_law.calculate_linear_velocity(test_args.VA1, Rb)
-
     with raises(TypeError):
-        linear_velocity_law.calculate_linear_velocity(test_args.VA1, 100)   
+        linear_velocity_law.calculate_linear_velocity(test_args.VA1, 100)

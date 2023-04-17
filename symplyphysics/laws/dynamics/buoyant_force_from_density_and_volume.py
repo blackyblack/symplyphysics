@@ -1,7 +1,10 @@
+from sympy import Expr
 from symplyphysics import (
-    symbols, Eq, pretty, solve, Quantity, units,
-    validate_input, validate_output, expr_to_quantity
+     Eq, pretty, solve, units, expr_to_quantity
 )
+from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
+from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## Any object, totally or partially immersed in a fluid or liquid (or gas), is buoyed up by a force equal to the
@@ -16,15 +19,19 @@ from symplyphysics import (
 ## g - gravity acceleration constant.
 ## V - volume of the displaced fluid.
 
-force_buoyant, fluid_density, displaced_volume = symbols('force_buoyant fluid_density displaced_volume')
+force_buoyant = Symbol("force_buoyant", units.force)
+fluid_density = Symbol("fluid_density", units.mass / units.volume)
+displaced_volume = Symbol("displaced_volume", units.volume)
+
 law = Eq(force_buoyant, -1 * fluid_density * units.acceleration_due_to_gravity * displaced_volume)
 
-def print():
-    return pretty(law, use_unicode=False)
+def print(expr: Expr) -> str:
+    symbols = [force_buoyant, fluid_density, displaced_volume]
+    return pretty(to_printable(expr, symbols), use_unicode=False)
 
-@validate_input(fluid_density_=(units.mass / units.volume), displaced_volume_=units.volume)
-@validate_output(units.force)
+@validate_input_symbols(fluid_density_=fluid_density, displaced_volume_=displaced_volume)
+@validate_output_symbol(force_buoyant)
 def calculate_force_buoyant(fluid_density_: Quantity, displaced_volume_: Quantity) -> Quantity:
     result_force_expr = solve(law, force_buoyant, dict=True)[0][force_buoyant]
     result_expr = result_force_expr.subs({fluid_density: fluid_density_, displaced_volume: displaced_volume_})
-    return expr_to_quantity(abs(result_expr), 'force_buoyant')
+    return expr_to_quantity(abs(result_expr))

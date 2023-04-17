@@ -17,7 +17,7 @@ solved_adiabatic_law = solve(adiabatic_law.law,
 solved_adiabatic_volume_law = solve(adiabatic_law.law,
     (adiabatic_law.pressure_start, adiabatic_law.pressure_end, adiabatic_law.volume_end), dict=True)[0][adiabatic_law.volume_end]
 
-carnot_cycle_volume = symbols('carnot_cycle_volume')
+carnot_cycle_volume = symbols("carnot_cycle_volume")
 
 gas_mole_count = 1
 gas_temperature_start = 200
@@ -71,11 +71,11 @@ result_pressure_adiabatic_compression = solved_adiabatic_law.subs({
 p1 = plot(
     result_pressure_isothermal_expansion,
     (carnot_cycle_volume, gas_volume_start, gas_volume_adiabatic_start),
-    line_color='blue',
-    title='Carnot Cycle',
-    xlabel='Volume',
-    ylabel='Pressure',
-    label='Isothermal',
+    line_color="blue",
+    title="Carnot Cycle",
+    xlabel="Volume",
+    ylabel="Pressure",
+    label="Isothermal",
     legend=True,
     backend=MatplotlibBackend,
     show=False)
@@ -83,31 +83,31 @@ p1 = plot(
 p2 = plot(
     result_pressure_adiabatic_expansion,
     (carnot_cycle_volume, gas_volume_adiabatic_start, gas_volume_adiabatic_end),
-    line_color='red',
-    label='Adiabatic',
+    line_color="red",
+    label="Adiabatic",
     backend=MatplotlibBackend,
     show=False)
 
 p3 = plot(
     result_pressure_isothermal_compression,
     (carnot_cycle_volume, gas_volume_isothermal_end, gas_volume_adiabatic_end),
-    line_color='blue',
+    line_color="blue",
     backend=MatplotlibBackend,
-    label='',
+    label="",
     show=False)
 
 p4 = plot(
     result_pressure_adiabatic_compression,
     (carnot_cycle_volume, gas_volume_start, gas_volume_isothermal_end),
-    line_color='red',
+    line_color="red",
     backend=MatplotlibBackend,
-    label='',
+    label="",
     show=False)
 
 p1.append(p2[0])
 p1.append(p3[0])
 p1.append(p4[0])
-p1[2].label = ''
-p1[3].label = ''
+p1[2].label = ""
+p1[3].label = ""
 
 p1.show()

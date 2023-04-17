@@ -19,14 +19,14 @@ from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_slab
 ## c - height of the parallelepiped.
 ## Ф(x, y, z) - neutron flux density.
 
-neutron_flux_power_constant = symbols('C1', constant=True)
-x_distance_from_center = symbols('x_distance_from_center')
-y_distance_from_center = symbols('y_distance_from_center')
-z_distance_from_center = symbols('z_distance_from_center')
-parallelepiped_width = symbols('parallelepiped_width')
-parallelepiped_length = symbols('parallelepiped_length')
-parallelepiped_height = symbols('parallelepiped_height')
-neutron_flux_function = symbols('neutron_flux_function', cls = Function)
+neutron_flux_power_constant = symbols("C1", constant=True)
+x_distance_from_center = symbols("x_distance_from_center")
+y_distance_from_center = symbols("y_distance_from_center")
+z_distance_from_center = symbols("z_distance_from_center")
+parallelepiped_width = symbols("parallelepiped_width")
+parallelepiped_length = symbols("parallelepiped_length")
+parallelepiped_height = symbols("parallelepiped_height")
+neutron_flux_function = symbols("neutron_flux_function", cls = Function)
 
 # These constants are being used for geometric buckling calculation
 # See: [geometric buckling for uniform parallelepiped](geometric_buckling_for_uniform_parallelepiped.py)
@@ -58,7 +58,7 @@ law = Eq(neutron_flux_function(x_distance_from_center, y_distance_from_center, z
 # - source condition: all neutrons flowing through the bounding area of the source must come from the neutron source
 
 # define flux function in cylindrical coordinates as a function of cylinder radius and height
-cartesian_coordinates = CoordSys3D('cartesian_coordinates')
+cartesian_coordinates = CoordSys3D("cartesian_coordinates")
 neutron_flux_function_cartesian = law.subs({
     x_distance_from_center: cartesian_coordinates.x,
     y_distance_from_center: cartesian_coordinates.y,

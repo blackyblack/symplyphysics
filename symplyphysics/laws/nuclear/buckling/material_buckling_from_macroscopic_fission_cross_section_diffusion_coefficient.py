@@ -1,7 +1,10 @@
+from sympy import Expr
 from symplyphysics import (
-    symbols, Eq, pretty, solve, Quantity, units, simplify,
-    validate_input, validate_output, expr_to_quantity
+    Eq, pretty, solve, units, simplify, expr_to_quantity
 )
+from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
+from symplyphysics.core.symbols.quantities import Dimensionless, Quantity
+from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_macroscopic_fission_cross_section_diffusion_coefficient as buckling_law
 
@@ -19,11 +22,11 @@ from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_macrosco
 ##   See [diffusion coefficient](./neutron_diffusion_coefficient_from_scattering_cross_section.py) implementation.
 ## Bm^2 - material buckling.
 
-neutrons_per_fission = symbols('neutrons_per_fission')
-macroscopic_fission_cross_section = symbols('macroscopic_fission_cross_section')
-macroscopic_absorption_cross_section = symbols('macroscopic_absorption_cross_section')
-diffusion_coefficient = symbols('diffusion_coefficient')
-material_buckling_squared = symbols('material_buckling_squared')
+neutrons_per_fission = Symbol("neutrons_per_fission", Dimensionless)
+macroscopic_fission_cross_section = Symbol("macroscopic_fission_cross_section", 1 / units.length)
+macroscopic_absorption_cross_section = Symbol("macroscopic_absorption_cross_section", 1 / units.length)
+diffusion_coefficient = Symbol("diffusion_coefficient", units.length)
+material_buckling_squared = Symbol("material_buckling_squared", 1 / units.length**2)
 
 law = Eq(material_buckling_squared,
     (neutrons_per_fission * macroscopic_fission_cross_section - macroscopic_absorption_cross_section) /
@@ -48,14 +51,16 @@ derived_material_buckling_squared = solve(
     dict=True)[0][material_buckling_squared]
 assert simplify(law.rhs) == simplify(derived_material_buckling_squared)
 
-def print():
-    return pretty(law, use_unicode=False)
+def print(expr: Expr) -> str:
+    symbols = [neutrons_per_fission, macroscopic_fission_cross_section, macroscopic_absorption_cross_section, diffusion_coefficient, material_buckling_squared]
+    return pretty(to_printable(expr, symbols), use_unicode=False)
 
-@validate_input(
-    macroscopic_fission_cross_section_=(1 / units.length),
-    macroscopic_absorption_cross_section_=(1 / units.length),
-    diffusion_coefficient_=units.length)
-@validate_output(1 / units.length**2)
+@validate_input_symbols(
+        neutrons_per_fission_=neutrons_per_fission,
+        macroscopic_fission_cross_section_=macroscopic_fission_cross_section,
+        macroscopic_absorption_cross_section_=macroscopic_absorption_cross_section,
+        diffusion_coefficient_=diffusion_coefficient)
+@validate_output_symbol(material_buckling_squared)
 def calculate_buckling(
     neutrons_per_fission_: float,
     macroscopic_fission_cross_section_: Quantity,
@@ -67,4 +72,4 @@ def calculate_buckling(
         macroscopic_fission_cross_section: macroscopic_fission_cross_section_,
         macroscopic_absorption_cross_section: macroscopic_absorption_cross_section_,
         diffusion_coefficient: diffusion_coefficient_})
-    return expr_to_quantity(result_expr, 'neutron_material_buckling_squared')
+    return expr_to_quantity(result_expr)

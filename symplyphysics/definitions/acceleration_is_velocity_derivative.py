@@ -1,29 +1,37 @@
+from sympy import Expr
 from symplyphysics import (
-    symbols, Function, Derivative, Eq, pretty, Quantity, units,
-    validate_input, validate_output, expr_to_quantity
+    Derivative, Eq, pretty, units, expr_to_quantity
 )
+from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
+from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.symbols import Function, Symbol, to_printable
 
 # Description
-## Acceleration definition: A = dv/dt
+## Acceleration is the derivative of velocity with respect to time.
 
-time = symbols('time')
-acceleration, velocity_function = symbols('acceleration velocity', cls = Function)
-definition = Eq(acceleration(time), Derivative(velocity_function(time), time))
+# Definition: A = dv/dt
+# Where:
+## v is velocity function of time
+## t is time
 
-definition_dimension_SI = units.meter / units.second**2
+time = Symbol("time", units.time)
+acceleration = Function("acceleration", units.acceleration)
+velocity = Function("velocity", units.velocity)
 
-def print():
-    return pretty(definition, use_unicode=False)
+definition = Eq(acceleration(time), Derivative(velocity(time), time))
 
-def print_dimension():
-    return pretty(definition_dimension_SI, use_unicode=False)
+definition_units_SI = units.meter / units.second**2
 
-@validate_input(velocity_start_=units.velocity, velocity_end_=units.velocity, time_=units.time)
-@validate_output(units.acceleration)
+def print(expr: Expr) -> str:
+    symbols = [time, acceleration, velocity]
+    return pretty(to_printable(expr, symbols), use_unicode=False)
+
+@validate_input_symbols(velocity_start_=velocity, velocity_end_=velocity, time_=time)
+@validate_output_symbol(acceleration)
 def calculate_linear_acceleration(velocity_start_: Quantity, velocity_end_: Quantity, time_: Quantity) -> Quantity:
     velocity_function_ = time * (velocity_end_ - velocity_start_) / time_
-    applied_definition = definition.subs(velocity_function(time), velocity_function_)
+    applied_definition = definition.subs(velocity(time), velocity_function_)
     # calculate acceleration
     dsolved = applied_definition.doit()
     result_expr = dsolved.rhs
-    return expr_to_quantity(result_expr, 'acceleration')
+    return expr_to_quantity(result_expr)

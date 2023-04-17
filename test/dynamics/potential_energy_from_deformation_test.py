@@ -4,6 +4,7 @@ from pytest import approx, fixture, raises
 from symplyphysics import (
     units, convert_to, SI, errors
 )
+from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.laws.dynamics import potential_energy_from_deformation as hookes_law
 
 # Description
@@ -12,16 +13,10 @@ from symplyphysics.laws.dynamics import potential_energy_from_deformation as hoo
 
 @fixture
 def test_args():
-    k = units.Quantity('k')
-    SI.set_quantity_dimension(k, units.force / units.length)
-    SI.set_quantity_scale_factor(k, 100 * units.newton / units.meter)
-
-    x = units.Quantity('x')
-    SI.set_quantity_dimension(x, units.length)
-    SI.set_quantity_scale_factor(x, 2 * units.centimeter)
-
-    Args = namedtuple('Args', ['k', 'x'])
-    return Args(k = k, x = x)
+    k = Quantity(100 * units.newton / units.meter)
+    x = Quantity(2 * units.centimeter)
+    Args = namedtuple("Args", ["k", "x"])
+    return Args(k=k, x=x)
 
 def test_basic_energy(test_args):
     result = hookes_law.calculate_energy(test_args.k, test_args.x)
@@ -30,24 +25,15 @@ def test_basic_energy(test_args):
     assert result_energy == approx(0.02, 0.0001)
 
 def test_bad_elastic_koefficient(test_args):
-    kb = units.Quantity('kb')
-    SI.set_quantity_dimension(kb, units.length)
-    SI.set_quantity_scale_factor(kb, 1 * units.meter)
-
+    kb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         hookes_law.calculate_energy(kb, test_args.x)
-
     with raises(TypeError):
         hookes_law.calculate_energy(100, test_args.x)
 
 def test_bad_deformation(test_args):
-    xb = units.Quantity('xb')
-    SI.set_quantity_dimension(xb, units.charge)
-    SI.set_quantity_scale_factor(xb, 1 * units.coulomb)
-
+    xb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         hookes_law.calculate_energy(test_args.k, xb)
-
     with raises(TypeError):
         hookes_law.calculate_energy(test_args.k, 100)
-        

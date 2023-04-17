@@ -16,9 +16,11 @@ from symplyphysics import (
 ## k_infinite (infinite multiplication factor) is the ratio of the neutrons produced by fission in one neutron
 ##   generation to the number of neutrons lost through absorption in the preceding neutron generation
 
-neutron_reproduction, thermal_utilisation = symbols('neutron_reproduction thermal_utilisation')
-resonance_escape_probability, fast_fission = symbols('resonance_escape_probability fast_fission')
-infinite_multiplication_factor = symbols('infinite_multiplication_factor')
+neutron_reproduction = symbols("neutron_reproduction")
+thermal_utilisation = symbols("thermal_utilisation")
+resonance_escape_probability = symbols("resonance_escape_probability")
+fast_fission = symbols("fast_fission")
+infinite_multiplication_factor = symbols("infinite_multiplication_factor")
 
 law = Eq(infinite_multiplication_factor,
     neutron_reproduction * fast_fission * resonance_escape_probability * thermal_utilisation)

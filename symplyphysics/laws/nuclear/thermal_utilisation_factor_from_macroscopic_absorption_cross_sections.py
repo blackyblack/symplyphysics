@@ -1,7 +1,10 @@
+from sympy import Expr
 from symplyphysics import (
-    symbols, Eq, pretty, solve, Quantity, units, S,
-    Probability, validate_input, expr_to_quantity, convert_to
+    Eq, pretty, solve, units, S, Probability, expr_to_quantity, convert_to
 )
+from symplyphysics.core.quantity_decorator import validate_input_symbols
+from symplyphysics.core.symbols.quantities import Dimensionless, Quantity
+from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## Thermal neutron utilization factor (f), is the ratio of the number of neutrons absorbed in the fuel
@@ -15,17 +18,20 @@ from symplyphysics import (
 ## Σa_total - macroscopic absorption cross-section of the fuel, moderator, cladding, etc, combined.
 ## f - thermal neutron utilisation factor
 
-macroscopic_fuel_absorption_cross_section = symbols('macroscopic_fuel_absorption_cross_section')
-macroscopic_total_absorption_cross_section = symbols('macroscopic_total_absorption_cross_section')
-thermal_utilisation_factor = symbols('thermal_utilisation_factor')
+macroscopic_fuel_absorption_cross_section = Symbol("macroscopic_fuel_absorption_cross_section", 1 / units.length)
+macroscopic_total_absorption_cross_section = Symbol("macroscopic_total_absorption_cross_section", 1 / units.length)
+thermal_utilisation_factor = Symbol("thermal_utilisation_factor", Dimensionless)
 
 law = Eq(thermal_utilisation_factor,
     macroscopic_fuel_absorption_cross_section / macroscopic_total_absorption_cross_section)
 
-def print():
-    return pretty(law, use_unicode=False)
+def print(expr: Expr) -> str:
+    symbols = [macroscopic_fuel_absorption_cross_section, macroscopic_total_absorption_cross_section, thermal_utilisation_factor]
+    return pretty(to_printable(expr, symbols), use_unicode=False)
 
-@validate_input(macroscopic_fuel_absorption_cross_section_=(1 / units.length), macroscopic_total_absorption_cross_section_=(1 / units.length))
+@validate_input_symbols(
+    macroscopic_fuel_absorption_cross_section_=macroscopic_fuel_absorption_cross_section,
+    macroscopic_total_absorption_cross_section_=macroscopic_total_absorption_cross_section)
 def calculate_utilisation_factor(
     macroscopic_fuel_absorption_cross_section_: Quantity,
     macroscopic_total_absorption_cross_section_: Quantity) -> Probability:
@@ -37,5 +43,5 @@ def calculate_utilisation_factor(
     result_expr = result_factor_expr.subs({
         macroscopic_fuel_absorption_cross_section: macroscopic_fuel_absorption_cross_section_,
         macroscopic_total_absorption_cross_section: macroscopic_total_absorption_cross_section_})
-    result_factor = expr_to_quantity(result_expr, 'utilisation_factor')
-    return Probability(convert_to(result_factor, S.One).n())
+    result_factor = expr_to_quantity(result_expr)
+    return Probability(convert_to(result_factor, S.One).evalf())

@@ -1,7 +1,10 @@
+from sympy import Expr
 from symplyphysics import (
-    symbols, Eq, pretty, solve, Quantity, units,
-    validate_input, validate_output, expr_to_quantity
+    Eq, pretty, solve, units, expr_to_quantity
 )
+from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
+from symplyphysics.core.symbols.quantities import Dimensionless, Quantity
+from symplyphysics.core.symbols.symbols import Symbol, to_printable
 from symplyphysics.laws.thermodynamics import pressure_from_temperature_and_volume as thermodynamics_law
 
 # Description
@@ -13,10 +16,15 @@ from symplyphysics.laws.thermodynamics import pressure_from_temperature_and_volu
 ## y is the ratio of specific heats (also known as heat capacity
 ##   ratio) (https://en.wikipedia.org/wiki/Heat_capacity_ratio)
 
-specific_heats_ratio = symbols('specific_heats_ratio')
-temperature_start, temperature_end = symbols('temperature_start temperature_end')
-volume_start, volume_end = symbols('volume_start volume_end')
-pressure_start, pressure_end = symbols('pressure_start pressure_end')
+specific_heats_ratio = Symbol("specific_heats_ratio", Dimensionless)
+# Some of these parameters depend on each other. It is up to user, which of these parameters to choose
+# as known.
+temperature_start = Symbol("temperature_start", units.temperature)
+temperature_end = Symbol("temperature_end", units.temperature)
+volume_start = Symbol("volume_start", units.volume)
+volume_end = Symbol("volume_end", units.volume)
+pressure_start = Symbol("pressure_start", units.pressure)
+pressure_end = Symbol("pressure_end", units.pressure)
 
 adiabatic_condition = Eq(
     pressure_start * (volume_start ** specific_heats_ratio),
@@ -34,11 +42,17 @@ eq_end = thermodynamics_law.law.subs({
 
 law = [eq_start, eq_end, adiabatic_condition]
 
-def print():
-    return pretty(law, use_unicode=False)
+def print(expr: Expr) -> str:
+    symbols = [specific_heats_ratio, temperature_start, temperature_end, volume_start, volume_end, pressure_start, pressure_end]
+    return pretty(to_printable(expr, symbols), use_unicode=False)
 
-@validate_input(mole_count_=units.amount_of_substance, temperature_start_=units.temperature, volume_start_=units.volume, volume_end_=units.volume)
-@validate_output(units.pressure)
+@validate_input_symbols(
+        mole_count_=thermodynamics_law.mole_count,
+        temperature_start_=temperature_start,
+        volume_start_=volume_start,
+        volume_end_=volume_end,
+        specific_heats_ratio_=specific_heats_ratio)
+@validate_output_symbol(pressure_end)
 def calculate_pressure(
     mole_count_: Quantity,
     temperature_start_: Quantity,
@@ -54,4 +68,4 @@ def calculate_pressure(
         volume_end: volume_end_,
         specific_heats_ratio: specific_heats_ratio_
     })
-    return expr_to_quantity(result_pressure, 'pressure_end')
+    return expr_to_quantity(result_pressure)
