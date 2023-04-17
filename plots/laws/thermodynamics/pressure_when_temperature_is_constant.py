@@ -4,7 +4,7 @@ from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics.laws.thermodynamics import temperature_is_constant as boyles_law
 
-print("Formula is:\n{}".format(boyles_law.print()))
+print("Formula is:\n{}".format(boyles_law.print(boyles_law.law)))
 volume = symbols("volume")
 solved = solve(boyles_law.law, boyles_law.pressure_end, dict=True)[0][boyles_law.pressure_end]
 result_pressure = solved.subs({

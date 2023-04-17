@@ -21,10 +21,11 @@ emitter_frequency = Quantity(units.frequency, 40000 * units.hertz)
 signal_frequency = Quantity(units.frequency, 41200 * units.hertz)
 
 solution = solve(doppler_law.law, doppler_law.source_velocity, dict=True)[0][doppler_law.source_velocity]
-applied_solution = solution.subs({doppler_law.observed_frequency: signal_frequency,
-                                  doppler_law.real_frequency: emitter_frequency,
-                                  doppler_law.wave_velocity:sound_velocity,
-                                  doppler_law.observer_velocity:zero_velocity})
+applied_solution = solution.subs({
+    doppler_law.observed_frequency: signal_frequency,
+    doppler_law.real_frequency: emitter_frequency,
+    doppler_law.wave_velocity:sound_velocity,
+    doppler_law.observer_velocity:zero_velocity})
 
 result_velocity = expr_to_quantity(applied_solution)
 result = convert_to(result_velocity, units.kilometer / units.hour).subs({units.kilometer / units.hour: 1}).evalf(3)

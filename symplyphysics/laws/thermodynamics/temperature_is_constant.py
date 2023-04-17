@@ -1,7 +1,10 @@
+from sympy import Expr
 from symplyphysics import (
-    symbols, Eq, pretty, solve, Quantity, units,
-    validate_input, validate_output, expr_to_quantity
+    Eq, pretty, solve, units, expr_to_quantity
 )
+from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
+from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.symbols import Symbol, to_printable
 from symplyphysics.laws.thermodynamics import pressure_from_temperature_and_volume as thermodynamics_law
 
 # Description
@@ -13,13 +16,17 @@ from symplyphysics.laws.thermodynamics import pressure_from_temperature_and_volu
 ## V1 is initial volume, V2 is resulting volume
 ## P1 is initial pressure, P1 is resulting pressure
 
-pressure_start, pressure_end = symbols('pressure_start pressure_end')
-volume_start, volume_end = symbols('volume_start volume_end')
+pressure_start = Symbol("pressure_start", units.pressure)
+pressure_end = Symbol("pressure_end", units.pressure)
+volume_start = Symbol("volume_start", units.volume)
+volume_end = Symbol("volume_end", units.volume)
+
 law = Eq(pressure_start * volume_start, pressure_end * volume_end)
 
 ## Derive the same law from the general ideal gas law
 
-temperature_start, temperature_end = symbols('temperature_start temperature_end')
+temperature_start = Symbol("temperature_start", units.temperature)
+temperature_end = Symbol("temperature_end", units.temperature)
 
 isothermal_condition = Eq(temperature_start, temperature_end)
 
@@ -40,15 +47,17 @@ derived_pressure_end = solve(derived_law,
     (temperature_start, temperature_end, pressure_end), dict=True)[0][pressure_end]
 assert solve(law, pressure_end, dict=True)[0][pressure_end] == derived_pressure_end
 
-def print():
-    return pretty(law, use_unicode=False)
 
-@validate_input(pressure_start_=units.pressure, pressure_end_=units.pressure, volume_start_=units.volume)
-@validate_output(units.volume)
+def print(expr: Expr) -> str:
+    symbols = [pressure_start, pressure_end, volume_start, volume_end]
+    return pretty(to_printable(expr, symbols), use_unicode=False)
+
+@validate_input_symbols(pressure_start_=pressure_start, pressure_end_=pressure_end, volume_start_=volume_start)
+@validate_output_symbol(volume_end)
 def calculate_volume(pressure_start_: Quantity, volume_start_: Quantity, pressure_end_: Quantity) -> Quantity:
     solved = solve(law, volume_end, dict=True)[0][volume_end]
     result_expr = solved.subs({
         pressure_start: pressure_start_,
         volume_start: volume_start_,
         pressure_end: pressure_end_})
-    return expr_to_quantity(result_expr, 'volume_end')
+    return expr_to_quantity(result_expr)

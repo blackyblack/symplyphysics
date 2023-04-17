@@ -19,8 +19,9 @@ law = Eq(refraction_factor, sqrt(relative_dielectric_permeability * relative_mag
 def print():
     return pretty(law, use_unicode=False)
 
-def calculate_refraction_factor(epsilon_: float, mu_: float) -> float:        
+def calculate_refraction_factor(relative_dielectric_permeability_: float, relative_magnetic_permeability_: float) -> float:        
     result_expr = solve(law, refraction_factor, dict=True)[0][refraction_factor]    
-    factor_applied = result_expr.subs({relative_dielectric_permeability: epsilon_, 
-                                       relative_magnetic_permeability: mu_})    
+    factor_applied = result_expr.subs({
+        relative_dielectric_permeability: relative_dielectric_permeability_,
+        relative_magnetic_permeability: relative_magnetic_permeability_})
     return factor_applied
