@@ -9,7 +9,7 @@ from symplyphysics.laws.electricity import electric_charge_is_constant_in_isolat
 
 @fixture
 def test_args():
-    Q_before = Quantity(units.charge, 1 * units.coulomb)
+    Q_before = Quantity(1 * units.coulomb)
     Args = namedtuple("Args", ["Q_before"])
     return Args(Q_before = Q_before)
 
@@ -20,7 +20,7 @@ def test_basic_charge_conservation(test_args):
     assert result_charge == approx(1.0, 0.001)
 
 def test_bad_charge():
-    Qb = Quantity(units.length)
+    Qb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         charge_law.calculate_charge_after(Qb)
     with raises(TypeError):

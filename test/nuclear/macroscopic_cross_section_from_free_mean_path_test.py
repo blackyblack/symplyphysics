@@ -10,7 +10,7 @@ from symplyphysics.laws.nuclear import macroscopic_cross_section_from_free_mean_
 @fixture
 def test_args():
     # boron carbide mean free path
-    mean_free_path = Quantity(units.length, 0.012 * units.centimeter)
+    mean_free_path = Quantity(0.012 * units.centimeter)
     Args = namedtuple("Args", ["y"])
     return Args(y=mean_free_path)
 
@@ -22,7 +22,7 @@ def test_basic_cross_section(test_args):
     assert result_cross_section == approx(84.3, 0.1)
 
 def test_bad_microscopic_cross_section():
-    yb = Quantity(units.time)
+    yb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         macro_cs.calculate_cross_section(yb)
     with raises(TypeError):

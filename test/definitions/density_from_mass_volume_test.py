@@ -9,8 +9,8 @@ from symplyphysics.definitions import density_from_mass_volume
 
 @fixture
 def test_args():
-    m = Quantity(units.mass, 1 * units.kilogram)
-    V = Quantity(units.volume, 3 * units.meter**3)
+    m = Quantity(1 * units.kilogram)
+    V = Quantity(3 * units.meter**3)
     Args = namedtuple("Args", ["m", "V"])
     return Args(m=m, V=V)
 
@@ -23,14 +23,14 @@ def test_basic_density(test_args):
     assert result_density == approx(0.3333, 0.01)
 
 def test_bad_mass(test_args):
-    mb = Quantity(units.length)
+    mb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         density_from_mass_volume.calculate_density(mb, test_args.V)
     with raises(TypeError):
         density_from_mass_volume.calculate_density(100, test_args.V)
 
 def test_bad_volume(test_args):
-    Vb = Quantity(units.length)
+    Vb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         density_from_mass_volume.calculate_density(test_args.m, Vb)
     with raises(TypeError):

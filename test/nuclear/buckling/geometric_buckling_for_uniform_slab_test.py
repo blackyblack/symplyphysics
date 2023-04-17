@@ -9,7 +9,7 @@ from symplyphysics.laws.nuclear.buckling import geometric_buckling_for_uniform_s
 
 @fixture
 def test_args():
-    slab_width = Quantity(units.length, 200 * units.centimeter)
+    slab_width = Quantity(200 * units.centimeter)
     Args = namedtuple("Args", ["A"])
     return Args(A=slab_width)
 
@@ -20,7 +20,7 @@ def test_basic_geometric_buckling(test_args):
     assert result_geometric_buckling == approx(0.000246, 0.01)
 
 def test_bad_slab_width():
-    Ab = Quantity(units.time)
+    Ab = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         buckling.calculate_geometric_buckling_squared(Ab)
     with raises(TypeError):

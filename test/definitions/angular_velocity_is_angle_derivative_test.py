@@ -14,9 +14,9 @@ from sympy.physics.units.definitions.dimension_definitions import angle as angle
 
 @fixture
 def test_args():
-    a0 = Quantity(angle_type, 0 * units.radian)
-    a1 = Quantity(angle_type, pi * units.radian)
-    t = Quantity(units.time, 5 * units.second)
+    a0 = Quantity(0 * units.radian)
+    a1 = Quantity(pi * units.radian)
+    t = Quantity(5 * units.second)
     Args = namedtuple("Args", ["a0", "a1", "t"])
     return Args(a0=a0, a1=a1, t=t)
 
@@ -27,23 +27,21 @@ def test_basic_velocity(test_args):
     result_velocity = convert_to(result, angular_velocity_def.definition_units_SI).subs({units.radian: 1, units.second: 1}).evalf(2)
     assert result_velocity == approx(0.63, 0.01)
 
+def test_velocity_with_number(test_args):
+    angular_velocity_def.calculate_angular_velocity(100, test_args.a1, test_args.t)
+    angular_velocity_def.calculate_angular_velocity(test_args.a0, 100, test_args.t)
+
 def test_velocity_with_bad_angle(test_args):
-    ab = Quantity(units.charge)
+    ab = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         angular_velocity_def.calculate_angular_velocity(
             ab, test_args.a1, test_args.t)
     with raises(errors.UnitsError):
         angular_velocity_def.calculate_angular_velocity(
-            test_args.a0, ab, test_args.t)           
-    with raises(TypeError):
-        angular_velocity_def.calculate_angular_velocity(
-            100, test_args.a1, test_args.t)
-    with raises(TypeError):
-        angular_velocity_def.calculate_angular_velocity(
-            test_args.a0, 100, test_args.t)
+            test_args.a0, ab, test_args.t)
 
 def test_velocity_with_bad_time(test_args):
-    tb = Quantity(units.charge)
+    tb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         angular_velocity_def.calculate_angular_velocity(
             test_args.a0, test_args.a1, tb)

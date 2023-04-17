@@ -10,7 +10,7 @@ from symplyphysics.laws.dynamics import force_reaction_from_force_action as newt
 
 @fixture
 def test_args():
-    Faction = Quantity(units.force, 2 * units.newton)
+    Faction = Quantity(2 * units.newton)
     Args = namedtuple("Args", ["F"])
     return Args(F=Faction)
 
@@ -33,7 +33,7 @@ def test_basic_force_quantity(test_args):
     assert result_force == approx(2.0, 0.01)
 
 def test_bad_force():
-    Fb = Quantity(units.length)
+    Fb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         newton_third_law.calculate_force_reaction(Fb)
     with raises(TypeError):

@@ -9,9 +9,9 @@ from symplyphysics.laws.thermodynamics import temperature_is_constant as boyles_
 
 @fixture
 def test_args():
-    P0 = Quantity(units.pressure, 1 * units.pascal)
-    P1 = Quantity(units.pressure, 2 * units.pascal)
-    V0 = Quantity(units.volume, 1 * units.liter)
+    P0 = Quantity(1 * units.pascal)
+    P1 = Quantity(2 * units.pascal)
+    V0 = Quantity(1 * units.liter)
     Args = namedtuple("Args", ["P0", "P1", "V0"])
     return Args(P0=P0, P1=P1, V0=V0)
 
@@ -22,7 +22,7 @@ def test_basic_volume(test_args):
     assert result_volume == approx(0.5, 0.01)
 
 def test_bad_pressure(test_args):
-    Pb = Quantity(units.length)
+    Pb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         boyles_law.calculate_volume(Pb, test_args.V0, test_args.P1)
     with raises(errors.UnitsError):
@@ -33,7 +33,7 @@ def test_bad_pressure(test_args):
         boyles_law.calculate_volume(test_args.P0, test_args.V0, 100)
 
 def test_bad_volume(test_args):
-    Vb = Quantity(units.length)
+    Vb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         boyles_law.calculate_volume(test_args.P0, Vb, test_args.P1)
     with raises(TypeError):

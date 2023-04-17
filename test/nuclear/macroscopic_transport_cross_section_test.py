@@ -10,7 +10,7 @@ from symplyphysics.laws.nuclear import macroscopic_transport_cross_section as ma
 @fixture
 def test_args():
     # carbon macroscopic scattering cross-section at 1 eV is 0.528 cm^-1
-    macroscopic_scattering_cross_section = Quantity(1 / units.length, 0.528 / units.centimeter)
+    macroscopic_scattering_cross_section = Quantity(0.528 / units.centimeter)
     # carbon (mass_number = 12) average scattering cosine angle is 0.0555
     average_scattering_angle_cosine = 0.0555
     Args = namedtuple("Args", ["scatter_cs", "u"])
@@ -23,7 +23,7 @@ def test_basic_cross_section(test_args):
     assert result_cross_section == approx(0.498, 0.01)
 
 def test_bad_scattering_cross_section(test_args):
-    scatter_csb = Quantity(units.length)
+    scatter_csb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         macro_tr_cs.calculate_cross_section(scatter_csb, test_args.u)
     with raises(TypeError):

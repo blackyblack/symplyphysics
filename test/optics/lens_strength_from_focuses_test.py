@@ -12,8 +12,8 @@ from symplyphysics.laws.optics import lens_focus_from_object_and_image as lens_l
 
 @fixture
 def test_args():
-    object_distance = Quantity(units.length, 0.4 * units.meter)
-    image_distance = Quantity(units.length, 0.4 * units.meter)
+    object_distance = Quantity(0.4 * units.meter)
+    image_distance = Quantity(0.4 * units.meter)
     Args = namedtuple("Args", ["object_distance", "image_distance"])
     return Args(object_distance=object_distance, image_distance=image_distance)
 
@@ -24,7 +24,7 @@ def test_basic_focus(test_args):
     assert result_focus == approx(0.2, 0.0001)
 
 def test_bad_distance(test_args):
-    db = Quantity(units.charge)
+    db = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         lens_law.calculate_focus(db, test_args.image_distance)
     with raises(TypeError):

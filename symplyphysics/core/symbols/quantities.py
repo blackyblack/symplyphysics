@@ -2,13 +2,14 @@ from functools import partial
 from sympy import S, Expr
 from sympy.physics.units import Dimension, Quantity as SymQuantity
 from sympy.physics.units.systems.si import SI
+from ..expr_to_quantity import collect_factor_and_dimension
 from .symbols import DimensionSymbol
 
 
-#TODO: maybe derive dimension automatically from the expression
-
 class Quantity(DimensionSymbol, SymQuantity):
-    def __new__(cls, dimension: Dimension=1, scale: Expr=1, *, display_name: str=None, **assumptions):
+    def __new__(cls, scale: Expr=1, *, display_name: str=None, dimension: Dimension=None, **assumptions):
+        (_, dimension_) = collect_factor_and_dimension(scale)
+        dimension = dimension_ if dimension is None else dimension
         name = DimensionSymbol.random_name("Q", 8) if display_name is None else DimensionSymbol.random_name(display_name)
         self = super().__new__(cls, name, None, None, None, None, None, False, **assumptions)
         self._dimension = dimension

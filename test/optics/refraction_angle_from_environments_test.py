@@ -12,7 +12,7 @@ from symplyphysics.laws.optics import refraction_angle_from_environments as refr
 
 @fixture
 def test_args():
-    incedence_angle = Quantity(angle_type, 30 * units.degree)
+    incedence_angle = Quantity(30 * units.degree)
     incedence_media = 1.003
     refractive_media = 1.333
     Args = namedtuple("Args", ["incedence_media", "incedence_angle", "refractive_media"])
@@ -25,9 +25,16 @@ def test_basic_angle(test_args):
     result_angle = convert_to(result.scale_factor, units.degree).subs(units.degree, 1).evalf(4)
     assert result_angle == approx(22.1, 0.01)
 
+def test_angle_with_number(test_args):
+    refraction_law.calculate_refraction_angle(0.5, test_args.incedence_media, test_args.refractive_media)
+    refraction_law.calculate_refraction_angle(-0.5, test_args.incedence_media, test_args.refractive_media)
+
 def test_bad_angle(test_args):
-    ab = Quantity(units.charge)
+    ab = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         refraction_law.calculate_refraction_angle(ab, test_args.incedence_media, test_args.refractive_media)
-    with raises(TypeError):
+    # Test for large angle
+    with raises(AssertionError):
         refraction_law.calculate_refraction_angle(100, test_args.incedence_media, test_args.refractive_media)
+    with raises(AssertionError):
+        refraction_law.calculate_refraction_angle(-100, test_args.incedence_media, test_args.refractive_media)

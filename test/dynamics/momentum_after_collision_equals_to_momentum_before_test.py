@@ -9,7 +9,7 @@ from symplyphysics.laws.dynamics import momentum_after_collision_equals_to_momen
 
 @fixture
 def test_args():
-    P_before = Quantity(units.momentum, 5 * units.kilogram * units.meter / units.second)
+    P_before = Quantity(5 * units.kilogram * units.meter / units.second)
     Args = namedtuple("Args", ["P_before"])
     return Args(P_before=P_before)
 
@@ -20,7 +20,7 @@ def test_basic_conservation(test_args):
     assert result_ == approx(5.0, 0.01)
 
 def test_bad_momentum():
-    Pb = Quantity(units.length)
+    Pb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         momentum_law.calculate_momentum_after(Pb)
     with raises(TypeError):

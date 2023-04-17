@@ -13,8 +13,8 @@ from symplyphysics.laws.electricity import energy_accumulated_in_capacitor_from_
 
 @fixture
 def test_args():
-    Capacitance = Quantity(units.capacitance, 0.00022 * units.farad)
-    Voltage = Quantity(units.voltage, 10 * units.volt)
+    Capacitance = Quantity(0.00022 * units.farad)
+    Voltage = Quantity(10 * units.volt)
     Args = namedtuple("Args", ["Capacitance", "Voltage"])
     return Args(Capacitance=Capacitance, Voltage=Voltage)
 
@@ -25,14 +25,14 @@ def test_basic_energy(test_args):
     assert result_power == approx(0.011, 0.00001)
 
 def test_bad_capacitance(test_args):
-    Cb = Quantity(units.length)
+    Cb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         capacitor_law.calculate_accumulated_energy(Cb, test_args.Voltage)
     with raises(TypeError):
         capacitor_law.calculate_accumulated_energy(100, test_args.Voltage)
 
 def test_bad_voltage(test_args):
-    Vb = Quantity(units.length)
+    Vb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         capacitor_law.calculate_accumulated_energy(test_args.Capacitance, Vb)
     with raises(TypeError):

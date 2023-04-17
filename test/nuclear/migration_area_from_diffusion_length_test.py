@@ -10,9 +10,9 @@ from symplyphysics.laws.nuclear import migration_area_from_diffusion_length as m
 @fixture
 def test_args():
     # water diffusion area = 39.9 cm^2
-    diffusion_area = Quantity(units.length**2, 39.9 * units.centimeter**2)
+    diffusion_area = Quantity(39.9 * units.centimeter**2)
     # light water Fermi age = 38.8 cm^2
-    neutron_fermi_age = Quantity(units.length**2, 38.8 * units.centimeter**2)
+    neutron_fermi_age = Quantity(38.8 * units.centimeter**2)
     Args = namedtuple("Args", ["Ld", "th"])
     return Args(Ld=diffusion_area, th=neutron_fermi_age)
 
@@ -24,14 +24,14 @@ def test_basic_migration_area(test_args):
     assert result_area == approx(78.8, 0.01)
 
 def test_bad_diffusion_area(test_args):
-    Ldb = Quantity(units.time)
+    Ldb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         migration_area.calculate_migration_area(Ldb, test_args.th)
     with raises(TypeError):
         migration_area.calculate_migration_area(100, test_args.th)
 
 def test_bad_fermi_age(test_args):
-    thb = Quantity(units.time)
+    thb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         migration_area.calculate_migration_area(test_args.Ld, thb)
     with raises(TypeError):

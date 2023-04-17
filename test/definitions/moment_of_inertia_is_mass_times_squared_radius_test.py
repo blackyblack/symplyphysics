@@ -13,8 +13,8 @@ from symplyphysics.definitions import moment_of_inertia_is_mass_times_squared_ra
 
 @fixture
 def test_args():
-    m = Quantity(units.mass, 5 * units.kilogram)
-    R = Quantity(units.length, 3 * units.meter)  
+    m = Quantity(5 * units.kilogram)
+    R = Quantity(3 * units.meter)  
     Args = namedtuple("Args", ["m", "R"])
     return Args(m=m, R=R)
 
@@ -26,14 +26,14 @@ def test_basic_moment_of_inertia(test_args):
     assert result_ == approx(45.0, 0.01)
 
 def test_inertia_with_bad_mass(test_args):
-    mb = Quantity(units.charge)
+    mb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         moment_of_inertia_def.calculate_moment_of_inertia(mb, test_args.R)   
     with raises(TypeError):
         moment_of_inertia_def.calculate_moment_of_inertia(100, test_args.R)
 
 def test_inertia_with_bad_mass(test_args):
-    Rb = Quantity(units.charge)
+    Rb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         moment_of_inertia_def.calculate_moment_of_inertia(test_args.m,  Rb)
     with raises(TypeError):

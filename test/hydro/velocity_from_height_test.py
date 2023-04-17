@@ -13,7 +13,7 @@ from symplyphysics.laws.hydro import velocity_from_height as torricellis_formula
 
 @fixture
 def test_args():
-    h = Quantity(units.length, 3 * units.meter)
+    h = Quantity(3 * units.meter)
     Args = namedtuple("Args", ["h"])
     return Args(h=h)
 
@@ -24,7 +24,7 @@ def test_basic_velocity(test_args):
     assert result_velocity == approx(7.67, 0.0001)
 
 def test_bad_height():
-    hb = Quantity(units.charge)
+    hb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         torricellis_formula.calculate_velocity(hb)
     with raises(TypeError):

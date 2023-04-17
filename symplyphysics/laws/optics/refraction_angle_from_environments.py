@@ -1,6 +1,7 @@
+import numbers
 from sympy import Expr
 from symplyphysics import (
-    Eq, pretty, solve, units, sin, pi
+    Eq, pretty, solve, units, sin, pi, SI
 )
 from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
 from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
@@ -37,9 +38,9 @@ def print(expr: Expr) -> str:
 
 @validate_input_symbols(incedence_angle_=incedence_angle, incedence_refractive_index_=incedence_refractive_index, resulting_refractive_index_=resulting_refractive_index)
 @validate_output_symbol(refraction_angle)
-def calculate_refraction_angle(incedence_angle_: Quantity, incedence_refractive_index_: float, resulting_refractive_index_: float) -> Quantity:
+def calculate_refraction_angle(incedence_angle_: Quantity | float, incedence_refractive_index_: float, resulting_refractive_index_: float) -> Quantity:
     #HACK: sympy angles are always in radians
-    incedence_angle_radians = incedence_angle_.scale_factor
+    incedence_angle_radians = incedence_angle_ if isinstance(incedence_angle_, numbers.Number) else incedence_angle_.scale_factor
     # Check for boundary conditions
     assert incedence_angle_radians <= pi/2
     assert incedence_angle_radians >= -pi/2
@@ -61,4 +62,5 @@ def calculate_refraction_angle(incedence_angle_: Quantity, incedence_refractive_
     # Check for boundary conditions
     assert angle_applied <= pi/2
     assert angle_applied >= -pi/2
-    return Quantity(angle_type, angle_applied * units.radian)
+    #HACK: angle type is automatically detected as dimensionless. Force it to angle.
+    return Quantity(angle_applied * units.radian, dimension=angle_type)

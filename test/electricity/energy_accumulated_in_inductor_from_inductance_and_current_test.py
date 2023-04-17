@@ -13,8 +13,8 @@ from symplyphysics.laws.electricity import energy_accumulated_in_inductor_from_i
 
 @fixture
 def test_args():
-    Inductance = Quantity(units.inductance, 0.15 * units.henry)
-    Current = Quantity(units.current, 0.5 * units.ampere)
+    Inductance = Quantity(0.15 * units.henry)
+    Current = Quantity(0.5 * units.ampere)
     Args = namedtuple("Args", ["Inductance", "Current"])
     return Args(Inductance=Inductance, Current=Current)
 
@@ -25,14 +25,14 @@ def test_basic_energy(test_args):
     assert result_power == approx(0.01875, 0.00001)
 
 def test_bad_Inductance(test_args):
-    Lb = Quantity(units.length)
+    Lb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         inductor_law.calculate_accumulated_energy(Lb, test_args.Current)
     with raises(TypeError):
         inductor_law.calculate_accumulated_energy(100, test_args.Current)
 
 def test_bad_Current(test_args):
-    Ib = Quantity(units.length)
+    Ib = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         inductor_law.calculate_accumulated_energy(test_args.Inductance, Ib)
     with raises(TypeError):

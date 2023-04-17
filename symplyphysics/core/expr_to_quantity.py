@@ -69,13 +69,17 @@ def collect_factor_and_dimension(expr: Expr):
     elif isinstance(expr, Add):
         factor, dim = collect_factor_and_dimension(expr.args[0])
         for addend in expr.args[1:]:
-            addend_factor, addend_dim = \
-                collect_factor_and_dimension(addend)
+            addend_factor, addend_dim = collect_factor_and_dimension(addend)
+            # automatically convert zero to the dimension of it's additives
+            if dim != addend_dim and not SI.get_dimension_system().equivalent_dims(dim, addend_dim):
+                if factor == S.Zero:
+                    dim = addend_dim
+                elif addend_factor == S.Zero:
+                    addend_dim = dim
             if dim != addend_dim and not SI.get_dimension_system().equivalent_dims(dim, addend_dim):
                 raise ValueError(
                     'Dimension of "{}" is {}, '
-                    'but it should be {}'.format(
-                        addend, addend_dim, dim))
+                    'but it should be {}'.format(addend, addend_dim, dim))
             factor += addend_factor
         return factor, dim
     elif isinstance(expr, Derivative):

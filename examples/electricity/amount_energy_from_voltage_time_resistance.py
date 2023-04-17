@@ -16,19 +16,17 @@ from symplyphysics.laws.electricity import power_is_proportional_voltage_and_cur
 CELSIUS_TO_KELVIN_OFFSET = int(273)
 
 # water parameters: density and specific heat capacity
-water_density = Quantity(units.mass / units.volume, 1000 * units.kilogram / units.meter**3)
-water_heat_capacity = Quantity(
-    units.energy / (units.mass * units.temperature),
-    4200 * units.joule / (units.kilogram * units.kelvin))
+water_density = Quantity(1000 * units.kilogram / units.meter**3)
+water_heat_capacity = Quantity(4200 * units.joule / (units.kilogram * units.kelvin))
 
 #TODO: use kilo, mega and so on
 # kettle parameters: power and volume
-kettle_power = Quantity(units.power, 1500 * units.watt)
-kettle_volume = Quantity(units.volume, 0.5 * units.liter)
+kettle_power = Quantity(1500 * units.watt)
+kettle_volume = Quantity(0.5 * units.liter)
 
 # heating parameters
-initial_temperature = Quantity(units.temperature, (20 + CELSIUS_TO_KELVIN_OFFSET) * units.kelvin)
-final_temperature = Quantity(units.temperature, (100 + CELSIUS_TO_KELVIN_OFFSET) * units.kelvin)
+initial_temperature = Quantity((20 + CELSIUS_TO_KELVIN_OFFSET) * units.kelvin)
+final_temperature = Quantity((100 + CELSIUS_TO_KELVIN_OFFSET) * units.kelvin)
 
 ohm_law_applied = ohm_law.law.subs({ohm_law.current: operate_power.current, ohm_law.resistance: joule_lenz_law.resistance, ohm_law.voltage: joule_lenz_law.voltage})
 operate_power_applied = operate_power.law.subs(operate_power.voltage, joule_lenz_law.voltage)

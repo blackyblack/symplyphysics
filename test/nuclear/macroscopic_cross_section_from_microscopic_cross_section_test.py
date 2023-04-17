@@ -10,9 +10,9 @@ from symplyphysics.laws.nuclear import macroscopic_cross_section_from_microscopi
 @fixture
 def test_args():
     # carbon microscopic cross-section is 5.01 barn
-    microscopic_cross_section = Quantity(units.length**2, 5.01E-24 * units.centimeter**2)
+    microscopic_cross_section = Quantity(5.01E-24 * units.centimeter**2)
     # NC = 1 * 2.75*10^22 atoms of carbon/cm^3
-    atomic_number_density = Quantity(1 / units.length**3, 2.75E+22 / units.centimeter**3)
+    atomic_number_density = Quantity(2.75E+22 / units.centimeter**3)
     Args = namedtuple("Args", ["b", "N"])
     return Args(b=microscopic_cross_section, N=atomic_number_density)
 
@@ -23,14 +23,14 @@ def test_basic_cross_section(test_args):
     assert result_cross_section == approx(0.14, 0.1)
 
 def test_bad_microscopic_cross_section(test_args):
-    bb = Quantity(units.length)
+    bb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         macro_cs.calculate_cross_section(bb, test_args.N)
     with raises(TypeError):
         macro_cs.calculate_cross_section(100, test_args.N)
 
 def test_bad_atomic_number_density(test_args):
-    Nb = Quantity(units.length)
+    Nb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         macro_cs.calculate_cross_section(test_args.b, Nb)
     with raises(TypeError):

@@ -12,9 +12,9 @@ from symplyphysics.laws.kinematic import constant_acceleration_movement_is_parab
 
 @fixture
 def test_args():
-    V0 = Quantity(units.velocity, 10 * units.meter / units.second)
-    a = Quantity(units.acceleration, -0.1 * units.meter / units.second**2)
-    t = Quantity(units.time, 10 * units.second)
+    V0 = Quantity(10 * units.meter / units.second)
+    a = Quantity(-0.1 * units.meter / units.second**2)
+    t = Quantity(10 * units.second)
     Args = namedtuple("Args", ["V0", "a", "t"])
     return Args(V0=V0, a=a, t=t)
 
@@ -25,21 +25,21 @@ def test_basic_distance(test_args):
     assert result_vector == approx(95, 0.01)
 
 def test_bad_velocity(test_args):
-    Vb = Quantity(units.length)
+    Vb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         movement_law.calculate_distance(Vb, test_args.a, test_args.t)
     with raises(TypeError):
         movement_law.calculate_distance(100, test_args.a, test_args.t)
 
 def test_bad_acceleration(test_args):
-    ab = Quantity(units.length)
+    ab = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         movement_law.calculate_distance(test_args.V0, ab, test_args.t)
     with raises(TypeError):
         movement_law.calculate_distance(test_args.V0, 100, test_args.t) 
 
 def test_bad_time(test_args):
-    tb = Quantity(units.length)
+    tb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         movement_law.calculate_distance(test_args.V0, test_args.a, tb)
     with raises(TypeError):

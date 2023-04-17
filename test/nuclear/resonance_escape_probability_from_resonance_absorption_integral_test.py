@@ -10,13 +10,13 @@ from symplyphysics.laws.nuclear import resonance_escape_probability_from_resonan
 @fixture
 def test_args():
     # U-238 atomic number density = 0.984 atoms per (barn * cm)
-    atomic_number_density_abs = Quantity(1 / units.length**3, 0.984E+24 / units.centimeter**3)
+    atomic_number_density_abs = Quantity(0.984E+24 / units.centimeter**3)
     # UO2 fuel rod with diameter = 1 cm has effective resonance integral = 20.5 barns
-    resonance_integral = Quantity(units.length**2, 20.5E-24 * units.centimeter**2)
+    resonance_integral = Quantity(20.5E-24 * units.centimeter**2)
     # U-238 with carbon moderator average lethargy decrement = 0.1573
     average_lethargy_change = 0.1573
     # Carbon macroscopic cross-section = 2820 cm^-1
-    macro_scatter_cross_section = Quantity(1 / units.length, 2820 / units.centimeter)
+    macro_scatter_cross_section = Quantity(2820 / units.centimeter)
     Args = namedtuple("Args", ["Na", "Ieff", "Let", "Ss"])
     return Args(Na=atomic_number_density_abs, Ieff=resonance_integral, Let=average_lethargy_change, Ss=macro_scatter_cross_section)
 
@@ -25,7 +25,7 @@ def test_basic_resonance_escape_factor(test_args):
     assert result.value == approx(0.955, 0.01)
 
 def test_bad_atomic_number_density(test_args):
-    Nab = Quantity(units.time)
+    Nab = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         resonance_escape.calculate_resonance_escape_probability(Nab, test_args.Ieff, test_args.Let, test_args.Ss)
     with raises(TypeError):

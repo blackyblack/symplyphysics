@@ -12,8 +12,8 @@ from symplyphysics.laws.kinematic import centripetal_acceleration_is_squared_vel
 
 @fixture
 def test_args():
-    lin_velocity = Quantity(units.velocity, 10 * units.meter / units.second)
-    curve_radius = Quantity(units.length, 0.5 * units.meter)    
+    lin_velocity = Quantity(10 * units.meter / units.second)
+    curve_radius = Quantity(0.5 * units.meter)    
     Args = namedtuple("Args", ["lin_velocity", "curve_radius"])
     return Args(lin_velocity=lin_velocity, curve_radius=curve_radius)
 
@@ -24,14 +24,14 @@ def test_basic_acceleration(test_args):
     assert result_acceleration == approx(200.0, 0.01)
 
 def test_bad_velocity(test_args):
-    vb = Quantity(units.length)
+    vb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         centripetal_acceleration_def.calculate_acceleration(vb, test_args.curve_radius)
     with raises(TypeError):
         centripetal_acceleration_def.calculate_acceleration(100, test_args.curve_radius)
 
 def test_bad_radius(test_args):
-    rb = Quantity(units.time)
+    rb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         centripetal_acceleration_def.calculate_acceleration(test_args.lin_velocity, rb)
     with raises(TypeError):

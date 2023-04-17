@@ -14,11 +14,11 @@ from symplyphysics.laws.waves import frequency_from_velocity as doppler_law
 
 @fixture
 def test_args():
-    sound_velocity = Quantity(units.velocity, 340 * units.meter/units.second)
-    train_velocity = Quantity(units.velocity, -9 * units.kilometer/units.hour)
-    bike_velocity = Quantity(units.velocity, 9 * units.kilometer/units.hour)
-    zero_velocity = Quantity(units.velocity, 0)
-    horn_frequency = Quantity(units.frequency, 2000 * units.hertz)    
+    sound_velocity = Quantity(340 * units.meter/units.second)
+    train_velocity = Quantity(-9 * units.kilometer/units.hour)
+    bike_velocity = Quantity(9 * units.kilometer/units.hour)
+    zero_velocity = Quantity(0)
+    horn_frequency = Quantity(2000 * units.hertz)    
     Args = namedtuple("Args", ["sound_velocity", "train_velocity", "bike_velocity", "zero_velocity", "horn_frequency"])
     return Args(sound_velocity=sound_velocity, zero_velocity=zero_velocity, train_velocity=train_velocity, bike_velocity=bike_velocity, horn_frequency=horn_frequency)
 
@@ -33,7 +33,7 @@ def test_basic_frequency(test_args):
     assert result_freq_2 == approx(result_freq_1, 0.001)
 
 def test_bad_velocity(test_args):
-    vb = Quantity(units.charge)
+    vb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         doppler_law.calculate_observed_frequency(test_args.horn_frequency, vb, test_args.train_velocity, test_args.bike_velocity)
     with raises(TypeError):
@@ -48,7 +48,7 @@ def test_bad_velocity(test_args):
         doppler_law.calculate_observed_frequency(test_args.horn_frequency, test_args.sound_velocity, test_args.train_velocity, 100)
 
 def test_bad_frequency(test_args):
-    fb = Quantity(units.charge)
+    fb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         doppler_law.calculate_observed_frequency(fb, test_args.sound_velocity, test_args.train_velocity, test_args.bike_velocity)
     with raises(TypeError):

@@ -13,8 +13,8 @@ from symplyphysics.laws.electricity.circuits import oscillation_period_for_capac
 
 @fixture
 def test_args():
-    L = Quantity(units.inductance, 1 * units.henry)
-    C = Quantity(units.capacitance, 1 * units.farad)
+    L = Quantity(1 * units.henry)
+    C = Quantity(1 * units.farad)
     Args = namedtuple("Args", ["L", "C"])
     return Args(L=L, C=C)
 
@@ -25,14 +25,14 @@ def test_basic_period(test_args):
     assert result_voltage == approx(6.28, 0.01)
 
 def test_bad_inductance(test_args):
-    Lb = Quantity(units.length)
+    Lb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         lc.calculate_oscillation_period(Lb, test_args.C)
     with raises(TypeError):
         lc.calculate_oscillation_period(100, test_args.C)
 
 def test_bad_capacity(test_args):
-    Cb = Quantity(units.length)
+    Cb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         lc.calculate_oscillation_period(test_args.L, Cb)
     with raises(TypeError):

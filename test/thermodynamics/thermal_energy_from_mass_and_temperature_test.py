@@ -11,10 +11,10 @@ from symplyphysics.laws.thermodynamics import thermal_energy_from_mass_and_tempe
 # Specific heat capacity of water is 4200 J/kg*K , ignore losses.
 @fixture
 def test_args():
-    C = Quantity(units.energy / (units.mass * units.temperature), 4200 * units.joule / (units.kilogram * units.kelvin))
-    m = Quantity(units.mass, 0.5 * units.kilogram)
-    t1 = Quantity(units.temperature, 273 * units.kelvin)
-    t2 = Quantity(units.temperature, 323 * units.kelvin)
+    C = Quantity(4200 * units.joule / (units.kilogram * units.kelvin))
+    m = Quantity(0.5 * units.kilogram)
+    t1 = Quantity(273 * units.kelvin)
+    t2 = Quantity(323 * units.kelvin)
     Args = namedtuple("Args", ["C", "m", "t1", "t2"])
     return Args(C=C, m=m, t1=t1, t2=t2)
 
@@ -25,21 +25,21 @@ def test_basic_amount(test_args):
     assert result_energy == approx(105000.1, 0.000001)
 
 def test_bad_specific_heat(test_args):
-    Cb = Quantity(units.mass)
+    Cb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
          amount_energy.calculate_amount_energy(Cb, test_args.m, test_args.t2, test_args.t1)
     with raises(TypeError):
          amount_energy.calculate_amount_energy(100, test_args.m, test_args.t2, test_args.t1)
 
 def test_bad_body_mass(test_args):
-    mb = Quantity(units.temperature)
+    mb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         amount_energy.calculate_amount_energy(test_args.C, mb, test_args.t2, test_args.t1)
     with raises(TypeError):
         amount_energy.calculate_amount_energy(test_args.C, 100, test_args.t2, test_args.t1)
 
 def test_bad_temperature(test_args):
-    tb = Quantity(units.mass)
+    tb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         amount_energy.calculate_amount_energy(test_args.C, test_args.m, tb, test_args.t1)
     with raises(TypeError):

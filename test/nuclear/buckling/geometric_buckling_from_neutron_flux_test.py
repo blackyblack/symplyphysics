@@ -12,7 +12,7 @@ from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_
 def test_args():
     # spherical reactor with radius = 10 centimeter
     spherical_coordinates = CoordSys3D("spherical_coordinates", transformation="spherical")
-    sphere_radius = Quantity(units.length, 10 * units.centimeter)
+    sphere_radius = Quantity(10 * units.centimeter)
     neutron_flux = sin((pi / sphere_radius) * spherical_coordinates.r) / spherical_coordinates.r
     Args = namedtuple("Args", ["f"])
     return Args(f=neutron_flux)

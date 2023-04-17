@@ -12,9 +12,9 @@ from symplyphysics.laws.gravity import free_fall_acceleration_from_height as fre
 # R - Earth radius constant       6.371e+6 m
 @fixture
 def test_args():
-    earth_mass = Quantity(units.mass, 5.976e+24 * units.kilogram)
-    earth_radius = Quantity(units.length, 6.371e+6 * units.meter)
-    height_from_surface = Quantity(units.length, 1 * units.meter)
+    earth_mass = Quantity(5.976e+24 * units.kilogram)
+    earth_radius = Quantity(6.371e+6 * units.meter)
+    height_from_surface = Quantity(1 * units.meter)
     Args = namedtuple("Args", ["earth_mass", "earth_radius", "height_from_surface"])
     return Args(earth_mass=earth_mass, earth_radius=earth_radius, height_from_surface=height_from_surface)
 
@@ -25,21 +25,21 @@ def test_basic_acceleration(test_args):
     assert result_acceleration == approx(9.82316, 0.005)
 
 def test_bad_earth_mass(test_args):
-    emb = Quantity(units.length)
+    emb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         free_fall_acceleration.calculate_acceleration(emb, test_args.earth_radius, test_args.height_from_surface)
     with raises(TypeError):
         free_fall_acceleration.calculate_acceleration(100, test_args.earth_radius, test_args.height_from_surface)
 
 def test_bad_earth_radius(test_args):
-    erb = Quantity(units.mass)
+    erb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         free_fall_acceleration.calculate_acceleration(test_args.earth_mass, erb, test_args.height_from_surface)
     with raises(TypeError):
         free_fall_acceleration.calculate_acceleration(test_args.earth_mass, 100, test_args.height_from_surface)
 
 def test_bad_height(test_args):
-    hb = Quantity(units.mass)
+    hb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         free_fall_acceleration.calculate_acceleration(test_args.earth_mass, test_args.earth_radius, hb)
     with raises(TypeError):

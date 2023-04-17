@@ -14,9 +14,9 @@ from symplyphysics.laws.gravity import gravity_force_from_mass_and_distance as g
 
 @fixture
 def test_args():
-    m1 = Quantity(units.mass, 3000 * units.kilogram)
-    m2 = Quantity(units.mass, 5000 * units.kilogram)
-    R = Quantity(units.length, 0.06 * units.meter)
+    m1 = Quantity(3000 * units.kilogram)
+    m2 = Quantity(5000 * units.kilogram)
+    R = Quantity(0.06 * units.meter)
     Args = namedtuple("Args", ["m1", "m2", "R"])
     return Args(m1=m1, m2=m2, R=R)
 
@@ -27,7 +27,7 @@ def test_basic_force(test_args):
     assert result_force == approx(0.27809583, 0.0000001)
 
 def test_bad_mass(test_args):
-    mb = Quantity(units.length)
+    mb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         gravity_law.calculate_force(mb, test_args.m2, test_args.R)
     with raises(TypeError):
@@ -38,7 +38,7 @@ def test_bad_mass(test_args):
         gravity_law.calculate_force(test_args.m1, 100, test_args.R)
 
 def test_bad_distance(test_args):
-    db = Quantity(units.charge)
+    db = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         gravity_law.calculate_force(test_args.m1, test_args.m2, db)
     with raises(TypeError):

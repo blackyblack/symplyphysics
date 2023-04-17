@@ -9,8 +9,8 @@ from symplyphysics.laws.electricity.circuits import sum_of_all_currents_through_
 
 @fixture
 def test_args():
-    I1 = Quantity(units.current, 3 * units.ampere)
-    I2 = Quantity(units.current, -5 * units.ampere)
+    I1 = Quantity(3 * units.ampere)
+    I2 = Quantity(-5 * units.ampere)
     Args = namedtuple("Args", ["I1", "I2"])
     return Args(I1=I1, I2=I2)
 
@@ -21,7 +21,7 @@ def test_basic_current(test_args):
     assert result_current == approx(-3, 0.01)
 
 def test_bad_current():
-    Ib = Quantity(units.length)
+    Ib = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         kirchhoff_law.calculate_current(Ib)
     with raises(TypeError):
@@ -39,7 +39,7 @@ def test_array_empty():
     assert int(convert_to(result, S.One).n()) == 0
 
 def test_array_bad_current(test_args):
-    Ib = Quantity(units.length)
+    Ib = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         kirchhoff_law.calculate_current_from_array([test_args.I1, Ib])
     with raises(TypeError):

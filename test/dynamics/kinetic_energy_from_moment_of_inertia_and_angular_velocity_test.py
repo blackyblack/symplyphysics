@@ -13,8 +13,8 @@ from sympy.physics.units.definitions.dimension_definitions import angle as angle
 
 @fixture
 def test_args():
-    I = Quantity(units.mass * units.length**2, 2 * units.kilogram * units.meter**2)
-    w = Quantity(angle_type / units.time, 3 * units.radian / units.second)
+    I = Quantity(2 * units.kilogram * units.meter**2)
+    w = Quantity(3 * units.radian / units.second)
     Args = namedtuple("Args", ["I", "w"])
     return Args(I=I, w=w)
 
@@ -25,14 +25,14 @@ def test_basic_energy(test_args):
     assert result_energy == approx(9.0, 0.01)
 
 def test_bad_inertia_moment(test_args):
-    Ib = Quantity(units.length)
+    Ib = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         kinetic_energy_law.calculate_energy(Ib, test_args.w)
     with raises(TypeError):
         kinetic_energy_law.calculate_energy(100, test_args.w)
 
 def test_bad_velocity(test_args):
-    wb = Quantity(units.length)
+    wb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         kinetic_energy_law.calculate_energy(test_args.I, wb)
     with raises(TypeError):

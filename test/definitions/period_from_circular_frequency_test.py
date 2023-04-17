@@ -9,7 +9,7 @@ from symplyphysics.definitions import period_from_circular_frequency as period_d
 
 @fixture
 def test_args():
-    w = Quantity(units.frequency, 6.28 * units.radian / units.second)
+    w = Quantity(6.28 * units.radian / units.second)
     Args = namedtuple("Args", ["w"])
     return Args(w=w)
 
@@ -20,7 +20,7 @@ def test_basic_period(test_args):
     assert result_period == approx(1.0, 0.01)
 
 def test_bad_frequency():
-    wb = Quantity(units.length)
+    wb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         period_def.calculate_period(wb)
     with raises(TypeError):

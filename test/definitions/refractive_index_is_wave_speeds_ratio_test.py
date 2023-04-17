@@ -13,8 +13,8 @@ from symplyphysics.definitions import refractive_index_is_wave_speeds_ratio as r
 
 @fixture
 def test_args():
-    v1 = Quantity(units.velocity, 299910 * units.kilometer / units.second)        
-    v2 = Quantity(units.velocity, 231000 * units.kilometer / units.second)
+    v1 = Quantity(299910 * units.kilometer / units.second)        
+    v2 = Quantity(231000 * units.kilometer / units.second)
     Args = namedtuple("Args", ["v1", "v2"])
     return Args(v1=v1, v2=v2)
 
@@ -23,7 +23,7 @@ def test_basic_refraction_factor(test_args):
     assert result == approx(1.298, 0.001)
 
 def test_bad_velocity(test_args):
-    vb = Quantity(units.length)
+    vb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         refractive_index_definition.calculate_refractive_index(vb, test_args.v2)
     with raises(TypeError):

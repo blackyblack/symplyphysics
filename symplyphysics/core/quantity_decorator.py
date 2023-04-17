@@ -9,7 +9,12 @@ from symplyphysics.core.vectors.vectors import Vector
 from .errors import UnitsError
 
 def assert_equivalent_dimension(arg: Quantity, decorator_name, param_name, func_name, expected_unit: Dimension):
-    if isinstance(arg, numbers.Number) and SI.get_dimension_system().is_dimensionless(expected_unit):
+    if not isinstance(expected_unit, Dimension):
+        raise TypeError(f"Argument '{expected_unit.name}' to decorator '{decorator_name}'"
+            f" should be sympy.physics.units.Dimension.")
+    #HACK: this allows to treat angle type as dimensionless
+    expected_dimension = expected_unit.subs("angle", S.One)
+    if isinstance(arg, numbers.Number) and SI.get_dimension_system().is_dimensionless(expected_dimension):
         return
     if not isinstance(arg, Quantity):
         raise TypeError(f"Argument '{param_name}' to function '{func_name}'"
@@ -19,13 +24,15 @@ def assert_equivalent_dimension(arg: Quantity, decorator_name, param_name, func_
     # zero can be of any dimension
     if scale_factor == S.Zero:
         return
-
-    if not isinstance(expected_unit, Dimension):
-        raise TypeError(f"Argument '{expected_unit.name}' to decorator '{decorator_name}'"
-            f" should be sympy.physics.units.Dimension.")
-    if not SI.get_dimension_system().equivalent_dims(arg.dimension, expected_unit):
+    
+    #HACK: this allows to treat angle type as dimensionless
+    arg_dimension = arg.dimension.subs("angle", S.One)
+    # angle is dimensionless but equivalent_dims() fails to compare it
+    if SI.get_dimension_system().is_dimensionless(expected_dimension) and SI.get_dimension_system().is_dimensionless(arg_dimension):
+        return
+    if not SI.get_dimension_system().equivalent_dims(arg_dimension, expected_dimension):
         raise UnitsError(f"Argument '{param_name}' to function '{func_name}' must "
-            f"be in units equivalent to '{expected_unit.name}'")
+            f"be in units equivalent to '{expected_dimension.name}'")
     if scale_factor.free_symbols:
         raise UnitsError(f"Argument '{param_name}' to function '{func_name}' should "
             f"not contain free symbols")

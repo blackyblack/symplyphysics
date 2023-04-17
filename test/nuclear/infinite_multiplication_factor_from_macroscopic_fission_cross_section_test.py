@@ -12,9 +12,9 @@ def test_args():
     # Uranium-235 thermal neutrons per fission is 2.42
     neutrons_per_fission = 2.42
     # Uranium-235 macroscopic fission cross-section
-    macro_fission_cross_section = Quantity(1 / units.length, 2.811 / units.centimeter)
+    macro_fission_cross_section = Quantity(2.811 / units.centimeter)
     # Uranium-235 + Uranium-238 macroscopic absorption cross-section
-    macro_abs_cross_section = Quantity(1 / units.length, (3.352 + 0.117) / units.centimeter)
+    macro_abs_cross_section = Quantity((3.352 + 0.117) / units.centimeter)
     Args = namedtuple("Args", ["v", "Sf", "Sa"])
     return Args(v=neutrons_per_fission, Sf=macro_fission_cross_section, Sa=macro_abs_cross_section)
 
@@ -23,7 +23,7 @@ def test_basic_multiplication_factor(test_args):
     assert result == approx(1.96, 0.01)
 
 def test_bad_macroscopic_cross_section(test_args):
-    Sb = Quantity(units.length)
+    Sb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         multiplication_factor.calculate_multiplication_factor(test_args.v, Sb, test_args.Sa)
     with raises(TypeError):

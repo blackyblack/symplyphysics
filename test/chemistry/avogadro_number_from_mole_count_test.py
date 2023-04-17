@@ -1,15 +1,12 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-
-from symplyphysics import (
-    units, errors
-)
+from symplyphysics import (units, errors)
 from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.laws.chemistry import avogadro_number_from_mole_count
 
 @fixture
 def test_args():
-    mole_count = Quantity(units.amount_of_substance, 5 * units.mole)
+    mole_count = Quantity(5 * units.mole)
     Args = namedtuple("Args", ["M"])
     return Args(M=mole_count)
 
@@ -19,7 +16,7 @@ def test_basic_particles_count(test_args):
     assert result == approx(3.011E+24, 0.01)
 
 def test_bad_mole_count():
-    Mb = Quantity(units.length)
+    Mb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         avogadro_number_from_mole_count.calculate_particles_count(Mb)
     with raises(TypeError):

@@ -9,8 +9,8 @@ from symplyphysics.laws.electricity.circuits import sum_of_all_voltages_in_loop_
 
 @fixture
 def test_args():
-    U1 = Quantity(units.voltage, 3 * units.volt)
-    U2 = Quantity(units.voltage, -5 * units.volt)
+    U1 = Quantity(3 * units.volt)
+    U2 = Quantity(-5 * units.volt)
     Args = namedtuple("Args", ["U1", "U2"])
     return Args(U1=U1, U2=U2)
 
@@ -21,7 +21,7 @@ def test_basic_voltage(test_args):
     assert result_voltage == approx(-3, 0.01)
 
 def test_bad_voltage():
-    Ub = Quantity(units.length)
+    Ub = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         kirchhoff_law_2.calculate_voltage(Ub)
     with raises(TypeError):
@@ -39,7 +39,7 @@ def test_array_empty():
     assert int(convert_to(result, S.One).n()) == 0
 
 def test_array_bad_voltage(test_args):
-    Ub = Quantity(units.length)
+    Ub = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         kirchhoff_law_2.calculate_voltage_from_array([test_args.U1, Ub])
     with raises(TypeError):

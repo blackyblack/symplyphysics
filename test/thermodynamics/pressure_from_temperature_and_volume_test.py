@@ -9,9 +9,9 @@ from symplyphysics.laws.thermodynamics import pressure_from_temperature_and_volu
 
 @fixture
 def test_args():
-    V = Quantity(units.volume, 22.414 * units.liter)
-    t = Quantity(units.temperature, 273.15 * units.kelvin)
-    n = Quantity(units.amount_of_substance, 1 * units.mole)
+    V = Quantity(22.414 * units.liter)
+    t = Quantity(273.15 * units.kelvin)
+    n = Quantity(1 * units.mole)
     Args = namedtuple("Args", ["V", "t", "n"])
     return Args(V=V, t=t, n=n)
 
@@ -26,21 +26,21 @@ def test_basic_pressure(test_args):
     assert result_pressure_atms == approx(1.0, 0.01)
 
 def test_bad_volume(test_args):
-    Vb = Quantity(units.length)
+    Vb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         ideal_gas_law.calculate_pressure(Vb, test_args.t, test_args.n)
     with raises(TypeError):
         ideal_gas_law.calculate_pressure(100, test_args.t, test_args.n)
 
 def test_bad_temperature(test_args):
-    tb = Quantity(units.length)
+    tb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         ideal_gas_law.calculate_pressure(test_args.V, tb, test_args.n)
     with raises(TypeError):
         ideal_gas_law.calculate_pressure(test_args.V, 100, test_args.n)
 
 def test_bad_mole_count(test_args):
-    nb = Quantity(units.length)
+    nb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         ideal_gas_law.calculate_pressure(test_args.V, test_args.t, nb)
     with raises(TypeError):

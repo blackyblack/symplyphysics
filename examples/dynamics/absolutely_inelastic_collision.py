@@ -13,10 +13,11 @@ from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.laws.dynamics import momentum_after_collision_equals_to_momentum_before as momentum_law
 from symplyphysics.definitions import momentum_is_mass_times_velocity as momentum_def
 
-bullet_mass = Quantity(units.mass, 10 * units.gram)
-bullet_velocity = Quantity(units.velocity, 700 * units.meter / units.second)
-body_mass = Quantity(units.mass, 75 * units.kilogram)
-body_velocity = Quantity(units.velocity, 0 * units.meter / units.second)
+bullet_mass = Quantity(10 * units.gram)
+bullet_velocity = Quantity(700 * units.meter / units.second)
+body_mass = Quantity(75 * units.kilogram)
+# Hint dimension so 'convert_to' is able to convert it to m/s
+body_velocity = Quantity(0 * units.meter / units.second, dimension=units.velocity)
 
 print("Formula for momentum conservation law is:\n{}".format(momentum_law.print(momentum_law.law)))
 print("Formula for momentum is:\n{}".format(momentum_def.print(momentum_def.definition)))

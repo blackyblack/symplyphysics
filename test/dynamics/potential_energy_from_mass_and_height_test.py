@@ -12,8 +12,8 @@ from symplyphysics.laws.dynamics import potential_energy_from_mass_and_height as
 
 @fixture
 def test_args():
-    m = Quantity(units.mass, 9 * units.gram)
-    h = Quantity(units.length, 500 * units.meter)
+    m = Quantity(9 * units.gram)
+    h = Quantity(500 * units.meter)
     Args = namedtuple("Args", ["m", "h"])
     return Args(m=m, h=h)
 
@@ -24,15 +24,15 @@ def test_basic_energy(test_args):
     assert result_energy == approx(44.19, 0.01)
 
 def test_bad_body_mass(test_args):
-    bm = Quantity(units.length)
+    mb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        potential_energy.calculate_potential_energy(bm, test_args.h)
+        potential_energy.calculate_potential_energy(mb, test_args.h)
     with raises(TypeError):
         potential_energy.calculate_potential_energy(100, test_args.h)
 
 def test_bad_height(test_args):
-    bh = Quantity(units.mass)
+    hb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        potential_energy.calculate_potential_energy(test_args.m, bh)
+        potential_energy.calculate_potential_energy(test_args.m, hb)
     with raises(TypeError):
         potential_energy.calculate_potential_energy(test_args.m, 100)

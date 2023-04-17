@@ -13,8 +13,8 @@ from symplyphysics.laws.dynamics import potential_energy_from_deformation as hoo
 
 @fixture
 def test_args():
-    k = Quantity(units.force / units.length, 100 * units.newton / units.meter)
-    x = Quantity(units.length, 2 * units.centimeter)
+    k = Quantity(100 * units.newton / units.meter)
+    x = Quantity(2 * units.centimeter)
     Args = namedtuple("Args", ["k", "x"])
     return Args(k=k, x=x)
 
@@ -25,14 +25,14 @@ def test_basic_energy(test_args):
     assert result_energy == approx(0.02, 0.0001)
 
 def test_bad_elastic_koefficient(test_args):
-    kb = Quantity(units.length)
+    kb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         hookes_law.calculate_energy(kb, test_args.x)
     with raises(TypeError):
         hookes_law.calculate_energy(100, test_args.x)
 
 def test_bad_deformation(test_args):
-    xb = Quantity(units.charge)
+    xb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         hookes_law.calculate_energy(test_args.k, xb)
     with raises(TypeError):

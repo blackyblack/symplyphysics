@@ -11,8 +11,8 @@ from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.laws.gravity import gravity_force_from_mass_and_distance as gravity_law
 from symplyphysics.laws.dynamics import acceleration_from_force as newtons_law_2
 
-earth_mass = Quantity(units.mass, 5.9722e24 * units.kilogram)
-earth_radius = Quantity(units.length, 6371 * units.kilometer)
+earth_mass = Quantity(5.9722e24 * units.kilogram)
+earth_radius = Quantity(6371 * units.kilometer)
 
 # Gravity force from gravity law
 gravity_force = solve(gravity_law.law, gravity_law.gravitational_force, dict=True)[0][gravity_law.gravitational_force].subs({

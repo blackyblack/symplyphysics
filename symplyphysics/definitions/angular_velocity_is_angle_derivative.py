@@ -1,3 +1,4 @@
+import numbers
 from sympy import Expr
 from symplyphysics import (
     Derivative, Eq, pretty, units, expr_to_quantity
@@ -33,10 +34,10 @@ def print(expr: Expr) -> str:
 
 @validate_input_symbols(angle_start_=angle_function, angle_end_=angle_function, moving_time_=time)
 @validate_output_symbol(angular_velocity)
-def calculate_angular_velocity(angle_start_: Quantity, angle_end_: Quantity, moving_time_: Quantity) -> Quantity:
-    #HACK: sympy angles are always in radians
-    angle_start_radians = angle_start_.scale_factor
-    angle_end_radians = angle_end_.scale_factor
+def calculate_angular_velocity(angle_start_: Quantity | float, angle_end_: Quantity | float, moving_time_: Quantity) -> Quantity:
+    #HACK: SymPy angles are always in radians
+    angle_start_radians = angle_start_ if isinstance(angle_start_, numbers.Number) else angle_start_.scale_factor
+    angle_end_radians = angle_end_ if isinstance(angle_end_, numbers.Number) else angle_end_.scale_factor
     angle_function_ = time * (angle_end_radians - angle_start_radians) / moving_time_
     applied_definition = definition.subs(angle_function(time), angle_function_)
     dsolved = applied_definition.doit()

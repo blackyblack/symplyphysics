@@ -12,8 +12,8 @@ from symplyphysics.definitions import circulation_is_integral_along_curve as cir
 @fixture
 def test_args():
     C = CoordinateSystem()
-    force_unit = Quantity(units.force, 1 * units.newton)
-    radius_unit = Quantity(units.length, 1 * units.meter)
+    force_unit = Quantity(1 * units.newton)
+    radius_unit = Quantity(1 * units.meter)
     # field is a field of gravitational forces, force is directed down by the Y coordinate
     # field is (0, -1 * G * m * M / y**2)
     # G * m * M = force * length**2 / mass**2 * mass**2 = force * length**2

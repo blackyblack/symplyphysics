@@ -13,8 +13,8 @@ from symplyphysics.laws.electricity import dissipated_heat_power_is_proportional
 
 @fixture
 def test_args():
-    Current = Quantity(units.current, 1 * units.ampere)
-    Resistance = Quantity(units.impedance, 2 * units.ohm)
+    Current = Quantity(1 * units.ampere)
+    Resistance = Quantity(2 * units.ohm)
     Args = namedtuple("Args", ["Current", "Resistance"])
     return Args(Current=Current, Resistance=Resistance)
 
@@ -25,14 +25,14 @@ def test_basic_power(test_args):
     assert result_power == approx(2, 0.01)
 
 def test_bad_current(test_args):
-    Ib = Quantity(units.length)
+    Ib = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         joule_lenz_law.calculate_heat_power(Ib, test_args.Resistance)
     with raises(TypeError):
         joule_lenz_law.calculate_heat_power(100, test_args.Resistance)
 
 def test_bad_resistance(test_args):
-    Rb = Quantity(units.length)
+    Rb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         joule_lenz_law.calculate_heat_power(test_args.Current, Rb)
     with raises(TypeError):

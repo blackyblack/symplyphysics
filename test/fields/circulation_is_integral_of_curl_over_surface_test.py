@@ -12,8 +12,8 @@ from symplyphysics.laws.fields import circulation_is_integral_of_curl_over_surfa
 @fixture
 def test_args():
     C = CoordinateSystem()
-    force_unit = Quantity(units.force, 1 * units.newton)
-    radius_unit = Quantity(units.length, 1 * units.meter)
+    force_unit = Quantity(1 * units.newton)
+    radius_unit = Quantity(1 * units.meter)
     Args = namedtuple("Args", ["C", "force_unit", "radius_unit"])
     return Args(C=C, force_unit=force_unit, radius_unit=radius_unit)
 

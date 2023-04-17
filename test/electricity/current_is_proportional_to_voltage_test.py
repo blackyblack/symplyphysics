@@ -13,8 +13,8 @@ from symplyphysics.laws.electricity import current_is_proportional_to_voltage as
 
 @fixture
 def test_args():
-    Voltage = Quantity(units.voltage, 3 * units.volt)
-    Resistance = Quantity(units.impedance, 2 * units.ohm)
+    Voltage = Quantity(3 * units.volt)
+    Resistance = Quantity(2 * units.ohm)
     Args = namedtuple("Args", ["Voltage", "Resistance"])
     return Args(Voltage=Voltage, Resistance=Resistance)
 
@@ -25,14 +25,14 @@ def test_basic_current(test_args):
     assert result_current == approx(1.5, 0.01)
 
 def test_bad_voltage(test_args):
-    Vb = Quantity(units.length)
+    Vb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         ohms_law.calculate_current(Vb, test_args.Resistance)
     with raises(TypeError):
         ohms_law.calculate_current(100, test_args.Resistance)
 
 def test_bad_resistance(test_args):
-    Rb = Quantity(units.length)
+    Rb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         ohms_law.calculate_current(test_args.Voltage, Rb)
     with raises(TypeError):

@@ -13,10 +13,10 @@ from symplyphysics.laws.electricity.circuits import resistor_and_capacitor_as_in
 
 @fixture
 def test_args():
-    V0 = Quantity(units.voltage, 3 * units.volt)
-    R = Quantity(units.impedance, 2 * units.ohm)
-    C = Quantity(units.capacitance, 2 * units.farad)
-    Time = Quantity(units.time, 4 * units.second)
+    V0 = Quantity(3 * units.volt)
+    R = Quantity(2 * units.ohm)
+    C = Quantity(2 * units.farad)
+    Time = Quantity(4 * units.second)
     Args = namedtuple("Args", ["V0", "R", "C", "Time"])
     return Args(V0=V0, R=R, C=C, Time=Time)
 
@@ -27,28 +27,28 @@ def test_basic_voltage(test_args):
     assert result_voltage == approx(1.89, 0.01)
 
 def test_bad_voltage(test_args):
-    Vb = Quantity(units.length)
+    Vb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         rc_node.calculate_capacitor_voltage(Vb, test_args.C, test_args.R, test_args.Time)
     with raises(TypeError):
         rc_node.calculate_capacitor_voltage(100, test_args.C, test_args.R, test_args.Time)
 
 def test_bad_capacity(test_args):
-    Cb = Quantity(units.length)
+    Cb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         rc_node.calculate_capacitor_voltage(test_args.V0, Cb, test_args.R, test_args.Time)
     with raises(TypeError):
         rc_node.calculate_capacitor_voltage(test_args.V0, 100, test_args.R, test_args.Time)
 
 def test_bad_resistance(test_args):
-    Rb = Quantity(units.length)
+    Rb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         rc_node.calculate_capacitor_voltage(test_args.V0, test_args.C, Rb, test_args.Time)
     with raises(TypeError):
         rc_node.calculate_capacitor_voltage(test_args.V0, test_args.C, 100, test_args.Time)
 
 def test_bad_time(test_args):
-    Tb = Quantity(units.length)
+    Tb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         rc_node.calculate_capacitor_voltage(test_args.V0, test_args.C, test_args.R, Tb)
     with raises(TypeError):
