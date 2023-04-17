@@ -1,7 +1,10 @@
+from sympy import Expr
 from symplyphysics import (
-    symbols, Eq, pretty, solve, Quantity, units, pi,
-    validate_input, validate_output, expr_to_quantity
+    Eq, pretty, solve, units, pi, expr_to_quantity
 )
+from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
+from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.symbols import Symbol, to_printable
 from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_slab as slab_flux
 
 # Description
@@ -15,8 +18,8 @@ from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_slab as
 ## Bg^2slab - geometric buckling for slab.
 ##   See [geometric buckling](./geometric_buckling_from_neutron_flux.py) implementation.
 
-slab_width = symbols('slab_width')
-geometric_buckling_squared = symbols('geometric_buckling_squared')
+slab_width = Symbol("slab_width", units.length)
+geometric_buckling_squared = Symbol("geometric_buckling_squared", 1 / units.length**2)
 
 law = Eq(geometric_buckling_squared, (pi / slab_width)**2)
 
@@ -30,12 +33,13 @@ geometric_buckling_slab_squared = slab_flux.axial_constant**2
 geometric_buckling_slab_solved = geometric_buckling_slab_squared.subs(slab_flux.slab_width, slab_width)
 assert geometric_buckling_slab_solved == law.rhs
 
-def print():
-    return pretty(law, use_unicode=False)
+def print(expr: Expr) -> str:
+    symbols = [slab_width, geometric_buckling_squared]
+    return pretty(to_printable(expr, symbols), use_unicode=False)
 
-@validate_input(slab_width_=units.length)
-@validate_output(1 / units.length**2)
+@validate_input_symbols(slab_width_=slab_width)
+@validate_output_symbol(geometric_buckling_squared)
 def calculate_geometric_buckling_squared(slab_width_: Quantity) -> Quantity:
     solved = solve(law, geometric_buckling_squared, dict=True)[0][geometric_buckling_squared]
     result_expr = solved.subs(slab_width, slab_width_)
-    return expr_to_quantity(result_expr, 'slab_geometric_buckling_squared')
+    return expr_to_quantity(result_expr)

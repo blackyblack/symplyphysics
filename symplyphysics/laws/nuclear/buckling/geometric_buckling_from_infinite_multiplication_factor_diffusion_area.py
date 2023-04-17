@@ -1,8 +1,11 @@
+from sympy import Expr
+from sympy.physics.units.dimensions import Dimension
 from symplyphysics import (
-    symbols, Eq, pretty, solve, Quantity, units, simplify,
-    validate_input, validate_output, expr_to_quantity
+    Eq, pretty, solve, units, simplify, S, expr_to_quantity
 )
-
+from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
+from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.symbols import Symbol, to_printable
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_macroscopic_fission_cross_section_diffusion_coefficient as buckling_law
 from symplyphysics.laws.nuclear import diffusion_area_from_diffusion_coefficient as diffusion_area_law
 from symplyphysics.laws.nuclear import infinite_multiplication_factor_from_macroscopic_fission_cross_section as infinite_multiplication_factor_law
@@ -23,10 +26,10 @@ from symplyphysics.laws.nuclear import infinite_multiplication_factor_from_macro
 ## Bg^2 - geometric buckling.
 ##   See [geometric buckling](./geometric_buckling_from_neutron_flux.py) implementation.
 
-geometric_buckling_squared = symbols('geometric_buckling_squared')
-infinite_multiplication_factor = symbols('infinite_multiplication_factor')
-effective_multiplication_factor = symbols('effective_multiplication_factor')
-diffusion_area = symbols('diffusion_area')
+infinite_multiplication_factor = Symbol("infinite_multiplication_factor", Dimension(S.One))
+effective_multiplication_factor = Symbol("effective_multiplication_factor", Dimension(S.One))
+diffusion_area = Symbol("diffusion_area", units.length**2)
+geometric_buckling_squared = Symbol("geometric_buckling_squared", 1 / units.length**2)
 
 law = Eq(geometric_buckling_squared,
     (infinite_multiplication_factor / effective_multiplication_factor - 1) / diffusion_area)
@@ -43,6 +46,7 @@ diffusion_area_eq2 = diffusion_area_law.law.subs({
     diffusion_area_law.macroscopic_absorption_cross_section: buckling_law.macroscopic_absorption_cross_section
 })
 infinite_multiplication_factor_eq3 = infinite_multiplication_factor_law.law.subs({
+    infinite_multiplication_factor_law.infinite_multiplication_factor: infinite_multiplication_factor,
     infinite_multiplication_factor_law.neutrons_per_fission: buckling_law.neutrons_per_fission,
     infinite_multiplication_factor_law.macroscopic_fission_cross_section: buckling_law.macroscopic_fission_cross_section,
     infinite_multiplication_factor_law.macroscopic_absorption_cross_section: buckling_law.macroscopic_absorption_cross_section
@@ -56,11 +60,13 @@ derived_geometric_buckling_squared = solve(derived_law,
     dict=True)[0][geometric_buckling_squared]
 assert simplify(law.rhs) == simplify(derived_geometric_buckling_squared)
 
-def print():
-    return pretty(law, use_unicode=False)
 
-@validate_input(diffusion_area_=units.length**2)
-@validate_output(1 / units.length**2)
+def print(expr: Expr) -> str:
+    symbols = [infinite_multiplication_factor, effective_multiplication_factor, diffusion_area, geometric_buckling_squared]
+    return pretty(to_printable(expr, symbols), use_unicode=False)
+
+@validate_input_symbols(infinite_multiplication_factor_=infinite_multiplication_factor, effective_multiplication_factor_=effective_multiplication_factor, diffusion_area_=diffusion_area)
+@validate_output_symbol(geometric_buckling_squared)
 def calculate_geometric_buckling_squared(
     infinite_multiplication_factor_: float,
     effective_multiplication_factor_: float,
@@ -70,4 +76,4 @@ def calculate_geometric_buckling_squared(
         infinite_multiplication_factor: infinite_multiplication_factor_,
         effective_multiplication_factor: effective_multiplication_factor_,
         diffusion_area: diffusion_area_})
-    return expr_to_quantity(result_expr, 'geometric_buckling_squared')
+    return expr_to_quantity(result_expr)
