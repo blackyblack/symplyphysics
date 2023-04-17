@@ -1,7 +1,12 @@
+from sympy import Expr
+from sympy.physics.units.dimensions import Dimension
 from symplyphysics import (
-    symbols, Eq, pretty, solve, Quantity, units, S,
-    Probability, validate_input, expr_to_quantity, convert_to
+    Eq, pretty, solve, units, S,
+    Probability, expr_to_quantity, convert_to
 )
+from symplyphysics.core.quantity_decorator import validate_input_symbols
+from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## Ptnl (thermal non-leakage factor) is the ratio of the number of thermal neutrons that do not leak from the
@@ -15,20 +20,21 @@ from symplyphysics import (
 ##   See [geometric buckling](./buckling/geometric_buckling_from_neutron_flux.py)
 ## Ptnl - thermal non-leakage probability.
 
-thermal_diffusion_area = symbols('thermal_diffusion_area')
-geometric_buckling = symbols('geometric_buckling')
-thermal_non_leakage_probability = symbols('thermal_non_leakage_probability')
+thermal_diffusion_area = Symbol("thermal_diffusion_area", units.length**2)
+geometric_buckling = Symbol("geometric_buckling", 1 / units.length**2)
+thermal_non_leakage_probability = Symbol("thermal_non_leakage_probability", Dimension(S.One))
 
 law = Eq(thermal_non_leakage_probability, 1 / (1 + thermal_diffusion_area * geometric_buckling))
 
-def print():
-    return pretty(law, use_unicode=False)
+def print(expr: Expr) -> str:
+    symbols = [thermal_diffusion_area, geometric_buckling, thermal_non_leakage_probability]
+    return pretty(to_printable(expr, symbols), use_unicode=False)
 
-@validate_input(thermal_diffusion_area_=units.length**2, geometric_buckling_=(1 / units.length**2))
+@validate_input_symbols(thermal_diffusion_area_=thermal_diffusion_area, geometric_buckling_=geometric_buckling)
 def calculate_probability(thermal_diffusion_area_: Quantity, geometric_buckling_: Quantity) -> Probability:
     result_probability_expr = solve(law, thermal_non_leakage_probability, dict=True)[0][thermal_non_leakage_probability]
     result_expr = result_probability_expr.subs({
         thermal_diffusion_area: thermal_diffusion_area_,
         geometric_buckling: geometric_buckling_})
-    result_factor = expr_to_quantity(result_expr, 'thermal_non_leakage_factor')
-    return Probability(convert_to(result_factor, S.One).n())
+    result_factor = expr_to_quantity(result_expr)
+    return Probability(convert_to(result_factor, S.One).evalf())

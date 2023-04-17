@@ -1,7 +1,10 @@
+from sympy import Expr
 from symplyphysics import (
-    symbols, Eq, pretty, solve, Quantity, units,
-    validate_input, validate_output, expr_to_quantity
+    Eq, pretty, solve, units, expr_to_quantity
 )
+from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
+from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## The current density vector J is proportional to the negative of the gradient of the neutron flux.
@@ -19,18 +22,19 @@ from symplyphysics import (
 ##   See [macroscopic transport cross-section](./macroscopic_transport_cross_section.py) implementation.
 ## D is the diffusion coefficient.
 
-macroscopic_transport_cross_section = symbols('macroscopic_transport_cross_section')
-neutron_diffusion_coefficient = symbols('neutron_diffusion_coefficient')
+macroscopic_transport_cross_section = Symbol("macroscopic_transport_cross_section", 1 / units.length)
+neutron_diffusion_coefficient = Symbol("neutron_diffusion_coefficient", units.length)
 
 law = Eq(neutron_diffusion_coefficient, 1 / (3 * macroscopic_transport_cross_section))
 
-def print():
-    return pretty(law, use_unicode=False)
+def print(expr: Expr) -> str:
+    symbols = [macroscopic_transport_cross_section, neutron_diffusion_coefficient]
+    return pretty(to_printable(expr, symbols), use_unicode=False)
 
-@validate_input(macroscopic_transport_cross_section_=(1 / units.length))
-@validate_output(units.length)
+@validate_input_symbols(macroscopic_transport_cross_section_=macroscopic_transport_cross_section)
+@validate_output_symbol(neutron_diffusion_coefficient)
 def calculate_diffusion_coefficient(macroscopic_transport_cross_section_: Quantity) -> Quantity:
     result_coefficient_expr = solve(law, neutron_diffusion_coefficient, dict=True)[0][neutron_diffusion_coefficient]
     result_expr = result_coefficient_expr.subs({
         macroscopic_transport_cross_section: macroscopic_transport_cross_section_})
-    return expr_to_quantity(result_expr, 'neutron_diffusion_coefficient')
+    return expr_to_quantity(result_expr)

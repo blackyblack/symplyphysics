@@ -1,7 +1,10 @@
+from sympy import Expr
 from symplyphysics import (
-    symbols, Eq, pretty, solve, Quantity, units,
-    validate_input, validate_output, expr_to_quantity
+    Eq, pretty, solve, units, expr_to_quantity
 )
+from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
+from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## Migration area (M^2) is equal to one-sixth of the square of the average distance (in all dimensions) between
@@ -17,20 +20,21 @@ from symplyphysics import (
 ##   slowing-down length is the square root of the Fermi age, τth = Ls^2. 
 ## M^2 - migration area.
 
-diffusion_area = symbols('diffusion_area')
-neutron_fermi_age = symbols('neutron_fermi_age')
-migration_area = symbols('migration_area')
+diffusion_area = Symbol("diffusion_area", units.length**2)
+neutron_fermi_age = Symbol("neutron_fermi_age", units.length**2)
+migration_area = Symbol("migration_area", units.length**2)
 
 law = Eq(migration_area, diffusion_area + neutron_fermi_age)
 
-def print():
-    return pretty(law, use_unicode=False)
+def print(expr: Expr) -> str:
+    symbols = [diffusion_area, neutron_fermi_age, migration_area]
+    return pretty(to_printable(expr, symbols), use_unicode=False)
 
-@validate_input(diffusion_area_=units.length**2, neutron_fermi_age_=units.length**2)
-@validate_output(units.length**2)
+@validate_input_symbols(diffusion_area_=diffusion_area, neutron_fermi_age_=neutron_fermi_age)
+@validate_output_symbol(migration_area)
 def calculate_migration_area(diffusion_area_: Quantity, neutron_fermi_age_: Quantity) -> Quantity:
     result_area_expr = solve(law, migration_area, dict=True)[0][migration_area]
     result_expr = result_area_expr.subs({
         diffusion_area: diffusion_area_,
         neutron_fermi_age: neutron_fermi_age_})
-    return expr_to_quantity(result_expr, 'neutron_migration_area')
+    return expr_to_quantity(result_expr)

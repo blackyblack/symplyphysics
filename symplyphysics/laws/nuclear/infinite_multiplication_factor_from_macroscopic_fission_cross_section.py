@@ -1,7 +1,11 @@
+from sympy import Expr
+from sympy.physics.units.dimensions import Dimension
 from symplyphysics import (
-    symbols, Eq, pretty, solve, Quantity, units, S,
-    validate_input, expr_to_quantity, convert_to
+    Eq, pretty, solve, units, S, expr_to_quantity, convert_to
 )
+from symplyphysics.core.quantity_decorator import validate_input_symbols
+from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## Infinite multiplication factor: k_infinite = v * Σf / Σa
@@ -13,18 +17,22 @@ from symplyphysics import (
 ## k_infinite - infinite multiplication factor.
 ##   See [infinite multiplication factor](./infinite_multiplication_factor.py)
 
-neutrons_per_fission = symbols('neutrons_per_fission')
-macroscopic_fission_cross_section = symbols('macroscopic_fission_cross_section')
-macroscopic_absorption_cross_section = symbols('macroscopic_absorption_cross_section')
-infinite_multiplication_factor = symbols('infinite_multiplication_factor')
+neutrons_per_fission = Symbol("neutrons_per_fission", Dimension(S.One))
+macroscopic_fission_cross_section = Symbol("macroscopic_fission_cross_section", 1 / units.length)
+macroscopic_absorption_cross_section = Symbol("macroscopic_absorption_cross_section", 1 / units.length)
+infinite_multiplication_factor = Symbol("infinite_multiplication_factor", Dimension(S.One))
 
 law = Eq(infinite_multiplication_factor,
     neutrons_per_fission * macroscopic_fission_cross_section / macroscopic_absorption_cross_section)
 
-def print():
-    return pretty(law, use_unicode=False)
+def print(expr: Expr) -> str:
+    symbols = [neutrons_per_fission, macroscopic_fission_cross_section, macroscopic_absorption_cross_section, infinite_multiplication_factor]
+    return pretty(to_printable(expr, symbols), use_unicode=False)
 
-@validate_input(macroscopic_fission_cross_section_=(1 / units.length), macroscopic_absorption_cross_section_=(1 / units.length))
+@validate_input_symbols(
+        neutrons_per_fission_=neutrons_per_fission,
+        macroscopic_fission_cross_section_=macroscopic_fission_cross_section,
+        macroscopic_absorption_cross_section_=macroscopic_absorption_cross_section)
 def calculate_multiplication_factor(neutrons_per_fission_: float,
     macroscopic_fission_cross_section_: Quantity,
     macroscopic_absorption_cross_section_: Quantity) -> float:
@@ -34,5 +42,5 @@ def calculate_multiplication_factor(neutrons_per_fission_: float,
         neutrons_per_fission: neutrons_per_fission_,
         macroscopic_fission_cross_section: macroscopic_fission_cross_section_,
         macroscopic_absorption_cross_section: macroscopic_absorption_cross_section_})
-    result_factor = expr_to_quantity(result_expr, 'inf_multiplication_factor')
-    return convert_to(result_factor, S.One).n()
+    result_factor = expr_to_quantity(result_expr)
+    return convert_to(result_factor, S.One).evalf()

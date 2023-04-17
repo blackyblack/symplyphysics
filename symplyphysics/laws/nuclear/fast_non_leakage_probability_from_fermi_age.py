@@ -1,8 +1,12 @@
+from sympy import Expr
 from sympy.functions import exp
+from sympy.physics.units.dimensions import Dimension
 from symplyphysics import (
-    symbols, Eq, pretty, solve, Quantity, units, S,
-    Probability, validate_input, expr_to_quantity, convert_to
+    Eq, pretty, solve, units, S, Probability, expr_to_quantity, convert_to
 )
+from symplyphysics.core.quantity_decorator import validate_input_symbols
+from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## Ptnl (fast non-leakage factor) is the ratio of the number of fast neutrons that do not leak from the reactor
@@ -18,20 +22,23 @@ from symplyphysics import (
 ##   thermal neutrons. The Fermi age is the same quantity as the slowing-down length squared (Ls^2). 
 ## Pfnl - fast non-leakage probability.
 
-geometric_buckling = symbols('geometric_buckling')
-neutron_fermi_age = symbols('neutron_fermi_age')
-fast_non_leakage_probability = symbols('thermal_non_leakage_probability')
+geometric_buckling = Symbol("geometric_buckling", 1 / units.length**2)
+neutron_fermi_age = Symbol("neutron_fermi_age", units.length**2)
+fast_non_leakage_probability = Symbol("fast_non_leakage_probability", Dimension(S.One))
 
 law = Eq(fast_non_leakage_probability, exp(-1 * geometric_buckling * neutron_fermi_age))
 
-def print():
-    return pretty(law, use_unicode=False)
+def print(expr: Expr) -> str:
+    symbols = [geometric_buckling, neutron_fermi_age, fast_non_leakage_probability]
+    return pretty(to_printable(expr, symbols), use_unicode=False)
 
-@validate_input(geometric_buckling_=(1 / units.length**2), neutron_fermi_age_=units.length**2)
+@validate_input_symbols(
+        geometric_buckling_=geometric_buckling,
+        neutron_fermi_age_=neutron_fermi_age)
 def calculate_probability(geometric_buckling_: Quantity, neutron_fermi_age_: Quantity) -> Probability:
     result_probability_expr = solve(law, fast_non_leakage_probability, dict=True)[0][fast_non_leakage_probability]
     result_expr = result_probability_expr.subs({
         geometric_buckling: geometric_buckling_,
         neutron_fermi_age: neutron_fermi_age_})
-    result_factor = expr_to_quantity(result_expr, 'fast_non_leakage_factor')
-    return Probability(convert_to(result_factor, S.One).n())
+    result_factor = expr_to_quantity(result_expr)
+    return Probability(convert_to(result_factor, S.One).evalf())

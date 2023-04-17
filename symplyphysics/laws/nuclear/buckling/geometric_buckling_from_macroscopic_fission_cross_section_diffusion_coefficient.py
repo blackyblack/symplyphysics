@@ -47,7 +47,7 @@ diffusion_eq1 = diffusion_equation_law.law.subs({
 })
 buckling_eq2 = buckling_law.law.subs({
     buckling_law.geometric_buckling_squared: geometric_buckling_squared,
-    buckling_law.neutron_flux: diffusion_equation_law.neutron_flux_function,
+    buckling_law.neutron_flux: diffusion_equation_law.neutron_flux,
     buckling_law.flux_position: diffusion_equation_law.flux_position
 })
 
@@ -55,7 +55,7 @@ derived_law = [diffusion_eq1, buckling_eq2]
 
 ## Check the equivalence of 'law' and 'derived_law'
 derived_geometric_buckling_squared = solve(derived_law,
-    (geometric_buckling_squared, diffusion_equation_law.neutron_flux_function(diffusion_equation_law.flux_position)),
+    (geometric_buckling_squared, diffusion_equation_law.neutron_flux(diffusion_equation_law.flux_position)),
     dict=True)[0][geometric_buckling_squared]
 assert simplify(law.rhs) == simplify(derived_geometric_buckling_squared)
 

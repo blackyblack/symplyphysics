@@ -1,7 +1,10 @@
+from sympy import Expr
 from symplyphysics import (
-    symbols, Eq, pretty, solve, Quantity, units,
-    validate_input, validate_output, expr_to_quantity
+    Eq, pretty, solve, units, expr_to_quantity
 )
+from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
+from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## The physical meaning of the diffusion length can be seen by calculating the mean square distance that
@@ -16,17 +19,18 @@ from symplyphysics import (
 ## L^2 - diffusion area.
 ## L - diffusion length.
 
-diffusion_coefficient = symbols('diffusion_coefficient')
-macroscopic_absorption_cross_section = symbols('macroscopic_absorption_cross_section')
-diffusion_area = symbols('diffusion_area')
+diffusion_coefficient = Symbol("diffusion_coefficient", units.length)
+macroscopic_absorption_cross_section = Symbol("macroscopic_absorption_cross_section", 1 / units.length)
+diffusion_area = Symbol("diffusion_area", units.length**2)
 
 law = Eq(diffusion_area, diffusion_coefficient / macroscopic_absorption_cross_section)
 
-def print():
-    return pretty(law, use_unicode=False)
+def print(expr: Expr) -> str:
+    symbols = [diffusion_coefficient, macroscopic_absorption_cross_section, diffusion_area]
+    return pretty(to_printable(expr, symbols), use_unicode=False)
 
-@validate_input(diffusion_coefficient_=units.length, macroscopic_absorption_cross_section_=(1 / units.length))
-@validate_output(units.length**2)
+@validate_input_symbols(diffusion_coefficient_=diffusion_coefficient, macroscopic_absorption_cross_section_=macroscopic_absorption_cross_section)
+@validate_output_symbol(diffusion_area)
 def calculate_diffusion_area(
     diffusion_coefficient_: Quantity,
     macroscopic_absorption_cross_section_: Quantity) -> Quantity:
@@ -34,4 +38,4 @@ def calculate_diffusion_area(
     result_expr = result_diffusion_expr.subs({
         diffusion_coefficient: diffusion_coefficient_,
         macroscopic_absorption_cross_section: macroscopic_absorption_cross_section_})
-    return expr_to_quantity(result_expr, 'neutron_diffusion_area')
+    return expr_to_quantity(result_expr)
