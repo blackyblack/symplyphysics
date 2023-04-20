@@ -1,12 +1,8 @@
 from sympy import Expr
 from symplyphysics import (
-    Eq, pretty, solve, units, expr_to_quantity, sqrt, convert_to
+    Eq, pretty, units, expr_to_quantity, sqrt, convert_to
 )
 from sympy.physics.units import speed_of_light, magnetic_constant, electric_constant
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## Speed of light in vacuum is fundamental but still might be calculated from other fundamentals.
@@ -19,8 +15,7 @@ from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 law = Eq(speed_of_light, 1 / sqrt(magnetic_constant * electric_constant))
 
-def print(expr: Expr) -> str:
-    symbols = [speed_of_light, magnetic_constant, electric_constant]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:    
+    return pretty(law, use_unicode=False)
 
 assert convert_to(law.lhs, units.meter / units.second) == convert_to(law.rhs, units.meter / units.second)
