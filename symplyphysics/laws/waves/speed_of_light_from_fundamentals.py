@@ -1,6 +1,5 @@
-from sympy import Expr
 from symplyphysics import (
-    Eq, pretty, units, expr_to_quantity, sqrt, convert_to
+    Eq, pretty, units, sqrt, convert_to
 )
 from sympy.physics.units import speed_of_light, magnetic_constant, electric_constant
 
