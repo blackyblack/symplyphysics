@@ -3,7 +3,7 @@ from sympy.vector import CoordSys3D, VectorZero
 from sympy.utilities.lambdify import lambdify, implemented_function
 from sympy.core.singleton import S
 from sympy.physics import units
-from sympy.physics.units import convert_to, Quantity
+from sympy.physics.units import convert_to
 from sympy.physics.units.systems.si import SI
 from .core import errors
 from .core.quantity_decorator import validate_input, validate_vector_input, validate_output, validate_vector_output, validate_output_same, assert_equivalent_dimension
@@ -16,6 +16,10 @@ from .core.fields.vector_field import VectorField
 from .core.vectors.vectors import Vector, vector_rebase, vector_from_sympy_vector, sympy_vector_from_vector
 from .core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_transform
 
+from .core.symbols.quantities import Quantity
+from .core.symbols.symbols import Function, Symbol, print_symbols
+from .core.quantity_decorator import validate_input_symbols, validate_output_symbol
+
 __all__ = [
     'validate_input',
     'validate_vector_input',
@@ -24,5 +28,9 @@ __all__ = [
     'validate_output_same',
     'assert_equivalent_dimension',
     'expr_to_quantity',
-    'expr_to_vector_of_quantities'
+    'expr_to_vector_of_quantities',
+# symbols
+    'Function', 'Quantity', 'Symbol', 'print_symbols',
+# decorators
+    'validate_input_symbols', 'validate_output_symbol',
 ]

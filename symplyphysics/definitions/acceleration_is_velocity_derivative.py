@@ -1,10 +1,7 @@
-from sympy import Expr
 from symplyphysics import (
-    Derivative, Eq, pretty, units, expr_to_quantity
+    Derivative, Eq, units, expr_to_quantity, Quantity, Function, Symbol, print_symbols,
+    validate_input_symbols, validate_output_symbol
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.symbols.symbols import Function, Symbol, to_printable
 
 # Description
 ## Acceleration is the derivative of velocity with respect to time.
@@ -22,9 +19,8 @@ definition = Eq(acceleration(time), Derivative(velocity(time), time))
 
 definition_units_SI = units.meter / units.second**2
 
-def print(expr: Expr) -> str:
-    symbols = [time, acceleration, velocity]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_symbols(definition)
 
 @validate_input_symbols(velocity_start_=velocity, velocity_end_=velocity, time_=time)
 @validate_output_symbol(acceleration)

@@ -32,6 +32,6 @@ def print(expr: Expr) -> str:
 def calculate_observed_frequency(real_frequency_: Quantity, source_velocity_: Quantity) -> Quantity:        
     result_expr = solve(law, observed_frequency, dict=True)[0][observed_frequency]
     frequency_applied = result_expr.subs({
-        real_frequency: real_frequency_,        
+        real_frequency: real_frequency_, 
         source_velocity: source_velocity_})
     return expr_to_quantity(frequency_applied)
