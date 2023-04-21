@@ -1,10 +1,8 @@
-from sympy import Expr
+from sympy import (Eq, solve)
 from symplyphysics import (
-    Eq, pretty, solve, units, expr_to_quantity
+    units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## Spring accumulates energy while being deformated. This law is known as Hooke's law.
@@ -22,9 +20,8 @@ deformation = Symbol("deformation", units.length)
 
 law = Eq(spring_energy, elastic_koefficient * deformation**2 / 2)
 
-def print(expr: Expr) -> str:
-    symbols = [spring_energy, elastic_koefficient, deformation]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(elastic_koefficient_=elastic_koefficient, deformation_=deformation)
 @validate_output_symbol(spring_energy)

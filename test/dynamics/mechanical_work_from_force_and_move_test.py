@@ -1,10 +1,8 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
 from symplyphysics import (
-    units, convert_to, SI, errors
+    errors, units, convert_to, Quantity, SI,
 )
-from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
-from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.laws.dynamics import mechanical_work_from_force_and_move as work_law
 
 # Description

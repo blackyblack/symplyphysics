@@ -1,10 +1,8 @@
-from sympy import Expr
+from sympy import (Eq, Derivative)
 from symplyphysics import (
-     Derivative, Eq, pretty, units, expr_to_quantity
+    units, expr_to_quantity, Quantity, Function, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.symbols.symbols import Function, Symbol, to_printable
 
 # Description
 ## In mechanics, the derivative of the position vs. time graph of an object is equal to the velocity of the object.
@@ -23,9 +21,8 @@ definition = Eq(velocity(moving_time), Derivative(movement(moving_time), moving_
 
 definition_units_SI = units.meter / units.second
 
-def print(expr: Expr) -> str:
-    symbols = [moving_time, velocity, movement]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(definition)
 
 @validate_input_symbols(position_start_=movement, position_end_=movement, moving_time_=moving_time)
 @validate_output_symbol(velocity)

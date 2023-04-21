@@ -1,10 +1,8 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-
 from symplyphysics import (
-    units, convert_to, SI, errors
+    errors, units, convert_to, Quantity, SI,
 )
-from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.laws.dynamics import acceleration_from_force as newton_second_law
 
 @fixture

@@ -1,5 +1,6 @@
+from sympy import (Eq, Derivative)
 from symplyphysics import (
-    Derivative, Eq, units, expr_to_quantity, Quantity, Function, Symbol, print_symbols,
+    units, expr_to_quantity, Quantity, Function, Symbol, print_expression,
     validate_input_symbols, validate_output_symbol
 )
 
@@ -20,7 +21,7 @@ definition = Eq(acceleration(time), Derivative(velocity(time), time))
 definition_units_SI = units.meter / units.second**2
 
 def print() -> str:
-    return print_symbols(definition)
+    return print_expression(definition)
 
 @validate_input_symbols(velocity_start_=velocity, velocity_end_=velocity, time_=time)
 @validate_output_symbol(acceleration)

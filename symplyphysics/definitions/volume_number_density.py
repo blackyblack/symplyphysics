@@ -1,10 +1,8 @@
-from sympy import Expr
+from sympy import (Eq, solve)
 from symplyphysics import (
-    Eq, pretty, solve, units, expr_to_quantity
+    units, expr_to_quantity, Quantity, Symbol, print_expression, Dimensionless,
+    validate_input_symbols, validate_output_symbol
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Dimensionless, Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## Volume number density is the number of specified objects per unit volume.
@@ -22,9 +20,8 @@ definition = Eq(number_density, objects / volume)
 
 definition_units_SI = 1 / units.meter**3
 
-def print(expr: Expr) -> str:
-    symbols = [number_density, objects, volume]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(definition)
 
 @validate_input_symbols(objects_=objects, volume_=volume)
 @validate_output_symbol(number_density)

@@ -2,7 +2,7 @@
 from sympy import sin
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
-from symplyphysics import print_symbols
+from symplyphysics import print_expression
 from symplyphysics.definitions import acceleration_is_velocity_derivative as acceleration
 
 print("Formula is:\n{}".format(acceleration.print()))
@@ -11,8 +11,8 @@ velocity_function = sin
 applied_law = acceleration.definition.subs(acceleration.velocity, velocity_function)
 dsolved = applied_law.doit()
 
-print("Velocity function is:\n{}".format(print_symbols(velocity_function(acceleration.time))))
-print("Acceleration function is:\n{}".format(print_symbols(dsolved)))
+print("Velocity function is:\n{}".format(print_expression(velocity_function(acceleration.time))))
+print("Acceleration function is:\n{}".format(print_expression(dsolved)))
 
 p1 = plot(
     velocity_function(acceleration.time),

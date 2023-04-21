@@ -1,10 +1,8 @@
-from sympy import Expr
+from sympy import (Eq, Derivative)
 from symplyphysics import (
-    Derivative, Eq, pretty, units, expr_to_quantity
+    units, expr_to_quantity, Quantity, Function, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.symbols.symbols import Function, Symbol, to_printable
 
 # Description
 ## Power has to be applied to casue any energy change.
@@ -23,9 +21,8 @@ definition = Eq(power(time), Derivative(energy(time), time))
 
 definition_units_SI = units.watt
 
-def print(expr: Expr) -> str:
-    symbols = [time, power, energy]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(definition)
 
 @validate_input_symbols(energy_start_=energy, energy_end_=energy, time_=time)
 @validate_output_symbol(power)

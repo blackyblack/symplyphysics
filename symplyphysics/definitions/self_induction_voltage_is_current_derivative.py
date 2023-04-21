@@ -1,10 +1,8 @@
-from sympy import Expr
+from sympy import (Eq, Derivative)
 from symplyphysics import (
-    Derivative, Eq, pretty, units, expr_to_quantity
+    units, expr_to_quantity, Quantity, Function, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.symbols.symbols import Function, Symbol, to_printable
 
 # Description
 ## Self-induction voltage definition: E = -L * dI/dt, where
@@ -21,9 +19,8 @@ definition = Eq(self_induction_voltage(time), -1 * inductance * Derivative(curre
 
 definition_units_SI = units.volt
 
-def print(expr: Expr) -> str:
-    symbols = [time, self_induction_voltage, current, inductance]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(definition)
 
 @validate_input_symbols(inductance_=inductance, current_start_=current, current_end_=current, time_=time)
 @validate_output_symbol(self_induction_voltage)

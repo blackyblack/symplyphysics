@@ -66,7 +66,7 @@ class SymbolPrinter(PrettyPrinter):
         func_name = e.func.display_name if isinstance(e.func, Function) else func_name
         return self._helper_print_function(e.func, e.args, sort=sort, func_name=func_name, left=left, right=right)
 
-def print_symbols(expr) -> str:
+def print_expression(expr) -> str:
     pp = SymbolPrinter(use_unicode=False)
     # XXX: this is an ugly hack, but at least it works
     use_unicode = pp._settings['use_unicode']

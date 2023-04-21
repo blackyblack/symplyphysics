@@ -1,7 +1,8 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-from symplyphysics import (units, errors)
-from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics import (
+    errors, units, Quantity,
+)
 from symplyphysics.laws.chemistry import avogadro_number_from_mole_count
 
 @fixture

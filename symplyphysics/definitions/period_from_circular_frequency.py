@@ -1,10 +1,8 @@
-from sympy import Expr, pi
+from sympy import (Eq, solve, pi)
 from symplyphysics import (
-    Eq, pretty, solve, units, expr_to_quantity
+    units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## Circular frequency w is scalar measure of spinning or oscillation speed.
@@ -22,9 +20,8 @@ definition = Eq(period, 2 * pi / circular_frequency)
 
 definition_units_SI = units.second
 
-def print(expr: Expr) -> str:
-    symbols = [period, circular_frequency]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(definition)
 
 @validate_input_symbols(frequency_=circular_frequency)
 @validate_output_symbol(period)

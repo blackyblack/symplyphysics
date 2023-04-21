@@ -1,11 +1,10 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
+from sympy import solve
 from sympy.vector import CoordSys3D
-
 from symplyphysics import (
-    units, convert_to, SI, errors, solve
+    errors, units, convert_to, Quantity, SI,
 )
-from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.laws.dynamics import buoyant_force_from_density_and_volume as archimedes_law
 
 @fixture

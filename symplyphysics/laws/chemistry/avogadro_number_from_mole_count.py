@@ -1,11 +1,9 @@
-from sympy import Expr
+from sympy import (Eq, solve, S)
 from symplyphysics import (
-    assert_equivalent_dimension, Eq, pretty, solve, units, S,
-    expr_to_quantity, convert_to
+    units, expr_to_quantity, Quantity, Symbol, print_expression, Dimensionless, convert_to,
+    validate_input_symbols,
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols
-from symplyphysics.core.symbols.quantities import Dimensionless, Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
+from symplyphysics.core.quantity_decorator import assert_equivalent_dimension
 
 # Description
 ## The Avogadro constant is the proportionality factor that relates the number of constituent particles
@@ -22,9 +20,8 @@ mole_count = Symbol("mole_count", units.amount_of_substance)
 
 law = Eq(units.avogadro, particles_count / mole_count)
 
-def print(expr: Expr) -> str:
-    symbols = [particles_count, mole_count]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(mole_count_=mole_count)
 def calculate_particles_count(mole_count_: Quantity) -> int:
