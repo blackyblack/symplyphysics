@@ -1,10 +1,8 @@
-from sympy import Expr, sqrt, pi, cos, Derivative
+from sympy import (Eq, solve, pi, sqrt, Derivative, symbols, cos, simplify)
 from symplyphysics import (
-    symbols, Eq, pretty, solve, simplify, units, expr_to_quantity
+    units, expr_to_quantity, Quantity, Symbol, Function, print_expression,
+    validate_input_symbols, validate_output_symbol
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.symbols.symbols import Function, Symbol, to_printable
 
 from symplyphysics.laws.electricity.circuits import sum_of_all_currents_through_an_electrical_node_is_zero as kirchhoff_law
 from symplyphysics.laws.electricity.circuits import sum_of_all_voltages_in_loop_is_zero as kirchhoff_law_2
@@ -31,9 +29,8 @@ capacitance = Symbol("capacitance", units.capacitance)
 
 law = Eq(oscillation_period, 2 * pi * sqrt(inductance * capacitance))
 
-def print(expr: Expr) -> str:
-    symbols = [oscillation_period, inductance, capacitance]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 ## Derive the same law from the capacitor, charge and self-induction voltage laws
 

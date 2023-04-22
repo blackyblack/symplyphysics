@@ -1,9 +1,9 @@
 from typing import List
-from sympy import Idx, IndexedBase, Sum
+from sympy import (Eq, solve, symbols, Idx, IndexedBase, Sum)
 from symplyphysics import (
-    symbols, Eq, pretty, solve, units,
-    validate_input, validate_output, expr_to_quantity, assert_equivalent_dimension
+    units, expr_to_quantity, Quantity, print_expression,
 )
+from symplyphysics.core.quantity_decorator import assert_equivalent_dimension, validate_input, validate_output
 from symplyphysics.core.symbols.quantities import Quantity
 
 # Description
@@ -20,8 +20,8 @@ i = symbols("i", cls=Idx)
 
 law = Eq(Sum(voltage[i], (i, 1, voltages_total)), 0)
 
-def print():
-    return pretty(law, use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input(voltage_in=units.voltage)
 @validate_output(units.voltage)

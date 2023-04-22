@@ -1,10 +1,9 @@
-from sympy import Expr
+from sympy import (Eq, solve)
 from symplyphysics import (
-    Eq, simplify, pretty, solve, units, expr_to_quantity
+    units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
+from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import power_is_energy_derivative as power_derivative
 
 # Description
@@ -45,11 +44,10 @@ derived_power = solve([power_applied_eq, energy_eq], (power, linear_function_coe
 derived_power_without_initial_energy = derived_power.subs(initial_energy_constant, 0)
 
 # Check that derived power is same as declared
-assert(simplify(derived_power_without_initial_energy - law.rhs) == 0)
+assert(expr_equals(derived_power_without_initial_energy, law.rhs))
 
-def print(expr: Expr) -> str:
-    symbols = [power, energy, time]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(energy_=energy, time_=time)
 @validate_output_symbol(power)

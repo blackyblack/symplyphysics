@@ -1,11 +1,9 @@
-from sympy import Expr
-from sympy.functions import exp
+from sympy import (Eq, solve, exp, S)
 from symplyphysics import (
-    Eq, pretty, solve, units, S, Probability, expr_to_quantity, convert_to
+    units, expr_to_quantity, Quantity, Symbol, print_expression, Dimensionless, convert_to,
+    validate_input_symbols,
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols
-from symplyphysics.core.symbols.quantities import Dimensionless, Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
+from symplyphysics.core.probability import Probability
 
 # Description
 ## Ptnl (fast non-leakage factor) is the ratio of the number of fast neutrons that do not leak from the reactor
@@ -27,9 +25,8 @@ fast_non_leakage_probability = Symbol("fast_non_leakage_probability", Dimensionl
 
 law = Eq(fast_non_leakage_probability, exp(-1 * geometric_buckling * neutron_fermi_age))
 
-def print(expr: Expr) -> str:
-    symbols = [geometric_buckling, neutron_fermi_age, fast_non_leakage_probability]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(
         geometric_buckling_=geometric_buckling,

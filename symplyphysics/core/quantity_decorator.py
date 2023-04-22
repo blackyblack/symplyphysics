@@ -1,11 +1,10 @@
 import functools
 import inspect
 import numbers
-from sympy.core.singleton import S
+from sympy import S
 from sympy.physics.units import Quantity, Dimension
 from sympy.physics.units.systems.si import SI
-
-from symplyphysics.core.vectors.vectors import Vector
+from ..core.vectors.vectors import Vector
 from .errors import UnitsError
 
 def assert_equivalent_dimension(arg: Quantity, decorator_name, param_name, func_name, expected_unit: Dimension):

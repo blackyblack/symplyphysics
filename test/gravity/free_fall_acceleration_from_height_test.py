@@ -1,10 +1,8 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-
 from symplyphysics import (
-    units, convert_to, SI, errors
+    errors, units, convert_to, Quantity, SI,
 )
-from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.laws.gravity import free_fall_acceleration_from_height as free_fall_acceleration
 
 # G - universal gravity constant  6.672e-11 N*m^2/kg^2

@@ -1,15 +1,13 @@
+from collections import namedtuple
+from pytest import approx, fixture, raises
+from symplyphysics import (
+    errors, units, convert_to, Quantity, SI,
+)
+from symplyphysics.laws.electricity.circuits import oscillation_period_for_capacitor_inductor_node as lc
+
 # Description
 ## Assert we have a capacitor with 1 farad capacitance and 1 henry inductor.
 ## Accordind to Tomson's formula oscillation period of this circuit should be 6.28 seconds
-
-from collections import namedtuple
-from pytest import approx, fixture, raises
-
-from symplyphysics import (
-    units, convert_to, SI, errors
-)
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.laws.electricity.circuits import oscillation_period_for_capacitor_inductor_node as lc
 
 @fixture
 def test_args():

@@ -1,12 +1,9 @@
-from sympy.core.expr import Expr
+from sympy import (Eq, Expr, solve, symbols, Function as SymFunction, S, simplify)
 from sympy.vector import Laplacian
 from symplyphysics import (
-    symbols, Eq, solve, pretty, Function, units, simplify, S,
-    expr_to_quantity, convert_to
+    units, expr_to_quantity, Quantity, Symbol, print_expression, Dimensionless, convert_to,
+    validate_input_symbols,
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols
-from symplyphysics.core.symbols.quantities import Dimensionless, Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## The diffusion equation, based on Fick's law, provides an analytical solution of spatial neutron flux
@@ -34,7 +31,7 @@ effective_multiplication_factor = Symbol("effective_multiplication_factor", Dime
 neutrons_per_fission = Symbol("neutrons_per_fission", Dimensionless)
 
 flux_position = symbols("flux_position")
-neutron_flux = symbols("neutron_flux", cls = Function)
+neutron_flux = symbols("neutron_flux", cls = SymFunction)
 
 law = Eq(
     -1 * diffusion_coefficient * Laplacian(neutron_flux(flux_position)) +
@@ -42,12 +39,11 @@ law = Eq(
     (1 / effective_multiplication_factor) * neutrons_per_fission * macroscopic_fission_cross_section *
     neutron_flux(flux_position))
 
-def print(expr: Expr) -> str:
-    symbols = [diffusion_coefficient, macroscopic_absorption_cross_section, macroscopic_fission_cross_section, effective_multiplication_factor, neutrons_per_fission]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 # neutron_flux_function_ should be a function on CoordSys3D
-def apply_neutron_flux_function(neutron_flux_function_: Function) -> Expr:
+def apply_neutron_flux_function(neutron_flux_function_: SymFunction) -> Expr:
     applied_law = law.subs(neutron_flux(flux_position), neutron_flux_function_)
     return simplify(applied_law.doit())
 
@@ -59,7 +55,7 @@ def apply_neutron_flux_function(neutron_flux_function_: Function) -> Expr:
         macroscopic_absorption_cross_section_=macroscopic_absorption_cross_section,
         diffusion_coefficient_=diffusion_coefficient)
 def calculate_multiplication_factor(
-    neutron_flux_function_: Function,
+    neutron_flux_function_: SymFunction,
     neutrons_per_fission_: float,
     macroscopic_fission_cross_section_: Quantity,
     macroscopic_absorption_cross_section_: Quantity,

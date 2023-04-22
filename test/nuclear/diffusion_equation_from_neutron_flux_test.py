@@ -1,11 +1,10 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-
+from sympy import cos, pi
 from sympy.vector import CoordSys3D
 from symplyphysics import (
-    units, errors, cos, pi
+    errors, units, Quantity,
 )
-from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.laws.nuclear import diffusion_equation_from_neutron_flux as diffusion_equation
 
 @fixture
@@ -14,8 +13,8 @@ def test_args():
     cartesian_coordinates = CoordSys3D("cartesian_coordinates")
     cube_side = Quantity(1 * units.meter)
     neutron_flux = (cos((pi / cube_side) * cartesian_coordinates.x) *
-        cos((pi / cube_side) * cartesian_coordinates.y) *
-        cos((pi / cube_side) * cartesian_coordinates.z))
+        cos(pi / cube_side * cartesian_coordinates.y) *
+        cos(pi / cube_side * cartesian_coordinates.z))
     neutrons_per_fission = 1
     macro_fission_cross_section = Quantity(0.006 / units.centimeter)
     macro_abs_cross_section = Quantity(0.0025 / units.centimeter)

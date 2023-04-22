@@ -1,10 +1,8 @@
-from sympy import Expr
+from sympy import (Eq, solve)
 from symplyphysics import (
-    Eq, pretty, solve, units, expr_to_quantity
+    units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## Current flowing through the resistor is proportional to applied voltage and reversly proportional to impedance of that resistor
@@ -19,9 +17,8 @@ resistance = Symbol("resistance", units.impedance)
 
 law = Eq(current, voltage / resistance)
 
-def print(expr: Expr) -> str:
-    symbols = [current, voltage, resistance]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(voltage_=voltage, resistance_=resistance)
 @validate_output_symbol(current)

@@ -1,11 +1,10 @@
-from sympy import Expr
-from symplyphysics import (
-    Eq, pretty, solve, units, simplify, expr_to_quantity
-)
+from sympy import (Eq, solve)
 from sympy.physics.units import gravitational_constant
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
+from symplyphysics import (
+    units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol
+)
+from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.gravity import gravity_force_from_mass_and_distance as gravity_law
 from symplyphysics.laws.dynamics import acceleration_from_force as newton2_law
 
@@ -39,12 +38,10 @@ derived_free_fall_acceleration = newton2_law.law.rhs.subs({
     })
 
 # Check if derived acceleration is same as declared    
-difference = simplify(derived_free_fall_acceleration - law.rhs)
-assert(difference == 0)
+assert(expr_equals(derived_free_fall_acceleration, law.rhs))
 
-def print(expr: Expr) -> str:
-    symbols = [free_fall_acceleration, planet_mass, planet_radius, height_above_surface]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(planet_mass_=planet_mass, planet_radius_=planet_radius, height_above_surface_=height_above_surface)
 @validate_output_symbol(free_fall_acceleration)

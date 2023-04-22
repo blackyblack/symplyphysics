@@ -1,11 +1,10 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-
 from symplyphysics import (
-    units, convert_to, SI, errors
+    errors, units, convert_to, Quantity, SI,
 )
-from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.laws.electricity import power_is_proportional_voltage_and_current as power_law
+
 # What is the power can be released by the battery at 9 V and a current of 0.5 A?
 @fixture
 def test_args():

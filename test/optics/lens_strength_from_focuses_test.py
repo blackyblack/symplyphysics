@@ -1,11 +1,8 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-
 from symplyphysics import (
-    units, convert_to, SI, errors
+    errors, units, Quantity, SI, convert_to,
 )
-from symplyphysics.core.symbols.quantities import Quantity
-
 from symplyphysics.laws.optics import lens_focus_from_object_and_image as lens_law
 
 #We are having thin lens which images object from 0.4m distance to the same 0.4m distance to image. This is only possible if 0.4 is double focus of this lens, so focus should be 0.2m.

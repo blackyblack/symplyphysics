@@ -1,10 +1,8 @@
-from sympy import Expr
+from sympy import (Eq, solve)
 from symplyphysics import (
-    Eq, pretty, solve, units, expr_to_quantity
+    units, expr_to_quantity, Quantity, Symbol, print_expression, Dimensionless,
+    validate_input_symbols, validate_output_symbol
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Dimensionless, Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
 from symplyphysics.laws.thermodynamics import pressure_from_temperature_and_volume as thermodynamics_law
 
 # Description
@@ -42,9 +40,9 @@ eq_end = thermodynamics_law.law.subs({
 
 law = [eq_start, eq_end, adiabatic_condition]
 
-def print(expr: Expr) -> str:
-    symbols = [specific_heats_ratio, temperature_start, temperature_end, volume_start, volume_end, pressure_start, pressure_end]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(
         mole_count_=thermodynamics_law.mole_count,
@@ -58,7 +56,7 @@ def calculate_pressure(
     temperature_start_: Quantity,
     volume_start_: Quantity,
     volume_end_: Quantity,
-    specific_heats_ratio_: float) :
+    specific_heats_ratio_: float) -> Quantity:
 
     solved = solve(law, (pressure_start, temperature_end, pressure_end), dict=True)[0][pressure_end]
     result_pressure = solved.subs({

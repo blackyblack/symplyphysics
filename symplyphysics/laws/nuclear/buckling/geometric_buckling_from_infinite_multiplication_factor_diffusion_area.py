@@ -1,10 +1,9 @@
-from sympy import Expr
+from sympy import (Eq, solve)
 from symplyphysics import (
-    Eq, pretty, solve, units, simplify, expr_to_quantity
+    units, expr_to_quantity, Quantity, Symbol, print_expression, Dimensionless,
+    validate_input_symbols, validate_output_symbol
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Dimensionless, Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
+from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_macroscopic_fission_cross_section_diffusion_coefficient as buckling_law
 from symplyphysics.laws.nuclear import diffusion_area_from_diffusion_coefficient as diffusion_area_law
 from symplyphysics.laws.nuclear import infinite_multiplication_factor_from_macroscopic_fission_cross_section as infinite_multiplication_factor_law
@@ -57,12 +56,11 @@ derived_law = [buckling_eq1, diffusion_area_eq2, infinite_multiplication_factor_
 derived_geometric_buckling_squared = solve(derived_law,
     (geometric_buckling_squared, buckling_law.diffusion_coefficient, buckling_law.macroscopic_fission_cross_section),
     dict=True)[0][geometric_buckling_squared]
-assert simplify(law.rhs) == simplify(derived_geometric_buckling_squared)
+assert expr_equals(law.rhs, derived_geometric_buckling_squared)
 
 
-def print(expr: Expr) -> str:
-    symbols = [infinite_multiplication_factor, effective_multiplication_factor, diffusion_area, geometric_buckling_squared]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(infinite_multiplication_factor_=infinite_multiplication_factor, effective_multiplication_factor_=effective_multiplication_factor, diffusion_area_=diffusion_area)
 @validate_output_symbol(geometric_buckling_squared)

@@ -1,10 +1,8 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-
 from symplyphysics import (
-    units, convert_to, SI, errors
+    errors, units, Quantity, SI, convert_to,
 )
-from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.laws.thermodynamics import thermal_energy_from_mass_and_temperature as amount_energy
 
 # How much energy does it take to heat some volume of water weighing 0.5 kilograms то 50 Celsius degree?

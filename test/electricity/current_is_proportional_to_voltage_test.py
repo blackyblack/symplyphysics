@@ -1,15 +1,13 @@
+from collections import namedtuple
+from pytest import approx, fixture, raises
+from symplyphysics import (
+    errors, units, convert_to, Quantity, SI,
+)
+from symplyphysics.laws.electricity import current_is_proportional_to_voltage as ohms_law
+
 # Description
 ## Assert we have 3 Volts applied to 2-Ohm resistor.
 ## According to Ohm's Law we should have 3/2 = 1.5Amps current flowing through this resistor.
-
-from collections import namedtuple
-from pytest import approx, fixture, raises
-
-from symplyphysics import (
-    units, convert_to, SI, errors
-)
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.laws.electricity import current_is_proportional_to_voltage as ohms_law
 
 @fixture
 def test_args():

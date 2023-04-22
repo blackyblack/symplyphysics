@@ -1,6 +1,5 @@
-from symplyphysics import (
-    symbols, Eq, pretty, solve, sqrt
-)
+from sympy import (Eq, solve, sqrt, symbols)
+from symplyphysics import print_expression
 
 # Description
 ## How media refracts electromagnetical waves depends on how this media transfers electrical and magnetical fields.
@@ -16,8 +15,8 @@ relative_magnetic_permeability = symbols("relative_magnetic_permeability")
 
 law = Eq(refraction_factor, sqrt(relative_dielectric_permeability * relative_magnetic_permeability))
 
-def print():
-    return pretty(law, use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 def calculate_refraction_factor(relative_dielectric_permeability_: float, relative_magnetic_permeability_: float) -> float:        
     result_expr = solve(law, refraction_factor, dict=True)[0][refraction_factor]    

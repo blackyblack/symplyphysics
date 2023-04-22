@@ -1,10 +1,8 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-
 from symplyphysics import (
-    units, convert_to, SI, errors
+    errors, units, Quantity, SI, convert_to,
 )
-from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.laws.thermodynamics import pressure_from_temperature_and_volume as ideal_gas_law
 
 @fixture

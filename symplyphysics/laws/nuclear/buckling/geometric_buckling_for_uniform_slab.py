@@ -1,10 +1,8 @@
-from sympy import Expr
+from sympy import (Eq, solve, pi)
 from symplyphysics import (
-    Eq, pretty, solve, units, pi, expr_to_quantity
+    units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
 from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_slab as slab_flux
 
 # Description
@@ -33,9 +31,8 @@ geometric_buckling_slab_squared = slab_flux.axial_constant**2
 geometric_buckling_slab_solved = geometric_buckling_slab_squared.subs(slab_flux.slab_width, slab_width)
 assert geometric_buckling_slab_solved == law.rhs
 
-def print(expr: Expr) -> str:
-    symbols = [slab_width, geometric_buckling_squared]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(slab_width_=slab_width)
 @validate_output_symbol(geometric_buckling_squared)

@@ -1,10 +1,8 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-
 from symplyphysics import (
-    units, errors
+    errors, units, Quantity,
 )
-from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.laws.nuclear import resonance_escape_probability_from_resonance_absorption_integral as resonance_escape
 
 @fixture

@@ -1,11 +1,10 @@
 from collections import namedtuple
 from pytest import approx, fixture
-
+from sympy import sin, pi
 from sympy.vector import CoordSys3D
 from symplyphysics import (
-    units, convert_to, SI, sin, pi
+    units, convert_to, Quantity, SI,
 )
-from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_flux as buckling
 
 @fixture
@@ -13,7 +12,7 @@ def test_args():
     # spherical reactor with radius = 10 centimeter
     spherical_coordinates = CoordSys3D("spherical_coordinates", transformation="spherical")
     sphere_radius = Quantity(10 * units.centimeter)
-    neutron_flux = sin((pi / sphere_radius) * spherical_coordinates.r) / spherical_coordinates.r
+    neutron_flux = sin(pi / sphere_radius * spherical_coordinates.r) / spherical_coordinates.r
     Args = namedtuple("Args", ["f"])
     return Args(f=neutron_flux)
 

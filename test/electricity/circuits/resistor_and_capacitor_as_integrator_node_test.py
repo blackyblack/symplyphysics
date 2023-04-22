@@ -1,15 +1,13 @@
+from collections import namedtuple
+from pytest import approx, fixture, raises
+from symplyphysics import (
+    errors, units, convert_to, Quantity, SI,
+)
+from symplyphysics.laws.electricity.circuits import resistor_and_capacitor_as_integrator_node as rc_node
+
 # Description
 ## Assert we have 3 Volts applied to 2-Ohm resistor in series with 2 Farads capacitor.
 ## After 1 Tau seconds capacitor voltage should be 63% of initial voltage. Tau = R * C = 4.
-
-from collections import namedtuple
-from pytest import approx, fixture, raises
-
-from symplyphysics import (
-    units, convert_to, SI, errors
-)
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.laws.electricity.circuits import resistor_and_capacitor_as_integrator_node as rc_node
 
 @fixture
 def test_args():

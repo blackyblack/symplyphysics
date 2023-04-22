@@ -1,10 +1,8 @@
-from sympy import Expr
+from sympy import (Eq, solve)
 from symplyphysics import (
-    Eq, pretty, solve, units, expr_to_quantity
+    units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## Capacitor can accumlate energy in the electric field inside it.
@@ -19,9 +17,8 @@ voltage = Symbol("voltage", units.voltage)
 
 law = Eq(accumulated_energy, capacitance * voltage**2 / 2)
 
-def print(expr: Expr) -> str:
-    symbols = [accumulated_energy, capacitance, voltage]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(capacitance_=capacitance, voltage_=voltage)
 @validate_output_symbol(accumulated_energy)

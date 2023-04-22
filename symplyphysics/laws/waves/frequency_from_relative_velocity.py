@@ -1,11 +1,9 @@
-from sympy import Expr
-from symplyphysics import (
-    Eq, pretty, solve, units, expr_to_quantity, sqrt
-)
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
+from sympy import (Eq, solve, sqrt)
 from sympy.physics.units import speed_of_light
+from symplyphysics import (
+    units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol
+)
 
 # Description
 ## Doppler effect is also applicable to electromagnetic waves in vacuum. As there is no any medium required for these waves to propagate,
@@ -23,9 +21,8 @@ source_velocity = Symbol("source_velocity", units.velocity)
 
 law = Eq(observed_frequency, real_frequency * sqrt((speed_of_light - source_velocity) / (speed_of_light + source_velocity)))
 
-def print(expr: Expr) -> str:
-    symbols = [observed_frequency, real_frequency, source_velocity]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(real_frequency_=real_frequency, source_velocity_=source_velocity)
 @validate_output_symbol(observed_frequency)

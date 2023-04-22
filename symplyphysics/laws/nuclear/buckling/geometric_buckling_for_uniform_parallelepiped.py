@@ -1,10 +1,8 @@
-from sympy import Expr
+from sympy import (Eq, solve, pi)
 from symplyphysics import (
-    Eq, pretty, solve, units, pi, expr_to_quantity
+    units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
 from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_parallelepiped as parallelepiped_flux
 
 # Description
@@ -43,9 +41,8 @@ geometric_buckling_parallelepiped_solved = geometric_buckling_parallelepiped_squ
 })
 assert geometric_buckling_parallelepiped_solved == law.rhs
 
-def print(expr: Expr) -> str:
-    symbols = [parallelepiped_width, parallelepiped_length, parallelepiped_height, geometric_buckling_squared]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(parallelepiped_width_=parallelepiped_width, parallelepiped_length_=parallelepiped_length, parallelepiped_height_=parallelepiped_height)
 @validate_output_symbol(geometric_buckling_squared)

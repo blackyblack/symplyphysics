@@ -1,10 +1,8 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-
 from symplyphysics import (
-    units, convert_to, SI, errors
+    errors, units, Quantity, SI, convert_to,
 )
-from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.laws.waves import wavelength_from_wave_speed_and_period as wavelength_law
 
 # Description.

@@ -1,15 +1,11 @@
-from sympy import Expr
-from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
+from sympy import (Eq, solve, sin, cos, Derivative, pi)
 from symplyphysics import (
-    Eq, pretty, units, solve, expr_equals, expr_equals_abs, expr_to_quantity,
-    Derivative, pi, sin, cos
+    units, expr_to_quantity, Quantity, Symbol, Function, print_expression, angle_type,
+    CoordinateSystem, Vector,
+    validate_input_symbols, validate_output_symbol
 )
-from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.symbols.symbols import Function, Symbol, to_printable
+from symplyphysics.core.expr_comparisons import expr_equals, expr_equals_abs
 from symplyphysics.core.vectors.vector_arithmetics import dot_vectors
-from symplyphysics.core.vectors.vectors import Vector
 from symplyphysics.definitions import velocity_is_movement_derivative as velocity_def
 from symplyphysics.definitions import angular_velocity_is_angle_derivative as angular_velocity_def
 from symplyphysics.definitions import acceleration_is_velocity_derivative as acceleration_def
@@ -110,9 +106,8 @@ law_acceleration = law.rhs.subs(linear_velocity, linear_velocity_applied)
 assert expr_equals_abs(radial_acceleration_magnitude, law_acceleration)
 
 
-def print(expr: Expr) -> str:
-    symbols = [centripetal_acceleration, linear_velocity, curve_radius]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(linear_velocity_=linear_velocity, curve_radius_=curve_radius)
 @validate_output_symbol(centripetal_acceleration)

@@ -1,11 +1,9 @@
-from sympy import Expr
-from symplyphysics import (
-    Eq, pretty, solve, units, expr_to_quantity
-)
 from sympy.physics.units import speed_of_light
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Dimensionless, Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
+from sympy import (Eq, solve)
+from symplyphysics import (
+    units, expr_to_quantity, Quantity, Symbol, print_expression, Dimensionless,
+    validate_input_symbols, validate_output_symbol
+)
 
 # Description
 ## Wavespeed differs in different medium. Electromagnetic wave propagation speed depends on refraction factor of medium.
@@ -21,9 +19,8 @@ refraction_factor = Symbol("refraction_factor", Dimensionless)
 
 law = Eq(wave_speed_in_medium, speed_of_light / refraction_factor)
 
-def print(expr: Expr) -> str:
-    symbols = [wave_speed_in_medium, refraction_factor]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(refraction_factor_=refraction_factor)
 @validate_output_symbol(wave_speed_in_medium)

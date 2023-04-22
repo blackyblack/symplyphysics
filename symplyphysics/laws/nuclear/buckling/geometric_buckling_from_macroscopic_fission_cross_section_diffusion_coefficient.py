@@ -1,10 +1,9 @@
-from sympy import Expr
+from sympy import (Eq, solve)
 from symplyphysics import (
-    Eq, pretty, solve, units, simplify, expr_to_quantity
+    units, expr_to_quantity, Quantity, Symbol, print_expression, Dimensionless,
+    validate_input_symbols, validate_output_symbol
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Dimensionless, Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
+from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.nuclear import diffusion_equation_from_neutron_flux as diffusion_equation_law
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_flux as buckling_law
 
@@ -56,12 +55,11 @@ derived_law = [diffusion_eq1, buckling_eq2]
 derived_geometric_buckling_squared = solve(derived_law,
     (geometric_buckling_squared, diffusion_equation_law.neutron_flux(diffusion_equation_law.flux_position)),
     dict=True)[0][geometric_buckling_squared]
-assert simplify(law.rhs) == simplify(derived_geometric_buckling_squared)
+assert expr_equals(law.rhs, derived_geometric_buckling_squared)
 
 
-def print(expr: Expr) -> str:
-    symbols = [neutrons_per_fission, effective_multiplication_factor, macroscopic_fission_cross_section, macroscopic_absorption_cross_section, diffusion_coefficient, geometric_buckling_squared]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(
         neutrons_per_fission_=neutrons_per_fission,

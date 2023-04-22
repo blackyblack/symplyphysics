@@ -1,10 +1,8 @@
-from sympy import Expr
+from sympy import (Eq, solve)
 from symplyphysics import (
-    Eq, pretty, solve, units, expr_to_quantity
+    units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## If wave source moves in media, observed wave frequency differs from real. 
@@ -29,9 +27,8 @@ observer_velocity = Symbol("observer_velocity", units.velocity)
 
 law = Eq(observed_frequency, real_frequency * (wave_velocity + observer_velocity) / (wave_velocity + source_velocity))
 
-def print(expr: Expr) -> str:
-    symbols = [observed_frequency, real_frequency, wave_velocity, source_velocity, observer_velocity]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(real_frequency_=real_frequency, wave_velocity_=wave_velocity, source_velocity_=source_velocity, observer_velocity_=observer_velocity)
 @validate_output_symbol(observed_frequency)

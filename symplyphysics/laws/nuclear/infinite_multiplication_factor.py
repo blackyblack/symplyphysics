@@ -1,6 +1,6 @@
-from symplyphysics import (
-    symbols, Eq, pretty, solve, Probability
-)
+from sympy import (Eq, solve, symbols)
+from symplyphysics import print_expression
+from symplyphysics.core.probability import Probability
 
 # Description
 ## Infinite multiplication factor: k_infinite = η * ε * p * f
@@ -25,8 +25,8 @@ infinite_multiplication_factor = symbols("infinite_multiplication_factor")
 law = Eq(infinite_multiplication_factor,
     neutron_reproduction * fast_fission * resonance_escape_probability * thermal_utilisation)
 
-def print():
-    return pretty(law, use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 def calculate_multiplication_factor(neutron_reproduction_: float, fast_fission_: float,
     resonance_escape_probability_: Probability, thermal_utilisation_: Probability) -> float:

@@ -1,16 +1,14 @@
+from collections import namedtuple
+from pytest import approx, fixture, raises
+from symplyphysics import (
+    errors, units, convert_to, Quantity, SI,
+)
+from symplyphysics.laws.gravity import gravity_force_from_mass_and_distance as gravity_law
+
 # Description
 ## For example we are calculating gravity force for objects with masses 3000 and 5000 kilograms
 ## with 0.06 meters of distance betweem their centers of mass.
 ## According to matematika-club.ru gravity calculator, force should be equal to 0.27809583 Newtons.
-
-from collections import namedtuple
-from pytest import approx, fixture, raises
-
-from symplyphysics import (
-    units, convert_to, SI, errors
-)
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.laws.gravity import gravity_force_from_mass_and_distance as gravity_law
 
 @fixture
 def test_args():

@@ -1,6 +1,5 @@
 from collections import namedtuple
 from pytest import approx, fixture
-
 from symplyphysics.laws.nuclear import most_neutron_energies_scattering_angle_average_cosine
 
 @fixture

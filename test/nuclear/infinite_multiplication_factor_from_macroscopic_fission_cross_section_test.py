@@ -1,10 +1,8 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-
 from symplyphysics import (
-    units, errors
+    errors, units, Quantity,
 )
-from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.laws.nuclear import infinite_multiplication_factor_from_macroscopic_fission_cross_section as multiplication_factor
 
 @fixture

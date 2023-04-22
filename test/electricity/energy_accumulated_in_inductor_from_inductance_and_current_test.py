@@ -1,15 +1,13 @@
+from collections import namedtuple
+from pytest import approx, fixture, raises
+from symplyphysics import (
+    errors, units, convert_to, Quantity, SI,
+)
+from symplyphysics.laws.electricity import energy_accumulated_in_inductor_from_inductance_and_current as inductor_law
+
 # Description
 ## Assert we have 150mH inductor with 0.5A current flowing through it.
 ## According to law we should have amount of energy accumulated in this inductor equals to 0.150 * 0.5**2 / 2 = 0.01875 Joules.
-
-from collections import namedtuple
-from pytest import approx, fixture, raises
-
-from symplyphysics import (
-    units, convert_to, SI, errors
-)
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.laws.electricity import energy_accumulated_in_inductor_from_inductance_and_current as inductor_law
 
 @fixture
 def test_args():

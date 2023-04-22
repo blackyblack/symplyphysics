@@ -1,11 +1,8 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-
 from symplyphysics import (
-    units, convert_to, SI, errors
+    errors, units, Quantity, SI, convert_to,
 )
-from symplyphysics.core.symbols.quantities import Quantity
-
 from symplyphysics.laws.waves import frequency_from_velocity as doppler_law
 
 # Man stands near railroad and hears horn of incoming train. Train comes with velocity of 9km/h and horns with 2000Hz frequency. What frequency hears the man? 

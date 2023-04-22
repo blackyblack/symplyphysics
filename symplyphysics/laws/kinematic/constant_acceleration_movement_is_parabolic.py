@@ -1,10 +1,9 @@
-from sympy import Expr
+from sympy import (Eq, solve, dsolve)
 from symplyphysics import (
-    Eq, pretty, dsolve, solve, units, expr_to_quantity, simplify
+    units, expr_to_quantity, Quantity, Symbol, Function, print_expression,
+    validate_input_symbols, validate_output_symbol
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.symbols.symbols import Function, Symbol, to_printable
+from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import velocity_is_movement_derivative as velocity_definition
 from symplyphysics.definitions import acceleration_is_velocity_derivative as acceleration_definition
 
@@ -42,12 +41,10 @@ constant_accelerated_movement_function = dsolved_movement.rhs
 derived_law = Eq(distance(movement_time), constant_accelerated_movement_function)
 
 # Prove that constant_accelerated_movement_function equals to law.rhs, given C1 = initial_velocity, C2 = 0
-difference = simplify(derived_law.rhs.subs({'C1': initial_velocity, 'C2': 0}) - law.rhs)
-assert(difference == 0)
+assert(expr_equals(derived_law.rhs.subs({'C1': initial_velocity, 'C2': 0}), law.rhs))
 
-def print(expr: Expr) -> str:
-    symbols = [movement_time, constant_acceleration, initial_velocity, distance]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(initial_velocity_=initial_velocity, acceleration_=constant_acceleration, time_=movement_time)
 @validate_output_symbol(distance)

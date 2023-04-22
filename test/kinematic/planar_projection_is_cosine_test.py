@@ -1,10 +1,8 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
 from symplyphysics import (
-    units, convert_to, SI, errors
+    errors, units, convert_to, Quantity, SI,
 )
-from symplyphysics.core.symbols.quantities import Quantity
-
 from symplyphysics.laws.kinematic import planar_projection_is_cosine as projection_law
 
 #We are having force vector of 3 Newtons with angle 60 degrees to horizontal axis. Projection of this vector to horizontal axis should be 2 times less than the vector.

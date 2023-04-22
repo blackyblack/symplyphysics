@@ -1,10 +1,9 @@
-from sympy import Expr
-from sympy.core.singleton import S
-from sympy.functions import exp
+from sympy import (
+    Expr, S, exp, Derivative, Function
+)
 from sympy.physics.units import Quantity
 from sympy.physics.units.systems.si import SI
 from sympy.core.add import Add
-from sympy.core.function import (Derivative, Function)
 from sympy.core.mul import Mul
 from sympy.core.power import Pow
 from sympy.physics.units.dimensions import Dimension
@@ -13,6 +12,7 @@ from ..core.coordinate_systems.coordinate_systems import CoordinateSystem
 from ..core.vectors.vectors import Vector, vector_from_sympy_vector
 from ..core.symbols.symbols import Symbol
 
+#TODO: return symplyphysics Quantity
 def expr_to_quantity(expr: Expr, quantity_name: str=None, randomize: bool=True) -> Quantity:
     quantity_scale = collect_factor_and_dimension(expr)
     dimension = quantity_scale[1]

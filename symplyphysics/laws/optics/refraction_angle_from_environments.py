@@ -1,12 +1,9 @@
 import numbers
-from sympy import Expr
+from sympy import (Eq, solve, sin, pi)
 from symplyphysics import (
-    Eq, pretty, solve, units, sin, pi, SI
+    units, Quantity, Symbol, print_expression, Dimensionless, angle_type,
+    validate_input_symbols, validate_output_symbol
 )
-from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Dimensionless, Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## If ray of light comes from one media to another, it refracts.
@@ -32,9 +29,8 @@ refraction_angle = Symbol("refraction_angle", angle_type)
 
 law = Eq(incedence_refractive_index * sin(incedence_angle), resulting_refractive_index * sin(refraction_angle))
 
-def print(expr: Expr) -> str:
-    symbols = [incedence_refractive_index, resulting_refractive_index, incedence_angle, refraction_angle]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(incedence_angle_=incedence_angle, incedence_refractive_index_=incedence_refractive_index, resulting_refractive_index_=resulting_refractive_index)
 @validate_output_symbol(refraction_angle)

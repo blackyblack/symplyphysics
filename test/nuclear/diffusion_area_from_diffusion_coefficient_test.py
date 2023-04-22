@@ -1,10 +1,8 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-
 from symplyphysics import (
-    units, convert_to, SI, errors
+    errors, units, convert_to, Quantity, SI,
 )
-from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.laws.nuclear import diffusion_area_from_diffusion_coefficient as diffusion_area
 
 @fixture
