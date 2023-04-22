@@ -1,10 +1,9 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-
+from sympy import S
 from symplyphysics import (
-    units, convert_to, SI, errors, S
+    errors, units, convert_to, Quantity, SI,
 )
-from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.laws.electricity.circuits import sum_of_all_currents_through_an_electrical_node_is_zero as kirchhoff_law
 
 @fixture

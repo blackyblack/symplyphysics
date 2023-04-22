@@ -1,10 +1,8 @@
 from collections import namedtuple
 from pytest import approx, fixture
-
 from symplyphysics import (
-    units, convert_to, SI
+    units, SI, convert_to,
 )
-
 from symplyphysics.laws.waves import wavespeed_from_medium as speed_law
 
 # Description

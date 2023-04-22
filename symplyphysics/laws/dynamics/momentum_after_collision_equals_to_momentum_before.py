@@ -1,10 +1,8 @@
-from sympy import Expr
+from sympy import (Eq, solve)
 from symplyphysics import (
-    Eq, pretty, solve, units, expr_to_quantity
+    units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## P_after = P_before
@@ -21,9 +19,8 @@ momentum_after = Symbol("momentum_after", units.momentum)
 
 law = Eq(momentum_after, momentum_before)
 
-def print(expr: Expr) -> str:
-    symbols = [momentum_before, momentum_after]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(momentum_before_=momentum_before)
 @validate_output_symbol(momentum_after)

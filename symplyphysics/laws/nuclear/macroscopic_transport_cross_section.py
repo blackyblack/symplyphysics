@@ -1,10 +1,8 @@
-from sympy import Expr
+from sympy import (Eq, solve)
 from symplyphysics import (
-    Eq, pretty, solve, units, expr_to_quantity
+    units, expr_to_quantity, Quantity, Symbol, print_expression, Dimensionless,
+    validate_input_symbols, validate_output_symbol,
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Dimensionless, Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## The transport mean free path (λtr) is an average distance a neutron will move in its original direction
@@ -26,9 +24,8 @@ macroscopic_transport_cross_section = Symbol("macroscopic_transport_cross_sectio
 law = Eq(macroscopic_transport_cross_section,
     macroscopic_scattering_cross_section * (1 - average_scattering_angle_cosine))
 
-def print(expr: Expr) -> str:
-    symbols = [macroscopic_scattering_cross_section, average_scattering_angle_cosine, macroscopic_transport_cross_section]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(macroscopic_scattering_cross_section_=macroscopic_scattering_cross_section, average_scattering_angle_cosine_=average_scattering_angle_cosine)
 @validate_output_symbol(macroscopic_transport_cross_section)

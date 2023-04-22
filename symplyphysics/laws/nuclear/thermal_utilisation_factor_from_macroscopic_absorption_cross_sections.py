@@ -1,10 +1,9 @@
-from sympy import Expr
+from sympy import (Eq, solve, S)
 from symplyphysics import (
-    Eq, pretty, solve, units, S, Probability, expr_to_quantity, convert_to
+    units, expr_to_quantity, Quantity, Symbol, print_expression, Dimensionless, convert_to,
+    validate_input_symbols,
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols
-from symplyphysics.core.symbols.quantities import Dimensionless, Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
+from symplyphysics.core.probability import Probability
 
 # Description
 ## Thermal neutron utilization factor (f), is the ratio of the number of neutrons absorbed in the fuel
@@ -25,9 +24,8 @@ thermal_utilisation_factor = Symbol("thermal_utilisation_factor", Dimensionless)
 law = Eq(thermal_utilisation_factor,
     macroscopic_fuel_absorption_cross_section / macroscopic_total_absorption_cross_section)
 
-def print(expr: Expr) -> str:
-    symbols = [macroscopic_fuel_absorption_cross_section, macroscopic_total_absorption_cross_section, thermal_utilisation_factor]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(
     macroscopic_fuel_absorption_cross_section_=macroscopic_fuel_absorption_cross_section,

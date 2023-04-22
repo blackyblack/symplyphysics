@@ -1,10 +1,9 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-
 from symplyphysics import (
-    units, errors, Probability
+    errors, units, Quantity,
 )
-from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.probability import Probability
 from symplyphysics.laws.nuclear import thermal_utilisation_factor_from_macroscopic_absorption_cross_sections as utilisation_factor
 
 @fixture

@@ -1,10 +1,11 @@
 from typing import List
-from sympy import Integral, Derivative
+from sympy import (Integral, Derivative, symbols, Eq, simplify)
 from sympy.vector import Dot
 from symplyphysics import (
-    symbols, Eq, pretty, VectorField, simplify
+    print_expression
 )
 from symplyphysics.core.vectors.vectors import Vector, sympy_vector_from_vector
+from symplyphysics.core.fields.vector_field import VectorField
 
 # Description
 ## Field circulation along closed curve is curvilinear integral of field by this curve.
@@ -42,8 +43,8 @@ parameter_from, parameter_to = symbols("parameter_from parameter_to")
 trajectory_element_definition = Eq(trajectory_element, Derivative(trajectory, parameter))
 definition = Eq(circulation, Integral(Dot(field, trajectory_element), (parameter, parameter_from, parameter_to)))
 
-def print():
-    return pretty(definition, use_unicode=False)
+def print() -> str:
+    return print_expression(definition)
 
 # field_ should be VectorField
 # trajectory_ should be array with projections to coordinates, eg [3 * cos(parameter), 3 * sin(parameter)]

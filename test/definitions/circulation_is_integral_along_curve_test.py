@@ -1,12 +1,12 @@
 from collections import namedtuple
 from pytest import approx, fixture
-
 from math import pi
 from sympy import sin, cos, sqrt
 from symplyphysics import (
-    units, convert_to, SI, expr_to_quantity, VectorField, CoordinateSystem
+    units, convert_to, Quantity, SI, expr_to_quantity,
 )
-from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
+from symplyphysics.core.fields.vector_field import VectorField
 from symplyphysics.definitions import circulation_is_integral_along_curve as circulation_def
 
 @fixture

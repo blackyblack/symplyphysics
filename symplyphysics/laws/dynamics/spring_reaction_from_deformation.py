@@ -1,12 +1,10 @@
-from sympy import Expr
+from sympy import (Eq, solve)
 from symplyphysics import (
-    Eq, pretty, solve, units,
-    validate_vector_input, expr_to_vector_of_quantities, validate_vector_output
+    units, Quantity, Symbol, print_expression, Vector, sympy_vector_from_vector,
+    validate_input_symbols,
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
-from symplyphysics.core.vectors.vectors import Vector, sympy_vector_from_vector
+from symplyphysics.core.expr_to_quantity import expr_to_vector_of_quantities
+from symplyphysics.core.quantity_decorator import validate_vector_input, validate_vector_output
 
 # Description
 ## Deformed sprign is about to return back to it's undeformed state and responds with some force. Law is:
@@ -24,9 +22,8 @@ deformation = Symbol("deformation", units.length)
 
 law = Eq(response_force, -1 * elastic_coefficient * deformation)
 
-def print(expr: Expr) -> str:
-    symbols = [response_force, elastic_coefficient, deformation]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(coefficient_=elastic_coefficient)
 @validate_vector_input(deformation_=deformation.dimension)

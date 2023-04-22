@@ -1,15 +1,13 @@
+from collections import namedtuple
+from pytest import approx, fixture, raises
+from symplyphysics import (
+    errors, units, convert_to, Quantity, SI,
+)
+from symplyphysics.laws.electricity import energy_accumulated_in_capacitor_from_capacitance_and_voltage as capacitor_law
+
 # Description
 ## Assert we have 0.22uF capacitor charged to 10 volts.
 ## According to law we should have amount of energy accumulated in this capacitor equals to 0.22 * 0.001 * 10**2 / 2 = 0.011 Joules.
-
-from collections import namedtuple
-from pytest import approx, fixture, raises
-
-from symplyphysics import (
-    units, convert_to, SI, errors
-)
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.laws.electricity import energy_accumulated_in_capacitor_from_capacitance_and_voltage as capacitor_law
 
 @fixture
 def test_args():

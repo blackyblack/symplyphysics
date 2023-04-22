@@ -1,7 +1,6 @@
-from symplyphysics import (
-    Eq, pretty, units, sqrt, convert_to
-)
+from sympy import (Eq, sqrt)
 from sympy.physics.units import speed_of_light, magnetic_constant, electric_constant
+from symplyphysics import units, print_expression, convert_to
 
 # Description
 ## Speed of light in vacuum is fundamental but still might be calculated from other fundamentals.
@@ -14,7 +13,7 @@ from sympy.physics.units import speed_of_light, magnetic_constant, electric_cons
 
 law = Eq(speed_of_light, 1 / sqrt(magnetic_constant * electric_constant))
 
-def print() -> str:    
-    return pretty(law, use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 assert convert_to(law.lhs, units.meter / units.second) == convert_to(law.rhs, units.meter / units.second)

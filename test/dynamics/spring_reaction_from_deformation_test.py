@@ -1,11 +1,8 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
 from symplyphysics import (
-    units, convert_to, SI, errors
+    errors, units, convert_to, Quantity, SI, Vector, CoordinateSystem,
 )
-from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.vectors.vectors import Vector
 from symplyphysics.laws.dynamics import spring_reaction_from_deformation as spring_law
 
 

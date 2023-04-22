@@ -1,10 +1,8 @@
-from sympy import Expr
+from sympy import (Eq, solve)
 from symplyphysics import (
-    Eq, pretty, solve, units, expr_to_quantity
+    units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## Any optic lens creates image of an object. Distances lens-object and lens-image depend on lens optical strength.
@@ -25,9 +23,8 @@ distance_to_image = Symbol("distance_to_image", units.length)
 
 law = Eq((1 / focus_distance), (1 / distance_to_object) + (1 / distance_to_image))
 
-def print(expr: Expr) -> str:
-    symbols = [focus_distance, distance_to_object, distance_to_image]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(object_distance_=distance_to_object, image_distance_=distance_to_image)
 @validate_output_symbol(focus_distance)

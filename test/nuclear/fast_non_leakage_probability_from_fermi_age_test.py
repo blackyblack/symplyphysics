@@ -1,10 +1,9 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-
 from symplyphysics import (
-    units, errors, Probability
+    errors, units, Quantity,
 )
-from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.probability import Probability
 from symplyphysics.laws.nuclear import fast_non_leakage_probability_from_fermi_age as non_leakage_factor
 
 @fixture

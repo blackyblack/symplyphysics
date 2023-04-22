@@ -1,10 +1,8 @@
-from sympy import Expr
+from sympy import (Eq, solve, sqrt)
 from symplyphysics import (
-    Eq, pretty, solve, units, expr_to_quantity, sqrt
+    units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## If hole appears in side wall or bottom of tank with liquid, liquid starts flowing out of this tank with some velocity. 
@@ -23,9 +21,8 @@ height_above_hole = Symbol("height_above_hole", units.length)
 
 law = Eq(liquid_velocity, sqrt(2 * units.acceleration_due_to_gravity * height_above_hole))
 
-def print(expr: Expr) -> str:
-    symbols = [liquid_velocity, height_above_hole]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(height_=height_above_hole)
 @validate_output_symbol(liquid_velocity)

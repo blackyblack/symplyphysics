@@ -1,10 +1,8 @@
-from sympy import Expr
+from sympy import (Eq, solve)
 from symplyphysics import (
-    Eq, pretty, solve, units, expr_to_quantity
+    units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
 from symplyphysics.laws.thermodynamics import pressure_from_temperature_and_volume as thermodynamics_law
 
 # Description
@@ -47,9 +45,8 @@ derived_pressure_end = solve(derived_law, (volume_start, volume_end, pressure_en
 assert solve(law, pressure_end, dict=True)[0][pressure_end] == derived_pressure_end
 
 
-def print(expr: Expr) -> str:
-    symbols = [pressure_start, pressure_end, temperature_start, temperature_end]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(temperature_start_=temperature_start, pressure_start_=pressure_start, temperature_end_=temperature_end)
 @validate_output_symbol(pressure_end)

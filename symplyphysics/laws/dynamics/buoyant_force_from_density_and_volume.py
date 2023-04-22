@@ -1,10 +1,8 @@
-from sympy import Expr
+from sympy import (Eq, solve)
 from symplyphysics import (
-     Eq, pretty, solve, units, expr_to_quantity
+    units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## Any object, totally or partially immersed in a fluid or liquid (or gas), is buoyed up by a force equal to the
@@ -25,9 +23,8 @@ displaced_volume = Symbol("displaced_volume", units.volume)
 
 law = Eq(force_buoyant, -1 * fluid_density * units.acceleration_due_to_gravity * displaced_volume)
 
-def print(expr: Expr) -> str:
-    symbols = [force_buoyant, fluid_density, displaced_volume]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(fluid_density_=fluid_density, displaced_volume_=displaced_volume)
 @validate_output_symbol(force_buoyant)

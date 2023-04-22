@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
+from sympy import solve, Eq, simplify
 from symplyphysics import (
-    Eq, units, convert_to, solve, expr_to_quantity, simplify
+    print_expression, units, convert_to, expr_to_quantity, Quantity
 )
-from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.laws.kinematic import centripetal_acceleration_is_squared_velocity_by_radius as centripetal_acceleration_law
 from symplyphysics.laws.gravity import free_fall_acceleration_from_height as free_fall_law
 
@@ -23,7 +23,7 @@ solution_applied = solution.subs(centripetal_acceleration_law.curve_radius, free
 # first solution is negative and corresponds to the backwards direction of velocity - ignore it
 satellite_velocity = solve(solution_applied, centripetal_acceleration_law.linear_velocity, dict = True)[1][centripetal_acceleration_law.linear_velocity]
 
-print(f"The formula for satellite linear velocity is: {simplify(satellite_velocity)}")
+print(f"The formula for satellite linear velocity is: {print_expression(simplify(satellite_velocity))}")
 
 ## As a curve radius we are having radius of the planet plus desired height of the orbit. Let's take Earth as an example and 100km height.
 planet_radius_ = Quantity(6400 * units.kilometer) 

@@ -1,14 +1,9 @@
 import numbers
-from sympy import Expr
+from sympy import (Eq, Derivative)
 from symplyphysics import (
-    Derivative, Eq, pretty, units, expr_to_quantity
+    angle_type, units, expr_to_quantity, Quantity, Function, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol
 )
-
-from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
-
-from symplyphysics.core.symbols.symbols import Function, Symbol, to_printable
 
 # Description
 ## The movement along circle might be easily represented in polar coordinates with the pole in the center of the circle.
@@ -28,9 +23,8 @@ definition = Eq(angular_velocity(time), Derivative(angle_function(time), time))
 
 definition_units_SI = units.radian / units.second
 
-def print(expr: Expr) -> str:
-    symbols = [time, angular_velocity, angle_function]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(definition)
 
 @validate_input_symbols(angle_start_=angle_function, angle_end_=angle_function, moving_time_=time)
 @validate_output_symbol(angular_velocity)

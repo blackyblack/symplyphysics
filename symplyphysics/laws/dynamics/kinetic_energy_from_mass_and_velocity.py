@@ -1,10 +1,8 @@
-from sympy import Expr
+from sympy import (Eq, solve)
 from symplyphysics import (
-    Eq, pretty, solve, units, expr_to_quantity
+    units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 # Kinetic energy of body: EK = (m * v**2) / 2
@@ -18,9 +16,8 @@ body_velocity = Symbol("body_velocity", units.velocity)
 
 law = Eq(kinetic_energy_of_body, body_mass * body_velocity**2 / 2)
 
-def print(expr: Expr) -> str:
-    symbols = [kinetic_energy_of_body, body_mass, body_velocity]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(body_mass_=body_mass, body_velocity_=body_velocity)
 @validate_output_symbol(kinetic_energy_of_body)

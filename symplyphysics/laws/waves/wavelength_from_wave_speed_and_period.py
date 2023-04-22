@@ -1,10 +1,8 @@
-from sympy import Expr
+from sympy import (Eq, solve)
 from symplyphysics import (
-    Eq, pretty, units, solve, expr_to_quantity
+    units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## Wavelength is the spatial period of a periodic wave — the distance over which the wave's shape repeats.
@@ -22,9 +20,8 @@ oscillation_period = Symbol("oscillation_period", units.time)
 
 law = Eq(wavelength, propagation_speed * oscillation_period)
 
-def print(expr: Expr) -> str:
-    symbols = [wavelength, propagation_speed, oscillation_period]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(velocity_=propagation_speed, period_=oscillation_period)
 @validate_output_symbol(wavelength)

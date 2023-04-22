@@ -1,11 +1,8 @@
-from sympy import Expr
+from sympy import (Eq, solve)
 from symplyphysics import (
-     Eq, pretty, solve, units, expr_to_quantity
+    units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
-
 from symplyphysics.definitions import volume_number_density
 from symplyphysics.definitions import density_from_mass_volume
 from symplyphysics.laws.chemistry import avogadro_number_from_mole_count
@@ -54,9 +51,8 @@ derived_number_density = solve(derived_law,
     dict=True)[0][volume_number_density.number_density]
 assert solve(law, atomic_number_density, dict=True)[0][atomic_number_density] == derived_number_density
 
-def print(expr: Expr) -> str:
-    symbols = [atomic_number_density, material_density, atomic_weight]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(material_density_=material_density, atomic_weight_=atomic_weight)
 @validate_output_symbol(atomic_number_density)

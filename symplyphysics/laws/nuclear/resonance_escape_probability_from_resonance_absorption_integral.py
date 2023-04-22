@@ -1,11 +1,9 @@
-from sympy import Expr
-from sympy.functions import exp
+from sympy import (Eq, solve, exp, S)
 from symplyphysics import (
-    Eq, pretty, solve, units, S, Probability, expr_to_quantity, convert_to
+    units, expr_to_quantity, Quantity, Symbol, print_expression, Dimensionless, convert_to,
+    validate_input_symbols,
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols
-from symplyphysics.core.symbols.quantities import Dimensionless, Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
+from symplyphysics.core.probability import Probability
 
 # Description
 ## The resonance escape probability, symbolized by p, is the probability that a neutron will be
@@ -40,9 +38,8 @@ law = Eq(resonance_escape_probability,
     exp(-1 * (absorber_atomic_number_density * effective_resonance_integral) /
     (average_lethargy_change * macroscopic_scattering_cross_section_moderator)))
 
-def print(expr: Expr) -> str:
-    symbols = [absorber_atomic_number_density, effective_resonance_integral, average_lethargy_change, macroscopic_scattering_cross_section_moderator, resonance_escape_probability]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(
     absorber_atomic_number_density_=absorber_atomic_number_density,

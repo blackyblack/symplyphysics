@@ -1,10 +1,8 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-
 from symplyphysics import (
-    units, errors
+    errors, units, Quantity,
 )
-from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.definitions import refractive_index_is_wave_speeds_ratio as refractive_index_definition
 
 # Description.

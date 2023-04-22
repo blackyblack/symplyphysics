@@ -1,12 +1,10 @@
 import numbers
-from sympy import Expr
+from sympy import (Eq, solve, symbols, cos)
 from symplyphysics import (
-    symbols, Eq, pretty, solve, Quantity,
-    validate_output_same, expr_to_quantity, cos
+    expr_to_quantity, Quantity, Symbol, print_expression, angle_type,
+    validate_input_symbols,
 )
-from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
-from symplyphysics.core.quantity_decorator import validate_input_symbols
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
+from symplyphysics.core.quantity_decorator import validate_output_same
 
 # Description
 ## Most of cases might be represented in 2-dimensional space with two orthogonal axis - vertical Y and horizontal X. Any vector in this space (velocity, force etc) can be easily
@@ -23,9 +21,8 @@ projection = symbols("projection")
 
 law = Eq(projection, vector_length * cos(vector_angle))
 
-def print(expr: Expr) -> str:
-    symbols = [vector_angle]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(angle_=vector_angle)
 @validate_output_same("vector_length_")

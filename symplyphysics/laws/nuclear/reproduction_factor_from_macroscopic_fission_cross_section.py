@@ -1,10 +1,8 @@
-from sympy import Expr
+from sympy import (Eq, solve, S)
 from symplyphysics import (
-    Eq, pretty, solve, units, S, expr_to_quantity, convert_to
+    units, expr_to_quantity, Quantity, Symbol, print_expression, Dimensionless, convert_to,
+    validate_input_symbols,
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols
-from symplyphysics.core.symbols.quantities import Dimensionless, Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## The reproduction factor η represents the number of fast neutrons produced per thermal neutron absorbed in the fuel.
@@ -26,9 +24,8 @@ neutron_reproduction_factor = Symbol("neutron_reproduction_factor", Dimensionles
 law = Eq(neutron_reproduction_factor,
     neutrons_per_fission * macroscopic_fuel_fission_cross_section / macroscopic_fuel_absorption_cross_section)
 
-def print(expr: Expr) -> str:
-    symbols = [neutrons_per_fission, macroscopic_fuel_fission_cross_section, macroscopic_fuel_absorption_cross_section, neutron_reproduction_factor]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(
         neutrons_per_fission_=neutrons_per_fission,

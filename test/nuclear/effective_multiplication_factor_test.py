@@ -1,7 +1,6 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-
-from symplyphysics import Probability
+from symplyphysics.core.probability import Probability
 from symplyphysics.laws.nuclear import effective_multiplication_factor
 
 @fixture

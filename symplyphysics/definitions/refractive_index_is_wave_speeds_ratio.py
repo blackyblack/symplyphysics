@@ -1,10 +1,9 @@
-from sympy import Expr
+from sympy import (Eq, solve, S)
 from symplyphysics import (
-    Eq, assert_equivalent_dimension, pretty, solve, units, convert_to, S, expr_to_quantity
+    units, expr_to_quantity, Quantity, Symbol, print_expression, Dimensionless, convert_to,
+    validate_input_symbols,
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols
-from symplyphysics.core.symbols.quantities import Dimensionless, Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
+from symplyphysics.core.quantity_decorator import assert_equivalent_dimension
 
 # Description
 ## If wave transfers from one medium to another, it refracts. That's because of different propagation speeds in different mediums.
@@ -28,9 +27,8 @@ definition = Eq(refractive_index, outer_speed / refracting_speed)
 
 definition_units_SI = S.One
 
-def print(expr: Expr) -> str:
-    symbols = [refractive_index, outer_speed, refracting_speed]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(definition)
 
 @validate_input_symbols(outer_speed_=outer_speed, refracting_speed_=refracting_speed)
 def calculate_refractive_index(outer_speed_: Quantity, refracting_speed_: Quantity) -> float:

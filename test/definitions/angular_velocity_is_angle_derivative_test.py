@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-
+from sympy import pi
 from symplyphysics import (
-    units, convert_to, SI, errors, pi
+    errors, units, convert_to, Quantity, SI,
 )
-from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.definitions import angular_velocity_is_angle_derivative as angular_velocity_def
-from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
 
 # Description
 ## Assume object starts rotating with some angular velocity. After 5 seconds it rotates to 180 degrees.

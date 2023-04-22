@@ -1,6 +1,6 @@
-from symplyphysics import (
-    symbols, Eq, pretty, solve, Probability
-)
+from sympy import (Eq, solve, symbols)
+from symplyphysics import print_expression
+from symplyphysics.core.probability import Probability
 
 # Description
 ## Effective multiplication factor: k_effective = k_infinite * Pf * Pt
@@ -23,8 +23,8 @@ effective_multiplication_factor = symbols("effective_multiplication_factor")
 law = Eq(effective_multiplication_factor,
     infinite_multiplication_factor * fast_non_leakage_probability * thermal_non_leakage_probability)
 
-def print():
-    return pretty(law, use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 def calculate_multiplication_factor(
     infinite_multiplication_factor_: float,

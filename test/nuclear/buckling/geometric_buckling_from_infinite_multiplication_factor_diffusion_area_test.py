@@ -1,11 +1,9 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-
-from sympy.physics.units import Dimension
+from sympy import S
 from symplyphysics import (
-    S, units, convert_to, SI, errors
+    errors, units, convert_to, Quantity, SI, Dimensionless,
 )
-from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_infinite_multiplication_factor_diffusion_area as buckling
 
 @fixture
@@ -25,7 +23,7 @@ def test_basic_buckling(test_args):
 
 def test_zero_buckling(test_args):
     result = buckling.calculate_geometric_buckling_squared(1, 1, test_args.L2)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, Dimension(1))
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, Dimensionless)
     result_buckling = convert_to(result, S.One).evalf(4)
     assert result_buckling == approx(0, 0.01)
 

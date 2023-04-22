@@ -1,11 +1,10 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
+from sympy import solve
 from sympy.vector import CoordSys3D
-
 from symplyphysics import (
-    solve, units, convert_to, SI, errors
+    errors, units, convert_to, Quantity, SI,
 )
-from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.laws.dynamics import force_reaction_from_force_action as newton_third_law
 
 @fixture

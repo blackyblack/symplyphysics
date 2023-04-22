@@ -1,12 +1,13 @@
 from collections import namedtuple
 from pytest import approx, fixture
-
 from sympy import Expr, sin, cos, sqrt, pi
+from sympy.vector import VectorZero
 from symplyphysics import (
-    units, SI, expr_to_quantity, convert_to,
-    VectorZero, FieldPoint, VectorField, CoordinateSystem, sympy_vector_from_vector
+    units, Quantity, CoordinateSystem, SI, expr_to_quantity, convert_to,
+    sympy_vector_from_vector,
 )
-from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.fields.field_point import FieldPoint
+from symplyphysics.core.fields.vector_field import VectorField
 from symplyphysics.laws.fields import circulation_is_integral_of_curl_over_surface as circulation_def
 
 @fixture

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
+from sympy import solve
 from symplyphysics import (
-     units, convert_to, solve, expr_to_quantity
+     units, convert_to, expr_to_quantity, Quantity
 )
-from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.laws.waves import frequency_from_velocity as doppler_law
 
 # This example show usefulness of Doppler law.

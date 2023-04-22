@@ -1,10 +1,8 @@
-from sympy import Expr
+from sympy import (Eq, solve)
 from symplyphysics import (
-    Eq, pretty, solve, units, expr_to_quantity
+    units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## If the particle is about to spin around axle, it has moment of inertia.
@@ -25,9 +23,8 @@ definition = Eq(moment_of_inertia, particle_mass * spinning_radius**2)
 
 definition_units_SI = units.kilogram * units.meter**2
 
-def print(expr: Expr) -> str:
-    symbols = [moment_of_inertia, particle_mass, spinning_radius]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(definition)
 
 @validate_input_symbols(mass_=particle_mass, radius_=spinning_radius)
 @validate_output_symbol(moment_of_inertia)

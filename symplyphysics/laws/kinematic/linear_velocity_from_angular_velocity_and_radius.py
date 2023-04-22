@@ -1,11 +1,8 @@
-from sympy import Expr
+from sympy import (Eq, solve)
 from symplyphysics import (
-    Eq, pretty, units, solve, expr_to_quantity
+    units, expr_to_quantity, Quantity, Symbol, print_expression, angle_type,
+    validate_input_symbols, validate_output_symbol
 )
-from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## Angular velocity is the rate of change of the angular position of a rotating body. We can define the angular velocity of a particle as the rate
@@ -24,9 +21,8 @@ curve_radius = Symbol("curve_radius", units.length)
 
 law = Eq(linear_velocity, angular_velocity * curve_radius)
 
-def print(expr: Expr) -> str:
-    symbols = [linear_velocity, angular_velocity, curve_radius]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(angular_velocity_=angular_velocity, curve_radius_=curve_radius)
 @validate_output_symbol(linear_velocity)

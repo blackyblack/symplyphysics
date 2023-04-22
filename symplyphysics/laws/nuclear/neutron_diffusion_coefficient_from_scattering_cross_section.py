@@ -1,10 +1,8 @@
-from sympy import Expr
+from sympy import (Eq, solve)
 from symplyphysics import (
-    Eq, pretty, solve, units, expr_to_quantity
+    units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol,
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
 
 # Description
 ## The current density vector J is proportional to the negative of the gradient of the neutron flux.
@@ -27,9 +25,8 @@ neutron_diffusion_coefficient = Symbol("neutron_diffusion_coefficient", units.le
 
 law = Eq(neutron_diffusion_coefficient, 1 / (3 * macroscopic_transport_cross_section))
 
-def print(expr: Expr) -> str:
-    symbols = [macroscopic_transport_cross_section, neutron_diffusion_coefficient]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 @validate_input_symbols(macroscopic_transport_cross_section_=macroscopic_transport_cross_section)
 @validate_output_symbol(neutron_diffusion_coefficient)

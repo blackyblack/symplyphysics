@@ -3,10 +3,9 @@
 # Description
 ## You throw the grenade to enemies. Which angle of throwing should you choose to hit the farest enemy?
 
-from sympy import diff
+from sympy import diff, symbols, Eq, solve, simplify, pi
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
-from symplyphysics import symbols, Eq, solve, simplify, pi
 from symplyphysics.laws.kinematic import constant_acceleration_movement_is_parabolic as movement_law
 from symplyphysics.laws.kinematic import planar_projection_is_cosine as projector
 

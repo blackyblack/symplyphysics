@@ -1,7 +1,6 @@
+from sympy import Eq, symbols, pi, Function as SymFunction, cos
 from sympy.vector import CoordSys3D
-from symplyphysics import (
-    symbols, Function, Eq, pretty, cos, pi
-)
+from symplyphysics import print_expression
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_flux
 
 # Description
@@ -19,7 +18,7 @@ from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_
 neutron_flux_power_constant = symbols("C1", constant=True)
 distance_from_center = symbols("distance_from_center")
 slab_width = symbols("slab_width")
-neutron_flux_function = symbols("neutron_flux_function", cls = Function)
+neutron_flux_function = symbols("neutron_flux_function", cls = SymFunction)
 
 # This constant is being used for geometric buckling calculation
 # See: [geometric buckling for uniform slab](geometric_buckling_for_uniform_slab.py)
@@ -46,7 +45,7 @@ solved = geometric_buckling_from_neutron_flux.apply_neutron_flux_function(neutro
 # check with the derived law: Bg^2 = axial_constant**2
 assert solved.rhs == axial_constant**2
 
-def print():
-    return pretty(law, use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 # There is no calculate() method. Neutron flux is usually being used internally to pass to other laws.

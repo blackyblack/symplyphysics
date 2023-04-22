@@ -1,7 +1,9 @@
+#!/usr/bin/env python3
+
+from sympy import solve, Eq
 from symplyphysics import (
-    expr_to_quantity, units, convert_to,solve, Eq, pretty
+    expr_to_quantity, print_expression, units, convert_to, Quantity
 )
-from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.laws.electricity import amount_energy_from_voltage_time_resistance as joule_lenz_law
 from symplyphysics.laws.thermodynamics import thermal_energy_from_mass_and_temperature as operate_energy
 from symplyphysics.definitions import density_from_mass_volume as density_law
@@ -37,7 +39,7 @@ law = [density_applied, ohm_law_applied, operate_power_applied, operate_energy.l
 heating_time_solved = solve(law, (operate_energy.amount_energy, joule_lenz_law.resistance, operate_power.current, operate_energy.body_mass, joule_lenz_law.time), dict=True)[0][joule_lenz_law.time]
 heating_time_eq = Eq(joule_lenz_law.time, heating_time_solved)
 
-print("\nFormula is:\n\n {}".format(pretty(heating_time_eq, use_unicode=False)))
+print("\nFormula is:\n\n {}".format(print_expression(heating_time_eq)))
 
 heating_time_expr = heating_time_solved.subs({
     operate_power.power: kettle_power,

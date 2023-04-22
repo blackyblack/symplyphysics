@@ -1,14 +1,13 @@
 import numbers
-from sympy import Expr
-from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
+from sympy import (Eq, solve)
 from sympy.vector import Dot
 from symplyphysics import (
-    Eq, pretty, solve, units, validate_input, expr_to_quantity,
-    CoordinateSystem, coordinates_transform, Vector, vector_rebase, sympy_vector_from_vector
+    units, expr_to_quantity, Quantity, Symbol, print_expression, angle_type,
+    Vector, sympy_vector_from_vector, vector_rebase,
+    validate_input_symbols, validate_output_symbol
 )
-from symplyphysics.core.quantity_decorator import validate_input_symbols, validate_output_symbol
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.symbols.symbols import Symbol, to_printable
+from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_transform
+from symplyphysics.core.quantity_decorator import validate_input
 
 # Description
 ## Work is measured result of force applied. Mechanical work is the only reason for the object energy to be changed.
@@ -25,9 +24,8 @@ distance = Symbol("distance", units.length)
 
 law = Eq(work, Dot(force, distance))
 
-def print(expr: Expr) -> str:
-    symbols = [work, force, distance]
-    return pretty(to_printable(expr, symbols), use_unicode=False)
+def print() -> str:
+    return print_expression(law)
 
 #TODO: consider removing 'validate_input' and pass angles as float numbers
 @validate_input_symbols(force_=force, distance_=distance)

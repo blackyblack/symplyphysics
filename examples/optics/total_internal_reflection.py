@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import math
-from symplyphysics import (solve, pi)
+from sympy import solve, pi
 from symplyphysics.laws.optics import refraction_angle_from_environments as refraction_law
 
 # This example show usefulness of refraction law.

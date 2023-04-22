@@ -1,10 +1,8 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
 from symplyphysics import (
-    units, convert_to, SI, errors
+    errors, units, Quantity, SI, convert_to, angle_type,
 )
-from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
-from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.laws.optics import refraction_angle_from_environments as refraction_law
 
 # Ray of light transfers from air (refractive coefficient is 1.003) to water (refractive coefficient is 1.333) with incedence angle 30 degrees. What is refraction angle?
