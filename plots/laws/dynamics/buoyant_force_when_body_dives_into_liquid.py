@@ -2,10 +2,11 @@
 from sympy import solve, pretty, symbols, pi
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
+from symplyphysics import print_expression
 from symplyphysics.laws.dynamics import buoyant_force_from_density_and_volume as archimedes_law
 from symplyphysics.laws.dynamics import acceleration_from_force as gravity_law
 
-print("Formula is:\n{}".format(archimedes_law.print(archimedes_law.law)))
+print("Formula is:\n{}".format(archimedes_law.print()))
 
 height = symbols("height")
 
@@ -34,9 +35,9 @@ result_gravity_force = solved_gravity.subs({
     gravity_law.acceleration: 9.8})
 
 print("Buoyant force above liquid function is:\n{}".format(
-    pretty(result_buoyant_force_above_liquid, use_unicode=False)))
+    print_expression(result_buoyant_force_above_liquid)))
 print("Buoyant force below liquid function is:\n{}".format(
-    pretty(result_buoyant_force_below_liquid, use_unicode=False)))
+    print_expression(result_buoyant_force_below_liquid)))
 
 p1 = plot(
     result_buoyant_force_above_liquid,

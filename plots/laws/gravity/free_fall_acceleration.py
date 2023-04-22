@@ -1,11 +1,12 @@
+from sympy import solve, symbols
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import (
-    units, symbols, convert_to, solve, pretty
+    print_expression, units, convert_to
 )
 from symplyphysics.laws.gravity import free_fall_acceleration_from_height as acceleration
 
-print("Formula is:\n{}".format(acceleration.print(acceleration.law)))
+print("Formula is:\n{}".format(acceleration.print()))
 
 height_above_ground = symbols("height_above_ground")
 gravity_constant_value = convert_to(units.gravitational_constant, units.newton * units.meter**2 / units.kilogram**2).evalf(5)
@@ -21,7 +22,7 @@ result_acceleration = solved.subs({
     acceleration.units.gravitational_constant: gravity_constant})
 
 print("\nFree fall accelleration function on Earth surface is:\n{}".format(
-    pretty(result_acceleration, use_unicode=False)))
+    print_expression(result_acceleration)))
 
 p1 = plot(
     result_acceleration,

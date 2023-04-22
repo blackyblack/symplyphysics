@@ -1,7 +1,7 @@
-from symplyphysics import (
-    symbols, Eq, pretty, solve, units
-)
-from symplyphysics.core.symbols.symbols import Symbol
+#!/usr/bin/env python3
+
+from sympy import solve, Eq
+from symplyphysics import print_expression, units, Symbol
 from symplyphysics.laws.dynamics import potential_energy_from_mass_and_height as potential_energy
 
 # Under what condition will the potential energies of two different bodies be the same
@@ -17,6 +17,6 @@ law = [Ep2, Ep1]
 solved = solve(law, (height_1, potential_energy.potential_energy_of_body), dict=True)[0][height_1]
 answer = Eq(height_1, solved)
 
-print("\nFormula is:\n{}".format(potential_energy.print(potential_energy.law)))
+print("\nFormula is:\n{}".format(potential_energy.print()))
 print("\nSolution:\nIF potential_energy_1 = potential_energy_2 AND body_mass_2 = 2 * body_mass_1 THEN {}".
-      format(pretty(answer, use_unicode=False)))
+      format(print_expression(answer)))
