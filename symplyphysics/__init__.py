@@ -11,16 +11,29 @@ from .core.vectors.vectors import Vector, sympy_vector_from_vector, vector_from_
 from .core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_transform
 
 __all__ = [
-# errors
+    # errors
     'errors',
-# units
-    'units', 'angle_type', 'Dimensionless', 'convert_to', 'SI',
-# symbols
-    'Function', 'Quantity', 'Symbol', 'print_expression', 'expr_to_quantity',
-# decorators
-    'validate_input_symbols', 'validate_output_symbol',
-# vectors
-    'Vector', 'sympy_vector_from_vector', 'vector_from_sympy_vector', 'vector_rebase',
-# coordinate systems
-    'CoordinateSystem', 'coordinates_transform',
+    # units
+    'units',
+    'angle_type',
+    'Dimensionless',
+    'convert_to',
+    'SI',
+    # symbols
+    'Function',
+    'Quantity',
+    'Symbol',
+    'print_expression',
+    'expr_to_quantity',
+    # decorators
+    'validate_input_symbols',
+    'validate_output_symbol',
+    # vectors
+    'Vector',
+    'sympy_vector_from_vector',
+    'vector_from_sympy_vector',
+    'vector_rebase',
+    # coordinate systems
+    'CoordinateSystem',
+    'coordinates_transform',
 ]

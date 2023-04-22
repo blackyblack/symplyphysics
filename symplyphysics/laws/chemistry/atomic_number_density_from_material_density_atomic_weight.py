@@ -1,8 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (
-    units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input_symbols, validate_output_symbol
-)
+from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol)
 from symplyphysics.definitions import volume_number_density
 from symplyphysics.definitions import density_from_mass_volume
 from symplyphysics.laws.chemistry import avogadro_number_from_mole_count
@@ -31,10 +29,11 @@ law = Eq(atomic_number_density, material_density * units.avogadro / atomic_weigh
 # Derive the same law from volume number density law
 density_law = density_from_mass_volume.definition.subs({
     density_from_mass_volume.volume: volume_number_density.volume,
-    density_from_mass_volume.density: material_density})
+    density_from_mass_volume.density: material_density
+})
 
-avogadro_law = avogadro_number_from_mole_count.law.subs({
-    avogadro_number_from_mole_count.particles_count: volume_number_density.objects})
+avogadro_law = avogadro_number_from_mole_count.law.subs(
+    {avogadro_number_from_mole_count.particles_count: volume_number_density.objects})
 
 atomic_weight_law = atomic_weight_from_mass_mole_count.law.subs({
     atomic_weight_from_mass_mole_count.atomic_weight: atomic_weight,
@@ -49,16 +48,18 @@ derived_number_density = solve(derived_law,
     (density_from_mass_volume.mass, volume_number_density.objects,
     volume_number_density.number_density, avogadro_number_from_mole_count.mole_count),
     dict=True)[0][volume_number_density.number_density]
-assert solve(law, atomic_number_density, dict=True)[0][atomic_number_density] == derived_number_density
+assert solve(law, atomic_number_density,
+    dict=True)[0][atomic_number_density] == derived_number_density
+
 
 def print() -> str:
     return print_expression(law)
 
+
 @validate_input_symbols(material_density_=material_density, atomic_weight_=atomic_weight)
 @validate_output_symbol(atomic_number_density)
-def calculate_atomic_number_density(material_density_: Quantity, atomic_weight_: Quantity) -> Quantity:
+def calculate_atomic_number_density(material_density_: Quantity,
+    atomic_weight_: Quantity) -> Quantity:
     solved = solve(law, atomic_number_density, dict=True)[0][atomic_number_density]
-    result_expr = solved.subs({
-        material_density: material_density_,
-        atomic_weight: atomic_weight_})
+    result_expr = solved.subs({material_density: material_density_, atomic_weight: atomic_weight_})
     return expr_to_quantity(result_expr)

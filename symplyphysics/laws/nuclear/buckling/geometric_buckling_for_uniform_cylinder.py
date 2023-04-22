@@ -1,8 +1,6 @@
 from sympy import (Eq, solve, pi)
-from symplyphysics import (
-    units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input_symbols, validate_output_symbol
-)
+from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol)
 from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_cylinder as cylinder_flux
 
 # Description
@@ -32,17 +30,22 @@ law = Eq(geometric_buckling_squared, (2.405 / cylinder_radius)**2 + (pi / cylind
 geometric_buckling_cylinder_squared = cylinder_flux.radial_constant**2 + cylinder_flux.axial_constant**2
 geometric_buckling_cylinder_solved = geometric_buckling_cylinder_squared.subs({
     cylinder_flux.cylinder_radius: cylinder_radius,
-    cylinder_flux.cylinder_height: cylinder_height})
+    cylinder_flux.cylinder_height: cylinder_height
+})
 assert geometric_buckling_cylinder_solved.evalf(7) == law.rhs.evalf(7)
+
 
 def print() -> str:
     return print_expression(law)
 
+
 @validate_input_symbols(cylinder_radius_=cylinder_radius, cylinder_height_=cylinder_height)
 @validate_output_symbol(geometric_buckling_squared)
-def calculate_geometric_buckling_squared(cylinder_radius_: Quantity, cylinder_height_: Quantity) -> Quantity:
+def calculate_geometric_buckling_squared(cylinder_radius_: Quantity,
+    cylinder_height_: Quantity) -> Quantity:
     solved = solve(law, geometric_buckling_squared, dict=True)[0][geometric_buckling_squared]
     result_expr = solved.subs({
         cylinder_radius: cylinder_radius_,
-        cylinder_height: cylinder_height_})
+        cylinder_height: cylinder_height_
+    })
     return expr_to_quantity(result_expr)

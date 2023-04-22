@@ -1,8 +1,6 @@
 from sympy import (Eq, solve, pi)
-from symplyphysics import (
-    units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input_symbols, validate_output_symbol
-)
+from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol)
 from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_sphere as sphere_flux
 
 # Description
@@ -28,11 +26,14 @@ law = Eq(geometric_buckling_squared, (pi / sphere_radius)**2)
 # solution for the neutron flux:
 # See [neutron flux for uniform sphere](./neutron_flux_for_uniform_sphere.py)
 geometric_buckling_sphere_squared = sphere_flux.radial_constant**2
-geometric_buckling_sphere_flux_solved = geometric_buckling_sphere_squared.subs(sphere_flux.sphere_radius, sphere_radius)
+geometric_buckling_sphere_flux_solved = geometric_buckling_sphere_squared.subs(
+    sphere_flux.sphere_radius, sphere_radius)
 assert geometric_buckling_sphere_flux_solved == law.rhs
+
 
 def print() -> str:
     return print_expression(law)
+
 
 @validate_input_symbols(sphere_radius_=sphere_radius)
 @validate_output_symbol(geometric_buckling_squared)

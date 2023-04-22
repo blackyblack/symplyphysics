@@ -1,8 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (
-    units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input_symbols, validate_output_symbol
-)
+from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol)
 from symplyphysics.laws.thermodynamics import pressure_from_temperature_and_volume as thermodynamics_law
 
 # Description
@@ -31,29 +29,37 @@ isochoric_condition = Eq(volume_start, volume_end)
 eq_start = thermodynamics_law.law.subs({
     thermodynamics_law.temperature: temperature_start,
     thermodynamics_law.volume: volume_start,
-    thermodynamics_law.pressure: pressure_start})
+    thermodynamics_law.pressure: pressure_start
+})
 
 eq_end = thermodynamics_law.law.subs({
     thermodynamics_law.temperature: temperature_end,
     thermodynamics_law.volume: volume_end,
-    thermodynamics_law.pressure: pressure_end})
+    thermodynamics_law.pressure: pressure_end
+})
 
 derived_law = [eq_start, eq_end, isochoric_condition]
 
 ## Check the equivalence of 'law' and 'derived_law'
-derived_pressure_end = solve(derived_law, (volume_start, volume_end, pressure_end), dict=True)[0][pressure_end]
+derived_pressure_end = solve(derived_law, (volume_start, volume_end, pressure_end),
+    dict=True)[0][pressure_end]
 assert solve(law, pressure_end, dict=True)[0][pressure_end] == derived_pressure_end
 
 
 def print() -> str:
     return print_expression(law)
 
-@validate_input_symbols(temperature_start_=temperature_start, pressure_start_=pressure_start, temperature_end_=temperature_end)
+
+@validate_input_symbols(temperature_start_=temperature_start,
+    pressure_start_=pressure_start,
+    temperature_end_=temperature_end)
 @validate_output_symbol(pressure_end)
-def calculate_pressure(temperature_start_: Quantity, pressure_start_: Quantity, temperature_end_: Quantity) -> Quantity:
+def calculate_pressure(temperature_start_: Quantity, pressure_start_: Quantity,
+    temperature_end_: Quantity) -> Quantity:
     solved = solve(law, pressure_end, dict=True)[0][pressure_end]
     result_expr = solved.subs({
         pressure_start: pressure_start_,
         temperature_start: temperature_start_,
-        temperature_end: temperature_end_})
+        temperature_end: temperature_end_
+    })
     return expr_to_quantity(result_expr)

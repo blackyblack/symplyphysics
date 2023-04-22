@@ -1,8 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (
-    units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input_symbols, validate_output_symbol
-)
+from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol)
 
 # Description
 ## The density (more precisely, the volumetric mass density), of a substance
@@ -22,8 +20,10 @@ definition = Eq(density, mass / volume)
 
 definition_units_SI = units.kilogram / units.meter**3
 
+
 def print() -> str:
     return print_expression(definition)
+
 
 @validate_input_symbols(mass_=mass, volume_=volume)
 @validate_output_symbol(density)

@@ -1,8 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (
-    units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input_symbols, validate_output_symbol
-)
+from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol)
 
 # Description
 # Amount of energy for body heat Q = C * m * (t2 - t1)
@@ -17,32 +15,32 @@ from symplyphysics import (
 # Positive value Q is for absorbed energy (heating), negative for released energy (cooling)
 
 amount_energy = Symbol("amount_energy", units.energy)
-specific_heat_capacity = Symbol("specific_heat_capacity", units.energy / (units.mass * units.temperature))
+specific_heat_capacity = Symbol("specific_heat_capacity",
+    units.energy / (units.mass * units.temperature))
 body_mass = Symbol("body_mass", units.mass)
 temperature_origin = Symbol("temperature_origin", units.temperature)
 temperature_end = Symbol("temperature_end", units.temperature)
 
 law = Eq(amount_energy, specific_heat_capacity * body_mass * (temperature_end - temperature_origin))
 
+
 def print() -> str:
     return print_expression(law)
 
-@validate_input_symbols(
-    specific_heat_capacity_=specific_heat_capacity,
+
+@validate_input_symbols(specific_heat_capacity_=specific_heat_capacity,
     body_mass_=body_mass,
     temperature_end_=temperature_end,
     temperature_origin_=temperature_origin)
 @validate_output_symbol(amount_energy)
-def calculate_amount_energy(
-    specific_heat_capacity_: Quantity,
-    body_mass_: Quantity,
-    temperature_end_: Quantity,
-    temperature_origin_: Quantity) -> Quantity:
+def calculate_amount_energy(specific_heat_capacity_: Quantity, body_mass_: Quantity,
+    temperature_end_: Quantity, temperature_origin_: Quantity) -> Quantity:
 
     result_amount_energy_expr = solve(law, amount_energy, dict=True)[0][amount_energy]
     result_expr = result_amount_energy_expr.subs({
         specific_heat_capacity: specific_heat_capacity_,
         body_mass: body_mass_,
         temperature_end: temperature_end_,
-        temperature_origin: temperature_origin_})
+        temperature_origin: temperature_origin_
+    })
     return expr_to_quantity(result_expr)

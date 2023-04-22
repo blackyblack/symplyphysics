@@ -13,33 +13,37 @@ class DimensionSymbol:
     _display_name: str = None
 
     @staticmethod
-    def random_name(base: str=None, digits: int=4) -> str:
+    def random_name(base: str = None, digits: int = 4) -> str:
         return ("" if base is None else base) + "".join(random.choices(string.digits, k=digits))
-    
+
     @property
     def dimension(self) -> Dimension:
         return self._dimension
-    
+
     @property
     def display_name(self) -> str:
         return self._display_name
-    
+
     def __repr__(self) -> str:
         return self.display_name
 
 
-class Symbol(DimensionSymbol, sympy.Symbol):    
-    def __new__(cls, display_name: str=None, dimension: Dimension=1, **assumptions):
-        name = DimensionSymbol.random_name("S", 8) if display_name is None else DimensionSymbol.random_name(display_name)
+class Symbol(DimensionSymbol, sympy.Symbol):
+
+    def __new__(cls, display_name: str = None, dimension: Dimension = 1, **assumptions):
+        name = DimensionSymbol.random_name("S",
+            8) if display_name is None else DimensionSymbol.random_name(display_name)
         self = super().__new__(cls, name, **assumptions)
         self._dimension = dimension
         self._display_name = name if display_name is None else display_name
         return self
 
 
-class Function(DimensionSymbol, UndefinedFunction):    
-    def __new__(cls, display_name: str=None, dimension: Dimension=1, **options):
-        name = DimensionSymbol.random_name("F", 8) if display_name is None else DimensionSymbol.random_name(display_name)
+class Function(DimensionSymbol, UndefinedFunction):
+
+    def __new__(cls, display_name: str = None, dimension: Dimension = 1, **options):
+        name = DimensionSymbol.random_name("F",
+            8) if display_name is None else DimensionSymbol.random_name(display_name)
         self = super().__new__(cls, name, **options)
         self._dimension = dimension
         self._display_name = name if display_name is None else display_name
@@ -50,7 +54,9 @@ class Function(DimensionSymbol, UndefinedFunction):
 # Use custom implementation of the PrettyPrinter to convert real symbol names
 # to user fiendly names.
 
+
 class SymbolPrinter(PrettyPrinter):
+
     def __init__(self, **settings):
         super().__init__(settings)
 
@@ -58,13 +64,18 @@ class SymbolPrinter(PrettyPrinter):
         symb_name = e.display_name if isinstance(e, Symbol) else e.name
         symb = pretty_symbol(symb_name, bold_name)
         return prettyForm(symb)
-    
-    def _print_Function(self, e, sort=False, func_name=None, left='(',
-                        right=')'):
+
+    def _print_Function(self, e, sort=False, func_name=None, left='(', right=')'):
         # optional argument func_name for supplying custom names
         # XXX works only for applied functions
         func_name = e.func.display_name if isinstance(e.func, Function) else func_name
-        return self._helper_print_function(e.func, e.args, sort=sort, func_name=func_name, left=left, right=right)
+        return self._helper_print_function(e.func,
+            e.args,
+            sort=sort,
+            func_name=func_name,
+            left=left,
+            right=right)
+
 
 def print_expression(expr) -> str:
     pp = SymbolPrinter(use_unicode=False)

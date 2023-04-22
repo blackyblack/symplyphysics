@@ -11,13 +11,12 @@ solved = solve(boyles_law.law, boyles_law.pressure_end, dict=True)[0][boyles_law
 result_pressure = solved.subs({
     boyles_law.pressure_start: 1,
     boyles_law.volume_start: 1,
-    boyles_law.volume_end: volume})
+    boyles_law.volume_end: volume
+})
 
 print("Pressure function is:\n{}".format(print_expression(result_pressure)))
 
-p1 = plot(
-    result_pressure,
-    (volume, 0.01, 1),
+p1 = plot(result_pressure, (volume, 0.01, 1),
     title="Pressure(Volume)",
     xlabel="Volume",
     ylabel="Pressure",

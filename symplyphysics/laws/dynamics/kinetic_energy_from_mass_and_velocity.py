@@ -1,8 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (
-    units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input_symbols, validate_output_symbol
-)
+from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol)
 
 # Description
 # Kinetic energy of body: EK = (m * v**2) / 2
@@ -16,8 +14,10 @@ body_velocity = Symbol("body_velocity", units.velocity)
 
 law = Eq(kinetic_energy_of_body, body_mass * body_velocity**2 / 2)
 
+
 def print() -> str:
     return print_expression(law)
+
 
 @validate_input_symbols(body_mass_=body_mass, body_velocity_=body_velocity)
 @validate_output_symbol(kinetic_energy_of_body)

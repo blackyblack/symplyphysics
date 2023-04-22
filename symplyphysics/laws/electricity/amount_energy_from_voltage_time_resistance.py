@@ -1,8 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (
-    units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input_symbols, validate_output_symbol
-)
+from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol)
 
 # Description
 # The amount of energy released by a conductor with a current is directly proportional
@@ -23,8 +21,10 @@ resistance = Symbol("resistance", units.impedance)
 
 law = Eq(amount_energy, (voltage**2 * time) / resistance)
 
+
 def print() -> str:
     return print_expression(law)
+
 
 @validate_input_symbols(voltage_=voltage, time_=time, resistance_=resistance)
 @validate_output_symbol(amount_energy)

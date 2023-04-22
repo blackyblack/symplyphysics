@@ -1,8 +1,6 @@
 from sympy import (Eq, Derivative)
-from symplyphysics import (
-    units, expr_to_quantity, Quantity, Function, Symbol, print_expression,
-    validate_input_symbols, validate_output_symbol
-)
+from symplyphysics import (units, expr_to_quantity, Quantity, Function, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol)
 
 # Description
 ## The instantaneous electrical current, or simply the electrical current, is the time derivative of the charge that flows.
@@ -20,8 +18,10 @@ definition = Eq(current(time), Derivative(charge(time), time))
 
 definition_units_SI = units.ampere
 
+
 def print() -> str:
     return print_expression(definition)
+
 
 @validate_input_symbols(charge_start_=charge, charge_end_=charge, time_=time)
 @validate_output_symbol(current)

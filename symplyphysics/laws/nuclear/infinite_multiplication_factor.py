@@ -25,16 +25,20 @@ infinite_multiplication_factor = symbols("infinite_multiplication_factor")
 law = Eq(infinite_multiplication_factor,
     neutron_reproduction * fast_fission * resonance_escape_probability * thermal_utilisation)
 
+
 def print() -> str:
     return print_expression(law)
+
 
 def calculate_multiplication_factor(neutron_reproduction_: float, fast_fission_: float,
     resonance_escape_probability_: Probability, thermal_utilisation_: Probability) -> float:
 
-    result_factor_expr = solve(law, infinite_multiplication_factor, dict=True)[0][infinite_multiplication_factor]
+    result_factor_expr = solve(law, infinite_multiplication_factor,
+        dict=True)[0][infinite_multiplication_factor]
     result_expr = result_factor_expr.subs({
         neutron_reproduction: neutron_reproduction_,
         fast_fission: fast_fission_,
         resonance_escape_probability: resonance_escape_probability_.value,
-        thermal_utilisation: thermal_utilisation_.value})
+        thermal_utilisation: thermal_utilisation_.value
+    })
     return result_expr.evalf()

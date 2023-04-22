@@ -3,7 +3,6 @@
 
 import io
 import os
-import sys
 
 from setuptools import find_packages, setup
 
@@ -13,18 +12,14 @@ DESCRIPTION = 'Physics laws implemented as code.'
 URL = 'https://github.com/blackyblack/symplyphysics'
 EMAIL = 'sam.and.tetris@gmail.com'
 AUTHOR = 'blackyblack'
-REQUIRES_PYTHON = '>=3.6.0'
+REQUIRES_PYTHON = '>=3.10.0'
 VERSION = '0.0.1'
 
 # What packages are required for this module to be executed?
-REQUIRED = [
-    'sympy'
-]
+REQUIRED = ['sympy']
 
 # What packages are optional?
-EXTRAS = {
-    'plots': ['matplotlib']
-}
+EXTRAS = {'plots': ['matplotlib']}
 
 # The rest you shouldn't have to touch too much :)
 # ------------------------------------------------
@@ -50,7 +45,6 @@ if not VERSION:
 else:
     about['__version__'] = VERSION
 
-
 # Where the magic happens:
 setup(
     name=NAME,
@@ -68,11 +62,9 @@ setup(
     include_package_data=True,
     license='MIT',
     classifiers=[
-        'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: Implementation :: CPython',
-        'Programming Language :: Python :: Implementation :: PyPy'
+    'License :: OSI Approved :: MIT License', 'Programming Language :: Python',
+    'Programming Language :: Python :: 3', 'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: Implementation :: CPython',
+    'Programming Language :: Python :: Implementation :: PyPy'
     ],
 )

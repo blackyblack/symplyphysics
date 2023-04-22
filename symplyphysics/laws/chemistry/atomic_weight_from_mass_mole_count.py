@@ -1,8 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (
-    units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input_symbols, validate_output_symbol
-)
+from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol)
 
 # Description
 ## The molar mass of a chemical compound is defined as the mass of a sample of that compound divided
@@ -20,8 +18,10 @@ mole_count = Symbol("mole_count", units.amount_of_substance)
 
 law = Eq(atomic_weight, substance_mass / mole_count)
 
+
 def print() -> str:
     return print_expression(law)
+
 
 @validate_input_symbols(substance_mass_=substance_mass, mole_count_=mole_count)
 @validate_output_symbol(atomic_weight)

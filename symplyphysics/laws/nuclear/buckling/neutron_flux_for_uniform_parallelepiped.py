@@ -25,7 +25,7 @@ z_distance_from_center = symbols("z_distance_from_center")
 parallelepiped_width = symbols("parallelepiped_width")
 parallelepiped_length = symbols("parallelepiped_length")
 parallelepiped_height = symbols("parallelepiped_height")
-neutron_flux_function = symbols("neutron_flux_function", cls = SymFunction)
+neutron_flux_function = symbols("neutron_flux_function", cls=SymFunction)
 
 # These constants are being used for geometric buckling calculation
 # See: [geometric buckling for uniform parallelepiped](geometric_buckling_for_uniform_parallelepiped.py)
@@ -41,11 +41,10 @@ assert length_constant == neutron_flux_for_uniform_slab.axial_constant.subs(
 assert height_constant == neutron_flux_for_uniform_slab.axial_constant.subs(
     neutron_flux_for_uniform_slab.slab_width, parallelepiped_height)
 
-law = Eq(neutron_flux_function(x_distance_from_center, y_distance_from_center, z_distance_from_center),
-    neutron_flux_power_constant *
-    cos(width_constant * x_distance_from_center) *
-    cos(length_constant * y_distance_from_center) *
-    cos(height_constant * z_distance_from_center))
+law = Eq(
+    neutron_flux_function(x_distance_from_center, y_distance_from_center, z_distance_from_center),
+    neutron_flux_power_constant * cos(width_constant * x_distance_from_center) *
+    cos(length_constant * y_distance_from_center) * cos(height_constant * z_distance_from_center))
 
 # Check the solution by passing the known neutron flux to the geometric_buckling_from_neutron_flux.
 # Neutron flux is a function of x, y, z in the cartesian coordinates.
@@ -61,14 +60,18 @@ cartesian_coordinates = CoordSys3D("cartesian_coordinates")
 neutron_flux_function_cartesian = law.subs({
     x_distance_from_center: cartesian_coordinates.x,
     y_distance_from_center: cartesian_coordinates.y,
-    z_distance_from_center: cartesian_coordinates.z})
+    z_distance_from_center: cartesian_coordinates.z
+})
 
-solved = geometric_buckling_from_neutron_flux.apply_neutron_flux_function(neutron_flux_function_cartesian.rhs)
+solved = geometric_buckling_from_neutron_flux.apply_neutron_flux_function(
+    neutron_flux_function_cartesian.rhs)
 
 # check with the derived law: Bg^2 = width_constant**2 + length_constant**2 + height_constant**2
 assert solved.rhs == (width_constant**2 + length_constant**2 + height_constant**2)
 
+
 def print() -> str:
     return print_expression(law)
+
 
 # There is no calculate() method. Neutron flux is usually being used internally to pass to other laws.

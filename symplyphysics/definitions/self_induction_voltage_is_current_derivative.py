@@ -1,8 +1,6 @@
 from sympy import (Eq, Derivative)
-from symplyphysics import (
-    units, expr_to_quantity, Quantity, Function, Symbol, print_expression,
-    validate_input_symbols, validate_output_symbol
-)
+from symplyphysics import (units, expr_to_quantity, Quantity, Function, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol)
 
 # Description
 ## Self-induction voltage definition: E = -L * dI/dt, where
@@ -19,14 +17,23 @@ definition = Eq(self_induction_voltage(time), -1 * inductance * Derivative(curre
 
 definition_units_SI = units.volt
 
+
 def print() -> str:
     return print_expression(definition)
 
-@validate_input_symbols(inductance_=inductance, current_start_=current, current_end_=current, time_=time)
+
+@validate_input_symbols(inductance_=inductance,
+    current_start_=current,
+    current_end_=current,
+    time_=time)
 @validate_output_symbol(self_induction_voltage)
-def calculate_voltage(inductance_: Quantity, current_start_: Quantity, current_end_: Quantity, time_: Quantity) -> Quantity:
+def calculate_voltage(inductance_: Quantity, current_start_: Quantity, current_end_: Quantity,
+    time_: Quantity) -> Quantity:
     current_function_ = time * (current_end_ - current_start_) / time_
-    applied_definition = definition.subs({current(time): current_function_, inductance: inductance_})
+    applied_definition = definition.subs({
+        current(time): current_function_,
+        inductance: inductance_
+    })
     dsolved = applied_definition.doit()
     result_expr = dsolved.rhs
     return expr_to_quantity(result_expr)

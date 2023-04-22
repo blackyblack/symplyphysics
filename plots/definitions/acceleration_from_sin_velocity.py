@@ -14,9 +14,7 @@ dsolved = applied_law.doit()
 print("Velocity function is:\n{}".format(print_expression(velocity_function(acceleration.time))))
 print("Acceleration function is:\n{}".format(print_expression(dsolved)))
 
-p1 = plot(
-    velocity_function(acceleration.time),
-    (acceleration.time, 0, 10),
+p1 = plot(velocity_function(acceleration.time), (acceleration.time, 0, 10),
     line_color="blue",
     title="Acceleration(time), Velocity(time)",
     label="Velocity(time)",
@@ -26,9 +24,7 @@ p1 = plot(
     backend=MatplotlibBackend,
     show=False)
 
-p2 = plot(
-    dsolved.rhs,
-    (acceleration.time, 0, 10),
+p2 = plot(dsolved.rhs, (acceleration.time, 0, 10),
     line_color="red",
     label="Acceleration(time)",
     backend=MatplotlibBackend,

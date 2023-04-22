@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 
 from sympy import solve
-from symplyphysics import (
-    units, convert_to, expr_to_quantity, Quantity
-)
+from symplyphysics import (units, convert_to, expr_to_quantity, Quantity)
 from symplyphysics.laws.dynamics import momentum_after_collision_equals_to_momentum_before as momentum_law
 from symplyphysics.definitions import momentum_is_mass_times_velocity as momentum_def
 
@@ -29,18 +27,24 @@ momentum_after = momentum_law.calculate_momentum_after(momentum_before)
 solved = solve(momentum_def.definition, momentum_def.velocity, dict=True)[0][momentum_def.velocity]
 result_expr = solved.subs({
     momentum_def.mass: expr_to_quantity(bullet_mass + body_mass),
-    momentum_def.momentum: momentum_after})
+    momentum_def.momentum: momentum_after
+})
 result_velocity = expr_to_quantity(result_expr)
 
-print("Velocity = {} {}; for two inelasticly collided objects with masses = {} {}, {} {}, velocities = {} {}, {} {}"
-   .format(
-        convert_to(result_velocity, units.meter/units.second).subs({units.meter: 1, units.seconds: 1}).evalf(2),
-        units.meter / units.second,
-        convert_to(bullet_mass, units.gram).subs(units.gram, 1).evalf(2),
-        units.gram,
-        convert_to(body_mass, units.kilogram).subs(units.kilogram, 1).evalf(2),
-        units.kilogram,
-        convert_to(bullet_velocity, units.meter / units.second).subs({units.meter: 1, units.second: 1}).evalf(3),
-        units.meter / units.second,
-        convert_to(body_velocity, units.meter / units.second).subs({units.meter: 1, units.second: 1}).evalf(2),
-        units.meter / units.second))
+print(
+    "Velocity = {} {}; for two inelasticly collided objects with masses = {} {}, {} {}, velocities = {} {}, {} {}"
+    .format(
+    convert_to(result_velocity, units.meter / units.second).subs({
+    units.meter: 1,
+    units.seconds: 1
+    }).evalf(2), units.meter / units.second,
+    convert_to(bullet_mass, units.gram).subs(units.gram, 1).evalf(2), units.gram,
+    convert_to(body_mass, units.kilogram).subs(units.kilogram, 1).evalf(2), units.kilogram,
+    convert_to(bullet_velocity, units.meter / units.second).subs({
+    units.meter: 1,
+    units.second: 1
+    }).evalf(3), units.meter / units.second,
+    convert_to(body_velocity, units.meter / units.second).subs({
+    units.meter: 1,
+    units.second: 1
+    }).evalf(2), units.meter / units.second))

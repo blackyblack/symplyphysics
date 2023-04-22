@@ -11,12 +11,19 @@ height_1 = Symbol("height_1", units.length)
 height_2 = Symbol("height_2", units.length)
 body_mass_1 = Symbol("body_mass_1", units.mass)
 
-Ep1 = potential_energy.law.subs({potential_energy.body_mass: body_mass_1, potential_energy.height: height_1})
-Ep2 = potential_energy.law.subs({potential_energy.body_mass: 2 * body_mass_1, potential_energy.height: height_2})
+Ep1 = potential_energy.law.subs({
+    potential_energy.body_mass: body_mass_1,
+    potential_energy.height: height_1
+})
+Ep2 = potential_energy.law.subs({
+    potential_energy.body_mass: 2 * body_mass_1,
+    potential_energy.height: height_2
+})
 law = [Ep2, Ep1]
 solved = solve(law, (height_1, potential_energy.potential_energy_of_body), dict=True)[0][height_1]
 answer = Eq(height_1, solved)
 
 print("\nFormula is:\n{}".format(potential_energy.print()))
-print("\nSolution:\nIF potential_energy_1 = potential_energy_2 AND body_mass_2 = 2 * body_mass_1 THEN {}".
-      format(print_expression(answer)))
+print(
+    "\nSolution:\nIF potential_energy_1 = potential_energy_2 AND body_mass_2 = 2 * body_mass_1 THEN {}"
+    .format(print_expression(answer)))

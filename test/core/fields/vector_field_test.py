@@ -14,10 +14,12 @@ def _assert_callable(field_: VectorField, size_: int):
     for i in range(size_):
         assert callable(field_.component(i))
 
+
 def _assert_point(field_: VectorField, point_: FieldPoint, expected_: List[Any]):
     for idx, c in enumerate(field_.components):
         value = c(point_) if callable(c) else c
         assert value == expected_[idx]
+
 
 @fixture
 def test_args():
@@ -25,7 +27,9 @@ def test_args():
     Args = namedtuple("Args", ["C"])
     return Args(C=C)
 
+
 # Test VectorField constructor
+
 
 def test_basic_field():
     field = VectorField(lambda p: p.y, lambda p: p.x)
@@ -36,11 +40,13 @@ def test_basic_field():
     assert field.basis == []
     assert field.coordinate_system is None
 
+
 def test_empty_field():
     field = VectorField()
     assert len(field.components) == 0
     field_point = FieldPoint(1, 2, 3)
     _assert_point(field, field_point, [])
+
 
 def test_4d_field():
     field = VectorField(lambda p: p.x, lambda p: p.y, lambda p: p.z)
@@ -48,6 +54,7 @@ def test_4d_field():
     assert len(field.components) == 4
     field_point = FieldPoint(1, 2, 3)
     _assert_point(field, field_point, [1, 2, 3, 1])
+
 
 def test_4d_point_field():
     field = VectorField(lambda p: p.x, lambda p: p.y, lambda p: p.z)
@@ -57,6 +64,7 @@ def test_4d_point_field():
     field_point.set_coordinate(3, 4)
     _assert_point(field, field_point, [1, 2, 3, 4])
 
+
 @unsupported_usage
 def test_wrong_type_lambda_field():
     field = VectorField(lambda p: "string", lambda p: p.x)
@@ -65,6 +73,7 @@ def test_wrong_type_lambda_field():
     field_point = FieldPoint(1, 2, 3)
     # non expression lambda in a field is not processed and returns as is
     _assert_point(field, field_point, ["string", 1])
+
 
 @unsupported_usage
 def test_wrong_type_value_field():
@@ -76,6 +85,7 @@ def test_wrong_type_value_field():
     # non expression in a field is not processed and returns as is
     _assert_point(field, field_point, ["string", 1])
 
+
 @unsupported_usage
 def test_invalid_lambda_field():
     field = VectorField(lambda p: p.y + "string", lambda p: p.x)
@@ -86,6 +96,7 @@ def test_invalid_lambda_field():
     with raises(TypeError):
         field.component(0)(field_point)
 
+
 @unsupported_usage
 def test_effect_in_lambda_field():
     field = VectorField(lambda p: "{}".format(p.y), lambda p: p.x)
@@ -94,23 +105,32 @@ def test_effect_in_lambda_field():
     field_point = FieldPoint(1, 2, 3)
     _assert_point(field, field_point, ["2", 1])
 
+
 def test_coord_system_field(test_args):
     field = VectorField(lambda p: p.y * p.z, 0, 0, test_args.C)
     field_point = FieldPoint(1, 2, 3)
     _assert_point(field, field_point, [6])
-    assert field.basis == [test_args.C.coord_system.x, test_args.C.coord_system.y, test_args.C.coord_system.z]
+    assert field.basis == [
+        test_args.C.coord_system.x, test_args.C.coord_system.y, test_args.C.coord_system.z
+    ]
     assert field.coordinate_system == test_args.C
+
 
 # Test field_from_vector()
 
+
 def test_basic_field_from_vector(test_args):
-    field = field_from_vector(Vector([test_args.C.coord_system.x, test_args.C.coord_system.y], test_args.C))
+    field = field_from_vector(
+        Vector([test_args.C.coord_system.x, test_args.C.coord_system.y], test_args.C))
     _assert_callable(field, 2)
     assert field.component(2) == 0
     field_point = FieldPoint(1, 2, 3)
     _assert_point(field, field_point, [1, 2, 0])
-    assert field.basis == [test_args.C.coord_system.x, test_args.C.coord_system.y, test_args.C.coord_system.z]
+    assert field.basis == [
+        test_args.C.coord_system.x, test_args.C.coord_system.y, test_args.C.coord_system.z
+    ]
     assert field.coordinate_system == test_args.C
+
 
 def test_plain_field_from_vector(test_args):
     field = field_from_vector(Vector([2, 3], test_args.C))
@@ -119,8 +139,11 @@ def test_plain_field_from_vector(test_args):
     assert field.component(1) == 3
     field_point = FieldPoint(1, 2, 3)
     _assert_point(field, field_point, [2, 3, 0])
-    assert field.basis == [test_args.C.coord_system.x, test_args.C.coord_system.y, test_args.C.coord_system.z]
+    assert field.basis == [
+        test_args.C.coord_system.x, test_args.C.coord_system.y, test_args.C.coord_system.z
+    ]
     assert field.coordinate_system == test_args.C
+
 
 def test_empty_coord_system_field_from_vector(test_args):
     field = field_from_vector(Vector([test_args.C.coord_system.x, test_args.C.coord_system.y]))
@@ -132,21 +155,30 @@ def test_empty_coord_system_field_from_vector(test_args):
     assert field.basis == []
     assert field.coordinate_system == None
 
+
 # Test field_from_sympy_vector()
 
+
 def test_basic_vector_to_field_conversion(test_args):
-    field = field_from_sympy_vector(test_args.C.coord_system.x * test_args.C.coord_system.i + test_args.C.coord_system.y * test_args.C.coord_system.j, test_args.C)
+    field = field_from_sympy_vector(
+        test_args.C.coord_system.x * test_args.C.coord_system.i +
+        test_args.C.coord_system.y * test_args.C.coord_system.j, test_args.C)
     _assert_callable(field, 3)
     field_point = FieldPoint(1, 2, 3)
     _assert_point(field, field_point, [1, 2, 0])
-    assert field.basis == [test_args.C.coord_system.x, test_args.C.coord_system.y, test_args.C.coord_system.z]
+    assert field.basis == [
+        test_args.C.coord_system.x, test_args.C.coord_system.y, test_args.C.coord_system.z
+    ]
     assert field.coordinate_system == test_args.C
 
+
 def test_skip_dimension_vector_to_field_conversion(test_args):
-    field = field_from_sympy_vector(1 * test_args.C.coord_system.i + 2 * test_args.C.coord_system.k, test_args.C)
+    field = field_from_sympy_vector(1 * test_args.C.coord_system.i + 2 * test_args.C.coord_system.k,
+        test_args.C)
     assert len(field.components) == 3
     field_point = FieldPoint(1, 2, 3)
     _assert_point(field, field_point, [1, 0, 2])
+
 
 def test_empty_vector_to_field_conversion():
     field = field_from_sympy_vector(SympyVector.zero, None)
@@ -156,32 +188,40 @@ def test_empty_vector_to_field_conversion():
     _assert_point(field, field_point, [])
     assert field.basis == []
 
+
 # Integer is not a valid SymPy vector
 def test_only_integer_vector_to_field_conversion():
     with raises(AttributeError):
         field_from_sympy_vector(1, None)
+
 
 # Base scalar is not a valid SymPy vector
 def test_only_scalar_to_field_conversion(test_args):
     with raises(AttributeError):
         field_from_sympy_vector(test_args.C.coord_system.x, test_args.C)
 
+
 # different coordinate systems in parameters are not supported
 def test_different_coord_systems_vector_to_field_conversion(test_args):
     C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
     with raises(TypeError):
-        field_from_sympy_vector(test_args.C.coord_system.x * test_args.C.coord_system.i + 2 * C1.coord_system.theta * C1.coord_system.j, test_args.C)
+        field_from_sympy_vector(
+            test_args.C.coord_system.x * test_args.C.coord_system.i +
+            2 * C1.coord_system.theta * C1.coord_system.j, test_args.C)
     with raises(TypeError):
         field_from_sympy_vector(test_args.C.coord_system.x * C1.coord_system.i, test_args.C)
 
+
 def test_custom_names_vector_to_field_conversion():
     C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
-    field = field_from_sympy_vector(C1.coord_system.r * C1.coord_system.i + 2 * C1.coord_system.theta * C1.coord_system.j, C1)
+    field = field_from_sympy_vector(
+        C1.coord_system.r * C1.coord_system.i + 2 * C1.coord_system.theta * C1.coord_system.j, C1)
     _assert_callable(field, 3)
     field_point = FieldPoint(1, 2, 3)
     _assert_point(field, field_point, [1, 4, 0])
     assert field.basis == [C1.coord_system.r, C1.coord_system.theta, C1.coord_system.z]
     assert field.coordinate_system == C1
+
 
 def test_rotate_coordinates_vector_to_field_conversion(test_args):
     sympy_vector_field = test_args.C.coord_system.x * test_args.C.coord_system.i + test_args.C.coord_system.y * test_args.C.coord_system.j
@@ -195,27 +235,32 @@ def test_rotate_coordinates_vector_to_field_conversion(test_args):
     result_transformed_field = field_from_sympy_vector(transformed_vector, B)
     _assert_point(result_transformed_field, field_point,
         [(sin(theta) + 2 * cos(theta)) * sin(theta) + (cos(theta) - 2 * sin(theta)) * cos(theta),
-        (sin(theta) + 2 * cos(theta)) * cos(theta) - (cos(theta) - 2 * sin(theta)) * sin(theta),
-        0])
+        (sin(theta) + 2 * cos(theta)) * cos(theta) - (cos(theta) - 2 * sin(theta)) * sin(theta), 0])
     assert result_transformed_field.basis == [B.coord_system.x, B.coord_system.y, B.coord_system.z]
     assert result_transformed_field.coordinate_system == B
+
 
 # when we express SymPy vector field to another coordinate system and base scalars (C.x, C.y) are
 # not transformed, we get multiple coordinate systems, which is unsupported by sympy_vector_to_field
 def test_rotate_coordinates_without_variables_vector_to_field_conversion(test_args):
     theta = symbols("theta")
     B = coordinates_rotate(test_args.C, theta, test_args.C.coord_system.k)
-    transformed_field = express(test_args.C.coord_system.x * test_args.C.coord_system.i + test_args.C.coord_system.y * test_args.C.coord_system.j, B.coord_system)
+    transformed_field = express(
+        test_args.C.coord_system.x * test_args.C.coord_system.i +
+        test_args.C.coord_system.y * test_args.C.coord_system.j, B.coord_system)
     with raises(TypeError):
         field_from_sympy_vector(transformed_field, B)
 
+
 # Test field.apply_to_basis()
+
 
 def test_basic_apply_to_basis(test_args):
     field = VectorField(lambda p: p.y, lambda p: p.x, 0, test_args.C)
     field_space = field.apply_to_basis()
     assert field_space.coordinate_system == test_args.C
     assert field_space.components == [test_args.C.coord_system.y, test_args.C.coord_system.x]
+
 
 def test_custom_names_apply_to_basis():
     C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
@@ -224,30 +269,37 @@ def test_custom_names_apply_to_basis():
     assert field_space.coordinate_system == C1
     assert field_space.components == [C1.coord_system.r, C1.coord_system.theta, C1.coord_system.z]
 
+
 def test_empty_basis_apply_to_basis():
     field = VectorField(lambda p: p.y * p.x)
     field_space = field.apply_to_basis()
     assert field_space.coordinate_system == None
     assert field_space.components == [0]
 
+
 # Test sympy_vector_from_field()
+
 
 def test_basic_sympy_vector_from_field(test_args):
     field = VectorField(lambda p: p.y, lambda p: p.x, 0, test_args.C)
     vector = sympy_vector_from_field(field)
     assert vector == test_args.C.coord_system.y * test_args.C.coord_system.i + test_args.C.coord_system.x * test_args.C.coord_system.j
 
+
 def test_empty_coord_system_sympy_vector_from_field():
     field = VectorField(lambda p: p.y, lambda p: p.x, 0)
     vector = sympy_vector_from_field(field)
     assert vector == SympyVector.zero
+
 
 def test_plain_sympy_vector_from_field(test_args):
     field = VectorField(1, 2, 0, test_args.C)
     vector = sympy_vector_from_field(field)
     assert vector == 1 * test_args.C.coord_system.i + 2 * test_args.C.coord_system.j
 
+
 # Test field.apply()
+
 
 # Result is a function that returns a vector at any point of the trajectory.
 # Result is stored in array, where first component of the array is magnitude of the resulting
@@ -263,6 +315,7 @@ def test_basic_field_apply(test_args):
     assert trajectory_vectors.coordinate_system == None
     assert trajectory_vectors.components == [test_args.C.coord_system.y, test_args.C.coord_system.x]
 
+
 # Coordinate system is not necessary to apply field.
 def test_parametrized_no_coord_system_field_apply():
     field = VectorField(lambda p: -p.y, lambda p: p.x)
@@ -273,8 +326,11 @@ def test_parametrized_no_coord_system_field_apply():
     assert trajectory_vectors.coordinate_system == None
     assert trajectory_vectors.components == [-parameter, parameter]
 
+
 def test_parametrized_field_apply(test_args):
-    field = field_from_sympy_vector(-test_args.C.coord_system.y * test_args.C.coord_system.i + test_args.C.coord_system.x * test_args.C.coord_system.j, test_args.C)
+    field = field_from_sympy_vector(
+        -test_args.C.coord_system.y * test_args.C.coord_system.i +
+        test_args.C.coord_system.x * test_args.C.coord_system.j, test_args.C)
     parameter = symbols("parameter")
     # represents y = x trajectory
     trajectory = [parameter, parameter]
@@ -282,12 +338,18 @@ def test_parametrized_field_apply(test_args):
     assert trajectory_vectors.coordinate_system == test_args.C
     assert trajectory_vectors.components == [-parameter, parameter, 0]
 
+
 def test_sympy_field_apply(test_args):
-    field = field_from_sympy_vector(-test_args.C.coord_system.y * test_args.C.coord_system.i + test_args.C.coord_system.x * test_args.C.coord_system.j, test_args.C)
+    field = field_from_sympy_vector(
+        -test_args.C.coord_system.y * test_args.C.coord_system.i +
+        test_args.C.coord_system.x * test_args.C.coord_system.j, test_args.C)
     trajectory = [test_args.C.coord_system.x, test_args.C.coord_system.y]
     trajectory_vectors = field.apply(trajectory)
     assert trajectory_vectors.coordinate_system == test_args.C
-    assert trajectory_vectors.components == [-test_args.C.coord_system.y, test_args.C.coord_system.x, 0]
+    assert trajectory_vectors.components == [
+        -test_args.C.coord_system.y, test_args.C.coord_system.x, 0
+    ]
+
 
 # VectorField is not rebased automatically and should be rebased to the same coordinate
 # system as in trajectory with 'field_rebase'.
@@ -298,7 +360,9 @@ def test_different_coord_systems_field_apply(test_args):
     trajectory_vectors = result_field.apply(trajectory)
     assert trajectory_vectors.components == [C1.coord_system.r * C1.coord_system.theta]
 
+
 # Test field_rebase()
+
 
 def test_basic_field_rebase(test_args):
     field = VectorField(lambda p: p.x + p.y, 0, 0, test_args.C)
@@ -309,7 +373,8 @@ def test_basic_field_rebase(test_args):
     assert point_vector.coordinate_system == test_args.C
 
     # B is located at [1, 2, 0] origin instead of [0, 0, 0] of test_args.C
-    B_inner = test_args.C.coord_system.locate_new('B', test_args.C.coord_system.i + 2 * test_args.C.coord_system.j)
+    B_inner = test_args.C.coord_system.locate_new(
+        'B', test_args.C.coord_system.i + 2 * test_args.C.coord_system.j)
     B = CoordinateSystem(test_args.C.coord_system_type, B_inner)
     field_rebased = field_rebase(field, B)
     assert field_rebased.basis == [B.coord_system.x, B.coord_system.y, B.coord_system.z]
@@ -320,13 +385,15 @@ def test_basic_field_rebase(test_args):
     # After rebase field was extended to 3D space
     assert transformed_point_vector.components == [6, 0, 0]
 
+
 # VectorField invariant does not hold, when applied to some fixed point in space. Use
 # 'field_rebase' to let VectorField know about new coordinate system.
 def test_invariant_field_rebase_and_apply(test_args):
     field = VectorField(lambda p: p.x**2 + 2 * p.y**2, 0, 0, test_args.C)
     assert field.coordinate_system == test_args.C
     point = [1, 2]
-    p1 = test_args.C.coord_system.origin.locate_new('p1', point[0] * test_args.C.coord_system.i + point[1] * test_args.C.coord_system.j)
+    p1 = test_args.C.coord_system.origin.locate_new(
+        'p1', point[0] * test_args.C.coord_system.i + point[1] * test_args.C.coord_system.j)
     p1_coordinates = p1.express_coordinates(test_args.C.coord_system)
     assert p1_coordinates[0] == point[0]
     assert p1_coordinates[1] == point[1]
@@ -334,11 +401,11 @@ def test_invariant_field_rebase_and_apply(test_args):
     point_vector = field.apply(point)
     assert point_vector.components == [9]
 
-    B = coordinates_rotate(test_args.C, pi/4, test_args.C.coord_system.k)
+    B = coordinates_rotate(test_args.C, pi / 4, test_args.C.coord_system.k)
     p1_coordinates_in_b = p1.express_coordinates(B.coord_system)
     assert p1_coordinates_in_b[0] != point[0]
 
-    transformed_point = [ p1_coordinates_in_b[0], p1_coordinates_in_b[1] ]
+    transformed_point = [p1_coordinates_in_b[0], p1_coordinates_in_b[1]]
     transformed_point_vector = field.apply(transformed_point)
     # invariant does not hold if field is not rebased to new coordinate system
     assert transformed_point_vector.components != point_vector.components
@@ -350,6 +417,7 @@ def test_invariant_field_rebase_and_apply(test_args):
     # rotated from the point of view of 'B' coordinate system.
     assert transformed_point_vector.components == [9 * sqrt(2) / 2, -9 * sqrt(2) / 2, 0]
 
+
 # Field is not rebased if no original coordinate system was set.
 def test_no_coord_system_field_rebase(test_args):
     field = VectorField(lambda p: p.x + p.y)
@@ -358,7 +426,8 @@ def test_no_coord_system_field_rebase(test_args):
     point_vector = field.apply(point)
     assert point_vector.components == [3]
 
-    B_inner = test_args.C.coord_system.locate_new('B', test_args.C.coord_system.i + 2 * test_args.C.coord_system.j)
+    B_inner = test_args.C.coord_system.locate_new(
+        'B', test_args.C.coord_system.i + 2 * test_args.C.coord_system.j)
     B = CoordinateSystem(test_args.C.coord_system_type, B_inner)
     field_rebased = field_rebase(field, B)
     assert field_rebased.basis == [B.coord_system.x, B.coord_system.y, B.coord_system.z]
@@ -366,6 +435,7 @@ def test_no_coord_system_field_rebase(test_args):
 
     transformed_point_vector = field_rebased.apply(point)
     assert transformed_point_vector.components == [3]
+
 
 # Field is not rebased if no target coordinate system was set.
 def test_no_target_coord_system_field_rebase(test_args):
@@ -381,7 +451,9 @@ def test_no_target_coord_system_field_rebase(test_args):
     transformed_point_vector = field_rebased.apply(point)
     assert transformed_point_vector.components == [3]
 
+
 # Test non-cartesian coordinate systems
+
 
 def test_cylindrical_field_create(test_args):
     field = VectorField(lambda p: p.x, lambda p: p.y, 0, test_args.C)

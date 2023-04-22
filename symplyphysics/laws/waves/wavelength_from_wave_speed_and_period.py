@@ -1,8 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (
-    units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input_symbols, validate_output_symbol
-)
+from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol)
 
 # Description
 ## Wavelength is the spatial period of a periodic wave — the distance over which the wave's shape repeats.
@@ -20,12 +18,17 @@ oscillation_period = Symbol("oscillation_period", units.time)
 
 law = Eq(wavelength, propagation_speed * oscillation_period)
 
+
 def print() -> str:
     return print_expression(law)
+
 
 @validate_input_symbols(velocity_=propagation_speed, period_=oscillation_period)
 @validate_output_symbol(wavelength)
 def calculate_wavelength(velocity_: Quantity, period_: Quantity) -> Quantity:
     applied_definition = solve(law, wavelength, dict=True)[0][wavelength]
-    result_expr = applied_definition.subs({propagation_speed: velocity_, oscillation_period: period_})
+    result_expr = applied_definition.subs({
+        propagation_speed: velocity_,
+        oscillation_period: period_
+    })
     return expr_to_quantity(result_expr)

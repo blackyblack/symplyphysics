@@ -1,6 +1,12 @@
 from sympy import (Eq, solve, S)
 from symplyphysics import (
-    units, expr_to_quantity, Quantity, Symbol, print_expression, Dimensionless, convert_to,
+    units,
+    expr_to_quantity,
+    Quantity,
+    Symbol,
+    print_expression,
+    Dimensionless,
+    convert_to,
     validate_input_symbols,
 )
 
@@ -17,33 +23,40 @@ from symplyphysics import (
 ## η - neutron reproduction factor
 
 neutrons_per_fission = Symbol("neutrons_per_fission", Dimensionless)
-macroscopic_fuel_fission_cross_section = Symbol("macroscopic_fuel_fission_cross_section", 1 / units.length)
-macroscopic_fuel_absorption_cross_section = Symbol("macroscopic_fuel_absorption_cross_section", 1 / units.length)
+macroscopic_fuel_fission_cross_section = Symbol("macroscopic_fuel_fission_cross_section",
+    1 / units.length)
+macroscopic_fuel_absorption_cross_section = Symbol("macroscopic_fuel_absorption_cross_section",
+    1 / units.length)
 neutron_reproduction_factor = Symbol("neutron_reproduction_factor", Dimensionless)
 
-law = Eq(neutron_reproduction_factor,
-    neutrons_per_fission * macroscopic_fuel_fission_cross_section / macroscopic_fuel_absorption_cross_section)
+law = Eq(
+    neutron_reproduction_factor, neutrons_per_fission * macroscopic_fuel_fission_cross_section /
+    macroscopic_fuel_absorption_cross_section)
+
 
 def print() -> str:
     return print_expression(law)
 
-@validate_input_symbols(
-        neutrons_per_fission_=neutrons_per_fission,
-        macroscopic_fuel_fission_cross_section_=macroscopic_fuel_fission_cross_section,
-        macroscopic_fuel_absorption_cross_section_=macroscopic_fuel_absorption_cross_section)
-def calculate_reproduction_factor(
-    neutrons_per_fission_: float,
+
+@validate_input_symbols(neutrons_per_fission_=neutrons_per_fission,
+    macroscopic_fuel_fission_cross_section_=macroscopic_fuel_fission_cross_section,
+    macroscopic_fuel_absorption_cross_section_=macroscopic_fuel_absorption_cross_section)
+def calculate_reproduction_factor(neutrons_per_fission_: float,
     macroscopic_fuel_fission_cross_section_: Quantity,
     macroscopic_fuel_absorption_cross_section_: Quantity) -> float:
 
     if macroscopic_fuel_fission_cross_section_.scale_factor > macroscopic_fuel_absorption_cross_section_.scale_factor:
-        raise ValueError(f"macroscopic_fuel_fission_cross_section_ ({macroscopic_fuel_fission_cross_section_.scale_factor}) should be <= "
-        f"macroscopic_fuel_absorption_cross_section_ ({macroscopic_fuel_absorption_cross_section_.scale_factor})")
+        raise ValueError(
+            f"macroscopic_fuel_fission_cross_section_ ({macroscopic_fuel_fission_cross_section_.scale_factor}) should be <= "
+            f"macroscopic_fuel_absorption_cross_section_ ({macroscopic_fuel_absorption_cross_section_.scale_factor})"
+        )
 
-    result_factor_expr = solve(law, neutron_reproduction_factor, dict=True)[0][neutron_reproduction_factor]
+    result_factor_expr = solve(law, neutron_reproduction_factor,
+        dict=True)[0][neutron_reproduction_factor]
     result_expr = result_factor_expr.subs({
         neutrons_per_fission: neutrons_per_fission_,
         macroscopic_fuel_fission_cross_section: macroscopic_fuel_fission_cross_section_,
-        macroscopic_fuel_absorption_cross_section: macroscopic_fuel_absorption_cross_section_})
+        macroscopic_fuel_absorption_cross_section: macroscopic_fuel_absorption_cross_section_
+    })
     result_factor = expr_to_quantity(result_expr)
     return convert_to(result_factor, S.One).evalf()

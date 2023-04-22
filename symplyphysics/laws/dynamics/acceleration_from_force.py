@@ -1,8 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (
-    units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input_symbols, validate_output_symbol
-)
+from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol)
 
 # Description
 ## Newton's second law: a = F / m
@@ -13,8 +11,10 @@ acceleration = Symbol("acceleration", units.acceleration)
 
 law = Eq(acceleration, force / mass)
 
+
 def print() -> str:
     return print_expression(law)
+
 
 @validate_input_symbols(mass_=mass, acceleration_=acceleration)
 @validate_output_symbol(force)

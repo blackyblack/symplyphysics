@@ -1,4 +1,5 @@
 class Probability(object):
+
     def __init__(self, value: float = 0):
         self.value = value
 

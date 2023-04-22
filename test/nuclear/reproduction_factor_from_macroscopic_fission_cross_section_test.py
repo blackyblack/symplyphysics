@@ -1,9 +1,12 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
 from symplyphysics import (
-    errors, units, Quantity,
+    errors,
+    units,
+    Quantity,
 )
 from symplyphysics.laws.nuclear import reproduction_factor_from_macroscopic_fission_cross_section as reproduction_factor
+
 
 @fixture
 def test_args():
@@ -16,9 +19,12 @@ def test_args():
     Args = namedtuple("Args", ["v", "Sf", "Sa"])
     return Args(v=neutrons_per_fission, Sf=macro_fission_cross_section, Sa=macro_abs_cross_section)
 
+
 def test_basic_reproduction_factor(test_args):
-    result = reproduction_factor.calculate_reproduction_factor(test_args.v, test_args.Sf, test_args.Sa)
+    result = reproduction_factor.calculate_reproduction_factor(test_args.v, test_args.Sf,
+        test_args.Sa)
     assert result == approx(1.96, 0.01)
+
 
 def test_bad_macroscopic_cross_section(test_args):
     Sb = Quantity(1 * units.coulomb)
