@@ -1,6 +1,12 @@
 from sympy import (Eq, solve, exp, S)
 from symplyphysics import (
-    units, expr_to_quantity, Quantity, Symbol, print_expression, Dimensionless, convert_to,
+    units,
+    expr_to_quantity,
+    Quantity,
+    Symbol,
+    print_expression,
+    Dimensionless,
+    convert_to,
     validate_input_symbols,
 )
 from symplyphysics.core.probability import Probability
@@ -16,25 +22,32 @@ from symplyphysics.core.probability import Probability
 ##   See [geometric buckling](./buckling/geometric_buckling_from_neutron_flux.py) implementation.
 ## τth - neutron Fermi age.
 ##   The Fermi age is related to the distance traveled during moderation, just as the diffusion length is for
-##   thermal neutrons. The Fermi age is the same quantity as the slowing-down length squared (Ls^2). 
+##   thermal neutrons. The Fermi age is the same quantity as the slowing-down length squared (Ls^2).
 ## Pfnl - fast non-leakage probability.
 
 geometric_buckling = Symbol("geometric_buckling", 1 / units.length**2)
 neutron_fermi_age = Symbol("neutron_fermi_age", units.length**2)
-fast_non_leakage_probability = Symbol("fast_non_leakage_probability", Dimensionless)
+fast_non_leakage_probability = Symbol("fast_non_leakage_probability",
+                                      Dimensionless)
 
-law = Eq(fast_non_leakage_probability, exp(-1 * geometric_buckling * neutron_fermi_age))
+law = Eq(fast_non_leakage_probability,
+         exp(-1 * geometric_buckling * neutron_fermi_age))
+
 
 def print() -> str:
     return print_expression(law)
 
-@validate_input_symbols(
-        geometric_buckling_=geometric_buckling,
-        neutron_fermi_age_=neutron_fermi_age)
-def calculate_probability(geometric_buckling_: Quantity, neutron_fermi_age_: Quantity) -> Probability:
-    result_probability_expr = solve(law, fast_non_leakage_probability, dict=True)[0][fast_non_leakage_probability]
+
+@validate_input_symbols(geometric_buckling_=geometric_buckling,
+                        neutron_fermi_age_=neutron_fermi_age)
+def calculate_probability(geometric_buckling_: Quantity,
+                          neutron_fermi_age_: Quantity) -> Probability:
+    result_probability_expr = solve(law,
+                                    fast_non_leakage_probability,
+                                    dict=True)[0][fast_non_leakage_probability]
     result_expr = result_probability_expr.subs({
         geometric_buckling: geometric_buckling_,
-        neutron_fermi_age: neutron_fermi_age_})
+        neutron_fermi_age: neutron_fermi_age_
+    })
     result_factor = expr_to_quantity(result_expr)
     return Probability(convert_to(result_factor, S.One).evalf())

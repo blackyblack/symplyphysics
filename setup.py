@@ -17,14 +17,10 @@ REQUIRES_PYTHON = '>=3.6.0'
 VERSION = '0.0.1'
 
 # What packages are required for this module to be executed?
-REQUIRED = [
-    'sympy'
-]
+REQUIRED = ['sympy']
 
 # What packages are optional?
-EXTRAS = {
-    'plots': ['matplotlib']
-}
+EXTRAS = {'plots': ['matplotlib']}
 
 # The rest you shouldn't have to touch too much :)
 # ------------------------------------------------
@@ -50,7 +46,6 @@ if not VERSION:
 else:
     about['__version__'] = VERSION
 
-
 # Where the magic happens:
 setup(
     name=NAME,
@@ -62,15 +57,15 @@ setup(
     author_email=EMAIL,
     python_requires=REQUIRES_PYTHON,
     url=URL,
-    packages=find_packages(exclude=["tests", "*.tests", "*.tests.*", "tests.*"]),
+    packages=find_packages(
+        exclude=["tests", "*.tests", "*.tests.*", "tests.*"]),
     install_requires=REQUIRED,
     extras_require=EXTRAS,
     include_package_data=True,
     license='MIT',
     classifiers=[
         'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 3',
+        'Programming Language :: Python', 'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy'

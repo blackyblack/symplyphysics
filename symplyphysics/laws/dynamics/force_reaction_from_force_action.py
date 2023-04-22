@@ -1,8 +1,7 @@
 from sympy import (Eq, solve)
-from symplyphysics import (
-    units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input_symbols, validate_output_symbol
-)
+from symplyphysics import (units, expr_to_quantity, Quantity, Symbol,
+                           print_expression, validate_input_symbols,
+                           validate_output_symbol)
 
 # Description
 ## Newton's third law: Fr = -Fa
@@ -15,8 +14,10 @@ force_reaction = Symbol("force_reaction", units.force)
 
 law = Eq(force_reaction, -1 * force_action)
 
+
 def print() -> str:
     return print_expression(law)
+
 
 @validate_input_symbols(force_action_=force_action)
 @validate_output_symbol(force_reaction)

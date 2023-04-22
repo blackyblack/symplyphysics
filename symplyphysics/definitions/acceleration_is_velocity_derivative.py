@@ -1,8 +1,7 @@
 from sympy import (Eq, Derivative)
-from symplyphysics import (
-    units, expr_to_quantity, Quantity, Function, Symbol, print_expression,
-    validate_input_symbols, validate_output_symbol
-)
+from symplyphysics import (units, expr_to_quantity, Quantity, Function, Symbol,
+                           print_expression, validate_input_symbols,
+                           validate_output_symbol)
 
 # Description
 ## Acceleration is the derivative of velocity with respect to time.
@@ -20,12 +19,18 @@ definition = Eq(acceleration(time), Derivative(velocity(time), time))
 
 definition_units_SI = units.meter / units.second**2
 
+
 def print() -> str:
     return print_expression(definition)
 
-@validate_input_symbols(velocity_start_=velocity, velocity_end_=velocity, time_=time)
+
+@validate_input_symbols(velocity_start_=velocity,
+                        velocity_end_=velocity,
+                        time_=time)
 @validate_output_symbol(acceleration)
-def calculate_linear_acceleration(velocity_start_: Quantity, velocity_end_: Quantity, time_: Quantity) -> Quantity:
+def calculate_linear_acceleration(velocity_start_: Quantity,
+                                  velocity_end_: Quantity,
+                                  time_: Quantity) -> Quantity:
     velocity_function_ = time * (velocity_end_ - velocity_start_) / time_
     applied_definition = definition.subs(velocity(time), velocity_function_)
     # calculate acceleration

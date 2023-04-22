@@ -1,11 +1,16 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
 from symplyphysics import (
-    errors, units, Quantity, SI, convert_to,
+    errors,
+    units,
+    Quantity,
+    SI,
+    convert_to,
 )
 from symplyphysics.laws.optics import lens_focus_from_object_and_image as lens_law
 
 #We are having thin lens which images object from 0.4m distance to the same 0.4m distance to image. This is only possible if 0.4 is double focus of this lens, so focus should be 0.2m.
+
 
 @fixture
 def test_args():
@@ -14,11 +19,15 @@ def test_args():
     Args = namedtuple("Args", ["object_distance", "image_distance"])
     return Args(object_distance=object_distance, image_distance=image_distance)
 
+
 def test_basic_focus(test_args):
-    result = lens_law.calculate_focus(test_args.object_distance, test_args.image_distance)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
+    result = lens_law.calculate_focus(test_args.object_distance,
+                                      test_args.image_distance)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension,
+                                                     units.length)
     result_focus = convert_to(result, units.meter).subs(units.meter, 1).evalf(4)
     assert result_focus == approx(0.2, 0.0001)
+
 
 def test_bad_distance(test_args):
     db = Quantity(1 * units.coulomb)

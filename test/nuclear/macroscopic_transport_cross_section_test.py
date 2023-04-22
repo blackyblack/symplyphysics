@@ -1,9 +1,14 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
 from symplyphysics import (
-    errors, units, convert_to, Quantity, SI,
+    errors,
+    units,
+    convert_to,
+    Quantity,
+    SI,
 )
 from symplyphysics.laws.nuclear import macroscopic_transport_cross_section as macro_tr_cs
+
 
 @fixture
 def test_args():
@@ -12,13 +17,19 @@ def test_args():
     # carbon (mass_number = 12) average scattering cosine angle is 0.0555
     average_scattering_angle_cosine = 0.0555
     Args = namedtuple("Args", ["scatter_cs", "u"])
-    return Args(scatter_cs=macroscopic_scattering_cross_section, u=average_scattering_angle_cosine)
+    return Args(scatter_cs=macroscopic_scattering_cross_section,
+                u=average_scattering_angle_cosine)
+
 
 def test_basic_cross_section(test_args):
-    result = macro_tr_cs.calculate_cross_section(test_args.scatter_cs, test_args.u)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length**-1)
-    result_cross_section = convert_to(result, units.centimeter**-1).subs(units.centimeter, 1).evalf(2)
+    result = macro_tr_cs.calculate_cross_section(test_args.scatter_cs,
+                                                 test_args.u)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension,
+                                                     units.length**-1)
+    result_cross_section = convert_to(result, units.centimeter**-1).subs(
+        units.centimeter, 1).evalf(2)
     assert result_cross_section == approx(0.498, 0.01)
+
 
 def test_bad_scattering_cross_section(test_args):
     scatter_csb = Quantity(1 * units.coulomb)

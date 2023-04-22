@@ -1,9 +1,14 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
 from symplyphysics import (
-    errors, units, convert_to, Quantity, SI,
+    errors,
+    units,
+    convert_to,
+    Quantity,
+    SI,
 )
 from symplyphysics.laws.nuclear import diffusion_area_from_diffusion_coefficient as diffusion_area
+
 
 @fixture
 def test_args():
@@ -14,11 +19,15 @@ def test_args():
     Args = namedtuple("Args", ["Sa", "D"])
     return Args(Sa=macro_abs_cross_section, D=diffusion_coefficient)
 
+
 def test_basic_diffusion_length(test_args):
     result = diffusion_area.calculate_diffusion_area(test_args.D, test_args.Sa)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length**2)
-    result_diffusion = convert_to(result, units.centimeter**2).subs(units.centimeter, 1).evalf(2)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension,
+                                                     units.length**2)
+    result_diffusion = convert_to(result, units.centimeter**2).subs(
+        units.centimeter, 1).evalf(2)
     assert result_diffusion == approx(2.54**2, 0.01)
+
 
 def test_bad_diffusion_coefficient(test_args):
     Db = Quantity(1 * units.coulomb)
@@ -26,6 +35,7 @@ def test_bad_diffusion_coefficient(test_args):
         diffusion_area.calculate_diffusion_area(Db, test_args.Sa)
     with raises(TypeError):
         diffusion_area.calculate_diffusion_area(100, test_args.Sa)
+
 
 def test_bad_macroscopic_cross_section(test_args):
     Sb = Quantity(1 * units.coulomb)

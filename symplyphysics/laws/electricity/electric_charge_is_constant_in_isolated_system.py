@@ -1,8 +1,7 @@
 from sympy import (Eq, solve)
-from symplyphysics import (
-    units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input_symbols, validate_output_symbol
-)
+from symplyphysics import (units, expr_to_quantity, Quantity, Symbol,
+                           print_expression, validate_input_symbols,
+                           validate_output_symbol)
 
 # Description
 ## Q_after = Q_before
@@ -15,12 +14,14 @@ charge_after = Symbol("charge_after", units.charge)
 
 law = Eq(charge_after, charge_before)
 
+
 def print() -> str:
     return print_expression(law)
+
 
 @validate_input_symbols(charge_before_=charge_before)
 @validate_output_symbol(charge_after)
 def calculate_charge_after(charge_before_: Quantity) -> Quantity:
-    solved = solve(law, charge_after, dict=True)[0][charge_after]    
+    solved = solve(law, charge_after, dict=True)[0][charge_after]
     result_expr = solved.subs(charge_before, charge_before_)
     return expr_to_quantity(result_expr)

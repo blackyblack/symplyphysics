@@ -1,7 +1,11 @@
 import numbers
 from sympy import (Eq, solve, symbols, cos)
 from symplyphysics import (
-    expr_to_quantity, Quantity, Symbol, print_expression, angle_type,
+    expr_to_quantity,
+    Quantity,
+    Symbol,
+    print_expression,
+    angle_type,
     validate_input_symbols,
 )
 from symplyphysics.core.quantity_decorator import validate_output_same
@@ -21,14 +25,21 @@ projection = symbols("projection")
 
 law = Eq(projection, vector_length * cos(vector_angle))
 
+
 def print() -> str:
     return print_expression(law)
 
+
 @validate_input_symbols(angle_=vector_angle)
 @validate_output_same("vector_length_")
-def calculate_projection(vector_length_: Quantity, angle_: Quantity | float) -> Quantity:
+def calculate_projection(vector_length_: Quantity,
+                         angle_: Quantity | float) -> Quantity:
     result_projection_expr = solve(law, projection, dict=True)[0][projection]
     #HACK: sympy angles are always in radians
-    angle_radians = angle_ if isinstance(angle_, numbers.Number) else angle_.scale_factor
-    result_expr = result_projection_expr.subs({vector_length: vector_length_, vector_angle: angle_radians})
+    angle_radians = angle_ if isinstance(
+        angle_, numbers.Number) else angle_.scale_factor
+    result_expr = result_projection_expr.subs({
+        vector_length: vector_length_,
+        vector_angle: angle_radians
+    })
     return expr_to_quantity(result_expr)

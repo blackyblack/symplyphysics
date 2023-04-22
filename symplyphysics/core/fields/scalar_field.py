@@ -10,7 +10,8 @@ from .field_point import FieldPoint
 # converts expression C.x + C.y to lambda p: p.x + p.y
 # If coordinate_system is not set, argument is returned as is, without conversion to lambda.
 # Can contain value instead of SymPy Vector, eg 0.5.
-def sympy_expression_to_field_function(sympy_vector_: Any, coordinate_system: CoordinateSystem=None) -> Any:
+def sympy_expression_to_field_function(
+        sympy_vector_: Any, coordinate_system: CoordinateSystem = None) -> Any:
     def _(point_: FieldPoint):
         base_scalars = coordinate_system.coord_system.base_scalars()
         # make a copy of expression
@@ -36,16 +37,20 @@ class ScalarField:
     #      to maintain ScalarField invariant.
     _coordinate_system: CoordinateSystem = None
 
-    def __init__(self, point_function=0, coordinate_system: CoordinateSystem=None):
+    def __init__(self,
+                 point_function=0,
+                 coordinate_system: CoordinateSystem = None):
         self._point_function = point_function
         self._coordinate_system = coordinate_system
 
     def __call__(self, point_: FieldPoint):
-        return self._point_function(point_) if callable(self._point_function) else self._point_function
+        return self._point_function(point_) if callable(
+            self._point_function) else self._point_function
 
     @property
     def basis(self) -> List[Any]:
-        return list(self.coordinate_system.coord_system.base_scalars()) if self.coordinate_system is not None else []
+        return list(self.coordinate_system.coord_system.base_scalars()
+                   ) if self.coordinate_system is not None else []
 
     @property
     def coordinate_system(self) -> CoordinateSystem:
@@ -70,34 +75,51 @@ class ScalarField:
     def apply_to_basis(self) -> Any:
         return self.apply(self.basis)
 
+
 # Convert field coordinate system to new basis and construct new field.
 # Scalar field invariant (coordinate system independence) should hold.
-def field_rebase(field_: ScalarField, coordinate_system: CoordinateSystem=None) -> ScalarField:
+def field_rebase(field_: ScalarField,
+                 coordinate_system: CoordinateSystem = None) -> ScalarField:
     # Simply set new coordinate system if field cannot be rebased
     if coordinate_system is None or field_.coordinate_system is None:
-        field_function = 0 if len(field_.components) == 0 else field_.components[0]
+        field_function = 0 if len(
+            field_.components) == 0 else field_.components[0]
         return ScalarField(field_function, coordinate_system)
     if coordinate_system.coord_system is None or field_.coordinate_system.coord_system is None:
-        field_function = 0 if len(field_.components) == 0 else field_.components[0]
+        field_function = 0 if len(
+            field_.components) == 0 else field_.components[0]
         return ScalarField(field_function, coordinate_system)
     return _extended_express(field_, coordinate_system)
 
-def _extended_express(field_: ScalarField, system_to: CoordinateSystem=None):
+
+def _extended_express(field_: ScalarField, system_to: CoordinateSystem = None):
     field_space_sympy = field_.apply_to_basis()
     if field_.coordinate_system.coord_system_type != system_to.coord_system_type:
         # This is a reverse transformation, if compared with Vector._extended_express()
-        new_scalars = list(system_to.transformation_to_system(field_.coordinate_system.coord_system_type))
-        for i, scalar in enumerate(field_.coordinate_system.coord_system.base_scalars()):
+        new_scalars = list(
+            system_to.transformation_to_system(
+                field_.coordinate_system.coord_system_type))
+        for i, scalar in enumerate(
+                field_.coordinate_system.coord_system.base_scalars()):
             field_space_sympy = field_space_sympy.subs(scalar, new_scalars[i])
     # We do not want to maintain own field transformation functions, so
     # we convert our field to SymPy format, transform it and convert back to ScalarField.
-    transformed_vector_sympy = express(field_space_sympy, system_to.coord_system, None, variables=True)
+    transformed_vector_sympy = express(field_space_sympy,
+                                       system_to.coord_system,
+                                       None,
+                                       variables=True)
     return field_from_sympy_vector(transformed_vector_sympy, system_to)
+
 
 # Helpers to support SymPy field manipulations
 
+
 # Constructs new ScalarField from SymPy expression using 'sympy_expression_to_field_function'.
-def field_from_sympy_vector(sympy_vector_, coordinate_system: CoordinateSystem=None):
-    return ScalarField(sympy_expression_to_field_function(sympy_vector_, coordinate_system), coordinate_system)
+def field_from_sympy_vector(sympy_vector_,
+                            coordinate_system: CoordinateSystem = None):
+    return ScalarField(
+        sympy_expression_to_field_function(sympy_vector_, coordinate_system),
+        coordinate_system)
+
 
 # sympy_vector_from_field is identical to field.apply_to_basis()

@@ -1,6 +1,12 @@
 from sympy import (Eq, solve, S)
 from symplyphysics import (
-    units, expr_to_quantity, Quantity, Symbol, print_expression, Dimensionless, convert_to,
+    units,
+    expr_to_quantity,
+    Quantity,
+    Symbol,
+    print_expression,
+    Dimensionless,
+    convert_to,
     validate_input_symbols,
 )
 from symplyphysics.core.probability import Probability
@@ -17,29 +23,41 @@ from symplyphysics.core.probability import Probability
 ## Σa_total - macroscopic absorption cross-section of the fuel, moderator, cladding, etc, combined.
 ## f - thermal neutron utilisation factor
 
-macroscopic_fuel_absorption_cross_section = Symbol("macroscopic_fuel_absorption_cross_section", 1 / units.length)
-macroscopic_total_absorption_cross_section = Symbol("macroscopic_total_absorption_cross_section", 1 / units.length)
+macroscopic_fuel_absorption_cross_section = Symbol(
+    "macroscopic_fuel_absorption_cross_section", 1 / units.length)
+macroscopic_total_absorption_cross_section = Symbol(
+    "macroscopic_total_absorption_cross_section", 1 / units.length)
 thermal_utilisation_factor = Symbol("thermal_utilisation_factor", Dimensionless)
 
-law = Eq(thermal_utilisation_factor,
-    macroscopic_fuel_absorption_cross_section / macroscopic_total_absorption_cross_section)
+law = Eq(
+    thermal_utilisation_factor, macroscopic_fuel_absorption_cross_section /
+    macroscopic_total_absorption_cross_section)
+
 
 def print() -> str:
     return print_expression(law)
 
-@validate_input_symbols(
-    macroscopic_fuel_absorption_cross_section_=macroscopic_fuel_absorption_cross_section,
-    macroscopic_total_absorption_cross_section_=macroscopic_total_absorption_cross_section)
-def calculate_utilisation_factor(
-    macroscopic_fuel_absorption_cross_section_: Quantity,
-    macroscopic_total_absorption_cross_section_: Quantity) -> Probability:
-    if macroscopic_fuel_absorption_cross_section_.scale_factor > macroscopic_total_absorption_cross_section_.scale_factor:
-        raise ValueError(f"macroscopic_fuel_absorption_cross_section_ ({macroscopic_fuel_absorption_cross_section_.scale_factor}) should be <= "
-        f"macroscopic_total_absorption_cross_section_ ({macroscopic_total_absorption_cross_section_.scale_factor})")
 
-    result_factor_expr = solve(law, thermal_utilisation_factor, dict=True)[0][thermal_utilisation_factor]
+@validate_input_symbols(macroscopic_fuel_absorption_cross_section_=
+                        macroscopic_fuel_absorption_cross_section,
+                        macroscopic_total_absorption_cross_section_=
+                        macroscopic_total_absorption_cross_section)
+def calculate_utilisation_factor(
+        macroscopic_fuel_absorption_cross_section_: Quantity,
+        macroscopic_total_absorption_cross_section_: Quantity) -> Probability:
+    if macroscopic_fuel_absorption_cross_section_.scale_factor > macroscopic_total_absorption_cross_section_.scale_factor:
+        raise ValueError(
+            f"macroscopic_fuel_absorption_cross_section_ ({macroscopic_fuel_absorption_cross_section_.scale_factor}) should be <= "
+            f"macroscopic_total_absorption_cross_section_ ({macroscopic_total_absorption_cross_section_.scale_factor})"
+        )
+
+    result_factor_expr = solve(law, thermal_utilisation_factor,
+                               dict=True)[0][thermal_utilisation_factor]
     result_expr = result_factor_expr.subs({
-        macroscopic_fuel_absorption_cross_section: macroscopic_fuel_absorption_cross_section_,
-        macroscopic_total_absorption_cross_section: macroscopic_total_absorption_cross_section_})
+        macroscopic_fuel_absorption_cross_section:
+            macroscopic_fuel_absorption_cross_section_,
+        macroscopic_total_absorption_cross_section:
+            macroscopic_total_absorption_cross_section_
+    })
     result_factor = expr_to_quantity(result_expr)
     return Probability(convert_to(result_factor, S.One).evalf())

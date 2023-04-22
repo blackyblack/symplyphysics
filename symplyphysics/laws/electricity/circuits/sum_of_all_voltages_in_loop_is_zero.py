@@ -1,7 +1,10 @@
 from typing import List
 from sympy import (Eq, solve, symbols, Idx, IndexedBase, Sum)
 from symplyphysics import (
-    units, expr_to_quantity, Quantity, print_expression,
+    units,
+    expr_to_quantity,
+    Quantity,
+    print_expression,
 )
 from symplyphysics.core.quantity_decorator import assert_equivalent_dimension, validate_input, validate_output
 from symplyphysics.core.symbols.quantities import Quantity
@@ -20,8 +23,10 @@ i = symbols("i", cls=Idx)
 
 law = Eq(Sum(voltage[i], (i, 1, voltages_total)), 0)
 
+
 def print() -> str:
     return print_expression(law)
+
 
 @validate_input(voltage_in=units.voltage)
 @validate_output(units.voltage)
@@ -31,10 +36,13 @@ def calculate_voltage(voltage_in: Quantity) -> Quantity:
     result_expr = solved.subs(voltage[1], voltage_in)
     return expr_to_quantity(result_expr)
 
+
 @validate_output(units.voltage)
 def calculate_voltage_from_array(voltages: List[Quantity]) -> Quantity:
     for idx, c in enumerate(voltages):
-        assert_equivalent_dimension(c, "validate_input", f"voltages[{idx}]", "calculate_voltage_from_array", units.voltage)
+        assert_equivalent_dimension(c, "validate_input", f"voltages[{idx}]",
+                                    "calculate_voltage_from_array",
+                                    units.voltage)
     voltages_law = law.subs(voltages_total, len(voltages) + 1).doit()
     unknown_voltage = voltage[len(voltages) + 1]
     solved = solve(voltages_law, unknown_voltage, dict=True)[0][unknown_voltage]
