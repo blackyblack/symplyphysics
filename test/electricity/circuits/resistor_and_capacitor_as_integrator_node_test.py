@@ -25,10 +25,9 @@ def test_args():
 
 
 def test_basic_voltage(test_args):
-    result = rc_node.calculate_capacitor_voltage(test_args.V0, test_args.C,
-                                                 test_args.R, test_args.Time)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension,
-                                                     units.voltage)
+    result = rc_node.calculate_capacitor_voltage(test_args.V0, test_args.C, test_args.R,
+        test_args.Time)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.voltage)
     result_voltage = convert_to(result, units.volt).subs(units.volt, 1).evalf(2)
     assert result_voltage == approx(1.89, 0.01)
 
@@ -36,38 +35,30 @@ def test_basic_voltage(test_args):
 def test_bad_voltage(test_args):
     Vb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
-        rc_node.calculate_capacitor_voltage(Vb, test_args.C, test_args.R,
-                                            test_args.Time)
+        rc_node.calculate_capacitor_voltage(Vb, test_args.C, test_args.R, test_args.Time)
     with raises(TypeError):
-        rc_node.calculate_capacitor_voltage(100, test_args.C, test_args.R,
-                                            test_args.Time)
+        rc_node.calculate_capacitor_voltage(100, test_args.C, test_args.R, test_args.Time)
 
 
 def test_bad_capacity(test_args):
     Cb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
-        rc_node.calculate_capacitor_voltage(test_args.V0, Cb, test_args.R,
-                                            test_args.Time)
+        rc_node.calculate_capacitor_voltage(test_args.V0, Cb, test_args.R, test_args.Time)
     with raises(TypeError):
-        rc_node.calculate_capacitor_voltage(test_args.V0, 100, test_args.R,
-                                            test_args.Time)
+        rc_node.calculate_capacitor_voltage(test_args.V0, 100, test_args.R, test_args.Time)
 
 
 def test_bad_resistance(test_args):
     Rb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
-        rc_node.calculate_capacitor_voltage(test_args.V0, test_args.C, Rb,
-                                            test_args.Time)
+        rc_node.calculate_capacitor_voltage(test_args.V0, test_args.C, Rb, test_args.Time)
     with raises(TypeError):
-        rc_node.calculate_capacitor_voltage(test_args.V0, test_args.C, 100,
-                                            test_args.Time)
+        rc_node.calculate_capacitor_voltage(test_args.V0, test_args.C, 100, test_args.Time)
 
 
 def test_bad_time(test_args):
     Tb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
-        rc_node.calculate_capacitor_voltage(test_args.V0, test_args.C,
-                                            test_args.R, Tb)
+        rc_node.calculate_capacitor_voltage(test_args.V0, test_args.C, test_args.R, Tb)
     with raises(TypeError):
-        rc_node.calculate_capacitor_voltage(test_args.V0, test_args.C,
-                                            test_args.R, 100)
+        rc_node.calculate_capacitor_voltage(test_args.V0, test_args.C, test_args.R, 100)

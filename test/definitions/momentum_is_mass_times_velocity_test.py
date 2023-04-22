@@ -20,12 +20,10 @@ def test_args():
 
 def test_basic_momentum(test_args):
     result = momentum_def.calculate_momentum(test_args.m, test_args.v)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension,
-                                                     units.momentum)
-    result_momentum = convert_to(result, momentum_def.definition_units_SI).subs(
-        {
-            units.kilogram * units.meter / units.second: 1
-        }).evalf(2)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.momentum)
+    result_momentum = convert_to(result, momentum_def.definition_units_SI).subs({
+        units.kilogram * units.meter / units.second: 1
+    }).evalf(2)
     assert result_momentum == approx(5.0, 0.001)
 
 

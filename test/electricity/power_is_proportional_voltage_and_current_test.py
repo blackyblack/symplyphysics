@@ -21,8 +21,7 @@ def test_args():
 
 def test_basic_power(test_args):
     result = power_law.calculate_power(test_args.I, test_args.U)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension,
-                                                     units.power)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.power)
     result_current = convert_to(result, units.watt).subs(units.watt, 1).evalf(2)
     assert result_current == approx(4.5, 0.01)
 

@@ -1,7 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol,
-                           print_expression, validate_input_symbols,
-                           validate_output_symbol)
+from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol)
 
 # Description
 ## Wavelength is the spatial period of a periodic wave — the distance over which the wave's shape repeats.

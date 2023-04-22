@@ -37,29 +37,24 @@ circulation, field, surface = symbols("circulation field surface")
 field_rotor = symbols("field_rotor")
 # surface_element (dS) is surface derivative by two parameters
 surface_element, surface_element_by_parameter1, surface_element_by_parameter2 = symbols(
-    "surface_element surface_element_by_parameter1 surface_element_by_parameter2"
-)
-parameter1, parameter1_from, parameter1_to = symbols(
-    "parameter1 parameter1_from parameter1_to")
-parameter2, parameter2_from, parameter2_to = symbols(
-    "parameter2 parameter2_from parameter2_to")
+    "surface_element surface_element_by_parameter1 surface_element_by_parameter2")
+parameter1, parameter1_from, parameter1_to = symbols("parameter1 parameter1_from parameter1_to")
+parameter2, parameter2_from, parameter2_to = symbols("parameter2 parameter2_from parameter2_to")
 
 # field_rotor, surface_element_by_parameter1, surface_element_by_parameter2, surface_element - should be evaluated before passing to definition
 # see calculate_circulation() for an example
 field_rotor_definition = Eq(field_rotor, Curl(field))
 surface_element_by_parameter1_definition = Eq(surface_element_by_parameter1,
-                                              Derivative(surface, parameter1))
+    Derivative(surface, parameter1))
 surface_element_by_parameter2_definition = Eq(surface_element_by_parameter2,
-                                              Derivative(surface, parameter2))
+    Derivative(surface, parameter2))
 surface_element_definition = Eq(surface_element,
-                                Cross(surface_element_by_parameter1,
-                                      surface_element_by_parameter2),
-                                evaluate=False)
+    Cross(surface_element_by_parameter1, surface_element_by_parameter2),
+    evaluate=False)
 law = Eq(
     circulation,
-    Integral(Dot(field_rotor,
-                 surface_element), (parameter1, parameter1_from, parameter1_to),
-             (parameter2, parameter2_from, parameter2_to)))
+    Integral(Dot(field_rotor, surface_element), (parameter1, parameter1_from, parameter1_to),
+    (parameter2, parameter2_from, parameter2_to)))
 
 
 def print() -> str:
@@ -68,18 +63,15 @@ def print() -> str:
 
 # field_ should be VectorField
 # surface_ should be array with projections to coordinates, eg [parameter1 * cos(parameter2), parameter1 * sin(parameter2)]
-def calculate_circulation(field_: VectorField, surface_: List, parameter1_from_,
-                          parameter1_to_, parameter2_from_, parameter2_to_):
+def calculate_circulation(field_: VectorField, surface_: List, parameter1_from_, parameter1_to_,
+    parameter2_from_, parameter2_to_):
 
     field_space = sympy_vector_from_field(field_)
-    field_rotor_sympy = field_rotor_definition.rhs.subs(field,
-                                                        field_space).doit()
-    field_rotor_applied = field_from_sympy_vector(field_rotor_sympy,
-                                                  field_.coordinate_system)
+    field_rotor_sympy = field_rotor_definition.rhs.subs(field, field_space).doit()
+    field_rotor_applied = field_from_sympy_vector(field_rotor_sympy, field_.coordinate_system)
     field_applied = field_rotor_applied.apply(surface_)
     field_as_vector = sympy_vector_from_vector(field_applied)
-    surface_sympy_vector = sympy_vector_from_vector(
-        Vector(surface_, field_.coordinate_system))
+    surface_sympy_vector = sympy_vector_from_vector(Vector(surface_, field_.coordinate_system))
     surface_element_x = surface_element_by_parameter1_definition.rhs.subs(
         surface, surface_sympy_vector).doit()
     surface_element_y = surface_element_by_parameter2_definition.rhs.subs(

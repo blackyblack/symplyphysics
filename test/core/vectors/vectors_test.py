@@ -38,23 +38,20 @@ def test_empty_vector():
 
 
 def test_basic_sympy_to_array_conversion(test_args):
-    vector = vector_from_sympy_vector(
-        test_args.C.coord_system.i + 2 * test_args.C.coord_system.j,
+    vector = vector_from_sympy_vector(test_args.C.coord_system.i + 2 * test_args.C.coord_system.j,
         test_args.C)
     assert vector.components == [1, 2, 0]
     assert vector.coordinate_system == test_args.C
 
 
 def test_order_sympy_to_array_conversion(test_args):
-    vector = vector_from_sympy_vector(
-        2 * test_args.C.coord_system.j + test_args.C.coord_system.i,
+    vector = vector_from_sympy_vector(2 * test_args.C.coord_system.j + test_args.C.coord_system.i,
         test_args.C)
     assert vector.components == [1, 2, 0]
 
 
 def test_skip_dimension_sympy_to_array_conversion(test_args):
-    vector = vector_from_sympy_vector(
-        test_args.C.coord_system.i + 2 * test_args.C.coord_system.k,
+    vector = vector_from_sympy_vector(test_args.C.coord_system.i + 2 * test_args.C.coord_system.k,
         test_args.C)
     assert vector.components == [1, 0, 2]
 
@@ -76,16 +73,14 @@ def test_only_scalar_sympy_to_array_conversion(test_args):
 
 def test_free_variable_sympy_to_array_conversion(test_args):
     x1 = symbols("x1")
-    vector = vector_from_sympy_vector(test_args.C.coord_system.i * x1,
-                                      test_args.C)
+    vector = vector_from_sympy_vector(test_args.C.coord_system.i * x1, test_args.C)
     assert vector.components == [x1, 0, 0]
     assert vector.coordinate_system == test_args.C
 
 
 def test_non_cartesian_array_to_sympy_conversion():
     C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
-    vector = vector_from_sympy_vector(C1.coord_system.i + 2 * C1.coord_system.j,
-                                      C1)
+    vector = vector_from_sympy_vector(C1.coord_system.i + 2 * C1.coord_system.j, C1)
     assert vector.components == [1, 2, 0]
     assert vector.coordinate_system == C1
 
@@ -97,19 +92,14 @@ def test_rotate_coordinates_array_to_sympy_conversion(test_args):
     theta = symbols("theta")
     B = coordinates_rotate(test_args.C, theta, test_args.C.coord_system.k)
     sympy_transformed_vector = express(sympy_vector, B.coord_system)
-    assert sympy_transformed_vector == (
-        (sin(theta) + cos(theta)) * B.coord_system.i +
+    assert sympy_transformed_vector == ((sin(theta) + cos(theta)) * B.coord_system.i +
         (-sin(theta) + cos(theta)) * B.coord_system.j)
     transformed_vector = vector_from_sympy_vector(sympy_transformed_vector, B)
-    assert transformed_vector.components == [
-        sin(theta) + cos(theta), -sin(theta) + cos(theta), 0
-    ]
+    assert transformed_vector.components == [sin(theta) + cos(theta), -sin(theta) + cos(theta), 0]
     assert transformed_vector.coordinate_system == B
     # Do the same via vector_rebase
     vector_rebased = vector_rebase(vector, B)
-    assert vector_rebased.components == [
-        sin(theta) + cos(theta), -sin(theta) + cos(theta), 0
-    ]
+    assert vector_rebased.components == [sin(theta) + cos(theta), -sin(theta) + cos(theta), 0]
 
 
 # Test sympy_vector_from_vector()
@@ -118,12 +108,10 @@ def test_rotate_coordinates_array_to_sympy_conversion(test_args):
 def test_multiple_coord_systems_sympy_to_array_conversion(test_args):
     C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
     with raises(TypeError):
-        vector_from_sympy_vector(
-            test_args.C.coord_system.i + 2 * C1.coord_system.k, test_args.C)
+        vector_from_sympy_vector(test_args.C.coord_system.i + 2 * C1.coord_system.k, test_args.C)
     with raises(TypeError):
         vector_from_sympy_vector(
-            test_args.C.coord_system.i +
-            C1.coord_system.r * test_args.C.coord_system.k, C1)
+            test_args.C.coord_system.i + C1.coord_system.r * test_args.C.coord_system.k, C1)
 
 
 def test_basic_array_to_sympy_conversion(test_args):
@@ -165,14 +153,12 @@ def test_rotate_coordinates_sympy_to_array_conversion(test_args):
     sympy_vector = sympy_vector_from_vector(Vector([1, 2], B))
     assert sympy_vector == B.coord_system.i + 2 * B.coord_system.j
     transformed_vector = express(sympy_vector, test_args.C.coord_system)
-    assert transformed_vector == (
-        (-2 * sin(theta) + cos(theta)) * test_args.C.coord_system.i +
+    assert transformed_vector == ((-2 * sin(theta) + cos(theta)) * test_args.C.coord_system.i +
         (sin(theta) + 2 * cos(theta)) * test_args.C.coord_system.j)
     # Do the same via vector_rebase
     vector_rebased = vector_rebase(Vector([1, 2], B), test_args.C)
     assert vector_rebased.components == [
-        -2 * sin(theta) + cos(theta),
-        sin(theta) + 2 * cos(theta), 0
+        -2 * sin(theta) + cos(theta), sin(theta) + 2 * cos(theta), 0
     ]
 
 
@@ -180,8 +166,7 @@ def test_rotate_coordinates_sympy_to_array_conversion(test_args):
 
 
 def test_basic_vector_rebase(test_args):
-    vector = Vector([test_args.C.coord_system.x, test_args.C.coord_system.y],
-                    test_args.C)
+    vector = Vector([test_args.C.coord_system.x, test_args.C.coord_system.y], test_args.C)
 
     # B is located at [1, 2] origin instead of [0, 0] of test_args.C
     B_inner = test_args.C.coord_system.locate_new(
@@ -191,9 +176,7 @@ def test_basic_vector_rebase(test_args):
     assert vector_rebased.coordinate_system == B
     # Original field is not changed
     assert vector.coordinate_system == test_args.C
-    assert vector_rebased.components == [
-        B.coord_system.x + 1, B.coord_system.y + 2, 0
-    ]
+    assert vector_rebased.components == [B.coord_system.x + 1, B.coord_system.y + 2, 0]
 
 
 # Simple numbers in vector are not scalars - they cannot be properly
@@ -238,21 +221,16 @@ def test_no_coord_system_vector_rebase(test_args):
     B = CoordinateSystem(test_args.C.coord_system_type, B_inner)
     vector_rebased = vector_rebase(vector, B)
     assert vector_rebased.coordinate_system == B
-    assert vector_rebased.components == [
-        test_args.C.coord_system.x, test_args.C.coord_system.y
-    ]
+    assert vector_rebased.components == [test_args.C.coord_system.x, test_args.C.coord_system.y]
 
 
 # Vector is not rebased if no target coordinate system was set.
 def test_no_target_coord_system_vector_rebase(test_args):
-    vector = Vector([test_args.C.coord_system.x, test_args.C.coord_system.y],
-                    test_args.C)
+    vector = Vector([test_args.C.coord_system.x, test_args.C.coord_system.y], test_args.C)
     assert vector.coordinate_system == test_args.C
     vector_rebased = vector_rebase(vector, None)
     assert vector_rebased.coordinate_system == None
-    assert vector_rebased.components == [
-        test_args.C.coord_system.x, test_args.C.coord_system.y
-    ]
+    assert vector_rebased.components == [test_args.C.coord_system.x, test_args.C.coord_system.y]
 
 
 # Rotation does not require vector defined with base scalars.
@@ -260,8 +238,7 @@ def test_rotate_vector_rebase(test_args):
     vector = Vector([1, 2], test_args.C)
     point = [1, 2]
     p1 = test_args.C.coord_system.origin.locate_new(
-        'p1', point[0] * test_args.C.coord_system.i +
-        point[1] * test_args.C.coord_system.j)
+        'p1', point[0] * test_args.C.coord_system.i + point[1] * test_args.C.coord_system.j)
     p1_coordinates = p1.express_coordinates(test_args.C.coord_system)
     assert p1_coordinates[0] == point[0]
     assert p1_coordinates[1] == point[1]

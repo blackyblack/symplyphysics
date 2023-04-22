@@ -20,10 +20,9 @@ def test_args():
 
 def test_basic_cross_section(test_args):
     result = macro_cs.calculate_cross_section(test_args.y)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension,
-                                                     units.length**-1)
-    result_cross_section = convert_to(result, units.centimeter**-1).subs(
-        units.centimeter, 1).evalf(2)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length**-1)
+    result_cross_section = convert_to(result, units.centimeter**-1).subs(units.centimeter,
+        1).evalf(2)
     # boron carbide macroscopic cross-section is 84.3 cm^-1
     assert result_cross_section == approx(84.3, 0.1)
 

@@ -41,5 +41,4 @@ assert angle_applied >= -pi / 2
 
 extreme_angle_degrees = angle_applied.evalf(3) / math.pi * 180
 print(
-    f"For full internal reflection angle should be above {extreme_angle_degrees.round(3)} degrees"
-)
+    f"For full internal reflection angle should be above {extreme_angle_degrees.round(3)} degrees")

@@ -20,22 +20,22 @@ def test_args():
     macro_scatter_cross_section = Quantity(2820 / units.centimeter)
     Args = namedtuple("Args", ["Na", "Ieff", "Let", "Ss"])
     return Args(Na=atomic_number_density_abs,
-                Ieff=resonance_integral,
-                Let=average_lethargy_change,
-                Ss=macro_scatter_cross_section)
+        Ieff=resonance_integral,
+        Let=average_lethargy_change,
+        Ss=macro_scatter_cross_section)
 
 
 def test_basic_resonance_escape_factor(test_args):
-    result = resonance_escape.calculate_resonance_escape_probability(
-        test_args.Na, test_args.Ieff, test_args.Let, test_args.Ss)
+    result = resonance_escape.calculate_resonance_escape_probability(test_args.Na, test_args.Ieff,
+        test_args.Let, test_args.Ss)
     assert result.value == approx(0.955, 0.01)
 
 
 def test_bad_atomic_number_density(test_args):
     Nab = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        resonance_escape.calculate_resonance_escape_probability(
-            Nab, test_args.Ieff, test_args.Let, test_args.Ss)
+        resonance_escape.calculate_resonance_escape_probability(Nab, test_args.Ieff, test_args.Let,
+            test_args.Ss)
     with raises(TypeError):
-        resonance_escape.calculate_resonance_escape_probability(
-            100, test_args.Ieff, test_args.Let, test_args.Ss)
+        resonance_escape.calculate_resonance_escape_probability(100, test_args.Ieff, test_args.Let,
+            test_args.Ss)

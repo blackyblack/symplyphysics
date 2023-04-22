@@ -1,7 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol,
-                           print_expression, validate_input_symbols,
-                           validate_output_symbol)
+from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol)
 
 # Description
 ## Accelerated velocity is time dependent and increases with time if acceleration is co-directed with velocity and decreases if they are counter-directed.
@@ -25,12 +24,10 @@ def print() -> str:
     return print_expression(law)
 
 
-@validate_input_symbols(initial_velocity_=initial_velocity,
-                        acceleration_=acceleration,
-                        time_=time)
+@validate_input_symbols(initial_velocity_=initial_velocity, acceleration_=acceleration, time_=time)
 @validate_output_symbol(velocity)
 def calculate_velocity(initial_velocity_: Quantity, acceleration_: Quantity,
-                       time_: Quantity) -> Quantity:
+    time_: Quantity) -> Quantity:
     result_velocity_expression = solve(law, velocity, dict=True)[0][velocity]
     result_expr = result_velocity_expression.subs({
         initial_velocity: initial_velocity_,

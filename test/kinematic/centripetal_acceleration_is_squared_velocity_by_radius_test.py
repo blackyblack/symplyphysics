@@ -22,33 +22,27 @@ def test_args():
 
 
 def test_basic_acceleration(test_args):
-    result = centripetal_acceleration_def.calculate_acceleration(
-        test_args.lin_velocity, test_args.curve_radius)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension,
-                                                     units.acceleration)
-    result_acceleration = convert_to(result,
-                                     units.meter / units.second**2).subs({
-                                         units.meter: 1,
-                                         units.second: 1
-                                     }).evalf(2)
+    result = centripetal_acceleration_def.calculate_acceleration(test_args.lin_velocity,
+        test_args.curve_radius)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.acceleration)
+    result_acceleration = convert_to(result, units.meter / units.second**2).subs({
+        units.meter: 1,
+        units.second: 1
+    }).evalf(2)
     assert result_acceleration == approx(200.0, 0.01)
 
 
 def test_bad_velocity(test_args):
     vb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        centripetal_acceleration_def.calculate_acceleration(
-            vb, test_args.curve_radius)
+        centripetal_acceleration_def.calculate_acceleration(vb, test_args.curve_radius)
     with raises(TypeError):
-        centripetal_acceleration_def.calculate_acceleration(
-            100, test_args.curve_radius)
+        centripetal_acceleration_def.calculate_acceleration(100, test_args.curve_radius)
 
 
 def test_bad_radius(test_args):
     rb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        centripetal_acceleration_def.calculate_acceleration(
-            test_args.lin_velocity, rb)
+        centripetal_acceleration_def.calculate_acceleration(test_args.lin_velocity, rb)
     with raises(TypeError):
-        centripetal_acceleration_def.calculate_acceleration(
-            test_args.lin_velocity, 100)
+        centripetal_acceleration_def.calculate_acceleration(test_args.lin_velocity, 100)

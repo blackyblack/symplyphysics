@@ -25,12 +25,9 @@ def test_args():
 
 
 def test_basic_force(test_args):
-    result = gravity_law.calculate_force(test_args.m1, test_args.m2,
-                                         test_args.R)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension,
-                                                     units.force)
-    result_force = convert_to(result, units.newton).subs(units.newton,
-                                                         1).evalf(7)
+    result = gravity_law.calculate_force(test_args.m1, test_args.m2, test_args.R)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
+    result_force = convert_to(result, units.newton).subs(units.newton, 1).evalf(7)
     assert result_force == approx(0.27809583, 0.0000001)
 
 

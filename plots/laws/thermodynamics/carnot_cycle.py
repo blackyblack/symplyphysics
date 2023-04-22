@@ -6,23 +6,18 @@ from symplyphysics import units
 from symplyphysics.laws.thermodynamics import temperature_is_constant as isothermal_law
 from symplyphysics.laws.thermodynamics import zero_heat_transfer as adiabatic_law
 
-solved_isothermal_law = solve(
-    isothermal_law.derived_law,
-    (isothermal_law.pressure_start, isothermal_law.temperature_end,
-     isothermal_law.pressure_end),
+solved_isothermal_law = solve(isothermal_law.derived_law,
+    (isothermal_law.pressure_start, isothermal_law.temperature_end, isothermal_law.pressure_end),
     dict=True)[0][isothermal_law.pressure_end]
 
-solved_adiabatic_law = solve(
-    adiabatic_law.law,
-    (adiabatic_law.pressure_start, adiabatic_law.temperature_end,
-     adiabatic_law.pressure_end),
+solved_adiabatic_law = solve(adiabatic_law.law,
+    (adiabatic_law.pressure_start, adiabatic_law.temperature_end, adiabatic_law.pressure_end),
     dict=True)[0][adiabatic_law.pressure_end]
 
 # We need adiabatic volume law to detect the point on the 'volume' axis where
 # we adiabatic compression should begin in order to close the cycle
-solved_adiabatic_volume_law = solve(
-    adiabatic_law.law, (adiabatic_law.pressure_start,
-                        adiabatic_law.pressure_end, adiabatic_law.volume_end),
+solved_adiabatic_volume_law = solve(adiabatic_law.law,
+    (adiabatic_law.pressure_start, adiabatic_law.pressure_end, adiabatic_law.volume_end),
     dict=True)[0][adiabatic_law.volume_end]
 
 carnot_cycle_volume = symbols("carnot_cycle_volume")
@@ -83,26 +78,24 @@ result_pressure_adiabatic_compression = solved_adiabatic_law.subs({
 })
 
 p1 = plot(result_pressure_isothermal_expansion,
-          (carnot_cycle_volume, gas_volume_start, gas_volume_adiabatic_start),
-          line_color="blue",
-          title="Carnot Cycle",
-          xlabel="Volume",
-          ylabel="Pressure",
-          label="Isothermal",
-          legend=True,
-          backend=MatplotlibBackend,
-          show=False)
+    (carnot_cycle_volume, gas_volume_start, gas_volume_adiabatic_start),
+    line_color="blue",
+    title="Carnot Cycle",
+    xlabel="Volume",
+    ylabel="Pressure",
+    label="Isothermal",
+    legend=True,
+    backend=MatplotlibBackend,
+    show=False)
 
-p2 = plot(
-    result_pressure_adiabatic_expansion,
+p2 = plot(result_pressure_adiabatic_expansion,
     (carnot_cycle_volume, gas_volume_adiabatic_start, gas_volume_adiabatic_end),
     line_color="red",
     label="Adiabatic",
     backend=MatplotlibBackend,
     show=False)
 
-p3 = plot(
-    result_pressure_isothermal_compression,
+p3 = plot(result_pressure_isothermal_compression,
     (carnot_cycle_volume, gas_volume_isothermal_end, gas_volume_adiabatic_end),
     line_color="blue",
     backend=MatplotlibBackend,
@@ -110,11 +103,11 @@ p3 = plot(
     show=False)
 
 p4 = plot(result_pressure_adiabatic_compression,
-          (carnot_cycle_volume, gas_volume_start, gas_volume_isothermal_end),
-          line_color="red",
-          backend=MatplotlibBackend,
-          label="",
-          show=False)
+    (carnot_cycle_volume, gas_volume_start, gas_volume_isothermal_end),
+    line_color="red",
+    backend=MatplotlibBackend,
+    label="",
+    show=False)
 
 p1.append(p2[0])
 p1.append(p3[0])

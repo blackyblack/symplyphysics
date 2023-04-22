@@ -23,8 +23,7 @@ def test_args():
 
 def test_basic_velocity(test_args):
     result = torricellis_formula.calculate_velocity(test_args.h)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension,
-                                                     units.velocity)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.velocity)
     result_velocity = convert_to(result, units.meter / units.second).subs({
         units.meter: 1,
         units.second: 1

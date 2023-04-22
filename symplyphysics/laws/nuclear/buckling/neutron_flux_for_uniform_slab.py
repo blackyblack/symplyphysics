@@ -24,8 +24,7 @@ neutron_flux_function = symbols("neutron_flux_function", cls=SymFunction)
 # See: [geometric buckling for uniform slab](geometric_buckling_for_uniform_slab.py)
 axial_constant = pi / slab_width
 
-law = Eq(
-    neutron_flux_function(distance_from_center),
+law = Eq(neutron_flux_function(distance_from_center),
     neutron_flux_power_constant * cos(axial_constant * distance_from_center))
 
 # Check the solution by passing the known neutron flux to the geometric_buckling_from_neutron_flux.
@@ -39,8 +38,7 @@ law = Eq(
 
 # define flux function in cartesian coordinates as a function of x coordinate
 cartesian_coordinates = CoordSys3D("cartesian_coordinates")
-neutron_flux_function_cartesian = law.subs(distance_from_center,
-                                           cartesian_coordinates.x)
+neutron_flux_function_cartesian = law.subs(distance_from_center, cartesian_coordinates.x)
 
 solved = geometric_buckling_from_neutron_flux.apply_neutron_flux_function(
     neutron_flux_function_cartesian.rhs)

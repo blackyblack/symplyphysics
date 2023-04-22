@@ -23,11 +23,9 @@ from symplyphysics import (
 
 microscopic_cross_section = Symbol("microscopic_cross_section", units.length**2)
 atomic_number_density = Symbol("atomic_number_density", 1 / units.length**3)
-macroscopic_cross_section = Symbol("macroscopic_cross_section",
-                                   1 / units.length)
+macroscopic_cross_section = Symbol("macroscopic_cross_section", 1 / units.length)
 
-law = Eq(macroscopic_cross_section,
-         microscopic_cross_section * atomic_number_density)
+law = Eq(macroscopic_cross_section, microscopic_cross_section * atomic_number_density)
 
 
 def print() -> str:
@@ -35,12 +33,12 @@ def print() -> str:
 
 
 @validate_input_symbols(microscopic_cross_section_=microscopic_cross_section,
-                        atomic_number_density_=atomic_number_density)
+    atomic_number_density_=atomic_number_density)
 @validate_output_symbol(macroscopic_cross_section)
 def calculate_cross_section(microscopic_cross_section_: Quantity,
-                            atomic_number_density_: Quantity) -> Quantity:
+    atomic_number_density_: Quantity) -> Quantity:
     result_cross_section_expr = solve(law, macroscopic_cross_section,
-                                      dict=True)[0][macroscopic_cross_section]
+        dict=True)[0][macroscopic_cross_section]
     result_expr = result_cross_section_expr.subs({
         microscopic_cross_section: microscopic_cross_section_,
         atomic_number_density: atomic_number_density_

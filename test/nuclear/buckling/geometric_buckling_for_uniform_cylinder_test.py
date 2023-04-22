@@ -19,12 +19,9 @@ def test_args():
 
 
 def test_basic_geometric_buckling(test_args):
-    result = buckling.calculate_geometric_buckling_squared(
-        test_args.R, test_args.H)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension,
-                                                     units.length**-2)
-    result_geometric_buckling = convert_to(result, units.meter**-2).subs(
-        units.meter, 1).evalf(2)
+    result = buckling.calculate_geometric_buckling_squared(test_args.R, test_args.H)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length**-2)
+    result_geometric_buckling = convert_to(result, units.meter**-2).subs(units.meter, 1).evalf(2)
     assert result_geometric_buckling == approx(2.3447, 0.01)
 
 

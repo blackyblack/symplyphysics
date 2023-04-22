@@ -1,7 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol,
-                           print_expression, validate_input_symbols,
-                           validate_output_symbol)
+from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol)
 from symplyphysics.laws.thermodynamics import pressure_from_temperature_and_volume as thermodynamics_law
 
 # Description
@@ -42,11 +41,9 @@ eq_end = thermodynamics_law.law.subs({
 derived_law = [eq_start, eq_end, isobaric_condition]
 
 ## Check the equivalence of 'law' and 'derived_law'
-derived_temperature_end = solve(derived_law,
-                                (pressure_start, pressure_end, temperature_end),
-                                dict=True)[0][temperature_end]
-assert solve(law, temperature_end,
-             dict=True)[0][temperature_end] == derived_temperature_end
+derived_temperature_end = solve(derived_law, (pressure_start, pressure_end, temperature_end),
+    dict=True)[0][temperature_end]
+assert solve(law, temperature_end, dict=True)[0][temperature_end] == derived_temperature_end
 
 
 def print() -> str:
@@ -54,11 +51,11 @@ def print() -> str:
 
 
 @validate_input_symbols(temperature_start_=temperature_start,
-                        temperature_end_=temperature_end,
-                        volume_start_=volume_start)
+    temperature_end_=temperature_end,
+    volume_start_=volume_start)
 @validate_output_symbol(volume_end)
 def calculate_volume(temperature_start_: Quantity, volume_start_: Quantity,
-                     temperature_end_: Quantity) -> Quantity:
+    temperature_end_: Quantity) -> Quantity:
     solved = solve(law, volume_end, dict=True)[0][volume_end]
     result_expr = solved.subs({
         temperature_start: temperature_start_,

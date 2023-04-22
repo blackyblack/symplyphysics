@@ -23,13 +23,9 @@ def test_args():
 
 
 def test_basic_wavelength(test_args):
-    result = wavelength_law.calculate_wavelength(test_args.v1,
-                                                 test_args.period1)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension,
-                                                     units.length)
-    result_wavelength = convert_to(result, units.meter).subs({
-        units.meter: 1
-    }).evalf(6)
+    result = wavelength_law.calculate_wavelength(test_args.v1, test_args.period1)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
+    result_wavelength = convert_to(result, units.meter).subs({units.meter: 1}).evalf(6)
     assert result_wavelength == approx(2.95, 0.001)
 
 

@@ -43,5 +43,4 @@ def calculate_force(coefficient_: Quantity, deformation_: Vector) -> Vector:
         deformation: sympy_vector_deformation
     })
     #TODO: think about some better solution to processing vectors
-    return expr_to_vector_of_quantities(result_expr,
-                                        deformation_.coordinate_system)
+    return expr_to_vector_of_quantities(result_expr, deformation_.coordinate_system)

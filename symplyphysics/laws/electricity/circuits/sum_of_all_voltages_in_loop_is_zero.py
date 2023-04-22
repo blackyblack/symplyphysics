@@ -41,8 +41,7 @@ def calculate_voltage(voltage_in: Quantity) -> Quantity:
 def calculate_voltage_from_array(voltages: List[Quantity]) -> Quantity:
     for idx, c in enumerate(voltages):
         assert_equivalent_dimension(c, "validate_input", f"voltages[{idx}]",
-                                    "calculate_voltage_from_array",
-                                    units.voltage)
+            "calculate_voltage_from_array", units.voltage)
     voltages_law = law.subs(voltages_total, len(voltages) + 1).doit()
     unknown_voltage = voltage[len(voltages) + 1]
     solved = solve(voltages_law, unknown_voltage, dict=True)[0][unknown_voltage]

@@ -38,18 +38,14 @@ def print() -> str:
     return print_expression(definition)
 
 
-@validate_input_symbols(outer_speed_=outer_speed,
-                        refracting_speed_=refracting_speed)
-def calculate_refractive_index(outer_speed_: Quantity,
-                               refracting_speed_: Quantity) -> float:
-    result_index_expr = solve(definition, refractive_index,
-                              dict=True)[0][refractive_index]
+@validate_input_symbols(outer_speed_=outer_speed, refracting_speed_=refracting_speed)
+def calculate_refractive_index(outer_speed_: Quantity, refracting_speed_: Quantity) -> float:
+    result_index_expr = solve(definition, refractive_index, dict=True)[0][refractive_index]
     result_expr = result_index_expr.subs({
         outer_speed: outer_speed_,
         refracting_speed: refracting_speed_
     })
     result = expr_to_quantity(result_expr)
-    assert_equivalent_dimension(result, "validate_output", "return",
-                                "calculate_refractive_index",
-                                refractive_index.dimension)
+    assert_equivalent_dimension(result, "validate_output", "return", "calculate_refractive_index",
+        refractive_index.dimension)
     return convert_to(result, S.One).evalf()

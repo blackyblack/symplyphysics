@@ -20,11 +20,8 @@ def test_args():
 
 def test_basic_coefficient(test_args):
     result = diffusion_coeff.calculate_diffusion_coefficient(test_args.S)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension,
-                                                     units.length)
-    result_coefficient = convert_to(result,
-                                    units.centimeter).subs(units.centimeter,
-                                                           1).evalf(2)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
+    result_coefficient = convert_to(result, units.centimeter).subs(units.centimeter, 1).evalf(2)
     # carbon diffusion coefficient is 0.668 cm
     assert result_coefficient == approx(0.668, 0.01)
 

@@ -23,10 +23,8 @@ def test_args():
 
 
 def test_basic_power(test_args):
-    result = joule_lenz_law.calculate_heat_power(test_args.Current,
-                                                 test_args.Resistance)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension,
-                                                     units.power)
+    result = joule_lenz_law.calculate_heat_power(test_args.Current, test_args.Resistance)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.power)
     result_power = convert_to(result, units.watt).subs(units.watt, 1).evalf(2)
     assert result_power == approx(2, 0.01)
 

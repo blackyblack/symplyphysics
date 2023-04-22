@@ -1,7 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol,
-                           print_expression, validate_input_symbols,
-                           validate_output_symbol)
+from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol)
 
 # Description
 ## If the particle is about to spin around axle, it has moment of inertia.
@@ -30,10 +29,6 @@ def print() -> str:
 @validate_input_symbols(mass_=particle_mass, radius_=spinning_radius)
 @validate_output_symbol(moment_of_inertia)
 def calculate_moment_of_inertia(mass_: Quantity, radius_: Quantity) -> Quantity:
-    result_inertia_expr = solve(definition, moment_of_inertia,
-                                dict=True)[0][moment_of_inertia]
-    result_expr = result_inertia_expr.subs({
-        particle_mass: mass_,
-        spinning_radius: radius_
-    })
+    result_inertia_expr = solve(definition, moment_of_inertia, dict=True)[0][moment_of_inertia]
+    result_expr = result_inertia_expr.subs({particle_mass: mass_, spinning_radius: radius_})
     return expr_to_quantity(result_expr)

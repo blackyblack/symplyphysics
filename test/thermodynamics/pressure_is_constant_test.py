@@ -20,12 +20,9 @@ def test_args():
 
 
 def test_basic_volume(test_args):
-    result = gay_lussacs_law.calculate_volume(test_args.t0, test_args.V0,
-                                              test_args.t1)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension,
-                                                     units.volume)
-    result_volume = convert_to(result, units.liter).subs(units.liter,
-                                                         1).evalf(2)
+    result = gay_lussacs_law.calculate_volume(test_args.t0, test_args.V0, test_args.t1)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.volume)
+    result_volume = convert_to(result, units.liter).subs(units.liter, 1).evalf(2)
     assert result_volume == approx(2.0, 0.01)
 
 

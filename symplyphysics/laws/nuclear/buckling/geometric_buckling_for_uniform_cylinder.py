@@ -1,7 +1,6 @@
 from sympy import (Eq, solve, pi)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol,
-                           print_expression, validate_input_symbols,
-                           validate_output_symbol)
+from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol)
 from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_cylinder as cylinder_flux
 
 # Description
@@ -18,11 +17,9 @@ from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_cylinde
 
 cylinder_radius = Symbol("cylinder_radius", units.length)
 cylinder_height = Symbol("cylinder_height", units.length)
-geometric_buckling_squared = Symbol("geometric_buckling_squared",
-                                    1 / units.length**2)
+geometric_buckling_squared = Symbol("geometric_buckling_squared", 1 / units.length**2)
 
-law = Eq(geometric_buckling_squared,
-         (2.405 / cylinder_radius)**2 + (pi / cylinder_height)**2)
+law = Eq(geometric_buckling_squared, (2.405 / cylinder_radius)**2 + (pi / cylinder_height)**2)
 
 # This law is derived from geometric buckling definition (see geometric_buckling_from_neutron_flux.py),
 # neutron flux laplacian in cylindrical coordinates and boundary conditions.
@@ -42,13 +39,11 @@ def print() -> str:
     return print_expression(law)
 
 
-@validate_input_symbols(cylinder_radius_=cylinder_radius,
-                        cylinder_height_=cylinder_height)
+@validate_input_symbols(cylinder_radius_=cylinder_radius, cylinder_height_=cylinder_height)
 @validate_output_symbol(geometric_buckling_squared)
-def calculate_geometric_buckling_squared(
-        cylinder_radius_: Quantity, cylinder_height_: Quantity) -> Quantity:
-    solved = solve(law, geometric_buckling_squared,
-                   dict=True)[0][geometric_buckling_squared]
+def calculate_geometric_buckling_squared(cylinder_radius_: Quantity,
+    cylinder_height_: Quantity) -> Quantity:
+    solved = solve(law, geometric_buckling_squared, dict=True)[0][geometric_buckling_squared]
     result_expr = solved.subs({
         cylinder_radius: cylinder_radius_,
         cylinder_height: cylinder_height_

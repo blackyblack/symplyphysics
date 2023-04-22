@@ -25,10 +25,9 @@ def test_args():
 
 def test_basic_capacitance(test_args):
     result = capacitance_def.calculate_capacitance(test_args.Q, test_args.U)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension,
-                                                     units.capacitance)
-    result_cap = convert_to(result, capacitance_def.definition_units_SI).subs(
-        units.farad, 1).evalf(4)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.capacitance)
+    result_cap = convert_to(result, capacitance_def.definition_units_SI).subs(units.farad,
+        1).evalf(4)
     assert result_cap == approx(2, 0.01)
 
 

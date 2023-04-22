@@ -22,10 +22,8 @@ def test_args():
 
 def test_basic_diffusion_length(test_args):
     result = diffusion_area.calculate_diffusion_area(test_args.D, test_args.Sa)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension,
-                                                     units.length**2)
-    result_diffusion = convert_to(result, units.centimeter**2).subs(
-        units.centimeter, 1).evalf(2)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length**2)
+    result_diffusion = convert_to(result, units.centimeter**2).subs(units.centimeter, 1).evalf(2)
     assert result_diffusion == approx(2.54**2, 0.01)
 
 

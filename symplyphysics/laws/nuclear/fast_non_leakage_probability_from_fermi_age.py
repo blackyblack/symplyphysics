@@ -27,11 +27,9 @@ from symplyphysics.core.probability import Probability
 
 geometric_buckling = Symbol("geometric_buckling", 1 / units.length**2)
 neutron_fermi_age = Symbol("neutron_fermi_age", units.length**2)
-fast_non_leakage_probability = Symbol("fast_non_leakage_probability",
-                                      Dimensionless)
+fast_non_leakage_probability = Symbol("fast_non_leakage_probability", Dimensionless)
 
-law = Eq(fast_non_leakage_probability,
-         exp(-1 * geometric_buckling * neutron_fermi_age))
+law = Eq(fast_non_leakage_probability, exp(-1 * geometric_buckling * neutron_fermi_age))
 
 
 def print() -> str:
@@ -39,12 +37,11 @@ def print() -> str:
 
 
 @validate_input_symbols(geometric_buckling_=geometric_buckling,
-                        neutron_fermi_age_=neutron_fermi_age)
+    neutron_fermi_age_=neutron_fermi_age)
 def calculate_probability(geometric_buckling_: Quantity,
-                          neutron_fermi_age_: Quantity) -> Probability:
-    result_probability_expr = solve(law,
-                                    fast_non_leakage_probability,
-                                    dict=True)[0][fast_non_leakage_probability]
+    neutron_fermi_age_: Quantity) -> Probability:
+    result_probability_expr = solve(law, fast_non_leakage_probability,
+        dict=True)[0][fast_non_leakage_probability]
     result_expr = result_probability_expr.subs({
         geometric_buckling: geometric_buckling_,
         neutron_fermi_age: neutron_fermi_age_

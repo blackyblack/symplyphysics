@@ -20,8 +20,7 @@ def test_args():
 
 def test_basic_speed(test_args):
     result = speed_law.calculate_wavespeed(test_args.refraction_factor)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension,
-                                                     units.speed)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.speed)
     result_freq_1 = convert_to(result, units.meter / units.second).subs({
         units.meter: 1,
         units.second: 1

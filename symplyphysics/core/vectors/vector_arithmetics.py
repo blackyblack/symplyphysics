@@ -10,12 +10,9 @@ def equal_vectors(vector_left: Vector, vector_right: Vector) -> bool:
         raise TypeError(
             f"Different coordinate systems in vectors: {str(vector_left.coordinate_system)} vs {str(vector_right.coordinate_system)}"
         )
-    for i in range(
-            max(len(vector_left.components), len(vector_right.components))):
-        val1 = 0 if i >= len(
-            vector_left.components) else vector_left.components[i]
-        val2 = 0 if i >= len(
-            vector_right.components) else vector_right.components[i]
+    for i in range(max(len(vector_left.components), len(vector_right.components))):
+        val1 = 0 if i >= len(vector_left.components) else vector_left.components[i]
+        val2 = 0 if i >= len(vector_right.components) else vector_right.components[i]
         if not expr_equals(val1, val2):
             return False
     return True
@@ -35,21 +32,16 @@ def add_cartesian_vectors(vector_left: Vector, vector_right: Vector) -> Vector:
         coord_name_from = CoordinateSystem.system_to_transformation_name(
             vector_left.coordinate_system.coord_system_type)
         raise ValueError(
-            f"Addition only supported for cartesian coordinates: got {coord_name_from}"
-        )
+            f"Addition only supported for cartesian coordinates: got {coord_name_from}")
     if vector_right.coordinate_system is not None and vector_right.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
         coord_name_from = CoordinateSystem.system_to_transformation_name(
             vector_right.coordinate_system.coord_system_type)
         raise ValueError(
-            f"Addition only supported for cartesian coordinates: got {coord_name_from}"
-        )
+            f"Addition only supported for cartesian coordinates: got {coord_name_from}")
     result = []
-    for i in range(
-            max(len(vector_left.components), len(vector_right.components))):
-        val1 = 0 if i >= len(
-            vector_left.components) else vector_left.components[i]
-        val2 = 0 if i >= len(
-            vector_right.components) else vector_right.components[i]
+    for i in range(max(len(vector_left.components), len(vector_right.components))):
+        val1 = 0 if i >= len(vector_left.components) else vector_left.components[i]
+        val2 = 0 if i >= len(vector_right.components) else vector_right.components[i]
         result.append(val1 + val2)
     return Vector(result, vector_left.coordinate_system)
 
@@ -92,8 +84,7 @@ def dot_vectors(vector_left: Vector, vector_right: Vector) -> Expr:
 
     if vector_left.coordinate_system is None or vector_left.coordinate_system.coord_system_type == CoordinateSystem.System.CARTESIAN:
         result = 0
-        for i in range(
-                min(len(vector_left.components), len(vector_right.components))):
+        for i in range(min(len(vector_left.components), len(vector_right.components))):
             result += (vector_left.components[i] * vector_right.components[i])
         return result
     if vector_left.coordinate_system.coord_system_type == CoordinateSystem.System.CYLINDRICAL:
@@ -114,8 +105,7 @@ def dot_vectors(vector_left: Vector, vector_right: Vector) -> Expr:
         r1, r2 = left_components[0], right_components[0]
         theta1, theta2 = left_components[1], right_components[1]
         phi1, phi2 = left_components[2], right_components[2]
-        x = r1 * r2 * (sin(theta1) * sin(theta2) * cos(phi1 - phi2) +
-                       cos(theta1) * cos(theta2))
+        x = r1 * r2 * (sin(theta1) * sin(theta2) * cos(phi1 - phi2) + cos(theta1) * cos(theta2))
         return x
 
 
@@ -130,8 +120,7 @@ def vector_magnitude(vector_: Vector) -> Expr:
 #      - Resulting vector is perpendicular to both input vectors;
 #      - Magnitude of resulting vector equals to the area of the parallelogram spanned by input vectors;
 #      is defined only in 3 and 7 dimensional Euclidean space.
-def cross_cartesian_vectors(vector_left: Vector,
-                            vector_right: Vector) -> Vector:
+def cross_cartesian_vectors(vector_left: Vector, vector_right: Vector) -> Vector:
     if vector_left.coordinate_system != vector_right.coordinate_system:
         raise TypeError(
             f"Different coordinate systems in vectors: {str(vector_left.coordinate_system)} vs {str(vector_right.coordinate_system)}"
@@ -140,22 +129,18 @@ def cross_cartesian_vectors(vector_left: Vector,
         coord_name_from = CoordinateSystem.system_to_transformation_name(
             vector_left.coordinate_system.coord_system_type)
         raise ValueError(
-            f"Cross product only supported for cartesian coordinates: got {coord_name_from}"
-        )
+            f"Cross product only supported for cartesian coordinates: got {coord_name_from}")
     if vector_right.coordinate_system is not None and vector_right.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
         coord_name_from = CoordinateSystem.system_to_transformation_name(
             vector_right.coordinate_system.coord_system_type)
         raise ValueError(
-            f"Cross product only supported for cartesian coordinates: got {coord_name_from}"
-        )
+            f"Cross product only supported for cartesian coordinates: got {coord_name_from}")
     if len(vector_left.components) > 3:
         raise ValueError(
-            f"Cross product is only defined for 3 dimensions. Got: {len(vector_left.components)}"
-        )
+            f"Cross product is only defined for 3 dimensions. Got: {len(vector_left.components)}")
     if len(vector_right.components) > 3:
         raise ValueError(
-            f"Cross product is only defined for 3 dimensions. Got: {len(vector_right.components)}"
-        )
+            f"Cross product is only defined for 3 dimensions. Got: {len(vector_right.components)}")
 
     left_components = vector_left.components
     left_components.extend([0] * (3 - len(left_components)))
@@ -164,4 +149,4 @@ def cross_cartesian_vectors(vector_left: Vector,
     ax, ay, az = left_components
     bx, by, bz = right_components
     return Vector([ay * bz - az * by, az * bx - ax * bz, ax * by - ay * bx],
-                  vector_left.coordinate_system)
+        vector_left.coordinate_system)

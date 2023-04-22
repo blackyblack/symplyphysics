@@ -24,20 +24,18 @@ gravitational_acceleration = symbols("gravitational_acceleration")
 ## The horizontal initial speed is projection of throwing_velocity to X, acceleration is 0.
 ## Flight ends when y == 0 again.
 
-initial_horizontal_velocity = solve(
-    projector.law, projector.projection,
+initial_horizontal_velocity = solve(projector.law, projector.projection,
     dict=True)[0][projector.projection].subs({
-        projector.vector_length: throwing_velocity,
-        projector.vector_angle: throwing_angle
+    projector.vector_length: throwing_velocity,
+    projector.vector_angle: throwing_angle
     })
 print(f"Initial horizontal velocity: {initial_horizontal_velocity}")
 
 # the angle between initial velocity and Y axis is (pi/2 - throwing angle) (that's because of pi/2 angle between X and Y axis)
-initial_vertical_velocity = solve(
-    projector.law, projector.projection,
+initial_vertical_velocity = solve(projector.law, projector.projection,
     dict=True)[0][projector.projection].subs({
-        projector.vector_length: throwing_velocity,
-        projector.vector_angle: pi / 2 - throwing_angle
+    projector.vector_length: throwing_velocity,
+    projector.vector_angle: pi / 2 - throwing_angle
     })
 print(f"Initial vertical velocity: {initial_vertical_velocity}")
 
@@ -80,15 +78,15 @@ max_angle = solve(max_law, throwing_angle, dict=True)[0][throwing_angle]
 print(f"Angle to achieve maximum distance: {max_angle}")
 
 p0 = plot(flight_distance_plotted, (throwing_angle, 0, pi / 2),
-          line_color="blue",
-          title="Throwing distance depending on angle",
-          label="distance",
-          xlabel="throwing angle, radians",
-          ylabel="distance",
-          legend=True,
-          annotations={},
-          backend=MatplotlibBackend,
-          show=False)
+    line_color="blue",
+    title="Throwing distance depending on angle",
+    label="distance",
+    xlabel="throwing angle, radians",
+    ylabel="distance",
+    legend=True,
+    annotations={},
+    backend=MatplotlibBackend,
+    show=False)
 
 peak_line = plot(
     1000 * (throwing_angle - max_angle),

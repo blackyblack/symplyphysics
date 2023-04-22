@@ -1,7 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol,
-                           print_expression, Dimensionless,
-                           validate_input_symbols, validate_output_symbol)
+from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
+    Dimensionless, validate_input_symbols, validate_output_symbol)
 
 # Description
 ## Volume number density is the number of specified objects per unit volume.

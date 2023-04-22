@@ -20,11 +20,9 @@ def print() -> str:
     return print_expression(law)
 
 
-def calculate_average_scattering_angle_cosine(
-        target_nucleus_mass_number_: int) -> float:
-    result_angle_cosine_expr = solve(
-        law, average_scattering_angle_cosine,
+def calculate_average_scattering_angle_cosine(target_nucleus_mass_number_: int) -> float:
+    result_angle_cosine_expr = solve(law, average_scattering_angle_cosine,
         dict=True)[0][average_scattering_angle_cosine]
     result_expr = result_angle_cosine_expr.subs(target_nucleus_mass_number,
-                                                target_nucleus_mass_number_)
+        target_nucleus_mass_number_)
     return result_expr.evalf()

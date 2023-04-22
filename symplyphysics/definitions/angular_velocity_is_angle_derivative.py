@@ -1,8 +1,7 @@
 import numbers
 from sympy import (Eq, Derivative)
-from symplyphysics import (angle_type, units, expr_to_quantity, Quantity,
-                           Function, Symbol, print_expression,
-                           validate_input_symbols, validate_output_symbol)
+from symplyphysics import (angle_type, units, expr_to_quantity, Quantity, Function, Symbol,
+    print_expression, validate_input_symbols, validate_output_symbol)
 
 # Description
 ## The movement along circle might be easily represented in polar coordinates with the pole in the center of the circle.
@@ -27,20 +26,16 @@ def print() -> str:
     return print_expression(definition)
 
 
-@validate_input_symbols(angle_start_=angle_function,
-                        angle_end_=angle_function,
-                        moving_time_=time)
+@validate_input_symbols(angle_start_=angle_function, angle_end_=angle_function, moving_time_=time)
 @validate_output_symbol(angular_velocity)
-def calculate_angular_velocity(angle_start_: Quantity | float,
-                               angle_end_: Quantity | float,
-                               moving_time_: Quantity) -> Quantity:
+def calculate_angular_velocity(angle_start_: Quantity | float, angle_end_: Quantity | float,
+    moving_time_: Quantity) -> Quantity:
     #HACK: SymPy angles are always in radians
-    angle_start_radians = angle_start_ if isinstance(
-        angle_start_, numbers.Number) else angle_start_.scale_factor
-    angle_end_radians = angle_end_ if isinstance(
-        angle_end_, numbers.Number) else angle_end_.scale_factor
-    angle_function_ = time * (angle_end_radians -
-                              angle_start_radians) / moving_time_
+    angle_start_radians = angle_start_ if isinstance(angle_start_,
+        numbers.Number) else angle_start_.scale_factor
+    angle_end_radians = angle_end_ if isinstance(angle_end_,
+        numbers.Number) else angle_end_.scale_factor
+    angle_function_ = time * (angle_end_radians - angle_start_radians) / moving_time_
     applied_definition = definition.subs(angle_function(time), angle_function_)
     dsolved = applied_definition.doit()
     result_expr = dsolved.rhs

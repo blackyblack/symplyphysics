@@ -1,7 +1,6 @@
 from sympy import (Eq, solve, pi)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol,
-                           print_expression, validate_input_symbols,
-                           validate_output_symbol)
+from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
+    validate_input_symbols, validate_output_symbol)
 from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_slab as slab_flux
 
 # Description
@@ -16,8 +15,7 @@ from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_slab as
 ##   See [geometric buckling](./geometric_buckling_from_neutron_flux.py) implementation.
 
 slab_width = Symbol("slab_width", units.length)
-geometric_buckling_squared = Symbol("geometric_buckling_squared",
-                                    1 / units.length**2)
+geometric_buckling_squared = Symbol("geometric_buckling_squared", 1 / units.length**2)
 
 law = Eq(geometric_buckling_squared, (pi / slab_width)**2)
 
@@ -28,8 +26,8 @@ law = Eq(geometric_buckling_squared, (pi / slab_width)**2)
 # solution for the neutron flux:
 # See [neutron flux for uniform slab](./neutron_flux_for_uniform_slab.py)
 geometric_buckling_slab_squared = slab_flux.axial_constant**2
-geometric_buckling_slab_solved = geometric_buckling_slab_squared.subs(
-    slab_flux.slab_width, slab_width)
+geometric_buckling_slab_solved = geometric_buckling_slab_squared.subs(slab_flux.slab_width,
+    slab_width)
 assert geometric_buckling_slab_solved == law.rhs
 
 
@@ -40,7 +38,6 @@ def print() -> str:
 @validate_input_symbols(slab_width_=slab_width)
 @validate_output_symbol(geometric_buckling_squared)
 def calculate_geometric_buckling_squared(slab_width_: Quantity) -> Quantity:
-    solved = solve(law, geometric_buckling_squared,
-                   dict=True)[0][geometric_buckling_squared]
+    solved = solve(law, geometric_buckling_squared, dict=True)[0][geometric_buckling_squared]
     result_expr = solved.subs(slab_width, slab_width_)
     return expr_to_quantity(result_expr)

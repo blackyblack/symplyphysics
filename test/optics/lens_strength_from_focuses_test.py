@@ -21,10 +21,8 @@ def test_args():
 
 
 def test_basic_focus(test_args):
-    result = lens_law.calculate_focus(test_args.object_distance,
-                                      test_args.image_distance)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension,
-                                                     units.length)
+    result = lens_law.calculate_focus(test_args.object_distance, test_args.image_distance)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
     result_focus = convert_to(result, units.meter).subs(units.meter, 1).evalf(4)
     assert result_focus == approx(0.2, 0.0001)
 

@@ -17,28 +17,22 @@ def test_args():
     # Uranium-235 + Uranium-238 macroscopic absorption cross-section
     macro_abs_cross_section = Quantity((3.352 + 0.117) / units.centimeter)
     Args = namedtuple("Args", ["v", "Sf", "Sa"])
-    return Args(v=neutrons_per_fission,
-                Sf=macro_fission_cross_section,
-                Sa=macro_abs_cross_section)
+    return Args(v=neutrons_per_fission, Sf=macro_fission_cross_section, Sa=macro_abs_cross_section)
 
 
 def test_basic_multiplication_factor(test_args):
-    result = multiplication_factor.calculate_multiplication_factor(
-        test_args.v, test_args.Sf, test_args.Sa)
+    result = multiplication_factor.calculate_multiplication_factor(test_args.v, test_args.Sf,
+        test_args.Sa)
     assert result == approx(1.96, 0.01)
 
 
 def test_bad_macroscopic_cross_section(test_args):
     Sb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        multiplication_factor.calculate_multiplication_factor(
-            test_args.v, Sb, test_args.Sa)
+        multiplication_factor.calculate_multiplication_factor(test_args.v, Sb, test_args.Sa)
     with raises(TypeError):
-        multiplication_factor.calculate_multiplication_factor(
-            test_args.v, 100, test_args.Sa)
+        multiplication_factor.calculate_multiplication_factor(test_args.v, 100, test_args.Sa)
     with raises(errors.UnitsError):
-        multiplication_factor.calculate_multiplication_factor(
-            test_args.v, test_args.Sf, Sb)
+        multiplication_factor.calculate_multiplication_factor(test_args.v, test_args.Sf, Sb)
     with raises(TypeError):
-        multiplication_factor.calculate_multiplication_factor(
-            test_args.v, test_args.Sf, 100)
+        multiplication_factor.calculate_multiplication_factor(test_args.v, test_args.Sf, 100)

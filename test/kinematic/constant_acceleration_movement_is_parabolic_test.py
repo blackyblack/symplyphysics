@@ -23,12 +23,9 @@ def test_args():
 
 
 def test_basic_distance(test_args):
-    result = movement_law.calculate_distance(test_args.V0, test_args.a,
-                                             test_args.t)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension,
-                                                     units.length)
-    result_vector = convert_to(result, units.meter).subs(units.meter,
-                                                         1).evalf(2)
+    result = movement_law.calculate_distance(test_args.V0, test_args.a, test_args.t)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
+    result_vector = convert_to(result, units.meter).subs(units.meter, 1).evalf(2)
     assert result_vector == approx(95, 0.01)
 
 

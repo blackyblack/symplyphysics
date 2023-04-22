@@ -17,5 +17,5 @@ def print() -> str:
     return print_expression(law)
 
 
-assert convert_to(law.lhs, units.meter / units.second) == convert_to(
-    law.rhs, units.meter / units.second)
+assert convert_to(law.lhs, units.meter / units.second) == convert_to(law.rhs,
+    units.meter / units.second)

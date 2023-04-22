@@ -20,10 +20,8 @@ def test_args():
 
 def test_basic_force(test_args):
     result = newton_second_law.calculate_force(test_args.m, test_args.a)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension,
-                                                     units.force)
-    result_force = convert_to(result, units.newton).subs(units.newton,
-                                                         1).evalf(2)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
+    result_force = convert_to(result, units.newton).subs(units.newton, 1).evalf(2)
     assert result_force == approx(3.0, 0.01)
 
 

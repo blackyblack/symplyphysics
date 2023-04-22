@@ -1,8 +1,7 @@
 import numbers
 from sympy import (Eq, solve, sin, pi)
-from symplyphysics import (units, Quantity, Symbol, print_expression,
-                           Dimensionless, angle_type, validate_input_symbols,
-                           validate_output_symbol)
+from symplyphysics import (units, Quantity, Symbol, print_expression, Dimensionless, angle_type,
+    validate_input_symbols, validate_output_symbol)
 
 # Description
 ## If ray of light comes from one media to another, it refracts.
@@ -27,7 +26,7 @@ incedence_angle = Symbol("incedence_angle", angle_type)
 refraction_angle = Symbol("refraction_angle", angle_type)
 
 law = Eq(incedence_refractive_index * sin(incedence_angle),
-         resulting_refractive_index * sin(refraction_angle))
+    resulting_refractive_index * sin(refraction_angle))
 
 
 def print() -> str:
@@ -35,15 +34,14 @@ def print() -> str:
 
 
 @validate_input_symbols(incedence_angle_=incedence_angle,
-                        incedence_refractive_index_=incedence_refractive_index,
-                        resulting_refractive_index_=resulting_refractive_index)
+    incedence_refractive_index_=incedence_refractive_index,
+    resulting_refractive_index_=resulting_refractive_index)
 @validate_output_symbol(refraction_angle)
 def calculate_refraction_angle(incedence_angle_: Quantity | float,
-                               incedence_refractive_index_: float,
-                               resulting_refractive_index_: float) -> Quantity:
+    incedence_refractive_index_: float, resulting_refractive_index_: float) -> Quantity:
     #HACK: sympy angles are always in radians
-    incedence_angle_radians = incedence_angle_ if isinstance(
-        incedence_angle_, numbers.Number) else incedence_angle_.scale_factor
+    incedence_angle_radians = incedence_angle_ if isinstance(incedence_angle_,
+        numbers.Number) else incedence_angle_.scale_factor
     # Check for boundary conditions
     assert incedence_angle_radians <= pi / 2
     assert incedence_angle_radians >= -pi / 2

@@ -36,7 +36,6 @@ def calculate_particles_count(mole_count_: Quantity) -> int:
     solved = solve(law, particles_count, dict=True)[0][particles_count]
     result_expr = solved.subs(mole_count, mole_count_)
     result = expr_to_quantity(result_expr)
-    assert_equivalent_dimension(result, "validate_output", "return",
-                                "calculate_particles_count",
-                                particles_count.dimension)
+    assert_equivalent_dimension(result, "validate_output", "return", "calculate_particles_count",
+        particles_count.dimension)
     return int(convert_to(result, S.One).evalf())

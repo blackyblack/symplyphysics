@@ -34,42 +34,34 @@ from symplyphysics.core.probability import Probability
 ##   See [macroscopic cross-section](./macroscopic_cross_section_from_free_mean_path.py) implementation.
 ## p - resonance escape probability
 
-absorber_atomic_number_density = Symbol("absorber_atomic_number_density",
-                                        1 / units.length**3)
-effective_resonance_integral = Symbol("effective_resonance_integral",
-                                      units.length**2)
+absorber_atomic_number_density = Symbol("absorber_atomic_number_density", 1 / units.length**3)
+effective_resonance_integral = Symbol("effective_resonance_integral", units.length**2)
 average_lethargy_change = Symbol("average_lethargy_change", Dimensionless)
 macroscopic_scattering_cross_section_moderator = Symbol(
     "macroscopic_scattering_cross_section_moderator", 1 / units.length)
-resonance_escape_probability = Symbol("resonance_escape_probability",
-                                      Dimensionless)
+resonance_escape_probability = Symbol("resonance_escape_probability", Dimensionless)
 
 law = Eq(
     resonance_escape_probability,
     exp(-1 * (absorber_atomic_number_density * effective_resonance_integral) /
-        (average_lethargy_change *
-         macroscopic_scattering_cross_section_moderator)))
+    (average_lethargy_change * macroscopic_scattering_cross_section_moderator)))
 
 
 def print() -> str:
     return print_expression(law)
 
 
-@validate_input_symbols(
-    absorber_atomic_number_density_=absorber_atomic_number_density,
+@validate_input_symbols(absorber_atomic_number_density_=absorber_atomic_number_density,
     effective_resonance_integral_=effective_resonance_integral,
     average_lethargy_change_=average_lethargy_change,
-    macroscopic_scattering_cross_section_moderator_=
-    macroscopic_scattering_cross_section_moderator)
+    macroscopic_scattering_cross_section_moderator_=macroscopic_scattering_cross_section_moderator)
 def calculate_resonance_escape_probability(
-        absorber_atomic_number_density_: Quantity,
-        effective_resonance_integral_: Quantity,
+        absorber_atomic_number_density_: Quantity, effective_resonance_integral_: Quantity,
         average_lethargy_change_: float,
-        macroscopic_scattering_cross_section_moderator_: Quantity
-) -> Probability:
+        macroscopic_scattering_cross_section_moderator_: Quantity) -> Probability:
 
     result_factor_expr = solve(law, resonance_escape_probability,
-                               dict=True)[0][resonance_escape_probability]
+        dict=True)[0][resonance_escape_probability]
     result_expr = result_factor_expr.subs({
         absorber_atomic_number_density:
             absorber_atomic_number_density_,

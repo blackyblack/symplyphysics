@@ -20,8 +20,7 @@ def test_args():
 
 
 def test_basic_non_leakage_factor(test_args):
-    result = non_leakage_factor.calculate_probability(test_args.Lth,
-                                                      test_args.Bg)
+    result = non_leakage_factor.calculate_probability(test_args.Lth, test_args.Bg)
     assert isinstance(result, Probability)
     assert result.value == approx(0.9921, 0.01)
 

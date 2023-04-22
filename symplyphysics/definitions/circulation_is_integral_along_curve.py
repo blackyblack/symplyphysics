@@ -38,12 +38,9 @@ circulation, field, trajectory = symbols("circulation field trajectory")
 trajectory_element, parameter = symbols("trajectory_element parameter")
 parameter_from, parameter_to = symbols("parameter_from parameter_to")
 
-trajectory_element_definition = Eq(trajectory_element,
-                                   Derivative(trajectory, parameter))
-definition = Eq(
-    circulation,
-    Integral(Dot(field, trajectory_element),
-             (parameter, parameter_from, parameter_to)))
+trajectory_element_definition = Eq(trajectory_element, Derivative(trajectory, parameter))
+definition = Eq(circulation,
+    Integral(Dot(field, trajectory_element), (parameter, parameter_from, parameter_to)))
 
 
 def print() -> str:
@@ -52,13 +49,11 @@ def print() -> str:
 
 # field_ should be VectorField
 # trajectory_ should be array with projections to coordinates, eg [3 * cos(parameter), 3 * sin(parameter)]
-def calculate_circulation(field_: VectorField, trajectory_: List,
-                          parameter_from_, parameter_to_):
+def calculate_circulation(field_: VectorField, trajectory_: List, parameter_from_, parameter_to_):
 
     field_app = field_.apply(trajectory_)
     field_as_vector = sympy_vector_from_vector(field_app)
-    trajectory_as_vector = sympy_vector_from_vector(
-        Vector(trajectory_, field_.coordinate_system))
+    trajectory_as_vector = sympy_vector_from_vector(Vector(trajectory_, field_.coordinate_system))
     trajectory_element_result = trajectory_element_definition.rhs.subs(
         trajectory, trajectory_as_vector).doit()
     result_expr = definition.rhs.subs({

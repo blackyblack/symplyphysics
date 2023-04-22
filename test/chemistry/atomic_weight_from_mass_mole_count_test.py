@@ -20,30 +20,25 @@ def test_args():
 
 
 def test_basic_atomic_weight(test_args):
-    result = atomic_weight_from_mass_mole_count.calculate_atomic_weight(
-        test_args.m, test_args.N)
-    assert SI.get_dimension_system().equivalent_dims(
-        result.dimension, units.mass / units.amount_of_substance)
-    result_mass = convert_to(result, units.gram / units.mole).subs(
-        units.gram, 1).subs(units.mole, 1).evalf(4)
+    result = atomic_weight_from_mass_mole_count.calculate_atomic_weight(test_args.m, test_args.N)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension,
+        units.mass / units.amount_of_substance)
+    result_mass = convert_to(result, units.gram / units.mole).subs(units.gram,
+        1).subs(units.mole, 1).evalf(4)
     assert result_mass == approx(18.0153, 0.01)
 
 
 def test_bad_mass(test_args):
     mb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
-        atomic_weight_from_mass_mole_count.calculate_atomic_weight(
-            mb, test_args.N)
+        atomic_weight_from_mass_mole_count.calculate_atomic_weight(mb, test_args.N)
     with raises(TypeError):
-        atomic_weight_from_mass_mole_count.calculate_atomic_weight(
-            100, test_args.N)
+        atomic_weight_from_mass_mole_count.calculate_atomic_weight(100, test_args.N)
 
 
 def test_bad_mole_count(test_args):
     Nb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
-        atomic_weight_from_mass_mole_count.calculate_atomic_weight(
-            test_args.m, Nb)
+        atomic_weight_from_mass_mole_count.calculate_atomic_weight(test_args.m, Nb)
     with raises(TypeError):
-        atomic_weight_from_mass_mole_count.calculate_atomic_weight(
-            test_args.m, 100)
+        atomic_weight_from_mass_mole_count.calculate_atomic_weight(test_args.m, 100)

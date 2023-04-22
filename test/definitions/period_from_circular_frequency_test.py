@@ -19,10 +19,9 @@ def test_args():
 
 def test_basic_period(test_args):
     result = period_def.calculate_period(test_args.w)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension,
-                                                     units.time)
-    result_period = convert_to(result, period_def.definition_units_SI).subs(
-        units.second, 1).evalf(2)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.time)
+    result_period = convert_to(result, period_def.definition_units_SI).subs(units.second,
+        1).evalf(2)
     assert result_period == approx(1.0, 0.01)
 
 

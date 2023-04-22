@@ -19,14 +19,12 @@ def test_args():
 
 def test_basic_conservation(test_args):
     result = momentum_law.calculate_momentum_after(test_args.P_before)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension,
-                                                     units.momentum)
-    result_ = convert_to(result,
-                         units.kilogram * units.meter / units.second).subs({
-                             units.kilogram: 1,
-                             units.meter: 1,
-                             units.second: 1
-                         }).evalf(2)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.momentum)
+    result_ = convert_to(result, units.kilogram * units.meter / units.second).subs({
+        units.kilogram: 1,
+        units.meter: 1,
+        units.second: 1
+    }).evalf(2)
     assert result_ == approx(5.0, 0.01)
 
 

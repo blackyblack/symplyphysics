@@ -12,17 +12,16 @@ from .symbols import DimensionSymbol
 class Quantity(DimensionSymbol, SymQuantity):
 
     def __new__(cls,
-                scale: Expr = 1,
-                *,
-                display_name: str = None,
-                dimension: Dimension = None,
-                **assumptions):
+        scale: Expr = 1,
+        *,
+        display_name: str = None,
+        dimension: Dimension = None,
+        **assumptions):
         (_, dimension_) = collect_factor_and_dimension(scale)
         dimension = dimension_ if dimension is None else dimension
-        name = (DimensionSymbol.random_name("Q", 8) if display_name is None else
-                DimensionSymbol.random_name(display_name))
-        self = super().__new__(cls, name, None, None, None, None, None, False,
-                               **assumptions)
+        name = (DimensionSymbol.random_name("Q", 8)
+            if display_name is None else DimensionSymbol.random_name(display_name))
+        self = super().__new__(cls, name, None, None, None, None, None, False, **assumptions)
         self._dimension = dimension
         self._display_name = name if display_name is None else display_name
         SI.set_quantity_dimension(self, dimension)
@@ -64,17 +63,14 @@ def collect_factor_and_dimension(expr: Expr):
         for addend in expr.args[1:]:
             addend_factor, addend_dim = collect_factor_and_dimension(addend)
             # automatically convert zero to the dimension of it's additives
-            if dim != addend_dim and not SI.get_dimension_system(
-            ).equivalent_dims(dim, addend_dim):
+            if dim != addend_dim and not SI.get_dimension_system().equivalent_dims(dim, addend_dim):
                 if factor == S.Zero:
                     dim = addend_dim
                 elif addend_factor == S.Zero:
                     addend_dim = dim
-            if dim != addend_dim and not SI.get_dimension_system(
-            ).equivalent_dims(dim, addend_dim):
-                raise ValueError(
-                    'Dimension of "{}" is {}, but it should be {}'.format(
-                        addend, addend_dim, dim))
+            if dim != addend_dim and not SI.get_dimension_system().equivalent_dims(dim, addend_dim):
+                raise ValueError('Dimension of "{}" is {}, but it should be {}'.format(
+                    addend, addend_dim, dim))
             factor += addend_factor
         return factor, dim
     elif isinstance(expr, Derivative):
@@ -87,9 +83,7 @@ def collect_factor_and_dimension(expr: Expr):
     elif isinstance(expr, Function):
         fds = [collect_factor_and_dimension(arg) for arg in expr.args]
         dims = [
-            Dimension(1)
-            if SI.get_dimension_system().is_dimensionless(d[1]) else d[1]
-            for d in fds
+            Dimension(1) if SI.get_dimension_system().is_dimensionless(d[1]) else d[1] for d in fds
         ]
         return (expr.func(*(f[0] for f in fds)), *dims)
     elif isinstance(expr, Dimension):

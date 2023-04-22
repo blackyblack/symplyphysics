@@ -44,8 +44,7 @@ def calculate_current(current_in: Quantity) -> Quantity:
 def calculate_current_from_array(currents: List[Quantity]) -> Quantity:
     for idx, c in enumerate(currents):
         assert_equivalent_dimension(c, "validate_input", f"currents[{idx}]",
-                                    "calculate_current_from_array",
-                                    units.current)
+            "calculate_current_from_array", units.current)
     currents_law = law.subs(currents_total, len(currents) + 1).doit()
     unknown_current = current[len(currents) + 1]
     solved = solve(currents_law, unknown_current, dict=True)[0][unknown_current]

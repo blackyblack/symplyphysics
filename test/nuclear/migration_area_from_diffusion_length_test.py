@@ -22,11 +22,8 @@ def test_args():
 
 def test_basic_migration_area(test_args):
     result = migration_area.calculate_migration_area(test_args.Ld, test_args.th)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension,
-                                                     units.length**2)
-    result_area = convert_to(result,
-                             units.centimeter**2).subs(units.centimeter,
-                                                       1).evalf(2)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length**2)
+    result_area = convert_to(result, units.centimeter**2).subs(units.centimeter, 1).evalf(2)
     # water migration area = 78.8 cm^2
     assert result_area == approx(78.8, 0.01)
 

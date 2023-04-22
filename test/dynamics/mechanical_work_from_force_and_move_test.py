@@ -22,17 +22,12 @@ def test_args():
     angle_between_force_and_axis = Quantity(60 * units.degree)
     angle_between_movement_and_axis = Quantity(0 * units.degree)
     Args = namedtuple("Args", ["F", "S", "Fa", "Sa"])
-    return Args(F=F,
-                S=S,
-                Fa=angle_between_force_and_axis,
-                Sa=angle_between_movement_and_axis)
+    return Args(F=F, S=S, Fa=angle_between_force_and_axis, Sa=angle_between_movement_and_axis)
 
 
 def test_basic_work(test_args):
-    result = work_law.calculate_work(test_args.F, test_args.S, test_args.Fa,
-                                     test_args.Sa)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension,
-                                                     units.energy)
+    result = work_law.calculate_work(test_args.F, test_args.S, test_args.Fa, test_args.Sa)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
     result_work = convert_to(result, units.joule).subs(units.joule, 1).evalf(4)
     assert result_work == approx(150, 0.01)
 

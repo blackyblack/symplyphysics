@@ -21,21 +21,20 @@ infinite_multiplication_factor = symbols("infinite_multiplication_factor")
 effective_multiplication_factor = symbols("effective_multiplication_factor")
 
 law = Eq(
-    effective_multiplication_factor, infinite_multiplication_factor *
-    fast_non_leakage_probability * thermal_non_leakage_probability)
+    effective_multiplication_factor,
+    infinite_multiplication_factor * fast_non_leakage_probability * thermal_non_leakage_probability)
 
 
 def print() -> str:
     return print_expression(law)
 
 
-def calculate_multiplication_factor(
-        infinite_multiplication_factor_: float,
-        fast_non_leakage_probability_: Probability,
-        thermal_non_leakage_probability_: Probability) -> float:
+def calculate_multiplication_factor(infinite_multiplication_factor_: float,
+    fast_non_leakage_probability_: Probability,
+    thermal_non_leakage_probability_: Probability) -> float:
 
     result_factor_expr = solve(law, effective_multiplication_factor,
-                               dict=True)[0][effective_multiplication_factor]
+        dict=True)[0][effective_multiplication_factor]
     result_expr = result_factor_expr.subs({
         infinite_multiplication_factor: infinite_multiplication_factor_,
         fast_non_leakage_probability: fast_non_leakage_probability_.value,

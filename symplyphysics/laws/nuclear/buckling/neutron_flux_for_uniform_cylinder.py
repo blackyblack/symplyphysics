@@ -36,10 +36,8 @@ assert axial_constant == neutron_flux_for_uniform_slab.axial_constant.subs(
     neutron_flux_for_uniform_slab.slab_width, cylinder_height)
 
 law = Eq(
-    neutron_flux_function(radial_distance_from_center,
-                          axial_distance_from_center),
-    neutron_flux_power_constant *
-    besselj(0, radial_constant * radial_distance_from_center) *
+    neutron_flux_function(radial_distance_from_center, axial_distance_from_center),
+    neutron_flux_power_constant * besselj(0, radial_constant * radial_distance_from_center) *
     cos(axial_constant * axial_distance_from_center))
 
 # Check the solution by passing the known neutron flux to the geometric_buckling_from_neutron_flux.
@@ -58,8 +56,7 @@ law = Eq(
 # define flux function in cylindrical coordinates as a function of cylinder radius and height
 
 #TODO: consider removing CoordSys3D dependency
-cylindrical_coordinates = CoordSys3D("cylindrical_coordinates",
-                                     transformation="cylindrical")
+cylindrical_coordinates = CoordSys3D("cylindrical_coordinates", transformation="cylindrical")
 neutron_flux_function_cylindrical = law.subs({
     radial_distance_from_center: cylindrical_coordinates.r,
     axial_distance_from_center: cylindrical_coordinates.z

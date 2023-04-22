@@ -20,8 +20,7 @@ Ep2 = potential_energy.law.subs({
     potential_energy.height: height_2
 })
 law = [Ep2, Ep1]
-solved = solve(law, (height_1, potential_energy.potential_energy_of_body),
-               dict=True)[0][height_1]
+solved = solve(law, (height_1, potential_energy.potential_energy_of_body), dict=True)[0][height_1]
 answer = Eq(height_1, solved)
 
 print("\nFormula is:\n{}".format(potential_energy.print()))

@@ -22,12 +22,9 @@ def test_args():
 
 
 def test_basic_energy(test_args):
-    result = potential_energy.calculate_potential_energy(
-        test_args.m, test_args.h)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension,
-                                                     units.energy)
-    result_energy = convert_to(result, units.joule).subs(units.joule,
-                                                         1).evalf(3)
+    result = potential_energy.calculate_potential_energy(test_args.m, test_args.h)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
+    result_energy = convert_to(result, units.joule).subs(units.joule, 1).evalf(3)
     assert result_energy == approx(44.19, 0.01)
 
 

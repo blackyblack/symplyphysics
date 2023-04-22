@@ -12,9 +12,9 @@ def test_args():
     thermal_utilisation = Probability(0.7)
     Args = namedtuple("Args", ["n", "e", "p", "f"])
     return Args(n=neutron_reproduction,
-                e=fast_fission,
-                p=resonance_escape_probability,
-                f=thermal_utilisation)
+        e=fast_fission,
+        p=resonance_escape_probability,
+        f=thermal_utilisation)
 
 
 def test_basic_multiplication_factor(test_args):

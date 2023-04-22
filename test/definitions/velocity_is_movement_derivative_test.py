@@ -24,10 +24,8 @@ def test_args():
 
 
 def test_basic_velocity(test_args):
-    result = velocity_def.calculate_velocity(test_args.S0, test_args.S1,
-                                             test_args.t)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension,
-                                                     units.velocity)
+    result = velocity_def.calculate_velocity(test_args.S0, test_args.S1, test_args.t)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.velocity)
     result_current = convert_to(result, velocity_def.definition_units_SI).subs({
         units.meter: 1,
         units.second: 1

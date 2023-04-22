@@ -23,10 +23,8 @@ def test_args():
 
 
 def test_basic_energy(test_args):
-    result = inductor_law.calculate_accumulated_energy(test_args.Inductance,
-                                                       test_args.Current)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension,
-                                                     units.energy)
+    result = inductor_law.calculate_accumulated_energy(test_args.Inductance, test_args.Current)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
     result_power = convert_to(result, units.joule).subs(units.joule, 1).evalf(5)
     assert result_power == approx(0.01875, 0.00001)
 

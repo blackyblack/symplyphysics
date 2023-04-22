@@ -40,10 +40,8 @@ law = Eq(
 # - albedo boundary condition: Ф(Ralbedo) = 0
 
 # define flux function in spherical coordinates as a function of sphere radius
-spherical_coordinates = CoordSys3D("spherical_coordinates",
-                                   transformation="spherical")
-neutron_flux_function_spherical = law.subs(distance_from_center,
-                                           spherical_coordinates.r)
+spherical_coordinates = CoordSys3D("spherical_coordinates", transformation="spherical")
+neutron_flux_function_spherical = law.subs(distance_from_center, spherical_coordinates.r)
 
 solved = geometric_buckling_from_neutron_flux.apply_neutron_flux_function(
     neutron_flux_function_spherical.rhs)
