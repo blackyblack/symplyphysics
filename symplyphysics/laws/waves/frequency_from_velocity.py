@@ -3,19 +3,17 @@ from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expr
     validate_input_symbols, validate_output_symbol)
 
 # Description
-## If wave source moves in media, observed wave frequency differs from real.
-## If observer moves in media, observed wave frequency differs from real as well. This effect is also known as irrelative Doppler effect.
+## The Doppler effect or Doppler shift is the apparent change in frequency of a wave in relation to an observer moving relative to the wave source.
 
 # Law: fo = fs * (v + vo)/(v + vs), where
 ## fo is observed frequency,
 ## fs is source wave frequency,
 ## v is wave velocity in this media,
-## vo is observer velocity related to media,
-## vs is source velocity related to media.
+## vo is observer velocity relative to the medium (positive when moving towards source, negative when moving away from source),
+## vs is source velocity relative to the medium (positive when moving away from observer, negative when moving towards observer).
 
 # Conditions:
-## 1. Velocities vs and vo are much smaller than v.
-## 2. Positive velocity direction means observer moving towards a source or source moving away from observer.
+## - Velocities vs and vo are much smaller than v.
 
 observed_frequency = Symbol("observed_frequency", units.frequency)
 real_frequency = Symbol("real_frequency", units.frequency)

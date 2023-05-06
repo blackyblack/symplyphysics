@@ -10,7 +10,7 @@ from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expr
 # Law: fo = fs * sqrt((c - v)/(c + v)), where
 ## fo is observed frequency,
 ## fs is source wave frequency,
-## v is velocity of source related to observer (positive velocity direction means source moving towards observer),
+## v is velocity of source related to observer (positive when moving away from each other, negative when moving towards each other),
 ## c is speed of light.
 
 observed_frequency = Symbol("observed_frequency", units.frequency)
