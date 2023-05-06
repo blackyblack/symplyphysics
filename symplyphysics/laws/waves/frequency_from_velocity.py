@@ -14,6 +14,10 @@ from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expr
 
 # Conditions:
 ## - Velocities vs and vo are much smaller than v.
+## - Source and observer are moving directly towards or away from each other.
+
+# Note:
+## When direction of source and observer is not directed towards to/away from each other, one should introduce angle to the formula.
 
 observed_frequency = Symbol("observed_frequency", units.frequency)
 real_frequency = Symbol("real_frequency", units.frequency)

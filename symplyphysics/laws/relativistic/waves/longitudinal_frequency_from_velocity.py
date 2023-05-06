@@ -17,13 +17,13 @@ from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expr
 ## - Source and observer are moving directly towards or away from each other.
 
 # Note:
-## [Non relativistic](./frequency_from_velocity.py) Doppler effect formula look very similar to relativistic law if we
+## [Non relativistic](../../waves/frequency_from_velocity.py) Doppler effect formula look very similar to relativistic law if we
 ## consider using common notation for velocity signs - positive when moving away from observer, negative when moving towards observer:
 ## fo = fs * (v + vo)/(v + vs) => fo = fs * (v - vo)/(v + vs)
 
 # Note:
 ## When direction of source and observer is not directed towards to/away from each other, one should introduce angle to the formula and
-## consider transverse doppler effect (TDE).
+## consider transverse Doppler effect (TDE).
 
 observed_frequency = Symbol("observed_frequency", units.frequency)
 real_frequency = Symbol("real_frequency", units.frequency)

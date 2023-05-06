@@ -6,7 +6,7 @@ from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expr
 ## Circular frequency w is scalar measure of spinning or oscillation speed.
 ## Period of this spinning or oscillation is 2 * pi / w
 
-# Definition: T = 2 * pi  / w
+# Definition: T = 2 * pi / w
 # Where:
 ## T is period of oscillation
 ## w is circular frequency
