@@ -7,7 +7,7 @@ from symplyphysics import (
     SI,
     convert_to,
 )
-from symplyphysics.laws.waves import relativistic_frequency_from_velocity as doppler_law
+from symplyphysics.laws.waves import relativistic_longitudinal_frequency_from_velocity as doppler_law
 
 # Description. With help of online calculator at https://physics.icalculator.com/the-doppler-effect-in-light-waves-calculator.html:
 ## For red wave with frequency 384THz (3.84e14 Hz) emitted by object moving away from observer with velocity 0.1c = 29979245.8 m/s
