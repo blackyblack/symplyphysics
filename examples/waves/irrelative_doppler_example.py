@@ -2,11 +2,11 @@
 
 from sympy import solve
 from symplyphysics import (units, convert_to, expr_to_quantity, Quantity)
-from symplyphysics.laws.waves import frequency_from_velocity as doppler_law
+from symplyphysics.laws.waves import frequency_shift_from_velocity as doppler_law
 
 # This example show usefulness of Doppler law.
 ## Doppler effect is widely used in systems like radars. This effect is applicable not only to waves emitted by source, but also to waves reflected by it.
-## So radar emits wave with known frequancy and then receives reflected wave with frequency modified according to Doppler's effect.
+## So radar emits wave with known frequency and then receives reflected wave with frequency modified according to Doppler's effect.
 ## Then radar system can calculate velocity of object. Radars may use sound waves (ultrasonic), radio or infrared (electromagnetic).
 ## So for example ultrasonic radar emits 40000Hz wave. An object reflects this wave and at some moment radar receives this signal.
 ## We can calculate object's velocity.

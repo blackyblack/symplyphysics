@@ -15,6 +15,7 @@ from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expr
 
 # Conditions:
 ## - Source and observer are moving directly towards or away from each other.
+## - Wave speed is close to speed of light. It means this law is only applicable to electromagnetic waves.
 
 # Note:
 ## [Non relativistic](../../waves/frequency_from_velocity.py) Doppler effect formula look very similar to relativistic law if we
@@ -24,6 +25,10 @@ from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expr
 # Note:
 ## When direction of source and observer is not directed towards to/away from each other, one should introduce angle to the formula and
 ## consider transverse Doppler effect (TDE).
+
+# Note:
+## This is a special case, when wave speed in medium (vacuum) is close to speed of light. But relativistic version of classical
+## Doppler effect is more general case, that includes non-electromagnetic waves.
 
 observed_frequency = Symbol("observed_frequency", units.frequency)
 real_frequency = Symbol("real_frequency", units.frequency)
