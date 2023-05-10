@@ -1,16 +1,27 @@
 #!/usr/bin/env python3
 
-from sympy import solve
+from sympy import solve, symbols
 from symplyphysics import (print_expression, units, convert_to, Quantity)
 from symplyphysics.laws.gravity import gravity_force_from_mass_and_distance as gravity_law
 from symplyphysics.laws.dynamics import acceleration_from_force as newtons_law_2
 
-# This example calculates pendulum period from it's length, mass and free fall acceleration.
+# This example calculates ideal pendulum period from it's length, mass and free fall acceleration.
+## Ideal pendulum is an object hanging on a thread. In a field of gravitation it starts oscillating after been pushed out of balance.
+
+# Conditions:
+## 1. Ideal pendulum doesnt accept or loose any energy. No any friction.
+## 2. Object is small.
+## 3. Another end of a thread is not moving in current axis.
+## 4. Thread is weightless and doesnt change it's length.
 
 
+pendulum_length = symbols("pendulum_length")
+pendulum_mass = symbols("pendulum_mass")
 
+## 2-dimension system is selected for this task. Y-axis is along gravity vector. X-axis directed right. Zero is in balanced position.
 
-
+## Pendulum angle is angle between thread and gravity vector. In balanced position it is 0.
+pendulum_angle = symbols("pendulum_angle")
 
 
 '''
