@@ -5,6 +5,8 @@ from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expr
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.relativistic.waves import longitudinal_frequency_shift_from_absolute_velocities as general_doppler_law
 
+#TODO: add transverse Doppler effect with angle
+
 # Description
 ## Doppler effect is also applicable to electromagnetic waves in vacuum. As there is no any medium required for these waves to propagate,
 ## speed of source related to observer is used for the calculation of the Doppler effect.

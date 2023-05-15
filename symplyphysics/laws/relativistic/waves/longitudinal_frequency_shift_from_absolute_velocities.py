@@ -1,7 +1,6 @@
-import numbers
 from sympy import (Eq, solve, sqrt)
 from sympy.physics.units import speed_of_light
-from symplyphysics import (angle_type, units, expr_to_quantity, Quantity, Symbol, print_expression,
+from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
     validate_input_symbols, validate_output_symbol)
 
 # Description
