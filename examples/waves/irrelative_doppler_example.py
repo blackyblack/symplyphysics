@@ -31,6 +31,14 @@ result_velocity = expr_to_quantity(applied_solution)
 result = convert_to(result_velocity, units.kilometer / units.hour).subs({
     units.kilometer / units.hour: 1
 }).evalf(3)
+
+# Since object is not an emitter of signal, we cannot directly use Doppler law. Let's assume, we emit
+# 40000 Hz at the approaching car. The car should observe this signal with 41200 Hz when moving at the
+# resulting velocity. However, it should transmit the signal back to the radar. After applying the
+# Doppler law, we should get twice the expected frequency shift - 42400 Hz.
+# Therefore we should divide the resulting velocity by factor of two for the reflected signal.
+result = result / 2
+
 if (result > 0):
     print(f"Object is moving away from radar with {result} km/h velocity")
 elif (result < 0):
