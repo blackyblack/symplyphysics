@@ -7,7 +7,7 @@ from symplyphysics.laws.electricity.circuits import sum_of_all_voltages_in_loop_
 from symplyphysics.definitions import capacitance_from_charge_and_voltage as capacitance_definition
 from symplyphysics.definitions import self_induction_voltage_is_current_derivative as induction_voltage_definition
 from symplyphysics.definitions import current_is_charge_derivative as charge_definition
-from symplyphysics.definitions import period_from_circular_frequency as period_definition
+from symplyphysics.laws.kinematic import period_from_circular_frequency as period_definition
 
 # Description
 ## LC-oscillator is the circuit of inductor and capacitor.
@@ -131,7 +131,7 @@ voltage_diff_solved = voltage_diff_eq.subs({capacitor_voltage(time): voltage_dif
 assert simplify(voltage_diff_solved.lhs - voltage_diff_solved.rhs) == 0
 
 # 6. Derive period from frequency
-period_law = period_definition.definition.subs(period_definition.circular_frequency, frequency)
+period_law = period_definition.law.subs(period_definition.circular_frequency, frequency)
 period_solved = solve(period_law, period_definition.period, dict=True)[0][period_definition.period]
 
 assert simplify(period_solved - law.rhs) == 0

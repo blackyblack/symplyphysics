@@ -49,8 +49,9 @@ constant_accelerated_movement_function = dsolved_movement.rhs
 
 derived_law = Eq(distance(movement_time), constant_accelerated_movement_function)
 
-# Prove that constant_accelerated_movement_function equals to law.rhs, given C1 = initial_velocity, C2 = 0
-assert (expr_equals(derived_law.rhs.subs({'C1': initial_velocity, 'C2': 0}), law.rhs))
+# Prove that constant_accelerated_movement_function equals to law.rhs, given C1 = initial_velocity,
+# C2 = initial distance = 0
+assert expr_equals(derived_law.rhs.subs({"C1": initial_velocity, "C2": 0}), law.rhs)
 
 
 def print() -> str:
