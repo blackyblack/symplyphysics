@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from sympy import solve, symbols
+from sympy import solve, symbols, sin, cos, pi, Eq
 from symplyphysics import (print_expression, units, convert_to, Quantity)
 from symplyphysics.laws.kinematic import planar_projection_is_cosine as projector
 
@@ -14,6 +14,7 @@ from symplyphysics.laws.kinematic import planar_projection_is_cosine as projecto
 ## 4. Thread is weightless and doesnt change it's length.
 
 pendulum_length = symbols("pendulum_length")
+pendulum_mass = symbols("pendulum_mass")
 
 ## 2-dimension system is selected for this task. Y-axis is along gravity vector. X-axis directed right. Zero is in balanced position.
 
@@ -22,33 +23,33 @@ pendulum_angle = symbols("pendulum_angle")
 
 ## There are two forces in this task: thread reaction force as centripetal force and gravity force. Gravity force causes free fall acceleration - g independently from mass.
 ## Projection of gravity force to a tangental velocity causes tangential acceleration.
+gravity_acceleration = symbols("gravity_acceleration")
+tangential_acceleration = symbols("tangential_acceleration")
 
+tangential_acceleration = gravity_acceleration * sin(pi/2 - pendulum_angle )
 
+## Pendulum oscillation is cyclic transfer of energy from kinetic to potential. To set oscillation up we have to input some energy. Usually it is done by biasing the pendulum to some angle and letting it go.
+## Biasing the pendulum is giving to it some amount of potential energy.
 
-'''
-earth_mass = Quantity(5.9722e24 * units.kilogram)
-earth_radius = Quantity(6371 * units.kilometer)
+magnitude_angle = symbols("magnitude_angle")
 
-# Gravity force from gravity law
-gravity_force = solve(gravity_law.law, gravity_law.gravitational_force,
-    dict=True)[0][gravity_law.gravitational_force]
+amount_of_potential_energy = symbols("amount_of_potential_energy")
 
-# Acceleration from Newton's 2 law
-acceleration_expr = solve(newtons_law_2.law, newtons_law_2.acceleration,
-    dict=True)[0][newtons_law_2.acceleration]
+amount_of_potential_energy = pendulum_mass * gravity_acceleration * (pendulum_length - pendulum_length * cos(magnitude_angle))
 
-# probe mass disappears
-result_expr = acceleration_expr.subs({
-    newtons_law_2.force: gravity_force,
-    newtons_law_2.mass: gravity_law.second_object_mass
-})
-print(f"Gravitation acceleration expression is {print_expression(result_expr)}")
+## After 1/4 of oscillating period pendulum reaches it's lowest position with angle = 0 and maximum of velocity (all potential energy has been transformed to kinetic)
 
-result_acceleration = result_expr.subs({
-    gravity_law.first_object_mass: earth_mass,
-    gravity_law.distance_between_mass_centers: earth_radius
-})
-result = convert_to(result_acceleration,
-    units.meter / (units.second**2)).subs(units.meter / (units.second**2), 1).evalf(4)
-print(f"Gravity acceleration on Earth is {result}")
-'''
+magnitude_velocity = symbols("magnitude_velocity")
+amount_of_kinetic_energy = pendulum_mass * magnitude_velocity * magnitude_velocity / 2
+
+Equation_1 = Eq(amount_of_kinetic_energy, amount_of_potential_energy)
+
+## The pendulum's movement in 1/4 period is arc as a proportional part of 2*pi arc
+
+path = 2 * pi * pendulum_length * pendulum_angle / (2 * pi)
+
+## Also path is double-integrated acceleration with zero initial velocity.
+
+Equation_2 = Eq(path, integral(integral(tangential_acceleration)))
+
+## So that's the question. What is integration variable - time or angle? And what next?
