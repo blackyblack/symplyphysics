@@ -32,7 +32,7 @@ from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expr
 ## between source and observer.
 
 # Note:
-## When wave velocity is getting close to speed of light, we are not longer having observer and source velocities, but relativistic relative
+## When wave velocity is getting close to speed of light, we are no longer having observer and source velocities, but relativistic relative
 ## velocity.
 
 observed_frequency = Symbol("observed_frequency", units.frequency)
