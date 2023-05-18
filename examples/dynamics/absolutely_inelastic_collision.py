@@ -6,7 +6,7 @@ from symplyphysics.laws.dynamics import momentum_after_collision_equals_to_momen
 from symplyphysics.definitions import momentum_is_mass_times_velocity as momentum_def
 
 # Inelastic collision transforms two objects with masses m1, m2 and velocities v1 and v2 to one object with mass m = m1 + m2 and unknown velocity to be resolved
-# Assert 1-dimentional env
+# Assert 1-dimentional environment.
 # Let the first object be the bullet with mass of 10gram and velocity of 700m/s hits the second object - steady 75kg piece of plasticine, stucks in it and makes this plasticine move with some unknown velocity.
 # The space is 1-dimensional, all vectors are collinear with axis.
 

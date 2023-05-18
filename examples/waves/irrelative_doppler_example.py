@@ -2,11 +2,11 @@
 
 from sympy import solve
 from symplyphysics import (units, convert_to, expr_to_quantity, Quantity)
-from symplyphysics.laws.waves import frequency_from_velocity as doppler_law
+from symplyphysics.laws.waves import frequency_shift_from_velocity as doppler_law
 
 # This example show usefulness of Doppler law.
 ## Doppler effect is widely used in systems like radars. This effect is applicable not only to waves emitted by source, but also to waves reflected by it.
-## So radar emits wave with known frequancy and then receives reflected wave with frequency modified according to Doppler's effect.
+## So radar emits wave with known frequency and then receives reflected wave with frequency modified according to Doppler's effect.
 ## Then radar system can calculate velocity of object. Radars may use sound waves (ultrasonic), radio or infrared (electromagnetic).
 ## So for example ultrasonic radar emits 40000Hz wave. An object reflects this wave and at some moment radar receives this signal.
 ## We can calculate object's velocity.
@@ -31,6 +31,14 @@ result_velocity = expr_to_quantity(applied_solution)
 result = convert_to(result_velocity, units.kilometer / units.hour).subs({
     units.kilometer / units.hour: 1
 }).evalf(3)
+
+# Since object is not an emitter of signal, we cannot directly use Doppler law. Let's assume, we emit
+# 40000 Hz at the approaching car. The car should observe this signal with 41200 Hz when moving at the
+# resulting velocity. However, it should transmit the signal back to the radar. After applying the
+# Doppler law, we should get twice the expected frequency shift - 42400 Hz.
+# Therefore we should divide the resulting velocity by factor of two for the reflected signal.
+result = result / 2
+
 if (result > 0):
     print(f"Object is moving away from radar with {result} km/h velocity")
 elif (result < 0):
