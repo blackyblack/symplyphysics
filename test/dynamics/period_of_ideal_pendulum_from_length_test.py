@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
     SI,
 )
-from symplyphysics.laws.kinematic import period_of_ideal_pendulum_from_length as pendulum_period
+from symplyphysics.laws.dynamics import period_of_ideal_pendulum_from_length as pendulum_period
 
 
 @fixture

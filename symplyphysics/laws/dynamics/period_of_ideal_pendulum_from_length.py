@@ -1,4 +1,4 @@
-from sympy import (Derivative, Eq, Function as SymFunction, cos, diff, sin, solve, pi, sqrt, symbols)
+from sympy import (Derivative, Eq, Function as SymFunction, diff, sin, solve, pi, sqrt, symbols)
 from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
     validate_input_symbols, validate_output_symbol)
 from symplyphysics.core.expr_comparisons import expr_equals
@@ -7,6 +7,7 @@ from symplyphysics.laws.dynamics import potential_energy_from_mass_and_height as
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_velocity as kinetic_energy
 from symplyphysics.laws.kinematic import linear_velocity_from_angular_velocity_and_radius as angular_velocity_law
 from symplyphysics.laws.kinematic import period_from_circular_frequency as angular_frequency
+from symplyphysics.definitions import harmonic_oscillator_is_second_derivative_equation as oscillator
 
 # Description
 ## Ideal pendulum is an object hanging on a thread. In a field of gravitation it starts oscillating after been pushed out of balance.
@@ -72,39 +73,30 @@ total_energy_eq = Eq(total_energy, amount_of_kinetic_energy + amount_of_potentia
 
 ## Differentiate both sides of equation
 total_energy_diff_eq = Eq(diff(total_energy_eq.lhs, time), diff(total_energy_eq.rhs, time))
-total_energy_diff_solved = solve(total_energy_diff_eq, Derivative(pendulum_angle(time), (time, 2)), dict=True)[0][Derivative(pendulum_angle(time), (time, 2))]
+total_energy_diff_solved = solve(total_energy_diff_eq,
+    Derivative(pendulum_angle(time), (time, 2)),
+    dict=True)[0][Derivative(pendulum_angle(time), (time, 2))]
+total_energy_diff_solved_eq = Eq(Derivative(pendulum_angle(time), (time, 2)),
+    total_energy_diff_solved)
 
 #NOTE: large displacement angle (over 15 degrees) gives quite a complex solution for the differential equation.
 
 # For small angles, sin(pendulum_angle) can be reduced to pendulum_angle
-small_angle_harmonic_oscillation = total_energy_diff_solved.subs(sin(pendulum_angle(time)), pendulum_angle(time))
+small_angle_harmonic_oscillation_eq = total_energy_diff_solved_eq.subs(
+    sin(pendulum_angle(time)), pendulum_angle(time))
 
 # Will result in harmonic oscillator equation:
 ## Derivative(pendulum_angle(time), (time, 2)) = -free_fall_acceleration / pendulum_length * pendulum_angle(time)
-harmonic_oscillation_eq = Eq(Derivative(pendulum_angle(time), (time, 2)), small_angle_harmonic_oscillation)
-
-## dsolve() gives us solution in exponential form - we are looking for the solution as trigonometric function
-
-maximum_angle = symbols("maximum_angle")
-initial_phase = symbols("initial_phase")
-oscillation_angular_frequency = sqrt(free_fall_acceleration / pendulum_length)
-angle_function_eq = Eq(pendulum_angle(time), maximum_angle * cos(oscillation_angular_frequency * time + initial_phase))
-dsolved = harmonic_oscillation_eq.subs(pendulum_angle(time), angle_function_eq.rhs)
-assert expr_equals(dsolved.lhs, dsolved.rhs)
-
-## There are many solutions for harmonic_oscillation_eq. Add condition, that at initial point of time (time = 0)
-## pendulum is at its highest point (pendulum_angle(time) = maximum_angle).
-## Let's prove that initial phase of cosine function (angle_function_eq) should be zero.
-
-initial_pendulum_condition = Eq(pendulum_angle(0), maximum_angle)
-angle_function_at_zero_time_eq = angle_function_eq.subs(time, 0)
-## Initial phase solutions have period of 2*pi. Take first solution.
-initial_phase_solved = solve([angle_function_at_zero_time_eq, initial_pendulum_condition], (maximum_angle, initial_phase), dict=True)[0][initial_phase]
-assert expr_equals(initial_phase_solved, 0)
+oscillator_eq = oscillator.definition.subs(oscillator.time, time)
+oscillator_eq = oscillator_eq.subs(oscillator.displacement_function(time), pendulum_angle(time))
+angular_frequency_solved = solve([oscillator_eq, small_angle_harmonic_oscillation_eq],
+    (oscillator.angular_frequency, pendulum_angle(time)),
+    dict=True)[0][oscillator.angular_frequency]
 
 ## Check that expected period matches our law.
 ## Square roots fail to compare with each other. Raise both parts to power of 2 before checking for equality.
-oscillation_period_derived = angular_frequency.law.subs(angular_frequency.circular_frequency, oscillation_angular_frequency).rhs
+oscillation_period_derived = angular_frequency.law.subs(angular_frequency.circular_frequency,
+    angular_frequency_solved).rhs
 assert expr_equals(oscillation_period_derived**2, law.rhs**2)
 
 

@@ -52,7 +52,8 @@ classical_law = general_doppler_law.law.subs({
     general_doppler_law.source_velocity: source_velocity,
     general_doppler_law.observer_velocity: observer_velocity,
     (general_doppler_law.source_velocity / speed_of_light)**2: 0,
-    (general_doppler_law.observer_velocity / speed_of_light)**2: 0})
+    (general_doppler_law.observer_velocity / speed_of_light)**2: 0
+})
 assert expr_equals(classical_law.rhs, law.rhs)
 
 #TODO: add proof for classical Doppler effect
