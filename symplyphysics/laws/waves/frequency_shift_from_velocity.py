@@ -1,11 +1,10 @@
-from sympy import (Eq, solve)
+from sympy import (Eq, pi, solve)
 from sympy.physics.units import speed_of_light
 from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
     validate_input_symbols, validate_output_symbol)
 from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.waves import frequency_shift_from_velocity_and_angle as classical_doppler_with_angle
 from symplyphysics.laws.relativistic.waves import longitudinal_frequency_shift_from_absolute_velocities as general_doppler_law
-
-#TODO: add Doppler effect with angle
 
 # Description
 ## The Doppler effect or Doppler shift is the apparent change in frequency of a wave in relation to an observer moving relative to the wave source.
@@ -54,6 +53,24 @@ classical_law = general_doppler_law.law.subs({
     (general_doppler_law.source_velocity / speed_of_light)**2: 0,
     (general_doppler_law.observer_velocity / speed_of_light)**2: 0})
 assert expr_equals(classical_law.rhs, law.rhs)
+
+# Confirm that Doppler effect for collinear movement is a subset of Doppler effect with angles
+
+## Classical Doppler effect angles are calculated with respect to the signal vector, directed
+## from source to observer. Hence source moving directly towards observer has 0 angle. Therefore
+## its cosine is positive, when moving towards observer.
+## This law has reverse notation - source velocity is positive when moving away from the observer.
+## Therefore we should use opposite direction for source - set pi as source angle.
+observed_frequency_zero_angles = classical_doppler_with_angle.law.subs({
+    classical_doppler_with_angle.observer_angle: 0,
+    classical_doppler_with_angle.source_angle: pi,
+    classical_doppler_with_angle.observer_speed: observer_velocity,
+    classical_doppler_with_angle.source_speed: source_velocity,
+    classical_doppler_with_angle.real_frequency: real_frequency,
+    classical_doppler_with_angle.wave_velocity: wave_velocity
+}).rhs
+
+assert expr_equals(observed_frequency_zero_angles, law.rhs)
 
 #TODO: add proof for classical Doppler effect
 
