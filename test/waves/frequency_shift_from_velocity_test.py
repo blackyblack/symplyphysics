@@ -43,6 +43,7 @@ def test_basic_frequency(test_args):
     # Doppler effect is irrelative at relatively low velocities
     assert result_freq_2 == approx(result_freq_1, 0.001)
 
+
 def test_fast_velocity_frequency(test_args):
     # observer is immobile and emitter is moving
     # speed of sound * 0.8
