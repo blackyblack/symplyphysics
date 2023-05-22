@@ -20,6 +20,7 @@ from symplyphysics.laws.relativistic.waves import longitudinal_frequency_shift_f
 ## - Source and observer velocities are less or equal than wave velocity. Otherwise emitted waves are left behind the source or never
 ## reach the observer.
 ## - Source and observer are moving directly towards or away from each other (collinear motion).
+## - Motion is in 1-D space.
 
 # Note:
 ## When source is moving with speed equal to wave velocity, observed frequency goes to infinity. This effect is known as sonic boom.
@@ -51,7 +52,8 @@ classical_law = general_doppler_law.law.subs({
     general_doppler_law.source_velocity: source_velocity,
     general_doppler_law.observer_velocity: observer_velocity,
     (general_doppler_law.source_velocity / speed_of_light)**2: 0,
-    (general_doppler_law.observer_velocity / speed_of_light)**2: 0})
+    (general_doppler_law.observer_velocity / speed_of_light)**2: 0
+})
 assert expr_equals(classical_law.rhs, law.rhs)
 
 # Confirm that Doppler effect for collinear movement is a subset of Doppler effect with angles

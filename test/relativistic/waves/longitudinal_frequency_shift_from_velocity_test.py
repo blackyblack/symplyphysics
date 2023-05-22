@@ -21,6 +21,7 @@ def test_args():
     Args = namedtuple("Args", ["object_velocity", "emitted_frequency"])
     return Args(object_velocity=object_velocity, emitted_frequency=emitted_frequency)
 
+
 def test_basic_frequency(test_args):
     result = doppler_law.calculate_observed_frequency(test_args.emitted_frequency,
         test_args.object_velocity)
@@ -28,12 +29,14 @@ def test_basic_frequency(test_args):
     result_freq = convert_to(result, units.hertz).subs(units.hertz, 1).evalf(4)
     assert result_freq == approx(383999999616000, 0.1)
 
+
 def test_bad_velocity(test_args):
     vb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         doppler_law.calculate_observed_frequency(test_args.emitted_frequency, vb)
     with raises(TypeError):
         doppler_law.calculate_observed_frequency(test_args.emitted_frequency, 100)
+
 
 def test_bad_frequency(test_args):
     fb = Quantity(1 * units.coulomb)

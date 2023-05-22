@@ -19,7 +19,7 @@ from symplyphysics import (units, angle_type, expr_to_quantity, Quantity, Symbol
 # Conditions:
 ## - Source and observer velocities are less or equal than wave velocity. Otherwise emitted waves are left behind the source or never
 ## reach the observer.
-
+## - Motion is in 1-D space.
 
 observed_frequency = Symbol("observed_frequency", units.frequency)
 real_frequency = Symbol("real_frequency", units.frequency)
@@ -29,8 +29,10 @@ observer_speed = Symbol("observer_speed", units.velocity)
 source_angle = Symbol("source_angle", angle_type)
 observer_angle = Symbol("observer_angle", angle_type)
 
-law = Eq(observed_frequency,
-    real_frequency * (wave_velocity - observer_speed * cos(observer_angle)) / (wave_velocity - source_speed * cos(source_angle)))
+law = Eq(
+    observed_frequency,
+    real_frequency * (wave_velocity - observer_speed * cos(observer_angle)) /
+    (wave_velocity - source_speed * cos(source_angle)))
 
 #TODO: add proof for Doppler effect
 
@@ -47,11 +49,13 @@ def print() -> str:
     observer_angle_=observer_angle)
 @validate_output_symbol(observed_frequency)
 def calculate_observed_frequency(real_frequency_: Quantity, wave_velocity_: Quantity,
-    source_speed_: Quantity, observer_speed_: Quantity,
-    source_angle_: float | Quantity, observer_angle_: float | Quantity) -> Quantity:
+    source_speed_: Quantity, observer_speed_: Quantity, source_angle_: float | Quantity,
+    observer_angle_: float | Quantity) -> Quantity:
     #HACK: sympy angles are always in radians
-    source_angle_radians = source_angle_ if isinstance(source_angle_, numbers.Number) else source_angle_.scale_factor
-    observer_angle_radians = observer_angle_ if isinstance(observer_angle_, numbers.Number) else observer_angle_.scale_factor
+    source_angle_radians = source_angle_ if isinstance(source_angle_,
+        numbers.Number) else source_angle_.scale_factor
+    observer_angle_radians = observer_angle_ if isinstance(observer_angle_,
+        numbers.Number) else observer_angle_.scale_factor
     result_expr = solve(law, observed_frequency, dict=True)[0][observed_frequency]
     frequency_applied = result_expr.subs({
         real_frequency: real_frequency_,

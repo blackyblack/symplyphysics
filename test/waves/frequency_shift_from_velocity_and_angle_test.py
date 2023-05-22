@@ -25,8 +25,10 @@ def test_args():
     horn_frequency = Quantity(2000 * units.hertz)
     source_angle = Quantity(30 * units.degree, dimension=angle_type)
     zero_angle = Quantity(0 * units.radian, dimension=angle_type)
-    Args = namedtuple("Args",
-        ["sound_velocity", "train_speed", "bike_speed", "zero_velocity", "horn_frequency", "source_angle", "zero_angle"])
+    Args = namedtuple("Args", [
+        "sound_velocity", "train_speed", "bike_speed", "zero_velocity", "horn_frequency",
+        "source_angle", "zero_angle"
+    ])
     return Args(sound_velocity=sound_velocity,
         zero_velocity=zero_velocity,
         train_speed=train_speed,
@@ -55,14 +57,36 @@ def test_basic_frequency(test_args):
     assert result_freq_2 == approx(result_freq_1, 0.001)
 
 
+# Classical Doppler effect does not have frequency shift when moving at 90 degrees
+def test_transverse_frequency(test_args):
+    source_angle = Quantity(90 * units.degree, dimension=angle_type)
+    result = doppler_law.calculate_observed_frequency(test_args.horn_frequency,
+        test_args.sound_velocity, test_args.train_speed, test_args.zero_velocity, source_angle,
+        test_args.zero_angle)
+    result_freq = int(convert_to(result, units.hertz).subs(units.hertz, 1).evalf(6))
+    initial_freq = int(
+        convert_to(test_args.horn_frequency, units.hertz).subs(units.hertz, 1).evalf(6))
+    assert result_freq == approx(initial_freq, 0.001)
+
+    result = doppler_law.calculate_observed_frequency(test_args.horn_frequency,
+        test_args.sound_velocity, test_args.zero_velocity, test_args.train_speed,
+        test_args.zero_angle, source_angle)
+    result_freq = int(convert_to(result, units.hertz).subs(units.hertz, 1).evalf(6))
+    initial_freq = int(
+        convert_to(test_args.horn_frequency, units.hertz).subs(units.hertz, 1).evalf(6))
+    assert result_freq == approx(initial_freq, 0.001)
+
+
 def test_bad_velocity(test_args):
     vb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         doppler_law.calculate_observed_frequency(test_args.horn_frequency, vb,
-            test_args.train_speed, test_args.bike_speed, test_args.source_angle, test_args.zero_angle)
+            test_args.train_speed, test_args.bike_speed, test_args.source_angle,
+            test_args.zero_angle)
     with raises(TypeError):
         doppler_law.calculate_observed_frequency(test_args.horn_frequency, 100,
-            test_args.train_speed, test_args.bike_speed, test_args.source_angle, test_args.zero_angle)
+            test_args.train_speed, test_args.bike_speed, test_args.source_angle,
+            test_args.zero_angle)
     with raises(errors.UnitsError):
         doppler_law.calculate_observed_frequency(test_args.horn_frequency, test_args.sound_velocity,
             vb, test_args.bike_speed, test_args.source_angle, test_args.zero_angle)
@@ -81,10 +105,12 @@ def test_bad_frequency(test_args):
     fb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         doppler_law.calculate_observed_frequency(fb, test_args.sound_velocity,
-            test_args.train_speed, test_args.bike_speed, test_args.source_angle, test_args.zero_angle)
+            test_args.train_speed, test_args.bike_speed, test_args.source_angle,
+            test_args.zero_angle)
     with raises(TypeError):
         doppler_law.calculate_observed_frequency(100, test_args.sound_velocity,
-            test_args.train_speed, test_args.bike_speed, test_args.source_angle, test_args.zero_angle)
+            test_args.train_speed, test_args.bike_speed, test_args.source_angle,
+            test_args.zero_angle)
 
 
 def test_bad_angle(test_args):

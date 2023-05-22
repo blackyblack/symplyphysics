@@ -4,7 +4,10 @@ from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expr
     validate_input_symbols, validate_output_symbol)
 
 # Description
-## General relativistic Doppler effect that is classical Doppler effect with relativistic coefficient.
+## General relativistic Doppler effect that is classical Doppler effect with relativistic coefficient. This law is not
+## used for actual calculations because relativistic effects are not visible for acoustic waves. And for
+## electromagnetic waves it is hard to define velocity relative to medium.
+## This law is used to show the connection between classical and relativistic Doppler laws.
 
 # Law: fo = fs * (1 - vo/v) / (1 + vs/v) * sqrt((1 - (vs/c)**2) / (1 - (vo/c)**2)), where
 ## fo is observed frequency,
@@ -41,26 +44,24 @@ source_velocity = Symbol("source_velocity", units.velocity)
 observer_velocity = Symbol("observer_velocity", units.velocity)
 wave_velocity = Symbol("wave_velocity", units.velocity)
 
-law = Eq(observed_frequency,
-    real_frequency * (1 - observer_velocity / wave_velocity) / (1 + source_velocity / wave_velocity) * sqrt(
-        (1 - (source_velocity / speed_of_light)**2) / (1 - (observer_velocity / speed_of_light)**2)))
+law = Eq(
+    observed_frequency,
+    real_frequency * (1 - observer_velocity / wave_velocity) /
+    (1 + source_velocity / wave_velocity) * sqrt(
+    (1 - (source_velocity / speed_of_light)**2) / (1 - (observer_velocity / speed_of_light)**2)))
 
 
 def print() -> str:
     return print_expression(law)
 
 
-@validate_input_symbols(
-        real_frequency_=real_frequency,
-        wave_velocity_=wave_velocity,
-        source_velocity_=source_velocity,
-        observer_velocity_=observer_velocity)
+@validate_input_symbols(real_frequency_=real_frequency,
+    wave_velocity_=wave_velocity,
+    source_velocity_=source_velocity,
+    observer_velocity_=observer_velocity)
 @validate_output_symbol(observed_frequency)
-def calculate_observed_frequency(
-    real_frequency_: Quantity,
-    wave_velocity_: Quantity,
-    source_velocity_: Quantity,
-    observer_velocity_: Quantity) -> Quantity:
+def calculate_observed_frequency(real_frequency_: Quantity, wave_velocity_: Quantity,
+    source_velocity_: Quantity, observer_velocity_: Quantity) -> Quantity:
 
     result_expr = solve(law, observed_frequency, dict=True)[0][observed_frequency]
     frequency_applied = result_expr.subs({
