@@ -1,6 +1,7 @@
-from sympy import (Eq, solve, pi, sqrt, Derivative, symbols, cos, simplify)
+from sympy import (Eq, solve, pi, sqrt, Derivative, simplify)
 from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, Function, print_expression,
     validate_input_symbols, validate_output_symbol)
+from symplyphysics.core.expr_comparisons import expr_equals
 
 from symplyphysics.laws.electricity.circuits import sum_of_all_currents_through_an_electrical_node_is_zero as kirchhoff_law
 from symplyphysics.laws.electricity.circuits import sum_of_all_voltages_in_loop_is_zero as kirchhoff_law_2
@@ -8,6 +9,7 @@ from symplyphysics.definitions import capacitance_from_charge_and_voltage as cap
 from symplyphysics.definitions import self_induction_voltage_is_current_derivative as induction_voltage_definition
 from symplyphysics.definitions import current_is_charge_derivative as charge_definition
 from symplyphysics.laws.kinematic import period_from_circular_frequency as period_definition
+from symplyphysics.definitions import harmonic_oscillator_is_second_derivative_equation as oscillator
 
 # Description
 ## LC-oscillator is the circuit of inductor and capacitor.
@@ -118,23 +120,19 @@ voltage_diff_eq = Eq(capacitor_voltage(time), capacitor_voltage_solved)
 
 ## Expected solution for U"(t) = - 1/LC * U(t) is:
 ## A * e^(i * w * t) + B * e^(-i * w * t), where w = 1 / sqrt(LC)
-## This form is known to be represented as cosine function:
-## A * cos(w * t + phi), or sine function:
-## A * sin(w * t + phi + pi / 2)
 
-## Let's check this solution:
-amplitude, phase = symbols("amplitude phase")
-frequency = 1 / sqrt(inductance * capacitance)
-voltage_diff_solution = amplitude * cos(frequency * time + phase)
-voltage_diff_solved = voltage_diff_eq.subs({capacitor_voltage(time): voltage_diff_solution})
-
-assert simplify(voltage_diff_solved.lhs - voltage_diff_solved.rhs) == 0
+oscillator_eq = oscillator.definition.subs(oscillator.time, time)
+oscillator_eq = oscillator_eq.subs(oscillator.displacement_function(time), capacitor_voltage(time))
+angular_frequency_solved = simplify(
+    solve([oscillator_eq, voltage_diff_eq], (oscillator.angular_frequency, capacitor_voltage(time)),
+    dict=True)[0][oscillator.angular_frequency])
 
 # 6. Derive period from frequency
-period_law = period_definition.law.subs(period_definition.circular_frequency, frequency)
+period_law = period_definition.law.subs(period_definition.circular_frequency,
+    angular_frequency_solved)
 period_solved = solve(period_law, period_definition.period, dict=True)[0][period_definition.period]
-
-assert simplify(period_solved - law.rhs) == 0
+## Square roots fail to compare with each other. Raise both parts to power of 2 before checking for equality.
+assert expr_equals(period_solved**2, law.rhs**2)
 
 
 @validate_input_symbols(inductance_=inductance, capacitance_=capacitance)

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from symplyphysics import Quantity, convert_to, expr_to_quantity, print_expression, units
-from symplyphysics.laws.kinematic import period_of_ideal_pendulum_from_length as pendulum_period
+from symplyphysics.laws.dynamics import period_of_ideal_pendulum_from_length as pendulum_period
 
 # This example calculates ideal pendulum period from its length
 
