@@ -1,4 +1,5 @@
-from sympy import (Derivative, Eq, Function as SymFunction, diff, sin, solve, pi, sqrt, symbols)
+from sympy import (Derivative, Eq, Function as SymFunction, cos, diff, sin, solve, pi, sqrt,
+    symbols)
 from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
     validate_input_symbols, validate_output_symbol)
 from symplyphysics.core.expr_comparisons import expr_equals

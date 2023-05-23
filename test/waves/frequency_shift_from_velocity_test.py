@@ -38,7 +38,7 @@ def test_basic_frequency(test_args):
     assert SI.get_dimension_system().equivalent_dims(result_1.dimension, units.frequency)
     assert SI.get_dimension_system().equivalent_dims(result_2.dimension, units.frequency)
     result_freq_1 = int(convert_to(result_1, units.hertz).subs(units.hertz, 1).evalf(4))
-    assert result_freq_1 == approx(2015, 0.1)
+    assert result_freq_1 == approx(2015, 0.001)
     result_freq_2 = int(convert_to(result_2, units.hertz).subs(units.hertz, 1).evalf(4))
     # Doppler effect is irrelative at relatively low velocities
     assert result_freq_2 == approx(result_freq_1, 0.001)

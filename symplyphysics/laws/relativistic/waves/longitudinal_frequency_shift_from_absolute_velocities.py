@@ -4,7 +4,10 @@ from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expr
     validate_input_symbols, validate_output_symbol)
 
 # Description
-## General relativistic Doppler effect that is classical Doppler effect with relativistic coefficient.
+## General relativistic Doppler effect that is classical Doppler effect with relativistic coefficient. This law is not
+## used for actual calculations because relativistic effects are not visible for acoustic waves. And for
+## electromagnetic waves it is hard to define velocity relative to medium.
+## This law is used to show the connection between classical and relativistic Doppler laws.
 
 # Law: fo = fs * (1 - vo/v) / (1 + vs/v) * sqrt((1 - (vs/c)**2) / (1 - (vo/c)**2)), where
 ## fo is observed frequency,
