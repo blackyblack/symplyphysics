@@ -9,7 +9,7 @@ from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expr
 ## U is inner energy,
 ## m is mass of a gas,
 ## R is ideal gas constant,
-## T is temperature,
+## T is absolute temperature in Kelvins,
 ## M is mass of one mole of this gas.
 
 # Conditions
