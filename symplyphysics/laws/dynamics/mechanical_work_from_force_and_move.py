@@ -26,7 +26,6 @@ def print() -> str:
     return print_expression(law)
 
 
-#TODO: consider removing 'validate_input' and pass angles as float numbers
 @validate_input_symbols(force_=force, distance_=distance)
 @validate_input(force_angle=angle_type, distance_angle=angle_type)
 @validate_output_symbol(work)
