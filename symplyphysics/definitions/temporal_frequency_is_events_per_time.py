@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (Dimensionless, units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input_symbols, validate_output_symbol)
+from symplyphysics import (Dimensionless, units, expr_to_quantity, Quantity, Symbol,
+    print_expression, validate_input_symbols, validate_output_symbol)
 
 # Description
 ## Frequency is the number of occurrences of a repeating event per unit of time.

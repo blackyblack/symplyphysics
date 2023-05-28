@@ -23,7 +23,8 @@ law = Eq(temporal_frequency, 1 / period)
 # Period is time span between events, so we are having 1 event per 'period' time
 frequency_of_single_event = frequency_def.definition.subs({
     frequency_def.events: 1,
-    frequency_def.time: period}).rhs
+    frequency_def.time: period
+}).rhs
 assert expr_equals(frequency_of_single_event, law.rhs)
 
 

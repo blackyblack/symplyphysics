@@ -20,14 +20,14 @@ circular_frequency = Symbol("circular_frequency", units.frequency)
 
 law = Eq(period, 2 * pi / circular_frequency)
 
-
 # Derive the same law from angular frequency definition
 
 # 2 * pi radians is a full cycle and 'period' is time to complete full cycle rotation
 frequency_of_full_cycle_def = frequency_def.definition.subs({
     frequency_def.radians: 2 * pi,
     frequency_def.time: period,
-    frequency_def.angular_frequency: circular_frequency})
+    frequency_def.angular_frequency: circular_frequency
+})
 full_cycle_period = solve(frequency_of_full_cycle_def, period, dict=True)[0][period]
 assert expr_equals(full_cycle_period, law.rhs)
 

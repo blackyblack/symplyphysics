@@ -15,6 +15,7 @@ from symplyphysics.laws.thermodynamics import inner_energy_from_temperature as i
 
 CELSIUS_TO_KELVIN_OFFSET = int(273)
 
+
 @fixture
 def test_args():
     m = Quantity(4 * units.gram)
@@ -23,11 +24,13 @@ def test_args():
     Args = namedtuple("Args", ["m", "T", "M"])
     return Args(m=m, T=T, M=M)
 
+
 def test_basic_energy(test_args):
     result = inner_energy_law.calculate_inner_energy(test_args.m, test_args.T, test_args.M)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
     result_pressure = convert_to(result, units.joule).subs(units.joule, 1).evalf(2)
-    assert result_pressure == approx(3656, 0.01)        
+    assert result_pressure == approx(3656, 0.01)
+
 
 def test_bad_mass(test_args):
     mb = Quantity(1 * units.coulomb)
@@ -36,12 +39,14 @@ def test_bad_mass(test_args):
     with raises(TypeError):
         inner_energy_law.calculate_inner_energy(100, test_args.T, test_args.M)
 
+
 def test_bad_temperature(test_args):
     tb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         inner_energy_law.calculate_inner_energy(test_args.m, tb, test_args.M)
     with raises(TypeError):
         inner_energy_law.calculate_inner_energy(test_args.m, 100, test_args.M)
+
 
 def test_bad_mole_mass(test_args):
     Mb = Quantity(1 * units.coulomb)

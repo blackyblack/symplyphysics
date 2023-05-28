@@ -24,7 +24,8 @@ def test_args():
 def test_basic_frequency(test_args):
     result = frequency_def.calculate_frequency(test_args.N, test_args.t)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.frequency)
-    result_frequency = convert_to(result, frequency_def.definition_units_SI).subs(units.hertz, 1).evalf(2)
+    result_frequency = convert_to(result, frequency_def.definition_units_SI).subs(units.hertz,
+        1).evalf(2)
     assert result_frequency == approx(0.416, 0.01)
 
 

@@ -21,5 +21,6 @@ print(
     f"Pendulum with length = {pendulum_length_inches} {units.inch} has oscillating period {oscillating_period_seconds} {units.second}\n"
 )
 
-oscillating_frequency_hertz = frequency_def.law.rhs.subs(frequency_def.period, oscillating_period_seconds)
+oscillating_frequency_hertz = frequency_def.law.rhs.subs(frequency_def.period,
+    oscillating_period_seconds)
 print(f"Oscillating frequency is {oscillating_frequency_hertz} {units.hertz}\n")
