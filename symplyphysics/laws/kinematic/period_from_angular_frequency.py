@@ -2,7 +2,7 @@ from sympy import (Eq, solve, pi)
 from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
     validate_input_symbols, validate_output_symbol)
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.definitions import angular_frequency_is_radians_per_time as frequency_def
+from symplyphysics.laws.kinematic import angular_frequency_from_radians_per_time as frequency_def
 
 # Description
 ## Circular (angular) frequency w is scalar measure of spinning or oscillation speed. Angular frequency is
@@ -20,10 +20,10 @@ circular_frequency = Symbol("circular_frequency", units.frequency)
 
 law = Eq(period, 2 * pi / circular_frequency)
 
-# Derive the same law from angular frequency definition
+# Derive the same law from angular frequency
 
 # 2 * pi radians is a full cycle and 'period' is time to complete full cycle rotation
-frequency_of_full_cycle_def = frequency_def.definition.subs({
+frequency_of_full_cycle_def = frequency_def.law.subs({
     frequency_def.radians: 2 * pi,
     frequency_def.time: period,
     frequency_def.angular_frequency: circular_frequency

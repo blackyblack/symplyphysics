@@ -6,7 +6,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.dynamics import potential_energy_from_deformation as spring_energy
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_velocity as kinetic_energy
 from symplyphysics.definitions import velocity_is_movement_derivative as velocity_def
-from symplyphysics.laws.kinematic import period_from_circular_frequency as period_definition
+from symplyphysics.laws.kinematic import period_from_angular_frequency as period_definition
 from symplyphysics.definitions import harmonic_oscillator_is_second_derivative_equation as oscillator
 
 # Description

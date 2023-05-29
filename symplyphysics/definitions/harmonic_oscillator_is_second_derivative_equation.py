@@ -16,7 +16,7 @@ from symplyphysics.core.quantity_decorator import validate_input, validate_outpu
 ## x(t) is function of dispalacement of the oscillator over time,
 ## t is time,
 ## w is angular frequency,
-##   see [circular frequency](../laws/kinematic/period_from_circular_frequency.py) implementation,
+##   see [angular frequency](../laws/kinematic/period_from_angular_frequency.py) implementation,
 ## d^2 is second derivative.
 
 # Conditions:

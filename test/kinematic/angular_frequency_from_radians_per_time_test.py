@@ -8,7 +8,7 @@ from symplyphysics import (
     Quantity,
     SI,
 )
-from symplyphysics.definitions import angular_frequency_is_radians_per_time as frequency_def
+from symplyphysics.laws.kinematic import angular_frequency_from_radians_per_time as frequency_def
 
 # Description
 ## Circle is rotating to 9.42 radians in 5.4 seconds. It should have angular frequency of 1.744 rad/s.
@@ -25,7 +25,7 @@ def test_args():
 def test_basic_frequency(test_args):
     result = frequency_def.calculate_frequency(test_args.N, test_args.t)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, 1 / units.time)
-    result_frequency = convert_to(result, frequency_def.definition_units_SI).subs({
+    result_frequency = convert_to(result, units.radian / units.second).subs({
         units.radian: 1,
         units.second: 1
     }).evalf(2)
