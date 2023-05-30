@@ -1,4 +1,4 @@
-from sympy import (Derivative, Eq, Function as SymFunction, cos, diff, sin, solve, pi, sqrt,
+from sympy import (Derivative, Eq, Function as SymFunction, diff, sin, solve, pi, sqrt,
     symbols)
 from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
     validate_input_symbols, validate_output_symbol)
@@ -7,7 +7,7 @@ from symplyphysics.laws.kinematic import planar_projection_is_cosine as projecto
 from symplyphysics.laws.dynamics import potential_energy_from_mass_and_height as potential_energy
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_velocity as kinetic_energy
 from symplyphysics.laws.kinematic import linear_velocity_from_angular_velocity_and_radius as angular_velocity_law
-from symplyphysics.laws.kinematic import period_from_circular_frequency as angular_frequency
+from symplyphysics.laws.kinematic import period_from_angular_frequency as angular_frequency
 from symplyphysics.definitions import harmonic_oscillator_is_second_derivative_equation as oscillator
 
 # Description

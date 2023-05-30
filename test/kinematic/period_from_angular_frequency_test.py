@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
     SI,
 )
-from symplyphysics.laws.kinematic import period_from_circular_frequency as period_def
+from symplyphysics.laws.kinematic import period_from_angular_frequency as period_def
 
 
 @fixture

@@ -22,12 +22,19 @@ mole_mass = Symbol("mole_mass", units.mass / units.amount_of_substance)
 
 law = Eq(inner_energy, 1.5 * mass_of_gas * units.molar_gas_constant * temperature / mole_mass)
 
+
 def print() -> str:
     return print_expression(law)
 
+
 @validate_input_symbols(mass_of_gas_=mass_of_gas, temperature_=temperature, mole_mass_=mole_mass)
 @validate_output_symbol(inner_energy)
-def calculate_inner_energy(mass_of_gas_: Quantity, temperature_: Quantity, mole_mass_: Quantity) -> Quantity:
+def calculate_inner_energy(mass_of_gas_: Quantity, temperature_: Quantity,
+    mole_mass_: Quantity) -> Quantity:
     solved = solve(law, inner_energy, dict=True)[0][inner_energy]
-    result_expr = solved.subs({mass_of_gas: mass_of_gas_, temperature: temperature_, mole_mass: mole_mass_})
+    result_expr = solved.subs({
+        mass_of_gas: mass_of_gas_,
+        temperature: temperature_,
+        mole_mass: mole_mass_
+    })
     return expr_to_quantity(result_expr)
