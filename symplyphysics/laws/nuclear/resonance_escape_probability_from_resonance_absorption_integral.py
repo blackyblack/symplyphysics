@@ -9,7 +9,7 @@ from symplyphysics import (
     convert_to,
     validate_input_symbols,
 )
-from symplyphysics.core.probability import Probability
+from symplyphysics.core.symbols.probability import Probability
 
 # Description
 ## The resonance escape probability, symbolized by p, is the probability that a neutron will be

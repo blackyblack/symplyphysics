@@ -5,7 +5,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.core.probability import Probability
+from symplyphysics.core.symbols.probability import Probability
 from symplyphysics.laws.nuclear import thermal_non_leakage_probability_from_diffusion_length as non_leakage_factor
 
 

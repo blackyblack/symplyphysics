@@ -5,7 +5,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.core.probability import Probability
+from symplyphysics.core.symbols.probability import Probability
 from symplyphysics.laws.nuclear import thermal_utilisation_factor_from_macroscopic_absorption_cross_sections as utilisation_factor
 
 

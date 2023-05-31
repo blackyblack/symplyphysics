@@ -9,7 +9,7 @@ from symplyphysics import (
     convert_to,
     validate_input_symbols,
 )
-from symplyphysics.core.probability import Probability
+from symplyphysics.core.symbols.probability import Probability
 
 # Description
 ## Thermal neutron utilization factor (f), is the ratio of the number of neutrons absorbed in the fuel

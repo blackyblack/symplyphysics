@@ -9,7 +9,7 @@ from symplyphysics import (
     convert_to,
     validate_input_symbols,
 )
-from symplyphysics.core.probability import Probability
+from symplyphysics.core.symbols.probability import Probability
 
 # Description
 ## Ptnl (fast non-leakage factor) is the ratio of the number of fast neutrons that do not leak from the reactor

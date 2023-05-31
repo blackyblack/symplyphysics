@@ -1,6 +1,6 @@
 from sympy import (Eq, solve, symbols)
 from symplyphysics import print_expression
-from symplyphysics.core.probability import Probability
+from symplyphysics.core.symbols.probability import Probability
 
 # Description
 ## Infinite multiplication factor: k_infinite = η * ε * p * f
