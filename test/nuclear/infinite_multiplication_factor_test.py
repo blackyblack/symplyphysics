@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-from symplyphysics.core.probability import Probability
+from symplyphysics.core.symbols.probability import Probability
 from symplyphysics.laws.nuclear import infinite_multiplication_factor
 
 

@@ -1,6 +1,6 @@
 from sympy import (Eq, solve, symbols)
 from symplyphysics import print_expression
-from symplyphysics.core.probability import Probability
+from symplyphysics.core.symbols.probability import Probability
 
 # Description
 ## Effective multiplication factor: k_effective = k_infinite * Pf * Pt

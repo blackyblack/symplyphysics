@@ -7,19 +7,19 @@ from symplyphysics import (
     SI,
     convert_to,
 )
+from symplyphysics.core.symbols.celsius import Celsius, to_kelvin_quantity
 from symplyphysics.laws.thermodynamics import inner_energy_from_temperature as inner_energy_law
 
 # Description
 ## With help of calculator on https://www.calculatoratoz.com/ru/molar-internal-energy-of-ideal-gas-calculator/Calc-1705 I calculated inner energy of 1 mole (4 gram) of Helium with it's molar mass 4 gramm/mole at 20 Celsius degrees.
 ## It should be 3656 Joules of energy.
 
-CELSIUS_TO_KELVIN_OFFSET = int(273)
-
 
 @fixture
 def test_args():
     m = Quantity(4 * units.gram)
-    T = Quantity((20 + CELSIUS_TO_KELVIN_OFFSET) * units.kelvin)
+    normal_temperature = Celsius(20)
+    T = to_kelvin_quantity(normal_temperature)
     M = Quantity(4 * units.gram / units.mole)
     Args = namedtuple("Args", ["m", "T", "M"])
     return Args(m=m, T=T, M=M)

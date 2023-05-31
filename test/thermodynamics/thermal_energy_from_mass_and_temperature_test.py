@@ -7,6 +7,7 @@ from symplyphysics import (
     SI,
     convert_to,
 )
+from symplyphysics.core.symbols.celsius import Celsius, to_kelvin_quantity
 from symplyphysics.laws.thermodynamics import thermal_energy_from_mass_and_temperature as amount_energy
 
 
@@ -16,8 +17,10 @@ from symplyphysics.laws.thermodynamics import thermal_energy_from_mass_and_tempe
 def test_args():
     C = Quantity(4200 * units.joule / (units.kilogram * units.kelvin))
     m = Quantity(0.5 * units.kilogram)
-    t1 = Quantity(273 * units.kelvin)
-    t2 = Quantity(323 * units.kelvin)
+    initial_temperature = Celsius(0)
+    t1 = to_kelvin_quantity(initial_temperature)
+    final_temperature = Celsius(50)
+    t2 = to_kelvin_quantity(final_temperature)
     Args = namedtuple("Args", ["C", "m", "t1", "t2"])
     return Args(C=C, m=m, t1=t1, t2=t2)
 
