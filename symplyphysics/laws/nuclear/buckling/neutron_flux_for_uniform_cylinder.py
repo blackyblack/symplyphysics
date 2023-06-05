@@ -54,9 +54,10 @@ law = Eq(
 # radial_constant is the solution of the Bessel function J0, with a condition the neutron flux cannot
 # have negative values (finite flux condition) and with zero flux boundary condition
 
-# define flux function in cylindrical coordinates as a function of cylinder radius and height
+# Define flux function in cylindrical coordinates as a function of cylinder radius and height
 
-#TODO: consider removing CoordSys3D dependency
+# CoordinateSystem class does not work here, because Laplacian obtains coordinate system from
+# the provided scalar field (neutron_flux function)
 cylindrical_coordinates = CoordSys3D("cylindrical_coordinates", transformation="cylindrical")
 unit_length = Quantity(1, dimension=units.length)
 neutron_flux_function_cylindrical = law.subs({

@@ -1,4 +1,4 @@
-from sympy import (Eq, symbols, pi, cos)
+from sympy import (Eq, pi, cos)
 from sympy.vector import CoordSys3D
 from symplyphysics import (Function, Quantity, Symbol, print_expression, units)
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_flux
