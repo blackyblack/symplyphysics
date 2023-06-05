@@ -1,7 +1,7 @@
-from sympy import (Eq, pi, symbols, Function as SymFunction, cos)
+from sympy import (Eq, pi, cos)
 from sympy.vector import CoordSys3D
 from sympy.functions.special.bessel import besselj
-from symplyphysics import print_expression
+from symplyphysics import (Function, Quantity, Symbol, print_expression, units)
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_flux
 from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_slab
 
@@ -20,11 +20,12 @@ from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_slab
 ## H - height of the cylinder.
 ## Ф(r, z) - neutron flux density.
 
-neutron_flux_power_constant = symbols("C1", constant=True)
-radial_distance_from_center = symbols("radial_distance_from_center")
-axial_distance_from_center = symbols("axial_distance_from_center")
-cylinder_radius, cylinder_height = symbols("cylinder_radius cylinder_height")
-neutron_flux_function = symbols("neutron_flux_function", cls=SymFunction)
+neutron_flux_power_constant = Symbol("C1", 1 / units.length**2 / units.time, constant=True)
+radial_distance_from_center = Symbol("radial_distance_from_center", units.length)
+axial_distance_from_center = Symbol("axial_distance_from_center", units.length)
+cylinder_radius = Symbol("cylinder_radius", units.length)
+cylinder_height = Symbol("cylinder_height", units.length)
+neutron_flux = Function("neutron_flux", 1 / units.length**2 / units.time)
 
 # These constants are being used for geometric buckling calculation
 # See: [geometric buckling for uniform cylinder](geometric_buckling_for_uniform_cylinder.py)
@@ -36,7 +37,7 @@ assert axial_constant == neutron_flux_for_uniform_slab.axial_constant.subs(
     neutron_flux_for_uniform_slab.slab_width, cylinder_height)
 
 law = Eq(
-    neutron_flux_function(radial_distance_from_center, axial_distance_from_center),
+    neutron_flux(radial_distance_from_center, axial_distance_from_center),
     neutron_flux_power_constant * besselj(0, radial_constant * radial_distance_from_center) *
     cos(axial_constant * axial_distance_from_center))
 
@@ -57,9 +58,10 @@ law = Eq(
 
 #TODO: consider removing CoordSys3D dependency
 cylindrical_coordinates = CoordSys3D("cylindrical_coordinates", transformation="cylindrical")
+unit_length = Quantity(1, dimension=units.length)
 neutron_flux_function_cylindrical = law.subs({
-    radial_distance_from_center: cylindrical_coordinates.r,
-    axial_distance_from_center: cylindrical_coordinates.z
+    radial_distance_from_center: cylindrical_coordinates.r * unit_length,
+    axial_distance_from_center: cylindrical_coordinates.z * unit_length
 })
 
 solved = geometric_buckling_from_neutron_flux.apply_neutron_flux_function(

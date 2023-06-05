@@ -1,6 +1,6 @@
-from sympy import Eq, symbols, pi, Function as SymFunction, cos
+from sympy import (Eq, symbols, pi, cos)
 from sympy.vector import CoordSys3D
-from symplyphysics import print_expression
+from symplyphysics import (Function, Quantity, Symbol, print_expression, units)
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_flux
 
 # Description
@@ -15,16 +15,16 @@ from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_
 ## a - slab width.
 ## Ф(x) - neutron flux density.
 
-neutron_flux_power_constant = symbols("C1", constant=True)
-distance_from_center = symbols("distance_from_center")
-slab_width = symbols("slab_width")
-neutron_flux_function = symbols("neutron_flux_function", cls=SymFunction)
+neutron_flux_power_constant = Symbol("C1", 1 / units.length**2 / units.time, constant=True)
+distance_from_center = Symbol("distance_from_center", units.length)
+slab_width = Symbol("slab_width", units.length)
+neutron_flux = Function("neutron_flux", 1 / units.length**2 / units.time)
 
 # This constant is being used for geometric buckling calculation
 # See: [geometric buckling for uniform slab](geometric_buckling_for_uniform_slab.py)
 axial_constant = pi / slab_width
 
-law = Eq(neutron_flux_function(distance_from_center),
+law = Eq(neutron_flux(distance_from_center),
     neutron_flux_power_constant * cos(axial_constant * distance_from_center))
 
 # Check the solution by passing the known neutron flux to the geometric_buckling_from_neutron_flux.
@@ -38,7 +38,8 @@ law = Eq(neutron_flux_function(distance_from_center),
 
 # define flux function in cartesian coordinates as a function of x coordinate
 cartesian_coordinates = CoordSys3D("cartesian_coordinates")
-neutron_flux_function_cartesian = law.subs(distance_from_center, cartesian_coordinates.x)
+unit_length = Quantity(1, dimension=units.length)
+neutron_flux_function_cartesian = law.subs(distance_from_center, cartesian_coordinates.x * unit_length)
 
 solved = geometric_buckling_from_neutron_flux.apply_neutron_flux_function(
     neutron_flux_function_cartesian.rhs)

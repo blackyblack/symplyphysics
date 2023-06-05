@@ -1,6 +1,6 @@
-from sympy import Eq, symbols, pi, Function as SymFunction, sin
+from sympy import Eq, pi, sin
 from sympy.vector import CoordSys3D
-from symplyphysics import print_expression
+from symplyphysics import (Function, Quantity, Symbol, print_expression, units)
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_flux
 
 # Description
@@ -15,17 +15,17 @@ from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_
 ## R - sphere radius.
 ## Ф(r) - neutron flux density.
 
-neutron_flux_power_constant = symbols("C1", constant=True)
-distance_from_center = symbols("distance_from_center")
-sphere_radius = symbols("sphere_radius")
-neutron_flux_function = symbols("neutron_flux_function", cls=SymFunction)
+neutron_flux_power_constant = Symbol("C1", 1 / units.length / units.time, constant=True)
+distance_from_center = Symbol("distance_from_center", units.length)
+sphere_radius = Symbol("sphere_radius", units.length)
+neutron_flux = Function("neutron_flux", 1 / units.length**2 / units.time)
 
 # This constant is being used for geometric buckling calculation
 # See: [geometric buckling for uniform sphere](geometric_buckling_for_uniform_sphere.py)
 radial_constant = pi / sphere_radius
 
 law = Eq(
-    neutron_flux_function(distance_from_center),
+    neutron_flux(distance_from_center),
     neutron_flux_power_constant * sin(radial_constant * distance_from_center) /
     distance_from_center)
 
@@ -41,7 +41,8 @@ law = Eq(
 
 # define flux function in spherical coordinates as a function of sphere radius
 spherical_coordinates = CoordSys3D("spherical_coordinates", transformation="spherical")
-neutron_flux_function_spherical = law.subs(distance_from_center, spherical_coordinates.r)
+unit_length = Quantity(1, dimension=units.length)
+neutron_flux_function_spherical = law.subs(distance_from_center, spherical_coordinates.r * unit_length)
 
 solved = geometric_buckling_from_neutron_flux.apply_neutron_flux_function(
     neutron_flux_function_spherical.rhs)

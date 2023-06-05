@@ -15,6 +15,8 @@ from symplyphysics.core.symbols.probability import Probability
 ## k_effective (effective multiplication factor) is ratio of the neutrons produced by fission in one neutron
 ##   generation to the number of neutrons lost through absorption and leakage in the preceding neutron generation.
 
+# All input parameters are dimensionless - use SymPy symbols.
+
 fast_non_leakage_probability = symbols("fast_non_leakage_probability")
 thermal_non_leakage_probability = symbols("thermal_non_leakage_probability")
 infinite_multiplication_factor = symbols("infinite_multiplication_factor")
