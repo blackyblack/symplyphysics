@@ -17,15 +17,18 @@ def test_args():
     # cube reactor with side = 1 meter
     cartesian_coordinates = CoordSys3D("cartesian_coordinates")
     cube_side = Quantity(1 * units.meter)
-    neutron_flux = (cos((pi / cube_side) * cartesian_coordinates.x) *
-        cos(pi / cube_side * cartesian_coordinates.y) *
-        cos(pi / cube_side * cartesian_coordinates.z))
+    unit_length = Quantity(1 * units.meter)
+    neutron_flux_unit = Quantity(1 / units.meter**2 / units.second)
+    neutron_flux = neutron_flux_unit * (cos(pi / cube_side * cartesian_coordinates.x * unit_length) *
+        cos(pi / cube_side * cartesian_coordinates.y * unit_length) *
+        cos(pi / cube_side * cartesian_coordinates.z * unit_length))
     neutrons_per_fission = 1
     macro_fission_cross_section = Quantity(0.006 / units.centimeter)
     macro_abs_cross_section = Quantity(0.0025 / units.centimeter)
     diffusion_coefficient = Quantity(2 * units.centimeter)
     Args = namedtuple("Args", ["f", "v", "Sf", "Sa", "D"])
-    return Args(f=neutron_flux,
+    return Args(
+        f=neutron_flux,
         v=neutrons_per_fission,
         Sf=macro_fission_cross_section,
         Sa=macro_abs_cross_section,

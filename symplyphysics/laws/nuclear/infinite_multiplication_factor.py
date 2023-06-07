@@ -16,6 +16,8 @@ from symplyphysics.core.symbols.probability import Probability
 ## k_infinite (infinite multiplication factor) is the ratio of the neutrons produced by fission in one neutron
 ##   generation to the number of neutrons lost through absorption in the preceding neutron generation
 
+# All input parameters are dimensionless - use SymPy symbols.
+
 neutron_reproduction = symbols("neutron_reproduction")
 thermal_utilisation = symbols("thermal_utilisation")
 resonance_escape_probability = symbols("resonance_escape_probability")
