@@ -11,8 +11,6 @@ from symplyphysics import (
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_flux as buckling
 
 
-#TODO: function does not have correct dimensions
-
 @fixture
 def test_args():
     # spherical reactor with radius = 10 centimeter

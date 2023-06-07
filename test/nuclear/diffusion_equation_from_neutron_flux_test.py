@@ -10,8 +10,6 @@ from symplyphysics import (
 from symplyphysics.laws.nuclear import diffusion_equation_from_neutron_flux as diffusion_equation
 
 
-#TODO: function does not have correct dimensions
-
 @fixture
 def test_args():
     # cube reactor with side = 1 meter
