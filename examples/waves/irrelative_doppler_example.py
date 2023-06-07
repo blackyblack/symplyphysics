@@ -8,15 +8,15 @@ from symplyphysics.laws.waves import frequency_shift_from_velocity as doppler_la
 ## Doppler effect is widely used in systems like radars. This effect is applicable not only to waves emitted by source, but also to waves reflected by it.
 ## So radar emits wave with known frequency and then receives reflected wave with frequency modified according to Doppler's effect.
 ## Then radar system can calculate velocity of object. Radars may use sound waves (ultrasonic), radio or infrared (electromagnetic).
-## So for example ultrasonic radar emits 40000Hz wave. An object reflects this wave and at some moment radar receives this signal.
+## So for example ultrasonic radar emits 40 kHz wave. An object reflects this wave and at some moment radar receives this signal.
 ## We can calculate object's velocity.
 
 sound_velocity = Quantity(340 * units.meter / units.second)
 # Zero velocity we are going to use as a velocity of the radar related to air.
 zero_velocity = Quantity(0)
-emitter_frequency = Quantity(40000 * units.hertz)
+emitter_frequency = Quantity(40 * units.kilo * units.hertz)
 # Choose any frequency and obtain the result
-signal_frequency = Quantity(41200 * units.hertz)
+signal_frequency = Quantity(41.2 * units.kilo * units.hertz)
 
 solution = solve(doppler_law.law, doppler_law.source_velocity,
     dict=True)[0][doppler_law.source_velocity]

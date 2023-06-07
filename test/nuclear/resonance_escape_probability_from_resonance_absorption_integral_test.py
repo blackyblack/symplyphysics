@@ -11,9 +11,9 @@ from symplyphysics.laws.nuclear import resonance_escape_probability_from_resonan
 @fixture
 def test_args():
     # U-238 atomic number density = 0.984 atoms per (barn * cm)
-    atomic_number_density_abs = Quantity(0.984E+24 / units.centimeter**3)
+    atomic_number_density_abs = Quantity(0.984e24 / units.centimeter**3)
     # UO2 fuel rod with diameter = 1 cm has effective resonance integral = 20.5 barns
-    resonance_integral = Quantity(20.5E-24 * units.centimeter**2)
+    resonance_integral = Quantity(20.5e-24 * units.centimeter**2)
     # U-238 with carbon moderator average lethargy decrement = 0.1573
     average_lethargy_change = 0.1573
     # Carbon macroscopic cross-section = 2820 cm^-1

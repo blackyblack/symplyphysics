@@ -11,8 +11,8 @@ gravity_constant_value = convert_to(units.gravitational_constant,
     units.newton * units.meter**2 / units.kilogram**2).evalf(5)
 gravity_constant = gravity_constant_value.subs(units.newton * units.meter**2 / units.kilogram**2,
     1).evalf(5)
-earth_mass = 5.976e+24  # kilogram
-earth_radius = 6.371e+6  # meter
+earth_mass = 5.9722e24  # kilogram
+earth_radius = 6.371e6  # meter
 
 solved = solve(acceleration.law, acceleration.free_fall_acceleration,
     dict=True)[0][acceleration.free_fall_acceleration]

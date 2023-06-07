@@ -11,12 +11,12 @@ from symplyphysics.laws.gravity import free_fall_acceleration_from_height as fre
 
 
 # G - universal gravity constant  6.672e-11 N*m^2/kg^2
-# M - Earth mass constant         5.976e+24 kg
-# R - Earth radius constant       6.371e+6 m
+# M - Earth mass constant         5.9722e24 kg
+# R - Earth radius constant       6371 km
 @fixture
 def test_args():
-    earth_mass = Quantity(5.976e+24 * units.kilogram)
-    earth_radius = Quantity(6.371e+6 * units.meter)
+    earth_mass = Quantity(5.9722e24 * units.kilogram)
+    earth_radius = Quantity(6371 * units.kilometer)
     height_from_surface = Quantity(1 * units.meter)
     Args = namedtuple("Args", ["earth_mass", "earth_radius", "height_from_surface"])
     return Args(earth_mass=earth_mass,
@@ -30,7 +30,7 @@ def test_basic_acceleration(test_args):
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.acceleration)
     result_acceleration = convert_to(result,
         units.meter / units.second**2).subs(units.meter / units.second**2, 1).evalf(6)
-    assert result_acceleration == approx(9.82316, 0.005)
+    assert result_acceleration == approx(9.823, 0.001)
 
 
 def test_bad_earth_mass(test_args):

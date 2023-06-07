@@ -15,9 +15,8 @@ from symplyphysics.laws.electricity import power_is_proportional_voltage_and_cur
 
 # water parameters: density and specific heat capacity
 water_density = Quantity(1000 * units.kilogram / units.meter**3)
-water_heat_capacity = Quantity(4200 * units.joule / (units.kilogram * units.kelvin))
+water_heat_capacity = Quantity(4.2 * units.kilo * units.joule / (units.kilogram * units.kelvin))
 
-#TODO: use kilo, mega and so on
 # kettle parameters: power and volume
 kettle_power = Quantity(1500 * units.watt)
 kettle_volume = Quantity(0.5 * units.liter)

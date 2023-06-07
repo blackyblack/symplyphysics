@@ -10,13 +10,13 @@ from symplyphysics import (
 from symplyphysics.laws.electricity import energy_accumulated_in_capacitor_from_capacitance_and_voltage as capacitor_law
 
 # Description
-## Assert we have 0.22uF capacitor charged to 10 volts.
-## According to law we should have amount of energy accumulated in this capacitor equals to 0.22 * 0.001 * 10**2 / 2 = 0.011 Joules.
+## Assert we have 220 uF capacitor charged to 10 volts.
+## According to law we should have amount of energy accumulated in this capacitor equals to 220 * 0.000001 * 10**2 / 2 = 0.011 Joules.
 
 
 @fixture
 def test_args():
-    Capacitance = Quantity(0.00022 * units.farad)
+    Capacitance = Quantity(220 * units.micro * units.farad)
     Voltage = Quantity(10 * units.volt)
     Args = namedtuple("Args", ["Capacitance", "Voltage"])
     return Args(Capacitance=Capacitance, Voltage=Voltage)

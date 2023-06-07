@@ -16,7 +16,7 @@ from symplyphysics.laws.electricity import energy_accumulated_in_inductor_from_i
 
 @fixture
 def test_args():
-    Inductance = Quantity(0.15 * units.henry)
+    Inductance = Quantity(150 * units.milli * units.henry)
     Current = Quantity(0.5 * units.ampere)
     Args = namedtuple("Args", ["Inductance", "Current"])
     return Args(Inductance=Inductance, Current=Current)

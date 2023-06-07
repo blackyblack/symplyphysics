@@ -10,13 +10,13 @@ from symplyphysics import (
 from symplyphysics.definitions import self_induction_voltage_is_current_derivative as self_induction_def
 
 # Description
-## Current through 0.0025 henry inductor increases from 0 to 0.5A in 5 seconds.
-## Self- induction voltage should be -0.00025 volts
+## Current through 2.5 millihenry inductor increases from 0 to 0.5A in 5 seconds.
+## Self-induction voltage should be -0.00025 volts
 
 
 @fixture
 def test_args():
-    L = Quantity(0.0025 * units.henry)
+    L = Quantity(2.5 * units.milli * units.henry)
     I0 = Quantity(0 * units.ampere)
     I1 = Quantity(0.5 * units.ampere)
     t = Quantity(5 * units.second)

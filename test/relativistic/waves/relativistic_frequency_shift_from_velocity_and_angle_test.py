@@ -17,7 +17,7 @@ from symplyphysics.laws.relativistic.waves import frequency_shift_from_velocity_
 def test_args():
     # speed of light * 0.9
     object_velocity = Quantity(269813212.2 * units.meter / units.second)
-    # emitted wavelength is 5.5 * 10^-7 meters
+    # emitted wavelength is 5.5 * 10^-7 meters (frequency is 5.45 * 10^14 Hz)
     emitted_frequency = Quantity(5.45077e14 * units.hertz)
     # angle of approach is 30 degrees (angle of recession is 150 degrees)
     source_angle = Quantity(30 * units.degree, dimension=angle_type)

@@ -8,6 +8,7 @@ from symplyphysics import (
     SI,
 )
 from symplyphysics.laws.kinematic import accelerated_velocity_from_time as accelerated_velocity_law
+
 # Description
 ## We are having object falling with initial speed 2 m/s directed upwards and 9.8 m/s**2 gravitation acceleration.
 ## Calculate speed after 5 secs of flight.
