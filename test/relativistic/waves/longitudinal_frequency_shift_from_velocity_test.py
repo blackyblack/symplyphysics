@@ -11,7 +11,7 @@ from symplyphysics.laws.relativistic.waves import longitudinal_frequency_shift_f
 
 # Description. With help of online calculator at https://physics.icalculator.com/the-doppler-effect-in-light-waves-calculator.html:
 ## For red wave with frequency 384THz (3.84e14 Hz) emitted by object moving away from observer with velocity 0.1c = 29979245.8 m/s
-## observed frequency should be 34734106894080
+## observed frequency should be 347341068940800
 
 
 @fixture
