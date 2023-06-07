@@ -10,11 +10,11 @@ from symplyphysics import (
 from symplyphysics.laws.electricity import power_from_energy_time as power_def
 
 
-# How much power did the heater use if it is known that it gave off 20,000 joules
+# How much power did the heater use if it is known that it gave off 20 kilojoules
 # of energy in 35 seconds? Consider that all energy consumed equals energy given up.
 @fixture
 def test_args():
-    Q = Quantity(20000 * units.joule)
+    Q = Quantity(20 * units.kilo * units.joule)
     t = Quantity(35 * units.second)
     Args = namedtuple("Args", ["Q", "t"])
     return Args(Q=Q, t=t)

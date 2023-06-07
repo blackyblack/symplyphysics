@@ -1,7 +1,7 @@
 from sympy import (Eq, solve, Expr, symbols, simplify)
 from sympy.vector import Laplacian
-from symplyphysics import (SI, Function, units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_output_symbol)
+from symplyphysics import (SI, Function, units, expr_to_quantity, Quantity, Symbol,
+    print_expression, validate_output_symbol)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import collect_factor_and_dimension
 from symplyphysics.laws.nuclear import diffusion_equation_from_neutron_flux as diffusion_equation
@@ -30,14 +30,15 @@ neutron_flux_laplacian = Function("neutron_flux_laplacian", 1 / units.length**4 
 # original dimension / units.length**2
 assert neutron_flux_laplacian.dimension == diffusion_equation.neutron_flux_laplacian.dimension
 
-neutron_flux_laplacian_definition = Eq(neutron_flux_laplacian(flux_position), Laplacian(neutron_flux(flux_position)), evaluate=False)
+neutron_flux_laplacian_definition = Eq(neutron_flux_laplacian(flux_position),
+    Laplacian(neutron_flux(flux_position)),
+    evaluate=False)
 
 # neutron_flux_function should be a function on CoordSys3D, eg:
 #   spherical_coordinates = CoordSys3D("spherical_coordinates", transformation="spherical")
 #   neutron_flux_function(spherical_coordinates.r)
 law = Eq(geometric_buckling_squared,
     -1 * neutron_flux_laplacian(flux_position) / neutron_flux(flux_position))
-
 
 # Check laplacian definition is the same as in diffusion equation
 
@@ -56,7 +57,8 @@ def apply_neutron_flux_function(neutron_flux_function_: Expr) -> Expr:
     # Manually divide to unit_length to get Laplacian dimension. CoordSys3D coordinates are dimensionless, hence
     # Laplacian cannot properly calculate resulting dimension.
     unit_length = Quantity(1, dimension=units.length)
-    neutron_flux_laplacian_eval = neutron_flux_laplacian_definition.rhs.subs(neutron_flux(flux_position), neutron_flux_function_).doit() / unit_length**2
+    neutron_flux_laplacian_eval = neutron_flux_laplacian_definition.rhs.subs(
+        neutron_flux(flux_position), neutron_flux_function_).doit() / unit_length**2
     applied_law = law.subs(neutron_flux_laplacian(flux_position), neutron_flux_laplacian_eval)
     applied_law = applied_law.subs(neutron_flux(flux_position), neutron_flux_function_)
     return simplify(applied_law)

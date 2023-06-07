@@ -13,9 +13,9 @@ from symplyphysics.laws.nuclear import macroscopic_cross_section_from_microscopi
 @fixture
 def test_args():
     # carbon microscopic cross-section is 5.01 barn
-    microscopic_cross_section = Quantity(5.01E-24 * units.centimeter**2)
+    microscopic_cross_section = Quantity(5.01e-24 * units.centimeter**2)
     # NC = 1 * 2.75*10^22 atoms of carbon/cm^3
-    atomic_number_density = Quantity(2.75E+22 / units.centimeter**3)
+    atomic_number_density = Quantity(2.75e22 / units.centimeter**3)
     Args = namedtuple("Args", ["b", "N"])
     return Args(b=microscopic_cross_section, N=atomic_number_density)
 

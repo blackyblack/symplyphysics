@@ -11,7 +11,7 @@ from symplyphysics.laws.relativistic.waves import longitudinal_frequency_shift_f
 
 # Description. With help of online calculator at https://physics.icalculator.com/the-doppler-effect-in-light-waves-calculator.html:
 ## For red wave with frequency 384THz (3.84e14 Hz) emitted by object moving away from observer with velocity 0.1c = 29979245.8 m/s
-## observed frequency should be 383999999616000 Hz.
+## observed frequency should be 347341068940800
 
 
 @fixture
@@ -26,8 +26,8 @@ def test_basic_frequency(test_args):
     result = doppler_law.calculate_observed_frequency(test_args.emitted_frequency,
         test_args.object_velocity)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.frequency)
-    result_freq = convert_to(result, units.hertz).subs(units.hertz, 1).evalf(4)
-    assert result_freq == approx(383999999616000, 0.1)
+    result_freq = convert_to(result, units.hertz).subs(units.hertz, 1).evalf(6)
+    assert result_freq == approx(3.473e14, 0.001)
 
 
 def test_bad_velocity(test_args):

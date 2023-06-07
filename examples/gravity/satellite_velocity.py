@@ -29,8 +29,8 @@ print(
 )
 
 ## As a curve radius we are having radius of the planet plus desired height of the orbit. Let's take Earth as an example and 100km height.
-planet_radius_ = Quantity(6400 * units.kilometer)
-planet_mass = Quantity(5.9742e24 * units.kilogram)
+planet_radius_ = Quantity(6371 * units.kilometer)
+planet_mass = Quantity(5.9722e24 * units.kilogram)
 height_above_surface_ = Quantity(100 * units.kilometer)
 
 required_velocity_expression = satellite_velocity.subs({

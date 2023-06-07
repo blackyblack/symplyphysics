@@ -15,7 +15,7 @@ from symplyphysics.laws.thermodynamics import thermal_energy_from_mass_and_tempe
 # Specific heat capacity of water is 4200 J/kg*K , ignore losses.
 @fixture
 def test_args():
-    C = Quantity(4200 * units.joule / (units.kilogram * units.kelvin))
+    C = Quantity(4.2 * units.kilo * units.joule / (units.kilogram * units.kelvin))
     m = Quantity(0.5 * units.kilogram)
     initial_temperature = Celsius(0)
     t1 = to_kelvin_quantity(initial_temperature)

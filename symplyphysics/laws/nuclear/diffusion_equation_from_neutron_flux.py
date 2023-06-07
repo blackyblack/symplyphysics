@@ -48,14 +48,15 @@ flux_position = symbols("flux_position")
 neutron_flux = Function("neutron_flux", 1 / units.length**2 / units.time)
 neutron_flux_laplacian = Function("neutron_flux_laplacian", 1 / units.length**4 / units.time)
 
-neutron_flux_laplacian_definition = Eq(neutron_flux_laplacian(flux_position), Laplacian(neutron_flux(flux_position)), evaluate=False)
+neutron_flux_laplacian_definition = Eq(neutron_flux_laplacian(flux_position),
+    Laplacian(neutron_flux(flux_position)),
+    evaluate=False)
 
 law = Eq(
     -1 * diffusion_coefficient * neutron_flux_laplacian(flux_position) +
     macroscopic_absorption_cross_section * neutron_flux(flux_position),
     (1 / effective_multiplication_factor) * neutrons_per_fission *
     macroscopic_fission_cross_section * neutron_flux(flux_position))
-
 
 # As Laplacian is a second derivative over space coordinates (x, y, z), resulting dimension should be
 # original dimension / units.length**2
@@ -71,7 +72,8 @@ def apply_neutron_flux_function(neutron_flux_function_: Expr) -> Expr:
     # Manually divide to unit_length to get Laplacian dimension. CoordSys3D coordinates are dimensionless, hence
     # Laplacian cannot properly calculate resulting dimension.
     unit_length = Quantity(1, dimension=units.length)
-    neutron_flux_laplacian_eval = neutron_flux_laplacian_definition.rhs.subs(neutron_flux(flux_position), neutron_flux_function_).doit() / unit_length**2
+    neutron_flux_laplacian_eval = neutron_flux_laplacian_definition.rhs.subs(
+        neutron_flux(flux_position), neutron_flux_function_).doit() / unit_length**2
     applied_law = law.subs(neutron_flux_laplacian(flux_position), neutron_flux_laplacian_eval)
     applied_law = applied_law.subs(neutron_flux(flux_position), neutron_flux_function_)
     return simplify(applied_law)
@@ -83,13 +85,13 @@ def apply_neutron_flux_function(neutron_flux_function_: Expr) -> Expr:
     macroscopic_fission_cross_section_=macroscopic_fission_cross_section,
     macroscopic_absorption_cross_section_=macroscopic_absorption_cross_section,
     diffusion_coefficient_=diffusion_coefficient)
-def calculate_multiplication_factor(neutron_flux_function_: Expr,
-    neutrons_per_fission_: float, macroscopic_fission_cross_section_: Quantity,
-    macroscopic_absorption_cross_section_: Quantity, diffusion_coefficient_: Quantity) -> float:
+def calculate_multiplication_factor(neutron_flux_function_: Expr, neutrons_per_fission_: float,
+    macroscopic_fission_cross_section_: Quantity, macroscopic_absorption_cross_section_: Quantity,
+    diffusion_coefficient_: Quantity) -> float:
 
     (_, neutron_flux_dimension) = collect_factor_and_dimension(neutron_flux_function_)
     assert SI.get_dimension_system().equivalent_dims(neutron_flux_dimension, neutron_flux.dimension)
-    
+
     applied_law = apply_neutron_flux_function(neutron_flux_function_)
     result_expr = applied_law.subs({
         neutrons_per_fission: neutrons_per_fission_,
