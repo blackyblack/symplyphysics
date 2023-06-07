@@ -54,7 +54,9 @@ buckling_eq2 = buckling_law.law.subs({
     buckling_law.neutron_flux_laplacian: diffusion_equation_law.neutron_flux_laplacian
 })
 
-derived_law = [diffusion_eq1, buckling_eq2, diffusion_equation_law.neutron_flux_laplacian_definition]
+derived_law = [
+    diffusion_eq1, buckling_eq2, diffusion_equation_law.neutron_flux_laplacian_definition
+]
 
 ## Check the equivalence of 'law' and 'derived_law'
 derived_geometric_buckling_squared = solve(derived_law, (geometric_buckling_squared,

@@ -39,7 +39,8 @@ law = Eq(neutron_flux(distance_from_center),
 # define flux function in cartesian coordinates as a function of x coordinate
 cartesian_coordinates = CoordSys3D("cartesian_coordinates")
 unit_length = Quantity(1, dimension=units.length)
-neutron_flux_function_cartesian = law.subs(distance_from_center, cartesian_coordinates.x * unit_length)
+neutron_flux_function_cartesian = law.subs(distance_from_center,
+    cartesian_coordinates.x * unit_length)
 
 solved = geometric_buckling_from_neutron_flux.apply_neutron_flux_function(
     neutron_flux_function_cartesian.rhs)
