@@ -5,6 +5,8 @@ from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expr
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.waves import frequency_shift_from_velocity_and_angle as classical_doppler_with_angle
 from symplyphysics.laws.relativistic.waves import longitudinal_frequency_shift_from_absolute_velocities as general_doppler_law
+from symplyphysics.laws.waves import wavelength_from_wave_speed_and_period as period_law
+from symplyphysics.laws.kinematic import temporal_frequency_from_period as frequency_def
 
 # Description
 ## The Doppler effect or Doppler shift is the apparent change in frequency of a wave in relation to an observer moving relative to the wave source.
@@ -74,7 +76,55 @@ observed_frequency_zero_angles = classical_doppler_with_angle.law.subs({
 
 assert expr_equals(observed_frequency_zero_angles, law.rhs)
 
-#TODO: add proof for classical Doppler effect
+# Derive the same law from frequency, wavelength laws, and assumption that moving source or
+# observer affects wavelength.
+
+## Start with idle observer and moving source
+
+wave_period_from_frequency_solved = solve(frequency_def.law, frequency_def.period, dict=True)[0][frequency_def.period]
+wave_period = wave_period_from_frequency_solved.subs(frequency_def.temporal_frequency, real_frequency)
+
+wavelength_solved = solve(period_law.law, period_law.wavelength, dict=True)[0][period_law.wavelength]
+wavelength = wavelength_solved.subs({
+    period_law.oscillation_period: wave_period,
+    period_law.propagation_speed: wave_velocity
+})
+
+## While wave travels (wave_period * wave_velocity) distance, moving source travels (wave_period * source_velocity)
+## distance.
+moving_source_distance_for_period = wave_period * source_velocity
+
+## Assuming zero angle and souce moving away from observer, observed wavelength is
+## 'moving_source_distance_for_period' higher, than emitted wavelength
+wavelength_observed = wavelength + moving_source_distance_for_period
+
+wave_period_solved = solve(period_law.law, period_law.oscillation_period, dict=True)[0][period_law.oscillation_period]
+observed_wave_period = wave_period_solved.subs({
+    period_law.wavelength: wavelength_observed,
+    period_law.propagation_speed: wave_velocity
+})
+
+frequency_solved = solve(frequency_def.law, frequency_def.temporal_frequency, dict=True)[0][frequency_def.temporal_frequency]
+frequency_observed = frequency_solved.subs(frequency_def.period, observed_wave_period)
+
+## Confirm that derived law is the same as expected for idle observer
+assert expr_equals(frequency_observed, law.rhs.subs(observer_velocity, 0))
+
+## Assuming zero angle and observer moving away from source, relative wave velocity from observer point of view
+## is lower, according to Galilean velocity addition formula
+
+# NOTE: Relativistic velocity addition should be applied when wave speed is close to speed of light
+relative_wave_speed = wave_velocity - observer_velocity
+
+period_relative_source = wave_period_solved.subs({
+    period_law.wavelength: wavelength_observed,
+    period_law.propagation_speed: relative_wave_speed
+})
+
+frequency_relative_observer = frequency_solved.subs(frequency_def.period, period_relative_source)
+
+## Confirm that derived law is the same as expected
+assert expr_equals(frequency_relative_observer, law.rhs)
 
 
 def print() -> str:
