@@ -6,6 +6,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.waves import wavelength_from_wave_speed_and_period as period_law
 from symplyphysics.laws.kinematic import temporal_frequency_from_period as frequency_def
 from symplyphysics.laws.kinematic import planar_projection_is_cosine as projector
+from symplyphysics.laws.kinematic import distance_from_constant_velocity as distance_law
 
 # Description
 ## See [doppler effect](./frequency_shift_from_velocity.py) description. When objects are not moving collinear, one
@@ -17,14 +18,20 @@ from symplyphysics.laws.kinematic import planar_projection_is_cosine as projecto
 ## v is wave velocity in this media,
 ## vo is observer speed relative to the medium (magnitude of the velocity vector),
 ## vs is source speed relative to the medium (magnitude of the velocity vector),
-## pho is angle between signal vector and observer velocity vector,
-## phs is angle between vector pointing from source of the wave to the observer (signal vector), and source velocity vector.
+## pho is angle between vector pointing from source of the wave to the observer (signal vector) and observer velocity vector,
+## phs is angle between signal vector and source velocity vector.
 
 # Conditions:
 ## - Source and observer velocities are less or equal than wave velocity. Otherwise emitted waves are left behind the source or never
 ## reach the observer.
 ## - Motion is in 2-D space.
-## - Angles are measured instantly for both source and observer.
+## - Source speed is constant during one period of the wave.
+
+# NOTE: Signal vector connects the source at the moment of wave emission and observer at the moment
+# of wave reception. It may be quite hard to estimate the point where the observer will be at the
+# moment of observation. Therefore this law is usually applied when objects are moving slowly, or when
+# one of the objects is idle.
+
 
 observed_frequency = Symbol("observed_frequency", units.frequency)
 real_frequency = Symbol("real_frequency", units.frequency)
@@ -45,11 +52,11 @@ law = Eq(
 
 ## Start with idle observer and moving source
 
-wave_period_from_frequency_solved = solve(frequency_def.law, frequency_def.period, dict=True)[0][frequency_def.period]
-wave_period = wave_period_from_frequency_solved.subs(frequency_def.temporal_frequency, real_frequency)
+period_from_frequency = solve(frequency_def.law, frequency_def.period, dict=True)[0][frequency_def.period]
+wave_period = period_from_frequency.subs(frequency_def.temporal_frequency, real_frequency)
 
-wavelength_solved = solve(period_law.law, period_law.wavelength, dict=True)[0][period_law.wavelength]
-wavelength = wavelength_solved.subs({
+wavelength_from_period = solve(period_law.law, period_law.wavelength, dict=True)[0][period_law.wavelength]
+wavelength = wavelength_from_period.subs({
     period_law.oscillation_period: wave_period,
     period_law.propagation_speed: wave_velocity
 })
@@ -57,32 +64,36 @@ wavelength = wavelength_solved.subs({
 ## While wave travels (wave_period * wave_velocity) distance, moving source travels (wave_period * source_velocity)
 ## distance.
 ## We are only interested in the wavelength on the wave signal vector (shortest path from source to observer), as
-## it is what we measure. Therefore we take 'source_speed' projection on the signal vector.
-
-# NOTE: Angles at the time of emission and at the time of observation may change. Here we assume, that wave
-# propagation is so fast that angles do not change.
+## it is what we measure on observer. Therefore we take 'source_speed' projection on the signal vector.
 
 source_speed_projection_on_signal = projector.law.subs({
     projector.vector_angle: source_angle,
     projector.vector_length: source_speed
 }).rhs
 
-moving_source_distance_for_period = wave_period * source_speed_projection_on_signal
+## Assume constant velocity during 'wave_period'
+moving_source_distance_for_period = distance_law.law.subs({
+    distance_law.initial_position: 0,
+    distance_law.movement_time: wave_period,
+    distance_law.constant_velocity: source_speed_projection_on_signal,
+}).rhs
 
 ## Assuming signal vector pointing from source to observer, positive projection should decrease wavelength.
 wavelength_observed = wavelength - moving_source_distance_for_period
 
-wave_period_solved = solve(period_law.law, period_law.oscillation_period, dict=True)[0][period_law.oscillation_period]
-observed_wave_period = wave_period_solved.subs({
+period_from_wavelength = solve(period_law.law, period_law.oscillation_period, dict=True)[0][period_law.oscillation_period]
+observed_wave_period = period_from_wavelength.subs({
     period_law.wavelength: wavelength_observed,
     period_law.propagation_speed: wave_velocity
 })
 
-frequency_solved = solve(frequency_def.law, frequency_def.temporal_frequency, dict=True)[0][frequency_def.temporal_frequency]
-frequency_observed = frequency_solved.subs(frequency_def.period, observed_wave_period)
-
 ## Confirm that derived law is the same as expected for idle observer
+
+frequency_from_period = solve(frequency_def.law, frequency_def.temporal_frequency, dict=True)[0][frequency_def.temporal_frequency]
+frequency_observed = frequency_from_period.subs(frequency_def.period, observed_wave_period)
 assert expr_equals(frequency_observed, law.rhs.subs(observer_speed, 0))
+
+## Now apply movement of the observer
 
 observer_speed_projection_on_signal = projector.law.subs({
     projector.vector_angle: observer_angle,
@@ -92,15 +103,15 @@ observer_speed_projection_on_signal = projector.law.subs({
 # NOTE: Relativistic velocity addition should be applied when wave speed is close to speed of light
 
 ## Assuming signal vector pointing from source to observer, positive projection should decrease relative wave
-## velocity from observer point of view is lower, according to Galilean velocity addition formula.
+## velocity from observer point of view, according to Galilean velocity addition formula.
 relative_wave_speed = wave_velocity - observer_speed_projection_on_signal
 
-period_relative_source = wave_period_solved.subs({
+period_relative_source = period_from_wavelength.subs({
     period_law.wavelength: wavelength_observed,
     period_law.propagation_speed: relative_wave_speed
 })
 
-frequency_relative_observer = frequency_solved.subs(frequency_def.period, period_relative_source)
+frequency_relative_observer = frequency_from_period.subs(frequency_def.period, period_relative_source)
 
 ## Confirm that derived law is the same as expected
 assert expr_equals(frequency_relative_observer, law.rhs)

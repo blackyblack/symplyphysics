@@ -31,7 +31,7 @@ constant_velocity_movement_definition = velocity_definition.law.subs({
     velocity_definition.movement_time: oscillation_period,
     velocity_definition.initial_position: 0
 })
-assert (expr_equals(constant_velocity_movement_definition.rhs, law.rhs))
+assert expr_equals(constant_velocity_movement_definition.rhs, law.rhs)
 
 
 def print() -> str:
