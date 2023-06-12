@@ -17,7 +17,7 @@ from symplyphysics import (angle_type, units, expr_to_quantity, Quantity, Symbol
 
 # Conditions:
 ## - Angle is detected at the moment of emission with respect to the observer frame.
-## - Motion is in 1-D space.
+## - Motion is in 2-D space.
 
 # Note:
 ## It is not trivial to substitute moving source and idle observer with moving observer and idle source. Law

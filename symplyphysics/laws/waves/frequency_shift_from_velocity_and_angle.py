@@ -26,11 +26,19 @@ from symplyphysics.laws.kinematic import distance_from_constant_velocity as dist
 ## reach the observer.
 ## - Motion is in 2-D space.
 ## - Source speed is constant during one period of the wave.
+## - Measurements are made in the medium reference frame (medium is not moving).
 
-# NOTE: Signal vector connects the source at the moment of wave emission and observer at the moment
-# of wave reception. It may be quite hard to estimate the point where the observer will be at the
-# moment of observation. Therefore this law is usually applied when objects are moving slowly, or when
-# one of the objects is idle.
+# Note:
+## Signal vector connects the source at the moment of wave emission and observer at the moment
+## of wave reception. It may be quite hard to estimate the point where the observer will be at the
+## moment of observation. Therefore this law is usually applied when objects are moving slowly, or when
+## one of the objects is idle.
+
+# Note:
+## When there is no medium to choose as reference point, there are no other waves but electromagnetic
+## that are known to always travel at the speed of light.
+## Use [relativistic Doppler law](..\relativistic\waves\frequency_shift_from_velocity_and_angle.py)
+## if no medium is present.
 
 
 observed_frequency = Symbol("observed_frequency", units.frequency)
