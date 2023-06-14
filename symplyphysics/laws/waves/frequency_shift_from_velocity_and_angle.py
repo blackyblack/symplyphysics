@@ -40,7 +40,6 @@ from symplyphysics.laws.kinematic import distance_from_constant_velocity as dist
 ## Use [relativistic Doppler law](..\relativistic\waves\frequency_shift_from_velocity_and_angle.py)
 ## if no medium is present.
 
-
 observed_frequency = Symbol("observed_frequency", units.frequency)
 real_frequency = Symbol("real_frequency", units.frequency)
 wave_velocity = Symbol("wave_velocity", units.velocity)
@@ -54,16 +53,17 @@ law = Eq(
     real_frequency * (wave_velocity - observer_speed * cos(observer_angle)) /
     (wave_velocity - source_speed * cos(source_angle)))
 
-
 # Derive the same law from frequency, wavelength laws, and assumption that moving source or
 # observer affects wavelength.
 
 ## Start with idle observer and moving source
 
-period_from_frequency = solve(frequency_def.law, frequency_def.period, dict=True)[0][frequency_def.period]
+period_from_frequency = solve(frequency_def.law, frequency_def.period,
+    dict=True)[0][frequency_def.period]
 wave_period = period_from_frequency.subs(frequency_def.temporal_frequency, real_frequency)
 
-wavelength_from_period = solve(period_law.law, period_law.wavelength, dict=True)[0][period_law.wavelength]
+wavelength_from_period = solve(period_law.law, period_law.wavelength,
+    dict=True)[0][period_law.wavelength]
 wavelength = wavelength_from_period.subs({
     period_law.oscillation_period: wave_period,
     period_law.propagation_speed: wave_velocity
@@ -89,7 +89,8 @@ moving_source_distance_for_period = distance_law.law.subs({
 ## Assuming signal vector pointing from source to observer, positive projection should decrease wavelength.
 wavelength_observed = wavelength - moving_source_distance_for_period
 
-period_from_wavelength = solve(period_law.law, period_law.oscillation_period, dict=True)[0][period_law.oscillation_period]
+period_from_wavelength = solve(period_law.law, period_law.oscillation_period,
+    dict=True)[0][period_law.oscillation_period]
 observed_wave_period = period_from_wavelength.subs({
     period_law.wavelength: wavelength_observed,
     period_law.propagation_speed: wave_velocity
@@ -97,7 +98,8 @@ observed_wave_period = period_from_wavelength.subs({
 
 ## Confirm that derived law is the same as expected for idle observer
 
-frequency_from_period = solve(frequency_def.law, frequency_def.temporal_frequency, dict=True)[0][frequency_def.temporal_frequency]
+frequency_from_period = solve(frequency_def.law, frequency_def.temporal_frequency,
+    dict=True)[0][frequency_def.temporal_frequency]
 frequency_observed = frequency_from_period.subs(frequency_def.period, observed_wave_period)
 assert expr_equals(frequency_observed, law.rhs.subs(observer_speed, 0))
 
@@ -119,7 +121,8 @@ period_relative_source = period_from_wavelength.subs({
     period_law.propagation_speed: relative_wave_speed
 })
 
-frequency_relative_observer = frequency_from_period.subs(frequency_def.period, period_relative_source)
+frequency_relative_observer = frequency_from_period.subs(frequency_def.period,
+    period_relative_source)
 
 ## Confirm that derived law is the same as expected
 assert expr_equals(frequency_relative_observer, law.rhs)

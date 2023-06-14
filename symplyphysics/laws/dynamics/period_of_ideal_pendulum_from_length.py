@@ -8,6 +8,8 @@ from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_velocity as
 from symplyphysics.laws.kinematic import linear_velocity_from_angular_velocity_and_radius as angular_velocity_law
 from symplyphysics.laws.kinematic import period_from_angular_frequency as angular_frequency
 from symplyphysics.definitions import harmonic_oscillator_is_second_derivative_equation as oscillator
+from symplyphysics.definitions import mechanical_energy_is_kinetic_and_potential as mechanical_energy_def
+from symplyphysics.laws.conservation import mechanical_energy_after_equals_to_mechanical_energy_before as mechanical_energy_conservation
 
 # Description
 ## Ideal pendulum is an object hanging on a thread. In a field of gravitation it starts oscillating after been pushed out of balance.
@@ -66,13 +68,32 @@ amount_of_kinetic_energy = kinetic_energy.law.subs({
     kinetic_energy.body_velocity: linear_velocity
 }).rhs
 
-#TODO: add conservation of energy to the laws
-## Total energy is constant
-total_energy = symbols("total_energy", constant=True)
-total_energy_eq = Eq(total_energy, amount_of_kinetic_energy + amount_of_potential_energy)
+mechanical_energy = mechanical_energy_def.definition.subs({
+    mechanical_energy_def.kinetic_energy: amount_of_kinetic_energy,
+    mechanical_energy_def.potential_energy: amount_of_potential_energy
+}).rhs
 
-## Differentiate both sides of equation
-total_energy_diff_eq = Eq(diff(total_energy_eq.lhs, time), diff(total_energy_eq.rhs, time))
+## Total mechanical energy for pendulum is constant
+
+## Differentiate both sides of equation.
+
+## As mechanical_energy(time_after) equals to mechanical_energy(time_before), mechanical_energy(time) should
+## be constant. I do not know how to derive it automatically, so let's differentiate mechanical_energy manually
+## using the formula: diff(f(t)) = (f(t1) - f(t0)) / (t1 - t0)
+conserved_energy_diff = symbols("conserved_energy_diff")
+conserved_energy_eq = Eq(conserved_energy_diff,
+    (mechanical_energy_conservation.mechanical_energy(mechanical_energy_conservation.time_after) -
+    mechanical_energy_conservation.mechanical_energy(mechanical_energy_conservation.time_before)) /
+    (mechanical_energy_conservation.time_after - mechanical_energy_conservation.time_before))
+
+## Show that mechanical_energy derivative is zero
+conserved_energy_diff_solved = solve([conserved_energy_eq, mechanical_energy_conservation.law],
+    (conserved_energy_diff,
+    mechanical_energy_conservation.mechanical_energy(mechanical_energy_conservation.time_after)),
+    dict=True)[0][conserved_energy_diff]
+assert conserved_energy_diff_solved == 0
+
+total_energy_diff_eq = Eq(conserved_energy_diff_solved, diff(mechanical_energy, time))
 total_energy_diff_solved = solve(total_energy_diff_eq,
     Derivative(pendulum_angle(time), (time, 2)),
     dict=True)[0][Derivative(pendulum_angle(time), (time, 2))]

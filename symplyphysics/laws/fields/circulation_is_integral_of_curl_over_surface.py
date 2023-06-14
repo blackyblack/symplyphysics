@@ -16,8 +16,9 @@ from symplyphysics.core.fields.vector_field import VectorField, field_from_sympy
 ## Potential field is the field with zero rotor. Also potential field is called irrotational field.
 ## Work to move the object along the closed curve in the potential field is zero.
 
-# Definition
-## C = SurfaceIntegral(Curl(F) * dS, Surface), where
+# Law:
+## C = SurfaceIntegral(Curl(F) * dS, Surface)
+## Where:
 ## C is circulation
 ## F is vector field
 ## S is surface boundary, equals to curve area
