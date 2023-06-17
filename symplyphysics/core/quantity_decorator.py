@@ -161,10 +161,16 @@ def validate_output_same(param_name):
                 expected_dimension = expected_unit.dimension
             else:
                 if len(components) == 0:
-                    raise UnitsError(f"Argument '{param_name}' to decorator 'validate_output_same'"
-                        f" is a List but does not have any components to derived expected dimension"
-                                    )
+                    raise UnitsError(
+                        f"Argument '{param_name}' to decorator 'validate_output_same' is a "
+                        f"List but does not have any components to derived expected dimension")
                 expected_dimension = components[0].dimension
+                for c in components:
+                    if SI.get_dimension_system().equivalent_dims(c, expected_dimension):
+                        continue
+                    raise UnitsError(
+                        f"Argument '{param_name}' to function '{func.__name__}' must"
+                        f" have all component dimensions equivalent to '{expected_dimension.name}'")
 
             _assert_expected_unit(ret, expected_dimension, func.__name__, "validate_output_same")
             return ret

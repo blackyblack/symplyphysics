@@ -1,7 +1,7 @@
 from sympy import (Eq, solve)
 from symplyphysics import (units, Quantity, Symbol, print_expression, Vector,
     sympy_vector_from_vector, validate_input, validate_output)
-from symplyphysics.core.expr_to_quantity import expr_to_vector_of_quantities
+from symplyphysics.core.expr_to_quantity import expr_to_vector
 
 # Description
 ## Deformed sprign is about to return back to it's undeformed state and responds with some force. Law is:
@@ -33,5 +33,4 @@ def calculate_force(coefficient_: Quantity, deformation_: Vector) -> Vector:
         elastic_coefficient: coefficient_,
         deformation: sympy_vector_deformation
     })
-    #TODO: think about some better solution to processing vectors
-    return expr_to_vector_of_quantities(result_expr, deformation_.coordinate_system)
+    return expr_to_vector(result_expr, deformation_.coordinate_system)
