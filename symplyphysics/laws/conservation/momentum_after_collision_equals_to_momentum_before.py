@@ -1,6 +1,6 @@
 from sympy import (Eq, solve, dsolve)
 from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, Function, print_expression,
-    validate_input_symbols, validate_output_symbol)
+    validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.conservation import momentum_of_colliding_objects_is_constant as constant_momentum
 
@@ -40,8 +40,8 @@ def print() -> str:
     return print_expression(law)
 
 
-@validate_input_symbols(momentum_before_=momentum)
-@validate_output_symbol(momentum)
+@validate_input(momentum_before_=momentum)
+@validate_output(momentum)
 def calculate_momentum_after(momentum_before_: Quantity) -> Quantity:
     solved = solve(law, momentum(time_after), dict=True)[0][momentum(time_after)]
     result_expr = solved.subs(momentum(time_before), momentum_before_)

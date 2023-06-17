@@ -1,6 +1,6 @@
 from sympy import (Derivative, Eq, dsolve)
 from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, Function, print_expression,
-    validate_input_symbols, validate_output_symbol)
+    validate_input, validate_output)
 
 # Description
 ## If there is no external force applied to system of objects, the summary momentum of this system remains constant
@@ -24,8 +24,8 @@ def print() -> str:
     return print_expression(law)
 
 
-@validate_input_symbols(momentum_before_=momentum)
-@validate_output_symbol(momentum)
+@validate_input(momentum_before_=momentum)
+@validate_output(momentum)
 def calculate_momentum_after(momentum_before_: Quantity) -> Quantity:
     solved = dsolve(law, momentum(time))
     result_expr = solved.subs("C1", momentum_before_).rhs
