@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
 from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input_symbols, validate_output_symbol)
+    validate_input, validate_output)
 
 # Description
 # Amount of energy for body heat Q = C * m * (t2 - t1)
@@ -28,11 +28,11 @@ def print() -> str:
     return print_expression(law)
 
 
-@validate_input_symbols(specific_heat_capacity_=specific_heat_capacity,
+@validate_input(specific_heat_capacity_=specific_heat_capacity,
     body_mass_=body_mass,
     temperature_end_=temperature_end,
     temperature_origin_=temperature_origin)
-@validate_output_symbol(amount_energy)
+@validate_output(amount_energy)
 def calculate_amount_energy(specific_heat_capacity_: Quantity, body_mass_: Quantity,
     temperature_end_: Quantity, temperature_origin_: Quantity) -> Quantity:
 

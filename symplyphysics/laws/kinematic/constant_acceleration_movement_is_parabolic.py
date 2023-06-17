@@ -1,6 +1,6 @@
 from sympy import (Eq, solve, dsolve)
 from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, Function, print_expression,
-    validate_input_symbols, validate_output_symbol)
+    validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import velocity_is_movement_derivative as velocity_definition
 from symplyphysics.definitions import acceleration_is_velocity_derivative as acceleration_definition
@@ -58,10 +58,10 @@ def print() -> str:
     return print_expression(law)
 
 
-@validate_input_symbols(initial_velocity_=initial_velocity,
+@validate_input(initial_velocity_=initial_velocity,
     acceleration_=constant_acceleration,
     time_=movement_time)
-@validate_output_symbol(distance)
+@validate_output(distance)
 def calculate_distance(initial_velocity_: Quantity, acceleration_: Quantity,
     time_: Quantity) -> Quantity:
     result_expr = solve(law, distance(movement_time), dict=True)[0][distance(movement_time)]

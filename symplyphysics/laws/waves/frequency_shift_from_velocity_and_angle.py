@@ -1,7 +1,7 @@
 import numbers
 from sympy import (Eq, cos, solve)
 from symplyphysics import (units, angle_type, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input_symbols, validate_output_symbol)
+    validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.waves import wavelength_from_wave_speed_and_period as period_law
 from symplyphysics.laws.kinematic import temporal_frequency_from_period as frequency_def
@@ -132,13 +132,13 @@ def print() -> str:
     return print_expression(law)
 
 
-@validate_input_symbols(real_frequency_=real_frequency,
+@validate_input(real_frequency_=real_frequency,
     wave_velocity_=wave_velocity,
     source_speed_=source_speed,
     observer_speed_=observer_speed,
     source_angle_=source_angle,
     observer_angle_=observer_angle)
-@validate_output_symbol(observed_frequency)
+@validate_output(observed_frequency)
 def calculate_observed_frequency(real_frequency_: Quantity, wave_velocity_: Quantity,
     source_speed_: Quantity, observer_speed_: Quantity, source_angle_: float | Quantity,
     observer_angle_: float | Quantity) -> Quantity:

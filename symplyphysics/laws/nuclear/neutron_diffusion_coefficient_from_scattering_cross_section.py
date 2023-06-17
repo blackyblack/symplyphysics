@@ -5,8 +5,8 @@ from symplyphysics import (
     Quantity,
     Symbol,
     print_expression,
-    validate_input_symbols,
-    validate_output_symbol,
+    validate_input,
+    validate_output,
 )
 
 # Description
@@ -36,8 +36,8 @@ def print() -> str:
     return print_expression(law)
 
 
-@validate_input_symbols(macroscopic_transport_cross_section_=macroscopic_transport_cross_section)
-@validate_output_symbol(neutron_diffusion_coefficient)
+@validate_input(macroscopic_transport_cross_section_=macroscopic_transport_cross_section)
+@validate_output(neutron_diffusion_coefficient)
 def calculate_diffusion_coefficient(macroscopic_transport_cross_section_: Quantity) -> Quantity:
     result_coefficient_expr = solve(law, neutron_diffusion_coefficient,
         dict=True)[0][neutron_diffusion_coefficient]

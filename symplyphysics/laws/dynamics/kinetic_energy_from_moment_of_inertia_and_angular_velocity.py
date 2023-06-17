@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
 from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression, angle_type,
-    validate_input_symbols, validate_output_symbol)
+    validate_input, validate_output)
 
 # Description
 ## If an object has a inertia moment and spins with some angular velocity, it bears kinetic energy.
@@ -20,8 +20,8 @@ def print() -> str:
     return print_expression(law)
 
 
-@validate_input_symbols(inertia_moment_=object_inertia_moment, angular_velocity_=angular_velocity)
-@validate_output_symbol(kinetic_energy)
+@validate_input(inertia_moment_=object_inertia_moment, angular_velocity_=angular_velocity)
+@validate_output(kinetic_energy)
 def calculate_energy(inertia_moment_: Quantity, angular_velocity_: Quantity) -> Quantity:
     result_energy_expr = solve(law, kinetic_energy, dict=True)[0][kinetic_energy]
     result_expr = result_energy_expr.subs({

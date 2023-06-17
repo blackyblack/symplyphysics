@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
 from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input_symbols, validate_output_symbol)
+    validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import temporal_frequency_is_events_per_time as frequency_def
 
@@ -32,8 +32,8 @@ def print() -> str:
     return print_expression(law)
 
 
-@validate_input_symbols(period_=period)
-@validate_output_symbol(temporal_frequency)
+@validate_input(period_=period)
+@validate_output(temporal_frequency)
 def calculate_frequency(period_: Quantity) -> Quantity:
     solved = solve(law, temporal_frequency, dict=True)[0][temporal_frequency]
     result_expr = solved.subs(period, period_)

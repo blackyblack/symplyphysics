@@ -7,7 +7,7 @@ from symplyphysics import (
     print_expression,
     Dimensionless,
     convert_to,
-    validate_input_symbols,
+    validate_input,
 )
 from symplyphysics.core.symbols.probability import Probability
 
@@ -34,7 +34,7 @@ def print() -> str:
     return print_expression(law)
 
 
-@validate_input_symbols(thermal_diffusion_area_=thermal_diffusion_area,
+@validate_input(thermal_diffusion_area_=thermal_diffusion_area,
     geometric_buckling_=geometric_buckling)
 def calculate_probability(thermal_diffusion_area_: Quantity,
     geometric_buckling_: Quantity) -> Probability:

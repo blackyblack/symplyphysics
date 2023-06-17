@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
 from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    Dimensionless, validate_input_symbols, validate_output_symbol)
+    Dimensionless, validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_macroscopic_fission_cross_section_diffusion_coefficient as buckling_law
 
@@ -52,11 +52,11 @@ def print() -> str:
     return print_expression(law)
 
 
-@validate_input_symbols(neutrons_per_fission_=neutrons_per_fission,
+@validate_input(neutrons_per_fission_=neutrons_per_fission,
     macroscopic_fission_cross_section_=macroscopic_fission_cross_section,
     macroscopic_absorption_cross_section_=macroscopic_absorption_cross_section,
     diffusion_coefficient_=diffusion_coefficient)
-@validate_output_symbol(material_buckling_squared)
+@validate_output(material_buckling_squared)
 def calculate_buckling(neutrons_per_fission_: float, macroscopic_fission_cross_section_: Quantity,
     macroscopic_absorption_cross_section_: Quantity, diffusion_coefficient_: Quantity) -> Quantity:
     result_buckling_expr = solve(law, material_buckling_squared,

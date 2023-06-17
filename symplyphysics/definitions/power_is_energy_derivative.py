@@ -1,6 +1,6 @@
 from sympy import (Eq, Derivative)
 from symplyphysics import (units, expr_to_quantity, Quantity, Function, Symbol, print_expression,
-    validate_input_symbols, validate_output_symbol)
+    validate_input, validate_output)
 
 # Description
 ## Power has to be applied to casue any energy change.
@@ -24,8 +24,8 @@ def print() -> str:
     return print_expression(definition)
 
 
-@validate_input_symbols(energy_start_=energy, energy_end_=energy, time_=time)
-@validate_output_symbol(power)
+@validate_input(energy_start_=energy, energy_end_=energy, time_=time)
+@validate_output(power)
 def calculate_power(energy_start_: Quantity, energy_end_: Quantity, time_: Quantity) -> Quantity:
     energy_function_ = time * (energy_end_ - energy_start_) / time_
     applied_definition = definition.subs(energy(time), energy_function_)

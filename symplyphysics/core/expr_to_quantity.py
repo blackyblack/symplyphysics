@@ -20,7 +20,7 @@ def expr_to_quantity(expr: Expr) -> Quantity:
     return Quantity(quantity_scale[0], dimension=dimension)
 
 
-def expr_to_vector_of_quantities(expr: Expr, coordinate_system: CoordinateSystem = None) -> Vector:
+def expr_to_vector(expr: Expr, coordinate_system: CoordinateSystem = None) -> Vector:
     if isinstance(expr, Mul):
         expr = expr.expand()
     if isinstance(expr, Add):

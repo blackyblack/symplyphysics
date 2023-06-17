@@ -2,9 +2,8 @@ import numbers
 from sympy import (Eq, solve)
 from sympy.vector import Dot
 from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression, angle_type,
-    Vector, sympy_vector_from_vector, vector_rebase, validate_input_symbols, validate_output_symbol)
+    Vector, sympy_vector_from_vector, vector_rebase, validate_input, validate_output)
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_transform
-from symplyphysics.core.quantity_decorator import validate_input
 
 # Description
 ## Work is measured result of force applied. Mechanical work is the only reason for the object energy to be changed.
@@ -26,9 +25,8 @@ def print() -> str:
     return print_expression(law)
 
 
-@validate_input_symbols(force_=force, distance_=distance)
-@validate_input(force_angle=angle_type, distance_angle=angle_type)
-@validate_output_symbol(work)
+@validate_input(force_=force, distance_=distance, force_angle=angle_type, distance_angle=angle_type)
+@validate_output(work)
 def calculate_work(force_: Quantity, distance_: Quantity, force_angle: Quantity | float,
     distance_angle: Quantity | float) -> Quantity:
     result_work_expr = solve(law, work, dict=True)[0][work]

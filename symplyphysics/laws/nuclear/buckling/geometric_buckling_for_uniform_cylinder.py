@@ -1,6 +1,6 @@
 from sympy import (Eq, solve, pi)
 from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input_symbols, validate_output_symbol)
+    validate_input, validate_output)
 from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_cylinder as cylinder_flux
 
 # Description
@@ -39,8 +39,8 @@ def print() -> str:
     return print_expression(law)
 
 
-@validate_input_symbols(cylinder_radius_=cylinder_radius, cylinder_height_=cylinder_height)
-@validate_output_symbol(geometric_buckling_squared)
+@validate_input(cylinder_radius_=cylinder_radius, cylinder_height_=cylinder_height)
+@validate_output(geometric_buckling_squared)
 def calculate_geometric_buckling_squared(cylinder_radius_: Quantity,
     cylinder_height_: Quantity) -> Quantity:
     solved = solve(law, geometric_buckling_squared, dict=True)[0][geometric_buckling_squared]

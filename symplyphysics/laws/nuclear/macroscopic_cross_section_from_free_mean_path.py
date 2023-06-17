@@ -5,8 +5,8 @@ from symplyphysics import (
     Quantity,
     Symbol,
     print_expression,
-    validate_input_symbols,
-    validate_output_symbol,
+    validate_input,
+    validate_output,
 )
 
 # Description
@@ -30,8 +30,8 @@ def print() -> str:
     return print_expression(law)
 
 
-@validate_input_symbols(mean_free_path_=mean_free_path)
-@validate_output_symbol(macroscopic_cross_section)
+@validate_input(mean_free_path_=mean_free_path)
+@validate_output(macroscopic_cross_section)
 def calculate_cross_section(mean_free_path_: Quantity) -> Quantity:
     result_cross_section_expr = solve(law, macroscopic_cross_section,
         dict=True)[0][macroscopic_cross_section]

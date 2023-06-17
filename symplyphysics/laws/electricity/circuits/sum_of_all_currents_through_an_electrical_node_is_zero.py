@@ -1,12 +1,7 @@
 from typing import List
 from sympy import (Eq, solve, symbols, Idx, IndexedBase, Sum)
-from symplyphysics import (
-    units,
-    expr_to_quantity,
-    Quantity,
-    print_expression,
-)
-from symplyphysics.core.quantity_decorator import assert_equivalent_dimension, validate_input, validate_output
+from symplyphysics import (units, expr_to_quantity, Quantity, print_expression, validate_input,
+    validate_output)
 from symplyphysics.core.symbols.quantities import Quantity
 
 # Description
@@ -40,11 +35,9 @@ def calculate_current(current_in: Quantity) -> Quantity:
     return expr_to_quantity(result_expr)
 
 
+@validate_input(currents=units.current)
 @validate_output(units.current)
 def calculate_current_from_array(currents: List[Quantity]) -> Quantity:
-    for idx, c in enumerate(currents):
-        assert_equivalent_dimension(c, "validate_input", f"currents[{idx}]",
-            "calculate_current_from_array", units.current)
     currents_law = law.subs(currents_total, len(currents) + 1).doit()
     unknown_current = current[len(currents) + 1]
     solved = solve(currents_law, unknown_current, dict=True)[0][unknown_current]

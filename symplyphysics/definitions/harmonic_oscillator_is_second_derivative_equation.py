@@ -1,9 +1,7 @@
-import numbers
 from sympy import (Derivative, Eq, cos, solve, symbols, Function as SymFunction)
 from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input_symbols)
+    validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.core.quantity_decorator import validate_input, validate_output
 
 # Description
 ## In classical mechanics, a harmonic oscillator is a system that, when displaced from its equilibrium position, experiences a restoring force F proportional to the displacement x.
@@ -64,8 +62,7 @@ def print() -> str:
     return print_expression(definition)
 
 
-@validate_input(amplitude_=units.length)
-@validate_input_symbols(angular_frequency_=angular_frequency, time_=time)
+@validate_input(amplitude_=units.length, angular_frequency_=angular_frequency, time_=time)
 @validate_output(units.length)
 def calculate_displacement(amplitude_: Quantity, angular_frequency_: Quantity,
     time_: Quantity) -> Quantity:

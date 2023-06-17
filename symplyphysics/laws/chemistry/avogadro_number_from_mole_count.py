@@ -7,7 +7,7 @@ from symplyphysics import (
     print_expression,
     Dimensionless,
     convert_to,
-    validate_input_symbols,
+    validate_input,
 )
 from symplyphysics.core.quantity_decorator import assert_equivalent_dimension
 
@@ -31,7 +31,7 @@ def print() -> str:
     return print_expression(law)
 
 
-@validate_input_symbols(mole_count_=mole_count)
+@validate_input(mole_count_=mole_count)
 def calculate_particles_count(mole_count_: Quantity) -> int:
     solved = solve(law, particles_count, dict=True)[0][particles_count]
     result_expr = solved.subs(mole_count, mole_count_)

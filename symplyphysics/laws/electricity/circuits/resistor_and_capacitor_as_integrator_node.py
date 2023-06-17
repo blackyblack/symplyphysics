@@ -1,6 +1,6 @@
 from sympy import (Derivative, Eq, solve, exp, simplify)
 from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, Function, print_expression,
-    validate_input_symbols, validate_output_symbol)
+    validate_input, validate_output)
 from symplyphysics.definitions import current_is_charge_derivative as charge_definition
 from symplyphysics.definitions import capacitance_from_charge_and_voltage as capacitance_definition
 from symplyphysics.laws.electricity import current_is_proportional_to_voltage as ohms_law
@@ -104,11 +104,11 @@ def print() -> str:
     return print_expression(law)
 
 
-@validate_input_symbols(initial_voltage_=initial_voltage,
+@validate_input(initial_voltage_=initial_voltage,
     capacitance_=capacitance,
     resistance_=resistance,
     time_=time)
-@validate_output_symbol(capacitor_voltage)
+@validate_output(capacitor_voltage)
 def calculate_capacitor_voltage(initial_voltage_: Quantity, capacitance_: Quantity,
     resistance_: Quantity, time_: Quantity) -> Quantity:
     capacitor_voltage_expr = solve(law, capacitor_voltage(time),
