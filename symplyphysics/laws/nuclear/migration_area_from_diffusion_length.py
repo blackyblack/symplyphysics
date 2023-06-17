@@ -5,8 +5,8 @@ from symplyphysics import (
     Quantity,
     Symbol,
     print_expression,
-    validate_input_symbols,
-    validate_output_symbol,
+    validate_input,
+    validate_output,
 )
 
 # Description
@@ -34,8 +34,8 @@ def print() -> str:
     return print_expression(law)
 
 
-@validate_input_symbols(diffusion_area_=diffusion_area, neutron_fermi_age_=neutron_fermi_age)
-@validate_output_symbol(migration_area)
+@validate_input(diffusion_area_=diffusion_area, neutron_fermi_age_=neutron_fermi_age)
+@validate_output(migration_area)
 def calculate_migration_area(diffusion_area_: Quantity, neutron_fermi_age_: Quantity) -> Quantity:
     result_area_expr = solve(law, migration_area, dict=True)[0][migration_area]
     result_expr = result_area_expr.subs({

@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
 from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input_symbols, validate_output_symbol)
+    validate_input, validate_output)
 from symplyphysics.definitions import volume_number_density
 from symplyphysics.definitions import density_from_mass_volume
 from symplyphysics.laws.chemistry import avogadro_number_from_mole_count
@@ -56,8 +56,8 @@ def print() -> str:
     return print_expression(law)
 
 
-@validate_input_symbols(material_density_=material_density, atomic_weight_=atomic_weight)
-@validate_output_symbol(atomic_number_density)
+@validate_input(material_density_=material_density, atomic_weight_=atomic_weight)
+@validate_output(atomic_number_density)
 def calculate_atomic_number_density(material_density_: Quantity,
     atomic_weight_: Quantity) -> Quantity:
     solved = solve(law, atomic_number_density, dict=True)[0][atomic_number_density]

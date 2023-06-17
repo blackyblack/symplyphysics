@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
 from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input_symbols, validate_output_symbol)
+    validate_input, validate_output)
 
 # Description
 ## P_after = P_before
@@ -22,8 +22,8 @@ def print() -> str:
     return print_expression(law)
 
 
-@validate_input_symbols(momentum_before_=momentum_before)
-@validate_output_symbol(momentum_after)
+@validate_input(momentum_before_=momentum_before)
+@validate_output(momentum_after)
 def calculate_momentum_after(momentum_before_: Quantity) -> Quantity:
     solved = solve(law, momentum_after, dict=True)[0][momentum_after]
     result_expr = solved.subs(momentum_before, momentum_before_)

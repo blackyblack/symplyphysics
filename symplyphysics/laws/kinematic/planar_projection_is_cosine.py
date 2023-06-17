@@ -6,7 +6,7 @@ from symplyphysics import (
     Symbol,
     print_expression,
     angle_type,
-    validate_input_symbols,
+    validate_input,
 )
 from symplyphysics.core.quantity_decorator import validate_output_same
 
@@ -30,7 +30,7 @@ def print() -> str:
     return print_expression(law)
 
 
-@validate_input_symbols(angle_=vector_angle)
+@validate_input(angle_=vector_angle)
 @validate_output_same("vector_length_")
 def calculate_projection(vector_length_: Quantity, angle_: Quantity | float) -> Quantity:
     result_projection_expr = solve(law, projection, dict=True)[0][projection]

@@ -1,7 +1,7 @@
 import numbers
 from sympy import (Eq, solve, sin, pi)
 from symplyphysics import (units, Quantity, Symbol, print_expression, Dimensionless, angle_type,
-    validate_input_symbols, validate_output_symbol)
+    validate_input, validate_output)
 
 # Description
 ## If ray of light comes from one media to another, it refracts.
@@ -33,10 +33,10 @@ def print() -> str:
     return print_expression(law)
 
 
-@validate_input_symbols(incedence_angle_=incedence_angle,
+@validate_input(incedence_angle_=incedence_angle,
     incedence_refractive_index_=incedence_refractive_index,
     resulting_refractive_index_=resulting_refractive_index)
-@validate_output_symbol(refraction_angle)
+@validate_output(refraction_angle)
 def calculate_refraction_angle(incedence_angle_: Quantity | float,
     incedence_refractive_index_: float, resulting_refractive_index_: float) -> Quantity:
     #HACK: sympy angles are always in radians

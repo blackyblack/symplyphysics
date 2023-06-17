@@ -7,7 +7,7 @@ from symplyphysics import (
     print_expression,
     Dimensionless,
     convert_to,
-    validate_input_symbols,
+    validate_input,
 )
 
 # Description
@@ -38,7 +38,7 @@ def print() -> str:
     return print_expression(law)
 
 
-@validate_input_symbols(neutrons_per_fission_=neutrons_per_fission,
+@validate_input(neutrons_per_fission_=neutrons_per_fission,
     macroscopic_fuel_fission_cross_section_=macroscopic_fuel_fission_cross_section,
     macroscopic_fuel_absorption_cross_section_=macroscopic_fuel_absorption_cross_section)
 def calculate_reproduction_factor(neutrons_per_fission_: float,

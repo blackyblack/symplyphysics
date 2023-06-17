@@ -7,7 +7,7 @@ from symplyphysics import (
     print_expression,
     Dimensionless,
     convert_to,
-    validate_input_symbols,
+    validate_input,
 )
 from symplyphysics.core.symbols.probability import Probability
 
@@ -36,8 +36,7 @@ def print() -> str:
     return print_expression(law)
 
 
-@validate_input_symbols(geometric_buckling_=geometric_buckling,
-    neutron_fermi_age_=neutron_fermi_age)
+@validate_input(geometric_buckling_=geometric_buckling, neutron_fermi_age_=neutron_fermi_age)
 def calculate_probability(geometric_buckling_: Quantity,
     neutron_fermi_age_: Quantity) -> Probability:
     result_probability_expr = solve(law, fast_non_leakage_probability,

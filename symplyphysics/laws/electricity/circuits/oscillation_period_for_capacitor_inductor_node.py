@@ -1,6 +1,6 @@
 from sympy import (Eq, solve, pi, sqrt, Derivative, simplify)
 from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, Function, print_expression,
-    validate_input_symbols, validate_output_symbol)
+    validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 
 from symplyphysics.laws.electricity.circuits import sum_of_all_currents_through_an_electrical_node_is_zero as kirchhoff_law
@@ -135,8 +135,8 @@ period_solved = solve(period_law, period_definition.period, dict=True)[0][period
 assert expr_equals(period_solved**2, law.rhs**2)
 
 
-@validate_input_symbols(inductance_=inductance, capacitance_=capacitance)
-@validate_output_symbol(oscillation_period)
+@validate_input(inductance_=inductance, capacitance_=capacitance)
+@validate_output(oscillation_period)
 def calculate_oscillation_period(inductance_: Quantity, capacitance_: Quantity) -> Quantity:
     result_period_expr = solve(law, oscillation_period, dict=True)[0][oscillation_period]
     result_expr = result_period_expr.subs({inductance: inductance_, capacitance: capacitance_})

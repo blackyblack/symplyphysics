@@ -10,7 +10,7 @@ from symplyphysics import (
     print_expression,
     Dimensionless,
     convert_to,
-    validate_input_symbols,
+    validate_input,
 )
 from symplyphysics.core.symbols.quantities import collect_factor_and_dimension
 
@@ -81,7 +81,7 @@ def apply_neutron_flux_function(neutron_flux_function_: Expr) -> Expr:
 
 # neutron_flux_function_ should be a function on CoordSys3D
 # neutron_flux_function_ geometry should be defined with Quantity, eg width.dimension == units.length
-@validate_input_symbols(neutrons_per_fission_=neutrons_per_fission,
+@validate_input(neutrons_per_fission_=neutrons_per_fission,
     macroscopic_fission_cross_section_=macroscopic_fission_cross_section,
     macroscopic_absorption_cross_section_=macroscopic_absorption_cross_section,
     diffusion_coefficient_=diffusion_coefficient)
