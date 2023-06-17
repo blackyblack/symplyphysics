@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
 from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input_symbols, validate_output_symbol)
+    validate_input, validate_output)
 
 # Description
 ## Ideal gas law: P * V = n * R * T
@@ -23,8 +23,8 @@ def print() -> str:
     return print_expression(law)
 
 
-@validate_input_symbols(volume_=volume, temperature_=temperature, mole_count_=mole_count)
-@validate_output_symbol(pressure)
+@validate_input(volume_=volume, temperature_=temperature, mole_count_=mole_count)
+@validate_output(pressure)
 def calculate_pressure(volume_: Quantity, temperature_: Quantity,
     mole_count_: Quantity) -> Quantity:
     solved = solve(law, pressure, dict=True)[0][pressure]

@@ -1,6 +1,6 @@
 from sympy import (Eq, solve, pi)
 from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input_symbols, validate_output_symbol)
+    validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematic import angular_frequency_from_radians_per_time as frequency_def
 
@@ -36,8 +36,8 @@ def print() -> str:
     return print_expression(law)
 
 
-@validate_input_symbols(frequency_=circular_frequency)
-@validate_output_symbol(period)
+@validate_input(frequency_=circular_frequency)
+@validate_output(period)
 def calculate_period(frequency_: Quantity) -> Quantity:
     solved = solve(law, period, dict=True)[0][period]
     result_expr = solved.subs(circular_frequency, frequency_)

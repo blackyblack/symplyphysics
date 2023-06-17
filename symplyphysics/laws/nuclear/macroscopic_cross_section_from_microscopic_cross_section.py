@@ -5,8 +5,8 @@ from symplyphysics import (
     Quantity,
     Symbol,
     print_expression,
-    validate_input_symbols,
-    validate_output_symbol,
+    validate_input,
+    validate_output,
 )
 
 # Description
@@ -32,9 +32,9 @@ def print() -> str:
     return print_expression(law)
 
 
-@validate_input_symbols(microscopic_cross_section_=microscopic_cross_section,
+@validate_input(microscopic_cross_section_=microscopic_cross_section,
     atomic_number_density_=atomic_number_density)
-@validate_output_symbol(macroscopic_cross_section)
+@validate_output(macroscopic_cross_section)
 def calculate_cross_section(microscopic_cross_section_: Quantity,
     atomic_number_density_: Quantity) -> Quantity:
     result_cross_section_expr = solve(law, macroscopic_cross_section,

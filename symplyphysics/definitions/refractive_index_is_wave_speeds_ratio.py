@@ -7,7 +7,7 @@ from symplyphysics import (
     print_expression,
     Dimensionless,
     convert_to,
-    validate_input_symbols,
+    validate_input,
 )
 from symplyphysics.core.quantity_decorator import assert_equivalent_dimension
 
@@ -38,7 +38,7 @@ def print() -> str:
     return print_expression(definition)
 
 
-@validate_input_symbols(outer_speed_=outer_speed, refracting_speed_=refracting_speed)
+@validate_input(outer_speed_=outer_speed, refracting_speed_=refracting_speed)
 def calculate_refractive_index(outer_speed_: Quantity, refracting_speed_: Quantity) -> float:
     result_index_expr = solve(definition, refractive_index, dict=True)[0][refractive_index]
     result_expr = result_index_expr.subs({

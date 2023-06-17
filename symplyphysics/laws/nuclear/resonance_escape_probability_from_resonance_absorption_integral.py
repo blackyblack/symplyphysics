@@ -7,7 +7,7 @@ from symplyphysics import (
     print_expression,
     Dimensionless,
     convert_to,
-    validate_input_symbols,
+    validate_input,
 )
 from symplyphysics.core.symbols.probability import Probability
 
@@ -51,7 +51,7 @@ def print() -> str:
     return print_expression(law)
 
 
-@validate_input_symbols(absorber_atomic_number_density_=absorber_atomic_number_density,
+@validate_input(absorber_atomic_number_density_=absorber_atomic_number_density,
     effective_resonance_integral_=effective_resonance_integral,
     average_lethargy_change_=average_lethargy_change,
     macroscopic_scattering_cross_section_moderator_=macroscopic_scattering_cross_section_moderator)

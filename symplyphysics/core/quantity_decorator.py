@@ -1,9 +1,12 @@
 import functools
 import inspect
 import numbers
+from typing import List
 from sympy import S
 from sympy.physics.units import Quantity, Dimension
 from sympy.physics.units.systems.si import SI
+
+from symplyphysics.core.symbols.symbols import Function, Symbol
 from ..core.vectors.vectors import Vector
 from .errors import UnitsError
 
@@ -41,9 +44,12 @@ def assert_equivalent_dimension(
             f"not contain free symbols")
 
 
-# Validates the input quantities. Input parameters should be sympy.physics.units.Quantity type.
+# Validates the input quantities. Input parameters should be sympy.physics.units.Quantity, list of Quantity or
+# Vector of Quantity type.
+# Unit should be should be Symbol with dimension property, or Dimension.
 # Example:
 # @validate_input(param1_=units.length, param2_=(1 / units.length))
+# @validate_input(param1_=body_mass, param2_=body_volume)
 def validate_input(**decorator_kwargs):
 
     def validate_func(func):
@@ -54,38 +60,24 @@ def validate_input(**decorator_kwargs):
             bound_args = wrapped_signature.bind(*args, **kwargs)
             for param in wrapped_signature.parameters.values():
                 if param.name in decorator_kwargs:
-                    expected_unit = decorator_kwargs[param.name]
                     arg = bound_args.arguments[param.name]
-                    assert_equivalent_dimension(arg, 'validate_input', param.name, func.__name__,
-                        expected_unit)
-            return func(*args, **kwargs)
 
-        return wrapper_validate
+                    components = None
+                    if isinstance(arg, Vector):
+                        components = arg.components
+                    elif isinstance(arg, List):
+                        components = arg
 
-    return validate_func
-
-
-# Validates the input quantities for vectors. Input parameters should be Vector that contains sympy.physics.units.Quantity as components.
-# Example:
-# @validate_vector_input(param1_=units.length, param2_=(1 / units.length))
-def validate_vector_input(**decorator_kwargs):
-
-    def validate_func(func):
-
-        @functools.wraps(func)
-        def wrapper_validate(*args, **kwargs):
-            wrapped_signature = inspect.signature(func)
-            bound_args = wrapped_signature.bind(*args, **kwargs)
-            for param in wrapped_signature.parameters.values():
-                if param.name in decorator_kwargs:
                     expected_unit = decorator_kwargs[param.name]
-                    arg = bound_args.arguments[param.name]
-                    if not isinstance(arg, Vector):
-                        raise TypeError(f"Argument '{arg}' to function '{func.__name__}'"
-                            f" should be Vector.")
-                    for idx, c in enumerate(arg.components):
-                        assert_equivalent_dimension(c, "validate_input", f"{param.name}[{idx}]",
+                    if isinstance(expected_unit, Symbol) or isinstance(expected_unit, Function):
+                        expected_unit = expected_unit.dimension
+                    if components is None:
+                        assert_equivalent_dimension(arg, "validate_input", param.name,
                             func.__name__, expected_unit)
+                    else:
+                        for idx, c in enumerate(components):
+                            assert_equivalent_dimension(c, "validate_input", f"{param.name}[{idx}]",
+                                func.__name__, expected_unit)
             return func(*args, **kwargs)
 
         return wrapper_validate
@@ -93,9 +85,33 @@ def validate_vector_input(**decorator_kwargs):
     return validate_func
 
 
-# Validates the output quantity. Output should be sympy.physics.units.Quantity type.
+def _assert_expected_unit(value: Quantity | Vector | List,
+    expected_unit: Dimension | Symbol | Function, function_name: str, validator_name: str):
+    components = None
+    if isinstance(value, Vector):
+        components = value.components
+    elif isinstance(value, List):
+        components = value
+
+    expected_dimension = expected_unit
+    if isinstance(expected_unit, Symbol) or isinstance(expected_unit, Function):
+        expected_dimension = expected_unit.dimension
+
+    if components is None:
+        assert_equivalent_dimension(value, validator_name, "return", function_name,
+            expected_dimension)
+    else:
+        for idx, c in enumerate(components):
+            assert_equivalent_dimension(c, validator_name, f"return[{idx}]", function_name,
+                expected_dimension)
+
+
+# Validates the output quantity. Output should be sympy.physics.units.Quantity, list of Quantity or
+# Vector of Quantity type.
+# Input should be should be Symbol with dimension property, Quantity or Dimension.
 # Example:
 # @validate_output(units.length**2)
+# @validate_output(body_volume)
 def validate_output(expected_unit):
 
     def validate_func(func):
@@ -103,8 +119,7 @@ def validate_output(expected_unit):
         @functools.wraps(func)
         def wrapper_validate(*args, **kwargs):
             ret = func(*args, **kwargs)
-            assert_equivalent_dimension(ret, 'validate_output', 'return', func.__name__,
-                expected_unit)
+            _assert_expected_unit(ret, expected_unit, func.__name__, "validate_output")
             return ret
 
         return wrapper_validate
@@ -112,27 +127,8 @@ def validate_output(expected_unit):
     return validate_func
 
 
-# Validates the output quantities for vector. Output should be Vector that contains sympy.physics.units.Quantity as components.
-# Example:
-# @validate_vector_output(units.length**2)
-def validate_vector_output(expected_unit):
-
-    def validate_func(func):
-
-        @functools.wraps(func)
-        def wrapper_validate(*args, **kwargs):
-            ret = func(*args, **kwargs)
-            for idx, c in enumerate(ret.components):
-                assert_equivalent_dimension(c, "validate_output", f"return[{idx}]", func.__name__,
-                    expected_unit)
-            return ret
-
-        return wrapper_validate
-
-    return validate_func
-
-
-# Validates that output quantity has the same dimension as input quantity. Output and input parameter should be sympy.physics.units.Quantity type.
+# Validates that output quantity has the same dimension as input quantity. Output and input parameter should be
+# sympy.physics.units.Quantity, list of Quantity or Vector of Quantity type.
 # Example:
 # @validate_output_same("param1")
 def validate_output_same(param_name):
@@ -153,51 +149,24 @@ def validate_output_same(param_name):
                 raise TypeError(f"Argument '{param_name}' to decorator 'validate_output_same'"
                     f" should be in function parameters")
             ret = func(*args, **kwargs)
-            assert_equivalent_dimension(ret, 'validate_output_same', param.name, func.__name__,
-                expected_unit.dimension)
-            return ret
 
-        return wrapper_validate
+            components = None
+            if isinstance(ret, Vector):
+                components = ret.components
+            elif isinstance(ret, List):
+                components = ret
 
-    return validate_func
+            expected_dimension = None
+            if components is None:
+                expected_dimension = expected_unit.dimension
+            else:
+                if len(components) == 0:
+                    raise UnitsError(f"Argument '{param_name}' to decorator 'validate_output_same'"
+                        f" is a List but does not have any components to derived expected dimension"
+                                    )
+                expected_dimension = components[0].dimension
 
-
-# Validates the input quantities. Input parameters should be Symbols with dimension property.
-# Example:
-# @validate_input_symbols(param1_=body_mass, param2_=body_volume)
-def validate_input_symbols(**decorator_kwargs):
-
-    def validate_func(func):
-
-        @functools.wraps(func)
-        def wrapper_validate(*args, **kwargs):
-            wrapped_signature = inspect.signature(func)
-            bound_args = wrapped_signature.bind(*args, **kwargs)
-            for param in wrapped_signature.parameters.values():
-                if param.name in decorator_kwargs:
-                    expected_symbol = decorator_kwargs[param.name]
-                    arg = bound_args.arguments[param.name]
-                    assert_equivalent_dimension(arg, 'validate_input', param.name, func.__name__,
-                        expected_symbol.dimension)
-            return func(*args, **kwargs)
-
-        return wrapper_validate
-
-    return validate_func
-
-
-# Validates the output quantity. Output should be should be Symbol with dimension property.
-# Example:
-# @validate_output_symbol(body_volume)
-def validate_output_symbol(expected_symbol):
-
-    def validate_func(func):
-
-        @functools.wraps(func)
-        def wrapper_validate(*args, **kwargs):
-            ret = func(*args, **kwargs)
-            assert_equivalent_dimension(ret, 'validate_output', 'return', func.__name__,
-                expected_symbol.dimension)
+            _assert_expected_unit(ret, expected_dimension, func.__name__, "validate_output_same")
             return ret
 
         return wrapper_validate

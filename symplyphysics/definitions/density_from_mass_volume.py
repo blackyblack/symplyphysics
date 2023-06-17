@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
 from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input_symbols, validate_output_symbol)
+    validate_input, validate_output)
 
 # Description
 ## The density (more precisely, the volumetric mass density), of a substance
@@ -25,8 +25,8 @@ def print() -> str:
     return print_expression(definition)
 
 
-@validate_input_symbols(mass_=mass, volume_=volume)
-@validate_output_symbol(density)
+@validate_input(mass_=mass, volume_=volume)
+@validate_output(density)
 def calculate_density(mass_: Quantity, volume_: Quantity) -> Quantity:
     solved = solve(definition, density, dict=True)[0][density]
     result_expr = solved.subs({mass: mass_, volume: volume_})

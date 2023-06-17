@@ -20,29 +20,21 @@ def test_args():
 
 
 def test_basic_voltage(test_args):
-    result = kirchhoff_law_2.calculate_voltage(test_args.U1)
+    result = kirchhoff_law_2.calculate_voltage([test_args.U1])
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.voltage)
     result_voltage = convert_to(result, units.volt).subs(units.volt, 1).evalf(2)
     assert result_voltage == approx(-3, 0.01)
 
 
-def test_bad_voltage():
-    Ub = Quantity(1 * units.meter)
-    with raises(errors.UnitsError):
-        kirchhoff_law_2.calculate_voltage(Ub)
-    with raises(TypeError):
-        kirchhoff_law_2.calculate_voltage(100)
-
-
-def test_array_voltage(test_args):
-    result = kirchhoff_law_2.calculate_voltage_from_array([test_args.U1, test_args.U2])
+def test_three_voltage_array(test_args):
+    result = kirchhoff_law_2.calculate_voltage([test_args.U1, test_args.U2])
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.voltage)
     result_voltage = convert_to(result, units.volt).subs(units.volt, 1).evalf(2)
     assert result_voltage == approx(2, 0.01)
 
 
 def test_array_empty():
-    result = kirchhoff_law_2.calculate_voltage_from_array([])
+    result = kirchhoff_law_2.calculate_voltage([])
     assert SI.get_dimension_system().is_dimensionless(result.dimension)
     assert int(convert_to(result, S.One).n()) == 0
 
@@ -50,14 +42,14 @@ def test_array_empty():
 def test_array_bad_voltage(test_args):
     Ub = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
-        kirchhoff_law_2.calculate_voltage_from_array([test_args.U1, Ub])
+        kirchhoff_law_2.calculate_voltage([test_args.U1, Ub])
     with raises(TypeError):
-        kirchhoff_law_2.calculate_voltage_from_array([test_args.U1, 100])
+        kirchhoff_law_2.calculate_voltage([test_args.U1, 100])
     with raises(errors.UnitsError):
-        kirchhoff_law_2.calculate_voltage_from_array([Ub, test_args.U2])
+        kirchhoff_law_2.calculate_voltage([Ub, test_args.U2])
     with raises(TypeError):
-        kirchhoff_law_2.calculate_voltage_from_array([100, test_args.U2])
+        kirchhoff_law_2.calculate_voltage([100, test_args.U2])
     with raises(errors.UnitsError):
-        kirchhoff_law_2.calculate_voltage_from_array([Ub, Ub])
+        kirchhoff_law_2.calculate_voltage([Ub, Ub])
     with raises(TypeError):
-        kirchhoff_law_2.calculate_voltage_from_array([100, 100])
+        kirchhoff_law_2.calculate_voltage([100, 100])

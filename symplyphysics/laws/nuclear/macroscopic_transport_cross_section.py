@@ -6,8 +6,8 @@ from symplyphysics import (
     Symbol,
     print_expression,
     Dimensionless,
-    validate_input_symbols,
-    validate_output_symbol,
+    validate_input,
+    validate_output,
 )
 
 # Description
@@ -37,9 +37,9 @@ def print() -> str:
     return print_expression(law)
 
 
-@validate_input_symbols(macroscopic_scattering_cross_section_=macroscopic_scattering_cross_section,
+@validate_input(macroscopic_scattering_cross_section_=macroscopic_scattering_cross_section,
     average_scattering_angle_cosine_=average_scattering_angle_cosine)
-@validate_output_symbol(macroscopic_transport_cross_section)
+@validate_output(macroscopic_transport_cross_section)
 def calculate_cross_section(macroscopic_scattering_cross_section_: Quantity,
     average_scattering_angle_cosine_: float) -> Quantity:
     result_cross_section_expr = solve(law, macroscopic_transport_cross_section,

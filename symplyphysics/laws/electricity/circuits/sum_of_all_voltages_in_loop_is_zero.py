@@ -1,13 +1,7 @@
 from typing import List
-from sympy import (Eq, solve, symbols, Idx, IndexedBase, Sum)
-from symplyphysics import (
-    units,
-    expr_to_quantity,
-    Quantity,
-    print_expression,
-)
-from symplyphysics.core.quantity_decorator import assert_equivalent_dimension, validate_input, validate_output
-from symplyphysics.core.symbols.quantities import Quantity
+from sympy import (Add, Eq, solve)
+from symplyphysics import (Symbol, units, expr_to_quantity, Quantity, print_expression,
+    validate_input, validate_output)
 
 # Description
 ## sum(U) = 0
@@ -17,34 +11,25 @@ from symplyphysics.core.symbols.quantities import Quantity
 ## This property of electrical loop is called Kirchhoff law #2.
 ## This law also demonstrates that work to move the unit of charge in electrical field along the closed path is zero.
 
-voltage = IndexedBase("voltage")
-voltages_total = symbols("voltages_total")
-i = symbols("i", cls=Idx)
+voltages = Symbol("voltages", units.voltage)
 
-law = Eq(Sum(voltage[i], (i, 1, voltages_total)), 0)
+law = Eq(Add(voltages), 0)
 
 
 def print() -> str:
     return print_expression(law)
 
 
-@validate_input(voltage_in=units.voltage)
+@validate_input(voltages_=units.voltage)
 @validate_output(units.voltage)
-def calculate_voltage(voltage_in: Quantity) -> Quantity:
-    two_voltages_law = law.subs(voltages_total, 2).doit()
-    solved = solve(two_voltages_law, voltage[2], dict=True)[0][voltage[2]]
-    result_expr = solved.subs(voltage[1], voltage_in)
-    return expr_to_quantity(result_expr)
-
-
-@validate_output(units.voltage)
-def calculate_voltage_from_array(voltages: List[Quantity]) -> Quantity:
-    for idx, c in enumerate(voltages):
-        assert_equivalent_dimension(c, "validate_input", f"voltages[{idx}]",
-            "calculate_voltage_from_array", units.voltage)
-    voltages_law = law.subs(voltages_total, len(voltages) + 1).doit()
-    unknown_voltage = voltage[len(voltages) + 1]
+def calculate_voltage(voltages_: List[Quantity]) -> Quantity:
+    voltage_symbols = [
+        Symbol("voltage_" + str(i), units.voltage) for i in range(0,
+        len(voltages_) + 1)
+    ]
+    voltages_law = law.subs(voltages, tuple(voltage_symbols))
+    unknown_voltage = voltage_symbols[len(voltages_)]
     solved = solve(voltages_law, unknown_voltage, dict=True)[0][unknown_voltage]
-    for idx, c in enumerate(voltages):
-        solved = solved.subs(voltage[idx + 1], c)
+    for idx, v in enumerate(voltages_):
+        solved = solved.subs(voltage_symbols[idx], v)
     return expr_to_quantity(solved)
