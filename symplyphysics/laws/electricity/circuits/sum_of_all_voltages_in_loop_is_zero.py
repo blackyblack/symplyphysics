@@ -1,6 +1,6 @@
 from typing import List
-from sympy import (Add, Eq, solve)
-from symplyphysics import (Symbol, units, expr_to_quantity, Quantity, print_expression,
+from sympy import (Eq, solve, symbols, Idx, IndexedBase, Sum)
+from symplyphysics import (units, expr_to_quantity, Quantity, print_expression,
     validate_input, validate_output)
 
 # Description
@@ -11,9 +11,11 @@ from symplyphysics import (Symbol, units, expr_to_quantity, Quantity, print_expr
 ## This property of electrical loop is called Kirchhoff law #2.
 ## This law also demonstrates that work to move the unit of charge in electrical field along the closed path is zero.
 
-voltages = Symbol("voltages", units.voltage)
+voltage = IndexedBase("voltage")
+voltages_total = symbols("voltages_total")
+i = symbols("i", cls=Idx)
 
-law = Eq(Add(voltages), 0)
+law = Eq(Sum(voltage[i], (i, 1, voltages_total)), 0)
 
 
 def print() -> str:
@@ -23,13 +25,9 @@ def print() -> str:
 @validate_input(voltages_=units.voltage)
 @validate_output(units.voltage)
 def calculate_voltage(voltages_: List[Quantity]) -> Quantity:
-    voltage_symbols = [
-        Symbol("voltage_" + str(i), units.voltage) for i in range(0,
-        len(voltages_) + 1)
-    ]
-    voltages_law = law.subs(voltages, tuple(voltage_symbols))
-    unknown_voltage = voltage_symbols[len(voltages_)]
+    voltages_law = law.subs(voltages_total, len(voltages_) + 1).doit()
+    unknown_voltage = voltage[len(voltages_) + 1]
     solved = solve(voltages_law, unknown_voltage, dict=True)[0][unknown_voltage]
-    for idx, v in enumerate(voltages_):
-        solved = solved.subs(voltage_symbols[idx], v)
+    for idx, c in enumerate(voltages_):
+        solved = solved.subs(voltage[idx + 1], c)
     return expr_to_quantity(solved)

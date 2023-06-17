@@ -45,94 +45,94 @@ def print() -> str:
 
 ## 1. Prove that capacitor_current(time) = inductor_current(time)
 
-# time = Symbol("time", units.time)
-# capacitor_current = Function("capacitor_current", units.current)
-# inductor_current = Function("inductor_current", units.current)
+time = Symbol("time", units.time)
+capacitor_current = Function("capacitor_current", units.current)
+inductor_current = Function("inductor_current", units.current)
 
-# two_currents_law = kirchhoff_law.law.subs(kirchhoff_law.currents_total, 2).doit()
-# # capacitor current is in, inductor current is out
-# two_currents_applied = two_currents_law.subs({
-#     kirchhoff_law.current[1]: capacitor_current(time),
-#     kirchhoff_law.current[2]: -1 * inductor_current(time)
-# })
-# capacitor_current_applied = solve(two_currents_applied, capacitor_current(time),
-#     dict=True)[0][capacitor_current(time)]
-# capacitor_current_eq = Eq(capacitor_current(time), capacitor_current_applied)
+two_currents_law = kirchhoff_law.law.subs(kirchhoff_law.currents_total, 2).doit()
+# capacitor current is in, inductor current is out
+two_currents_applied = two_currents_law.subs({
+    kirchhoff_law.current[1]: capacitor_current(time),
+    kirchhoff_law.current[2]: -1 * inductor_current(time)
+})
+capacitor_current_applied = solve(two_currents_applied, capacitor_current(time),
+    dict=True)[0][capacitor_current(time)]
+capacitor_current_eq = Eq(capacitor_current(time), capacitor_current_applied)
 
-# assert capacitor_current_eq.lhs == capacitor_current(time)
-# assert capacitor_current_eq.rhs == inductor_current(time)
+assert capacitor_current_eq.lhs == capacitor_current(time)
+assert capacitor_current_eq.rhs == inductor_current(time)
 
-# ## 2. Prove that capacitor_voltage(time) = inductor_voltage(time)
+## 2. Prove that capacitor_voltage(time) = inductor_voltage(time)
 
-# capacitor_voltage = Function("capacitor_voltage", units.voltage)
-# inductor_voltage = Function("inductor_voltage", units.voltage)
+capacitor_voltage = Function("capacitor_voltage", units.voltage)
+inductor_voltage = Function("inductor_voltage", units.voltage)
 
-# two_voltages_law = kirchhoff_law_2.law.subs(kirchhoff_law_2.voltages_total, 2).doit()
-# # capacitor is voltage source, inductor is voltage consumer
-# two_voltages_applied = two_voltages_law.subs({
-#     kirchhoff_law_2.voltage[1]: -1 * inductor_voltage(time),
-#     kirchhoff_law_2.voltage[2]: capacitor_voltage(time)
-# })
-# inductor_voltage_applied = solve(two_voltages_applied, inductor_voltage(time),
-#     dict=True)[0][inductor_voltage(time)]
+two_voltages_law = kirchhoff_law_2.law.subs(kirchhoff_law_2.voltages_total, 2).doit()
+# capacitor is voltage source, inductor is voltage consumer
+two_voltages_applied = two_voltages_law.subs({
+    kirchhoff_law_2.voltage[1]: -1 * inductor_voltage(time),
+    kirchhoff_law_2.voltage[2]: capacitor_voltage(time)
+})
+inductor_voltage_applied = solve(two_voltages_applied, inductor_voltage(time),
+    dict=True)[0][inductor_voltage(time)]
 
-# assert inductor_voltage_applied == capacitor_voltage(time)
+assert inductor_voltage_applied == capacitor_voltage(time)
 
-# ## 3. Prove that capacitor current derivative equals to capacitance * (second order derivative of voltage of capacitor)
+## 3. Prove that capacitor current derivative equals to capacitance * (second order derivative of voltage of capacitor)
 
-# ## charge of capacitor is voltage of capacitor * capacitance
-# capacitor_charge_law = capacitance_definition.definition.subs({
-#     capacitance_definition.capacitance: capacitance,
-#     capacitance_definition.charge: charge_definition.charge(time),
-#     capacitance_definition.voltage: capacitor_voltage(time)
-# })
-# capacitor_charge_applied = solve(capacitor_charge_law, charge_definition.charge(time),
-#     dict=True)[0][charge_definition.charge(time)]
+## charge of capacitor is voltage of capacitor * capacitance
+capacitor_charge_law = capacitance_definition.definition.subs({
+    capacitance_definition.capacitance: capacitance,
+    capacitance_definition.charge: charge_definition.charge(time),
+    capacitance_definition.voltage: capacitor_voltage(time)
+})
+capacitor_charge_applied = solve(capacitor_charge_law, charge_definition.charge(time),
+    dict=True)[0][charge_definition.charge(time)]
 
-# ## I_c(t) = C * U_c'(t)
-# capacitor_current_law = charge_definition.definition.subs(charge_definition.time, time)
-# capacitor_current_law = capacitor_current_law.subs(charge_definition.charge(time),
-#     capacitor_charge_applied)
-# ## I_c'(t) = C * U_c"(t)
-# capacitor_current_law_derivative = Eq(Derivative(capacitor_current_law.lhs, time),
-#     Derivative(capacitor_current_law.rhs, time))
+## I_c(t) = C * U_c'(t)
+capacitor_current_law = charge_definition.definition.subs(charge_definition.time, time)
+capacitor_current_law = capacitor_current_law.subs(charge_definition.charge(time),
+    capacitor_charge_applied)
+## I_c'(t) = C * U_c"(t)
+capacitor_current_law_derivative = Eq(Derivative(capacitor_current_law.lhs, time),
+    Derivative(capacitor_current_law.rhs, time))
 
-# ## 4. Prove that inductor voltage equals to -1 * capacitance * inductance * (second order derivative of voltage of capacitor)
+## 4. Prove that inductor voltage equals to -1 * capacitance * inductance * (second order derivative of voltage of capacitor)
 
-# ## Inductor voltage is the self-inductance.
-# inductor_voltage_law = induction_voltage_definition.definition.subs(
-#     induction_voltage_definition.time, time)
-# inductor_voltage_law = inductor_voltage_law.subs({
-#     induction_voltage_definition.inductance: inductance,
-#     induction_voltage_definition.self_induction_voltage(time): capacitor_voltage(time),
-#     induction_voltage_definition.current(time): charge_definition.current(time)
-# })
+## Inductor voltage is the self-inductance.
+inductor_voltage_law = induction_voltage_definition.definition.subs(
+    induction_voltage_definition.time, time)
+inductor_voltage_law = inductor_voltage_law.subs({
+    induction_voltage_definition.inductance: inductance,
+    induction_voltage_definition.self_induction_voltage(time): capacitor_voltage(time),
+    induction_voltage_definition.current(time): charge_definition.current(time)
+})
 
-# derived_law = [inductor_voltage_law, capacitor_current_law_derivative]
+derived_law = [inductor_voltage_law, capacitor_current_law_derivative]
 
-# ## U"(t) = - 1/LC * U(t)
-# capacitor_voltage_solved = solve(derived_law,
-#     (Derivative(charge_definition.current(time)), capacitor_voltage(time)),
-#     dict=True)[0][capacitor_voltage(time)]
-# voltage_diff_eq = Eq(capacitor_voltage(time), capacitor_voltage_solved)
+## U"(t) = - 1/LC * U(t)
+capacitor_voltage_solved = solve(derived_law,
+    (Derivative(charge_definition.current(time)), capacitor_voltage(time)),
+    dict=True)[0][capacitor_voltage(time)]
+voltage_diff_eq = Eq(capacitor_voltage(time), capacitor_voltage_solved)
 
-# ## 5. Solve differential equation and find period of the harmonic oscillator
+## 5. Solve differential equation and find period of the harmonic oscillator
 
-# ## Expected solution for U"(t) = - 1/LC * U(t) is:
-# ## A * e^(i * w * t) + B * e^(-i * w * t), where w = 1 / sqrt(LC)
+## Expected solution for U"(t) = - 1/LC * U(t) is:
+## A * e^(i * w * t) + B * e^(-i * w * t), where w = 1 / sqrt(LC)
 
-# oscillator_eq = oscillator.definition.subs(oscillator.time, time)
-# oscillator_eq = oscillator_eq.subs(oscillator.displacement_function(time), capacitor_voltage(time))
-# angular_frequency_solved = simplify(
-#     solve([oscillator_eq, voltage_diff_eq], (oscillator.angular_frequency, capacitor_voltage(time)),
-#     dict=True)[0][oscillator.angular_frequency])
+oscillator_eq = oscillator.definition.subs(oscillator.time, time)
+oscillator_eq = oscillator_eq.subs(oscillator.displacement_function(time), capacitor_voltage(time))
+angular_frequency_solved = simplify(
+    solve([oscillator_eq, voltage_diff_eq], (oscillator.angular_frequency, capacitor_voltage(time)),
+    dict=True)[0][oscillator.angular_frequency])
 
-# # 6. Derive period from frequency
-# period_law = period_definition.law.subs(period_definition.circular_frequency,
-#     angular_frequency_solved)
-# period_solved = solve(period_law, period_definition.period, dict=True)[0][period_definition.period]
-# ## Square roots fail to compare with each other. Raise both parts to power of 2 before checking for equality.
-# assert expr_equals(period_solved**2, law.rhs**2)
+# 6. Derive period from frequency
+period_law = period_definition.law.subs(period_definition.circular_frequency,
+    angular_frequency_solved)
+period_solved = solve(period_law, period_definition.period, dict=True)[0][period_definition.period]
+## Square roots fail to compare with each other. Raise both parts to power of 2 before checking for equality.
+assert expr_equals(period_solved**2, law.rhs**2)
 
 
 @validate_input(inductance_=inductance, capacitance_=capacitance)
