@@ -1,5 +1,7 @@
-from typing import List
-from sympy import (Eq, solve, symbols, Idx, IndexedBase, Sum, Add, Function as SymFunction)
+from functools import reduce
+import operator
+from typing import Iterable, List
+from sympy import (Eq, solve, symbols, Idx, IndexedBase, Sum, Expr, sympify)
 from symplyphysics import (units, expr_to_quantity, Quantity, print_expression,
     Symbol, validate_input, validate_output)
 
@@ -18,28 +20,23 @@ i = symbols("i", cls=Idx)
 law = Eq(Sum(voltage[i], (i, 1, voltages_total)), 0)
 
 
-def eval_sum(*args):
-    n = len(args)
-    return n
-    #return prod(
-    #    prod(args[j] - args[i] for j in range(i + 1, n))
-    #    / factorial(i) for i in range(n))
-    # converting factorial(i) to int is slightly faster
+class SumArray(Expr):
+    """
+    Represents unevaluated Sum over array.
 
+    """
 
-class MySumm(SymFunction):
-    is_integer = True
-
-    @classmethod
-    def eval(cls, *args):
-        return eval_sum(*args)
+    def __new__(cls, *array):
+        obj = Expr.__new__(cls, *array)
+        return obj
 
     def doit(self, **hints):
-        return eval_sum(*self.args)
+        return reduce(operator.add, self._args) if isinstance(self._args, Iterable) else self._args
+
 
 
 voltages = Symbol("voltages", units.voltage)
-law2 = Eq(MySumm(voltages), 0)
+law2 = Eq(SumArray(voltages, voltages), 0, evaluate=False)
 
 
 def print() -> str:
@@ -50,9 +47,13 @@ def print() -> str:
 @validate_output(units.voltage)
 def calculate_voltage(voltages_: List[Quantity]) -> Quantity:
     voltage_symbols = [Symbol("voltage_" + str(i), units.voltage) for i in range(len(voltages_) + 1)]
+    sympy_voltages = sympify(voltage_symbols, strict=False)
     unknown_voltage = voltage_symbols[len(voltages_)]
-    voltages_law = law2.subs(voltages, tuple(voltage_symbols))
+    voltages_law = law2.subs(voltages, sympy_voltages)
+    #voltages_law = law2
+    #voltages_law = law2.subs(voltages, voltage_symbols[0])
+    voltages_law = voltages_law.doit()
     solved = solve(voltages_law, unknown_voltage, dict=True)[0][unknown_voltage]
-    for idx, c in enumerate(voltages_):
-        solved = solved.subs(voltage[idx + 1], c)
+    for idx in range(len(voltage_symbols) - 1):
+        solved = solved.subs(voltage_symbols[idx], voltages_[idx])
     return expr_to_quantity(solved)
