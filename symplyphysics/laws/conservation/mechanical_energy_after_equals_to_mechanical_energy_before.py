@@ -5,7 +5,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.conservation import mechanical_energy_is_constant
 
 # Description
-## The total mechanical energy of a system is conserved i.e., the energy can neither be created nor be destroyed.
+## The total mechanical energy of an isolated system is conserved i.e., the energy can neither be created nor be destroyed.
 ## It can only be internally converted from one form to another if the forces doing work on the system are conservative in nature.
 ## See [mechanical_energy_is_constant](./mechanical_energy_is_constant.py) for more information.
 

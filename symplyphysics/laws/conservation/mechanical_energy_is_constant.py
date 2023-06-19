@@ -5,7 +5,7 @@ from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expr
 # Description
 ## Mechanical energy, sum of the kinetic energy, or energy of motion, and the potential energy, or energy stored in a system by
 ## reason of the position of its parts.
-## Mechanical energy is constant in a system that has only gravitational forces or in an otherwise idealized system—that is,
+## Mechanical energy is constant in a system that has only gravitational forces or in an otherwise idealized system — that is,
 ## one lacking dissipative forces, such as friction and air resistance, or one in which such forces can be reasonably neglected.
 
 # Law: dE/dt = 0
