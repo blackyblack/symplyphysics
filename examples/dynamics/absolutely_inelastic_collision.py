@@ -2,7 +2,7 @@
 
 from sympy import solve
 from symplyphysics import (units, convert_to, expr_to_quantity, Quantity)
-from symplyphysics.laws.dynamics import momentum_after_collision_equals_to_momentum_before as momentum_law
+from symplyphysics.laws.conservation import momentum_after_collision_equals_to_momentum_before as momentum_conservation_law
 from symplyphysics.definitions import momentum_is_mass_times_velocity as momentum_def
 
 # Inelastic collision transforms two objects with masses m1, m2 and velocities v1 and v2 to one object with mass m = m1 + m2 and unknown velocity to be resolved
@@ -16,12 +16,12 @@ body_mass = Quantity(75 * units.kilogram)
 # Hint dimension so 'convert_to' is able to convert it to m/s
 body_velocity = Quantity(0 * units.meter / units.second, dimension=units.velocity)
 
-print("Formula for momentum conservation law is:\n{}".format(momentum_law.print()))
+print("Formula for momentum conservation law is:\n{}".format(momentum_conservation_law.print()))
 print("Formula for momentum is:\n{}".format(momentum_def.print()))
 
 # initial body velocity is 0 so the momentum is 0 as well. So the momentum of system before collision equals to momentum of bullet
 momentum_before = momentum_def.calculate_momentum(bullet_mass, bullet_velocity)
-momentum_after = momentum_law.calculate_momentum_after(momentum_before)
+momentum_after = momentum_conservation_law.calculate_momentum_after(momentum_before)
 
 # Mass of the resulting object is a sum of masses of a bullet and plasticine
 solved = solve(momentum_def.definition, momentum_def.velocity, dict=True)[0][momentum_def.velocity]
