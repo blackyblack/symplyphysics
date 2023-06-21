@@ -75,6 +75,9 @@ class SymbolPrinter(PrettyPrinter):
             func_name=func_name,
             left=left,
             right=right)
+    
+    def _print_SumArray(self, expr):
+        return self._print_Function(expr, func_name='SumArray')
 
 
 def print_expression(expr) -> str:

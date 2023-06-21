@@ -49,11 +49,12 @@ time = Symbol("time", units.time)
 capacitor_current = Function("capacitor_current", units.current)
 inductor_current = Function("inductor_current", units.current)
 
-two_currents_law = kirchhoff_law.law.subs(kirchhoff_law.currents_total, 2).doit()
+current_symbols = tuple(Symbol("current_" + str(i), units.current) for i in range(2))
+two_currents_law = kirchhoff_law.law.subs(kirchhoff_law.currents, current_symbols).doit()
 # capacitor current is in, inductor current is out
 two_currents_applied = two_currents_law.subs({
-    kirchhoff_law.current[1]: capacitor_current(time),
-    kirchhoff_law.current[2]: -1 * inductor_current(time)
+    current_symbols[0]: capacitor_current(time),
+    current_symbols[1]: -1 * inductor_current(time)
 })
 capacitor_current_applied = solve(two_currents_applied, capacitor_current(time),
     dict=True)[0][capacitor_current(time)]
@@ -67,11 +68,12 @@ assert capacitor_current_eq.rhs == inductor_current(time)
 capacitor_voltage = Function("capacitor_voltage", units.voltage)
 inductor_voltage = Function("inductor_voltage", units.voltage)
 
-two_voltages_law = kirchhoff_law_2.law.subs(kirchhoff_law_2.voltages_total, 2).doit()
+voltage_symbols = tuple(Symbol("voltage_" + str(i), units.voltage) for i in range(2))
+two_voltages_law = kirchhoff_law_2.law.subs(kirchhoff_law_2.voltages, voltage_symbols).doit()
 # capacitor is voltage source, inductor is voltage consumer
 two_voltages_applied = two_voltages_law.subs({
-    kirchhoff_law_2.voltage[1]: -1 * inductor_voltage(time),
-    kirchhoff_law_2.voltage[2]: capacitor_voltage(time)
+    voltage_symbols[0]: -1 * inductor_voltage(time),
+    voltage_symbols[1]: capacitor_voltage(time)
 })
 inductor_voltage_applied = solve(two_voltages_applied, inductor_voltage(time),
     dict=True)[0][inductor_voltage(time)]
