@@ -8,6 +8,8 @@ from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_velocity as
 from symplyphysics.laws.kinematic import linear_velocity_from_angular_velocity_and_radius as angular_velocity_law
 from symplyphysics.laws.kinematic import period_from_angular_frequency as angular_frequency
 from symplyphysics.definitions import harmonic_oscillator_is_second_derivative_equation as oscillator
+from symplyphysics.definitions import mechanical_energy_is_kinetic_and_potential as mechanical_energy_def
+from symplyphysics.laws.conservation import mechanical_energy_is_constant as mechanical_energy_conservation
 
 # Description
 ## Ideal pendulum is an object hanging on a thread. In a field of gravitation it starts oscillating after been pushed out of balance.
@@ -66,16 +68,25 @@ amount_of_kinetic_energy = kinetic_energy.law.subs({
     kinetic_energy.body_velocity: linear_velocity
 }).rhs
 
-#TODO: add conservation of energy to the laws
-## Total energy is constant
-total_energy = symbols("total_energy", constant=True)
-total_energy_eq = Eq(total_energy, amount_of_kinetic_energy + amount_of_potential_energy)
+mechanical_energy = mechanical_energy_def.definition.subs({
+    mechanical_energy_def.kinetic_energy: amount_of_kinetic_energy,
+    mechanical_energy_def.potential_energy: amount_of_potential_energy
+}).rhs
 
-## Differentiate both sides of equation
-total_energy_diff_eq = Eq(diff(total_energy_eq.lhs, time), diff(total_energy_eq.rhs, time))
-total_energy_diff_solved = solve(total_energy_diff_eq,
-    Derivative(pendulum_angle(time), (time, 2)),
+## Total mechanical energy for pendulum is constant
+
+conserved_energy_eq = mechanical_energy_conservation.law.subs(mechanical_energy_conservation.time, time)
+
+## Differentiate both sides of equation.
+## Derivative of constant mechanical energy will be zero, so is the left side of this equation.
+total_energy_diff_eq = Eq(Derivative(mechanical_energy_conservation.mechanical_energy(time), time), diff(mechanical_energy, time))
+
+## We do not replace it with zero, but solve system of equations instead
+total_energy_diff_solved = solve([total_energy_diff_eq, conserved_energy_eq],
+    (Derivative(pendulum_angle(time), (time, 2)),
+    Derivative(mechanical_energy_conservation.mechanical_energy(time), time)),
     dict=True)[0][Derivative(pendulum_angle(time), (time, 2))]
+## Now we've found the solution for second order derivative of angle function over time
 total_energy_diff_solved_eq = Eq(Derivative(pendulum_angle(time), (time, 2)),
     total_energy_diff_solved)
 
