@@ -15,11 +15,11 @@ from symplyphysics.laws.electricity import resistance_is_proportional_to_length 
 
 @fixture
 def test_args():
-    Resistivity = Quantity(0.0172 * units.ohm * (units.milli * units.meter)^2 / units.meter)
-    Wire_length = Quantity(3 * units.meter)
-    Section = Quantity(2 * (units.milli * units.meter)^2)
-    Args = namedtuple("Args", ["Resistivity", "Wire_length", "Section"])
-    return Args(Resistivity=Resistivity, Wire_length=Wire_length, Section=Section)
+    resistivity = Quantity(0.0172 * units.ohm * (units.milli * units.meter)^2 / units.meter)
+    wire_length = Quantity(3 * units.meter)
+    cross_section = Quantity(2 * (units.milli * units.meter)^2)
+    Args = namedtuple("Args", ["Resistivity", "Wire_length", "Cross_section"])
+    return Args(resistivity=resistivity, wire_length=wire_length, cross_section=cross_section)
 
 
 def test_basic_resistance(test_args):
