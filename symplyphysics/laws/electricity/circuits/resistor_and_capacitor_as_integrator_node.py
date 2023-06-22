@@ -1,6 +1,7 @@
 from sympy import (Derivative, Eq, solve, exp, simplify)
 from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, Function, print_expression,
     validate_input, validate_output)
+from symplyphysics.core.symbols.symbols import tuple_of_symbols
 from symplyphysics.definitions import current_is_charge_derivative as charge_definition
 from symplyphysics.definitions import capacitance_from_charge_and_voltage as capacitance_definition
 from symplyphysics.laws.electricity import current_is_proportional_to_voltage as ohms_law
@@ -34,7 +35,7 @@ capacitor_current = Function("capacitor_current", units.current)
 resistor_current = Function("resistor_current", units.current)
 resistor_voltage = Function("resistor_voltage", units.voltage)
 
-current_symbols = tuple(Symbol("current_" + str(i), units.current) for i in range(2))
+current_symbols = tuple_of_symbols("current", units.current, 2)
 two_currents_law = kirchhoff_law.law.subs(kirchhoff_law.currents, current_symbols).doit()
 # capacitor current is in, resistor current is out
 two_currents_applied = two_currents_law.subs({
@@ -49,7 +50,7 @@ capacitor_current_eq = Eq(capacitor_current(time), capacitor_current_applied)
 assert capacitor_current_eq.lhs == capacitor_current(time)
 assert capacitor_current_eq.rhs == resistor_current(time)
 
-voltage_symbols = tuple(Symbol("voltage_" + str(i), units.voltage) for i in range(3))
+voltage_symbols = tuple_of_symbols("voltage", units.voltage, 3)
 three_voltages_law = kirchhoff_law_2.law.subs(kirchhoff_law_2.voltages, voltage_symbols).doit()
 # initial_voltage is voltage source, capacitor and resistor are voltage consumers
 three_voltages_applied = three_voltages_law.subs({

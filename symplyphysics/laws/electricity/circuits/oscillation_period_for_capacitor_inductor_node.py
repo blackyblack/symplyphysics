@@ -2,6 +2,7 @@ from sympy import (Eq, solve, pi, sqrt, Derivative, simplify)
 from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, Function, print_expression,
     validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.core.symbols.symbols import tuple_of_symbols
 
 from symplyphysics.laws.electricity.circuits import sum_of_all_currents_through_an_electrical_node_is_zero as kirchhoff_law
 from symplyphysics.laws.electricity.circuits import sum_of_all_voltages_in_loop_is_zero as kirchhoff_law_2
@@ -49,7 +50,7 @@ time = Symbol("time", units.time)
 capacitor_current = Function("capacitor_current", units.current)
 inductor_current = Function("inductor_current", units.current)
 
-current_symbols = tuple(Symbol("current_" + str(i), units.current) for i in range(2))
+current_symbols = tuple_of_symbols("current", units.current, 2)
 two_currents_law = kirchhoff_law.law.subs(kirchhoff_law.currents, current_symbols).doit()
 # capacitor current is in, inductor current is out
 two_currents_applied = two_currents_law.subs({
@@ -68,7 +69,7 @@ assert capacitor_current_eq.rhs == inductor_current(time)
 capacitor_voltage = Function("capacitor_voltage", units.voltage)
 inductor_voltage = Function("inductor_voltage", units.voltage)
 
-voltage_symbols = tuple(Symbol("voltage_" + str(i), units.voltage) for i in range(2))
+voltage_symbols = tuple_of_symbols("voltage", units.voltage, 2)
 two_voltages_law = kirchhoff_law_2.law.subs(kirchhoff_law_2.voltages, voltage_symbols).doit()
 # capacitor is voltage source, inductor is voltage consumer
 two_voltages_applied = two_voltages_law.subs({

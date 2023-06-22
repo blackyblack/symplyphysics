@@ -3,7 +3,7 @@ from sympy import (Eq, solve)
 from symplyphysics import (Symbol, units, expr_to_quantity, Quantity, print_expression, validate_input,
     validate_output)
 from symplyphysics.core.operations.sum_array import SumArray
-from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.symbols import tuple_of_symbols
 
 # Description
 ## sum(I) = 0
@@ -26,10 +26,10 @@ def print() -> str:
 @validate_input(currents_=currents)
 @validate_output(units.current)
 def calculate_current_from_array(currents_: List[Quantity]) -> Quantity:
-    current_symbols = tuple(Symbol("current" + str(i), units.current) for i in range(len(currents_) + 1))
+    current_symbols = tuple_of_symbols("current", units.current, len(currents_) + 1)
     unknown_current = current_symbols[len(currents_)]
-    currents_law = law.subs(currents, tuple(current_symbols)).doit()
+    currents_law = law.subs(currents, current_symbols).doit()
     solved = solve(currents_law, unknown_current, dict=True)[0][unknown_current]
-    for idx in range(len(current_symbols) - 1):
-        solved = solved.subs(current_symbols[idx], currents_[idx])
+    for (from_, to_) in zip(current_symbols, currents_):
+        solved = solved.subs(from_, to_)
     return expr_to_quantity(solved)

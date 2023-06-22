@@ -3,6 +3,7 @@ from sympy import (Eq, solve)
 from symplyphysics import (units, expr_to_quantity, Quantity, print_expression,
     Symbol, validate_input, validate_output)
 from symplyphysics.core.operations.sum_array import SumArray
+from symplyphysics.core.symbols.symbols import tuple_of_symbols
 
 # Description
 ## sum(U) = 0
@@ -23,10 +24,10 @@ def print() -> str:
 @validate_input(voltages_=voltages)
 @validate_output(units.voltage)
 def calculate_voltage(voltages_: List[Quantity]) -> Quantity:
-    voltage_symbols = tuple(Symbol("voltage_" + str(i), units.voltage) for i in range(len(voltages_) + 1))
+    voltage_symbols = tuple_of_symbols("voltage", units.voltage, len(voltages_) + 1)
     unknown_voltage = voltage_symbols[len(voltages_)]
-    voltages_law = law.subs(voltages, tuple(voltage_symbols)).doit()
+    voltages_law = law.subs(voltages, voltage_symbols).doit()
     solved = solve(voltages_law, unknown_voltage, dict=True)[0][unknown_voltage]
-    for idx in range(len(voltage_symbols) - 1):
-        solved = solved.subs(voltage_symbols[idx], voltages_[idx])
+    for (from_, to_) in zip(voltage_symbols, voltages_):
+        solved = solved.subs(from_, to_)
     return expr_to_quantity(solved)
