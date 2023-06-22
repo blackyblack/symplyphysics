@@ -1,7 +1,7 @@
 from typing import List
 from sympy import (Eq, solve)
-from symplyphysics import (Symbol, units, expr_to_quantity, Quantity, print_expression, validate_input,
-    validate_output)
+from symplyphysics import (Symbol, units, expr_to_quantity, Quantity, print_expression,
+    validate_input, validate_output)
 from symplyphysics.core.operations.sum_array import SumArray
 from symplyphysics.core.symbols.symbols import tuple_of_symbols
 

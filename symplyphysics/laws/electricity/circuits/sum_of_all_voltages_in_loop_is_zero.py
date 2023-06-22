@@ -1,7 +1,7 @@
 from typing import List
 from sympy import (Eq, solve)
-from symplyphysics import (units, expr_to_quantity, Quantity, print_expression,
-    Symbol, validate_input, validate_output)
+from symplyphysics import (units, expr_to_quantity, Quantity, print_expression, Symbol,
+    validate_input, validate_output)
 from symplyphysics.core.operations.sum_array import SumArray
 from symplyphysics.core.symbols.symbols import tuple_of_symbols
 
@@ -10,7 +10,7 @@ from symplyphysics.core.symbols.symbols import tuple_of_symbols
 ## Where U is a voltage on the element of an electrical loop.
 ## Loop is a closed sub-circuit in an electrical circuit.
 ## In other words, sum of all voltage sources in the loop equals to sum of all voltage consumers in this loop.
-## This property of electrical loop is called Kirchhoff law #2.
+## This property of electrical loop is also known as second Kirchhoff law.
 ## This law also demonstrates that work to move the unit of charge in electrical field along the closed path is zero.
 
 voltages = Symbol("voltages", units.voltage)

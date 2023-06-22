@@ -16,7 +16,7 @@ from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expr
 
 # Note:
 ## SymPy does not have a proper way to represent constant energy. We use it's derivative over time instead. Derivative
-## of the constant value is zero. 
+## of the constant value is zero.
 
 time = Symbol("time", units.time)
 mechanical_energy = Function("mechanical_energy", units.energy)
