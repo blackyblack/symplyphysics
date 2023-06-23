@@ -6,7 +6,7 @@ from sympy.core.power import Pow
 from sympy.physics.units import Dimension, Quantity as SymQuantity
 from sympy.physics.units.systems.si import SI
 from sympy.physics.units.dimensions import Dimension
-from .symbols import DimensionSymbol
+from .symbols import DimensionSymbol, next_name
 
 
 class Quantity(DimensionSymbol, SymQuantity):
@@ -19,8 +19,7 @@ class Quantity(DimensionSymbol, SymQuantity):
         **assumptions):
         (_, dimension_) = collect_factor_and_dimension(scale)
         dimension = dimension_ if dimension is None else dimension
-        name = (DimensionSymbol.random_name("Q", 8)
-            if display_name is None else DimensionSymbol.random_name(display_name))
+        name = next_name("Q") if display_name is None else next_name(display_name)
         self = super().__new__(cls, name, None, None, None, None, None, False, **assumptions)
         self._dimension = dimension
         self._display_name = name if display_name is None else display_name
