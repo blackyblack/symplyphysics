@@ -76,6 +76,9 @@ class SymbolPrinter(PrettyPrinter):
             left=left,
             right=right)
 
+    def _print_SumArray(self, expr):
+        return self._print_Function(expr, func_name='SumArray')
+
 
 def print_expression(expr) -> str:
     pp = SymbolPrinter(use_unicode=False)
@@ -86,3 +89,8 @@ def print_expression(expr) -> str:
         return pp.doprint(expr)
     finally:
         pretty_use_unicode(uflag)
+
+
+# Helper method for easier interaction with SumArray
+def tuple_of_symbols(display_name: str = None, dimension: Dimension = 1, length: int = 1) -> bool:
+    return tuple(Symbol(display_name + "_" + str(i), dimension) for i in range(length))

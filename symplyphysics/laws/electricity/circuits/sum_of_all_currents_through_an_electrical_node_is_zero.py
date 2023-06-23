@@ -1,8 +1,9 @@
 from typing import List
-from sympy import (Eq, solve, symbols, Idx, IndexedBase, Sum)
-from symplyphysics import (units, expr_to_quantity, Quantity, print_expression, validate_input,
-    validate_output)
-from symplyphysics.core.symbols.quantities import Quantity
+from sympy import (Eq, solve)
+from symplyphysics import (Symbol, units, expr_to_quantity, Quantity, print_expression,
+    validate_input, validate_output)
+from symplyphysics.core.operations.sum_array import SumArray
+from symplyphysics.core.symbols.symbols import tuple_of_symbols
 
 # Description
 ## sum(I) = 0
@@ -14,33 +15,21 @@ from symplyphysics.core.symbols.quantities import Quantity
 ## This property of electrical node is called Kirchhoff law #1.
 ## Assert there are minimum 2 currents flowing through any node
 
-#TODO: implement indexed symbol with dimension
-current = IndexedBase("current")
-currents_total = symbols("currents_total")
-i = symbols("i", cls=Idx)
-
-law = Eq(Sum(current[i], (i, 1, currents_total)), 0)
+currents = Symbol("currents", units.current)
+law = Eq(SumArray(currents), 0, evaluate=False)
 
 
 def print() -> str:
     return print_expression(law)
 
 
-@validate_input(current_in=units.current)
+@validate_input(currents_=currents)
 @validate_output(units.current)
-def calculate_current(current_in: Quantity) -> Quantity:
-    two_currents_law = law.subs(currents_total, 2).doit()
-    solved = solve(two_currents_law, current[2], dict=True)[0][current[2]]
-    result_expr = solved.subs(current[1], current_in)
-    return expr_to_quantity(result_expr)
-
-
-@validate_input(currents=units.current)
-@validate_output(units.current)
-def calculate_current_from_array(currents: List[Quantity]) -> Quantity:
-    currents_law = law.subs(currents_total, len(currents) + 1).doit()
-    unknown_current = current[len(currents) + 1]
+def calculate_current_from_array(currents_: List[Quantity]) -> Quantity:
+    current_symbols = tuple_of_symbols("current", units.current, len(currents_) + 1)
+    unknown_current = current_symbols[len(currents_)]
+    currents_law = law.subs(currents, current_symbols).doit()
     solved = solve(currents_law, unknown_current, dict=True)[0][unknown_current]
-    for idx, c in enumerate(currents):
-        solved = solved.subs(current[idx + 1], c)
+    for (from_, to_) in zip(current_symbols, currents_):
+        solved = solved.subs(from_, to_)
     return expr_to_quantity(solved)

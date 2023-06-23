@@ -1,6 +1,7 @@
 from sympy import (Derivative, Eq, solve, exp, simplify)
 from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, Function, print_expression,
     validate_input, validate_output)
+from symplyphysics.core.symbols.symbols import tuple_of_symbols
 from symplyphysics.definitions import current_is_charge_derivative as charge_definition
 from symplyphysics.definitions import capacitance_from_charge_and_voltage as capacitance_definition
 from symplyphysics.laws.electricity import current_is_proportional_to_voltage as ohms_law
@@ -34,11 +35,12 @@ capacitor_current = Function("capacitor_current", units.current)
 resistor_current = Function("resistor_current", units.current)
 resistor_voltage = Function("resistor_voltage", units.voltage)
 
-two_currents_law = kirchhoff_law.law.subs(kirchhoff_law.currents_total, 2).doit()
+current_symbols = tuple_of_symbols("current", units.current, 2)
+two_currents_law = kirchhoff_law.law.subs(kirchhoff_law.currents, current_symbols).doit()
 # capacitor current is in, resistor current is out
 two_currents_applied = two_currents_law.subs({
-    kirchhoff_law.current[1]: capacitor_current(time),
-    kirchhoff_law.current[2]: -1 * resistor_current(time)
+    current_symbols[0]: capacitor_current(time),
+    current_symbols[1]: -1 * resistor_current(time)
 })
 capacitor_current_applied = solve(two_currents_applied, capacitor_current(time),
     dict=True)[0][capacitor_current(time)]
@@ -48,12 +50,13 @@ capacitor_current_eq = Eq(capacitor_current(time), capacitor_current_applied)
 assert capacitor_current_eq.lhs == capacitor_current(time)
 assert capacitor_current_eq.rhs == resistor_current(time)
 
-three_voltages_law = kirchhoff_law_2.law.subs(kirchhoff_law_2.voltages_total, 3).doit()
+voltage_symbols = tuple_of_symbols("voltage", units.voltage, 3)
+three_voltages_law = kirchhoff_law_2.law.subs(kirchhoff_law_2.voltages, voltage_symbols).doit()
 # initial_voltage is voltage source, capacitor and resistor are voltage consumers
 three_voltages_applied = three_voltages_law.subs({
-    kirchhoff_law_2.voltage[1]: -1 * capacitor_voltage(time),
-    kirchhoff_law_2.voltage[2]: -1 * resistor_voltage(time),
-    kirchhoff_law_2.voltage[3]: initial_voltage
+    voltage_symbols[0]: -1 * capacitor_voltage(time),
+    voltage_symbols[1]: -1 * resistor_voltage(time),
+    voltage_symbols[2]: initial_voltage
 })
 resistor_voltage_applied = solve(three_voltages_applied, resistor_voltage(time),
     dict=True)[0][resistor_voltage(time)]

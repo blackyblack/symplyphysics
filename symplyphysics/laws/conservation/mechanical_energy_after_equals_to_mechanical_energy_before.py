@@ -24,15 +24,21 @@ law = Eq(mechanical_energy(time_after), mechanical_energy(time_before))
 # Derive the same law from constant mechanical energy
 
 ## dsolve() shows that solution is constant C1
-dsolved = dsolve(mechanical_energy_is_constant.law, mechanical_energy_is_constant.mechanical_energy(mechanical_energy_is_constant.time))
+dsolved = dsolve(
+    mechanical_energy_is_constant.law,
+    mechanical_energy_is_constant.mechanical_energy(mechanical_energy_is_constant.time))
 
 energy_before_eq = dsolved.subs(mechanical_energy_is_constant.time, time_before)
-energy_before_eq = energy_before_eq.subs(mechanical_energy_is_constant.mechanical_energy(time_before), mechanical_energy(time_before))
+energy_before_eq = energy_before_eq.subs(
+    mechanical_energy_is_constant.mechanical_energy(time_before), mechanical_energy(time_before))
 energy_after_eq = dsolved.subs(mechanical_energy_is_constant.time, time_after)
-energy_after_eq = energy_after_eq.subs(mechanical_energy_is_constant.mechanical_energy(time_after), mechanical_energy(time_after))
+energy_after_eq = energy_after_eq.subs(mechanical_energy_is_constant.mechanical_energy(time_after),
+    mechanical_energy(time_after))
 
 ## Show that when energy is constant, energy_before equals to energy_after
-energy_after_solved = solve([energy_after_eq, energy_before_eq], (mechanical_energy(time_after), "C1"), dict=True)[0][mechanical_energy(time_after)]
+energy_after_solved = solve([energy_after_eq, energy_before_eq],
+    (mechanical_energy(time_after), "C1"),
+    dict=True)[0][mechanical_energy(time_after)]
 assert expr_equals(energy_after_solved, law.rhs)
 
 
