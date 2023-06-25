@@ -1,20 +1,15 @@
-import random
-import string
 import sympy
 from sympy.physics.units import Dimension
 from sympy.core.function import UndefinedFunction
 from sympy.printing.pretty.pretty import PrettyPrinter
 from sympy.printing.pretty.stringpict import prettyForm
 from sympy.printing.pretty.pretty_symbology import pretty_symbol, pretty_use_unicode
+from .id_generator import next_id
 
 
 class DimensionSymbol:
     _dimension: Dimension = None
     _display_name: str = None
-
-    @staticmethod
-    def random_name(base: str = None, digits: int = 4) -> str:
-        return ("" if base is None else base) + "".join(random.choices(string.digits, k=digits))
 
     @property
     def dimension(self) -> Dimension:
@@ -31,8 +26,7 @@ class DimensionSymbol:
 class Symbol(DimensionSymbol, sympy.Symbol):
 
     def __new__(cls, display_name: str = None, dimension: Dimension = 1, **assumptions):
-        name = DimensionSymbol.random_name("S",
-            8) if display_name is None else DimensionSymbol.random_name(display_name)
+        name = next_name("S") if display_name is None else next_name(display_name)
         self = super().__new__(cls, name, **assumptions)
         self._dimension = dimension
         self._display_name = name if display_name is None else display_name
@@ -42,15 +36,14 @@ class Symbol(DimensionSymbol, sympy.Symbol):
 class Function(DimensionSymbol, UndefinedFunction):
 
     def __new__(cls, display_name: str = None, dimension: Dimension = 1, **options):
-        name = DimensionSymbol.random_name("F",
-            8) if display_name is None else DimensionSymbol.random_name(display_name)
+        name = next_name("F") if display_name is None else next_name(display_name)
         self = super().__new__(cls, name, **options)
         self._dimension = dimension
         self._display_name = name if display_name is None else display_name
         return self
 
 
-# Symbol and Function have random name, hence their display is not readable.
+# Symbol and Function have generated names, hence their display is not readable.
 # Use custom implementation of the PrettyPrinter to convert real symbol names
 # to user fiendly names.
 
@@ -76,6 +69,13 @@ class SymbolPrinter(PrettyPrinter):
             left=left,
             right=right)
 
+    def _print_SumArray(self, expr):
+        return self._print_Function(expr, func_name='SumArray')
+
+
+def next_name(name: str = None) -> str:
+    return name + str(next_id(name))
+
 
 def print_expression(expr) -> str:
     pp = SymbolPrinter(use_unicode=False)
@@ -86,3 +86,8 @@ def print_expression(expr) -> str:
         return pp.doprint(expr)
     finally:
         pretty_use_unicode(uflag)
+
+
+# Helper method for easier interaction with SumArray
+def tuple_of_symbols(display_name: str = None, dimension: Dimension = 1, length: int = 1) -> bool:
+    return tuple(Symbol(display_name + "_" + str(i), dimension) for i in range(length))

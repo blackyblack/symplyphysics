@@ -1,9 +1,8 @@
 from enum import Enum, unique
-import random
-import string
 from typing import List
 from sympy import acos, atan2, cos, sin, sqrt
 from sympy.vector import CoordSys3D
+from ..symbols.symbols import next_name
 
 
 class CoordinateSystem:
@@ -35,14 +34,10 @@ class CoordinateSystem:
             return ["r", "theta", "phi"]
         return ["x", "y", "z"]
 
-    @staticmethod
-    def random_name() -> str:
-        return "C" + "".join(random.choices(string.digits, k=10))
-
     def __init__(self, coord_system_type=System.CARTESIAN, inner: CoordSys3D = None):
         self._coord_system_type = coord_system_type
         if inner is None:
-            self._coord_system = CoordSys3D(CoordinateSystem.random_name(),
+            self._coord_system = CoordSys3D(next_name("C"),
                 variable_names=CoordinateSystem.system_to_base_scalars(coord_system_type))
             return
         self._coord_system = inner
@@ -90,7 +85,7 @@ def coordinates_transform(self: CoordinateSystem,
     coord_system_type=CoordinateSystem.System.CARTESIAN) -> CoordinateSystem:
     if coord_system_type == None:
         coord_system_type = self.coord_system_type
-    new_coord_system = self.coord_system.create_new(CoordinateSystem.random_name(),
+    new_coord_system = self.coord_system.create_new(next_name("C"),
         variable_names=CoordinateSystem.system_to_base_scalars(coord_system_type),
         transformation=None)
     return CoordinateSystem(coord_system_type, new_coord_system)
@@ -103,4 +98,4 @@ def coordinates_rotate(self: CoordinateSystem, angle, axis) -> CoordinateSystem:
             f"Rotation only supported for cartesian coordinates: got {coord_name_from}")
     return CoordinateSystem(
         self.coord_system_type,
-        self.coord_system.orient_new_axis(CoordinateSystem.random_name(), angle, axis))
+        self.coord_system.orient_new_axis(next_name("C"), angle, axis))

@@ -75,16 +75,18 @@ mechanical_energy = mechanical_energy_def.definition.subs({
 
 ## Total mechanical energy for pendulum is constant
 
-conserved_energy_eq = mechanical_energy_conservation.law.subs(mechanical_energy_conservation.time, time)
+conserved_energy_eq = mechanical_energy_conservation.law.subs(mechanical_energy_conservation.time,
+    time)
 
 ## Differentiate both sides of equation.
 ## Derivative of constant mechanical energy will be zero, so is the left side of this equation.
-total_energy_diff_eq = Eq(Derivative(mechanical_energy_conservation.mechanical_energy(time), time), diff(mechanical_energy, time))
+total_energy_diff_eq = Eq(Derivative(mechanical_energy_conservation.mechanical_energy(time), time),
+    diff(mechanical_energy, time))
 
 ## We do not replace it with zero, but solve system of equations instead
 total_energy_diff_solved = solve([total_energy_diff_eq, conserved_energy_eq],
-    (Derivative(pendulum_angle(time), (time, 2)),
-    Derivative(mechanical_energy_conservation.mechanical_energy(time), time)),
+    (Derivative(pendulum_angle(time),
+    (time, 2)), Derivative(mechanical_energy_conservation.mechanical_energy(time), time)),
     dict=True)[0][Derivative(pendulum_angle(time), (time, 2))]
 ## Now we've found the solution for second order derivative of angle function over time
 total_energy_diff_solved_eq = Eq(Derivative(pendulum_angle(time), (time, 2)),
