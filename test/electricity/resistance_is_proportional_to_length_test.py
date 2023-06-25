@@ -11,11 +11,13 @@ from symplyphysics.laws.electricity import resistance_is_proportional_to_length 
 
 # Description
 ## Assert we have 3 meters of copper wire with 2 mm^2 section. Resistivity of copper is 1.75e-8 Ohm*m.
-## According to online calculator (https://systemlines.ru/tekhnicheskie-i-vspomogatelnye-materialy/kalkulyator-rascheta-soprotivleniya-provodnika/) it's resistance should be 0,02625 Ohm.
+## According to online calculator
+## (https://systemlines.ru/tekhnicheskie-i-vspomogatelnye-materialy/kalkulyator-rascheta-soprotivleniya-provodnika/)
+## it's resistance should be 0,02625 Ohm.
 
 @fixture
 def test_args():
-    resistivity = Quantity(0.0172 * units.ohm * (units.milli * units.meter)**2 / units.meter)
+    resistivity = Quantity(0.0175 * units.ohm * (units.milli * units.meter)**2 / units.meter)
     wire_length = Quantity(3 * units.meter)
     cross_section = Quantity(2 * (units.milli * units.meter)**2)
     Args = namedtuple("Args", ["resistivity", "wire_length", "cross_section"])
@@ -24,8 +26,8 @@ def test_args():
 
 def test_basic_resistance(test_args):
     result = wire_law.calculate_resistance(test_args.resistivity, test_args.wire_length, test_args.cross_section)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.ohm)
-    result_current = convert_to(result, units.ohm).subs(units.ohm, 1).evalf(2)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.impedance)
+    result_current = convert_to(result, units.ohm).subs(units.ohm, 1).evalf(6)
     assert result_current == approx(0.02625, 0.001)
 
 '''
