@@ -30,12 +30,24 @@ def test_basic_resistance(test_args):
     result_current = convert_to(result, units.ohm).subs(units.ohm, 1).evalf(6)
     assert result_current == approx(0.02625, 0.001)
 
-'''
-def test_bad_voltage(test_args):
-    Vb = Quantity(1 * units.meter)
-    with raises(errors.UnitsError):
-        ohms_law.calculate_current(Vb, test_args.Resistance)
-    with raises(TypeError):
-        ohms_law.calculate_current(100, test_args.Resistance)
 
-'''
+def test_bad_resistivity(test_args):
+    rb = Quantity(1 * units.coulomb)
+    with raises(errors.UnitsError):
+        wire_law.calculate_resistance(rb, test_args.wire_length, test_args.cross_section)
+    with raises(TypeError):
+        wire_law.calculate_resistance(100, test_args.wire_length, test_args.cross_section)
+
+def test_bad_length(test_args):
+    lb = Quantity(1 * units.coulomb)
+    with raises(errors.UnitsError):
+        wire_law.calculate_resistance(test_args.resistivity, lb, test_args.cross_section)
+    with raises(TypeError):
+        wire_law.calculate_resistance(test_args.resistivity, 100, test_args.cross_section)
+
+def test_bad_crossection(test_args):
+    cb = Quantity(1 * units.coulomb)
+    with raises(errors.UnitsError):
+        wire_law.calculate_resistance(test_args.resistivity, test_args.wire_length, cb)
+    with raises(TypeError):
+        wire_law.calculate_resistance(test_args.resistivity, test_args.wire_length, 100)        
