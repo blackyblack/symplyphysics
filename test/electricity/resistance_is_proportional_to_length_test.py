@@ -13,7 +13,7 @@ from symplyphysics.laws.electricity import resistance_is_proportional_to_length 
 ## Assert we have 3 meters of copper wire with 2 mm^2 section. Resistivity of copper is 1.75e-8 Ohm*m.
 ## According to online calculator
 ## (https://systemlines.ru/tekhnicheskie-i-vspomogatelnye-materialy/kalkulyator-rascheta-soprotivleniya-provodnika/)
-## it's resistance should be 0,02625 Ohm.
+## it's resistance should be 0.02625 Ohm.
 
 @fixture
 def test_args():
@@ -45,7 +45,7 @@ def test_bad_length(test_args):
     with raises(TypeError):
         wire_law.calculate_resistance(test_args.resistivity, 100, test_args.cross_section)
 
-def test_bad_crossection(test_args):
+def test_bad_cross_section(test_args):
     cb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         wire_law.calculate_resistance(test_args.resistivity, test_args.wire_length, cb)

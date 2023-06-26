@@ -3,7 +3,7 @@ from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expr
     validate_input, validate_output)
 
 # Description
-## Resistance of the wire is proportional to it's length and resistivity and inversely proportional to it's cross-sectional area.
+## Resistance of the wire is proportional to its length and resistivity and inversely proportional to its cross-sectional area.
 ## Law: R = ro * l / S, where
 ## R is resistance of the wire
 ## ro is resistivity of wire material
