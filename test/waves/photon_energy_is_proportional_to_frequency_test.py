@@ -22,13 +22,13 @@ def test_args():
     return Args(frequency=frequency)
 
 
-def test_basic_resistance(test_args):
+def test_basic_energy(test_args):
     result = planck_law.calculate_energy(test_args.frequency)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
     result_current = convert_to(result, units.joule).subs(units.joule, 1).evalf(6)
     assert result_current == approx(1.9878528e-17, 0.00001)
 
-def test_bad_resistivity(test_args):
+def test_bad_frequency(test_args):
     fb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         planck_law.calculate_energy(fb)
