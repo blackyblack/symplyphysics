@@ -16,7 +16,7 @@ voltage = Symbol("voltage", units.voltage)
 law = Eq(accumulated_energy, capacitance * voltage**2 / 2)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

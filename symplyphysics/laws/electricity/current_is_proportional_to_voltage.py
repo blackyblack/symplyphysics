@@ -16,7 +16,7 @@ resistance = Symbol("resistance", units.impedance)
 law = Eq(current, voltage / resistance)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

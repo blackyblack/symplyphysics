@@ -13,8 +13,8 @@ from symplyphysics.laws.kinematic import distance_from_constant_velocity as move
 ## If an object is traveling at a constant velocity of 12m/s, then calculate the distance covered by the object after 1 minute.
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     x0 = Quantity(0 * units.meter)
     v = Quantity(12 * units.meter / units.second)
     t = Quantity(60 * units.second)
@@ -33,7 +33,7 @@ def test_bad_distance(test_args):
     xb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         movement_law.calculate_distance(xb, test_args.v, test_args.t)
-    with raises(TypeError):
+    with raises(AttributeError):
         movement_law.calculate_distance(100, test_args.v, test_args.t)
 
 
@@ -41,7 +41,7 @@ def test_bad_velocity(test_args):
     vb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         movement_law.calculate_distance(test_args.x0, vb, test_args.t)
-    with raises(TypeError):
+    with raises(AttributeError):
         movement_law.calculate_distance(test_args.x0, 100, test_args.t)
 
 
@@ -49,5 +49,5 @@ def test_bad_time(test_args):
     tb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         movement_law.calculate_distance(test_args.x0, test_args.v, tb)
-    with raises(TypeError):
+    with raises(AttributeError):
         movement_law.calculate_distance(test_args.x0, test_args.v, 100)

@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.laws.thermodynamics import volume_is_constant as isochoric_law
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     t0 = Quantity(1 * units.kelvin)
     t1 = Quantity(2 * units.kelvin)
     P0 = Quantity(1 * units.pascal)
@@ -32,9 +32,9 @@ def test_bad_temperature(test_args):
         isochoric_law.calculate_pressure(tb, test_args.P0, test_args.t1)
     with raises(errors.UnitsError):
         isochoric_law.calculate_pressure(test_args.t0, test_args.P0, tb)
-    with raises(TypeError):
+    with raises(AttributeError):
         isochoric_law.calculate_pressure(100, test_args.P0, test_args.t1)
-    with raises(TypeError):
+    with raises(AttributeError):
         isochoric_law.calculate_pressure(test_args.t0, test_args.P0, 100)
 
 
@@ -42,5 +42,5 @@ def test_bad_pressure(test_args):
     Pb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         isochoric_law.calculate_pressure(test_args.t0, Pb, test_args.t1)
-    with raises(TypeError):
+    with raises(AttributeError):
         isochoric_law.calculate_pressure(test_args.t0, 100, test_args.t1)

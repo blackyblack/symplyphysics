@@ -15,8 +15,8 @@ from symplyphysics.definitions import angular_velocity_is_angle_derivative as an
 ## Velocity should be pi/5 radian/sec.
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     a0 = Quantity(0 * units.radian)
     a1 = Quantity(pi * units.radian)
     t = Quantity(5 * units.second)
@@ -52,5 +52,5 @@ def test_velocity_with_bad_time(test_args):
     tb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         angular_velocity_def.calculate_angular_velocity(test_args.a0, test_args.a1, tb)
-    with raises(TypeError):
+    with raises(AttributeError):
         angular_velocity_def.calculate_angular_velocity(test_args.a0, test_args.a1, 100)

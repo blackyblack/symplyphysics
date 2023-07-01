@@ -34,7 +34,7 @@ constant_velocity_movement_definition = velocity_definition.law.subs({
 assert expr_equals(constant_velocity_movement_definition.rhs, law.rhs)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

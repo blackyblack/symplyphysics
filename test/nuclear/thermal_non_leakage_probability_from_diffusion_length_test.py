@@ -9,8 +9,8 @@ from symplyphysics.core.symbols.probability import Probability
 from symplyphysics.laws.nuclear import thermal_non_leakage_probability_from_diffusion_length as non_leakage_factor
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     # water diffusion area is 8.1 cm^2
     thermal_diffusion_area = Quantity(8.1 * units.centimeter**2)
     # sphere with radius = 1 meter
@@ -29,7 +29,7 @@ def test_bad_diffusion_area(test_args):
     Lthb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         non_leakage_factor.calculate_probability(Lthb, test_args.Bg)
-    with raises(TypeError):
+    with raises(AttributeError):
         non_leakage_factor.calculate_probability(100, test_args.Bg)
 
 
@@ -37,5 +37,5 @@ def test_bad_buckling(test_args):
     Bgb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         non_leakage_factor.calculate_probability(test_args.Lth, Bgb)
-    with raises(TypeError):
+    with raises(AttributeError):
         non_leakage_factor.calculate_probability(test_args.Lth, 100)

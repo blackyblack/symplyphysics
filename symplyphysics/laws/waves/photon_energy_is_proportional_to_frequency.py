@@ -4,7 +4,7 @@ from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expr
 from sympy.physics.units import planck as planck_constant
 
 # Description
-## Photon is the elementary part of any electromagnetical radiation which has no mass and always moves with speed of light. 
+## Photon is the elementary part of any electromagnetical radiation which has no mass and always moves with speed of light.
 ## It carries some energy. The amount of energy depends only on the frequency of the photon.
 ## Law is: E = h * nu, where
 ## E is energy of photon,
@@ -17,7 +17,7 @@ photon_frequency = Symbol("frequency", units.frequency)
 law = Eq(photon_energy, planck_constant * photon_frequency)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

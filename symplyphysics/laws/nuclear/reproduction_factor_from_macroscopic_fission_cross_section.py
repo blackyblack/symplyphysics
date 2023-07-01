@@ -34,7 +34,7 @@ law = Eq(
     macroscopic_fuel_absorption_cross_section)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

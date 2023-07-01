@@ -38,7 +38,7 @@ def add_cartesian_vectors(vector_left: Vector, vector_right: Vector) -> Vector:
             vector_right.coordinate_system.coord_system_type)
         raise ValueError(
             f"Addition only supported for cartesian coordinates: got {coord_name_from}")
-    result = []
+    result: list[Expr] = []
     for i in range(max(len(vector_left.components), len(vector_right.components))):
         val1 = 0 if i >= len(vector_left.components) else vector_left.components[i]
         val2 = 0 if i >= len(vector_right.components) else vector_right.components[i]
@@ -81,7 +81,6 @@ def dot_vectors(vector_left: Vector, vector_right: Vector) -> Expr:
         raise TypeError(
             f"Different coordinate systems in vectors: {str(vector_left.coordinate_system)} vs {str(vector_right.coordinate_system)}"
         )
-
     if vector_left.coordinate_system is None or vector_left.coordinate_system.coord_system_type == CoordinateSystem.System.CARTESIAN:
         result = 0
         for i in range(min(len(vector_left.components), len(vector_right.components))):

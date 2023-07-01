@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_for_uniform_sphere as buckling
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     sphere_radius = Quantity(20 * units.centimeter)
     Args = namedtuple("Args", ["R"])
     return Args(R=sphere_radius)
@@ -29,5 +29,5 @@ def test_bad_sphere_radius():
     Rb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         buckling.calculate_geometric_buckling_squared(Rb)
-    with raises(TypeError):
+    with raises(AttributeError):
         buckling.calculate_geometric_buckling_squared(100)

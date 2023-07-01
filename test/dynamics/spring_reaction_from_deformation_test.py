@@ -12,8 +12,8 @@ from symplyphysics import (
 from symplyphysics.laws.dynamics import spring_reaction_from_deformation as spring_law
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     C = CoordinateSystem()
     k = Quantity(0.1 * units.newton / units.meter)
     df_x = Quantity(3 * units.meter)
@@ -37,7 +37,7 @@ def test_bad_elastic_coefficient(test_args):
     eb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         spring_law.calculate_force(eb, test_args.df)
-    with raises(TypeError):
+    with raises(AttributeError):
         spring_law.calculate_force(100, test_args.df)
 
 
@@ -46,5 +46,5 @@ def test_bad_deformation(test_args):
     vb = Vector([db], test_args.C)
     with raises(errors.UnitsError):
         spring_law.calculate_force(test_args.k, vb)
-    with raises(TypeError):
+    with raises(AttributeError):
         spring_law.calculate_force(test_args.k, 100)

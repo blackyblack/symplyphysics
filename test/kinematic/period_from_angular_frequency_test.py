@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.laws.kinematic import period_from_angular_frequency as period_def
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     w = Quantity(6.28 * units.radian / units.second)
     Args = namedtuple("Args", ["w"])
     return Args(w=w)
@@ -28,5 +28,5 @@ def test_bad_frequency():
     wb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         period_def.calculate_period(wb)
-    with raises(TypeError):
+    with raises(AttributeError):
         period_def.calculate_period(100)

@@ -20,7 +20,7 @@ definition = Eq(mechanical_energy, kinetic_energy + potential_energy)
 definition_units_SI = units.joule
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(definition)
 
 

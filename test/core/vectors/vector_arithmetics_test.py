@@ -7,8 +7,8 @@ from symplyphysics.core.vectors.vectors import Vector, vector_rebase
 from test.test_decorators import unsupported_usage
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     C = CoordinateSystem()
     Args = namedtuple("Args", ["C"])
     return Args(C=C)

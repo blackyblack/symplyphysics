@@ -26,7 +26,7 @@ projection = symbols("projection")
 law = Eq(projection, vector_length * cos(vector_angle))
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

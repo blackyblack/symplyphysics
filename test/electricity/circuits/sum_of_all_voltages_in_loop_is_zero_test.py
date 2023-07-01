@@ -11,8 +11,8 @@ from symplyphysics import (
 from symplyphysics.laws.electricity.circuits import sum_of_all_voltages_in_loop_is_zero as kirchhoff_law_2
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     U1 = Quantity(3 * units.volt)
     U2 = Quantity(-5 * units.volt)
     Args = namedtuple("Args", ["U1", "U2"])
@@ -43,13 +43,13 @@ def test_array_bad_voltage(test_args):
     Ub = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         kirchhoff_law_2.calculate_voltage([test_args.U1, Ub])
-    with raises(TypeError):
+    with raises(AttributeError):
         kirchhoff_law_2.calculate_voltage([test_args.U1, 100])
     with raises(errors.UnitsError):
         kirchhoff_law_2.calculate_voltage([Ub, test_args.U2])
-    with raises(TypeError):
+    with raises(AttributeError):
         kirchhoff_law_2.calculate_voltage([100, test_args.U2])
     with raises(errors.UnitsError):
         kirchhoff_law_2.calculate_voltage([Ub, Ub])
-    with raises(TypeError):
+    with raises(AttributeError):
         kirchhoff_law_2.calculate_voltage([100, 100])

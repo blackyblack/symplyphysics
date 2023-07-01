@@ -22,7 +22,7 @@ displaced_volume = Symbol("displaced_volume", units.volume)
 law = Eq(force_buoyant, -1 * fluid_density * units.acceleration_due_to_gravity * displaced_volume)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

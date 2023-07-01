@@ -35,7 +35,7 @@ geometric_buckling_cylinder_solved = geometric_buckling_cylinder_squared.subs({
 assert geometric_buckling_cylinder_solved.evalf(7) == law.rhs.evalf(7)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

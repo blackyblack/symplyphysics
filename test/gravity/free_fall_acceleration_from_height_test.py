@@ -13,8 +13,8 @@ from symplyphysics.laws.gravity import free_fall_acceleration_from_height as fre
 # G - universal gravity constant  6.672e-11 N*m^2/kg^2
 # M - Earth mass constant         5.9722e24 kg
 # R - Earth radius constant       6371 km
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     earth_mass = Quantity(5.9722e24 * units.kilogram)
     earth_radius = Quantity(6371 * units.kilometer)
     height_from_surface = Quantity(1 * units.meter)
@@ -38,7 +38,7 @@ def test_bad_earth_mass(test_args):
     with raises(errors.UnitsError):
         free_fall_acceleration.calculate_acceleration(emb, test_args.earth_radius,
             test_args.height_from_surface)
-    with raises(TypeError):
+    with raises(AttributeError):
         free_fall_acceleration.calculate_acceleration(100, test_args.earth_radius,
             test_args.height_from_surface)
 
@@ -48,7 +48,7 @@ def test_bad_earth_radius(test_args):
     with raises(errors.UnitsError):
         free_fall_acceleration.calculate_acceleration(test_args.earth_mass, erb,
             test_args.height_from_surface)
-    with raises(TypeError):
+    with raises(AttributeError):
         free_fall_acceleration.calculate_acceleration(test_args.earth_mass, 100,
             test_args.height_from_surface)
 
@@ -58,6 +58,6 @@ def test_bad_height(test_args):
     with raises(errors.UnitsError):
         free_fall_acceleration.calculate_acceleration(test_args.earth_mass, test_args.earth_radius,
             hb)
-    with raises(TypeError):
+    with raises(AttributeError):
         free_fall_acceleration.calculate_acceleration(test_args.earth_mass, test_args.earth_radius,
             100)

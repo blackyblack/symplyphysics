@@ -20,7 +20,7 @@ initial_velocity = Symbol("initial_velocity", units.velocity)
 law = Eq(velocity, initial_velocity + acceleration * time)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

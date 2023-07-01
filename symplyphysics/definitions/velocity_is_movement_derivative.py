@@ -20,7 +20,7 @@ definition = Eq(velocity(moving_time), Derivative(movement(moving_time), moving_
 definition_units_SI = units.meter / units.second
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(definition)
 
 

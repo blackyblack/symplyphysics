@@ -21,7 +21,7 @@ definition = Eq(density, mass / volume)
 definition_units_SI = units.kilogram / units.meter**3
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(definition)
 
 

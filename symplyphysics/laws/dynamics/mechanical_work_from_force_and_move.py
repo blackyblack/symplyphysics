@@ -21,7 +21,7 @@ distance = Symbol("distance", units.length)
 law = Eq(work, Dot(force, distance))
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

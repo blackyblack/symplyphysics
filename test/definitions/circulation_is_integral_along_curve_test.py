@@ -14,8 +14,8 @@ from symplyphysics.core.fields.vector_field import VectorField
 from symplyphysics.definitions import circulation_is_integral_along_curve as circulation_def
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     C = CoordinateSystem()
     force_unit = Quantity(1 * units.newton)
     radius_unit = Quantity(1 * units.meter)

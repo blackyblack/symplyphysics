@@ -14,8 +14,8 @@ from symplyphysics.laws.relativistic.waves import longitudinal_frequency_shift_f
 ## observed frequency should be 347341068940800
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     object_velocity = Quantity(29979245.8 * units.meter / units.second)
     emitted_frequency = Quantity(3.84e14 * units.hertz)
     Args = namedtuple("Args", ["object_velocity", "emitted_frequency"])
@@ -34,7 +34,7 @@ def test_bad_velocity(test_args):
     vb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         doppler_law.calculate_observed_frequency(test_args.emitted_frequency, vb)
-    with raises(TypeError):
+    with raises(AttributeError):
         doppler_law.calculate_observed_frequency(test_args.emitted_frequency, 100)
 
 
@@ -42,5 +42,5 @@ def test_bad_frequency(test_args):
     fb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         doppler_law.calculate_observed_frequency(fb, test_args.object_velocity)
-    with raises(TypeError):
+    with raises(AttributeError):
         doppler_law.calculate_observed_frequency(100, test_args.object_velocity)

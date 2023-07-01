@@ -72,7 +72,7 @@ observed_frequency_zero_angles = relativistic_doppler_with_angle.law.subs({
 assert expr_equals(observed_frequency_zero_angles**2, law.rhs**2)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

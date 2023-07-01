@@ -32,7 +32,7 @@ fast_non_leakage_probability = Symbol("fast_non_leakage_probability", Dimensionl
 law = Eq(fast_non_leakage_probability, exp(-1 * geometric_buckling * neutron_fermi_age))
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

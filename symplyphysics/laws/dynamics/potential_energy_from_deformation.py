@@ -19,7 +19,7 @@ deformation = Symbol("deformation", units.length)
 law = Eq(spring_energy, elastic_koefficient * deformation**2 / 2)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

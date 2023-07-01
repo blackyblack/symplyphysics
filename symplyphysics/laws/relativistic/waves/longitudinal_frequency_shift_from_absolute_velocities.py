@@ -51,7 +51,7 @@ law = Eq(
     (1 - (source_velocity / speed_of_light)**2) / (1 - (observer_velocity / speed_of_light)**2)))
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

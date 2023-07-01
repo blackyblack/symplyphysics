@@ -32,7 +32,7 @@ neutron_diffusion_coefficient = Symbol("neutron_diffusion_coefficient", units.le
 law = Eq(neutron_diffusion_coefficient, 1 / (3 * macroscopic_transport_cross_section))
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

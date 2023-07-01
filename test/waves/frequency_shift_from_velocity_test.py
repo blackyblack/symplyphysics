@@ -14,8 +14,8 @@ from symplyphysics.laws.waves import frequency_shift_from_velocity as doppler_la
 ## Another situation is when man rides a bike towards horning standing train with the same velocity. Observed frequency should be same.
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     sound_velocity = Quantity(340 * units.meter / units.second)
     train_velocity = Quantity(-9 * units.kilometer / units.hour)
     bike_velocity = Quantity(-9 * units.kilometer / units.hour)
@@ -67,19 +67,19 @@ def test_bad_velocity(test_args):
     with raises(errors.UnitsError):
         doppler_law.calculate_observed_frequency(test_args.horn_frequency, vb,
             test_args.train_velocity, test_args.bike_velocity)
-    with raises(TypeError):
+    with raises(AttributeError):
         doppler_law.calculate_observed_frequency(test_args.horn_frequency, 100,
             test_args.train_velocity, test_args.bike_velocity)
     with raises(errors.UnitsError):
         doppler_law.calculate_observed_frequency(test_args.horn_frequency, test_args.sound_velocity,
             vb, test_args.bike_velocity)
-    with raises(TypeError):
+    with raises(AttributeError):
         doppler_law.calculate_observed_frequency(test_args.horn_frequency, test_args.sound_velocity,
             100, test_args.bike_velocity)
     with raises(errors.UnitsError):
         doppler_law.calculate_observed_frequency(test_args.horn_frequency, test_args.sound_velocity,
             test_args.train_velocity, vb)
-    with raises(TypeError):
+    with raises(AttributeError):
         doppler_law.calculate_observed_frequency(test_args.horn_frequency, test_args.sound_velocity,
             test_args.train_velocity, 100)
 
@@ -89,6 +89,6 @@ def test_bad_frequency(test_args):
     with raises(errors.UnitsError):
         doppler_law.calculate_observed_frequency(fb, test_args.sound_velocity,
             test_args.train_velocity, test_args.bike_velocity)
-    with raises(TypeError):
+    with raises(AttributeError):
         doppler_law.calculate_observed_frequency(100, test_args.sound_velocity,
             test_args.train_velocity, test_args.bike_velocity)

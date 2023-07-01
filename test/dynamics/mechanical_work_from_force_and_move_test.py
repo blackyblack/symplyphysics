@@ -15,8 +15,8 @@ from symplyphysics.laws.dynamics import mechanical_work_from_force_and_move as w
 ## As cosine of 60 degrees is 1/2, work should be 100 * 3 / 2 = 150 Joules.
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     F = Quantity(100 * units.newton)
     S = Quantity(3 * units.meter)
     angle_between_force_and_axis = Quantity(60 * units.degree)
@@ -41,7 +41,7 @@ def test_bad_force(test_args):
     Fb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         work_law.calculate_work(Fb, test_args.S, test_args.Fa, test_args.Sa)
-    with raises(TypeError):
+    with raises(AttributeError):
         work_law.calculate_work(100, test_args.S, test_args.Fa, test_args.Sa)
 
 
@@ -49,7 +49,7 @@ def test_bad_move(test_args):
     Sb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         work_law.calculate_work(test_args.F, Sb, test_args.Fa, test_args.Sa)
-    with raises(TypeError):
+    with raises(AttributeError):
         work_law.calculate_work(test_args.F, 100, test_args.Fa, test_args.Sa)
 
 

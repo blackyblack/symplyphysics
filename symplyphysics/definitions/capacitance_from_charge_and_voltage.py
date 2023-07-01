@@ -21,7 +21,7 @@ definition = Eq(capacitance, charge / voltage)
 definition_units_SI = units.farad
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(definition)
 
 

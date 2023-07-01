@@ -33,7 +33,7 @@ law = Eq(thermal_utilisation_factor,
     macroscopic_fuel_absorption_cross_section / macroscopic_total_absorption_cross_section)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

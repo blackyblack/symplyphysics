@@ -71,7 +71,7 @@ solved = geometric_buckling_from_neutron_flux.apply_neutron_flux_function(
 assert solved.rhs == (width_constant**2 + length_constant**2 + height_constant**2)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

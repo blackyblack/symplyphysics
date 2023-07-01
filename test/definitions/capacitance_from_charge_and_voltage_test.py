@@ -14,8 +14,8 @@ from symplyphysics import (
 from symplyphysics.definitions import capacitance_from_charge_and_voltage as capacitance_def
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     C = Quantity(2 * units.farad)
     Q = Quantity(6 * units.coulomb)
     U = Quantity(3 * units.volts)
@@ -35,7 +35,7 @@ def test_bad_charge(test_args):
     Qb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         capacitance_def.calculate_capacitance(Qb, test_args.U)
-    with raises(TypeError):
+    with raises(AttributeError):
         capacitance_def.calculate_capacitance(100, test_args.U)
 
 
@@ -43,5 +43,5 @@ def test_bad_voltage(test_args):
     Vb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         capacitance_def.calculate_capacitance(test_args.Q, Vb)
-    with raises(TypeError):
+    with raises(AttributeError):
         capacitance_def.calculate_capacitance(test_args.Q, 100)

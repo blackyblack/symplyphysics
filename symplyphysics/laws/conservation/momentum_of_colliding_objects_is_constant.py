@@ -20,7 +20,7 @@ momentum = Function("momentum", units.momentum)
 law = Eq(Derivative(momentum(time), time), 0)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

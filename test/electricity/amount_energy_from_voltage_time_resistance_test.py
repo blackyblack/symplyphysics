@@ -13,8 +13,8 @@ from symplyphysics.laws.electricity import amount_energy_from_voltage_time_resis
 #  at 220 volts and a heater resistance of 36 ohms?
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     U = Quantity(220 * units.volt)
     t = Quantity(60 * units.second)
     R = Quantity(36 * units.ohm)
@@ -33,7 +33,7 @@ def test_bad_voltage(test_args):
     Ub = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         joule_lenz_law.calculate_amount_energy(Ub, test_args.t, test_args.R)
-    with raises(TypeError):
+    with raises(AttributeError):
         joule_lenz_law.calculate_amount_energy(100, test_args.t, test_args.R)
 
 
@@ -41,7 +41,7 @@ def test_bad_time(test_args):
     tb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         joule_lenz_law.calculate_amount_energy(test_args.U, tb, test_args.R)
-    with raises(TypeError):
+    with raises(AttributeError):
         joule_lenz_law.calculate_amount_energy(test_args.U, 100, test_args.R)
 
 
@@ -49,5 +49,5 @@ def test_bad_resistance(test_args):
     Rb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         joule_lenz_law.calculate_amount_energy(test_args.U, test_args.t, Rb)
-    with raises(TypeError):
+    with raises(AttributeError):
         joule_lenz_law.calculate_amount_energy(test_args.U, test_args.t, 100)

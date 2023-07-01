@@ -10,15 +10,15 @@ from symplyphysics import (
 from symplyphysics.laws.conservation import momentum_after_collision_equals_to_momentum_before as conservation_law
 
 
-@fixture
-def test_args():
-    P_before = Quantity(5 * units.kilogram * units.meter / units.second)
-    Args = namedtuple("Args", ["P_before"])
-    return Args(P_before=P_before)
+@fixture(name="test_args")
+def test_args_fixture():
+    Ps = Quantity(5 * units.kilogram * units.meter / units.second)
+    Args = namedtuple("Args", ["Ps"])
+    return Args(Ps=Ps)
 
 
 def test_basic_conservation(test_args):
-    result = conservation_law.calculate_momentum_after(test_args.P_before)
+    result = conservation_law.calculate_momentum_after(test_args.Ps)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.momentum)
     result_ = convert_to(result, units.kilogram * units.meter / units.second).subs({
         units.kilogram: 1,
@@ -32,5 +32,5 @@ def test_bad_momentum():
     Pb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         conservation_law.calculate_momentum_after(Pb)
-    with raises(TypeError):
+    with raises(AttributeError):
         conservation_law.calculate_momentum_after(100)

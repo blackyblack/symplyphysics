@@ -113,7 +113,7 @@ oscillation_period_derived = angular_frequency.law.subs(angular_frequency.circul
 assert expr_equals(oscillation_period_derived**2, law.rhs**2)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

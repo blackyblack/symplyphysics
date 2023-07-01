@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.laws.thermodynamics import pressure_from_temperature_and_volume as ideal_gas_law
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     V = Quantity(22.414 * units.liter)
     t = Quantity(273.15 * units.kelvin)
     n = Quantity(1 * units.mole)
@@ -34,7 +34,7 @@ def test_bad_volume(test_args):
     Vb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         ideal_gas_law.calculate_pressure(Vb, test_args.t, test_args.n)
-    with raises(TypeError):
+    with raises(AttributeError):
         ideal_gas_law.calculate_pressure(100, test_args.t, test_args.n)
 
 
@@ -42,7 +42,7 @@ def test_bad_temperature(test_args):
     tb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         ideal_gas_law.calculate_pressure(test_args.V, tb, test_args.n)
-    with raises(TypeError):
+    with raises(AttributeError):
         ideal_gas_law.calculate_pressure(test_args.V, 100, test_args.n)
 
 
@@ -50,5 +50,5 @@ def test_bad_mole_count(test_args):
     nb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         ideal_gas_law.calculate_pressure(test_args.V, test_args.t, nb)
-    with raises(TypeError):
+    with raises(AttributeError):
         ideal_gas_law.calculate_pressure(test_args.V, test_args.t, 100)

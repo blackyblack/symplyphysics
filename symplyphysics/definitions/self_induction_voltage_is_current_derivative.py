@@ -18,7 +18,7 @@ definition = Eq(self_induction_voltage(time), -1 * inductance * Derivative(curre
 definition_units_SI = units.volt
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(definition)
 
 

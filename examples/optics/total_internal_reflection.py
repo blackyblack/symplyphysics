@@ -18,21 +18,21 @@ solutions = solve(refraction_law.law, refraction_law.incedence_angle, dict=True)
 result_expr = solutions[0][refraction_law.incedence_angle]
 
 ## Optical fiber usually consists of core with refractive index
-core_refractive_index = 1.479
+CORE_REFRACTIVE_INDEX = 1.479
 ## and coating with refractive index
-coat_refractive_index = 1.474
+COAT_REFRACTIVE_INDEX = 1.474
 
 angle_applied = result_expr.subs({
-    refraction_law.incedence_refractive_index: core_refractive_index,
-    refraction_law.resulting_refractive_index: coat_refractive_index,
+    refraction_law.incedence_refractive_index: CORE_REFRACTIVE_INDEX,
+    refraction_law.resulting_refractive_index: COAT_REFRACTIVE_INDEX,
     refraction_law.refraction_angle: pi / 2
 })
 
 if (angle_applied > pi / 2 or angle_applied < -pi / 2):
     result_expr = solutions[1][refraction_law.incedence_angle]
     angle_applied = result_expr.subs({
-        refraction_law.incedence_refractive_index: core_refractive_index,
-        refraction_law.resulting_refractive_index: coat_refractive_index,
+        refraction_law.incedence_refractive_index: CORE_REFRACTIVE_INDEX,
+        refraction_law.resulting_refractive_index: COAT_REFRACTIVE_INDEX,
         refraction_law.refraction_angle: pi / 2
     })
 

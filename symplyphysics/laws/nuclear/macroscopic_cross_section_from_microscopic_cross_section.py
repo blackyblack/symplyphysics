@@ -28,7 +28,7 @@ macroscopic_cross_section = Symbol("macroscopic_cross_section", 1 / units.length
 law = Eq(macroscopic_cross_section, microscopic_cross_section * atomic_number_density)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

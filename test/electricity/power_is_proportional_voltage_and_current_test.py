@@ -11,8 +11,8 @@ from symplyphysics.laws.electricity import power_is_proportional_voltage_and_cur
 
 
 # What is the power can be released by the battery at 9 V and a current of 0.5 A?
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     I = Quantity(0.5 * units.ampere)
     U = Quantity(9 * units.volt)
     Args = namedtuple("Args", ["U", "I"])
@@ -30,7 +30,7 @@ def test_bad_current(test_args):
     Ib = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         power_law.calculate_power(Ib, test_args.U)
-    with raises(TypeError):
+    with raises(AttributeError):
         power_law.calculate_power(100, test_args.U)
 
 
@@ -38,5 +38,5 @@ def test_bad_voltage(test_args):
     Ub = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         power_law.calculate_power(test_args.I, Ub)
-    with raises(TypeError):
+    with raises(AttributeError):
         power_law.calculate_power(test_args.I, 100)

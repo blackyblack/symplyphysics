@@ -30,7 +30,7 @@ thermal_non_leakage_probability = Symbol("thermal_non_leakage_probability", Dime
 law = Eq(thermal_non_leakage_probability, 1 / (1 + thermal_diffusion_area * geometric_buckling))
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

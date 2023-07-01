@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.definitions import volume_number_density
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture_fixture():
     objects = 100
     V = Quantity(1 * units.meter**3)
     Args = namedtuple("Args", ["o", "V"])
@@ -30,5 +30,5 @@ def test_bad_volume(test_args):
     Vb = Quantity(1 * units.length)
     with raises(errors.UnitsError):
         volume_number_density.calculate_number_density(test_args.o, Vb)
-    with raises(TypeError):
+    with raises(AttributeError):
         volume_number_density.calculate_number_density(test_args.o, 100)

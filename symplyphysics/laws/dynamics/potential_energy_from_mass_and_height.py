@@ -17,7 +17,7 @@ free_fall_acceleration = units.acceleration_due_to_gravity
 law = Eq(potential_energy_of_body, body_mass * free_fall_acceleration * height)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

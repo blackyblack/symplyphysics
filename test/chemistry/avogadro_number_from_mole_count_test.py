@@ -8,8 +8,8 @@ from symplyphysics import (
 from symplyphysics.laws.chemistry import avogadro_number_from_mole_count
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     mole_count = Quantity(5 * units.mole)
     Args = namedtuple("Args", ["M"])
     return Args(M=mole_count)
@@ -25,5 +25,5 @@ def test_bad_mole_count():
     Mb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         avogadro_number_from_mole_count.calculate_particles_count(Mb)
-    with raises(TypeError):
+    with raises(AttributeError):
         avogadro_number_from_mole_count.calculate_particles_count(100)

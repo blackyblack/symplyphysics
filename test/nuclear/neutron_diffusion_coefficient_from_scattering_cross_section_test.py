@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.laws.nuclear import neutron_diffusion_coefficient_from_scattering_cross_section as diffusion_coeff
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     # carbon macroscopic transport cross-section
     macro_transport_cross_section = Quantity(0.4987 / units.centimeter)
     Args = namedtuple("Args", ["S"])
@@ -30,5 +30,5 @@ def test_bad_macroscopic_cross_section():
     Sb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         diffusion_coeff.calculate_diffusion_coefficient(Sb)
-    with raises(TypeError):
+    with raises(AttributeError):
         diffusion_coeff.calculate_diffusion_coefficient(100)

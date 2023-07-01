@@ -15,7 +15,7 @@ body_velocity = Symbol("body_velocity", units.velocity)
 law = Eq(kinetic_energy_of_body, body_mass * body_velocity**2 / 2)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

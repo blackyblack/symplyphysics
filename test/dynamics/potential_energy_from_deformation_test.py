@@ -14,8 +14,8 @@ from symplyphysics.laws.dynamics import potential_energy_from_deformation as hoo
 ## Result is independently calculated with https://www.center-pss.ru/math/raschet-potencialnoi-energii-pruzhini.htm
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     k = Quantity(100 * units.newton / units.meter)
     x = Quantity(2 * units.centimeter)
     Args = namedtuple("Args", ["k", "x"])
@@ -33,7 +33,7 @@ def test_bad_elastic_koefficient(test_args):
     kb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         hookes_law.calculate_energy(kb, test_args.x)
-    with raises(TypeError):
+    with raises(AttributeError):
         hookes_law.calculate_energy(100, test_args.x)
 
 
@@ -41,5 +41,5 @@ def test_bad_deformation(test_args):
     xb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         hookes_law.calculate_energy(test_args.k, xb)
-    with raises(TypeError):
+    with raises(AttributeError):
         hookes_law.calculate_energy(test_args.k, 100)

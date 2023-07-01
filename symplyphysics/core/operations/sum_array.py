@@ -1,6 +1,7 @@
+from __future__ import annotations
 from functools import reduce
 import operator
-from typing import Iterable
+from typing import Any
 from sympy import Expr, Tuple
 
 
@@ -10,10 +11,13 @@ class SumArray(Expr):
 
     """
 
-    def __new__(cls, array):
-        array = array if isinstance(array, (tuple, Tuple)) else (array,)
-        obj = Expr.__new__(cls, *array)
+    def __new__(cls, array: Expr | Tuple | tuple[Expr, ...]) -> SumArray:
+        array_unpacked = array if isinstance(array, (tuple, Tuple)) else Tuple(array)
+        obj = Expr.__new__(cls, *array_unpacked)
         return obj
 
-    def doit(self, **hints):
-        return reduce(operator.add, self.args) if isinstance(self.args, Iterable) else self.args
+    def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
+        pass
+
+    def doit(self, **_hints: Any) -> Expr:
+        return reduce(operator.add, self.args)

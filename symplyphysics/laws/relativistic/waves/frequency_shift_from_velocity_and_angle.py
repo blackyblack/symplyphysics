@@ -35,7 +35,7 @@ law = Eq(
     (speed_of_light - relative_speed * cos(source_angle)))
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

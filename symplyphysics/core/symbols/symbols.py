@@ -1,4 +1,6 @@
-import sympy
+from __future__ import annotations
+from typing import Any, Optional
+from sympy import S, Symbol as SymSymbol, Expr
 from sympy.physics.units import Dimension
 from sympy.core.function import UndefinedFunction
 from sympy.printing.pretty.pretty import PrettyPrinter
@@ -8,8 +10,12 @@ from .id_generator import next_id
 
 
 class DimensionSymbol:
-    _dimension: Dimension = None
-    _display_name: str = None
+    _dimension: Dimension
+    _display_name: str
+
+    def __init__(self, display_name: str, dimension: Dimension = Dimension(S.One)):
+        self._dimension = dimension
+        self._display_name = display_name
 
     @property
     def dimension(self) -> Dimension:
@@ -23,24 +29,40 @@ class DimensionSymbol:
         return self.display_name
 
 
-class Symbol(DimensionSymbol, sympy.Symbol):
+class Symbol(DimensionSymbol, SymSymbol):
 
-    def __new__(cls, display_name: str = None, dimension: Dimension = 1, **assumptions):
+    def __new__(cls,
+        display_name: Optional[str] = None,
+        _dimension: Dimension = Dimension(S.One),
+        **assumptions: Any) -> Symbol:
         name = next_name("S") if display_name is None else next_name(display_name)
-        self = super().__new__(cls, name, **assumptions)
-        self._dimension = dimension
-        self._display_name = name if display_name is None else display_name
-        return self
+        obj = SymSymbol.__new__(cls, name, **assumptions)
+        return obj
+
+    def __init__(self,
+        display_name: Optional[str] = None,
+        dimension: Dimension = Dimension(S.One),
+        **_assumptions: Any):
+        display_name = self.name if display_name is None else display_name
+        super().__init__(display_name, dimension)
 
 
 class Function(DimensionSymbol, UndefinedFunction):
 
-    def __new__(cls, display_name: str = None, dimension: Dimension = 1, **options):
+    def __new__(mcs,
+        display_name: Optional[str] = None,
+        _dimension: Dimension = Dimension(S.One),
+        **options: Any) -> Function:
         name = next_name("F") if display_name is None else next_name(display_name)
-        self = super().__new__(cls, name, **options)
-        self._dimension = dimension
-        self._display_name = name if display_name is None else display_name
-        return self
+        obj = UndefinedFunction.__new__(mcs, name, **options)
+        return obj
+
+    def __init__(cls,
+        display_name: Optional[str] = None,
+        dimension: Dimension = Dimension(S.One),
+        **_options: Any):
+        display_name = cls.name if display_name is None else display_name
+        super().__init__(display_name, dimension)
 
 
 # Symbol and Function have generated names, hence their display is not readable.
@@ -50,17 +72,25 @@ class Function(DimensionSymbol, UndefinedFunction):
 
 class SymbolPrinter(PrettyPrinter):
 
-    def __init__(self, **settings):
+    def __init__(self, **settings: Any):
         super().__init__(settings)
 
-    def _print_Symbol(self, e, bold_name=False):
+    def is_unicode(self) -> bool:
+        return self._settings["use_unicode"]
+
+    def _print_Symbol(self, e: Expr, bold_name: bool = False) -> prettyForm:
         symb_name = e.display_name if isinstance(e, Symbol) else e.name
         symb = pretty_symbol(symb_name, bold_name)
         return prettyForm(symb)
 
-    def _print_Function(self, e, sort=False, func_name=None, left='(', right=')'):
+    def _print_Function(self,
+        e: Expr,
+        sort: bool = False,
+        func_name: Optional[str] = None,
+        left: str = "(",
+        right: str = ")") -> prettyForm:
         # optional argument func_name for supplying custom names
-        # XXX works only for applied functions
+        # works only for applied functions
         func_name = e.func.display_name if isinstance(e.func, Function) else func_name
         return self._helper_print_function(e.func,
             e.args,
@@ -69,25 +99,28 @@ class SymbolPrinter(PrettyPrinter):
             left=left,
             right=right)
 
-    def _print_SumArray(self, expr):
-        return self._print_Function(expr, func_name='SumArray')
+    # pylint: disable-next=invalid-name
+    def _print_SumArray(self, e: Expr) -> prettyForm:
+        return self._print_Function(e, func_name="SumArray")
 
 
-def next_name(name: str = None) -> str:
+def next_name(name: str) -> str:
     return name + str(next_id(name))
 
 
-def print_expression(expr) -> str:
-    pp = SymbolPrinter(use_unicode=False)
-    # XXX: this is an ugly hack, but at least it works
-    use_unicode = pp._settings['use_unicode']
+def print_expression(expr: Expr) -> str:
+    pprinter = SymbolPrinter(use_unicode=False)
+    # this is an ugly hack, but at least it works
+    use_unicode = pprinter.is_unicode()
     uflag = pretty_use_unicode(use_unicode)
     try:
-        return pp.doprint(expr)
+        return pprinter.doprint(expr)
     finally:
         pretty_use_unicode(uflag)
 
 
 # Helper method for easier interaction with SumArray
-def tuple_of_symbols(display_name: str = None, dimension: Dimension = 1, length: int = 1) -> bool:
+def tuple_of_symbols(display_name: str,
+    dimension: Dimension = Dimension(S.One),
+    length: int = 1) -> tuple[Symbol, ...]:
     return tuple(Symbol(display_name + "_" + str(i), dimension) for i in range(length))

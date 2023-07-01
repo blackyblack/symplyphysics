@@ -29,7 +29,7 @@ law = Eq(incedence_refractive_index * sin(incedence_angle),
     resulting_refractive_index * sin(refraction_angle))
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

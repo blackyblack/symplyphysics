@@ -31,7 +31,7 @@ capacitance = Symbol("capacitance", units.capacitance)
 law = Eq(oscillation_period, 2 * pi * sqrt(inductance * capacitance))
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

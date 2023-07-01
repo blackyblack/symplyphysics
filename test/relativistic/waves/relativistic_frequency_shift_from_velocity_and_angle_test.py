@@ -13,8 +13,8 @@ from symplyphysics.laws.relativistic.waves import frequency_shift_from_velocity_
 # Using calculations from the paper: http://www.mrelativity.net/TransDoppler/Relativistic%20Transverse%20Doppler%20Effect.pdf.
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     # speed of light * 0.9
     object_velocity = Quantity(269813212.2 * units.meter / units.second)
     # emitted wavelength is 5.5 * 10^-7 meters (frequency is 5.45 * 10^14 Hz)
@@ -50,7 +50,7 @@ def test_bad_velocity(test_args):
     with raises(errors.UnitsError):
         doppler_law.calculate_observed_frequency(test_args.emitted_frequency, vb,
             test_args.source_angle)
-    with raises(TypeError):
+    with raises(AttributeError):
         doppler_law.calculate_observed_frequency(test_args.emitted_frequency, 100,
             test_args.source_angle)
 
@@ -60,7 +60,7 @@ def test_bad_frequency(test_args):
     with raises(errors.UnitsError):
         doppler_law.calculate_observed_frequency(fb, test_args.object_velocity,
             test_args.source_angle)
-    with raises(TypeError):
+    with raises(AttributeError):
         doppler_law.calculate_observed_frequency(100, test_args.object_velocity,
             test_args.source_angle)
 

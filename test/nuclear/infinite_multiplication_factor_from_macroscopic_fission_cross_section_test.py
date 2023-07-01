@@ -8,8 +8,8 @@ from symplyphysics import (
 from symplyphysics.laws.nuclear import infinite_multiplication_factor_from_macroscopic_fission_cross_section as multiplication_factor
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     # Uranium-235 thermal neutrons per fission is 2.42
     neutrons_per_fission = 2.42
     # Uranium-235 macroscopic fission cross-section
@@ -30,9 +30,9 @@ def test_bad_macroscopic_cross_section(test_args):
     Sb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         multiplication_factor.calculate_multiplication_factor(test_args.v, Sb, test_args.Sa)
-    with raises(TypeError):
+    with raises(AttributeError):
         multiplication_factor.calculate_multiplication_factor(test_args.v, 100, test_args.Sa)
     with raises(errors.UnitsError):
         multiplication_factor.calculate_multiplication_factor(test_args.v, test_args.Sf, Sb)
-    with raises(TypeError):
+    with raises(AttributeError):
         multiplication_factor.calculate_multiplication_factor(test_args.v, test_args.Sf, 100)

@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.laws.dynamics import period_of_ideal_pendulum_from_length as pendulum_period
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     L = Quantity(1 * units.meter)
     Args = namedtuple("Args", ["L"])
     return Args(L=L)
@@ -29,5 +29,5 @@ def test_bad_length():
     Lb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         pendulum_period.calculate_period(Lb)
-    with raises(TypeError):
+    with raises(AttributeError):
         pendulum_period.calculate_period(100)

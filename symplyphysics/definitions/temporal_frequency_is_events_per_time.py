@@ -21,7 +21,7 @@ definition = Eq(temporal_frequency, events / time)
 definition_units_SI = units.hertz
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(definition)
 
 

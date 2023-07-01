@@ -14,8 +14,8 @@ from symplyphysics.laws.waves import wavelength_from_wave_speed_and_period as wa
 ## According to online calculator https://vpayaem.ru/inf_wave1.html wavelength should be 2.95m.
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     v1 = Quantity(299910000 * units.meter / units.second)
     period1 = Quantity(9.84252e-9 * units.second)
     Args = namedtuple("Args", ["v1", "period1"])
@@ -33,7 +33,7 @@ def test_bad_velocity(test_args):
     vb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         wavelength_law.calculate_wavelength(vb, test_args.period1)
-    with raises(TypeError):
+    with raises(AttributeError):
         wavelength_law.calculate_wavelength(100, test_args.period1)
 
 
@@ -41,5 +41,5 @@ def test_bad_period(test_args):
     pb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         wavelength_law.calculate_wavelength(test_args.v1, pb)
-    with raises(TypeError):
+    with raises(AttributeError):
         wavelength_law.calculate_wavelength(test_args.v1, 100)

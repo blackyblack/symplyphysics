@@ -128,7 +128,7 @@ frequency_relative_observer = frequency_from_period.subs(frequency_def.period,
 assert expr_equals(frequency_relative_observer, law.rhs)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

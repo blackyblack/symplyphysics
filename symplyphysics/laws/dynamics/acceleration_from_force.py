@@ -12,7 +12,7 @@ acceleration = Symbol("acceleration", units.acceleration)
 law = Eq(acceleration, force / mass)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

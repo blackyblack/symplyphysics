@@ -22,7 +22,7 @@ definition = Eq(angular_velocity(time), Derivative(angle_function(time), time))
 definition_units_SI = units.radian / units.second
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(definition)
 
 

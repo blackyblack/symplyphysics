@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.definitions import mechanical_energy_is_kinetic_and_potential as mechanical_energy_def
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     K = Quantity(1 * units.joule)
     P = Quantity(5 * units.joule)
     Args = namedtuple("Args", ["K", "P"])
@@ -30,9 +30,9 @@ def test_bad_energy(test_args):
     Eb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         mechanical_energy_def.calculate_mechanical_energy(Eb, test_args.P)
-    with raises(TypeError):
+    with raises(AttributeError):
         mechanical_energy_def.calculate_mechanical_energy(100, test_args.P)
     with raises(errors.UnitsError):
         mechanical_energy_def.calculate_mechanical_energy(test_args.K, Eb)
-    with raises(TypeError):
+    with raises(AttributeError):
         mechanical_energy_def.calculate_mechanical_energy(test_args.K, 100)

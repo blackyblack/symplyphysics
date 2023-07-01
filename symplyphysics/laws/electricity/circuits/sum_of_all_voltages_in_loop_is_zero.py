@@ -17,7 +17,7 @@ voltages = Symbol("voltages", units.voltage)
 law = Eq(SumArray(voltages), 0, evaluate=False)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

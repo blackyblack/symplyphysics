@@ -49,7 +49,7 @@ print(f"x(t): {horizontal_movement}")
 vertical_movement = movement_law.law.rhs.subs({
     movement_law.initial_velocity: initial_vertical_velocity,
     movement_law.movement_time: time_argument,
-    movement_law.constant_acceleration: -gravitational_acceleration
+    movement_law.constant_acceleration: -1 * gravitational_acceleration
 })
 print(f"y(t): {vertical_movement}")
 

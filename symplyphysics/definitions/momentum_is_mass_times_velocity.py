@@ -20,7 +20,7 @@ definition = Eq(momentum, mass * velocity)
 definition_units_SI = units.kilogram * units.meter / units.second
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(definition)
 
 

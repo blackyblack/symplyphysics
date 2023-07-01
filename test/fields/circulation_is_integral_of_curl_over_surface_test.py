@@ -16,8 +16,8 @@ from symplyphysics.core.fields.vector_field import VectorField
 from symplyphysics.laws.fields import circulation_is_integral_of_curl_over_surface as circulation_def
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     C = CoordinateSystem()
     force_unit = Quantity(1 * units.newton)
     radius_unit = Quantity(1 * units.meter)

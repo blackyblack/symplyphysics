@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_for_uniform_parallelepiped as buckling
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     # cube reactor 20 * 20 * 20
     par_width = Quantity(20 * units.centimeter)
     par_length = Quantity(20 * units.centimeter)
@@ -32,7 +32,7 @@ def test_bad_width(test_args):
     ab = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         buckling.calculate_geometric_buckling_squared(ab, test_args.b, test_args.c)
-    with raises(TypeError):
+    with raises(AttributeError):
         buckling.calculate_geometric_buckling_squared(100, test_args.b, test_args.c)
 
 
@@ -40,7 +40,7 @@ def test_bad_length(test_args):
     bb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         buckling.calculate_geometric_buckling_squared(test_args.a, bb, test_args.c)
-    with raises(TypeError):
+    with raises(AttributeError):
         buckling.calculate_geometric_buckling_squared(test_args.a, 100, test_args.c)
 
 
@@ -48,5 +48,5 @@ def test_bad_height(test_args):
     cb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         buckling.calculate_geometric_buckling_squared(test_args.a, test_args.b, cb)
-    with raises(TypeError):
+    with raises(AttributeError):
         buckling.calculate_geometric_buckling_squared(test_args.a, test_args.b, 100)

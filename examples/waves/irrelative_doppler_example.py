@@ -44,4 +44,4 @@ if (result > 0):
 elif (result < 0):
     print(f"Object is moving towards radar with {-result} km/h velocity")
 else:
-    print(f"Object is not moving")
+    print("Object is not moving")

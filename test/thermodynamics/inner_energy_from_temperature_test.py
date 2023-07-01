@@ -15,8 +15,8 @@ from symplyphysics.laws.thermodynamics import inner_energy_from_temperature as i
 ## It should be 3656 Joules of energy.
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     m = Quantity(4 * units.gram)
     normal_temperature = Celsius(20)
     T = to_kelvin_quantity(normal_temperature)
@@ -36,7 +36,7 @@ def test_bad_mass(test_args):
     mb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         inner_energy_law.calculate_inner_energy(mb, test_args.T, test_args.M)
-    with raises(TypeError):
+    with raises(AttributeError):
         inner_energy_law.calculate_inner_energy(100, test_args.T, test_args.M)
 
 
@@ -44,7 +44,7 @@ def test_bad_temperature(test_args):
     tb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         inner_energy_law.calculate_inner_energy(test_args.m, tb, test_args.M)
-    with raises(TypeError):
+    with raises(AttributeError):
         inner_energy_law.calculate_inner_energy(test_args.m, 100, test_args.M)
 
 
@@ -52,5 +52,5 @@ def test_bad_mole_mass(test_args):
     Mb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         inner_energy_law.calculate_inner_energy(test_args.m, test_args.T, Mb)
-    with raises(TypeError):
+    with raises(AttributeError):
         inner_energy_law.calculate_inner_energy(test_args.m, test_args.T, 100)

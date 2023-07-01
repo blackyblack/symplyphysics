@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_macroscopic_fission_cross_section_diffusion_coefficient as buckling
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     neutrons_per_fission = 2.6
     # critical reactor
     effective_multiplication_factor = 1
@@ -38,11 +38,11 @@ def test_bad_macroscopic_cross_section(test_args):
     Sb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         buckling.calculate_buckling(test_args.v, test_args.k, Sb, test_args.Sa, test_args.D)
-    with raises(TypeError):
+    with raises(AttributeError):
         buckling.calculate_buckling(test_args.v, test_args.k, 100, test_args.Sa, test_args.D)
     with raises(errors.UnitsError):
         buckling.calculate_buckling(test_args.v, test_args.k, test_args.Sf, Sb, test_args.D)
-    with raises(TypeError):
+    with raises(AttributeError):
         buckling.calculate_buckling(test_args.v, test_args.k, test_args.Sf, 100, test_args.D)
 
 
@@ -50,5 +50,5 @@ def test_bad_diffusion_coefficient(test_args):
     Db = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         buckling.calculate_buckling(test_args.v, test_args.k, test_args.Sf, test_args.Sa, Db)
-    with raises(TypeError):
+    with raises(AttributeError):
         buckling.calculate_buckling(test_args.v, test_args.k, test_args.Sf, test_args.Sa, 100)

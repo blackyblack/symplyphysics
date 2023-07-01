@@ -19,7 +19,7 @@ definition = Eq(acceleration(time), Derivative(velocity(time), time))
 definition_units_SI = units.meter / units.second**2
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(definition)
 
 

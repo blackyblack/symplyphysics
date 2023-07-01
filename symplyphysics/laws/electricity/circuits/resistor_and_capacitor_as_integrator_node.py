@@ -103,7 +103,7 @@ voltage_diff_solution = voltage_diff_eq.subs(capacitor_voltage(time), law.rhs)
 assert simplify(voltage_diff_solution.lhs - voltage_diff_solution.rhs) == 0
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

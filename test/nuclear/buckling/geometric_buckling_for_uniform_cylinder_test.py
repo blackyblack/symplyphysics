@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_for_uniform_cylinder as buckling
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     cylinder_radius = Quantity(1.8 * units.meter)
     cylinder_height = Quantity(4.2 * units.meter)
     Args = namedtuple("Args", ["R", "H"])
@@ -29,7 +29,7 @@ def test_bad_cylinder_radius(test_args):
     Rb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         buckling.calculate_geometric_buckling_squared(Rb, test_args.H)
-    with raises(TypeError):
+    with raises(AttributeError):
         buckling.calculate_geometric_buckling_squared(100, test_args.H)
 
 
@@ -37,5 +37,5 @@ def test_bad_cylinder_height(test_args):
     Hb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         buckling.calculate_geometric_buckling_squared(test_args.R, Hb)
-    with raises(TypeError):
+    with raises(AttributeError):
         buckling.calculate_geometric_buckling_squared(test_args.R, 100)

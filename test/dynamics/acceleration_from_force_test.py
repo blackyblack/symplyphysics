@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.laws.dynamics import acceleration_from_force as newton_second_law
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     m = Quantity(1 * units.kilogram)
     a = Quantity(3 * units.meter / units.second**2)
     Args = namedtuple("Args", ["m", "a"])
@@ -29,7 +29,7 @@ def test_bad_mass(test_args):
     mb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         newton_second_law.calculate_force(mb, test_args.a)
-    with raises(TypeError):
+    with raises(AttributeError):
         newton_second_law.calculate_force(100, test_args.a)
 
 
@@ -37,5 +37,5 @@ def test_bad_acceleration(test_args):
     ab = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         newton_second_law.calculate_force(test_args.m, ab)
-    with raises(TypeError):
+    with raises(AttributeError):
         newton_second_law.calculate_force(test_args.m, 100)

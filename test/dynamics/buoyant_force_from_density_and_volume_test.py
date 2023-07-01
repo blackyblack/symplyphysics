@@ -12,8 +12,8 @@ from symplyphysics import (
 from symplyphysics.laws.dynamics import buoyant_force_from_density_and_volume as archimedes_law
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     # water density
     pf = Quantity(1000 * units.kilogram / units.meter**3)
     V = Quantity(0.2 * units.meter**3)
@@ -30,32 +30,36 @@ def test_basic_force(test_args):
 
 def test_force_vector():
     cartesian_coordinates = CoordSys3D("cartesian_coordinates")
-    Fgravity = 2 * cartesian_coordinates.x + cartesian_coordinates.y
+    # Make linter happy
+    x = getattr(cartesian_coordinates, "x")
+    y = getattr(cartesian_coordinates, "y")
+    z = getattr(cartesian_coordinates, "z")
+    Fg = 2 * x + y
     result_force_expr = solve(archimedes_law.law, archimedes_law.force_buoyant,
         dict=True)[0][archimedes_law.force_buoyant]
     # set non vector variables to 1 since vector components cannot be properly calculated with quantities
     result = result_force_expr.subs({
-        archimedes_law.units.acceleration_due_to_gravity: Fgravity,
+        archimedes_law.units.acceleration_due_to_gravity: Fg,
         archimedes_law.fluid_density: 1,
         archimedes_law.displaced_volume: 1
     })
-    # make sure that result vector is not 0 (see Fgravity for non zero vector components)
-    assert result.coeff(cartesian_coordinates.x) != 0
-    assert result.coeff(cartesian_coordinates.y) != 0
-    assert result.coeff(cartesian_coordinates.z) == 0
+    # make sure that result vector is not 0 (see Fg for non zero vector components)
+    assert result.coeff(x) != 0
+    assert result.coeff(y) != 0
+    assert result.coeff(z) == 0
     # force action and force reaction should compensate each other
-    assert (result + Fgravity) == 0
+    assert (result + Fg) == 0
     # vector components should compensate each other (since density and volume = 1)
-    assert result.coeff(cartesian_coordinates.x) == -1 * Fgravity.coeff(cartesian_coordinates.x)
-    assert result.coeff(cartesian_coordinates.y) == -1 * Fgravity.coeff(cartesian_coordinates.y)
-    assert result.coeff(cartesian_coordinates.z) == -1 * Fgravity.coeff(cartesian_coordinates.z)
+    assert result.coeff(x) == -1 * Fg.coeff(x)
+    assert result.coeff(y) == -1 * Fg.coeff(y)
+    assert result.coeff(z) == -1 * Fg.coeff(z)
 
 
 def test_bad_density(test_args):
     pb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         archimedes_law.calculate_force_buoyant(pb, test_args.V)
-    with raises(TypeError):
+    with raises(AttributeError):
         archimedes_law.calculate_force_buoyant(100, test_args.V)
 
 
@@ -63,5 +67,5 @@ def test_bad_volume(test_args):
     Vb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         archimedes_law.calculate_force_buoyant(test_args.pf, Vb)
-    with raises(TypeError):
+    with raises(AttributeError):
         archimedes_law.calculate_force_buoyant(test_args.pf, 100)

@@ -11,8 +11,8 @@ from symplyphysics import (
 from symplyphysics.laws.electricity.circuits import sum_of_all_currents_through_an_electrical_node_is_zero as kirchhoff_law
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     I1 = Quantity(3 * units.ampere)
     I2 = Quantity(-5 * units.ampere)
     Args = namedtuple("Args", ["I1", "I2"])
@@ -43,13 +43,13 @@ def test_array_bad_current(test_args):
     Ib = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         kirchhoff_law.calculate_current_from_array([test_args.I1, Ib])
-    with raises(TypeError):
+    with raises(AttributeError):
         kirchhoff_law.calculate_current_from_array([test_args.I1, 100])
     with raises(errors.UnitsError):
         kirchhoff_law.calculate_current_from_array([Ib, test_args.I2])
-    with raises(TypeError):
+    with raises(AttributeError):
         kirchhoff_law.calculate_current_from_array([100, test_args.I2])
     with raises(errors.UnitsError):
         kirchhoff_law.calculate_current_from_array([Ib, Ib])
-    with raises(TypeError):
+    with raises(AttributeError):
         kirchhoff_law.calculate_current_from_array([100, 100])

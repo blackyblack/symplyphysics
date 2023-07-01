@@ -43,7 +43,7 @@ definition = Eq(circulation,
     Integral(Dot(field, trajectory_element), (parameter, parameter_from, parameter_to)))
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(definition)
 
 

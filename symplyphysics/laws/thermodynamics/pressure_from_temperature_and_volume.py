@@ -19,7 +19,7 @@ temperature = Symbol("temperature", units.temperature)
 law = Eq(pressure, mole_count * temperature * units.molar_gas_constant / volume)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

@@ -42,7 +42,7 @@ power_derived = solve(law_derived,
 assert (expr_equals(power_derived, law.rhs))
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

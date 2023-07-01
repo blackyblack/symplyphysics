@@ -13,8 +13,8 @@ from symplyphysics.laws.dynamics import potential_energy_from_mass_and_height as
 # an altitude of 500 meters?
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     m = Quantity(9 * units.gram)
     h = Quantity(500 * units.meter)
     Args = namedtuple("Args", ["m", "h"])
@@ -32,7 +32,7 @@ def test_bad_body_mass(test_args):
     mb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         potential_energy.calculate_potential_energy(mb, test_args.h)
-    with raises(TypeError):
+    with raises(AttributeError):
         potential_energy.calculate_potential_energy(100, test_args.h)
 
 
@@ -40,5 +40,5 @@ def test_bad_height(test_args):
     hb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         potential_energy.calculate_potential_energy(test_args.m, hb)
-    with raises(TypeError):
+    with raises(AttributeError):
         potential_energy.calculate_potential_energy(test_args.m, 100)

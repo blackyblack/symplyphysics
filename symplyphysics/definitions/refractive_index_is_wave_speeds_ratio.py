@@ -34,7 +34,7 @@ definition = Eq(refractive_index, outer_speed / refracting_speed)
 definition_units_SI = S.One
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(definition)
 
 
@@ -46,6 +46,6 @@ def calculate_refractive_index(outer_speed_: Quantity, refracting_speed_: Quanti
         refracting_speed: refracting_speed_
     })
     result = expr_to_quantity(result_expr)
-    assert_equivalent_dimension(result, "validate_output", "return", "calculate_refractive_index",
+    assert_equivalent_dimension(result, "return", "calculate_refractive_index",
         refractive_index.dimension)
     return convert_to(result, S.One).evalf()

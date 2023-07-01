@@ -22,7 +22,7 @@ definition = Eq(moment_of_inertia, particle_mass * spinning_radius**2)
 definition_units_SI = units.kilogram * units.meter**2
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(definition)
 
 

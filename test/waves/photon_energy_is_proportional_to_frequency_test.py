@@ -15,9 +15,10 @@ from symplyphysics.laws.waves import photon_energy_is_proportional_to_frequency 
 ## https://www.center-pss.ru/math/raschet-energii-fotona.htm
 ## we obtain energy of single photone equal to 1.9878528e-17 Joule.
 
-@fixture
-def test_args():
-    frequency = Quantity(3e16 * units.hertz)    
+
+@fixture(name="test_args")
+def test_args_fixture():
+    frequency = Quantity(3e16 * units.hertz)
     Args = namedtuple("Args", ["frequency"])
     return Args(frequency=frequency)
 
@@ -28,9 +29,10 @@ def test_basic_energy(test_args):
     result_current = convert_to(result, units.joule).subs(units.joule, 1).evalf(6)
     assert result_current == approx(1.9878528e-17, 0.00001)
 
-def test_bad_frequency(test_args):
+
+def test_bad_frequency():
     fb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         planck_law.calculate_energy(fb)
-    with raises(TypeError):
+    with raises(AttributeError):
         planck_law.calculate_energy(100)

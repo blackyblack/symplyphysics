@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.laws.thermodynamics import pressure_is_constant as gay_lussacs_law
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     t0 = Quantity(1 * units.kelvin)
     t1 = Quantity(2 * units.kelvin)
     V0 = Quantity(1 * units.liter)
@@ -32,9 +32,9 @@ def test_bad_temperature(test_args):
         gay_lussacs_law.calculate_volume(tb, test_args.V0, test_args.t1)
     with raises(errors.UnitsError):
         gay_lussacs_law.calculate_volume(test_args.t0, test_args.V0, tb)
-    with raises(TypeError):
+    with raises(AttributeError):
         gay_lussacs_law.calculate_volume(100, test_args.V0, test_args.t1)
-    with raises(TypeError):
+    with raises(AttributeError):
         gay_lussacs_law.calculate_volume(test_args.t0, test_args.V0, 100)
 
 
@@ -42,5 +42,5 @@ def test_bad_volume(test_args):
     Vb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         gay_lussacs_law.calculate_volume(test_args.t0, Vb, test_args.t1)
-    with raises(TypeError):
+    with raises(AttributeError):
         gay_lussacs_law.calculate_volume(test_args.t0, 100, test_args.t1)

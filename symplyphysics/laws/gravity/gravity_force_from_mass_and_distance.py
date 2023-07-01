@@ -23,7 +23,7 @@ law = Eq(
     distance_between_mass_centers**2)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

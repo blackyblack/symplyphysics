@@ -6,8 +6,8 @@ from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateS
 from symplyphysics.core.vectors.vectors import Vector, sympy_vector_from_vector, vector_from_sympy_vector, vector_rebase
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     C = CoordinateSystem()
     Args = namedtuple("Args", ["C"])
     return Args(C=C)
@@ -19,7 +19,7 @@ def test_args():
 def test_basic_vector():
     vector = Vector([1, 2])
     assert vector.components == [1, 2]
-    assert vector.coordinate_system == None
+    assert vector.coordinate_system is None
 
 
 def test_coord_sys_vector(test_args):
@@ -29,9 +29,9 @@ def test_coord_sys_vector(test_args):
 
 
 def test_empty_vector():
-    vector = Vector()
+    vector = Vector([])
     assert vector.components == []
-    assert vector.coordinate_system == None
+    assert vector.coordinate_system is None
 
 
 # Test vector_from_sympy_vector()
@@ -59,7 +59,7 @@ def test_skip_dimension_sympy_to_array_conversion(test_args):
 def test_empty_sympy_to_array_conversion(test_args):
     vector = vector_from_sympy_vector(SympyVector.zero, test_args.C)
     assert vector.components == []
-    assert vector.coordinate_system == None
+    assert vector.coordinate_system is None
 
 
 # Does not support non SymPy Vectors
@@ -169,9 +169,9 @@ def test_basic_vector_rebase(test_args):
     vector = Vector([test_args.C.coord_system.x, test_args.C.coord_system.y], test_args.C)
 
     # B is located at [1, 2] origin instead of [0, 0] of test_args.C
-    B_inner = test_args.C.coord_system.locate_new(
+    Bi = test_args.C.coord_system.locate_new(
         'B', test_args.C.coord_system.i + 2 * test_args.C.coord_system.j)
-    B = CoordinateSystem(test_args.C.coord_system_type, B_inner)
+    B = CoordinateSystem(test_args.C.coord_system_type, Bi)
     vector_rebased = vector_rebase(vector, B)
     assert vector_rebased.coordinate_system == B
     # Original field is not changed
@@ -185,9 +185,9 @@ def test_plain_vector_rebase(test_args):
     vector = Vector([1, 2], test_args.C)
 
     # B is located at [1, 2] origin instead of [0, 0] of test_args.C
-    B_inner = test_args.C.coord_system.locate_new(
+    Bi = test_args.C.coord_system.locate_new(
         'B', test_args.C.coord_system.i + 2 * test_args.C.coord_system.j)
-    B = CoordinateSystem(test_args.C.coord_system_type, B_inner)
+    B = CoordinateSystem(test_args.C.coord_system_type, Bi)
     vector_rebased = vector_rebase(vector, B)
     assert vector_rebased.coordinate_system == B
     # Original field is not changed
@@ -202,9 +202,9 @@ def test_parameters_vector_rebase(test_args):
     vector = Vector([parameter, parameter], test_args.C)
 
     # B is located at [1, 2] origin instead of [0, 0] of test_args.C
-    B_inner = test_args.C.coord_system.locate_new(
+    Bi = test_args.C.coord_system.locate_new(
         'B', test_args.C.coord_system.i + 2 * test_args.C.coord_system.j)
-    B = CoordinateSystem(test_args.C.coord_system_type, B_inner)
+    B = CoordinateSystem(test_args.C.coord_system_type, Bi)
     vector_rebased = vector_rebase(vector, B)
     assert vector_rebased.coordinate_system == B
     # Original field is not changed
@@ -216,9 +216,9 @@ def test_parameters_vector_rebase(test_args):
 def test_no_coord_system_vector_rebase(test_args):
     vector = Vector([test_args.C.coord_system.x, test_args.C.coord_system.y])
     assert vector.coordinate_system is None
-    B_inner = test_args.C.coord_system.locate_new(
+    Bi = test_args.C.coord_system.locate_new(
         'B', test_args.C.coord_system.i + 2 * test_args.C.coord_system.j)
-    B = CoordinateSystem(test_args.C.coord_system_type, B_inner)
+    B = CoordinateSystem(test_args.C.coord_system_type, Bi)
     vector_rebased = vector_rebase(vector, B)
     assert vector_rebased.coordinate_system == B
     assert vector_rebased.components == [test_args.C.coord_system.x, test_args.C.coord_system.y]
@@ -229,7 +229,7 @@ def test_no_target_coord_system_vector_rebase(test_args):
     vector = Vector([test_args.C.coord_system.x, test_args.C.coord_system.y], test_args.C)
     assert vector.coordinate_system == test_args.C
     vector_rebased = vector_rebase(vector, None)
-    assert vector_rebased.coordinate_system == None
+    assert vector_rebased.coordinate_system is None
     assert vector_rebased.components == [test_args.C.coord_system.x, test_args.C.coord_system.y]
 
 

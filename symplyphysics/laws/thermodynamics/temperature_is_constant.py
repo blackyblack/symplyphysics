@@ -46,7 +46,7 @@ derived_pressure_end = solve(derived_law, (temperature_start, temperature_end, p
 assert solve(law, pressure_end, dict=True)[0][pressure_end] == derived_pressure_end
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

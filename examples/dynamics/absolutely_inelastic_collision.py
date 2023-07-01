@@ -16,8 +16,8 @@ body_mass = Quantity(75 * units.kilogram)
 # Hint dimension so 'convert_to' is able to convert it to m/s
 body_velocity = Quantity(0 * units.meter / units.second, dimension=units.velocity)
 
-print("Formula for momentum conservation law is:\n{}".format(momentum_conservation_law.print()))
-print("Formula for momentum is:\n{}".format(momentum_def.print()))
+print(f"Formula for momentum conservation law is:\n{momentum_conservation_law.print_law()}")
+print(f"Formula for momentum is:\n{momentum_def.print_law()}")
 
 # initial body velocity is 0 so the momentum is 0 as well. So the momentum of system before collision equals to momentum of bullet
 momentum_before = momentum_def.calculate_momentum(bullet_mass, bullet_velocity)
@@ -31,20 +31,25 @@ result_expr = solved.subs({
 })
 result_velocity = expr_to_quantity(result_expr)
 
-print(
-    "Velocity = {} {}; for two inelasticly collided objects with masses = {} {}, {} {}, velocities = {} {}, {} {}"
-    .format(
-    convert_to(result_velocity, units.meter / units.second).subs({
+result_velocity_meter_per_second = convert_to(result_velocity, units.meter / units.second).subs({
     units.meter: 1,
     units.seconds: 1
-    }).evalf(2), units.meter / units.second,
-    convert_to(bullet_mass, units.gram).subs(units.gram, 1).evalf(2), units.gram,
-    convert_to(body_mass, units.kilogram).subs(units.kilogram, 1).evalf(2), units.kilogram,
-    convert_to(bullet_velocity, units.meter / units.second).subs({
+}).evalf(2)
+bullet_mass_gram = convert_to(bullet_mass, units.gram).subs(units.gram, 1).evalf(2)
+body_mass_kg = convert_to(body_mass, units.kilogram).subs(units.kilogram, 1).evalf(2)
+bullet_velocity_meter_per_second = convert_to(bullet_velocity, units.meter / units.second).subs({
     units.meter: 1,
     units.second: 1
-    }).evalf(3), units.meter / units.second,
-    convert_to(body_velocity, units.meter / units.second).subs({
+}).evalf(3)
+body_velocity_meter_per_second = convert_to(body_velocity, units.meter / units.second).subs({
     units.meter: 1,
     units.second: 1
-    }).evalf(2), units.meter / units.second))
+}).evalf(2)
+
+print(f"Velocity = {result_velocity_meter_per_second} {units.meter / units.second}\n")
+print(
+    f"for two inelasticly collided objects with masses = {bullet_mass_gram} {units.gram}, {body_mass_kg} {units.kilogram}\n"
+)
+print(
+    f"velocities = {bullet_velocity_meter_per_second} {units.meter / units.second}, {body_velocity_meter_per_second} {units.meter / units.second}\n"
+)

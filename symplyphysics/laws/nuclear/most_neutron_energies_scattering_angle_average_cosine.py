@@ -16,7 +16,7 @@ average_scattering_angle_cosine = symbols("average_scattering_angle_cosine")
 law = Eq(average_scattering_angle_cosine, 2 / (3 * target_nucleus_mass_number))
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

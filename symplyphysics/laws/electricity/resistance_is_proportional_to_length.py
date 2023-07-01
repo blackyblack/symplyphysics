@@ -18,13 +18,18 @@ cross_section = Symbol("cross_section", units.length**2)
 law = Eq(resistance, resistivity * wire_length / cross_section)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 
 @validate_input(resistivity_=resistivity, wire_length_=wire_length, cross_section_=cross_section)
 @validate_output(resistance)
-def calculate_resistance(resistivity_: Quantity, wire_length_: Quantity, cross_section_: Quantity) -> Quantity:
+def calculate_resistance(resistivity_: Quantity, wire_length_: Quantity,
+    cross_section_: Quantity) -> Quantity:
     result_resistance_expr = solve(law, resistance, dict=True)[0][resistance]
-    result_expr = result_resistance_expr.subs({resistivity: resistivity_, wire_length: wire_length_, cross_section: cross_section_})
+    result_expr = result_resistance_expr.subs({
+        resistivity: resistivity_,
+        wire_length: wire_length_,
+        cross_section: cross_section_
+    })
     return expr_to_quantity(result_expr)

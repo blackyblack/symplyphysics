@@ -14,8 +14,8 @@ from symplyphysics.definitions import self_induction_voltage_is_current_derivati
 ## Self-induction voltage should be -0.00025 volts
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     L = Quantity(2.5 * units.milli * units.henry)
     I0 = Quantity(0 * units.ampere)
     I1 = Quantity(0.5 * units.ampere)
@@ -37,7 +37,7 @@ def test_voltage_with_bad_induction(test_args):
     Lb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         self_induction_def.calculate_voltage(Lb, test_args.I0, test_args.I1, test_args.t)
-    with raises(TypeError):
+    with raises(AttributeError):
         self_induction_def.calculate_voltage(100, test_args.I0, test_args.I1, test_args.t)
 
 
@@ -47,9 +47,9 @@ def test_voltage_with_bad_current(test_args):
         self_induction_def.calculate_voltage(test_args.L, Ib, test_args.I1, test_args.t)
     with raises(errors.UnitsError):
         self_induction_def.calculate_voltage(test_args.L, test_args.I0, Ib, test_args.t)
-    with raises(TypeError):
+    with raises(AttributeError):
         self_induction_def.calculate_voltage(test_args.L, 100, test_args.I1, test_args.t)
-    with raises(TypeError):
+    with raises(AttributeError):
         self_induction_def.calculate_voltage(test_args.L, test_args.I0, 100, test_args.t)
 
 
@@ -57,5 +57,5 @@ def test_voltage_with_bad_time(test_args):
     tb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         self_induction_def.calculate_voltage(test_args.L, test_args.I0, test_args.I1, tb)
-    with raises(TypeError):
+    with raises(AttributeError):
         self_induction_def.calculate_voltage(test_args.L, test_args.I0, test_args.I1, 100)

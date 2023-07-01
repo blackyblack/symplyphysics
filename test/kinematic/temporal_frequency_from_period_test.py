@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.laws.kinematic import temporal_frequency_from_period as frequency_def
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     T = Quantity(2.8 * units.second)
     Args = namedtuple("Args", ["T"])
     return Args(T=T)
@@ -28,5 +28,5 @@ def test_bad_period():
     Tb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         frequency_def.calculate_frequency(Tb)
-    with raises(TypeError):
+    with raises(AttributeError):
         frequency_def.calculate_frequency(100)

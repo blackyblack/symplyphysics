@@ -40,7 +40,7 @@ eq_end = thermodynamics_law.law.subs({
 law = [eq_start, eq_end, adiabatic_condition]
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

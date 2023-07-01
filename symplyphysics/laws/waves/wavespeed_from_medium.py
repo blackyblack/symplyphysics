@@ -18,7 +18,7 @@ refraction_factor = Symbol("refraction_factor", Dimensionless)
 law = Eq(wave_speed_in_medium, speed_of_light / refraction_factor)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

@@ -6,45 +6,47 @@ from symplyphysics import print_expression
 from symplyphysics.laws.dynamics import buoyant_force_from_density_and_volume as archimedes_law
 from symplyphysics.laws.dynamics import acceleration_from_force as gravity_law
 
-print("Formula is:\n{}".format(archimedes_law.print()))
+print(f"Formula is:\n{archimedes_law.print_law()}")
 
 height = symbols("height")
 
-fluid_density = 0.6
-cylinder_mass = 30
-cylinder_height = 5
-cylinder_radius = 2
+FLUID_DENSITY = 0.6
+CYLINDER_MASS = 30
+CYLINDER_HEIGHT = 5
+CYLINDER_RADIUS = 2
 
-cylinder_volume_function = pi * height * cylinder_radius**2
-cylinder_volume = cylinder_volume_function.subs(height, cylinder_height)
+cylinder_volume_function = pi * height * CYLINDER_RADIUS**2
+cylinder_volume = cylinder_volume_function.subs(height, CYLINDER_HEIGHT)
 
 solved = abs(
     solve(archimedes_law.law, archimedes_law.force_buoyant,
     dict=True)[0][archimedes_law.force_buoyant])
 result_buoyant_force_above_liquid = solved.subs({
     archimedes_law.units.acceleration_due_to_gravity: 9.8,
-    archimedes_law.fluid_density: fluid_density,
+    archimedes_law.fluid_density: FLUID_DENSITY,
     archimedes_law.displaced_volume: cylinder_volume_function
 })
 
 result_buoyant_force_below_liquid = solved.subs({
     archimedes_law.units.acceleration_due_to_gravity: 9.8,
-    archimedes_law.fluid_density: fluid_density,
+    archimedes_law.fluid_density: FLUID_DENSITY,
     archimedes_law.displaced_volume: cylinder_volume
 })
 
 solved_gravity = solve(gravity_law.law, gravity_law.force, dict=True)[0][gravity_law.force]
 result_gravity_force = solved_gravity.subs({
-    gravity_law.mass: cylinder_mass,
+    gravity_law.mass: CYLINDER_MASS,
     gravity_law.acceleration: 9.8
 })
 
-print("Buoyant force above liquid function is:\n{}".format(
-    print_expression(result_buoyant_force_above_liquid)))
-print("Buoyant force below liquid function is:\n{}".format(
-    print_expression(result_buoyant_force_below_liquid)))
+print(
+    f"Buoyant force above liquid function is:\n{print_expression(result_buoyant_force_above_liquid)}"
+)
+print(
+    f"Buoyant force below liquid function is:\n{print_expression(result_buoyant_force_below_liquid)}"
+)
 
-p1 = plot(result_buoyant_force_above_liquid, (height, 0, cylinder_height),
+p1 = plot(result_buoyant_force_above_liquid, (height, 0, CYLINDER_HEIGHT),
     line_color="blue",
     title="Floating body",
     xlabel="Height below water",
@@ -60,7 +62,7 @@ p2 = plot(result_gravity_force, (height, 0, 8),
     backend=MatplotlibBackend,
     show=False)
 
-p3 = plot(result_buoyant_force_below_liquid, (height, cylinder_height, 8),
+p3 = plot(result_buoyant_force_below_liquid, (height, CYLINDER_HEIGHT, 8),
     line_color="blue",
     label="",
     backend=MatplotlibBackend,

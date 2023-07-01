@@ -26,7 +26,7 @@ macroscopic_cross_section = Symbol("macroscopic_cross_section", 1 / units.length
 law = Eq(macroscopic_cross_section, 1 / mean_free_path)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

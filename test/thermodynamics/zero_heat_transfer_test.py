@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.laws.thermodynamics import zero_heat_transfer
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     n = Quantity(1 * units.mole)
     t0 = Quantity(100 * units.kelvin)
     V0 = Quantity(1000 * units.liter)
@@ -35,7 +35,7 @@ def test_bad_mole_count(test_args):
     with raises(errors.UnitsError):
         zero_heat_transfer.calculate_pressure(nb, test_args.t0, test_args.V0, test_args.V1,
             test_args.y)
-    with raises(TypeError):
+    with raises(AttributeError):
         zero_heat_transfer.calculate_pressure(100, test_args.t0, test_args.V0, test_args.V1,
             test_args.y)
 
@@ -45,7 +45,7 @@ def test_bad_temperature(test_args):
     with raises(errors.UnitsError):
         zero_heat_transfer.calculate_pressure(test_args.n, tb, test_args.V0, test_args.V1,
             test_args.y)
-    with raises(TypeError):
+    with raises(AttributeError):
         zero_heat_transfer.calculate_pressure(test_args.n, 100, test_args.V0, test_args.V1,
             test_args.y)
 
@@ -58,10 +58,10 @@ def test_bad_volume(test_args):
     with raises(errors.UnitsError):
         zero_heat_transfer.calculate_pressure(test_args.n, test_args.t0, test_args.V0, Vb,
             test_args.y)
-    with raises(TypeError):
+    with raises(AttributeError):
         zero_heat_transfer.calculate_pressure(test_args.n, test_args.t0, 100, test_args.V1,
             test_args.y)
-    with raises(TypeError):
+    with raises(AttributeError):
         zero_heat_transfer.calculate_pressure(test_args.n, test_args.t0, test_args.V0, 100,
             test_args.y)
 
@@ -71,6 +71,6 @@ def test_bad_specific_heats_ratio(test_args):
     with raises(errors.UnitsError):
         zero_heat_transfer.calculate_pressure(test_args.n, test_args.t0, test_args.V0, test_args.V1,
             yb)
-    with raises(TypeError):
+    with raises(AttributeError):
         zero_heat_transfer.calculate_pressure(test_args.n, test_args.t0, test_args.V0, test_args.V1,
             'bad')
