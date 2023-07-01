@@ -24,16 +24,16 @@ def test_basic_utilisation_factor(test_args):
 
 
 def test_bad_macroscopic_cross_section(test_args):
-    Safb = Quantity(1 * units.coulomb)
+    Sb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        utilisation_factor.calculate_utilisation_factor(Safb, test_args.Sat)
-    with raises(AttributeError):
+        utilisation_factor.calculate_utilisation_factor(Sb, test_args.Sat)
+    with raises(TypeError):
         utilisation_factor.calculate_utilisation_factor(100, test_args.Sat)
     with raises(errors.UnitsError):
-        utilisation_factor.calculate_utilisation_factor(test_args.Saf, Safb)
-    with raises(AttributeError):
+        utilisation_factor.calculate_utilisation_factor(test_args.Saf, Sb)
+    with raises(TypeError):
         utilisation_factor.calculate_utilisation_factor(test_args.Saf, 100)
 
-    Saftb = Quantity(test_args.Sat.scale_factor + 1)
+    Sb = Quantity(test_args.Sat.scale_factor + 1)
     with raises(ValueError):
-        utilisation_factor.calculate_utilisation_factor(Saftb, test_args.Sat)
+        utilisation_factor.calculate_utilisation_factor(Sb, test_args.Sat)

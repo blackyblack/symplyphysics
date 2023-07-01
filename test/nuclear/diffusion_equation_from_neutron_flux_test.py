@@ -21,9 +21,8 @@ def test_args_fixture():
     cube_side = Quantity(1 * units.meter)
     unit_length = Quantity(1 * units.meter)
     neutron_flux_unit = Quantity(1 / units.meter**2 / units.second)
-    neutron_flux = neutron_flux_unit * (cos(pi / cube_side * x * unit_length)
-        * cos(pi / cube_side * y * unit_length) *
-        cos(pi / cube_side * z * unit_length))
+    neutron_flux = neutron_flux_unit * (cos(pi / cube_side * x * unit_length) *
+        cos(pi / cube_side * y * unit_length) * cos(pi / cube_side * z * unit_length))
     neutrons_per_fission = 1
     macro_fission_cross_section = Quantity(0.006 / units.centimeter)
     macro_abs_cross_section = Quantity(0.0025 / units.centimeter)
@@ -47,7 +46,7 @@ def test_bad_diffusion_coefficient(test_args):
     with raises(errors.UnitsError):
         diffusion_equation.calculate_multiplication_factor(test_args.f, test_args.v, test_args.Sf,
             test_args.Sa, Db)
-    with raises(AttributeError):
+    with raises(TypeError):
         diffusion_equation.calculate_multiplication_factor(test_args.f, test_args.v, test_args.Sf,
             test_args.Sa, 100)
 
@@ -57,12 +56,12 @@ def test_bad_macroscopic_cross_section(test_args):
     with raises(errors.UnitsError):
         diffusion_equation.calculate_multiplication_factor(test_args.f, test_args.v, Sb,
             test_args.Sa, test_args.D)
-    with raises(AttributeError):
+    with raises(TypeError):
         diffusion_equation.calculate_multiplication_factor(test_args.f, test_args.v, 100,
             test_args.Sa, test_args.D)
     with raises(errors.UnitsError):
         diffusion_equation.calculate_multiplication_factor(test_args.f, test_args.v, test_args.Sf,
             Sb, test_args.D)
-    with raises(AttributeError):
+    with raises(TypeError):
         diffusion_equation.calculate_multiplication_factor(test_args.f, test_args.v, test_args.Sf,
             100, test_args.D)

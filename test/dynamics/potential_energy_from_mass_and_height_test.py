@@ -32,7 +32,7 @@ def test_bad_body_mass(test_args):
     mb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         potential_energy.calculate_potential_energy(mb, test_args.h)
-    with raises(AttributeError):
+    with raises(TypeError):
         potential_energy.calculate_potential_energy(100, test_args.h)
 
 
@@ -40,5 +40,5 @@ def test_bad_height(test_args):
     hb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         potential_energy.calculate_potential_energy(test_args.m, hb)
-    with raises(AttributeError):
+    with raises(TypeError):
         potential_energy.calculate_potential_energy(test_args.m, 100)

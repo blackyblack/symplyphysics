@@ -32,7 +32,7 @@ def test_bad_inertia_moment(test_args):
     Ib = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         kinetic_energy_law.calculate_energy(Ib, test_args.w)
-    with raises(AttributeError):
+    with raises(TypeError):
         kinetic_energy_law.calculate_energy(100, test_args.w)
 
 
@@ -40,5 +40,5 @@ def test_bad_velocity(test_args):
     wb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         kinetic_energy_law.calculate_energy(test_args.I, wb)
-    with raises(AttributeError):
+    with raises(TypeError):
         kinetic_energy_law.calculate_energy(test_args.I, 100)

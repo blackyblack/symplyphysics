@@ -29,5 +29,5 @@ def test_bad_sphere_radius():
     Rb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         buckling.calculate_geometric_buckling_squared(Rb)
-    with raises(AttributeError):
+    with raises(TypeError):
         buckling.calculate_geometric_buckling_squared(100)

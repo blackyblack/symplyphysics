@@ -29,7 +29,7 @@ def test_bad_buckling(test_args):
     Bb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         non_leakage_factor.calculate_probability(Bb, test_args.th)
-    with raises(AttributeError):
+    with raises(TypeError):
         non_leakage_factor.calculate_probability(100, test_args.th)
 
 
@@ -37,5 +37,5 @@ def test_bad_fermi_age(test_args):
     thb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         non_leakage_factor.calculate_probability(test_args.Bg, thb)
-    with raises(AttributeError):
+    with raises(TypeError):
         non_leakage_factor.calculate_probability(test_args.Bg, 100)

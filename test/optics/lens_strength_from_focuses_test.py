@@ -31,9 +31,9 @@ def test_bad_distance(test_args):
     db = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         lens_law.calculate_focus(db, test_args.image_distance)
-    with raises(AttributeError):
+    with raises(TypeError):
         lens_law.calculate_focus(100, test_args.image_distance)
     with raises(errors.UnitsError):
         lens_law.calculate_focus(test_args.object_distance, db)
-    with raises(AttributeError):
+    with raises(TypeError):
         lens_law.calculate_focus(test_args.object_distance, 100)

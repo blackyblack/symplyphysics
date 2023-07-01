@@ -36,7 +36,7 @@ def test_bad_velocity(test_args):
     Vb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         accelerated_velocity_law.calculate_velocity(Vb, test_args.A1, test_args.T1)
-    with raises(AttributeError):
+    with raises(TypeError):
         accelerated_velocity_law.calculate_velocity(100, test_args.A1, test_args.T1)
 
 
@@ -44,7 +44,7 @@ def test_bad_acceleration(test_args):
     Ab = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         accelerated_velocity_law.calculate_velocity(test_args.V1, Ab, test_args.T1)
-    with raises(AttributeError):
+    with raises(TypeError):
         accelerated_velocity_law.calculate_velocity(test_args.V1, 100, test_args.T1)
 
 
@@ -52,5 +52,5 @@ def test_bad_time(test_args):
     Tb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         accelerated_velocity_law.calculate_velocity(test_args.V1, test_args.A1, Tb)
-    with raises(AttributeError):
+    with raises(TypeError):
         accelerated_velocity_law.calculate_velocity(test_args.V1, test_args.A1, 100)

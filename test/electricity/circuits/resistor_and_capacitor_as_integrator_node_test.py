@@ -36,7 +36,7 @@ def test_bad_voltage(test_args):
     Vb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         rc_node.calculate_capacitor_voltage(Vb, test_args.C, test_args.R, test_args.T)
-    with raises(AttributeError):
+    with raises(TypeError):
         rc_node.calculate_capacitor_voltage(100, test_args.C, test_args.R, test_args.T)
 
 
@@ -44,7 +44,7 @@ def test_bad_capacity(test_args):
     Cb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         rc_node.calculate_capacitor_voltage(test_args.V0, Cb, test_args.R, test_args.T)
-    with raises(AttributeError):
+    with raises(TypeError):
         rc_node.calculate_capacitor_voltage(test_args.V0, 100, test_args.R, test_args.T)
 
 
@@ -52,7 +52,7 @@ def test_bad_resistance(test_args):
     Rb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         rc_node.calculate_capacitor_voltage(test_args.V0, test_args.C, Rb, test_args.T)
-    with raises(AttributeError):
+    with raises(TypeError):
         rc_node.calculate_capacitor_voltage(test_args.V0, test_args.C, 100, test_args.T)
 
 
@@ -60,5 +60,5 @@ def test_bad_time(test_args):
     Tb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         rc_node.calculate_capacitor_voltage(test_args.V0, test_args.C, test_args.R, Tb)
-    with raises(AttributeError):
+    with raises(TypeError):
         rc_node.calculate_capacitor_voltage(test_args.V0, test_args.C, test_args.R, 100)

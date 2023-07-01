@@ -52,5 +52,5 @@ def test_velocity_with_bad_time(test_args):
     tb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         angular_velocity_def.calculate_angular_velocity(test_args.a0, test_args.a1, tb)
-    with raises(AttributeError):
+    with raises(TypeError):
         angular_velocity_def.calculate_angular_velocity(test_args.a0, test_args.a1, 100)

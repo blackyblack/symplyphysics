@@ -43,5 +43,5 @@ def test_bad_diffusion_area(test_args):
     Lb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         buckling.calculate_geometric_buckling_squared(test_args.k_inf, test_args.k_eff, Lb)
-    with raises(AttributeError):
+    with raises(TypeError):
         buckling.calculate_geometric_buckling_squared(test_args.k_inf, test_args.k_eff, 100)

@@ -33,7 +33,7 @@ def test_bad_velocity(test_args):
     vb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         wavelength_law.calculate_wavelength(vb, test_args.period1)
-    with raises(AttributeError):
+    with raises(TypeError):
         wavelength_law.calculate_wavelength(100, test_args.period1)
 
 
@@ -41,5 +41,5 @@ def test_bad_period(test_args):
     pb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         wavelength_law.calculate_wavelength(test_args.v1, pb)
-    with raises(AttributeError):
+    with raises(TypeError):
         wavelength_law.calculate_wavelength(test_args.v1, 100)

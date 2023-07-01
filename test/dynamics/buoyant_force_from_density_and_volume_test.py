@@ -59,7 +59,7 @@ def test_bad_density(test_args):
     pb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         archimedes_law.calculate_force_buoyant(pb, test_args.V)
-    with raises(AttributeError):
+    with raises(TypeError):
         archimedes_law.calculate_force_buoyant(100, test_args.V)
 
 
@@ -67,5 +67,5 @@ def test_bad_volume(test_args):
     Vb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         archimedes_law.calculate_force_buoyant(test_args.pf, Vb)
-    with raises(AttributeError):
+    with raises(TypeError):
         archimedes_law.calculate_force_buoyant(test_args.pf, 100)

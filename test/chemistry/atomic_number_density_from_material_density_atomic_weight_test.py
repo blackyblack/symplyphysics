@@ -32,7 +32,7 @@ def test_bad_density(test_args):
     pb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         atomic_number_density.calculate_atomic_number_density(pb, test_args.M)
-    with raises(AttributeError):
+    with raises(TypeError):
         atomic_number_density.calculate_atomic_number_density(100, test_args.M)
 
 
@@ -40,5 +40,5 @@ def test_bad_atomic_mass(test_args):
     Mb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         atomic_number_density.calculate_atomic_number_density(test_args.p, Mb)
-    with raises(AttributeError):
+    with raises(TypeError):
         atomic_number_density.calculate_atomic_number_density(test_args.p, 100)

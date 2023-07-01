@@ -32,9 +32,9 @@ def test_bad_temperature(test_args):
         gay_lussacs_law.calculate_volume(tb, test_args.V0, test_args.t1)
     with raises(errors.UnitsError):
         gay_lussacs_law.calculate_volume(test_args.t0, test_args.V0, tb)
-    with raises(AttributeError):
+    with raises(TypeError):
         gay_lussacs_law.calculate_volume(100, test_args.V0, test_args.t1)
-    with raises(AttributeError):
+    with raises(TypeError):
         gay_lussacs_law.calculate_volume(test_args.t0, test_args.V0, 100)
 
 
@@ -42,5 +42,5 @@ def test_bad_volume(test_args):
     Vb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         gay_lussacs_law.calculate_volume(test_args.t0, Vb, test_args.t1)
-    with raises(AttributeError):
+    with raises(TypeError):
         gay_lussacs_law.calculate_volume(test_args.t0, 100, test_args.t1)

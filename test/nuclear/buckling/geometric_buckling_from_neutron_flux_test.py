@@ -22,8 +22,8 @@ def test_args_fixture():
     # to conform to neutron flux dimension
     neutron_flux_times_radius_unit = Quantity(1 / units.meter / units.second)
     sphere_radius = Quantity(10 * units.centimeter)
-    neutron_flux = neutron_flux_times_radius_unit * sin(pi / sphere_radius *
-        r * unit_length) / (r * unit_length)
+    neutron_flux = neutron_flux_times_radius_unit * sin(
+        pi / sphere_radius * r * unit_length) / (r * unit_length)
     Args = namedtuple("Args", ["f"])
     return Args(f=neutron_flux)
 

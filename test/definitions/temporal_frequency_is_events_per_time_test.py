@@ -33,5 +33,5 @@ def test_bad_time(test_args):
     tb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         frequency_def.calculate_frequency(test_args.N, tb)
-    with raises(AttributeError):
+    with raises(TypeError):
         frequency_def.calculate_frequency(test_args.N, 100)

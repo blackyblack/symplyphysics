@@ -33,7 +33,7 @@ def test_bad_elascticity(test_args):
     kb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         spring_period.calculate_period(kb, test_args.m)
-    with raises(AttributeError):
+    with raises(TypeError):
         spring_period.calculate_period(100, test_args.m)
 
 
@@ -41,5 +41,5 @@ def test_bad_mass(test_args):
     mb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         spring_period.calculate_period(test_args.k, mb)
-    with raises(AttributeError):
+    with raises(TypeError):
         spring_period.calculate_period(test_args.k, 100)

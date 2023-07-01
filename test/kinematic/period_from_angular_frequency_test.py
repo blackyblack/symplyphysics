@@ -28,5 +28,5 @@ def test_bad_frequency():
     wb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         period_def.calculate_period(wb)
-    with raises(AttributeError):
+    with raises(TypeError):
         period_def.calculate_period(100)

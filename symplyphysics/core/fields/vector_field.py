@@ -1,4 +1,4 @@
-from typing import Optional, Sequence
+from typing import Optional
 from sympy import Expr
 from sympy.vector import Vector as SympyVector, express
 
@@ -38,7 +38,7 @@ class VectorField:
             self.set_component(2, vector_function_z_)
 
     def __call__(self, point_: FieldPoint) -> Vector:
-        vector_components: Sequence[FieldFunction] = []
+        vector_components: list[FieldFunction] = []
         for vector_function in self.components:
             vector_components.append(
                 vector_function(point_) if callable(vector_function) else vector_function)

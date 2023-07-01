@@ -35,11 +35,11 @@ def test_bad_mass(test_args):
     mb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         gravity_law.calculate_force(mb, test_args.m2, test_args.R)
-    with raises(AttributeError):
+    with raises(TypeError):
         gravity_law.calculate_force(100, test_args.m2, test_args.R)
     with raises(errors.UnitsError):
         gravity_law.calculate_force(test_args.m1, mb, test_args.R)
-    with raises(AttributeError):
+    with raises(TypeError):
         gravity_law.calculate_force(test_args.m1, 100, test_args.R)
 
 
@@ -47,5 +47,5 @@ def test_bad_distance(test_args):
     db = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         gravity_law.calculate_force(test_args.m1, test_args.m2, db)
-    with raises(AttributeError):
+    with raises(TypeError):
         gravity_law.calculate_force(test_args.m1, test_args.m2, 100)

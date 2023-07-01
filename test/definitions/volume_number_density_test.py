@@ -30,5 +30,5 @@ def test_bad_volume(test_args):
     Vb = Quantity(1 * units.length)
     with raises(errors.UnitsError):
         volume_number_density.calculate_number_density(test_args.o, Vb)
-    with raises(AttributeError):
+    with raises(TypeError):
         volume_number_density.calculate_number_density(test_args.o, 100)

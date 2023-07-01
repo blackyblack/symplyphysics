@@ -33,7 +33,7 @@ def test_bad_current(test_args):
     Ib = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         joule_lenz_law.calculate_heat_power(Ib, test_args.R)
-    with raises(AttributeError):
+    with raises(TypeError):
         joule_lenz_law.calculate_heat_power(100, test_args.R)
 
 
@@ -41,5 +41,5 @@ def test_bad_resistance(test_args):
     Rb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         joule_lenz_law.calculate_heat_power(test_args.C, Rb)
-    with raises(AttributeError):
+    with raises(TypeError):
         joule_lenz_law.calculate_heat_power(test_args.C, 100)

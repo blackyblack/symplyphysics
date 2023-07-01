@@ -35,7 +35,7 @@ def test_bad_charge(test_args):
     Qb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         capacitance_def.calculate_capacitance(Qb, test_args.U)
-    with raises(AttributeError):
+    with raises(TypeError):
         capacitance_def.calculate_capacitance(100, test_args.U)
 
 
@@ -43,5 +43,5 @@ def test_bad_voltage(test_args):
     Vb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         capacitance_def.calculate_capacitance(test_args.Q, Vb)
-    with raises(AttributeError):
+    with raises(TypeError):
         capacitance_def.calculate_capacitance(test_args.Q, 100)

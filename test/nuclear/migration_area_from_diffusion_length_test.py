@@ -29,10 +29,10 @@ def test_basic_migration_area(test_args):
 
 
 def test_bad_diffusion_area(test_args):
-    Ldb = Quantity(1 * units.coulomb)
+    Lb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        migration_area.calculate_migration_area(Ldb, test_args.th)
-    with raises(AttributeError):
+        migration_area.calculate_migration_area(Lb, test_args.th)
+    with raises(TypeError):
         migration_area.calculate_migration_area(100, test_args.th)
 
 
@@ -40,5 +40,5 @@ def test_bad_fermi_age(test_args):
     thb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         migration_area.calculate_migration_area(test_args.Ld, thb)
-    with raises(AttributeError):
+    with raises(TypeError):
         migration_area.calculate_migration_area(test_args.Ld, 100)

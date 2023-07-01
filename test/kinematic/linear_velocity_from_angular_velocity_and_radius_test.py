@@ -34,7 +34,7 @@ def test_bad_angular_velocity(test_args):
     Vb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         linear_velocity_law.calculate_linear_velocity(Vb, test_args.R1)
-    with raises(AttributeError):
+    with raises(TypeError):
         linear_velocity_law.calculate_linear_velocity(100, test_args.R1)
 
 
@@ -42,5 +42,5 @@ def test_bad_radius(test_args):
     Rb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         linear_velocity_law.calculate_linear_velocity(test_args.V1, Rb)
-    with raises(AttributeError):
+    with raises(TypeError):
         linear_velocity_law.calculate_linear_velocity(test_args.V1, 100)

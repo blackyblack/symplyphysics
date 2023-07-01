@@ -35,9 +35,9 @@ def test_current_with_bad_charge(test_args):
         current_def.calculate_current(Qb, test_args.Q1, test_args.t)
     with raises(errors.UnitsError):
         current_def.calculate_current(test_args.Q0, Qb, test_args.t)
-    with raises(AttributeError):
+    with raises(TypeError):
         current_def.calculate_current(100, test_args.Q1, test_args.t)
-    with raises(AttributeError):
+    with raises(TypeError):
         current_def.calculate_current(test_args.Q0, 100, test_args.t)
 
 
@@ -45,5 +45,5 @@ def test_current_with_bad_time(test_args):
     tb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         current_def.calculate_current(test_args.Q0, test_args.Q1, tb)
-    with raises(AttributeError):
+    with raises(TypeError):
         current_def.calculate_current(test_args.Q0, test_args.Q1, 100)

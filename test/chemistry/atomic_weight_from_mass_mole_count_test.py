@@ -32,7 +32,7 @@ def test_bad_mass(test_args):
     mb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         atomic_weight_from_mass_mole_count.calculate_atomic_weight(mb, test_args.N)
-    with raises(AttributeError):
+    with raises(TypeError):
         atomic_weight_from_mass_mole_count.calculate_atomic_weight(100, test_args.N)
 
 
@@ -40,5 +40,5 @@ def test_bad_mole_count(test_args):
     Nb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         atomic_weight_from_mass_mole_count.calculate_atomic_weight(test_args.m, Nb)
-    with raises(AttributeError):
+    with raises(TypeError):
         atomic_weight_from_mass_mole_count.calculate_atomic_weight(test_args.m, 100)

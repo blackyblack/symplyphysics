@@ -33,7 +33,7 @@ def test_bad_voltage(test_args):
     Ub = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         joule_lenz_law.calculate_amount_energy(Ub, test_args.t, test_args.R)
-    with raises(AttributeError):
+    with raises(TypeError):
         joule_lenz_law.calculate_amount_energy(100, test_args.t, test_args.R)
 
 
@@ -41,7 +41,7 @@ def test_bad_time(test_args):
     tb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         joule_lenz_law.calculate_amount_energy(test_args.U, tb, test_args.R)
-    with raises(AttributeError):
+    with raises(TypeError):
         joule_lenz_law.calculate_amount_energy(test_args.U, 100, test_args.R)
 
 
@@ -49,5 +49,5 @@ def test_bad_resistance(test_args):
     Rb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         joule_lenz_law.calculate_amount_energy(test_args.U, test_args.t, Rb)
-    with raises(AttributeError):
+    with raises(TypeError):
         joule_lenz_law.calculate_amount_energy(test_args.U, test_args.t, 100)

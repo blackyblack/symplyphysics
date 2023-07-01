@@ -29,9 +29,9 @@ def test_bad_velocity(test_args):
     vb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         refractive_index_definition.calculate_refractive_index(vb, test_args.v2)
-    with raises(AttributeError):
+    with raises(TypeError):
         refractive_index_definition.calculate_refractive_index(100, test_args.v2)
     with raises(errors.UnitsError):
         refractive_index_definition.calculate_refractive_index(test_args.v1, vb)
-    with raises(AttributeError):
+    with raises(TypeError):
         refractive_index_definition.calculate_refractive_index(test_args.v1, 100)

@@ -39,9 +39,9 @@ def test_velocity_with_bad_distance(test_args):
         velocity_def.calculate_velocity(Sb, test_args.S1, test_args.t)
     with raises(errors.UnitsError):
         velocity_def.calculate_velocity(test_args.S0, Sb, test_args.t)
-    with raises(AttributeError):
+    with raises(TypeError):
         velocity_def.calculate_velocity(100, test_args.S1, test_args.t)
-    with raises(AttributeError):
+    with raises(TypeError):
         velocity_def.calculate_velocity(test_args.S0, 100, test_args.t)
 
 
@@ -49,5 +49,5 @@ def test_velocity_with_bad_time(test_args):
     tb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         velocity_def.calculate_velocity(test_args.S0, test_args.S1, tb)
-    with raises(AttributeError):
+    with raises(TypeError):
         velocity_def.calculate_velocity(test_args.S0, test_args.S1, 100)

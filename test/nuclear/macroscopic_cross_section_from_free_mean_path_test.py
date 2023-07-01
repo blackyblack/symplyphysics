@@ -31,5 +31,5 @@ def test_bad_microscopic_cross_section():
     yb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         macro_cs.calculate_cross_section(yb)
-    with raises(AttributeError):
+    with raises(TypeError):
         macro_cs.calculate_cross_section(100)

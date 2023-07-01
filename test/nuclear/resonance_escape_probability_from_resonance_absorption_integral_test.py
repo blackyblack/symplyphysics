@@ -32,10 +32,10 @@ def test_basic_resonance_escape_factor(test_args):
 
 
 def test_bad_atomic_number_density(test_args):
-    Nab = Quantity(1 * units.coulomb)
+    Nb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        resonance_escape.calculate_resonance_escape_probability(Nab, test_args.Ieff, test_args.Let,
+        resonance_escape.calculate_resonance_escape_probability(Nb, test_args.Ieff, test_args.Let,
             test_args.Ss)
-    with raises(AttributeError):
+    with raises(TypeError):
         resonance_escape.calculate_resonance_escape_probability(100, test_args.Ieff, test_args.Let,
             test_args.Ss)

@@ -97,6 +97,8 @@ def field_rebase(field_: ScalarField,
 
 def _extended_express(field_: ScalarField, system_to: CoordinateSystem) -> ScalarField:
     field_space_sympy = field_.apply_to_basis()
+    if field_.coordinate_system is None:
+        return ScalarField(field_.components[0] if len(field_.components) > 0 else 0, system_to)
     if field_.coordinate_system.coord_system_type != system_to.coord_system_type:
         # This is a reverse transformation, if compared with Vector._extended_express()
         new_scalars = list(

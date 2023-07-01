@@ -33,7 +33,7 @@ def test_bad_voltage(test_args):
     Vb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         ohms_law.calculate_current(Vb, test_args.R)
-    with raises(AttributeError):
+    with raises(TypeError):
         ohms_law.calculate_current(100, test_args.R)
 
 
@@ -41,5 +41,5 @@ def test_bad_resistance(test_args):
     Rb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         ohms_law.calculate_current(test_args.V, Rb)
-    with raises(AttributeError):
+    with raises(TypeError):
         ohms_law.calculate_current(test_args.V, 100)

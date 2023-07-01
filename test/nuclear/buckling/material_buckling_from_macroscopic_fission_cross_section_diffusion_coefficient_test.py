@@ -35,11 +35,11 @@ def test_bad_macroscopic_cross_section(test_args):
     Sb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         material_buckling.calculate_buckling(test_args.v, Sb, test_args.Sa, test_args.D)
-    with raises(AttributeError):
+    with raises(TypeError):
         material_buckling.calculate_buckling(test_args.v, 100, test_args.Sa, test_args.D)
     with raises(errors.UnitsError):
         material_buckling.calculate_buckling(test_args.v, test_args.Sf, Sb, test_args.D)
-    with raises(AttributeError):
+    with raises(TypeError):
         material_buckling.calculate_buckling(test_args.v, test_args.Sf, 100, test_args.D)
 
 
@@ -47,5 +47,5 @@ def test_bad_diffusion_coefficient(test_args):
     Db = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         material_buckling.calculate_buckling(test_args.v, test_args.Sf, test_args.Sa, Db)
-    with raises(AttributeError):
+    with raises(TypeError):
         material_buckling.calculate_buckling(test_args.v, test_args.Sf, test_args.Sa, 100)

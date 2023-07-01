@@ -32,9 +32,9 @@ def test_bad_temperature(test_args):
         isochoric_law.calculate_pressure(tb, test_args.P0, test_args.t1)
     with raises(errors.UnitsError):
         isochoric_law.calculate_pressure(test_args.t0, test_args.P0, tb)
-    with raises(AttributeError):
+    with raises(TypeError):
         isochoric_law.calculate_pressure(100, test_args.P0, test_args.t1)
-    with raises(AttributeError):
+    with raises(TypeError):
         isochoric_law.calculate_pressure(test_args.t0, test_args.P0, 100)
 
 
@@ -42,5 +42,5 @@ def test_bad_pressure(test_args):
     Pb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         isochoric_law.calculate_pressure(test_args.t0, Pb, test_args.t1)
-    with raises(AttributeError):
+    with raises(TypeError):
         isochoric_law.calculate_pressure(test_args.t0, 100, test_args.t1)

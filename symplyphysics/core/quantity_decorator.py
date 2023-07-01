@@ -15,9 +15,11 @@ def assert_equivalent_dimension(
         arg: Quantity | numbers.Number, param_name: str, func_name: str, expected_unit: Dimension):
     #HACK: this allows to treat angle type as dimensionless
     expected_dimension = expected_unit.subs("angle", S.One)
-    if isinstance(arg,
-        numbers.Number) and SI.get_dimension_system().is_dimensionless(expected_dimension):
-        return
+    if isinstance(arg, numbers.Number):
+        if SI.get_dimension_system().is_dimensionless(expected_dimension):
+            return
+        raise TypeError(f"Argument '{param_name}' to function '{func_name}'"
+            f" is Number but '{expected_dimension}' is not dimensionless")
     scale_factor = SI.get_quantity_scale_factor(arg)
     # zero can be of any dimension
     if scale_factor == S.Zero:
@@ -42,10 +44,9 @@ def assert_equivalent_dimension(
 # Example:
 # @validate_input(param1_=units.length, param2_=(1 / units.length))
 # @validate_input(param1_=body_mass, param2_=body_volume)
-def validate_input(**decorator_kwargs: Any
-                  ) -> Callable[[Callable[[Any], Any]], Callable[[Any], Any]]:
+def validate_input(**decorator_kwargs: Any) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
 
-    def validate_func(func: Callable[[Any], Any]) -> Callable[[Any], Any]:
+    def validate_func(func: Callable[..., Any]) -> Callable[..., Any]:
 
         @functools.wraps(func)
         def wrapper_validate(*args: Any, **kwargs: Any) -> Any:
@@ -103,10 +104,9 @@ def _assert_expected_unit(value: Quantity | Vector | Sequence,
 # @validate_output(units.length**2)
 # @validate_output(body_volume)
 def validate_output(
-    expected_unit: Dimension | Symbol | Function
-) -> Callable[[Callable[[Any], Any]], Callable[[Any], Any]]:
+        expected_unit: Dimension | Symbol | Function) -> Callable[[Any], Callable[..., Any]]:
 
-    def validate_func(func: Callable[[Any], Any]) -> Callable[[Any], Any]:
+    def validate_func(func: Callable[..., Any]) -> Callable[..., Any]:
 
         @functools.wraps(func)
         def wrapper_validate(*args: Any, **kwargs: Any) -> Any:
@@ -123,9 +123,9 @@ def validate_output(
 # sympy.physics.units.Quantity, list of Quantity or Vector of Quantity type.
 # Example:
 # @validate_output_same("param1")
-def validate_output_same(param_name: str) -> Callable[[Callable[[Any], Any]], Callable[[Any], Any]]:
+def validate_output_same(param_name: str) -> Callable[[Any], Callable[..., Any]]:
 
-    def validate_func(func: Callable[[Any], Any]) -> Callable[[Any], Any]:
+    def validate_func(func: Callable[..., Any]) -> Callable[..., Any]:
 
         @functools.wraps(func)
         def wrapper_validate(*args: Any, **kwargs: Any) -> Any:

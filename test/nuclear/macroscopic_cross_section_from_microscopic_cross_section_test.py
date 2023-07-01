@@ -32,7 +32,7 @@ def test_bad_microscopic_cross_section(test_args):
     bb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         macro_cs.calculate_cross_section(bb, test_args.N)
-    with raises(AttributeError):
+    with raises(TypeError):
         macro_cs.calculate_cross_section(100, test_args.N)
 
 
@@ -40,5 +40,5 @@ def test_bad_atomic_number_density(test_args):
     Nb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         macro_cs.calculate_cross_section(test_args.b, Nb)
-    with raises(AttributeError):
+    with raises(TypeError):
         macro_cs.calculate_cross_section(test_args.b, 100)

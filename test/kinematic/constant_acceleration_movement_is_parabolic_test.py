@@ -33,7 +33,7 @@ def test_bad_velocity(test_args):
     Vb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         movement_law.calculate_distance(Vb, test_args.a, test_args.t)
-    with raises(AttributeError):
+    with raises(TypeError):
         movement_law.calculate_distance(100, test_args.a, test_args.t)
 
 
@@ -41,7 +41,7 @@ def test_bad_acceleration(test_args):
     ab = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         movement_law.calculate_distance(test_args.V0, ab, test_args.t)
-    with raises(AttributeError):
+    with raises(TypeError):
         movement_law.calculate_distance(test_args.V0, 100, test_args.t)
 
 
@@ -49,5 +49,5 @@ def test_bad_time(test_args):
     tb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         movement_law.calculate_distance(test_args.V0, test_args.a, tb)
-    with raises(AttributeError):
+    with raises(TypeError):
         movement_law.calculate_distance(test_args.V0, test_args.a, 100)

@@ -32,7 +32,7 @@ def test_bad_mass(test_args):
     mb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         density_from_mass_volume.calculate_density(mb, test_args.V)
-    with raises(AttributeError):
+    with raises(TypeError):
         density_from_mass_volume.calculate_density(100, test_args.V)
 
 
@@ -40,5 +40,5 @@ def test_bad_volume(test_args):
     Vb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         density_from_mass_volume.calculate_density(test_args.m, Vb)
-    with raises(AttributeError):
+    with raises(TypeError):
         density_from_mass_volume.calculate_density(test_args.m, 100)

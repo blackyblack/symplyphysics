@@ -29,7 +29,7 @@ def test_bad_cylinder_radius(test_args):
     Rb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         buckling.calculate_geometric_buckling_squared(Rb, test_args.H)
-    with raises(AttributeError):
+    with raises(TypeError):
         buckling.calculate_geometric_buckling_squared(100, test_args.H)
 
 
@@ -37,5 +37,5 @@ def test_bad_cylinder_height(test_args):
     Hb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         buckling.calculate_geometric_buckling_squared(test_args.R, Hb)
-    with raises(AttributeError):
+    with raises(TypeError):
         buckling.calculate_geometric_buckling_squared(test_args.R, 100)

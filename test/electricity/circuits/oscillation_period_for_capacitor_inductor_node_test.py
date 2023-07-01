@@ -33,7 +33,7 @@ def test_bad_inductance(test_args):
     Lb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         lc.calculate_oscillation_period(Lb, test_args.C)
-    with raises(AttributeError):
+    with raises(TypeError):
         lc.calculate_oscillation_period(100, test_args.C)
 
 
@@ -41,5 +41,5 @@ def test_bad_capacity(test_args):
     Cb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         lc.calculate_oscillation_period(test_args.L, Cb)
-    with raises(AttributeError):
+    with raises(TypeError):
         lc.calculate_oscillation_period(test_args.L, 100)

@@ -34,7 +34,7 @@ def test_bad_velocity(test_args):
     vb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         doppler_law.calculate_observed_frequency(test_args.emitted_frequency, vb)
-    with raises(AttributeError):
+    with raises(TypeError):
         doppler_law.calculate_observed_frequency(test_args.emitted_frequency, 100)
 
 
@@ -42,5 +42,5 @@ def test_bad_frequency(test_args):
     fb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         doppler_law.calculate_observed_frequency(fb, test_args.object_velocity)
-    with raises(AttributeError):
+    with raises(TypeError):
         doppler_law.calculate_observed_frequency(100, test_args.object_velocity)

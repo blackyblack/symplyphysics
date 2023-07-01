@@ -35,7 +35,7 @@ def test_bad_mole_count(test_args):
     with raises(errors.UnitsError):
         zero_heat_transfer.calculate_pressure(nb, test_args.t0, test_args.V0, test_args.V1,
             test_args.y)
-    with raises(AttributeError):
+    with raises(TypeError):
         zero_heat_transfer.calculate_pressure(100, test_args.t0, test_args.V0, test_args.V1,
             test_args.y)
 
@@ -45,7 +45,7 @@ def test_bad_temperature(test_args):
     with raises(errors.UnitsError):
         zero_heat_transfer.calculate_pressure(test_args.n, tb, test_args.V0, test_args.V1,
             test_args.y)
-    with raises(AttributeError):
+    with raises(TypeError):
         zero_heat_transfer.calculate_pressure(test_args.n, 100, test_args.V0, test_args.V1,
             test_args.y)
 
@@ -58,10 +58,10 @@ def test_bad_volume(test_args):
     with raises(errors.UnitsError):
         zero_heat_transfer.calculate_pressure(test_args.n, test_args.t0, test_args.V0, Vb,
             test_args.y)
-    with raises(AttributeError):
+    with raises(TypeError):
         zero_heat_transfer.calculate_pressure(test_args.n, test_args.t0, 100, test_args.V1,
             test_args.y)
-    with raises(AttributeError):
+    with raises(TypeError):
         zero_heat_transfer.calculate_pressure(test_args.n, test_args.t0, test_args.V0, 100,
             test_args.y)
 

@@ -43,13 +43,13 @@ def test_array_bad_current(test_args):
     Ib = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         kirchhoff_law.calculate_current_from_array([test_args.I1, Ib])
-    with raises(AttributeError):
+    with raises(TypeError):
         kirchhoff_law.calculate_current_from_array([test_args.I1, 100])
     with raises(errors.UnitsError):
         kirchhoff_law.calculate_current_from_array([Ib, test_args.I2])
-    with raises(AttributeError):
+    with raises(TypeError):
         kirchhoff_law.calculate_current_from_array([100, test_args.I2])
     with raises(errors.UnitsError):
         kirchhoff_law.calculate_current_from_array([Ib, Ib])
-    with raises(AttributeError):
+    with raises(TypeError):
         kirchhoff_law.calculate_current_from_array([100, 100])

@@ -48,5 +48,5 @@ def test_bad_force():
     Fb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         newton_third_law.calculate_force_reaction(Fb)
-    with raises(AttributeError):
+    with raises(TypeError):
         newton_third_law.calculate_force_reaction(100)

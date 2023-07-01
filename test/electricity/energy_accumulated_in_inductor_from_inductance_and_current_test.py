@@ -33,7 +33,7 @@ def test_bad_inductance(test_args):
     Ib = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         inductor_law.calculate_accumulated_energy(Ib, test_args.C)
-    with raises(AttributeError):
+    with raises(TypeError):
         inductor_law.calculate_accumulated_energy(100, test_args.C)
 
 
@@ -41,5 +41,5 @@ def test_bad_current(test_args):
     Cb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         inductor_law.calculate_accumulated_energy(test_args.I, Cb)
-    with raises(AttributeError):
+    with raises(TypeError):
         inductor_law.calculate_accumulated_energy(test_args.I, 100)

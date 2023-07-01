@@ -29,7 +29,7 @@ def test_bad_mass(test_args):
     mb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         newton_second_law.calculate_force(mb, test_args.a)
-    with raises(AttributeError):
+    with raises(TypeError):
         newton_second_law.calculate_force(100, test_args.a)
 
 
@@ -37,5 +37,5 @@ def test_bad_acceleration(test_args):
     ab = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         newton_second_law.calculate_force(test_args.m, ab)
-    with raises(AttributeError):
+    with raises(TypeError):
         newton_second_law.calculate_force(test_args.m, 100)

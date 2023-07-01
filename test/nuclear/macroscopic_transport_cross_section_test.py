@@ -32,5 +32,5 @@ def test_bad_scattering_cross_section(test_args):
     scatter_csb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         macro_tr_cs.calculate_cross_section(scatter_csb, test_args.u)
-    with raises(AttributeError):
+    with raises(TypeError):
         macro_tr_cs.calculate_cross_section(100, test_args.u)

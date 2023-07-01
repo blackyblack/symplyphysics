@@ -36,7 +36,7 @@ def test_inertia_with_bad_mass(test_args):
     mb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         moment_of_inertia_def.calculate_moment_of_inertia(mb, test_args.R)
-    with raises(AttributeError):
+    with raises(TypeError):
         moment_of_inertia_def.calculate_moment_of_inertia(100, test_args.R)
 
 
@@ -44,5 +44,5 @@ def test_inertia_with_bad_radius(test_args):
     Rb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         moment_of_inertia_def.calculate_moment_of_inertia(test_args.m, Rb)
-    with raises(AttributeError):
+    with raises(TypeError):
         moment_of_inertia_def.calculate_moment_of_inertia(test_args.m, 100)

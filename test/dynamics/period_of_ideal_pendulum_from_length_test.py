@@ -29,5 +29,5 @@ def test_bad_length():
     Lb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         pendulum_period.calculate_period(Lb)
-    with raises(AttributeError):
+    with raises(TypeError):
         pendulum_period.calculate_period(100)

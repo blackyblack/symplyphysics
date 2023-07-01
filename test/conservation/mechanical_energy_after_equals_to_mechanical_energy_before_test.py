@@ -28,5 +28,5 @@ def test_bad_energy():
     Eb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         conservation_law.calculate_energy_after(Eb)
-    with raises(AttributeError):
+    with raises(TypeError):
         conservation_law.calculate_energy_after(100)

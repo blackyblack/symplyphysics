@@ -30,9 +30,9 @@ def test_bad_macroscopic_cross_section(test_args):
     Sb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         reproduction_factor.calculate_reproduction_factor(test_args.v, Sb, test_args.Sa)
-    with raises(AttributeError):
+    with raises(TypeError):
         reproduction_factor.calculate_reproduction_factor(test_args.v, 100, test_args.Sa)
     with raises(errors.UnitsError):
         reproduction_factor.calculate_reproduction_factor(test_args.v, test_args.Sf, Sb)
-    with raises(AttributeError):
+    with raises(TypeError):
         reproduction_factor.calculate_reproduction_factor(test_args.v, test_args.Sf, 100)

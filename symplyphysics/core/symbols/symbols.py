@@ -1,6 +1,6 @@
 from __future__ import annotations
 from typing import Any, Optional
-from sympy import S, Symbol as SymSymbol, Expr
+from sympy import S, Symbol as SymSymbol, Expr, Equality
 from sympy.physics.units import Dimension
 from sympy.core.function import UndefinedFunction
 from sympy.printing.pretty.pretty import PrettyPrinter
@@ -48,6 +48,8 @@ class Symbol(DimensionSymbol, SymSymbol):
 
 
 class Function(DimensionSymbol, UndefinedFunction):
+
+    name: str
 
     def __new__(mcs,
         display_name: Optional[str] = None,
@@ -108,7 +110,7 @@ def next_name(name: str) -> str:
     return name + str(next_id(name))
 
 
-def print_expression(expr: Expr) -> str:
+def print_expression(expr: Expr | Equality) -> str:
     pprinter = SymbolPrinter(use_unicode=False)
     # this is an ugly hack, but at least it works
     use_unicode = pprinter.is_unicode()

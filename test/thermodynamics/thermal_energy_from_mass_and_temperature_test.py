@@ -37,7 +37,7 @@ def test_bad_specific_heat(test_args):
     Cb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         amount_energy.calculate_amount_energy(Cb, test_args.m, test_args.t2, test_args.t1)
-    with raises(AttributeError):
+    with raises(TypeError):
         amount_energy.calculate_amount_energy(100, test_args.m, test_args.t2, test_args.t1)
 
 
@@ -45,7 +45,7 @@ def test_bad_body_mass(test_args):
     mb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         amount_energy.calculate_amount_energy(test_args.C, mb, test_args.t2, test_args.t1)
-    with raises(AttributeError):
+    with raises(TypeError):
         amount_energy.calculate_amount_energy(test_args.C, 100, test_args.t2, test_args.t1)
 
 
@@ -53,9 +53,9 @@ def test_bad_temperature(test_args):
     tb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         amount_energy.calculate_amount_energy(test_args.C, test_args.m, tb, test_args.t1)
-    with raises(AttributeError):
+    with raises(TypeError):
         amount_energy.calculate_amount_energy(test_args.C, test_args.m, 100, test_args.t1)
     with raises(errors.UnitsError):
         amount_energy.calculate_amount_energy(test_args.C, test_args.m, test_args.t2, tb)
-    with raises(AttributeError):
+    with raises(TypeError):
         amount_energy.calculate_amount_energy(test_args.C, test_args.m, test_args.t2, 100)

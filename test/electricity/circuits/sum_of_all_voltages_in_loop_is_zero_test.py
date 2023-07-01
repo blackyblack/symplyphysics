@@ -43,13 +43,13 @@ def test_array_bad_voltage(test_args):
     Ub = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         kirchhoff_law_2.calculate_voltage([test_args.U1, Ub])
-    with raises(AttributeError):
+    with raises(TypeError):
         kirchhoff_law_2.calculate_voltage([test_args.U1, 100])
     with raises(errors.UnitsError):
         kirchhoff_law_2.calculate_voltage([Ub, test_args.U2])
-    with raises(AttributeError):
+    with raises(TypeError):
         kirchhoff_law_2.calculate_voltage([100, test_args.U2])
     with raises(errors.UnitsError):
         kirchhoff_law_2.calculate_voltage([Ub, Ub])
-    with raises(AttributeError):
+    with raises(TypeError):
         kirchhoff_law_2.calculate_voltage([100, 100])

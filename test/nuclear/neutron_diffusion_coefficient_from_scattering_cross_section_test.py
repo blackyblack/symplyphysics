@@ -30,5 +30,5 @@ def test_bad_macroscopic_cross_section():
     Sb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         diffusion_coeff.calculate_diffusion_coefficient(Sb)
-    with raises(AttributeError):
+    with raises(TypeError):
         diffusion_coeff.calculate_diffusion_coefficient(100)

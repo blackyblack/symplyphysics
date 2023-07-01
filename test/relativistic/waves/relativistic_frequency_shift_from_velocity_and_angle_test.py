@@ -50,7 +50,7 @@ def test_bad_velocity(test_args):
     with raises(errors.UnitsError):
         doppler_law.calculate_observed_frequency(test_args.emitted_frequency, vb,
             test_args.source_angle)
-    with raises(AttributeError):
+    with raises(TypeError):
         doppler_law.calculate_observed_frequency(test_args.emitted_frequency, 100,
             test_args.source_angle)
 
@@ -60,7 +60,7 @@ def test_bad_frequency(test_args):
     with raises(errors.UnitsError):
         doppler_law.calculate_observed_frequency(fb, test_args.object_velocity,
             test_args.source_angle)
-    with raises(AttributeError):
+    with raises(TypeError):
         doppler_law.calculate_observed_frequency(100, test_args.object_velocity,
             test_args.source_angle)
 

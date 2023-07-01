@@ -37,7 +37,7 @@ def test_bad_elastic_coefficient(test_args):
     eb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         spring_law.calculate_force(eb, test_args.df)
-    with raises(AttributeError):
+    with raises(TypeError):
         spring_law.calculate_force(100, test_args.df)
 
 
@@ -46,5 +46,5 @@ def test_bad_deformation(test_args):
     vb = Vector([db], test_args.C)
     with raises(errors.UnitsError):
         spring_law.calculate_force(test_args.k, vb)
-    with raises(AttributeError):
+    with raises(TypeError):
         spring_law.calculate_force(test_args.k, 100)

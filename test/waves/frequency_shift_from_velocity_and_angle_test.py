@@ -83,20 +83,20 @@ def test_bad_velocity(test_args):
         doppler_law.calculate_observed_frequency(test_args.horn_frequency, vb,
             test_args.train_speed, test_args.bike_speed, test_args.source_angle,
             test_args.zero_angle)
-    with raises(AttributeError):
+    with raises(TypeError):
         doppler_law.calculate_observed_frequency(test_args.horn_frequency, 100,
             test_args.train_speed, test_args.bike_speed, test_args.source_angle,
             test_args.zero_angle)
     with raises(errors.UnitsError):
         doppler_law.calculate_observed_frequency(test_args.horn_frequency, test_args.sound_velocity,
             vb, test_args.bike_speed, test_args.source_angle, test_args.zero_angle)
-    with raises(AttributeError):
+    with raises(TypeError):
         doppler_law.calculate_observed_frequency(test_args.horn_frequency, test_args.sound_velocity,
             100, test_args.bike_speed, test_args.source_angle, test_args.zero_angle)
     with raises(errors.UnitsError):
         doppler_law.calculate_observed_frequency(test_args.horn_frequency, test_args.sound_velocity,
             test_args.train_speed, vb, test_args.source_angle, test_args.zero_angle)
-    with raises(AttributeError):
+    with raises(TypeError):
         doppler_law.calculate_observed_frequency(test_args.horn_frequency, test_args.sound_velocity,
             test_args.train_speed, 100, test_args.source_angle, test_args.zero_angle)
 
@@ -107,7 +107,7 @@ def test_bad_frequency(test_args):
         doppler_law.calculate_observed_frequency(fb, test_args.sound_velocity,
             test_args.train_speed, test_args.bike_speed, test_args.source_angle,
             test_args.zero_angle)
-    with raises(AttributeError):
+    with raises(TypeError):
         doppler_law.calculate_observed_frequency(100, test_args.sound_velocity,
             test_args.train_speed, test_args.bike_speed, test_args.source_angle,
             test_args.zero_angle)

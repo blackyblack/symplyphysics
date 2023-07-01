@@ -31,7 +31,7 @@ def test_bad_energy(test_args):
     Qb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         power_def.calculate_power(Qb, test_args.t)
-    with raises(AttributeError):
+    with raises(TypeError):
         power_def.calculate_power(100, test_args.t)
 
 
@@ -39,5 +39,5 @@ def test_bad_time(test_args):
     tb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         power_def.calculate_power(test_args.Q, tb)
-    with raises(AttributeError):
+    with raises(TypeError):
         power_def.calculate_power(test_args.Q, 100)

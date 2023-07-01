@@ -35,5 +35,5 @@ def test_bad_height():
     hb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         torricellis_formula.calculate_velocity(hb)
-    with raises(AttributeError):
+    with raises(TypeError):
         torricellis_formula.calculate_velocity(100)

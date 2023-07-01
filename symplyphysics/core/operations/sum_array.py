@@ -2,7 +2,7 @@ from __future__ import annotations
 from functools import reduce
 import operator
 from typing import Any
-from sympy import Expr, Tuple
+from sympy import Expr, Basic, flatten
 
 
 class SumArray(Expr):
@@ -11,13 +11,14 @@ class SumArray(Expr):
 
     """
 
-    def __new__(cls, array: Expr | Tuple | tuple[Expr, ...]) -> SumArray:
-        array_unpacked = array if isinstance(array, (tuple, Tuple)) else Tuple(array)
-        obj = Expr.__new__(cls, *array_unpacked)
+    def __new__(cls, *args: Any) -> SumArray:
+        # We remove all levels of nested tuples, because we want to sum everything we got.
+        flat_args = tuple(flatten(args))
+        obj = Expr.__new__(cls, *flat_args)
         return obj
 
     def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
         pass
 
-    def doit(self, **_hints: Any) -> Expr:
+    def doit(self, **_hints: Any) -> Basic:
         return reduce(operator.add, self.args)

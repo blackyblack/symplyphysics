@@ -30,9 +30,9 @@ def test_bad_energy(test_args):
     Eb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         mechanical_energy_def.calculate_mechanical_energy(Eb, test_args.P)
-    with raises(AttributeError):
+    with raises(TypeError):
         mechanical_energy_def.calculate_mechanical_energy(100, test_args.P)
     with raises(errors.UnitsError):
         mechanical_energy_def.calculate_mechanical_energy(test_args.K, Eb)
-    with raises(AttributeError):
+    with raises(TypeError):
         mechanical_energy_def.calculate_mechanical_energy(test_args.K, 100)

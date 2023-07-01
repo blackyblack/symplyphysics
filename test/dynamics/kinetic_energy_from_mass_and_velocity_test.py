@@ -29,7 +29,7 @@ def test_bad_body_mass(test_args):
     bm = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         kinetic_energy.calculate_kinetic_energy(bm, test_args.v)
-    with raises(AttributeError):
+    with raises(TypeError):
         kinetic_energy.calculate_kinetic_energy(100, test_args.v)
 
 
@@ -37,5 +37,5 @@ def test_bad_body_velocity(test_args):
     bv = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         kinetic_energy.calculate_kinetic_energy(test_args.m, bv)
-    with raises(AttributeError):
+    with raises(TypeError):
         kinetic_energy.calculate_kinetic_energy(test_args.m, 100)

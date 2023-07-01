@@ -36,7 +36,7 @@ def test_bad_velocity(test_args):
     vb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         centripetal_acceleration_def.calculate_acceleration(vb, test_args.curve_radius)
-    with raises(AttributeError):
+    with raises(TypeError):
         centripetal_acceleration_def.calculate_acceleration(100, test_args.curve_radius)
 
 
@@ -44,5 +44,5 @@ def test_bad_radius(test_args):
     rb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         centripetal_acceleration_def.calculate_acceleration(test_args.lin_velocity, rb)
-    with raises(AttributeError):
+    with raises(TypeError):
         centripetal_acceleration_def.calculate_acceleration(test_args.lin_velocity, 100)

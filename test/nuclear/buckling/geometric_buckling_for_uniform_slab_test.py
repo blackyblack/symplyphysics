@@ -29,5 +29,5 @@ def test_bad_slab_width():
     Ab = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         buckling.calculate_geometric_buckling_squared(Ab)
-    with raises(AttributeError):
+    with raises(TypeError):
         buckling.calculate_geometric_buckling_squared(100)

@@ -25,5 +25,5 @@ def test_bad_mole_count():
     Mb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         avogadro_number_from_mole_count.calculate_particles_count(Mb)
-    with raises(AttributeError):
+    with raises(TypeError):
         avogadro_number_from_mole_count.calculate_particles_count(100)

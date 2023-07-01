@@ -34,5 +34,5 @@ def test_bad_frequency():
     fb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         planck_law.calculate_energy(fb)
-    with raises(AttributeError):
+    with raises(TypeError):
         planck_law.calculate_energy(100)

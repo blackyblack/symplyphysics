@@ -30,7 +30,7 @@ def test_bad_current(test_args):
     Ib = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         power_law.calculate_power(Ib, test_args.U)
-    with raises(AttributeError):
+    with raises(TypeError):
         power_law.calculate_power(100, test_args.U)
 
 
@@ -38,5 +38,5 @@ def test_bad_voltage(test_args):
     Ub = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         power_law.calculate_power(test_args.I, Ub)
-    with raises(AttributeError):
+    with raises(TypeError):
         power_law.calculate_power(test_args.I, 100)

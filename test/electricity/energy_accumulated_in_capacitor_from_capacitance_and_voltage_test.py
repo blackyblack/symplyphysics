@@ -33,7 +33,7 @@ def test_bad_capacitance(test_args):
     Cb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         capacitor_law.calculate_accumulated_energy(Cb, test_args.V)
-    with raises(AttributeError):
+    with raises(TypeError):
         capacitor_law.calculate_accumulated_energy(100, test_args.V)
 
 
@@ -41,5 +41,5 @@ def test_bad_voltage(test_args):
     Vb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         capacitor_law.calculate_accumulated_energy(test_args.C, Vb)
-    with raises(AttributeError):
+    with raises(TypeError):
         capacitor_law.calculate_accumulated_energy(test_args.C, 100)

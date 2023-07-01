@@ -38,7 +38,7 @@ def test_bad_earth_mass(test_args):
     with raises(errors.UnitsError):
         free_fall_acceleration.calculate_acceleration(emb, test_args.earth_radius,
             test_args.height_from_surface)
-    with raises(AttributeError):
+    with raises(TypeError):
         free_fall_acceleration.calculate_acceleration(100, test_args.earth_radius,
             test_args.height_from_surface)
 
@@ -48,7 +48,7 @@ def test_bad_earth_radius(test_args):
     with raises(errors.UnitsError):
         free_fall_acceleration.calculate_acceleration(test_args.earth_mass, erb,
             test_args.height_from_surface)
-    with raises(AttributeError):
+    with raises(TypeError):
         free_fall_acceleration.calculate_acceleration(test_args.earth_mass, 100,
             test_args.height_from_surface)
 
@@ -58,6 +58,6 @@ def test_bad_height(test_args):
     with raises(errors.UnitsError):
         free_fall_acceleration.calculate_acceleration(test_args.earth_mass, test_args.earth_radius,
             hb)
-    with raises(AttributeError):
+    with raises(TypeError):
         free_fall_acceleration.calculate_acceleration(test_args.earth_mass, test_args.earth_radius,
             100)

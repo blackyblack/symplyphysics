@@ -37,7 +37,7 @@ def test_bad_resistivity(test_args):
     rb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         wire_law.calculate_resistance(rb, test_args.wire_length, test_args.cross_section)
-    with raises(AttributeError):
+    with raises(TypeError):
         wire_law.calculate_resistance(100, test_args.wire_length, test_args.cross_section)
 
 
@@ -45,7 +45,7 @@ def test_bad_length(test_args):
     lb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         wire_law.calculate_resistance(test_args.resistivity, lb, test_args.cross_section)
-    with raises(AttributeError):
+    with raises(TypeError):
         wire_law.calculate_resistance(test_args.resistivity, 100, test_args.cross_section)
 
 
@@ -53,5 +53,5 @@ def test_bad_cross_section(test_args):
     cb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         wire_law.calculate_resistance(test_args.resistivity, test_args.wire_length, cb)
-    with raises(AttributeError):
+    with raises(TypeError):
         wire_law.calculate_resistance(test_args.resistivity, test_args.wire_length, 100)

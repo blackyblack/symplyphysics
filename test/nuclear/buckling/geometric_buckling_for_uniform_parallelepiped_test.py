@@ -32,7 +32,7 @@ def test_bad_width(test_args):
     ab = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         buckling.calculate_geometric_buckling_squared(ab, test_args.b, test_args.c)
-    with raises(AttributeError):
+    with raises(TypeError):
         buckling.calculate_geometric_buckling_squared(100, test_args.b, test_args.c)
 
 
@@ -40,7 +40,7 @@ def test_bad_length(test_args):
     bb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         buckling.calculate_geometric_buckling_squared(test_args.a, bb, test_args.c)
-    with raises(AttributeError):
+    with raises(TypeError):
         buckling.calculate_geometric_buckling_squared(test_args.a, 100, test_args.c)
 
 
@@ -48,5 +48,5 @@ def test_bad_height(test_args):
     cb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         buckling.calculate_geometric_buckling_squared(test_args.a, test_args.b, cb)
-    with raises(AttributeError):
+    with raises(TypeError):
         buckling.calculate_geometric_buckling_squared(test_args.a, test_args.b, 100)

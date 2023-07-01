@@ -28,5 +28,5 @@ def test_bad_charge():
     Qb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         charge_law.calculate_charge_after(Qb)
-    with raises(AttributeError):
+    with raises(TypeError):
         charge_law.calculate_charge_after(100)

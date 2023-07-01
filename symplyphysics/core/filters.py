@@ -1,26 +1,28 @@
 from typing import Any, Mapping, Sequence, TypeVar
+from abc import abstractmethod
+
+K = TypeVar("K")
+T = TypeVar("T", bound="Comparable")
 
 
 class Comparable:
 
-    def __gt__(self, _: Any) -> bool:
-        ...
+    @abstractmethod
+    def __eq__(self, other: Any) -> bool:
+        pass
 
-    def __lt__(self, _: Any) -> bool:
-        ...
+    @abstractmethod
+    def __lt__(self: T, other: T | int) -> bool:
+        pass
 
-    def __ge__(self, _: Any) -> bool:
-        ...
+    def __gt__(self: T, other: T | int) -> bool:
+        return (not self < other) and self != other
 
-    def __le__(self, _: Any) -> bool:
-        ...
+    def __le__(self: T, other: T | int) -> bool:
+        return self < other or self == other
 
-    def __eq__(self, _: Any) -> bool:
-        ...
-
-
-T = TypeVar("T", bound=Comparable)
-K = TypeVar("K")
+    def __ge__(self: T, other: T | int) -> bool:
+        return not self < other
 
 
 def filter_zeroes(list_: Sequence[T]) -> list[T]:

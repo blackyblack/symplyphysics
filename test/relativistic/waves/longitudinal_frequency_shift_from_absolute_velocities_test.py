@@ -79,19 +79,19 @@ def test_bad_velocity(test_args):
     with raises(errors.UnitsError):
         doppler_law.calculate_observed_frequency(test_args.emitted_frequency, speed_of_light, vb,
             test_args.zero_velocity)
-    with raises(AttributeError):
+    with raises(TypeError):
         doppler_law.calculate_observed_frequency(test_args.emitted_frequency, speed_of_light, 100,
             test_args.zero_velocity)
     with raises(errors.UnitsError):
         doppler_law.calculate_observed_frequency(test_args.emitted_frequency, speed_of_light,
             test_args.object_velocity, vb)
-    with raises(AttributeError):
+    with raises(TypeError):
         doppler_law.calculate_observed_frequency(test_args.emitted_frequency, speed_of_light,
             test_args.object_velocity, 100)
     with raises(errors.UnitsError):
         doppler_law.calculate_observed_frequency(test_args.emitted_frequency, vb,
             test_args.object_velocity, test_args.zero_velocity)
-    with raises(AttributeError):
+    with raises(TypeError):
         doppler_law.calculate_observed_frequency(test_args.emitted_frequency, 100,
             test_args.object_velocity, test_args.zero_velocity)
 
@@ -101,6 +101,6 @@ def test_bad_frequency(test_args):
     with raises(errors.UnitsError):
         doppler_law.calculate_observed_frequency(fb, speed_of_light, test_args.object_velocity,
             test_args.zero_velocity)
-    with raises(AttributeError):
+    with raises(TypeError):
         doppler_law.calculate_observed_frequency(100, speed_of_light, test_args.object_velocity,
             test_args.zero_velocity)

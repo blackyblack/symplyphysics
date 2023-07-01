@@ -31,7 +31,7 @@ def test_bad_mass(test_args):
     mb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         momentum_def.calculate_momentum(mb, test_args.v)
-    with raises(AttributeError):
+    with raises(TypeError):
         momentum_def.calculate_momentum(100, test_args.v)
 
 
@@ -39,5 +39,5 @@ def test_bad_velocity(test_args):
     vb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         momentum_def.calculate_momentum(test_args.m, vb)
-    with raises(AttributeError):
+    with raises(TypeError):
         momentum_def.calculate_momentum(test_args.m, 100)

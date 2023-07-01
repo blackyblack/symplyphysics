@@ -35,9 +35,9 @@ def test_bad_velocity(test_args):
         acceleration.calculate_linear_acceleration(vb, test_args.v1, test_args.t)
     with raises(errors.UnitsError):
         acceleration.calculate_linear_acceleration(test_args.v0, vb, test_args.t)
-    with raises(AttributeError):
+    with raises(TypeError):
         acceleration.calculate_linear_acceleration(100, test_args.v1, test_args.t)
-    with raises(AttributeError):
+    with raises(TypeError):
         acceleration.calculate_linear_acceleration(test_args.v0, 100, test_args.t)
 
 
@@ -45,5 +45,5 @@ def test_bad_time(test_args):
     tb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         acceleration.calculate_linear_acceleration(test_args.v0, test_args.v1, tb)
-    with raises(AttributeError):
+    with raises(TypeError):
         acceleration.calculate_linear_acceleration(test_args.v0, test_args.v1, 100)

@@ -33,7 +33,7 @@ def test_bad_elastic_koefficient(test_args):
     kb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         hookes_law.calculate_energy(kb, test_args.x)
-    with raises(AttributeError):
+    with raises(TypeError):
         hookes_law.calculate_energy(100, test_args.x)
 
 
@@ -41,5 +41,5 @@ def test_bad_deformation(test_args):
     xb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         hookes_law.calculate_energy(test_args.k, xb)
-    with raises(AttributeError):
+    with raises(TypeError):
         hookes_law.calculate_energy(test_args.k, 100)

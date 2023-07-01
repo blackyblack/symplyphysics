@@ -35,7 +35,7 @@ def test_bad_amplitude(test_args):
     Ab = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         oscillator.calculate_displacement(Ab, test_args.w, test_args.t)
-    with raises(AttributeError):
+    with raises(TypeError):
         oscillator.calculate_displacement(100, test_args.w, test_args.t)
 
 
@@ -43,7 +43,7 @@ def test_bad_frequency(test_args):
     wb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         oscillator.calculate_displacement(test_args.A, wb, test_args.t)
-    with raises(AttributeError):
+    with raises(TypeError):
         oscillator.calculate_displacement(test_args.A, 100, test_args.t)
 
 
@@ -51,5 +51,5 @@ def test_bad_time(test_args):
     tb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         oscillator.calculate_displacement(test_args.A, test_args.w, tb)
-    with raises(AttributeError):
+    with raises(TypeError):
         oscillator.calculate_displacement(test_args.A, test_args.w, 100)

@@ -32,5 +32,5 @@ def test_bad_momentum():
     Pb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         conservation_law.calculate_momentum_after(Pb)
-    with raises(AttributeError):
+    with raises(TypeError):
         conservation_law.calculate_momentum_after(100)

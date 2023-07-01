@@ -37,7 +37,7 @@ def test_voltage_with_bad_induction(test_args):
     Lb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         self_induction_def.calculate_voltage(Lb, test_args.I0, test_args.I1, test_args.t)
-    with raises(AttributeError):
+    with raises(TypeError):
         self_induction_def.calculate_voltage(100, test_args.I0, test_args.I1, test_args.t)
 
 
@@ -47,9 +47,9 @@ def test_voltage_with_bad_current(test_args):
         self_induction_def.calculate_voltage(test_args.L, Ib, test_args.I1, test_args.t)
     with raises(errors.UnitsError):
         self_induction_def.calculate_voltage(test_args.L, test_args.I0, Ib, test_args.t)
-    with raises(AttributeError):
+    with raises(TypeError):
         self_induction_def.calculate_voltage(test_args.L, 100, test_args.I1, test_args.t)
-    with raises(AttributeError):
+    with raises(TypeError):
         self_induction_def.calculate_voltage(test_args.L, test_args.I0, 100, test_args.t)
 
 
@@ -57,5 +57,5 @@ def test_voltage_with_bad_time(test_args):
     tb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         self_induction_def.calculate_voltage(test_args.L, test_args.I0, test_args.I1, tb)
-    with raises(AttributeError):
+    with raises(TypeError):
         self_induction_def.calculate_voltage(test_args.L, test_args.I0, test_args.I1, 100)

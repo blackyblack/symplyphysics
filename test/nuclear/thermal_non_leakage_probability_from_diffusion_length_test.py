@@ -26,16 +26,16 @@ def test_basic_non_leakage_factor(test_args):
 
 
 def test_bad_diffusion_area(test_args):
-    Lthb = Quantity(1 * units.coulomb)
+    Lb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        non_leakage_factor.calculate_probability(Lthb, test_args.Bg)
-    with raises(AttributeError):
+        non_leakage_factor.calculate_probability(Lb, test_args.Bg)
+    with raises(TypeError):
         non_leakage_factor.calculate_probability(100, test_args.Bg)
 
 
 def test_bad_buckling(test_args):
-    Bgb = Quantity(1 * units.coulomb)
+    Bb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        non_leakage_factor.calculate_probability(test_args.Lth, Bgb)
-    with raises(AttributeError):
+        non_leakage_factor.calculate_probability(test_args.Lth, Bb)
+    with raises(TypeError):
         non_leakage_factor.calculate_probability(test_args.Lth, 100)

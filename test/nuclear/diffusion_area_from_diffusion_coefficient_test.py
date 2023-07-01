@@ -31,7 +31,7 @@ def test_bad_diffusion_coefficient(test_args):
     Db = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         diffusion_area.calculate_diffusion_area(Db, test_args.Sa)
-    with raises(AttributeError):
+    with raises(TypeError):
         diffusion_area.calculate_diffusion_area(100, test_args.Sa)
 
 
@@ -39,5 +39,5 @@ def test_bad_macroscopic_cross_section(test_args):
     Sb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         diffusion_area.calculate_diffusion_area(test_args.D, Sb)
-    with raises(AttributeError):
+    with raises(TypeError):
         diffusion_area.calculate_diffusion_area(test_args.D, 100)
