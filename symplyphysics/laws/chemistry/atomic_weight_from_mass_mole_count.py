@@ -19,7 +19,7 @@ mole_count = Symbol("mole_count", units.amount_of_substance)
 law = Eq(atomic_weight, substance_mass / mole_count)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

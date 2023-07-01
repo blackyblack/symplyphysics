@@ -14,7 +14,7 @@ charge_after = Symbol("charge_after", units.charge)
 law = Eq(charge_after, charge_before)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

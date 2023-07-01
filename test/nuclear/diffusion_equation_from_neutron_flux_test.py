@@ -10,16 +10,19 @@ from symplyphysics import (
 from symplyphysics.laws.nuclear import diffusion_equation_from_neutron_flux as diffusion_equation
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     # cube reactor with side = 1 meter
     cartesian_coordinates = CoordSys3D("cartesian_coordinates")
+    # Makes linter happy
+    x = getattr(cartesian_coordinates, "x")
+    y = getattr(cartesian_coordinates, "y")
+    z = getattr(cartesian_coordinates, "z")
     cube_side = Quantity(1 * units.meter)
     unit_length = Quantity(1 * units.meter)
     neutron_flux_unit = Quantity(1 / units.meter**2 / units.second)
-    neutron_flux = neutron_flux_unit * (cos(pi / cube_side * cartesian_coordinates.x * unit_length)
-        * cos(pi / cube_side * cartesian_coordinates.y * unit_length) *
-        cos(pi / cube_side * cartesian_coordinates.z * unit_length))
+    neutron_flux = neutron_flux_unit * (cos(pi / cube_side * x * unit_length) *
+        cos(pi / cube_side * y * unit_length) * cos(pi / cube_side * z * unit_length))
     neutrons_per_fission = 1
     macro_fission_cross_section = Quantity(0.006 / units.centimeter)
     macro_abs_cross_section = Quantity(0.0025 / units.centimeter)

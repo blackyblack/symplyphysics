@@ -1,3 +1,4 @@
+from typing import Optional
 from sympy import Expr, S, exp
 from sympy.core.add import Add
 from sympy.core.mul import Mul
@@ -20,13 +21,13 @@ def expr_to_quantity(expr: Expr) -> Quantity:
     return Quantity(quantity_scale[0], dimension=dimension)
 
 
-def expr_to_vector(expr: Expr, coordinate_system: CoordinateSystem = None) -> Vector:
+def expr_to_vector(expr: Expr, coordinate_system: Optional[CoordinateSystem] = None) -> Vector:
     if isinstance(expr, Mul):
         expr = expr.expand()
     if isinstance(expr, Add):
         expr = VectorAdd(expr)
     vector = vector_from_sympy_vector(expr, coordinate_system)
-    components = []
+    components: list[Quantity] = []
     for c in vector.components:
         components.append(expr_to_quantity(c))
     return Vector(components, coordinate_system)

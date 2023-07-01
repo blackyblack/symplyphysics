@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.laws.dynamics import period_of_ideal_pendulum_from_length as pendulum_period
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     L = Quantity(1 * units.meter)
     Args = namedtuple("Args", ["L"])
     return Args(L=L)

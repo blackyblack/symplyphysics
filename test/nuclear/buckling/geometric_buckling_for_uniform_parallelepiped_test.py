@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_for_uniform_parallelepiped as buckling
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     # cube reactor 20 * 20 * 20
     par_width = Quantity(20 * units.centimeter)
     par_length = Quantity(20 * units.centimeter)

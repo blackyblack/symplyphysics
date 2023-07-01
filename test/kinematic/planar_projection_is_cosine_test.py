@@ -11,8 +11,8 @@ from symplyphysics.laws.kinematic import planar_projection_is_cosine as projecti
 
 
 #We are having force vector of 3 Newtons with angle 60 degrees to horizontal axis. Projection of this vector to horizontal axis should be 2 times less than the vector.
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     force_vector_amplitude = Quantity(3 * units.newton)
     angle_between_vector_and_axis = Quantity(60 * units.degree)
     Args = namedtuple("Args",

@@ -15,8 +15,8 @@ from symplyphysics.definitions import harmonic_oscillator_is_second_derivative_e
 ## 1.5 seconds it will be on the negative side of the equilibrium, i.e. at -20 meters displacement.
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     A = Quantity(20 * units.meter)
     w = Quantity(2 * pi / 1 * units.hertz)
     t = Quantity(1.5 * units.second)

@@ -39,7 +39,7 @@ dsolved_movement = dsolve(constant_velocity_movement_definition,
 assert (expr_equals(dsolved_movement.rhs.subs("C1", initial_position), law.rhs))
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

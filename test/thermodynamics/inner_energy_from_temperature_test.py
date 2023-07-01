@@ -15,8 +15,8 @@ from symplyphysics.laws.thermodynamics import inner_energy_from_temperature as i
 ## It should be 3656 Joules of energy.
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     m = Quantity(4 * units.gram)
     normal_temperature = Celsius(20)
     T = to_kelvin_quantity(normal_temperature)

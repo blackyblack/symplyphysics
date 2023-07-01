@@ -10,15 +10,15 @@ from symplyphysics import (
 from symplyphysics.laws.electricity import electric_charge_is_constant_in_isolated_system as charge_law
 
 
-@fixture
-def test_args():
-    Q_before = Quantity(1 * units.coulomb)
-    Args = namedtuple("Args", ["Q_before"])
-    return Args(Q_before=Q_before)
+@fixture(name="test_args")
+def test_args_fixture():
+    Qs = Quantity(1 * units.coulomb)
+    Args = namedtuple("Args", ["Qs"])
+    return Args(Qs=Qs)
 
 
 def test_basic_charge_conservation(test_args):
-    result = charge_law.calculate_charge_after(test_args.Q_before)
+    result = charge_law.calculate_charge_after(test_args.Qs)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.charge)
     result_charge = convert_to(result, units.coulomb).subs(units.coulomb, 1).evalf(2)
     assert result_charge == approx(1.0, 0.001)

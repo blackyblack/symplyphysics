@@ -28,7 +28,7 @@ law = Eq(infinite_multiplication_factor,
     neutron_reproduction * fast_fission * resonance_escape_probability * thermal_utilisation)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

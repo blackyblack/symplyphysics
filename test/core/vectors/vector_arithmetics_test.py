@@ -1,14 +1,14 @@
 from collections import namedtuple
+from test.test_decorators import unsupported_usage
 from pytest import fixture, raises
 from sympy import atan2, cos, pi, sin, sqrt
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_transform
 from symplyphysics.core.vectors.vector_arithmetics import add_cartesian_vectors, cross_cartesian_vectors, dot_vectors, equal_vectors, scale_vector, vector_magnitude
 from symplyphysics.core.vectors.vectors import Vector, vector_rebase
-from test.test_decorators import unsupported_usage
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     C = CoordinateSystem()
     Args = namedtuple("Args", ["C"])
     return Args(C=C)

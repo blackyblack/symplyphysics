@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.laws.dynamics import acceleration_from_force as newton_second_law
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     m = Quantity(1 * units.kilogram)
     a = Quantity(3 * units.meter / units.second**2)
     Args = namedtuple("Args", ["m", "a"])

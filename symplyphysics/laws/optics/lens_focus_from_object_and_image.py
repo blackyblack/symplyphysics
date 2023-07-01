@@ -22,7 +22,7 @@ distance_to_image = Symbol("distance_to_image", units.length)
 law = Eq((1 / focus_distance), (1 / distance_to_object) + (1 / distance_to_image))
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

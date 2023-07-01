@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_macroscopic_fission_cross_section_diffusion_coefficient as buckling
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     neutrons_per_fission = 2.6
     # critical reactor
     effective_multiplication_factor = 1

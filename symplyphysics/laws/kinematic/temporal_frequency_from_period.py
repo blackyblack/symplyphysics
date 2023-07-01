@@ -28,7 +28,7 @@ frequency_of_single_event = frequency_def.definition.subs({
 assert expr_equals(frequency_of_single_event, law.rhs)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

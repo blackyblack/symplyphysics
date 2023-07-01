@@ -15,8 +15,8 @@ from symplyphysics.laws.kinematic import accelerated_velocity_from_time as accel
 ## Let's choose Y axis directed upwards and space is 1-dimensional. So initial speed is +2m/s (as the angle between velocity and Y is 0) and acceleration is -9.8 m/s**2 (as the angle between acceleration and Y is 180)
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     V1 = Quantity(2 * units.meter / units.second)
     A1 = Quantity(-9.8 * units.meter / units.second**2)
     T1 = Quantity(5 * units.second)

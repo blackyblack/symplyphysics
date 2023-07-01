@@ -14,8 +14,8 @@ from symplyphysics.laws.electricity.circuits import oscillation_period_for_capac
 ## Accordind to Tomson's formula oscillation period of this circuit should be 6.28 seconds
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     L = Quantity(1 * units.henry)
     C = Quantity(1 * units.farad)
     Args = namedtuple("Args", ["L", "C"])

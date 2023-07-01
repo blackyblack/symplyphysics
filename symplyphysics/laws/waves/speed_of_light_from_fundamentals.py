@@ -13,7 +13,7 @@ from symplyphysics import units, print_expression, convert_to
 law = Eq(speed_of_light, 1 / sqrt(magnetic_constant * electric_constant))
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

@@ -11,17 +11,19 @@ from symplyphysics import (
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_flux as buckling
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     # spherical reactor with radius = 10 centimeter
     spherical_coordinates = CoordSys3D("spherical_coordinates", transformation="spherical")
+    # Makes linter happy
+    r = getattr(spherical_coordinates, "r")
     unit_length = Quantity(1 * units.meter)
     # neutron flux function has radius in denominator, hence the coefficient should be multiplied to units.length
     # to conform to neutron flux dimension
     neutron_flux_times_radius_unit = Quantity(1 / units.meter / units.second)
     sphere_radius = Quantity(10 * units.centimeter)
-    neutron_flux = neutron_flux_times_radius_unit * sin(pi / sphere_radius *
-        spherical_coordinates.r * unit_length) / (spherical_coordinates.r * unit_length)
+    neutron_flux = neutron_flux_times_radius_unit * sin(
+        pi / sphere_radius * r * unit_length) / (r * unit_length)
     Args = namedtuple("Args", ["f"])
     return Args(f=neutron_flux)
 

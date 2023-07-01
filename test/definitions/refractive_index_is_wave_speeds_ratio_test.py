@@ -12,8 +12,8 @@ from symplyphysics.definitions import refractive_index_is_wave_speeds_ratio as r
 ## Propagation speed in water is 231000 km/s.
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     v1 = Quantity(299910 * units.kilometer / units.second)
     v2 = Quantity(231000 * units.kilometer / units.second)
     Args = namedtuple("Args", ["v1", "v2"])

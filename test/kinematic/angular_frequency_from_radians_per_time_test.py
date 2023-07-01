@@ -14,8 +14,8 @@ from symplyphysics.laws.kinematic import angular_frequency_from_radians_per_time
 ## Circle is rotating to 9.42 radians in 5.4 seconds. It should have angular frequency of 1.744 rad/s.
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     rotation = Quantity(9.42 * units.radian, dimension=angle_type)
     t = Quantity(5.4 * units.second)
     Args = namedtuple("Args", ["N", "t"])

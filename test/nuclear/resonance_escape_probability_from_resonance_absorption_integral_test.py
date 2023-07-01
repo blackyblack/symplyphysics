@@ -8,8 +8,8 @@ from symplyphysics import (
 from symplyphysics.laws.nuclear import resonance_escape_probability_from_resonance_absorption_integral as resonance_escape
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     # U-238 atomic number density = 0.984 atoms per (barn * cm)
     atomic_number_density_abs = Quantity(0.984e24 / units.centimeter**3)
     # UO2 fuel rod with diameter = 1 cm has effective resonance integral = 20.5 barns
@@ -32,9 +32,9 @@ def test_basic_resonance_escape_factor(test_args):
 
 
 def test_bad_atomic_number_density(test_args):
-    Nab = Quantity(1 * units.coulomb)
+    Nb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        resonance_escape.calculate_resonance_escape_probability(Nab, test_args.Ieff, test_args.Let,
+        resonance_escape.calculate_resonance_escape_probability(Nb, test_args.Ieff, test_args.Let,
             test_args.Ss)
     with raises(TypeError):
         resonance_escape.calculate_resonance_escape_probability(100, test_args.Ieff, test_args.Let,

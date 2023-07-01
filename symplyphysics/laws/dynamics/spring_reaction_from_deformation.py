@@ -20,7 +20,7 @@ deformation = Symbol("deformation", units.length)
 law = Eq(response_force, -1 * elastic_coefficient * deformation)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

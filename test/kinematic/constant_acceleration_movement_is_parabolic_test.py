@@ -13,8 +13,8 @@ from symplyphysics.laws.kinematic import constant_acceleration_movement_is_parab
 ## The man starts running with initial speed 10m/s and is getting tired while running (decreases his velocity) with -0.1 m/s/s. How far this man can run away in 10 seconds?
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     V0 = Quantity(10 * units.meter / units.second)
     a = Quantity(-0.1 * units.meter / units.second**2)
     t = Quantity(10 * units.second)

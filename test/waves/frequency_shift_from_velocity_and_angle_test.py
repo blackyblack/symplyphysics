@@ -16,8 +16,8 @@ from symplyphysics.laws.waves import frequency_shift_from_velocity_and_angle as 
 ## Another situation is when man rides a bike towards horning standing train with the same velocity. Observed frequency should be same.
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     sound_velocity = Quantity(340 * units.meter / units.second)
     train_speed = Quantity(9 * units.kilometer / units.hour)
     bike_speed = Quantity(9 * units.kilometer / units.hour)

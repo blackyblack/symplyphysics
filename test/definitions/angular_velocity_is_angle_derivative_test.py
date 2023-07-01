@@ -15,8 +15,8 @@ from symplyphysics.definitions import angular_velocity_is_angle_derivative as an
 ## Velocity should be pi/5 radian/sec.
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     a0 = Quantity(0 * units.radian)
     a1 = Quantity(pi * units.radian)
     t = Quantity(5 * units.second)

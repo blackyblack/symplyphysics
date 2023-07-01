@@ -20,7 +20,7 @@ definition = Eq(power(time), Derivative(energy(time), time))
 definition_units_SI = units.watt
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(definition)
 
 

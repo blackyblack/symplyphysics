@@ -14,8 +14,8 @@ from symplyphysics.definitions import self_induction_voltage_is_current_derivati
 ## Self-induction voltage should be -0.00025 volts
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     L = Quantity(2.5 * units.milli * units.henry)
     I0 = Quantity(0 * units.ampere)
     I1 = Quantity(0.5 * units.ampere)

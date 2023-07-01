@@ -16,7 +16,7 @@ relative_magnetic_permeability = symbols("relative_magnetic_permeability")
 law = Eq(refraction_factor, sqrt(relative_dielectric_permeability * relative_magnetic_permeability))
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_for_uniform_slab as buckling
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     slab_width = Quantity(200 * units.centimeter)
     Args = namedtuple("Args", ["A"])
     return Args(A=slab_width)

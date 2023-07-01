@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.laws.thermodynamics import temperature_is_constant as boyles_law
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     P0 = Quantity(1 * units.pascal)
     P1 = Quantity(2 * units.pascal)
     V0 = Quantity(1 * units.liter)

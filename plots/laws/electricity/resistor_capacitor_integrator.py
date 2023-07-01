@@ -15,17 +15,17 @@ from symplyphysics.laws.electricity.circuits import resistor_and_capacitor_as_in
 
 time = symbols("time")
 
-initial_voltage = 1
-example_capacitance = 1
-example_impedance = 1
+INITIAL_VOLTAGE = 1
+EXAMPLE_CAPACITANCE = 1
+EXAMPLE_IMPEDANCE = 1
 
-rc_time_constant = example_capacitance * example_impedance
+RC_TIME_CONSTANT = EXAMPLE_CAPACITANCE * EXAMPLE_IMPEDANCE
 
 applied_law = rc_node.law.subs({
     rc_node.time: time,
-    rc_node.resistance: example_impedance,
-    rc_node.capacitance: example_capacitance,
-    rc_node.initial_voltage: initial_voltage
+    rc_node.resistance: EXAMPLE_IMPEDANCE,
+    rc_node.capacitance: EXAMPLE_CAPACITANCE,
+    rc_node.initial_voltage: INITIAL_VOLTAGE
 })
 capacitor_voltage_function = solve(applied_law, rc_node.capacitor_voltage(time),
     dict=True)[0][rc_node.capacitor_voltage(time)]
@@ -33,9 +33,9 @@ capacitor_voltage_function = solve(applied_law, rc_node.capacitor_voltage(time),
 # see resistor_and_capacitor_as_integrator_node.capacitor_current_eq for a proof the current on resistor equals to current on capacitor
 # see resistor_and_capacitor_as_integrator_node.resistor_voltage_eq for a proof the voltage on resistor is (initial_voltage - capacitor_voltage_function)
 # see symplyphysics.laws.electricity.current_is_proportional_to_voltage for a proof that current through resistor = resistor voltage / resistor impedance
-capacitor_current_function = (initial_voltage - capacitor_voltage_function) / example_impedance
+capacitor_current_function = (INITIAL_VOLTAGE - capacitor_voltage_function) / EXAMPLE_IMPEDANCE
 
-UC = plot(capacitor_voltage_function, (time, 0, 8 * rc_time_constant),
+UC = plot(capacitor_voltage_function, (time, 0, 8 * RC_TIME_CONSTANT),
     line_color="blue",
     title="Capacitor voltage",
     label="Capacitor voltage",
@@ -44,7 +44,7 @@ UC = plot(capacitor_voltage_function, (time, 0, 8 * rc_time_constant),
     backend=MatplotlibBackend,
     show=False)
 
-IC = plot(capacitor_current_function, (time, 0, 8 * rc_time_constant),
+IC = plot(capacitor_current_function, (time, 0, 8 * RC_TIME_CONSTANT),
     line_color="orange",
     label="Capacitor current",
     legend=True,
@@ -52,7 +52,7 @@ IC = plot(capacitor_current_function, (time, 0, 8 * rc_time_constant),
     show=False)
 UC.append(IC[0])
 
-voltage063 = plot(0.63 * initial_voltage, (time, 0, rc_time_constant),
+voltage063 = plot(0.63 * INITIAL_VOLTAGE, (time, 0, RC_TIME_CONSTANT),
     line_color="yellow",
     label="U = 0.63 of U0",
     backend=MatplotlibBackend,
@@ -60,15 +60,15 @@ voltage063 = plot(0.63 * initial_voltage, (time, 0, rc_time_constant),
 UC.append(voltage063[0])
 
 tau_line = plot(
-    1000 * (time - rc_time_constant) * 0.63 * initial_voltage,
-    (time, rc_time_constant, rc_time_constant + 0.001),
+    1000 * (time - RC_TIME_CONSTANT) * 0.63 * INITIAL_VOLTAGE,
+    (time, RC_TIME_CONSTANT, RC_TIME_CONSTANT + 0.001),
     label="time = Tau",
     line_color="yellow",
     show=False,
 )
 UC.append(tau_line[0])
 
-voltage095 = plot(0.95 * initial_voltage, (time, 0, 3 * rc_time_constant),
+voltage095 = plot(0.95 * INITIAL_VOLTAGE, (time, 0, 3 * RC_TIME_CONSTANT),
     line_color="green",
     label="U = 0.95 of U0",
     backend=MatplotlibBackend,
@@ -76,15 +76,15 @@ voltage095 = plot(0.95 * initial_voltage, (time, 0, 3 * rc_time_constant),
 UC.append(voltage095[0])
 
 tau3_line = plot(
-    1000 * (time - 3 * rc_time_constant) * 0.95 * initial_voltage,
-    (time, 3 * rc_time_constant, 3 * rc_time_constant + 0.001),
+    1000 * (time - 3 * RC_TIME_CONSTANT) * 0.95 * INITIAL_VOLTAGE,
+    (time, 3 * RC_TIME_CONSTANT, 3 * RC_TIME_CONSTANT + 0.001),
     label="time = 3 * Tau",
     line_color="green",
     show=False,
 )
 UC.append(tau3_line[0])
 
-voltageFull = plot(initial_voltage, (time, 0, 8 * rc_time_constant),
+voltageFull = plot(INITIAL_VOLTAGE, (time, 0, 8 * RC_TIME_CONSTANT),
     line_color="red",
     label="U0",
     backend=MatplotlibBackend,

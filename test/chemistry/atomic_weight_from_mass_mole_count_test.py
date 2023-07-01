@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.laws.chemistry import atomic_weight_from_mass_mole_count
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     # molar mass of water is 18.0153 gram / mole
     mass = Quantity(18.0153 * units.gram)
     mole_count = Quantity(1 * units.mole)

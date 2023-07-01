@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.laws.thermodynamics import volume_is_constant as isochoric_law
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     t0 = Quantity(1 * units.kelvin)
     t1 = Quantity(2 * units.kelvin)
     P0 = Quantity(1 * units.pascal)

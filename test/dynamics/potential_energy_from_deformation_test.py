@@ -14,8 +14,8 @@ from symplyphysics.laws.dynamics import potential_energy_from_deformation as hoo
 ## Result is independently calculated with https://www.center-pss.ru/math/raschet-potencialnoi-energii-pruzhini.htm
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     k = Quantity(100 * units.newton / units.meter)
     x = Quantity(2 * units.centimeter)
     Args = namedtuple("Args", ["k", "x"])

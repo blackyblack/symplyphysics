@@ -14,8 +14,8 @@ from symplyphysics.definitions import moment_of_inertia_is_mass_times_squared_ra
 ## Moment of inertia of this system should be 45kg*m**2.
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     m = Quantity(5 * units.kilogram)
     R = Quantity(3 * units.meter)
     Args = namedtuple("Args", ["m", "R"])
@@ -40,7 +40,7 @@ def test_inertia_with_bad_mass(test_args):
         moment_of_inertia_def.calculate_moment_of_inertia(100, test_args.R)
 
 
-def test_inertia_with_bad_mass(test_args):
+def test_inertia_with_bad_radius(test_args):
     Rb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         moment_of_inertia_def.calculate_moment_of_inertia(test_args.m, Rb)

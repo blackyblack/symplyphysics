@@ -75,7 +75,7 @@ observed_frequency_zero_angles = classical_doppler_with_angle.law.subs({
 assert expr_equals(observed_frequency_zero_angles, law.rhs)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

@@ -13,8 +13,8 @@ from symplyphysics.laws.kinematic import distance_from_constant_velocity as move
 ## If an object is traveling at a constant velocity of 12m/s, then calculate the distance covered by the object after 1 minute.
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     x0 = Quantity(0 * units.meter)
     v = Quantity(12 * units.meter / units.second)
     t = Quantity(60 * units.second)

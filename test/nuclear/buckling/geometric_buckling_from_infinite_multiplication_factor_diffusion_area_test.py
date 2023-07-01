@@ -12,8 +12,8 @@ from symplyphysics import (
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_infinite_multiplication_factor_diffusion_area as buckling
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     infinite_multiplication_factor = 1.0247
     # critical reactor
     effective_multiplication_factor = 1
@@ -40,8 +40,8 @@ def test_zero_buckling(test_args):
 
 
 def test_bad_diffusion_area(test_args):
-    L2b = Quantity(1 * units.coulomb)
+    Lb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        buckling.calculate_geometric_buckling_squared(test_args.k_inf, test_args.k_eff, L2b)
+        buckling.calculate_geometric_buckling_squared(test_args.k_inf, test_args.k_eff, Lb)
     with raises(TypeError):
         buckling.calculate_geometric_buckling_squared(test_args.k_inf, test_args.k_eff, 100)

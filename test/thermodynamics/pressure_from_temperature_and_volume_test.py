@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.laws.thermodynamics import pressure_from_temperature_and_volume as ideal_gas_law
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     V = Quantity(22.414 * units.liter)
     t = Quantity(273.15 * units.kelvin)
     n = Quantity(1 * units.mole)

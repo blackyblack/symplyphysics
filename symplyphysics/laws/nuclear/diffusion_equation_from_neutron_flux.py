@@ -63,7 +63,7 @@ law = Eq(
 assert neutron_flux_laplacian.dimension == neutron_flux.dimension / units.length**2
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

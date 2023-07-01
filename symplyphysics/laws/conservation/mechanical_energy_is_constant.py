@@ -24,7 +24,7 @@ mechanical_energy = Function("mechanical_energy", units.energy)
 law = Eq(Derivative(mechanical_energy(time), time), 0)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

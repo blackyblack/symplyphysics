@@ -20,7 +20,7 @@ curve_radius = Symbol("curve_radius", units.length)
 law = Eq(linear_velocity, angular_velocity * curve_radius)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

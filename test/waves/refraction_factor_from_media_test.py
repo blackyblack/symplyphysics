@@ -6,8 +6,8 @@ from symplyphysics.laws.waves import refraction_factor_from_media as media_law
 ## Refraction factor of air is 1.000292. Air dielectric permeability is 1.000576. Air magnetic permeability is 1.00000037.
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     dielectric_permeability = 1.000576
     magnetic_permeability = 1.00000037
     Args = namedtuple("Args", ["dielectric_permeability", "magnetic_permeability"])

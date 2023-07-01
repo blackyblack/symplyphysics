@@ -13,8 +13,8 @@ from symplyphysics.definitions import temporal_frequency_is_events_per_time as f
 ## Pendulum is making 25 complete oscillations in 60 seconds. It should have frequency of 0.416 Hz.
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     oscillations = 25
     t = Quantity(60 * units.second)
     Args = namedtuple("Args", ["N", "t"])

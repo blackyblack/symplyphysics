@@ -52,7 +52,7 @@ assert solve(law, atomic_number_density,
     dict=True)[0][atomic_number_density] == derived_number_density
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

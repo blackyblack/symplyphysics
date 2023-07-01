@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.definitions import acceleration_is_velocity_derivative as acceleration
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     v0 = Quantity(1 * units.meter / units.second)
     v1 = Quantity(20 * units.meter / units.second)
     t = Quantity(5 * units.second)

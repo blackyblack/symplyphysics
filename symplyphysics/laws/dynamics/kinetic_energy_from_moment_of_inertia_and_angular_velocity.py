@@ -16,7 +16,7 @@ angular_velocity = Symbol("angular_velocity", angle_type / units.time)
 law = Eq(kinetic_energy, object_inertia_moment * angular_velocity**2 / 2)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

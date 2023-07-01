@@ -31,7 +31,7 @@ oscillation_period = Symbol("oscillation_period", units.time)
 law = Eq(oscillation_period, 2 * pi * sqrt(object_mass / spring_elasticity))
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

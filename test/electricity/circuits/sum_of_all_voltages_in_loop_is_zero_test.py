@@ -11,8 +11,8 @@ from symplyphysics import (
 from symplyphysics.laws.electricity.circuits import sum_of_all_voltages_in_loop_is_zero as kirchhoff_law_2
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     U1 = Quantity(3 * units.volt)
     U2 = Quantity(-5 * units.volt)
     Args = namedtuple("Args", ["U1", "U2"])

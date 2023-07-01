@@ -30,7 +30,7 @@ frequency_of_radian = frequency_def.definition.subs({
 assert expr_equals(frequency_of_radian, law.rhs)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

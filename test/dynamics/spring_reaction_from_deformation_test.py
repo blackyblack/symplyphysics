@@ -12,8 +12,8 @@ from symplyphysics import (
 from symplyphysics.laws.dynamics import spring_reaction_from_deformation as spring_law
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     C = CoordinateSystem()
     k = Quantity(0.1 * units.newton / units.meter)
     df_x = Quantity(3 * units.meter)

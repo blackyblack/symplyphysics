@@ -13,8 +13,8 @@ from symplyphysics.laws.dynamics import potential_energy_from_mass_and_height as
 # an altitude of 500 meters?
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     m = Quantity(9 * units.gram)
     h = Quantity(500 * units.meter)
     Args = namedtuple("Args", ["m", "h"])

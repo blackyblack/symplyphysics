@@ -47,7 +47,7 @@ law = Eq(
     (average_lethargy_change * macroscopic_scattering_cross_section_moderator)))
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

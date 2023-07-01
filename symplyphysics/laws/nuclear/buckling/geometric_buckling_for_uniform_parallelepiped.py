@@ -40,7 +40,7 @@ geometric_buckling_parallelepiped_solved = geometric_buckling_parallelepiped_squ
 assert geometric_buckling_parallelepiped_solved == law.rhs
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

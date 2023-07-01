@@ -33,5 +33,5 @@ def from_kelvin(value: float) -> Celsius:
 
 
 def from_kelvin_quantity(value: Quantity) -> Celsius:
-    kelvin_value = convert_to(value, units.kelvin).subs(units.kelvin, 1).evalf()
+    kelvin_value = float(convert_to(value, units.kelvin).subs(units.kelvin, 1).evalf())
     return from_kelvin(kelvin_value)

@@ -47,7 +47,7 @@ diffusion_equation_laplacian = diffusion_equation.neutron_flux_laplacian_definit
 assert expr_equals(diffusion_equation_laplacian, neutron_flux_laplacian_definition.rhs)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

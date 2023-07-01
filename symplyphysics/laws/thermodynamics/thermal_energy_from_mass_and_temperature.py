@@ -24,7 +24,7 @@ temperature_end = Symbol("temperature_end", units.temperature)
 law = Eq(amount_energy, specific_heat_capacity * body_mass * (temperature_end - temperature_origin))
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

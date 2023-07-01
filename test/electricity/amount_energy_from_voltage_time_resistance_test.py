@@ -13,8 +13,8 @@ from symplyphysics.laws.electricity import amount_energy_from_voltage_time_resis
 #  at 220 volts and a heater resistance of 36 ohms?
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     U = Quantity(220 * units.volt)
     t = Quantity(60 * units.second)
     R = Quantity(36 * units.ohm)

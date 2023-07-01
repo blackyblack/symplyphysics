@@ -19,7 +19,7 @@ currents = Symbol("currents", units.current)
 law = Eq(SumArray(currents), 0, evaluate=False)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

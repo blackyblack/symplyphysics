@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.laws.nuclear import macroscopic_cross_section_from_free_mean_path as macro_cs
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     # boron carbide mean free path
     mean_free_path = Quantity(0.012 * units.centimeter)
     Args = namedtuple("Args", ["y"])

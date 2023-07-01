@@ -48,7 +48,7 @@ derived_material_buckling_squared = solve(derived_law,
 assert expr_equals(law.rhs, derived_material_buckling_squared)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

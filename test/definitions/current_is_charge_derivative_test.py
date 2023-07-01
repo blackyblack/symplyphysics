@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.definitions import current_is_charge_derivative as current_def
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     Q0 = Quantity(0 * units.coulomb)
     Q1 = Quantity(20 * units.coulomb)
     I0 = Quantity(0.5 * units.ampere)

@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_velocity as kinetic_energy
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     m = Quantity(0.5 * units.kilogram)
     v = Quantity(0.5 * units.meter / units.second)
     Args = namedtuple("Args", ["m", "v"])

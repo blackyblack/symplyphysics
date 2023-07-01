@@ -31,7 +31,7 @@ geometric_buckling_slab_solved = geometric_buckling_slab_squared.subs(slab_flux.
 assert geometric_buckling_slab_solved == law.rhs
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

@@ -23,7 +23,7 @@ mole_mass = Symbol("mole_mass", units.mass / units.amount_of_substance)
 law = Eq(inner_energy, 1.5 * mass_of_gas * units.molar_gas_constant * temperature / mole_mass)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

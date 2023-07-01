@@ -14,8 +14,8 @@ from symplyphysics.definitions import velocity_is_movement_derivative as velocit
 ## Velocity should be 16 m/s.
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     S0 = Quantity(0 * units.meter)
     S1 = Quantity(80 * units.meters)
     t = Quantity(5 * units.second)

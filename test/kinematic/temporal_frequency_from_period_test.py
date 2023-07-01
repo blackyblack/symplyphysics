@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.laws.kinematic import temporal_frequency_from_period as frequency_def
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     T = Quantity(2.8 * units.second)
     Args = namedtuple("Args", ["T"])
     return Args(T=T)

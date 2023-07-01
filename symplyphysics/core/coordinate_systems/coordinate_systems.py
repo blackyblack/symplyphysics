@@ -1,7 +1,7 @@
 from enum import Enum, unique
-from typing import List
-from sympy import acos, atan2, cos, sin, sqrt
-from sympy.vector import CoordSys3D
+from typing import Optional
+from sympy import acos, atan2, cos, sin, sqrt, Expr
+from sympy.vector import CoordSys3D, Vector as SymVector
 from ..symbols.symbols import next_name
 
 
@@ -13,8 +13,8 @@ class CoordinateSystem:
         CYLINDRICAL = 1
         SPHERICAL = 2
 
-    _coord_system: CoordSys3D = None
-    _coord_system_type: System = None
+    _coord_system: CoordSys3D
+    _coord_system_type: System
 
     @staticmethod
     def system_to_transformation_name(coord_system_type: System) -> str:
@@ -27,17 +27,19 @@ class CoordinateSystem:
         return "none"
 
     @staticmethod
-    def system_to_base_scalars(coord_system_type: System) -> List[str]:
+    def system_to_base_scalars(coord_system_type: System) -> list[str]:
         if coord_system_type == CoordinateSystem.System.CYLINDRICAL:
             return ["r", "theta", "z"]
         if coord_system_type == CoordinateSystem.System.SPHERICAL:
             return ["r", "theta", "phi"]
         return ["x", "y", "z"]
 
-    def __init__(self, coord_system_type=System.CARTESIAN, inner: CoordSys3D = None):
+    def __init__(self,
+        coord_system_type: System = System.CARTESIAN,
+        inner: Optional[CoordSys3D] = None):
         self._coord_system_type = coord_system_type
         if inner is None:
-            self._coord_system = CoordSys3D(next_name("C"),
+            self._coord_system = CoordSys3D(next_name("CS"),
                 variable_names=CoordinateSystem.system_to_base_scalars(coord_system_type))
             return
         self._coord_system = inner
@@ -81,21 +83,20 @@ class CoordinateSystem:
 
 
 # Change coordinate system type, eg from cartesian to cylindrical
-def coordinates_transform(self: CoordinateSystem,
-    coord_system_type=CoordinateSystem.System.CARTESIAN) -> CoordinateSystem:
-    if coord_system_type == None:
-        coord_system_type = self.coord_system_type
+def coordinates_transform(
+    self: CoordinateSystem,
+    coord_system_type: CoordinateSystem.System = CoordinateSystem.System.CARTESIAN
+) -> CoordinateSystem:
     new_coord_system = self.coord_system.create_new(next_name("C"),
         variable_names=CoordinateSystem.system_to_base_scalars(coord_system_type),
         transformation=None)
     return CoordinateSystem(coord_system_type, new_coord_system)
 
 
-def coordinates_rotate(self: CoordinateSystem, angle, axis) -> CoordinateSystem:
+def coordinates_rotate(self: CoordinateSystem, angle: Expr, axis: SymVector) -> CoordinateSystem:
     if self.coord_system_type != CoordinateSystem.System.CARTESIAN:
         coord_name_from = CoordinateSystem.system_to_transformation_name(self.coord_system_type)
         raise ValueError(
             f"Rotation only supported for cartesian coordinates: got {coord_name_from}")
-    return CoordinateSystem(
-        self.coord_system_type,
+    return CoordinateSystem(self.coord_system_type,
         self.coord_system.orient_new_axis(next_name("C"), angle, axis))

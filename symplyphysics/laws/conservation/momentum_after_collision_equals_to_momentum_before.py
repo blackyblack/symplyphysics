@@ -38,7 +38,7 @@ energy_after_solved = solve([energy_after_eq, energy_before_eq], (momentum(time_
 assert expr_equals(energy_after_solved, law.rhs)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

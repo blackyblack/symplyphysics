@@ -54,7 +54,7 @@ derived_law = Eq(distance(movement_time), constant_accelerated_movement_function
 assert expr_equals(derived_law.rhs.subs({"C1": initial_velocity, "C2": 0}), law.rhs)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

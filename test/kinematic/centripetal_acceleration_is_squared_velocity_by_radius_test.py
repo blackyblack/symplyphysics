@@ -13,8 +13,8 @@ from symplyphysics.laws.kinematic import centripetal_acceleration_is_squared_vel
 ## The object is rotating with linear velocity of 10 m/s tied to the center with 0/5 m thread, it's centripetal acceleration should be 200 m/s/s (according to calc.ru online calculator)
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     lin_velocity = Quantity(10 * units.meter / units.second)
     curve_radius = Quantity(0.5 * units.meter)
     Args = namedtuple("Args", ["lin_velocity", "curve_radius"])

@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.laws.chemistry import atomic_number_density_from_material_density_atomic_weight as atomic_number_density
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     # boron carbide density is 2.52 g/cm^3
     p = Quantity(2.52 * units.gram / units.centimeter**3)
     # boron carbide atomic mass

@@ -31,7 +31,7 @@ geometric_buckling_sphere_flux_solved = geometric_buckling_sphere_squared.subs(
 assert geometric_buckling_sphere_flux_solved == law.rhs
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

@@ -14,16 +14,16 @@ from symplyphysics.laws.electricity import energy_accumulated_in_capacitor_from_
 ## According to law we should have amount of energy accumulated in this capacitor equals to 220 * 0.000001 * 10**2 / 2 = 0.011 Joules.
 
 
-@fixture
-def test_args():
-    Capacitance = Quantity(220 * units.micro * units.farad)
-    Voltage = Quantity(10 * units.volt)
-    Args = namedtuple("Args", ["Capacitance", "Voltage"])
-    return Args(Capacitance=Capacitance, Voltage=Voltage)
+@fixture(name="test_args")
+def test_args_fixture():
+    C = Quantity(220 * units.micro * units.farad)
+    V = Quantity(10 * units.volt)
+    Args = namedtuple("Args", ["C", "V"])
+    return Args(C=C, V=V)
 
 
 def test_basic_energy(test_args):
-    result = capacitor_law.calculate_accumulated_energy(test_args.Capacitance, test_args.Voltage)
+    result = capacitor_law.calculate_accumulated_energy(test_args.C, test_args.V)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
     result_power = convert_to(result, units.joule).subs(units.joule, 1).evalf(5)
     assert result_power == approx(0.011, 0.00001)
@@ -32,14 +32,14 @@ def test_basic_energy(test_args):
 def test_bad_capacitance(test_args):
     Cb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
-        capacitor_law.calculate_accumulated_energy(Cb, test_args.Voltage)
+        capacitor_law.calculate_accumulated_energy(Cb, test_args.V)
     with raises(TypeError):
-        capacitor_law.calculate_accumulated_energy(100, test_args.Voltage)
+        capacitor_law.calculate_accumulated_energy(100, test_args.V)
 
 
 def test_bad_voltage(test_args):
     Vb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
-        capacitor_law.calculate_accumulated_energy(test_args.Capacitance, Vb)
+        capacitor_law.calculate_accumulated_energy(test_args.C, Vb)
     with raises(TypeError):
-        capacitor_law.calculate_accumulated_energy(test_args.Capacitance, 100)
+        capacitor_law.calculate_accumulated_energy(test_args.C, 100)

@@ -16,7 +16,7 @@ voltage = Symbol("voltage", units.voltage)
 law = Eq(power, current * voltage)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

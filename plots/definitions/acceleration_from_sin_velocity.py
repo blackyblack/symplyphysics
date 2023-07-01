@@ -5,16 +5,16 @@ from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression
 from symplyphysics.definitions import acceleration_is_velocity_derivative as acceleration
 
-print("Formula is:\n{}".format(acceleration.print()))
+print(f"Formula is:\n{acceleration.print_law()}")
 
-velocity_function = sin
-applied_law = acceleration.definition.subs(acceleration.velocity, velocity_function)
+VelocityFunction = sin
+applied_law = acceleration.definition.subs(acceleration.velocity, VelocityFunction)
 dsolved = applied_law.doit()
 
-print("Velocity function is:\n{}".format(print_expression(velocity_function(acceleration.time))))
-print("Acceleration function is:\n{}".format(print_expression(dsolved)))
+print(f"Velocity function is:\n{print_expression(VelocityFunction(acceleration.time))}")
+print(f"Acceleration function is:\n{print_expression(dsolved)}")
 
-p1 = plot(velocity_function(acceleration.time), (acceleration.time, 0, 10),
+p1 = plot(VelocityFunction(acceleration.time), (acceleration.time, 0, 10),
     line_color="blue",
     title="Acceleration(time), Velocity(time)",
     label="Velocity(time)",

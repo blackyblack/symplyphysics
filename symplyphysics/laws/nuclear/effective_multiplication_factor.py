@@ -27,7 +27,7 @@ law = Eq(
     infinite_multiplication_factor * fast_non_leakage_probability * thermal_non_leakage_probability)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

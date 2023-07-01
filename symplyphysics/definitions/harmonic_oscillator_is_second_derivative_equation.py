@@ -58,7 +58,7 @@ initial_phase_solved = solve([displacement_function_at_zero_time_eq, initial_con
 assert expr_equals(initial_phase_solved, 0)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(definition)
 
 

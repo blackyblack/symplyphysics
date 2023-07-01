@@ -30,7 +30,7 @@ migration_area = Symbol("migration_area", units.length**2)
 law = Eq(migration_area, diffusion_area + neutron_fermi_age)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

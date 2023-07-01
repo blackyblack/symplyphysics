@@ -13,8 +13,8 @@ from symplyphysics.laws.dynamics import kinetic_energy_from_moment_of_inertia_an
 ## If we have a stone with 2kg*m^2 of moment of inertia spinning with 3rad/s angular velocity, this stone should bear 9 joules of kinetic energy.
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     I = Quantity(2 * units.kilogram * units.meter**2)
     w = Quantity(3 * units.radian / units.second)
     Args = namedtuple("Args", ["I", "w"])

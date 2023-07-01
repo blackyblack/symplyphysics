@@ -22,63 +22,63 @@ solved_adiabatic_volume_law = solve(adiabatic_law.law,
 
 carnot_cycle_volume = symbols("carnot_cycle_volume")
 
-gas_mole_count = 1
-gas_temperature_start = 200
-gas_temperature_end = 100
-gas_specific_heats_ratio = 1.66
-gas_volume_start = 1
-gas_volume_adiabatic_start = gas_volume_start + 1
+GAS_MOLE_COUNT = 1
+GAS_TEMPERATURE_START = 200
+GAS_TEMPERATURE_END = 100
+GAS_SPECIFIC_HEATS_RATIO = 1.66
+GAS_VOLUME_START = 1
+GAS_VOLUME_ADIABATIC_START = GAS_VOLUME_START + 1
 
 gas_volume_adiabatic_end = solved_adiabatic_volume_law.subs({
-    adiabatic_law.temperature_start: gas_temperature_start,
-    adiabatic_law.volume_start: gas_volume_adiabatic_start,
-    adiabatic_law.specific_heats_ratio: gas_specific_heats_ratio,
-    adiabatic_law.temperature_end: gas_temperature_end
+    adiabatic_law.temperature_start: GAS_TEMPERATURE_START,
+    adiabatic_law.volume_start: GAS_VOLUME_ADIABATIC_START,
+    adiabatic_law.specific_heats_ratio: GAS_SPECIFIC_HEATS_RATIO,
+    adiabatic_law.temperature_end: GAS_TEMPERATURE_END
 })
 
 # Use reversed adiabatic process here: looks like adiabatic expansion
 # but we use it to calculate adiabatic compression
 gas_volume_isothermal_end = solved_adiabatic_volume_law.subs({
-    adiabatic_law.temperature_start: gas_temperature_start,
-    adiabatic_law.volume_start: gas_volume_start,
-    adiabatic_law.specific_heats_ratio: gas_specific_heats_ratio,
-    adiabatic_law.temperature_end: gas_temperature_end
+    adiabatic_law.temperature_start: GAS_TEMPERATURE_START,
+    adiabatic_law.volume_start: GAS_VOLUME_START,
+    adiabatic_law.specific_heats_ratio: GAS_SPECIFIC_HEATS_RATIO,
+    adiabatic_law.temperature_end: GAS_TEMPERATURE_END
 })
 
 result_pressure_isothermal_expansion = solved_isothermal_law.subs({
-    isothermal_law.temperature_start: gas_temperature_start,
+    isothermal_law.temperature_start: GAS_TEMPERATURE_START,
     units.molar_gas_constant: 1,
-    isothermal_law.thermodynamics_law.mole_count: gas_mole_count,
+    isothermal_law.thermodynamics_law.mole_count: GAS_MOLE_COUNT,
     isothermal_law.volume_end: carnot_cycle_volume
 })
 
 result_pressure_isothermal_compression = solved_isothermal_law.subs({
-    isothermal_law.temperature_start: gas_temperature_end,
+    isothermal_law.temperature_start: GAS_TEMPERATURE_END,
     units.molar_gas_constant: 1,
-    isothermal_law.thermodynamics_law.mole_count: gas_mole_count,
+    isothermal_law.thermodynamics_law.mole_count: GAS_MOLE_COUNT,
     isothermal_law.volume_end: carnot_cycle_volume
 })
 
 result_pressure_adiabatic_expansion = solved_adiabatic_law.subs({
-    adiabatic_law.temperature_start: gas_temperature_start,
-    adiabatic_law.volume_start: gas_volume_adiabatic_start,
+    adiabatic_law.temperature_start: GAS_TEMPERATURE_START,
+    adiabatic_law.volume_start: GAS_VOLUME_ADIABATIC_START,
     units.molar_gas_constant: 1,
-    adiabatic_law.thermodynamics_law.mole_count: gas_mole_count,
-    adiabatic_law.specific_heats_ratio: gas_specific_heats_ratio,
+    adiabatic_law.thermodynamics_law.mole_count: GAS_MOLE_COUNT,
+    adiabatic_law.specific_heats_ratio: GAS_SPECIFIC_HEATS_RATIO,
     adiabatic_law.volume_end: carnot_cycle_volume
 })
 
 result_pressure_adiabatic_compression = solved_adiabatic_law.subs({
-    adiabatic_law.temperature_start: gas_temperature_end,
+    adiabatic_law.temperature_start: GAS_TEMPERATURE_END,
     adiabatic_law.volume_start: gas_volume_isothermal_end,
     units.molar_gas_constant: 1,
-    adiabatic_law.thermodynamics_law.mole_count: gas_mole_count,
-    adiabatic_law.specific_heats_ratio: gas_specific_heats_ratio,
+    adiabatic_law.thermodynamics_law.mole_count: GAS_MOLE_COUNT,
+    adiabatic_law.specific_heats_ratio: GAS_SPECIFIC_HEATS_RATIO,
     adiabatic_law.volume_end: carnot_cycle_volume
 })
 
 p1 = plot(result_pressure_isothermal_expansion,
-    (carnot_cycle_volume, gas_volume_start, gas_volume_adiabatic_start),
+    (carnot_cycle_volume, GAS_VOLUME_START, GAS_VOLUME_ADIABATIC_START),
     line_color="blue",
     title="Carnot Cycle",
     xlabel="Volume",
@@ -89,7 +89,7 @@ p1 = plot(result_pressure_isothermal_expansion,
     show=False)
 
 p2 = plot(result_pressure_adiabatic_expansion,
-    (carnot_cycle_volume, gas_volume_adiabatic_start, gas_volume_adiabatic_end),
+    (carnot_cycle_volume, GAS_VOLUME_ADIABATIC_START, gas_volume_adiabatic_end),
     line_color="red",
     label="Adiabatic",
     backend=MatplotlibBackend,
@@ -103,7 +103,7 @@ p3 = plot(result_pressure_isothermal_compression,
     show=False)
 
 p4 = plot(result_pressure_adiabatic_compression,
-    (carnot_cycle_volume, gas_volume_start, gas_volume_isothermal_end),
+    (carnot_cycle_volume, GAS_VOLUME_START, gas_volume_isothermal_end),
     line_color="red",
     backend=MatplotlibBackend,
     label="",

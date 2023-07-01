@@ -4,8 +4,8 @@ from symplyphysics.core.symbols.probability import Probability
 from symplyphysics.laws.nuclear import effective_multiplication_factor
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     infinite_multiplication_factor = 1.092
     fast_non_leakage_probability = Probability(0.95)
     thermal_non_leakage_probability = Probability(0.96)

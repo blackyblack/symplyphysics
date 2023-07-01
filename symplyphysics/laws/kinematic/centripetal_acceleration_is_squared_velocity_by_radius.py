@@ -116,7 +116,7 @@ law_acceleration = law.rhs.subs(linear_velocity, linear_velocity_applied)
 assert expr_equals_abs(radial_acceleration_magnitude, law_acceleration)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

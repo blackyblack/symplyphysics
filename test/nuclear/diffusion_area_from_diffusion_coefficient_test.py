@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.laws.nuclear import diffusion_area_from_diffusion_coefficient as diffusion_area
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     # water macroscopic absorption cross-section is 0.022 cm^-1
     macro_abs_cross_section = Quantity(0.022 / units.centimeter)
     # water diffusion coefficient is 0.142 cm

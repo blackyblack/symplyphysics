@@ -58,7 +58,7 @@ law = Eq(
     (parameter2, parameter2_from, parameter2_to)))
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

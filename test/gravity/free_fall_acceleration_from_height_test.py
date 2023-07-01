@@ -13,8 +13,8 @@ from symplyphysics.laws.gravity import free_fall_acceleration_from_height as fre
 # G - universal gravity constant  6.672e-11 N*m^2/kg^2
 # M - Earth mass constant         5.9722e24 kg
 # R - Earth radius constant       6371 km
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     earth_mass = Quantity(5.9722e24 * units.kilogram)
     earth_radius = Quantity(6371 * units.kilometer)
     height_from_surface = Quantity(1 * units.meter)

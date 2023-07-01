@@ -4,8 +4,8 @@ from symplyphysics.core.symbols.probability import Probability
 from symplyphysics.laws.nuclear import infinite_multiplication_factor
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     neutron_reproduction = 2.02
     fast_fission = 1.03
     resonance_escape_probability = Probability(0.75)

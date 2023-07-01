@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.definitions import power_is_energy_derivative as power_def
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     Q0 = Quantity(0 * units.joule)
     Q1 = Quantity(20 * units.joule)
     t = Quantity(5 * units.second)

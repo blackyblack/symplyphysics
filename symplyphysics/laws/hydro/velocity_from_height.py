@@ -20,7 +20,7 @@ height_above_hole = Symbol("height_above_hole", units.length)
 law = Eq(liquid_velocity, sqrt(2 * units.acceleration_due_to_gravity * height_above_hole))
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

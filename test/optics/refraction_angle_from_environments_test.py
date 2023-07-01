@@ -14,8 +14,8 @@ from symplyphysics.laws.optics import refraction_angle_from_environments as refr
 ## We have online calculator which gives us 22.1 refraction angle. https://matematika-club.ru/kalkulyator-otrazheniya-i-prelomleniya-sveta
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     incedence_angle = Quantity(30 * units.degree)
     incedence_media = 1.003
     refractive_media = 1.333

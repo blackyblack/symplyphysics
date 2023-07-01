@@ -12,25 +12,29 @@ from symplyphysics import (
 from symplyphysics.laws.dynamics import force_reaction_from_force_action as newton_third_law
 
 
-@fixture
-def test_args():
-    Faction = Quantity(2 * units.newton)
+@fixture(name="test_args")
+def test_args_fixture():
+    Fa = Quantity(2 * units.newton)
     Args = namedtuple("Args", ["F"])
-    return Args(F=Faction)
+    return Args(F=Fa)
 
 
 def test_basic_force():
     cartesian_coordinates = CoordSys3D("cartesian_coordinates")
-    Faction = 2 * cartesian_coordinates.x + cartesian_coordinates.y
+    # Make linter happy
+    x = getattr(cartesian_coordinates, "x")
+    y = getattr(cartesian_coordinates, "y")
+    z = getattr(cartesian_coordinates, "z")
+    Fa = 2 * x + y
     result_force = solve(newton_third_law.law, newton_third_law.force_reaction,
         dict=True)[0][newton_third_law.force_reaction]
-    result = result_force.subs(newton_third_law.force_action, Faction)
+    result = result_force.subs(newton_third_law.force_action, Fa)
     # force action and force reaction should compensate each other
-    assert (result + Faction) == 0
+    assert (result + Fa) == 0
     # vector components should compensate each other
-    assert result.coeff(cartesian_coordinates.x) == -1 * Faction.coeff(cartesian_coordinates.x)
-    assert result.coeff(cartesian_coordinates.y) == -1 * Faction.coeff(cartesian_coordinates.y)
-    assert result.coeff(cartesian_coordinates.z) == -1 * Faction.coeff(cartesian_coordinates.z)
+    assert result.coeff(x) == -1 * Fa.coeff(x)
+    assert result.coeff(y) == -1 * Fa.coeff(y)
+    assert result.coeff(z) == -1 * Fa.coeff(z)
 
 
 def test_basic_force_quantity(test_args):

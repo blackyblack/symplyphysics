@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.laws.nuclear import migration_area_from_diffusion_length as migration_area
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     # water diffusion area = 39.9 cm^2
     diffusion_area = Quantity(39.9 * units.centimeter**2)
     # light water Fermi age = 38.8 cm^2
@@ -29,9 +29,9 @@ def test_basic_migration_area(test_args):
 
 
 def test_bad_diffusion_area(test_args):
-    Ldb = Quantity(1 * units.coulomb)
+    Lb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        migration_area.calculate_migration_area(Ldb, test_args.th)
+        migration_area.calculate_migration_area(Lb, test_args.th)
     with raises(TypeError):
         migration_area.calculate_migration_area(100, test_args.th)
 

@@ -32,7 +32,7 @@ full_cycle_period = solve(frequency_of_full_cycle_def, period, dict=True)[0][per
 assert expr_equals(full_cycle_period, law.rhs)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

@@ -14,7 +14,7 @@ force_reaction = Symbol("force_reaction", units.force)
 law = Eq(force_reaction, -1 * force_action)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

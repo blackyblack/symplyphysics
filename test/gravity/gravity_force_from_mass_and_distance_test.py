@@ -15,8 +15,8 @@ from symplyphysics.laws.gravity import gravity_force_from_mass_and_distance as g
 ## According to matematika-club.ru gravity calculator, force should be equal to 0.27809583 Newtons.
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     m1 = Quantity(3000 * units.kilogram)
     m2 = Quantity(5000 * units.kilogram)
     R = Quantity(0.06 * units.meter)

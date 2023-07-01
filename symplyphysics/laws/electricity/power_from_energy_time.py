@@ -47,7 +47,7 @@ derived_power_without_initial_energy = derived_power.subs(initial_energy_constan
 assert (expr_equals(derived_power_without_initial_energy, law.rhs))
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

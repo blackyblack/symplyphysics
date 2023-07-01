@@ -1,15 +1,15 @@
 from collections import namedtuple
+from test.test_decorators import unsupported_usage
 from pytest import fixture, raises
 from sympy import atan, cos, pi, sin, sqrt, symbols, simplify
 from sympy.vector import CoordSys3D, express
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_rotate, coordinates_transform
-from test.test_decorators import unsupported_usage
 from symplyphysics.core.fields.field_point import FieldPoint
 from symplyphysics.core.fields.scalar_field import ScalarField, field_from_sympy_vector, field_rebase, sympy_expression_to_field_function
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     C = CoordinateSystem()
     Args = namedtuple("Args", ["C"])
     return Args(C=C)
@@ -40,11 +40,13 @@ def test_integer_sympy_expression_to_field_function():
 # Only scalars from requested coordinate system are being applied
 def test_partially_different_coord_systems_sympy_expression_to_field_function(test_args):
     C1 = CoordSys3D("C1", variable_names=("r", "phi", "z"))
-    field_function = sympy_expression_to_field_function(test_args.C.coord_system.x + 2 * C1.phi,
+    # Makes linter happy
+    phi = getattr(C1, "phi")
+    field_function = sympy_expression_to_field_function(test_args.C.coord_system.x + 2 * phi,
         test_args.C)
     assert callable(field_function)
     field_point = FieldPoint(1, 2, 3)
-    assert field_function(field_point) == 1 + 2 * C1.phi
+    assert field_function(field_point) == 1 + 2 * phi
 
 
 # Test ScalarField constructor
@@ -54,7 +56,7 @@ def test_basic_field():
     field = ScalarField(lambda p: p.y * p.z)
     field_point = FieldPoint(1, 2, 3)
     assert field(field_point) == 6
-    assert field.basis == []
+    assert len(field.basis) == 0
     assert field.coordinate_system is None
     assert len(field.components) == 1
     assert callable(field.components[0])
@@ -103,7 +105,7 @@ def test_invalid_lambda_field():
 
 @unsupported_usage
 def test_effect_in_lambda_field():
-    field = ScalarField(lambda p: "{}".format(p.y))
+    field = ScalarField(lambda p: f"{p.y}")
     field_point = FieldPoint(1, 2, 3)
     assert field(field_point) == "2"
 
@@ -147,14 +149,14 @@ def test_empty_vector_to_field_conversion():
     # applying empty field to a point results in zero value
     field_point = FieldPoint(1, 2, 3)
     assert field(field_point) == 0
-    assert field.basis == []
+    assert len(field.basis) == 0
 
 
 def test_only_integer_vector_to_field_conversion():
     field = field_from_sympy_vector(1)
     field_point = FieldPoint(1, 2, 3)
     assert field(field_point) == 1
-    assert field.basis == []
+    assert len(field.basis) == 0
 
 
 def test_custom_names_vector_to_field_conversion():
@@ -216,7 +218,7 @@ def test_parametrized_no_coord_system_field_apply():
     # represents y = x trajectory
     trajectory = [parameter, parameter]
     trajectory_value = field.apply(trajectory)
-    assert trajectory_value == -parameter
+    assert trajectory_value == -1 * parameter
 
 
 def test_parametrized_field_apply(test_args):
@@ -319,9 +321,9 @@ def test_basic_field_rebase(test_args):
     assert field.coordinate_system == test_args.C
 
     # B is located at [1, 2] origin instead of [0, 0] of test_args.C
-    B_inner = test_args.C.coord_system.locate_new(
+    Bi = test_args.C.coord_system.locate_new(
         'B', test_args.C.coord_system.i + 2 * test_args.C.coord_system.j)
-    B = CoordinateSystem(test_args.C.coord_system_type, B_inner)
+    B = CoordinateSystem(test_args.C.coord_system_type, Bi)
     field_rebased = field_rebase(field, B)
     assert field_rebased.basis == [B.coord_system.x, B.coord_system.y, B.coord_system.z]
     assert field_rebased.coordinate_system == B
@@ -372,9 +374,9 @@ def test_no_coord_system_field_rebase(test_args):
     point_value = field.apply(point)
     assert point_value == 3
 
-    B_inner = test_args.C.coord_system.locate_new(
+    Bi = test_args.C.coord_system.locate_new(
         'B', test_args.C.coord_system.i + 2 * test_args.C.coord_system.j)
-    B = CoordinateSystem(test_args.C.coord_system_type, B_inner)
+    B = CoordinateSystem(test_args.C.coord_system_type, Bi)
     field_rebased = field_rebase(field, B)
     assert field_rebased.basis == [B.coord_system.x, B.coord_system.y, B.coord_system.z]
     assert field_rebased.coordinate_system == B
@@ -392,7 +394,7 @@ def test_no_target_coord_system_field_rebase(test_args):
     assert point_value == 3
 
     field_rebased = field_rebase(field, None)
-    assert field_rebased.coordinate_system == None
+    assert field_rebased.coordinate_system is None
 
     point_value = field_rebased.apply(point)
     assert point_value == 3

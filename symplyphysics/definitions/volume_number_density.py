@@ -19,7 +19,7 @@ definition = Eq(number_density, objects / volume)
 definition_units_SI = 1 / units.meter**3
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(definition)
 
 

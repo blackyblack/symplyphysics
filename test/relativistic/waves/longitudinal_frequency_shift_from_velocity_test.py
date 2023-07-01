@@ -14,8 +14,8 @@ from symplyphysics.laws.relativistic.waves import longitudinal_frequency_shift_f
 ## observed frequency should be 347341068940800
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     object_velocity = Quantity(29979245.8 * units.meter / units.second)
     emitted_frequency = Quantity(3.84e14 * units.hertz)
     Args = namedtuple("Args", ["object_velocity", "emitted_frequency"])

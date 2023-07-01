@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.laws.nuclear.buckling import material_buckling_from_macroscopic_fission_cross_section_diffusion_coefficient as material_buckling
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     neutrons_per_fission = 2.6
     macro_fission_cross_section = Quantity(1.482 / units.centimeter)
     macro_abs_cross_section = Quantity(3.108 / units.centimeter)

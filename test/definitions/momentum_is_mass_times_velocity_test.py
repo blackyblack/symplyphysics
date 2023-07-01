@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.definitions import momentum_is_mass_times_velocity as momentum_def
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     m = Quantity(1 * units.kilogram)
     v = Quantity(5 * units.meter / units.second)
     Args = namedtuple("Args", ["m", "v"])

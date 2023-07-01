@@ -66,7 +66,7 @@ derived_geometric_buckling_squared = solve(derived_law, (geometric_buckling_squa
 assert expr_equals(law.rhs, derived_geometric_buckling_squared)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

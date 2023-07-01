@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.definitions import density_from_mass_volume
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     m = Quantity(1 * units.kilogram)
     V = Quantity(3 * units.meter**3)
     Args = namedtuple("Args", ["m", "V"])

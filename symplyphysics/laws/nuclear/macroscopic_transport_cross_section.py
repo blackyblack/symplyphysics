@@ -33,7 +33,7 @@ law = Eq(macroscopic_transport_cross_section,
     macroscopic_scattering_cross_section * (1 - average_scattering_angle_cosine))
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

@@ -9,8 +9,8 @@ from symplyphysics.core.symbols.probability import Probability
 from symplyphysics.laws.nuclear import fast_non_leakage_probability_from_fermi_age as non_leakage_factor
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     # sphere with radius = 1 meter
     geometric_buckling = Quantity(9.869 / units.meter**2)
     # water Fermi age = 27 cm^2
@@ -26,9 +26,9 @@ def test_basic_non_leakage_factor(test_args):
 
 
 def test_bad_buckling(test_args):
-    Bgb = Quantity(1 * units.coulomb)
+    Bb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        non_leakage_factor.calculate_probability(Bgb, test_args.th)
+        non_leakage_factor.calculate_probability(Bb, test_args.th)
     with raises(TypeError):
         non_leakage_factor.calculate_probability(100, test_args.th)
 

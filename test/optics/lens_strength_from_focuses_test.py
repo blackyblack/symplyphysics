@@ -12,8 +12,8 @@ from symplyphysics.laws.optics import lens_focus_from_object_and_image as lens_l
 #We are having thin lens which images object from 0.4m distance to the same 0.4m distance to image. This is only possible if 0.4 is double focus of this lens, so focus should be 0.2m.
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     object_distance = Quantity(0.4 * units.meter)
     image_distance = Quantity(0.4 * units.meter)
     Args = namedtuple("Args", ["object_distance", "image_distance"])

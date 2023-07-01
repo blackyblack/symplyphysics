@@ -11,8 +11,8 @@ from symplyphysics import (
 from symplyphysics.laws.electricity.circuits import sum_of_all_currents_through_an_electrical_node_is_zero as kirchhoff_law
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     I1 = Quantity(3 * units.ampere)
     I2 = Quantity(-5 * units.ampere)
     Args = namedtuple("Args", ["I1", "I2"])

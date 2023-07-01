@@ -13,8 +13,8 @@ from symplyphysics.laws.thermodynamics import thermal_energy_from_mass_and_tempe
 
 # How much energy does it take to heat some volume of water weighing 0.5 kilograms то 50 Celsius degree?
 # Specific heat capacity of water is 4200 J/kg*K , ignore losses.
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     C = Quantity(4.2 * units.kilo * units.joule / (units.kilogram * units.kelvin))
     m = Quantity(0.5 * units.kilogram)
     initial_temperature = Celsius(0)

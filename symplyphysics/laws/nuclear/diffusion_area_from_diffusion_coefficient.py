@@ -23,7 +23,7 @@ diffusion_area = Symbol("diffusion_area", units.length**2)
 law = Eq(diffusion_area, diffusion_coefficient / macroscopic_absorption_cross_section)
 
 
-def print() -> str:
+def print_law() -> str:
     return print_expression(law)
 
 

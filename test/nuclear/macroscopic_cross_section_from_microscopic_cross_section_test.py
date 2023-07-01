@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.laws.nuclear import macroscopic_cross_section_from_microscopic_cross_section as macro_cs
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     # carbon microscopic cross-section is 5.01 barn
     microscopic_cross_section = Quantity(5.01e-24 * units.centimeter**2)
     # NC = 1 * 2.75*10^22 atoms of carbon/cm^3

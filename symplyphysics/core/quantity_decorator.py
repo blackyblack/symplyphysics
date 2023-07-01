@@ -1,7 +1,7 @@
 import functools
 import inspect
 import numbers
-from typing import List
+from typing import Any, Callable, List, Sequence
 from sympy import S
 from sympy.physics.units import Quantity, Dimension
 from sympy.physics.units.systems.si import SI
@@ -12,24 +12,18 @@ from .errors import UnitsError
 
 
 def assert_equivalent_dimension(
-        arg: Quantity, decorator_name, param_name, func_name, expected_unit: Dimension):
-    if not isinstance(expected_unit, Dimension):
-        raise TypeError(f"Argument '{expected_unit.name}' to decorator '{decorator_name}'"
-            f" should be sympy.physics.units.Dimension.")
+        arg: Quantity | numbers.Number, param_name: str, func_name: str, expected_unit: Dimension):
     #HACK: this allows to treat angle type as dimensionless
     expected_dimension = expected_unit.subs("angle", S.One)
-    if isinstance(arg,
-        numbers.Number) and SI.get_dimension_system().is_dimensionless(expected_dimension):
-        return
-    if not isinstance(arg, Quantity):
+    if isinstance(arg, numbers.Number):
+        if SI.get_dimension_system().is_dimensionless(expected_dimension):
+            return
         raise TypeError(f"Argument '{param_name}' to function '{func_name}'"
-            f" should be sympy.physics.units.Quantity.")
-
+            f" is Number but '{expected_dimension}' is not dimensionless")
     scale_factor = SI.get_quantity_scale_factor(arg)
     # zero can be of any dimension
     if scale_factor == S.Zero:
         return
-
     #HACK: this allows to treat angle type as dimensionless
     arg_dimension = arg.dimension.subs("angle", S.One)
     # angle is dimensionless but equivalent_dims() fails to compare it
@@ -50,12 +44,12 @@ def assert_equivalent_dimension(
 # Example:
 # @validate_input(param1_=units.length, param2_=(1 / units.length))
 # @validate_input(param1_=body_mass, param2_=body_volume)
-def validate_input(**decorator_kwargs):
+def validate_input(**decorator_kwargs: Any) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
 
-    def validate_func(func):
+    def validate_func(func: Callable[..., Any]) -> Callable[..., Any]:
 
         @functools.wraps(func)
-        def wrapper_validate(*args, **kwargs):
+        def wrapper_validate(*args: Any, **kwargs: Any) -> Any:
             wrapped_signature = inspect.signature(func)
             bound_args = wrapped_signature.bind(*args, **kwargs)
             for param in wrapped_signature.parameters.values():
@@ -72,12 +66,11 @@ def validate_input(**decorator_kwargs):
                     if isinstance(expected_unit, Symbol) or isinstance(expected_unit, Function):
                         expected_unit = expected_unit.dimension
                     if components is None:
-                        assert_equivalent_dimension(arg, "validate_input", param.name,
-                            func.__name__, expected_unit)
+                        assert_equivalent_dimension(arg, param.name, func.__name__, expected_unit)
                     else:
                         for idx, c in enumerate(components):
-                            assert_equivalent_dimension(c, "validate_input", f"{param.name}[{idx}]",
-                                func.__name__, expected_unit)
+                            assert_equivalent_dimension(c, f"{param.name}[{idx}]", func.__name__,
+                                expected_unit)
             return func(*args, **kwargs)
 
         return wrapper_validate
@@ -85,12 +78,12 @@ def validate_input(**decorator_kwargs):
     return validate_func
 
 
-def _assert_expected_unit(value: Quantity | Vector | List,
-    expected_unit: Dimension | Symbol | Function, function_name: str, validator_name: str):
+def _assert_expected_unit(value: Quantity | Vector | Sequence,
+    expected_unit: Dimension | Symbol | Function, function_name: str):
     components = None
     if isinstance(value, Vector):
         components = value.components
-    elif isinstance(value, List):
+    elif isinstance(value, Sequence):
         components = value
 
     expected_dimension = expected_unit
@@ -98,12 +91,10 @@ def _assert_expected_unit(value: Quantity | Vector | List,
         expected_dimension = expected_unit.dimension
 
     if components is None:
-        assert_equivalent_dimension(value, validator_name, "return", function_name,
-            expected_dimension)
+        assert_equivalent_dimension(value, "return", function_name, expected_dimension)
     else:
         for idx, c in enumerate(components):
-            assert_equivalent_dimension(c, validator_name, f"return[{idx}]", function_name,
-                expected_dimension)
+            assert_equivalent_dimension(c, f"return[{idx}]", function_name, expected_dimension)
 
 
 # Validates the output quantity. Output should be sympy.physics.units.Quantity, list of Quantity or
@@ -112,14 +103,15 @@ def _assert_expected_unit(value: Quantity | Vector | List,
 # Example:
 # @validate_output(units.length**2)
 # @validate_output(body_volume)
-def validate_output(expected_unit):
+def validate_output(
+        expected_unit: Dimension | Symbol | Function) -> Callable[[Any], Callable[..., Any]]:
 
-    def validate_func(func):
+    def validate_func(func: Callable[..., Any]) -> Callable[..., Any]:
 
         @functools.wraps(func)
-        def wrapper_validate(*args, **kwargs):
+        def wrapper_validate(*args: Any, **kwargs: Any) -> Any:
             ret = func(*args, **kwargs)
-            _assert_expected_unit(ret, expected_unit, func.__name__, "validate_output")
+            _assert_expected_unit(ret, expected_unit, func.__name__)
             return ret
 
         return wrapper_validate
@@ -131,12 +123,12 @@ def validate_output(expected_unit):
 # sympy.physics.units.Quantity, list of Quantity or Vector of Quantity type.
 # Example:
 # @validate_output_same("param1")
-def validate_output_same(param_name):
+def validate_output_same(param_name: str) -> Callable[[Any], Callable[..., Any]]:
 
-    def validate_func(func):
+    def validate_func(func: Callable[..., Any]) -> Callable[..., Any]:
 
         @functools.wraps(func)
-        def wrapper_validate(*args, **kwargs):
+        def wrapper_validate(*args: Any, **kwargs: Any) -> Any:
             wrapped_signature = inspect.signature(func)
             bound_args = wrapped_signature.bind(*args, **kwargs)
             expected_unit = None
@@ -153,7 +145,7 @@ def validate_output_same(param_name):
             components = None
             if isinstance(ret, Vector):
                 components = ret.components
-            elif isinstance(ret, List):
+            elif isinstance(ret, Sequence):
                 components = ret
 
             expected_dimension = None
@@ -171,7 +163,7 @@ def validate_output_same(param_name):
                     raise UnitsError(f"Argument '{param_name}' to function '{func.__name__}' must"
                         f" have all component dimensions equivalent to '{expected_dimension.name}'")
 
-            _assert_expected_unit(ret, expected_dimension, func.__name__, "validate_output_same")
+            _assert_expected_unit(ret, expected_dimension, func.__name__)
             return ret
 
         return wrapper_validate

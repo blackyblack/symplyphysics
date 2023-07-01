@@ -3,8 +3,8 @@ from pytest import approx, fixture
 from symplyphysics.laws.nuclear import most_neutron_energies_scattering_angle_average_cosine
 
 
-@fixture
-def test_args():
+@fixture(name="test_args")
+def test_args_fixture():
     # carbon mass number is 12
     target_nucleus_mass_number = 12
     Args = namedtuple("Args", ["A"])
