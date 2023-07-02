@@ -20,8 +20,11 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install pytest
+          pip install mypy
       - name: Install symplyphysics
         run: python3 setup.py install
+      - name: Run typechecking with mypy
+        run: mypy --exclude=build .
       - name: Run tests with pytest
         if: success()
         run: pytest 
