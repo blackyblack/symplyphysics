@@ -39,7 +39,7 @@ class CoordinateSystem:
         inner: Optional[CoordSys3D] = None):
         self._coord_system_type = coord_system_type
         if inner is None:
-            self._coord_system = CoordSys3D(next_name("CS"),
+            self._coord_system = CoordSys3D(next_name("SYS"),
                 variable_names=CoordinateSystem.system_to_base_scalars(coord_system_type))
             return
         self._coord_system = inner
@@ -87,7 +87,7 @@ def coordinates_transform(
     self: CoordinateSystem,
     coord_system_type: CoordinateSystem.System = CoordinateSystem.System.CARTESIAN
 ) -> CoordinateSystem:
-    new_coord_system = self.coord_system.create_new(next_name("C"),
+    new_coord_system = self.coord_system.create_new(next_name("SYS"),
         variable_names=CoordinateSystem.system_to_base_scalars(coord_system_type),
         transformation=None)
     return CoordinateSystem(coord_system_type, new_coord_system)

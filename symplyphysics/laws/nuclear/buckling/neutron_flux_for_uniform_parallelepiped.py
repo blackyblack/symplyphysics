@@ -57,11 +57,15 @@ law = Eq(
 
 # define flux function in cylindrical coordinates as a function of cylinder radius and height
 cartesian_coordinates = CoordSys3D("cartesian_coordinates")
+# Make linter happy
+x = getattr(cartesian_coordinates, "x")
+y = getattr(cartesian_coordinates, "y")
+z = getattr(cartesian_coordinates, "z")
 unit_length = Quantity(1, dimension=units.length)
 neutron_flux_function_cartesian = law.subs({
-    x_distance_from_center: cartesian_coordinates.x * unit_length,
-    y_distance_from_center: cartesian_coordinates.y * unit_length,
-    z_distance_from_center: cartesian_coordinates.z * unit_length
+    x_distance_from_center: x * unit_length,
+    y_distance_from_center: y * unit_length,
+    z_distance_from_center: z * unit_length
 })
 
 solved = geometric_buckling_from_neutron_flux.apply_neutron_flux_function(

@@ -1,4 +1,3 @@
-import numbers
 from sympy import (Eq, solve, symbols, cos)
 from symplyphysics import (
     expr_to_quantity,
@@ -35,7 +34,7 @@ def print_law() -> str:
 def calculate_projection(vector_length_: Quantity, angle_: Quantity | float) -> Quantity:
     result_projection_expr = solve(law, projection, dict=True)[0][projection]
     #HACK: sympy angles are always in radians
-    angle_radians = angle_ if isinstance(angle_, numbers.Number) else angle_.scale_factor
+    angle_radians = angle_.scale_factor if isinstance(angle_, Quantity) else angle_
     result_expr = result_projection_expr.subs({
         vector_length: vector_length_,
         vector_angle: angle_radians

@@ -71,6 +71,6 @@ def test_bad_specific_heats_ratio(test_args):
     with raises(errors.UnitsError):
         zero_heat_transfer.calculate_pressure(test_args.n, test_args.t0, test_args.V0, test_args.V1,
             yb)
-    with raises(AttributeError):
+    with raises(errors.UnitsError):
         zero_heat_transfer.calculate_pressure(test_args.n, test_args.t0, test_args.V0, test_args.V1,
             'bad')

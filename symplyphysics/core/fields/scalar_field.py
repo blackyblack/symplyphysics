@@ -5,7 +5,7 @@ from sympy.vector import express
 from ..coordinate_systems.coordinate_systems import CoordinateSystem
 from .field_point import FieldPoint
 
-FieldFunction: TypeAlias = Callable[[FieldPoint], Expr] | Expr
+FieldFunction: TypeAlias = Callable[[FieldPoint], Expr | float] | Expr | float
 
 
 # Converts SymPy expression to a lambda function to use in some field, eg
@@ -48,7 +48,7 @@ class ScalarField:
         self._point_function = point_function
         self._coordinate_system = coordinate_system
 
-    def __call__(self, point_: FieldPoint) -> Expr:
+    def __call__(self, point_: FieldPoint) -> Expr | float:
         return self._point_function(point_) if callable(
             self._point_function) else self._point_function
 
@@ -68,7 +68,7 @@ class ScalarField:
     # Applies field to a trajectory / surface / volume - calls field function with each element of the trajectory as parameter.
     # trajectory_ - list of expressions that correspond to a function in some space, eg [param, param] for a linear function y = x
     # return - value that depends on trajectory parameters.
-    def apply(self, trajectory_: list[Expr]) -> Expr:
+    def apply(self, trajectory_: list[Expr]) -> Expr | float:
         field_point = FieldPoint()
         for idx, element in enumerate(trajectory_):
             field_point.set_coordinate(idx, element)
@@ -77,7 +77,7 @@ class ScalarField:
     # Convert coordinate system to space and apply field.
     # Applying field to entire space is necessary for SymPy field operators like Curl.
     # return - value that depends on basis parameters.
-    def apply_to_basis(self) -> Expr:
+    def apply_to_basis(self) -> Expr | float:
         return self.apply(self.basis)
 
 
@@ -99,15 +99,20 @@ def _extended_express(field_: ScalarField, system_to: CoordinateSystem) -> Scala
     field_space_sympy = field_.apply_to_basis()
     if field_.coordinate_system is None:
         return ScalarField(field_.components[0] if len(field_.components) > 0 else 0, system_to)
+    # Got a scalar value after applying to basis - use this value as field function
+    if not isinstance(field_space_sympy, Expr):
+        return ScalarField(field_space_sympy, system_to)
+    # Make linter happy
+    field_space_expr: Expr = field_space_sympy
     if field_.coordinate_system.coord_system_type != system_to.coord_system_type:
         # This is a reverse transformation, if compared with Vector._extended_express()
         new_scalars = list(
             system_to.transformation_to_system(field_.coordinate_system.coord_system_type))
         for i, scalar in enumerate(field_.coordinate_system.coord_system.base_scalars()):
-            field_space_sympy = field_space_sympy.subs(scalar, new_scalars[i])
+            field_space_expr = field_space_expr.subs(scalar, new_scalars[i])
     # We do not want to maintain own field transformation functions, so
     # we convert our field to SymPy format, transform it and convert back to ScalarField.
-    transformed_vector_sympy = express(field_space_sympy,
+    transformed_vector_sympy = express(field_space_expr,
         system_to.coord_system,
         None,
         variables=True)

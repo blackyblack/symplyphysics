@@ -1,4 +1,3 @@
-import numbers
 from sympy import (Eq, cos, solve, sqrt)
 from sympy.physics.units import speed_of_light
 from symplyphysics import (angle_type, units, expr_to_quantity, Quantity, Symbol, print_expression,
@@ -46,8 +45,8 @@ def print_law() -> str:
 def calculate_observed_frequency(real_frequency_: Quantity, relative_speed_: Quantity,
     source_angle_: float | Quantity) -> Quantity:
     #HACK: sympy angles are always in radians
-    source_angle_radians = source_angle_ if isinstance(source_angle_,
-        numbers.Number) else source_angle_.scale_factor
+    source_angle_radians = source_angle_.scale_factor if isinstance(source_angle_,
+        Quantity) else source_angle_
     result_expr = solve(law, observed_frequency, dict=True)[0][observed_frequency]
     frequency_applied = result_expr.subs({
         real_frequency: real_frequency_,

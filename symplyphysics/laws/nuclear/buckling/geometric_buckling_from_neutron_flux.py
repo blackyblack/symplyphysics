@@ -1,4 +1,4 @@
-from sympy import (Eq, solve, Expr, symbols, simplify)
+from sympy import (Eq, solve, Expr, symbols, simplify, Equality)
 from sympy.vector import Laplacian
 from symplyphysics import (SI, Function, units, expr_to_quantity, Quantity, Symbol,
     print_expression, validate_output)
@@ -53,7 +53,7 @@ def print_law() -> str:
 
 # neutron_flux_function_ should be a function on CoordSys3D
 # This is an exact copy from 'diffusion_equation_from_neutron_flux'
-def apply_neutron_flux_function(neutron_flux_function_: Expr) -> Expr:
+def apply_neutron_flux_function(neutron_flux_function_: Expr) -> Equality:
     # Manually divide to unit_length to get Laplacian dimension. CoordSys3D coordinates are dimensionless, hence
     # Laplacian cannot properly calculate resulting dimension.
     unit_length = Quantity(1, dimension=units.length)

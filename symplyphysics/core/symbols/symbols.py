@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Any, Optional
+from typing import Any, Optional, Sequence
 from sympy import S, Symbol as SymSymbol, Expr, Equality
 from sympy.physics.units import Dimension
 from sympy.core.function import UndefinedFunction
@@ -25,9 +25,6 @@ class DimensionSymbol:
     def display_name(self) -> str:
         return self._display_name
 
-    def __repr__(self) -> str:
-        return self.display_name
-
 
 class Symbol(DimensionSymbol, SymSymbol):
 
@@ -35,7 +32,7 @@ class Symbol(DimensionSymbol, SymSymbol):
         display_name: Optional[str] = None,
         _dimension: Dimension = Dimension(S.One),
         **assumptions: Any) -> Symbol:
-        name = next_name("S") if display_name is None else next_name(display_name)
+        name = next_name("SYM") if display_name is None else next_name(display_name)
         obj = SymSymbol.__new__(cls, name, **assumptions)
         return obj
 
@@ -55,7 +52,7 @@ class Function(DimensionSymbol, UndefinedFunction):
         display_name: Optional[str] = None,
         _dimension: Dimension = Dimension(S.One),
         **options: Any) -> Function:
-        name = next_name("F") if display_name is None else next_name(display_name)
+        name = next_name("FUN") if display_name is None else next_name(display_name)
         obj = UndefinedFunction.__new__(mcs, name, **options)
         return obj
 
@@ -81,7 +78,7 @@ class SymbolPrinter(PrettyPrinter):
         return self._settings["use_unicode"]
 
     def _print_Symbol(self, e: Expr, bold_name: bool = False) -> prettyForm:
-        symb_name = e.display_name if isinstance(e, Symbol) else e.name
+        symb_name = e.display_name if isinstance(e, Symbol) else getattr(e, "name")
         symb = pretty_symbol(symb_name, bold_name)
         return prettyForm(symb)
 
@@ -110,7 +107,7 @@ def next_name(name: str) -> str:
     return name + str(next_id(name))
 
 
-def print_expression(expr: Expr | Equality) -> str:
+def print_expression(expr: Expr | Equality | Sequence[Expr | Equality]) -> str:
     pprinter = SymbolPrinter(use_unicode=False)
     # this is an ugly hack, but at least it works
     use_unicode = pprinter.is_unicode()

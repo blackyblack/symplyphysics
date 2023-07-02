@@ -1,21 +1,20 @@
 import functools
 import inspect
-import numbers
-from typing import Any, Callable, List, Sequence
+from typing import Any, Callable, Sequence, Optional
 from sympy import S
 from sympy.physics.units import Quantity, Dimension
 from sympy.physics.units.systems.si import SI
 
-from symplyphysics.core.symbols.symbols import Function, Symbol
+from symplyphysics.core.symbols.symbols import DimensionSymbol, Function, Symbol
 from ..core.vectors.vectors import Vector
 from .errors import UnitsError
 
 
 def assert_equivalent_dimension(
-        arg: Quantity | numbers.Number, param_name: str, func_name: str, expected_unit: Dimension):
+        arg: Quantity | float, param_name: str, func_name: str, expected_unit: Dimension):
     #HACK: this allows to treat angle type as dimensionless
     expected_dimension = expected_unit.subs("angle", S.One)
-    if isinstance(arg, numbers.Number):
+    if not isinstance(arg, Quantity):
         if SI.get_dimension_system().is_dimensionless(expected_dimension):
             return
         raise TypeError(f"Argument '{param_name}' to function '{func_name}'"
@@ -56,14 +55,14 @@ def validate_input(**decorator_kwargs: Any) -> Callable[[Callable[..., Any]], Ca
                 if param.name in decorator_kwargs:
                     arg = bound_args.arguments[param.name]
 
-                    components = None
+                    components: Optional[list[Quantity | float]] = None
                     if isinstance(arg, Vector):
                         components = arg.components
-                    elif isinstance(arg, List):
-                        components = arg
+                    elif isinstance(arg, Sequence):
+                        components = list(arg)
 
                     expected_unit = decorator_kwargs[param.name]
-                    if isinstance(expected_unit, Symbol) or isinstance(expected_unit, Function):
+                    if isinstance(expected_unit, DimensionSymbol):
                         expected_unit = expected_unit.dimension
                     if components is None:
                         assert_equivalent_dimension(arg, param.name, func.__name__, expected_unit)
@@ -80,21 +79,29 @@ def validate_input(**decorator_kwargs: Any) -> Callable[[Callable[..., Any]], Ca
 
 def _assert_expected_unit(value: Quantity | Vector | Sequence,
     expected_unit: Dimension | Symbol | Function, function_name: str):
-    components = None
+    components: Optional[list[Quantity | float]] = None
+    value_typed: Optional[Quantity | float] = None
     if isinstance(value, Vector):
         components = value.components
     elif isinstance(value, Sequence):
-        components = value
-
-    expected_dimension = expected_unit
-    if isinstance(expected_unit, Symbol) or isinstance(expected_unit, Function):
-        expected_dimension = expected_unit.dimension
-
-    if components is None:
-        assert_equivalent_dimension(value, "return", function_name, expected_dimension)
+        components = list(value)
     else:
+        # Make linter happy
+        value_typed = value
+
+    # Make linter happy
+    expected_dimension_typed: Dimension
+    if isinstance(expected_unit, DimensionSymbol):
+        expected_dimension_typed = expected_unit.dimension
+    else:
+        expected_dimension_typed = expected_unit
+
+    if value_typed is not None:
+        assert_equivalent_dimension(value_typed, "return", function_name, expected_dimension_typed)
+    if components is not None:
         for idx, c in enumerate(components):
-            assert_equivalent_dimension(c, f"return[{idx}]", function_name, expected_dimension)
+            assert_equivalent_dimension(c, f"return[{idx}]", function_name,
+                expected_dimension_typed)
 
 
 # Validates the output quantity. Output should be sympy.physics.units.Quantity, list of Quantity or
@@ -142,28 +149,39 @@ def validate_output_same(param_name: str) -> Callable[[Any], Callable[..., Any]]
                     f" should be in function parameters")
             ret = func(*args, **kwargs)
 
-            components = None
+            components: Optional[list[Quantity | float]] = None
+            value_typed: Optional[Quantity | float] = None
             if isinstance(ret, Vector):
                 components = ret.components
             elif isinstance(ret, Sequence):
-                components = ret
-
-            expected_dimension = None
-            if components is None:
-                expected_dimension = expected_unit.dimension
+                components = list(ret)
             else:
-                if len(components) == 0:
-                    raise UnitsError(
-                        f"Argument '{param_name}' to decorator 'validate_output_same' is a "
-                        f"List but does not have any components to derived expected dimension")
-                expected_dimension = components[0].dimension
-                for c in components:
-                    if SI.get_dimension_system().equivalent_dims(c, expected_dimension):
-                        continue
-                    raise UnitsError(f"Argument '{param_name}' to function '{func.__name__}' must"
-                        f" have all component dimensions equivalent to '{expected_dimension.name}'")
+                # Make linter happy
+                value_typed = ret
 
-            _assert_expected_unit(ret, expected_dimension, func.__name__)
+            # Make linter happy
+            expected_dimension_typed: Dimension
+            if isinstance(expected_unit, DimensionSymbol):
+                expected_dimension_typed = expected_unit.dimension
+            else:
+                expected_dimension_typed = expected_unit
+
+            if value_typed is not None:
+                _assert_expected_unit(ret, expected_dimension_typed, func.__name__)
+                return ret
+
+            assert components is not None, "Should have either components or value_typed set"
+
+            if len(components) == 0:
+                raise UnitsError(
+                    f"Argument '{param_name}' to decorator 'validate_output_same' is a "
+                    f"List but does not have any components to derived expected dimension")
+            for c in components:
+                if SI.get_dimension_system().equivalent_dims(c, expected_dimension_typed):
+                    continue
+                raise UnitsError(f"Argument '{param_name}' to function '{func.__name__}' must"
+                    f" have all component dimensions equivalent to '{expected_dimension_typed.name}'"
+                                )
             return ret
 
         return wrapper_validate

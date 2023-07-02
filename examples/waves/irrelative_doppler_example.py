@@ -39,9 +39,9 @@ result = convert_to(result_velocity, units.kilometer / units.hour).subs({
 # Therefore we should divide the resulting velocity by factor of two for the reflected signal.
 result = result / 2
 
-if (result > 0):
+if result > 0:
     print(f"Object is moving away from radar with {result} km/h velocity")
-elif (result < 0):
+elif result < 0:
     print(f"Object is moving towards radar with {-result} km/h velocity")
 else:
     print("Object is not moving")

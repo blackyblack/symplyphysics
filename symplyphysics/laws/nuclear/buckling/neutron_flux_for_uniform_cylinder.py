@@ -59,10 +59,13 @@ law = Eq(
 # CoordinateSystem class does not work here, because Laplacian obtains coordinate system from
 # the provided scalar field (neutron_flux function)
 cylindrical_coordinates = CoordSys3D("cylindrical_coordinates", transformation="cylindrical")
+# Make linter happy
+r = getattr(cylindrical_coordinates, "r")
+z = getattr(cylindrical_coordinates, "z")
 unit_length = Quantity(1, dimension=units.length)
 neutron_flux_function_cylindrical = law.subs({
-    radial_distance_from_center: cylindrical_coordinates.r * unit_length,
-    axial_distance_from_center: cylindrical_coordinates.z * unit_length
+    radial_distance_from_center: r * unit_length,
+    axial_distance_from_center: z * unit_length
 })
 
 solved = geometric_buckling_from_neutron_flux.apply_neutron_flux_function(

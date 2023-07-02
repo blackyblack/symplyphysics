@@ -1,4 +1,3 @@
-import numbers
 from sympy import (Eq, solve, sin, pi)
 from symplyphysics import (units, Quantity, Symbol, print_expression, Dimensionless, angle_type,
     validate_input, validate_output)
@@ -40,8 +39,8 @@ def print_law() -> str:
 def calculate_refraction_angle(incedence_angle_: Quantity | float,
     incedence_refractive_index_: float, resulting_refractive_index_: float) -> Quantity:
     #HACK: sympy angles are always in radians
-    incedence_angle_radians = incedence_angle_ if isinstance(incedence_angle_,
-        numbers.Number) else incedence_angle_.scale_factor
+    incedence_angle_radians = incedence_angle_.scale_factor if isinstance(
+        incedence_angle_, Quantity) else incedence_angle_
     # Check for boundary conditions
     assert incedence_angle_radians <= pi / 2
     assert incedence_angle_radians >= -pi / 2
