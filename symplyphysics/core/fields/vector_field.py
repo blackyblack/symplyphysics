@@ -1,6 +1,6 @@
 from typing import Optional
 from sympy import Expr
-from sympy.vector import Vector as SympyVector, express
+from sympy.vector import Vector as SymVector, express
 
 from ..coordinate_systems.coordinate_systems import CoordinateSystem
 from .field_point import FieldPoint
@@ -131,13 +131,13 @@ def _extended_express(field_: VectorField, system_to: CoordinateSystem) -> Vecto
 
 
 # Constructs new VectorField from SymPy expression using 'vector_from_sympy_vector'.
-def field_from_sympy_vector(sympy_vector_: Expr,
-    coordinate_system: CoordinateSystem) -> VectorField:
+def field_from_sympy_vector(sympy_vector_: SymVector,
+    coordinate_system: Optional[CoordinateSystem] = None) -> VectorField:
     field_vector = vector_from_sympy_vector(sympy_vector_, coordinate_system)
     return field_from_vector(field_vector)
 
 
 # Apply field to entire coordinate system and convert to SymPy vector
-def sympy_vector_from_field(field_: VectorField) -> SympyVector:
+def sympy_vector_from_field(field_: VectorField) -> SymVector:
     field_space = field_.apply_to_basis()
     return sympy_vector_from_vector(field_space)

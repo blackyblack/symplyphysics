@@ -1,5 +1,4 @@
-from typing import Optional
-from sympy import Expr
+from typing import Any, Optional
 from sympy.vector import Vector as SymVector, express
 from sympy.vector.operators import _get_coord_systems
 
@@ -15,13 +14,12 @@ from ..coordinate_systems.coordinate_systems import CoordinateSystem
 # Therefore for all physical applications vectors should assume various origin point and should be
 # defined dynamically, eg [C.x, C.y] or [parameter1, parameter2].
 class Vector:
-    _components: list[Expr]
+    _components: list[Any]
     #NOTE: 4 and higher dimensional vectors are not supported cause of using CoordSys3D
     #      to allow rebasing vector coordinate system.
     _coordinate_system: Optional[CoordinateSystem] = None
 
-    def __init__(self, components: list[Expr],
-        coordinate_system: Optional[CoordinateSystem] = None):
+    def __init__(self, components: list[Any], coordinate_system: Optional[CoordinateSystem] = None):
         self._components = components
         self._coordinate_system = coordinate_system
 
@@ -30,7 +28,7 @@ class Vector:
         return self._coordinate_system
 
     @property
-    def components(self) -> list[Expr]:
+    def components(self) -> list[Any]:
         return self._components
 
 
@@ -39,20 +37,19 @@ class Vector:
 def vector_from_sympy_vector(sympy_vector_: SymVector,
     coordinate_system: Optional[CoordinateSystem] = None) -> Vector:
     if sympy_vector_ == SymVector.zero:
-        return Vector([])
+        return Vector([], coordinate_system)
     coord_system_set = _get_coord_systems(sympy_vector_)
     coord_system = None
     if len(coord_system_set) > 1:
         coord_sys_names = [str(c) for c in coord_system_set]
         raise TypeError(f"Different coordinate systems in expression: {str(coord_sys_names)}")
-    if len(coord_system_set) > 1:
+    if len(coord_system_set) > 0:
         coord_system = next(iter(coord_system_set))
-        if coord_system != coordinate_system.coord_system:
+        if coordinate_system is not None and coord_system != coordinate_system.coord_system:
             raise TypeError(
                 f"Different coordinate systems in expression and argument: {str(coord_system)} vs {str(coordinate_system.coord_system)}"
             )
-    coord_system = coord_system if coordinate_system is None else coordinate_system.coord_system
-    as_matrix = sympy_vector_.to_matrix(coordinate_system.coord_system)
+    as_matrix = sympy_vector_.to_matrix(coord_system)
     components = [e for e in as_matrix]
     return Vector(components, coordinate_system)
 

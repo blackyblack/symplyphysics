@@ -1,4 +1,3 @@
-import numbers
 from sympy import (Eq, cos, solve)
 from symplyphysics import (units, angle_type, expr_to_quantity, Quantity, Symbol, print_expression,
     validate_input, validate_output)
@@ -143,10 +142,10 @@ def calculate_observed_frequency(real_frequency_: Quantity, wave_velocity_: Quan
     source_speed_: Quantity, observer_speed_: Quantity, source_angle_: float | Quantity,
     observer_angle_: float | Quantity) -> Quantity:
     #HACK: sympy angles are always in radians
-    source_angle_radians = source_angle_ if isinstance(source_angle_,
-        numbers.Number) else source_angle_.scale_factor
-    observer_angle_radians = observer_angle_ if isinstance(observer_angle_,
-        numbers.Number) else observer_angle_.scale_factor
+    source_angle_radians = source_angle_.scale_factor if isinstance(source_angle_,
+        Quantity) else source_angle_
+    observer_angle_radians = observer_angle_.scale_factor if isinstance(observer_angle_,
+        Quantity) else observer_angle_
     result_expr = solve(law, observed_frequency, dict=True)[0][observed_frequency]
     frequency_applied = result_expr.subs({
         real_frequency: real_frequency_,

@@ -1,7 +1,7 @@
 from __future__ import annotations
 from functools import partial
 from typing import Any, Optional
-from sympy import Expr, S, Derivative, Function
+from sympy import Expr, S, Derivative, Function as SymFunction, Basic
 from sympy.core.add import Add
 from sympy.core.mul import Mul
 from sympy.core.power import Pow
@@ -13,23 +13,22 @@ from .symbols import DimensionSymbol, next_name
 class Quantity(DimensionSymbol, SymQuantity):
 
     def __new__(cls,
-        _scale: Expr = S.One,
-        *,
-        display_name: Optional[str] = None,
-        **assumptions: Any) -> SymQuantity:
-        name = next_name("QU") if display_name is None else next_name(display_name)
+        _name: Expr,
+        _abbrev: Optional[str] = None,
+        _latex_repr: Optional[str] = None,
+        _pretty_unicode_repr: Optional[str] = None,
+        _pretty_ascii_repr: Optional[str] = None,
+        _mathml_presentation_repr: Optional[str] = None,
+        _is_prefixed: bool = False,
+        **assumptions: Any) -> Quantity:
+        name = next_name("QTY")
         obj = SymQuantity.__new__(cls, name, None, None, None, None, None, False, **assumptions)
         return obj
 
-    def __init__(self,
-        scale: Expr = S.One,
-        *,
-        display_name: Optional[str] = None,
-        dimension: Optional[Dimension] = None,
-        **_assumptions: Any):
+    def __init__(self, scale: Expr | float = S.One, *, dimension: Optional[Dimension] = None):
         (_, dimension_) = collect_factor_and_dimension(scale)
         dimension = dimension_ if dimension is None else dimension
-        super().__init__(self.name if display_name is None else display_name, dimension)
+        super().__init__(self.name, dimension)
         SI.set_quantity_dimension(self, dimension)
         SI.set_quantity_scale_factor(self, scale)
 
@@ -43,7 +42,9 @@ class Quantity(DimensionSymbol, SymQuantity):
 
 
 # HACK: copy of SI._collect_factor_and_dimension with fixed exp() dimension evaluation
-def collect_factor_and_dimension(expr: Expr) -> tuple[Expr, Dimension]:
+# TODO: this function is recursive and it is hard to maintain proper types for
+# input and output parameters. Fix it.
+def collect_factor_and_dimension(expr: Expr | float | Basic) -> tuple[Any, ...]:
     """
     Return tuple with scale factor expression and dimension expression.
     """
@@ -84,7 +85,7 @@ def collect_factor_and_dimension(expr: Expr) -> tuple[Expr, Dimension]:
             factor /= ifactor**count
             dim /= idim**count
         return factor, dim
-    elif isinstance(expr, Function):
+    elif isinstance(expr, SymFunction):
         fds = [collect_factor_and_dimension(arg) for arg in expr.args]
         dims = [
             Dimension(S.One) if SI.get_dimension_system().is_dimensionless(d[1]) else d[1]

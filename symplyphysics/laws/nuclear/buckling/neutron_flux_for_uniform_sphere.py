@@ -41,9 +41,10 @@ law = Eq(
 
 # define flux function in spherical coordinates as a function of sphere radius
 spherical_coordinates = CoordSys3D("spherical_coordinates", transformation="spherical")
+# Make linter happy
+r = getattr(spherical_coordinates, "r")
 unit_length = Quantity(1, dimension=units.length)
-neutron_flux_function_spherical = law.subs(distance_from_center,
-    spherical_coordinates.r * unit_length)
+neutron_flux_function_spherical = law.subs(distance_from_center, r * unit_length)
 
 solved = geometric_buckling_from_neutron_flux.apply_neutron_flux_function(
     neutron_flux_function_spherical.rhs)

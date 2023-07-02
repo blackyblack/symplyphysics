@@ -76,7 +76,7 @@ def scale_vector(scalar_value: Expr, vector: Vector) -> Vector:
 # Dot product equals to magnitudes of both vectors multiplied * cos(phi), where
 # phi is angle between vectors.
 # Hence vectors are orthogonal (perpendicular) when dot product is zero.
-def dot_vectors(vector_left: Vector, vector_right: Vector) -> Expr:
+def dot_vectors(vector_left: Vector, vector_right: Vector) -> Expr | float:
     if vector_left.coordinate_system != vector_right.coordinate_system:
         raise TypeError(
             f"Different coordinate systems in vectors: {str(vector_left.coordinate_system)} vs {str(vector_right.coordinate_system)}"
@@ -95,7 +95,6 @@ def dot_vectors(vector_left: Vector, vector_right: Vector) -> Expr:
         theta1, theta2 = left_components[1], right_components[1]
         z1, z2 = left_components[2], right_components[2]
         return r1 * r2 * cos(theta1 - theta2) + z1 * z2
-
     if vector_left.coordinate_system.coord_system_type == CoordinateSystem.System.SPHERICAL:
         left_components = vector_left.components
         left_components.extend([0] * (3 - len(left_components)))
@@ -106,6 +105,9 @@ def dot_vectors(vector_left: Vector, vector_right: Vector) -> Expr:
         phi1, phi2 = left_components[2], right_components[2]
         x = r1 * r2 * (sin(theta1) * sin(theta2) * cos(phi1 - phi2) + cos(theta1) * cos(theta2))
         return x
+    raise TypeError(
+        f"Unsupported coordinate system type: {str(vector_left.coordinate_system.coord_system_type)}"
+    )
 
 
 def vector_magnitude(vector_: Vector) -> Expr:

@@ -1,8 +1,7 @@
 from typing import Iterable, TypeAlias
-from numbers import Real
 from sympy import Expr
 
-Coordinate: TypeAlias = Expr | Real
+Coordinate: TypeAlias = Expr | float
 
 
 # This class not only represents point in space, but any trajectory in any-dimensional space.

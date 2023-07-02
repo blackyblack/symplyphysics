@@ -2,7 +2,7 @@ from typing import Optional
 from sympy import Expr, S, exp
 from sympy.core.add import Add
 from sympy.core.mul import Mul
-from sympy.vector import VectorAdd
+from sympy.vector import VectorAdd, VectorMul, Vector as SymVector
 from ..core.coordinate_systems.coordinate_systems import CoordinateSystem
 from ..core.vectors.vectors import Vector, vector_from_sympy_vector
 from ..core.symbols.quantities import Quantity, collect_factor_and_dimension
@@ -23,9 +23,11 @@ def expr_to_quantity(expr: Expr) -> Quantity:
 
 def expr_to_vector(expr: Expr, coordinate_system: Optional[CoordinateSystem] = None) -> Vector:
     if isinstance(expr, Mul):
-        expr = expr.expand()
+        expr = VectorMul(*expr.args)
     if isinstance(expr, Add):
-        expr = VectorAdd(expr)
+        expr = VectorAdd(*expr.args)
+    if not isinstance(expr, SymVector):
+        raise TypeError(f"Expression cannot be converted to SymPy Vector: {str(expr)}")
     vector = vector_from_sympy_vector(expr, coordinate_system)
     components: list[Quantity] = []
     for c in vector.components:

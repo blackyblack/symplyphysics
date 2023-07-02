@@ -281,7 +281,7 @@ def test_invariant_transformed_trajectory_field_apply(test_args):
     transformed_trajectory_value = field.apply(transformed_trajectory)
 
     p1 = test_args.C.coord_system.origin.locate_new(
-        'p1', point[0] * test_args.C.coord_system.i + point[1] * test_args.C.coord_system.j)
+        "p1", point[0] * test_args.C.coord_system.i + point[1] * test_args.C.coord_system.j)
     p1_coordinates = p1.express_coordinates(test_args.C.coord_system)
     assert p1_coordinates[0] == point[0]
     assert p1_coordinates[1] == point[1]
@@ -322,7 +322,7 @@ def test_basic_field_rebase(test_args):
 
     # B is located at [1, 2] origin instead of [0, 0] of test_args.C
     Bi = test_args.C.coord_system.locate_new(
-        'B', test_args.C.coord_system.i + 2 * test_args.C.coord_system.j)
+        "B", test_args.C.coord_system.i + 2 * test_args.C.coord_system.j)
     B = CoordinateSystem(test_args.C.coord_system_type, Bi)
     field_rebased = field_rebase(field, B)
     assert field_rebased.basis == [B.coord_system.x, B.coord_system.y, B.coord_system.z]
@@ -344,7 +344,7 @@ def test_invariant_field_rebase_and_apply(test_args):
     field = ScalarField(lambda p: p.x**2 + 2 * p.y**2, test_args.C)
     point = [1, 2]
     p1 = test_args.C.coord_system.origin.locate_new(
-        'p1', point[0] * test_args.C.coord_system.i + point[1] * test_args.C.coord_system.j)
+        "p1", point[0] * test_args.C.coord_system.i + point[1] * test_args.C.coord_system.j)
     p1_coordinates = p1.express_coordinates(test_args.C.coord_system)
     assert p1_coordinates[0] == point[0]
     assert p1_coordinates[1] == point[1]
@@ -375,7 +375,7 @@ def test_no_coord_system_field_rebase(test_args):
     assert point_value == 3
 
     Bi = test_args.C.coord_system.locate_new(
-        'B', test_args.C.coord_system.i + 2 * test_args.C.coord_system.j)
+        "B", test_args.C.coord_system.i + 2 * test_args.C.coord_system.j)
     B = CoordinateSystem(test_args.C.coord_system_type, Bi)
     field_rebased = field_rebase(field, B)
     assert field_rebased.basis == [B.coord_system.x, B.coord_system.y, B.coord_system.z]

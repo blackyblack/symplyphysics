@@ -59,7 +59,7 @@ def test_skip_dimension_sympy_to_array_conversion(test_args):
 def test_empty_sympy_to_array_conversion(test_args):
     vector = vector_from_sympy_vector(SympyVector.zero, test_args.C)
     assert vector.components == []
-    assert vector.coordinate_system is None
+    assert vector.coordinate_system == test_args.C
 
 
 # Does not support non SymPy Vectors
@@ -170,7 +170,7 @@ def test_basic_vector_rebase(test_args):
 
     # B is located at [1, 2] origin instead of [0, 0] of test_args.C
     Bi = test_args.C.coord_system.locate_new(
-        'B', test_args.C.coord_system.i + 2 * test_args.C.coord_system.j)
+        "B", test_args.C.coord_system.i + 2 * test_args.C.coord_system.j)
     B = CoordinateSystem(test_args.C.coord_system_type, Bi)
     vector_rebased = vector_rebase(vector, B)
     assert vector_rebased.coordinate_system == B
@@ -186,7 +186,7 @@ def test_plain_vector_rebase(test_args):
 
     # B is located at [1, 2] origin instead of [0, 0] of test_args.C
     Bi = test_args.C.coord_system.locate_new(
-        'B', test_args.C.coord_system.i + 2 * test_args.C.coord_system.j)
+        "B", test_args.C.coord_system.i + 2 * test_args.C.coord_system.j)
     B = CoordinateSystem(test_args.C.coord_system_type, Bi)
     vector_rebased = vector_rebase(vector, B)
     assert vector_rebased.coordinate_system == B
@@ -203,7 +203,7 @@ def test_parameters_vector_rebase(test_args):
 
     # B is located at [1, 2] origin instead of [0, 0] of test_args.C
     Bi = test_args.C.coord_system.locate_new(
-        'B', test_args.C.coord_system.i + 2 * test_args.C.coord_system.j)
+        "B", test_args.C.coord_system.i + 2 * test_args.C.coord_system.j)
     B = CoordinateSystem(test_args.C.coord_system_type, Bi)
     vector_rebased = vector_rebase(vector, B)
     assert vector_rebased.coordinate_system == B
@@ -217,7 +217,7 @@ def test_no_coord_system_vector_rebase(test_args):
     vector = Vector([test_args.C.coord_system.x, test_args.C.coord_system.y])
     assert vector.coordinate_system is None
     Bi = test_args.C.coord_system.locate_new(
-        'B', test_args.C.coord_system.i + 2 * test_args.C.coord_system.j)
+        "B", test_args.C.coord_system.i + 2 * test_args.C.coord_system.j)
     B = CoordinateSystem(test_args.C.coord_system_type, Bi)
     vector_rebased = vector_rebase(vector, B)
     assert vector_rebased.coordinate_system == B
@@ -238,7 +238,7 @@ def test_rotate_vector_rebase(test_args):
     vector = Vector([1, 2], test_args.C)
     point = [1, 2]
     p1 = test_args.C.coord_system.origin.locate_new(
-        'p1', point[0] * test_args.C.coord_system.i + point[1] * test_args.C.coord_system.j)
+        "p1", point[0] * test_args.C.coord_system.i + point[1] * test_args.C.coord_system.j)
     p1_coordinates = p1.express_coordinates(test_args.C.coord_system)
     assert p1_coordinates[0] == point[0]
     assert p1_coordinates[1] == point[1]

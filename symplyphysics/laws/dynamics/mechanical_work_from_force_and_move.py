@@ -1,4 +1,3 @@
-import numbers
 from sympy import (Eq, solve)
 from sympy.vector import Dot
 from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression, angle_type,
@@ -34,11 +33,10 @@ def calculate_work(force_: Quantity, distance_: Quantity, force_angle: Quantity 
     coordinates_cartesian = coordinates_transform(coordinates_polar,
         CoordinateSystem.System.CARTESIAN)
     #HACK: sympy angles are always in radians
-    force_angle_radians = force_angle if isinstance(force_angle,
-        numbers.Number) else force_angle.scale_factor
-    distance_angle_radians = distance_angle if isinstance(distance_angle,
-        numbers.Number) else distance_angle.scale_factor
-
+    force_angle_radians = force_angle.scale_factor if isinstance(force_angle,
+        Quantity) else force_angle
+    distance_angle_radians = distance_angle.scale_factor if isinstance(distance_angle,
+        Quantity) else distance_angle
     # Convert to Cartesian coordinates as Dot product does not work properly for Cylindrical coordinates
     force_vector = Vector([force_, force_angle_radians], coordinates_polar)
     distance_vector = Vector([distance_, distance_angle_radians], coordinates_polar)
