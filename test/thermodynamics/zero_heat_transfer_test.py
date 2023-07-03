@@ -26,7 +26,7 @@ def test_basic_pressure(test_args):
     result = zero_heat_transfer.calculate_pressure(test_args.n, test_args.t0, test_args.V0,
         test_args.V1, test_args.y)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.pressure)
-    result_pressure = convert_to(result, units.pascal).subs(units.pascal, 1).evalf(8)
+    result_pressure = convert_to(result, units.pascal).evalf(8)
     assert result_pressure == approx(262.19, 0.001)
 
 

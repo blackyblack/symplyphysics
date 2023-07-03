@@ -21,8 +21,7 @@ def test_args_fixture_fixture():
 def test_basic_density(test_args):
     result = volume_number_density.calculate_number_density(test_args.o, test_args.V)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, 1 / units.volume)
-    result_density = convert_to(result,
-        volume_number_density.definition_units_SI).subs(units.meter, 1).evalf(2)
+    result_density = convert_to(result, volume_number_density.definition_units_SI).evalf(2)
     assert result_density == approx(100, 0.01)
 
 

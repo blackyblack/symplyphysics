@@ -23,7 +23,7 @@ def test_args_fixture():
 def test_basic_power(test_args):
     result = power_def.calculate_power(test_args.Q, test_args.t)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.power)
-    result_power = convert_to(result, units.watt).subs(units.watt, 1).evalf(5)
+    result_power = convert_to(result, units.watt).evalf(5)
     assert result_power == approx(571, 0.001)
 
 

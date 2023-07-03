@@ -25,7 +25,7 @@ def test_args_fixture():
 def test_basic_amount(test_args):
     result = joule_lenz_law.calculate_amount_energy(test_args.U, test_args.t, test_args.R)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_energy = convert_to(result, units.joule).subs(units.joule, 1).evalf(6)
+    result_energy = convert_to(result, units.joule).evalf(6)
     assert result_energy == approx(80666.6, 0.000001)
 
 

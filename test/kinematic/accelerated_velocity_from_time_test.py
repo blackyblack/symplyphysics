@@ -27,8 +27,7 @@ def test_args_fixture():
 def test_basic_velocity(test_args):
     result = accelerated_velocity_law.calculate_velocity(test_args.V1, test_args.A1, test_args.T1)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.velocity)
-    result_velocity = convert_to(result,
-        units.meter / units.second).subs(units.meter / units.second, 1).evalf(2)
+    result_velocity = convert_to(result, units.meter / units.second).evalf(2)
     assert result_velocity == approx(-47, 0.01)
 
 

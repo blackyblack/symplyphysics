@@ -25,7 +25,7 @@ def test_basic_projection(test_args):
     result = projection_law.calculate_projection(test_args.force_vector_amplitude,
         test_args.angle_between_vector_and_horizontal_axis)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
-    result_vector = convert_to(result, units.newton).subs(units.newton, 1).evalf(2)
+    result_vector = convert_to(result, units.newton).evalf(2)
     assert result_vector == approx(1.5, 0.01)
 
 

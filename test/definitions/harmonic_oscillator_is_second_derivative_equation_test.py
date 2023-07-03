@@ -27,7 +27,7 @@ def test_args_fixture():
 def test_basic_displacement(test_args):
     result = oscillator.calculate_displacement(test_args.A, test_args.w, test_args.t)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
-    result_frequency = convert_to(result, units.meter).subs(units.meter, 1).evalf(4)
+    result_frequency = convert_to(result, units.meter).evalf(4)
     assert result_frequency == approx(-20, 0.01)
 
 

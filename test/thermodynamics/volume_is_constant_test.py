@@ -22,7 +22,7 @@ def test_args_fixture():
 def test_basic_pressure(test_args):
     result = isochoric_law.calculate_pressure(test_args.t0, test_args.P0, test_args.t1)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.pressure)
-    result_pressure = convert_to(result, units.pascal).subs(units.pascal, 1).evalf(2)
+    result_pressure = convert_to(result, units.pascal).evalf(2)
     assert result_pressure == approx(2.0, 0.01)
 
 

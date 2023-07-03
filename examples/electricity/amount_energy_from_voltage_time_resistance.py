@@ -45,7 +45,7 @@ heating_time_solved = solve(law, (operate_energy.amount_energy, joule_lenz_law.r
     dict=True)[0][joule_lenz_law.time]
 heating_time_eq = Eq(joule_lenz_law.time, heating_time_solved)
 
-print("\nFormula is:\n\n {}".format(print_expression(heating_time_eq)))
+print(f"\nFormula is:\n\n {print_expression(heating_time_eq)}")
 
 heating_time_expr = heating_time_solved.subs({
     operate_power.power: kettle_power,
@@ -57,9 +57,9 @@ heating_time_expr = heating_time_solved.subs({
 })
 heating_time = expr_to_quantity(heating_time_expr)
 
-kettle_power_value = convert_to(kettle_power, units.watt).subs(units.watt, 1).evalf(5)
-kettle_volume_value = convert_to(kettle_volume, units.liter).subs(units.liter, 1).evalf(3)
-heating_time_value = convert_to(heating_time, units.second).subs(units.second, 1).evalf(3)
+kettle_power_value = convert_to(kettle_power, units.watt).evalf(5)
+kettle_volume_value = convert_to(kettle_volume, units.liter).evalf(3)
+heating_time_value = convert_to(heating_time, units.second).evalf(3)
 
 print(
     f"\nPower = {kettle_power_value} {units.watt}, water volume = {kettle_volume_value} {units.liter}"

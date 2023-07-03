@@ -31,7 +31,7 @@ def test_basic_frequency(test_args):
     result = doppler_law.calculate_observed_frequency(test_args.emitted_frequency, speed_of_light,
         test_args.object_velocity, test_args.zero_velocity)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.frequency)
-    result_freq = int(convert_to(result, units.hertz).subs(units.hertz, 1).evalf(4))
+    result_freq = int(convert_to(result, units.hertz).evalf(4))
     assert result_freq == approx(1.2507e14, 0.001)
 
 
@@ -44,7 +44,7 @@ def test_classical_moving_observer_frequency(test_args):
     result = doppler_law.calculate_observed_frequency(horn_frequency, wave_velocity,
         object_velocity, test_args.zero_velocity)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.frequency)
-    result_freq = int(convert_to(result, units.hertz).subs(units.hertz, 1).evalf(4))
+    result_freq = int(convert_to(result, units.hertz).evalf(4))
     assert result_freq == approx(1985, 0.1)
 
     # make observer moving and source idle to verify that effect is irrelative if we have moving
@@ -52,7 +52,7 @@ def test_classical_moving_observer_frequency(test_args):
     result = doppler_law.calculate_observed_frequency(horn_frequency, wave_velocity,
         test_args.zero_velocity, object_velocity)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.frequency)
-    moving_observer_freq = int(convert_to(result, units.hertz).subs(units.hertz, 1).evalf(4))
+    moving_observer_freq = int(convert_to(result, units.hertz).evalf(4))
     assert moving_observer_freq == result_freq
 
 
@@ -63,14 +63,14 @@ def test_moving_observer_frequency(test_args):
     result = doppler_law.calculate_observed_frequency(test_args.emitted_frequency, speed_of_light,
         object_velocity, test_args.zero_velocity)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.frequency)
-    result_freq = int(convert_to(result, units.hertz).subs(units.hertz, 1).evalf(8))
+    result_freq = int(convert_to(result, units.hertz).evalf(8))
 
     # make observer moving and source idle to verify that effect is irrelative if we have moving
     # source of waves or moving observer
     result = doppler_law.calculate_observed_frequency(test_args.emitted_frequency, speed_of_light,
         test_args.zero_velocity, object_velocity)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.frequency)
-    moving_observer_freq = int(convert_to(result, units.hertz).subs(units.hertz, 1).evalf(8))
+    moving_observer_freq = int(convert_to(result, units.hertz).evalf(8))
     assert moving_observer_freq == result_freq
 
 

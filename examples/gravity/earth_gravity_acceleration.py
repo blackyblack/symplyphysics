@@ -30,6 +30,5 @@ result_acceleration = result_expr.subs({
     gravity_law.first_object_mass: earth_mass,
     gravity_law.distance_between_mass_centers: earth_radius
 })
-result = convert_to(result_acceleration,
-    units.meter / (units.second**2)).subs(units.meter / (units.second**2), 1).evalf(4)
+result = convert_to(result_acceleration, units.meter / (units.second**2)).evalf(4)
 print(f"Gravity acceleration on Earth is {result}")

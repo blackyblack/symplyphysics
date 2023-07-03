@@ -28,10 +28,7 @@ def test_basic_velocity(test_args):
     result = angular_velocity_def.calculate_angular_velocity(test_args.a0, test_args.a1,
         test_args.t)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, 1 / units.time)
-    result_velocity = convert_to(result, angular_velocity_def.definition_units_SI).subs({
-        units.radian: 1,
-        units.second: 1
-    }).evalf(2)
+    result_velocity = convert_to(result, angular_velocity_def.definition_units_SI).evalf(2)
     assert result_velocity == approx(0.63, 0.01)
 
 

@@ -28,7 +28,7 @@ def test_args_fixture():
 def test_basic_work(test_args):
     result = work_law.calculate_work(test_args.F, test_args.S, test_args.Fa, test_args.Sa)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_work = convert_to(result, units.joule).subs(units.joule, 1).evalf(4)
+    result_work = convert_to(result, units.joule).evalf(4)
     assert result_work == approx(150, 0.01)
 
 

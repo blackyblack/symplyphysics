@@ -23,8 +23,7 @@ def test_args_fixture():
 def test_basic_cross_section(test_args):
     result = macro_tr_cs.calculate_cross_section(test_args.scatter_cs, test_args.u)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length**-1)
-    result_cross_section = convert_to(result, units.centimeter**-1).subs(units.centimeter,
-        1).evalf(2)
+    result_cross_section = convert_to(result, units.centimeter**-1).evalf(2)
     assert result_cross_section == approx(0.498, 0.01)
 
 

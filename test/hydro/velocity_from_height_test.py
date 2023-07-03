@@ -24,10 +24,7 @@ def test_args_fixture():
 def test_basic_velocity(test_args):
     result = torricellis_formula.calculate_velocity(test_args.h)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.velocity)
-    result_velocity = convert_to(result, units.meter / units.second).subs({
-        units.meter: 1,
-        units.second: 1
-    }).evalf(5)
+    result_velocity = convert_to(result, units.meter / units.second).evalf(5)
     assert result_velocity == approx(7.67, 0.0001)
 
 

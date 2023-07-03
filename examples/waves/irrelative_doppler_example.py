@@ -28,9 +28,7 @@ applied_solution = solution.subs({
 })
 
 result_velocity = expr_to_quantity(applied_solution)
-result = convert_to(result_velocity, units.kilometer / units.hour).subs({
-    units.kilometer / units.hour: 1
-}).evalf(3)
+result = convert_to(result_velocity, units.kilometer / units.hour).evalf(3)
 
 # Since object is not an emitter of signal, we cannot directly use Doppler law. Let's assume, we emit
 # 40000 Hz at the approaching car. The car should observe this signal with 41200 Hz when moving at the

@@ -25,7 +25,7 @@ def test_args_fixture():
 def test_basic_power(test_args):
     result = joule_lenz_law.calculate_heat_power(test_args.C, test_args.R)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.power)
-    result_power = convert_to(result, units.watt).subs(units.watt, 1).evalf(2)
+    result_power = convert_to(result, units.watt).evalf(2)
     assert result_power == approx(2, 0.01)
 
 

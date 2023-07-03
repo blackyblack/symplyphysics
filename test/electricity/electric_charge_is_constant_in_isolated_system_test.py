@@ -20,7 +20,7 @@ def test_args_fixture():
 def test_basic_charge_conservation(test_args):
     result = charge_law.calculate_charge_after(test_args.Qs)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.charge)
-    result_charge = convert_to(result, units.coulomb).subs(units.coulomb, 1).evalf(2)
+    result_charge = convert_to(result, units.coulomb).evalf(2)
     assert result_charge == approx(1.0, 0.001)
 
 

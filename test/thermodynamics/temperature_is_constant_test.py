@@ -22,7 +22,7 @@ def test_args_fixture():
 def test_basic_volume(test_args):
     result = boyles_law.calculate_volume(test_args.P0, test_args.V0, test_args.P1)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.volume)
-    result_volume = convert_to(result, units.liter).subs(units.liter, 1).evalf(2)
+    result_volume = convert_to(result, units.liter).evalf(2)
     assert result_volume == approx(0.5, 0.01)
 
 

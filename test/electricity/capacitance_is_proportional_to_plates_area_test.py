@@ -1,12 +1,6 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-from symplyphysics import (
-    errors,
-    units,
-    convert_to,
-    Quantity,
-    SI,
-)
+from symplyphysics import (errors, units, Quantity, SI, convert_to)
 from symplyphysics.laws.electricity import capacitance_is_proportional_to_plates_area as capacitance_law
 
 # Description
@@ -26,11 +20,11 @@ def test_args_fixture():
 
 
 def test_basic_capacitance(test_args):
-    result = capacitance_law.calculate_capacitance(test_args.permeability, test_args.area, test_args.clearance)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.capacitance)    
-    result_capacitance = convert_to(result, units.farad).subs({units.pico: 1, units.farad: 1}).evalf(8)    
-    assert result_capacitance == approx(0.000000000177083756352408, 0.000000000001)
-    #assert result_capacitance == approx(177.08, 0.000000000001)
+    result = capacitance_law.calculate_capacitance(test_args.permeability, test_args.area,
+        test_args.clearance)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.capacitance)
+    result_capacitance = convert_to(result, units.pico * units.farad).evalf(4)
+    assert result_capacitance == approx(177.08, 0.001)
 
 
 def test_bad_area(test_args):

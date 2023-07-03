@@ -40,7 +40,5 @@ required_velocity_expression = satellite_velocity.subs({
 })
 
 result_velocity = expr_to_quantity(required_velocity_expression)
-result = convert_to(result_velocity, units.kilometer / units.second).subs({
-    units.kilometer / units.second: 1
-}).evalf(3)
+result = convert_to(result_velocity, units.kilometer / units.second).evalf(3)
 print(f"Required velocity to launch satellite is {result} kilometer/sec")

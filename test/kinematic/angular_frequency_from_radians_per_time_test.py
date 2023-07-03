@@ -25,10 +25,7 @@ def test_args_fixture():
 def test_basic_frequency(test_args):
     result = frequency_def.calculate_frequency(test_args.N, test_args.t)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, 1 / units.time)
-    result_frequency = convert_to(result, units.radian / units.second).subs({
-        units.radian: 1,
-        units.second: 1
-    }).evalf(2)
+    result_frequency = convert_to(result, units.radian / units.second).evalf(2)
     assert result_frequency == approx(1.744, 0.01)
 
 

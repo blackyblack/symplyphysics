@@ -23,8 +23,7 @@ def test_args_fixture():
 def test_basic_number_density(test_args):
     result = atomic_number_density.calculate_atomic_number_density(test_args.p, test_args.M)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, 1 / units.volume)
-    result_number_density = convert_to(result, 1 / units.centimeter**3).subs(units.centimeter,
-        1).evalf(6)
+    result_number_density = convert_to(result, 1 / units.centimeter**3).evalf(6)
     assert result_number_density == approx(2.75e22, 0.001)
 
 

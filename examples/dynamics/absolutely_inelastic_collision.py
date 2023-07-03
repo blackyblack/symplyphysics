@@ -31,20 +31,11 @@ result_expr = solved.subs({
 })
 result_velocity = expr_to_quantity(result_expr)
 
-result_velocity_meter_per_second = convert_to(result_velocity, units.meter / units.second).subs({
-    units.meter: 1,
-    units.seconds: 1
-}).evalf(2)
-bullet_mass_gram = convert_to(bullet_mass, units.gram).subs(units.gram, 1).evalf(2)
-body_mass_kg = convert_to(body_mass, units.kilogram).subs(units.kilogram, 1).evalf(2)
-bullet_velocity_meter_per_second = convert_to(bullet_velocity, units.meter / units.second).subs({
-    units.meter: 1,
-    units.second: 1
-}).evalf(3)
-body_velocity_meter_per_second = convert_to(body_velocity, units.meter / units.second).subs({
-    units.meter: 1,
-    units.second: 1
-}).evalf(2)
+result_velocity_meter_per_second = convert_to(result_velocity, units.meter / units.second).evalf(2)
+bullet_mass_gram = convert_to(bullet_mass, units.gram).evalf(2)
+body_mass_kg = convert_to(body_mass, units.kilogram).evalf(2)
+bullet_velocity_meter_per_second = convert_to(bullet_velocity, units.meter / units.second).evalf(3)
+body_velocity_meter_per_second = convert_to(body_velocity, units.meter / units.second).evalf(2)
 
 print(f"Velocity = {result_velocity_meter_per_second} {units.meter / units.second}\n")
 print(

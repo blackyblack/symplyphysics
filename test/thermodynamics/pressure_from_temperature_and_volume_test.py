@@ -23,10 +23,10 @@ def test_args_fixture():
 def test_basic_pressure(test_args):
     result = ideal_gas_law.calculate_pressure(test_args.V, test_args.t, test_args.n)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.pressure)
-    result_pressure = convert_to(result, units.pascal).subs(units.pascal, 1).evalf(2)
+    result_pressure = convert_to(result, units.pascal).evalf(2)
     assert result_pressure == approx(101.325e+3, 0.01)
     # Also check that calculated pressure = 1 atmosphere
-    result_pressure_atms = convert_to(result, units.atm).subs(units.atm, 1).evalf(2)
+    result_pressure_atms = convert_to(result, units.atm).evalf(2)
     assert result_pressure_atms == approx(1.0, 0.01)
 
 

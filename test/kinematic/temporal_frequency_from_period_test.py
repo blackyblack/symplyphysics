@@ -20,7 +20,7 @@ def test_args_fixture():
 def test_basic_frequency(test_args):
     result = frequency_def.calculate_frequency(test_args.T)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.frequency)
-    result_period = convert_to(result, units.hertz).subs(units.hertz, 1).evalf(2)
+    result_period = convert_to(result, units.hertz).evalf(2)
     assert result_period == approx(0.36, 0.01)
 
 

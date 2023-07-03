@@ -40,7 +40,7 @@ def test_basic_force():
 def test_basic_force_quantity(test_args):
     result = newton_third_law.calculate_force_reaction(test_args.F)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
-    result_force = convert_to(result, units.newton).subs(units.newton, 1).evalf(2)
+    result_force = convert_to(result, units.newton).evalf(2)
     assert result_force == approx(2.0, 0.01)
 
 

@@ -26,7 +26,7 @@ def test_basic_frequency(test_args):
     result = doppler_law.calculate_observed_frequency(test_args.emitted_frequency,
         test_args.object_velocity)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.frequency)
-    result_freq = convert_to(result, units.hertz).subs(units.hertz, 1).evalf(6)
+    result_freq = convert_to(result, units.hertz).evalf(6)
     assert result_freq == approx(3.473e14, 0.001)
 
 
