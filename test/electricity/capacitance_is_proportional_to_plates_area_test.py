@@ -10,7 +10,7 @@ from symplyphysics import (
 from symplyphysics.laws.electricity import capacitance_is_proportional_to_plates_area as capacitance_law
 
 # Description
-## Assert we have a capacitor with 20mm2 plate area and 5micrometer clearance with fielectric permeability of insulator of 5.
+## Assert we have a capacitor with 20mm2 plate area and 5micrometer clearance with dielectric permeability of insulator of 5.
 ## According to online calculator
 ## (https://matematika-club.ru/ehlektroemkost-kondensatora-kalkulyator-onlajn)
 ## its capacitance should be  177.08 pF or 0.000000000177083756352408 Farad.
@@ -20,30 +20,30 @@ from symplyphysics.laws.electricity import capacitance_is_proportional_to_plates
 def test_args_fixture():
     permeability = 5.0
     area = Quantity(20 * (units.milli * units.meter)**2)
-    clearance = Quantity(5 * units.micro * units.meter)
-    Args = namedtuple("Args", ["permeability", "area", "clearance"])
-    return Args(permeability=permeability, area=area, clearance=clearance)
+    distance = Quantity(5 * units.micro * units.meter)
+    Args = namedtuple("Args", ["permeability", "area", "distance"])
+    return Args(permeability=permeability, area=area, distance=distance)
 
 
 def test_basic_capacitance(test_args):
-    result = capacitance_law.calculate_capacitance(test_args.permeability, test_args.area, test_args.clearance)
+    result = capacitance_law.calculate_capacitance(test_args.permeability, test_args.area, test_args.distance)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.capacitance)    
-    result_capacitance = convert_to(result, units.farad).subs({units.pico: 1, units.farad: 1}).evalf(8)    
+    result_capacitance = convert_to(result, units.farad).subs({units.farad: 1}).evalf(8)    
     assert result_capacitance == approx(0.000000000177083756352408, 0.000000000001)
-    #assert result_capacitance == approx(177.08, 0.000000000001)
+    #assert result_capacitance == approx(177.08 * units.pico, 0.000000000001)
 
 
 def test_bad_area(test_args):
     ab = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        capacitance_law.calculate_capacitance(test_args.permeability, ab, test_args.clearance)
+        capacitance_law.calculate_capacitance(test_args.permeability, ab, test_args.distance)
     with raises(TypeError):
-        capacitance_law.calculate_capacitance(test_args.permeability, 100, test_args.clearance)
+        capacitance_law.calculate_capacitance(test_args.permeability, 100, test_args.distance)
 
 
-def test_bad_clearance(test_args):
-    cb = Quantity(1 * units.coulomb)
+def test_bad_distance(test_args):
+    db = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        capacitance_law.calculate_capacitance(test_args.permeability, test_args.area, cb)
+        capacitance_law.calculate_capacitance(test_args.permeability, test_args.area, db)
     with raises(TypeError):
         capacitance_law.calculate_capacitance(test_args.permeability, test_args.area, 100)
