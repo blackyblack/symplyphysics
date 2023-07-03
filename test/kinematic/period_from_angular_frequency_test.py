@@ -20,7 +20,7 @@ def test_args_fixture():
 def test_basic_period(test_args):
     result = period_def.calculate_period(test_args.w)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.time)
-    result_period = convert_to(result, units.second).subs(units.second, 1).evalf(2)
+    result_period = convert_to(result, units.second).evalf(2)
     assert result_period == approx(1.0, 0.01)
 
 

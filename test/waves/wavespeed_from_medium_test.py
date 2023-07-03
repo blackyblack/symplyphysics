@@ -21,8 +21,5 @@ def test_args_fixture():
 def test_basic_speed(test_args):
     result = speed_law.calculate_wavespeed(test_args.refraction_factor)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.speed)
-    result_freq_1 = convert_to(result, units.meter / units.second).subs({
-        units.meter: 1,
-        units.second: 1
-    }).evalf(5)
+    result_freq_1 = convert_to(result, units.meter / units.second).evalf(5)
     assert result_freq_1 == approx(299792500, 1)

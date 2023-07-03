@@ -24,7 +24,7 @@ def test_args_fixture():
 def test_basic_force(test_args):
     result = archimedes_law.calculate_force_buoyant(test_args.pf, test_args.V)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
-    result_force = convert_to(result, units.newton).subs(units.newton, 1).evalf(4)
+    result_force = convert_to(result, units.newton).evalf(4)
     assert result_force == approx(1961.3, 0.01)
 
 

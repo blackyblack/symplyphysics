@@ -20,7 +20,7 @@ def test_args_fixture():
 def test_basic_conservation(test_args):
     result = conservation_law.calculate_energy_after(test_args.Es)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_ = convert_to(result, units.joule).subs(units.joule, 1).evalf(2)
+    result_ = convert_to(result, units.joule).evalf(2)
     assert result_ == approx(5.0, 0.01)
 
 

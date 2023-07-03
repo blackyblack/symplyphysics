@@ -31,7 +31,7 @@ def test_basic_frequency(test_args):
     result = doppler_law.calculate_observed_frequency(test_args.emitted_frequency,
         test_args.object_velocity, test_args.source_angle)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.frequency)
-    result_freq = convert_to(result, units.hertz).subs(units.hertz, 1).evalf(4)
+    result_freq = convert_to(result, units.hertz).evalf(4)
     assert result_freq == approx(1.0772e15, 0.0001)
 
 
@@ -41,7 +41,7 @@ def test_transverse_frequency(test_args):
     result = doppler_law.calculate_observed_frequency(test_args.emitted_frequency,
         test_args.object_velocity, source_angle)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.frequency)
-    result_freq = convert_to(result, units.hertz).subs(units.hertz, 1).evalf(6)
+    result_freq = convert_to(result, units.hertz).evalf(6)
     assert result_freq == approx(2.3755e14, 0.001)
 
 

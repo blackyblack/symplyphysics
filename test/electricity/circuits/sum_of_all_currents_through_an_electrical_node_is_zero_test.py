@@ -22,14 +22,14 @@ def test_args_fixture():
 def test_basic_current(test_args):
     result = kirchhoff_law.calculate_current_from_array([test_args.I1])
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.current)
-    result_current = convert_to(result, units.ampere).subs(units.ampere, 1).evalf(2)
+    result_current = convert_to(result, units.ampere).evalf(2)
     assert result_current == approx(-3, 0.01)
 
 
 def test_three_current_array(test_args):
     result = kirchhoff_law.calculate_current_from_array([test_args.I1, test_args.I2])
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.current)
-    result_current = convert_to(result, units.ampere).subs(units.ampere, 1).evalf(2)
+    result_current = convert_to(result, units.ampere).evalf(2)
     assert result_current == approx(2, 0.01)
 
 

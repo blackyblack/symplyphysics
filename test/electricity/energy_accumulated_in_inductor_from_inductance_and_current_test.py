@@ -25,7 +25,7 @@ def test_args_fixture():
 def test_basic_energy(test_args):
     result = inductor_law.calculate_accumulated_energy(test_args.I, test_args.C)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_power = convert_to(result, units.joule).subs(units.joule, 1).evalf(5)
+    result_power = convert_to(result, units.joule).evalf(5)
     assert result_power == approx(0.01875, 0.00001)
 
 

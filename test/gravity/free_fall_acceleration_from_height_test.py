@@ -28,8 +28,7 @@ def test_basic_acceleration(test_args):
     result = free_fall_acceleration.calculate_acceleration(test_args.earth_mass,
         test_args.earth_radius, test_args.height_from_surface)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.acceleration)
-    result_acceleration = convert_to(result,
-        units.meter / units.second**2).subs(units.meter / units.second**2, 1).evalf(6)
+    result_acceleration = convert_to(result, units.meter / units.second**2).evalf(6)
     assert result_acceleration == approx(9.823, 0.001)
 
 

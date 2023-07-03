@@ -1,12 +1,11 @@
 from sympy.physics import units
-from sympy.physics.units import convert_to
 from sympy.physics.units.systems import SI
 from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
 from .core import errors
 from .core.symbols.quantities import Quantity, Dimensionless
 from .core.symbols.symbols import Function, Symbol, print_expression
 from .core.quantity_decorator import validate_input, validate_output
-from .core.expr_to_quantity import expr_to_quantity
+from .core.convert import expr_to_quantity, convert_to
 from .core.vectors.vectors import Vector, sympy_vector_from_vector, vector_from_sympy_vector, vector_rebase
 from .core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_transform
 

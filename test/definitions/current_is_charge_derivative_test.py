@@ -24,8 +24,7 @@ def test_args_fixture():
 def test_basic_current(test_args):
     result = current_def.calculate_current(test_args.Q0, test_args.Q1, test_args.t)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.current)
-    result_current = convert_to(result, current_def.definition_units_SI).subs(units.ampere,
-        1).evalf(2)
+    result_current = convert_to(result, current_def.definition_units_SI).evalf(2)
     assert result_current == approx(4, 0.01)
 
 

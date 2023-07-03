@@ -25,7 +25,7 @@ def test_args_fixture():
 def test_basic_energy(test_args):
     result = hookes_law.calculate_energy(test_args.k, test_args.x)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_energy = convert_to(result, units.joule).subs(units.joule, 1).evalf(5)
+    result_energy = convert_to(result, units.joule).evalf(5)
     assert result_energy == approx(0.02, 0.0001)
 
 

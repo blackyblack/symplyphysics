@@ -24,7 +24,7 @@ def test_args_fixture():
 def test_basic_energy(test_args):
     result = kinetic_energy_law.calculate_energy(test_args.I, test_args.w)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_energy = convert_to(result, units.joule).subs(units.joule, 1).evalf(2)
+    result_energy = convert_to(result, units.joule).evalf(2)
     assert result_energy == approx(9.0, 0.01)
 
 

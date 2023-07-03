@@ -37,9 +37,9 @@ def test_basic_frequency(test_args):
         test_args.sound_velocity, test_args.zero_velocity, test_args.bike_velocity)
     assert SI.get_dimension_system().equivalent_dims(result_1.dimension, units.frequency)
     assert SI.get_dimension_system().equivalent_dims(result_2.dimension, units.frequency)
-    result_freq_1 = int(convert_to(result_1, units.hertz).subs(units.hertz, 1).evalf(4))
+    result_freq_1 = int(convert_to(result_1, units.hertz).evalf(4))
     assert result_freq_1 == approx(2015, 0.001)
-    result_freq_2 = int(convert_to(result_2, units.hertz).subs(units.hertz, 1).evalf(4))
+    result_freq_2 = int(convert_to(result_2, units.hertz).evalf(4))
     # Doppler effect is irrelative at relatively low velocities
     assert result_freq_2 == approx(result_freq_1, 0.001)
 
@@ -51,13 +51,13 @@ def test_fast_velocity_frequency(test_args):
     result = doppler_law.calculate_observed_frequency(test_args.horn_frequency,
         test_args.sound_velocity, object_velocity, test_args.zero_velocity)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.frequency)
-    result_freq = int(convert_to(result, units.hertz).subs(units.hertz, 1).evalf(8))
+    result_freq = int(convert_to(result, units.hertz).evalf(8))
 
     # make observer moving and source idle
     result = doppler_law.calculate_observed_frequency(test_args.horn_frequency,
         test_args.sound_velocity, test_args.zero_velocity, object_velocity)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.frequency)
-    moving_observer_freq = int(convert_to(result, units.hertz).subs(units.hertz, 1).evalf(8))
+    moving_observer_freq = int(convert_to(result, units.hertz).evalf(8))
     # Doppler effect is no longer irrelative at very high velocities
     assert result_freq / moving_observer_freq > 2
 

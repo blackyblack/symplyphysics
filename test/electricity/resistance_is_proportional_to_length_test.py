@@ -29,7 +29,7 @@ def test_basic_resistance(test_args):
     result = wire_law.calculate_resistance(test_args.resistivity, test_args.wire_length,
         test_args.cross_section)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.impedance)
-    result_current = convert_to(result, units.ohm).subs(units.ohm, 1).evalf(6)
+    result_current = convert_to(result, units.ohm).evalf(6)
     assert result_current == approx(0.02625, 0.001)
 
 

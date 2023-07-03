@@ -9,8 +9,6 @@ print(f"Formula is:\n{acceleration.print_law()}")
 height_above_ground = symbols("height_above_ground")
 gravity_constant_value = convert_to(units.gravitational_constant,
     units.newton * units.meter**2 / units.kilogram**2).evalf(5)
-gravity_constant = gravity_constant_value.subs(units.newton * units.meter**2 / units.kilogram**2,
-    1).evalf(5)
 EARTH_MASS = 5.9722e24  # kilogram
 EARTH_RADIUS = 6.371e6  # meter
 
@@ -20,7 +18,7 @@ result_acceleration = solved.subs({
     acceleration.planet_mass: EARTH_MASS,
     acceleration.planet_radius: EARTH_RADIUS,
     acceleration.height_above_surface: height_above_ground,
-    acceleration.units.gravitational_constant: gravity_constant
+    acceleration.units.gravitational_constant: gravity_constant_value
 })
 
 print(

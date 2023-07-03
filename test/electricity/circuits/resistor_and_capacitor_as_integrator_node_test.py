@@ -28,7 +28,7 @@ def test_basic_voltage(test_args):
     result = rc_node.calculate_capacitor_voltage(test_args.V0, test_args.C, test_args.R,
         test_args.T)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.voltage)
-    result_voltage = convert_to(result, units.volt).subs(units.volt, 1).evalf(2)
+    result_voltage = convert_to(result, units.volt).evalf(2)
     assert result_voltage == approx(1.89, 0.01)
 
 

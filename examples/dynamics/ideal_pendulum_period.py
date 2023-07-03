@@ -13,10 +13,9 @@ pendulum_length = Quantity(24 * units.inch)
 oscillating_period_expr = pendulum_period.law.subs(pendulum_period.pendulum_length,
     pendulum_length).rhs
 oscillating_period = expr_to_quantity(oscillating_period_expr)
-oscillating_period_seconds = convert_to(oscillating_period, units.second).subs(units.second,
-    1).evalf(5)
+oscillating_period_seconds = convert_to(oscillating_period, units.second).evalf(5)
 
-pendulum_length_inches = int(convert_to(pendulum_length, units.inch).subs(units.inch, 1).evalf(3))
+pendulum_length_inches = int(convert_to(pendulum_length, units.inch).evalf(3))
 print(
     f"Pendulum with length = {pendulum_length_inches} {units.inch} has oscillating period {oscillating_period_seconds} {units.second}\n"
 )

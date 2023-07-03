@@ -25,7 +25,7 @@ def test_args_fixture():
 def test_basic_energy(test_args):
     result = capacitor_law.calculate_accumulated_energy(test_args.C, test_args.V)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_power = convert_to(result, units.joule).subs(units.joule, 1).evalf(5)
+    result_power = convert_to(result, units.joule).evalf(5)
     assert result_power == approx(0.011, 0.00001)
 
 
