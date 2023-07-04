@@ -23,8 +23,8 @@ from symplyphysics.core.symbols.probability import Probability
 ##   See [geometric buckling](./buckling/geometric_buckling_from_neutron_flux.py)
 ## Ptnl - thermal non-leakage probability.
 
-thermal_diffusion_area = Symbol("thermal_diffusion_area", units.length**2)
-geometric_buckling = Symbol("geometric_buckling", 1 / units.length**2)
+thermal_diffusion_area = Symbol("thermal_diffusion_area", units.area)
+geometric_buckling = Symbol("geometric_buckling", 1 / units.area)
 thermal_non_leakage_probability = Symbol("thermal_non_leakage_probability", Dimensionless)
 
 law = Eq(thermal_non_leakage_probability, 1 / (1 + thermal_diffusion_area * geometric_buckling))

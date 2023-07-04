@@ -24,8 +24,8 @@ from symplyphysics.laws.nuclear import infinite_multiplication_factor_from_macro
 
 infinite_multiplication_factor = Symbol("infinite_multiplication_factor", Dimensionless)
 effective_multiplication_factor = Symbol("effective_multiplication_factor", Dimensionless)
-diffusion_area = Symbol("diffusion_area", units.length**2)
-geometric_buckling_squared = Symbol("geometric_buckling_squared", 1 / units.length**2)
+diffusion_area = Symbol("diffusion_area", units.area)
+geometric_buckling_squared = Symbol("geometric_buckling_squared", 1 / units.area)
 
 law = Eq(geometric_buckling_squared,
     (infinite_multiplication_factor / effective_multiplication_factor - 1) / diffusion_area)

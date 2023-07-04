@@ -13,7 +13,7 @@ from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expr
 # Conditions
 ## Particle is zero-sized, rigid and uniform.
 
-moment_of_inertia = Symbol("moment_of_inertia", units.mass * units.length**2)
+moment_of_inertia = Symbol("moment_of_inertia", units.mass * units.area)
 particle_mass = Symbol("particle_mass", units.mass)
 spinning_radius = Symbol("spinning_radius", units.length)
 

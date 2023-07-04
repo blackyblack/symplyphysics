@@ -18,14 +18,14 @@ from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_slab
 ## c - height of the parallelepiped.
 ## Ф(x, y, z) - neutron flux density.
 
-neutron_flux_power_constant = Symbol("C1", 1 / units.length**2 / units.time, constant=True)
+neutron_flux_power_constant = Symbol("C1", 1 / units.area / units.time, constant=True)
 x_distance_from_center = Symbol("x_distance_from_center", units.length)
 y_distance_from_center = Symbol("y_distance_from_center", units.length)
 z_distance_from_center = Symbol("z_distance_from_center", units.length)
 parallelepiped_width = Symbol("parallelepiped_width", units.length)
 parallelepiped_length = Symbol("parallelepiped_length", units.length)
 parallelepiped_height = Symbol("parallelepiped_height", units.length)
-neutron_flux = Function("neutron_flux", 1 / units.length**2 / units.time)
+neutron_flux = Function("neutron_flux", 1 / units.area / units.time)
 
 # These constants are being used for geometric buckling calculation
 # See: [geometric buckling for uniform parallelepiped](geometric_buckling_for_uniform_parallelepiped.py)

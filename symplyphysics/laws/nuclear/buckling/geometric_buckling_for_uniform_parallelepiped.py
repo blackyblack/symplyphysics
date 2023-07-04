@@ -19,7 +19,7 @@ from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_paralle
 parallelepiped_width = Symbol("parallelepiped_width", units.length)
 parallelepiped_length = Symbol("parallelepiped_length", units.length)
 parallelepiped_height = Symbol("parallelepiped_height", units.length)
-geometric_buckling_squared = Symbol("geometric_buckling_squared", 1 / units.length**2)
+geometric_buckling_squared = Symbol("geometric_buckling_squared", 1 / units.area)
 
 law = Eq(geometric_buckling_squared, (pi / parallelepiped_width)**2 +
     (pi / parallelepiped_length)**2 + (pi / parallelepiped_height)**2)

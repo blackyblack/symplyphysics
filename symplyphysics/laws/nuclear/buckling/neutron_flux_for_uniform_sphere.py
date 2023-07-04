@@ -18,7 +18,7 @@ from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_
 neutron_flux_power_constant = Symbol("C1", 1 / units.length / units.time, constant=True)
 distance_from_center = Symbol("distance_from_center", units.length)
 sphere_radius = Symbol("sphere_radius", units.length)
-neutron_flux = Function("neutron_flux", 1 / units.length**2 / units.time)
+neutron_flux = Function("neutron_flux", 1 / units.area / units.time)
 
 # This constant is being used for geometric buckling calculation
 # See: [geometric buckling for uniform sphere](geometric_buckling_for_uniform_sphere.py)

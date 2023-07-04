@@ -17,7 +17,7 @@ from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_cylinde
 
 cylinder_radius = Symbol("cylinder_radius", units.length)
 cylinder_height = Symbol("cylinder_height", units.length)
-geometric_buckling_squared = Symbol("geometric_buckling_squared", 1 / units.length**2)
+geometric_buckling_squared = Symbol("geometric_buckling_squared", 1 / units.area)
 
 law = Eq(geometric_buckling_squared, (2.405 / cylinder_radius)**2 + (pi / cylinder_height)**2)
 

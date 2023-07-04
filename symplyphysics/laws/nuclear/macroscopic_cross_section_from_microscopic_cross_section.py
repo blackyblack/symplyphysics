@@ -21,8 +21,8 @@ from symplyphysics import (
 ##   See [atomic number density](../chemistry/atomic_number_density_from_material_density_atomic_weight.py) implementation.
 ## Σ is the macroscopic cross-section.
 
-microscopic_cross_section = Symbol("microscopic_cross_section", units.length**2)
-atomic_number_density = Symbol("atomic_number_density", 1 / units.length**3)
+microscopic_cross_section = Symbol("microscopic_cross_section", units.area)
+atomic_number_density = Symbol("atomic_number_density", 1 / units.volume)
 macroscopic_cross_section = Symbol("macroscopic_cross_section", 1 / units.length)
 
 law = Eq(macroscopic_cross_section, microscopic_cross_section * atomic_number_density)

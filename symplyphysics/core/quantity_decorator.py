@@ -108,7 +108,7 @@ def _assert_expected_unit(value: Quantity | Vector | Sequence,
 # Vector of Quantity type.
 # Input should be should be Symbol with dimension property, Quantity or Dimension.
 # Example:
-# @validate_output(units.length**2)
+# @validate_output(units.length)
 # @validate_output(body_volume)
 def validate_output(
         expected_unit: Dimension | Symbol | Function) -> Callable[[Any], Callable[..., Any]]:

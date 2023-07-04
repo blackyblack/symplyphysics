@@ -15,10 +15,10 @@ from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_
 ## a - slab width.
 ## Ф(x) - neutron flux density.
 
-neutron_flux_power_constant = Symbol("C1", 1 / units.length**2 / units.time, constant=True)
+neutron_flux_power_constant = Symbol("C1", 1 / units.area / units.time, constant=True)
 distance_from_center = Symbol("distance_from_center", units.length)
 slab_width = Symbol("slab_width", units.length)
-neutron_flux = Function("neutron_flux", 1 / units.length**2 / units.time)
+neutron_flux = Function("neutron_flux", 1 / units.area / units.time)
 
 # This constant is being used for geometric buckling calculation
 # See: [geometric buckling for uniform slab](geometric_buckling_for_uniform_slab.py)

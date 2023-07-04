@@ -27,7 +27,7 @@ macroscopic_fission_cross_section = Symbol("macroscopic_fission_cross_section", 
 macroscopic_absorption_cross_section = Symbol("macroscopic_absorption_cross_section",
     1 / units.length)
 diffusion_coefficient = Symbol("diffusion_coefficient", units.length)
-geometric_buckling_squared = Symbol("geometric_buckling_squared", 1 / units.length**2)
+geometric_buckling_squared = Symbol("geometric_buckling_squared", 1 / units.area)
 
 law = Eq(geometric_buckling_squared,
     ((neutrons_per_fission / effective_multiplication_factor) * macroscopic_fission_cross_section -

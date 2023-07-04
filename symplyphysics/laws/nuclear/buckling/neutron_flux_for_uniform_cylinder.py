@@ -20,12 +20,12 @@ from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_slab
 ## H - height of the cylinder.
 ## Ф(r, z) - neutron flux density.
 
-neutron_flux_power_constant = Symbol("C1", 1 / units.length**2 / units.time, constant=True)
+neutron_flux_power_constant = Symbol("C1", 1 / units.area / units.time, constant=True)
 radial_distance_from_center = Symbol("radial_distance_from_center", units.length)
 axial_distance_from_center = Symbol("axial_distance_from_center", units.length)
 cylinder_radius = Symbol("cylinder_radius", units.length)
 cylinder_height = Symbol("cylinder_height", units.length)
-neutron_flux = Function("neutron_flux", 1 / units.length**2 / units.time)
+neutron_flux = Function("neutron_flux", 1 / units.area / units.time)
 
 # These constants are being used for geometric buckling calculation
 # See: [geometric buckling for uniform cylinder](geometric_buckling_for_uniform_cylinder.py)

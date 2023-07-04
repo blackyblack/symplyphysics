@@ -22,8 +22,8 @@ from symplyphysics.laws.nuclear import diffusion_equation_from_neutron_flux as d
 
 # Position is a free variable of a function - do not specify its dimension
 flux_position = symbols("flux_position")
-neutron_flux = Function("neutron_flux", 1 / units.length**2 / units.time)
-geometric_buckling_squared = Symbol("geometric_buckling_squared", 1 / units.length**2)
+neutron_flux = Function("neutron_flux", 1 / units.area / units.time)
+geometric_buckling_squared = Symbol("geometric_buckling_squared", 1 / units.area)
 neutron_flux_laplacian = Function("neutron_flux_laplacian", 1 / units.length**4 / units.time)
 
 # As Laplacian is a second derivative over space coordinates (x, y, z), resulting dimension should be

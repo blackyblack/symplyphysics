@@ -13,7 +13,7 @@ from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expr
 resistance = Symbol("resistance", units.impedance)
 resistivity = Symbol("resistivity", units.impedance * units.length)
 wire_length = Symbol("wire_length", units.length)
-cross_section = Symbol("cross_section", units.length**2)
+cross_section = Symbol("cross_section", units.area)
 
 law = Eq(resistance, resistivity * wire_length / cross_section)
 

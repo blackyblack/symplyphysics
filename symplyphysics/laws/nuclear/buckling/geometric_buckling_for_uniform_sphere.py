@@ -15,7 +15,7 @@ from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_sphere 
 ##   See [geometric buckling](./geometric_buckling_from_neutron_flux.py) implementation.
 
 sphere_radius = Symbol("sphere_radius", units.length)
-geometric_buckling_squared = Symbol("geometric_buckling_squared", 1 / units.length**2)
+geometric_buckling_squared = Symbol("geometric_buckling_squared", 1 / units.area)
 
 law = Eq(geometric_buckling_squared, (pi / sphere_radius)**2)
 

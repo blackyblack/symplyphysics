@@ -27,8 +27,8 @@ def test_args_fixture():
 def test_basic_buckling(test_args):
     result = buckling.calculate_geometric_buckling_squared(test_args.k_inf, test_args.k_eff,
         test_args.L2)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length**-2)
-    result_buckling = convert_to(result, units.centimeter**-2).evalf(4)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, 1 / units.area)
+    result_buckling = convert_to(result, 1 / units.centimeter**2).evalf(4)
     assert result_buckling == approx(0.000412, 0.01)
 
 
