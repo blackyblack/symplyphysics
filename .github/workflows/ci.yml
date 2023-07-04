@@ -25,9 +25,8 @@ jobs:
       - name: Install symplyphysics
         run: python3 setup.py install
       - name: Run typechecking with mypy
-        if: success()
         run: mypy --exclude=build .
       - name: Run linter with pylint
-        run: pylint ./test/**/*.py ./symplyphysics
+        run: pylint --fail-under=9 ./test/**/*.py ./symplyphysics
       - name: Run tests with pytest
         run: pytest 
