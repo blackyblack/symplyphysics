@@ -60,7 +60,9 @@ law = Eq(
 
 # As Laplacian is a second derivative over space coordinates (x, y, z), resulting dimension should be
 # original dimension / units.length**2
-assert SI.get_dimension_system().equivalent_dims(neutron_flux_laplacian.dimension, neutron_flux.dimension / units.length**2)
+assert SI.get_dimension_system().equivalent_dims(neutron_flux_laplacian.dimension,
+    neutron_flux.dimension / units.length**2)
+
 
 def print_law() -> str:
     return print_expression(law)

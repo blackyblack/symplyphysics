@@ -3,7 +3,7 @@ from sympy.physics.units import convert_to
 from .quantities import Quantity
 
 
-class Celsius(object):
+class Celsius:
     CELSIUS_TO_KELVIN_OFFSET = 273.15
     value: float
 

@@ -1,7 +1,7 @@
 from sympy import (Eq, solve)
+from sympy.physics.units import planck as planck_constant
 from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
     validate_input, validate_output)
-from sympy.physics.units import planck as planck_constant
 
 # Description
 ## Photon is the elementary part of any electromagnetical radiation which has no mass and always moves with speed of light.

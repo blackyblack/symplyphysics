@@ -20,7 +20,8 @@ dielectric_permeability = Symbol("dielectric_permeability", Dimensionless)
 plate_area = Symbol("plate_area", units.area)
 distance_between_plates = Symbol("distance_between_plates", units.length)
 
-law = Eq(capacitor_capacitance, electric_constant * dielectric_permeability * plate_area / distance_between_plates)
+law = Eq(capacitor_capacitance,
+    electric_constant * dielectric_permeability * plate_area / distance_between_plates)
 
 
 def print_law() -> str:
@@ -29,7 +30,8 @@ def print_law() -> str:
 
 @validate_input(plate_area_=plate_area, distance_between_plates_=distance_between_plates)
 @validate_output(capacitor_capacitance)
-def calculate_capacitance(dielectric_permeability_: float, plate_area_: Quantity, distance_between_plates_: Quantity) -> Quantity:
+def calculate_capacitance(dielectric_permeability_: float, plate_area_: Quantity,
+    distance_between_plates_: Quantity) -> Quantity:
     result_capacitance_expr = solve(law, capacitor_capacitance, dict=True)[0][capacitor_capacitance]
     result_expr = result_capacitance_expr.subs({
         dielectric_permeability: dielectric_permeability_,

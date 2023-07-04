@@ -55,26 +55,36 @@ class CoordinateSystem:
     def transformation_to_system(self, coord_system_type: System):
         if self._coord_system_type == self.System.CYLINDRICAL:
             r, theta, z = self._coord_system.base_scalars()
-            if coord_system_type == self.System.CARTESIAN:
-                return (r * cos(theta), r * sin(theta), z)
-            if coord_system_type == self.System.CYLINDRICAL:
-                return (r, theta, z)
+            cylindrical_conversions = {
+                self.System.CARTESIAN: (r * cos(theta), r * sin(theta), z),
+                self.System.CYLINDRICAL: (r, theta, z)
+            }
+            transformation = cylindrical_conversions.get(coord_system_type)
+            if transformation is not None:
+                return transformation
 
         if self._coord_system_type == self.System.SPHERICAL:
             r, theta, phi = self._coord_system.base_scalars()
-            if coord_system_type == self.System.CARTESIAN:
-                return (r * sin(theta) * cos(phi), r * sin(theta) * sin(phi), r * cos(theta))
-            if coord_system_type == self.System.SPHERICAL:
-                return (r, theta, phi)
+            spherical_conversions = {
+                self.System.CARTESIAN:
+                (r * sin(theta) * cos(phi), r * sin(theta) * sin(phi), r * cos(theta)),
+                self.System.SPHERICAL: (r, theta, phi)
+            }
+            transformation = spherical_conversions.get(coord_system_type)
+            if transformation is not None:
+                return transformation
 
         if self._coord_system_type == self.System.CARTESIAN:
             x, y, z = self._coord_system.base_scalars()
-            if coord_system_type == self.System.CYLINDRICAL:
-                return (sqrt(x**2 + y**2), atan2(y, x), z)
-            if coord_system_type == self.System.SPHERICAL:
-                return (sqrt(x**2 + y**2 + z**2), acos(z / sqrt(x**2 + y**2 + z**2)), atan2(y, x))
-            if coord_system_type == self.System.CARTESIAN:
-                return (x, y, z)
+            cartesian_conversions = {
+                self.System.CYLINDRICAL: (sqrt(x**2 + y**2), atan2(y, x), z),
+                self.System.SPHERICAL:
+                (sqrt(x**2 + y**2 + z**2), acos(z / sqrt(x**2 + y**2 + z**2)), atan2(y, x)),
+                self.System.CARTESIAN: (x, y, z)
+            }
+            transformation = cartesian_conversions.get(coord_system_type)
+            if transformation is not None:
+                return transformation
 
         coord_name_from = self.system_to_transformation_name(self._coord_system_type)
         coord_name_to = self.system_to_transformation_name(coord_system_type)

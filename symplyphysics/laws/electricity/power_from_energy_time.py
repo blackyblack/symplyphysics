@@ -44,7 +44,7 @@ derived_power = solve([power_applied_eq, energy_eq], (power, linear_function_coe
 derived_power_without_initial_energy = derived_power.subs(initial_energy_constant, 0)
 
 # Check that derived power is same as declared
-assert (expr_equals(derived_power_without_initial_energy, law.rhs))
+assert expr_equals(derived_power_without_initial_energy, law.rhs)
 
 
 def print_law() -> str:

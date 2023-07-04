@@ -33,9 +33,9 @@ def convert_to(expr: Expr, target_units: Iterable[SymQuantity] | SymQuantity) ->
     def get_total_scale_factor(expr: Expr) -> Expr:
         if isinstance(expr, Mul):
             return reduce(lambda x, y: x * y, [get_total_scale_factor(i) for i in expr.args])
-        elif isinstance(expr, Pow):
+        if isinstance(expr, Pow):
             return get_total_scale_factor(expr.base)**expr.exp
-        elif isinstance(expr, SymQuantity):
+        if isinstance(expr, SymQuantity):
             return SI.get_quantity_scale_factor(expr)
         return expr
 
