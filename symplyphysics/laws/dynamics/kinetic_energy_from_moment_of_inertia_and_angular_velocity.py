@@ -10,7 +10,7 @@ from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expr
 ## w is angular velocity
 
 kinetic_energy = Symbol("kinetic_energy", units.energy)
-object_inertia_moment = Symbol("object_inertia_moment", units.mass * units.length**2)
+object_inertia_moment = Symbol("object_inertia_moment", units.mass * units.area)
 angular_velocity = Symbol("angular_velocity", angle_type / units.time)
 
 law = Eq(kinetic_energy, object_inertia_moment * angular_velocity**2 / 2)

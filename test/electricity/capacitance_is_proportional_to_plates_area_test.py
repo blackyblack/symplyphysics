@@ -20,7 +20,8 @@ def test_args_fixture():
 
 
 def test_basic_capacitance(test_args):
-    result = capacitance_law.calculate_capacitance(test_args.permeability, test_args.area, test_args.distance)
+    result = capacitance_law.calculate_capacitance(test_args.permeability, test_args.area,
+        test_args.distance)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.capacitance)
     result_capacitance = convert_to(result, units.pico * units.farad).evalf(4)
     assert result_capacitance == approx(177.08, 0.0001)

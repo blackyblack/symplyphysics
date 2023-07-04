@@ -6,6 +6,8 @@ from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateS
 from symplyphysics.core.vectors.vector_arithmetics import add_cartesian_vectors, cross_cartesian_vectors, dot_vectors, equal_vectors, scale_vector, vector_magnitude
 from symplyphysics.core.vectors.vectors import Vector, vector_rebase
 
+# pylint: disable=too-many-locals
+
 
 @fixture(name="test_args")
 def test_args_fixture():

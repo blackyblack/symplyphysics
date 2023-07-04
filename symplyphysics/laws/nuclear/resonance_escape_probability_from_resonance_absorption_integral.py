@@ -34,7 +34,7 @@ from symplyphysics.core.symbols.probability import Probability
 ##   See [macroscopic cross-section](./macroscopic_cross_section_from_free_mean_path.py) implementation.
 ## p - resonance escape probability
 
-absorber_atomic_number_density = Symbol("absorber_atomic_number_density", 1 / units.length**3)
+absorber_atomic_number_density = Symbol("absorber_atomic_number_density", 1 / units.volume)
 effective_resonance_integral = Symbol("effective_resonance_integral", units.length**2)
 average_lethargy_change = Symbol("average_lethargy_change", Dimensionless)
 macroscopic_scattering_cross_section_moderator = Symbol(

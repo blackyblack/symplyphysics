@@ -1,6 +1,6 @@
 from collections import namedtuple
-from pytest import approx, fixture
 from math import pi
+from pytest import approx, fixture
 from sympy import sin, cos, sqrt
 from symplyphysics import (
     units,

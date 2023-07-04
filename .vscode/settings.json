@@ -12,12 +12,5 @@
     "test"
   ],
   "python.testing.unittestEnabled": false,
-  "python.testing.pytestEnabled": true,
-  "pylint.args": [
-    "--disable=missing-class-docstring",
-    "--disable=missing-function-docstring",
-    "--disable=missing-module-docstring",
-    "--disable=line-too-long",
-    "--good-names-rgxs=^[_a-z][_a-z0-9]?$,^[_A-Z][_a-z0-9]?$"
-  ]
+  "python.testing.pytestEnabled": true
 }

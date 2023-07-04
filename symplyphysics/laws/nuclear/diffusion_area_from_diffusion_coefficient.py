@@ -18,7 +18,7 @@ from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expr
 diffusion_coefficient = Symbol("diffusion_coefficient", units.length)
 macroscopic_absorption_cross_section = Symbol("macroscopic_absorption_cross_section",
     1 / units.length)
-diffusion_area = Symbol("diffusion_area", units.length**2)
+diffusion_area = Symbol("diffusion_area", units.area)
 
 law = Eq(diffusion_area, diffusion_coefficient / macroscopic_absorption_cross_section)
 

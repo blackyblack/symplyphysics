@@ -25,7 +25,7 @@ from symplyphysics.core.symbols.probability import Probability
 ##   thermal neutrons. The Fermi age is the same quantity as the slowing-down length squared (Ls^2).
 ## Pfnl - fast non-leakage probability.
 
-geometric_buckling = Symbol("geometric_buckling", 1 / units.length**2)
+geometric_buckling = Symbol("geometric_buckling", 1 / units.area)
 neutron_fermi_age = Symbol("neutron_fermi_age", units.length**2)
 fast_non_leakage_probability = Symbol("fast_non_leakage_probability", Dimensionless)
 

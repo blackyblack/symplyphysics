@@ -37,7 +37,7 @@ derived_free_fall_acceleration = newton2_law.law.rhs.subs({
 })
 
 # Check if derived acceleration is same as declared
-assert (expr_equals(derived_free_fall_acceleration, law.rhs))
+assert expr_equals(derived_free_fall_acceleration, law.rhs)
 
 
 def print_law() -> str:

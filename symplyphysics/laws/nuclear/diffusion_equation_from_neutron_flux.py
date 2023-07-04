@@ -45,7 +45,7 @@ neutrons_per_fission = Symbol("neutrons_per_fission", Dimensionless)
 
 # Position is a free variable of a function - do not specify its dimension
 flux_position = symbols("flux_position")
-neutron_flux = Function("neutron_flux", 1 / units.length**2 / units.time)
+neutron_flux = Function("neutron_flux", 1 / units.area / units.time)
 neutron_flux_laplacian = Function("neutron_flux_laplacian", 1 / units.length**4 / units.time)
 
 neutron_flux_laplacian_definition = Eq(neutron_flux_laplacian(flux_position),
@@ -60,7 +60,8 @@ law = Eq(
 
 # As Laplacian is a second derivative over space coordinates (x, y, z), resulting dimension should be
 # original dimension / units.length**2
-assert neutron_flux_laplacian.dimension == neutron_flux.dimension / units.length**2
+assert SI.get_dimension_system().equivalent_dims(neutron_flux_laplacian.dimension,
+    neutron_flux.dimension / units.length**2)
 
 
 def print_law() -> str:

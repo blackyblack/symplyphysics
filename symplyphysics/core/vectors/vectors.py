@@ -49,8 +49,7 @@ def vector_from_sympy_vector(sympy_vector_: SymVector,
             raise TypeError(
                 f"Different coordinate systems in expression and argument: {str(coord_system)} vs {str(coordinate_system.coord_system)}"
             )
-    as_matrix = sympy_vector_.to_matrix(coord_system)
-    components = [e for e in as_matrix]
+    components = list(sympy_vector_.to_matrix(coord_system))
     return Vector(components, coordinate_system)
 
 

@@ -26,7 +26,7 @@ class DimensionSymbol:
         return self._display_name
 
 
-class Symbol(DimensionSymbol, SymSymbol):
+class Symbol(DimensionSymbol, SymSymbol):  # pylint: disable=too-many-ancestors
 
     def __new__(cls,
         display_name: Optional[str] = None,
@@ -82,6 +82,7 @@ class SymbolPrinter(PrettyPrinter):
         symb = pretty_symbol(symb_name, bold_name)
         return prettyForm(symb)
 
+    # pylint: disable-next=too-many-arguments
     def _print_Function(self,
         e: Expr,
         sort: bool = False,

@@ -10,7 +10,7 @@ from sympy.physics.units.systems.si import SI
 from .symbols import DimensionSymbol, next_name
 
 
-class Quantity(DimensionSymbol, SymQuantity):
+class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancestors
 
     def __new__(cls,
         _name: Expr,
@@ -50,7 +50,7 @@ def collect_factor_and_dimension(expr: Expr | float | Basic) -> tuple[Any, ...]:
     """
     if isinstance(expr, SymQuantity):
         return expr.scale_factor, expr.dimension
-    elif isinstance(expr, Mul):
+    if isinstance(expr, Mul):
         factor = S.One
         dimension = Dimension(S.One)
         for arg in expr.args:
@@ -58,13 +58,13 @@ def collect_factor_and_dimension(expr: Expr | float | Basic) -> tuple[Any, ...]:
             factor *= arg_factor
             dimension *= arg_dim
         return factor, dimension
-    elif isinstance(expr, Pow):
+    if isinstance(expr, Pow):
         factor, dim = collect_factor_and_dimension(expr.base)
         exp_factor, exp_dim = collect_factor_and_dimension(expr.exp)
         if SI.get_dimension_system().is_dimensionless(exp_dim):
             exp_dim = 1
         return factor**exp_factor, dim**(exp_factor * exp_dim)
-    elif isinstance(expr, Add):
+    if isinstance(expr, Add):
         factor, dim = collect_factor_and_dimension(expr.args[0])
         for addend in expr.args[1:]:
             addend_factor, addend_dim = collect_factor_and_dimension(addend)
@@ -78,24 +78,23 @@ def collect_factor_and_dimension(expr: Expr | float | Basic) -> tuple[Any, ...]:
                 raise ValueError(f"Dimension of '{addend}' is {addend_dim}, but it should be {dim}")
             factor += addend_factor
         return factor, dim
-    elif isinstance(expr, Derivative):
+    if isinstance(expr, Derivative):
         factor, dim = collect_factor_and_dimension(expr.args[0])
         for independent, count in expr.variable_count:
             ifactor, idim = collect_factor_and_dimension(independent)
             factor /= ifactor**count
             dim /= idim**count
         return factor, dim
-    elif isinstance(expr, SymFunction):
+    if isinstance(expr, SymFunction):
         fds = [collect_factor_and_dimension(arg) for arg in expr.args]
         dims = [
             Dimension(S.One) if SI.get_dimension_system().is_dimensionless(d[1]) else d[1]
             for d in fds
         ]
         return (expr.func(*(f[0] for f in fds)), *dims)
-    elif isinstance(expr, Dimension):
+    if isinstance(expr, Dimension):
         return S.One, expr
-    else:
-        return expr, Dimension(S.One)
+    return expr, Dimension(S.One)
 
 
 Dimensionless = Dimension(S.One)

@@ -26,7 +26,7 @@ def test_args_fixture():
 def test_basic_buckling(test_args):
     result = material_buckling.calculate_buckling(test_args.v, test_args.Sf, test_args.Sa,
         test_args.D)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, 1 / units.length**2)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, 1 / units.area)
     result_buckling = convert_to(result, 1 / units.meter**2).evalf(2)
     assert result_buckling == approx(2.345, 0.01)
 

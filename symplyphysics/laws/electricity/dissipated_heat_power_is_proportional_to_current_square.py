@@ -39,7 +39,7 @@ power_derived = solve(law_derived,
     dict=True)[0][power_and_time.power]
 
 # Check if derived power is same as declared
-assert (expr_equals(power_derived, law.rhs))
+assert expr_equals(power_derived, law.rhs)
 
 
 def print_law() -> str:

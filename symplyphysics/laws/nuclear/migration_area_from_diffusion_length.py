@@ -23,9 +23,9 @@ from symplyphysics import (
 ##   slowing-down length is the square root of the Fermi age, τth = Ls^2.
 ## M^2 - migration area.
 
-diffusion_area = Symbol("diffusion_area", units.length**2)
+diffusion_area = Symbol("diffusion_area", units.area)
 neutron_fermi_age = Symbol("neutron_fermi_age", units.length**2)
-migration_area = Symbol("migration_area", units.length**2)
+migration_area = Symbol("migration_area", units.area)
 
 law = Eq(migration_area, diffusion_area + neutron_fermi_age)
 
