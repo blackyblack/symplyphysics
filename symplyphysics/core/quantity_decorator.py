@@ -2,19 +2,19 @@ import functools
 import inspect
 from typing import Any, Callable, Sequence, Optional
 from sympy import S
-from sympy.physics.units import Quantity, Dimension
+from sympy.physics.units import Quantity as SymQuantity, Dimension
 from sympy.physics.units.systems.si import SI
 
-from symplyphysics.core.symbols.symbols import DimensionSymbol, Function, Symbol
+from ..core.symbols.symbols import DimensionSymbol, Function, Symbol
 from ..core.vectors.vectors import Vector
 from .errors import UnitsError
 
 
 def assert_equivalent_dimension(
-        arg: Quantity | float, param_name: str, func_name: str, expected_unit: Dimension):
+        arg: SymQuantity | float, param_name: str, func_name: str, expected_unit: Dimension):
     #HACK: this allows to treat angle type as dimensionless
     expected_dimension = expected_unit.subs("angle", S.One)
-    if not isinstance(arg, Quantity):
+    if not isinstance(arg, SymQuantity):
         if SI.get_dimension_system().is_dimensionless(expected_dimension):
             return
         raise TypeError(f"Argument '{param_name}' to function '{func_name}'"
@@ -55,7 +55,7 @@ def validate_input(**decorator_kwargs: Any) -> Callable[[Callable[..., Any]], Ca
                 if param.name in decorator_kwargs:
                     arg = bound_args.arguments[param.name]
 
-                    components: Optional[list[Quantity | float]] = None
+                    components: Optional[list[SymQuantity | float]] = None
                     if isinstance(arg, Vector):
                         components = arg.components
                     elif isinstance(arg, Sequence):
@@ -77,10 +77,10 @@ def validate_input(**decorator_kwargs: Any) -> Callable[[Callable[..., Any]], Ca
     return validate_func
 
 
-def _assert_expected_unit(value: Quantity | Vector | Sequence,
+def _assert_expected_unit(value: SymQuantity | Vector | Sequence,
     expected_unit: Dimension | Symbol | Function, function_name: str):
-    components: Optional[list[Quantity | float]] = None
-    value_typed: Optional[Quantity | float] = None
+    components: Optional[list[SymQuantity | float]] = None
+    value_typed: Optional[SymQuantity | float] = None
     if isinstance(value, Vector):
         components = value.components
     elif isinstance(value, Sequence):
@@ -149,8 +149,8 @@ def validate_output_same(param_name: str) -> Callable[[Any], Callable[..., Any]]
                     f" should be in function parameters")
             ret = func(*args, **kwargs)
 
-            components: Optional[list[Quantity | float]] = None
-            value_typed: Optional[Quantity | float] = None
+            components: Optional[list[SymQuantity | float]] = None
+            value_typed: Optional[SymQuantity | float] = None
             if isinstance(ret, Vector):
                 components = ret.components
             elif isinstance(ret, Sequence):

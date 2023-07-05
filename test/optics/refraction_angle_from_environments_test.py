@@ -29,8 +29,7 @@ def test_basic_angle(test_args):
     result = refraction_law.calculate_refraction_angle(test_args.incedence_angle,
         test_args.incedence_media, test_args.refractive_media)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, angle_type)
-    #HACK: angle quantities are not properly processed by 'convert_to'. Convert their 'scale_factor' instead.
-    result_angle = convert_to(result.scale_factor, units.degree).evalf(4)
+    result_angle = convert_to(result, units.degree).evalf(4)
     assert result_angle == approx(22.1, 0.01)
 
 
