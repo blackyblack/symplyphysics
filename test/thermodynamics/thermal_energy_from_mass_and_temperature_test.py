@@ -6,6 +6,7 @@ from symplyphysics import (
     Quantity,
     SI,
     convert_to,
+    prefixes,
 )
 from symplyphysics.core.symbols.celsius import Celsius, to_kelvin_quantity
 from symplyphysics.laws.thermodynamics import thermal_energy_from_mass_and_temperature as amount_energy
@@ -15,7 +16,7 @@ from symplyphysics.laws.thermodynamics import thermal_energy_from_mass_and_tempe
 # Specific heat capacity of water is 4200 J/kg*K , ignore losses.
 @fixture(name="test_args")
 def test_args_fixture():
-    C = Quantity(4.2 * units.kilo * units.joule / (units.kilogram * units.kelvin))
+    C = Quantity(4.2 * prefixes.kilo * units.joule / (units.kilogram * units.kelvin))
     m = Quantity(0.5 * units.kilogram)
     initial_temperature = Celsius(0)
     t1 = to_kelvin_quantity(initial_temperature)

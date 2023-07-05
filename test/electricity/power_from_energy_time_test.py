@@ -6,6 +6,7 @@ from symplyphysics import (
     convert_to,
     Quantity,
     SI,
+    prefixes,
 )
 from symplyphysics.laws.electricity import power_from_energy_time as power_def
 
@@ -14,7 +15,7 @@ from symplyphysics.laws.electricity import power_from_energy_time as power_def
 # of energy in 35 seconds? Consider that all energy consumed equals energy given up.
 @fixture(name="test_args")
 def test_args_fixture():
-    Q = Quantity(20 * units.kilo * units.joule)
+    Q = Quantity(20 * prefixes.kilo * units.joule)
     t = Quantity(35 * units.second)
     Args = namedtuple("Args", ["Q", "t"])
     return Args(Q=Q, t=t)

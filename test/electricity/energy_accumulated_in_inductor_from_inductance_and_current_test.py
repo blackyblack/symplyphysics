@@ -1,12 +1,6 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-from symplyphysics import (
-    errors,
-    units,
-    convert_to,
-    Quantity,
-    SI,
-)
+from symplyphysics import (errors, units, convert_to, Quantity, SI, prefixes)
 from symplyphysics.laws.electricity import energy_accumulated_in_inductor_from_inductance_and_current as inductor_law
 
 # Description
@@ -16,7 +10,7 @@ from symplyphysics.laws.electricity import energy_accumulated_in_inductor_from_i
 
 @fixture(name="test_args")
 def test_args_fixture():
-    I = Quantity(150 * units.milli * units.henry)
+    I = Quantity(150 * prefixes.milli * units.henry)
     C = Quantity(0.5 * units.ampere)
     Args = namedtuple("Args", ["I", "C"])
     return Args(I=I, C=C)

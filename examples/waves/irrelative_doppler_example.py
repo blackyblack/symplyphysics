@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from sympy import solve
-from symplyphysics import (units, convert_to, expr_to_quantity, Quantity)
+from symplyphysics import (units, convert_to, expr_to_quantity, Quantity, prefixes)
 from symplyphysics.laws.waves import frequency_shift_from_velocity as doppler_law
 
 # This example show usefulness of Doppler law.
@@ -14,9 +14,9 @@ from symplyphysics.laws.waves import frequency_shift_from_velocity as doppler_la
 sound_velocity = Quantity(340 * units.meter / units.second)
 # Zero velocity we are going to use as a velocity of the radar related to air.
 zero_velocity = Quantity(0)
-emitter_frequency = Quantity(40 * units.kilo * units.hertz)
+emitter_frequency = Quantity(40 * prefixes.kilo * units.hertz)
 # Choose any frequency and obtain the result
-signal_frequency = Quantity(41.2 * units.kilo * units.hertz)
+signal_frequency = Quantity(41.2 * prefixes.kilo * units.hertz)
 
 solution = solve(doppler_law.law, doppler_law.source_velocity,
     dict=True)[0][doppler_law.source_velocity]

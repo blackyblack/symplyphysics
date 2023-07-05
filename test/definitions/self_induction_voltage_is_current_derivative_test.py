@@ -1,12 +1,6 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-from symplyphysics import (
-    errors,
-    units,
-    convert_to,
-    Quantity,
-    SI,
-)
+from symplyphysics import (errors, units, convert_to, Quantity, SI, prefixes)
 from symplyphysics.definitions import self_induction_voltage_is_current_derivative as self_induction_def
 
 # Description
@@ -16,7 +10,7 @@ from symplyphysics.definitions import self_induction_voltage_is_current_derivati
 
 @fixture(name="test_args")
 def test_args_fixture():
-    L = Quantity(2.5 * units.milli * units.henry)
+    L = Quantity(2.5 * prefixes.milli * units.henry)
     I0 = Quantity(0 * units.ampere)
     I1 = Quantity(0.5 * units.ampere)
     t = Quantity(5 * units.second)

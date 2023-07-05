@@ -19,7 +19,8 @@ number_of_turns = Symbol("number_of_turns", Dimensionless)
 turn_area = Symbol("turn_area", units.area)
 coil_length = Symbol("coil_length", units.length)
 
-law = Eq(coil_inductance, magnetic_constant * magnetic_permeability * number_of_turns**2 * turn_area / coil_length)
+law = Eq(coil_inductance,
+    magnetic_constant * magnetic_permeability * number_of_turns**2 * turn_area / coil_length)
 
 
 def print_law() -> str:
@@ -28,8 +29,9 @@ def print_law() -> str:
 
 @validate_input(turn_area_=turn_area, coil_length_=coil_length)
 @validate_output(coil_inductance)
-def calculate_inductance(magnetic_permeability_: float, number_of_turns_: float, turn_area_: Quantity, coil_length_: Quantity) -> Quantity:
-    result_inductance_expr = solve(law, coil_inductance, dict=True)[0][coil_inductance]    
+def calculate_inductance(magnetic_permeability_: float, number_of_turns_: float,
+    turn_area_: Quantity, coil_length_: Quantity) -> Quantity:
+    result_inductance_expr = solve(law, coil_inductance, dict=True)[0][coil_inductance]
     result_expr = result_inductance_expr.subs({
         magnetic_permeability: magnetic_permeability_,
         number_of_turns: number_of_turns_,
