@@ -1,12 +1,6 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-from symplyphysics import (
-    errors,
-    units,
-    convert_to,
-    Quantity,
-    SI,
-)
+from symplyphysics import (errors, units, convert_to, Quantity, SI, prefixes)
 from symplyphysics.laws.electricity import resistance_is_proportional_to_length as wire_law
 
 # Description
@@ -18,9 +12,9 @@ from symplyphysics.laws.electricity import resistance_is_proportional_to_length 
 
 @fixture(name="test_args")
 def test_args_fixture():
-    resistivity = Quantity(0.0175 * units.ohm * (units.milli * units.meter)**2 / units.meter)
+    resistivity = Quantity(0.0175 * units.ohm * (prefixes.milli * units.meter)**2 / units.meter)
     wire_length = Quantity(3 * units.meter)
-    cross_section = Quantity(2 * (units.milli * units.meter)**2)
+    cross_section = Quantity(2 * (prefixes.milli * units.meter)**2)
     Args = namedtuple("Args", ["resistivity", "wire_length", "cross_section"])
     return Args(resistivity=resistivity, wire_length=wire_length, cross_section=cross_section)
 

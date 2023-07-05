@@ -1,12 +1,6 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-from symplyphysics import (
-    errors,
-    units,
-    convert_to,
-    Quantity,
-    SI,
-)
+from symplyphysics import (errors, units, convert_to, Quantity, SI, prefixes)
 from symplyphysics.laws.electricity import energy_accumulated_in_capacitor_from_capacitance_and_voltage as capacitor_law
 
 # Description
@@ -16,7 +10,7 @@ from symplyphysics.laws.electricity import energy_accumulated_in_capacitor_from_
 
 @fixture(name="test_args")
 def test_args_fixture():
-    C = Quantity(220 * units.micro * units.farad)
+    C = Quantity(220 * prefixes.micro * units.farad)
     V = Quantity(10 * units.volt)
     Args = namedtuple("Args", ["C", "V"])
     return Args(C=C, V=V)

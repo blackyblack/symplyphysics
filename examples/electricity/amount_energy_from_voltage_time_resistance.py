@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 from sympy import solve, Eq
-from symplyphysics import (expr_to_quantity, print_expression, units, convert_to, Quantity)
+from symplyphysics import (expr_to_quantity, print_expression, units, convert_to, Quantity,
+    prefixes)
 from symplyphysics.core.symbols.celsius import Celsius, to_kelvin_quantity
 from symplyphysics.laws.electricity import amount_energy_from_voltage_time_resistance as joule_lenz_law
 from symplyphysics.laws.thermodynamics import thermal_energy_from_mass_and_temperature as operate_energy
@@ -15,7 +16,7 @@ from symplyphysics.laws.electricity import power_is_proportional_voltage_and_cur
 
 # water parameters: density and specific heat capacity
 water_density = Quantity(1000 * units.kilogram / units.meter**3)
-water_heat_capacity = Quantity(4.2 * units.kilo * units.joule / (units.kilogram * units.kelvin))
+water_heat_capacity = Quantity(4.2 * prefixes.kilo * units.joule / (units.kilogram * units.kelvin))
 
 # kettle parameters: power and volume
 kettle_power = Quantity(1500 * units.watt)
