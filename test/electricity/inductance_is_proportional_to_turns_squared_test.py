@@ -5,8 +5,8 @@ from symplyphysics.laws.electricity import inductance_is_proportional_to_turns_s
 
 # Description
 ## Assert we have a capacitor with 100 turns on a core with relative permeability of 2, length of 5mm and turn area is 0.002m2.
-## According to online calculator (https://www.asutpp.ru/onlayn-kalkulyator-rascheta-induktivnosti-katushki-s-vozdushnym-serdechnikom.html)
-## its inductance should be  10.555751316062 mH.
+## According to online calculator (https://goo.su/WBwDZXS)
+## its inductance should be  10.05309649 mH.
 
 
 @fixture(name="test_args")
@@ -22,22 +22,22 @@ def test_args_fixture():
 def test_basic_inductance(test_args):    
     result = coil_law.calculate_inductance(test_args.permeability, test_args.turncount, test_args.turn_area, test_args.length)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.inductance)
-    result_inductance = convert_to(result, units.milli * units.henry).evalf(6)
-    assert result_inductance == approx(10.555751316062, 0.0001)
+    result_inductance = convert_to(result, units.henry).evalf(10)
+    assert result_inductance == approx(0.01005309649, 0.0001)
 
-'''
+
 def test_bad_area(test_args):
     ab = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        capacitance_law.calculate_capacitance(test_args.permeability, ab, test_args.distance)
+        coil_law.calculate_inductance(test_args.permeability, test_args.turncount, ab, test_args.length)
     with raises(TypeError):
-        capacitance_law.calculate_capacitance(test_args.permeability, 100, test_args.distance)
+        coil_law.calculate_inductance(test_args.permeability, test_args.turncount, 100, test_args.length)
 
 
-def test_bad_distance(test_args):
-    db = Quantity(1 * units.coulomb)
+def test_bad_length(test_args):
+    lb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        capacitance_law.calculate_capacitance(test_args.permeability, test_args.area, db)
+        coil_law.calculate_inductance(test_args.permeability, test_args.turncount, test_args.turn_area, lb)
     with raises(TypeError):
-        capacitance_law.calculate_capacitance(test_args.permeability, test_args.area, 100)
-'''
+        coil_law.calculate_inductance(test_args.permeability, test_args.turncount, test_args.turn_area, 100)
+
