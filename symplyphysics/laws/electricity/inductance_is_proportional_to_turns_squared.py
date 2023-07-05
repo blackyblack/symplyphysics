@@ -10,7 +10,7 @@ from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expr
 ## mu is magnetic permeability of core,
 ## mu_0 is magnetic constant (magnetic permeability of vacuum),
 ## N is number of turns,
-## S is area of each turn,
+## S is area of each turn (coil's cross sectional area),
 ## d is coil length.
 
 coil_inductance = Symbol("coil_inductance", units.inductance)

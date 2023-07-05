@@ -4,9 +4,9 @@ from symplyphysics import (errors, units, Quantity, SI, convert_to, prefixes)
 from symplyphysics.laws.electricity import inductance_is_proportional_to_turns_squared as coil_law
 
 # Description
-## Assert we have a capacitor with 100 turns on a core with relative permeability of 2, length of 5mm and turn area is 0.002m2.
+## Assert we have a capacitor with 100 turns on a core with relative permeability of 2, length of 5 mm and turn area is 0.002 m^2.
 ## According to online calculator (https://goo.su/WBwDZXS)
-## its inductance should be  10.05309649 mH.
+## its inductance should be 10.05309649 mH.
 
 
 @fixture(name="test_args")
