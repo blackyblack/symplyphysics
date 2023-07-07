@@ -32,4 +32,7 @@ jobs:
         run: pytest
       - name: Run examples
         run: |
-          for f in ./examples/*/*.py; do python "$f"; done
+          for f in ./examples/*/*.py; do
+            echo "$(basename $f)\n"
+            python "$f";
+          done
