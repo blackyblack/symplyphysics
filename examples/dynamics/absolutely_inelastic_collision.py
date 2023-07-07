@@ -10,7 +10,8 @@ from symplyphysics.definitions import momentum_is_mass_times_velocity as momentu
 # Let the first object be the bullet with mass of 10gram and velocity of 700m/s hits the second object - steady 75kg piece of plasticine, stucks in it and makes this plasticine move with some unknown velocity.
 # The space is 1-dimensional, all vectors are collinear with axis.
 
-bullet_mass = Quantity(10 * units.gram)
+x = "test"
+bullet_mass = Quantity(x * 10 * units.gram)
 bullet_velocity = Quantity(700 * units.meter / units.second)
 body_mass = Quantity(75 * units.kilogram)
 # Hint dimension so 'convert_to' is able to convert it to m/s
@@ -29,7 +30,7 @@ result_expr = solved.subs({
     momentum_def.mass: expr_to_quantity(bullet_mass + body_mass),
     momentum_def.momentum: momentum_after
 })
-result_velocity = expr_to_quantity(result_expr
+result_velocity = expr_to_quantity(result_expr)
 
 result_velocity_meter_per_second = convert_to(result_velocity, units.meter / units.second).evalf(2)
 bullet_mass_gram = convert_to(bullet_mass, units.gram).evalf(2)
