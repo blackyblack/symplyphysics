@@ -2,6 +2,7 @@ from sympy import (Eq, cos, solve)
 from symplyphysics import (units, angle_type, expr_to_quantity, Quantity, Symbol, print_expression,
     validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.core.quantity_decorator import assert_equivalent_dimension
 from symplyphysics.laws.waves import wavelength_from_wave_speed_and_period as period_law
 from symplyphysics.laws.kinematic import temporal_frequency_from_period as frequency_def
 from symplyphysics.laws.kinematic import planar_projection_is_cosine as projector
@@ -131,19 +132,26 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(real_frequency_=real_frequency,
-    wave_velocity_=wave_velocity,
-    source_speed_=source_speed,
-    observer_speed_=observer_speed,
-    source_angle_=source_angle,
-    observer_angle_=observer_angle)
+@validate_input(real_frequency_=real_frequency, wave_velocity_=wave_velocity)
 @validate_output(observed_frequency)
-def calculate_observed_frequency(real_frequency_: Quantity, wave_velocity_: Quantity,
-    source_speed_: Quantity, observer_speed_: Quantity, source_angle_: float | Quantity,
-    observer_angle_: float | Quantity) -> Quantity:
+def calculate_observed_frequency(
+        real_frequency_: Quantity, wave_velocity_: Quantity, source_speed_angle: tuple[Quantity,
+    float | Quantity], observer_speed_angle: tuple[Quantity, float | Quantity]) -> Quantity:
     #HACK: sympy angles are always in radians
+    (source_speed_, source_angle_) = source_speed_angle
+    assert_equivalent_dimension(source_speed_, "source_speed_", "calculate_observed_frequency",
+        source_speed.dimension)
+    assert_equivalent_dimension(source_angle_, "source_angle_", "calculate_observed_frequency",
+        source_angle.dimension)
+
     source_angle_radians = source_angle_.scale_factor if isinstance(source_angle_,
         Quantity) else source_angle_
+    (observer_speed_, observer_angle_) = observer_speed_angle
+    assert_equivalent_dimension(observer_speed_, "observer_speed_", "calculate_observed_frequency",
+        observer_speed.dimension)
+    assert_equivalent_dimension(observer_angle_, "observer_angle_", "calculate_observed_frequency",
+        observer_angle.dimension)
+
     observer_angle_radians = observer_angle_.scale_factor if isinstance(observer_angle_,
         Quantity) else observer_angle_
     result_expr = solve(law, observed_frequency, dict=True)[0][observed_frequency]

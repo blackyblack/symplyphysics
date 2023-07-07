@@ -5,7 +5,7 @@ from symplyphysics import (
     Quantity,
     Symbol,
     print_expression,
-    Dimensionless,
+    dimensionless,
     convert_to,
     validate_input,
 )
@@ -25,7 +25,7 @@ from symplyphysics.core.quantity_decorator import assert_equivalent_dimension
 ## - Mediums are isotropic and transparent.
 ## - Wave is monochromic as propagation speed depends on frequency.
 
-refractive_index = Symbol("refractive_index", Dimensionless)
+refractive_index = Symbol("refractive_index", dimensionless)
 outer_speed = Symbol("outer_speed", units.velocity)
 refracting_speed = Symbol("refracting_speed", units.velocity)
 

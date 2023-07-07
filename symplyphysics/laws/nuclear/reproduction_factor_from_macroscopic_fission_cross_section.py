@@ -5,7 +5,7 @@ from symplyphysics import (
     Quantity,
     Symbol,
     print_expression,
-    Dimensionless,
+    dimensionless,
     convert_to,
     validate_input,
 )
@@ -22,12 +22,12 @@ from symplyphysics import (
 ##   (Σc_fuel) cross-sections.
 ## η - neutron reproduction factor
 
-neutrons_per_fission = Symbol("neutrons_per_fission", Dimensionless)
+neutrons_per_fission = Symbol("neutrons_per_fission", dimensionless)
 macroscopic_fuel_fission_cross_section = Symbol("macroscopic_fuel_fission_cross_section",
     1 / units.length)
 macroscopic_fuel_absorption_cross_section = Symbol("macroscopic_fuel_absorption_cross_section",
     1 / units.length)
-neutron_reproduction_factor = Symbol("neutron_reproduction_factor", Dimensionless)
+neutron_reproduction_factor = Symbol("neutron_reproduction_factor", dimensionless)
 
 law = Eq(
     neutron_reproduction_factor, neutrons_per_fission * macroscopic_fuel_fission_cross_section /

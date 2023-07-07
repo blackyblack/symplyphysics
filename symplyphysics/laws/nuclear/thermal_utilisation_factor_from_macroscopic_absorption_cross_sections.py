@@ -5,7 +5,7 @@ from symplyphysics import (
     Quantity,
     Symbol,
     print_expression,
-    Dimensionless,
+    dimensionless,
     convert_to,
     validate_input,
 )
@@ -27,7 +27,7 @@ macroscopic_fuel_absorption_cross_section = Symbol("macroscopic_fuel_absorption_
     1 / units.length)
 macroscopic_total_absorption_cross_section = Symbol("macroscopic_total_absorption_cross_section",
     1 / units.length)
-thermal_utilisation_factor = Symbol("thermal_utilisation_factor", Dimensionless)
+thermal_utilisation_factor = Symbol("thermal_utilisation_factor", dimensionless)
 
 law = Eq(thermal_utilisation_factor,
     macroscopic_fuel_absorption_cross_section / macroscopic_total_absorption_cross_section)

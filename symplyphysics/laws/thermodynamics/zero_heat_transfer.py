@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
 from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    Dimensionless, validate_input, validate_output)
+    dimensionless, validate_input, validate_output)
 from symplyphysics.laws.thermodynamics import pressure_from_temperature_and_volume as thermodynamics_law
 
 # Description
@@ -12,7 +12,7 @@ from symplyphysics.laws.thermodynamics import pressure_from_temperature_and_volu
 ## y is the ratio of specific heats (also known as heat capacity
 ##   ratio) (https://en.wikipedia.org/wiki/Heat_capacity_ratio)
 
-specific_heats_ratio = Symbol("specific_heats_ratio", Dimensionless)
+specific_heats_ratio = Symbol("specific_heats_ratio", dimensionless)
 # Some of these parameters depend on each other. It is up to user, which of these parameters to choose
 # as known.
 temperature_start = Symbol("temperature_start", units.temperature)
