@@ -32,4 +32,5 @@ jobs:
         run: pytest
       - name: Run examples
         run: |
-          for f in ./examples/*.py; do python "$f"; done
+          cd examples
+          for f in *.py; do python "$f"; done
