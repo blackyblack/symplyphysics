@@ -33,13 +33,13 @@ jobs:
         run: pytest
       - name: Run examples
         run: |
-          for f in ./examples/*/*.py; do
+          for f in ./examples/**/*.py; do
             printf "\n-------- '%s'\n" "$(basename $f)"
             python "$f";
           done
       - name: Run plots
         run: |
-          for f in ./plots/*/*.py; do
+          for f in ./plots/**/*.py; do
             printf "\n-------- '%s'\n" "$(basename $f)"
             python "$f";
           done
