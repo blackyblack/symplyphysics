@@ -29,4 +29,7 @@ jobs:
       - name: Run linter with pylint
         run: pylint --fail-under=9 ./test/**/*.py ./symplyphysics
       - name: Run tests with pytest
-        run: pytest 
+        run: pytest
+      - name: Run examples
+        run: |
+          for f in ./examples/*.py; do python "$f"; done
