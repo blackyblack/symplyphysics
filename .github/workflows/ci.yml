@@ -36,9 +36,9 @@ jobs:
             printf "\n-------- '%s'\n" "$(basename $f)"
             python "$f";
           done
-       - name: Run plots
-         run: |
-           for f in ./plots/*/*.py; do
-             printf "\n-------- '%s'\n" "$(basename $f)"
-             python "$f";
-           done
+      - name: Run plots
+        run: |
+          for f in ./plots/*/*.py; do
+            printf "\n-------- '%s'\n" "$(basename $f)"
+            python "$f";
+          done
