@@ -1,5 +1,5 @@
 from typing import List
-from sympy import (Eq, Integral, Derivative, symbols, simplify)
+from sympy import (Eq, Integral, Derivative, symbols, simplify, Expr)
 from sympy.vector import Dot, Curl, Cross
 from symplyphysics import (
     Vector,
@@ -64,8 +64,8 @@ def print_law() -> str:
 
 # field_ should be VectorField
 # surface_ should be array with projections to coordinates, eg [parameter1 * cos(parameter2), parameter1 * sin(parameter2)]
-def calculate_circulation(field_: VectorField, surface_: List, parameter1_from_, parameter1_to_,
-    parameter2_from_, parameter2_to_):
+def calculate_circulation(field_: VectorField, surface_: List, parameters_from: tuple[Expr | float,
+    Expr | float], parameters_to: tuple[Expr | float, Expr | float]):
 
     field_space = sympy_vector_from_field(field_)
     field_rotor_sympy = field_rotor_definition.rhs.subs(field, field_space).doit()
@@ -84,9 +84,9 @@ def calculate_circulation(field_: VectorField, surface_: List, parameter1_from_,
     result_expr = law.rhs.subs({
         field_rotor: field_as_vector,
         surface_element: surface_element_result,
-        parameter1_from: parameter1_from_,
-        parameter1_to: parameter1_to_,
-        parameter2_from: parameter2_from_,
-        parameter2_to: parameter2_to_
+        parameter1_from: parameters_from[0],
+        parameter1_to: parameters_to[0],
+        parameter2_from: parameters_from[1],
+        parameter2_to: parameters_to[1]
     }).doit()
     return simplify(result_expr)

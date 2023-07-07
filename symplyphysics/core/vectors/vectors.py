@@ -1,7 +1,9 @@
 from typing import Any, Optional
-from sympy.vector import Vector as SymVector, express
+from sympy import Expr, Add, Mul
+from sympy.vector import VectorAdd, VectorMul, Vector as SymVector, express
 from sympy.vector.operators import _get_coord_systems
 
+from ...core.symbols.quantities import Quantity, expr_to_quantity
 from ..coordinate_systems.coordinate_systems import CoordinateSystem
 
 
@@ -98,3 +100,17 @@ def _extended_express(vector_: Vector, system_to: CoordinateSystem) -> Vector:
     sympy_vector = sympy_vector_from_vector(vector_)
     transformed_vector_sympy = express(sympy_vector, system_to.coord_system, None, variables=True)
     return vector_from_sympy_vector(transformed_vector_sympy, system_to)
+
+
+def expr_to_vector(expr: Expr, coordinate_system: Optional[CoordinateSystem] = None) -> Vector:
+    if isinstance(expr, Mul):
+        expr = VectorMul(*expr.args)
+    if isinstance(expr, Add):
+        expr = VectorAdd(*expr.args)
+    if not isinstance(expr, SymVector):
+        raise TypeError(f"Expression cannot be converted to SymPy Vector: {str(expr)}")
+    vector = vector_from_sympy_vector(expr, coordinate_system)
+    components: list[Quantity] = []
+    for c in vector.components:
+        components.append(expr_to_quantity(c))
+    return Vector(components, coordinate_system)

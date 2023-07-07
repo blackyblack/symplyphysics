@@ -1,5 +1,5 @@
 from sympy import (Eq, solve)
-from symplyphysics import (Dimensionless, units, expr_to_quantity, Quantity, Symbol,
+from symplyphysics import (dimensionless, units, expr_to_quantity, Quantity, Symbol,
     print_expression, validate_input, validate_output)
 
 # Description
@@ -12,7 +12,7 @@ from symplyphysics import (Dimensionless, units, expr_to_quantity, Quantity, Sym
 ## t is time,
 ## f is temporal frequency.
 
-events = Symbol("events", Dimensionless)
+events = Symbol("events", dimensionless)
 time = Symbol("period", units.time)
 temporal_frequency = Symbol("temporal_frequency", units.frequency)
 

@@ -1,7 +1,7 @@
 from __future__ import annotations
 from functools import partial
-from typing import Any, Optional
-from sympy import Expr, S, Derivative, Function as SymFunction, Basic
+from typing import Any, Callable, Optional
+from sympy import Expr, S, Derivative, Function as SymFunction, exp, Basic, sympify
 from sympy.core.add import Add
 from sympy.core.mul import Mul
 from sympy.core.power import Pow
@@ -13,7 +13,7 @@ from .symbols import DimensionSymbol, next_name
 class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancestors
 
     def __new__(cls,
-        _name: Expr,
+        _name: Basic,
         _abbrev: Optional[str] = None,
         _latex_repr: Optional[str] = None,
         _pretty_unicode_repr: Optional[str] = None,
@@ -25,8 +25,8 @@ class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancest
         obj = SymQuantity.__new__(cls, name, None, None, None, None, None, False, **assumptions)
         return obj
 
-    def __init__(self, scale: Expr | float = S.One, *, dimension: Optional[Dimension] = None):
-        (_, dimension_) = collect_factor_and_dimension(scale)
+    def __init__(self, expr: Basic | float = S.One, *, dimension: Optional[Dimension] = None):
+        (scale, dimension_) = collect_factor_and_dimension(sympify(expr))
         dimension = dimension_ if dimension is None else dimension
         super().__init__(self.name, dimension)
         SI.set_quantity_dimension(self, dimension)
@@ -42,32 +42,38 @@ class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancest
 
 
 # HACK: copy of SI._collect_factor_and_dimension with fixed exp() dimension evaluation
-# TODO: this function is recursive and it is hard to maintain proper types for
-# input and output parameters. Fix it.
-def collect_factor_and_dimension(expr: Expr | float | Basic) -> tuple[Any, ...]:
+def collect_factor_and_dimension(expr: Basic) -> tuple[Basic, Dimension]:
     """
     Return tuple with scale factor expression and dimension expression.
     """
-    if isinstance(expr, SymQuantity):
-        return expr.scale_factor, expr.dimension
-    if isinstance(expr, Mul):
+
+    def _collect_quantity(expr: SymQuantity) -> tuple[Basic, Dimension]:
+        return (expr.scale_factor, expr.dimension)
+
+    def _collect_mul(expr: Mul) -> tuple[Basic, Dimension]:
         factor = S.One
         dimension = Dimension(S.One)
         for arg in expr.args:
-            arg_factor, arg_dim = collect_factor_and_dimension(arg)
+            (arg_factor, arg_dim) = collect_factor_and_dimension(arg)
             factor *= arg_factor
             dimension *= arg_dim
-        return factor, dimension
-    if isinstance(expr, Pow):
-        factor, dim = collect_factor_and_dimension(expr.base)
-        exp_factor, exp_dim = collect_factor_and_dimension(expr.exp)
+        return (factor, dimension)
+
+    def _collect_pow(expr: Pow) -> tuple[Basic, Dimension]:
+        pow_expr: Expr = S.One
+        (factor, dim) = collect_factor_and_dimension(expr.base)
+        pow_expr *= factor
+        (exp_factor, exp_dim) = collect_factor_and_dimension(expr.exp)
         if SI.get_dimension_system().is_dimensionless(exp_dim):
-            exp_dim = 1
-        return factor**exp_factor, dim**(exp_factor * exp_dim)
-    if isinstance(expr, Add):
-        factor, dim = collect_factor_and_dimension(expr.args[0])
+            exp_dim = S.One
+        return (pow_expr**exp_factor, dim**(exp_factor * exp_dim))
+
+    def _collect_add(expr: Add) -> tuple[Basic, Dimension]:
+        sum_expr: Expr = S.Zero
+        (factor, dim) = collect_factor_and_dimension(expr.args[0])
+        sum_expr += factor
         for addend in expr.args[1:]:
-            addend_factor, addend_dim = collect_factor_and_dimension(addend)
+            (addend_factor, addend_dim) = collect_factor_and_dimension(addend)
             # automatically convert zero to the dimension of it's additives
             if dim != addend_dim and not SI.get_dimension_system().equivalent_dims(dim, addend_dim):
                 if factor == S.Zero:
@@ -76,25 +82,56 @@ def collect_factor_and_dimension(expr: Expr | float | Basic) -> tuple[Any, ...]:
                     addend_dim = dim
             if dim != addend_dim and not SI.get_dimension_system().equivalent_dims(dim, addend_dim):
                 raise ValueError(f"Dimension of '{addend}' is {addend_dim}, but it should be {dim}")
-            factor += addend_factor
-        return factor, dim
-    if isinstance(expr, Derivative):
-        factor, dim = collect_factor_and_dimension(expr.args[0])
+            sum_expr += addend_factor
+        return (sum_expr, dim)
+
+    def _collect_derivative(expr: Derivative) -> tuple[Basic, Dimension]:
+        (factor, dim) = collect_factor_and_dimension(expr.args[0])
         for independent, count in expr.variable_count:
-            ifactor, idim = collect_factor_and_dimension(independent)
+            (ifactor, idim) = collect_factor_and_dimension(independent)
             factor /= ifactor**count
             dim /= idim**count
-        return factor, dim
-    if isinstance(expr, SymFunction):
+        return (factor, dim)
+
+    def _collect_function(expr: SymFunction) -> tuple[Basic, Dimension]:
         fds = [collect_factor_and_dimension(arg) for arg in expr.args]
         dims = [
-            Dimension(S.One) if SI.get_dimension_system().is_dimensionless(d[1]) else d[1]
-            for d in fds
+            Dimension(1) if SI.get_dimension_system().is_dimensionless(d[1]) else d[1] for d in fds
         ]
-        return (expr.func(*(f[0] for f in fds)), *dims)
-    if isinstance(expr, Dimension):
-        return S.One, expr
-    return expr, Dimension(S.One)
+        ret = expr.func(*(f[0] for f in fds))
+        # if no args for a function, try to detect dimension from the function result
+        return (ret, dims[0]) if len(dims) > 0 else collect_factor_and_dimension(ret)
+
+    def _collect_dimension(expr: Dimension) -> tuple[Basic, Dimension]:
+        return (S.One, expr)
+
+    cases: dict[type, Callable[[Any], tuple[Basic, Dimension]]] = {
+        SymQuantity: _collect_quantity,
+        Mul: _collect_mul,
+        Pow: _collect_pow,
+        Add: _collect_add,
+        Derivative: _collect_derivative,
+        SymFunction: _collect_function,
+        Dimension: _collect_dimension,
+    }
+
+    for k, v in cases.items():
+        if isinstance(expr, k):
+            return v(expr)
+    return (expr, Dimension(S.One))
 
 
-Dimensionless = Dimension(S.One)
+def expr_to_quantity(expr: Expr) -> Quantity:
+    quantity_scale = collect_factor_and_dimension(expr)
+    dimension = quantity_scale[1]
+    # HACK: this allows to treat angle type as dimensionless
+    dimension = dimension.subs("angle", S.One)
+    if isinstance(dimension, exp):
+        dimension_args = dimension.nargs.args[0]
+        # power of the exponent should be dimensionless
+        assert dimension_args == S.One
+        dimension = S.One
+    return Quantity(quantity_scale[0], dimension=dimension)
+
+
+dimensionless = Dimension(S.One)

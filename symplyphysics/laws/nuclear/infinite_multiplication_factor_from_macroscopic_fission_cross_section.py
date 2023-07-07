@@ -5,7 +5,7 @@ from symplyphysics import (
     Quantity,
     Symbol,
     print_expression,
-    Dimensionless,
+    dimensionless,
     convert_to,
     validate_input,
 )
@@ -20,11 +20,11 @@ from symplyphysics import (
 ## k_infinite - infinite multiplication factor.
 ##   See [infinite multiplication factor](./infinite_multiplication_factor.py)
 
-neutrons_per_fission = Symbol("neutrons_per_fission", Dimensionless)
+neutrons_per_fission = Symbol("neutrons_per_fission", dimensionless)
 macroscopic_fission_cross_section = Symbol("macroscopic_fission_cross_section", 1 / units.length)
 macroscopic_absorption_cross_section = Symbol("macroscopic_absorption_cross_section",
     1 / units.length)
-infinite_multiplication_factor = Symbol("infinite_multiplication_factor", Dimensionless)
+infinite_multiplication_factor = Symbol("infinite_multiplication_factor", dimensionless)
 
 law = Eq(
     infinite_multiplication_factor,

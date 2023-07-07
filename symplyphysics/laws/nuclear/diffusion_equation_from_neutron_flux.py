@@ -8,7 +8,7 @@ from symplyphysics import (
     Quantity,
     Symbol,
     print_expression,
-    Dimensionless,
+    dimensionless,
     convert_to,
     validate_input,
 )
@@ -40,8 +40,8 @@ diffusion_coefficient = Symbol("diffusion_coefficient", units.length)
 macroscopic_absorption_cross_section = Symbol("macroscopic_absorption_cross_section",
     1 / units.length)
 macroscopic_fission_cross_section = Symbol("macroscopic_fission_cross_section", 1 / units.length)
-effective_multiplication_factor = Symbol("effective_multiplication_factor", Dimensionless)
-neutrons_per_fission = Symbol("neutrons_per_fission", Dimensionless)
+effective_multiplication_factor = Symbol("effective_multiplication_factor", dimensionless)
+neutrons_per_fission = Symbol("neutrons_per_fission", dimensionless)
 
 # Position is a free variable of a function - do not specify its dimension
 flux_position = symbols("flux_position")

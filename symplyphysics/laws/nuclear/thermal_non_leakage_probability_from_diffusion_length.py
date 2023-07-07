@@ -5,7 +5,7 @@ from symplyphysics import (
     Quantity,
     Symbol,
     print_expression,
-    Dimensionless,
+    dimensionless,
     convert_to,
     validate_input,
 )
@@ -25,7 +25,7 @@ from symplyphysics.core.symbols.probability import Probability
 
 thermal_diffusion_area = Symbol("thermal_diffusion_area", units.area)
 geometric_buckling = Symbol("geometric_buckling", 1 / units.area)
-thermal_non_leakage_probability = Symbol("thermal_non_leakage_probability", Dimensionless)
+thermal_non_leakage_probability = Symbol("thermal_non_leakage_probability", dimensionless)
 
 law = Eq(thermal_non_leakage_probability, 1 / (1 + thermal_diffusion_area * geometric_buckling))
 

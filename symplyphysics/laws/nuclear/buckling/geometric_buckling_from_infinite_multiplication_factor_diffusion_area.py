@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
 from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    Dimensionless, validate_input, validate_output)
+    dimensionless, validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_macroscopic_fission_cross_section_diffusion_coefficient as buckling_law
 from symplyphysics.laws.nuclear import diffusion_area_from_diffusion_coefficient as diffusion_area_law
@@ -22,8 +22,8 @@ from symplyphysics.laws.nuclear import infinite_multiplication_factor_from_macro
 ## Bg^2 - geometric buckling.
 ##   See [geometric buckling](./geometric_buckling_from_neutron_flux.py) implementation.
 
-infinite_multiplication_factor = Symbol("infinite_multiplication_factor", Dimensionless)
-effective_multiplication_factor = Symbol("effective_multiplication_factor", Dimensionless)
+infinite_multiplication_factor = Symbol("infinite_multiplication_factor", dimensionless)
+effective_multiplication_factor = Symbol("effective_multiplication_factor", dimensionless)
 diffusion_area = Symbol("diffusion_area", units.area)
 geometric_buckling_squared = Symbol("geometric_buckling_squared", 1 / units.area)
 

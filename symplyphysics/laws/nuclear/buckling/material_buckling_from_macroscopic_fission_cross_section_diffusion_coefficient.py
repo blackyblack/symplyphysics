@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
 from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    Dimensionless, validate_input, validate_output)
+    dimensionless, validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_macroscopic_fission_cross_section_diffusion_coefficient as buckling_law
 
@@ -18,7 +18,7 @@ from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_macrosco
 ##   See [diffusion coefficient](./neutron_diffusion_coefficient_from_scattering_cross_section.py) implementation.
 ## Bm^2 - material buckling.
 
-neutrons_per_fission = Symbol("neutrons_per_fission", Dimensionless)
+neutrons_per_fission = Symbol("neutrons_per_fission", dimensionless)
 macroscopic_fission_cross_section = Symbol("macroscopic_fission_cross_section", 1 / units.length)
 macroscopic_absorption_cross_section = Symbol("macroscopic_absorption_cross_section",
     1 / units.length)

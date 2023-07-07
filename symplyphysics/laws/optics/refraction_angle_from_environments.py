@@ -1,5 +1,5 @@
 from sympy import (Eq, solve, sin, pi)
-from symplyphysics import (units, Quantity, Symbol, print_expression, Dimensionless, angle_type,
+from symplyphysics import (units, Quantity, Symbol, print_expression, dimensionless, angle_type,
     validate_input, validate_output)
 
 # Description
@@ -19,8 +19,8 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, Dimensionl
 ## - light is monochromic, as refactive index depends on the light frequency.
 ## - refracting media is uniform, so refracting index does not change over ray path.
 
-incedence_refractive_index = Symbol("incedence_refractive_index", Dimensionless)
-resulting_refractive_index = Symbol("resulting_refractive_index", Dimensionless)
+incedence_refractive_index = Symbol("incedence_refractive_index", dimensionless)
+resulting_refractive_index = Symbol("resulting_refractive_index", dimensionless)
 incedence_angle = Symbol("incedence_angle", angle_type)
 refraction_angle = Symbol("refraction_angle", angle_type)
 

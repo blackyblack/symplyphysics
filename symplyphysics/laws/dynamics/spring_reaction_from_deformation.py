@@ -1,7 +1,7 @@
 from sympy import (Eq, solve)
 from symplyphysics import (units, Quantity, Symbol, print_expression, Vector,
     sympy_vector_from_vector, validate_input, validate_output)
-from symplyphysics.core.convert import expr_to_vector
+from symplyphysics.core.vectors.vectors import expr_to_vector
 
 # Description
 ## Deformed sprign is about to return back to it's undeformed state and responds with some force. Law is:

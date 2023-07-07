@@ -18,7 +18,7 @@ from symplyphysics.definitions import harmonic_oscillator_is_second_derivative_e
 @fixture(name="test_args")
 def test_args_fixture():
     A = Quantity(20 * units.meter)
-    w = Quantity(2 * pi / 1 * units.hertz)
+    w = Quantity(2 * pi * units.hertz)
     t = Quantity(1.5 * units.second)
     Args = namedtuple("Args", ["A", "w", "t"])
     return Args(A=A, w=w, t=t)

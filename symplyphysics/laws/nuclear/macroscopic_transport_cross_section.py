@@ -5,7 +5,7 @@ from symplyphysics import (
     Quantity,
     Symbol,
     print_expression,
-    Dimensionless,
+    dimensionless,
     validate_input,
     validate_output,
 )
@@ -25,7 +25,7 @@ from symplyphysics import (
 
 macroscopic_scattering_cross_section = Symbol("macroscopic_scattering_cross_section",
     1 / units.length)
-average_scattering_angle_cosine = Symbol("average_scattering_angle_cosine", Dimensionless)
+average_scattering_angle_cosine = Symbol("average_scattering_angle_cosine", dimensionless)
 macroscopic_transport_cross_section = Symbol("macroscopic_transport_cross_section",
     1 / units.length)
 
