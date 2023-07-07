@@ -29,7 +29,7 @@ result_expr = solved.subs({
     momentum_def.mass: expr_to_quantity(bullet_mass + body_mass),
     momentum_def.momentum: momentum_after
 })
-result_velocity = expr_to_quantity(result_expr)
+result_velocity = expr_to_quantity(result_expr
 
 result_velocity_meter_per_second = convert_to(result_velocity, units.meter / units.second).evalf(2)
 bullet_mass_gram = convert_to(bullet_mass, units.gram).evalf(2)
