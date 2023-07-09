@@ -64,8 +64,10 @@ def collect_factor_and_dimension(expr: Basic) -> tuple[Basic, Dimension]:
         (factor, dim) = collect_factor_and_dimension(expr.base)
         pow_expr *= factor
         (exp_factor, exp_dim) = collect_factor_and_dimension(expr.exp)
-        if SI.get_dimension_system().is_dimensionless(exp_dim):
-            exp_dim = S.One
+        if not SI.get_dimension_system().is_dimensionless(exp_dim):
+            raise ValueError(
+                f"Dimension of '{expr.exp}' is {exp_dim}, but it should be dimensionless")
+        exp_dim = S.One
         return (pow_expr**exp_factor, dim**(exp_factor * exp_dim))
 
     def _collect_add(expr: Add) -> tuple[Basic, Dimension]:
@@ -85,22 +87,19 @@ def collect_factor_and_dimension(expr: Basic) -> tuple[Basic, Dimension]:
             sum_expr += addend_factor
         return (sum_expr, dim)
 
-    def _collect_derivative(expr: Derivative) -> tuple[Basic, Dimension]:
-        (factor, dim) = collect_factor_and_dimension(expr.args[0])
-        for independent, count in expr.variable_count:
-            (ifactor, idim) = collect_factor_and_dimension(independent)
-            factor /= ifactor**count
-            dim /= idim**count
-        return (factor, dim)
+    def _unsupported_derivative(expr: Derivative):
+        raise ValueError(f"Dimension '{expr}' should not contain unevaluated Derivative")
 
     def _collect_function(expr: SymFunction) -> tuple[Basic, Dimension]:
-        fds = [collect_factor_and_dimension(arg) for arg in expr.args]
-        dims = [
-            Dimension(1) if SI.get_dimension_system().is_dimensionless(d[1]) else d[1] for d in fds
-        ]
-        ret = expr.func(*(f[0] for f in fds))
-        # if no args for a function, try to detect dimension from the function result
-        return (ret, dims[0]) if len(dims) > 0 else collect_factor_and_dimension(ret)
+        factors: list[Basic] = []
+        for arg in expr.args:
+            (f, d) = collect_factor_and_dimension(arg)
+            # only functions with dimensionless arguments are supported
+            if not SI.get_dimension_system().is_dimensionless(d):
+                raise ValueError(f"Dimension of '{arg}' is {d}, but it should be dimensionless")
+            factors.append(f)
+        ret = expr.func(*(f for f in factors))
+        return (ret, dimensionless)
 
     def _collect_dimension(expr: Dimension) -> tuple[Basic, Dimension]:
         return (S.One, expr)
@@ -110,7 +109,7 @@ def collect_factor_and_dimension(expr: Basic) -> tuple[Basic, Dimension]:
         Mul: _collect_mul,
         Pow: _collect_pow,
         Add: _collect_add,
-        Derivative: _collect_derivative,
+        Derivative: _unsupported_derivative,
         SymFunction: _collect_function,
         Dimension: _collect_dimension,
     }
@@ -118,7 +117,7 @@ def collect_factor_and_dimension(expr: Basic) -> tuple[Basic, Dimension]:
     for k, v in cases.items():
         if isinstance(expr, k):
             return v(expr)
-    return (expr, Dimension(S.One))
+    return (expr, dimensionless)
 
 
 def expr_to_quantity(expr: Expr) -> Quantity:
