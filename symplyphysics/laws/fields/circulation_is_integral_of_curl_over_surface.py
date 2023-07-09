@@ -64,8 +64,8 @@ def print_law() -> str:
 
 # field_ should be VectorField
 # surface_ should be array with projections to coordinates, eg [parameter1 * cos(parameter2), parameter1 * sin(parameter2)]
-def calculate_circulation(field_: VectorField, surface_: List, parameters_from: tuple[Expr | float,
-    Expr | float], parameters_to: tuple[Expr | float, Expr | float]):
+def calculate_circulation(field_: VectorField, surface_: List, parameters1: tuple[Expr | float,
+    Expr | float], parameters2: tuple[Expr | float, Expr | float]):
 
     field_space = sympy_vector_from_field(field_)
     field_rotor_sympy = field_rotor_definition.rhs.subs(field, field_space).doit()
@@ -84,9 +84,9 @@ def calculate_circulation(field_: VectorField, surface_: List, parameters_from: 
     result_expr = law.rhs.subs({
         field_rotor: field_as_vector,
         surface_element: surface_element_result,
-        parameter1_from: parameters_from[0],
-        parameter1_to: parameters_to[0],
-        parameter2_from: parameters_from[1],
-        parameter2_to: parameters_to[1]
+        parameter1_from: parameters1[0],
+        parameter1_to: parameters1[1],
+        parameter2_from: parameters2[0],
+        parameter2_to: parameters2[1]
     }).doit()
     return simplify(result_expr)
