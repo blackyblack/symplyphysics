@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 
 # Description
 ## Spring accumulates energy while being deformated. This law is known as Hooke's law.
@@ -31,4 +31,4 @@ def calculate_energy(elastic_koefficient_: Quantity, deformation_: Quantity) -> 
         elastic_koefficient: elastic_koefficient_,
         deformation: deformation_
     })
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

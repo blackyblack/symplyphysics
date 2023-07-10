@@ -5,6 +5,8 @@ from sympy import S
 from sympy.physics.units import Quantity as SymQuantity, Dimension
 from sympy.physics.units.systems.si import SI
 
+from symplyphysics.core.symbols.quantities import Quantity
+
 from ..core.symbols.symbols import DimensionSymbol, Function, Symbol
 from ..core.vectors.vectors import Vector
 from .errors import UnitsError
@@ -14,17 +16,17 @@ def assert_equivalent_dimension(
         arg: SymQuantity | float, param_name: str, func_name: str, expected_unit: Dimension):
     #HACK: this allows to treat angle type as dimensionless
     expected_dimension = expected_unit.subs("angle", S.One)
-    if not isinstance(arg, SymQuantity):
+    if isinstance(arg, (float | int)):
         if SI.get_dimension_system().is_dimensionless(expected_dimension):
             return
         raise TypeError(f"Argument '{param_name}' to function '{func_name}'"
             f" is Number but '{expected_dimension}' is not dimensionless")
-    scale_factor = SI.get_quantity_scale_factor(arg)
+    arg_quantity = Quantity(arg)
     # zero can be of any dimension
-    if scale_factor == S.Zero:
+    if arg_quantity.scale_factor == S.Zero:
         return
     #HACK: this allows to treat angle type as dimensionless
-    arg_dimension = arg.dimension.subs("angle", S.One)
+    arg_dimension = arg_quantity.dimension.subs("angle", S.One)
     # angle is dimensionless but equivalent_dims() fails to compare it
     if SI.get_dimension_system().is_dimensionless(
             expected_dimension) and SI.get_dimension_system().is_dimensionless(arg_dimension):
@@ -32,7 +34,7 @@ def assert_equivalent_dimension(
     if not SI.get_dimension_system().equivalent_dims(arg_dimension, expected_dimension):
         raise UnitsError(f"Argument '{param_name}' to function '{func_name}' must "
             f"be in units equivalent to '{expected_dimension.name}'")
-    if scale_factor.free_symbols:
+    if arg_quantity.scale_factor.free_symbols:
         raise UnitsError(f"Argument '{param_name}' to function '{func_name}' should "
             f"not contain free symbols")
 

@@ -1,7 +1,6 @@
 from sympy import (Eq, solve, S)
 from symplyphysics import (
     units,
-    expr_to_quantity,
     Quantity,
     Symbol,
     print_expression,
@@ -45,7 +44,7 @@ def calculate_refractive_index(outer_speed_: Quantity, refracting_speed_: Quanti
         outer_speed: outer_speed_,
         refracting_speed: refracting_speed_
     })
-    result = expr_to_quantity(result_expr)
+    result = Quantity(result_expr)
     assert_equivalent_dimension(result, "return", "calculate_refractive_index",
         refractive_index.dimension)
     return convert_to(result, S.One).evalf()

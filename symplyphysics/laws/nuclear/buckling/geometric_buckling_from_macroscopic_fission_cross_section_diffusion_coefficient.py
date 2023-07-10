@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    dimensionless, validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, dimensionless, validate_input,
+    validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.nuclear import diffusion_equation_from_neutron_flux as diffusion_equation_law
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_flux as buckling_law
@@ -88,4 +88,4 @@ def calculate_buckling(neutrons_per_fission_: float, effective_multiplication_fa
         macroscopic_absorption_cross_section: macroscopic_absorption_cross_section_,
         diffusion_coefficient: diffusion_coefficient_
     })
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

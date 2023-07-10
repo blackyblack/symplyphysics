@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (dimensionless, units, expr_to_quantity, Quantity, Symbol,
-    print_expression, validate_input, validate_output)
+from symplyphysics import (dimensionless, units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 
 # Description
 ## Frequency is the number of occurrences of a repeating event per unit of time.
@@ -30,4 +30,4 @@ def print_law() -> str:
 def calculate_frequency(events_: float, time_: Quantity) -> Quantity:
     solved = solve(definition, temporal_frequency, dict=True)[0][temporal_frequency]
     result_expr = solved.subs({time: time_, events: events_})
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

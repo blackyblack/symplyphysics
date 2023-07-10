@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 
 # Description
 ## Current flowing through the resistor is proportional to applied voltage and reversly proportional to impedance of that resistor
@@ -25,4 +25,4 @@ def print_law() -> str:
 def calculate_current(voltage_: Quantity, resistance_: Quantity) -> Quantity:
     result_current_expr = solve(law, current, dict=True)[0][current]
     result_expr = result_current_expr.subs({voltage: voltage_, resistance: resistance_})
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

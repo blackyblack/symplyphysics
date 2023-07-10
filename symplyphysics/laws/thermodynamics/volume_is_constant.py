@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 from symplyphysics.laws.thermodynamics import pressure_from_temperature_and_volume as thermodynamics_law
 
 # Description
@@ -62,4 +62,4 @@ def calculate_pressure(temperature_start_: Quantity, pressure_start_: Quantity,
         temperature_start: temperature_start_,
         temperature_end: temperature_end_
     })
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

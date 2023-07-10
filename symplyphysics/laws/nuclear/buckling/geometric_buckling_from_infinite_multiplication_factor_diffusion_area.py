@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    dimensionless, validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, dimensionless, validate_input,
+    validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_macroscopic_fission_cross_section_diffusion_coefficient as buckling_law
 from symplyphysics.laws.nuclear import diffusion_area_from_diffusion_coefficient as diffusion_area_law
@@ -81,4 +81,4 @@ def calculate_geometric_buckling_squared(infinite_multiplication_factor_: float,
         effective_multiplication_factor: effective_multiplication_factor_,
         diffusion_area: diffusion_area_
     })
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

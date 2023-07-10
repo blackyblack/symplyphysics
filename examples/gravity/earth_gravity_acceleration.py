@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from sympy import solve
-from symplyphysics import (print_expression, units, convert_to, Quantity, expr_to_quantity)
+from symplyphysics import (print_expression, units, convert_to, Quantity)
 from symplyphysics.laws.gravity import gravity_force_from_mass_and_distance as gravity_law
 from symplyphysics.laws.dynamics import acceleration_from_force as newtons_law_2
 
@@ -30,7 +30,7 @@ result_acceleration_expr = result_expr.subs({
     gravity_law.first_object_mass: earth_mass,
     gravity_law.distance_between_mass_centers: earth_radius
 })
-result_acceleration = expr_to_quantity(result_acceleration_expr)
+result_acceleration = Quantity(result_acceleration_expr)
 
 result = convert_to(result_acceleration, units.meter / (units.second**2)).evalf(4)
 print(f"Gravity acceleration on Earth is {result}")

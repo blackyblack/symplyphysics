@@ -1,7 +1,6 @@
 from sympy import (Eq, solve, S)
 from symplyphysics import (
     units,
-    expr_to_quantity,
     Quantity,
     Symbol,
     print_expression,
@@ -44,5 +43,5 @@ def calculate_probability(thermal_diffusion_area_: Quantity,
         thermal_diffusion_area: thermal_diffusion_area_,
         geometric_buckling: geometric_buckling_
     })
-    result_factor = expr_to_quantity(result_expr)
+    result_factor = Quantity(result_expr)
     return Probability(convert_to(result_factor, S.One).evalf())

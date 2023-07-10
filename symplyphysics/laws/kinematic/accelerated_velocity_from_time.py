@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 
 # Description
 ## Accelerated velocity is time dependent and increases with time if acceleration is co-directed with velocity and decreases if they are counter-directed.
@@ -34,4 +34,4 @@ def calculate_velocity(initial_velocity_: Quantity, acceleration_: Quantity,
         acceleration: acceleration_,
         time: time_
     })
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

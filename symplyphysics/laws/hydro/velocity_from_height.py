@@ -1,6 +1,6 @@
 from sympy import (Eq, solve, sqrt)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 
 # Description
 ## If hole appears in side wall or bottom of tank with liquid, liquid starts flowing out of this tank with some velocity.
@@ -29,4 +29,4 @@ def print_law() -> str:
 def calculate_velocity(height_: Quantity) -> Quantity:
     result_velocity_expr = solve(law, liquid_velocity, dict=True)[0][liquid_velocity]
     result_expr = result_velocity_expr.subs({height_above_hole: height_})
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

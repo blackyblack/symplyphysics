@@ -1,6 +1,6 @@
 from sympy import (Eq, dsolve, Derivative)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression, Function,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, Function, validate_input,
+    validate_output)
 
 # Description
 ## Mechanical energy, sum of the kinetic energy, or energy of motion, and the potential energy, or energy stored in a system by
@@ -33,4 +33,4 @@ def print_law() -> str:
 def calculate_energy_after(mechanical_energy_before_: Quantity) -> Quantity:
     solved = dsolve(law, mechanical_energy(time))
     result_expr = solved.subs("C1", mechanical_energy_before_).rhs
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

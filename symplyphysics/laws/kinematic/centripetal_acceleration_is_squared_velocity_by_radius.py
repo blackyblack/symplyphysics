@@ -1,6 +1,6 @@
 from sympy import (Eq, solve, sin, cos, Derivative, pi)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, Function, print_expression,
-    angle_type, CoordinateSystem, Vector, validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, Function, print_expression, angle_type,
+    CoordinateSystem, Vector, validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals, expr_equals_abs
 from symplyphysics.core.vectors.vector_arithmetics import dot_vectors
 from symplyphysics.definitions import velocity_is_movement_derivative as velocity_def
@@ -125,4 +125,4 @@ def print_law() -> str:
 def calculate_acceleration(linear_velocity_: Quantity, curve_radius_: Quantity) -> Quantity:
     solved = solve(law, centripetal_acceleration, dict=True)[0][centripetal_acceleration]
     result_expr = solved.subs({linear_velocity: linear_velocity_, curve_radius: curve_radius_})
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

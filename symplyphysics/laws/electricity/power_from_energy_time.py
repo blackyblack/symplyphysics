@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import power_is_energy_derivative as power_derivative
 
@@ -56,4 +56,4 @@ def print_law() -> str:
 def calculate_power(energy_: Quantity, time_: Quantity) -> Quantity:
     result_power_expr = solve(law, power, dict=True)[0][power]
     result_expr = result_power_expr.subs({energy: energy_, time: time_})
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

@@ -1,7 +1,6 @@
 from sympy import (Eq, solve, exp, S)
 from symplyphysics import (
     units,
-    expr_to_quantity,
     Quantity,
     Symbol,
     print_expression,
@@ -72,5 +71,5 @@ def calculate_resonance_escape_probability(
         macroscopic_scattering_cross_section_moderator:
             macroscopic_scattering_cross_section_moderator_
     })
-    result_factor = expr_to_quantity(result_expr)
+    result_factor = Quantity(result_expr)
     return Probability(convert_to(result_factor, S.One).evalf())

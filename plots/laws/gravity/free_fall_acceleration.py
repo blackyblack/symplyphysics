@@ -1,13 +1,13 @@
 from sympy import solve, symbols
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
-from symplyphysics import (print_expression, units, convert_to)
+from symplyphysics import (print_expression, units, convert_to, Quantity)
 from symplyphysics.laws.gravity import free_fall_acceleration_from_height as acceleration
 
 print(f"Formula is:\n{acceleration.print_law()}")
 
 height_above_ground = symbols("height_above_ground")
-gravity_constant_value = convert_to(units.gravitational_constant,
+gravity_constant_value = convert_to(Quantity(units.gravitational_constant),
     units.newton * units.meter**2 / units.kilogram**2).evalf(5)
 EARTH_MASS = 5.9722e24  # kilogram
 EARTH_RADIUS = 6.371e6  # meter

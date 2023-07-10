@@ -1,6 +1,6 @@
 from sympy import (Eq, Derivative)
-from symplyphysics import (units, expr_to_quantity, Quantity, Function, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Function, Symbol, print_expression, validate_input,
+    validate_output)
 
 # Description
 ## Self-induction voltage definition: E = -L * dI/dt, where
@@ -33,4 +33,4 @@ def calculate_voltage(inductance_: Quantity, current_start_: Quantity, current_e
     })
     dsolved = applied_definition.doit()
     result_expr = dsolved.rhs
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 
 # Description
 ## Potential energy of body EP = m * g * h
@@ -27,4 +27,4 @@ def calculate_potential_energy(body_mass_: Quantity, height_: Quantity) -> Quant
     result_energy_expr = solve(law, potential_energy_of_body,
         dict=True)[0][potential_energy_of_body]
     result_expr = result_energy_expr.subs({body_mass: body_mass_, height: height_})
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

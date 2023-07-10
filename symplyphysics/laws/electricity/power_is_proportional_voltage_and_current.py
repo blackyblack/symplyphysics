@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 
 # Description
 # Power of current is proportional to current and voltage
@@ -25,4 +25,4 @@ def print_law() -> str:
 def calculate_power(current_: Quantity, voltage_: Quantity) -> Quantity:
     result_power_expr = solve(law, power, dict=True)[0][power]
     result_expr = result_power_expr.subs({current: current_, voltage: voltage_})
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

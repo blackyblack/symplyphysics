@@ -1,7 +1,7 @@
 from typing import List
 from sympy import (Eq, solve)
-from symplyphysics import (units, expr_to_quantity, Quantity, print_expression, Symbol,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, print_expression, Symbol, validate_input,
+    validate_output)
 from symplyphysics.core.operations.sum_array import SumArray
 from symplyphysics.core.symbols.symbols import tuple_of_symbols
 
@@ -30,4 +30,4 @@ def calculate_voltage(voltages_: List[Quantity]) -> Quantity:
     solved = solve(voltages_law, unknown_voltage, dict=True)[0][unknown_voltage]
     for (from_, to_) in zip(voltage_symbols, voltages_):
         solved = solved.subs(from_, to_)
-    return expr_to_quantity(solved)
+    return Quantity(solved)

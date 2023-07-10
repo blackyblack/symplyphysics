@@ -1,6 +1,6 @@
 from sympy import (Eq, solve, dsolve)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, Function, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, Function, print_expression, validate_input,
+    validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import velocity_is_movement_derivative as velocity_definition
 
@@ -55,4 +55,4 @@ def calculate_distance(initial_distance_: Quantity, velocity_: Quantity,
         constant_velocity: velocity_,
         movement_time: time_
     })
-    return expr_to_quantity(result_expr_substituted)
+    return Quantity(result_expr_substituted)

@@ -1,6 +1,6 @@
 from sympy import (Eq, Derivative)
-from symplyphysics import (units, expr_to_quantity, Quantity, Function, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Function, Symbol, print_expression, validate_input,
+    validate_output)
 
 # Description
 ## The instantaneous electrical current, or simply the electrical current, is the time derivative of the charge that flows.
@@ -30,4 +30,4 @@ def calculate_current(charge_start_: Quantity, charge_end_: Quantity, time_: Qua
     applied_definition = definition.subs(charge(time), charge_function_)
     dsolved = applied_definition.doit()
     result_expr = dsolved.rhs
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

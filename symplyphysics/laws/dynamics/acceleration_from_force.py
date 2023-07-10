@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 
 # Description
 ## Newton's second law: a = F / m
@@ -21,4 +21,4 @@ def print_law() -> str:
 def calculate_force(mass_: Quantity, acceleration_: Quantity) -> Quantity:
     result_force_expr = solve(law, force, dict=True)[0][force]
     result_expr = result_force_expr.subs({mass: mass_, acceleration: acceleration_})
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

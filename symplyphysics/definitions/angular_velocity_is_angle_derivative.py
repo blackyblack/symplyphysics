@@ -1,6 +1,6 @@
 from sympy import (Eq, Derivative)
-from symplyphysics import (angle_type, units, expr_to_quantity, Quantity, Function, Symbol,
-    print_expression, validate_input, validate_output)
+from symplyphysics import (angle_type, units, Quantity, Function, Symbol, print_expression,
+    validate_input, validate_output)
 
 # Description
 ## The movement along circle might be easily represented in polar coordinates with the pole in the center of the circle.
@@ -37,4 +37,4 @@ def calculate_angular_velocity(angle_start_: Quantity | float, angle_end_: Quant
     applied_definition = definition.subs(angle_function(time), angle_function_)
     dsolved = applied_definition.doit()
     result_expr = dsolved.rhs
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

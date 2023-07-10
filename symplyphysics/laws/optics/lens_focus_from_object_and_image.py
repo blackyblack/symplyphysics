@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 
 # Description
 ## Any optic lens creates image of an object. Distances lens-object and lens-image depend on lens optical strength.
@@ -34,4 +34,4 @@ def calculate_focus(object_distance_: Quantity, image_distance_: Quantity) -> Qu
         distance_to_object: object_distance_,
         distance_to_image: image_distance_
     })
-    return expr_to_quantity(focus_applied)
+    return Quantity(focus_applied)

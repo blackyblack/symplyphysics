@@ -1,7 +1,7 @@
 from sympy import (Eq, pi, solve, sqrt, simplify)
 from sympy.physics.units import speed_of_light
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.relativistic.waves import longitudinal_frequency_shift_from_absolute_velocities as general_doppler_law
 from symplyphysics.laws.relativistic.waves import frequency_shift_from_velocity_and_angle as relativistic_doppler_with_angle
@@ -85,4 +85,4 @@ def calculate_observed_frequency(real_frequency_: Quantity,
         real_frequency: real_frequency_,
         relative_velocity: relative_velocity_
     })
-    return expr_to_quantity(frequency_applied)
+    return Quantity(frequency_applied)

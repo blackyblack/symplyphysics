@@ -1,7 +1,6 @@
 from sympy import (Eq, solve)
 from symplyphysics import (
     units,
-    expr_to_quantity,
     Quantity,
     Symbol,
     print_expression,
@@ -42,4 +41,4 @@ def calculate_migration_area(diffusion_area_: Quantity, neutron_fermi_age_: Quan
         diffusion_area: diffusion_area_,
         neutron_fermi_age: neutron_fermi_age_
     })
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

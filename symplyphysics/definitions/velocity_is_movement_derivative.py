@@ -1,6 +1,6 @@
 from sympy import (Eq, Derivative)
-from symplyphysics import (units, expr_to_quantity, Quantity, Function, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Function, Symbol, print_expression, validate_input,
+    validate_output)
 
 # Description
 ## In mechanics, the derivative of the position vs. time graph of an object is equal to the velocity of the object.
@@ -32,4 +32,4 @@ def calculate_velocity(position_start_: Quantity, position_end_: Quantity,
     applied_definition = definition.subs(movement(moving_time), movement_function_)
     dsolved = applied_definition.doit()
     result_expr = dsolved.rhs
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

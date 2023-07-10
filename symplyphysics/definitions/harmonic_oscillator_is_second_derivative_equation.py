@@ -1,6 +1,6 @@
 from sympy import (Derivative, Eq, cos, solve, symbols, Function as SymFunction)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 
 # Description
@@ -72,4 +72,4 @@ def calculate_displacement(amplitude_: Quantity, angular_frequency_: Quantity,
         angular_frequency: angular_frequency_,
         time: time_
     }).rhs
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

@@ -1,7 +1,6 @@
 from sympy import (Eq, solve)
 from symplyphysics import (
     units,
-    expr_to_quantity,
     Quantity,
     Symbol,
     print_expression,
@@ -43,4 +42,4 @@ def calculate_cross_section(microscopic_cross_section_: Quantity,
         microscopic_cross_section: microscopic_cross_section_,
         atomic_number_density: atomic_number_density_
     })
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

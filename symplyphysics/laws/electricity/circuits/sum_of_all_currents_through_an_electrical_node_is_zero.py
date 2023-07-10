@@ -1,7 +1,7 @@
 from typing import List
 from sympy import (Eq, solve)
-from symplyphysics import (Symbol, units, expr_to_quantity, Quantity, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (Symbol, units, Quantity, print_expression, validate_input,
+    validate_output)
 from symplyphysics.core.operations.sum_array import SumArray
 from symplyphysics.core.symbols.symbols import tuple_of_symbols
 
@@ -32,4 +32,4 @@ def calculate_current_from_array(currents_: List[Quantity]) -> Quantity:
     solved = solve(currents_law, unknown_current, dict=True)[0][unknown_current]
     for (from_, to_) in zip(current_symbols, currents_):
         solved = solved.subs(from_, to_)
-    return expr_to_quantity(solved)
+    return Quantity(solved)
