@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 
 from sympy import solve, Eq
-from symplyphysics import (expr_to_quantity, print_expression, units, convert_to, Quantity,
-    prefixes)
+from symplyphysics import (print_expression, units, convert_to, Quantity, prefixes)
 from symplyphysics.core.symbols.celsius import Celsius, to_kelvin_quantity
 from symplyphysics.laws.electricity import amount_energy_from_voltage_time_resistance as joule_lenz_law
 from symplyphysics.laws.thermodynamics import thermal_energy_from_mass_and_temperature as operate_energy
@@ -56,7 +55,7 @@ heating_time_expr = heating_time_solved.subs({
     operate_energy.temperature_origin: initial_temperature_kelvin,
     operate_energy.temperature_end: final_temperature_kelvin
 })
-heating_time = expr_to_quantity(heating_time_expr)
+heating_time = Quantity(heating_time_expr)
 
 kettle_power_value = convert_to(kettle_power, units.watt).evalf(5)
 kettle_volume_value = convert_to(kettle_volume, units.liter).evalf(3)

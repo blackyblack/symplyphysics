@@ -1,7 +1,6 @@
 from sympy import (Eq, solve)
 from symplyphysics import (
     units,
-    expr_to_quantity,
     Quantity,
     Symbol,
     print_expression,
@@ -43,4 +42,4 @@ def calculate_diffusion_coefficient(macroscopic_transport_cross_section_: Quanti
         dict=True)[0][neutron_diffusion_coefficient]
     result_expr = result_coefficient_expr.subs(
         {macroscopic_transport_cross_section: macroscopic_transport_cross_section_})
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

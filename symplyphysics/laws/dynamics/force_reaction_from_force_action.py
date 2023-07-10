@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 
 # Description
 ## Newton's third law: Fr = -Fa
@@ -23,4 +23,4 @@ def print_law() -> str:
 def calculate_force_reaction(force_action_: Quantity) -> Quantity:
     result_force_expr = solve(law, force_reaction, dict=True)[0][force_reaction]
     result_expr = result_force_expr.subs({force_action: force_action_})
-    return expr_to_quantity(abs(result_expr))
+    return Quantity(abs(result_expr))

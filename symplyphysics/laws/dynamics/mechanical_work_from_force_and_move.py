@@ -1,7 +1,7 @@
 from sympy import (Eq, solve)
 from sympy.vector import Dot
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression, angle_type,
-    Vector, sympy_vector_from_vector, vector_rebase, validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, angle_type, Vector,
+    sympy_vector_from_vector, vector_rebase, validate_input, validate_output)
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_transform
 
 # Description
@@ -48,4 +48,4 @@ def calculate_work(force_: Quantity, distance_: Quantity, force_angle: Quantity 
         force: force_vector_cartesian_sympy,
         distance: distance_vector_cartesian_sympy
     }).doit()
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

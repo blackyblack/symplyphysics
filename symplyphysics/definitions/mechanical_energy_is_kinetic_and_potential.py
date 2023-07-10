@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 
 # Description
 ## The mechanical energy of the system is defined as the total kinetic energy plus the total potential energy.
@@ -32,4 +32,4 @@ def calculate_mechanical_energy(kinetic_energy_: Quantity, potential_energy_: Qu
         kinetic_energy: kinetic_energy_,
         potential_energy: potential_energy_
     })
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

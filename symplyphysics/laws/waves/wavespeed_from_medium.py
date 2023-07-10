@@ -1,7 +1,7 @@
 from sympy.physics.units import speed_of_light
 from sympy import (Eq, solve)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    dimensionless, validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, dimensionless, validate_input,
+    validate_output)
 
 # Description
 ## Wavespeed differs in different medium. Electromagnetic wave propagation speed depends on refraction factor of medium.
@@ -27,4 +27,4 @@ def print_law() -> str:
 def calculate_wavespeed(refraction_factor_: float) -> Quantity:
     result_expr = solve(law, wave_speed_in_medium, dict=True)[0][wave_speed_in_medium]
     wavespeed_applied = result_expr.subs(refraction_factor, refraction_factor_)
-    return expr_to_quantity(wavespeed_applied)
+    return Quantity(wavespeed_applied)

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from symplyphysics import Quantity, convert_to, expr_to_quantity, units
+from symplyphysics import Quantity, convert_to, units
 from symplyphysics.laws.dynamics import period_of_ideal_pendulum_from_length as pendulum_period
 from symplyphysics.laws.kinematic import temporal_frequency_from_period as frequency_def
 
@@ -12,7 +12,7 @@ pendulum_length = Quantity(24 * units.inch)
 
 oscillating_period_expr = pendulum_period.law.subs(pendulum_period.pendulum_length,
     pendulum_length).rhs
-oscillating_period = expr_to_quantity(oscillating_period_expr)
+oscillating_period = Quantity(oscillating_period_expr)
 oscillating_period_seconds = convert_to(oscillating_period, units.second).evalf(5)
 
 pendulum_length_inches = int(convert_to(pendulum_length, units.inch).evalf(3))

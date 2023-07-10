@@ -1,6 +1,6 @@
 from sympy import (Eq, Derivative)
-from symplyphysics import (units, expr_to_quantity, Quantity, Function, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Function, Symbol, print_expression, validate_input,
+    validate_output)
 
 # Description
 ## Acceleration is the derivative of velocity with respect to time.
@@ -32,4 +32,4 @@ def calculate_linear_acceleration(velocity_start_: Quantity, velocity_end_: Quan
     # calculate acceleration
     dsolved = applied_definition.doit()
     result_expr = dsolved.rhs
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

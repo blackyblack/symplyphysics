@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 
 # Description
 # Amount of energy for body heat Q = C * m * (t2 - t1)
@@ -43,4 +43,4 @@ def calculate_amount_energy(specific_heat_capacity_: Quantity, body_mass_: Quant
         temperature_end: temperature_end_,
         temperature_origin: temperature_origin_
     })
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

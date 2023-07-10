@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from sympy import solve, Eq, simplify
-from symplyphysics import (print_expression, units, convert_to, expr_to_quantity, Quantity)
+from symplyphysics import (print_expression, units, convert_to, Quantity)
 from symplyphysics.laws.kinematic import centripetal_acceleration_is_squared_velocity_by_radius as centripetal_acceleration_law
 from symplyphysics.laws.gravity import free_fall_acceleration_from_height as free_fall_law
 
@@ -39,6 +39,6 @@ required_velocity_expression = satellite_velocity.subs({
     free_fall_law.height_above_surface: height_above_surface_
 })
 
-result_velocity = expr_to_quantity(required_velocity_expression)
+result_velocity = Quantity(required_velocity_expression)
 result = convert_to(result_velocity, units.kilometer / units.second).evalf(3)
 print(f"Required velocity to launch satellite is {result} kilometer/sec")

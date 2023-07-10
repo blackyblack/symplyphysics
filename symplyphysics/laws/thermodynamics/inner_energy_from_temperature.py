@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 
 # Description
 ## Inner energy of ideal gas is sum of kinetic energy of all it's molecules.
@@ -37,4 +37,4 @@ def calculate_inner_energy(mass_of_gas_: Quantity, temperature_: Quantity,
         temperature: temperature_,
         mole_mass: mole_mass_
     })
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

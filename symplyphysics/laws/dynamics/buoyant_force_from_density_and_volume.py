@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 
 # Description
 ## Any object, totally or partially immersed in a fluid or liquid (or gas), is buoyed up by a force equal to the
@@ -34,4 +34,4 @@ def calculate_force_buoyant(fluid_density_: Quantity, displaced_volume_: Quantit
         fluid_density: fluid_density_,
         displaced_volume: displaced_volume_
     })
-    return expr_to_quantity(abs(result_expr))
+    return Quantity(abs(result_expr))

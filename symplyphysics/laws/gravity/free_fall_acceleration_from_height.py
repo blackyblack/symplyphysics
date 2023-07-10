@@ -1,7 +1,7 @@
 from sympy import (Eq, solve)
 from sympy.physics.units import gravitational_constant
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.gravity import gravity_force_from_mass_and_distance as gravity_law
 from symplyphysics.laws.dynamics import acceleration_from_force as newton2_law
@@ -56,4 +56,4 @@ def calculate_acceleration(planet_mass_: Quantity, planet_radius_: Quantity,
         planet_radius: planet_radius_,
         height_above_surface: height_above_surface_
     })
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

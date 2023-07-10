@@ -1,6 +1,6 @@
 from sympy import (Eq, solve, dsolve)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression, Function,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, Function, validate_input,
+    validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.conservation import mechanical_energy_is_constant
 
@@ -51,4 +51,4 @@ def print_law() -> str:
 def calculate_energy_after(mechanical_energy_before_: Quantity) -> Quantity:
     solved = solve(law, mechanical_energy(time_after), dict=True)[0][mechanical_energy(time_after)]
     result_expr = solved.subs(mechanical_energy(time_before), mechanical_energy_before_)
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

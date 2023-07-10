@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 
 # Description
 ## Resistance of the wire is proportional to its length and resistivity and inversely proportional to its cross-sectional area.
@@ -32,4 +32,4 @@ def calculate_resistance(resistivity_: Quantity, wire_length_: Quantity,
         wire_length: wire_length_,
         cross_section: cross_section_
     })
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

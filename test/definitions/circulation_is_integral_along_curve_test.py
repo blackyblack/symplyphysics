@@ -7,7 +7,6 @@ from symplyphysics import (
     convert_to,
     Quantity,
     SI,
-    expr_to_quantity,
 )
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
 from symplyphysics.core.fields.vector_field import VectorField
@@ -74,7 +73,7 @@ def test_force_circulation(test_args):
     trajectory = [circulation_def.parameter, circulation_def.parameter]
     result_expr = circulation_def.calculate_circulation(test_args.field, trajectory,
         1 * test_args.radius_unit, 2 * test_args.radius_unit)
-    result = expr_to_quantity(result_expr)
+    result = Quantity(result_expr)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
     result_work = convert_to(result, units.joule).evalf(2)
     assert result_work == approx(-0.5, 0.01)
@@ -93,7 +92,7 @@ def test_force_circulation_horizontal_up(test_args):
     trajectory_vertical = [5 * test_args.radius_unit, circulation_def.parameter]
     result_expr = circulation_def.calculate_circulation(test_args.field, trajectory_vertical,
         1 * test_args.radius_unit, 2 * test_args.radius_unit)
-    result = expr_to_quantity(result_expr)
+    result = Quantity(result_expr)
     result_work = convert_to(result, units.joule).evalf(2)
     assert result_work == approx(-0.5, 0.01)
 
@@ -103,6 +102,6 @@ def test_force_circulation_horizontal_down(test_args):
     trajectory_vertical = [6 * test_args.radius_unit, circulation_def.parameter]
     result_expr = circulation_def.calculate_circulation(test_args.field, trajectory_vertical,
         2 * test_args.radius_unit, 1 * test_args.radius_unit)
-    result = expr_to_quantity(result_expr)
+    result = Quantity(result_expr)
     result_work = convert_to(result, units.joule).evalf(2)
     assert result_work == approx(0.5, 0.01)

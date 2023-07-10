@@ -3,7 +3,7 @@ from sympy import Expr, Add, Mul
 from sympy.vector import VectorAdd, VectorMul, Vector as SymVector, express
 from sympy.vector.operators import _get_coord_systems
 
-from ...core.symbols.quantities import Quantity, expr_to_quantity
+from ...core.symbols.quantities import Quantity
 from ..coordinate_systems.coordinate_systems import CoordinateSystem
 
 
@@ -112,5 +112,5 @@ def expr_to_vector(expr: Expr, coordinate_system: Optional[CoordinateSystem] = N
     vector = vector_from_sympy_vector(expr, coordinate_system)
     components: list[Quantity] = []
     for c in vector.components:
-        components.append(expr_to_quantity(c))
+        components.append(Quantity(c))
     return Vector(components, coordinate_system)

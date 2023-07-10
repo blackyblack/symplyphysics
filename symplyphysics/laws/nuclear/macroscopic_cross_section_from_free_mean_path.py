@@ -1,7 +1,6 @@
 from sympy import (Eq, solve)
 from symplyphysics import (
     units,
-    expr_to_quantity,
     Quantity,
     Symbol,
     print_expression,
@@ -36,4 +35,4 @@ def calculate_cross_section(mean_free_path_: Quantity) -> Quantity:
     result_cross_section_expr = solve(law, macroscopic_cross_section,
         dict=True)[0][macroscopic_cross_section]
     result_expr = result_cross_section_expr.subs(mean_free_path, mean_free_path_)
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

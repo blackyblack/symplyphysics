@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from sympy import solve
-from symplyphysics import (units, convert_to, expr_to_quantity, Quantity)
+from symplyphysics import (units, convert_to, Quantity)
 from symplyphysics.laws.conservation import momentum_after_collision_equals_to_momentum_before as momentum_conservation_law
 from symplyphysics.definitions import momentum_is_mass_times_velocity as momentum_def
 
@@ -26,10 +26,10 @@ momentum_after = momentum_conservation_law.calculate_momentum_after(momentum_bef
 # Mass of the resulting object is a sum of masses of a bullet and plasticine
 solved = solve(momentum_def.definition, momentum_def.velocity, dict=True)[0][momentum_def.velocity]
 result_expr = solved.subs({
-    momentum_def.mass: expr_to_quantity(bullet_mass + body_mass),
+    momentum_def.mass: Quantity(bullet_mass + body_mass),
     momentum_def.momentum: momentum_after
 })
-result_velocity = expr_to_quantity(result_expr)
+result_velocity = Quantity(result_expr)
 
 result_velocity_meter_per_second = convert_to(result_velocity, units.meter / units.second).evalf(2)
 bullet_mass_gram = convert_to(bullet_mass, units.gram).evalf(2)

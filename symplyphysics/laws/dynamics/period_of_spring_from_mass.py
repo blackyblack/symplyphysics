@@ -1,7 +1,7 @@
 from sympy import (Derivative, Eq, Function as SymFunction, diff, solve, pi, sqrt, symbols,
     simplify)
-from symplyphysics import (Quantity, expr_to_quantity, units, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (Quantity, units, Symbol, print_expression, validate_input,
+    validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.dynamics import potential_energy_from_deformation as spring_energy
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_velocity as kinetic_energy
@@ -93,4 +93,4 @@ assert expr_equals(period_solved**2, law.rhs**2)
 def calculate_period(spring_elasticity_: Quantity, object_mass_: Quantity) -> Quantity:
     solved = solve(law, oscillation_period, dict=True)[0][oscillation_period]
     result_expr = solved.subs({spring_elasticity: spring_elasticity_, object_mass: object_mass_})
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

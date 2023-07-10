@@ -1,7 +1,6 @@
 from sympy import (Eq, solve, S)
 from symplyphysics import (
     units,
-    expr_to_quantity,
     Quantity,
     Symbol,
     print_expression,
@@ -49,5 +48,5 @@ def calculate_multiplication_factor(neutrons_per_fission_: float,
         macroscopic_fission_cross_section: macroscopic_fission_cross_section_,
         macroscopic_absorption_cross_section: macroscopic_absorption_cross_section_
     })
-    result_factor = expr_to_quantity(result_expr)
+    result_factor = Quantity(result_expr)
     return convert_to(result_factor, S.One).evalf()

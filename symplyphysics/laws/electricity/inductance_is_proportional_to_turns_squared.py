@@ -1,7 +1,7 @@
 from sympy import (Eq, solve)
 from sympy.physics.units import magnetic_constant
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input, validate_output, dimensionless)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output, dimensionless)
 
 # Description
 ## The basic characteristic of a coil is its inductance - the ability of the coil to accumulate energy as magnetic field.
@@ -38,4 +38,4 @@ def calculate_inductance(magnetic_permeability_: float, number_of_turns_: float,
         turn_area: turn_area_,
         coil_length: coil_length_
     })
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

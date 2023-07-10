@@ -4,7 +4,6 @@ from symplyphysics import (
     SI,
     Function,
     units,
-    expr_to_quantity,
     Quantity,
     Symbol,
     print_expression,
@@ -12,7 +11,6 @@ from symplyphysics import (
     convert_to,
     validate_input,
 )
-from symplyphysics.core.symbols.quantities import collect_factor_and_dimension
 
 # Description
 ## The diffusion equation, based on Fick's law, provides an analytical solution of spatial neutron flux
@@ -90,8 +88,10 @@ def calculate_multiplication_factor(neutron_flux_function_: Expr, neutrons_per_f
     macroscopic_fission_cross_section_: Quantity, macroscopic_absorption_cross_section_: Quantity,
     diffusion_coefficient_: Quantity) -> float:
 
-    (_, neutron_flux_dimension) = collect_factor_and_dimension(neutron_flux_function_)
-    assert SI.get_dimension_system().equivalent_dims(neutron_flux_dimension, neutron_flux.dimension)
+    # this is like validate_input but does not require no free symbols
+    neutron_flux_quantity = Quantity(neutron_flux_function_)
+    assert SI.get_dimension_system().equivalent_dims(neutron_flux_quantity.dimension,
+        neutron_flux.dimension)
 
     applied_law = apply_neutron_flux_function(neutron_flux_function_)
     result_expr = applied_law.subs({
@@ -102,5 +102,5 @@ def calculate_multiplication_factor(neutron_flux_function_: Expr, neutrons_per_f
     })
     result_factor_expr = solve(result_expr, effective_multiplication_factor,
         dict=True)[0][effective_multiplication_factor]
-    result_factor = expr_to_quantity(result_factor_expr)
+    result_factor = Quantity(result_factor_expr)
     return convert_to(result_factor, S.One).evalf()

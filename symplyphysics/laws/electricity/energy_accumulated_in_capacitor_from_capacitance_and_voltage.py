@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 
 # Description
 ## Capacitor can accumlate energy in the electric field inside it.
@@ -25,4 +25,4 @@ def print_law() -> str:
 def calculate_accumulated_energy(capacitance_: Quantity, voltage_: Quantity) -> Quantity:
     result_energy_expr = solve(law, accumulated_energy, dict=True)[0][accumulated_energy]
     result_expr = result_energy_expr.subs({capacitance: capacitance_, voltage: voltage_})
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

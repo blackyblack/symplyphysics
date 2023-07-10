@@ -1,6 +1,5 @@
 from sympy import (Eq, solve, symbols, cos)
 from symplyphysics import (
-    expr_to_quantity,
     Quantity,
     Symbol,
     print_expression,
@@ -39,4 +38,4 @@ def calculate_projection(vector_length_: Quantity, angle_: Quantity | float) -> 
         vector_length: vector_length_,
         vector_angle: angle_radians
     })
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

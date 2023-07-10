@@ -1,7 +1,7 @@
 from sympy import (Eq, solve, sqrt)
 from sympy.physics.units import speed_of_light
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 
 # Description
 ## General relativistic Doppler effect that is classical Doppler effect with relativistic coefficient. This law is not
@@ -70,4 +70,4 @@ def calculate_observed_frequency(real_frequency_: Quantity, wave_velocity_: Quan
         source_velocity: source_velocity_,
         observer_velocity: observer_velocity_
     })
-    return expr_to_quantity(frequency_applied)
+    return Quantity(frequency_applied)

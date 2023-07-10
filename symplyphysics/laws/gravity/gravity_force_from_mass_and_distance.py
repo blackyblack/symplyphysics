@@ -1,7 +1,7 @@
 from sympy import (Eq, solve)
 from sympy.physics.units import gravitational_constant
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 
 # Description
 ## Every object generates gravity field around it. Any other object in this field is pulled toward generator.
@@ -39,4 +39,4 @@ def calculate_force(first_object_mass_: Quantity, second_object_mass_: Quantity,
         second_object_mass: second_object_mass_,
         distance_between_mass_centers: distance_between_objects_
     })
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

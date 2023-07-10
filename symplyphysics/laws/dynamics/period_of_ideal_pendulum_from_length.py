@@ -1,6 +1,6 @@
 from sympy import (Derivative, Eq, Function as SymFunction, diff, sin, solve, pi, sqrt, symbols)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematic import planar_projection_is_cosine as projector
 from symplyphysics.laws.dynamics import potential_energy_from_mass_and_height as potential_energy
@@ -122,4 +122,4 @@ def print_law() -> str:
 def calculate_period(pendulum_length_: Quantity) -> Quantity:
     solved = solve(law, oscillation_period, dict=True)[0][oscillation_period]
     result_expr = solved.subs(pendulum_length, pendulum_length_)
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

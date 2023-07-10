@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from sympy import solve
-from symplyphysics import (units, convert_to, expr_to_quantity, Quantity, prefixes)
+from symplyphysics import (units, convert_to, Quantity, prefixes)
 from symplyphysics.laws.waves import frequency_shift_from_velocity as doppler_law
 
 # This example show usefulness of Doppler law.
@@ -27,7 +27,7 @@ applied_solution = solution.subs({
     doppler_law.observer_velocity: zero_velocity
 })
 
-result_velocity = expr_to_quantity(applied_solution)
+result_velocity = Quantity(applied_solution)
 result = convert_to(result_velocity, units.kilometer / units.hour).evalf(3)
 
 # Since object is not an emitter of signal, we cannot directly use Doppler law. Let's assume, we emit

@@ -1,7 +1,6 @@
 from sympy import (Eq, solve)
 from symplyphysics import (
     units,
-    expr_to_quantity,
     Quantity,
     Symbol,
     print_expression,
@@ -48,4 +47,4 @@ def calculate_cross_section(macroscopic_scattering_cross_section_: Quantity,
         macroscopic_scattering_cross_section: macroscopic_scattering_cross_section_,
         average_scattering_angle_cosine: average_scattering_angle_cosine_
     })
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

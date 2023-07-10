@@ -1,6 +1,6 @@
 from sympy import (Eq, Derivative)
-from symplyphysics import (units, expr_to_quantity, Quantity, Function, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Function, Symbol, print_expression, validate_input,
+    validate_output)
 
 # Description
 ## Power has to be applied to casue any energy change.
@@ -31,4 +31,4 @@ def calculate_power(energy_start_: Quantity, energy_end_: Quantity, time_: Quant
     applied_definition = definition.subs(energy(time), energy_function_)
     dsolved = applied_definition.doit()
     result_expr = dsolved.rhs
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

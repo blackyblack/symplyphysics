@@ -1,7 +1,7 @@
 from sympy import (Eq, solve)
 from sympy.physics.units import electric_constant
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input, validate_output, dimensionless)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output, dimensionless)
 
 # Description
 ## The basic characteristic of a capacitor is its capacitance - the ability of the capacitor to accumulate an electric charge.
@@ -38,4 +38,4 @@ def calculate_capacitance(dielectric_permeability_: float, plate_area_: Quantity
         plate_area: plate_area_,
         distance_between_plates: distance_between_plates_
     })
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

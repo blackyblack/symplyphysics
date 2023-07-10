@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 
 # Description
 ## The physical meaning of the diffusion length can be seen by calculating the mean square distance that
@@ -37,4 +37,4 @@ def calculate_diffusion_area(diffusion_coefficient_: Quantity,
         diffusion_coefficient: diffusion_coefficient_,
         macroscopic_absorption_cross_section: macroscopic_absorption_cross_section_
     })
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

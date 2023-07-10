@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematic import distance_from_constant_velocity as velocity_definition
 
@@ -46,4 +46,4 @@ def calculate_wavelength(velocity_: Quantity, period_: Quantity) -> Quantity:
         propagation_speed: velocity_,
         oscillation_period: period_
     })
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

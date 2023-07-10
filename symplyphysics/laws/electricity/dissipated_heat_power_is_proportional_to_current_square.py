@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity import power_from_energy_time as power_and_time
 from symplyphysics.laws.electricity import current_is_proportional_to_voltage as ohm_law
@@ -51,4 +51,4 @@ def print_law() -> str:
 def calculate_heat_power(current_: Quantity, resistance_: Quantity) -> Quantity:
     result_power_expr = solve(law, heat_power, dict=True)[0][heat_power]
     result_expr = result_power_expr.subs({current: current_, resistance: resistance_})
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)

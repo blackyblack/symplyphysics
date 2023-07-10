@@ -1,6 +1,6 @@
 from sympy import (Eq, cos, solve)
-from symplyphysics import (units, angle_type, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, angle_type, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.waves import wavelength_from_wave_speed_and_period as period_law
 from symplyphysics.laws.kinematic import temporal_frequency_from_period as frequency_def
@@ -155,4 +155,4 @@ def calculate_observed_frequency(
         source_angle: source_angle_radians,
         observer_angle: observer_angle_radians
     })
-    return expr_to_quantity(frequency_applied)
+    return Quantity(frequency_applied)

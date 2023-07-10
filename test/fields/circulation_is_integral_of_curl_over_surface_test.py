@@ -7,7 +7,6 @@ from symplyphysics import (
     Quantity,
     CoordinateSystem,
     SI,
-    expr_to_quantity,
     convert_to,
     sympy_vector_from_vector,
 )
@@ -76,7 +75,7 @@ def test_force_field_circulation(test_args):
     ]
     result_expr = circulation_def.calculate_circulation(field, surface,
         (1 * test_args.radius_unit, 2 * test_args.radius_unit), (0, pi / 2))
-    result = expr_to_quantity(result_expr)
+    result = Quantity(result_expr)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
     result_work = convert_to(result, units.joule).evalf(2)
     assert result_work > 0

@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 
 # Description
 # The amount of energy released by a conductor with a current is directly proportional
@@ -31,4 +31,4 @@ def print_law() -> str:
 def calculate_amount_energy(voltage_: Quantity, time_: Quantity, resistance_: Quantity) -> Quantity:
     result_energy_expr = solve(law, amount_energy, dict=True)[0][amount_energy]
     result_expr = result_energy_expr.subs({voltage: voltage_, time: time_, resistance: resistance_})
-    return expr_to_quantity(result_expr)
+    return Quantity(result_expr)
