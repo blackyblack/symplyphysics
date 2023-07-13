@@ -1,6 +1,5 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, expr_to_quantity, Quantity, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression,  validate_input, validate_output)
 
 # Description
 ## Conductivity is ability of medium to conduct electrical current.
