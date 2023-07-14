@@ -1,6 +1,6 @@
-from __future__ import annotations
 from functools import partial
 from typing import Any, Callable, Optional
+from typing_extensions import Self
 from sympy import Expr, S, Derivative, Function as SymFunction, Basic, sympify
 from sympy.core.add import Add
 from sympy.core.mul import Mul
@@ -99,7 +99,7 @@ class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancest
         _pretty_ascii_repr: Optional[str] = None,
         _mathml_presentation_repr: Optional[str] = None,
         _is_prefixed: bool = False,
-        **assumptions: Any) -> Quantity:
+        **assumptions: Any) -> Self:
         name = next_name("QTY")
         obj = SymQuantity.__new__(cls, name, None, None, None, None, None, False, **assumptions)
         return obj
@@ -116,7 +116,7 @@ class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancest
     def func(self) -> partial:
         return partial(Quantity.identity, self)
 
-    def identity(self, *_args: Any) -> Quantity:
+    def identity(self, *_args: Any) -> Self:
         return self
 
 

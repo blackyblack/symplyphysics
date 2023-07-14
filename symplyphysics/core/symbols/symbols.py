@@ -1,5 +1,5 @@
-from __future__ import annotations
 from typing import Any, Optional, Sequence
+from typing_extensions import Self
 from sympy import S, Symbol as SymSymbol, Expr, Equality
 from sympy.physics.units import Dimension
 from sympy.core.function import UndefinedFunction
@@ -31,7 +31,7 @@ class Symbol(DimensionSymbol, SymSymbol):  # pylint: disable=too-many-ancestors
     def __new__(cls,
         display_name: Optional[str] = None,
         _dimension: Dimension = Dimension(S.One),
-        **assumptions: Any) -> Symbol:
+        **assumptions: Any) -> Self:
         name = next_name("SYM") if display_name is None else next_name(display_name)
         obj = SymSymbol.__new__(cls, name, **assumptions)
         return obj
@@ -51,7 +51,7 @@ class Function(DimensionSymbol, UndefinedFunction):
     def __new__(mcs,
         display_name: Optional[str] = None,
         _dimension: Dimension = Dimension(S.One),
-        **options: Any) -> Function:
+        **options: Any) -> Self:
         name = next_name("FUN") if display_name is None else next_name(display_name)
         obj = UndefinedFunction.__new__(mcs, name, **options)
         return obj

@@ -46,4 +46,4 @@ def calculate_refractive_index(outer_speed_: Quantity, refracting_speed_: Quanti
         refracting_speed: refracting_speed_
     })
     result = Quantity(result_expr)
-    return convert_to(result, S.One).evalf()
+    return float(convert_to(result, S.One).evalf())
