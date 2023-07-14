@@ -22,7 +22,7 @@ def test_args_fixture():
 def test_basic_non_leakage_factor(test_args):
     result = non_leakage_factor.calculate_probability(test_args.Bg, test_args.th)
     assert isinstance(result, Probability)
-    assert result.value == approx(0.9737, 0.01)
+    assert result == approx(0.9737, 0.01)
 
 
 def test_bad_buckling(test_args):

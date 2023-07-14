@@ -40,7 +40,7 @@ def calculate_multiplication_factor(neutron_reproduction_: float, fast_fission_:
     result_expr = result_factor_expr.subs({
         neutron_reproduction: neutron_reproduction_,
         fast_fission: fast_fission_,
-        resonance_escape_probability: resonance_escape_probability_.value,
-        thermal_utilisation: thermal_utilisation_.value
+        resonance_escape_probability: resonance_escape_probability_,
+        thermal_utilisation: thermal_utilisation_
     })
     return result_expr.evalf()

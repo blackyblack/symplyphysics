@@ -7,6 +7,7 @@ from symplyphysics import (
     dimensionless,
     convert_to,
     validate_input,
+    validate_output,
 )
 
 # Description
@@ -40,6 +41,7 @@ def print_law() -> str:
 @validate_input(neutrons_per_fission_=neutrons_per_fission,
     macroscopic_fuel_fission_cross_section_=macroscopic_fuel_fission_cross_section,
     macroscopic_fuel_absorption_cross_section_=macroscopic_fuel_absorption_cross_section)
+@validate_output(neutron_reproduction_factor)
 def calculate_reproduction_factor(neutrons_per_fission_: float,
     macroscopic_fuel_fission_cross_section_: Quantity,
     macroscopic_fuel_absorption_cross_section_: Quantity) -> float:
@@ -58,4 +60,4 @@ def calculate_reproduction_factor(neutrons_per_fission_: float,
         macroscopic_fuel_absorption_cross_section: macroscopic_fuel_absorption_cross_section_
     })
     result_factor = Quantity(result_expr)
-    return convert_to(result_factor, S.One).evalf()
+    return float(convert_to(result_factor, S.One).evalf())

@@ -10,6 +10,7 @@ from symplyphysics import (
     dimensionless,
     convert_to,
     validate_input,
+    validate_output,
 )
 
 # Description
@@ -84,6 +85,7 @@ def apply_neutron_flux_function(neutron_flux_function_: Expr) -> Expr:
     macroscopic_fission_cross_section_=macroscopic_fission_cross_section,
     macroscopic_absorption_cross_section_=macroscopic_absorption_cross_section,
     diffusion_coefficient_=diffusion_coefficient)
+@validate_output(effective_multiplication_factor)
 def calculate_multiplication_factor(neutron_flux_function_: Expr, neutrons_per_fission_: float,
     macroscopic_fission_cross_section_: Quantity, macroscopic_absorption_cross_section_: Quantity,
     diffusion_coefficient_: Quantity) -> float:
@@ -103,4 +105,4 @@ def calculate_multiplication_factor(neutron_flux_function_: Expr, neutrons_per_f
     result_factor_expr = solve(result_expr, effective_multiplication_factor,
         dict=True)[0][effective_multiplication_factor]
     result_factor = Quantity(result_factor_expr)
-    return convert_to(result_factor, S.One).evalf()
+    return float(convert_to(result_factor, S.One).evalf())

@@ -7,8 +7,8 @@ from symplyphysics import (
     dimensionless,
     convert_to,
     validate_input,
+    validate_output,
 )
-from symplyphysics.core.quantity_decorator import assert_equivalent_dimension
 
 # Description
 ## If wave transfers from one medium to another, it refracts. That's because of different propagation speeds in different mediums.
@@ -38,6 +38,7 @@ def print_law() -> str:
 
 
 @validate_input(outer_speed_=outer_speed, refracting_speed_=refracting_speed)
+@validate_output(refractive_index)
 def calculate_refractive_index(outer_speed_: Quantity, refracting_speed_: Quantity) -> float:
     result_index_expr = solve(definition, refractive_index, dict=True)[0][refractive_index]
     result_expr = result_index_expr.subs({
@@ -45,6 +46,4 @@ def calculate_refractive_index(outer_speed_: Quantity, refracting_speed_: Quanti
         refracting_speed: refracting_speed_
     })
     result = Quantity(result_expr)
-    assert_equivalent_dimension(result, "return", "calculate_refractive_index",
-        refractive_index.dimension)
     return convert_to(result, S.One).evalf()

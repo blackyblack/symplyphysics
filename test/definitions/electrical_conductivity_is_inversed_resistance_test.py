@@ -12,6 +12,7 @@ from symplyphysics.definitions import electrical_conductivity_is_inversed_resist
 # Description
 ## If the object has 2 Ohm resistance, it should have 0.5 Siemens conductivity. No external calculators were used for such computation.
 
+
 @fixture(name="test_args")
 def test_args_fixture():
     R = Quantity(2 * units.ohm)
@@ -24,6 +25,7 @@ def test_basic_conductivity(test_args):
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.conductance)
     result_conductivity = convert_to(result, conductivity_def.definition_units_SI).evalf(2)
     assert result_conductivity == approx(0.5, 0.001)
+
 
 def test_bad_resistance():
     Rb = Quantity(1 * units.meter)

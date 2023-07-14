@@ -1,10 +1,9 @@
-from dataclasses import dataclass
+from typing_extensions import Self
 
 
-@dataclass(frozen=True)
-class Probability:
-    value: float
+class Probability(float):
 
-    def __post_init__(self):
-        if self.value < 0 or self.value > 1.0:
-            raise AttributeError(f"Probability value should be in range [0..1], got '{self.value}'")
+    def __new__(cls, value: float) -> Self:
+        if value < 0 or value > 1.0:
+            raise AttributeError(f"Probability value should be in range [0..1], got '{value}'")
+        return float.__new__(cls, value)

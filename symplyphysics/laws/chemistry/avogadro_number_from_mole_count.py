@@ -7,8 +7,8 @@ from symplyphysics import (
     dimensionless,
     convert_to,
     validate_input,
+    validate_output,
 )
-from symplyphysics.core.quantity_decorator import assert_equivalent_dimension
 
 # Description
 ## The Avogadro constant is the proportionality factor that relates the number of constituent particles
@@ -31,10 +31,9 @@ def print_law() -> str:
 
 
 @validate_input(mole_count_=mole_count)
+@validate_output(particles_count)
 def calculate_particles_count(mole_count_: Quantity) -> int:
     solved = solve(law, particles_count, dict=True)[0][particles_count]
     result_expr = solved.subs(mole_count, mole_count_)
     result = Quantity(result_expr)
-    assert_equivalent_dimension(result, "return", "calculate_particles_count",
-        particles_count.dimension)
     return int(convert_to(result, S.One).evalf())

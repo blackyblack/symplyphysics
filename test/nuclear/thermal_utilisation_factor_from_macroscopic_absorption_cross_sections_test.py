@@ -20,7 +20,7 @@ def test_args_fixture():
 def test_basic_utilisation_factor(test_args):
     result = utilisation_factor.calculate_utilisation_factor(test_args.Saf, test_args.Sat)
     assert isinstance(result, Probability)
-    assert result.value == approx(0.861, 0.01)
+    assert result == approx(0.861, 0.01)
 
 
 def test_bad_macroscopic_cross_section(test_args):
