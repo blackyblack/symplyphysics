@@ -1,3 +1,4 @@
+from __future__ import annotations
 from typing import Any, Optional, Sequence
 from typing_extensions import Self
 from sympy import S, Symbol as SymSymbol, Expr, Equality
@@ -48,10 +49,11 @@ class Function(DimensionSymbol, UndefinedFunction):
 
     name: str
 
+    # NOTE: Self type cannot be used in a metaclass and 'mcs' is a metaclass here
     def __new__(mcs,
         display_name: Optional[str] = None,
         _dimension: Dimension = Dimension(S.One),
-        **options: Any) -> Self:
+        **options: Any) -> Function:
         name = next_name("FUN") if display_name is None else next_name(display_name)
         obj = UndefinedFunction.__new__(mcs, name, **options)
         return obj
