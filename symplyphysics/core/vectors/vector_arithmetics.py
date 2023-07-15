@@ -1,6 +1,7 @@
-from sympy import Expr, cos, sin, sqrt
+from sympy import S, Expr, cos, sin, sqrt
 from ..coordinate_systems.coordinate_systems import CoordinateSystem
 from .vectors import Vector
+from ..symbols.quantities import Quantity
 from ..expr_comparisons import expr_equals
 
 
@@ -38,7 +39,7 @@ def add_cartesian_vectors(vector_left: Vector, vector_right: Vector) -> Vector:
             vector_right.coordinate_system.coord_system_type)
         raise ValueError(
             f"Addition only supported for cartesian coordinates: got {coord_name_from}")
-    result: list[Expr] = []
+    result: list[Expr | float | Quantity] = []
     for i in range(max(len(vector_left.components), len(vector_right.components))):
         val1 = 0 if i >= len(vector_left.components) else vector_left.components[i]
         val2 = 0 if i >= len(vector_right.components) else vector_right.components[i]
@@ -82,23 +83,23 @@ def dot_vectors(vector_left: Vector, vector_right: Vector) -> Expr | float:
             f"Different coordinate systems in vectors: {str(vector_left.coordinate_system)} vs {str(vector_right.coordinate_system)}"
         )
     if vector_left.coordinate_system is None or vector_left.coordinate_system.coord_system_type == CoordinateSystem.System.CARTESIAN:
-        result = 0
+        result: Expr = S.Zero
         for i in range(min(len(vector_left.components), len(vector_right.components))):
             result += (vector_left.components[i] * vector_right.components[i])
         return result
     if vector_left.coordinate_system.coord_system_type == CoordinateSystem.System.CYLINDRICAL:
-        left_components = vector_left.components
+        left_components = list(vector_left.components)
         left_components.extend([0] * (3 - len(left_components)))
-        right_components = vector_right.components
+        right_components = list(vector_right.components)
         right_components.extend([0] * (3 - len(right_components)))
         r1, r2 = left_components[0], right_components[0]
         theta1, theta2 = left_components[1], right_components[1]
         z1, z2 = left_components[2], right_components[2]
         return r1 * r2 * cos(theta1 - theta2) + z1 * z2
     if vector_left.coordinate_system.coord_system_type == CoordinateSystem.System.SPHERICAL:
-        left_components = vector_left.components
+        left_components = list(vector_left.components)
         left_components.extend([0] * (3 - len(left_components)))
-        right_components = vector_right.components
+        right_components = list(vector_right.components)
         right_components.extend([0] * (3 - len(right_components)))
         r1, r2 = left_components[0], right_components[0]
         theta1, theta2 = left_components[1], right_components[1]
@@ -143,9 +144,9 @@ def cross_cartesian_vectors(vector_left: Vector, vector_right: Vector) -> Vector
         raise ValueError(
             f"Cross product is only defined for 3 dimensions. Got: {len(vector_right.components)}")
 
-    left_components = vector_left.components
+    left_components = list(vector_left.components)
     left_components.extend([0] * (3 - len(left_components)))
-    right_components = vector_right.components
+    right_components = list(vector_right.components)
     right_components.extend([0] * (3 - len(right_components)))
     ax, ay, az = left_components
     bx, by, bz = right_components

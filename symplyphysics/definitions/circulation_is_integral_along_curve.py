@@ -1,7 +1,7 @@
-from typing import List
-from sympy import (Integral, Derivative, symbols, Eq, simplify)
+from sympy import (Expr, Integral, Derivative, symbols, Eq, simplify)
 from sympy.vector import Dot
 from symplyphysics import (print_expression)
+from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.core.vectors.vectors import Vector, sympy_vector_from_vector
 from symplyphysics.core.fields.vector_field import VectorField
 
@@ -49,7 +49,8 @@ def print_law() -> str:
 
 # field_ should be VectorField
 # trajectory_ should be array with projections to coordinates, eg [3 * cos(parameter), 3 * sin(parameter)]
-def calculate_circulation(field_: VectorField, trajectory_: List, parameter_from_, parameter_to_):
+def calculate_circulation(field_: VectorField, trajectory_: list[Expr], parameter_from_: Expr,
+    parameter_to_: Expr) -> Quantity:
 
     field_app = field_.apply(trajectory_)
     field_as_vector = sympy_vector_from_vector(field_app)
@@ -62,4 +63,4 @@ def calculate_circulation(field_: VectorField, trajectory_: List, parameter_from
         parameter_from: parameter_from_,
         parameter_to: parameter_to_
     }).doit()
-    return simplify(result_expr)
+    return Quantity(simplify(result_expr))

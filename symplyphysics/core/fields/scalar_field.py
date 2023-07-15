@@ -1,8 +1,9 @@
 from typing import Callable, Optional, TypeAlias
-from sympy import Expr
+from sympy import Expr, sympify
 from sympy.vector import express
 
 from ..coordinate_systems.coordinate_systems import CoordinateSystem
+from ..symbols.quantities import Quantity
 from .field_point import FieldPoint
 
 FieldFunction: TypeAlias = Callable[[FieldPoint], Expr | float] | Expr | float
@@ -13,14 +14,15 @@ FieldFunction: TypeAlias = Callable[[FieldPoint], Expr | float] | Expr | float
 # If coordinate_system is not set, argument is returned as is, without conversion to lambda.
 # Can contain value instead of SymPy Vector, eg 0.5.
 def sympy_expression_to_field_function(
-        expr: Expr, coordinate_system: Optional[CoordinateSystem] = None) -> FieldFunction:
+        expr: Expr | float | Quantity,
+        coordinate_system: Optional[CoordinateSystem] = None) -> FieldFunction:
     def _(point_: FieldPoint):
         # Duplicate check to make analyzer happy
         if coordinate_system is None:
             return expr
         base_scalars = coordinate_system.coord_system.base_scalars()
         # make a copy of expression
-        expression = expr
+        expression = sympify(expr)
         for i, scalar in enumerate(base_scalars):
             expression = expression.subs(scalar, point_.coordinate(i))
         return expression

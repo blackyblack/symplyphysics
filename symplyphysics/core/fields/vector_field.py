@@ -1,6 +1,8 @@
-from typing import Optional
+from typing import Optional, Sequence
 from sympy import Expr
 from sympy.vector import Vector as SymVector, express
+
+from symplyphysics.core.symbols.quantities import Quantity
 
 from ..coordinate_systems.coordinate_systems import CoordinateSystem
 from .field_point import FieldPoint
@@ -38,7 +40,7 @@ class VectorField:
             self.set_component(2, vector_function_z_)
 
     def __call__(self, point_: FieldPoint) -> Vector:
-        vector_components: list[FieldFunction] = []
+        vector_components: list[Expr | float] = []
         for vector_function in self.components:
             vector_components.append(
                 vector_function(point_) if callable(vector_function) else vector_function)
@@ -71,7 +73,7 @@ class VectorField:
     # Applies field to a trajectory / surface / volume - calls field functions with each element of the trajectory as parameter.
     # trajectory_ - list of expressions that correspond to a function in some space, eg [param, param] for a linear function y = x
     # return - vector parametrized by trajectory parameters.
-    def apply(self, trajectory_: list[Expr]) -> Vector:
+    def apply(self, trajectory_: Sequence[Expr]) -> Vector:
         field_point = FieldPoint()
         for idx, element in enumerate(trajectory_):
             field_point.set_coordinate(idx, element)
@@ -84,27 +86,29 @@ class VectorField:
         return self.apply(self.basis)
 
 
-# Constructs new VectorField from Vector
-def field_from_vector(vector_: Vector) -> VectorField:
+# Constructs new VectorField from list and coordinate system
+def _field_from_list(field_components_: Sequence[Expr | float | Quantity],
+    coordinate_system: Optional[CoordinateSystem] = None) -> VectorField:
     vector_components: list[FieldFunction] = []
-    for component in vector_.components:
-        vector_components.append(
-            sympy_expression_to_field_function(component, vector_.coordinate_system))
+    for component in field_components_:
+        vector_components.append(sympy_expression_to_field_function(component, coordinate_system))
     if len(vector_components) < 3:
         vector_components.extend([0] * (3 - len(vector_components)))
     return VectorField(vector_components[0], vector_components[1], vector_components[2],
-        vector_.coordinate_system)
+        coordinate_system)
 
 
 # Convert field coordinate system to new basis and construct new field.
 def field_rebase(field_: VectorField,
     coordinate_system: Optional[CoordinateSystem] = None) -> VectorField:
     # Simply set new coordinate system if field cannot be rebased
-    if coordinate_system is None or field_.coordinate_system is None:
-        return field_from_vector(Vector(field_.components, coordinate_system))
-    # Simply set new coordinate system if field cannot be rebased
-    if coordinate_system.coord_system is None or field_.coordinate_system.coord_system is None:
-        return field_from_vector(Vector(field_.components, coordinate_system))
+    if ((coordinate_system is None or field_.coordinate_system is None) or
+        (coordinate_system.coord_system is None or field_.coordinate_system.coord_system is None)):
+        vector_components = field_.components
+        if len(vector_components) < 3:
+            vector_components.extend([0] * (3 - len(vector_components)))
+        return VectorField(vector_components[0], vector_components[1], vector_components[2],
+            coordinate_system)
     return _extended_express(field_, coordinate_system)
 
 
@@ -134,7 +138,7 @@ def _extended_express(field_: VectorField, system_to: CoordinateSystem) -> Vecto
 def field_from_sympy_vector(sympy_vector_: SymVector,
     coordinate_system: Optional[CoordinateSystem] = None) -> VectorField:
     field_vector = vector_from_sympy_vector(sympy_vector_, coordinate_system)
-    return field_from_vector(field_vector)
+    return _field_from_list(field_vector.components, coordinate_system)
 
 
 # Apply field to entire coordinate system and convert to SymPy vector

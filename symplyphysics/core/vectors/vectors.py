@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Optional, Sequence
 from sympy import Expr, Add, Mul
 from sympy.vector import VectorAdd, VectorMul, Vector as SymVector, express
 from sympy.vector.operators import _get_coord_systems
@@ -16,13 +16,15 @@ from ..coordinate_systems.coordinate_systems import CoordinateSystem
 # Therefore for all physical applications vectors should assume various origin point and should be
 # defined dynamically, eg [C.x, C.y] or [parameter1, parameter2].
 class Vector:
-    _components: list[Any]
+    _components: list[Expr | float | Quantity]
     #NOTE: 4 and higher dimensional vectors are not supported cause of using CoordSys3D
     #      to allow rebasing vector coordinate system.
     _coordinate_system: Optional[CoordinateSystem] = None
 
-    def __init__(self, components: list[Any], coordinate_system: Optional[CoordinateSystem] = None):
-        self._components = components
+    def __init__(self,
+        components: Sequence[Expr | float | Quantity],
+        coordinate_system: Optional[CoordinateSystem] = None):
+        self._components = list(components)
         self._coordinate_system = coordinate_system
 
     @property
@@ -30,7 +32,7 @@ class Vector:
         return self._coordinate_system
 
     @property
-    def components(self) -> list[Any]:
+    def components(self) -> Sequence[Expr | float | Quantity]:
         return self._components
 
 
@@ -110,7 +112,7 @@ def expr_to_vector(expr: Expr, coordinate_system: Optional[CoordinateSystem] = N
     if not isinstance(expr, SymVector):
         raise TypeError(f"Expression cannot be converted to SymPy Vector: {str(expr)}")
     vector = vector_from_sympy_vector(expr, coordinate_system)
-    components: list[Quantity] = []
+    components: list[Expr | float | Quantity] = []
     for c in vector.components:
         components.append(Quantity(c))
     return Vector(components, coordinate_system)

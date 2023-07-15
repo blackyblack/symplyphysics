@@ -1,4 +1,3 @@
-from typing import List
 from sympy import (Eq, solve)
 from symplyphysics import (Symbol, units, Quantity, print_expression, validate_input,
     validate_output)
@@ -25,7 +24,7 @@ def print_law() -> str:
 
 @validate_input(currents_=currents)
 @validate_output(units.current)
-def calculate_current_from_array(currents_: List[Quantity]) -> Quantity:
+def calculate_current_from_array(currents_: list[Quantity]) -> Quantity:
     current_symbols = tuple_of_symbols("current", units.current, len(currents_) + 1)
     unknown_current = current_symbols[len(currents_)]
     currents_law = law.subs(currents, current_symbols).doit()

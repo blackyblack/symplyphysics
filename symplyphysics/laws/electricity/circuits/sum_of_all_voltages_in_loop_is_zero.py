@@ -1,4 +1,3 @@
-from typing import List
 from sympy import (Eq, solve)
 from symplyphysics import (units, Quantity, print_expression, Symbol, validate_input,
     validate_output)
@@ -23,7 +22,7 @@ def print_law() -> str:
 
 @validate_input(voltages_=voltages)
 @validate_output(units.voltage)
-def calculate_voltage(voltages_: List[Quantity]) -> Quantity:
+def calculate_voltage(voltages_: list[Quantity]) -> Quantity:
     voltage_symbols = tuple_of_symbols("voltage", units.voltage, len(voltages_) + 1)
     unknown_voltage = voltage_symbols[len(voltages_)]
     voltages_law = law.subs(voltages, voltage_symbols).doit()

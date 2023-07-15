@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import approx, fixture
-from sympy import Expr, sin, cos, sqrt, pi
+from sympy import S, Expr, sin, cos, sqrt, pi
 from sympy.vector import VectorZero
 from symplyphysics import (
     units,
@@ -31,8 +31,8 @@ def test_basic_circulation(test_args):
         circulation_def.parameter1 * cos(circulation_def.parameter2),
         circulation_def.parameter1 * sin(circulation_def.parameter2)
     ]
-    result_expr = circulation_def.calculate_circulation(field, surface, (0, 1), (0, pi / 2))
-    assert result_expr.evalf(4) == approx((-pi / 4).evalf(4), 0.001)
+    result = circulation_def.calculate_circulation(field, surface, (0, 1), (0, pi / 2))
+    assert convert_to(result, S.One).evalf(4) == approx((-pi / 4).evalf(4), 0.001)
 
 
 def test_two_parameters_circulation(test_args):
@@ -44,8 +44,8 @@ def test_two_parameters_circulation(test_args):
         3 * circulation_def.parameter1 * cos(circulation_def.parameter2),
         3 * circulation_def.parameter1 * sin(circulation_def.parameter2), circulation_def.parameter1
     ]
-    result_expr = circulation_def.calculate_circulation(field, cone, (0, 1), (0, 2 * pi))
-    assert result_expr.evalf(4) == approx((-18 * pi).evalf(4), 0.001)
+    result = circulation_def.calculate_circulation(field, cone, (0, 1), (0, 2 * pi))
+    assert convert_to(result, S.One).evalf(4) == approx((-18 * pi).evalf(4), 0.001)
 
 
 def _distance(point: FieldPoint) -> Expr:
@@ -73,9 +73,8 @@ def test_force_field_circulation(test_args):
         circulation_def.parameter1 * cos(circulation_def.parameter2),
         circulation_def.parameter1 * sin(circulation_def.parameter2)
     ]
-    result_expr = circulation_def.calculate_circulation(field, surface,
+    result = circulation_def.calculate_circulation(field, surface,
         (1 * test_args.radius_unit, 2 * test_args.radius_unit), (0, pi / 2))
-    result = Quantity(result_expr)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
     result_work = convert_to(result, units.joule).evalf(2)
     assert result_work > 0

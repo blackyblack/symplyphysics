@@ -1,13 +1,12 @@
 from collections import namedtuple
-from typing import Any, List
 from test.test_decorators import unsupported_usage
 from pytest import fixture, raises
-from sympy import atan, cos, pi, sin, sqrt, symbols
+from sympy import Expr, atan, cos, pi, sin, sqrt, symbols
 from sympy.vector import express, Vector as SympyVector
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_rotate, coordinates_transform
-from symplyphysics.core.vectors.vectors import Vector, vector_rebase
+from symplyphysics.core.vectors.vectors import vector_rebase
 from symplyphysics.core.fields.field_point import FieldPoint
-from symplyphysics.core.fields.vector_field import VectorField, field_from_sympy_vector, field_from_vector, field_rebase, sympy_vector_from_field
+from symplyphysics.core.fields.vector_field import VectorField, field_from_sympy_vector, field_rebase, sympy_vector_from_field
 
 
 def _assert_callable(field_: VectorField, size_: int):
@@ -15,7 +14,7 @@ def _assert_callable(field_: VectorField, size_: int):
         assert callable(field_.component(i))
 
 
-def _assert_point(field_: VectorField, point_: FieldPoint, expected_: List[Any]):
+def _assert_point(field_: VectorField, point_: FieldPoint, expected_: list[Expr | float]):
     for idx, c in enumerate(field_.components):
         value = c(point_) if callable(c) else c
         assert value == expected_[idx]
@@ -116,46 +115,6 @@ def test_coord_system_field(test_args):
     assert field.coordinate_system == test_args.C
 
 
-# Test field_from_vector()
-
-
-def test_basic_field_from_vector(test_args):
-    field = field_from_vector(
-        Vector([test_args.C.coord_system.x, test_args.C.coord_system.y], test_args.C))
-    _assert_callable(field, 2)
-    assert field.component(2) == 0
-    field_point = FieldPoint(1, 2, 3)
-    _assert_point(field, field_point, [1, 2, 0])
-    assert field.basis == [
-        test_args.C.coord_system.x, test_args.C.coord_system.y, test_args.C.coord_system.z
-    ]
-    assert field.coordinate_system == test_args.C
-
-
-def test_plain_field_from_vector(test_args):
-    field = field_from_vector(Vector([2, 3], test_args.C))
-    assert len(field.components) == 2
-    assert field.component(0) == 2
-    assert field.component(1) == 3
-    field_point = FieldPoint(1, 2, 3)
-    _assert_point(field, field_point, [2, 3, 0])
-    assert field.basis == [
-        test_args.C.coord_system.x, test_args.C.coord_system.y, test_args.C.coord_system.z
-    ]
-    assert field.coordinate_system == test_args.C
-
-
-def test_empty_coord_system_field_from_vector(test_args):
-    field = field_from_vector(Vector([test_args.C.coord_system.x, test_args.C.coord_system.y]))
-    assert len(field.components) == 2
-    assert field.component(0) == test_args.C.coord_system.x
-    assert field.component(1) == test_args.C.coord_system.y
-    field_point = FieldPoint(1, 2, 3)
-    _assert_point(field, field_point, [test_args.C.coord_system.x, test_args.C.coord_system.y, 0])
-    assert len(field.basis) == 0
-    assert field.coordinate_system is None
-
-
 # Test field_from_sympy_vector()
 
 
@@ -163,7 +122,7 @@ def test_basic_vector_to_field_conversion(test_args):
     field = field_from_sympy_vector(
         test_args.C.coord_system.x * test_args.C.coord_system.i +
         test_args.C.coord_system.y * test_args.C.coord_system.j, test_args.C)
-    _assert_callable(field, 3)
+    _assert_callable(field, 2)
     field_point = FieldPoint(1, 2, 3)
     _assert_point(field, field_point, [1, 2, 0])
     assert field.basis == [
