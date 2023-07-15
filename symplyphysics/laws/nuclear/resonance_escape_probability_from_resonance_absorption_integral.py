@@ -7,6 +7,7 @@ from symplyphysics import (
     dimensionless,
     convert_to,
     validate_input,
+    validate_output,
 )
 from symplyphysics.core.symbols.probability import Probability
 
@@ -54,6 +55,7 @@ def print_law() -> str:
     effective_resonance_integral_=effective_resonance_integral,
     average_lethargy_change_=average_lethargy_change,
     macroscopic_scattering_cross_section_moderator_=macroscopic_scattering_cross_section_moderator)
+@validate_output(resonance_escape_probability)
 def calculate_resonance_escape_probability(
         absorber_atomic_number_density_: Quantity, effective_resonance_integral_: Quantity,
         average_lethargy_change_: float,

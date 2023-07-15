@@ -48,3 +48,9 @@ def test_bad_deformation(test_args):
         spring_law.calculate_force(test_args.k, vb)
     with raises(TypeError):
         spring_law.calculate_force(test_args.k, 100)
+
+
+def test_bad_deformation_vector(test_args):
+    vb = Vector([test_args.df.components[0] * test_args.df.components[0]], test_args.C)
+    with raises(TypeError):
+        spring_law.calculate_force(test_args.k, vb)

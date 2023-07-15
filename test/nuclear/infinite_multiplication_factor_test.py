@@ -26,10 +26,10 @@ def test_basic_multiplication_factor(test_args):
 def test_bad_resonance_escape(test_args):
     with raises(AttributeError):
         infinite_multiplication_factor.calculate_multiplication_factor(
-            test_args.n, test_args.e, 100, test_args.f)
+            test_args.n, test_args.e, Probability(100), test_args.f)
 
 
 def test_bad_thermal_utilisation(test_args):
     with raises(AttributeError):
         infinite_multiplication_factor.calculate_multiplication_factor(
-            test_args.n, test_args.e, test_args.p, 100)
+            test_args.n, test_args.e, test_args.p, Probability(100))

@@ -39,7 +39,7 @@ def calculate_multiplication_factor(infinite_multiplication_factor_: float,
         dict=True)[0][effective_multiplication_factor]
     result_expr = result_factor_expr.subs({
         infinite_multiplication_factor: infinite_multiplication_factor_,
-        fast_non_leakage_probability: fast_non_leakage_probability_.value,
-        thermal_non_leakage_probability: thermal_non_leakage_probability_.value
+        fast_non_leakage_probability: fast_non_leakage_probability_,
+        thermal_non_leakage_probability: thermal_non_leakage_probability_
     })
     return result_expr.evalf()

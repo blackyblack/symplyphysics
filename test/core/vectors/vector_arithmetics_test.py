@@ -57,7 +57,7 @@ def test_basic_add_vectors(test_args):
     assert add_cartesian_vectors(Vector([1, 2]), Vector([2, 1])).components == [3, 3]
     assert add_cartesian_vectors(Vector([1, 2 * 2]), Vector([1, 4])).components == [2, 8]
     assert add_cartesian_vectors(Vector([1, 0]), Vector([1])).components == [2, 0]
-    assert add_cartesian_vectors(Vector([]), Vector([])).components == []
+    assert len(add_cartesian_vectors(Vector([]), Vector([])).components) == 0
     assert add_cartesian_vectors(Vector([1, 2, 3]), Vector([1, 2, 3])).components == [2, 4, 6]
     assert add_cartesian_vectors(Vector([test_args.C.coord_system.x, 2]),
         Vector([test_args.C.coord_system.x, 2])).components == [2 * test_args.C.coord_system.x, 4]
@@ -157,7 +157,7 @@ def test_basic_scale_vector(test_args):
     assert scale_vector(1, Vector([2, 1])).components == [2, 1]
     assert scale_vector(0.1, Vector([1, 4])).components == [0.1, 0.4]
     assert scale_vector(2, Vector([1])).components == [2]
-    assert scale_vector(2, Vector([])).components == []
+    assert len(scale_vector(2, Vector([])).components) == 0
     assert scale_vector(0, Vector([1, 4])).components == [0, 0]
     assert scale_vector(-1, Vector([1, 4])).components == [-1, -4]
     assert scale_vector(2, Vector([test_args.C.coord_system.x,

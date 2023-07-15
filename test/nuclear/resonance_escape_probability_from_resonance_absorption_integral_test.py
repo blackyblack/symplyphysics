@@ -28,7 +28,7 @@ def test_args_fixture():
 def test_basic_resonance_escape_factor(test_args):
     result = resonance_escape.calculate_resonance_escape_probability(test_args.Na, test_args.Ieff,
         test_args.Let, test_args.Ss)
-    assert result.value == approx(0.955, 0.01)
+    assert result == approx(0.955, 0.01)
 
 
 def test_bad_atomic_number_density(test_args):

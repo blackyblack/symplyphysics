@@ -7,6 +7,7 @@ from symplyphysics import (
     dimensionless,
     convert_to,
     validate_input,
+    validate_output,
 )
 from symplyphysics.core.symbols.probability import Probability
 
@@ -39,6 +40,7 @@ def print_law() -> str:
 @validate_input(
     macroscopic_fuel_absorption_cross_section_=macroscopic_fuel_absorption_cross_section,
     macroscopic_total_absorption_cross_section_=macroscopic_total_absorption_cross_section)
+@validate_output(thermal_utilisation_factor)
 def calculate_utilisation_factor(
         macroscopic_fuel_absorption_cross_section_: Quantity,
         macroscopic_total_absorption_cross_section_: Quantity) -> Probability:

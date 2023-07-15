@@ -30,7 +30,7 @@ def test_coord_sys_vector(test_args):
 
 def test_empty_vector():
     vector = Vector([])
-    assert vector.components == []
+    assert len(vector.components) == 0
     assert vector.coordinate_system is None
 
 
@@ -58,7 +58,7 @@ def test_skip_dimension_sympy_to_array_conversion(test_args):
 
 def test_empty_sympy_to_array_conversion(test_args):
     vector = vector_from_sympy_vector(SympyVector.zero, test_args.C)
-    assert vector.components == []
+    assert len(vector.components) == 0
     assert vector.coordinate_system == test_args.C
 
 

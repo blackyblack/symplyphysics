@@ -28,7 +28,7 @@ jobs:
       - name: Run typechecking with mypy
         run: mypy --exclude=build .
       - name: Run linter with pylint
-        run: pylint --fail-under=9 ./test/**/*.py ./symplyphysics
+        run: pylint --fail-under=10 ./test/**/*.py ./symplyphysics
       - name: Run tests with pytest
         run: pytest
       - name: Run examples

@@ -39,13 +39,17 @@ def assert_equivalent_dimension(
             f"not contain free symbols")
 
 
-def _assert_expected_unit(value: SymQuantity | Vector | Sequence,
+def _assert_expected_unit(value: SymQuantity | Vector | Sequence[SymQuantity | float],
     expected_units: Dimension | Symbol | Function | Sequence[Dimension | Symbol | Function],
     param_name: str, function_name: str):
     components: list[SymQuantity | float] = []
     indexed = False
     if isinstance(value, Vector):
-        components = value.components
+        for c in value.components:
+            if not isinstance(c, (SymQuantity | float | int)):
+                raise TypeError(f"Argument '{param_name}' to function '{function_name}'"
+                    f" is Vector but its component {c} is not Quantity or Number")
+            components.append(c)
         indexed = True
     elif isinstance(value, Sequence):
         components = list(value)

@@ -25,10 +25,10 @@ def test_basic_multiplication_factor(test_args):
 def test_bad_fast_non_leakage(test_args):
     with raises(AttributeError):
         effective_multiplication_factor.calculate_multiplication_factor(
-            test_args.kinf, 100, test_args.Pt)
+            test_args.kinf, Probability(100), test_args.Pt)
 
 
 def test_thermal_non_leakage(test_args):
     with raises(AttributeError):
         effective_multiplication_factor.calculate_multiplication_factor(
-            test_args.kinf, test_args.Pf, 100)
+            test_args.kinf, test_args.Pf, Probability(100))

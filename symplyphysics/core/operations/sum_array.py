@@ -1,7 +1,7 @@
-from __future__ import annotations
 from functools import reduce
 import operator
 from typing import Any
+from typing_extensions import Self
 from sympy import Expr, Basic, flatten
 
 
@@ -11,7 +11,7 @@ class SumArray(Expr):
 
     """
 
-    def __new__(cls, *args: Any) -> SumArray:
+    def __new__(cls, *args: Any) -> Self:
         # We remove all levels of nested tuples, because we want to sum everything we got.
         flat_args = tuple(flatten(args))
         obj = Expr.__new__(cls, *flat_args)

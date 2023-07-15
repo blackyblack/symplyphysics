@@ -1,10 +1,9 @@
-from typing import Any, List
-from sympy import symbols
+from sympy import Expr, symbols
 from sympy.vector import CoordSys3D
 from symplyphysics.core.fields.field_point import FieldPoint
 
 
-def _assert_point(point_: FieldPoint, expected_: List[Any]):
+def _assert_point(point_: FieldPoint, expected_: list[Expr | float]):
     for idx, c in enumerate(point_.coordinates):
         assert c == expected_[idx]
 
