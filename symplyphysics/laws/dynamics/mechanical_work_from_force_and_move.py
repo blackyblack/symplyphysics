@@ -38,8 +38,8 @@ def calculate_work(force_: Quantity, distance_: Quantity, force_angle: Quantity 
     distance_angle_radians = distance_angle.scale_factor if isinstance(distance_angle,
         Quantity) else distance_angle
     # Convert to Cartesian coordinates as Dot product does not work properly for Cylindrical coordinates
-    force_vector = Vector([force_, force_angle_radians], coordinates_polar)
-    distance_vector = Vector([distance_, distance_angle_radians], coordinates_polar)
+    force_vector = Vector(coordinates_polar, [force_, force_angle_radians])
+    distance_vector = Vector(coordinates_polar, [distance_, distance_angle_radians])
     force_vector_cartesian = vector_rebase(force_vector, coordinates_cartesian)
     distance_vector_cartesian = vector_rebase(distance_vector, coordinates_cartesian)
     force_vector_cartesian_sympy = sympy_vector_from_vector(force_vector_cartesian)
