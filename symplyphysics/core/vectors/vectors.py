@@ -1,12 +1,11 @@
-from typing import Sequence, TypeAlias
+from typing import Sequence
 from sympy import Expr, Add, Mul
 from sympy.vector import VectorAdd, VectorMul, Vector as SymVector, express
 from sympy.vector.operators import _get_coord_systems
 
+from ...core.fields.scalar_field import ScalarValue
 from ...core.symbols.quantities import Quantity
 from ..coordinate_systems.coordinate_systems import CoordinateSystem
-
-VectorComponent: TypeAlias = Expr | float | Quantity
 
 
 # Contains list of SymPy expressions or any numbers as components.
@@ -22,9 +21,9 @@ class Vector:
     #NOTE: 4 and higher dimensional vectors are not supported cause of using CoordSys3D
     #      to allow rebasing vector coordinate system.
     _coordinate_system: CoordinateSystem
-    _components: list[VectorComponent]
+    _components: list[ScalarValue]
 
-    def __init__(self, coordinate_system: CoordinateSystem, components: Sequence[VectorComponent]):
+    def __init__(self, coordinate_system: CoordinateSystem, components: Sequence[ScalarValue]):
         self._coordinate_system = coordinate_system
         self._components = list(components)
 
@@ -33,7 +32,7 @@ class Vector:
         return self._coordinate_system
 
     @property
-    def components(self) -> Sequence[VectorComponent]:
+    def components(self) -> Sequence[ScalarValue]:
         return self._components
 
 
@@ -100,7 +99,5 @@ def expr_to_vector(expr: Expr, coordinate_system: CoordinateSystem) -> Vector:
     if not isinstance(expr, SymVector):
         raise TypeError(f"Expression cannot be converted to SymPy Vector: {str(expr)}")
     vector = vector_from_sympy_vector(expr, coordinate_system)
-    components: list[Expr | float | Quantity] = []
-    for c in vector.components:
-        components.append(Quantity(c))
+    components = [Quantity(c) for c in vector.components]
     return Vector(coordinate_system, components)

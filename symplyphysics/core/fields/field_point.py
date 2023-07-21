@@ -11,14 +11,8 @@ class FieldPoint:
     # may contain not number but sympy expression, eg C.x
     _coordinates: list[Coordinate] = []
 
-    def __init__(self, x_: Coordinate = 0, y_: Coordinate = 0, z_: Coordinate = 0):
-        self._coordinates = []
-        if x_ != 0:
-            self.set_coordinate(0, x_)
-        if y_ != 0:
-            self.set_coordinate(1, y_)
-        if z_ != 0:
-            self.set_coordinate(2, z_)
+    def __init__(self, *coordinates: Coordinate):
+        self._coordinates = list(coordinates)
 
     @property
     def x(self) -> Coordinate:

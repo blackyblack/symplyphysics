@@ -58,8 +58,7 @@ def test_basic_field():
     assert field(field_point) == 6
     assert len(field.basis) == 0
     assert field.coordinate_system is None
-    assert len(field.components) == 1
-    assert callable(field.components[0])
+    assert callable(field.field_function)
 
 
 def test_empty_field():
@@ -67,14 +66,12 @@ def test_empty_field():
     field_point = FieldPoint(1, 2, 3)
     assert field(field_point) == 0
     # Scalar field components size is always 1
-    assert len(field.components) == 1
-    assert field.components[0] == 0
+    assert field.field_function == 0
 
 
 def test_4d_point_field():
     field = ScalarField(lambda p: p.coordinate(3))
-    field_point = FieldPoint(1, 2, 3)
-    field_point.set_coordinate(3, 4)
+    field_point = FieldPoint(1, 2, 3, 4)
     assert field(field_point) == 4
 
 

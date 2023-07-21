@@ -1,5 +1,5 @@
 from functools import partial
-from typing import Any, Callable, Optional
+from typing import Any, Callable, Optional, TypeAlias
 from typing_extensions import Self
 from sympy import Expr, S, Derivative, Function as SymFunction, Basic, sympify
 from sympy.core.add import Add
@@ -121,3 +121,5 @@ class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancest
 
 
 dimensionless = Dimension(S.One)
+
+ScalarValue: TypeAlias = Expr | float | Quantity
