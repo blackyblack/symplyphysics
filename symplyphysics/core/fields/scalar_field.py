@@ -3,10 +3,10 @@ from sympy import Expr, sympify
 from sympy.vector import express
 
 from ..coordinate_systems.coordinate_systems import CoordinateSystem
-from ..vectors.vectors import VectorComponent
+from ...core.symbols.quantities import ScalarValue
 from .field_point import FieldPoint
 
-FieldFunction: TypeAlias = Callable[[FieldPoint], VectorComponent] | VectorComponent
+FieldFunction: TypeAlias = Callable[[FieldPoint], ScalarValue] | ScalarValue
 
 
 # Converts SymPy expression to a lambda function to use in some field, eg
@@ -14,9 +14,9 @@ FieldFunction: TypeAlias = Callable[[FieldPoint], VectorComponent] | VectorCompo
 # If coordinate_system is not set, argument is returned as is, without conversion to lambda.
 # Can contain value instead of SymPy Vector, eg 0.5.
 def sympy_expression_to_field_function(
-        expr: VectorComponent,
-        coordinate_system: Optional[CoordinateSystem] = None) -> FieldFunction:
-    def _(point_: FieldPoint):
+        expr: ScalarValue, coordinate_system: Optional[CoordinateSystem] = None) -> FieldFunction:
+
+    def subs_with_point(point_: FieldPoint) -> ScalarValue:
         # Duplicate check to make analyzer happy
         if coordinate_system is None:
             return expr
@@ -29,14 +29,15 @@ def sympy_expression_to_field_function(
 
     if coordinate_system is None:
         return expr
-    return expr if not isinstance(expr, Expr) else _
+    return expr if not isinstance(expr, Expr) else subs_with_point
 
 
-# Contains mapping of point to a scalar value in _function, eg P(FieldPoint).
+# Contains mapping of point to a scalar value in _point_function, eg P(FieldPoint).
 # Scalar field should not depend on the coordinate system, ie if applied to a point
 # A1 in coordinate system C1 and having scalar value V as a result, it should
 # have the same value V when applied to a point A2 in coordinate system C2, if
-# A1 and A2 are the same points.
+# A1 and A2 are the same points. Therefore scalar field is known to be invariant under
+# Lorentz transformations.
 class ScalarField:
     # Can contain lambda or some value. If value is stored, it will be returned when field is applied.
     _point_function: FieldFunction
@@ -50,7 +51,7 @@ class ScalarField:
         self._point_function = point_function
         self._coordinate_system = coordinate_system
 
-    def __call__(self, point_: FieldPoint) -> VectorComponent:
+    def __call__(self, point_: FieldPoint) -> ScalarValue:
         return self._point_function(point_) if callable(
             self._point_function) else self._point_function
 
@@ -63,22 +64,20 @@ class ScalarField:
         return self._coordinate_system
 
     @property
-    def components(self) -> Sequence[FieldFunction]:
-        return [self._point_function]
+    def field_function(self) -> FieldFunction:
+        return self._point_function
 
     # Applies field to a trajectory / surface / volume - calls field function with each element of the trajectory as parameter.
     # trajectory_ - list of expressions that correspond to a function in some space, eg [param, param] for a linear function y = x
     # return - value that depends on trajectory parameters.
-    def apply(self, trajectory_: Sequence[Expr]) -> VectorComponent:
-        field_point = FieldPoint()
-        for idx, element in enumerate(trajectory_):
-            field_point.set_coordinate(idx, element)
+    def apply(self, trajectory_: Sequence[Expr]) -> ScalarValue:
+        field_point = FieldPoint(*trajectory_)
         return self(field_point)
 
     # Convert coordinate system to space and apply field.
     # Applying field to entire space is necessary for SymPy field operators like Curl.
     # return - value that depends on basis parameters.
-    def apply_to_basis(self) -> VectorComponent:
+    def apply_to_basis(self) -> ScalarValue:
         return self.apply(self.basis)
 
 
@@ -88,18 +87,16 @@ def field_rebase(field_: ScalarField,
     coordinate_system: Optional[CoordinateSystem] = None) -> ScalarField:
     # Simply set new coordinate system if field cannot be rebased
     if coordinate_system is None or field_.coordinate_system is None:
-        field_function = 0 if len(field_.components) == 0 else field_.components[0]
-        return ScalarField(field_function, coordinate_system)
+        return ScalarField(field_.field_function, coordinate_system)
     if coordinate_system.coord_system is None or field_.coordinate_system.coord_system is None:
-        field_function = 0 if len(field_.components) == 0 else field_.components[0]
-        return ScalarField(field_function, coordinate_system)
+        return ScalarField(field_.field_function, coordinate_system)
     return _extended_express(field_, coordinate_system)
 
 
 def _extended_express(field_: ScalarField, system_to: CoordinateSystem) -> ScalarField:
     field_space_sympy = field_.apply_to_basis()
     if field_.coordinate_system is None:
-        return ScalarField(field_.components[0] if len(field_.components) > 0 else 0, system_to)
+        return ScalarField(field_.field_function, system_to)
     # Got a scalar value after applying to basis - use this value as field function
     if not isinstance(field_space_sympy, Expr):
         return ScalarField(field_space_sympy, system_to)

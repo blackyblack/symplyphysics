@@ -2,13 +2,13 @@ from functools import reduce
 from operator import add
 from typing import Sequence
 from sympy import S, Expr, cos, sin, sqrt, sympify
-from ..coordinate_systems.coordinate_systems import CoordinateSystem
-from .vectors import Vector, VectorComponent
+from .vectors import Vector
 from ..expr_comparisons import expr_equals
+from ..coordinate_systems.coordinate_systems import CoordinateSystem
+from ...core.fields.scalar_field import ScalarValue
 
 
-def equal_lists(list_left: Sequence[VectorComponent],
-    list_right: Sequence[VectorComponent]) -> bool:
+def equal_lists(list_left: Sequence[ScalarValue], list_right: Sequence[ScalarValue]) -> bool:
     max_len = max(len(list_left), len(list_right))
     list_left_extended = list(list_left) + [0] * (max_len - len(list_left))
     list_right_extended = list(list_right) + [0] * (max_len - len(list_right))
@@ -18,34 +18,36 @@ def equal_lists(list_left: Sequence[VectorComponent],
     return True
 
 
-def add_lists(list_left: Sequence[VectorComponent],
-    list_right: Sequence[VectorComponent]) -> list[Expr]:
+def add_lists(list_left: Sequence[ScalarValue], list_right: Sequence[ScalarValue]) -> list[Expr]:
     max_len = max(len(list_left), len(list_right))
     list_left_extended = list(list_left) + [0] * (max_len - len(list_left))
     list_right_extended = list(list_right) + [0] * (max_len - len(list_right))
-    return list(map(lambda lr: sympify(lr[0] + lr[1]), zip(list_left_extended, list_right_extended)))
+    return list(map(lambda lr: sympify(lr[0] + lr[1]), zip(list_left_extended,
+        list_right_extended)))
 
 
 # Multiply each element of the list to 'scalar_value'
-def scale_list(scalar_value: Expr, list_: Sequence[VectorComponent]) -> list[Expr]:
+def scale_list(scalar_value: Expr, list_: Sequence[ScalarValue]) -> list[Expr]:
     return [scalar_value * e for e in list_]
 
 
 # Multiply elements of two lists respectively and sum the results
-def multiply_lists_and_sum(list_left: Sequence[VectorComponent],
-    list_right: Sequence[VectorComponent]) -> Expr:
+def multiply_lists_and_sum(list_left: Sequence[ScalarValue],
+    list_right: Sequence[ScalarValue]) -> Expr:
     return sympify(reduce(add, map(lambda lr: lr[0] * lr[1], zip(list_left, list_right)), 0))
 
 
 # Resulting vector is orthogonal to both input vectors and its magnitude is equal to
 # the area of the parallelogram spanned by input vectors
-def cross_multiply_lists(list_left: Sequence[VectorComponent],
-    list_right: Sequence[VectorComponent]) -> list[Expr]:
+def cross_multiply_lists(list_left: Sequence[ScalarValue],
+    list_right: Sequence[ScalarValue]) -> list[Expr]:
     dimensions = 3
     if len(list_left) > dimensions:
-        raise ValueError(f"Cross product is only defined for {dimensions} dimensions. Got: {len(list_left)}")
+        raise ValueError(
+            f"Cross product is only defined for {dimensions} dimensions. Got: {len(list_left)}")
     if len(list_right) > dimensions:
-        raise ValueError(f"Cross product is only defined for {dimensions} dimensions. Got: {len(list_right)}")
+        raise ValueError(
+            f"Cross product is only defined for {dimensions} dimensions. Got: {len(list_right)}")
     list_left_extended = list(list_left) + [0] * (dimensions - len(list_left))
     list_right_extended = list(list_right) + [0] * (dimensions - len(list_right))
     ax, ay, az = list_left_extended
@@ -142,7 +144,7 @@ def dot_vectors(vector_left: Vector, vector_right: Vector) -> Expr:
     return S.Zero
 
 
-def vector_magnitude(vector_: Vector | Sequence[VectorComponent]) -> Expr:
+def vector_magnitude(vector_: Vector | Sequence[ScalarValue]) -> Expr:
     squared_sum = dot_vectors(vector_, vector_) if isinstance(vector_,
         Vector) else multiply_lists_and_sum(vector_, vector_)
     return sqrt(squared_sum)

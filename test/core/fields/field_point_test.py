@@ -21,14 +21,8 @@ def test_empty_point():
     _assert_point(point, [0, 0, 0])
 
 
-def test_skip_coordinate_point():
-    point = FieldPoint(1, None, 3)
-    _assert_point(point, [1, 0, 3])
-
-
 def test_4d_point():
-    point = FieldPoint(1, 2, 3)
-    point.set_coordinate(3, 4)
+    point = FieldPoint(1, 2, 3, 4)
     _assert_point(point, [1, 2, 3, 4])
 
 
