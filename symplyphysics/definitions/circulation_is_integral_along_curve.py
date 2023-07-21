@@ -47,14 +47,13 @@ def print_law() -> str:
     return print_expression(definition)
 
 
-# field_ should be VectorField
 # trajectory_ should be array with projections to coordinates, eg [3 * cos(parameter), 3 * sin(parameter)]
 def calculate_circulation(field_: VectorField, trajectory_: list[Expr], parameter_from_: Expr,
     parameter_to_: Expr) -> Quantity:
 
     field_app = field_.apply(trajectory_)
     field_as_vector = sympy_vector_from_vector(field_app)
-    trajectory_as_vector = sympy_vector_from_vector(Vector(trajectory_, field_.coordinate_system))
+    trajectory_as_vector = sympy_vector_from_vector(Vector(field_.coordinate_system, trajectory_))
     trajectory_element_result = trajectory_element_definition.rhs.subs(
         trajectory, trajectory_as_vector).doit()
     result_expr = definition.rhs.subs({

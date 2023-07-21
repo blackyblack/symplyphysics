@@ -4,7 +4,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, Vector,
 from symplyphysics.core.vectors.vectors import expr_to_vector
 
 # Description
-## Deformed sprign is about to return back to it's undeformed state and responds with some force. Law is:
+## Deformed spring is about to return back to it's undeformed state and responds with some force. Law is:
 ## F = -kx, where
 ## F is force of response vector,
 ## k is elastic coefficient,

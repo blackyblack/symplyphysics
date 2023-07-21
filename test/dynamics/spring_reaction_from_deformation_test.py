@@ -18,7 +18,7 @@ def test_args_fixture():
     k = Quantity(0.1 * units.newton / units.meter)
     df_x = Quantity(3 * units.meter)
     df_y = Quantity(1 * units.meter)
-    df = Vector([df_x, df_y], C)
+    df = Vector(C, [df_x, df_y])
     Args = namedtuple("Args", ["C", "k", "df"])
     return Args(C=C, k=k, df=df)
 
@@ -43,7 +43,7 @@ def test_bad_elastic_coefficient(test_args):
 
 def test_bad_deformation(test_args):
     db = Quantity(1 * units.coulomb)
-    vb = Vector([db], test_args.C)
+    vb = Vector(test_args.C, [db])
     with raises(errors.UnitsError):
         spring_law.calculate_force(test_args.k, vb)
     with raises(TypeError):
@@ -51,6 +51,6 @@ def test_bad_deformation(test_args):
 
 
 def test_bad_deformation_vector(test_args):
-    vb = Vector([test_args.df.components[0] * test_args.df.components[0]], test_args.C)
+    vb = Vector(test_args.C, [test_args.df.components[0] * test_args.df.components[0]])
     with raises(TypeError):
         spring_law.calculate_force(test_args.k, vb)

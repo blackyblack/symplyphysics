@@ -1,12 +1,12 @@
-from typing import Callable, Optional, TypeAlias
+from typing import Callable, Optional, Sequence, TypeAlias
 from sympy import Expr, sympify
 from sympy.vector import express
 
 from ..coordinate_systems.coordinate_systems import CoordinateSystem
-from ..symbols.quantities import Quantity
+from ..vectors.vectors import VectorComponent
 from .field_point import FieldPoint
 
-FieldFunction: TypeAlias = Callable[[FieldPoint], Expr | float] | Expr | float
+FieldFunction: TypeAlias = Callable[[FieldPoint], VectorComponent] | VectorComponent
 
 
 # Converts SymPy expression to a lambda function to use in some field, eg
@@ -14,7 +14,7 @@ FieldFunction: TypeAlias = Callable[[FieldPoint], Expr | float] | Expr | float
 # If coordinate_system is not set, argument is returned as is, without conversion to lambda.
 # Can contain value instead of SymPy Vector, eg 0.5.
 def sympy_expression_to_field_function(
-        expr: Expr | float | Quantity,
+        expr: VectorComponent,
         coordinate_system: Optional[CoordinateSystem] = None) -> FieldFunction:
     def _(point_: FieldPoint):
         # Duplicate check to make analyzer happy
@@ -50,27 +50,26 @@ class ScalarField:
         self._point_function = point_function
         self._coordinate_system = coordinate_system
 
-    def __call__(self, point_: FieldPoint) -> Expr | float:
+    def __call__(self, point_: FieldPoint) -> VectorComponent:
         return self._point_function(point_) if callable(
             self._point_function) else self._point_function
 
     @property
-    def basis(self) -> list[Expr]:
-        return list(self.coordinate_system.coord_system.base_scalars()
-                   ) if self.coordinate_system is not None else []
+    def basis(self) -> Sequence[Expr]:
+        return list(self.coordinate_system.coord_system.base_scalars()) if self.coordinate_system is not None and self.coordinate_system.coord_system is not None else []
 
     @property
     def coordinate_system(self) -> Optional[CoordinateSystem]:
         return self._coordinate_system
 
     @property
-    def components(self) -> list[FieldFunction]:
+    def components(self) -> Sequence[FieldFunction]:
         return [self._point_function]
 
     # Applies field to a trajectory / surface / volume - calls field function with each element of the trajectory as parameter.
     # trajectory_ - list of expressions that correspond to a function in some space, eg [param, param] for a linear function y = x
     # return - value that depends on trajectory parameters.
-    def apply(self, trajectory_: list[Expr]) -> Expr | float:
+    def apply(self, trajectory_: Sequence[Expr]) -> VectorComponent:
         field_point = FieldPoint()
         for idx, element in enumerate(trajectory_):
             field_point.set_coordinate(idx, element)
@@ -79,7 +78,7 @@ class ScalarField:
     # Convert coordinate system to space and apply field.
     # Applying field to entire space is necessary for SymPy field operators like Curl.
     # return - value that depends on basis parameters.
-    def apply_to_basis(self) -> Expr | float:
+    def apply_to_basis(self) -> VectorComponent:
         return self.apply(self.basis)
 
 
