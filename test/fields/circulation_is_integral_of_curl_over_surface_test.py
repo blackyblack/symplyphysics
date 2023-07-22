@@ -25,7 +25,7 @@ def test_args_fixture():
 
 
 def test_basic_circulation(test_args):
-    field = VectorField(test_args.C, lambda point: [point.y, 0, point.x + point.z])
+    field = VectorField(lambda point: [point.y, 0, point.x + point.z], test_args.C)
     surface = [
         circulation_def.parameter1 * cos(circulation_def.parameter2),
         circulation_def.parameter1 * sin(circulation_def.parameter2)
@@ -35,7 +35,7 @@ def test_basic_circulation(test_args):
 
 
 def test_two_parameters_circulation(test_args):
-    field = VectorField(test_args.C, lambda point: [point.y, -point.x, 0])
+    field = VectorField(lambda point: [point.y, -point.x, 0], test_args.C)
     # circle function is: x**2 + y**2 = 9
     # from circulation_is_integral_along_curve_test we got circulation -18 * pi
     # let's check with cone surface
@@ -53,10 +53,10 @@ def _distance(point: FieldPoint) -> Expr:
 
 def test_gravitational_field_is_conservative(test_args):
     field = VectorField(
-        test_args.C, lambda point: [
+        lambda point: [
         -point.x / _distance(point)**3, -point.y / _distance(point)**3, -point.z / _distance(point)
         **3
-        ])
+        ], test_args.C)
     field_space = field.apply_to_basis()
     field_space_sympy = sympy_vector_from_vector(field_space)
     field_rotor_applied = circulation_def.field_rotor_definition.rhs.subs(
@@ -69,10 +69,10 @@ def test_force_field_circulation(test_args):
     # B = mass / (current * time**2) = mass / (charge * time)
     # Lorentz force is: F = q * v * B = charge * (length / time) * B = force
     field = VectorField(
-        test_args.C, lambda point: [
+        lambda point: [
         -point.y * test_args.force_unit / _distance(point), point.x * test_args.force_unit /
         _distance(point), 0
-        ])
+        ], test_args.C)
     surface = [
         circulation_def.parameter1 * cos(circulation_def.parameter2),
         circulation_def.parameter1 * sin(circulation_def.parameter2)

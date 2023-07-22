@@ -59,13 +59,13 @@ velocity_horisontal = velocity_def.definition.rhs.subs(velocity_def.moving_time,
     time).subs(velocity_def.movement(time), curve_radius_horisontal).doit()
 velocity_vertical = velocity_def.definition.rhs.subs(velocity_def.moving_time,
     time).subs(velocity_def.movement(time), curve_radius_vertical).doit()
-velocity_vector = Vector(cartesian_coordinates, [velocity_horisontal, velocity_vertical])
+velocity_vector = Vector([velocity_horisontal, velocity_vertical], cartesian_coordinates)
 
 ## These unit vectors should not necessary be derived. We can choose them at will and prove that
 ## they are orthogonal to each other and radial_unit_vector is orthogonal to 'velocity_vector'.
 ## One can also show that 'tangential_unit_vector' is 'radial_unit_vector' derivative.
-radial_unit_vector = Vector(cartesian_coordinates, [cos(alpha(time)), sin(alpha(time))])
-tangential_unit_vector = Vector(cartesian_coordinates, [-sin(alpha(time)), cos(alpha(time))])
+radial_unit_vector = Vector([cos(alpha(time)), sin(alpha(time))], cartesian_coordinates)
+tangential_unit_vector = Vector([-sin(alpha(time)), cos(alpha(time))], cartesian_coordinates)
 
 ## This is Dot product of radial vector and velocity vector. Radial vector is orthogonal to velocity hence vector
 ## multiplication result should be zero.
@@ -80,8 +80,8 @@ acceleration_horisontal = acceleration_horisontal.subs(acceleration_def.velocity
 acceleration_vertical = acceleration_def.definition.rhs.subs(acceleration_def.time, time)
 acceleration_vertical = acceleration_vertical.subs(acceleration_def.velocity(time),
     velocity_vertical).doit()
-acceleration_vector = Vector(cartesian_coordinates,
-    [acceleration_horisontal, acceleration_vertical])
+acceleration_vector = Vector([acceleration_horisontal, acceleration_vertical],
+    cartesian_coordinates)
 
 ## Prove that 'acceleration_vector' has tangential and radial parts.
 

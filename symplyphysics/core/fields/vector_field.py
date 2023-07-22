@@ -1,3 +1,4 @@
+from functools import partial
 from typing import Callable, Sequence, TypeAlias
 from sympy import Expr, sympify
 from sympy.vector import Vector as SymVector, express
@@ -10,31 +11,6 @@ from ...core.fields.scalar_field import ScalarValue
 FieldFunction: TypeAlias = Callable[[FieldPoint], Sequence[ScalarValue]] | Sequence[ScalarValue]
 
 
-# Converts SymPy expression to a lambda function to use in some field, eg
-# converts expression C.x + C.y to lambda p: p.x + p.y
-# If coordinate_system is not set, argument is returned as is, without conversion to lambda.
-# Can contain value instead of SymPy Vector, eg 0.5.
-def sympy_expression_to_field_function(expr: Sequence[ScalarValue],
-    coordinate_system: CoordinateSystem) -> FieldFunction:
-
-    def subs_with_point(point_: FieldPoint) -> Sequence[Expr]:
-        # Duplicate check to make analyzer happy
-        if coordinate_system is None:
-            return expr
-        base_scalars = coordinate_system.coord_system.base_scalars()
-        result: list[Expr] = []
-        for e in expr:
-            expression = sympify(e)
-            for i, scalar in enumerate(base_scalars):
-                expression = expression.subs(scalar, point_.coordinate(i))
-            result.append(expression)
-        return result
-
-    if coordinate_system is None:
-        return expr
-    return subs_with_point
-
-
 # Contains mapping of point to vector in _point_function, eg P(FieldPoint).
 # Vector field is coordinate system dependent, because generally vectors are not coordinate
 # system invariant.
@@ -45,14 +21,16 @@ class VectorField:
     #      that allows rebasing vector field to different coordinate systems.
     _coordinate_system: CoordinateSystem
 
-    def __init__(self, coordinate_system: CoordinateSystem, point_function: FieldFunction):
+    def __init__(self,
+        point_function: FieldFunction,
+        coordinate_system: CoordinateSystem = CoordinateSystem(CoordinateSystem.System.CARTESIAN)):
         self._point_function = point_function
         self._coordinate_system = coordinate_system
 
     def __call__(self, point_: FieldPoint) -> Vector:
         result = self._point_function(point_) if callable(
             self._point_function) else self._point_function
-        return Vector(self._coordinate_system, result)
+        return Vector(result, self._coordinate_system)
 
     @property
     def basis(self) -> list[Expr]:
@@ -87,10 +65,9 @@ def field_rebase(field_: VectorField, coordinate_system: CoordinateSystem) -> Ve
     # Simply set new coordinate system if field cannot be rebased
     if (coordinate_system.coord_system is None or field_.coordinate_system.coord_system is None):
         return VectorField(coordinate_system, field_.field_function)
-
     field_space_sympy = sympy_vector_from_field(field_)
     if field_.coordinate_system.coord_system_type != coordinate_system.coord_system_type:
-        # This is ScalarField._extended_express() but without transformation_to_system()
+        # This is ScalarField.field_rebase() but without transformation_to_system()
         new_scalars = list(coordinate_system.coord_system.base_scalars())
         for i, scalar in enumerate(field_.coordinate_system.coord_system.base_scalars()):
             field_space_sympy = field_space_sympy.subs(scalar, new_scalars[i])
@@ -106,12 +83,25 @@ def field_rebase(field_: VectorField, coordinate_system: CoordinateSystem) -> Ve
 # Helpers to support SymPy field manipulations, eg Curl
 
 
-# Constructs new VectorField from SymPy expression using 'vector_from_sympy_vector'.
+def _subs_with_point(expr: Sequence[ScalarValue], coordinate_system: CoordinateSystem,
+    point_: FieldPoint) -> Sequence[Expr]:
+    base_scalars = coordinate_system.coord_system.base_scalars()
+    result: list[Expr] = []
+    for e in expr:
+        expression = sympify(e)
+        for i, scalar in enumerate(base_scalars):
+            expression = expression.subs(scalar, point_.coordinate(i))
+        result.append(expression)
+    return result
+
+
+# Constructs new VectorField from SymPy expression.
+# Can contain value instead of SymPy Vector, eg 0.5, but it should be sympified.
 def field_from_sympy_vector(sympy_vector_: SymVector,
     coordinate_system: CoordinateSystem) -> VectorField:
     field_vector = vector_from_sympy_vector(sympy_vector_, coordinate_system)
-    field_function = sympy_expression_to_field_function(field_vector.components, coordinate_system)
-    return VectorField(coordinate_system, field_function)
+    point_function = partial(_subs_with_point, field_vector.components, coordinate_system)
+    return VectorField(point_function, coordinate_system)
 
 
 # Apply field to entire coordinate system and convert to SymPy vector

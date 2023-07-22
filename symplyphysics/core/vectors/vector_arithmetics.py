@@ -85,7 +85,7 @@ def add_cartesian_vectors(vector_left: Vector, vector_right: Vector) -> Vector:
         raise ValueError(
             f"Addition only supported for cartesian coordinates: got {coord_name_from}")
     result = add_lists(vector_left.components, vector_right.components)
-    return Vector(vector_left.coordinate_system, result)
+    return Vector(result, vector_left.coordinate_system)
 
 
 # Change Vector magnitude (length)
@@ -93,7 +93,7 @@ def add_cartesian_vectors(vector_left: Vector, vector_right: Vector) -> Vector:
 def scale_vector(scalar_value: Expr, vector: Vector) -> Vector:
     if vector.coordinate_system.coord_system_type == CoordinateSystem.System.CARTESIAN:
         vector_components = scale_list(scalar_value, vector.components)
-        return Vector(vector.coordinate_system, vector_components)
+        return Vector(vector_components, vector.coordinate_system)
     if vector.coordinate_system.coord_system_type == CoordinateSystem.System.CYLINDRICAL:
         vector_components = [sympify(c) for c in vector.components]
         vector_size = len(vector_components)
@@ -101,12 +101,12 @@ def scale_vector(scalar_value: Expr, vector: Vector) -> Vector:
             vector_components[0] = vector_components[0] * scalar_value
         if vector_size > 2:
             vector_components[2] = vector_components[2] * scalar_value
-        return Vector(vector.coordinate_system, vector_components)
+        return Vector(vector_components, vector.coordinate_system)
     if vector.coordinate_system.coord_system_type == CoordinateSystem.System.SPHERICAL:
         vector_components = [sympify(c) for c in vector.components]
         if len(vector_components) > 0:
             vector_components[0] = vector_components[0] * scalar_value
-        return Vector(vector.coordinate_system, vector_components)
+        return Vector(vector_components, vector.coordinate_system)
     # never
     return vector
 
@@ -173,4 +173,4 @@ def cross_cartesian_vectors(vector_left: Vector, vector_right: Vector) -> Vector
         raise ValueError(
             f"Cross product only supported for cartesian coordinates: got {coord_name_from}")
     result = cross_multiply_lists(vector_left.components, vector_right.components)
-    return Vector(vector_left.coordinate_system, result)
+    return Vector(result, vector_left.coordinate_system)

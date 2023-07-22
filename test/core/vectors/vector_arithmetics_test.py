@@ -34,13 +34,13 @@ def test_basic_equal_vectors(test_args):
         [test_args.C.coord_system.x * test_args.C.coord_system.i, 2])
     assert not equal_lists([test_args.C.coord_system.x * test_args.C.coord_system.i, 2],
         [test_args.C.coord_system.x * test_args.C.coord_system.j, 2])
-    assert equal_vectors(Vector(test_args.C, [1, 2]), Vector(test_args.C, [1, 2]))
+    assert equal_vectors(Vector([1, 2], test_args.C), Vector([1, 2], test_args.C))
 
 
 def test_invalid_equal_vectors(test_args):
     C1 = CoordinateSystem()
     with raises(TypeError):
-        equal_vectors(Vector(test_args.C, [1, 2]), Vector(C1, [1, 2]))
+        equal_vectors(Vector([1, 2], test_args.C), Vector([1, 2], C1))
     with raises(TypeError):
         equal_lists(["hello", 2], [2, 1])
     with raises(TypeError):
@@ -69,7 +69,7 @@ def test_basic_add_vectors(test_args):
         test_args.C.coord_system.x * test_args.C.coord_system.i +
         test_args.C.coord_system.x * test_args.C.coord_system.j, 4
         ]
-    result_vector = add_cartesian_vectors(Vector(test_args.C, [1, 2]), Vector(test_args.C, [1, 2]))
+    result_vector = add_cartesian_vectors(Vector([1, 2], test_args.C), Vector([1, 2], test_args.C))
     assert result_vector.components == [2, 4]
     assert result_vector.coordinate_system == test_args.C
 
@@ -77,9 +77,9 @@ def test_basic_add_vectors(test_args):
 def test_rebased_add_vectors(test_args):
     Cy = coordinates_transform(test_args.C, CoordinateSystem.System.CYLINDRICAL)
     # First vector has r = 5 and theta = 0
-    vector1 = Vector(Cy, [5, 0, 1])
+    vector1 = Vector([5, 0, 1], Cy)
     # Second vector has r = 5 and theta = pi/2
-    vector2 = Vector(Cy, [5, pi / 2, 1])
+    vector2 = Vector([5, pi / 2, 1], Cy)
     # Their sum should be a vector with r = sqrt(50) and theta = pi/4
     vector1_cartesian = vector_rebase(vector1, test_args.C)
     vector2_cartesian = vector_rebase(vector2, test_args.C)
@@ -95,7 +95,7 @@ def test_invalid_add_vectors(test_args):
     with raises(TypeError):
         add_lists([1, 2], [[1, 2], 1])
     with raises(TypeError):
-        add_cartesian_vectors(Vector(test_args.C, [1, 2]), Vector(C1, [1, 2]))
+        add_cartesian_vectors(Vector([1, 2], test_args.C), Vector([1, 2], C1))
     with raises(TypeError):
         add_lists(["hello", 2], [2, 1])
     with raises(SympifyError):
@@ -103,10 +103,10 @@ def test_invalid_add_vectors(test_args):
     # non-cartesian addition is not supported
     C2 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
     with raises(ValueError):
-        add_cartesian_vectors(Vector(C2, [1, 2]), Vector(C2, [1, 2]))
+        add_cartesian_vectors(Vector([1, 2], C2), Vector([1, 2], C2))
     C3 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
     with raises(ValueError):
-        add_cartesian_vectors(Vector(C3, [1, 2]), Vector(C3, [1, 2]))
+        add_cartesian_vectors(Vector([1, 2], C3), Vector([1, 2], C3))
 
 
 def test_basic_scale_vector(test_args):
@@ -151,18 +151,18 @@ def test_basic_scale_vector(test_args):
     assert scale_list(test_args.C.coord_system.x, [test_args.C.coord_system.y, 2]) == [
         test_args.C.coord_system.x * test_args.C.coord_system.y, test_args.C.coord_system.x * 2
     ]
-    result_vector = scale_vector(2, Vector(test_args.C, [1, 2]))
+    result_vector = scale_vector(2, Vector([1, 2], test_args.C))
     assert result_vector.components == [2, 4]
     assert result_vector.coordinate_system == test_args.C
 
 
 def test_invalid_scale_vector(test_args):
     with raises(TypeError):
-        scale_vector(Vector(test_args.C, [1, 2]), Vector(test_args.C, [1, 2]))
+        scale_vector(Vector([1, 2], test_args.C), Vector([1, 2], test_args.C))
 
 
 def test_cylindrical_scale_vector(test_args):
-    vector1 = Vector(test_args.C, [1, 2])
+    vector1 = Vector([1, 2], test_args.C)
     Cy = coordinates_transform(test_args.C, CoordinateSystem.System.CYLINDRICAL)
     vector1_polar = vector_rebase(vector1, Cy)
     scaled_vector1_polar = scale_vector(5, vector1_polar)
@@ -178,7 +178,7 @@ def test_cylindrical_scale_vector(test_args):
     assert initial_vector_angle == result_vector_angle
 
     # Try 3 dimensions
-    vector2 = Vector(test_args.C, [1, 2, 3])
+    vector2 = Vector([1, 2, 3], test_args.C)
     Cy = coordinates_transform(test_args.C, CoordinateSystem.System.CYLINDRICAL)
     vector2_polar = vector_rebase(vector2, Cy)
     scaled_vector2_polar = scale_vector(5, vector2_polar)
@@ -192,12 +192,12 @@ def test_cylindrical_scale_vector(test_args):
     assert result_vector2_magnitude / initial_vector2_magnitude == 5
     # It's hard to verify angle so only validate magnitude
 
-    assert scale_vector(5, Vector(Cy, [1, 2])).components == [5, 2]
-    assert scale_vector(5, Vector(Cy, [1, 2, 3])).components == [5, 2, 15]
+    assert scale_vector(5, Vector([1, 2], Cy)).components == [5, 2]
+    assert scale_vector(5, Vector([1, 2, 3], Cy)).components == [5, 2, 15]
 
 
 def test_spherical_scale_vector(test_args):
-    vector1 = Vector(test_args.C, [1, 2])
+    vector1 = Vector([1, 2], test_args.C)
     Cs = coordinates_transform(test_args.C, CoordinateSystem.System.SPHERICAL)
     vector1_polar = vector_rebase(vector1, Cs)
     scaled_vector1_polar = scale_vector(5, vector1_polar)
@@ -213,7 +213,7 @@ def test_spherical_scale_vector(test_args):
     assert initial_vector_angle == result_vector_angle
 
     # Try 3 dimensions
-    vector2 = Vector(test_args.C, [1, 2, 3])
+    vector2 = Vector([1, 2, 3], test_args.C)
     Cs = coordinates_transform(test_args.C, CoordinateSystem.System.SPHERICAL)
     vector2_polar = vector_rebase(vector2, Cs)
     scaled_vector2_polar = scale_vector(5, vector2_polar)
@@ -227,8 +227,8 @@ def test_spherical_scale_vector(test_args):
     assert result_vector2_magnitude / initial_vector2_magnitude == 5
     # It's hard to verify angle so only validate magnitude
 
-    assert scale_vector(5, Vector(Cs, [1, 2])).components == [5, 2]
-    assert scale_vector(5, Vector(Cs, [1, 2, 3])).components == [5, 2, 3]
+    assert scale_vector(5, Vector([1, 2], Cs)).components == [5, 2]
+    assert scale_vector(5, Vector([1, 2, 3], Cs)).components == [5, 2, 3]
 
 
 @unsupported_usage
@@ -251,7 +251,7 @@ def test_basic_dot_product(test_args):
         2]) == test_args.C.coord_system.x * test_args.C.coord_system.y + 4
     assert multiply_lists_and_sum([test_args.C.coord_system.x - test_args.C.coord_system.x, 2],
         [1, 2]) == 4
-    assert dot_vectors(Vector(test_args.C, [1, 2]), Vector(test_args.C, [1, 2])) == 5
+    assert dot_vectors(Vector([1, 2], test_args.C), Vector([1, 2], test_args.C)) == 5
     # Verify that orthogonal vectors have zero dot product
     assert multiply_lists_and_sum([1, 0], [0, 1]) == 0
     initial = [2, 3]
@@ -283,29 +283,29 @@ def test_invalid_dot_product(test_args):
     with raises(TypeError):
         multiply_lists_and_sum([1, 2], [[1, 2], 1])
     with raises(TypeError):
-        dot_vectors(Vector(test_args.C, [1, 2]), Vector(C1, [1, 2]))
+        dot_vectors(Vector([1, 2], test_args.C), Vector([1, 2], C1))
 
 
 def test_non_cartesian_dot_product():
     C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
-    assert dot_vectors(Vector(C1, [1, 0]), Vector(C1, [1, pi / 2])) == 0
-    assert dot_vectors(Vector(C1, [1, 0]), Vector(C1, [1, pi / 4])) == (sqrt(2) / 2)
-    assert dot_vectors(Vector(C1, [1, 0, 0]), Vector(C1, [1, pi / 2, 0])) == 0
-    assert dot_vectors(Vector(C1, [1, 0, 0]), Vector(C1, [0, 0, 1])) == 0
+    assert dot_vectors(Vector([1, 0], C1), Vector([1, pi / 2], C1)) == 0
+    assert dot_vectors(Vector([1, 0], C1), Vector([1, pi / 4], C1)) == (sqrt(2) / 2)
+    assert dot_vectors(Vector([1, 0, 0], C1), Vector([1, pi / 2, 0], C1)) == 0
+    assert dot_vectors(Vector([1, 0, 0], C1), Vector([0, 0, 1], C1)) == 0
 
     # When r = 0 and z > 0, vector is directed up and is immune to rotations,
     # therefore rotated vector is parallel to original
-    assert dot_vectors(Vector(C1, [0, 0, 1]), Vector(C1, [0, pi / 2, 1])) == 1
+    assert dot_vectors(Vector([0, 0, 1], C1), Vector([0, pi / 2, 1], C1)) == 1
 
     C2 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
-    assert dot_vectors(Vector(C2, [1, 0]), Vector(C2, [1, pi / 2])) == 0
-    assert dot_vectors(Vector(C2, [1, 0]), Vector(C2, [1, pi / 4])) == (sqrt(2) / 2)
-    assert dot_vectors(Vector(C2, [1, 0, 0]), Vector(C2, [1, pi / 2, 0])) == 0
-    assert dot_vectors(Vector(C2, [1, pi / 2, 0]), Vector(C2, [1, pi / 2, pi / 2])) == 0
+    assert dot_vectors(Vector([1, 0], C2), Vector([1, pi / 2], C2)) == 0
+    assert dot_vectors(Vector([1, 0], C2), Vector([1, pi / 4], C2)) == (sqrt(2) / 2)
+    assert dot_vectors(Vector([1, 0, 0], C2), Vector([1, pi / 2, 0], C2)) == 0
+    assert dot_vectors(Vector([1, pi / 2, 0], C2), Vector([1, pi / 2, pi / 2], C2)) == 0
 
     # When theta angle = 0, vector is directed up and is immune to rotations,
     # therefore rotated vector is parallel to original
-    assert dot_vectors(Vector(C2, [1, 0, 0]), Vector(C2, [1, 0, pi / 2])) == 1
+    assert dot_vectors(Vector([1, 0, 0], C2), Vector([1, 0, pi / 2], C2)) == 1
 
 
 def test_basic_magnitude_vectors(test_args):
@@ -318,14 +318,14 @@ def test_basic_magnitude_vectors(test_args):
 
 def test_non_cartesian_magnitude_vectors():
     C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
-    assert vector_magnitude(Vector(C1, [3, 0])) == 3
-    assert vector_magnitude(Vector(C1, [3, 0, 2])) == sqrt(13)
-    assert vector_magnitude(Vector(C1, [3, pi / 4, 2])) == sqrt(13)
+    assert vector_magnitude(Vector([3, 0], C1)) == 3
+    assert vector_magnitude(Vector([3, 0, 2], C1)) == sqrt(13)
+    assert vector_magnitude(Vector([3, pi / 4, 2], C1)) == sqrt(13)
 
     C2 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
-    assert vector_magnitude(Vector(C2, [3, 0])) == 3
-    assert vector_magnitude(Vector(C2, [3, 0, 2])) == 3
-    assert vector_magnitude(Vector(C2, [3, pi / 4, 2])) == 3
+    assert vector_magnitude(Vector([3, 0], C2)) == 3
+    assert vector_magnitude(Vector([3, 0, 2], C2)) == 3
+    assert vector_magnitude(Vector([3, pi / 4, 2], C2)) == 3
 
 
 def test_basic_cross_product(test_args):
@@ -344,8 +344,8 @@ def test_basic_cross_product(test_args):
         ]
     assert cross_multiply_lists([test_args.C.coord_system.x - test_args.C.coord_system.x, 2],
         [1, 2]) == [0, 0, -2]
-    assert cross_cartesian_vectors(Vector(test_args.C, [1, 2]), Vector(test_args.C,
-        [1, 2])).components == [0, 0, 0]
+    assert cross_cartesian_vectors(Vector([1, 2], test_args.C), Vector([1, 2],
+        test_args.C)).components == [0, 0, 0]
     # Verify that cross product vector is orthogonal to both input vectors
     input_vector1 = [1, 0]
     input_vector2 = [0, 1]
@@ -387,24 +387,24 @@ def test_invalid_cross_product(test_args):
     with raises(TypeError):
         cross_multiply_lists([1, 2], [[1, 2], 1])
     with raises(TypeError):
-        cross_cartesian_vectors(Vector(test_args.C, [1, 2]), Vector(C1, [1, 2]))
+        cross_cartesian_vectors(Vector([1, 2], test_args.C), Vector([1, 2], C1))
     with raises(ValueError):
-        cross_cartesian_vectors(Vector(test_args.C, [1, 2, 3, 4]), Vector(test_args.C, [1, 2]))
+        cross_cartesian_vectors(Vector([1, 2, 3, 4], test_args.C), Vector([1, 2], test_args.C))
     # non-cartesian cross product is not supported
     C2 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
     with raises(ValueError):
-        cross_cartesian_vectors(Vector(C2, [1, 2]), Vector(C2, [1, 2]))
+        cross_cartesian_vectors(Vector([1, 2], C2), Vector([1, 2], C2))
     C3 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
     with raises(ValueError):
-        cross_cartesian_vectors(Vector(C3, [1, 2]), Vector(C3, [1, 2]))
+        cross_cartesian_vectors(Vector([1, 2], C3), Vector([1, 2], C3))
 
 
 def test_rebased_cross_product(test_args):
     Cy = coordinates_transform(test_args.C, CoordinateSystem.System.CYLINDRICAL)
     # First vector has r = 5 and theta = 0
-    vector1 = Vector(Cy, [5, 0, 1])
+    vector1 = Vector([5, 0, 1], Cy)
     # Second vector has r = 5 and theta = pi/2
-    vector2 = Vector(Cy, [5, pi / 2, 1])
+    vector2 = Vector([5, pi / 2, 1], Cy)
     # Their product should be a vector with r = sqrt(50), theta = -3 * pi/4, z = 25
     vector1_cartesian = vector_rebase(vector1, test_args.C)
     vector2_cartesian = vector_rebase(vector2, test_args.C)
