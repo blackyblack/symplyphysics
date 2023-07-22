@@ -53,7 +53,7 @@ def calculate_circulation(field_: VectorField, trajectory_: list[Expr], paramete
 
     field_app = field_.apply(trajectory_)
     field_as_vector = sympy_vector_from_vector(field_app)
-    trajectory_as_vector = sympy_vector_from_vector(Vector(field_.coordinate_system, trajectory_))
+    trajectory_as_vector = sympy_vector_from_vector(Vector(trajectory_, field_.coordinate_system))
     trajectory_element_result = trajectory_element_definition.rhs.subs(
         trajectory, trajectory_as_vector).doit()
     result_expr = definition.rhs.subs({

@@ -1,10 +1,8 @@
 from typing import Sequence
-from sympy import Expr, Add, Mul
-from sympy.vector import VectorAdd, VectorMul, Vector as SymVector, express
+from sympy.vector import express, Vector as SymVector
 from sympy.vector.operators import _get_coord_systems
 
 from ...core.fields.scalar_field import ScalarValue
-from ...core.symbols.quantities import Quantity
 from ..coordinate_systems.coordinate_systems import CoordinateSystem
 
 
@@ -23,7 +21,9 @@ class Vector:
     _coordinate_system: CoordinateSystem
     _components: list[ScalarValue]
 
-    def __init__(self, coordinate_system: CoordinateSystem, components: Sequence[ScalarValue]):
+    def __init__(self,
+        components: Sequence[ScalarValue],
+        coordinate_system: CoordinateSystem = CoordinateSystem(CoordinateSystem.System.CARTESIAN)):
         self._coordinate_system = coordinate_system
         self._components = list(components)
 
@@ -41,7 +41,7 @@ class Vector:
 def vector_from_sympy_vector(sympy_vector_: SymVector,
     coordinate_system: CoordinateSystem) -> Vector:
     if sympy_vector_ == SymVector.zero:
-        return Vector(coordinate_system, [])
+        return Vector([], coordinate_system)
     coord_system_set = _get_coord_systems(sympy_vector_)
     coord_system = None
     if len(coord_system_set) > 1:
@@ -54,7 +54,7 @@ def vector_from_sympy_vector(sympy_vector_: SymVector,
                 f"Different coordinate systems in expression and argument: {str(coord_system)} vs {str(coordinate_system.coord_system)}"
             )
     components = list(sympy_vector_.to_matrix(coord_system))
-    return Vector(coordinate_system, components)
+    return Vector(components, coordinate_system)
 
 
 # Converts Vector to SymPy Vector
@@ -79,7 +79,7 @@ def vector_rebase(vector_: Vector, coordinate_system: CoordinateSystem) -> Vecto
             new_component = 0 if i >= len(vector_.components) else vector_.components[i]
             for j, old_scalar in enumerate(new_scalars):
                 new_scalars[j] = old_scalar.subs(scalar, new_component)
-        vector_ = Vector(vector_.coordinate_system, new_scalars)
+        vector_ = Vector(new_scalars, vector_.coordinate_system)
 
     # We do not want to maintain own vector transformation functions, so
     # we convert our vector to SymPy format, transform it and convert back to Vector.
@@ -89,15 +89,3 @@ def vector_rebase(vector_: Vector, coordinate_system: CoordinateSystem) -> Vecto
         None,
         variables=True)
     return vector_from_sympy_vector(transformed_vector_sympy, coordinate_system)
-
-
-def expr_to_vector(expr: Expr, coordinate_system: CoordinateSystem) -> Vector:
-    if isinstance(expr, Mul):
-        expr = VectorMul(*expr.args)
-    if isinstance(expr, Add):
-        expr = VectorAdd(*expr.args)
-    if not isinstance(expr, SymVector):
-        raise TypeError(f"Expression cannot be converted to SymPy Vector: {str(expr)}")
-    vector = vector_from_sympy_vector(expr, coordinate_system)
-    components = [Quantity(c) for c in vector.components]
-    return Vector(coordinate_system, components)
