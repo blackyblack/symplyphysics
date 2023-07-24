@@ -25,8 +25,8 @@ def test_args_fixture():
 def test_basic_period(test_args):
     result = lc.calculate_oscillation_period(test_args.L, test_args.C)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.time)
-    result_voltage = convert_to(result, units.second).evalf(2)
-    assert result_voltage == approx(6.28, 0.01)
+    result_period = convert_to(result, units.second).evalf(2)
+    assert result_period == approx(6.28, 0.01)
 
 
 def test_bad_inductance(test_args):
