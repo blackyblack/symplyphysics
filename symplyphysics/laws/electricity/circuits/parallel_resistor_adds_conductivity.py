@@ -22,7 +22,7 @@ def print_law() -> str:
 @validate_output(units.impedance)
 def calculate_resistance(first_resistance_: Quantity, second_resistance_: Quantity) -> Quantity:
     first_resistance = Symbol("first_resistance", units.impedance)
-    second_resistance = Symbol("second_resistance", units.impedance)    
+    second_resistance = Symbol("second_resistance", units.impedance)
     conductance1 = solve(conductance_definition.definition, conductance_definition.object_conductivity, dict=True)[0][conductance_definition.object_conductivity].subs(
         {conductance_definition.object_resistance: first_resistance})
     conductance2 = solve(conductance_definition.definition, conductance_definition.object_conductivity, dict=True)[0][conductance_definition.object_conductivity].subs(
