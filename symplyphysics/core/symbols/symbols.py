@@ -1,6 +1,5 @@
 from __future__ import annotations
-from typing import Any, Optional, Sequence
-from typing_extensions import Self
+from typing import Any, Optional, Sequence, Self
 from sympy import S, Symbol as SymSymbol, Expr, Equality
 from sympy.physics.units import Dimension
 from sympy.core.function import UndefinedFunction

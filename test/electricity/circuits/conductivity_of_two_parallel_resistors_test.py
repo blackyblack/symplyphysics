@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
     SI,
 )
-from symplyphysics.laws.electricity.circuits import parallel_resistor_adds_conductivity as parallel_resistor
+from symplyphysics.laws.electricity.circuits import conductivity_of_two_parallel_resistors as parallel_resistor
 
 # Description
 ## Assert we have two resistors with 2 Ohm and 4 Ohm impedances.
@@ -39,4 +39,3 @@ def test_bad_resistance(test_args):
         parallel_resistor.calculate_resistance(test_args.R1, Rb)
     with raises(TypeError):
         parallel_resistor.calculate_resistance(test_args.R1, 100)
-    

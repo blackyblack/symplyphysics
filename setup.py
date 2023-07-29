@@ -12,7 +12,7 @@ DESCRIPTION = 'Physics laws implemented as code.'
 URL = 'https://github.com/blackyblack/symplyphysics'
 EMAIL = 'sam.and.tetris@gmail.com'
 AUTHOR = 'blackyblack'
-REQUIRES_PYTHON = '>=3.10.0'
+REQUIRES_PYTHON = '>=3.11.0'
 VERSION = '1.0.0'
 
 # What packages are required for this module to be executed?

@@ -53,3 +53,5 @@ def test_array_bad_current(test_args):
         kirchhoff_law.calculate_current_from_array([Ib, Ib])
     with raises(TypeError):
         kirchhoff_law.calculate_current_from_array([100, 100])
+    with raises(TypeError):
+        kirchhoff_law.calculate_current_from_array(test_args.I1)
