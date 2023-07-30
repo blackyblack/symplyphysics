@@ -10,36 +10,38 @@ Physics laws implemented as code. Based on [SymPy](https://github.com/sympy/symp
 # How to install
 
 ```sh
-python3 setup.py install --user
+pip install .
 ```
 
-Install **matplotlib** for plotting support:
+Install with **matplotlib** for plotting support:
 
 ```sh
-pip install matplotlib
+pip install .[plots]
+```
+
+> **_NOTE:_**  for Windows users **Python/Scripts** folder should be added to the PATH environment variable
+
+# How to install for development (local installation)
+
+```sh
+pip install -e .[dev,plots]
 ```
 
 # How to run
 
-With **symplyphysics** installed:
+Install **symplyphysics** and run:
 
 ```sh
 cd examples/force_from_acceleration
 python3 main.py
 ```
 
-Without **symplyphysics** installed:
-
-```sh
-PYTHONPATH=. python3 ./examples/force_from_acceleration/main.py
-```
-
 # How to test
 
-Install **pytest**:
+Install with **pytest**:
 
 ```sh
-pip install pytest
+pip install .[dev]
 ```
 
 Run tests:
@@ -47,5 +49,3 @@ Run tests:
 ```sh
 pytest
 ```
-
-> **_NOTE:_**  for Windows users **Python/Scripts** folder should be added to the PATH environment variable
