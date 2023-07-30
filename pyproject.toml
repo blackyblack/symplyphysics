@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "symplyphysics"
+version = "1.0.0"
+authors = [
+    {name = "blackyblack", email = "sam.and.tetris@gmail.com"},
+]
+description = "Physics laws implemented as code"
+readme = "README.md"
+requires-python = ">=3.11"
+keywords = ["physics", "mathematics"]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Scientific/Engineering :: Physics",
+]
+dependencies = [
+    "sympy",
+]
+
+[project.optional-dependencies]
+plots = ["matplotlib"]
+
+[tool.setuptools]
+packages = ["symplyphysics"]
+
+[tool.pytest.ini_options]
+testpaths = [
+    "test",
+]

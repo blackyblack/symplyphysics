@@ -24,7 +24,7 @@ jobs:
           pip install pylint
           pip install mypy
       - name: Install symplyphysics
-        run: python3 setup.py install
+        run: pip install -e .
       - name: Run typechecking with mypy
         run: mypy --exclude=build .
       - name: Run linter with pylint

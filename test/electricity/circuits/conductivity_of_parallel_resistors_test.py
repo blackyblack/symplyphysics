@@ -10,8 +10,8 @@ from symplyphysics import (
 from symplyphysics.laws.electricity.circuits import conductivity_of_parallel_resistors as parallel_resistor
 
 # Description
-## Assert we have two resistors with 1/2 Siemens and 1/4 Siemens impedances.
-## Accordind to calculator (https://www.chipdip.ru/calc/parallel-resistors) resulting resistance should be 0.75 Siemens.
+## Assert we have two resistors with 1/2 Siemens and 1/4 Siemens conductance.
+## Accordind to calculator (https://www.chipdip.ru/calc/parallel-resistors) resulting conductance should be 0.75 Siemens.
 
 
 @fixture(name="test_args")
