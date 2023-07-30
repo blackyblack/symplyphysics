@@ -1,6 +1,5 @@
 from functools import partial
-from typing import Any, Callable, Optional, TypeAlias
-from typing_extensions import Self
+from typing import Any, Callable, Optional, TypeAlias, Self
 from sympy import Expr, S, Derivative, Function as SymFunction, Basic, sympify
 from sympy.core.add import Add
 from sympy.core.mul import Mul

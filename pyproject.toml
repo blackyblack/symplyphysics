@@ -1,0 +1,55 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "symplyphysics"
+version = "1.0.0"
+authors = [
+    {name = "blackyblack", email = "sam.and.tetris@gmail.com"},
+]
+description = "Physics laws implemented as code"
+readme = "README.md"
+requires-python = ">=3.11"
+keywords = ["physics", "mathematics"]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Scientific/Engineering :: Physics",
+]
+dependencies = [
+    "sympy",
+]
+
+[project.optional-dependencies]
+plots = ["matplotlib"]
+dev = [
+  "pytest",
+  "mypy",
+  "pylint",
+]
+
+[tool.setuptools.packages]
+find = {}  # Scan the project directory with the default parameters
+
+[tool.pytest.ini_options]
+testpaths = [
+    "test",
+]
+
+[tool.pylint.basic]
+good-names-rgxs = ["^[_a-z][_a-z0-9]?$,^[_A-Z][_a-z0-9]?$"]
+
+[tool.pylint.messages_control]
+disable = [
+  "missing-class-docstring",
+  "missing-function-docstring",
+  "missing-module-docstring",
+  "line-too-long",
+  "similarities",
+  "too-many-locals",
+]
+
+[tool.yapf]
+based_on_style = "google"
+column_limit = 100
+continuation_align_style = "fixed"
