@@ -19,6 +19,8 @@ Install with **matplotlib** for plotting support:
 pip install .[plots]
 ```
 
+> **_NOTE:_**  for Windows users **Python/Scripts** folder should be added to the PATH environment variable
+
 # How to install for development (local installation)
 
 ```sh
@@ -47,5 +49,3 @@ Run tests:
 ```sh
 pytest
 ```
-
-> **_NOTE:_**  for Windows users **Python/Scripts** folder should be added to the PATH environment variable
