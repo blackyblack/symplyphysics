@@ -28,10 +28,28 @@ dev = [
   "pylint",
 ]
 
-[tool.setuptools]
-packages = ["symplyphysics"]
+[tool.setuptools.packages.find]
+where = ["symplyphysics"]
 
 [tool.pytest.ini_options]
 testpaths = [
     "test",
 ]
+
+[tool.pylint.basic]
+good-names-rgxs = ["^[_a-z][_a-z0-9]?$,^[_A-Z][_a-z0-9]?$"]
+
+[tool.pylint.messages_control]
+disable = [
+  "missing-class-docstring",
+  "missing-function-docstring",
+  "missing-module-docstring",
+  "line-too-long",
+  "similarities",
+  "too-many-locals",
+]
+
+[tool.yapf]
+based_on_style = "google"
+column_limit = 100
+continuation_align_style = "fixed"
