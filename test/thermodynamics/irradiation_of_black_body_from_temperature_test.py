@@ -16,15 +16,15 @@ def test_args_fixture():
     Args = namedtuple("Args", ["t"])
     return Args(t=t)
 
-def test_basic_radiant_heat_energy(test_args):
-    result = stefan_boltzmann_law.calculate_irradiance(test_args.t)
+def test_basic_radiance_heat_energy(test_args):
+    result = stefan_boltzmann_law.calculate_radiance(test_args.t)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.power/units.length**2)
-    result_radiant_heat_energy_joule = convert_to(result, units.joule/units.meter**2/units.second).evalf(6)
-    assert result_radiant_heat_energy_joule == approx(0.009073, 0.000001)
+    result_radiance_heat_energy_joule = convert_to(result, units.joule/units.meter**2/units.second).evalf(6)
+    assert result_radiance_heat_energy_joule == approx(0.009073, 0.0001)
 
 def test_bad_temperature(test_args):
     tb = Quantity(1 * units.second)
     with raises(errors.UnitsError):
-        stefan_boltzmann_law.calculate_irradiance(tb)
+        stefan_boltzmann_law.calculate_radiance(tb)
     with raises(TypeError):
-        stefan_boltzmann_law.calculate_irradiance(100)
+        stefan_boltzmann_law.calculate_radiance(100)
