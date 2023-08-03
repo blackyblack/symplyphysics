@@ -10,11 +10,11 @@ solved = solve(stefan_boltzmann_law.law, stefan_boltzmann_law.radiance,
     dict=True)[0][stefan_boltzmann_law.radiance]
 radiance_temperature = solved.subs({
     stefan_boltzmann_law.units.stefan_boltzmann_constant: 
-                                convert_to(units.stefan_boltzmann_constant,units.watt/units.meter**2/units.kelvin**4).evalf(5)
+                            convert_to(units.stefan_boltzmann_constant,units.watt/units.meter**2/units.kelvin**4).evalf(5)
 })
 
-print(f"irradiance  function is:\n{print_expression(radiance_temperature)}")
-p1 = plot(radiance_temperature, (stefan_boltzmann_law.temperature, 0, 400),   
+print(f"Radiance function is:\n{print_expression(radiance_temperature)}")
+p1 = plot(radiance_temperature, (stefan_boltzmann_law.temperature, 0, 400),
     line_color="black",
     title="Stefan - Boltzmann Law",
     xlabel="T(K)",
