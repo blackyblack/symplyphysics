@@ -24,7 +24,7 @@ def test_basic_radiance_heat_energy(test_args):
     result_radiance = convert_to(result, units.watt/units.meter**2).evalf(6)
     assert result_radiance == approx(0.009073, 0.0001)
 
-def test_bad_temperature(test_args):
+def test_bad_temperature():
     tb = Quantity(1 * units.second)
     with raises(errors.UnitsError):
         stefan_boltzmann_law.calculate_radiance(tb)
