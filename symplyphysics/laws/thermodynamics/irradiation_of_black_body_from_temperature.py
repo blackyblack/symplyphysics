@@ -8,24 +8,24 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## power of the black body's thermodynamic temperature T (also called absolute temperature). 
 
 # Law: j* = sigma*T^4, where
-## j* is irradiance,
+## j* is radiant heat energy,
 ## sigma is constant of proportionality,called the Stefan–Boltzmann constant,
 ## T is temperature of a completely black body
 
 # Note
 ## j* = epsilon*sigma*T^4, where ε is the integral absorption capacity of the body. For a completely black body ε = 1.
 
-irradiance = Symbol("irradiance", units.power/units.length**2)
-temperature = Symbol("temperature", units.temperature)
+irradiance = Symbol("irradiance", units.watt/units.meter**2)
+temperature = Symbol("temperature", units.kelvin)
 
-law = Eq(irradiance, units.stefan * (temperature**4))
+law = Eq(irradiance, units.stefan_boltzmann_constant * (temperature**4))
 
 def print_law() -> str:
     return print_expression(law)
 
 @validate_input( temperature_=temperature)
 @validate_output(irradiance)
-def calculate_pressure(temperature_: Quantity) -> Quantity:
+def calculate_irradiance(temperature_: Quantity) -> Quantity:
     solved = solve(law, irradiance, dict=True)[0][irradiance]
-    result_expr = solved.subs({temperature: temperature_})
+    result_expr = solved.subs(temperature, temperature_)
     return Quantity(result_expr)
