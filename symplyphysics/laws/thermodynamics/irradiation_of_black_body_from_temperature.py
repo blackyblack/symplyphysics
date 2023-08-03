@@ -15,8 +15,8 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 # Note
 ## j* = epsilon*sigma*T^4, where ε is the integral absorption capacity of the body. For a completely black body ε = 1.
 
-irradiance = Symbol("irradiance", units.watt/units.meter**2)
-temperature = Symbol("temperature", units.kelvin)
+irradiance = Symbol("irradiance", units.power/units.length**2)
+temperature = Symbol("temperature", units.temperature)
 
 law = Eq(irradiance, units.stefan_boltzmann_constant * (temperature**4))
 
