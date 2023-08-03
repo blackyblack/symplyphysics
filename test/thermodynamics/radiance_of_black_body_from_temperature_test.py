@@ -7,10 +7,10 @@ from symplyphysics import (
     Quantity,
     SI,
 )
-from symplyphysics.laws.thermodynamics import irradiation_of_black_body_from_temperature as stefan_boltzmann_law
+from symplyphysics.laws.thermodynamics import radiance_of_black_body_from_temperature as stefan_boltzmann_law
 
 # Description. With help of online calculator at https://www.wolframalpha.com/input/?i=stefan+boltzmann+law:
-## For black body with temperature 20 K radiant heat energy should be 0.009073
+## For black body with temperature 20 K radiant heat energy should be 0.009073 [W/m^2]
 
 @fixture(name="test_args")
 def test_args_fixture():
