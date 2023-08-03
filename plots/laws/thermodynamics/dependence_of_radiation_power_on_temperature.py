@@ -13,7 +13,7 @@ irradiance_temperature = solved.subs({
                                 convert_to(units.stefan_boltzmann_constant,units.watt/units.meter**2/units.kelvin**4).evalf(5)
 })
 
-print(f"Pressure function is:\n{print_expression(irradiance_temperature_)}")
+print(f"Pressure function is:\n{print_expression(irradiance_temperature)}")
 p1 = plot(irradiance_temperature, (stefan_boltzmann_law.temperature, 0, 400),   
     line_color="black",
     title="Stefan - Boltzmann Law",
