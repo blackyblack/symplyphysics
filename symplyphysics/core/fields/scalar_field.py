@@ -3,9 +3,10 @@ from typing import Callable, Sequence, TypeAlias
 from sympy import Expr, sympify
 from sympy.vector import express
 
-from ..coordinate_systems.coordinate_systems import CoordinateSystem
-from ...core.symbols.quantities import ScalarValue
 from .field_point import FieldPoint
+from ..coordinate_systems.coordinate_systems import CoordinateSystem
+from ...core.dimensions import ScalarValue
+
 
 FieldFunction: TypeAlias = Callable[[FieldPoint], ScalarValue] | ScalarValue
 

@@ -1,56 +1,21 @@
 import functools
 import inspect
 from typing import Any, Callable, Sequence
-from sympy import S
 from sympy.physics.units import Quantity as SymQuantity, Dimension
-from sympy.physics.units.systems.si import SI
 
-from symplyphysics.core.symbols.quantities import Quantity
-
-from ..core.symbols.symbols import DimensionSymbol, Function, Symbol
-from ..core.vectors.vectors import Vector
-from .errors import UnitsError
+from .symbols.symbols import DimensionSymbol, Function, Symbol
+from .dimensions import assert_equivalent_dimension, ScalarValue
 
 
-def assert_equivalent_dimension(
-        arg: SymQuantity | float, param_name: str, func_name: str, expected_unit: Dimension):
-    #HACK: this allows to treat angle type as dimensionless
-    expected_dimension = expected_unit.subs("angle", S.One)
-    if isinstance(arg, (float | int)):
-        if SI.get_dimension_system().is_dimensionless(expected_dimension):
-            return
-        raise TypeError(f"Argument '{param_name}' to function '{func_name}'"
-            f" is Number but '{expected_dimension}' is not dimensionless")
-    arg_quantity = Quantity(arg)
-    # zero can be of any dimension
-    if arg_quantity.scale_factor == S.Zero:
-        return
-    #HACK: this allows to treat angle type as dimensionless
-    arg_dimension = arg_quantity.dimension.subs("angle", S.One)
-    # angle is dimensionless but equivalent_dims() fails to compare it
-    if SI.get_dimension_system().is_dimensionless(
-            expected_dimension) and SI.get_dimension_system().is_dimensionless(arg_dimension):
-        return
-    if not SI.get_dimension_system().equivalent_dims(arg_dimension, expected_dimension):
-        raise UnitsError(f"Argument '{param_name}' to function '{func_name}' must "
-            f"be in units equivalent to '{expected_dimension.name}'")
-    if arg_quantity.scale_factor.free_symbols:
-        raise UnitsError(f"Argument '{param_name}' to function '{func_name}' should "
-            f"not contain free symbols")
-
-
-def _assert_expected_unit(value: SymQuantity | Vector | Sequence[SymQuantity | float],
+def _assert_expected_unit(value: ScalarValue | SymQuantity | DimensionSymbol | Sequence[ScalarValue | SymQuantity],
     expected_units: Dimension | Symbol | Function | Sequence[Dimension | Symbol | Function],
     param_name: str, function_name: str):
-    components: list[SymQuantity | float] = []
+    components: list[ScalarValue | SymQuantity | Dimension] = []
     indexed = False
-    if isinstance(value, Vector):
-        for c in value.components:
-            if not isinstance(c, (SymQuantity | float | int)):
-                raise TypeError(f"Argument '{param_name}' to function '{function_name}'"
-                    f" is Vector but its component {c} is not Quantity or Number")
-            components.append(c)
-        indexed = True
+    if isinstance(value, SymQuantity):
+        components.append(value)
+    elif isinstance(value, DimensionSymbol):
+        components.append(value.dimension)
     elif isinstance(value, Sequence):
         components = list(value)
         indexed = True

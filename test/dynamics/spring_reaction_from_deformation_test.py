@@ -6,21 +6,19 @@ from symplyphysics import (
     convert_to,
     Quantity,
     SI,
-    Vector,
-    CoordinateSystem,
 )
+from symplyphysics.core.vectors.vectors import QuantityVector
 from symplyphysics.laws.dynamics import spring_reaction_from_deformation as spring_law
 
 
 @fixture(name="test_args")
 def test_args_fixture():
-    C = CoordinateSystem()
     k = Quantity(0.1 * units.newton / units.meter)
     df_x = Quantity(3 * units.meter)
     df_y = Quantity(1 * units.meter)
-    df = Vector([df_x, df_y], C)
-    Args = namedtuple("Args", ["C", "k", "df"])
-    return Args(C=C, k=k, df=df)
+    df = QuantityVector([df_x, df_y])
+    Args = namedtuple("Args", ["k", "df"])
+    return Args(k=k, df=df)
 
 
 def test_basic_force(test_args):
@@ -43,7 +41,7 @@ def test_bad_elastic_coefficient(test_args):
 
 def test_bad_deformation(test_args):
     db = Quantity(1 * units.coulomb)
-    vb = Vector([db], test_args.C)
+    vb = QuantityVector([db])
     with raises(errors.UnitsError):
         spring_law.calculate_force(test_args.k, vb)
     with raises(TypeError):
@@ -51,6 +49,6 @@ def test_bad_deformation(test_args):
 
 
 def test_bad_deformation_vector(test_args):
-    vb = Vector([test_args.df.components[0] * test_args.df.components[0]], test_args.C)
+    vb = QuantityVector([test_args.df.components[0] * test_args.df.components[0]])
     with raises(TypeError):
         spring_law.calculate_force(test_args.k, vb)

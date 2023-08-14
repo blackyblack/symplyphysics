@@ -1,8 +1,11 @@
-from typing import Sequence
+from typing import Optional, Self, Sequence
 from sympy.vector import express, Vector as SymVector
 from sympy.vector.operators import _get_coord_systems
+from sympy.physics.units import Dimension
 
-from ...core.fields.scalar_field import ScalarValue
+from ..dimensions import assert_equivalent_dimension, dimensionless, ScalarValue
+from ..symbols.quantities import Quantity
+from ..symbols.symbols import DimensionSymbol, next_name
 from ..coordinate_systems.coordinate_systems import CoordinateSystem
 
 
@@ -34,6 +37,28 @@ class Vector:
     @property
     def components(self) -> Sequence[ScalarValue]:
         return self._components
+
+
+class QuantityVector(Vector, DimensionSymbol):
+
+    def __init__(self, components: Sequence[Quantity],
+        coordinate_system: CoordinateSystem = CoordinateSystem(CoordinateSystem.System.CARTESIAN)):
+        dimension = dimensionless if len(components) == 0 else components[0].dimension
+        scale_factors = []
+        for idx, c in enumerate(components):
+            param_name_indexed = f"{c.display_name}[{idx}]"
+            assert_equivalent_dimension(c, param_name_indexed, "QuantityVector", dimension)
+            scale_factors.append(c.scale_factor)
+        DimensionSymbol.__init__(self, next_name("VEC"), dimension)
+        Vector.__init__(self, scale_factors, coordinate_system)
+
+    @staticmethod
+    def from_expressions(components: Sequence[ScalarValue],
+        coordinate_system: CoordinateSystem = CoordinateSystem(CoordinateSystem.System.CARTESIAN),
+        *,
+        dimension: Optional[Dimension] = None) -> Self:
+        quantities = [Quantity(c, dimension=dimension) for c in components]
+        return QuantityVector(quantities, coordinate_system)
 
 
 # Converts SymPy Vector to Vector

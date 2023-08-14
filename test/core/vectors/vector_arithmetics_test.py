@@ -1,11 +1,13 @@
 from collections import namedtuple
+
+from symplyphysics import Quantity, dimensionless, units
 from test.test_decorators import unsupported_usage
 from pytest import fixture, raises
 from sympy import atan2, cos, pi, sin, sqrt, SympifyError
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_transform
-from symplyphysics.core.vectors.vector_arithmetics import (add_cartesian_vectors,
-    cross_cartesian_vectors, dot_vectors, equal_vectors, scale_vector, vector_magnitude)
-from symplyphysics.core.vectors.vectors import Vector, vector_rebase
+from symplyphysics.core.vectors.vector_arithmetics import (add_cartesian_quantity_vectors, add_cartesian_vectors,
+    cross_cartesian_vectors, dot_vectors, equal_quantity_vectors, equal_vectors, scale_quantity_vector, scale_vector, vector_magnitude)
+from symplyphysics.core.vectors.vectors import QuantityVector, Vector, vector_rebase
 
 # pylint: disable=too-many-locals
 
@@ -423,3 +425,47 @@ def test_rebased_cross_product(test_args):
     vector_cartesian_cross = cross_cartesian_vectors(vector1_cartesian, vector2_cartesian)
     vector_cross = vector_rebase(vector_cartesian_cross, Cy)
     assert vector_cross.components == [sqrt(50), -3 * pi / 4, 25]
+
+
+def test_basic_equal_quantity_vectors():
+    Q1 = Quantity(1)
+    Q2 = Quantity(2)
+    assert equal_quantity_vectors(QuantityVector([Q1, Q2]), QuantityVector([Q1, Q2]))
+    assert not equal_quantity_vectors(QuantityVector([Q1, Q2]), QuantityVector([Q2, Q1]))
+    L1 = Quantity(1 * units.meter)
+    L2 = Quantity(2 * units.meter)
+    assert equal_quantity_vectors(QuantityVector([L1, L2]), QuantityVector([L1, L2]))
+    assert not equal_quantity_vectors(QuantityVector([L1, L2]), QuantityVector([Q1, Q2]))
+
+
+def test_basic_add_quantity_vectors():
+    Q1 = Quantity(1)
+    Q2 = Quantity(2)
+    assert add_cartesian_quantity_vectors(QuantityVector([Q1, Q2]), QuantityVector([Q1, Q2])).components == [2, 4]
+    assert add_cartesian_quantity_vectors(QuantityVector([Q1, Q2]), QuantityVector([Q2, Q1])).components == [3, 3]
+    L1 = Quantity(1 * units.meter)
+    L2 = Quantity(2 * units.meter)
+    result = add_cartesian_quantity_vectors(QuantityVector([L1, L2]), QuantityVector([L1, L2]))
+    assert result.components == [2, 4]
+    assert result.dimension == units.length
+    result = add_cartesian_quantity_vectors(QuantityVector([L1, L2]), QuantityVector([L2, L1]))
+    assert result.components == [3, 3]
+    assert result.dimension == units.length
+
+
+def test_basic_scale_quantity_vectors():
+    Q1 = Quantity(1)
+    Q2 = Quantity(2)
+    initial = QuantityVector([Q1, Q2])
+    result = scale_quantity_vector(Quantity(2), initial)
+    assert result.components == [2, 4]
+    assert result.dimension == dimensionless
+    L1 = Quantity(1 * units.meter)
+    L2 = Quantity(2 * units.meter)
+    initial = QuantityVector([L1, L2])
+    result = scale_quantity_vector(Quantity(2), initial)
+    assert result.components == [2, 4]
+    assert result.dimension == units.length
+    result = scale_quantity_vector(L2, initial)
+    assert result.components == [2, 4]
+    assert result.dimension == units.length**2

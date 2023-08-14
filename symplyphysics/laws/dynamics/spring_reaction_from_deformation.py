@@ -1,7 +1,8 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, Vector,
+from symplyphysics import (units, Quantity, Symbol, print_expression,
     sympy_vector_from_vector, validate_input, validate_output)
 from symplyphysics.core.convert import expr_to_vector
+from symplyphysics.core.vectors.vectors import QuantityVector
 
 # Description
 ## Deformed spring is about to return back to it's undeformed state and responds with some force. Law is:
@@ -26,7 +27,7 @@ def print_law() -> str:
 
 @validate_input(coefficient_=elastic_coefficient, deformation_=deformation)
 @validate_output(response_force)
-def calculate_force(coefficient_: Quantity, deformation_: Vector) -> Vector:
+def calculate_force(coefficient_: Quantity, deformation_: QuantityVector) -> QuantityVector:
     result_force_expr = solve(law, response_force, dict=True)[0][response_force]
     sympy_vector_deformation = sympy_vector_from_vector(deformation_)
     result_expr = result_force_expr.subs({

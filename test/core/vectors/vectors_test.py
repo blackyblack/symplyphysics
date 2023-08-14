@@ -1,9 +1,11 @@
 from collections import namedtuple
 from pytest import fixture, raises
+from symplyphysics import Quantity, dimensionless, units
 from sympy import atan, pi, sqrt, symbols, sin, cos
 from sympy.vector import Vector as SympyVector, express
+from symplyphysics.core import errors
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_rotate, coordinates_transform
-from symplyphysics.core.vectors.vectors import Vector, sympy_vector_from_vector, vector_from_sympy_vector, vector_rebase
+from symplyphysics.core.vectors.vectors import QuantityVector, Vector, sympy_vector_from_vector, vector_from_sympy_vector, vector_rebase
 
 
 @fixture(name="test_args")
@@ -233,3 +235,53 @@ def test_spherical_vector_create(test_args):
     vector_rebased = vector_rebase(vector, B)
     assert vector_rebased.coordinate_system == B
     assert vector_rebased.components == [sqrt(5), pi / 2, atan(2)]
+
+
+# Test QuantityVector constructor
+
+
+def test_basic_quantity_vector(test_args):
+    q1 = Quantity(1)
+    q2 = Quantity(2)
+    vector = QuantityVector([q1, q2], test_args.C)
+    assert vector.components == [q1.scale_factor, q2.scale_factor]
+    assert vector.coordinate_system == test_args.C
+    assert vector.dimension == dimensionless
+
+
+def test_empty_quantity_vector():
+    vector = QuantityVector([])
+    assert len(vector.components) == 0
+    assert vector.dimension == dimensionless
+
+
+def test_invalid_dimension_quantity_vector():
+    q1 = Quantity(1)
+    q2 = Quantity(2, dimension=units.length)
+    with raises(errors.UnitsError):
+        QuantityVector([q1, q2])
+
+
+# Test QuantityVector.from_expressions()
+
+def test_basic_from_expressions():
+    vector = QuantityVector.from_expressions([1, 2])
+    assert vector.components == [1, 2]
+    assert vector.dimension == dimensionless
+
+
+def test_dimensions_manual_from_expressions():
+    vector = QuantityVector.from_expressions([1, 2], dimension=units.length)
+    assert vector.components == [1, 2]
+    assert vector.dimension == units.length
+
+
+def test_dimensions_auto_from_expressions():
+    vector = QuantityVector.from_expressions([1 * units.meter, 2 * units.meter])
+    assert vector.components == [1, 2]
+    assert vector.dimension == units.length
+
+
+def test_invalid_dimension_from_expressions():
+    with raises(errors.UnitsError):
+        QuantityVector.from_expressions([1 * units.meter, 2 * units.second])

@@ -2,10 +2,13 @@ from functools import reduce
 from operator import add
 from typing import Optional, Sequence
 from sympy import S, Expr, cos, sin, sqrt, sympify
-from .vectors import Vector
+from sympy.physics.units.systems.si import SI
+
+from .vectors import QuantityVector, Vector
 from ..expr_comparisons import expr_equals
+from ..symbols.quantities import Quantity
 from ..coordinate_systems.coordinate_systems import CoordinateSystem
-from ...core.fields.scalar_field import ScalarValue
+from ..dimensions import ScalarValue, assert_equivalent_dimension
 
 
 # Add zeroes so that both vectors have the same length.
@@ -24,7 +27,7 @@ def _extend_two_vectors(
     return (list_left_extended, list_right_extended)
 
 
-# Compare two Python vectors
+# Compare two vectors
 def equal_vectors(vector_left: Vector, vector_right: Vector) -> bool:
     if vector_left.coordinate_system != vector_right.coordinate_system:
         raise TypeError(
@@ -37,7 +40,7 @@ def equal_vectors(vector_left: Vector, vector_right: Vector) -> bool:
     return True
 
 
-# Sum of two Python vectors
+# Sum of two vectors
 # Sum of two vectors can be seen as a diagonal of the parallelogram, where vectors are adjacent sides of this parallelogram.
 # To subtract vectors, multiply one of the vectors to -1 and add them.
 #NOTE: adding two non-cartesian vectors is not a trivial task. We suggest to convert them to cartesian
@@ -65,7 +68,7 @@ def add_cartesian_vectors(vector_left: Vector, vector_right: Vector) -> Vector:
 
 # Change Vector magnitude (length)
 # Scalar multiplication changes the magnitude of the vector and does not change it's direction.
-def scale_vector(scalar_value: Expr, vector: Vector) -> Vector:
+def scale_vector(scalar_value: ScalarValue, vector: Vector) -> Vector:
     if vector.coordinate_system.coord_system_type == CoordinateSystem.System.CARTESIAN:
         vector_components = [scalar_value * e for e in vector.components]
         return Vector(vector_components, vector.coordinate_system)
@@ -92,7 +95,7 @@ def _multiply_lists_and_sum(list_left: Sequence[ScalarValue],
     return sympify(reduce(add, map(lambda lr: lr[0] * lr[1], zip(list_left, list_right)), 0))
 
 
-# Dot product of two Python vectors
+# Dot product of two vectors
 # Dot product equals to magnitudes of both vectors multiplied * cos(phi), where
 # phi is angle between vectors.
 # Hence vectors are orthogonal (perpendicular) when dot product is zero.
@@ -162,3 +165,24 @@ def cross_cartesian_vectors(vector_left: Vector, vector_right: Vector) -> Vector
     bx, by, bz = list_right_extended
     result = [sympify(ay * bz - az * by), sympify(az * bx - ax * bz), sympify(ax * by - ay * bx)]
     return Vector(result, vector_left.coordinate_system)
+
+
+# Compare two vectors of quantities
+def equal_quantity_vectors(vector_left: QuantityVector, vector_right: QuantityVector) -> bool:
+    if not SI.get_dimension_system().equivalent_dims(vector_left.dimension, vector_right.dimension):
+        return False
+    return equal_vectors(vector_left, vector_right)
+
+
+# Sum of two vectors of quantities
+def add_cartesian_quantity_vectors(vector_left: QuantityVector, vector_right: QuantityVector) -> QuantityVector:
+    assert_equivalent_dimension(vector_left.dimension, vector_left.display_name, "add_cartesian_quantity_vectors", vector_right.dimension)
+    return QuantityVector.from_expressions(add_cartesian_vectors(vector_left, vector_right).components, vector_left.coordinate_system, dimension=vector_left.dimension)
+
+
+# Change QuantityVector magnitude (length)
+def scale_quantity_vector(scalar_value: Quantity, vector: QuantityVector) -> QuantityVector:
+    quantities = [Quantity(c, dimension=vector.dimension) for c in vector.components]
+    quantities_vector = Vector(quantities, vector.coordinate_system)
+    scaled_quantities = scale_vector(scalar_value, quantities_vector)
+    return QuantityVector.from_expressions(scaled_quantities.components, vector.coordinate_system)

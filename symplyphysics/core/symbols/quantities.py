@@ -1,91 +1,11 @@
 from functools import partial
-from typing import Any, Callable, Optional, TypeAlias, Self
-from sympy import Expr, S, Derivative, Function as SymFunction, Basic, sympify
-from sympy.core.add import Add
-from sympy.core.mul import Mul
-from sympy.core.power import Pow
+from typing import Any, Optional, Self
+from sympy import S, Basic, sympify
 from sympy.physics.units import Dimension, Quantity as SymQuantity
 from sympy.physics.units.systems.si import SI
 
 from .symbols import DimensionSymbol, next_name
-
-
-def _collect_factor_and_dimension(expr: Basic) -> tuple[Basic, Dimension]:
-    """
-    Return tuple with scale factor expression and dimension expression.
-    """
-
-    def _collect_quantity(expr: SymQuantity) -> tuple[Basic, Dimension]:
-        return (expr.scale_factor, expr.dimension)
-
-    def _collect_mul(expr: Mul) -> tuple[Basic, Dimension]:
-        factor = S.One
-        dimension = Dimension(S.One)
-        for arg in expr.args:
-            (arg_factor, arg_dim) = _collect_factor_and_dimension(arg)
-            factor *= arg_factor
-            dimension *= arg_dim
-        return (factor, dimension)
-
-    def _collect_pow(expr: Pow) -> tuple[Basic, Dimension]:
-        pow_expr: Expr = S.One
-        (factor, dim) = _collect_factor_and_dimension(expr.base)
-        pow_expr *= factor
-        (exp_factor, exp_dim) = _collect_factor_and_dimension(expr.exp)
-        if not SI.get_dimension_system().is_dimensionless(exp_dim):
-            raise ValueError(
-                f"Dimension of '{expr.exp}' is {exp_dim}, but it should be dimensionless")
-        exp_dim = S.One
-        return (pow_expr**exp_factor, dim**(exp_factor * exp_dim))
-
-    def _collect_add(expr: Add) -> tuple[Basic, Dimension]:
-        sum_expr: Expr = S.Zero
-        (factor, dim) = _collect_factor_and_dimension(expr.args[0])
-        sum_expr += factor
-        for addend in expr.args[1:]:
-            (addend_factor, addend_dim) = _collect_factor_and_dimension(addend)
-            # automatically convert zero to the dimension of it's additives
-            if dim != addend_dim and not SI.get_dimension_system().equivalent_dims(dim, addend_dim):
-                if factor == S.Zero:
-                    dim = addend_dim
-                elif addend_factor == S.Zero:
-                    addend_dim = dim
-            if dim != addend_dim and not SI.get_dimension_system().equivalent_dims(dim, addend_dim):
-                raise ValueError(f"Dimension of '{addend}' is {addend_dim}, but it should be {dim}")
-            sum_expr += addend_factor
-        return (sum_expr, dim)
-
-    def _unsupported_derivative(expr: Derivative):
-        raise ValueError(f"Dimension '{expr}' should not contain unevaluated Derivative")
-
-    def _collect_function(expr: SymFunction) -> tuple[Basic, Dimension]:
-        factors: list[Basic] = []
-        for arg in expr.args:
-            (f, d) = _collect_factor_and_dimension(arg)
-            # only functions with dimensionless arguments are supported
-            if not SI.get_dimension_system().is_dimensionless(d):
-                raise ValueError(f"Dimension of '{arg}' is {d}, but it should be dimensionless")
-            factors.append(f)
-        ret = expr.func(*(f for f in factors))
-        return (ret, dimensionless)
-
-    def _collect_dimension(expr: Dimension) -> tuple[Basic, Dimension]:
-        return (S.One, expr)
-
-    cases: dict[type, Callable[[Any], tuple[Basic, Dimension]]] = {
-        SymQuantity: _collect_quantity,
-        Mul: _collect_mul,
-        Pow: _collect_pow,
-        Add: _collect_add,
-        Derivative: _unsupported_derivative,
-        SymFunction: _collect_function,
-        Dimension: _collect_dimension,
-    }
-
-    for k, v in cases.items():
-        if isinstance(expr, k):
-            return v(expr)
-    return (expr, dimensionless)
+from ..dimensions import collect_factor_and_dimension
 
 
 class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancestors
@@ -104,7 +24,7 @@ class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancest
         return obj
 
     def __init__(self, expr: Basic | float = S.One, *, dimension: Optional[Dimension] = None):
-        (scale, dimension_) = _collect_factor_and_dimension(sympify(expr))
+        (scale, dimension_) = collect_factor_and_dimension(sympify(expr))
         dimension = dimension_ if dimension is None else dimension
         super().__init__(self.name, dimension)
         SI.set_quantity_dimension(self, dimension)
@@ -117,8 +37,3 @@ class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancest
 
     def identity(self, *_args: Any) -> Self:
         return self
-
-
-dimensionless = Dimension(S.One)
-
-ScalarValue: TypeAlias = Expr | float | Quantity
