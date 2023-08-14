@@ -26,29 +26,28 @@ def test_basic_conductivity(test_args):
     result_resistance = convert_to(result, units.ohm).evalf(3)
     assert result_resistance == approx(3, 0.001)
 
-'''
 def test_three_resistors_array(test_args):
-    S3 = Quantity(1 * units.siemens)
-    result = parallel_resistor.calculate_parallel_conductance([test_args.S1, test_args.S2, S3])
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.conductance)
-    result_conductance = convert_to(result, units.siemens).evalf(3)
-    assert result_conductance == approx(1.75, 0.01)
+    S3 = Quantity(3 * units.ohm)
+    result = serial_resistor.calculate_serial_resistance([test_args.R1, test_args.R2, S3])
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.impedance)
+    result_resistance = convert_to(result, units.ohm).evalf(3)
+    assert result_resistance == approx(6, 0.01)
 
 
 def test_bad_conductivity(test_args):
-    Sb = Quantity(1 * units.meter)
+    Rb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
-        parallel_resistor.calculate_parallel_conductance([Sb, test_args.S2])
+        serial_resistor.calculate_serial_resistance([Rb, test_args.R2])
     with raises(TypeError):
-        parallel_resistor.calculate_parallel_conductance([100, test_args.S2])
+        serial_resistor.calculate_serial_resistance([100, test_args.R2])
     with raises(errors.UnitsError):
-        parallel_resistor.calculate_parallel_conductance([test_args.S1, Sb])
+        serial_resistor.calculate_serial_resistance([test_args.R1, Rb])
     with raises(TypeError):
-        parallel_resistor.calculate_parallel_conductance([test_args.S1, 100])
+        serial_resistor.calculate_serial_resistance([test_args.R1, 100])
     with raises(errors.UnitsError):
-        parallel_resistor.calculate_parallel_conductance([Sb, Sb])
+        serial_resistor.calculate_serial_resistance([Rb, Rb])
     with raises(TypeError):
-        parallel_resistor.calculate_parallel_conductance([100, 100])
+        serial_resistor.calculate_serial_resistance([100, 100])
     with raises(TypeError):
-        parallel_resistor.calculate_parallel_conductance(test_args.S1)
-'''
+        serial_resistor.calculate_serial_resistance(test_args.R1)
+
