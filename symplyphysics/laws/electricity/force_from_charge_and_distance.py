@@ -11,7 +11,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## q_1 and q_2 are the quantities of each charge,
 ## r is the distance between the charges.
 
-# Note 
+# Note
 ## The symbols Q1 and Q2 in the Coulomb's law equation represent the quantities of charge on the two interacting objects.
 ## When using the "+" and "-" signs in the calculation of force,
 ## the result will be that a "-" value for force is a sign of an attractive force
