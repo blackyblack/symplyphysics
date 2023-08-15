@@ -43,4 +43,4 @@ def test_bad_distance(test_args):
     with raises(errors.UnitsError):
         couloumb_law_scalar.calculate_force_btw_two_charged_particles(test_args.q1, test_args.q2, r0)
     with raises(TypeError):
-       couloumb_law_scalar.calculate_force_btw_two_charged_particles(test_args.q1, test_args.q2, 1)
+        couloumb_law_scalar.calculate_force_btw_two_charged_particles(test_args.q1, test_args.q2, 1)
