@@ -7,7 +7,8 @@ from .symbols.symbols import DimensionSymbol, Function, Symbol
 from .dimensions import assert_equivalent_dimension, ScalarValue
 
 
-def _assert_expected_unit(value: ScalarValue | SymQuantity | DimensionSymbol | Sequence[ScalarValue | SymQuantity],
+def _assert_expected_unit(value: ScalarValue | SymQuantity | DimensionSymbol |
+    Sequence[ScalarValue | SymQuantity],
     expected_units: Dimension | Symbol | Function | Sequence[Dimension | Symbol | Function],
     param_name: str, function_name: str):
     components: list[ScalarValue | SymQuantity | Dimension] = []

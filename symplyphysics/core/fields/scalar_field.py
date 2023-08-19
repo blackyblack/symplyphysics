@@ -7,7 +7,6 @@ from .field_point import FieldPoint
 from ..coordinate_systems.coordinate_systems import CoordinateSystem
 from ...core.dimensions import ScalarValue
 
-
 FieldFunction: TypeAlias = Callable[[FieldPoint], ScalarValue] | ScalarValue
 
 

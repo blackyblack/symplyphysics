@@ -1,13 +1,13 @@
 from collections import namedtuple
 
-from symplyphysics import Quantity, dimensionless, units
 from test.test_decorators import unsupported_usage
 from pytest import fixture, raises
 from sympy import atan2, cos, pi, sin, sqrt, SympifyError
-from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_transform
-from symplyphysics.core.vectors.vector_arithmetics import (add_cartesian_quantity_vectors, add_cartesian_vectors,
-    cross_cartesian_vectors, dot_vectors, equal_quantity_vectors, equal_vectors, scale_quantity_vector, scale_vector, vector_magnitude)
-from symplyphysics.core.vectors.vectors import QuantityVector, Vector, vector_rebase
+from symplyphysics import (Quantity, dimensionless, units, QuantityVector, Vector, vector_rebase,
+    CoordinateSystem, coordinates_transform)
+from symplyphysics.core.vectors.vector_arithmetics import (add_cartesian_quantity_vectors,
+    add_cartesian_vectors, cross_cartesian_vectors, dot_vectors, equal_quantity_vectors,
+    equal_vectors, scale_quantity_vector, scale_vector, vector_magnitude)
 
 # pylint: disable=too-many-locals
 
@@ -441,8 +441,10 @@ def test_basic_equal_quantity_vectors():
 def test_basic_add_quantity_vectors():
     Q1 = Quantity(1)
     Q2 = Quantity(2)
-    assert add_cartesian_quantity_vectors(QuantityVector([Q1, Q2]), QuantityVector([Q1, Q2])).components == [2, 4]
-    assert add_cartesian_quantity_vectors(QuantityVector([Q1, Q2]), QuantityVector([Q2, Q1])).components == [3, 3]
+    assert add_cartesian_quantity_vectors(QuantityVector([Q1, Q2]), QuantityVector([Q1,
+        Q2])).components == [2, 4]
+    assert add_cartesian_quantity_vectors(QuantityVector([Q1, Q2]), QuantityVector([Q2,
+        Q1])).components == [3, 3]
     L1 = Quantity(1 * units.meter)
     L2 = Quantity(2 * units.meter)
     result = add_cartesian_quantity_vectors(QuantityVector([L1, L2]), QuantityVector([L1, L2]))

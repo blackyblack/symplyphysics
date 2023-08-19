@@ -1,4 +1,5 @@
-from typing import Optional, Self, Sequence
+from __future__ import annotations
+from typing import Optional, Sequence
 from sympy.vector import express, Vector as SymVector
 from sympy.vector.operators import _get_coord_systems
 from sympy.physics.units import Dimension
@@ -41,7 +42,8 @@ class Vector:
 
 class QuantityVector(Vector, DimensionSymbol):
 
-    def __init__(self, components: Sequence[Quantity],
+    def __init__(self,
+        components: Sequence[Quantity],
         coordinate_system: CoordinateSystem = CoordinateSystem(CoordinateSystem.System.CARTESIAN)):
         dimension = dimensionless if len(components) == 0 else components[0].dimension
         scale_factors = []
@@ -52,11 +54,14 @@ class QuantityVector(Vector, DimensionSymbol):
         DimensionSymbol.__init__(self, next_name("VEC"), dimension)
         Vector.__init__(self, scale_factors, coordinate_system)
 
+    def to_quantities(self) -> list[Quantity]:
+        return [Quantity(c, dimension=self.dimension) for c in self.components]
+
     @staticmethod
     def from_expressions(components: Sequence[ScalarValue],
         coordinate_system: CoordinateSystem = CoordinateSystem(CoordinateSystem.System.CARTESIAN),
         *,
-        dimension: Optional[Dimension] = None) -> Self:
+        dimension: Optional[Dimension] = None) -> QuantityVector:
         quantities = [Quantity(c, dimension=dimension) for c in components]
         return QuantityVector(quantities, coordinate_system)
 

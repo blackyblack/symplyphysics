@@ -1,11 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import Quantity, dimensionless, units
 from sympy import atan, pi, sqrt, symbols, sin, cos
 from sympy.vector import Vector as SympyVector, express
-from symplyphysics.core import errors
+from symplyphysics import (Quantity, dimensionless, units, QuantityVector, Vector,
+    sympy_vector_from_vector, vector_from_sympy_vector, vector_rebase, errors)
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_rotate, coordinates_transform
-from symplyphysics.core.vectors.vectors import QuantityVector, Vector, sympy_vector_from_vector, vector_from_sympy_vector, vector_rebase
 
 
 @fixture(name="test_args")
@@ -262,7 +261,20 @@ def test_invalid_dimension_quantity_vector():
         QuantityVector([q1, q2])
 
 
+# Test QuantityVector.to_quantities()
+
+
+def test_basic_to_quantities(test_args):
+    q1 = Quantity(1)
+    q2 = Quantity(2)
+    vector = QuantityVector([q1, q2], test_args.C)
+    qs = vector.to_quantities()
+    assert [qs[0].scale_factor, qs[1].scale_factor] == [q1.scale_factor, q2.scale_factor]
+    assert [qs[0].dimension, qs[1].dimension] == [q1.dimension, q2.dimension]
+
+
 # Test QuantityVector.from_expressions()
+
 
 def test_basic_from_expressions():
     vector = QuantityVector.from_expressions([1, 2])

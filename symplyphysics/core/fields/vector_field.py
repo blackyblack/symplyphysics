@@ -8,7 +8,6 @@ from ..coordinate_systems.coordinate_systems import CoordinateSystem
 from ..vectors.vectors import Vector, vector_from_sympy_vector, sympy_vector_from_vector
 from ...core.dimensions import ScalarValue
 
-
 FieldFunction: TypeAlias = Callable[[FieldPoint], Sequence[ScalarValue]] | Sequence[ScalarValue]
 
 

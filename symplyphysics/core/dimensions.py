@@ -8,7 +8,6 @@ from sympy.physics.units.systems.si import SI
 
 from .errors import UnitsError
 
-
 ScalarValue: TypeAlias = Expr | float
 
 
@@ -90,8 +89,8 @@ def collect_factor_and_dimension(expr: Basic) -> tuple[Basic, Dimension]:
     return (expr, dimensionless)
 
 
-def assert_equivalent_dimension(
-        arg: SymQuantity | ScalarValue | Dimension, param_name: str, func_name: str, expected_unit: Dimension):
+def assert_equivalent_dimension(arg: SymQuantity | ScalarValue | Dimension, param_name: str,
+    func_name: str, expected_unit: Dimension):
     #HACK: this allows to treat angle type as dimensionless
     expected_dimension = expected_unit.subs("angle", S.One)
     if isinstance(arg, (float | int)):

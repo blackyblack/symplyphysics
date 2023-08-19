@@ -26,5 +26,4 @@ def expr_to_vector(expr: Expr, coordinate_system: CoordinateSystem) -> QuantityV
     if not isinstance(expr, SymVector):
         raise TypeError(f"Expression cannot be converted to SymPy Vector: {str(expr)}")
     vector = vector_from_sympy_vector(expr, coordinate_system)
-    components = [Quantity(c) for c in vector.components]
-    return QuantityVector(components, coordinate_system)
+    return QuantityVector.from_expressions(vector.components, coordinate_system)

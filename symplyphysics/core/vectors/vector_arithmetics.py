@@ -175,9 +175,14 @@ def equal_quantity_vectors(vector_left: QuantityVector, vector_right: QuantityVe
 
 
 # Sum of two vectors of quantities
-def add_cartesian_quantity_vectors(vector_left: QuantityVector, vector_right: QuantityVector) -> QuantityVector:
-    assert_equivalent_dimension(vector_left.dimension, vector_left.display_name, "add_cartesian_quantity_vectors", vector_right.dimension)
-    return QuantityVector.from_expressions(add_cartesian_vectors(vector_left, vector_right).components, vector_left.coordinate_system, dimension=vector_left.dimension)
+def add_cartesian_quantity_vectors(vector_left: QuantityVector,
+    vector_right: QuantityVector) -> QuantityVector:
+    assert_equivalent_dimension(vector_left.dimension, vector_left.display_name,
+        "add_cartesian_quantity_vectors", vector_right.dimension)
+    return QuantityVector.from_expressions(add_cartesian_vectors(vector_left,
+        vector_right).components,
+        vector_left.coordinate_system,
+        dimension=vector_left.dimension)
 
 
 # Change QuantityVector magnitude (length)
