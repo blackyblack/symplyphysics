@@ -3,11 +3,12 @@ from collections import namedtuple
 from test.test_decorators import unsupported_usage
 from pytest import fixture, raises
 from sympy import atan2, cos, pi, sin, sqrt, SympifyError
-from symplyphysics import (Quantity, dimensionless, units, QuantityVector, Vector, CoordinateSystem,
-    coordinates_transform)
+from symplyphysics import (SI, Quantity, dimensionless, units, QuantityVector, Vector,
+    CoordinateSystem, coordinates_transform)
 from symplyphysics.core.vectors.vector_arithmetics import (add_cartesian_quantity_vectors,
-    add_cartesian_vectors, cross_cartesian_vectors, dot_vectors, equal_vectors,
-    scale_quantity_vector, scale_vector, vector_magnitude, dot_quantity_vectors)
+    add_cartesian_vectors, cross_cartesian_quantity_vectors, cross_cartesian_vectors, dot_vectors,
+    equal_vectors, quantity_vector_magnitude, scale_quantity_vector, scale_vector, vector_magnitude,
+    dot_quantity_vectors)
 
 # pylint: disable=too-many-locals
 
@@ -478,8 +479,49 @@ def test_basic_dot_quantity_product():
     Q2 = Quantity(2)
     assert dot_quantity_vectors(QuantityVector([Q1, Q2]), QuantityVector([Q1,
         Q2])).scale_factor == 5
-    # TODO: more tests
+    L1 = Quantity(1 * units.meter)
+    L2 = Quantity(2 * units.meter)
+    distance1 = QuantityVector([L1, L2])
+    distance2 = QuantityVector([L2, L1])
+    area = dot_quantity_vectors(distance1, distance2)
+    assert area.scale_factor == 4
+    SI.get_dimension_system().equivalent_dims(area.dimension, units.area)
 
 
-# TODO: tests for magnitude of the quantity vectors
-# TODO: tests for cross product of the quantity vectors
+def test_basic_quantity_magnitude():
+    Q1 = Quantity(1)
+    Q2 = Quantity(2)
+    magnitude = quantity_vector_magnitude(QuantityVector([Q1, Q2]))
+    assert magnitude.scale_factor == sqrt(5)
+    assert magnitude.dimension == dimensionless
+    L1 = Quantity(1 * units.meter)
+    L2 = Quantity(2 * units.meter)
+    initial = QuantityVector([L1, L2])
+    magnitude = quantity_vector_magnitude(initial)
+    assert magnitude.scale_factor == sqrt(5)
+    SI.get_dimension_system().equivalent_dims(magnitude.dimension, units.length)
+
+
+def test_basic_quantity_cross_product():
+    Q1 = Quantity(1)
+    Q2 = Quantity(2)
+    crossed = cross_cartesian_quantity_vectors(QuantityVector([Q1, Q2]), QuantityVector([Q1, Q2]))
+    assert [
+        crossed.components[0].scale_factor, crossed.components[1].scale_factor,
+        crossed.components[2].scale_factor
+    ] == [0, 0, 0]
+    crossed = cross_cartesian_quantity_vectors(QuantityVector([Q1, Q2]), QuantityVector([Q2, Q1]))
+    assert [
+        crossed.components[0].scale_factor, crossed.components[1].scale_factor,
+        crossed.components[2].scale_factor
+    ] == [0, 0, -3]
+    L1 = Quantity(1 * units.meter)
+    L2 = Quantity(2 * units.meter)
+    distance1 = QuantityVector([L1, L2])
+    distance2 = QuantityVector([L2, L1])
+    cross_area_vector = cross_cartesian_quantity_vectors(distance1, distance2)
+    assert [
+        cross_area_vector.components[0].scale_factor, cross_area_vector.components[1].scale_factor,
+        cross_area_vector.components[2].scale_factor
+    ] == [0, 0, -3]
+    SI.get_dimension_system().equivalent_dims(cross_area_vector.dimension, units.area)

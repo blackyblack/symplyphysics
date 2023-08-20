@@ -99,7 +99,12 @@ class QuantityVector(Vector, DimensionSymbol):
         components: Sequence[Quantity | ScalarValue],
         coordinate_system: CoordinateSystem = CoordinateSystem(CoordinateSystem.System.CARTESIAN)):
         quantities = QuantityVector._expr_to_quantities(components)
+        # find first dimension with non-zero scale factor
         dimension = dimensionless if len(quantities) == 0 else quantities[0].dimension
+        for q in quantities:
+            if q.scale_factor != 0:
+                dimension = q.dimension
+                break
         scale_factors = []
         for idx, c in enumerate(quantities):
             param_name_indexed = f"{c.display_name}[{idx}]"
@@ -130,6 +135,8 @@ class QuantityVector(Vector, DimensionSymbol):
 
     # Convert vector coordinate system to new basis and construct new vector.
     # Rebased vector should be the same as old vector but in new coordinate system.
+    # Quantities should not contain free symbols, eg coordinate_system.x, so they cannot be
+    # properly rebased. Only coordinate system rotation and type conversion is supported.
     def rebase(self, coordinate_system: CoordinateSystem) -> QuantityVector:
         vector_ = Vector(self.components, self.coordinate_system)
         rebased = vector_.rebase(coordinate_system)

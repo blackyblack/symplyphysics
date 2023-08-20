@@ -185,3 +185,19 @@ def scale_quantity_vector(scalar_value: Quantity, vector: QuantityVector) -> Qua
 def dot_quantity_vectors(vector_left: QuantityVector, vector_right: QuantityVector) -> Quantity:
     dotted = dot_vectors(vector_left, vector_right)
     return Quantity(dotted)
+
+
+# Magnitude of the vector of quantities
+def quantity_vector_magnitude(vector_: QuantityVector) -> Quantity:
+    squared_sum = dot_quantity_vectors(vector_, vector_)
+    return Quantity(sqrt(squared_sum))
+
+
+# Cross product of two vectors of quantities
+def cross_cartesian_quantity_vectors(vector_left: QuantityVector,
+    vector_right: QuantityVector) -> QuantityVector:
+    assert_equivalent_dimension(vector_left.dimension, vector_left.display_name,
+        "cross_cartesian_quantity_vectors", vector_right.dimension)
+    return QuantityVector(
+        cross_cartesian_vectors(vector_left, vector_right).components,
+        vector_left.coordinate_system)
