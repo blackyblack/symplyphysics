@@ -2,7 +2,6 @@ from functools import reduce
 from operator import add
 from typing import Optional, Sequence
 from sympy import S, Expr, cos, sin, sqrt, sympify
-from sympy.physics.units.systems.si import SI
 
 from .vectors import QuantityVector, Vector
 from ..expr_comparisons import expr_equals
@@ -167,27 +166,22 @@ def cross_cartesian_vectors(vector_left: Vector, vector_right: Vector) -> Vector
     return Vector(result, vector_left.coordinate_system)
 
 
-# Compare two vectors of quantities
-def equal_quantity_vectors(vector_left: QuantityVector, vector_right: QuantityVector) -> bool:
-    if not SI.get_dimension_system().equivalent_dims(vector_left.dimension, vector_right.dimension):
-        return False
-    return equal_vectors(vector_left, vector_right)
-
-
 # Sum of two vectors of quantities
 def add_cartesian_quantity_vectors(vector_left: QuantityVector,
     vector_right: QuantityVector) -> QuantityVector:
     assert_equivalent_dimension(vector_left.dimension, vector_left.display_name,
         "add_cartesian_quantity_vectors", vector_right.dimension)
-    return QuantityVector.from_expressions(add_cartesian_vectors(vector_left,
-        vector_right).components,
-        vector_left.coordinate_system,
-        dimension=vector_left.dimension)
+    return QuantityVector(
+        add_cartesian_vectors(vector_left, vector_right).components, vector_left.coordinate_system)
 
 
 # Change QuantityVector magnitude (length)
 def scale_quantity_vector(scalar_value: Quantity, vector: QuantityVector) -> QuantityVector:
-    quantities = [Quantity(c, dimension=vector.dimension) for c in vector.components]
-    quantities_vector = Vector(quantities, vector.coordinate_system)
-    scaled_quantities = scale_vector(scalar_value, quantities_vector)
-    return QuantityVector.from_expressions(scaled_quantities.components, vector.coordinate_system)
+    scaled_quantities = scale_vector(scalar_value, vector)
+    return QuantityVector(scaled_quantities.components, vector.coordinate_system)
+
+
+# Dot product of two vectors of quantities
+def dot_quantity_vectors(vector_left: QuantityVector, vector_right: QuantityVector) -> Quantity:
+    dotted = dot_vectors(vector_left, vector_right)
+    return Quantity(dotted)

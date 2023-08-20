@@ -2,8 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy import atan, pi, sqrt, symbols, sin, cos
 from sympy.vector import Vector as SympyVector, express
-from symplyphysics import (Quantity, dimensionless, units, QuantityVector, Vector,
-    sympy_vector_from_vector, vector_from_sympy_vector, vector_rebase, errors)
+from symplyphysics import (Quantity, dimensionless, units, QuantityVector, Vector, errors)
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_rotate, coordinates_transform
 
 
@@ -29,30 +28,30 @@ def test_empty_vector(test_args):
     assert vector.coordinate_system == test_args.C
 
 
-# Test vector_from_sympy_vector()
+# Test Vector.from_sympy_vector()
 
 
 def test_basic_sympy_to_array_conversion(test_args):
-    vector = vector_from_sympy_vector(test_args.C.coord_system.i + 2 * test_args.C.coord_system.j,
+    vector = Vector.from_sympy_vector(test_args.C.coord_system.i + 2 * test_args.C.coord_system.j,
         test_args.C)
     assert vector.components == [1, 2, 0]
     assert vector.coordinate_system == test_args.C
 
 
 def test_order_sympy_to_array_conversion(test_args):
-    vector = vector_from_sympy_vector(2 * test_args.C.coord_system.j + test_args.C.coord_system.i,
+    vector = Vector.from_sympy_vector(2 * test_args.C.coord_system.j + test_args.C.coord_system.i,
         test_args.C)
     assert vector.components == [1, 2, 0]
 
 
 def test_skip_dimension_sympy_to_array_conversion(test_args):
-    vector = vector_from_sympy_vector(test_args.C.coord_system.i + 2 * test_args.C.coord_system.k,
+    vector = Vector.from_sympy_vector(test_args.C.coord_system.i + 2 * test_args.C.coord_system.k,
         test_args.C)
     assert vector.components == [1, 0, 2]
 
 
 def test_empty_sympy_to_array_conversion(test_args):
-    vector = vector_from_sympy_vector(SympyVector.zero, test_args.C)
+    vector = Vector.from_sympy_vector(SympyVector.zero, test_args.C)
     assert len(vector.components) == 0
     assert vector.coordinate_system == test_args.C
 
@@ -60,72 +59,69 @@ def test_empty_sympy_to_array_conversion(test_args):
 # Does not support non SymPy Vectors
 def test_only_scalar_sympy_to_array_conversion(test_args):
     with raises(AttributeError):
-        vector_from_sympy_vector(test_args.C.coord_system.x, test_args.C)
+        Vector.from_sympy_vector(test_args.C.coord_system.x, test_args.C)
     x1 = symbols("x1")
     with raises(AttributeError):
-        vector_from_sympy_vector(x1, test_args.C)
+        Vector.from_sympy_vector(x1, test_args.C)
 
 
 def test_free_variable_sympy_to_array_conversion(test_args):
     x1 = symbols("x1")
-    vector = vector_from_sympy_vector(test_args.C.coord_system.i * x1, test_args.C)
+    vector = Vector.from_sympy_vector(test_args.C.coord_system.i * x1, test_args.C)
     assert vector.components == [x1, 0, 0]
     assert vector.coordinate_system == test_args.C
 
 
 def test_non_cartesian_array_to_sympy_conversion():
     C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
-    vector = vector_from_sympy_vector(C1.coord_system.i + 2 * C1.coord_system.j, C1)
+    vector = Vector.from_sympy_vector(C1.coord_system.i + 2 * C1.coord_system.j, C1)
     assert vector.components == [1, 2, 0]
     assert vector.coordinate_system == C1
 
 
 def test_rotate_coordinates_array_to_sympy_conversion(test_args):
     sympy_vector = test_args.C.coord_system.i + test_args.C.coord_system.j
-    vector = vector_from_sympy_vector(sympy_vector, test_args.C)
+    vector = Vector.from_sympy_vector(sympy_vector, test_args.C)
     assert vector.components == [1, 1, 0]
     theta = symbols("theta")
     B = coordinates_rotate(test_args.C, theta, test_args.C.coord_system.k)
     sympy_transformed_vector = express(sympy_vector, B.coord_system)
     assert sympy_transformed_vector == ((sin(theta) + cos(theta)) * B.coord_system.i +
         (-sin(theta) + cos(theta)) * B.coord_system.j)
-    transformed_vector = vector_from_sympy_vector(sympy_transformed_vector, B)
+    transformed_vector = Vector.from_sympy_vector(sympy_transformed_vector, B)
     assert transformed_vector.components == [sin(theta) + cos(theta), -sin(theta) + cos(theta), 0]
     assert transformed_vector.coordinate_system == B
     # Do the same via vector_rebase
-    vector_rebased = vector_rebase(vector, B)
+    vector_rebased = vector.rebase(B)
     assert vector_rebased.components == [sin(theta) + cos(theta), -sin(theta) + cos(theta), 0]
-
-
-# Test sympy_vector_from_vector()
 
 
 def test_multiple_coord_systems_sympy_to_array_conversion(test_args):
     C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
     with raises(TypeError):
-        vector_from_sympy_vector(test_args.C.coord_system.i + 2 * C1.coord_system.k, test_args.C)
+        Vector.from_sympy_vector(test_args.C.coord_system.i + 2 * C1.coord_system.k, test_args.C)
     with raises(TypeError):
-        vector_from_sympy_vector(
+        Vector.from_sympy_vector(
             test_args.C.coord_system.i + C1.coord_system.r * test_args.C.coord_system.k, C1)
 
 
 def test_basic_array_to_sympy_conversion(test_args):
-    sympy_vector = sympy_vector_from_vector(Vector([1, 2], test_args.C))
+    sympy_vector = Vector([1, 2], test_args.C).to_sympy_vector()
     assert sympy_vector == test_args.C.coord_system.i + 2 * test_args.C.coord_system.j
 
 
 def test_skip_dimension_array_to_sympy_conversion(test_args):
-    sympy_vector = sympy_vector_from_vector(Vector([1, 0, 2], test_args.C))
+    sympy_vector = Vector([1, 0, 2], test_args.C).to_sympy_vector()
     assert sympy_vector == test_args.C.coord_system.i + 2 * test_args.C.coord_system.k
 
 
 def test_4d_array_to_sympy_conversion(test_args):
-    sympy_vector = sympy_vector_from_vector(Vector([1, 0, 2, 5], test_args.C))
+    sympy_vector = Vector([1, 0, 2, 5], test_args.C).to_sympy_vector()
     assert sympy_vector == test_args.C.coord_system.i + 2 * test_args.C.coord_system.k
 
 
 def test_empty_array_to_sympy_conversion():
-    sympy_vector = sympy_vector_from_vector(Vector([]))
+    sympy_vector = Vector([]).to_sympy_vector()
     assert sympy_vector == SympyVector.zero
     # only comparison with Vector.zero works
     assert sympy_vector != 0
@@ -134,25 +130,25 @@ def test_empty_array_to_sympy_conversion():
 
 def test_string_array_to_sympy_conversion():
     with raises(TypeError):
-        sympy_vector_from_vector(Vector(["test"]))
+        Vector(["test"]).to_sympy_vector()
 
 
 def test_rotate_coordinates_sympy_to_array_conversion(test_args):
     theta = symbols("theta")
     B = coordinates_rotate(test_args.C, theta, test_args.C.coord_system.k)
-    sympy_vector = sympy_vector_from_vector(Vector([1, 2], B))
+    sympy_vector = Vector([1, 2], B).to_sympy_vector()
     assert sympy_vector == B.coord_system.i + 2 * B.coord_system.j
     transformed_vector = express(sympy_vector, test_args.C.coord_system)
     assert transformed_vector == ((-2 * sin(theta) + cos(theta)) * test_args.C.coord_system.i +
         (sin(theta) + 2 * cos(theta)) * test_args.C.coord_system.j)
     # Do the same via vector_rebase
-    vector_rebased = vector_rebase(Vector([1, 2], B), test_args.C)
+    vector_rebased = Vector([1, 2], B).rebase(test_args.C)
     assert vector_rebased.components == [
         -2 * sin(theta) + cos(theta), sin(theta) + 2 * cos(theta), 0
     ]
 
 
-# Test vector_rebase()
+# Test Vector.rebase()
 
 
 def test_basic_vector_rebase(test_args):
@@ -162,7 +158,7 @@ def test_basic_vector_rebase(test_args):
     Bi = test_args.C.coord_system.locate_new(
         "B", test_args.C.coord_system.i + 2 * test_args.C.coord_system.j)
     B = CoordinateSystem(test_args.C.coord_system_type, Bi)
-    vector_rebased = vector_rebase(vector, B)
+    vector_rebased = vector.rebase(B)
     assert vector_rebased.coordinate_system == B
     # Original field is not changed
     assert vector.coordinate_system == test_args.C
@@ -177,7 +173,7 @@ def test_plain_vector_rebase(test_args):
     Bi = test_args.C.coord_system.locate_new(
         "B", test_args.C.coord_system.i + 2 * test_args.C.coord_system.j)
     B = CoordinateSystem(test_args.C.coord_system_type, Bi)
-    vector_rebased = vector_rebase(vector, B)
+    vector_rebased = vector.rebase(B)
     assert vector_rebased.coordinate_system == B
     # Original field is not changed
     assert vector.coordinate_system == test_args.C
@@ -194,7 +190,7 @@ def test_parameters_vector_rebase(test_args):
     Bi = test_args.C.coord_system.locate_new(
         "B", test_args.C.coord_system.i + 2 * test_args.C.coord_system.j)
     B = CoordinateSystem(test_args.C.coord_system_type, Bi)
-    vector_rebased = vector_rebase(vector, B)
+    vector_rebased = vector.rebase(B)
     assert vector_rebased.coordinate_system == B
     # Original field is not changed
     assert vector.coordinate_system == test_args.C
@@ -216,7 +212,7 @@ def test_rotate_vector_rebase(test_args):
     assert p1_coordinates_in_b[0] != point[0]
 
     transformed_point = [p1_coordinates_in_b[0], p1_coordinates_in_b[1], 0]
-    vector_rebased = vector_rebase(vector, B)
+    vector_rebased = vector.rebase(B)
     assert vector_rebased.coordinate_system == B
     assert vector_rebased.components == [3 * sqrt(2) / 2, sqrt(2) / 2, 0]
     assert vector_rebased.components == transformed_point
@@ -231,7 +227,7 @@ def test_spherical_vector_create(test_args):
     # vector should have r = sqrt(5) in polar coordinates
     # vector is in XY-plane, so theta angle should be pi/2
     # phi angle is atan(2/1)
-    vector_rebased = vector_rebase(vector, B)
+    vector_rebased = vector.rebase(B)
     assert vector_rebased.coordinate_system == B
     assert vector_rebased.components == [sqrt(5), pi / 2, atan(2)]
 
@@ -243,7 +239,8 @@ def test_basic_quantity_vector(test_args):
     q1 = Quantity(1)
     q2 = Quantity(2)
     vector = QuantityVector([q1, q2], test_args.C)
-    assert vector.components == [q1.scale_factor, q2.scale_factor]
+    assert [vector.components[0].scale_factor,
+        vector.components[1].scale_factor] == [q1.scale_factor, q2.scale_factor]
     assert vector.coordinate_system == test_args.C
     assert vector.dimension == dimensionless
 
@@ -261,39 +258,53 @@ def test_invalid_dimension_quantity_vector():
         QuantityVector([q1, q2])
 
 
-# Test QuantityVector.to_quantities()
+# Test QuantityVector.components()
 
 
 def test_basic_to_quantities(test_args):
     q1 = Quantity(1)
     q2 = Quantity(2)
     vector = QuantityVector([q1, q2], test_args.C)
-    qs = vector.to_quantities()
-    assert [qs[0].scale_factor, qs[1].scale_factor] == [q1.scale_factor, q2.scale_factor]
-    assert [qs[0].dimension, qs[1].dimension] == [q1.dimension, q2.dimension]
+    assert [vector.components[0].scale_factor,
+        vector.components[1].scale_factor] == [q1.scale_factor, q2.scale_factor]
+    assert [vector.components[0].dimension,
+        vector.components[1].dimension] == [q1.dimension, q2.dimension]
 
 
-# Test QuantityVector.from_expressions()
+# Test QuantityVector.from_sympy_vector()
 
 
-def test_basic_from_expressions():
-    vector = QuantityVector.from_expressions([1, 2])
-    assert vector.components == [1, 2]
+def test_basic_quantities_from_sympy_vector(test_args):
+    vector = QuantityVector.from_sympy_vector(
+        test_args.C.coord_system.i + 2 * test_args.C.coord_system.j, test_args.C)
+    assert [vector.components[0].scale_factor, vector.components[1].scale_factor] == [1, 2]
     assert vector.dimension == dimensionless
 
 
-def test_dimensions_manual_from_expressions():
-    vector = QuantityVector.from_expressions([1, 2], dimension=units.length)
-    assert vector.components == [1, 2]
+def test_dimensions_manual_quantities_from_sympy_vector(test_args):
+    vector = QuantityVector.from_sympy_vector(test_args.C.coord_system.i +
+        2 * test_args.C.coord_system.j,
+        test_args.C,
+        dimension=units.length)
+    assert [vector.components[0].scale_factor, vector.components[1].scale_factor] == [1, 2]
     assert vector.dimension == units.length
 
 
-def test_dimensions_auto_from_expressions():
-    vector = QuantityVector.from_expressions([1 * units.meter, 2 * units.meter])
-    assert vector.components == [1, 2]
+def test_dimensions_auto_quantities_from_sympy_vector(test_args):
+    vector = QuantityVector.from_sympy_vector(
+        test_args.C.coord_system.i * units.meter + 2 * test_args.C.coord_system.j * units.meter,
+        test_args.C)
+    assert [vector.components[0].scale_factor, vector.components[1].scale_factor] == [1, 2]
     assert vector.dimension == units.length
 
 
-def test_invalid_dimension_from_expressions():
+def test_invalid_dimension_quantities_from_sympy_vector(test_args):
     with raises(errors.UnitsError):
-        QuantityVector.from_expressions([1 * units.meter, 2 * units.second])
+        QuantityVector.from_sympy_vector(
+            test_args.C.coord_system.i * units.meter +
+            2 * test_args.C.coord_system.j * units.second, test_args.C)
+
+
+# Test QuantityVector.rebase()
+
+# TODO: implement rebase() tests

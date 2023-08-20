@@ -8,7 +8,6 @@ from symplyphysics import (
     CoordinateSystem,
     SI,
     convert_to,
-    sympy_vector_from_vector,
 )
 from symplyphysics.core.fields.field_point import FieldPoint
 from symplyphysics.core.fields.vector_field import VectorField
@@ -58,7 +57,7 @@ def test_gravitational_field_is_conservative(test_args):
         **3
         ], test_args.C)
     field_space = field.apply_to_basis()
-    field_space_sympy = sympy_vector_from_vector(field_space)
+    field_space_sympy = field_space.to_sympy_vector()
     field_rotor_applied = circulation_def.field_rotor_definition.rhs.subs(
         circulation_def.field, field_space_sympy).doit()
     assert field_rotor_applied == VectorZero.zero

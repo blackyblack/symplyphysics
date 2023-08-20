@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (Vector, units, Quantity, Symbol, print_expression,
-    sympy_vector_from_vector, validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 from symplyphysics.core.convert import expr_to_vector
 from symplyphysics.core.vectors.vectors import QuantityVector
 
@@ -29,8 +29,7 @@ def print_law() -> str:
 @validate_output(response_force)
 def calculate_force(coefficient_: Quantity, deformation_: QuantityVector) -> QuantityVector:
     result_force_expr = solve(law, response_force, dict=True)[0][response_force]
-    sympy_vector_deformation = sympy_vector_from_vector(
-        Vector(deformation_.to_quantities(), deformation_.coordinate_system))
+    sympy_vector_deformation = deformation_.to_sympy_vector()
     result_expr = result_force_expr.subs({
         elastic_coefficient: coefficient_,
         deformation: sympy_vector_deformation

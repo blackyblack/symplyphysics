@@ -1,8 +1,6 @@
 from sympy import (Expr, Integral, Derivative, symbols, Eq, simplify)
 from sympy.vector import Dot
-from symplyphysics import (print_expression)
-from symplyphysics.core.symbols.quantities import Quantity
-from symplyphysics.core.vectors.vectors import Vector, sympy_vector_from_vector
+from symplyphysics import (print_expression, Quantity, Vector)
 from symplyphysics.core.fields.vector_field import VectorField
 
 # Description
@@ -52,8 +50,8 @@ def calculate_circulation(field_: VectorField, trajectory_: list[Expr], paramete
     parameter_to_: Expr) -> Quantity:
 
     field_app = field_.apply(trajectory_)
-    field_as_vector = sympy_vector_from_vector(field_app)
-    trajectory_as_vector = sympy_vector_from_vector(Vector(trajectory_, field_.coordinate_system))
+    field_as_vector = field_app.to_sympy_vector()
+    trajectory_as_vector = Vector(trajectory_, field_.coordinate_system).to_sympy_vector()
     trajectory_element_result = trajectory_element_definition.rhs.subs(
         trajectory, trajectory_as_vector).doit()
     result_expr = definition.rhs.subs({

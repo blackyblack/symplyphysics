@@ -24,8 +24,7 @@ def force_law(acceleration_: Vector) -> Vector:
 @validate_input(mass_=units.mass, acceleration_=units.acceleration)
 @validate_output(units.force)
 def calculate_force(mass_: Quantity, acceleration_: QuantityVector) -> QuantityVector:
-    quantities = acceleration_.to_quantities()
-    quantities_vector = Vector(quantities, acceleration_.coordinate_system)
+    quantities_vector = Vector(acceleration_.components, acceleration_.coordinate_system)
     result_force = force_law(quantities_vector)
     force_components = []
     for c in result_force.components:

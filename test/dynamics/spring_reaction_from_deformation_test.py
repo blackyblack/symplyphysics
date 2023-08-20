@@ -23,12 +23,11 @@ def test_args_fixture():
 
 def test_basic_force(test_args):
     result = spring_law.calculate_force(test_args.k, test_args.df)
-    result_quantities = result.to_quantities()
-    assert SI.get_dimension_system().equivalent_dims(result_quantities[0].dimension, units.force)
-    assert SI.get_dimension_system().equivalent_dims(result_quantities[1].dimension, units.force)
-    result_force_x = convert_to(result_quantities[0], units.newton).evalf(2)
+    assert SI.get_dimension_system().equivalent_dims(result.components[0].dimension, units.force)
+    assert SI.get_dimension_system().equivalent_dims(result.components[1].dimension, units.force)
+    result_force_x = convert_to(result.components[0], units.newton).evalf(2)
     assert result_force_x == approx(-0.3, 0.01)
-    result_force_y = convert_to(result_quantities[1], units.newton).evalf(2)
+    result_force_y = convert_to(result.components[1], units.newton).evalf(2)
     assert result_force_y == approx(-0.1, 0.01)
 
 

@@ -1,7 +1,7 @@
 from sympy import (Eq, solve)
 from sympy.vector import Dot
 from symplyphysics import (units, Quantity, Symbol, print_expression, angle_type, Vector,
-    sympy_vector_from_vector, vector_rebase, validate_input, validate_output)
+    validate_input, validate_output)
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_transform
 
 # Description
@@ -40,10 +40,10 @@ def calculate_work(force_: Quantity, distance_: Quantity, force_angle: Quantity 
     # Convert to Cartesian coordinates as Dot product does not work properly for Cylindrical coordinates
     force_vector = Vector([force_, force_angle_radians], coordinates_polar)
     distance_vector = Vector([distance_, distance_angle_radians], coordinates_polar)
-    force_vector_cartesian = vector_rebase(force_vector, coordinates_cartesian)
-    distance_vector_cartesian = vector_rebase(distance_vector, coordinates_cartesian)
-    force_vector_cartesian_sympy = sympy_vector_from_vector(force_vector_cartesian)
-    distance_vector_cartesian_sympy = sympy_vector_from_vector(distance_vector_cartesian)
+    force_vector_cartesian = force_vector.rebase(coordinates_cartesian)
+    distance_vector_cartesian = distance_vector.rebase(coordinates_cartesian)
+    force_vector_cartesian_sympy = force_vector_cartesian.to_sympy_vector()
+    distance_vector_cartesian_sympy = distance_vector_cartesian.to_sympy_vector()
     result_expr = result_work_expr.subs({
         force: force_vector_cartesian_sympy,
         distance: distance_vector_cartesian_sympy

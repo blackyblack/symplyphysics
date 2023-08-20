@@ -8,7 +8,7 @@ from .core.convert import convert_to
 from .core.symbols.symbols import Function, Symbol, print_expression
 from .core.symbols.prefixes import prefixes
 from .core.quantity_decorator import validate_input, validate_output
-from .core.vectors.vectors import Vector, QuantityVector, sympy_vector_from_vector, vector_from_sympy_vector, vector_rebase
+from .core.vectors.vectors import Vector, QuantityVector
 from .core.vectors.vector_arithmetics import scale_vector, add_cartesian_vectors, dot_vectors, cross_cartesian_vectors
 from .core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_transform
 
@@ -34,9 +34,6 @@ __all__ = [
     # vectors
     "Vector",
     "QuantityVector",
-    "sympy_vector_from_vector",
-    "vector_from_sympy_vector",
-    "vector_rebase",
     "scale_vector",
     "add_cartesian_vectors",
     "dot_vectors",

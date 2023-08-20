@@ -3,7 +3,7 @@ from sympy.vector import VectorAdd, VectorMul, Vector as SymVector
 from sympy.physics.units import Quantity as SymQuantity
 
 from .dimensions import assert_equivalent_dimension
-from .vectors.vectors import QuantityVector, vector_from_sympy_vector
+from .vectors.vectors import QuantityVector
 from .coordinate_systems.coordinate_systems import CoordinateSystem
 from .symbols.quantities import Quantity
 
@@ -25,5 +25,4 @@ def expr_to_vector(expr: Expr, coordinate_system: CoordinateSystem) -> QuantityV
         expr = VectorAdd(*expr.args)
     if not isinstance(expr, SymVector):
         raise TypeError(f"Expression cannot be converted to SymPy Vector: {str(expr)}")
-    vector = vector_from_sympy_vector(expr, coordinate_system)
-    return QuantityVector.from_expressions(vector.components, coordinate_system)
+    return QuantityVector.from_sympy_vector(expr, coordinate_system)
