@@ -28,12 +28,14 @@ def test_basic_inductivity(test_args):
     result_inductance = convert_to(result, units.henry).evalf(3)
     assert result_inductance == approx(3, 0.001)
 
+
 def test_three_inductors_array(test_args):
     L3 = Quantity(3 * units.henry)
     result = serial_inductor.calculate_serial_inductance([test_args.L1, test_args.L2, L3])
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.inductance)
     result_conductance = convert_to(result, units.henry).evalf(3)
     assert result_conductance == approx(6, 0.01)
+
 
 def test_bad_inductivity(test_args):
     Lb = Quantity(1 * units.meter)

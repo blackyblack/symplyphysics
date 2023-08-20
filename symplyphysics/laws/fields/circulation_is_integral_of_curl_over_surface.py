@@ -1,13 +1,8 @@
 from typing import Sequence
 from sympy import (Expr, Eq, Integral, Derivative, symbols, simplify)
 from sympy.vector import Dot, Curl, Cross
-from symplyphysics import (
-    Vector,
-    sympy_vector_from_vector,
-    print_expression,
-)
-from symplyphysics.core.fields.vector_field import VectorField, field_from_sympy_vector, sympy_vector_from_field
-from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics import (Vector, print_expression, Quantity)
+from symplyphysics.core.fields.vector_field import VectorField
 
 # Description
 ## Circulation of the field along the closed curve is flow of the rotor (or curl) of this field
@@ -68,12 +63,12 @@ def print_law() -> str:
 def calculate_circulation(field_: VectorField, surface_: Sequence[Expr], parameters1: tuple[Expr,
     Expr], parameters2: tuple[Expr, Expr]) -> Quantity:
 
-    field_space = sympy_vector_from_field(field_)
+    field_space = field_.to_sympy_vector()
     field_rotor_sympy = field_rotor_definition.rhs.subs(field, field_space).doit()
-    field_rotor_applied = field_from_sympy_vector(field_rotor_sympy, field_.coordinate_system)
+    field_rotor_applied = VectorField.from_sympy_vector(field_rotor_sympy, field_.coordinate_system)
     field_applied = field_rotor_applied.apply(surface_)
-    field_as_vector = sympy_vector_from_vector(field_applied)
-    surface_sympy_vector = sympy_vector_from_vector(Vector(surface_, field_.coordinate_system))
+    field_as_vector = field_applied.to_sympy_vector()
+    surface_sympy_vector = Vector(surface_, field_.coordinate_system).to_sympy_vector()
     surface_element_x = surface_element_by_parameter1_definition.rhs.subs(
         surface, surface_sympy_vector).doit()
     surface_element_y = surface_element_by_parameter2_definition.rhs.subs(

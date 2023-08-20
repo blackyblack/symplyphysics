@@ -1,5 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 
 # Description
 ## Coulomb's law states that the force F between two point charges, q1 and q2, in a vacuum is proportional to their product
@@ -26,14 +27,17 @@ first_charge = Symbol("first_charge", units.charge)
 second_charge = Symbol("second_charge", units.charge)
 distance = Symbol("distance", units.length)
 
-law = Eq(force, (units.coulomb_constant * first_charge * second_charge)/(distance**2))
+law = Eq(force, (units.coulomb_constant * first_charge * second_charge) / (distance**2))
+
 
 def print_law() -> str:
     return print_expression(law)
 
-@validate_input(first_charge_ = first_charge, second_charge_ = second_charge, distance_ = distance)
+
+@validate_input(first_charge_=first_charge, second_charge_=second_charge, distance_=distance)
 @validate_output(force)
-def calculate_force(first_charge_: Quantity, second_charge_: Quantity, distance_: Quantity) -> Quantity:
+def calculate_force(first_charge_: Quantity, second_charge_: Quantity,
+    distance_: Quantity) -> Quantity:
     solved = solve(law, force, dict=True)[0][force]
     result_expr = solved.subs({
         first_charge: first_charge_,

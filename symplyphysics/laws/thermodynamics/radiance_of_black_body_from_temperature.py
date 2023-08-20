@@ -1,5 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 
 # Description
 ## The Stefan–Boltzmann law, also known as Stefan's law, states that the total energy radiated per
@@ -15,17 +16,19 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 # Note
 ## j* = epsilon*sigma*T^4, where ε is the integral absorption capacity of the body. For a completely black body ε = 1.
 
-radiance = Symbol("radiance", units.power/units.area)
+radiance = Symbol("radiance", units.power / units.area)
 temperature = Symbol("temperature", units.temperature)
 
 law = Eq(radiance, units.stefan_boltzmann_constant * (temperature**4))
 
+
 def print_law() -> str:
     return print_expression(law)
+
 
 @validate_input(temperature_=temperature)
 @validate_output(radiance)
 def calculate_radiance(temperature_: Quantity) -> Quantity:
-    solved = solve(law, radiance, dict=True)[0][radiance ]
+    solved = solve(law, radiance, dict=True)[0][radiance]
     result_expr = solved.subs(temperature, temperature_)
     return Quantity(result_expr)
