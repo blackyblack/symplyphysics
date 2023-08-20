@@ -8,7 +8,7 @@ from symplyphysics import (
     SI,
 )
 from symplyphysics.core.vectors.vectors import QuantityVector
-from symplyphysics.laws.dynamics import spring_reaction_from_deformation as spring_law
+from symplyphysics.laws.dynamics.vector import spring_reaction_from_deformation as spring_law
 
 
 @fixture(name="test_args")
@@ -17,8 +17,11 @@ def test_args_fixture():
     df_x = Quantity(3 * units.meter)
     df_y = Quantity(1 * units.meter)
     df = QuantityVector([df_x, df_y])
-    Args = namedtuple("Args", ["k", "df"])
-    return Args(k=k, df=df)
+    f_x = Quantity(-0.3 * units.newton)
+    f_y = Quantity(-0.1 * units.newton)
+    f = QuantityVector([f_x, f_y])
+    Args = namedtuple("Args", ["k", "df", "f"])
+    return Args(k=k, df=df, f=f)
 
 
 def test_basic_force(test_args):
@@ -31,12 +34,26 @@ def test_basic_force(test_args):
     assert result_force_y == approx(-0.1, 0.01)
 
 
+def test_basic_deformation(test_args):
+    result = spring_law.calculate_deformation(test_args.k, test_args.f)
+    assert SI.get_dimension_system().equivalent_dims(result.components[0].dimension, units.length)
+    assert SI.get_dimension_system().equivalent_dims(result.components[1].dimension, units.length)
+    result_deformation_x = convert_to(result.components[0], units.meter).evalf(2)
+    assert result_deformation_x == approx(3, 0.01)
+    result_deformation_y = convert_to(result.components[1], units.meter).evalf(2)
+    assert result_deformation_y == approx(1, 0.01)
+
+
 def test_bad_elastic_coefficient(test_args):
     eb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         spring_law.calculate_force(eb, test_args.df)
     with raises(TypeError):
         spring_law.calculate_force(100, test_args.df)
+    with raises(errors.UnitsError):
+        spring_law.calculate_deformation(eb, test_args.f)
+    with raises(TypeError):
+        spring_law.calculate_deformation(100, test_args.f)
 
 
 def test_bad_deformation(test_args):
@@ -46,3 +63,12 @@ def test_bad_deformation(test_args):
         spring_law.calculate_force(test_args.k, vb)
     with raises(TypeError):
         spring_law.calculate_force(test_args.k, 100)
+
+
+def test_bad_force(test_args):
+    db = Quantity(1 * units.coulomb)
+    vb = QuantityVector([db])
+    with raises(errors.UnitsError):
+        spring_law.calculate_deformation(test_args.k, vb)
+    with raises(TypeError):
+        spring_law.calculate_deformation(test_args.k, 100)

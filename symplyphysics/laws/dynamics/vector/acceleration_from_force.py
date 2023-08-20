@@ -5,10 +5,10 @@ from symplyphysics import (units, Quantity, Symbol, QuantityVector, Vector, scal
 # Description
 ## Newton's second law in vector form: a = 1/m * F
 ## Where:
-## F - force vector.
-## m - mass.
-## a - acceleration vector
-## * - scalar multiplication (scale vector)
+## F - force vector,
+## m - mass,
+## a - acceleration vector,
+## * - scalar multiplication (scale vector).
 
 mass = Symbol("mass", units.mass)
 
@@ -21,7 +21,7 @@ def force_law(acceleration_: Vector) -> Vector:
     return scale_vector(mass, acceleration_)
 
 
-@validate_input(mass_=units.mass, acceleration_=units.acceleration)
+@validate_input(mass_=mass, acceleration_=units.acceleration)
 @validate_output(units.force)
 def calculate_force(mass_: Quantity, acceleration_: QuantityVector) -> QuantityVector:
     quantities_vector = Vector(acceleration_.components, acceleration_.coordinate_system)
@@ -31,3 +31,15 @@ def calculate_force(mass_: Quantity, acceleration_: QuantityVector) -> QuantityV
         with_mass = sympify(c).subs(mass, mass_)
         force_components.append(Quantity(with_mass))
     return QuantityVector(force_components, acceleration_.coordinate_system)
+
+
+@validate_input(mass_=mass, force_=units.force)
+@validate_output(units.acceleration)
+def calculate_acceleration(mass_: Quantity, force_: QuantityVector) -> QuantityVector:
+    quantities_vector = Vector(force_.components, force_.coordinate_system)
+    result_acceleration = acceleration_law(quantities_vector)
+    acceleration_components = []
+    for c in result_acceleration.components:
+        with_mass = sympify(c).subs(mass, mass_)
+        acceleration_components.append(Quantity(with_mass))
+    return QuantityVector(acceleration_components, force_.coordinate_system)
