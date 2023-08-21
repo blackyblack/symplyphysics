@@ -23,8 +23,8 @@ def print_law() -> str:
 @validate_output(units.conductance)
 def calculate_parallel_conductance(conductances_: list[Quantity]) -> Quantity:
     conductance_symbols = tuple_of_symbols("conductance", units.conductance, len(conductances_))
-    currents_law = law.subs(conductances, conductance_symbols).doit()
-    solved = solve(currents_law, parallel_conductance, dict=True)[0][parallel_conductance]
+    conductances_law = law.subs(conductances, conductance_symbols).doit()
+    solved = solve(conductances_law, parallel_conductance, dict=True)[0][parallel_conductance]
     for (from_, to_) in zip(conductance_symbols, conductances_):
         solved = solved.subs(from_, to_)
     return Quantity(solved)
