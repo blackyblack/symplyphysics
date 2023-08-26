@@ -1,6 +1,8 @@
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from sympy import (Eq, solve, sympify)
+from symplyphysics import (Vector, units, Quantity, Symbol, print_expression, validate_input,
     validate_output)
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.dynamics.vector import acceleration_from_force as acceleration_law_vector
 
 # Description
 ## Newton's second law: a = F / m
@@ -10,6 +12,16 @@ mass = Symbol("mass", units.mass)
 acceleration = Symbol("acceleration", units.acceleration)
 
 law = Eq(acceleration, force / mass)
+
+# Derive the same law from vector form
+
+# Scalar law is equivalent to using one-dimensional vectors
+force_vector = Vector([force])
+acceleration_vector = acceleration_law_vector.acceleration_law(force_vector)
+assert len(acceleration_vector.components) == 1
+acceleration_with_mass = sympify(acceleration_vector.components[0]).subs(
+    acceleration_law_vector.mass, mass)
+assert expr_equals(acceleration_with_mass, law.rhs)
 
 
 def print_law() -> str:

@@ -3,7 +3,7 @@ from sympy.physics.units.systems import SI
 from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
 from .core import errors
 from .core.dimensions import dimensionless
-from .core.symbols.quantities import Quantity
+from .core.symbols.quantities import Quantity, list_of_quantities
 from .core.convert import convert_to
 from .core.symbols.symbols import Function, Symbol, print_expression
 from .core.symbols.prefixes import prefixes
@@ -26,6 +26,7 @@ __all__ = [
     "Symbol",
     "prefixes",
     "print_expression",
+    "list_of_quantities",
     # convert
     "convert_to",
     # decorators

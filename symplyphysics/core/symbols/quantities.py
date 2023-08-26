@@ -1,6 +1,6 @@
 from functools import partial
-from typing import Any, Optional, Self
-from sympy import S, Basic, sympify
+from typing import Any, Optional, Self, Sequence
+from sympy import S, Basic, Expr, sympify
 from sympy.physics.units import Dimension, Quantity as SymQuantity
 from sympy.physics.units.systems.si import SI
 
@@ -37,3 +37,8 @@ class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancest
 
     def identity(self, *_args: Any) -> Self:
         return self
+
+
+def list_of_quantities(input_: Sequence[Expr | float], subs_: dict[Expr,
+    Quantity]) -> Sequence[Quantity]:
+    return [Quantity(sympify(c).subs(subs_)) for c in input_]
