@@ -14,18 +14,18 @@ from symplyphysics.laws.dynamics.vector import spring_reaction_from_deformation 
 @fixture(name="test_args")
 def test_args_fixture():
     k = Quantity(0.1 * units.newton / units.meter)
-    df_x = Quantity(3 * units.meter)
-    df_y = Quantity(1 * units.meter)
-    df = QuantityVector([df_x, df_y])
+    d_x = Quantity(3 * units.meter)
+    d_y = Quantity(1 * units.meter)
+    d = QuantityVector([d_x, d_y])
     f_x = Quantity(-0.3 * units.newton)
     f_y = Quantity(-0.1 * units.newton)
     f = QuantityVector([f_x, f_y])
-    Args = namedtuple("Args", ["k", "df", "f"])
-    return Args(k=k, df=df, f=f)
+    Args = namedtuple("Args", ["k", "d", "f"])
+    return Args(k=k, d=d, f=f)
 
 
 def test_basic_force(test_args):
-    result = spring_law.calculate_force(test_args.k, test_args.df)
+    result = spring_law.calculate_force(test_args.k, test_args.d)
     assert SI.get_dimension_system().equivalent_dims(result.components[0].dimension, units.force)
     assert SI.get_dimension_system().equivalent_dims(result.components[1].dimension, units.force)
     result_force_x = convert_to(result.components[0], units.newton).evalf(2)
@@ -47,9 +47,9 @@ def test_basic_deformation(test_args):
 def test_bad_elastic_coefficient(test_args):
     eb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        spring_law.calculate_force(eb, test_args.df)
+        spring_law.calculate_force(eb, test_args.d)
     with raises(TypeError):
-        spring_law.calculate_force(100, test_args.df)
+        spring_law.calculate_force(100, test_args.d)
     with raises(errors.UnitsError):
         spring_law.calculate_deformation(eb, test_args.f)
     with raises(TypeError):
