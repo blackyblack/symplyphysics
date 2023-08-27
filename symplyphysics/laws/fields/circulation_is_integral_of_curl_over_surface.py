@@ -1,7 +1,8 @@
 from typing import Sequence
-from sympy import (Expr, Eq, Integral, Derivative, symbols, simplify)
-from sympy.vector import Dot, Curl, Cross
-from symplyphysics import (Vector, print_expression, Quantity)
+from sympy import (Expr, Eq, Integral, Derivative, simplify, Symbol as SymSymbol)
+from symplyphysics import (CoordinateSystem, Vector, cross_cartesian_vectors, dot_vectors, Quantity)
+from symplyphysics.core.dimensions import ScalarValue
+from symplyphysics.core.fields.operators import curl_operator
 from symplyphysics.core.fields.vector_field import VectorField
 
 # Description
@@ -29,60 +30,52 @@ from symplyphysics.core.fields.vector_field import VectorField
 
 # These are not physical symbols - SymPy 'symbols' is good enough.
 
-circulation, field, surface = symbols("circulation field surface")
-# field rotor should be evaluated and applied before using in circulation definition
-field_rotor = symbols("field_rotor")
+surface = SymSymbol("surface")
+
 # surface_element (dS) is surface derivative by two parameters
-surface_element, surface_element_by_parameter1, surface_element_by_parameter2 = symbols(
-    "surface_element surface_element_by_parameter1 surface_element_by_parameter2")
-parameter1, parameter1_from, parameter1_to = symbols("parameter1 parameter1_from parameter1_to")
-parameter2, parameter2_from, parameter2_to = symbols("parameter2 parameter2_from parameter2_to")
+# surface_partial_element is surface derivative by 1 coordinate
+surface_partial_element = SymSymbol("surface_partial_element")
+surface_element_parameter = SymSymbol("surface_element_parameter")
 
-# field_rotor, surface_element_by_parameter1, surface_element_by_parameter2, surface_element - should be evaluated before passing to definition
-# see calculate_circulation() for an example
-field_rotor_definition = Eq(field_rotor, Curl(field))
-surface_element_by_parameter1_definition = Eq(surface_element_by_parameter1,
-    Derivative(surface, parameter1))
-surface_element_by_parameter2_definition = Eq(surface_element_by_parameter2,
-    Derivative(surface, parameter2))
-surface_element_definition = Eq(surface_element,
-    Cross(surface_element_by_parameter1, surface_element_by_parameter2),
-    evaluate=False)
-law = Eq(
-    circulation,
-    Integral(Dot(field_rotor, surface_element), (parameter1, parameter1_from, parameter1_to),
-    (parameter2, parameter2_from, parameter2_to)))
+surface_partial_element_definition = Eq(surface_partial_element,
+    Derivative(surface, surface_element_parameter))
 
 
-def print_law() -> str:
-    return print_expression(law)
+# Calculate surface element, which is Cross(Derivative(Surface, x), Derivative(Surface, y))
+def _surface_element(surface_: Sequence[Expr], parameters: Sequence[SymSymbol],
+    coordinate_system: CoordinateSystem) -> Vector:
+    assert len(parameters) == 2, "Surface element should have 2 parameters"
+    surface_sympy_vector = Vector(surface_, coordinate_system).to_sympy_vector()
+    surface_element_x = surface_partial_element_definition.rhs.subs(surface_element_parameter,
+        parameters[0])
+    surface_element_x = surface_element_x.subs(surface, surface_sympy_vector).doit()
+    surface_element_y = surface_partial_element_definition.rhs.subs(surface_element_parameter,
+        parameters[1])
+    surface_element_y = surface_element_y.subs(surface, surface_sympy_vector).doit()
+    surface_element_vector_x = Vector.from_sympy_vector(surface_element_x, coordinate_system)
+    surface_element_vector_y = Vector.from_sympy_vector(surface_element_y, coordinate_system)
+    return cross_cartesian_vectors(surface_element_vector_x, surface_element_vector_y)
+
+
+# Calculate SurfaceIntegral integrand, which is Dot(Curl(Field), dS)
+def integral_expression(field_: VectorField, surface_: Sequence[Expr],
+    parameters: Sequence[SymSymbol]) -> Expr:
+    surface_element_vector = _surface_element(surface_, parameters, field_.coordinate_system)
+    field_rotor_vector_field = curl_operator(field_)
+    field_rotor_applied = field_rotor_vector_field.apply(surface_)
+    return dot_vectors(field_rotor_applied, surface_element_vector)
+
+
+def circulation_law(integral_expression_: Expr, parameters: Sequence[SymSymbol],
+    limits: Sequence[tuple[ScalarValue, ScalarValue]]) -> Expr:
+    integral_limits = [(p, limit1, limit2) for (p, (limit1, limit2)) in zip(parameters, limits)]
+    return Integral(integral_expression_, *integral_limits).doit()
 
 
 # field_ should be VectorField
 # surface_ should be array with projections to coordinates, eg [parameter1 * cos(parameter2), parameter1 * sin(parameter2)]
-def calculate_circulation(field_: VectorField, surface_: Sequence[Expr], parameters1: tuple[Expr,
-    Expr], parameters2: tuple[Expr, Expr]) -> Quantity:
-
-    field_space = field_.to_sympy_vector()
-    field_rotor_sympy = field_rotor_definition.rhs.subs(field, field_space).doit()
-    field_rotor_applied = VectorField.from_sympy_vector(field_rotor_sympy, field_.coordinate_system)
-    field_applied = field_rotor_applied.apply(surface_)
-    field_as_vector = field_applied.to_sympy_vector()
-    surface_sympy_vector = Vector(surface_, field_.coordinate_system).to_sympy_vector()
-    surface_element_x = surface_element_by_parameter1_definition.rhs.subs(
-        surface, surface_sympy_vector).doit()
-    surface_element_y = surface_element_by_parameter2_definition.rhs.subs(
-        surface, surface_sympy_vector).doit()
-    surface_element_result = surface_element_definition.rhs.subs({
-        surface_element_by_parameter1: surface_element_x,
-        surface_element_by_parameter2: surface_element_y
-    }).doit()
-    result_expr = law.rhs.subs({
-        field_rotor: field_as_vector,
-        surface_element: surface_element_result,
-        parameter1_from: parameters1[0],
-        parameter1_to: parameters1[1],
-        parameter2_from: parameters2[0],
-        parameter2_to: parameters2[1]
-    }).doit()
+def calculate_circulation(field_: VectorField, surface_: Sequence[Expr],
+    parameters: Sequence[SymSymbol], limits: Sequence[tuple[ScalarValue, ScalarValue]]) -> Quantity:
+    integral_expression_value = integral_expression(field_, surface_, parameters)
+    result_expr = circulation_law(integral_expression_value, parameters, limits)
     return Quantity(simplify(result_expr))

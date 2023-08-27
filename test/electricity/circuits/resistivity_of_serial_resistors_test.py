@@ -13,6 +13,7 @@ from symplyphysics.laws.electricity.circuits import resistivity_of_serial_resist
 ## Assert we have two resistors with 1 Ohm and 2 Ohm resistances.
 ## Resulting resistance should be 3 Ohm.
 
+
 @fixture(name="test_args")
 def test_args_fixture():
     R1 = Quantity(1 * units.ohm)
@@ -20,11 +21,13 @@ def test_args_fixture():
     Args = namedtuple("Args", ["R1", "R2"])
     return Args(R1=R1, R2=R2)
 
+
 def test_basic_resistance(test_args):
     result = serial_resistor.calculate_serial_resistance([test_args.R1, test_args.R2])
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.impedance)
     result_resistance = convert_to(result, units.ohm).evalf(3)
     assert result_resistance == approx(3, 0.001)
+
 
 def test_three_resistors_array(test_args):
     R3 = Quantity(3 * units.ohm)
@@ -50,4 +53,3 @@ def test_bad_resistance(test_args):
         serial_resistor.calculate_serial_resistance([100, 100])
     with raises(TypeError):
         serial_resistor.calculate_serial_resistance(test_args.R1)
-
