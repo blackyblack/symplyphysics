@@ -2,7 +2,7 @@ from sympy import (Eq, solve, sin, cos, Derivative, pi)
 from symplyphysics import (units, Quantity, Symbol, Function, print_expression, angle_type,
     CoordinateSystem, Vector, validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals, expr_equals_abs
-from symplyphysics.core.vectors.vector_arithmetics import dot_vectors
+from symplyphysics.core.vectors.arithmetics import dot_vectors
 from symplyphysics.definitions import velocity_is_movement_derivative as velocity_def
 from symplyphysics.definitions import angular_velocity_is_angle_derivative as angular_velocity_def
 from symplyphysics.definitions import acceleration_is_velocity_derivative as acceleration_def

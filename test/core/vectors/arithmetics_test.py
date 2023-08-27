@@ -5,7 +5,7 @@ from pytest import fixture, raises
 from sympy import atan2, cos, pi, sin, sqrt, SympifyError
 from symplyphysics import (SI, Quantity, dimensionless, units, QuantityVector, Vector,
     CoordinateSystem, coordinates_transform)
-from symplyphysics.core.vectors.vector_arithmetics import (add_cartesian_quantity_vectors,
+from symplyphysics.core.vectors.arithmetics import (add_cartesian_quantity_vectors,
     add_cartesian_vectors, cross_cartesian_quantity_vectors, cross_cartesian_vectors, dot_vectors,
     equal_vectors, quantity_vector_magnitude, scale_quantity_vector, scale_vector, vector_magnitude,
     dot_quantity_vectors)
