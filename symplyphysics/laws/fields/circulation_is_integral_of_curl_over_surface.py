@@ -107,8 +107,9 @@ def _calculate_curl_dot_surface_element(field_: VectorField, surface_: Sequence[
 # surface_ should be array with projections to coordinates, eg [parameter1 * cos(parameter2), parameter1 * sin(parameter2)]
 # parameters contain a set of surface parameters. Usually they are 'parameter1', 'parameter2'.
 def calculate_circulation(field_: VectorField, surface_: Sequence[Expr],
-    surface_parameters_: Sequence[SymSymbol], parameter1_limits: tuple[ScalarValue,
-    ScalarValue], parameter2_limits: tuple[ScalarValue, ScalarValue]) -> Quantity:
+    surface_parameters_: Sequence[SymSymbol],
+    parameter1_limits: tuple[ScalarValue, ScalarValue],
+    parameter2_limits: tuple[ScalarValue, ScalarValue]) -> Quantity:
     if len(surface_parameters_) > 2:
         raise ValueError(f"Surface with 3 and more parameters is not supported,"
             f" got {len(surface_parameters_)}")
