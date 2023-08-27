@@ -26,6 +26,4 @@ def curl_operator(field_: VectorField) -> VectorField:
         diff(field_x, z) - diff(field_z, x),
         diff(field_y, x) - diff(field_x, y)
     ], field_space.coordinate_system)
-    #TODO: avoid conversion to SymPy vector
-    field_rotor_vector_sympy = field_rotor_vector.to_sympy_vector()
-    return VectorField.from_sympy_vector(field_rotor_vector_sympy, field_space.coordinate_system)
+    return VectorField.from_vector(field_rotor_vector)
