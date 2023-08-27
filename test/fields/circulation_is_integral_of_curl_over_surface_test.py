@@ -1,8 +1,9 @@
 from collections import namedtuple
-from pytest import approx, fixture
+from pytest import approx, fixture, raises
 from sympy import S, Expr, sin, cos, sqrt, pi
 from sympy.vector import VectorZero
 from symplyphysics import (
+    Symbol,
     units,
     Quantity,
     CoordinateSystem,
@@ -10,6 +11,7 @@ from symplyphysics import (
     convert_to,
 )
 from symplyphysics.core.fields.field_point import FieldPoint
+from symplyphysics.core.fields.operators import curl_operator
 from symplyphysics.core.fields.vector_field import VectorField
 from symplyphysics.laws.fields import circulation_is_integral_of_curl_over_surface as circulation_def
 
@@ -29,7 +31,8 @@ def test_basic_circulation(test_args):
         circulation_def.parameter1 * cos(circulation_def.parameter2),
         circulation_def.parameter1 * sin(circulation_def.parameter2)
     ]
-    result = circulation_def.calculate_circulation(field, surface, (0, 1), (0, pi / 2))
+    result = circulation_def.calculate_circulation(field, surface,
+        [circulation_def.parameter1, circulation_def.parameter2], (0, 1), (0, pi / 2))
     assert convert_to(result, S.One).evalf(4) == approx((-pi / 4).evalf(4), 0.001)
 
 
@@ -42,7 +45,8 @@ def test_two_parameters_circulation(test_args):
         3 * circulation_def.parameter1 * cos(circulation_def.parameter2),
         3 * circulation_def.parameter1 * sin(circulation_def.parameter2), circulation_def.parameter1
     ]
-    result = circulation_def.calculate_circulation(field, cone, (0, 1), (0, 2 * pi))
+    result = circulation_def.calculate_circulation(field, cone,
+        [circulation_def.parameter1, circulation_def.parameter2], (0, 1), (0, 2 * pi))
     assert convert_to(result, S.One).evalf(4) == approx((-18 * pi).evalf(4), 0.001)
 
 
@@ -56,17 +60,15 @@ def test_gravitational_field_is_conservative(test_args):
         -point.x / _distance(point)**3, -point.y / _distance(point)**3, -point.z / _distance(point)
         **3
         ], test_args.C)
-    field_space = field.apply_to_basis()
-    field_space_sympy = field_space.to_sympy_vector()
-    field_rotor_applied = circulation_def.field_rotor_definition.rhs.subs(
-        circulation_def.field, field_space_sympy).doit()
+    field_rotor = curl_operator(field)
+    field_rotor_applied = field_rotor.apply_to_basis().to_sympy_vector()
     assert field_rotor_applied == VectorZero.zero
 
 
 def test_force_field_circulation(test_args):
     # we use lorentz force in magnetic field as reference
     # B = mass / (current * time**2) = mass / (charge * time)
-    # Lorentz force is: F = q * v * B = charge * (length / time) * B = force
+    # Lorentz force is: F = q * v * B = charge * (length / time) * B
     field = VectorField(
         lambda point: [
         -point.y * test_args.force_unit / _distance(point), point.x * test_args.force_unit /
@@ -77,7 +79,25 @@ def test_force_field_circulation(test_args):
         circulation_def.parameter1 * sin(circulation_def.parameter2)
     ]
     result = circulation_def.calculate_circulation(field, surface,
+        [circulation_def.parameter1, circulation_def.parameter2],
         (1 * test_args.radius_unit, 2 * test_args.radius_unit), (0, pi / 2))
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
     result_work = convert_to(result, units.joule).evalf(2)
     assert result_work > 0
+
+
+def test_three_parameters_circulation(test_args):
+    field = VectorField(lambda point: [point.y, -point.x, 0], test_args.C)
+    parameter3 = Symbol("parameter3")
+    surface = [
+        circulation_def.parameter1 * cos(circulation_def.parameter2),
+        circulation_def.parameter1 * sin(circulation_def.parameter2)
+    ]
+    with raises(TypeError):
+        circulation_def.calculate_circulation(field, surface,
+            [circulation_def.parameter1, circulation_def.parameter2, parameter3], (0, 1),
+            (0, 2 * pi))
+    with raises(TypeError):
+        circulation_def.calculate_circulation(field, surface,
+            [circulation_def.parameter1, circulation_def.parameter2, circulation_def.parameter1],
+            (0, 1), (0, 2 * pi))

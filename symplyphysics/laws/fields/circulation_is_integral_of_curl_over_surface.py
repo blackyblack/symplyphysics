@@ -1,7 +1,9 @@
 from typing import Sequence
-from sympy import (Expr, Eq, Integral, Derivative, symbols, simplify)
-from sympy.vector import Dot, Curl, Cross
-from symplyphysics import (Vector, print_expression, Quantity)
+from sympy import (Expr, Eq, Integral, Derivative, simplify, Symbol as SymSymbol)
+from symplyphysics import (CoordinateSystem, Vector, cross_cartesian_vectors, dot_vectors, Quantity,
+    print_expression)
+from symplyphysics.core.dimensions import ScalarValue
+from symplyphysics.core.fields.operators import curl_operator
 from symplyphysics.core.fields.vector_field import VectorField
 
 # Description
@@ -29,60 +31,97 @@ from symplyphysics.core.fields.vector_field import VectorField
 
 # These are not physical symbols - SymPy 'symbols' is good enough.
 
-circulation, field, surface = symbols("circulation field surface")
-# field rotor should be evaluated and applied before using in circulation definition
-field_rotor = symbols("field_rotor")
-# surface_element (dS) is surface derivative by two parameters
-surface_element, surface_element_by_parameter1, surface_element_by_parameter2 = symbols(
-    "surface_element surface_element_by_parameter1 surface_element_by_parameter2")
-parameter1, parameter1_from, parameter1_to = symbols("parameter1 parameter1_from parameter1_to")
-parameter2, parameter2_from, parameter2_to = symbols("parameter2 parameter2_from parameter2_to")
+surface = SymSymbol("surface")
+circulation = SymSymbol("circulation")
 
-# field_rotor, surface_element_by_parameter1, surface_element_by_parameter2, surface_element - should be evaluated before passing to definition
-# see calculate_circulation() for an example
-field_rotor_definition = Eq(field_rotor, Curl(field))
-surface_element_by_parameter1_definition = Eq(surface_element_by_parameter1,
-    Derivative(surface, parameter1))
-surface_element_by_parameter2_definition = Eq(surface_element_by_parameter2,
-    Derivative(surface, parameter2))
-surface_element_definition = Eq(surface_element,
-    Cross(surface_element_by_parameter1, surface_element_by_parameter2),
-    evaluate=False)
-law = Eq(
-    circulation,
-    Integral(Dot(field_rotor, surface_element), (parameter1, parameter1_from, parameter1_to),
-    (parameter2, parameter2_from, parameter2_to)))
+# surface_element (dS) is surface derivative by two parameters
+# surface_partial_element is surface derivative by 1 coordinate
+surface_partial_element = SymSymbol("surface_partial_element")
+surface_element_parameter = SymSymbol("surface_element_parameter")
+
+# This is integrand of the integral over the surface
+curl_dot_surface_element = SymSymbol("curl_dot_surface_element")
+# This is inner integral of the double integral
+curl_dot_surface_integral = SymSymbol("curl_dot_surface_integral")
+
+# Inner integral parameter and limits
+parameter1 = SymSymbol("parameter1")
+parameter1_from = SymSymbol("parameter1_from")
+parameter1_to = SymSymbol("parameter1_to")
+# Outer integral parameter and limits
+parameter2 = SymSymbol("parameter2")
+parameter2_from = SymSymbol("parameter2_from")
+parameter2_to = SymSymbol("parameter2_to")
+
+# Surface partial derivative is derivative of the 'surface' over some parameter
+surface_partial_derivative_definition = Eq(surface_partial_element,
+    Derivative(surface, surface_element_parameter))
+
+curl_dot_surface_integral_definition = Eq(
+    curl_dot_surface_integral,
+    Integral(curl_dot_surface_element, (parameter1, parameter1_from, parameter1_to)))
+
+law = Eq(circulation,
+    Integral(curl_dot_surface_integral, (parameter2, parameter2_from, parameter2_to)))
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
+# Calculate surface element, which is Cross(Derivative(Surface, x), Derivative(Surface, y)) for Surface
+# parametrized with 2 parameters
+# 3 and more parameters are not supported
+def _surface_element(surface_: Sequence[Expr], parameters: Sequence[SymSymbol],
+    coordinate_system: CoordinateSystem) -> Vector:
+    assert len(parameters) <= 2, "Surface element with 3 parameters and more is not supported"
+    surface_vector = Vector(surface_, coordinate_system)
+    if len(parameters) == 0:
+        return surface_vector
+
+    surface_sympy_vector = surface_vector.to_sympy_vector()
+    surface_element_x = surface_partial_derivative_definition.rhs.subs(
+        surface_element_parameter, parameters[0])
+    surface_element_x = surface_element_x.subs(surface, surface_sympy_vector).doit()
+    surface_element_vector_x = Vector.from_sympy_vector(surface_element_x, coordinate_system)
+    if len(parameters) == 1:
+        return surface_element_vector_x
+
+    surface_element_y = surface_partial_derivative_definition.rhs.subs(
+        surface_element_parameter, parameters[1])
+    surface_element_y = surface_element_y.subs(surface, surface_sympy_vector).doit()
+    surface_element_vector_y = Vector.from_sympy_vector(surface_element_y, coordinate_system)
+    return cross_cartesian_vectors(surface_element_vector_x, surface_element_vector_y)
+
+
+# Calculate SurfaceIntegral integrand, which is Dot(Curl(Field), dS)
+def _calculate_curl_dot_surface_element(field_: VectorField, surface_: Sequence[Expr],
+    parameters: Sequence[SymSymbol]) -> Expr:
+    surface_element_vector = _surface_element(surface_, parameters, field_.coordinate_system)
+    field_rotor_vector_field = curl_operator(field_)
+    field_rotor_applied = field_rotor_vector_field.apply(surface_)
+    return dot_vectors(field_rotor_applied, surface_element_vector)
+
+
 # field_ should be VectorField
 # surface_ should be array with projections to coordinates, eg [parameter1 * cos(parameter2), parameter1 * sin(parameter2)]
-def calculate_circulation(field_: VectorField, surface_: Sequence[Expr], parameters1: tuple[Expr,
-    Expr], parameters2: tuple[Expr, Expr]) -> Quantity:
-
-    field_space = field_.to_sympy_vector()
-    field_rotor_sympy = field_rotor_definition.rhs.subs(field, field_space).doit()
-    field_rotor_applied = VectorField.from_sympy_vector(field_rotor_sympy, field_.coordinate_system)
-    field_applied = field_rotor_applied.apply(surface_)
-    field_as_vector = field_applied.to_sympy_vector()
-    surface_sympy_vector = Vector(surface_, field_.coordinate_system).to_sympy_vector()
-    surface_element_x = surface_element_by_parameter1_definition.rhs.subs(
-        surface, surface_sympy_vector).doit()
-    surface_element_y = surface_element_by_parameter2_definition.rhs.subs(
-        surface, surface_sympy_vector).doit()
-    surface_element_result = surface_element_definition.rhs.subs({
-        surface_element_by_parameter1: surface_element_x,
-        surface_element_by_parameter2: surface_element_y
+# parameters contain a set of surface parameters. Usually they are 'parameter1', 'parameter2'.
+def calculate_circulation(field_: VectorField, surface_: Sequence[Expr],
+    surface_parameters_: Sequence[SymSymbol], parameter1_limits: tuple[ScalarValue,
+    ScalarValue], parameter2_limits: tuple[ScalarValue, ScalarValue]) -> Quantity:
+    if len(surface_parameters_) > 2:
+        raise TypeError(f"Surface with 3 and more parameters is not supported,"
+            f" got {len(surface_parameters_)}")
+    curl_dot_surface_element_value = _calculate_curl_dot_surface_element(
+        field_, surface_, surface_parameters_)
+    curl_dot_surface_integral_value = curl_dot_surface_integral_definition.rhs.subs({
+        curl_dot_surface_element: curl_dot_surface_element_value,
+        parameter1_from: parameter1_limits[0],
+        parameter1_to: parameter1_limits[1],
     }).doit()
-    result_expr = law.rhs.subs({
-        field_rotor: field_as_vector,
-        surface_element: surface_element_result,
-        parameter1_from: parameters1[0],
-        parameter1_to: parameters1[1],
-        parameter2_from: parameters2[0],
-        parameter2_to: parameters2[1]
+    circulation_value = law.rhs.subs({
+        curl_dot_surface_integral: curl_dot_surface_integral_value,
+        parameter2_from: parameter2_limits[0],
+        parameter2_to: parameter2_limits[1],
     }).doit()
-    return Quantity(simplify(result_expr))
+    return Quantity(simplify(circulation_value))

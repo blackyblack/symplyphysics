@@ -53,12 +53,12 @@ def add_cartesian_vectors(vector_left: Vector, vector_right: Vector) -> Vector:
         coord_name_from = CoordinateSystem.system_to_transformation_name(
             vector_left.coordinate_system.coord_system_type)
         raise ValueError(
-            f"Addition only supported for cartesian coordinates: got {coord_name_from}")
+            f"Addition is only supported for cartesian coordinates: got {coord_name_from}")
     if vector_right.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
         coord_name_from = CoordinateSystem.system_to_transformation_name(
             vector_right.coordinate_system.coord_system_type)
         raise ValueError(
-            f"Addition only supported for cartesian coordinates: got {coord_name_from}")
+            f"Addition is only supported for cartesian coordinates: got {coord_name_from}")
     (list_left_extended, list_right_extended) = _extend_two_vectors(vector_left, vector_right)
     result = list(
         map(lambda lr: sympify(lr[0] + lr[1]), zip(list_left_extended, list_right_extended)))
@@ -143,12 +143,12 @@ def cross_cartesian_vectors(vector_left: Vector, vector_right: Vector) -> Vector
         coord_name_from = CoordinateSystem.system_to_transformation_name(
             vector_left.coordinate_system.coord_system_type)
         raise ValueError(
-            f"Cross product only supported for cartesian coordinates: got {coord_name_from}")
+            f"Cross product is only supported for cartesian coordinates: got {coord_name_from}")
     if vector_right.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
         coord_name_from = CoordinateSystem.system_to_transformation_name(
             vector_right.coordinate_system.coord_system_type)
         raise ValueError(
-            f"Cross product only supported for cartesian coordinates: got {coord_name_from}")
+            f"Cross product is only supported for cartesian coordinates: got {coord_name_from}")
     dimensions = 3
     if len(vector_left.components) > dimensions:
         raise ValueError(
