@@ -110,7 +110,7 @@ def calculate_circulation(field_: VectorField, surface_: Sequence[Expr],
     surface_parameters_: Sequence[SymSymbol], parameter1_limits: tuple[ScalarValue,
     ScalarValue], parameter2_limits: tuple[ScalarValue, ScalarValue]) -> Quantity:
     if len(surface_parameters_) > 2:
-        raise TypeError(f"Surface with 3 and more parameters is not supported,"
+        raise ValueError(f"Surface with 3 and more parameters is not supported,"
             f" got {len(surface_parameters_)}")
     curl_dot_surface_element_value = _calculate_curl_dot_surface_element(
         field_, surface_, surface_parameters_)

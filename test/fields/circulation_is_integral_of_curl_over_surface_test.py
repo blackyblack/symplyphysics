@@ -93,11 +93,11 @@ def test_three_parameters_circulation(test_args):
         circulation_def.parameter1 * cos(circulation_def.parameter2),
         circulation_def.parameter1 * sin(circulation_def.parameter2)
     ]
-    with raises(TypeError):
+    with raises(ValueError):
         circulation_def.calculate_circulation(field, surface,
             [circulation_def.parameter1, circulation_def.parameter2, parameter3], (0, 1),
             (0, 2 * pi))
-    with raises(TypeError):
+    with raises(ValueError):
         circulation_def.calculate_circulation(field, surface,
             [circulation_def.parameter1, circulation_def.parameter2, circulation_def.parameter1],
             (0, 1), (0, 2 * pi))

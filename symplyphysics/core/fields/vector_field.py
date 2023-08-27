@@ -57,14 +57,19 @@ class VectorField:
     def field_function(self) -> FieldFunction:
         return self._point_function
 
+    # Constructs new VectorField from Vector.
+    @staticmethod
+    def from_vector(vector_: Vector) -> VectorField:
+        point_function = partial(_subs_with_point, vector_.components, vector_.coordinate_system)
+        return VectorField(point_function, vector_.coordinate_system)
+
     # Constructs new VectorField from SymPy expression.
     # Can contain value instead of SymPy Vector, eg 0.5, but it should be sympified.
     @staticmethod
     def from_sympy_vector(sympy_vector_: SymVector,
         coordinate_system: CoordinateSystem) -> VectorField:
         field_vector = Vector.from_sympy_vector(sympy_vector_, coordinate_system)
-        point_function = partial(_subs_with_point, field_vector.components, coordinate_system)
-        return VectorField(point_function, coordinate_system)
+        return VectorField.from_vector(field_vector)
 
     # Applies field to a trajectory / surface / volume - calls field functions with each element of the trajectory as parameter.
     # trajectory_ - list of expressions that correspond to a function in some space, eg [param, param] for a linear function y = x
