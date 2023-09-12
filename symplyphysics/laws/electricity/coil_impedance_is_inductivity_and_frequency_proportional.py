@@ -1,6 +1,6 @@
 from sympy import (I, Eq, solve)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless)
+    validate_output, angle_type)
 
 # Description
 ## The impedance of ideal coil depends on its inductivity and frequency. While having zero resistivity, the real part of
@@ -12,7 +12,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## L is coin inductivity.
 
 coil_impedance = Symbol("coil_impedance", units.impedance)
-circular_frequency = Symbol("circular_frequency", units.hertz)
+circular_frequency = Symbol("circular_frequency", angle_type / units.time)
 coil_inductivity = Symbol("coil_inductivity", units.inductance)
 
 law = Eq(coil_impedance, I * circular_frequency * coil_inductivity)
