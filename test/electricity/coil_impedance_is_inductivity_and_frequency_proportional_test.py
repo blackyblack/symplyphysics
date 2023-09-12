@@ -1,5 +1,5 @@
-from sympy import re, im
 from collections import namedtuple
+from sympy import re, im
 from pytest import approx, fixture, raises
 from symplyphysics import (errors, units, convert_to, Quantity, SI)
 from symplyphysics.laws.electricity import coil_impedance_is_inductivity_and_frequency_proportional as coil_impedance_law
