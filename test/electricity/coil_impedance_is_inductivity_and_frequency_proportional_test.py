@@ -11,7 +11,7 @@ from symplyphysics.laws.electricity import coil_impedance_is_inductivity_and_fre
 @fixture(name="test_args")
 def test_args_fixture():
     inductivity = Quantity(5 * units.henry)
-    frequency = Quantity(315.159 * units.radian / units.second)
+    frequency = Quantity(314.159 * units.radian / units.second)
     Args = namedtuple("Args", ["inductivity", "frequency"])
     return Args(inductivity=inductivity, frequency=frequency)
 

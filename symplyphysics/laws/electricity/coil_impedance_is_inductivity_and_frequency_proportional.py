@@ -9,7 +9,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## Z is coil impedance,
 ## j is imaginary number,
 ## w is circular frequency,
-## L is coin inductivity.
+## L is coil inductivity.
 
 coil_impedance = Symbol("coil_impedance", units.impedance)
 circular_frequency = Symbol("circular_frequency", angle_type / units.time)
