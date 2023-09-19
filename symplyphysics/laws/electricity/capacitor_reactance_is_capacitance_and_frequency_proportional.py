@@ -3,7 +3,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
     validate_output, angle_type)
 
 # Description
-## While the serial resistance of ideal capacitor is zero, its reactance depends on its capacitance and frequency. 
+## While the serial resistance of ideal capacitor is zero, its reactance depends on its capacitance and frequency.
 ## Law: Xc = -j/wС, where
 ## Xc is capacitor reactance,
 ## j is imaginary number,
