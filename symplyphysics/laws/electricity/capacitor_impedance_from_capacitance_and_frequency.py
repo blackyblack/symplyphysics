@@ -5,7 +5,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 # Description
 ## While the serial resistance of ideal capacitor is zero, its reactance depends on its capacitance and frequency.
 ## Law: Zc = -j/wС, where
-## Xc is capacitor impedance,
+## Zc is capacitor impedance,
 ## j is imaginary number,
 ## w is circular frequency,
 ## C is capacitance of capacitor.

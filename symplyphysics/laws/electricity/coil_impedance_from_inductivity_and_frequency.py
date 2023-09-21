@@ -5,8 +5,8 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 # Description
 ## The impedance of ideal coil depends on its inductivity and frequency. While having zero resistivity, the real part of
 ## coil impedance is zero.
-## Law: Z = jwL, where
-## Z is coil impedance,
+## Law: Zl = jwL, where
+## Zl is coil impedance,
 ## j is imaginary number,
 ## w is circular frequency,
 ## L is coil inductivity.

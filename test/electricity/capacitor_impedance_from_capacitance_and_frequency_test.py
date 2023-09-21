@@ -2,7 +2,7 @@ from collections import namedtuple
 from sympy import re, im
 from pytest import approx, fixture, raises
 from symplyphysics import (errors, units, convert_to, Quantity, SI)
-from symplyphysics.laws.electricity import capacitor_impedance_is_capacitance_and_frequency_proportional as capacitor_impedance_law
+from symplyphysics.laws.electricity import capacitor_impedance_from_capacitance_and_frequency as capacitor_impedance_law
 
 # Description
 ## Assert we have a capacitor with 5F capacitance. In 0.05Hz (0.314159 rad/s) circuit impedance of this element should be 636.61mOhm.
