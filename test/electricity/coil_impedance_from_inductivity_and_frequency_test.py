@@ -2,7 +2,7 @@ from collections import namedtuple
 from sympy import re, im
 from pytest import approx, fixture, raises
 from symplyphysics import (errors, units, convert_to, Quantity, SI)
-from symplyphysics.laws.electricity import coil_impedance_is_inductivity_and_frequency_proportional as coil_impedance_law
+from symplyphysics.laws.electricity import coil_impedance_from_inductivity_and_frequency as coil_impedance_law
 
 # Description
 ## Assert we have a coil with 5H inductivity. In 50Hz (314.159 rad/s) circuit impedance of this coil should be 1575.8 Ohm.
@@ -11,7 +11,7 @@ from symplyphysics.laws.electricity import coil_impedance_is_inductivity_and_fre
 @fixture(name="test_args")
 def test_args_fixture():
     inductivity = Quantity(5 * units.henry)
-    frequency = Quantity(315.159 * units.radian / units.second)
+    frequency = Quantity(314.159 * units.radian / units.second)
     Args = namedtuple("Args", ["inductivity", "frequency"])
     return Args(inductivity=inductivity, frequency=frequency)
 
