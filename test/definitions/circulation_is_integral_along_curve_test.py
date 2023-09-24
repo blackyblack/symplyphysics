@@ -1,7 +1,6 @@
 from collections import namedtuple
-from math import pi
 from pytest import approx, fixture
-from sympy import S, sin, cos, sqrt
+from sympy import S, sin, cos, sqrt, Symbol as SymSymbol, pi
 from symplyphysics import (
     units,
     convert_to,
@@ -31,6 +30,14 @@ def test_basic_circulation(test_args):
     curve = [cos(circulation_def.parameter), sin(circulation_def.parameter)]
     result = circulation_def.calculate_circulation(field, curve, 0, pi / 2)
     assert convert_to(result, S.One).evalf(4) == approx(-pi / 4, 0.001)
+
+
+def test_circle_circulation():
+    field = VectorField(lambda point: [-point.y, point.x])
+    radius = SymSymbol("radius")
+    circle = [radius * cos(circulation_def.parameter), radius * sin(circulation_def.parameter)]
+    result = circulation_def.calculate_circulation(field, circle, 0, 2 * pi)
+    assert convert_to(result, S.One).evalf(4) == approx((2 * pi * radius**2).evalf(4), 0.001)
 
 
 def test_two_parameters_circulation(test_args):

@@ -48,7 +48,6 @@ def print_law() -> str:
 # trajectory_ should be array with projections to coordinates, eg [3 * cos(parameter), 3 * sin(parameter)]
 def calculate_circulation(field_: VectorField, trajectory_: list[Expr], parameter_from_: Expr,
     parameter_to_: Expr) -> Quantity:
-
     field_app = field_.apply(trajectory_)
     field_as_vector = field_app.to_sympy_vector()
     trajectory_as_vector = Vector(trajectory_, field_.coordinate_system).to_sympy_vector()

@@ -55,10 +55,11 @@ def _distance(point: FieldPoint) -> Expr:
 
 
 def test_gravitational_field_is_conservative(test_args):
+    # gravitational field also has a common multiplier of -G*m1*m2. It does not
+    # affect conservative property of a field.
     field = VectorField(
         lambda point: [
-        -point.x / _distance(point)**3, -point.y / _distance(point)**3, -point.z / _distance(point)
-        **3
+        point.x / _distance(point)**3, point.y / _distance(point)**3, point.z / _distance(point)**3
         ], test_args.C)
     field_rotor = curl_operator(field)
     field_rotor_applied = field_rotor.apply_to_basis().to_sympy_vector()

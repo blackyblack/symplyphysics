@@ -9,8 +9,9 @@ from symplyphysics.core.fields.vector_field import VectorField
 # Description
 ## Circulation of the field along the closed curve is flow of the rotor (or curl) of this field
 ## through any area surrounded by this curve.
-## CurveIntegral(F * dl, Curve) = SurfaceIntegral(Curl(F) * dS, Surface), where
-## S is area surrounded by Curve.
+## See [circulation definition](..\..\definitions\circulation_is_integral_along_curve.py) for circulation
+## as curvilinear integral formula.
+## Surface integral is derived from linear integral by using [Stoke's theorem](https://en.wikipedia.org/wiki/Stokes%27_theorem).
 ## Potential field is the field with zero rotor. Also potential field is called irrotational field.
 ## Work to move the object along the closed curve in the potential field is zero.
 
@@ -21,6 +22,7 @@ from symplyphysics.core.fields.vector_field import VectorField
 ## F is vector field
 ## S is surface boundary, equals to curve area
 ## dS is surface double derivative
+## dl is curve derivative (unit vector, tangent to the curve)
 ## * is dot product
 ## Curl is rotor (or curl) operator
 
@@ -28,6 +30,8 @@ from symplyphysics.core.fields.vector_field import VectorField
 ## - Field is smooth vector field in 3d space
 ## - Surface is smooth oriented surface in 3d space
 ## - Curve is smooth, continuous and closed
+## - Surface is a function of at most two parameters (eg z(x, y) = sqrt(x**2 + y**2)), or parametrized with at most
+##   two parameters (eg x(t1, t2) = t1 * cos(t2), y(t1, t2) = t1 * sin(t2), z(t1, t2) = t1)
 
 # These are not physical symbols - SymPy 'symbols' is good enough.
 
