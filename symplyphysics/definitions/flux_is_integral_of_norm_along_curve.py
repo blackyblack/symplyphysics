@@ -1,5 +1,5 @@
 from typing import Sequence
-from sympy import (Expr, Integral, Derivative, Eq, simplify, Symbol as SymSymbol)
+from sympy import (Expr, Integral, Derivative, Eq, simplify, Symbol as SymSymbol, sympify)
 from symplyphysics import (cross_cartesian_vectors, print_expression, Quantity, Vector, dot_vectors,
     scale_vector)
 from symplyphysics.core.dimensions import ScalarValue
@@ -64,7 +64,8 @@ def _unit_norm_vector(trajectory_: Vector):
 
 def _calculate_dot_norm(field_: VectorField, trajectory_: Vector) -> Expr:
     norm_vector = _unit_norm_vector(trajectory_)
-    field_applied = field_.apply(trajectory_.components)
+    trajectory_components = [sympify(c) for c in trajectory_.components]
+    field_applied = field_.apply(trajectory_components)
     return dot_vectors(field_applied, norm_vector)
 
 
