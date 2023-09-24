@@ -1,6 +1,7 @@
-from sympy import (Expr, Integral, Derivative, symbols, Eq, simplify)
-from sympy.vector import Dot
-from symplyphysics import (print_expression, Quantity, Vector)
+from typing import Sequence
+from sympy import (Expr, Integral, Derivative, Symbol as SymSymbol, Eq, simplify, sympify)
+from symplyphysics import (dot_vectors, print_expression, Quantity, Vector)
+from symplyphysics.core.dimensions import ScalarValue
 from symplyphysics.core.fields.vector_field import VectorField
 
 # Description
@@ -15,48 +16,60 @@ from symplyphysics.core.fields.vector_field import VectorField
 ## (eg sum of sides of a square).
 
 # Definition
-## C = CurveIntegral(F * dl, Curve)
+## C = CurveIntegral(dot(F, dr), Curve)
 # Where:
 ## C is circulation
 ## F is vector field
-## l is radius-vector of the curve
-## * is dot product
+## dr is curve tangent vector
+## dot is dot product
 
 # Conditions
 ## - Curve is a function of a single parameter (eg y(x) = x**2), or parametrized with a single parameter
 ## (eg x(t) = cos(t), y(t) = sin(t))
 ## - Curve is smooth and continuous
 
-# These are not physical symbols - SymPy 'symbols' is good enough.
+# These are not physical symbols - SymPy 'Symbol' is good enough.
 
 # trajectory is a function of the moving particle
-circulation, field, trajectory = symbols("circulation field trajectory")
+circulation = SymSymbol("circulation")
+trajectory = SymSymbol("trajectory")
 # trajectory_element (dl) is trajectory derivative by parameter
 # parameter is an argument of trajectory function, eg x coordinate
-trajectory_element, parameter = symbols("trajectory_element parameter")
-parameter_from, parameter_to = symbols("parameter_from parameter_to")
+trajectory_element = SymSymbol("trajectory_element")
+parameter = SymSymbol("parameter")
+parameter_from = SymSymbol("parameter_from")
+parameter_to = SymSymbol("parameter_to")
+field_dot_tangent = SymSymbol("field_dot_tangent")
 
 trajectory_element_definition = Eq(trajectory_element, Derivative(trajectory, parameter))
-definition = Eq(circulation,
-    Integral(Dot(field, trajectory_element), (parameter, parameter_from, parameter_to)))
+definition = Eq(
+    circulation,
+    Integral(field_dot_tangent,
+    (parameter, parameter_from, parameter_to)))
 
 
 def print_law() -> str:
     return print_expression(definition)
 
 
+def _calculate_dot_tangent(field_: VectorField, trajectory_: Vector) -> Expr:
+    trajectory_sympy_vector = trajectory_.to_sympy_vector()
+    trajectory_element_sympy_vector = trajectory_element_definition.rhs.subs(
+        trajectory, trajectory_sympy_vector).doit()
+    trajectory_element_vector = Vector.from_sympy_vector(trajectory_element_sympy_vector,
+        trajectory_.coordinate_system)
+    trajectory_components = [sympify(c) for c in trajectory_.components]
+    field_applied = field_.apply(trajectory_components)
+    return dot_vectors(field_applied, trajectory_element_vector)
+
+
 # trajectory_ should be array with projections to coordinates, eg [3 * cos(parameter), 3 * sin(parameter)]
-def calculate_circulation(field_: VectorField, trajectory_: list[Expr], parameter_from_: Expr,
-    parameter_to_: Expr) -> Quantity:
-    field_app = field_.apply(trajectory_)
-    field_as_vector = field_app.to_sympy_vector()
-    trajectory_as_vector = Vector(trajectory_, field_.coordinate_system).to_sympy_vector()
-    trajectory_element_result = trajectory_element_definition.rhs.subs(
-        trajectory, trajectory_as_vector).doit()
+def calculate_circulation(field_: VectorField, trajectory_: Sequence[Expr], parameter_limits: tuple[ScalarValue, ScalarValue]) -> Quantity:
+    trajectory_vector = Vector(trajectory_, field_.coordinate_system)
+    field_dot_tangent_value = _calculate_dot_tangent(field_, trajectory_vector)
     result_expr = definition.rhs.subs({
-        field: field_as_vector,
-        trajectory_element: trajectory_element_result,
-        parameter_from: parameter_from_,
-        parameter_to: parameter_to_
+        field_dot_tangent: field_dot_tangent_value,
+        parameter_from: parameter_limits[0],
+        parameter_to: parameter_limits[1]
     }).doit()
     return Quantity(simplify(result_expr))

@@ -25,10 +25,9 @@ from symplyphysics.core.vectors.arithmetics import vector_magnitude
 ## (eg x(t) = cos(t), y(t) = sin(t))
 ## - Curve is smooth and continuous
 
-# These are not physical symbols - SymPy 'symbols' is good enough.
+# These are not physical symbols - SymPy 'Symbol' is good enough.
 
 flux = SymSymbol("flux")
-field = SymSymbol("field")
 # trajectory is a function of the moving particle
 trajectory = SymSymbol("trajectory")
 # trajectory_element (dl) is trajectory derivative by parameter
