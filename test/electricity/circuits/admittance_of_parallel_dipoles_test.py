@@ -38,7 +38,7 @@ def test_three_resistors_array(test_args):
     assert result_admittance == approx(1.75, 0.01)
 
 
-def test_bad_conductivity(test_args):
+def test_bad_admittance(test_args):
     Sb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         parallel_law.calculate_parallel_admittance([Sb, test_args.S2])
