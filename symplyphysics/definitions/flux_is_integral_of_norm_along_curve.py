@@ -1,10 +1,9 @@
 from typing import Sequence
 from sympy import (Expr, Integral, Derivative, Eq, simplify, Symbol as SymSymbol, sympify)
 from symplyphysics import (cross_cartesian_vectors, print_expression, Quantity, Vector, dot_vectors,
-    scale_vector)
+    vector_unit, vector_magnitude)
 from symplyphysics.core.dimensions import ScalarValue
 from symplyphysics.core.fields.vector_field import VectorField
-from symplyphysics.core.vectors.arithmetics import vector_magnitude
 
 # Description
 ## Flux is defined as the amount of "stuff" going through a curve or a surface
@@ -55,8 +54,9 @@ def _unit_norm_vector(trajectory_: Vector):
     tangent_sympy_vector = trajectory_element_definition.rhs.subs(trajectory,
         trajectory_sympy_vector).doit()
     tangent_vector = Vector.from_sympy_vector(tangent_sympy_vector, trajectory_.coordinate_system)
-    tangent_vector_magnitude = _trajectory_element_magnitude(tangent_vector)
-    unit_tangent_vector = scale_vector(1 / tangent_vector_magnitude, tangent_vector)
+    unit_tangent_vector = vector_unit(tangent_vector)
+    # Use cross product with k vector to assert that norm vector is not directed
+    # upwards (in the same direction as k)
     k_vector = Vector([0, 0, 1], trajectory_.coordinate_system)
     return cross_cartesian_vectors(unit_tangent_vector, k_vector)
 

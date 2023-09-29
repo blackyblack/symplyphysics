@@ -166,6 +166,11 @@ def cross_cartesian_vectors(vector_left: Vector, vector_right: Vector) -> Vector
     return Vector(result, vector_left.coordinate_system)
 
 
+# Make unit vector (vector of size 1 and same direction as original vector)
+def vector_unit(vector_: Vector) -> Vector:
+    return scale_vector(1 / vector_magnitude(vector_), vector_)
+
+
 # Sum of two vectors of quantities
 def add_cartesian_quantity_vectors(vector_left: QuantityVector,
     vector_right: QuantityVector) -> QuantityVector:
@@ -201,3 +206,8 @@ def cross_cartesian_quantity_vectors(vector_left: QuantityVector,
     return QuantityVector(
         cross_cartesian_vectors(vector_left, vector_right).components,
         vector_left.coordinate_system)
+
+
+# Make quantity unit vector
+def quantity_vector_unit(vector_: QuantityVector) -> QuantityVector:
+    return scale_quantity_vector(1 / quantity_vector_magnitude(vector_), vector_)

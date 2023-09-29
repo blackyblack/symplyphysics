@@ -42,10 +42,7 @@ parameter_to = SymSymbol("parameter_to")
 field_dot_tangent = SymSymbol("field_dot_tangent")
 
 trajectory_element_definition = Eq(trajectory_element, Derivative(trajectory, parameter))
-definition = Eq(
-    circulation,
-    Integral(field_dot_tangent,
-    (parameter, parameter_from, parameter_to)))
+definition = Eq(circulation, Integral(field_dot_tangent, (parameter, parameter_from, parameter_to)))
 
 
 def print_law() -> str:
@@ -64,7 +61,8 @@ def _calculate_dot_tangent(field_: VectorField, trajectory_: Vector) -> Expr:
 
 
 # trajectory_ should be array with projections to coordinates, eg [3 * cos(parameter), 3 * sin(parameter)]
-def calculate_circulation(field_: VectorField, trajectory_: Sequence[Expr], parameter_limits: tuple[ScalarValue, ScalarValue]) -> Quantity:
+def calculate_circulation(field_: VectorField, trajectory_: Sequence[Expr],
+    parameter_limits: tuple[ScalarValue, ScalarValue]) -> Quantity:
     trajectory_vector = Vector(trajectory_, field_.coordinate_system)
     field_dot_tangent_value = _calculate_dot_tangent(field_, trajectory_vector)
     result_expr = definition.rhs.subs({

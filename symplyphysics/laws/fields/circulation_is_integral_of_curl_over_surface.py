@@ -16,14 +16,13 @@ from symplyphysics.core.fields.vector_field import VectorField
 ## Work to move the object along the closed curve in the potential field is zero.
 
 # Law:
-## C = SurfaceIntegral(Curl(F) * dS, Surface)
+## C = SurfaceIntegral(dot(Curl(F), dS), Surface)
 ## Where:
 ## C is circulation
 ## F is vector field
 ## S is surface boundary, equals to curve area
 ## dS is surface double derivative
-## dl is curve derivative (unit vector, tangent to the curve)
-## * is dot product
+## dot is dot product
 ## Curl is rotor (or curl) operator
 
 # Conditions
