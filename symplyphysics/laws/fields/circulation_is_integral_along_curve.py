@@ -14,6 +14,8 @@ from symplyphysics.core.fields.vector_field import VectorField
 ## particle. Thus, as long as the particle moves with nonzero speed, its trajectory is necessarily a smooth curve.
 ## When curve is not smooth (eg trajectory is a square) one should represent this curve as a sum of its smooth parts
 ## (eg sum of sides of a square).
+## Curve is parametrized counter-clockwise. Positive field circulation assumes the direction of the field is the same as
+## the curve orientation.
 
 # Definition
 ## C = CurveIntegral(dot(F, dr), Curve)
@@ -27,6 +29,7 @@ from symplyphysics.core.fields.vector_field import VectorField
 ## - Curve is a function of a single parameter (eg y(x) = x**2), or parametrized with a single parameter
 ## (eg x(t) = cos(t), y(t) = sin(t))
 ## - Curve is smooth and continuous
+## - Curve is positively oriented
 
 # These are not physical symbols - SymPy 'Symbol' is good enough.
 
@@ -42,11 +45,11 @@ parameter_to = SymSymbol("parameter_to")
 field_dot_tangent = SymSymbol("field_dot_tangent")
 
 trajectory_element_definition = Eq(trajectory_element, Derivative(trajectory, parameter))
-definition = Eq(circulation, Integral(field_dot_tangent, (parameter, parameter_from, parameter_to)))
+law = Eq(circulation, Integral(field_dot_tangent, (parameter, parameter_from, parameter_to)))
 
 
 def print_law() -> str:
-    return print_expression(definition)
+    return print_expression(law)
 
 
 def _calculate_dot_tangent(field_: VectorField, trajectory_: Vector) -> Expr:
@@ -65,7 +68,7 @@ def calculate_circulation(field_: VectorField, trajectory_: Sequence[Expr],
     parameter_limits: tuple[ScalarValue, ScalarValue]) -> Quantity:
     trajectory_vector = Vector(trajectory_, field_.coordinate_system)
     field_dot_tangent_value = _calculate_dot_tangent(field_, trajectory_vector)
-    result_expr = definition.rhs.subs({
+    result_expr = law.rhs.subs({
         field_dot_tangent: field_dot_tangent_value,
         parameter_from: parameter_limits[0],
         parameter_to: parameter_limits[1]

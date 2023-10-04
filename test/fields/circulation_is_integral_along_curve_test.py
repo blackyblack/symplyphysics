@@ -9,7 +9,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
 from symplyphysics.core.fields.vector_field import VectorField
-from symplyphysics.definitions import circulation_is_integral_along_curve as circulation_def
+from symplyphysics.laws.fields import circulation_is_integral_along_curve as circulation_def
 
 
 @fixture(name="test_args")
@@ -19,7 +19,7 @@ def test_args_fixture():
     radius_unit = Quantity(1 * units.meter)
     # field is a field of gravitational forces, force is directed down by the Y coordinate
     # field is (0, -1 * G * m * M / y**2)
-    # G * m * M = force * length**2 / mass**2 * mass**2 = force * length**2
+    # G * m * M = (force * length**2 / mass**2) * mass**2 = force * length**2
     field = VectorField(lambda point: [0, -1 * force_unit * radius_unit**2 / point.y**2], C)
     Args = namedtuple("Args", ["C", "force_unit", "radius_unit", "field"])
     return Args(C=C, force_unit=force_unit, radius_unit=radius_unit, field=field)
@@ -65,7 +65,8 @@ def test_orthogonal_movement_circulation(test_args):
     # trajectory is upwards helix
     helix = [
         cos(circulation_def.parameter),
-        sin(circulation_def.parameter), circulation_def.parameter
+        sin(circulation_def.parameter),
+        circulation_def.parameter
     ]
     result = circulation_def.calculate_circulation(field, helix, (0, 2 * pi))
     assert convert_to(result, S.One) == 0

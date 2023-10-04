@@ -8,14 +8,16 @@ from symplyphysics.core.fields.vector_field import VectorField
 # Description
 ## Flux is defined as the amount of "stuff" going through a curve or a surface
 ## and we can get the flux at a particular point by taking the force and seeing
-## how much of the force is perpendicular to the curve.
+## how much of the force is perpendicular to the surface.
+## Surface is parametrized counter-clockwise. Positive field flux assumes the direction of the field is outwards
+## of the surface.
 
 # Definition
-## Flux = CurveIntegral(dot(F, n) * dl, Curve)
+## Flux = SurfaceIntegral(dot(F, n) * dS, Surface)
 # Where:
 ## Flux is flux
 ## F is vector field
-## n is unit normal vector of the curve, in the same plane as tangent of the curve
+## n (norm) is outward unit normal vector of the surface
 ## dl is curve unit tangent vector magnitude
 ## dot is dot product
 
@@ -23,6 +25,8 @@ from symplyphysics.core.fields.vector_field import VectorField
 ## - Curve is a function of a single parameter (eg y(x) = x**2), or parametrized with a single parameter
 ## (eg x(t) = cos(t), y(t) = sin(t))
 ## - Curve is smooth and continuous
+## - Curve is positively oriented
+## - Field is defined for a plane (2-dimensional coordinate system)
 
 # These are not physical symbols - SymPy 'Symbol' is good enough.
 
@@ -39,14 +43,14 @@ parameter_to = SymSymbol("parameter_to")
 field_dot_norm = SymSymbol("field_dot_norm")
 
 trajectory_element_definition = Eq(trajectory_element, Derivative(trajectory, parameter))
-definition = Eq(
+law = Eq(
     flux,
     Integral(field_dot_norm * trajectory_element_magnitude,
     (parameter, parameter_from, parameter_to)))
 
 
 def print_law() -> str:
-    return print_expression(definition)
+    return print_expression(law)
 
 
 def _unit_norm_vector(trajectory_: Vector):
@@ -80,10 +84,14 @@ def _trajectory_element_magnitude(trajectory_: Vector) -> Expr:
 # trajectory_ should be array with projections to coordinates, eg [3 * cos(parameter), 3 * sin(parameter)]
 def calculate_flux(field_: VectorField, trajectory_: Sequence[Expr],
     parameter_limits: tuple[ScalarValue, ScalarValue]) -> Quantity:
+    # trajectory_ and field_ should be 2-dimensional
+    if len(trajectory_) > 2:
+        raise ValueError(f"Trajectory with 2 and more components is not supported,"
+            f" got {len(trajectory_)}")
     trajectory_vector = Vector(trajectory_, field_.coordinate_system)
     field_dot_norm_value = _calculate_dot_norm(field_, trajectory_vector)
     trajectory_element_magnitude_value = _trajectory_element_magnitude(trajectory_vector)
-    flux_value = definition.rhs.subs({
+    flux_value = law.rhs.subs({
         field_dot_norm: field_dot_norm_value,
         trajectory_element_magnitude: trajectory_element_magnitude_value,
         parameter_from: parameter_limits[0],

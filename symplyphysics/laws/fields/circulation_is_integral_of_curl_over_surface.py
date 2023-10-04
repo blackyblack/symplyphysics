@@ -14,21 +14,25 @@ from symplyphysics.core.fields.vector_field import VectorField
 ## Surface integral is derived from linear integral by using [Stoke's theorem](https://en.wikipedia.org/wiki/Stokes%27_theorem).
 ## Potential field is the field with zero rotor. Also potential field is called irrotational field.
 ## Work to move the object along the closed curve in the potential field is zero.
+## In other words, the line integral of a vector field over a loop is equal to the flux of its curl through the enclosed surface.
+## See [flux definition](./flux_is_integral_of_across_surface.py) for more information on vector field flux.
 
 # Law:
 ## C = SurfaceIntegral(dot(Curl(F), dS), Surface)
 ## Where:
 ## C is circulation
 ## F is vector field
-## S is surface boundary, equals to curve area
-## dS is surface double derivative
+## Surface is surface boundary enclosed inside the curve
+## dS is vector surface element, equals to n * dA, where:
+## - n is unit normal vector of the surface
+## - dA is infinitesimal element of surface area
 ## dot is dot product
 ## Curl is rotor (or curl) operator
 
 # Conditions
 ## - Field is smooth vector field in 3d space
-## - Surface is smooth oriented surface in 3d space
-## - Curve is smooth, continuous and closed
+## - Surface is smooth positively oriented surface in 3d space
+## - Surface enclosing curve is smooth, continuous and closed
 ## - Surface is a function of at most two parameters (eg z(x, y) = sqrt(x**2 + y**2)), or parametrized with at most
 ##   two parameters (eg x(t1, t2) = t1 * cos(t2), y(t1, t2) = t1 * sin(t2), z(t1, t2) = t1)
 
@@ -72,35 +76,25 @@ def print_law() -> str:
     return print_expression(law)
 
 
-# Calculate surface element, which is Cross(Derivative(Surface, x), Derivative(Surface, y)) for Surface
+# Calculate vector surface element, which is Cross(Derivative(Surface, x), Derivative(Surface, y)) for Surface
 # parametrized with 2 parameters
-# 3 and more parameters are not supported
-def _surface_element(surface_: Sequence[Expr], parameters: Sequence[SymSymbol],
-    coordinate_system: CoordinateSystem) -> Vector:
-    assert len(parameters) <= 2, "Surface element with 3 parameters and more is not supported"
+def _surface_element(surface_: Sequence[Expr], coordinate_system: CoordinateSystem) -> Vector:
     surface_vector = Vector(surface_, coordinate_system)
-    if len(parameters) == 0:
-        return surface_vector
-
     surface_sympy_vector = surface_vector.to_sympy_vector()
     surface_element_x = surface_partial_derivative_definition.rhs.subs(
-        surface_element_parameter, parameters[0])
+        surface_element_parameter, parameter1)
     surface_element_x = surface_element_x.subs(surface, surface_sympy_vector).doit()
     surface_element_vector_x = Vector.from_sympy_vector(surface_element_x, coordinate_system)
-    if len(parameters) == 1:
-        return surface_element_vector_x
-
     surface_element_y = surface_partial_derivative_definition.rhs.subs(
-        surface_element_parameter, parameters[1])
+        surface_element_parameter, parameter2)
     surface_element_y = surface_element_y.subs(surface, surface_sympy_vector).doit()
     surface_element_vector_y = Vector.from_sympy_vector(surface_element_y, coordinate_system)
     return cross_cartesian_vectors(surface_element_vector_x, surface_element_vector_y)
 
 
 # Calculate SurfaceIntegral integrand, which is Dot(Curl(Field), dS)
-def _calculate_curl_dot_surface_element(field_: VectorField, surface_: Sequence[Expr],
-    parameters: Sequence[SymSymbol]) -> Expr:
-    surface_element_vector = _surface_element(surface_, parameters, field_.coordinate_system)
+def _calculate_curl_dot_surface_element(field_: VectorField, surface_: Sequence[Expr]) -> Expr:
+    surface_element_vector = _surface_element(surface_, field_.coordinate_system)
     field_rotor_vector_field = curl_operator(field_)
     field_rotor_applied = field_rotor_vector_field.apply(surface_)
     return dot_vectors(field_rotor_applied, surface_element_vector)
@@ -108,15 +102,17 @@ def _calculate_curl_dot_surface_element(field_: VectorField, surface_: Sequence[
 
 # field_ should be VectorField
 # surface_ should be array with projections to coordinates, eg [parameter1 * cos(parameter2), parameter1 * sin(parameter2)]
-# parameters contain a set of surface parameters. Usually they are 'parameter1', 'parameter2'.
 def calculate_circulation(field_: VectorField, surface_: Sequence[Expr],
-    surface_parameters_: Sequence[SymSymbol], parameter1_limits: tuple[ScalarValue,
-    ScalarValue], parameter2_limits: tuple[ScalarValue, ScalarValue]) -> Quantity:
-    if len(surface_parameters_) > 2:
-        raise ValueError(f"Surface with 3 and more parameters is not supported,"
-            f" got {len(surface_parameters_)}")
+    parameter1_limits: tuple[ScalarValue, ScalarValue],
+    parameter2_limits: tuple[ScalarValue, ScalarValue]) -> Quantity:
+    free_symbols = set()
+    for ss in surface_:
+        free_symbols = free_symbols.union(ss.free_symbols)
+    if (parameter1 not in free_symbols) or (parameter2 not in free_symbols):
+        raise ValueError("Trajectory should be parametrized by both parameter1 and parameter2")
+
     curl_dot_surface_element_value = _calculate_curl_dot_surface_element(
-        field_, surface_, surface_parameters_)
+        field_, surface_)
     curl_dot_surface_integral_value = curl_dot_surface_integral_definition.rhs.subs({
         curl_dot_surface_element: curl_dot_surface_element_value,
         parameter1_from: parameter1_limits[0],
