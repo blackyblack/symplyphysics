@@ -5,7 +5,7 @@ from symplyphysics import convert_to
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
 from symplyphysics.core.fields.field_point import FieldPoint
 from symplyphysics.core.fields.vector_field import VectorField
-from symplyphysics.laws.fields import flux_is_integral_of_across_surface as flux_def
+from symplyphysics.laws.fields import flux_is_integral_across_surface as flux_def
 
 
 @fixture(name="test_args")

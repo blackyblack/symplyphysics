@@ -1,5 +1,5 @@
 from typing import Sequence
-from sympy import (Expr, Eq, Integral, Derivative, simplify, Symbol as SymSymbol)
+from sympy import (Basic, Expr, Eq, Integral, Derivative, simplify, Symbol as SymSymbol)
 from symplyphysics import (CoordinateSystem, Vector, cross_cartesian_vectors, dot_vectors, Quantity,
     print_expression)
 from symplyphysics.core.dimensions import ScalarValue
@@ -105,7 +105,7 @@ def _calculate_curl_dot_surface_element(field_: VectorField, surface_: Sequence[
 def calculate_circulation(field_: VectorField, surface_: Sequence[Expr],
     parameter1_limits: tuple[ScalarValue, ScalarValue],
     parameter2_limits: tuple[ScalarValue, ScalarValue]) -> Quantity:
-    free_symbols = set()
+    free_symbols: set[Basic] = set()
     for ss in surface_:
         free_symbols = free_symbols.union(ss.free_symbols)
     if (parameter1 not in free_symbols) or (parameter2 not in free_symbols):
