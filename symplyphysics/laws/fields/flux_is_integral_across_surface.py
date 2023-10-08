@@ -1,9 +1,10 @@
 from typing import Sequence
-from sympy import (Expr, Integral, Derivative, Eq, simplify, Symbol as SymSymbol, sympify)
-from symplyphysics import (cross_cartesian_vectors, print_expression, Quantity, Vector, dot_vectors,
-    vector_unit, vector_magnitude)
+from sympy import (Expr, Integral, Eq, simplify, Symbol as SymSymbol)
+from symplyphysics import (print_expression, Quantity, Vector, dot_vectors)
 from symplyphysics.core.dimensions import ScalarValue
 from symplyphysics.core.fields.vector_field import VectorField
+from symplyphysics.core.geometry.elements import parametrized_surface_element
+from symplyphysics.core.geometry.parameters import is_parametrized_surface
 
 # Description
 ## Flux is defined as the amount of "stuff" going through a curve or a surface
@@ -11,90 +12,70 @@ from symplyphysics.core.fields.vector_field import VectorField
 ## how much of the force is perpendicular to the surface.
 ## Surface is parametrized counter-clockwise. Positive field flux assumes the direction of the field is outwards
 ## of the surface.
+## See [flux across curve definition](.\flux_is_integral_across_curve.py) for flux as curvilinear
+## integral formula.
 
 # Definition
-## Flux = SurfaceIntegral(dot(F, n) * dS, Surface)
+## Flux = SurfaceIntegral(dot(F, dS), Surface)
 # Where:
 ## Flux is flux
 ## F is vector field
-## n (norm) is outward unit normal vector of the surface
-## dl is curve unit tangent vector magnitude
+## dS is vector surface element, equals to n * dA, where:
+## - n is unit normal vector of the surface
+## - dA is infinitesimal element of surface area
 ## dot is dot product
 
 # Conditions
-## - Curve is a function of a single parameter (eg y(x) = x**2), or parametrized with a single parameter
-## (eg x(t) = cos(t), y(t) = sin(t))
-## - Curve is smooth and continuous
-## - Curve is positively oriented
-## - Field is defined for a plane (2-dimensional coordinate system)
+## - Field is smooth vector field in 3d space
+## - Surface is smooth positively oriented surface in 3d space
+## - Surface enclosing curve is smooth, continuous and closed
+## - Surface is a function of two parameters (eg z(x, y) = sqrt(x**2 + y**2)), or parametrized with
+##   two parameters (eg x(t1, t2) = t1 * cos(t2), y(t1, t2) = t1 * sin(t2), z(t1, t2) = t1)
 
 # These are not physical symbols - SymPy 'Symbol' is good enough.
 
 flux = SymSymbol("flux")
-# trajectory is a function of the moving particle
-trajectory = SymSymbol("trajectory")
-# trajectory_element (dl) is trajectory derivative by parameter
-# parameter is an argument of trajectory function, eg x coordinate
-trajectory_element = SymSymbol("trajectory_element")
-trajectory_element_magnitude = SymSymbol("trajectory_element_magnitude")
-parameter = SymSymbol("parameter")
-parameter_from = SymSymbol("parameter_from")
-parameter_to = SymSymbol("parameter_to")
-field_dot_norm = SymSymbol("field_dot_norm")
+# This is integrand of the integral over the surface
+field_dot_surface_element = SymSymbol("field_dot_surface_element")
+# Inner integral parameter and limits
+parameter1 = SymSymbol("parameter1")
+parameter1_from = SymSymbol("parameter1_from")
+parameter1_to = SymSymbol("parameter1_to")
+# Outer integral parameter and limits
+parameter2 = SymSymbol("parameter2")
+parameter2_from = SymSymbol("parameter2_from")
+parameter2_to = SymSymbol("parameter2_to")
 
-trajectory_element_definition = Eq(trajectory_element, Derivative(trajectory, parameter))
 law = Eq(
     flux,
-    Integral(field_dot_norm * trajectory_element_magnitude,
-    (parameter, parameter_from, parameter_to)))
+    Integral(field_dot_surface_element, (parameter1, parameter1_from, parameter1_to),
+    (parameter2, parameter2_from, parameter2_to)))
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-def _unit_norm_vector(trajectory_: Vector):
-    trajectory_sympy_vector = trajectory_.to_sympy_vector()
-    tangent_sympy_vector = trajectory_element_definition.rhs.subs(trajectory,
-        trajectory_sympy_vector).doit()
-    tangent_vector = Vector.from_sympy_vector(tangent_sympy_vector, trajectory_.coordinate_system)
-    unit_tangent_vector = vector_unit(tangent_vector)
-    # Use cross product with k vector to assert that norm vector is not directed
-    # upwards (in the same direction as k)
-    k_vector = Vector([0, 0, 1], trajectory_.coordinate_system)
-    return cross_cartesian_vectors(unit_tangent_vector, k_vector)
-
-
-def _calculate_dot_norm(field_: VectorField, trajectory_: Vector) -> Expr:
-    norm_vector = _unit_norm_vector(trajectory_)
-    trajectory_components = [sympify(c) for c in trajectory_.components]
-    field_applied = field_.apply(trajectory_components)
-    return dot_vectors(field_applied, norm_vector)
-
-
-def _trajectory_element_magnitude(trajectory_: Vector) -> Expr:
-    trajectory_sympy_vector = trajectory_.to_sympy_vector()
-    trajectory_element_sympy_vector = trajectory_element_definition.rhs.subs(
-        trajectory, trajectory_sympy_vector).doit()
-    trajectory_element_vector = Vector.from_sympy_vector(trajectory_element_sympy_vector,
-        trajectory_.coordinate_system)
-    return vector_magnitude(trajectory_element_vector)
+# Calculate SurfaceIntegral integrand, which is Dot(Field, dS)
+def _calculate_field_dot_surface_element(field_: VectorField, surface_: Sequence[Expr]) -> Expr:
+    field_applied = field_.apply(surface_)
+    surface_vector = Vector(surface_, field_.coordinate_system)
+    surface_element_vector = parametrized_surface_element(surface_vector, parameter1, parameter2)
+    return dot_vectors(field_applied, surface_element_vector)
 
 
 # trajectory_ should be array with projections to coordinates, eg [3 * cos(parameter), 3 * sin(parameter)]
-def calculate_flux(field_: VectorField, trajectory_: Sequence[Expr],
-    parameter_limits: tuple[ScalarValue, ScalarValue]) -> Quantity:
-    # trajectory_ and field_ should be 2-dimensional
-    if len(trajectory_) > 2:
-        raise ValueError(f"Trajectory with 2 and more components is not supported,"
-            f" got {len(trajectory_)}")
-    trajectory_vector = Vector(trajectory_, field_.coordinate_system)
-    field_dot_norm_value = _calculate_dot_norm(field_, trajectory_vector)
-    trajectory_element_magnitude_value = _trajectory_element_magnitude(trajectory_vector)
+def calculate_flux(field_: VectorField, surface_: Sequence[Expr],
+    parameter1_limits: tuple[ScalarValue, ScalarValue], parameter2_limits: tuple[ScalarValue,
+    ScalarValue]) -> Quantity:
+    if not is_parametrized_surface(surface_, parameter1, parameter2):
+        raise ValueError("Trajectory should be parametrized by both parameter1 and parameter2")
+    field_dot_surface_element_value = _calculate_field_dot_surface_element(field_, surface_)
     flux_value = law.rhs.subs({
-        field_dot_norm: field_dot_norm_value,
-        trajectory_element_magnitude: trajectory_element_magnitude_value,
-        parameter_from: parameter_limits[0],
-        parameter_to: parameter_limits[1],
+        field_dot_surface_element: field_dot_surface_element_value,
+        parameter1_from: parameter1_limits[0],
+        parameter1_to: parameter1_limits[1],
+        parameter2_from: parameter2_limits[0],
+        parameter2_to: parameter2_limits[1],
     }).doit()
     return Quantity(simplify(flux_value))

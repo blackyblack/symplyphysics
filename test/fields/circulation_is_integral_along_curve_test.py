@@ -65,8 +65,7 @@ def test_orthogonal_movement_circulation(test_args):
     # trajectory is upwards helix
     helix = [
         cos(circulation_def.parameter),
-        sin(circulation_def.parameter),
-        circulation_def.parameter
+        sin(circulation_def.parameter), circulation_def.parameter
     ]
     result = circulation_def.calculate_circulation(field, helix, (0, 2 * pi))
     assert convert_to(result, S.One) == 0

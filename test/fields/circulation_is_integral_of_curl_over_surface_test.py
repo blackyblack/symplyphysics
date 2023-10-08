@@ -41,8 +41,7 @@ def test_cone_circulation(test_args):
     # let's check with cone surface
     cone = [
         3 * circulation_def.parameter1 * cos(circulation_def.parameter2),
-        3 * circulation_def.parameter1 * sin(circulation_def.parameter2),
-        circulation_def.parameter1
+        3 * circulation_def.parameter1 * sin(circulation_def.parameter2), circulation_def.parameter1
     ]
     result = circulation_def.calculate_circulation(field, cone, (0, 1), (0, 2 * pi))
     assert convert_to(result, S.One).evalf(4) == approx((-18 * pi).evalf(4), 0.001)
@@ -50,10 +49,7 @@ def test_cone_circulation(test_args):
 
 def test_one_parameter_circulation(test_args):
     field = VectorField(lambda point: [point.y, point.x], test_args.C)
-    surface = [
-        cos(circulation_def.parameter1),
-        sin(circulation_def.parameter1)
-    ]
+    surface = [cos(circulation_def.parameter1), sin(circulation_def.parameter1)]
     with raises(ValueError):
         circulation_def.calculate_circulation(field, surface, (0, 1), (0, pi / 2))
 

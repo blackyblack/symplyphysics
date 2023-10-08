@@ -27,6 +27,7 @@ atomic_weight = Symbol("atomic_weight", units.mass / units.amount_of_substance)
 law = Eq(atomic_number_density, material_density * units.avogadro / atomic_weight)
 
 # Derive the same law from volume number density law
+
 density_law = density_from_mass_volume.definition.subs({
     density_from_mass_volume.volume: volume_number_density.volume,
     density_from_mass_volume.density: material_density
