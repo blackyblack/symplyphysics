@@ -4,7 +4,7 @@ from symplyphysics import (Vector, dot_vectors, Quantity, print_expression)
 from symplyphysics.core.dimensions import ScalarValue
 from symplyphysics.core.fields.operators import curl_operator
 from symplyphysics.core.fields.vector_field import VectorField
-from symplyphysics.core.geometry.elements import parametrized_surface_element
+from symplyphysics.core.geometry.normals import parametrized_surface_normal
 from symplyphysics.core.geometry.parameters import is_parametrized_surface
 from symplyphysics.laws.fields import flux_is_integral_across_surface as flux_def
 
@@ -57,7 +57,7 @@ law = Eq(
     Integral(curl_dot_surface_element, (parameter1, parameter1_from, parameter1_to),
     (parameter2, parameter2_from, parameter2_to)))
 
-# Use flux across surface as reference
+# Verify that circulation over surface equals to flux of curl of field.
 
 flux_field_integral = flux_def.law.subs({
     flux_def.field_dot_surface_element: curl_dot_surface_element,
@@ -80,7 +80,7 @@ def _calculate_curl_dot_surface_element(field_: VectorField, surface_: Sequence[
     field_rotor_vector_field = curl_operator(field_)
     field_rotor_applied = field_rotor_vector_field.apply(surface_)
     surface_vector = Vector(surface_, field_.coordinate_system)
-    surface_element_vector = parametrized_surface_element(surface_vector, parameter1, parameter2)
+    surface_element_vector = parametrized_surface_normal(surface_vector, parameter1, parameter2)
     return dot_vectors(field_rotor_applied, surface_element_vector)
 
 

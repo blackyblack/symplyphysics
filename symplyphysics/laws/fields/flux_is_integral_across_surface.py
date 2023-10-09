@@ -3,7 +3,7 @@ from sympy import (Expr, Integral, Eq, simplify, Symbol as SymSymbol)
 from symplyphysics import (print_expression, Quantity, Vector, dot_vectors)
 from symplyphysics.core.dimensions import ScalarValue
 from symplyphysics.core.fields.vector_field import VectorField
-from symplyphysics.core.geometry.elements import parametrized_surface_element
+from symplyphysics.core.geometry.normals import parametrized_surface_normal
 from symplyphysics.core.geometry.parameters import is_parametrized_surface
 
 # Description
@@ -60,7 +60,7 @@ def print_law() -> str:
 def _calculate_field_dot_surface_element(field_: VectorField, surface_: Sequence[Expr]) -> Expr:
     field_applied = field_.apply(surface_)
     surface_vector = Vector(surface_, field_.coordinate_system)
-    surface_element_vector = parametrized_surface_element(surface_vector, parameter1, parameter2)
+    surface_element_vector = parametrized_surface_normal(surface_vector, parameter1, parameter2)
     return dot_vectors(field_applied, surface_element_vector)
 
 

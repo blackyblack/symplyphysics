@@ -1,10 +1,11 @@
 from typing import Sequence
 from sympy import (Expr, Integral, Eq, simplify, Symbol as SymSymbol, sympify)
-from symplyphysics import (cross_cartesian_vectors, print_expression, Quantity, Vector, dot_vectors,
+from symplyphysics import (print_expression, Quantity, Vector, dot_vectors,
     vector_unit, vector_magnitude)
 from symplyphysics.core.dimensions import ScalarValue
 from symplyphysics.core.fields.vector_field import VectorField
 from symplyphysics.core.geometry.elements import curve_element
+from symplyphysics.core.geometry.normals import curve_normal
 
 # Description
 ## Flux is defined as the amount of "stuff" going through a curve or a surface
@@ -19,7 +20,7 @@ from symplyphysics.core.geometry.elements import curve_element
 ## Flux is flux
 ## F is vector field
 ## n (norm) is outward unit normal vector of the curve
-## dl is curve unit tangent vector magnitude
+## dl is curve element magnitude
 ## dot is dot product
 
 # Conditions
@@ -51,20 +52,12 @@ def print_law() -> str:
     return print_expression(law)
 
 
-def _unit_norm_vector(trajectory_: Vector):
-    curve_element_vector = curve_element(trajectory_, parameter)
-    unit_tangent_vector = vector_unit(curve_element_vector)
-    # Use cross product with k vector to assert that norm vector is on
-    # the XY plane
-    k_vector = Vector([0, 0, 1], trajectory_.coordinate_system)
-    return cross_cartesian_vectors(unit_tangent_vector, k_vector)
-
-
 def _calculate_dot_norm(field_: VectorField, trajectory_: Vector) -> Expr:
-    norm_vector = _unit_norm_vector(trajectory_)
     trajectory_components = [sympify(c) for c in trajectory_.components]
     field_applied = field_.apply(trajectory_components)
-    return dot_vectors(field_applied, norm_vector)
+    norm_vector = curve_normal(trajectory_, parameter)
+    norm_unit_vector = vector_unit(norm_vector)
+    return dot_vectors(field_applied, norm_unit_vector)
 
 
 def _curve_element_magnitude(trajectory_: Vector) -> Expr:

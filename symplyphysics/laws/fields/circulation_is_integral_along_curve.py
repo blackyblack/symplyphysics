@@ -23,7 +23,7 @@ from symplyphysics.core.geometry.elements import curve_element
 # Where:
 ## C is circulation
 ## F is vector field
-## dr is curve tangent vector
+## dr is curve element (tangent) vector
 ## dot is dot product
 
 # Conditions
