@@ -34,17 +34,15 @@ solved = solve(admittances_law, parallel_admittance_law.parallel_admittance, dic
 for (from_, to_) in zip(admittance_symbols, admittances):
     solved = solved.subs(from_, to_)
 result_admittance = solved
-print(f"Admittance of 2 parallel coils is {print_expression(result_admittance)}")
 
 # And finally find resulting inductivity back through the impedance
 result_impedance = solve(admittance_def.definition, admittance_def.dipole_impedance, dict=True)[0][admittance_def.dipole_impedance].subs(
     admittance_def.dipole_admittance, result_admittance
 )
-print(f"Impedance of 2 parallel coils is {print_expression(result_impedance)}")
 
 result_inductivity = solve(coil_impedance_law.law, coil_impedance_law.coil_inductivity, dict=True)[0][coil_impedance_law.coil_inductivity].subs({
     coil_impedance_law.coil_impedance: result_impedance,
     coil_impedance_law.circular_frequency: circular_frequency
 })
 result_inductivity = simplify(result_inductivity)
-print(f"Inductivity of 2 parallel coils is {print_expression(result_inductivity)}")
+print(f"Inductivity of 2 parallel coils is \n{print_expression(result_inductivity)}")
