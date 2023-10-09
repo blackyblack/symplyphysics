@@ -14,15 +14,12 @@ from symplyphysics.laws.electricity.circuits import admittance_of_parallel_dipol
 
 inductivity_1 = Symbol("inductivity_1", units.inductance)
 inductivity_2 = Symbol("inductivity_2", units.inductance)
-circular_frequency = Symbol("circular_frequency", units.frequency)
 
 # Parallel connection of dipoles summarizes their admittances.
 # First find impedances and then admittances
 impedance_law = coil_impedance_law.law.subs(coil_impedance_law.coil_impedance, admittance_def.dipole_impedance)
-admittance_solution = solve([impedance_law, admittance_def.definition],
+admittance_solved = solve([impedance_law, admittance_def.definition],
     admittance_def.dipole_impedance, admittance_def.dipole_admittance, dict=True)[0][admittance_def.dipole_admittance]
-admittance_solved = admittance_solution.subs(coil_impedance_law.circular_frequency, circular_frequency)
-
 admittance_1 = admittance_solved.subs(coil_impedance_law.coil_inductivity, inductivity_1)
 admittance_2 = admittance_solved.subs(coil_impedance_law.coil_inductivity, inductivity_2)
 admittances = [admittance_1, admittance_2]
@@ -42,9 +39,8 @@ result_impedance = solve(admittance_def.definition, admittance_def.dipole_impeda
 )
 print(f"Impedance of 2 parallel coils is {print_expression(result_impedance)}")
 
-result_inductivity = solve(coil_impedance_law.law, coil_impedance_law.coil_inductivity, dict=True)[0][coil_impedance_law.coil_inductivity].subs({
-    coil_impedance_law.coil_impedance: result_impedance,
-    coil_impedance_law.circular_frequency: circular_frequency
-})
+result_inductivity = solve(coil_impedance_law.law, coil_impedance_law.coil_inductivity, dict=True)[0][coil_impedance_law.coil_inductivity].subs(
+    coil_impedance_law.coil_impedance, result_impedance
+)
 result_inductivity = simplify(result_inductivity)
 print(f"Inductivity of 2 parallel coils is {print_expression(result_inductivity)}")
