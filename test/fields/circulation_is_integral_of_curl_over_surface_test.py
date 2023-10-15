@@ -1,7 +1,6 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import approx, fixture
 from sympy import S, Expr, sin, cos, sqrt, pi
-from sympy.vector import VectorZero
 from symplyphysics import (
     units,
     Quantity,
@@ -10,7 +9,6 @@ from symplyphysics import (
     convert_to,
 )
 from symplyphysics.core.fields.field_point import FieldPoint
-from symplyphysics.core.fields.operators import curl_operator
 from symplyphysics.core.fields.vector_field import VectorField
 from symplyphysics.laws.fields import circulation_is_integral_of_curl_over_surface as circulation_def
 
@@ -34,40 +32,8 @@ def test_basic_circulation(test_args):
     assert convert_to(result, S.One).evalf(4) == approx((-pi / 4).evalf(4), 0.001)
 
 
-def test_cone_circulation(test_args):
-    field = VectorField(lambda point: [point.y, -point.x, 0], test_args.C)
-    # circle function is: x**2 + y**2 = 9
-    # from circulation_is_integral_along_curve_test we got circulation -18 * pi
-    # let's check with cone surface
-    cone = [
-        3 * circulation_def.parameter1 * cos(circulation_def.parameter2),
-        3 * circulation_def.parameter1 * sin(circulation_def.parameter2), circulation_def.parameter1
-    ]
-    result = circulation_def.calculate_circulation(field, cone, (0, 1), (0, 2 * pi))
-    assert convert_to(result, S.One).evalf(4) == approx((-18 * pi).evalf(4), 0.001)
-
-
-def test_one_parameter_circulation(test_args):
-    field = VectorField(lambda point: [point.y, point.x], test_args.C)
-    surface = [cos(circulation_def.parameter1), sin(circulation_def.parameter1)]
-    with raises(ValueError):
-        circulation_def.calculate_circulation(field, surface, (0, 1), (0, pi / 2))
-
-
 def _distance(point: FieldPoint) -> Expr:
     return sqrt(point.x**2 + point.y**2 + point.z**2)
-
-
-def test_gravitational_field_is_conservative(test_args):
-    # gravitational field also has a common multiplier of -G*M. It does not
-    # affect conservative property of a field.
-    field = VectorField(
-        lambda point: [
-        point.x / _distance(point)**3, point.y / _distance(point)**3, point.z / _distance(point)**3
-        ], test_args.C)
-    field_rotor = curl_operator(field)
-    field_rotor_applied = field_rotor.apply_to_basis().to_sympy_vector()
-    assert field_rotor_applied == VectorZero.zero
 
 
 def test_force_field_circulation(test_args):

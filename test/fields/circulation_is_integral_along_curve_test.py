@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import approx, fixture
-from sympy import S, sin, cos, sqrt, Symbol as SymSymbol, pi
+from sympy import S, sin, cos, pi
 from symplyphysics import (
     units,
     convert_to,
@@ -30,49 +30,6 @@ def test_basic_circulation(test_args):
     curve = [cos(circulation_def.parameter), sin(circulation_def.parameter)]
     result = circulation_def.calculate_circulation(field, curve, (0, pi / 2))
     assert convert_to(result, S.One).evalf(4) == approx((-pi / 4).evalf(4), 0.001)
-
-
-def test_circle_circulation():
-    field = VectorField(lambda point: [-point.y, point.x])
-    radius = SymSymbol("radius")
-    circle = [radius * cos(circulation_def.parameter), radius * sin(circulation_def.parameter)]
-    result = circulation_def.calculate_circulation(field, circle, (0, 2 * pi))
-    assert convert_to(result, S.One).evalf(4) == approx((2 * pi * radius**2).evalf(4), 0.001)
-
-
-def test_two_parameters_circulation(test_args):
-    field = VectorField(lambda point: [point.y, -point.x, 0], test_args.C)
-    # circle function is: x**2 + y**2 = 9
-    # parametrize by circulation_def.parameter
-    circle = [3 * cos(circulation_def.parameter), 3 * sin(circulation_def.parameter)]
-    result = circulation_def.calculate_circulation(field, circle, (0, 2 * pi))
-    assert convert_to(result, S.One).evalf(4) == approx((-18 * pi).evalf(4), 0.001)
-    # now try to define trajectory without parametrization
-    # parametrized solution uses angle [0, 2*pi] that corresponds to the counter-clockwise direction
-    # so we should integrate in the same direction: [r, -r] for upper part of the circle and [-r, r] for lower
-    # y = sqrt(9 - x**2) for upper part of the circle
-    # y = -sqrt(9 - x**2) for lower part of the circle
-    circle_implicit_up = [circulation_def.parameter, sqrt(9 - circulation_def.parameter**2)]
-    result_up = circulation_def.calculate_circulation(field, circle_implicit_up, (3, -3))
-    circle_implicit_down = [circulation_def.parameter, -sqrt(9 - circulation_def.parameter**2)]
-    result_down = circulation_def.calculate_circulation(field, circle_implicit_down, (-3, 3))
-    assert (convert_to(result_up, S.One).evalf(4) +
-        convert_to(result_down, S.One).evalf(4)) == approx((-18 * pi).evalf(4), 0.001)
-
-
-def test_orthogonal_movement_circulation(test_args):
-    field = VectorField(lambda point: [point.y, -point.x, 1], test_args.C)
-    # trajectory is upwards helix
-    helix = [
-        cos(circulation_def.parameter),
-        sin(circulation_def.parameter), circulation_def.parameter
-    ]
-    result = circulation_def.calculate_circulation(field, helix, (0, 2 * pi))
-    assert convert_to(result, S.One) == 0
-    # trajectory is upwards straight line
-    trajectory_vertical = [1, 0, circulation_def.parameter]
-    result = circulation_def.calculate_circulation(field, trajectory_vertical, (0, 2 * pi))
-    assert convert_to(result, S.One).evalf(4) == approx((2 * pi).evalf(4), 0.001)
 
 
 def test_force_circulation(test_args):

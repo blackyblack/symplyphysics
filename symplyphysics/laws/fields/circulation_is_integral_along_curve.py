@@ -1,9 +1,9 @@
 from typing import Sequence
-from sympy import (Expr, Integral, Symbol as SymSymbol, Eq, simplify, sympify)
-from symplyphysics import (dot_vectors, print_expression, Quantity, Vector)
+from sympy import (Expr, Symbol as SymSymbol)
+from symplyphysics import Quantity
 from symplyphysics.core.dimensions import ScalarValue
+from symplyphysics.core.fields.analysis import circulation_along_curve
 from symplyphysics.core.fields.vector_field import VectorField
-from symplyphysics.core.geometry.elements import curve_element
 
 # Description
 ## Field circulation along closed curve is curvilinear integral of field by this curve.
@@ -32,36 +32,18 @@ from symplyphysics.core.geometry.elements import curve_element
 ## - Curve is smooth and continuous
 ## - Curve is positively oriented
 
-# These are not physical symbols - SymPy 'Symbol' is good enough.
-
-circulation = SymSymbol("circulation")
+# This is how we parametrize the curve
 parameter = SymSymbol("parameter")
-parameter_from = SymSymbol("parameter_from")
-parameter_to = SymSymbol("parameter_to")
-field_dot_curve_element = SymSymbol("field_dot_curve_element")
-
-law = Eq(circulation, Integral(field_dot_curve_element, (parameter, parameter_from, parameter_to)))
 
 
-def print_law() -> str:
-    return print_expression(law)
+def circulation_law(field: VectorField, trajectory: Sequence[Expr], parameter_from: ScalarValue,
+    parameter_to: ScalarValue) -> ScalarValue:
+    return circulation_along_curve(field, trajectory, (parameter, parameter_from, parameter_to))
 
 
-def _calculate_dot_element(field_: VectorField, trajectory_: Vector) -> Expr:
-    trajectory_components = [sympify(c) for c in trajectory_.components]
-    field_applied = field_.apply(trajectory_components)
-    curve_element_vector = curve_element(trajectory_, parameter)
-    return dot_vectors(field_applied, curve_element_vector)
-
-
-# trajectory_ should be array with projections to coordinates, eg [3 * cos(parameter), 3 * sin(parameter)]
-def calculate_circulation(field_: VectorField, trajectory_: Sequence[Expr],
+# trajectory should be array with projections to coordinates, eg [3 * cos(parameter), 3 * sin(parameter)]
+def calculate_circulation(field: VectorField, trajectory: Sequence[Expr],
     parameter_limits: tuple[ScalarValue, ScalarValue]) -> Quantity:
-    trajectory_vector = Vector(trajectory_, field_.coordinate_system)
-    field_dot_element_value = _calculate_dot_element(field_, trajectory_vector)
-    result_expr = law.rhs.subs({
-        field_dot_curve_element: field_dot_element_value,
-        parameter_from: parameter_limits[0],
-        parameter_to: parameter_limits[1]
-    }).doit()
-    return Quantity(simplify(result_expr))
+    (parameter_from, parameter_to) = parameter_limits
+    result_expr = circulation_law(field, trajectory, parameter_from, parameter_to)
+    return Quantity(result_expr)
