@@ -2,7 +2,7 @@ from typing import Sequence
 from sympy import (Expr, Symbol as SymSymbol)
 from symplyphysics import Quantity
 from symplyphysics.core.dimensions import ScalarValue
-from symplyphysics.core.fields.analysis import circulation_over_surface
+from symplyphysics.core.fields.analysis import circulation_along_surface_boundary
 from symplyphysics.core.fields.vector_field import VectorField
 
 # Description
@@ -19,9 +19,9 @@ from symplyphysics.core.fields.vector_field import VectorField
 # Law:
 ## C = SurfaceIntegral(dot(Curl(F), dS), Surface)
 ## Where:
-## C is circulation
+## C is circulation along Curve
 ## F is vector field
-## Surface is surface boundary enclosed inside the curve
+## Surface is surface enclosed inside the Curve
 ## dS is vector surface element, equals to n * dA, where:
 ## - n is unit normal vector of the surface
 ## - dA is infinitesimal element of surface area
@@ -42,9 +42,10 @@ parameter2 = SymSymbol("parameter2")
 
 
 def circulation_law(field: VectorField, trajectory: Sequence[Expr],
-    parameter1_limits: tuple[ScalarValue, ScalarValue],
-    parameter2_limits: tuple[ScalarValue, ScalarValue]) -> ScalarValue:
-    return circulation_over_surface(field, trajectory, (parameter1, parameter1_limits[0], parameter1_limits[1]),
+    parameter1_limits: tuple[ScalarValue, ScalarValue], parameter2_limits: tuple[ScalarValue,
+    ScalarValue]) -> ScalarValue:
+    return circulation_along_surface_boundary(field, trajectory,
+        (parameter1, parameter1_limits[0], parameter1_limits[1]),
         (parameter2, parameter2_limits[0], parameter2_limits[1]))
 
 

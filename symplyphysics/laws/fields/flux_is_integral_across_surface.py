@@ -37,10 +37,10 @@ parameter1 = SymSymbol("parameter1")
 parameter2 = SymSymbol("parameter2")
 
 
-def flux_law(field: VectorField, trajectory: Sequence[Expr],
-    parameter1_limits: tuple[ScalarValue, ScalarValue],
-    parameter2_limits: tuple[ScalarValue, ScalarValue]) -> ScalarValue:
-    return flux_across_surface(field, trajectory, (parameter1, parameter1_limits[0], parameter1_limits[1]),
+def flux_law(field: VectorField, trajectory: Sequence[Expr], parameter1_limits: tuple[ScalarValue,
+    ScalarValue], parameter2_limits: tuple[ScalarValue, ScalarValue]) -> ScalarValue:
+    return flux_across_surface(field, trajectory,
+        (parameter1, parameter1_limits[0], parameter1_limits[1]),
         (parameter2, parameter2_limits[0], parameter2_limits[1]))
 
 

@@ -3,9 +3,9 @@ from pytest import approx, fixture, mark, raises
 from sympy import Expr, cos, pi, sin, sqrt, Symbol as SymSymbol
 from sympy.vector import VectorZero
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
-from symplyphysics.core.fields.analysis import circulation_along_curve, circulation_over_surface, flux_across_curve, flux_across_surface
+from symplyphysics.core.fields.analysis import circulation_along_curve, circulation_along_surface_boundary, flux_across_curve, flux_across_surface
 from symplyphysics.core.fields.field_point import FieldPoint
-from symplyphysics.core.fields.operators import curl_operator
+from symplyphysics.core.fields.operators import curl_operator_cartesian
 from symplyphysics.core.fields.vector_field import VectorField
 
 
@@ -69,18 +69,25 @@ def test_orthogonal_movement_circulation_along_curve(test_args):
     assert result.evalf(4) == approx((2 * pi).evalf(4), 0.001)
 
 
-def test_basic_circulation_over_surface(test_args):
+def test_basic_circulation_along_surface_boundary(test_args):
     field = VectorField(lambda point: [point.y, 0, point.x + point.z], test_args.C)
+    # cylinder
     surface = [
         test_args.parameter1 * cos(test_args.parameter2),
         test_args.parameter1 * sin(test_args.parameter2)
     ]
-    result = circulation_over_surface(field, surface, (test_args.parameter1, 0, 1),
+    result = circulation_along_surface_boundary(field, surface, (test_args.parameter1, 0, 1),
         (test_args.parameter2, 0, pi / 2))
     assert result.evalf(4) == approx((-pi / 4).evalf(4), 0.001)
+    # circle, which is a cylinder's boundary
+    curve = [cos(test_args.parameter1), sin(test_args.parameter1)]
+    result_from_boundary = circulation_along_curve(field, curve, (test_args.parameter1, 0, pi / 2))
+    # verify that 'circulation_along_curve()' result is the same as when using
+    # 'circulation_along_surface_boundary()'
+    assert result_from_boundary.evalf(4) == approx(result.evalf(4), 0.001)
 
 
-def test_cone_circulation(test_args):
+def test_cone_circulation_along_surface_boundary(test_args):
     field = VectorField(lambda point: [point.y, -point.x, 0], test_args.C)
     # circle function is: x**2 + y**2 = 9
     # from circulation_is_integral_along_curve_test we got circulation -18 * pi
@@ -89,18 +96,18 @@ def test_cone_circulation(test_args):
         3 * test_args.parameter1 * cos(test_args.parameter2),
         3 * test_args.parameter1 * sin(test_args.parameter2), test_args.parameter1
     ]
-    result = circulation_over_surface(field, cone, (test_args.parameter1, 0, 1),
+    result = circulation_along_surface_boundary(field, cone, (test_args.parameter1, 0, 1),
         (test_args.parameter2, 0, 2 * pi))
     assert result.evalf(4) == approx((-18 * pi).evalf(4), 0.001)
 
 
-# non-surface trajectories (eg circle) are not supported
-def test_circle_circulation_over_surface(test_args):
+# non-surface trajectories (eg circle) result in zero circulation
+def test_circle_circulation_along_surface_boundary(test_args):
     field = VectorField(lambda point: [point.y, point.x], test_args.C)
     surface = [cos(test_args.parameter1), sin(test_args.parameter1)]
-    with raises(ValueError):
-        circulation_over_surface(field, surface, (test_args.parameter1, 0, 1),
-            (test_args.parameter2, 0, pi / 2))
+    result = circulation_along_surface_boundary(field, surface, (test_args.parameter1, 0, 1),
+        (test_args.parameter2, 0, pi / 2))
+    assert result.evalf(4) == 0
 
 
 def test_gravitational_field_is_conservative(test_args):
@@ -110,7 +117,7 @@ def test_gravitational_field_is_conservative(test_args):
         lambda point: [
         point.x / _distance(point)**3, point.y / _distance(point)**3, point.z / _distance(point)**3
         ], test_args.C)
-    field_rotor = curl_operator(field)
+    field_rotor = curl_operator_cartesian(field)
     field_rotor_applied = field_rotor.apply_to_basis().to_sympy_vector()
     assert field_rotor_applied == VectorZero.zero
 

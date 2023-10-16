@@ -21,8 +21,8 @@ def test_args_fixture():
     # field is (0, -1 * G * m * M / y**2)
     # G * m * M = (force * length**2 / mass**2) * mass**2 = force * length**2
     field = VectorField(lambda point: [0, -1 * force_unit * radius_unit**2 / point.y**2], C)
-    Args = namedtuple("Args", ["C", "force_unit", "radius_unit", "field"])
-    return Args(C=C, force_unit=force_unit, radius_unit=radius_unit, field=field)
+    Args = namedtuple("Args", ["C", "radius_unit", "field"])
+    return Args(C=C, radius_unit=radius_unit, field=field)
 
 
 def test_basic_circulation(test_args):
