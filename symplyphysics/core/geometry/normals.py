@@ -1,6 +1,6 @@
 from sympy import Expr, diff
 
-from symplyphysics.core.geometry.elements import curve_element
+from ..geometry.elements import curve_element
 from ..vectors.vectors import Vector
 from ..vectors.arithmetics import cross_cartesian_vectors
 

@@ -5,7 +5,7 @@ from sympy.vector import VectorZero
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
 from symplyphysics.core.fields.analysis import circulation_along_curve, circulation_along_surface_boundary, flux_across_curve, flux_across_surface
 from symplyphysics.core.fields.field_point import FieldPoint
-from symplyphysics.core.fields.operators import curl_operator_cartesian
+from symplyphysics.core.fields.operators import curl_operator
 from symplyphysics.core.fields.vector_field import VectorField
 
 
@@ -117,7 +117,7 @@ def test_gravitational_field_is_conservative(test_args):
         lambda point: [
         point.x / _distance(point)**3, point.y / _distance(point)**3, point.z / _distance(point)**3
         ], test_args.C)
-    field_rotor = curl_operator_cartesian(field)
+    field_rotor = curl_operator(field)
     field_rotor_applied = field_rotor.apply_to_basis().to_sympy_vector()
     assert field_rotor_applied == VectorZero.zero
 
@@ -176,3 +176,7 @@ def test_gravitational_field_flux(test_args):
     assert result.evalf(4) == approx((4 * pi).evalf(4), 0.001)
     # if -G * M multiplier is applied, we will get Gauss law for gravity:
     # https://en.wikipedia.org/wiki/Gauss%27s_law_for_gravity
+
+
+#TODO: flux_across_surface_boundary tests
+#TODO: flux_across_volume_boundary tests

@@ -225,11 +225,11 @@ def test_spherical_vector_create(test_args):
     vector = Vector([1, 2], test_args.C)
     B = coordinates_transform(test_args.C, CoordinateSystem.System.SPHERICAL)
     # vector should have r = sqrt(5) in polar coordinates
-    # vector is in XY-plane, so theta angle should be pi/2
-    # phi angle is atan(2/1)
+    # vector is in XY-plane, so phi angle should be pi/2
+    # theta angle is atan(2/1)
     vector_rebased = vector.rebase(B)
     assert vector_rebased.coordinate_system == B
-    assert vector_rebased.components == [sqrt(5), pi / 2, atan(2)]
+    assert vector_rebased.components == [sqrt(5), atan(2), pi / 2]
 
 
 # Test QuantityVector constructor
@@ -355,11 +355,11 @@ def test_spherical_quantities_rebase(test_args):
     vector = QuantityVector([q1, q2], test_args.C)
     B = coordinates_transform(test_args.C, CoordinateSystem.System.SPHERICAL)
     # vector should have r = sqrt(5) in polar coordinates
-    # vector is in XY-plane, so theta angle should be pi/2
-    # phi angle is atan(2/1)
+    # vector is in XY-plane, so phi angle should be pi/2
+    # theta angle is atan(2/1)
     vector_rebased = vector.rebase(B)
     assert vector_rebased.coordinate_system == B
     assert [
         vector_rebased.components[0].scale_factor, vector_rebased.components[1].scale_factor,
         vector_rebased.components[2].scale_factor
-    ] == [sqrt(5), pi / 2, atan(2)]
+    ] == [sqrt(5), atan(2), pi / 2]

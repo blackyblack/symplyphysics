@@ -310,14 +310,14 @@ def test_non_cartesian_dot_product():
     assert dot_vectors(Vector([0, 0, 1], C1), Vector([0, pi / 2, 1], C1)) == 1
 
     C2 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
-    assert dot_vectors(Vector([1, 0], C2), Vector([1, pi / 2], C2)) == 0
-    assert dot_vectors(Vector([1, 0], C2), Vector([1, pi / 4], C2)) == (sqrt(2) / 2)
-    assert dot_vectors(Vector([1, 0, 0], C2), Vector([1, pi / 2, 0], C2)) == 0
-    assert dot_vectors(Vector([1, pi / 2, 0], C2), Vector([1, pi / 2, pi / 2], C2)) == 0
+    assert dot_vectors(Vector([1, 0], C2), Vector([1, 0, pi / 2], C2)) == 0
+    assert dot_vectors(Vector([1, 0], C2), Vector([1, 0, pi / 4], C2)) == (sqrt(2) / 2)
+    assert dot_vectors(Vector([1, 0, 0], C2), Vector([1, 0, pi / 2], C2)) == 0
+    assert dot_vectors(Vector([1, 0, pi / 2], C2), Vector([1, pi / 2, pi / 2], C2)) == 0
 
-    # When theta angle = 0, vector is directed up and is immune to rotations,
+    # When phi angle = 0, vector is directed up and is immune to rotations,
     # therefore rotated vector is parallel to original
-    assert dot_vectors(Vector([1, 0, 0], C2), Vector([1, 0, pi / 2], C2)) == 1
+    assert dot_vectors(Vector([1, 0, 0], C2), Vector([1, pi / 2, 0], C2)) == 1
 
 
 def test_basic_magnitude_vectors(test_args):
@@ -336,8 +336,8 @@ def test_non_cartesian_magnitude_vectors():
 
     C2 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
     assert vector_magnitude(Vector([3, 0], C2)) == 3
-    assert vector_magnitude(Vector([3, 0, 2], C2)) == 3
-    assert vector_magnitude(Vector([3, pi / 4, 2], C2)) == 3
+    assert vector_magnitude(Vector([3, 2, 0], C2)) == 3
+    assert vector_magnitude(Vector([3, 2, pi / 4], C2)) == 3
 
 
 def test_basic_cross_product(test_args):
@@ -439,8 +439,8 @@ def test_basic_unit_vector():
         C1)).components == [3 / sqrt(13), pi / 4, 2 / sqrt(13)]
     C2 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
     assert vector_unit(Vector([3, 0], C2)).components == [1, 0]
-    assert vector_unit(Vector([3, 0, 2], C2)).components == [1, 0, 2]
-    assert vector_unit(Vector([3, pi / 4, 2], C2)).components == [1, pi / 4, 2]
+    assert vector_unit(Vector([3, 2, 0], C2)).components == [1, 2, 0]
+    assert vector_unit(Vector([3, 2, pi / 4], C2)).components == [1, 2, pi / 4]
 
 
 def test_basic_equal_quantity_vectors():

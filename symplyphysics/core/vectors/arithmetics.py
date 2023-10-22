@@ -117,7 +117,7 @@ def dot_vectors(vector_left: Vector, vector_right: Vector) -> Expr:
             list_right_extended) = _extend_two_vectors(vector_left, vector_right, dimensions)
         r1, theta1, phi1 = list_left_extended
         r2, theta2, phi2 = list_right_extended
-        return r1 * r2 * (sin(theta1) * sin(theta2) * cos(phi1 - phi2) + cos(theta1) * cos(theta2))
+        return r1 * r2 * (sin(phi1) * sin(phi2) * cos(theta1 - theta2) + cos(phi1) * cos(phi2))
     # never
     return S.Zero
 
