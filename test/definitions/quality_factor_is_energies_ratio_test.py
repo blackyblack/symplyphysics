@@ -10,7 +10,7 @@ from symplyphysics import (
 from symplyphysics.definitions import quality_factor_is_energies_ratio as quality_factor_def
 
 # Description
-## If the oscillating system has raisonant frequency 2 rad/sec, stores total 13 Joules of energy and dissipates 0.4 Watt power, it's quality factor should be 65.
+## If the oscillating system has resonant frequency 2 rad/sec, stores total 13 Joules of energy and dissipates 0.4 Watt power, it's quality factor should be 65.
 ## No external calculators were used for such computation.
 
 
@@ -23,7 +23,7 @@ def test_args_fixture():
     return Args(w=w, W=W, P=P)
 
 
-def test_basic_admittance(test_args):
+def test_basic_quality_factor(test_args):
     result = quality_factor_def.calculate_quality_factor(test_args.w, test_args.W, test_args.P)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, quality_factor_def.definition_units_SI)
     result_factor = convert_to(result, quality_factor_def.definition_units_SI).evalf(2)
