@@ -1,18 +1,16 @@
 from collections import namedtuple
-from sympy import I
 from pytest import approx, fixture, raises
 from symplyphysics import (
     errors,
     units,
     convert_to,
     Quantity,
-    SI,
-    dimensionless
+    SI    
 )
 from symplyphysics.definitions import quality_factor_is_energies_ratio as quality_factor_def
 
 # Description
-## If the oscillating system has raisonant frequency 2 rad/sec, stores total 13 Joules of energy and dissipates 0.4 Watt power, it's quality factor should be 65. 
+## If the oscillating system has raisonant frequency 2 rad/sec, stores total 13 Joules of energy and dissipates 0.4 Watt power, it's quality factor should be 65.
 ## No external calculators were used for such computation.
 
 
