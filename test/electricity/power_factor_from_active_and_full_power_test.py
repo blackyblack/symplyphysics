@@ -4,7 +4,7 @@ from symplyphysics import (errors, units, convert_to, Quantity, SI, dimensionles
 from symplyphysics.laws.electricity import power_factor_from_active_and_full_power as power_factor_law
 
 # Description
-## Assert we have a device wich consums 10 Watt of power and makes 3 Watt of work. Power factor of this consumer should be 3/10.
+## Assert we have a device wich consumes 10 Watt of power and makes 3 Watt of work. Power factor of this consumer should be 3/10.
 
 @fixture(name="test_args")
 def test_args_fixture():
@@ -14,7 +14,7 @@ def test_args_fixture():
     return Args(P=P, S=S)
 
 
-def test_basic_resistance(test_args):
+def test_basic_power_factor(test_args):
     result = power_factor_law.calculate_power_factor(test_args.P, test_args.S)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, dimensionless)
     result_current = convert_to(result, dimensionless).evalf(6)

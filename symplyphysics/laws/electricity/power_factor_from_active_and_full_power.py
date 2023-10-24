@@ -12,7 +12,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## S is total power consumed.
 
 full_power = Symbol("full_power", units.power)
-active_power = Symbol("circular_frequency", units.power)
+active_power = Symbol("active_power", units.power)
 power_factor = Symbol("power_factor", dimensionless)
 
 law = Eq(power_factor, active_power / full_power)
