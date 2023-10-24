@@ -5,7 +5,7 @@ from symplyphysics import (
     units,
     convert_to,
     Quantity,
-    SI    
+    SI
 )
 from symplyphysics.definitions import quality_factor_is_energies_ratio as quality_factor_def
 

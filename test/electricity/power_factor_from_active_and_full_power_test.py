@@ -9,7 +9,7 @@ from symplyphysics.laws.electricity import power_factor_from_active_and_full_pow
 @fixture(name="test_args")
 def test_args_fixture():
     P = Quantity(3 * units.watt)
-    S = Quantity(10 * units.watt)    
+    S = Quantity(10 * units.watt)
     Args = namedtuple("Args", ["P", "S"])
     return Args(P=P, S=S)
 
