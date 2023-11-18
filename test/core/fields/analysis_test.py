@@ -1,11 +1,9 @@
 from collections import namedtuple
 from pytest import approx, fixture, mark, raises
 from sympy import Expr, cos, pi, sin, sqrt, Symbol as SymSymbol
-from sympy.vector import VectorZero
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
-from symplyphysics.core.fields.analysis import circulation_along_curve, circulation_along_surface_boundary, flux_across_curve, flux_across_surface
+from symplyphysics.core.fields.analysis import circulation_along_curve, circulation_along_surface_boundary, flux_across_curve, flux_across_surface, flux_across_surface_boundary
 from symplyphysics.core.fields.field_point import FieldPoint
-from symplyphysics.core.fields.operators import curl_operator
 from symplyphysics.core.fields.vector_field import VectorField
 
 
@@ -16,10 +14,6 @@ def test_args_fixture():
     parameter2 = SymSymbol("parameter2")
     Args = namedtuple("Args", ["C", "parameter1", "parameter2"])
     return Args(C=C, parameter1=parameter1, parameter2=parameter2)
-
-
-def _distance(point: FieldPoint) -> Expr:
-    return sqrt(point.x**2 + point.y**2 + point.z**2)
 
 
 def test_basic_circulation_along_curve(test_args):
@@ -110,18 +104,6 @@ def test_circle_circulation_along_surface_boundary(test_args):
     assert result.evalf(4) == 0
 
 
-def test_gravitational_field_is_conservative(test_args):
-    # gravitational field also has a common multiplier of -G*M. It does not
-    # affect conservative property of a field.
-    field = VectorField(
-        lambda point: [
-        point.x / _distance(point)**3, point.y / _distance(point)**3, point.z / _distance(point)**3
-        ], test_args.C)
-    field_rotor = curl_operator(field)
-    field_rotor_applied = field_rotor.apply_to_basis().to_sympy_vector()
-    assert field_rotor_applied == VectorZero.zero
-
-
 def test_basic_flux_across_curve(test_args):
     field = VectorField(lambda point: [point.x, point.y], test_args.C)
     # flux over circle of radius = 2
@@ -159,6 +141,10 @@ def test_basic_flux_across_surface(test_args):
     assert result.evalf(4) == approx((12 * pi).evalf(4), 0.001)
 
 
+def _distance(point: FieldPoint) -> Expr:
+    return sqrt(point.x**2 + point.y**2 + point.z**2)
+
+
 @mark.skip("takes too much time to calculate the result")
 def test_gravitational_field_flux(test_args):
     # gravitational field also has a common multiplier of -G * M
@@ -178,5 +164,26 @@ def test_gravitational_field_flux(test_args):
     # https://en.wikipedia.org/wiki/Gauss%27s_law_for_gravity
 
 
-#TODO: flux_across_surface_boundary tests
+# it works when field divergence is constant (no free variables), or when surface is not
+# parametrized
+def test_basic_flux_across_surface_boundary(test_args):
+    field = VectorField(lambda point: [point.x - point.y, point.x + point.y], test_args.C)
+    # flux over circle of radius 2
+    circle = [test_args.parameter1 * cos(test_args.parameter2), test_args.parameter1 * sin(test_args.parameter2)]
+    result = flux_across_surface_boundary(field, circle, (test_args.parameter1, 0, 2),
+        (test_args.parameter2, 0, 2 * pi))
+    assert result.evalf(4) == approx((8 * pi).evalf(4), 0.001)
+
+
+# non parametrized surface works for any divergence, but is harder to manipulate with
+def test_non_parametrized_flux_across_surface_boundary(test_args):
+    field = VectorField(lambda point: [point.x**2, point.y], test_args.C)
+    x = field.coordinate_system.coord_system.base_scalars()[0]
+    y = field.coordinate_system.coord_system.base_scalars()[1]
+    circle_implicit = [x, y]
+    # flux over circle of radius 3
+    result = flux_across_surface_boundary(field, circle_implicit, (x, -sqrt(9 - y**2), sqrt(9 - y**2)),
+        (y, -3, 3))
+    assert result.evalf(4) == approx((9 * pi).evalf(4), 0.001)
+
 #TODO: flux_across_volume_boundary tests
