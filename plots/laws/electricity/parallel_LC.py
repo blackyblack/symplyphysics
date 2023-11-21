@@ -15,14 +15,14 @@ from symplyphysics.laws.electricity.circuits import admittance_of_parallel_dipol
 from symplyphysics.definitions import admittance_is_inversed_impedance as admittance_def
 from symplyphysics.laws.electricity import capacitor_impedance_from_capacitance_and_frequency as capacitor_impedance
 from symplyphysics.laws.electricity import coil_impedance_from_inductivity_and_frequency as coil_impedance
-from symplyphysics.laws.electricity.circuits import oscillation_period_for_capacitor_inductor_node as thompsons_formula
+from symplyphysics.laws.electricity.circuits import oscillation_period_for_capacitor_inductor_node as thomsons_formula
 from symplyphysics.laws.kinematic import period_from_angular_frequency as period_definition
 
 frequency_arg = Symbol("frequency_arg")
 
 EXAMPLE_INDUCTANCE = 0.00001
 EXAMPLE_CAPACITANCE = 0.00001
-EXAMPLE_R = 5000000
+EXAMPLE_RESISTANCE = 5000000
 
 # Parallel connection of dipoles summarizes their admittances.
 # First find impedances and then admittances
@@ -32,16 +32,15 @@ L_admittance = admittance_def.definition.rhs.subs({admittance_def.dipole_impedan
 C_impedance = capacitor_impedance.law.rhs.subs({capacitor_impedance.circular_frequency: frequency_arg})
 C_admittance = admittance_def.definition.rhs.subs({admittance_def.dipole_impedance: C_impedance}).subs({capacitor_impedance.capacitor_capacitance:EXAMPLE_CAPACITANCE})
 
-R_impedance = EXAMPLE_R
+R_impedance = EXAMPLE_RESISTANCE
 R_admittance = admittance_def.definition.rhs.subs({admittance_def.dipole_impedance: R_impedance})
 
-ideal_elements = tuple({L_admittance, C_admittance})
-real_elements = tuple({L_admittance, C_admittance, R_admittance})
+ideal_elements = (L_admittance, C_admittance)
+real_elements = (L_admittance, C_admittance, R_admittance)
 
 admittance_ideal = parallel_admittance_law.law.rhs.subs(parallel_admittance_law.admittances, ideal_elements).doit()
-print(f"ideal: ", admittance_ideal)
+
 admittance_real = parallel_admittance_law.law.rhs.subs(parallel_admittance_law.admittances, real_elements).doit()
-print(f"real: ", admittance_real)
 
 impedance_from_admittance_law = solve(admittance_def.definition, admittance_def.dipole_impedance, dict=True)[0][admittance_def.dipole_impedance]
 
@@ -51,7 +50,7 @@ impedance_ideal_to_plot = Abs(impedance_ideal)
 impedance_real = impedance_from_admittance_law.subs({admittance_def.dipole_admittance: admittance_real})
 impedance_real_to_plot = Abs(impedance_real)
 
-thomsons_period = thompsons_formula.law.rhs.subs({thompsons_formula.inductance: EXAMPLE_INDUCTANCE, thompsons_formula.capacitance: EXAMPLE_CAPACITANCE})
+thomsons_period = thomsons_formula.law.rhs.subs({thomsons_formula.inductance: EXAMPLE_INDUCTANCE, thomsons_formula.capacitance: EXAMPLE_CAPACITANCE})
 frequency_from_period = solve(period_definition.law, period_definition.circular_frequency, dict = True)[0][period_definition.circular_frequency]
 thomsons_frequency = frequency_from_period.subs({period_definition.period: thomsons_period})
 
