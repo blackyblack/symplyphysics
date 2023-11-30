@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-from symplyphysics import (    
+from symplyphysics import (
     errors,
     units,
     Quantity,
@@ -13,8 +13,8 @@ from symplyphysics.laws.relativistic import energy_is_mass as fundamental_formul
 ## Calculated with "https://www.omnicalculator.com/physics/emc2"
 
 @fixture(name="test_args")
-def test_args_fixture():    
-    m = Quantity(6 * units.kilogram)    
+def test_args_fixture():
+    m = Quantity(6 * units.kilogram)
     Args = namedtuple("Args", ["m"])
     return Args(m=m)
 
