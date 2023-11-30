@@ -22,7 +22,7 @@ def print_law() -> str:
 
 @validate_input(rest_mass_=rest_mass)
 @validate_output(rest_energy)
-def calculate_rest_energy(rest_mass_: Quantity) -> Quantity:        
+def calculate_rest_energy(rest_mass_: Quantity) -> Quantity:
     result_expr = solve(law, rest_energy, dict=True)[0][rest_energy]
     energy_applied = result_expr.subs({rest_mass: rest_mass_})
     return Quantity(energy_applied)

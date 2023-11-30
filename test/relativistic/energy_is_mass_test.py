@@ -1,7 +1,6 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-from symplyphysics import (
-    angle_type,
+from symplyphysics import (    
     errors,
     units,
     Quantity,
