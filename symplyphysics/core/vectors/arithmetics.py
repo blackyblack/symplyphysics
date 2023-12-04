@@ -117,7 +117,7 @@ def dot_vectors(vector_left: Vector, vector_right: Vector) -> Expr:
             list_right_extended) = _extend_two_vectors(vector_left, vector_right, dimensions)
         r1, theta1, phi1 = list_left_extended
         r2, theta2, phi2 = list_right_extended
-        return r1 * r2 * (sin(theta1) * sin(theta2) * cos(phi1 - phi2) + cos(theta1) * cos(theta2))
+        return r1 * r2 * (sin(phi1) * sin(phi2) * cos(theta1 - theta2) + cos(phi1) * cos(phi2))
     # never
     return S.Zero
 
@@ -166,6 +166,11 @@ def cross_cartesian_vectors(vector_left: Vector, vector_right: Vector) -> Vector
     return Vector(result, vector_left.coordinate_system)
 
 
+# Make unit vector (vector of size 1 and same direction as original vector)
+def vector_unit(vector_: Vector) -> Vector:
+    return scale_vector(1 / vector_magnitude(vector_), vector_)
+
+
 # Sum of two vectors of quantities
 def add_cartesian_quantity_vectors(vector_left: QuantityVector,
     vector_right: QuantityVector) -> QuantityVector:
@@ -201,3 +206,8 @@ def cross_cartesian_quantity_vectors(vector_left: QuantityVector,
     return QuantityVector(
         cross_cartesian_vectors(vector_left, vector_right).components,
         vector_left.coordinate_system)
+
+
+# Make quantity unit vector
+def quantity_vector_unit(vector_: QuantityVector) -> QuantityVector:
+    return scale_quantity_vector(1 / quantity_vector_magnitude(vector_), vector_)

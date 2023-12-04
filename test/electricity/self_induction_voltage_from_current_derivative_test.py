@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
 from symplyphysics import (errors, units, convert_to, Quantity, SI, prefixes)
-from symplyphysics.definitions import self_induction_voltage_is_current_derivative as self_induction_def
+from symplyphysics.laws.electricity import self_induction_voltage_from_current_derivative as self_induction_def
 
 # Description
 ## Current through 2.5 millihenry inductor increases from 0 to 0.5A in 5 seconds.

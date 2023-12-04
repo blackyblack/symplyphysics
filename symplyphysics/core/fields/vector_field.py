@@ -2,7 +2,7 @@ from __future__ import annotations
 from functools import partial
 from typing import Callable, Sequence, TypeAlias
 from sympy import Expr, sympify
-from sympy.vector import Vector as SymVector, express
+from sympy.vector import Vector as SymVector
 
 from .field_point import FieldPoint
 from ..coordinate_systems.coordinate_systems import CoordinateSystem
@@ -91,21 +91,4 @@ class VectorField:
         field_space = self.apply_to_basis()
         return field_space.to_sympy_vector()
 
-    # Convert field coordinate system to new basis and construct new field.
-    def rebase(self, coordinate_system: CoordinateSystem) -> VectorField:
-        # Simply set new coordinate system if field cannot be rebased
-        if (coordinate_system.coord_system is None or self.coordinate_system.coord_system is None):
-            return VectorField(coordinate_system, self.field_function)
-        field_space_sympy = self.to_sympy_vector()
-        if self.coordinate_system.coord_system_type != coordinate_system.coord_system_type:
-            # This is ScalarField.field_rebase() but without transformation_to_system()
-            new_scalars = list(coordinate_system.coord_system.base_scalars())
-            for i, scalar in enumerate(self.coordinate_system.coord_system.base_scalars()):
-                field_space_sympy = field_space_sympy.subs(scalar, new_scalars[i])
-        # We do not want to maintain own field transformation functions, so
-        # we convert our field to SymPy format, transform it and convert back to VectorField.
-        transformed_vector_sympy = express(field_space_sympy,
-            coordinate_system.coord_system,
-            None,
-            variables=True)
-        return VectorField.from_sympy_vector(transformed_vector_sympy, coordinate_system)
+    # rebase() for curvilinear coordinate systems is quite complex. Not implemented for the moment.

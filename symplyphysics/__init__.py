@@ -9,7 +9,7 @@ from .core.symbols.symbols import Function, Symbol, print_expression
 from .core.symbols.prefixes import prefixes
 from .core.quantity_decorator import validate_input, validate_output
 from .core.vectors.vectors import Vector, QuantityVector
-from .core.vectors.arithmetics import scale_vector, add_cartesian_vectors, dot_vectors, cross_cartesian_vectors
+from .core.vectors.arithmetics import scale_vector, add_cartesian_vectors, dot_vectors, cross_cartesian_vectors, vector_unit, vector_magnitude
 from .core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_transform
 
 __all__ = [
@@ -39,6 +39,8 @@ __all__ = [
     "add_cartesian_vectors",
     "dot_vectors",
     "cross_cartesian_vectors",
+    "vector_unit",
+    "vector_magnitude",
     # coordinate systems
     "CoordinateSystem",
     "coordinates_transform",

@@ -4,13 +4,13 @@ from symplyphysics import (units, Quantity, Symbol, Function, print_expression, 
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.symbols import tuple_of_symbols
 
+from symplyphysics.definitions import capacitance_from_charge_and_voltage as capacitance_definition
+from symplyphysics.definitions import current_is_charge_derivative as charge_definition
+from symplyphysics.definitions import harmonic_oscillator_is_second_derivative_equation as oscillator
+from symplyphysics.laws.electricity import self_induction_voltage_from_current_derivative as induction_voltage_definition
+from symplyphysics.laws.kinematic import period_from_angular_frequency as period_definition
 from symplyphysics.laws.electricity.circuits import sum_of_all_currents_through_an_electrical_node_is_zero as kirchhoff_law
 from symplyphysics.laws.electricity.circuits import sum_of_all_voltages_in_loop_is_zero as kirchhoff_law_2
-from symplyphysics.definitions import capacitance_from_charge_and_voltage as capacitance_definition
-from symplyphysics.definitions import self_induction_voltage_is_current_derivative as induction_voltage_definition
-from symplyphysics.definitions import current_is_charge_derivative as charge_definition
-from symplyphysics.laws.kinematic import period_from_angular_frequency as period_definition
-from symplyphysics.definitions import harmonic_oscillator_is_second_derivative_equation as oscillator
 
 # Description
 ## LC-oscillator is the circuit of inductor and capacitor.

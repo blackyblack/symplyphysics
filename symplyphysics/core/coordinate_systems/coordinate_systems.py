@@ -30,6 +30,8 @@ class CoordinateSystem:
     def system_to_base_scalars(coord_system_type: System) -> list[str]:
         if coord_system_type == CoordinateSystem.System.CYLINDRICAL:
             return ["r", "theta", "z"]
+        # theta - azimuthal angle
+        # phi - polar angle
         if coord_system_type == CoordinateSystem.System.SPHERICAL:
             return ["r", "theta", "phi"]
         return ["x", "y", "z"]
@@ -67,7 +69,7 @@ class CoordinateSystem:
             r, theta, phi = self._coord_system.base_scalars()
             spherical_conversions = {
                 self.System.CARTESIAN:
-                (r * sin(theta) * cos(phi), r * sin(theta) * sin(phi), r * cos(theta)),
+                (r * cos(theta) * sin(phi), r * sin(theta) * sin(phi), r * cos(phi)),
                 self.System.SPHERICAL: (r, theta, phi)
             }
             transformation = spherical_conversions.get(coord_system_type)
@@ -78,8 +80,8 @@ class CoordinateSystem:
             x, y, z = self._coord_system.base_scalars()
             cartesian_conversions = {
                 self.System.CYLINDRICAL: (sqrt(x**2 + y**2), atan2(y, x), z),
-                self.System.SPHERICAL:
-                (sqrt(x**2 + y**2 + z**2), acos(z / sqrt(x**2 + y**2 + z**2)), atan2(y, x)),
+                self.System.SPHERICAL: (sqrt(x**2 + y**2 + z**2), atan2(y,
+                x), acos(z / sqrt(x**2 + y**2 + z**2))),
                 self.System.CARTESIAN: (x, y, z)
             }
             transformation = cartesian_conversions.get(coord_system_type)
@@ -94,10 +96,10 @@ class CoordinateSystem:
 
 # Change coordinate system type, eg from cartesian to cylindrical
 def coordinates_transform(
-    self: CoordinateSystem,
+    from_system: CoordinateSystem,
     coord_system_type: CoordinateSystem.System = CoordinateSystem.System.CARTESIAN
 ) -> CoordinateSystem:
-    new_coord_system = self.coord_system.create_new(next_name("SYS"),
+    new_coord_system = from_system.coord_system.create_new(next_name("SYS"),
         variable_names=CoordinateSystem.system_to_base_scalars(coord_system_type),
         transformation=None)
     return CoordinateSystem(coord_system_type, new_coord_system)

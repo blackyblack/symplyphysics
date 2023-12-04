@@ -7,8 +7,8 @@ from symplyphysics import (SI, Quantity, dimensionless, units, QuantityVector, V
     CoordinateSystem, coordinates_transform)
 from symplyphysics.core.vectors.arithmetics import (add_cartesian_quantity_vectors,
     add_cartesian_vectors, cross_cartesian_quantity_vectors, cross_cartesian_vectors, dot_vectors,
-    equal_vectors, quantity_vector_magnitude, scale_quantity_vector, scale_vector, vector_magnitude,
-    dot_quantity_vectors)
+    equal_vectors, quantity_vector_magnitude, quantity_vector_unit, scale_quantity_vector,
+    scale_vector, vector_magnitude, dot_quantity_vectors, vector_unit)
 
 # pylint: disable=too-many-locals
 
@@ -310,14 +310,14 @@ def test_non_cartesian_dot_product():
     assert dot_vectors(Vector([0, 0, 1], C1), Vector([0, pi / 2, 1], C1)) == 1
 
     C2 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
-    assert dot_vectors(Vector([1, 0], C2), Vector([1, pi / 2], C2)) == 0
-    assert dot_vectors(Vector([1, 0], C2), Vector([1, pi / 4], C2)) == (sqrt(2) / 2)
-    assert dot_vectors(Vector([1, 0, 0], C2), Vector([1, pi / 2, 0], C2)) == 0
-    assert dot_vectors(Vector([1, pi / 2, 0], C2), Vector([1, pi / 2, pi / 2], C2)) == 0
+    assert dot_vectors(Vector([1, 0], C2), Vector([1, 0, pi / 2], C2)) == 0
+    assert dot_vectors(Vector([1, 0], C2), Vector([1, 0, pi / 4], C2)) == (sqrt(2) / 2)
+    assert dot_vectors(Vector([1, 0, 0], C2), Vector([1, 0, pi / 2], C2)) == 0
+    assert dot_vectors(Vector([1, 0, pi / 2], C2), Vector([1, pi / 2, pi / 2], C2)) == 0
 
-    # When theta angle = 0, vector is directed up and is immune to rotations,
+    # When phi angle = 0, vector is directed up and is immune to rotations,
     # therefore rotated vector is parallel to original
-    assert dot_vectors(Vector([1, 0, 0], C2), Vector([1, 0, pi / 2], C2)) == 1
+    assert dot_vectors(Vector([1, 0, 0], C2), Vector([1, pi / 2, 0], C2)) == 1
 
 
 def test_basic_magnitude_vectors(test_args):
@@ -336,8 +336,8 @@ def test_non_cartesian_magnitude_vectors():
 
     C2 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
     assert vector_magnitude(Vector([3, 0], C2)) == 3
-    assert vector_magnitude(Vector([3, 0, 2], C2)) == 3
-    assert vector_magnitude(Vector([3, pi / 4, 2], C2)) == 3
+    assert vector_magnitude(Vector([3, 2, 0], C2)) == 3
+    assert vector_magnitude(Vector([3, 2, pi / 4], C2)) == 3
 
 
 def test_basic_cross_product(test_args):
@@ -426,6 +426,21 @@ def test_rebased_cross_product(test_args):
     vector_cartesian_cross = cross_cartesian_vectors(vector1_cartesian, vector2_cartesian)
     vector_cross = vector_cartesian_cross.rebase(Cy)
     assert vector_cross.components == [sqrt(50), -3 * pi / 4, 25]
+
+
+def test_basic_unit_vector():
+    assert vector_unit(Vector([1, 2])).components == [1 / sqrt(5), 2 / sqrt(5)]
+    assert vector_unit(Vector([])).components == []
+    assert vector_unit(Vector([1, 2, 3])).components == [1 / sqrt(14), 2 / sqrt(14), 3 / sqrt(14)]
+    C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
+    assert vector_unit(Vector([3, 0], C1)).components == [1, 0]
+    assert vector_unit(Vector([3, 0, 2], C1)).components == [3 / sqrt(13), 0, 2 / sqrt(13)]
+    assert vector_unit(Vector([3, pi / 4, 2],
+        C1)).components == [3 / sqrt(13), pi / 4, 2 / sqrt(13)]
+    C2 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
+    assert vector_unit(Vector([3, 0], C2)).components == [1, 0]
+    assert vector_unit(Vector([3, 2, 0], C2)).components == [1, 2, 0]
+    assert vector_unit(Vector([3, 2, pi / 4], C2)).components == [1, 2, pi / 4]
 
 
 def test_basic_equal_quantity_vectors():
@@ -525,3 +540,19 @@ def test_basic_quantity_cross_product():
         cross_area_vector.components[2].scale_factor
     ] == [0, 0, -3]
     SI.get_dimension_system().equivalent_dims(cross_area_vector.dimension, units.area)
+
+
+def test_basic_quantity_unit_vector():
+    Q1 = Quantity(1)
+    Q2 = Quantity(2)
+    unit_vector = quantity_vector_unit(QuantityVector([Q1, Q2]))
+    assert [unit_vector.components[0].scale_factor,
+        unit_vector.components[1].scale_factor] == [1 / sqrt(5), 2 / sqrt(5)]
+    L1 = Quantity(1 * units.meter)
+    L2 = Quantity(2 * units.meter)
+    initial = QuantityVector([L1, L2])
+    unit_vector = quantity_vector_unit(initial)
+    assert [unit_vector.components[0].scale_factor,
+        unit_vector.components[1].scale_factor] == [1 / sqrt(5), 2 / sqrt(5)]
+    SI.get_dimension_system().equivalent_dims(unit_vector.components[0].dimension, units.length)
+    SI.get_dimension_system().equivalent_dims(unit_vector.components[1].dimension, units.length)
