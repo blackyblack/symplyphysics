@@ -2,7 +2,7 @@ from collections import namedtuple
 from typing import Sequence
 from test.test_decorators import unsupported_usage
 from pytest import fixture, raises
-from sympy import Expr, atan, cos, pi, sin, sqrt, symbols
+from sympy import Expr, atan, cos, sin, sqrt, symbols
 from sympy.vector import express
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_rotate, coordinates_transform
 from symplyphysics.core.fields.field_point import FieldPoint
@@ -269,63 +269,6 @@ def test_different_coord_systems_field_apply(test_args):
     assert trajectory_vectors.components == [C1.coord_system.r * C1.coord_system.theta, 0, 0]
 
 
-# Test field_rebase()
-
-
-def test_basic_field_rebase(test_args):
-    field = VectorField(lambda p: [p.x + p.y, 0, 0], test_args.C)
-    assert field.coordinate_system == test_args.C
-    point = [1, 2, 3]
-    point_vector = field.apply(point)
-    assert point_vector.components == [3, 0, 0]
-    assert point_vector.coordinate_system == test_args.C
-
-    # B is located at [1, 2, 0] origin instead of [0, 0, 0] of test_args.C
-    Bi = test_args.C.coord_system.locate_new(
-        "B", test_args.C.coord_system.i + 2 * test_args.C.coord_system.j)
-    B = CoordinateSystem(test_args.C.coord_system_type, Bi)
-    field_rebased = field.rebase(B)
-    assert field_rebased.basis == [B.coord_system.x, B.coord_system.y, B.coord_system.z]
-    assert field_rebased.coordinate_system == B
-
-    transformed_point_vector = field_rebased.apply(point)
-    assert transformed_point_vector.components != point_vector.components
-    # After rebase field was extended to 3D space
-    assert transformed_point_vector.components == [6, 0, 0]
-
-
-# VectorField invariant does not hold, when applied to some fixed point in space. Use
-# 'field_rebase' to let VectorField know about new coordinate system.
-def test_invariant_field_rebase_and_apply(test_args):
-    field = VectorField(lambda p: [p.x**2 + 2 * p.y**2, 0, 0], test_args.C)
-    assert field.coordinate_system == test_args.C
-    point = [1, 2]
-    p1 = test_args.C.coord_system.origin.locate_new(
-        "p1", point[0] * test_args.C.coord_system.i + point[1] * test_args.C.coord_system.j)
-    p1_coordinates = p1.express_coordinates(test_args.C.coord_system)
-    assert p1_coordinates[0] == point[0]
-    assert p1_coordinates[1] == point[1]
-
-    point_vector = field.apply(point)
-    assert point_vector.components == [9, 0, 0]
-
-    B = coordinates_rotate(test_args.C, pi / 4, test_args.C.coord_system.k)
-    p1_coordinates_in_b = p1.express_coordinates(B.coord_system)
-    assert p1_coordinates_in_b[0] != point[0]
-
-    transformed_point = [p1_coordinates_in_b[0], p1_coordinates_in_b[1]]
-    transformed_point_vector = field.apply(transformed_point)
-    # invariant does not hold if field is not rebased to new coordinate system
-    assert transformed_point_vector.components != point_vector.components
-
-    field_rebased = field.rebase(B)
-    assert field_rebased.coordinate_system == B
-    transformed_point_vector = field_rebased.apply(transformed_point)
-    # here vector is the same as in 'test_args.C' coordinate system, but it is
-    # rotated from the point of view of 'B' coordinate system.
-    assert transformed_point_vector.components == [9 * sqrt(2) / 2, -9 * sqrt(2) / 2, 0]
-
-
 # Test non-cartesian coordinate systems
 
 
@@ -336,7 +279,7 @@ def test_cylindrical_field_create(test_args):
     assert point_vector.components == [1, 2, 0]
 
     B = coordinates_transform(test_args.C, CoordinateSystem.System.CYLINDRICAL)
-    field_rebased = field.rebase(B)
+    field_rebased = VectorField(lambda p: [p.x, p.y, 0], B)
     assert field_rebased.coordinate_system == B
 
     # point should have r = sqrt(5) in polar coordinates

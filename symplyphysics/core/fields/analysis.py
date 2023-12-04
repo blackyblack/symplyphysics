@@ -78,19 +78,20 @@ def flux_across_surface_boundary(field: VectorField, surface: Sequence[Expr],
 
 
 # flux across some surface, that is a volume boundary is triple integral of divergence of the field
-# Parametrized volumes are not supported. They should be defined with CoordinateSystem base scalars.
-def flux_across_volume_boundary(field: VectorField, volume: Sequence[Expr],
-    x_limits: tuple[ScalarValue, ScalarValue], y_limits: tuple[ScalarValue,
-    ScalarValue], z_limits: tuple[ScalarValue, ScalarValue]) -> ScalarValue:
+# over volume.
+# Parametrized volumes are not supported. We define volume by the integral limits.
+# Integration starts from the last limit, ie z_limits
+def flux_across_volume_boundary(field: VectorField, x_limits: tuple[ScalarValue, ScalarValue],
+    y_limits: tuple[ScalarValue, ScalarValue], z_limits: tuple[ScalarValue,
+    ScalarValue]) -> ScalarValue:
     (x_from, x_to) = x_limits
     (y_from, y_to) = y_limits
     (z_from, z_to) = z_limits
     field_divergence = divergence_operator(field)
-    volume_vector = Vector(volume, field.coordinate_system)
-    volume_element_magnitude_value = volume_element_magnitude(volume_vector)
     x = field.coordinate_system.coord_system.base_scalars()[0]
     y = field.coordinate_system.coord_system.base_scalars()[1]
     z = field.coordinate_system.coord_system.base_scalars()[2]
-    flux_value = integrate(field_divergence * volume_element_magnitude_value, (x, x_from, x_to),
-        (y, y_from, y_to), (z, z_from, z_to))
+    volume_element_magnitude_value = volume_element_magnitude(field.coordinate_system)
+    flux_value = integrate(field_divergence * volume_element_magnitude_value, (z, z_from, z_to),
+        (y, y_from, y_to), (x, x_from, x_to))
     return simplify(flux_value)

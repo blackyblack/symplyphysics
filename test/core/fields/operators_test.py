@@ -8,8 +8,8 @@ from symplyphysics.core.fields.field_point import FieldPoint
 from symplyphysics.core.fields.vector_field import VectorField
 from symplyphysics.core.fields.operators import curl_operator, divergence_operator
 
-
 # Tests are mostly based on vector calculus slides: https://www.slideshare.net/garghanish/coordinate-systems-and-vector-calculus
+
 
 @fixture(name="test_args")
 def test_args_fixture():
@@ -31,14 +31,13 @@ def test_basic_divergence(test_args):
 
 
 def test_cylindrical_divergence(test_args):
-    field = VectorField(
-        lambda point: [point.x * 2 / 3, point.y * 2 / 3, point.z * 2 / 3], test_args.C)
+    field = VectorField(lambda point: [point.x * 2 / 3, point.y * 2 / 3, point.z * 2 / 3],
+        test_args.C)
     result = divergence_operator(field)
     assert result == 2
     # verify that in cylindrical coordinates result is same
     C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
-    cylindrical_field = VectorField(
-        lambda point: [point.x * 2 / 3, 0, point.z * 2 / 3], C1)
+    cylindrical_field = VectorField(lambda point: [point.x * 2 / 3, 0, point.z * 2 / 3], C1)
     result = divergence_operator(cylindrical_field)
     assert result == 2
 
@@ -47,7 +46,9 @@ def test_spherical_divergence():
     C1 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
     # point.x is r, point.y is theta, point.z is phi
     field = VectorField(
-        lambda point: [1 / point.x**2 * cos(point.z), cos(point.z), point.x * sin(point.z) * cos(point.y)], C1)
+        lambda point:
+        [1 / point.x**2 * cos(point.z),
+        cos(point.z), point.x * sin(point.z) * cos(point.y)], C1)
     result = divergence_operator(field)
     theta = field.coordinate_system.coord_system.base_scalars()[1]
     phi = field.coordinate_system.coord_system.base_scalars()[2]
@@ -55,8 +56,8 @@ def test_spherical_divergence():
 
 
 def test_basic_curl(test_args):
-    field = VectorField(
-        lambda point: [point.x**2 * point.y * point.z, 0, point.x * point.z], test_args.C)
+    field = VectorField(lambda point: [point.x**2 * point.y * point.z, 0, point.x * point.z],
+        test_args.C)
     result_field = curl_operator(field)
     x = field.coordinate_system.coord_system.base_scalars()[0]
     y = field.coordinate_system.coord_system.base_scalars()[1]
@@ -86,7 +87,9 @@ def test_spherical_curl():
     C1 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
     # point.x is r, point.y is theta, point.z is phi
     field = VectorField(
-        lambda point: [1 / point.x**2 * cos(point.z), cos(point.z), point.x * sin(point.z) * cos(point.y)], C1)
+        lambda point:
+        [1 / point.x**2 * cos(point.z),
+        cos(point.z), point.x * sin(point.z) * cos(point.y)], C1)
     result_field = curl_operator(field)
     r = field.coordinate_system.coord_system.base_scalars()[0]
     theta = field.coordinate_system.coord_system.base_scalars()[1]

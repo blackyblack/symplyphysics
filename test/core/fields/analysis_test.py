@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import approx, fixture, mark, raises
 from sympy import Expr, cos, pi, sin, sqrt, Symbol as SymSymbol
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
-from symplyphysics.core.fields.analysis import circulation_along_curve, circulation_along_surface_boundary, flux_across_curve, flux_across_surface, flux_across_surface_boundary
+from symplyphysics.core.fields.analysis import circulation_along_curve, circulation_along_surface_boundary, flux_across_curve, flux_across_surface, flux_across_surface_boundary, flux_across_volume_boundary
 from symplyphysics.core.fields.field_point import FieldPoint
 from symplyphysics.core.fields.vector_field import VectorField
 
@@ -169,7 +169,10 @@ def test_gravitational_field_flux(test_args):
 def test_basic_flux_across_surface_boundary(test_args):
     field = VectorField(lambda point: [point.x - point.y, point.x + point.y], test_args.C)
     # flux over circle of radius 2
-    circle = [test_args.parameter1 * cos(test_args.parameter2), test_args.parameter1 * sin(test_args.parameter2)]
+    circle = [
+        test_args.parameter1 * cos(test_args.parameter2),
+        test_args.parameter1 * sin(test_args.parameter2)
+    ]
     result = flux_across_surface_boundary(field, circle, (test_args.parameter1, 0, 2),
         (test_args.parameter2, 0, 2 * pi))
     assert result.evalf(4) == approx((8 * pi).evalf(4), 0.001)
@@ -182,8 +185,25 @@ def test_non_parametrized_flux_across_surface_boundary(test_args):
     y = field.coordinate_system.coord_system.base_scalars()[1]
     circle_implicit = [x, y]
     # flux over circle of radius 3
-    result = flux_across_surface_boundary(field, circle_implicit, (x, -sqrt(9 - y**2), sqrt(9 - y**2)),
-        (y, -3, 3))
+    result = flux_across_surface_boundary(field, circle_implicit,
+        (x, -sqrt(9 - y**2), sqrt(9 - y**2)), (y, -3, 3))
     assert result.evalf(4) == approx((9 * pi).evalf(4), 0.001)
 
-#TODO: flux_across_volume_boundary tests
+
+def test_basic_flux_across_volume_boundary(test_args):
+    field = VectorField(lambda point: [point.x**2 / 2, point.y * point.z, -point.x * point.z],
+        test_args.C)
+    x = field.coordinate_system.coord_system.base_scalars()[0]
+    y = field.coordinate_system.coord_system.base_scalars()[1]
+    result = flux_across_volume_boundary(field, (-2, 2), (-sqrt(4 - x**2), sqrt(4 - x**2)),
+        (0, sqrt(4 - x**2 - y**2)))
+    assert result.evalf(4) == approx((4 * pi).evalf(4), 0.001)
+
+
+# A vector field exists in the region between two concentric cylindrical surfaces defined by
+# r = 1 and r = 2, with both cylinders extending between z = 0 and z = 5
+def test_basic_flux_across_sphere_boundary():
+    B = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
+    field = VectorField(lambda point: [point.x**3, 0, 0], B)
+    result = flux_across_volume_boundary(field, (1, 2), (0, 2 * pi), (0, 5))
+    assert result.evalf(4) == approx((150 * pi).evalf(4), 0.001)

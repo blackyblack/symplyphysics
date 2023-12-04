@@ -96,10 +96,10 @@ class CoordinateSystem:
 
 # Change coordinate system type, eg from cartesian to cylindrical
 def coordinates_transform(
-    self: CoordinateSystem,
+    from_system: CoordinateSystem,
     coord_system_type: CoordinateSystem.System = CoordinateSystem.System.CARTESIAN
 ) -> CoordinateSystem:
-    new_coord_system = self.coord_system.create_new(next_name("SYS"),
+    new_coord_system = from_system.coord_system.create_new(next_name("SYS"),
         variable_names=CoordinateSystem.system_to_base_scalars(coord_system_type),
         transformation=None)
     return CoordinateSystem(coord_system_type, new_coord_system)

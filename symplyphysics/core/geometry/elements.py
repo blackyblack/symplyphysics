@@ -15,23 +15,15 @@ def curve_element_magnitude(trajectory: Vector, parameter: Expr) -> ScalarValue:
     return vector_magnitude(curve_element(trajectory, parameter))
 
 
-def volume_element_magnitude(volume: Vector) -> ScalarValue:
-    if volume.coordinate_system == CoordinateSystem.System.CARTESIAN:
-        x = volume.coordinate_system.coord_system.base_scalars()[0]
-        y = volume.coordinate_system.coord_system.base_scalars()[1]
-        z = volume.coordinate_system.coord_system.base_scalars()[2]
-        return curve_element_magnitude(volume, x) * curve_element_magnitude(volume,
-            y) * curve_element_magnitude(volume, z)
-    if volume.coordinate_system == CoordinateSystem.System.CYLINDRICAL:
-        r = volume.coordinate_system.coord_system.base_scalars()[0]
-        theta = volume.coordinate_system.coord_system.base_scalars()[1]
-        z = volume.coordinate_system.coord_system.base_scalars()[2]
-        return r * curve_element_magnitude(volume, r) * curve_element_magnitude(volume,
-            theta) * curve_element_magnitude(volume, z)
-    if volume.coordinate_system == CoordinateSystem.System.SPHERICAL:
-        r = volume.coordinate_system.coord_system.base_scalars()[0]
-        theta = volume.coordinate_system.coord_system.base_scalars()[1]
-        phi = volume.coordinate_system.coord_system.base_scalars()[2]
-        return r**2 * sin(phi) * curve_element_magnitude(volume, r) * curve_element_magnitude(
-            volume, theta) * curve_element_magnitude(volume, phi)
-    raise ValueError(f"Unsupported coordinate system: {volume.coordinate_system}")
+# For non parametrized volumes
+def volume_element_magnitude(coordinate_system: CoordinateSystem) -> ScalarValue:
+    if coordinate_system.coord_system_type == CoordinateSystem.System.CARTESIAN:
+        return 1
+    if coordinate_system.coord_system_type == CoordinateSystem.System.CYLINDRICAL:
+        r = coordinate_system.coord_system.base_scalars()[0]
+        return r
+    if coordinate_system.coord_system_type == CoordinateSystem.System.SPHERICAL:
+        r = coordinate_system.coord_system.base_scalars()[0]
+        phi = coordinate_system.coord_system.base_scalars()[2]
+        return r**2 * sin(phi)
+    raise ValueError(f"Unsupported coordinate system: {coordinate_system}")
