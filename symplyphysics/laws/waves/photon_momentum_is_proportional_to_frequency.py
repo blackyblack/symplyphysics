@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
 from sympy.physics.units import planck as planck_constant
-from sympy.physics.units import speed_of_light as c
+from sympy.physics.units import speed_of_light
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
     validate_output)
 
@@ -16,7 +16,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 photon_momentum = Symbol("photon_momentum", units.momentum)
 photon_frequency = Symbol("frequency", units.frequency)
 
-law = Eq(photon_momentum, planck_constant * photon_frequency / c)
+law = Eq(photon_momentum, planck_constant * photon_frequency / speed_of_light)
 
 
 def print_law() -> str:
