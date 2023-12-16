@@ -4,16 +4,16 @@ from typing import Callable, Sequence, TypeAlias
 from sympy import Expr, sympify
 from sympy.vector import Vector as SymVector
 
-from .field_point import FieldPoint
+from ..points.point import Point
 from ..coordinate_systems.coordinate_systems import CoordinateSystem
 from ..vectors.vectors import Vector
 from ...core.dimensions import ScalarValue
 
-FieldFunction: TypeAlias = Callable[[FieldPoint], Sequence[ScalarValue]] | Sequence[ScalarValue]
+FieldFunction: TypeAlias = Callable[[Point], Sequence[ScalarValue]] | Sequence[ScalarValue]
 
 
 def _subs_with_point(expr: Sequence[ScalarValue], coordinate_system: CoordinateSystem,
-    point_: FieldPoint) -> Sequence[Expr]:
+    point_: Point) -> Sequence[Expr]:
     base_scalars = coordinate_system.coord_system.base_scalars()
     result: list[Expr] = []
     for e in expr:
@@ -24,7 +24,7 @@ def _subs_with_point(expr: Sequence[ScalarValue], coordinate_system: CoordinateS
     return result
 
 
-# Contains mapping of point to vector in _point_function, eg P(FieldPoint).
+# Contains mapping of point to vector in _point_function, eg P(Point).
 # Vector field is coordinate system dependent, because generally vectors are not coordinate
 # system invariant.
 class VectorField:
@@ -40,7 +40,7 @@ class VectorField:
         self._point_function = point_function
         self._coordinate_system = coordinate_system
 
-    def __call__(self, point_: FieldPoint) -> Vector:
+    def __call__(self, point_: Point) -> Vector:
         result = self._point_function(point_) if callable(
             self._point_function) else self._point_function
         return Vector(result, self._coordinate_system)
@@ -75,7 +75,7 @@ class VectorField:
     # trajectory_ - list of expressions that correspond to a function in some space, eg [param, param] for a linear function y = x
     # return - vector parametrized by trajectory parameters.
     def apply(self, trajectory_: Sequence[Expr]) -> Vector:
-        field_point = FieldPoint()
+        field_point = Point()
         for idx, element in enumerate(trajectory_):
             field_point.set_coordinate(idx, element)
         return self(field_point)

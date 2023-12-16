@@ -4,15 +4,19 @@ from typing import Callable, Sequence, TypeAlias
 from sympy import Expr, sympify
 from sympy.vector import express
 
-from .field_point import FieldPoint
+from ..points.point import Point
+from ..points.cartesian_point import CartesianPoint
+from ..points.sphere_point import SpherePoint
+from ..points.cylinder_point import CylinderPoint
 from ..coordinate_systems.coordinate_systems import CoordinateSystem
 from ...core.dimensions import ScalarValue
 
-FieldFunction: TypeAlias = Callable[[FieldPoint], ScalarValue] | ScalarValue
+AnyPoint: TypeAlias = Point | CartesianPoint | SpherePoint | CylinderPoint
+FieldFunction: TypeAlias = Callable[[AnyPoint], ScalarValue] | ScalarValue
 
 
 def _subs_with_point(expr: ScalarValue, coordinate_system: CoordinateSystem,
-    point_: FieldPoint) -> ScalarValue:
+    point_: Point) -> ScalarValue:
     base_scalars = coordinate_system.coord_system.base_scalars()
     # convert ScalarValue to Expr
     expression = sympify(expr)
@@ -21,7 +25,7 @@ def _subs_with_point(expr: ScalarValue, coordinate_system: CoordinateSystem,
     return expression
 
 
-# Contains mapping of point to a scalar value in _point_function, eg P(FieldPoint).
+# Contains mapping of point to a scalar value in _point_function, eg P(Point).
 # Scalar field should not depend on the coordinate system, ie if applied to a point
 # A1 in coordinate system C1 and having scalar value V as a result, it should
 # have the same value V when applied to a point A2 in coordinate system C2, if
@@ -40,9 +44,18 @@ class ScalarField:
         self._point_function = point_function
         self._coordinate_system = coordinate_system
 
-    def __call__(self, point_: FieldPoint) -> ScalarValue:
-        return self._point_function(point_) if callable(
-            self._point_function) else self._point_function
+    def __call__(self, point_: AnyPoint) -> ScalarValue:
+        if not callable(self._point_function):
+            return self._point_function
+        # Point with general Point type is not checked against coordinate system.
+        # It's up to user to make sure that field function works with general Point type.
+        if isinstance(point_, CartesianPoint) and self._coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
+            raise ValueError(f"Unsupported coordinate system for CartesianPoint: {self._coordinate_system}")
+        if isinstance(point_, SpherePoint) and self._coordinate_system.coord_system_type != CoordinateSystem.System.SPHERICAL:
+            raise ValueError(f"Unsupported coordinate system for SpherePoint: {self._coordinate_system}")
+        if isinstance(point_, CylinderPoint) and self._coordinate_system.coord_system_type != CoordinateSystem.System.CYLINDRICAL:
+            raise ValueError(f"Unsupported coordinate system for CylinderPoint: {self._coordinate_system}")
+        return self._point_function(point_)
 
     @property
     def basis(self) -> Sequence[Expr]:
@@ -70,8 +83,14 @@ class ScalarField:
     # trajectory_ - list of expressions that correspond to a function in some space, eg [param, param] for a linear function y = x
     # return - value that depends on trajectory parameters.
     def apply(self, trajectory_: Sequence[Expr]) -> ScalarValue:
-        field_point = FieldPoint(*trajectory_)
-        return self(field_point)
+        trajectory_as_point = Point(*trajectory_)
+        if self._coordinate_system.coord_system_type == CoordinateSystem.System.CARTESIAN:
+            trajectory_as_point = CartesianPoint(*trajectory_)
+        elif self._coordinate_system.coord_system_type == CoordinateSystem.System.SPHERICAL:
+            trajectory_as_point = SpherePoint(*trajectory_)
+        elif self._coordinate_system.coord_system_type == CoordinateSystem.System.CYLINDRICAL:
+            trajectory_as_point = CylinderPoint(*trajectory_)
+        return self(trajectory_as_point)
 
     # Convert coordinate system to space and apply field.
     # Applying field to entire space is necessary for SymPy field operators like Curl.

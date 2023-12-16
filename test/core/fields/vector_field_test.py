@@ -5,11 +5,11 @@ from pytest import fixture, raises
 from sympy import Expr, atan, cos, sin, sqrt, symbols
 from sympy.vector import express
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_rotate, coordinates_transform
-from symplyphysics.core.fields.field_point import FieldPoint
+from symplyphysics.core.points.point import Point
 from symplyphysics.core.fields.vector_field import VectorField
 
 
-def _assert_point(field_: VectorField, point_: FieldPoint, expected_: Sequence[Expr | float]):
+def _assert_point(field_: VectorField, point_: Point, expected_: Sequence[Expr | float]):
     value = field_(point_)
     for idx, v in enumerate(value.components):
         assert v == expected_[idx]
@@ -28,7 +28,7 @@ def test_args_fixture():
 def test_basic_field():
     field = VectorField(lambda p: [p.y, p.x])
     assert callable(field.field_function)
-    field_point = FieldPoint(1, 2, 3)
+    field_point = Point(1, 2, 3)
     _assert_point(field, field_point, [2, 1])
     assert len(field.basis) == 3
 
@@ -36,19 +36,19 @@ def test_basic_field():
 def test_empty_field():
     field = VectorField([])
     assert not callable(field.field_function)
-    field_point = FieldPoint(1, 2, 3)
+    field_point = Point(1, 2, 3)
     _assert_point(field, field_point, [])
 
 
 def test_4d_field():
     field = VectorField(lambda p: [p.x, p.y, p.z, p.x])
-    field_point = FieldPoint(1, 2, 3)
+    field_point = Point(1, 2, 3)
     _assert_point(field, field_point, [1, 2, 3, 1])
 
 
 def test_4d_point_field():
     field = VectorField(lambda p: [p.x, p.y, p.z, p.coordinate(3)])
-    field_point = FieldPoint(1, 2, 3, 4)
+    field_point = Point(1, 2, 3, 4)
     _assert_point(field, field_point, [1, 2, 3, 4])
 
 
@@ -56,7 +56,7 @@ def test_4d_point_field():
 def test_wrong_type_lambda_field():
     field = VectorField(lambda p: ["string", p.x])
     assert callable(field.field_function)
-    field_point = FieldPoint(1, 2, 3)
+    field_point = Point(1, 2, 3)
     # non expression lambda in a field is not processed and returns as is
     _assert_point(field, field_point, ["string", 1])
 
@@ -65,7 +65,7 @@ def test_wrong_type_lambda_field():
 def test_wrong_type_value_field():
     field = VectorField(["string", 1])
     assert not callable(field.field_function)
-    field_point = FieldPoint(1, 2, 3)
+    field_point = Point(1, 2, 3)
     # non expression in a field is not processed and returns as is
     _assert_point(field, field_point, ["string", 1])
 
@@ -74,7 +74,7 @@ def test_wrong_type_value_field():
 def test_invalid_lambda_field():
     field = VectorField(lambda p: [p.y + "string", p.x])
     assert callable(field.field_function)
-    field_point = FieldPoint(1, 2, 3)
+    field_point = Point(1, 2, 3)
     # cannot add integer and string in field lambda
     with raises(TypeError):
         field(field_point)
@@ -84,13 +84,13 @@ def test_invalid_lambda_field():
 def test_effect_in_lambda_field():
     field = VectorField(lambda p: [f"{p.y}", p.x])
     assert callable(field.field_function)
-    field_point = FieldPoint(1, 2, 3)
+    field_point = Point(1, 2, 3)
     _assert_point(field, field_point, ["2", 1])
 
 
 def test_coord_system_field(test_args):
     field = VectorField(lambda p: [p.y * p.z, 0, 0], test_args.C)
-    field_point = FieldPoint(1, 2, 3)
+    field_point = Point(1, 2, 3)
     _assert_point(field, field_point, [6, 0, 0])
     assert field.basis == [
         test_args.C.coord_system.x, test_args.C.coord_system.y, test_args.C.coord_system.z
@@ -106,7 +106,7 @@ def test_basic_vector_to_field_conversion(test_args):
         test_args.C.coord_system.x * test_args.C.coord_system.i +
         test_args.C.coord_system.y * test_args.C.coord_system.j, test_args.C)
     assert callable(field.field_function)
-    field_point = FieldPoint(1, 2, 3)
+    field_point = Point(1, 2, 3)
     _assert_point(field, field_point, [1, 2, 0])
     assert field.basis == [
         test_args.C.coord_system.x, test_args.C.coord_system.y, test_args.C.coord_system.z
@@ -117,7 +117,7 @@ def test_basic_vector_to_field_conversion(test_args):
 def test_skip_dimension_vector_to_field_conversion(test_args):
     field = VectorField.from_sympy_vector(
         1 * test_args.C.coord_system.i + 2 * test_args.C.coord_system.k, test_args.C)
-    field_point = FieldPoint(1, 2, 3)
+    field_point = Point(1, 2, 3)
     _assert_point(field, field_point, [1, 0, 2])
 
 
@@ -149,7 +149,7 @@ def test_custom_names_vector_to_field_conversion():
     field = VectorField.from_sympy_vector(
         C1.coord_system.r * C1.coord_system.i + 2 * C1.coord_system.theta * C1.coord_system.j, C1)
     assert callable(field.field_function)
-    field_point = FieldPoint(1, 2, 3)
+    field_point = Point(1, 2, 3)
     _assert_point(field, field_point, [1, 4, 0])
     assert field.basis == [C1.coord_system.r, C1.coord_system.theta, C1.coord_system.z]
     assert field.coordinate_system == C1
@@ -159,7 +159,7 @@ def test_rotate_coordinates_vector_to_field_conversion(test_args):
     sympy_vector_field = test_args.C.coord_system.x * test_args.C.coord_system.i + test_args.C.coord_system.y * test_args.C.coord_system.j
     field = VectorField.from_sympy_vector(sympy_vector_field, test_args.C)
     assert callable(field.field_function)
-    field_point = FieldPoint(1, 2, 3)
+    field_point = Point(1, 2, 3)
     _assert_point(field, field_point, [1, 2, 0])
     theta = symbols("theta")
     B = coordinates_rotate(test_args.C, theta, test_args.C.coord_system.k)

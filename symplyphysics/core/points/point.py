@@ -5,38 +5,14 @@ Coordinate: TypeAlias = Expr | float
 
 
 # This class not only represents point in space, but any trajectory in any-dimensional space.
-# One should set it's coordinate to SymPy variable whenever it should be used as a trajectory, eg FieldPoint(C.x, C.y)
+# One should set it's coordinate to SymPy variable whenever it should be used as a trajectory, eg Point(C.x, C.y)
 # represents a plane in 3D-space, where C is SympPy CoordSys3D.
-class FieldPoint:
+class Point:
     # may contain not number but sympy expression, eg C.x
     _coordinates: list[Coordinate] = []
 
     def __init__(self, *coordinates: Coordinate):
         self._coordinates = list(coordinates)
-
-    @property
-    def x(self) -> Coordinate:
-        return self.coordinate(0)
-
-    @x.setter
-    def x(self, value_: Coordinate):
-        self.set_coordinate(0, value_)
-
-    @property
-    def y(self) -> Coordinate:
-        return self.coordinate(1)
-
-    @y.setter
-    def y(self, value_: Coordinate):
-        self.set_coordinate(1, value_)
-
-    @property
-    def z(self) -> Coordinate:
-        return self.coordinate(2)
-
-    @z.setter
-    def z(self, value_: Coordinate):
-        self.set_coordinate(2, value_)
 
     @property
     def coordinates(self) -> Iterable[Coordinate]:

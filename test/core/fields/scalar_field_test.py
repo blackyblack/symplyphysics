@@ -2,9 +2,13 @@ from collections import namedtuple
 from test.test_decorators import unsupported_usage
 from pytest import fixture, raises
 from sympy import atan, cos, pi, sin, sqrt, symbols, simplify
-from sympy.vector import CoordSys3D, express
+from sympy.vector import express
+from symplyphysics.core.dimensions import ScalarValue
+from symplyphysics.core.points.cylinder_point import CylinderPoint
+from symplyphysics.core.points.sphere_point import SpherePoint
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_rotate, coordinates_transform
-from symplyphysics.core.fields.field_point import FieldPoint
+from symplyphysics.core.points.cartesian_point import CartesianPoint
+from symplyphysics.core.points.point import Point
 from symplyphysics.core.fields.scalar_field import ScalarField
 
 
@@ -19,8 +23,10 @@ def test_args_fixture():
 
 
 def test_basic_field():
-    field = ScalarField(lambda p: p.y * p.z)
-    field_point = FieldPoint(1, 2, 3)
+    def field_function(p: CartesianPoint) -> ScalarValue:
+        return p.z * p.y
+    field = ScalarField(field_function)
+    field_point = CartesianPoint(1, 2, 3)
     assert field(field_point) == 6
     assert len(field.basis) == 3
     assert callable(field.field_function)
@@ -28,7 +34,7 @@ def test_basic_field():
 
 def test_empty_field():
     field = ScalarField()
-    field_point = FieldPoint(1, 2, 3)
+    field_point = Point(1, 2, 3)
     assert field(field_point) == 0
     # Scalar field components size is always 1
     assert field.field_function == 0
@@ -36,14 +42,14 @@ def test_empty_field():
 
 def test_4d_point_field():
     field = ScalarField(lambda p: p.coordinate(3))
-    field_point = FieldPoint(1, 2, 3, 4)
+    field_point = Point(1, 2, 3, 4)
     assert field(field_point) == 4
 
 
 @unsupported_usage
 def test_wrong_type_lambda_field():
     field = ScalarField(lambda p: "string")
-    field_point = FieldPoint(1, 2, 3)
+    field_point = Point(1, 2, 3)
     # non expression lambda in a field is not processed and returns as is
     assert field(field_point) == "string"
 
@@ -51,7 +57,7 @@ def test_wrong_type_lambda_field():
 @unsupported_usage
 def test_wrong_type_value_field():
     field = ScalarField("string")
-    field_point = FieldPoint(1, 2, 3)
+    field_point = Point(1, 2, 3)
     # non expression in a field is not processed and returns as is
     assert field(field_point) == "string"
 
@@ -59,7 +65,7 @@ def test_wrong_type_value_field():
 @unsupported_usage
 def test_invalid_lambda_field():
     field = ScalarField(lambda p: p.y + "string")
-    field_point = FieldPoint(1, 2, 3)
+    field_point = CartesianPoint(1, 2, 3)
     # cannot add integer and string in field lambda
     with raises(TypeError):
         field(field_point)
@@ -68,18 +74,35 @@ def test_invalid_lambda_field():
 @unsupported_usage
 def test_effect_in_lambda_field():
     field = ScalarField(lambda p: f"{p.y}")
-    field_point = FieldPoint(1, 2, 3)
+    field_point = CartesianPoint(1, 2, 3)
     assert field(field_point) == "2"
 
 
 def test_coord_system_field(test_args):
     field = ScalarField(lambda p: p.y * p.z, test_args.C)
-    field_point = FieldPoint(1, 2, 3)
+    field_point = CartesianPoint(1, 2, 3)
     assert field(field_point) == 6
     assert field.basis == [
         test_args.C.coord_system.x, test_args.C.coord_system.y, test_args.C.coord_system.z
     ]
     assert field.coordinate_system == test_args.C
+
+
+def test_wrong_coord_system_field(test_args):
+    field = ScalarField(lambda p: p.y * p.z, test_args.C)
+    field_point_sphere = SpherePoint(1, 2, 3)
+    with raises(ValueError):
+        field(field_point_sphere)
+    field_point_cylinder = CylinderPoint(1, 2, 3)
+    with raises(ValueError):
+        field(field_point_cylinder)
+
+
+def test_wrong_lambda_field():
+    field = ScalarField(lambda p: p.y * p.z)
+    field_point = Point(1, 2, 3)
+    with raises(AttributeError):
+        field(field_point)
 
 
 # Test ScalarField.from_expression()
@@ -88,7 +111,7 @@ def test_coord_system_field(test_args):
 def test_basic_vector_to_field_conversion(test_args):
     field = ScalarField.from_expression(test_args.C.coord_system.x + test_args.C.coord_system.y,
         test_args.C)
-    field_point = FieldPoint(1, 2, 3)
+    field_point = Point(1, 2, 3)
     assert field(field_point) == 3
     assert field.basis == [
         test_args.C.coord_system.x, test_args.C.coord_system.y, test_args.C.coord_system.z
@@ -102,40 +125,38 @@ def test_dimensional_vector_to_field_conversion(test_args):
     field = ScalarField.from_expression(
         test_args.C.coord_system.x * test_args.C.coord_system.i +
         test_args.C.coord_system.y * test_args.C.coord_system.j, test_args.C)
-    field_point = FieldPoint(1, 2, 3)
+    field_point = Point(1, 2, 3)
     assert field(field_point) == test_args.C.coord_system.i + 2 * test_args.C.coord_system.j
 
 
 def test_empty_vector_to_field_conversion():
     field = ScalarField.from_expression(0)
     # applying empty field to a point results in zero value
-    field_point = FieldPoint(1, 2, 3)
+    field_point = Point(1, 2, 3)
     assert field(field_point) == 0
     assert len(field.basis) == 3
 
 
 def test_only_integer_vector_to_field_conversion():
     field = ScalarField.from_expression(1)
-    field_point = FieldPoint(1, 2, 3)
+    field_point = Point(1, 2, 3)
     assert field(field_point) == 1
     assert len(field.basis) == 3
 
 
 # Only scalars from requested coordinate system are being applied
-def test_partially_different_coord_systems_vector_to_field(test_args):
-    C1 = CoordSys3D("C1", variable_names=("r", "phi", "z"))
-    # Makes linter happy
-    phi = getattr(C1, "phi")
+def test_external_symbols_vector_to_field(test_args):
+    phi = symbols("phi")
     field = ScalarField.from_expression(test_args.C.coord_system.x + 2 * phi, test_args.C)
     assert callable(field.field_function)
-    field_point = FieldPoint(1, 2, 3)
+    field_point = Point(1, 2, 3)
     assert field(field_point) == 1 + 2 * phi
 
 
 def test_custom_names_vector_to_field_conversion():
     C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
     field = ScalarField.from_expression(C1.coord_system.r + 2 * C1.coord_system.theta, C1)
-    field_point = FieldPoint(1, 2, 3)
+    field_point = CylinderPoint(1, 2, 3)
     assert field(field_point) == 5
     assert field.basis == [C1.coord_system.r, C1.coord_system.theta, C1.coord_system.z]
     assert field.coordinate_system == C1
@@ -144,7 +165,7 @@ def test_custom_names_vector_to_field_conversion():
 def test_rotate_coordinates_vector_to_field_conversion(test_args):
     sympy_vector_field = test_args.C.coord_system.x + test_args.C.coord_system.y
     field = ScalarField.from_expression(sympy_vector_field, test_args.C)
-    field_point = FieldPoint(1, 2, 3)
+    field_point = Point(1, 2, 3)
     assert field(field_point) == 3
     theta = symbols("theta")
     B = coordinates_rotate(test_args.C, theta, test_args.C.coord_system.k)
@@ -166,7 +187,7 @@ def test_rotate_coordinates_without_variables_vector_to_field_conversion(test_ar
     transformed_field = express(test_args.C.coord_system.x + test_args.C.coord_system.y,
         B.coord_system)
     field = ScalarField.from_expression(transformed_field, B)
-    field_point = FieldPoint(1, 2, 3)
+    field_point = Point(1, 2, 3)
     assert field(field_point) == test_args.C.coord_system.x + test_args.C.coord_system.y
 
 
