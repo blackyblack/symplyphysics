@@ -22,6 +22,7 @@ law = Eq(photon_momentum, planck_constant * photon_frequency / speed_of_light)
 def print_law() -> str:
     return print_expression(law)
 
+
 @validate_input(photon_frequency_=photon_frequency)
 @validate_output(photon_momentum)
 def calculate_momentum(photon_frequency_: Quantity) -> Quantity:

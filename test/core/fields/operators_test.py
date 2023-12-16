@@ -1,12 +1,16 @@
 from collections import namedtuple
+from typing import Sequence
 from pytest import fixture
 from sympy import Expr, cos, exp, sin, Symbol as SymSymbol, sqrt
 from sympy.vector import VectorZero
+from symplyphysics.core.dimensions import ScalarValue
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
-from symplyphysics.core.fields.field_point import FieldPoint
 from symplyphysics.core.fields.vector_field import VectorField
 from symplyphysics.core.fields.operators import curl_operator, divergence_operator
+from symplyphysics.core.points.cartesian_point import CartesianPoint
+from symplyphysics.core.points.cylinder_point import CylinderPoint
+from symplyphysics.core.points.sphere_point import SpherePoint
 
 # Tests are mostly based on vector calculus slides: https://www.slideshare.net/garghanish/coordinate-systems-and-vector-calculus
 
@@ -37,18 +41,25 @@ def test_cylindrical_divergence(test_args):
     assert result == 2
     # verify that in cylindrical coordinates result is same
     C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
-    cylindrical_field = VectorField(lambda point: [point.x * 2 / 3, 0, point.z * 2 / 3], C1)
+
+    def field_function(p: CylinderPoint) -> Sequence[ScalarValue]:
+        return [p.radius * 2 / 3, 0, p.height * 2 / 3]
+
+    cylindrical_field = VectorField(field_function, C1)
     result = divergence_operator(cylindrical_field)
     assert result == 2
 
 
 def test_spherical_divergence():
     C1 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
-    # point.x is r, point.y is theta, point.z is phi
-    field = VectorField(
-        lambda point:
-        [1 / point.x**2 * cos(point.z),
-        cos(point.z), point.x * sin(point.z) * cos(point.y)], C1)
+
+    def field_function(p: SpherePoint) -> Sequence[ScalarValue]:
+        return [
+            1 / p.radius**2 * cos(p.polar_angle),
+            cos(p.polar_angle), p.radius * sin(p.polar_angle) * cos(p.azimuthal_angle)
+        ]
+
+    field = VectorField(field_function, C1)
     result = divergence_operator(field)
     theta = field.coordinate_system.coord_system.base_scalars()[1]
     phi = field.coordinate_system.coord_system.base_scalars()[2]
@@ -70,9 +81,14 @@ def test_basic_curl(test_args):
 
 def test_cylindrical_curl():
     C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
-    # point.x is r, point.y is theta, point.z is z
-    field = VectorField(
-        lambda point: [point.x * sin(point.y), point.x**2 * point.z, point.z * cos(point.y)], C1)
+
+    def field_function(p: CylinderPoint) -> Sequence[ScalarValue]:
+        return [
+            p.radius * sin(p.azimuthal_angle), p.radius**2 * p.height,
+            p.height * cos(p.azimuthal_angle)
+        ]
+
+    field = VectorField(field_function, C1)
     result_field = curl_operator(field)
     r = field.coordinate_system.coord_system.base_scalars()[0]
     theta = field.coordinate_system.coord_system.base_scalars()[1]
@@ -85,11 +101,14 @@ def test_cylindrical_curl():
 
 def test_spherical_curl():
     C1 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
-    # point.x is r, point.y is theta, point.z is phi
-    field = VectorField(
-        lambda point:
-        [1 / point.x**2 * cos(point.z),
-        cos(point.z), point.x * sin(point.z) * cos(point.y)], C1)
+
+    def field_function(p: SpherePoint) -> Sequence[ScalarValue]:
+        return [
+            1 / p.radius**2 * cos(p.polar_angle),
+            cos(p.polar_angle), p.radius * sin(p.polar_angle) * cos(p.azimuthal_angle)
+        ]
+
+    field = VectorField(field_function, C1)
     result_field = curl_operator(field)
     r = field.coordinate_system.coord_system.base_scalars()[0]
     theta = field.coordinate_system.coord_system.base_scalars()[1]
@@ -100,7 +119,7 @@ def test_spherical_curl():
     assert expr_equals(result_vector.components[2], -cos(phi) / r)
 
 
-def _distance(point: FieldPoint) -> Expr:
+def _distance(point: CartesianPoint) -> Expr:
     return sqrt(point.x**2 + point.y**2 + point.z**2)
 
 

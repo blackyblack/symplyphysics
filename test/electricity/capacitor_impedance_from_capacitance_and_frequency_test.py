@@ -8,6 +8,7 @@ from symplyphysics.laws.electricity import capacitor_impedance_from_capacitance_
 ## Assert we have a capacitor with 5F capacitance. In 0.05Hz (0.314159 rad/s) circuit impedance of this element should be 636.61mOhm.
 ## (https://www.translatorscafe.com/unit-converter/ru-RU/calculator/capacitor-impedance/)
 
+
 @fixture(name="test_args")
 def test_args_fixture():
     c = Quantity(5 * units.farad)
@@ -24,6 +25,7 @@ def test_basic_impedance(test_args):
     result_im = im(result_impedance)
     assert result_re == 0
     assert result_im == approx(-0.63662, 0.001)
+
 
 def test_bad_capacitance(test_args):
     cb = Quantity(1 * units.coulomb)

@@ -6,6 +6,7 @@ from symplyphysics.laws.electricity import power_factor_from_active_and_full_pow
 # Description
 ## Assert we have a device wich consumes 10 Watt of power and makes 3 Watt of work. Power factor of this consumer should be 3/10.
 
+
 @fixture(name="test_args")
 def test_args_fixture():
     P = Quantity(3 * units.watt)

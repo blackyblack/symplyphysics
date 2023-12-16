@@ -1,10 +1,13 @@
 from collections import namedtuple
+from typing import Sequence
 from pytest import approx, fixture, mark, raises
 from sympy import Expr, cos, pi, sin, sqrt, Symbol as SymSymbol
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
+from symplyphysics.core.dimensions import ScalarValue
 from symplyphysics.core.fields.analysis import circulation_along_curve, circulation_along_surface_boundary, flux_across_curve, flux_across_surface, flux_across_surface_boundary, flux_across_volume_boundary
-from symplyphysics.core.fields.field_point import FieldPoint
 from symplyphysics.core.fields.vector_field import VectorField
+from symplyphysics.core.points.cartesian_point import CartesianPoint
+from symplyphysics.core.points.cylinder_point import CylinderPoint
 
 
 @fixture(name="test_args")
@@ -141,7 +144,7 @@ def test_basic_flux_across_surface(test_args):
     assert result.evalf(4) == approx((12 * pi).evalf(4), 0.001)
 
 
-def _distance(point: FieldPoint) -> Expr:
+def _distance(point: CartesianPoint) -> Expr:
     return sqrt(point.x**2 + point.y**2 + point.z**2)
 
 
@@ -204,6 +207,10 @@ def test_basic_flux_across_volume_boundary(test_args):
 # r = 1 and r = 2, with both cylinders extending between z = 0 and z = 5
 def test_basic_flux_across_sphere_boundary():
     B = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
-    field = VectorField(lambda point: [point.x**3, 0, 0], B)
+
+    def field_function(p: CylinderPoint) -> Sequence[ScalarValue]:
+        return [p.radius**3, 0, 0]
+
+    field = VectorField(field_function, B)
     result = flux_across_volume_boundary(field, (1, 2), (0, 2 * pi), (0, 5))
     assert result.evalf(4) == approx((150 * pi).evalf(4), 0.001)

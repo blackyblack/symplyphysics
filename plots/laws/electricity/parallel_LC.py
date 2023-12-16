@@ -27,10 +27,15 @@ EXAMPLE_RESISTANCE = 5000000
 # Parallel connection of dipoles summarizes their admittances.
 # First find impedances and then admittances
 L_impedance = coil_impedance.law.rhs.subs({coil_impedance.circular_frequency: frequency_arg})
-L_admittance = admittance_def.definition.rhs.subs({admittance_def.dipole_impedance: L_impedance}).subs({coil_impedance.coil_inductivity: EXAMPLE_INDUCTANCE})
+L_admittance = admittance_def.definition.rhs.subs({
+    admittance_def.dipole_impedance: L_impedance
+}).subs({coil_impedance.coil_inductivity: EXAMPLE_INDUCTANCE})
 
-C_impedance = capacitor_impedance.law.rhs.subs({capacitor_impedance.circular_frequency: frequency_arg})
-C_admittance = admittance_def.definition.rhs.subs({admittance_def.dipole_impedance: C_impedance}).subs({capacitor_impedance.capacitor_capacitance:EXAMPLE_CAPACITANCE})
+C_impedance = capacitor_impedance.law.rhs.subs(
+    {capacitor_impedance.circular_frequency: frequency_arg})
+C_admittance = admittance_def.definition.rhs.subs({
+    admittance_def.dipole_impedance: C_impedance
+}).subs({capacitor_impedance.capacitor_capacitance: EXAMPLE_CAPACITANCE})
 
 R_impedance = EXAMPLE_RESISTANCE
 R_admittance = admittance_def.definition.rhs.subs({admittance_def.dipole_impedance: R_impedance})
@@ -38,24 +43,35 @@ R_admittance = admittance_def.definition.rhs.subs({admittance_def.dipole_impedan
 ideal_elements = (L_admittance, C_admittance)
 real_elements = (L_admittance, C_admittance, R_admittance)
 
-admittance_ideal = parallel_admittance_law.law.rhs.subs(parallel_admittance_law.admittances, ideal_elements).doit()
+admittance_ideal = parallel_admittance_law.law.rhs.subs(parallel_admittance_law.admittances,
+    ideal_elements).doit()
 
-admittance_real = parallel_admittance_law.law.rhs.subs(parallel_admittance_law.admittances, real_elements).doit()
+admittance_real = parallel_admittance_law.law.rhs.subs(parallel_admittance_law.admittances,
+    real_elements).doit()
 
-impedance_from_admittance_law = solve(admittance_def.definition, admittance_def.dipole_impedance, dict=True)[0][admittance_def.dipole_impedance]
+impedance_from_admittance_law = solve(admittance_def.definition,
+    admittance_def.dipole_impedance,
+    dict=True)[0][admittance_def.dipole_impedance]
 
-impedance_ideal = impedance_from_admittance_law.subs({admittance_def.dipole_admittance: admittance_ideal})
+impedance_ideal = impedance_from_admittance_law.subs(
+    {admittance_def.dipole_admittance: admittance_ideal})
 impedance_ideal_to_plot = Abs(impedance_ideal)
 
-impedance_real = impedance_from_admittance_law.subs({admittance_def.dipole_admittance: admittance_real})
+impedance_real = impedance_from_admittance_law.subs(
+    {admittance_def.dipole_admittance: admittance_real})
 impedance_real_to_plot = Abs(impedance_real)
 
-thomsons_period = thomsons_formula.law.rhs.subs({thomsons_formula.inductance: EXAMPLE_INDUCTANCE, thomsons_formula.capacitance: EXAMPLE_CAPACITANCE})
-frequency_from_period = solve(period_definition.law, period_definition.circular_frequency, dict = True)[0][period_definition.circular_frequency]
+thomsons_period = thomsons_formula.law.rhs.subs({
+    thomsons_formula.inductance: EXAMPLE_INDUCTANCE,
+    thomsons_formula.capacitance: EXAMPLE_CAPACITANCE
+})
+frequency_from_period = solve(period_definition.law,
+    period_definition.circular_frequency,
+    dict=True)[0][period_definition.circular_frequency]
 thomsons_frequency = frequency_from_period.subs({period_definition.period: thomsons_period})
 
-
-PLOT = plot(impedance_ideal_to_plot, (frequency_arg, thomsons_frequency - 1.2, thomsons_frequency + 1.2),
+PLOT = plot(impedance_ideal_to_plot,
+    (frequency_arg, thomsons_frequency - 1.2, thomsons_frequency + 1.2),
     line_color="blue",
     title="LC impedance",
     label="LC impedance",
@@ -64,15 +80,17 @@ PLOT = plot(impedance_ideal_to_plot, (frequency_arg, thomsons_frequency - 1.2, t
     backend=MatplotlibBackend,
     show=False)
 
-real_impedance = plot(impedance_real_to_plot, (frequency_arg, thomsons_frequency - 1.2, thomsons_frequency + 1.2),
+real_impedance = plot(impedance_real_to_plot,
+    (frequency_arg, thomsons_frequency - 1.2, thomsons_frequency + 1.2),
     label="RLC impedance",
-    line_color="green",    
+    line_color="green",
     show=False)
 PLOT.append(real_impedance[0])
 
-freq_line = plot((frequency_arg - thomsons_frequency) * 1000000000,  (frequency_arg, thomsons_frequency - 0.001, thomsons_frequency + 0.001),
+freq_line = plot((frequency_arg - thomsons_frequency) * 1000000000,
+    (frequency_arg, thomsons_frequency - 0.001, thomsons_frequency + 0.001),
     label="frequency = 1 / sqrt(LC)",
-    line_color="red",    
+    line_color="red",
     show=False)
 PLOT.append(freq_line[0])
 

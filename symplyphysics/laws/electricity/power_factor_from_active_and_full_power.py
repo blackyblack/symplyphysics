@@ -17,6 +17,7 @@ power_factor = Symbol("power_factor", dimensionless)
 
 law = Eq(power_factor, active_power / full_power)
 
+
 def print_law() -> str:
     return print_expression(law)
 
@@ -25,8 +26,5 @@ def print_law() -> str:
 @validate_output(power_factor)
 def calculate_power_factor(active_power_: Quantity, full_power_: Quantity) -> Quantity:
     result_factor_expr = solve(law, power_factor, dict=True)[0][power_factor]
-    result_expr = result_factor_expr.subs({
-        active_power: active_power_,
-        full_power: full_power_
-    })
+    result_expr = result_factor_expr.subs({active_power: active_power_, full_power: full_power_})
     return Quantity(result_expr)
