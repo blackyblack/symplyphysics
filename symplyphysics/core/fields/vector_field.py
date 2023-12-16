@@ -4,12 +4,16 @@ from typing import Callable, Sequence, TypeAlias
 from sympy import Expr, sympify
 from sympy.vector import Vector as SymVector
 
+from .scalar_field import AnyPoint
 from ..points.point import Point
+from ..points.cartesian_point import CartesianPoint
+from ..points.sphere_point import SpherePoint
+from ..points.cylinder_point import CylinderPoint
 from ..coordinate_systems.coordinate_systems import CoordinateSystem
 from ..vectors.vectors import Vector
 from ...core.dimensions import ScalarValue
 
-FieldFunction: TypeAlias = Callable[[Point], Sequence[ScalarValue]] | Sequence[ScalarValue]
+FieldFunction: TypeAlias = Callable[[AnyPoint], Sequence[ScalarValue]] | Sequence[ScalarValue]
 
 
 def _subs_with_point(expr: Sequence[ScalarValue], coordinate_system: CoordinateSystem,
@@ -41,8 +45,26 @@ class VectorField:
         self._coordinate_system = coordinate_system
 
     def __call__(self, point_: Point) -> Vector:
-        result = self._point_function(point_) if callable(
-            self._point_function) else self._point_function
+        if not callable(self._point_function):
+            return Vector(self._point_function, self._coordinate_system)
+        # Point with general Point type is not checked against coordinate system.
+        # It's up to user to make sure that field function works with general Point type.
+        if isinstance(
+                point_, CartesianPoint
+        ) and self._coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
+            raise ValueError(
+                f"Unsupported coordinate system for CartesianPoint: {self._coordinate_system}")
+        if isinstance(
+                point_, SpherePoint
+        ) and self._coordinate_system.coord_system_type != CoordinateSystem.System.SPHERICAL:
+            raise ValueError(
+                f"Unsupported coordinate system for SpherePoint: {self._coordinate_system}")
+        if isinstance(
+                point_, CylinderPoint
+        ) and self._coordinate_system.coord_system_type != CoordinateSystem.System.CYLINDRICAL:
+            raise ValueError(
+                f"Unsupported coordinate system for CylinderPoint: {self._coordinate_system}")
+        result = self._point_function(point_)
         return Vector(result, self._coordinate_system)
 
     @property
@@ -75,10 +97,14 @@ class VectorField:
     # trajectory_ - list of expressions that correspond to a function in some space, eg [param, param] for a linear function y = x
     # return - vector parametrized by trajectory parameters.
     def apply(self, trajectory_: Sequence[Expr]) -> Vector:
-        field_point = Point()
-        for idx, element in enumerate(trajectory_):
-            field_point.set_coordinate(idx, element)
-        return self(field_point)
+        trajectory_as_point = Point(*trajectory_)
+        if self._coordinate_system.coord_system_type == CoordinateSystem.System.CARTESIAN:
+            trajectory_as_point = CartesianPoint(*trajectory_)
+        elif self._coordinate_system.coord_system_type == CoordinateSystem.System.SPHERICAL:
+            trajectory_as_point = SpherePoint(*trajectory_)
+        elif self._coordinate_system.coord_system_type == CoordinateSystem.System.CYLINDRICAL:
+            trajectory_as_point = CylinderPoint(*trajectory_)
+        return self(trajectory_as_point)
 
     # Convert coordinate system to space and apply field.
     # Applying field to entire space is necessary for SymPy field operators like Curl.

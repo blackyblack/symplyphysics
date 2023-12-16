@@ -23,8 +23,10 @@ def test_args_fixture():
 
 
 def test_basic_field():
+
     def field_function(p: CartesianPoint) -> ScalarValue:
         return p.z * p.y
+
     field = ScalarField(field_function)
     field_point = CartesianPoint(1, 2, 3)
     assert field(field_point) == 6

@@ -17,6 +17,7 @@ coil_inductivity = Symbol("coil_inductivity", units.inductance)
 
 law = Eq(coil_impedance, I * circular_frequency * coil_inductivity)
 
+
 def print_law() -> str:
     return print_expression(law)
 

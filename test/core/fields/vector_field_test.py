@@ -4,12 +4,16 @@ from test.test_decorators import unsupported_usage
 from pytest import fixture, raises
 from sympy import Expr, atan, cos, sin, sqrt, symbols
 from sympy.vector import express
-from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_rotate, coordinates_transform
+from symplyphysics.core.dimensions import ScalarValue
+from symplyphysics.core.points.cylinder_point import CylinderPoint
+from symplyphysics.core.points.cartesian_point import CartesianPoint
 from symplyphysics.core.points.point import Point
+from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_rotate, coordinates_transform
 from symplyphysics.core.fields.vector_field import VectorField
+from symplyphysics.core.fields.scalar_field import AnyPoint
 
 
-def _assert_point(field_: VectorField, point_: Point, expected_: Sequence[Expr | float]):
+def _assert_point(field_: VectorField, point_: AnyPoint, expected_: Sequence[Expr | float]):
     value = field_(point_)
     for idx, v in enumerate(value.components):
         assert v == expected_[idx]
@@ -26,9 +30,13 @@ def test_args_fixture():
 
 
 def test_basic_field():
-    field = VectorField(lambda p: [p.y, p.x])
+
+    def field_function(p: CartesianPoint) -> Sequence[ScalarValue]:
+        return [p.y, p.x]
+
+    field = VectorField(field_function)
     assert callable(field.field_function)
-    field_point = Point(1, 2, 3)
+    field_point = CartesianPoint(1, 2, 3)
     _assert_point(field, field_point, [2, 1])
     assert len(field.basis) == 3
 
@@ -42,13 +50,13 @@ def test_empty_field():
 
 def test_4d_field():
     field = VectorField(lambda p: [p.x, p.y, p.z, p.x])
-    field_point = Point(1, 2, 3)
+    field_point = CartesianPoint(1, 2, 3)
     _assert_point(field, field_point, [1, 2, 3, 1])
 
 
 def test_4d_point_field():
     field = VectorField(lambda p: [p.x, p.y, p.z, p.coordinate(3)])
-    field_point = Point(1, 2, 3, 4)
+    field_point = CartesianPoint(1, 2, 3, 4)
     _assert_point(field, field_point, [1, 2, 3, 4])
 
 
@@ -56,7 +64,7 @@ def test_4d_point_field():
 def test_wrong_type_lambda_field():
     field = VectorField(lambda p: ["string", p.x])
     assert callable(field.field_function)
-    field_point = Point(1, 2, 3)
+    field_point = CartesianPoint(1, 2, 3)
     # non expression lambda in a field is not processed and returns as is
     _assert_point(field, field_point, ["string", 1])
 
@@ -74,7 +82,7 @@ def test_wrong_type_value_field():
 def test_invalid_lambda_field():
     field = VectorField(lambda p: [p.y + "string", p.x])
     assert callable(field.field_function)
-    field_point = Point(1, 2, 3)
+    field_point = CartesianPoint(1, 2, 3)
     # cannot add integer and string in field lambda
     with raises(TypeError):
         field(field_point)
@@ -84,13 +92,13 @@ def test_invalid_lambda_field():
 def test_effect_in_lambda_field():
     field = VectorField(lambda p: [f"{p.y}", p.x])
     assert callable(field.field_function)
-    field_point = Point(1, 2, 3)
+    field_point = CartesianPoint(1, 2, 3)
     _assert_point(field, field_point, ["2", 1])
 
 
 def test_coord_system_field(test_args):
     field = VectorField(lambda p: [p.y * p.z, 0, 0], test_args.C)
-    field_point = Point(1, 2, 3)
+    field_point = CartesianPoint(1, 2, 3)
     _assert_point(field, field_point, [6, 0, 0])
     assert field.basis == [
         test_args.C.coord_system.x, test_args.C.coord_system.y, test_args.C.coord_system.z
@@ -195,8 +203,12 @@ def test_basic_apply_to_basis(test_args):
 
 
 def test_custom_names_apply_to_basis():
+
+    def field_function(p: CylinderPoint) -> Sequence[ScalarValue]:
+        return [p.radius, p.azimuthal_angle, p.height]
+
     C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
-    field = VectorField(lambda p: [p.x, p.y, p.z], C1)
+    field = VectorField(field_function, C1)
     field_space = field.apply_to_basis()
     assert field_space.coordinate_system == C1
     assert field_space.components == [C1.coord_system.r, C1.coord_system.theta, C1.coord_system.z]
@@ -279,7 +291,7 @@ def test_cylindrical_field_create(test_args):
     assert point_vector.components == [1, 2, 0]
 
     B = coordinates_transform(test_args.C, CoordinateSystem.System.CYLINDRICAL)
-    field_rebased = VectorField(lambda p: [p.x, p.y, 0], B)
+    field_rebased = VectorField(lambda p: [p.r, p.theta, 0], B)
     assert field_rebased.coordinate_system == B
 
     # point should have r = sqrt(5) in polar coordinates

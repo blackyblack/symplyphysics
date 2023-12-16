@@ -3,6 +3,7 @@ from .point import Coordinate, Point
 
 # This class represents point in 3d spherical space.
 class SpherePoint(Point):
+
     @property
     def radius(self) -> Coordinate:
         return self.coordinate(0)

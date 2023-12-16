@@ -16,6 +16,7 @@ capacitor_capacitance = Symbol("capacitor_capacitance", units.capacitance)
 
 law = Eq(capacitor_impedance, -I / (circular_frequency * capacitor_capacitance))
 
+
 def print_law() -> str:
     return print_expression(law)
 

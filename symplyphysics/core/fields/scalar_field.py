@@ -49,12 +49,21 @@ class ScalarField:
             return self._point_function
         # Point with general Point type is not checked against coordinate system.
         # It's up to user to make sure that field function works with general Point type.
-        if isinstance(point_, CartesianPoint) and self._coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
-            raise ValueError(f"Unsupported coordinate system for CartesianPoint: {self._coordinate_system}")
-        if isinstance(point_, SpherePoint) and self._coordinate_system.coord_system_type != CoordinateSystem.System.SPHERICAL:
-            raise ValueError(f"Unsupported coordinate system for SpherePoint: {self._coordinate_system}")
-        if isinstance(point_, CylinderPoint) and self._coordinate_system.coord_system_type != CoordinateSystem.System.CYLINDRICAL:
-            raise ValueError(f"Unsupported coordinate system for CylinderPoint: {self._coordinate_system}")
+        if isinstance(
+                point_, CartesianPoint
+        ) and self._coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
+            raise ValueError(
+                f"Unsupported coordinate system for CartesianPoint: {self._coordinate_system}")
+        if isinstance(
+                point_, SpherePoint
+        ) and self._coordinate_system.coord_system_type != CoordinateSystem.System.SPHERICAL:
+            raise ValueError(
+                f"Unsupported coordinate system for SpherePoint: {self._coordinate_system}")
+        if isinstance(
+                point_, CylinderPoint
+        ) and self._coordinate_system.coord_system_type != CoordinateSystem.System.CYLINDRICAL:
+            raise ValueError(
+                f"Unsupported coordinate system for CylinderPoint: {self._coordinate_system}")
         return self._point_function(point_)
 
     @property

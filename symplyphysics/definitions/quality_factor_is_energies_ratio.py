@@ -22,6 +22,7 @@ definition = Eq(quality_factor, resonant_frequency * stored_energy / dissipated_
 
 definition_units_SI = dimensionless
 
+
 def print_law() -> str:
     return print_expression(definition)
 
@@ -30,5 +31,9 @@ def print_law() -> str:
 @validate_output(quality_factor)
 def calculate_quality_factor(frequency_: Quantity, energy_: Quantity, power_: Quantity) -> Quantity:
     result_factor_expr = solve(definition, quality_factor, dict=True)[0][quality_factor]
-    result_expr = result_factor_expr.subs({resonant_frequency: frequency_, stored_energy: energy_, dissipated_power: power_})
+    result_expr = result_factor_expr.subs({
+        resonant_frequency: frequency_,
+        stored_energy: energy_,
+        dissipated_power: power_
+    })
     return Quantity(result_expr)

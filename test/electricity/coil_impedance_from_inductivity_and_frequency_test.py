@@ -8,6 +8,7 @@ from symplyphysics.laws.electricity import coil_impedance_from_inductivity_and_f
 ## Assert we have a coil with 5H inductivity. In 50Hz (314.159 rad/s) circuit impedance of this coil should be 1575.8 Ohm.
 ## (https://www.translatorscafe.com/unit-converter/ru-RU/calculator/inductor-impedance/)
 
+
 @fixture(name="test_args")
 def test_args_fixture():
     inductivity = Quantity(5 * units.henry)
@@ -24,6 +25,7 @@ def test_basic_impedance(test_args):
     result_im = im(result_impedance)
     assert result_re == 0
     assert result_im == approx(1575.8, 0.1)
+
 
 def test_bad_inductivity(test_args):
     ib = Quantity(1 * units.coulomb)

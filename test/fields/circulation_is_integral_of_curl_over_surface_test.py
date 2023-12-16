@@ -8,8 +8,8 @@ from symplyphysics import (
     SI,
     convert_to,
 )
-from symplyphysics.core.fields.field_point import FieldPoint
 from symplyphysics.core.fields.vector_field import VectorField
+from symplyphysics.core.points.cartesian_point import CartesianPoint
 from symplyphysics.laws.fields import circulation_is_integral_of_curl_over_surface as circulation_def
 
 
@@ -32,7 +32,7 @@ def test_basic_circulation(test_args):
     assert convert_to(result, S.One).evalf(4) == approx((-pi / 4).evalf(4), 0.001)
 
 
-def _distance(point: FieldPoint) -> Expr:
+def _distance(point: CartesianPoint) -> Expr:
     return sqrt(point.x**2 + point.y**2 + point.z**2)
 
 
