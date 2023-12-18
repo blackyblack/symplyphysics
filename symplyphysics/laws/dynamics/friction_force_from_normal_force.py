@@ -1,5 +1,5 @@
-from sympy import (Eq, solve, sin, pi)
-from symplyphysics import (units, Quantity, Symbol, print_expression, dimensionless, angle_type,
+from sympy import (Eq, solve)
+from symplyphysics import (units, Quantity, Symbol, print_expression, dimensionless,
     validate_input, validate_output)
 
 # Description
@@ -25,7 +25,7 @@ def print_law() -> str:
 
 @validate_input(friction_factor_=friction_factor,  normal_reaction_=normal_reaction)
 @validate_output(friction_force)
-def calculate_friction_force(friction_factor_: float, normal_reaction_: Quantity) -> Quantity:           
+def calculate_friction_force(friction_factor_: float, normal_reaction_: Quantity) -> Quantity:
     result_expr = solve(law, friction_force, dict=True)[0][friction_force]
     friction_force_applied = result_expr.subs({friction_factor: friction_factor_, normal_reaction: normal_reaction_})
     return Quantity(friction_force_applied, dimension=units.force)
