@@ -28,4 +28,4 @@ def print_law() -> str:
 def calculate_friction_force(friction_factor_: float, normal_reaction_: Quantity) -> Quantity:
     result_expr = solve(law, friction_force, dict=True)[0][friction_force]
     friction_force_applied = result_expr.subs({friction_factor: friction_factor_, normal_reaction: normal_reaction_})
-    return Quantity(friction_force_applied, dimension=units.force)
+    return Quantity(friction_force_applied)
