@@ -10,12 +10,12 @@ from symplyphysics import (
 from symplyphysics.laws.hydro import dynamic_pressure_from_velocity as dynamic_pressure_formula
 
 # Description
-## Water with density 1000kg/m3 flows with 0.2m/s. This flow should cause dynamic pressure of 20 Pa. 
+## Water with density 1000kg/m3 flows with 0.2m/s. This flow should cause dynamic pressure of 20 Pa.
 
 
 @fixture(name="test_args")
 def test_args_fixture():
-    ro =Quantity(1000 * units.kilogram / units.meter**3) 
+    ro =Quantity(1000 * units.kilogram / units.meter**3)
     v = Quantity(0.2 * units.meter / units.second)
     Args = namedtuple("Args", ["ro", "v"])
     return Args(ro=ro, v=v)
@@ -40,3 +40,4 @@ def test_bad_velocity(test_args):
         dynamic_pressure_formula.calculate_pressure(test_args.ro, bv)
     with raises(TypeError):
         dynamic_pressure_formula.calculate_pressure(test_args.ro, 100)
+        
