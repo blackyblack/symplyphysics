@@ -4,5 +4,4 @@ dist/
 __pycache__
 .pytest_cache
 setup.bat
-.idea
-.vscode
+
