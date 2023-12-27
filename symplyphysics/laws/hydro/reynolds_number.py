@@ -1,27 +1,22 @@
 from sympy import (Eq, solve)
 from symplyphysics import (
-    units, Quantity, Symbol, print_expression, validate_input, validate_output, dimensionless)
+    units, Quantity, Symbol, print_expression, validate_input, validate_output, dimensionless, convert_to)
 
 
 # Description
-# This file contains the implementation of the Reynolds number calculation in fluid dynamics.
-## The Reynolds number quantifies the relative importance of these two types of forces for given flow conditions,
-## and is a guide to when turbulent flow will occur in a particular situation
 # The Reynolds number is a dimensionless quantity that characterizes the flow of a fluid in a pipe.
-# It is calculated using the hydraulic diameter, fluid density, fluid velocity, and dynamic viscosity.
 # Law: Re = rho * d * v / mu, where
 # rho is fluid density
 # d is hydraulic diameter of the pipe
-# v is velocity of the fluid m/s.
+# v is velocity of the fluid.
 
 
-diameter = Symbol("diameter", units.length)  # hydraulic diameter of the pipe
+diameter = Symbol("diameter", units.length)
 density = Symbol(
-    "density", (units.mass / units.volume)  # density of the fluid kg/m^3
+    "density", (units.mass / units.volume)
 )
-velocity = Symbol("volume", units.velocity)  # velocity of the fluid m/s
+velocity = Symbol("velocity", units.velocity)
 dynamic_viscosity = Symbol(
-    # dynamic viscosity of the fluid Pa*s
     "dynamic_viscosity", units.pressure * units.time
 )
 
@@ -42,7 +37,7 @@ def print_law() -> str:
 )
 @validate_output(reynolds_number)
 def calculate_reynolds_number(diameter_: Quantity, density_: Quantity,
-    velocity_: Quantity, dynamic_viscosity_: Quantity) -> float:
+                              velocity_: Quantity, dynamic_viscosity_: Quantity) -> float:
     result_expr = solve(law, reynolds_number, dict=True)[0][reynolds_number]
     result_applied = result_expr.subs({
         diameter: diameter_,
@@ -50,4 +45,5 @@ def calculate_reynolds_number(diameter_: Quantity, density_: Quantity,
         velocity: velocity_,
         dynamic_viscosity: dynamic_viscosity_
     })
-    return Quantity(result_applied)
+    result = Quantity(result_applied)
+    return float(convert_to(result, dimensionless))

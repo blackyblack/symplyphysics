@@ -1,11 +1,6 @@
 from collections import namedtuple
 from pytest import approx, fixture
-from symplyphysics import (
-    convert_to,
-    Quantity,
-    dimensionless,
-    units
-)
+from symplyphysics import Quantity, units
 from symplyphysics.laws.hydro import reynolds_number
 
 
@@ -17,7 +12,7 @@ from symplyphysics.laws.hydro import reynolds_number
 def test_args_fixture():
     rho = Quantity(1000 * units.kilogram / units.meter**3)
     d = Quantity(0.1 * units.meter)
-    v = Quantity(1 * units.velocity)
+    v = Quantity(1 * units.meter / units.second)
     mu = Quantity(0.000894 * units.pascal * units.second)
     Args = namedtuple("Args", ["d", "rho", "v", "mu"])
     return Args(d=d, rho=rho, v=v, mu=mu)
@@ -25,6 +20,5 @@ def test_args_fixture():
 
 def test_reynolds_number(test_args):
     result = reynolds_number.calculate_reynolds_number(
-        test_args.d, test_args.rho, test_args.v, test_args.mu).evalf(6)
-    result_reynolds_number = convert_to(result, dimensionless)
-    assert result_reynolds_number == approx(111856.823, 0.001)
+        test_args.d, test_args.rho, test_args.v, test_args.mu)
+    assert result == approx(111856.823, 0.001)
