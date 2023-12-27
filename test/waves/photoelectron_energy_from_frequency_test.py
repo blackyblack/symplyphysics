@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
     SI,
 )
-from symplyphysics.laws.waves import photoelectric_effect
+from symplyphysics.laws.waves import photoelectron_energy_from_frequency as photoeffect
 
 # Description
 ## The metal surface with the work function 3.81e-19 J is irradiated with photons of frequency 9.23e14 Hz.
@@ -24,7 +24,7 @@ def test_args_fixture():
 
 
 def test_basic_energy(test_args):
-    result = photoelectric_effect.calculate_max_kinetic_energy(test_args.frequency, test_args.work)
+    result = photoeffect.calculate_max_kinetic_energy(test_args.frequency, test_args.work)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
     result_current = convert_to(result, units.joule).evalf(3)
     assert result_current == approx(2.3e-19, 0.01)
@@ -33,14 +33,14 @@ def test_basic_energy(test_args):
 def test_bad_frequency(test_args):
     fb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        photoelectric_effect.calculate_max_kinetic_energy(fb, test_args.work)
+        photoeffect.calculate_max_kinetic_energy(fb, test_args.work)
     with raises(TypeError):
-        photoelectric_effect.calculate_max_kinetic_energy(100, test_args.work)
+        photoeffect.calculate_max_kinetic_energy(100, test_args.work)
 
 
 def test_bad_work_function(test_args):
     wb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        photoelectric_effect.calculate_max_kinetic_energy(test_args.frequency, wb)
+        photoeffect.calculate_max_kinetic_energy(test_args.frequency, wb)
     with raises(TypeError):
-        photoelectric_effect.calculate_max_kinetic_energy(test_args.frequency, 100)
+        photoeffect.calculate_max_kinetic_energy(test_args.frequency, 100)
