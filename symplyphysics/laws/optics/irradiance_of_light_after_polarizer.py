@@ -22,8 +22,8 @@ from symplyphysics import (
 ## k is the polarizer's transparency coefficient
 ## phi is the angle between the initial polarization direction and the axis of the polarizer
 
-irradiance_final = Symbol("irradiance_final", units.watt / units.meter**2)
-irradiance_initial = Symbol("irradiance_initial", units.watt / units.meter**2)
+irradiance_final = Symbol("irradiance_final", units.power / units.length**2)
+irradiance_initial = Symbol("irradiance_initial", units.power / units.length**2)
 transparency_coefficient = Symbol("transparency_coefficient", dimensionless)
 polarization_angle = Symbol("polarization_angle", angle_type)
 
@@ -45,8 +45,8 @@ def print_law() -> str:
 @validate_output(irradiance_final)
 def calculate_irradiance(
     irradiance_initial_: Quantity,
-    transparency_coefficient_: Quantity,
-    polarization_angle_: Quantity,
+    transparency_coefficient_: float,
+    polarization_angle_: Quantity | float,
 ) -> Quantity:
     result_expr = solve(law, irradiance_final, dict=True)[0][irradiance_final]
     irradiance_applied = result_expr.subs({

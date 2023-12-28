@@ -24,7 +24,7 @@ def test_args_fixture():
 
 def test_basic_irradiance(test_args):
     result = malus_law.calculate_irradiance(test_args.I0, test_args.k, test_args.phi)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.watt / units.meter**2)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.power / units.length**2)
     result_irradiance = convert_to(result, units.watt / units.meter**2).evalf(3)
     assert result_irradiance == approx(0.375, 0.001)
 
