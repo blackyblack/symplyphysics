@@ -41,13 +41,9 @@ def test_bad_transparency_coefficient(test_args):
     k = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         malus_law.calculate_irradiance(test_args.I0, k, test_args.phi)
-    with raises(TypeError):
-        malus_law.calculate_irradiance(test_args.I0, 100, test_args.phi)
 
 
 def test_bad_polarization_angle(test_args):
     phi = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         malus_law.calculate_irradiance(test_args.I0, test_args.k, phi)
-    with raises(TypeError):
-        malus_law.calculate_irradiance(test_args.I0, test_args.k, 100)

@@ -22,7 +22,7 @@ from symplyphysics import (
 ## k is the polarizer's transparency coefficient
 ## phi is the angle between the initial polarization direction and the axis of the polarizer
 
-irradiance_final = Symbol("irradiance_final", units.power / units.length**2)
+irradiance_final = Symbol("irradiance_final", units.power / units.area)
 irradiance_initial = Symbol("irradiance_initial", units.power / units.length**2)
 transparency_coefficient = Symbol("transparency_coefficient", dimensionless)
 polarization_angle = Symbol("polarization_angle", angle_type)
