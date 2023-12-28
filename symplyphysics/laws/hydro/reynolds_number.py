@@ -1,4 +1,4 @@
-from sympy import (Eq, solve)
+from sympy import (Eq, solve, S)
 from symplyphysics import (
     units, Quantity, Symbol, print_expression, validate_input, validate_output, dimensionless, convert_to)
 
@@ -47,4 +47,5 @@ def calculate_reynolds_number(diameter_: Quantity, density_: Quantity,
     })
     result = Quantity(result_applied)
     
-    return float(convert_to(result, Quantity(dimensionless)))
+    return float(convert_to(result, S.One).evalf())
+
