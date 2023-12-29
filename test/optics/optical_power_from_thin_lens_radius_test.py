@@ -15,17 +15,17 @@ from symplyphysics.laws.optics import optical_power_from_thin_lens_radius as opt
 
 @fixture(name="test_args")
 def test_args_fixture():
-    lense_index = 1.5
+    lens_index = 1.5
     medium_index = 1
     front_radius = Quantity(50 * units.cm)
     back_radius = Quantity(-50 * units.cm)
-    Args = namedtuple("Args", ["lense_index", "medium_index", "front_radius", "back_radius"])
-    return Args(lense_index=lense_index, medium_index=medium_index,
+    Args = namedtuple("Args", ["lens_index", "medium_index", "front_radius", "back_radius"])
+    return Args(lens_index=lens_index, medium_index=medium_index,
         front_radius=front_radius, back_radius=back_radius)
 
 
 def test_basic_power(test_args):
-    result = optical_power.calculate_optical_power(test_args.lense_index, test_args.medium_index,
+    result = optical_power.calculate_optical_power(test_args.lens_index, test_args.medium_index,
         test_args.front_radius, test_args.back_radius)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, 1 / units.length)
     result_power = convert_to(result, units.dioptre).evalf(2)
@@ -35,14 +35,14 @@ def test_basic_power(test_args):
 def test_bad_radius(test_args):
     rb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        optical_power.calculate_optical_power(test_args.lense_index, test_args.medium_index,
+        optical_power.calculate_optical_power(test_args.lens_index, test_args.medium_index,
             rb, test_args.back_radius)
     with raises(TypeError):
-        optical_power.calculate_optical_power(test_args.lense_index, test_args.medium_index,
+        optical_power.calculate_optical_power(test_args.lens_index, test_args.medium_index,
             100, test_args.back_radius)
     with raises(errors.UnitsError):
-        optical_power.calculate_optical_power(test_args.lense_index, test_args.medium_index,
+        optical_power.calculate_optical_power(test_args.lens_index, test_args.medium_index,
             test_args.front_radius, rb)
     with raises(TypeError):
-        optical_power.calculate_optical_power(test_args.lense_index, test_args.medium_index,
+        optical_power.calculate_optical_power(test_args.lens_index, test_args.medium_index,
             test_args.front_radius, 100)
