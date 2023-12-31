@@ -14,8 +14,10 @@ hydrostatic_pressure = Symbol("hydrostatic_pressure", units.pressure)
 
 law = Eq(hydrostatic_pressure, density * units.acceleration_due_to_gravity * depth)
 
+
 def print_law():
     return print_expression(law)
+
 
 @validate_input(density_=density, depth_=depth)
 @validate_output(hydrostatic_pressure)

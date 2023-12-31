@@ -14,7 +14,8 @@ def circulation_along_curve(field: VectorField, trajectory: Sequence[Expr],
     parameter_limits: ParameterLimits) -> ScalarValue:
     (parameter, parameter_from, parameter_to) = parameter_limits
     field_applied = field.apply(trajectory)
-    curve_element_vector = parametrized_curve_element(Vector(trajectory, field.coordinate_system), parameter)
+    curve_element_vector = parametrized_curve_element(Vector(trajectory, field.coordinate_system),
+        parameter)
     integrand = dot_vectors(field_applied, curve_element_vector)
     circulation_value = integrate(integrand, (parameter, parameter_from, parameter_to))
     return simplify(circulation_value)
@@ -42,7 +43,8 @@ def flux_across_curve(field: VectorField, trajectory: Sequence[Expr],
     norm_vector = parametrized_curve_normal(trajectory_vector, parameter)
     norm_unit_vector = vector_unit(norm_vector)
     field_dot_norm_value = dot_vectors(field_applied, norm_unit_vector)
-    curve_element_magnitude_value = parametrized_curve_element_magnitude(trajectory_vector, parameter)
+    curve_element_magnitude_value = parametrized_curve_element_magnitude(
+        trajectory_vector, parameter)
     flux_value = integrate(field_dot_norm_value * curve_element_magnitude_value,
         (parameter, parameter_from, parameter_to))
     return simplify(flux_value)

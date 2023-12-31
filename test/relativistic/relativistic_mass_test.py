@@ -18,16 +18,14 @@ def test_args_fixture():
 
 
 def test_basic_mass(test_args):
-    result = relativistic_mass.calculate_relativistic_mass(
-        test_args.m, test_args.v)
+    result = relativistic_mass.calculate_relativistic_mass(test_args.m, test_args.v)
     result_mass = convert_to(result, units.kilogram).evalf(4)
     assert result_mass == approx(6.04, 0.01)
 
 
 def test_basic_zero_velocity(test_args):
     velocity = Quantity(0 * units.meter / units.second)
-    result = relativistic_mass.calculate_relativistic_mass(
-        test_args.m, velocity)
+    result = relativistic_mass.calculate_relativistic_mass(test_args.m, velocity)
     result_mass = convert_to(result, units.kilogram).evalf(4)
     assert result_mass == approx(6, 0.01)
 

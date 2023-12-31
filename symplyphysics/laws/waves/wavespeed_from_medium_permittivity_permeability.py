@@ -17,7 +17,6 @@ wave_speed_in_medium = Symbol("wave_speed_in_medium", units.velocity)
 relative_permittivity = Symbol("relative_permittivity", dimensionless)
 relative_permeability = Symbol("relative_permeability", dimensionless)
 
-
 law = Eq(wave_speed_in_medium, speed_of_light / sqrt(relative_permittivity * relative_permeability))
 
 

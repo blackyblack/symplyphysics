@@ -117,4 +117,4 @@ class VectorField:
         field_space = self.apply_to_basis()
         return field_space.to_sympy_vector()
 
-     # rebase() for curvilinear coordinate systems is quite complex. Won't implement.
+    # rebase() for curvilinear coordinate systems is quite complex. Won't implement.
