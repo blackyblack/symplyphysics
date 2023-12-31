@@ -11,6 +11,7 @@ from symplyphysics.laws.dynamics import friction_force_from_normal_force as fric
 
 #Description. According to online friction calculator (https://www.omnicalculator.com/physics/friction) normal reaction of 5 Newtons with friction factor of 0.001 will cause 0.005 newtons of friction force.
 
+
 @fixture(name="test_args")
 def test_args_fixture():
     mu = 0.001

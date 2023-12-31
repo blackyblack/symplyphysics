@@ -5,14 +5,14 @@ from ..vectors.vectors import Vector
 
 
 # Curve element is its tangent vector
-def curve_element(trajectory: Vector, parameter: Expr) -> Vector:
+def parametrized_curve_element(trajectory: Vector, parameter: Expr) -> Vector:
     trajectory_sympy_vector = trajectory.to_sympy_vector()
     trajectory_element_sympy_vector = diff(trajectory_sympy_vector, parameter)
     return Vector.from_sympy_vector(trajectory_element_sympy_vector, trajectory.coordinate_system)
 
 
-def curve_element_magnitude(trajectory: Vector, parameter: Expr) -> ScalarValue:
-    return vector_magnitude(curve_element(trajectory, parameter))
+def parametrized_curve_element_magnitude(trajectory: Vector, parameter: Expr) -> ScalarValue:
+    return vector_magnitude(parametrized_curve_element(trajectory, parameter))
 
 
 # For non parametrized volumes

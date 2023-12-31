@@ -20,8 +20,10 @@ def test_args_fixture():
     front_radius = Quantity(50 * units.cm)
     back_radius = Quantity(-50 * units.cm)
     Args = namedtuple("Args", ["lens_index", "medium_index", "front_radius", "back_radius"])
-    return Args(lens_index=lens_index, medium_index=medium_index,
-        front_radius=front_radius, back_radius=back_radius)
+    return Args(lens_index=lens_index,
+        medium_index=medium_index,
+        front_radius=front_radius,
+        back_radius=back_radius)
 
 
 def test_basic_power(test_args):
@@ -35,11 +37,11 @@ def test_basic_power(test_args):
 def test_bad_radius(test_args):
     rb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        optical_power.calculate_optical_power(test_args.lens_index, test_args.medium_index,
-            rb, test_args.back_radius)
+        optical_power.calculate_optical_power(test_args.lens_index, test_args.medium_index, rb,
+            test_args.back_radius)
     with raises(TypeError):
-        optical_power.calculate_optical_power(test_args.lens_index, test_args.medium_index,
-            100, test_args.back_radius)
+        optical_power.calculate_optical_power(test_args.lens_index, test_args.medium_index, 100,
+            test_args.back_radius)
     with raises(errors.UnitsError):
         optical_power.calculate_optical_power(test_args.lens_index, test_args.medium_index,
             test_args.front_radius, rb)

@@ -17,14 +17,12 @@ def test_args_fixture():
     relative_permeability = 1
     Args = namedtuple("Args", ["relative_permittivity", "relative_permeability"])
     return Args(relative_permittivity=relative_permittivity,
-                relative_permeability=relative_permeability)
+        relative_permeability=relative_permeability)
 
 
 def test_basic_speed(test_args):
-    result = speed_law.calculate_wavespeed(
-        test_args.relative_permittivity,
-        test_args.relative_permeability
-    )
+    result = speed_law.calculate_wavespeed(test_args.relative_permittivity,
+        test_args.relative_permeability)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.speed)
     result_freq_1 = convert_to(result, units.meter / units.second).evalf(5)
     assert result_freq_1 == approx(299792458, rel=1e-2)

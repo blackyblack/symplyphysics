@@ -1,5 +1,4 @@
 from sympy import Eq, solve
-from sympy.physics.units import speed_of_light as c
 from symplyphysics import units, Quantity, Symbol, print_expression, validate_input, validate_output
 
 # Description
@@ -13,7 +12,7 @@ from symplyphysics import units, Quantity, Symbol, print_expression, validate_in
 rest_energy = Symbol("rest_energy", units.energy)
 rest_mass = Symbol("rest_mass", units.mass)
 
-law = Eq(rest_energy, rest_mass * c**2)
+law = Eq(rest_energy, rest_mass * units.speed_of_light**2)
 
 
 def print_law() -> str:
