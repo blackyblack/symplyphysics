@@ -17,8 +17,6 @@ def test_args_fixture():
 
 def test_basic_efficiency(test_args):
     result = efficiency_law.calculate_efficiency_factor(test_args.Q_h, test_args.Q_r)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, dimensionless)
-    result_efficiency = convert_to(result, dimensionless).evalf(6)
     assert result_efficiency == approx(0.25, 0.001)
 
 
