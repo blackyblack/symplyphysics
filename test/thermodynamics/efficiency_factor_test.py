@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-from symplyphysics import (errors, units, convert_to, Quantity, SI, dimensionless)
+from symplyphysics import (errors, units, Quantity)
 from symplyphysics.laws.thermodynamics import efficiency_factor as efficiency_law
 
 # Description
