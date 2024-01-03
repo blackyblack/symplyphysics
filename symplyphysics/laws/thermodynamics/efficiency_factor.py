@@ -1,4 +1,4 @@
-gfrom sympy import (Eq, solve)
+gfrom sympy import (Eq, solve, S)
 from symplyphysics import (units, Quantity, Symbol, print_expression,
                            validate_input, validate_output, dimensionless)
 
@@ -24,10 +24,11 @@ def print_law() -> str:
                 heat_to_refrigerator_=heat_to_refrigerator)
 @validate_output(efficiency_factor)
 def calculate_efficiency_factor(heat_from_heater_: Quantity,
-                                heat_to_refrigerator_: Quantity) -> Quantity:
+                                heat_to_refrigerator_: Quantity) -> float:
     result_efficiency_factor = solve(law, efficiency_factor, dict=True)[0][efficiency_factor]
     result_expr = result_efficiency_factor.subs({
         heat_from_heater: heat_from_heater_,
         heat_to_refrigerator: heat_to_refrigerator_
     })
-    return Quantity(result_expr)
+    result = Quantity(result_expr)
+    return float(convert_to(result, S.One).evalf())
