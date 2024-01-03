@@ -3,8 +3,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression,
                            validate_input, validate_output, dimensionless)
 
 # Description
-## Efficiency is a characteristic of the efficiency of a system (device, machine) in relation to the conversion or transfer of energy.
-## It is determined by the ratio of the useful energy used to the total amount of energy received by the system: eta = (Q_h - Q_r) / Q_h.
+## The efficiency of a heat engine is the ratio of the useful energy used to the total amount of energy received by the system: eta = (Q_h - Q_r) / Q_h.
 ## Where:
 ## Q_h - the amount of heat transferred by the heater to the heat engine
 ## Q_r - the amount of heat transferred by the heat engine to the refrigerator
