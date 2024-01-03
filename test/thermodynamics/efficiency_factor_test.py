@@ -25,7 +25,7 @@ def test_basic_efficiency(test_args):
 def test_bad_efficiency(test_args):
     Q_rb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
-        efficiency_law.calculate_efficiency_factor(test_args.Q_h, test_args.Q_r)
+        efficiency_law.calculate_efficiency_factor(test_args.Q_h, Q_rb)
     with raises(errors.UnitsError):
         efficiency_law.calculate_efficiency_factor(Q_rb, test_args.Q_r)
     with raises(TypeError):
