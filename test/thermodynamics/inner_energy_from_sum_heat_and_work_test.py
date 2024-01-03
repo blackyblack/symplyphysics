@@ -12,20 +12,20 @@ from symplyphysics.laws.thermodynamics import inner_energy_from_sum_heat_and_wor
 
 @fixture(name="test_args")
 def fixture_test_args():
-    W = Quantity(50 *  units.joule)
-    Q = Quantity(100 *  units.joule)
+    W = Quantity(50 * units.joule)
+    Q = Quantity(100 * units.joule)
     Args = namedtuple("Args", ["Q", "W"])
     return Args(Q=Q, W=W)
 
 
-def test_basic_result(test_args):
+def test_basic_delta_inner_energy(test_args):
     result = first_law_of_term.calculate_inner_energy(test_args.Q, test_args.W)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
     result_delta_inner_energy = convert_to(result, units.joule).evalf(2)
-    assert result_delta_inner_energy == approx(150 * units.kilo , 0.01)
+    assert result_delta_inner_energy == approx(150, 0.01)
 
 
-def test_error_heat(test_args):
+def test_bad_heat(test_args):
     error_q = Quantity(1 * units.watt)
     with raises(errors.UnitsError):
         first_law_of_term.calculate_inner_energy(error_q, test_args.W)
@@ -33,7 +33,7 @@ def test_error_heat(test_args):
         first_law_of_term.calculate_inner_energy(100, test_args.W)
 
 
-def test_error_work(test_args):
+def test_bad_work(test_args):
     error_w = Quantity(1 * units.watt)
     with raises(errors.UnitsError):
         first_law_of_term.calculate_inner_energy(test_args.Q, error_w)

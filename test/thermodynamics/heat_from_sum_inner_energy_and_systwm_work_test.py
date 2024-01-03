@@ -9,19 +9,20 @@ from symplyphysics import (
 )
 from symplyphysics.laws.thermodynamics import heat_from_sum_inner_energy_and_system_work as first_law_of_term
 
+
 @fixture(name="test_args")
 def fixture_test_args():
-    W = Quantity(50 * units.kilo * units.joule)
-    dU = Quantity(100 * units.kilo * units.joule)
+    W = Quantity(50 * units.joule)
+    dU = Quantity(100 * units.joule)
     Args = namedtuple("Args", ["dU", "W"])
     return Args(dU=dU, W=W)
 
 
-def test_basic_result(test_args):
+def test_basic_heat(test_args):
     result = first_law_of_term.calculate_heat(test_args.W, test_args.dU)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
     result_heat = convert_to(result, units.joule).evalf(2)
-    assert result_heat == approx(150 * units.kilo, 0.01)
+    assert result_heat == approx(150, 0.01)
 
 
 def test_bad_delta_inner_energy(test_args):
