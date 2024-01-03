@@ -10,25 +10,25 @@ from symplyphysics import (units, Quantity, Symbol, print_expression,
 ## Q_r - the amount of heat transferred by the heat engine to the refrigerator
 ## \eta - efficiency_law of the heat engine
 
-the_amount_of_heat_from_heater = Symbol("the_amount_of_heat_from_heater", units.joule)
-the_amount_of_heat_to_refrigerator = Symbol("the_amount_of_heat_to_refrigerator", units.joule)
+heat_from_heater = Symbol("heat_from_heater", units.joule)
+heat_to_refrigerator = Symbol("heat_to_refrigerator", units.joule)
 efficiency_factor = Symbol("efficiency_factor", dimensionless)
 
-law = Eq(efficiency_factor, (the_amount_of_heat_from_heater - the_amount_of_heat_to_refrigerator) / the_amount_of_heat_from_heater)
+law = Eq(efficiency_factor, (heat_from_heater - heat_to_refrigerator) / heat_from_heater)
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(the_amount_of_heat_from_heater_=the_amount_of_heat_from_heater,
-                the_amount_of_heat_to_refrigerator_=the_amount_of_heat_to_refrigerator)
+@validate_input(heat_from_heater_=heat_from_heater,
+                heat_to_refrigerator_=heat_to_refrigerator)
 @validate_output(efficiency_factor)
-def calculate_efficiency_factor(the_amount_of_heat_from_heater_: Quantity,
-                                the_amount_of_heat_to_refrigerator_: Quantity) -> Quantity:
+def calculate_efficiency_factor(heat_from_heater_: Quantity,
+                                heat_to_refrigerator_: Quantity) -> Quantity:
     result_efficiency_factor = solve(law, efficiency_factor, dict=True)[0][efficiency_factor]
     result_expr = result_efficiency_factor.subs({
-        the_amount_of_heat_from_heater: the_amount_of_heat_from_heater_,
-        the_amount_of_heat_to_refrigerator: the_amount_of_heat_to_refrigerator_
+        heat_from_heater: heat_from_heater_,
+        heat_to_refrigerator: heat_to_refrigerator_
     })
     return Quantity(result_expr)
