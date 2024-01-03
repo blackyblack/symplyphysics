@@ -1,4 +1,4 @@
-from sympy import (Eq, solve)
+gfrom sympy import (Eq, solve)
 from symplyphysics import (units, Quantity, Symbol, print_expression,
                            validate_input, validate_output, dimensionless)
 
@@ -10,8 +10,8 @@ from symplyphysics import (units, Quantity, Symbol, print_expression,
 ## Q_r - the amount of heat transferred by the heat engine to the refrigerator
 ## \eta - efficiency of the heat engine
 
-heat_from_heater = Symbol("heat_from_heater", units.joule)
-heat_to_refrigerator = Symbol("heat_to_refrigerator", units.joule)
+heat_from_heater = Symbol("heat_from_heater", units.energy)
+heat_to_refrigerator = Symbol("heat_to_refrigerator", units.energy)
 efficiency_factor = Symbol("efficiency_factor", dimensionless)
 
 law = Eq(efficiency_factor, (heat_from_heater - heat_to_refrigerator) / heat_from_heater)
