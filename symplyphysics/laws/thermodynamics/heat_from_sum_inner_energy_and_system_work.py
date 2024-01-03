@@ -17,19 +17,20 @@ heat = Symbol('heat', units.energy)
 delta_inner_energy = Symbol('delta_inner_energy', units.energy)
 work = Symbol('work', units.energy)
 
-law = Eq(delta_inner_energy, heat + work)
+law = Eq(heat, delta_inner_energy + work)
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(heat_=heat, work_=work)
-@validate_output(delta_inner_energy)
-def calculate_inner_energy(heat_: Quantity, work_: Quantity) -> Quantity:
-    solved = solve(law, delta_inner_energy, dict=True)[0][delta_inner_energy]
+@validate_input(delta_inner_energy_=delta_inner_energy, work_=work)
+@validate_output(heat)
+def calculate_heat(delta_inner_energy_: Quantity, work_: Quantity) -> Quantity:
+    """Calculating the law for heat, where the system does the work."""
+    solved = solve(law, heat, dict=True)[0][heat]
     result_expr = solved.subs({
-        heat: heat_,
+        delta_inner_energy: delta_inner_energy_,
         work: work_
     })
     return Quantity(result_expr)
