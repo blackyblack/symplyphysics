@@ -9,8 +9,8 @@ from symplyphysics.laws.thermodynamics import efficiency_factor as efficiency_la
 
 @fixture(name="test_args")
 def test_args_fixture():
-    Q_h = Quantity(2 * units.energy)
-    Q_r = Quantity(1.5 * units.energy)
+    Q_h = Quantity(2 * units.joule)
+    Q_r = Quantity(1.5 * units.joule)
     Args = namedtuple("Args", ["Q_h", "Q_r"])
     return Args(Q_h=Q_h, Q_r=Q_r)
 
