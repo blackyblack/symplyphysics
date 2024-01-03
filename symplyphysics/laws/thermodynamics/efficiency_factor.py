@@ -1,5 +1,5 @@
 from sympy import (Eq, solve, S)
-from symplyphysics import (units, Quantity, Symbol, print_expression, convert_to
+from symplyphysics import (units, Quantity, Symbol, print_expression, convert_to,
                            validate_input, validate_output, dimensionless)
 
 # Description
