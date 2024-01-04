@@ -11,7 +11,7 @@ from symplyphysics.laws.thermodynamics import average_square_of_velocity as velo
 
 # Description
 ## Example from https://easyfizika.ru/zadachi/molekulyarnaya-fizika/opredelit-srednyuyu-kvadratichnuyu-skorost-molekul-vodoroda/
-## The ideal gas has a temperature of 273 K. The mass of one atom is equal to 3,32 * 10^(-27) kg. Then the average square of velocity should be 3.403 * 10^6 (m/s)^2
+## The ideal gas has a temperature of 273 K. The mass of molecule is equal to 3,32 * 10^(-27) kg. Then the average square of velocity should be 3.403 * 10^6 (m/s)^2
 
 
 @fixture(name="test_args")
