@@ -8,7 +8,7 @@ from symplyphysics import (
     Quantity,
     SI,
 )
-from symplyphysics.laws.waves import photon_momentum_is_proportional_to_propogation_vec as photon_momentum_law
+from symplyphysics.laws.waves import photon_momentum_is_proportional_to_propagation_vec as photon_momentum_law
 
 # Description
 ## Assert we have ultraviolet radiation with frequency of 3e16 Hz.
@@ -20,19 +20,21 @@ from symplyphysics.laws.waves import photon_momentum_is_proportional_to_propogat
 
 @fixture(name="test_args")
 def test_args_fixture():
-    abs_propogation_vec = Quantity(2e8 * pi * (1/units.length))
-    Args = namedtuple("Args", ["abs_propogation_vec"])
-    return Args(abs_propogation_vec=abs_propogation_vec)
+    module_propagation_vector = Quantity(2e8 * pi * (1/units.meter))
+    Args = namedtuple("Args", ["module_propagation_vector"])
+    return Args(module_propagation_vector=module_propagation_vector)
 
 
 def test_basic_momentum(test_args):
-    result = photon_momentum_law.calculate_momentum(test_args.abs_propogation_vec)
+    result = photon_momentum_law.calculate_momentum(test_args.module_propagation_vector)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.momentum)
     result_current = convert_to(result, units.newton * units.second).evalf(6)
     assert result_current == approx(6.6307632061911e-26, 0.00001)
 
 
 def test_bad_propogation_vec():
-    abs_propogation_vec = Quantity(1 * units.coulomb)
+    module_propagation_vector = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        photon_momentum_law.calculate_momentum(abs_propogation_vec)
+        photon_momentum_law.calculate_momentum(module_propagation_vector)
+    with raises(TypeError):
+        photon_momentum_law.calculate_momentum(100)
