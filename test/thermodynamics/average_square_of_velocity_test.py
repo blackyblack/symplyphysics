@@ -25,8 +25,8 @@ def test_basic_average_square_velocity(test_args):
     result = velocity_law.calculate_average_square_velocity(test_args.t,
                                                             test_args.m)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.velocity ** 2)
-    result_pressure = convert_to(result, (units.meter / units.second) ** 2).evalf(5)
-    assert result_pressure == approx(3.881 * 1E-21, 0.001)
+    result_average_square_velocity = convert_to(result, (units.meter / units.second) ** 2).evalf(5)
+    assert result_average_square_velocity == approx(3.881 * 1E-21, 0.001)
 
 
 def test_bad_mass(test_args):
