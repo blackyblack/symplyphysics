@@ -14,7 +14,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 # Q is the heat supplied to the system.
 # If the work is done by the system, and not by external
 # forces, then the formula is used:
-# Q=dU+A
+# dU=Q-A
 # where A is gas work.
 
 heat = Symbol("heat", units.energy)
@@ -31,8 +31,6 @@ def print_law() -> str:
 @validate_input(heat_=heat, work_=work)
 @validate_output(delta_inner_energy)
 def calculate_inner_energy(heat_: Quantity, work_: Quantity) -> Quantity:
-    """Calculation of the law for a system where the work
-     is performed by external forces. """
     solved = solve(law, delta_inner_energy, dict=True)[0][delta_inner_energy]
     result_expr = solved.subs({
         heat: heat_,
