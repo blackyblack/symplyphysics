@@ -10,13 +10,14 @@ from symplyphysics import (
 from symplyphysics.laws.thermodynamics import average_square_of_velocity as velocity_law
 
 # Description
-## The ideal gas has a temperature of 300 K. The mass of gas is equal to 32 gram. Then the average square of velocity should be 3.881 * 1E-21 (m/s)^2
+## Example from https://easyfizika.ru/zadachi/molekulyarnaya-fizika/opredelit-srednyuyu-kvadratichnuyu-skorost-molekul-vodoroda/
+## The ideal gas has a temperature of 273 K. The mass of one atom is equal to 3,32 * 10^(-27) kg. Then the average square of velocity should be 3.403 * 10^6 (m/s)^2
 
 
 @fixture(name="test_args")
 def test_args_fixture():
-    m = Quantity(32 * units.gram)
-    t = Quantity(300 * units.kelvin)
+    m = Quantity(3.32 * 1E-27 * units.kilogram)
+    t = Quantity(273 * units.kelvin)
     Args = namedtuple("Args", ["m", "t"])
     return Args(m=m, t=t)
 
@@ -26,7 +27,7 @@ def test_basic_average_square_velocity(test_args):
                                                             test_args.m)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.velocity ** 2)
     result_average_square_velocity = convert_to(result, (units.meter / units.second) ** 2).evalf(5)
-    assert result_average_square_velocity == approx(3.881 * 1E-21, 0.001)
+    assert result_average_square_velocity == approx(3.403 * 1E6, 0.001)
 
 
 def test_bad_mass(test_args):
