@@ -6,6 +6,7 @@ from symplyphysics.laws.dynamics import mechanical_work_from_force_and_move as w
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_velocity as kinetic_energy
 from symplyphysics.definitions import momentum_is_mass_times_velocity as impuls
 from symplyphysics.laws.conservation import momentum_after_collision_equals_to_momentum_before as impuls_conservation
+from symplyphysics.laws.conservation import mechanical_energy_after_equals_to_mechanical_energy_before as energy_conservation
 
 # Example from https://uchitel.pro/%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B8-%D0%BD%D0%B0-%D0%B7%D0%B0%D0%BA%D0%BE%D0%BD-%D1%81%D0%BE%D1%85%D1%80%D0%B0%D0%BD%D0%B5%D0%BD%D0%B8%D1%8F-%D0%B8%D0%BC%D0%BF%D1%83%D0%BB%D1%8C%D1%81%D0%B0/
 # A skater with a mass of M = 70 kg, standing on the ice,
@@ -52,7 +53,10 @@ kinetic_energy_law = kinetic_energy.law.subs({
     kinetic_energy.body_velocity: -velocity_of_skater_law
 }).rhs
 
-conservation_energy = Eq(kinetic_energy_law, work_friction_law)
+conservation_energy = energy_conservation.law.subs({
+    energy_conservation.mechanical_energy(energy_conservation.time_before): 0,
+    energy_conservation.mechanical_energy(energy_conservation.time_after): kinetic_energy_law - work_friction_law,
+})
 print(f"Final equation: {print_expression(conservation_energy)}")
 distance_law = solve(conservation_energy, distance, dict=True)[0][distance]
 print(f"Total distance equation: {print_expression(distance_law)}")
