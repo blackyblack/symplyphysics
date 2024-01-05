@@ -26,7 +26,7 @@ height_start = height(time_before)
 height_land = height(time_after)
 
 
-def get_mechanical_energy_at_the_moment(time: Quantity) -> Quantity:
+def get_mechanical_energy_at_the_moment(time: Symbol) -> Quantity:
     kinetic_energy_of_body_at_the_moment = kinetic_energy.law.subs({
         kinetic_energy.body_velocity: velocity(time),
         kinetic_energy.body_mass: body_mass
