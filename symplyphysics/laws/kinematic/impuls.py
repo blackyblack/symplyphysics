@@ -23,8 +23,8 @@ def print_law() -> str:
 
 
 @validate_input(mass_of_the_body_=mass_of_the_body, velocity_=velocity)
-@validate_output(velocity)
+@validate_output(impuls)
 def calculate_impuls(mass_of_the_body_: Quantity, velocity_: Quantity) -> Quantity:
-    result_impuls = solve(law, velocity, dict=True)[0][velocity]
+    result_impuls = solve(law, impuls, dict=True)[0][impuls]
     result_expr = result_impuls.subs({mass_of_the_body: mass_of_the_body_, velocity: velocity_})
     return Quantity(result_expr)
