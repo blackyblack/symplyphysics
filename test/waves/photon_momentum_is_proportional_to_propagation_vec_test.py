@@ -32,7 +32,7 @@ def test_basic_momentum(test_args):
     assert result_current == approx(6.6307632061911e-26, 0.00001)
 
 
-def test_bad_propogation_vec():
+def test_bad_propagation_vec():
     wavenumber = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         photon_momentum_law.calculate_momentum(wavenumber)
