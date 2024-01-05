@@ -36,9 +36,7 @@ impuls_conservation_law = impuls_conservation.law.subs({
     impuls_conservation.momentum(impuls_conservation.time_before): 0,
     impuls_conservation.momentum(impuls_conservation.time_after): impuls_of_skater - impuls_of_puck
 })
-velocity_of_skater_law = solve(impuls_conservation_law,
-                               velocity_of_skater,
-                               dict=True)[0][velocity_of_skater]
+velocity_of_skater_law = solve(impuls_conservation_law, velocity_of_skater, dict=True)[0][velocity_of_skater]
 
 friction_force_law = friction_force.law.subs({
     friction_force.friction_factor: friction_factor,
@@ -56,9 +54,7 @@ kinetic_energy_law = kinetic_energy.law.subs({
 
 conservation_energy = Eq(kinetic_energy_law, work_friction_law)
 print(f"Final equation: {print_expression(conservation_energy)}")
-distance_law = solve(conservation_energy,
-                     distance,
-                     dict=True)[0][distance]
+distance_law = solve(conservation_energy, distance, dict=True)[0][distance]
 print(f"Total distance equation: {print_expression(distance_law)}")
 
 
