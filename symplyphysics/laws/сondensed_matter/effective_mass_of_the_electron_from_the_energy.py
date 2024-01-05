@@ -11,26 +11,26 @@ from symplyphysics import (SI, units, Quantity, Symbol, Function, dimensionless,
 
 # Law: m_effective = (h/2pi)^2 / (d^2(E)/dk^2)
 ## Where:
-## E - energy of the electron,
+## E - energy function of the electron,
 ## h is Planck constant,
 ## k is component of the propagation vector,
 ## (d^2(E)/dk^2) - derivative of the second order of energy by the component of the wave vector.
 ## m_effective is effective mass of the electron.
 
-propagation_vector_axis = Symbol("propogation_vec_axis", 1/units.length)
+propagation_vector_axis = Symbol("propagation_vector_axis", 1/units.length)
 
-energy = Function("energy", units.energy)
+energy_function = Function("energy_function", units.energy)
 mass = Symbol("mass", units.mass)
 
 law = Eq(mass, ((planck_constant/2/pi)**2)
-         / Derivative(energy(propagation_vector_axis), (propagation_vector_axis, 2)))
+         / Derivative(energy_function(propagation_vector_axis), (propagation_vector_axis, 2)))
 
 def print_law() -> str:
     return print_expression(law)
 
 
 def apply_energy_function(energy_function_: Expr) -> Expr:
-    applied_law = law.subs(energy(propagation_vector_axis), energy_function_)
+    applied_law = law.subs(energy_function(propagation_vector_axis), energy_function_)
     return applied_law
 
 
@@ -39,7 +39,7 @@ def apply_energy_function(energy_function_: Expr) -> Expr:
 def calculate_mass(energy_function_: Expr, propagation_vector_axis_: Quantity) -> Quantity:
     energy_function_quantity = Quantity(energy_function_)
     assert SI.get_dimension_system().equivalent_dims(energy_function_quantity.dimension,
-        energy.dimension)
+        energy_function.dimension)
 
     applied_law = apply_energy_function(energy_function_)
 
