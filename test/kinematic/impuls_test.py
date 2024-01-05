@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
     SI,
 )
-from symplyphysics.laws.kinematic import centripetal_acceleration_is_squared_velocity_by_radius as centripetal_acceleration_def
+from symplyphysics.laws.kinematic import impuls as impuls_law
 
 # Description
 ## Test example from http://kornev-school.ru/f9_momentum.html
@@ -23,7 +23,7 @@ def test_args_fixture():
 
 
 def test_basic_impuls(test_args):
-    result = centripetal_acceleration_def.calculate_acceleration(test_args.m, test_args.v)
+    result = impuls_law.calculate_impuls(test_args.m, test_args.v)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.mass * units.velocity)
     result_acceleration = convert_to(result, units.kilogram * units.meter / units.second).evalf(4)
     assert result_acceleration == approx(24, 0.01)
@@ -32,14 +32,14 @@ def test_basic_impuls(test_args):
 def test_bad_velocity(test_args):
     vb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        centripetal_acceleration_def.calculate_acceleration(test_args.m, vb)
+        impuls_law.calculate_impuls(test_args.m, vb)
     with raises(TypeError):
-        centripetal_acceleration_def.calculate_acceleration(test_args.m, 100)
+        impuls_law.calculate_impuls(test_args.m, 100)
 
 
 def test_bad_mass(test_args):
     mb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        centripetal_acceleration_def.calculate_acceleration(mb, test_args.v)
+        impuls_law.calculate_impuls(mb, test_args.v)
     with raises(TypeError):
-        centripetal_acceleration_def.calculate_acceleration(100, test_args.v)
+        impuls_law.calculate_impuls(100, test_args.v)
