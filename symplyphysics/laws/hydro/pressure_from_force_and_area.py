@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output)
+                           validate_output)
 
 # Description
 ## Pressure has a direct relationship with force. Assuming that the area is constant, pressure increases as the force applied also increases.
@@ -10,7 +10,6 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## P is pressure
 ## F is the force
 ## A is the area
-
 
 
 pressure = Symbol("pressure", units.pressure)
