@@ -15,22 +15,22 @@ from symplyphysics import (
 ## Law is: p = (h/2pi) * k, where
 ## p is momentum of photon,
 ## h is Planck constant,
-## k is module of the propagation vector of photon.
+## k is number of wave cycles per length.
 
 photon_momentum = Symbol("photon_momentum", units.momentum)
-module_propagation_vector = Symbol("module_propagation_vector", 1/units.length)
+wavenumber = Symbol("wavenumber", 1/units.length)
 
-law = Eq(photon_momentum, (planck_constant/(2*pi)) * module_propagation_vector)
+law = Eq(photon_momentum, (planck_constant/(2*pi)) * wavenumber)
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(photon_propagation_=module_propagation_vector)
+@validate_input(wavenumber_=wavenumber)
 @validate_output(photon_momentum)
-def calculate_momentum(photon_propagation_: Quantity) -> Quantity:
+def calculate_momentum(wavenumber_: Quantity) -> Quantity:
     result_momentum_expr = solve(law, photon_momentum, dict=True)[0][photon_momentum]
     result_expr = result_momentum_expr.subs(
-        {module_propagation_vector: photon_propagation_})
+        {wavenumber: wavenumber_})
     return Quantity(result_expr)
