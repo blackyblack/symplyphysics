@@ -44,7 +44,7 @@ conservation_law = conservation.law.subs({
     conservation.mechanical_energy(conservation.time_after): mechanical_energy_after
 })
 
-
+# First solution is negative - ignore it
 solved = solve(conservation_law, landing_speed, dict=True)[1][landing_speed]
 answer = Eq(landing_speed, solved)
 
