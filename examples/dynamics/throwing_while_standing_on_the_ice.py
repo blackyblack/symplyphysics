@@ -38,17 +38,19 @@ momentum_conservation_law = momentum_conservation.law.subs({
     momentum_conservation.momentum(momentum_conservation.time_after): momentum_of_puck
 })
 
-
 velocity_of_skater_law = solve(momentum_conservation_law, velocity_of_skater, dict=True)[0][velocity_of_skater]
 
 reaction_force_value = third_newton_law.law.subs({
-    third_newton_law.force_action: -mass_of_skater * gravity_acceleration
+    third_newton_law.force_action: mass_of_skater * gravity_acceleration
 }).rhs
 
+# We take only the modulus of the reaction force vector,
+# since we set the direction of the vertical axis coinciding with the direction of this vector
 friction_force_value = friction_force.law.subs({
     friction_force.friction_factor: friction_factor,
-    friction_force.normal_reaction: reaction_force_value
+    friction_force.normal_reaction: abs(reaction_force_value)
 }).rhs
+
 work_friction_value = work_friction.law.subs({
     work_friction.force: friction_force_value,
     work_friction.distance: distance
