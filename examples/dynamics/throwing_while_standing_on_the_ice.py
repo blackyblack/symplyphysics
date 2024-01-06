@@ -1,5 +1,5 @@
 from sympy import solve, Symbol, Eq
-from symplyphysics import print_expression, Quantity
+from symplyphysics import print_expression
 from symplyphysics.laws.dynamics import friction_force_from_normal_force as friction_force
 from symplyphysics.laws.dynamics import mechanical_work_from_force_and_move as work_friction
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_velocity as kinetic_energy
