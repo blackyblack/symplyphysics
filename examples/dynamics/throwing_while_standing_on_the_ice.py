@@ -1,11 +1,12 @@
-from sympy import solve, Symbol
-from symplyphysics import print_expression
+from sympy import solve, Symbol, Eq
+from symplyphysics import print_expression, Quantity
 from symplyphysics.laws.dynamics import friction_force_from_normal_force as friction_force
 from symplyphysics.laws.dynamics import mechanical_work_from_force_and_move as work_friction
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_velocity as kinetic_energy
 from symplyphysics.definitions import momentum_is_mass_times_velocity as momentum
 from symplyphysics.laws.conservation import momentum_after_collision_equals_to_momentum_before as momentum_conservation
 from symplyphysics.laws.conservation import mechanical_energy_after_equals_to_mechanical_energy_before as energy_conservation
+from symplyphysics.laws.dynamics import force_reaction_from_force_action as third_newton_law
 
 # Example from https://uchitel.pro/%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B8-%D0%BD%D0%B0-%D0%B7%D0%B0%D0%BA%D0%BE%D0%BD-%D1%81%D0%BE%D1%85%D1%80%D0%B0%D0%BD%D0%B5%D0%BD%D0%B8%D1%8F-%D0%B8%D0%BC%D0%BF%D1%83%D0%BB%D1%8C%D1%81%D0%B0/
 # A skater with a mass of M = 70 kg, standing on the ice,
@@ -36,11 +37,17 @@ momentum_conservation_law = momentum_conservation.law.subs({
     momentum_conservation.momentum(momentum_conservation.time_before): momentum_of_skater,
     momentum_conservation.momentum(momentum_conservation.time_after): momentum_of_puck
 })
+
+
 velocity_of_skater_law = solve(momentum_conservation_law, velocity_of_skater, dict=True)[0][velocity_of_skater]
+
+reaction_force_value = third_newton_law.law.subs({
+    third_newton_law.force_action: -mass_of_skater * gravity_acceleration
+}).rhs
 
 friction_force_value = friction_force.law.subs({
     friction_force.friction_factor: friction_factor,
-    friction_force.normal_reaction: mass_of_skater * gravity_acceleration
+    friction_force.normal_reaction: reaction_force_value
 }).rhs
 work_friction_value = work_friction.law.subs({
     work_friction.force: friction_force_value,
@@ -57,9 +64,10 @@ conservation_energy = energy_conservation.law.subs({
     energy_conservation.mechanical_energy(energy_conservation.time_after): work_friction_value,
 })
 print(f"Final equation: {print_expression(conservation_energy)}")
-distance_value = solve(conservation_energy, distance, dict=True)[0][distance]
-print(f"Total distance equation: {print_expression(distance_value)}")
-distance_m = distance_value.subs({
+distance_equation = solve(conservation_energy, distance, dict=True)[0][distance]
+answer = Eq(distance, distance_equation)
+print(f"Total distance equation: {print_expression(answer)}")
+distance_m = distance_equation.subs({
     gravity_acceleration: 9.8,
     mass_of_skater: 70,
     mass_of_puck: 0.3,
