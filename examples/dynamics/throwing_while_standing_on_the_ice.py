@@ -33,8 +33,8 @@ momentum_of_puck = momentum.definition.subs({
 }).rhs
 
 momentum_conservation_law = momentum_conservation.law.subs({
-    momentum_conservation.momentum(momentum_conservation.time_before): 0,
-    momentum_conservation.momentum(momentum_conservation.time_after): momentum_of_skater - momentum_of_puck
+    momentum_conservation.momentum(momentum_conservation.time_before): momentum_of_skater,
+    momentum_conservation.momentum(momentum_conservation.time_after): momentum_of_puck
 })
 velocity_of_skater_law = solve(momentum_conservation_law, velocity_of_skater, dict=True)[0][velocity_of_skater]
 
