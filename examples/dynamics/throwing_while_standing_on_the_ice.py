@@ -7,6 +7,7 @@ from symplyphysics.definitions import momentum_is_mass_times_velocity as momentu
 from symplyphysics.laws.conservation import momentum_after_collision_equals_to_momentum_before as momentum_conservation
 from symplyphysics.laws.conservation import mechanical_energy_after_equals_to_mechanical_energy_before as energy_conservation
 from symplyphysics.laws.dynamics import force_reaction_from_force_action as third_newton_law
+from symplyphysics.laws.dynamics import acceleration_from_force as second_newton_law
 
 # Example from https://uchitel.pro/%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B8-%D0%BD%D0%B0-%D0%B7%D0%B0%D0%BA%D0%BE%D0%BD-%D1%81%D0%BE%D1%85%D1%80%D0%B0%D0%BD%D0%B5%D0%BD%D0%B8%D1%8F-%D0%B8%D0%BC%D0%BF%D1%83%D0%BB%D1%8C%D1%81%D0%B0/
 # A skater with a mass of M = 70 kg, standing on the ice,
@@ -23,6 +24,7 @@ distance = Symbol("distance")
 gravity_acceleration = Symbol("gravity_acceleration")
 
 velocity_of_skater = Symbol("velocity_of_scater")
+gravity_force = Symbol("gravity_force")
 
 momentum_of_skater = momentum.definition.subs({
     momentum.mass: mass_of_skater,
@@ -40,8 +42,14 @@ momentum_conservation_law = momentum_conservation.law.subs({
 
 velocity_of_skater_law = solve(momentum_conservation_law, velocity_of_skater, dict=True)[0][velocity_of_skater]
 
+acceleration_law = second_newton_law.law.subs({
+    second_newton_law.acceleration: gravity_acceleration,
+    second_newton_law.force: gravity_force
+})
+gravity_force_value = solve(acceleration_law, gravity_force, dict=True)[0][gravity_force]
+
 reaction_force_value = third_newton_law.law.subs({
-    third_newton_law.force_action: mass_of_skater * gravity_acceleration
+    third_newton_law.force_action: gravity_force_value
 }).rhs
 
 # We take only the modulus of the reaction force vector,
