@@ -16,10 +16,8 @@ mass_of_bullet = Symbol("mass_of_bullet")
 
 angle_of_shot = Symbol("angle_of_shot")
 
-# At the highest point of the trajectory, the bullet velocity modulus is equal to
-# V_x = V * cos(alpha)
-# because in the projection on the horizontal axis,
-# the movement of the bullet is described by the law of motion with constant velocity.
+# We take only the horizontal component of the velocity,
+# since there is no vertical component of the velocity at the highest point of the trajectory.
 velocity_projection_equation = projection_velocity.law.subs(({
     projection_velocity.vector_length: start_velocity,
     projection_velocity.vector_angle: angle_of_shot
