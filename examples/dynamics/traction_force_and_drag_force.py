@@ -15,7 +15,7 @@ distance = Symbol("distance")
 traction_force = Symbol("traction_force")
 
 # According to Newton's second law,
-# the thrust force is directed horizontally in the direction of movement
+# the traction force is directed horizontally in the direction of movement
 # of the trolleybus, and the drag force is directed horizontally against
 # the movement. In the projection on the horizontal axis,
 # the sum of the forces acting on the trolleybus
