@@ -34,24 +34,21 @@ momentum_of_puck = momentum.definition.subs({
     momentum.mass: mass_of_puck,
     momentum.velocity: velocity_of_puck
 }).rhs
-
 momentum_conservation_law = momentum_conservation.law.subs({
     momentum_conservation.momentum(momentum_conservation.time_before): momentum_of_skater,
     momentum_conservation.momentum(momentum_conservation.time_after): momentum_of_puck
 })
-
 velocity_of_skater_law = solve(momentum_conservation_law, velocity_of_skater, dict=True)[0][velocity_of_skater]
 
 acceleration_law = second_newton_law.law.subs({
-    second_newton_law.acceleration: gravity_acceleration,
-    second_newton_law.force: gravity_force
+    second_newton_law.mass: mass_of_skater,
+    second_newton_law.force: gravity_force,
+    second_newton_law.acceleration: gravity_acceleration
 })
 gravity_force_value = solve(acceleration_law, gravity_force, dict=True)[0][gravity_force]
-
 reaction_force_value = third_newton_law.law.subs({
     third_newton_law.force_action: gravity_force_value
 }).rhs
-
 # We take only the modulus of the reaction force vector,
 # since we set the direction of the vertical axis coinciding with the direction of this vector
 friction_force_value = friction_force.law.subs({
@@ -63,12 +60,10 @@ work_friction_value = work_friction.law.subs({
     work_friction.force: friction_force_value,
     work_friction.distance: distance
 }).rhs
-
 kinetic_energy_value = kinetic_energy.law.subs({
     kinetic_energy.body_mass: mass_of_skater,
     kinetic_energy.body_velocity: velocity_of_skater_law
 }).rhs
-
 conservation_energy = energy_conservation.law.subs({
     energy_conservation.mechanical_energy(energy_conservation.time_before): kinetic_energy_value,
     energy_conservation.mechanical_energy(energy_conservation.time_after): work_friction_value,
@@ -77,6 +72,7 @@ print(f"Final equation: {print_expression(conservation_energy)}")
 distance_equation = solve(conservation_energy, distance, dict=True)[0][distance]
 answer = Eq(distance, distance_equation)
 print(f"Total distance equation: {print_expression(answer)}")
+
 distance_m = distance_equation.subs({
     gravity_acceleration: 9.8,
     mass_of_skater: 70,
