@@ -21,10 +21,9 @@ from symplyphysics.laws.condensed_matter import effective_mass_of_the_electron_f
 
 @fixture(name="test_args")
 def test_args_fixture():
-    period_structure_not_quantity = 2e-10
-    period_structure = Quantity(period_structure_not_quantity * (units.meter))
-    gamma = Quantity(4 * 1.6e-19 * (units.joule))
-    wavenumber = Quantity((pi / period_structure_not_quantity / 1e3) * (1/units.meter))
+    period_structure = Quantity(2e-10 * units.meter)
+    gamma = Quantity(4 * 1.6e-19 * units.joule)
+    wavenumber = Quantity(pi / period_structure / 1000)
     energy_function = -2 * gamma * cos(wavenumber * period_structure)
 
     increased_wavenumber = Quantity(wavenumber * 3)
