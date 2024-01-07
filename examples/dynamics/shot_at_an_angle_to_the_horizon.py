@@ -1,5 +1,6 @@
-import math
+#!/usr/bin/env python3
 
+import math
 from sympy import solve, Symbol, Eq
 from symplyphysics import print_expression
 from symplyphysics.laws.kinematic import planar_projection_is_cosine as projection_velocity
@@ -15,6 +16,10 @@ mass_of_bullet = Symbol("mass_of_bullet")
 
 angle_of_shot = Symbol("angle_of_shot")
 
+# At the highest point of the trajectory, the bullet velocity modulus is equal to
+# V_x = V * cos(alpha)
+# because in the projection on the horizontal axis,
+# the movement of the bullet is described by the law of motion with constant velocity.
 velocity_projection_equation = projection_velocity.law.subs(({
     projection_velocity.vector_length: start_velocity,
     projection_velocity.vector_angle: angle_of_shot
