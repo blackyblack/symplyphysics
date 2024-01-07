@@ -14,6 +14,12 @@ distance = Symbol("distance")
 
 traction_force = Symbol("traction_force")
 
+# According to Newton's second law,
+# the thrust force is directed horizontally in the direction of movement
+# of the trolleybus, and the drag force is directed horizontally against
+# the movement. In the projection on the horizontal axis,
+# the sum of the forces acting on the trolleybus
+# F = F_trac - F_drag
 acceleration_value = second_newton_law.law.subs({
     second_newton_law.mass: mass_of_trolleybus,
     second_newton_law.force: traction_force - drag_force
