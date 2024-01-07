@@ -1,6 +1,6 @@
 from sympy import (Derivative, Expr, Eq, solve, pi,)
 from sympy.physics.units import planck as planck_constant
-from symplyphysics import (SI, units, Quantity, Symbol, Function, dimensionless, print_expression, validate_input,
+from symplyphysics import (SI, units, Quantity, Symbol, Function, print_expression, validate_input,
     validate_output,)
 
 # Description

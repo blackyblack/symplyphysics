@@ -2,7 +2,6 @@ from collections import namedtuple
 from pytest import approx, fixture, raises
 
 from sympy import cos, pi
-from sympy.physics.units import planck as planck_constant
 from symplyphysics import (
     errors,
     units,
@@ -10,7 +9,7 @@ from symplyphysics import (
     Quantity,
     SI,
 )
-from symplyphysics.laws.сondensed_matter import effective_mass_of_the_electron_from_the_energy as ef_mass_el
+from symplyphysics.laws.condensed_matter import effective_mass_of_the_electron_from_the_energy as ef_mass_el
 
 # Description
 ## Let's consider the one-dimensional model for an electron presented on the website:
