@@ -23,12 +23,8 @@ distance = Symbol("distance")
 
 gravity_acceleration = Symbol("gravity_acceleration")
 
-velocity_of_skater = Symbol("velocity_of_scater")
-gravity_force = Symbol("gravity_force")
-
 momentum_of_skater = momentum.definition.subs({
     momentum.mass: mass_of_skater,
-    momentum.velocity: velocity_of_skater
 }).rhs
 momentum_of_puck = momentum.definition.subs({
     momentum.mass: mass_of_puck,
@@ -38,14 +34,13 @@ momentum_conservation_law = momentum_conservation.law.subs({
     momentum_conservation.momentum(momentum_conservation.time_before): momentum_of_skater,
     momentum_conservation.momentum(momentum_conservation.time_after): momentum_of_puck
 })
-velocity_of_skater_law = solve(momentum_conservation_law, velocity_of_skater, dict=True)[0][velocity_of_skater]
+velocity_of_skater_equation = solve(momentum_conservation_law, momentum.velocity, dict=True)[0][momentum.velocity]
 
-acceleration_law = second_newton_law.law.subs({
+acceleration_equation = second_newton_law.law.subs({
     second_newton_law.mass: mass_of_skater,
-    second_newton_law.force: gravity_force,
     second_newton_law.acceleration: gravity_acceleration
 })
-gravity_force_value = solve(acceleration_law, gravity_force, dict=True)[0][gravity_force]
+gravity_force_value = solve(acceleration_equation, second_newton_law.force, dict=True)[0][second_newton_law.force]
 reaction_force_value = third_newton_law.law.subs({
     third_newton_law.force_action: gravity_force_value
 }).rhs
@@ -62,7 +57,7 @@ work_friction_value = work_friction.law.subs({
 }).rhs
 kinetic_energy_value = kinetic_energy.law.subs({
     kinetic_energy.body_mass: mass_of_skater,
-    kinetic_energy.body_velocity: velocity_of_skater_law
+    kinetic_energy.body_velocity: velocity_of_skater_equation
 }).rhs
 conservation_energy = energy_conservation.law.subs({
     energy_conservation.mechanical_energy(energy_conservation.time_before): kinetic_energy_value,
