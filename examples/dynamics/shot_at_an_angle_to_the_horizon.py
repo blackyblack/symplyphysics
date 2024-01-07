@@ -1,3 +1,5 @@
+import math
+
 from sympy import solve, Symbol, Eq
 from symplyphysics import print_expression
 from symplyphysics.laws.kinematic import planar_projection_is_cosine as projection_velocity
@@ -8,7 +10,7 @@ from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_velocity as
 # if its kinetic energy at the highest point of the trajectory is 450 J?
 
 start_velocity = Symbol("start_velocity")
-kinetic_energy_in_pick = Symbol("kinetic_energy_in_pick")
+kinetic_energy_in_peak = Symbol("kinetic_energy_in_peak")
 mass_of_bullet = Symbol("mass_of_bullet")
 
 angle_of_shot = Symbol("angle_of_shot")
@@ -19,7 +21,7 @@ velocity_projection_equation = projection_velocity.law.subs(({
 })).rhs
 
 kinetic_energy_equation = kinetic_energy.law.subs({
-    kinetic_energy.kinetic_energy_of_body: kinetic_energy_in_pick,
+    kinetic_energy.kinetic_energy_of_body: kinetic_energy_in_peak,
     kinetic_energy.body_velocity: velocity_projection_equation,
     kinetic_energy.body_mass: mass_of_bullet
 })
@@ -33,6 +35,7 @@ print(f"Total angle of shot equation:\n{print_expression(answer)}")
 angle_of_shot_rad = angle_of_shot_equation.subs({
     start_velocity: 600,
     mass_of_bullet: 0.01,
-    kinetic_energy_in_pick: 450
+    kinetic_energy_in_peak: 450
 })
-print(f"Angle of shot is: {angle_of_shot_rad} rad")
+# 1 rad = 180 / pi degree
+print(f"Angle of shot is: {angle_of_shot_rad * 180 / math.pi} degree")
