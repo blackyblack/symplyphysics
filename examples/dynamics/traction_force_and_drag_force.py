@@ -14,8 +14,7 @@ distance = Symbol("distance")
 
 traction_force = Symbol("traction_force")
 
-# According to Newton's second law,
-# the traction force is directed horizontally in the direction of movement
+# The traction force is directed horizontally in the direction of movement
 # of the trolleybus, and the drag force is directed horizontally against
 # the movement. In the projection on the horizontal axis,
 # the sum of the forces acting on the trolleybus
@@ -35,6 +34,7 @@ print(f"Final equation:\n{print_expression(distance_value)}")
 traction_force_equation = solve(distance_value, traction_force, dict=True)[0][traction_force]
 answer = Eq(traction_force, traction_force_equation)
 print(f"Total traction force equation:\n{print_expression(answer)}")
+
 traction_force_N = traction_force_equation.subs({
     time_of_motion: 5,
     distance: 10,
