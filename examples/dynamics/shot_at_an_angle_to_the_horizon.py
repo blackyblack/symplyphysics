@@ -25,7 +25,8 @@ kinetic_energy_equation = kinetic_energy.law.subs({
 })
 print(f"Final equation: {print_expression(kinetic_energy_equation)}")
 
-angle_of_shot_equation = solve(kinetic_energy_equation, angle_of_shot, dict=True)[0][angle_of_shot]
+# The last solve is correct for this example
+angle_of_shot_equation = solve(kinetic_energy_equation, angle_of_shot, dict=True)[-1][angle_of_shot]
 answer = Eq(angle_of_shot, angle_of_shot_equation)
 print(f"Total angle of shot equation:\n{print_expression(answer)}")
 
