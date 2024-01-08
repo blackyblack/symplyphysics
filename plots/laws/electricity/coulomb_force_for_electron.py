@@ -11,7 +11,7 @@ CHARGE_OF_ELECTRON = -1.6 * 1E-19
 
 print(f"Formula is:\n{coulomb_law.print_law()}")
 
-distance = Symbol("dictance")
+distance = Symbol("distance")
 
 force_equation = coulomb_law.law.subs({
     coulomb_law.first_charge: CHARGE_OF_ELECTRON,
@@ -26,7 +26,7 @@ p1 = plot(force_equation, (distance, 1, 5),
           xlabel="r, m",
           ylabel="F, N",
           backend=MatplotlibBackend,
-          label="The force acting on an electron from another electron",
+          label="Electrostatic force",
           legend=True,
           show=False)
 p1.show()
