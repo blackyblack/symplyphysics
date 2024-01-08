@@ -18,7 +18,6 @@ from symplyphysics.laws.condensed_matter import thermionic_emission_current as e
 @fixture(name="test_args")
 def test_args_fixture():
     thermodynamic_work = Quantity(2.59 * units.electronvolt)
-    thermodynamic_work = Quantity(convert_to(thermodynamic_work, units.joule).evalf(8) * units.joule)
     temperature = Quantity(300 * units.kelvin)
 
     Args = namedtuple("Args", ["thermodynamic_work", "temperature"])
@@ -29,7 +28,7 @@ def test_args_fixture():
 
 def test_basic_thermionic_current(test_args):
     result = emission_law.calculate_current(test_args.thermodynamic_work, test_args.temperature)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.current / units.length**2)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.current / units.area)
     result = convert_to(result, units.ampere / units.meter**2).evalf(5)
     assert result == approx(0.33e-32, rel=0.01)
 
