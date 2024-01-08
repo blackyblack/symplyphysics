@@ -37,8 +37,8 @@ def print_law() -> str:
 @validate_input(thermodynamic_work_=thermodynamic_work, temperature_=temperature)
 @validate_output(density_current)
 def calculate_current(thermodynamic_work_: Quantity, temperature_: Quantity) -> Quantity:
-    result_momentum_expr = solve(law, density_current, dict=True)[0][density_current]
-    result_expr = result_momentum_expr.subs({
+    result_expr = solve(law, density_current, dict=True)[0][density_current]
+    result_expr = result_expr.subs({
         thermodynamic_work: thermodynamic_work_,
         temperature: temperature_,
     })
