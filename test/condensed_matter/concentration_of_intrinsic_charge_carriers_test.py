@@ -1,10 +1,11 @@
 from collections import namedtuple
-from pytest import approx, fixture
+from pytest import approx, fixture, raises
 from symplyphysics import (
     units,
     SI,
     convert_to,
     Quantity,
+    errors
 )
 from symplyphysics.laws.condensed_matter import concentration_of_intrinsic_charge_carriers as concentration_law
 
@@ -15,21 +16,62 @@ from symplyphysics.laws.condensed_matter import concentration_of_intrinsic_charg
 
 @fixture(name="test_args")
 def test_args_fixture():
-    density_conductivity = Quantity(3.2e19 * (1 / units.centimeter**3))
-    density_valence = Quantity(1.8e19 * (1 / units.centimeter**3))
+    density_of_states_in_conduction_band = Quantity(3.2e19 * (1 / units.centimeter**3))
+    density_of_states_in_valence_band = Quantity(1.8e19 * (1 / units.centimeter**3))
     temperature = Quantity(300 * units.kelvin)
-    band_gap = Quantity(1.12 * 1.6e-19 * units.joule)
+    band_gap = Quantity(1.12 * units.electronvolt)
+    band_gap = Quantity(convert_to(band_gap, units.joule).evalf(8) * units.joule)
 
-    Args = namedtuple("Args", ["density_conductivity", "density_valence", "temperature", "band_gap"])
+    Args = namedtuple("Args", ["density_of_states_in_conduction_band", "density_of_states_in_valence_band", "temperature", "band_gap"])
     return Args(
-        density_conductivity=density_conductivity,
-        density_valence=density_valence,
+        density_of_states_in_conduction_band=density_of_states_in_conduction_band,
+        density_of_states_in_valence_band=density_of_states_in_valence_band,
         band_gap=band_gap, temperature=temperature)
 
 
-def test_basic_concentration_intrinsic(test_args):
-    result = concentration_law.calculate_concentration(test_args.density_conductivity,
-        test_args.density_valence, test_args.band_gap, test_args.temperature)
+def test_basic_charge_carriers_concentration(test_args):
+    result = concentration_law.calculate_concentration(test_args.density_of_states_in_conduction_band,
+        test_args.density_of_states_in_valence_band, test_args.band_gap, test_args.temperature)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, 1 / units.length**3)
     result = convert_to(result, 1 / units.centimeter**3).evalf(5)
     assert result == approx(1e10, rel=0.1)
+
+
+def test_bad_density_of_states_in_conduction_band(test_args):
+    density_of_states_in_conduction_band = Quantity(1 * units.coulomb)
+    with raises(errors.UnitsError):
+        concentration_law.calculate_concentration(density_of_states_in_conduction_band,
+                                                  test_args.density_of_states_in_valence_band, test_args.band_gap, test_args.temperature)
+    with raises(TypeError):
+        concentration_law.calculate_concentration(100,
+                                                  test_args.density_of_states_in_valence_band, test_args.band_gap, test_args.temperature)
+
+
+def test_bad_density_of_states_in_valence_band(test_args):
+    density_of_states_in_valence_band = Quantity(1 * units.coulomb)
+    with raises(errors.UnitsError):
+        concentration_law.calculate_concentration(test_args.density_of_states_in_conduction_band,
+                                                  density_of_states_in_valence_band, test_args.band_gap, test_args.temperature)
+    with raises(TypeError):
+        concentration_law.calculate_concentration(test_args.density_of_states_in_conduction_band,
+                                                  100, test_args.band_gap, test_args.temperature)
+
+
+def test_bad_band_gap(test_args):
+    band_gap = Quantity(1 * units.coulomb)
+    with raises(errors.UnitsError):
+        concentration_law.calculate_concentration(test_args.density_of_states_in_conduction_band,
+                                                  test_args.density_of_states_in_valence_band, band_gap, test_args.temperature)
+    with raises(TypeError):
+        concentration_law.calculate_concentration(test_args.density_of_states_in_conduction_band,
+                                                  test_args.density_of_states_in_valence_band, 100, test_args.temperature)
+
+
+def test_bad_temperature(test_args):
+    temperature = Quantity(1 * units.coulomb)
+    with raises(errors.UnitsError):
+        concentration_law.calculate_concentration(test_args.density_of_states_in_conduction_band,
+                                                  test_args.density_of_states_in_valence_band, test_args.band_gap, temperature)
+    with raises(TypeError):
+        concentration_law.calculate_concentration(test_args.density_of_states_in_conduction_band,
+                                                  test_args.density_of_states_in_valence_band, test_args.band_gap, 100)
