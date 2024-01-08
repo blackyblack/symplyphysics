@@ -18,7 +18,8 @@ traction_force = Symbol("traction_force")
 # The traction force is directed horizontally in the direction of movement
 # of the trolleybus, and the drag force is directed horizontally against
 # the movement.
-acceleration_force = superposition_law.definition.subs(superposition_law.forces, (traction_force, -drag_force)).doit().rhs
+acceleration_force = superposition_law.definition.subs(superposition_law.forces,
+    (traction_force, -drag_force)).doit().rhs
 
 acceleration_value = second_newton_law.law.subs({
     second_newton_law.mass: mass_of_trolleybus,
