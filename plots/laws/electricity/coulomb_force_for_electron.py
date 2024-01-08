@@ -16,9 +16,9 @@ force_equation = coulomb_law.law.subs({
     coulomb_law.first_charge: CHARGE_OF_ELECTRON,
     coulomb_law.second_charge: CHARGE_OF_ELECTRON,
     coulomb_law.distance: distance
-})
+}).rhs
 
-p1 = plot(force_equation, (distance, 0, 50),
+p1 = plot(force_equation, (distance, 1, 50),
           line_color="blue",
           title="Coluomb Law",
           xlabel="r, m",
