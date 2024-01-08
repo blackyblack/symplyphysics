@@ -22,7 +22,7 @@ force_equation = coulomb_law.law.subs({
                units.newton * (units.meters / units.coulomb) ** 2)
 }).rhs
 
-p1 = plot(force_equation, distance,
+p1 = plot(force_equation, (distance, 1, 5),
           line_color="blue",
           title="Coluomb Law",
           xlabel="r, m",
