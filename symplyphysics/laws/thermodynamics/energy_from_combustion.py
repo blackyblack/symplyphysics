@@ -25,7 +25,6 @@ def print_law() -> str:
     mass_of_matter_=mass_of_matter)
 @validate_output(amount_energy)
 def calculate_amount_energy(specific_heat_combustion_: Quantity, mass_of_matter_: Quantity) -> Quantity:
-
     result_amount_energy_expr = solve(law, amount_energy, dict=True)[0][amount_energy]
     result_expr = result_amount_energy_expr.subs({
         specific_heat_combustion: specific_heat_combustion_,

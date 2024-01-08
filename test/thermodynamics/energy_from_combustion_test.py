@@ -8,7 +8,7 @@ from symplyphysics import (
     convert_to,
     prefixes,
 )
-from symplyphysics.laws.thermodynamics import the_energy_of_combustion_of_matter as amount_energy
+from symplyphysics.laws.thermodynamics import energy_from_combustion as amount_energy
 
 # Test example from https://easyfizika.ru/zadachi/termodinamika/skolko-tepla-vydelitsya-pri-sgoranii-2-kg-benzina/
 # When burning 2 kg of gasoline, 92 MJ energy should be released
