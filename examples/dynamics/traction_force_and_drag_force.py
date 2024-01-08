@@ -2,6 +2,7 @@ from sympy import solve, Symbol, Eq
 from symplyphysics import print_expression
 from symplyphysics.laws.dynamics import acceleration_from_force as second_newton_law
 from symplyphysics.laws.kinematic import constant_acceleration_movement_is_parabolic as distance_law
+from symplyphysics.definitions import superposition_of_forces_is_sum as superposition_law
 
 # A trolleybus with a mass of 12 tons, starting from a place,
 # passes a distance of 10 m along a horizontal path in 5 seconds.
@@ -16,12 +17,13 @@ traction_force = Symbol("traction_force")
 
 # The traction force is directed horizontally in the direction of movement
 # of the trolleybus, and the drag force is directed horizontally against
-# the movement. In the projection on the horizontal axis,
-# the sum of the forces acting on the trolleybus
-# F = F_trac - F_drag
+# the movement.
+acceleration_force = superposition_law.definition.subs(superposition_law.forces,
+    (traction_force, -drag_force)).doit().rhs
+
 acceleration_value = second_newton_law.law.subs({
     second_newton_law.mass: mass_of_trolleybus,
-    second_newton_law.force: traction_force - drag_force
+    second_newton_law.force: acceleration_force
 }).rhs
 
 distance_value = distance_law.law.subs({

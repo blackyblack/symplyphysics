@@ -14,7 +14,7 @@ from symplyphysics.laws.hydro import pressure_from_force_and_area as pressure
 @fixture(name="test_args")
 def test_args_fixture():
     force = Quantity(588 * units.newton)
-    area = Quantity(0.002 * units.meter ** 2)
+    area = Quantity(0.002 * units.meter**2)
     Args = namedtuple("Args", ["area", "force"])
     return Args(
         area=area,

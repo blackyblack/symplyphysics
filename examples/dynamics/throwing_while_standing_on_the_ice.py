@@ -34,13 +34,15 @@ momentum_conservation_law = momentum_conservation.law.subs({
     momentum_conservation.momentum(momentum_conservation.time_before): momentum_of_skater,
     momentum_conservation.momentum(momentum_conservation.time_after): momentum_of_puck
 })
-velocity_of_skater_equation = solve(momentum_conservation_law, momentum.velocity, dict=True)[0][momentum.velocity]
+velocity_of_skater_equation = solve(momentum_conservation_law, momentum.velocity,
+    dict=True)[0][momentum.velocity]
 
 acceleration_equation = second_newton_law.law.subs({
     second_newton_law.mass: mass_of_skater,
     second_newton_law.acceleration: gravity_acceleration
 })
-gravity_force_value = solve(acceleration_equation, second_newton_law.force, dict=True)[0][second_newton_law.force]
+gravity_force_value = solve(acceleration_equation, second_newton_law.force,
+    dict=True)[0][second_newton_law.force]
 reaction_force_value = third_newton_law.law.subs({
     third_newton_law.force_action: gravity_force_value
 }).rhs

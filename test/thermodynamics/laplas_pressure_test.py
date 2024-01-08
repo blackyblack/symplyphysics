@@ -9,7 +9,6 @@ from symplyphysics import (
 )
 from symplyphysics.laws.thermodynamics import laplas_pressure as laplas_law
 
-
 # Description
 ## Test example from http://ru.solverbook.com/spravochnik/molekulyarnaya-fizika-i-termodinamika/davlenie-pod-iskrivlennoj-poverxnostyu-zhidkosti/
 ## Water surface tension coefficient is equal 7.4 * 10^(-2) N/m. The radius of the bubble in the water is equal 0,005 mm. Then the Laplace pressure will equal 2.96 * 10^4 Pa.

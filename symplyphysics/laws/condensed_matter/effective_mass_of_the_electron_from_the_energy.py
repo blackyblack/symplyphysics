@@ -1,7 +1,21 @@
-from sympy import (Derivative, Expr, Eq, solve, pi,)
+from sympy import (
+    Derivative,
+    Expr,
+    Eq,
+    solve,
+    pi,
+)
 from sympy.physics.units import planck as planck_constant
-from symplyphysics import (SI, units, Quantity, Symbol, Function, print_expression, validate_input,
-    validate_output,)
+from symplyphysics import (
+    SI,
+    units,
+    Quantity,
+    Symbol,
+    Function,
+    print_expression,
+    validate_input,
+    validate_output,
+)
 
 # Description
 ## In solid state physics, a particle's effective mass is the mass that it seems to have when responding to forces,
@@ -17,12 +31,12 @@ from symplyphysics import (SI, units, Quantity, Symbol, Function, print_expressi
 ## (d^2(E)/dk^2) - derivative of the second order of energy by the component of the wave vector.
 ## m_effective is effective mass of the electron.
 
-wavenumber = Symbol("wavenumber", 1/units.length)
+wavenumber = Symbol("wavenumber", 1 / units.length)
 energy_function = Function("energy_function", units.energy)
 mass = Symbol("mass", units.mass)
 
-law = Eq(mass, ((planck_constant/2/pi)**2)
-         / Derivative(energy_function(wavenumber), (wavenumber, 2)))
+law = Eq(mass, ((planck_constant / 2 / pi)**2) / Derivative(energy_function(wavenumber),
+    (wavenumber, 2)))
 
 
 def print_law() -> str:
