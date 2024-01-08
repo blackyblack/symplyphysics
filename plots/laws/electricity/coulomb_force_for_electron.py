@@ -6,28 +6,27 @@ from symplyphysics import (print_expression, units, Quantity, convert_to)
 
 from symplyphysics.laws.electricity import force_from_charge_and_distance as coulomb_law
 
+ELECTROSTATIC_CONSTANT = 9 * 1E9
 CHARGE_OF_ELECTRON = -1.6 * 1E-19
 
 print(f"Formula is:\n{coulomb_law.print_law()}")
 
 distance = Symbol("dictance")
-electrostatic_constant = Symbol("electrostatic_constant")
 
 force_equation = coulomb_law.law.subs({
     coulomb_law.first_charge: CHARGE_OF_ELECTRON,
     coulomb_law.second_charge: CHARGE_OF_ELECTRON,
     coulomb_law.distance: distance,
-    coulomb_law.units.coulomb_constant:
-    convert_to(Quantity(units.coulomb_constant),
-               units.newton * (units.meters / units.coulomb) ** 2)
+    coulomb_law.units.coulomb_constant: ELECTROSTATIC_CONSTANT
 }).rhs
 
 p1 = plot(force_equation, (distance, 1, 5),
           line_color="blue",
-          title="Coluomb Law",
+          title="Coulomb Law",
           xlabel="r, m",
           ylabel="F, N",
           backend=MatplotlibBackend,
+          label="The force acting on an electron from another electron",
           legend=True,
           show=False)
 p1.show()
