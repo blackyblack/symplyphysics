@@ -1,6 +1,5 @@
 from sympy import Expr
-from symplyphysics import (units, Quantity, Vector,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Vector, validate_input, validate_output)
 from symplyphysics.core.vectors.arithmetics import dot_vectors
 from symplyphysics.core.vectors.vectors import QuantityVector
 

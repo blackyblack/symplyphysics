@@ -23,10 +23,9 @@ def test_args_fixture():
 
 
 def test_basic_average_square_velocity(test_args):
-    result = velocity_law.calculate_average_square_velocity(test_args.t,
-                                                            test_args.m)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.velocity ** 2)
-    result_average_square_velocity = convert_to(result, (units.meter / units.second) ** 2).evalf(5)
+    result = velocity_law.calculate_average_square_velocity(test_args.t, test_args.m)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.velocity**2)
+    result_average_square_velocity = convert_to(result, (units.meter / units.second)**2).evalf(5)
     assert result_average_square_velocity == approx(3.403 * 1E6, 0.001)
 
 

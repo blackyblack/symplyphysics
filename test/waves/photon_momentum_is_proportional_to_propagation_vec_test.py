@@ -20,7 +20,7 @@ from symplyphysics.laws.waves import photon_momentum_is_proportional_to_propagat
 
 @fixture(name="test_args")
 def test_args_fixture():
-    wavenumber = Quantity(2e8 * pi * (1/units.meter))
+    wavenumber = Quantity(2e8 * pi * (1 / units.meter))
     Args = namedtuple("Args", ["wavenumber"])
     return Args(wavenumber=wavenumber)
 
