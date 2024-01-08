@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from sympy import solve, Symbol, Eq
 from symplyphysics import print_expression
 from symplyphysics.definitions import density_from_mass_volume as density_law
