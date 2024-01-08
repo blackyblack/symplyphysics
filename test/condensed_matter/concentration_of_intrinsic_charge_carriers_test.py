@@ -20,7 +20,6 @@ def test_args_fixture():
     density_of_states_in_valence_band = Quantity(1.8e19 * (1 / units.centimeter**3))
     temperature = Quantity(300 * units.kelvin)
     band_gap = Quantity(1.12 * units.electronvolt)
-    band_gap = Quantity(convert_to(band_gap, units.joule).evalf(8) * units.joule)
 
     Args = namedtuple("Args", ["density_of_states_in_conduction_band", "density_of_states_in_valence_band", "temperature", "band_gap"])
     return Args(
@@ -32,7 +31,7 @@ def test_args_fixture():
 def test_basic_charge_carriers_concentration(test_args):
     result = concentration_law.calculate_concentration(test_args.density_of_states_in_conduction_band,
         test_args.density_of_states_in_valence_band, test_args.band_gap, test_args.temperature)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, 1 / units.length**3)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, 1 / units.volume)
     result = convert_to(result, 1 / units.centimeter**3).evalf(5)
     assert result == approx(1e10, rel=0.1)
 
