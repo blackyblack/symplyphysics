@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 
 from sympy import solve, Symbol, Eq
-from symplyphysics import print_expression, Quantity, prefixes, units, \
-    convert_to, dimensionless
+from symplyphysics import print_expression, Quantity, prefixes, units, convert_to
 from symplyphysics.definitions import density_from_mass_volume as density_law
 from symplyphysics.laws.kinematic import distance_from_constant_velocity as distance_law
 from symplyphysics.laws.electricity import power_factor_from_active_and_full_power as efficiency_law
