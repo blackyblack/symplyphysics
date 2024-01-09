@@ -14,12 +14,12 @@ from symplyphysics import (
 ## of donor impurities is significantly higher than the concentration of acceptor impurities, then the law for
 ## the height of the barrier takes the form below.
 
-## Law is: F = (k * T / q) * ln(Nd * Na / n), where
+## Law is: F = (k * T / q) * ln(Nd * Na / n^2), where
 ## F - height of the potential transition (barrier),
 ## n is concentration of intrinsic charge carriers,
 ## q - charge of electron or hole,
-## Nd - concentrations of donors,
-## Nd - concentrations of acceptors,
+## Nd - concentration of donors,
+## Nd - concentration of acceptors,
 ## k - Boltzmann constant,
 ## T - temperature.
 
@@ -30,7 +30,7 @@ acceptors_concentration = Symbol("acceptors_concentration", 1 / units.volume)
 charge_carriers_concentration = Symbol("charge_carriers_concentration", 1 / units.volume)
 temperature = Symbol("temperature", units.temperature)
 
-charge_electron = Quantity(1.6e-19 * units.coulomb)
+charge_electron = Symbol("charge_electron", units.charge)
 
 law = Eq(height_barrier, (boltzmann * temperature / charge_electron) * log(donors_concentration * acceptors_concentration / charge_carriers_concentration**2))
 
@@ -39,14 +39,15 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(donors_concentration_=donors_concentration, acceptors_concentration_=acceptors_concentration, charge_carriers_concentration_=charge_carriers_concentration, temperature_=temperature)
+@validate_input(donors_concentration_=donors_concentration, acceptors_concentration_=acceptors_concentration, charge_carriers_concentration_=charge_carriers_concentration, temperature_=temperature, charge_electron_=charge_electron)
 @validate_output(height_barrier)
-def calculate_height_barrier(donors_concentration_: Quantity, acceptors_concentration_: Quantity, charge_carriers_concentration_: Quantity, temperature_: Quantity) -> Quantity:
+def calculate_height_barrier(donors_concentration_: Quantity, acceptors_concentration_: Quantity, charge_carriers_concentration_: Quantity, temperature_: Quantity, charge_electron_: Quantity) -> Quantity:
     result_expr = solve(law, height_barrier, dict=True)[0][height_barrier]
     result_expr = result_expr.subs({
         donors_concentration: donors_concentration_,
         acceptors_concentration: acceptors_concentration_,
         charge_carriers_concentration: charge_carriers_concentration_,
         temperature: temperature_,
+        charge_electron: charge_electron_
     })
     return Quantity(result_expr)

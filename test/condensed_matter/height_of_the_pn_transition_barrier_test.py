@@ -25,17 +25,19 @@ def test_args_fixture():
 
     temperature = Quantity(300 * units.kelvin)
 
-    Args = namedtuple("Args", ["donors_concentration", "acceptors_concentration", "charge_carriers_concentration", "temperature"])
+    charge_electron = Quantity(1.6e-19 * units.coulomb)
+
+    Args = namedtuple("Args", ["donors_concentration", "acceptors_concentration", "charge_carriers_concentration", "temperature", "charge_electron"])
     return Args(
         donors_concentration=donors_concentration,
         acceptors_concentration=acceptors_concentration,
         charge_carriers_concentration=charge_carriers_concentration,
-        temperature=temperature)
+        temperature=temperature, charge_electron=charge_electron)
 
 
 def test_basic_height_barrier(test_args):
     result = barrier_law.calculate_height_barrier(test_args.donors_concentration,
-        test_args.acceptors_concentration, test_args.charge_carriers_concentration, test_args.temperature)
+        test_args.acceptors_concentration, test_args.charge_carriers_concentration, test_args.temperature, test_args.charge_electron)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.voltage)
     result = convert_to(result, units.volt).evalf(5)
     assert result == approx(0.529, rel=0.1)
@@ -44,30 +46,38 @@ def test_basic_height_barrier(test_args):
 def test_bad_donors_concentration(test_args):
     donors_concentration = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        barrier_law.calculate_height_barrier(donors_concentration, test_args.acceptors_concentration, test_args.charge_carriers_concentration, test_args.temperature)
+        barrier_law.calculate_height_barrier(donors_concentration, test_args.acceptors_concentration, test_args.charge_carriers_concentration, test_args.temperature, test_args.charge_electron)
     with raises(TypeError):
-        barrier_law.calculate_height_barrier(100, test_args.acceptors_concentration, test_args.charge_carriers_concentration, test_args.temperature)
+        barrier_law.calculate_height_barrier(100, test_args.acceptors_concentration, test_args.charge_carriers_concentration, test_args.temperature, test_args.charge_electron)
 
 
 def test_bad_acceptors_concentration(test_args):
     acceptors_concentration = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        barrier_law.calculate_height_barrier(test_args.donors_concentration, acceptors_concentration, test_args.charge_carriers_concentration, test_args.temperature)
+        barrier_law.calculate_height_barrier(test_args.donors_concentration, acceptors_concentration, test_args.charge_carriers_concentration, test_args.temperature, test_args.charge_electron)
     with raises(TypeError):
-        barrier_law.calculate_height_barrier(test_args.donors_concentration, 100, test_args.charge_carriers_concentration, test_args.temperature)
+        barrier_law.calculate_height_barrier(test_args.donors_concentration, 100, test_args.charge_carriers_concentration, test_args.temperature, test_args.charge_electron)
 
 
 def test_bad_charge_carriers_concentration(test_args):
     charge_carriers_concentration = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        barrier_law.calculate_height_barrier(test_args.donors_concentration, test_args.acceptors_concentration, charge_carriers_concentration, test_args.temperature)
+        barrier_law.calculate_height_barrier(test_args.donors_concentration, test_args.acceptors_concentration, charge_carriers_concentration, test_args.temperature, test_args.charge_electron)
     with raises(TypeError):
-        barrier_law.calculate_height_barrier(test_args.donors_concentration, test_args.acceptors_concentration, 100, test_args.temperature)
+        barrier_law.calculate_height_barrier(test_args.donors_concentration, test_args.acceptors_concentration, 100, test_args.temperature, test_args.charge_electron)
 
 
 def test_bad_temperature(test_args):
     temperature = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        barrier_law.calculate_height_barrier(test_args.donors_concentration, test_args.acceptors_concentration, test_args.charge_carriers_concentration, temperature)
+        barrier_law.calculate_height_barrier(test_args.donors_concentration, test_args.acceptors_concentration, test_args.charge_carriers_concentration, temperature, test_args.charge_electron)
     with raises(TypeError):
-        barrier_law.calculate_height_barrier(test_args.donors_concentration, test_args.acceptors_concentration, test_args.charge_carriers_concentration, 100)
+        barrier_law.calculate_height_barrier(test_args.donors_concentration, test_args.acceptors_concentration, test_args.charge_carriers_concentration, 100, test_args.charge_electron)
+
+
+def test_bad_charge_electron(test_args):
+    charge_electron = Quantity(1 * units.kelvin)
+    with raises(errors.UnitsError):
+        barrier_law.calculate_height_barrier(test_args.donors_concentration, test_args.acceptors_concentration, test_args.charge_carriers_concentration, test_args.temperature, charge_electron)
+    with raises(TypeError):
+        barrier_law.calculate_height_barrier(test_args.donors_concentration, test_args.acceptors_concentration, test_args.charge_carriers_concentration, test_args.temperature, 100)
