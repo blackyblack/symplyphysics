@@ -11,14 +11,14 @@ from symplyphysics.core.operations.sum_array import SumArray
 from symplyphysics.core.symbols.symbols import tuple_of_symbols
 
 # Description
-## If resistors are connected in parallel, the inverse of total resistance is the sum of inverse resistance of each resistor.
-## Law: 1/R_parallel = sum(1/R[i]), where
+## If resistors are connected in parallel, total resistance is the inverse sum of inverse resistance of each resistor.
+## Law: R_parallel = 1/sum(1/R[i]), where
 ## R_parallel is total resistance,
 ## R[i] is resistance of i-th resistor.
 
 inverse_resistances = Symbol("inverse_resistances", 1 / units.impedance)
 parallel_resistance = Symbol("parallel_resistance", units.impedance)
-law = Eq(1 / parallel_resistance, SumArray(inverse_resistances), evaluate=False)
+law = Eq(parallel_resistance, 1 / SumArray(inverse_resistances), evaluate=False)
 
 
 def print_law() -> str:
