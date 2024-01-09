@@ -29,7 +29,7 @@ polarization_angle = Symbol("polarization_angle", angle_type)
 
 law = Eq(
     irradiance_final,
-    irradiance_initial * transparency_coefficient * cos(polarization_angle) ** 2,
+    irradiance_initial * transparency_coefficient * cos(polarization_angle)**2,
 )
 
 
@@ -50,8 +50,8 @@ def calculate_irradiance(
 ) -> Quantity:
     result_expr = solve(law, irradiance_final, dict=True)[0][irradiance_final]
     irradiance_applied = result_expr.subs({
-            irradiance_initial: irradiance_initial_,
-            transparency_coefficient: transparency_coefficient_,
-            polarization_angle: polarization_angle_,
+        irradiance_initial: irradiance_initial_,
+        transparency_coefficient: transparency_coefficient_,
+        polarization_angle: polarization_angle_,
     })
     return Quantity(irradiance_applied)

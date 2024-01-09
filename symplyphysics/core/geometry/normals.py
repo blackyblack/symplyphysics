@@ -1,14 +1,14 @@
 from sympy import Expr, diff
 
-from ..geometry.elements import curve_element
+from ..geometry.elements import parametrized_curve_element
 from ..vectors.vectors import Vector
 from ..vectors.arithmetics import cross_cartesian_vectors
 
 
 # Curve normal is orthogonal to its tangent.
 # Curve should be on XY plane.
-def curve_normal(trajectory: Vector, parameter: Expr) -> Vector:
-    curve_element_vector = curve_element(trajectory, parameter)
+def parametrized_curve_normal(trajectory: Vector, parameter: Expr) -> Vector:
+    curve_element_vector = parametrized_curve_element(trajectory, parameter)
     k_vector = Vector([0, 0, 1], trajectory.coordinate_system)
     return cross_cartesian_vectors(curve_element_vector, k_vector)
 
