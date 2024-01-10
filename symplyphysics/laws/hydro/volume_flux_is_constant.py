@@ -1,4 +1,4 @@
-from sympy import Eq, dsolve, Derivative
+from sympy import Eq, solve, dsolve, Derivative
 from symplyphysics import (
     units,
     Quantity,
@@ -33,11 +33,15 @@ law = Eq(Derivative(tube_area(time) * fluid_speed(time), time), 0)
 
 
 @validate_input(tube_area_before_=tube_area, fluid_speed_before_=fluid_speed, tube_area_after_=tube_area)
-@validate_output(units.velocity)
-def calculate_flow_speed(tube_area_before_: Quantity, fluid_speed_before_: Quantity, tube_area_after_: Quantity) -> Quantity:
-    solved = dsolve(law, fluid_speed(time))
-    result_expr = solved.subs({
-        "C1": tube_area_before_ * fluid_speed_before_,
-        tube_area(time): tube_area_after_
+@validate_output(fluid_speed)
+def calculate_fluid_speed(tube_area_before_: Quantity, fluid_speed_before_: Quantity, tube_area_after_: Quantity) -> Quantity:
+    dsolved = dsolve(law, fluid_speed(time))
+    c1_value = solve(dsolved, "C1")[0].subs({
+        tube_area(time): tube_area_before_,
+        fluid_speed(time): fluid_speed_before_,
+    })
+    result_expr = dsolved.subs({
+        "C1": c1_value,
+        tube_area(time): tube_area_after_,
     }).rhs
     return Quantity(result_expr)
