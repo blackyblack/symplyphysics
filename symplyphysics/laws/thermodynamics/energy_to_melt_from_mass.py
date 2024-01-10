@@ -11,17 +11,19 @@ from symplyphysics.laws.thermodynamics import energy_from_combustion as combusti
 ## Q = k_lambda * m
 ## Where:
 ## Q = energy, required to melt solid matter
-## k_lambda - specific heat of melting
-## m - mass of solid matter
+## k_lambda - specific heat of melting - the amount of heat that must be communicated
+## to one unit of the mass of a crystalline substance in an equilibrium
+## isobaric-isothermal process in order to transfer it from a solid (crystalline)
+##state to a liquid one
+#
+# NOTICE: specific heat of melting and specific heat of combustion values should
+## be distinguished, they are not equivalent!
+## Specific heat of combustion - a physical quantity showing how much heat is released when a fuel weighing 1 kg is completely burned.
 
 amount_energy = Symbol("amount_energy", units.energy)
 specific_heat_melting = Symbol("specific_heat_melting", units.energy / units.mass)
 mass_of_matter = Symbol("mass_of_matter", units.mass)
 
-# Important note! Although we substitute the specific heat of melting
-# into the specific heat of combustion in the formula of the thermal energy
-# released during the combustion of a substance, these values should be distinguished,
-# they are not equivalent!
 energy_from_combustion_value = combustion_energy_law.law.subs({
     combustion_energy_law.specific_heat_combustion: specific_heat_melting,
     combustion_energy_law.mass_of_matter: mass_of_matter
