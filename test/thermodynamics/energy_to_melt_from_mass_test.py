@@ -8,7 +8,7 @@ from symplyphysics import (
     convert_to,
     prefixes,
 )
-from symplyphysics.laws.thermodynamics import energy_from_combustion as amount_energy
+from symplyphysics.laws.thermodynamics import energy_to_melt_from_mass as amount_energy
 
 # https://easyfizika.ru/zadachi/termodinamika/vannu-emkostyu-100-litrov-neobhodimo-zapolnit-vodoj-imeyushhej-temperaturu-30-c/
 # If mass of ice equal 29.7 kg and specific heat of melting equal 330 KJ/kg,
