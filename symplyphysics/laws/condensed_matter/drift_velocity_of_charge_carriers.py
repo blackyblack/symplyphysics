@@ -10,11 +10,13 @@ from symplyphysics import (
 
 # Description
 ## Drift velocity is the average velocity attained by charged particles, such as electrons,
-## in a material due to an electric field.
+## in a material due to an electric field. In general, an electron in a conductor will propagate
+## randomly at the Fermi velocity, resulting in an average velocity of zero. Applying an electric
+## field adds to this random motion a small net flow in one direction; this is the drift.
 
 ## Law is: v = u * E, where
-## v - drift velocity of charge carriers,
-## u - mobility of charge carriers,
+## v - drift velocity of charge carriers (electrons or holes),
+## u - mobility of charge carriers (electrons or holes),
 ## E - electric_intensity.
 
 drift_velocity = Symbol("drift_velocity", units.velocity)
