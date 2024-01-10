@@ -14,6 +14,8 @@ from symplyphysics import (
 ## current per cross-sectional area at a given point in space, its direction being that of the motion
 ## of the positive charges at this point. In SI base units, the electric current density is measured
 ## in amperes per square metre.
+## Mobility - characterises how quickly an electron or hole can move through a metal or semiconductor
+## when pulled by an electric fiel.
 
 ## Law is: j = q * (-n1 * u1 + n2 * u2) * E, where
 ## j - current density of charge carriers,
@@ -22,7 +24,7 @@ from symplyphysics import (
 ## n2 - concentration of holes,
 ## u1 - mobility of electrons,
 ## u2 - mobility of holes,
-## E - electric_intensity.
+## E - electric intensity (physical field that surrounds electrically charged particles).
 
 density_current = Symbol("density_current", units.current / units.area)
 
@@ -43,7 +45,7 @@ def print_law() -> str:
 
 @validate_input(electrons_concentration_=electrons_concentration, holes_concentration_=holes_concentration, electrons_mobility_=electrons_mobility, holes_mobility_=holes_mobility, electric_intensity_=electric_intensity)
 @validate_output(density_current)
-def calculate_current(electrons_concentration_: Quantity, holes_concentration_: Quantity, electrons_mobility_: Quantity, holes_mobility_: Quantity, electric_intensity_: Quantity) -> Quantity:
+def calculate_current_density(electrons_concentration_: Quantity, holes_concentration_: Quantity, electrons_mobility_: Quantity, holes_mobility_: Quantity, electric_intensity_: Quantity) -> Quantity:
     result_expr = solve(law, density_current, dict=True)[0][density_current]
     result_expr = result_expr.subs({
         electrons_concentration: electrons_concentration_,
