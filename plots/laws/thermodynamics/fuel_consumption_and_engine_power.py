@@ -12,10 +12,10 @@ from symplyphysics.laws.thermodynamics import energy_from_combustion as combusti
 efficiency_factor_values = [0.15, 0.3, 0.45, 0.6, 0.75]
 
 volume_of_gasoline, velocity_of_car, efficiency_factor, power_of_car, distance = symbols(
-    "volume_of_gasoline,velocity_of_car,efficiency_factor,power_of_car, distance"
+    "volume_of_gasoline velocity_of_car efficiency_factor power_of_car distance"
 )
 density_of_gasoline, gasoline_specific_heat_combustion = symbols(
-    "density_of_gasoline,gasoline_specific_heat_combustion"
+    "density_of_gasoline gasoline_specific_heat_combustion"
 )
 
 # Note: fuel_consumption = volume_of_fuel / distance
