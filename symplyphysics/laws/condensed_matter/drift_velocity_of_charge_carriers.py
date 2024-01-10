@@ -14,7 +14,7 @@ from symplyphysics import (
 ## randomly at the Fermi velocity, resulting in an average velocity of zero. Applying an electric
 ## field adds to this random motion a small net flow in one direction; this is the drift.
 ## Mobility - characterises how quickly an electron or hole can move through a metal or semiconductor
-## when pulled by an electric fiel.
+## when pulled by an electric field.
 
 ## Law is: v = u * E, where
 ## v - drift velocity of charge carriers (electrons or holes),
