@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+from enum import Enum
 from sympy import solve, Symbol, Eq
 from symplyphysics.core.symbols.celsius import to_kelvin_quantity, Celsius
 from symplyphysics.laws.thermodynamics import thermal_energy_from_mass_and_temperature as energy_heating_law
