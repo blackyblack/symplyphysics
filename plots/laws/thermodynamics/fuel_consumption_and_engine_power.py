@@ -66,7 +66,7 @@ print(f"Formula is:\n{print_expression(gasoline_consumption_equation)}")
 # 1 m^3 / m = 10^(-3) liters / m = (10^(-3) / 10^(-3)) liters / km = 1 liters / km
 base_plot = plot(title="Coulomb Law",
                  xlabel="$N, W$",
-                 ylabel="$V/S, l/km$",
+                 ylabel="$V/S, liters/km$",
                  backend=MatplotlibBackend,
                  legend=True,
                  show=False)
