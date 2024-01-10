@@ -1,8 +1,9 @@
-from sympy import Eq, solve
+from sympy import Eq, dsolve, Derivative
 from symplyphysics import (
     units,
     Quantity,
     Symbol,
+    Function,
     validate_input,
     validate_output,
 )
@@ -11,30 +12,32 @@ from symplyphysics import (
 ## The product of the area and the fluid speed, which is called volume flux, is constant 
 ## at all points along the tube of flow of an incompressible liquid.
 
-# Law: A*v = constant
+# Law: d(A*v)/dt = 0
 ## A - area of the tube of flow
 ## v - fluid speed
 
 # It is also called the equation of continuity
 
 # Condition
-## The fluid should be ideal, i.e. nonviscous, in laminar flow, incompressible and irrotational.
+## The fluid should be ideal, i.e.
+## 1) nonviscous,
+## 2) in steady (laminar) flow,
+## 3) incompressible,
+## 4) irrotational.
 
-area_start = Symbol("A_start", units.area)
-v_start = Symbol("v_start", units.velocity)
-area_end = Symbol("A_end", units.area)
-v_end = Symbol("v_end", units.velocity)
+time = Symbol("time", units.time)
+tube_area = Function("tube_area", units.area)
+fluid_speed = Function("fluid_speed", units.velocity)
 
-law = Eq(area_start * v_start, area_end * v_end)
+law = Eq(Derivative(tube_area(time) * fluid_speed(time), time), 0)
 
 
-@validate_input(area_start_=area_start, v_start_=v_start, area_end_=area_end)
-@validate_output(v_end)
-def calculate_flow_speed(area_start_: Quantity, v_start_: Quantity, area_end_: Quantity) -> Quantity:
-    solved = solve(law, v_end, dict=True)[0][v_end]
-    value = solved.subs({
-        area_start: area_start_,
-        v_start: v_start_,
-        area_end: area_end_,
-    })
-    return Quantity(value)
+@validate_input(tube_area_before_=tube_area, fluid_speed_before_=fluid_speed, tube_area_after_=tube_area)
+@validate_output(units.velocity)
+def calculate_flow_speed(tube_area_before_: Quantity, fluid_speed_before_: Quantity, tube_area_after_: Quantity) -> Quantity:
+    solved = dsolve(law, fluid_speed(time))
+    result_expr = solved.subs({
+        "C1": tube_area_before_ * fluid_speed_before_,
+        tube_area(time): tube_area_after_
+    }).rhs
+    return Quantity(result_expr)
