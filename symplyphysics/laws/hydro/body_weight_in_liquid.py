@@ -1,10 +1,10 @@
-from sympy import (Eq, solve, simplify)
+from sympy import (Eq, solve)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
                            validate_output)
 
 # Description
-##The Archimedean force acting on a body immersed in a liquid (or gas) is equal to the weight of the liquid (or gas) displaced by the body.
-##In this case, the weight of the body (i.e., the force with which the body acts on the support or suspension) immersed in the liquid decreases.
+## The Archimedean force acting on a body immersed in a liquid (or gas) is equal to the weight of the liquid (or gas) displaced by the body.
+## In this case, the weight of the body (i.e., the force with which the body acts on the support or suspension) immersed in the liquid decreases.
 
 ## Law: P_liquid = P * ( 1 - ⍴_liquid / ⍴)
 ## Where:
@@ -12,8 +12,6 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## P is body weight in the air
 ## ⍴_liquid is the density of the liquid
 ## ⍴ is body density
-
-# Conditions
 
 
 weight_liquid = Symbol("weight_liquid", units.force)
