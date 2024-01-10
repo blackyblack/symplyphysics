@@ -8,9 +8,9 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 # to a liquid state.
 ## Q = k_lambda * m
 ## Where:
-## Q = energy from melting
+## Q = energy, required to melt solid matter
 ## k_lambda - specific heat of melting
-## m - mass of matter
+## m - mass of solid matter
 
 amount_energy = Symbol("amount_energy", units.energy)
 specific_heat_melting = Symbol("specific_heat_melting", units.energy / units.mass)
