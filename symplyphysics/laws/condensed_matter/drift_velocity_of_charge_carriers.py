@@ -19,7 +19,7 @@ from symplyphysics import (
 ## Law is: v = u * E, where
 ## v - drift velocity of charge carriers (electrons or holes),
 ## u - mobility of charge carriers (electrons or holes),
-## E - electric intensity (physical field that surrounds electrically charged particles).
+## E - electric field intensity.
 
 drift_velocity = Symbol("drift_velocity", units.velocity)
 
