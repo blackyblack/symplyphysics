@@ -1,5 +1,4 @@
-from sympy import (Eq, solve, exp)
-from sympy.physics.units import boltzmann
+from sympy import (Eq, solve)
 from symplyphysics import (
     units,
     Quantity,

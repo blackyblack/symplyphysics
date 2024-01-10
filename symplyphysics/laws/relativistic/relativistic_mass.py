@@ -1,6 +1,7 @@
 from sympy import Eq, solve, sqrt
 from sympy.physics.units import speed_of_light
 
+
 from symplyphysics import (Quantity, Symbol, print_expression, units, validate_input,
     validate_output)
 
@@ -14,6 +15,7 @@ from symplyphysics import (Quantity, Symbol, print_expression, units, validate_i
 
 # Conditions
 ## Non-zero rest mass
+
 
 rest_mass = Symbol("rest_mass", units.mass)
 velocity = Symbol("velocity", units.velocity)
