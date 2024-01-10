@@ -2,6 +2,8 @@ from sympy import (Eq, solve)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
     validate_output)
 
+from symplyphysics.laws.thermodynamics import energy_from_combustion as combustion_energy_law
+
 # Description
 ## The heat of melting is the amount of heat that must be brought to a solid
 # crystalline substance at constant pressure in order to completely transfer it
@@ -16,7 +18,16 @@ amount_energy = Symbol("amount_energy", units.energy)
 specific_heat_melting = Symbol("specific_heat_melting", units.energy / units.mass)
 mass_of_matter = Symbol("mass_of_matter", units.mass)
 
-law = Eq(amount_energy, specific_heat_melting * mass_of_matter)
+# Important note! Although we substitute the specific heat of melting
+# into the specific heat of combustion in the formula of the thermal energy
+# released during the combustion of a substance, these values should be distinguished,
+# they are not equivalent!
+energy_from_combustion_value = combustion_energy_law.law.subs({
+    combustion_energy_law.specific_heat_combustion: specific_heat_melting,
+    combustion_energy_law.mass_of_matter: mass_of_matter
+}).rhs
+
+law = Eq(amount_energy, energy_from_combustion_value)
 
 
 def print_law() -> str:
