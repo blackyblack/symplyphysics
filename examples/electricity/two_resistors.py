@@ -23,8 +23,15 @@ I_parallel = symbols("I_parallel")
 
 ## Find resistance R12 using the law of conductance
 
-sigma1 = 1 / R1
-sigma2 = 1 / R2
+sigma1 = solve(
+    conductivity_law.definition, 
+    conductivity_law.object_conductivity
+)[0].subs({conductivity_law.object_resistance: R1})
+
+sigma2 = solve(
+    conductivity_law.definition,
+    conductivity_law.object_conductivity
+)[0].subs({conductivity_law.object_resistance: R2})
 
 parallel_law = parallel_conductance.law.subs({
     parallel_conductance.first_conductance: sigma1,
