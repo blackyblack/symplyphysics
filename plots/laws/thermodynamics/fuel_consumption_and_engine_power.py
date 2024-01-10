@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from sympy import symbols, Eq, solve
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
