@@ -13,11 +13,13 @@ from symplyphysics import (
 ## in a material due to an electric field. In general, an electron in a conductor will propagate
 ## randomly at the Fermi velocity, resulting in an average velocity of zero. Applying an electric
 ## field adds to this random motion a small net flow in one direction; this is the drift.
+## Mobility - characterises how quickly an electron or hole can move through a metal or semiconductor
+## when pulled by an electric fiel.
 
 ## Law is: v = u * E, where
 ## v - drift velocity of charge carriers (electrons or holes),
 ## u - mobility of charge carriers (electrons or holes),
-## E - electric_intensity.
+## E - electric intensity (physical field that surrounds electrically charged particles).
 
 drift_velocity = Symbol("drift_velocity", units.velocity)
 
