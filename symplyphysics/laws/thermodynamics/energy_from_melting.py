@@ -3,10 +3,18 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
     validate_output)
 
 # Description
+## The heat of melting is the amount of heat that must be brought to a solid
+# crystalline substance at constant pressure in order to completely transfer it
+# to a liquid state.
+## Q = k_lambda * m
+## Where:
+## Q = energy from melting
+## k_lambda - specific heat of melting
+## m - mass of matter
 
-amount_energy = Symbol("", units.energy)
-specific_heat_melting = Symbol("", units.energy / units.mass)
-mass_of_matter = Symbol("", units.mass)
+amount_energy = Symbol("amount_energy", units.energy)
+specific_heat_melting = Symbol("specific_heat_melting", units.energy / units.mass)
+mass_of_matter = Symbol("mass_of_matter", units.mass)
 
 law = Eq(amount_energy, specific_heat_melting * mass_of_matter)
 
