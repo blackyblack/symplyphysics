@@ -24,8 +24,8 @@ from symplyphysics import (
 ## 3) incompressible
 ## 4) irrotational
 
-time = Symbol("t", units.time)
-inner_pressure = Function("P_inner", units.pressure)
+time = Symbol("time", units.time)
+inner_pressure = Function("inner_pressure", units.pressure)
 
 law = Eq(Derivative(inner_pressure(time), time), 0)
 
