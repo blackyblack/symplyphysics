@@ -21,7 +21,7 @@ def test_args_fixture():
     return Args(radius_of_electron=radius_of_electron)
 
 
-def test_basic_speed(test_args):
+def test_basic_energy_of_electron(test_args):
     result = energy_law.calculate_energy_of_electron(test_args.radius_of_electron)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
     result_1 = convert_to(result, units.electronvolt).evalf(5)

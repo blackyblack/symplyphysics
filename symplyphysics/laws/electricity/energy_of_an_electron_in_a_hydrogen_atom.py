@@ -25,7 +25,7 @@ def print_law() -> str:
 
 @validate_input(radius_of_electron_=radius_of_electron)
 @validate_output(energy_of_electron)
-def calculate_energy_of_electron(radius_of_electron_: float) -> Quantity:
+def calculate_energy_of_electron(radius_of_electron_: Quantity) -> Quantity:
     result_expr = solve(law, energy_of_electron, dict=True)[0][energy_of_electron]
     result = result_expr.subs(radius_of_electron, radius_of_electron_)
     return Quantity(result)
