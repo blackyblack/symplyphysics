@@ -3,23 +3,25 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, dimensionl
     validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import refractive_index_is_wave_speeds_ratio as refractive_index_definition
+from symplyphysics.laws.kinematic import distance_from_constant_velocity as distance_law
+from symplyphysics.laws.kinematic import planar_projection_is_cosine as projection_law
 
 # Description
-## If ray of light comes from one media to another, it refracts.
-## Incoming ray, refracted ray and perpendicular to media boundary are within the same plane.
+## If ray of light comes from one medium to another, it refracts.
+## Incoming ray, refracted ray and perpendicular to medium boundary are within the same plane.
 
 ## Law: n1 * sin(alpha) = n2 * sin(beta)
 ## Where:
-## n1 is refractive index of first media.
-## n2 is refractive index of second media.
-## alfa is incoming angle. Angle is measured between normal vector to a media boundary plane directed outside of refracting media and incoming ray of light.
-## beta is refraction angle. Angle is measured between normal vector to a media boundary plane directed inside refracting media and refracted ray of light.
+## n1 is refractive index of first medium.
+## n2 is refractive index of second medium.
+## alfa is incoming angle. Angle is measured between normal vector to a medium boundary plane directed outside of refracting medium and incoming ray of light.
+## beta is refraction angle. Angle is measured between normal vector to a medium boundary plane directed inside refracting medium and refracted ray of light.
 
 # Conditions
-## - alfa is in [-pi/2, pi/2] range, meaning that incoming ray comes from the outer media.
-## - beta is in [-pi/2, pi/2] range, meaning that refracted ray stays in the refracting media.
+## - alfa is in [-pi/2, pi/2] range, meaning that incoming ray comes from the outer medium.
+## - beta is in [-pi/2, pi/2] range, meaning that refracted ray stays in the refracting medium.
 ## - light is monochromic, as refactive index depends on the light frequency.
-## - refracting media is uniform, so refracting index does not change over ray path.
+## - refracting medium is uniform, so refracting index does not change over ray path.
 
 incedence_refractive_index = Symbol("incedence_refractive_index", dimensionless)
 resulting_refractive_index = Symbol("resulting_refractive_index", dimensionless)
@@ -33,48 +35,59 @@ law = Eq(incedence_refractive_index * sin(incedence_angle),
 
 # Fermat's principle states that the path taken by a ray between two given points is the path that can be traveled in the least time.
 # For derivation, we will use the notation in figure https://en.wikipedia.org/wiki/Fermat%27s_principle#/media/File:Fermat_Snellius.svg
-# First, let's find an expression for the time it takes light to travel from A to B in terms of x - point of refraction at the boundary of the media.
-t = Symbol("t", units.time)
+# First, let's find an expression for the time it takes light to travel from A to B in terms of x - point of refraction at the boundary of the medium.
+travel_time = Symbol("travel_time", units.time)
+outer_travel_distance = Symbol("outer_travel_distance", units.length)
+medium_travel_distance = Symbol("medium_travel_distance", units.length)
+outer_velocity = Symbol("outer_velocity", units.velocity)
+medium_velocity = Symbol("medium_velocity", units.velocity)
+
+distance_law_outer_eq = distance_law.law.subs({distance_law.distance(distance_law.movement_time): outer_travel_distance, distance_law.constant_velocity: outer_velocity, distance_law.initial_position: 0})
+distance_law_medium_eq = distance_law.law.subs({distance_law.distance(distance_law.movement_time): medium_travel_distance, distance_law.constant_velocity: medium_velocity, distance_law.initial_position: 0})
+outer_travel_time = solve(distance_law_outer_eq, distance_law.movement_time)[0]
+medium_travel_time = solve(distance_law_medium_eq, distance_law.movement_time)[0]
+
+travel_time = outer_travel_time + medium_travel_time
+
+# Lengths outer_travel_distance (l1) and medium_travel_distance (l2) can be expressed in terms of x.
 x = Symbol("x", units.length)
-l1 = Symbol("l1", units.length)
-l2 = Symbol("l2", units.length)
-v1 = Symbol("v1", units.velocity)
-v2 = Symbol("v2", units.velocity)
-
-travel_time = Eq(t, l1 / v1 + l2 / v2)
-
-# Lengths l1 and l2 can be expressed in terms of x.
 a = Symbol("a", units.length)
 b = Symbol("b", units.length)
 d = Symbol("d", units.length)
-length_1 = Eq(l1, sqrt(x ** 2 + a ** 2))
-length_2 = Eq(l2, sqrt((d - x) ** 2 + b ** 2))
+outer_travel_distance_cartesian_eq = Eq(outer_travel_distance, sqrt(x ** 2 + a ** 2))
+medium_travel_distance_cartesian_eq = Eq(medium_travel_distance, sqrt((d - x) ** 2 + b ** 2))
 
-#It is also possible to express l1 and l2 in terms of the angles of incidence (alpha) and refraction (beta).
-l1_sin = Eq(l1, x / sin(incedence_angle))
-l2_sin = Eq(l2, (d - x) / sin(refraction_angle))
+# It is also possible to express outer_travel_distance and medium_travel_distance in terms of the angles of incidence (alpha) and refraction (beta).
+
+# Use (pi / 2 - angle) to obtain vertical projection instead of horizontal
+projection_incedence_eq = projection_law.law.subs({projection_law.vector_angle: pi/2 - incedence_angle, projection_law.vector_length: outer_travel_distance, projection_law.projection: x})
+projection_incedence_distance = solve(projection_incedence_eq, outer_travel_distance)[0]
+outer_travel_distance_polar_eq = Eq(outer_travel_distance, projection_incedence_distance)
+projection_refraction_eq = projection_law.law.subs({projection_law.vector_angle: pi/2 - refraction_angle, projection_law.vector_length: medium_travel_distance, projection_law.projection: d - x})
+projection_refraction_distance = solve(projection_refraction_eq, medium_travel_distance)[0]
+medium_travel_distance_polar_eq = Eq(medium_travel_distance, projection_refraction_distance)
 
 # Substitute l1, l2 in travel_time, differentiate by x and equate the derivative to zero - minimal time case.
-time_on_x = travel_time.subs({length_1.lhs: length_1.rhs, length_2.lhs: length_2.rhs})
-min_time_case = Eq(diff(time_on_x.rhs, x), 0)
+travel_time_on_cartesian = travel_time.subs({outer_travel_distance_cartesian_eq.lhs: outer_travel_distance_cartesian_eq.rhs, medium_travel_distance_cartesian_eq.lhs: medium_travel_distance_cartesian_eq.rhs})
+min_time_case = Eq(diff(travel_time_on_cartesian, x), 0)
 
 # Let's get the same expression using the sines of the angles.
-min_time_case = min_time_case.subs({length_1.rhs: length_1.lhs, length_2.rhs: length_2.lhs})
-min_time_case = min_time_case.subs({l1_sin.lhs: l1_sin.rhs, l2_sin.lhs: l2_sin.rhs}).simplify()
+min_time_case = min_time_case.subs({outer_travel_distance_cartesian_eq.rhs: outer_travel_distance_cartesian_eq.lhs, medium_travel_distance_cartesian_eq.rhs: medium_travel_distance_cartesian_eq.lhs})
+min_time_case = min_time_case.subs({outer_travel_distance_polar_eq.lhs: outer_travel_distance_polar_eq.rhs, medium_travel_distance_polar_eq.lhs: medium_travel_distance_polar_eq.rhs}).simplify()
 
 # Finally, let's use the definition of the refractive index as the ratio of the speed of light in the medium to that in a reference medium (vacuum).
-n1_definition = refractive_index_definition.definition.subs({
-    refractive_index_definition.refractive_index: incedence_refractive_index,
-    refractive_index_definition.refracting_speed: v1
+outer_refraction_definition = refractive_index_definition.definition.subs({
+    refractive_index_definition.refractive_index: incedence_refractive_index
 })
-n2_definition = refractive_index_definition.definition.subs({
-    refractive_index_definition.refractive_index: resulting_refractive_index,
-    refractive_index_definition.refracting_speed: v2
+medium_refreaction_definition = refractive_index_definition.definition.subs({
+    refractive_index_definition.refractive_index: resulting_refractive_index
 })
+outer_refraction_velocity = solve(outer_refraction_definition, refractive_index_definition.refracting_speed, dict=True)[0][refractive_index_definition.refracting_speed]
+medium_refraction_velocity = solve(medium_refreaction_definition, refractive_index_definition.refracting_speed, dict=True)[0][refractive_index_definition.refracting_speed]
 
 min_time_case = min_time_case.subs({
-    v1: solve(n1_definition, v1, dict=True)[0][v1],
-    v2: solve(n2_definition, v2, dict=True)[0][v2]
+    outer_velocity: outer_refraction_velocity,
+    medium_velocity: medium_refraction_velocity
 })
 resulting_expression = Eq(
     incedence_refractive_index * sin(incedence_angle),
@@ -82,8 +95,8 @@ resulting_expression = Eq(
 )
 
 # Verify that the resulting_expression corresponds to the law.
-assert (expr_equals(law.lhs, resulting_expression.lhs))
-assert (expr_equals(law.rhs, resulting_expression.rhs))
+assert expr_equals(law.lhs, resulting_expression.lhs)
+assert expr_equals(law.rhs, resulting_expression.rhs)
 
 
 def print_law() -> str:
