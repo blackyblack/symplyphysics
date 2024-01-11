@@ -16,7 +16,7 @@ def test_args_fixture():
 
 def test_basic(test_args):
     result = hagen_poiseuille_equation.calculate_delta_pressure(test_args.mu, test_args.l, test_args.q, test_args.r)
-    result_pressure = convert_to(result, units.pascal)
+    result_pressure = convert_to(result, units.pascal).evalf(4)
     assert result_pressure == approx(2.276, 0.001)
 
 

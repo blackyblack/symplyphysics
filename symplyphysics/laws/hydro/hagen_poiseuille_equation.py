@@ -18,7 +18,7 @@ delta_pressure = Symbol("delta_pressure", units.pressure)
 
 
 law = Eq(delta_pressure, 8 * dynamic_viscosity *
-         length * flow_rate / (pi.round(4) * radius**4))
+         length * flow_rate / (pi * radius**4))
 
 
 def print_law() -> str:
