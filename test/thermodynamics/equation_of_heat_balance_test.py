@@ -20,14 +20,14 @@ def test_args_fixture():
     return Args(q1=q1, q2=q2, q3=q3)
 
 
-def test_basic_current(test_args):
+def test_basic_amount_heat_balance(test_args):
     result = heat_balance_law.calculate_amount_energy([test_args.q1, test_args.q2])
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
     result_current = convert_to(result, units.joule).evalf(2)
     assert result_current == approx(2, 0.01)
 
 
-def test_three_current_array(test_args):
+def test_three_array_elements(test_args):
     result = heat_balance_law.calculate_amount_energy([test_args.q1, test_args.q2, test_args.q3])
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
     result_current = convert_to(result, units.joule).evalf(2)
@@ -40,7 +40,7 @@ def test_array_empty():
     assert int(convert_to(result, S.One).n()) == 0
 
 
-def test_array_bad_current(test_args):
+def test_array_with_bad_element(test_args):
     qb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         heat_balance_law.calculate_amount_energy([test_args.q1, qb])
