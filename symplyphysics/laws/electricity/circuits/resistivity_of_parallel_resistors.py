@@ -15,10 +15,10 @@ import symplyphysics.laws.electricity.circuits.conductivity_of_parallel_resistor
 import symplyphysics.definitions.electrical_conductivity_is_inversed_resistance as conductance_definition
 
 # Description
-## If resistors are connected in parallel, total resistance is the inverse sum of inverse resistance of each resistor.
-## Law: R_parallel = 1/sum(1/R[i]), where
-## R_parallel is total resistance,
-## R[i] is resistance of i-th resistor.
+## If resistors are connected in parallel, total resistance is the inverse sum of condutances of each resistor.
+## Law: R_parallel = 1/sum(sigma_i), where
+## R_parallel - total resistance,
+## sigma_i - conductance of i-th resistor.
 
 conductances = Symbol("conductances", units.conductance)
 parallel_resistance = Symbol("parallel_resistance", units.impedance)
