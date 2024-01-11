@@ -9,6 +9,13 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## Where:
 ## k_q - the heat of combustion attributed to a unit of mass or volume of fuel is called specific heat of combustion
 ## m - mass of matter
+##
+## NOTICE: This law is similar to the law of the law of energy to melt.
+## Mathematically, they are similar, but different in terms of physical meaning.
+## In the law of melting energy, the specific heat of melting is the amount of heat needed to melt
+## a solid material weighing 1 kg. In the law of energy released during combustion,
+## the specific heat of combustion is the amount of heat released during
+## the complete combustion of a substance weighing 1 kg.
 
 amount_energy = Symbol("amount_energy", units.energy)
 specific_heat_combustion = Symbol("specific_heat_combustion", units.energy / units.mass)
