@@ -6,9 +6,9 @@ from symplyphysics.core.symbols.symbols import tuple_of_symbols
 
 # Description
 ## The first law of thermodynamics for a closed and adiabatically isolated
-# system is called the heat balance equation: in a closed system of bodies,
-# the algebraic sum of the amounts of heat given and received by all bodies
-# involved in heat exchange is zero:
+## system is called the heat balance equation: in a closed system of bodies,
+## the algebraic sum of the amounts of heat given and received by all bodies
+## involved in heat exchange is zero:
 ## sum(Q) = 0
 ## Where Q is amount of heat
 
