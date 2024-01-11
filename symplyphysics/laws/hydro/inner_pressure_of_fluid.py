@@ -7,17 +7,17 @@ from symplyphysics import (
     validate_input,
     validate_output,
 )
-from symplyphysics.laws.hydro.dynamic_pressure_from_velocity import dynamic_pressure
-from symplyphysics.laws.hydro.hydrostatic_pressure_from_density_and_depth import hydrostatic_pressure
+# from symplyphysics.laws.hydro.dynamic_pressure_from_velocity import dynamic_pressure
+# from symplyphysics.laws.hydro.hydrostatic_pressure_from_density_and_depth import hydrostatic_pressure
 
 # Description
 ## Inner pressure of an ideal fluid is the sum of static, dynamic, and hydrostatic pressure at chosen point.
 
 # Law: P_inner = P_static + P_dynamic + P_hydrostatic
-## P_inner -- inner pressure
-## P_static -- static pressure
-## P_dynamic -- dynamic pressure
-## P_hydrostatic -- hydrostatic pressure
+## P_inner - inner pressure
+## P_static - static pressure
+## P_dynamic - dynamic pressure
+## P_hydrostatic - hydrostatic pressure
 
 # Condition: this definition applies to an ideal liquid, namely one that is
 ## 1) nonviscous
@@ -27,6 +27,8 @@ from symplyphysics.laws.hydro.hydrostatic_pressure_from_density_and_depth import
 
 inner_pressure = Symbol("inner_pressure", units.pressure)
 static_pressure = Symbol("static_pressure", units.pressure)
+dynamic_pressure = Symbol("dynamic_pressure", units.pressure)
+hydrostatic_pressure = Symbol("hydrostatic_pressure", units.pressure)
 
 law = Eq(inner_pressure, static_pressure + dynamic_pressure + hydrostatic_pressure)
 

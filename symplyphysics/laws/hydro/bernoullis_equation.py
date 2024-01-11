@@ -14,8 +14,8 @@ from symplyphysics import (
 ## pressure of the fluid is constant at all points along a streamline.
 
 # Law: d(P_inner)/dt = 0
-## P_inner -- inner pressure of fluid at chosen point
-## t -- time
+## P_inner - inner pressure of fluid at chosen point
+## t - time
 
 # Condition
 ## The fluid must be ideal, i.e.
