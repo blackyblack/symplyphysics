@@ -15,22 +15,23 @@ from symplyphysics.laws.thermodynamics import equation_of_heat_balance as heat_b
 def test_args_fixture():
     q1 = Quantity(3 * units.joules)
     q2 = Quantity(-5 * units.joules)
-    Args = namedtuple("Args", ["q1", "q2"])
-    return Args(q1=q1, q2=q2)
+    q3 = Quantity(2 * units.joules)
+    Args = namedtuple("Args", ["q1", "q2", "q3"])
+    return Args(q1=q1, q2=q2, q3=q3)
 
 
 def test_basic_current(test_args):
-    result = heat_balance_law.calculate_amount_energy([test_args.q1])
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_current = convert_to(result, units.joule).evalf(2)
-    assert result_current == approx(-3, 0.01)
-
-
-def test_three_current_array(test_args):
     result = heat_balance_law.calculate_amount_energy([test_args.q1, test_args.q2])
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
     result_current = convert_to(result, units.joule).evalf(2)
     assert result_current == approx(2, 0.01)
+
+
+def test_three_current_array(test_args):
+    result = heat_balance_law.calculate_amount_energy([test_args.q1, test_args.q2, test_args.q3])
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
+    result_current = convert_to(result, units.joule).evalf(2)
+    assert result_current == approx(0, 0.01)
 
 
 def test_array_empty():
