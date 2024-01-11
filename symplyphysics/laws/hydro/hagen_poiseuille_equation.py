@@ -1,6 +1,4 @@
-from math import pi
-
-from sympy import Eq, solve
+from sympy import Eq, solve, pi
 
 from symplyphysics import (Quantity, Symbol, print_expression, units,
                            validate_input, validate_output)
@@ -11,7 +9,6 @@ from symplyphysics import (Quantity, Symbol, print_expression, units,
 # L is length,
 # Q is the volumetric flow rate,
 # R is the pipe radius
-# A is cross-section area of pipe.
 
 dynamic_viscosity = Symbol("dynamic_viscosity", units.pressure * units.time)
 length = Symbol("length", units.length)
@@ -21,7 +18,7 @@ delta_pressure = Symbol("delta_pressure", units.pressure)
 
 
 law = Eq(delta_pressure, 8 * dynamic_viscosity *
-         length * flow_rate / (pi * radius**4))
+         length * flow_rate / (pi.round(4) * radius**4))
 
 
 def print_law() -> str:
@@ -35,7 +32,7 @@ def print_law() -> str:
     radius_=radius,
 )
 @validate_output(delta_pressure)
-def calculate_delta_p(
+def calculate_delta_pressure(
         dynamic_viscosity_: Quantity,
         length_: Quantity,
         flow_rate_: Quantity,
