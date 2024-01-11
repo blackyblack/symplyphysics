@@ -21,12 +21,12 @@ force_equation = coulomb_law.law.subs({
 }).rhs
 
 p1 = plot(force_equation, (distance, 1, 5),
-          line_color="blue",
-          title="Coulomb Law",
-          xlabel="r, m",
-          ylabel="F, N",
-          backend=MatplotlibBackend,
-          label="Electrostatic force",
-          legend=True,
-          show=False)
+    line_color="blue",
+    title="Coulomb Law",
+    xlabel="r, m",
+    ylabel="F, N",
+    backend=MatplotlibBackend,
+    label="Electrostatic force",
+    legend=True,
+    show=False)
 p1.show()

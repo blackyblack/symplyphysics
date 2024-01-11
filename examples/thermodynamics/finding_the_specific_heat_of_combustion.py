@@ -38,7 +38,8 @@ efficiency_equation = efficiency_law.law.subs({
     efficiency_law.full_power: energy_combustion_value,
     efficiency_law.power_factor: efficiency_factor
 })
-specific_heat_combustion_value = solve(efficiency_equation, specific_heat_combustion, dict=True)[0][specific_heat_combustion]
+specific_heat_combustion_value = solve(efficiency_equation, specific_heat_combustion,
+    dict=True)[0][specific_heat_combustion]
 answer = Eq(specific_heat_combustion, specific_heat_combustion_value)
 print(f"Total equation is:\n{print_expression(answer)}")
 
@@ -51,5 +52,5 @@ specific_heat_combustion_j_div_kg = specific_heat_combustion_value.subs({
     specific_heat_heating: Quantity(4200 * units.joules / (units.kilogram * units.kelvin)),
 })
 answer_value = convert_to(Quantity(specific_heat_combustion_j_div_kg),
-                          prefixes.mega * units.joules / units.kilogram)
+    prefixes.mega * units.joules / units.kilogram)
 print(f"Specific heat of combustion is:\n{answer_value} MJ/kg")

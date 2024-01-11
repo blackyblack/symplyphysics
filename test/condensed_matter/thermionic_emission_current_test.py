@@ -1,12 +1,6 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-from symplyphysics import (
-    units,
-    SI,
-    convert_to,
-    Quantity,
-    errors
-)
+from symplyphysics import (units, SI, convert_to, Quantity, errors)
 from symplyphysics.laws.condensed_matter import thermionic_emission_current as emission_law
 
 # Description
@@ -21,9 +15,7 @@ def test_args_fixture():
     temperature = Quantity(300 * units.kelvin)
 
     Args = namedtuple("Args", ["thermodynamic_work", "temperature"])
-    return Args(
-        thermodynamic_work=thermodynamic_work,
-        temperature=temperature)
+    return Args(thermodynamic_work=thermodynamic_work, temperature=temperature)
 
 
 def test_basic_thermionic_current(test_args):

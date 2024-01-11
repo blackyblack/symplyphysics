@@ -23,7 +23,8 @@ def print_law() -> str:
 @validate_input(amounts_energy_=amounts_energy)
 @validate_output(units.energy)
 def calculate_amount_energy(amounts_energy_: list[Quantity]) -> Quantity:
-    amounts_energy_symbols = tuple_of_symbols("amount_energy", units.energy, len(amounts_energy_) + 1)
+    amounts_energy_symbols = tuple_of_symbols("amount_energy", units.energy,
+        len(amounts_energy_) + 1)
     unknown_amount_energy = amounts_energy_symbols[len(amounts_energy_)]
     amounts_energy_law = law.subs(amounts_energy, amounts_energy_symbols).doit()
     solved = solve(amounts_energy_law, unknown_amount_energy, dict=True)[0][unknown_amount_energy]

@@ -1,13 +1,7 @@
 from sympy import (Eq, solve, log)
 from sympy.physics.units import boltzmann
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    print_expression,
-    validate_input,
-    validate_output
-)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 
 # Description
 ## The p-n junction has a potential barrier preventing the movement of charge carriers. If the concentration
@@ -32,16 +26,23 @@ temperature = Symbol("temperature", units.temperature)
 
 charge_electron = Symbol("charge_electron", units.charge)
 
-law = Eq(height_barrier, (boltzmann * temperature / charge_electron) * log(donors_concentration * acceptors_concentration / charge_carriers_concentration**2))
+law = Eq(height_barrier, (boltzmann * temperature / charge_electron) *
+    log(donors_concentration * acceptors_concentration / charge_carriers_concentration**2))
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(donors_concentration_=donors_concentration, acceptors_concentration_=acceptors_concentration, charge_carriers_concentration_=charge_carriers_concentration, temperature_=temperature, charge_electron_=charge_electron)
+@validate_input(donors_concentration_=donors_concentration,
+    acceptors_concentration_=acceptors_concentration,
+    charge_carriers_concentration_=charge_carriers_concentration,
+    temperature_=temperature,
+    charge_electron_=charge_electron)
 @validate_output(height_barrier)
-def calculate_height_barrier(donors_concentration_: Quantity, acceptors_concentration_: Quantity, charge_carriers_concentration_: Quantity, temperature_: Quantity, charge_electron_: Quantity) -> Quantity:
+def calculate_height_barrier(donors_concentration_: Quantity, acceptors_concentration_: Quantity,
+    charge_carriers_concentration_: Quantity, temperature_: Quantity,
+    charge_electron_: Quantity) -> Quantity:
     result_expr = solve(law, height_barrier, dict=True)[0][height_barrier]
     result_expr = result_expr.subs({
         donors_concentration: donors_concentration_,

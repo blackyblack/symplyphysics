@@ -33,15 +33,17 @@ density_of_water_equation = density_law.definition.subs({
     density_law.volume: volume_of_bath,
     density_law.density: density_of_water
 })
-mass_of_all_water = solve(density_of_water_equation, density_law.mass, dict=True)[0][density_law.mass]
+mass_of_all_water = solve(density_of_water_equation, density_law.mass,
+    dict=True)[0][density_law.mass]
 
 # the mass of all the water filling the bath consists of the mass of hot water
 # that was in the bathroom initially, and the mass of water of melted ice
 # mass_all_water = mass_of_hot_water + mass_of_ice
 mass_of_all_water_equation = Eq(mass_of_all_water, mass_of_ice + mass_of_hot_water)
-mass_of_hot_water_value = solve(mass_of_all_water_equation, mass_of_hot_water, dict=True)[0][mass_of_hot_water]
+mass_of_hot_water_value = solve(mass_of_all_water_equation, mass_of_hot_water,
+    dict=True)[0][mass_of_hot_water]
 
-energy_colding_hot_water = energy_heating_law.law.subs({
+energy_cooling_hot_water = energy_heating_law.law.subs({
     energy_heating_law.specific_heat_capacity: specific_heat_heating_water,
     energy_heating_law.body_mass: mass_of_hot_water_value,
     energy_heating_law.temperature_origin: temperature_of_hot_water,
@@ -69,17 +71,12 @@ energy_to_heat_melted_ice_equation = energy_heating_law.law.subs({
 
 amount_of_heat_symbols_ = tuple_of_symbols("amount_of_heat", units.energy, 4)
 thermodinamics_law_1_equation = thermodinamics_law_1.law.subs({
-    thermodinamics_law_1.amounts_energy: amount_of_heat_symbols_
-}).doit().subs({
-    amount_of_heat_symbols_[0]: energy_colding_hot_water.rhs,
-    amount_of_heat_symbols_[1]: energy_to_heating_ice_equation.rhs,
-    amount_of_heat_symbols_[2]: energy_to_melt_ice_equation.rhs,
-    amount_of_heat_symbols_[3]: energy_to_heat_melted_ice_equation.rhs
-})
+    thermodinamics_law_1.amounts_energy:
+    (energy_cooling_hot_water.rhs, energy_to_heating_ice_equation.rhs,
+    energy_to_melt_ice_equation.rhs, energy_to_heat_melted_ice_equation.rhs)
+}).doit()
 
-mass_of_ice_equation = solve(thermodinamics_law_1_equation,
-                             mass_of_ice,
-                             dict=True)[0][mass_of_ice]
+mass_of_ice_equation = solve(thermodinamics_law_1_equation, mass_of_ice, dict=True)[0][mass_of_ice]
 answer = Eq(mass_of_ice, mass_of_ice_equation)
 print(f"Total equation:\n{print_expression(answer)}")
 
@@ -88,8 +85,7 @@ mass_of_ice_value_kg = mass_of_ice_equation.subs({
     temperature_of_hot_water: to_kelvin_quantity(Celsius(80)),
     temperature_of_ice: to_kelvin_quantity(Celsius(-20)),
     temperature_end: to_kelvin_quantity(Celsius(30)),
-
-    density_of_water: Quantity(1000 * units.kilograms / (units.meter ** 3)),
+    density_of_water: Quantity(1000 * units.kilograms / (units.meter**3)),
     specific_heat_heating_water: Quantity(4200 * units.joules / (units.kilogram * units.kelvin)),
     specific_heat_heating_ice: Quantity(2100 * units.joules / (units.kilogram * units.kelvin)),
     specific_heat_melting_ice: Quantity(330 * prefixes.kilo * units.joules / units.kilogram),

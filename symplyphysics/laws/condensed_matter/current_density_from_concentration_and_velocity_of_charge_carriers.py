@@ -34,9 +34,12 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(charge_carriers_concentration_=charge_carriers_concentration, drift_velocity_=drift_velocity, charge_=charge)
+@validate_input(charge_carriers_concentration_=charge_carriers_concentration,
+    drift_velocity_=drift_velocity,
+    charge_=charge)
 @validate_output(density_current)
-def calculate_current(charge_carriers_concentration_: Quantity, drift_velocity_: Quantity, charge_: Quantity) -> Quantity:
+def calculate_current(charge_carriers_concentration_: Quantity, drift_velocity_: Quantity,
+    charge_: Quantity) -> Quantity:
     result_expr = solve(law, density_current, dict=True)[0][density_current]
     result_expr = result_expr.subs({
         charge_carriers_concentration: charge_carriers_concentration_,

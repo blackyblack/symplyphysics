@@ -9,7 +9,7 @@ from symplyphysics import (
 )
 
 # Description
-## The product of the area and the fluid speed, which is called volume flux, is constant 
+## The product of the area and the fluid speed, which is called volume flux, is constant
 ## at all points along the tube of flow of an incompressible liquid.
 
 # Law: d(A*v)/dt = 0
@@ -32,9 +32,12 @@ fluid_speed = Function("fluid_speed", units.velocity)
 law = Eq(Derivative(tube_area(time) * fluid_speed(time), time), 0)
 
 
-@validate_input(tube_area_before_=tube_area, fluid_speed_before_=fluid_speed, tube_area_after_=tube_area)
+@validate_input(tube_area_before_=tube_area,
+    fluid_speed_before_=fluid_speed,
+    tube_area_after_=tube_area)
 @validate_output(fluid_speed)
-def calculate_fluid_speed(tube_area_before_: Quantity, fluid_speed_before_: Quantity, tube_area_after_: Quantity) -> Quantity:
+def calculate_fluid_speed(tube_area_before_: Quantity, fluid_speed_before_: Quantity,
+    tube_area_after_: Quantity) -> Quantity:
     dsolved = dsolve(law, fluid_speed(time))
     c1_value = solve(dsolved, "C1")[0].subs({
         tube_area(time): tube_area_before_,

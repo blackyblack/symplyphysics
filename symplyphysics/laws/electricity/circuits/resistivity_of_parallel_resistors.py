@@ -16,7 +16,6 @@ from symplyphysics.core.symbols.symbols import tuple_of_symbols
 ## R_parallel is total resistance,
 ## R[i] is resistance of i-th resistor.
 
-
 inv_resistances = Symbol("resistances", 1 / units.impedance)
 parallel_resistance = Symbol("parallel_resistance", units.impedance)
 law = Eq(parallel_resistance, 1 / SumArray(inv_resistances), evaluate=False)

@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-                           validate_output)
+    validate_output)
 
 # Description
 ## The Archimedean force acting on a body immersed in a liquid (or gas) is equal to the weight of the liquid (or gas) displaced by the body.
@@ -12,7 +12,6 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## P is body weight in the air
 ## ⍴_liquid is the density of the liquid
 ## ⍴ is body density
-
 
 weight_liquid = Symbol("weight_liquid", units.force)
 weight_air = Symbol("weight_air", units.force)
