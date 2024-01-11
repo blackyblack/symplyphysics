@@ -13,7 +13,7 @@ from symplyphysics import (
 ## Half-life is the time required for a quantity (of substance) to reduce to half of its initial value.
 ## The term is commonly used in nuclear physics to describe how quickly unstable atoms undergo radioactive
 ## decay or how long stable atoms survive. The term is also used more generally to characterize any type
-##of exponential (or, rarely, non-exponential) decay.
+## of exponential (or, rarely, non-exponential) decay.
 
 ## Law is: N = N0 * 2^(-t / T), where
 ## N - number of cores after a period of time,
@@ -36,7 +36,7 @@ def print_law() -> str:
 
 @validate_input(number_of_cores_initial_=number_of_cores_initial, half_life_=half_life, decay_time_=decay_time)
 @validate_output(number_of_cores)
-def calculate_number_of_cores(number_of_cores_initial_: Quantity, half_life_: Quantity, decay_time_: Quantity) -> Quantity:
+def calculate_number_of_cores(number_of_cores_initial_: int, half_life_: Quantity, decay_time_: Quantity) -> Quantity:
     result_expr = solve(law, number_of_cores, dict=True)[0][number_of_cores]
     result_expr = result_expr.subs({
         number_of_cores_initial: number_of_cores_initial_,
