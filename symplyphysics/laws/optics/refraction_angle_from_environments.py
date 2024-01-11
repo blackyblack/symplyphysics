@@ -1,6 +1,8 @@
-from sympy import (Eq, solve, sin, pi)
+from sympy import (Eq, solve, diff, sin, pi, sqrt)
 from symplyphysics import (units, Quantity, Symbol, print_expression, dimensionless, angle_type,
     validate_input, validate_output)
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.definitions import refractive_index_is_wave_speeds_ratio as refractive_index_definition
 
 # Description
 ## If ray of light comes from one media to another, it refracts.
@@ -26,6 +28,62 @@ refraction_angle = Symbol("refraction_angle", angle_type)
 
 law = Eq(incedence_refractive_index * sin(incedence_angle),
     resulting_refractive_index * sin(refraction_angle))
+
+# Derive the same Snell's law from Fermat's principle
+
+# Fermat's principle states that the path taken by a ray between two given points is the path that can be traveled in the least time.
+# For derivation, we will use the notation in figure https://en.wikipedia.org/wiki/Fermat%27s_principle#/media/File:Fermat_Snellius.svg
+# First, let's find an expression for the time it takes light to travel from A to B in terms of x - point of refraction at the boundary of the media.
+t = Symbol("t", units.time)
+x = Symbol("x", units.length)
+l1 = Symbol("l1", units.length)
+l2 = Symbol("l2", units.length)
+v1 = Symbol("v1", units.velocity)
+v2 = Symbol("v2", units.velocity)
+
+travel_time = Eq(t, l1 / v1 + l2 / v2)
+
+# Lengths l1 and l2 can be expressed in terms of x.
+a = Symbol("a", units.length)
+b = Symbol("b", units.length)
+d = Symbol("d", units.length)
+length_1 = Eq(l1, sqrt(x ** 2 + a ** 2))
+length_2 = Eq(l2, sqrt((d - x) ** 2 + b ** 2))
+
+#It is also possible to express l1 and l2 in terms of the angles of incidence (alpha) and refraction (beta).
+l1_sin = Eq(l1, x / sin(incedence_angle))
+l2_sin = Eq(l2, (d - x) / sin(refraction_angle))
+
+# Substitute l1, l2 in travel_time, differentiate by x and equate the derivative to zero - minimal time case.
+time_on_x = travel_time.subs({length_1.lhs: length_1.rhs, length_2.lhs: length_2.rhs})
+min_time_case = Eq(diff(time_on_x.rhs, x), 0)
+
+# Let's get the same expression using the sines of the angles.
+min_time_case = min_time_case.subs({length_1.rhs: length_1.lhs, length_2.rhs: length_2.lhs})
+min_time_case = min_time_case.subs({l1_sin.lhs: l1_sin.rhs, l2_sin.lhs: l2_sin.rhs}).simplify()
+
+# Finally, let's use the definition of the refractive index as the ratio of the speed of light in the medium to that in a reference medium (vacuum).
+n1_definition = refractive_index_definition.definition.subs({
+    refractive_index_definition.refractive_index: incedence_refractive_index,
+    refractive_index_definition.refracting_speed: v1
+})
+n2_definition = refractive_index_definition.definition.subs({
+    refractive_index_definition.refractive_index: resulting_refractive_index,
+    refractive_index_definition.refracting_speed: v2
+})
+
+min_time_case = min_time_case.subs({
+    v1: solve(n1_definition, v1, dict=True)[0][v1],
+    v2: solve(n2_definition, v2, dict=True)[0][v2]
+})
+resulting_expression = Eq(
+    incedence_refractive_index * sin(incedence_angle),
+    solve(min_time_case, incedence_refractive_index * sin(incedence_angle), dict=True)[0][incedence_refractive_index * sin(incedence_angle)]
+)
+
+# Verify that the resulting_expression corresponds to the law.
+assert (expr_equals(law.lhs, resulting_expression.lhs))
+assert (expr_equals(law.rhs, resulting_expression.rhs))
 
 
 def print_law() -> str:
