@@ -20,9 +20,9 @@ import symplyphysics.definitions.electrical_conductivity_is_inversed_resistance 
 ## R_parallel is total resistance,
 ## R[i] is resistance of i-th resistor.
 
-inv_resistances = Symbol("resistances", 1 / units.impedance)
+conductances = Symbol("conductances", units.conductance)
 parallel_resistance = Symbol("parallel_resistance", units.impedance)
-law = Eq(parallel_resistance, 1 / SumArray(inv_resistances), evaluate=False)
+law = Eq(parallel_resistance, 1 / SumArray(conductances), evaluate=False)
 
 
 # Derive the law from the conductivity law for parallel resistors
@@ -66,7 +66,7 @@ parallel_resistance_from_conductivity_law = solve(
 )[0]
 
 parallel_resistance_from_law_in_question = solve(
-    law.subs(inv_resistances, (1 / resistance1, 1 / resistance2)),
+    law.subs(conductances, (conductance1, conductance2)),
     parallel_resistance
 )[0]
 
@@ -83,10 +83,13 @@ def print_law() -> str:
 @validate_input(resistances_=units.impedance)
 @validate_output(units.impedance)
 def calculate_parallel_resistance(resistances_: list[Quantity]) -> Quantity:
-    resistance_symbols = tuple_of_symbols("resistance", units.impedance, len(resistances_))
-    inv_resistance_symbols = tuple(1 / r for r in resistance_symbols)
-    resistances_law = law.subs(inv_resistances, inv_resistance_symbols).doit()
+    conductances_ = tuple(
+        conductance_definition.calculate_conductivity(resistance) 
+        for resistance in resistances_
+    )
+    conductance_symbols = tuple_of_symbols("conductance", units.conductance, len(conductances_))
+    resistances_law = law.subs(conductances, conductance_symbols).doit()
     solved = solve(resistances_law, parallel_resistance, dict=True)[0][parallel_resistance]
-    for from_, to_ in zip(resistance_symbols, resistances_):
-        solved = solved.subs(from_, to_)
+    for symbol, value in zip(conductance_symbols, conductances_):
+        solved = solved.subs(symbol, value)
     return Quantity(solved)
