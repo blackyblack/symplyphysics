@@ -21,7 +21,7 @@ def test_bernoullis_equation(test_args):
     result = bernoullis_equation.calculate_inner_pressure(test_args.inner_pressure_before)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.pressure)
     result_pressure = convert_to(result, units.pascal).evalf(3)
-    assert result_pressure == approx(1, 0.003)
+    assert result_pressure == approx(1, 1e-3)
 
 
 def test_bad_inner_pressure_before(test_args):
