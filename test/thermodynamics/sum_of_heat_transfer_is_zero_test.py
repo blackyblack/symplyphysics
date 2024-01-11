@@ -8,7 +8,7 @@ from symplyphysics import (
     Quantity,
     SI,
 )
-from symplyphysics.laws.thermodynamics import equation_of_heat_balance as heat_balance_law
+from symplyphysics.laws.thermodynamics import sum_of_heat_transfer_is_zero as heat_balance_law
 
 
 @fixture(name="test_args")
