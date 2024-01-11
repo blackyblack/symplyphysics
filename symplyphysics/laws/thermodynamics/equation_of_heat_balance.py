@@ -25,8 +25,8 @@ def print_law() -> str:
 def calculate_amount_energy(amounts_energy_: list[Quantity]) -> Quantity:
     amounts_energy_symbols = tuple_of_symbols("amount_energy", units.energy, len(amounts_energy_) + 1)
     unknown_amount_energy = amounts_energy_symbols[len(amounts_energy_)]
-    voltages_law = law.subs(amounts_energy, amounts_energy_symbols).doit()
-    solved = solve(voltages_law, unknown_amount_energy, dict=True)[0][unknown_amount_energy]
+    amounts_energy_law = law.subs(amounts_energy, amounts_energy_symbols).doit()
+    solved = solve(amounts_energy_law, unknown_amount_energy, dict=True)[0][unknown_amount_energy]
     for (from_, to_) in zip(amounts_energy_symbols, amounts_energy_):
         solved = solved.subs(from_, to_)
     return Quantity(solved)
