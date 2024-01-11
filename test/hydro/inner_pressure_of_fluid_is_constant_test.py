@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
     SI,
 )
-import symplyphysics.laws.hydro.bernoullis_equation as bernoullis_equation
+import symplyphysics.laws.hydro.inner_pressure_of_fluid_is_constant as bernoullis_equation
 
 
 @fixture(name="test_args")
