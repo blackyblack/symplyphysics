@@ -2,34 +2,31 @@ from sympy import (Eq, solve)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
     validate_output)
 
-from symplyphysics.laws.thermodynamics import energy_from_combustion as combustion_energy_law
-
 # Description
 ## The heat of melting is the amount of heat that must be brought to a solid
-# crystalline substance at constant pressure in order to completely transfer it
-# to a liquid state.
+## crystalline substance at constant pressure in order to completely transfer it
+## to a liquid state.
 ## Q = k_lambda * m
 ## Where:
 ## Q = energy, required to melt solid matter
 ## k_lambda - specific heat of melting - the amount of heat that must be communicated
 ## to one unit of the mass of a crystalline substance in an equilibrium
 ## isobaric-isothermal process in order to transfer it from a solid (crystalline)
-##state to a liquid one
-#
-# NOTICE: specific heat of melting and specific heat of combustion values should
-## be distinguished, they are not equivalent!
-## Specific heat of combustion - a physical quantity showing how much heat is released when a fuel weighing 1 kg is completely burned.
+## state to a liquid one
+##
+## NOTICE: This law is similar to the law of energy released during
+## the combustion of matter. Mathematically, they are similar,
+## but different in terms of physical meaning. In the law of melting energy,
+## the specific heat of melting is the amount of heat needed to melt
+## a solid material weighing 1 kg. In the law of energy released during combustion,
+## the specific heat of combustion is the amount of heat released during
+## the complete combustion of a substance weighing 1 kg.
 
 amount_energy = Symbol("amount_energy", units.energy)
 specific_heat_melting = Symbol("specific_heat_melting", units.energy / units.mass)
 mass_of_matter = Symbol("mass_of_matter", units.mass)
 
-energy_from_combustion_value = combustion_energy_law.law.subs({
-    combustion_energy_law.specific_heat_combustion: specific_heat_melting,
-    combustion_energy_law.mass_of_matter: mass_of_matter
-}).rhs
-
-law = Eq(amount_energy, energy_from_combustion_value)
+law = Eq(amount_energy, specific_heat_melting * mass_of_matter)
 
 
 def print_law() -> str:
