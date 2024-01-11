@@ -69,7 +69,6 @@ energy_to_heat_melted_ice_equation = energy_heating_law.law.subs({
     energy_heating_law.temperature_end: temperature_end
 })
 
-amount_of_heat_symbols_ = tuple_of_symbols("amount_of_heat", units.energy, 4)
 thermodinamics_law_1_equation = thermodinamics_law_1.law.subs({
     thermodinamics_law_1.amounts_energy:
     (energy_cooling_hot_water.rhs, energy_to_heating_ice_equation.rhs,
