@@ -6,7 +6,6 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, dimensionl
 ## There is an empirical formula for the spectral lines of the hydrogen atom.
 
 # Law: f = R * (1 / m^2 - 1 / n^2 ), where
-## Vmedium is speed of electromagnetic wave in medium,
 ## f - frequency of the electron transition in hydrogen,
 ## R - Rydberg's constant,
 ## m - the number of the level to which the electron goes,
@@ -28,7 +27,7 @@ def print_law() -> str:
 
 @validate_input(number_level_to_=number_level_to, number_level_from_=number_level_from)
 @validate_output(transition_frequency)
-def calculate_transition_frequency(number_level_to_: float, number_level_from_: float) -> Quantity:
+def calculate_transition_frequency(number_level_to_: int, number_level_from_: int) -> Quantity:
     result_expr = solve(law, transition_frequency, dict=True)[0][transition_frequency]
     transition_frequency_applied = result_expr.subs({
         number_level_to: number_level_to_,
