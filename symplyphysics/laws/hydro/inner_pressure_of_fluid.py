@@ -7,8 +7,6 @@ from symplyphysics import (
     validate_input,
     validate_output,
 )
-# from symplyphysics.laws.hydro.dynamic_pressure_from_velocity import dynamic_pressure
-# from symplyphysics.laws.hydro.hydrostatic_pressure_from_density_and_depth import hydrostatic_pressure
 
 # Description
 ## Inner pressure of an ideal fluid is the sum of static, dynamic, and hydrostatic pressure at chosen point.
