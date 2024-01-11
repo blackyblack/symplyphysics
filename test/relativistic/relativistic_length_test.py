@@ -18,8 +18,7 @@ def test_args_fixture():
 
 
 def test_basic_length(test_args):
-    result = relativistic_length.calculate_relativistic_length(
-        test_args.l, test_args.v)
+    result = relativistic_length.calculate_relativistic_length(test_args.l, test_args.v)
     result_length = convert_to(result, units.length).evalf(4)
     assert result_length == approx(99.98, 0.001)
 

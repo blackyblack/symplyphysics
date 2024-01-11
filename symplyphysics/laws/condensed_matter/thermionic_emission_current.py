@@ -27,7 +27,9 @@ temperature = Symbol("temperature", units.temperature)
 
 richardson_constant = Quantity(120 * (units.ampere / units.kelvin**2 / units.centimeter**2))
 
-law = Eq(density_current, richardson_constant * (temperature**2) * exp(-thermodynamic_work / (boltzmann * temperature)))
+law = Eq(
+    density_current,
+    richardson_constant * (temperature**2) * exp(-thermodynamic_work / (boltzmann * temperature)))
 
 
 def print_law() -> str:

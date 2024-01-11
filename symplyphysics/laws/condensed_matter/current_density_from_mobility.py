@@ -36,16 +36,26 @@ electric_intensity = Symbol("electric_intensity", units.voltage / units.length)
 
 charge = Quantity(1.6e-19 * units.coulomb)
 
-law = Eq(density_current, charge * (-electrons_concentration * electrons_mobility + holes_concentration * holes_mobility) * electric_intensity)
+law = Eq(
+    density_current,
+    charge *
+    (-electrons_concentration * electrons_mobility + holes_concentration * holes_mobility) *
+    electric_intensity)
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(electrons_concentration_=electrons_concentration, holes_concentration_=holes_concentration, electrons_mobility_=electrons_mobility, holes_mobility_=holes_mobility, electric_intensity_=electric_intensity)
+@validate_input(electrons_concentration_=electrons_concentration,
+    holes_concentration_=holes_concentration,
+    electrons_mobility_=electrons_mobility,
+    holes_mobility_=holes_mobility,
+    electric_intensity_=electric_intensity)
 @validate_output(density_current)
-def calculate_current_density(electrons_concentration_: Quantity, holes_concentration_: Quantity, electrons_mobility_: Quantity, holes_mobility_: Quantity, electric_intensity_: Quantity) -> Quantity:
+def calculate_current_density(electrons_concentration_: Quantity, holes_concentration_: Quantity,
+    electrons_mobility_: Quantity, holes_mobility_: Quantity,
+    electric_intensity_: Quantity) -> Quantity:
     result_expr = solve(law, density_current, dict=True)[0][density_current]
     result_expr = result_expr.subs({
         electrons_concentration: electrons_concentration_,

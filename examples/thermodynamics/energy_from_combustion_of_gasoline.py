@@ -27,19 +27,18 @@ velocity_equation = distance_law.law.subs({
     distance_law.constant_velocity: velocity_of_car,
     distance_law.initial_position: 0
 })
-time_value = solve(velocity_equation, distance_law.movement_time, dict=True)[0][distance_law.movement_time]
+time_value = solve(velocity_equation, distance_law.movement_time,
+    dict=True)[0][distance_law.movement_time]
 
-power_equation = power_law.law.subs({
-    power_law.time: time_value,
-    power_law.power: power_of_car
-})
+power_equation = power_law.law.subs({power_law.time: time_value, power_law.power: power_of_car})
 energy_from_power_value = solve(power_equation, power_law.energy, dict=True)[0][power_law.energy]
 
 density_of_gasoline_equation = density_law.definition.subs({
     density_law.density: density_of_gasoline,
     density_law.volume: volume_of_gasoline
 })
-mass_of_gasoline_value = solve(density_of_gasoline_equation, density_law.mass, dict=True)[0][density_law.mass]
+mass_of_gasoline_value = solve(density_of_gasoline_equation, density_law.mass,
+    dict=True)[0][density_law.mass]
 
 amount_heat_value = combustion_energy_law.law.subs({
     combustion_energy_law.specific_heat_combustion: gasoline_specific_heat_combustion,
@@ -60,7 +59,7 @@ distance_m = distance_value.subs({
     velocity_of_car: Quantity(54 * units.kilometers / units.hour),
     power_of_car: Quantity(46 * prefixes.kilo * units.watts),
     efficiency_factor: Quantity(25 * units.percents),
-    density_of_gasoline: Quantity(700 * units.kilogram / (units.meter ** 3)),
+    density_of_gasoline: Quantity(700 * units.kilogram / (units.meter**3)),
     gasoline_specific_heat_combustion: Quantity(46 * prefixes.mega * units.joules / units.kilogram)
 })
 print(f"Distance is: {convert_to(Quantity(distance_m), units.kilometers).evalf(4)} km")

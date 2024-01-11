@@ -17,15 +17,12 @@ def test_args_fixture():
     liquid_density = Quantity(1000 * units.kilogram / units.meter**3)
     body_density = Quantity(2600 * units.kilogram / units.meter**3)
     Args = namedtuple("Args", ["weight_air", "liquid_density", "body_density"])
-    return Args(
-        weight_air=weight_air,
-        liquid_density=liquid_density,
-        body_density=body_density
-               )
+    return Args(weight_air=weight_air, liquid_density=liquid_density, body_density=body_density)
 
 
 def test_basic_weight(test_args):
-    result = weight.calculate_weight(test_args.weight_air, test_args.liquid_density, test_args.body_density)
+    result = weight.calculate_weight(test_args.weight_air, test_args.liquid_density,
+        test_args.body_density)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
     result_weight = convert_to(result, units.newton).evalf(5)
     assert result_weight == approx(1.6, 0.001)
