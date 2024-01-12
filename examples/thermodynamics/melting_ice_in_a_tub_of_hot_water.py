@@ -3,6 +3,7 @@
 from sympy import solve, Symbol, Eq
 from symplyphysics import print_expression, Quantity, prefixes, units, convert_to
 from symplyphysics.core.symbols.celsius import to_kelvin_quantity, Celsius
+from symplyphysics.laws.conservation import mixture_mass_equal_sum_of_components_masses as sum_masses_law
 from symplyphysics.laws.thermodynamics import thermal_energy_from_mass_and_temperature as energy_heating_law
 from symplyphysics.laws.thermodynamics import energy_to_melt_from_mass as energy_melting_law
 from symplyphysics.definitions import density_from_mass_volume as density_law
@@ -38,7 +39,10 @@ mass_of_all_water = solve(density_of_water_equation, density_law.mass,
 # the mass of all the water filling the bath consists of the mass of hot water
 # that was in the bathroom initially, and the mass of water of melted ice
 # mass_all_water = mass_of_hot_water + mass_of_ice
-mass_of_all_water_equation = Eq(mass_of_all_water, mass_of_ice + mass_of_hot_water)
+mass_of_all_water_equation = sum_masses_law.law.subs({
+    sum_masses_law.masses_of_components: (mass_of_ice, mass_of_hot_water),
+    sum_masses_law.mass_of_mixture: mass_of_all_water
+}).doit()
 mass_of_hot_water_value = solve(mass_of_all_water_equation, mass_of_hot_water,
     dict=True)[0][mass_of_hot_water]
 
