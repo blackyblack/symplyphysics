@@ -1,4 +1,4 @@
-from sympy import (Eq, solve)
+from sympy import (Eq, solve, S)
 from symplyphysics import (
     units,
     Quantity,
@@ -44,4 +44,4 @@ def calculate_number_of_cores(number_of_cores_initial_: int, half_life_: Quantit
         half_life: half_life_,
         decay_time: decay_time_
     })
-    return convert_to(Quantity(result_expr), Quantity(dimensionless)).evalf(5)
+    return int(convert_to(Quantity(result_expr), S.One).evalf())
