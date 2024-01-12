@@ -36,9 +36,6 @@ density_of_water_equation = density_law.definition.subs({
 mass_of_all_water = solve(density_of_water_equation, density_law.mass,
     dict=True)[0][density_law.mass]
 
-# the mass of all the water filling the bath consists of the mass of hot water
-# that was in the bathroom initially, and the mass of water of melted ice
-# mass_all_water = mass_of_hot_water + mass_of_ice
 mass_of_all_water_equation = sum_masses_law.law.subs({
     sum_masses_law.masses_of_components: (mass_of_ice, mass_of_hot_water),
     sum_masses_law.mass_of_mixture: mass_of_all_water
