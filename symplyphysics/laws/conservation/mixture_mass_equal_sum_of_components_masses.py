@@ -13,10 +13,10 @@ from symplyphysics.core.symbols.symbols import tuple_of_symbols
 ## m - mass of mixture
 ##
 # Conditions:
-## 1) mixture in a closed impenetrable volume, that is, molecules/atoms cannot leave it
-##    and they are always inside;
-## 2) chemical reactions between components are neglected;
-## 3) mass is not transformed to energy, for example due to annihilation.
+## - Mixture in a closed impenetrable volume, that is, molecules/atoms cannot leave it
+##   and they are always inside;
+## - Chemical reactions between components are neglected;
+## - Mass is not transformed to energy, for example due to annihilation.
 
 masses_of_components = Symbol("masses_of_components", units.mass)
 mass_of_mixture = Symbol("mass_of_mixture", units.mass)
