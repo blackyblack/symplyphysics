@@ -81,7 +81,7 @@ mass_ratio_to_plot = mass_ratio_value.subs({
 
 base_plot = plot(title="The mass of ice required to cool the hot water to a set temperature",
     xlabel=r"$T_{balance}, K$",
-    ylabel=r"$m_{ice} / m_{hot_water}$",
+    ylabel=r"$m_{ice} / m_{hot-water}$",
     backend=MatplotlibBackend,
     legend=True,
     show=False)
@@ -97,7 +97,7 @@ for temperature_of_hot_water_value in temperature_of_hot_water_values:
         dict=True)[0][temperature_balance]
 
     subplot = plot(mass_ratio_to_subplot, (temperature_balance, to_kelvin(Celsius(0)), temperature_supremum),
-        label=r"$T_{hot-water}=" + f"{temperature_of_hot_water_value}" + ", K$",
+        label=r"$T_{hot-water}=" + f"{to_kelvin(Celsius(temperature_of_hot_water_value))}" + ", K$",
         show=False)
     base_plot.append(subplot[0])
 
