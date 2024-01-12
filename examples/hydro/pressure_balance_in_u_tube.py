@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 
-from sympy import solve, symbols, dsolve, Eq
-from symplyphysics import units, convert_to, prefixes, Quantity, print_expression
-from symplyphysics.core.expr_comparisons import expr_equals
+from sympy import solve, symbols, Eq
+from symplyphysics import units, convert_to, Quantity, print_expression
 from symplyphysics.laws.hydro import inner_pressure_of_fluid as inner_pressure
-from symplyphysics.laws.hydro import inner_pressure_of_fluid_is_constant as bernoullis_equation
 from symplyphysics.laws.hydro import hydrostatic_pressure_from_density_and_depth as hydrostatic_pressure
 
 # Description
@@ -64,15 +62,8 @@ inner_pressure_right_arm_law = inner_pressure.law.subs({
 })
 inner_pressure_right_arm = solve(inner_pressure_right_arm_law, inner_pressure.inner_pressure)[0]
 
-# The inner pressure in conserved at all points of the fluid
-
-inner_pressure_solved = dsolve(
-    bernoullis_equation.law, 
-    bernoullis_equation.inner_pressure(bernoullis_equation.time)
-)
-assert expr_equals(inner_pressure_solved.rhs, symbols("C1"))
-
-# Since the total pressure in conserved, we can equate the total pressure in both arms
+# Since the total pressure in conserved (see [Bernoulli's principle](../../symplyphysics/laws/hydro/inner_pressure_of_fluid_is_constant.py))
+# we can equate the total pressure in both arms
 
 equation = Eq(inner_pressure_left_arm, inner_pressure_right_arm)
 oil_density_formula = solve(equation, oil_density)[0]
