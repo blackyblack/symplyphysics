@@ -10,7 +10,7 @@ from symplyphysics.laws.thermodynamics import energy_to_melt_from_mass as energy
 from symplyphysics.definitions import density_from_mass_volume as density_law
 from symplyphysics.laws.thermodynamics import sum_of_heat_transfer_is_zero as thermodinamics_law_1
 
-temperature_of_hot_water_values = list(map(lambda t: to_kelvin(Celsius(t)), [5, 20, 35, 50, 65, 80]))
+temperature_of_hot_water_values = [5, 20, 35, 50, 65, 80]
 
 temperature_of_hot_water = symbols("temperature_of_hot_water")
 temperature_of_ice = symbols("temperature_of_ice")
@@ -88,7 +88,7 @@ base_plot = plot(title="The mass of ice required to cool the hot water to a set 
 
 for temperature_of_hot_water_value in temperature_of_hot_water_values:
     mass_ratio_to_subplot = mass_ratio_to_plot.subs({
-        temperature_of_hot_water: temperature_of_hot_water_value
+        temperature_of_hot_water: to_kelvin(Celsius(temperature_of_hot_water_value))
     })
 
     # Find the upper limit of the temperature scale, so as not to build a graph
