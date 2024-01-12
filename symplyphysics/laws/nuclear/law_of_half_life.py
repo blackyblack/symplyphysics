@@ -6,6 +6,7 @@ from symplyphysics import (
     print_expression,
     validate_input,
     validate_output,
+    convert_to,
     dimensionless
 )
 
@@ -36,11 +37,11 @@ def print_law() -> str:
 
 @validate_input(number_of_cores_initial_=number_of_cores_initial, half_life_=half_life, decay_time_=decay_time)
 @validate_output(number_of_cores)
-def calculate_number_of_cores(number_of_cores_initial_: int, half_life_: Quantity, decay_time_: Quantity) -> Quantity:
+def calculate_number_of_cores(number_of_cores_initial_: int, half_life_: Quantity, decay_time_: Quantity) -> int:
     result_expr = solve(law, number_of_cores, dict=True)[0][number_of_cores]
     result_expr = result_expr.subs({
         number_of_cores_initial: number_of_cores_initial_,
         half_life: half_life_,
         decay_time: decay_time_
     })
-    return Quantity(result_expr)
+    return convert_to(Quantity(result_expr), dimensionless).evalf(5)

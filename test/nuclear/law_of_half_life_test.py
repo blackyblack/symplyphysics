@@ -27,10 +27,8 @@ def test_args_fixture():
         half_life=half_life, decay_time=decay_time)
 
 
-def test_basic_current(test_args):
+def test_basic_number_of_cores(test_args):
     result = number_of_cores_law.calculate_number_of_cores(test_args.number_of_cores_initial, test_args.half_life, test_args.decay_time)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, dimensionless)
-    result = convert_to(result, dimensionless).evalf(5)
     assert result == approx(1e30, rel=0.01)
 
 
