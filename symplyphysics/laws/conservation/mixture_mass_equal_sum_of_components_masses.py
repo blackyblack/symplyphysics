@@ -11,6 +11,9 @@ from symplyphysics.core.symbols.symbols import tuple_of_symbols
 ## Where:
 ## m_i - mass of mixture component
 ## m - mass of mixture
+##
+## NOTICE: This law can be applied to a mixture that is in a closed impenetrable volume,
+## that is, molecules/atoms cannot leave it and they are always inside.
 
 masses_of_components = Symbol("masses_of_components", units.mass)
 mass_of_mixture = Symbol("mass_of_mixture", units.mass)
@@ -24,7 +27,7 @@ def print_law() -> str:
 @validate_input(mass_of_mixture_=mass_of_mixture)
 @validate_output(units.mass)
 def calculate_mass_of_mixture(mass_of_mixture_: Sequence[Quantity]) -> Quantity:
-    mass_of_component_symbols = tuple_of_symbols("mass_of_component", units.force, len(mass_of_mixture_))
+    mass_of_component_symbols = tuple_of_symbols("mass_of_component", units.mass, len(mass_of_mixture_))
     masses_of_components_law = law.subs(masses_of_components, mass_of_component_symbols).doit()
     solved = solve(masses_of_components_law, mass_of_mixture, dict=True)[0][mass_of_mixture]
     for (from_, to_) in zip(mass_of_component_symbols, mass_of_mixture_):
