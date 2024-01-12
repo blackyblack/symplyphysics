@@ -12,10 +12,11 @@ from symplyphysics.core.symbols.symbols import tuple_of_symbols
 ## m_i - mass of mixture component
 ## m - mass of mixture
 ##
-## NOTICE: This law can be applied to a mixture if:
-## 1) in a closed impenetrable volume, that is, molecules/atoms cannot leave it
+# Conditions:
+## 1) mixture in a closed impenetrable volume, that is, molecules/atoms cannot leave it
 ##    and they are always inside;
-## 2) chemical reactions between components are neglected.
+## 2) chemical reactions between components are neglected;
+## 3) mass is not transformed to energy, for example due to annihilation.
 
 masses_of_components = Symbol("masses_of_components", units.mass)
 mass_of_mixture = Symbol("mass_of_mixture", units.mass)
