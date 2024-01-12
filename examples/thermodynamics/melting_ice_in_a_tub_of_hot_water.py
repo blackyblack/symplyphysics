@@ -3,7 +3,6 @@
 from sympy import solve, Symbol, Eq
 from symplyphysics import print_expression, Quantity, prefixes, units, convert_to
 from symplyphysics.core.symbols.celsius import to_kelvin_quantity, Celsius
-from symplyphysics.core.symbols.symbols import tuple_of_symbols
 from symplyphysics.laws.thermodynamics import thermal_energy_from_mass_and_temperature as energy_heating_law
 from symplyphysics.laws.thermodynamics import energy_to_melt_from_mass as energy_melting_law
 from symplyphysics.definitions import density_from_mass_volume as density_law

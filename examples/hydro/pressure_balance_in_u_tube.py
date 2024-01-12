@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
-from sympy import solve, symbols, Eq
+from sympy import dsolve, solve, symbols, Eq
 from symplyphysics import units, convert_to, Quantity, print_expression
 from symplyphysics.laws.hydro import inner_pressure_of_fluid as inner_pressure
 from symplyphysics.laws.hydro import hydrostatic_pressure_from_density_and_depth as hydrostatic_pressure
+from symplyphysics.laws.hydro import inner_pressure_of_fluid_is_constant as constant_pressure_law
 
 # Description
 ## A U-tube contains two liquids at static equilibrium:
@@ -62,11 +63,14 @@ inner_pressure_right_arm_law = inner_pressure.law.subs({
 })
 inner_pressure_right_arm = solve(inner_pressure_right_arm_law, inner_pressure.inner_pressure)[0]
 
-# Since the total pressure in conserved (see [Bernoulli's principle](../../symplyphysics/laws/hydro/inner_pressure_of_fluid_is_constant.py))
-# we can equate the total pressure in both arms
+# Use Bernoulli's principle to equate the total pressure in both arms
+dsolved = dsolve(constant_pressure_law.law, constant_pressure_law.inner_pressure(constant_pressure_law.time))
+dsolved_left = dsolved.subs(constant_pressure_law.inner_pressure(constant_pressure_law.time), inner_pressure_left_arm)
+dsolved_right = dsolved.subs(constant_pressure_law.inner_pressure(constant_pressure_law.time), inner_pressure_right_arm)
+solved_left = solve([dsolved_left, dsolved_right], (inner_pressure_left_arm, "C1"), dict=True)[0][inner_pressure_left_arm]
+constant_pressure_eq = Eq(inner_pressure_left_arm, solved_left)
 
-equation = Eq(inner_pressure_left_arm, inner_pressure_right_arm)
-oil_density_formula = solve(equation, oil_density)[0]
+oil_density_formula = solve(constant_pressure_eq, oil_density)[0]
 
 print(f"Formula for oil density:\n{print_expression(Eq(oil_density, oil_density_formula))}")
 

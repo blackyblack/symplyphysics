@@ -1,4 +1,4 @@
-from sympy import Eq, solve, dsolve, Derivative
+from sympy import Eq, dsolve, Derivative
 from symplyphysics import (
     units,
     Quantity,
