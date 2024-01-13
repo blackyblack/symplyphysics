@@ -23,12 +23,12 @@ from symplyphysics.laws.kinematic import planar_projection_is_cosine as projecti
 ## - light is monochromic, as refactive index depends on the light frequency.
 ## - refracting medium is uniform, so refracting index does not change over ray path.
 
-incedence_refractive_index = Symbol("incedence_refractive_index", dimensionless)
+incidence_refractive_index = Symbol("incidence_refractive_index", dimensionless)
 resulting_refractive_index = Symbol("resulting_refractive_index", dimensionless)
-incedence_angle = Symbol("incedence_angle", angle_type)
+incidence_angle = Symbol("incidence_angle", angle_type)
 refraction_angle = Symbol("refraction_angle", angle_type)
 
-law = Eq(incedence_refractive_index * sin(incedence_angle),
+law = Eq(incidence_refractive_index * sin(incidence_angle),
     resulting_refractive_index * sin(refraction_angle))
 
 # Derive the same Snell's law from Fermat's principle
@@ -60,9 +60,9 @@ medium_travel_distance_cartesian_eq = Eq(medium_travel_distance, sqrt((d - x) **
 # It is also possible to express outer_travel_distance and medium_travel_distance in terms of the angles of incidence (alpha) and refraction (beta).
 
 # Use (pi / 2 - angle) to obtain vertical projection instead of horizontal
-projection_incedence_eq = projection_law.law.subs({projection_law.vector_angle: pi/2 - incedence_angle, projection_law.vector_length: outer_travel_distance, projection_law.projection: x})
-projection_incedence_distance = solve(projection_incedence_eq, outer_travel_distance)[0]
-outer_travel_distance_polar_eq = Eq(outer_travel_distance, projection_incedence_distance)
+projection_incidence_eq = projection_law.law.subs({projection_law.vector_angle: pi/2 - incidence_angle, projection_law.vector_length: outer_travel_distance, projection_law.projection: x})
+projection_incidence_distance = solve(projection_incidence_eq, outer_travel_distance)[0]
+outer_travel_distance_polar_eq = Eq(outer_travel_distance, projection_incidence_distance)
 projection_refraction_eq = projection_law.law.subs({projection_law.vector_angle: pi/2 - refraction_angle, projection_law.vector_length: medium_travel_distance, projection_law.projection: d - x})
 projection_refraction_distance = solve(projection_refraction_eq, medium_travel_distance)[0]
 medium_travel_distance_polar_eq = Eq(medium_travel_distance, projection_refraction_distance)
@@ -77,7 +77,7 @@ min_time_case = min_time_case.subs({outer_travel_distance_polar_eq.lhs: outer_tr
 
 # Finally, let's use the definition of the refractive index as the ratio of the speed of light in the medium to that in a reference medium (vacuum).
 outer_refraction_definition = refractive_index_definition.definition.subs({
-    refractive_index_definition.refractive_index: incedence_refractive_index
+    refractive_index_definition.refractive_index: incidence_refractive_index
 })
 medium_refreaction_definition = refractive_index_definition.definition.subs({
     refractive_index_definition.refractive_index: resulting_refractive_index
@@ -90,8 +90,8 @@ min_time_case = min_time_case.subs({
     medium_velocity: medium_refraction_velocity
 })
 resulting_expression = Eq(
-    incedence_refractive_index * sin(incedence_angle),
-    solve(min_time_case, incedence_refractive_index * sin(incedence_angle), dict=True)[0][incedence_refractive_index * sin(incedence_angle)]
+    incidence_refractive_index * sin(incidence_angle),
+    solve(min_time_case, incidence_refractive_index * sin(incidence_angle), dict=True)[0][incidence_refractive_index * sin(incidence_angle)]
 )
 
 # Verify that the resulting_expression corresponds to the law.
@@ -103,23 +103,23 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(incedence_angle_=incedence_angle,
-    incedence_refractive_index_=incedence_refractive_index,
+@validate_input(incidence_angle_=incidence_angle,
+    incidence_refractive_index_=incidence_refractive_index,
     resulting_refractive_index_=resulting_refractive_index)
 @validate_output(refraction_angle)
-def calculate_refraction_angle(incedence_angle_: Quantity | float,
-    incedence_refractive_index_: float, resulting_refractive_index_: float) -> Quantity:
+def calculate_refraction_angle(incidence_angle_: Quantity | float,
+    incidence_refractive_index_: float, resulting_refractive_index_: float) -> Quantity:
     #HACK: sympy angles are always in radians
-    incedence_angle_radians = incedence_angle_.scale_factor if isinstance(
-        incedence_angle_, Quantity) else incedence_angle_
+    incidence_angle_radians = incidence_angle_.scale_factor if isinstance(
+        incidence_angle_, Quantity) else incidence_angle_
     # Check for boundary conditions
-    assert incedence_angle_radians <= pi / 2
-    assert incedence_angle_radians >= -pi / 2
+    assert incidence_angle_radians <= pi / 2
+    assert incidence_angle_radians >= -pi / 2
     solutions = solve(law, refraction_angle, dict=True)
     result_expr = solutions[0][refraction_angle]
     angle_applied = result_expr.subs({
-        incedence_angle: incedence_angle_radians,
-        incedence_refractive_index: incedence_refractive_index_,
+        incidence_angle: incidence_angle_radians,
+        incidence_refractive_index: incidence_refractive_index_,
         resulting_refractive_index: resulting_refractive_index_
     })
     #HACK: there are 2 solutions for refraction_angle: pi - asin() and asin(). We choose former and switch to latter
@@ -127,8 +127,8 @@ def calculate_refraction_angle(incedence_angle_: Quantity | float,
     if (angle_applied > pi / 2 or angle_applied < -pi / 2):
         result_expr = solutions[1][refraction_angle]
         angle_applied = result_expr.subs({
-            incedence_angle: incedence_angle_radians,
-            incedence_refractive_index: incedence_refractive_index_,
+            incidence_angle: incidence_angle_radians,
+            incidence_refractive_index: incidence_refractive_index_,
             resulting_refractive_index: resulting_refractive_index_
         })
 
