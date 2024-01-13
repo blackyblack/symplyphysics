@@ -9,6 +9,7 @@ from symplyphysics import (units, Quantity, Function, Symbol, print_expression, 
 # Definition: mu = dm / dt
 # Where:
 ## mu is mass flow rate
+## m is mass of matter (function m(t))
 ## t is time
 
 time = Symbol("time", units.time)
