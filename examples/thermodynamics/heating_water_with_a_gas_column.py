@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from sympy import solve, Symbol, Eq, Integral, pi
+from sympy import solve, Symbol, Eq, Integral, pi, simplify
 from symplyphysics import print_expression, Quantity, prefixes, units, convert_to
 from symplyphysics.core.symbols.celsius import to_kelvin_quantity, Celsius
 from symplyphysics.laws.electricity import power_factor_from_active_and_full_power as efficiency_law
@@ -20,14 +20,14 @@ from symplyphysics.definitions import mass_flow_rate as mass_rate_law
 # The efficiency of the heater is 60%.
 
 volume_of_gas = Symbol("volume_of_gas")
-diameter_of_pipe = Symbol("diametr_of_pipe")
+diameter_of_pipe = Symbol("diameter_of_pipe")
 time_of_hour = Symbol("time_of_hour")
 velocity_of_water = Symbol("velocity_of_water")
 pressure_in_column = Symbol("press_in_column")
 efficiency_of_column = Symbol("efficiency_of_column")
 temperature_start = Symbol("temperature_start")
 
-mass_flow_rate = Symbol("mass_flow_rate", constant=True)
+mass_flow_rate = Symbol("mass_flow_rate")
 
 molar_mass_of_metan = Symbol("molar_mass_of_metan")
 specific_heat_of_combustion_metan = Symbol("specific_heat_of_combustion_metan")
