@@ -14,6 +14,13 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## S1 is the area of the first piston
 ## S2 is the area of the second piston
 
+## Proof
+## The pressure that piston number one creates is equal to: p1 = F1 / S1
+## The pressure of the second piston on the liquid is: p2 = F2 / S2
+## If the pistons are in equilibrium, then the pressures p1 and p2 are equal, therefore, we can equate the right-hand sides of the expressions
+## ==> F1 / S1 = F2 / S2
+
+
 ## Conditions
 ## This ratio is performed only in an ideal hydraulic press, i.e. one in which there is no friction.
 
@@ -32,7 +39,7 @@ def print_law() -> str:
 
 @validate_input(input_force_=input_force, input_area_=input_area, output_forces_area_=output_forces_area)
 @validate_output(output_force)
-def calculate_force(input_force_: Quantity, input_area_, output_forces_area_: Quantity) -> Quantity:
+def calculate_output_force(input_force_: Quantity, input_area_, output_forces_area_: Quantity) -> Quantity:
     result_expr = solve(law, output_force, dict=True)[0][output_force]
     result_force = result_expr.subs({
         input_force: input_force_,
