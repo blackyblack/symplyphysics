@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from sympy import solve, Symbol, Eq, Integral
+from sympy import solve, Symbol, Eq, dsolve
 from symplyphysics import print_expression, Quantity, prefixes, units, convert_to
 from symplyphysics.core.symbols.celsius import to_kelvin_quantity, Celsius
 from symplyphysics.laws.electricity import power_factor_from_active_and_full_power as efficiency_law
@@ -30,23 +30,23 @@ temperature_of_vaporization_water = Symbol("temperature_of_vaporization_water")
 
 time = Symbol("time")
 
-mass_gas_integral = Integral(mass_rate_law.definition,
-    (mass_rate_law.time, 0, mass_rate_law.time)).doit()
-mass_of_alcohol_in_start_equation = mass_gas_integral.subs({
-    mass_rate_law.mass(0): 0,
-    mass_rate_law.mass_flow_rate(0): 0,
+mass_gas_integral = dsolve(mass_rate_law.definition, mass_rate_law.mass(mass_rate_law.time))
+mass_of_gas_equation = mass_gas_integral.subs({
+    "C1": 0,
+}).doit()
+
+mass_of_alcohol_in_start_equation = mass_of_gas_equation.subs({
     mass_rate_law.mass(mass_rate_law.time): mass_of_alcohol,
-    mass_rate_law.mass_flow_rate(mass_rate_law.time): mass_rate_alcohol,
-    mass_rate_law.time: time_of_minute
+    mass_rate_law.time: time_of_minute,
+    mass_rate_law.mass_flow_rate(mass_rate_law.time): mass_rate_alcohol
 }).doit()
 mass_flow_rate_in_start_value = solve(mass_of_alcohol_in_start_equation, mass_rate_alcohol,
     dict=True)[0][mass_rate_alcohol]
-mass_of_alcohol_value = mass_gas_integral.subs({
-    mass_rate_law.mass(0): 0,
-    mass_rate_law.mass_flow_rate(0): 0,
+
+mass_of_alcohol_value = mass_of_gas_equation.subs({
     mass_rate_law.mass_flow_rate(mass_rate_law.time): mass_flow_rate_in_start_value,
-    mass_rate_law.time: time
-}).doit().lhs
+    mass_rate_law.time: time,
+}).doit().rhs
 
 energy_from_combustion_alcohol_value = combustion_energy_law.law.subs({
     combustion_energy_law.specific_heat_combustion: specific_heat_of_combustion_alcohol,
