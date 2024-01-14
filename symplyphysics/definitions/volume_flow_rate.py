@@ -16,8 +16,8 @@ from symplyphysics.definitions import density_from_mass_volume as density_law
 ## t is time
 
 time = Symbol("time", units.time)
-volume = Function("volume", units.mass)
-volume_flow_rate = Function("volume_flow_rate", units.mass / units.time)
+volume = Function("volume", units.volume)
+volume_flow_rate = Function("volume_flow_rate", units.volume / units.time)
 
 definition = Eq(volume_flow_rate(time), Derivative(volume(time), time))
 
@@ -53,10 +53,10 @@ def print_law() -> str:
 
 @validate_input(volume_start_=volume, volume_end_=volume, time_=time)
 @validate_output(volume_flow_rate)
-def calculate_mass_flow_rate(volume_start_: Quantity, volume_end_: Quantity,
+def calculate_volume_flow_rate(volume_start_: Quantity, volume_end_: Quantity,
     time_: Quantity) -> Quantity:
-    mass_function_ = time * (volume_end_ - volume_start_) / time_
-    applied_definition = definition.subs(volume(time), mass_function_)
+    volume_function_ = time * (volume_end_ - volume_start_) / time_
+    applied_definition = definition.subs(volume(time), volume_function_)
     # calculate volume flow rate
     dsolved = applied_definition.doit()
     result_expr = dsolved.rhs
