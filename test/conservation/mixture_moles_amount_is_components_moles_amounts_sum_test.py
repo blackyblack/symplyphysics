@@ -25,7 +25,7 @@ def test_basic_amount_of_moles(test_args):
     assert result_amount_of_moles == approx(30, 0.001)
 
 
-def test_three_masses_array(test_args):
+def test_three_amounts_of_moles_array(test_args):
     m3 = Quantity(5 * units.moles)
     result = sum_of_moles_law.calculate_moles_count_of_mixture([test_args.nu1, test_args.nu2, m3])
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.amount_of_substance)
