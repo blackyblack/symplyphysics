@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from sympy import solve, Symbol, Eq, Integral, pi, simplify
+from sympy import dsolve, solve, Symbol, Eq, Integral, pi
 from symplyphysics import print_expression, Quantity, prefixes, units, convert_to
 from symplyphysics.core.symbols.celsius import to_kelvin_quantity, Celsius
 from symplyphysics.laws.electricity import power_factor_from_active_and_full_power as efficiency_law
@@ -80,24 +80,24 @@ state_equation = klayperon_law.law.subs({
 mass_of_gas_in_state_value = solve(state_equation, mole_count_law.substance_mass,
     dict=True)[0][mole_count_law.substance_mass]
 
-mass_gas_integral = Integral(mass_rate_law.definition,
-    (mass_rate_law.time, 0, mass_rate_law.time)).doit()
+mass_gas_dsolved = dsolve(mass_rate_law.definition, mass_rate_law.mass(mass_rate_law.time))
+# C1 is initial mass of consumed gas
+# HACK: we should tell dsolve() that mass flow rate is constant, but solve() does not work properly with constant
+#       value. So we substitute it with constant and revert to normal mass flow rate after dsolve()
+mass_flow_constant_rate = Symbol("mass_flow_rate_const", constant=True)
+mass_gas_eq = mass_gas_dsolved.subs({"C1": 0, mass_rate_law.mass_flow_rate(mass_rate_law.time): mass_flow_constant_rate}).doit()
+mass_gas_eq = mass_gas_eq.subs(mass_flow_constant_rate, mass_flow_rate)
 
-mass_of_gas_in_start_equation = mass_gas_integral.subs({
-    mass_rate_law.mass(0): 0,
-    mass_rate_law.mass_flow_rate(0): 0,
+mass_of_gas_in_start_equation = mass_gas_eq.subs({
     mass_rate_law.mass(mass_rate_law.time): mass_of_gas_in_state_value,
-    mass_rate_law.mass_flow_rate(mass_rate_law.time): mass_flow_rate,
     mass_rate_law.time: time_of_hour
-}).doit()
+})
 mass_flow_rate_in_start_value = solve(mass_of_gas_in_start_equation, mass_flow_rate,
     dict=True)[0][mass_flow_rate]
-mass_of_gas_value = mass_gas_integral.subs({
-    mass_rate_law.mass(0): 0,
-    mass_rate_law.mass_flow_rate(0): 0,
-    mass_rate_law.mass_flow_rate(mass_rate_law.time): mass_flow_rate_in_start_value,
+mass_of_gas_value = solve(mass_gas_eq.subs({
+    mass_flow_rate: mass_flow_rate_in_start_value,
     mass_rate_law.time: velocity_law.moving_time
-}).doit().lhs
+}), mass_rate_law.mass(velocity_law.moving_time))[0]
 
 energy_from_combustion_of_metan_value = combustion_energy_law.law.subs({
     combustion_energy_law.specific_heat_combustion: specific_heat_of_combustion_metan,
