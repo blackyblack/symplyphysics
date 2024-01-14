@@ -9,7 +9,7 @@ from symplyphysics.laws.conservation import mechanical_energy_after_equals_to_me
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_velocity as kinetic_energy_law
 
 # Example from https://easyfizika.ru/zadachi/termodinamika/zheleznyj-meteorit-vletaet-v-atmosferu-zemli-so-skorostyu-1-5x10-3-m-s/
-# An iron meteorite flies into the Earth's atmosphere at a speed of 1.5·103 m/s,
+# An iron meteorite flies into the Earth's atmosphere at a speed of 1.5 km/s,
 # having a temperature of 300 K. If 80% of the kinetic energy of a meteorite passes
 # into its internal energy when moving in the atmosphere,
 # then what part of the meteorite's mass will melt.
