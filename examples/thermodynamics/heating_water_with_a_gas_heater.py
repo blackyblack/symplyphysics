@@ -13,7 +13,7 @@ from symplyphysics.laws.chemistry import atomic_weight_from_mass_mole_count as m
 from symplyphysics.definitions import mass_flow_rate as mass_rate_law
 
 # Example from https://easyfizika.ru/zadachi/termodinamika/gazovaya-nagrevatelnaya-kolonka-potreblyaet-1-8-m3-metana-ch4-v-chas-najti-temperaturu/
-# The gas heating column consumes 1.8 m^3 of methane (CH4) per hour. Find
+# The gas heater consumes 1.8 m^3 of methane (CH4) per hour. Find
 # the temperature of the water flowing out, if its jet has a velocity of 0.5 m / s
 # and a diameter of 1 cm, the initial temperature of water and gas is 11 ° C,
 # the calorific value of methane is 55 kJ / g. The gas in the pipe is at a pressure of 120 kPa.
