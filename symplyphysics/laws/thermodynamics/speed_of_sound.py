@@ -3,7 +3,7 @@ from sympy import Eq, solve, sqrt
 from symplyphysics import (Quantity, Symbol, dimensionless, print_expression,
                            units, validate_input, validate_output)
 
-# Speed of souns for ideal gases
+# Speed of sound for ideal gases
 # c = sqrt( gamma * R * T / M ), where
 # gamma is heat capacity ratio (adiabatic index),
 # T is temperature,
@@ -33,10 +33,12 @@ def print_law():
     mole_mass_=mole_mass
 )
 @validate_output(speed_of_sound)
-def calculate_speed_of_sound(temperature_, heat_capacity_ratio_, mole_mass_):
-
+def calculate_speed_of_sound(
+    temperature_: Quantity,
+    heat_capacity_ratio_: Quantity,
+    mole_mass_: Quantity,
+) -> Quantity:
     result_expr = solve(law, speed_of_sound, dict=True)[0][speed_of_sound]
-
     result_applied = result_expr.subs(
         {
             temperature: temperature_,
@@ -44,5 +46,4 @@ def calculate_speed_of_sound(temperature_, heat_capacity_ratio_, mole_mass_):
             mole_mass: mole_mass_,
         }
     )
-
     return Quantity(result_applied)
