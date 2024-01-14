@@ -35,7 +35,7 @@ def print_law():
 @validate_output(speed_of_sound)
 def calculate_speed_of_sound(
     temperature_: Quantity,
-    heat_capacity_ratio_: Quantity,
+    heat_capacity_ratio_: float,
     mole_mass_: Quantity,
 ) -> Quantity:
     result_expr = solve(law, speed_of_sound, dict=True)[0][speed_of_sound]
