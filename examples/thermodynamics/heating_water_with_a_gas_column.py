@@ -1,20 +1,21 @@
 #!/usr/bin/env python3
 
-from sympy import dsolve, solve, Symbol, Eq, Integral, pi
+import math
+from sympy import dsolve, solve, Symbol, Eq
 from symplyphysics import print_expression, Quantity, prefixes, units, convert_to
 from symplyphysics.core.symbols.celsius import to_kelvin_quantity, Celsius
 from symplyphysics.laws.electricity import power_factor_from_active_and_full_power as efficiency_law
 from symplyphysics.laws.thermodynamics import energy_from_combustion as combustion_energy_law
 from symplyphysics.definitions import density_from_mass_volume as density_law
 from symplyphysics.laws.thermodynamics import thermal_energy_from_mass_and_temperature as energy_heating_law
-from symplyphysics.definitions import velocity_is_movement_derivative as velocity_law
+from symplyphysics.laws.kinematic import distance_from_constant_velocity as velocity_law
 from symplyphysics.laws.thermodynamics import pressure_from_temperature_and_volume as klayperon_law
 from symplyphysics.laws.chemistry import atomic_weight_from_mass_mole_count as mole_count_law
 from symplyphysics.definitions import mass_flow_rate as mass_rate_law
 
 # Example from https://easyfizika.ru/zadachi/termodinamika/gazovaya-nagrevatelnaya-kolonka-potreblyaet-1-8-m3-metana-ch4-v-chas-najti-temperaturu/
 # The gas heating column consumes 1.8 m^3 of methane (CH4) per hour. Find
-# the temperature of the water flowing out of it jet has a velocity of 0.5 m / s
+# the temperature of the water flowing out, if its jet has a velocity of 0.5 m / s
 # and a diameter of 1 cm, the initial temperature of water and gas is 11 ° C,
 # the calorific value of methane is 55 kJ / g. The gas in the pipe is at a pressure of 120 kPa.
 # The efficiency of the heater is 60%.
@@ -23,8 +24,8 @@ volume_of_gas = Symbol("volume_of_gas")
 diameter_of_pipe = Symbol("diameter_of_pipe")
 time_of_hour = Symbol("time_of_hour")
 velocity_of_water = Symbol("velocity_of_water")
-pressure_in_column = Symbol("press_in_column")
-efficiency_of_column = Symbol("efficiency_of_column")
+pressure_in_gas_heater = Symbol("pressure_in_gas_heater")
+efficiency_of_gas_heater = Symbol("efficiency_of_gas_heater")
 temperature_start = Symbol("temperature_start")
 
 mass_flow_rate = Symbol("mass_flow_rate")
@@ -36,16 +37,14 @@ density_of_water = Symbol("density_of_water")
 
 temperature_water = Symbol("temperature_water")
 
-velocity_integral = Integral(velocity_law.definition,
-    (velocity_law.moving_time, 0, velocity_law.moving_time)).doit()
-distance_value = velocity_integral.subs({
-    velocity_law.velocity(velocity_law.moving_time): velocity_of_water,
-    velocity_law.movement(0): 0
-}).doit().lhs
+distance_value = velocity_law.law.subs({
+    velocity_law.constant_velocity: velocity_of_water,
+    velocity_law.initial_position: 0
+}).rhs
 
 # We assume that the cross-section of the pipe through which the water flows has the shape of a circle
 # S = pi * d^2 / 4
-pipe_cross_sectional_area = (1 / 4) * pi * diameter_of_pipe ** 2
+pipe_cross_sectional_area = math.pi * diameter_of_pipe ** 2 / 4
 # And we assume that the pipe goes straight to the water heating site.
 # Accordingly, the volume of the pipe that the water passes over a certain period of time has the shape of a cylinder
 # V = S * l(t)
@@ -73,7 +72,7 @@ mole_count_value = solve(mass_of_gas_equation, mole_count_law.mole_count,
 
 state_equation = klayperon_law.law.subs({
     klayperon_law.volume: volume_of_gas,
-    klayperon_law.pressure: pressure_in_column,
+    klayperon_law.pressure: pressure_in_gas_heater,
     klayperon_law.temperature: temperature_start,
     klayperon_law.mole_count: mole_count_value
 })
@@ -96,8 +95,8 @@ mass_flow_rate_in_start_value = solve(mass_of_gas_in_start_equation, mass_flow_r
     dict=True)[0][mass_flow_rate]
 mass_of_gas_value = solve(mass_gas_eq.subs({
     mass_flow_rate: mass_flow_rate_in_start_value,
-    mass_rate_law.time: velocity_law.moving_time
-}), mass_rate_law.mass(velocity_law.moving_time))[0]
+    mass_rate_law.time: velocity_law.movement_time
+}), mass_rate_law.mass(velocity_law.movement_time))[0]
 
 energy_from_combustion_of_metan_value = combustion_energy_law.law.subs({
     combustion_energy_law.specific_heat_combustion: specific_heat_of_combustion_metan,
@@ -107,7 +106,7 @@ energy_from_combustion_of_metan_value = combustion_energy_law.law.subs({
 efficiency_equation = efficiency_law.law.subs({
     efficiency_law.active_power: energy_to_heating_water_value,
     efficiency_law.full_power: energy_from_combustion_of_metan_value,
-    efficiency_law.power_factor: efficiency_of_column
+    efficiency_law.power_factor: efficiency_of_gas_heater
 })
 
 temperature_water_value = solve(efficiency_equation, temperature_water,
@@ -120,8 +119,8 @@ temperature_water_k = temperature_water_value.subs({
     diameter_of_pipe: Quantity(1 * prefixes.centi * units.meters),
     time_of_hour: Quantity(1 * units.hours),
     velocity_of_water: Quantity(0.5 * units.meters / units.second),
-    pressure_in_column: Quantity(120 * prefixes.kilo * units.pascals),
-    efficiency_of_column: Quantity(60 * units.percents),
+    pressure_in_gas_heater: Quantity(120 * prefixes.kilo * units.pascals),
+    efficiency_of_gas_heater: Quantity(60 * units.percents),
     temperature_start: to_kelvin_quantity(Celsius(11)),
     molar_mass_of_metan: Quantity(16 * units.grams / units.mole),
     specific_heat_of_combustion_metan: Quantity(55 * prefixes.mega * units.joules / units.kilogram),
