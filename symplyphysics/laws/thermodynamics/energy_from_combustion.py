@@ -16,6 +16,8 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## a solid material weighing 1 kg. In the law of energy released during combustion,
 ## the specific heat of combustion is the amount of heat released during
 ## the complete combustion of a substance weighing 1 kg.
+## In the law of energy for vaporization, the specific heat of vaporization is the amount of energy
+## must be expended to evaporate one kilogram of a substance taken at boiling point.
 
 amount_energy = Symbol("amount_energy", units.energy)
 specific_heat_combustion = Symbol("specific_heat_combustion", units.energy / units.mass)
