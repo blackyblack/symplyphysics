@@ -3,12 +3,12 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
     validate_output)
 
 # Description
-## The heat of melting is the amount of heat that must be brought to a solid
-## crystalline substance at constant pressure in order to completely transfer it
-## to a liquid state.
+## The heat of vaporization of a substance is the amount of heat that must be communicated
+# to a substance at constant pressure and temperature in order to transfer
+# it from a liquid state to a gaseous state (into steam).
 ## Q = k_v * m
 ## Where:
-## Q = energy, required to melt solid matter
+## Q - the energy required to convert a substance from a liquid to a gaseous state
 ## k_v - the specific heat of vaporization is the necessary energy that must be communicated
 ## to a substance weighing 1 kg in order to convert it to a gaseous state
 ##

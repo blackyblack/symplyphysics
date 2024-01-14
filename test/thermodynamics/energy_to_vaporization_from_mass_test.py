@@ -12,7 +12,7 @@ from symplyphysics.laws.thermodynamics import energy_to_vaporization_from_mass a
 
 # https://easyfizika.ru/zadachi/termodinamika/na-zazhzhennuyu-spirtovku-s-kpd-60-postavili-sosud-s-500-g-vody-pri-20-c-cherez-kakoe/
 # If mass of water equal 20 g and specific heat of vaporization equal 29 MJ/kg,
-# the melting energy should be equal to 0.58 MJ
+# the energy to vaporization should be equal to 0.58 MJ
 
 
 @fixture(name="test_args")
