@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
-import math
-from sympy import dsolve, solve, Symbol, Eq
+from sympy import dsolve, solve, Symbol, Eq, pi
 from symplyphysics import print_expression, Quantity, prefixes, units, convert_to
 from symplyphysics.core.symbols.celsius import to_kelvin_quantity, Celsius
 from symplyphysics.laws.electricity import power_factor_from_active_and_full_power as efficiency_law
@@ -44,7 +43,7 @@ distance_value = velocity_law.law.subs({
 
 # We assume that the cross-section of the pipe through which the water flows has the shape of a circle
 # S = pi * d^2 / 4
-pipe_cross_sectional_area = math.pi * diameter_of_pipe ** 2 / 4
+pipe_cross_sectional_area = pi * diameter_of_pipe ** 2 / 4
 # And we assume that the pipe goes straight to the water heating site.
 # Accordingly, the volume of the pipe that the water passes over a certain period of time has the shape of a cylinder
 # V = S * l(t)
@@ -127,4 +126,4 @@ temperature_water_k = temperature_water_value.subs({
     specific_heat_of_heating_water: Quantity(4200 * units.joules / (units.kilogram * units.kelvin)),
     density_of_water: Quantity(1_000 * units.kilograms / (units.meter ** 3))
 })
-print(f"Temperature of water in out is: {convert_to(Quantity(temperature_water_k), units.kelvins)} K")
+print(f"Temperature of water in out is: {convert_to(Quantity(temperature_water_k), units.kelvins).evalf(5)} K")
