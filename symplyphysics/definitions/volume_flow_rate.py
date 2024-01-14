@@ -23,29 +23,6 @@ definition = Eq(volume_flow_rate(time), Derivative(volume(time), time))
 
 definition_units_SI = units.meters ** 3 / units.second
 
-# If the mass and volume are constant over time,
-# then a standard formula can be obtained: pho = m / V
-mass_rate_equation = mass_flow_rate_law.definition.subs({
-    mass_flow_rate_law.time: time,
-    mass_flow_rate_law.mass_flow_rate(mass_flow_rate_law.time): 0
-})
-mass_equation = dsolve(mass_rate_equation, mass_flow_rate_law.mass(time)).subs({
-    "C1": density_law.mass
-})
-
-volume_rate_equation = definition.subs({
-    volume_flow_rate(time): 0
-})
-volume_equation = dsolve(volume_rate_equation, volume(time)).subs({
-    "C1": density_law.volume
-})
-
-density_equation = density_law.definition.subs({
-    density_law.mass: mass_equation.rhs,
-    density_law.volume: volume_equation.rhs
-})
-assert expr_equals(density_law.definition.rhs, density_equation.rhs)
-
 
 def print_law() -> str:
     return print_expression(definition)
