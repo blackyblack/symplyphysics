@@ -1,0 +1,35 @@
+from sympy import (Eq, solve)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output, dimensionless)
+
+# Description
+## The mass fraction is the ratio of the mass of the solute to the total mass of the solution
+## omega = m_i / m
+## Where:
+## m_i - mass of component
+## m - mass of solute
+## omega - mass fraction of the solute
+
+mass_fraction = Symbol("mass_fraction", dimensionless)
+mass_of_component = Symbol("mass_of_component", units.mass)
+mass_of_mixture = Symbol("mass_of_mixture", units.mass)
+
+definition = Eq(mass_fraction, mass_of_component / mass_of_mixture)
+
+definition_units_SI = dimensionless
+
+
+def print_law() -> str:
+    return print_expression(definition)
+
+
+@validate_input(mass_of_component_=mass_of_component, mass_of_mixture_=mass_of_mixture)
+@validate_output(mass_fraction)
+def calculate_mass_fraction(mass_of_component_: Quantity,
+    mass_of_mixture_: Quantity) -> Quantity:
+    result_mass_fraction_expr = solve(definition, mass_fraction, dict=True)[0][mass_fraction]
+    result_expr = result_mass_fraction_expr.subs({
+        mass_of_component: mass_of_component_,
+        mass_of_mixture: mass_of_mixture_
+    })
+    return Quantity(result_expr)
