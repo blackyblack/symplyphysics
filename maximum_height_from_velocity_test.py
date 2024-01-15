@@ -14,7 +14,7 @@ from symplyphysics.laws.kinematic import maximum_height_from_velocity as maximum
 
 @fixture(name="test_args")
 def test_args_fixture():
-     v = Quantity(10 * units.meter / units.second)
+    v = Quantity(10 * units.meter / units.second)
     Args = namedtuple("Args", ["v"])
     return Args(v=v)
 
