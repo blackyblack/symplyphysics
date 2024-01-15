@@ -18,7 +18,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 maximum_height = Symbol("maximum_height", units.length)
 initial_velocity = Symbol("initial_velocity", units.velocity)
 
-law = Eq(maximum_height, initial_velocity**2 /(2*units.acceleration_due_to_gravity))
+law = Eq(maximum_height, initial_velocity**2 / (2 * units.acceleration_due_to_gravity))
 
 
 def print_law() -> str:
