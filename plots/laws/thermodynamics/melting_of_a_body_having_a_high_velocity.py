@@ -94,7 +94,7 @@ koefficient_of_melting_meteorite_to_plots = answer.subs({
 
 base_plot = plot(title="The proportion of a molten meteorite depending on its velocity",
     xlabel=r"$v, m/s$",
-    ylabel=r"$molten_ratio$",
+    ylabel=r"$molten ratio$",
     backend=MatplotlibBackend,
     legend=True,
     show=False)
