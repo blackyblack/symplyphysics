@@ -30,21 +30,28 @@ temperature_of_vaporization_water = Symbol("temperature_of_vaporization_water")
 
 time = Symbol("time")
 
-mass_gas_integral = dsolve(mass_rate_law.definition, mass_rate_law.mass(mass_rate_law.time))
+# We take the ignition of an alcohol burner as the initial moment of time.
+# Then, at the initial moment of time, the mass of the burnt alcohol is zero.
+# The constant C1, which occurs during integration, corresponds exactly to the mass of burnt alcohol at time t=0
+mass_flow_rate_constant = Symbol("mass_flow_rate_constant", constant=True)
+mass_flow_rate_constant_equation = mass_rate_law.definition.subs({
+    mass_rate_law.mass_flow_rate(mass_rate_law.time): mass_flow_rate_constant
+})
+mass_gas_integral = dsolve(mass_flow_rate_constant_equation, mass_rate_law.mass(mass_rate_law.time))
 mass_of_gas_equation = mass_gas_integral.subs({
     "C1": 0,
+    mass_flow_rate_constant: mass_rate_alcohol
 }).doit()
 
 mass_of_alcohol_in_start_equation = mass_of_gas_equation.subs({
     mass_rate_law.mass(mass_rate_law.time): mass_of_alcohol,
     mass_rate_law.time: time_of_minute,
-    mass_rate_law.mass_flow_rate(mass_rate_law.time): mass_rate_alcohol
 }).doit()
 mass_flow_rate_in_start_value = solve(mass_of_alcohol_in_start_equation, mass_rate_alcohol,
     dict=True)[0][mass_rate_alcohol]
 
 mass_of_alcohol_value = mass_of_gas_equation.subs({
-    mass_rate_law.mass_flow_rate(mass_rate_law.time): mass_flow_rate_in_start_value,
+    mass_rate_alcohol: mass_flow_rate_in_start_value,
     mass_rate_law.time: time,
 }).doit().rhs
 
