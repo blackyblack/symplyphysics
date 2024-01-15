@@ -3,11 +3,9 @@ from pytest import approx, fixture, raises
 from symplyphysics import (
     errors,
     units,
-    convert_to,
     Quantity,
-    SI, dimensionless,
 )
-from symplyphysics.definitions import mass_fraction_of_the_solute as mass_fraction_law
+from symplyphysics.definitions import mass_fraction as mass_fraction_law
 
 
 @fixture(name="test_args")
@@ -20,9 +18,7 @@ def test_args_fixture():
 
 def test_basic_mass_fraction(test_args):
     result = mass_fraction_law.calculate_mass_fraction(test_args.m_i, test_args.m)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, dimensionless)
-    result_mass_fraction = convert_to(result, mass_fraction_law.definition_units_SI).evalf(4)
-    assert result_mass_fraction == approx(0.3333, 0.01)
+    assert result == approx(0.3333, 0.01)
 
 
 def test_bad_mass_of_component(test_args):
