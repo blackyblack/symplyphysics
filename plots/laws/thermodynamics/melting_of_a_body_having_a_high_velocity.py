@@ -10,7 +10,7 @@ from symplyphysics.laws.thermodynamics import energy_to_melt_from_mass as energy
 from symplyphysics.laws.conservation import mechanical_energy_after_equals_to_mechanical_energy_before as energy_conservation_law
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_velocity as kinetic_energy_law
 
-matters_parametrs = {
+matter_parametrs = {
     "Fe": {
         "specific_heat_heating": 460,
         "specific_heat_melting": 270_000,
