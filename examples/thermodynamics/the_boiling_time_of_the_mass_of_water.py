@@ -82,7 +82,7 @@ efficiency_equation = efficiency_law.law.subs({
 time_of_vaporization = solve(efficiency_equation, time,
     dict=True)[0][time]
 answer = Eq(time, time_of_vaporization)
-print(f"Total equation:\n{print_expression(time_of_vaporization)}")
+print(f"Total equation:\n{print_expression(answer)}")
 
 time_of_vaporization_s = time_of_vaporization.subs({
     efficiency: Quantity(60 * units.percents),
