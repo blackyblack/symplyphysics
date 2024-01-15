@@ -3,6 +3,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, Function, 
     validate_output)
 
 # Description
+## The mass is constant in a system that is closed, and mass is not transformed to energy
 
 # Law: dm/dt = 0
 ## Where:
