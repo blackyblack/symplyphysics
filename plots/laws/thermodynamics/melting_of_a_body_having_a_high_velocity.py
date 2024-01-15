@@ -14,37 +14,37 @@ matters_parametrs = {
     "Fe": {
         "specific_heat_heating": 460,
         "specific_heat_melting": 270_000,
-        "temperature_of_melting": to_kelvin(Celsius(1_400)),
+        "temperature_of_melting": 1_400,
     },
     "W": {
         "specific_heat_heating": 134,
         "specific_heat_melting": 184_000,
-        "temperature_of_melting": to_kelvin(Celsius(3_422)),
+        "temperature_of_melting": 3_422,
     },
     "Al": {
         "specific_heat_heating": 897,
         "specific_heat_melting": 393_000,
-        "temperature_of_melting": to_kelvin(Celsius(660)),
+        "temperature_of_melting": 660,
     },
     "Si": {     # silicon/silicium
         "specific_heat_heating": 714,
         "specific_heat_melting": 1_409_000,
-        "temperature_of_melting": to_kelvin(Celsius(1_415)),
+        "temperature_of_melting": 1_415,
     },
     "Cu": {
         "specific_heat_heating": 383,
         "specific_heat_melting": 213_000,
-        "temperature_of_melting": to_kelvin(Celsius(1_083.4)),
+        "temperature_of_melting": 1_083.4,
     },
     "Au": {
         "specific_heat_heating": 129,
         "specific_heat_melting": 67_000,
-        "temperature_of_melting": to_kelvin(Celsius(1_063)),
+        "temperature_of_melting": 1_063,
     },
     "Zn": {
         "specific_heat_heating": 400,
         "specific_heat_melting": 117_000,
-        "temperature_of_melting": to_kelvin(Celsius(415)),
+        "temperature_of_melting": 415,
     }
 }
 
@@ -94,32 +94,32 @@ koefficient_of_melting_meteorite_to_plots = answer.subs({
 
 base_plot = plot(title="The proportion of a molten meteorite depending on its velocity",
     xlabel=r"$v, m/s$",
-    ylabel=r"$m_{melt-meteorite} / m_{meteorite}$",
+    ylabel=r"$molten_ratio$",
     backend=MatplotlibBackend,
     legend=True,
     show=False)
 
-masses_ratio_supremum = 1
-masses_ratio_minimum = 0
-for matter in matters_parametrs:
+MASSES_RATIO_MAXIMUM = 1
+MASSES_RATIO_MINIMUM = 0
+for matter, parameters in matters_parametrs.items():
     masses_ratio_to_subplot = koefficient_of_melting_meteorite_to_plots.subs({
-        specific_heat_heating_meteorite: matters_parametrs[matter]["specific_heat_heating"],
-        specific_heat_melting_meteorite: matters_parametrs[matter]["specific_heat_melting"],
-        temperature_of_meteorite_melting: matters_parametrs[matter]["temperature_of_melting"],
+        specific_heat_heating_meteorite: parameters["specific_heat_heating"],   # joules / kilogram
+        specific_heat_melting_meteorite: parameters["specific_heat_melting"],   # joules / kilogram
+        temperature_of_meteorite_melting: to_kelvin(Celsius(parameters["temperature_of_melting"]))
     })
     # First solve is negative value. Ignore it.
     masses_ratio_supremum_equation = masses_ratio_to_subplot.subs({
-        koefficient_of_melting_meteorite: masses_ratio_supremum
+        koefficient_of_melting_meteorite: MASSES_RATIO_MAXIMUM
     })
-    velocity_supremum = solve(masses_ratio_supremum_equation, velocity_of_meteorite,
+    velocity_maximum = solve(masses_ratio_supremum_equation, velocity_of_meteorite,
         dict=True)[-1][velocity_of_meteorite]
     masses_ratio_minimum_equation = masses_ratio_to_subplot.subs({
-        koefficient_of_melting_meteorite: masses_ratio_minimum
+        koefficient_of_melting_meteorite: MASSES_RATIO_MINIMUM
     })
     velocity_minimum = solve(masses_ratio_minimum_equation, velocity_of_meteorite,
         dict=True)[-1][velocity_of_meteorite]
 
-    subplot = plot(masses_ratio_to_subplot.rhs, (velocity_of_meteorite, velocity_minimum, velocity_supremum),
+    subplot = plot(masses_ratio_to_subplot.rhs, (velocity_of_meteorite, velocity_minimum, velocity_maximum),
                    label=f"Material of meteorite is {matter}",
                    show=False)
     base_plot.append(subplot[0])
