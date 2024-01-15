@@ -1,6 +1,7 @@
 from sympy import (Eq, solve, S)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
     validate_output, dimensionless, convert_to)
+from symplyphysics.core.symbols.fraction import Fraction
 
 # Description
 ## The mass fraction is the ratio of the mass of the mixture to the total mass of the mixture
@@ -26,11 +27,11 @@ def print_law() -> str:
 @validate_input(mass_of_component_=mass_of_component, mass_of_mixture_=mass_of_mixture)
 @validate_output(mass_fraction)
 def calculate_mass_fraction(mass_of_component_: Quantity,
-    mass_of_mixture_: Quantity) -> float:
+    mass_of_mixture_: Quantity) -> Fraction:
     result_mass_fraction_expr = solve(definition, mass_fraction, dict=True)[0][mass_fraction]
     result_expr = result_mass_fraction_expr.subs({
         mass_of_component: mass_of_component_,
         mass_of_mixture: mass_of_mixture_
     })
     result = Quantity(result_expr)
-    return float(convert_to(result, S.One).evalf())
+    return Fraction(convert_to(result, S.One).evalf())

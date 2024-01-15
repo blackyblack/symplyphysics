@@ -29,7 +29,7 @@ def test_bad_mass_of_component(test_args):
         mass_fraction_law.calculate_mass_fraction(100, test_args.m)
 
 
-def test_bad_mass_of_solute(test_args):
+def test_bad_mass_of_mixture(test_args):
     mb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         mass_fraction_law.calculate_mass_fraction(test_args.m_i, mb)
