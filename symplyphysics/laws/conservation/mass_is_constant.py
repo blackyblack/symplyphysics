@@ -21,7 +21,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, Function, 
 ## of the constant value is zero.
 
 time = Symbol("time", units.time)
-mass = Function("mechanical_energy", units.mass)
+mass = Function("mass", units.mass)
 
 law = Eq(Derivative(mass(time), time), 0)
 
