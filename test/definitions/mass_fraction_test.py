@@ -21,6 +21,13 @@ def test_basic_mass_fraction(test_args):
     assert result == approx(0.3333, 0.01)
 
 
+def test_bad_mass_fraction(test_args):
+    with raises(AttributeError):
+        mass_fraction_law.calculate_mass_fraction(test_args.m, test_args.m_i)
+    with raises(AttributeError):
+        mass_fraction_law.calculate_mass_fraction((-1) * test_args.m_i, test_args.m)
+
+
 def test_bad_mass_of_component(test_args):
     mb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
