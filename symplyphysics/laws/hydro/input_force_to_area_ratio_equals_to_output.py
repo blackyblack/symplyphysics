@@ -1,6 +1,8 @@
 from sympy import (Eq, solve)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
                            validate_output)
+from symplyphysics.laws.hydro import pressure_from_force_and_area as pressure_law
+from symplyphysics.core.expr_comparisons import expr_equals
 
 # Description
 ## If both vertically positioned cylinders of communicating vessels are closed with pistons, then with the help of external forces applied to the pistons,
@@ -14,12 +16,6 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## S1 is the area of the first piston
 ## S2 is the area of the second piston
 
-## Proof
-## The pressure that piston number one creates is equal to: p1 = F1 / S1
-## The pressure of the second piston on the liquid is: p2 = F2 / S2
-## If the pistons are in equilibrium, then the pressures p1 and p2 are equal, therefore, we can equate the right-hand sides of the expressions
-## ==> F1 / S1 = F2 / S2
-
 
 ## Conditions
 ## This ratio is performed only in an ideal hydraulic press, i.e. one in which there is no friction.
@@ -31,6 +27,21 @@ output_force = Symbol("output_force", units.force)
 output_forces_area = Symbol("output_forces_area", units.area)
 
 law = Eq(input_force / input_area, output_force / output_forces_area)
+
+pressure_input = pressure_law.law.rhs.subs({
+    pressure_law.force: input_force,
+    pressure_law.area: input_area
+})
+
+## If the pistons are in equilibrium, then the pressures pressure_input and pressure_output are equal
+pressure_output = pressure_law.law.subs({
+    pressure_law.force: output_force,
+    pressure_law.area: output_forces_area,
+    pressure_law.pressure: pressure_input
+})
+
+assert expr_equals(pressure_output.rhs, law.rhs)
+assert expr_equals(pressure_output.lhs, law.lhs)
 
 
 def print_law() -> str:
@@ -46,5 +57,5 @@ def calculate_output_force(input_force_: Quantity, input_area_, output_forces_ar
         input_area: input_area_,
         output_forces_area: output_forces_area_,
     })
-
+    print(result_force)
     return Quantity(result_force)
