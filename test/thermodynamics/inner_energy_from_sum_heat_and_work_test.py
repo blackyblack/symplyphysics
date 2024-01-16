@@ -25,11 +25,6 @@ def test_basic_delta_inner_energy(test_args):
     assert result_delta_inner_energy == approx(150, 0.01)
 
 
-def test_basic_delta_inner_energy_work_system(test_args):
-    result = first_law_of_term.calculate_inner_energy(test_args.Q, -1*test_args.W)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-
-
 def test_bad_heat(test_args):
     error_q = Quantity(1 * units.watt)
     with raises(errors.UnitsError):

@@ -14,7 +14,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 # Q is the heat supplied to the system.
 # If the work is done by the system, and not by external
 # forces, then the formula is used:
-# dU=Q-A
+# Q=dU+A
 # where A is gas work.
 
 heat = Symbol("heat", units.energy)
