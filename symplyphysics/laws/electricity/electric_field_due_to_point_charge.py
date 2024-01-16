@@ -25,7 +25,7 @@ electric_field = Symbol("electric_field", units.force / units.charge)
 point_charge = Symbol("point_charge", units.charge)
 distance = Symbol("distance", units.length)
 
-law = Eq(electric_field, units.coulomb_constant * Abs(point_charge) / distance**2)
+law = Eq(electric_field, units.coulomb_constant * point_charge / distance**2)
 
 
 # Derive this law from Coulomb's law and the definition of electric field
