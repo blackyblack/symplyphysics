@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
     SI,
 )
-from symplyphysics.laws.electricity import electric_field_is_force_over_test_charge as electric_field
+from symplyphysics.laws.electricity import electric_field_magnitude_is_force_over_test_charge as electric_field
 
 # The electric field is 6 N/C if the force exerted on the test charge of 0.5 C is 3 N.
 
