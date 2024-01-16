@@ -28,6 +28,7 @@ def test_basic_height(test_args):
 
 def test_bad_velocity(test_args):
     vb = Quantity(1 * units.coulomb)
+    
     with raises(errors.UnitsError):
        maximum_height_law.calculate_height(vb)
   
