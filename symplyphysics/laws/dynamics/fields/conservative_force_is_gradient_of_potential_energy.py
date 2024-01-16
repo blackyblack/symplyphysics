@@ -1,4 +1,4 @@
-from symplyphysics import Vector
+from symplyphysics import Vector, scale_vector
 from symplyphysics.core.fields.scalar_field import ScalarField
 from symplyphysics.core.fields.vector_field import VectorField
 from symplyphysics.core.fields.operators import gradient_operator
@@ -16,10 +16,7 @@ from symplyphysics.core.fields.operators import gradient_operator
 ## U - scalar field of its potential
 ## grad - gradient operator
 
-def law(potential_: ScalarField) -> VectorField:
-    gradient_field = gradient_operator(potential_).apply_to_basis()
-    result_vector = Vector(
-        [-component for component in gradient_field.components],
-        gradient_field.coordinate_system
-    )
-    return VectorField.from_vector(result_vector)
+def law(potential_: ScalarField) -> Vector:
+    gradient_vector = gradient_operator(potential_)
+    result_force_vector = scale_vector(-1, gradient_vector)
+    return result_force_vector
