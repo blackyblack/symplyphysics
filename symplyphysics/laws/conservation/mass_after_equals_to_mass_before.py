@@ -6,7 +6,7 @@ from symplyphysics.laws.conservation import mass_is_constant
 
 # Description
 ## The total mass of the closed system is preserved.
-## For more information, see [mass_is_constant](./mass_is_constant.py ).
+## For more information, see [mass_is_constant](./mass_is_constant.py).
 
 # Law: m(t1) = m(t0)
 ## Where:
@@ -16,7 +16,7 @@ from symplyphysics.laws.conservation import mass_is_constant
 
 time_before = Symbol("time_before", units.time)
 time_after = Symbol("time_after", units.time)
-mass = Function("mas", units.mass)
+mass = Function("mass", units.mass)
 
 law = Eq(mass(time_after), mass(time_before))
 
@@ -27,18 +27,18 @@ dsolved = dsolve(
     mass_is_constant.law,
     mass_is_constant.mass(mass_is_constant.time))
 
-energy_before_eq = dsolved.subs(mass_is_constant.time, time_before)
-energy_before_eq = energy_before_eq.subs(
+mass_before_eq = dsolved.subs(mass_is_constant.time, time_before)
+mass_before_eq = mass_before_eq.subs(
     mass_is_constant.mass(time_before), mass(time_before))
-energy_after_eq = dsolved.subs(mass_is_constant.time, time_after)
-energy_after_eq = energy_after_eq.subs(mass_is_constant.mass(time_after),
+mass_after_eq = dsolved.subs(mass_is_constant.time, time_after)
+mass_after_eq = mass_after_eq.subs(mass_is_constant.mass(time_after),
     mass(time_after))
 
 ## Show that when mass is constant, mass_before equals to mass_after
-energy_after_solved = solve([energy_after_eq, energy_before_eq],
+mass_after_solved = solve([mass_after_eq, mass_before_eq],
     (mass(time_after), "C1"),
     dict=True)[0][mass(time_after)]
-assert expr_equals(energy_after_solved, law.rhs)
+assert expr_equals(mass_after_solved, law.rhs)
 
 
 def print_law() -> str:
