@@ -29,47 +29,53 @@ def test_basic_gradient(test_args):
     field = ScalarField(
         lambda point: point.x**2 + point.y**2 - point.z**2
     )
-    result_field = gradient_operator(field)
-    result_vector = result_field.apply_to_basis()
-    x = field.coordinate_system.coord_system.base_scalars()[0]
-    y = field.coordinate_system.coord_system.base_scalars()[1]
-    z = field.coordinate_system.coord_system.base_scalars()[2]
-    for i, expr in enumerate([2 * x, 2 * y, - 2 * z]):
-        assert expr_equals(result_vector.components[i], expr)
+    result_vector = gradient_operator(field)
+
+    x, y, z = field.coordinate_system.coord_system.base_scalars()
+    correct_result = [2 * x, 2 * y, -2 * z]
+
+    for result_component, correct_component in zip(result_vector.components, correct_result):
+        assert expr_equals(result_component, correct_component)
 
 
 def test_cylindrical_gradient(test_args):
-    # verify that in cylindrical coordinates the result is same
     C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
 
     def field_function(p: CylinderPoint) -> ScalarValue:
-        return p.r ** 2 - p.z ** 2
+        return p.r ** 2 + p.r * p.z * sin(p.theta) - p.z ** 2
 
     cylindrical_field = ScalarField(field_function, C1)
-    result_cylindrical_field = gradient_operator(cylindrical_field)
-    result_cylindrical_vector = result_cylindrical_field.apply_to_basis()
+    result_cylindrical_vector = gradient_operator(cylindrical_field)
 
-    r = cylindrical_field.coordinate_system.coord_system.base_scalars()[0]
-    z = cylindrical_field.coordinate_system.coord_system.base_scalars()[2]
-    for i, expr in enumerate([2 * r, 0, - 2 * z]):
-        assert expr_equals(result_cylindrical_vector.components[i], expr)
+    r, theta, z = cylindrical_field.coordinate_system.coord_system.base_scalars()
+    correct_result = [
+        2 * r + z * sin(theta), 
+        z * cos(theta), 
+        -2 * z + r * sin(theta),
+    ]
+    
+    for result_component, correct_component in zip(result_cylindrical_vector.components, correct_result):
+        assert expr_equals(result_component, correct_component)
 
 
 def test_spherical_gradient(test_args):
-    # verify that in spherical coordinates the result is the same
     C1 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
 
     def field_function(p: SpherePoint) -> ScalarValue:
-        return - p.r**2 * cos(2 * p.theta)
+        return - p.r**2 * cos(2 * p.phi + p.theta)
 
     spherical_field = ScalarField(field_function, C1)
-    result_spherical_field = gradient_operator(spherical_field)
-    result_spherical_vector = result_spherical_field.apply_to_basis()
+    result_spherical_vector = gradient_operator(spherical_field)
 
-    r = spherical_field.coordinate_system.coord_system.base_scalars()[0]
-    theta = spherical_field.coordinate_system.coord_system.base_scalars()[1]
-    for i, expr in enumerate([-2 * r * cos(2 * theta), 2 * r * sin(2 * theta), 0]):
-        assert expr_equals(result_spherical_vector.components[i], expr)
+    r, theta, phi = spherical_field.coordinate_system.coord_system.base_scalars()
+    correct_result = [
+        -2 * r * cos(2*phi + theta),
+        r * sin(2*phi + theta) / sin(phi),
+        2 * r * sin(2*phi + theta),
+    ]
+
+    for result_component, correct_component in zip(result_spherical_vector.components, correct_result):
+        assert expr_equals(result_component, correct_component)
 
 
 def test_basic_divergence(test_args):

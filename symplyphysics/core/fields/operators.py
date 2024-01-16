@@ -31,12 +31,12 @@ def gradient_operator(field: ScalarField) -> Vector:
         return gradient
     if field.coordinate_system.coord_system_type == CoordinateSystem.System.SPHERICAL:
         r = field.coordinate_system.coord_system.base_scalars()[0]
-        phi = field.coordinate_system.coord_system.base_scalars()[1]
-        theta = field.coordinate_system.coord_system.base_scalars()[2]
+        theta = field.coordinate_system.coord_system.base_scalars()[1]
+        phi = field.coordinate_system.coord_system.base_scalars()[2]
         gradient = Vector([
             diff(field_space, r),
-            diff(field_space, phi) / (r * sin(theta)),
-            diff(field_space, theta) / r,
+            diff(field_space, theta) / (r * sin(phi)),
+            diff(field_space, phi) / r,
         ], field.coordinate_system)
         return gradient
     raise ValueError(f"Unsupported coordinate system: {field.coordinate_system}")
