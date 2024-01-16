@@ -37,20 +37,11 @@ def test_bad_pressue(test_args):
 
 
 def test_bad_volume(test_args):
-    Vb = Quantity(1 * units.coulomb)
+    vb = Quantity(1 * units.coulomb)
+    vb2 = Quantity(2 * units.coulomb)
     with raises(errors.UnitsError):
         work_done_by_gas_in_isobaric_process.calculate_work(
-            test_args.p, Vb, test_args.v_2)
+            test_args.p, vb, vb2)
     with raises(errors.UnitsError):
         work_done_by_gas_in_isobaric_process.calculate_work(
-            test_args.p, 20, test_args.v_2)
-
-
-def test_bad_volume2(test_args):
-    Vb = Quantity(1 * units.coulomb)
-    with raises(errors.UnitsError):
-        work_done_by_gas_in_isobaric_process.calculate_work(
-            test_args.p, test_args.v_1, Vb)
-    with raises(errors.UnitsError):
-        work_done_by_gas_in_isobaric_process.calculate_work(
-            test_args.p, test_args.v_1, 20)
+            test_args.p, 20, 30)
