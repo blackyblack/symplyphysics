@@ -108,11 +108,11 @@ for matter, parameters in matter_parameters.items():
         temperature_of_meteorite_melting: to_kelvin(Celsius(parameters["temperature_of_melting"])),
     })
     # First solve is negative value. Ignore it.
-    masses_ratio_supremum_equation = masses_ratio_to_subplot.subs({
+    masses_ratio_maximum_equation = masses_ratio_to_subplot.subs({
         koefficient_of_melting_meteorite: MASSES_RATIO_MAXIMUM
     })
-    velocity_maximum = solve(masses_ratio_supremum_equation, velocity_of_meteorite,
-        dict=True)[-1][velocity_of_meteorite]
+    velocity_maximum = solve(masses_ratio_maximum_equation, velocity_of_meteorite,
+                             dict=True)[-1][velocity_of_meteorite]
     masses_ratio_minimum_equation = masses_ratio_to_subplot.subs({
         koefficient_of_melting_meteorite: MASSES_RATIO_MINIMUM
     })
