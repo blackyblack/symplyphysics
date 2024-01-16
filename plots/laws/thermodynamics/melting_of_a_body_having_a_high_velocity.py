@@ -101,11 +101,11 @@ base_plot = plot(title="The proportion of a molten meteorite depending on its ve
 
 MASSES_RATIO_MAXIMUM = 1
 MASSES_RATIO_MINIMUM = 0
-for matter, parameters in matter_parametrs.items():
+for matter, parameters in matter_parameters.items():
     masses_ratio_to_subplot = koefficient_of_melting_meteorite_to_plots.subs({
-        specific_heat_heating_meteorite: dict(parameters)["specific_heat_heating"],   # joules / (kilogram * kelvin)
-        specific_heat_melting_meteorite: dict(parameters)["specific_heat_melting"],   # joules / kilogram
-        temperature_of_meteorite_melting: to_kelvin(Celsius(dict(parameters)["temperature_of_melting"]))
+        specific_heat_heating_meteorite: parameters["specific_heat_heating"],   # joules / (kilogram * kelvin)
+        specific_heat_melting_meteorite: parameters["specific_heat_melting"],   # joules / kilogram
+        temperature_of_meteorite_melting: to_kelvin(Celsius(parameters["temperature_of_melting"])),
     })
     # First solve is negative value. Ignore it.
     masses_ratio_supremum_equation = masses_ratio_to_subplot.subs({
