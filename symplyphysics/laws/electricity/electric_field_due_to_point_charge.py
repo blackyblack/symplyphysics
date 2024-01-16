@@ -7,6 +7,9 @@ from symplyphysics import (
     validate_input,
     validate_output,
 )
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.electricity import force_from_charge_and_distance as coulombs_law
+from symplyphysics.laws.electricity import electric_field_magnitude_is_force_over_test_charge as electric_field_def
 
 # Description
 ## The magnitude of the electric field set up by a point charge is linearly proportional 
@@ -15,7 +18,7 @@ from symplyphysics import (
 # Law: E = k_e * |q| / r^2
 ## E - magnitude of electric field
 ## k_e - Coulomb's constant
-## q - charge of point charge
+## q - point charge
 ## r - distance to point charge
 
 electric_field = Symbol("electric_field", units.force / units.charge)
@@ -23,6 +26,29 @@ point_charge = Symbol("point_charge", units.charge)
 distance = Symbol("distance", units.length)
 
 law = Eq(electric_field, units.coulomb_constant * Abs(point_charge) / distance**2)
+
+
+# Derive this law from Coulomb's law and the definition of electric field
+
+test_charge = Symbol("test_charge", units.charge)
+
+# Plugging in absolute values of charges because we are interested in
+# the magnitude of the force and electric field
+coulombs_law_sub = coulombs_law.law.subs({
+    coulombs_law.first_charge: Abs(point_charge),
+    coulombs_law.second_charge: Abs(test_charge),
+    coulombs_law.distance: distance,
+})
+force = solve(coulombs_law_sub, coulombs_law.force)[0]
+
+electric_field_def_sub = electric_field_def.law.subs({
+    electric_field_def.electrostatic_force: force,
+    electric_field_def.test_charge: Abs(test_charge),
+})
+electric_field_derived = solve(electric_field_def_sub, electric_field_def.electric_field)[0]
+electric_field_from_law = solve(law, electric_field)[0]
+
+assert expr_equals(electric_field_from_law, electric_field_derived)
 
 
 def print_law() -> str:
