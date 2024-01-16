@@ -3,6 +3,11 @@ from pytest import approx, fixture, raises
 from symplyphysics import errors, units, convert_to, Quantity, SI
 from symplyphysics.laws.hydro import inner_friction_is_proportional_to_velocity_gradient as newtons_law
 
+# Description
+## Water (dynamic viscosity of which is 8.9e-4 Pa*s) is flowing steadily on top of a flat solid plate.
+## At the site of contact with the plate its speed is 0, and at the top it is 0.1 m/s. The flow is 5 cm thick.
+## Assert that the shear stress in the water amounts to 1.78e-3 Pa.
+
 
 @fixture(name="test_args")
 def test_args_fixture():
@@ -10,14 +15,12 @@ def test_args_fixture():
     speed_before = Quantity(0 * units.meter / units.second)
     speed_after = Quantity(0.1 * units.meter / units.second)
     layer_separation = Quantity(5 * units.centimeter)
-    layer_area = Quantity(30 * units.centimeter**2)
-    Args = namedtuple("Args", "dynamic_viscosity speed_before speed_after layer_separation layer_area")
+    Args = namedtuple("Args", "dynamic_viscosity speed_before speed_after layer_separation")
     return Args(
         dynamic_viscosity=dynamic_viscosity,
         speed_before=speed_before,
         speed_after=speed_after,
         layer_separation=layer_separation,
-        layer_area=layer_area,
     )
 
 
@@ -27,11 +30,10 @@ def test_basic_law(test_args):
         test_args.speed_before,
         test_args.speed_after,
         test_args.layer_separation,
-        test_args.layer_area,
     )
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
-    result_force = convert_to(result, units.newton).evalf(6)
-    assert result_force == approx(5.34e-6, 1e-6)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.pressure)
+    result_stress = convert_to(result, units.pascal).evalf(3)
+    assert result_stress == approx(1.78e-3, 1e-3)
 
 
 def test_bad_dynamic_viscosity(test_args):
@@ -42,7 +44,6 @@ def test_bad_dynamic_viscosity(test_args):
             test_args.speed_before,
             test_args.speed_after,
             test_args.layer_separation,
-            test_args.layer_area,
         )
     with raises(TypeError):
         newtons_law.calculate_inner_friction(
@@ -50,7 +51,6 @@ def test_bad_dynamic_viscosity(test_args):
             test_args.speed_before,
             test_args.speed_after,
             test_args.layer_separation,
-            test_args.layer_area,
         )
 
 
@@ -62,7 +62,6 @@ def test_bad_fluid_speed(test_args):
             bad_fluid_speed,
             test_args.speed_after,
             test_args.layer_separation,
-            test_args.layer_area,
         )
     with raises(TypeError):
         newtons_law.calculate_inner_friction(
@@ -70,7 +69,6 @@ def test_bad_fluid_speed(test_args):
             100,
             test_args.speed_after,
             test_args.layer_separation,
-            test_args.layer_area,
         )
     with raises(errors.UnitsError):
         newtons_law.calculate_inner_friction(
@@ -78,7 +76,6 @@ def test_bad_fluid_speed(test_args):
             test_args.speed_before,
             bad_fluid_speed,
             test_args.layer_separation,
-            test_args.layer_area,
         )
     with raises(TypeError):
         newtons_law.calculate_inner_friction(
@@ -86,7 +83,6 @@ def test_bad_fluid_speed(test_args):
             test_args.speed_before,
             100,
             test_args.layer_separation,
-            test_args.layer_area,
         )
 
 
@@ -98,33 +94,11 @@ def test_bad_layer_separation(test_args):
             test_args.speed_before,
             test_args.speed_after,
             bad_layer_separation,
-            test_args.layer_area,
         )
     with raises(TypeError):
         newtons_law.calculate_inner_friction(
             test_args.dynamic_viscosity,
             test_args.speed_before,
             test_args.speed_after,
-            100,
-            test_args.layer_area,
-        )
-
-
-def test_bad_layer_area(test_args):
-    bad_layer_area = Quantity(1 * units.second)
-    with raises(errors.UnitsError):
-        newtons_law.calculate_inner_friction(
-            test_args.dynamic_viscosity,
-            test_args.speed_before,
-            test_args.speed_after,
-            test_args.layer_separation,
-            bad_layer_area,
-        )
-    with raises(TypeError):
-        newtons_law.calculate_inner_friction(
-            test_args.dynamic_viscosity,
-            test_args.speed_before,
-            test_args.speed_after,
-            test_args.layer_separation,
             100,
         )
