@@ -2,8 +2,8 @@ from symplyphysics import Symbol, units, validate_input, validate_output, Quanti
 from symplyphysics.core.vectors.vectors import QuantityVector, Vector
 
 # Description
-## The electic field E  is defined at any point in terms of the electrostatic force F
-## that would be exerted on a test charge q0 placed there:
+## The electic field E is defined at any point in terms of the electrostatic force F 
+## that would be exerted on a test charge q0 placed there.
 
 # Definition: E = F / q0
 ## E - electic field
@@ -13,7 +13,7 @@ from symplyphysics.core.vectors.vectors import QuantityVector, Vector
 test_charge = Symbol("test_charge", units.charge)
 
 
-def electric_field_definition(electrostatic_force_: Vector) -> Vector:
+def electric_field_law(electrostatic_force_: Vector) -> Vector:
     return scale_vector(1 / test_charge, electrostatic_force_)
 
 
@@ -24,7 +24,7 @@ def electrostatic_force_law(electric_field_: Vector) -> Vector:
 @validate_input(electrostatic_force_=units.force, test_charge_=test_charge)
 @validate_output(units.force / units.charge)
 def calculate_electric_field(electrostatic_force_: QuantityVector, test_charge_: Quantity) -> QuantityVector:
-    result_electric_field = electric_field_definition(electrostatic_force_)
+    result_electric_field = electric_field_law(electrostatic_force_)
     electric_field_components = list_of_quantities(
         result_electric_field.components, 
         {test_charge: test_charge_}
