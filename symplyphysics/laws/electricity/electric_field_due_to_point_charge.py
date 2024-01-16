@@ -9,14 +9,14 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity import force_from_charge_and_distance as coulombs_law
-from symplyphysics.laws.electricity import electric_field_magnitude_is_force_over_test_charge as electric_field_def
+from symplyphysics.laws.electricity import electric_field_value_is_force_over_test_charge as electric_field_def
 
 # Description
-## The magnitude of the electric field set up by a point charge is linearly proportional 
-## to the absolute value of the charge and the square inverse of the distance to it.
+## The value of the electric field set up by a point charge is linearly proportional 
+## to the value of the charge and the square inverse of the distance to it.
 
-# Law: E = k_e * |q| / r^2
-## E - magnitude of electric field
+# Law: E = k_e * q / r^2
+## E - value of the electric field, which has the same sign as the charge producing it
 ## k_e - Coulomb's constant
 ## q - point charge
 ## r - distance to point charge
@@ -32,21 +32,19 @@ law = Eq(electric_field, units.coulomb_constant * Abs(point_charge) / distance**
 
 test_charge = Symbol("test_charge", units.charge)
 
-# Plugging in absolute values of charges because we are interested in
-# the magnitude of the force and electric field
 coulombs_law_sub = coulombs_law.law.subs({
-    coulombs_law.first_charge: Abs(point_charge),
-    coulombs_law.second_charge: Abs(test_charge),
+    coulombs_law.first_charge: point_charge,
+    coulombs_law.second_charge: test_charge,
     coulombs_law.distance: distance,
 })
 force = solve(coulombs_law_sub, coulombs_law.force)[0]
 
 electric_field_def_sub = electric_field_def.law.subs({
     electric_field_def.electrostatic_force: force,
-    electric_field_def.test_charge: Abs(test_charge),
+    electric_field_def.test_charge: test_charge,
 })
 electric_field_derived = solve(electric_field_def_sub, electric_field_def.electric_field)[0]
-electric_field_from_law = solve(law, electric_field)[0]
+electric_field_from_law = law.rhs
 
 assert expr_equals(electric_field_from_law, electric_field_derived)
 

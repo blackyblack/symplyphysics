@@ -2,12 +2,12 @@ from symplyphysics import Symbol, units, validate_input, validate_output, Quanti
 from symplyphysics.core.vectors.vectors import QuantityVector, Vector
 
 # Description
-## The electic field E is defined at any point in terms of the electrostatic force F 
+## The electric field E is defined at any point in terms of the electrostatic force F 
 ## that would be exerted on a test charge q0 placed there.
 
 # Definition: E = F / q0
-## E - electic field
-## F - electrostatic force
+## E - electric field vector
+## F - electrostatic force vector
 ## q0 - test charge
 
 test_charge = Symbol("test_charge", units.charge)
