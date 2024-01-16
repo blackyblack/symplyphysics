@@ -12,7 +12,7 @@ from symplyphysics import (
 
 # Law: E = F / q0
 ## E - electric field
-## F - electorstatic force
+## F - electrostatic force
 ## q0 - test_charge
 
 electric_field = Symbol("electric_field", units.force / units.charge)
