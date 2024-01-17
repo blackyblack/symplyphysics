@@ -18,7 +18,6 @@ def print_law() -> str:
 
 @validate_input(initial_velocity_=initial_velocity)
 @validate_output(maximum_height)
-
 def calculate_maximum_height (initial_velocity_: Quantity) -> Quantity:
     result_maximum_height = solve(law, maximum_height, dict=True)[0][maximum_height]
     result_expr = result_maximum_height.subs({initial_velocity: initial_velocity_})
