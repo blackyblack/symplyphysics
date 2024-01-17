@@ -14,11 +14,11 @@ from symplyphysics import (
 
 # Law: q = n*e
 ## q - electric charge
-## n - an integer factor
+## n - an integer factor (from the set of whole numbers, i.e. positive, zero, or negative)
 ## e - elementary charge
 
 charge = Symbol("charge", units.charge)
-integer_factor = Symbol("factor", dimensionless)
+integer_factor = Symbol("factor", dimensionless)  # positive, zero or negative
 
 law = Eq(charge, integer_factor * units.elementary_charge)
 
