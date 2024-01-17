@@ -14,7 +14,7 @@ from symplyphysics import (
 ## to the dipole and the value of the dipole moment.
 
 # Law:
-## E = k_e * p / z^3
+## E = 2 * k_e * p / z^3
 ## E - value of electric field of dipole
 ## k_e - Coulomb's constant
 ## p = ql - value of the dipole moment
@@ -27,7 +27,7 @@ electric_field = Symbol("electric_field", units.force / units.charge)
 dipole_moment = Symbol("dipole_moment", units.charge * units.length)
 distance_to_dipole = Symbol("distance_to_dipole", units.length)
 
-law = Eq(electric_field, units.coulomb_constant * dipole_moment / distance_to_dipole**3)
+law = Eq(electric_field, 2 * units.coulomb_constant * dipole_moment / distance_to_dipole**3)
 
 
 def print_law() -> str:

@@ -10,13 +10,13 @@ from symplyphysics import (
 from symplyphysics.laws.electricity import electric_field_due_to_dipole as dipole_field
 
 # Description
-## A dipole of a magnitude of 1e-10 C*m produces an electric field of a magnitude of 0.899 V/m
+## A dipole of a magnitude of 0.5e-10 C*m produces an electric field of a magnitude of 0.899 V/m
 ## at a distance of 1 m.
 
 
 @fixture(name="test_args")
 def test_args_fixture():
-    p = Quantity(1e-10 * units.coulomb * units.meter)
+    p = Quantity(0.5e-10 * units.coulomb * units.meter)
     z = Quantity(1 * units.meter)
     Args = namedtuple("Args", "p z")
     return Args(p=p, z=z)
