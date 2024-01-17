@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from sympy import solve
 from symplyphysics import Quantity, Symbol, units, convert_to, print_expression
 from symplyphysics.laws.electricity import electric_field_value_is_force_over_test_charge as electric_field_law
