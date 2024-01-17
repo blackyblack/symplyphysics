@@ -1,4 +1,4 @@
-from sympy import Eq, Derivative
+from sympy import Eq, Derivative, solve
 from symplyphysics import units, Quantity, Symbol, Function, print_expression, validate_input, validate_output
 
 # Description
@@ -42,7 +42,7 @@ def print_law() -> str:
     layer_separation_=layer_position,
 )
 @validate_output(shear_stress)
-def calculate_inner_friction(
+def calculate_shear_stress(
     dynamic_viscosity_: Quantity,
     fluid_speed_before_: Quantity,
     fluid_speed_after_: Quantity,
@@ -53,6 +53,5 @@ def calculate_inner_friction(
         dynamic_viscosity: dynamic_viscosity_,
         fluid_speed(layer_position): fluid_speed_function,
     })
-    dsolved = applied_law.doit()
-    result_expr = dsolved.rhs
+    result_expr = solve(applied_law, shear_stress)[0]
     return Quantity(result_expr)
