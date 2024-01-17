@@ -16,6 +16,9 @@ from symplyphysics.core.fields.operators import gradient_operator
 ## U - scalar field of its potential
 ## grad - gradient operator
 
+# Conditions
+## - Force is conservative (see definition above)
+
 def law(potential_: ScalarField) -> Vector:
     gradient_vector = gradient_operator(potential_)
     result_force_vector = scale_vector(-1, gradient_vector)
