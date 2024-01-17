@@ -37,7 +37,7 @@ def print_law() -> str:
 
 @validate_input(relative_permittivity_=relative_permittivity, electric_intensity_=electric_intensity)
 @validate_output(energy_density)
-def calculate_energy_density(relative_permittivity_: Quantity, electric_intensity_: Quantity) -> Quantity:
+def calculate_energy_density(relative_permittivity_: float, electric_intensity_: Quantity) -> Quantity:
     result_expr = solve(law, energy_density, dict=True)[0][energy_density]
     result_expr = result_expr.subs({
         relative_permittivity: relative_permittivity_,
