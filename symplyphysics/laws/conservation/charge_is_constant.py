@@ -1,4 +1,4 @@
-from sympy import Eq, dsolve, Derivative
+from sympy import Eq, solve, dsolve, Derivative
 from symplyphysics import (
     Symbol,
     Function,
@@ -33,5 +33,8 @@ def print_law() -> str:
 @validate_output(total_charge)
 def calculate_charge_after(total_charge_before_: Quantity) -> Quantity:
     dsolved = dsolve(law, total_charge(time))
-    result_charge = dsolved.subs("C1", total_charge_before_).rhs
+    dsolved_sub_before = dsolved.subs(total_charge(time), total_charge_before_)
+    C1 = solve(dsolved_sub_before, "C1")[0]
+    dsolved_sub_after = dsolved.subs("C1", C1)
+    result_charge = dsolved_sub_after.rhs
     return Quantity(result_charge)
