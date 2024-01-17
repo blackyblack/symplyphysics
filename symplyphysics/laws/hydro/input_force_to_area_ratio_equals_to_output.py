@@ -1,8 +1,9 @@
-from sympy import (Eq, solve)
+from sympy import (Eq, solve, dsolve)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
                            validate_output)
 from symplyphysics.laws.hydro import pressure_from_force_and_area as pressure_law
 from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.hydro import inner_pressure_of_fluid_is_constant as constant_pressure_law
 
 # Description
 ## If both vertically positioned cylinders of communicating vessels are closed with pistons, then with the help of external forces applied to the pistons,
@@ -33,15 +34,17 @@ pressure_input = pressure_law.law.rhs.subs({
     pressure_law.area: input_area
 })
 
-## If the pistons are in equilibrium, then the pressures pressure_input and pressure_output are equal
-pressure_output = pressure_law.law.subs({
+pressure_output = pressure_law.law.rhs.subs({
     pressure_law.force: output_force,
     pressure_law.area: output_forces_area,
-    pressure_law.pressure: pressure_input
 })
 
-assert expr_equals(pressure_output.rhs, law.rhs)
-assert expr_equals(pressure_output.lhs, law.lhs)
+## If the pistons are in equilibrium, then the pressures pressure_input and pressure_output are equal
+dsolved = dsolve(constant_pressure_law.law, constant_pressure_law.inner_pressure(constant_pressure_law.time))
+dsolved_input = dsolved.subs(constant_pressure_law.inner_pressure(constant_pressure_law.time), pressure_input)
+dsolved_output = dsolved.subs(constant_pressure_law.inner_pressure(constant_pressure_law.time), pressure_output)
+solved_input = solve([dsolved_input, dsolved_output], (pressure_input, "C1"), dict=True)[0][pressure_input]
+pressure_equation = Eq(pressure_input, solved_input)
 
 
 def print_law() -> str:
@@ -57,5 +60,4 @@ def calculate_output_force(input_force_: Quantity, input_area_, output_forces_ar
         input_area: input_area_,
         output_forces_area: output_forces_area_,
     })
-    print(result_force)
     return Quantity(result_force)
