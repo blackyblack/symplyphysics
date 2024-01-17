@@ -46,6 +46,10 @@ dsolved_output = dsolved.subs(constant_pressure_law.inner_pressure(constant_pres
 solved_input = solve([dsolved_input, dsolved_output], (pressure_input, "C1"), dict=True)[0][pressure_input]
 pressure_equation = Eq(pressure_input, solved_input)
 
+assert expr_equals(law.rhs, pressure_equation.rhs)
+assert expr_equals(law.lhs, pressure_equation.lhs)
+
+
 
 def print_law() -> str:
     return print_expression(law)
