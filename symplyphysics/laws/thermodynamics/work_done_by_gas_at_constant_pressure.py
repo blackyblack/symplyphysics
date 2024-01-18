@@ -3,12 +3,14 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
                            validate_output)
 
 # Description
-# Common formula for work done by gas is A = ∫p * dV, where
-# A is work done,
+# When energy is added to gas molecules and increases their kinetic energy,
+# the gas expands and does work on its surroundings. The work done by the gas
+# with constant pressure can be found by: A = p * ΔV, where
+# ΔV is the change in the volume of the gas,
 # p is pressure,
-# dV is change in volume.
-# For process with constant pressure the equation can be transformed to
-# A = p * (V2 - V1), where
+# A is work done.
+# When the volume of a gas changes from to V1 to V2, the change
+# in the volume of the gas is ΔV = V2 - V1
 # V1 is initial volume,
 # V2 is resulting volume,
 # p is pressure,

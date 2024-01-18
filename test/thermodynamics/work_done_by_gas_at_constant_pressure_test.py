@@ -42,16 +42,13 @@ def test_bad_volume(test_args):
     with raises(errors.UnitsError):
         work_done_by_gas_at_constant_pressure.calculate_work(
             test_args.p, vb, test_args.v_2)
+    with raises(errors.UnitsError):
+        work_done_by_gas_at_constant_pressure.calculate_work(
+            test_args.p, test_args.v_1, vb)
     with raises(TypeError):
         work_done_by_gas_at_constant_pressure.calculate_work(
             test_args.p, 20, test_args.v_2)
-
-
-def test_bad_volume2(test_args):
-    vb2 = Quantity(2 * units.coulomb)
-    with raises(errors.UnitsError):
-        work_done_by_gas_at_constant_pressure.calculate_work(
-            test_args.p, test_args.v_1, vb2)
     with raises(TypeError):
         work_done_by_gas_at_constant_pressure.calculate_work(
-            test_args.p, test_args.v_1, 30)
+            test_args.p, test_args.v_1, 20)
+
