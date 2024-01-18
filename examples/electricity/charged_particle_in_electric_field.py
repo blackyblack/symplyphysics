@@ -28,7 +28,7 @@ values = {
     electric_field_magnitude: Quantity(1.1e6 * units.newton / units.coulomb),
 }
 
-electric_field_vector = Vector([0, -electric_field_magnitude, 0])
+electric_field_vector = Vector([0, -1 * electric_field_magnitude, 0])
 electrostatic_force_vector = electric_field_law.electrostatic_force_law(electric_field_vector)
 electrostatic_force_y_expr = electrostatic_force_vector.components[1]
 electrostatic_force_y = (
