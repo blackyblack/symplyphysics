@@ -31,7 +31,7 @@ def print_law() -> str:
 
 @validate_input(body_volume_=body_volume, body_density_=body_density, liquid_density_=liquid_density)
 @validate_output(submerged_volume)
-def calculate_volume(body_volume_: Quantity, body_density_, liquid_density_: Quantity) -> Quantity:
+def calculate_submerged_volume(body_volume_: Quantity, body_density_, liquid_density_: Quantity) -> Quantity:
     result_expr = solve(law, submerged_volume, dict=True)[0][submerged_volume]
     result_volume = result_expr.subs({
         body_volume: body_volume_,
