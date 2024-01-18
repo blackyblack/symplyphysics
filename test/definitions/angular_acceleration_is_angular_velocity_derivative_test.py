@@ -12,8 +12,8 @@ from symplyphysics import (
 from symplyphysics.definitions import angular_acceleration_is_angular_velocity_derivative as angular_acceleration_def
 
 # Description
-## Assume object starts rotating with some angular velocity. After 5 seconds it rotates to 180 degrees.
-## Velocity should be pi/5 radian/sec.
+## Suppose that the object starts rotating with some angular acceleration. After 5 seconds, it rotates at 180 degrees per second.
+## Acceleration should be pi/5 radians/sec^2.
 
 
 @fixture(name="test_args")
