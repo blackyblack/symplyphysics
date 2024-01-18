@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from sympy import  symbols, plot
+from sympy import symbols, plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression, units
 from symplyphysics.laws.electricity import electric_field_due_to_point_charge as electric_field
@@ -40,7 +40,7 @@ plot_of_total_field = plot(
     label="total field",
     line_color="blue",
     xlabel="x, m",
-    ylabel="E, V/m",
+    ylabel="E, N/C",
     ylim=(-3e6, 3e6),
     legend=True,
     backend=MatplotlibBackend,
