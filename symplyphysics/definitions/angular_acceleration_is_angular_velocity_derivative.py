@@ -30,8 +30,8 @@ def print_law() -> str:
 def calculate_angular_acceleration(angular_velocity_start_: Quantity,
     angular_velocity_end_: Quantity, moving_time_: Quantity) -> Quantity:
     #HACK: SymPy angles are always in radians
-    angle_acceleration_ = time * (angular_velocity_end_ - angular_velocity_start_) / moving_time_
-    applied_definition = definition.subs(angle_acceleration_(time), angle_acceleration_)
+    angular_acceleration_ = time * (angular_velocity_end_ - angular_velocity_start_) / moving_time_
+    applied_definition = definition.subs(angular_acceleration(time), angular_acceleration_)
     dsolved = applied_definition.doit()
     result_expr = dsolved.rhs
     return Quantity(result_expr)
