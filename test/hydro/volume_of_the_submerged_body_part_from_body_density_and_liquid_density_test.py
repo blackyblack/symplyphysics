@@ -10,8 +10,8 @@ from symplyphysics import (
 
 from symplyphysics.laws.hydro import volume_of_the_submerged_body_part_from_body_density_and_liquid_density as submerged
 
-## If the density of the body is greater than the density of the liquid, then the volume of the submerged part of the body will be greater than the part of the body on the surface, since gravity is greater than the Archimedes force.
-## then the volume of the submerged part of the body will be greater than the part of the body on the surface, since gravity is greater than the Archimedes force.
+## If the density of the submerged body part is greater than the density of the liquid in which it is immersed,
+## then the submerged body part will occupy a larger volume than the volume of the body itself, since it will displace the liquid in order to stay afloat.
 
 @fixture(name="test_args")
 def test_args_fixture():
