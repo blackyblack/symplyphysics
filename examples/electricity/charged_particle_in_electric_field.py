@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from sympy import solve, symbols
-from symplyphysics import print_expression, Vector
+from symplyphysics import print_expression, Vector, Quantity, units, convert_to
 from symplyphysics.laws.electricity.vector import electric_field_is_force_over_test_charge as electric_field_law
 from symplyphysics.laws.dynamics import acceleration_from_force
 from symplyphysics.laws.kinematic import constant_acceleration_movement_is_parabolic as const_acceleration_law
@@ -21,11 +21,11 @@ plate_length_x = symbols("plate_length_x")
 electric_field_magnitude = symbols("electric_field_magnitude")
 
 values = {
-    drop_mass: 1.5e-10,  # kg
-    drop_charge: 2.8e-13,  # C
-    drop_speed_x: 20,  # m/s
-    plate_length_x: 1.6e-2,  # m
-    electric_field_magnitude: 1.1e6,  # N/C
+    drop_mass: Quantity(1.5e-7 * units.gram),
+    drop_charge: Quantity(-2.8e-13 * units.coulomb),
+    drop_speed_x: Quantity(20 * units.meter / units.second),
+    plate_length_x: Quantity(1.6e-2 * units.meter),
+    electric_field_magnitude: Quantity(1.1e6 * units.newton / units.coulomb),
 }
 
 electric_field_vector = Vector([0, -electric_field_magnitude, 0])
@@ -34,7 +34,7 @@ electrostatic_force_y_expr = electrostatic_force_vector.components[1]
 electrostatic_force_y = (
     electrostatic_force_y_expr
     if isinstance(electrostatic_force_y_expr, float)
-    else electrostatic_force_y_expr.subs(electric_field_law.test_charge, -drop_charge)
+    else electrostatic_force_y_expr.subs(electric_field_law.test_charge, drop_charge)
 )
 
 drop_acceleration_y = solve(
@@ -67,8 +67,8 @@ vertical_deflection = solve(
     dict=True
 )[0][const_acceleration_law.distance(movement_time)]
 
-vertical_deflection_value = vertical_deflection.subs(values)
-vertical_deflection_value_in_mm = 1e3 * vertical_deflection_value
+vertical_deflection_expr = Quantity(vertical_deflection.subs(values))
+vertical_deflection_value = convert_to(vertical_deflection_expr, units.millimeter).evalf(3)
 
 print(f"Result expression for vertical deflection:\n{print_expression(vertical_deflection)}\n")
-print(f"The vertical deflection of the drop is {vertical_deflection_value_in_mm.evalf(3)} mm.")
+print(f"The vertical deflection of the drop is {vertical_deflection_value} mm.")
