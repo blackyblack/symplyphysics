@@ -16,22 +16,23 @@ from symplyphysics import (
 ## no sense to say that some part of this energy belongs to one of the charges.
 
 ## Law is: W = q1 * q2 / (4 * pi  * e0 * e * r), where
-## W -energy of interaction of charges,
+## W - energy of interaction of charges,
 ## q1 - first charge,
 ## q2 - second charge,
 ## e0 - electric constant,
+## e - relative permittivity of medium,
 ## r - distance between charges.
 
 energy = Symbol("energy", units.energy)
 
 relative_permittivity = Symbol("relative_permittivity", dimensionless)
 distance = Symbol("distance", units.length)
-charge_1 = Symbol("charge_electron", units.charge)
-charge_2 = Symbol("charge_electron", units.charge)
+charge_1 = Symbol("charge_1", units.charge)
+charge_2 = Symbol("charge_2", units.charge)
 
 law = Eq(
     energy,
-    charge_1 * charge_1 / (4 * pi * electric_constant * relative_permittivity * distance))
+    charge_1 * charge_2 / (4 * pi * electric_constant * relative_permittivity * distance))
 
 
 def print_law() -> str:

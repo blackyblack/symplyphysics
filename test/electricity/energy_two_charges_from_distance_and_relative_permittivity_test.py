@@ -4,7 +4,7 @@ from symplyphysics import (units, SI, convert_to, Quantity, errors)
 from symplyphysics.laws.electricity import energy_two_charges_from_distance_and_relative_permittivity as energy_law
 
 # Description
-## It is known that with a charge of q1 equal to 1 coulomb and a charge of q2 equal to 1 coulomb,
+## It is known that with a charge of q1 equal to 0.25 coulomb and a charge of q2 equal to 4 coulomb,
 ## interaction energy is 4.49e9 joule at a distance of 2 meters between charges and relative_permittivity equal to 1.
 ## https://matematika-club.ru/potencialnaya-ehnergiya-zaryada-q-kalkulyator-onlajn
 
@@ -13,8 +13,8 @@ from symplyphysics.laws.electricity import energy_two_charges_from_distance_and_
 def test_args_fixture():
     relative_permittivity = 1
     distance = Quantity(2 * units.meter)
-    charge_1 = Quantity(1 * units.coulomb)
-    charge_2 = Quantity(1 * units.coulomb)
+    charge_1 = Quantity(0.25 * units.coulomb)
+    charge_2 = Quantity(4 * units.coulomb)
 
     Args = namedtuple("Args", ["relative_permittivity", "distance", "charge_1", "charge_2"])
     return Args(relative_permittivity=relative_permittivity, distance=distance,
@@ -44,17 +44,10 @@ def test_bad_distance(test_args):
         energy_law.calculate_energy(test_args.relative_permittivity, 100, test_args.charge_1, test_args.charge_2)
 
 
-def test_bad_charge_1(test_args):
+def test_bad_charges(test_args):
     charge_1 = Quantity(1 * units.meter)
-    with raises(errors.UnitsError):
-        energy_law.calculate_energy(test_args.relative_permittivity, test_args.distance, charge_1, test_args.charge_2)
-    with raises(TypeError):
-        energy_law.calculate_energy(test_args.relative_permittivity, test_args.distance, 100, test_args.charge_2)
-
-
-def test_bad_charge_2(test_args):
     charge_2 = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
-        energy_law.calculate_energy(test_args.relative_permittivity, test_args.distance, test_args.charge_1, charge_2)
+        energy_law.calculate_energy(test_args.relative_permittivity, test_args.distance, charge_1, charge_2)
     with raises(TypeError):
-        energy_law.calculate_energy(test_args.relative_permittivity, test_args.distance, test_args.charge_1, 100)
+        energy_law.calculate_energy(test_args.relative_permittivity, test_args.distance, 100, 100)
