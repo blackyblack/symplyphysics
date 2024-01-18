@@ -2,11 +2,10 @@
 
 from sympy import solve, symbols
 from symplyphysics import print_expression, Vector
-# from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
-# from symplyphysics.core.vectors.vectors import Vector
 from symplyphysics.laws.electricity.vector import electric_field_is_force_over_test_charge as electric_field_law
 from symplyphysics.laws.dynamics import acceleration_from_force
-from symplyphysics.laws.kinematic import constant_acceleration_movement_is_parabolic as acceleration_law
+from symplyphysics.laws.kinematic import constant_acceleration_movement_is_parabolic as const_acceleration_law
+from symplyphysics.laws.kinematic import distance_from_constant_velocity as const_velocity_law
 
 # Description
 ## A charged drop with a mass of m = 1.5e-7 g and a negative charge of magnitude Q = 2.8e-13 C enters
@@ -46,23 +45,27 @@ drop_acceleration_y = solve(
     acceleration_from_force.mass: drop_mass,
 })
 
+movement_time = symbols("movement_time")
+
 # Since no forces act on the drop along the x axis, the projection of the acceleration on it is zero
-horizontal_movement_law = acceleration_law.law.subs({
-    acceleration_law.constant_acceleration: 0,
-    acceleration_law.initial_velocity: drop_speed_x,
-    acceleration_law.distance(acceleration_law.movement_time): plate_length_x,
+horizontal_movement_law = const_velocity_law.law.subs({
+    const_velocity_law.constant_velocity: drop_speed_x,
+    const_velocity_law.initial_position: 0,
+    const_velocity_law.distance(const_velocity_law.movement_time): plate_length_x,
+    const_velocity_law.movement_time: movement_time,
 })
 
-vertical_movement_law = acceleration_law.law.subs({
-    acceleration_law.constant_acceleration: drop_acceleration_y,
-    acceleration_law.initial_velocity: 0,
+vertical_movement_law = const_acceleration_law.law.subs({
+    const_acceleration_law.constant_acceleration: drop_acceleration_y,
+    const_acceleration_law.initial_velocity: 0,
+    const_acceleration_law.movement_time: movement_time,
 })
 
 vertical_deflection = solve(
     [horizontal_movement_law, vertical_movement_law],
-    (acceleration_law.movement_time, acceleration_law.distance(acceleration_law.movement_time)),
+    (movement_time, const_acceleration_law.distance(movement_time)),
     dict=True
-)[0][acceleration_law.distance(acceleration_law.movement_time)]
+)[0][const_acceleration_law.distance(movement_time)]
 
 vertical_deflection_value = vertical_deflection.subs(values)
 vertical_deflection_value_in_mm = 1e3 * vertical_deflection_value
