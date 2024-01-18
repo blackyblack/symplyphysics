@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 
 from sympy import solve, symbols
-from symplyphysics import print_expression
-from symplyphysics.laws.electricity import electric_field_value_is_force_over_test_charge as electric_field_law
+from symplyphysics import print_expression, Vector, list_of_quantities
+# from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
+# from symplyphysics.core.vectors.vectors import Vector
+from symplyphysics.laws.electricity.vector import electric_field_is_force_over_test_charge as electric_field_law
 from symplyphysics.laws.dynamics import acceleration_from_force
 from symplyphysics.laws.kinematic import constant_acceleration_movement_is_parabolic as acceleration_law
 
@@ -27,16 +29,9 @@ values = {
     electric_field_magnitude: 1.1e6,  # N/C
 }
 
-# The vector equation E = F/q can be rewritten as F = Eq. Taking the projection of the electrostatic force
-# along the y axis, we find that |F| = (-|E|)*(-Q) = |E| * Q, thus the electrostatic force exerted on the
-# drop is oriented in the positive direction of the y axis.
-electrostatic_force_y = solve(
-    electric_field_law.law, 
-    electric_field_law.electrostatic_force
-)[0].subs({
-    electric_field_law.electric_field: electric_field_magnitude,
-    electric_field_law.test_charge: drop_charge,
-})
+electric_field_vector = Vector([0, -electric_field_magnitude, 0])
+electrostatic_force_vector = electric_field_law.electrostatic_force_law(electric_field_vector)
+electrostatic_force_y = electrostatic_force_vector.components[1].subs(electric_field_law.test_charge, -drop_charge)
 
 drop_acceleration_y = solve(
     acceleration_from_force.law,
