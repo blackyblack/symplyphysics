@@ -10,6 +10,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity import electric_field_due_to_point_charge as point_field
+from symplyphysics.laws.electricity import electric_dipole_moment
 
 # Description
 ## The value of the electric field set up by a dipole at a distant point on the dipole axis 
@@ -68,8 +69,20 @@ net_field_approx = series(net_field_sub, factor, 0, 2).removeO()
 # Substitute distance_to_origin back into the net_field formula
 net_field_approx_sub = net_field_approx.subs(factor, distance_between_charges / distance_to_origin)
 
-# Substitute charge*distance_between_charges with dipole_moment
-net_field_derived = net_field_approx_sub.subs(charge * distance_between_charges, dipole_moment)
+# Replace charge*distance_between_charges back with dipole_moment
+net_field_derived = solve(
+    [
+        Eq(electric_field, net_field_approx_sub),
+        electric_dipole_moment.law.subs({
+            electric_dipole_moment.electric_moment: dipole_moment,
+            electric_dipole_moment.charge: charge,
+            electric_dipole_moment.distance: distance_between_charges,
+        }),
+    ],
+    (charge, electric_field),
+    dict=True,
+)[0][electric_field]
+
 net_field_from_law = law.rhs.subs(distance_to_dipole, distance_to_origin)
 
 assert expr_equals(net_field_from_law, net_field_derived)

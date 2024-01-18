@@ -10,7 +10,7 @@ from symplyphysics import (
 from symplyphysics.laws.electricity import electric_field_due_to_dipole as dipole_field
 
 # Description
-## A dipole of a magnitude of 0.5e-10 C*m produces an electric field of a magnitude of 0.899 V/m
+## A dipole of a magnitude of 0.5e-10 C*m produces an electric field of a magnitude of 0.899 N/C
 ## at a distance of 1 m.
 
 
