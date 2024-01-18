@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-from sympy import solve
-from symplyphysics import Quantity, Symbol, units, convert_to, print_expression
+from sympy import solve, symbols
+from symplyphysics import print_expression
 from symplyphysics.laws.electricity import electric_field_value_is_force_over_test_charge as electric_field_law
 from symplyphysics.laws.dynamics import acceleration_from_force
 from symplyphysics.laws.kinematic import constant_acceleration_movement_is_parabolic as acceleration_law
@@ -15,18 +15,16 @@ from symplyphysics.laws.kinematic import constant_acceleration_movement_is_parab
 ## deflection of the drop at the far edge of the plates? Neglect the gravitational force on the drop
 ## since the drop is small enough that the electrostatic force prevails over the gravitational one.
 
-drop_mass = Symbol("drop_mass", units.mass)
-drop_charge = Symbol("drop_charge", units.charge)
-drop_speed_x = Symbol("drop_speed_x", units.velocity)
-plate_length_x = Symbol("plate_length_x", units.length)
-electric_field_magnitude = Symbol("electric_field_magnitude", units.force / units.charge)
+drop_mass, drop_charge, drop_speed_x = symbols("drop_mass drop_charge drop_speed_x")
+plate_length_x = symbols("plate_length_x")
+electric_field_magnitude = symbols("electric_field_magnitude")
 
 values = {
-    drop_mass: Quantity(1.5e-7 * units.gram),
-    drop_charge: Quantity(2.8e-13 * units.coulomb),
-    drop_speed_x: Quantity(20 * units.meter / units.second),
-    plate_length_x: Quantity(1.6 * units.centimeter),
-    electric_field_magnitude: Quantity(1.1e6 * units.newton / units.coulomb),
+    drop_mass: 1.5e-10,  # kg
+    drop_charge: 2.8e-13,  # C
+    drop_speed_x: 20,  # m/s
+    plate_length_x: 1.6e-2,  # m
+    electric_field_magnitude: 1.1e6,  # N/C
 }
 
 # The vector equation E = F/q can be rewritten as F = Eq. Taking the projection of the electrostatic force
@@ -66,8 +64,8 @@ vertical_deflection = solve(
     dict=True
 )[0][acceleration_law.distance(acceleration_law.movement_time)]
 
-vertical_deflection_sub = Quantity(vertical_deflection.subs(values))
-vertical_deflection_value = convert_to(vertical_deflection_sub, units.millimeter).evalf(3)
+vertical_deflection_value = vertical_deflection.subs(values)
+vertical_deflection_value_in_mm = 1e3 * vertical_deflection_value
 
 print(f"Result expression for vertical deflection:\n{print_expression(vertical_deflection)}\n")
-print(f"The vertical deflection of the drop is {vertical_deflection_value} mm.")
+print(f"The vertical deflection of the drop is {vertical_deflection_value_in_mm.evalf(3)} mm.")
