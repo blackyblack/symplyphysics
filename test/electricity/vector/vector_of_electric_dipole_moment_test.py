@@ -23,8 +23,8 @@ def test_args_fixture():
         Quantity(-1.0 * units.meter),
         Quantity(0.5 * units.meter),    
     ])
-    Args = namedtuple("Args", "q l p")
-    return Args(q=q, l=l, p=p)
+    Args = namedtuple("Args", "q l")
+    return Args(q=q, l=l)
 
 
 def test_basic_law(test_args):
