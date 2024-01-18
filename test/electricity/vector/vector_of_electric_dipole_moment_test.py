@@ -23,11 +23,6 @@ def test_args_fixture():
         Quantity(-1.0 * units.meter),
         Quantity(0.5 * units.meter),    
     ])
-    p = QuantityVector([
-        Quantity(2e-13 * units.coulomb * units.meter),
-        Quantity(-2e-13 * units.coulomb * units.meter),
-        Quantity(1e-13 * units.coulomb * units.meter),
-    ])
     Args = namedtuple("Args", "q l p")
     return Args(q=q, l=l, p=p)
 
@@ -36,9 +31,9 @@ def test_basic_law(test_args):
     result = dipole_moment.calculate_dipole_moment(test_args.q, test_args.l)
     assert len(result.components) == 3
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.charge * units.length)
-    for result_component, correct_component in zip(result.components, test_args.p.components):
+    correct_values = [2e-13, -2e-13, 1e-13]
+    for result_component, correct_value in zip(result.components, correct_values):
         result_value = convert_to(result_component, units.coulomb * units.meter).evalf(2)
-        correct_value = convert_to(correct_component, units.coulomb * units.meter).evalf(2)
         assert result_value == approx(correct_value, 1e-2)
 
 
