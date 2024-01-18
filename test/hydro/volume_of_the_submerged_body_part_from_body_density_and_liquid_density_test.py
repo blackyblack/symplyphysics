@@ -10,13 +10,11 @@ from symplyphysics import (
 
 from symplyphysics.laws.hydro import volume_of_the_submerged_body_part_from_body_density_and_liquid_density as submerged
 
-## If the density of the submerged body part is greater than the density of the liquid in which it is immersed,
-## then the submerged body part will occupy a larger volume than the volume of the body itself, since it will displace the liquid in order to stay afloat.
 
 @fixture(name="test_args")
 def test_args_fixture():
-    body_volume = Quantity(0.04 * units.meter**3)
-    body_density = Quantity(2600 * units.kilogram / units.meter**3)
+    body_volume = Quantity(12 * units.meter**3)
+    body_density = Quantity(500 * units.kilogram / units.meter**3)
     liquid_density = Quantity(1000 * units.kilogram / units.meter**3)
     Args = namedtuple("Args", ["body_volume", "body_density", "liquid_density"])
     return Args(
@@ -30,7 +28,7 @@ def test_basic_volume(test_args):
     result = submerged.calculate_submerged_volume(test_args.body_volume, test_args.body_density, test_args.liquid_density)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.volume)
     result_volume = convert_to(result, units.meter**3).evalf(5)
-    assert result_volume == approx(0.104, 0.001)
+    assert result_volume == approx(6, 0.001)
 
 
 def test_bad_density(test_args):

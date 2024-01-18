@@ -14,6 +14,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 
 ## Conditions
 ## The body is immersed in only one liquid.
+## Gravity should be equal to the force of Archimedes.
 
 
 submerged_volume = Symbol("submerged_volume", units.volume)
