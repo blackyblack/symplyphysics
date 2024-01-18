@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from sympy import solve, symbols
-from symplyphysics import print_expression, Vector, list_of_quantities
+from symplyphysics import print_expression, Vector
 # from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
 # from symplyphysics.core.vectors.vectors import Vector
 from symplyphysics.laws.electricity.vector import electric_field_is_force_over_test_charge as electric_field_law
@@ -31,7 +31,12 @@ values = {
 
 electric_field_vector = Vector([0, -electric_field_magnitude, 0])
 electrostatic_force_vector = electric_field_law.electrostatic_force_law(electric_field_vector)
-electrostatic_force_y = electrostatic_force_vector.components[1].subs(electric_field_law.test_charge, -drop_charge)
+electrostatic_force_y_expr = electrostatic_force_vector.components[1]
+electrostatic_force_y = (
+    electrostatic_force_y_expr
+    if isinstance(electrostatic_force_y_expr, float)
+    else electrostatic_force_y_expr.subs(electric_field_law.test_charge, -drop_charge)
+)
 
 drop_acceleration_y = solve(
     acceleration_from_force.law,
