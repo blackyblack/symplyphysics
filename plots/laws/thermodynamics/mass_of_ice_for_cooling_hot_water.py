@@ -24,8 +24,7 @@ temperature_melt_ice = symbols("temperature_melt_ice")
 mass_of_ice = symbols("mass_of_ice")
 mass_of_hot_water = symbols("mass_of_hot_water")
 
-mass_of_all_water = solve(density_law.definition, density_law.mass,
-    dict=True)[0][density_law.mass]
+mass_of_all_water = solve(density_law.definition, density_law.mass, dict=True)[0][density_law.mass]
 
 # the mass of all the water filling the bath consists of the mass of hot water
 # that was in the bathroom initially, and the mass of water of melted ice
@@ -64,7 +63,8 @@ thermodinamics_law_1_equation = thermodinamics_law_1.law.subs({
     energy_to_melt_ice_equation.rhs, energy_to_heat_melted_ice_equation.rhs)
 }).doit()
 
-solve_system_equations = solve((thermodinamics_law_1_equation, mass_of_all_water_equation), (mass_of_ice, mass_of_hot_water))
+solve_system_equations = solve((thermodinamics_law_1_equation, mass_of_all_water_equation),
+    (mass_of_ice, mass_of_hot_water))
 mass_of_ice_solve_value = solve_system_equations[mass_of_ice]
 mass_of_hot_water_solve_value = solve_system_equations[mass_of_hot_water]
 
@@ -73,9 +73,9 @@ print(f"Total equation:\n{print_expression(Eq(mass_of_ice / mass_of_hot_water, m
 
 mass_ratio_to_plot = mass_ratio_value.subs({
     temperature_of_ice: to_kelvin(Celsius(-20)),
-    specific_heat_heating_water: 4200,      # joules / (kilogram * kelvin)
-    specific_heat_heating_ice: 2100,        # joules / (kilogram * kelvin)
-    specific_heat_melting_ice: 330_000,     # 1 kilojoules / kilogram = 10^3 joules / kilogram
+    specific_heat_heating_water: 4200,  # joules / (kilogram * kelvin)
+    specific_heat_heating_ice: 2100,  # joules / (kilogram * kelvin)
+    specific_heat_melting_ice: 330_000,  # 1 kilojoules / kilogram = 10^3 joules / kilogram
     temperature_melt_ice: to_kelvin(Celsius(0))
 })
 
@@ -87,16 +87,17 @@ base_plot = plot(title="The mass of ice required to cool the hot water to a set 
     show=False)
 
 for temperature_of_hot_water_value in temperature_of_hot_water_values:
-    mass_ratio_to_subplot = mass_ratio_to_plot.subs({
-        temperature_of_hot_water: to_kelvin(Celsius(temperature_of_hot_water_value))
-    })
+    mass_ratio_to_subplot = mass_ratio_to_plot.subs(
+        {temperature_of_hot_water: to_kelvin(Celsius(temperature_of_hot_water_value))})
 
     # Find the upper limit of the temperature scale, so as not to build a graph
     # on the temperature section where there will be a negative mass
-    temperature_supremum = solve(mass_ratio_to_subplot.subs({mass_of_ice: 0}), temperature_balance,
+    temperature_supremum = solve(mass_ratio_to_subplot.subs({mass_of_ice: 0}),
+        temperature_balance,
         dict=True)[0][temperature_balance]
 
-    subplot = plot(mass_ratio_to_subplot, (temperature_balance, to_kelvin(Celsius(0)), temperature_supremum),
+    subplot = plot(mass_ratio_to_subplot,
+        (temperature_balance, to_kelvin(Celsius(0)), temperature_supremum),
         label=r"$T_{hot-water}=" + f"{to_kelvin(Celsius(temperature_of_hot_water_value))}" + ", K$",
         show=False)
     base_plot.append(subplot[0])

@@ -33,13 +33,11 @@ electrostatic_force_vector = electric_field_law.electrostatic_force_law(electric
 electrostatic_force_y_expr = sympify(electrostatic_force_vector.components[1])
 electrostatic_force_y = electrostatic_force_y_expr.subs(electric_field_law.test_charge, drop_charge)
 
-drop_acceleration_y = solve(
-    acceleration_from_force.law,
-    acceleration_from_force.acceleration
-)[0].subs({
+drop_acceleration_y = solve(acceleration_from_force.law,
+    acceleration_from_force.acceleration)[0].subs({
     acceleration_from_force.force: electrostatic_force_y,
     acceleration_from_force.mass: drop_mass,
-})
+    })
 
 movement_time = symbols("movement_time")
 
@@ -57,11 +55,9 @@ vertical_movement_law = const_acceleration_law.law.subs({
     const_acceleration_law.movement_time: movement_time,
 })
 
-vertical_deflection = solve(
-    [horizontal_movement_law, vertical_movement_law],
+vertical_deflection = solve([horizontal_movement_law, vertical_movement_law],
     (movement_time, const_acceleration_law.distance(movement_time)),
-    dict=True
-)[0][const_acceleration_law.distance(movement_time)]
+    dict=True)[0][const_acceleration_law.distance(movement_time)]
 
 vertical_deflection_expr = Quantity(vertical_deflection.subs(values))
 vertical_deflection_value = convert_to(vertical_deflection_expr, units.millimeter).evalf(3)

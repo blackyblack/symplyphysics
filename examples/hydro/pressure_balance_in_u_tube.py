@@ -33,10 +33,8 @@ hydrostatic_pressure_left_arm_law = hydrostatic_pressure.law.subs({
     hydrostatic_pressure.density: oil_density,
     hydrostatic_pressure.depth: oil_column_height,
 })
-hydrostatic_pressure_left_arm = solve(
-    hydrostatic_pressure_left_arm_law,
-    hydrostatic_pressure.hydrostatic_pressure
-)[0]
+hydrostatic_pressure_left_arm = solve(hydrostatic_pressure_left_arm_law,
+    hydrostatic_pressure.hydrostatic_pressure)[0]
 
 inner_pressure_left_arm_law = inner_pressure.law.subs({
     inner_pressure.static_pressure: atmospheric_pressure,
@@ -51,10 +49,8 @@ hydrostatic_pressure_right_arm_law = hydrostatic_pressure.law.subs({
     hydrostatic_pressure.density: water_density,
     hydrostatic_pressure.depth: water_column_height,
 })
-hydrostatic_pressure_right_arm = solve(
-    hydrostatic_pressure_right_arm_law,
-    hydrostatic_pressure.hydrostatic_pressure
-)[0]
+hydrostatic_pressure_right_arm = solve(hydrostatic_pressure_right_arm_law,
+    hydrostatic_pressure.hydrostatic_pressure)[0]
 
 inner_pressure_right_arm_law = inner_pressure.law.subs({
     inner_pressure.static_pressure: atmospheric_pressure,
@@ -64,10 +60,14 @@ inner_pressure_right_arm_law = inner_pressure.law.subs({
 inner_pressure_right_arm = solve(inner_pressure_right_arm_law, inner_pressure.inner_pressure)[0]
 
 # Use Bernoulli's principle to equate the total pressure in both arms
-dsolved = dsolve(constant_pressure_law.law, constant_pressure_law.inner_pressure(constant_pressure_law.time))
-dsolved_left = dsolved.subs(constant_pressure_law.inner_pressure(constant_pressure_law.time), inner_pressure_left_arm)
-dsolved_right = dsolved.subs(constant_pressure_law.inner_pressure(constant_pressure_law.time), inner_pressure_right_arm)
-solved_left = solve([dsolved_left, dsolved_right], (inner_pressure_left_arm, "C1"), dict=True)[0][inner_pressure_left_arm]
+dsolved = dsolve(constant_pressure_law.law,
+    constant_pressure_law.inner_pressure(constant_pressure_law.time))
+dsolved_left = dsolved.subs(constant_pressure_law.inner_pressure(constant_pressure_law.time),
+    inner_pressure_left_arm)
+dsolved_right = dsolved.subs(constant_pressure_law.inner_pressure(constant_pressure_law.time),
+    inner_pressure_right_arm)
+solved_left = solve([dsolved_left, dsolved_right], (inner_pressure_left_arm, "C1"),
+    dict=True)[0][inner_pressure_left_arm]
 constant_pressure_eq = Eq(inner_pressure_left_arm, solved_left)
 
 oil_density_formula = solve(constant_pressure_eq, oil_density)[0]

@@ -12,6 +12,7 @@ from symplyphysics.laws.dynamics import maximum_height_from_velocity as maximum_
 # Description
 ## If a body is thrown vertically upwards at a speed of 10 m/s, it will rise to a height of  (10*10) /2*9,8 = 5.1 meters
 
+
 @fixture(name="test_args")
 def test_args_fixture():
     v = Quantity(10 * units.meter / units.second)
@@ -28,9 +29,9 @@ def test_basic_height(test_args):
 
 def test_bad_velocity():
     vb = Quantity(1 * units.coulomb)
-    
+
     with raises(errors.UnitsError):
-       maximum_height_law.calculate_maximum_height(vb)
-  
+        maximum_height_law.calculate_maximum_height(vb)
+
     with raises(TypeError):
-       maximum_height_law.calculate_maximum_height(100)
+        maximum_height_law.calculate_maximum_height(100)

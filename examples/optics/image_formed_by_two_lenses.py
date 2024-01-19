@@ -3,7 +3,7 @@
 from sympy import symbols, solve
 from symplyphysics.laws.optics import lens_focus_from_object_and_image as thin_lens
 
-# Two thin converging lenses of focal lengths 10 cm and 20 cm are separated by 20 cm. 
+# Two thin converging lenses of focal lengths 10 cm and 20 cm are separated by 20 cm.
 # An object is placed 15 cm to the left of lens 1. What is the position of the final image?
 
 focal_length_1, focal_length_2 = symbols("focal_length_1 focal_length_2")

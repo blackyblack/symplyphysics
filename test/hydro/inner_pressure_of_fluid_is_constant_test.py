@@ -24,7 +24,7 @@ def test_bernoullis_equation(test_args):
     assert result_pressure == approx(1, 1e-3)
 
 
-def test_bad_inner_pressure_before(test_args):
+def test_bad_inner_pressure_before():
     bad_inner_pressure_before = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         bernoullis_equation.calculate_inner_pressure(bad_inner_pressure_before)

@@ -1,13 +1,6 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-from symplyphysics import (
-    units,
-    SI,
-    dimensionless,
-    convert_to,
-    Quantity,
-    errors
-)
+from symplyphysics import (units, Quantity, errors)
 from symplyphysics.laws.nuclear import law_of_half_life as number_of_cores_law
 
 # Description
@@ -22,35 +15,42 @@ def test_args_fixture():
     decay_time = Quantity(90 * units.second)
 
     Args = namedtuple("Args", ["number_of_cores_initial", "half_life", "decay_time"])
-    return Args(
-        number_of_cores_initial=number_of_cores_initial,
-        half_life=half_life, decay_time=decay_time)
+    return Args(number_of_cores_initial=number_of_cores_initial,
+        half_life=half_life,
+        decay_time=decay_time)
 
 
 def test_basic_number_of_cores(test_args):
-    result = number_of_cores_law.calculate_number_of_cores(test_args.number_of_cores_initial, test_args.half_life, test_args.decay_time)
+    result = number_of_cores_law.calculate_number_of_cores(test_args.number_of_cores_initial,
+        test_args.half_life, test_args.decay_time)
     assert result == approx(1e30, rel=0.01)
 
 
 def test_bad_number_of_cores_initial(test_args):
     number_of_cores_initial = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        number_of_cores_law.calculate_number_of_cores(number_of_cores_initial, test_args.half_life, test_args.decay_time)
+        number_of_cores_law.calculate_number_of_cores(number_of_cores_initial, test_args.half_life,
+            test_args.decay_time)
     with raises(TypeError):
-        number_of_cores_law.calculate_number_of_cores(True, test_args.half_life, test_args.decay_time)
+        number_of_cores_law.calculate_number_of_cores(True, test_args.half_life,
+            test_args.decay_time)
 
 
 def test_bad_half_life(test_args):
     half_life = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        number_of_cores_law.calculate_number_of_cores(test_args.number_of_cores_initial, half_life, test_args.decay_time)
+        number_of_cores_law.calculate_number_of_cores(test_args.number_of_cores_initial, half_life,
+            test_args.decay_time)
     with raises(TypeError):
-        number_of_cores_law.calculate_number_of_cores(test_args.number_of_cores_initial, 100, test_args.decay_time)
+        number_of_cores_law.calculate_number_of_cores(test_args.number_of_cores_initial, 100,
+            test_args.decay_time)
 
 
 def test_bad_decay_time(test_args):
     decay_time = Quantity(1 * units.kelvin)
     with raises(errors.UnitsError):
-        number_of_cores_law.calculate_number_of_cores(test_args.number_of_cores_initial, test_args.half_life, decay_time)
+        number_of_cores_law.calculate_number_of_cores(test_args.number_of_cores_initial,
+            test_args.half_life, decay_time)
     with raises(TypeError):
-        number_of_cores_law.calculate_number_of_cores(test_args.number_of_cores_initial, test_args.half_life, 100)
+        number_of_cores_law.calculate_number_of_cores(test_args.number_of_cores_initial,
+            test_args.half_life, 100)

@@ -7,7 +7,6 @@ from symplyphysics import (
     SI,
 )
 from symplyphysics.core import errors
-from symplyphysics.core.vectors.vectors import QuantityVector
 from symplyphysics.laws.conservation import mixture_mass_equal_sum_of_components_masses as sum_of_masses_law
 
 

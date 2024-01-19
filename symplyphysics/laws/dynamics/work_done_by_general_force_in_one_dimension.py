@@ -49,12 +49,8 @@ def calculate_work(
     position_end_: Quantity,
 ) -> Quantity:
     # Using the two-point line equation: (y - y1)/(y2 - y1) = (x - x1)/(x2 - x1)
-    force_function = (
-        (force_end_ - force_start_)
-        * (position - position_start_)
-        / (position_end - position_start_)
-        + force_start_
-    )
+    force_function = ((force_end_ - force_start_) * (position - position_start_) /
+        (position_end - position_start_) + force_start_)
     result = law.rhs.subs({
         force(position): force_function,
         position_start: position_start_,

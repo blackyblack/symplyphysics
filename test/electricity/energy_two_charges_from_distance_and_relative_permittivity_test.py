@@ -17,12 +17,15 @@ def test_args_fixture():
     charge_2 = Quantity(4 * units.coulomb)
 
     Args = namedtuple("Args", ["relative_permittivity", "distance", "charge_1", "charge_2"])
-    return Args(relative_permittivity=relative_permittivity, distance=distance,
-                charge_1=charge_1, charge_2=charge_2)
+    return Args(relative_permittivity=relative_permittivity,
+        distance=distance,
+        charge_1=charge_1,
+        charge_2=charge_2)
 
 
 def test_basic_energy(test_args):
-    result = energy_law.calculate_energy(test_args.relative_permittivity, test_args.distance, test_args.charge_1, test_args.charge_2)
+    result = energy_law.calculate_energy(test_args.relative_permittivity, test_args.distance,
+        test_args.charge_1, test_args.charge_2)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
     result = convert_to(result, units.joule).evalf(5)
     assert result == approx(4.49e9, rel=0.01)
@@ -31,23 +34,28 @@ def test_basic_energy(test_args):
 def test_bad_relative_permittivity(test_args):
     relative_permittivity = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        energy_law.calculate_energy(relative_permittivity, test_args.distance, test_args.charge_1, test_args.charge_2)
+        energy_law.calculate_energy(relative_permittivity, test_args.distance, test_args.charge_1,
+            test_args.charge_2)
     with raises(TypeError):
-        energy_law.calculate_energy(True, test_args.distance, test_args.charge_1, test_args.charge_2)
+        energy_law.calculate_energy(True, test_args.distance, test_args.charge_1,
+            test_args.charge_2)
 
 
 def test_bad_distance(test_args):
     distance = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        energy_law.calculate_energy(test_args.relative_permittivity, distance, test_args.charge_1, test_args.charge_2)
+        energy_law.calculate_energy(test_args.relative_permittivity, distance, test_args.charge_1,
+            test_args.charge_2)
     with raises(TypeError):
-        energy_law.calculate_energy(test_args.relative_permittivity, 100, test_args.charge_1, test_args.charge_2)
+        energy_law.calculate_energy(test_args.relative_permittivity, 100, test_args.charge_1,
+            test_args.charge_2)
 
 
 def test_bad_charges(test_args):
     charge_1 = Quantity(1 * units.meter)
     charge_2 = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
-        energy_law.calculate_energy(test_args.relative_permittivity, test_args.distance, charge_1, charge_2)
+        energy_law.calculate_energy(test_args.relative_permittivity, test_args.distance, charge_1,
+            charge_2)
     with raises(TypeError):
         energy_law.calculate_energy(test_args.relative_permittivity, test_args.distance, 100, 100)

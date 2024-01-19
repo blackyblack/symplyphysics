@@ -31,12 +31,8 @@ height = Symbol("height")
 area = Symbol("area")
 volume_equation = Eq(volume, height * area)
 
-volume_of_ice_value = volume_equation.subs({
-    height: layer_thickness_of_ice
-}).rhs
-volume_of_water_value = volume_equation.subs({
-    height: layer_thickness_of_water
-}).rhs
+volume_of_ice_value = volume_equation.subs({height: layer_thickness_of_ice}).rhs
+volume_of_water_value = volume_equation.subs({height: layer_thickness_of_water}).rhs
 
 density_of_ice_equation = density_law.definition.subs({
     density_law.density: density_of_ice,
@@ -62,21 +58,23 @@ energy_from_cooling_water_value = energy_heating_law.law.subs({
 }).rhs
 
 heat_balance_equation = thermodinamics_law_1.law.subs({
-    thermodinamics_law_1.amounts_energy: (energy_for_melting_ice_value, energy_from_cooling_water_value)
+    thermodinamics_law_1.amounts_energy:
+    (energy_for_melting_ice_value, energy_from_cooling_water_value)
 }).doit()
 
 print(print_expression(heat_balance_equation))
 
-height_of_water_solve = solve(heat_balance_equation, layer_thickness_of_water, dict=True)[0][layer_thickness_of_water]
+height_of_water_solve = solve(heat_balance_equation, layer_thickness_of_water,
+    dict=True)[0][layer_thickness_of_water]
 answer = Eq(layer_thickness_of_water, height_of_water_solve)
 print(f"Total equation:\n{print_expression(answer)}")
 
 height_of_water_value = height_of_water_solve.subs({
     layer_thickness_of_ice: Quantity(4.2 * prefixes.centi * units.meters),
     temperature_of_ice: to_kelvin_quantity(Celsius(0)),
-    temperature_of_water: Quantity(306 * units.kelvins) ,
-    density_of_water: Quantity(1000 * units.kilograms / (units.meter ** 3)),
-    density_of_ice: Quantity(900 * units.kilograms / (units.meter ** 3)),
+    temperature_of_water: Quantity(306 * units.kelvins),
+    density_of_water: Quantity(1000 * units.kilograms / (units.meter**3)),
+    density_of_ice: Quantity(900 * units.kilograms / (units.meter**3)),
     specific_heat_heating_of_water: Quantity(4200 * units.joules / (units.kilogram * units.kelvin)),
     specific_heat_melting_of_ice: Quantity(330 * prefixes.kilo * units.joules / units.kilogram)
 })

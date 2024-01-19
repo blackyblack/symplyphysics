@@ -8,7 +8,8 @@ from symplyphysics.laws.electricity import electric_field_due_to_point_charge as
 ## infinity at which the net electric field produced by the two particles equals zero?
 
 first_charge, second_charge = symbols("first_charge second_charge")
-first_position, second_position, zero_position = symbols("first_position second_position zero_position")
+first_position, second_position, zero_position = symbols(
+    "first_position second_position zero_position")
 
 law_electric_field_first_charge = point_charge.law.subs({
     point_charge.point_charge: first_charge,
@@ -20,7 +21,8 @@ law_electric_field_second_charge = point_charge.law.subs({
     point_charge.point_charge: second_charge,
     point_charge.distance: zero_position - second_position,
 })
-electric_field_second_charge = solve(law_electric_field_second_charge, point_charge.electric_field)[0]
+electric_field_second_charge = solve(law_electric_field_second_charge,
+    point_charge.electric_field)[0]
 
 # By condition the total field is zero.
 eqn = Eq(electric_field_first_charge + electric_field_second_charge, 0)

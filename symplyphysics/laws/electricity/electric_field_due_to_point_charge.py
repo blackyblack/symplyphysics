@@ -1,4 +1,4 @@
-from sympy import Eq, solve, Abs
+from sympy import Eq, solve
 from symplyphysics import (
     units,
     Quantity,
@@ -12,7 +12,7 @@ from symplyphysics.laws.electricity import force_from_charge_and_distance as cou
 from symplyphysics.laws.electricity import electric_field_value_is_force_over_test_charge as electric_field_def
 
 # Description
-## The value of the electric field set up by a point charge is linearly proportional 
+## The value of the electric field set up by a point charge is linearly proportional
 ## to the value of the charge and the square inverse of the distance to it.
 
 # Law: E = k_e * q / r^2
@@ -26,7 +26,6 @@ point_charge = Symbol("point_charge", units.charge)
 distance = Symbol("distance", units.length)
 
 law = Eq(electric_field, units.coulomb_constant * point_charge / distance**2)
-
 
 # Derive this law from Coulomb's law and the definition of electric field
 
