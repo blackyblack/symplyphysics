@@ -10,7 +10,8 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 # p is pressure,
 # A is work done.
 # When the volume of a gas changes from to V1 to V2, the change
-# in the volume of the gas is ΔV = V2 - V1
+# in the volume of the gas is ΔV = V2 - V1.
+# Law: A = p * (V2 - V1), where
 # V1 is initial volume,
 # V2 is resulting volume,
 # p is pressure,
