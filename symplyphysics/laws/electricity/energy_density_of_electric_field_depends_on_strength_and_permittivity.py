@@ -1,14 +1,7 @@
 from sympy import (Eq, solve, exp)
 from sympy.physics.units import electric_constant
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    print_expression,
-    validate_input,
-    validate_output,
-    dimensionless
-)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output, dimensionless)
 
 # Description
 ## In physics, energy density or volumic energy is the amount of energy stored in a given system or region of space per unit volume.
@@ -26,18 +19,18 @@ energy_density = Symbol("energy_density", units.energy / units.volume)
 relative_permittivity = Symbol("relative_permittivity", dimensionless)
 electric_intensity = Symbol("electric_intensity", units.voltage / units.length)
 
-law = Eq(
-    energy_density,
-    (electric_constant * relative_permittivity * electric_intensity**2) / 2)
+law = Eq(energy_density, (electric_constant * relative_permittivity * electric_intensity**2) / 2)
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(relative_permittivity_=relative_permittivity, electric_intensity_=electric_intensity)
+@validate_input(relative_permittivity_=relative_permittivity,
+    electric_intensity_=electric_intensity)
 @validate_output(energy_density)
-def calculate_energy_density(relative_permittivity_: float, electric_intensity_: Quantity) -> Quantity:
+def calculate_energy_density(relative_permittivity_: float,
+    electric_intensity_: Quantity) -> Quantity:
     result_expr = solve(law, energy_density, dict=True)[0][energy_density]
     result_expr = result_expr.subs({
         relative_permittivity: relative_permittivity_,

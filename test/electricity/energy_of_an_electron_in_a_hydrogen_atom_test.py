@@ -1,12 +1,6 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-from symplyphysics import (
-    units,
-    Quantity,
-    SI,
-    convert_to,
-    errors
-)
+from symplyphysics import (units, Quantity, SI, convert_to, errors)
 from symplyphysics.laws.electricity import energy_of_an_electron_in_a_hydrogen_atom as energy_law
 
 # Description

@@ -1,5 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 # Description
 ## The maximum height to which a body thrown vertically upwards will rise depends on the initial velocity
 ## Law: h = (v**2)/(2*g)
@@ -18,7 +19,7 @@ def print_law() -> str:
 
 @validate_input(initial_velocity_=initial_velocity)
 @validate_output(maximum_height)
-def calculate_maximum_height (initial_velocity_: Quantity) -> Quantity:
+def calculate_maximum_height(initial_velocity_: Quantity) -> Quantity:
     result_maximum_height = solve(law, maximum_height, dict=True)[0][maximum_height]
     result_expr = result_maximum_height.subs({initial_velocity: initial_velocity_})
     return Quantity(result_expr)

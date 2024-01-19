@@ -30,8 +30,7 @@ distance = Symbol("distance", units.length)
 charge_1 = Symbol("charge_1", units.charge)
 charge_2 = Symbol("charge_2", units.charge)
 
-law = Eq(
-    energy,
+law = Eq(energy,
     charge_1 * charge_2 / (4 * pi * electric_constant * relative_permittivity * distance))
 
 
@@ -39,9 +38,13 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(relative_permittivity_=relative_permittivity, distance_=distance, charge_1_=charge_1, charge_2_=charge_2)
+@validate_input(relative_permittivity_=relative_permittivity,
+    distance_=distance,
+    charge_1_=charge_1,
+    charge_2_=charge_2)
 @validate_output(energy)
-def calculate_energy(relative_permittivity_: float, distance_: Quantity, charge_1_: Quantity, charge_2_: Quantity) -> Quantity:
+def calculate_energy(relative_permittivity_: float, distance_: Quantity, charge_1_: Quantity,
+    charge_2_: Quantity) -> Quantity:
     result_expr = solve(law, energy, dict=True)[0][energy]
     result_expr = result_expr.subs({
         relative_permittivity: relative_permittivity_,

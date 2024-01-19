@@ -24,7 +24,8 @@ mass_fraction_equation = mass_fraction_law.definition.subs({
     mass_fraction_law.mass_of_mixture: mass_of_mixture,
     mass_fraction_law.mass_fraction: mass_fraction_of_salt
 })
-mass_of_salt_before_value = solve(mass_fraction_equation, mass_fraction_law.mass_of_component,
+mass_of_salt_before_value = solve(mass_fraction_equation,
+    mass_fraction_law.mass_of_component,
     dict=True)[0][mass_fraction_law.mass_of_component]
 
 mass_of_salt_and_sediment = mixture_mass_law.law.subs({
@@ -41,8 +42,7 @@ mass_of_mixture_equation = mixture_mass_law.law.subs({
     mixture_mass_law.masses_of_components: (mass_of_water, mass_of_salt_before_value),
     mixture_mass_law.mass_of_mixture: mass_of_mixture
 }).doit()
-mass_of_water_value = solve(mass_of_mixture_equation, mass_of_water,
-    dict=True)[0][mass_of_water]
+mass_of_water_value = solve(mass_of_mixture_equation, mass_of_water, dict=True)[0][mass_of_water]
 
 solubility_value = mass_fraction_law.definition.subs({
     mass_fraction_law.mass_of_mixture: mass_of_water_value,
@@ -56,4 +56,6 @@ solubility_fraction = solubility_value.subs({
     mass_of_sediment: Quantity(45 * units.grams),
     mass_fraction_of_salt: Quantity(35 * units.percents)
 })
-print(f"Solubility is: {print_expression(convert_to(Quantity(solubility_fraction), units.percents).evalf(4))} %")
+print(
+    f"Solubility is: {print_expression(convert_to(Quantity(solubility_fraction), units.percents).evalf(4))} %"
+)

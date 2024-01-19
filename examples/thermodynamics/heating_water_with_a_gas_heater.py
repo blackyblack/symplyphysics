@@ -43,7 +43,7 @@ distance_value = velocity_law.law.subs({
 
 # We assume that the cross-section of the pipe through which the water flows has the shape of a circle
 # S = pi * d^2 / 4
-pipe_cross_sectional_area = pi * diameter_of_pipe ** 2 / 4
+pipe_cross_sectional_area = pi * diameter_of_pipe**2 / 4
 # And we assume that the pipe goes straight to the water heating site.
 # Accordingly, the volume of the pipe that the water passes over a certain period of time has the shape of a cylinder
 # V = S * l(t)
@@ -63,9 +63,7 @@ energy_to_heating_water_value = energy_heating_law.law.subs({
     energy_heating_law.temperature_end: temperature_water
 }).rhs
 
-mass_of_gas_equation = mole_count_law.law.subs({
-    mole_count_law.atomic_weight: molar_mass_of_metan
-})
+mass_of_gas_equation = mole_count_law.law.subs({mole_count_law.atomic_weight: molar_mass_of_metan})
 mole_count_value = solve(mass_of_gas_equation, mole_count_law.mole_count,
     dict=True)[0][mole_count_law.mole_count]
 
@@ -83,7 +81,10 @@ mass_gas_dsolved = dsolve(mass_rate_law.definition, mass_rate_law.mass(mass_rate
 # HACK: we should tell dsolve() that mass flow rate is constant, but solve() does not work properly with constant
 #       value. So we substitute it with constant and revert to normal mass flow rate after dsolve()
 mass_flow_constant_rate = Symbol("mass_flow_rate_const", constant=True)
-mass_gas_eq = mass_gas_dsolved.subs({"C1": 0, mass_rate_law.mass_flow_rate(mass_rate_law.time): mass_flow_constant_rate}).doit()
+mass_gas_eq = mass_gas_dsolved.subs({
+    "C1": 0,
+    mass_rate_law.mass_flow_rate(mass_rate_law.time): mass_flow_constant_rate
+}).doit()
 mass_gas_eq = mass_gas_eq.subs(mass_flow_constant_rate, mass_flow_rate)
 
 mass_of_gas_in_start_equation = mass_gas_eq.subs({
@@ -92,10 +93,11 @@ mass_of_gas_in_start_equation = mass_gas_eq.subs({
 })
 mass_flow_rate_in_start_value = solve(mass_of_gas_in_start_equation, mass_flow_rate,
     dict=True)[0][mass_flow_rate]
-mass_of_gas_value = solve(mass_gas_eq.subs({
+mass_of_gas_value = solve(
+    mass_gas_eq.subs({
     mass_flow_rate: mass_flow_rate_in_start_value,
     mass_rate_law.time: velocity_law.movement_time
-}), mass_rate_law.mass(velocity_law.movement_time))[0]
+    }), mass_rate_law.mass(velocity_law.movement_time))[0]
 
 energy_from_combustion_of_metan_value = combustion_energy_law.law.subs({
     combustion_energy_law.specific_heat_combustion: specific_heat_of_combustion_metan,
@@ -114,7 +116,7 @@ answer = Eq(temperature_water, temperature_water_value)
 print(f"Total equation:\n{print_expression(answer)}")
 
 temperature_water_k = temperature_water_value.subs({
-    volume_of_gas: Quantity(1.8 * units.meters ** 3),
+    volume_of_gas: Quantity(1.8 * units.meters**3),
     diameter_of_pipe: Quantity(1 * prefixes.centi * units.meters),
     time_of_hour: Quantity(1 * units.hours),
     velocity_of_water: Quantity(0.5 * units.meters / units.second),
@@ -124,6 +126,8 @@ temperature_water_k = temperature_water_value.subs({
     molar_mass_of_metan: Quantity(16 * units.grams / units.mole),
     specific_heat_of_combustion_metan: Quantity(55 * prefixes.mega * units.joules / units.kilogram),
     specific_heat_of_heating_water: Quantity(4200 * units.joules / (units.kilogram * units.kelvin)),
-    density_of_water: Quantity(1_000 * units.kilograms / (units.meter ** 3))
+    density_of_water: Quantity(1_000 * units.kilograms / (units.meter**3))
 })
-print(f"Temperature of water in out is: {convert_to(Quantity(temperature_water_k), units.kelvins).evalf(5)} K")
+print(
+    f"Temperature of water in out is: {convert_to(Quantity(temperature_water_k), units.kelvins).evalf(5)} K"
+)

@@ -23,20 +23,15 @@ law = Eq(mass(time_after), mass(time_before))
 # Derive the same law from constant mass
 
 ## dsolve() shows that solution is constant C1
-dsolved = dsolve(
-    mass_is_constant.law,
-    mass_is_constant.mass(mass_is_constant.time))
+dsolved = dsolve(mass_is_constant.law, mass_is_constant.mass(mass_is_constant.time))
 
 mass_before_eq = dsolved.subs(mass_is_constant.time, time_before)
-mass_before_eq = mass_before_eq.subs(
-    mass_is_constant.mass(time_before), mass(time_before))
+mass_before_eq = mass_before_eq.subs(mass_is_constant.mass(time_before), mass(time_before))
 mass_after_eq = dsolved.subs(mass_is_constant.time, time_after)
-mass_after_eq = mass_after_eq.subs(mass_is_constant.mass(time_after),
-    mass(time_after))
+mass_after_eq = mass_after_eq.subs(mass_is_constant.mass(time_after), mass(time_after))
 
 ## Show that when mass is constant, mass_before equals to mass_after
-mass_after_solved = solve([mass_after_eq, mass_before_eq],
-    (mass(time_after), "C1"),
+mass_after_solved = solve([mass_after_eq, mass_before_eq], (mass(time_after), "C1"),
     dict=True)[0][mass(time_after)]
 assert expr_equals(mass_after_solved, law.rhs)
 

@@ -1,6 +1,6 @@
 from sympy import Eq, solve
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-                           validate_output)
+    validate_output)
 
 # Description
 # When energy is added to gas molecules and increases their kinetic energy,
@@ -17,7 +17,6 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 # p is pressure,
 # A is work done.
 
-
 pressure = Symbol("pressure", units.pressure)
 init_volume = Symbol("init_volume", units.volume)
 result_volume = Symbol("result_volume", units.volume)
@@ -30,19 +29,14 @@ def print_law():
     print_expression(law)
 
 
-@validate_input(
-    pressure_=pressure,
-    init_volume_=init_volume,
-    result_volume_=result_volume
-)
+@validate_input(pressure_=pressure, init_volume_=init_volume, result_volume_=result_volume)
 @validate_output(work)
-def calculate_work(pressure_: Quantity, init_volume_: Quantity, result_volume_: Quantity) -> Quantity:
+def calculate_work(pressure_: Quantity, init_volume_: Quantity,
+    result_volume_: Quantity) -> Quantity:
     result_work_expr = solve(law, work, dict=True)[0][work]
-    result_work = result_work_expr.subs(
-        {
-            pressure: pressure_,
-            init_volume: init_volume_,
-            result_volume: result_volume_,
-        }
-    )
+    result_work = result_work_expr.subs({
+        pressure: pressure_,
+        init_volume: init_volume_,
+        result_volume: result_volume_,
+    })
     return Quantity(result_work)

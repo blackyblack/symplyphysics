@@ -44,8 +44,10 @@ kinetic_energy_of_meteorite = kinetic_energy_law.law.subs({
 }).rhs
 
 energy_conservation_equation = energy_conservation_law.law.subs({
-    energy_conservation_law.mechanical_energy(energy_conservation_law.time_before): koefficient_of_transfer_to_kinetic * kinetic_energy_of_meteorite,
-    energy_conservation_law.mechanical_energy(energy_conservation_law.time_after): energy_to_heating_meteorite + energy_to_meteorite_melting
+    energy_conservation_law.mechanical_energy(energy_conservation_law.time_before):
+    koefficient_of_transfer_to_kinetic * kinetic_energy_of_meteorite,
+    energy_conservation_law.mechanical_energy(energy_conservation_law.time_after):
+    energy_to_heating_meteorite + energy_to_meteorite_melting
 })
 mass_of_melting_value = solve(energy_conservation_equation, mass_of_melting_meteorite,
     dict=True)[0][mass_of_melting_meteorite]
@@ -57,9 +59,10 @@ koefficient_of_melting_meteorite_percents = koefficient_of_melting_meteorite_val
     velocity_of_meteorite: Quantity(1.5 * units.kilometers / units.second),
     temperature_of_meteorite: Quantity(300 * units.kelvins),
     koefficient_of_transfer_to_kinetic: Quantity(80 * units.percents),
-
     specific_heat_heating_meteorite: Quantity(460 * units.joules / (units.kilogram * units.kelvin)),
     specific_heat_melting_meteorite: Quantity(270 * prefixes.kilo * units.joules / units.kilogram),
     temperature_of_meteorite_melting: to_kelvin_quantity(Celsius(1400)),
 })
-print(f"The fraction of a meteorite that melts is: {print_expression(convert_to(Quantity(koefficient_of_melting_meteorite_percents), units.percents).evalf(5))} %")
+print(
+    f"The fraction of a meteorite that melts is: {print_expression(convert_to(Quantity(koefficient_of_melting_meteorite_percents), units.percents).evalf(5))} %"
+)

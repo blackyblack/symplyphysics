@@ -11,7 +11,7 @@ from symplyphysics import (
 from symplyphysics.laws.electricity.vector import vector_of_electric_dipole_moment as dipole_moment
 
 # Description
-## The vector of the dipole moment of two point charges of magnitude Q = 2e-13 C, the displacement 
+## The vector of the dipole moment of two point charges of magnitude Q = 2e-13 C, the displacement
 ## vector between which is [1, -1, 0.5] m, amounts to [2e-13, -2e-13, 1e-13] C*m
 
 
@@ -21,7 +21,7 @@ def test_args_fixture():
     l = QuantityVector([
         Quantity(1.0 * units.meter),
         Quantity(-1.0 * units.meter),
-        Quantity(0.5 * units.meter),    
+        Quantity(0.5 * units.meter),
     ])
     Args = namedtuple("Args", "q l")
     return Args(q=q, l=l)
