@@ -20,7 +20,7 @@ def test_args_fixture():
 
 
 def test_basic_height(test_args):
-    result = maximum_height_law.calculate_height(test_args.v)
+    result = maximum_height_law.calculate_maximum_height(test_args.v)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
     result_vector = convert_to(result, units.meter).evalf(2)
     assert result_vector == approx(5.10, 0.01)
@@ -30,7 +30,7 @@ def test_bad_velocity():
     vb = Quantity(1 * units.coulomb)
     
     with raises(errors.UnitsError):
-       maximum_height_law.calculate_height(vb)
+       maximum_height_law.calculate_maximum_height(vb)
   
     with raises(TypeError):
-       maximum_height_law.calculate_height(100)
+       maximum_height_law.calculate_maximum_height(100)
