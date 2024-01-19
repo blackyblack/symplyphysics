@@ -1,4 +1,4 @@
-from sympy import (Eq, solve)
+from sympy import (Eq, solve, simplify)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
                            validate_output)
 
@@ -9,12 +9,13 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## Where:
 ## V_sub is the volume of the submerged body part
 ## V is full body volume
-## ⍴ is body density
+## ⍴ is body density. It is not density of material of the body, but density of its full volume.
 ## ⍴_liquid is the density of the liquid
 
 ## Conditions
 ## The body is immersed in only one liquid.
-## Gravity should be equal to the force of Archimedes.
+## The body must float so that gravity and the Archimedean force are in balance.
+## Density of body should be less than density of fluid. Otherwise, it drowns and forces do not compensate each other.
 
 
 submerged_volume = Symbol("submerged_volume", units.volume)
@@ -34,6 +35,7 @@ def print_law() -> str:
 @validate_output(submerged_volume)
 def calculate_submerged_volume(body_volume_: Quantity, body_density_, liquid_density_: Quantity) -> Quantity:
     result_expr = solve(law, submerged_volume, dict=True)[0][submerged_volume]
+    assert simplify(body_density_ - liquid_density_) < 0
     result_volume = result_expr.subs({
         body_volume: body_volume_,
         body_density: body_density_,
