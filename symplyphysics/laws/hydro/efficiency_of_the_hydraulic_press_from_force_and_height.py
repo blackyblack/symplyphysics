@@ -30,7 +30,7 @@ def print_law() -> str:
 
 @validate_input(useful_force_=useful_force, useful_height_=useful_height, expended_force_=expended_force, expended_height_=expended_height)
 @validate_output(efficiency)
-def calculate_efficiency(useful_force_: Quantity, useful_height_, expended_force_, expended_height_: Quantity) -> float:
+def calculate_efficiency(useful_force_: Quantity, useful_height_: Quantity , expended_force_: Quantity, expended_height_: Quantity) -> float:
     result_expr = solve(law, efficiency, dict=True)[0][efficiency]
     result_efficiency = result_expr.subs({
         useful_force: useful_force_,
@@ -40,3 +40,4 @@ def calculate_efficiency(useful_force_: Quantity, useful_height_, expended_force
     })
     result = Quantity(result_efficiency)
     return float(convert_to(result, S.One).evalf())
+
