@@ -1,6 +1,6 @@
-from sympy import (Eq, solve)
+from sympy import (Eq, solve, S)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-                           validate_output, dimensionless)
+                           validate_output, dimensionless, convert_to)
 
 # Description
 ## Since the hydraulic press is a mechanism, its operation can be characterized by a coefficient of efficiency.
@@ -12,9 +12,6 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## F1 is expended force
 ## h1 is expended height
 ## n is coefficient of efficiency
-
-## Conditions
-## The efficiency is calculated if we are talking about an imperfect hydraulic press.
 
 
 useful_force = Symbol("useful_force", units.force)
@@ -33,7 +30,7 @@ def print_law() -> str:
 
 @validate_input(useful_force_=useful_force, useful_height_=useful_height, expended_force_=expended_force, expended_height_=expended_height)
 @validate_output(efficiency)
-def calculate_efficiency(useful_force_: Quantity, useful_height_, expended_force_, expended_height_: Quantity) -> Quantity:
+def calculate_efficiency(useful_force_: Quantity, useful_height_, expended_force_, expended_height_: Quantity) -> float:
     result_expr = solve(law, efficiency, dict=True)[0][efficiency]
     result_efficiency = result_expr.subs({
         useful_force: useful_force_,
@@ -41,5 +38,5 @@ def calculate_efficiency(useful_force_: Quantity, useful_height_, expended_force
         expended_force: expended_force_,
         expended_height: expended_height_
     })
-
-    return Quantity(result_efficiency)
+    result = Quantity(result_efficiency)
+    return float(convert_to(result, S.One).evalf())
