@@ -46,3 +46,11 @@ def test_bad_radius(test_args):
         capacity_law.calculate_capacity(test_args.relative_permittivity, first_radius, second_radius)
     with raises(TypeError):
         capacity_law.calculate_capacity(test_args.relative_permittivity, 100, 100)
+
+
+def test_swap_radius(test_args):
+    result = capacity_law.calculate_capacity(test_args.relative_permittivity,
+        test_args.second_radius, test_args.first_radius)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.capacitance)
+    result = convert_to(result, units.farad).evalf(5)
+    assert result == approx(8.34e-12, rel=0.01)

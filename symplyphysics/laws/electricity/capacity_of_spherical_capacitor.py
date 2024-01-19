@@ -43,7 +43,7 @@ def calculate_capacity(relative_permittivity_: float, inner_radius_: Quantity,
     result_expr = solve(law, capacity, dict=True)[0][capacity]
     result_expr = result_expr.subs({
         relative_permittivity: relative_permittivity_,
-        inner_radius: Quantity(Min(inner_radius_, outer_radius_) * units.meter),
-        outer_radius: Quantity(Max(inner_radius_, outer_radius_) * units.meter)
+        inner_radius: min([inner_radius_, outer_radius_], key=lambda x: x.scale_factor),
+        outer_radius: max([inner_radius_, outer_radius_], key=lambda x: x.scale_factor)
     })
     return Quantity(result_expr)
