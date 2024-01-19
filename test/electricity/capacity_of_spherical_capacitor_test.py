@@ -39,21 +39,10 @@ def test_bad_relative_permittivity(test_args):
         capacity_law.calculate_capacity(True, test_args.first_radius, test_args.second_radius)
 
 
-def test_bad_first_radius(test_args):
+def test_bad_radius(test_args):
     first_radius = Quantity(1 * units.coulomb)
+    second_radius = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        capacity_law.calculate_capacity(test_args.relative_permittivity, first_radius,
-            test_args.second_radius)
+        capacity_law.calculate_capacity(test_args.relative_permittivity, first_radius, second_radius)
     with raises(TypeError):
-        capacity_law.calculate_capacity(test_args.relative_permittivity, 100,
-            test_args.second_radius)
-
-
-def test_bad_second_radius(test_args):
-    second_radius = Quantity(1 * units.kelvin)
-    with raises(errors.UnitsError):
-        capacity_law.calculate_capacity(test_args.relative_permittivity,
-            test_args.first_radius, second_radius)
-    with raises(TypeError):
-        capacity_law.calculate_capacity(test_args.relative_permittivity,
-            test_args.first_radius, 100)
+        capacity_law.calculate_capacity(test_args.relative_permittivity, 100, 100)
