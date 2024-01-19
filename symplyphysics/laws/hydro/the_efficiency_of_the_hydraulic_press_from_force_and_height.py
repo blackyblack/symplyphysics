@@ -7,8 +7,8 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 
 ## Law: n = (F2 * h2) / (F1 * h1)
 ## Where:
-## F2 is the force spent on useful work
-## h2 is the useful movement
+## F2 is the force spent on useful work (work on lifting the load)
+## h2 is the movement of load
 ## F1 is expended force
 ## h1 is expended height
 ## n is coefficient of efficiency
