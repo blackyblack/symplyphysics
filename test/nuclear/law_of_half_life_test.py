@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-from symplyphysics import (units, SI, dimensionless, convert_to, Quantity, errors)
+from symplyphysics import (units, Quantity, errors)
 from symplyphysics.laws.nuclear import law_of_half_life as number_of_cores_law
 
 # Description

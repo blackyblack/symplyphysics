@@ -1,4 +1,4 @@
-from sympy import Eq, solve, Abs
+from sympy import Eq, solve
 from symplyphysics import (
     units,
     Quantity,

@@ -10,7 +10,6 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.symbols import tuple_of_symbols
 from symplyphysics.core.operations.sum_array import SumArray
-from symplyphysics.core.symbols.symbols import tuple_of_symbols
 import symplyphysics.laws.electricity.circuits.conductivity_of_parallel_resistors as parallel_conductivity
 import symplyphysics.definitions.electrical_conductivity_is_inversed_resistance as conductance_definition
 

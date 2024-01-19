@@ -1,4 +1,4 @@
-from sympy import (Eq, solve, exp)
+from sympy import (Eq, solve)
 from sympy.physics.units import electric_constant
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
     validate_output, dimensionless)

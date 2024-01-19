@@ -24,7 +24,7 @@ def test_basic_law(test_args):
     assert result_charge == approx(4.81e-18, 1e-18)
 
 
-def test_bad_args(test_args):
+def test_bad_args():
     nb = Quantity(1 * units.second)
     with raises(errors.UnitsError):
         charge_is_quantized.calculate_charge(nb)

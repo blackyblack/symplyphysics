@@ -22,7 +22,7 @@ def test_basic_energy_of_electron(test_args):
     assert result_1 == approx(13.6, 0.01)
 
 
-def test_bad_radius_of_electron(test_args):
+def test_bad_radius_of_electron():
     radius_of_electron = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         energy_law.calculate_energy_of_electron(radius_of_electron)

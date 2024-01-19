@@ -27,7 +27,7 @@ def test_basic_law(test_args):
     assert result_charge == approx(-1, 1e-3)
 
 
-def test_bad_args(test_args):
+def test_bad_args():
     bad_charge_before = Quantity(1 * units.second)
     with raises(errors.UnitsError):
         charge_is_constant.calculate_charge_after(bad_charge_before)
