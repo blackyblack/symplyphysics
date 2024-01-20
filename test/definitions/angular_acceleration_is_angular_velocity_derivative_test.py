@@ -30,7 +30,7 @@ def test_basic_acceleration(test_args):
         test_args.t)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, 1 / (units.time ** 2))
     result_velocity = convert_to(result, angular_acceleration_def.definition_units_SI).evalf(2)
-    assert result_velocity == approx(pi / 5, 0.01)
+    assert result_velocity == approx(0.63, 0.01)
 
 
 def test_velocity_with_bad_angle(test_args):
