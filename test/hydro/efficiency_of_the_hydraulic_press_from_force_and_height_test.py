@@ -28,8 +28,8 @@ def test_args_fixture():
 
 
 def test_basic_efficiency(test_args):
-    result_volume = efficiency.calculate_efficiency(test_args.useful_force, test_args.useful_height, test_args.expended_force, test_args.expended_height)
-    assert result_volume == approx(0.95, 0.001)
+    result_efficiency = efficiency.calculate_efficiency(test_args.useful_force, test_args.useful_height, test_args.expended_force, test_args.expended_height)
+    assert result_efficiency == approx(0.95, 0.001)
 
 
 def test_bad_force(test_args):
