@@ -19,8 +19,6 @@ moment_of_force = Symbol("moment_of_force", units.force * units.length * angle_t
 
 law = Eq(moment_of_force, moment_of_inertia * angular_acceleration)
 
-definition_units_SI = units.radian * units.newton * units.meter
-
 
 def print_law() -> str:
     return print_expression(law)
