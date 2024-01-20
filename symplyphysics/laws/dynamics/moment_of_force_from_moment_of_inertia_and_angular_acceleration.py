@@ -9,8 +9,7 @@ from symplyphysics import (angle_type, units, Quantity, Symbol, print_expression
 
 # Law: M = I * epsilon
 # Where:
-## epsilon is angular acceleration function of time
-## t - time
+## epsilon is angular acceleration
 ## I - body moment of inertia
 ## M - moment of force
 
