@@ -4,7 +4,7 @@ from symplyphysics import (units, SI, convert_to, Quantity, errors)
 from symplyphysics.laws.electricity import electric_field_of_infinite_charged_plane as intensity_law
 
 # Description
-## It is known that with a surface charge density of 1 [coulomb / meter^2], the electric field strength is 1.4e11 [volt / meter].
+## It is known that with a surface charge density of 2.5 [coulomb / meter^2], the electric field strength is 1.4e11 [volt / meter].
 ## https://www.calculatoratoz.com/en/electric-field-due-to-infinite-sheet-calculator/Calc-672
 
 
@@ -23,7 +23,7 @@ def test_basic_electric_intensity(test_args):
     assert result == approx(1.4e11, rel=0.01)
 
 
-def test_bad_surface_charge_density(test_args):
+def test_bad_surface_charge_density():
     surface_charge_density = Quantity(1 * units.joule)
     with raises(errors.UnitsError):
         intensity_law.calculate_electric_intensity(surface_charge_density)
