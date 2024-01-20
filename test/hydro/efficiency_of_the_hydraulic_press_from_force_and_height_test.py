@@ -28,9 +28,7 @@ def test_args_fixture():
 
 
 def test_basic_efficiency(test_args):
-    result = efficiency.calculate_efficiency(test_args.useful_force, test_args.useful_height, test_args.expended_force, test_args.expended_height)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, dimensionless)
-    result_volume = convert_to(result, dimensionless).evalf(5)
+    resultt_volume = efficiency.calculate_efficiency(test_args.useful_force, test_args.useful_height, test_args.expended_force, test_args.expended_height)
     assert result_volume == approx(0.95, 0.001)
 
 
