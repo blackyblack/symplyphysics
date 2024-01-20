@@ -29,10 +29,10 @@ ohm_law_applied = ohm_law.law.subs({
     ohm_law.current: current,
     ohm_law.resistance: inner_resistance + outer_resistance
 })
-power_derived = solve(ohm_law_applied, ohm_law.voltage, dict=True)[0][ohm_law.voltage]
+voltage_derived = solve(ohm_law_applied, ohm_law.voltage, dict=True)[0][ohm_law.voltage]
 
-# Check if derived power is same as declared
-assert expr_equals(power_derived, law.rhs)
+# Check if derived voltage is same as declared.
+assert expr_equals(voltage_derived, law.rhs)
 
 
 def print_law() -> str:
