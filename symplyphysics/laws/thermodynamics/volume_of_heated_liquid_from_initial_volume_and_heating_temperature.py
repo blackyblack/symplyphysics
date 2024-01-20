@@ -12,7 +12,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## V is volume of liquid at temperature t
 ## y is the coefficient of volumetric expansion of the liquid
 ## t_start is initial temperature in Kelvins
-## t_end is final temperature in Kelvin
+## t_end is final temperature in Kelvins
 
 
 final_volume = Symbol("final_volume", units.volume)
