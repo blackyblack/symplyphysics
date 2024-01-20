@@ -5,7 +5,7 @@ from symplyphysics.laws.electricity import electric_field_outside_charged_sphere
 
 # Description
 ## It is known that when the sphere is charged with 1 coulomb and distance from
-## sphere is 1 meter, the electric field intensity is 8.992 volt / meter.
+## sphere is 1 meter, the electric field intensity is 8.992e9 volt / meter.
 ## https://vrcacademy.com/calculator/electric-field-uniformly-charged-sphere-calculator/
 
 
