@@ -5,8 +5,12 @@ from symplyphysics import (
     Symbol,
     print_expression,
     validate_input,
-    validate_output,
+    validate_output
 )
+from symplyphysics.core.expr_comparisons import expr_equals
+
+from symplyphysics.laws.condensed_matter import current_density_from_concentration_and_velocity_of_charge_carriers as density_velocity_law
+from symplyphysics.laws.condensed_matter import drift_velocity_of_charge_carriers as velocity_law
 
 # Description
 ## Current density is the amount of charge per unit time that flows through a unit area of a chosen
@@ -41,6 +45,27 @@ law = Eq(
     charge *
     (-electrons_concentration * electrons_mobility + holes_concentration * holes_mobility) *
     electric_intensity)
+
+## This law might be derived via law for current density in metals.
+
+density_velocity_law_electrons = density_velocity_law.law.subs({
+    density_velocity_law.charge: charge,
+    density_velocity_law.charge_carriers_concentration: -electrons_concentration,
+    density_velocity_law.drift_velocity: electrons_mobility * electric_intensity,
+    density_velocity_law.density_current: density_velocity_law.density_current,
+})
+density_velocity_law_holes = density_velocity_law.law.subs({
+    density_velocity_law.charge: charge,
+    density_velocity_law.charge_carriers_concentration: holes_concentration,
+    density_velocity_law.drift_velocity: holes_mobility * electric_intensity,
+    density_velocity_law.density_current: density_velocity_law.density_current,
+})
+density_current_electrons_derived = solve(density_velocity_law_electrons, density_velocity_law.density_current, dict=True)[0][density_velocity_law.density_current]
+density_current_holes_derived = solve(density_velocity_law_holes, density_velocity_law.density_current, dict=True)[0][density_velocity_law.density_current]
+density_current_derived = density_current_electrons_derived + density_current_holes_derived
+
+# Check if derived density current is same as declared.
+assert expr_equals(density_current_derived, law.rhs)
 
 
 def print_law() -> str:
