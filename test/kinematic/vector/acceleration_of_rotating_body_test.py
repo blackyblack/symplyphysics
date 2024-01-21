@@ -28,8 +28,13 @@ def test_args_fixture():
         Quantity(0.1 * units.meter / units.second**2),
         Quantity(-3.0 * units.meter / units.second**2),
     ])
-    Args = namedtuple("Args", "a_r a_t")
-    return Args(a_r=a_r, a_t=a_t)
+    a_total = QuantityVector([
+        Quantity(-1.0 * units.meter / units.second**2),
+        Quantity(0.1 * units.meter / units.second**2),
+        Quantity(-2.6 * units.meter / units.second**2),
+    ])
+    Args = namedtuple("Args", "a_r a_t a_total")
+    return Args(a_r=a_r, a_t=a_t, a_total=a_total)
 
 
 def test_basic_law(test_args):
@@ -37,6 +42,26 @@ def test_basic_law(test_args):
     assert len(result.components) == 3
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.acceleration)
     correct_values = (-1.0, 0.1, -2.6)
+    for result_component, correct_value in zip(result.components, correct_values):
+        result_value = convert_to(result_component, units.meter / units.second**2).evalf(3)
+        assert result_value == approx(correct_value, 1e-3)
+
+
+def test_radial_law(test_args):
+    result = acceleration_law.calculate_radial_acceleration(test_args.a_total, test_args.a_t)
+    assert len(result.components) == 3
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.acceleration)
+    correct_values = (-1.0, 0.0, 0.4)
+    for result_component, correct_value in zip(result.components, correct_values):
+        result_value = convert_to(result_component, units.meter / units.second**2).evalf(3)
+        assert result_value == approx(correct_value, 1e-3)
+
+
+def test_tangential_law(test_args):
+    result = acceleration_law.calculate_tangential_acceleration(test_args.a_total, test_args.a_r)
+    assert len(result.components) == 3
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.acceleration)
+    correct_values = (0.0, 0.1, -3.0)
     for result_component, correct_value in zip(result.components, correct_values):
         result_value = convert_to(result_component, units.meter / units.second**2).evalf(3)
         assert result_value == approx(correct_value, 1e-3)
@@ -63,3 +88,49 @@ def test_bad_acceleration(test_args):
         acceleration_law.calculate_acceleration(100, test_args.a_t)
     with raises(TypeError):
         acceleration_law.calculate_acceleration(test_args.a_r, 100)
+
+
+def test_bad_radial_acceleration(test_args):
+    a_bad_vector = QuantityVector([
+        Quantity(1.0 * units.second),
+        Quantity(1.0 * units.second),
+        Quantity(1.0 * units.second),
+    ])
+    with raises(errors.UnitsError):
+        acceleration_law.calculate_radial_acceleration(a_bad_vector, test_args.a_t)
+    with raises(errors.UnitsError):
+        acceleration_law.calculate_radial_acceleration(test_args.a_total, a_bad_vector)
+
+    a_bad_scalar = Quantity(1.0 * units.meter / units.second**2)
+    with raises(AttributeError):
+        acceleration_law.calculate_radial_acceleration(a_bad_scalar, test_args.a_t)
+    with raises(AttributeError):
+        acceleration_law.calculate_radial_acceleration(test_args.a_total, a_bad_scalar)
+
+    with raises(TypeError):
+        acceleration_law.calculate_radial_acceleration(100, test_args.a_t)
+    with raises(TypeError):
+        acceleration_law.calculate_radial_acceleration(test_args.a_total, 100)
+
+
+def test_bad_tangential_acceleration(test_args):
+    a_bad_vector = QuantityVector([
+        Quantity(1.0 * units.second),
+        Quantity(1.0 * units.second),
+        Quantity(1.0 * units.second),
+    ])
+    with raises(errors.UnitsError):
+        acceleration_law.calculate_tangential_acceleration(a_bad_vector, test_args.a_r)
+    with raises(errors.UnitsError):
+        acceleration_law.calculate_tangential_acceleration(test_args.a_total, a_bad_vector)
+
+    a_bad_scalar = Quantity(1.0 * units.meter / units.second**2)
+    with raises(AttributeError):
+        acceleration_law.calculate_tangential_acceleration(a_bad_scalar, test_args.a_r)
+    with raises(AttributeError):
+        acceleration_law.calculate_tangential_acceleration(test_args.a_total, a_bad_scalar)
+
+    with raises(TypeError):
+        acceleration_law.calculate_tangential_acceleration(100, test_args.a_r)
+    with raises(TypeError):
+        acceleration_law.calculate_tangential_acceleration(test_args.a_total, 100)
