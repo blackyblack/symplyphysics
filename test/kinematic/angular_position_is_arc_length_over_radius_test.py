@@ -18,7 +18,7 @@ def test_args_fixture():
 
 def test_basic_law(test_args):
     result = angular_position_def.calculate_angular_position(test_args.s, test_args.r)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, 1)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, dimensionless)
     result_angle = convert_to(result, units.radian).evalf(3)
     assert result_angle == approx(2.0, 1e-3)
 
