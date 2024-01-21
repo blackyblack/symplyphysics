@@ -14,7 +14,8 @@ from symplyphysics import (
 
 # Law: a = a_r + a_t
 ## a - total acceleration vector
-## a_r - radial acceleration vector (parallel to position vector of the rotating point)
+## a_r - radial acceleration vector (parallel to position vector of the rotating point and
+##       pointing in the direction opposite to it)
 ## a_t - tangential acceleration vector (perpendicular to position vector of the rotating
 ##       point, and tangent to its path)
 
