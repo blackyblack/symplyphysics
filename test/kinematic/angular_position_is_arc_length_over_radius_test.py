@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, approx, raises
-from symplyphysics import Quantity, units, SI, angle_type, convert_to, errors
+from symplyphysics import Quantity, units, SI, convert_to, errors, dimensionless
 from symplyphysics.laws.kinematic import angular_position_is_arc_length_over_radius as angular_position_def
 
 # Description
