@@ -9,11 +9,10 @@ from symplyphysics import (
 )
 
 # Description
-## Electric potential (also called the electric field potential, potential drop, the electrostatic potential)
-## is defined as the amount of work energy needed per unit of electric charge to move the charge from
-## a reference point to a specific point in an electric field. More precisely, the electric potential is
-## the energy per unit charge for a test charge that is so small that the disturbance of the field under
-## consideration is negligible.
+## The electrostatic potential is a scalar physical quantity equal to the ratio of the potential energy
+## of the interaction of a charge with an electric field to the magnitude of the charge.
+## The potential energy is equal to the work that a fixed charge would do on a test charge if
+## the test charge moved from the initial distance "r" to infinity.
 
 ## Law is: ф = W / q, where
 ## ф - electrostatic potential,
