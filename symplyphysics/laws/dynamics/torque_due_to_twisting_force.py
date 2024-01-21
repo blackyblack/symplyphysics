@@ -16,7 +16,11 @@ from symplyphysics import (
 ## tau - torque
 ## F - force exerted at the given point
 ## r - distance to axis from the given point
-## phi - angle between the position vector and force vector
+## phi - angle between the position vector of the given point and force vector
+
+# Note
+## The position vector of a point in space, also known as location or radius vector,
+## is the vector connecting the origin of the coordinate system and the given point.
 
 torque = Symbol("torque", units.force * units.length)
 force = Symbol("force", units.force)
