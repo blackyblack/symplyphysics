@@ -1,4 +1,4 @@
-from sympy import Eq, solve, sin
+from sympy import Eq, solve, sin, symbols, sqrt
 from symplyphysics import (
     units,
     Quantity,
@@ -7,7 +7,12 @@ from symplyphysics import (
     validate_input,
     validate_output,
     angle_type,
+    Vector,
+    dot_vectors,
+    vector_magnitude,
 )
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.dynamics.vector import torque_vector_of_twisting_force as torque_vector_def
 
 # Description
 ## Torque is a turning action on a body about a rotation axis due to a force.
@@ -28,6 +33,33 @@ distance_to_axis = Symbol("distance_to_axis", units.length)
 angle = Symbol("angle", angle_type)
 
 law = Eq(torque, distance_to_axis * force * sin(angle))
+
+
+# Derive law from its vector counterpart.
+force_vector = Vector(symbols("force_x:z", real=True))
+position_vector = Vector(symbols("x:z", real=True))
+
+torque_vector_derived = torque_vector_def.torque_definition(force_vector, position_vector)
+torque_magnitude_derived = vector_magnitude(torque_vector_derived)
+
+force_magnitude = vector_magnitude(force_vector)
+position_magnitude = vector_magnitude(position_vector)
+
+# Use the definition of dot product (a, b) = |a| * |b| * cos(a, b)
+cosine_of_angle_in_between = (
+    dot_vectors(force_vector, position_vector) 
+    / force_magnitude 
+    / position_magnitude
+)
+sine_of_angle_in_between = sqrt(1 - cosine_of_angle_in_between**2)
+
+torque_magnitude_from_law = solve(law, torque)[0].subs({
+    force: force_magnitude,
+    distance_to_axis: position_magnitude,
+    sin(angle): sine_of_angle_in_between,
+})
+
+assert expr_equals(torque_magnitude_derived, torque_magnitude_from_law)
 
 
 def print_law() -> str:
