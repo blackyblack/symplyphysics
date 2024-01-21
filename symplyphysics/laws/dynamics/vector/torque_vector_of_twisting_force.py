@@ -10,7 +10,7 @@ from symplyphysics import (
 
 # Description
 ## Torque is a turning or twisting action on a body about a rotation axis due to a force.
-## It is defined as a cross product of the force vector and the position vector of the point
+## It is a pseudovector defined as a cross product of the force vector and the position vector of the point
 ## of force application.
 
 # Law: tau = [F, r]
