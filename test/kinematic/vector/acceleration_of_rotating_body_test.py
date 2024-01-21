@@ -41,9 +41,9 @@ def test_basic_law(test_args):
     result = acceleration_law.calculate_acceleration(test_args.a_r, test_args.a_t)
     assert len(result.components) == 3
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.acceleration)
-    correct_values = (-1.0, 0.1, -2.6)
-    for result_component, correct_value in zip(result.components, correct_values):
+    for result_component, correct_component in zip(result.components, test_args.a_total.components):
         result_value = convert_to(result_component, units.meter / units.second**2).evalf(3)
+        correct_value = convert_to(correct_component, units.meter / units.second**2).evalf(3)
         assert result_value == approx(correct_value, 1e-3)
 
 
@@ -51,9 +51,9 @@ def test_radial_law(test_args):
     result = acceleration_law.calculate_radial_acceleration(test_args.a_total, test_args.a_t)
     assert len(result.components) == 3
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.acceleration)
-    correct_values = (-1.0, 0.0, 0.4)
-    for result_component, correct_value in zip(result.components, correct_values):
+    for result_component, correct_component in zip(result.components, test_args.a_r.components):
         result_value = convert_to(result_component, units.meter / units.second**2).evalf(3)
+        correct_value = convert_to(correct_component, units.meter / units.second**2).evalf(3)
         assert result_value == approx(correct_value, 1e-3)
 
 
@@ -61,9 +61,9 @@ def test_tangential_law(test_args):
     result = acceleration_law.calculate_tangential_acceleration(test_args.a_total, test_args.a_r)
     assert len(result.components) == 3
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.acceleration)
-    correct_values = (0.0, 0.1, -3.0)
-    for result_component, correct_value in zip(result.components, correct_values):
+    for result_component, correct_component in zip(result.components, test_args.a_t.components):
         result_value = convert_to(result_component, units.meter / units.second**2).evalf(3)
+        correct_value = convert_to(correct_component, units.meter / units.second**2).evalf(3)
         assert result_value == approx(correct_value, 1e-3)
 
 
