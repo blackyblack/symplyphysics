@@ -11,6 +11,8 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematic import linear_velocity_from_angular_velocity_and_radius as linear_velocity_law
+from symplyphysics.definitions import angular_acceleration_is_angular_velocity_derivative as angular_acceleration_def
+from symplyphysics.definitions import acceleration_is_velocity_derivative as acceleration_def
 
 # Description
 ## The tangential acceleration of a rotating body represents the change in magnitude
@@ -49,18 +51,41 @@ diff_linear_velocity_law = Eq(
 )
 
 # alpha = d(omega)/dt
-diff_linear_velocity_law_sub = diff_linear_velocity_law.subs(
+angular_time = angular_acceleration_def.time
+angular_acceleration_def_sub = angular_acceleration_def.definition.subs({
+    angular_acceleration_def.angular_acceleration(angular_time): angular_acceleration,
+    angular_acceleration_def.angular_velocity(angular_time): angular_velocity(angular_time)
+})
+diff_angular_velocity_from_def = solve(
+    angular_acceleration_def_sub,
+    Derivative(angular_velocity(angular_time), angular_time)
+)[0]
+diff_linear_velocity_law_sub_angular = diff_linear_velocity_law.subs(
     Derivative(angular_velocity(time), time), 
-    angular_acceleration
+    diff_angular_velocity_from_def,
 )
 
 # a_t = dv/dt
+linear_time = acceleration_def.time
+acceleration_def_sub = acceleration_def.definition.subs({
+    acceleration_def.acceleration(linear_time): tangential_acceleration,
+    acceleration_def.velocity(linear_time): linear_velocity(linear_time),
+})
+diff_velocity_from_def = solve(
+    acceleration_def_sub,
+    Derivative(linear_velocity(linear_time), linear_time),
+)[0]
+diff_linear_velocity_law_sub_angular_and_linear = diff_linear_velocity_law_sub_angular.subs(
+    Derivative(linear_velocity(time), time),
+    diff_velocity_from_def,
+)
+
 tangential_acceleration_derived = solve(
-    diff_linear_velocity_law_sub,
-    Derivative(linear_velocity(time), time)
+    diff_linear_velocity_law_sub_angular_and_linear,
+    tangential_acceleration,
 )[0]
 
-tangential_acceleration_from_law = solve(law, tangential_acceleration)[0]
+tangential_acceleration_from_law = law.rhs
 
 assert expr_equals(
     tangential_acceleration_derived,

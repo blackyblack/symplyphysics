@@ -11,7 +11,7 @@ from symplyphysics.laws.kinematic import tangential_acceleration_of_rotating_bod
 
 # Description
 ## A body is moving along a curve. Its angular acceleration is 3.5 rad/s^2 and its rotation radius
-## about the momentary rotation axis is 0.1 m. The magnitude of its tangential acceleration should
+## around the momentary rotation axis is 0.1 m. The magnitude of its tangential acceleration should
 ## amount to 0.35 m/s^2.
 
 
