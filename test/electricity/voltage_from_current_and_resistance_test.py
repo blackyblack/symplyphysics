@@ -41,13 +41,12 @@ def test_bad_current(test_args):
 
 
 def test_bad_resistance(test_args):
-    inner_resistance = Quantity(1 * units.meter)
-    outer_resistance = Quantity(1 * units.meter)
+    resistance = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
-        voltage_law.calculate_voltage(test_args.current, inner_resistance, test_args.outer_resistance)
+        voltage_law.calculate_voltage(test_args.current, resistance, test_args.outer_resistance)
     with raises(TypeError):
         voltage_law.calculate_voltage(test_args.current, 100, test_args.outer_resistance)
     with raises(errors.UnitsError):
-        voltage_law.calculate_voltage(test_args.current, test_args.inner_resistance, outer_resistance)
+        voltage_law.calculate_voltage(test_args.current, test_args.inner_resistance, resistance)
     with raises(TypeError):
         voltage_law.calculate_voltage(test_args.current, test_args.inner_resistance, 100)
