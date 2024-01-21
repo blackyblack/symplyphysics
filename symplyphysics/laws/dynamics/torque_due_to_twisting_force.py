@@ -45,7 +45,7 @@ torque_magnitude_derived = vector_magnitude(torque_vector_derived)
 force_magnitude = vector_magnitude(force_vector)
 position_magnitude = vector_magnitude(position_vector)
 
-# Use the definition of dot product (a, b) = |a| * |b| * cos(a, b)
+# Use the definition of dot product (a, b) = |a| * |b| * cos(a, b) to find the sine of angle between vectors
 cosine_of_angle_in_between = (
     dot_vectors(force_vector, position_vector) 
     / force_magnitude 
