@@ -8,14 +8,15 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 
 ## Law: V = V_start * (1 + y * (t_end - t_start)
 ## Where:
-## V_start is liquid volume at the initial temperature
-## V is volume of liquid at temperature t
-## y is the coefficient of volumetric expansion of the liquid
+## V_start is body volume at the initial temperature
+## V is volume of body at temperature t
+## y is the coefficient of volumetric expansion of the body
 ## t_start is initial temperature
 ## t_end is final temperature
 
 ## Conditions
 ## The pressure must be constant.
+## There is no phase transition, eg melting or evaporation.
 
 
 final_volume = Symbol("final_volume", units.volume)
