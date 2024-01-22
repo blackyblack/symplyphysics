@@ -36,7 +36,8 @@ def print_law() -> str:
 
 @validate_input(force_=force, distance_to_axis_=distance_to_axis, angle_=angle)
 @validate_output(torque)
-def calculate_torque(force_: Quantity, distance_to_axis_: Quantity, angle_: Quantity | float) -> Quantity:
+def calculate_torque(force_: Quantity, distance_to_axis_: Quantity,
+    angle_: Quantity | float) -> Quantity:
     result = solve(law, torque)[0]
     angle_value = angle_.scale_factor if isinstance(angle_, Quantity) else angle_
     result_torque = result.subs({

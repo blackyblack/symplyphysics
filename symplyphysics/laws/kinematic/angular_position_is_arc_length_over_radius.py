@@ -12,7 +12,7 @@ from symplyphysics import (
 # Description:
 ## To describe the rotation of a rigid body about a fixed axis (rotational axis), a reference line is
 ## assumed to be fixed in the body, perpendicular to that axis and rotating with the body. The angular
-## position of this is measured relative to a fixed direction and is expressed as a ratio of the arc 
+## position of this is measured relative to a fixed direction and is expressed as a ratio of the arc
 ## length of a circular path and its radius r.
 
 # Law: theta = s / r

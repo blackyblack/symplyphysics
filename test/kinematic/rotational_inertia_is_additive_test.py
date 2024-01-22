@@ -26,18 +26,15 @@ def test_args_fixture():
 
 
 def test_law_two_particles(test_args):
-    result = rotational_inertia_law.calculate_rotational_inertia([
-        test_args.I1, test_args.I2
-    ])
+    result = rotational_inertia_law.calculate_rotational_inertia([test_args.I1, test_args.I2])
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.mass * units.length**2)
     result_value = convert_to(result, units.kilogram * units.meter**2).evalf(3)
     assert result_value == approx(3.1, 1e-2)
 
 
 def test_law_three_particles(test_args):
-    result = rotational_inertia_law.calculate_rotational_inertia([
-        test_args.I1, test_args.I2, test_args.I3
-    ])
+    result = rotational_inertia_law.calculate_rotational_inertia(
+        [test_args.I1, test_args.I2, test_args.I3])
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.mass * units.length**2)
     result_value = convert_to(result, units.kilogram * units.meter**2).evalf(3)
     assert result_value == approx(5.2, 1e-2)

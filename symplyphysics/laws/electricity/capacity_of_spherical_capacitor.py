@@ -27,7 +27,9 @@ relative_permittivity = Symbol("relative_permittivity", dimensionless)
 inner_radius = Symbol("inner_radius", units.length)
 outer_radius = Symbol("outer_radius", units.length)
 
-law = Eq(capacity, 4 * pi * relative_permittivity * electric_constant * inner_radius * outer_radius / (outer_radius - inner_radius))
+law = Eq(
+    capacity, 4 * pi * relative_permittivity * electric_constant * inner_radius * outer_radius /
+    (outer_radius - inner_radius))
 
 
 def print_law() -> str:

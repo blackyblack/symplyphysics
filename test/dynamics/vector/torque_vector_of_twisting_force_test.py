@@ -1,13 +1,6 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-from symplyphysics import (
-    errors,
-    units,
-    convert_to,
-    Quantity,
-    SI,
-    QuantityVector
-)
+from symplyphysics import (errors, units, convert_to, Quantity, SI, QuantityVector)
 from symplyphysics.laws.dynamics.vector import torque_vector_of_twisting_force as torque_def
 
 # Description
@@ -34,9 +27,8 @@ def test_args_fixture():
 def test_basic_law(test_args):
     result = torque_def.calculate_torque(test_args.F, test_args.r)
     for (result_component, correct_value) in zip(result.components, [8, 3, 2]):
-        assert SI.get_dimension_system().equivalent_dims(
-            result_component.dimension, units.force * units.length
-        )
+        assert SI.get_dimension_system().equivalent_dims(result_component.dimension,
+            units.force * units.length)
         result_value = convert_to(result_component, units.newton * units.meter).evalf(3)
         assert result_value == approx(correct_value, 1e-3)
 

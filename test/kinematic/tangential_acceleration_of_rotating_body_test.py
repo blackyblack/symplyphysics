@@ -24,10 +24,12 @@ def test_args_fixture():
 
 
 def test_basic_law(test_args):
-    result = tangential_acceleration_law.calculate_tangential_acceleration(test_args.alpha, test_args.r)
+    result = tangential_acceleration_law.calculate_tangential_acceleration(
+        test_args.alpha, test_args.r)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.acceleration)
     result_value = convert_to(result, units.meter / units.second**2).evalf(3)
     assert result_value == approx(0.35, 1e-3)
+
 
 def test_bad_angular_acceleration(test_args):
     alpha_b = Quantity(1.0 * units.second)

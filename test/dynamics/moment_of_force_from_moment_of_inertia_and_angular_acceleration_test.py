@@ -5,15 +5,16 @@ from sympy.physics.units.systems import SI
 from symplyphysics import (
     errors,
     units,
-    Quantity, convert_to,
+    Quantity,
+    convert_to,
 )
 from symplyphysics.laws.dynamics import moment_of_force_from_moment_of_inertia_and_angular_acceleration as moment_force_law
 
 
 @fixture(name="test_args")
 def test_args_fixture():
-    epsilon = Quantity(1 * units.radians / (units.second ** 2))
-    i = Quantity(3 * units.kilograms * units.meters ** 2)
+    epsilon = Quantity(1 * units.radians / (units.second**2))
+    i = Quantity(3 * units.kilograms * units.meters**2)
     Args = namedtuple("Args", ["i", "epsilon"])
     return Args(i=i, epsilon=epsilon)
 
