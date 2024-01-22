@@ -1,11 +1,12 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
+from sympy.physics.units import prefixes
 from symplyphysics import (units, SI, convert_to, Quantity, errors)
 from symplyphysics.laws.electricity import magnetic_field_intensity_of_infinite_wire as intensity_law
 
 # Description
-## With a current value of 1 ampere and a distance of 2 meters from the wire, the magnetic
-## field intensity will be equal to 39.79e-3 amperes per meter.
+## With a current value of 0.5 ampere and a distance of 2 meters from the wire, the magnetic
+## field intensity will be equal to 39.79 milliamperes per meter.
 ## https://www.fxyz.ru/формулы_по_физике/электричество/магнитное_поле/правило_буравчика_электромагнетизм/напряженность_магнитного_поля/
 
 
@@ -21,8 +22,8 @@ def test_args_fixture():
 def test_basic_magnetic_intensity(test_args):
     result = intensity_law.calculate_magnetic_intensity(test_args.current, test_args.distance)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.current / units.length)
-    result = convert_to(result, units.ampere / units.meter).evalf(5)
-    assert result == approx(39.79e-3, rel=0.01)
+    result = convert_to(result, units.ampere * prefixes.milli / units.meter).evalf(5)
+    assert result == approx(39.79, rel=0.01)
 
 
 def test_bad_current(test_args):

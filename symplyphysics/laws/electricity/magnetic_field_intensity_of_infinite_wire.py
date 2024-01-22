@@ -9,7 +9,7 @@ from symplyphysics import (
 )
 
 # Description
-## A magnetic field intensity is a vector field that describes the magnetic influence on moving electri
+## A magnetic field intensity is a vector field that describes the magnetic influence on moving electric
 ## charges, electric currents and magnetic materials. In the case of an infinite wire, the magnetic
 ## field intensity depends only on the current and the distance from the wire.
 
