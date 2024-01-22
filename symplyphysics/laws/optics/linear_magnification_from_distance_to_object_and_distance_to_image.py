@@ -14,7 +14,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## d is distance from lens to object
 
 ## Conditions
-## If the image is real, then a plus sign is placed before the value d and a minus sign if the image is imaginary.
+## If the image is straight, then a plus sign is placed before the value f and a minus sign if the image is inverted.
 
 
 distance_to_object = Symbol("distance_to_object", units.length)
