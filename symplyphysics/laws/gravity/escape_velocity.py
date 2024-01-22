@@ -10,6 +10,8 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 # M - planet_mass of planet
 # G - gravitational constant
 # h - height above the planet surface
+# R - radius of planet
+
 
 velocity = Symbol("initial_velocity", units.velocity)
 planet_mass = Symbol("planet_mass", units.mass)

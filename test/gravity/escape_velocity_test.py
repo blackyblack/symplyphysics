@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
     SI,
 )
-from symplyphysics.laws.gravity import first_cosmic_velocity
+from symplyphysics.laws.gravity import escape_velocity
 
 
 # First cosmic velocity for Earth near surface is 7,91 km/s
@@ -22,7 +22,7 @@ def test_args_fixture():
 
 
 def test_basic_velocity(test_args):
-    result = first_cosmic_velocity.calculate_velocity(
+    result = escape_velocity.calculate_velocity(
         test_args.m, test_args.r, test_args.h
     )
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.velocity)
@@ -31,24 +31,24 @@ def test_basic_velocity(test_args):
 
 
 def test_bad_mass(test_args):
-    bm = Quantity(5000000 * units.coulomb)
+    bm = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        first_cosmic_velocity.calculate_velocity(bm, test_args.r, test_args.h)
+        escape_velocity.calculate_velocity(bm, test_args.r, test_args.h)
     with raises(TypeError):
-        first_cosmic_velocity.calculate_velocity(100, test_args.r, test_args.h)
+        escape_velocity.calculate_velocity(100, test_args.r, test_args.h)
 
 
 def test_bad_radius(test_args):
-    br = Quantity(5000000 * units.coulomb)
+    br = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        first_cosmic_velocity.calculate_velocity(test_args.m, br, test_args.h)
+        escape_velocity.calculate_velocity(test_args.m, br, test_args.h)
     with raises(TypeError):
-        first_cosmic_velocity.calculate_velocity(test_args.m, 100, test_args.h)
+        escape_velocity.calculate_velocity(test_args.m, 100, test_args.h)
 
 
 def test_bad_height(test_args):
     bh = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        first_cosmic_velocity.calculate_velocity(test_args.m, test_args.r, bh)
+        escape_velocity.calculate_velocity(test_args.m, test_args.r, bh)
     with raises(TypeError):
-        first_cosmic_velocity.calculate_velocity(test_args.m, test_args.r, 100)
+        escape_velocity.calculate_velocity(test_args.m, test_args.r, 100)
