@@ -4,7 +4,7 @@ from symplyphysics import (units, SI, convert_to, Quantity, errors)
 from symplyphysics.laws.condensed_matter import resistance_from_temperature as resistance_law
 
 # Description
-## With a temperature coefficient of 15 [1 / kelvin], a temperature change of 300 [kelvin]
+## With a temperature coefficient of 15 [1 / kelvin], a temperature of 573.15 [kelvin]
 ## and an initial resistance of [25 ohm], the resistance will be 112525 [ohm].
 ## https://www.calculatoratoz.com/ru/temperature-dependence-of-resistance-calculator/Calc-2232
 
@@ -13,7 +13,7 @@ from symplyphysics.laws.condensed_matter import resistance_from_temperature as r
 def test_args_fixture():
     resistance_initial = Quantity(25 * units.ohm)
     temperature_coefficient = Quantity(15 * (1 / units.kelvin))
-    temperature = Quantity(300 * units.kelvin)
+    temperature = Quantity(573.15 * units.kelvin)
 
     Args = namedtuple("Args",
         ["resistance_initial", "temperature_coefficient", "temperature"])

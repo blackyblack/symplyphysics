@@ -12,11 +12,11 @@ from symplyphysics import (
 ## The resistance depends on the temperature. For different materials, the value
 ## of the temperature coefficient and resistance at zero degrees celsius may differ.
 
-## Law is: R = R0 * (1 + a * T), where
+## Law is: R = R0 * (1 + a * (T - 273.15)), where
 ## R - resistance,
 ## R0 - resistance at zero degrees celsius,
 ## a - temperature coefficient,
-## T - temperature change.
+## T - temperature.
 
 resistance = Symbol("resistance", units.impedance)
 
@@ -24,7 +24,9 @@ resistance_initial = Symbol("resistance_initial", units.impedance)
 temperature_coefficient = Symbol("temperature_coefficient", 1 / units.temperature)
 temperature = Symbol("temperature", units.temperature)
 
-law = Eq(resistance, resistance_initial * (1 + temperature_coefficient * temperature))
+celsius_to_kelvin = Quantity(273.15 * units.kelvin)
+
+law = Eq(resistance, resistance_initial * (1 + temperature_coefficient * (temperature - celsius_to_kelvin)))
 
 
 def print_law() -> str:
