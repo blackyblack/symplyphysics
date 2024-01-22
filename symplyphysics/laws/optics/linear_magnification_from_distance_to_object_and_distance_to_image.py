@@ -6,15 +6,15 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## Magnification, in optics, the size of an image relative to the size of the object creating it.
 ## Depending on the position of the object in relation to the lens, the linear dimensions of the image change.
 
+
 ## Law: M = f / d
 ## Where:
 ## M is linear magnification produced by lense
-## f is distance from lens to image.
-## d is distance from lens to object,
+## f is distance from lens to image
+## d is distance from lens to object
 
 ## Conditions
-## f > 0 – for real images; f < 0 – for imaginary images. The "–" sign is placed before d only when a converging beam of rays falls on the lens.
-## Then they are mentally extended to the intersection behind the lens, an imaginary light source is placed there, and the distance d is determined for it.
+## If the image is real, then a plus sign is placed before the value d and a minus sign if the image is imaginary.
 
 
 distance_to_object = Symbol("distance_to_object", units.length)
