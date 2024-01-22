@@ -29,7 +29,7 @@ def print_law() -> str:
 
 @validate_input(image_height_=image_height, object_height_=object_height)
 @validate_output(magnification)
-def calculate_magnification(image_height_, object_height_: Quantity) -> float:
+def calculate_magnification(image_height_: Quantity, object_height_: Quantity) -> float:
     result_expr = solve(law, magnification, dict=True)[0][magnification]
     result_magnification = result_expr.subs({
         image_height: image_height_,
