@@ -4,7 +4,6 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 
 # Description
 ## The optical path length L between points A and B of a transparent medium is the distance over which light (optical radiation) has spread it would be in a vacuum for the same time it takes from A to B in the medium.
-## Since the speed of light in any medium is less than its speed in a vacuum, L is always greater than the actual distance traveled.
 
 
 ## Law: L = l * n
