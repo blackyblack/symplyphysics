@@ -4,7 +4,7 @@ from symplyphysics import (units, SI, convert_to, Quantity, errors)
 from symplyphysics.laws.electricity import magnetic_induction_of_wire as induction_law
 
 # Description
-## For a distance of 0.5 meters from the conductor and a current of 20 A, the magnetic field induction is 8 tesla.
+## For a distance of 0.5 meters from the conductor and a current of 20 A, the magnetic field induction is 8e-6 tesla.
 ## https://pressbooks.online.ucf.edu/osuniversityphysics2/chapter/magnetic-field-due-to-a-thin-straight-wire/#:~:text=Summary,the%20permeability%20of%20free%20space.
 
 
