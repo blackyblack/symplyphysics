@@ -18,7 +18,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## Conditions
 ## If virtual image is formed, f is negative.
 ## If real image is formed, f is positive.
-## d is always negative as it is on left side of the lens.
+## d is always negative as object is on left side of the lens.
 
 
 distance_to_object = Symbol("distance_to_object", units.length)
