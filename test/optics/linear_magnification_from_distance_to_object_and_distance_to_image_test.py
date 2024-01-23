@@ -15,7 +15,7 @@ from symplyphysics.laws.optics import linear_magnification_from_distance_to_obje
 @fixture(name="test_args")
 def test_args_fixture():
     distance_to_image = Quantity(0.175 * units.meter)
-    distance_to_object = Quantit(-0.07 * units.meter)
+    distance_to_object = Quantity(-0.07 * units.meter)
     Args = namedtuple("Args", ["distance_to_image", "distance_to_object"])
     return Args(
         distance_to_image=distance_to_image,
