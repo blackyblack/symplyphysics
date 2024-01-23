@@ -1,8 +1,4 @@
 #!/usr/bin/env python3
-"""
-Description:
-    A diver makes 2.5 revolutions...
-"""
 
 from sympy import solve, symbols, pi
 from symplyphysics import units, print_expression
