@@ -18,7 +18,7 @@ from sympy.physics.units import magnetic_constant
 ## Law is: F = mu0 * mu * I1 * I2 * l / (2 * pi * r), where
 ## F - force of interaction of wires,
 ## mu0 - magnetic constant,
-## mu - relative permeability,
+## mu - relative permeability of medium,
 ## I1 - current in the first wire,
 ## I2 - current in the second wire,
 ## l - length of wires,

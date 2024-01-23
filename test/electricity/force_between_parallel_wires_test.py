@@ -5,7 +5,7 @@ from symplyphysics.laws.electricity import force_between_parallel_wires as force
 
 # Description
 ## Let the current in the first wire be 0.5 amperes, and in the second 1.5 amperes.
-## Then, with a length of wires equal to 1 meter and a relative magnetic constant equal to 1,
+## Then, with a length of wires equal to 1 meter and a relative permeability equal to 1,
 ## the force will be equal to 7.5e-8 newtons at a distance of 2 meters.
 ## https://www.calculatoratoz.com/ru/force-between-parallel-wires-calculator/Calc-2131
 
