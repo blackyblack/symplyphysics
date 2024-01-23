@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+"""
+Description:
+    A diver makes 2.5 revolutions...
+"""
 
 from sympy import solve, symbols, pi
 from symplyphysics import units, print_expression
@@ -20,10 +24,14 @@ const_acceleration_law_sub = const_acceleration_law.law.subs({
 # First solution is negative
 dive_time = solve(const_acceleration_law_sub, const_acceleration_law.movement_time)[1]
 
+# Average angular velocity can be found as ratio of total angular displacement to total rotation time.
+# This is analogous to average linear velocity being ratio of total distance traveled to total travel time.
 angular_velocity_law_sub = angular_velocity_law.law.subs({
     angular_velocity_law.radians: total_angular_displacement,
     angular_velocity_law.time: dive_time,
 })
+# We are not interested in the sign of angular velocity, thus angular frequency and angular velocity
+# are interchangeable terms in this context.
 average_angular_velocity = solve(
     angular_velocity_law_sub,
     angular_velocity_law.angular_frequency,
