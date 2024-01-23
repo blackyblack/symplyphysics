@@ -1,4 +1,4 @@
-from sympy import Eq, sin, solve
+from sympy import Eq, sin, solve, pi
 from symplyphysics import (
     units,
     Quantity,
@@ -12,6 +12,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.dynamics import mechanical_work_from_force_and_move as linear_work_law
 from symplyphysics.laws.kinematic import angular_position_is_arc_length_over_radius as angular_position_def
 from symplyphysics.laws.dynamics import torque_due_to_twisting_force as torque_def
+from symplyphysics.laws.kinematic import planar_projection_is_cosine as projection_law
 
 # Description
 ## When a torque accelerates a rigid body in rotation about a fixed axis, the torque does work on
@@ -32,17 +33,28 @@ law = Eq(work, torque * angular_displacement)
 
 # Derive law from non-rotational counterpart.
 ## We assume a particle moving along a curved trajectory due to a force F applied to it.
-## The displacement of the particle should be small enough so that the position vector
-## is approximately the same at all points of the trajectory. In that case, the force vector
-## is assumed to form an angle phi with the position vector of the particle. Since only the
-## component of the force vector that is tangent to the path is the one accelerating the
-## particle, it does work on the particle.
+## Since only the component of the force vector which accelerates the particle does work on it,
+## we are only interested in the tangent component of it.
+
+# Conditions:
+## The displacement of the particle should be small enough, so that the force, radius vector,
+## and angle between the two stay the same at all points of the path in question.
+
+# Reference frame: 
+## the x axis points in the direction of the radius vector
+## the y axis is tangent to the part of the path in question
 
 force = Symbol("force", units.force)
-angle = Symbol("angle", angle_type)
+angle = Symbol("angle", angle_type)  # angle between force and radius vectors
 radius = Symbol("radius", units.length)
 
-tangent_force = force * sin(angle)
+tangent_force = solve(
+    projection_law.law, 
+    projection_law.projection
+)[0].subs({
+    projection_law.vector_length: force,
+    projection_law.vector_angle: pi / 2 - angle  # complementary angle
+})
 
 distance_traveled = solve(
     angular_position_def.law,
@@ -69,9 +81,7 @@ work_derived_sub = solve(
     dict=True
 )[0][work]
 
-work_from_law = law.rhs
-
-assert expr_equals(work_derived_sub, work_from_law)
+assert expr_equals(work_derived_sub, law.rhs)
 
 
 def print_law() -> str:
