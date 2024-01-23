@@ -22,7 +22,7 @@ def test_args_fixture():
 def test_basic_magnetic_intensity(test_args):
     result = intensity_law.calculate_magnetic_intensity(test_args.current, test_args.distance)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.current / units.length)
-    result = convert_to(result, units.ampere * prefixes.milli / units.meter).evalf(5)
+    result = convert_to(result, prefixes.milli * units.ampere / units.meter).evalf(5)
     assert result == approx(39.79, rel=0.01)
 
 
