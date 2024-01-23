@@ -29,7 +29,7 @@ def print_law() -> str:
 
 @validate_input(geometric_path_=geometric_path, refractive_index_=refractive_index)
 @validate_output(optical_path)
-def calculate_optical_path(geometric_path_ Quantity, refractive_index_: float) -> Quantity:
+def calculate_optical_path(geometric_path_: Quantity, refractive_index_: float) -> Quantity:
     result_expr = solve(law, optical_path, dict=True)[0][optical_path]
     result_optical_path = result_expr.subs({
         geometric_path: geometric_path_,
