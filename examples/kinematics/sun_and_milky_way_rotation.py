@@ -46,9 +46,7 @@ print(f"Formula for the Sun's period of revolution:\n{print_expression(sun_perio
 print(f"The Sun makes one revolution around the Milky Way's center in {sun_period_value} years.")
 
 count_revolutions = time_elapsed / sun_period
-count_revolutions_value = convert_to(
-    Quantity(count_revolutions.subs(values)), dimensionless
-).evalf(3)
+count_revolutions_value = Quantity(count_revolutions.subs(values)).scale_factor.evalf(3)
 
 time_elapsed_value = convert_to(values[time_elapsed], units.year).evalf(3)
 
