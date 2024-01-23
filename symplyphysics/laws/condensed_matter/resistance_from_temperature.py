@@ -12,11 +12,12 @@ from symplyphysics import (
 ## The resistance depends on the temperature. For different materials, the value
 ## of the temperature coefficient and resistance at zero degrees celsius may differ.
 
-## Law is: R = R0 * (1 + a * (T - 273.15)), where
+## Law is: R = R0 * (1 + a * (T - T0)), where
 ## R - resistance,
 ## R0 - resistance at zero degrees celsius,
 ## a - temperature coefficient,
-## T - temperature.
+## T - temperature,
+## T0 - 273.15 kelvin degrees.
 
 resistance = Symbol("resistance", units.impedance)
 
