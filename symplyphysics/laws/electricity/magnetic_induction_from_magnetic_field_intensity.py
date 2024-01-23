@@ -17,10 +17,10 @@ from sympy.physics.units import magnetic_constant
 ## Law is: B = mu0 * mu * H, where
 ## B - magnetic field induction,
 ## mu0 - magnetic constant,
-## mu - relative permeability,
+## mu - relative permeability of medium,
 ## H - magnetic field intensity.
 
-induction = Symbol("induction", units.force / units.current / units.length)
+induction = Symbol("induction", units.magnetic_density)
 
 relative_permeability = Symbol("relative_permeability", dimensionless)
 intensity = Symbol("intensity", units.current / units.length)

@@ -5,7 +5,7 @@ from symplyphysics import (units, SI, convert_to, Quantity, errors)
 from symplyphysics.laws.electricity import magnetic_induction_from_magnetic_field_intensity as induction_law
 
 # Description
-## With a relative magnetic permeability of 1592 and a magnetic field induction of 1 ampere per meter,
+## With a relative magnetic permeability of 1592 and a magnetic field intensity of 1 ampere per meter,
 ## the magnetic induction is 2 millitesla.
 ## https://www.calculatoratoz.com/en/magnetic-permeability-calculator/Calc-2144
 
@@ -21,8 +21,8 @@ def test_args_fixture():
 
 def test_basic_induction(test_args):
     result = induction_law.calculate_induction(test_args.relative_permeability, test_args.intensity)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force / units.current / units.length)
-    result = convert_to(result, units.tesla * prefixes.milli).evalf(5)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.magnetic_density)
+    result = convert_to(result, prefixes.milli * units.tesla).evalf(5)
     assert result == approx(2, rel=0.01)
 
 
