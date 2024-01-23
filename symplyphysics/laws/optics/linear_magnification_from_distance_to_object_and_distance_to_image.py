@@ -5,6 +5,8 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 # Description
 ## Magnification, in optics, the size of an image relative to the size of the object creating it.
 ## Depending on the position of the object in relation to the lens, the linear dimensions of the image change.
+## If magnfication is positive, it means image formed is virtual and erect.
+## If magnfication is negative, it means image formed is real and inverted.
 
 
 ## Law: M = f / d
@@ -14,7 +16,9 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## d is distance from lens to object
 
 ## Conditions
-## If the image is virtual and erect, then a plus sign is placed before the value f and a minus sign if the image is real and inverted.
+## If virtual image is formed, f is negative.
+## If real image is formed, f is positive.
+## d is always negative as it is on left side of the lens.
 
 
 distance_to_object = Symbol("distance_to_object", units.length)
