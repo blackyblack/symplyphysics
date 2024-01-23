@@ -36,3 +36,9 @@ def test_bad_geometric_path(test_args):
         optical_path.calculate_optical_path(bad_geometric_path, test_args.refractive_index)
     with raises(TypeError):
         optical_path.calculate_optical_path(100, test_args.refractive_index)
+
+
+def test_bad_refractive_index(test_args):
+    bad_refractive_index = Quantity(1 * units.coulomb)
+    with raises(errors.UnitsError):
+        optical_path.calculate_optical_path(test_args.geometric_path, bad_refractive_index)
