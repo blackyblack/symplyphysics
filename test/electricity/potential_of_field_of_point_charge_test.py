@@ -19,7 +19,8 @@ def test_args_fixture():
 
 
 def test_basic_electrostatic_potential(test_args):
-    result = potential_law.calculate_electrostatic_potential(test_args.relative_permittivity, test_args.distance, test_args.charge)
+    result = potential_law.calculate_electrostatic_potential(test_args.relative_permittivity,
+        test_args.distance, test_args.charge)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.voltage)
     result = convert_to(result, units.volt).evalf(5)
     assert result == approx(1.4e-6, rel=0.1)
@@ -28,7 +29,8 @@ def test_basic_electrostatic_potential(test_args):
 def test_bad_relative_permittivity(test_args):
     relative_permittivity = Quantity(1 * units.joule)
     with raises(errors.UnitsError):
-        potential_law.calculate_electrostatic_potential(relative_permittivity, test_args.distance, test_args.charge)
+        potential_law.calculate_electrostatic_potential(relative_permittivity, test_args.distance,
+            test_args.charge)
     with raises(TypeError):
         potential_law.calculate_electrostatic_potential(True, test_args.distance, test_args.charge)
 
@@ -36,14 +38,18 @@ def test_bad_relative_permittivity(test_args):
 def test_bad_distance(test_args):
     distance = Quantity(1 * units.joule)
     with raises(errors.UnitsError):
-        potential_law.calculate_electrostatic_potential(test_args.relative_permittivity, distance, test_args.charge)
+        potential_law.calculate_electrostatic_potential(test_args.relative_permittivity, distance,
+            test_args.charge)
     with raises(TypeError):
-        potential_law.calculate_electrostatic_potential(test_args.relative_permittivity, 100, test_args.charge)
+        potential_law.calculate_electrostatic_potential(test_args.relative_permittivity, 100,
+            test_args.charge)
 
 
 def test_bad_charge(test_args):
     charge = Quantity(1 * units.joule)
     with raises(errors.UnitsError):
-        potential_law.calculate_electrostatic_potential(test_args.relative_permittivity, test_args.distance, charge)
+        potential_law.calculate_electrostatic_potential(test_args.relative_permittivity,
+            test_args.distance, charge)
     with raises(TypeError):
-        potential_law.calculate_electrostatic_potential(test_args.relative_permittivity, test_args.distance, 100)
+        potential_law.calculate_electrostatic_potential(test_args.relative_permittivity,
+            test_args.distance, 100)

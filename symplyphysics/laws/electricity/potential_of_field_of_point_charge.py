@@ -29,7 +29,8 @@ relative_permittivity = Symbol("relative_permittivity", dimensionless)
 distance = Symbol("distance", units.length)
 charge = Symbol("charge", units.charge)
 
-law = Eq(electrostatic_potential, charge / (4 * pi * electric_constant * relative_permittivity * distance))
+law = Eq(electrostatic_potential,
+    charge / (4 * pi * electric_constant * relative_permittivity * distance))
 
 
 def print_law() -> str:
@@ -38,7 +39,8 @@ def print_law() -> str:
 
 @validate_input(relative_permittivity_=relative_permittivity, distance_=distance, charge_=charge)
 @validate_output(electrostatic_potential)
-def calculate_electrostatic_potential(relative_permittivity_: float, distance_: Quantity, charge_: Quantity) -> Quantity:
+def calculate_electrostatic_potential(relative_permittivity_: float, distance_: Quantity,
+    charge_: Quantity) -> Quantity:
     result_expr = solve(law, electrostatic_potential, dict=True)[0][electrostatic_potential]
     result_expr = result_expr.subs({
         relative_permittivity: relative_permittivity_,

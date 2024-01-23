@@ -1,6 +1,6 @@
 from sympy import Eq, solve
-from symplyphysics import (angle_type, units, Quantity, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (angle_type, units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 
 # Description
 ## The moment of force (the moment of force relative to a point)
@@ -13,7 +13,7 @@ from symplyphysics import (angle_type, units, Quantity, Symbol, print_expression
 ## I - body moment of inertia
 ## M - moment of force
 
-angular_acceleration = Symbol("angular_acceleration", angle_type / (units.time **  2))
+angular_acceleration = Symbol("angular_acceleration", angle_type / (units.time**2))
 moment_of_inertia = Symbol("moment_of_inertia", units.mass * units.area)
 moment_of_force = Symbol("moment_of_force", units.force * units.length * angle_type)
 
@@ -26,7 +26,8 @@ def print_law() -> str:
 
 @validate_input(moment_of_inertia_=moment_of_inertia, angular_acceleration_=angular_acceleration)
 @validate_output(moment_of_force)
-def calculate_moment_of_force(moment_of_inertia_: Quantity, angular_acceleration_: Quantity) -> Quantity:
+def calculate_moment_of_force(moment_of_inertia_: Quantity,
+    angular_acceleration_: Quantity) -> Quantity:
     solved = solve(law, moment_of_force, dict=True)[0][moment_of_force]
     result_expr = solved.subs({
         moment_of_inertia: moment_of_inertia_,

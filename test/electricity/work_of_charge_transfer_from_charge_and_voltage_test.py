@@ -4,7 +4,7 @@ from symplyphysics import (units, SI, convert_to, Quantity, errors)
 from symplyphysics.laws.electricity import work_of_charge_transfer_from_charge_and_voltage as work_law
 
 # Description
-## At a voltage of 5 volts and a charge of 1 coulomb, work of charge transfer 
+## At a voltage of 5 volts and a charge of 1 coulomb, work of charge transfer
 ## will be equal to 5 joules.
 ## https://www.fxyz.ru/формулы_по_физике/электричество/цепи_постоянного_тока/работа_и_мощность_электрического_тока/работа_электрического_тока/
 
