@@ -15,7 +15,7 @@ from symplyphysics import (
 ## Law is: m = I * S, where
 ## m - magnetic moment,
 ## I - current,
-## S - area of the circuit through which the current flows.
+## S - area of closed contour, which is formed by a closed thin conductor through which current flows.
 
 moment = Symbol("moment", units.current * units.area)
 
