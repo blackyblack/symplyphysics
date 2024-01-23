@@ -14,15 +14,15 @@ from symplyphysics.laws.optics import linear_magnification_from_distance_to_obje
 
 @fixture(name="test_args")
 def test_args_fixture():
-    distance_to_image = Quantity(-0.175 * units.meter)
-    distance_to_object = Quantity(0.07 * units.meter)
+    distance_to_image = Quantity(0.175 * units.meter)
+    distance_to_object = Quantit(-0.07 * units.meter)
     Args = namedtuple("Args", ["distance_to_image", "distance_to_object"])
     return Args(
         distance_to_image=distance_to_image,
         distance_to_object=distance_to_object,
                )
 
-## The minus sign means that the image is straigth.
+## The minus sign means that the image is real and inverted.
 def test_basic_magnification(test_args):
     result = magnification.calculate_magnification(test_args.distance_to_image, test_args.distance_to_object)
     assert result == approx(-2.5, 0.001)
