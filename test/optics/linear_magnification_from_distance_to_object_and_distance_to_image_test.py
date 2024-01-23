@@ -22,7 +22,7 @@ def test_args_fixture():
         distance_to_object=distance_to_object,
                )
 
-## The minus sign means that the image is upside down.
+## The minus sign means that the image is straigth.
 def test_basic_magnification(test_args):
     result = magnification.calculate_magnification(test_args.distance_to_image, test_args.distance_to_object)
     assert result == approx(-2.5, 0.001)
