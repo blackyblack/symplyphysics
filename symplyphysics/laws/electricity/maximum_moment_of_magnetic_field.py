@@ -17,6 +17,13 @@ from symplyphysics import (
 ## I - current,
 ## S - area of closed contour, which is formed by a closed thin conductor through which current flows.
 
+# Conditions:
+## - Ideally, the conductor itself should be infinitely thin. But a conductor can have
+##   any shape and size if its dimensions can be neglected relative to the size of the
+##   closed circuit that it forms.
+## - The plane must be flat for this formula to be applicable. If there are several turns
+##   of the conductor, then the formula will be similar, but still different.
+
 moment = Symbol("moment", units.current * units.area)
 
 current = Symbol("current", units.current)
