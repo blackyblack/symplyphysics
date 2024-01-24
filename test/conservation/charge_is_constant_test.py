@@ -9,7 +9,7 @@ from symplyphysics import (
 )
 from symplyphysics.laws.conservation import charge_is_constant
 
-# An isolated system contained -1 C of charge in total. At any time in the future 
+# An isolated system contained -1 C of charge in total. At any time in the future
 # it will contain the same amount of charge.
 
 
@@ -27,7 +27,7 @@ def test_basic_law(test_args):
     assert result_charge == approx(-1, 1e-3)
 
 
-def test_bad_args(test_args):
+def test_bad_args():
     bad_charge_before = Quantity(1 * units.second)
     with raises(errors.UnitsError):
         charge_is_constant.calculate_charge_after(bad_charge_before)

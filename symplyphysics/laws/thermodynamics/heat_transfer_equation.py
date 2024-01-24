@@ -3,6 +3,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
     validate_output)
 
 # Description
+
 # heat flow calculation Q = k * (T1-T2)/ d * S
 # where:
 # k = material thermal conductivity, ability of a material to transfer heat
@@ -18,6 +19,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 # The heat flow sign indicates the direction of heat transfer and reflects the direction of heat flow from one temperature to another.
 # If heat flow is positive, it means that thermal energy moves from a higher temperature to a lower temperature.
 # If heat flow is negative, it means that thermal energy moves from a lower temperature to a higher temperature.
+
 
 heat_flow = Symbol("heat_flow", units.power)
 material_thermal_conductivity = Symbol("material_thermal_conductivity", units.power / (units.temperature * units.length))

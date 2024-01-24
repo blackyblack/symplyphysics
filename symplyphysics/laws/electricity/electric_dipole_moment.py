@@ -23,9 +23,7 @@ electric_moment = Symbol("electric_moment", units.charge * units.length)
 charge = Symbol("charge", units.charge)
 distance = Symbol("distance", units.length)
 
-law = Eq(
-    electric_moment,
-    charge * distance)
+law = Eq(electric_moment, charge * distance)
 
 
 def print_law() -> str:

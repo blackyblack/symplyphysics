@@ -17,15 +17,12 @@ def test_args_fixture():
     first_area = Quantity(10 * units.meter**2)
     second_area = Quantity(0.1 * units.meter**2)
     Args = namedtuple("Args", ["first_force", "first_area", "second_area"])
-    return Args(
-        first_force=first_force,
-        first_area=first_area,
-        second_area=second_area
-               )
+    return Args(first_force=first_force, first_area=first_area, second_area=second_area)
 
 
 def test_basic_force(test_args):
-    result = hydraulic.calculate_output_force(test_args.first_force, test_args.first_area, test_args.second_area)
+    result = hydraulic.calculate_output_force(test_args.first_force, test_args.first_area,
+        test_args.second_area)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
     result_force = convert_to(result, units.newton).evalf(5)
     assert result_force == approx(20, 0.001)

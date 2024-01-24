@@ -13,12 +13,13 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, dimensionl
 
 transition_frequency = Symbol("transition_frequency", units.frequency)
 
-number_level_to  = Symbol("number_level_to", dimensionless)
+number_level_to = Symbol("number_level_to", dimensionless)
 number_level_from = Symbol("number_level_from", dimensionless)
 
 rydberg_constant = Quantity(3.29e15 * units.hertz)
 
-law = Eq(transition_frequency, rydberg_constant * ((1 / number_level_to**2) - (1 / number_level_from**2)))
+law = Eq(transition_frequency,
+    rydberg_constant * ((1 / number_level_to**2) - (1 / number_level_from**2)))
 
 
 def print_law() -> str:

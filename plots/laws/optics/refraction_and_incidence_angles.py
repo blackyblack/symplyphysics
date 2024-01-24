@@ -17,7 +17,8 @@ BENZENE_REFRACTIVE_INDEX = 1.4957  # Source: https://refractiveindex.info/?shelf
 DIAMOND_REFRACTIVE_INDEX = 2.4168  # Source: https://refractiveindex.info/?shelf=3d&book=crystals&page=diamond
 
 incident_index, refracted_index = symbols("incident_index refracted_index", positive=True)
-angle_of_incidence, angle_of_refraction = symbols("angle_of_incidence angle_of_refraction", real=True)
+angle_of_incidence, angle_of_refraction = symbols("angle_of_incidence angle_of_refraction",
+    real=True)
 
 law = refraction_law.law.subs({
     refraction_law.incidence_refractive_index: incident_index,
@@ -42,8 +43,11 @@ def maximum_angle_of_incidence(incident_index_: float, refracted_index_: float) 
     # if the equation has no solution, it means that the maximum angle is pi/2
     return solved[0] if solved else pi / 2
 
-assert maximum_angle_of_incidence(AIR_REFRACTIVE_INDEX, WATER_REFRACTIVE_INDEX) == approx(pi / 2, 1e-5)
-assert maximum_angle_of_incidence(WATER_REFRACTIVE_INDEX, AIR_REFRACTIVE_INDEX) == approx(0.84911, 1e-5)
+
+assert maximum_angle_of_incidence(AIR_REFRACTIVE_INDEX,
+    WATER_REFRACTIVE_INDEX) == approx(pi / 2, 1e-5)
+assert maximum_angle_of_incidence(WATER_REFRACTIVE_INDEX,
+    AIR_REFRACTIVE_INDEX) == approx(0.84911, 1e-5)
 
 
 @dataclass
@@ -55,9 +59,7 @@ class SubplotData:
 
 
 def make_subplot(data_: SubplotData):
-    maximum_angle = maximum_angle_of_incidence(
-        data_.incident_index, data_.refracted_index
-    )
+    maximum_angle = maximum_angle_of_incidence(data_.incident_index, data_.refracted_index)
     angle_of_refraction_value = solved_angle_of_refraction.subs({
         incident_index: data_.incident_index,
         refracted_index: data_.refracted_index,
@@ -77,28 +79,28 @@ def make_subplot(data_: SubplotData):
 
 datas = [
     SubplotData(
-        incident_index=DIAMOND_REFRACTIVE_INDEX,
-        refracted_index=AIR_REFRACTIVE_INDEX,
-        label="diamond to air",
-        color="black",
+    incident_index=DIAMOND_REFRACTIVE_INDEX,
+    refracted_index=AIR_REFRACTIVE_INDEX,
+    label="diamond to air",
+    color="black",
     ),
     SubplotData(
-        incident_index=BENZENE_REFRACTIVE_INDEX,
-        refracted_index=WATER_REFRACTIVE_INDEX,
-        label="benzene to water",
-        color="blue",
+    incident_index=BENZENE_REFRACTIVE_INDEX,
+    refracted_index=WATER_REFRACTIVE_INDEX,
+    label="benzene to water",
+    color="blue",
     ),
     SubplotData(
-        incident_index=WATER_REFRACTIVE_INDEX,
-        refracted_index=BENZENE_REFRACTIVE_INDEX,
-        label="water to benzene",
-        color="green",
+    incident_index=WATER_REFRACTIVE_INDEX,
+    refracted_index=BENZENE_REFRACTIVE_INDEX,
+    label="water to benzene",
+    color="green",
     ),
     SubplotData(
-        incident_index=AIR_REFRACTIVE_INDEX,
-        refracted_index=WATER_REFRACTIVE_INDEX,
-        label="air to water",
-        color="red",
+    incident_index=AIR_REFRACTIVE_INDEX,
+    refracted_index=WATER_REFRACTIVE_INDEX,
+    label="air to water",
+    color="red",
     ),
 ]
 
