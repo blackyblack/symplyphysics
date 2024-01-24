@@ -7,7 +7,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## Charge density can be either positive or negative, since electric charge can be either positive or negative.
 
 
-## Law: λ = q / l
+## Definition: λ = q / l
 ## Where:
 ## λ is linear charge density
 ## q is charge
@@ -18,17 +18,18 @@ linear_charge_density = Symbol("linear_charge_density", units.charge / units.len
 charge = Symbol("charge", units.charge)
 length = Symbol("length", units.length)
 
-law = Eq(linear_charge_density, charge / length)
+definition = Eq(linear_charge_density, charge / length)
 
+definition_units_SI = units.coulomb / units.meter
 
-def print_law() -> str:
-    return print_expression(law)
+def print_definition() -> str:
+    return print_expression(definition)
 
 
 @validate_input(charge_=charge, length_=length)
 @validate_output(linear_charge_density)
 def calculate_linear_charge_density(charge_, length_: Quantity) -> Quantity:
-    result_expr = solve(law, linear_charge_density, dict=True)[0][linear_charge_density]
+    result_expr = solve(definition, linear_charge_density, dict=True)[0][linear_charge_density]
     result_linear_charge_density = result_expr.subs({
         charge: charge_,
         length: length_,
