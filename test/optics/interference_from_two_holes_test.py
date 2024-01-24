@@ -25,6 +25,8 @@ def test_basic_travel_difference(test_args):
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
     result_travel_difference = convert_to(result, prefixes.micro * units.meters).evalf(5)
     assert result_travel_difference == approx(50 / 3, 0.001)
+
+
 def test_bad_coordinate(test_args):
     xb = Quantity(5 * units.coulomb)
     with raises(errors.UnitsError):
