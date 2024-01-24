@@ -6,7 +6,10 @@ from symplyphysics import (Quantity, Symbol, print_expression, units, validate_i
 
 
 # Description
-# The relativistic sum of velocities is the sum total of velocities in a body or system
+# In relativistic mechanics, if a body moves relative to a moving reference
+# system with velocity v1, and the velocity of the system relative to
+# the observer is v2, then the velocity of the body relative
+# to the observer will be:
 # Law: v = (v1 + v2) / (1 + (v1 * v2) / c**2), where
 # v1 is first velocity,
 # v2 is second velocity,
@@ -14,17 +17,14 @@ from symplyphysics import (Quantity, Symbol, print_expression, units, validate_i
 # v is relativistic sum of velocities.
 
 
-# Conditions
-# Non-zero rest mass
-# Non-zero velocity
-
 first_velocity = Symbol("first_velocity", units.velocity)
 second_velocity = Symbol("second_velocity", units.velocity)
-relativistic_sum_of_velocities = Symbol(
-    "relativistic_sum_of_velocities", units.velocity)
+resulting_velocity = Symbol(
+    "resulting_velocity", units.velocity)
+
 
 law = Eq(
-    relativistic_sum_of_velocities,
+    resulting_velocity,
     (first_velocity + second_velocity) / (1 + (first_velocity * second_velocity) / speed_of_light**2))
 
 
@@ -36,9 +36,9 @@ def print_law() -> str:
     first_velocity_=first_velocity,
     second_velocity_=second_velocity,
 )
-@validate_output(relativistic_sum_of_velocities)
-def calculate_relativistic_sum_of_velocities(first_velocity_, second_velocity_):
-    result_expr = solve(law, relativistic_sum_of_velocities)[0]
+@validate_output(resulting_velocity)
+def calculate_velocity(first_velocity_, second_velocity_):
+    result_expr = solve(law, resulting_velocity)[0]
     velocity_applied = result_expr.subs({
         first_velocity: first_velocity_,
         second_velocity: second_velocity_,
