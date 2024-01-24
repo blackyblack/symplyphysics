@@ -26,7 +26,7 @@ def print_law() -> str:
 
 @validate_input(induction_=induction, area_=area, angle_=angle)
 @validate_output(flux)
-def calculate_flux(induction_: Quantity, area_: Quantity, angle_: Union[float, Quantity]) -> Quantity:
+def calculate_flux(induction_: Quantity, area_: Quantity, angle_: Quantity | float) -> Quantity:
     result_flux_expr = solve(law, flux, dict=True)[0][flux]
     result_expr = result_flux_expr.subs({induction: induction_, area: area_, angle: angle_})
     return Quantity(result_expr)
