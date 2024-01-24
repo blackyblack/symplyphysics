@@ -36,7 +36,6 @@ def print_law() -> str:
 @validate_output(magnification)
 def calculate_magnification(distance_to_image_ : Quantity, distance_to_object_: Quantity) -> float:
     if distance_to_object_.scale_factor > 0:
-
         raise ValueError("The distance to the object must be non-positive.")
     result_expr = solve(law, magnification, dict=True)[0][magnification]
     result_magnification = result_expr.subs({
