@@ -21,6 +21,9 @@ from sympy.physics.units import magnetic_constant
 ## I - current,
 ## r - distance from conductor.
 
+# Conditions:
+## - The wire is infinitely thin.
+
 induction = Symbol("induction", units.magnetic_density)
 
 relative_permeability = Symbol("relative_permeability", dimensionless)
