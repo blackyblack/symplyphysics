@@ -9,7 +9,7 @@ from symplyphysics import (
     dimensionless
 )
 
-from symplyphysics.laws.electricity import linear_charge_density_from_charge_and_length as linear_charge_density
+from symplyphysics.definitions import linear_charge_density_from_charge_and_length as linear_charge_density
 
 
 @fixture(name="test_args")
