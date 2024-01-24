@@ -114,9 +114,6 @@ class ScalarField:
     # Convert field coordinate system to new basis and construct new field.
     # Scalar field invariant (coordinate system independence) should hold.
     def rebase(self, coordinate_system: CoordinateSystem) -> ScalarField:
-        # Simply set new coordinate system if field cannot be rebased
-        if coordinate_system.coord_system is None or self.coordinate_system.coord_system is None:
-            return ScalarField(self.field_function, coordinate_system)
         field_space_sympy = self.apply_to_basis()
         # Got a scalar value after applying to basis - use this value as field function
         if not isinstance(field_space_sympy, Expr):

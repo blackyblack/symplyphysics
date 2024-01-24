@@ -2,8 +2,44 @@ from sympy import diff, sin, tan
 
 from ..dimensions import ScalarValue
 from ..fields.vector_field import VectorField
+from ..fields.scalar_field import ScalarField
 from ..coordinate_systems.coordinate_systems import CoordinateSystem
 from ..vectors.vectors import Vector
+
+
+def gradient_operator(field: ScalarField) -> Vector:
+    field_space = field.apply_to_basis()
+    if field.coordinate_system.coord_system_type == CoordinateSystem.System.CARTESIAN:
+        x = field.coordinate_system.coord_system.base_scalars()[0]
+        y = field.coordinate_system.coord_system.base_scalars()[1]
+        z = field.coordinate_system.coord_system.base_scalars()[2]
+        gradient = Vector([
+            diff(field_space, x),
+            diff(field_space, y),
+            diff(field_space, z),
+        ], field.coordinate_system)
+        return gradient
+    if field.coordinate_system.coord_system_type == CoordinateSystem.System.CYLINDRICAL:
+        r = field.coordinate_system.coord_system.base_scalars()[0]
+        theta = field.coordinate_system.coord_system.base_scalars()[1]
+        z = field.coordinate_system.coord_system.base_scalars()[2]
+        gradient = Vector([
+            diff(field_space, r),
+            diff(field_space, theta) / r,
+            diff(field_space, z),
+        ], field.coordinate_system)
+        return gradient
+    if field.coordinate_system.coord_system_type == CoordinateSystem.System.SPHERICAL:
+        r = field.coordinate_system.coord_system.base_scalars()[0]
+        theta = field.coordinate_system.coord_system.base_scalars()[1]
+        phi = field.coordinate_system.coord_system.base_scalars()[2]
+        gradient = Vector([
+            diff(field_space, r),
+            diff(field_space, theta) / (r * sin(phi)),
+            diff(field_space, phi) / r,
+        ], field.coordinate_system)
+        return gradient
+    raise ValueError(f"Unsupported coordinate system: {field.coordinate_system}")
 
 
 def divergence_operator(field: VectorField) -> ScalarValue:

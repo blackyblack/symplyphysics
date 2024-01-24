@@ -14,8 +14,8 @@ from symplyphysics.laws.optics import refraction_angle_from_environments as refr
 ## If we increase alpha, beta increases as well. There is such value of alpha when beta reaches it's max possible value - 90 degrees, it means refracted ray goes along mediums border.
 ## If we continue increasing alpha, there will be no more refraction anymore, the whole ray will be only reflected.
 
-solutions = solve(refraction_law.law, refraction_law.incedence_angle, dict=True)
-result_expr = solutions[0][refraction_law.incedence_angle]
+solutions = solve(refraction_law.law, refraction_law.incidence_angle, dict=True)
+result_expr = solutions[0][refraction_law.incidence_angle]
 
 ## Optical fiber usually consists of core with refractive index
 CORE_REFRACTIVE_INDEX = 1.479
@@ -23,15 +23,15 @@ CORE_REFRACTIVE_INDEX = 1.479
 COAT_REFRACTIVE_INDEX = 1.474
 
 angle_applied = result_expr.subs({
-    refraction_law.incedence_refractive_index: CORE_REFRACTIVE_INDEX,
+    refraction_law.incidence_refractive_index: CORE_REFRACTIVE_INDEX,
     refraction_law.resulting_refractive_index: COAT_REFRACTIVE_INDEX,
     refraction_law.refraction_angle: pi / 2
 })
 
 if (angle_applied > pi / 2 or angle_applied < -pi / 2):
-    result_expr = solutions[1][refraction_law.incedence_angle]
+    result_expr = solutions[1][refraction_law.incidence_angle]
     angle_applied = result_expr.subs({
-        refraction_law.incedence_refractive_index: CORE_REFRACTIVE_INDEX,
+        refraction_law.incidence_refractive_index: CORE_REFRACTIVE_INDEX,
         refraction_law.resulting_refractive_index: COAT_REFRACTIVE_INDEX,
         refraction_law.refraction_angle: pi / 2
     })

@@ -93,6 +93,8 @@ class Vector:
         return Vector.from_sympy_vector(transformed_vector_sympy, coordinate_system)
 
 
+# TODO: vectors in polar coordinates have angle type for some components.
+#       It is not supported by this class.
 class QuantityVector(Vector, DimensionSymbol):
 
     def __init__(self,
