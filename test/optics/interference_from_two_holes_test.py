@@ -29,7 +29,7 @@ def test_bad_coordinate(test_args):
     xb = Quantity(5 * units.coulomb)
     with raises(errors.UnitsError):
         interference_two_holes_law.calculate_travel_difference(xb, test_args.d, test_args.l)
-    with raises(errors.UnitsError):
+    with raises(TypeError):
         interference_two_holes_law.calculate_travel_difference(100, test_args.d, test_args.l)
 
 
