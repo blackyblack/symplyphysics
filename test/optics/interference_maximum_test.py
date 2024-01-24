@@ -7,7 +7,7 @@ from symplyphysics import (
     SI,
     convert_to, prefixes, dimensionless,
 )
-from symplyphysics.laws.optics import intenference_maximum as maximum_law
+from symplyphysics.laws.optics import interference_maximum as maximum_law
 
 
 @fixture(name="test_args")
