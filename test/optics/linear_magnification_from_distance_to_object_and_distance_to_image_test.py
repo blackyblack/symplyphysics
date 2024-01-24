@@ -38,3 +38,5 @@ def test_bad_distance(test_args):
         magnification.calculate_magnification(100, test_args.distance_to_object)
     with raises(TypeError):
         magnification.calculate_magnification(test_args.distance_to_image, 100)
+    with raises(ValueError):
+        magnification.calculate_magnification(test_args.distance_to_image, test_args.distance_to_image)   
