@@ -3,17 +3,21 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
     validate_output)
 
 # Description
-# heat flow calculation Ф = λ * (T1-T2)/ d * S
+# heat flow calculation Q = k * (T1-T2)/ d * S
 # where:
-# λ = material_thermal_conductivity (Watts/(K*m))
-# T1 = inside_temperature (C')
-# T2 = outside_temperature (C')
-# d = wall_thickness (m)
-# S = wall_area (m2)
-# Note: heat flow (Ф) is measured in Watts
+# k = material thermal conductivity, ability of a material to transfer heat
+# T1 = inside temperature
+# T2 = outside temperature
+# d = wall thickness
+# S = wall area
+# Note: heat flow is measured in Watts
 # 
-# This formula describes Fourier's law for heat transfer and is used to calculate heat flow (Ф) through a material or structure.
-# The Fourier formula is used to determine the amount of heat that is transferred through a material from one side to the other due to the material's thermal conductivity, temperature gradient, material thickness, and cross-sectional area.
+# This formula describes Fourier's law of heat transfer and is used to calculate the heat flow through a material or structure.
+# Fourier's formula is used to determine the amount of heat that is transferred through a material from one side to the other due to the material's thermal conductivity, temperature gradient, material thickness and cross-sectional area. 
+# The cross-sectional area can be any shape, including the surface area of ​​a circle.
+# The heat flow sign indicates the direction of heat transfer and reflects the direction of heat flow from one temperature to another.
+# If heat flow is positive, it means that thermal energy moves from a higher temperature to a lower temperature.
+# If heat flow is negative, it means that thermal energy moves from a lower temperature to a higher temperature.
 
 heat_flow = Symbol("heat_flow", units.power)
 material_thermal_conductivity = Symbol("material_thermal_conductivity", units.power / (units.temperature * units.length))
