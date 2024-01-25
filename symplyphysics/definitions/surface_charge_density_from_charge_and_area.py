@@ -3,7 +3,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
                            validate_output)
 
 # Description
-## Surface charge density is the quantity of charge per unit area at any point on a surface charge distribution on a two dimensional surface.
+## Surface charge density is the amount of charge per unit of a two-dimensional surface area. It is a measure of how much quantity of electric charge is accumulated over a surface.
 ## Charge density can be either positive or negative, since electric charge can be either positive or negative.
 
 
@@ -28,7 +28,7 @@ def print_definition() -> str:
 
 @validate_input(charge_=charge, area_=area)
 @validate_output(surface_charge_density)
-def calculate_surface_charge_density(charge_, area_: Quantity) -> Quantity:
+def calculate_surface_charge_density(charge_: Quantity, area_: Quantity) -> Quantity:
     result_expr = solve(definition, surface_charge_density, dict=True)[0][surface_charge_density]
     result_surface_charge_density = result_expr.subs({
         charge: charge_,
