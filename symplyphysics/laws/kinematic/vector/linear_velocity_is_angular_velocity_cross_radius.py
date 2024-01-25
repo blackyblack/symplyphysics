@@ -22,7 +22,7 @@ from symplyphysics.core.vectors.arithmetics import dot_quantity_vectors
 ## [a, b] - cross product between vectors a and b
 
 # Conditions:
-## - Angular velocity vector and radius vector should be perpendicular to each other
+## - Angular velocity pseudovector and radius vector should be perpendicular to each other
 
 def linear_velocity_law(angular_velocity: Vector, rotation_radius: Vector) -> Vector:
     return cross_cartesian_vectors(angular_velocity, rotation_radius)
