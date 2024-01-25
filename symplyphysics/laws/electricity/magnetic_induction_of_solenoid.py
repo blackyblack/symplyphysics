@@ -16,7 +16,7 @@ from sympy.physics.units import magnetic_constant
 
 ## Law is: B = mu * mu0 * I * N / l, where
 ## B - induction,
-## mu - relative permeability of the medium in which the solenoid is located,
+## mu - relative permeability of the core inside of a solenoid,
 ## mu0 - magnetic constant,
 ## I - current,
 ## N - number of turns,
