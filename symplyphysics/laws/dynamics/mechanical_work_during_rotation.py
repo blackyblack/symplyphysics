@@ -40,7 +40,7 @@ law = Eq(work, torque * angular_displacement)
 ## The displacement of the particle should be small enough, so that the force, radius vector,
 ## and angle between the two stay the same at all points of the path in question.
 
-# Reference frame: 
+# Reference frame:
 ## the x axis points in the direction of the radius vector
 ## the y axis is tangent to the part of the path in question
 
@@ -49,7 +49,7 @@ angle = Symbol("angle", angle_type)  # angle between force and radius vectors
 radius = Symbol("radius", units.length)
 
 tangent_force = solve(
-    projection_law.law, 
+    projection_law.law,
     projection_law.projection
 )[0].subs({
     projection_law.vector_length: force,
@@ -88,11 +88,14 @@ assert expr_equals(work_derived_sub, law.rhs)
 
 angle_start = Symbol("angle_start", angle_type)
 angle_end = Symbol("angle_end", angle_type)
+# Infinitesimal work = dTau(angle) * dAngle
+# SymPy integration does not need dAngle
+# And we do not substitute torque for function because it is constant
+work_function = work_derived_sub.subs(angular_displacement, 1)
 
-infinitesimal_work = work_derived_sub
 integral_work = integrate(
-    infinitesimal_work / angular_displacement,
-    (angular_displacement, angle_start, angle_end)
+    work_function,
+    (angle, angle_start, angle_end)
 )
 
 integral_work_solved = solve(
