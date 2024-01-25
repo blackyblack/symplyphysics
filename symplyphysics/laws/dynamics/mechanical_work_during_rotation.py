@@ -1,4 +1,4 @@
-from sympy import Eq, sin, solve, pi
+from sympy import Eq, integrate, solve, pi
 from symplyphysics import (
     units,
     Quantity,
