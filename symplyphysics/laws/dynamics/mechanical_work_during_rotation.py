@@ -83,7 +83,7 @@ work_derived_sub = solve(
 
 assert expr_equals(work_derived_sub, law.rhs)
 
-# Having derived for the infinitesimal case, let us prove this equality for in case of a finite angular
+# Having derived for the infinitesimal case, let us prove this equality in case of a finite angular
 # displacement, with the torque being constant.
 
 angle_start = Symbol("angle_start", angle_type)
