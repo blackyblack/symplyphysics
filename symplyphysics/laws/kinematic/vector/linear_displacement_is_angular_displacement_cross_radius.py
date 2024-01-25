@@ -16,6 +16,10 @@ from symplyphysics import (
 ## s - vector of linear displacement
 ## theta - pseudovector of angular displacement, parallel to axis of rotation
 ## r - radius vector of body, perpendicular to axis of rotation
+## [a, b] - cross product between vectors a and b
+
+# Condition
+## Angular displacement pseudovector and radius vector should be perpendicular to each other
 
 
 def linear_displacement_law(
