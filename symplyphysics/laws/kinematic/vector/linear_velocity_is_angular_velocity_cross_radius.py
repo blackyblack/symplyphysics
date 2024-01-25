@@ -19,7 +19,10 @@ from symplyphysics.core.vectors.arithmetics import dot_quantity_vectors
 ## v - vector of linear velocity
 ## w - pseudovector of angular velocity, parallel to axis of rotation
 ## r - radius vector of body, perpendicular to axis of rotation
+## [a, b] - cross product between vectors a and b
 
+# Conditions:
+## - Angular velocity vector and radius vector should be perpendicular to each other
 
 def linear_velocity_law(angular_velocity: Vector, rotation_radius: Vector) -> Vector:
     return cross_cartesian_vectors(angular_velocity, rotation_radius)
