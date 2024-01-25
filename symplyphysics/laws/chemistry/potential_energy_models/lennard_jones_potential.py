@@ -25,9 +25,9 @@ potential = Symbol("potential", units.energy)
 dispersion_energy = Symbol("dispersion_energy", units.energy)
 particle_size = Symbol("particle_size", units.length)
 distance = Symbol("distance", units.length)
-reduced_distance = particle_size / distance
+reduced_distance = distance / particle_size
 
-law = Eq(potential, 4 * dispersion_energy * (reduced_distance**12 - reduced_distance**6))
+law = Eq(potential, 4 * dispersion_energy * (reduced_distance**(-12) - reduced_distance**(-6)))
 
 
 def print_law() -> str:
