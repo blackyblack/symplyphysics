@@ -27,7 +27,7 @@ def test_basic_law(test_args):
     result = lennard_jones_potential.calculate_potential(test_args.e, test_args.sigma, test_args.r)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
     result_value = convert_to(result, units.joule).evalf(3)
-    assert result_value == approx(2.65e-13, 1e-3)
+    assert result_value == approx(2.65e-13, abs=1e-15)
 
 
 def test_bad_energy(test_args):
