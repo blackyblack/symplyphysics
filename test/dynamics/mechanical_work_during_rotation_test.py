@@ -16,7 +16,7 @@ from symplyphysics.laws.dynamics import mechanical_work_during_rotation as work_
 
 @fixture(name="test_args")
 def test_args_fixture():
-    tau = Quantity(3.0 * units.newton* units.meter)
+    tau = Quantity(3.0 * units.newton * units.meter)
     theta = Quantity(3.0 * units.radian)
     Args = namedtuple("Args", "tau theta")
     return Args(tau=tau, theta=theta)
