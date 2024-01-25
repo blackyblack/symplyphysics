@@ -21,13 +21,13 @@ from symplyphysics import (
 ## sigma - distance at which the potential energy is zero ("particle size")
 ## r - distance between interacting particles
 
-lj_potential = Symbol("potential", units.energy)
+potential = Symbol("potential", units.energy)
 dispersion_energy = Symbol("dispersion_energy", units.energy)
 particle_size = Symbol("particle_size", units.length)
 distance = Symbol("distance", units.length)
 reduced_distance = particle_size / distance
 
-law = Eq(lj_potential, 4 * dispersion_energy * (reduced_distance**12 - reduced_distance**6))
+law = Eq(potential, 4 * dispersion_energy * (reduced_distance**12 - reduced_distance**6))
 
 
 def print_law() -> str:
@@ -39,7 +39,7 @@ def print_law() -> str:
     particle_size_=particle_size,
     distance_=distance,
 )
-@validate_output(lj_potential)
+@validate_output(potential)
 def calculate_potential(
     dispersion_energy_: Quantity,
     particle_size_: Quantity,

@@ -17,7 +17,7 @@ from symplyphysics.laws.chemistry import lennard_jones_potential
 @fixture(name="test_args")
 def test_args_fixture():
     e = Quantity(2.94e-21 * units.joule)
-    sigma = Quantity(4.10e-10 * units.angstrom)
+    sigma = Quantity(4.10 * units.angstrom)
     r = Quantity(1.0 * units.angstrom)
     Args = namedtuple("Args", "e sigma r")
     return Args(e=e, sigma=sigma, r=r)
