@@ -53,6 +53,14 @@ def test_bad_angular_velocity(test_args):
     with raises(errors.UnitsError):
         linear_velocity_law.calculate_linear_velocity(w_bad_vector, test_args.r)
 
+    w_non_orthogonal = QuantityVector([
+        Quantity(0.0 * units.radian / units.second),
+        Quantity(1.0 * units.radian / units.second),
+        Quantity(1.0 * units.radian / units.second),
+    ])
+    with raises(ValueError):
+        linear_velocity_law.calculate_linear_velocity(w_non_orthogonal, test_args.r)
+
     w_scalar = Quantity(1.0 * units.radian / units.second)
     with raises(AttributeError):
         linear_velocity_law.calculate_linear_velocity(w_scalar, test_args.r)
@@ -71,6 +79,14 @@ def test_bad_rotation_radius(test_args):
     ])
     with raises(errors.UnitsError):
         linear_velocity_law.calculate_linear_velocity(test_args.w, r_bad_vector)
+
+    r_non_orthogonal = QuantityVector([
+        Quantity(0.0 * units.meter),
+        Quantity(1.0 * units.meter),
+        Quantity(1.0 * units.meter),
+    ])
+    with raises(ValueError):
+        linear_velocity_law.calculate_linear_velocity(test_args.w, r_non_orthogonal)
 
     r_scalar = Quantity(1.0 * units.meter)
     with raises(AttributeError):
