@@ -1,7 +1,6 @@
-from typing import Union
 from sympy import (Eq, solve, cos)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless, angle_type)
+    validate_output, angle_type)
 
 # Description
 ## Magnetic flux is the flux of a magnetic induction vector through a certain surface.
