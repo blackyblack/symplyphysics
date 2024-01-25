@@ -12,10 +12,10 @@ from symplyphysics import (
 from sympy.physics.units import magnetic_constant
 
 # Description
-## Let there be a rectilinear conductor of finite length.  Then its magnetic induction will depend on
+## Let there be a rectilinear conductor of finite length. Then its magnetic induction will depend on
 ## the magnitude of the current and the material. It also depends on the perpendicular distance to the
 ## conductor and on the angles between the lines drawn from the ends of the conductor to the point and
-## the semiconductor.
+## the conductor.
 
 ## Law is: B = mu * mu0 * I * (cos(a1) + cos(a2)) / (4 * pi * r), where
 ## B - induction,

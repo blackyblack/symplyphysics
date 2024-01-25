@@ -3,11 +3,12 @@ from pytest import approx, fixture, raises
 from sympy import pi
 from symplyphysics import (units, SI, convert_to, Quantity, errors)
 from symplyphysics.laws.electricity import magnetic_induction_of_linear_conductor_of_finite_length as induction_law
+from sympy.physics.units import prefixes
 
 # Description
-## Let the current in the first wire be 0.5 amperes, and in the second 1.5 amperes.
-## Then, with a second_angle of wires equal to 1 meter and a relative permeability equal to 1,
-## the force will be equal to 7.5e-8 newtons at a distance of 2 meters.
+## Let the current in the conductor be 1 ampere, the distance from the conductor is 2 meter and the
+## magnetic permeability of the medium is 10. Then, at the first angle of 45 degree (pi / 4 radian)
+## and the second angle of 60 degree (pi / 3 radian), the magnetic induction will be equal to 603 nanotesla.
 ## https://www.indigomath.ru//raschety/EFaosd.html
 
 
@@ -35,8 +36,17 @@ def test_basic_induction(test_args):
         test_args.current, test_args.first_angle, test_args.second_angle,
         test_args.distance)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.magnetic_density)
-    result = convert_to(result, units.tesla).evalf(5)
-    assert result == approx(603e-9, rel=0.01)
+    result = convert_to(result, prefixes.nano * units.tesla).evalf(5)
+    assert result == approx(603, rel=0.01)
+
+
+def test_swap_angle(test_args):
+    result = induction_law.calculate_induction(test_args.relative_permeability,
+        test_args.current, test_args.second_angle, test_args.first_angle,
+        test_args.distance)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.magnetic_density)
+    result = convert_to(result, prefixes.nano * units.tesla).evalf(5)
+    assert result == approx(603, rel=0.01)
 
 
 def test_bad_relative_permeability(test_args):
