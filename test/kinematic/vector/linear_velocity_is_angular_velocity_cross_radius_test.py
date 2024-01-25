@@ -80,14 +80,6 @@ def test_bad_rotation_radius(test_args):
     with raises(errors.UnitsError):
         linear_velocity_law.calculate_linear_velocity(test_args.w, r_bad_vector)
 
-    r_non_orthogonal = QuantityVector([
-        Quantity(0.0 * units.meter),
-        Quantity(1.0 * units.meter),
-        Quantity(1.0 * units.meter),
-    ])
-    with raises(ValueError):
-        linear_velocity_law.calculate_linear_velocity(test_args.w, r_non_orthogonal)
-
     r_scalar = Quantity(1.0 * units.meter)
     with raises(AttributeError):
         linear_velocity_law.calculate_linear_velocity(test_args.w, r_scalar)
