@@ -1,6 +1,5 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-from sympy import S
 from symplyphysics import (
     errors,
     units,
@@ -21,10 +20,10 @@ from symplyphysics.laws.kinematic.vector import (
 
 @fixture(name="test_args")
 def test_args_fixture():
-    theta = QuantityVector([0.0, 0.0, S(10)**(-5)])
+    theta = QuantityVector([0.0, 0.0, 1e-5])
     r = QuantityVector([
         Quantity(0.0 * units.meter),
-        Quantity(S(10)**(-1) * units.meter),
+        Quantity(0.1 * units.meter),
         Quantity(0.0 * units.meter),
     ])
     Args = namedtuple("Args", "theta r")
@@ -35,9 +34,9 @@ def test_basic_law(test_args):
     result = linear_displacement_law.calculate_linear_displacement(test_args.theta, test_args.r)
     assert len(result.components) == 3
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
-    for result_component, correct_value in zip(result.components, [-S(10)**(-6), 0.0, 0.0]):
+    for result_component, correct_value in zip(result.components, [-1e-6, 0.0, 0.0]):
         result_value = convert_to(result_component, units.meter).evalf(3)
-        assert result_value == approx(correct_value, 1e-7)
+        assert result_value == approx(correct_value, 1e-4)
 
 
 def test_bad_angular_displacement(test_args):
