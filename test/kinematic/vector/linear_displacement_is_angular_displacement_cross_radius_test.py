@@ -13,9 +13,9 @@ from symplyphysics.laws.kinematic.vector import (
 )
 
 # Description
-## A body is rotating about a fixes axis. It makes a rotation of 1e-5 rad in the positive direction of the
-## z-axis, small enough so that the body's radius vector can be considered constant and equal to (0, 0.1, 0) m.
-## During this rotation the body's linear displacement amounts to (-1e-6, 0, 0) m. Note that the angular
+## A body is rotating about a fixes axis. It makes a rotation of 1e-5 rad in the positive direction around the
+## z-axis in the xy-plane, small enough so that the body's radius vector can be considered constant and equal to 
+## (0, 0.1, 0) m. During this rotation the body's linear displacement amounts to (-1e-6, 0, 0) m. Note that the angular
 ## displacement is a pseudovector, the magnitude of which is the angle of rotation and which is aligned along
 ## the axis of rotation. Its direction can be found via the right-hand rule.
 
