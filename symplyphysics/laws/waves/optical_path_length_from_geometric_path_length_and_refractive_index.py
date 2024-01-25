@@ -4,7 +4,10 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 
 # Description
 ## Optical path length is the length that light needs to travel through a vacuum to create the same phase difference as it would have when traveling through a given medium. 
-
+## If two light beams have common starting and ending points, then the difference in the optical path lengths of such rays is called the optical path difference.
+## The the optical path difference corresponds to the phase shift undergone by the light emitted from two previously coherent sources when passed through mediums of different refractive indices.
+## If the difference in the course of the waves is equal to an integer number of waves (i.e. an even number of half-waves), then an interference maximum is formed at the point of superposition of these waves. 
+## If the difference in the course of the waves is equal to an odd number of half-waves, then an interference minimum is formed at the point of superposition of these waves.
 
 ## Law: L = l * n
 ## Where:
