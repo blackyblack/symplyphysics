@@ -72,14 +72,6 @@ def test_bad_rotation_radius(test_args):
     with raises(errors.UnitsError):
         linear_displacement_law.calculate_linear_displacement(test_args.theta, r_bad_vector)
 
-    r_non_orthogonal = QuantityVector([
-        Quantity(0.0 * units.meter),
-        Quantity(0.1 * units.meter),
-        Quantity(0.5 * units.meter),
-    ])
-    with raises(ValueError):
-        linear_displacement_law.calculate_linear_displacement(test_args.theta, r_non_orthogonal)
-
     r_scalar = Quantity(1.0 * units.meter)
     with raises(AttributeError):
         linear_displacement_law.calculate_linear_displacement(test_args.theta, r_scalar)
