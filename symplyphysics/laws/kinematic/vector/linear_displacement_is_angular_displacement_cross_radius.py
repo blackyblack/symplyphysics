@@ -1,3 +1,4 @@
+from pytest import approx
 from symplyphysics import (
     units,
     angle_type,
@@ -7,6 +8,7 @@ from symplyphysics import (
     QuantityVector,
     cross_cartesian_vectors,
 )
+from symplyphysics.core.vectors.arithmetics import dot_quantity_vectors
 
 # Description
 ## Assuming a body rotating about a fixed axis, the vector of its linear displacement can be expressed
@@ -33,5 +35,7 @@ def linear_displacement_law(
 def calculate_linear_displacement(
     angular_displacement_: QuantityVector, rotation_radius_: QuantityVector
 ) -> QuantityVector:
+    if dot_quantity_vectors(angular_displacement_, rotation_radius_).scale_factor != approx(0.0, 1e-3):
+        raise ValueError
     result_vector = linear_displacement_law(angular_displacement_, rotation_radius_)
     return QuantityVector(result_vector.components, angular_displacement_.coordinate_system)
