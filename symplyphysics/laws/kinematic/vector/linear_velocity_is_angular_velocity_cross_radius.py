@@ -7,6 +7,8 @@ from symplyphysics import (
     angle_type,
     cross_cartesian_vectors,
 )
+from pytest import approx
+from symplyphysics.core.vectors.arithmetics import dot_quantity_vectors
 
 # Description
 ## Assuming the body is rotating about a fixed axis, the vector of its linear velocity is the
@@ -15,7 +17,7 @@ from symplyphysics import (
 
 # Law: v = [w, r]
 ## v - vector of linear velocity
-## w - vector of angular velocity, parallel to axis of rotation
+## w - pseudovector of angular velocity, parallel to axis of rotation
 ## r - radius vector of body, perpendicular to axis of rotation
 
 
@@ -26,5 +28,7 @@ def linear_velocity_law(angular_velocity: Vector, rotation_radius: Vector) -> Ve
 @validate_input(angular_velocity_=angle_type/units.time, rotation_radius_=units.length)
 @validate_output(units.velocity)
 def calculate_linear_velocity(angular_velocity_: QuantityVector, rotation_radius_: QuantityVector) -> QuantityVector:
+    # angular_velocity_ and rotation_radius_ must be perpendicular to each other
+    assert dot_quantity_vectors(angular_velocity_, rotation_radius_).scale_factor == approx(0.0, 1e-3)
     result_vector = linear_velocity_law(angular_velocity_, rotation_radius_)
     return QuantityVector(result_vector.components, angular_velocity_.coordinate_system)

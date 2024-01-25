@@ -13,9 +13,10 @@ from symplyphysics.laws.kinematic.vector import (
 )
 
 # Description
-## A rigid body is moving about an axis with angular velocity (0, 0, 4.0) m/s^2.
-## At a certain point in time, the radius vector of the body is (0, -0.5, 0) m.
-## Its linear velocity at that time is (2.0, 0, 0) m/s.
+## A rigid body is moving about an axis with angular velocity 4.0 rad/s in the positive direction
+## of the z-axis (therefore, the angular velocity pseudovector is (0.0, 0.0, 4.0) rad/s). At a
+## certain point in time, the radius vector of the body is (0, -0.5, 0) m. Its linear velocity at
+## that time is (2.0, 0, 0) m/s.
 
 
 @fixture(name="test_args")
@@ -51,7 +52,7 @@ def test_bad_angular_velocity(test_args):
     ])
     with raises(errors.UnitsError):
         linear_velocity_law.calculate_linear_velocity(w_bad_vector, test_args.r)
-    
+
     w_scalar = Quantity(1.0 * units.radian / units.second)
     with raises(AttributeError):
         linear_velocity_law.calculate_linear_velocity(w_scalar, test_args.r)
