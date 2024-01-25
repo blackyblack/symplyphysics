@@ -83,6 +83,29 @@ work_derived_sub = solve(
 
 assert expr_equals(work_derived_sub, law.rhs)
 
+# Having derived for the infinitesimal case, let us prove this equality for in case of a finite angular
+# displacement, with the torque being constant.
+
+angle_start = Symbol("angle_start", angle_type)
+angle_end = Symbol("angle_end", angle_type)
+
+infinitesimal_work = work_derived_sub
+integral_work = integrate(
+    infinitesimal_work / angular_displacement,
+    (angular_displacement, angle_start, angle_end)
+)
+
+integral_work_solved = solve(
+    [
+        Eq(angular_displacement, angle_end - angle_start),
+        Eq(work, integral_work)
+    ],
+    (angle_end, work),
+    dict=True
+)[0][work]
+
+assert expr_equals(integral_work_solved, law.rhs)
+
 
 def print_law() -> str:
     return print_expression(law)
