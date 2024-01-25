@@ -13,6 +13,7 @@ from symplyphysics import (
 ## Lorentz force is force acting on a charge moving at speed from magnetic field.
 ## Lorentz force depends on the magnitude of charge, its velocity, magnitude of magnetic induction
 ## and angle between the magnetic induction and the charge velocity.
+## The force is directed perpendicular to the plane in which the velocity and magnetic induction vectors are located.
 
 ## Law is: F = q * v * B * sin(a), where
 ## F - force,

@@ -3,7 +3,7 @@ from pytest import approx, fixture, raises
 from sympy import pi
 from symplyphysics import (units, SI, convert_to, Quantity, errors)
 
-from symplyphysics.laws.electricity import lorentz_force as force_law
+from symplyphysics.laws.electricity import force_from_charge_velocity_magnetic_induction as force_law
 
 # Description
 ## The charge value is 0.1 coulomb. The charge rate is 3 meter per second. The magnetic induction is 2 tesla.
