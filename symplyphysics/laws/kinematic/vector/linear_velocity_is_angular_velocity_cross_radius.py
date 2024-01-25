@@ -32,6 +32,8 @@ def linear_velocity_law(angular_velocity: Vector, rotation_radius: Vector) -> Ve
 @validate_output(units.velocity)
 def calculate_linear_velocity(angular_velocity_: QuantityVector, rotation_radius_: QuantityVector) -> QuantityVector:
     if dot_quantity_vectors(angular_velocity_, rotation_radius_).scale_factor != approx(0.0, 1e-3):
-        raise ValueError
+        raise ValueError(
+            "Angular velocity pseudovector and rotation radius vector should be perpendicular to each other."
+        )
     result_vector = linear_velocity_law(angular_velocity_, rotation_radius_)
     return QuantityVector(result_vector.components, angular_velocity_.coordinate_system)
