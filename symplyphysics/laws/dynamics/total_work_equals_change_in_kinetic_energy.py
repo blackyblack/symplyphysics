@@ -1,4 +1,4 @@
-from sympy import Eq, solve
+from sympy import Eq, solve, integrate
 from symplyphysics import (
     units,
     Quantity,
@@ -17,6 +17,7 @@ from symplyphysics.laws.dynamics import (
 from symplyphysics.laws.kinematic import (
     accelerated_velocity_from_time as velocity_law,
     constant_acceleration_movement_is_parabolic as distance_law,
+    distance_from_constant_velocity,
 )
 
 # Description
@@ -91,6 +92,61 @@ work_sub = solve(
 )[0][total_work]
 
 assert expr_equals(work_sub, law.rhs)
+
+
+# Derive the law for the general case in one dimension
+
+velocity_ = Symbol("velocity", units.velocity)
+infinitesimal_time = Symbol("infinitesimal_time", units.time)
+infinitesimal_velocity = Symbol("infinitesimal_velocity", units.velocity)
+
+# dx = v*dt
+infinitesimal_displacement = distance_from_constant_velocity.law.rhs.subs({
+    distance_from_constant_velocity.initial_position: 0,
+    distance_from_constant_velocity.constant_velocity: velocity_,
+    distance_from_constant_velocity.movement_time: infinitesimal_time,
+})
+
+# a = dv/dt
+acceleration_ = solve(
+    velocity_law.law, velocity_law.acceleration
+)[0].subs({
+    velocity_law.initial_velocity: 0,
+    velocity_law.velocity: infinitesimal_velocity,
+    velocity_law.time: infinitesimal_time,
+})
+
+# F = m*a = m*(dv/dt)
+force_ = solve(
+    newtons_second_law.law, newtons_second_law.force
+)[0].subs({
+    newtons_second_law.mass: particle_mass,
+    newtons_second_law.acceleration: acceleration_,
+})
+
+# dW = F*dx = m*(dv/dt)*v*dt = m*v*dv
+infinitesimal_work = work_def.law.rhs.subs({
+    work_def.force: force_,
+    work_def.distance: infinitesimal_displacement,
+})
+
+# W = m*(v1**2)/2  - m*(v0**2)/2
+finite_work = integrate(
+    infinitesimal_work.subs(infinitesimal_velocity, 1),
+    (velocity_, velocity(time_before), velocity(time_after))
+)
+
+finite_work_sub = solve(
+    [
+        Eq(total_work, finite_work),
+        Eq(kinetic_energy(time_before), kinetic_energy_before),
+        Eq(kinetic_energy(time_after), kinetic_energy_after),
+    ],
+    (total_work, velocity(time_before), velocity(time_after)),
+    dict=True,
+)[0][total_work]
+
+assert expr_equals(finite_work_sub, law.rhs)
 
 
 def print_law() -> str:
