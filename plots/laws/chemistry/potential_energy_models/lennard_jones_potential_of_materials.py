@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from sympy import solve, symbols
+from sympy import symbols
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics.laws.chemistry.potential_energy_models import lennard_jones_potential
@@ -28,7 +28,7 @@ law = lennard_jones_potential.law.rhs.subs(
     lennard_jones_potential.distance, distance
 )
 
-PLOT = plot(
+potentials_plot = plot(
     ylim=(-1.0, 2.0),
     axis_center=(0.0, 0.0),
     line_color="red",
@@ -52,6 +52,6 @@ for data_ in datas_:
         line_color=data_.line_color,
         show=False,
     )
-    PLOT.append(subplot[0])
+    potentials_plot.append(subplot[0])
 
-PLOT.show()
+potentials_plot.show()
