@@ -88,7 +88,7 @@ assert expr_equals(work_derived_sub, law.rhs)
 
 angle_start = Symbol("angle_start", angle_type)
 angle_end = Symbol("angle_end", angle_type)
-# Infinitesimal work = dTau(angle) * dAngle
+# Infinitesimal work = Tau(angle) * dAngle
 # SymPy integration does not need dAngle
 # And we do not substitute torque for function because it is constant
 work_function = work_derived_sub.subs(angular_displacement, 1)
