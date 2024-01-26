@@ -1,4 +1,4 @@
-from sympy import Eq, solve, integrate
+from sympy import Derivative, Eq, solve, integrate
 from symplyphysics import (
     units,
     Quantity,
@@ -14,11 +14,9 @@ from symplyphysics.laws.dynamics import (
     kinetic_energy_from_mass_and_velocity as kinetic_energy_def,
     mechanical_work_from_force_and_move as work_def,
 )
-from symplyphysics.laws.kinematic import (
-    accelerated_velocity_from_time as velocity_law,
-    constant_acceleration_movement_is_parabolic as distance_law,
-    distance_from_constant_velocity,
-)
+from symplyphysics.definitions import velocity_is_movement_derivative as velocity_def
+from symplyphysics.definitions import acceleration_is_velocity_derivative as acceleration_def
+
 
 # Description
 ## The work-energy principle states that the work done by all forces acting on a particle
@@ -36,92 +34,27 @@ time_after = Symbol("time_after", units.time)
 law = Eq(total_work, kinetic_energy(time_after) - kinetic_energy(time_before))
 
 
-# Derive the law in case of rectilinear motion with constant total force acting on particle
+# Derive the law in case of rectilinear motion with infinitesimal constant total force acting on particle and
+# integrating the resulting infinitesimal work over time
 
 total_force = Symbol("total_force", units.force)
 particle_mass = Symbol("particle_mass", units.mass)
-
-acceleration = solve(
-    newtons_second_law.law,
-    newtons_second_law.acceleration
-)[0].subs({
-    newtons_second_law.force: total_force,
-    newtons_second_law.mass: particle_mass,
-})
-
-velocity = Function("velocity", units.velocity)
-
-movement_time = solve(
-    velocity_law.law,
-    velocity_law.time
-)[0].subs({
-    velocity_law.velocity: velocity(time_after),
-    velocity_law.initial_velocity: velocity(time_before),
-    velocity_law.acceleration: acceleration,
-})
-
-displacement = distance_law.law.rhs.subs({
-    distance_law.movement_time: movement_time,
-    distance_law.constant_acceleration: acceleration,
-    distance_law.initial_velocity: velocity(time_before),
-})
-
-work = work_def.law.rhs.subs({
-    work_def.force: total_force,
-    work_def.distance: displacement,
-})
-
-kinetic_energy_before = kinetic_energy_def.law.rhs.subs({
-    kinetic_energy_def.body_mass: particle_mass,
-    kinetic_energy_def.body_velocity: velocity(time_before),
-})
-
-kinetic_energy_after = kinetic_energy_def.law.rhs.subs({
-    kinetic_energy_def.body_mass: particle_mass,
-    kinetic_energy_def.body_velocity: velocity(time_after),
-})
-
-work_sub = solve(
-    [
-        Eq(total_work, work),
-        Eq(kinetic_energy(time_before), kinetic_energy_before),
-        Eq(kinetic_energy(time_after), kinetic_energy_after),
-    ],
-    (total_work, velocity(time_before), velocity(time_after)),
-    dict=True,
-)[0][total_work]
-
-assert expr_equals(work_sub, law.rhs)
-
-
-# Derive the law for the general case in one dimension
-
-velocity_ = Symbol("velocity", units.velocity)
 infinitesimal_time = Symbol("infinitesimal_time", units.time)
-infinitesimal_velocity = Symbol("infinitesimal_velocity", units.velocity)
+infinitesimal_velocity = Function("infinitesimal_velocity", units.velocity)
 
-# dx = v*dt
-infinitesimal_displacement = distance_from_constant_velocity.law.rhs.subs({
-    distance_from_constant_velocity.initial_position: 0,
-    distance_from_constant_velocity.constant_velocity: velocity_,
-    distance_from_constant_velocity.movement_time: infinitesimal_time,
-})
-
-# a = dv/dt
-acceleration_ = solve(
-    velocity_law.law, velocity_law.acceleration
-)[0].subs({
-    velocity_law.initial_velocity: 0,
-    velocity_law.velocity: infinitesimal_velocity,
-    velocity_law.time: infinitesimal_time,
-})
+infinitesimal_displacement = solve(velocity_def.definition, Derivative(velocity_def.movement(velocity_def.moving_time), velocity_def.moving_time))[0]
+infinitesimal_displacement = infinitesimal_displacement.subs(velocity_def.moving_time, infinitesimal_time)
+infinitesimal_displacement = infinitesimal_displacement.subs(velocity_def.velocity(infinitesimal_time), infinitesimal_velocity(infinitesimal_time))
+infinitesimal_acceleration = solve(acceleration_def.definition, acceleration_def.acceleration(acceleration_def.time))[0]
+infinitesimal_acceleration = infinitesimal_acceleration.subs(acceleration_def.time, infinitesimal_time)
+infinitesimal_acceleration = infinitesimal_acceleration.subs(acceleration_def.velocity(infinitesimal_time), infinitesimal_velocity(infinitesimal_time))
 
 # F = m*a = m*(dv/dt)
 force_ = solve(
     newtons_second_law.law, newtons_second_law.force
 )[0].subs({
     newtons_second_law.mass: particle_mass,
-    newtons_second_law.acceleration: acceleration_,
+    newtons_second_law.acceleration: infinitesimal_acceleration,
 })
 
 # dW = F*dx = m*(dv/dt)*v*dt = m*v*dv
@@ -132,17 +65,29 @@ infinitesimal_work = work_def.law.rhs.subs({
 
 # W = m*(v1**2)/2  - m*(v0**2)/2
 finite_work = integrate(
-    infinitesimal_work.subs(infinitesimal_velocity, 1),
-    (velocity_, velocity(time_before), velocity(time_after))
+    infinitesimal_work,
+    (infinitesimal_time, time_before, time_after)
 )
+
+kinetic_energy_before_eq = kinetic_energy_def.law.subs({
+    kinetic_energy_def.body_mass: particle_mass,
+    kinetic_energy_def.body_velocity: infinitesimal_velocity(time_before),
+    kinetic_energy_def.kinetic_energy_of_body: kinetic_energy(time_before)
+})
+
+kinetic_energy_after_eq = kinetic_energy_def.law.subs({
+    kinetic_energy_def.body_mass: particle_mass,
+    kinetic_energy_def.body_velocity: infinitesimal_velocity(time_after),
+    kinetic_energy_def.kinetic_energy_of_body: kinetic_energy(time_after)
+})
 
 finite_work_sub = solve(
     [
         Eq(total_work, finite_work),
-        Eq(kinetic_energy(time_before), kinetic_energy_before),
-        Eq(kinetic_energy(time_after), kinetic_energy_after),
+        kinetic_energy_before_eq,
+        kinetic_energy_after_eq,
     ],
-    (total_work, velocity(time_before), velocity(time_after)),
+    (total_work, infinitesimal_velocity(time_before), infinitesimal_velocity(time_after)),
     dict=True,
 )[0][total_work]
 
