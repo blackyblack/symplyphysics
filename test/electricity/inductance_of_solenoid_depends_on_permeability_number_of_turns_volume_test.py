@@ -12,7 +12,7 @@ from symplyphysics.laws.electricity import inductance_of_solenoid_depends_on_per
 
 # Description
 ## Number of turns per unit length is 10, magnetic permeability of solenoid core is 10,
-## and volume of solenoid is 0.1 [meter^3]. Then the inductance of the solenoid is 125.6 microgenre.
+## and volume of solenoid is 0.1 [meter^3]. Then the inductance of the solenoid is 125.6 microhenry.
 ## https://physics.icalculator.com/self-inductance-calculator.html
 
 
