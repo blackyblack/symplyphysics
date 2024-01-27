@@ -38,6 +38,7 @@ def force_law(acceleration_: Vector) -> Vector:
 
 
 # Derive this law from law of force and momentum
+# Condition: mass is constant
 
 time = force_momentum_law.time
 momentum_x = Function("momentum_x", units.mass * units.velocity)
