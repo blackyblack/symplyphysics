@@ -37,8 +37,10 @@ def print_law() -> str:
 @validate_input(molar_mass_=molar_mass, valence_=valence)
 @validate_output(equivalent)
 def calculate_equivalent(molar_mass_: Quantity, valence_: int) -> Quantity:
-    assert isinstance(valence_, int)
-    assert valence_ > 0
+    if not isinstance(valence_, int):
+        raise ValueError("valence_ must be an integer.")
+    if valence_ <= 0:
+        raise ValueError("valence_ must be greater than 0.")
 
     result_expr = solve(law, equivalent, dict=True)[0][equivalent]
     result_expr = result_expr.subs({
