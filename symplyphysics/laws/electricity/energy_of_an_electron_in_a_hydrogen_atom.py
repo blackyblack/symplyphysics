@@ -16,7 +16,8 @@ energy_of_electron = Symbol("energy_of_electron", units.energy)
 
 radius_of_electron = Symbol("radius_of_electron", units.length)
 
-law = Eq(energy_of_electron, units.coulomb_constant * elementary_charge**2 / (2 * radius_of_electron))
+law = Eq(energy_of_electron,
+    units.coulomb_constant * elementary_charge**2 / (2 * radius_of_electron))
 
 
 def print_law() -> str:

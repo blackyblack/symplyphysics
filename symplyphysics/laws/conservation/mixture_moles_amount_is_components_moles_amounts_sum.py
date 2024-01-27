@@ -29,9 +29,12 @@ def print_law() -> str:
 @validate_input(moles_count_of_mixture_=moles_count_of_mixture)
 @validate_output(units.amount_of_substance)
 def calculate_moles_count_of_mixture(moles_count_of_mixture_: Sequence[Quantity]) -> Quantity:
-    moles_count_of_component_symbols = tuple_of_symbols("moles_count_of_component", units.amount_of_substance, len(moles_count_of_mixture_))
-    moles_counts_of_components_law = law.subs(moles_count_of_components, moles_count_of_component_symbols).doit()
-    solved = solve(moles_counts_of_components_law, moles_count_of_mixture, dict=True)[0][moles_count_of_mixture]
+    moles_count_of_component_symbols = tuple_of_symbols("moles_count_of_component",
+        units.amount_of_substance, len(moles_count_of_mixture_))
+    moles_counts_of_components_law = law.subs(moles_count_of_components,
+        moles_count_of_component_symbols).doit()
+    solved = solve(moles_counts_of_components_law, moles_count_of_mixture,
+        dict=True)[0][moles_count_of_mixture]
     for (from_, to_) in zip(moles_count_of_component_symbols, moles_count_of_mixture_):
         solved = solved.subs(from_, to_)
     return Quantity(solved)

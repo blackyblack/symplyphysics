@@ -13,8 +13,8 @@ from symplyphysics.laws.electricity import electric_field_due_to_point_charge as
 from symplyphysics.laws.electricity import electric_dipole_moment
 
 # Description
-## The value of the electric field set up by a dipole at a distant point on the dipole axis 
-## (which runs through both particles) is proportional to the inverse cube of the distance 
+## The value of the electric field set up by a dipole at a distant point on the dipole axis
+## (which runs through both particles) is proportional to the inverse cube of the distance
 ## to the dipole and the value of the dipole moment.
 
 # Law:
@@ -32,7 +32,6 @@ dipole_moment = Symbol("dipole_moment", units.charge * units.length)
 distance_to_dipole = Symbol("distance_to_dipole", units.length)
 
 law = Eq(electric_field, 2 * units.coulomb_constant * dipole_moment / distance_to_dipole**3)
-
 
 # Derive the law from the expression for the electric field of point charges.
 # Assuming the dipole is made up of two point charges q and -q (q > 0) with distance d in between.
@@ -72,12 +71,12 @@ net_field_approx_sub = net_field_approx.subs(factor, distance_between_charges / 
 # Replace charge*distance_between_charges back with dipole_moment
 net_field_derived = solve(
     [
-        Eq(electric_field, net_field_approx_sub),
-        electric_dipole_moment.law.subs({
-            electric_dipole_moment.electric_moment: dipole_moment,
-            electric_dipole_moment.charge: charge,
-            electric_dipole_moment.distance: distance_between_charges,
-        }),
+    Eq(electric_field, net_field_approx_sub),
+    electric_dipole_moment.law.subs({
+    electric_dipole_moment.electric_moment: dipole_moment,
+    electric_dipole_moment.charge: charge,
+    electric_dipole_moment.distance: distance_between_charges,
+    }),
     ],
     (charge, electric_field),
     dict=True,

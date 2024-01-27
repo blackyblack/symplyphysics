@@ -16,11 +16,10 @@ from symplyphysics.laws.electricity.vector import electric_field_is_force_over_t
 @fixture(name="test_args")
 def test_args_fixture():
     q0 = Quantity(0.5 * units.coulomb)
-    F = QuantityVector([
-        Quantity(0.5 * units.newton), 
-        Quantity(0 * units.newton), 
-        Quantity(1 * units.newton)
-    ])
+    F = QuantityVector(
+        [Quantity(0.5 * units.newton),
+        Quantity(0 * units.newton),
+        Quantity(1 * units.newton)])
     E = QuantityVector([
         Quantity(1 * units.newton / units.coulomb),
         Quantity(0 * units.newton / units.coulomb),

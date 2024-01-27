@@ -1,17 +1,12 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-from symplyphysics import (
-    units,
-    SI,
-    Quantity,
-    convert_to,
-    errors
-)
+from symplyphysics import (units, SI, Quantity, convert_to, errors)
 from symplyphysics.laws.waves import frequency_of_the_electron_transition_in_hydrogen as frequency_law
 
 # Description
 ## It is known that the electron transition frequency is 4.77e14 Hz at m=2 and n=3.
 ## http://www.phys.utk.edu/labs/modphys/BalmerSeries.pdf
+
 
 @fixture(name="test_args")
 def test_args_fixture():
@@ -19,8 +14,7 @@ def test_args_fixture():
     number_level_from = 3
 
     Args = namedtuple("Args", ["number_level_to", "number_level_from"])
-    return Args(number_level_to=number_level_to,
-        number_level_from=number_level_from)
+    return Args(number_level_to=number_level_to, number_level_from=number_level_from)
 
 
 def test_basic_transition_frequency(test_args):

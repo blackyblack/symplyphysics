@@ -5,7 +5,7 @@ from symplyphysics import (
     units,
     Quantity,
     SI,
-    convert_to,
+    convert_to
 )
 from symplyphysics.core.symbols.celsius import Celsius, to_kelvin_quantity
 from symplyphysics.laws.thermodynamics import heat_transfer_equation as heat_flow
@@ -14,6 +14,7 @@ from symplyphysics.laws.thermodynamics import heat_transfer_equation as heat_flo
 
 @fixture(name="test_args")
 def test_args_fixture():
+
     k = Quantity(0.4 * units.watt / (units.kelvin * units.meter))
     inside_temperature = Celsius(60)
     T1 = to_kelvin_quantity(inside_temperature)
@@ -30,6 +31,7 @@ def test_basic_amount(test_args):
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.power)
     result_energy = convert_to(result, units.watt).evalf(7)
     assert result_energy == approx(16, 0.000001)
+
 
 def test_bad_material_thermal_conductivity(test_args):
     kb = Quantity(1 * units.coulomb)

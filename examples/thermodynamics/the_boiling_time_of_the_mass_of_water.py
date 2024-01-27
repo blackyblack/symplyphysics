@@ -34,9 +34,8 @@ time = Symbol("time")
 # Then, at the initial moment of time, the mass of the burnt alcohol is zero.
 # The constant C1, which occurs during integration, corresponds exactly to the mass of burnt alcohol at time t=0
 mass_flow_rate_constant = Symbol("mass_flow_rate_constant", constant=True)
-mass_flow_rate_constant_equation = mass_rate_law.definition.subs({
-    mass_rate_law.mass_flow_rate(mass_rate_law.time): mass_flow_rate_constant
-})
+mass_flow_rate_constant_equation = mass_rate_law.definition.subs(
+    {mass_rate_law.mass_flow_rate(mass_rate_law.time): mass_flow_rate_constant})
 mass_gas_integral = dsolve(mass_flow_rate_constant_equation, mass_rate_law.mass(mass_rate_law.time))
 mass_of_gas_equation = mass_gas_integral.subs({
     "C1": 0,
@@ -47,7 +46,8 @@ mass_of_alcohol_in_start_equation = mass_of_gas_equation.subs({
     mass_rate_law.mass(mass_rate_law.time): mass_of_alcohol,
     mass_rate_law.time: time_of_minute,
 }).doit()
-mass_flow_rate_in_start_value = solve(mass_of_alcohol_in_start_equation, mass_rate_alcohol,
+mass_flow_rate_in_start_value = solve(mass_of_alcohol_in_start_equation,
+    mass_rate_alcohol,
     dict=True)[0][mass_rate_alcohol]
 
 mass_of_alcohol_value = mass_of_gas_equation.subs({
@@ -75,26 +75,39 @@ energy_to_vaporization_water_value = energy_to_vapor_law.law.subs({
 # Active work in this example is done to heat water to boiling point and to evaporate. Then
 # A_{active} = Q_{heating} + Q_{vaporization}
 efficiency_equation = efficiency_law.law.subs({
-    efficiency_law.active_power: energy_for_heating_water_value + energy_to_vaporization_water_value,
-    efficiency_law.full_power: energy_from_combustion_alcohol_value,
-    efficiency_law.power_factor: efficiency
+    efficiency_law.active_power:
+    energy_for_heating_water_value + energy_to_vaporization_water_value,
+    efficiency_law.full_power:
+        energy_from_combustion_alcohol_value,
+    efficiency_law.power_factor:
+        efficiency
 })
-time_of_vaporization = solve(efficiency_equation, time,
-    dict=True)[0][time]
+time_of_vaporization = solve(efficiency_equation, time, dict=True)[0][time]
 answer = Eq(time, time_of_vaporization)
 print(f"Total equation:\n{print_expression(answer)}")
 
 time_of_vaporization_s = time_of_vaporization.subs({
-    efficiency: Quantity(60 * units.percents),
-    mass_of_booling_water: Quantity(20 * units.grams),
-    mass_of_water: Quantity(500 * units.grams),
-    temperature_of_water: to_kelvin_quantity(Celsius(20)),
-    mass_of_alcohol: Quantity(4 * units.grams),
-    time_of_minute: Quantity(1 * units.minutes),
-
-    specific_heat_of_combustion_alcohol: Quantity(29 * prefixes.mega * units.joules / units.kilogram),
-    specific_heat_of_heating_water: Quantity(4200 * units.joules / (units.kilogram * units.kelvin)),
-    specific_heat_of_vaporization_water: Quantity(2.26 * prefixes.mega * units.joules / units.kilogram),
-    temperature_of_vaporization_water: to_kelvin_quantity(Celsius(100)),
+    efficiency:
+    Quantity(60 * units.percents),
+    mass_of_booling_water:
+    Quantity(20 * units.grams),
+    mass_of_water:
+    Quantity(500 * units.grams),
+    temperature_of_water:
+    to_kelvin_quantity(Celsius(20)),
+    mass_of_alcohol:
+    Quantity(4 * units.grams),
+    time_of_minute:
+    Quantity(1 * units.minutes),
+    specific_heat_of_combustion_alcohol:
+    Quantity(29 * prefixes.mega * units.joules / units.kilogram),
+    specific_heat_of_heating_water:
+    Quantity(4200 * units.joules / (units.kilogram * units.kelvin)),
+    specific_heat_of_vaporization_water:
+    Quantity(2.26 * prefixes.mega * units.joules / units.kilogram),
+    temperature_of_vaporization_water:
+    to_kelvin_quantity(Celsius(100)),
 })
-print(f"Time for vaporization water is: {convert_to(Quantity(time_of_vaporization_s), units.seconds)} s")
+print(
+    f"Time for vaporization water is: {convert_to(Quantity(time_of_vaporization_s), units.seconds)} s"
+)

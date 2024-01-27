@@ -42,8 +42,16 @@ medium_travel_distance = Symbol("medium_travel_distance", units.length)
 outer_velocity = Symbol("outer_velocity", units.velocity)
 medium_velocity = Symbol("medium_velocity", units.velocity)
 
-distance_law_outer_eq = distance_law.law.subs({distance_law.distance(distance_law.movement_time): outer_travel_distance, distance_law.constant_velocity: outer_velocity, distance_law.initial_position: 0})
-distance_law_medium_eq = distance_law.law.subs({distance_law.distance(distance_law.movement_time): medium_travel_distance, distance_law.constant_velocity: medium_velocity, distance_law.initial_position: 0})
+distance_law_outer_eq = distance_law.law.subs({
+    distance_law.distance(distance_law.movement_time): outer_travel_distance,
+    distance_law.constant_velocity: outer_velocity,
+    distance_law.initial_position: 0
+})
+distance_law_medium_eq = distance_law.law.subs({
+    distance_law.distance(distance_law.movement_time): medium_travel_distance,
+    distance_law.constant_velocity: medium_velocity,
+    distance_law.initial_position: 0
+})
 outer_travel_time = solve(distance_law_outer_eq, distance_law.movement_time)[0]
 medium_travel_time = solve(distance_law_medium_eq, distance_law.movement_time)[0]
 
@@ -54,36 +62,55 @@ x = Symbol("x", units.length)
 a = Symbol("a", units.length)
 b = Symbol("b", units.length)
 d = Symbol("d", units.length)
-outer_travel_distance_cartesian_eq = Eq(outer_travel_distance, sqrt(x ** 2 + a ** 2))
-medium_travel_distance_cartesian_eq = Eq(medium_travel_distance, sqrt((d - x) ** 2 + b ** 2))
+outer_travel_distance_cartesian_eq = Eq(outer_travel_distance, sqrt(x**2 + a**2))
+medium_travel_distance_cartesian_eq = Eq(medium_travel_distance, sqrt((d - x)**2 + b**2))
 
 # It is also possible to express outer_travel_distance and medium_travel_distance in terms of the angles of incidence (alpha) and refraction (beta).
 
 # Use (pi / 2 - angle) to obtain vertical projection instead of horizontal
-projection_incidence_eq = projection_law.law.subs({projection_law.vector_angle: pi/2 - incidence_angle, projection_law.vector_length: outer_travel_distance, projection_law.projection: x})
+projection_incidence_eq = projection_law.law.subs({
+    projection_law.vector_angle: pi / 2 - incidence_angle,
+    projection_law.vector_length: outer_travel_distance,
+    projection_law.projection: x
+})
 projection_incidence_distance = solve(projection_incidence_eq, outer_travel_distance)[0]
 outer_travel_distance_polar_eq = Eq(outer_travel_distance, projection_incidence_distance)
-projection_refraction_eq = projection_law.law.subs({projection_law.vector_angle: pi/2 - refraction_angle, projection_law.vector_length: medium_travel_distance, projection_law.projection: d - x})
+projection_refraction_eq = projection_law.law.subs({
+    projection_law.vector_angle: pi / 2 - refraction_angle,
+    projection_law.vector_length: medium_travel_distance,
+    projection_law.projection: d - x
+})
 projection_refraction_distance = solve(projection_refraction_eq, medium_travel_distance)[0]
 medium_travel_distance_polar_eq = Eq(medium_travel_distance, projection_refraction_distance)
 
 # Substitute l1, l2 in travel_time, differentiate by x and equate the derivative to zero - minimal time case.
-travel_time_on_cartesian = travel_time.subs({outer_travel_distance_cartesian_eq.lhs: outer_travel_distance_cartesian_eq.rhs, medium_travel_distance_cartesian_eq.lhs: medium_travel_distance_cartesian_eq.rhs})
+travel_time_on_cartesian = travel_time.subs({
+    outer_travel_distance_cartesian_eq.lhs: outer_travel_distance_cartesian_eq.rhs,
+    medium_travel_distance_cartesian_eq.lhs: medium_travel_distance_cartesian_eq.rhs
+})
 min_time_case = Eq(diff(travel_time_on_cartesian, x), 0)
 
 # Let's get the same expression using the sines of the angles.
-min_time_case = min_time_case.subs({outer_travel_distance_cartesian_eq.rhs: outer_travel_distance_cartesian_eq.lhs, medium_travel_distance_cartesian_eq.rhs: medium_travel_distance_cartesian_eq.lhs})
-min_time_case = min_time_case.subs({outer_travel_distance_polar_eq.lhs: outer_travel_distance_polar_eq.rhs, medium_travel_distance_polar_eq.lhs: medium_travel_distance_polar_eq.rhs}).simplify()
+min_time_case = min_time_case.subs({
+    outer_travel_distance_cartesian_eq.rhs: outer_travel_distance_cartesian_eq.lhs,
+    medium_travel_distance_cartesian_eq.rhs: medium_travel_distance_cartesian_eq.lhs
+})
+min_time_case = min_time_case.subs({
+    outer_travel_distance_polar_eq.lhs: outer_travel_distance_polar_eq.rhs,
+    medium_travel_distance_polar_eq.lhs: medium_travel_distance_polar_eq.rhs
+}).simplify()
 
 # Finally, let's use the definition of the refractive index as the ratio of the speed of light in the medium to that in a reference medium (vacuum).
-outer_refraction_definition = refractive_index_definition.definition.subs({
-    refractive_index_definition.refractive_index: incidence_refractive_index
-})
-medium_refreaction_definition = refractive_index_definition.definition.subs({
-    refractive_index_definition.refractive_index: resulting_refractive_index
-})
-outer_refraction_velocity = solve(outer_refraction_definition, refractive_index_definition.refracting_speed, dict=True)[0][refractive_index_definition.refracting_speed]
-medium_refraction_velocity = solve(medium_refreaction_definition, refractive_index_definition.refracting_speed, dict=True)[0][refractive_index_definition.refracting_speed]
+outer_refraction_definition = refractive_index_definition.definition.subs(
+    {refractive_index_definition.refractive_index: incidence_refractive_index})
+medium_refreaction_definition = refractive_index_definition.definition.subs(
+    {refractive_index_definition.refractive_index: resulting_refractive_index})
+outer_refraction_velocity = solve(outer_refraction_definition,
+    refractive_index_definition.refracting_speed,
+    dict=True)[0][refractive_index_definition.refracting_speed]
+medium_refraction_velocity = solve(medium_refreaction_definition,
+    refractive_index_definition.refracting_speed,
+    dict=True)[0][refractive_index_definition.refracting_speed]
 
 min_time_case = min_time_case.subs({
     outer_velocity: outer_refraction_velocity,
@@ -91,8 +118,8 @@ min_time_case = min_time_case.subs({
 })
 resulting_expression = Eq(
     incidence_refractive_index * sin(incidence_angle),
-    solve(min_time_case, incidence_refractive_index * sin(incidence_angle), dict=True)[0][incidence_refractive_index * sin(incidence_angle)]
-)
+    solve(min_time_case, incidence_refractive_index * sin(incidence_angle),
+    dict=True)[0][incidence_refractive_index * sin(incidence_angle)])
 
 # Verify that the resulting_expression corresponds to the law.
 assert expr_equals(law.lhs, resulting_expression.lhs)

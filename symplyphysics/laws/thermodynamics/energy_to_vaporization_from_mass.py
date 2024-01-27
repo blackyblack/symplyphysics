@@ -33,7 +33,8 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(specific_heat_vaporization_=specific_heat_vaporization, mass_of_matter_=mass_of_matter)
+@validate_input(specific_heat_vaporization_=specific_heat_vaporization,
+    mass_of_matter_=mass_of_matter)
 @validate_output(amount_energy)
 def calculate_amount_energy(specific_heat_vaporization_: Quantity,
     mass_of_matter_: Quantity) -> Quantity:

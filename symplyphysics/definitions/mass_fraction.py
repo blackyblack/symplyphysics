@@ -26,8 +26,7 @@ def print_law() -> str:
 
 @validate_input(mass_of_component_=mass_of_component, mass_of_mixture_=mass_of_mixture)
 @validate_output(mass_fraction)
-def calculate_mass_fraction(mass_of_component_: Quantity,
-    mass_of_mixture_: Quantity) -> Fraction:
+def calculate_mass_fraction(mass_of_component_: Quantity, mass_of_mixture_: Quantity) -> Fraction:
     result_mass_fraction_expr = solve(definition, mass_fraction, dict=True)[0][mass_fraction]
     result_expr = result_mass_fraction_expr.subs({
         mass_of_component: mass_of_component_,
