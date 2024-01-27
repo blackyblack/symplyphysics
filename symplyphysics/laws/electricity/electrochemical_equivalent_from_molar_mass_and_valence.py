@@ -36,7 +36,10 @@ def print_law() -> str:
 
 @validate_input(molar_mass_=molar_mass, valence_=valence)
 @validate_output(equivalent)
-def calculate_equivalent(molar_mass_: Quantity, valence_: float) -> Quantity:
+def calculate_equivalent(molar_mass_: Quantity, valence_: int) -> Quantity:
+    assert isinstance(valence_, int)
+    assert valence_ > 0
+
     result_expr = solve(law, equivalent, dict=True)[0][equivalent]
     result_expr = result_expr.subs({
         molar_mass: molar_mass_,

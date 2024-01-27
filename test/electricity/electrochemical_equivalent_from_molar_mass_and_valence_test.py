@@ -40,3 +40,7 @@ def test_bad_valence(test_args):
         equivalent_law.calculate_equivalent(test_args.molar_mass, valence)
     with raises(TypeError):
         equivalent_law.calculate_equivalent(test_args.molar_mass, True)
+    with raises(AssertionError):
+        equivalent_law.calculate_equivalent(test_args.molar_mass, 4.1)
+    with raises(AssertionError):
+        equivalent_law.calculate_equivalent(test_args.molar_mass, -4)
