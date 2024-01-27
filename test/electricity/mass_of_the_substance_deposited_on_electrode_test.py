@@ -5,7 +5,7 @@ from symplyphysics.laws.electricity import mass_of_the_substance_deposited_on_el
 
 # Description
 ## Consider copper with an electrochemical equivalent of 1.19 [gram / (ampere * hour)]. Let the current be 2 ampere and the time
-## be 300 second. Then the mass of the substance deposited on the electrode will be 2.38 gram.
+## be 1 hour. Then the mass of the substance deposited on the electrode will be 2.38 gram.
 ## https://www.indigomath.ru//raschety/2JNq0p.html
 
 @fixture(name="test_args")
