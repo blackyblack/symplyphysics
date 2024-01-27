@@ -48,21 +48,21 @@ momentum_z = Function("momentum_z", units.mass * units.velocity)
 momentum_vec = Vector([momentum_x(time), momentum_y(time), momentum_z(time)])
 force_derived = force_momentum_law.force_law(momentum_vec)
 
-time_ = acceleration_def.time
 momentum_def_sub = momentum_def.definition.subs(momentum_def.mass, mass)
-velocity_x = solve(momentum_def_sub, momentum_def.velocity)[0].subs(momentum_def.momentum, momentum_x(time_))
-velocity_y = solve(momentum_def_sub, momentum_def.velocity)[0].subs(momentum_def.momentum, momentum_y(time_))
-velocity_z = solve(momentum_def_sub, momentum_def.velocity)[0].subs(momentum_def.momentum, momentum_z(time_))
+velocity_x = solve(momentum_def_sub, momentum_def.velocity)[0].subs(momentum_def.momentum, momentum_x(time))
+velocity_y = solve(momentum_def_sub, momentum_def.velocity)[0].subs(momentum_def.momentum, momentum_y(time))
+velocity_z = solve(momentum_def_sub, momentum_def.velocity)[0].subs(momentum_def.momentum, momentum_z(time))
 
-acceleration_x = acceleration_def.definition.rhs.subs(acceleration_def.velocity(time_), velocity_x)
-acceleration_y = acceleration_def.definition.rhs.subs(acceleration_def.velocity(time_), velocity_y)
-acceleration_z = acceleration_def.definition.rhs.subs(acceleration_def.velocity(time_), velocity_z)
+acceleration_def_sub = acceleration_def.definition.rhs.subs(acceleration_def.time, time)
+acceleration_x = acceleration_def_sub.subs(acceleration_def.velocity(time), velocity_x)
+acceleration_y = acceleration_def_sub.subs(acceleration_def.velocity(time), velocity_y)
+acceleration_z = acceleration_def_sub.subs(acceleration_def.velocity(time), velocity_z)
+
 acceleration_vec = Vector([acceleration_x, acceleration_y, acceleration_z])
-
 force_from_law = force_law(acceleration_vec)
 
 for component_derived, component_from_law in zip(force_derived.components, force_from_law.components):
-    assert expr_equals(component_derived, component_from_law.subs(time_, time))
+    assert expr_equals(component_derived, component_from_law)
 
 
 @validate_input(mass_=mass, acceleration_=units.acceleration)
