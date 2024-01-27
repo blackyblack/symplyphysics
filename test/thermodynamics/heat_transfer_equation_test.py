@@ -10,12 +10,7 @@ from symplyphysics import (
 from symplyphysics.core.symbols.celsius import Celsius, to_kelvin_quantity
 from symplyphysics.laws.thermodynamics import heat_transfer_equation as heat_flow
 
-
-
-
-# What amount of heat is transferred through the wall from one side to the other if the material has a thermal conductivity of 0.4 Watt/(Kelvin*meter), the wall thickness is 1 cm, its area is 100 cm**2, the temperature inside is 60 Celsius, the temperature outside is 20 Celsius
-
-
+# What amount of heat is transferred through the wall from one side to the other if the material has a thermal conductivity of 0.4 Watt/(Kelvin*meter), the cross section thickness is 1 cm, its area is 100 cm**2, the temperature inside is 60 Celsius, the temperature outside is 20 Celsius
 
 @fixture(name="test_args")
 def test_args_fixture():
@@ -28,7 +23,6 @@ def test_args_fixture():
     S = Quantity(100 * units.centimeter**2)
     Args = namedtuple("Args", ["k", "T1", "T2", "d", "S"])
     return Args(k=k, T1=T1, T2=T2, d=d, S=S)
-
 
 def test_basic_amount(test_args):
     result = heat_flow.calculate_heat_flow(test_args.k, test_args.T1, test_args.T2,
@@ -55,14 +49,14 @@ def test_bad_temperature(test_args):
     with raises(TypeError):
         heat_flow.calculate_heat_flow(test_args.k, test_args.T1, 100, test_args.d, test_args.S)
 
-def test_bad_wall_thickness(test_args):
+def test_bad_cross_section_thickness(test_args):
     db = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         heat_flow.calculate_heat_flow(test_args.k, test_args.T1, test_args.T2, db, test_args.S)
     with raises(TypeError):
         heat_flow.calculate_heat_flow(test_args.k, test_args.T1, test_args.T2, 100, test_args.S)
 
-def test_bad_wall_area(test_args):
+def test_bad_cross_sectional_area(test_args):
     Sb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         heat_flow.calculate_heat_flow(test_args.k, test_args.T1, test_args.T2, test_args.d, Sb)
