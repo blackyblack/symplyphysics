@@ -17,7 +17,7 @@ travel_difference = Symbol("travel_difference", units.length)
 number_minimum = Symbol("number_minimum", dimensionless)
 wave_length = Symbol("wave_length", units.length)
 
-law = Eq(travel_difference, number_minimum * wave_length)
+law = Eq(travel_difference, (2 * number_minimum + 1) * wave_length / 2)
 
 
 def print_law():
