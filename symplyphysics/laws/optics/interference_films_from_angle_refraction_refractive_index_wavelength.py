@@ -20,7 +20,7 @@ from symplyphysics import (
 ## and demonstrate interference.
 ## The angle of refraction of light is the angle between the ray passing through the surface and the normal to the surface.
 
-## Law is: h = k * L / (2 * n * sin(O)), where
+## Law is: h = k * L / (2 * n * cos(O)), where
 ## h - film thickness,
 ## k - order of interference,
 ## L - wavelength,
