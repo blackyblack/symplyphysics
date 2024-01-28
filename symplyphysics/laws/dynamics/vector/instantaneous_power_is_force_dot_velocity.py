@@ -12,6 +12,7 @@ from symplyphysics.core.dimensions import ScalarValue
 ## v - instantaneous velocity vector
 ## (a, b) is the dot product between vectors a and b
 
+
 def power_law(force_: Vector, velocity_: Vector) -> ScalarValue:
     return dot_vectors(force_, velocity_)
 

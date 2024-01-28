@@ -1,7 +1,6 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-from symplyphysics import (units, SI, convert_to, Quantity, errors)
-from sympy.physics.units import prefixes
+from symplyphysics import (units, SI, convert_to, Quantity, errors, prefixes)
 from symplyphysics.laws.electricity import electrochemical_equivalent_from_molar_mass_and_valence as equivalent_law
 
 # Description

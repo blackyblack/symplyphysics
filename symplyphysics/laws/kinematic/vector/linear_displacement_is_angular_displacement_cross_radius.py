@@ -24,18 +24,16 @@ from symplyphysics.core.vectors.arithmetics import dot_quantity_vectors
 ## Angular displacement pseudovector and radius vector should be perpendicular to each other
 
 
-def linear_displacement_law(
-    angular_displacement_: Vector, rotation_radius_: Vector
-) -> Vector:
+def linear_displacement_law(angular_displacement_: Vector, rotation_radius_: Vector) -> Vector:
     return cross_cartesian_vectors(angular_displacement_, rotation_radius_)
 
 
 @validate_input(angular_displacement_=angle_type, rotation_radius_=units.length)
 @validate_output(units.length)
-def calculate_linear_displacement(
-    angular_displacement_: QuantityVector, rotation_radius_: QuantityVector
-) -> QuantityVector:
-    if dot_quantity_vectors(angular_displacement_, rotation_radius_).scale_factor != approx(0.0, 1e-3):
+def calculate_linear_displacement(angular_displacement_: QuantityVector,
+    rotation_radius_: QuantityVector) -> QuantityVector:
+    if dot_quantity_vectors(angular_displacement_,
+        rotation_radius_).scale_factor != approx(0.0, 1e-3):
         raise ValueError(
             "Angular displacement psedovector and rotation radius vector should be perpendular to each other."
         )

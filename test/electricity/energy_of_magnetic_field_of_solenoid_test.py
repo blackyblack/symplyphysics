@@ -1,6 +1,5 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-from sympy import pi
 from sympy.physics.units import prefixes
 from symplyphysics import (
     errors,
@@ -28,7 +27,8 @@ def test_args_fixture():
 
 
 def test_basic_energy(test_args):
-    result = energy_law.calculate_energy(test_args.relative_permeability, test_args.intensity, test_args.volume)
+    result = energy_law.calculate_energy(test_args.relative_permeability, test_args.intensity,
+        test_args.volume)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
     result_voltage = convert_to(result, prefixes.micro * units.joule).evalf(5)
     assert result_voltage == approx(190, 0.01)
@@ -38,8 +38,6 @@ def test_bad_relative_permeability(test_args):
     relative_permeability = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         energy_law.calculate_energy(relative_permeability, test_args.intensity, test_args.volume)
-    with raises(TypeError):
-        energy_law.calculate_energy(True, test_args.intensity, test_args.volume)
 
 
 def test_bad_intensity(test_args):

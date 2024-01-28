@@ -23,7 +23,8 @@ def test_args_fixture():
 
 
 def test_basic_force(test_args):
-    result = force_law.calculate_force(test_args.charge, test_args.velocity, test_args.angle, test_args.induction)
+    result = force_law.calculate_force(test_args.charge, test_args.velocity, test_args.angle,
+        test_args.induction)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
     result = convert_to(result, units.newton).evalf(5)
     assert result == approx(0.4, rel=0.1)

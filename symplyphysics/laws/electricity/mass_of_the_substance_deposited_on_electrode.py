@@ -32,15 +32,9 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(equivalent_=equivalent,
-    current_=current,
-    time_=time)
+@validate_input(equivalent_=equivalent, current_=current, time_=time)
 @validate_output(mass)
 def calculate_mass(equivalent_: Quantity, current_: Quantity, time_: Quantity) -> Quantity:
     result_expr = solve(law, mass, dict=True)[0][mass]
-    result_expr = result_expr.subs({
-        equivalent: equivalent_,
-        current: current_,
-        time: time_
-    })
+    result_expr = result_expr.subs({equivalent: equivalent_, current: current_, time: time_})
     return Quantity(result_expr)
