@@ -24,9 +24,7 @@ datas_ = [
 ]
 
 distance = symbols("distance", positive=True)
-law = lennard_jones_potential.law.rhs.subs(
-    lennard_jones_potential.distance, distance
-)
+law = lennard_jones_potential.law.rhs.subs(lennard_jones_potential.distance, distance)
 
 potentials_plot = plot(
     ylim=(-1.0, 2.0),
@@ -47,7 +45,8 @@ for data_ in datas_:
         lennard_jones_potential.particle_size: data_.particle_size,
     })
     subplot = plot(
-        applied_law, (distance, 0.0, 0.8),
+        applied_law,
+        (distance, 0.0, 0.8),
         label=data_.label,
         line_color=data_.line_color,
         show=False,

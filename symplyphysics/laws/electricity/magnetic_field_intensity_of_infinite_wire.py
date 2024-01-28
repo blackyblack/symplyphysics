@@ -23,9 +23,7 @@ magnetic_intensity = Symbol("magnetic_intensity", units.current / units.length)
 current = Symbol("current", units.current)
 distance = Symbol("distance", units.length)
 
-law = Eq(
-    magnetic_intensity,
-    current / (2 * pi * distance))
+law = Eq(magnetic_intensity, current / (2 * pi * distance))
 
 
 def print_law() -> str:

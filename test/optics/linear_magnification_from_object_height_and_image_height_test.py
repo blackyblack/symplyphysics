@@ -16,7 +16,7 @@ def test_args_fixture():
     return Args(
         image_height=image_height,
         object_height=object_height,
-               )
+    )
 
 
 def test_basic_magnification(test_args):

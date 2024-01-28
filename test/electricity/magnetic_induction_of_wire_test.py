@@ -14,16 +14,13 @@ def test_args_fixture():
     current = Quantity(20 * units.ampere)
     distance = Quantity(0.5 * units.meter)
 
-    Args = namedtuple("Args",
-        ["relative_permeability", "current", "distance"])
-    return Args(relative_permeability=relative_permeability,
-        current=current,
-        distance=distance)
+    Args = namedtuple("Args", ["relative_permeability", "current", "distance"])
+    return Args(relative_permeability=relative_permeability, current=current, distance=distance)
 
 
 def test_basic_induction(test_args):
-    result = induction_law.calculate_induction(test_args.relative_permeability,
-        test_args.current, test_args.distance)
+    result = induction_law.calculate_induction(test_args.relative_permeability, test_args.current,
+        test_args.distance)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.magnetic_density)
     result = convert_to(result, units.tesla).evalf(5)
     assert result == approx(8e-6, rel=0.01)
@@ -42,15 +39,13 @@ def test_bad_current(test_args):
         induction_law.calculate_induction(test_args.relative_permeability, current,
             test_args.distance)
     with raises(TypeError):
-        induction_law.calculate_induction(test_args.relative_permeability, 100,
-            test_args.distance)
+        induction_law.calculate_induction(test_args.relative_permeability, 100, test_args.distance)
 
 
 def test_bad_distance(test_args):
     distance = Quantity(1 * units.kelvin)
     with raises(errors.UnitsError):
-        induction_law.calculate_induction(test_args.relative_permeability,
-            test_args.current, distance)
+        induction_law.calculate_induction(test_args.relative_permeability, test_args.current,
+            distance)
     with raises(TypeError):
-        induction_law.calculate_induction(test_args.relative_permeability,
-            test_args.current, 100)
+        induction_law.calculate_induction(test_args.relative_permeability, test_args.current, 100)

@@ -27,7 +27,8 @@ temperature = Symbol("temperature", units.temperature)
 
 celsius_to_kelvin = Quantity(273.15 * units.kelvin)
 
-law = Eq(resistance, resistance_initial * (1 + temperature_coefficient * (temperature - celsius_to_kelvin)))
+law = Eq(resistance,
+    resistance_initial * (1 + temperature_coefficient * (temperature - celsius_to_kelvin)))
 
 
 def print_law() -> str:

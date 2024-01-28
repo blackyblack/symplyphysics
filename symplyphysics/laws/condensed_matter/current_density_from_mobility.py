@@ -1,12 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    print_expression,
-    validate_input,
-    validate_output
-)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 
 from symplyphysics.laws.condensed_matter import current_density_from_concentration_and_velocity_of_charge_carriers as density_velocity_law
@@ -51,7 +45,8 @@ velocity_law_electrons = velocity_law.law.subs({
     velocity_law.charge_carriers_mobility: electrons_mobility,
     velocity_law.electric_intensity: electric_intensity,
 })
-velocity_electrons = solve(velocity_law_electrons, velocity_law.drift_velocity, dict=True)[0][velocity_law.drift_velocity]
+velocity_electrons = solve(velocity_law_electrons, velocity_law.drift_velocity,
+    dict=True)[0][velocity_law.drift_velocity]
 density_velocity_law_electrons = density_velocity_law.law.subs({
     density_velocity_law.charge: -charge,
     density_velocity_law.charge_carriers_concentration: electrons_concentration,
@@ -62,14 +57,19 @@ velocity_law_holes = velocity_law.law.subs({
     velocity_law.charge_carriers_mobility: holes_mobility,
     velocity_law.electric_intensity: electric_intensity,
 })
-velocity_holes = solve(velocity_law_holes, velocity_law.drift_velocity, dict=True)[0][velocity_law.drift_velocity]
+velocity_holes = solve(velocity_law_holes, velocity_law.drift_velocity,
+    dict=True)[0][velocity_law.drift_velocity]
 density_velocity_law_holes = density_velocity_law.law.subs({
     density_velocity_law.charge: charge,
     density_velocity_law.charge_carriers_concentration: holes_concentration,
     density_velocity_law.drift_velocity: velocity_holes,
 })
-density_current_electrons_derived = solve(density_velocity_law_electrons, density_velocity_law.density_current, dict=True)[0][density_velocity_law.density_current]
-density_current_holes_derived = solve(density_velocity_law_holes, density_velocity_law.density_current, dict=True)[0][density_velocity_law.density_current]
+density_current_electrons_derived = solve(density_velocity_law_electrons,
+    density_velocity_law.density_current,
+    dict=True)[0][density_velocity_law.density_current]
+density_current_holes_derived = solve(density_velocity_law_holes,
+    density_velocity_law.density_current,
+    dict=True)[0][density_velocity_law.density_current]
 density_current_derived = density_current_electrons_derived + density_current_holes_derived
 
 # Check if derived density current is same as declared.

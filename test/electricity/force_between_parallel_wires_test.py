@@ -19,8 +19,7 @@ def test_args_fixture():
     distance = Quantity(2 * units.meter)
 
     Args = namedtuple("Args", [
-        "relative_permeability", "first_wire_current", "second_wire_current", "length",
-        "distance"
+        "relative_permeability", "first_wire_current", "second_wire_current", "length", "distance"
     ])
     return Args(relative_permeability=relative_permeability,
         first_wire_current=first_wire_current,
@@ -41,50 +40,42 @@ def test_basic_force(test_args):
 def test_bad_relative_permeability(test_args):
     relative_permeability = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        force_law.calculate_force(relative_permeability,
-            test_args.first_wire_current, test_args.second_wire_current, test_args.length,
-            test_args.distance)
+        force_law.calculate_force(relative_permeability, test_args.first_wire_current,
+            test_args.second_wire_current, test_args.length, test_args.distance)
 
 
 def test_bad_wire_current(test_args):
     first_wire_current = Quantity(1 * units.coulomb)
     second_wire_current = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        force_law.calculate_force(test_args.relative_permeability,
-            first_wire_current, test_args.second_wire_current, test_args.length,
-            test_args.distance)
+        force_law.calculate_force(test_args.relative_permeability, first_wire_current,
+            test_args.second_wire_current, test_args.length, test_args.distance)
     with raises(TypeError):
         force_law.calculate_force(test_args.relative_permeability, 100,
             test_args.second_wire_current, test_args.length, test_args.distance)
     with raises(errors.UnitsError):
-        force_law.calculate_force(test_args.relative_permeability,
-            test_args.first_wire_current, second_wire_current, test_args.length,
-            test_args.distance)
+        force_law.calculate_force(test_args.relative_permeability, test_args.first_wire_current,
+            second_wire_current, test_args.length, test_args.distance)
     with raises(TypeError):
-        force_law.calculate_force(test_args.relative_permeability,
-            test_args.first_wire_current, 100, test_args.length,
-            test_args.distance)
+        force_law.calculate_force(test_args.relative_permeability, test_args.first_wire_current,
+            100, test_args.length, test_args.distance)
 
 
 def test_bad_length(test_args):
     length = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        force_law.calculate_force(test_args.relative_permeability,
-            test_args.first_wire_current, test_args.second_wire_current, length,
-            test_args.distance)
+        force_law.calculate_force(test_args.relative_permeability, test_args.first_wire_current,
+            test_args.second_wire_current, length, test_args.distance)
     with raises(TypeError):
-        force_law.calculate_force(test_args.relative_permeability,
-            test_args.first_wire_current, test_args.second_wire_current, 100,
-            test_args.distance)
+        force_law.calculate_force(test_args.relative_permeability, test_args.first_wire_current,
+            test_args.second_wire_current, 100, test_args.distance)
 
 
 def test_bad_distance(test_args):
     distance = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        force_law.calculate_force(test_args.relative_permeability,
-            test_args.first_wire_current, test_args.second_wire_current, test_args.length,
-            distance)
+        force_law.calculate_force(test_args.relative_permeability, test_args.first_wire_current,
+            test_args.second_wire_current, test_args.length, distance)
     with raises(TypeError):
-        force_law.calculate_force(test_args.relative_permeability,
-            test_args.first_wire_current, test_args.second_wire_current, test_args.length,
-            100)
+        force_law.calculate_force(test_args.relative_permeability, test_args.first_wire_current,
+            test_args.second_wire_current, test_args.length, 100)

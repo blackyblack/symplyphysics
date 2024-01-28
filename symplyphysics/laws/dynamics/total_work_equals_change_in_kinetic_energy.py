@@ -17,7 +17,6 @@ from symplyphysics.laws.dynamics import (
 from symplyphysics.definitions import velocity_is_movement_derivative as velocity_def
 from symplyphysics.definitions import acceleration_is_velocity_derivative as acceleration_def
 
-
 # Description
 ## The work-energy principle states that the work done by all forces acting on a particle
 ## (the work of the resultant force) equals the change in the kinetic energy of the particle.
@@ -33,7 +32,6 @@ time_after = Symbol("time_after", units.time)
 
 law = Eq(total_work, kinetic_energy(time_after) - kinetic_energy(time_before))
 
-
 # Derive the law in case of rectilinear motion with infinitesimal constant total force acting on particle and
 # integrating the resulting infinitesimal work over time
 
@@ -42,17 +40,22 @@ particle_mass = Symbol("particle_mass", units.mass)
 infinitesimal_time = Symbol("infinitesimal_time", units.time)
 infinitesimal_velocity = Function("infinitesimal_velocity", units.velocity)
 
-infinitesimal_displacement = solve(velocity_def.definition, Derivative(velocity_def.movement(velocity_def.moving_time), velocity_def.moving_time))[0]
-infinitesimal_displacement = infinitesimal_displacement.subs(velocity_def.moving_time, infinitesimal_time)
-infinitesimal_displacement = infinitesimal_displacement.subs(velocity_def.velocity(infinitesimal_time), infinitesimal_velocity(infinitesimal_time))
-infinitesimal_acceleration = solve(acceleration_def.definition, acceleration_def.acceleration(acceleration_def.time))[0]
-infinitesimal_acceleration = infinitesimal_acceleration.subs(acceleration_def.time, infinitesimal_time)
-infinitesimal_acceleration = infinitesimal_acceleration.subs(acceleration_def.velocity(infinitesimal_time), infinitesimal_velocity(infinitesimal_time))
+infinitesimal_displacement = solve(
+    velocity_def.definition,
+    Derivative(velocity_def.movement(velocity_def.moving_time), velocity_def.moving_time))[0]
+infinitesimal_displacement = infinitesimal_displacement.subs(velocity_def.moving_time,
+    infinitesimal_time)
+infinitesimal_displacement = infinitesimal_displacement.subs(
+    velocity_def.velocity(infinitesimal_time), infinitesimal_velocity(infinitesimal_time))
+infinitesimal_acceleration = solve(acceleration_def.definition,
+    acceleration_def.acceleration(acceleration_def.time))[0]
+infinitesimal_acceleration = infinitesimal_acceleration.subs(acceleration_def.time,
+    infinitesimal_time)
+infinitesimal_acceleration = infinitesimal_acceleration.subs(
+    acceleration_def.velocity(infinitesimal_time), infinitesimal_velocity(infinitesimal_time))
 
 # F = m*a = m*(dv/dt)
-force_ = solve(
-    newtons_second_law.law, newtons_second_law.force
-)[0].subs({
+force_ = solve(newtons_second_law.law, newtons_second_law.force)[0].subs({
     newtons_second_law.mass: particle_mass,
     newtons_second_law.acceleration: infinitesimal_acceleration,
 })
@@ -64,10 +67,7 @@ infinitesimal_work = work_def.law.rhs.subs({
 })
 
 # W = m*(v1**2)/2  - m*(v0**2)/2
-finite_work = integrate(
-    infinitesimal_work,
-    (infinitesimal_time, time_before, time_after)
-)
+finite_work = integrate(infinitesimal_work, (infinitesimal_time, time_before, time_after))
 
 kinetic_energy_before_eq = kinetic_energy_def.law.subs({
     kinetic_energy_def.body_mass: particle_mass,
@@ -83,9 +83,9 @@ kinetic_energy_after_eq = kinetic_energy_def.law.subs({
 
 finite_work_sub = solve(
     [
-        Eq(total_work, finite_work),
-        kinetic_energy_before_eq,
-        kinetic_energy_after_eq,
+    Eq(total_work, finite_work),
+    kinetic_energy_before_eq,
+    kinetic_energy_after_eq,
     ],
     (total_work, infinitesimal_velocity(time_before), infinitesimal_velocity(time_after)),
     dict=True,
@@ -100,7 +100,8 @@ def print_law() -> str:
 
 @validate_input(kinetic_energy_before_=kinetic_energy, kinetic_energy_after_=kinetic_energy)
 @validate_output(total_work)
-def calculate_total_work(kinetic_energy_before_: Quantity, kinetic_energy_after_: Quantity) -> Quantity:
+def calculate_total_work(kinetic_energy_before_: Quantity,
+    kinetic_energy_after_: Quantity) -> Quantity:
     result = law.rhs.subs({
         kinetic_energy(time_before): kinetic_energy_before_,
         kinetic_energy(time_after): kinetic_energy_after_,
