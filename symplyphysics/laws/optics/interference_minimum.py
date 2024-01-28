@@ -3,7 +3,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression,
                            validate_input, validate_output, dimensionless)
 
 # Description
-## If the stroke difference is equal to an odd number of half-waves,
+## If the travel difference is equal to an odd number of half-waves,
 ## then at this point of the screen there will be a minimum of intensity during interference.
 
 # Law: delta = (2m+1) * lambda / 2
@@ -26,7 +26,7 @@ def print_law():
 
 @validate_input(wave_length_=wave_length, number_minimum_=number_minimum)
 @validate_output(travel_difference)
-def calculate_travel_difference(wave_length_: Quantity, number_minimum_: Quantity | int) -> Quantity:
+def calculate_travel_difference(wave_length_: Quantity, number_minimum_: int) -> Quantity:
     solved = solve(law, wave_length, dict=True)[0][wave_length]
     result_expr = solved.subs({
         wave_length: wave_length_,
