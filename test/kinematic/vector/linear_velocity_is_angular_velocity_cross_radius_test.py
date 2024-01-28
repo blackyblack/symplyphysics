@@ -13,7 +13,7 @@ from symplyphysics.laws.kinematic.vector import (
 )
 
 # Description
-## A rigid body is moving about an axis with angular velocity 4.0 rad/s in the positive direction around 
+## A rigid body is moving about an axis with angular velocity 4.0 rad/s in the positive direction around
 ## the z-axis in the xy-plane (therefore, the angular velocity pseudovector is (0.0, 0.0, 4.0) rad/s). At a
 ## certain point in time, the radius vector of the body is (0, -0.5, 0) m. Its linear velocity at
 ## that time is (2.0, 0, 0) m/s.

@@ -6,7 +6,6 @@ from symplyphysics import (
     Quantity,
     SI,
     convert_to,
-    dimensionless
 )
 
 from symplyphysics.definitions import linear_charge_density_from_charge_and_length as linear_charge_density

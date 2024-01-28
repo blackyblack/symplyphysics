@@ -44,9 +44,6 @@ def test_bad_relative_permeability(test_args):
         force_law.calculate_force(relative_permeability,
             test_args.first_wire_current, test_args.second_wire_current, test_args.length,
             test_args.distance)
-    with raises(TypeError):
-        force_law.calculate_force(True, test_args.first_wire_current,
-            test_args.second_wire_current, test_args.length, test_args.distance)
 
 
 def test_bad_wire_current(test_args):

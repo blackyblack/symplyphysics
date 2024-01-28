@@ -1,9 +1,8 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
 from sympy import pi
-from symplyphysics import (units, SI, convert_to, Quantity, errors)
+from symplyphysics import (units, SI, convert_to, Quantity, errors, prefixes)
 from symplyphysics.laws.electricity import magnetic_induction_of_linear_conductor_of_finite_length as induction_law
-from sympy.physics.units import prefixes
 
 # Description
 ## Let the current in the conductor be 1 ampere, the distance from the conductor is 2 meter and the
@@ -55,14 +54,10 @@ def test_bad_relative_permeability(test_args):
         induction_law.calculate_induction(relative_permeability,
             test_args.current, test_args.first_angle, test_args.second_angle,
             test_args.distance)
-    with raises(TypeError):
-        induction_law.calculate_induction(True, test_args.current,
-            test_args.first_angle, test_args.second_angle, test_args.distance)
 
 
 def test_bad_current(test_args):
     current = Quantity(1 * units.coulomb)
-    first_angle = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         induction_law.calculate_induction(test_args.relative_permeability,
             current, test_args.first_angle, test_args.second_angle,

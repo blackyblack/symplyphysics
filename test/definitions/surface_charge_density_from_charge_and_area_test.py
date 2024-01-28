@@ -6,7 +6,6 @@ from symplyphysics import (
     Quantity,
     SI,
     convert_to,
-    dimensionless
 )
 
 from symplyphysics.definitions import surface_charge_density_from_charge_and_area as surface_charge_density

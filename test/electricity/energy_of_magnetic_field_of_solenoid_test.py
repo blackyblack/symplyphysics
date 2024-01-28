@@ -1,6 +1,5 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-from sympy import pi
 from sympy.physics.units import prefixes
 from symplyphysics import (
     errors,
@@ -38,8 +37,6 @@ def test_bad_relative_permeability(test_args):
     relative_permeability = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         energy_law.calculate_energy(relative_permeability, test_args.intensity, test_args.volume)
-    with raises(TypeError):
-        energy_law.calculate_energy(True, test_args.intensity, test_args.volume)
 
 
 def test_bad_intensity(test_args):

@@ -6,7 +6,6 @@ from symplyphysics import (
     Quantity,
     SI,
     convert_to,
-    dimensionless
 )
 
 from symplyphysics.laws.thermodynamics import volume_of_heated_body_from_initial_volume_and_heating_temperature as heating
