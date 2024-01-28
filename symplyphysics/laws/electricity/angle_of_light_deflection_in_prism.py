@@ -24,6 +24,9 @@ from symplyphysics import (
 ## a - angle between faces,
 ## n - refractive index of prism.
 
+# Conditions:
+## - angle deviation of prism and angle of incidence of incoming beam are small.
+
 angle_deviation = Symbol("angle_deviation", angle_type)
 
 angle_faces = Symbol("angle_faces", angle_type)
