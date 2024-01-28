@@ -15,8 +15,7 @@ def test_args_fixture():
     temperature_coefficient = Quantity(15 * (1 / units.kelvin))
     temperature = Quantity(573.15 * units.kelvin)
 
-    Args = namedtuple("Args",
-        ["resistance_initial", "temperature_coefficient", "temperature"])
+    Args = namedtuple("Args", ["resistance_initial", "temperature_coefficient", "temperature"])
     return Args(resistance_initial=resistance_initial,
         temperature_coefficient=temperature_coefficient,
         temperature=temperature)
@@ -36,7 +35,8 @@ def test_bad_resistance_initial(test_args):
         resistance_law.calculate_resistance(resistance_initial, test_args.temperature_coefficient,
             test_args.temperature)
     with raises(TypeError):
-        resistance_law.calculate_resistance(100, test_args.temperature_coefficient, test_args.temperature)
+        resistance_law.calculate_resistance(100, test_args.temperature_coefficient,
+            test_args.temperature)
 
 
 def test_bad_temperature_coefficient(test_args):

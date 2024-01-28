@@ -19,11 +19,12 @@ def test_args_fixture():
     return Args(
         charge=charge,
         area=area,
-               )
+    )
 
 
 def test_basic_surface_charge_density(test_args):
-    result = surface_charge_density.calculate_surface_charge_density(test_args.charge, test_args.area)
+    result = surface_charge_density.calculate_surface_charge_density(test_args.charge,
+        test_args.area)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.charge / units.area)
     result_surface_charge_density = convert_to(result, units.coulomb / units.meter**2).evalf(5)
     assert result_surface_charge_density == approx(5, 0.001)

@@ -41,10 +41,10 @@ z_end = Symbol("z_end", units.length)
 law = Eq(
     rotational_inertia,
     Integral(
-        density(x, y, z) * distance_to_axis(x, y, z),
-        (x, x_start, x_end),
-        (y, y_start, y_end),
-        (z, z_start, z_end),
+    density(x, y, z) * distance_to_axis(x, y, z),
+    (x, x_start, x_end),
+    (y, y_start, y_end),
+    (z, z_start, z_end),
     ),
 )
 
@@ -54,9 +54,8 @@ law = Eq(
 # The rotational axis passes through its center and is parallel to the z-axis.
 @validate_input(density_=density, x_=x, y_=y, z_=z)
 @validate_output(units.mass * units.length**2)
-def calculate_rotational_inertia(
-    density_: Quantity, x_: Quantity, y_: Quantity, z_: Quantity
-) -> Quantity:
+def calculate_rotational_inertia(density_: Quantity, x_: Quantity, y_: Quantity,
+    z_: Quantity) -> Quantity:
     result = law.rhs.subs({
         density(x, y, z): density_,
         distance_to_axis(x, y, z): x**2 + y**2,

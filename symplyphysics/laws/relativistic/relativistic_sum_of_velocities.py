@@ -2,8 +2,7 @@ from sympy import Eq, solve
 from sympy.physics.units import speed_of_light
 
 from symplyphysics import (Quantity, Symbol, print_expression, units, validate_input,
-                           validate_output)
-
+    validate_output)
 
 # Description
 # In relativistic mechanics, if a body moves relative to a moving reference
@@ -16,16 +15,12 @@ from symplyphysics import (Quantity, Symbol, print_expression, units, validate_i
 # c is speed of light,
 # v is relativistic sum of velocities.
 
-
 first_velocity = Symbol("first_velocity", units.velocity)
 second_velocity = Symbol("second_velocity", units.velocity)
-resulting_velocity = Symbol(
-    "resulting_velocity", units.velocity)
+resulting_velocity = Symbol("resulting_velocity", units.velocity)
 
-
-law = Eq(
-    resulting_velocity,
-    (first_velocity + second_velocity) / (1 + (first_velocity * second_velocity) / speed_of_light**2))
+law = Eq(resulting_velocity, (first_velocity + second_velocity) / (1 +
+    (first_velocity * second_velocity) / speed_of_light**2))
 
 
 def print_law() -> str:

@@ -27,7 +27,8 @@ def test_args_fixture():
 
 
 def test_basic_energy(test_args):
-    result = energy_law.calculate_energy(test_args.relative_permeability, test_args.intensity, test_args.volume)
+    result = energy_law.calculate_energy(test_args.relative_permeability, test_args.intensity,
+        test_args.volume)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
     result_voltage = convert_to(result, prefixes.micro * units.joule).evalf(5)
     assert result_voltage == approx(190, 0.01)

@@ -24,13 +24,15 @@ from symplyphysics.core.vectors.arithmetics import dot_quantity_vectors
 # Conditions:
 ## - Angular velocity pseudovector and radius vector should be perpendicular to each other
 
+
 def linear_velocity_law(angular_velocity: Vector, rotation_radius: Vector) -> Vector:
     return cross_cartesian_vectors(angular_velocity, rotation_radius)
 
 
-@validate_input(angular_velocity_=angle_type/units.time, rotation_radius_=units.length)
+@validate_input(angular_velocity_=angle_type / units.time, rotation_radius_=units.length)
 @validate_output(units.velocity)
-def calculate_linear_velocity(angular_velocity_: QuantityVector, rotation_radius_: QuantityVector) -> QuantityVector:
+def calculate_linear_velocity(angular_velocity_: QuantityVector,
+    rotation_radius_: QuantityVector) -> QuantityVector:
     if dot_quantity_vectors(angular_velocity_, rotation_radius_).scale_factor != approx(0.0, 1e-3):
         raise ValueError(
             "Angular velocity pseudovector and rotation radius vector should be perpendicular to each other."

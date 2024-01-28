@@ -17,11 +17,15 @@ def test_args_fixture():
     relative_permeability = 120
 
     Args = namedtuple("Args", ["current", "length", "number_turns", "relative_permeability"])
-    return Args(current=current, length=length, relative_permeability=relative_permeability, number_turns=number_turns)
+    return Args(current=current,
+        length=length,
+        relative_permeability=relative_permeability,
+        number_turns=number_turns)
 
 
 def test_basic_induction(test_args):
-    result = induction_law.calculate_induction(test_args.current, test_args.length, test_args.relative_permeability, test_args.number_turns)
+    result = induction_law.calculate_induction(test_args.current, test_args.length,
+        test_args.relative_permeability, test_args.number_turns)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.magnetic_density)
     result = convert_to(result, units.tesla).evalf(5)
     assert result == approx(3.4e-3, rel=0.1)
@@ -30,26 +34,32 @@ def test_basic_induction(test_args):
 def test_bad_current(test_args):
     current = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        induction_law.calculate_induction(current, test_args.length, test_args.relative_permeability, test_args.number_turns)
+        induction_law.calculate_induction(current, test_args.length,
+            test_args.relative_permeability, test_args.number_turns)
     with raises(TypeError):
-        induction_law.calculate_induction(100, test_args.length, test_args.relative_permeability, test_args.number_turns)
+        induction_law.calculate_induction(100, test_args.length, test_args.relative_permeability,
+            test_args.number_turns)
 
 
 def test_bad_length(test_args):
     length = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        induction_law.calculate_induction(test_args.current, length, test_args.relative_permeability, test_args.number_turns)
+        induction_law.calculate_induction(test_args.current, length,
+            test_args.relative_permeability, test_args.number_turns)
     with raises(TypeError):
-        induction_law.calculate_induction(test_args.current, 100, test_args.relative_permeability, test_args.number_turns)
+        induction_law.calculate_induction(test_args.current, 100, test_args.relative_permeability,
+            test_args.number_turns)
 
 
 def test_bad_relative_permeability(test_args):
     relative_permeability = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        induction_law.calculate_induction(test_args.current, test_args.length, relative_permeability, test_args.number_turns)
+        induction_law.calculate_induction(test_args.current, test_args.length,
+            relative_permeability, test_args.number_turns)
 
 
 def test_bad_number_turns(test_args):
     number_turns = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        induction_law.calculate_induction(test_args.current, test_args.length, test_args.relative_permeability, number_turns)
+        induction_law.calculate_induction(test_args.current, test_args.length,
+            test_args.relative_permeability, number_turns)

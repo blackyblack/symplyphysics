@@ -1,4 +1,4 @@
-from sympy import (Eq, solve, pi, Min, Max)
+from sympy import (Eq, solve, pi)
 from sympy.physics.units import electric_constant
 from symplyphysics import (
     units,

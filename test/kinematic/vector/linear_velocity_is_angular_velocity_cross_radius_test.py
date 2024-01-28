@@ -9,8 +9,7 @@ from symplyphysics import (
     QuantityVector,
 )
 from symplyphysics.laws.kinematic.vector import (
-    linear_velocity_is_angular_velocity_cross_radius as linear_velocity_law,
-)
+    linear_velocity_is_angular_velocity_cross_radius as linear_velocity_law,)
 
 # Description
 ## A rigid body is moving about an axis with angular velocity 4.0 rad/s in the positive direction around

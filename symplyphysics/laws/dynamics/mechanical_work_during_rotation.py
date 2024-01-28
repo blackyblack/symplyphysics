@@ -30,7 +30,6 @@ angular_displacement = Symbol("angular_displacement", angle_type)
 
 law = Eq(work, torque * angular_displacement)
 
-
 # Derive law from non-rotational counterpart.
 ## We assume a particle moving along a curved trajectory due to a force F applied to it.
 ## Since only the component of the force vector which accelerates the particle does work on it,
@@ -48,10 +47,7 @@ force = Symbol("force", units.force)
 angle = Symbol("angle", angle_type)  # angle between force and radius vectors
 radius = Symbol("radius", units.length)
 
-tangent_force = solve(
-    projection_law.law,
-    projection_law.projection
-)[0].subs({
+tangent_force = solve(projection_law.law, projection_law.projection)[0].subs({
     projection_law.vector_length: force,
     projection_law.vector_angle: pi / 2 - angle  # complementary angle
 })
@@ -75,11 +71,8 @@ torque_def_sub = torque_def.law.subs({
     torque_def.distance_to_axis: radius,
     torque_def.angle: angle,
 })
-work_derived_sub = solve(
-    [Eq(work, work_derived), torque_def_sub],
-    (radius, work),
-    dict=True
-)[0][work]
+work_derived_sub = solve([Eq(work, work_derived), torque_def_sub], (radius, work),
+    dict=True)[0][work]
 
 assert expr_equals(work_derived_sub, law.rhs)
 
@@ -93,19 +86,12 @@ angle_end = Symbol("angle_end", angle_type)
 # And we do not substitute torque for function because it is constant
 work_function = work_derived_sub.subs(angular_displacement, 1)
 
-integral_work = integrate(
-    work_function,
-    (angle, angle_start, angle_end)
-)
+integral_work = integrate(work_function, (angle, angle_start, angle_end))
 
 integral_work_solved = solve(
-    [
-        Eq(angular_displacement, angle_end - angle_start),
-        Eq(work, integral_work)
-    ],
-    (angle_end, work),
-    dict=True
-)[0][work]
+    [Eq(angular_displacement, angle_end - angle_start),
+    Eq(work, integral_work)], (angle_end, work),
+    dict=True)[0][work]
 
 assert expr_equals(integral_work_solved, law.rhs)
 

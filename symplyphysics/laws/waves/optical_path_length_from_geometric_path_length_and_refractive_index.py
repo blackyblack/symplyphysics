@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-                           validate_output, dimensionless)
+    validate_output, dimensionless)
 
 # Description
 ## The optical path length of light in a substance is numerically equal to the path length in a vacuum, which contains the same number of light waves as the geometric length in a substance.
@@ -13,7 +13,6 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 
 ## Conditions
 ## The environment should be homogeneous.
-
 
 optical_path = Symbol("optical_path", units.length)
 geometric_path = Symbol("geometric_path", units.length)
