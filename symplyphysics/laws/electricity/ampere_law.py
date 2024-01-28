@@ -1,17 +1,10 @@
 from sympy import (Eq, solve, cos)
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    print_expression,
-    validate_input,
-    validate_output,
-    angle_type
-)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output, angle_type)
 
 # Description
 ## Ampere's law is the law that determines the force with which a magnetic field acts on
-## a small segment of a conductor with a current. The force turns out to be linearly dependent 
+## a small segment of a conductor with a current. The force turns out to be linearly dependent
 ## on both current and magnetic induction.
 
 ## Law is: F = I * L * B * cos(a), where
@@ -39,12 +32,10 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(current_=current,
-    length_=length,
-    angle_=angle,
-    induction_=induction)
+@validate_input(current_=current, length_=length, angle_=angle, induction_=induction)
 @validate_output(force)
-def calculate_force(current_: Quantity, length_: Quantity, angle_: float | Quantity, induction_: Quantity) -> Quantity:
+def calculate_force(current_: Quantity, length_: Quantity, angle_: float | Quantity,
+    induction_: Quantity) -> Quantity:
     result_expr = solve(law, force, dict=True)[0][force]
     result_expr = result_expr.subs({
         current: current_,

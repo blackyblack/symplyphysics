@@ -6,7 +6,6 @@ from symplyphysics import (
     Quantity,
     SI,
     convert_to,
-    dimensionless
 )
 
 from symplyphysics.laws.waves import optical_path_length_from_geometric_path_length_and_refractive_index as optical_path
@@ -20,11 +19,12 @@ def test_args_fixture():
     return Args(
         geometric_path=geometric_path,
         refractive_index=refractive_index,
-               )
+    )
 
 
 def test_basic_optical_path(test_args):
-    result = optical_path.calculate_optical_path(test_args.geometric_path, test_args.refractive_index)
+    result = optical_path.calculate_optical_path(test_args.geometric_path,
+        test_args.refractive_index)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
     result_optical_path = convert_to(result, units.meter.evalf(5))
     assert result_optical_path == approx(0.0015, 0.0001)

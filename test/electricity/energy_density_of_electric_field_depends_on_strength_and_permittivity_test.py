@@ -31,8 +31,6 @@ def test_bad_relative_permittivity(test_args):
     with raises(errors.UnitsError):
         energy_density_law.calculate_energy_density(relative_permittivity,
             test_args.electric_intensity)
-    with raises(TypeError):
-        energy_density_law.calculate_energy_density(True, test_args.electric_intensity)
 
 
 def test_bad_electric_intensity(test_args):

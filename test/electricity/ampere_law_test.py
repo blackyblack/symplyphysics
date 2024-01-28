@@ -16,14 +16,15 @@ def test_args_fixture():
     current = Quantity(3.5 * units.ampere)
     length = Quantity(2 * units.meter)
     induction = Quantity(0.6 * units.tesla)
-    angle = pi/4
+    angle = pi / 4
 
     Args = namedtuple("Args", ["current", "length", "induction", "angle"])
     return Args(current=current, length=length, angle=angle, induction=induction)
 
 
 def test_basic_force(test_args):
-    result = ampere_law.calculate_force(test_args.current, test_args.length, test_args.angle, test_args.induction)
+    result = ampere_law.calculate_force(test_args.current, test_args.length, test_args.angle,
+        test_args.induction)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
     result = convert_to(result, units.newton).evalf(5)
     assert result == approx(3, rel=0.1)
