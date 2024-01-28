@@ -22,7 +22,7 @@ def test_args_fixture():
 def test_basic_induction(test_args):
     result = induction_law.calculate_induction(test_args.relative_permeability, test_args.intensity)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.magnetic_density)
-    result = convert_to(result, prefixes.milli * units.tesla).evalf(5)
+    result = convert_to(result, units.tesla * prefixes.milli).evalf(5)
     assert result == approx(2, rel=0.01)
 
 
