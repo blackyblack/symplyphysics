@@ -1,7 +1,6 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-from sympy.physics.units import prefixes
-from symplyphysics import (units, SI, convert_to, Quantity, errors)
+from symplyphysics import (units, SI, convert_to, Quantity, errors, prefixes)
 from symplyphysics.laws.electricity import magnetic_induction_from_magnetic_field_intensity as induction_law
 
 # Description
@@ -22,7 +21,7 @@ def test_args_fixture():
 def test_basic_induction(test_args):
     result = induction_law.calculate_induction(test_args.relative_permeability, test_args.intensity)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.magnetic_density)
-    result = convert_to(result, units.tesla * prefixes.milli).evalf(5)
+    result = convert_to(result, prefixes.milli * units.tesla).evalf(5)
     assert result == approx(2, rel=0.01)
 
 
