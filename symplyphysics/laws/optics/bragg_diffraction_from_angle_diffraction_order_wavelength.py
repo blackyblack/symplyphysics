@@ -35,7 +35,7 @@ def print_law() -> str:
     wavelength_=wavelength,
     angle_=angle,)
 @validate_output(distance)
-def calculate_distance(diffraction_order_: float, wavelength_: Quantity, angle_: float | Quantity) -> Quantity:
+def calculate_distance(diffraction_order_: int, wavelength_: Quantity, angle_: float | Quantity) -> Quantity:
     result_expr = solve(law, distance, dict=True)[0][distance]
     distance_applied = result_expr.subs({
         diffraction_order: diffraction_order_,
