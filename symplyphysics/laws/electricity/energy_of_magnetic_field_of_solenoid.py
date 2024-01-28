@@ -1,7 +1,7 @@
 from sympy import (Eq, solve)
+from sympy.physics.units import magnetic_constant
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
     validate_output, dimensionless)
-from sympy.physics.units import magnetic_constant
 
 # Description
 ## A solenoid is a cylindrical coil consisting of a large number of turns of wire forming a helical line.
@@ -29,7 +29,12 @@ def print_law() -> str:
 
 @validate_input(relative_permeability_=relative_permeability, intensity_=intensity, volume_=volume)
 @validate_output(energy)
-def calculate_energy(relative_permeability_: float, intensity_: Quantity, volume_: Quantity) -> Quantity:
+def calculate_energy(relative_permeability_: float, intensity_: Quantity,
+    volume_: Quantity) -> Quantity:
     result_energy_expr = solve(law, energy, dict=True)[0][energy]
-    result_expr = result_energy_expr.subs({relative_permeability: relative_permeability_, intensity: intensity_, volume: volume_})
+    result_expr = result_energy_expr.subs({
+        relative_permeability: relative_permeability_,
+        intensity: intensity_,
+        volume: volume_
+    })
     return Quantity(result_expr)

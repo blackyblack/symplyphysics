@@ -9,8 +9,8 @@ from symplyphysics import (
 )
 from symplyphysics.laws.gravity import escape_velocity
 
-
 # First cosmic velocity for Earth near surface is 7,91 km/s
+
 
 @fixture(name="test_args")
 def test_args_fixture():
@@ -22,9 +22,7 @@ def test_args_fixture():
 
 
 def test_basic_velocity(test_args):
-    result = escape_velocity.calculate_velocity(
-        test_args.m, test_args.r, test_args.h
-    )
+    result = escape_velocity.calculate_velocity(test_args.m, test_args.r, test_args.h)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.velocity)
     result_velocity = convert_to(result, units.meter / units.second).evalf(4)
     assert result_velocity == approx(7910, 0.001)

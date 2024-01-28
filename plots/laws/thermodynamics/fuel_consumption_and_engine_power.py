@@ -76,7 +76,7 @@ for efficiency_factor_value in efficiency_factor_values:
         efficiency_factor: efficiency_factor_value
     }).rhs
     subplot = plot(gasoline_compustion_value, (power_of_car, 1_000, 100_000),
-        label="$\eta_{engine}=" + f"{efficiency_factor_value}$",
+        label=r"$\eta_{engine}=" + f"{efficiency_factor_value}$",
         show=False)
     base_plot.append(subplot[0])
 

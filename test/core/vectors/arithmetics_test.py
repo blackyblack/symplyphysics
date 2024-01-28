@@ -1,10 +1,10 @@
 from collections import namedtuple
 
-from test.test_decorators import unsupported_usage
 from pytest import fixture, raises
 from sympy import atan2, cos, pi, sin, sqrt, SympifyError
 from symplyphysics import (SI, Quantity, dimensionless, units, QuantityVector, Vector,
     CoordinateSystem, coordinates_transform)
+from symplyphysics.core.test_decorators import unsupported_usage
 from symplyphysics.core.vectors.arithmetics import (add_cartesian_quantity_vectors,
     add_cartesian_vectors, cross_cartesian_quantity_vectors, cross_cartesian_vectors, dot_vectors,
     equal_vectors, quantity_vector_magnitude, quantity_vector_unit, scale_quantity_vector,

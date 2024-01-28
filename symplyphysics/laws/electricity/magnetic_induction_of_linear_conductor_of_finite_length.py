@@ -1,15 +1,7 @@
 from sympy import (Eq, solve, pi, cos)
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    print_expression,
-    validate_input,
-    validate_output,
-    dimensionless,
-    angle_type
-)
 from sympy.physics.units import magnetic_constant
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output, dimensionless, angle_type)
 
 # Description
 ## Let there be a rectilinear conductor of finite length. Then its magnetic induction will depend on
@@ -38,7 +30,10 @@ first_angle = Symbol("first_angle", angle_type)
 second_angle = Symbol("second_angle", angle_type)
 distance = Symbol("distance", units.length)
 
-law = Eq(induction, relative_permeability * magnetic_constant * current * (cos(first_angle) + cos(second_angle)) / (4 * pi * distance))
+law = Eq(
+    induction,
+    relative_permeability * magnetic_constant * current * (cos(first_angle) + cos(second_angle)) /
+    (4 * pi * distance))
 
 
 def print_law() -> str:

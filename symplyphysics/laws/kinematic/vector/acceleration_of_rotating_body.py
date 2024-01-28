@@ -73,7 +73,8 @@ def calculate_radial_acceleration(
     tangential_acceleration_: QuantityVector,
 ) -> QuantityVector:
     radial_acceleration = radial_acceleration_law(
-        total_acceleration_, tangential_acceleration_,
+        total_acceleration_,
+        tangential_acceleration_,
     )
     return QuantityVector(
         radial_acceleration.components,
@@ -91,7 +92,8 @@ def calculate_tangential_acceleration(
     radial_acceleration_: QuantityVector,
 ) -> QuantityVector:
     tangential_acceleration = tangential_acceleration_law(
-        total_acceleration_, radial_acceleration_,
+        total_acceleration_,
+        radial_acceleration_,
     )
     return QuantityVector(
         tangential_acceleration.components,

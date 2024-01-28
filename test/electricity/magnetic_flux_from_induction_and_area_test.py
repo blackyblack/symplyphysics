@@ -1,7 +1,6 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
 from sympy import pi
-from sympy.physics.units import prefixes
 from symplyphysics import (
     errors,
     units,
@@ -21,7 +20,7 @@ from symplyphysics.laws.electricity import magnetic_flux_from_induction_and_area
 def test_args_fixture():
     induction = Quantity(0.3 * units.tesla)
     area = Quantity(0.1 * units.meter**2)
-    angle = pi/4
+    angle = pi / 4
 
     Args = namedtuple("Args", ["induction", "area", "angle"])
     return Args(induction=induction, area=area, angle=angle)
