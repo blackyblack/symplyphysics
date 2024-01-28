@@ -5,7 +5,6 @@ from symplyphysics import (
     cross_cartesian_vectors,
     validate_input,
     validate_output,
-    list_of_quantities,
 )
 
 # Description

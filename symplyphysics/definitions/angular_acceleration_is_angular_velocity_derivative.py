@@ -14,23 +14,26 @@ from symplyphysics import (angle_type, units, Quantity, Function, Symbol, print_
 
 time = Symbol("time", units.time)
 angular_velocity = Function("angular_velocity", angle_type / units.time)
-angular_acceleration = Function("angular_acceleration", angle_type / (units.time ** 2))
+angular_acceleration = Function("angular_acceleration", angle_type / (units.time**2))
 
 definition = Eq(angular_acceleration(time), Derivative(angular_velocity(time), time))
 
-definition_units_SI = units.radian / (units.second ** 2)
+definition_units_SI = units.radian / (units.second**2)
 
 
 def print_law() -> str:
     return print_expression(definition)
 
 
-@validate_input(angular_velocity_start_=angular_velocity, angular_velocity_end_=angular_velocity, moving_time_=time)
+@validate_input(angular_velocity_start_=angular_velocity,
+    angular_velocity_end_=angular_velocity,
+    moving_time_=time)
 @validate_output(angular_acceleration)
 def calculate_angular_acceleration(angular_velocity_start_: Quantity,
     angular_velocity_end_: Quantity, moving_time_: Quantity) -> Quantity:
     #HACK: SymPy angles are always in radians
-    angular_velocity_function = time * (angular_velocity_end_ - angular_velocity_start_) / moving_time_
+    angular_velocity_function = time * (angular_velocity_end_ -
+        angular_velocity_start_) / moving_time_
     applied_definition = definition.subs(angular_velocity(time), angular_velocity_function)
     dsolved = applied_definition.doit()
     result_expr = dsolved.rhs

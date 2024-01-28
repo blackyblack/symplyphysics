@@ -20,7 +20,7 @@ from symplyphysics.laws.dynamics import torque_due_to_twisting_force as torque_d
 def test_args_fixture():
     F = Quantity(3.0 * units.newton)
     r = Quantity(5.0 * units.centimeter)
-    phi_float = pi/6
+    phi_float = pi / 6
     phi_quantity = Quantity(phi_float * units.radian)
     Args = namedtuple("Args", "F r phi_float phi_quantity")
     return Args(F=F, r=r, phi_float=phi_float, phi_quantity=phi_quantity)

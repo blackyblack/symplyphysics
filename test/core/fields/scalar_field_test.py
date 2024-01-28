@@ -1,8 +1,8 @@
 from collections import namedtuple
-from test.test_decorators import unsupported_usage
 from pytest import fixture, raises
 from sympy import atan, cos, pi, sin, sqrt, symbols, simplify
 from sympy.vector import express
+from symplyphysics.core.test_decorators import unsupported_usage
 from symplyphysics.core.dimensions import ScalarValue
 from symplyphysics.core.points.cylinder_point import CylinderPoint
 from symplyphysics.core.points.sphere_point import SpherePoint

@@ -1,10 +1,10 @@
 from sympy import Eq, solve
 from symplyphysics import (
-    units, 
-    Quantity, 
-    Symbol, 
-    print_expression, 
-    angle_type, 
+    units,
+    Quantity,
+    Symbol,
+    print_expression,
+    angle_type,
     validate_input,
     validate_output,
 )
@@ -25,7 +25,6 @@ object_inertia_moment = Symbol("object_inertia_moment", units.mass * units.area)
 angular_velocity = Symbol("angular_velocity", angle_type / units.time)
 
 law = Eq(kinetic_energy, object_inertia_moment * angular_velocity**2 / 2)
-
 
 # Derive this law from the definition of kinetic energy and the expression for linear velocity of a rotating body
 rotation_radius = Symbol("rotation_radius", units.length)

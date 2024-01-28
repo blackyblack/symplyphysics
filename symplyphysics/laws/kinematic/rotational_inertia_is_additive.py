@@ -27,12 +27,9 @@ def print_law() -> str:
 @validate_input(rotational_inertias_=rotational_inertias)
 @validate_output(total_rotational_inertia)
 def calculate_rotational_inertia(rotational_inertias_: list[Quantity]) -> Quantity:
-    rotational_inertia_symbols = tuple_of_symbols(
-        "rotational_inertia", units.mass * units.length**2, len(rotational_inertias_)
-    )
-    rotational_inertia_law = law.subs(
-        rotational_inertias, rotational_inertia_symbols
-    ).doit()
+    rotational_inertia_symbols = tuple_of_symbols("rotational_inertia",
+        units.mass * units.length**2, len(rotational_inertias_))
+    rotational_inertia_law = law.subs(rotational_inertias, rotational_inertia_symbols).doit()
     solved = solve(rotational_inertia_law, total_rotational_inertia)[0]
     for (symbol, value) in zip(rotational_inertia_symbols, rotational_inertias_):
         solved = solved.subs(symbol, value)
