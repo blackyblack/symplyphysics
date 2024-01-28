@@ -9,8 +9,10 @@ from symplyphysics import (units, Quantity, Symbol, print_expression,
 # Law: delta = (2m+1) * lambda / 2
 # Where:
 ## delta - optical travel difference for two coherent waves
-## lambda - length of wave
+## lambda - length of waves (wave 1 and wave 2)
 ## m - number of interference minimum
+
+# Condition: The two waves must be coherent
 
 
 travel_difference = Symbol("travel_difference", units.length)
