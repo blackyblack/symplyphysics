@@ -4,11 +4,7 @@ from symplyphysics import (
     errors,
     units,
     Quantity,
-    SI,
-    convert_to,
-    dimensionless
 )
-
 from symplyphysics.laws.optics import linear_magnification_from_object_height_and_image_height as magnification
 
 

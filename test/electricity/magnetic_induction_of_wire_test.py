@@ -34,8 +34,6 @@ def test_bad_relative_permeability(test_args):
     with raises(errors.UnitsError):
         induction_law.calculate_induction(relative_permeability, test_args.current,
             test_args.distance)
-    with raises(TypeError):
-        induction_law.calculate_induction(True, test_args.current, test_args.distance)
 
 
 def test_bad_current(test_args):

@@ -10,7 +10,7 @@ from symplyphysics import (
 from symplyphysics.laws.kinematic import rotational_inertia_cartesian_integral as rotational_inertia_law
 
 # Description
-## The rotational inertia of a unit cube about an axis passing through its center and the centers of 
+## The rotational inertia of a unit cube about an axis passing through its center and the centers of
 ## the top and bottom faces is 1.0 kg*m^2. Its density is 6.0 kg/m^3.
 
 

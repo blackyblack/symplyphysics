@@ -6,7 +6,6 @@ from symplyphysics import (
     Quantity,
     SI,
     convert_to,
-    dimensionless
 )
 
 from symplyphysics.laws.waves import optical_path_length_from_geometric_path_length_and_refractive_index as optical_path

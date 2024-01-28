@@ -1,7 +1,6 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
 from sympy import pi
-from sympy.physics.units import prefixes
 from symplyphysics import (
     errors,
     units,

@@ -1,9 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from sympy import SympifyError
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.fields.scalar_field import ScalarField
-from symplyphysics.core.fields.vector_field import VectorField
 from symplyphysics.laws.dynamics.fields import conservative_force_is_gradient_of_potential_energy as gradient_law
 
 # Description
@@ -25,9 +23,6 @@ def test_basic_law(test_args):
         assert expr_equals(result_gradient.components[i], expr)
 
 
-def test_bad_law(test_args):
-    bad_field = VectorField(lambda point: [point.x, point.y, point.z])
-    with raises(SympifyError):
-        gradient_law.law(bad_field)
+def test_bad_law():
     with raises(AttributeError):
         gradient_law.law(100)

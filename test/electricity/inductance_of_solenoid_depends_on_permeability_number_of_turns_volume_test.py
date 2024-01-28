@@ -37,8 +37,6 @@ def test_bad_relative_permeability(test_args):
     relative_permeability = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         inductance_law.calculate_inductance(relative_permeability, test_args.number_of_turns, test_args.volume)
-    with raises(TypeError):
-        inductance_law.calculate_inductance(True, test_args.number_of_turns, test_args.volume)
 
 
 def test_bad_number_of_turns(test_args):

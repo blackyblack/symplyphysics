@@ -1,4 +1,5 @@
 from sympy import (Eq, solve)
+from sympy.physics.units import magnetic_constant
 from symplyphysics import (
     units,
     Quantity,
@@ -8,7 +9,6 @@ from symplyphysics import (
     validate_output,
     dimensionless
 )
-from sympy.physics.units import magnetic_constant
 
 # Description
 ## A solenoid is a cylindrical coil consisting of a large number of turns of wire forming a helical line.
@@ -42,6 +42,7 @@ def print_law() -> str:
     number_turns_=number_turns)
 @validate_output(induction)
 def calculate_induction(current_: Quantity, length_: Quantity, relative_permeability_: float, number_turns_: float) -> Quantity:
+    #TODO: throw on negative number of turns
     result_expr = solve(law, induction, dict=True)[0][induction]
     result_expr = result_expr.subs({
         current: current_,
