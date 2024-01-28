@@ -1,4 +1,4 @@
-from sympy import (Eq, solve, pi, solveset, dsolve)
+from sympy import (Eq, solve, pi)
 from symplyphysics import (
     units,
     Quantity,
