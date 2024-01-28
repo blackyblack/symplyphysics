@@ -6,10 +6,15 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, dimensionl
 ## Diffraction from a three-dimensional periodic structure such as atoms in a crystal is called Bragg
 ## diffraction. This is similar to what happens when waves are scattered on a diffraction grating. Bragg
 ## diffraction is a consequence of interference between waves reflected from crystal planes.
+## The diffraction order indicates the number of integer wavelengths. When the difference in the path of
+## the beam reflected from the first layer of atoms and the beam reflected from the second layer of atoms is
+## equal to the integer number of the wave "n", then these two waves fall into the observation point with the
+## same phases and demonstrate interference.
+## The sliding angle is an angle that complements the angle of incidence of the beam up to 90 degrees.
 
 ## Law: d = n * L / (2 * sin(O)), where
-## d - diffraction_order,
-## n - refractive index of lens material,
+## d - distance between crystal planes,
+## n - diffraction order,
 ## L - wavelength,
 ## O - sliding angle.
 
