@@ -27,7 +27,7 @@ def test_basic_average_kinetic_energy(test_args):
     assert result_energy == approx(6.21e-21, abs=1e-23)
 
 
-def test_bad_temperature(test_args):
+def test_bad_temperature():
     bad_temperature = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         average_kinetic_energy.calculate_average_kinetic_energy(bad_temperature)
