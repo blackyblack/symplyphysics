@@ -10,7 +10,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression,
 # Where:
 ## delta - optical travel difference for two coherent waves
 ## lambda - length of waves (wave 1 and wave 2)
-## m - number of interference minimum
+## m - number of interference minimum (m = 0, 1, 2, ...)
 
 # Condition: The two waves must be coherent
 
