@@ -9,8 +9,8 @@ from symplyphysics import (Symbol, units, print_expression, Quantity,
 
 # Law: n * ((1 / a) - (1 / R)) = n' * ((1 / b) - (1 / R))
 # Where:
-## n - surface refraction index in 1st optical environment
-## n' - surface refraction index in 2nd optical environment
+## n - refraction index in optical environment
+## n' - refraction index in lens
 ## a - distance from object to surface of lens
 ## b - distance from image to surface of lens
 ## R - surface curvature radius (the surface is convex)
