@@ -39,9 +39,16 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(current_=current, inner_resistance_=inner_resistance, outer_resistance_=outer_resistance)
+@validate_input(current_=current,
+    inner_resistance_=inner_resistance,
+    outer_resistance_=outer_resistance)
 @validate_output(voltage)
-def calculate_voltage(current_: Quantity, inner_resistance_: Quantity, outer_resistance_: Quantity) -> Quantity:
+def calculate_voltage(current_: Quantity, inner_resistance_: Quantity,
+    outer_resistance_: Quantity) -> Quantity:
     result_voltage_expr = solve(law, voltage, dict=True)[0][voltage]
-    result_expr = result_voltage_expr.subs({current: current_, inner_resistance: inner_resistance_, outer_resistance: outer_resistance_})
+    result_expr = result_voltage_expr.subs({
+        current: current_,
+        inner_resistance: inner_resistance_,
+        outer_resistance: outer_resistance_
+    })
     return Quantity(result_expr)

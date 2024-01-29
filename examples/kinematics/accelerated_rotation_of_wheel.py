@@ -36,7 +36,8 @@ values = {
 }
 
 angular_velocity_eqn = angular_velocity_def.definition.subs(angular_velocity_def.time, time)
-angular_acceleration_eqn = angular_acceleration_def.definition.subs(angular_acceleration_def.time, time)
+angular_acceleration_eqn = angular_acceleration_def.definition.subs(angular_acceleration_def.time,
+    time)
 
 angular_position = factor * time**2
 
@@ -72,14 +73,14 @@ centripetal_acceleration = centripetal_acceleration_law.law.rhs.subs({
 # align the tangential acceleration with the x axis, and the centripetal one with the y axis.
 total_acceleration = vector_magnitude(
     total_acceleration_law.acceleration_law(
-        Vector([tangential_acceleration, 0]),
-        Vector([0, centripetal_acceleration]),
-    )
-).simplify()
+    Vector([tangential_acceleration, 0]),
+    Vector([0, centripetal_acceleration]),
+    )).simplify()
 total_acceleration_value = convert_to(
     Quantity(total_acceleration.subs(values)),
     units.meter / units.second**2,
 ).evalf(3)
 
-print(f"Formula for total acceleration of point on wheel:\n{print_expression(total_acceleration)}\n")
+print(
+    f"Formula for total acceleration of point on wheel:\n{print_expression(total_acceleration)}\n")
 print(f"Total acceleration of point on wheel is {total_acceleration_value} m/s^2.")

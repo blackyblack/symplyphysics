@@ -25,7 +25,7 @@ def test_args_fixture():
     return Args(C=C, parameter1=parameter1, parameter2=parameter2)
 
 
-def test_basic_gradient(test_args):
+def test_basic_gradient():
     field = ScalarField(lambda point: point.x**2 + point.y**2 - point.z**2)
     result_vector = gradient_operator(field)
 
@@ -36,7 +36,7 @@ def test_basic_gradient(test_args):
         assert expr_equals(result_component, correct_component)
 
 
-def test_cylindrical_gradient(test_args):
+def test_cylindrical_gradient():
     C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
 
     def field_function(p: CylinderPoint) -> ScalarValue:
@@ -57,7 +57,7 @@ def test_cylindrical_gradient(test_args):
         assert expr_equals(result_component, correct_component)
 
 
-def test_spherical_gradient(test_args):
+def test_spherical_gradient():
     C1 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
 
     def field_function(p: SpherePoint) -> ScalarValue:

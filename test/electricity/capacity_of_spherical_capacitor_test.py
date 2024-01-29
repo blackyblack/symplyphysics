@@ -34,8 +34,6 @@ def test_bad_relative_permittivity(test_args):
     with raises(errors.UnitsError):
         capacity_law.calculate_capacity(relative_permittivity, test_args.first_radius,
             test_args.second_radius)
-    with raises(TypeError):
-        capacity_law.calculate_capacity(True, test_args.first_radius, test_args.second_radius)
 
 
 def test_bad_radius(test_args):

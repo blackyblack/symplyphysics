@@ -22,11 +22,14 @@ def test_args_fixture():
     outer_resistance = Quantity(100 * units.ohm)
 
     Args = namedtuple("Args", ["current", "inner_resistance", "outer_resistance"])
-    return Args(current=current, inner_resistance=inner_resistance, outer_resistance=outer_resistance)
+    return Args(current=current,
+        inner_resistance=inner_resistance,
+        outer_resistance=outer_resistance)
 
 
 def test_basic_voltage(test_args):
-    result = voltage_law.calculate_voltage(test_args.current, test_args.inner_resistance, test_args.outer_resistance)
+    result = voltage_law.calculate_voltage(test_args.current, test_args.inner_resistance,
+        test_args.outer_resistance)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.voltage)
     result_voltage = convert_to(result, units.volt).evalf(5)
     assert result_voltage == approx(1.2, 0.01)
@@ -35,7 +38,8 @@ def test_basic_voltage(test_args):
 def test_bad_current(test_args):
     current = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
-        voltage_law.calculate_voltage(current, test_args.inner_resistance, test_args.outer_resistance)
+        voltage_law.calculate_voltage(current, test_args.inner_resistance,
+            test_args.outer_resistance)
     with raises(TypeError):
         voltage_law.calculate_voltage(100, test_args.inner_resistance, test_args.outer_resistance)
 
