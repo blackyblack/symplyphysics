@@ -8,7 +8,7 @@ from symplyphysics import (
     SI,
     angle_type,
 )
-from symplyphysics.laws.kinematic import accelerated_angular_velocity_from_time as angular_velocity_law
+from symplyphysics.laws.kinematic import angular_velocity_from_constant_angular_acceleration as angular_velocity_law
 
 # Description
 ## A body is rotating about a fixed axis with angular acceleration of 3 rad/s^2. Initially its
