@@ -26,7 +26,8 @@ from symplyphysics.definitions import (
 ## t - time
 
 ## Conditions:
-## Angular acceleration of the body is constant.
+## - Angular acceleration of the body is constant.
+## - Initial displacement is zero.
 
 angular_displacement = Symbol("angular_displacement", angle_type)
 initial_angular_velocity = Symbol("initial_angular_velocity", angle_type / units.time)
@@ -48,22 +49,34 @@ angular_velocity_formula = dsolve(
     angular_acceleration_def.angular_acceleration(time), angular_acceleration,
 ).doit()
 
-C1 = solve(Eq(initial_angular_velocity, angular_velocity_formula.subs(time, 0)), "C1")[0]
-
-angular_velocity_expr = angular_velocity_formula.subs("C1", C1)
+angular_velocity = Symbol("angular_velocity", angle_type / units.time)
+angular_velocity_derived = solve(
+    [
+        Eq(initial_angular_velocity, angular_velocity_formula.subs(time, 0)),
+        Eq(angular_velocity, angular_velocity_formula)
+    ],
+    ("C1", angular_velocity),
+    dict=True,
+)[0][angular_velocity]
 
 angular_displacement_formula = dsolve(
     angular_velocity_def.definition.subs(angular_velocity_def.time, time),
     angular_velocity_def.angle_function(time),
 ).rhs.subs(
-    angular_velocity_def.angular_velocity(time), angular_velocity_expr,
+    angular_velocity_def.angular_velocity(time), angular_velocity_derived,
 ).doit()
 
-C1 = solve(Eq(0, angular_displacement_formula.subs(time, 0)), "C1")[0]
+angular_displacement_derived = solve(
+    [
+        # initial angular displacement is 0 by condition
+        Eq(0, angular_displacement_formula.subs(time, 0)),
+        Eq(angular_displacement, angular_displacement_formula)
+    ],
+    ("C1", angular_displacement),
+    dict=True,
+)[0][angular_displacement]
 
-angular_displacement_expr = angular_displacement_formula.subs("C1", C1)
-
-assert expr_equals(angular_displacement_expr, law.rhs)
+assert expr_equals(angular_displacement_derived, law.rhs)
 
 
 def print_law() -> str:
@@ -80,7 +93,7 @@ def calculate_angular_displacement(
     initial_angular_velocity_: Quantity,
     angular_acceleration_: Quantity,
     time_: Quantity,
-) -> Quantity | float:
+) -> Quantity:
     result = law.rhs.subs({
         initial_angular_velocity: initial_angular_velocity_,
         angular_acceleration: angular_acceleration_,
