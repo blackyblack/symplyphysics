@@ -1,4 +1,4 @@
-from sympy import Eq
+from sympy import Eq, solve
 from symplyphysics import (
     units,
     Quantity,
@@ -7,6 +7,12 @@ from symplyphysics import (
     validate_input,
     validate_output,
     angle_type,
+    Vector,
+    vector_magnitude,
+)
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.kinematic.vector import (
+    linear_displacement_is_angular_displacement_cross_radius as displacement_law
 )
 
 # Description:
@@ -25,6 +31,38 @@ arc_length = Symbol("arc_length", units.length)
 path_radius = Symbol("path_radius", units.length)
 
 law = Eq(angular_position, arc_length / path_radius)
+
+
+# Derive law from its [vector counterpart](../linear_displacement_is_angular_displacement_cross_radius.py)
+
+angle_x = Symbol("angle_x", angle_type)
+angle_y = Symbol("angle_y", angle_type)
+angle_z = Symbol("angle_z", angle_type)
+angle_vec = Vector([angle_x, angle_y, angle_z])
+angle_norm = vector_magnitude(angle_vec)
+
+radius_x = Symbol("radius_x", units.length)
+radius_y = Symbol("radius_y", units.length)
+radius_z = Symbol("radius_z", units.length)
+radius_vec = Vector([radius_x, radius_y, radius_z])
+radius_norm = vector_magnitude(radius_vec)
+
+displacement_from_law = solve(
+    law, arc_length
+)[0].subs({
+    angular_position: angle_norm,
+    path_radius: radius_norm,
+})
+
+# From [the law](../linear_displacement_is_angular_displacement_cross_radius.py), taking the vector 
+# norm of both sides, we have norm(s) = norm(theta) * norm(r) * sin(phi) where s is the linear 
+# displacement vector, theta is the angular displacement pseudovector, r is the radius vector, and 
+# phi is the and between the last two. As a necessary condition, theta and r are orthogonal to each 
+# other, therefore phi is pi/2 and sin(phi) is 1, and so abs(s) = abs(theta) * abs(r).
+
+displacement_derived = angle_norm * radius_norm
+
+assert expr_equals(displacement_from_law, displacement_derived)
 
 
 def print_law() -> str:
