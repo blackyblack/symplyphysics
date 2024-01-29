@@ -7,7 +7,6 @@ from symplyphysics import (
     validate_input,
     validate_output,
     dimensionless,
-    angle_type
 )
 
 # Description
@@ -19,11 +18,11 @@ from symplyphysics import (
 ## point with the same faces and demonstrate interference.
 
 ## Law is: r = sqrt(k * R * L / n), where
-## r - film thickness,
+## r - radius of Newton's ring,
 ## k - order of interference,
 ## R - radius of curvature of lens
-## L - wavelength,
-## n - refractive index of lens.
+## L - wavelength in medium surrounding lens and plate,
+## n - refractive index of medium between lens and plate.
 
 radius = Symbol("radius", units.length)
 
@@ -44,7 +43,13 @@ def print_law() -> str:
     refractive_index_=refractive_index,
     radius_curvature_=radius_curvature)
 @validate_output(radius)
-def calculate_radius(wavelength_: Quantity, order_interference_: int, refractive_index_: float, radius_curvature_: Quantity) -> Quantity:
+def calculate_radius(wavelength_: Quantity, order_interference_: float, refractive_index_: float, radius_curvature_: Quantity) -> Quantity:
+    check = order_interference_ * 2 % 2
+    if not (isinstance(order_interference_, int) or check == 1 or check == 0):
+        raise ValueError("order_interference_ must be an integer or an odd number divided by 2.")
+    if order_interference_ <= 0:
+        raise ValueError("order_interference_ must be greater than 0.") 
+
     result_expr = solve(law, radius, dict=True)[0][radius]
     result_expr = result_expr.subs({
         wavelength: wavelength_,
