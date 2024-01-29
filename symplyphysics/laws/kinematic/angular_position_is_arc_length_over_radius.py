@@ -11,9 +11,6 @@ from symplyphysics import (
     vector_magnitude,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.kinematic.vector import (
-    linear_displacement_is_angular_displacement_cross_radius as displacement_law
-)
 
 # Description:
 ## To describe the rotation of a rigid body about a fixed axis (rotational axis), a reference line is
@@ -54,11 +51,11 @@ displacement_from_law = solve(
     path_radius: radius_norm,
 })
 
-# From [the law](../linear_displacement_is_angular_displacement_cross_radius.py), taking the vector 
-# norm of both sides, we have norm(s) = norm(theta) * norm(r) * sin(phi) where s is the linear 
-# displacement vector, theta is the angular displacement pseudovector, r is the radius vector, and 
-# phi is the and between the last two. As a necessary condition, theta and r are orthogonal to each 
-# other, therefore phi is pi/2 and sin(phi) is 1, and so abs(s) = abs(theta) * abs(r).
+# From [the law](../linear_displacement_is_angular_displacement_cross_radius.py), taking the vector
+# norm of both sides, we have norm(s) = norm(theta) * norm(r) * sin(phi) where s is the linear
+# displacement vector, theta is the angular displacement pseudovector, r is the radius vector, and
+# phi is the and between the last two. As a necessary condition, theta and r are orthogonal to each
+# other, therefore phi is pi/2 and sin(phi) is 1, and so abs(s) = abs(theta) * abs(r)
 
 displacement_derived = angle_norm * radius_norm
 
