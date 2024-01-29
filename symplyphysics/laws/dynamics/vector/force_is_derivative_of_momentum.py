@@ -49,5 +49,5 @@ def calculate_force(
             scale_vector(-1, momentum_before_)
         )
     )
-    result = [component.doit() for component in force_law(momentum_function).components]
+    result = [component.doit() for component in force_law(momentum_function).components]  # type: ignore
     return QuantityVector(result, momentum_before_.coordinate_system)
