@@ -6,6 +6,7 @@ from symplyphysics import (
     Function,
     validate_input,
     validate_output,
+    print_expression,
 )
 
 # Description
@@ -47,6 +48,10 @@ law = Eq(
     (z, z_start, z_end),
     ),
 )
+
+
+def print_law() -> str:
+    return print_expression(law)
 
 
 # Assuming constant density throughout the body.
