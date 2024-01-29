@@ -44,9 +44,14 @@ angular_velocity_formula = dsolve(
     angular_acceleration,
 ).doit()
 
-C1 = solve(Eq(initial_angular_velocity, angular_velocity_formula.subs(time, 0)), "C1")[0]
-
-angular_velocity_derived = angular_velocity_formula.subs("C1", C1)
+angular_velocity_derived = solve(
+    [
+        Eq(initial_angular_velocity, angular_velocity_formula.subs(time, 0)),
+        Eq(angular_velocity, angular_velocity_formula)
+    ],
+    ("C1", angular_velocity),
+    dict=True
+)[0][angular_velocity]
 
 assert expr_equals(angular_velocity_derived, law.rhs)
 
