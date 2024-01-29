@@ -24,10 +24,10 @@ from symplyphysics.laws.optics import the_formula_of_the_spherical_refractive_su
 def test_args_fixture():
     do = Quantity(oo * units.meters)
     di = Quantity(27 * prefixes.centi * units.meters)
+    rl = Quantity(7 * prefixes.centi * units.meters)
     nm = 1
-    rl = Quantity(7 * prefixes.centi * units.meter)
-    Args = namedtuple("Args", ["do", "di", "nm", "rl"])
-    return Args(do=do, di=di, nm=nm, rl=rl)
+    Args = namedtuple("Args", ["do", "di", "rl", "nm", ])
+    return Args(do=do, di=di, rl=rl, nm=nm)
 
 
 def test_basic_refraction_index(test_args):
@@ -39,20 +39,20 @@ def test_bad_distance(test_args):
     db = Quantity(1 * units.coulomb)
 
     with raises(errors.UnitsError):
-        spherical_lens_law.calculate_refraction_index_lens(db, test_args.di, test_args.nm, test_args.rl)
+        spherical_lens_law.calculate_refraction_index_lens(db, test_args.di, test_args.rl, test_args.nm)
     with raises(TypeError):
-        spherical_lens_law.calculate_refraction_index_lens(100, test_args.di, test_args.nm, test_args.rl)
+        spherical_lens_law.calculate_refraction_index_lens(100, test_args.di, test_args.rl, test_args.nm)
 
     with raises(errors.UnitsError):
-        spherical_lens_law.calculate_refraction_index_lens(test_args.do, db, test_args.nm, test_args.rl)
+        spherical_lens_law.calculate_refraction_index_lens(test_args.do, db, test_args.rl, test_args.nm)
     with (raises(TypeError)):
-        spherical_lens_law.calculate_refraction_index_lens(test_args.do, 100, test_args.nm, test_args.rl)
+        spherical_lens_law.calculate_refraction_index_lens(test_args.do, 100, test_args.rl, test_args.nm)
 
 
 def test_bad_radius(test_args):
     rb = Quantity(1 * units.coulomb)
 
     with raises(errors.UnitsError):
-        spherical_lens_law.calculate_refraction_index_lens(test_args.do, test_args.di, test_args.nm, rb)
+        spherical_lens_law.calculate_refraction_index_lens(test_args.do, test_args.di, rb, test_args.nm)
     with raises(TypeError):
-        spherical_lens_law.calculate_refraction_index_lens(test_args.do, test_args.di, test_args.nm, 100)
+        spherical_lens_law.calculate_refraction_index_lens(test_args.do, test_args.di, 100, test_args.nm, )

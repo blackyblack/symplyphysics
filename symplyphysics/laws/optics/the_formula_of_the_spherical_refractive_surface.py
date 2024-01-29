@@ -4,7 +4,6 @@ from symplyphysics import (units, Quantity, Symbol, print_expression,
 from symplyphysics.core.expr_comparisons import expr_equals
 
 from symplyphysics.laws.conservation import abbe_invariant_of_two_optical_environments_is_constant as abbe_conservation_law
-from symplyphysics.laws.optics import abbe_invariant as abbe_invariant_law
 
 # Description:
 ## The formula of the spherical refractive surface allows you to uniquely determine
@@ -25,35 +24,27 @@ from symplyphysics.laws.optics import abbe_invariant as abbe_invariant_law
 
 distance_to_object = Symbol("distance_to_object", units.length)
 distance_to_image = Symbol("distance_to_image", units.length)
-lens_radius = Symbol("lens_radius", units.length)
-refraction_index_medium = Symbol("refraction_index_medium", dimensionless)
+curvature_radius_lens = Symbol("curvature_radius_lens", units.length)
+refraction_index_environment = Symbol("refraction_index_environment", dimensionless)
 refraction_index_lens = Symbol("refraction_index_lens", dimensionless)
 
 law = Eq(
-    (refraction_index_medium / (-distance_to_object)) + (refraction_index_lens / distance_to_image),
-    (refraction_index_lens - refraction_index_medium) / lens_radius
+    (refraction_index_environment / (-distance_to_object)) + (refraction_index_lens / distance_to_image),
+    (refraction_index_lens - refraction_index_environment) / curvature_radius_lens
 )
 
 # From Abbe's invariants:
 
-medium_invariant_value = abbe_invariant_law.law.subs({
-    abbe_invariant_law.curvature_radius: lens_radius,
-    abbe_invariant_law.refraction_index: refraction_index_medium,
-    abbe_invariant_law.distance_to_surface: distance_to_object
-}).rhs
-lens_invariant_value = abbe_invariant_law.law.subs({
-    abbe_invariant_law.curvature_radius: lens_radius,
-    abbe_invariant_law.refraction_index: refraction_index_lens,
-    abbe_invariant_law.distance_to_surface: distance_to_image
-}).rhs
+abbe_invariant_environment = refraction_index_environment * ((1 / distance_to_object) - (1 / curvature_radius_lens))
+abbe_invariant_lens = refraction_index_lens * ((1 / distance_to_image) - (1 / curvature_radius_lens))
 
 invariant_conservation_eq = abbe_conservation_law.law.subs({
-    abbe_conservation_law.invariant_abbe_before: medium_invariant_value,
-    abbe_conservation_law.invariant_abbe_after: lens_invariant_value
+    abbe_conservation_law.abbe_invariant_environment: abbe_invariant_environment,
+    abbe_conservation_law.abbe_invariant_lens: abbe_invariant_lens
 })
 
-radius_lens_from_law = solve(law, lens_radius, dict=True)[0][lens_radius]
-radius_lens_from_invariants = solve(invariant_conservation_eq, lens_radius, dict=True)[0][lens_radius]
+radius_lens_from_law = solve(law, curvature_radius_lens, dict=True)[0][curvature_radius_lens]
+radius_lens_from_invariants = solve(invariant_conservation_eq, curvature_radius_lens, dict=True)[0][curvature_radius_lens]
 assert expr_equals(radius_lens_from_law, radius_lens_from_invariants)
 
 
@@ -62,20 +53,24 @@ def print_law() -> str:
 
 
 @validate_input(
-    distance_to_object_=distance_to_object, distance_to_image_=distance_to_image,
-    lens_radius_=lens_radius, refraction_index_medium_=refraction_index_medium
+    distance_to_object_=distance_to_object,
+    distance_to_image_=distance_to_image,
+    curvature_radius_lens_=curvature_radius_lens,
+    refraction_index_environment_=refraction_index_environment
 )
 @validate_output(refraction_index_lens)
 def calculate_refraction_index_lens(
-        distance_to_object_: Quantity, distance_to_image_: Quantity,
-        lens_radius_: Quantity, refraction_index_medium_: Quantity
+        distance_to_object_: Quantity,
+        distance_to_image_: Quantity,
+        curvature_radius_lens_: Quantity,
+        refraction_index_environment_: float
 ) -> float:
     solved = solve(law, refraction_index_lens, dict=True)[0][refraction_index_lens]
     result_expr = solved.subs({
         distance_to_object: distance_to_object_,
         distance_to_image: distance_to_image_,
-        lens_radius: lens_radius_,
-        refraction_index_medium: refraction_index_medium_
+        curvature_radius_lens: curvature_radius_lens_,
+        refraction_index_environment: refraction_index_environment_
     })
     result = Quantity(result_expr)
     return float(convert_to(result, S.One).evalf())
