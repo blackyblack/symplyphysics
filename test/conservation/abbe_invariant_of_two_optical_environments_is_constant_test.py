@@ -5,7 +5,7 @@ from symplyphysics import (
     units,
     convert_to,
     Quantity,
-    SI,
+    SI, prefixes,
 )
 from symplyphysics.laws.conservation import abbe_invariant_of_two_optical_environments_is_constant as abbe_conservation_law
 
@@ -18,31 +18,46 @@ from symplyphysics.laws.conservation import abbe_invariant_of_two_optical_enviro
 
 # Radius of lens: R = (h * D - 1) / D = 0.07 (m)
 # Refraction index in air: n = 1
-# Abbe's invariant in air: Q = n * ((1 / oo) - (1 / R)) = -14.286 (1/m)
 
-# Refraction index in lens: n' = h D = 1.35
-# Abbe's invariant in lens: Q' = n' ((1 / h) - (1 / R)) = -14.286 (1/m)
-
-# Equation Q = Q' should be true
+# Refraction index in lens: n' = n ( ((1/oo) - (1/R)) / ((1/h) - (1/R)) ) = 1.35
 
 
 @fixture(name="test_args")
 def test_args_fixture():
-    qm = Quantity(-14.286 / units.meters)
-    Args = namedtuple("Args", ["qm"])
-    return Args(qm=qm)
+    r = Quantity(7 * prefixes.centi * units.meters)
+    n = 1.0
+    a = oo
+    b = Quantity(27 * prefixes.centi * units.meters)
+
+    Args = namedtuple("Args", ["a", "b", "n", "r"])
+    return Args(a=a, b=b, n=n, r=r)
 
 
 def test_basic_conservation(test_args):
-    result = abbe_conservation_law.calculate_surface_abbe_invariant(test_args.qm)
+    result = abbe_conservation_law.calculate_refraction_index_lens(test_args.a, test_args.b, test_args.n, test_args.r)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, 1 / units.length)
     result_ = convert_to(result, 1 / units.meter).evalf(2)
-    assert result_ == approx(14.286, 0.01)
+    assert result_ == approx(1.35, 0.01)
 
 
-def test_bad_abbe_invariant():
-    qmb = Quantity(1 * units.meter)
+def test_bad_distance(test_args):
+    db = Quantity(1 * units.coulomb)
+
     with raises(errors.UnitsError):
-        abbe_conservation_law.calculate_surface_abbe_invariant(qmb)
+        abbe_conservation_law.calculate_refraction_index_lens(db, test_args.b, test_args.n, test_args.r)
     with raises(TypeError):
-        abbe_conservation_law.calculate_surface_abbe_invariant(100)
+        abbe_conservation_law.calculate_refraction_index_lens(100, test_args.b, test_args.n, test_args.r)
+
+    with raises(errors.UnitsError):
+        abbe_conservation_law.calculate_refraction_index_lens(test_args.a, db, test_args.n, test_args.r)
+    with raises(TypeError):
+        abbe_conservation_law.calculate_refraction_index_lens(test_args.a, 100, test_args.n, test_args.r)
+
+
+def test_bad_radius(test_args):
+    rb = Quantity(1 * units.coulomb)
+
+    with raises(errors.UnitsError):
+        abbe_conservation_law.calculate_refraction_index_lens(test_args.a, test_args.b, test_args.n, rb)
+    with raises(TypeError):
+        abbe_conservation_law.calculate_refraction_index_lens(test_args.a, test_args.b, test_args.n, 100)

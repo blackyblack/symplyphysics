@@ -1,41 +1,64 @@
-from sympy import Eq, solve
+from sympy import Eq, solve, S
 from symplyphysics import (Symbol, units, print_expression, Quantity,
-    validate_input, validate_output)
+                           validate_input, validate_output, dimensionless,
+                           convert_to)
 
 # Description
 ## The Abbe's invariant connects the front and back segments S and S',
 ## allowing one of them to be determined if the second one is known
 
-# Law: Q = Q'
+# Law: n * ((1 / a) - (1 / R)) = n' * ((1 / b) - (1 / R))
 # Where:
-## Q -  the Abbe's invariant of the medium before refraction
-## Q' - the Abbe invariant of the refractive surface
+## n - surface refraction index in 1st optical environment
+## n' - surface refraction index in 2nd optical environment
+## a - distance from object to surface of lens
+## b - distance from image to surface of lens
+## R - surface curvature radius (the surface is convex)
 
 # Conditions:
 ## - Abbe's formula is valid only for paraxial rays;
-## - All rays emanating from point S and forming different but necessarily small angles with the axis will pass through the same point S' after refraction;
-## - For real systems of only the paraxial region, formulas and positions that are valid for an ideal optical system can be applied.
-## - The segment S does not depend on the angle, i.e. the homocentric beam of paraxial rays remains homocentric after passing through the refractive surface.
+## - All rays emanating from point S and forming different but necessarily small angles with the axis will pass through point S' after refraction.
 
 # NOTE:
 ## proofs: https://studme.org/341451/matematika_himiya_fizik/prelomlenie_otrazhenie_sveta_sfericheskoy_poverhnosti
 
-invariant_abbe_before = Symbol("invariant_abbe_before", 1 / units.length)
-invariant_abbe_after = Symbol("invariant_abbe_after", 1 / units.length)
+curvature_radius = Symbol("curvature_radius", units.length)
 
-law = Eq(invariant_abbe_before, invariant_abbe_after)
+refraction_index_environment = Symbol("refraction_index_environment", dimensionless)
+distance_from_object = Symbol("distance_from_object", units.length)
+
+refraction_index_lens = Symbol("refraction_index_lens", dimensionless)
+distance_from_image = Symbol("distance_from_image", units.length)
+
+abbe_invariant_environment = refraction_index_environment * ((1 / distance_from_object) - (1 / curvature_radius))
+abbe_invariant_lens = refraction_index_lens * ((1 / distance_from_image) - (1 / curvature_radius))
+
+law = Eq(abbe_invariant_environment, abbe_invariant_lens)
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(invariant_abbe_medium_=invariant_abbe_before)
-@validate_output(invariant_abbe_after)
-def calculate_surface_abbe_invariant(invariant_abbe_before_: Quantity) -> Quantity:
-    solved = solve(law, invariant_abbe_after, dict=True)[0][invariant_abbe_after]
+@validate_input(
+    curvature_radius_=curvature_radius,
+    refraction_index_environment_=refraction_index_environment,
+    distance_from_object_=distance_from_object,
+    distance_from_image_=distance_from_image,
+)
+@validate_output(refraction_index_lens)
+def calculate_refraction_index_lens(
+    distance_from_object_: Quantity,
+    distance_from_image_: Quantity,
+    curvature_radius_: Quantity,
+    refraction_index_environment_: float,
+) -> float:
+    solved = solve(law, refraction_index_lens, dict=True)[0][refraction_index_lens]
     result_expr = solved.subs({
-        invariant_abbe_before: invariant_abbe_before_
+        curvature_radius: curvature_radius_,
+        refraction_index_environment: refraction_index_environment_,
+        distance_from_object: distance_from_object_,
+        distance_from_image: distance_from_image_,
     })
     result = Quantity(result_expr)
-    return result
+    return float(convert_to(result, S.One).evalf())
