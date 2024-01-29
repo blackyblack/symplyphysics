@@ -10,19 +10,19 @@ from symplyphysics import (
 
 # Description
 ## The parallel-axis theorem relates the rotational inertia of a body about any axis to
-## that of the same body about a parallel axis that extends through the body's com (center
+## that of the same body about a parallel axis that extends through the body's center of mass
 ## of mass).
 
 # Law: I = I_com + M*(h**2)
 ## I - rotational inertia about some axis
 ## I_com - rotational inertia about such an axis that is parallel to the given one
-##         and that passes through the com (center of mass)
+##         and that passes through the center of mass
 ## M - body mass
 ## h - perpendicular distance between the two axes
 
 # Conditions:
 ## - The two axis must be parallel to each other.
-## - One of them should pass through the body's com.
+## - The axis used in the calculation of I_com must pass through the body's center of mass.
 
 rotational_inertia = Symbol("rotational_inertia", units.mass * units.length**2)
 rotational_inertia_through_com = Symbol("rotational_inertia_through_com", units.mass * units.length**2)

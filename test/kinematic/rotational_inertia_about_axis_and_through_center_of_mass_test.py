@@ -8,12 +8,12 @@ from symplyphysics import (
     SI,
 )
 from symplyphysics.laws.kinematic import (
-    rotational_inertia_about_axis_and_through_com as parallel_axis_theorem,
+    rotational_inertia_about_axis_and_through_center_of_mass as parallel_axis_theorem,
 )
 
 # Description
 ## A body weighing 3 kg is rotating about an axis. Its rotational inertia about a parallel
-## axis that extends through the body's com is 5.0 kg*(m**2). The two axis are 0.5 m apart.
+## axis that extends through the body's center of mass is 5.0 kg*(m**2). The two axis are 0.5 m apart.
 ## The rotational inertia about the original axis is 5.75 kg*(m**2).
 
 
