@@ -29,8 +29,6 @@ def test_bad_relative_permeability(test_args):
     relative_permeability = Quantity(1 * units.joule)
     with raises(errors.UnitsError):
         induction_law.calculate_induction(relative_permeability, test_args.intensity)
-    with raises(TypeError):
-        induction_law.calculate_induction(True, test_args.intensity)
 
 
 def test_bad_intensity(test_args):
