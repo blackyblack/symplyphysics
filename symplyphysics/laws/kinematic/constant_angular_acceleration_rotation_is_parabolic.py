@@ -1,4 +1,4 @@
-from sympy import Eq
+from sympy import Eq, solve, dsolve
 from symplyphysics import (
     units,
     Quantity,
@@ -7,6 +7,11 @@ from symplyphysics import (
     validate_input,
     validate_output,
     angle_type,
+)
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.definitions import (
+    angular_acceleration_is_angular_velocity_derivative as angular_acceleration_def,
+    angular_velocity_is_angle_derivative as angular_velocity_def,
 )
 
 # Description
@@ -32,6 +37,36 @@ law = Eq(
     angular_displacement,
     initial_angular_velocity * time + angular_acceleration * time**2 / 2,
 )
+
+def pprint(x):
+    print(print_expression(x))
+    assert 0
+
+# Derive law from definitions of angular velocity and acceleration
+
+angular_velocity_formula = dsolve(
+    angular_acceleration_def.definition.subs(angular_acceleration_def.time, time),
+    angular_acceleration_def.angular_velocity(time),
+).rhs.subs(
+    angular_acceleration_def.angular_acceleration(time), angular_acceleration,
+).doit()
+
+C1 = solve(Eq(initial_angular_velocity, angular_velocity_formula.subs(time, 0)), "C1")[0]
+
+angular_velocity_expr = angular_velocity_formula.subs("C1", C1)
+
+angular_displacement_formula = dsolve(
+    angular_velocity_def.definition.subs(angular_velocity_def.time, time),
+    angular_velocity_def.angle_function(time),
+).rhs.subs(
+    angular_velocity_def.angular_velocity(time), angular_velocity_expr,
+).doit()
+
+C1 = solve(Eq(0, angular_displacement_formula.subs(time, 0)), "C1")[0]
+
+angular_displacement_expr = angular_displacement_formula.subs("C1", C1)
+
+assert expr_equals(angular_displacement_expr, law.rhs)
 
 
 def print_law() -> str:
