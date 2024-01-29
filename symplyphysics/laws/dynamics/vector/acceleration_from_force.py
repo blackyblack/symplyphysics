@@ -41,24 +41,26 @@ def force_law(acceleration_: Vector) -> Vector:
 # Condition: mass is constant
 
 time = force_momentum_law.time
-momentum_x = Function("momentum_x", units.mass * units.velocity)
-momentum_y = Function("momentum_y", units.mass * units.velocity)
-momentum_z = Function("momentum_z", units.mass * units.velocity)
 
+momentum_x = Function("momentum_x", units.momentum)
+momentum_y = Function("momentum_y", units.momentum)
+momentum_z = Function("momentum_z", units.momentum)
 momentum_vec = Vector([momentum_x(time), momentum_y(time), momentum_z(time)])
+
 force_derived = force_momentum_law.force_law(momentum_vec)
 
 momentum_def_sub = momentum_def.definition.subs(momentum_def.mass, mass)
-velocity_x = solve(momentum_def_sub, momentum_def.velocity)[0].subs(momentum_def.momentum, momentum_x(time))
-velocity_y = solve(momentum_def_sub, momentum_def.velocity)[0].subs(momentum_def.momentum, momentum_y(time))
-velocity_z = solve(momentum_def_sub, momentum_def.velocity)[0].subs(momentum_def.momentum, momentum_z(time))
+velocity_vec = Vector([
+    solve(momentum_def_sub, momentum_def.velocity)[0].subs(momentum_def.momentum, momentum_component)
+    for momentum_component in momentum_vec.components
+])
 
 acceleration_def_sub = acceleration_def.definition.rhs.subs(acceleration_def.time, time)
-acceleration_x = acceleration_def_sub.subs(acceleration_def.velocity(time), velocity_x)
-acceleration_y = acceleration_def_sub.subs(acceleration_def.velocity(time), velocity_y)
-acceleration_z = acceleration_def_sub.subs(acceleration_def.velocity(time), velocity_z)
+acceleration_vec = Vector([
+    acceleration_def_sub.subs(acceleration_def.velocity(time), velocity_component)
+    for velocity_component in velocity_vec.components
+])
 
-acceleration_vec = Vector([acceleration_x, acceleration_y, acceleration_z])
 force_from_law = force_law(acceleration_vec)
 
 for component_derived, component_from_law in zip(force_derived.components, force_from_law.components):
