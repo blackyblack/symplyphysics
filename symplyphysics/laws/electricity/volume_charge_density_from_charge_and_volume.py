@@ -19,9 +19,7 @@ volume_charge_density = Symbol("volume_charge_density", units.charge / units.vol
 charge = Symbol("charge", units.charge)
 volume = Symbol("volume", units.volume)
 
-definition = Eq(volume_charge_density, charge / volume)
-
-definition_units_SI = units.coulomb / units.meter**3
+law = Eq(volume_charge_density, charge / volume)
 
 ## Proof
 
@@ -33,16 +31,16 @@ expr = volume_number_density.definition.subs({
     })
 
 derived_law = solve(expr,  volume_number_density.number_density, dict=True)[0][volume_number_density.number_density]
-assert definition.rhs == derived_law
+assert law.rhs == derived_law
 
 def print_definition() -> str:
-    return print_expression(definition)
+    return print_expression(law)
 
 
 @validate_input(charge_=charge, volume_=volume)
 @validate_output(volume_charge_density)
 def calculate_volume_charge_density(charge_: Quantity, volume_: Quantity) -> Quantity:
-    result_expr = solve(definition, volume_charge_density, dict=True)[0][volume_charge_density]
+    result_expr = solve(law, volume_charge_density, dict=True)[0][volume_charge_density]
     result_volume_charge_density = result_expr.subs({
         charge: charge_,
         volume: volume_,

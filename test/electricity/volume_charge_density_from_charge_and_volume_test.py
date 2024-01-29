@@ -9,7 +9,7 @@ from symplyphysics import (
     dimensionless
 )
 
-from symplyphysics.definitions import volume_charge_density_from_charge_and_volume as volume_charge_density
+from symplyphysics.laws import volume_charge_density_from_charge_and_volume as volume_charge_density
 
 
 @fixture(name="test_args")
