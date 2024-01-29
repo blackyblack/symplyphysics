@@ -1,4 +1,4 @@
-from sympy import Derivative
+from sympy import Derivative, sympify
 from symplyphysics import (
     units,
     Symbol,
@@ -49,5 +49,5 @@ def calculate_force(
             scale_vector(-1, momentum_before_)
         )
     )
-    result = [component.doit() for component in force_law(momentum_function).components]  # type: ignore
+    result = [sympify(component.doit()) for component in force_law(momentum_function).components]
     return QuantityVector(result, momentum_before_.coordinate_system)
