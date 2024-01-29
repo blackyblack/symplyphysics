@@ -24,7 +24,7 @@ def test_args_fixture():
 
 
 def test_basic_law(test_args):
-    result = rotational_inertia_law.calculate_rotational_inertia(
+    result = rotational_inertia_law.calculate_cylinder_rotational_inertia(
         test_args.rho, test_args.rmax, test_args.zmax
     )
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.mass * units.length**2)
@@ -35,18 +35,18 @@ def test_basic_law(test_args):
 def test_bad_density(test_args):
     rhob = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        rotational_inertia_law.calculate_rotational_inertia(rhob, test_args.rmax, test_args.zmax)
+        rotational_inertia_law.calculate_cylinder_rotational_inertia(rhob, test_args.rmax, test_args.zmax)
     with raises(TypeError):
-        rotational_inertia_law.calculate_rotational_inertia(100, test_args.rmax, test_args.zmax)
+        rotational_inertia_law.calculate_cylinder_rotational_inertia(100, test_args.rmax, test_args.zmax)
 
 
 def test_bad_lengths(test_args):
     lb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        rotational_inertia_law.calculate_rotational_inertia(test_args.rho, lb, test_args.zmax)
+        rotational_inertia_law.calculate_cylinder_rotational_inertia(test_args.rho, lb, test_args.zmax)
     with raises(errors.UnitsError):
-        rotational_inertia_law.calculate_rotational_inertia(test_args.rho, test_args.rmax, lb)
+        rotational_inertia_law.calculate_cylinder_rotational_inertia(test_args.rho, test_args.rmax, lb)
     with raises(TypeError):
-        rotational_inertia_law.calculate_rotational_inertia(test_args.rho, 100, test_args.zmax)
+        rotational_inertia_law.calculate_cylinder_rotational_inertia(test_args.rho, 100, test_args.zmax)
     with raises(TypeError):
-        rotational_inertia_law.calculate_rotational_inertia(test_args.rho, test_args.rmax, 100)
+        rotational_inertia_law.calculate_cylinder_rotational_inertia(test_args.rho, test_args.rmax, 100)

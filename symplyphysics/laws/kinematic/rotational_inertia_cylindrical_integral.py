@@ -59,7 +59,7 @@ def print_law() -> str:
 # The rotational axis is the axis of the cylinder.
 @validate_input(density_=density, radius_=radius, height_=height)
 @validate_output(rotational_inertia)
-def calculate_rotational_inertia(
+def calculate_cylinder_rotational_inertia(
     density_: Quantity, radius_: Quantity, height_: Quantity
 ) -> Quantity:
     result = law.rhs.subs({
