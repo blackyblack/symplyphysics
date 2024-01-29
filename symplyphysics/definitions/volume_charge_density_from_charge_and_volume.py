@@ -30,18 +30,11 @@ definition_units_SI = units.coulomb / units.meter**3
 ## In this case, the objects are charged particles.
 expr = volume_number_density.definition.subs({
         volume_number_density.volume: volume,
+        volume_number_density.objects: charge
     })
 
-number_of_particles = solve(expr,  volume_number_density.objects, dict=True)[0][volume_number_density.objects]
-
-## The total charge is equal to the product of the elementary charge by the number of particles,
-## so we substitute the number of particles into the formula, and divide both parts of the resulting expression by volume to obtain the formula for the volumetric charge density.
-derived_law = charge_is_quantized.law.subs({
-        charge_is_quantized.charge: charge / volume,
-        charge_is_quantized.integer_factor: number_of_particles / volume,
-    })
-
-assert definition.rhs == derived_law.lhs
+derived_law = solve(expr,  volume_number_density.number_density, dict=True)[0][volume_number_density.number_density]
+assert definition.rhs == derived_law
 
 def print_definition() -> str:
     return print_expression(definition)
