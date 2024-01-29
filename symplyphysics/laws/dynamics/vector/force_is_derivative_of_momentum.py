@@ -31,8 +31,8 @@ def force_law(momentum_: Vector) -> Vector:
 
 
 @validate_input(
-    momentum_before_=units.mass * units.velocity,
-    momentum_after_=units.mass * units.velocity,
+    momentum_before_=units.momentum,
+    momentum_after_=units.momentum,
     time_=time,
 )
 @validate_output(units.force)
