@@ -28,12 +28,12 @@ def center_of_mass_law(
 ) -> Vector:
     assert len(masses_) == len(position_vectors_)
     assert len(masses_) > 0, "At least one particle should be present."
-    total_mass = 0
+    total_mass = 0.0
     first = True
     for mass, position_vector in zip(masses_, position_vectors_):
         total_mass += mass
         scaled = scale_vector(mass, position_vector)
-        result = scaled if first else add_cartesian_vectors(result, scaled)
+        result: Vector = scaled if first else add_cartesian_vectors(result, scaled)
         first = False
     scaled_result = scale_vector(1 / total_mass, result)
     return scaled_result
