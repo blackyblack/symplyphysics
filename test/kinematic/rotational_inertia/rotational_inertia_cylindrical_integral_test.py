@@ -7,7 +7,9 @@ from symplyphysics import (
     Quantity,
     SI,
 )
-from symplyphysics.laws.kinematic import rotational_inertia_cylindrical_integral as rotational_inertia_law
+from symplyphysics.laws.kinematic.rotational_inertia import (
+    rotational_inertia_cylindrical_integral as rotational_inertia_law,
+)
 
 # Description
 ## A cylinder is rotating about its axis. Its density is 300 kg/m**3, and it has a radius of 0.3 m

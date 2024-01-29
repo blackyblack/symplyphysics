@@ -8,7 +8,7 @@ from symplyphysics import (
     validate_output,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.kinematic import rotational_inertia_cylindrical_integral as integral_law
+from symplyphysics.laws.kinematic.rotational_inertia import rotational_inertia_cylindrical_integral as integral_law
 from symplyphysics.definitions import density_from_mass_volume as density_def
 
 # Description
