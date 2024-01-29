@@ -38,9 +38,6 @@ law = Eq(
     initial_angular_velocity * time + angular_acceleration * time**2 / 2,
 )
 
-def pprint(x):
-    print(print_expression(x))
-    assert 0
 
 # Derive law from definitions of angular velocity and acceleration
 
