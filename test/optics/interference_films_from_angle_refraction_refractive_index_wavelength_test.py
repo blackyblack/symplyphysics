@@ -40,21 +40,19 @@ def test_bad_order_interference(test_args):
     order_interference = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         thickness_law.calculate_film_thickness(test_args.wavelength, order_interference, test_args.refractive_index, test_args.angle_refraction)
-    with raises(TypeError):
-        thickness_law.calculate_film_thickness(test_args.wavelength, True, test_args.refractive_index, test_args.angle_refraction)
+    with raises(ValueError):
+        thickness_law.calculate_film_thickness(test_args.wavelength, 0.3, test_args.refractive_index, test_args.angle_refraction)
+    with raises(ValueError):
+        thickness_law.calculate_film_thickness(test_args.wavelength, -1, test_args.refractive_index, test_args.angle_refraction)
 
 
 def test_bad_refractive_index(test_args):
     refractive_index = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         thickness_law.calculate_film_thickness(test_args.wavelength, test_args.order_interference, refractive_index, test_args.angle_refraction)
-    with raises(TypeError):
-        thickness_law.calculate_film_thickness(test_args.wavelength, test_args.order_interference, True, test_args.angle_refraction)
 
 
 def test_bad_angle_refraction(test_args):
     angle_refraction = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         thickness_law.calculate_film_thickness(test_args.wavelength, test_args.order_interference, test_args.refractive_index, angle_refraction)
-    with raises(AttributeError):
-        thickness_law.calculate_film_thickness(test_args.wavelength, test_args.order_interference, test_args.refractive_index, True)

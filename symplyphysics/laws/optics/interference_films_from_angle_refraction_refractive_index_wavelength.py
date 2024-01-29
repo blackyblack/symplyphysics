@@ -18,12 +18,13 @@ from symplyphysics import (
 ## beam reflected from the upper boundary of the film and the beam reflected from the lower boundary of the
 ## film is equal to an integer wave "n", then these two waves enter the observation point with the same phases
 ## and demonstrate interference.
-## The angle of refraction of light is the angle between the ray passing through the surface and the normal to the surface.
+## Order of interference can be chosen arbitrarily, to achieve the desired thin film thickness.
+## Angle of refraction is angle between refracted ray and the normal.
 
 ## Law is: h = k * L / (2 * n * cos(O)), where
 ## h - film thickness,
 ## k - order of interference,
-## L - wavelength,
+## L - wavelength in medium above the film,
 ## n - refractive index of film
 ## O - angle of refraction.
 
@@ -46,7 +47,13 @@ def print_law() -> str:
     refractive_index_=refractive_index,
     angle_refraction_=angle_refraction)
 @validate_output(film_thickness)
-def calculate_film_thickness(wavelength_: Quantity, order_interference_: int, refractive_index_: float, angle_refraction_: float | Quantity) -> Quantity:
+def calculate_film_thickness(wavelength_: Quantity, order_interference_: int | float, refractive_index_: float, angle_refraction_: float | Quantity) -> Quantity:
+    check = order_interference_ * 2 % 2
+    if not (isinstance(order_interference_, int) or check == 1 or check == 0):
+        raise ValueError("order_interference_ must be an integer or an odd number divided by 2.")
+    if order_interference_ <= 0:
+        raise ValueError("order_interference_ must be greater than 0.") 
+
     result_expr = solve(law, film_thickness, dict=True)[0][film_thickness]
     result_expr = result_expr.subs({
         wavelength: wavelength_,
