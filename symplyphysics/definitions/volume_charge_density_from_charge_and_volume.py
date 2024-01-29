@@ -2,7 +2,6 @@ from sympy import (Eq, solve)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
                            validate_output)
 from symplyphysics.definitions import volume_number_density
-from symplyphysics.laws.electricity import charge_is_quantized
 
 # Description
 ## The volume charge density is defined as the amount of charge present over a unit volume of the conductor.
