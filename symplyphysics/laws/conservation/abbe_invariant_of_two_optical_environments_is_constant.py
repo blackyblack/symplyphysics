@@ -4,19 +4,23 @@ from symplyphysics import (Symbol, units, print_expression, Quantity,
                            convert_to)
 
 # Description
+## The point S is located on the front of the optical axis,
+## i.e. on the part that is outside the spherical lens (outside).
+## The point S' is located on a part of the optical axis inside the lens
 ## The Abbe's invariant connects the front and back segments S and S',
 ## allowing one of them to be determined if the second one is known
 
 # Law: n * ((1 / a) - (1 / R)) = n' * ((1 / b) - (1 / R))
 # Where:
-## n - refraction index in optical environment
-## n' - refraction index in lens
-## a - distance from object to surface of lens
-## b - distance from image to surface of lens
+## n - refraction index in 1st optical environment
+## n' - refraction index in 2nd optical environment
+## a - distance from object to surface
+## b - distance from image to surface
 ## R - surface curvature radius (the surface is convex)
 
 # Conditions:
 ## - Abbe's formula is valid only for paraxial rays;
+#№ - Law is valid for one refractive surface
 ## - All rays emanating from point S and forming different but necessarily small angles with the axis will pass through point S' after refraction.
 
 # NOTE:
