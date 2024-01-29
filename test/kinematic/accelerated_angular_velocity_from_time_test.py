@@ -12,7 +12,7 @@ from symplyphysics.laws.kinematic import accelerated_angular_velocity_from_time 
 
 # Description
 ## A body is rotating about a fixed axis with angular acceleration of 3 rad/s^2. Initially its
-## angular velocity is -3 rad/s. In 3 seconds, its angular velocity amounts to 6 rad/s^2.
+## angular velocity is -3 rad/s. In 3 seconds, its angular velocity amounts to 6 rad/s.
 
 
 @fixture(name="test_args")
