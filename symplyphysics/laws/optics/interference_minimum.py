@@ -29,7 +29,7 @@ def print_law():
 @validate_input(wave_length_=wave_length, number_minimum_=number_minimum)
 @validate_output(travel_difference)
 def calculate_travel_difference(wave_length_: Quantity, number_minimum_: int) -> Quantity:
-    solved = solve(law, wave_length, dict=True)[0][wave_length]
+    solved = solve(law, travel_difference, dict=True)[0][travel_difference]
     result_expr = solved.subs({
         wave_length: wave_length_,
         number_minimum: number_minimum_
