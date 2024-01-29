@@ -1,6 +1,6 @@
 from sympy import (Eq, solve, S)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-                           validate_output, dimensionless, convert_to)
+    validate_output, dimensionless, convert_to)
 
 # Description
 ## Magnification, in optics, the size of an image relative to the size of the object creating it.
@@ -14,7 +14,6 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 
 ## Conditions
 ## If the image is straight, then the value h_image is considered with a plus sign, and if it is inverted, then with a minus sign.
-
 
 image_height = Symbol("image_height", units.length)
 object_height = Symbol("object_height", units.length)

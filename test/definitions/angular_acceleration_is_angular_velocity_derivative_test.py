@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
 from sympy import pi
-from symplyphysics import (errors, units, convert_to, Quantity, SI, angle_type, dimensionless)
+from symplyphysics import (errors, units, convert_to, Quantity, SI)
 from symplyphysics.definitions import angular_acceleration_is_angular_velocity_derivative as angular_acceleration_def
 
 # Description

@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-from symplyphysics import (errors, units, Quantity, SI, convert_to, dimensionless)
+from symplyphysics import (errors, units, Quantity)
 
 from symplyphysics.laws.hydro import efficiency_of_the_hydraulic_press_from_force_and_height as efficiency
 
