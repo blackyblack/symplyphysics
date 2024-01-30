@@ -5,7 +5,7 @@ from symplyphysics import (
     units,
     Quantity,
     SI,
-    convert_to, prefixes, dimensionless,
+    convert_to, prefixes,
 )
 from symplyphysics.laws.optics import interference_maximum as maximum_law
 
@@ -33,7 +33,7 @@ def test_bad_wave_length(test_args):
         maximum_law.calculate_travel_difference(100, test_args.maximum_number)
 
 
-def test_bad_number_maximum(test_args):
+def test_bad_number_minimum(test_args):
     nb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         maximum_law.calculate_travel_difference(test_args.wave_length, nb)
