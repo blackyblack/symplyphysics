@@ -50,8 +50,9 @@ momentum_vec = Vector([momentum_x(time), momentum_y(time), momentum_z(time)])
 force_derived = force_momentum_law.force_law(momentum_vec)
 
 momentum_def_sub = momentum_def.definition.subs(momentum_def.mass, mass)
+velocity_from_momentum = solve(momentum_def_sub, momentum_def.velocity)[0]
 velocity_vec = Vector([
-    solve(momentum_def_sub, momentum_def.velocity)[0].subs(momentum_def.momentum, momentum_component)
+    velocity_from_momentum.subs(momentum_def.momentum, momentum_component)
     for momentum_component in momentum_vec.components
 ])
 
