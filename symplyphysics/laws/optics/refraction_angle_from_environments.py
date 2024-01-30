@@ -5,6 +5,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import refractive_index_is_wave_speeds_ratio as refractive_index_definition
 from symplyphysics.laws.kinematic import distance_from_constant_velocity as distance_law
 from symplyphysics.laws.kinematic import planar_projection_is_cosine as projection_law
+from symplyphysics.core.symbols.quantities import scale_factor
 
 # Description
 ## If ray of light comes from one medium to another, it refracts.
@@ -137,8 +138,7 @@ def print_law() -> str:
 def calculate_refraction_angle(incidence_angle_: Quantity | float,
     incidence_refractive_index_: float, resulting_refractive_index_: float) -> Quantity:
     #HACK: sympy angles are always in radians
-    incidence_angle_radians = incidence_angle_.scale_factor if isinstance(
-        incidence_angle_, Quantity) else incidence_angle_
+    incidence_angle_radians = scale_factor(incidence_angle_)
     # Check for boundary conditions
     assert incidence_angle_radians <= pi / 2
     assert incidence_angle_radians >= -pi / 2

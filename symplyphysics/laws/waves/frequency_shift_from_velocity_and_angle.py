@@ -2,6 +2,7 @@ from sympy import (Eq, cos, solve)
 from symplyphysics import (units, angle_type, Quantity, Symbol, print_expression, validate_input,
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.laws.waves import wavelength_from_wave_speed_and_period as period_law
 from symplyphysics.laws.kinematic import temporal_frequency_from_period as frequency_def
 from symplyphysics.laws.kinematic import planar_projection_is_cosine as projector
@@ -142,10 +143,8 @@ def calculate_observed_frequency(
     (observer_speed_, observer_angle_) = observer_speed_angle
     (source_speed_, source_angle_) = source_speed_angle
     #HACK: sympy angles are always in radians
-    observer_angle_radians = observer_angle_.scale_factor if isinstance(observer_angle_,
-        Quantity) else observer_angle_
-    source_angle_radians = source_angle_.scale_factor if isinstance(source_angle_,
-        Quantity) else source_angle_
+    observer_angle_radians = scale_factor(observer_angle_)
+    source_angle_radians = scale_factor(source_angle_)
     result_expr = solve(law, observed_frequency, dict=True)[0][observed_frequency]
     frequency_applied = result_expr.subs({
         real_frequency: real_frequency_,

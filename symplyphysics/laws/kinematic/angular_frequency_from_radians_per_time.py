@@ -2,6 +2,7 @@ from sympy import (Eq, solve)
 from symplyphysics import (angle_type, units, Quantity, Symbol, print_expression, validate_input,
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.definitions import temporal_frequency_is_events_per_time as frequency_def
 
 # Description
@@ -37,7 +38,7 @@ def print_law() -> str:
 @validate_output(angular_frequency)
 def calculate_frequency(radians_: float | Quantity, time_: Quantity) -> Quantity:
     #HACK: SymPy angles are always in radians
-    angle_radians = radians_.scale_factor if isinstance(radians_, Quantity) else radians_
+    angle_radians = scale_factor(radians_)
     solved = solve(law, angular_frequency, dict=True)[0][angular_frequency]
     result_expr = solved.subs({time: time_, radians: angle_radians})
     return Quantity(result_expr)

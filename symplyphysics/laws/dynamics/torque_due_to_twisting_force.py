@@ -12,6 +12,7 @@ from symplyphysics import (
     vector_magnitude,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.laws.dynamics.vector import torque_vector_of_twisting_force as torque_vector_def
 
 # Description
@@ -67,7 +68,7 @@ def print_law() -> str:
 def calculate_torque(force_: Quantity, distance_to_axis_: Quantity,
     angle_: Quantity | float) -> Quantity:
     result = solve(law, torque)[0]
-    angle_value = angle_.scale_factor if isinstance(angle_, Quantity) else angle_
+    angle_value = scale_factor(angle_)
     result_torque = result.subs({
         distance_to_axis: distance_to_axis_,
         force: force_,
