@@ -22,7 +22,7 @@ from symplyphysics.laws.optics import the_formula_of_the_spherical_refractive_su
 
 @fixture(name="test_args")
 def test_args_fixture():
-    do = Quantity(oo * units.meters)
+    do = Quantity(1E10 * units.meters)
     di = Quantity(27 * prefixes.centi * units.meters)
     rl = Quantity(7 * prefixes.centi * units.meters)
     nm = 1
@@ -31,7 +31,7 @@ def test_args_fixture():
 
 
 def test_basic_refraction_index(test_args):
-    result = spherical_lens_law.calculate_refraction_index_lens(test_args.do, test_args.di, test_args.nm, test_args.rl)
+    result = spherical_lens_law.calculate_refraction_index_lens(test_args.do, test_args.di, test_args.rl, test_args.nm)
     assert result == approx(1.35, 0.001)
 
 
@@ -55,4 +55,4 @@ def test_bad_radius(test_args):
     with raises(errors.UnitsError):
         spherical_lens_law.calculate_refraction_index_lens(test_args.do, test_args.di, rb, test_args.nm)
     with raises(TypeError):
-        spherical_lens_law.calculate_refraction_index_lens(test_args.do, test_args.di, 100, test_args.nm, )
+        spherical_lens_law.calculate_refraction_index_lens(test_args.do, test_args.di, 100, test_args.nm)

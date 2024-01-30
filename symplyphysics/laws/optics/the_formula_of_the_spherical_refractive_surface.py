@@ -35,12 +35,12 @@ law = Eq(
 
 # From Abbe's invariants:
 
-abbe_invariant_environment = refraction_index_environment * ((1 / distance_to_object) - (1 / curvature_radius_lens))
-abbe_invariant_lens = refraction_index_lens * ((1 / distance_to_image) - (1 / curvature_radius_lens))
-
 invariant_conservation_eq = abbe_conservation_law.law.subs({
-    abbe_conservation_law.abbe_invariant_environment: abbe_invariant_environment,
-    abbe_conservation_law.abbe_invariant_lens: abbe_invariant_lens
+    abbe_conservation_law.refraction_index_environment: refraction_index_environment,
+    abbe_conservation_law.refraction_index_lens: refraction_index_lens,
+    abbe_conservation_law.distance_from_image: distance_to_image,
+    abbe_conservation_law.distance_from_object: distance_to_object,
+    abbe_conservation_law.curvature_radius: curvature_radius_lens,
 })
 
 radius_lens_from_law = solve(law, curvature_radius_lens, dict=True)[0][curvature_radius_lens]
