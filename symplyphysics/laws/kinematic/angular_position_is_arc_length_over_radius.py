@@ -30,7 +30,7 @@ path_radius = Symbol("path_radius", units.length)
 law = Eq(angular_position, arc_length / path_radius)
 
 
-# Derive law from its [vector counterpart](../linear_displacement_is_angular_displacement_cross_radius.py)
+# Derive law from its [vector counterpart](./vector/linear_displacement_is_angular_displacement_cross_radius.py)
 
 angle_x = Symbol("angle_x", angle_type)
 angle_y = Symbol("angle_y", angle_type)
