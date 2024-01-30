@@ -11,12 +11,12 @@ from symplyphysics import (
 
 # Description
 ## Momentum (amount of motion) is a vector physical quantity that is a measure of the mechanical movement
-## of a body. The relativistic angular momentum also takes into account speed limits equal to the speed of light.
+## of a body. The relativistic momentum also takes into account speed limits equal to the speed of light.
 
 ## Law is: p = m * v / sqrt(1 - v^2 / c^2), where
 ## p - momentum,
-## m - mass,
-## v - velocity,
+## m - rest mass,
+## v - velocity of the object in the selected frame of reference,
 ## c - speed of light in vacuum.
 
 momentum = Symbol("momentum", units.momentum)
