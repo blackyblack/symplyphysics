@@ -25,24 +25,24 @@ law = Eq(pressure, 2 / 3 * molecules_concentration * average_kinetic_energy)
 
 ## Proof
 
-temperature = kinetic_energy.law.subs({
+temperature_eq = kinetic_energy.law.subs({
         kinetic_energy.average_kinetic_energy: average_kinetic_energy
     })
 
-derived_temperature = solve(temperature, kinetic_energy.temperature, dict=True)[0][kinetic_energy.temperature]
+derived_temperature = solve(temperature_eq, kinetic_energy.temperature, dict=True)[0][kinetic_energy.temperature]
 
-particles_number = volume_number_density.definition.subs({
+particles_number_eq = volume_number_density.definition.subs({
         volume_number_density.volume: ideal_gas_law.volume,
         volume_number_density.number_density: molecules_concentration
     })
 
-derived_particles_number = solve(particles_number, volume_number_density.objects, dict=True)[0][volume_number_density.objects]
+derived_particles_number = solve(particles_number_eq, volume_number_density.objects, dict=True)[0][volume_number_density.objects]
 
-mole_count = avogadro_number.law.subs({
+mole_count_eq = avogadro_number.law.subs({
         avogadro_number.particles_count: derived_particles_number
     })
 
-derived_mole_count = solve(mole_count, avogadro_number.mole_count, dict=True)[0][avogadro_number.mole_count]
+derived_mole_count = solve(mole_count_eq, avogadro_number.mole_count, dict=True)[0][avogadro_number.mole_count]
 
 derived_pressure = ideal_gas_law.law.subs({
         ideal_gas_law.temperature: derived_temperature,
