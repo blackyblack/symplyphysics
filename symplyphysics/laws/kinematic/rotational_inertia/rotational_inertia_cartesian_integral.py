@@ -1,4 +1,4 @@
-from sympy import Eq, Integral
+from sympy import Eq, Integral, sqrt
 from symplyphysics import (
     units,
     Symbol,
@@ -42,7 +42,7 @@ z_end = Symbol("z_end", units.length)
 law = Eq(
     rotational_inertia,
     Integral(
-    density(x, y, z) * distance_to_axis(x, y, z),
+    density(x, y, z) * distance_to_axis(x, y, z)**2,
     (x, x_start, x_end),
     (y, y_start, y_end),
     (z, z_start, z_end),
@@ -63,7 +63,7 @@ def calculate_rotational_inertia(density_: Quantity, x_: Quantity, y_: Quantity,
     z_: Quantity) -> Quantity:
     result = law.rhs.subs({
         density(x, y, z): density_,
-        distance_to_axis(x, y, z): x**2 + y**2,
+        distance_to_axis(x, y, z): sqrt(x**2 + y**2),
         x_start: -1.0 * x_,
         x_end: x_,
         y_start: -1.0 * y_,
