@@ -5,7 +5,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.laws.waves import wavelength_from_wave_speed_and_period as period_law
 from symplyphysics.laws.kinematic import temporal_frequency_from_period as frequency_def
-from symplyphysics.laws.kinematic import planar_projection_is_cosine as projector
+from symplyphysics.laws.vector import planar_projection_is_cosine as projector
 from symplyphysics.laws.kinematic import distance_from_constant_velocity as distance_law
 
 # Description
