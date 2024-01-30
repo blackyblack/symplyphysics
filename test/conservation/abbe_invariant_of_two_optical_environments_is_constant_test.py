@@ -3,9 +3,8 @@ from pytest import approx, fixture, raises
 from symplyphysics import (
     errors,
     units,
-    convert_to,
     Quantity,
-    SI, prefixes,
+    prefixes,
 )
 from symplyphysics.laws.conservation import abbe_invariant_of_two_optical_environments_is_constant as abbe_conservation_law
 
@@ -49,7 +48,7 @@ def test_bad_distance(test_args):
     with raises(errors.UnitsError):
         abbe_conservation_law.calculate_refraction_index_lens(test_args.a, db, test_args.r, test_args.n)
     with raises(TypeError):
-        abbe_conservation_law.calculate_refraction_index_lens(test_args.a, 100, test_args.n, test_args.r)
+        abbe_conservation_law.calculate_refraction_index_lens(test_args.a, 100, test_args.r, test_args.n)
 
 
 def test_bad_radius(test_args):
