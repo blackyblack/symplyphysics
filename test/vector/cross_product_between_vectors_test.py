@@ -33,7 +33,7 @@ def test_basic_law_parallel_vectors(test_args):
     assert result.evalf(3) == approx(0, abs=1e-14)
 
 
-def test_bad_dimensions_count(_test_args):
+def test_bad_dimensions_count(test_args):
     a_bad = Vector([1, 2, 3, 4, 5])
     b_bad = Vector([-1, -2, -3, -4, 5])
     with raises(ValueError):
