@@ -11,7 +11,7 @@ from symplyphysics.laws.relativistic import coordinate_conversion_velocity_const
 
 # Description
 ## Let the coordinate in the first frame of reference be 2 meter, the speed of the second system relative to
-## the first is 3 meter per second, and the time_first_frame is 3 second.
+## the first is 3 meter per second, and the time is 3 second.
 ## Then the coordinate in the second frame of reference will be -7 meter.
 ## https://physics.icalculator.com/lorentz-transformation-of-coordinates-calculator.html
 

@@ -5,7 +5,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 
 # Description
 ## Let the frame of reference move relative to the other frame of reference at a constant speed along the X
-## axis, and the origin of the spatial coordinates coincide at the initial moment of time_first_frame in both systems.
+## axis, and the origin of the spatial coordinates coincide at the initial moment of time in both systems.
 ## Then there are simple transformations that can be used to get the x coordinate in one frame of reference,
 ## knowing the x coordinate in another frame of reference.
 
@@ -13,7 +13,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## x_2 - another coordinate (in the second frame of reference),
 ## x_1 - coordinate (in the first frame of reference),
 ## v - velocity at which the second frame of reference moves relative to the first,
-## t - time_first_frame (in the first frame of reference).
+## t - time in the first frame of reference.
 
 coordinate_second_frame = Symbol("coordinate_second_frame", units.length)
 
