@@ -45,7 +45,7 @@ def calculate_force(
     momentum_function = scale_vector(
         time / time_,
         add_cartesian_vectors(
-            momentum_after_, 
+            momentum_after_,
             scale_vector(-1, momentum_before_)
         )
     )

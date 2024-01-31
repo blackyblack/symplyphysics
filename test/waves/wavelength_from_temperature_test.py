@@ -36,4 +36,3 @@ def test_bad_temperature():
         wins_law.calculate_intensive_wavelength(tb)
     with raises(TypeError):
         wins_law.calculate_intensive_wavelength(100)
-

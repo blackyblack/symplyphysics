@@ -5,8 +5,7 @@ from symplyphysics import (
     units,
     Quantity,
     SI,
-    convert_to,
-    dimensionless
+    convert_to
 )
 
 from symplyphysics.laws.electricity import volume_charge_density_from_charge_and_volume as volume_charge_density

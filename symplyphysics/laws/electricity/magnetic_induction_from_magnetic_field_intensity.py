@@ -1,4 +1,5 @@
 from sympy import (Eq, solve)
+from sympy.physics.units import magnetic_constant
 from symplyphysics import (
     units,
     Quantity,
@@ -8,7 +9,6 @@ from symplyphysics import (
     validate_output,
     dimensionless
 )
-from sympy.physics.units import magnetic_constant
 
 # Description
 ## Magnetic induction is a physical quantity that is a force characteristic of a magnetic field, namely, a characteristic
