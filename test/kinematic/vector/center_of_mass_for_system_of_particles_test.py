@@ -77,7 +77,6 @@ def test_bad_masses(test_args):
 
     with raises(errors.UnitsError):
         com_def.calculate_center_of_mass([mb, test_args.r2], [test_args.r1, test_args.r2])
-    # shouldn't it raise errors.UnitsError instead?
     with raises(ValueError):
         com_def.calculate_center_of_mass([test_args.m1, mb], [test_args.r1, test_args.r2])
 
@@ -89,7 +88,6 @@ def test_bad_masses(test_args):
         com_def.calculate_center_of_mass([100], [test_args.r1])
 
 
-@mark.skip("fix calculate_center_of_mass function")
 def test_bad_positions(test_args):
     rb = QuantityVector([
         Quantity(1.0 * units.coulomb),
@@ -98,12 +96,11 @@ def test_bad_positions(test_args):
     ])
     with raises(errors.UnitsError):
         com_def.calculate_center_of_mass([test_args.m1], [rb])
-    with raises(errors.UnitsError):
+    with raises(TypeError):
         com_def.calculate_center_of_mass([test_args.m1], rb)
 
-    with raises(errors.UnitsError):
+    with raises(ValueError):
         com_def.calculate_center_of_mass([test_args.m1, test_args.m2], [rb, test_args.r1])
-    # shouldn't it raise errors.UnitsError instead?
     with raises(ValueError):
         com_def.calculate_center_of_mass([test_args.m1, test_args.m2], [test_args.r1, rb])
 
@@ -111,5 +108,5 @@ def test_bad_positions(test_args):
         com_def.calculate_center_of_mass([test_args.m1], test_args.r1)
     with raises(TypeError):
         com_def.calculate_center_of_mass([test_args.m1], 100)
-    with raises(TypeError):
+    with raises(AttributeError):
         com_def.calculate_center_of_mass([test_args.m1], [100])

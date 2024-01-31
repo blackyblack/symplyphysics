@@ -8,7 +8,7 @@ from .dimensions import assert_equivalent_dimension, ScalarValue
 
 
 def _assert_expected_unit(value: ScalarValue | SymQuantity | DimensionSymbol |
-    Sequence[ScalarValue | SymQuantity],
+    Sequence[ScalarValue | SymQuantity | DimensionSymbol],
     expected_units: Dimension | Symbol | Function | Sequence[Dimension | Symbol | Function],
     param_name: str, function_name: str):
     components: list[ScalarValue | SymQuantity | Dimension] = []
@@ -18,8 +18,14 @@ def _assert_expected_unit(value: ScalarValue | SymQuantity | DimensionSymbol |
     elif isinstance(value, DimensionSymbol):
         components.append(value.dimension)
     elif isinstance(value, Sequence):
-        components = list(value)
         indexed = True
+        for item in value:
+            if isinstance(item, SymQuantity):
+                components.append(item)
+            elif isinstance(item, DimensionSymbol):
+                components.append(item.dimension)
+            else:
+                components.append(item)                                
     else:
         components.append(value)
 
