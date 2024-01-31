@@ -42,13 +42,13 @@ def test_four_resistors_array(test_args):
 
 
 def test_bad_resistance(test_args):
-    invR_bad = Quantity(1 * units.meter)
+    Rb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
-        parallel_resistor.calculate_parallel_resistance([invR_bad, test_args.R2])
+        parallel_resistor.calculate_parallel_resistance([Rb, test_args.R2])
     with raises(TypeError):
         parallel_resistor.calculate_parallel_resistance([100, test_args.R2])
     with raises(errors.UnitsError):
-        parallel_resistor.calculate_parallel_resistance([test_args.R1, invR_bad])
+        parallel_resistor.calculate_parallel_resistance([test_args.R1, Rb])
     with raises(TypeError):
         parallel_resistor.calculate_parallel_resistance([test_args.R1, 100])
     with raises(TypeError):

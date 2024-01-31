@@ -22,8 +22,8 @@ def test_args_fixture():
 
 
 def test_basic_time(test_args):
-    result = relativistic_time_dilation.calculate_relativistic_time(
-        test_args.own_time, test_args.velocity)
+    result = relativistic_time_dilation.calculate_relativistic_time(test_args.own_time,
+        test_args.velocity)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.time)
     result_time = convert_to(result, units.second).evalf(4)
     assert result_time == approx(13.423, 0.01)
@@ -40,8 +40,6 @@ def test_bad_time(test_args):
 def test_bad_velocity(test_args):
     bv = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        relativistic_time_dilation.calculate_relativistic_time(
-            test_args.own_time, bv)
+        relativistic_time_dilation.calculate_relativistic_time(test_args.own_time, bv)
     with raises(TypeError):
-        relativistic_time_dilation.calculate_relativistic_time(
-            test_args.own_time, 100)
+        relativistic_time_dilation.calculate_relativistic_time(test_args.own_time, 100)

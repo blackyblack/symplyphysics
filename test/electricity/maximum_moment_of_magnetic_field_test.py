@@ -14,11 +14,8 @@ def test_args_fixture():
     current = Quantity(0.5 * units.ampere)
     area = Quantity(0.02 * units.meter**2)
 
-    Args = namedtuple("Args",
-        ["current", "area"])
-    return Args(
-        current=current,
-        area=area)
+    Args = namedtuple("Args", ["current", "area"])
+    return Args(current=current, area=area)
 
 
 def test_basic_moment(test_args):

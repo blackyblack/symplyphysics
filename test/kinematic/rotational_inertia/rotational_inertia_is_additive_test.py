@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
     SI,
 )
-from symplyphysics.laws.kinematic import rotational_inertia_is_additive as rotational_inertia_law
+from symplyphysics.laws.kinematic.rotational_inertia import rotational_inertia_is_additive as rotational_inertia_law
 
 # Description
 ## The system consists of two particles, the rotational inertia of which is 0.1 kg*m^2 and

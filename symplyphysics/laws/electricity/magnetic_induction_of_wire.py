@@ -1,14 +1,7 @@
 from sympy import (Eq, solve, pi)
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    print_expression,
-    validate_input,
-    validate_output,
-    dimensionless
-)
 from sympy.physics.units import magnetic_constant
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output, dimensionless)
 
 # Description
 ## Let there be an infinite thin conductor. Then the magnetic field created by the current in
@@ -37,9 +30,7 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(relative_permeability_=relative_permeability,
-    current_=current,
-    distance_=distance)
+@validate_input(relative_permeability_=relative_permeability, current_=current, distance_=distance)
 @validate_output(induction)
 def calculate_induction(relative_permeability_: float, current_: Quantity,
     distance_: Quantity) -> Quantity:

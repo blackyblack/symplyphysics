@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
     SI,
 )
-from symplyphysics.laws.kinematic import rotational_inertia_of_particle as rotational_inertia_def
+from symplyphysics.laws.kinematic.rotational_inertia import rotational_inertia_of_particle as rotational_inertia_def
 
 # Description
 ## A particle of mass m = 1 g rotates around an axis at a radius r = 3 m. Its rotational inertia

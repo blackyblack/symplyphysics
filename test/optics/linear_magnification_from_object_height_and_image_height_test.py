@@ -4,11 +4,7 @@ from symplyphysics import (
     errors,
     units,
     Quantity,
-    SI,
-    convert_to,
-    dimensionless
 )
-
 from symplyphysics.laws.optics import linear_magnification_from_object_height_and_image_height as magnification
 
 
@@ -20,7 +16,7 @@ def test_args_fixture():
     return Args(
         image_height=image_height,
         object_height=object_height,
-               )
+    )
 
 
 def test_basic_magnification(test_args):
