@@ -1,4 +1,5 @@
 from sympy import (Eq, solve, sqrt)
+from sympy.physics.units import acceleration_due_to_gravity as earth_free_fall_acceleration
 from symplyphysics import (
     units,
     Quantity,
@@ -22,15 +23,15 @@ from symplyphysics.laws.kinematic import constant_acceleration_movement_is_parab
 movement_time = Symbol("movement_time", units.time)
 
 height = Symbol("height", units.length)
-acceleration = Symbol("acceleration", units.acceleration)
 
-law = Eq(movement_time, sqrt(2 * height / acceleration))
+law = Eq(movement_time, sqrt(2 * height / earth_free_fall_acceleration))
 
 # This law might be derived via "constant_acceleration_movement_is_parabolic" law.
+# Horizontal vector of movement does not change falling time.
 
 distance_law_applied = distance_law.law.subs({
     distance_law.initial_velocity : 0,
-    distance_law.constant_acceleration: acceleration,
+    distance_law.constant_acceleration: earth_free_fall_acceleration,
     distance_law.distance(distance_law.movement_time): height,
 })
 time_derived = solve(distance_law_applied, distance_law.movement_time, dict=True)[1][distance_law.movement_time]
@@ -43,12 +44,11 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(height_=height, acceleration_=acceleration)
+@validate_input(height_=height)
 @validate_output(movement_time)
-def calculate_movement_time(height_: Quantity, acceleration_: Quantity) -> Quantity:
+def calculate_movement_time(height_: Quantity) -> Quantity:
     result_expr = solve(law, movement_time, dict=True)[0][movement_time]
     result_expr = result_expr.subs({
         height: height_,
-        acceleration: acceleration_,
     })
     return Quantity(result_expr)
