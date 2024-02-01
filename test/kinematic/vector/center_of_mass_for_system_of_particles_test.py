@@ -1,5 +1,5 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises, mark
+from pytest import approx, fixture, raises
 from symplyphysics import (
     errors,
     units,
@@ -96,7 +96,7 @@ def test_bad_positions(test_args):
     ])
     with raises(errors.UnitsError):
         com_def.calculate_center_of_mass([test_args.m1], [rb])
-    with raises(TypeError):
+    with raises(errors.UnitsError):
         com_def.calculate_center_of_mass([test_args.m1], rb)
 
     with raises(ValueError):
@@ -108,5 +108,5 @@ def test_bad_positions(test_args):
         com_def.calculate_center_of_mass([test_args.m1], test_args.r1)
     with raises(TypeError):
         com_def.calculate_center_of_mass([test_args.m1], 100)
-    with raises(AttributeError):
+    with raises(TypeError):
         com_def.calculate_center_of_mass([test_args.m1], [100])

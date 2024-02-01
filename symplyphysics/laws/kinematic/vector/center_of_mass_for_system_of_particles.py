@@ -1,4 +1,6 @@
 from typing import Sequence
+
+from sympy import S
 from symplyphysics import (
     units,
     validate_input,
@@ -26,22 +28,23 @@ def center_of_mass_law(
     masses_: Sequence[ScalarValue],
     position_vectors_: Sequence[Vector],
 ) -> Vector:
-    assert len(masses_) == len(position_vectors_)
-    assert len(masses_) > 0, "At least one particle should be present."
-    total_mass = 0.0
-    first = True
+    if len(masses_) != len(position_vectors_):
+        raise ValueError("Mass and position arrays should have the same lengths")
+    if len(position_vectors_) == 0:
+        raise ValueError("At least one particle should be present")
+    result = Vector([0, 0, 0], next(iter(position_vectors_)).coordinate_system)
+    total_mass = S.Zero
     for mass, position_vector in zip(masses_, position_vectors_):
         total_mass += mass
         scaled = scale_vector(mass, position_vector)
-        result: Vector = scaled if first else add_cartesian_vectors(result, scaled)
-        first = False
+        result = add_cartesian_vectors(result, scaled)
     scaled_result = scale_vector(1 / total_mass, result)
     return scaled_result
 
 
 @validate_input(
     masses_=units.mass,
-    # position_vectors_=units.length,  # FIXME: function raises errors.UnitsError
+    position_vectors_=units.length,
 )
 @validate_output(units.length)
 def calculate_center_of_mass(

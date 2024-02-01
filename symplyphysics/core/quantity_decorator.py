@@ -12,22 +12,15 @@ def _assert_expected_unit(value: ScalarValue | SymQuantity | DimensionSymbol |
     expected_units: Dimension | Symbol | Function | Sequence[Dimension | Symbol | Function],
     param_name: str, function_name: str):
     components: list[ScalarValue | SymQuantity | Dimension] = []
-    indexed = False
-    if isinstance(value, SymQuantity):
-        components.append(value)
-    elif isinstance(value, DimensionSymbol):
-        components.append(value.dimension)
-    elif isinstance(value, Sequence):
-        indexed = True
-        for item in value:
-            if isinstance(item, SymQuantity):
-                components.append(item)
-            elif isinstance(item, DimensionSymbol):
-                components.append(item.dimension)
-            else:
-                components.append(item)                                
-    else:
-        components.append(value)
+    indexed = isinstance(value, Sequence)
+    values = list(value) if isinstance(value, Sequence) else list([value])
+    for item in values:
+        if isinstance(item, SymQuantity):
+            components.append(item)
+        elif isinstance(item, DimensionSymbol):
+            components.append(item.dimension)
+        else:
+            components.append(item)
 
     is_tuple = False
     if isinstance(expected_units, Sequence):
