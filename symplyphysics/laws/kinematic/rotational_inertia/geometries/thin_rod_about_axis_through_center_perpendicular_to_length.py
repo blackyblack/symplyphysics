@@ -8,8 +8,8 @@ from symplyphysics import (
     validate_output,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.kinematic.rotational_inertia import (
-    rotational_inertia_of_particle as rotational_inertia_def,
+from symplyphysics.laws.kinematic.rotational_inertia.geometries import (
+    slab_about_perpendicular_axis_through_center as slab_formula
 )
 
 # Description
@@ -27,38 +27,15 @@ length = Symbol("length", units.length)
 law = Eq(rotational_inertia, mass * length**2 / 12)
 
 
-# Derive law from definition of rotational inertia
+# Derive law from formula for a slab rotating about the axis perpendicular to its lenght and width
+# passing through its center. The thin rod is a particular case of it, when the width of the slab
+# approaches zero.
 
-# We will consider the thin rod as continuously distributed elements. We can calculate
-# the total rotational inertia of the rod as the sum of rotational inertias of each of
-# its parts, namely, by integrating over the rod's length.
-
-infinitesimal_length = SymSymbol("infinitesimal_length", positive=True)
-infinitesimal_mass = SymSymbol("infinitesimal_mass", positive=True)
-
-# Because the rod is uniform, the ratio of mass to length is equal for all elements of
-# the rod and for the rod itself. This equation basically states that the local linear
-# density of the rod is constant and equal to the ratio of rod's mass to its length.
-
-uniformity_eqn = Eq(infinitesimal_mass / infinitesimal_length, mass / length)
-
-# Express the mass of the element through its length.
-infinitesimal_mass = solve(uniformity_eqn, infinitesimal_mass)[0]
-
-# The rod is oriented along the x-axis, and the origin is located in its center due to
-# the fact that the rotational axis passes through the center of the rod.
-
-x = SymSymbol("x", real=True)
-
-infinitesimal_rotational_inertia = rotational_inertia_def.law.rhs.subs({
-    rotational_inertia_def.radius: x,
-    rotational_inertia_def.mass: infinitesimal_mass
+rotational_inertia_derived = slab_formula.law.rhs.subs({
+    slab_formula.mass: mass,
+    slab_formula.length: length,
+    slab_formula.width: 0,
 })
-
-rotational_inertia_derived = integrate(
-    infinitesimal_rotational_inertia.subs(infinitesimal_length, 1),
-    (x, -1 * length / 2, length / 2),
-).simplify()
 
 assert expr_equals(law.rhs, rotational_inertia_derived)
 
