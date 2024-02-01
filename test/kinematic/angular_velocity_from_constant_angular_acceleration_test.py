@@ -5,8 +5,7 @@ from symplyphysics import (
     units,
     convert_to,
     Quantity,
-    SI,
-    angle_type,
+    SI
 )
 from symplyphysics.laws.kinematic import angular_velocity_from_constant_angular_acceleration as angular_velocity_law
 
