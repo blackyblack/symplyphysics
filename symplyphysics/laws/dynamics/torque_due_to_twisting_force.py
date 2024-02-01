@@ -12,6 +12,7 @@ from symplyphysics import (
     vector_magnitude,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.laws.dynamics.vector import torque_vector_of_twisting_force as torque_vector_def
 
 # Description
@@ -34,7 +35,6 @@ angle = Symbol("angle", angle_type)
 
 law = Eq(torque, distance_to_axis * force * sin(angle))
 
-
 # Derive law from its vector counterpart.
 force_vector = Vector(symbols("force_x:z", real=True))
 position_vector = Vector(symbols("x:z", real=True))
@@ -46,11 +46,8 @@ force_magnitude = vector_magnitude(force_vector)
 position_magnitude = vector_magnitude(position_vector)
 
 # Use the definition of dot product (a, b) = |a| * |b| * cos(a, b) to find the sine of angle between vectors
-cosine_of_angle_in_between = (
-    dot_vectors(force_vector, position_vector) 
-    / force_magnitude 
-    / position_magnitude
-)
+cosine_of_angle_in_between = (dot_vectors(force_vector, position_vector) / force_magnitude /
+    position_magnitude)
 sine_of_angle_in_between = sqrt(1 - cosine_of_angle_in_between**2)
 
 torque_magnitude_from_law = solve(law, torque)[0].subs({
@@ -71,7 +68,7 @@ def print_law() -> str:
 def calculate_torque(force_: Quantity, distance_to_axis_: Quantity,
     angle_: Quantity | float) -> Quantity:
     result = solve(law, torque)[0]
-    angle_value = angle_.scale_factor if isinstance(angle_, Quantity) else angle_
+    angle_value = scale_factor(angle_)
     result_torque = result.subs({
         distance_to_axis: distance_to_axis_,
         force: force_,
