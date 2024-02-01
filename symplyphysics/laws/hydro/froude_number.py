@@ -10,7 +10,8 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 # Law: Fr = u / sqrt(g * L), where
 # u is velocity,
 # g is acceleration due to gravity,
-# L is a characteristic length,
+# L is a characteristic length (the characteristic length is the dimension
+# that defines the length scale of a physical system),
 # Fr is Froude number.
 
 
