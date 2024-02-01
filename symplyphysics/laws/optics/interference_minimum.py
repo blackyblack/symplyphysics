@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression,
-                           validate_input, validate_output, dimensionless)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output, dimensionless)
 
 # Description
 ## If the travel difference is equal to an odd number of half-waves,
@@ -13,7 +13,6 @@ from symplyphysics import (units, Quantity, Symbol, print_expression,
 ## m - number of interference minimum (m = 0, 1, 2, ...)
 
 # Condition: The two waves must be coherent
-
 
 travel_difference = Symbol("travel_difference", units.length)
 number_minimum = Symbol("number_minimum", dimensionless)
@@ -30,9 +29,6 @@ def print_law():
 @validate_output(travel_difference)
 def calculate_travel_difference(wave_length_: Quantity, number_minimum_: int) -> Quantity:
     solved = solve(law, travel_difference, dict=True)[0][travel_difference]
-    result_expr = solved.subs({
-        wave_length: wave_length_,
-        number_minimum: number_minimum_
-    })
+    result_expr = solved.subs({wave_length: wave_length_, number_minimum: number_minimum_})
     result = Quantity(result_expr)
     return result

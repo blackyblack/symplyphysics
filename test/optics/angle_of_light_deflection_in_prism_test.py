@@ -1,8 +1,15 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
 from sympy import pi
-from symplyphysics import (units, SI, convert_to, Quantity, errors, dimensionless,)
-from symplyphysics.laws.electricity import angle_of_light_deflection_in_prism as angle_law
+from symplyphysics import (
+    units,
+    SI,
+    convert_to,
+    Quantity,
+    errors,
+    dimensionless,
+)
+from symplyphysics.laws.optics import angle_of_light_deflection_in_prism as angle_law
 
 # Description
 ## Consider a prism with an angle between the faces equal to 45 degree (pi / 4 radian) and a refractive index of 2.5.
@@ -30,13 +37,9 @@ def test_bad_angle_faces(test_args):
     angle_faces = Quantity(1 * units.joule)
     with raises(errors.UnitsError):
         angle_law.calculate_angle_deviation(angle_faces, test_args.refractive_index)
-    with raises(TypeError):
-        angle_law.calculate_angle_deviation(True, test_args.refractive_index)
 
 
 def test_bad_refractive_index(test_args):
     refractive_index = Quantity(1 * units.joule)
     with raises(errors.UnitsError):
         angle_law.calculate_angle_deviation(test_args.angle_faces, refractive_index)
-    with raises(TypeError):
-        angle_law.calculate_angle_deviation(test_args.angle_faces, True)

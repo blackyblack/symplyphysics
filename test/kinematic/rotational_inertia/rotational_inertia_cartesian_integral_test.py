@@ -8,8 +8,7 @@ from symplyphysics import (
     SI,
 )
 from symplyphysics.laws.kinematic.rotational_inertia import (
-    rotational_inertia_cartesian_integral as rotational_inertia_law,
-)
+    rotational_inertia_cartesian_integral as rotational_inertia_law,)
 
 # Description
 ## The rotational inertia of a unit cube about an axis passing through its center and the centers of

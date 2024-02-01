@@ -63,3 +63,6 @@ def test_bad_number_turns(test_args):
     with raises(errors.UnitsError):
         induction_law.calculate_induction(test_args.current, test_args.length,
             test_args.relative_permeability, number_turns)
+    with raises(ValueError):
+        induction_law.calculate_induction(test_args.current, test_args.length,
+            test_args.relative_permeability, -1)

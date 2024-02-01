@@ -1,13 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (
-    Quantity,
-    Symbol,
-    print_expression,
-    validate_input,
-    validate_output,
-    dimensionless,
-    angle_type
-)
+from symplyphysics import (Quantity, Symbol, print_expression, validate_input, validate_output,
+    dimensionless, angle_type)
 
 # Description
 ## A prism, an optical prism, is a body made of a homogeneous material transparent to optical radiation,

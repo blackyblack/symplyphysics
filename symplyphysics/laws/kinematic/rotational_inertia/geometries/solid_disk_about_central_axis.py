@@ -25,7 +25,6 @@ radius = Symbol("radius", units.length)
 
 law = Eq(rotational_inertia, mass * radius**2 / 2)
 
-
 # Derive law from general integral in cylindrical coordinates
 
 length = Symbol("length", units.length)
@@ -37,13 +36,20 @@ density = density_def.definition.rhs.subs({
 })
 
 rotational_inertia_derived = integral_law.law.rhs.subs({
-    integral_law.density(integral_law.radius, integral_law.polar_angle, integral_law.height): density,
-    integral_law.radius_start: 0,
-    integral_law.radius_end: radius,
-    integral_law.polar_angle_start: 0,
-    integral_law.polar_angle_end: 2*pi,
-    integral_law.height_start: 0,
-    integral_law.height_end: length,
+    integral_law.density(integral_law.radius, integral_law.polar_angle, integral_law.height):
+        density,
+    integral_law.radius_start:
+        0,
+    integral_law.radius_end:
+        radius,
+    integral_law.polar_angle_start:
+        0,
+    integral_law.polar_angle_end:
+    2 * pi,
+    integral_law.height_start:
+        0,
+    integral_law.height_end:
+        length,
 }).doit()
 
 assert expr_equals(rotational_inertia_derived, law.rhs)

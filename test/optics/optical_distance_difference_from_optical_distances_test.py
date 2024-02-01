@@ -5,7 +5,8 @@ from symplyphysics import (
     units,
     Quantity,
     SI,
-    convert_to, prefixes,
+    convert_to,
+    prefixes,
 )
 from symplyphysics.laws.optics import optical_distance_difference_from_optical_distances as optical_difference_law
 
@@ -14,6 +15,7 @@ from symplyphysics.laws.optics import optical_distance_difference_from_optical_d
 # How much will the optical path length of the beam change if the beam falls on the plate (n = 1.5) normally
 
 # Answer: delta = L2 - L1 = n * h - 1 * h= 0.5 mm
+
 
 @fixture(name="test_args")
 def test_args_fixture():
@@ -24,7 +26,8 @@ def test_args_fixture():
 
 
 def test_basic_distance_difference(test_args):
-    result = optical_difference_law.calculate_optical_difference_distance(test_args.ol1, test_args.ol2)
+    result = optical_difference_law.calculate_optical_difference_distance(
+        test_args.ol1, test_args.ol2)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
     result_travel_difference = convert_to(result, prefixes.milli * units.meters).evalf(3)
     assert result_travel_difference == approx(0.5, 0.1)

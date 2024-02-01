@@ -1,6 +1,7 @@
 from sympy import Eq, solve
 from sympy.physics.units import speed_of_light, planck, boltzmann
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 
 # Description
 ## Any object with non-zero absolute temperature radiates energy. Absolutely black object is objects, which doesn't reflect any radiation.
@@ -21,6 +22,7 @@ law = Eq(intensive_wavelength, wiens_constant / object_temperature)
 
 def print_law() -> str:
     return print_expression(law)
+
 
 @validate_input(object_temperature_=object_temperature)
 @validate_output(intensive_wavelength)

@@ -9,6 +9,7 @@ from symplyphysics.laws.gravity import range_of_flight_of_a_body_thrown_at_an_an
 ## and the acceleration of gravity is 9.8 [meter / second^2]. Then the throw range will be 0.92 meter.
 ## https://www.omnicalculator.com/physics/range-projectile-motion
 
+
 @fixture(name="test_args")
 def test_args_fixture():
     initial_velocity = Quantity(3 * (units.meter / units.second))
@@ -19,7 +20,10 @@ def test_args_fixture():
 
 
 def test_basic_range(test_args):
-    result = range_law.calculate_range(test_args.initial_velocity, test_args.angle,)
+    result = range_law.calculate_range(
+        test_args.initial_velocity,
+        test_args.angle,
+    )
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
     result = convert_to(result, units.meter).evalf(5)
     assert result == approx(0.92, rel=0.01)

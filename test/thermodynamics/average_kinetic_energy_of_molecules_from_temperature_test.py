@@ -15,9 +15,7 @@ from symplyphysics.laws.thermodynamics import average_kinetic_energy_of_molecule
 def test_args_fixture():
     temperature = Quantity(300 * units.kelvin)
     Args = namedtuple("Args", ["temperature"])
-    return Args(
-        temperature=temperature
-    )
+    return Args(temperature=temperature)
 
 
 def test_basic_average_kinetic_energy(test_args):

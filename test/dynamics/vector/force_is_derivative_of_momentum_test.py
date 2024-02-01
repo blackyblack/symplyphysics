@@ -57,7 +57,7 @@ def test_bad_momenta(test_args):
         force_momentum_law.calculate_force(p_scalar, test_args.p1, test_args.dt)
     with raises(AttributeError):
         force_momentum_law.calculate_force(test_args.p0, p_scalar, test_args.dt)
-    
+
     with raises(TypeError):
         force_momentum_law.calculate_force(100, test_args.p1, test_args.dt)
     with raises(TypeError):

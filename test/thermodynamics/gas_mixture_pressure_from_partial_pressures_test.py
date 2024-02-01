@@ -1,6 +1,5 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-from sympy import S
 from symplyphysics import (
     errors,
     units,
@@ -18,15 +17,12 @@ def test_args_fixture():
     p2 = Quantity(100 * units.pascal)
     p3 = Quantity(400 * units.pascal)
     Args = namedtuple("Args", ["p1", "p2", "p3"])
-    return Args(
-        p1=p1,
-        p2=p2,
-        p3=p3
-    )
+    return Args(p1=p1, p2=p2, p3=p3)
 
 
 def test_basic_gas_mixture_pressure(test_args):
-    result = gas_mixture_pressure.calculate_total_pressure([test_args.p1, test_args.p2, test_args.p3])
+    result = gas_mixture_pressure.calculate_total_pressure(
+        [test_args.p1, test_args.p2, test_args.p3])
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.pressure)
     result_pressure = convert_to(result, units.pascal).evalf(3)
     assert result_pressure == approx(700, 0.001)

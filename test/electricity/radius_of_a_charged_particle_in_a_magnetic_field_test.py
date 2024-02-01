@@ -21,7 +21,8 @@ def test_args_fixture():
 
 
 def test_basic_radius(test_args):
-    result = radius_law.calculate_radius(test_args.mass, test_args.velocity, test_args.induction, test_args.charge)
+    result = radius_law.calculate_radius(test_args.mass, test_args.velocity, test_args.induction,
+        test_args.charge)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
     result = convert_to(result, units.meter).evalf(5)
     assert result == approx(0.83, rel=0.1)

@@ -10,7 +10,7 @@ from symplyphysics import (
 from symplyphysics.laws.dynamics import braking_path as path_law
 
 # Description
-## Let the mass of the object be 10 kilogram, the speed is 20 meter per second, and the friction force 
+## Let the mass of the object be 10 kilogram, the speed is 20 meter per second, and the friction force
 ## is 40 newton. Then the stopping distance will be 50 meter.
 ## https://www.indigomath.ru/formuly-po-fizike/dinamika/put-tormozhenija-2.html
 
@@ -26,7 +26,8 @@ def test_args_fixture():
 
 
 def test_basic_braking_path(test_args):
-    result = path_law.calculate_braking_path(test_args.mass, test_args.velocity, test_args.friction_force)
+    result = path_law.calculate_braking_path(test_args.mass, test_args.velocity,
+        test_args.friction_force)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
     result_voltage = convert_to(result, units.meter).evalf(5)
     assert result_voltage == approx(50, 0.01)

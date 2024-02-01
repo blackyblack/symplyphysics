@@ -10,6 +10,7 @@ from symplyphysics.laws.gravity import maximum_height_of_a_body_thrown_at_an_ang
 ## an angle to the horizon will be 0.23 meter.
 ## https://www.omnicalculator.com/physics/projectile-motion
 
+
 @fixture(name="test_args")
 def test_args_fixture():
     initial_velocity = Quantity(3 * (units.meter / units.second))
