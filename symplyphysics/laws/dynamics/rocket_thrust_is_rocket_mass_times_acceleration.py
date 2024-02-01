@@ -9,15 +9,18 @@ from symplyphysics import (
 )
 
 # Description
-## ...
+## Assuming we are at rest relative to an inertial reference frame, we observe a rocket
+## accelerate through space with no gravitational or atmospheric drag forces acting on it.
+## The mass of the rocket changes as it burns fuel and releases the products of burning,
+## but the total mass of the system does not change.
 
 # Law: R * v_rel = M * a
-## R - rate of fuel consumption
+## R = -dM/dt - rate of fuel consumption
 ## v_rel - velocity of racket relative to products
 ## M - racket mass
 ## a - racket acceleration
 
-# Note: R*v_rel is called thrust of rocket engine
+# Note: (R * v_rel) is called thrust of rocket engine
 
 fuel_consumption_rate = Symbol("fuel_consumption_rate", units.mass / units.time)
 relative_velocity = Symbol("relative_velocity", units.velocity)
@@ -43,7 +46,7 @@ def calculate_relative_velocity(
     racket_acceleration_: Quantity,
 ) -> Quantity:
     result = solve(law, relative_velocity)[0].subs({
-        fuel_consumption_rate: fuel_consumption_rate,
+        fuel_consumption_rate: fuel_consumption_rate_,
         racket_mass: racket_mass_,
         racket_acceleration: racket_acceleration_,
     })

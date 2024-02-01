@@ -1,0 +1,54 @@
+from collections import namedtuple
+from pytest import approx, fixture, raises
+from symplyphysics import (
+    errors,
+    units,
+    convert_to,
+    Quantity,
+    SI,
+)
+from symplyphysics.laws.dynamics import rocket_thrust_is_rocket_mass_times_acceleration as rocket_law
+
+# Description
+## A rocket whose initial mass is 850 kg consumes fuel at the rate of 2.3 kg/s. Its acceleration
+## is 7.6 m/s**2. Then, the rackets speed relative to the exhaust gases is about 2.8 km/s.
+
+
+@fixture(name="test_args")
+def test_args_fixture():
+    m = Quantity(850.0 * units.kilogram)
+    r = Quantity(2.3 * units.kilogram / units.second)
+    a = Quantity(7.6 * units.meter / units.second**2)
+    Args = namedtuple("Args", "m r a")
+    return Args(m=m, r=r, a=a)
+
+
+def test_basic_law(test_args):
+    result = rocket_law.calculate_relative_velocity(test_args.r, test_args.m, test_args.a)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.velocity)
+    result_value = convert_to(result, units.kilometer / units.second).evalf(2)
+    assert result_value == approx(2.8, 1e-2)
+
+
+def test_bad_consumption_rate(test_args):
+    rb = Quantity(1.0 * units.coulomb)
+    with raises(errors.UnitsError):
+        rocket_law.calculate_relative_velocity(rb, test_args.m, test_args.a)
+    with raises(TypeError):
+        rocket_law.calculate_relative_velocity(100, test_args.m, test_args.a)
+
+
+def test_bad_mass(test_args):
+    mb = Quantity(1.0 * units.coulomb)
+    with raises(errors.UnitsError):
+        rocket_law.calculate_relative_velocity(test_args.r, mb, test_args.a)
+    with raises(TypeError):
+        rocket_law.calculate_relative_velocity(test_args.r, 100, test_args.a)
+
+
+def test_bad_acceleration(test_args):
+    ab = Quantity(1.0 * units.coulomb)
+    with raises(errors.UnitsError):
+        rocket_law.calculate_relative_velocity(test_args.r, test_args.m, ab)
+    with raises(TypeError):
+        rocket_law.calculate_relative_velocity(test_args.r, test_args.m, 100)
