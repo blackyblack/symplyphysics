@@ -32,6 +32,10 @@ law = Eq(rotational_inertia, mass * (length**2 + width**2) / 12)
 # Derive this law from the integral definition of rotational inertia in cartesian coordiantes.
 # Condition: density of slab is constant.
 
+# Reference frame:
+## z-axis is parallel to the rotational axis in question (height of slab)
+## x-axis and y-axis are perpendicular to the rotational axis (length and width of slab)
+
 height = Symbol("height", units.length)
 volume = length * width * height
 
