@@ -11,7 +11,7 @@ from symplyphysics.laws.dynamics import rocket_thrust_is_rocket_mass_times_accel
 
 # Description
 ## A rocket whose initial mass is 850 kg consumes fuel at the rate of 2.3 kg/s. Its acceleration
-## is 7.6 m/s**2. Then, the rackets speed relative to the exhaust gases is about 2.8 km/s.
+## is 7.6 m/s**2. Then, the rocket's speed relative to the exhaust gases is about 2.8 km/s.
 
 
 @fixture(name="test_args")
