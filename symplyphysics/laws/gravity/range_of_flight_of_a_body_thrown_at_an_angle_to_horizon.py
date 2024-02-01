@@ -32,7 +32,7 @@ projection_law_applied = projection_law.law.subs({
     projection_law.vector_length: initial_velocity,
     projection_law.vector_angle: angle,
 })
-projection_derived = solve(projection_law_applied, projection_law.projection, dict=True)[0][projection_law.projection]
+horizontal_projection_derived = solve(projection_law_applied, projection_law.projection, dict=True)[0][projection_law.projection]
 
 time_law_applied = time_law.law.subs({
     time_law.initial_velocity : initial_velocity,
@@ -42,7 +42,7 @@ time_derived = solve(time_law_applied, time_law.movement_time, dict=True)[0][tim
 
 range_law_applied = distance_law.law.subs({
     distance_law.initial_position : 0,
-    distance_law.constant_velocity: projection_derived,
+    distance_law.constant_velocity: horizontal_projection_derived,
     distance_law.movement_time: time_derived,
 })
 
