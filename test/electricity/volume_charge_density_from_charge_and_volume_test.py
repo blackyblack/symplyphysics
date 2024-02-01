@@ -1,12 +1,6 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-from symplyphysics import (
-    errors,
-    units,
-    Quantity,
-    SI,
-    convert_to
-)
+from symplyphysics import (errors, units, Quantity, SI, convert_to)
 
 from symplyphysics.laws.electricity import volume_charge_density_from_charge_and_volume as volume_charge_density
 
@@ -19,11 +13,12 @@ def test_args_fixture():
     return Args(
         charge=charge,
         volume=volume,
-               )
+    )
 
 
 def test_basic_volume_charge_density(test_args):
-    result = volume_charge_density.calculate_volume_charge_density(test_args.charge, test_args.volume)
+    result = volume_charge_density.calculate_volume_charge_density(test_args.charge,
+        test_args.volume)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.charge / units.volume)
     result_volume_charge_density = convert_to(result, units.coulomb / units.meter**3).evalf(5)
     assert result_volume_charge_density == approx(2, 0.001)

@@ -34,16 +34,18 @@ projection_law_applied = projection_law.law.subs({
     projection_law.vector_length: initial_velocity,
     projection_law.vector_angle: (pi / 2) - angle,
 })
-projection_derived = solve(projection_law_applied, projection_law.projection, dict=True)[0][projection_law.projection]
+projection_derived = solve(projection_law_applied, projection_law.projection,
+    dict=True)[0][projection_law.projection]
 
 # The acceleration of gravity is directed opposite to the vertical coordinate axis,
 ## so there is a minus sign before the acceleration.
 distance_law_applied = distance_law.law.subs({
-    distance_law.initial_velocity : projection_derived,
+    distance_law.initial_velocity: projection_derived,
     distance_law.constant_acceleration: -earth_free_fall_acceleration,
     distance_law.distance(distance_law.movement_time): 0,
 })
-time_derived = solve(distance_law_applied, distance_law.movement_time, dict=True)[1][distance_law.movement_time]
+time_derived = solve(distance_law_applied, distance_law.movement_time,
+    dict=True)[1][distance_law.movement_time]
 
 # Check if derived movement time is same as declared.
 assert expr_equals(time_derived, law.rhs)

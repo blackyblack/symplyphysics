@@ -30,11 +30,12 @@ law = Eq(movement_time, sqrt(2 * height / earth_free_fall_acceleration))
 # Horizontal vector of movement does not change falling time.
 
 distance_law_applied = distance_law.law.subs({
-    distance_law.initial_velocity : 0,
+    distance_law.initial_velocity: 0,
     distance_law.constant_acceleration: earth_free_fall_acceleration,
     distance_law.distance(distance_law.movement_time): height,
 })
-time_derived = solve(distance_law_applied, distance_law.movement_time, dict=True)[1][distance_law.movement_time]
+time_derived = solve(distance_law_applied, distance_law.movement_time,
+    dict=True)[1][distance_law.movement_time]
 
 # Check if derived movement time is same as declared.
 assert expr_equals(time_derived, law.rhs)

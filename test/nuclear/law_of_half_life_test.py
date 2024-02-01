@@ -31,6 +31,9 @@ def test_bad_number_of_cores_initial(test_args):
     with raises(errors.UnitsError):
         number_of_cores_law.calculate_number_of_cores(number_of_cores_initial, test_args.half_life,
             test_args.decay_time)
+    with raises(ValueError):
+        number_of_cores_law.calculate_number_of_cores(-1, test_args.half_life,
+            test_args.decay_time)
 
 
 def test_bad_half_life(test_args):

@@ -36,7 +36,8 @@ def print_law() -> str:
 @validate_output(induction)
 def calculate_induction(current_: Quantity, length_: Quantity, relative_permeability_: float,
     number_turns_: float) -> Quantity:
-    #TODO: throw on negative number of turns
+    if number_turns_ < 0:
+        raise ValueError("Number of turns cannot be negative")
     result_expr = solve(law, induction, dict=True)[0][induction]
     result_expr = result_expr.subs({
         current: current_,

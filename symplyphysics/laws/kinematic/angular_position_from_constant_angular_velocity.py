@@ -31,7 +31,6 @@ law = Eq(
     initial_angular_position + angular_velocity * time,
 )
 
-
 # Derive law from definition of angular velocity
 
 angular_position_formula = dsolve(
@@ -64,11 +63,8 @@ def calculate_angular_position(
     angular_velocity_: Quantity,
     time_: Quantity,
 ) -> Quantity:
-    initial_angular_position_ = (
-        initial_angular_position_.scale_factor
-        if isinstance(initial_angular_position_, Quantity)
-        else initial_angular_position_
-    )
+    initial_angular_position_ = (initial_angular_position_.scale_factor if isinstance(
+        initial_angular_position_, Quantity) else initial_angular_position_)
     result = law.rhs.subs({
         initial_angular_position: initial_angular_position_,
         angular_velocity: angular_velocity_,

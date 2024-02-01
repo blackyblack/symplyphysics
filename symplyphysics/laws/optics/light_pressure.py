@@ -1,14 +1,7 @@
 from sympy import (Eq, solve)
 from sympy.physics.units import speed_of_light
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    print_expression,
-    validate_input,
-    validate_output,
-    dimensionless
-)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output, dimensionless)
 
 # Description
 ## Light pressure is the pressure exerted by light radiation incident on the surface of a body.

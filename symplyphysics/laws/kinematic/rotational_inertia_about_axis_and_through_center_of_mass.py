@@ -25,7 +25,8 @@ from symplyphysics import (
 ## - The axis used in the calculation of I_com must pass through the body's center of mass.
 
 rotational_inertia = Symbol("rotational_inertia", units.mass * units.length**2)
-rotational_inertia_through_com = Symbol("rotational_inertia_through_com", units.mass * units.length**2)
+rotational_inertia_through_com = Symbol("rotational_inertia_through_com",
+    units.mass * units.length**2)
 mass = Symbol("mass", units.mass)
 distance_between_axes = Symbol("distance_between_axes", units.length)
 

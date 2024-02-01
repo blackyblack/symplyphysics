@@ -10,8 +10,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import (
-    angular_acceleration_is_angular_velocity_derivative as angular_acceleration_def,
-)
+    angular_acceleration_is_angular_velocity_derivative as angular_acceleration_def,)
 
 # Description
 ## If a body is rotating about a fixed axis with constant angular acceleration, its angular
@@ -33,7 +32,6 @@ time = Symbol("time", units.time)
 
 law = Eq(angular_velocity, initial_angular_velocity + angular_acceleration * time)
 
-
 # Derive this law from definition of angular acceleration
 
 angular_velocity_formula = dsolve(
@@ -44,14 +42,11 @@ angular_velocity_formula = dsolve(
     angular_acceleration,
 ).doit()
 
-angular_velocity_derived = solve(
-    [
-        Eq(initial_angular_velocity, angular_velocity_formula.subs(time, 0)),
-        Eq(angular_velocity, angular_velocity_formula)
-    ],
-    ("C1", angular_velocity),
-    dict=True
-)[0][angular_velocity]
+angular_velocity_derived = solve([
+    Eq(initial_angular_velocity, angular_velocity_formula.subs(time, 0)),
+    Eq(angular_velocity, angular_velocity_formula)
+], ("C1", angular_velocity),
+    dict=True)[0][angular_velocity]
 
 assert expr_equals(angular_velocity_derived, law.rhs)
 

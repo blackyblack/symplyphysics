@@ -8,8 +8,7 @@ from symplyphysics import (
     SI,
 )
 from symplyphysics.laws.kinematic.rotational_inertia import (
-    rotational_inertia_cylindrical_integral as rotational_inertia_law,
-)
+    rotational_inertia_cylindrical_integral as rotational_inertia_law,)
 
 # Description
 ## A cylinder is rotating about its axis. Its density is 300 kg/m**3, and it has a radius of 0.3 m
@@ -27,8 +26,7 @@ def test_args_fixture():
 
 def test_basic_law(test_args):
     result = rotational_inertia_law.calculate_cylinder_rotational_inertia(
-        test_args.rho, test_args.rmax, test_args.zmax
-    )
+        test_args.rho, test_args.rmax, test_args.zmax)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.mass * units.length**2)
     result_value = convert_to(result, units.kilogram * units.meter**2).evalf(3)
     assert result_value == approx(0.382, 1e-3)
@@ -37,18 +35,24 @@ def test_basic_law(test_args):
 def test_bad_density(test_args):
     rhob = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        rotational_inertia_law.calculate_cylinder_rotational_inertia(rhob, test_args.rmax, test_args.zmax)
+        rotational_inertia_law.calculate_cylinder_rotational_inertia(rhob, test_args.rmax,
+            test_args.zmax)
     with raises(TypeError):
-        rotational_inertia_law.calculate_cylinder_rotational_inertia(100, test_args.rmax, test_args.zmax)
+        rotational_inertia_law.calculate_cylinder_rotational_inertia(100, test_args.rmax,
+            test_args.zmax)
 
 
 def test_bad_lengths(test_args):
     lb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        rotational_inertia_law.calculate_cylinder_rotational_inertia(test_args.rho, lb, test_args.zmax)
+        rotational_inertia_law.calculate_cylinder_rotational_inertia(test_args.rho, lb,
+            test_args.zmax)
     with raises(errors.UnitsError):
-        rotational_inertia_law.calculate_cylinder_rotational_inertia(test_args.rho, test_args.rmax, lb)
+        rotational_inertia_law.calculate_cylinder_rotational_inertia(test_args.rho, test_args.rmax,
+            lb)
     with raises(TypeError):
-        rotational_inertia_law.calculate_cylinder_rotational_inertia(test_args.rho, 100, test_args.zmax)
+        rotational_inertia_law.calculate_cylinder_rotational_inertia(test_args.rho, 100,
+            test_args.zmax)
     with raises(TypeError):
-        rotational_inertia_law.calculate_cylinder_rotational_inertia(test_args.rho, test_args.rmax, 100)
+        rotational_inertia_law.calculate_cylinder_rotational_inertia(test_args.rho, test_args.rmax,
+            100)

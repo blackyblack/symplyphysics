@@ -8,11 +8,10 @@ from symplyphysics import (
     SI,
 )
 from symplyphysics.laws.kinematic.rotational_inertia.geometries import (
-    slab_about_perpendicular_axis_through_center as slab_formula
-)
+    slab_about_perpendicular_axis_through_center as slab_formula)
 
 # Description
-## A slab of length 40 cm, width of 30 cm and a mass of 5.0 kg is rotating an axis that passes 
+## A slab of length 40 cm, width of 30 cm and a mass of 5.0 kg is rotating an axis that passes
 ## through its center so that its length and width are perpendicular to it. Its rotational
 ## inertia amounts to about 0.1042 kg*(m**2).
 

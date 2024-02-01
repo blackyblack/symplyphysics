@@ -36,10 +36,9 @@ pressure_law_applied = pressure_law.law.subs({
 })
 height_derived = solve(pressure_law_applied, pressure_law.depth, dict=True)[0][pressure_law.depth]
 
-velocity_law_applied = velocity_law.law.subs({
-    velocity_law.height_above_hole: height_derived
-})
-velocity_derived = solve(velocity_law_applied, velocity_law.liquid_velocity, dict=True)[0][velocity_law.liquid_velocity]
+velocity_law_applied = velocity_law.law.subs({velocity_law.height_above_hole: height_derived})
+velocity_derived = solve(velocity_law_applied, velocity_law.liquid_velocity,
+    dict=True)[0][velocity_law.liquid_velocity]
 
 # Check if derived velocity is same as declared.
 assert expr_equals(velocity_derived, law.rhs)

@@ -21,6 +21,7 @@ temperature = Symbol("temperature", units.temperature)
 
 law = Eq(average_kinetic_energy, 1.5 * boltzmann * temperature)
 
+
 def print_law() -> str:
     return print_expression(law)
 

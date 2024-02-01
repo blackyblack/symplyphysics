@@ -24,7 +24,7 @@ def test_basic_movement_time(test_args):
     assert result == approx(1.428, rel=0.01)
 
 
-def test_bad_height(test_args):
+def test_bad_height():
     height = Quantity(1 * units.joule)
     with raises(errors.UnitsError):
         time_law.calculate_movement_time(height)

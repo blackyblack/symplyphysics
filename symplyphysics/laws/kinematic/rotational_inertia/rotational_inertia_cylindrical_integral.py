@@ -42,10 +42,10 @@ height_end = Symbol("height_end", units.length)
 law = Eq(
     rotational_inertia,
     Integral(
-        density(radius, polar_angle, height) * radius**3,
-        (radius, radius_start, radius_end),
-        (polar_angle, polar_angle_start, polar_angle_end),
-        (height, height_start, height_end),
+    density(radius, polar_angle, height) * radius**3,
+    (radius, radius_start, radius_end),
+    (polar_angle, polar_angle_start, polar_angle_end),
+    (height, height_start, height_end),
     ),
 )
 
@@ -59,9 +59,8 @@ def print_law() -> str:
 # The rotational axis is the axis of the cylinder.
 @validate_input(density_=density, radius_=radius, height_=height)
 @validate_output(rotational_inertia)
-def calculate_cylinder_rotational_inertia(
-    density_: Quantity, radius_: Quantity, height_: Quantity
-) -> Quantity:
+def calculate_cylinder_rotational_inertia(density_: Quantity, radius_: Quantity,
+    height_: Quantity) -> Quantity:
     result = law.rhs.subs({
         density(radius, polar_angle, height): density_,
         radius_start: 0,

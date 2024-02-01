@@ -9,8 +9,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematic.rotational_inertia import (
-    rotational_inertia_cartesian_integral as integral_law,
-)
+    rotational_inertia_cartesian_integral as integral_law,)
 from symplyphysics.definitions import density_from_mass_volume as density_def
 
 # Description
@@ -27,7 +26,6 @@ length = Symbol("length", units.length)
 width = Symbol("width", units.length)
 
 law = Eq(rotational_inertia, mass * (length**2 + width**2) / 12)
-
 
 # Derive this law from the integral definition of rotational inertia in cartesian coordiantes.
 # Condition: density of slab is constant.
@@ -49,14 +47,13 @@ distance_to_axis = sqrt(integral_law.x**2 + integral_law.y**2)
 rotational_inertia_derived = integral_law.law.rhs.subs({
     integral_law.density(integral_law.x, integral_law.y, integral_law.z): density,
     integral_law.distance_to_axis(integral_law.x, integral_law.y, integral_law.z): distance_to_axis,
-    integral_law.x_start: -1 *  length / 2,
+    integral_law.x_start: -1 * length / 2,
     integral_law.y_start: -1 * width / 2,
     integral_law.z_start: 0,
     integral_law.x_end: length / 2,
     integral_law.y_end: width / 2,
     integral_law.z_end: height,
 }).doit().simplify()
-
 
 assert expr_equals(law.rhs, rotational_inertia_derived)
 

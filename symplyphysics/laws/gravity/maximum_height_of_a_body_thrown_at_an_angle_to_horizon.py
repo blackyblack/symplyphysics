@@ -35,7 +35,8 @@ projection_law_applied = projection_law.law.subs({
     projection_law.vector_length: initial_velocity,
     projection_law.vector_angle: (pi / 2) - angle,
 })
-vertical_projection_derived = solve(projection_law_applied, projection_law.projection, dict=True)[0][projection_law.projection]
+vertical_projection_derived = solve(projection_law_applied, projection_law.projection,
+    dict=True)[0][projection_law.projection]
 
 # Vertical velocity is zero in the highest point of trajectory.
 velocity_law_applied = velocity_law.law.subs({

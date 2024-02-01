@@ -9,6 +9,7 @@ from symplyphysics.laws.gravity import maximum_movement_time_of_a_body_thrown_at
 ## and the acceleration of gravity is 9.8 [meter / second^2]. Then the travel time will be 0.43 second.
 ## https://www.indigomath.ru//raschety/yJTxXc.html
 
+
 @fixture(name="test_args")
 def test_args_fixture():
     initial_velocity = Quantity(3 * (units.meter / units.second))

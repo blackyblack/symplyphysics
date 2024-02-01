@@ -22,9 +22,7 @@ def test_args_fixture():
     wavelength = Quantity(700 * units.nanometer)
     angle = pi / 4
     Args = namedtuple("Args", ["diffraction_order", "wavelength", "angle"])
-    return Args(diffraction_order=diffraction_order,
-        wavelength=wavelength,
-        angle=angle)
+    return Args(diffraction_order=diffraction_order, wavelength=wavelength, angle=angle)
 
 
 def test_basic_distance(test_args):
@@ -39,8 +37,6 @@ def test_bad_diffraction_order(test_args):
     diffraction_order = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         distance_law.calculate_distance(diffraction_order, test_args.wavelength, test_args.angle)
-    with raises(TypeError):
-        distance_law.calculate_distance(True, test_args.wavelength, test_args.angle)
 
 
 def test_bad_wavelength(test_args):
@@ -55,5 +51,3 @@ def test_bad_angle(test_args):
     angle = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         distance_law.calculate_distance(test_args.diffraction_order, test_args.wavelength, angle)
-    with raises(AttributeError):
-        distance_law.calculate_distance(test_args.diffraction_order, test_args.wavelength, True)

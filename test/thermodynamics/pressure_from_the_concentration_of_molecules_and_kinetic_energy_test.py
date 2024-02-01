@@ -16,14 +16,13 @@ def test_args_fixture():
     average_kinetic_energy = Quantity(2.4e-20 * units.joule)
     molecules_concentration = Quantity(5e24 * (1 / units.meter**3))
     Args = namedtuple("Args", ["average_kinetic_energy", "molecules_concentration"])
-    return Args(
-        average_kinetic_energy=average_kinetic_energy,
-        molecules_concentration=molecules_concentration
-    )
+    return Args(average_kinetic_energy=average_kinetic_energy,
+        molecules_concentration=molecules_concentration)
 
 
 def test_basic_pressure(test_args):
-    result = ideal_gas_pressure.calculate_pressure(test_args.molecules_concentration, test_args.average_kinetic_energy)
+    result = ideal_gas_pressure.calculate_pressure(test_args.molecules_concentration,
+        test_args.average_kinetic_energy)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.pressure)
     result_pressure = convert_to(result, units.pascal).evalf(3)
     assert result_pressure == approx(80000, 0.001)

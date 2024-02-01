@@ -1,9 +1,9 @@
+from typing import Sequence
 from sympy import (Eq, solve)
 from symplyphysics import (units, Quantity, print_expression, Symbol, validate_input,
     validate_output)
 from symplyphysics.core.operations.sum_array import SumArray
 from symplyphysics.core.symbols.symbols import tuple_of_symbols
-from typing import Sequence
 
 # Description
 ## The pressure of a mixture of gases is equal to the sum of their partial pressures.

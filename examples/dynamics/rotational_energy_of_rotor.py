@@ -2,12 +2,10 @@
 
 from sympy import Symbol, pi
 from symplyphysics import Quantity, convert_to, print_expression, units
-from symplyphysics.laws.dynamics import (
-    kinetic_energy_from_moment_of_inertia_and_angular_velocity as rotational_energy_law
-)
+from symplyphysics.laws.dynamics import (kinetic_energy_from_moment_of_inertia_and_angular_velocity
+    as rotational_energy_law)
 from symplyphysics.laws.kinematic.rotational_inertia.geometries import (
-    solid_disk_about_central_axis as disk_formula
-)
+    solid_disk_about_central_axis as disk_formula)
 
 # Description
 ## An spin testing was conducted involving a solid steel rotor of mass M = 272 kg and
@@ -37,10 +35,7 @@ rotational_energy = rotational_energy_law.law.rhs.subs({
     rotational_energy_law.angular_velocity: angular_speed,
 })
 
-rotational_energy_value = convert_to(
-    Quantity(rotational_energy.subs(values)),
-    units.joule
-).evalf(3)
+rotational_energy_value = convert_to(Quantity(rotational_energy.subs(values)), units.joule).evalf(3)
 
 print(f"Formula for the rotational energy of the rotor:\n{print_expression(rotational_energy)}\n")
 print(f"The energy release due to the rotor's rotation is {rotational_energy_value} J.")
