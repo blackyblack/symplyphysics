@@ -35,11 +35,11 @@ projection_law_applied = projection_law.law.subs({
     projection_law.vector_length: initial_velocity,
     projection_law.vector_angle: (pi / 2) - angle,
 })
-horizontal_projection_derived = solve(projection_law_applied, projection_law.projection, dict=True)[0][projection_law.projection]
+vertical_projection_derived = solve(projection_law_applied, projection_law.projection, dict=True)[0][projection_law.projection]
 
 # Vertical velocity is zero in the highest point of trajectory.
 velocity_law_applied = velocity_law.law.subs({
-    velocity_law.initial_velocity: horizontal_projection_derived,
+    velocity_law.initial_velocity: vertical_projection_derived,
     velocity_law.velocity: 0,
     velocity_law.acceleration: -earth_free_fall_acceleration,
 })
@@ -48,7 +48,7 @@ time_derived = solve(velocity_law_applied, velocity_law.time, dict=True)[0][velo
 # The acceleration of gravity is directed opposite to the vertical coordinate axis,
 ## so there is a minus sign before the acceleration.
 height_law_applied = distance_law.law.subs({
-    distance_law.initial_velocity: horizontal_projection_derived,
+    distance_law.initial_velocity: vertical_projection_derived,
     distance_law.movement_time: time_derived,
     distance_law.constant_acceleration: -earth_free_fall_acceleration,
 })
