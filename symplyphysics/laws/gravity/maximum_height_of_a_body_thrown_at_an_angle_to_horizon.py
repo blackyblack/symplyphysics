@@ -5,7 +5,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematic import constant_acceleration_movement_is_parabolic as distance_law
 from symplyphysics.laws.kinematic import planar_projection_is_cosine as projection_law
-from symplyphysics.laws.gravity import maximum_movement_time_of_a_body_thrown_at_an_angle_to_horizon as time_law
+from symplyphysics.laws.kinematic import accelerated_velocity_from_time as velocity_law
 
 # Description
 ## Let's say we throw the body at an angle to the horizon with some initial velocity.
@@ -27,7 +27,7 @@ angle = Symbol("angle", angle_type)
 law = Eq(height, initial_velocity**2 * sin(angle)**2 / (2 * earth_free_fall_acceleration))
 
 # This law might be derived via "constant_acceleration_movement_is_parabolic" law, "planar_projection_is_cosine" law
-# and "maximum_movement_time_of_a_body_thrown_at_an_angle_to_horizon" law.
+# and "accelerated_velocity_from_time" law.
 
 # The law seeks a projection on the horizontal axis, but a projection on the vertical axis is necessary,
 # so the angle is represented as a "pi/2 - angle".
@@ -35,19 +35,21 @@ projection_law_applied = projection_law.law.subs({
     projection_law.vector_length: initial_velocity,
     projection_law.vector_angle: (pi / 2) - angle,
 })
-projection_derived = solve(projection_law_applied, projection_law.projection, dict=True)[0][projection_law.projection]
+horizontal_projection_derived = solve(projection_law_applied, projection_law.projection, dict=True)[0][projection_law.projection]
 
-time_law_applied = time_law.law.subs({
-    time_law.initial_velocity : initial_velocity,
-    time_law.angle: angle,
+# Vertical velocity is zero in the highest point of trajectory.
+velocity_law_applied = velocity_law.law.subs({
+    velocity_law.initial_velocity: horizontal_projection_derived,
+    velocity_law.velocity: 0,
+    velocity_law.acceleration: -earth_free_fall_acceleration,
 })
-time_derived = solve(time_law_applied, time_law.movement_time, dict=True)[0][time_law.movement_time]
+time_derived = solve(velocity_law_applied, velocity_law.time, dict=True)[0][velocity_law.time]
 
 # The acceleration of gravity is directed opposite to the vertical coordinate axis,
 ## so there is a minus sign before the acceleration.
 height_law_applied = distance_law.law.subs({
-    distance_law.initial_velocity: projection_derived,
-    distance_law.movement_time: time_derived / 2,
+    distance_law.initial_velocity: horizontal_projection_derived,
+    distance_law.movement_time: time_derived,
     distance_law.constant_acceleration: -earth_free_fall_acceleration,
 })
 
