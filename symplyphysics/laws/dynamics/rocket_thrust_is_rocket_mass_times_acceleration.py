@@ -1,4 +1,4 @@
-from sympy import Eq, solve
+from sympy import Eq, solve, Symbol as SymSymbol
 from symplyphysics import (
     units,
     Quantity,
@@ -6,6 +6,16 @@ from symplyphysics import (
     print_expression,
     validate_input,
     validate_output,
+)
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.conservation import (
+    momentum_after_collision_equals_to_momentum_before as momentum_conservation_law,
+)
+from symplyphysics.definitions import (
+    momentum_is_mass_times_velocity as momentum_def,
+)
+from symplyphysics.laws.kinematic import (
+    accelerated_velocity_from_time as acceleration_def
 )
 
 # Description
@@ -24,10 +34,88 @@ from symplyphysics import (
 
 fuel_consumption_rate = Symbol("fuel_consumption_rate", units.mass / units.time)
 relative_velocity = Symbol("relative_velocity", units.velocity)
-racket_mass = Symbol("racket_mass", units.mass)
-racket_acceleration = Symbol("racket_acceleration", units.acceleration)
+rocket_mass = Symbol("rocket_mass", units.mass)
+rocket_acceleration = Symbol("rocket_acceleration", units.acceleration)
 
-law = Eq(fuel_consumption_rate * relative_velocity, racket_mass * racket_acceleration)
+law = Eq(fuel_consumption_rate * relative_velocity, rocket_mass * rocket_acceleration)
+
+
+# Derive this law from the law of conservation of momentum.
+
+rocket_speed = SymSymbol("rocket_speed", positive=True)
+rocket_speed_change = SymSymbol("rocket_speed_change", positive=True)
+rocket_mass_change = SymSymbol("rocket_mass_change", negative=True)
+
+rocket_momentum_before_release = momentum_def.definition.rhs.subs({
+    momentum_def.mass: rocket_mass,
+    momentum_def.velocity: rocket_speed,
+})
+
+initial_momentum = rocket_momentum_before_release
+
+rocket_momentum_after_release = momentum_def.definition.rhs.subs({
+    momentum_def.mass: rocket_mass + rocket_mass_change,
+    momentum_def.velocity: rocket_speed + rocket_speed_change,
+})
+
+products_speed = SymSymbol("products_speed")
+
+products_momentum = momentum_def.definition.rhs.subs({
+    momentum_def.mass: -1 * rocket_mass_change,
+    momentum_def.velocity: products_speed,
+})
+
+final_momentum = rocket_momentum_after_release + products_momentum
+
+rocket_speed_relative_to_frame = rocket_speed + rocket_speed_change
+rocket_speed_relative_to_products = relative_velocity
+products_speed_relative_to_frame = products_speed
+
+# NOTE: probably needs a separate law
+relative_speed_eqn = Eq(
+    rocket_speed_relative_to_frame,
+    rocket_speed_relative_to_products + products_speed_relative_to_frame,
+)
+
+momentum_conservation_eqn = momentum_conservation_law.law.subs({
+    momentum_conservation_law.momentum(momentum_conservation_law.time_before): initial_momentum,
+    momentum_conservation_law.momentum(momentum_conservation_law.time_after): final_momentum,
+})
+
+relative_velocity_expr = solve(
+    [relative_speed_eqn, momentum_conservation_eqn],
+    (products_speed, relative_velocity),
+    dict=True,
+)[0][relative_velocity]
+
+time_change = SymSymbol("time_change")
+
+fuel_consumption_eqn = Eq(rocket_mass_change, -1 * fuel_consumption_rate * time_change)
+
+rocket_acceleration_expr = solve(
+    acceleration_def.law, 
+    acceleration_def.acceleration,
+)[0].subs({
+    acceleration_def.velocity: rocket_speed_change,
+    acceleration_def.time: time_change,
+    acceleration_def.initial_velocity: 0,
+})
+
+relative_velocity_eqn_system = [
+    Eq(relative_velocity, relative_velocity_expr),
+    fuel_consumption_eqn,
+    Eq(rocket_acceleration, rocket_acceleration_expr),
+]
+
+relative_velocity_derived = solve(
+    relative_velocity_eqn_system,
+    (relative_velocity, rocket_mass_change, rocket_speed_change),
+    dict=True
+)[0][relative_velocity]
+
+relative_velocity_from_law = solve(law, relative_velocity)[0]
+
+assert expr_equals(relative_velocity_derived, relative_velocity_from_law)
 
 
 def print_law() -> str:
@@ -36,18 +124,18 @@ def print_law() -> str:
 
 @validate_input(
     fuel_consumption_rate_=fuel_consumption_rate,
-    racket_mass_=racket_mass,
-    racket_acceleration_=racket_acceleration,
+    rocket_mass_=rocket_mass,
+    rocket_acceleration_=rocket_acceleration,
 )
 @validate_output(relative_velocity)
 def calculate_relative_velocity(
     fuel_consumption_rate_: Quantity,
-    racket_mass_: Quantity,
-    racket_acceleration_: Quantity,
+    rocket_mass_: Quantity,
+    rocket_acceleration_: Quantity,
 ) -> Quantity:
     result = solve(law, relative_velocity)[0].subs({
         fuel_consumption_rate: fuel_consumption_rate_,
-        racket_mass: racket_mass_,
-        racket_acceleration: racket_acceleration_,
+        rocket_mass: rocket_mass_,
+        rocket_acceleration: rocket_acceleration_,
     })
     return Quantity(result)
