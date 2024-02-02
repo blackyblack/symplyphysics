@@ -6,7 +6,7 @@ from symplyphysics.laws.hydro import shear_stress_is_proportional_to_velocity_gr
 # Description
 ## Water (dynamic viscosity of which is 8.9e-4 Pa*s) is flowing steadily on top of a flat solid plate.
 ## At the site of contact with the plate its speed is 0, and at the top it is 0.1 m/s. The flow is 5 cm thick.
-## Assert that the shear stress in the water amounts to 1.78e-3 Pa.
+## Assert that the shear stress in the water at its highest point of contact with the plate amounts to 1.78e-3 Pa.
 
 
 @fixture(name="test_args")
