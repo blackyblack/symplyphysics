@@ -9,6 +9,7 @@ from symplyphysics import (
 )
 from symplyphysics.laws.relativistic import relativistic_time_dilation
 
+
 # Using calculations from the paper: https://www.omnicalculator.com/physics/time-dilation
 
 
