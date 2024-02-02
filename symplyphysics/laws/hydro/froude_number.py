@@ -7,7 +7,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 # Froude number characterizes the ratio between the force of inertia and
 # the external force, in the field of which the motion occurs, acting on
 # an elementary volume of liquid or gas. There is a characteristic length in
-# formula. The characteristic length is the dimension
+# the formula. The characteristic length is the dimension
 # that defines the length scale of a physical system. A characteristic length
 # is usually the volume of a system divided by its surface: L = V / A,
 # where V is the volume of the body, and A is the cross-sectional area.
