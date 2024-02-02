@@ -10,8 +10,13 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 # Law: Fr = u / sqrt(g * L), where
 # u is velocity,
 # g is acceleration due to gravity,
-# L is a characteristic length (the characteristic length is the dimension
-# that defines the length scale of a physical system),
+# L is a characteristic length (The characteristic length is the dimension
+# that defines the length scale of a physical system. A characteristic length
+# is usually the volume of a system divided by its surface: L = V / A,
+# where V is the volume of the body, and A is the cross-sectional area.
+# For example, it is used to calculate flow through circular and non-circular
+# tubes in order to examine flow conditions. D = 4 * A / p, where
+# D is characteristic diameter, A is the cross-sectional are, p is wetted perimeter),
 # Fr is Froude number.
 
 
