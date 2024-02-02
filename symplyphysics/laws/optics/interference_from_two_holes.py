@@ -3,11 +3,9 @@ from symplyphysics import (units, Quantity, Symbol, print_expression,
                            validate_input, validate_output)
 
 # Description
-## The coherence of vibrations that occur at the same
-## time at different points in the plane perpendicular to the direction
-## of wave propagation is called spatial coherence.
-## Spatial coherence depends on the conditions of radiation and
-## the formation of light waves in extended sources.
+## If two monochromatic waves of the same frequency are combined in the Young scheme,
+## then for the case when d << L and x << L (L - distance from holes to surface with image,
+## x - coordinate from symmetry point, d - distance), it is possible to approximate:
 
 # Law: delta = x * d / l
 # Where:
@@ -15,6 +13,10 @@ from symplyphysics import (units, Quantity, Symbol, print_expression,
 ## x - coordinate in interference picture
 ## d - distance between holes (or source parameter)
 ## l - distance from holes to picture
+
+# Conditions:
+# - Two monochromatic waves of the same frequency;
+# - d << L and x << L
 
 
 travel_difference = Symbol("travel_difference", units.length)
