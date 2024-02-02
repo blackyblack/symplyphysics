@@ -10,7 +10,6 @@ from symplyphysics import (
 
 from symplyphysics.laws.thermodynamics import pressure_of_ideal_gas_from_height_and_temperature as pressure_of_ideal_gas
 
-## Source of numbers: https://tsput.ru/res/fizika/1/ZAD_MKT/z_mkt_18_02.htm
 
 @fixture(name="test_args")
 def test_args_fixture():
@@ -31,7 +30,7 @@ def test_args_fixture():
 
 def test_basic_law(test_args):
     result = pressure_of_ideal_gas.calculate_final_pressure(test_args.initial_pressure, test_args.atomic_weight,
-                                                test_args.final_height, test_args.initial_height, test_args.temperature)
+                                                test_args.initial_height, test_args.final_height, test_args.temperature)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.pressure)
     result_final_pressure = convert_to(result, units.pascal).evalf(3)
     assert result_final_pressure == approx(0.56e5, abs=1e3)

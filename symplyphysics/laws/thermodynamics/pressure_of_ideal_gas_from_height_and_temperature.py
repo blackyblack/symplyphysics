@@ -28,8 +28,8 @@ final_height = Symbol("final_height", units.length)
 initial_height = Symbol("initial_height", units.length)
 temperature = Symbol("temperature", units.temperature)
 
-law = Eq(final_pressure, initial_pressure * exp(units.acceleration_due_to_gravity * atomic_weight *
-                                                (final_height - initial_height)/ (units.molar_gas_constant * temperature)))
+law = Eq(final_pressure, initial_pressure * exp(-units.acceleration_due_to_gravity * atomic_weight *
+                                                (final_height - initial_height) / (units.molar_gas_constant * temperature)))
 
 
 def print_law() -> str:
