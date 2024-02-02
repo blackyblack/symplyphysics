@@ -9,7 +9,7 @@ from symplyphysics import (
     dimensionless
 )
 
-from symplyphysics.laws.thermodynamics import number_of_impacts_on_the_wall_of_molecules_from_area_and_velocity as number_of_impacts
+from symplyphysics.laws.thermodynamics import number_of_impacts_of_molecules_on_the_wall_from_area_and_velocity as number_of_impacts
 
 
 @fixture(name="test_args")
