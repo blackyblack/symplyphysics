@@ -31,7 +31,7 @@ def test_basic_number_of_impacts(test_args):
     result = number_of_impacts.calculate_number_of_impacts(test_args.molecules_concentration, test_args.area, test_args.velocity_projection, test_args.time)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, dimensionless)
     result_number_of_impacts = convert_to(result, dimensionless).evalf(3)
-    assert result_number_of_impacts == approx(6.25e27, 1e23)
+    assert result_number_of_impacts == approx(6.25e27, abs=1e24)
 
 
 def test_bad_molecules_concentration(test_args):

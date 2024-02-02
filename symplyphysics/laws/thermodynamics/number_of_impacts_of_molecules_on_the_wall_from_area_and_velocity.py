@@ -18,12 +18,16 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## t is time
 
 number_of_impacts = Symbol("number_of_impacts", dimensionless)
-molecules_concentration = Symbol("number_of_molecules", 1 / units.volume)
+molecules_concentration = Symbol("molecules_concentration", 1 / units.volume)
 area = Symbol("area", units.area)
 velocity_projection = Symbol("velocity_projection", units.velocity)
 time = Symbol("time", units.time)
 
-law = Eq(number_of_impacts, 0.5 * molecules_concentration * area * velocity_projection * time)
+law = Eq(number_of_impacts, (molecules_concentration * area * velocity_projection * time) / 2)
+
+## Conditions
+## Gas is ideal
+## Wall is flat and perpendicular to X-axis
 
 
 def print_law() -> str:
@@ -32,7 +36,7 @@ def print_law() -> str:
 
 @validate_input(molecules_concentration_=molecules_concentration, area_=area, velocity_projection_=velocity_projection, time_=time)
 @validate_output(number_of_impacts)
-def calculate_number_of_impacts(molecules_concentration_: Quantity, area_: Quantity, velocity_projection_: Quantity, time_: Quantity) -> Quantity:
+def calculate_number_of_impacts(molecules_concentration_: Quantity, area_: Quantity, velocity_projection_: Quantity, time_: Quantity) -> int:
     result_expr = solve(law, number_of_impacts, dict=True)[0][number_of_impacts]
     result_number_of_impacts = result_expr.subs({
         molecules_concentration: molecules_concentration_,
