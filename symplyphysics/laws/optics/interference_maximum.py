@@ -4,7 +4,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression,
 
 # Description
 ## If the stroke difference is equal to an even number of half-waves,
-## then the interference intensity will be maximum at this point of the screen.
+## then at this point of the screen the interference intensity will be maximum.
 
 # Law: delta = m * lambda
 # Where:
