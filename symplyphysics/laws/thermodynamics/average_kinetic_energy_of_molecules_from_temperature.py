@@ -1,7 +1,7 @@
 from sympy import (Eq, solve)
+from sympy.physics.units import boltzmann
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
     validate_output)
-from sympy.physics.units import boltzmann
 
 # Description
 ## The kinetic theory of ideal gases allows us to determine the average kinetic energy for an ideal gas.

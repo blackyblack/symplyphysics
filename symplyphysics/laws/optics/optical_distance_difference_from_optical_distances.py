@@ -33,4 +33,3 @@ def calculate_optical_difference_distance(optical_distance1_: Quantity, optical_
     })
     result = Quantity(result_expr)
     return result
-
