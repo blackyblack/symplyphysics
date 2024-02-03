@@ -26,12 +26,13 @@ volume = Symbol("volume", units.volume)
 temperature = Symbol("temperature", units.temperature)
 amount_of_substance = Symbol("amount_of_substance", units.amount_of_substance)
 
-bonding_forces_parameter = Symbol("bonding_forces_parameter", units.pressure * units.volume ** 2)
-molecules_volume_parameter = Symbol("molecules_volume_parameter", units.volume)
+bonding_forces_parameter = Symbol("bonding_forces_parameter", units.pressure * (units.volume / units.amount_of_substance) ** 2)
+molecules_volume_parameter = Symbol("molecules_volume_parameter", units.volume / units.amount_of_substance)
 
 
 law = Eq(
-    (pressure - bonding_forces_parameter * (amount_of_substance / volume) ** 2) * (volume - bonding_forces_parameter * amount_of_substance),
+    (pressure + bonding_forces_parameter * (amount_of_substance / volume) ** 2) *
+    (volume - molecules_volume_parameter * amount_of_substance),
     amount_of_substance * units.molar_gas_constant * temperature
 )
 
