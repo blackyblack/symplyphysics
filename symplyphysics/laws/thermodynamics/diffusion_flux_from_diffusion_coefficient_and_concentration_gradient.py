@@ -34,9 +34,9 @@ def print_law() -> str:
 @validate_input(diffusion_coefficient_=diffusion_coefficient, concentration_start_=concentration, concentration_end_=concentration, position_=position)
 @validate_output(diffusion_flux)
 def calculate_diffusion_flux(diffusion_coefficient_: Quantity, concentration_start_: Quantity,  concentration_end_: Quantity, position_: Quantity) -> Quantity:
-    diffusion_flux_function_ = position * (concentration_end_ - concentration_start_) / position_
+    concentration_function_ = position * (concentration_end_ - concentration_start_) / position_
     applied_definition = law.subs({
-        concentration(position): diffusion_flux_function_,
+        concentration(position): concentration_function_,
         diffusion_coefficient: diffusion_coefficient_
     })
     dsolved = applied_definition.doit()

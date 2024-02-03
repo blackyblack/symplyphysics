@@ -29,8 +29,8 @@ def test_args_fixture():
 def test_basic_law(test_args):
     result = diffusion_flux.calculate_diffusion_flux(test_args.diffusion_coefficient, test_args.concentration_start, test_args.concentration_end, test_args.position)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.amount_of_substance / (units.area * units.time))
-    result_final_pressure = convert_to(result, units.mole / (units.meter**2 * units.second)).evalf(3)
-    assert result_final_pressure == approx(-0.001, 0.001)
+    result_diffusion_flux = convert_to(result, units.mole / (units.meter**2 * units.second)).evalf(3)
+    assert result_diffusion_flux == approx(-0.001, 0.001)
 
 
 def test_diffusion_coefficient(test_args):
