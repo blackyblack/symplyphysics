@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (units, SI, convert_to, Quantity, errors)
+from symplyphysics.core.approx import assert_approx
 from symplyphysics.laws.condensed_matter import thermionic_emission_current as emission_law
 
 # Description
@@ -22,7 +23,7 @@ def test_basic_thermionic_current(test_args):
     result = emission_law.calculate_current(test_args.thermodynamic_work, test_args.temperature)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.current / units.area)
     result = convert_to(result, units.ampere / units.meter**2).evalf(5)
-    assert result == approx(0.33e-32, rel=0.01)
+    assert_approx(result, 0.3342e-32)
 
 
 def test_bad_thermodynamic_work(test_args):
