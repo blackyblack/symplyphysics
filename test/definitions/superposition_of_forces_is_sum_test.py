@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -23,7 +24,7 @@ def test_basic_superposition(test_args):
     assert SI.get_dimension_system().equivalent_dims(result.dimension,
         forces_law.definition_units_SI)
     result_force = convert_to(result, units.newton).evalf(3)
-    assert result_force == approx(30, 0.001)
+    assert_approx(result_force, 30)
 
 
 def test_three_forces_array(test_args):
@@ -32,7 +33,7 @@ def test_three_forces_array(test_args):
     assert SI.get_dimension_system().equivalent_dims(result.dimension,
         forces_law.definition_units_SI)
     result_force = convert_to(result, units.newton).evalf(3)
-    assert result_force == approx(25, 0.01)
+    assert_approx(result_force, 25)
 
 
 def test_bad_force(test_args):

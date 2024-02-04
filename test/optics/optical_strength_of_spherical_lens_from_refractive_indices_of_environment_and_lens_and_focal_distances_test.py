@@ -1,7 +1,5 @@
 from collections import namedtuple
 from pytest import approx, fixture, raises
-from sympy import oo
-
 from symplyphysics import (
     errors,
     units,

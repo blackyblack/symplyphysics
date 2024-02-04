@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -10,7 +11,7 @@ from symplyphysics import (
 from symplyphysics.definitions import temporal_frequency_is_events_per_time as frequency_def
 
 # Description
-## Pendulum is making 25 complete oscillations in 60 seconds. It should have frequency of 0.416 Hz.
+## Pendulum is making 25 complete oscillations in 60 seconds. It should have frequency of 0.4167 Hz.
 
 
 @fixture(name="test_args")
@@ -24,8 +25,8 @@ def test_args_fixture():
 def test_basic_frequency(test_args):
     result = frequency_def.calculate_frequency(test_args.N, test_args.t)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.frequency)
-    result_frequency = convert_to(result, frequency_def.definition_units_SI).evalf(2)
-    assert result_frequency == approx(0.416, 0.01)
+    result_frequency = convert_to(result, frequency_def.definition_units_SI).evalf(4)
+    assert_approx(result_frequency, 0.4167)
 
 
 def test_bad_time(test_args):

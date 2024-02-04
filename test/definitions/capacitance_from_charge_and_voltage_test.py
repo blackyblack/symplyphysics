@@ -3,8 +3,9 @@
 ## According to the definition of Capacitance this capacitor should have C = 2 Farads.
 
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -26,8 +27,8 @@ def test_args_fixture():
 def test_basic_capacitance(test_args):
     result = capacitance_def.calculate_capacitance(test_args.Q, test_args.U)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.capacitance)
-    result_cap = convert_to(result, capacitance_def.definition_units_SI).evalf(4)
-    assert result_cap == approx(2, 0.01)
+    result_capacitance = convert_to(result, capacitance_def.definition_units_SI).evalf(4)
+    assert_approx(result_capacitance, 2)
 
 
 def test_bad_charge(test_args):

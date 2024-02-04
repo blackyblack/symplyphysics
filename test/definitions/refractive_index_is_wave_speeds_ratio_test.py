@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     Quantity,
@@ -22,7 +23,7 @@ def test_args_fixture():
 
 def test_basic_refraction_factor(test_args):
     result = refractive_index_definition.calculate_refractive_index(test_args.v1, test_args.v2)
-    assert result == approx(1.298, 0.001)
+    assert_approx(result, 1.298)
 
 
 def test_bad_velocity(test_args):

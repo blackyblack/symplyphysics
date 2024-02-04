@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     units,
     errors,
     SI,
@@ -44,7 +45,9 @@ def test_basic_height_barrier(test_args):
         test_args.temperature, test_args.charge_electron)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.voltage)
     result = convert_to(result, units.volt).evalf(5)
-    assert result == approx(0.529, rel=0.1)
+    # NOTE: onsite intrinsic charge carriers are caclulated instead of hardcoded 1e10 value,
+    #       therefore result in our law is not very accurate
+    assert_approx(result, 0.529, tolerance=0.1)
 
 
 def test_bad_donors_concentration(test_args):

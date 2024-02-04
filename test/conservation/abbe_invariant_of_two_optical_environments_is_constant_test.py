@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     Quantity,
@@ -25,7 +26,7 @@ from symplyphysics.laws.conservation import abbe_invariant_of_two_optical_enviro
 def test_args_fixture():
     r = Quantity(7 * prefixes.centi * units.meters)
     n = 1.0
-    a = Quantity(1E10 * units.meters)
+    a = Quantity(1e10 * units.meters)
     b = Quantity(27 * prefixes.centi * units.meters)
 
     Args = namedtuple("Args", ["a", "b", "n", "r"])
@@ -34,7 +35,7 @@ def test_args_fixture():
 
 def test_basic_conservation(test_args):
     result = abbe_conservation_law.calculate_refraction_index_lens(test_args.a, test_args.b, test_args.r, test_args.n)
-    assert result == approx(1.35, 0.01)
+    assert_approx(result, 1.35)
 
 
 def test_bad_distance(test_args):
