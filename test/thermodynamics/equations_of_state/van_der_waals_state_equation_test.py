@@ -14,7 +14,7 @@ from symplyphysics.laws.thermodynamics.equations_of_state import van_der_waals_s
 
 # Find pressure in state 1. For this example koefficients for van-der-vaals state equation
 
-# a = (V/nu)^2 * (p2 * T1 - p1 * T2) / (T2 - T1) = 0.188 [Pa * m^6 / mole^2]
+# a = (V/nu)^2 * (p2 * T1 - p1 * T2) / (T2 - T1) = 0.191 [Pa * m^6 / mole^2]
 # b = V - nu * R * (T2 - T1) / (p2 - p1) = 4.532 * 10^(-5) [m^3 / mole]
 # V = 0.25 [liters]
 # nu = 1 [moles]
@@ -28,7 +28,7 @@ def test_args_fixture():
     t = Quantity(300 * units.kelvins)
     v = Quantity(0.25 * units.liters)
     nu = Quantity(1 * units.mole)
-    a = Quantity(0.188 * units.pascals * (units.meter ** 3 / units.mole) ** 2)
+    a = Quantity(0.191 * units.pascals * (units.meter ** 3 / units.mole) ** 2)
     b = Quantity(4.532 * 1E-5 * units.meters ** 3 / units.moles)
     Args = namedtuple("Args", ["t", "v", "nu", "a", "b"])
     return Args(t=t, v=v, nu=nu, a=a, b=b)
