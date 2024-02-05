@@ -19,7 +19,7 @@ def test_args_fixture():
 def test_basic_particles_count(test_args):
     result = avogadro_number_from_mole_count.calculate_particles_count(test_args.M)
     assert isinstance(result, int)
-    assert_approx(result , 3.011e24)
+    assert_approx(result, 3.011e24)
 
 
 def test_bad_mole_count():

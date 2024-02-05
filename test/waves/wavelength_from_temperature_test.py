@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -26,8 +27,8 @@ def test_args_fixture():
 def test_basic_wavelength(test_args):
     result = wins_law.calculate_intensive_wavelength(test_args.T)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
-    result_current = convert_to(result, units.meter).evalf(6)
-    assert result_current == approx(7.2444e-7, 0.00001)
+    result_wavelength = convert_to(result, units.meter).evalf(6)
+    assert_approx(result_wavelength, 7.2444e-7)
 
 
 def test_bad_temperature():

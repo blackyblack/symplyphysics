@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     Quantity,
@@ -27,7 +28,7 @@ def test_basic_frequency(test_args):
         test_args.object_velocity)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.frequency)
     result_freq = convert_to(result, units.hertz).evalf(6)
-    assert result_freq == approx(3.473e14, 0.001)
+    assert_approx(result_freq, 3.473e14)
 
 
 def test_bad_velocity(test_args):

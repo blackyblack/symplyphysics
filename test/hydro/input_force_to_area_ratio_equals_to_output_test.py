@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     Quantity,
@@ -25,7 +26,7 @@ def test_basic_force(test_args):
         test_args.second_area)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
     result_force = convert_to(result, units.newton).evalf(5)
-    assert result_force == approx(20, 0.001)
+    assert_approx(result_force, 20)
 
 
 def test_bad_area(test_args):

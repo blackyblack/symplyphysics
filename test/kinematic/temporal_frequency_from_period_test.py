@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -20,8 +21,8 @@ def test_args_fixture():
 def test_basic_frequency(test_args):
     result = frequency_def.calculate_frequency(test_args.T)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.frequency)
-    result_period = convert_to(result, units.hertz).evalf(2)
-    assert result_period == approx(0.36, 0.01)
+    result_period = convert_to(result, units.hertz).evalf(4)
+    assert_approx(result_period, 0.3571)
 
 
 def test_bad_period():

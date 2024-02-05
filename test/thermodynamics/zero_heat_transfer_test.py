@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     Quantity,
@@ -27,7 +28,7 @@ def test_basic_pressure(test_args):
         test_args.V1, test_args.y)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.pressure)
     result_pressure = convert_to(result, units.pascal).evalf(8)
-    assert result_pressure == approx(262.19, 0.001)
+    assert_approx(result_pressure, 262.19)
 
 
 def test_bad_mole_count(test_args):

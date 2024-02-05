@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -22,7 +23,7 @@ def test_basic_geometric_buckling(test_args):
     result = buckling.calculate_geometric_buckling_squared(test_args.R, test_args.H)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, 1 / units.area)
     result_geometric_buckling = convert_to(result, 1 / units.meter**2).evalf(2)
-    assert result_geometric_buckling == approx(2.3447, 0.01)
+    assert_approx(result_geometric_buckling, 2.3447)
 
 
 def test_bad_cylinder_radius(test_args):

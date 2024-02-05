@@ -1,7 +1,6 @@
 from sympy import Eq, solve, S
-from symplyphysics import (Symbol, units, print_expression, Quantity,
-                           validate_input, validate_output, dimensionless,
-                           convert_to)
+from symplyphysics import (Symbol, units, print_expression, Quantity, validate_input,
+    validate_output, dimensionless, convert_to)
 
 # Description
 ## The point S is located on the front of the optical axis,
@@ -34,7 +33,8 @@ distance_from_object = Symbol("distance_from_object", units.length)
 refraction_index_lens = Symbol("refraction_index_lens", dimensionless)
 distance_from_image = Symbol("distance_from_image", units.length)
 
-abbe_invariant_environment = refraction_index_environment * ((1 / distance_from_object) - (1 / curvature_radius))
+abbe_invariant_environment = refraction_index_environment * ((1 / distance_from_object) -
+    (1 / curvature_radius))
 abbe_invariant_lens = refraction_index_lens * ((1 / distance_from_image) - (1 / curvature_radius))
 
 law = Eq(abbe_invariant_environment, abbe_invariant_lens)

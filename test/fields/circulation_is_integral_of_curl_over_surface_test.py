@@ -1,7 +1,8 @@
 from collections import namedtuple
-from pytest import approx, fixture
+from pytest import fixture
 from sympy import S, Expr, sin, cos, sqrt, pi
 from symplyphysics import (
+    assert_approx,
     units,
     Quantity,
     CoordinateSystem,
@@ -29,7 +30,7 @@ def test_basic_circulation(test_args):
         circulation_def.parameter1 * sin(circulation_def.parameter2)
     ]
     result = circulation_def.calculate_circulation(field, surface, (0, 1), (0, pi / 2))
-    assert convert_to(result, S.One).evalf(4) == approx((-pi / 4).evalf(4), 0.001)
+    assert_approx(convert_to(result, S.One).evalf(4), (-pi / 4).evalf(4))
 
 
 def _distance(point: CartesianPoint) -> Expr:

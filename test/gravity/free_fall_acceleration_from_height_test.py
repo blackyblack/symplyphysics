@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -29,7 +30,7 @@ def test_basic_acceleration(test_args):
         test_args.earth_radius, test_args.height_from_surface)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.acceleration)
     result_acceleration = convert_to(result, units.meter / units.second**2).evalf(6)
-    assert result_acceleration == approx(9.823, 0.001)
+    assert_approx(result_acceleration, 9.823)
 
 
 def test_bad_earth_mass(test_args):

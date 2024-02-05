@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     Quantity,
@@ -31,7 +32,7 @@ def test_basic_power(test_args):
         test_args.front_radius, test_args.back_radius)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, 1 / units.length)
     result_power = convert_to(result, units.dioptre).evalf(2)
-    assert result_power == approx(2, 0.1)
+    assert_approx(result_power, 2)
 
 
 def test_bad_radius(test_args):

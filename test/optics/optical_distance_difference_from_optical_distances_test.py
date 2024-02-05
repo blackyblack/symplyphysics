@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     Quantity,
@@ -30,7 +31,7 @@ def test_basic_distance_difference(test_args):
         test_args.ol1, test_args.ol2)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
     result_travel_difference = convert_to(result, prefixes.milli * units.meters).evalf(3)
-    assert result_travel_difference == approx(0.5, 0.1)
+    assert_approx(result_travel_difference, 0.5)
 
 
 def test_bad_distances(test_args):

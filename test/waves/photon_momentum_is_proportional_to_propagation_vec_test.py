@@ -1,7 +1,8 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from sympy import pi
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -28,8 +29,8 @@ def test_args_fixture():
 def test_basic_momentum(test_args):
     result = photon_momentum_law.calculate_momentum(test_args.wavenumber)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.momentum)
-    result_current = convert_to(result, units.newton * units.second).evalf(6)
-    assert result_current == approx(6.6307632061911e-26, 0.00001)
+    result_momentum = convert_to(result, units.newton * units.second).evalf(6)
+    assert_approx(result_momentum, 6.6307632061911e-26)
 
 
 def test_bad_propagation_vec():

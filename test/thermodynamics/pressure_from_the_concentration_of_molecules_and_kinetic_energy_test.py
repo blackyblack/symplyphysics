@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     Quantity,
@@ -25,7 +26,7 @@ def test_basic_pressure(test_args):
         test_args.average_kinetic_energy)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.pressure)
     result_pressure = convert_to(result, units.pascal).evalf(3)
-    assert result_pressure == approx(80000, 0.001)
+    assert_approx(result_pressure, 80000)
 
 
 def test_bad_energy(test_args):

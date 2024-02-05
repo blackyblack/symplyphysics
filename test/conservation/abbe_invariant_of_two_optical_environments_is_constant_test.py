@@ -34,7 +34,8 @@ def test_args_fixture():
 
 
 def test_basic_conservation(test_args):
-    result = abbe_conservation_law.calculate_refraction_index_lens(test_args.a, test_args.b, test_args.r, test_args.n)
+    result = abbe_conservation_law.calculate_refraction_index_lens(test_args.a, test_args.b,
+        test_args.r, test_args.n)
     assert_approx(result, 1.35)
 
 
@@ -42,20 +43,34 @@ def test_bad_distance(test_args):
     db = Quantity(1 * units.coulomb)
 
     with raises(errors.UnitsError):
-        abbe_conservation_law.calculate_refraction_index_lens(db, test_args.b, test_args.r, test_args.n)
+        abbe_conservation_law.calculate_refraction_index_lens(db, test_args.b, test_args.r,
+            test_args.n)
     with raises(TypeError):
-        abbe_conservation_law.calculate_refraction_index_lens(100, test_args.b, test_args.r, test_args.n)
+        abbe_conservation_law.calculate_refraction_index_lens(100, test_args.b, test_args.r,
+            test_args.n)
 
     with raises(errors.UnitsError):
-        abbe_conservation_law.calculate_refraction_index_lens(test_args.a, db, test_args.r, test_args.n)
+        abbe_conservation_law.calculate_refraction_index_lens(test_args.a, db, test_args.r,
+            test_args.n)
     with raises(TypeError):
-        abbe_conservation_law.calculate_refraction_index_lens(test_args.a, 100, test_args.r, test_args.n)
+        abbe_conservation_law.calculate_refraction_index_lens(test_args.a, 100, test_args.r,
+            test_args.n)
 
 
 def test_bad_radius(test_args):
     rb = Quantity(1 * units.coulomb)
 
     with raises(errors.UnitsError):
-        abbe_conservation_law.calculate_refraction_index_lens(test_args.a, test_args.b, rb, test_args.n,)
+        abbe_conservation_law.calculate_refraction_index_lens(
+            test_args.a,
+            test_args.b,
+            rb,
+            test_args.n,
+        )
     with raises(TypeError):
-        abbe_conservation_law.calculate_refraction_index_lens(test_args.a, test_args.b, 100, test_args.n,)
+        abbe_conservation_law.calculate_refraction_index_lens(
+            test_args.a,
+            test_args.b,
+            100,
+            test_args.n,
+        )

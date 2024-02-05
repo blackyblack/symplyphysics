@@ -22,7 +22,6 @@ from symplyphysics import units, Quantity, Symbol, Function, print_expression, v
 ## v - speed of fluid flow
 ## d/dy - spatial derivative in the direction perpendicular to velocity vector
 
-
 shear_stress = Symbol("shear_stress", units.pressure)
 dynamic_viscosity = Symbol("dynamic_viscosity", units.pressure * units.time)
 fluid_speed = Function("fluid_speed", units.velocity)
@@ -48,7 +47,8 @@ def calculate_shear_stress(
     fluid_speed_after_: Quantity,
     layer_separation_: Quantity,
 ) -> Quantity:
-    fluid_speed_function = layer_position * (fluid_speed_after_ - fluid_speed_before_) / layer_separation_
+    fluid_speed_function = layer_position * (fluid_speed_after_ -
+        fluid_speed_before_) / layer_separation_
     applied_law = law.subs({
         dynamic_viscosity: dynamic_viscosity_,
         fluid_speed(layer_position): fluid_speed_function,

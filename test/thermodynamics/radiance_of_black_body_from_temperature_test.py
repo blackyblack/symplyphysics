@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -25,7 +26,7 @@ def test_basic_radiance_heat_energy(test_args):
     assert SI.get_dimension_system().equivalent_dims(result.dimension,
         units.power / units.length**2)
     result_radiance = convert_to(result, units.watt / units.meter**2).evalf(6)
-    assert result_radiance == approx(0.009073, 0.0001)
+    assert_approx(result_radiance, 0.009073)
 
 
 def test_bad_temperature():

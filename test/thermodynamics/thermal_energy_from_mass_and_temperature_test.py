@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     Quantity,
@@ -31,7 +32,7 @@ def test_basic_amount(test_args):
         test_args.t1)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
     result_energy = convert_to(result, units.joule).evalf(7)
-    assert result_energy == approx(105000.1, 0.000001)
+    assert_approx(result_energy, 105000.1)
 
 
 def test_bad_specific_heat(test_args):

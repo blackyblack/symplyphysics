@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     Quantity,
@@ -27,7 +28,7 @@ def test_basic_optical_path(test_args):
         test_args.refractive_index)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
     result_optical_path = convert_to(result, units.meter.evalf(5))
-    assert result_optical_path == approx(0.0015, 0.0001)
+    assert_approx(result_optical_path, 0.0015)
 
 
 def test_bad_geometric_path(test_args):

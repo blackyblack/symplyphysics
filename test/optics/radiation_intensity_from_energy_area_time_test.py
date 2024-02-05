@@ -1,6 +1,6 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from symplyphysics import (errors, units, Quantity, SI, convert_to, prefixes)
+from pytest import fixture, raises
+from symplyphysics import (assert_approx, errors, units, Quantity, SI, convert_to, prefixes)
 from symplyphysics.laws.optics import radiation_intensity_from_energy_area_time as intensity_law
 
 # Description
@@ -22,7 +22,7 @@ def test_basic_intensity(test_args):
     result = intensity_law.calculate_intensity(test_args.energy, test_args.area, test_args.time)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.power / units.area)
     result = convert_to(result, prefixes.milli * units.watt / units.meter**2).evalf(2)
-    assert result == approx(44, 0.1)
+    assert_approx(result, 44)
 
 
 def test_bad_energy(test_args):

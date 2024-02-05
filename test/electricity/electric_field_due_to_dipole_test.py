@@ -17,7 +17,7 @@ from symplyphysics.laws.electricity import electric_field_due_to_dipole as dipol
 
 @fixture(name="test_args")
 def test_args_fixture():
-    p = Quantity(0.5e-10 * units.coulomb * units.meter)
+    p = Quantity(5e-11 * units.coulomb * units.meter)
     z = Quantity(1 * units.meter)
     Args = namedtuple("Args", "p z")
     return Args(p=p, z=z)

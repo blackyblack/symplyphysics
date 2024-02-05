@@ -1,6 +1,6 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from symplyphysics import Quantity, units, errors, convert_to
+from pytest import fixture, raises
+from symplyphysics import assert_approx, Quantity, units, errors, convert_to
 from symplyphysics.laws.hydro import hagen_poiseuille_equation
 
 
@@ -18,7 +18,7 @@ def test_basic(test_args):
     result = hagen_poiseuille_equation.calculate_delta_pressure(test_args.mu, test_args.l,
         test_args.q, test_args.r)
     result_pressure = convert_to(result, units.pascal).evalf(4)
-    assert result_pressure == approx(2.276, 0.001)
+    assert_approx(result_pressure, 2.276)
 
 
 def test_bad_dynamic_viscosity(test_args):

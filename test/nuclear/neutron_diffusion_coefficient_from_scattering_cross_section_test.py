@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -23,7 +24,7 @@ def test_basic_coefficient(test_args):
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
     result_coefficient = convert_to(result, units.centimeter).evalf(2)
     # carbon diffusion coefficient is 0.668 cm
-    assert result_coefficient == approx(0.668, 0.01)
+    assert_approx(result_coefficient, 0.668)
 
 
 def test_bad_macroscopic_cross_section():

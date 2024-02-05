@@ -23,7 +23,7 @@ def test_basic_thermionic_current(test_args):
     result = emission_law.calculate_current(test_args.thermodynamic_work, test_args.temperature)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.current / units.area)
     result = convert_to(result, units.ampere / units.meter**2).evalf(5)
-    assert_approx(result, 0.3342e-32)
+    assert_approx(result, 3.342e-33)
 
 
 def test_bad_thermodynamic_work(test_args):

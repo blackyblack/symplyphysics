@@ -12,7 +12,7 @@ from symplyphysics import (
 from symplyphysics.laws.electricity import magnetic_flux_from_induction_and_area as flux_law
 
 # Description
-## With a magnetic induction of 0.3 tesla and an area of 0.1 meters, the magnetic flux is 21.2e-3 weber.
+## With a magnetic induction of 0.3 tesla and an area of 0.1 meters, the magnetic flux is 2.12e-2 weber.
 ## The angle between the normal of the pad and the magnetic induction is 45 degree (pi / 4 radian).
 ## https://physics.icalculator.com/magnetic-flux-calculator.html
 
@@ -31,7 +31,7 @@ def test_basic_flux(test_args):
     result = flux_law.calculate_flux(test_args.induction, test_args.area, test_args.angle)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.magnetic_flux)
     result_flux = convert_to(result, units.weber).evalf(5)
-    assert_approx(result_flux, 21.2e-3)
+    assert_approx(result_flux, 2.12e-2)
 
 
 def test_bad_induction(test_args):

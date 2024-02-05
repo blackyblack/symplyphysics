@@ -46,7 +46,9 @@ def test_basic_mass(test_args):
     result = ef_mass_el.calculate_mass(test_args.energy_function, test_args.wavenumber)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.mass)
     result = convert_to(result, units.kilogram).evalf(6)
-    assert_approx(result, 0.24 * convert_to(test_args.mass_electron, units.kilogram).evalf(6), tolerance=0.01)
+    assert_approx(result,
+        0.24 * convert_to(test_args.mass_electron, units.kilogram).evalf(6),
+        tolerance=0.01)
 
 
 def test_mass_increases_with_increasing_wave_number(test_args):

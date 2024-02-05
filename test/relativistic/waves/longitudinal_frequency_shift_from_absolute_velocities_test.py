@@ -1,7 +1,8 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from sympy.physics.units import speed_of_light
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     Quantity,
@@ -32,20 +33,20 @@ def test_basic_frequency(test_args):
         test_args.object_velocity, test_args.zero_velocity)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.frequency)
     result_freq = int(convert_to(result, units.hertz).evalf(4))
-    assert result_freq == approx(1.2507e14, 0.001)
+    assert_approx(result_freq, 1.2507e14)
 
 
 def test_classical_moving_observer_frequency(test_args):
-    # observer is immobile and emitter is moving
+    # observer is immobile and emitter is moving away
     horn_frequency = Quantity(2000 * units.hertz)
-    object_velocity = Quantity(-9 * units.kilometer / units.hour)
+    object_velocity = Quantity(9 * units.kilometer / units.hour)
     # speed of sound
     wave_velocity = Quantity(340 * units.meter / units.second)
     result = doppler_law.calculate_observed_frequency(horn_frequency, wave_velocity,
         object_velocity, test_args.zero_velocity)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.frequency)
     result_freq = int(convert_to(result, units.hertz).evalf(4))
-    assert result_freq == approx(1985, 0.1)
+    assert_approx(result_freq, 1985)
 
     # make observer moving and source idle to verify that effect is irrelative if we have moving
     # source of waves or moving observer

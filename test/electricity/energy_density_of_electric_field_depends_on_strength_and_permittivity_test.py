@@ -4,15 +4,17 @@ from symplyphysics import (assert_approx, units, SI, convert_to, Quantity, error
 from symplyphysics.laws.electricity import energy_density_of_electric_field_depends_on_strength_and_permittivity as energy_density_law
 
 # Description
-## It is known that with a permittivity equal to 5 and an electric field intensity equal to 10 Volt / meter,
-## energy density of the electric field is 2.2e-9 Joule / meter**3.
-## https://www.calculatoratoz.com/ru/energy-density-given-electric-field-calculator/Calc-2224
+## It is known that with a permittivity equal to 5 and an electric field intensity equal to 5 Volt / meter,
+## energy density of the electric field is (1.106e-10 * 5) Joule / meter**3.
+## https://byjus.com/energy-density-formula/
+## Example above calculates energy density with vacuum permittivity. We should multiply the result to relative
+## permittivity to obtain the medium permittivity.
 
 
 @fixture(name="test_args")
 def test_args_fixture():
     relative_permittivity = 5
-    electric_intensity = Quantity(10 * (units.volt / units.meter))
+    electric_intensity = Quantity(5 * (units.volt / units.meter))
 
     Args = namedtuple("Args", ["relative_permittivity", "electric_intensity"])
     return Args(relative_permittivity=relative_permittivity, electric_intensity=electric_intensity)
@@ -23,7 +25,7 @@ def test_basic_energy_density(test_args):
         test_args.electric_intensity)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy / units.volume)
     result = convert_to(result, units.joule / units.meter**3).evalf(5)
-    assert_approx(result, 2.2e-9)
+    assert_approx(result, 1.106e-10 * 5)
 
 
 def test_bad_relative_permittivity(test_args):

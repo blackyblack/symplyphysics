@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     Quantity,
@@ -30,7 +31,7 @@ def test_basic_angle(test_args):
         test_args.incidence_media, test_args.refractive_media)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, angle_type)
     result_angle = convert_to(result, units.degree).evalf(4)
-    assert result_angle == approx(22.1, 0.01)
+    assert_approx(result_angle, 22.1)
 
 
 def test_angle_with_number(test_args):

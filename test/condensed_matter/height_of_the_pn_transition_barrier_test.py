@@ -23,9 +23,7 @@ def test_args_fixture():
     donors_concentration = Quantity(3e16 * (1 / units.centimeter**3))
     acceptors_concentration = Quantity(2e12 * (1 / units.centimeter**3))
     charge_carriers_concentration = Quantity(1e10 * (1 / units.centimeter**3))
-
     temperature = Quantity(300 * units.kelvin)
-
     charge_electron = Quantity(1.6e-19 * units.coulomb)
 
     Args = namedtuple("Args", [

@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -31,7 +32,7 @@ def test_basic_buckling(test_args):
         test_args.D)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, 1 / units.area)
     result_buckling = convert_to(result, 1 / units.meter**2).evalf(2)
-    assert result_buckling == approx(2.345, 0.01)
+    assert_approx(result_buckling, 2.345)
 
 
 def test_bad_macroscopic_cross_section(test_args):

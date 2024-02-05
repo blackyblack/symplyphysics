@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -31,7 +32,7 @@ def test_basic_law(test_args):
         test_args.t)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, dimensionless)
     result_value = convert_to(result, units.radian).evalf(3)
-    assert result_value == approx(-20.0, 1e-3)
+    assert_approx(result_value, -20)
 
 
 def test_bad_angular_velocity(test_args):

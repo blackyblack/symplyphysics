@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     angle_type,
     errors,
     units,
@@ -26,7 +27,7 @@ def test_basic_frequency(test_args):
     result = frequency_def.calculate_frequency(test_args.N, test_args.t)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, 1 / units.time)
     result_frequency = convert_to(result, units.radian / units.second).evalf(2)
-    assert result_frequency == approx(1.744, 0.01)
+    assert_approx(result_frequency, 1.744)
 
 
 def test_bad_time(test_args):
