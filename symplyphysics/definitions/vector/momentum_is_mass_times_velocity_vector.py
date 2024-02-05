@@ -11,7 +11,7 @@ from symplyphysics import (
 from symplyphysics.core.symbols.quantities import list_of_quantities
 
 # Description
-## A particle's linear momentum is a vector quantity defines as its velocity vector multiplied by its mass.
+## A particle's linear momentum is a vector quantity defined as its velocity vector multiplied by its mass.
 
 # Definition: p = m * v
 ## p - vector of linear momentum
@@ -39,7 +39,7 @@ def calculate_momentum(mass_: Quantity, velocity_: QuantityVector) -> QuantityVe
 
 @validate_input(mass_=mass, momentum_=units.momentum)
 @validate_output(units.velocity)
-def calculate_velocity_from_momentum(mass_: Quantity, momentum_: QuantityVector) -> QuantityVector:
+def calculate_velocity(mass_: Quantity, momentum_: QuantityVector) -> QuantityVector:
     velocity = velocity_from_momentum_law(momentum_)
     velocity_components = list_of_quantities(velocity.components, {mass: mass_})
     return QuantityVector(velocity_components, momentum_.coordinate_system)

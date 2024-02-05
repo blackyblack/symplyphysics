@@ -71,7 +71,7 @@ def test_momentum_bad_velocity(test_args):
 
 
 def test_velocity_law(test_args):
-    result = momentum_def.calculate_velocity_from_momentum(test_args.m, test_args.p)
+    result = momentum_def.calculate_velocity(test_args.m, test_args.p)
     assert len(result.components) == 3
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.velocity)
     for result_component, correct_component in zip(result.components, test_args.v.components):
@@ -83,9 +83,9 @@ def test_velocity_law(test_args):
 def test_velocity_bad_mass(test_args):
     m_bad_scalar = Quantity(1.0 * units.second)
     with raises(errors.UnitsError):
-        momentum_def.calculate_velocity_from_momentum(m_bad_scalar, test_args.p)
+        momentum_def.calculate_velocity(m_bad_scalar, test_args.p)
     with raises(TypeError):
-        momentum_def.calculate_velocity_from_momentum(100, test_args.p)
+        momentum_def.calculate_velocity(100, test_args.p)
 
 
 def test_velocity_bad_momentum(test_args):
@@ -95,13 +95,13 @@ def test_velocity_bad_momentum(test_args):
         Quantity(1.0 * units.meter),
     ])
     with raises(errors.UnitsError):
-        momentum_def.calculate_velocity_from_momentum(test_args.m, p_bad_vector)
+        momentum_def.calculate_velocity(test_args.m, p_bad_vector)
 
     p_scalar = Quantity(1.0 * units.kilogram * units.meter / units.second)
     with raises(AttributeError):
-        momentum_def.calculate_velocity_from_momentum(test_args.m, p_scalar)
+        momentum_def.calculate_velocity(test_args.m, p_scalar)
 
     with raises(TypeError):
-        momentum_def.calculate_velocity_from_momentum(test_args.m, 100)
+        momentum_def.calculate_velocity(test_args.m, 100)
     with raises(TypeError):
-        momentum_def.calculate_velocity_from_momentum(test_args.m, [100])
+        momentum_def.calculate_velocity(test_args.m, [100])
