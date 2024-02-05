@@ -8,7 +8,6 @@ from symplyphysics import (
     validate_input,
     validate_output,
 )
-from symplyphysics.core.dimensions import ScalarValue
 from symplyphysics.core.symbols.quantities import list_of_quantities
 
 # Description
