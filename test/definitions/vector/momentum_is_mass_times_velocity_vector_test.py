@@ -9,7 +9,7 @@ from symplyphysics import (
     errors,
     QuantityVector,
 )
-from symplyphysics.definitions.vector import momentum_is_mass_times_velocity as momentum_def
+from symplyphysics.definitions.vector import momentum_is_mass_times_velocity_vector as momentum_def
 
 # Description
 ## A particle of mass m = 0.2 kg is moving in space, its velocity vector being (-1, 0, 2) m/s.
