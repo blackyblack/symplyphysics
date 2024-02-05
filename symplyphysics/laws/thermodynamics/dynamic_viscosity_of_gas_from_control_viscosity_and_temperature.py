@@ -18,7 +18,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## Conditions
 ## Gas is ideal
 
-set_temperature = Symbol("given_temperature", units.temperature)
+set_temperature = Symbol("set_temperature", units.temperature)
 control_temperature = Symbol("control_temperature", units.temperature)
 dynamic_viscosity = Symbol("dynamic_viscosity", units.pressure * units.time)
 control_viscosity = Symbol("control_viscosity", units.pressure * units.time)
