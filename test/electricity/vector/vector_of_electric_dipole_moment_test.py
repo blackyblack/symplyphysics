@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     units,
     errors,
     convert_to,
@@ -34,7 +35,7 @@ def test_basic_law(test_args):
     correct_values = [2e-13, -2e-13, 1e-13]
     for result_component, correct_value in zip(result.components, correct_values):
         result_value = convert_to(result_component, units.coulomb * units.meter).evalf(2)
-        assert result_value == approx(correct_value, 1e-2)
+        assert_approx(result_value, correct_value)
 
 
 def test_bad_charge(test_args):

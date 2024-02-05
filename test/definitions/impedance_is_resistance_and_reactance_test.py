@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -27,7 +28,7 @@ def test_basic_impedance(test_args):
     result = impedance_def.calculate_impedance_magnitude(test_args.R, test_args.X)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.impedance)
     result_impedance = convert_to(result, impedance_def.definition_units_SI).evalf(5)
-    assert result_impedance == approx(10.12, 0.001)
+    assert_approx(result_impedance, 10.12)
 
 
 def test_bad_resistance(test_args):

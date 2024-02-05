@@ -4,7 +4,6 @@ from sympy.physics.units import speed_of_light
 from symplyphysics import (Quantity, Symbol, print_expression, units, validate_input,
     validate_output)
 
-
 # Description
 # Time dilation is the difference in elapsed time as measured by two clocks,
 # either due to a relative velocity between them (special relativity),
@@ -19,7 +18,6 @@ from symplyphysics import (Quantity, Symbol, print_expression, units, validate_i
 moving_observer_time = Symbol("moving_observer_time", units.time)
 velocity = Symbol("velocity", units.velocity)
 relativistic_time = Symbol("relativistic_time", units.time)
-
 
 law = Eq(relativistic_time, moving_observer_time / sqrt(1 - velocity**2 / speed_of_light**2))
 

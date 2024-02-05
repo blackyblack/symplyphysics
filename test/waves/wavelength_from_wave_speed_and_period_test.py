@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     Quantity,
@@ -26,7 +27,7 @@ def test_basic_wavelength(test_args):
     result = wavelength_law.calculate_wavelength(test_args.v1, test_args.period1)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
     result_wavelength = convert_to(result, units.meter).evalf(6)
-    assert result_wavelength == approx(2.95, 0.001)
+    assert_approx(result_wavelength, 2.95)
 
 
 def test_bad_velocity(test_args):

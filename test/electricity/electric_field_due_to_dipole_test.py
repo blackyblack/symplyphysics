@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -16,7 +17,7 @@ from symplyphysics.laws.electricity import electric_field_due_to_dipole as dipol
 
 @fixture(name="test_args")
 def test_args_fixture():
-    p = Quantity(0.5e-10 * units.coulomb * units.meter)
+    p = Quantity(5e-11 * units.coulomb * units.meter)
     z = Quantity(1 * units.meter)
     Args = namedtuple("Args", "p z")
     return Args(p=p, z=z)
@@ -26,7 +27,7 @@ def test_basic_law(test_args):
     result = dipole_field.calculate_electric_field(test_args.p, test_args.z)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force / units.charge)
     result_field = convert_to(result, units.newton / units.coulomb).evalf(3)
-    assert result_field == approx(0.899, 1e-3)
+    assert_approx(result_field, 0.899)
 
 
 def test_bad_dipole(test_args):

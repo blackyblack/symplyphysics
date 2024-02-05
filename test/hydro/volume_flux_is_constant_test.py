@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -34,7 +35,7 @@ def test_basic_flow_speed(test_args):
         test_args.speed_before, test_args.area_after)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.velocity)
     result_velocity = convert_to(result, units.meter / units.second).evalf(3)
-    assert result_velocity == approx(3, 0.001)
+    assert_approx(result_velocity, 3)
 
 
 def test_bad_tube_area_before(test_args):

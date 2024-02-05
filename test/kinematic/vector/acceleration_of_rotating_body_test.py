@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -44,7 +45,7 @@ def test_basic_law(test_args):
     for result_component, correct_component in zip(result.components, test_args.a_total.components):
         result_value = convert_to(result_component, units.meter / units.second**2).evalf(3)
         correct_value = convert_to(correct_component, units.meter / units.second**2).evalf(3)
-        assert result_value == approx(correct_value, 1e-3)
+        assert_approx(result_value, correct_value)
 
 
 def test_radial_law(test_args):
@@ -54,7 +55,7 @@ def test_radial_law(test_args):
     for result_component, correct_component in zip(result.components, test_args.a_r.components):
         result_value = convert_to(result_component, units.meter / units.second**2).evalf(3)
         correct_value = convert_to(correct_component, units.meter / units.second**2).evalf(3)
-        assert result_value == approx(correct_value, 1e-3)
+        assert_approx(result_value, correct_value)
 
 
 def test_tangential_law(test_args):
@@ -64,7 +65,7 @@ def test_tangential_law(test_args):
     for result_component, correct_component in zip(result.components, test_args.a_t.components):
         result_value = convert_to(result_component, units.meter / units.second**2).evalf(3)
         correct_value = convert_to(correct_component, units.meter / units.second**2).evalf(3)
-        assert result_value == approx(correct_value, 1e-3)
+        assert_approx(result_value, correct_value)
 
 
 def test_bad_acceleration(test_args):

@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     Quantity,
@@ -18,7 +19,7 @@ def test_args_fixture():
 
 def test_basic_mass_fraction(test_args):
     result = mass_fraction_law.calculate_mass_fraction(test_args.m_i, test_args.m)
-    assert result == approx(0.3333, 0.01)
+    assert_approx(result, 0.3333)
 
 
 def test_bad_mass_fraction(test_args):

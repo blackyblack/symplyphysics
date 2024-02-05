@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -29,8 +30,8 @@ def test_basic_braking_path(test_args):
     result = path_law.calculate_braking_path(test_args.mass, test_args.velocity,
         test_args.friction_force)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
-    result_voltage = convert_to(result, units.meter).evalf(5)
-    assert result_voltage == approx(50, 0.01)
+    result_path = convert_to(result, units.meter).evalf(5)
+    assert_approx(result_path, 50)
 
 
 def test_bad_mass(test_args):

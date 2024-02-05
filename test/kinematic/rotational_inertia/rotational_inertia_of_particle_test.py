@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -26,7 +27,7 @@ def test_basic_law(test_args):
     result = rotational_inertia_def.calculate_rotational_inertia(test_args.m, test_args.r)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.mass * units.length**2)
     result_value = convert_to(result, units.kilogram * units.meter**2).evalf(3)
-    assert result_value == approx(9e-3, 1e-3)
+    assert_approx(result_value, 9e-3)
 
 
 def test_bad_mass(test_args):

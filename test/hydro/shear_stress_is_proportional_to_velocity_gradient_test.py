@@ -1,6 +1,6 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from symplyphysics import errors, units, convert_to, Quantity, SI
+from pytest import fixture, raises
+from symplyphysics import assert_approx, errors, units, convert_to, Quantity, SI
 from symplyphysics.laws.hydro import shear_stress_is_proportional_to_velocity_gradient as newtons_law
 
 # Description
@@ -33,7 +33,7 @@ def test_basic_law(test_args):
     )
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.pressure)
     result_stress = convert_to(result, units.pascal).evalf(3)
-    assert result_stress == approx(1.78e-3, 1e-3)
+    assert_approx(result_stress, 1.78e-3)
 
 
 def test_bad_dynamic_viscosity(test_args):

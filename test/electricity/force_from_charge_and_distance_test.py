@@ -1,6 +1,6 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from symplyphysics import (errors, units, convert_to, Quantity, SI, prefixes)
+from pytest import fixture, raises
+from symplyphysics import (assert_approx, errors, units, convert_to, Quantity, SI, prefixes)
 from symplyphysics.laws.electricity import force_from_charge_and_distance as couloumb_law_scalar
 
 # Description. With help of online calculator at https://www.wolframalpha.com/widgets/gallery/view.jsp?id=5227fa9a19dce7ba113f50a405dcaf09
@@ -20,7 +20,7 @@ def test_basic_force(test_args):
     result = couloumb_law_scalar.calculate_force(test_args.q1, test_args.q2, test_args.r)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
     result_force = convert_to(result, units.newton).evalf(7)
-    assert result_force == approx(-0.0112344, 0.00001)
+    assert_approx(result_force, -0.0112344)
 
 
 def test_bad_charge(test_args):

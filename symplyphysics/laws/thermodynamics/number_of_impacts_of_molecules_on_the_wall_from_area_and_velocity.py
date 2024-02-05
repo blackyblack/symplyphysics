@@ -34,9 +34,13 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(molecules_concentration_=molecules_concentration, area_=area, velocity_projection_=velocity_projection, time_=time)
+@validate_input(molecules_concentration_=molecules_concentration,
+    area_=area,
+    velocity_projection_=velocity_projection,
+    time_=time)
 @validate_output(number_of_impacts)
-def calculate_number_of_impacts(molecules_concentration_: Quantity, area_: Quantity, velocity_projection_: Quantity, time_: Quantity) -> int:
+def calculate_number_of_impacts(molecules_concentration_: Quantity, area_: Quantity,
+    velocity_projection_: Quantity, time_: Quantity) -> int:
     result_expr = solve(law, number_of_impacts, dict=True)[0][number_of_impacts]
     result_number_of_impacts = result_expr.subs({
         molecules_concentration: molecules_concentration_,

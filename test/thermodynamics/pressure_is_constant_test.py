@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     Quantity,
@@ -23,7 +24,7 @@ def test_basic_volume(test_args):
     result = gay_lussacs_law.calculate_volume(test_args.t0, test_args.V0, test_args.t1)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.volume)
     result_volume = convert_to(result, units.liter).evalf(2)
-    assert result_volume == approx(2.0, 0.01)
+    assert_approx(result_volume, 2)
 
 
 def test_bad_temperature(test_args):

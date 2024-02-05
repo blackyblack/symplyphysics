@@ -1,7 +1,8 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from sympy import pi
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     Quantity,
@@ -12,7 +13,7 @@ from symplyphysics.laws.optics import bragg_diffraction_from_angle_diffraction_o
 
 # Description
 ## Let the diffraction order be 1, the wavelength is 700 nanometer, and the sliding angle is
-## 45 degree (pi / 4 radian). Then the distance between the crystal planes will be 494 nanometer.
+## 45 degree (pi / 4 radian). Then the distance between the crystal planes will be 494.9 nanometer.
 ## https://www.indigomath.ru//raschety/ZfLMDK.html
 
 
@@ -29,8 +30,8 @@ def test_basic_distance(test_args):
     result = distance_law.calculate_distance(test_args.diffraction_order, test_args.wavelength,
         test_args.angle)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
-    result_power = convert_to(result, units.nanometer).evalf(2)
-    assert result_power == approx(494, 0.1)
+    result_value = convert_to(result, units.nanometer).evalf(4)
+    assert_approx(result_value, 494.9)
 
 
 def test_bad_diffraction_order(test_args):

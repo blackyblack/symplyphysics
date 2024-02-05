@@ -1,6 +1,6 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from symplyphysics import (units, SI, convert_to, Quantity, errors)
+from pytest import fixture, raises
+from symplyphysics import (assert_approx, units, SI, convert_to, Quantity, errors)
 from symplyphysics.laws.electricity import electric_field_of_infinite_charged_plane as intensity_law
 
 # Description
@@ -20,7 +20,7 @@ def test_basic_electric_intensity(test_args):
     result = intensity_law.calculate_electric_intensity(test_args.surface_charge_density)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.voltage / units.length)
     result = convert_to(result, units.volt / units.meter).evalf(5)
-    assert result == approx(1.4e11, rel=0.01)
+    assert_approx(result, 1.412e11)
 
 
 def test_bad_surface_charge_density():

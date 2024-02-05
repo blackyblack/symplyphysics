@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture
+from pytest import fixture
 from symplyphysics import (
+    assert_approx,
     units,
     SI,
     convert_to,
@@ -24,5 +25,5 @@ def test_basic_speed(test_args):
     result = speed_law.calculate_wavespeed(test_args.relative_permittivity,
         test_args.relative_permeability)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.speed)
-    result_freq_1 = convert_to(result, units.meter / units.second).evalf(5)
-    assert result_freq_1 == approx(299792458, rel=1e-2)
+    result_speed = convert_to(result, units.meter / units.second).evalf(5)
+    assert_approx(result_speed, 299792458)

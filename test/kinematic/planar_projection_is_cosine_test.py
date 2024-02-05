@@ -1,6 +1,8 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
+from sympy import pi
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -25,12 +27,15 @@ def test_basic_projection(test_args):
     result = projection_law.calculate_projection(test_args.force_vector_amplitude,
         test_args.angle_between_vector_and_horizontal_axis)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
-    result_vector = convert_to(result, units.newton).evalf(2)
-    assert result_vector == approx(1.5, 0.01)
+    result_value = convert_to(result, units.newton).evalf(4)
+    assert_approx(result_value, 1.5)
 
 
 def test_projection_with_number(test_args):
-    projection_law.calculate_projection(test_args.force_vector_amplitude, 100)
+    result = projection_law.calculate_projection(test_args.force_vector_amplitude,
+        (pi / 3).evalf(4))
+    result_value = convert_to(result, units.newton).evalf(4)
+    assert_approx(result_value, 1.5)
 
 
 def test_bad_angle(test_args):

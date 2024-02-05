@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -26,8 +27,8 @@ def test_args_fixture():
 def test_basic_law(test_args):
     result = rocket_law.calculate_relative_velocity(test_args.r, test_args.m, test_args.a)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.velocity)
-    result_value = convert_to(result, units.kilometer / units.second).evalf(2)
-    assert result_value == approx(2.8, 1e-2)
+    result_value = convert_to(result, units.kilometer / units.second).evalf(4)
+    assert_approx(result_value, 2.809)
 
 
 def test_bad_consumption_rate(test_args):

@@ -1,8 +1,9 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from sympy import solve
 from sympy.vector import CoordSys3D
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -41,7 +42,7 @@ def test_basic_force_quantity(test_args):
     result = newton_third_law.calculate_force_reaction(test_args.F)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
     result_force = convert_to(result, units.newton).evalf(2)
-    assert result_force == approx(2.0, 0.01)
+    assert_approx(result_force, 2)
 
 
 def test_bad_force():

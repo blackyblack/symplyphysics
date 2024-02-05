@@ -1,17 +1,17 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from symplyphysics import (units, SI, convert_to, Quantity, errors)
+from pytest import fixture, raises
+from symplyphysics import (assert_approx, units, SI, convert_to, Quantity, errors)
 from symplyphysics.laws.hydro import velocity_of_liquid_flowing_out_of_pipe_from_pressure_and_density as velocity_law
 
 # Description
-## The density of water is 997 [kilogram / meter^3]. At a pressure of 500e3 pascal,
+## The density of water is 997 [kilogram / meter^3]. At a pressure of 5e5 pascal,
 ## the water velocity will be 31.67 meter per second.
 ## https://www.indigomath.ru//raschety/C7zPVP.html
 
 
 @fixture(name="test_args")
 def test_args_fixture():
-    pressure = Quantity(500e3 * units.pascal)
+    pressure = Quantity(5e5 * units.pascal)
     density = Quantity(997 * (units.kilogram / units.meter**3))
 
     Args = namedtuple("Args", ["pressure", "density"])
@@ -22,7 +22,7 @@ def test_basic_velocity(test_args):
     result = velocity_law.calculate_velocity(test_args.pressure, test_args.density)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.velocity)
     result = convert_to(result, units.meter / units.second).evalf(5)
-    assert result == approx(31.67, rel=0.01)
+    assert_approx(result, 31.67)
 
 
 def test_bad_pressure(test_args):

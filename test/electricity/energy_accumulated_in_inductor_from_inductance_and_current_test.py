@@ -1,6 +1,6 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from symplyphysics import (errors, units, convert_to, Quantity, SI, prefixes)
+from pytest import fixture, raises
+from symplyphysics import (assert_approx, errors, units, convert_to, Quantity, SI, prefixes)
 from symplyphysics.laws.electricity import energy_accumulated_in_inductor_from_inductance_and_current as inductor_law
 
 # Description
@@ -19,8 +19,8 @@ def test_args_fixture():
 def test_basic_energy(test_args):
     result = inductor_law.calculate_accumulated_energy(test_args.I, test_args.C)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_power = convert_to(result, units.joule).evalf(5)
-    assert result_power == approx(0.01875, 0.00001)
+    result_energy = convert_to(result, units.joule).evalf(5)
+    assert_approx(result_energy, 0.01875)
 
 
 def test_bad_inductance(test_args):

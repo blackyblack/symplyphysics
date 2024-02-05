@@ -1,6 +1,6 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from symplyphysics import (units, SI, convert_to, Quantity, errors)
+from pytest import fixture, raises
+from symplyphysics import (assert_approx, units, SI, convert_to, Quantity, errors)
 from symplyphysics.laws.electricity import capacity_of_spherical_capacitor as capacity_law
 
 # Description
@@ -26,7 +26,7 @@ def test_basic_capacity(test_args):
         test_args.first_radius, test_args.second_radius)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.capacitance)
     result = convert_to(result, units.farad).evalf(5)
-    assert result == approx(8.34e-12, rel=0.01)
+    assert_approx(result, 8.34e-12)
 
 
 def test_bad_relative_permittivity(test_args):
@@ -51,4 +51,4 @@ def test_swap_radius(test_args):
         test_args.second_radius, test_args.first_radius)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.capacitance)
     result = convert_to(result, units.farad).evalf(5)
-    assert result == approx(8.34e-12, rel=0.01)
+    assert_approx(result, 8.34e-12)

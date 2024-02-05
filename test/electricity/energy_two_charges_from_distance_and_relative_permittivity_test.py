@@ -1,6 +1,6 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from symplyphysics import (units, SI, convert_to, Quantity, errors)
+from pytest import fixture, raises
+from symplyphysics import (assert_approx, units, SI, convert_to, Quantity, errors)
 from symplyphysics.laws.electricity import energy_two_charges_from_distance_and_relative_permittivity as energy_law
 
 # Description
@@ -28,7 +28,7 @@ def test_basic_energy(test_args):
         test_args.charge_1, test_args.charge_2)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
     result = convert_to(result, units.joule).evalf(5)
-    assert result == approx(4.49e9, rel=0.01)
+    assert_approx(result, 4.49e9)
 
 
 def test_bad_relative_permittivity(test_args):

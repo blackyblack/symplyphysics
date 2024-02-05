@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -25,7 +26,7 @@ def test_basic_pressure(test_args):
     result = dynamic_pressure_formula.calculate_pressure(test_args.ro, test_args.v)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.pressure)
     result_velocity = convert_to(result, units.pascal).evalf(5)
-    assert result_velocity == approx(20, 0.0001)
+    assert_approx(result_velocity, 20)
 
 
 def test_bad_density(test_args):

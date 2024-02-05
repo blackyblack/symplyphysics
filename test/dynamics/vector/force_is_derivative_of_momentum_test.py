@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     units,
     errors,
     convert_to,
@@ -38,7 +39,7 @@ def test_basic_law(test_args):
     assert SI.get_dimension_system().equivalent_dims(result_force.dimension, units.force)
     for result_component, correct_value in zip(result_force.components, (4, 2, 2)):
         result_value = convert_to(result_component, units.newton).evalf(3)
-        assert result_value == approx(correct_value, 1e-3)
+        assert_approx(result_value, correct_value)
 
 
 def test_bad_momenta(test_args):

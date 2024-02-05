@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -22,7 +23,7 @@ def test_basic_density(test_args):
     result = density_from_mass_volume.calculate_density(test_args.m, test_args.V)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.mass / units.volume)
     result_density = convert_to(result, density_from_mass_volume.definition_units_SI).evalf(2)
-    assert result_density == approx(0.3333, 0.01)
+    assert_approx(result_density, 0.3333)
 
 
 def test_bad_mass(test_args):

@@ -1,6 +1,6 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from symplyphysics import (units, SI, convert_to, Quantity, errors)
+from pytest import fixture, raises
+from symplyphysics import (assert_approx, units, SI, convert_to, Quantity, errors)
 from symplyphysics.laws.condensed_matter import drift_velocity_of_charge_carriers as velocity_law
 
 # Description
@@ -11,7 +11,7 @@ from symplyphysics.laws.condensed_matter import drift_velocity_of_charge_carrier
 @fixture(name="test_args")
 def test_args_fixture():
     charge_carriers_mobility = Quantity(0.17 * (units.meter**2 / units.volt / units.second))
-    electric_intensity = Quantity(5.5e5 * (units.volt / units.meter))
+    electric_intensity = Quantity(5.88e5 * (units.volt / units.meter))
 
     Args = namedtuple("Args", ["charge_carriers_mobility", "electric_intensity"])
     return Args(charge_carriers_mobility=charge_carriers_mobility,
@@ -23,7 +23,7 @@ def test_basic_drift_velocity(test_args):
         test_args.electric_intensity)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length / units.time)
     result = convert_to(result, units.meter / units.second).evalf(5)
-    assert result == approx(1e5, rel=0.1)
+    assert_approx(result, 1e5)
 
 
 def test_bad_charge_carriers_mobility(test_args):

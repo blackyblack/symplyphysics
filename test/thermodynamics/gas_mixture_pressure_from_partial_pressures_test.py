@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     Quantity,
@@ -25,7 +26,7 @@ def test_basic_gas_mixture_pressure(test_args):
         [test_args.p1, test_args.p2, test_args.p3])
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.pressure)
     result_pressure = convert_to(result, units.pascal).evalf(3)
-    assert result_pressure == approx(700, 0.001)
+    assert_approx(result_pressure, 700)
 
 
 def test_array_with_bad_element(test_args):

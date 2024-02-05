@@ -1,7 +1,8 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from sympy import pi
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -28,7 +29,7 @@ def test_basic_displacement(test_args):
     result = oscillator.calculate_displacement(test_args.A, test_args.w, test_args.t)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
     result_frequency = convert_to(result, units.meter).evalf(4)
-    assert result_frequency == approx(-20, 0.01)
+    assert_approx(result_frequency, -20)
 
 
 def test_bad_amplitude(test_args):

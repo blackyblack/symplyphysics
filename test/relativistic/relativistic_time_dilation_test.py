@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     Quantity,
@@ -8,7 +9,6 @@ from symplyphysics import (
     convert_to,
 )
 from symplyphysics.laws.relativistic import relativistic_time_dilation
-
 
 # Using calculations from the paper: https://www.omnicalculator.com/physics/time-dilation
 
@@ -26,7 +26,7 @@ def test_basic_time(test_args):
         test_args.velocity)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.time)
     result_time = convert_to(result, units.second).evalf(4)
-    assert result_time == approx(13.423, 0.01)
+    assert_approx(result_time, 13.423)
 
 
 def test_bad_time(test_args):

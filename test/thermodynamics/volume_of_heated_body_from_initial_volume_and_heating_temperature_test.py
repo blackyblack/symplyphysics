@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     Quantity,
@@ -30,7 +31,7 @@ def test_basic_volume(test_args):
         test_args.finish_temperature, test_args.start_temperature)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.volume)
     result_volume = convert_to(result, units.liter).evalf(5)
-    assert result_volume == approx(20.4, 0.001)
+    assert_approx(result_volume, 20.4)
 
 
 def test_bad_coefficient(test_args):

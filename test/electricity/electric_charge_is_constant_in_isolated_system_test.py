@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -20,8 +21,8 @@ def test_args_fixture():
 def test_basic_charge_conservation(test_args):
     result = charge_law.calculate_charge_after(test_args.Qs)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.charge)
-    result_charge = convert_to(result, units.coulomb).evalf(2)
-    assert result_charge == approx(1.0, 0.001)
+    result_charge = convert_to(result, units.coulomb).evalf(4)
+    assert_approx(result_charge, 1)
 
 
 def test_bad_charge():

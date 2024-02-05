@@ -1,7 +1,8 @@
 from collections import namedtuple
 from sympy import pi
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -30,14 +31,14 @@ def test_basic_law_float_angle(test_args):
     result = torque_def.calculate_torque(test_args.F, test_args.r, test_args.phi_float)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force * units.length)
     result_torque = convert_to(result, units.newton * units.meter).evalf(3)
-    assert result_torque == approx(0.075, 1e-4)
+    assert_approx(result_torque, 0.075)
 
 
 def test_basic_law_quantity_angle(test_args):
     result = torque_def.calculate_torque(test_args.F, test_args.r, test_args.phi_quantity)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force * units.length)
     result_torque = convert_to(result, units.newton * units.meter).evalf(3)
-    assert result_torque == approx(0.075, 1e-4)
+    assert_approx(result_torque, 0.075)
 
 
 def test_bad_force(test_args):

@@ -1,7 +1,8 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from sympy import pi
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -29,7 +30,7 @@ def test_basic_velocity(test_args):
         test_args.t)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, 1 / units.time)
     result_velocity = convert_to(result, angular_velocity_def.definition_units_SI).evalf(2)
-    assert result_velocity == approx(0.63, 0.01)
+    assert_approx(result_velocity, (pi / 5).evalf(4))
 
 
 def test_velocity_with_number(test_args):

@@ -1,11 +1,12 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
     errors,
     units,
     convert_to,
     Quantity,
     SI,
+    assert_approx,
 )
 from symplyphysics.laws.chemistry import atomic_number_density_from_material_density_atomic_weight as atomic_number_density
 
@@ -24,7 +25,7 @@ def test_basic_number_density(test_args):
     result = atomic_number_density.calculate_atomic_number_density(test_args.p, test_args.M)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, 1 / units.volume)
     result_number_density = convert_to(result, 1 / units.centimeter**3).evalf(6)
-    assert result_number_density == approx(2.75e22, 0.001)
+    assert_approx(result_number_density, 2.75e22)
 
 
 def test_bad_density(test_args):

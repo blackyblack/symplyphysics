@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -26,7 +27,7 @@ def test_basic_current(test_args):
     result = ohms_law.calculate_current(test_args.V, test_args.R)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.current)
     result_current = convert_to(result, units.ampere).evalf(2)
-    assert result_current == approx(1.5, 0.01)
+    assert_approx(result_current, 1.5)
 
 
 def test_bad_voltage(test_args):

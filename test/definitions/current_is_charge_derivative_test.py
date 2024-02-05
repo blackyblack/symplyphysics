@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -25,7 +26,7 @@ def test_basic_current(test_args):
     result = current_def.calculate_current(test_args.Q0, test_args.Q1, test_args.t)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.current)
     result_current = convert_to(result, current_def.definition_units_SI).evalf(2)
-    assert result_current == approx(4, 0.01)
+    assert_approx(result_current, 4)
 
 
 def test_current_with_bad_charge(test_args):

@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -25,7 +26,7 @@ def test_basic_velocity(test_args):
     result = torricellis_formula.calculate_velocity(test_args.h)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.velocity)
     result_velocity = convert_to(result, units.meter / units.second).evalf(5)
-    assert result_velocity == approx(7.67, 0.0001)
+    assert_approx(result_velocity, 7.67)
 
 
 def test_bad_height():

@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -24,7 +25,7 @@ def test_basic_conductivity(test_args):
     result = conductivity_def.calculate_conductivity(test_args.R)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.conductance)
     result_conductivity = convert_to(result, conductivity_def.definition_units_SI).evalf(2)
-    assert result_conductivity == approx(0.5, 0.001)
+    assert_approx(result_conductivity, 0.5)
 
 
 def test_bad_resistance():

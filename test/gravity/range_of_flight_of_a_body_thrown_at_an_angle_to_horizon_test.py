@@ -1,12 +1,12 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from sympy import pi
-from symplyphysics import (units, SI, convert_to, Quantity, errors)
+from symplyphysics import (assert_approx, units, SI, convert_to, Quantity, errors)
 from symplyphysics.laws.gravity import range_of_flight_of_a_body_thrown_at_an_angle_to_horizon as range_law
 
 # Description
 ## Let the initial velocity be 3 meter per second, the angle of the throw is 45 degree (pi / 4 radian),
-## and the acceleration of gravity is 9.8 [meter / second^2]. Then the throw range will be 0.92 meter.
+## and the acceleration of gravity is 9.8 [meter / second^2]. Then the throw range will be 0.918 meter.
 ## https://www.omnicalculator.com/physics/range-projectile-motion
 
 
@@ -26,7 +26,7 @@ def test_basic_range(test_args):
     )
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
     result = convert_to(result, units.meter).evalf(5)
-    assert result == approx(0.92, rel=0.01)
+    assert_approx(result, 0.918)
 
 
 def test_bad_initial_velocity(test_args):

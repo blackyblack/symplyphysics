@@ -1,6 +1,6 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from symplyphysics import (errors, units, convert_to, Quantity, SI, QuantityVector)
+from pytest import fixture, raises
+from symplyphysics import (assert_approx, errors, units, convert_to, Quantity, SI, QuantityVector)
 from symplyphysics.laws.dynamics.vector import torque_vector_of_twisting_force as torque_def
 
 # Description
@@ -30,7 +30,7 @@ def test_basic_law(test_args):
         assert SI.get_dimension_system().equivalent_dims(result_component.dimension,
             units.force * units.length)
         result_value = convert_to(result_component, units.newton * units.meter).evalf(3)
-        assert result_value == approx(correct_value, 1e-3)
+        assert_approx(result_value, correct_value)
 
 
 def test_bad_force(test_args):

@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -28,8 +29,8 @@ def test_basic_voltage(test_args):
     result = rc_node.calculate_capacitor_voltage(test_args.V0, test_args.C, test_args.R,
         test_args.T)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.voltage)
-    result_voltage = convert_to(result, units.volt).evalf(2)
-    assert result_voltage == approx(1.89, 0.01)
+    result_voltage = convert_to(result, units.volt).evalf(4)
+    assert_approx(result_voltage, 1.896)
 
 
 def test_bad_voltage(test_args):

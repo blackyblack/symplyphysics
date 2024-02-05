@@ -1,7 +1,8 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from sympy import cos, pi, sin
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -33,7 +34,7 @@ def test_basic_work(test_args):
     result = work_law.calculate_work(test_args.F, test_args.S)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
     result_work = convert_to(result, units.joule).evalf(4)
-    assert result_work == approx(150, 0.01)
+    assert_approx(result_work, 150)
 
 
 def test_bad_force(test_args):

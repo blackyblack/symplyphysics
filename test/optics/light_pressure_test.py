@@ -1,6 +1,6 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from symplyphysics import (units, SI, convert_to, Quantity, errors, prefixes)
+from pytest import fixture, raises
+from symplyphysics import (assert_approx, units, SI, convert_to, Quantity, errors, prefixes)
 from symplyphysics.laws.optics import light_pressure as pressure_law
 
 # Description
@@ -23,7 +23,7 @@ def test_basic_pressure(test_args):
     result = pressure_law.calculate_pressure(test_args.intensity, test_args.reflection_coefficient)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.pressure)
     result = convert_to(result, prefixes.nano * units.pascal).evalf(5)
-    assert result == approx(4, rel=0.01)
+    assert_approx(result, 4)
 
 
 def test_bad_intensity(test_args):

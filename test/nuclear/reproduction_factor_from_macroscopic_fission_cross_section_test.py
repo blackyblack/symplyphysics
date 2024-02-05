@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     Quantity,
@@ -23,7 +24,7 @@ def test_args_fixture():
 def test_basic_reproduction_factor(test_args):
     result = reproduction_factor.calculate_reproduction_factor(test_args.v, test_args.Sf,
         test_args.Sa)
-    assert result == approx(1.96, 0.01)
+    assert_approx(result, 1.96)
 
 
 def test_bad_macroscopic_cross_section(test_args):

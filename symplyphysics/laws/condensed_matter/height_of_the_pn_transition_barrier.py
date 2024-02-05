@@ -13,7 +13,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## n is concentration of intrinsic charge carriers,
 ## q - charge of electron or hole,
 ## Nd - concentration of donors,
-## Nd - concentration of acceptors,
+## Na - concentration of acceptors,
 ## k - Boltzmann constant,
 ## T - temperature.
 

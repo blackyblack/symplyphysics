@@ -1,6 +1,6 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from symplyphysics import Quantity, units, errors
+from pytest import fixture, raises
+from symplyphysics import assert_approx, Quantity, units, errors
 from symplyphysics.laws.hydro import reynolds_number
 
 # Description
@@ -21,7 +21,7 @@ def test_args_fixture():
 def test_reynolds_number(test_args):
     result = reynolds_number.calculate_reynolds_number(test_args.d, test_args.rho, test_args.v,
         test_args.mu)
-    assert result == approx(111856.823, 0.001)
+    assert_approx(result, 111856.823)
 
 
 def test_bad_velocity(test_args):

@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -33,7 +34,7 @@ def test_basic_another_coordinate(test_args):
         test_args.velocity, test_args.time_first_frame)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
     result = convert_to(result, units.meter).evalf(5)
-    assert result == approx(-7, 0.01)
+    assert_approx(result, -7)
 
 
 def test_bad_coordinate(test_args):

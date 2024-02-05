@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -26,7 +27,7 @@ def test_hydrostatic_pressure(test_args):
     result = calculate_hydrostatic_pressure(test_args.rho, test_args.h)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.pressure)
     result_pressure = convert_to(result, units.pascal).evalf(5)
-    assert result_pressure == approx(98100, 0.001)
+    assert_approx(result_pressure, 98100)
 
 
 def test_bad_density(test_args):

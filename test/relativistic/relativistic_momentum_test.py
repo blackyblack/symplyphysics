@@ -1,6 +1,6 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from symplyphysics import (units, SI, convert_to, Quantity, errors)
+from pytest import fixture, raises
+from symplyphysics import (assert_approx, units, SI, convert_to, Quantity, errors)
 from symplyphysics.laws.relativistic import relativistic_momentum as momentum_law
 
 # Description
@@ -22,7 +22,7 @@ def test_basic_momentum(test_args):
     result = momentum_law.calculate_momentum(test_args.mass, test_args.velocity)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.momentum)
     result = convert_to(result, units.kilogram * units.meter / units.second).evalf(5)
-    assert result == approx(300, rel=0.01)
+    assert_approx(result, 300)
 
 
 def test_bad_mass(test_args):

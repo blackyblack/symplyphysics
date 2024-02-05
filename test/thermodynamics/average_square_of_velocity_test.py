@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     Quantity,
@@ -16,7 +17,7 @@ from symplyphysics.laws.thermodynamics import average_square_of_velocity as velo
 
 @fixture(name="test_args")
 def test_args_fixture():
-    m = Quantity(3.32 * 1E-27 * units.kilogram)
+    m = Quantity(3.32e-27 * units.kilogram)
     t = Quantity(273 * units.kelvin)
     Args = namedtuple("Args", ["m", "t"])
     return Args(m=m, t=t)
@@ -26,7 +27,7 @@ def test_basic_average_square_velocity(test_args):
     result = velocity_law.calculate_average_square_velocity(test_args.t, test_args.m)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.velocity**2)
     result_average_square_velocity = convert_to(result, (units.meter / units.second)**2).evalf(5)
-    assert result_average_square_velocity == approx(3.403 * 1E6, 0.001)
+    assert_approx(result_average_square_velocity, 3.403e6)
 
 
 def test_bad_mass(test_args):

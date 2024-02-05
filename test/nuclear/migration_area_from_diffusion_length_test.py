@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -25,7 +26,7 @@ def test_basic_migration_area(test_args):
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.area)
     result_area = convert_to(result, units.centimeter**2).evalf(2)
     # water migration area = 78.8 cm^2
-    assert result_area == approx(78.8, 0.01)
+    assert_approx(result_area, 78.8)
 
 
 def test_bad_diffusion_area(test_args):
