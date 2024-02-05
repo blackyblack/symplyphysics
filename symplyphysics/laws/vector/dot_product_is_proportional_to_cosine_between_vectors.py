@@ -1,10 +1,5 @@
 from sympy import Eq, Symbol as SymSymbol, cos, solve
-from symplyphysics import (
-    Quantity,
-    print_expression,
-    convert_to,
-)
-from symplyphysics.core.dimensions import ScalarValue
+from symplyphysics import Quantity, print_expression
 from symplyphysics.core.symbols.quantities import scale_factor
 
 # Description:
