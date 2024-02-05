@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     units,
     errors,
     convert_to,
@@ -36,7 +37,7 @@ def test_basic_electric_field_definition(test_args):
     for result_component, correct_component in zip(result.components, test_args.E.components):
         result_value = convert_to(result_component, units.newton / units.coulomb).evalf(2)
         correct_value = convert_to(correct_component, units.newton / units.coulomb).evalf(2)
-        assert result_value == approx(correct_value, 1e-2)
+        assert_approx(result_value, correct_value)
 
 
 def test_basic_electrostatic_force_law(test_args):
@@ -46,7 +47,7 @@ def test_basic_electrostatic_force_law(test_args):
     for result_component, correct_component in zip(result.components, test_args.F.components):
         result_value = convert_to(result_component, units.newton).evalf(2)
         correct_value = convert_to(correct_component, units.newton).evalf(2)
-        assert result_value == approx(correct_value, 1e-2)
+        assert_approx(result_value, correct_value)
 
 
 def test_bad_force_in_electric_field(test_args):

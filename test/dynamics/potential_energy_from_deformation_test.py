@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -26,7 +27,7 @@ def test_basic_energy(test_args):
     result = hookes_law.calculate_energy(test_args.k, test_args.x)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
     result_energy = convert_to(result, units.joule).evalf(5)
-    assert result_energy == approx(0.02, 0.0001)
+    assert_approx(result_energy, 0.02)
 
 
 def test_bad_elastic_koefficient(test_args):

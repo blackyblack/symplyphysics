@@ -1,6 +1,6 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from symplyphysics import (units, SI, convert_to, Quantity, errors)
+from pytest import fixture, raises
+from symplyphysics import (assert_approx, units, SI, convert_to, Quantity, errors)
 from symplyphysics.laws.electricity import mass_of_the_substance_deposited_on_electrode as mass_law
 
 # Description
@@ -23,7 +23,7 @@ def test_basic_mass(test_args):
     result = mass_law.calculate_mass(test_args.equivalent, test_args.current, test_args.time)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.mass)
     result = convert_to(result, units.gram).evalf(5)
-    assert result == approx(2.38, rel=0.01)
+    assert_approx(result, 2.38)
 
 
 def test_bad_equivalent(test_args):

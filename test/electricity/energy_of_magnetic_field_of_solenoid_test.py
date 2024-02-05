@@ -1,7 +1,8 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from sympy.physics.units import prefixes
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -12,7 +13,7 @@ from symplyphysics.laws.electricity import energy_of_magnetic_field_of_solenoid 
 
 # Description
 ## Magnetic permeability of solenoid core is 120, intensity of magnetic field is 5 ampere per meter,
-## the volume of the solenoid is 0.1 [meter^3]. Then energy of solenoid will be equal to 190 microjoule.
+## the volume of the solenoid is 0.1 [meter^3]. Then energy of solenoid will be equal to 188.5 microjoule.
 ## https://www.indigomath.ru//raschety/Pwhwei.html
 
 
@@ -30,8 +31,8 @@ def test_basic_energy(test_args):
     result = energy_law.calculate_energy(test_args.relative_permeability, test_args.intensity,
         test_args.volume)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_voltage = convert_to(result, prefixes.micro * units.joule).evalf(5)
-    assert result_voltage == approx(190, 0.01)
+    result_energy = convert_to(result, prefixes.micro * units.joule).evalf(5)
+    assert_approx(result_energy, 188.5)
 
 
 def test_bad_relative_permeability(test_args):

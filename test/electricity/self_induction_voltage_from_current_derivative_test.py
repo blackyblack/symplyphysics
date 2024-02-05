@@ -1,6 +1,6 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from symplyphysics import (errors, units, convert_to, Quantity, SI, prefixes)
+from pytest import fixture, raises
+from symplyphysics import (assert_approx, errors, units, convert_to, Quantity, SI, prefixes)
 from symplyphysics.laws.electricity import self_induction_voltage_from_current_derivative as self_induction_def
 
 # Description
@@ -22,8 +22,8 @@ def test_basic_voltage(test_args):
     result = self_induction_def.calculate_voltage(test_args.L, test_args.I0, test_args.I1,
         test_args.t)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.voltage)
-    result_current = convert_to(result, self_induction_def.definition_units_SI).evalf(6)
-    assert result_current == approx(-0.00025, 0.000001)
+    result_voltage = convert_to(result, self_induction_def.definition_units_SI).evalf(6)
+    assert_approx(result_voltage, -0.00025)
 
 
 def test_voltage_with_bad_induction(test_args):

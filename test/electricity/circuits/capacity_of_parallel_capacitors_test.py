@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -25,8 +26,8 @@ def test_args_fixture():
 def test_basic_capacitance(test_args):
     result = parallel_capacitor.calculate_parallel_capacitance([test_args.C1, test_args.C2])
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.capacitance)
-    result_conductance = convert_to(result, units.farad).evalf(3)
-    assert result_conductance == approx(5, 0.001)
+    result_capacitance = convert_to(result, units.farad).evalf(3)
+    assert_approx(result_capacitance, 5)
 
 
 def test_three_capacitors_array(test_args):
@@ -34,7 +35,7 @@ def test_three_capacitors_array(test_args):
     result = parallel_capacitor.calculate_parallel_capacitance([test_args.C1, test_args.C2, C3])
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.capacitance)
     result_capacitance = convert_to(result, units.farad).evalf(3)
-    assert result_capacitance == approx(10, 0.01)
+    assert_approx(result_capacitance, 10)
 
 
 def test_bad_capacitance(test_args):

@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -25,7 +26,7 @@ def test_basic_power(test_args):
     result = power_def.calculate_power(test_args.Q, test_args.t)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.power)
     result_power = convert_to(result, units.watt).evalf(5)
-    assert result_power == approx(571, 0.001)
+    assert_approx(result_power, 571)
 
 
 def test_bad_energy(test_args):

@@ -1,12 +1,12 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from sympy.physics.units.systems import SI
-
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     Quantity,
     convert_to,
+    SI,
 )
 from symplyphysics.laws.dynamics import moment_of_force_from_moment_of_inertia_and_angular_acceleration as moment_force_law
 
@@ -23,7 +23,7 @@ def test_basic_moment_of_force(test_args):
     result = moment_force_law.calculate_moment_of_force(test_args.i, test_args.epsilon)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force * units.length)
     result_moment_of_force = convert_to(result, units.newtons * units.meters).evalf(2)
-    assert result_moment_of_force == approx(3, 0.01)
+    assert_approx(result_moment_of_force, 3)
 
 
 def test_bad_moment_of_inertia(test_args):

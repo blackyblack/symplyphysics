@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -26,7 +27,7 @@ def test_basic_period(test_args):
     result = spring_period.calculate_period(test_args.k, test_args.m)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.time)
     result_period = convert_to(result, units.second).evalf(2)
-    assert result_period == approx(12.57, 0.01)
+    assert_approx(result_period, 12.57)
 
 
 def test_bad_elascticity(test_args):

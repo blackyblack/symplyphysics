@@ -1,11 +1,11 @@
 from collections import namedtuple
 from sympy import re, im
-from pytest import approx, fixture, raises
-from symplyphysics import (errors, units, convert_to, Quantity, SI)
+from pytest import fixture, raises
+from symplyphysics import (assert_approx, errors, units, convert_to, Quantity, SI)
 from symplyphysics.laws.electricity import coil_impedance_from_inductivity_and_frequency as coil_impedance_law
 
 # Description
-## Assert we have a coil with 5H inductivity. In 50Hz (314.159 rad/s) circuit impedance of this coil should be 1575.8 Ohm.
+## Assert we have a coil with 5H inductivity. In 50Hz (314.159 rad/s) circuit impedance of this coil should be 1570.8 Ohm.
 ## (https://www.translatorscafe.com/unit-converter/ru-RU/calculator/inductor-impedance/)
 
 
@@ -24,7 +24,7 @@ def test_basic_impedance(test_args):
     result_re = re(result_impedance)
     result_im = im(result_impedance)
     assert result_re == 0
-    assert result_im == approx(1575.8, 0.1)
+    assert_approx(result_im, 1570.8)
 
 
 def test_bad_inductivity(test_args):

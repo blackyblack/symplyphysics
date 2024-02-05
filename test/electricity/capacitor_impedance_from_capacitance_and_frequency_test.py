@@ -1,7 +1,7 @@
 from collections import namedtuple
 from sympy import re, im
-from pytest import approx, fixture, raises
-from symplyphysics import (errors, units, convert_to, Quantity, SI)
+from pytest import fixture, raises
+from symplyphysics import (assert_approx, errors, units, convert_to, Quantity, SI)
 from symplyphysics.laws.electricity import capacitor_impedance_from_capacitance_and_frequency as capacitor_impedance_law
 
 # Description
@@ -24,7 +24,7 @@ def test_basic_impedance(test_args):
     result_re = re(result_impedance)
     result_im = im(result_impedance)
     assert result_re == 0
-    assert result_im == approx(-0.63662, 0.001)
+    assert_approx(result_im, -0.63662)
 
 
 def test_bad_capacitance(test_args):

@@ -1,6 +1,6 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from symplyphysics import (errors, units, convert_to, Quantity, SI, prefixes)
+from pytest import fixture, raises
+from symplyphysics import (assert_approx, errors, units, convert_to, Quantity, SI, prefixes)
 from symplyphysics.laws.electricity import energy_accumulated_in_capacitor_from_capacitance_and_voltage as capacitor_law
 
 # Description
@@ -19,8 +19,8 @@ def test_args_fixture():
 def test_basic_energy(test_args):
     result = capacitor_law.calculate_accumulated_energy(test_args.C, test_args.V)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_power = convert_to(result, units.joule).evalf(5)
-    assert result_power == approx(0.011, 0.00001)
+    result_energy = convert_to(result, units.joule).evalf(5)
+    assert_approx(result_energy, 0.011)
 
 
 def test_bad_capacitance(test_args):

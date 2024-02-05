@@ -1,6 +1,6 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from symplyphysics import (units, SI, convert_to, Quantity, errors)
+from pytest import fixture, raises
+from symplyphysics import (assert_approx, units, SI, convert_to, Quantity, errors)
 from symplyphysics.laws.electricity import energy_density_of_electric_field_depends_on_strength_and_permittivity as energy_density_law
 
 # Description
@@ -23,7 +23,7 @@ def test_basic_energy_density(test_args):
         test_args.electric_intensity)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy / units.volume)
     result = convert_to(result, units.joule / units.meter**3).evalf(5)
-    assert result == approx(2.2e-9, rel=0.01)
+    assert_approx(result, 2.2e-9)
 
 
 def test_bad_relative_permittivity(test_args):

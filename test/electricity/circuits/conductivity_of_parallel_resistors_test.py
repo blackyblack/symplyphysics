@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -26,7 +27,7 @@ def test_basic_conductivity(test_args):
     result = parallel_resistor.calculate_parallel_conductance([test_args.S1, test_args.S2])
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.conductance)
     result_conductance = convert_to(result, units.siemens).evalf(3)
-    assert result_conductance == approx(0.75, 0.001)
+    assert_approx(result_conductance, 0.75)
 
 
 def test_three_resistors_array(test_args):
@@ -34,7 +35,7 @@ def test_three_resistors_array(test_args):
     result = parallel_resistor.calculate_parallel_conductance([test_args.S1, test_args.S2, S3])
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.conductance)
     result_conductance = convert_to(result, units.siemens).evalf(3)
-    assert result_conductance == approx(1.75, 0.01)
+    assert_approx(result_conductance, 1.75)
 
 
 def test_bad_conductivity(test_args):

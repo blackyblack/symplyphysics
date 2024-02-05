@@ -1,6 +1,6 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from symplyphysics import (errors, units, convert_to, Quantity, SI, dimensionless)
+from pytest import fixture, raises
+from symplyphysics import (assert_approx, errors, units, convert_to, Quantity, SI, dimensionless)
 from symplyphysics.laws.electricity import power_factor_from_active_and_full_power as power_factor_law
 
 # Description
@@ -18,8 +18,8 @@ def test_args_fixture():
 def test_basic_power_factor(test_args):
     result = power_factor_law.calculate_power_factor(test_args.P, test_args.S)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, dimensionless)
-    result_current = convert_to(result, dimensionless).evalf(6)
-    assert result_current == approx(0.3, 0.001)
+    result_factor = convert_to(result, dimensionless).evalf(6)
+    assert_approx(result_factor, 0.3)
 
 
 def test_bad_power(test_args):

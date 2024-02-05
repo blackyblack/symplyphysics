@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -26,7 +27,7 @@ def test_basic_law(test_args):
     result = work_law.calculate_work(test_args.tau, test_args.theta)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
     result_value = convert_to(result, units.joule).evalf(3)
-    assert result_value == approx(9.0, 1e-3)
+    assert_approx(result_value, 9)
 
 
 def test_bad_torque(test_args):
