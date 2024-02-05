@@ -33,7 +33,7 @@ def test_args_fixture():
     return Args(r=r, p=p)
 
 
-def test_basic_law(test_args):
+def test_definition(test_args):
     result = angular_momentum_def.calculate_angular_momentum(test_args.r, test_args.p)
     assert len(result.components) == 3
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length * units.momentum)

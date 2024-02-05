@@ -18,7 +18,7 @@ from symplyphysics import (
 ## cross(a, b) - cross product between vectors a and b
 
 
-def angular_momentum_law(position_vector_: Vector, linear_momentum_: Vector) -> Vector:
+def angular_momentum_definition(position_vector_: Vector, linear_momentum_: Vector) -> Vector:
     return cross_cartesian_vectors(position_vector_, linear_momentum_)
 
 
@@ -27,5 +27,5 @@ def angular_momentum_law(position_vector_: Vector, linear_momentum_: Vector) -> 
 def calculate_angular_momentum(
     position_vector_: QuantityVector, linear_momentum_: QuantityVector
 ) -> QuantityVector:
-    result = angular_momentum_law(position_vector_, linear_momentum_)
+    result = angular_momentum_definition(position_vector_, linear_momentum_)
     return QuantityVector(result.components, position_vector_.coordinate_system)
