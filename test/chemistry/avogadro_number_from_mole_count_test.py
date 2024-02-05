@@ -4,8 +4,8 @@ from symplyphysics import (
     errors,
     units,
     Quantity,
-    assert_approx,
 )
+from symplyphysics.core.approx import approx_equal_numbers
 from symplyphysics.laws.chemistry import avogadro_number_from_mole_count
 
 
@@ -19,7 +19,7 @@ def test_args_fixture():
 def test_basic_particles_count(test_args):
     result = avogadro_number_from_mole_count.calculate_particles_count(test_args.M)
     assert isinstance(result, int)
-    assert_approx(result, 3.011e24)
+    assert approx_equal_numbers(result, 3.011e24)
 
 
 def test_bad_mole_count():
