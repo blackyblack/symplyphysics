@@ -32,6 +32,9 @@ def print_law() -> str:
     return print_expression(law)
 
 
+# TODO: derive law from [its vector counterpart](./vector/instantaneous_power_is_force_dot_velocity.py)
+
+
 @validate_input(force_=force, speed_=speed, angle_=angle)
 @validate_output(power)
 def calculate_power(force_: Quantity, speed_: Quantity, angle_: Quantity | float) -> Quantity:
