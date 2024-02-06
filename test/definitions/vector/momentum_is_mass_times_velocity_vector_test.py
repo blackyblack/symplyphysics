@@ -1,9 +1,8 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from sympy import cos, pi, sin
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     units,
-    convert_to,
     Quantity,
     SI,
     errors,
@@ -38,9 +37,7 @@ def test_momentum_definition(test_args):
     assert len(result.components) == 3
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.momentum)
     for result_component, correct_component in zip(result.components, test_args.p.components):
-        result_value = convert_to(result_component, units.kilogram * units.meter / units.second)
-        correct_value = convert_to(correct_component, units.kilogram * units.meter / units.second)
-        assert result_value == approx(correct_value, 1e-3)
+        assert_equal(result_component, correct_component)
 
 
 def test_momentum_bad_mass(test_args):
@@ -75,9 +72,7 @@ def test_velocity_law(test_args):
     assert len(result.components) == 3
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.velocity)
     for result_component, correct_component in zip(result.components, test_args.v.components):
-        result_value = convert_to(result_component, units.meter / units.second)
-        correct_value = convert_to(correct_component, units.meter / units.second)
-        assert result_value == approx(correct_value, 1e-3)
+        assert_equal(result_component, correct_component)
 
 
 def test_velocity_bad_mass(test_args):
