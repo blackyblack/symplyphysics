@@ -8,6 +8,7 @@ from symplyphysics import (
     validate_output,
     angle_type,
 )
+from symplyphysics.core.symbols.quantities import scale_factor
 
 # Description
 ## Power is the rate at which the work is done by a force. The instantaneous power is the power
