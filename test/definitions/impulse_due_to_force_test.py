@@ -1,13 +1,11 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
     prefixes,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.definitions import impulse_due_to_force as impulse_def
 
@@ -27,9 +25,7 @@ def test_args_fixture():
 
 def test_definition(test_args):
     result = impulse_def.calculate_impulse(test_args.F, test_args.F, test_args.t_i, test_args.t_f)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.momentum)
-    result_value = convert_to(result, units.kilogram * units.meter / units.second).evalf(3)
-    assert_approx(result_value, 0.6)
+    assert_equal(result, 0.6 * units.kilogram * units.meter / units.second)
 
 
 def test_bad_forces(test_args):
