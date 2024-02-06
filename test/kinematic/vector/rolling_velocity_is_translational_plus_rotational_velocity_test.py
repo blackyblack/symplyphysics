@@ -1,10 +1,9 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
     SI,
     QuantityVector,
@@ -39,9 +38,8 @@ def test_law(test_args):
     result = rolling_velocity_law.calculate_rolling_velocity(test_args.v_t, test_args.v_r)
     assert len(result.components) == 3
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.velocity)
-    for result_components, correct_value in zip(result.components, [1.0, 1.0, 1.0]):
-        result_value = convert_to(result_components, units.meter / units.second)
-        assert_approx(result_value, correct_value)
+    for result_component, correct_value in zip(result.components, [1.0, 1.0, 1.0]):
+        assert_equal(result_component, correct_value * units.meter / units.second)
 
 
 def test_bad_velocities(test_args):
