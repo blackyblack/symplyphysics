@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from sympy import pi
-from symplyphysics import (assert_approx, units, SI, convert_to, Quantity, errors)
+from symplyphysics import (assert_equal, units, Quantity, errors)
 from symplyphysics.laws.gravity import maximum_movement_time_of_a_body_thrown_at_an_angle_to_horizon as time_law
 
 # Description
@@ -21,9 +21,7 @@ def test_args_fixture():
 
 def test_basic_movement_time(test_args):
     result = time_law.calculate_movement_time(test_args.initial_velocity, test_args.angle)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.time)
-    result = convert_to(result, units.second).evalf(5)
-    assert_approx(result, 0.433)
+    assert_equal(result, 0.433 * units.second)
 
 
 def test_bad_initial_velocity(test_args):

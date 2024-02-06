@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy import S
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
     convert_to,
@@ -22,16 +22,12 @@ def test_args_fixture():
 
 def test_basic_voltage(test_args):
     result = kirchhoff_law_2.calculate_voltage([test_args.U1])
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.voltage)
-    result_voltage = convert_to(result, units.volt).evalf(2)
-    assert_approx(result_voltage, -3)
+    assert_equal(result, -3 * units.volt)
 
 
 def test_three_voltage_array(test_args):
     result = kirchhoff_law_2.calculate_voltage([test_args.U1, test_args.U2])
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.voltage)
-    result_voltage = convert_to(result, units.volt).evalf(2)
-    assert_approx(result_voltage, 2)
+    assert_equal(result, 2 * units.volt)
 
 
 def test_array_empty():

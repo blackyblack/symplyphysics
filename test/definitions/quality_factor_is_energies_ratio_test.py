@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (assert_approx, errors, units, convert_to, Quantity, SI)
+from symplyphysics import (assert_equal, errors, units, Quantity)
 from symplyphysics.definitions import quality_factor_is_energies_ratio as quality_factor_def
 
 # Description
@@ -19,10 +19,7 @@ def test_args_fixture():
 
 def test_basic_quality_factor(test_args):
     result = quality_factor_def.calculate_quality_factor(test_args.w, test_args.W, test_args.P)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension,
-        quality_factor_def.definition_units_SI)
-    result_factor = convert_to(result, quality_factor_def.definition_units_SI).evalf(2)
-    assert_approx(result_factor, 65)
+    assert_equal(result, 65)
 
 
 def test_bad_frequency(test_args):

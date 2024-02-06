@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.electricity.circuits import resistor_and_capacitor_as_integrator_node as rc_node
 
@@ -28,9 +26,7 @@ def test_args_fixture():
 def test_basic_voltage(test_args):
     result = rc_node.calculate_capacitor_voltage(test_args.V0, test_args.C, test_args.R,
         test_args.T)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.voltage)
-    result_voltage = convert_to(result, units.volt).evalf(4)
-    assert_approx(result_voltage, 1.896)
+    assert_equal(result, 1.896 * units.volt)
 
 
 def test_bad_voltage(test_args):

@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
     Quantity,
-    SI,
-    convert_to,
 )
 from symplyphysics.laws.thermodynamics import laplas_pressure as laplas_law
 
@@ -25,9 +23,7 @@ def test_args_fixture():
 
 def test_basic_laplas_pressure(test_args):
     result = laplas_law.calculate_laplas_pressure(test_args.sigma, test_args.r)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.pressure)
-    result_laplas_pressure = convert_to(result, units.pascal).evalf(5)
-    assert_approx(result_laplas_pressure, 2.96e4)
+    assert_equal(result, 2.96e4 * units.pascal)
 
 
 def test_bad_surface_tension(test_args):

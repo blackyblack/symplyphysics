@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_macroscopic_fission_cross_section_diffusion_coefficient as buckling
 
@@ -30,9 +28,7 @@ def test_args_fixture():
 def test_basic_buckling(test_args):
     result = buckling.calculate_buckling(test_args.v, test_args.k, test_args.Sf, test_args.Sa,
         test_args.D)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, 1 / units.area)
-    result_buckling = convert_to(result, 1 / units.meter**2).evalf(2)
-    assert_approx(result_buckling, 2.345)
+    assert_equal(result, 2.345 / units.meter**2)
 
 
 def test_bad_macroscopic_cross_section(test_args):

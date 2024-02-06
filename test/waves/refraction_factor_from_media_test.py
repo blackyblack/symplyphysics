@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import fixture
-from symplyphysics import assert_approx
+from symplyphysics import assert_equal
 from symplyphysics.laws.waves import refraction_factor_from_media as media_law
 
 # Description.
@@ -18,5 +18,5 @@ def test_args_fixture():
 
 def test_basic_factor(test_args):
     result = media_law.calculate_refraction_factor(test_args.dielectric_permeability,
-        test_args.magnetic_permeability).evalf(6)
-    assert_approx(result, 1.000292)
+        test_args.magnetic_permeability)
+    assert_equal(result, 1.000292)

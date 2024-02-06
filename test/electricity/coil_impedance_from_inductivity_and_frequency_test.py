@@ -1,7 +1,7 @@
 from collections import namedtuple
-from sympy import re, im
+from sympy import I
 from pytest import fixture, raises
-from symplyphysics import (assert_approx, errors, units, convert_to, Quantity, SI)
+from symplyphysics import (assert_equal, errors, units, Quantity)
 from symplyphysics.laws.electricity import coil_impedance_from_inductivity_and_frequency as coil_impedance_law
 
 # Description
@@ -19,12 +19,7 @@ def test_args_fixture():
 
 def test_basic_impedance(test_args):
     result = coil_impedance_law.calculate_impedance(test_args.inductivity, test_args.frequency)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.impedance)
-    result_impedance = convert_to(result, units.ohm).evalf(5)
-    result_re = re(result_impedance)
-    result_im = im(result_impedance)
-    assert result_re == 0
-    assert_approx(result_im, 1570.8)
+    assert_equal(result, 1570.8 * I * units.ohm)
 
 
 def test_bad_inductivity(test_args):

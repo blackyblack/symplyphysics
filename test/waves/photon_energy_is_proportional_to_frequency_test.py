@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.waves import photon_energy_is_proportional_to_frequency as planck_law
 
@@ -26,9 +24,7 @@ def test_args_fixture():
 
 def test_basic_energy(test_args):
     result = planck_law.calculate_energy(test_args.frequency)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_energy = convert_to(result, units.joule).evalf(6)
-    assert_approx(result_energy, 1.9878528e-17)
+    assert_equal(result, 1.9878528e-17 * units.joule)
 
 
 def test_bad_frequency():

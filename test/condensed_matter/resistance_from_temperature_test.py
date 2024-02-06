@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (assert_approx, units, SI, convert_to, Quantity, errors)
+from symplyphysics import (assert_equal, units, Quantity, errors)
 from symplyphysics.laws.condensed_matter import resistance_from_temperature as resistance_law
 
 # Description
@@ -24,9 +24,7 @@ def test_args_fixture():
 def test_basic_resistance(test_args):
     result = resistance_law.calculate_resistance(test_args.resistance_initial,
         test_args.temperature_coefficient, test_args.temperature)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.impedance)
-    result = convert_to(result, units.ohm).evalf(5)
-    assert_approx(result, 112525)
+    assert_equal(result, 112525 * units.ohm)
 
 
 def test_bad_resistance_initial(test_args):

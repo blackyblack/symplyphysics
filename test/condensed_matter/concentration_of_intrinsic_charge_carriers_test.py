@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (assert_approx, units, SI, convert_to, Quantity, errors)
+from symplyphysics import (assert_equal, units, Quantity, errors)
 from symplyphysics.laws.condensed_matter import concentration_of_intrinsic_charge_carriers as concentration_law
 
 # Description
@@ -29,10 +29,8 @@ def test_basic_charge_carriers_concentration(test_args):
     result = concentration_law.calculate_concentration(
         test_args.density_of_states_in_conduction_band, test_args.density_of_states_in_valence_band,
         test_args.band_gap, test_args.temperature)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, 1 / units.volume)
-    result = convert_to(result, 1 / units.centimeter**3).evalf(5)
     # NOTE: high tolerance due to very high inaccuracy of available examples
-    assert_approx(result, 1e10, tolerance=0.1)
+    assert_equal(result, 1e10 / units.centimeter**3, tolerance=0.1)
 
 
 def test_bad_density_of_states_in_conduction_band(test_args):

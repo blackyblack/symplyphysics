@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from sympy import pi
-from symplyphysics import (assert_approx, units, SI, convert_to, Quantity, errors)
+from symplyphysics import (assert_equal, units, Quantity, errors)
 from symplyphysics.laws.gravity import maximum_height_of_a_body_thrown_at_an_angle_to_horizon as height_law
 
 # Description
@@ -22,9 +22,7 @@ def test_args_fixture():
 
 def test_basic_height(test_args):
     result = height_law.calculate_height(test_args.initial_velocity, test_args.angle)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
-    result = convert_to(result, units.meter).evalf(5)
-    assert_approx(result, 0.2294)
+    assert_equal(result, 0.2294 * units.meter)
 
 
 def test_bad_initial_velocity(test_args):

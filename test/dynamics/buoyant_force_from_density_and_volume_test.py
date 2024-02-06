@@ -3,12 +3,10 @@ from pytest import fixture, raises
 from sympy import solve
 from sympy.vector import CoordSys3D
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.dynamics import buoyant_force_from_density_and_volume as archimedes_law
 
@@ -24,9 +22,7 @@ def test_args_fixture():
 
 def test_basic_force(test_args):
     result = archimedes_law.calculate_force_buoyant(test_args.pf, test_args.V)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
-    result_force = convert_to(result, units.newton).evalf(4)
-    assert_approx(result_force, 1961.3)
+    assert_equal(result, 1961.3 * units.newton)
 
 
 def test_force_vector():

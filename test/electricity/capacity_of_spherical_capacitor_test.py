@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (assert_approx, units, SI, convert_to, Quantity, errors)
+from symplyphysics import (assert_equal, units, Quantity, errors)
 from symplyphysics.laws.electricity import capacity_of_spherical_capacitor as capacity_law
 
 # Description
@@ -24,9 +24,13 @@ def test_args_fixture():
 def test_basic_capacity(test_args):
     result = capacity_law.calculate_capacity(test_args.relative_permittivity,
         test_args.first_radius, test_args.second_radius)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.capacitance)
-    result = convert_to(result, units.farad).evalf(5)
-    assert_approx(result, 8.34e-12)
+    assert_equal(result, 8.34e-12 * units.farad)
+
+
+def test_swap_radius(test_args):
+    result = capacity_law.calculate_capacity(test_args.relative_permittivity,
+        test_args.second_radius, test_args.first_radius)
+    assert_equal(result, 8.34e-12 * units.farad)
 
 
 def test_bad_relative_permittivity(test_args):
@@ -44,11 +48,3 @@ def test_bad_radius(test_args):
             second_radius)
     with raises(TypeError):
         capacity_law.calculate_capacity(test_args.relative_permittivity, 100, 100)
-
-
-def test_swap_radius(test_args):
-    result = capacity_law.calculate_capacity(test_args.relative_permittivity,
-        test_args.second_radius, test_args.first_radius)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.capacitance)
-    result = convert_to(result, units.farad).evalf(5)
-    assert_approx(result, 8.34e-12)

@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
     Quantity,
@@ -24,7 +24,7 @@ def test_args_fixture():
 def test_basic_magnification(test_args):
     result = magnification.calculate_magnification(test_args.distance_to_image,
         test_args.distance_to_object)
-    assert_approx(result, -2.5)
+    assert_equal(result, -2.5)
 
 
 def test_bad_distance(test_args):

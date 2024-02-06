@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.definitions import moment_of_inertia_is_mass_times_squared_radius as moment_of_inertia_def
 
@@ -24,10 +22,8 @@ def test_args_fixture():
 
 
 def test_basic_moment_of_inertia(test_args):
-    result_expr = moment_of_inertia_def.calculate_moment_of_inertia(test_args.m, test_args.R)
-    assert SI.get_dimension_system().equivalent_dims(result_expr.dimension, units.mass * units.area)
-    result = convert_to(result_expr, moment_of_inertia_def.definition_units_SI).evalf(2)
-    assert_approx(result, 45)
+    result = moment_of_inertia_def.calculate_moment_of_inertia(test_args.m, test_args.R)
+    assert_equal(result, 45 * units.kilogram * units.meter**2)
 
 
 def test_inertia_with_bad_mass(test_args):

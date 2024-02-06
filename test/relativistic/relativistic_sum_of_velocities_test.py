@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import assert_approx, Quantity, convert_to, errors, units
+from symplyphysics import assert_equal, Quantity, errors, units
 from symplyphysics.laws.relativistic import relativistic_sum_of_velocities
 
 # Compared with example at https://openstax.org/books/college-physics-2e/pages/28-4-relativistic-addition-of-velocities
@@ -16,10 +16,7 @@ def test_args_fixture():
 
 def test_basic_sum(test_args):
     result = relativistic_sum_of_velocities.calculate_velocity(test_args.v1, test_args.v2)
-    result_velocity = convert_to(result, units.meter / units.second).evalf(4)
-    result_expected = convert_to(Quantity(units.speed_of_light),
-        units.meter / units.second).evalf(4)
-    assert_approx(result_velocity, result_expected)
+    assert_equal(result, units.speed_of_light)
 
 
 def test_bad_velocity(test_args):

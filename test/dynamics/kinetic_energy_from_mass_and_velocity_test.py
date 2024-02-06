@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_velocity as kinetic_energy
 
@@ -21,9 +19,7 @@ def test_args_fixture():
 
 def test_basic_kinetic_energy(test_args):
     result = kinetic_energy.calculate_kinetic_energy(test_args.m, test_args.v)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_energy = convert_to(result, units.joule).evalf(3)
-    assert_approx(result_energy, 0.0625)
+    assert_equal(result, 0.0625 * units.joule)
 
 
 def test_bad_body_mass(test_args):

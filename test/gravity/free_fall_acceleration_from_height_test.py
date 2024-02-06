@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.gravity import free_fall_acceleration_from_height as free_fall_acceleration
 
@@ -28,9 +26,7 @@ def test_args_fixture():
 def test_basic_acceleration(test_args):
     result = free_fall_acceleration.calculate_acceleration(test_args.earth_mass,
         test_args.earth_radius, test_args.height_from_surface)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.acceleration)
-    result_acceleration = convert_to(result, units.meter / units.second**2).evalf(6)
-    assert_approx(result_acceleration, 9.823)
+    assert_equal(result, 9.823 * units.meter / units.second**2)
 
 
 def test_bad_earth_mass(test_args):

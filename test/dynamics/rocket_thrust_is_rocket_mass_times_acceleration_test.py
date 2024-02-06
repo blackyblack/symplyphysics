@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.dynamics import rocket_thrust_is_rocket_mass_times_acceleration as rocket_law
 
@@ -26,9 +24,7 @@ def test_args_fixture():
 
 def test_basic_law(test_args):
     result = rocket_law.calculate_relative_velocity(test_args.r, test_args.m, test_args.a)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.velocity)
-    result_value = convert_to(result, units.kilometer / units.second).evalf(4)
-    assert_approx(result_value, 2.809)
+    assert_equal(result, 2.809 * units.kilometer / units.second)
 
 
 def test_bad_consumption_rate(test_args):

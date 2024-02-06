@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.electricity.circuits import resistivity_of_serial_resistors as serial_resistor
 
@@ -25,17 +23,13 @@ def test_args_fixture():
 
 def test_basic_resistance(test_args):
     result = serial_resistor.calculate_serial_resistance([test_args.R1, test_args.R2])
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.impedance)
-    result_resistance = convert_to(result, units.ohm).evalf(3)
-    assert_approx(result_resistance, 3)
+    assert_equal(result, 3 * units.ohm)
 
 
 def test_three_resistors_array(test_args):
     R3 = Quantity(3 * units.ohm)
     result = serial_resistor.calculate_serial_resistance([test_args.R1, test_args.R2, R3])
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.impedance)
-    result_resistance = convert_to(result, units.ohm).evalf(3)
-    assert_approx(result_resistance, 6)
+    assert_equal(result, 6 * units.ohm)
 
 
 def test_bad_resistance(test_args):

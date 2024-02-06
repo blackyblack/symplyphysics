@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.dynamics import friction_force_from_normal_force as friction_force_law
 
@@ -23,9 +21,7 @@ def test_args_fixture():
 
 def test_basic_friction_force(test_args):
     result = friction_force_law.calculate_friction_force(test_args.mu, test_args.N)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
-    result_force = convert_to(result, units.newton).evalf(3)
-    assert_approx(result_force, 0.005)
+    assert_equal(result, 0.005 * units.newton)
 
 
 def test_bad_reaction(test_args):
