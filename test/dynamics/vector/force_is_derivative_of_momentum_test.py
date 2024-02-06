@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     units,
     errors,
-    convert_to,
     Quantity,
-    SI,
     QuantityVector,
 )
 from symplyphysics.laws.dynamics.vector import force_is_derivative_of_momentum as force_momentum_law
@@ -35,10 +34,8 @@ def test_args_fixture():
 def test_basic_law(test_args):
     result_force = force_momentum_law.calculate_force(test_args.p0, test_args.p1, test_args.dt)
     assert len(result_force.components) == 3
-    assert SI.get_dimension_system().equivalent_dims(result_force.dimension, units.force)
     for result_component, correct_value in zip(result_force.components, (4, 2, 2)):
-        result_value = convert_to(result_component, units.newton).evalf(3)
-        assert result_value == approx(correct_value, 1e-3)
+        assert_equal(result_component, correct_value * units.newton)
 
 
 def test_bad_momenta(test_args):

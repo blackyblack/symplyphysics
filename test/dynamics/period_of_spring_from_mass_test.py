@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.dynamics import period_of_spring_from_mass as spring_period
 
@@ -24,9 +23,7 @@ def test_args_fixture():
 
 def test_basic_period(test_args):
     result = spring_period.calculate_period(test_args.k, test_args.m)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.time)
-    result_period = convert_to(result, units.second).evalf(2)
-    assert result_period == approx(12.57, 0.01)
+    assert_equal(result, 12.57 * units.second)
 
 
 def test_bad_elascticity(test_args):

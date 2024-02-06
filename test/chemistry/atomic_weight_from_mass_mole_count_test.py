@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
+    assert_equal,
 )
 from symplyphysics.laws.chemistry import atomic_weight_from_mass_mole_count
 
@@ -21,10 +20,7 @@ def test_args_fixture():
 
 def test_basic_atomic_weight(test_args):
     result = atomic_weight_from_mass_mole_count.calculate_atomic_weight(test_args.m, test_args.N)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension,
-        units.mass / units.amount_of_substance)
-    result_mass = convert_to(result, units.gram / units.mole).evalf(4)
-    assert result_mass == approx(18.0153, 0.01)
+    assert_equal(result, 18.0153 * units.gram / units.mole)
 
 
 def test_bad_mass(test_args):

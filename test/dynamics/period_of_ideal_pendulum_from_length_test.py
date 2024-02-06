@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.dynamics import period_of_ideal_pendulum_from_length as pendulum_period
 
@@ -19,10 +18,8 @@ def test_args_fixture():
 
 def test_basic_period(test_args):
     result = pendulum_period.calculate_period(test_args.L)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.time)
-    result_period = convert_to(result, units.second).evalf(2)
     # For a pendulum of 1 meter length, period should be 2 seconds
-    assert result_period == approx(2.0, 0.01)
+    assert_equal(result, 2.006 * units.second)
 
 
 def test_bad_length():

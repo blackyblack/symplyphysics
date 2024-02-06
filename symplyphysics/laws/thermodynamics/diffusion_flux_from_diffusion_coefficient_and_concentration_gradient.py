@@ -1,7 +1,6 @@
-from sympy import (Eq, solve, Derivative)
+from sympy import (Eq, Derivative)
 from symplyphysics import (units, Function, Quantity, Symbol, print_expression, validate_input,
     validate_output)
-
 
 # Description
 ## Fick's first law relates the diffusive flux to the gradient of the concentration. It postulates that the flux goes from regions of high concentration to regions of low concentration,
@@ -24,16 +23,21 @@ diffusion_coefficient = Symbol("diffusion_coefficient", units.area / units.time)
 concentration = Function("concentration", units.amount_of_substance / units.volume)
 position = Symbol("position", units.length)
 
-law = Eq(diffusion_flux(position), -diffusion_coefficient * Derivative(concentration(position), position))
+law = Eq(diffusion_flux(position),
+    -diffusion_coefficient * Derivative(concentration(position), position))
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(diffusion_coefficient_=diffusion_coefficient, concentration_start_=concentration, concentration_end_=concentration, position_=position)
+@validate_input(diffusion_coefficient_=diffusion_coefficient,
+    concentration_start_=concentration,
+    concentration_end_=concentration,
+    position_=position)
 @validate_output(diffusion_flux)
-def calculate_diffusion_flux(diffusion_coefficient_: Quantity, concentration_start_: Quantity,  concentration_end_: Quantity, position_: Quantity) -> Quantity:
+def calculate_diffusion_flux(diffusion_coefficient_: Quantity, concentration_start_: Quantity,
+    concentration_end_: Quantity, position_: Quantity) -> Quantity:
     concentration_function_ = position * (concentration_end_ - concentration_start_) / position_
     applied_definition = law.subs({
         concentration(position): concentration_function_,

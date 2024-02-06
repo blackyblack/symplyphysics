@@ -1,13 +1,13 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from sympy import pi
-from symplyphysics import (units, SI, convert_to, Quantity, errors)
+from symplyphysics import (assert_equal, units, Quantity, errors)
 
 from symplyphysics.laws.electricity import force_from_charge_velocity_magnetic_induction as force_law
 
 # Description
 ## The charge value is 0.1 coulomb. The charge rate is 3 meter per second. The magnetic induction is 2 tesla.
-## The angle between induction and velocity is 45 degree (pi / 4 radian). Then the Lorentz force is 0.4 newton.
+## The angle between induction and velocity is 45 degree (pi / 4 radian). Then the Lorentz force is 0.424 newton.
 ## https://physics.icalculator.com/lorentz-force-calculator.html
 
 
@@ -25,9 +25,7 @@ def test_args_fixture():
 def test_basic_force(test_args):
     result = force_law.calculate_force(test_args.charge, test_args.velocity, test_args.angle,
         test_args.induction)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
-    result = convert_to(result, units.newton).evalf(5)
-    assert result == approx(0.4, rel=0.1)
+    assert_equal(result, 0.424 * units.newton)
 
 
 def test_bad_charge(test_args):

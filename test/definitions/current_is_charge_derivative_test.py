@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.definitions import current_is_charge_derivative as current_def
 
@@ -23,9 +22,7 @@ def test_args_fixture():
 
 def test_basic_current(test_args):
     result = current_def.calculate_current(test_args.Q0, test_args.Q1, test_args.t)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.current)
-    result_current = convert_to(result, current_def.definition_units_SI).evalf(2)
-    assert result_current == approx(4, 0.01)
+    assert_equal(result, 4 * units.ampere)
 
 
 def test_current_with_bad_charge(test_args):

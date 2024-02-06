@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.definitions import acceleration_is_velocity_derivative as acceleration
 
@@ -21,9 +20,7 @@ def test_args_fixture():
 
 def test_basic_acceleration(test_args):
     result = acceleration.calculate_linear_acceleration(test_args.v0, test_args.v1, test_args.t)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.acceleration)
-    result_acceleration = convert_to(result, acceleration.definition_units_SI).evalf(2)
-    assert result_acceleration == approx(3.8, 0.01)
+    assert_equal(result, 3.8 * units.meter / units.second**2)
 
 
 def test_bad_velocity(test_args):

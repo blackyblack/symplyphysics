@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
     Quantity,
-    SI,
-    convert_to,
 )
 from symplyphysics.laws.optics import optical_power_from_thin_lens_radius as optical_power
 
@@ -29,9 +28,7 @@ def test_args_fixture():
 def test_basic_power(test_args):
     result = optical_power.calculate_optical_power(test_args.lens_index, test_args.medium_index,
         test_args.front_radius, test_args.back_radius)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, 1 / units.length)
-    result_power = convert_to(result, units.dioptre).evalf(2)
-    assert result_power == approx(2, 0.1)
+    assert_equal(result, 2 * units.dioptre)
 
 
 def test_bad_radius(test_args):

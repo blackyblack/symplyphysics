@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.waves import photoelectron_energy_from_frequency as photoeffect
 
@@ -17,7 +16,7 @@ from symplyphysics.laws.waves import photoelectron_energy_from_frequency as phot
 
 @fixture(name="test_args")
 def test_args_fixture():
-    frequency = Quantity(9.23e14 * units.hertz)
+    frequency = Quantity(9.224e14 * units.hertz)
     work = Quantity(3.81e-19 * units.joule)
     Args = namedtuple("Args", ["frequency", "work"])
     return Args(frequency=frequency, work=work)
@@ -25,9 +24,7 @@ def test_args_fixture():
 
 def test_basic_energy(test_args):
     result = photoeffect.calculate_max_kinetic_energy(test_args.frequency, test_args.work)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_current = convert_to(result, units.joule).evalf(3)
-    assert result_current == approx(2.3e-19, 0.01)
+    assert_equal(result, 2.3e-19 * units.joule)
 
 
 def test_bad_frequency(test_args):

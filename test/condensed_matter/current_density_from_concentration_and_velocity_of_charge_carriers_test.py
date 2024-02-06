@@ -1,6 +1,6 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from symplyphysics import (units, SI, convert_to, Quantity, errors)
+from pytest import fixture, raises
+from symplyphysics import (assert_equal, units, Quantity, errors)
 from symplyphysics.laws.condensed_matter import current_density_from_concentration_and_velocity_of_charge_carriers as current_law
 
 # Description
@@ -11,7 +11,7 @@ from symplyphysics.laws.condensed_matter import current_density_from_concentrati
 @fixture(name="test_args")
 def test_args_fixture():
     charge_carriers_concentration = Quantity(8.4e28 * (1 / units.meter**3))
-    drift_velocity = Quantity(7.4e-5 * (units.meter / units.second))
+    drift_velocity = Quantity(7.44e-5 * (units.meter / units.second))
     charge_electron = Quantity(1.6e-19 * units.coulomb)
 
     Args = namedtuple("Args",
@@ -24,9 +24,7 @@ def test_args_fixture():
 def test_basic_current(test_args):
     result = current_law.calculate_current(test_args.charge_carriers_concentration,
         test_args.drift_velocity, test_args.charge_electron)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.current / units.area)
-    result = convert_to(result, units.ampere / units.meter**2).evalf(5)
-    assert result == approx(1e6, rel=0.01)
+    assert_equal(result, 1e6 * units.ampere / units.meter**2)
 
 
 def test_bad_charge_carriers_concentration(test_args):

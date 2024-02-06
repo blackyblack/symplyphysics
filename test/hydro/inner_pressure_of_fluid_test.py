@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 import symplyphysics.laws.hydro.inner_pressure_of_fluid as inner_pressure
 
@@ -29,9 +28,7 @@ def test_basic_law(test_args):
         test_args.p_dynamic,
         test_args.p_hydrostatic,
     )
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.pressure)
-    result_inner_pressure = convert_to(result, units.pascal).evalf(5)
-    assert result_inner_pressure == approx(15, 1e-5)
+    assert_equal(result, 15 * units.pascal)
 
 
 def test_bad_static_pressure(test_args):

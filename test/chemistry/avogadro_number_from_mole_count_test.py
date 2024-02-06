@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
     Quantity,
@@ -18,7 +19,7 @@ def test_args_fixture():
 def test_basic_particles_count(test_args):
     result = avogadro_number_from_mole_count.calculate_particles_count(test_args.M)
     assert isinstance(result, int)
-    assert result == approx(3.011E+24, 0.01)
+    assert_equal(result, 3.011e24)
 
 
 def test_bad_mole_count():

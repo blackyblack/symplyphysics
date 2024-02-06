@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
     Quantity,
-    convert_to,
-    SI,
 )
 from symplyphysics.laws.thermodynamics import work_done_by_gas_at_constant_pressure
 
@@ -22,9 +21,7 @@ def test_args_fixture():
 def test_gas_work(test_args):
     result = work_done_by_gas_at_constant_pressure.calculate_work(test_args.p, test_args.v_1,
         test_args.v_2)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_work = convert_to(result, units.joule).evalf(4)
-    assert result_work == approx(2.52, 0.01)
+    assert_equal(result, 2.52 * units.joule)
 
 
 def test_bad_pressure(test_args):

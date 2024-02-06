@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.electricity.circuits import conductivity_of_two_parallel_resistors as parallel_resistor
 
@@ -24,9 +23,7 @@ def test_args_fixture():
 
 def test_basic_resistance(test_args):
     result = parallel_resistor.calculate_resistance(test_args.R1, test_args.R2)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.impedance)
-    result_resistance = convert_to(result, units.ohm).evalf(3)
-    assert result_resistance == approx(1.333, 0.001)
+    assert_equal(result, 1.333 * units.ohm)
 
 
 def test_bad_resistance(test_args):

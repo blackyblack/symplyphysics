@@ -1,8 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from symplyphysics import Quantity, units, errors
+from pytest import fixture, raises
+from symplyphysics import assert_equal, Quantity, units, errors
 from symplyphysics.laws.hydro import mach_number
-
 
 # Example from: https://www.omnicalculator.com/physics/mach-number
 
@@ -17,7 +16,7 @@ def test_args_fixture():
 
 def test_basic_mach_number(test_args):
     result = mach_number.calculate_mach_number(test_args.velocity, test_args.speed_of_sound)
-    assert result == approx(0.097, 0.01)
+    assert_equal(result, 0.09712)
 
 
 def test_bad_velocity(test_args):

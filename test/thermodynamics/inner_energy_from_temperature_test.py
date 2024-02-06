@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
     Quantity,
-    SI,
-    convert_to,
 )
 from symplyphysics.core.symbols.celsius import Celsius, to_kelvin_quantity
 from symplyphysics.laws.thermodynamics import inner_energy_from_temperature as inner_energy_law
@@ -27,9 +26,7 @@ def test_args_fixture():
 
 def test_basic_energy(test_args):
     result = inner_energy_law.calculate_inner_energy(test_args.m, test_args.T, test_args.M)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_pressure = convert_to(result, units.joule).evalf(2)
-    assert result_pressure == approx(3656, 0.01)
+    assert_equal(result, 3656 * units.joule)
 
 
 def test_bad_mass(test_args):

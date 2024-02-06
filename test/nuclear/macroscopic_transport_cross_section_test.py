@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.nuclear import macroscopic_transport_cross_section as macro_tr_cs
 
@@ -22,9 +21,7 @@ def test_args_fixture():
 
 def test_basic_cross_section(test_args):
     result = macro_tr_cs.calculate_cross_section(test_args.scatter_cs, test_args.u)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, 1 / units.length)
-    result_cross_section = convert_to(result, 1 / units.centimeter).evalf(2)
-    assert result_cross_section == approx(0.498, 0.01)
+    assert_equal(result, 0.4987 / units.centimeter)
 
 
 def test_bad_scattering_cross_section(test_args):

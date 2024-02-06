@@ -1,7 +1,6 @@
 from sympy import Eq, solve, S
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-                           validate_output, dimensionless, convert_to)
-
+    validate_output, dimensionless, convert_to)
 
 # Description
 # The Mach number is a dimensionless quantity in fluid dynamics representing
@@ -10,7 +9,6 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 # v is velocity,
 # c is speed of sound,
 # M is Mach number.
-
 
 velocity = Symbol("velocity", units.velocity)
 speed_of_sound = Symbol("speed_of_sound", units.velocity)

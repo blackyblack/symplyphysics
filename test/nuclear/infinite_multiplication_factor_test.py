@@ -1,5 +1,6 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
+from symplyphysics import assert_equal
 from symplyphysics.core.symbols.probability import Probability
 from symplyphysics.laws.nuclear import infinite_multiplication_factor
 
@@ -20,7 +21,7 @@ def test_args_fixture():
 def test_basic_multiplication_factor(test_args):
     result = infinite_multiplication_factor.calculate_multiplication_factor(
         test_args.n, test_args.e, test_args.p, test_args.f)
-    assert result == approx(1.092315, 0.01)
+    assert_equal(result, 1.092315)
 
 
 def test_bad_resonance_escape(test_args):

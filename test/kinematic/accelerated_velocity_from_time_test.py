@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.kinematic import accelerated_velocity_from_time as accelerated_velocity_law
 
@@ -26,9 +25,7 @@ def test_args_fixture():
 
 def test_basic_velocity(test_args):
     result = accelerated_velocity_law.calculate_velocity(test_args.V1, test_args.A1, test_args.T1)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.velocity)
-    result_velocity = convert_to(result, units.meter / units.second).evalf(2)
-    assert result_velocity == approx(-47, 0.01)
+    assert_equal(result, -47 * units.meter / units.second)
 
 
 def test_bad_velocity(test_args):

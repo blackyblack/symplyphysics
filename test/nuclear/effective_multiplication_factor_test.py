@@ -1,5 +1,6 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
+from symplyphysics import assert_equal
 from symplyphysics.core.symbols.probability import Probability
 from symplyphysics.laws.nuclear import effective_multiplication_factor
 
@@ -19,7 +20,7 @@ def test_args_fixture():
 def test_basic_multiplication_factor(test_args):
     result = effective_multiplication_factor.calculate_multiplication_factor(
         test_args.kinf, test_args.Pf, test_args.Pt)
-    assert result == approx(1, 0.01)
+    assert_equal(result, 1, tolerance=0.01)
 
 
 def test_bad_fast_non_leakage(test_args):

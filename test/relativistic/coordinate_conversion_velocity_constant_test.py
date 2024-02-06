@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.relativistic import coordinate_conversion_velocity_constant as coordinate_law
 
@@ -31,9 +30,7 @@ def test_args_fixture():
 def test_basic_another_coordinate(test_args):
     result = coordinate_law.calculate_coordinate_second_frame(test_args.coordinate_first_frame,
         test_args.velocity, test_args.time_first_frame)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
-    result = convert_to(result, units.meter).evalf(5)
-    assert result == approx(-7, 0.01)
+    assert_equal(result, -7 * units.meter)
 
 
 def test_bad_coordinate(test_args):

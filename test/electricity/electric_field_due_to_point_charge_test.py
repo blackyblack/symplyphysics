@@ -1,12 +1,11 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
     prefixes,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.electricity import electric_field_due_to_point_charge as electric_field
 
@@ -23,9 +22,7 @@ def test_args_fixture():
 
 def test_basic_law(test_args):
     result = electric_field.calculate_electric_field(test_args.q, test_args.r)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force / units.charge)
-    result_field = convert_to(result, units.newton / units.coulomb).evalf(3)
-    assert result_field == approx(0.999, 1e-3)
+    assert_equal(result, 0.999 * units.newton / units.coulomb)
 
 
 def test_bad_charge(test_args):

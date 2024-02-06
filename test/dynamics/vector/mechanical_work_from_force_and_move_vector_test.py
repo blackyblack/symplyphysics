@@ -1,12 +1,11 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from sympy import cos, pi, sin
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
 from symplyphysics.core.vectors.vectors import QuantityVector
@@ -31,9 +30,7 @@ def test_args_fixture():
 
 def test_basic_work(test_args):
     result = work_law.calculate_work(test_args.F, test_args.S)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_work = convert_to(result, units.joule).evalf(4)
-    assert result_work == approx(150, 0.01)
+    assert_equal(result, 150 * units.joule)
 
 
 def test_bad_force(test_args):

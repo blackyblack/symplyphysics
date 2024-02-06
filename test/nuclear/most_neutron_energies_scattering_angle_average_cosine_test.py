@@ -1,5 +1,6 @@
 from collections import namedtuple
-from pytest import approx, fixture
+from pytest import fixture
+from symplyphysics import assert_equal
 from symplyphysics.laws.nuclear import most_neutron_energies_scattering_angle_average_cosine
 
 
@@ -14,4 +15,4 @@ def test_args_fixture():
 def test_basic_scattering_angle(test_args):
     result = most_neutron_energies_scattering_angle_average_cosine.calculate_average_scattering_angle_cosine(
         test_args.A)
-    assert result == approx(0.0555, 0.01)
+    assert_equal(result, 0.0555)

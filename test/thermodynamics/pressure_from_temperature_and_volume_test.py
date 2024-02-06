@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
     Quantity,
-    SI,
-    convert_to,
 )
 from symplyphysics.laws.thermodynamics import pressure_from_temperature_and_volume as ideal_gas_law
 
@@ -22,12 +21,9 @@ def test_args_fixture():
 # The volume of 1 mol of any gas at STP (Standard temperature, 273.15 K and pressure, 1 atm) is measured to be 22.414 L.
 def test_basic_pressure(test_args):
     result = ideal_gas_law.calculate_pressure(test_args.V, test_args.t, test_args.n)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.pressure)
-    result_pressure = convert_to(result, units.pascal).evalf(2)
-    assert result_pressure == approx(101.325e+3, 0.01)
+    assert_equal(result, 1.01325e5 * units.pascal)
     # Also check that calculated pressure = 1 atmosphere
-    result_pressure_atms = convert_to(result, units.atm).evalf(2)
-    assert result_pressure_atms == approx(1.0, 0.01)
+    assert_equal(result, 1 * units.atm)
 
 
 def test_bad_volume(test_args):

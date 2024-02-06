@@ -9,15 +9,10 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.conservation import (
-    momentum_after_collision_equals_to_momentum_before as momentum_conservation_law,
-)
-from symplyphysics.definitions import (
-    momentum_is_mass_times_velocity as momentum_def,
-    mass_flow_rate as flow_rate_def
-)
-from symplyphysics.laws.kinematic import (
-    accelerated_velocity_from_time as acceleration_def
-)
+    momentum_after_collision_equals_to_momentum_before as momentum_conservation_law,)
+from symplyphysics.definitions import (momentum_is_mass_times_velocity as momentum_def,
+    mass_flow_rate as flow_rate_def)
+from symplyphysics.laws.kinematic import (accelerated_velocity_from_time as acceleration_def)
 
 # Description
 ## Assuming we are at rest relative to an inertial reference frame, we observe a rocket
@@ -43,7 +38,6 @@ rocket_mass = Symbol("rocket_mass", units.mass)
 rocket_acceleration = Symbol("rocket_acceleration", units.acceleration)
 
 law = Eq(fuel_consumption_rate * relative_velocity, rocket_mass * rocket_acceleration)
-
 
 # Derive this law from the law of conservation of momentum.
 
@@ -83,8 +77,10 @@ relative_speed_eqn = Eq(
 )
 
 momentum_conservation_eqn = momentum_conservation_law.law.subs({
-    momentum_conservation_law.momentum(momentum_conservation_law.time_before): rocket_momentum_before_release,
-    momentum_conservation_law.momentum(momentum_conservation_law.time_after): final_momentum,
+    momentum_conservation_law.momentum(momentum_conservation_law.time_before):
+        rocket_momentum_before_release,
+    momentum_conservation_law.momentum(momentum_conservation_law.time_after):
+        final_momentum,
 })
 
 relative_velocity_expr = solve(
@@ -96,9 +92,9 @@ relative_velocity_expr = solve(
 time_change = SymSymbol("time_change")
 
 # solve differential equation with constant fuel_consumption_rate
-dsolved_fuel_mass = dsolve(flow_rate_def.definition.subs(
-    flow_rate_def.mass_flow_rate(flow_rate_def.time), fuel_consumption_rate),
-    flow_rate_def.mass(flow_rate_def.time))
+dsolved_fuel_mass = dsolve(
+    flow_rate_def.definition.subs(flow_rate_def.mass_flow_rate(flow_rate_def.time),
+    fuel_consumption_rate), flow_rate_def.mass(flow_rate_def.time))
 fuel_consumption_eqn = Eq(fuel_mass_thrusted, dsolved_fuel_mass.rhs)
 # C1 is initial fuel mass thrusted
 fuel_consumption_eqn = fuel_consumption_eqn.subs({"C1": 0, flow_rate_def.time: time_change})
@@ -118,11 +114,9 @@ relative_velocity_eqn_system = [
     Eq(rocket_acceleration, rocket_acceleration_expr),
 ]
 
-relative_velocity_derived = solve(
-    relative_velocity_eqn_system,
+relative_velocity_derived = solve(relative_velocity_eqn_system,
     (relative_velocity, fuel_mass_thrusted, rocket_speed_change),
-    dict=True
-)[0][relative_velocity]
+    dict=True)[0][relative_velocity]
 
 relative_velocity_from_law = solve(law, relative_velocity)[0]
 

@@ -1,12 +1,11 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from sympy import pi
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.definitions import angular_velocity_is_angle_derivative as angular_velocity_def
 
@@ -27,9 +26,7 @@ def test_args_fixture():
 def test_basic_velocity(test_args):
     result = angular_velocity_def.calculate_angular_velocity(test_args.a0, test_args.a1,
         test_args.t)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, 1 / units.time)
-    result_velocity = convert_to(result, angular_velocity_def.definition_units_SI).evalf(2)
-    assert result_velocity == approx(0.63, 0.01)
+    assert_equal(result, (pi / 5) * units.radian / units.second)
 
 
 def test_velocity_with_number(test_args):

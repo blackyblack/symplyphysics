@@ -1,12 +1,11 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     units,
-    convert_to,
     Quantity,
-    SI,
+    errors,
 )
-from symplyphysics.core import errors
 from symplyphysics.laws.conservation import mixture_mass_equal_sum_of_components_masses as sum_of_masses_law
 
 
@@ -20,17 +19,13 @@ def test_args_fixture():
 
 def test_basic_superposition(test_args):
     result = sum_of_masses_law.calculate_mass_of_mixture([test_args.m1, test_args.m2])
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.mass)
-    result_mass = convert_to(result, units.kilograms).evalf(3)
-    assert result_mass == approx(30, 0.001)
+    assert_equal(result, 30 * units.kilograms)
 
 
 def test_three_masses_array(test_args):
     m3 = Quantity(5 * units.kilograms)
     result = sum_of_masses_law.calculate_mass_of_mixture([test_args.m1, test_args.m2, m3])
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.mass)
-    result_mass = convert_to(result, units.kilograms).evalf(3)
-    assert result_mass == approx(35, 0.001)
+    assert_equal(result, 35 * units.kilograms)
 
 
 def test_bad_mass(test_args):

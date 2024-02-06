@@ -1,6 +1,6 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from symplyphysics import (units, SI, convert_to, Quantity, errors)
+from pytest import fixture, raises
+from symplyphysics import (assert_equal, units, Quantity, errors)
 from symplyphysics.laws.electricity import force_between_parallel_wires as force_law
 
 # Description
@@ -32,9 +32,7 @@ def test_basic_force(test_args):
     result = force_law.calculate_force(test_args.relative_permeability,
         test_args.first_wire_current, test_args.second_wire_current, test_args.length,
         test_args.distance)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
-    result = convert_to(result, units.newton).evalf(5)
-    assert result == approx(7.5e-8, rel=0.01)
+    assert_equal(result, 7.5e-8 * units.newton)
 
 
 def test_bad_relative_permeability(test_args):
