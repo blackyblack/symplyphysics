@@ -4,9 +4,9 @@ from symplyphysics import (
     errors,
     units,
     Quantity,
-    SI,
     convert_to,
     assert_approx,
+    equivalent_dims,
 )
 from symplyphysics.laws.chemistry.potential_energy_models import lennard_jones_potential
 
@@ -26,7 +26,7 @@ def test_args_fixture():
 
 def test_basic_law(test_args):
     result = lennard_jones_potential.calculate_potential(test_args.e, test_args.sigma, test_args.r)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
+    assert equivalent_dims(result, units.energy)
     result_value = convert_to(result, units.joule).evalf(5)
     assert_approx(result_value, 2.6529e-13)
 
