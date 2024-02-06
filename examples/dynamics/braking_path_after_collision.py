@@ -4,6 +4,7 @@ from sympy import solve, Symbol, Eq
 from symplyphysics import Quantity, convert_to, units, print_expression
 from symplyphysics.definitions import (
     momentum_is_mass_times_velocity as momentum_def,
+    mechanical_energy_is_kinetic_and_potential as mechanical_energy_def,
 )
 from symplyphysics.laws.conservation import (
     mechanical_energy_after_equals_to_mechanical_energy_before as energy_conservation_law,
@@ -30,8 +31,7 @@ friction_coefficient = Symbol("friction_coefficient")
 
 values = {
     height: Quantity(2.50 * units.meter),
-    friction_coefficient: Quantity(0.500),
-    units.acceleration_due_to_gravity: Quantity(9.81 * units.meter / units.second**2),
+    friction_coefficient: 0.500,
 }
 
 speed_before_1 = Symbol("speed_before_1")
@@ -40,20 +40,30 @@ speed_after_2 = Symbol("speed_after_2")
 
 # Find speed of block 1 just before the collision
 
-energy_before_1 = potential_energy_def.law.rhs.subs({
+potential_energy_before_1 = potential_energy_def.law.rhs.subs({
     potential_energy_def.height: height,
     potential_energy_def.body_mass: mass_1,
     potential_energy_def.free_fall_acceleration: units.acceleration_due_to_gravity,
 })
 
-energy_after_1 = kinetic_energy_def.law.rhs.subs({
+mechanical_energy_before_1 = mechanical_energy_def.definition.rhs.subs({
+    mechanical_energy_def.potential_energy: potential_energy_before_1,
+    mechanical_energy_def.kinetic_energy: 0,
+})
+
+kinetic_energy_after_1 = kinetic_energy_def.law.rhs.subs({
     kinetic_energy_def.body_mass: mass_1,
     kinetic_energy_def.body_velocity: speed_before_1,
 })
 
+mechanical_energy_after_1 = mechanical_energy_def.definition.rhs.subs({
+    mechanical_energy_def.potential_energy: 0,
+    mechanical_energy_def.kinetic_energy: kinetic_energy_after_1,
+})
+
 energy_conservation_eqn_1 = energy_conservation_law.law.subs({
-    energy_conservation_law.mechanical_energy(energy_conservation_law.time_before): energy_before_1,
-    energy_conservation_law.mechanical_energy(energy_conservation_law.time_after): energy_after_1,
+    energy_conservation_law.mechanical_energy(energy_conservation_law.time_before): mechanical_energy_before_1,
+    energy_conservation_law.mechanical_energy(energy_conservation_law.time_after): mechanical_energy_after_1,
 })
 
 speed_before_1 = solve(energy_conservation_eqn_1, speed_before_1)[0]
@@ -64,6 +74,8 @@ momentum_before_1 = momentum_def.definition.rhs.subs({
 })
 
 # (a) Elastic collision
+
+mechanical_energy_before_elastic = mechanical_energy_before_1
 
 momentum_after_1_elastic = momentum_def.definition.rhs.subs({
     momentum_def.mass: mass_1,
@@ -82,21 +94,26 @@ momentum_conservation_eqn_collision = momentum_conservation_law.law.subs({
     momentum_conservation_law.momentum(momentum_conservation_law.time_after): momentum_after_elastic,
 })
 
-energy_after_1_elastic = kinetic_energy_def.law.rhs.subs({
+kinetic_energy_after_1_elastic = kinetic_energy_def.law.rhs.subs({
     kinetic_energy_def.body_mass: mass_1,
     kinetic_energy_def.body_velocity: speed_after_1,
 })
 
-energy_after_2_elastic = kinetic_energy_def.law.rhs.subs({
+kinetic_energy_after_2_elastic = kinetic_energy_def.law.rhs.subs({
     kinetic_energy_def.body_mass: mass_2,
     kinetic_energy_def.body_velocity: speed_after_2,
 })
 
-energy_after_elastic = energy_after_1_elastic + energy_after_2_elastic
+kinetic_energy_after_elastic = kinetic_energy_after_1_elastic + kinetic_energy_after_2_elastic
+
+mechanical_energy_after_elastic = mechanical_energy_def.definition.rhs.subs({
+    mechanical_energy_def.potential_energy: 0,
+    mechanical_energy_def.kinetic_energy: kinetic_energy_after_elastic,
+})
 
 energy_conservation_eqn_collision = energy_conservation_law.law.subs({
-    energy_conservation_law.mechanical_energy(energy_conservation_law.time_before): energy_before_1,
-    energy_conservation_law.mechanical_energy(energy_conservation_law.time_after): energy_after_elastic,
+    energy_conservation_law.mechanical_energy(energy_conservation_law.time_before): mechanical_energy_before_elastic,
+    energy_conservation_law.mechanical_energy(energy_conservation_law.time_after): mechanical_energy_after_elastic,
 })
 
 speed_after_2_elastic = solve(
