@@ -1,14 +1,12 @@
 from collections import namedtuple
-from pytest import approx, fixture
+from pytest import fixture
 from symplyphysics import (
+    assert_equal,
     Quantity,
     QuantityVector, 
     vector_magnitude, 
     dot_vectors,
     units,
-    dimensionless,
-    convert_to,
-    SI,
 )
 from symplyphysics.laws.geometry import dot_product_is_proportional_to_cosine_between_vectors as cosine_law
 
@@ -41,9 +39,7 @@ def test_law(test_args):
     result = cosine_law.calculate_cosine_between_vectors(
         test_args.f_dot_r, test_args.f_norm, test_args.r_norm,
     )
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, dimensionless)
-    result_value = convert_to(result, dimensionless).evalf(3)
-    assert result_value == approx(-0.456, 1e-3)
+    assert_equal(result, -0.456)
 
 
 def test_law_perpendicular(test_args):
@@ -51,9 +47,7 @@ def test_law_perpendicular(test_args):
     result = cosine_law.calculate_cosine_between_vectors(
         f_perp_dot_r, test_args.f_norm, test_args.r_norm,
     )
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, dimensionless)
-    result_value = convert_to(result, dimensionless).evalf(3)
-    assert result_value == approx(0.0, abs=1e-15)
+    assert_equal(result, 0.0)
 
 
 def test_law_parallel(test_args):
@@ -61,6 +55,4 @@ def test_law_parallel(test_args):
     result = cosine_law.calculate_cosine_between_vectors(
         f_parallel_dot_r, test_args.f_norm, test_args.r_norm,
     )
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, dimensionless)
-    result_value = convert_to(result, dimensionless).evalf(3)
-    assert result_value == approx(1.0, 1e-3)
+    assert_equal(result, 1.0)
