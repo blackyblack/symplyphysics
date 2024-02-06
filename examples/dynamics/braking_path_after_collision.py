@@ -46,9 +46,21 @@ potential_energy_before_1 = potential_energy_def.law.rhs.subs({
     potential_energy_def.free_fall_acceleration: units.acceleration_due_to_gravity,
 })
 
+# Block 1 slides from rest.
+kinetic_energy_before_1 = kinetic_energy_def.law.rhs.subs({
+    kinetic_energy_def.body_mass: mass_1,
+    kinetic_energy_def.body_velocity: 0,
+})
+
 mechanical_energy_before_1 = mechanical_energy_def.definition.rhs.subs({
     mechanical_energy_def.potential_energy: potential_energy_before_1,
-    mechanical_energy_def.kinetic_energy: 0,
+    mechanical_energy_def.kinetic_energy: kinetic_energy_before_1,
+})
+
+# Block 1 slides down to zero elevation level.
+potential_energy_after_1 = potential_energy_def.law.rhs.subs({
+    potential_energy_def.height: 0,
+    potential_energy_def.body_mass: mass_1,
 })
 
 kinetic_energy_after_1 = kinetic_energy_def.law.rhs.subs({
@@ -57,7 +69,7 @@ kinetic_energy_after_1 = kinetic_energy_def.law.rhs.subs({
 })
 
 mechanical_energy_after_1 = mechanical_energy_def.definition.rhs.subs({
-    mechanical_energy_def.potential_energy: 0,
+    mechanical_energy_def.potential_energy: potential_energy_after_1,
     mechanical_energy_def.kinetic_energy: kinetic_energy_after_1,
 })
 
