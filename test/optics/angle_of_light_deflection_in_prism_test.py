@@ -1,13 +1,11 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from sympy import pi
 from symplyphysics import (
+    assert_equal,
     units,
-    SI,
-    convert_to,
     Quantity,
     errors,
-    dimensionless,
 )
 from symplyphysics.laws.optics import angle_of_light_deflection_in_prism as angle_law
 
@@ -28,9 +26,7 @@ def test_args_fixture():
 
 def test_basic_angle_deviation(test_args):
     result = angle_law.calculate_angle_deviation(test_args.angle_faces, test_args.refractive_index)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, dimensionless)
-    result = convert_to(result, dimensionless).evalf(5)
-    assert result == approx(1.1781, rel=0.01)
+    assert_equal(result, 1.1781)
 
 
 def test_bad_angle_faces(test_args):

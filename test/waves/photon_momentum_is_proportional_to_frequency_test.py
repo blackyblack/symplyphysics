@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.waves import photon_momentum_is_proportional_to_frequency as photon_momentum_law
 
@@ -25,9 +24,7 @@ def test_args_fixture():
 
 def test_basic_momentum(test_args):
     result = photon_momentum_law.calculate_momentum(test_args.frequency)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.momentum)
-    result_current = convert_to(result, units.newton * units.second).evalf(6)
-    assert result_current == approx(6.6307632061911e-26, 0.00001)
+    assert_equal(result, 6.6307632061911e-26 * units.newton * units.second)
 
 
 def test_bad_frequency():

@@ -1,12 +1,11 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from sympy.physics.units import prefixes
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.electricity import inductance_of_solenoid_depends_on_permeability_number_of_turns_volume as inductance_law
 
@@ -31,9 +30,7 @@ def test_args_fixture():
 def test_basic_inductance(test_args):
     result = inductance_law.calculate_inductance(test_args.relative_permeability,
         test_args.number_of_turns, test_args.volume)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.inductance)
-    result_voltage = convert_to(result, prefixes.micro * units.henry).evalf(5)
-    assert result_voltage == approx(125.6, 0.01)
+    assert_equal(result, 125.6 * prefixes.micro * units.henry)
 
 
 def test_bad_relative_permeability(test_args):

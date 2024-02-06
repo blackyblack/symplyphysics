@@ -1,7 +1,6 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from symplyphysics import (errors, units, Quantity)
-
+from pytest import fixture, raises
+from symplyphysics import (assert_equal, errors, units, Quantity)
 from symplyphysics.laws.hydro import efficiency_of_the_hydraulic_press_from_force_and_height as efficiency
 
 
@@ -20,9 +19,9 @@ def test_args_fixture():
 
 
 def test_basic_efficiency(test_args):
-    result_efficiency = efficiency.calculate_efficiency(test_args.useful_force,
-        test_args.useful_height, test_args.expended_force, test_args.expended_height)
-    assert result_efficiency == approx(0.95, 0.001)
+    result = efficiency.calculate_efficiency(test_args.useful_force, test_args.useful_height,
+        test_args.expended_force, test_args.expended_height)
+    assert_equal(result, 0.95)
 
 
 def test_bad_force(test_args):

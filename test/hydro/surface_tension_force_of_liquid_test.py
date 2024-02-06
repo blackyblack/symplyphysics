@@ -1,17 +1,17 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from symplyphysics import (units, SI, convert_to, Quantity, errors, prefixes)
+from pytest import fixture, raises
+from symplyphysics import (assert_equal, units, Quantity, errors, prefixes)
 from symplyphysics.laws.hydro import surface_tension_force_of_liquid as force_law
 
 # Description
-## Let the liquid be water with a surface tension coefficient equal to 72.86e-3 newton.
+## Let the liquid be water with a surface tension coefficient equal to 7.286e-2 newton.
 ## Then, with a contour length of 3 centimeter, the surface tension force will be equal to 2185.8 micronewton.
 ## https://www.indigomath.ru//raschety/BP2MOO.html
 
 
 @fixture(name="test_args")
 def test_args_fixture():
-    surface_coefficient = Quantity(72.86e-3 * units.newton / units.meter)
+    surface_coefficient = Quantity(7.286e-2 * units.newton / units.meter)
     contour_length = Quantity(3 * units.centimeter)
 
     Args = namedtuple("Args", ["surface_coefficient", "contour_length"])
@@ -20,9 +20,7 @@ def test_args_fixture():
 
 def test_basic_force(test_args):
     result = force_law.calculate_force(test_args.surface_coefficient, test_args.contour_length)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
-    result = convert_to(result, prefixes.micro * units.newton).evalf(5)
-    assert result == approx(2185.8, rel=0.01)
+    assert_equal(result, 2185.8 * prefixes.micro * units.newton)
 
 
 def test_bad_surface_coefficient(test_args):

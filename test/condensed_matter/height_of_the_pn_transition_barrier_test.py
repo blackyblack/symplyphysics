@@ -1,10 +1,9 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     units,
     errors,
-    SI,
-    convert_to,
     Quantity,
 )
 from symplyphysics.laws.condensed_matter import height_of_the_pn_transition_barrier as barrier_law
@@ -22,9 +21,7 @@ def test_args_fixture():
     donors_concentration = Quantity(3e16 * (1 / units.centimeter**3))
     acceptors_concentration = Quantity(2e12 * (1 / units.centimeter**3))
     charge_carriers_concentration = Quantity(1e10 * (1 / units.centimeter**3))
-
     temperature = Quantity(300 * units.kelvin)
-
     charge_electron = Quantity(1.6e-19 * units.coulomb)
 
     Args = namedtuple("Args", [
@@ -42,9 +39,9 @@ def test_basic_height_barrier(test_args):
     result = barrier_law.calculate_height_barrier(test_args.donors_concentration,
         test_args.acceptors_concentration, test_args.charge_carriers_concentration,
         test_args.temperature, test_args.charge_electron)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.voltage)
-    result = convert_to(result, units.volt).evalf(5)
-    assert result == approx(0.529, rel=0.1)
+    # NOTE: onsite intrinsic charge carriers are caclulated instead of hardcoded 1e10 value,
+    #       therefore result in our test is not very accurate
+    assert_equal(result, 0.529 * units.volt, tolerance=0.1)
 
 
 def test_bad_donors_concentration(test_args):

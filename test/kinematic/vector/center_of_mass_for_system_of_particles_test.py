@@ -1,16 +1,15 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
     SI,
     QuantityVector,
 )
 from symplyphysics.laws.kinematic.vector import (
-    center_of_mass_for_system_of_particles as com_def,
-)
+    center_of_mass_for_system_of_particles as com_def,)
 
 # Description
 ## Particle 1 weighs 1 kg and has position (0, -1, 2) m.
@@ -52,8 +51,7 @@ def test_basic_law_two_particles(test_args):
     assert len(result.components) == 3
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
     for result_component, correct_value in zip(result.components, [1.6, 2.2, 1.2]):
-        result_value = convert_to(result_component, units.meter).evalf(3)
-        assert result_value == approx(correct_value, 1e-3)
+        assert_equal(result_component, correct_value * units.meter)
 
 
 def test_basic_law_three_particles(test_args):
@@ -64,8 +62,7 @@ def test_basic_law_three_particles(test_args):
     assert len(result.components) == 3
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
     for result_component, correct_value in zip(result.components, [-0.5, 1.75, 0.0]):
-        result_value = convert_to(result_component, units.meter).evalf(3)
-        assert result_value == approx(correct_value, 1e-3)
+        assert_equal(result_component, correct_value * units.meter)
 
 
 def test_bad_masses(test_args):

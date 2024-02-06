@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
     Quantity,
-    SI,
-    convert_to,
 )
 from symplyphysics.laws.relativistic.waves import longitudinal_frequency_shift_from_velocity as doppler_law
 
@@ -25,9 +24,7 @@ def test_args_fixture():
 def test_basic_frequency(test_args):
     result = doppler_law.calculate_observed_frequency(test_args.emitted_frequency,
         test_args.object_velocity)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.frequency)
-    result_freq = convert_to(result, units.hertz).evalf(6)
-    assert result_freq == approx(3.473e14, 0.001)
+    assert_equal(result, 3.473e14 * units.hertz)
 
 
 def test_bad_velocity(test_args):

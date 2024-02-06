@@ -1,12 +1,11 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     angle_type,
     errors,
     units,
     Quantity,
-    SI,
-    convert_to,
 )
 from symplyphysics.laws.waves import frequency_shift_from_velocity_and_angle as doppler_law
 
@@ -48,13 +47,9 @@ def test_basic_frequency(test_args):
     result_2 = doppler_law.calculate_observed_frequency(test_args.horn_frequency,
         test_args.sound_velocity, (test_args.zero_velocity, test_args.zero_angle),
         (test_args.bike_speed, observer_angle))
-    assert SI.get_dimension_system().equivalent_dims(result_1.dimension, units.frequency)
-    assert SI.get_dimension_system().equivalent_dims(result_2.dimension, units.frequency)
-    result_freq_1 = int(convert_to(result_1, units.hertz).evalf(4))
-    assert result_freq_1 == approx(2013, 0.001)
-    result_freq_2 = int(convert_to(result_2, units.hertz).evalf(4))
+    assert_equal(result_1, 2013 * units.hertz)
     # Doppler effect is irrelative at relatively low velocities
-    assert result_freq_2 == approx(result_freq_1, 0.001)
+    assert_equal(result_2, 2013 * units.hertz)
 
 
 # Classical Doppler effect does not have frequency shift when moving at 90 degrees
@@ -63,16 +58,12 @@ def test_transverse_frequency(test_args):
     result = doppler_law.calculate_observed_frequency(test_args.horn_frequency,
         test_args.sound_velocity, (test_args.train_speed, source_angle),
         (test_args.zero_velocity, test_args.zero_angle))
-    result_freq = int(convert_to(result, units.hertz).evalf(6))
-    initial_freq = int(convert_to(test_args.horn_frequency, units.hertz).evalf(6))
-    assert result_freq == approx(initial_freq, 0.001)
+    assert_equal(result, test_args.horn_frequency)
 
     result = doppler_law.calculate_observed_frequency(test_args.horn_frequency,
         test_args.sound_velocity, (test_args.zero_velocity, test_args.zero_angle),
         (test_args.train_speed, source_angle))
-    result_freq = int(convert_to(result, units.hertz).evalf(6))
-    initial_freq = int(convert_to(test_args.horn_frequency, units.hertz).evalf(6))
-    assert result_freq == approx(initial_freq, 0.001)
+    assert_equal(result, test_args.horn_frequency)
 
 
 def test_bad_velocity(test_args):

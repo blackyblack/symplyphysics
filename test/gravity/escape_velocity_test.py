@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.gravity import escape_velocity
 
@@ -14,7 +13,7 @@ from symplyphysics.laws.gravity import escape_velocity
 
 @fixture(name="test_args")
 def test_args_fixture():
-    m = Quantity(5.97 * 1e24 * units.kilograms)
+    m = Quantity(5.97e24 * units.kilograms)
     r = Quantity(6_371 * units.kilometers)
     h = Quantity(0 * units.meters)
     Args = namedtuple("Args", ["m", "h", "r"])
@@ -23,9 +22,7 @@ def test_args_fixture():
 
 def test_basic_velocity(test_args):
     result = escape_velocity.calculate_velocity(test_args.m, test_args.r, test_args.h)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.velocity)
-    result_velocity = convert_to(result, units.meter / units.second).evalf(4)
-    assert result_velocity == approx(7910, 0.001)
+    assert_equal(result, 7910 * units.meter / units.second)
 
 
 def test_bad_mass(test_args):

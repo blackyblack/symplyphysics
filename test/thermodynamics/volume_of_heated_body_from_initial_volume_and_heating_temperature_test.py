@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
     Quantity,
-    SI,
-    convert_to,
 )
 
 from symplyphysics.laws.thermodynamics import volume_of_heated_body_from_initial_volume_and_heating_temperature as heating
@@ -28,9 +27,7 @@ def test_args_fixture():
 def test_basic_volume(test_args):
     result = heating.calculate_final_volume(test_args.start_volume, test_args.expansion_coefficient,
         test_args.finish_temperature, test_args.start_temperature)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.volume)
-    result_volume = convert_to(result, units.liter).evalf(5)
-    assert result_volume == approx(20.4, 0.001)
+    assert_equal(result, 20.4 * units.liter)
 
 
 def test_bad_coefficient(test_args):

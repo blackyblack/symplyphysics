@@ -1,6 +1,6 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from symplyphysics import (units, SI, convert_to, Quantity, errors)
+from pytest import fixture, raises
+from symplyphysics import (assert_equal, units, Quantity, errors)
 from symplyphysics.laws.electricity import work_of_charge_transfer_from_charge_and_voltage as work_law
 
 # Description
@@ -20,9 +20,7 @@ def test_args_fixture():
 
 def test_basic_work_of_charge_transfer(test_args):
     result = work_law.calculate_work(test_args.charge, test_args.voltage)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result = convert_to(result, units.joule).evalf(5)
-    assert result == approx(5, rel=0.01)
+    assert_equal(result, 5 * units.joule)
 
 
 def test_bad_charge(test_args):

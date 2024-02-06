@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.electricity import electric_field_value_is_force_over_test_charge as electric_field
 
@@ -16,17 +15,13 @@ from symplyphysics.laws.electricity import electric_field_value_is_force_over_te
 def test_args_fixture():
     q0 = Quantity(0.5 * units.coulomb)
     F = Quantity(3 * units.newton)
-    E = Quantity(6 * units.newton / units.coulomb)
-    Args = namedtuple("Args", "q0 F E")
-    return Args(q0=q0, F=F, E=E)
+    Args = namedtuple("Args", "q0 F")
+    return Args(q0=q0, F=F)
 
 
 def test_basic_law(test_args):
     result = electric_field.calculate_electric_field(test_args.F, test_args.q0)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force / units.charge)
-    result_field = convert_to(result, units.newton / units.coulomb).evalf(2)
-    correct_field = convert_to(test_args.E, units.newton / units.coulomb).evalf(2)
-    assert result_field == approx(correct_field, 1e-2)
+    assert_equal(result, 6 * units.newton / units.coulomb)
 
 
 def test_bad_force(test_args):

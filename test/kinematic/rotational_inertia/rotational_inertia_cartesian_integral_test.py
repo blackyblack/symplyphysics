@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.kinematic.rotational_inertia import (
     rotational_inertia_cartesian_integral as rotational_inertia_law,)
@@ -26,9 +25,7 @@ def test_args_fixture():
 def test_basic_law(test_args):
     result = rotational_inertia_law.calculate_rotational_inertia(test_args.rho, test_args.x,
         test_args.y, test_args.z)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.mass * units.length**2)
-    result_value = convert_to(result, units.kilogram * units.meter**2).evalf(3)
-    assert result_value == approx(1.0, 1e-3)
+    assert_equal(result, 1 * units.kilogram * units.meter**2)
 
 
 def test_bad_density(test_args):

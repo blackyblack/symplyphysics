@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.kinematic import tangential_acceleration_of_rotating_body as tangential_acceleration_law
 
@@ -26,9 +25,7 @@ def test_args_fixture():
 def test_basic_law(test_args):
     result = tangential_acceleration_law.calculate_tangential_acceleration(
         test_args.alpha, test_args.r)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.acceleration)
-    result_value = convert_to(result, units.meter / units.second**2).evalf(3)
-    assert result_value == approx(0.35, 1e-3)
+    assert_equal(result, 0.35 * units.meter / units.second**2)
 
 
 def test_bad_angular_acceleration(test_args):

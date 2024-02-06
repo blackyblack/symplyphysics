@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from sympy import cos, pi, sin
 from symplyphysics import (
+    assert_equal,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.core import errors
 from symplyphysics.core.vectors.vectors import QuantityVector
@@ -24,22 +23,17 @@ def test_args_fixture():
 
 def test_basic_superposition(test_args):
     result = forces_law.calculate_resultant_force([test_args.F1, test_args.F2])
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
-    result_force_x = convert_to(result.components[0], units.newton).evalf(3)
-    assert result_force_x == approx(25, 0.001)
-    result_force_y = convert_to(result.components[1], units.newton).evalf(3)
-    assert result_force_y == approx(8.66, 0.001)
     assert len(result.components) == 2
+    assert_equal(result.components[0], 25 * units.newton)
+    assert_equal(result.components[1], 8.66 * units.newton)
 
 
 def test_three_forces_array(test_args):
     F3 = QuantityVector([Quantity(0, dimension=units.force), Quantity(-5 * units.newton)])
     result = forces_law.calculate_resultant_force([test_args.F1, test_args.F2, F3])
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
-    result_force_x = convert_to(result.components[0], units.newton).evalf(3)
-    assert result_force_x == approx(25, 0.001)
-    result_force_y = convert_to(result.components[1], units.newton).evalf(3)
-    assert result_force_y == approx(3.66, 0.001)
+    assert len(result.components) == 2
+    assert_equal(result.components[0], 25 * units.newton)
+    assert_equal(result.components[1], 3.66 * units.newton)
 
 
 def test_bad_force(test_args):
