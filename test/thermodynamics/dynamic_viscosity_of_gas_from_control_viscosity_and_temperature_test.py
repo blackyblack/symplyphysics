@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
     Quantity,
-    SI,
-    convert_to,
-    assert_approx,
 )
 
 from symplyphysics.laws.thermodynamics import dynamic_viscosity_of_gas_from_control_viscosity_and_temperature as dynamic_viscosity
@@ -29,9 +27,7 @@ def test_args_fixture():
 
 def test_basic_law(test_args):
     result = dynamic_viscosity.calculate_dynamic_viscosity(test_args.control_viscosity, test_args.control_temperature, test_args.sutherland_constant, test_args.set_temperature)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.pressure * units.time)
-    result_dynamic_viscosity = convert_to(result, units.pascal * units.second).evalf(3)
-    assert_approx(result_dynamic_viscosity, 1.86e-5)
+    assert_equal(result, 1.86e-5 * units.pascal * units.second)
 
 
 def test_bad_temperature(test_args):
