@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
     Quantity,
-    SI,
-    convert_to,
 )
 
 from symplyphysics.laws.hydro import volume_of_the_submerged_body_part_from_body_density_and_liquid_density as submerged
@@ -24,9 +22,7 @@ def test_args_fixture():
 def test_basic_volume(test_args):
     result = submerged.calculate_submerged_volume(test_args.body_volume, test_args.body_density,
         test_args.liquid_density)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.volume)
-    result_volume = convert_to(result, units.meter**3).evalf(5)
-    assert_approx(result_volume, 6)
+    assert_equal(result, 6 * units.meter**3)
 
 
 def test_bad_density(test_args):

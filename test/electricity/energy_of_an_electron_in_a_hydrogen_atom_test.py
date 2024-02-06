@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (assert_approx, units, Quantity, SI, convert_to, errors)
+from symplyphysics import (assert_equal, units, Quantity, errors)
 from symplyphysics.laws.electricity import energy_of_an_electron_in_a_hydrogen_atom as energy_law
 
 # Description
@@ -16,10 +16,8 @@ def test_args_fixture():
 
 
 def test_basic_energy_of_electron(test_args):
-    result_expr = energy_law.calculate_energy_of_electron(test_args.radius_of_electron)
-    assert SI.get_dimension_system().equivalent_dims(result_expr.dimension, units.energy)
-    result = convert_to(result_expr, units.electronvolt).evalf(5)
-    assert_approx(result, 13.6)
+    result = energy_law.calculate_energy_of_electron(test_args.radius_of_electron)
+    assert_equal(result, 13.6 * units.electronvolt)
 
 
 def test_bad_radius_of_electron():

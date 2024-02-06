@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (assert_approx, units, SI, convert_to, Quantity, errors, prefixes)
+from symplyphysics import (assert_equal, units, Quantity, errors, prefixes)
 from symplyphysics.laws.electricity import electrochemical_equivalent_from_molar_mass_and_valence as equivalent_law
 
 # Description
@@ -20,9 +20,7 @@ def test_args_fixture():
 
 def test_basic_equivalent(test_args):
     result = equivalent_law.calculate_equivalent(test_args.molar_mass, test_args.valence)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.mass / units.charge)
-    result = convert_to(result, prefixes.micro * units.gram / (units.coulomb)).evalf(5)
-    assert_approx(result, 248.74)
+    assert_equal(result, 248.74 * prefixes.micro * units.gram / units.coulomb)
 
 
 def test_bad_molar_mass(test_args):

@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.electricity import period_of_a_charged_particle_in_a_magnetic_field as period_law
 
@@ -28,9 +26,7 @@ def test_args_fixture():
 
 def test_basic_period(test_args):
     result = period_law.calculate_period(test_args.mass, test_args.charge, test_args.induction)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.time)
-    result_period = convert_to(result, units.second).evalf(5)
-    assert_approx(result_period, 1.047)
+    assert_equal(result, 1.047 * units.second)
 
 
 def test_bad_mass(test_args):

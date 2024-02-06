@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.nuclear import diffusion_area_from_diffusion_coefficient as diffusion_area
 
@@ -23,9 +21,7 @@ def test_args_fixture():
 
 def test_basic_diffusion_length(test_args):
     result = diffusion_area.calculate_diffusion_area(test_args.D, test_args.Sa)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.area)
-    result_diffusion = convert_to(result, units.centimeter**2).evalf(2)
-    assert_approx(result_diffusion, 2.54**2)
+    assert_equal(result, 2.54**2 * units.centimeter**2)
 
 
 def test_bad_diffusion_coefficient(test_args):

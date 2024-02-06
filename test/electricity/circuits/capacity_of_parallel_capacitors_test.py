@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.electricity.circuits import capacity_of_parallel_capacitors as parallel_capacitor
 
@@ -25,17 +23,13 @@ def test_args_fixture():
 
 def test_basic_capacitance(test_args):
     result = parallel_capacitor.calculate_parallel_capacitance([test_args.C1, test_args.C2])
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.capacitance)
-    result_capacitance = convert_to(result, units.farad).evalf(3)
-    assert_approx(result_capacitance, 5)
+    assert_equal(result, 5 * units.farad)
 
 
 def test_three_capacitors_array(test_args):
     C3 = Quantity(5 * units.farad)
     result = parallel_capacitor.calculate_parallel_capacitance([test_args.C1, test_args.C2, C3])
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.capacitance)
-    result_capacitance = convert_to(result, units.farad).evalf(3)
-    assert_approx(result_capacitance, 10)
+    assert_equal(result, 10 * units.farad)
 
 
 def test_bad_capacitance(test_args):

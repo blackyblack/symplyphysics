@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (assert_approx, units, SI, convert_to, Quantity, errors)
+from symplyphysics import (assert_equal, units, Quantity, errors)
 from symplyphysics.laws.electricity import magnetic_induction_of_solenoid as induction_law
 
 # Description
@@ -26,9 +26,7 @@ def test_args_fixture():
 def test_basic_induction(test_args):
     result = induction_law.calculate_induction(test_args.current, test_args.length,
         test_args.relative_permeability, test_args.number_turns)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.magnetic_density)
-    result = convert_to(result, units.tesla).evalf(5)
-    assert_approx(result, 3.3174e-3)
+    assert_equal(result, 3.3174e-3 * units.tesla)
 
 
 def test_bad_current(test_args):

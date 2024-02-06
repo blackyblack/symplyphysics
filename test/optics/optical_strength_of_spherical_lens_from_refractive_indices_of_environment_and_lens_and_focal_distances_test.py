@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (assert_approx, errors, units, Quantity, prefixes)
+from symplyphysics import (assert_equal, errors, units, Quantity, prefixes)
 
 from symplyphysics.laws.optics import optical_strength_of_spherical_lens_from_refractive_indices_of_environment_and_lens_and_focal_distances as spherical_lens_law
 
@@ -32,7 +32,7 @@ def test_args_fixture():
 def test_basic_refraction_index(test_args):
     result = spherical_lens_law.calculate_refraction_index_lens(test_args.do, test_args.di,
         test_args.rl, test_args.nm)
-    assert_approx(result, 1.35)
+    assert_equal(result, 1.35)
 
 
 def test_bad_distance(test_args):

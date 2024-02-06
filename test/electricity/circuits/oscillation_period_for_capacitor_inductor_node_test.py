@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.electricity.circuits import oscillation_period_for_capacitor_inductor_node as lc
 
@@ -25,9 +23,7 @@ def test_args_fixture():
 
 def test_basic_period(test_args):
     result = lc.calculate_oscillation_period(test_args.L, test_args.C)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.time)
-    result_period = convert_to(result, units.second).evalf(2)
-    assert_approx(result_period, 6.28)
+    assert_equal(result, 6.28 * units.second)
 
 
 def test_bad_inductance(test_args):

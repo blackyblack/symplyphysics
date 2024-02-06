@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.nuclear import macroscopic_cross_section_from_free_mean_path as macro_cs
 
@@ -23,10 +21,8 @@ def test_args_fixture():
 
 def test_basic_cross_section(test_args):
     result = macro_cs.calculate_cross_section(test_args.y)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, 1 / units.length)
-    result_cross_section = convert_to(result, 1 / units.centimeter).evalf(4)
     # boron carbide macroscopic cross-section is 84.3 cm^-1
-    assert_approx(result_cross_section, 84.3)
+    assert_equal(result, 84.3 / units.centimeter)
 
 
 def test_bad_microscopic_cross_section():

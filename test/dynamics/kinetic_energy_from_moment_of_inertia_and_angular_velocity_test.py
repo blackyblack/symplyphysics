@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.dynamics import kinetic_energy_from_moment_of_inertia_and_angular_velocity as kinetic_energy_law
 
@@ -24,9 +22,7 @@ def test_args_fixture():
 
 def test_basic_energy(test_args):
     result = kinetic_energy_law.calculate_energy(test_args.I, test_args.w)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_energy = convert_to(result, units.joule).evalf(2)
-    assert_approx(result_energy, 9)
+    assert_equal(result, 9 * units.joule)
 
 
 def test_bad_inertia_moment(test_args):

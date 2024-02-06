@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.kinematic.rotational_inertia.geometries import (
     slab_about_perpendicular_axis_through_center as slab_formula)
@@ -28,9 +26,7 @@ def test_args_fixture():
 
 def test_basic_law(test_args):
     result = slab_formula.calculate_rotational_inertia(test_args.m, test_args.a, test_args.b)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.mass * units.length**2)
-    result_value = convert_to(result, units.kilogram * units.meter**2).evalf(3)
-    assert_approx(result_value, 0.1042)
+    assert_equal(result, 0.1042 * units.kilogram * units.meter**2)
 
 
 def test_bad_mass(test_args):

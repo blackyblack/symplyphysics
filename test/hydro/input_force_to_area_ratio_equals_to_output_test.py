@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
     Quantity,
-    SI,
-    convert_to,
 )
 
 from symplyphysics.laws.hydro import input_force_to_area_ratio_equals_to_output as hydraulic
@@ -24,9 +22,7 @@ def test_args_fixture():
 def test_basic_force(test_args):
     result = hydraulic.calculate_output_force(test_args.first_force, test_args.first_area,
         test_args.second_area)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
-    result_force = convert_to(result, units.newton).evalf(5)
-    assert_approx(result_force, 20)
+    assert_equal(result, 20 * units.newton)
 
 
 def test_bad_area(test_args):

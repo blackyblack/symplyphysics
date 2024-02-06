@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.gravity import gravity_force_from_mass_and_distance as gravity_law
 
@@ -27,9 +25,7 @@ def test_args_fixture():
 
 def test_basic_force(test_args):
     result = gravity_law.calculate_force(test_args.m1, test_args.m2, test_args.R)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
-    result_force = convert_to(result, units.newton).evalf(7)
-    assert_approx(result_force, 0.27809583)
+    assert_equal(result, 0.27809583 * units.newton)
 
 
 def test_bad_mass(test_args):

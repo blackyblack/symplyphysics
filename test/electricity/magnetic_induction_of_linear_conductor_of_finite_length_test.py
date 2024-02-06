@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from sympy import pi
-from symplyphysics import (assert_approx, units, SI, convert_to, Quantity, errors, prefixes)
+from symplyphysics import (assert_equal, units, Quantity, errors, prefixes)
 from symplyphysics.laws.electricity import magnetic_induction_of_linear_conductor_of_finite_length as induction_law
 
 # Description
@@ -31,17 +31,13 @@ def test_args_fixture():
 def test_basic_induction(test_args):
     result = induction_law.calculate_induction(test_args.relative_permeability, test_args.current,
         test_args.first_angle, test_args.second_angle, test_args.distance)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.magnetic_density)
-    result = convert_to(result, prefixes.nano * units.tesla).evalf(5)
-    assert_approx(result, 603)
+    assert_equal(result, 603 * prefixes.nano * units.tesla)
 
 
 def test_swap_angle(test_args):
     result = induction_law.calculate_induction(test_args.relative_permeability, test_args.current,
         test_args.second_angle, test_args.first_angle, test_args.distance)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.magnetic_density)
-    result = convert_to(result, prefixes.nano * units.tesla).evalf(5)
-    assert_approx(result, 603)
+    assert_equal(result, 603 * prefixes.nano * units.tesla)
 
 
 def test_bad_relative_permeability(test_args):
