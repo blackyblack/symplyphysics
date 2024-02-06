@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import assert_approx, Quantity, units, SI, convert_to, errors, dimensionless
+from symplyphysics import assert_equal, Quantity, units, errors
 from symplyphysics.laws.kinematic import angular_position_is_arc_length_over_radius as angular_position_def
 
 # Description
@@ -18,9 +18,7 @@ def test_args_fixture():
 
 def test_basic_law(test_args):
     result = angular_position_def.calculate_angular_position(test_args.s, test_args.r)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, dimensionless)
-    result_angle = convert_to(result, units.radian).evalf(3)
-    assert_approx(result_angle, 2)
+    assert_equal(result, 2 * units.radian)
 
 
 def test_bad_arc_length(test_args):

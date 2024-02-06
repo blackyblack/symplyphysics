@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.dynamics import braking_path as path_law
 
@@ -29,9 +27,7 @@ def test_args_fixture():
 def test_basic_braking_path(test_args):
     result = path_law.calculate_braking_path(test_args.mass, test_args.velocity,
         test_args.friction_force)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
-    result_path = convert_to(result, units.meter).evalf(5)
-    assert_approx(result_path, 50)
+    assert_equal(result, 50 * units.meter)
 
 
 def test_bad_mass(test_args):

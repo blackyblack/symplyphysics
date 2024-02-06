@@ -2,12 +2,10 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy import pi
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
     Quantity,
-    SI,
-    convert_to,
 )
 from symplyphysics.laws.optics import bragg_diffraction_from_angle_diffraction_order_wavelength as distance_law
 
@@ -29,9 +27,7 @@ def test_args_fixture():
 def test_basic_distance(test_args):
     result = distance_law.calculate_distance(test_args.diffraction_order, test_args.wavelength,
         test_args.angle)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
-    result_value = convert_to(result, units.nanometer).evalf(4)
-    assert_approx(result_value, 494.9)
+    assert_equal(result, 494.9 * units.nanometer)
 
 
 def test_bad_diffraction_order(test_args):

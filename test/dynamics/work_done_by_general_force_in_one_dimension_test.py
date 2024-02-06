@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.dynamics import work_done_by_general_force_in_one_dimension as work_law
 
@@ -28,9 +26,7 @@ def test_args_fixture():
 
 def test_basic_law(test_args):
     result = work_law.calculate_work(test_args.f0, test_args.f1, test_args.x0, test_args.x1)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_work = convert_to(result, units.joule).evalf(3)
-    assert_approx(result_work, 4)
+    assert_equal(result, 4 * units.joule)
 
 
 def test_bad_force(test_args):

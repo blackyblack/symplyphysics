@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.dynamics import (
     total_work_equals_change_in_kinetic_energy as work_energy_principle,)
@@ -26,9 +24,7 @@ def test_args_fixture():
 
 def test_basic_law(test_args):
     result = work_energy_principle.calculate_total_work(test_args.K0, test_args.K1)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_value = convert_to(result, units.joule).evalf(3)
-    assert_approx(result_value, 4)
+    assert_equal(result, 4 * units.joule)
 
 
 def test_bad_energies(test_args):

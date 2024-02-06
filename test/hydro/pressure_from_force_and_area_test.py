@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
     Quantity,
-    SI,
-    convert_to,
 )
 
 from symplyphysics.laws.hydro import pressure_from_force_and_area as pressure
@@ -25,9 +23,7 @@ def test_args_fixture():
 
 def test_basic_pressure(test_args):
     result = pressure.calculate_pressure(test_args.force, test_args.area)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.pressure)
-    result_pressure = convert_to(result, units.pascal).evalf(5)
-    assert_approx(result_pressure, 294000)
+    assert_equal(result, 294000 * units.pascal)
 
 
 def test_bad_force(test_args):

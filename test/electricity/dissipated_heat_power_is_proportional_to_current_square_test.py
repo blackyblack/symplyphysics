@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.electricity import dissipated_heat_power_is_proportional_to_current_square as joule_lenz_law
 
@@ -25,9 +23,7 @@ def test_args_fixture():
 
 def test_basic_power(test_args):
     result = joule_lenz_law.calculate_heat_power(test_args.C, test_args.R)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.power)
-    result_power = convert_to(result, units.watt).evalf(2)
-    assert_approx(result_power, 2)
+    assert_equal(result, 2 * units.watt)
 
 
 def test_bad_current(test_args):

@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.electricity import electric_charge_is_constant_in_isolated_system as charge_law
 
@@ -20,9 +18,7 @@ def test_args_fixture():
 
 def test_basic_charge_conservation(test_args):
     result = charge_law.calculate_charge_after(test_args.Qs)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.charge)
-    result_charge = convert_to(result, units.coulomb).evalf(4)
-    assert_approx(result_charge, 1)
+    assert_equal(result, 1 * units.coulomb)
 
 
 def test_bad_charge():

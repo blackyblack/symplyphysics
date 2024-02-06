@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
     Quantity,
-    SI,
-    convert_to,
 )
 from symplyphysics.laws.thermodynamics.equations_of_state import van_der_waals_state_equation as waals_law
 
@@ -28,17 +27,16 @@ def test_args_fixture():
     t = Quantity(300 * units.kelvins)
     v = Quantity(0.25 * units.liters)
     nu = Quantity(1 * units.mole)
-    a = Quantity(0.191 * units.pascals * (units.meter ** 3 / units.mole) ** 2)
-    b = Quantity(4.532 * 1E-5 * units.meters ** 3 / units.moles)
+    a = Quantity(0.191 * units.pascals * (units.meter**3 / units.mole)**2)
+    b = Quantity(4.532 * 1e-5 * units.meters**3 / units.moles)
     Args = namedtuple("Args", ["t", "v", "nu", "a", "b"])
     return Args(t=t, v=v, nu=nu, a=a, b=b)
 
 
 def test_basic_pressure(test_args):
-    result = waals_law.calculate_pressure(test_args.v, test_args.t, test_args.nu, test_args.a, test_args.b)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.pressure)
-    result_ = convert_to(result, units.atm).evalf(5)
-    assert result_ == approx(90.0, 0.01)
+    result = waals_law.calculate_pressure(test_args.v, test_args.t, test_args.nu, test_args.a,
+        test_args.b)
+    assert_equal(result, 90 * units.atm, tolerance=0.01)
 
 
 def test_bad_temperature(test_args):

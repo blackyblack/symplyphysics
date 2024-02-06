@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import raises, fixture
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.electricity import charge_is_quantized
 
@@ -20,9 +18,7 @@ def test_args_fixture():
 
 def test_basic_law(test_args):
     result = charge_is_quantized.calculate_charge(test_args.n)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.charge)
-    result_charge = convert_to(result, units.coulomb).evalf(3)
-    assert_approx(result_charge, 4.81e-18)
+    assert_equal(result, 4.81e-18 * units.coulomb)
 
 
 def test_bad_args():

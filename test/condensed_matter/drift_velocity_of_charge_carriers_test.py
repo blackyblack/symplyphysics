@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (assert_approx, units, SI, convert_to, Quantity, errors)
+from symplyphysics import (assert_equal, units, Quantity, errors)
 from symplyphysics.laws.condensed_matter import drift_velocity_of_charge_carriers as velocity_law
 
 # Description
@@ -21,9 +21,7 @@ def test_args_fixture():
 def test_basic_drift_velocity(test_args):
     result = velocity_law.calculate_velocity(test_args.charge_carriers_mobility,
         test_args.electric_intensity)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length / units.time)
-    result = convert_to(result, units.meter / units.second).evalf(5)
-    assert_approx(result, 1e5)
+    assert_equal(result, 1e5 * units.meter / units.second)
 
 
 def test_bad_charge_carriers_mobility(test_args):

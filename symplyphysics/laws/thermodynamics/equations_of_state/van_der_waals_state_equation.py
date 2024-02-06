@@ -26,15 +26,14 @@ volume = Symbol("volume", units.volume)
 temperature = Symbol("temperature", units.temperature)
 amount_of_substance = Symbol("amount_of_substance", units.amount_of_substance)
 
-bonding_forces_parameter = Symbol("bonding_forces_parameter", units.pressure * (units.volume / units.amount_of_substance) ** 2)
-molecules_volume_parameter = Symbol("molecules_volume_parameter", units.volume / units.amount_of_substance)
+bonding_forces_parameter = Symbol("bonding_forces_parameter",
+    units.pressure * (units.volume / units.amount_of_substance)**2)
+molecules_volume_parameter = Symbol("molecules_volume_parameter",
+    units.volume / units.amount_of_substance)
 
-
-law = Eq(
-    (pressure + bonding_forces_parameter * (amount_of_substance / volume) ** 2) *
+law = Eq((pressure + bonding_forces_parameter * (amount_of_substance / volume)**2) *
     (volume - molecules_volume_parameter * amount_of_substance),
-    amount_of_substance * units.molar_gas_constant * temperature
-)
+    amount_of_substance * units.molar_gas_constant * temperature)
 
 
 def print_law() -> str:
@@ -49,13 +48,8 @@ def print_law() -> str:
     molecules_volume_parameter_=molecules_volume_parameter,
 )
 @validate_output(pressure)
-def calculate_pressure(
-    volume_: Quantity,
-    temperature_: Quantity,
-    amount_of_substance_: Quantity,
-    bonding_forces_parameter_: Quantity,
-    molecules_volume_parameter_: Quantity
-) -> Quantity:
+def calculate_pressure(volume_: Quantity, temperature_: Quantity, amount_of_substance_: Quantity,
+    bonding_forces_parameter_: Quantity, molecules_volume_parameter_: Quantity) -> Quantity:
     solved = solve(law, pressure, dict=True)[0][pressure]
     result_expr = solved.subs({
         volume: volume_,

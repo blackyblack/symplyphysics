@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (assert_approx, units, SI, Quantity, convert_to, errors)
+from symplyphysics import (assert_equal, units, Quantity, errors)
 from symplyphysics.laws.waves import frequency_of_the_electron_transition_in_hydrogen as frequency_law
 
 # Description
@@ -20,9 +20,7 @@ def test_args_fixture():
 def test_basic_transition_frequency(test_args):
     result = frequency_law.calculate_transition_frequency(test_args.number_level_to,
         test_args.number_level_from)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.frequency)
-    result_value = convert_to(result, units.hertz).evalf(5)
-    assert_approx(result_value, 4.568e14)
+    assert_equal(result, 4.568e14 * units.hertz)
 
 
 def test_bad_number_level_to(test_args):

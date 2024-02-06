@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (assert_approx, units, SI, convert_to, Quantity, errors)
+from symplyphysics import (assert_equal, units, Quantity, errors)
 from symplyphysics.laws.electricity import electric_dipole_moment as moment_law
 
 # Description
@@ -20,9 +20,7 @@ def test_args_fixture():
 
 def test_basic_electric_dipole_moment(test_args):
     result = moment_law.calculate_electric_moment(test_args.charge, test_args.distance)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.charge * units.length)
-    result = convert_to(result, units.coulomb * units.meter).evalf(5)
-    assert_approx(result, 2)
+    assert_equal(result, 2 * units.coulomb * units.meter)
 
 
 def test_bad_charge(test_args):

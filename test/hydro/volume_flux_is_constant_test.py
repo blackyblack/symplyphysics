@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.hydro import volume_flux_is_constant as continuity_equation
 
@@ -33,9 +31,7 @@ def test_args_fixture():
 def test_basic_flow_speed(test_args):
     result = continuity_equation.calculate_fluid_speed(test_args.area_before,
         test_args.speed_before, test_args.area_after)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.velocity)
-    result_velocity = convert_to(result, units.meter / units.second).evalf(3)
-    assert_approx(result_velocity, 3)
+    assert_equal(result, 3 * units.meter / units.second)
 
 
 def test_bad_tube_area_before(test_args):

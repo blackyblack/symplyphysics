@@ -1,10 +1,9 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
     SI,
     QuantityVector,
@@ -52,8 +51,7 @@ def test_basic_law_two_particles(test_args):
     assert len(result.components) == 3
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
     for result_component, correct_value in zip(result.components, [1.6, 2.2, 1.2]):
-        result_value = convert_to(result_component, units.meter).evalf(3)
-        assert_approx(result_value, correct_value)
+        assert_equal(result_component, correct_value * units.meter)
 
 
 def test_basic_law_three_particles(test_args):
@@ -64,8 +62,7 @@ def test_basic_law_three_particles(test_args):
     assert len(result.components) == 3
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
     for result_component, correct_value in zip(result.components, [-0.5, 1.75, 0.0]):
-        result_value = convert_to(result_component, units.meter).evalf(3)
-        assert_approx(result_value, correct_value)
+        assert_equal(result_component, correct_value * units.meter)
 
 
 def test_bad_masses(test_args):

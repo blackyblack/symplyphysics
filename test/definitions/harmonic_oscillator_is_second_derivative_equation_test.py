@@ -2,12 +2,10 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy import pi
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.definitions import harmonic_oscillator_is_second_derivative_equation as oscillator
 
@@ -27,9 +25,7 @@ def test_args_fixture():
 
 def test_basic_displacement(test_args):
     result = oscillator.calculate_displacement(test_args.A, test_args.w, test_args.t)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
-    result_frequency = convert_to(result, units.meter).evalf(4)
-    assert_approx(result_frequency, -20)
+    assert_equal(result, -20 * units.meter)
 
 
 def test_bad_amplitude(test_args):

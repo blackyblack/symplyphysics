@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from sympy import pi
-from symplyphysics import (assert_approx, units, SI, convert_to, Quantity, errors)
+from symplyphysics import (assert_equal, units, Quantity, errors)
 
 from symplyphysics.laws.electricity import force_from_charge_velocity_magnetic_induction as force_law
 
@@ -25,9 +25,7 @@ def test_args_fixture():
 def test_basic_force(test_args):
     result = force_law.calculate_force(test_args.charge, test_args.velocity, test_args.angle,
         test_args.induction)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
-    result = convert_to(result, units.newton).evalf(5)
-    assert_approx(result, 0.424)
+    assert_equal(result, 0.424 * units.newton)
 
 
 def test_bad_charge(test_args):

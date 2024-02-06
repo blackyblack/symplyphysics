@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 import symplyphysics.laws.hydro.inner_pressure_of_fluid_is_constant as bernoullis_equation
 
@@ -20,9 +18,7 @@ def test_args_fixture():
 
 def test_bernoullis_equation(test_args):
     result = bernoullis_equation.calculate_inner_pressure(test_args.inner_pressure_before)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.pressure)
-    result_pressure = convert_to(result, units.pascal).evalf(3)
-    assert_approx(result_pressure, 1)
+    assert_equal(result, 1 * units.pascal)
 
 
 def test_bad_inner_pressure_before():

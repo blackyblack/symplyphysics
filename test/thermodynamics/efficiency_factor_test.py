@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (assert_approx, errors, units, Quantity)
+from symplyphysics import (assert_equal, errors, units, Quantity)
 from symplyphysics.laws.thermodynamics import efficiency_factor as efficiency_law
 
 # Description
@@ -17,7 +17,7 @@ def test_args_fixture():
 
 def test_basic_efficiency(test_args):
     result = efficiency_law.calculate_efficiency_factor(test_args.q_h, test_args.q_r)
-    assert_approx(result, 0.25)
+    assert_equal(result, 0.25)
 
 
 def test_bad_efficiency(test_args):
