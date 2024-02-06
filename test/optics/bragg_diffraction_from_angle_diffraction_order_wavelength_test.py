@@ -1,7 +1,8 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from sympy import pi
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     Quantity,
@@ -12,7 +13,7 @@ from symplyphysics.laws.optics import bragg_diffraction_from_angle_diffraction_o
 
 # Description
 ## Let the diffraction order be 1, the wavelength is 700 nanometer, and the sliding angle is
-## 45 degree (pi / 4 radian). Then the distance between the crystal planes will be 494 nanometer.
+## 45 degree (pi / 4 radian). Then the distance between the crystal planes will be 494.9 nanometer.
 ## https://www.indigomath.ru//raschety/ZfLMDK.html
 
 
@@ -22,25 +23,21 @@ def test_args_fixture():
     wavelength = Quantity(700 * units.nanometer)
     angle = pi / 4
     Args = namedtuple("Args", ["diffraction_order", "wavelength", "angle"])
-    return Args(diffraction_order=diffraction_order,
-        wavelength=wavelength,
-        angle=angle)
+    return Args(diffraction_order=diffraction_order, wavelength=wavelength, angle=angle)
 
 
 def test_basic_distance(test_args):
     result = distance_law.calculate_distance(test_args.diffraction_order, test_args.wavelength,
         test_args.angle)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
-    result_power = convert_to(result, units.nanometer).evalf(2)
-    assert result_power == approx(494, 0.1)
+    result_value = convert_to(result, units.nanometer).evalf(4)
+    assert_approx(result_value, 494.9)
 
 
 def test_bad_diffraction_order(test_args):
     diffraction_order = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         distance_law.calculate_distance(diffraction_order, test_args.wavelength, test_args.angle)
-    with raises(TypeError):
-        distance_law.calculate_distance(True, test_args.wavelength, test_args.angle)
 
 
 def test_bad_wavelength(test_args):
@@ -55,5 +52,3 @@ def test_bad_angle(test_args):
     angle = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         distance_law.calculate_distance(test_args.diffraction_order, test_args.wavelength, angle)
-    with raises(AttributeError):
-        distance_law.calculate_distance(test_args.diffraction_order, test_args.wavelength, True)

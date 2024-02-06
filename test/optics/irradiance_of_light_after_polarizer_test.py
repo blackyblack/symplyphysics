@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     Quantity,
@@ -26,7 +27,7 @@ def test_basic_irradiance(test_args):
     result = malus_law.calculate_irradiance(test_args.I0, test_args.k, test_args.phi)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.power / units.area)
     result_irradiance = convert_to(result, units.watt / units.meter**2).evalf(3)
-    assert result_irradiance == approx(0.375, 0.001)
+    assert_approx(result_irradiance, 0.375)
 
 
 def test_bad_irradiance_initial(test_args):

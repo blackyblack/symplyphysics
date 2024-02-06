@@ -1,7 +1,8 @@
 from collections import namedtuple
 from sympy import I
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -25,7 +26,7 @@ def test_basic_admittance(test_args):
     result = admittance_def.calculate_admittance(test_args.Z)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.conductance)
     result_admittance = abs(convert_to(result, admittance_def.definition_units_SI).evalf(2))
-    assert result_admittance == approx(0.5, 0.001)
+    assert_approx(result_admittance, 0.5)
 
 
 def test_bad_impedance():

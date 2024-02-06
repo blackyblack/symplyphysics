@@ -1,13 +1,6 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from symplyphysics import (
-    errors,
-    units,
-    convert_to,
-    Quantity,
-    SI,
-    angle_type,
-)
+from pytest import fixture, raises
+from symplyphysics import (assert_approx, errors, units, convert_to, Quantity, SI)
 from symplyphysics.laws.kinematic import angular_velocity_from_constant_angular_acceleration as angular_velocity_law
 
 # Description
@@ -25,10 +18,11 @@ def test_args_fixture():
 
 
 def test_basic_law(test_args):
-    result = angular_velocity_law.calculate_angular_velocity(test_args.w0, test_args.alpha, test_args.t)
+    result = angular_velocity_law.calculate_angular_velocity(test_args.w0, test_args.alpha,
+        test_args.t)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, 1 / units.time)
     result_value = convert_to(result, units.radian / units.second).evalf(3)
-    assert result_value == approx(6.0, 1e-3)
+    assert_approx(result_value, 6)
 
 
 def test_bad_angular_velocity(test_args):

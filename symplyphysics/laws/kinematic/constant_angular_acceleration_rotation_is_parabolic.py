@@ -39,21 +39,21 @@ law = Eq(
     initial_angular_velocity * time + angular_acceleration * time**2 / 2,
 )
 
-
 # Derive law from definitions of angular velocity and acceleration
 
 angular_velocity_formula = dsolve(
     angular_acceleration_def.definition.subs(angular_acceleration_def.time, time),
     angular_acceleration_def.angular_velocity(time),
 ).rhs.subs(
-    angular_acceleration_def.angular_acceleration(time), angular_acceleration,
+    angular_acceleration_def.angular_acceleration(time),
+    angular_acceleration,
 ).doit()
 
 angular_velocity = Symbol("angular_velocity", angle_type / units.time)
 angular_velocity_derived = solve(
     [
-        Eq(initial_angular_velocity, angular_velocity_formula.subs(time, 0)),
-        Eq(angular_velocity, angular_velocity_formula)
+    Eq(initial_angular_velocity, angular_velocity_formula.subs(time, 0)),
+    Eq(angular_velocity, angular_velocity_formula)
     ],
     ("C1", angular_velocity),
     dict=True,
@@ -63,14 +63,15 @@ angular_displacement_formula = dsolve(
     angular_velocity_def.definition.subs(angular_velocity_def.time, time),
     angular_velocity_def.angle_function(time),
 ).rhs.subs(
-    angular_velocity_def.angular_velocity(time), angular_velocity_derived,
+    angular_velocity_def.angular_velocity(time),
+    angular_velocity_derived,
 ).doit()
 
 angular_displacement_derived = solve(
     [
-        # initial angular displacement is 0 by condition
-        Eq(0, angular_displacement_formula.subs(time, 0)),
-        Eq(angular_displacement, angular_displacement_formula)
+    # initial angular displacement is 0 by condition
+    Eq(0, angular_displacement_formula.subs(time, 0)),
+    Eq(angular_displacement, angular_displacement_formula)
     ],
     ("C1", angular_displacement),
     dict=True,

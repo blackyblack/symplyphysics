@@ -64,7 +64,8 @@ acceleration_vec = Vector([
 
 force_from_law = force_law(acceleration_vec)
 
-for component_derived, component_from_law in zip(force_derived.components, force_from_law.components):
+for component_derived, component_from_law in zip(force_derived.components,
+    force_from_law.components):
     assert expr_equals(component_derived, component_from_law)
 
 
@@ -80,7 +81,5 @@ def calculate_force(mass_: Quantity, acceleration_: QuantityVector) -> QuantityV
 @validate_output(units.acceleration)
 def calculate_acceleration(mass_: Quantity, force_: QuantityVector) -> QuantityVector:
     result_acceleration = acceleration_law(force_)
-    acceleration_components = list_of_quantities(
-        result_acceleration.components, {mass: mass_}
-    )
+    acceleration_components = list_of_quantities(result_acceleration.components, {mass: mass_})
     return QuantityVector(acceleration_components, force_.coordinate_system)

@@ -1,7 +1,8 @@
 from collections import namedtuple
-from pytest import approx, fixture
+from pytest import fixture
 from sympy import (S, sin, cos, pi, sqrt)
 from symplyphysics import (
+    assert_approx,
     SI,
     Quantity,
     convert_to,
@@ -28,7 +29,7 @@ def test_basic_flux(test_args):
         sqrt(flux_def.parameter1**2 + 1) * sin(flux_def.parameter2), -flux_def.parameter1
     ]
     result = flux_def.calculate_flux(field, surface, (-2, 1), (0, 2 * pi))
-    assert convert_to(result, S.One).evalf(4) == approx((12 * pi).evalf(4), 0.001)
+    assert_approx(convert_to(result, S.One).evalf(4), (12 * pi).evalf(4))
 
 
 def test_electric_intensity_flux(test_args):
@@ -41,5 +42,6 @@ def test_electric_intensity_flux(test_args):
     result = flux_def.calculate_flux(field, surface, (0, 0.02 * test_args.radius_unit), (0, 2 * pi))
     assert SI.get_dimension_system().equivalent_dims(result.dimension,
         units.force * units.area / units.charge)
-    assert convert_to(result, units.newton * units.meter**2 / units.coulomb).evalf(4) == approx(
-        (0.04 * pi).evalf(4), 0.001)
+    assert_approx(
+        convert_to(result, units.newton * units.meter**2 / units.coulomb).evalf(4),
+        (0.04 * pi).evalf(4))

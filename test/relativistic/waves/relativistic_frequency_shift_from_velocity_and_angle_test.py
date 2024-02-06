@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     angle_type,
     errors,
     units,
@@ -32,7 +33,7 @@ def test_basic_frequency(test_args):
         test_args.object_velocity, test_args.source_angle)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.frequency)
     result_freq = convert_to(result, units.hertz).evalf(4)
-    assert result_freq == approx(1.0772e15, 0.0001)
+    assert_approx(result_freq, 1.0772e15)
 
 
 # Relativistic Doppler effect has visible frequency shift when moving at 90 degrees
@@ -42,7 +43,7 @@ def test_transverse_frequency(test_args):
         test_args.object_velocity, source_angle)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.frequency)
     result_freq = convert_to(result, units.hertz).evalf(6)
-    assert result_freq == approx(2.3755e14, 0.001)
+    assert_approx(result_freq, 2.3755e14)
 
 
 def test_bad_velocity(test_args):

@@ -1,7 +1,8 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from sympy import S
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -29,14 +30,14 @@ def test_basic_buckling(test_args):
         test_args.L2)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, 1 / units.area)
     result_buckling = convert_to(result, 1 / units.centimeter**2).evalf(4)
-    assert result_buckling == approx(0.000412, 0.01)
+    assert_approx(result_buckling, 0.0004109)
 
 
 def test_zero_buckling(test_args):
     result = buckling.calculate_geometric_buckling_squared(1, 1, test_args.L2)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, dimensionless)
     result_buckling = convert_to(result, S.One).evalf(4)
-    assert result_buckling == approx(0, 0.01)
+    assert_approx(result_buckling, 0)
 
 
 def test_bad_diffusion_area(test_args):

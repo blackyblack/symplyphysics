@@ -1,6 +1,6 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from symplyphysics import (errors, units, Quantity, SI, convert_to, prefixes)
+from pytest import fixture, raises
+from symplyphysics import (assert_approx, errors, units, Quantity, SI, convert_to, prefixes)
 from symplyphysics.laws.electricity import inductance_is_proportional_to_turns_squared as coil_law
 
 # Description
@@ -24,7 +24,7 @@ def test_basic_inductance(test_args):
         test_args.turn_area, test_args.length)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.inductance)
     result_inductance = convert_to(result, prefixes.milli * units.henry).evalf(4)
-    assert result_inductance == approx(10.053, 0.0001)
+    assert_approx(result_inductance, 10.053)
 
 
 def test_bad_area(test_args):

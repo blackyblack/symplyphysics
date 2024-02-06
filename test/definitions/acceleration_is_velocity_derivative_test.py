@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -23,7 +24,7 @@ def test_basic_acceleration(test_args):
     result = acceleration.calculate_linear_acceleration(test_args.v0, test_args.v1, test_args.t)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.acceleration)
     result_acceleration = convert_to(result, acceleration.definition_units_SI).evalf(2)
-    assert result_acceleration == approx(3.8, 0.01)
+    assert_approx(result_acceleration, 3.8)
 
 
 def test_bad_velocity(test_args):

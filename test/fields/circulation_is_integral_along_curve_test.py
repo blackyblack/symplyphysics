@@ -1,7 +1,8 @@
 from collections import namedtuple
-from pytest import approx, fixture
+from pytest import fixture
 from sympy import S, sin, cos, pi
 from symplyphysics import (
+    assert_approx,
     units,
     convert_to,
     Quantity,
@@ -29,7 +30,7 @@ def test_basic_circulation(test_args):
     field = VectorField(lambda point: [point.y, 0, point.x + point.z], test_args.C)
     curve = [cos(circulation_def.parameter), sin(circulation_def.parameter)]
     result = circulation_def.calculate_circulation(field, curve, (0, pi / 2))
-    assert convert_to(result, S.One).evalf(4) == approx((-pi / 4).evalf(4), 0.001)
+    assert_approx(convert_to(result, S.One).evalf(4), (-pi / 4).evalf(4))
 
 
 def test_force_circulation(test_args):
@@ -40,7 +41,7 @@ def test_force_circulation(test_args):
         (1 * test_args.radius_unit, 2 * test_args.radius_unit))
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
     result_work = convert_to(result, units.joule).evalf(2)
-    assert result_work == approx(-0.5, 0.01)
+    assert_approx(result_work, -0.5)
 
 
 def test_force_circulation_horizontal(test_args):
@@ -57,7 +58,7 @@ def test_force_circulation_horizontal_up(test_args):
     result = circulation_def.calculate_circulation(test_args.field, trajectory_vertical,
         (1 * test_args.radius_unit, 2 * test_args.radius_unit))
     result_work = convert_to(result, units.joule).evalf(2)
-    assert result_work == approx(-0.5, 0.01)
+    assert_approx(result_work, -0.5)
 
 
 def test_force_circulation_horizontal_down(test_args):
@@ -66,4 +67,4 @@ def test_force_circulation_horizontal_down(test_args):
     result = circulation_def.calculate_circulation(test_args.field, trajectory_vertical,
         (2 * test_args.radius_unit, 1 * test_args.radius_unit))
     result_work = convert_to(result, units.joule).evalf(2)
-    assert result_work == approx(0.5, 0.01)
+    assert_approx(result_work, 0.5)

@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -9,8 +10,7 @@ from symplyphysics import (
     dimensionless,
 )
 from symplyphysics.laws.kinematic import (
-    angular_position_from_constant_angular_velocity as angular_position_law,
-)
+    angular_position_from_constant_angular_velocity as angular_position_law,)
 
 # Description
 ## A body is rotating about a fixed axis with a constant angular velocity of 0.5 rad/s.
@@ -27,12 +27,11 @@ def test_args_fixture():
 
 
 def test_basic_law(test_args):
-    result = angular_position_law.calculate_angular_position(
-        test_args.theta0, test_args.w, test_args.t
-    )
+    result = angular_position_law.calculate_angular_position(test_args.theta0, test_args.w,
+        test_args.t)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, dimensionless)
     result_value = convert_to(result, units.radian).evalf(3)
-    assert result_value == approx(15.0, 1e-3)
+    assert_approx(result_value, 15)
 
 
 def test_bad_angle(test_args):

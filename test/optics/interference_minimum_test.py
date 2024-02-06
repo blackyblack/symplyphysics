@@ -1,11 +1,13 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     Quantity,
     SI,
-    convert_to, prefixes,
+    convert_to,
+    prefixes,
 )
 from symplyphysics.laws.optics import interference_minimum as minimum_law
 
@@ -19,10 +21,11 @@ def test_args_fixture():
 
 
 def test_basic_travel_difference(test_args):
-    result = minimum_law.calculate_travel_difference(test_args.wave_length, test_args.minimum_number)
+    result = minimum_law.calculate_travel_difference(test_args.wave_length,
+        test_args.minimum_number)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
     result_travel_difference = convert_to(result, prefixes.nano * units.meters).evalf(5)
-    assert result_travel_difference == approx(1375, 0.1)
+    assert_approx(result_travel_difference, 1375)
 
 
 def test_bad_wave_length(test_args):

@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     units,
     errors,
     convert_to,
@@ -25,15 +26,15 @@ def test_basic_force(test_args):
     assert len(result.components) == 1
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
     result_force = convert_to(result.components[0], units.newton).evalf(2)
-    assert result_force == approx(3.0, 0.01)
+    assert_approx(result_force, 3)
 
 
 def test_basic_acceleration(test_args):
     result = newton_second_law.calculate_acceleration(test_args.m, test_args.f)
     assert len(result.components) == 1
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.acceleration)
-    result_force = convert_to(result.components[0], units.meter / units.second**2).evalf(2)
-    assert result_force == approx(3.0, 0.01)
+    result_acceleration = convert_to(result.components[0], units.meter / units.second**2).evalf(2)
+    assert_approx(result_acceleration, 3)
 
 
 def test_bad_mass(test_args):

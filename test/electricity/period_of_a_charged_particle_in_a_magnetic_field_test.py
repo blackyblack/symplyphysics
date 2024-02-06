@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -11,7 +12,7 @@ from symplyphysics.laws.electricity import period_of_a_charged_particle_in_a_mag
 
 # Description
 ## The mass of the particle is 0.1 kilogram, the charge is 0.2 coulomb.
-## With a magnetic induction equal to 3 tesla, the period of motion of the particle is 1.05 second.
+## With a magnetic induction equal to 3 tesla, the period of motion of the particle is 1.047 second.
 ## https://physics.icalculator.com/radius-of-trajectory-and-period-of-a-charge-moving-inside-a-uniform-magnetic-field-calculator.html
 
 
@@ -28,8 +29,8 @@ def test_args_fixture():
 def test_basic_period(test_args):
     result = period_law.calculate_period(test_args.mass, test_args.charge, test_args.induction)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.time)
-    result_voltage = convert_to(result, units.second).evalf(5)
-    assert result_voltage == approx(1.05, 0.01)
+    result_period = convert_to(result, units.second).evalf(5)
+    assert_approx(result_period, 1.047)
 
 
 def test_bad_mass(test_args):

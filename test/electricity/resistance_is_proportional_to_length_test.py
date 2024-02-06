@@ -1,6 +1,6 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from symplyphysics import (errors, units, convert_to, Quantity, SI, prefixes)
+from pytest import fixture, raises
+from symplyphysics import (assert_approx, errors, units, convert_to, Quantity, SI, prefixes)
 from symplyphysics.laws.electricity import resistance_is_proportional_to_length as wire_law
 
 # Description
@@ -24,7 +24,7 @@ def test_basic_resistance(test_args):
         test_args.cross_section)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.impedance)
     result_current = convert_to(result, units.ohm).evalf(6)
-    assert result_current == approx(0.02625, 0.001)
+    assert_approx(result_current, 0.02625)
 
 
 def test_bad_resistivity(test_args):

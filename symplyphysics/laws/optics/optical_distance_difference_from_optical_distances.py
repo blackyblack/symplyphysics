@@ -25,7 +25,8 @@ def print_law() -> str:
 
 @validate_input(optical_distance1_=optical_distance1, optical_distance2_=optical_distance2)
 @validate_output(optical_difference_distance)
-def calculate_optical_difference_distance(optical_distance1_: Quantity, optical_distance2_: Quantity) -> Quantity:
+def calculate_optical_difference_distance(optical_distance1_: Quantity,
+    optical_distance2_: Quantity) -> Quantity:
     solved = solve(law, optical_difference_distance, dict=True)[0][optical_difference_distance]
     result_expr = solved.subs({
         optical_distance1: optical_distance1_,
@@ -33,4 +34,3 @@ def calculate_optical_difference_distance(optical_distance1_: Quantity, optical_
     })
     result = Quantity(result_expr)
     return result
-

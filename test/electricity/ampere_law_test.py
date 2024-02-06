@@ -1,11 +1,11 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from sympy import pi
-from symplyphysics import (units, SI, convert_to, Quantity, errors)
+from symplyphysics import (assert_approx, units, SI, convert_to, Quantity, errors)
 from symplyphysics.laws.electricity import ampere_law
 
 # Description
-## With a current of 3.5 amperes, a conductor length of 2 meters and a magnetic induction of 0.6 tesla,
+## With a current of 3.5 amperes, a conductor length of 2 meters and a magnetic induction of 0.6061 tesla,
 ## the force will be equal to 3 newton. The angle between the magnetic induction and the current direction
 ## is 45 degrees (pi / 4 radians).
 ## https://physics.icalculator.com/calculating-magnetic-field-using-the-amperes-law.html
@@ -15,7 +15,7 @@ from symplyphysics.laws.electricity import ampere_law
 def test_args_fixture():
     current = Quantity(3.5 * units.ampere)
     length = Quantity(2 * units.meter)
-    induction = Quantity(0.6 * units.tesla)
+    induction = Quantity(0.6061 * units.tesla)
     angle = pi / 4
 
     Args = namedtuple("Args", ["current", "length", "induction", "angle"])
@@ -27,7 +27,7 @@ def test_basic_force(test_args):
         test_args.induction)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
     result = convert_to(result, units.newton).evalf(5)
-    assert result == approx(3, rel=0.1)
+    assert_approx(result, 3)
 
 
 def test_bad_current(test_args):

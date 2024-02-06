@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -8,8 +9,7 @@ from symplyphysics import (
     SI,
 )
 from symplyphysics.laws.kinematic.rotational_inertia.geometries import (
-    solid_disk_about_central_axis as solid_disk
-)
+    solid_disk_about_central_axis as solid_disk)
 
 # Description
 ## A disk is rotating about its central axis. It is 2.0 kg heavy and it has a radius of 0.4 m.
@@ -28,7 +28,7 @@ def test_basic_law(test_args):
     result = solid_disk.calculate_rotational_inertia(test_args.m, test_args.r)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.mass * units.length**2)
     result_value = convert_to(result, units.kilogram * units.meter**2).evalf(3)
-    assert result_value == approx(0.16, 1e-3)
+    assert_approx(result_value, 0.16)
 
 
 def test_bad_mass(test_args):

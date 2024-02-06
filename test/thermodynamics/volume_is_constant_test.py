@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     Quantity,
@@ -23,7 +24,7 @@ def test_basic_pressure(test_args):
     result = isochoric_law.calculate_pressure(test_args.t0, test_args.P0, test_args.t1)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.pressure)
     result_pressure = convert_to(result, units.pascal).evalf(2)
-    assert result_pressure == approx(2.0, 0.01)
+    assert_approx(result_pressure, 2)
 
 
 def test_bad_temperature(test_args):

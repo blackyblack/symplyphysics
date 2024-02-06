@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -24,8 +25,8 @@ def test_args_fixture():
 def test_basic_energy(test_args):
     result = potential_energy.calculate_potential_energy(test_args.m, test_args.h)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_energy = convert_to(result, units.joule).evalf(3)
-    assert result_energy == approx(44.19, 0.01)
+    result_energy = convert_to(result, units.joule).evalf(4)
+    assert_approx(result_energy, 44.13)
 
 
 def test_bad_body_mass(test_args):

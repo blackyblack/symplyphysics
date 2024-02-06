@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -29,9 +30,9 @@ def test_basic_force(test_args):
     assert SI.get_dimension_system().equivalent_dims(result.components[0].dimension, units.force)
     assert SI.get_dimension_system().equivalent_dims(result.components[1].dimension, units.force)
     result_force_x = convert_to(result.components[0], units.newton).evalf(2)
-    assert result_force_x == approx(-0.3, 0.01)
+    assert_approx(result_force_x, -0.3)
     result_force_y = convert_to(result.components[1], units.newton).evalf(2)
-    assert result_force_y == approx(-0.1, 0.01)
+    assert_approx(result_force_y, -0.1)
 
 
 def test_basic_deformation(test_args):
@@ -39,9 +40,9 @@ def test_basic_deformation(test_args):
     assert SI.get_dimension_system().equivalent_dims(result.components[0].dimension, units.length)
     assert SI.get_dimension_system().equivalent_dims(result.components[1].dimension, units.length)
     result_deformation_x = convert_to(result.components[0], units.meter).evalf(2)
-    assert result_deformation_x == approx(3, 0.01)
+    assert_approx(result_deformation_x, 3)
     result_deformation_y = convert_to(result.components[1], units.meter).evalf(2)
-    assert result_deformation_y == approx(1, 0.01)
+    assert_approx(result_deformation_y, 1)
 
 
 def test_bad_elastic_coefficient(test_args):

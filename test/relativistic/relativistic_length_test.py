@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     Quantity,
@@ -20,7 +21,7 @@ def test_args_fixture():
 def test_basic_length(test_args):
     result = relativistic_length.calculate_relativistic_length(test_args.l, test_args.v)
     result_length = convert_to(result, units.length).evalf(4)
-    assert result_length == approx(99.98, 0.001)
+    assert_approx(result_length, 99.98)
 
 
 def test_bad_length(test_args):

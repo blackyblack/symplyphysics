@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -8,8 +9,7 @@ from symplyphysics import (
     SI,
 )
 from symplyphysics.laws.kinematic import (
-    rotational_inertia_about_axis_and_through_center_of_mass as parallel_axis_theorem,
-)
+    rotational_inertia_about_axis_and_through_center_of_mass as parallel_axis_theorem,)
 
 # Description
 ## A body weighing 3 kg is rotating about an axis. Its rotational inertia about a parallel
@@ -27,12 +27,11 @@ def test_args_fixture():
 
 
 def test_basic_law(test_args):
-    result = parallel_axis_theorem.calculate_rotational_inertia(
-        test_args.i_com, test_args.m, test_args.h
-    )
+    result = parallel_axis_theorem.calculate_rotational_inertia(test_args.i_com, test_args.m,
+        test_args.h)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.mass * units.length**2)
     result_value = convert_to(result, units.kilogram * units.meter**2).evalf(3)
-    assert result_value == approx(5.75, 1e-3)
+    assert_approx(result_value, 5.75)
 
 
 def test_bad_inertia(test_args):
@@ -49,6 +48,7 @@ def test_bad_mass(test_args):
         parallel_axis_theorem.calculate_rotational_inertia(test_args.i_com, mb, test_args.h)
     with raises(TypeError):
         parallel_axis_theorem.calculate_rotational_inertia(test_args.i_com, 100, test_args.h)
+
 
 def test_bad_distance(test_args):
     hb = Quantity(1.0 * units.coulomb)

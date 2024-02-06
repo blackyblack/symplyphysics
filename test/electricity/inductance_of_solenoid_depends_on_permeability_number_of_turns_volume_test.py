@@ -1,7 +1,8 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from sympy.physics.units import prefixes
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -33,7 +34,7 @@ def test_basic_inductance(test_args):
         test_args.number_of_turns, test_args.volume)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.inductance)
     result_voltage = convert_to(result, prefixes.micro * units.henry).evalf(5)
-    assert result_voltage == approx(125.6, 0.01)
+    assert_approx(result_voltage, 125.6)
 
 
 def test_bad_relative_permeability(test_args):

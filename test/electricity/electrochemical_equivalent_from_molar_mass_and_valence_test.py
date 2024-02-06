@@ -1,11 +1,11 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from symplyphysics import (units, SI, convert_to, Quantity, errors, prefixes)
+from pytest import fixture, raises
+from symplyphysics import (assert_approx, units, SI, convert_to, Quantity, errors, prefixes)
 from symplyphysics.laws.electricity import electrochemical_equivalent_from_molar_mass_and_valence as equivalent_law
 
 # Description
 ## Consider molybdenum with a molar mass of 96 gram per mol. With a valence of 4,
-## the electrochemical equivalent is 250 microgram per coulomb.
+## the electrochemical equivalent is 248 microgram per coulomb.
 ## https://www.indigomath.ru//raschety/ZBpXGP.html
 
 
@@ -22,7 +22,7 @@ def test_basic_equivalent(test_args):
     result = equivalent_law.calculate_equivalent(test_args.molar_mass, test_args.valence)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.mass / units.charge)
     result = convert_to(result, prefixes.micro * units.gram / (units.coulomb)).evalf(5)
-    assert result == approx(250, rel=0.01)
+    assert_approx(result, 248.74)
 
 
 def test_bad_molar_mass(test_args):

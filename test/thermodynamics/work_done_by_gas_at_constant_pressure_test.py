@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     Quantity,
@@ -24,7 +25,7 @@ def test_gas_work(test_args):
         test_args.v_2)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
     result_work = convert_to(result, units.joule).evalf(4)
-    assert result_work == approx(2.52, 0.01)
+    assert_approx(result_work, 2.52)
 
 
 def test_bad_pressure(test_args):

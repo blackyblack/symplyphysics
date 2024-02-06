@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_approx,
     errors,
     units,
     convert_to,
@@ -24,7 +25,7 @@ def test_basic_height(test_args):
     result = maximum_height_law.calculate_maximum_height(test_args.v)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
     result_vector = convert_to(result, units.meter).evalf(2)
-    assert result_vector == approx(5.10, 0.01)
+    assert_approx(result_vector, 5.1)
 
 
 def test_bad_velocity():
