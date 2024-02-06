@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
     Quantity,
-    SI,
-    convert_to,
 )
 from symplyphysics.laws.thermodynamics import volume_is_constant as isochoric_law
 
@@ -22,9 +20,7 @@ def test_args_fixture():
 
 def test_basic_pressure(test_args):
     result = isochoric_law.calculate_pressure(test_args.t0, test_args.P0, test_args.t1)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.pressure)
-    result_pressure = convert_to(result, units.pascal).evalf(2)
-    assert_approx(result_pressure, 2)
+    assert_equal(result, 2 * units.pascal)
 
 
 def test_bad_temperature(test_args):

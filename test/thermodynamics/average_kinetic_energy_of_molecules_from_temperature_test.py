@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
     Quantity,
-    SI,
-    convert_to,
 )
 
 from symplyphysics.laws.thermodynamics import average_kinetic_energy_of_molecules_from_temperature as average_kinetic_energy
@@ -21,9 +19,7 @@ def test_args_fixture():
 
 def test_basic_average_kinetic_energy(test_args):
     result = average_kinetic_energy.calculate_average_kinetic_energy(test_args.temperature)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_energy = convert_to(result, units.joule).evalf(3)
-    assert_approx(result_energy, 6.21e-21)
+    assert_equal(result, 6.21e-21 * units.joule)
 
 
 def test_bad_temperature():

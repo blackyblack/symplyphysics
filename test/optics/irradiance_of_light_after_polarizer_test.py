@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
     Quantity,
-    SI,
-    convert_to,
 )
 from symplyphysics.laws.optics import irradiance_of_light_after_polarizer as malus_law
 
@@ -25,9 +23,7 @@ def test_args_fixture():
 
 def test_basic_irradiance(test_args):
     result = malus_law.calculate_irradiance(test_args.I0, test_args.k, test_args.phi)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.power / units.area)
-    result_irradiance = convert_to(result, units.watt / units.meter**2).evalf(3)
-    assert_approx(result_irradiance, 0.375)
+    assert_equal(result, 0.375 * units.watt / units.meter**2)
 
 
 def test_bad_irradiance_initial(test_args):

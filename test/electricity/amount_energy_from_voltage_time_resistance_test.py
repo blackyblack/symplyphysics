@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.electricity import amount_energy_from_voltage_time_resistance as joule_lenz_law
 
@@ -25,9 +23,7 @@ def test_args_fixture():
 
 def test_basic_amount(test_args):
     result = joule_lenz_law.calculate_amount_energy(test_args.U, test_args.t, test_args.R)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_energy = convert_to(result, units.joule).evalf(4)
-    assert_approx(result_energy, 80666.6)
+    assert_equal(result, 80666.6 * units.joule)
 
 
 def test_bad_voltage(test_args):

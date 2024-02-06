@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (assert_approx, units, SI, convert_to, Quantity, errors)
+from symplyphysics import (assert_equal, units, Quantity, errors)
 from symplyphysics.laws.electricity import radius_of_a_charged_particle_in_a_magnetic_field as radius_law
 
 # Description
@@ -23,9 +23,7 @@ def test_args_fixture():
 def test_basic_radius(test_args):
     result = radius_law.calculate_radius(test_args.mass, test_args.velocity, test_args.induction,
         test_args.charge)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
-    result = convert_to(result, units.meter).evalf(5)
-    assert_approx(result, 0.8333)
+    assert_equal(result, 0.8333 * units.meter)
 
 
 def test_bad_mass(test_args):

@@ -1,11 +1,9 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from sympy import S
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
     SI,
 )
@@ -23,22 +21,18 @@ def test_args_fixture():
 
 def test_basic_amount_heat_balance(test_args):
     result = heat_balance_law.calculate_amount_energy([test_args.q1, test_args.q2])
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_value = convert_to(result, units.joule).evalf(2)
-    assert_approx(result_value, 2)
+    assert_equal(result, 2 * units.joule)
 
 
 def test_three_array_elements(test_args):
     result = heat_balance_law.calculate_amount_energy([test_args.q1, test_args.q2, test_args.q3])
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_value = convert_to(result, units.joule).evalf(2)
-    assert_approx(result_value, 0)
+    assert_equal(result, 0 * units.joule)
 
 
 def test_array_empty():
     result = heat_balance_law.calculate_amount_energy([])
     assert SI.get_dimension_system().is_dimensionless(result.dimension)
-    assert int(convert_to(result, S.One).n()) == 0
+    assert_equal(result, 0)
 
 
 def test_array_with_bad_element(test_args):

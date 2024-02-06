@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
     Quantity,
-    SI,
-    convert_to,
     prefixes,
 )
 from symplyphysics.laws.thermodynamics import energy_to_vaporization_from_mass as amount_energy
@@ -26,9 +24,7 @@ def test_args_fixture():
 
 def test_basic_amount(test_args):
     result = amount_energy.calculate_amount_energy(test_args.k_v, test_args.m)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_energy = convert_to(result, prefixes.mega * units.joules).evalf(5)
-    assert_approx(result_energy, 0.58)
+    assert_equal(result, 0.58 * prefixes.mega * units.joules)
 
 
 def test_bad_specific_heat_vaporization(test_args):

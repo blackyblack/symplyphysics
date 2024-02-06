@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (assert_approx, units, SI, convert_to, Quantity, errors)
+from symplyphysics import (assert_equal, units, Quantity, errors)
 from symplyphysics.laws.electricity import maximum_moment_of_magnetic_field as moment_law
 
 # Description
@@ -20,9 +20,7 @@ def test_args_fixture():
 
 def test_basic_moment(test_args):
     result = moment_law.calculate_moment(test_args.current, test_args.area)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.current * units.area)
-    result = convert_to(result, units.ampere * units.meter**2).evalf(5)
-    assert_approx(result, 0.01)
+    assert_equal(result, 0.01 * units.ampere * units.meter**2)
 
 
 def test_bad_current(test_args):

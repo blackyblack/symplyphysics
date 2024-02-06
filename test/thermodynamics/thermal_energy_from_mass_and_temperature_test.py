@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
     Quantity,
-    SI,
-    convert_to,
     prefixes,
 )
 from symplyphysics.core.symbols.celsius import Celsius, to_kelvin_quantity
@@ -30,9 +28,7 @@ def test_args_fixture():
 def test_basic_amount(test_args):
     result = amount_energy.calculate_amount_energy(test_args.C, test_args.m, test_args.t2,
         test_args.t1)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_energy = convert_to(result, units.joule).evalf(7)
-    assert_approx(result_energy, 105000.1)
+    assert_equal(result, 105000.1 * units.joule)
 
 
 def test_bad_specific_heat(test_args):

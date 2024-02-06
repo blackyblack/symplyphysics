@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.dynamics import mechanical_work_during_rotation as work_law
 
@@ -25,9 +23,7 @@ def test_args_fixture():
 
 def test_basic_law(test_args):
     result = work_law.calculate_work(test_args.tau, test_args.theta)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_value = convert_to(result, units.joule).evalf(3)
-    assert_approx(result_value, 9)
+    assert_equal(result, 9 * units.joule)
 
 
 def test_bad_torque(test_args):

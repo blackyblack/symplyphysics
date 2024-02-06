@@ -2,12 +2,10 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy import pi
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.geometry import planar_projection_is_cosine as projection_law
 
@@ -26,16 +24,13 @@ def test_args_fixture():
 def test_basic_projection(test_args):
     result = projection_law.calculate_projection(test_args.force_vector_amplitude,
         test_args.angle_between_vector_and_horizontal_axis)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
-    result_value = convert_to(result, units.newton).evalf(4)
-    assert_approx(result_value, 1.5)
+    assert_equal(result, 1.5 * units.newton)
 
 
 def test_projection_with_number(test_args):
     result = projection_law.calculate_projection(test_args.force_vector_amplitude,
         (pi / 3).evalf(4))
-    result_value = convert_to(result, units.newton).evalf(4)
-    assert_approx(result_value, 1.5)
+    assert_equal(result, 1.5 * units.newton)
 
 
 def test_bad_angle(test_args):

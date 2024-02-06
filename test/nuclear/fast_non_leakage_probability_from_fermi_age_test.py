@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
     Quantity,
@@ -23,7 +23,7 @@ def test_args_fixture():
 def test_basic_non_leakage_factor(test_args):
     result = non_leakage_factor.calculate_probability(test_args.Bg, test_args.th)
     assert isinstance(result, Probability)
-    assert_approx(result, 0.9737)
+    assert_equal(result, 0.9737)
 
 
 def test_bad_buckling(test_args):

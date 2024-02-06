@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.nuclear import neutron_diffusion_coefficient_from_scattering_cross_section as diffusion_coeff
 
@@ -21,10 +19,8 @@ def test_args_fixture():
 
 def test_basic_coefficient(test_args):
     result = diffusion_coeff.calculate_diffusion_coefficient(test_args.S)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
-    result_coefficient = convert_to(result, units.centimeter).evalf(2)
     # carbon diffusion coefficient is 0.668 cm
-    assert_approx(result_coefficient, 0.668)
+    assert_equal(result, 0.668 * units.centimeter)
 
 
 def test_bad_macroscopic_cross_section():
