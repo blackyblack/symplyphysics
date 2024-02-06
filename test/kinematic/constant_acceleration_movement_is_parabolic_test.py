@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.kinematic import constant_acceleration_movement_is_parabolic as movement_law
 
@@ -25,9 +23,7 @@ def test_args_fixture():
 
 def test_basic_distance(test_args):
     result = movement_law.calculate_distance(test_args.V0, test_args.a, test_args.t)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
-    result_value = convert_to(result, units.meter).evalf(2)
-    assert_approx(result_value, 95)
+    assert_equal(result, 95 * units.meter)
 
 
 def test_bad_velocity(test_args):

@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
     Quantity,
-    SI,
-    convert_to,
 )
 from symplyphysics.laws.optics import lens_focus_from_object_and_image as lens_law
 
@@ -23,9 +21,7 @@ def test_args_fixture():
 
 def test_basic_focus(test_args):
     result = lens_law.calculate_focus(test_args.object_distance, test_args.image_distance)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
-    result_focus = convert_to(result, units.meter).evalf(4)
-    assert_approx(result_focus, 0.2)
+    assert_equal(result, 0.2 * units.meter)
 
 
 def test_bad_distance(test_args):

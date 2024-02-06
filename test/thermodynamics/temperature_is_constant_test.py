@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
     Quantity,
-    SI,
-    convert_to,
 )
 from symplyphysics.laws.thermodynamics import temperature_is_constant as boyles_law
 
@@ -22,9 +20,7 @@ def test_args_fixture():
 
 def test_basic_volume(test_args):
     result = boyles_law.calculate_volume(test_args.P0, test_args.V0, test_args.P1)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.volume)
-    result_volume = convert_to(result, units.liter).evalf(2)
-    assert_approx(result_volume, 0.5)
+    assert_equal(result, 0.5 * units.liter)
 
 
 def test_bad_pressure(test_args):

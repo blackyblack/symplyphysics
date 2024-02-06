@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
     Quantity,
-    SI,
-    convert_to,
 )
 from symplyphysics.laws.relativistic import energy_is_mass as fundamental_formula
 
@@ -23,9 +21,7 @@ def test_args_fixture():
 
 def test_basic_energy(test_args):
     result = fundamental_formula.calculate_rest_energy(test_args.m)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_energy = convert_to(result, units.joule).evalf(4)
-    assert_approx(result_energy, 539253107242090584)
+    assert_equal(result, 539253107242090584 * units.joule)
 
 
 def test_bad_mass():

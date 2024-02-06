@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.thermodynamics import radiance_of_black_body_from_temperature as stefan_boltzmann_law
 
@@ -23,10 +21,7 @@ def test_args_fixture():
 
 def test_basic_radiance_heat_energy(test_args):
     result = stefan_boltzmann_law.calculate_radiance(test_args.t)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension,
-        units.power / units.length**2)
-    result_radiance = convert_to(result, units.watt / units.meter**2).evalf(6)
-    assert_approx(result_radiance, 0.009073)
+    assert_equal(result, 0.009073 * units.watt / units.meter**2)
 
 
 def test_bad_temperature():

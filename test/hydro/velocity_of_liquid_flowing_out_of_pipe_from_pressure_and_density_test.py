@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (assert_approx, units, SI, convert_to, Quantity, errors)
+from symplyphysics import (assert_equal, units, Quantity, errors)
 from symplyphysics.laws.hydro import velocity_of_liquid_flowing_out_of_pipe_from_pressure_and_density as velocity_law
 
 # Description
@@ -20,9 +20,7 @@ def test_args_fixture():
 
 def test_basic_velocity(test_args):
     result = velocity_law.calculate_velocity(test_args.pressure, test_args.density)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.velocity)
-    result = convert_to(result, units.meter / units.second).evalf(5)
-    assert_approx(result, 31.67)
+    assert_equal(result, 31.67 * units.meter / units.second)
 
 
 def test_bad_pressure(test_args):

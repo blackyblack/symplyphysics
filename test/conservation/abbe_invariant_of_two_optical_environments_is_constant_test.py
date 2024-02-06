@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
     Quantity,
@@ -36,7 +36,7 @@ def test_args_fixture():
 def test_basic_conservation(test_args):
     result = abbe_conservation_law.calculate_refraction_index_lens(test_args.a, test_args.b,
         test_args.r, test_args.n)
-    assert_approx(result, 1.35)
+    assert_equal(result, 1.35)
 
 
 def test_bad_distance(test_args):

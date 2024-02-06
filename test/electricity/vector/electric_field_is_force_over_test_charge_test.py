@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     units,
     errors,
-    convert_to,
     Quantity,
-    SI,
     QuantityVector,
 )
 from symplyphysics.laws.electricity.vector import electric_field_is_force_over_test_charge as electric_field
@@ -33,21 +31,15 @@ def test_args_fixture():
 def test_basic_electric_field_definition(test_args):
     result = electric_field.calculate_electric_field(test_args.F, test_args.q0)
     assert len(result.components) == 3
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force / units.charge)
     for result_component, correct_component in zip(result.components, test_args.E.components):
-        result_value = convert_to(result_component, units.newton / units.coulomb).evalf(2)
-        correct_value = convert_to(correct_component, units.newton / units.coulomb).evalf(2)
-        assert_approx(result_value, correct_value)
+        assert_equal(result_component, correct_component)
 
 
 def test_basic_electrostatic_force_law(test_args):
     result = electric_field.calculate_electrostatic_force(test_args.E, test_args.q0)
     assert len(result.components) == 3
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
     for result_component, correct_component in zip(result.components, test_args.F.components):
-        result_value = convert_to(result_component, units.newton).evalf(2)
-        correct_value = convert_to(correct_component, units.newton).evalf(2)
-        assert_approx(result_value, correct_value)
+        assert_equal(result_component, correct_component)
 
 
 def test_bad_force_in_electric_field(test_args):

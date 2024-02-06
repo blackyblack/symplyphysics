@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.kinematic.rotational_inertia import rotational_inertia_is_additive as rotational_inertia_law
 
@@ -28,17 +26,13 @@ def test_args_fixture():
 
 def test_law_two_particles(test_args):
     result = rotational_inertia_law.calculate_rotational_inertia([test_args.I1, test_args.I2])
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.mass * units.length**2)
-    result_value = convert_to(result, units.kilogram * units.meter**2).evalf(3)
-    assert_approx(result_value, 3.1)
+    assert_equal(result, 3.1 * units.kilogram * units.meter**2)
 
 
 def test_law_three_particles(test_args):
     result = rotational_inertia_law.calculate_rotational_inertia(
         [test_args.I1, test_args.I2, test_args.I3])
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.mass * units.length**2)
-    result_value = convert_to(result, units.kilogram * units.meter**2).evalf(3)
-    assert_approx(result_value, 5.2)
+    assert_equal(result, 5.2 * units.kilogram * units.meter**2)
 
 
 def test_bad_inertias(test_args):

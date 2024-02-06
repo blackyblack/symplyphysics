@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (assert_approx, errors, units, Quantity, SI, convert_to)
+from symplyphysics import (assert_equal, errors, units, Quantity)
 
 from symplyphysics.laws.thermodynamics import diffusion_flux_from_diffusion_coefficient_and_concentration_gradient as diffusion_flux
 
@@ -22,11 +22,7 @@ def test_args_fixture():
 def test_basic_law(test_args):
     result = diffusion_flux.calculate_diffusion_flux(test_args.diffusion_coefficient,
         test_args.concentration_start, test_args.concentration_end, test_args.position)
-    assert SI.get_dimension_system().equivalent_dims(
-        result.dimension, units.amount_of_substance / (units.area * units.time))
-    result_diffusion_flux = convert_to(result,
-        units.mole / (units.meter**2 * units.second)).evalf(3)
-    assert_approx(result_diffusion_flux, -0.001)
+    assert_equal(result, -0.001 * units.mole / (units.meter**2 * units.second))
 
 
 def test_diffusion_coefficient(test_args):

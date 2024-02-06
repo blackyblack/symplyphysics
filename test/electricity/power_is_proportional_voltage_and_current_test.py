@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.electricity import power_is_proportional_voltage_and_current as power_law
 
@@ -22,9 +20,7 @@ def test_args_fixture():
 
 def test_basic_power(test_args):
     result = power_law.calculate_power(test_args.I, test_args.U)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.power)
-    result_power = convert_to(result, units.watt).evalf(2)
-    assert_approx(result_power, 4.5)
+    assert_equal(result, 4.5 * units.watt)
 
 
 def test_bad_current(test_args):

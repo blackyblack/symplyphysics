@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.electricity.circuits import inductivity_of_serial_inductors as serial_inductor
 
@@ -25,17 +23,13 @@ def test_args_fixture():
 
 def test_basic_inductivity(test_args):
     result = serial_inductor.calculate_serial_inductance([test_args.L1, test_args.L2])
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.inductance)
-    result_inductance = convert_to(result, units.henry).evalf(3)
-    assert_approx(result_inductance, 3)
+    assert_equal(result, 3 * units.henry)
 
 
 def test_three_inductors_array(test_args):
     L3 = Quantity(3 * units.henry)
     result = serial_inductor.calculate_serial_inductance([test_args.L1, test_args.L2, L3])
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.inductance)
-    result_inductance = convert_to(result, units.henry).evalf(3)
-    assert_approx(result_inductance, 6)
+    assert_equal(result, 6 * units.henry)
 
 
 def test_bad_inductivity(test_args):

@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
     Quantity,
-    SI,
-    convert_to,
 )
 
 from symplyphysics.laws.thermodynamics import pressure_from_the_concentration_of_molecules_and_kinetic_energy as ideal_gas_pressure
@@ -24,9 +22,7 @@ def test_args_fixture():
 def test_basic_pressure(test_args):
     result = ideal_gas_pressure.calculate_pressure(test_args.molecules_concentration,
         test_args.average_kinetic_energy)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.pressure)
-    result_pressure = convert_to(result, units.pascal).evalf(3)
-    assert_approx(result_pressure, 80000)
+    assert_equal(result, 80000 * units.pascal)
 
 
 def test_bad_energy(test_args):

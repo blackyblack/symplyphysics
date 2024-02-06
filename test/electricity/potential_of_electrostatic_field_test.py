@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (assert_approx, units, SI, convert_to, Quantity, errors)
+from symplyphysics import (assert_equal, units, Quantity, errors)
 from symplyphysics.laws.electricity import potential_of_electrostatic_field as potential_law
 
 # Description
@@ -20,9 +20,7 @@ def test_args_fixture():
 
 def test_basic_electrostatic_potential(test_args):
     result = potential_law.calculate_potential(test_args.potential_energy, test_args.charge)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.voltage)
-    result = convert_to(result, units.volt).evalf(5)
-    assert_approx(result, 1.818)
+    assert_equal(result, 1.818 * units.volt)
 
 
 def test_bad_potential_energy(test_args):

@@ -3,7 +3,7 @@ from pytest import fixture, raises
 from sympy import cos, pi
 from sympy.vector import CoordSys3D
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
     Quantity,
@@ -39,7 +39,7 @@ def test_args_fixture():
 def test_basic_multiplication_factor(test_args):
     result = diffusion_equation.calculate_multiplication_factor(test_args.f, test_args.v,
         test_args.Sf, test_args.Sa, test_args.D)
-    assert_approx(result, 0.712)
+    assert_equal(result, 0.712)
 
 
 def test_bad_diffusion_coefficient(test_args):

@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.core.vectors.vectors import QuantityVector
 from symplyphysics.laws.dynamics.vector import spring_reaction_from_deformation as spring_law
@@ -27,22 +25,14 @@ def test_args_fixture():
 
 def test_basic_force(test_args):
     result = spring_law.calculate_force(test_args.k, test_args.d)
-    assert SI.get_dimension_system().equivalent_dims(result.components[0].dimension, units.force)
-    assert SI.get_dimension_system().equivalent_dims(result.components[1].dimension, units.force)
-    result_force_x = convert_to(result.components[0], units.newton).evalf(2)
-    assert_approx(result_force_x, -0.3)
-    result_force_y = convert_to(result.components[1], units.newton).evalf(2)
-    assert_approx(result_force_y, -0.1)
+    assert_equal(result.components[0], -0.3 * units.newton)
+    assert_equal(result.components[1], -0.1 * units.newton)
 
 
 def test_basic_deformation(test_args):
     result = spring_law.calculate_deformation(test_args.k, test_args.f)
-    assert SI.get_dimension_system().equivalent_dims(result.components[0].dimension, units.length)
-    assert SI.get_dimension_system().equivalent_dims(result.components[1].dimension, units.length)
-    result_deformation_x = convert_to(result.components[0], units.meter).evalf(2)
-    assert_approx(result_deformation_x, 3)
-    result_deformation_y = convert_to(result.components[1], units.meter).evalf(2)
-    assert_approx(result_deformation_y, 1)
+    assert_equal(result.components[0], 3 * units.meter)
+    assert_equal(result.components[1], 1 * units.meter)
 
 
 def test_bad_elastic_coefficient(test_args):

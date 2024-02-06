@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (assert_approx, units, Quantity, errors)
+from symplyphysics import (assert_equal, units, Quantity, errors)
 from symplyphysics.laws.nuclear import law_of_half_life as number_of_cores_law
 
 # Description
@@ -23,7 +23,7 @@ def test_args_fixture():
 def test_basic_number_of_cores(test_args):
     result = number_of_cores_law.calculate_number_of_cores(test_args.number_of_cores_initial,
         test_args.half_life, test_args.decay_time)
-    assert_approx(result, 1e30)
+    assert_equal(result, 1e30)
 
 
 def test_bad_number_of_cores_initial(test_args):

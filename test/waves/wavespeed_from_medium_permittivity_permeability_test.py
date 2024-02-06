@@ -1,10 +1,8 @@
 from collections import namedtuple
 from pytest import fixture
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     units,
-    SI,
-    convert_to,
 )
 from symplyphysics.laws.waves import wavespeed_from_medium_permittivity_permeability as speed_law
 
@@ -24,6 +22,4 @@ def test_args_fixture():
 def test_basic_speed(test_args):
     result = speed_law.calculate_wavespeed(test_args.relative_permittivity,
         test_args.relative_permeability)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.speed)
-    result_speed = convert_to(result, units.meter / units.second).evalf(5)
-    assert_approx(result_speed, 299792458)
+    assert_equal(result, 299792458 * units.meter / units.second)

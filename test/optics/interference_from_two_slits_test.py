@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
     Quantity,
-    SI,
-    convert_to,
     prefixes,
 )
 from symplyphysics.laws.optics import \
@@ -25,9 +23,7 @@ def test_args_fixture():
 def test_basic_travel_difference(test_args):
     result = interference_two_holes_law.calculate_travel_difference(test_args.x, test_args.d,
         test_args.l)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
-    result_travel_difference = convert_to(result, prefixes.micro * units.meters).evalf(5)
-    assert_approx(result_travel_difference, 16.67)
+    assert_equal(result, 16.67 * prefixes.micro * units.meters)
 
 
 def test_bad_coordinate(test_args):

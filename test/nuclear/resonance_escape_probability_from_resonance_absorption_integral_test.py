@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
     Quantity,
@@ -29,7 +29,7 @@ def test_args_fixture():
 def test_basic_resonance_escape_factor(test_args):
     result = resonance_escape.calculate_resonance_escape_probability(test_args.Na, test_args.Ieff,
         test_args.Let, test_args.Ss)
-    assert_approx(result, 0.955)
+    assert_equal(result, 0.955)
 
 
 def test_bad_atomic_number_density(test_args):

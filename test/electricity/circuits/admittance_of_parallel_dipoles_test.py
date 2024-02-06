@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.electricity.circuits import admittance_of_parallel_dipoles as parallel_law
 
@@ -26,17 +24,13 @@ def test_args_fixture():
 
 def test_basic_admittance(test_args):
     result = parallel_law.calculate_parallel_admittance([test_args.S1, test_args.S2])
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.conductance)
-    result_admittance = convert_to(result, units.siemens).evalf(3)
-    assert_approx(result_admittance, 0.75)
+    assert_equal(result, 0.75 * units.siemens)
 
 
 def test_three_resistors_array(test_args):
     S3 = Quantity(1 * units.siemens)
     result = parallel_law.calculate_parallel_admittance([test_args.S1, test_args.S2, S3])
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.conductance)
-    result_admittance = convert_to(result, units.siemens).evalf(3)
-    assert_approx(result_admittance, 1.75)
+    assert_equal(result, 1.75 * units.siemens)
 
 
 def test_bad_admittance(test_args):

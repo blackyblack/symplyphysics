@@ -3,12 +3,10 @@ from pytest import fixture, raises
 from sympy import solve
 from sympy.vector import CoordSys3D
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.dynamics import force_reaction_from_force_action as newton_third_law
 
@@ -40,9 +38,7 @@ def test_basic_force():
 
 def test_basic_force_quantity(test_args):
     result = newton_third_law.calculate_force_reaction(test_args.F)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
-    result_force = convert_to(result, units.newton).evalf(2)
-    assert_approx(result_force, 2)
+    assert_equal(result, 2 * units.newton)
 
 
 def test_bad_force():

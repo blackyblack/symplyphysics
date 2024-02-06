@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.core.vectors.vectors import QuantityVector
 from symplyphysics.laws.dynamics.vector import instantaneous_power_is_force_dot_velocity as power_law
@@ -35,9 +33,7 @@ def test_args_fixture():
 
 def test_basic_law(test_args):
     result = power_law.calculate_power(test_args.f, test_args.v)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.power)
-    result_value = convert_to(result, units.watt).evalf(3)
-    assert_approx(result_value, 3)
+    assert_equal(result, 3 * units.watt)
 
 
 def test_bad_force(test_args):
