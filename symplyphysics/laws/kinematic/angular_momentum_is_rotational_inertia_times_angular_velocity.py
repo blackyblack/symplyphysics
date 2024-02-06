@@ -11,7 +11,7 @@ from symplyphysics import (
 
 # Description
 ## For a rigid body rotating about a fixed axis, the component of its angular momentum parallel
-## to the rotation axis is found as the product of the body's rotatinal inertia and the magnitude
+## to the rotational axis is found as the product of the body's rotational inertia and the magnitude
 ## of its angular velocity.
 
 # Law: L = I * w
