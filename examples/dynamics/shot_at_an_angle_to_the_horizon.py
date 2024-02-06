@@ -3,7 +3,7 @@
 import math
 from sympy import solve, Symbol, Eq
 from symplyphysics import print_expression
-from symplyphysics.laws.vector import planar_projection_is_cosine as projection_velocity
+from symplyphysics.laws.geometry import planar_projection_is_cosine as projection_velocity
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_velocity as kinetic_energy
 
 # The initial velocity of the bullet is 600 m/s, its mass is 10 g.

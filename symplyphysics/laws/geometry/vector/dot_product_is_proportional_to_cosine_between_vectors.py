@@ -7,7 +7,7 @@ from symplyphysics import (
     vector_magnitude,
 )
 from symplyphysics.core.dimensions import ScalarValue
-from symplyphysics.laws.vector import (
+from symplyphysics.laws.geometry import (
     dot_product_is_proportional_to_cosine_between_vectors as cosine_scalar_law,
 )
 

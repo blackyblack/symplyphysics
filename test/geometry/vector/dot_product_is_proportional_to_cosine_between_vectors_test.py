@@ -8,7 +8,7 @@ from symplyphysics import (
     units,
     convert_to,
 )
-from symplyphysics.laws.vector.vector import (
+from symplyphysics.laws.geometry.vector import (
     dot_product_is_proportional_to_cosine_between_vectors as dot_product_law,
 )
 
