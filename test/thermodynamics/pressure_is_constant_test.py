@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
     Quantity,
-    SI,
-    convert_to,
 )
 from symplyphysics.laws.thermodynamics import pressure_is_constant as gay_lussacs_law
 
@@ -22,9 +20,7 @@ def test_args_fixture():
 
 def test_basic_volume(test_args):
     result = gay_lussacs_law.calculate_volume(test_args.t0, test_args.V0, test_args.t1)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.volume)
-    result_volume = convert_to(result, units.liter).evalf(2)
-    assert_approx(result_volume, 2)
+    assert_equal(result, 2 * units.liter)
 
 
 def test_bad_temperature(test_args):

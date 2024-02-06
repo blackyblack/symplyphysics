@@ -1,18 +1,17 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
     Quantity,
-    convert_to,
 )
 from symplyphysics.laws.relativistic import relativistic_length
 
 
 @fixture(name="test_args")
 def test_args_fixture():
-    l = Quantity(100 * units.meters)
+    l = Quantity(100 * units.meter)
     v = Quantity(5_000_000 * (units.meter / units.second))
     Args = namedtuple("Args", ["l", "v"])
     return Args(l=l, v=v)
@@ -20,8 +19,7 @@ def test_args_fixture():
 
 def test_basic_length(test_args):
     result = relativistic_length.calculate_relativistic_length(test_args.l, test_args.v)
-    result_length = convert_to(result, units.length).evalf(4)
-    assert_approx(result_length, 99.98)
+    assert_equal(result, 99.98 * units.meter)
 
 
 def test_bad_length(test_args):

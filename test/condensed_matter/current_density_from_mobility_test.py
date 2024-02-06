@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (assert_approx, units, SI, convert_to, Quantity, errors)
+from symplyphysics import (assert_equal, units, Quantity, errors)
 from symplyphysics.laws.condensed_matter import current_density_from_mobility as current_law
 
 # Description
@@ -33,9 +33,7 @@ def test_basic_current(test_args):
     result = current_law.calculate_current_density(test_args.electrons_concentration,
         test_args.holes_concentration, test_args.electrons_mobility, test_args.holes_mobility,
         test_args.electric_intensity)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.current / units.area)
-    result = convert_to(result, units.ampere / units.centimeter**2).evalf(5)
-    assert_approx(result, 120)
+    assert_equal(result, 120 * units.ampere / units.centimeter**2)
 
 
 def test_bad_electrons_concentration(test_args):

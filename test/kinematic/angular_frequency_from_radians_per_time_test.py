@@ -1,13 +1,11 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     angle_type,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.kinematic import angular_frequency_from_radians_per_time as frequency_def
 
@@ -25,9 +23,7 @@ def test_args_fixture():
 
 def test_basic_frequency(test_args):
     result = frequency_def.calculate_frequency(test_args.N, test_args.t)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, 1 / units.time)
-    result_frequency = convert_to(result, units.radian / units.second).evalf(2)
-    assert_approx(result_frequency, 1.744)
+    assert_equal(result, 1.744 * units.radian / units.second)
 
 
 def test_bad_time(test_args):

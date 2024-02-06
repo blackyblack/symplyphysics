@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import assert_approx, Quantity, units, errors
+from symplyphysics import assert_equal, Quantity, units, errors
 from symplyphysics.laws.hydro import froude_number
 
 # Example from https://www.symbolab.com/calculator/physics/froude-number
@@ -16,7 +16,7 @@ def test_args_fixture():
 
 def test_basic_froude_number(test_args):
     result = froude_number.calculate_froude_number(test_args.v, test_args.l)
-    assert_approx(result, 0.1596)
+    assert_equal(result, 0.1596)
 
 
 def test_bad_velocity(test_args):

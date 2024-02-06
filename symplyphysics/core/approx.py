@@ -1,8 +1,8 @@
 from typing import Optional
 from pytest import approx
-from sympy import Expr
+from sympy import N, Expr, re, im
 from sympy.physics.units import Dimension
-from sympy.physics.units.systems import SI
+from symplyphysics.core.dimensions import assert_equivalent_dimension
 from symplyphysics.core.symbols.quantities import Quantity
 
 APPROX_RELATIVE_TOLERANCE = 0.001
@@ -20,19 +20,25 @@ def approx_equal_quantities(lhs: Quantity,
     tolerance: float = APPROX_RELATIVE_TOLERANCE,
     dimension: Optional[Dimension] = None) -> bool:
     rhs_quantity = rhs if isinstance(rhs, Quantity) else Quantity(rhs, dimension=dimension)
-    if not SI.get_dimension_system().equivalent_dims(lhs.dimension, rhs_quantity.dimension):
-        raise ValueError(
-            f"Dimension of '{rhs}' is {rhs_quantity.dimension}, but it should be {lhs.dimension}")
-    return approx_equal_numbers(lhs.scale_factor, rhs_quantity.scale_factor, tolerance=tolerance)
+    assert_equivalent_dimension(lhs, lhs.dimension.name, "approx_equal_quantities",
+        rhs_quantity.dimension)
+    if not approx_equal_numbers(
+            N(im(lhs.scale_factor)), N(im(rhs_quantity.scale_factor)), tolerance=tolerance):
+        return False
+    return approx_equal_numbers(N(re(lhs.scale_factor)),
+        N(re(rhs_quantity.scale_factor)),
+        tolerance=tolerance)
 
 
 # Combined with assert for better test output
-def assert_equal(lhs: Quantity,
-    rhs: Expr | Quantity,
+def assert_equal(lhs: Quantity | float,
+    rhs: Expr | Quantity | float,
     *,
     tolerance: float = APPROX_RELATIVE_TOLERANCE,
     dimension: Optional[Dimension] = None):
     rhs_quantity = rhs if isinstance(rhs, Quantity) else Quantity(rhs, dimension=dimension)
+    # do not allow to override LHS dimension
+    lhs_quantity = lhs if isinstance(lhs, Quantity) else Quantity(lhs)
     assert approx_equal_quantities(
-        lhs, rhs, tolerance=tolerance, dimension=dimension
-    ), f"Expected {lhs.scale_factor} to be equal to {rhs_quantity.scale_factor} with tolerance {tolerance}"
+        lhs_quantity, rhs_quantity, tolerance=tolerance, dimension=dimension
+    ), f"Expected {N(lhs_quantity.scale_factor)} to be equal to {N(rhs_quantity.scale_factor)} with tolerance {tolerance}"

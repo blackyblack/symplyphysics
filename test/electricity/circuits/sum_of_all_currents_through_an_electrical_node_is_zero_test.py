@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy import S
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
     convert_to,
@@ -24,14 +24,12 @@ def test_basic_current(test_args):
     result = kirchhoff_law.calculate_current_from_array([test_args.I1])
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.current)
     result_current = convert_to(result, units.ampere).evalf(2)
-    assert_approx(result_current, -3)
+    assert_equal(result_current, -3)
 
 
 def test_three_current_array(test_args):
     result = kirchhoff_law.calculate_current_from_array([test_args.I1, test_args.I2])
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.current)
-    result_current = convert_to(result, units.ampere).evalf(2)
-    assert_approx(result_current, 2)
+    assert_equal(result, 2 * units.ampere)
 
 
 def test_array_empty():

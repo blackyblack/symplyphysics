@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (assert_approx, units, SI, convert_to, Quantity, errors, prefixes)
+from symplyphysics import (assert_equal, units, Quantity, errors, prefixes)
 from symplyphysics.laws.hydro import surface_tension_force_of_liquid as force_law
 
 # Description
@@ -20,9 +20,7 @@ def test_args_fixture():
 
 def test_basic_force(test_args):
     result = force_law.calculate_force(test_args.surface_coefficient, test_args.contour_length)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
-    result = convert_to(result, prefixes.micro * units.newton).evalf(5)
-    assert_approx(result, 2185.8)
+    assert_equal(result, 2185.8 * prefixes.micro * units.newton)
 
 
 def test_bad_surface_coefficient(test_args):

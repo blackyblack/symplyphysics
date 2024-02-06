@@ -3,11 +3,9 @@ from pytest import fixture
 from sympy import sin, pi
 from sympy.vector import CoordSys3D
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_flux as buckling
 
@@ -31,6 +29,4 @@ def test_args_fixture():
 
 def test_basic_geometric_buckling(test_args):
     result = buckling.calculate_geometric_buckling_squared(test_args.f)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, 1 / units.area)
-    result_geometric_buckling = convert_to(result, 1 / units.centimeter**2).evalf(4)
-    assert_approx(result_geometric_buckling, 0.0986)
+    assert_equal(result, 0.0986 / units.centimeter**2)

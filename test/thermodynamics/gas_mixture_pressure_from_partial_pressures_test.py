@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
     Quantity,
-    SI,
-    convert_to,
 )
 
 from symplyphysics.laws.thermodynamics import gas_mixture_pressure_from_partial_pressures as gas_mixture_pressure
@@ -24,9 +22,7 @@ def test_args_fixture():
 def test_basic_gas_mixture_pressure(test_args):
     result = gas_mixture_pressure.calculate_total_pressure(
         [test_args.p1, test_args.p2, test_args.p3])
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.pressure)
-    result_pressure = convert_to(result, units.pascal).evalf(3)
-    assert_approx(result_pressure, 700)
+    assert_equal(result, 700 * units.pascal)
 
 
 def test_array_with_bad_element(test_args):

@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture
-from sympy import S, sin, cos, pi
+from sympy import sin, cos, pi
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
 from symplyphysics.core.fields.vector_field import VectorField
@@ -30,7 +28,7 @@ def test_basic_circulation(test_args):
     field = VectorField(lambda point: [point.y, 0, point.x + point.z], test_args.C)
     curve = [cos(circulation_def.parameter), sin(circulation_def.parameter)]
     result = circulation_def.calculate_circulation(field, curve, (0, pi / 2))
-    assert_approx(convert_to(result, S.One).evalf(4), (-pi / 4).evalf(4))
+    assert_equal(result, -pi / 4)
 
 
 def test_force_circulation(test_args):
@@ -39,9 +37,7 @@ def test_force_circulation(test_args):
     trajectory = [circulation_def.parameter, circulation_def.parameter]
     result = circulation_def.calculate_circulation(test_args.field, trajectory,
         (1 * test_args.radius_unit, 2 * test_args.radius_unit))
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_work = convert_to(result, units.joule).evalf(2)
-    assert_approx(result_work, -0.5)
+    assert_equal(result, -0.5 * units.newton * units.meter)
 
 
 def test_force_circulation_horizontal(test_args):
@@ -49,7 +45,7 @@ def test_force_circulation_horizontal(test_args):
     trajectory_horizontal = [circulation_def.parameter, 5 * test_args.radius_unit]
     result = circulation_def.calculate_circulation(test_args.field, trajectory_horizontal,
         (1 * test_args.radius_unit, 2 * test_args.radius_unit))
-    assert convert_to(result, S.One) == 0
+    assert_equal(result, 0)
 
 
 def test_force_circulation_horizontal_up(test_args):
@@ -57,8 +53,7 @@ def test_force_circulation_horizontal_up(test_args):
     trajectory_vertical = [5 * test_args.radius_unit, circulation_def.parameter]
     result = circulation_def.calculate_circulation(test_args.field, trajectory_vertical,
         (1 * test_args.radius_unit, 2 * test_args.radius_unit))
-    result_work = convert_to(result, units.joule).evalf(2)
-    assert_approx(result_work, -0.5)
+    assert_equal(result, -0.5 * units.joule)
 
 
 def test_force_circulation_horizontal_down(test_args):
@@ -66,5 +61,4 @@ def test_force_circulation_horizontal_down(test_args):
     trajectory_vertical = [6 * test_args.radius_unit, circulation_def.parameter]
     result = circulation_def.calculate_circulation(test_args.field, trajectory_vertical,
         (2 * test_args.radius_unit, 1 * test_args.radius_unit))
-    result_work = convert_to(result, units.joule).evalf(2)
-    assert_approx(result_work, 0.5)
+    assert_equal(result, 0.5 * units.joule)

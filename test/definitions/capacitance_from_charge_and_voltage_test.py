@@ -5,12 +5,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.definitions import capacitance_from_charge_and_voltage as capacitance_def
 
@@ -26,9 +24,7 @@ def test_args_fixture():
 
 def test_basic_capacitance(test_args):
     result = capacitance_def.calculate_capacitance(test_args.Q, test_args.U)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.capacitance)
-    result_capacitance = convert_to(result, capacitance_def.definition_units_SI).evalf(4)
-    assert_approx(result_capacitance, 2)
+    assert_equal(result, 2 * units.farad)
 
 
 def test_bad_charge(test_args):

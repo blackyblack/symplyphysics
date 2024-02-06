@@ -2,12 +2,10 @@ from collections import namedtuple
 from sympy import pi
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.dynamics import torque_due_to_twisting_force as torque_def
 
@@ -29,16 +27,12 @@ def test_args_fixture():
 
 def test_basic_law_float_angle(test_args):
     result = torque_def.calculate_torque(test_args.F, test_args.r, test_args.phi_float)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force * units.length)
-    result_torque = convert_to(result, units.newton * units.meter).evalf(3)
-    assert_approx(result_torque, 0.075)
+    assert_equal(result, 0.075 * units.newton * units.meter)
 
 
 def test_basic_law_quantity_angle(test_args):
     result = torque_def.calculate_torque(test_args.F, test_args.r, test_args.phi_quantity)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force * units.length)
-    result_torque = convert_to(result, units.newton * units.meter).evalf(3)
-    assert_approx(result_torque, 0.075)
+    assert_equal(result, 0.075 * units.newton * units.meter)
 
 
 def test_bad_force(test_args):

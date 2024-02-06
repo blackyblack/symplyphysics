@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.nuclear import migration_area_from_diffusion_length as migration_area
 
@@ -23,10 +21,8 @@ def test_args_fixture():
 
 def test_basic_migration_area(test_args):
     result = migration_area.calculate_migration_area(test_args.Ld, test_args.th)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.area)
-    result_area = convert_to(result, units.centimeter**2).evalf(2)
     # water migration area = 78.8 cm^2
-    assert_approx(result_area, 78.8)
+    assert_equal(result, 78.8 * units.centimeter**2, tolerance=0.01)
 
 
 def test_bad_diffusion_area(test_args):

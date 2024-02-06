@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.kinematic import period_from_angular_frequency as period_def
 
@@ -20,9 +18,7 @@ def test_args_fixture():
 
 def test_basic_period(test_args):
     result = period_def.calculate_period(test_args.w)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.time)
-    result_period = convert_to(result, units.second).evalf(2)
-    assert_approx(result_period, 1)
+    assert_equal(result, 1 * units.second)
 
 
 def test_bad_frequency():

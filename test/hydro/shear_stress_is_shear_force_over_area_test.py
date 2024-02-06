@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.hydro import shear_stress_is_shear_force_over_area as shear_stress
 
@@ -23,9 +21,7 @@ def test_args_fixture():
 
 def test_basic_law(test_args):
     result = shear_stress.calculate_shear_stress(test_args.F, test_args.A)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.pressure)
-    result_stress = convert_to(result, units.pascal).evalf(3)
-    assert_approx(result_stress, 1)
+    assert_equal(result, 1 * units.pascal)
 
 
 def test_bad_force(test_args):

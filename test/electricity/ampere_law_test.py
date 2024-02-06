@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from sympy import pi
-from symplyphysics import (assert_approx, units, SI, convert_to, Quantity, errors)
+from symplyphysics import (assert_equal, units, Quantity, errors)
 from symplyphysics.laws.electricity import ampere_law
 
 # Description
@@ -25,9 +25,7 @@ def test_args_fixture():
 def test_basic_force(test_args):
     result = ampere_law.calculate_force(test_args.current, test_args.length, test_args.angle,
         test_args.induction)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
-    result = convert_to(result, units.newton).evalf(5)
-    assert_approx(result, 3)
+    assert_equal(result, 3 * units.newton)
 
 
 def test_bad_current(test_args):

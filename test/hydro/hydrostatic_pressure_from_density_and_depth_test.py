@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.hydro.hydrostatic_pressure_from_density_and_depth import calculate_hydrostatic_pressure
 
@@ -25,9 +23,7 @@ def test_args_fixture():
 
 def test_hydrostatic_pressure(test_args):
     result = calculate_hydrostatic_pressure(test_args.rho, test_args.h)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.pressure)
-    result_pressure = convert_to(result, units.pascal).evalf(5)
-    assert_approx(result_pressure, 98100)
+    assert_equal(result, 98100 * units.pascal)
 
 
 def test_bad_density(test_args):

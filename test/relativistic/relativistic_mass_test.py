@@ -1,11 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
     Quantity,
-    convert_to,
 )
 from symplyphysics.laws.relativistic import relativistic_mass
 
@@ -22,15 +21,13 @@ def test_args_fixture():
 
 def test_basic_mass(test_args):
     result = relativistic_mass.calculate_relativistic_mass(test_args.m, test_args.v)
-    result_mass = convert_to(result, units.kilogram).evalf(4)
-    assert_approx(result_mass, 6.01339)
+    assert_equal(result, 6.01339 * units.kilogram)
 
 
 def test_basic_zero_velocity(test_args):
     velocity = Quantity(0 * units.meter / units.second)
     result = relativistic_mass.calculate_relativistic_mass(test_args.m, velocity)
-    result_mass = convert_to(result, units.kilogram).evalf(4)
-    assert_approx(result_mass, 6)
+    assert_equal(result, 6 * units.kilogram)
 
 
 def test_bad_mass(test_args):

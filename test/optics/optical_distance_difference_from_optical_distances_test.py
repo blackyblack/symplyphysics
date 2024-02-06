@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
     Quantity,
-    SI,
-    convert_to,
     prefixes,
 )
 from symplyphysics.laws.optics import optical_distance_difference_from_optical_distances as optical_difference_law
@@ -29,9 +27,7 @@ def test_args_fixture():
 def test_basic_distance_difference(test_args):
     result = optical_difference_law.calculate_optical_difference_distance(
         test_args.ol1, test_args.ol2)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
-    result_travel_difference = convert_to(result, prefixes.milli * units.meters).evalf(3)
-    assert_approx(result_travel_difference, 0.5)
+    assert_equal(result, 0.5 * prefixes.milli * units.meters)
 
 
 def test_bad_distances(test_args):

@@ -32,8 +32,8 @@ def linear_displacement_law(angular_displacement_: Vector, rotation_radius_: Vec
 @validate_output(units.length)
 def calculate_linear_displacement(angular_displacement_: QuantityVector,
     rotation_radius_: QuantityVector) -> QuantityVector:
-    if dot_quantity_vectors(angular_displacement_,
-        rotation_radius_).scale_factor != approx(0.0, 1e-3):
+    if dot_quantity_vectors(angular_displacement_, rotation_radius_).scale_factor != approx(0.0,
+        rel=1e-3):
         raise ValueError(
             "Angular displacement psedovector and rotation radius vector should be perpendular to each other."
         )

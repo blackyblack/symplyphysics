@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
     Quantity,
@@ -36,13 +36,9 @@ def test_basic_frequency(test_args):
         test_args.sound_velocity, test_args.train_velocity, test_args.zero_velocity)
     result_2 = doppler_law.calculate_observed_frequency(test_args.horn_frequency,
         test_args.sound_velocity, test_args.zero_velocity, test_args.bike_velocity)
-    assert SI.get_dimension_system().equivalent_dims(result_1.dimension, units.frequency)
-    assert SI.get_dimension_system().equivalent_dims(result_2.dimension, units.frequency)
-    result_freq_1 = int(convert_to(result_1, units.hertz).evalf(4))
-    assert_approx(result_freq_1, 2015)
-    result_freq_2 = int(convert_to(result_2, units.hertz).evalf(4))
+    assert_equal(result_1, 2015 * units.hertz)
     # Doppler effect is irrelative at relatively low velocities
-    assert_approx(result_freq_2, result_freq_1)
+    assert_equal(result_2, 2015 * units.hertz)
 
 
 def test_fast_velocity_frequency(test_args):

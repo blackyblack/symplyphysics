@@ -1,10 +1,9 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_approx,
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
     SI,
     QuantityVector,
@@ -43,9 +42,7 @@ def test_basic_law(test_args):
     assert len(result.components) == 3
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.acceleration)
     for result_component, correct_component in zip(result.components, test_args.a_total.components):
-        result_value = convert_to(result_component, units.meter / units.second**2).evalf(3)
-        correct_value = convert_to(correct_component, units.meter / units.second**2).evalf(3)
-        assert_approx(result_value, correct_value)
+        assert_equal(result_component, correct_component)
 
 
 def test_radial_law(test_args):
@@ -53,9 +50,7 @@ def test_radial_law(test_args):
     assert len(result.components) == 3
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.acceleration)
     for result_component, correct_component in zip(result.components, test_args.a_r.components):
-        result_value = convert_to(result_component, units.meter / units.second**2).evalf(3)
-        correct_value = convert_to(correct_component, units.meter / units.second**2).evalf(3)
-        assert_approx(result_value, correct_value)
+        assert_equal(result_component, correct_component)
 
 
 def test_tangential_law(test_args):
@@ -63,9 +58,7 @@ def test_tangential_law(test_args):
     assert len(result.components) == 3
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.acceleration)
     for result_component, correct_component in zip(result.components, test_args.a_t.components):
-        result_value = convert_to(result_component, units.meter / units.second**2).evalf(3)
-        correct_value = convert_to(correct_component, units.meter / units.second**2).evalf(3)
-        assert_approx(result_value, correct_value)
+        assert_equal(result_component, correct_component)
 
 
 def test_bad_acceleration(test_args):
