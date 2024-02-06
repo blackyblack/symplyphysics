@@ -1,7 +1,7 @@
 from pytest import raises
 from sympy import Derivative, cos, pi
 from symplyphysics import (units, Quantity, SI, dimensionless)
-from symplyphysics.core.symbols.quantities import scale_factor
+from symplyphysics.core.symbols.quantities import scale_factor, equivalent_dims
 
 # Test Quantity constructor
 
@@ -134,3 +134,17 @@ def test_scale_factor():
     a_float = 1.0
     assert scale_factor(a_quantity) == 1.0
     assert scale_factor(a_float) == 1.0
+
+
+def test_assert_equivalent_dims():
+    q = Quantity(1.0 * units.meter)
+    dim = units.length
+    assert equivalent_dims(q, q)
+    assert equivalent_dims(q, dim)
+    assert equivalent_dims(q.dimension, dim)
+    assert equivalent_dims(dim, dim)
+
+    qb = Quantity(1.0 * units.second)
+    assert not equivalent_dims(qb, q)
+    assert not equivalent_dims(qb, dim)
+    assert not equivalent_dims(qb.dimension, dim)

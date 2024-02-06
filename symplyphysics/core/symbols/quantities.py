@@ -48,3 +48,14 @@ def scale_factor(quantity_: Quantity | float) -> float:
     if isinstance(quantity_, Quantity):
         return quantity_.scale_factor
     return quantity_
+
+
+def equivalent_dims(
+    left_: Quantity | Dimension, right_: Quantity | Dimension,
+) -> bool:
+    if isinstance(left_, Quantity):
+        left_ = left_.dimension
+    if isinstance(right_, Quantity):
+        right_ = right_.dimension
+    
+    return SI.get_dimension_system().equivalent_dims(left_, right_)
