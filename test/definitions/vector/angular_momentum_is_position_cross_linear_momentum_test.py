@@ -13,8 +13,8 @@ from symplyphysics.definitions.vector import (
 )
 
 # Description
-## A particle is is located at a point with position vector of (1, 2, -1) m and possesses
-## a linear momentum (0, -1, 2) kg*m/s. Its angular momentum amounts to (3, 2, -1) kg*m**2/s.
+## A particle is located at a point with position vector of (1, 2, -1) m and possesses
+## a linear momentum (0, -1, 2) kg*m/s. Its angular momentum amounts to (3, -2, -1) kg*m**2/s.
 
 
 @fixture(name="test_args")

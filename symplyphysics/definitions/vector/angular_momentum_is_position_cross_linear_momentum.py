@@ -12,7 +12,7 @@ from symplyphysics import (
 ## as a cross product of its position vector and linear momentum.
 
 # Definition: L = cross(r, p)
-## L - vector of angular momentum
+## L - pseudovector of angular momentum
 ## p - vector of linear momentum
 ## r - position vector of particle relative to a fixed point
 ## cross(a, b) - cross product between vectors a and b
