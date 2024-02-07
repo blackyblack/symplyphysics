@@ -9,6 +9,8 @@ from symplyphysics import (
     validate_output,
     vector_magnitude,
 )
+from symplyphysics.core.dimensions import ScalarValue
+from symplyphysics.core.points.cartesian_point import CartesianPoint
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.fields.scalar_field import ScalarField
 from symplyphysics.laws.dynamics.fields import (
@@ -44,12 +46,14 @@ potential = gravitational_potential_energy.law.rhs.subs({
     gravitational_potential_energy.distance_between_mass_centers: distance_between_mass_centers,
 })
 
-potential_field = ScalarField(
-    lambda point: potential.subs(
+def potential_field_function(point) -> ScalarValue:
+    assert isinstance(point, CartesianPoint)
+    return potential.subs(
         distance_between_mass_centers, 
         sqrt(point.x**2 + point.y**2 + point.z**2),
     )
-)
+
+potential_field = ScalarField(potential_field_function)
 
 gravitational_force_vector = gradient_law.law(potential_field)
 gravitational_force_derived = vector_magnitude(gravitational_force_vector).simplify()
