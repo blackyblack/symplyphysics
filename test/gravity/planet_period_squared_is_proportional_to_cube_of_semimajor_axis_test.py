@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
     Quantity,
-    convert_to,
-    SI,
 )
 from symplyphysics.laws.gravity import (
     planet_period_squared_is_proportional_to_cube_of_semimajor_axis as law_of_periods
@@ -26,9 +25,7 @@ def test_args_fixture():
 
 def test_law(test_args):
     result = law_of_periods.calculate_rotation_period(test_args.M, test_args.a)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.time)
-    result_value = convert_to(result, units.year).evalf(3)
-    assert result_value == approx(73.1, 1e-3)
+    assert_equal(result, 73.1 * units.year, tolerance=1e-2)
 
 
 def test_bad_mass(test_args):
