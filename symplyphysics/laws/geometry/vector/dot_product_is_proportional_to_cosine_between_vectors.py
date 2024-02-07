@@ -1,4 +1,3 @@
-from sympy import solve, cos
 from symplyphysics import (
     Quantity,
     QuantityVector,
