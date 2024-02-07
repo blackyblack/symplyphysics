@@ -12,29 +12,29 @@ from symplyphysics.laws.dynamics.deformation import (
 
 # Description
 ## An object is being compressed, its initial length is 1 m, and it became 2 mm shorter.
-## The object's Young's modulus is 10 Pa. The stress on the object amounts to 2e-2 Pa.
+## The object's Young's modulus is 10 Pa. The stress on the object amounts to 0.02 Pa.
 
 
 @fixture(name="test_args")
 def test_args_fixture():
     L = Quantity(1.0 * units.meter)
-    dL = Quantity(-2.0 * units.millimeter)
+    D = Quantity(-2.0 * units.millimeter)
     E = Quantity(10.0 * units.pascal)
-    Args = namedtuple("Args", "L dL E")
-    return Args(L=L, dL=dL, E=E)
+    Args = namedtuple("Args", "L D E")
+    return Args(L=L, D=D, E=E)
 
 
 def test_law(test_args):
-    result = stress_strain_law.calculate_tensile_stress(test_args.E, test_args.dL, test_args.L)
-    assert_equal(result, 2e-2 * units.pascal)
+    result = stress_strain_law.calculate_tensile_stress(test_args.E, test_args.D, test_args.L)
+    assert_equal(result, 0.02 * units.pascal)
 
 
 def test_bad_modulus(test_args):
     Eb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        stress_strain_law.calculate_tensile_stress(Eb, test_args.dL, test_args.L)
+        stress_strain_law.calculate_tensile_stress(Eb, test_args.D, test_args.L)
     with raises(TypeError):
-        stress_strain_law.calculate_tensile_stress(100, test_args.dL, test_args.L)
+        stress_strain_law.calculate_tensile_stress(100, test_args.D, test_args.L)
 
 
 def test_bad_length(test_args):
@@ -44,6 +44,6 @@ def test_bad_length(test_args):
     with raises(TypeError):
         stress_strain_law.calculate_tensile_stress(test_args.E, 100, test_args.L)
     with raises(errors.UnitsError):
-        stress_strain_law.calculate_tensile_stress(test_args.E, test_args.dL, Lb)
+        stress_strain_law.calculate_tensile_stress(test_args.E, test_args.D, Lb)
     with raises(TypeError):
-        stress_strain_law.calculate_tensile_stress(test_args.E, test_args.dL, 100)
+        stress_strain_law.calculate_tensile_stress(test_args.E, test_args.D, 100)
