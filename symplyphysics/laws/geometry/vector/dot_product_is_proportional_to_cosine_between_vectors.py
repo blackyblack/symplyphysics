@@ -7,9 +7,6 @@ from symplyphysics import (
     vector_magnitude,
 )
 from symplyphysics.core.dimensions import ScalarValue
-# from symplyphysics.laws.geometry import (
-#     dot_product_is_proportional_to_cosine_between_vectors as cosine_scalar_law,
-# )
 
 # Description:
 ## Dot product is scalar binary operation defined as the product of the norm of the vectors
