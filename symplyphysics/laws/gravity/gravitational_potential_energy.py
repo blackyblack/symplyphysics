@@ -16,6 +16,11 @@ from symplyphysics import (
 ## from infinite to r.
 
 # Law: U = -G * m1 * m2 / r
+## U - gravitational potential energy
+## G - gravitational constant
+## m1, m2 - masses of interacting particles
+## r - distance between mass centers of particles
+
 gravitational_potential_energy = Symbol("gravitational_potential_energy", units.energy)
 first_mass = Symbol("first_mass", units.mass)
 second_mass = Symbol("second_mass", units.mass)
