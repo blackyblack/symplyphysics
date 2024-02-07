@@ -9,7 +9,7 @@ from symplyphysics import (
 )
 
 # Description
-## When an object is under stress or compression, the stress is related to the strain via the
+## When an object is under tension or compression, the stress is related to the strain via the
 ## Young's modulus.
 
 # Law: sigma = E * |dL|/L
