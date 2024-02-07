@@ -46,10 +46,9 @@ potential = gravitational_potential_energy.law.rhs.subs({
     gravitational_potential_energy.distance_between_mass_centers: distance_between_mass_centers,
 })
 
-def potential_field_function(point) -> ScalarValue:
-    assert isinstance(point, CartesianPoint)
+def potential_field_function(point: CartesianPoint) -> ScalarValue:
     return potential.subs(
-        distance_between_mass_centers, 
+        distance_between_mass_centers,
         sqrt(point.x**2 + point.y**2 + point.z**2),
     )
 
