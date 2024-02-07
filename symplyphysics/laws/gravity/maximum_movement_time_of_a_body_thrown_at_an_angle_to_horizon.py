@@ -4,7 +4,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
     validate_output, angle_type)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematic import constant_acceleration_movement_is_parabolic as distance_law
-from symplyphysics.laws.kinematic import planar_projection_is_cosine as projection_law
+from symplyphysics.laws.geometry import planar_projection_is_cosine as projection_law
 
 # Description
 ## Let's say we throw the body at an angle to the horizon with some initial velocity.
