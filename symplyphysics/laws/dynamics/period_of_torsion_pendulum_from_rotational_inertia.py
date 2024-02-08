@@ -20,7 +20,7 @@ from symplyphysics import (
 
 oscillation_period = Symbol("oscillation_period", units.time)
 rotational_inertia = Symbol("rotational_inertia", units.mass * units.length**2)
-torsion_constant = Symbol("torsion_constant", units.mass * units.length**2 / units.time**2)
+torsion_constant = Symbol("torsion_constant", units.force * units.length)
 
 law = Eq(oscillation_period, 2 * pi * sqrt(rotational_inertia / torsion_constant))
 
