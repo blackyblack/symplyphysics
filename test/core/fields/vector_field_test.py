@@ -10,10 +10,9 @@ from symplyphysics.core.points.cartesian_point import CartesianPoint
 from symplyphysics.core.points.point import Point
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_rotate, coordinates_transform
 from symplyphysics.core.fields.vector_field import VectorField
-from symplyphysics.core.fields.scalar_field import AnyPoint
 
 
-def _assert_point(field_: VectorField, point_: AnyPoint, expected_: Sequence[Expr | float]):
+def _assert_point(field_: VectorField, point_: Point, expected_: Sequence[Expr | float]):
     value = field_(point_)
     for idx, v in enumerate(value.components):
         assert v == expected_[idx]

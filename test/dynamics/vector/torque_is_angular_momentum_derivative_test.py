@@ -41,21 +41,21 @@ def test_law(test_args):
 
 
 def test_bad_angular_momenta(test_args):
-    L_bad_vector = QuantityVector([
+    Lb = QuantityVector([
         Quantity(1.0 * units.meter),
         Quantity(1.0 * units.meter),
         Quantity(1.0 * units.meter),
     ])
     with raises(errors.UnitsError):
-        torque_law.calculate_torque(L_bad_vector, test_args.L1, test_args.t)
+        torque_law.calculate_torque(Lb, test_args.L1, test_args.t)
     with raises(errors.UnitsError):
-        torque_law.calculate_torque(test_args.L0, L_bad_vector, test_args.t)
+        torque_law.calculate_torque(test_args.L0, Lb, test_args.t)
 
-    L_scalar = Quantity(1.0 * units.kilogram * units.meter**2 / units.second)
+    Ls = Quantity(1.0 * units.kilogram * units.meter**2 / units.second)
     with raises(AttributeError):
-        torque_law.calculate_torque(L_scalar, test_args.L1, test_args.t)
+        torque_law.calculate_torque(Ls, test_args.L1, test_args.t)
     with raises(AttributeError):
-        torque_law.calculate_torque(test_args.L0, L_scalar, test_args.t)
+        torque_law.calculate_torque(test_args.L0, Ls, test_args.t)
 
     with raises(TypeError):
         torque_law.calculate_torque(100, test_args.L1, test_args.t)
