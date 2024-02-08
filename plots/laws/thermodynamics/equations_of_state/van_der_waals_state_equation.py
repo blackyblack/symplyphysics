@@ -24,14 +24,15 @@ state_equation = van_der_waals_law.law.subs({
     van_der_waals_law.bonding_forces_parameter: parameter_a,
     van_der_waals_law.molecules_volume_parameter: parameter_b
 })
-pressure_eq = solve(state_equation, pressure, dict=True)[0][pressure]
-answer = Eq(pressure, pressure_eq)
+pressure_value = solve(state_equation, pressure, dict=True)[0][pressure]
+answer = Eq(pressure, pressure_value)
 print(f"Total equation:\n{print_expression(answer)}")
 
-pressure_to_plots = pressure_eq.subs({
+pressure_to_plots = pressure_value.subs({
     parameter_a: 0.188,     # [Pa * m^6 / mole^2]
     parameter_b: 4.532 * 1E-5,      # [m^3 / mole]
-    amount_of_substance: 1      # [moles]
+    amount_of_substance: 1,      # [moles]
+    van_der_waals_law.units.molar_gas_constant: 8.31446262,
 })
 
 base_plot = plot(title="The Van der Waals state equation",
