@@ -16,6 +16,10 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## R is ideal gas constant,
 ## T is temperature
 
+## Note
+## Since the internal energy of an ideal gas does not change during the isothermal process, all the heat received from the source is converted into work.
+## When gas is compressed, the work of external forces is positive, and when expanding, the gas does the positive work.
+
 work = Symbol("work", units.energy)
 mass = Symbol("mass", units.mass)
 molar_mass = Symbol("molar_mass", units.mass / units.amount_of_substance)
