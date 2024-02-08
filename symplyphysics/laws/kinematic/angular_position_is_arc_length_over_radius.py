@@ -1,4 +1,4 @@
-from sympy import Eq, solve
+from sympy import Eq, solve, pi
 from symplyphysics import (
     units,
     Quantity,
@@ -11,6 +11,9 @@ from symplyphysics import (
     vector_magnitude,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.geometry import (
+    cross_product_is_proportional_to_sine_between_vectors as sine_law,
+)
 
 # Description:
 ## To describe the rotation of a rigid body about a fixed axis (rotational axis), a reference line is
@@ -44,20 +47,19 @@ radius_z = Symbol("radius_z", units.length)
 radius_vec = Vector([radius_x, radius_y, radius_z])
 radius_norm = vector_magnitude(radius_vec)
 
-displacement_from_law = solve(
-    law, arc_length
-)[0].subs({
+displacement_from_law = solve(law, arc_length)[0].subs({
     angular_position: angle_norm,
     path_radius: radius_norm,
 })
 
-# From [the law](../linear_displacement_is_angular_displacement_cross_radius.py), taking the vector
-# norm of both sides, we have norm(s) = norm(theta) * norm(r) * sin(phi) where s is the linear
-# displacement vector, theta is the angular displacement pseudovector, r is the radius vector, and
-# phi is the and between the last two. As a necessary condition, theta and r are orthogonal to each
-# other, therefore phi is pi/2 and sin(phi) is 1, and so abs(s) = abs(theta) * abs(r)
+# The radius vector and the rotation pseudovector are necessarily perpendicular to each other
+angle_between = pi / 2
 
-displacement_derived = angle_norm * radius_norm
+displacement_derived = sine_law.law.rhs.subs({
+    sine_law.vector_left_norm: angle_norm,
+    sine_law.vector_right_norm: radius_norm,
+    sine_law.angle_between_vectors: angle_between,
+})
 
 assert expr_equals(displacement_from_law, displacement_derived)
 
