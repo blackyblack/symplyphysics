@@ -9,6 +9,7 @@ from symplyphysics import (
 
 from symplyphysics.laws.thermodynamics import work_of_ideal_gas_in_isothermal_process as work_of_ideal_gas
 
+## Source of numbers: https://edu.tltsu.ru/er/book_view.php?book_id=48e&page_id=3912
 
 @fixture(name="test_args")
 def test_args_fixture():
