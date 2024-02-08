@@ -47,3 +47,6 @@ def test_bad_length(test_args):
         orbital_velocity.calculate_orbital_velocity(test_args.planet_mass, 100, test_args.large_half_axis_length)
     with raises(TypeError):
         orbital_velocity.calculate_orbital_velocity(test_args.planet_mass, test_args.distance, 100)
+    with raises(ValueError):
+        orbital_velocity.calculate_orbital_velocity(test_args.planet_mass, test_args.large_half_axis_length,
+                                                    test_args.distance)
