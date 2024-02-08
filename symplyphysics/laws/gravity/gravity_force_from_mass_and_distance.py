@@ -39,6 +39,7 @@ law = Eq(
 
 
 # Derive law from the gravitational potential energy
+# Condition: space must be 3-dimensional and flat
 
 potential = gravitational_potential_energy.law.rhs.subs({
     gravitational_potential_energy.first_mass: first_object_mass,
