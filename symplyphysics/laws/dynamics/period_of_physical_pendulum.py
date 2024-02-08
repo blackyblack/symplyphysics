@@ -15,14 +15,19 @@ from symplyphysics import (
     validate_input,
     validate_output,
 )
+from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import (
     angular_velocity_is_angle_derivative as angular_velocity_def,
     angular_acceleration_is_angular_velocity_derivative as angular_acceleration_def,
+    harmonic_oscillator_is_second_derivative_equation as oscillator_eqn,
 )
 from symplyphysics.laws.dynamics import (
     acceleration_from_force as newtons_second_law,
     torque_due_to_twisting_force as torque_def,
     moment_of_force_from_moment_of_inertia_and_angular_acceleration as torque_law,
+)
+from symplyphysics.laws.kinematic import (
+    period_from_angular_frequency as period_law,
 )
 
 # Description
@@ -36,10 +41,10 @@ from symplyphysics.laws.dynamics import (
 ## g - acceleration due to gravity
 ## h - distance between pivot and pendulum's center of mass
 
-oscillation_period = Symbol("oscillation_period", units.time)
-rotational_inertia = Symbol("rotational_inertia", units.mass * units.length**2)
-pendulum_mass = Symbol("pendulum_mass", units.mass)
-distance_to_pivot = Symbol("distance_to_pivot", units.length)
+oscillation_period = Symbol("oscillation_period", units.time, positive=True)
+rotational_inertia = Symbol("rotational_inertia", units.mass * units.length**2, positive=True)
+pendulum_mass = Symbol("pendulum_mass", units.mass, positive=True)
+distance_to_pivot = Symbol("distance_to_pivot", units.length, positive=True)
 
 law = Eq(
     oscillation_period, 
@@ -92,7 +97,25 @@ torque_from_law = torque_law.law.rhs.subs({
     torque_law.angular_acceleration: angular_acceleration,
 })
 
-diff_eqn = torque_from_def - torque_from_law
+diff_eqn_derived = Eq(torque_from_def, torque_from_law)
+
+diff_eqn_original = (
+    oscillator_eqn.definition
+    .subs(oscillator_eqn.time, time)
+    .subs(oscillator_eqn.displacement_function, angle)
+)
+
+angular_velocity_expr = solve(
+    [diff_eqn_derived, diff_eqn_original],
+    (angle(time).diff(time, time), oscillator_eqn.angular_frequency),
+    dict=True
+)[1][oscillator_eqn.angular_frequency]
+
+period_derived = period_law.law.rhs.subs(
+    period_law.circular_frequency, angular_velocity_expr
+)
+
+assert expr_equals(law.rhs, period_derived)
 
 
 def print_law() -> str:
