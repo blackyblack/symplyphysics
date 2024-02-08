@@ -13,7 +13,7 @@ from symplyphysics import (
 
 # Description
 ## - Case of a single particle
-##   The total vector sum of all the external torques acting on a particle is equal to the 
+##   The total vector sum of all the external torques acting on a particle is equal to the
 ##   time rate change of the angular momentum of that particle.
 ## - Case of a system of particles
 ##   The net external torque acting on a system of particles is equal to the time rate change

@@ -1,10 +1,9 @@
 from __future__ import annotations
 from functools import partial
-from typing import Callable, Sequence, TypeAlias
+from typing import Callable, Sequence, TypeAlias, TypeVar
 from sympy import Expr, sympify
 from sympy.vector import Vector as SymVector
 
-from .scalar_field import AnyPoint
 from ..points.point import Point
 from ..points.cartesian_point import CartesianPoint
 from ..points.sphere_point import SpherePoint
@@ -13,7 +12,8 @@ from ..coordinate_systems.coordinate_systems import CoordinateSystem
 from ..vectors.vectors import Vector
 from ...core.dimensions import ScalarValue
 
-FieldFunction: TypeAlias = Callable[[AnyPoint], Sequence[ScalarValue]] | Sequence[ScalarValue]
+T = TypeVar("T", bound="Point")
+FieldFunction: TypeAlias = Callable[[T], Sequence[ScalarValue]] | Sequence[ScalarValue]
 
 
 def _subs_with_point(expr: Sequence[ScalarValue], coordinate_system: CoordinateSystem,
