@@ -1,4 +1,4 @@
-from sympy import Eq
+from sympy import Eq, solve
 from symplyphysics import (
     units,
     Quantity,
@@ -7,6 +7,11 @@ from symplyphysics import (
     angle_type,
     validate_input,
     validate_output,
+)
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.kinematic import (
+    linear_velocity_from_angular_velocity_and_radius as velocities_law,
+    centripetal_acceleration_is_squared_velocity_by_radius as centripetal_law,
 )
 
 # Description
@@ -23,6 +28,30 @@ angular_velocity = Symbol("angular_velocity", angle_type / units.time)
 curve_radius = Symbol("curve_radius", units.length)
 
 law = Eq(centripetal_acceleration, angular_velocity**2 * curve_radius)
+
+
+# Derive law from expression for linear velocity in circular motion
+
+centripetal_acceleration_derived = centripetal_law.law.rhs.subs(
+    centripetal_law.curve_radius, curve_radius
+)
+
+velocities_law_sub = velocities_law.law.subs({
+    velocities_law.linear_velocity: centripetal_law.linear_velocity,
+    velocities_law.angular_velocity: angular_velocity,
+    velocities_law.curve_radius: curve_radius,
+})
+
+centripetal_acceleration_derived = solve(
+    [
+        Eq(centripetal_acceleration, centripetal_acceleration_derived),
+        velocities_law_sub,
+    ],
+    (centripetal_acceleration, centripetal_law.linear_velocity),
+    dict=True
+)[0][centripetal_acceleration]
+
+assert expr_equals(law.rhs, centripetal_acceleration_derived)
 
 
 def print_law() -> str:
