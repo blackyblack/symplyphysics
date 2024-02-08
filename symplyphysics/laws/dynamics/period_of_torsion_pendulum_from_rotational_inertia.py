@@ -25,6 +25,9 @@ torsion_constant = Symbol("torsion_constant", units.force * units.length)
 law = Eq(oscillation_period, 2 * pi * sqrt(rotational_inertia / torsion_constant))
 
 
+# TODO: derive from relation between restoring torque and twist angle
+
+
 def print_law() -> str:
     return print_expression(law)
 
