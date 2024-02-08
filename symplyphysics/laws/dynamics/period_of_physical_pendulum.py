@@ -3,8 +3,10 @@ from sympy import (
     pi,
     sqrt,
     solve,
+    symbols,
     Symbol as SymSymbol,
     Function as SymFunction,
+    Derivative,
 )
 from sympy.physics.units import acceleration_due_to_gravity
 from symplyphysics import (
@@ -47,7 +49,7 @@ pendulum_mass = Symbol("pendulum_mass", units.mass, positive=True)
 distance_to_pivot = Symbol("distance_to_pivot", units.length, positive=True)
 
 law = Eq(
-    oscillation_period, 
+    oscillation_period,
     2 * pi * sqrt(rotational_inertia / (pendulum_mass * acceleration_due_to_gravity * distance_to_pivot))
 )
 
@@ -55,7 +57,8 @@ law = Eq(
 # Derive from torque definition
 
 time = SymSymbol("time")
-angle = SymFunction("angle")
+# use symbols to avoid "not callable" warning
+angle_function = symbols("angle_function", cls=SymFunction)
 torque = SymSymbol("torque")
 
 gravitational_force = solve(newtons_second_law.law, newtons_second_law.force)[0].subs({
@@ -66,7 +69,7 @@ gravitational_force = solve(newtons_second_law.law, newtons_second_law.force)[0]
 angular_velocity = (
     angular_velocity_def.definition.rhs
     .subs(angular_velocity_def.time, time)
-    .subs(angular_velocity_def.angle_function(time), angle(time))
+    .subs(angular_velocity_def.angle_function(time), angle_function(time))
 )
 
 angular_acceleration = (
@@ -75,39 +78,39 @@ angular_acceleration = (
     .subs(angular_acceleration_def.angular_velocity(time), angular_velocity)
 )
 
-angle_sym = SymSymbol("angle")
-
-# The factor of -1 indicates that the torque acts to reduce the angle.
-torque_from_def = -1 * torque_def.law.rhs.subs({
-    torque_def.force: gravitational_force,
+# The factor of -1 indicates that gravitational force acts to reduce the angle.
+torque_due_to_gravity = torque_def.law.rhs.subs({
+    torque_def.force: -1 * gravitational_force,
     torque_def.distance_to_axis: distance_to_pivot,
-    torque_def.angle: angle(time),
+    torque_def.angle: angle_function(time),
 })
 
-torque_from_def = (
-    torque_from_def
-    .subs(angle(time), angle_sym)
+# Temporary replace function with symbol to make "series" work
+angle_sym = SymSymbol("angle_sym")
+torque_due_to_gravity = (
+    torque_due_to_gravity
+    .subs(angle_function(time), angle_sym)
     .series(angle_sym, 0, 2)
     .removeO()
-    .subs(angle_sym, angle(time))
+    .subs(angle_sym, angle_function(time))
 )
 
-torque_from_law = torque_law.law.rhs.subs({
+torque_due_to_acceleration = torque_law.law.rhs.subs({
     torque_law.moment_of_inertia: rotational_inertia,
     torque_law.angular_acceleration: angular_acceleration,
 })
 
-diff_eqn_derived = Eq(torque_from_def, torque_from_law)
+diff_eqn_derived = Eq(torque_due_to_gravity, torque_due_to_acceleration)
 
 diff_eqn_original = (
     oscillator_eqn.definition
     .subs(oscillator_eqn.time, time)
-    .subs(oscillator_eqn.displacement_function, angle)
+    .subs(oscillator_eqn.displacement_function(time), angle_function(time))
 )
 
 angular_velocity_expr = solve(
     [diff_eqn_derived, diff_eqn_original],
-    (angle(time).diff(time, time), oscillator_eqn.angular_frequency),
+    (Derivative(angle_function(time), (time, 2)), oscillator_eqn.angular_frequency),
     dict=True
 )[1][oscillator_eqn.angular_frequency]
 
