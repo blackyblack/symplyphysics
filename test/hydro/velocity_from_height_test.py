@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.hydro import velocity_from_height as torricellis_formula
 
@@ -23,9 +22,7 @@ def test_args_fixture():
 
 def test_basic_velocity(test_args):
     result = torricellis_formula.calculate_velocity(test_args.h)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.velocity)
-    result_velocity = convert_to(result, units.meter / units.second).evalf(5)
-    assert result_velocity == approx(7.67, 0.0001)
+    assert_equal(result, 7.67 * units.meter / units.second)
 
 
 def test_bad_height():

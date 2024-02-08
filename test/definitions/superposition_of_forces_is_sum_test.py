@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.definitions import superposition_of_forces_is_sum as forces_law
 
@@ -20,19 +19,13 @@ def test_args_fixture():
 
 def test_basic_superposition(test_args):
     result = forces_law.calculate_resultant_force([test_args.F1, test_args.F2])
-    assert SI.get_dimension_system().equivalent_dims(result.dimension,
-        forces_law.definition_units_SI)
-    result_force = convert_to(result, units.newton).evalf(3)
-    assert result_force == approx(30, 0.001)
+    assert_equal(result, 30 * units.newton)
 
 
 def test_three_forces_array(test_args):
     F3 = Quantity(-5 * units.newton)
     result = forces_law.calculate_resultant_force([test_args.F1, test_args.F2, F3])
-    assert SI.get_dimension_system().equivalent_dims(result.dimension,
-        forces_law.definition_units_SI)
-    result_force = convert_to(result, units.newton).evalf(3)
-    assert result_force == approx(25, 0.01)
+    assert_equal(result, 25 * units.newton)
 
 
 def test_bad_force(test_args):

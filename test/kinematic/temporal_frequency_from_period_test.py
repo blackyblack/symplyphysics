@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.kinematic import temporal_frequency_from_period as frequency_def
 
@@ -19,9 +18,7 @@ def test_args_fixture():
 
 def test_basic_frequency(test_args):
     result = frequency_def.calculate_frequency(test_args.T)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.frequency)
-    result_period = convert_to(result, units.hertz).evalf(2)
-    assert result_period == approx(0.36, 0.01)
+    assert_equal(result, 0.3571 * units.hertz)
 
 
 def test_bad_period():

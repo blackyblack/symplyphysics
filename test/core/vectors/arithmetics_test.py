@@ -1,5 +1,4 @@
 from collections import namedtuple
-
 from pytest import fixture, raises
 from sympy import atan2, cos, pi, sin, sqrt, SympifyError
 from symplyphysics import (SI, Quantity, dimensionless, units, QuantityVector, Vector,

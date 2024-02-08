@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
     Quantity,
-    SI,
-    convert_to,
 )
 
 from symplyphysics.definitions import surface_charge_density_from_charge_and_area as surface_charge_density
@@ -25,9 +24,7 @@ def test_args_fixture():
 def test_basic_surface_charge_density(test_args):
     result = surface_charge_density.calculate_surface_charge_density(test_args.charge,
         test_args.area)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.charge / units.area)
-    result_surface_charge_density = convert_to(result, units.coulomb / units.meter**2).evalf(5)
-    assert result_surface_charge_density == approx(5, 0.001)
+    assert_equal(result, 5 * units.coulomb / units.meter**2)
 
 
 def test_bad_charge(test_args):

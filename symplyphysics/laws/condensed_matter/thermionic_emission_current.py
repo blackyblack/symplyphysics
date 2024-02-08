@@ -25,7 +25,7 @@ density_current = Symbol("density_current", units.current / units.area)
 thermodynamic_work = Symbol("thermodynamic_work", units.energy)
 temperature = Symbol("temperature", units.temperature)
 
-richardson_constant = Quantity(120 * (units.ampere / units.kelvin**2 / units.centimeter**2))
+richardson_constant = Quantity(120.17 * (units.ampere / units.kelvin**2 / units.centimeter**2))
 
 law = Eq(
     density_current,

@@ -38,7 +38,19 @@ class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancest
     def identity(self, *_args: Any) -> Self:
         return self
 
+    def _eval_is_positive(self):
+        return self.scale_factor >= 0
+
+    def _eval_Abs(self):
+        return self if self.scale_factor >= 0 else (-1 * self)
+
 
 def list_of_quantities(input_: Sequence[Expr | float], subs_: dict[Expr,
     Quantity]) -> Sequence[Quantity]:
     return [Quantity(sympify(c).subs(subs_)) for c in input_]
+
+
+def scale_factor(quantity_: Quantity | float) -> float:
+    if isinstance(quantity_, Quantity):
+        return quantity_.scale_factor
+    return quantity_

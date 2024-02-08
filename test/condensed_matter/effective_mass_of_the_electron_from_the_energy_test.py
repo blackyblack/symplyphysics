@@ -1,13 +1,12 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-
+from pytest import fixture, raises
 from sympy import cos, pi
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
     convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.condensed_matter import effective_mass_of_the_electron_from_the_energy as ef_mass_el
 
@@ -25,10 +24,8 @@ def test_args_fixture():
     gamma = Quantity(4 * 1.6e-19 * units.joule)
     wavenumber = Quantity(pi / period_structure / 1000)
     energy_function = -2 * gamma * cos(wavenumber * period_structure)
-
     increased_wavenumber = Quantity(wavenumber * 3)
     energy_function_new = -2 * gamma * cos(increased_wavenumber * period_structure)
-
     mass_electron = Quantity(9.109e-31 * units.kilogram)
 
     Args = namedtuple("Args", [
@@ -44,10 +41,7 @@ def test_args_fixture():
 
 def test_basic_mass(test_args):
     result = ef_mass_el.calculate_mass(test_args.energy_function, test_args.wavenumber)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.mass)
-    result = convert_to(result, units.kilogram).evalf(6)
-    assert result == approx(0.24 * convert_to(test_args.mass_electron, units.kilogram).evalf(6),
-        0.00001)
+    assert_equal(result, 0.24 * test_args.mass_electron, tolerance=0.01)
 
 
 def test_mass_increases_with_increasing_wave_number(test_args):

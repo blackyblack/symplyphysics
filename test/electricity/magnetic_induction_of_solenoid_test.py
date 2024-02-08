@@ -1,11 +1,11 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from symplyphysics import (units, SI, convert_to, Quantity, errors)
+from pytest import fixture, raises
+from symplyphysics import (assert_equal, units, Quantity, errors)
 from symplyphysics.laws.electricity import magnetic_induction_of_solenoid as induction_law
 
 # Description
 ## With the number of turns equal to 11, a current of 1 ampere, a solenoid length of 0.5 meter
-## and a magnetic permeability of 120, the magnetic induction will be 3.4e-3 tesla.
+## and a magnetic permeability of 120, the magnetic induction will be 3.3174e-3 tesla.
 ## https://physics.icalculator.com/magnetic-field-inside-a-solenoid-calculator.html
 
 
@@ -26,9 +26,7 @@ def test_args_fixture():
 def test_basic_induction(test_args):
     result = induction_law.calculate_induction(test_args.current, test_args.length,
         test_args.relative_permeability, test_args.number_turns)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.magnetic_density)
-    result = convert_to(result, units.tesla).evalf(5)
-    assert result == approx(3.4e-3, rel=0.1)
+    assert_equal(result, 3.3174e-3 * units.tesla)
 
 
 def test_bad_current(test_args):
@@ -63,3 +61,6 @@ def test_bad_number_turns(test_args):
     with raises(errors.UnitsError):
         induction_law.calculate_induction(test_args.current, test_args.length,
             test_args.relative_permeability, number_turns)
+    with raises(ValueError):
+        induction_law.calculate_induction(test_args.current, test_args.length,
+            test_args.relative_permeability, -1)

@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
     Quantity,
-    convert_to,
-    SI,
 )
 from symplyphysics.core.symbols.celsius import Celsius, to_kelvin_quantity
 from symplyphysics.laws.thermodynamics import speed_of_sound
@@ -27,9 +26,7 @@ def test_args_fixture():
 
 def test_speed_of_sound(test_args):
     result = speed_of_sound.calculate_speed_of_sound(test_args.t, test_args.gamma, test_args.M)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.velocity)
-    result_velocity = convert_to(result, units.meter / units.second).evalf(4)
-    assert result_velocity == approx(343.21, 0.01)
+    assert_equal(result, 343.21 * units.meter / units.second)
 
 
 def test_bad_temperature(test_args):

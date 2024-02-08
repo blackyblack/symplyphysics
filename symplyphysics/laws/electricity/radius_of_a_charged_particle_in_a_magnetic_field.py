@@ -39,7 +39,8 @@ distance_law_applied = distance_law.law.subs({
     distance_law.constant_velocity: velocity,
 })
 # Period is a time taken to cover a full circle.
-period_derived = solve(distance_law_applied, distance_law.movement_time, dict=True)[0][distance_law.movement_time]
+period_derived = solve(distance_law_applied, distance_law.movement_time,
+    dict=True)[0][distance_law.movement_time]
 
 law_applied = period_law.law.subs({
     period_law.mass: mass,
@@ -59,7 +60,8 @@ def print_law() -> str:
 
 @validate_input(mass_=mass, velocity_=velocity, induction_=induction, charge_=charge)
 @validate_output(radius)
-def calculate_radius(mass_: Quantity, velocity_: Quantity, induction_: Quantity, charge_: Quantity) -> Quantity:
+def calculate_radius(mass_: Quantity, velocity_: Quantity, induction_: Quantity,
+    charge_: Quantity) -> Quantity:
     result_expr = solve(law, radius, dict=True)[0][radius]
     result_expr = result_expr.subs({
         mass: mass_,

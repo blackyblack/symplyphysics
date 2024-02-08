@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.kinematic import distance_from_constant_velocity as movement_law
 
@@ -24,9 +23,7 @@ def test_args_fixture():
 
 def test_basic_distance(test_args):
     result = movement_law.calculate_distance(test_args.x0, test_args.v, test_args.t)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
-    result_vector = convert_to(result, units.meter).evalf(2)
-    assert result_vector == approx(720, 0.01)
+    assert_equal(result, 720 * units.meter)
 
 
 def test_bad_distance(test_args):

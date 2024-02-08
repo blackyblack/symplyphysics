@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.definitions import mass_flow_rate as mass_rate_definition
 
@@ -21,9 +20,7 @@ def test_args_fixture():
 
 def test_basic_mass_flow_rate(test_args):
     result = mass_rate_definition.calculate_mass_flow_rate(test_args.m0, test_args.m1, test_args.t)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.mass / units.time)
-    result_acceleration = convert_to(result, mass_rate_definition.definition_units_SI).evalf(2)
-    assert result_acceleration == approx(3.8, 0.01)
+    assert_equal(result, 3.8 * units.kilogram / units.second)
 
 
 def test_bad_mass(test_args):

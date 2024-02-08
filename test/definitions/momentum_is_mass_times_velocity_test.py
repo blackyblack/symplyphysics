@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.definitions import momentum_is_mass_times_velocity as momentum_def
 
@@ -20,9 +19,7 @@ def test_args_fixture():
 
 def test_basic_momentum(test_args):
     result = momentum_def.calculate_momentum(test_args.m, test_args.v)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.momentum)
-    result_momentum = convert_to(result, momentum_def.definition_units_SI).evalf(2)
-    assert result_momentum == approx(5.0, 0.001)
+    assert_equal(result, 5 * units.kilogram * units.meter / units.second)
 
 
 def test_bad_mass(test_args):

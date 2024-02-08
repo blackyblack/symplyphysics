@@ -1,12 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
     Quantity,
-    SI,
-    convert_to,
-    angle_type,
 )
 from symplyphysics.laws.optics import refraction_angle_from_environments as refraction_law
 
@@ -28,9 +26,7 @@ def test_args_fixture():
 def test_basic_angle(test_args):
     result = refraction_law.calculate_refraction_angle(test_args.incidence_angle,
         test_args.incidence_media, test_args.refractive_media)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, angle_type)
-    result_angle = convert_to(result, units.degree).evalf(4)
-    assert result_angle == approx(22.1, 0.01)
+    assert_equal(result, 22.1 * units.degree)
 
 
 def test_angle_with_number(test_args):

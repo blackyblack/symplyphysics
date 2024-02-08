@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
     Quantity,
-    SI,
-    convert_to,
 )
 
 from symplyphysics.laws.hydro import body_weight_in_liquid as weight
@@ -23,9 +22,7 @@ def test_args_fixture():
 def test_basic_weight(test_args):
     result = weight.calculate_weight(test_args.weight_air, test_args.liquid_density,
         test_args.body_density)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
-    result_weight = convert_to(result, units.newton).evalf(5)
-    assert result_weight == approx(1.6, 0.001)
+    assert_equal(result, 1.6 * units.newton)
 
 
 def test_bad_density(test_args):
