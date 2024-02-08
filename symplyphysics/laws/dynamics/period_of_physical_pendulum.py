@@ -1,4 +1,11 @@
-from sympy import Eq, pi, sqrt
+from sympy import (
+    Eq,
+    pi,
+    sqrt,
+    solve,
+    Symbol as SymSymbol,
+    Function as SymFunction,
+)
 from sympy.physics.units import acceleration_due_to_gravity
 from symplyphysics import (
     units,
@@ -7,6 +14,15 @@ from symplyphysics import (
     print_expression,
     validate_input,
     validate_output,
+)
+from symplyphysics.definitions import (
+    angular_velocity_is_angle_derivative as angular_velocity_def,
+    angular_acceleration_is_angular_velocity_derivative as angular_acceleration_def,
+)
+from symplyphysics.laws.dynamics import (
+    acceleration_from_force as newtons_second_law,
+    torque_due_to_twisting_force as torque_def,
+    moment_of_force_from_moment_of_inertia_and_angular_acceleration as torque_law,
 )
 
 # Description
@@ -29,6 +45,54 @@ law = Eq(
     oscillation_period, 
     2 * pi * sqrt(rotational_inertia / (pendulum_mass * acceleration_due_to_gravity * distance_to_pivot))
 )
+
+
+# Derive from torque definition
+
+time = SymSymbol("time")
+angle = SymFunction("angle")
+torque = SymSymbol("torque")
+
+gravitational_force = solve(newtons_second_law.law, newtons_second_law.force)[0].subs({
+    newtons_second_law.mass: pendulum_mass,
+    newtons_second_law.acceleration: acceleration_due_to_gravity,
+})
+
+angular_velocity = (
+    angular_velocity_def.definition.rhs
+    .subs(angular_velocity_def.time, time)
+    .subs(angular_velocity_def.angle_function(time), angle(time))
+)
+
+angular_acceleration = (
+    angular_acceleration_def.definition.rhs
+    .subs(angular_acceleration_def.time, time)
+    .subs(angular_acceleration_def.angular_velocity(time), angular_velocity)
+)
+
+angle_sym = SymSymbol("angle")
+
+# The factor of -1 indicates that the torque acts to reduce the angle.
+torque_from_def = -1 * torque_def.law.rhs.subs({
+    torque_def.force: gravitational_force,
+    torque_def.distance_to_axis: distance_to_pivot,
+    torque_def.angle: angle(time),
+})
+
+torque_from_def = (
+    torque_from_def
+    .subs(angle(time), angle_sym)
+    .series(angle_sym, 0, 2)
+    .removeO()
+    .subs(angle_sym, angle(time))
+)
+
+torque_from_law = torque_law.law.rhs.subs({
+    torque_law.moment_of_inertia: rotational_inertia,
+    torque_law.angular_acceleration: angular_acceleration,
+})
+
+diff_eqn = torque_from_def - torque_from_law
 
 
 def print_law() -> str:
