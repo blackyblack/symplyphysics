@@ -12,11 +12,11 @@ from symplyphysics.laws.thermodynamics import work_of_ideal_gas_in_isothermal_pr
 
 @fixture(name="test_args")
 def test_args_fixture():
-    mass = Quantity(0.5 * units.kilogram)
-    molar_mass = Quantity(0.028 * units.kilogram / units.mole)
-    start_volume = Quantity(32 * units.meter**3)
-    final_volume = Quantity(48 * units.meter**3)
-    temperature = Quantity(273 * units.kelvin)
+    mass = Quantity(0.02 * units.kilogram)
+    molar_mass = Quantity(0.002 * units.kilogram / units.mole)
+    start_volume = Quantity(0.22 * units.meter**3)
+    final_volume = Quantity(1.1 * units.meter**3)
+    temperature = Quantity(300 * units.kelvin)
     Args = namedtuple("Args", ["mass", "molar_mass", "start_volume", "final_volume", "temperature"])
     return Args(
         mass=mass,
@@ -29,7 +29,7 @@ def test_args_fixture():
 
 def test_basic_law(test_args):
     result = work_of_ideal_gas.calculate_work(test_args.mass, test_args.molar_mass, test_args.start_volume, test_args.final_volume, test_args.temperature)
-    assert_equal(result, 16426 * units.joule)
+    assert_equal(result, 40123 * units.joule)
 
 
 def test_bad_mass(test_args):
