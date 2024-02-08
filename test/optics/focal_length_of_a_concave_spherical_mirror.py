@@ -24,7 +24,7 @@ def test_basic_focus_distance(test_args):
     assert_equal(result, 20 * prefixes.centi * units.meters)
 
 
-def test_bad_wave_length(test_args):
+def test_bad_radius():
     rb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         mirror_focus_law.calculate_focus_distance(rb)

@@ -14,14 +14,12 @@ from symplyphysics.laws.optics import lens_focus_from_object_and_image as focus_
 ## F - focus distance
 ## R - curvature radius of mirror
 
-# Condition: environment is air
-
 focus_distance = Symbol("focus_distance", units.length)
 curvature_radius = Symbol("curvature_radius", units.length)
 
 law = Eq(focus_distance, curvature_radius / 2)
 
-# refraction index of air equal 1. Mirror has refraction index equal -n, where n - refraction index of environment
+# Mirror has refraction index equal -n, where n - refraction index of environment
 refraction_index = symbols("refraction_index")
 
 spherical_lens_eq = spherical_lens_law.law.subs({
