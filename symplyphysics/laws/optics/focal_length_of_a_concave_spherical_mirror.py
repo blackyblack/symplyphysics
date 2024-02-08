@@ -1,4 +1,4 @@
-from sympy import (Eq, solve)
+from sympy import (Eq, simplify, solve, symbols)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
@@ -22,10 +22,12 @@ curvature_radius = Symbol("curvature_radius", units.length)
 law = Eq(focus_distance, curvature_radius / 2)
 
 # refraction index of air equal 1. Mirror has refraction index equal -n, where n - refraction index of environment
+refraction_index = symbols("refraction_index")
+
 spherical_lens_eq = spherical_lens_law.law.subs({
     spherical_lens_law.curvature_radius_lens: curvature_radius,
-    spherical_lens_law.refraction_index_lens: -1,
-    spherical_lens_law.refraction_index_environment: 1
+    spherical_lens_law.refraction_index_lens: -1 * refraction_index,
+    spherical_lens_law.refraction_index_environment: refraction_index
 })
 
 # Paste distances from object and image in law of spherical lens
@@ -34,18 +36,19 @@ spherical_lens_equation = spherical_lens_eq.subs({
     spherical_lens_law.distance_to_image: focus_law.distance_to_image,
 })
 
-# Multiply both sides of the equation by (-1)
-spherical_lens_equation = Eq(spherical_lens_equation.lhs * (-1), spherical_lens_equation.rhs * (-1))
+# Divide both sides of equation to refraction index
+spherical_lens_equation = simplify(Eq(spherical_lens_equation.lhs / refraction_index, spherical_lens_equation.rhs / refraction_index))
+spherical_lens_equation = Eq(curvature_radius/2, solve(spherical_lens_equation, curvature_radius)[0]/2)
 
 focus_equation = focus_law.law.subs({
     focus_law.focus_distance: focus_distance
 })
+focus_equation = Eq(focus_distance, solve(focus_equation, focus_distance)[0])
 
-# If two equations have equal parts, then their second parts are also equal
-assert expr_equals(spherical_lens_equation.lhs, focus_equation.rhs)
-focus_eq = Eq(focus_equation.lhs, spherical_lens_equation.rhs)
-
-focus_value = solve(focus_eq, focus_distance, dict=True)[0][focus_distance]
+focus_value = solve([focus_equation, spherical_lens_equation],
+    (focus_distance,
+     focus_law.distance_to_image * focus_law.distance_to_object / (focus_law.distance_to_image + focus_law.distance_to_object)),
+    dict=True)[0][focus_distance]
 assert expr_equals(focus_value, law.rhs)
 
 
