@@ -6,12 +6,15 @@ from symplyphysics.laws.optics import optical_strength_of_spherical_lens_from_re
 from symplyphysics.laws.optics import lens_focus_from_object_and_image as focus_law
 
 # Description
-#
+## The focal length of a spherical mirror is equal to half the radius of curvature,
+## and for a concave mirror F > 0 (for a convex mirror F < 0).
 
 # Law: F = R / 2
 # Where:
 ## F - focus distance
 ## R - curvature radius of mirror
+
+# Condition: environment is air
 
 focus_distance = Symbol("focus_distance", units.length)
 curvature_radius = Symbol("curvature_radius", units.length)
@@ -38,11 +41,11 @@ focus_equation = focus_law.law.subs({
     focus_law.focus_distance: focus_distance
 })
 
+# If two equations have equal parts, then their second parts are also equal
 assert expr_equals(spherical_lens_equation.lhs, focus_equation.rhs)
-
 focus_eq = Eq(focus_equation.lhs, spherical_lens_equation.rhs)
-focus_value = solve(focus_eq, focus_distance, dict=True)[0][focus_distance]
 
+focus_value = solve(focus_eq, focus_distance, dict=True)[0][focus_distance]
 assert expr_equals(focus_value, law.rhs)
 
 
