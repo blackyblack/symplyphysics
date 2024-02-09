@@ -4,6 +4,8 @@ from sympy import solve, Symbol, Eq
 from symplyphysics import print_expression, Quantity, units, convert_to
 from symplyphysics.laws.thermodynamics.equations_of_state import van_der_waals_state_equation as van_der_waals_law
 
+# Example from 2.24 in https://studfile.net/preview/1772224/page:8/
+
 temperature_before = Symbol("temperature_before")
 temperature_after = Symbol("temperature_after")
 volume = Symbol("volume")
