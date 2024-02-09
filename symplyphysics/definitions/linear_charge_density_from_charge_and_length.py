@@ -27,7 +27,7 @@ def print_definition() -> str:
 
 @validate_input(charge_=charge, length_=length)
 @validate_output(linear_charge_density)
-def calculate_linear_charge_density(charge_, length_: Quantity) -> Quantity:
+def calculate_linear_charge_density(charge_: Quantity, length_: Quantity) -> Quantity:
     result_expr = solve(definition, linear_charge_density, dict=True)[0][linear_charge_density]
     result_linear_charge_density = result_expr.subs({
         charge: charge_,

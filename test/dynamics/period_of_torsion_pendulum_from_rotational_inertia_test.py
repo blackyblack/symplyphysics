@@ -13,21 +13,22 @@ from symplyphysics.laws.dynamics import (
 ## The period of a torsion pendulum with rotational inertia I = 2.0e-4 kg*m**2 and torsion constant
 ## kappa = 7.1e-2 is 0.3335 s.
 
+Args = namedtuple("Args", "I kappa")
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     I = Quantity(2.0e-4 * units.kilogram * units.meter**2)
     kappa = Quantity(7.1e-2 * units.newton * units.meter)
-    Args = namedtuple("Args", "I kappa")
     return Args(I=I, kappa=kappa)
 
 
-def test_law(test_args):
+def test_law(test_args: Args) -> None:
     result = pendulum_law.calculate_period(test_args.I, test_args.kappa)
     assert_equal(result, 0.3335 * units.second)
 
 
-def test_bad_rotational_inertia(test_args):
+def test_bad_rotational_inertia(test_args: Args) -> None:
     Ib = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
         pendulum_law.calculate_period(Ib, test_args.kappa)
@@ -35,7 +36,7 @@ def test_bad_rotational_inertia(test_args):
         pendulum_law.calculate_period(100, test_args.kappa)
 
 
-def test_bad_torsion_constant(test_args):
+def test_bad_torsion_constant(test_args: Args) -> None:
     kappab = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
         pendulum_law.calculate_period(test_args.I, kappab)

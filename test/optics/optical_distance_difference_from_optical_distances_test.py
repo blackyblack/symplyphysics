@@ -15,22 +15,23 @@ from symplyphysics.laws.optics import optical_distance_difference_from_optical_d
 
 # Answer: delta = L2 - L1 = n * h - 1 * h= 0.5 mm
 
+Args = namedtuple("Args", ["ol1", "ol2"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     ol1 = Quantity(1 * prefixes.milli * units.meters)
     ol2 = Quantity(1.5 * prefixes.milli * units.meters)
-    Args = namedtuple("Args", ["ol1", "ol2"])
     return Args(ol1=ol1, ol2=ol2)
 
 
-def test_basic_distance_difference(test_args):
+def test_basic_distance_difference(test_args: Args) -> None:
     result = optical_difference_law.calculate_optical_difference_distance(
         test_args.ol1, test_args.ol2)
     assert_equal(result, 0.5 * prefixes.milli * units.meters)
 
 
-def test_bad_distances(test_args):
+def test_bad_distances(test_args: Args) -> None:
     olb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         optical_difference_law.calculate_optical_difference_distance(olb, test_args.ol2)

@@ -6,22 +6,23 @@ from symplyphysics.laws.astronomy import luminosity_of_celestial_body_from_radiu
 
 ## Source of numbers: https://astrogalaxy.ru/065.html
 
+Args = namedtuple("Args", ["radius", "temperature"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     radius = Quantity(695700000 * units.meter)
     temperature = Quantity(5772 * units.kelvin)
-    Args = namedtuple("Args", ["radius", "temperature"])
     return Args(radius=radius, temperature=temperature)
 
 
-def test_basic_law(test_args):
+def test_basic_law(test_args: Args) -> None:
     result = luminosity_of_celestial_body.calculate_luminosity(test_args.radius,
         test_args.temperature)
     assert_equal(result, 3.827e26 * units.watt)
 
 
-def test_bad_radius(test_args):
+def test_bad_radius(test_args: Args) -> None:
     bad_radius = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         luminosity_of_celestial_body.calculate_luminosity(bad_radius, test_args.temperature)
@@ -29,7 +30,7 @@ def test_bad_radius(test_args):
         luminosity_of_celestial_body.calculate_luminosity(100, test_args.temperature)
 
 
-def test_bad_temperature(test_args):
+def test_bad_temperature(test_args: Args) -> None:
     bad_temperature = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         luminosity_of_celestial_body.calculate_luminosity(test_args.radius, bad_temperature)

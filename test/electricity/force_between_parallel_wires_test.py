@@ -9,18 +9,17 @@ from symplyphysics.laws.electricity import force_between_parallel_wires as force
 ## the force will be equal to 7.5e-8 newtons at a distance of 2 meters.
 ## https://www.calculatoratoz.com/ru/force-between-parallel-wires-calculator/Calc-2131
 
+Args = namedtuple("Args",
+    ["relative_permeability", "first_wire_current", "second_wire_current", "length", "distance"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     relative_permeability = 1
     first_wire_current = Quantity(0.5 * units.ampere)
     second_wire_current = Quantity(1.5 * units.ampere)
     length = Quantity(1 * units.meter)
     distance = Quantity(2 * units.meter)
-
-    Args = namedtuple("Args", [
-        "relative_permeability", "first_wire_current", "second_wire_current", "length", "distance"
-    ])
     return Args(relative_permeability=relative_permeability,
         first_wire_current=first_wire_current,
         second_wire_current=second_wire_current,
@@ -28,21 +27,21 @@ def test_args_fixture():
         distance=distance)
 
 
-def test_basic_force(test_args):
+def test_basic_force(test_args: Args) -> None:
     result = force_law.calculate_force(test_args.relative_permeability,
         test_args.first_wire_current, test_args.second_wire_current, test_args.length,
         test_args.distance)
     assert_equal(result, 7.5e-8 * units.newton)
 
 
-def test_bad_relative_permeability(test_args):
+def test_bad_relative_permeability(test_args: Args) -> None:
     relative_permeability = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         force_law.calculate_force(relative_permeability, test_args.first_wire_current,
             test_args.second_wire_current, test_args.length, test_args.distance)
 
 
-def test_bad_wire_current(test_args):
+def test_bad_wire_current(test_args: Args) -> None:
     first_wire_current = Quantity(1 * units.coulomb)
     second_wire_current = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
@@ -59,7 +58,7 @@ def test_bad_wire_current(test_args):
             100, test_args.length, test_args.distance)
 
 
-def test_bad_length(test_args):
+def test_bad_length(test_args: Args) -> None:
     length = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         force_law.calculate_force(test_args.relative_permeability, test_args.first_wire_current,
@@ -69,7 +68,7 @@ def test_bad_length(test_args):
             test_args.second_wire_current, 100, test_args.distance)
 
 
-def test_bad_distance(test_args):
+def test_bad_distance(test_args: Args) -> None:
     distance = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         force_law.calculate_force(test_args.relative_permeability, test_args.first_wire_current,

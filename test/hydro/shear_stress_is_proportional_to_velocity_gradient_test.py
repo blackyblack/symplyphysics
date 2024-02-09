@@ -8,14 +8,15 @@ from symplyphysics.laws.hydro import shear_stress_is_proportional_to_velocity_gr
 ## At the site of contact with the plate its speed is 0, and at the top it is 0.1 m/s. The flow is 5 cm thick.
 ## Assert that the shear stress in the water at its highest point of contact with the plate amounts to 1.78e-3 Pa.
 
+Args = namedtuple("Args", "dynamic_viscosity speed_before speed_after layer_separation")
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     dynamic_viscosity = Quantity(8.9e-4 * units.pascal * units.second)
     speed_before = Quantity(0 * units.meter / units.second)
     speed_after = Quantity(0.1 * units.meter / units.second)
     layer_separation = Quantity(5 * units.centimeter)
-    Args = namedtuple("Args", "dynamic_viscosity speed_before speed_after layer_separation")
     return Args(
         dynamic_viscosity=dynamic_viscosity,
         speed_before=speed_before,
@@ -24,7 +25,7 @@ def test_args_fixture():
     )
 
 
-def test_basic_law(test_args):
+def test_basic_law(test_args: Args) -> None:
     result = newtons_law.calculate_shear_stress(
         test_args.dynamic_viscosity,
         test_args.speed_before,
@@ -34,7 +35,7 @@ def test_basic_law(test_args):
     assert_equal(result, 1.78e-3 * units.pascal)
 
 
-def test_bad_dynamic_viscosity(test_args):
+def test_bad_dynamic_viscosity(test_args: Args) -> None:
     bad_dynamic_viscosity = Quantity(1 * units.second)
     with raises(errors.UnitsError):
         newtons_law.calculate_shear_stress(
@@ -52,7 +53,7 @@ def test_bad_dynamic_viscosity(test_args):
         )
 
 
-def test_bad_fluid_speed(test_args):
+def test_bad_fluid_speed(test_args: Args) -> None:
     bad_fluid_speed = Quantity(1 * units.second)
     with raises(errors.UnitsError):
         newtons_law.calculate_shear_stress(
@@ -84,7 +85,7 @@ def test_bad_fluid_speed(test_args):
         )
 
 
-def test_bad_layer_separation(test_args):
+def test_bad_layer_separation(test_args: Args) -> None:
     bad_layer_separation = Quantity(1 * units.second)
     with raises(errors.UnitsError):
         newtons_law.calculate_shear_stress(

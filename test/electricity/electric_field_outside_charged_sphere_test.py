@@ -8,22 +8,22 @@ from symplyphysics.laws.electricity import electric_field_outside_charged_sphere
 ## sphere is 1 meter, the electric field intensity is 8.992e9 volt / meter.
 ## https://vrcacademy.com/calculator/electric-field-uniformly-charged-sphere-calculator/
 
+Args = namedtuple("Args", ["charge", "distance"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     charge = Quantity(1 * units.coulomb)
     distance = Quantity(1 * units.meter)
-
-    Args = namedtuple("Args", ["charge", "distance"])
     return Args(charge=charge, distance=distance)
 
 
-def test_basic_electric_intensity(test_args):
+def test_basic_electric_intensity(test_args: Args) -> None:
     result = intensity_law.calculate_electric_intensity(test_args.charge, test_args.distance)
     assert_equal(result, 8.992e9 * units.volt / units.meter)
 
 
-def test_bad_charge(test_args):
+def test_bad_charge(test_args: Args) -> None:
     charge = Quantity(1 * units.joule)
     with raises(errors.UnitsError):
         intensity_law.calculate_electric_intensity(charge, test_args.distance)
@@ -31,7 +31,7 @@ def test_bad_charge(test_args):
         intensity_law.calculate_electric_intensity(100, test_args.distance)
 
 
-def test_bad_distance(test_args):
+def test_bad_distance(test_args: Args) -> None:
     distance = Quantity(1 * units.joule)
     with raises(errors.UnitsError):
         intensity_law.calculate_electric_intensity(test_args.charge, distance)

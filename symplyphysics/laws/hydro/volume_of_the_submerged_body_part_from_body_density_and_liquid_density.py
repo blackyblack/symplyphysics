@@ -33,7 +33,7 @@ def print_law() -> str:
     body_density_=body_density,
     liquid_density_=liquid_density)
 @validate_output(submerged_volume)
-def calculate_submerged_volume(body_volume_: Quantity, body_density_,
+def calculate_submerged_volume(body_volume_: Quantity, body_density_: Quantity,
     liquid_density_: Quantity) -> Quantity:
     if body_density_.scale_factor > liquid_density_.scale_factor:
         raise ValueError("Density of body should be less or equal than density of fluid.")

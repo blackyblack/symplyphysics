@@ -14,30 +14,30 @@ from symplyphysics.laws.electricity import energy_of_magnetic_field_of_solenoid 
 ## the volume of the solenoid is 0.1 [meter^3]. Then energy of solenoid will be equal to 188.5 microjoule.
 ## https://www.indigomath.ru//raschety/Pwhwei.html
 
+Args = namedtuple("Args", ["relative_permeability", "intensity", "volume"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     relative_permeability = 120
     intensity = Quantity(5 * (units.ampere / units.meter))
     volume = Quantity(0.1 * units.meter**3)
-
-    Args = namedtuple("Args", ["relative_permeability", "intensity", "volume"])
     return Args(relative_permeability=relative_permeability, intensity=intensity, volume=volume)
 
 
-def test_basic_energy(test_args):
+def test_basic_energy(test_args: Args) -> None:
     result = energy_law.calculate_energy(test_args.relative_permeability, test_args.intensity,
         test_args.volume)
     assert_equal(result, 188.5 * prefixes.micro * units.joule)
 
 
-def test_bad_relative_permeability(test_args):
+def test_bad_relative_permeability(test_args: Args) -> None:
     relative_permeability = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         energy_law.calculate_energy(relative_permeability, test_args.intensity, test_args.volume)
 
 
-def test_bad_intensity(test_args):
+def test_bad_intensity(test_args: Args) -> None:
     intensity = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         energy_law.calculate_energy(test_args.relative_permeability, intensity, test_args.volume)
@@ -45,7 +45,7 @@ def test_bad_intensity(test_args):
         energy_law.calculate_energy(test_args.relative_permeability, 100, test_args.volume)
 
 
-def test_bad_volume(test_args):
+def test_bad_volume(test_args: Args) -> None:
     volume = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         energy_law.calculate_energy(test_args.relative_permeability, test_args.intensity, volume)

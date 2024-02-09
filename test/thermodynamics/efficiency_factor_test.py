@@ -6,21 +6,22 @@ from symplyphysics.laws.thermodynamics import efficiency_factor as efficiency_la
 # Description
 ## Suppose we have a heat engine that receives 2 Joules of heat from the heater, and gives 1.5 Joules to the refrigerator. Then its efficiency should be (2 - 1.5) / 2 = 0.25
 
+Args = namedtuple("Args", ["q_h", "q_r"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     q_h = Quantity(2 * units.joule)
     q_r = Quantity(1.5 * units.joule)
-    Args = namedtuple("Args", ["q_h", "q_r"])
     return Args(q_h=q_h, q_r=q_r)
 
 
-def test_basic_efficiency(test_args):
+def test_basic_efficiency(test_args: Args) -> None:
     result = efficiency_law.calculate_efficiency_factor(test_args.q_h, test_args.q_r)
     assert_equal(result, 0.25)
 
 
-def test_bad_efficiency(test_args):
+def test_bad_efficiency(test_args: Args) -> None:
     q_rb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         efficiency_law.calculate_efficiency_factor(test_args.q_h, q_rb)
