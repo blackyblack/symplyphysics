@@ -12,7 +12,7 @@ from symplyphysics import Symbol, units, print_expression, Quantity, \
 ## D - optical power of lens
 
 focus_distance = Symbol("focus_distance", units.length)
-optical_power = Symbol("optical_power", units.optical_power)
+optical_power = Symbol("optical_power", 1 / units.length)
 
 law = Eq(optical_power, 1 / focus_distance)
 
