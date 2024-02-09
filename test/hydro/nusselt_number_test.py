@@ -9,16 +9,17 @@ from symplyphysics.laws.hydro import nusselt_number
 # Heat transfer coefficient equals 200 W / m*m*K (source https://www.engineersedge.com),
 # thermal conductivity for air equals 0.022 W / m*K, characteristic length equals 1 m.
 
+Args = namedtuple("Args", ["heat_transfer_coefficient",
+                           "characteristic_length", "thermal_conductivity"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     heat_transfer_coefficient = Quantity(
         200 * units.watt / (units.meter**2 * units.kelvin))
     characteristic_length = Quantity(1 * units.meter)
     thermal_conductivity = Quantity(
         0.022 * units.watt / (units.meter * units.kelvin))
-    Args = namedtuple("Args", ["heat_transfer_coefficient",
-                      "characteristic_length", "thermal_conductivity"])
     return Args(
         heat_transfer_coefficient=heat_transfer_coefficient,
         characteristic_length=characteristic_length,
@@ -26,7 +27,7 @@ def test_args_fixture():
     )
 
 
-def test_basic_nusselt_number(test_args):
+def test_basic_nusselt_number(test_args) -> None:
     result = nusselt_number.calculate_nusselt_number(
         heat_transfer_coefficient_=test_args.heat_transfer_coefficient,
         characteristic_length_=test_args.characteristic_length,
@@ -35,7 +36,7 @@ def test_basic_nusselt_number(test_args):
     assert_equal(result, 9090.91)
 
 
-def test_bad_heat_transfer_coefficient(test_args):
+def test_bad_heat_transfer_coefficient(test_args) -> None:
     htc = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         nusselt_number.calculate_nusselt_number(
@@ -51,7 +52,7 @@ def test_bad_heat_transfer_coefficient(test_args):
         )
 
 
-def test_bad_length(test_args):
+def test_bad_length(test_args) -> None:
     bl = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         nusselt_number.calculate_nusselt_number(
@@ -67,7 +68,7 @@ def test_bad_length(test_args):
         )
 
 
-def test_bad_conductivity(test_args):
+def test_bad_conductivity(test_args) -> None:
     bc = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         nusselt_number.calculate_nusselt_number(
