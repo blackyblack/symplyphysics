@@ -5,7 +5,7 @@ from symplyphysics.laws.dynamics.vector import torque_vector_of_twisting_force a
 
 # Description
 ## A force (1, -2, -1) N is applied at a point (0, 2, -3) m. The torque applied
-## should amount to (8, 3, 2) N*m.
+## should amount to (-8, -3, -2) N*m.
 
 
 @fixture(name="test_args")
@@ -25,8 +25,8 @@ def test_args_fixture():
 
 
 def test_basic_law(test_args):
-    result = torque_def.calculate_torque(test_args.F, test_args.r)
-    for (result_component, correct_value) in zip(result.components, [8, 3, 2]):
+    result = torque_def.calculate_torque(test_args.r, test_args.F)
+    for (result_component, correct_value) in zip(result.components, [-8, -3, -2]):
         assert_equal(result_component, correct_value * units.newton * units.meter)
 
 
@@ -38,13 +38,13 @@ def test_bad_force(test_args):
             Quantity(-2.0 * units.second),
             Quantity(-1.0 * units.second)
         ])
-        torque_def.calculate_torque(Fb, test_args.r)
+        torque_def.calculate_torque(test_args.r, Fb)
     # Fb is in the dimension of a force, but not a vector
     with raises(AttributeError):
         Fb = Quantity(1.0 * units.newton)
-        torque_def.calculate_torque(Fb, test_args.r)
+        torque_def.calculate_torque(test_args.r, Fb)
     with raises(TypeError):
-        torque_def.calculate_torque(100, test_args.r)
+        torque_def.calculate_torque(test_args.r, 100)
 
 
 def test_bad_distance(test_args):
@@ -54,9 +54,9 @@ def test_bad_distance(test_args):
             Quantity(-2.0 * units.second),
             Quantity(-1.0 * units.second)
         ])
-        torque_def.calculate_torque(test_args.F, rb)
+        torque_def.calculate_torque(rb, test_args.F)
     with raises(AttributeError):
         rb = Quantity(1.0 * units.meter)
-        torque_def.calculate_torque(test_args.F, rb)
+        torque_def.calculate_torque(rb, test_args.F)
     with raises(TypeError):
-        torque_def.calculate_torque(test_args.F, 100)
+        torque_def.calculate_torque(100, test_args.F)
