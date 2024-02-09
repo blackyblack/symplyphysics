@@ -50,21 +50,21 @@ parameter_a_ = parameter_a.subs({
     temperature_after: Quantity(350 * units.kelvins),
     volume: Quantity(0.25 * units.liters),
     amount_of_substance: Quantity(1 * units.amount_of_substance),
-    pressure_before: Quantity(90 * units.atm),
-    pressure_after: Quantity(110 * units.atm),
+    pressure_before: Quantity(90 * units.atmospheres),
+    pressure_after: Quantity(110 * units.atmospheres),
 })
 parameter_b_ = parameter_b.subs({
     temperature_before: Quantity(300 * units.kelvins),
     temperature_after: Quantity(350 * units.kelvins),
     volume: Quantity(0.25 * units.liters),
     amount_of_substance: Quantity(1 * units.amount_of_substance),
-    pressure_before: Quantity(90 * units.atm),
-    pressure_after: Quantity(110 * units.atm),
+    pressure_before: Quantity(90 * units.atmospheres),
+    pressure_after: Quantity(110 * units.atmospheres),
 })
 
 answer1_value = convert_to(Quantity(parameter_a_),
-    units.pascals * (units.meters * 3 / units.moles)**2)
+    units.pascals * (units.meters ** 3 / units.moles)**2)
 answer2_value = convert_to(Quantity(parameter_b_),
-    units.meters * 3 / units.moles)
+    units.meters ** 3 / units.moles)
 print(f"Parameter a is: {answer1_value} Pa * (m^3 / moles)^2")
 print(f"Parameter b is: {answer2_value} m^3 / moles")
