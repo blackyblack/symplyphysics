@@ -3,8 +3,15 @@ from symplyphysics import (units, Quantity, Symbol, print_expression,
                            validate_input, validate_output, dimensionless)
 
 # Description
-## If the optical distance difference is equal half-integer number of waves,
-## then at this point of the screen the interference intensity will be maximum.
+## 1) If the difference in the course of two waves is equal to an integer number of waves
+## (i.e. an even number of half-waves) Δ = mλ, where m = 0, 1, 2, ...,
+## then an interference maximum is formed at the point of superposition of these waves.
+
+## 2) An interference pattern occurs when the path difference from the slit to the
+## screen is equal to an integer number of wavelengths (0, λ, 2λ, …).
+
+## https://vogueindustry.com/17289645-interference-patterns-maximum-and-minimum-conditions#menu-9
+## https://www.livelaptopspec.com/what-is-maximum-constructive-interference/
 
 # Law: delta = m * lambda
 # Where:
