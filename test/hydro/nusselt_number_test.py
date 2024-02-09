@@ -27,7 +27,7 @@ def test_args_fixture() -> Args:
     )
 
 
-def test_basic_nusselt_number(test_args) -> None:
+def test_basic_nusselt_number(test_args: Args) -> None:
     result = nusselt_number.calculate_nusselt_number(
         heat_transfer_coefficient_=test_args.heat_transfer_coefficient,
         characteristic_length_=test_args.characteristic_length,
@@ -36,7 +36,7 @@ def test_basic_nusselt_number(test_args) -> None:
     assert_equal(result, 9090.91)
 
 
-def test_bad_heat_transfer_coefficient(test_args) -> None:
+def test_bad_heat_transfer_coefficient(test_args: Args) -> None:
     htc = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         nusselt_number.calculate_nusselt_number(
@@ -52,7 +52,7 @@ def test_bad_heat_transfer_coefficient(test_args) -> None:
         )
 
 
-def test_bad_length(test_args) -> None:
+def test_bad_length(test_args: Args) -> None:
     bl = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         nusselt_number.calculate_nusselt_number(
@@ -68,7 +68,7 @@ def test_bad_length(test_args) -> None:
         )
 
 
-def test_bad_conductivity(test_args) -> None:
+def test_bad_conductivity(test_args: Args) -> None:
     bc = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         nusselt_number.calculate_nusselt_number(
