@@ -24,7 +24,7 @@ def test_basic_power(test_args: Args) -> None:
     assert_equal(result, 5 * units.dioptre)
 
 
-def test_bad_focal_distance(test_args: Args) -> None:
+def test_bad_focal_distance() -> None:
     fb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         optical_power_law.calculate_optical_power(fb)
