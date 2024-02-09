@@ -98,7 +98,7 @@ class VectorField:
     # Applies field to a trajectory / surface / volume - calls field functions with each element of the trajectory as parameter.
     # trajectory_ - list of expressions that correspond to a function in some space, eg [param, param] for a linear function y = x
     # return - vector parametrized by trajectory parameters.
-    def apply(self, trajectory_: Sequence[Expr]) -> Vector:
+    def apply(self, trajectory_: Sequence[Expr | float]) -> Vector:
         trajectory_as_point = Point(*trajectory_)
         if self._coordinate_system.coord_system_type == CoordinateSystem.System.CARTESIAN:
             trajectory_as_point = CartesianPoint(*trajectory_)

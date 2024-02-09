@@ -15,7 +15,7 @@ Args = namedtuple("Args", ["C"])
 
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     C = CoordinateSystem()
     return Args(C=C)
 

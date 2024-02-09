@@ -29,8 +29,7 @@ from symplyphysics.laws.dynamics import (
     moment_of_force_from_moment_of_inertia_and_angular_acceleration as torque_law,
 )
 from symplyphysics.laws.kinematic import (
-    period_from_angular_frequency as period_law,
-)
+    period_from_angular_frequency as period_law,)
 
 # Description
 ## A physical pendulum is a pendulum with an arbitrary distribution of mass that
@@ -49,10 +48,8 @@ pendulum_mass = Symbol("pendulum_mass", units.mass, positive=True)
 distance_to_pivot = Symbol("distance_to_pivot", units.length, positive=True)
 
 law = Eq(
-    oscillation_period,
-    2 * pi * sqrt(rotational_inertia / (pendulum_mass * acceleration_due_to_gravity * distance_to_pivot))
-)
-
+    oscillation_period, 2 * pi * sqrt(rotational_inertia /
+    (pendulum_mass * acceleration_due_to_gravity * distance_to_pivot)))
 
 # Derive from torque definition
 
@@ -66,17 +63,11 @@ gravitational_force = solve(newtons_second_law.law, newtons_second_law.force)[0]
     newtons_second_law.acceleration: acceleration_due_to_gravity,
 })
 
-angular_velocity = (
-    angular_velocity_def.definition.rhs
-    .subs(angular_velocity_def.time, time)
-    .subs(angular_velocity_def.angle_function(time), angle_function(time))
-)
+angular_velocity = (angular_velocity_def.definition.rhs.subs(angular_velocity_def.time,
+    time).subs(angular_velocity_def.angle_function(time), angle_function(time)))
 
-angular_acceleration = (
-    angular_acceleration_def.definition.rhs
-    .subs(angular_acceleration_def.time, time)
-    .subs(angular_acceleration_def.angular_velocity(time), angular_velocity)
-)
+angular_acceleration = (angular_acceleration_def.definition.rhs.subs(angular_acceleration_def.time,
+    time).subs(angular_acceleration_def.angular_velocity(time), angular_velocity))
 
 # The factor of -1 indicates that gravitational force acts to reduce the angle.
 torque_due_to_gravity = torque_def.law.rhs.subs({
@@ -87,13 +78,8 @@ torque_due_to_gravity = torque_def.law.rhs.subs({
 
 # Temporary replace function with symbol to make "series" work
 angle_sym = SymSymbol("angle_sym")
-torque_due_to_gravity = (
-    torque_due_to_gravity
-    .subs(angle_function(time), angle_sym)
-    .series(angle_sym, 0, 2)
-    .removeO()
-    .subs(angle_sym, angle_function(time))
-)
+torque_due_to_gravity = (torque_due_to_gravity.subs(angle_function(time),
+    angle_sym).series(angle_sym, 0, 2).removeO().subs(angle_sym, angle_function(time)))
 
 torque_due_to_acceleration = torque_law.law.rhs.subs({
     torque_law.moment_of_inertia: rotational_inertia,
@@ -102,21 +88,14 @@ torque_due_to_acceleration = torque_law.law.rhs.subs({
 
 diff_eqn_derived = Eq(torque_due_to_gravity, torque_due_to_acceleration)
 
-diff_eqn_original = (
-    oscillator_eqn.definition
-    .subs(oscillator_eqn.time, time)
-    .subs(oscillator_eqn.displacement_function(time), angle_function(time))
-)
+diff_eqn_original = (oscillator_eqn.definition.subs(oscillator_eqn.time,
+    time).subs(oscillator_eqn.displacement_function(time), angle_function(time)))
 
-angular_velocity_expr = solve(
-    [diff_eqn_derived, diff_eqn_original],
+angular_velocity_expr = solve([diff_eqn_derived, diff_eqn_original],
     (Derivative(angle_function(time), (time, 2)), oscillator_eqn.angular_frequency),
-    dict=True
-)[1][oscillator_eqn.angular_frequency]
+    dict=True)[1][oscillator_eqn.angular_frequency]
 
-period_derived = period_law.law.rhs.subs(
-    period_law.circular_frequency, angular_velocity_expr
-)
+period_derived = period_law.law.rhs.subs(period_law.circular_frequency, angular_velocity_expr)
 
 assert expr_equals(law.rhs, period_derived)
 
