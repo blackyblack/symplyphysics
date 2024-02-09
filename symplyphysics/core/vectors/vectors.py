@@ -25,9 +25,11 @@ class Vector:
     _coordinate_system: CoordinateSystem
     _components: list[ScalarValue]
 
-    def __init__(self,
+    def __init__(
+        self,
         components: Sequence[ScalarValue],
-        coordinate_system: CoordinateSystem = CoordinateSystem(CoordinateSystem.System.CARTESIAN)):
+        coordinate_system: CoordinateSystem = CoordinateSystem(CoordinateSystem.System.CARTESIAN)
+    ) -> None:
         self._coordinate_system = coordinate_system
         self._components = list(components)
 
@@ -97,9 +99,11 @@ class Vector:
 #       It is not supported by this class.
 class QuantityVector(Vector, DimensionSymbol):
 
-    def __init__(self,
+    def __init__(
+        self,
         components: Sequence[Quantity | ScalarValue],
-        coordinate_system: CoordinateSystem = CoordinateSystem(CoordinateSystem.System.CARTESIAN)):
+        coordinate_system: CoordinateSystem = CoordinateSystem(CoordinateSystem.System.CARTESIAN)
+    ) -> None:
         quantities = QuantityVector._expr_to_quantities(components)
         # find first dimension with non-zero scale factor
         dimension = dimensionless if len(quantities) == 0 else quantities[0].dimension

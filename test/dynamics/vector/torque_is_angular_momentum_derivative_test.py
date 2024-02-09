@@ -7,9 +7,7 @@ from symplyphysics import (
     Quantity,
     QuantityVector,
 )
-from symplyphysics.laws.dynamics.vector import (
-    torque_is_angular_momentum_derivative as torque_law
-)
+from symplyphysics.laws.dynamics.vector import (torque_is_angular_momentum_derivative as torque_law)
 
 # Description
 ## During the interval of 1 s, the particle's angular momentum changed from (1, 2, -1) kg*m**2/s

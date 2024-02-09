@@ -28,8 +28,5 @@ def print_law() -> str:
 @validate_output(luminosity)
 def calculate_luminosity(radius_: Quantity, temperature_: Quantity) -> Quantity:
     solved = solve(law, luminosity, dict=True)[0][luminosity]
-    result_expr = solved.subs({
-        radius: radius_,
-        temperature: temperature_
-    })
+    result_expr = solved.subs({radius: radius_, temperature: temperature_})
     return Quantity(result_expr)

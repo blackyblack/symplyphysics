@@ -8,8 +8,7 @@ from symplyphysics.definitions import (
 )
 from symplyphysics.laws.conservation import (
     mechanical_energy_after_equals_to_mechanical_energy_before as energy_conservation_law,
-    momentum_after_collision_equals_to_momentum_before as momentum_conservation_law
-)
+    momentum_after_collision_equals_to_momentum_before as momentum_conservation_law)
 from symplyphysics.laws.dynamics import (
     kinetic_energy_from_mass_and_velocity as kinetic_energy_def,
     potential_energy_from_mass_and_height as potential_energy_def,
@@ -74,8 +73,10 @@ mechanical_energy_after_1 = mechanical_energy_def.definition.rhs.subs({
 })
 
 energy_conservation_eqn_1 = energy_conservation_law.law.subs({
-    energy_conservation_law.mechanical_energy(energy_conservation_law.time_before): mechanical_energy_before_1,
-    energy_conservation_law.mechanical_energy(energy_conservation_law.time_after): mechanical_energy_after_1,
+    energy_conservation_law.mechanical_energy(energy_conservation_law.time_before):
+        mechanical_energy_before_1,
+    energy_conservation_law.mechanical_energy(energy_conservation_law.time_after):
+        mechanical_energy_after_1,
 })
 
 speed_before_1 = solve(energy_conservation_eqn_1, speed_before_1)[0]
@@ -102,8 +103,10 @@ momentum_after_2_elastic = momentum_def.definition.rhs.subs({
 momentum_after_elastic = momentum_after_1_elastic + momentum_after_2_elastic
 
 momentum_conservation_eqn_collision = momentum_conservation_law.law.subs({
-    momentum_conservation_law.momentum(momentum_conservation_law.time_before): momentum_before_1,
-    momentum_conservation_law.momentum(momentum_conservation_law.time_after): momentum_after_elastic,
+    momentum_conservation_law.momentum(momentum_conservation_law.time_before):
+        momentum_before_1,
+    momentum_conservation_law.momentum(momentum_conservation_law.time_after):
+        momentum_after_elastic,
 })
 
 kinetic_energy_after_1_elastic = kinetic_energy_def.law.rhs.subs({
@@ -124,15 +127,16 @@ mechanical_energy_after_elastic = mechanical_energy_def.definition.rhs.subs({
 })
 
 energy_conservation_eqn_collision = energy_conservation_law.law.subs({
-    energy_conservation_law.mechanical_energy(energy_conservation_law.time_before): mechanical_energy_before_elastic,
-    energy_conservation_law.mechanical_energy(energy_conservation_law.time_after): mechanical_energy_after_elastic,
+    energy_conservation_law.mechanical_energy(energy_conservation_law.time_before):
+        mechanical_energy_before_elastic,
+    energy_conservation_law.mechanical_energy(energy_conservation_law.time_after):
+        mechanical_energy_after_elastic,
 })
 
 speed_after_2_elastic = solve(
     [momentum_conservation_eqn_collision, energy_conservation_eqn_collision],
     (speed_after_1, speed_after_2),
-    dict=True
-)[1][speed_after_2]
+    dict=True)[1][speed_after_2]
 
 # (b) Inelastic collision
 
@@ -143,10 +147,7 @@ momentum_after_inelastic = momentum_def.definition.rhs.subs({
     momentum_def.velocity: speed_after,
 })
 
-speed_after_inelastic = solve(
-    Eq(momentum_before_1, momentum_after_inelastic),
-    speed_after
-)[0]
+speed_after_inelastic = solve(Eq(momentum_before_1, momentum_after_inelastic), speed_after)[0]
 
 # Find braking path from friction force in general case
 
@@ -177,7 +178,9 @@ braking_path_inelastic = braking_path.subs({
 
 print(f"General expression for braking path:\n{print_expression(braking_path)}\n")
 print(f"Braking path after elastic collision:\n{print_expression(braking_path_elastic)}\n")
-print(f"Braking path after completely inelastic collision:\n{print_expression(braking_path_inelastic)}\n")
+print(
+    f"Braking path after completely inelastic collision:\n{print_expression(braking_path_inelastic)}\n"
+)
 
 braking_path_elastic_value = convert_to(
     Quantity(braking_path_elastic.subs(values)),

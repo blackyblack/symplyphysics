@@ -11,12 +11,11 @@ from symplyphysics.core.points.cartesian_point import CartesianPoint
 from symplyphysics.core.points.point import Point
 from symplyphysics.core.fields.scalar_field import ScalarField
 
-
 Args = namedtuple("Args", ["C"])
 
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     C = CoordinateSystem()
     return Args(C=C)
 
@@ -25,6 +24,7 @@ def test_args_fixture():
 
 
 def test_basic_field() -> None:
+
     def field_function(p: CartesianPoint) -> ScalarValue:
         return p.z * p.y
 
@@ -268,7 +268,8 @@ def test_invariant_transformed_trajectory_field_apply(test_args: Args) -> None:
 
     assert transformed_trajectory_value.subs({
         x: p1_coordinates_in_b[0],
-        y: p1_coordinates_in_b[1]}) == 99
+        y: p1_coordinates_in_b[1]
+    }) == 99
 
 
 # Test field.apply_to_basis()

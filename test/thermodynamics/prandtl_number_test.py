@@ -3,32 +3,23 @@ from pytest import fixture, raises
 from symplyphysics import assert_equal, Quantity, units, errors
 from symplyphysics.laws.thermodynamics import prandtl_number
 
-
 # Example from https://www.omnicalculator.com/physics/prandtl-number
 
 
 @fixture(name="test_args")
 def test_args_fixture():
-    heat_capacity = Quantity(1.006 * units.joule /
-                             (units.kilogram * units.kelvin))
+    heat_capacity = Quantity(1.006 * units.joule / (units.kilogram * units.kelvin))
     dynamic_viscosity = Quantity(0.0000182 * units.pascal * units.second)
-    thermal_conductivity = Quantity(
-        0.025596 * units.watt / units.meter / units.kelvin)
-    Args = namedtuple(
-        "Args", ["heat_capacity", "dynamic_viscosity", "thermal_conductivity"])
-    return Args(
-        heat_capacity=heat_capacity,
+    thermal_conductivity = Quantity(0.025596 * units.watt / units.meter / units.kelvin)
+    Args = namedtuple("Args", ["heat_capacity", "dynamic_viscosity", "thermal_conductivity"])
+    return Args(heat_capacity=heat_capacity,
         dynamic_viscosity=dynamic_viscosity,
-        thermal_conductivity=thermal_conductivity
-    )
+        thermal_conductivity=thermal_conductivity)
 
 
 def test_basic_prandtl_number(test_args):
-    result = prandtl_number.calculate_prandtl_number(
-        test_args.heat_capacity,
-        test_args.dynamic_viscosity,
-        test_args.thermal_conductivity
-    )
+    result = prandtl_number.calculate_prandtl_number(test_args.heat_capacity,
+        test_args.dynamic_viscosity, test_args.thermal_conductivity)
     assert_equal(result, 0.000715)
 
 

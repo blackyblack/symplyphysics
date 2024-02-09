@@ -5,11 +5,9 @@ from symplyphysics import (
     errors,
     units,
     Quantity,
-    convert_to,
 )
 from symplyphysics.laws.dynamics import (
-    period_of_torsion_pendulum_from_rotational_inertia as pendulum_law,
-)
+    period_of_torsion_pendulum_from_rotational_inertia as pendulum_law,)
 
 # Description
 ## The period of a torsion pendulum with rotational inertia I = 2.0e-4 kg*m**2 and torsion constant

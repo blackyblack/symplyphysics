@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.gravity import (
-    area_rate_of_change_is_proportional_to_angular_momentum as keplers_second_law,
-)
+    area_rate_of_change_is_proportional_to_angular_momentum as keplers_second_law,)
 
 # Description
 ## Earth's mass is 6.0e24 kg and its angular momentum is 2.7e40 kg*m**2/s.

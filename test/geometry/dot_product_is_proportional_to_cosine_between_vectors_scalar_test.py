@@ -3,8 +3,8 @@ from pytest import fixture
 from symplyphysics import (
     assert_equal,
     Quantity,
-    QuantityVector, 
-    vector_magnitude, 
+    QuantityVector,
+    vector_magnitude,
     dot_vectors,
     units,
 )
@@ -37,7 +37,9 @@ def test_args_fixture():
 
 def test_law(test_args):
     result = cosine_law.calculate_cosine_between_vectors(
-        test_args.f_dot_r, test_args.f_norm, test_args.r_norm,
+        test_args.f_dot_r,
+        test_args.f_norm,
+        test_args.r_norm,
     )
     assert_equal(result, -0.456)
 
@@ -45,7 +47,9 @@ def test_law(test_args):
 def test_law_perpendicular(test_args):
     f_perp_dot_r = 0.0
     result = cosine_law.calculate_cosine_between_vectors(
-        f_perp_dot_r, test_args.f_norm, test_args.r_norm,
+        f_perp_dot_r,
+        test_args.f_norm,
+        test_args.r_norm,
     )
     assert_equal(result, 0.0)
 
@@ -53,6 +57,8 @@ def test_law_perpendicular(test_args):
 def test_law_parallel(test_args):
     f_parallel_dot_r = test_args.f_norm * test_args.r_norm
     result = cosine_law.calculate_cosine_between_vectors(
-        f_parallel_dot_r, test_args.f_norm, test_args.r_norm,
+        f_parallel_dot_r,
+        test_args.f_norm,
+        test_args.r_norm,
     )
     assert_equal(result, 1.0)

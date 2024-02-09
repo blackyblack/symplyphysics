@@ -6,9 +6,8 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.dynamics.deformation import (
-    tensile_stress_is_youngs_modulus_times_strain as stress_strain_law
-)
+from symplyphysics.laws.dynamics.deformation import (tensile_stress_is_youngs_modulus_times_strain
+    as stress_strain_law)
 
 # Description
 ## An object is being compressed, its initial length is 1 m, and it became 2 mm shorter.

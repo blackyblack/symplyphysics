@@ -35,17 +35,18 @@ spherical_lens_equation = spherical_lens_eq.subs({
 })
 
 # Divide both sides of equation to refraction index
-spherical_lens_equation = simplify(Eq(spherical_lens_equation.lhs / refraction_index, spherical_lens_equation.rhs / refraction_index))
-spherical_lens_equation = Eq(curvature_radius/2, solve(spherical_lens_equation, curvature_radius)[0]/2)
+spherical_lens_equation = simplify(
+    Eq(spherical_lens_equation.lhs / refraction_index,
+    spherical_lens_equation.rhs / refraction_index))
+spherical_lens_equation = Eq(curvature_radius / 2,
+    solve(spherical_lens_equation, curvature_radius)[0] / 2)
 
-focus_equation = focus_law.law.subs({
-    focus_law.focus_distance: focus_distance
-})
+focus_equation = focus_law.law.subs({focus_law.focus_distance: focus_distance})
 focus_equation = Eq(focus_distance, solve(focus_equation, focus_distance)[0])
 
 focus_value = solve([focus_equation, spherical_lens_equation],
-    (focus_distance,
-     focus_law.distance_to_image * focus_law.distance_to_object / (focus_law.distance_to_image + focus_law.distance_to_object)),
+    (focus_distance, focus_law.distance_to_image * focus_law.distance_to_object /
+    (focus_law.distance_to_image + focus_law.distance_to_object)),
     dict=True)[0][focus_distance]
 assert expr_equals(focus_value, law.rhs)
 
@@ -58,8 +59,6 @@ def print_law() -> str:
 @validate_output(focus_distance)
 def calculate_focus_distance(curvature_radius_: Quantity) -> Quantity:
     solved = solve(law, focus_distance, dict=True)[0][focus_distance]
-    result_expr = solved.subs({
-        curvature_radius: curvature_radius_
-    })
+    result_expr = solved.subs({curvature_radius: curvature_radius_})
     result = Quantity(result_expr)
     return result

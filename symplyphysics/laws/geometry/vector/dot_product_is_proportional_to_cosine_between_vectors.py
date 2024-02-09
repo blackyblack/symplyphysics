@@ -18,16 +18,13 @@ from symplyphysics.core.dimensions import ScalarValue
 ## norm(v) - norm, or length, of vector v
 
 
-def cosine_between_vectors_law(
-    vector_left_: Vector, vector_right_: Vector
-) -> ScalarValue:
+def cosine_between_vectors_law(vector_left_: Vector, vector_right_: Vector) -> ScalarValue:
     dot_product_ = dot_vectors(vector_left_, vector_right_)
     vector_left_norm_ = vector_magnitude(vector_left_)
     vector_right_norm_ = vector_magnitude(vector_right_)
     return dot_product_ / (vector_left_norm_ * vector_right_norm_)
 
 
-def calculate_cosine_between_vectors(
-    vector_left_: QuantityVector, vector_right_: QuantityVector
-) -> Quantity:
+def calculate_cosine_between_vectors(vector_left_: QuantityVector,
+    vector_right_: QuantityVector) -> Quantity:
     return Quantity(cosine_between_vectors_law(vector_left_, vector_right_))

@@ -10,7 +10,7 @@ from symplyphysics import (
 )
 
 # Description
-## Also known as Kepler's third law of planetary motion, the law of periods relates 
+## Also known as Kepler's third law of planetary motion, the law of periods relates
 ## the period of rotation of any planet to the semimajor axis of its orbit.
 
 # Law: T**2 = 4*pi**2 / (G*M) * a**3
@@ -28,7 +28,6 @@ law = Eq(
     4 * pi**2 / (gravitational_constant * attracting_mass) * semimajor_axis**3,
 )
 
-
 # TODO: derive law from Newton's second law of motion
 
 
@@ -39,7 +38,8 @@ def print_law() -> str:
 @validate_input(attracting_mass_=attracting_mass, semimajor_axis_=semimajor_axis)
 @validate_output(rotation_period)
 def calculate_rotation_period(
-    attracting_mass_: Quantity, semimajor_axis_: Quantity,
+    attracting_mass_: Quantity,
+    semimajor_axis_: Quantity,
 ) -> Quantity:
     result = solve(law, rotation_period)[0].subs({
         attracting_mass: attracting_mass_,

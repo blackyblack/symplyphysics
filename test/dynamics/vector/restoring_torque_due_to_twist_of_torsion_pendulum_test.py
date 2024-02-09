@@ -7,9 +7,8 @@ from symplyphysics import (
     Quantity,
     QuantityVector,
 )
-from symplyphysics.laws.dynamics.vector import (
-    restoring_torque_due_to_twist_of_torsion_pendulum as pendulum_laws
-)
+from symplyphysics.laws.dynamics.vector import (restoring_torque_due_to_twist_of_torsion_pendulum as
+    pendulum_laws)
 
 # Description
 ## A torsion pendulum is rotated about its axis so that its rotation pseudovector is (0.1, 0.2, -0.1) rad.
@@ -20,7 +19,7 @@ from symplyphysics.laws.dynamics.vector import (
 @fixture(name="test_args")
 def test_args_fixture():
     tau = QuantityVector([
-        Quantity(-1.0 * units.newton * units.meter),        
+        Quantity(-1.0 * units.newton * units.meter),
         Quantity(-2.0 * units.newton * units.meter),
         Quantity(1.0 * units.newton * units.meter),
     ])
@@ -64,7 +63,7 @@ def test_bad_rotation_vector(test_args):
     ])
     with raises(errors.UnitsError):
         pendulum_laws.calculate_torque(test_args.kappa, theta_b)
-    
+
     theta_s = 1.0
     with raises(AttributeError):
         pendulum_laws.calculate_torque(test_args.kappa, theta_s)
@@ -78,11 +77,11 @@ def test_bad_torque(test_args):
     ])
     with raises(errors.UnitsError):
         pendulum_laws.calculate_rotation_vector(test_args.kappa, tau_b)
-    
+
     tau_s = Quantity(1.0 * units.newton * units.meter)
     with raises(AttributeError):
         pendulum_laws.calculate_rotation_vector(test_args.kappa, tau_s)
-    
+
     with raises(TypeError):
         pendulum_laws.calculate_rotation_vector(test_args.kappa, 100)
     with raises(TypeError):

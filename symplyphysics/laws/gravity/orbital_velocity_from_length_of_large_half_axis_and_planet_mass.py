@@ -21,18 +21,25 @@ planet_mass = Symbol("planet_mass", units.mass)
 distance = Symbol("distance", units.length)
 large_half_axis_length = Symbol("large_half_axis_length", units.length)
 
-law = Eq(orbital_velocity, sqrt(gravitational_constant * planet_mass * ((2 / distance) - (1 / large_half_axis_length))))
+law = Eq(
+    orbital_velocity,
+    sqrt(gravitational_constant * planet_mass * ((2 / distance) - (1 / large_half_axis_length))))
 
 
-def print_law():
-    print_expression(law)
+def print_law() -> str:
+    return print_expression(law)
 
 
-@validate_input(planet_mass_=planet_mass, distance_=distance, large_half_axis_length_=large_half_axis_length)
+@validate_input(planet_mass_=planet_mass,
+    distance_=distance,
+    large_half_axis_length_=large_half_axis_length)
 @validate_output(orbital_velocity)
-def calculate_orbital_velocity(planet_mass_: Quantity, distance_: Quantity, large_half_axis_length_: Quantity) -> Quantity:
+def calculate_orbital_velocity(planet_mass_: Quantity, distance_: Quantity,
+    large_half_axis_length_: Quantity) -> Quantity:
     if distance_.scale_factor > large_half_axis_length_.scale_factor:
-        raise ValueError("The distance between the rotating body and the central body must be less or equal to the large half-axis.")
+        raise ValueError(
+            "The distance between the rotating body and the central body must be less or equal to the large half-axis."
+        )
     result_velocity_expr = solve(law, orbital_velocity, dict=True)[0][orbital_velocity]
     result_expr = result_velocity_expr.subs({
         planet_mass: planet_mass_,
