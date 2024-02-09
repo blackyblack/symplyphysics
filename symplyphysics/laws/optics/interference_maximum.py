@@ -26,7 +26,7 @@ wave_length = Symbol("wave_length", units.length)
 law = Eq(travel_difference, number_maximum * wave_length)
 
 
-def print_law():
+def print_law() -> str:
     return print_expression(law)
 
 
