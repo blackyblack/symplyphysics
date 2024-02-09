@@ -32,7 +32,7 @@ def print_law() -> str:
     second_velocity_=second_velocity,
 )
 @validate_output(resulting_velocity)
-def calculate_velocity(first_velocity_, second_velocity_) -> Quantity:
+def calculate_velocity(first_velocity_: Quantity, second_velocity_: Quantity) -> Quantity:
     result_expr = solve(law, resulting_velocity)[0]
     velocity_applied = result_expr.subs({
         first_velocity: first_velocity_,

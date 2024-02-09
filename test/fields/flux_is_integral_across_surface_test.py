@@ -11,16 +11,17 @@ from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateS
 from symplyphysics.core.fields.vector_field import VectorField
 from symplyphysics.laws.fields import flux_is_integral_across_surface as flux_def
 
+Args = namedtuple("Args", ["C", "radius_unit"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     C = CoordinateSystem()
     radius_unit = Quantity(1 * units.meter)
-    Args = namedtuple("Args", ["C", "radius_unit"])
     return Args(C=C, radius_unit=radius_unit)
 
 
-def test_basic_flux(test_args):
+def test_basic_flux(test_args: Args) -> None:
     field = VectorField(lambda point: [point.x, point.y, 0], test_args.C)
     # flux over hyperboloid, between planes z = -2 and z = 1
     surface = [
@@ -31,7 +32,7 @@ def test_basic_flux(test_args):
     assert_equal(result, 12 * pi)
 
 
-def test_electric_intensity_flux(test_args):
+def test_electric_intensity_flux(test_args: Args) -> None:
     intensity = 100 * units.newton / units.coulomb
     field = VectorField([0, 2 * intensity, intensity], test_args.C)
     surface = [

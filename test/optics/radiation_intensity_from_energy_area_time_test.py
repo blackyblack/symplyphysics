@@ -8,22 +8,23 @@ from symplyphysics.laws.optics import radiation_intensity_from_energy_area_time 
 ## is 5 second. Then the radiation power is 44 [milliwatt / meter^2].
 ## https://www.indigomath.ru//raschety/lXPL2K.html
 
+Args = namedtuple("Args", ["energy", "area", "time"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     energy = Quantity(110 * prefixes.micro * units.joule)
     area = Quantity(5 * units.centimeter**2)
     time = Quantity(5 * units.second)
-    Args = namedtuple("Args", ["energy", "area", "time"])
     return Args(energy=energy, area=area, time=time)
 
 
-def test_basic_intensity(test_args):
+def test_basic_intensity(test_args: Args) -> None:
     result = intensity_law.calculate_intensity(test_args.energy, test_args.area, test_args.time)
     assert_equal(result, 44 * prefixes.milli * units.watt / units.meter**2)
 
 
-def test_bad_energy(test_args):
+def test_bad_energy(test_args: Args) -> None:
     energy = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         intensity_law.calculate_intensity(energy, test_args.area, test_args.time)
@@ -31,7 +32,7 @@ def test_bad_energy(test_args):
         intensity_law.calculate_intensity(100, test_args.area, test_args.time)
 
 
-def test_bad_area(test_args):
+def test_bad_area(test_args: Args) -> None:
     area = Quantity(1 * units.kelvin)
     with raises(errors.UnitsError):
         intensity_law.calculate_intensity(test_args.energy, area, test_args.time)
@@ -39,7 +40,7 @@ def test_bad_area(test_args):
         intensity_law.calculate_intensity(test_args.energy, 100, test_args.time)
 
 
-def test_bad_time(test_args):
+def test_bad_time(test_args: Args) -> None:
     time = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         intensity_law.calculate_intensity(test_args.energy, test_args.area, time)

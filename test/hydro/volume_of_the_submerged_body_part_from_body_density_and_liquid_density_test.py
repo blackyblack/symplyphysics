@@ -9,23 +9,24 @@ from symplyphysics import (
 
 from symplyphysics.laws.hydro import volume_of_the_submerged_body_part_from_body_density_and_liquid_density as submerged
 
+Args = namedtuple("Args", ["body_volume", "body_density", "liquid_density"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     body_volume = Quantity(12 * units.meter**3)
     body_density = Quantity(500 * units.kilogram / units.meter**3)
     liquid_density = Quantity(1000 * units.kilogram / units.meter**3)
-    Args = namedtuple("Args", ["body_volume", "body_density", "liquid_density"])
     return Args(body_volume=body_volume, body_density=body_density, liquid_density=liquid_density)
 
 
-def test_basic_volume(test_args):
+def test_basic_volume(test_args: Args) -> None:
     result = submerged.calculate_submerged_volume(test_args.body_volume, test_args.body_density,
         test_args.liquid_density)
     assert_equal(result, 6 * units.meter**3)
 
 
-def test_bad_density(test_args):
+def test_bad_density(test_args: Args) -> None:
     bad_density = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         submerged.calculate_submerged_volume(test_args.body_volume, bad_density,
@@ -42,7 +43,7 @@ def test_bad_density(test_args):
             test_args.body_density)
 
 
-def test_bad_volume(test_args):
+def test_bad_volume(test_args: Args) -> None:
     bad_volume = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         submerged.calculate_submerged_volume(bad_volume, test_args.body_density,

@@ -14,13 +14,14 @@ from symplyphysics.laws.hydro import volume_flux_is_constant as continuity_equat
 ## In another section of the pipe, the area is 2 m^2, and the speed of the flow is 3 m/s.
 ## This law should confirm the validity of these figures.
 
+Args = namedtuple("Args", ["area_before", "speed_before", "area_after"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     area_before = Quantity(1 * units.meter**2)
     speed_before = Quantity(6 * units.meter / units.second)
     area_after = Quantity(2 * units.meter**2)
-    Args = namedtuple("Args", ["area_before", "speed_before", "area_after"])
     return Args(
         area_before=area_before,
         speed_before=speed_before,
@@ -28,13 +29,13 @@ def test_args_fixture():
     )
 
 
-def test_basic_flow_speed(test_args):
+def test_basic_flow_speed(test_args: Args) -> None:
     result = continuity_equation.calculate_fluid_speed(test_args.area_before,
         test_args.speed_before, test_args.area_after)
     assert_equal(result, 3 * units.meter / units.second)
 
 
-def test_bad_tube_area_before(test_args):
+def test_bad_tube_area_before(test_args: Args) -> None:
     bad_area_before = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         continuity_equation.calculate_fluid_speed(bad_area_before, test_args.speed_before,
@@ -43,7 +44,7 @@ def test_bad_tube_area_before(test_args):
         continuity_equation.calculate_fluid_speed(1, test_args.speed_before, test_args.area_after)
 
 
-def test_bad_fluid_speed_before(test_args):
+def test_bad_fluid_speed_before(test_args: Args) -> None:
     bad_fluid_speed_before = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         continuity_equation.calculate_fluid_speed(test_args.area_before, bad_fluid_speed_before,
@@ -52,7 +53,7 @@ def test_bad_fluid_speed_before(test_args):
         continuity_equation.calculate_fluid_speed(test_args.area_before, 1, test_args.area_after)
 
 
-def test_bad_tube_area_after(test_args):
+def test_bad_tube_area_after(test_args: Args) -> None:
     bad_area_after = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         continuity_equation.calculate_fluid_speed(test_args.area_before, test_args.speed_before,

@@ -14,9 +14,14 @@ from symplyphysics.laws.waves import frequency_shift_from_velocity_and_angle as 
 ## We have online calc for Dopler effect here: https://planetcalc.ru/2351/. With our parameters we should obtain 2013Hz observed frequency.
 ## Another situation is when man rides a bike towards horning standing train with the same velocity. Observed frequency should be same.
 
+Args = namedtuple("Args", [
+    "sound_velocity", "train_speed", "bike_speed", "zero_velocity", "horn_frequency",
+    "source_angle", "zero_angle"
+])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     sound_velocity = Quantity(340 * units.meter / units.second)
     train_speed = Quantity(9 * units.kilometer / units.hour)
     bike_speed = Quantity(9 * units.kilometer / units.hour)
@@ -24,10 +29,6 @@ def test_args_fixture():
     horn_frequency = Quantity(2000 * units.hertz)
     source_angle = Quantity(30 * units.degree, dimension=angle_type)
     zero_angle = Quantity(0 * units.radian, dimension=angle_type)
-    Args = namedtuple("Args", [
-        "sound_velocity", "train_speed", "bike_speed", "zero_velocity", "horn_frequency",
-        "source_angle", "zero_angle"
-    ])
     return Args(sound_velocity=sound_velocity,
         zero_velocity=zero_velocity,
         train_speed=train_speed,
@@ -37,7 +38,7 @@ def test_args_fixture():
         zero_angle=zero_angle)
 
 
-def test_basic_frequency(test_args):
+def test_basic_frequency(test_args: Args) -> None:
     result_1 = doppler_law.calculate_observed_frequency(test_args.horn_frequency,
         test_args.sound_velocity, (test_args.train_speed, test_args.source_angle),
         (test_args.zero_velocity, test_args.zero_angle))
@@ -53,7 +54,7 @@ def test_basic_frequency(test_args):
 
 
 # Classical Doppler effect does not have frequency shift when moving at 90 degrees
-def test_transverse_frequency(test_args):
+def test_transverse_frequency(test_args: Args) -> None:
     source_angle = Quantity(90 * units.degree, dimension=angle_type)
     result = doppler_law.calculate_observed_frequency(test_args.horn_frequency,
         test_args.sound_velocity, (test_args.train_speed, source_angle),
@@ -66,7 +67,7 @@ def test_transverse_frequency(test_args):
     assert_equal(result, test_args.horn_frequency)
 
 
-def test_bad_velocity(test_args):
+def test_bad_velocity(test_args: Args) -> None:
     vb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         doppler_law.calculate_observed_frequency(test_args.horn_frequency, vb,
@@ -90,7 +91,7 @@ def test_bad_velocity(test_args):
             (test_args.train_speed, test_args.source_angle), (100, test_args.zero_angle))
 
 
-def test_bad_frequency(test_args):
+def test_bad_frequency(test_args: Args) -> None:
     fb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         doppler_law.calculate_observed_frequency(fb, test_args.sound_velocity,
@@ -102,7 +103,7 @@ def test_bad_frequency(test_args):
             (test_args.bike_speed, test_args.zero_angle))
 
 
-def test_bad_angle(test_args):
+def test_bad_angle(test_args: Args) -> None:
     ab = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         doppler_law.calculate_observed_frequency(test_args.horn_frequency, test_args.sound_velocity,

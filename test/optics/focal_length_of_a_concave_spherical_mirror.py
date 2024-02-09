@@ -11,20 +11,21 @@ from symplyphysics.laws.optics import focal_length_of_a_concave_spherical_mirror
 
 # Test example from https://www.test-uz.ru/solutions_view.php?cat=6&num=15.5
 
+Args = namedtuple("Args", ["r"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     r = Quantity(40 * prefixes.centi * units.meters)
-    Args = namedtuple("Args", ["r"])
     return Args(r=r)
 
 
-def test_basic_focus_distance(test_args):
+def test_basic_focus_distance(test_args: Args) -> None:
     result = mirror_focus_law.calculate_focus_distance(test_args.r)
     assert_equal(result, 20 * prefixes.centi * units.meters)
 
 
-def test_bad_radius():
+def test_bad_radius() -> None:
     rb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         mirror_focus_law.calculate_focus_distance(rb)

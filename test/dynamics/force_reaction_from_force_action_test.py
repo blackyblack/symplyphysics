@@ -10,15 +10,16 @@ from symplyphysics import (
 )
 from symplyphysics.laws.dynamics import force_reaction_from_force_action as newton_third_law
 
+Args = namedtuple("Args", ["F"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     Fa = Quantity(2 * units.newton)
-    Args = namedtuple("Args", ["F"])
     return Args(F=Fa)
 
 
-def test_basic_force():
+def test_basic_force() -> None:
     cartesian_coordinates = CoordSys3D("cartesian_coordinates")
     # Make linter happy
     x = getattr(cartesian_coordinates, "x")
@@ -36,12 +37,12 @@ def test_basic_force():
     assert result.coeff(z) == -1 * Fa.coeff(z)
 
 
-def test_basic_force_quantity(test_args):
+def test_basic_force_quantity(test_args: Args) -> None:
     result = newton_third_law.calculate_force_reaction(test_args.F)
     assert_equal(result, 2 * units.newton)
 
 
-def test_bad_force():
+def test_bad_force() -> None:
     Fb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         newton_third_law.calculate_force_reaction(Fb)

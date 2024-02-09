@@ -8,20 +8,21 @@ from symplyphysics import (
 )
 import symplyphysics.laws.hydro.inner_pressure_of_fluid_is_constant as bernoullis_equation
 
+Args = namedtuple("Args", "inner_pressure_before")
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     inner_pressure_before = Quantity(1 * units.pascal)
-    Args = namedtuple("Args", "inner_pressure_before")
     return Args(inner_pressure_before=inner_pressure_before)
 
 
-def test_bernoullis_equation(test_args):
+def test_bernoullis_equation(test_args: Args) -> None:
     result = bernoullis_equation.calculate_inner_pressure(test_args.inner_pressure_before)
     assert_equal(result, 1 * units.pascal)
 
 
-def test_bad_inner_pressure_before():
+def test_bad_inner_pressure_before() -> None:
     bad_inner_pressure_before = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         bernoullis_equation.calculate_inner_pressure(bad_inner_pressure_before)
