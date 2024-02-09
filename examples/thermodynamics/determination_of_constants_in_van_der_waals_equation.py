@@ -22,7 +22,8 @@ state_equation_before = van_der_waals_law.law.subs({
     van_der_waals_law.pressure: pressure_before,
     van_der_waals_law.bonding_forces_parameter: parameter_a,
     van_der_waals_law.molecules_volume_parameter: parameter_b,
-    van_der_waals_law.amount_of_substance: amount_of_substance
+    van_der_waals_law.amount_of_substance: amount_of_substance,
+    van_der_waals_law.units.molar_gas_constant: Quantity(8.31446262 * units.joules / (units.moles * units.kelvins))
 })
 
 state_equation_after = van_der_waals_law.law.subs({
@@ -31,7 +32,8 @@ state_equation_after = van_der_waals_law.law.subs({
     van_der_waals_law.pressure: pressure_after,
     van_der_waals_law.bonding_forces_parameter: parameter_a,
     van_der_waals_law.molecules_volume_parameter: parameter_b,
-    van_der_waals_law.amount_of_substance: amount_of_substance
+    van_der_waals_law.amount_of_substance: amount_of_substance,
+    van_der_waals_law.units.molar_gas_constant: Quantity(8.31446262 * units.joules / (units.moles * units.kelvins))
 })
 
 solved = solve((state_equation_before, state_equation_after), (parameter_a, parameter_b), dict=True)[0]
