@@ -61,8 +61,8 @@ parameter_b_ = parameter_b.subs({
 })
 
 answer1_value = convert_to(Quantity(parameter_a_),
-    units.pressure * (units.volume / units.amount_of_substance)**2)
+    units.pascals * (units.meters * 3 / units.moles)**2)
 answer2_value = convert_to(Quantity(parameter_b_),
-    units.volume / units.amount_of_substance)
+    units.meters * 3 / units.moles)
 print(f"Parameter a is: {answer1_value} Pa * (m^3 / moles)^2")
 print(f"Parameter b is: {answer2_value} m^3 / moles")
