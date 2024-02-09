@@ -13,29 +13,25 @@ from symplyphysics.laws.optics import optical_strength_of_spherical_lens_from_re
 
 # Radius of lens: R = (h * D - 1) / D = 0.07 (m)
 
+Args = namedtuple("Args", ["do", "di", "rl", "nm"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     do = Quantity(1e10 * units.meters)
     di = Quantity(27 * prefixes.centi * units.meters)
     rl = Quantity(7 * prefixes.centi * units.meters)
     nm = 1
-    Args = namedtuple("Args", [
-        "do",
-        "di",
-        "rl",
-        "nm",
-    ])
     return Args(do=do, di=di, rl=rl, nm=nm)
 
 
-def test_basic_refraction_index(test_args):
+def test_basic_refraction_index(test_args: Args) -> None:
     result = spherical_lens_law.calculate_refraction_index_lens(test_args.do, test_args.di,
         test_args.rl, test_args.nm)
     assert_equal(result, 1.35)
 
 
-def test_bad_distance(test_args):
+def test_bad_distance(test_args: Args) -> None:
     db = Quantity(1 * units.coulomb)
 
     with raises(errors.UnitsError):
@@ -53,7 +49,7 @@ def test_bad_distance(test_args):
             test_args.nm)
 
 
-def test_bad_radius(test_args):
+def test_bad_radius(test_args: Args) -> None:
     rb = Quantity(1 * units.coulomb)
 
     with raises(errors.UnitsError):

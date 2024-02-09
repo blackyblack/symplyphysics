@@ -37,8 +37,8 @@ def print_law() -> str:
     final_temperature_=final_temperature,
     start_temperature_=start_temperature)
 @validate_output(final_volume)
-def calculate_final_volume(start_volume_, expansion_coefficient_, final_temperature_,
-    start_temperature_: Quantity) -> Quantity:
+def calculate_final_volume(start_volume_: Quantity, expansion_coefficient_: Quantity,
+    final_temperature_: Quantity, start_temperature_: Quantity) -> Quantity:
     result_expr = solve(law, final_volume, dict=True)[0][final_volume]
     result_volume = result_expr.subs({
         start_volume: start_volume_,

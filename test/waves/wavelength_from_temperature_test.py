@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.waves import wavelength_from_temperature as wins_law
+from symplyphysics.laws.waves import wavelength_from_temperature as wiens_law
 
 # Description
 ## Assert we are having preheated black object with temperature of 4000K.
@@ -14,22 +14,23 @@ from symplyphysics.laws.waves import wavelength_from_temperature as wins_law
 ## https://www.calculatoratoz.com/ru/wavelength-corresponding-to-maximum-radiation-emission-calculator/Calc-40123
 ## we obtain the most intensive radiation at 7.2444e-7 meters wavelength.
 
+Args = namedtuple("Args", ["T"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     T = Quantity(4000 * units.kelvin)
-    Args = namedtuple("Args", ["T"])
     return Args(T=T)
 
 
-def test_basic_wavelength(test_args):
-    result = wins_law.calculate_intensive_wavelength(test_args.T)
+def test_basic_wavelength(test_args: Args) -> None:
+    result = wiens_law.calculate_intensive_wavelength(test_args.T)
     assert_equal(result, 7.2444e-7 * units.meter)
 
 
-def test_bad_temperature():
+def test_bad_temperature() -> None:
     tb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        wins_law.calculate_intensive_wavelength(tb)
+        wiens_law.calculate_intensive_wavelength(tb)
     with raises(TypeError):
-        wins_law.calculate_intensive_wavelength(100)
+        wiens_law.calculate_intensive_wavelength(100)

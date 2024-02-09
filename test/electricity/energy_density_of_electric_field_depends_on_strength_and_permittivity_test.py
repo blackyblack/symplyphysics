@@ -10,30 +10,30 @@ from symplyphysics.laws.electricity import energy_density_of_electric_field_depe
 ## Example above calculates energy density with vacuum permittivity. We should multiply the result to relative
 ## permittivity to obtain the medium permittivity.
 
+Args = namedtuple("Args", ["relative_permittivity", "electric_intensity"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     relative_permittivity = 5
     electric_intensity = Quantity(5 * (units.volt / units.meter))
-
-    Args = namedtuple("Args", ["relative_permittivity", "electric_intensity"])
     return Args(relative_permittivity=relative_permittivity, electric_intensity=electric_intensity)
 
 
-def test_basic_energy_density(test_args):
+def test_basic_energy_density(test_args: Args) -> None:
     result = energy_density_law.calculate_energy_density(test_args.relative_permittivity,
         test_args.electric_intensity)
     assert_equal(result, 1.106e-10 * 5 * units.joule / units.meter**3)
 
 
-def test_bad_relative_permittivity(test_args):
+def test_bad_relative_permittivity(test_args: Args) -> None:
     relative_permittivity = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         energy_density_law.calculate_energy_density(relative_permittivity,
             test_args.electric_intensity)
 
 
-def test_bad_electric_intensity(test_args):
+def test_bad_electric_intensity(test_args: Args) -> None:
     electric_intensity = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         energy_density_law.calculate_energy_density(test_args.relative_permittivity,

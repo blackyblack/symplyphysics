@@ -8,20 +8,21 @@ from symplyphysics import (
 )
 from symplyphysics.laws.conservation import mechanical_energy_after_equals_to_mechanical_energy_before as conservation_law
 
+Args = namedtuple("Args", ["Es"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     Es = Quantity(5 * units.joule)
-    Args = namedtuple("Args", ["Es"])
     return Args(Es=Es)
 
 
-def test_basic_conservation(test_args):
+def test_basic_conservation(test_args: Args) -> None:
     result = conservation_law.calculate_energy_after(test_args.Es)
     assert_equal(result, 5 * units.joule)
 
 
-def test_bad_energy():
+def test_bad_energy() -> None:
     Eb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         conservation_law.calculate_energy_after(Eb)

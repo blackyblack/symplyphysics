@@ -10,17 +10,17 @@ from symplyphysics.laws.electricity import magnetic_induction_of_linear_conducto
 ## and the second angle of 60 degree (pi / 3 radian), the magnetic induction will be equal to 603 nanotesla.
 ## https://www.indigomath.ru//raschety/EFaosd.html
 
+Args = namedtuple("Args",
+    ["relative_permeability", "current", "first_angle", "second_angle", "distance"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     relative_permeability = 10
     current = Quantity(1 * units.ampere)
     first_angle = pi / 4
     second_angle = pi / 3
     distance = Quantity(2 * units.meter)
-
-    Args = namedtuple("Args",
-        ["relative_permeability", "current", "first_angle", "second_angle", "distance"])
     return Args(relative_permeability=relative_permeability,
         current=current,
         first_angle=first_angle,
@@ -28,26 +28,26 @@ def test_args_fixture():
         distance=distance)
 
 
-def test_basic_induction(test_args):
+def test_basic_induction(test_args: Args) -> None:
     result = induction_law.calculate_induction(test_args.relative_permeability, test_args.current,
         test_args.first_angle, test_args.second_angle, test_args.distance)
     assert_equal(result, 603 * prefixes.nano * units.tesla)
 
 
-def test_swap_angle(test_args):
+def test_swap_angle(test_args: Args) -> None:
     result = induction_law.calculate_induction(test_args.relative_permeability, test_args.current,
         test_args.second_angle, test_args.first_angle, test_args.distance)
     assert_equal(result, 603 * prefixes.nano * units.tesla)
 
 
-def test_bad_relative_permeability(test_args):
+def test_bad_relative_permeability(test_args: Args) -> None:
     relative_permeability = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         induction_law.calculate_induction(relative_permeability, test_args.current,
             test_args.first_angle, test_args.second_angle, test_args.distance)
 
 
-def test_bad_current(test_args):
+def test_bad_current(test_args: Args) -> None:
     current = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         induction_law.calculate_induction(test_args.relative_permeability, current,
@@ -57,7 +57,7 @@ def test_bad_current(test_args):
             test_args.first_angle, test_args.second_angle, test_args.distance)
 
 
-def test_bad_angle(test_args):
+def test_bad_angle(test_args: Args) -> None:
     first_angle = Quantity(1 * units.coulomb)
     second_angle = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
@@ -74,7 +74,7 @@ def test_bad_angle(test_args):
             test_args.first_angle, True, test_args.distance)
 
 
-def test_bad_distance(test_args):
+def test_bad_distance(test_args: Args) -> None:
     distance = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         induction_law.calculate_induction(test_args.relative_permeability, test_args.current,

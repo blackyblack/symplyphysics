@@ -17,9 +17,11 @@ from symplyphysics.laws.kinematic.vector import (
 ## certain point in time, the radius vector of the body is (0, -0.5, 0) m. Its linear velocity at
 ## that time is (2.0, 0, 0) m/s.
 
+Args = namedtuple("Args", "w r")
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     w = QuantityVector([
         Quantity(0.0 * units.radian / units.second),
         Quantity(0.0 * units.radian / units.second),
@@ -30,11 +32,10 @@ def test_args_fixture():
         Quantity(-0.5 * units.meter),
         Quantity(0.0 * units.meter),
     ])
-    Args = namedtuple("Args", "w r")
     return Args(w=w, r=r)
 
 
-def test_basic_law(test_args):
+def test_basic_law(test_args: Args) -> None:
     result = linear_velocity_law.calculate_linear_velocity(test_args.w, test_args.r)
     assert len(result.components) == 3
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.velocity)
@@ -42,7 +43,7 @@ def test_basic_law(test_args):
         assert_equal(result_component, correct_value * units.meter / units.second)
 
 
-def test_bad_angular_velocity(test_args):
+def test_bad_angular_velocity(test_args: Args) -> None:
     w_bad_vector = QuantityVector([
         Quantity(1.0 * units.second),
         Quantity(1.0 * units.second),
@@ -69,7 +70,7 @@ def test_bad_angular_velocity(test_args):
         linear_velocity_law.calculate_linear_velocity([100], test_args.r)
 
 
-def test_bad_rotation_radius(test_args):
+def test_bad_rotation_radius(test_args: Args) -> None:
     r_bad_vector = QuantityVector([
         Quantity(1.0 * units.second),
         Quantity(1.0 * units.second),
