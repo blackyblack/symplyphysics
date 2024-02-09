@@ -68,7 +68,7 @@ def test_bad_length(test_args):
 
 
 def test_bad_conductivity(test_args):
-    bc = Quantity(1 * units.watt / (units.meter**2 * units.kelvin))
+    bc = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         nusselt_number.calculate_nusselt_number(
             test_args.heat_transfer_coefficient,

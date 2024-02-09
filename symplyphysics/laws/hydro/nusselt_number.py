@@ -1,6 +1,6 @@
 from sympy import Eq, solve, S
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless, convert_to)
+                           validate_output, dimensionless, convert_to)
 
 
 # Description
@@ -13,14 +13,15 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 # For example, it is used to calculate flow through circular and non-circular
 # tubes in order to examine flow conditions. D = 4 * A / p, where
 # D is characteristic diameter, A is the cross-sectional are, p is wetted perimeter.
-# Law: h * L / k, where
+# Law: Nu = h * L / k, where
 # h is the heat transfer coefficient,
 # L is the characteristic length,
-# k is the thermal conductivity.
+# k is the thermal conductivity,
+# Nu is Nusselt number.
 
 
 heat_transfer_coefficient = Symbol(
-    "heat_transfer_coefficient", units.power / (units.length**2 * units.temperature)
+    "heat_transfer_coefficient", units.power / (units.area * units.temperature)
 )
 characteristic_length = Symbol("characteristic_length", units.length)
 thermal_conductivity = Symbol(
@@ -29,7 +30,9 @@ thermal_conductivity = Symbol(
 
 nusselt_number = Symbol("nusselt_number", dimensionless)
 
-law = Eq(nusselt_number, heat_transfer_coefficient * characteristic_length / thermal_conductivity)
+law = Eq(nusselt_number, heat_transfer_coefficient *
+         characteristic_length / thermal_conductivity)
+
 
 def print_law() -> str:
     return print_expression(law)
