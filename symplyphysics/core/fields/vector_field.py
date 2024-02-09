@@ -38,9 +38,11 @@ class VectorField:
     #      that allows rebasing vector field to different coordinate systems.
     _coordinate_system: CoordinateSystem
 
-    def __init__(self,
+    def __init__(
+        self,
         point_function: FieldFunction,
-        coordinate_system: CoordinateSystem = CoordinateSystem(CoordinateSystem.System.CARTESIAN)):
+        coordinate_system: CoordinateSystem = CoordinateSystem(CoordinateSystem.System.CARTESIAN)
+    ) -> None:
         self._point_function = point_function
         self._coordinate_system = coordinate_system
 

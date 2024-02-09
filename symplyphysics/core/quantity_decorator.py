@@ -10,7 +10,7 @@ from .dimensions import assert_equivalent_dimension, ScalarValue
 def _assert_expected_unit(value: ScalarValue | SymQuantity | DimensionSymbol |
     Sequence[ScalarValue | SymQuantity | DimensionSymbol],
     expected_units: Dimension | Symbol | Function | Sequence[Dimension | Symbol | Function],
-    param_name: str, function_name: str):
+    param_name: str, function_name: str) -> None:
     components: list[ScalarValue | SymQuantity | Dimension] = []
     indexed = isinstance(value, Sequence)
     values = list(value) if isinstance(value, Sequence) else list([value])

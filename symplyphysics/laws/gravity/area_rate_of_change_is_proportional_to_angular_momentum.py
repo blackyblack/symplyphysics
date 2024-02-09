@@ -30,7 +30,6 @@ planet_mass = Symbol("planet_mass", units.mass)
 
 law = Eq(Derivative(area_swept(time), time), planet_angular_momentum / (2 * planet_mass))
 
-
 # TODO: derive law from expression of area and definition of angular momentum
 
 
@@ -40,9 +39,8 @@ def print_law() -> str:
 
 @validate_input(planet_angular_momentum_=planet_angular_momentum, planet_mass_=planet_mass)
 @validate_output(units.area / units.time)
-def calculate_rate_of_change_of_area(
-    planet_angular_momentum_: Quantity, planet_mass_: Quantity
-) -> Quantity:
+def calculate_rate_of_change_of_area(planet_angular_momentum_: Quantity,
+    planet_mass_: Quantity) -> Quantity:
     result = law.rhs.subs({
         planet_angular_momentum: planet_angular_momentum_,
         planet_mass: planet_mass_,

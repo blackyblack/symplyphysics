@@ -44,7 +44,7 @@ def calculate_potential(
     dispersion_energy_: Quantity,
     particle_size_: Quantity,
     distance_: Quantity,
-):
+) -> Quantity:
     result = law.rhs.subs({
         dispersion_energy: dispersion_energy_,
         particle_size: particle_size_,

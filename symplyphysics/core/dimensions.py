@@ -56,7 +56,7 @@ def collect_factor_and_dimension(expr: Basic) -> tuple[Basic, Dimension]:
             sum_expr += addend_factor
         return (sum_expr, dim)
 
-    def _unsupported_derivative(expr: Derivative):
+    def _unsupported_derivative(expr: Derivative) -> tuple[Basic, Dimension]:
         raise ValueError(f"Dimension '{expr}' should not contain unevaluated Derivative")
 
     def _collect_function(expr: SymFunction) -> tuple[Basic, Dimension]:
@@ -90,7 +90,7 @@ def collect_factor_and_dimension(expr: Basic) -> tuple[Basic, Dimension]:
 
 
 def assert_equivalent_dimension(arg: SymQuantity | ScalarValue | Dimension, param_name: str,
-    func_name: str, expected_unit: Dimension):
+    func_name: str, expected_unit: Dimension) -> None:
     #HACK: this allows to treat angle type as dimensionless
     expected_dimension = expected_unit.subs("angle", S.One)
     if isinstance(arg, (float | int)):

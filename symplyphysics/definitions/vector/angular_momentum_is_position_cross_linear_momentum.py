@@ -24,8 +24,7 @@ def angular_momentum_definition(position_vector_: Vector, linear_momentum_: Vect
 
 @validate_input(position_vector_=units.length, linear_momentum_=units.momentum)
 @validate_output(units.length * units.momentum)
-def calculate_angular_momentum(
-    position_vector_: QuantityVector, linear_momentum_: QuantityVector
-) -> QuantityVector:
+def calculate_angular_momentum(position_vector_: QuantityVector,
+    linear_momentum_: QuantityVector) -> QuantityVector:
     result = angular_momentum_definition(position_vector_, linear_momentum_)
     return QuantityVector(result.components, position_vector_.coordinate_system)

@@ -9,8 +9,7 @@ from symplyphysics import (
     errors,
 )
 from symplyphysics.definitions.vector import (
-    angular_momentum_is_position_cross_linear_momentum as angular_momentum_def,
-)
+    angular_momentum_is_position_cross_linear_momentum as angular_momentum_def,)
 
 # Description
 ## A particle is located at a point with position vector of (1, 2, -1) m and possesses
@@ -36,9 +35,11 @@ def test_args_fixture():
 def test_definition(test_args):
     result = angular_momentum_def.calculate_angular_momentum(test_args.r, test_args.p)
     assert len(result.components) == 3
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length * units.momentum)
+    assert SI.get_dimension_system().equivalent_dims(result.dimension,
+        units.length * units.momentum)
     for result_component, correct_value in zip(result.components, [3.0, -2.0, -1.0]):
-        assert_equal(result_component, correct_value * units.kilogram * units.meter**2 / units.second)
+        assert_equal(result_component,
+            correct_value * units.kilogram * units.meter**2 / units.second)
 
 
 def test_bad_position_vector(test_args):

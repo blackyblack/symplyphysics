@@ -33,7 +33,8 @@ def rotation_vector_law(torque_: Vector) -> Vector:
 
 @validate_input(torsion_constant_=torsion_constant, rotation_vector_=angle_type)
 @validate_output(units.force * units.length)
-def calculate_torque(torsion_constant_: Quantity, rotation_vector_: QuantityVector) -> QuantityVector:
+def calculate_torque(torsion_constant_: Quantity,
+    rotation_vector_: QuantityVector) -> QuantityVector:
     result = torque_law(rotation_vector_)
     result_components = list_of_quantities(result.components, {torsion_constant: torsion_constant_})
     return QuantityVector(result_components, rotation_vector_.coordinate_system)
@@ -41,7 +42,8 @@ def calculate_torque(torsion_constant_: Quantity, rotation_vector_: QuantityVect
 
 @validate_input(torsion_constant_=torsion_constant, torque_=units.force * units.length)
 @validate_output(angle_type)
-def calculate_rotation_vector(torsion_constant_: Quantity, torque_: QuantityVector) -> QuantityVector:
+def calculate_rotation_vector(torsion_constant_: Quantity,
+    torque_: QuantityVector) -> QuantityVector:
     result = rotation_vector_law(torque_)
     result_components = list_of_quantities(result.components, {torsion_constant: torsion_constant_})
     return QuantityVector(result_components, torque_.coordinate_system)

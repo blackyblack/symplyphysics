@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from pytest import approx
 from sympy import symbols, solve, pi, sin
 from sympy.plotting import plot
-from sympy.plotting.plot import MatplotlibBackend
+from sympy.plotting.plot import MatplotlibBackend, Plot
 from symplyphysics.laws.optics import refraction_angle_from_environments as refraction_law
 
 # Description
@@ -58,7 +58,7 @@ class SubplotData:
     color: str
 
 
-def make_subplot(data_: SubplotData):
+def make_subplot(data_: SubplotData) -> Plot:
     maximum_angle = maximum_angle_of_incidence(data_.incident_index, data_.refracted_index)
     angle_of_refraction_value = solved_angle_of_refraction.subs({
         incident_index: data_.incident_index,

@@ -26,10 +26,8 @@ first_mass = Symbol("first_mass", units.mass)
 second_mass = Symbol("second_mass", units.mass)
 distance_between_mass_centers = Symbol("distance_between_mass_centers", units.length)
 
-law = Eq(
-    gravitational_potential_energy,
-    -1 * gravitational_constant * first_mass * second_mass / distance_between_mass_centers
-)
+law = Eq(gravitational_potential_energy,
+    -1 * gravitational_constant * first_mass * second_mass / distance_between_mass_centers)
 
 
 def print_law() -> str:

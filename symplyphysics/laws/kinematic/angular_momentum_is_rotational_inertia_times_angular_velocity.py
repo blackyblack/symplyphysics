@@ -32,7 +32,8 @@ def print_law() -> str:
 
 @validate_input(rotational_inertia_=rotational_inertia, angular_velocity_=angular_velocity)
 @validate_output(angular_momentum)
-def calculate_angular_momentum(rotational_inertia_: Quantity, angular_velocity_: Quantity) -> Quantity:
+def calculate_angular_momentum(rotational_inertia_: Quantity,
+    angular_velocity_: Quantity) -> Quantity:
     result = law.rhs.subs({
         rotational_inertia: rotational_inertia_,
         angular_velocity: angular_velocity_,

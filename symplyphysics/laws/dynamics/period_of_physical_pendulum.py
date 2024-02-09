@@ -26,9 +26,8 @@ pendulum_mass = Symbol("pendulum_mass", units.mass)
 distance_to_pivot = Symbol("distance_to_pivot", units.length)
 
 law = Eq(
-    oscillation_period, 
-    2 * pi * sqrt(rotational_inertia / (pendulum_mass * acceleration_due_to_gravity * distance_to_pivot))
-)
+    oscillation_period, 2 * pi * sqrt(rotational_inertia /
+    (pendulum_mass * acceleration_due_to_gravity * distance_to_pivot)))
 
 
 def print_law() -> str:

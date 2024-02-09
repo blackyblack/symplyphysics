@@ -29,7 +29,7 @@ distance_to_picture = Symbol("distance_to_picture", units.length)
 law = Eq(travel_difference, coordinate * distance_between_slits / distance_to_picture)
 
 
-def print_law():
+def print_law() -> str:
     return print_expression(law)
 
 

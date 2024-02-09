@@ -24,15 +24,23 @@ dynamic_viscosity = Symbol("dynamic_viscosity", units.pressure * units.time)
 control_viscosity = Symbol("control_viscosity", units.pressure * units.time)
 sutherland_constant = Symbol("sutherland_constant", units.temperature)
 
-law = Eq(dynamic_viscosity, control_viscosity * ((control_temperature + sutherland_constant) / (set_temperature + sutherland_constant)) * (set_temperature / control_temperature)**1.5)
+law = Eq(
+    dynamic_viscosity,
+    control_viscosity * ((control_temperature + sutherland_constant) /
+    (set_temperature + sutherland_constant)) * (set_temperature / control_temperature)**1.5)
+
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(control_viscosity_=control_viscosity, control_temperature_=control_temperature, sutherland_constant_=sutherland_constant, set_temperature_=set_temperature)
+@validate_input(control_viscosity_=control_viscosity,
+    control_temperature_=control_temperature,
+    sutherland_constant_=sutherland_constant,
+    set_temperature_=set_temperature)
 @validate_output(dynamic_viscosity)
-def calculate_dynamic_viscosity(control_viscosity_: Quantity, control_temperature_: Quantity, sutherland_constant_: Quantity, set_temperature_: Quantity) -> Quantity:
+def calculate_dynamic_viscosity(control_viscosity_: Quantity, control_temperature_: Quantity,
+    sutherland_constant_: Quantity, set_temperature_: Quantity) -> Quantity:
     result_expr = solve(law, dynamic_viscosity, dict=True)[0][dynamic_viscosity]
     result_dynamic_viscosity = result_expr.subs({
         control_viscosity: control_viscosity_,

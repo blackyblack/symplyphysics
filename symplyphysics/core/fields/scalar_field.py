@@ -38,9 +38,11 @@ class ScalarField:
     #      to maintain ScalarField invariant.
     _coordinate_system: CoordinateSystem
 
-    def __init__(self,
+    def __init__(
+        self,
         point_function: FieldFunction = 0,
-        coordinate_system: CoordinateSystem = CoordinateSystem(CoordinateSystem.System.CARTESIAN)):
+        coordinate_system: CoordinateSystem = CoordinateSystem(CoordinateSystem.System.CARTESIAN)
+    ) -> None:
         self._point_function = point_function
         self._coordinate_system = coordinate_system
 

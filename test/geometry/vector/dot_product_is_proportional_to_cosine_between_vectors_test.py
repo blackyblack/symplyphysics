@@ -7,8 +7,7 @@ from symplyphysics import (
     units,
 )
 from symplyphysics.laws.geometry.vector import (
-    dot_product_is_proportional_to_cosine_between_vectors as dot_product_law,
-)
+    dot_product_is_proportional_to_cosine_between_vectors as dot_product_law,)
 
 # Description
 ## A particle with position vector (0.0, 0.3, 2.3) m is moving under a force (1.0, 2.0, -1.5) N.
@@ -44,6 +43,7 @@ def test_law_perpendicular(test_args):
     ])
     result = dot_product_law.calculate_cosine_between_vectors(f_perpendicular, test_args.r)
     assert_equal(result, 0.0)
+
 
 def test_law_parallel(test_args):
     f_parallel = QuantityVector([

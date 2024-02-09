@@ -24,8 +24,7 @@ def test_args_fixture():
 
 def test_law(test_args):
     result = gravitational_potential_energy.calculate_gravitational_potential_energy(
-        test_args.m1, test_args.m2, test_args.r
-    )
+        test_args.m1, test_args.m2, test_args.r)
     assert_equal(result, -2.67e-14 * units.joule)
 
 
@@ -33,29 +32,23 @@ def test_bad_masses(test_args):
     mb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
         gravitational_potential_energy.calculate_gravitational_potential_energy(
-            mb, test_args.m2, test_args.r
-        )
+            mb, test_args.m2, test_args.r)
     with raises(TypeError):
         gravitational_potential_energy.calculate_gravitational_potential_energy(
-            100, test_args.m2, test_args.r
-        )
+            100, test_args.m2, test_args.r)
     with raises(errors.UnitsError):
         gravitational_potential_energy.calculate_gravitational_potential_energy(
-            test_args.m1, mb, test_args.r
-        )
+            test_args.m1, mb, test_args.r)
     with raises(TypeError):
         gravitational_potential_energy.calculate_gravitational_potential_energy(
-            test_args.m1, 100, test_args.r
-        )
+            test_args.m1, 100, test_args.r)
 
 
 def test_bad_distance(test_args):
     rb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
         gravitational_potential_energy.calculate_gravitational_potential_energy(
-            test_args.m1, test_args.m2, rb
-        )
+            test_args.m1, test_args.m2, rb)
     with raises(TypeError):
         gravitational_potential_energy.calculate_gravitational_potential_energy(
-            test_args.m1, test_args.m2, 100
-        )
+            test_args.m1, test_args.m2, 100)

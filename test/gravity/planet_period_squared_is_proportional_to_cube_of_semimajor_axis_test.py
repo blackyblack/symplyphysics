@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.gravity import (
-    planet_period_squared_is_proportional_to_cube_of_semimajor_axis as law_of_periods
-)
+    planet_period_squared_is_proportional_to_cube_of_semimajor_axis as law_of_periods)
 
 # Description
 ## A planet orbits around a star of mass M = 3e30 kg. The semimajor axis of its orbit is a = 3e9 km.

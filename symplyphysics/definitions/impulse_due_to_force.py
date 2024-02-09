@@ -45,7 +45,8 @@ def calculate_impulse(
     time_start_: Quantity,
     time_end_: Quantity,
 ) -> Quantity:
-    force_function = force_start_ + (force_end_ - force_start_) / (time_end_ - time_start_) * (time - time_start_)
+    force_function = force_start_ + (force_end_ - force_start_) / (time_end_ -
+        time_start_) * (time - time_start_)
     result = law.rhs.subs({
         force(time): force_function,
         time_start: time_start_,
