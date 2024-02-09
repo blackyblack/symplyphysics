@@ -11,7 +11,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 
 # Definition: d^2x(t)/dt^2 = -w**2 * x(t)
 # Where:
-## x(t) is function of dispalacement of the oscillator over time,
+## x(t) is function of displacement of the oscillator over time,
 ## t is time,
 ## w is angular frequency,
 ##   see [angular frequency](../laws/kinematic/period_from_angular_frequency.py) implementation,
