@@ -26,7 +26,7 @@ def test_basic_linear_magnification(test_args: Args) -> None:
         magnification_law.image_height: test_args.hi
     }
     result = law.calculate_symbol_value(magnification_law.magnification, dict_for_calculating)
-    assert_equal(result, 5/7)
+    assert_equal(result, 0.714)
 
 
 def test_bad_height_object(test_args: Args) -> None:
