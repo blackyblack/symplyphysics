@@ -27,10 +27,8 @@ class BaseLaw:
         symbols_set = self.symbols.copy()
         symbols_set.remove(variable)
 
-        variables_list = list(symbols_set)
-
-        variables_for_calculate = list(str(symbol) for symbol in variables_list)
-        dimensions = list(symbol.dimension for symbol in variables_list)
+        variables_for_calculate = list(str(symbol) for symbol in symbols_set)
+        dimensions = list(symbol.dimension for symbol in symbols_set)
 
         dict_validate = dict(
             zip(variables_for_calculate, dimensions)
@@ -40,7 +38,7 @@ class BaseLaw:
         @validate_output(variable.dimension)
         def __calculate_variable(*quantities_: Quantity | Fraction | Probability) -> Quantity | Fraction | Probability:
             solved = solve(self.law, variable, dict=True)[0][variable]
-            result_expr = solved.subs(zip(variables_list, quantities_))
+            result_expr = solved.subs(zip(symbols_set, quantities_))
             result = Quantity(result_expr)
             return result
 
