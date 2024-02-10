@@ -1,10 +1,7 @@
 from sympy import solve, Eq
 
-from symplyphysics import Symbol, Quantity, validate_input, \
-    validate_output, units
+from symplyphysics import Symbol, Quantity, validate_input, validate_output
 from symplyphysics.core.symbols.fraction import Fraction
-
-from symplyphysics.laws.optics import linear_magnification_from_object_height_and_image_height as magnification_law
 
 
 class BaseLaw:
