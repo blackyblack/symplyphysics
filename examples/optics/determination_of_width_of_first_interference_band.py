@@ -49,6 +49,4 @@ distance_between_maxima_ = answer.subs({
     distance_between_slits: Quantity(0.2 * prefixes.milli * units.meters),
     wavelength: Quantity(500 * prefixes.nano * units.meters),
 }).rhs
-print(f"distance between first and second maxima is: {print_expression(
-    convert_to(Quantity(distance_between_maxima_), prefixes.milli * units.meters).evalf(3)
-)} mm")
+print(f"distance between first and second maxima is: {print_expression(convert_to(Quantity(distance_between_maxima_), prefixes.milli * units.meters).evalf(3))} mm")
