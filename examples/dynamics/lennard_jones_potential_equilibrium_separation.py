@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from sympy import solve, symbols
 from symplyphysics import (
     print_expression,
