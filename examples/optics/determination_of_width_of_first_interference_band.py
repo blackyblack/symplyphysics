@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from sympy import solve, Symbol
+from sympy import solve, Symbol, Eq
 from symplyphysics import print_expression, Quantity, prefixes, units, convert_to
 from symplyphysics.laws.optics import interference_from_two_slits as two_slits_law
 from symplyphysics.laws.optics import interference_maximum as maximum_law
@@ -41,13 +41,14 @@ coordinate_for_second_maximum_value = coordinate_value.subs({
 # of these maxima in the interference pattern
 # dx = x_2 - x_1
 distance_between_maxima_value = coordinate_for_second_maximum_value - coordinate_for_first_maximum_value
-print(f"Equation for distance between first and second maxima:\n{print_expression(distance_between_maxima_value)}")
+answer = Eq(distance_between_maxima, distance_between_maxima_value)
+print(f"Equation for distance between first and second maxima:\n{print_expression(answer)}")
 
-distance_between_maxima_ = distance_between_maxima_value.subs({
+distance_between_maxima_ = answer.subs({
     distance_to_pattern: Quantity(1.5 * units.meters),
     distance_between_slits: Quantity(0.2 * prefixes.milli * units.meters),
     wavelength: Quantity(500 * prefixes.nano * units.meters),
-})
+}).rhs
 print(f"distance between first and second maxima is: {print_expression(
     convert_to(Quantity(distance_between_maxima_), prefixes.milli * units.meters).evalf(3)
 )} mm")
