@@ -14,7 +14,7 @@ from symplyphysics.laws.hydro import jurin_equation
 Args = namedtuple("Args", ["surface_tension_coefficient", "angle", "density_of_liquid", "radius",])
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     surface_tension_coefficient = Quantity(0.073 * units.newton / units.meter)
     angle = 0
     density_of_liquid = Quantity(1000 * units.kilogram / units.meter**3)
