@@ -13,6 +13,7 @@ from symplyphysics.laws.optics import linear_magnification_from_object_height_an
 Args = namedtuple("Args", ["ho", "hi"])
 law = base_law.BaseLaw(magnification_law.law)
 
+
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
     ho = Quantity(7 * units.meters)
