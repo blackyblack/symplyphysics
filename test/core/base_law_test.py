@@ -14,7 +14,7 @@ Args = namedtuple("Args", ["ho", "hi"])
 law = base_law.BaseLaw(magnification_law.law)
 
 @fixture(name="test_args")
-def test_args_fixture() -> None:
+def test_args_fixture() -> Args:
     ho = Quantity(7 * units.meters)
     hi = Quantity(5 * units.meters)
     return Args(ho=ho, hi=hi)
