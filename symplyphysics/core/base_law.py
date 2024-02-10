@@ -10,7 +10,7 @@ class BaseLaw:
         self.symbols = law.atoms(Symbol)
 
     def calculate_symbol_value(self, variable: Symbol, dict_quantities: dict[Symbol, Quantity | Fraction]
-    ):
+    ) -> Quantity | Fraction:
         if variable in self.symbols:
             pass
         else:
