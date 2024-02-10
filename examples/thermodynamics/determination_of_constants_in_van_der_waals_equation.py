@@ -16,25 +16,30 @@ pressure_after = Symbol("pressure_after")
 parameter_a = Symbol("parameter_a")
 parameter_b = Symbol("parameter_b")
 
-state_equation_before = van_der_waals_law.law.subs({
+base_variables_of_state_equation = {
     van_der_waals_law.volume: volume,
+    van_der_waals_law.amount_of_substance: amount_of_substance,
+    van_der_waals_law.bonding_forces_parameter: parameter_a,
+    van_der_waals_law.molecules_volume_parameter: parameter_b,
+}
+base_values_of_state_equation = {
+    temperature_before: Quantity(300 * units.kelvins),
+    temperature_after: Quantity(350 * units.kelvins),
+    volume: Quantity(0.25 * units.liters),
+    amount_of_substance: Quantity(1 * units.amount_of_substance),
+    pressure_before: Quantity(90 * units.atmospheres),
+    pressure_after: Quantity(110 * units.atmospheres),
+}
+
+state_equation_before = van_der_waals_law.law.subs({
     van_der_waals_law.temperature: temperature_before,
     van_der_waals_law.pressure: pressure_before,
-    van_der_waals_law.bonding_forces_parameter: parameter_a,
-    van_der_waals_law.molecules_volume_parameter: parameter_b,
-    van_der_waals_law.amount_of_substance: amount_of_substance,
-    van_der_waals_law.units.molar_gas_constant: Quantity(8.31446262 * units.joules / (units.moles * units.kelvins))
-})
+}).subs(base_variables_of_state_equation)
 
 state_equation_after = van_der_waals_law.law.subs({
-    van_der_waals_law.volume: volume,
     van_der_waals_law.temperature: temperature_after,
     van_der_waals_law.pressure: pressure_after,
-    van_der_waals_law.bonding_forces_parameter: parameter_a,
-    van_der_waals_law.molecules_volume_parameter: parameter_b,
-    van_der_waals_law.amount_of_substance: amount_of_substance,
-    van_der_waals_law.units.molar_gas_constant: Quantity(8.31446262 * units.joules / (units.moles * units.kelvins))
-})
+}).subs(base_variables_of_state_equation)
 
 solved = solve((state_equation_before, state_equation_after), (parameter_a, parameter_b), dict=True)[0]
 parameter_a_value = solved[parameter_a]
@@ -45,26 +50,12 @@ answer2 = Eq(parameter_b, parameter_b_value)
 print(f"Equation for parameter a:\n{print_expression(answer1)}")
 print(f"Equation for parameter b:\n{print_expression(answer2)}")
 
-parameter_a_ = parameter_a.subs({
-    temperature_before: Quantity(300 * units.kelvins),
-    temperature_after: Quantity(350 * units.kelvins),
-    volume: Quantity(0.25 * units.liters),
-    amount_of_substance: Quantity(1 * units.amount_of_substance),
-    pressure_before: Quantity(90 * units.atmospheres),
-    pressure_after: Quantity(110 * units.atmospheres),
-})
-parameter_b_ = parameter_b.subs({
-    temperature_before: Quantity(300 * units.kelvins),
-    temperature_after: Quantity(350 * units.kelvins),
-    volume: Quantity(0.25 * units.liters),
-    amount_of_substance: Quantity(1 * units.amount_of_substance),
-    pressure_before: Quantity(90 * units.atmospheres),
-    pressure_after: Quantity(110 * units.atmospheres),
-})
+parameter_a_ = answer1.subs(base_values_of_state_equation).rhs
+parameter_b_ = answer2.subs(base_values_of_state_equation).rhs
 
 answer1_value = convert_to(Quantity(parameter_a_),
-    units.pascals * (units.meters ** 3 / units.moles)**2)
+    units.pascals * (units.meters ** 3 / units.mole)**2)
 answer2_value = convert_to(Quantity(parameter_b_),
-    units.meters ** 3 / units.moles)
+    units.liters / units.mole)
 print(f"Parameter a is: {answer1_value} Pa * (m^3 / moles)^2")
-print(f"Parameter b is: {answer2_value} m^3 / moles")
+print(f"Parameter b is: {answer2_value} liters / moles")
