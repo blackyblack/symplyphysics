@@ -4,13 +4,18 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 
 # Description
 ## The Jurin equation determines the height of the liquid rise in the capillaries.
+## In the absence of wetting  theta > 90, cos(theta) < 0, and the liquid level in the capillary drops by the value h. With full wetting  theta =0, cos (theta) = 1, and the radius of the meniscus is equal to the radius of the capillary.
+
+## Conditions
+## Surface of the meniscus is a sphere
+## Height of the liquid is raised (lowered) h is much larger than the radius of the capillary r
 
 
 ## Law: h = 2 * a * cos(theta) / (⍴ * g * r)
 ## Where:
 ## h is the height of the liquid column
 ## a is the coefficient of surface tension of the liquid
-## theta is the angle of liquid wetting of the capillary wall
+## theta is the angle between the surface of a solid and the tangent to the surface of a liquid
 ## ⍴ is density of liquid
 ## g is acceleration of free fall
 ## r is capillary radius
@@ -22,12 +27,7 @@ angle = Symbol("angle", angle_type)
 density_of_liquid = Symbol("density_of_liquid", units.mass / units.volume)
 radius = Symbol("radius", units.length)
 
-law = Eq(height, (2 * surface_tension_coefficient * cos(angle)) / (density_of_liquid * radius * units.acceleration_due_to_gravity))
-
-## Note
-## The formula is obtained under the assumption that the surface of the meniscus is a sphere, and is applicable if the height of the liquid is raised (lowered) h is much larger than the radius of the capillary r
-## The smaller the radius of the capillary r, the higher the liquid rises in it. The height of the liquid column rises also with an increase in the coefficient of surface tension of the liquid.
-## In the absence of wetting  theta > 90, cos(theta) < 0, and the liquid level in the capillary drops by the value h. With full wetting  theta =0, cos (theta) = 1, and the radius of the meniscus is equal to the radius of the capillary.
+law = Eq(height, 2 * surface_tension_coefficient * cos(angle) / (density_of_liquid * radius * units.acceleration_due_to_gravity))
 
 def print_law() -> str:
     return print_expression(law)
@@ -44,6 +44,6 @@ def calculate_height(surface_tension_coefficient_: Quantity, angle_: Quantity,
         density_of_liquid: density_of_liquid_,
         radius: radius_,
     })
-    if Quantity(result_height).scale_factor < radius_.scale_factor:
+    if Quantity(result_height).scale_factor <= radius_.scale_factor:
         raise ValueError("The height must be greater than the radius")
     return Quantity(result_height)
