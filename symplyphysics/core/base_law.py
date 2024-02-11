@@ -17,10 +17,10 @@ class BaseLaw:
 
     law = BaseLaw(laplas_law.law)
     result = law.calculate_symbol_value(
-        law.laplas_pressure,
+        laplas_law.laplas_pressure,
         dict_quantities={
-            law.radius_of_curvature: Quantity(0.05 * units.meters),
-            law.surface_tension_of_the_liquid: Quantity(7 * units.newtons / units.meter)
+            laplas_law.radius_of_curvature: Quantity(0.05 * units.meters),
+            laplas_law.surface_tension_of_the_liquid: Quantity(7 * units.newtons / units.meter)
         }
     )
     print(result, result.dimension)
@@ -32,14 +32,13 @@ class BaseLaw:
 
     law = BaseLaw(laplas_law.law)
     result = law.calculate_symbol_value(
-        laplas_law.laplas_pressure,
+        law.laplas_pressure,
         dict_quantities={
-            laplas_law.radius_of_curvature: Quantity(0.05 * units.meters),
-            laplas_law.surface_tension_of_the_liquid: Quantity(7 * units.newtons / units.meter)
+            law.radius_of_curvature: Quantity(0.05 * units.meters),
+            law.surface_tension_of_the_liquid: Quantity(7 * units.newtons / units.meter)
         }
     )
     print(result, result.dimension)
-
     """
 
     def __init__(self, law: Eq) -> None:
@@ -48,13 +47,13 @@ class BaseLaw:
 
         variables_keys = list(str(symbol) for symbol in self.symbols)
         for key, symbol in zip(variables_keys, self.symbols):
-            setattr(self, key[:-1], symbol)  # key[:-1] for deleting index in end of string
+            self.__dict__[key[:-1]] = symbol    # key[:-1] for deleting index in end of string
 
     def calculate_symbol_value(
         self,
         variable: Symbol,
-        dict_quantities: dict[Symbol, Quantity | Fraction | Probability]
-    ) -> Quantity | Fraction | Probability:
+        dict_quantities: dict[Symbol, Quantity]
+    ) -> Quantity:
         self.__check_symbol_in_equation(variable)
         for symbol in dict_quantities.keys():
             self.__check_symbol_in_equation(symbol)
