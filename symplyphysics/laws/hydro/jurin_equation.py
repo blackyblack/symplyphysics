@@ -44,6 +44,6 @@ def calculate_height(surface_tension_coefficient_: Quantity, angle_: Quantity,
         density_of_liquid: density_of_liquid_,
         radius: radius_,
     })
-    if Quantity(result_height).scale_factor <= radius_.scale_factor:
-        raise ValueError("The height must be greater than the radius")
+    if Quantity(result_height).scale_factor < radius_.scale_factor:
+        raise ValueError("The height must be greater or equal than the radius")
     return Quantity(result_height)
