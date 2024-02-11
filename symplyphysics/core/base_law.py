@@ -1,7 +1,8 @@
 from sympy import solve, Eq, S
 from sympy.physics.units import Dimension
 
-from symplyphysics import Symbol, Quantity, errors, dimensionless, convert_to
+from symplyphysics import Symbol, Quantity, errors, dimensionless, convert_to, \
+    print_expression
 from symplyphysics.core.symbols.fraction import Fraction
 from symplyphysics.core.symbols.probability import Probability
 
@@ -50,6 +51,9 @@ class BaseLaw:
         for key, symbol in zip(variables_keys, self.symbols):
             self.__dict__[key[:-1]] = symbol    # key[:-1] for deleting index in end of string
 
+    def print_law(self) -> str:
+        return print_expression(self.law)
+
     def calculate_symbol_value(
         self,
         variable: Symbol,
@@ -61,17 +65,14 @@ class BaseLaw:
             self.__check_symbol_in_equation(symbol)
 
         dict_validate = self.__get_validate_input_dict(dict_quantities)
-
         self.__validate_input(dict_validate)
         solved = solve(self.law, variable, dict=True)[0][variable]
         result_expr = solved.subs(dict_quantities)
         result = Quantity(result_expr)
-
         self.__validate_output(variable, result)
 
         if convert_to_type:
             return convert_to_type(convert_to(result, S.One).evalf())
-
         return result
 
     def __check_symbol_in_equation(self, symbol: Symbol) -> None:
