@@ -45,5 +45,5 @@ def calculate_height(surface_tension_coefficient_: Quantity, angle_: Quantity,
         radius: radius_,
     })
     if Quantity(result_height).scale_factor < radius_.scale_factor:
-        raise ValueError("The height must be greater or equal than the radius")
+         raise ValueError(f"The height must be greater than the radius. Сurrently {Quantity(result_height).scale_factor} < {radius_.scale_factor}")
     return Quantity(result_height)
