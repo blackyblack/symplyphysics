@@ -38,7 +38,7 @@ def test_bad_height_object(test_args: Args) -> None:
             magnification_law.image_height: test_args.hi
         }
         law.calculate_symbol_value(magnification_law.magnification, dict_for_calculating)
-    with raises(errors.UnitsError):
+    with raises(TypeError):
         dict_for_calculating = {
             magnification_law.object_height: 100,
             magnification_law.image_height: test_args.hi
@@ -54,7 +54,7 @@ def test_bad_height_image(test_args: Args) -> None:
             magnification_law.image_height: hib
         }
         law.calculate_symbol_value(magnification_law.magnification, dict_for_calculating)
-    with raises(errors.UnitsError):
+    with raises(TypeError):
         dict_for_calculating = {
             magnification_law.object_height: test_args.ho,
             magnification_law.image_height: 100

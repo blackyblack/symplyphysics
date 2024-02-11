@@ -1,8 +1,8 @@
-from sympy import solve, Eq, S
-from sympy.physics.units import Dimension
+from typing import Any
 
-from symplyphysics import Symbol, Quantity, errors, dimensionless, convert_to, \
-    print_expression
+from sympy import solve, Eq, S
+from symplyphysics import Symbol, Quantity, convert_to, print_expression
+from symplyphysics.core.quantity_decorator import _assert_expected_unit
 from symplyphysics.core.symbols.fraction import Fraction
 from symplyphysics.core.symbols.probability import Probability
 
@@ -44,12 +44,17 @@ class BaseLaw:
 
     def __init__(self, law: Eq) -> None:
         self.law = law
-        self.symbols = self.law.atoms(Symbol)
+        self.symbols = law.atoms(Symbol)
 
-        # NOTE: mypy raised "BaseLaw has no attribute..." if use this attributes
-        variables_keys = list(str(symbol) for symbol in self.symbols)
+        variables_keys = list(str(symbol) for symbol in law.atoms(Symbol))
         for key, symbol in zip(variables_keys, self.symbols):
             self.__dict__[key[:-1]] = symbol    # key[:-1] for deleting index in end of string
+
+    def __getattr__(self, name: str) -> Any:
+        return self.__dict__[name]
+
+    def __setattr__(self, name: str, value: Any) -> None:
+        self.__dict__[name] = value
 
     def print_law(self) -> str:
         return print_expression(self.law)
@@ -57,17 +62,16 @@ class BaseLaw:
     def calculate_symbol_value(
         self,
         variable: Symbol,
-        dict_quantities: dict[Symbol, Quantity],
+        dict_for_subs: dict[Symbol, Quantity],
         convert_to_type: type[float | int] | None = None
     ) -> Quantity | Probability | Fraction | float | int:
         self.__check_symbol_in_equation(variable)
-        for symbol in dict_quantities.keys():
+        for symbol in dict_for_subs.keys():
             self.__check_symbol_in_equation(symbol)
 
-        dict_validate = self.__get_validate_input_dict(dict_quantities)
-        self.__validate_input(dict_validate)
+        self.__validate_input(dict_for_subs)
         solved = solve(self.law, variable, dict=True)[0][variable]
-        result_expr = solved.subs(dict_quantities)
+        result_expr = solved.subs(dict_for_subs)
         result = Quantity(result_expr)
         self.__validate_output(variable, result)
 
@@ -79,19 +83,9 @@ class BaseLaw:
         if symbol not in self.symbols:
             raise ValueError(f"The specified variable {symbol} is not in the law.")
 
-    def __get_validate_input_dict(self, dict_of_quantities: dict[Symbol, Quantity]) -> dict[Dimension, Dimension]:
-        quantity_type = lambda quantity: quantity.dimension if isinstance(quantity, Quantity) else dimensionless
-        dict_validate = {symbol.dimension: quantity_type(quantity) for symbol, quantity in dict_of_quantities.items()}
-        return dict_validate
-
-    def __validate_input(self, validate_dict: dict[Dimension, Dimension]) -> None:
-        for symbol_dimension, quantity_dimension in validate_dict.items():
-            if isinstance(quantity_dimension, Dimension) and symbol_dimension != quantity_dimension:
-                raise errors.UnitsError(f"Expected dimension: {symbol_dimension}, received: {quantity_dimension}.")
+    def __validate_input(self, input_dict: dict[Symbol, Quantity]) -> None:
+        for symbol, quantity in input_dict.items():
+            _assert_expected_unit(quantity, symbol, symbol.name[:-1], self.calculate_symbol_value.__name__)
 
     def __validate_output(self, variable: Symbol, result: Quantity) -> None:
-        result_type = lambda quantity: quantity.dimension if isinstance(quantity, Quantity) else dimensionless
-        variable_dimension = variable.dimension
-        result_dimension = result_type(result)
-        if variable_dimension != result_type(result):
-            raise errors.UnitsError(f"Expected dimension: {variable_dimension}, received: {result_dimension}.")
+        _assert_expected_unit(result, variable, "return", self.calculate_symbol_value.__name__)
