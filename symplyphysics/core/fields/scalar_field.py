@@ -1,6 +1,6 @@
 from __future__ import annotations
 from functools import partial
-from typing import Callable, Sequence, TypeAlias
+from typing import Callable, Sequence, TypeAlias, TypeVar
 from sympy import Expr, sympify
 from sympy.vector import express
 
@@ -11,8 +11,8 @@ from ..points.cylinder_point import CylinderPoint
 from ..coordinate_systems.coordinate_systems import CoordinateSystem
 from ...core.dimensions import ScalarValue
 
-AnyPoint: TypeAlias = Point | CartesianPoint | SpherePoint | CylinderPoint
-FieldFunction: TypeAlias = Callable[[AnyPoint], ScalarValue] | ScalarValue
+T = TypeVar("T", bound="Point")
+FieldFunction: TypeAlias = Callable[[T], ScalarValue] | ScalarValue
 
 
 def _subs_with_point(expr: ScalarValue, coordinate_system: CoordinateSystem,
@@ -38,13 +38,15 @@ class ScalarField:
     #      to maintain ScalarField invariant.
     _coordinate_system: CoordinateSystem
 
-    def __init__(self,
+    def __init__(
+        self,
         point_function: FieldFunction = 0,
-        coordinate_system: CoordinateSystem = CoordinateSystem(CoordinateSystem.System.CARTESIAN)):
+        coordinate_system: CoordinateSystem = CoordinateSystem(CoordinateSystem.System.CARTESIAN)
+    ) -> None:
         self._point_function = point_function
         self._coordinate_system = coordinate_system
 
-    def __call__(self, point_: AnyPoint) -> ScalarValue:
+    def __call__(self, point_: Point) -> ScalarValue:
         if not callable(self._point_function):
             return self._point_function
         # Point with general Point type is not checked against coordinate system.
@@ -82,7 +84,7 @@ class ScalarField:
     # Can contain value instead of SymPy Vector, eg 0.5, but it should be sympified.
     @staticmethod
     def from_expression(
-        expr: Expr,
+        expr: Expr | float,
         coordinate_system: CoordinateSystem = CoordinateSystem(CoordinateSystem.System.CARTESIAN)
     ) -> ScalarField:
         point_function = partial(_subs_with_point, expr, coordinate_system)
@@ -91,7 +93,7 @@ class ScalarField:
     # Applies field to a trajectory / surface / volume - calls field function with each element of the trajectory as parameter.
     # trajectory_ - list of expressions that correspond to a function in some space, eg [param, param] for a linear function y = x
     # return - value that depends on trajectory parameters.
-    def apply(self, trajectory_: Sequence[Expr]) -> ScalarValue:
+    def apply(self, trajectory_: Sequence[Expr | float]) -> ScalarValue:
         trajectory_as_point = Point(*trajectory_)
         if self._coordinate_system.coord_system_type == CoordinateSystem.System.CARTESIAN:
             trajectory_as_point = CartesianPoint(*trajectory_)

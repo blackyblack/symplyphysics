@@ -1,7 +1,6 @@
 from sympy import Eq, solve, sqrt, S
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-                           validate_output, dimensionless, convert_to)
-
+    validate_output, dimensionless, convert_to)
 
 # Description
 # Froude number characterizes the ratio between the force of inertia and
@@ -20,13 +19,11 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 # L is a characteristic length,
 # Fr is Froude number.
 
-
 velocity = Symbol("velocity", units.velocity)
 characteristic_length = Symbol("characteristic_length", units.length)
 froude_number = Symbol("froude_number", dimensionless)
 
-law = Eq(froude_number, velocity /
-         sqrt(units.acceleration_due_to_gravity * characteristic_length))
+law = Eq(froude_number, velocity / sqrt(units.acceleration_due_to_gravity * characteristic_length))
 
 
 def print_law() -> str:

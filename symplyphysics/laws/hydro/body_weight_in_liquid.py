@@ -27,7 +27,8 @@ def print_law() -> str:
 
 @validate_input(weight_air_=weight_air, liquid_density_=liquid_density, body_density_=body_density)
 @validate_output(weight_liquid)
-def calculate_weight(weight_air_: Quantity, liquid_density_, body_density_: Quantity) -> Quantity:
+def calculate_weight(weight_air_: Quantity, liquid_density_: Quantity,
+    body_density_: Quantity) -> Quantity:
     result_expr = solve(law, weight_liquid, dict=True)[0][weight_liquid]
     result_weight = result_expr.subs({
         weight_air: weight_air_,

@@ -3,34 +3,32 @@
 ## According to the definition of Capacitance this capacitor should have C = 2 Farads.
 
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.definitions import capacitance_from_charge_and_voltage as capacitance_def
 
+Args = namedtuple("Args", ["C", "Q", "U"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     C = Quantity(2 * units.farad)
     Q = Quantity(6 * units.coulomb)
     U = Quantity(3 * units.volts)
-    Args = namedtuple("Args", ["C", "Q", "U"])
     return Args(C=C, Q=Q, U=U)
 
 
-def test_basic_capacitance(test_args):
+def test_basic_capacitance(test_args: Args) -> None:
     result = capacitance_def.calculate_capacitance(test_args.Q, test_args.U)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.capacitance)
-    result_cap = convert_to(result, capacitance_def.definition_units_SI).evalf(4)
-    assert result_cap == approx(2, 0.01)
+    assert_equal(result, 2 * units.farad)
 
 
-def test_bad_charge(test_args):
+def test_bad_charge(test_args: Args) -> None:
     Qb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         capacitance_def.calculate_capacitance(Qb, test_args.U)
@@ -38,7 +36,7 @@ def test_bad_charge(test_args):
         capacitance_def.calculate_capacitance(100, test_args.U)
 
 
-def test_bad_voltage(test_args):
+def test_bad_voltage(test_args: Args) -> None:
     Vb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         capacitance_def.calculate_capacitance(test_args.Q, Vb)

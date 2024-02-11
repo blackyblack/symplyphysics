@@ -23,7 +23,8 @@ class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancest
         obj = SymQuantity.__new__(cls, name, None, None, None, None, None, False, **assumptions)
         return obj
 
-    def __init__(self, expr: Basic | float = S.One, *, dimension: Optional[Dimension] = None):
+    def __init__(self, expr: Basic | float = S.One, *,
+        dimension: Optional[Dimension] = None) -> None:
         (scale, dimension_) = collect_factor_and_dimension(sympify(expr))
         dimension = dimension_ if dimension is None else dimension
         super().__init__(self.name, dimension)
@@ -37,6 +38,12 @@ class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancest
 
     def identity(self, *_args: Any) -> Self:
         return self
+
+    def _eval_is_positive(self) -> bool:
+        return self.scale_factor >= 0
+
+    def _eval_Abs(self) -> Self:
+        return self if self.scale_factor >= 0 else (-1 * self)
 
 
 def list_of_quantities(input_: Sequence[Expr | float], subs_: dict[Expr,

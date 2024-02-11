@@ -1,10 +1,9 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     units,
     errors,
-    SI,
-    convert_to,
     Quantity,
 )
 from symplyphysics.laws.condensed_matter import height_of_the_pn_transition_barrier as barrier_law
@@ -16,21 +15,20 @@ from symplyphysics.laws.condensed_matter import height_of_the_pn_transition_barr
 ## It is known that the concentration of intrinsic charge carriers in silicon is equal to 1e10 [1 / cm^3].
 ## https://www.ioffe.ru/SVA/NSM/Semicond/Si/bandstr.html
 
+Args = namedtuple("Args", [
+    "donors_concentration", "acceptors_concentration", "charge_carriers_concentration",
+    "temperature", "charge_electron"
+])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     donors_concentration = Quantity(3e16 * (1 / units.centimeter**3))
     acceptors_concentration = Quantity(2e12 * (1 / units.centimeter**3))
     charge_carriers_concentration = Quantity(1e10 * (1 / units.centimeter**3))
-
     temperature = Quantity(300 * units.kelvin)
-
     charge_electron = Quantity(1.6e-19 * units.coulomb)
 
-    Args = namedtuple("Args", [
-        "donors_concentration", "acceptors_concentration", "charge_carriers_concentration",
-        "temperature", "charge_electron"
-    ])
     return Args(donors_concentration=donors_concentration,
         acceptors_concentration=acceptors_concentration,
         charge_carriers_concentration=charge_carriers_concentration,
@@ -38,16 +36,16 @@ def test_args_fixture():
         charge_electron=charge_electron)
 
 
-def test_basic_height_barrier(test_args):
+def test_basic_height_barrier(test_args: Args) -> None:
     result = barrier_law.calculate_height_barrier(test_args.donors_concentration,
         test_args.acceptors_concentration, test_args.charge_carriers_concentration,
         test_args.temperature, test_args.charge_electron)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.voltage)
-    result = convert_to(result, units.volt).evalf(5)
-    assert result == approx(0.529, rel=0.1)
+    # NOTE: onsite intrinsic charge carriers are caclulated instead of hardcoded 1e10 value,
+    #       therefore result in our test is not very accurate
+    assert_equal(result, 0.529 * units.volt, tolerance=0.1)
 
 
-def test_bad_donors_concentration(test_args):
+def test_bad_donors_concentration(test_args: Args) -> None:
     donors_concentration = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         barrier_law.calculate_height_barrier(donors_concentration,
@@ -59,7 +57,7 @@ def test_bad_donors_concentration(test_args):
             test_args.charge_electron)
 
 
-def test_bad_acceptors_concentration(test_args):
+def test_bad_acceptors_concentration(test_args: Args) -> None:
     acceptors_concentration = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         barrier_law.calculate_height_barrier(test_args.donors_concentration,
@@ -71,7 +69,7 @@ def test_bad_acceptors_concentration(test_args):
             test_args.charge_electron)
 
 
-def test_bad_charge_carriers_concentration(test_args):
+def test_bad_charge_carriers_concentration(test_args: Args) -> None:
     charge_carriers_concentration = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         barrier_law.calculate_height_barrier(test_args.donors_concentration,
@@ -83,7 +81,7 @@ def test_bad_charge_carriers_concentration(test_args):
             test_args.charge_electron)
 
 
-def test_bad_temperature(test_args):
+def test_bad_temperature(test_args: Args) -> None:
     temperature = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         barrier_law.calculate_height_barrier(test_args.donors_concentration,
@@ -95,7 +93,7 @@ def test_bad_temperature(test_args):
             test_args.charge_electron)
 
 
-def test_bad_charge_electron(test_args):
+def test_bad_charge_electron(test_args: Args) -> None:
     charge_electron = Quantity(1 * units.kelvin)
     with raises(errors.UnitsError):
         barrier_law.calculate_height_barrier(test_args.donors_concentration,

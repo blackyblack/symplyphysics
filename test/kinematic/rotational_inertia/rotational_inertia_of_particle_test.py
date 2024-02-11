@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.kinematic.rotational_inertia import rotational_inertia_of_particle as rotational_inertia_def
 
@@ -13,23 +12,22 @@ from symplyphysics.laws.kinematic.rotational_inertia import rotational_inertia_o
 ## A particle of mass m = 1 g rotates around an axis at a radius r = 3 m. Its rotational inertia
 ## should amount to 0.009 kg*m^2.
 
+Args = namedtuple("Args", "m r")
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     m = Quantity(1.0 * units.gram)
     r = Quantity(3.0 * units.meter)
-    Args = namedtuple("Args", "m r")
     return Args(m=m, r=r)
 
 
-def test_basic_law(test_args):
+def test_basic_law(test_args: Args) -> None:
     result = rotational_inertia_def.calculate_rotational_inertia(test_args.m, test_args.r)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.mass * units.length**2)
-    result_value = convert_to(result, units.kilogram * units.meter**2).evalf(3)
-    assert result_value == approx(9e-3, 1e-3)
+    assert_equal(result, 9e-3 * units.kilogram * units.meter**2)
 
 
-def test_bad_mass(test_args):
+def test_bad_mass(test_args: Args) -> None:
     mb = Quantity(1.0 * units.second)
     with raises(errors.UnitsError):
         rotational_inertia_def.calculate_rotational_inertia(mb, test_args.r)
@@ -37,7 +35,7 @@ def test_bad_mass(test_args):
         rotational_inertia_def.calculate_rotational_inertia(100, test_args.r)
 
 
-def test_bad_radius(test_args):
+def test_bad_radius(test_args: Args) -> None:
     rb = Quantity(1.0 * units.second)
     with raises(errors.UnitsError):
         rotational_inertia_def.calculate_rotational_inertia(test_args.m, rb)

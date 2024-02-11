@@ -1,6 +1,6 @@
 from sympy import (Eq, solve, S)
-from symplyphysics import (units, Quantity, Symbol, print_expression,
-    validate_input, validate_output, dimensionless, convert_to)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output, dimensionless, convert_to)
 from symplyphysics.core.expr_comparisons import expr_equals
 
 from symplyphysics.laws.conservation import abbe_invariant_of_two_optical_environments_is_constant as abbe_conservation_law
@@ -21,17 +21,15 @@ from symplyphysics.laws.conservation import abbe_invariant_of_two_optical_enviro
 ##   and the surface of the lens with the radius lying on this optical axis;
 ## - proofs: https://studme.org/341451/matematika_himiya_fizik/prelomlenie_otrazhenie_sveta_sfericheskoy_poverhnosti.
 
-
 distance_to_object = Symbol("distance_to_object", units.length)
 distance_to_image = Symbol("distance_to_image", units.length)
 curvature_radius_lens = Symbol("curvature_radius_lens", units.length)
 refraction_index_environment = Symbol("refraction_index_environment", dimensionless)
 refraction_index_lens = Symbol("refraction_index_lens", dimensionless)
 
-law = Eq(
-    (refraction_index_environment / (-distance_to_object)) + (refraction_index_lens / distance_to_image),
-    (refraction_index_lens - refraction_index_environment) / curvature_radius_lens
-)
+law = Eq((refraction_index_environment /
+    (-distance_to_object)) + (refraction_index_lens / distance_to_image),
+    (refraction_index_lens - refraction_index_environment) / curvature_radius_lens)
 
 # From Abbe's invariants:
 
@@ -44,7 +42,8 @@ invariant_conservation_eq = abbe_conservation_law.law.subs({
 })
 
 radius_lens_from_law = solve(law, curvature_radius_lens, dict=True)[0][curvature_radius_lens]
-radius_lens_from_invariants = solve(invariant_conservation_eq, curvature_radius_lens, dict=True)[0][curvature_radius_lens]
+radius_lens_from_invariants = solve(invariant_conservation_eq, curvature_radius_lens,
+    dict=True)[0][curvature_radius_lens]
 assert expr_equals(radius_lens_from_law, radius_lens_from_invariants)
 
 
@@ -52,19 +51,13 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(
-    distance_to_object_=distance_to_object,
+@validate_input(distance_to_object_=distance_to_object,
     distance_to_image_=distance_to_image,
     curvature_radius_lens_=curvature_radius_lens,
-    refraction_index_environment_=refraction_index_environment
-)
+    refraction_index_environment_=refraction_index_environment)
 @validate_output(refraction_index_lens)
-def calculate_refraction_index_lens(
-        distance_to_object_: Quantity,
-        distance_to_image_: Quantity,
-        curvature_radius_lens_: Quantity,
-        refraction_index_environment_: float
-) -> float:
+def calculate_refraction_index_lens(distance_to_object_: Quantity, distance_to_image_: Quantity,
+    curvature_radius_lens_: Quantity, refraction_index_environment_: float) -> float:
     solved = solve(law, refraction_index_lens, dict=True)[0][refraction_index_lens]
     result_expr = solved.subs({
         distance_to_object: distance_to_object_,

@@ -38,7 +38,7 @@ class CoordinateSystem:
 
     def __init__(self,
         coord_system_type: System = System.CARTESIAN,
-        inner: Optional[CoordSys3D] = None):
+        inner: Optional[CoordSys3D] = None) -> None:
         self._coord_system_type = coord_system_type
         if inner is None:
             self._coord_system = CoordSys3D(next_name("SYS"),
@@ -54,7 +54,7 @@ class CoordinateSystem:
     def coord_system_type(self) -> System:
         return self._coord_system_type
 
-    def transformation_to_system(self, coord_system_type: System):
+    def transformation_to_system(self, coord_system_type: System) -> tuple[Expr, Expr, Expr]:
         if self._coord_system_type == self.System.CYLINDRICAL:
             r, theta, z = self._coord_system.base_scalars()
             cylindrical_conversions = {

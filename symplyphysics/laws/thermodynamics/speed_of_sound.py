@@ -20,8 +20,8 @@ law = Eq(speed_of_sound,
     sqrt(heat_capacity_ratio * units.molar_gas_constant * temperature / mole_mass))
 
 
-def print_law():
-    print_expression(law)
+def print_law() -> str:
+    return print_expression(law)
 
 
 @validate_input(temperature_=temperature,

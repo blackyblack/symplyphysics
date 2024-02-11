@@ -1,34 +1,32 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
     Quantity,
-    SI,
-    convert_to,
 )
 
 from symplyphysics.laws.thermodynamics import pressure_from_the_concentration_of_molecules_and_kinetic_energy as ideal_gas_pressure
 
+Args = namedtuple("Args", ["average_kinetic_energy", "molecules_concentration"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     average_kinetic_energy = Quantity(2.4e-20 * units.joule)
     molecules_concentration = Quantity(5e24 * (1 / units.meter**3))
-    Args = namedtuple("Args", ["average_kinetic_energy", "molecules_concentration"])
     return Args(average_kinetic_energy=average_kinetic_energy,
         molecules_concentration=molecules_concentration)
 
 
-def test_basic_pressure(test_args):
+def test_basic_pressure(test_args: Args) -> None:
     result = ideal_gas_pressure.calculate_pressure(test_args.molecules_concentration,
         test_args.average_kinetic_energy)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.pressure)
-    result_pressure = convert_to(result, units.pascal).evalf(3)
-    assert result_pressure == approx(80000, 0.001)
+    assert_equal(result, 80000 * units.pascal)
 
 
-def test_bad_energy(test_args):
+def test_bad_energy(test_args: Args) -> None:
     bad_energy = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         ideal_gas_pressure.calculate_pressure(test_args.molecules_concentration, bad_energy)
@@ -36,7 +34,7 @@ def test_bad_energy(test_args):
         ideal_gas_pressure.calculate_pressure(test_args.molecules_concentration, 100)
 
 
-def test_bad_concentration(test_args):
+def test_bad_concentration(test_args: Args) -> None:
     bad_concentration = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         ideal_gas_pressure.calculate_pressure(bad_concentration, test_args.average_kinetic_energy)

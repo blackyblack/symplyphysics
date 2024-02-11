@@ -1,6 +1,7 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
     Quantity,
@@ -20,41 +21,57 @@ from symplyphysics.laws.conservation import abbe_invariant_of_two_optical_enviro
 
 # Refraction index in lens: n' = n ( ((1/oo) - (1/R)) / ((1/h) - (1/R)) ) = 1.35
 
+Args = namedtuple("Args", ["a", "b", "n", "r"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     r = Quantity(7 * prefixes.centi * units.meters)
     n = 1.0
-    a = Quantity(1E10 * units.meters)
+    a = Quantity(1e10 * units.meters)
     b = Quantity(27 * prefixes.centi * units.meters)
 
-    Args = namedtuple("Args", ["a", "b", "n", "r"])
     return Args(a=a, b=b, n=n, r=r)
 
 
-def test_basic_conservation(test_args):
-    result = abbe_conservation_law.calculate_refraction_index_lens(test_args.a, test_args.b, test_args.r, test_args.n)
-    assert result == approx(1.35, 0.01)
+def test_basic_conservation(test_args: Args) -> None:
+    result = abbe_conservation_law.calculate_refraction_index_lens(test_args.a, test_args.b,
+        test_args.r, test_args.n)
+    assert_equal(result, 1.35)
 
 
-def test_bad_distance(test_args):
+def test_bad_distance(test_args: Args) -> None:
     db = Quantity(1 * units.coulomb)
 
     with raises(errors.UnitsError):
-        abbe_conservation_law.calculate_refraction_index_lens(db, test_args.b, test_args.r, test_args.n)
+        abbe_conservation_law.calculate_refraction_index_lens(db, test_args.b, test_args.r,
+            test_args.n)
     with raises(TypeError):
-        abbe_conservation_law.calculate_refraction_index_lens(100, test_args.b, test_args.r, test_args.n)
+        abbe_conservation_law.calculate_refraction_index_lens(100, test_args.b, test_args.r,
+            test_args.n)
 
     with raises(errors.UnitsError):
-        abbe_conservation_law.calculate_refraction_index_lens(test_args.a, db, test_args.r, test_args.n)
+        abbe_conservation_law.calculate_refraction_index_lens(test_args.a, db, test_args.r,
+            test_args.n)
     with raises(TypeError):
-        abbe_conservation_law.calculate_refraction_index_lens(test_args.a, 100, test_args.r, test_args.n)
+        abbe_conservation_law.calculate_refraction_index_lens(test_args.a, 100, test_args.r,
+            test_args.n)
 
 
-def test_bad_radius(test_args):
+def test_bad_radius(test_args: Args) -> None:
     rb = Quantity(1 * units.coulomb)
 
     with raises(errors.UnitsError):
-        abbe_conservation_law.calculate_refraction_index_lens(test_args.a, test_args.b, rb, test_args.n,)
+        abbe_conservation_law.calculate_refraction_index_lens(
+            test_args.a,
+            test_args.b,
+            rb,
+            test_args.n,
+        )
     with raises(TypeError):
-        abbe_conservation_law.calculate_refraction_index_lens(test_args.a, test_args.b, 100, test_args.n,)
+        abbe_conservation_law.calculate_refraction_index_lens(
+            test_args.a,
+            test_args.b,
+            100,
+            test_args.n,
+        )

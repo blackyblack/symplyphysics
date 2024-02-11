@@ -1,6 +1,6 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from symplyphysics import (units, SI, convert_to, Quantity, errors, prefixes)
+from pytest import fixture, raises
+from symplyphysics import (assert_equal, units, Quantity, errors, prefixes)
 from symplyphysics.laws.electricity import magnetic_induction_from_magnetic_field_intensity as induction_law
 
 # Description
@@ -8,30 +8,28 @@ from symplyphysics.laws.electricity import magnetic_induction_from_magnetic_fiel
 ## the magnetic induction is 2 millitesla.
 ## https://www.calculatoratoz.com/en/magnetic-permeability-calculator/Calc-2144
 
+Args = namedtuple("Args", ["relative_permeability", "intensity"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     relative_permeability = 1592
     intensity = Quantity(1 * (units.ampere / units.meter))
-
-    Args = namedtuple("Args", ["relative_permeability", "intensity"])
     return Args(relative_permeability=relative_permeability, intensity=intensity)
 
 
-def test_basic_induction(test_args):
+def test_basic_induction(test_args: Args) -> None:
     result = induction_law.calculate_induction(test_args.relative_permeability, test_args.intensity)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.magnetic_density)
-    result = convert_to(result, prefixes.milli * units.tesla).evalf(5)
-    assert result == approx(2, rel=0.01)
+    assert_equal(result, 2 * prefixes.milli * units.tesla)
 
 
-def test_bad_relative_permeability(test_args):
+def test_bad_relative_permeability(test_args: Args) -> None:
     relative_permeability = Quantity(1 * units.joule)
     with raises(errors.UnitsError):
         induction_law.calculate_induction(relative_permeability, test_args.intensity)
 
 
-def test_bad_intensity(test_args):
+def test_bad_intensity(test_args: Args) -> None:
     intensity = Quantity(1 * units.joule)
     with raises(errors.UnitsError):
         induction_law.calculate_induction(test_args.relative_permeability, intensity)

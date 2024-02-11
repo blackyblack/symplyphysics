@@ -1,6 +1,6 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from symplyphysics import (units, SI, convert_to, Quantity, errors)
+from pytest import fixture, raises
+from symplyphysics import (assert_equal, units, Quantity, errors)
 from symplyphysics.laws.relativistic import relativistic_momentum as momentum_law
 
 # Description
@@ -8,24 +8,22 @@ from symplyphysics.laws.relativistic import relativistic_momentum as momentum_la
 ## Then momentum will be equal to 300 [kilogram * meter / second].
 ## https://www.wolframalpha.com/input?i=relativistic+momentum+calculator&assumption=%7B%22FS%22%7D+-%3E+%7B%7B%22RelativisticMomentum%22%2C+%22p%22%7D%2C+%7B%22RelativisticMomentum%22%2C+%22v%22%7D%2C+%7B%22RelativisticMomentum%22%2C+%22m%22%7D%7D&assumption=%7B%22F%22%2C+%22RelativisticMomentum%22%2C+%22m%22%7D+-%3E%220.1+g%22&assumption=%7B%22F%22%2C+%22RelativisticMomentum%22%2C+%22v%22%7D+-%3E%223×10%5E6+m%2Fs%22
 
+Args = namedtuple("Args", ["mass", "velocity"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     mass = Quantity(0.1 * units.gram)
     velocity = Quantity(3e6 * (units.meter / units.second))
-
-    Args = namedtuple("Args", ["mass", "velocity"])
     return Args(mass=mass, velocity=velocity)
 
 
-def test_basic_momentum(test_args):
+def test_basic_momentum(test_args: Args) -> None:
     result = momentum_law.calculate_momentum(test_args.mass, test_args.velocity)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.momentum)
-    result = convert_to(result, units.kilogram * units.meter / units.second).evalf(5)
-    assert result == approx(300, rel=0.01)
+    assert_equal(result, 300 * units.kilogram * units.meter / units.second)
 
 
-def test_bad_mass(test_args):
+def test_bad_mass(test_args: Args) -> None:
     mass = Quantity(1 * units.joule)
     with raises(errors.UnitsError):
         momentum_law.calculate_momentum(mass, test_args.velocity)
@@ -33,7 +31,7 @@ def test_bad_mass(test_args):
         momentum_law.calculate_momentum(100, test_args.velocity)
 
 
-def test_bad_velocity(test_args):
+def test_bad_velocity(test_args: Args) -> None:
     velocity = Quantity(1 * units.joule)
     with raises(errors.UnitsError):
         momentum_law.calculate_momentum(test_args.mass, velocity)

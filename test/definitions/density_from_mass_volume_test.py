@@ -1,31 +1,29 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.definitions import density_from_mass_volume
 
+Args = namedtuple("Args", ["m", "V"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     m = Quantity(1 * units.kilogram)
     V = Quantity(3 * units.meter**3)
-    Args = namedtuple("Args", ["m", "V"])
     return Args(m=m, V=V)
 
 
-def test_basic_density(test_args):
+def test_basic_density(test_args: Args) -> None:
     result = density_from_mass_volume.calculate_density(test_args.m, test_args.V)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.mass / units.volume)
-    result_density = convert_to(result, density_from_mass_volume.definition_units_SI).evalf(2)
-    assert result_density == approx(0.3333, 0.01)
+    assert_equal(result, 0.3333 * units.kilogram / units.meter**3)
 
 
-def test_bad_mass(test_args):
+def test_bad_mass(test_args: Args) -> None:
     mb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         density_from_mass_volume.calculate_density(mb, test_args.V)
@@ -33,7 +31,7 @@ def test_bad_mass(test_args):
         density_from_mass_volume.calculate_density(100, test_args.V)
 
 
-def test_bad_volume(test_args):
+def test_bad_volume(test_args: Args) -> None:
     Vb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         density_from_mass_volume.calculate_density(test_args.m, Vb)
