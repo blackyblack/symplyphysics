@@ -14,7 +14,7 @@ from symplyphysics.laws.thermodynamics import van_der_waals_equation
 Args = namedtuple("Args", ["amount_of_substance", "mutual_attraction_constant", "volume", "mutual_repulsion_constant", "pressure"])
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     amount_of_substance = Quantity(0.1093 * units.mole)
     mutual_attraction_constant = Quantity(0.136 * units.pascal * units.meter**6 / units.mole**2)
     volume = Quantity(9e-5 * units.meter**3)
