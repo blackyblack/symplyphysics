@@ -26,9 +26,7 @@ def test_args_fixture() -> Args:
 
 def test_basic_law(test_args: Args) -> None:
     result = diffusion_coefficient.calculate_diffusion_coefficient(test_args.temperature, test_args.particle_radius, test_args.dynamic_viscosity)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.area / units.time)
-    result_diffusion_coefficient = convert_to(result, units.meter**2 / units.second).evalf(3)
-    assert result_diffusion_coefficient == approx(1.15e-7, abs=1e-4)
+    assert_equal(result, 1.15e-7 * units.meter**2 / units.second)
 
 
 def test_bad_temperature(test_args: Args) -> None:
