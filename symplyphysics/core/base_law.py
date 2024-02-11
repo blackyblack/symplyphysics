@@ -45,6 +45,7 @@ class BaseLaw:
         self.law = law
         self.symbols = self.law.atoms(Symbol)
 
+        # NOTE: mypy raised "BaseLaw has no attribute..." if use this attributes
         variables_keys = list(str(symbol) for symbol in self.symbols)
         for key, symbol in zip(variables_keys, self.symbols):
             self.__dict__[key[:-1]] = symbol    # key[:-1] for deleting index in end of string
