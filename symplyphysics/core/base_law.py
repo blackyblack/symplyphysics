@@ -1,11 +1,9 @@
-from sympy import solve, Eq
+from sympy import solve, Eq, S
 from sympy.physics.units import Dimension
 
-from symplyphysics import Symbol, Quantity, units, errors, dimensionless
+from symplyphysics import Symbol, Quantity, errors, dimensionless, convert_to
 from symplyphysics.core.symbols.fraction import Fraction
 from symplyphysics.core.symbols.probability import Probability
-
-from symplyphysics.laws.thermodynamics import laplas_pressure as laplas_law
 
 
 class BaseLaw:
@@ -13,6 +11,7 @@ class BaseLaw:
     Example:
     --------
 
+    from symplyphysics.core.base_law import BaseLaw
     from symplyphysics.laws.thermodynamics import laplas_pressure as laplas_law
 
     law = BaseLaw(laplas_law.law)
@@ -28,6 +27,7 @@ class BaseLaw:
     or
     --
 
+    from symplyphysics.core.base_law import BaseLaw
     from symplyphysics.laws.thermodynamics import laplas_pressure as laplas_law
 
     law = BaseLaw(laplas_law.law)
@@ -52,8 +52,9 @@ class BaseLaw:
     def calculate_symbol_value(
         self,
         variable: Symbol,
-        dict_quantities: dict[Symbol, Quantity]
-    ) -> Quantity:
+        dict_quantities: dict[Symbol, Quantity],
+        convert_to_type: type[float | int] | None = None
+    ) -> Quantity | Probability | Fraction | float | int:
         self.__check_symbol_in_equation(variable)
         for symbol in dict_quantities.keys():
             self.__check_symbol_in_equation(symbol)
@@ -64,7 +65,12 @@ class BaseLaw:
         solved = solve(self.law, variable, dict=True)[0][variable]
         result_expr = solved.subs(dict_quantities)
         result = Quantity(result_expr)
+
         self.__validate_output(variable, result)
+
+        if convert_to_type:
+            return convert_to_type(convert_to(result, S.One).evalf())
+
         return result
 
     def __check_symbol_in_equation(self, symbol: Symbol) -> None:
