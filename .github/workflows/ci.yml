@@ -19,7 +19,7 @@ jobs:
       - name: Install symplyphysics
         run: pip install .[dev,plots]
       - name: Run typechecking with mypy
-        run: mypy --exclude=build .
+        run: mypy .
       - name: Run linter with pylint
         run: pylint --fail-under=9.8 ./test/**/*.py ./symplyphysics
       - name: Run tests with pytest
