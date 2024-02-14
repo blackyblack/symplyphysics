@@ -26,7 +26,7 @@ def test_args_fixture() -> Args:
     return Args(g=g, beta=beta, t_surf=t_surf, t_bulk=t_bulk, l=l, mu=mu)
 
 
-def test_basic_grashof_number(test_args) -> None:
+def test_basic_grashof_number(test_args: Args) -> None:
     result = grashof_number.calculate_grashof_number(
         test_args.g,
         test_args.beta,
@@ -38,7 +38,7 @@ def test_basic_grashof_number(test_args) -> None:
     assert_equal(result, -178503313966.7169)
 
 
-def test_bad_gravitational_acceleration(test_args) -> None:
+def test_bad_gravitational_acceleration(test_args: Args) -> None:
     bg = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         grashof_number.calculate_grashof_number(
@@ -60,7 +60,7 @@ def test_bad_gravitational_acceleration(test_args) -> None:
         )
 
 
-def test_bad_coefficient_of_volume_expansion(test_args) -> None:
+def test_bad_coefficient_of_volume_expansion(test_args: Args) -> None:
     beta = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         grashof_number.calculate_grashof_number(
@@ -82,7 +82,7 @@ def test_bad_coefficient_of_volume_expansion(test_args) -> None:
         )
 
 
-def test_bad_temperature(test_args) -> None:
+def test_bad_temperature(test_args: Args) -> None:
     ts = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         grashof_number.calculate_grashof_number(
@@ -122,7 +122,7 @@ def test_bad_temperature(test_args) -> None:
         )
 
 
-def test_bad_lenght(test_args) -> None:
+def test_bad_lenght(test_args: Args) -> None:
     l = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         grashof_number.calculate_grashof_number(
@@ -144,7 +144,7 @@ def test_bad_lenght(test_args) -> None:
         )
 
 
-def test_bad_viscosity(test_args) -> None:
+def test_bad_viscosity(test_args: Args) -> None:
     mu = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         grashof_number.calculate_grashof_number(
