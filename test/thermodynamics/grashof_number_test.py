@@ -17,7 +17,7 @@ Args = namedtuple("Args", ["beta", "t_surf", "t_bulk", "l", "mu"])
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
-    beta = Quantity(0.000458 * units.kelvin ** -1)
+    beta = Quantity(0.000458 / units.kelvin)
     t_surf = to_kelvin_quantity(Celsius(20))
     t_bulk = to_kelvin_quantity(Celsius(60))
     l = Quantity(1 * units.meter)
