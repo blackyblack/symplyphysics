@@ -1,7 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from sympy.physics.units import prefixes
-from symplyphysics import (assert_equal, units, Quantity, errors)
+from symplyphysics import (assert_equal, units, Quantity, errors, prefixes)
 from symplyphysics.laws.electricity import magnetic_field_intensity_of_infinite_wire as intensity_law
 
 # Description

@@ -3,11 +3,10 @@ from operator import add
 from typing import Optional, Sequence
 from sympy import S, Expr, cos, sin, sqrt, sympify
 
-from .vectors import QuantityVector, Vector
+from .vectors import Vector
 from ..expr_comparisons import expr_equals
-from ..symbols.quantities import Quantity
 from ..coordinate_systems.coordinate_systems import CoordinateSystem
-from ..dimensions import ScalarValue, assert_equivalent_dimension
+from ..dimensions import ScalarValue
 
 
 # Add zeroes so that both vectors have the same length.
@@ -72,7 +71,7 @@ def scale_vector(scalar_value: ScalarValue, vector: Vector) -> Vector:
         vector_components = [scalar_value * e for e in vector.components]
         return Vector(vector_components, vector.coordinate_system)
     if vector.coordinate_system.coord_system_type == CoordinateSystem.System.CYLINDRICAL:
-        vector_components = [sympify(c) for c in vector.components]
+        vector_components = list(vector.components)
         vector_size = len(vector_components)
         if vector_size > 0:
             vector_components[0] = vector_components[0] * scalar_value
@@ -80,7 +79,7 @@ def scale_vector(scalar_value: ScalarValue, vector: Vector) -> Vector:
             vector_components[2] = vector_components[2] * scalar_value
         return Vector(vector_components, vector.coordinate_system)
     if vector.coordinate_system.coord_system_type == CoordinateSystem.System.SPHERICAL:
-        vector_components = [sympify(c) for c in vector.components]
+        vector_components = list(vector.components)
         if len(vector_components) > 0:
             vector_components[0] = vector_components[0] * scalar_value
         return Vector(vector_components, vector.coordinate_system)
@@ -162,52 +161,10 @@ def cross_cartesian_vectors(vector_left: Vector, vector_right: Vector) -> Vector
         dimensions)
     ax, ay, az = list_left_extended
     bx, by, bz = list_right_extended
-    result = [sympify(ay * bz - az * by), sympify(az * bx - ax * bz), sympify(ax * by - ay * bx)]
+    result = [ay * bz - az * by, az * bx - ax * bz, ax * by - ay * bx]
     return Vector(result, vector_left.coordinate_system)
 
 
 # Make unit vector (vector of size 1 and same direction as original vector)
 def vector_unit(vector_: Vector) -> Vector:
     return scale_vector(1 / vector_magnitude(vector_), vector_)
-
-
-# Sum of two vectors of quantities
-def add_cartesian_quantity_vectors(vector_left: QuantityVector,
-    vector_right: QuantityVector) -> QuantityVector:
-    assert_equivalent_dimension(vector_left.dimension, vector_left.display_name,
-        "add_cartesian_quantity_vectors", vector_right.dimension)
-    return QuantityVector(
-        add_cartesian_vectors(vector_left, vector_right).components, vector_left.coordinate_system)
-
-
-# Change QuantityVector magnitude (length)
-def scale_quantity_vector(scalar_value: Quantity, vector: QuantityVector) -> QuantityVector:
-    scaled_quantities = scale_vector(scalar_value, vector)
-    return QuantityVector(scaled_quantities.components, vector.coordinate_system)
-
-
-# Dot product of two vectors of quantities
-def dot_quantity_vectors(vector_left: QuantityVector, vector_right: QuantityVector) -> Quantity:
-    dotted = dot_vectors(vector_left, vector_right)
-    return Quantity(dotted)
-
-
-# Magnitude of the vector of quantities
-def quantity_vector_magnitude(vector_: QuantityVector) -> Quantity:
-    squared_sum = dot_quantity_vectors(vector_, vector_)
-    return Quantity(sqrt(squared_sum))
-
-
-# Cross product of two vectors of quantities
-def cross_cartesian_quantity_vectors(vector_left: QuantityVector,
-    vector_right: QuantityVector) -> QuantityVector:
-    assert_equivalent_dimension(vector_left.dimension, vector_left.display_name,
-        "cross_cartesian_quantity_vectors", vector_right.dimension)
-    return QuantityVector(
-        cross_cartesian_vectors(vector_left, vector_right).components,
-        vector_left.coordinate_system)
-
-
-# Make quantity unit vector
-def quantity_vector_unit(vector_: QuantityVector) -> QuantityVector:
-    return scale_quantity_vector(1 / quantity_vector_magnitude(vector_), vector_)

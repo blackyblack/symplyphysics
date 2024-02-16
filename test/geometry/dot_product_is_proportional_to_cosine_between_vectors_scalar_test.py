@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture
 from symplyphysics import (
+    Vector,
     assert_equal,
-    Quantity,
-    QuantityVector,
     vector_magnitude,
     dot_vectors,
-    units,
 )
 from symplyphysics.laws.geometry import dot_product_is_proportional_to_cosine_between_vectors as cosine_law
 
@@ -19,17 +17,8 @@ Args = namedtuple("Args", "f_norm r_norm f_dot_r")
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
-    f = QuantityVector([
-        Quantity(1.0 * units.newton),
-        Quantity(2.0 * units.newton),
-        Quantity(-1.5 * units.newton),
-    ])
-    r = QuantityVector([
-        Quantity(0.0 * units.meter),
-        Quantity(0.3 * units.meter),
-        Quantity(2.3 * units.meter),
-    ])
-
+    f = Vector([1.0, 2.0, -1.5,])
+    r = Vector([0.0, 0.3, 2.3])
     f_norm = vector_magnitude(f)
     r_norm = vector_magnitude(r)
     f_dot_r = dot_vectors(f, r)

@@ -12,6 +12,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
 )
+from symplyphysics.core.dimensions import collect_factor_and_dimension
 
 # Description
 ## The diffusion equation, based on Fick's law, provides an analytical solution of spatial neutron flux
@@ -91,8 +92,8 @@ def calculate_multiplication_factor(neutron_flux_function_: Expr, neutrons_per_f
     diffusion_coefficient_: Quantity) -> float:
 
     # this is like validate_input but does not require no free symbols
-    neutron_flux_quantity = Quantity(neutron_flux_function_)
-    assert SI.get_dimension_system().equivalent_dims(neutron_flux_quantity.dimension,
+    (_, dimension) = collect_factor_and_dimension(neutron_flux_function_)
+    assert SI.get_dimension_system().equivalent_dims(dimension,
         neutron_flux.dimension)
 
     applied_law = apply_neutron_flux_function(neutron_flux_function_)

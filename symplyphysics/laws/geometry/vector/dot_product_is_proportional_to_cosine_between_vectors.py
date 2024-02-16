@@ -27,4 +27,4 @@ def cosine_between_vectors_law(vector_left_: Vector, vector_right_: Vector) -> S
 
 def calculate_cosine_between_vectors(vector_left_: QuantityVector,
     vector_right_: QuantityVector) -> Quantity:
-    return Quantity(cosine_between_vectors_law(vector_left_, vector_right_))
+    return Quantity(cosine_between_vectors_law(vector_left_.to_base_vector(), vector_right_.to_base_vector()))

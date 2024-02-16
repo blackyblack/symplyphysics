@@ -1,11 +1,11 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from sympy.physics.units import prefixes
 from symplyphysics import (
     assert_equal,
     errors,
     units,
     Quantity,
+    prefixes,
 )
 from symplyphysics.laws.electricity import energy_of_magnetic_field_of_solenoid as energy_law
 

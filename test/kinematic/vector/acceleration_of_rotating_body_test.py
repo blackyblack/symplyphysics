@@ -12,8 +12,8 @@ from symplyphysics.laws.kinematic.vector import acceleration_of_rotating_body as
 
 # Description
 ## A body is moving along a curve. At a certain point in time, its radial acceleration
-## with respect to the momentary rotational axis is (-1, 0, 0.4) m/s^2, and its tangential
-## acceleration is (0, 0.1, -3) m/s^2. Its acceleration should amount to (-1.0, 0.1, -2.6) m/s^2.
+## with respect to the momentary rotational axis is (3, 1, 1) m/s^2, and its tangential
+## acceleration is (-1, 2, 1) m/s^2. Its acceleration should amount to (2, 3, 2) m/s^2.
 
 Args = namedtuple("Args", "a_r a_t a_total")
 
@@ -21,19 +21,19 @@ Args = namedtuple("Args", "a_r a_t a_total")
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
     a_r = QuantityVector([
-        Quantity(-1.0 * units.meter / units.second**2),
-        Quantity(0.0 * units.meter / units.second**2),
-        Quantity(0.4 * units.meter / units.second**2),
+        Quantity(3.0 * units.meter / units.second**2),
+        Quantity(1.0 * units.meter / units.second**2),
+        Quantity(1.0 * units.meter / units.second**2),
     ])
     a_t = QuantityVector([
-        Quantity(0.0 * units.meter / units.second**2),
-        Quantity(0.1 * units.meter / units.second**2),
-        Quantity(-3.0 * units.meter / units.second**2),
+        Quantity(-1.0 * units.meter / units.second**2),
+        Quantity(2.0 * units.meter / units.second**2),
+        Quantity(1.0 * units.meter / units.second**2),
     ])
     a_total = QuantityVector([
-        Quantity(-1.0 * units.meter / units.second**2),
-        Quantity(0.1 * units.meter / units.second**2),
-        Quantity(-2.6 * units.meter / units.second**2),
+        Quantity(2.0 * units.meter / units.second**2),
+        Quantity(3.0 * units.meter / units.second**2),
+        Quantity(2.0 * units.meter / units.second**2),
     ])
     return Args(a_r=a_r, a_t=a_t, a_total=a_total)
 

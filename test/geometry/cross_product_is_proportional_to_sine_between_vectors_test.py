@@ -1,12 +1,10 @@
 from collections import namedtuple
 from pytest import fixture
 from symplyphysics import (
+    Vector,
     assert_equal,
-    Quantity,
-    QuantityVector,
     vector_magnitude,
     cross_cartesian_vectors,
-    units,
 )
 from symplyphysics.laws.geometry import (
     cross_product_is_proportional_to_sine_between_vectors as sine_law,)
@@ -21,20 +19,11 @@ Args = namedtuple("Args", "r_norm f_norm tau_norm")
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
-    r = QuantityVector([
-        Quantity(0.0 * units.meter),
-        Quantity(1.0 * units.meter),
-        Quantity(-2.0 * units.meter),
-    ])
-    F = QuantityVector([
-        Quantity(1.0 * units.newton),
-        Quantity(2.0 * units.newton),
-        Quantity(-1.0 * units.newton),
-    ])
-    tau = cross_cartesian_vectors(r, F)
-
+    f = Vector([1.0, 2.0, -1.0,])
+    r = Vector([0.0, 1.0, -2.0])
+    tau = cross_cartesian_vectors(r, f)
     r_norm = vector_magnitude(r)
-    f_norm = vector_magnitude(F)
+    f_norm = vector_magnitude(f)
     tau_norm = vector_magnitude(tau)
     return Args(r_norm=r_norm, f_norm=f_norm, tau_norm=tau_norm)
 
