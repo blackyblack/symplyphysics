@@ -1,6 +1,5 @@
 from sympy import Derivative, sympify
 from symplyphysics import (
-    CoordinateSystem,
     units,
     Symbol,
     Quantity,
@@ -44,10 +43,6 @@ def calculate_torque(
     angular_momentum_after_: QuantityVector,
     time_: Quantity,
 ) -> QuantityVector:
-    if angular_momentum_before_.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
-        raise ValueError("Initial angular momentum vector should be in cartesian coordinate system")
-    if angular_momentum_after_.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
-        raise ValueError("Final angular momentum vector should be in cartesian coordinate system")
     angular_momentum_function = scale_vector(
         time / time_,
         add_cartesian_vectors(angular_momentum_after_.to_base_vector(),

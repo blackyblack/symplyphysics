@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (CoordinateSystem, assert_equal, errors, units, Quantity, QuantityVector)
+from symplyphysics import (assert_equal, errors, units, Quantity, QuantityVector)
 from symplyphysics.laws.dynamics.vector import torque_vector_of_twisting_force as torque_def
 
 # Description
@@ -43,23 +43,6 @@ def test_bad_force(test_args: Args) -> None:
     with raises(TypeError):
         torque_def.calculate_torque(test_args.r, 100)
 
-    C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
-    f_c1 = QuantityVector([
-        Quantity(1.0 * units.newton),
-        Quantity(1.0 * units.radian),
-        Quantity(-1.0 * units.newton),
-    ], C1)
-    with raises(ValueError):
-        torque_def.calculate_torque(test_args.r, f_c1)
-    C2 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
-    f_c2 = QuantityVector([
-        Quantity(1.0 * units.newton),
-        Quantity(1.0 * units.radian),
-        Quantity(1.0 * units.radian),
-    ], C2)
-    with raises(ValueError):
-        torque_def.calculate_torque(test_args.r, f_c2)
-
 
 def test_bad_distance(test_args: Args) -> None:
     with raises(errors.UnitsError):
@@ -71,20 +54,3 @@ def test_bad_distance(test_args: Args) -> None:
         torque_def.calculate_torque(rb, test_args.F)
     with raises(TypeError):
         torque_def.calculate_torque(100, test_args.F)
-
-    C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
-    r_c1 = QuantityVector([
-        Quantity(1.0 * units.meter),
-        Quantity(1.0 * units.radian),
-        Quantity(-1.0 * units.meter),
-    ], C1)
-    with raises(ValueError):
-        torque_def.calculate_torque(r_c1, test_args.F)
-    C2 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
-    r_c2 = QuantityVector([
-        Quantity(1.0 * units.meter),
-        Quantity(1.0 * units.radian),
-        Quantity(1.0 * units.radian),
-    ], C2)
-    with raises(ValueError):
-        torque_def.calculate_torque(r_c2, test_args.F)

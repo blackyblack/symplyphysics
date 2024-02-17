@@ -2,7 +2,6 @@ from typing import Sequence
 
 from sympy import S
 from symplyphysics import (
-    CoordinateSystem,
     units,
     validate_input,
     validate_output,
@@ -52,10 +51,6 @@ def calculate_center_of_mass(
         raise ValueError("Mass and position arrays should have the same lengths")
     if len(position_vectors_) == 0:
         raise ValueError("At least one particle should be present")
-    for c in position_vectors_:
-        if c.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
-            raise ValueError(f"Radius vector {c} should be in cartesian coordinate system")
-
     position_base_vectors = [v.to_base_vector() for v in position_vectors_]
     result_vector = center_of_mass_law(masses_, position_base_vectors)
     return QuantityVector.from_base_vector(result_vector)

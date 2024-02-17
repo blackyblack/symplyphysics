@@ -1,7 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    CoordinateSystem,
     assert_equal,
     errors,
     units,
@@ -70,23 +69,6 @@ def test_bad_angular_velocity(test_args: Args) -> None:
     with raises(TypeError):
         linear_velocity_law.calculate_linear_velocity([100], test_args.r)
 
-    C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
-    w_c1 = QuantityVector([
-        Quantity(1.0 * units.radian / units.second),
-        Quantity(1.0 * units.radian),
-        Quantity(-1.0 * units.radian / units.second),
-    ], C1)
-    with raises(ValueError):
-        linear_velocity_law.calculate_linear_velocity(w_c1, test_args.r)
-    C2 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
-    w_c2 = QuantityVector([
-        Quantity(1.0 * units.radian / units.second),
-        Quantity(1.0 * units.radian),
-        Quantity(1.0 * units.radian),
-    ], C2)
-    with raises(ValueError):
-        linear_velocity_law.calculate_linear_velocity(w_c2, test_args.r)
-
 
 def test_bad_rotation_radius(test_args: Args) -> None:
     r_bad_vector = QuantityVector([
@@ -105,20 +87,3 @@ def test_bad_rotation_radius(test_args: Args) -> None:
         linear_velocity_law.calculate_linear_velocity(test_args.w, 100)
     with raises(TypeError):
         linear_velocity_law.calculate_linear_velocity(test_args.w, [100])
-
-    C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
-    r_c1 = QuantityVector([
-        Quantity(1.0 * units.meter),
-        Quantity(1.0 * units.radian),
-        Quantity(-1.0 * units.meter),
-    ], C1)
-    with raises(ValueError):
-        linear_velocity_law.calculate_linear_velocity(test_args.w, r_c1)
-    C2 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
-    r_c2 = QuantityVector([
-        Quantity(1.0 * units.meter),
-        Quantity(1.0 * units.radian),
-        Quantity(1.0 * units.radian),
-    ], C2)
-    with raises(ValueError):
-        linear_velocity_law.calculate_linear_velocity(test_args.w, r_c2)

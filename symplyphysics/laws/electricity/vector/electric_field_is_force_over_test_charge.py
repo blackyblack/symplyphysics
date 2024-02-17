@@ -1,4 +1,4 @@
-from symplyphysics import Symbol, units, validate_input, validate_output, Quantity, scale_vector, list_of_quantities
+from symplyphysics import Symbol, units, validate_input, validate_output, Quantity, scale_vector, subs_list
 from symplyphysics.core.vectors.vectors import QuantityVector, Vector
 
 # Description
@@ -27,7 +27,7 @@ def calculate_electric_field(electrostatic_force_: QuantityVector,
     test_charge_: Quantity) -> QuantityVector:
     electrostatic_force_vector = electrostatic_force_.to_base_vector()
     result_electric_field = electric_field_law(electrostatic_force_vector)
-    electric_field_components = list_of_quantities(result_electric_field.components,
+    electric_field_components = subs_list(result_electric_field.components,
         {test_charge: test_charge_})
     return QuantityVector(electric_field_components, electrostatic_force_.coordinate_system)
 
@@ -38,5 +38,5 @@ def calculate_electrostatic_force(electric_field_: QuantityVector,
     test_charge_: Quantity) -> QuantityVector:
     electric_field_vector = electric_field_.to_base_vector()
     result_force = electrostatic_force_law(electric_field_vector)
-    force_components = list_of_quantities(result_force.components, {test_charge: test_charge_})
+    force_components = subs_list(result_force.components, {test_charge: test_charge_})
     return QuantityVector(force_components, electric_field_.coordinate_system)

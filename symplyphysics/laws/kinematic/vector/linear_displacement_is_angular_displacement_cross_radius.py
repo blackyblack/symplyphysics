@@ -1,6 +1,5 @@
 from pytest import approx
 from symplyphysics import (
-    CoordinateSystem,
     Quantity,
     dot_vectors,
     units,
@@ -16,11 +15,11 @@ from symplyphysics import (
 ## Assuming a body rotating about a fixed axis, the vector of its linear displacement can be expressed
 ## as the cross product of the vector of angular displacement and the radius of rotation.
 
-# Law: s = [theta, r]
+# Law: s = cross(theta, r)
 ## s - vector of linear displacement
 ## theta - pseudovector of angular displacement, parallel to axis of rotation
 ## r - radius vector of body, perpendicular to axis of rotation
-## [a, b] - cross product between vectors a and b
+## cross(a, b) - cross product between vectors a and b
 
 # Condition
 ## Angular displacement pseudovector and radius vector should be perpendicular to each other
@@ -34,11 +33,6 @@ def linear_displacement_law(angular_displacement_: Vector, rotation_radius_: Vec
 @validate_output(units.length)
 def calculate_linear_displacement(angular_displacement_: QuantityVector,
     rotation_radius_: QuantityVector) -> QuantityVector:
-    if angular_displacement_.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
-        raise ValueError(
-            "Angular displacement pseudovector should be in cartesian coordinate system")
-    if rotation_radius_.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
-        raise ValueError("Radius vector should be in cartesian coordinate system")
     angular_displacement_vector = angular_displacement_.to_base_vector()
     rotation_radius_vector = rotation_radius_.to_base_vector()
     dot_vectors_result = Quantity(dot_vectors(angular_displacement_vector, rotation_radius_vector))

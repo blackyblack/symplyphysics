@@ -1,5 +1,5 @@
 from pytest import raises
-from sympy import Derivative, cos, pi
+from sympy import Derivative, cos, pi, Symbol as SymSymbol
 from symplyphysics import (units, Quantity, SI, dimensionless)
 from symplyphysics.core.symbols.quantities import scale_factor
 
@@ -134,3 +134,14 @@ def test_scale_factor() -> None:
     a_float = 1.0
     assert scale_factor(a_quantity) == 1.0
     assert scale_factor(a_float) == 1.0
+
+
+def test_invalid_free_symbol_quantity() -> None:
+    a = Quantity(10 * units.meter / units.second)
+    b = SymSymbol("b")
+    expr = a * b
+    with raises(ValueError):
+        Quantity(expr)
+    expr = b * a
+    with raises(ValueError):
+        Quantity(expr)

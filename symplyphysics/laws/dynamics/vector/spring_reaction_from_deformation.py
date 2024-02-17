@@ -1,5 +1,5 @@
 from symplyphysics import (Vector, QuantityVector, scale_vector, units, Quantity, Symbol,
-    validate_input, validate_output, list_of_quantities)
+    validate_input, validate_output, subs_list)
 
 # Description
 ## Deformed spring is about to return back to it's undeformed state and responds with some force. Law is:
@@ -26,7 +26,7 @@ def deformation_law(force_: Vector) -> Vector:
 @validate_output(units.force)
 def calculate_force(coefficient_: Quantity, deformation_: QuantityVector) -> QuantityVector:
     result_force_vector = force_law(deformation_.to_base_vector())
-    force_components = list_of_quantities(result_force_vector.components,
+    force_components = subs_list(result_force_vector.components,
         {elastic_coefficient: coefficient_})
     return QuantityVector(force_components, deformation_.coordinate_system)
 
@@ -35,6 +35,6 @@ def calculate_force(coefficient_: Quantity, deformation_: QuantityVector) -> Qua
 @validate_output(units.length)
 def calculate_deformation(coefficient_: Quantity, force_: QuantityVector) -> QuantityVector:
     result_deformation_vector = deformation_law(force_.to_base_vector())
-    deformation_components = list_of_quantities(result_deformation_vector.components,
+    deformation_components = subs_list(result_deformation_vector.components,
         {elastic_coefficient: coefficient_})
     return QuantityVector(deformation_components, force_.coordinate_system)

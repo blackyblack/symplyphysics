@@ -1,6 +1,5 @@
 from pytest import approx
 from symplyphysics import (
-    CoordinateSystem,
     Quantity,
     dot_vectors,
     units,
@@ -17,11 +16,11 @@ from symplyphysics import (
 ## cross product of the vector of angular rotation and the radius vector of the body. The radius
 ## vector of the body is perpendicular to the axis of rotation.
 
-# Law: v = [w, r]
+# Law: v = cross(w, r)
 ## v - vector of linear velocity
 ## w - pseudovector of angular velocity, parallel to axis of rotation
 ## r - radius vector of body, perpendicular to axis of rotation
-## [a, b] - cross product between vectors a and b
+## cross(a, b) - cross product between vectors a and b
 
 # Conditions:
 ## - Angular velocity pseudovector and radius vector should be perpendicular to each other
@@ -35,10 +34,6 @@ def linear_velocity_law(angular_velocity: Vector, rotation_radius: Vector) -> Ve
 @validate_output(units.velocity)
 def calculate_linear_velocity(angular_velocity_: QuantityVector,
     rotation_radius_: QuantityVector) -> QuantityVector:
-    if angular_velocity_.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
-        raise ValueError("Angular velocity pseudovector should be in cartesian coordinate system")
-    if rotation_radius_.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
-        raise ValueError("Radius vector should be in cartesian coordinate system")
     angular_velocity_vector = angular_velocity_.to_base_vector()
     rotation_radius_vector = rotation_radius_.to_base_vector()
     dot_vectors_result = Quantity(dot_vectors(angular_velocity_vector, rotation_radius_vector))

@@ -1,7 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    CoordinateSystem,
     assert_equal,
     errors,
     units,
@@ -62,23 +61,6 @@ def test_bad_angular_displacement(test_args: Args) -> None:
     with raises(AttributeError):
         linear_displacement_law.calculate_linear_displacement([100], test_args.r)
 
-    C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
-    theta_c1 = QuantityVector([
-        Quantity(1.0),
-        Quantity(1.0 * units.radian),
-        Quantity(-1.0),
-    ], C1)
-    with raises(ValueError):
-        linear_displacement_law.calculate_linear_displacement(theta_c1, test_args.r)
-    C2 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
-    theta_c2 = QuantityVector([
-        Quantity(1.0),
-        Quantity(1.0 * units.radian),
-        Quantity(1.0 * units.radian),
-    ], C2)
-    with raises(ValueError):
-        linear_displacement_law.calculate_linear_displacement(theta_c2, test_args.r)
-
 
 def test_bad_rotation_radius(test_args: Args) -> None:
     r_bad_vector = QuantityVector([
@@ -97,20 +79,3 @@ def test_bad_rotation_radius(test_args: Args) -> None:
         linear_displacement_law.calculate_linear_displacement(test_args.theta, 100)
     with raises(TypeError):
         linear_displacement_law.calculate_linear_displacement(test_args.theta, [100])
-
-    C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
-    r_c1 = QuantityVector([
-        Quantity(1.0 * units.meter),
-        Quantity(1.0 * units.radian),
-        Quantity(-1.0 * units.meter),
-    ], C1)
-    with raises(ValueError):
-        linear_displacement_law.calculate_linear_displacement(test_args.theta, r_c1)
-    C2 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
-    r_c2 = QuantityVector([
-        Quantity(1.0 * units.meter),
-        Quantity(1.0 * units.radian),
-        Quantity(1.0 * units.radian),
-    ], C2)
-    with raises(ValueError):
-        linear_displacement_law.calculate_linear_displacement(test_args.theta, r_c2)
