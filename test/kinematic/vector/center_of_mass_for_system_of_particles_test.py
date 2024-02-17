@@ -1,6 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
+    CoordinateSystem,
     assert_equal,
     errors,
     units,
@@ -84,6 +85,10 @@ def test_bad_masses(test_args: Args) -> None:
         com_def.calculate_center_of_mass(100, [test_args.r1])
     with raises(TypeError):
         com_def.calculate_center_of_mass([100], [test_args.r1])
+    with raises(ValueError):
+        com_def.calculate_center_of_mass([], [test_args.r1])
+    with raises(ValueError):
+        com_def.calculate_center_of_mass([test_args.m1, test_args.m1], [test_args.r1])
 
 
 def test_bad_positions(test_args: Args) -> None:
@@ -108,3 +113,26 @@ def test_bad_positions(test_args: Args) -> None:
         com_def.calculate_center_of_mass([test_args.m1], 100)
     with raises(TypeError):
         com_def.calculate_center_of_mass([test_args.m1], [100])
+    with raises(ValueError):
+        com_def.calculate_center_of_mass([test_args.m1], [])
+
+    C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
+    r_c1 = QuantityVector([
+        Quantity(1.0 * units.meter),
+        Quantity(1.0 * units.radian),
+        Quantity(-1.0 * units.meter),
+    ], C1)
+    with raises(ValueError):
+        com_def.calculate_center_of_mass([test_args.m1], [r_c1])
+    with raises(ValueError):
+        com_def.calculate_center_of_mass([test_args.m1, test_args.m1], [test_args.r1, r_c1])
+    C2 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
+    r_c2 = QuantityVector([
+        Quantity(1.0 * units.meter),
+        Quantity(1.0 * units.radian),
+        Quantity(1.0 * units.radian),
+    ], C2)
+    with raises(ValueError):
+        com_def.calculate_center_of_mass([test_args.m1], [r_c2])
+    with raises(ValueError):
+        com_def.calculate_center_of_mass([test_args.m1, test_args.m1], [test_args.r1, r_c2])

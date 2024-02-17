@@ -1,6 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
+    CoordinateSystem,
     assert_equal,
     errors,
     units,
@@ -84,6 +85,37 @@ def test_bad_acceleration(test_args: Args) -> None:
     with raises(TypeError):
         acceleration_law.calculate_acceleration(test_args.a_r, 100)
 
+    a_non_orthogonal = QuantityVector([
+        Quantity(3.0 * units.meter / units.second**2),
+        Quantity(4.0 * units.meter / units.second**2),
+        Quantity(1.0 * units.meter / units.second**2),
+    ])
+    with raises(ValueError):
+        acceleration_law.calculate_acceleration(a_non_orthogonal, test_args.a_t)
+    with raises(ValueError):
+        acceleration_law.calculate_acceleration(test_args.a_r, a_non_orthogonal)
+
+    C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
+    a_c1 = QuantityVector([
+        Quantity(1.0 * units.meter / units.second**2),
+        Quantity(1.0 * units.radian),
+        Quantity(-1.0 * units.meter / units.second**2),
+    ], C1)
+    with raises(ValueError):
+        acceleration_law.calculate_acceleration(a_c1, test_args.a_t)
+    with raises(ValueError):
+        acceleration_law.calculate_acceleration(test_args.a_r, a_c1)
+    C2 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
+    a_c2 = QuantityVector([
+        Quantity(1.0 * units.meter / units.second**2),
+        Quantity(1.0 * units.radian),
+        Quantity(1.0 * units.radian),
+    ], C2)
+    with raises(ValueError):
+        acceleration_law.calculate_acceleration(a_c2, test_args.a_t)
+    with raises(ValueError):
+        acceleration_law.calculate_acceleration(test_args.a_r, a_c2)
+
 
 def test_bad_radial_acceleration(test_args: Args) -> None:
     a_bad_vector = QuantityVector([
@@ -107,6 +139,27 @@ def test_bad_radial_acceleration(test_args: Args) -> None:
     with raises(TypeError):
         acceleration_law.calculate_radial_acceleration(test_args.a_total, 100)
 
+    C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
+    a_c1 = QuantityVector([
+        Quantity(1.0 * units.meter / units.second**2),
+        Quantity(1.0 * units.radian),
+        Quantity(-1.0 * units.meter / units.second**2),
+    ], C1)
+    with raises(ValueError):
+        acceleration_law.calculate_radial_acceleration(a_c1, test_args.a_t)
+    with raises(ValueError):
+        acceleration_law.calculate_radial_acceleration(test_args.a_total, a_c1)
+    C2 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
+    a_c2 = QuantityVector([
+        Quantity(1.0 * units.meter / units.second**2),
+        Quantity(1.0 * units.radian),
+        Quantity(1.0 * units.radian),
+    ], C2)
+    with raises(ValueError):
+        acceleration_law.calculate_radial_acceleration(a_c2, test_args.a_t)
+    with raises(ValueError):
+        acceleration_law.calculate_radial_acceleration(test_args.a_total, a_c2)
+
 
 def test_bad_tangential_acceleration(test_args: Args) -> None:
     a_bad_vector = QuantityVector([
@@ -129,3 +182,24 @@ def test_bad_tangential_acceleration(test_args: Args) -> None:
         acceleration_law.calculate_tangential_acceleration(100, test_args.a_r)
     with raises(TypeError):
         acceleration_law.calculate_tangential_acceleration(test_args.a_total, 100)
+
+    C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
+    a_c1 = QuantityVector([
+        Quantity(1.0 * units.meter / units.second**2),
+        Quantity(1.0 * units.radian),
+        Quantity(-1.0 * units.meter / units.second**2),
+    ], C1)
+    with raises(ValueError):
+        acceleration_law.calculate_tangential_acceleration(a_c1, test_args.a_r)
+    with raises(ValueError):
+        acceleration_law.calculate_tangential_acceleration(test_args.a_total, a_c1)
+    C2 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
+    a_c2 = QuantityVector([
+        Quantity(1.0 * units.meter / units.second**2),
+        Quantity(1.0 * units.radian),
+        Quantity(1.0 * units.radian),
+    ], C2)
+    with raises(ValueError):
+        acceleration_law.calculate_tangential_acceleration(a_c2, test_args.a_r)
+    with raises(ValueError):
+        acceleration_law.calculate_tangential_acceleration(test_args.a_total, a_c2)
