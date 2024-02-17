@@ -41,7 +41,8 @@ state_equation_after = van_der_waals_law.law.subs({
     van_der_waals_law.pressure: pressure_after,
 }).subs(base_variables_of_state_equation)
 
-solved = solve((state_equation_before, state_equation_after), (parameter_a, parameter_b), dict=True)[0]
+solved = solve((state_equation_before, state_equation_after), (parameter_a, parameter_b),
+    dict=True)[0]
 parameter_a_value = solved[parameter_a]
 parameter_b_value = solved[parameter_b]
 
@@ -54,8 +55,7 @@ parameter_a_ = answer1.subs(base_values_of_state_equation).rhs
 parameter_b_ = answer2.subs(base_values_of_state_equation).rhs
 
 answer1_value = convert_to(Quantity(parameter_a_),
-    units.pascals * (units.meters ** 3 / units.mole)**2)
-answer2_value = convert_to(Quantity(parameter_b_),
-    units.liters / units.mole)
+    units.pascals * (units.meters**3 / units.mole)**2)
+answer2_value = convert_to(Quantity(parameter_b_), units.liters / units.mole)
 print(f"Parameter a is: {answer1_value} Pa * (m^3 / moles)^2")
 print(f"Parameter b is: {answer2_value} liters / moles")

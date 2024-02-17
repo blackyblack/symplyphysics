@@ -36,6 +36,16 @@ class CoordinateSystem:
             return ["r", "theta", "phi"]
         return ["x", "y", "z"]
 
+    @staticmethod
+    def is_angle_component(coord_system_type: System, component_idx: int) -> bool:
+        if coord_system_type == CoordinateSystem.System.CARTESIAN:
+            return False
+        if coord_system_type == CoordinateSystem.System.CYLINDRICAL:
+            return component_idx == 1
+        if coord_system_type == CoordinateSystem.System.SPHERICAL:
+            return component_idx in (1, 2)
+        return False
+
     def __init__(self,
         coord_system_type: System = System.CARTESIAN,
         inner: Optional[CoordSys3D] = None) -> None:

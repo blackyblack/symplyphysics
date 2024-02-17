@@ -1,5 +1,8 @@
 from pytest import approx
 from symplyphysics import (
+    CoordinateSystem,
+    Quantity,
+    dot_vectors,
     units,
     angle_type,
     validate_input,
@@ -8,7 +11,6 @@ from symplyphysics import (
     QuantityVector,
     cross_cartesian_vectors,
 )
-from symplyphysics.core.vectors.arithmetics import dot_quantity_vectors
 
 # Description
 ## Assuming a body rotating about a fixed axis, the vector of its linear displacement can be expressed
@@ -32,10 +34,17 @@ def linear_displacement_law(angular_displacement_: Vector, rotation_radius_: Vec
 @validate_output(units.length)
 def calculate_linear_displacement(angular_displacement_: QuantityVector,
     rotation_radius_: QuantityVector) -> QuantityVector:
-    if dot_quantity_vectors(angular_displacement_, rotation_radius_).scale_factor != approx(0.0,
-        rel=1e-3):
+    if angular_displacement_.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
         raise ValueError(
-            "Angular displacement psedovector and rotation radius vector should be perpendular to each other."
+            "Angular displacement pseudovector should be in cartesian coordinate system")
+    if rotation_radius_.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
+        raise ValueError("Radius vector should be in cartesian coordinate system")
+    angular_displacement_vector = angular_displacement_.to_base_vector()
+    rotation_radius_vector = rotation_radius_.to_base_vector()
+    dot_vectors_result = Quantity(dot_vectors(angular_displacement_vector, rotation_radius_vector))
+    if dot_vectors_result.scale_factor != approx(0.0, rel=1e-3):
+        raise ValueError(
+            "Angular displacement pseudovector and rotation radius vector should be perpendicular to each other"
         )
-    result_vector = linear_displacement_law(angular_displacement_, rotation_radius_)
-    return QuantityVector(result_vector.components, angular_displacement_.coordinate_system)
+    result_vector = linear_displacement_law(angular_displacement_vector, rotation_radius_vector)
+    return QuantityVector.from_base_vector(result_vector)

@@ -5,7 +5,8 @@ from symplyphysics import (
     units,
     Quantity,
     SI,
-    convert_to, prefixes,
+    convert_to,
+    prefixes,
 )
 from symplyphysics.laws.optics import interference_maximum as maximum_law
 
@@ -20,7 +21,8 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_travel_difference(test_args: Args) -> None:
-    result = maximum_law.calculate_travel_difference(test_args.wave_length, test_args.maximum_number)
+    result = maximum_law.calculate_travel_difference(test_args.wave_length,
+        test_args.maximum_number)
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
     result_travel_difference = convert_to(result, prefixes.nano * units.meters).evalf(5)
     assert result_travel_difference == approx(1100, 0.1)

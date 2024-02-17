@@ -30,7 +30,8 @@ def dipole_moment_law(displacement_vector_: Vector) -> Vector:
 @validate_output(units.charge * units.length)
 def calculate_dipole_moment(charge_: Quantity,
     displacement_vector_: QuantityVector) -> QuantityVector:
-    result_dipole_moment = dipole_moment_law(displacement_vector_)
+    displacement_base_vector = displacement_vector_.to_base_vector()
+    result_dipole_moment = dipole_moment_law(displacement_base_vector)
     dipole_moment_components = list_of_quantities(
         result_dipole_moment.components,
         {charge: charge_},

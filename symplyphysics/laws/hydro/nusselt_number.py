@@ -1,7 +1,6 @@
 from sympy import Eq, solve, S
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-                           validate_output, dimensionless, convert_to)
-
+    validate_output, dimensionless, convert_to)
 
 # Description
 # Nusselt number is the ratio of convective to conductive heat transfer at
@@ -19,19 +18,15 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 # k is the thermal conductivity,
 # Nu is Nusselt number.
 
-
-heat_transfer_coefficient = Symbol(
-    "heat_transfer_coefficient", units.power / (units.area * units.temperature)
-)
+heat_transfer_coefficient = Symbol("heat_transfer_coefficient",
+    units.power / (units.area * units.temperature))
 characteristic_length = Symbol("characteristic_length", units.length)
-thermal_conductivity = Symbol(
-    "thermal_conductivity", units.power / (units.length * units.temperature)
-)
+thermal_conductivity = Symbol("thermal_conductivity",
+    units.power / (units.length * units.temperature))
 
 nusselt_number = Symbol("nusselt_number", dimensionless)
 
-law = Eq(nusselt_number, heat_transfer_coefficient *
-         characteristic_length / thermal_conductivity)
+law = Eq(nusselt_number, heat_transfer_coefficient * characteristic_length / thermal_conductivity)
 
 
 def print_law() -> str:
@@ -44,11 +39,8 @@ def print_law() -> str:
     thermal_conductivity_=thermal_conductivity,
 )
 @validate_output(nusselt_number)
-def calculate_nusselt_number(
-    heat_transfer_coefficient_: Quantity,
-    characteristic_length_: Quantity,
-    thermal_conductivity_: Quantity
-) -> float:
+def calculate_nusselt_number(heat_transfer_coefficient_: Quantity, characteristic_length_: Quantity,
+    thermal_conductivity_: Quantity) -> float:
     result_expr = solve(law, nusselt_number, dict=True)[0][nusselt_number]
     result_applied = result_expr.subs({
         heat_transfer_coefficient: heat_transfer_coefficient_,

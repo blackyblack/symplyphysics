@@ -4,7 +4,8 @@ from symplyphysics import (
     assert_equal,
     errors,
     units,
-    Quantity, prefixes,
+    Quantity,
+    prefixes,
 )
 from symplyphysics.laws.optics import optical_power_from_focus_distance as optical_power_law
 

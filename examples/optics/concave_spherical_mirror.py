@@ -34,9 +34,9 @@ magnification_distance_eq = magnification_distance_law.law.subs({
     magnification_distance_law.magnification: linear_magnification,
 })
 
-distance_from_object_value = solve(
-    [magnification_height_eq, magnification_distance_eq],
-    (image_height/object_height, distance_from_object), dict=True)[0][distance_from_object]
+distance_from_object_value = solve([magnification_height_eq, magnification_distance_eq],
+    (image_height / object_height, distance_from_object),
+    dict=True)[0][distance_from_object]
 
 focus_eq = mirror_law.law.subs({
     mirror_law.curvature_radius: radius_curvature,
@@ -49,9 +49,8 @@ lens_focus_eq = lens_focus_law.law.subs({
     lens_focus_law.distance_to_object: distance_from_object_value,
 })
 
-distance_from_image_value = solve(
-    [focus_eq, lens_focus_eq],
-    (focus, distance_from_image), dict=True)[0][distance_from_image]
+distance_from_image_value = solve([focus_eq, lens_focus_eq], (focus, distance_from_image),
+    dict=True)[0][distance_from_image]
 
 magnification_eq = magnification_distance_law.law.subs({
     magnification_distance_law.magnification: linear_magnification,
@@ -74,5 +73,9 @@ distance_from_image_m = distance_from_image_value.subs({
     radius_curvature: Quantity(40 * prefixes.centi * units.meters),
     linear_magnification: 1 / 2
 })
-print(f"Distance from object to mirror is: {print_expression(convert_to(Quantity(distance_from_object_m), prefixes.centi * units.meters).evalf(3))} cm")
-print(f"Distance from image to mirror is: {print_expression(convert_to(Quantity(distance_from_image_m), prefixes.centi * units.meters).evalf(3))} cm")
+print(
+    f"Distance from object to mirror is: {print_expression(convert_to(Quantity(distance_from_object_m), prefixes.centi * units.meters).evalf(3))} cm"
+)
+print(
+    f"Distance from image to mirror is: {print_expression(convert_to(Quantity(distance_from_image_m), prefixes.centi * units.meters).evalf(3))} cm"
+)

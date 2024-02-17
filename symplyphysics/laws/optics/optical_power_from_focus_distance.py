@@ -25,8 +25,6 @@ def print_law() -> str:
 @validate_output(optical_power)
 def calculate_optical_power(focus_distance_: Quantity) -> Quantity:
     solved = solve(law, optical_power, dict=True)[0][optical_power]
-    result_expr = solved.subs({
-        focus_distance: focus_distance_
-    })
+    result_expr = solved.subs({focus_distance: focus_distance_})
     result = Quantity(result_expr)
     return result

@@ -32,14 +32,14 @@ def velocity_from_momentum_law(momentum_: Vector) -> Vector:
 @validate_input(mass_=mass, velocity_=units.velocity)
 @validate_output(units.momentum)
 def calculate_momentum(mass_: Quantity, velocity_: QuantityVector) -> QuantityVector:
-    momentum = momentum_definition(velocity_)
-    momentum_components = list_of_quantities(momentum.components, {mass: mass_})
+    momentum_vector = momentum_definition(velocity_.to_base_vector())
+    momentum_components = list_of_quantities(momentum_vector.components, {mass: mass_})
     return QuantityVector(momentum_components, velocity_.coordinate_system)
 
 
 @validate_input(mass_=mass, momentum_=units.momentum)
 @validate_output(units.velocity)
 def calculate_velocity(mass_: Quantity, momentum_: QuantityVector) -> QuantityVector:
-    velocity = velocity_from_momentum_law(momentum_)
-    velocity_components = list_of_quantities(velocity.components, {mass: mass_})
+    velocity_vector = velocity_from_momentum_law(momentum_.to_base_vector())
+    velocity_components = list_of_quantities(velocity_vector.components, {mass: mass_})
     return QuantityVector(velocity_components, momentum_.coordinate_system)

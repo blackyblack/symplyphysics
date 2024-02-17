@@ -6,6 +6,7 @@ from sympy.physics.units.systems.si import SI
 
 from .symbols import DimensionSymbol, next_name
 from ..dimensions import collect_factor_and_dimension
+from ..errors import UnitsError
 
 
 class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancestors
@@ -26,6 +27,9 @@ class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancest
     def __init__(self, expr: Basic | float = S.One, *,
         dimension: Optional[Dimension] = None) -> None:
         (scale, dimension_) = collect_factor_and_dimension(sympify(expr))
+        if scale.free_symbols:
+            raise UnitsError(f"Argument '{expr}' to function 'Quantity()' should "
+                f"not contain free symbols")
         dimension = dimension_ if dimension is None else dimension
         super().__init__(self.name, dimension)
         SI.set_quantity_dimension(self, dimension)

@@ -9,17 +9,15 @@ from symplyphysics.laws.hydro import nusselt_number
 # Heat transfer coefficient equals 200 W / m*m*K (source https://www.engineersedge.com),
 # thermal conductivity for air equals 0.022 W / m*K, characteristic length equals 1 m.
 
-Args = namedtuple("Args", ["heat_transfer_coefficient",
-                           "characteristic_length", "thermal_conductivity"])
+Args = namedtuple("Args",
+    ["heat_transfer_coefficient", "characteristic_length", "thermal_conductivity"])
 
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
-    heat_transfer_coefficient = Quantity(
-        200 * units.watt / (units.meter**2 * units.kelvin))
+    heat_transfer_coefficient = Quantity(200 * units.watt / (units.meter**2 * units.kelvin))
     characteristic_length = Quantity(1 * units.meter)
-    thermal_conductivity = Quantity(
-        0.022 * units.watt / (units.meter * units.kelvin))
+    thermal_conductivity = Quantity(0.022 * units.watt / (units.meter * units.kelvin))
     return Args(
         heat_transfer_coefficient=heat_transfer_coefficient,
         characteristic_length=characteristic_length,
@@ -31,8 +29,7 @@ def test_basic_nusselt_number(test_args: Args) -> None:
     result = nusselt_number.calculate_nusselt_number(
         heat_transfer_coefficient_=test_args.heat_transfer_coefficient,
         characteristic_length_=test_args.characteristic_length,
-        thermal_conductivity_=test_args.thermal_conductivity
-    )
+        thermal_conductivity_=test_args.thermal_conductivity)
     assert_equal(result, 9090.91)
 
 

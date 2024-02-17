@@ -1,11 +1,11 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from sympy.physics.units import prefixes
 from symplyphysics import (
     assert_equal,
     errors,
     units,
     Quantity,
+    prefixes,
 )
 from symplyphysics.laws.electricity import inductance_of_solenoid_depends_on_permeability_number_of_turns_volume as inductance_law
 

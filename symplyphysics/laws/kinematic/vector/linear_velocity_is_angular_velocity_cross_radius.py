@@ -1,5 +1,8 @@
 from pytest import approx
 from symplyphysics import (
+    CoordinateSystem,
+    Quantity,
+    dot_vectors,
     units,
     validate_input,
     validate_output,
@@ -8,7 +11,6 @@ from symplyphysics import (
     angle_type,
     cross_cartesian_vectors,
 )
-from symplyphysics.core.vectors.arithmetics import dot_quantity_vectors
 
 # Description
 ## Assuming the body is rotating about a fixed axis, the vector of its linear velocity is the
@@ -33,10 +35,16 @@ def linear_velocity_law(angular_velocity: Vector, rotation_radius: Vector) -> Ve
 @validate_output(units.velocity)
 def calculate_linear_velocity(angular_velocity_: QuantityVector,
     rotation_radius_: QuantityVector) -> QuantityVector:
-    if dot_quantity_vectors(angular_velocity_, rotation_radius_).scale_factor != approx(0.0,
-        rel=1e-3):
+    if angular_velocity_.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
+        raise ValueError("Angular velocity pseudovector should be in cartesian coordinate system")
+    if rotation_radius_.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
+        raise ValueError("Radius vector should be in cartesian coordinate system")
+    angular_velocity_vector = angular_velocity_.to_base_vector()
+    rotation_radius_vector = rotation_radius_.to_base_vector()
+    dot_vectors_result = Quantity(dot_vectors(angular_velocity_vector, rotation_radius_vector))
+    if dot_vectors_result.scale_factor != approx(0.0, rel=1e-3):
         raise ValueError(
-            "Angular velocity pseudovector and rotation radius vector should be perpendicular to each other."
+            "Angular velocity pseudovector and rotation radius vector should be perpendicular to each other"
         )
-    result_vector = linear_velocity_law(angular_velocity_, rotation_radius_)
-    return QuantityVector(result_vector.components, angular_velocity_.coordinate_system)
+    result_vector = linear_velocity_law(angular_velocity_vector, rotation_radius_vector)
+    return QuantityVector.from_base_vector(result_vector)
