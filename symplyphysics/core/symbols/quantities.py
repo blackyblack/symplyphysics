@@ -50,12 +50,10 @@ class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancest
         return self if self.scale_factor >= 0 else (-1 * self)
 
 
-def list_of_quantities(input_: Sequence[Expr | float], subs_: dict[Expr,
+def subs_list(input_: Sequence[Expr | float], subs_: dict[Expr,
     Quantity]) -> Sequence[Quantity]:
     return [Quantity(sympify(c).subs(subs_)) for c in input_]
 
 
 def scale_factor(quantity_: Quantity | float) -> float:
-    if isinstance(quantity_, Quantity):
-        return quantity_.scale_factor
-    return quantity_
+    return quantity_.scale_factor if isinstance(quantity_, Quantity) else quantity_

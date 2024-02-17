@@ -1,6 +1,5 @@
 from sympy import Derivative, sympify
 from symplyphysics import (
-    CoordinateSystem,
     units,
     Symbol,
     Quantity,
@@ -39,10 +38,6 @@ def calculate_force(
     momentum_after_: QuantityVector,
     time_: Quantity,
 ) -> QuantityVector:
-    if momentum_before_.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
-        raise ValueError("Initial momentum vector should be in cartesian coordinate system")
-    if momentum_after_.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
-        raise ValueError("Final momentum vector should be in cartesian coordinate system")
     # delta_p = (t / delta_t) * (p1 - p0)
     momentum_function = scale_vector(
         time / time_,

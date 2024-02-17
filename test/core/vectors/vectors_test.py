@@ -259,6 +259,46 @@ def test_invalid_dimension_quantity_vector() -> None:
         QuantityVector([q1, q2])
 
 
+def test_coordinate_system_quantity_vector() -> None:
+    C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
+    vector = QuantityVector([
+        Quantity(1.0 * units.meter / units.second**2),
+        Quantity(1.0 * units.radian),
+        Quantity(-1.0 * units.meter / units.second**2),
+    ], C1)
+    assert vector.coordinate_system.coord_system_type == CoordinateSystem.System.CYLINDRICAL
+    C2 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
+    vector = QuantityVector([
+        Quantity(1.0 * units.meter / units.second**2),
+        Quantity(1.0 * units.radian),
+        Quantity(1.0 * units.radian),
+    ], C2)
+    assert vector.coordinate_system.coord_system_type == CoordinateSystem.System.SPHERICAL
+
+
+def test_invalid_coordinate_system_quantity_vector() -> None:
+    C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
+    with raises(ValueError):
+        QuantityVector([
+            Quantity(1.0 * units.meter / units.second**2),
+            Quantity(1.0 * units.radian),
+            Quantity(-1.0 * units.meter),
+        ], C1)
+    with raises(ValueError):
+        QuantityVector([
+            Quantity(1.0 * units.meter / units.second**2),
+            Quantity(1.0 * units.meter / units.second**2),
+            Quantity(-1.0 * units.meter / units.second**2),
+        ], C1)
+    C2 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
+    with raises(ValueError):
+        QuantityVector([
+            Quantity(1.0 * units.meter / units.second**2),
+            Quantity(1.0 * units.meter / units.second**2),
+            Quantity(1.0 * units.radian),
+        ], C2)
+
+
 # Test QuantityVector.components()
 
 

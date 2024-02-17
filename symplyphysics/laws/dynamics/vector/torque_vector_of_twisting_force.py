@@ -1,5 +1,4 @@
 from symplyphysics import (
-    CoordinateSystem,
     units,
     QuantityVector,
     Vector,
@@ -27,9 +26,5 @@ def torque_definition(position_: Vector, force_: Vector) -> Vector:
 @validate_input(force_=units.force, position_=units.length)
 @validate_output(units.force * units.length)
 def calculate_torque(position_: QuantityVector, force_: QuantityVector) -> QuantityVector:
-    if position_.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
-        raise ValueError("Position vector should be in cartesian coordinate system")
-    if force_.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
-        raise ValueError("Force vector should be in cartesian coordinate system")
     torque_vector = torque_definition(position_.to_base_vector(), force_.to_base_vector())
     return QuantityVector.from_base_vector(torque_vector)

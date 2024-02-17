@@ -2,7 +2,6 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy import cos, pi, sin
 from symplyphysics import (
-    CoordinateSystem,
     assert_equal,
     units,
     Quantity,
@@ -58,23 +57,3 @@ def test_bad_force(test_args: Args) -> None:
         forces_law.calculate_resultant_force(test_args.F1)
     with raises(ValueError):
         forces_law.calculate_resultant_force([])
-    C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
-    f_c1 = QuantityVector([
-        Quantity(10 * units.newton),
-        Quantity(1.0 * units.radian),
-        Quantity(10 * units.newton),
-    ], C1)
-    with raises(ValueError):
-        forces_law.calculate_resultant_force([f_c1])
-    with raises(ValueError):
-        forces_law.calculate_resultant_force([test_args.F1, f_c1])
-    C2 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
-    f_c2 = QuantityVector([
-        Quantity(10 * units.newton),
-        Quantity(1.0 * units.radian),
-        Quantity(1.0 * units.radian),
-    ], C2)
-    with raises(ValueError):
-        forces_law.calculate_resultant_force([f_c2])
-    with raises(ValueError):
-        forces_law.calculate_resultant_force([test_args.F1, f_c2])

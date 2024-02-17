@@ -1,7 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    CoordinateSystem,
     assert_equal,
     units,
     errors,
@@ -65,27 +64,6 @@ def test_bad_momenta(test_args: Args) -> None:
         force_momentum_law.calculate_force(test_args.p0, 100, test_args.dt)
     with raises(TypeError):
         force_momentum_law.calculate_force(test_args.p0, [100], test_args.dt)
-
-    C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
-    p_c1 = QuantityVector([
-        Quantity(1.0 * units.kilogram * units.meter / units.second),
-        Quantity(1.0 * units.radian),
-        Quantity(-1.0 * units.kilogram * units.meter / units.second),
-    ], C1)
-    with raises(ValueError):
-        force_momentum_law.calculate_force(p_c1, test_args.p1, test_args.dt)
-    with raises(ValueError):
-        force_momentum_law.calculate_force(test_args.p1, p_c1, test_args.dt)
-    C2 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
-    p_c2 = QuantityVector([
-        Quantity(1.0 * units.kilogram * units.meter / units.second),
-        Quantity(1.0 * units.radian),
-        Quantity(1.0 * units.radian),
-    ], C2)
-    with raises(ValueError):
-        force_momentum_law.calculate_force(p_c2, test_args.p1, test_args.dt)
-    with raises(ValueError):
-        force_momentum_law.calculate_force(test_args.p1, p_c2, test_args.dt)
 
 
 def test_bad_time(test_args: Args) -> None:
