@@ -54,9 +54,7 @@ def calculate_center_of_mass(
         raise ValueError("At least one particle should be present")
     for c in position_vectors_:
         if c.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
-            raise ValueError(
-                f"Radius vector {c} should be in cartesian coordinate system"
-            )
+            raise ValueError(f"Radius vector {c} should be in cartesian coordinate system")
 
     position_base_vectors = [v.to_base_vector() for v in position_vectors_]
     result_vector = center_of_mass_law(masses_, position_base_vectors)

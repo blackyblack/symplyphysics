@@ -100,14 +100,14 @@ class QuantityVector(DimensionSymbol):
     # Vector of scalar values, ie expressions or numbers
     _inner_vector: Vector
 
-    def __init__(
-        self,
+    def __init__(self,
         components: Sequence[Quantity | ScalarValue],
         coordinate_system: CoordinateSystem = CoordinateSystem(CoordinateSystem.System.CARTESIAN),
         *,
-        dimension: Optional[Dimension] = None
-    ) -> None:
-        quantities = [c if isinstance(c, Quantity) else Quantity(c, dimension=dimension) for c in components]
+        dimension: Optional[Dimension] = None) -> None:
+        quantities = [
+            c if isinstance(c, Quantity) else Quantity(c, dimension=dimension) for c in components
+        ]
         # find first dimension with non-zero scale factor
         if dimension is None:
             dimension = dimensionless
@@ -117,7 +117,8 @@ class QuantityVector(DimensionSymbol):
                     break
         scale_factors = []
         for idx, c in enumerate(quantities):
-            dimension_to_check = angle_type if CoordinateSystem.is_angle_component(coordinate_system.coord_system_type, idx) else dimension
+            dimension_to_check = angle_type if CoordinateSystem.is_angle_component(
+                coordinate_system.coord_system_type, idx) else dimension
             assert_equivalent_dimension(c, c.display_name, "QuantityVector", dimension_to_check)
             scale_factors.append(c.scale_factor)
         DimensionSymbol.__init__(self, next_name("VEC"), dimension)
@@ -127,7 +128,8 @@ class QuantityVector(DimensionSymbol):
     def components(self) -> Sequence[Quantity]:
         quantities = []
         for idx, c in enumerate(self._inner_vector.components):
-            dimension_to_set = angle_type if CoordinateSystem.is_angle_component(self._inner_vector.coordinate_system.coord_system_type, idx) else self.dimension
+            dimension_to_set = angle_type if CoordinateSystem.is_angle_component(
+                self._inner_vector.coordinate_system.coord_system_type, idx) else self.dimension
             quantities.append(Quantity(c, dimension=dimension_to_set))
         return quantities
 
@@ -140,5 +142,6 @@ class QuantityVector(DimensionSymbol):
         return Vector(self.components, self.coordinate_system)
 
     @staticmethod
-    def from_base_vector(vector: Vector, *, dimension: Optional[Dimension] = None) -> QuantityVector:
+    def from_base_vector(vector: Vector, *,
+        dimension: Optional[Dimension] = None) -> QuantityVector:
         return QuantityVector(vector.components, vector.coordinate_system, dimension=dimension)

@@ -1,6 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
+    CoordinateSystem,
     assert_equal,
     units,
     Quantity,
@@ -61,6 +62,23 @@ def test_bad_position_vector(test_args: Args) -> None:
     with raises(TypeError):
         angular_momentum_def.calculate_angular_momentum([100], test_args.p)
 
+    C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
+    r_c1 = QuantityVector([
+        Quantity(1.0 * units.meter),
+        Quantity(1.0 * units.radian),
+        Quantity(-1.0 * units.meter),
+    ], C1)
+    with raises(ValueError):
+        angular_momentum_def.calculate_angular_momentum(r_c1, test_args.p)
+    C2 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
+    r_c2 = QuantityVector([
+        Quantity(1.0 * units.meter),
+        Quantity(1.0 * units.radian),
+        Quantity(1.0 * units.radian),
+    ], C2)
+    with raises(ValueError):
+        angular_momentum_def.calculate_angular_momentum(r_c2, test_args.p)
+
 
 def test_bad_linear_momentum(test_args: Args) -> None:
     p_bad_vector = QuantityVector([
@@ -79,3 +97,20 @@ def test_bad_linear_momentum(test_args: Args) -> None:
         angular_momentum_def.calculate_angular_momentum(test_args.r, 100)
     with raises(TypeError):
         angular_momentum_def.calculate_angular_momentum(test_args.r, [100])
+
+    C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
+    p_c1 = QuantityVector([
+        Quantity(1.0 * units.kilogram * units.meter / units.second),
+        Quantity(1.0 * units.radian),
+        Quantity(-1.0 * units.kilogram * units.meter / units.second),
+    ], C1)
+    with raises(ValueError):
+        angular_momentum_def.calculate_angular_momentum(p_c1, test_args.p)
+    C2 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
+    p_c2 = QuantityVector([
+        Quantity(1.0 * units.kilogram * units.meter / units.second),
+        Quantity(1.0 * units.radian),
+        Quantity(1.0 * units.radian),
+    ], C2)
+    with raises(ValueError):
+        angular_momentum_def.calculate_angular_momentum(p_c2, test_args.p)

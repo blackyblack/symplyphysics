@@ -17,7 +17,11 @@ Args = namedtuple("Args", "f_norm r_norm f_dot_r")
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
-    f = Vector([1.0, 2.0, -1.5,])
+    f = Vector([
+        1.0,
+        2.0,
+        -1.5,
+    ])
     r = Vector([0.0, 0.3, 2.3])
     f_norm = vector_magnitude(f)
     r_norm = vector_magnitude(r)

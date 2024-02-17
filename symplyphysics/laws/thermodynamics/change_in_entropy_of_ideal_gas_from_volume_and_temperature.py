@@ -27,31 +27,41 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 entropy_change = Symbol("entropy_change", units.energy / units.temperature)
 mass = Symbol("mass", units.mass)
 molar_mass = Symbol("molar_mass", units.mass / units.amount_of_substance)
-molar_heat_capacity = Symbol("molar_heat_capacity", units.energy / (units.temperature * units.amount_of_substance))
+molar_heat_capacity = Symbol("molar_heat_capacity",
+    units.energy / (units.temperature * units.amount_of_substance))
 final_temperature = Symbol("final_temperature", units.temperature)
 initial_temperature = Symbol("initial_temperature", units.temperature)
 final_volume = Symbol("final_volume", units.volume)
 start_volume = Symbol("start_volume", units.volume)
 
-law = Eq(entropy_change, (mass / molar_mass) * ((molar_heat_capacity * log(final_temperature / initial_temperature)) + (units.molar_gas_constant * log(final_volume / start_volume))))
+law = Eq(entropy_change,
+    (mass / molar_mass) * ((molar_heat_capacity * log(final_temperature / initial_temperature)) +
+    (units.molar_gas_constant * log(final_volume / start_volume))))
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(mass_=mass, molar_mass_=molar_mass, molar_heat_capacity_=molar_heat_capacity, final_temperature_=final_temperature, initial_temperature_=initial_temperature, final_volume_=final_volume, start_volume_=start_volume)
+@validate_input(mass_=mass,
+    molar_mass_=molar_mass,
+    molar_heat_capacity_=molar_heat_capacity,
+    temperature_limits=units.temperature,
+    volume_limits=units.volume)
 @validate_output(entropy_change)
-def calculate_entropy_change(mass_: Quantity, molar_mass_: Quantity,
-    molar_heat_capacity_: Quantity, final_temperature_: Quantity, initial_temperature_: Quantity, final_volume_: Quantity, start_volume_: Quantity) -> Quantity:
+def calculate_entropy_change(mass_: Quantity, molar_mass_: Quantity, molar_heat_capacity_: Quantity,
+    temperature_limits: tuple[Quantity, Quantity], volume_limits: tuple[Quantity,
+    Quantity]) -> Quantity:
+    initial_temperature_, final_temperature_ = temperature_limits
+    start_volume_, final_volume_ = volume_limits
     result_expr = solve(law, entropy_change, dict=True)[0][entropy_change]
     result_entropy_change = result_expr.subs({
         mass: mass_,
         molar_mass: molar_mass_,
         molar_heat_capacity: molar_heat_capacity_,
-        final_temperature: final_temperature_,
         initial_temperature: initial_temperature_,
+        final_temperature: final_temperature_,
+        start_volume: start_volume_,
         final_volume: final_volume_,
-        start_volume: start_volume_
     })
     return Quantity(result_entropy_change)

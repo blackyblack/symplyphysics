@@ -19,7 +19,11 @@ Args = namedtuple("Args", "r_norm f_norm tau_norm")
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
-    f = Vector([1.0, 2.0, -1.0,])
+    f = Vector([
+        1.0,
+        2.0,
+        -1.0,
+    ])
     r = Vector([0.0, 1.0, -2.0])
     tau = cross_cartesian_vectors(r, f)
     r_norm = vector_magnitude(r)

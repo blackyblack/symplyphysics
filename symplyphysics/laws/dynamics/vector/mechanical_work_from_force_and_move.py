@@ -20,5 +20,5 @@ def work_law(force_: Vector, distance_: Vector) -> Expr:
 @validate_input(force_=units.force, distance_=units.length)
 @validate_output(units.energy)
 def calculate_work(force_: QuantityVector, distance_: QuantityVector) -> Quantity:
-    result_work = work_law(force_, distance_)
+    result_work = work_law(force_.to_base_vector(), distance_.to_base_vector())
     return Quantity(result_work)

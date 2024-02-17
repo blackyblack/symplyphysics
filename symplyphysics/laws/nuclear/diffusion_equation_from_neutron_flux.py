@@ -93,8 +93,7 @@ def calculate_multiplication_factor(neutron_flux_function_: Expr, neutrons_per_f
 
     # this is like validate_input but does not require no free symbols
     (_, dimension) = collect_factor_and_dimension(neutron_flux_function_)
-    assert SI.get_dimension_system().equivalent_dims(dimension,
-        neutron_flux.dimension)
+    assert SI.get_dimension_system().equivalent_dims(dimension, neutron_flux.dimension)
 
     applied_law = apply_neutron_flux_function(neutron_flux_function_)
     result_expr = applied_law.subs({

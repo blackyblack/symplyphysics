@@ -36,12 +36,9 @@ def calculate_linear_displacement(angular_displacement_: QuantityVector,
     rotation_radius_: QuantityVector) -> QuantityVector:
     if angular_displacement_.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
         raise ValueError(
-            "Angular displacement pseudovector should be in cartesian coordinate system"
-        )
+            "Angular displacement pseudovector should be in cartesian coordinate system")
     if rotation_radius_.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
-        raise ValueError(
-            "Radius vector should be in cartesian coordinate system"
-        )
+        raise ValueError("Radius vector should be in cartesian coordinate system")
     angular_displacement_vector = angular_displacement_.to_base_vector()
     rotation_radius_vector = rotation_radius_.to_base_vector()
     dot_vectors_result = Quantity(dot_vectors(angular_displacement_vector, rotation_radius_vector))

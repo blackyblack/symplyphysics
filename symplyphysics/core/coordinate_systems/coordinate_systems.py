@@ -43,7 +43,7 @@ class CoordinateSystem:
         if coord_system_type == CoordinateSystem.System.CYLINDRICAL:
             return component_idx == 1
         if coord_system_type == CoordinateSystem.System.SPHERICAL:
-            return component_idx == 1 or component_idx == 2
+            return component_idx in (1, 2)
         return False
 
     def __init__(self,

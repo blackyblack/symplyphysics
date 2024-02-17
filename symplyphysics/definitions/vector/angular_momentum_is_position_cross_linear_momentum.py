@@ -1,4 +1,5 @@
 from symplyphysics import (
+    CoordinateSystem,
     units,
     Vector,
     QuantityVector,
@@ -26,5 +27,10 @@ def angular_momentum_definition(position_vector_: Vector, linear_momentum_: Vect
 @validate_output(units.length * units.momentum)
 def calculate_angular_momentum(position_vector_: QuantityVector,
     linear_momentum_: QuantityVector) -> QuantityVector:
-    result = angular_momentum_definition(position_vector_, linear_momentum_)
-    return QuantityVector(result.components, position_vector_.coordinate_system)
+    if position_vector_.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
+        raise ValueError("Position vector should be in cartesian coordinate system")
+    if linear_momentum_.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
+        raise ValueError("Linear momentum vector should be in cartesian coordinate system")
+    result_vector = angular_momentum_definition(position_vector_.to_base_vector(),
+        linear_momentum_.to_base_vector())
+    return QuantityVector.from_base_vector(result_vector)

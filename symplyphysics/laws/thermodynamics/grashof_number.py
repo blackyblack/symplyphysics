@@ -1,7 +1,6 @@
 from sympy import Eq, solve, S
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-                           validate_output, dimensionless, convert_to)
-
+    validate_output, dimensionless, convert_to)
 
 # Description
 # The Grashof number (Gr) is a dimensionless number which the ratio of
@@ -29,29 +28,25 @@ characteristic_length = Symbol("characteristic_length", units.length)
 viscosity = Symbol("viscosity", units.area / units.time)
 grashof_number = Symbol("grashof_number", dimensionless)
 
+law = Eq(
+    grashof_number,
+    units.acceleration_due_to_gravity * coefficient_of_volume_expansion *
+    (surface_temperature - fluid_temperature) * characteristic_length**3 / (viscosity**2))
 
-law = Eq(grashof_number, units.acceleration_due_to_gravity * coefficient_of_volume_expansion *
-         (surface_temperature - fluid_temperature) * characteristic_length**3 / (viscosity**2))
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(
-    coefficient_of_volume_expansion_=coefficient_of_volume_expansion,
+@validate_input(coefficient_of_volume_expansion_=coefficient_of_volume_expansion,
     surface_temperature_=surface_temperature,
     fluid_temperature_=fluid_temperature,
     characteristic_length_=characteristic_length,
-    viscosity_=viscosity
-)
+    viscosity_=viscosity)
 @validate_output(grashof_number)
-def calculate_grashof_number(
-    coefficient_of_volume_expansion_: Quantity,
-    surface_temperature_: Quantity,
-    fluid_temperature_: Quantity,
-    characteristic_length_: Quantity,
-    viscosity_: Quantity
-) -> float:
+def calculate_grashof_number(coefficient_of_volume_expansion_: Quantity,
+    surface_temperature_: Quantity, fluid_temperature_: Quantity, characteristic_length_: Quantity,
+    viscosity_: Quantity) -> float:
     result_expr = solve(law, grashof_number, dict=True)[0][grashof_number]
     result_applied = result_expr.subs({
         coefficient_of_volume_expansion: coefficient_of_volume_expansion_,

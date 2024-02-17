@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression,
-                           validate_input, validate_output, dimensionless)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output, dimensionless)
 
 # Description
 ## If the difference in the course of two waves is equal to an integer number of waves
@@ -18,7 +18,6 @@ from symplyphysics import (units, Quantity, Symbol, print_expression,
 
 # Condition: The two waves must be coherent
 
-
 travel_difference = Symbol("travel_difference", units.length)
 number_maximum = Symbol("number_maximum", dimensionless)
 wave_length = Symbol("wave_length", units.length)
@@ -34,9 +33,6 @@ def print_law() -> str:
 @validate_output(travel_difference)
 def calculate_travel_difference(wave_length_: Quantity, number_maximum_: int) -> Quantity:
     solved = solve(law, travel_difference, dict=True)[0][travel_difference]
-    result_expr = solved.subs({
-        wave_length: wave_length_,
-        number_maximum: number_maximum_
-    })
+    result_expr = solved.subs({wave_length: wave_length_, number_maximum: number_maximum_})
     result = Quantity(result_expr)
     return result

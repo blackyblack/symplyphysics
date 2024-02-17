@@ -58,20 +58,16 @@ def calculate_acceleration(
     tangential_acceleration_: QuantityVector,
 ) -> QuantityVector:
     if radial_acceleration_.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
-        raise ValueError(
-            "Radial acceleration vector should be in cartesian coordinate system"
-        )
+        raise ValueError("Radial acceleration vector should be in cartesian coordinate system")
     if tangential_acceleration_.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
-        raise ValueError(
-            "Tangential acceleration vector should be in cartesian coordinate system"
-        )
+        raise ValueError("Tangential acceleration vector should be in cartesian coordinate system")
     radial_acceleration_vector = radial_acceleration_.to_base_vector()
     tangential_acceleration_vector = tangential_acceleration_.to_base_vector()
-    dot_vectors_result = Quantity(dot_vectors(radial_acceleration_vector, tangential_acceleration_vector))
+    dot_vectors_result = Quantity(
+        dot_vectors(radial_acceleration_vector, tangential_acceleration_vector))
     if dot_vectors_result.scale_factor != approx(0.0, rel=1e-3):
         raise ValueError(
-            "Radial and tangential acceleration vectors should be perpendicular to each other"
-        )
+            "Radial and tangential acceleration vectors should be perpendicular to each other")
     acceleration_vector = acceleration_law(
         radial_acceleration_vector,
         tangential_acceleration_vector,
@@ -89,13 +85,9 @@ def calculate_radial_acceleration(
     tangential_acceleration_: QuantityVector,
 ) -> QuantityVector:
     if total_acceleration_.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
-        raise ValueError(
-            "Total acceleration vector should be in cartesian coordinate system"
-        )
+        raise ValueError("Total acceleration vector should be in cartesian coordinate system")
     if tangential_acceleration_.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
-        raise ValueError(
-            "Tangential acceleration vector should be in cartesian coordinate system"
-        )
+        raise ValueError("Tangential acceleration vector should be in cartesian coordinate system")
     total_acceleration_vector = total_acceleration_.to_base_vector()
     tangential_acceleration_vector = tangential_acceleration_.to_base_vector()
     radial_acceleration_vector = radial_acceleration_law(
@@ -115,13 +107,9 @@ def calculate_tangential_acceleration(
     radial_acceleration_: QuantityVector,
 ) -> QuantityVector:
     if total_acceleration_.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
-        raise ValueError(
-            "Total acceleration vector should be in cartesian coordinate system"
-        )
+        raise ValueError("Total acceleration vector should be in cartesian coordinate system")
     if radial_acceleration_.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
-        raise ValueError(
-            "Radial acceleration vector should be in cartesian coordinate system"
-        )
+        raise ValueError("Radial acceleration vector should be in cartesian coordinate system")
     total_acceleration_vector = total_acceleration_.to_base_vector()
     radial_acceleration_vector = radial_acceleration_.to_base_vector()
     tangential_acceleration_vector = tangential_acceleration_law(

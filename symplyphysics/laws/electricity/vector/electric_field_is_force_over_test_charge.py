@@ -25,7 +25,8 @@ def electrostatic_force_law(electric_field_: Vector) -> Vector:
 @validate_output(units.force / units.charge)
 def calculate_electric_field(electrostatic_force_: QuantityVector,
     test_charge_: Quantity) -> QuantityVector:
-    result_electric_field = electric_field_law(electrostatic_force_)
+    electrostatic_force_vector = electrostatic_force_.to_base_vector()
+    result_electric_field = electric_field_law(electrostatic_force_vector)
     electric_field_components = list_of_quantities(result_electric_field.components,
         {test_charge: test_charge_})
     return QuantityVector(electric_field_components, electrostatic_force_.coordinate_system)
@@ -35,6 +36,7 @@ def calculate_electric_field(electrostatic_force_: QuantityVector,
 @validate_output(units.force)
 def calculate_electrostatic_force(electric_field_: QuantityVector,
     test_charge_: Quantity) -> QuantityVector:
-    result_force = electrostatic_force_law(electric_field_)
+    electric_field_vector = electric_field_.to_base_vector()
+    result_force = electrostatic_force_law(electric_field_vector)
     force_components = list_of_quantities(result_force.components, {test_charge: test_charge_})
     return QuantityVector(force_components, electric_field_.coordinate_system)

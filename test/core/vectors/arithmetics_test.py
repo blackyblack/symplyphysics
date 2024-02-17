@@ -3,8 +3,8 @@ from pytest import fixture, raises
 from sympy import atan2, cos, pi, sin, sqrt
 from symplyphysics import (SI, Quantity, dimensionless, units, QuantityVector, Vector,
     CoordinateSystem, coordinates_transform)
-from symplyphysics.core.vectors.arithmetics import (add_cartesian_vectors, cross_cartesian_vectors, dot_vectors,
-    equal_vectors, scale_vector, vector_magnitude, vector_unit)
+from symplyphysics.core.vectors.arithmetics import (add_cartesian_vectors, cross_cartesian_vectors,
+    dot_vectors, equal_vectors, scale_vector, vector_magnitude, vector_unit)
 
 # pylint: disable=too-many-locals
 
@@ -407,30 +407,46 @@ def test_basic_unit_vector() -> None:
 def test_basic_equal_quantity_vectors() -> None:
     Q1 = Quantity(1)
     Q2 = Quantity(2)
-    assert equal_vectors(QuantityVector([Q1, Q2]).to_base_vector(), QuantityVector([Q1, Q2]).to_base_vector())
-    assert not equal_vectors(QuantityVector([Q1, Q2]).to_base_vector(), QuantityVector([Q2, Q1]).to_base_vector())
+    assert equal_vectors(
+        QuantityVector([Q1, Q2]).to_base_vector(),
+        QuantityVector([Q1, Q2]).to_base_vector())
+    assert not equal_vectors(
+        QuantityVector([Q1, Q2]).to_base_vector(),
+        QuantityVector([Q2, Q1]).to_base_vector())
     L1 = Quantity(1 * units.meter)
     L2 = Quantity(2 * units.meter)
-    assert equal_vectors(QuantityVector([L1, L2]).to_base_vector(), QuantityVector([L1, L2]).to_base_vector())
-    assert not equal_vectors(QuantityVector([L1, L2]).to_base_vector(), QuantityVector([Q1, Q2]).to_base_vector())
+    assert equal_vectors(
+        QuantityVector([L1, L2]).to_base_vector(),
+        QuantityVector([L1, L2]).to_base_vector())
+    assert not equal_vectors(
+        QuantityVector([L1, L2]).to_base_vector(),
+        QuantityVector([Q1, Q2]).to_base_vector())
 
 
 def test_basic_add_quantity_vectors() -> None:
     Q1 = Quantity(1)
     Q2 = Quantity(2)
-    result_base_vector = add_cartesian_vectors(QuantityVector([Q1, Q2]).to_base_vector(), QuantityVector([Q1, Q2]).to_base_vector())
+    result_base_vector = add_cartesian_vectors(
+        QuantityVector([Q1, Q2]).to_base_vector(),
+        QuantityVector([Q1, Q2]).to_base_vector())
     result = QuantityVector.from_base_vector(result_base_vector)
     assert [result.components[0].scale_factor, result.components[1].scale_factor] == [2, 4]
-    result_base_vector = add_cartesian_vectors(QuantityVector([Q1, Q2]).to_base_vector(), QuantityVector([Q2, Q1]).to_base_vector())
+    result_base_vector = add_cartesian_vectors(
+        QuantityVector([Q1, Q2]).to_base_vector(),
+        QuantityVector([Q2, Q1]).to_base_vector())
     result = QuantityVector.from_base_vector(result_base_vector)
     assert [result.components[0].scale_factor, result.components[1].scale_factor] == [3, 3]
     L1 = Quantity(1 * units.meter)
     L2 = Quantity(2 * units.meter)
-    result_base_vector = add_cartesian_vectors(QuantityVector([L1, L2]).to_base_vector(), QuantityVector([L1, L2]).to_base_vector())
+    result_base_vector = add_cartesian_vectors(
+        QuantityVector([L1, L2]).to_base_vector(),
+        QuantityVector([L1, L2]).to_base_vector())
     result = QuantityVector.from_base_vector(result_base_vector)
     assert [result.components[0].scale_factor, result.components[1].scale_factor] == [2, 4]
     assert result.dimension == units.length
-    result_base_vector = add_cartesian_vectors(QuantityVector([L1, L2]).to_base_vector(), QuantityVector([L2, L1]).to_base_vector())
+    result_base_vector = add_cartesian_vectors(
+        QuantityVector([L1, L2]).to_base_vector(),
+        QuantityVector([L2, L1]).to_base_vector())
     result = QuantityVector.from_base_vector(result_base_vector)
     assert [result.components[0].scale_factor, result.components[1].scale_factor] == [3, 3]
     assert result.dimension == units.length
@@ -460,8 +476,9 @@ def test_basic_scale_quantity_vectors() -> None:
 def test_basic_dot_quantity_product() -> None:
     Q1 = Quantity(1)
     Q2 = Quantity(2)
-    result_dot = dot_vectors(QuantityVector([Q1, Q2]).to_base_vector(), QuantityVector([Q1,
-        Q2]).to_base_vector())
+    result_dot = dot_vectors(
+        QuantityVector([Q1, Q2]).to_base_vector(),
+        QuantityVector([Q1, Q2]).to_base_vector())
     assert Quantity(result_dot).scale_factor == 5
     L1 = Quantity(1 * units.meter)
     L2 = Quantity(2 * units.meter)
@@ -492,13 +509,17 @@ def test_basic_quantity_magnitude() -> None:
 def test_basic_quantity_cross_product() -> None:
     Q1 = Quantity(1)
     Q2 = Quantity(2)
-    crossed_base_vector = cross_cartesian_vectors(QuantityVector([Q1, Q2]).to_base_vector(), QuantityVector([Q1, Q2]).to_base_vector())
+    crossed_base_vector = cross_cartesian_vectors(
+        QuantityVector([Q1, Q2]).to_base_vector(),
+        QuantityVector([Q1, Q2]).to_base_vector())
     crossed = QuantityVector.from_base_vector(crossed_base_vector)
     assert [
         crossed.components[0].scale_factor, crossed.components[1].scale_factor,
         crossed.components[2].scale_factor
     ] == [0, 0, 0]
-    crossed_base_vector = cross_cartesian_vectors(QuantityVector([Q1, Q2]).to_base_vector(), QuantityVector([Q2, Q1]).to_base_vector())
+    crossed_base_vector = cross_cartesian_vectors(
+        QuantityVector([Q1, Q2]).to_base_vector(),
+        QuantityVector([Q2, Q1]).to_base_vector())
     crossed = QuantityVector.from_base_vector(crossed_base_vector)
     assert [
         crossed.components[0].scale_factor, crossed.components[1].scale_factor,
@@ -508,7 +529,8 @@ def test_basic_quantity_cross_product() -> None:
     L2 = Quantity(2 * units.meter)
     distance1 = QuantityVector([L1, L2])
     distance2 = QuantityVector([L2, L1])
-    cross_area_base_vector = cross_cartesian_vectors(distance1.to_base_vector(), distance2.to_base_vector())
+    cross_area_base_vector = cross_cartesian_vectors(distance1.to_base_vector(),
+        distance2.to_base_vector())
     cross_area_vector = QuantityVector.from_base_vector(cross_area_base_vector)
     assert [
         cross_area_vector.components[0].scale_factor, cross_area_vector.components[1].scale_factor,

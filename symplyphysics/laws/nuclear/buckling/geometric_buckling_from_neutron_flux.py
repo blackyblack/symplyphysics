@@ -69,8 +69,7 @@ def apply_neutron_flux_function(neutron_flux_function_: Expr) -> Equality:
 def calculate_geometric_buckling_squared(neutron_flux_function_: Expr) -> Quantity:
     # this is like validate_input but does not require no free symbols
     (_, dimension) = collect_factor_and_dimension(neutron_flux_function_)
-    assert SI.get_dimension_system().equivalent_dims(dimension,
-        neutron_flux.dimension)
+    assert SI.get_dimension_system().equivalent_dims(dimension, neutron_flux.dimension)
 
     result_expr = apply_neutron_flux_function(neutron_flux_function_)
     result_buckling_expr = solve(result_expr, geometric_buckling_squared,
