@@ -13,9 +13,10 @@ from symplyphysics import (
 ## of mass, and rotational motion of its points about the rotational axis.
 
 # Law: v = v_translation + v_rotation
-## v - velocity of a point on the wheel.
-## v_translation - velocity of the wheel's center of mass
+## v - velocity of a point on the wheel relative to the inertial frame
+## v_translation - velocity of the wheel's center of mass relative to the inertial frame
 ## v_rotation - see [rotational velocity formula](./linear_velocity_is_angular_velocity_cross_radius.py)
+##              relative to wheel
 
 
 def rolling_velocity_law(translational_velocity_: Vector, rotational_velocity_: Vector) -> Vector:
