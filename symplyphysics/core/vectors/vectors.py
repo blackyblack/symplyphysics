@@ -1,12 +1,13 @@
 from __future__ import annotations
 from typing import Optional, Sequence
+from sympy import Expr
 from sympy.vector import express, Vector as SymVector
 from sympy.vector.operators import _get_coord_systems
 from sympy.physics.units import Dimension
 from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
 
 from ..dimensions import assert_equivalent_dimension, dimensionless, ScalarValue
-from ..symbols.quantities import Quantity
+from ..symbols.quantities import Quantity, subs_list
 from ..symbols.symbols import DimensionSymbol, next_name
 from ..coordinate_systems.coordinate_systems import CoordinateSystem
 
@@ -143,5 +144,7 @@ class QuantityVector(DimensionSymbol):
 
     @staticmethod
     def from_base_vector(vector: Vector, *,
-        dimension: Optional[Dimension] = None) -> QuantityVector:
-        return QuantityVector(vector.components, vector.coordinate_system, dimension=dimension)
+        dimension: Optional[Dimension] = None,
+        subs: Optional[dict[Expr, Quantity]] = None) -> QuantityVector:
+        components = vector.components if subs is None else subs_list(vector.components, subs)
+        return QuantityVector(components, vector.coordinate_system, dimension=dimension)
