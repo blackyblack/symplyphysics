@@ -28,5 +28,8 @@ def rolling_velocity_law(translational_velocity_: Vector, rotational_velocity_: 
 def calculate_rolling_velocity(
     translational_velocity_: QuantityVector, rotational_velocity_: QuantityVector,
 ) -> QuantityVector:
-    result = rolling_velocity_law(translational_velocity_, rotational_velocity_)
+    result = rolling_velocity_law(
+        translational_velocity_.to_base_vector(),
+        rotational_velocity_.to_base_vector(),
+    )
     return QuantityVector(result.components, translational_velocity_.coordinate_system)

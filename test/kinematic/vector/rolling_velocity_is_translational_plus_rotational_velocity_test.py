@@ -17,9 +17,11 @@ from symplyphysics.laws.kinematic.vector import (
 ## component amounts to (1, 2, -1) m/s, and the rotational one to (0, -1, 2) m/s.
 ## Then the linear velocity of that point is (1, 1, 1) m/s at that point in time.
 
+Args = namedtuple("Args", "v_t v_r")
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     v_t = QuantityVector([
         Quantity(1.0 * units.meter / units.second),
         Quantity(2.0 * units.meter / units.second),
@@ -30,11 +32,10 @@ def test_args_fixture():
         Quantity(-1.0 * units.meter / units.second),
         Quantity(2.0 * units.meter / units.second),
     ])
-    Args = namedtuple("Args", "v_t v_r")
     return Args(v_t=v_t, v_r=v_r)
 
 
-def test_law(test_args):
+def test_law(test_args: Args) -> None:
     result = rolling_velocity_law.calculate_rolling_velocity(test_args.v_t, test_args.v_r)
     assert len(result.components) == 3
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.velocity)
@@ -42,7 +43,7 @@ def test_law(test_args):
         assert_equal(result_component, correct_value * units.meter / units.second)
 
 
-def test_bad_velocities(test_args):
+def test_bad_velocities(test_args: Args) -> None:
     v_bad_vector = QuantityVector([
         Quantity(1.0 * units.meter),
         Quantity(2.0 * units.meter),
