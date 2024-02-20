@@ -43,7 +43,7 @@ def print_law() -> str:
     second_frame_velocity_in_first_frame_=second_frame_velocity_in_first_frame,
 )
 @validate_output(body_velocity_in_first_frame)
-def calculate_velocity_in_first_frame(
+def calculate_body_velocity_in_first_frame(
     velocity_in_second_frame_: Quantity,
     second_frame_velocity_in_first_frame_: Quantity,
 ) -> Quantity:

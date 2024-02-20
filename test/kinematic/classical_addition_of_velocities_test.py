@@ -27,7 +27,7 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = galilean_law.calculate_speed_relative_to_first_frame(
+    result = galilean_law.calculate_body_velocity_in_first_frame(
         test_args.kayak_speed_relative_to_water,
         test_args.water_speed_relative_to_bank,
     )
@@ -37,22 +37,22 @@ def test_law(test_args: Args) -> None:
 def test_bad_velocities(test_args: Args) -> None:
     vb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        galilean_law.calculate_speed_relative_to_first_frame(
+        galilean_law.calculate_body_velocity_in_first_frame(
             vb,
             test_args.water_speed_relative_to_bank,
         )
     with raises(TypeError):
-        galilean_law.calculate_speed_relative_to_first_frame(
+        galilean_law.calculate_body_velocity_in_first_frame(
             100,
             test_args.water_speed_relative_to_bank,
         )
     with raises(errors.UnitsError):
-        galilean_law.calculate_speed_relative_to_first_frame(
+        galilean_law.calculate_body_velocity_in_first_frame(
             test_args.kayak_speed_relative_to_water,
             vb,
         )
     with raises(TypeError):
-        galilean_law.calculate_speed_relative_to_first_frame(
+        galilean_law.calculate_body_velocity_in_first_frame(
             test_args.kayak_speed_relative_to_water,
             100,
         )
