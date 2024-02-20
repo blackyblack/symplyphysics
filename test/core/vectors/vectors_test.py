@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy import atan, pi, sqrt, symbols, sin, cos
 from sympy.vector import Vector as SympyVector, express
-from symplyphysics import (Quantity, dimensionless, units, QuantityVector, Vector, errors)
+from symplyphysics import (Quantity, dimensionless, units, QuantityVector, Vector, errors, assert_equal)
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_rotate, coordinates_transform
 
 Args = namedtuple("Args", ["C"])
@@ -310,3 +310,23 @@ def test_basic_to_quantities(test_args: Args) -> None:
         vector.components[1].scale_factor] == [q1.scale_factor, q2.scale_factor]
     assert [vector.components[0].dimension,
         vector.components[1].dimension] == [q1.dimension, q2.dimension]
+
+
+def test_from_base_vector(test_args: Args) -> None:
+    vector = Vector([1, 2, 3])
+    quantity_vector = QuantityVector.from_base_vector(vector)
+    for component, quantity in zip(vector.components, quantity_vector.components):
+        assert_equal(quantity, component)
+
+    x, y, z = symbols("x:z")
+    symbol_vector = Vector([x, y, z])
+    subs = {
+        x: Quantity(1.0),
+        y: Quantity(2.0),
+        z: Quantity(3.0),
+    }
+    symbol_quantity_vector = QuantityVector.from_base_vector(
+        symbol_vector, subs=subs
+    )
+    for value, quantity in zip(subs.values(), symbol_quantity_vector.components):
+        assert_equal(quantity, value)
