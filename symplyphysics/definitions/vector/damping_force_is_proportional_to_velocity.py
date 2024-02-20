@@ -33,7 +33,7 @@ def velocity_law(damping_force_: Vector) -> Vector:
 
 @validate_input(
     damping_constant_=damping_constant,
-    velocity_=units.length / units.time
+    velocity_=units.velocity
 )
 @validate_output(units.force)
 def calculate_damping_force(
@@ -50,7 +50,7 @@ def calculate_damping_force(
     damping_constant_=damping_constant,
     damping_force_=units.force
 )
-@validate_output(units.length / units.time)
+@validate_output(units.velocity)
 def calculate_velocity(
     damping_constant_: Quantity, damping_force_: QuantityVector
 ) -> QuantityVector:
