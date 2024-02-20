@@ -18,20 +18,21 @@ from symplyphysics.laws.kinematic.vector import (
 ## displacement is a pseudovector, the magnitude of which is the angle of rotation and which is aligned along
 ## the axis of rotation. Its direction can be found via the right-hand rule.
 
+Args = namedtuple("Args", "theta r")
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     theta = QuantityVector([0.0, 0.0, 1e-5])
     r = QuantityVector([
         Quantity(0.0 * units.meter),
         Quantity(0.1 * units.meter),
         Quantity(0.0 * units.meter),
     ])
-    Args = namedtuple("Args", "theta r")
     return Args(theta=theta, r=r)
 
 
-def test_basic_law(test_args):
+def test_basic_law(test_args: Args) -> None:
     result = linear_displacement_law.calculate_linear_displacement(test_args.theta, test_args.r)
     assert len(result.components) == 3
     assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
@@ -39,7 +40,7 @@ def test_basic_law(test_args):
         assert_equal(result_component, correct_value * units.meter)
 
 
-def test_bad_angular_displacement(test_args):
+def test_bad_angular_displacement(test_args: Args) -> None:
     theta_bad_vector = QuantityVector([
         Quantity(1.0 * units.meter),
         Quantity(1.0 * units.meter),
@@ -61,7 +62,7 @@ def test_bad_angular_displacement(test_args):
         linear_displacement_law.calculate_linear_displacement([100], test_args.r)
 
 
-def test_bad_rotation_radius(test_args):
+def test_bad_rotation_radius(test_args: Args) -> None:
     r_bad_vector = QuantityVector([
         Quantity(1.0 * units.coulomb),
         Quantity(1.0 * units.coulomb),

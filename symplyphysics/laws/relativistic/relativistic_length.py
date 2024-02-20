@@ -21,8 +21,8 @@ relativistic_length = Symbol("relativistic_length", units.length)
 law = Eq(relativistic_length, rest_length * sqrt(1 - velocity**2 / speed_of_light**2))
 
 
-def print_law():
-    print_expression(law)
+def print_law() -> str:
+    return print_expression(law)
 
 
 @validate_input(rest_length_=rest_length, velocity_=velocity)

@@ -36,9 +36,19 @@ class CoordinateSystem:
             return ["r", "theta", "phi"]
         return ["x", "y", "z"]
 
+    @staticmethod
+    def is_angle_component(coord_system_type: System, component_idx: int) -> bool:
+        if coord_system_type == CoordinateSystem.System.CARTESIAN:
+            return False
+        if coord_system_type == CoordinateSystem.System.CYLINDRICAL:
+            return component_idx == 1
+        if coord_system_type == CoordinateSystem.System.SPHERICAL:
+            return component_idx in (1, 2)
+        return False
+
     def __init__(self,
         coord_system_type: System = System.CARTESIAN,
-        inner: Optional[CoordSys3D] = None):
+        inner: Optional[CoordSys3D] = None) -> None:
         self._coord_system_type = coord_system_type
         if inner is None:
             self._coord_system = CoordSys3D(next_name("SYS"),
@@ -54,7 +64,7 @@ class CoordinateSystem:
     def coord_system_type(self) -> System:
         return self._coord_system_type
 
-    def transformation_to_system(self, coord_system_type: System):
+    def transformation_to_system(self, coord_system_type: System) -> tuple[Expr, Expr, Expr]:
         if self._coord_system_type == self.System.CYLINDRICAL:
             r, theta, z = self._coord_system.base_scalars()
             cylindrical_conversions = {

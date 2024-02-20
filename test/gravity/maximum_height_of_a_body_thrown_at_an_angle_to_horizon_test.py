@@ -10,22 +10,22 @@ from symplyphysics.laws.gravity import maximum_height_of_a_body_thrown_at_an_ang
 ## an angle to the horizon will be 0.2294 meter.
 ## https://www.omnicalculator.com/physics/projectile-motion
 
+Args = namedtuple("Args", ["initial_velocity", "angle"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     initial_velocity = Quantity(3 * (units.meter / units.second))
     angle = pi / 4
-
-    Args = namedtuple("Args", ["initial_velocity", "angle"])
     return Args(initial_velocity=initial_velocity, angle=angle)
 
 
-def test_basic_height(test_args):
+def test_basic_height(test_args: Args) -> None:
     result = height_law.calculate_height(test_args.initial_velocity, test_args.angle)
     assert_equal(result, 0.2294 * units.meter)
 
 
-def test_bad_initial_velocity(test_args):
+def test_bad_initial_velocity(test_args: Args) -> None:
     initial_velocity = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         height_law.calculate_height(initial_velocity, test_args.angle)
@@ -33,7 +33,7 @@ def test_bad_initial_velocity(test_args):
         height_law.calculate_height(100, test_args.angle)
 
 
-def test_bad_angle(test_args):
+def test_bad_angle(test_args: Args) -> None:
     angle = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         height_law.calculate_height(test_args.initial_velocity, angle)

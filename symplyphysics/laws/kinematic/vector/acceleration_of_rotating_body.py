@@ -1,4 +1,7 @@
+from pytest import approx
 from symplyphysics import (
+    Quantity,
+    dot_vectors,
     units,
     validate_input,
     validate_output,
@@ -53,14 +56,18 @@ def calculate_acceleration(
     radial_acceleration_: QuantityVector,
     tangential_acceleration_: QuantityVector,
 ) -> QuantityVector:
+    radial_acceleration_vector = radial_acceleration_.to_base_vector()
+    tangential_acceleration_vector = tangential_acceleration_.to_base_vector()
+    dot_vectors_result = Quantity(
+        dot_vectors(radial_acceleration_vector, tangential_acceleration_vector))
+    if dot_vectors_result.scale_factor != approx(0.0, rel=1e-3):
+        raise ValueError(
+            "Radial and tangential acceleration vectors should be perpendicular to each other")
     acceleration_vector = acceleration_law(
-        radial_acceleration_,
-        tangential_acceleration_,
+        radial_acceleration_vector,
+        tangential_acceleration_vector,
     )
-    return QuantityVector(
-        acceleration_vector.components,
-        radial_acceleration_.coordinate_system,
-    )
+    return QuantityVector.from_base_vector(acceleration_vector)
 
 
 @validate_input(
@@ -72,14 +79,13 @@ def calculate_radial_acceleration(
     total_acceleration_: QuantityVector,
     tangential_acceleration_: QuantityVector,
 ) -> QuantityVector:
-    radial_acceleration = radial_acceleration_law(
-        total_acceleration_,
-        tangential_acceleration_,
+    total_acceleration_vector = total_acceleration_.to_base_vector()
+    tangential_acceleration_vector = tangential_acceleration_.to_base_vector()
+    radial_acceleration_vector = radial_acceleration_law(
+        total_acceleration_vector,
+        tangential_acceleration_vector,
     )
-    return QuantityVector(
-        radial_acceleration.components,
-        total_acceleration_.coordinate_system,
-    )
+    return QuantityVector.from_base_vector(radial_acceleration_vector)
 
 
 @validate_input(
@@ -91,11 +97,10 @@ def calculate_tangential_acceleration(
     total_acceleration_: QuantityVector,
     radial_acceleration_: QuantityVector,
 ) -> QuantityVector:
-    tangential_acceleration = tangential_acceleration_law(
-        total_acceleration_,
-        radial_acceleration_,
+    total_acceleration_vector = total_acceleration_.to_base_vector()
+    radial_acceleration_vector = radial_acceleration_.to_base_vector()
+    tangential_acceleration_vector = tangential_acceleration_law(
+        total_acceleration_vector,
+        radial_acceleration_vector,
     )
-    return QuantityVector(
-        tangential_acceleration.components,
-        total_acceleration_.coordinate_system,
-    )
+    return QuantityVector.from_base_vector(tangential_acceleration_vector)

@@ -19,8 +19,8 @@ height = Symbol("height", units.length)
 law = Eq(velocity, sqrt(gravitational_constant * planet_mass / (radius + height)))
 
 
-def print_law():
-    print_expression(law)
+def print_law() -> str:
+    return print_expression(law)
 
 
 @validate_input(planet_mass_=planet_mass, radius_=radius, height_=height)

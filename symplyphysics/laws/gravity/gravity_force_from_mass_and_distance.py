@@ -1,7 +1,21 @@
-from sympy import (Eq, solve)
+from sympy import Eq, solve, sqrt
 from sympy.physics.units import gravitational_constant
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output)
+from symplyphysics import (
+    units,
+    Quantity,
+    Symbol,
+    print_expression,
+    validate_input,
+    validate_output,
+    vector_magnitude,
+)
+from symplyphysics.core.dimensions import ScalarValue
+from symplyphysics.core.points.cartesian_point import CartesianPoint
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.core.fields.scalar_field import ScalarField
+from symplyphysics.laws.dynamics.fields import (
+    conservative_force_is_gradient_of_potential_energy as gradient_law,)
+from symplyphysics.laws.gravity import gravitational_potential_energy
 
 # Description
 ## Every object generates gravity field around it. Any other object in this field is pulled toward generator.
@@ -21,6 +35,35 @@ distance_between_mass_centers = Symbol("distance_between_mass_centers", units.le
 law = Eq(
     gravitational_force, gravitational_constant * first_object_mass * second_object_mass /
     distance_between_mass_centers**2)
+
+# Derive law from the gravitational potential energy
+# Condition: space must be 3-dimensional and flat
+
+potential = gravitational_potential_energy.law.rhs.subs({
+    gravitational_potential_energy.first_mass: first_object_mass,
+    gravitational_potential_energy.second_mass: second_object_mass,
+    gravitational_potential_energy.distance_between_mass_centers: distance_between_mass_centers,
+})
+
+
+def potential_field_function(point: CartesianPoint) -> ScalarValue:
+    return potential.subs(
+        distance_between_mass_centers,
+        sqrt(point.x**2 + point.y**2 + point.z**2),
+    )
+
+
+potential_field = ScalarField(potential_field_function)
+
+gravitational_force_vector = gradient_law.law(potential_field)
+gravitational_force_derived = vector_magnitude(gravitational_force_vector).simplify()
+
+x, y, z = gravitational_force_vector.coordinate_system.coord_system.base_scalars()
+gravitational_force_from_law = law.rhs.subs(distance_between_mass_centers, sqrt(x**2 + y**2 + z**2))
+
+# sympy avoids oversimplifications in case of square roots without certain assumptions,
+# therefore we resort to squaring both sides to make it work
+assert expr_equals(gravitational_force_derived**2, gravitational_force_from_law**2)
 
 
 def print_law() -> str:

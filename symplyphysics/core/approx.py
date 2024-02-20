@@ -35,7 +35,7 @@ def assert_equal(lhs: Quantity | float,
     rhs: Expr | Quantity | float,
     *,
     tolerance: float = APPROX_RELATIVE_TOLERANCE,
-    dimension: Optional[Dimension] = None):
+    dimension: Optional[Dimension] = None) -> None:
     rhs_quantity = rhs if isinstance(rhs, Quantity) else Quantity(rhs, dimension=dimension)
     # do not allow to override LHS dimension
     lhs_quantity = lhs if isinstance(lhs, Quantity) else Quantity(lhs)

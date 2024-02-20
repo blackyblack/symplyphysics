@@ -14,9 +14,11 @@ from symplyphysics.laws.dynamics.vector import instantaneous_power_is_force_dot_
 ## moves with the velocity vector equal to (2, 0, -1) m/s at that time. The power of the force exerted
 ## on the object is 3 W.
 
+Args = namedtuple("Args", "f v")
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     f = QuantityVector([
         Quantity(1.0 * units.newton),
         Quantity(1.0 * units.newton),
@@ -27,16 +29,15 @@ def test_args_fixture():
         Quantity(0.0 * units.meter / units.second),
         Quantity(-1.0 * units.meter / units.second),
     ])
-    Args = namedtuple("Args", "f v")
     return Args(f=f, v=v)
 
 
-def test_basic_law(test_args):
+def test_basic_law(test_args: Args) -> None:
     result = power_law.calculate_power(test_args.f, test_args.v)
     assert_equal(result, 3 * units.watt)
 
 
-def test_bad_force(test_args):
+def test_bad_force(test_args: Args) -> None:
     f_bad_vector = QuantityVector([
         Quantity(1.0 * units.second),
         Quantity(1.0 * units.second),
@@ -55,7 +56,7 @@ def test_bad_force(test_args):
         power_law.calculate_power([100], test_args.v)
 
 
-def test_bad_velocity(test_args):
+def test_bad_velocity(test_args: Args) -> None:
     v_bad_vector = QuantityVector([
         Quantity(1.0 * units.second),
         Quantity(1.0 * units.second),

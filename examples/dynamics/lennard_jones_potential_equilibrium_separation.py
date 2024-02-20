@@ -1,4 +1,6 @@
-from sympy import solve, Eq, symbols
+#!/usr/bin/env python3
+
+from sympy import solve, symbols
 from symplyphysics import (
     print_expression,
     vector_magnitude,
@@ -6,8 +8,9 @@ from symplyphysics import (
     units,
     Quantity,
 )
+from symplyphysics.core.dimensions import ScalarValue
 from symplyphysics.core.fields.scalar_field import ScalarField
-from symplyphysics.core.points import cartesian_point
+from symplyphysics.core.points.cartesian_point import CartesianPoint
 from symplyphysics.laws.dynamics.fields import (
     conservative_force_is_gradient_of_potential_energy as potential_law,)
 
@@ -30,7 +33,7 @@ values = {
 }
 
 
-def potential_energy_function(point):
+def potential_energy_function(point: CartesianPoint) -> ScalarValue:
     return A / point.x**12 - B / point.x**6
 
 

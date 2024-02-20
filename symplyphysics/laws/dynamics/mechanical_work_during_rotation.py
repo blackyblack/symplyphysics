@@ -12,7 +12,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.dynamics import mechanical_work_from_force_and_move as linear_work_law
 from symplyphysics.laws.kinematic import angular_position_is_arc_length_over_radius as angular_position_def
 from symplyphysics.laws.dynamics import torque_due_to_twisting_force as torque_def
-from symplyphysics.laws.kinematic import planar_projection_is_cosine as projection_law
+from symplyphysics.laws.geometry import planar_projection_is_cosine as projection_law
 
 # Description
 ## When a torque accelerates a rigid body in rotation about a fixed axis, the torque does work on

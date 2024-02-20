@@ -13,21 +13,22 @@ from symplyphysics.definitions import impedance_is_resistance_and_reactance as i
 ## the impedance magnitude of the circuit is 10.12 Ohm.
 ## Taken from https://wiraelectrical.com/impedance-and-admittance/
 
+Args = namedtuple("Args", ["R", "X"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     R = Quantity(10 * units.ohm)
     X = Quantity(-1.59 * units.ohm)
-    Args = namedtuple("Args", ["R", "X"])
     return Args(R=R, X=X)
 
 
-def test_basic_impedance(test_args):
+def test_basic_impedance(test_args: Args) -> None:
     result = impedance_def.calculate_impedance_magnitude(test_args.R, test_args.X)
     assert_equal(result, 10.12 * units.ohm)
 
 
-def test_bad_resistance(test_args):
+def test_bad_resistance(test_args: Args) -> None:
     Rb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         impedance_def.calculate_impedance_magnitude(Rb, test_args.X)
@@ -35,7 +36,7 @@ def test_bad_resistance(test_args):
         impedance_def.calculate_impedance_magnitude(100, test_args.X)
 
 
-def test_bad_reactance(test_args):
+def test_bad_reactance(test_args: Args) -> None:
     Xb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         impedance_def.calculate_impedance_magnitude(test_args.R, Xb)

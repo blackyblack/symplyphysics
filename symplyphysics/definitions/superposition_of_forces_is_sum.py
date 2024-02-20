@@ -34,8 +34,10 @@ expected_sum = definition.subs(forces, force_symbols_).doit().rhs
 # Using one dimensional vectors represents scalar form of the law
 vector_forces = [Vector([force1]), Vector([force2])]
 resultant_vector = vector_forces_sum.superposition_law(vector_forces)
-assert len(resultant_vector.components) == 1
+assert len(resultant_vector.components) == 3
 assert expr_equals(resultant_vector.components[0], expected_sum)
+assert resultant_vector.components[1] == 0
+assert resultant_vector.components[2] == 0
 
 
 def print_law() -> str:

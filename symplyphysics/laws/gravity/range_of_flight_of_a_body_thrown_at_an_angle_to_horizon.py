@@ -4,7 +4,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
     validate_output, angle_type)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematic import distance_from_constant_velocity as distance_law
-from symplyphysics.laws.kinematic import planar_projection_is_cosine as projection_law
+from symplyphysics.laws.geometry import planar_projection_is_cosine as projection_law
 from symplyphysics.laws.gravity import maximum_movement_time_of_a_body_thrown_at_an_angle_to_horizon as time_law
 
 # Description

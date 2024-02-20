@@ -21,25 +21,26 @@ from symplyphysics.laws.thermodynamics.equations_of_state import van_der_waals_s
 
 # Pressure should be 90 atm
 
+Args = namedtuple("Args", ["t", "v", "nu", "a", "b"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     t = Quantity(300 * units.kelvins)
     v = Quantity(0.25 * units.liters)
     nu = Quantity(1 * units.mole)
     a = Quantity(0.191 * units.pascals * (units.meter**3 / units.mole)**2)
     b = Quantity(4.532 * 1e-5 * units.meters**3 / units.moles)
-    Args = namedtuple("Args", ["t", "v", "nu", "a", "b"])
     return Args(t=t, v=v, nu=nu, a=a, b=b)
 
 
-def test_basic_pressure(test_args):
+def test_basic_pressure(test_args: Args) -> None:
     result = waals_law.calculate_pressure(test_args.v, test_args.t, test_args.nu, test_args.a,
         test_args.b)
     assert_equal(result, 90 * units.atm, tolerance=0.01)
 
 
-def test_bad_temperature(test_args):
+def test_bad_temperature(test_args: Args) -> None:
     tb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         waals_law.calculate_pressure(test_args.v, tb, test_args.nu, test_args.a, test_args.b)
@@ -47,7 +48,7 @@ def test_bad_temperature(test_args):
         waals_law.calculate_pressure(test_args.v, 100, test_args.nu, test_args.a, test_args.b)
 
 
-def test_bad_volume(test_args):
+def test_bad_volume(test_args: Args) -> None:
     vb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         waals_law.calculate_pressure(vb, test_args.t, test_args.nu, test_args.a, test_args.b)
@@ -55,7 +56,7 @@ def test_bad_volume(test_args):
         waals_law.calculate_pressure(100, test_args.t, test_args.nu, test_args.a, test_args.b)
 
 
-def test_bad_molecules_volume_parameter(test_args):
+def test_bad_molecules_volume_parameter(test_args: Args) -> None:
     bb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         waals_law.calculate_pressure(test_args.v, test_args.t, test_args.nu, test_args.a, bb)
@@ -63,7 +64,7 @@ def test_bad_molecules_volume_parameter(test_args):
         waals_law.calculate_pressure(test_args.v, test_args.t, test_args.nu, test_args.a, 100)
 
 
-def test_bad_bonding_forces_parameter(test_args):
+def test_bad_bonding_forces_parameter(test_args: Args) -> None:
     ab = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         waals_law.calculate_pressure(test_args.v, test_args.t, test_args.nu, ab, test_args.b)

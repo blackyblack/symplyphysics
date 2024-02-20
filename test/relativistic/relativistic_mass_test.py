@@ -10,27 +10,28 @@ from symplyphysics.laws.relativistic import relativistic_mass
 
 # From https://rechneronline.de/spectrum/relativistic-mass-growth.php
 
+Args = namedtuple("Args", ["m", "v"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     m = Quantity(6 * units.kilogram)
     v = Quantity(20_000_000 * (units.meter / units.second))
-    Args = namedtuple("Args", ["m", "v"])
     return Args(m=m, v=v)
 
 
-def test_basic_mass(test_args):
+def test_basic_mass(test_args: Args) -> None:
     result = relativistic_mass.calculate_relativistic_mass(test_args.m, test_args.v)
     assert_equal(result, 6.01339 * units.kilogram)
 
 
-def test_basic_zero_velocity(test_args):
+def test_basic_zero_velocity(test_args: Args) -> None:
     velocity = Quantity(0 * units.meter / units.second)
     result = relativistic_mass.calculate_relativistic_mass(test_args.m, velocity)
     assert_equal(result, 6 * units.kilogram)
 
 
-def test_bad_mass(test_args):
+def test_bad_mass(test_args: Args) -> None:
     mb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         relativistic_mass.calculate_relativistic_mass(mb, test_args.v)
@@ -38,7 +39,7 @@ def test_bad_mass(test_args):
         relativistic_mass.calculate_relativistic_mass(100, test_args.v)
 
 
-def test_bad_velocity(test_args):
+def test_bad_velocity(test_args: Args) -> None:
     mv = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         relativistic_mass.calculate_relativistic_mass(test_args.m, mv)

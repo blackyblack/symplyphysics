@@ -28,10 +28,6 @@ def center_of_mass_law(
     masses_: Sequence[ScalarValue],
     position_vectors_: Sequence[Vector],
 ) -> Vector:
-    if len(masses_) != len(position_vectors_):
-        raise ValueError("Mass and position arrays should have the same lengths")
-    if len(position_vectors_) == 0:
-        raise ValueError("At least one particle should be present")
     result = Vector([0, 0, 0], next(iter(position_vectors_)).coordinate_system)
     total_mass = S.Zero
     for mass, position_vector in zip(masses_, position_vectors_):
@@ -51,5 +47,10 @@ def calculate_center_of_mass(
     masses_: Sequence[Quantity],
     position_vectors_: Sequence[QuantityVector],
 ) -> QuantityVector:
-    result = center_of_mass_law(masses_, position_vectors_)
-    return QuantityVector(result.components, result.coordinate_system)
+    if len(masses_) != len(position_vectors_):
+        raise ValueError("Mass and position arrays should have the same lengths")
+    if len(position_vectors_) == 0:
+        raise ValueError("At least one particle should be present")
+    position_base_vectors = [v.to_base_vector() for v in position_vectors_]
+    result_vector = center_of_mass_law(masses_, position_base_vectors)
+    return QuantityVector.from_base_vector(result_vector)

@@ -4,7 +4,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, dimensionl
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import refractive_index_is_wave_speeds_ratio as refractive_index_definition
 from symplyphysics.laws.kinematic import distance_from_constant_velocity as distance_law
-from symplyphysics.laws.kinematic import planar_projection_is_cosine as projection_law
+from symplyphysics.laws.geometry import planar_projection_is_cosine as projection_law
 from symplyphysics.core.symbols.quantities import scale_factor
 
 # Description

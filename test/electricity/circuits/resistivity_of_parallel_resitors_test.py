@@ -13,30 +13,31 @@ from symplyphysics.laws.electricity.circuits import resistivity_of_parallel_resi
 ## Resulting resistance should be 0.8 Ohm.
 ## If we add another resistor of 12 Ohm, the resulting resistance should be 0.75 Ohm.
 
+Args = namedtuple("Args", ["R1", "R2", "R3"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     R1 = Quantity(2 * units.ohm)
     R2 = Quantity(2 * units.ohm)
     R3 = Quantity(4 * units.ohm)
-    Args = namedtuple("Args", ["R1", "R2", "R3"])
     return Args(R1=R1, R2=R2, R3=R3)
 
 
-def test_basic_resistance(test_args):
+def test_basic_resistance(test_args: Args) -> None:
     result = parallel_resistor.calculate_parallel_resistance(
         [test_args.R1, test_args.R2, test_args.R3])
     assert_equal(result, 0.8 * units.ohm)
 
 
-def test_four_resistors_array(test_args):
+def test_four_resistors_array(test_args: Args) -> None:
     R4 = Quantity(12 * units.ohm)
     result = parallel_resistor.calculate_parallel_resistance(
         [test_args.R1, test_args.R2, test_args.R3, R4])
     assert_equal(result, 0.75 * units.ohm)
 
 
-def test_bad_resistance(test_args):
+def test_bad_resistance(test_args: Args) -> None:
     Rb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         parallel_resistor.calculate_parallel_resistance([Rb, test_args.R2])

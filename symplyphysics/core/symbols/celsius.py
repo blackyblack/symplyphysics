@@ -7,7 +7,7 @@ class Celsius:
     CELSIUS_TO_KELVIN_OFFSET = 273.15
     value: float
 
-    def __init__(self, value: float = 0):
+    def __init__(self, value: float = 0) -> None:
         self.value = value
 
     def __str__(self) -> str:

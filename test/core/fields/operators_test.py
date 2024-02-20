@@ -15,17 +15,18 @@ from symplyphysics.core.points.sphere_point import SpherePoint
 
 # Tests are mostly based on vector calculus slides: https://www.slideshare.net/garghanish/coordinate-systems-and-vector-calculus
 
+Args = namedtuple("Args", ["C", "parameter1", "parameter2"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     C = CoordinateSystem()
     parameter1 = SymSymbol("parameter1")
     parameter2 = SymSymbol("parameter2")
-    Args = namedtuple("Args", ["C", "parameter1", "parameter2"])
     return Args(C=C, parameter1=parameter1, parameter2=parameter2)
 
 
-def test_basic_gradient():
+def test_basic_gradient() -> None:
     field = ScalarField(lambda point: point.x**2 + point.y**2 - point.z**2)
     result_vector = gradient_operator(field)
 
@@ -36,7 +37,7 @@ def test_basic_gradient():
         assert expr_equals(result_component, correct_component)
 
 
-def test_cylindrical_gradient():
+def test_cylindrical_gradient() -> None:
     C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
 
     def field_function(p: CylinderPoint) -> ScalarValue:
@@ -57,7 +58,7 @@ def test_cylindrical_gradient():
         assert expr_equals(result_component, correct_component)
 
 
-def test_spherical_gradient():
+def test_spherical_gradient() -> None:
     C1 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
 
     def field_function(p: SpherePoint) -> ScalarValue:
@@ -78,7 +79,7 @@ def test_spherical_gradient():
         assert expr_equals(result_component, correct_component)
 
 
-def test_basic_divergence(test_args):
+def test_basic_divergence(test_args: Args) -> None:
     field = VectorField(
         lambda point: [exp(point.x) * cos(point.y),
         exp(point.x) * sin(point.y), point.z], test_args.C)
@@ -88,7 +89,7 @@ def test_basic_divergence(test_args):
     assert result == 2 * exp(x) * cos(y) + 1
 
 
-def test_cylindrical_divergence(test_args):
+def test_cylindrical_divergence(test_args: Args) -> None:
     field = VectorField(lambda point: [point.x * 2 / 3, point.y * 2 / 3, point.z * 2 / 3],
         test_args.C)
     result = divergence_operator(field)
@@ -104,7 +105,7 @@ def test_cylindrical_divergence(test_args):
     assert result == 2
 
 
-def test_spherical_divergence():
+def test_spherical_divergence() -> None:
     C1 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
 
     def field_function(p: SpherePoint) -> Sequence[ScalarValue]:
@@ -120,7 +121,7 @@ def test_spherical_divergence():
     assert expr_equals(result, 2 * cos(theta) * cos(phi))
 
 
-def test_basic_curl(test_args):
+def test_basic_curl(test_args: Args) -> None:
     field = VectorField(lambda point: [point.x**2 * point.y * point.z, 0, point.x * point.z],
         test_args.C)
     result_field = curl_operator(field)
@@ -133,7 +134,7 @@ def test_basic_curl(test_args):
     assert expr_equals(result_vector.components[2], -x**2 * z)
 
 
-def test_cylindrical_curl():
+def test_cylindrical_curl() -> None:
     C1 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)
 
     def field_function(p: CylinderPoint) -> Sequence[ScalarValue]:
@@ -153,7 +154,7 @@ def test_cylindrical_curl():
     assert expr_equals(result_vector.components[2], 3 * r * z - cos(theta))
 
 
-def test_spherical_curl():
+def test_spherical_curl() -> None:
     C1 = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
 
     def field_function(p: SpherePoint) -> Sequence[ScalarValue]:
@@ -177,7 +178,7 @@ def _distance(point: CartesianPoint) -> Expr:
     return sqrt(point.x**2 + point.y**2 + point.z**2)
 
 
-def test_gravitational_field_is_conservative(test_args):
+def test_gravitational_field_is_conservative(test_args: Args) -> None:
     # gravitational field also has a common multiplier of -G*M. It does not
     # affect conservative property of a field.
     field = VectorField(
