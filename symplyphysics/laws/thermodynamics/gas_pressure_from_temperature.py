@@ -9,13 +9,17 @@ from symplyphysics import (
 )
 
 # Description
-## The gas standard_pressure at a certain temperature depends on the temperature, standard standard_pressure and thermal coefficient.
+## The gas pressure at a certain temperature depends on the temperature, standard pressure and thermal coefficient.
+## https://www.fxyz.ru/формулы_по_физике/термодинамика_теория_теплоты/тепловое_расширение/расширение_газа/термический_коэффициент_давления/
 
 ## Law is: p = p0 * y * T, where
 ## p - pressure,
 ## p0 - pressure at zero degrees celsius,
-## a - thermal coefficient,
+## y - thermal coefficient,
 ## T - temperature.
+
+# Conditions:
+## - the volume of gas remains constant when heated
 
 pressure = Symbol("pressure", units.pressure)
 
