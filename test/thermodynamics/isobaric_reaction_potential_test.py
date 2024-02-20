@@ -1,58 +1,59 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.condensed_matter import resistance_from_temperature as resistance_law
+from symplyphysics.laws.thermodynamics import isobaric_reaction_potential as potential_law
 
 # Description
-## With a temperature coefficient of 15 [1 / kelvin], a temperature of 573.15 [kelvin]
-## and an initial resistance of [25 ohm], the resistance will be 112525 [ohm].
-## https://www.calculatoratoz.com/ru/temperature-dependence-of-resistance-calculator/Calc-2232
+## The decomposition of barium carbonate by the reaction: BaCO3 = BaO + CO2.
+## At a temperature of 298 kelvin, the thermal effect of the reaction is 552866 joule per mole, the entropy change is 37.22 joule per mole.
+## Then the isobaric potential is 506676 joule per mole.
+## https://studfile.net/preview/5797036/page:4/
 
-Args = namedtuple("Args", ["resistance_initial", "temperature_coefficient", "temperature"])
+Args = namedtuple("Args", ["thermal_effect", "entropy", "temperature"])
 
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
-    resistance_initial = Quantity(25 * units.ohm)
-    temperature_coefficient = Quantity(15 * (1 / units.kelvin))
-    temperature = Quantity(573.15 * units.kelvin)
+    thermal_effect = Quantity(552866 * units.joule / units.mole)
+    entropy = Quantity(155 * (units.joule / units.mole / units.kelvin))
+    temperature = Quantity(298 * units.kelvin)
 
-    return Args(resistance_initial=resistance_initial,
-        temperature_coefficient=temperature_coefficient,
+    return Args(thermal_effect=thermal_effect,
+        entropy=entropy,
         temperature=temperature)
 
 
-def test_basic_resistance(test_args: Args) -> None:
-    result = resistance_law.calculate_resistance(test_args.resistance_initial,
-        test_args.temperature_coefficient, test_args.temperature)
-    assert_equal(result, 112525 * units.ohm)
+def test_basic_isobaric_potential(test_args: Args) -> None:
+    result = potential_law.calculate_isobaric_potential(test_args.thermal_effect,
+        test_args.entropy, test_args.temperature)
+    assert_equal(result, 506676 * units.joule / units.mole)
 
 
-def test_bad_resistance_initial(test_args: Args) -> None:
-    resistance_initial = Quantity(1 * units.coulomb)
+def test_bad_thermal_effect(test_args: Args) -> None:
+    thermal_effect = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        resistance_law.calculate_resistance(resistance_initial, test_args.temperature_coefficient,
+        potential_law.calculate_isobaric_potential(thermal_effect, test_args.entropy,
             test_args.temperature)
     with raises(TypeError):
-        resistance_law.calculate_resistance(100, test_args.temperature_coefficient,
+        potential_law.calculate_isobaric_potential(100, test_args.entropy,
             test_args.temperature)
 
 
-def test_bad_temperature_coefficient(test_args: Args) -> None:
-    temperature_coefficient = Quantity(1 * units.coulomb)
+def test_bad_entropy(test_args: Args) -> None:
+    entropy = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        resistance_law.calculate_resistance(test_args.resistance_initial, temperature_coefficient,
+        potential_law.calculate_isobaric_potential(test_args.thermal_effect, entropy,
             test_args.temperature)
     with raises(TypeError):
-        resistance_law.calculate_resistance(test_args.resistance_initial, 100,
+        potential_law.calculate_isobaric_potential(test_args.thermal_effect, 100,
             test_args.temperature)
 
 
 def test_bad_temperature(test_args: Args) -> None:
     temperature = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        resistance_law.calculate_resistance(test_args.resistance_initial,
-            test_args.temperature_coefficient, temperature)
+        potential_law.calculate_isobaric_potential(test_args.thermal_effect,
+            test_args.entropy, temperature)
     with raises(TypeError):
-        resistance_law.calculate_resistance(test_args.resistance_initial,
-            test_args.temperature_coefficient, 100)
+        potential_law.calculate_isobaric_potential(test_args.thermal_effect,
+            test_args.entropy, 100)

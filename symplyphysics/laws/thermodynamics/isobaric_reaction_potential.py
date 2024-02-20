@@ -9,42 +9,42 @@ from symplyphysics import (
 )
 
 # Description
-## The resistance depends on the temperature. For different materials, the value
-## of the temperature coefficient and resistance at zero degrees celsius may differ.
+## The isobaric potential of a reaction is a value whose change during a chemical reaction is equal to the change in the internal
+## energy of the system. The isobaric potential shows how much of the total internal energy of the system can be used for chemical
+## transformations.
 
-## Law is: R = R0 * (1 + a * (T - T0)), where
-## R - resistance,
-## R0 - resistance at zero degrees celsius,
-## a - temperature coefficient,
+## Law is: G = H - T * S, where
+## G - isobaric potential of reaction,
+## H - thermal effect of reaction,
 ## T - temperature,
-## T0 - 273.15 kelvin degrees.
+## S - entropy.
 
-resistance = Symbol("resistance", units.impedance)
+# Conditions:
+## - we neglect the temperature dependence of thermodynamic quantities.
 
-resistance_initial = Symbol("resistance_initial", units.impedance)
-temperature_coefficient = Symbol("temperature_coefficient", 1 / units.temperature)
+isobaric_potential = Symbol("isobaric_potential", units.energy / units.amount_of_substance)
+
+thermal_effect = Symbol("thermal_effect", units.energy / units.amount_of_substance)
+entropy = Symbol("entropy", units.energy / units.amount_of_substance / units.temperature)
 temperature = Symbol("temperature", units.temperature)
 
-celsius_to_kelvin = Quantity(273.15 * units.kelvin)
-
-law = Eq(resistance,
-    resistance_initial * (1 + temperature_coefficient * (temperature - celsius_to_kelvin)))
+law = Eq(isobaric_potential, thermal_effect - temperature * entropy)
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(resistance_initial_=resistance_initial,
-    temperature_coefficient_=temperature_coefficient,
+@validate_input(thermal_effect_=thermal_effect,
+    entropy_=entropy,
     temperature_=temperature)
-@validate_output(resistance)
-def calculate_resistance(resistance_initial_: Quantity, temperature_coefficient_: Quantity,
+@validate_output(isobaric_potential)
+def calculate_isobaric_potential(thermal_effect_: Quantity, entropy_: Quantity,
     temperature_: Quantity) -> Quantity:
-    result_expr = solve(law, resistance, dict=True)[0][resistance]
+    result_expr = solve(law, isobaric_potential, dict=True)[0][isobaric_potential]
     result_expr = result_expr.subs({
-        resistance_initial: resistance_initial_,
-        temperature_coefficient: temperature_coefficient_,
+        thermal_effect: thermal_effect_,
+        entropy: entropy_,
         temperature: temperature_
     })
     return Quantity(result_expr)
