@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics import general_definition_of_entropy as entropy_law
+from symplyphysics.laws.thermodynamics import entropy_from_statistical_weight as entropy_law
 
 # Description
 ## Let the statistical weight of the state of the system be equal to 1000000. Then the entropy of the system will be equal
