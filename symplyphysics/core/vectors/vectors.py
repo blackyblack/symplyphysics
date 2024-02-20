@@ -146,7 +146,5 @@ class QuantityVector(DimensionSymbol):
     def from_base_vector(vector: Vector, *,
         dimension: Optional[Dimension] = None,
         subs: Optional[dict[Expr, Quantity]] = None) -> QuantityVector:
-        components = vector.components
-        if subs is not None:
-            components = subs_list(components, subs)
+        components = vector.components if subs is None else subs_list(vector.components, subs)
         return QuantityVector(components, vector.coordinate_system, dimension=dimension)
