@@ -12,7 +12,10 @@ from symplyphysics.laws.conservation import (
     momentum_after_collision_equals_to_momentum_before as momentum_conservation_law,)
 from symplyphysics.definitions import (momentum_is_mass_times_velocity as momentum_def,
     mass_flow_rate as flow_rate_def)
-from symplyphysics.laws.kinematic import (accelerated_velocity_from_time as acceleration_def)
+from symplyphysics.laws.kinematic import (
+    accelerated_velocity_from_time as acceleration_def,
+    classical_addition_of_velocities as galilean_law,
+)
 
 # Description
 ## Assuming we are at rest relative to an inertial reference frame, we observe a rocket
@@ -69,12 +72,11 @@ rocket_speed_relative_to_frame = rocket_speed + rocket_speed_change
 rocket_speed_relative_to_products = relative_velocity
 products_speed_relative_to_frame = products_speed
 
-# NOTE: probably needs a separate law - this is Galilean law of addition of velocities
-relative_speed_eqn = Eq(
-    rocket_speed_relative_to_frame,
-    # velocities are directed in opposite sides
-    rocket_speed_relative_to_products + products_speed_relative_to_frame,
-)
+relative_speed_eqn = galilean_law.law.subs({
+    galilean_law.body_velocity_in_first_frame: rocket_speed_relative_to_frame,
+    galilean_law.body_velocity_in_second_frame: rocket_speed_relative_to_products,
+    galilean_law.second_frame_velocity_in_first_frame: products_speed_relative_to_frame,
+})
 
 momentum_conservation_eqn = momentum_conservation_law.law.subs({
     momentum_conservation_law.momentum(momentum_conservation_law.time_before):
