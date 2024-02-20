@@ -23,15 +23,15 @@ from symplyphysics import (
 ## - Space and time are absolute
 ## - Applies to inertial frames of reference
 
-speed_relative_to_first_frame = Symbol("velocity_relative_to_first_frame", units.velocity)
-speed_relative_to_second_frame = Symbol("velocity_relative_to_second_frame", units.velocity)
-relative_speed_of_second_frame_relative_to_first = Symbol(
-    "relative_speed_of_second_frame_relative_to_first", units.velocity
+body_velocity_in_first_frame = Symbol("body_velocity_in_first_frame", units.velocity)
+body_velocity_in_second_frame = Symbol("body_velocity_in_second_frame", units.velocity)
+second_frame_velocity_in_first_frame = Symbol(
+    "second_frame_velocity_in_first_frame", units.velocity
 )
 
 law = Eq(
-    speed_relative_to_first_frame,
-    speed_relative_to_second_frame + relative_speed_of_second_frame_relative_to_first,
+    body_velocity_in_first_frame,
+    body_velocity_in_second_frame + second_frame_velocity_in_first_frame,
 )
 
 def print_law() -> str:
@@ -39,16 +39,16 @@ def print_law() -> str:
 
 
 @validate_input(
-    speed_relative_to_second_frame_=speed_relative_to_second_frame,
-    relative_speed_of_second_frame_relative_to_first_=relative_speed_of_second_frame_relative_to_first,
+    velocity_in_second_frame_=body_velocity_in_second_frame,
+    second_frame_velocity_in_first_frame_=second_frame_velocity_in_first_frame,
 )
-@validate_output(speed_relative_to_first_frame)
-def calculate_speed_relative_to_first_frame(
-    speed_relative_to_second_frame_: Quantity,
-    relative_speed_of_second_frame_relative_to_first_: Quantity,
+@validate_output(body_velocity_in_first_frame)
+def calculate_velocity_in_first_frame(
+    velocity_in_second_frame_: Quantity,
+    second_frame_velocity_in_first_frame_: Quantity,
 ) -> Quantity:
     result = law.rhs.subs({
-        speed_relative_to_second_frame: speed_relative_to_second_frame_,
-        relative_speed_of_second_frame_relative_to_first: relative_speed_of_second_frame_relative_to_first_,
+        body_velocity_in_second_frame: velocity_in_second_frame_,
+        second_frame_velocity_in_first_frame: second_frame_velocity_in_first_frame_,
     })
     return Quantity(result)
