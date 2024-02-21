@@ -7,7 +7,6 @@ from symplyphysics.laws.thermodynamics import gas_pressure_from_temperature as p
 ## With a pressure coefficient of 0.003661 [1 / kelvin], a temperature of 293.15 kelvin and a standard pressure of 101325 pascal,
 ## the pressure change will be 108744 pascal.
 ## https://www.indigomath.ru/formuly-po-fizike/molekuljarnaja-kinetika/temperaturnaja-zavisimost-davlenija-gaza.html
-## https://www.fxyz.ru/%D1%84%D0%BE%D1%80%D0%BC%D1%83%D0%BB%D1%8B_%D0%BF%D0%BE_%D1%84%D0%B8%D0%B7%D0%B8%D0%BA%D0%B5/%D1%82%D0%B5%D1%80%D0%BC%D0%BE%D0%B4%D0%B8%D0%BD%D0%B0%D0%BC%D0%B8%D0%BA%D0%B0_%D1%82%D0%B5%D0%BE%D1%80%D0%B8%D1%8F_%D1%82%D0%B5%D0%BF%D0%BB%D0%BE%D1%82%D1%8B/%D1%82%D0%B5%D0%BF%D0%BB%D0%BE%D0%B2%D0%BE%D0%B5_%D1%80%D0%B0%D1%81%D1%88%D0%B8%D1%80%D0%B5%D0%BD%D0%B8%D0%B5/%D1%80%D0%B0%D1%81%D1%88%D0%B8%D1%80%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B3%D0%B0%D0%B7%D0%B0/%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D0%BA%D0%BE%D1%8D%D1%84%D1%84%D0%B8%D1%86%D0%B8%D0%B5%D0%BD%D1%82_%D0%B4%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F/
 
 Args = namedtuple("Args", ["standard_pressure", "thermal_coefficient", "temperature"])
 
