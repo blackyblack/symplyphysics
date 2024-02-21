@@ -312,7 +312,7 @@ def test_basic_to_quantities(test_args: Args) -> None:
         vector.components[1].dimension] == [q1.dimension, q2.dimension]
 
 
-def test_from_base_vector(test_args: Args) -> None:
+def test_from_base_vector() -> None:
     vector = Vector([1, 2, 3])
     quantity_vector = QuantityVector.from_base_vector(vector)
     for component, quantity in zip(vector.components, quantity_vector.components):

@@ -6,6 +6,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## Brownian motion is the random motion of microscopic visible suspended particles of a solid substance in a liquid or gas caused by the thermal motion of particles of a liquid or gas.
 ## The diffusion coefficient is a quantitative characteristic of the diffusion rate, equal to the amount of matter passing per unit time through a section of a unit area as a result of the thermal motion of molecules with a concentration gradient equal to one(corresponding to a change of 1 mol/l → 0 mol/l per unit length).
 ## The diffusion coefficient is determined by the properties of the medium and the type of diffusing particles.
+## This law is also known as Stokes–Einstein–Sutherland relation.
 
 ## Law: D = R * T / (6 * Na * pi * r * eta)
 ## Where:
@@ -16,9 +17,11 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## r is particle radius
 ## eta is dynamic viscosity
 
-## Conditions
-## Particle displacements in any direction are equally likely
-## The inertia of a Brownian particle can be neglected compared to the influence of friction forces
+# Conditions:
+## - Particle displacements in any direction are equally likely
+## - The inertia of a Brownian particle can be neglected compared to the influence of friction forces
+## - Particles are spherical
+## - Low Reynolds number, ie non turbulent flow
 
 diffusion_coefficient = Symbol("diffusion_coefficient", units.area / units.time)
 temperature = Symbol("temperature", units.temperature)
