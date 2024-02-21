@@ -5,7 +5,7 @@ from symplyphysics.laws.thermodynamics import isobaric_potential_from_heat_capac
 
 # Description
 ## The decomposition of barium carbonate by the reaction: BaCO3 = BaO + CO2.
-## At a temperature of 298 kelvin, the thermal effect of the reaction is 552866 joule per mole, the entropy change is 37.22 [joule / (mole * kelvin)],
+## At a temperature of 298 kelvin, the thermal effect of the reaction is 552866 joule per mole, the entropy change is 155 [joule / (mole * kelvin)],
 ## The isobaric heat capacity is -8.79 [joule / (mole * kelvin)].
 ## Then the isobaric potential is 506676 joule per mole.
 ## https://studfile.net/preview/5797036/page:4/

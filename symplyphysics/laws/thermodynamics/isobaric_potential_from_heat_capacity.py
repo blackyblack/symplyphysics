@@ -12,6 +12,7 @@ from symplyphysics import (
 ## The isobaric potential of a reaction is a value whose change during a chemical reaction is equal to the change in the internal
 ## energy of the system. The isobaric potential shows how much of the total internal energy of the system can be used for chemical
 ## transformations.
+## Thermal effect of reaction is enthalpy of the system.
 
 ## Law is: G = H - T * S - Cp * T * (ln(298 / T) + (298 / T) - 1), where
 ## G - isobaric potential of reaction,
@@ -21,7 +22,8 @@ from symplyphysics import (
 ## Cp - heat capacity.
 
 # Conditions:
-## - we neglect the temperature dependence of the heat capacities.
+## - we neglect the temperature dependence of the heat capacities;
+## - the process is isobaric-isothermal.
 
 isobaric_potential = Symbol("isobaric_potential", units.energy / units.amount_of_substance)
 
