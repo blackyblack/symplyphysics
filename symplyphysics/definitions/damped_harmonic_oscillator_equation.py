@@ -50,7 +50,7 @@ def calculate_displacement(
     initial_velocity_: Quantity,
     undamped_angular_frequency_: Quantity,
     damping_ratio_: Quantity,
-    time_=time,
+    time_: Quantity,
 ) -> Quantity:
     dsolved = dsolve(definition, displacement(time)).rhs
     c12 = solve(

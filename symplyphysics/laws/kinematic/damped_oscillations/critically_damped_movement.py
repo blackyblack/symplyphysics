@@ -35,20 +35,19 @@ c1 = initial_position
 c2 = initial_velocity + c1 * undamped_angular_frequency
 
 law = Eq(
-    displacement(time), 
+    displacement(time),
     exp(-1 * undamped_angular_frequency * time) * (c1 + c2 * time),
 )
 
 # Derive from damped oscillator equation
 
-_eqn = damped_eqn.definition.subs(damped_eqn.time, time)
-# fmt: off
-_eqn = _eqn.subs({
+_eqn = damped_eqn.definition.subs(
+    damped_eqn.time, time
+).subs({
     damped_eqn.displacement(time): displacement(time),
     damped_eqn.undamped_angular_frequency: undamped_angular_frequency,
     damped_eqn.damping_ratio: 1,
 })
-# fmt: on
 
 _dsolved = dsolve(_eqn, displacement(time)).rhs
 
