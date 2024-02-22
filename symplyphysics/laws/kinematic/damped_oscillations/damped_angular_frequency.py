@@ -42,7 +42,7 @@ def print_law() -> str:
 @validate_output(damped_angular_frequency)
 def calculate_damped_angular_frequency(
     undamped_angular_frequency_: Quantity,
-    damping_ratio_: Quantity,
+    damping_ratio_: float,
 ) -> Quantity:
     result = law.rhs.subs({
         undamped_angular_frequency: undamped_angular_frequency_,
