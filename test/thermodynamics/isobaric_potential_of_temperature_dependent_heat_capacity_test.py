@@ -90,8 +90,10 @@ def test_bad_heat_capacity(test_args: Args) -> None:
             test_args.coefficient_capacity_2, test_args.coefficient_capacity_3,)
 
 
-def test_bad_coefficient_capacity_1(test_args: Args) -> None:
+def test_bad_coefficients_capacity(test_args: Args) -> None:
     coefficient_capacity_1 = Quantity(1 * units.coulomb)
+    coefficient_capacity_2 = Quantity(1 * units.coulomb)
+    coefficient_capacity_3 = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         potential_law.calculate_isobaric_potential(test_args.thermal_effect,
             test_args.entropy, test_args.temperature, test_args.heat_capacity, coefficient_capacity_1,
@@ -100,10 +102,6 @@ def test_bad_coefficient_capacity_1(test_args: Args) -> None:
         potential_law.calculate_isobaric_potential(test_args.thermal_effect,
             test_args.entropy, test_args.temperature, test_args.heat_capacity, 100,
             test_args.coefficient_capacity_2, test_args.coefficient_capacity_3,)
-
-
-def test_bad_coefficient_capacity_2(test_args: Args) -> None:
-    coefficient_capacity_2 = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         potential_law.calculate_isobaric_potential(test_args.thermal_effect,
             test_args.entropy, test_args.temperature, test_args.heat_capacity, test_args.coefficient_capacity_1,
@@ -112,10 +110,6 @@ def test_bad_coefficient_capacity_2(test_args: Args) -> None:
         potential_law.calculate_isobaric_potential(test_args.thermal_effect,
             test_args.entropy, test_args.temperature, test_args.heat_capacity, test_args.coefficient_capacity_1,
             100, test_args.coefficient_capacity_3,)
-
-
-def test_bad_coefficient_capacity_3(test_args: Args) -> None:
-    coefficient_capacity_3 = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         potential_law.calculate_isobaric_potential(test_args.thermal_effect,
             test_args.entropy, test_args.temperature, test_args.heat_capacity, test_args.coefficient_capacity_1,
