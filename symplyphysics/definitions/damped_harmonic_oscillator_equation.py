@@ -39,33 +39,31 @@ def print_law() -> str:
 
 
 @validate_input(
-    initial_position_=units.meter,
+    initial_position_=units.length,
     initial_velocity_=units.velocity,
     undamped_angular_frequency_=undamped_angular_frequency,
     damping_ratio_=damping_ratio,
     time_=time,
 )
+@validate_output(displacement)
 def calculate_displacement(
     initial_position_: Quantity,
     initial_velocity_: Quantity,
     undamped_angular_frequency_: Quantity,
-    damping_ratio_: Quantity,
+    damping_ratio_: float,
     time_: Quantity,
 ) -> Quantity:
-    dsolved = dsolve(definition, displacement(time)).rhs
+    dsolved = dsolve(definition, displacement(time)).rhs.subs({
+        undamped_angular_frequency: undamped_angular_frequency_,
+        damping_ratio: damping_ratio_,
+    })
     c12 = solve(
         [
             Eq(initial_position_, dsolved.subs(time, 0)),
             Eq(initial_velocity_, dsolved.diff(time).subs(time, 0)),
         ],
         ("C1", "C2"),
-        dict=True,
-    )[0]
-    for c, v in c12.items():
-        dsolved = dsolved.subs(c, v)
-    result = dsolved.subs({
-        undamped_angular_frequency: undamped_angular_frequency_,
-        damping_ratio: damping_ratio_,
-        time: time_,
-    })
+    )
+    dsolved = dsolved.subs(c12)
+    result = dsolved.subs(time, time_)
     return Quantity(result)

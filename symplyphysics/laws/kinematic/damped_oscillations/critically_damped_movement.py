@@ -83,12 +83,10 @@ def calculate_displacement(
     undamped_angular_frequency_: Quantity,
     time_: Quantity,
 ) -> Quantity:
-    # fmt: off
     result = law.rhs.subs({
         initial_position: initial_position_,
         initial_velocity: initial_velocity_,
         undamped_angular_frequency: undamped_angular_frequency_,
         time: time_,
     })
-    # fmt: on
     return Quantity(result)

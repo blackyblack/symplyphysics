@@ -11,7 +11,7 @@ from symplyphysics.definitions import damped_harmonic_oscillator_equation as dam
 # Description
 ## A damped oscillator is critically damped, with the damping constant z = 2.5, and an
 ## undamped angular frequency w = 5 Hz. Initial position of the oscillator is 0, and
-## its initial speed is 1 m/s. Then at t = 0.5 s, the oscillator's position is 0.041 m.
+## its initial speed is 1 m/s. Then at t = 0.5 s, the oscillator's position is 0.0259 m.
 
 Args = namedtuple("Args", "x0 v0 w z t")
 
@@ -30,7 +30,7 @@ def test_critically_damped(test_args: Args) -> None:
     result = damped_eqn.calculate_displacement(
         test_args.x0, test_args.v0, test_args.w, test_args.z, test_args.t
     )
-    assert_equal(result, 0.041 * units.meter, tolerance=2e-3)
+    assert_equal(result, 0.0259 * units.meter, tolerance=2e-3)
 
 
 def test_bad_initial_position(test_args: Args) -> None:
