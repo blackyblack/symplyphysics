@@ -29,12 +29,12 @@ damped_angular_frequency = Symbol("damped_angular_frequency", angle_type / units
 c1 = Symbol("C1", units.length)
 c2 = Symbol("C2", units.length)
 
-decay_exponent = exp(-1 * exponential_decay_constant * time)
-frequency_exponent = exp(abs(damped_angular_frequency) * time)
+decay_factor = exp(-1 * exponential_decay_constant * time)
+frequency_factor = exp(abs(damped_angular_frequency) * time)
 
 law = Eq(
     displacement(time),
-    decay_exponent * (c1 * frequency_exponent + c2 / frequency_exponent)
+    decay_factor * (c1 * frequency_factor + c2 / frequency_factor)
 )
 
 
