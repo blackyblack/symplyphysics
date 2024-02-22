@@ -1,16 +1,68 @@
-from sympy import Eq
+from sympy import Eq, exp
+from symplyphysics import (
+    units,
+    Quantity,
+    Symbol,
+    Function,
+    angle_type,
+    validate_input,
+    validate_output,
+    print_expression,
+)
 
 # Description
-## ...
+## In the presence of a damping force in the oscillating system, the system's behaviour
+## depends on the value of the damping ratio. When it is greater than 1, the system is unable
+## to oscillate and instead slowly returns to equilibrium (exponentially decays to steady
+## state). This behaviour is also known as overdamping.
 
-# ---------------------------------------------------------------------- #
-# z > 1, overdamped system                                               #
-# # the system exponentially decays to steady state without oscillations #
-# # larger values of the damping ratio return to equilibrium more slowly #
-# ---------------------------------------------------------------------- #
-
-# Law: x(t) = exp(-omega*zeta*t) * (C1 * exp(omega*sqrt(zeta**2 - 1)*t) + C2 * exp(-omega*sqrt(zeta**2 - 1)*t))
+# Law: x(t) = exp(-lambda*t) * (C1 * exp(|omega_damped|*t) + C2 * exp(-|omega_damped|*t))
 ## x(t) - position of overdamped oscillator
 ## t - time
-## zeta - damping ratio
-## omega - undamped angular frequency
+## lambda - see [exponential decay constant](./exponential_decay_in_damped_oscillator.py)
+## omega_damped - see [damped angular frequency](./damped_angular_frequency.py)
+
+displacement = Function("displacement", units.length)
+time = Symbol("time", units.time, positive=True)
+exponential_decay_constant = Symbol("exponential_decay_constant", 1 / units.time)
+damped_angular_frequency = Symbol("damped_angular_frequency", angle_type / units.time)
+c1 = Symbol("C1", units.length)
+c2 = Symbol("C2", units.length)
+
+decay_exponent = exp(-1 * exponential_decay_constant * time)
+frequency_exponent = exp(abs(damped_angular_frequency) * time)
+
+law = Eq(
+    displacement(time),
+    decay_exponent * (c1 * frequency_exponent + c2 / frequency_exponent)
+)
+
+
+def print_law() -> str:
+    return print_expression(law)
+
+
+# TODO: derive from damped oscillator equation directly
+
+
+@validate_input(
+    exponential_decay_constant_=exponential_decay_constant,
+    damped_angular_frequency_=damped_angular_frequency,
+    c1_=c1, c2_=c2, time_=time,
+)
+@validate_output(displacement)
+def calculate_displacement(
+    exponential_decay_constant_: Quantity,
+    damped_angular_frequency_: Quantity,
+    c1_: Quantity,
+    c2_: Quantity,
+    time_: Quantity,
+) -> Quantity:
+    result = law.rhs.subs({
+        exponential_decay_constant: exponential_decay_constant_,
+        damped_angular_frequency: damped_angular_frequency_,
+        c1: c1_,
+        c2: c2_,
+        time: time_,
+    })
+    return Quantity(result)
