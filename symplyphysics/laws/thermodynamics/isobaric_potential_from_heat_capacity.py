@@ -12,14 +12,14 @@ from symplyphysics import (
 ## The isobaric potential of a reaction is a value whose change during a chemical reaction is equal to the change in the internal
 ## energy of the system. The isobaric potential shows how much of the total internal energy of the system can be used for chemical
 ## transformations.
-## Thermal effect of reaction is enthalpy of the system.
+## Thermal effect of reaction is change of enthalpy of the system.
 
-## Law is: G = H - T * S - Cp * T * (ln(298 / T) + (298 / T) - 1), where
-## G - isobaric potential of reaction,
+## Law is: G = H - T * S - Cp * T * (ln(T / 298) + (298 / T) - 1), where
+## G - change of isobaric potential of reaction,
 ## H - thermal effect of reaction,
 ## T - temperature,
-## S - entropy,
-## Cp - heat capacity.
+## S - change of entropy,
+## Cp - change of heat capacity.
 
 # Conditions:
 ## - we neglect the temperature dependence of the heat capacities;
@@ -34,7 +34,7 @@ heat_capacity = Symbol("heat_capacity", units.energy / units.amount_of_substance
 standard_temperature = Quantity(298 * units.kelvin)
 
 law = Eq(isobaric_potential,
-         thermal_effect - temperature * entropy - heat_capacity * temperature * (log(standard_temperature / temperature) + (standard_temperature / temperature) - 1))
+         thermal_effect - temperature * entropy - heat_capacity * temperature * (log(temperature / standard_temperature) + (standard_temperature / temperature) - 1))
 
 
 def print_law() -> str:
