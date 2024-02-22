@@ -7,7 +7,6 @@ from symplyphysics import (
     scale_vector,
     validate_input,
     validate_output,
-    subs_list,
 )
 
 # Description
@@ -32,14 +31,16 @@ def velocity_from_momentum_law(momentum_: Vector) -> Vector:
 @validate_input(mass_=mass, velocity_=units.velocity)
 @validate_output(units.momentum)
 def calculate_momentum(mass_: Quantity, velocity_: QuantityVector) -> QuantityVector:
-    momentum_vector = momentum_definition(velocity_.to_base_vector())
-    momentum_components = subs_list(momentum_vector.components, {mass: mass_})
-    return QuantityVector(momentum_components, velocity_.coordinate_system)
+    result_vector = momentum_definition(velocity_.to_base_vector())
+    return QuantityVector.from_base_vector(
+        result_vector, subs={mass: mass_}
+    )
 
 
 @validate_input(mass_=mass, momentum_=units.momentum)
 @validate_output(units.velocity)
 def calculate_velocity(mass_: Quantity, momentum_: QuantityVector) -> QuantityVector:
-    velocity_vector = velocity_from_momentum_law(momentum_.to_base_vector())
-    velocity_components = subs_list(velocity_vector.components, {mass: mass_})
-    return QuantityVector(velocity_components, momentum_.coordinate_system)
+    result_vector = velocity_from_momentum_law(momentum_.to_base_vector())
+    return QuantityVector.from_base_vector(
+        result_vector, subs={mass: mass_}
+    )

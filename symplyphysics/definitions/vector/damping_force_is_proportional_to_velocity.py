@@ -8,7 +8,6 @@ from symplyphysics import (
     validate_input,
     validate_output,
 )
-from symplyphysics.core.symbols.quantities import subs_list
 
 # Description
 ## Damping force is an external (relative to an object) force that drains energy from the object,
@@ -39,11 +38,10 @@ def velocity_law(damping_force_: Vector) -> Vector:
 def calculate_damping_force(
     damping_constant_: Quantity, velocity_: QuantityVector
 ) -> QuantityVector:
-    vector = damping_force_definition(velocity_.to_base_vector())
-    result_components = subs_list(
-        vector.components, {damping_constant: damping_constant_}
+    result_vector = damping_force_definition(velocity_.to_base_vector())
+    return QuantityVector.from_base_vector(
+        result_vector, subs={damping_constant: damping_constant_}
     )
-    return QuantityVector(result_components, velocity_.coordinate_system)
 
 
 @validate_input(
@@ -54,8 +52,7 @@ def calculate_damping_force(
 def calculate_velocity(
     damping_constant_: Quantity, damping_force_: QuantityVector
 ) -> QuantityVector:
-    vector = velocity_law(damping_force_.to_base_vector())
-    result_components = subs_list(
-        vector.components, {damping_constant: damping_constant_}
+    result_vector = velocity_law(damping_force_.to_base_vector())
+    return QuantityVector.from_base_vector(
+        result_vector, subs={damping_constant: damping_constant_}
     )
-    return QuantityVector(result_components, damping_force_.coordinate_system)
