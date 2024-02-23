@@ -28,7 +28,7 @@ from symplyphysics.core.symbols.quantities import scale_factor
 ## - System is underdamped, i.e. its damping ratio is less than 1.
 
 displacement = Function("displacement", units.length, real=True)
-time = Symbol("time", units.time, positive=True)
+time = Symbol("time", units.time, nonnegative=True)
 amplitude = Symbol("amplitude", units.length, positive=True)
 exponential_decay_constant = Symbol("exponential_decay_constant", 1 / units.time, positive=True)
 undamped_angular_frequency = Symbol("undamped_angular_frequency", angle_type / units.time, positive=True)
