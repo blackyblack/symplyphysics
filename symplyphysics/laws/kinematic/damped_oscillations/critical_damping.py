@@ -25,18 +25,21 @@ from symplyphysics.definitions import damped_harmonic_oscillator_equation as dam
 ## x0 - oscillator's initial position
 ## v0 - oscillator's initial velocity
 
+# Conditions
+## - System is critically damped, i.e. its damping ratio is equal to 1.
+
 displacement = Function("displacement", units.length)
 time = Symbol("time", units.time, positive=True)
 undamped_angular_frequency = Symbol("undamped_angular_frequency", angle_type / units.time, positive=True)
 initial_position = Symbol("initial_position", units.length)
 initial_velocity = Symbol("initial_velocity", units.velocity)
 
-c1 = initial_position
-c2 = initial_velocity + c1 * undamped_angular_frequency
-
 law = Eq(
     displacement(time),
-    exp(-1 * undamped_angular_frequency * time) * (c1 + c2 * time),
+    exp(-1 * undamped_angular_frequency * time) * (
+        initial_position
+        + (initial_velocity + initial_position * undamped_angular_frequency) * time
+    ),
 )
 
 # Derive from damped oscillator equation
