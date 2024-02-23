@@ -4,7 +4,7 @@ from symplyphysics import (assert_equal, units, Quantity, errors)
 from symplyphysics.laws.dynamics import coefficient_of_stiffness_from_area_length as coefficient_law
 
 # Description
-## Consider an aluminum spring. The Young's modulus for aluminum is 70e9 pascal. With a spring cross-section of 0.1 [meter^2] and a length of 3 meter,
+## Consider an aluminum bar. The Young's modulus for aluminum is 70e9 pascal. With a bar cross-section of 0.1 [meter^2] and a length of 3 meter,
 ## the stiffness coefficient is 2333333333 [newton / meter].
 ## https://educon.by/index.php/formuly/phystheory
 ## https://ru.wikipedia.org/wiki/%D0%9C%D0%BE%D0%B4%D1%83%D0%BB%D1%8C_%D0%AE%D0%BD%D0%B3%D0%B0
