@@ -11,20 +11,19 @@ from symplyphysics import (
 )
 
 # Description
-## For any (positive) value of the damping ratio, the position of a damped oscillator
-## is subject to exponential decay, i.e. its position is proportional to exp(-lambda*t)
-## where lambda is the exponential decay constant and t is time.
+## The damping ratio of an oscillator can be calculated via the exponential decay constant,
+## which describes how fast the oscillations decay, and its undamped angular frequency.
 
-# Law: lambda = omega * zeta
+# Law: zeta = lambda / omega
+## zeta - damping ratio
 ## lambda - exponential decay constant
 ## omega - undamped angular frequency of oscillator
-## zeta - damping ratio
 
+damping_ratio = Symbol("damping_ratio", dimensionless)
 exponential_decay_constant = Symbol("exponential_decay_constant", 1 / units.time)
 undamped_angular_frequency = Symbol("undamped_angular_frequency", angle_type / units.time)
-damping_ratio = Symbol("damping_ratio", dimensionless)
 
-law = Eq(exponential_decay_constant, undamped_angular_frequency * damping_ratio)
+law = Eq(damping_ratio, exponential_decay_constant / undamped_angular_frequency)
 
 
 def print_law() -> str:
@@ -32,16 +31,16 @@ def print_law() -> str:
 
 
 @validate_input(
+    exponential_decay_constant_=exponential_decay_constant,
     undamped_angular_frequency_=undamped_angular_frequency,
-    damping_ratio_=damping_ratio,
 )
-@validate_output(exponential_decay_constant)
-def calculate_exponential_decay_constant(
+@validate_output(damping_ratio)
+def calculate_damping_ratio(
+    exponential_decay_constant_: Quantity,
     undamped_angular_frequency_: Quantity,
-    damping_ratio_: float,
 ) -> Quantity:
     result = law.rhs.subs({
+        exponential_decay_constant: exponential_decay_constant_,
         undamped_angular_frequency: undamped_angular_frequency_,
-        damping_ratio: damping_ratio_,
     })
     return Quantity(result)
