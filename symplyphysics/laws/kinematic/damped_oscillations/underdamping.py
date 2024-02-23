@@ -10,6 +10,8 @@ from symplyphysics import (
     angle_type,
 )
 from symplyphysics.core.symbols.quantities import scale_factor
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.definitions import damped_harmonic_oscillator_equation as damped_eqn
 
 # Description
 ## In the presence of a damping force in the oscillating system, the system's behaviour
@@ -40,6 +42,12 @@ law = Eq(
     * exp(-1 * exponential_decay_constant * time)
     * cos(undamped_angular_frequency * time + phase_lag)
 )
+
+
+# TODO: Relate to [damped oscillations equation](../../../definitions/damped_harmonic_oscillator_equation.py)
+## We will show it is the solution of the aforementioned equation.
+
+## NOTE: requires law of damping ratio for this
 
 
 def print_law() -> str:
