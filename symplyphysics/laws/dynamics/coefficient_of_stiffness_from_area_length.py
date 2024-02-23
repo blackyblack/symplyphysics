@@ -9,7 +9,7 @@ from symplyphysics import (
 )
 
 # Description
-## The bar stiffness coefficient depends on the Young's module, cross-sectional area and length.
+## The stiffness coefficient depends on the Young's module, cross-sectional area and length.
 ## Young's module is a tabular value that differs for each material.
 
 ## Law is: k = E * S / l, where
