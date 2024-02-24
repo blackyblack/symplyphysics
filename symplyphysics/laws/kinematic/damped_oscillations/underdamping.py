@@ -1,4 +1,4 @@
-from sympy import Eq, exp, cos, solve
+from sympy import Eq, exp, cos, solve, symbols
 from symplyphysics import (
     units,
     Quantity,
@@ -9,7 +9,13 @@ from symplyphysics import (
     validate_output,
     angle_type,
 )
+from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import scale_factor
+from symplyphysics.definitions import damped_harmonic_oscillator_equation as damped_eqn
+from symplyphysics.laws.kinematic.damped_oscillations import (
+    damping_ratio_from_decay_constant_and_undamped_frequency as damping_ratio_law,
+    damped_angular_frequency as damped_frequency_law,
+)
 
 # Description
 ## In the presence of a damping force in the oscillating system, the system's behaviour
@@ -42,10 +48,39 @@ law = Eq(
 )
 
 
-# TODO: Relate to [damped oscillations equation](../../../definitions/damped_harmonic_oscillator_equation.py)
+# Relating to [damped oscillations equation](../../../definitions/damped_harmonic_oscillator_equation.py)
 ## We will show it is the solution of the aforementioned equation.
 
-## NOTE: requires law of damping ratio for this
+_damping_ratio_sym, _undamped_frequency_sym = symbols("damping_ratio undamped_frequency", positive=True)
+
+_decay_eqn = damping_ratio_law.law.subs({
+    damping_ratio_law.damping_ratio: _damping_ratio_sym,
+    damping_ratio_law.exponential_decay_constant: exponential_decay_constant,
+    damping_ratio_law.undamped_angular_frequency: _undamped_frequency_sym,
+})
+_frequencies_eqn = damped_frequency_law.law.subs({
+    damped_frequency_law.damped_angular_frequency: damped_angular_frequency,
+    damped_frequency_law.undamped_angular_frequency: _undamped_frequency_sym,
+    damped_frequency_law.damping_ratio: _damping_ratio_sym,
+})
+
+_solved = solve(
+    [_decay_eqn, _frequencies_eqn],
+    (_damping_ratio_sym, _undamped_frequency_sym),
+    dict=True
+)[0]
+_damping_ratio_expr = _solved[_damping_ratio_sym]
+_undamped_frequency_expr = _solved[_undamped_frequency_sym]
+
+_diff_eqn = damped_eqn.definition.subs(damped_eqn.time, time)
+
+_diff_eqn_subs = _diff_eqn.subs({
+    damped_eqn.displacement(time): law.rhs,
+    damped_eqn.undamped_angular_frequency: _undamped_frequency_expr,
+    damped_eqn.damping_ratio: _damping_ratio_expr,
+}).doit()
+
+assert expr_equals(_diff_eqn_subs, 0)
 
 
 def print_law() -> str:
