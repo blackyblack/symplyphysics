@@ -16,7 +16,7 @@ from symplyphysics import (
 
 ## Law is: D = D0 * exp(-Ea / (k * T)), where
 ## R - diffusion coefficient,
-## D0 - diffusion constant(tabular value depends on dopant),
+## D0 - diffusion constant (tabular value depends on dopant),
 ## Ea - activation energy of dopant,
 ## k - boltzmann constant,
 ## T - temperature.

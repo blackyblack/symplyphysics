@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.condensed_matter import diffusion_coefficient as diffusion_law
+from symplyphysics.laws.condensed_matter import diffusion_coefficient_from_energy_temperature as diffusion_law
 
 # Description
 ## Consider a dopant of phosphorus in silicon. The diffusion constant will be 3.85 [centimeter^2 / second],
