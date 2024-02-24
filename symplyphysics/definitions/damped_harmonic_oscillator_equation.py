@@ -33,6 +33,10 @@ definition = (
     + undamped_angular_frequency**2 * displacement(time)
 )
 
+# This solution can be used in the case of an overdamped oscillator.
+# It contains coefficients "C1" and "C2" that can be found from initial conditions.
+general_solution = dsolve(definition, displacement(time)).rhs
+
 
 def print_law() -> str:
     return print_expression(definition)
@@ -53,7 +57,7 @@ def calculate_displacement(
     damping_ratio_: float,
     time_: Quantity,
 ) -> Quantity:
-    dsolved = dsolve(definition, displacement(time)).rhs.subs({
+    dsolved = general_solution.subs({
         undamped_angular_frequency: undamped_angular_frequency_,
         damping_ratio: damping_ratio_,
     })
