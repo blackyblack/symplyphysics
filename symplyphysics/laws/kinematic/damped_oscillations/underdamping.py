@@ -1,4 +1,4 @@
-from sympy import Eq, exp, cos
+from sympy import Eq, exp, cos, solve
 from symplyphysics import (
     units,
     Quantity,
@@ -10,8 +10,6 @@ from symplyphysics import (
     angle_type,
 )
 from symplyphysics.core.symbols.quantities import scale_factor
-from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.definitions import damped_harmonic_oscillator_equation as damped_eqn
 
 # Description
 ## In the presence of a damping force in the oscillating system, the system's behaviour
@@ -19,11 +17,11 @@ from symplyphysics.definitions import damped_harmonic_oscillator_equation as dam
 ## with a slightly different frequency than in the undamped case, and its amplitude decreasing
 ## to zero. This behaviour is also known as underdamping.
 
-# Law: x(t) = x_max * exp(-lambda*t) * cos(omega_damped*t + phi)
+# Law: x(t) = A * exp(-lambda*t) * cos(omega_damped*t + phi)
 ## x(t) - position of damped oscillator
-## x_max - amplitude of damped oscillations
+## A - coefficient to be found from initial condition
 ## lambda - exponential decay constant
-## omega_damped - damped angular frequency
+## omega_damped - [damped angular frequency](./damped_angular_frequency.py)
 ## phi - phase lag
 
 # Conditions
@@ -31,16 +29,16 @@ from symplyphysics.definitions import damped_harmonic_oscillator_equation as dam
 
 displacement = Function("displacement", units.length, real=True)
 time = Symbol("time", units.time, nonnegative=True)
-amplitude = Symbol("amplitude", units.length, positive=True)
+coefficient = Symbol("coefficient", units.length, positive=True)
 exponential_decay_constant = Symbol("exponential_decay_constant", 1 / units.time, positive=True)
-undamped_angular_frequency = Symbol("undamped_angular_frequency", angle_type / units.time, positive=True)
+damped_angular_frequency = Symbol("damped_angular_frequency", angle_type / units.time, positive=True)
 phase_lag = Symbol("phase_lag", angle_type, real=True)
 
 law = Eq(
     displacement(time),
-    amplitude
+    coefficient
     * exp(-1 * exponential_decay_constant * time)
-    * cos(undamped_angular_frequency * time + phase_lag)
+    * cos(damped_angular_frequency * time + phase_lag)
 )
 
 
@@ -55,24 +53,28 @@ def print_law() -> str:
 
 
 @validate_input(
-    amplitude_=amplitude,
+    initial_position_=units.length,
     exponential_decay_constant_=exponential_decay_constant,
-    undamped_angular_frequency_=undamped_angular_frequency,
+    damped_angular_frequency_=damped_angular_frequency,
     phase_lag_=phase_lag,
     time_=time,
 )
 @validate_output(displacement)
 def calculate_displacement(
-    amplitude_: Quantity,
+    initial_position_: Quantity,
     exponential_decay_constant_: Quantity,
-    undamped_angular_frequency_: Quantity,
+    damped_angular_frequency_: Quantity,
     phase_lag_: Quantity | float,
     time_: Quantity,
 ) -> Quantity:
-    result = law.rhs.subs({
-        amplitude: amplitude_,
+    coefficient_expr = solve(
+        law.subs({displacement(time): initial_position_, time: 0}),
+        coefficient,
+    )[0]
+    displacement_expr = law.rhs.subs(coefficient, coefficient_expr)
+    result = displacement_expr.subs({
         exponential_decay_constant: exponential_decay_constant_,
-        undamped_angular_frequency: undamped_angular_frequency_,
+        damped_angular_frequency: damped_angular_frequency_,
         phase_lag: scale_factor(phase_lag_),
         time: time_,
     })
