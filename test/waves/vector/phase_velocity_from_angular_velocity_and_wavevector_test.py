@@ -60,15 +60,39 @@ def test_bad_frequency(test_args: Args) -> None:
         phase_velocity_law.calculate_wavevector(100, test_args.k)
 
 
-@mark.skip("finish it")
+def test_bad_wavenumber(test_args: Args) -> None:
+    k_bad_vector = QuantityVector([
+        Quantity(1.0 * units.coulomb),
+        Quantity(1.0 * units.coulomb),
+        Quantity(1.0 * units.coulomb),
+    ])
+    with raises(errors.UnitsError):
+        phase_velocity_law.calculate_phase_velocity(test_args.w, k_bad_vector)
+
+    k_scalar = Quantity(1.0 * units.radian / units.meter)
+    with raises(AttributeError):
+        phase_velocity_law.calculate_phase_velocity(test_args.w, k_scalar)
+    
+    with raises(TypeError):
+        phase_velocity_law.calculate_phase_velocity(test_args.w, 100)
+    with raises(TypeError):
+        phase_velocity_law.calculate_phase_velocity(test_args.w, [100, 100])
+
+
 def test_bad_velocity(test_args: Args) -> None:
     v_bad_vector = QuantityVector([
         Quantity(1.0 * units.coulomb),
         Quantity(1.0 * units.coulomb),
         Quantity(1.0 * units.coulomb),
     ])
+    with raises(errors.UnitsError):
+        phase_velocity_law.calculate_wavevector(test_args.w, v_bad_vector)
 
-
-@mark.skip("finish it")
-def test_bad_wavenumber(test_args: Args) -> None:
-    pass
+    v_scalar = Quantity(1.0 * units.meter / units.second)
+    with raises(AttributeError):
+        phase_velocity_law.calculate_wavevector(test_args.w, v_scalar)
+    
+    with raises(TypeError):
+        phase_velocity_law.calculate_wavevector(test_args.w, 100)
+    with raises(TypeError):
+        phase_velocity_law.calculate_wavevector(test_args.w, [100, 100])
