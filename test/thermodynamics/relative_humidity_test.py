@@ -22,20 +22,16 @@ def test_args_fixture() -> Args:
 
 def test_basic_relative_humidity(test_args: Args) -> None:
     result = humidity_law.calculate_relative_humidity(test_args.water_vapor_pressure, test_args.saturated_vapor_pressure)
-    assert_equal(result, 44.9)
+    assert_equal(result, 0.449)
 
 
-def test_bad_water_vapor_pressure(test_args: Args) -> None:
-    water_vapor_pressure = Quantity(1 * units.coulomb)
+def test_bad_pressure(test_args: Args) -> None:
+    bad_pressure = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        humidity_law.calculate_relative_humidity(water_vapor_pressure, test_args.saturated_vapor_pressure)
+        humidity_law.calculate_relative_humidity(bad_pressure, test_args.saturated_vapor_pressure)
     with raises(TypeError):
         humidity_law.calculate_relative_humidity(100, test_args.saturated_vapor_pressure)
-
-
-def test_bad_saturated_vapor_pressure(test_args: Args) -> None:
-    saturated_vapor_pressure = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        humidity_law.calculate_relative_humidity(test_args.water_vapor_pressure, saturated_vapor_pressure)
+        humidity_law.calculate_relative_humidity(test_args.water_vapor_pressure, bad_pressure)
     with raises(TypeError):
         humidity_law.calculate_relative_humidity(test_args.water_vapor_pressure, 100)

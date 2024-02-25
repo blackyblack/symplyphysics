@@ -1,4 +1,4 @@
-from sympy import (Eq, solve, S)
+from sympy import (Eq, solve)
 from symplyphysics import (
     units,
     Quantity,
@@ -6,27 +6,26 @@ from symplyphysics import (
     print_expression,
     validate_input,
     validate_output,
-    dimensionless,
-    convert_to
+    dimensionless
 )
 
 # Description
 ## Relative humidity is the ratio of water vapor pressure p to saturated vapor pressure p0 at a given temperature.
+## Saturated vapor is vapor in dynamic equilibrium with a liquid or solid of the same composition in a closed system.
+## In such a pair, the number of evaporating molecules is equal to the number of condensing molecules per unit of time.
+## Water vapor is the gaseous aggregate state of water.
 
 ## Law is: ph = (p / p_sat) * 100, where
 ## ph - relative humidity,
 ## p - water vapor pressure,
 ## p_sat - saturated vapor pressure.
 
-# Conditions:
-## - the process is isobaric-isothermal.
-
 relative_humidity = Symbol("relative_humidity", dimensionless)
 
 water_vapor_pressure = Symbol("water_vapor_pressure", units.pressure)
 saturated_vapor_pressure = Symbol("saturated_vapor_pressure", units.pressure)
 
-law = Eq(relative_humidity, (water_vapor_pressure / saturated_vapor_pressure) * 100)
+law = Eq(relative_humidity, water_vapor_pressure / saturated_vapor_pressure)
 
 
 def print_law() -> str:
@@ -37,10 +36,10 @@ def print_law() -> str:
     saturated_vapor_pressure_=saturated_vapor_pressure)
 @validate_output(relative_humidity)
 def calculate_relative_humidity(water_vapor_pressure_: Quantity,
-    saturated_vapor_pressure_: Quantity) -> float:
+    saturated_vapor_pressure_: Quantity) -> Quantity:
     result_expr = solve(law, relative_humidity, dict=True)[0][relative_humidity]
     result_expr = result_expr.subs({
         water_vapor_pressure: water_vapor_pressure_,
         saturated_vapor_pressure: saturated_vapor_pressure_
     })
-    return float(convert_to(Quantity(result_expr), S.One).evalf())
+    return Quantity(result_expr)
