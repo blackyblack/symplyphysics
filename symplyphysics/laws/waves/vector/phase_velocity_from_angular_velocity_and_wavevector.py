@@ -53,7 +53,7 @@ def calculate_phase_velocity(
 ) -> QuantityVector:
     result = phase_velocity_law(wavevector_.to_base_vector())
     return QuantityVector.from_base_vector(
-        result, 
+        result,
         subs={angular_frequency: angular_frequency_},
     )
 

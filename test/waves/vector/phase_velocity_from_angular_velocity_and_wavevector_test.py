@@ -1,5 +1,5 @@
 from collections import namedtuple
-from pytest import fixture, raises, mark
+from pytest import fixture, raises
 from symplyphysics import (
     assert_equal,
     errors,
@@ -72,7 +72,7 @@ def test_bad_wavenumber(test_args: Args) -> None:
     k_scalar = Quantity(1.0 * units.radian / units.meter)
     with raises(AttributeError):
         phase_velocity_law.calculate_phase_velocity(test_args.w, k_scalar)
-    
+
     with raises(TypeError):
         phase_velocity_law.calculate_phase_velocity(test_args.w, 100)
     with raises(TypeError):
@@ -91,7 +91,7 @@ def test_bad_velocity(test_args: Args) -> None:
     v_scalar = Quantity(1.0 * units.meter / units.second)
     with raises(AttributeError):
         phase_velocity_law.calculate_wavevector(test_args.w, v_scalar)
-    
+
     with raises(TypeError):
         phase_velocity_law.calculate_wavevector(test_args.w, 100)
     with raises(TypeError):
