@@ -16,11 +16,16 @@ from symplyphysics import (
 ## It is the velocity at which the phase of one frequency component of the wave travels.
 ## The phase velocity is collinear with the wavevector.
 
-# Law: v = w * k / |k|**2
-## v - vector of phase velocity of wave
+# Note
+## A angular wavevector is a vector used in describing a wave. Its magnitude is the angular
+## wavenumber of the wave. Its direction is perpendicular to the wavefront, and in isotropic
+## media it is also the direction of wave propagation.
+
+# Law: v = (w / |k|) * (k / |k|)
+## v - phase velocity of wave
 ## w - angular frequency of wave
-## k - wavevector of wave
-## |k| - wavenumber of wave, where |v| is the Euclidean norm of vector v
+## k - angular wavevector of wave
+## |k| - [angular wavenumber of wave](../../../definitions/angular_wavenumber_is_inverse_wavelength.py)
 
 angular_frequency = Symbol("angular_frequency", angle_type / units.time, positive=True)
 
