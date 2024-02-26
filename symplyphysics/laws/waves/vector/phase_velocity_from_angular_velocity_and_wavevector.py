@@ -19,12 +19,12 @@ from symplyphysics.core.expr_comparisons import expr_equals
 ## The phase velocity is collinear with the wavevector.
 
 # Note
-## A angular wavevector is a vector used in describing a wave. Its magnitude is the angular
+## Angular wavevector is a vector used in describing a wave. Its magnitude is the angular
 ## wavenumber of the wave. Its direction is perpendicular to the wavefront, and in isotropic
 ## media it is also the direction of wave propagation.
 
 # Law: v = (w / |k|) * (k / |k|)
-## v - phase velocity of wave
+## v - [phase velocity of wave](../phase_velocity_from_angular_velocity_and_wavevector.py)
 ## w - angular frequency of wave
 ## k - angular wavevector of wave
 ## |k| - [angular wavenumber of wave](../../../definitions/angular_wavenumber_is_inverse_wavelength.py)
