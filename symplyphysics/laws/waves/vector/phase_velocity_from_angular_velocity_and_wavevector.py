@@ -1,3 +1,4 @@
+from sympy import symbols
 from symplyphysics import (
     units,
     angle_type,
@@ -10,6 +11,7 @@ from symplyphysics import (
     scale_vector,
     vector_magnitude,
 )
+from symplyphysics.core.expr_comparisons import expr_equals
 
 # Description
 ## The phase velocity of a wave is the rate at which the wave propagates in a medium.
@@ -38,13 +40,26 @@ def phase_velocity_law(wavevector_: Vector) -> Vector:
     )
 
 
-# k = |k| * e_k = (w / |v|) * (v / |v|) = w * v / |v|**2
+# k   =   |k| * e_k
+#   =(1)= (w / |v|) * e_k
+#   =(2)= (w / |v|) * (v / |v|)
+#     =   w * v / |v|**2
+# where
+# (1) |v| = (w / |k|) * (|k| / |k|) = w / |k| => |k| = w / |v|
+# (2) v / |v| =(1)= (w / |k|) * (k / |k|) / (w / |k|) = k / |k| = e_k
 def wavevector_law(phase_velocity_: Vector) -> Vector:
     phase_speed_ = vector_magnitude(phase_velocity_)
     return scale_vector(
         angular_frequency / phase_speed_**2,
         phase_velocity_,
     )
+
+# Prove the wavevector law for arbitrary v and w
+_phase_velocity = Vector(symbols("phase_velocity_x:z"))
+_wavevector_derived = wavevector_law(_phase_velocity)
+_phase_velocity_derived = phase_velocity_law(_wavevector_derived)
+for _component, _derived_component in zip(_phase_velocity.components, _phase_velocity_derived.components):
+    assert expr_equals(_component, _derived_component)
 
 
 @validate_input(
