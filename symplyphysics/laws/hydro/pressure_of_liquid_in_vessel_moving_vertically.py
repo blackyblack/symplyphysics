@@ -5,7 +5,7 @@ from symplyphysics import (
     Symbol,
     print_expression,
     validate_input,
-    validate_output,
+    validate_output
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from sympy.physics.units import acceleration_due_to_gravity as earth_free_fall_acceleration
@@ -18,11 +18,15 @@ from symplyphysics.laws.hydro import hydrostatic_pressure_from_density_and_depth
 ## and the height.
 
 ## Law is: p = p0 * |g + a| * h, where
+## || - absolute value of the value,
 ## p - pressure,
 ## p0 - density of liquid,
 ## g - earth free fall acceleration,
 ## a - acceleration of vessel,
 ## h - height.
+
+# Conditions:
+# - vessel is closed on both sides.
 
 pressure = Symbol("pressure", units.pressure)
 
@@ -33,6 +37,8 @@ height = Symbol("height", units.length)
 law = Eq(pressure, density_liquid * Abs(earth_free_fall_acceleration + acceleration) * height)
 
 # This law might be derived via hydrostatic pressure law.
+# The vessel moves vertically and the pressure exerted by the resultant force on a surface of equal pressure
+# is considered. The modulus of the resulting force will be equal to m * sqrt((g+a)^2) = m * |g + a|.
 
 pressure_law_applied = pressure_law.law.subs({
     pressure_law.density: density_liquid,

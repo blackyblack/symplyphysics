@@ -5,12 +5,12 @@ from symplyphysics import units, Quantity, Symbol, print_expression, validate_in
 # Law: P = ρ * g * h
 # P - hydrostatic pressure
 # ρ - density of liquid
-# g - acceleration of gravity
+# g - acceleration (should be directed vertically downwards.)
 # h - depth
 
 density = Symbol("density", units.mass / units.volume)
 depth = Symbol("depth", units.length)
-acceleration = Symbol("depth", units.acceleration)
+acceleration = Symbol("acceleration", units.acceleration)
 hydrostatic_pressure = Symbol("hydrostatic_pressure", units.pressure)
 
 law = Eq(hydrostatic_pressure, density * acceleration * depth)

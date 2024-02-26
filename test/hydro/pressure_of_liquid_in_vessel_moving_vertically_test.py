@@ -1,11 +1,12 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.hydro import pressure_of_liquid_in_vessel_moving_horizontally as pressure_law
+from sympy.physics.units import acceleration_due_to_gravity as earth_free_fall_acceleration
+from symplyphysics.laws.hydro import pressure_of_liquid_in_vessel_moving_vertically as pressure_law
 
 # Description
-## Consider a vessel 1 meter high with water moving vertically with an acceleration of 1 [meter / second^2].
-## Then the water pressure in the vessel will be 9827 pascal.
+## Consider a vessel 1 meter high with water moving vertically down with an acceleration of 1 [meter / second^2].
+## Then the water pressure in the vessel will be 10774 pascal.
 
 Args = namedtuple("Args", ["density_liquid", "acceleration", "height"])
 
@@ -24,7 +25,7 @@ def test_args_fixture() -> Args:
 def test_basic_pressure(test_args: Args) -> None:
     result = pressure_law.calculate_pressure(test_args.density_liquid,
         test_args.acceleration, test_args.height)
-    assert_equal(result, 9827 * units.pascal)
+    assert_equal(result, 10774 * units.pascal)
 
 
 def test_bad_density_liquid(test_args: Args) -> None:

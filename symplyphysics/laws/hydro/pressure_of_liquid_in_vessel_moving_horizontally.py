@@ -16,6 +16,8 @@ from symplyphysics.laws.hydro import hydrostatic_pressure_from_density_and_depth
 ## If a vessel with a liquid moves with horizontal acceleration, then the hydrostatic pressure of the liquid
 ## depends on the density of the liquid, the acceleration of free fall, the horizontal acceleration of the vessel
 ## and the height.
+## Height is the distance from the surface of the water in the vessel to the surface of equal pressure. In a vessel
+## moving with horizontal acceleration, the planes of equal pressure are inclined at an angle to the horizon.
 
 ## Law is: p = p0 * sqrt(g^2 + a^2) * h, where
 ## p - pressure,
@@ -33,6 +35,9 @@ height = Symbol("height", units.length)
 law = Eq(pressure, density_liquid * sqrt(earth_free_fall_acceleration**2 + acceleration**2) * height)
 
 # This law might be derived via hydrostatic pressure law.
+# The vessel moves horizontally and the pressure exerted by the resultant force on a surface of equal pressure,
+# which is inclined with respect to the horizon, is considered. The modulus of the optimizing force will be equal
+# to m* sqrt(g^2+ a^2). 
 
 pressure_law_applied = pressure_law.law.subs({
     pressure_law.density: density_liquid,
