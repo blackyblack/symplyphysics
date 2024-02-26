@@ -3,7 +3,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 
-from symplyphysics.laws.thermodynamics import laplas_pressure as laplas_law
+from symplyphysics.laws.thermodynamics import laplase_pressure as laplase_law
 
 # Description
 ## Under the curved surface of the liquid, in addition to the internal pressure,
@@ -23,17 +23,19 @@ radius_of_bubble = Symbol("radius_of_bubble", units.length)
 law = Eq(excessive_pressure, 4 * surface_tension_of_the_liquid / radius_of_bubble)
 
 # This law might be derived via Laplas law.
-# The bubble has two surfaces – an outer and an inner one, each of which creates additional pressure.
-# Therefore, an additional multiplier of "2" appears.
 
-laplas_law_applied = laplas_law.law.subs({
-    laplas_law.surface_tension_of_the_liquid: 2 * surface_tension_of_the_liquid,
-    laplas_law.radius_of_curvature: radius_of_bubble
+laplase_law_applied = laplase_law.law.subs({
+    laplase_law.surface_tension_of_the_liquid: surface_tension_of_the_liquid,
+    laplase_law.radius_of_curvature: radius_of_bubble
 })
-pressure_derived = solve(laplas_law_applied, laplas_law.laplas_pressure, dict=True)[0][laplas_law.laplas_pressure]
+
+# This is an excess pressure in a spherical drop.
+pressure_derived = solve(laplase_law_applied, laplase_law.laplas_pressure, dict=True)[0][laplase_law.laplas_pressure]
 
 # Check if derived pressure is same as declared.
-assert expr_equals(pressure_derived, law.rhs)
+# The bubble has two surfaces – an outer and an inner one, each of which creates additional pressure.
+# Therefore, an additional multiplier of "2" appears.
+assert expr_equals(2 * pressure_derived, law.rhs)
 
 
 def print_law() -> str:

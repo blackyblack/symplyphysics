@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics import laplas_pressure as laplas_law
+from symplyphysics.laws.thermodynamics import laplase_pressure as laplas_law
 
 # Description
 ## Test example from http://ru.solverbook.com/spravochnik/molekulyarnaya-fizika-i-termodinamika/davlenie-pod-iskrivlennoj-poverxnostyu-zhidkosti/
