@@ -3,7 +3,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 
-from symplyphysics.laws.thermodynamics import laplase_pressure as laplase_law
+from symplyphysics.laws.thermodynamics import laplace_pressure as laplace_law
 
 # Description
 ## Under the curved surface of the liquid, in addition to the internal pressure,
@@ -22,15 +22,15 @@ radius_of_bubble = Symbol("radius_of_bubble", units.length)
 
 law = Eq(excessive_pressure, 4 * surface_tension_of_the_liquid / radius_of_bubble)
 
-# This law might be derived via Laplase law.
+# This law might be derived via Laplace law.
 
-laplase_law_applied = laplase_law.law.subs({
-    laplase_law.surface_tension_of_the_liquid: surface_tension_of_the_liquid,
-    laplase_law.radius_of_curvature: radius_of_bubble
+laplace_law_applied = laplace_law.law.subs({
+    laplace_law.surface_tension_of_the_liquid: surface_tension_of_the_liquid,
+    laplace_law.radius_of_curvature: radius_of_bubble
 })
 
 # This is an excess pressure in a spherical drop.
-pressure_derived = solve(laplase_law_applied, laplase_law.laplase_pressure, dict=True)[0][laplase_law.laplase_pressure]
+pressure_derived = solve(laplace_law_applied, laplace_law.laplace_pressure, dict=True)[0][laplace_law.laplace_pressure]
 
 # Check if derived pressure is same as declared.
 # The bubble has two surfaces – an outer and an inner one, each of which creates additional pressure.
