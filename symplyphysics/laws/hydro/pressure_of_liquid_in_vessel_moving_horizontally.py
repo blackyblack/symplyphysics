@@ -15,7 +15,7 @@ from symplyphysics.laws.hydro import hydrostatic_pressure_from_density_and_depth
 # Description
 ## If a vessel with a liquid moves with horizontal acceleration, then the hydrostatic pressure of the liquid
 ## depends on the density of the liquid, the acceleration of free fall, the horizontal acceleration of the vessel
-## and the height.
+## and the height of liquid.
 ## Height is the distance from the surface of the water in the vessel to the surface of equal pressure. In a vessel
 ## moving with horizontal acceleration, the planes of equal pressure are inclined at an angle to the horizon.
 

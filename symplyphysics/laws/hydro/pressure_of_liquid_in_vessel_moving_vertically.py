@@ -15,7 +15,7 @@ from symplyphysics.laws.hydro import hydrostatic_pressure_from_density_and_depth
 # Description
 ## If a vessel with a liquid moves with vertical acceleration, then the hydrostatic pressure of the liquid
 ## depends on the density of the liquid, the acceleration of free fall, the vertical acceleration of the vessel
-## and the height.
+## and the height of liquid.
 
 ## Law is: p = p0 * |g + a| * h, where
 ## || - absolute value of the value,
