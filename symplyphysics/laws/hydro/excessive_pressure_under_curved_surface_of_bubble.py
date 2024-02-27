@@ -22,7 +22,7 @@ radius_of_bubble = Symbol("radius_of_bubble", units.length)
 
 law = Eq(excessive_pressure, 4 * surface_tension_of_the_liquid / radius_of_bubble)
 
-# This law might be derived via Laplas law.
+# This law might be derived via Laplase law.
 
 laplase_law_applied = laplase_law.law.subs({
     laplase_law.surface_tension_of_the_liquid: surface_tension_of_the_liquid,
@@ -30,7 +30,7 @@ laplase_law_applied = laplase_law.law.subs({
 })
 
 # This is an excess pressure in a spherical drop.
-pressure_derived = solve(laplase_law_applied, laplase_law.laplas_pressure, dict=True)[0][laplase_law.laplas_pressure]
+pressure_derived = solve(laplase_law_applied, laplase_law.laplase_pressure, dict=True)[0][laplase_law.laplase_pressure]
 
 # Check if derived pressure is same as declared.
 # The bubble has two surfaces – an outer and an inner one, each of which creates additional pressure.

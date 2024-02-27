@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics import laplase_pressure as laplas_law
+from symplyphysics.laws.thermodynamics import laplase_pressure as laplase_law
 
 # Description
 ## Test example from http://ru.solverbook.com/spravochnik/molekulyarnaya-fizika-i-termodinamika/davlenie-pod-iskrivlennoj-poverxnostyu-zhidkosti/
@@ -22,22 +22,22 @@ def test_args_fixture() -> Args:
     return Args(sigma=sigma, r=r)
 
 
-def test_basic_laplas_pressure(test_args: Args) -> None:
-    result = laplas_law.calculate_laplas_pressure(test_args.sigma, test_args.r)
+def test_basic_laplase_pressure(test_args: Args) -> None:
+    result = laplase_law.calculate_laplase_pressure(test_args.sigma, test_args.r)
     assert_equal(result, 2.96e4 * units.pascal)
 
 
 def test_bad_surface_tension(test_args: Args) -> None:
     sigma_b = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        laplas_law.calculate_laplas_pressure(sigma_b, test_args.r)
+        laplase_law.calculate_laplase_pressure(sigma_b, test_args.r)
     with raises(TypeError):
-        laplas_law.calculate_laplas_pressure(100, test_args.r)
+        laplase_law.calculate_laplase_pressure(100, test_args.r)
 
 
 def test_bad_radius(test_args: Args) -> None:
     rb = Quantity(10 * units.coulomb)
     with raises(errors.UnitsError):
-        laplas_law.calculate_laplas_pressure(test_args.sigma, rb)
+        laplase_law.calculate_laplase_pressure(test_args.sigma, rb)
     with raises(TypeError):
-        laplas_law.calculate_laplas_pressure(test_args.sigma, 100)
+        laplase_law.calculate_laplase_pressure(test_args.sigma, 100)
