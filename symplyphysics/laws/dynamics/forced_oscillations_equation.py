@@ -9,6 +9,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
 )
+from symplyphysics.core.symbols.quantities import scale_factor
 
 # Description
 ## Forced, or driven, oscillations are a type of oscillations in the precence of an external driving
@@ -64,7 +65,7 @@ def calculate_displacement(
     natural_angular_frequency_: Quantity,
     driving_force_amplitude_: Quantity,
     driving_angular_frequency_: Quantity,
-    driving_phase_lag_: Quantity,
+    driving_phase_lag_: Quantity | float,
     time_: Quantity,
 ) -> Quantity:
     initial_conditions = {
@@ -79,7 +80,7 @@ def calculate_displacement(
     result = dsolved.subs({
         oscillator_mass: oscillator_mass_,
         driving_force_amplitude: driving_force_amplitude_,
-        driving_phase_lag: driving_phase_lag_,
+        driving_phase_lag: scale_factor(driving_phase_lag_),
         time: time_,
     })
     return Quantity(result)
