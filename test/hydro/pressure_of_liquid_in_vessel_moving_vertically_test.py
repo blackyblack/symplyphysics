@@ -1,7 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from sympy.physics.units import acceleration_due_to_gravity as earth_free_fall_acceleration
 from symplyphysics.laws.hydro import pressure_of_liquid_in_vessel_moving_vertically as pressure_law
 
 # Description

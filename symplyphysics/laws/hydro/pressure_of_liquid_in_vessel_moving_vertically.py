@@ -1,11 +1,14 @@
-from sympy import (Eq, solve, Abs)
+from sympy import (Eq, solve, sqrt)
 from symplyphysics import (
+    Vector,
+    add_cartesian_vectors,
     units,
     Quantity,
     Symbol,
     print_expression,
     validate_input,
-    validate_output
+    validate_output,
+    vector_magnitude,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from sympy.physics.units import acceleration_due_to_gravity as earth_free_fall_acceleration
@@ -25,25 +28,29 @@ from symplyphysics.laws.hydro import hydrostatic_pressure_from_density_and_depth
 ## a - acceleration of vessel,
 ## h - height.
 
-# Conditions:
-# - vessel is closed on both sides.
-
 pressure = Symbol("pressure", units.pressure)
 
 density_liquid = Symbol("density_liquid", units.mass / units.volume)
 acceleration = Symbol("acceleration", units.acceleration)
 height = Symbol("height", units.length)
 
-law = Eq(pressure, density_liquid * Abs(earth_free_fall_acceleration + acceleration) * height)
+law = Eq(pressure, density_liquid * sqrt((earth_free_fall_acceleration + acceleration)**2) * height)
 
 # This law might be derived via hydrostatic pressure law.
 # The vessel moves vertically and the pressure exerted by the resultant force on a surface of equal pressure
 # is considered. The modulus of the resulting force will be equal to m * sqrt((g+a)^2) = m * |g + a|.
+# If the acceleration is positive, then the vessel moves upwards. If the acceleration is negative, then
+# the vessel is moving down.
+
+free_fall_acceleration_vector = Vector([0, earth_free_fall_acceleration])
+# Vertical vector
+vessel_acceleration_vector = Vector([0, acceleration])
+total_acceleration = vector_magnitude(add_cartesian_vectors(free_fall_acceleration_vector, vessel_acceleration_vector))
 
 pressure_law_applied = pressure_law.law.subs({
     pressure_law.density: density_liquid,
     pressure_law.depth: height,
-    pressure_law.acceleration: Abs(earth_free_fall_acceleration + acceleration),
+    pressure_law.acceleration: total_acceleration,
 })
 pressure_derived = solve(pressure_law_applied, pressure_law.hydrostatic_pressure, dict=True)[0][pressure_law.hydrostatic_pressure]
 
