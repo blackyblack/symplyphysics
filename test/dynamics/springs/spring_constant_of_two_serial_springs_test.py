@@ -23,17 +23,17 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = spring_law.calculate_spring_constant(test_args.k1, test_args.k2)
+    result = spring_law.calculate_total_stiffness(test_args.k1, test_args.k2)
     assert_equal(result, 150.0 * units.newton / units.meter)
 
 
 def test_bad_spring_constants(test_args: Args) -> None:
     kb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        spring_law.calculate_spring_constant(kb, test_args.k2)
+        spring_law.calculate_total_stiffness(kb, test_args.k2)
     with raises(TypeError):
-        spring_law.calculate_spring_constant(100, test_args.k2)
+        spring_law.calculate_total_stiffness(100, test_args.k2)
     with raises(errors.UnitsError):
-        spring_law.calculate_spring_constant(test_args.k1, kb)
+        spring_law.calculate_total_stiffness(test_args.k1, kb)
     with raises(TypeError):
-        spring_law.calculate_spring_constant(test_args.k1, 100)
+        spring_law.calculate_total_stiffness(test_args.k1, 100)

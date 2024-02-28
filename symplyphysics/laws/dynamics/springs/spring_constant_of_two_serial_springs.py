@@ -38,7 +38,7 @@ def print_law() -> str:
     second_stiffness_=second_stiffness,
 )
 @validate_output(total_stiffness)
-def calculate_stiffness(
+def calculate_total_stiffness(
     first_stiffness_: Quantity,
     second_stiffness_: Quantity,
 ) -> Quantity:
