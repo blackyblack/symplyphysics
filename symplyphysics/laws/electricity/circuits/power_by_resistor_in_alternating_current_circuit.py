@@ -7,7 +7,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## the frequency of the alternating current, the time and the resistance of the resistor.
 
 ## Law is: P = I^2 * R * sin(w * t)^2, where
-## P - power,
+## P - instantaneous power,
 ## I - current amplitude,
 ## R - resistance of the resistor,
 ## w - frequency of the current,
