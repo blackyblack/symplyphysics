@@ -1,4 +1,4 @@
-from sympy import Eq, pi, sin
+from sympy import Eq, dsolve, sin
 from symplyphysics import (
     units,
     angle_type,
@@ -9,7 +9,9 @@ from symplyphysics import (
     validate_input,
     validate_output,
 )
+from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import scale_factor
+from symplyphysics.laws.dynamics import forced_oscillations_equation as forced_eqn
 
 # Description
 ## When an oscillating external force is driving the oscillations of an oscillator,
@@ -48,7 +50,26 @@ law = Eq(
     / (2 * natural_angular_frequency)
 )
 
-# TODO: derive law from driven oscillations equation
+# Derive law from driven oscillations equation
+
+_law = forced_eqn.law
+
+_eqn = _law.rhs - _law.lhs
+_eqn = _eqn.subs({
+    forced_eqn.oscillator_mass: oscillator_mass,
+    forced_eqn.natural_angular_frequency: natural_angular_frequency,
+    forced_eqn.driving_force_amplitude: driving_force_amplitude,
+    forced_eqn.driving_angular_frequency: natural_angular_frequency,
+    forced_eqn.driving_phase_lag: driving_phase_lag,
+    forced_eqn.time: time,
+})
+
+_dsolved = dsolve(_eqn, forced_eqn.displacement(time)).rhs
+
+# We're not interested in the general solution of the differential equation
+_dsolved = _dsolved.subs({"C1": 0, "C2": 0})
+
+assert expr_equals(_dsolved, law.rhs)
 
 
 def print_law() -> str:
