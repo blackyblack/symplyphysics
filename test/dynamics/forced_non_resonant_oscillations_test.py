@@ -46,18 +46,6 @@ def test_bad_mass(test_args: Args) -> None:
         )
 
 
-def test_bad_mass(test_args: Args) -> None:
-    mb = Quantity(1.0 * units.coulomb)
-    with raises(errors.UnitsError):
-        forced_law.calculate_driven_displacement(
-            mb, test_args.w0, test_args.f, test_args.w, test_args.phi, test_args.t
-        )
-    with raises(TypeError):
-        forced_law.calculate_driven_displacement(
-            100, test_args.w0, test_args.f, test_args.w, test_args.phi, test_args.t
-        )
-
-
 def test_bad_angular_frequencies(test_args: Args) -> None:
     wb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
