@@ -10,22 +10,21 @@ from symplyphysics import (
 
 # Description
 ## If two springs are side-to-side to one another, i.e. connected in parallel, the total
-## spring constant of the system of springs is equal to the sum of the spring constants
-## of each spring.
+## stiffness of the system of springs is equal to the sum of the stiffnesses of each spring.
 
 # Law: k = k1 + k2
-## k - total spring constant
-## k1 - spring constant of first spring
-## k2 - spring constant of second spring
+## k - total stiffness
+## k1 - stiffness of first spring
+## k2 - stiffness of second spring
 
 # Condition
 ## - Springs must be Hookean, or linear-response, i.e. obey the Hooke's law.
 
-total_spring_constant = Symbol("total_spring_constant", units.force / units.length)
-first_spring_constant = Symbol("first_spring_constant", units.force / units.length)
-second_spring_constant = Symbol("second_spring_constant", units.force / units.length)
+total_stiffness = Symbol("total_stiffness", units.force / units.length)
+first_stiffness = Symbol("first_stiffness", units.force / units.length)
+second_stiffness = Symbol("second_stiffness", units.force / units.length)
 
-law = Eq(total_spring_constant, first_spring_constant + second_spring_constant)
+law = Eq(total_stiffness, first_stiffness + second_stiffness)
 
 # TODO: derive law from Hooke's law
 
@@ -35,16 +34,16 @@ def print_law() -> str:
 
 
 @validate_input(
-    first_spring_constant_=first_spring_constant,
-    second_spring_constant_=second_spring_constant,
+    first_stiffness_=first_stiffness,
+    second_stiffness_=second_stiffness,
 )
-@validate_output(total_spring_constant)
-def calculate_spring_constant(
-    first_spring_constant_: Quantity,
-    second_spring_constant_: Quantity,
+@validate_output(total_stiffness)
+def calculate_stiffness(
+    first_stiffness_: Quantity,
+    second_stiffness_: Quantity,
 ) -> Quantity:
     result = law.rhs.subs({
-        first_spring_constant: first_spring_constant_,
-        second_spring_constant: second_spring_constant_,
+        first_stiffness: first_stiffness_,
+        second_stiffness: second_stiffness_,
     })
     return Quantity(result)
