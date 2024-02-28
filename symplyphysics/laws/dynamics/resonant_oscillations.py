@@ -1,4 +1,4 @@
-from sympy import Eq, pi, sin
+from sympy import Eq, dsolve, sin
 from symplyphysics import (
     units,
     angle_type,
@@ -9,7 +9,9 @@ from symplyphysics import (
     validate_input,
     validate_output,
 )
+from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import scale_factor
+from symplyphysics.laws.dynamics import forced_oscillations_equation as forced_eqn
 
 # Description
 ## When an oscillating external force is driving the oscillations of an oscillator,
@@ -17,7 +19,7 @@ from symplyphysics.core.symbols.quantities import scale_factor
 ## force is equal to the natural frequency of the oscillator. This condition is called
 ## resonance.
 
-# Law: q(t) = f_m * (w0 * t * sin(w0 * t + phi) - sin(phi) * sin(w0*t)) / (2 * m * w0**2)
+# Law: q(t) = (f_m / m) * t * sin(w0 * t + phi) / (2 * w0)
 ## q(t) - displacement of resonant oscillations
 ## t - time
 ## m - mass of oscillator
@@ -42,13 +44,31 @@ time = Symbol("time", units.time)
 
 law = Eq(
     resonant_displacement(time),
-    driving_force_amplitude
-    * (natural_angular_frequency * time * sin(natural_angular_frequency * time + driving_phase_lag)
-       - sin(driving_phase_lag) * sin(natural_angular_frequency * time))
-    / (2 * oscillator_mass * natural_angular_frequency**2)
+    (driving_force_amplitude / oscillator_mass)
+    * time 
+    * sin(natural_angular_frequency * time + driving_phase_lag)
+    / (2 * natural_angular_frequency)
 )
 
-# TODO: derive law from driven oscillations equation
+# Derive law from driven oscillations equation
+
+_eqn = forced_eqn.law.subs({
+    forced_eqn.oscillator_mass: oscillator_mass,
+    forced_eqn.natural_angular_frequency: natural_angular_frequency,
+    forced_eqn.driving_force_amplitude: driving_force_amplitude,
+    forced_eqn.driving_angular_frequency: natural_angular_frequency,
+    forced_eqn.driving_phase_lag: driving_phase_lag,
+    forced_eqn.time: time,
+})
+
+_dsolved = dsolve(_eqn, forced_eqn.displacement(time)).rhs
+
+# We're interested in the particular solution of the differential equation, therefore
+# throwing out the part that describes the oscillator's motion in the absence of an
+# external driving force.
+_dsolved = _dsolved.subs({"C1": 0, "C2": 0})
+
+assert expr_equals(_dsolved, law.rhs)
 
 
 def print_law() -> str:
