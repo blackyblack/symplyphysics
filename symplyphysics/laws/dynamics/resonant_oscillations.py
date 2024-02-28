@@ -1,4 +1,4 @@
-from sympy import Eq, pi, cos
+from sympy import Eq, pi, sin
 from symplyphysics import (
     units,
     angle_type,
@@ -17,7 +17,7 @@ from symplyphysics.core.symbols.quantities import scale_factor
 ## force is equal to the natural frequency of the oscillator. This condition is called
 ## resonance.
 
-# Law: q(t) = (f_m / m) * t * sin(w0 * t + phi) / (2 * w0)
+# Law: q(t) = f_m * (w0 * t * sin(w0 * t + phi) - sin(phi) * sin(w0*t)) / (2 * m * w0**2)
 ## q(t) - displacement of resonant oscillations
 ## t - time
 ## m - mass of oscillator
@@ -42,10 +42,10 @@ time = Symbol("time", units.time)
 
 law = Eq(
     resonant_displacement(time),
-    (driving_force_amplitude / oscillator_mass)
-    * time
-    * cos(natural_angular_frequency * time + driving_phase_lag - pi/2)
-    / (2 * natural_angular_frequency)
+    driving_force_amplitude
+    * (natural_angular_frequency * time * sin(natural_angular_frequency * time + driving_phase_lag)
+       - sin(driving_phase_lag) * sin(natural_angular_frequency * time))
+    / (2 * oscillator_mass * natural_angular_frequency**2)
 )
 
 # TODO: derive law from driven oscillations equation
