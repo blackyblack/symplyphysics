@@ -4,7 +4,7 @@ from symplyphysics import (assert_equal, units, Quantity, errors)
 from symplyphysics.laws.hydro import pressure_of_liquid_in_vessel_moving_vertically as pressure_law
 
 # Description
-## Consider a vessel 1 meter high with water moving vertically down with an acceleration of 1 [meter / second^2].
+## Consider a vessel 1 meter high with water moving vertically up with an acceleration of 1 [meter / second^2].
 ## Then the water pressure in the vessel will be 10774 pascal.
 
 Args = namedtuple("Args", ["density_liquid", "acceleration", "height"])
