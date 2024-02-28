@@ -52,10 +52,7 @@ law = Eq(
 
 # Derive law from driven oscillations equation
 
-_law = forced_eqn.law
-
-_eqn = _law.rhs - _law.lhs
-_eqn = _eqn.subs({
+_eqn = forced_eqn.law.subs({
     forced_eqn.oscillator_mass: oscillator_mass,
     forced_eqn.natural_angular_frequency: natural_angular_frequency,
     forced_eqn.driving_force_amplitude: driving_force_amplitude,
@@ -66,7 +63,9 @@ _eqn = _eqn.subs({
 
 _dsolved = dsolve(_eqn, forced_eqn.displacement(time)).rhs
 
-# We're not interested in the general solution of the differential equation
+# We're interested in the particular solution of the differential equation, therefore
+# throwing out the part that describes the oscillator's motion in the absence of an
+# external driving force.
 _dsolved = _dsolved.subs({"C1": 0, "C2": 0})
 
 assert expr_equals(_dsolved, law.rhs)
