@@ -2,11 +2,14 @@ from sympy import Eq, solve
 from symplyphysics import units, Quantity, Symbol, print_expression, validate_input, validate_output
 
 # Description
-# Law: P = ρ * g * h
+# Law: P = ρ * a * h
 # P - hydrostatic pressure
 # ρ - density of liquid
-# g - acceleration (should be directed vertically downwards.)
+# a - acceleration of vessel (should be directed vertically upwards)
 # h - depth
+
+# Conditions
+# - No other accelerations involved, ie gravitational acceleration
 
 density = Symbol("density", units.mass / units.volume)
 depth = Symbol("depth", units.length)

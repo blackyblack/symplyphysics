@@ -9,7 +9,7 @@ from symplyphysics import (
 from symplyphysics.laws.hydro.hydrostatic_pressure_from_density_and_depth_acceleration import calculate_hydrostatic_pressure
 
 # Description
-# A body at a depth of 10 m in water (1000 kg/m³) with a free fall acceleration of 9.81 m/s²
+# A body at a depth of 10 m in water (1000 kg/m³) in a vessel moving vertically up with acceleration of 9.81 m/s²
 # should experience a hydrostatic pressure of 98100 Pa.
 
 Args = namedtuple("Args", ["rho", "h", "acceleration"])
