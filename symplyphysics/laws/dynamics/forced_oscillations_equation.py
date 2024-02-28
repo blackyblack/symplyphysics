@@ -48,7 +48,7 @@ def print_law() -> str:
 
 @validate_input(
     initial_position_=displacement,
-    initial_velicity_=units.velocity,
+    initial_velocity_=units.velocity,
     oscillator_mass_=oscillator_mass,
     natural_angular_frequency_=natural_angular_frequency,
     driving_force_amplitude_=driving_force_amplitude,
