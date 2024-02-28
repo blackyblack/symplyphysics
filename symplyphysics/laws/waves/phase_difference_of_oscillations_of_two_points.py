@@ -1,4 +1,4 @@
-from sympy import (Eq, solve, pi, S)
+from sympy import (Eq, solve, pi, S, Abs)
 from symplyphysics import (
     units,
     Quantity,
@@ -20,13 +20,13 @@ from symplyphysics import (
 ## r1 - distance to the first point,
 ## L - wavelength.
 
-phase_difference = Symbol("phase_difference", dimensionless)
+phase_difference = Symbol("phase_difference", units.radian)
 
 distance_first_point = Symbol("distance_first_point", units.length)
 distance_second_point = Symbol("distance_second_point", units.length)
 wavelength = Symbol("wavelength", units.length)
 
-law = Eq(phase_difference, 2 * pi * (distance_second_point - distance_first_point) / wavelength)
+law = Eq(phase_difference, 2 * pi * Abs(distance_second_point - distance_first_point) / wavelength)
 
 
 def print_law() -> str:
