@@ -9,8 +9,8 @@ from symplyphysics import (
 from symplyphysics.laws.dynamics import forced_non_resonant_oscillations as forced_law
 
 # Description
-## An oscillating external driving force of magnitude f = 1 N and angular frequency w = 5 N is acting on
-## an oscillator with a natural angular frequency w0 = 3 N. At t = 1 s, the displacement of the oscillator
+## An oscillating external driving force of magnitude f = 1 N and angular frequency w = 5 rad/s is acting on
+## an oscillator with a natural angular frequency w0 = 3 rad/s. At t = 1 s, the displacement of the oscillator
 ## caused by the driving force amounts to q = -8.87 mm. The mass of the oscillator is 2 kg.
 
 Args = namedtuple("Args", "m w0 f w phi t")
