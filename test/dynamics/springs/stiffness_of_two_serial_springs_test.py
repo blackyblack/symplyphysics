@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.dynamics.springs import spring_constant_of_two_serial_springs as spring_law
+from symplyphysics.laws.dynamics.springs import stiffness_of_two_serial_springs as spring_law
 
 # Description
 ## Two springs are connected in parallel, the first spring's constant is 50 N/m and the second's
