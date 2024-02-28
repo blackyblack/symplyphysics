@@ -20,8 +20,7 @@ from symplyphysics.laws.hydro import hydrostatic_pressure_from_density_and_depth
 ## depends on the density of the liquid, the acceleration of free fall, the vertical acceleration of the vessel
 ## and the height of liquid.
 
-## Law is: p = p0 * |g + a| * h, where
-## || - absolute value of the value,
+## Law is: p = p0 * sqrt((g + a)^2) * h, where
 ## p - pressure,
 ## p0 - density of liquid,
 ## g - earth free fall acceleration,
@@ -38,9 +37,9 @@ law = Eq(pressure, density_liquid * sqrt((earth_free_fall_acceleration + acceler
 
 # This law might be derived via hydrostatic pressure law.
 # The vessel moves vertically and the pressure exerted by the resultant force on a surface of equal pressure
-# is considered. The modulus of the resulting force will be equal to m * sqrt((g+a)^2) = m * |g + a|.
-# If the acceleration is positive, then the vessel moves upwards. If the acceleration is negative, then
-# the vessel is moving down.
+# is considered. The modulus of the resulting force will be equal to m * sqrt((g+a)^2).
+# If the acceleration "a" is positive, then it is directed upwards. If the acceleration "a" is negative,
+# then it is directed downward.
 
 free_fall_acceleration_vector = Vector([0, earth_free_fall_acceleration])
 # Vertical vector
