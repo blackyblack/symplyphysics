@@ -25,7 +25,7 @@ def test_definition(test_args: Args) -> None:
     assert_equal(result, 1.0e-3 * units.meter / units.newton)
 
 
-def test_bad_stiffness(test_args: Args) -> None:
+def test_bad_stiffness() -> None:
     kb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
         compliance_def.calculate_compliance(kb)
