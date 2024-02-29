@@ -1,4 +1,5 @@
 from sympy import (Eq, solve, sqrt)
+from sympy.physics.units import acceleration_due_to_gravity as earth_free_fall_acceleration
 from symplyphysics import (
     Vector,
     add_cartesian_vectors,
@@ -11,8 +12,6 @@ from symplyphysics import (
     vector_magnitude,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from sympy.physics.units import acceleration_due_to_gravity as earth_free_fall_acceleration
-
 from symplyphysics.laws.hydro import hydrostatic_pressure_from_density_and_depth_acceleration as pressure_law
 
 # Description
@@ -44,14 +43,16 @@ law = Eq(pressure, density_liquid * sqrt((earth_free_fall_acceleration + acceler
 free_fall_acceleration_vector = Vector([0, earth_free_fall_acceleration])
 # Vertical vector
 vessel_acceleration_vector = Vector([0, acceleration])
-total_acceleration = vector_magnitude(add_cartesian_vectors(free_fall_acceleration_vector, vessel_acceleration_vector))
+total_acceleration = vector_magnitude(
+    add_cartesian_vectors(free_fall_acceleration_vector, vessel_acceleration_vector))
 
 pressure_law_applied = pressure_law.law.subs({
     pressure_law.density: density_liquid,
     pressure_law.depth: height,
     pressure_law.acceleration: total_acceleration,
 })
-pressure_derived = solve(pressure_law_applied, pressure_law.hydrostatic_pressure, dict=True)[0][pressure_law.hydrostatic_pressure]
+pressure_derived = solve(pressure_law_applied, pressure_law.hydrostatic_pressure,
+    dict=True)[0][pressure_law.hydrostatic_pressure]
 
 # Check if derived pressure is same as declared.
 assert expr_equals(pressure_derived, law.rhs)
@@ -61,9 +62,7 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(density_liquid_=density_liquid,
-    acceleration_=acceleration,
-    height_=height)
+@validate_input(density_liquid_=density_liquid, acceleration_=acceleration, height_=height)
 @validate_output(pressure)
 def calculate_pressure(density_liquid_: Quantity, acceleration_: Quantity,
     height_: Quantity) -> Quantity:

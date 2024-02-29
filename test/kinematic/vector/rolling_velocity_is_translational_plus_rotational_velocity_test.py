@@ -9,8 +9,7 @@ from symplyphysics import (
     QuantityVector,
 )
 from symplyphysics.laws.kinematic.vector import (
-    rolling_velocity_is_translational_plus_rotational_velocities as rolling_velocity_law,
-)
+    rolling_velocity_is_translational_plus_rotational_velocities as rolling_velocity_law,)
 
 # Description
 ## A wheel is rolling smoothly, and for a point on the wheel the translational velocity

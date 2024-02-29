@@ -21,7 +21,8 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_relative_humidity(test_args: Args) -> None:
-    result = humidity_law.calculate_relative_humidity(test_args.water_vapor_pressure, test_args.saturated_vapor_pressure)
+    result = humidity_law.calculate_relative_humidity(test_args.water_vapor_pressure,
+        test_args.saturated_vapor_pressure)
     assert_equal(result, 44.9 * units.percent)
 
 

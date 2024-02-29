@@ -30,7 +30,8 @@ laplace_law_applied = laplace_law.law.subs({
 })
 
 # This is an excess pressure in a spherical drop.
-pressure_derived = solve(laplace_law_applied, laplace_law.laplace_pressure, dict=True)[0][laplace_law.laplace_pressure]
+pressure_derived = solve(laplace_law_applied, laplace_law.laplace_pressure,
+    dict=True)[0][laplace_law.laplace_pressure]
 
 # Check if derived pressure is same as declared.
 # The bubble has two surfaces – an outer and an inner one, each of which creates additional pressure.

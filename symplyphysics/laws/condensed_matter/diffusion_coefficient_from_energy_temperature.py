@@ -27,16 +27,15 @@ energy = Symbol("energy", units.energy)
 diffusion_constant = Symbol("diffusion_constant", units.area / units.time)
 temperature = Symbol("temperature", units.temperature)
 
-law = Eq(diffusion_coefficient, diffusion_constant * exp(-energy / (boltzmann_constant * temperature)))
+law = Eq(diffusion_coefficient,
+    diffusion_constant * exp(-energy / (boltzmann_constant * temperature)))
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(energy_=energy,
-    diffusion_constant_=diffusion_constant,
-    temperature_=temperature)
+@validate_input(energy_=energy, diffusion_constant_=diffusion_constant, temperature_=temperature)
 @validate_output(diffusion_coefficient)
 def calculate_diffusion_coefficient(energy_: Quantity, diffusion_constant_: Quantity,
     temperature_: Quantity) -> Quantity:

@@ -15,13 +15,13 @@ from symplyphysics.laws.dynamics import forced_oscillations_equation as forced_e
 
 # Description
 ## Forced, or driven, oscillations are a type of oscillations in the precence of an external driving
-## force acting on the oscillating system. In the case of an oscillating external force, two angular 
-## frequencies are associated with such a system: (1) the natural angular frequency of the system, 
-## which is the angular frequency the system would oscillate with if no external force were present, 
+## force acting on the oscillating system. In the case of an oscillating external force, two angular
+## frequencies are associated with such a system: (1) the natural angular frequency of the system,
+## which is the angular frequency the system would oscillate with if no external force were present,
 ## and (2) the angular frequency of the external force driving the oscillations.
 
 # Law: q(t) = (f / m) * cos(omega*t + phi) / (omega0**2 - omega**2)
-## q(t) - particular solution of the forced oscillations equation that accounts 
+## q(t) - particular solution of the forced oscillations equation that accounts
 ##        for the oscillator's response to the driving force
 ## t - time
 ## m - mass of oscillating body
@@ -31,7 +31,7 @@ from symplyphysics.laws.dynamics import forced_oscillations_equation as forced_e
 ## phi - phase lag of the oscillations of the external force
 
 # Conditions
-## - Angular frequency of the external force is strictly not equal to the natural angular 
+## - Angular frequency of the external force is strictly not equal to the natural angular
 ##   frequency of the oscillator.
 ## - No damping is present in the system.
 
@@ -48,12 +48,9 @@ driving_angular_frequency = Symbol("driving_angular_frequency", angle_type / uni
 driving_phase_lag = Symbol("driving_phase_lag", angle_type)
 time = Symbol("time", units.time)
 
-law = Eq(
-    driven_displacement(time),
-    (driving_force_amplitude / oscillator_mass)
-    * cos(driving_angular_frequency * time + driving_phase_lag)
-    / (natural_angular_frequency**2 - driving_angular_frequency**2)
-)
+law = Eq(driven_displacement(time), (driving_force_amplitude / oscillator_mass) *
+    cos(driving_angular_frequency * time + driving_phase_lag) /
+    (natural_angular_frequency**2 - driving_angular_frequency**2))
 
 # Derive law from forced oscillations equation
 
@@ -80,6 +77,7 @@ def print_law() -> str:
     return print_expression(law)
 
 
+#pylint: disable=too-many-arguments
 @validate_input(
     oscillator_mass_=oscillator_mass,
     natural_angular_frequency_=natural_angular_frequency,

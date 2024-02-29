@@ -33,36 +33,43 @@ isobaric_potential = Symbol("isobaric_potential", units.energy / units.amount_of
 thermal_effect = Symbol("thermal_effect", units.energy / units.amount_of_substance)
 entropy = Symbol("entropy", units.energy / units.amount_of_substance / units.temperature)
 temperature = Symbol("temperature", units.temperature)
-heat_capacity = Symbol("heat_capacity", units.energy / units.amount_of_substance / units.temperature)
-coefficient_capacity_1 = Symbol("coefficient_capacity_1", units.energy / units.amount_of_substance / units.temperature)
-coefficient_capacity_2 = Symbol("coefficient_capacity_2", units.energy / units.amount_of_substance / units.temperature**2)
-coefficient_capacity_3 = Symbol("coefficient_capacity_3", units.energy * units.temperature / units.amount_of_substance)
+heat_capacity = Symbol("heat_capacity",
+    units.energy / units.amount_of_substance / units.temperature)
+coefficient_capacity_1 = Symbol("coefficient_capacity_1",
+    units.energy / units.amount_of_substance / units.temperature)
+coefficient_capacity_2 = Symbol("coefficient_capacity_2",
+    units.energy / units.amount_of_substance / units.temperature**2)
+coefficient_capacity_3 = Symbol("coefficient_capacity_3",
+    units.energy * units.temperature / units.amount_of_substance)
 standard_temperature = Quantity(298 * units.kelvin)
 
-law = Eq(isobaric_potential,
-         thermal_effect - temperature * entropy - temperature * 
-         (coefficient_capacity_1 * (log(standard_temperature / temperature) + (standard_temperature / temperature) - 1) +
-          coefficient_capacity_2 * ((temperature / 2) + (standard_temperature**2/(2 * temperature)) - standard_temperature) +
-          coefficient_capacity_3 * ((temperature**(-2) / 2) + (standard_temperature**(-1) / -temperature) - (standard_temperature**(-2) / -2))))
+law = Eq(
+    isobaric_potential, thermal_effect - temperature * entropy - temperature *
+    (coefficient_capacity_1 * (log(standard_temperature / temperature) +
+    (standard_temperature / temperature) - 1) + coefficient_capacity_2 * ((temperature / 2) +
+    (standard_temperature**2 / (2 * temperature)) - standard_temperature) + coefficient_capacity_3 *
+    ((temperature**(-2) / 2) + (standard_temperature**(-1) / -temperature) -
+    (standard_temperature**(-2) / -2))))
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(thermal_effect_=thermal_effect,
+#pylint: disable=too-many-arguments
+@validate_input(
+    thermal_effect_=thermal_effect,
     entropy_=entropy,
     temperature_=temperature,
     heat_capacity_=heat_capacity,
     coefficient_capacity_1_=coefficient_capacity_1,
     coefficient_capacity_2_=coefficient_capacity_2,
-    coefficient_capacity_3_=coefficient_capacity_3,)
+    coefficient_capacity_3_=coefficient_capacity_3,
+)
 @validate_output(isobaric_potential)
 def calculate_isobaric_potential(thermal_effect_: Quantity, entropy_: Quantity,
-    temperature_: Quantity, heat_capacity_: Quantity,
-    coefficient_capacity_1_: Quantity,
-    coefficient_capacity_2_: Quantity,
-    coefficient_capacity_3_: Quantity) -> Quantity:
+    temperature_: Quantity, heat_capacity_: Quantity, coefficient_capacity_1_: Quantity,
+    coefficient_capacity_2_: Quantity, coefficient_capacity_3_: Quantity) -> Quantity:
     result_expr = solve(law, isobaric_potential, dict=True)[0][isobaric_potential]
     result_expr = result_expr.subs({
         thermal_effect: thermal_effect_,

@@ -21,7 +21,7 @@ from symplyphysics.core.quantity_decorator import validate_output_same
 ## or electromagnetic waves.
 
 # Law: d**2(u(x, t))/dx**2 = (1/v**2) * d**2(u(x, t))/dt**2
-## u(x, t) - factor representing a displacement from rest situation, 
+## u(x, t) - factor representing a displacement from rest situation,
 ##           which can be pressure, position, electric field, etc
 ## x - position
 ## t - time
@@ -65,7 +65,6 @@ _solution = solution.subs(phase_velocity, -1 * phase_velocity)
 _lhs = definition.lhs.subs(displacement(position, time), _solution).doit()
 _rhs = definition.rhs.subs(displacement(position, time), _solution).doit()
 assert expr_equals(_lhs, _rhs)
-
 
 
 def print_law() -> str:

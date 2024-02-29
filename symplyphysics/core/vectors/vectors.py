@@ -143,7 +143,8 @@ class QuantityVector(DimensionSymbol):
         return Vector(self.components, self.coordinate_system)
 
     @staticmethod
-    def from_base_vector(vector: Vector, *,
+    def from_base_vector(vector: Vector,
+        *,
         dimension: Optional[Dimension] = None,
         subs: Optional[dict[Expr, Quantity]] = None) -> QuantityVector:
         components = vector.components if subs is None else subs_list(vector.components, subs)

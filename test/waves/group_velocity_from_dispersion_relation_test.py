@@ -21,7 +21,8 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = group_velocity_law.calculate_group_velocity(test_args.w0, test_args.w1, test_args.k0, test_args.k1)
+    result = group_velocity_law.calculate_group_velocity(test_args.w0, test_args.w1, test_args.k0,
+        test_args.k1)
     assert_equal(result, 4.10 * units.meter / units.second)
 
 

@@ -13,9 +13,9 @@ from symplyphysics.core.symbols.quantities import scale_factor
 
 # Description
 ## Forced, or driven, oscillations are a type of oscillations in the precence of an external driving
-## force acting on the oscillating system. In the case of an oscillating external force, two angular 
-## frequencies are associated with such a system: (1) the natural angular frequency of the system, 
-## which is the angular frequency the system would oscillate with if no external force were present, 
+## force acting on the oscillating system. In the case of an oscillating external force, two angular
+## frequencies are associated with such a system: (1) the natural angular frequency of the system,
+## which is the angular frequency the system would oscillate with if no external force were present,
 ## and (2) the angular frequency of the external force driving the oscillations. Such systems can
 ## undergo resonance if the angular frequency of the driving force is close to the natural angular
 ## frequency of the oscillator.
@@ -39,7 +39,8 @@ time = Symbol("time", units.time)
 
 law = Eq(
     Derivative(displacement(time), time, 2) + natural_angular_frequency**2 * displacement(time),
-    (driving_force_amplitude / oscillator_mass) * cos(driving_angular_frequency * time + driving_phase_lag),
+    (driving_force_amplitude / oscillator_mass) *
+    cos(driving_angular_frequency * time + driving_phase_lag),
 )
 
 
@@ -47,6 +48,7 @@ def print_law() -> str:
     return print_expression(law)
 
 
+#pylint: disable=too-many-arguments
 @validate_input(
     initial_position_=displacement,
     initial_velocity_=units.velocity,

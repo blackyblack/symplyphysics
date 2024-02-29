@@ -30,23 +30,21 @@ from symplyphysics.definitions import damped_harmonic_oscillator_equation as dam
 
 displacement = Function("displacement", units.length, real=True)
 time = Symbol("time", units.time, nonnegative=True)
-undamped_angular_frequency = Symbol("undamped_angular_frequency", angle_type / units.time, positive=True)
+undamped_angular_frequency = Symbol("undamped_angular_frequency",
+    angle_type / units.time,
+    positive=True)
 initial_position = Symbol("initial_position", units.length, real=True)
 initial_velocity = Symbol("initial_velocity", units.velocity, real=True)
 
 law = Eq(
     displacement(time),
-    exp(-1 * undamped_angular_frequency * time) * (
-        initial_position
-        + (initial_velocity + initial_position * undamped_angular_frequency) * time
-    ),
+    exp(-1 * undamped_angular_frequency * time) * (initial_position +
+    (initial_velocity + initial_position * undamped_angular_frequency) * time),
 )
 
 # Derive from damped oscillator equation
 
-_eqn = damped_eqn.definition.subs(
-    damped_eqn.time, time
-).subs({
+_eqn = damped_eqn.definition.subs(damped_eqn.time, time).subs({
     damped_eqn.displacement(time): displacement(time),
     damped_eqn.undamped_angular_frequency: undamped_angular_frequency,
     damped_eqn.damping_ratio: 1,

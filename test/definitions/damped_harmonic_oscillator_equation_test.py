@@ -27,54 +27,38 @@ def test_args_fixture() -> Args:
 
 
 def test_critically_damped(test_args: Args) -> None:
-    result = damped_eqn.calculate_displacement(
-        test_args.x0, test_args.v0, test_args.w, test_args.z, test_args.t
-    )
+    result = damped_eqn.calculate_displacement(test_args.x0, test_args.v0, test_args.w, test_args.z,
+        test_args.t)
     assert_equal(result, 0.0259 * units.meter, tolerance=2e-3)
 
 
 def test_bad_initial_position(test_args: Args) -> None:
     xb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        damped_eqn.calculate_displacement(
-            xb, test_args.v0, test_args.w, test_args.z, test_args.t
-        )
+        damped_eqn.calculate_displacement(xb, test_args.v0, test_args.w, test_args.z, test_args.t)
     with raises(TypeError):
-        damped_eqn.calculate_displacement(
-            100, test_args.v0, test_args.w, test_args.z, test_args.t
-        )
+        damped_eqn.calculate_displacement(100, test_args.v0, test_args.w, test_args.z, test_args.t)
 
 
 def test_bad_initial_velocity(test_args: Args) -> None:
     vb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        damped_eqn.calculate_displacement(
-            test_args.x0, vb, test_args.w, test_args.z, test_args.t
-        )
+        damped_eqn.calculate_displacement(test_args.x0, vb, test_args.w, test_args.z, test_args.t)
     with raises(TypeError):
-        damped_eqn.calculate_displacement(
-            test_args.x0, 100, test_args.w, test_args.z, test_args.t
-        )
+        damped_eqn.calculate_displacement(test_args.x0, 100, test_args.w, test_args.z, test_args.t)
 
 
 def test_bad_undamped_angular_frequency(test_args: Args) -> None:
     wb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        damped_eqn.calculate_displacement(
-            test_args.x0, test_args.v0, wb, test_args.z, test_args.t
-        )
+        damped_eqn.calculate_displacement(test_args.x0, test_args.v0, wb, test_args.z, test_args.t)
     with raises(TypeError):
-        damped_eqn.calculate_displacement(
-            test_args.x0, test_args.v0, 100, test_args.z, test_args.t
-        )
+        damped_eqn.calculate_displacement(test_args.x0, test_args.v0, 100, test_args.z, test_args.t)
+
 
 def test_bad_time(test_args: Args) -> None:
     tb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        damped_eqn.calculate_displacement(
-            test_args.x0, test_args.v0, test_args.w, test_args.z, tb
-        )
+        damped_eqn.calculate_displacement(test_args.x0, test_args.v0, test_args.w, test_args.z, tb)
     with raises(TypeError):
-        damped_eqn.calculate_displacement(
-            test_args.x0, test_args.v0, test_args.w, test_args.z, 100
-        )
+        damped_eqn.calculate_displacement(test_args.x0, test_args.v0, test_args.w, test_args.z, 100)

@@ -7,9 +7,8 @@ from symplyphysics import (
     errors,
     QuantityVector,
 )
-from symplyphysics.definitions.vector import (
-    damping_force_is_proportional_to_velocity as damping_def
-)
+from symplyphysics.definitions.vector import (damping_force_is_proportional_to_velocity as
+    damping_def)
 
 # Description
 ## A damping force acts on a body. The body's velocity is (4, -2, 0) m/s, the damping constant
@@ -26,11 +25,10 @@ def test_args_fixture() -> Args:
         Quantity(-2.0 * units.meter / units.second),
         Quantity(0.0 * units.meter / units.second),
     ])
-    f = QuantityVector([
-        Quantity(-0.2 * units.newton),
+    f = QuantityVector(
+        [Quantity(-0.2 * units.newton),
         Quantity(0.1 * units.newton),
-        Quantity(0.0 * units.newton)
-    ])
+        Quantity(0.0 * units.newton)])
     return Args(b=b, v=v, f=f)
 
 
