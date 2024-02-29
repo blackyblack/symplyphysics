@@ -25,14 +25,14 @@ from symplyphysics import (
 
 body_velocity_in_first_frame = Symbol("body_velocity_in_first_frame", units.velocity)
 body_velocity_in_second_frame = Symbol("body_velocity_in_second_frame", units.velocity)
-second_frame_velocity_in_first_frame = Symbol(
-    "second_frame_velocity_in_first_frame", units.velocity
-)
+second_frame_velocity_in_first_frame = Symbol("second_frame_velocity_in_first_frame",
+    units.velocity)
 
 law = Eq(
     body_velocity_in_first_frame,
     body_velocity_in_second_frame + second_frame_velocity_in_first_frame,
 )
+
 
 def print_law() -> str:
     return print_expression(law)

@@ -28,7 +28,6 @@ standard_pressure = Symbol("standard_pressure", units.pressure)
 thermal_coefficient = Symbol("thermal_coefficient", 1 / units.temperature)
 temperature = Symbol("temperature", units.temperature)
 
-
 law = Eq(pressure_change, standard_pressure * thermal_coefficient * temperature)
 
 
@@ -36,9 +35,12 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(standard_pressure_=standard_pressure, thermal_coefficient_=thermal_coefficient, temperature_=temperature)
+@validate_input(standard_pressure_=standard_pressure,
+    thermal_coefficient_=thermal_coefficient,
+    temperature_=temperature)
 @validate_output(pressure_change)
-def calculate_pressure_change(standard_pressure_: Quantity, thermal_coefficient_: Quantity, temperature_: Quantity) -> Quantity:
+def calculate_pressure_change(standard_pressure_: Quantity, thermal_coefficient_: Quantity,
+    temperature_: Quantity) -> Quantity:
     result_expr = solve(law, pressure_change, dict=True)[0][pressure_change]
     result_expr = result_expr.subs({
         standard_pressure: standard_pressure_,

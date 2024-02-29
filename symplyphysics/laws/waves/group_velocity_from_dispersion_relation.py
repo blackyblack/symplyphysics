@@ -12,8 +12,8 @@ from symplyphysics import (
 
 # Description
 ## Waves can form a group, called wave packets. The velocity with which a wave packet travels
-## is called group velocity. In other words, it is the velocity with which the overall envelope 
-## shape of the wave's amplitudes - called envelope of modulation of the wave -  propagates 
+## is called group velocity. In other words, it is the velocity with which the overall envelope
+## shape of the wave's amplitudes - called envelope of modulation of the wave -  propagates
 ## through space.
 
 # Law: v_group = dw(k)/dk
@@ -27,7 +27,7 @@ dispersion_relation = Function("dispersion_relation", angle_type / units.time, r
 wavenumber = Symbol("wavenumber", angle_type / units.length, positive=True)
 
 law = Eq(
-    group_velocity, 
+    group_velocity,
     Derivative(dispersion_relation(wavenumber), wavenumber),
 )
 
@@ -49,11 +49,8 @@ def calculate_group_velocity(
     wavenumber_before_: Quantity,
     wavenumber_after_: Quantity,
 ) -> Quantity:
-    dispersion_relation_ = (
-        (angular_frequency_after_ - angular_frequency_before_)
-        * (wavenumber - wavenumber_before_)
-        / (wavenumber_after_ - wavenumber_before_)
-    )
+    dispersion_relation_ = ((angular_frequency_after_ - angular_frequency_before_) *
+        (wavenumber - wavenumber_before_) / (wavenumber_after_ - wavenumber_before_))
     result = law.rhs.subs(
         dispersion_relation(wavenumber),
         dispersion_relation_,

@@ -6,9 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.definitions import (
-    angular_wavenumber_is_inverse_wavelength as wavenumber_def
-)
+from symplyphysics.definitions import (angular_wavenumber_is_inverse_wavelength as wavenumber_def)
 
 # Description
 ## A wave has a wavelength of 3 m, then its angular wavenumber is 2.09 rad/m.
@@ -27,7 +25,7 @@ def test_definition(test_args: Args) -> None:
     assert_equal(result, 2.09 * units.radian / units.meter, tolerance=3e-3)
 
 
-def test_bad_wavelength(test_args: Args) -> None:
+def test_bad_wavelength() -> None:
     lambda_bad = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
         wavenumber_def.calculate_wavenumber(lambda_bad)

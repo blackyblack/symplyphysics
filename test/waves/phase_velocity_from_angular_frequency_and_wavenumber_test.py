@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.waves import (
-    phase_velocity_from_angular_frequency_and_wavenumber as phase_velocity_law,
-)
+    phase_velocity_from_angular_frequency_and_wavenumber as phase_velocity_law,)
 
 # Description
 ## A wave has angular frequency w = 9 Hz and angular wavenumber k = 0.3 1/m.

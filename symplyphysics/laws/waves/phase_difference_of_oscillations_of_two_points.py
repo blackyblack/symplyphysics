@@ -7,20 +7,21 @@ from symplyphysics import (
     validate_input,
     validate_output,
     convert_to,
-    dimensionless,
+    angle_type,
 )
 
 # Description
 ## The phase difference of the oscillations of two points spaced at distances r1 and r2 from the source of
 ## the oscillations depends on these distances and wavelength.
 
-## Law is: phi = 2 * pi * (r2 - r1) / L, where
+## Law is: phi = 2 * pi * |r2 - r1| / L, where
 ## phi - phase difference,
 ## r2 - distance to the second point,
 ## r1 - distance to the first point,
-## L - wavelength.
+## L - wavelength,
+## || - absolute value.
 
-phase_difference = Symbol("phase_difference", units.radian)
+phase_difference = Symbol("phase_difference", angle_type)
 
 distance_first_point = Symbol("distance_first_point", units.length)
 distance_second_point = Symbol("distance_second_point", units.length)
@@ -44,5 +45,5 @@ def calculate_phase_difference(distance_first_point_: Quantity, distance_second_
         distance_first_point: distance_first_point_,
         distance_second_point: distance_second_point_,
         wavelength: wavelength_
-    })
+    }).doit()
     return float(convert_to(Quantity(result_expr), S.One).evalf())

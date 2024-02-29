@@ -10,7 +10,10 @@ from symplyphysics.laws.thermodynamics import isobaric_potential_from_heat_capac
 ## Then the standard change of isobaric potential is 506676 joule per mole.
 ## https://studfile.net/preview/5797036/page:4/
 
-Args = namedtuple("Args", ["standard_thermal_effect", "standard_change_entropy", "temperature", "standard_change_heat_capacity"])
+Args = namedtuple("Args", [
+    "standard_thermal_effect", "standard_change_entropy", "temperature",
+    "standard_change_heat_capacity"
+])
 
 
 @fixture(name="test_args")
@@ -27,46 +30,55 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_standard_change_isobaric_potential(test_args: Args) -> None:
-    result = potential_law.calculate_standard_change_isobaric_potential(test_args.standard_thermal_effect,
-        test_args.standard_change_entropy, test_args.temperature, test_args.standard_change_heat_capacity)
+    result = potential_law.calculate_standard_change_isobaric_potential(
+        test_args.standard_thermal_effect, test_args.standard_change_entropy, test_args.temperature,
+        test_args.standard_change_heat_capacity)
     assert_equal(result, 506676 * units.joule / units.mole)
 
 
 def test_bad_standard_thermal_effect(test_args: Args) -> None:
     standard_thermal_effect = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        potential_law.calculate_standard_change_isobaric_potential(standard_thermal_effect, test_args.standard_change_entropy,
-            test_args.temperature, test_args.standard_change_heat_capacity)
+        potential_law.calculate_standard_change_isobaric_potential(
+            standard_thermal_effect, test_args.standard_change_entropy, test_args.temperature,
+            test_args.standard_change_heat_capacity)
     with raises(TypeError):
-        potential_law.calculate_standard_change_isobaric_potential(100, test_args.standard_change_entropy,
-            test_args.temperature, test_args.standard_change_heat_capacity)
+        potential_law.calculate_standard_change_isobaric_potential(
+            100, test_args.standard_change_entropy, test_args.temperature,
+            test_args.standard_change_heat_capacity)
 
 
 def test_bad_standard_change_entropy(test_args: Args) -> None:
     standard_change_entropy = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        potential_law.calculate_standard_change_isobaric_potential(test_args.standard_thermal_effect, standard_change_entropy,
-            test_args.temperature, test_args.standard_change_heat_capacity)
+        potential_law.calculate_standard_change_isobaric_potential(
+            test_args.standard_thermal_effect, standard_change_entropy, test_args.temperature,
+            test_args.standard_change_heat_capacity)
     with raises(TypeError):
-        potential_law.calculate_standard_change_isobaric_potential(test_args.standard_thermal_effect, 100,
-            test_args.temperature, test_args.standard_change_heat_capacity)
+        potential_law.calculate_standard_change_isobaric_potential(
+            test_args.standard_thermal_effect, 100, test_args.temperature,
+            test_args.standard_change_heat_capacity)
 
 
 def test_bad_temperature(test_args: Args) -> None:
     temperature = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        potential_law.calculate_standard_change_isobaric_potential(test_args.standard_thermal_effect,
-            test_args.standard_change_entropy, temperature, test_args.standard_change_heat_capacity)
+        potential_law.calculate_standard_change_isobaric_potential(
+            test_args.standard_thermal_effect, test_args.standard_change_entropy, temperature,
+            test_args.standard_change_heat_capacity)
     with raises(TypeError):
-        potential_law.calculate_standard_change_isobaric_potential(test_args.standard_thermal_effect,
-            test_args.standard_change_entropy, 100, test_args.standard_change_heat_capacity)
+        potential_law.calculate_standard_change_isobaric_potential(
+            test_args.standard_thermal_effect, test_args.standard_change_entropy, 100,
+            test_args.standard_change_heat_capacity)
 
 
 def test_bad_standard_change_heat_capacity(test_args: Args) -> None:
     standard_change_heat_capacity = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        potential_law.calculate_standard_change_isobaric_potential(test_args.standard_thermal_effect,
-            test_args.standard_change_entropy, test_args.temperature, standard_change_heat_capacity)
+        potential_law.calculate_standard_change_isobaric_potential(
+            test_args.standard_thermal_effect, test_args.standard_change_entropy,
+            test_args.temperature, standard_change_heat_capacity)
     with raises(TypeError):
-        potential_law.calculate_standard_change_isobaric_potential(test_args.standard_thermal_effect,
-            test_args.standard_change_entropy, test_args.temperature, 100)
+        potential_law.calculate_standard_change_isobaric_potential(
+            test_args.standard_thermal_effect, test_args.standard_change_entropy,
+            test_args.temperature, 100)

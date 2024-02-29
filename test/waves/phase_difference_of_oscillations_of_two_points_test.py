@@ -32,14 +32,14 @@ def test_basic_phase_difference(test_args: Args) -> None:
 def test_bad_distances_and_wavelength(test_args: Args) -> None:
     bad_distance = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        phase_difference_law.calculate_phase_difference(bad_distance, test_args.distance_second_point,
-            test_args.wavelength)
+        phase_difference_law.calculate_phase_difference(bad_distance,
+            test_args.distance_second_point, test_args.wavelength)
     with raises(TypeError):
         phase_difference_law.calculate_phase_difference(100, test_args.distance_second_point,
             test_args.wavelength)
     with raises(errors.UnitsError):
-        phase_difference_law.calculate_phase_difference(test_args.distance_first_point, bad_distance,
-            test_args.wavelength)
+        phase_difference_law.calculate_phase_difference(test_args.distance_first_point,
+            bad_distance, test_args.wavelength)
     with raises(TypeError):
         phase_difference_law.calculate_phase_difference(test_args.distance_first_point, 100,
             test_args.wavelength)

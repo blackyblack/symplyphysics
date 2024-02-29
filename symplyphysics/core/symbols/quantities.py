@@ -50,8 +50,7 @@ class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancest
         return self if self.scale_factor >= 0 else (-1 * self)
 
 
-def subs_list(input_: Sequence[Expr | float], subs_: dict[Expr,
-    Quantity]) -> Sequence[Quantity]:
+def subs_list(input_: Sequence[Expr | float], subs_: dict[Expr, Quantity]) -> Sequence[Quantity]:
     return [Quantity(sympify(c).subs(subs_)) for c in input_]
 
 

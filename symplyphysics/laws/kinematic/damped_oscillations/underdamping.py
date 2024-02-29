@@ -37,21 +37,21 @@ displacement = Function("displacement", units.length, real=True)
 time = Symbol("time", units.time, nonnegative=True)
 coefficient = Symbol("coefficient", units.length, positive=True)
 exponential_decay_constant = Symbol("exponential_decay_constant", 1 / units.time, positive=True)
-damped_angular_frequency = Symbol("damped_angular_frequency", angle_type / units.time, positive=True)
+damped_angular_frequency = Symbol("damped_angular_frequency",
+    angle_type / units.time,
+    positive=True)
 phase_lag = Symbol("phase_lag", angle_type, real=True)
 
 law = Eq(
     displacement(time),
-    coefficient
-    * exp(-1 * exponential_decay_constant * time)
-    * cos(damped_angular_frequency * time + phase_lag)
-)
-
+    coefficient * exp(-1 * exponential_decay_constant * time) *
+    cos(damped_angular_frequency * time + phase_lag))
 
 # Relating to [damped oscillations equation](../../../definitions/damped_harmonic_oscillator_equation.py)
 ## We will show it is the solution of the aforementioned equation.
 
-_damping_ratio_sym, _undamped_frequency_sym = symbols("damping_ratio undamped_frequency", positive=True)
+_damping_ratio_sym, _undamped_frequency_sym = symbols("damping_ratio undamped_frequency",
+    positive=True)
 
 _decay_eqn = damping_ratio_law.law.subs({
     damping_ratio_law.damping_ratio: _damping_ratio_sym,
@@ -64,11 +64,8 @@ _frequencies_eqn = damped_frequency_law.law.subs({
     damped_frequency_law.damping_ratio: _damping_ratio_sym,
 })
 
-_solved = solve(
-    [_decay_eqn, _frequencies_eqn],
-    (_damping_ratio_sym, _undamped_frequency_sym),
-    dict=True
-)[0]
+_solved = solve([_decay_eqn, _frequencies_eqn], (_damping_ratio_sym, _undamped_frequency_sym),
+    dict=True)[0]
 _damping_ratio_expr = _solved[_damping_ratio_sym]
 _undamped_frequency_expr = _solved[_undamped_frequency_sym]
 
@@ -103,7 +100,10 @@ def calculate_displacement(
     time_: Quantity,
 ) -> Quantity:
     coefficient_expr = solve(
-        law.subs({displacement(time): initial_position_, time: 0}),
+        law.subs({
+        displacement(time): initial_position_,
+        time: 0
+        }),
         coefficient,
     )[0]
     displacement_expr = law.rhs.subs(coefficient, coefficient_expr)

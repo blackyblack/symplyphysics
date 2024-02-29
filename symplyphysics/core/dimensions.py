@@ -1,5 +1,5 @@
 from typing import Any, Callable, TypeAlias
-from sympy import Expr, S, Derivative, Function as SymFunction, Basic
+from sympy import Abs, Expr, S, Derivative, Function as SymFunction, Basic
 from sympy.core.add import Add
 from sympy.core.mul import Mul
 from sympy.core.power import Pow
@@ -59,6 +59,10 @@ def collect_factor_and_dimension(expr: Basic) -> tuple[Basic, Dimension]:
     def _unsupported_derivative(expr: Derivative) -> tuple[Basic, Dimension]:
         raise ValueError(f"Dimension '{expr}' should not contain unevaluated Derivative")
 
+    def _collect_abs(expr: Abs) -> tuple[Basic, Dimension]:
+        (f, d) = _collect_add(Add(*expr.args))
+        return (expr.func(f), d)
+
     def _collect_function(expr: SymFunction) -> tuple[Basic, Dimension]:
         factors: list[Basic] = []
         for arg in expr.args:
@@ -78,6 +82,7 @@ def collect_factor_and_dimension(expr: Basic) -> tuple[Basic, Dimension]:
         Mul: _collect_mul,
         Pow: _collect_pow,
         Add: _collect_add,
+        Abs: _collect_abs,
         Derivative: _unsupported_derivative,
         SymFunction: _collect_function,
         Dimension: _collect_dimension,

@@ -18,14 +18,12 @@ def test_args_fixture() -> Args:
     entropy = Quantity(155 * (units.joule / units.mole / units.kelvin))
     temperature = Quantity(298 * units.kelvin)
 
-    return Args(thermal_effect=thermal_effect,
-        entropy=entropy,
-        temperature=temperature)
+    return Args(thermal_effect=thermal_effect, entropy=entropy, temperature=temperature)
 
 
 def test_basic_isobaric_potential(test_args: Args) -> None:
-    result = potential_law.calculate_isobaric_potential(test_args.thermal_effect,
-        test_args.entropy, test_args.temperature)
+    result = potential_law.calculate_isobaric_potential(test_args.thermal_effect, test_args.entropy,
+        test_args.temperature)
     assert_equal(result, 506676 * units.joule / units.mole)
 
 
@@ -35,8 +33,7 @@ def test_bad_thermal_effect(test_args: Args) -> None:
         potential_law.calculate_isobaric_potential(thermal_effect, test_args.entropy,
             test_args.temperature)
     with raises(TypeError):
-        potential_law.calculate_isobaric_potential(100, test_args.entropy,
-            test_args.temperature)
+        potential_law.calculate_isobaric_potential(100, test_args.entropy, test_args.temperature)
 
 
 def test_bad_entropy(test_args: Args) -> None:
@@ -52,8 +49,7 @@ def test_bad_entropy(test_args: Args) -> None:
 def test_bad_temperature(test_args: Args) -> None:
     temperature = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        potential_law.calculate_isobaric_potential(test_args.thermal_effect,
-            test_args.entropy, temperature)
+        potential_law.calculate_isobaric_potential(test_args.thermal_effect, test_args.entropy,
+            temperature)
     with raises(TypeError):
-        potential_law.calculate_isobaric_potential(test_args.thermal_effect,
-            test_args.entropy, 100)
+        potential_law.calculate_isobaric_potential(test_args.thermal_effect, test_args.entropy, 100)

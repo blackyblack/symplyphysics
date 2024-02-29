@@ -6,9 +6,8 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.kinematic.damped_oscillations import (
-    damped_angular_frequency as damped_law
-)
+from symplyphysics.laws.kinematic.damped_oscillations import (damped_angular_frequency as
+    damped_law)
 
 # Description
 ## A damped oscillator has a damping ratio of 0.3 and its undamped angular frequency

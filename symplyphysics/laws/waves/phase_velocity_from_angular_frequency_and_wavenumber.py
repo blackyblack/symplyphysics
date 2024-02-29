@@ -24,7 +24,6 @@ angular_wavenumber = Symbol("angular_wavenumber", angle_type / units.length, pos
 
 law = Eq(phase_velocity, angular_frequency / angular_wavenumber)
 
-
 # TODO: derive from wave phase equation
 
 

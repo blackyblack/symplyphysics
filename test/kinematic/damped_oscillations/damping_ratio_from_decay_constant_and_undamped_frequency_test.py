@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.kinematic.damped_oscillations import (
-    damping_ratio_from_decay_constant_and_undamped_frequency as decay_law,
-)
+    damping_ratio_from_decay_constant_and_undamped_frequency as decay_law,)
 
 # Description
 ## A damped oscillator is described as having the decay constant zeta = 3 1/s

@@ -54,11 +54,13 @@ def wavevector_law(phase_velocity_: Vector) -> Vector:
         phase_velocity_,
     )
 
+
 # Prove the wavevector law for arbitrary v and w
 _phase_velocity = Vector(symbols("phase_velocity_x:z"))
 _wavevector_derived = wavevector_law(_phase_velocity)
 _phase_velocity_derived = phase_velocity_law(_wavevector_derived)
-for _component, _derived_component in zip(_phase_velocity.components, _phase_velocity_derived.components):
+for _component, _derived_component in zip(_phase_velocity.components,
+    _phase_velocity_derived.components):
     assert expr_equals(_component, _derived_component)
 
 
@@ -78,10 +80,7 @@ def calculate_phase_velocity(
     )
 
 
-@validate_input(
-    angular_frequency_=angular_frequency,
-    phase_velocity_=units.velocity
-)
+@validate_input(angular_frequency_=angular_frequency, phase_velocity_=units.velocity)
 @validate_output(angle_type / units.length)
 def calculate_wavevector(
     angular_frequency_: Quantity,
