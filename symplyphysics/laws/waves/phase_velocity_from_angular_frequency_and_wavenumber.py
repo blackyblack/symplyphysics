@@ -28,16 +28,13 @@ angular_wavenumber = Symbol("angular_wavenumber", angle_type / units.length, pos
 
 law = Eq(phase_velocity, angular_frequency / angular_wavenumber)
 
-
 # Derive from definition of phase velocity via wavelength and time period
 
-_wavelength = solve(wavenumber_def.definition, wavenumber_def.wavelength)[0].subs(
-    wavenumber_def.angular_wavenumber, angular_wavenumber
-)
+_wavelength = solve(wavenumber_def.definition,
+    wavenumber_def.wavelength)[0].subs(wavenumber_def.angular_wavenumber, angular_wavenumber)
 
-_time_period = solve(frequency_law.law, frequency_law.period)[0].subs(
-    frequency_law.circular_frequency, angular_frequency
-)
+_time_period = solve(frequency_law.law,
+    frequency_law.period)[0].subs(frequency_law.circular_frequency, angular_frequency)
 
 _phase_velocity = solve(velocity_law.law, velocity_law.propagation_speed)[0].subs({
     velocity_law.wavelength: _wavelength,

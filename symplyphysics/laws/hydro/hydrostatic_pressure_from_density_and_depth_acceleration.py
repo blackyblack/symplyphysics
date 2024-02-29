@@ -25,7 +25,12 @@ def print_law() -> str:
 
 @validate_input(density_=density, depth_=depth, acceleration_=acceleration)
 @validate_output(hydrostatic_pressure)
-def calculate_hydrostatic_pressure(density_: Quantity, depth_: Quantity, acceleration_: Quantity) -> Quantity:
+def calculate_hydrostatic_pressure(density_: Quantity, depth_: Quantity,
+    acceleration_: Quantity) -> Quantity:
     result_pressure_expr = solve(law, hydrostatic_pressure, dict=True)[0][hydrostatic_pressure]
-    result_expr = result_pressure_expr.subs({density: density_, depth: depth_, acceleration: acceleration_,})
+    result_expr = result_pressure_expr.subs({
+        density: density_,
+        depth: depth_,
+        acceleration: acceleration_,
+    })
     return Quantity(result_expr)
