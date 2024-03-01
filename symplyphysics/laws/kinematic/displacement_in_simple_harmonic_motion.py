@@ -34,7 +34,6 @@ law = Eq(displacement(time), amplitude * cos(angular_frequency * time + phase_la
 
 # Derive law from [oscillator equation](../../definitions/harmonic_oscillator_is_second_derivative_equation.py)
 
-
 _eqn = harmonic_eqn.definition.subs({
     harmonic_eqn.time: time,
     harmonic_eqn.angular_frequency: angular_frequency,
@@ -42,24 +41,19 @@ _eqn = harmonic_eqn.definition.subs({
     harmonic_eqn.displacement_function(time), displacement(time)
 )
 
-_A, _B = symbols("A B", real=True)
+_initial_position = law.rhs.subs(time, 0)
+_initial_velocity = law.rhs.diff(time).subs(time, 0)
 
-_dsolved = dsolve(_eqn, displacement(time)).rhs.subs({
-    "C1": _A,
-    "C2": _B,
-})
+_dsolved = dsolve(
+    _eqn,
+    displacement(time),
+    ics={
+        displacement(0): _initial_position,
+        displacement(time).diff(time).subs(time, 0): _initial_velocity,
+    }
+).rhs
 
-# Setting amplitude equal to sqrt(A**2 + B**2) we can have these identities
-_eqn_A = Eq(_A/amplitude, -1 * sin(phase_lag))
-_eqn_B = Eq(_B/amplitude, cos(phase_lag))
-
-_dsolved_subs = solve(
-    [Eq(displacement(time), _dsolved), _eqn_A, _eqn_B],
-    (displacement(time), _A, _B),
-    dict=True
-)[0][displacement(time)].simplify()
-
-assert expr_equals(law.rhs, _dsolved_subs)
+assert expr_equals(law.rhs, _dsolved)
 
 
 def print_law() -> str:
