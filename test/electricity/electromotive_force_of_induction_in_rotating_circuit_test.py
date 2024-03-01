@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy import pi
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.electricity import electromotive_force_of_induction_in_rotating_ce_of_induction_in_rotating_circuit as electromotive_force_law
+from symplyphysics.laws.electricity import electromotive_force_of_induction_in_rotating_circuit as electromotive_force_law
 
 # Description
 ## In a homogeneous magnetostatic field with an induction equal to 0.1 tesla, a frame containing 1000 turns

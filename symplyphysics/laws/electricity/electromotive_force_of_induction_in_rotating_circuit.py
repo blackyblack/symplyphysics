@@ -8,10 +8,14 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## product of the number of turns of the frame N, the induction of the magnetic field, the area of one
 ## turn of the frame, the angular velocity of rotation of the frame and the sine of the angle of rotation
 ## of the frame.
+## At the initial moment of time, the contour plane is perpendicular to the field lines of force and the
+## frame rotates around an axis perpendicular to the field lines and passing through the middle of the
+## opposite sides of the frame.
 ## EMF - electromotive force.
 
 ## Law is: U = -N * B * S * w * sin(w * t), where
-## U - voltage(electromotive force),
+## U - voltage (electromotive force),
+## N - number of turns,
 ## B - magnetic field induction,
 ## S - contour area,
 ## w - rotation frequency,
