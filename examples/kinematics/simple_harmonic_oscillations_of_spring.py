@@ -62,7 +62,7 @@ amplitude_expr = solve(amplitude_eqn, amplitude)[0]
 amplitude_value = convert_to(Quantity(amplitude_expr.subs(values)), units.meter).evalf(2)
 
 print(f"Formula of amplitude of oscillations:\n{print_expression(amplitude_expr)}\n")
-print(f"Amplitude of oscillations is {amplitude_value} m")
+print(f"Amplitude of oscillations is {amplitude_value} m.\n\n")
 
 # (b) Position and (c) velocity at zero time
 
@@ -72,6 +72,8 @@ phase_lag_eqn = Eq(
 ).simplify()
 
 phase_lag_expr = solve(phase_lag_eqn, phase_lag)[0]
+
+print(f"Formula of phase lag:\n{print_expression(phase_lag_expr)}\n\n")
 
 initial_subs = {
     amplitude: amplitude_expr,
