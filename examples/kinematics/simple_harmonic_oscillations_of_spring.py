@@ -17,12 +17,12 @@ from symplyphysics.laws.kinematic import (
 ## and (c) velocity of the block at t = 0 s?
 
 block_mass, spring_stiffness, amplitude = symbols("block_mass spring_stiffness amplitude", positive=True)
-time, time1, position1, velocity1, phase_lag = symbols("time time1 position1 velocity1 phase_lag", real=True)
+time, initial_time, position1, velocity1, phase_lag = symbols("time initial_time position1 velocity1 phase_lag", real=True)
 
 values = {
     block_mass: Quantity(2.00 * units.kilogram),
     spring_stiffness: Quantity(100 * units.newton / units.meter),
-    time1: Quantity(1.00 * units.second),
+    initial_time: Quantity(1.00 * units.second),
     position1: Quantity(0.129 * units.meter),
     velocity1: Quantity(3.415 * units.meter / units.second),
 }
@@ -53,9 +53,10 @@ velocity_expr = position_expr.diff(time)
 
 # (a) Amplitude of oscillations
 
+# Help SymPy solve the equations by using this identity
 amplitude_eqn = Eq(
-    position1 ** 2 + (velocity1 / angular_frequency_expr)**2,
-    position_expr.subs(time, time1)**2 + (velocity_expr.subs(time, time1) / angular_frequency_expr)**2,
+    position1**2 + (velocity1 / angular_frequency_expr)**2,
+    position_expr**2 + (velocity_expr / angular_frequency_expr)**2,
 )
 
 amplitude_expr = solve(amplitude_eqn, amplitude)[0]
@@ -66,14 +67,19 @@ print(f"Amplitude of oscillations is {amplitude_value} m.\n\n")
 
 # (b) Position and (c) velocity at zero time
 
+# Help SymPy solve the equations by using this identity
 phase_lag_eqn = Eq(
     velocity1 / position1,
-    velocity_expr.subs(time, time1) / position_expr.subs(time, time1),
+    velocity_expr / position_expr,
 ).simplify()
 
 phase_lag_expr = solve(phase_lag_eqn, phase_lag)[0]
 
 print(f"Formula of phase lag:\n{print_expression(phase_lag_expr)}\n\n")
+
+# Separate initial time and current time (time)
+amplitude_expr = amplitude_expr.subs(time, initial_time)
+phase_lag_expr = phase_lag_expr.subs(time, initial_time)
 
 initial_subs = {
     amplitude: amplitude_expr,
