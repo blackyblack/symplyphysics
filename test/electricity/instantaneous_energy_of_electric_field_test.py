@@ -27,7 +27,7 @@ def test_args_fixture() -> Args:
         initial_phase=initial_phase)
 
 
-def test_basic_voltage(test_args: Args) -> None:
+def test_basic_energy(test_args: Args) -> None:
     result = energy_law.calculate_energy(test_args.inductance, test_args.maximum_current,
         test_args.frequency, test_args.time, test_args.initial_phase)
     assert_equal(result, 2e-4 * units.joule)
