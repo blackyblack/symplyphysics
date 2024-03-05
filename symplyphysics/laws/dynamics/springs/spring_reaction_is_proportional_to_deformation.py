@@ -14,7 +14,7 @@ from symplyphysics import (
 ## spring.
 
 # Law: F = -k * x
-## F - restoring force exerted by the spring due to the deformation
+## F - restoring force (spring reaction) exerted by the spring due to the deformation
 ## k - proportionality coefficient, characteristic of the spring, also known as stiffness
 ## x - deformation of the spring (positive or negative, see Note)
 
@@ -30,11 +30,11 @@ from symplyphysics import (
 
 # Also see its [vector counterpart](../vector/spring_reaction_from_deformation.py)
 
-restoring_force = Symbol("restoring_force", units.force)
+spring_reaction = Symbol("spring_reaction", units.force)
 stiffness = Symbol("stiffness", units.force / units.length)
 deformation = Symbol("deformation", units.length)
 
-law = Eq(restoring_force, -1 * stiffness * deformation)
+law = Eq(spring_reaction, -1 * stiffness * deformation)
 
 
 def print_law() -> str:
@@ -42,7 +42,7 @@ def print_law() -> str:
 
 
 @validate_input(stiffness_=stiffness, deformation_=deformation)
-@validate_output(restoring_force)
-def calculate_restoring_force(stiffness_: Quantity, deformation_: Quantity) -> Quantity:
+@validate_output(spring_reaction)
+def calculate_spring_reaction(stiffness_: Quantity, deformation_: Quantity) -> Quantity:
     result = law.rhs.subs({stiffness: stiffness_, deformation: deformation_})
     return Quantity(result)

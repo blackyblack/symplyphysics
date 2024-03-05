@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.core.vectors.vectors import QuantityVector
-from symplyphysics.laws.dynamics.vector import spring_reaction_from_deformation as spring_law
+from symplyphysics.laws.dynamics.springs.vector import spring_reaction_is_proportional_to_deformation as spring_law
 
 Args = namedtuple("Args", ["k", "d", "f"])
 

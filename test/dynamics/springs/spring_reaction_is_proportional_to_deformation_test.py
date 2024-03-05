@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.dynamics.springs import (
-    spring_force_is_proportional_to_deformation as hookes_law,
+    spring_reaction_is_proportional_to_deformation as hookes_law,
 )
 
 # Description
@@ -25,21 +25,21 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = hookes_law.calculate_restoring_force(test_args.k, test_args.x)
+    result = hookes_law.calculate_spring_reaction(test_args.k, test_args.x)
     assert_equal(result, 15.0 * units.newton)
 
 
 def test_bad_stiffness(test_args: Args) -> None:
     kb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        hookes_law.calculate_restoring_force(kb, test_args.x)
+        hookes_law.calculate_spring_reaction(kb, test_args.x)
     with raises(TypeError):
-        hookes_law.calculate_restoring_force(100, test_args.x)
+        hookes_law.calculate_spring_reaction(100, test_args.x)
 
 
 def test_bad_deformation(test_args: Args) -> None:
     xb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        hookes_law.calculate_restoring_force(test_args.k, xb)
+        hookes_law.calculate_spring_reaction(test_args.k, xb)
     with raises(TypeError):
-        hookes_law.calculate_restoring_force(test_args.k, 100)
+        hookes_law.calculate_spring_reaction(test_args.k, 100)
