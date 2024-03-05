@@ -28,71 +28,59 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = forced_law.calculate_driven_displacement(
-        test_args.m, test_args.w0, test_args.f, test_args.w, test_args.phi, test_args.t
-    )
+    result = forced_law.calculate_driven_displacement(test_args.m, test_args.w0, test_args.f,
+        test_args.w, test_args.phi, test_args.t)
     assert_equal(result, -8.87 * units.millimeter)
 
 
 def test_bad_mass(test_args: Args) -> None:
     mb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        forced_law.calculate_driven_displacement(
-            mb, test_args.w0, test_args.f, test_args.w, test_args.phi, test_args.t
-        )
+        forced_law.calculate_driven_displacement(mb, test_args.w0, test_args.f, test_args.w,
+            test_args.phi, test_args.t)
     with raises(TypeError):
-        forced_law.calculate_driven_displacement(
-            100, test_args.w0, test_args.f, test_args.w, test_args.phi, test_args.t
-        )
+        forced_law.calculate_driven_displacement(100, test_args.w0, test_args.f, test_args.w,
+            test_args.phi, test_args.t)
 
 
 def test_bad_angular_frequencies(test_args: Args) -> None:
     wb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        forced_law.calculate_driven_displacement(
-            test_args.m, wb, test_args.f, test_args.w, test_args.phi, test_args.t
-        )
+        forced_law.calculate_driven_displacement(test_args.m, wb, test_args.f, test_args.w,
+            test_args.phi, test_args.t)
     with raises(TypeError):
-        forced_law.calculate_driven_displacement(
-            test_args.m, 100, test_args.f, test_args.w, test_args.phi, test_args.t
-        )
+        forced_law.calculate_driven_displacement(test_args.m, 100, test_args.f, test_args.w,
+            test_args.phi, test_args.t)
     with raises(errors.UnitsError):
-        forced_law.calculate_driven_displacement(
-            test_args.m, test_args.w0, test_args.f, wb, test_args.phi, test_args.t
-        )
+        forced_law.calculate_driven_displacement(test_args.m, test_args.w0, test_args.f, wb,
+            test_args.phi, test_args.t)
     with raises(TypeError):
-        forced_law.calculate_driven_displacement(
-            test_args.m, test_args.w0, test_args.f, 100, test_args.phi, test_args.t
-        )
+        forced_law.calculate_driven_displacement(test_args.m, test_args.w0, test_args.f, 100,
+            test_args.phi, test_args.t)
 
 
 def test_bad_force_amplitude(test_args: Args) -> None:
     fb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        forced_law.calculate_driven_displacement(
-            test_args.m, test_args.w0, fb, test_args.w, test_args.phi, test_args.t
-        )
+        forced_law.calculate_driven_displacement(test_args.m, test_args.w0, fb, test_args.w,
+            test_args.phi, test_args.t)
     with raises(TypeError):
-        forced_law.calculate_driven_displacement(
-            test_args.m, test_args.w0, 100, test_args.w, test_args.phi, test_args.t
-        )
+        forced_law.calculate_driven_displacement(test_args.m, test_args.w0, 100, test_args.w,
+            test_args.phi, test_args.t)
 
 
 def test_bad_phase_lag(test_args: Args) -> None:
     phi_bad = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        forced_law.calculate_driven_displacement(
-            test_args.m, test_args.w0, test_args.f, test_args.w, phi_bad, test_args.t
-        )
+        forced_law.calculate_driven_displacement(test_args.m, test_args.w0, test_args.f,
+            test_args.w, phi_bad, test_args.t)
 
 
 def test_bad_time(test_args: Args) -> None:
     tb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        forced_law.calculate_driven_displacement(
-            test_args.m, test_args.w0, test_args.f, test_args.w, test_args.phi, tb
-        )
+        forced_law.calculate_driven_displacement(test_args.m, test_args.w0, test_args.f,
+            test_args.w, test_args.phi, tb)
     with raises(TypeError):
-        forced_law.calculate_driven_displacement(
-            test_args.m, test_args.w0, test_args.f, test_args.w, test_args.phi, 100
-        )
+        forced_law.calculate_driven_displacement(test_args.m, test_args.w0, test_args.f,
+            test_args.w, test_args.phi, 100)

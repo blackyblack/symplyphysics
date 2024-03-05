@@ -27,16 +27,22 @@ from symplyphysics import (
 ## - we neglect the temperature dependence of the heat capacities;
 ## - the process is isobaric-isothermal.
 
-standard_change_isobaric_potential = Symbol("standard_change_isobaric_potential", units.energy / units.amount_of_substance)
+standard_change_isobaric_potential = Symbol("standard_change_isobaric_potential",
+    units.energy / units.amount_of_substance)
 
-standard_thermal_effect = Symbol("standard_thermal_effect", units.energy / units.amount_of_substance)
-standard_change_entropy = Symbol("standard_change_entropy", units.energy / units.amount_of_substance / units.temperature)
+standard_thermal_effect = Symbol("standard_thermal_effect",
+    units.energy / units.amount_of_substance)
+standard_change_entropy = Symbol("standard_change_entropy",
+    units.energy / units.amount_of_substance / units.temperature)
 temperature = Symbol("temperature", units.temperature)
-standard_change_heat_capacity = Symbol("standard_change_heat_capacity", units.energy / units.amount_of_substance / units.temperature)
+standard_change_heat_capacity = Symbol("standard_change_heat_capacity",
+    units.energy / units.amount_of_substance / units.temperature)
 standard_temperature = Quantity(298 * units.kelvin)
 
-law = Eq(standard_change_isobaric_potential,
-         standard_thermal_effect - temperature * standard_change_entropy - standard_change_heat_capacity * temperature * (log(temperature / standard_temperature) + (standard_temperature / temperature) - 1))
+law = Eq(
+    standard_change_isobaric_potential, standard_thermal_effect -
+    temperature * standard_change_entropy - standard_change_heat_capacity * temperature *
+    (log(temperature / standard_temperature) + (standard_temperature / temperature) - 1))
 
 
 def print_law() -> str:
@@ -48,9 +54,11 @@ def print_law() -> str:
     temperature_=temperature,
     standard_change_heat_capacity_=standard_change_heat_capacity)
 @validate_output(standard_change_isobaric_potential)
-def calculate_standard_change_isobaric_potential(standard_thermal_effect_: Quantity, standard_change_entropy_: Quantity,
-    temperature_: Quantity, standard_change_heat_capacity_: Quantity) -> Quantity:
-    result_expr = solve(law, standard_change_isobaric_potential, dict=True)[0][standard_change_isobaric_potential]
+def calculate_standard_change_isobaric_potential(
+        standard_thermal_effect_: Quantity, standard_change_entropy_: Quantity,
+        temperature_: Quantity, standard_change_heat_capacity_: Quantity) -> Quantity:
+    result_expr = solve(law, standard_change_isobaric_potential,
+        dict=True)[0][standard_change_isobaric_potential]
     result_expr = result_expr.subs({
         standard_thermal_effect: standard_thermal_effect_,
         standard_change_entropy: standard_change_entropy_,

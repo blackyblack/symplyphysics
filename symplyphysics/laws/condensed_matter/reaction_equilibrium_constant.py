@@ -1,15 +1,7 @@
 from sympy import (Eq, solve, exp, S)
 from sympy.physics.units import molar_gas_constant
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    print_expression,
-    validate_input,
-    validate_output,
-    dimensionless,
-    convert_to
-)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output, dimensionless, convert_to)
 
 # Description
 ## The equilibrium constant is a value that determines for a given chemical reaction the ratio between
@@ -29,10 +21,12 @@ from symplyphysics import (
 
 equilibrium_constant = Symbol("equilibrium_constant", dimensionless)
 
-standard_change_isobaric_potential = Symbol("standard_change_isobaric_potential", units.energy / units.amount_of_substance)
+standard_change_isobaric_potential = Symbol("standard_change_isobaric_potential",
+    units.energy / units.amount_of_substance)
 temperature = Symbol("temperature", units.temperature)
 
-law = Eq(equilibrium_constant, exp(-standard_change_isobaric_potential / (molar_gas_constant * temperature)))
+law = Eq(equilibrium_constant,
+    exp(-standard_change_isobaric_potential / (molar_gas_constant * temperature)))
 
 
 def print_law() -> str:

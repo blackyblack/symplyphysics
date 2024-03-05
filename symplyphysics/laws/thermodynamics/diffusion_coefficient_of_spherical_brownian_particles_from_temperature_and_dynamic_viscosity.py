@@ -28,15 +28,21 @@ temperature = Symbol("temperature", units.temperature)
 particle_radius = Symbol("particle_radius", units.length)
 dynamic_viscosity = Symbol("dynamic_viscosity", units.pressure * units.time)
 
-law = Eq(diffusion_coefficient, units.molar_gas_constant * temperature / (6 * units.avogadro * pi * particle_radius * dynamic_viscosity))
+law = Eq(
+    diffusion_coefficient, units.molar_gas_constant * temperature /
+    (6 * units.avogadro * pi * particle_radius * dynamic_viscosity))
+
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(temperature_=temperature, particle_radius_=particle_radius, dynamic_viscosity_=dynamic_viscosity)
+@validate_input(temperature_=temperature,
+    particle_radius_=particle_radius,
+    dynamic_viscosity_=dynamic_viscosity)
 @validate_output(diffusion_coefficient)
-def calculate_diffusion_coefficient(temperature_: Quantity, particle_radius_: Quantity, dynamic_viscosity_: Quantity) -> Quantity:
+def calculate_diffusion_coefficient(temperature_: Quantity, particle_radius_: Quantity,
+    dynamic_viscosity_: Quantity) -> Quantity:
     result_expr = solve(law, diffusion_coefficient, dict=True)[0][diffusion_coefficient]
     result_diffusion_coefficient = result_expr.subs({
         temperature: temperature_,

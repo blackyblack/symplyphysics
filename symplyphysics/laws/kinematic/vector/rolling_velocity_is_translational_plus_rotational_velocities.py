@@ -26,7 +26,8 @@ def rolling_velocity_law(translational_velocity_: Vector, rotational_velocity_: 
 @validate_input(translational_velocity_=units.velocity, rotational_velocity_=units.velocity)
 @validate_output(units.velocity,)
 def calculate_rolling_velocity(
-    translational_velocity_: QuantityVector, rotational_velocity_: QuantityVector,
+    translational_velocity_: QuantityVector,
+    rotational_velocity_: QuantityVector,
 ) -> QuantityVector:
     result = rolling_velocity_law(
         translational_velocity_.to_base_vector(),

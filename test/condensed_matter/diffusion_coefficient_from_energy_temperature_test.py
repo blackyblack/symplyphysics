@@ -18,9 +18,7 @@ def test_args_fixture() -> Args:
     diffusion_constant = Quantity(3.85 * (units.centimeter**2 / units.second))
     temperature = Quantity(1000 * units.kelvin)
 
-    return Args(energy=energy,
-        diffusion_constant=diffusion_constant,
-        temperature=temperature)
+    return Args(energy=energy, diffusion_constant=diffusion_constant, temperature=temperature)
 
 
 def test_basic_diffusion_coefficient(test_args: Args) -> None:
@@ -45,8 +43,7 @@ def test_bad_diffusion_constant(test_args: Args) -> None:
         diffusion_law.calculate_diffusion_coefficient(test_args.energy, diffusion_constant,
             test_args.temperature)
     with raises(TypeError):
-        diffusion_law.calculate_diffusion_coefficient(test_args.energy, 100,
-            test_args.temperature)
+        diffusion_law.calculate_diffusion_coefficient(test_args.energy, 100, test_args.temperature)
 
 
 def test_bad_temperature(test_args: Args) -> None:

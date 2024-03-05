@@ -24,7 +24,8 @@ pressure_law_applied = pressure_law.law.subs({
     pressure_law.depth: depth,
     pressure_law.acceleration: units.acceleration_due_to_gravity,
 })
-pressure_derived = solve(pressure_law_applied, pressure_law.hydrostatic_pressure, dict=True)[0][pressure_law.hydrostatic_pressure]
+pressure_derived = solve(pressure_law_applied, pressure_law.hydrostatic_pressure,
+    dict=True)[0][pressure_law.hydrostatic_pressure]
 
 # Check if derived pressure is same as declared.
 assert expr_equals(pressure_derived, law.rhs)

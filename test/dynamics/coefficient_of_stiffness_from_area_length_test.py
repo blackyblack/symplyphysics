@@ -18,9 +18,7 @@ def test_args_fixture() -> Args:
     area = Quantity(0.1 * units.meter**2)
     length = Quantity(3 * units.meter)
 
-    return Args(module_of_young=module_of_young,
-        area=area,
-        length=length)
+    return Args(module_of_young=module_of_young, area=area, length=length)
 
 
 def test_basic_resistance(test_args: Args) -> None:
@@ -35,8 +33,7 @@ def test_bad_module_of_young(test_args: Args) -> None:
         coefficient_law.calculate_coefficient_of_stiffness(module_of_young, test_args.area,
             test_args.length)
     with raises(TypeError):
-        coefficient_law.calculate_coefficient_of_stiffness(100, test_args.area,
-            test_args.length)
+        coefficient_law.calculate_coefficient_of_stiffness(100, test_args.area, test_args.length)
 
 
 def test_bad_area(test_args: Args) -> None:

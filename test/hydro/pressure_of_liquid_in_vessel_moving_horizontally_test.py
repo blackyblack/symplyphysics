@@ -16,42 +16,34 @@ def test_args_fixture() -> Args:
     acceleration = Quantity(1 * units.meter / units.second**2)
     height = Quantity(1 * units.meter)
 
-    return Args(density_liquid=density_liquid,
-        acceleration=acceleration,
-        height=height)
+    return Args(density_liquid=density_liquid, acceleration=acceleration, height=height)
 
 
 def test_basic_pressure(test_args: Args) -> None:
-    result = pressure_law.calculate_pressure(test_args.density_liquid,
-        test_args.acceleration, test_args.height)
+    result = pressure_law.calculate_pressure(test_args.density_liquid, test_args.acceleration,
+        test_args.height)
     assert_equal(result, 9827 * units.pascal)
 
 
 def test_bad_density_liquid(test_args: Args) -> None:
     density_liquid = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        pressure_law.calculate_pressure(density_liquid, test_args.acceleration,
-            test_args.height)
+        pressure_law.calculate_pressure(density_liquid, test_args.acceleration, test_args.height)
     with raises(TypeError):
-        pressure_law.calculate_pressure(100, test_args.acceleration,
-            test_args.height)
+        pressure_law.calculate_pressure(100, test_args.acceleration, test_args.height)
 
 
 def test_bad_acceleration(test_args: Args) -> None:
     acceleration = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        pressure_law.calculate_pressure(test_args.density_liquid, acceleration,
-            test_args.height)
+        pressure_law.calculate_pressure(test_args.density_liquid, acceleration, test_args.height)
     with raises(TypeError):
-        pressure_law.calculate_pressure(test_args.density_liquid, 100,
-            test_args.height)
+        pressure_law.calculate_pressure(test_args.density_liquid, 100, test_args.height)
 
 
 def test_bad_height(test_args: Args) -> None:
     height = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        pressure_law.calculate_pressure(test_args.density_liquid,
-            test_args.acceleration, height)
+        pressure_law.calculate_pressure(test_args.density_liquid, test_args.acceleration, height)
     with raises(TypeError):
-        pressure_law.calculate_pressure(test_args.density_liquid,
-            test_args.acceleration, 100)
+        pressure_law.calculate_pressure(test_args.density_liquid, test_args.acceleration, 100)

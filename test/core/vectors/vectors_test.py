@@ -2,7 +2,8 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy import atan, pi, sqrt, symbols, sin, cos
 from sympy.vector import Vector as SympyVector, express
-from symplyphysics import (Quantity, dimensionless, units, QuantityVector, Vector, errors, assert_equal)
+from symplyphysics import (Quantity, dimensionless, units, QuantityVector, Vector, errors,
+    assert_equal)
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_rotate, coordinates_transform
 
 Args = namedtuple("Args", ["C"])
@@ -325,8 +326,6 @@ def test_from_base_vector() -> None:
         y: Quantity(2.0),
         z: Quantity(3.0),
     }
-    symbol_quantity_vector = QuantityVector.from_base_vector(
-        symbol_vector, subs=subs
-    )
+    symbol_quantity_vector = QuantityVector.from_base_vector(symbol_vector, subs=subs)
     for value, quantity in zip(subs.values(), symbol_quantity_vector.components):
         assert_equal(quantity, value)

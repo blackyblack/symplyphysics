@@ -31,9 +31,7 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(module_of_young_=module_of_young,
-    area_=area,
-    length_=length)
+@validate_input(module_of_young_=module_of_young, area_=area, length_=length)
 @validate_output(coefficient_of_stiffness)
 def calculate_coefficient_of_stiffness(module_of_young_: Quantity, area_: Quantity,
     length_: Quantity) -> Quantity:

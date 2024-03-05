@@ -37,9 +37,7 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(thermal_effect_=thermal_effect,
-    entropy_=entropy,
-    temperature_=temperature)
+@validate_input(thermal_effect_=thermal_effect, entropy_=entropy, temperature_=temperature)
 @validate_output(isobaric_potential)
 def calculate_isobaric_potential(thermal_effect_: Quantity, entropy_: Quantity,
     temperature_: Quantity) -> Quantity:

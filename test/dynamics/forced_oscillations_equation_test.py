@@ -33,95 +33,79 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = forced_eqn.calculate_displacement(
-        test_args.q0, test_args.v0, test_args.m, test_args.w0, test_args.f, test_args.w, test_args.phi, test_args.t
-    )
+    result = forced_eqn.calculate_displacement(test_args.q0, test_args.v0, test_args.m,
+        test_args.w0, test_args.f, test_args.w, test_args.phi, test_args.t)
     assert_equal(result, -6.46 * units.centimeter)
 
 
 def test_bad_position(test_args: Args) -> None:
     qb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        forced_eqn.calculate_displacement(
-            qb, test_args.v0, test_args.m, test_args.w0, test_args.f, test_args.w, test_args.phi, test_args.t
-        )
+        forced_eqn.calculate_displacement(qb, test_args.v0, test_args.m, test_args.w0, test_args.f,
+            test_args.w, test_args.phi, test_args.t)
     with raises(TypeError):
-        forced_eqn.calculate_displacement(
-            100, test_args.v0, test_args.m, test_args.w0, test_args.f, test_args.w, test_args.phi, test_args.t
-        )
+        forced_eqn.calculate_displacement(100, test_args.v0, test_args.m, test_args.w0, test_args.f,
+            test_args.w, test_args.phi, test_args.t)
 
 
 def test_bad_velocity(test_args: Args) -> None:
     vb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        forced_eqn.calculate_displacement(
-            test_args.q0, vb, test_args.m, test_args.w0, test_args.f, test_args.w, test_args.phi, test_args.t
-        )
+        forced_eqn.calculate_displacement(test_args.q0, vb, test_args.m, test_args.w0, test_args.f,
+            test_args.w, test_args.phi, test_args.t)
     with raises(TypeError):
-        forced_eqn.calculate_displacement(
-            test_args.q0, 100, test_args.m, test_args.w0, test_args.f, test_args.w, test_args.phi, test_args.t
-        )
+        forced_eqn.calculate_displacement(test_args.q0, 100, test_args.m, test_args.w0, test_args.f,
+            test_args.w, test_args.phi, test_args.t)
 
 
 def test_bad_mass(test_args: Args) -> None:
     mb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        forced_eqn.calculate_displacement(
-            test_args.q0, test_args.v0, mb, test_args.w0, test_args.f, test_args.w, test_args.phi, test_args.t
-        )
+        forced_eqn.calculate_displacement(test_args.q0, test_args.v0, mb, test_args.w0, test_args.f,
+            test_args.w, test_args.phi, test_args.t)
     with raises(TypeError):
-        forced_eqn.calculate_displacement(
-            test_args.q0, test_args.v0, 100, test_args.w0, test_args.f, test_args.w, test_args.phi, test_args.t
-        )
+        forced_eqn.calculate_displacement(test_args.q0, test_args.v0, 100, test_args.w0,
+            test_args.f, test_args.w, test_args.phi, test_args.t)
 
 
 def test_bad_frequencies(test_args: Args) -> None:
     wb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        forced_eqn.calculate_displacement(
-            test_args.q0, test_args.v0, test_args.m, wb, test_args.f, test_args.w, test_args.phi, test_args.t
-        )
+        forced_eqn.calculate_displacement(test_args.q0, test_args.v0, test_args.m, wb, test_args.f,
+            test_args.w, test_args.phi, test_args.t)
     with raises(TypeError):
-        forced_eqn.calculate_displacement(
-            test_args.q0, test_args.v0, test_args.m, 100, test_args.f, test_args.w, test_args.phi, test_args.t
-        )
+        forced_eqn.calculate_displacement(test_args.q0, test_args.v0, test_args.m, 100, test_args.f,
+            test_args.w, test_args.phi, test_args.t)
     with raises(errors.UnitsError):
-        forced_eqn.calculate_displacement(
-            test_args.q0, test_args.v0, test_args.m, test_args.w0, test_args.f, wb, test_args.phi, test_args.t
-        )
+        forced_eqn.calculate_displacement(test_args.q0, test_args.v0, test_args.m, test_args.w0,
+            test_args.f, wb, test_args.phi, test_args.t)
     with raises(TypeError):
-        forced_eqn.calculate_displacement(
-            test_args.q0, test_args.v0, test_args.m, test_args.w0, test_args.f, 100, test_args.phi, test_args.t
-        )
+        forced_eqn.calculate_displacement(test_args.q0, test_args.v0, test_args.m, test_args.w0,
+            test_args.f, 100, test_args.phi, test_args.t)
 
 
 def test_bad_force(test_args: Args) -> None:
     fb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        forced_eqn.calculate_displacement(
-            test_args.q0, test_args.v0, test_args.m, test_args.w0, fb, test_args.w, test_args.phi, test_args.t
-        )
+        forced_eqn.calculate_displacement(test_args.q0, test_args.v0, test_args.m, test_args.w0, fb,
+            test_args.w, test_args.phi, test_args.t)
     with raises(TypeError):
-        forced_eqn.calculate_displacement(
-            test_args.q0, test_args.v0, test_args.m, test_args.w0, 100, test_args.w, test_args.phi, test_args.t
-        )
+        forced_eqn.calculate_displacement(test_args.q0, test_args.v0, test_args.m, test_args.w0,
+            100, test_args.w, test_args.phi, test_args.t)
 
 
 def test_bad_phase_lag(test_args: Args) -> None:
     phi_bad = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        forced_eqn.calculate_displacement(
-            test_args.q0, test_args.v0, test_args.m, test_args.w0, test_args.f, test_args.w, phi_bad, test_args.t
-        )
+        forced_eqn.calculate_displacement(test_args.q0, test_args.v0, test_args.m, test_args.w0,
+            test_args.f, test_args.w, phi_bad, test_args.t)
 
 
 def test_bad_time(test_args: Args) -> None:
     tb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        forced_eqn.calculate_displacement(
-            test_args.q0, test_args.v0, test_args.m, test_args.w0, test_args.f, test_args.w, test_args.phi, tb
-        )
+        forced_eqn.calculate_displacement(test_args.q0, test_args.v0, test_args.m, test_args.w0,
+            test_args.f, test_args.w, test_args.phi, tb)
     with raises(TypeError):
-        forced_eqn.calculate_displacement(
-            test_args.q0, test_args.v0, test_args.m, test_args.w0, test_args.f, test_args.w, test_args.phi, 100
-        )
+        forced_eqn.calculate_displacement(test_args.q0, test_args.v0, test_args.m, test_args.w0,
+            test_args.f, test_args.w, test_args.phi, 100)

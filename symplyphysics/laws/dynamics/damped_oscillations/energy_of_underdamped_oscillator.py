@@ -34,13 +34,8 @@ exponential_decay_constant = Symbol("exponential_decay_constant", angle_type / u
 time = Symbol("time", units.time)
 
 law = Eq(
-    oscillator_energy,
-    oscillator_mass
-    * undamped_angular_frequency**2
-    * maximum_amplitude**2
-    * exp(-2 * exponential_decay_constant * time)
-    / 2
-)
+    oscillator_energy, oscillator_mass * undamped_angular_frequency**2 * maximum_amplitude**2 *
+    exp(-2 * exponential_decay_constant * time) / 2)
 
 # TODO Derive from [underdamped oscillations](../../kinematic/damped_oscillations/underdamping.py)
 

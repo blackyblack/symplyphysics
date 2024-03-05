@@ -1,13 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    print_expression,
-    validate_input,
-    validate_output,
-    dimensionless
-)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output, dimensionless)
 
 # Description
 ## Relative humidity is the ratio of water vapor pressure p to saturated vapor pressure p0 at a given temperature.

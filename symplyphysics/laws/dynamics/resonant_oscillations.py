@@ -42,13 +42,8 @@ driving_force_amplitude = Symbol("driving_force_amplitude", units.force)
 driving_phase_lag = Symbol("driving_phase_lag", angle_type)
 time = Symbol("time", units.time)
 
-law = Eq(
-    resonant_displacement(time),
-    (driving_force_amplitude / oscillator_mass)
-    * time 
-    * sin(natural_angular_frequency * time + driving_phase_lag)
-    / (2 * natural_angular_frequency)
-)
+law = Eq(resonant_displacement(time), (driving_force_amplitude / oscillator_mass) * time *
+    sin(natural_angular_frequency * time + driving_phase_lag) / (2 * natural_angular_frequency))
 
 # Derive law from driven oscillations equation
 
