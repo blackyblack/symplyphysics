@@ -38,6 +38,7 @@ def print_law() -> str:
     first_compliance_=first_compliance,
     second_compliance_=second_compliance,
 )
+@validate_output(total_compliance)
 def calculate_compliance(
     first_compliance_: Quantity,
     second_compliance_: Quantity,
