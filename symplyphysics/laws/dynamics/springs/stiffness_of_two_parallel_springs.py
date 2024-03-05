@@ -1,4 +1,4 @@
-from sympy import Eq
+from sympy import Eq, solve, Symbol as SymSymbol
 from symplyphysics import (
     units,
     Quantity,
@@ -7,6 +7,8 @@ from symplyphysics import (
     validate_input,
     validate_output,
 )
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.dynamics.springs import spring_reaction_is_proportional_to_deformation as hookes_law
 
 # Description
 ## If two springs are side-to-side to one another, i.e. connected in parallel, the total
@@ -26,7 +28,30 @@ second_stiffness = Symbol("second_stiffness", units.force / units.length)
 
 law = Eq(total_stiffness, first_stiffness + second_stiffness)
 
-# TODO: derive law from Hooke's law
+# Derive law from Hooke's law
+## In the case of serial connection, the forces acting on both springs add up while
+## the springs deform equally.
+
+_deformation = SymSymbol("deformation")
+
+_force_expr = solve(
+    hookes_law.law, hookes_law.spring_reaction
+)[0].subs(
+    hookes_law.deformation, _deformation
+)
+
+_first_force = _force_expr.subs(hookes_law.stiffness, first_stiffness)
+_second_force = _force_expr.subs(hookes_law.stiffness, second_stiffness)
+
+_total_force_hooke = _force_expr.subs(hookes_law.stiffness, total_stiffness)
+_total_force_added = _first_force + _second_force
+
+_total_stiffness_derived = solve(
+    Eq(_total_force_hooke, _total_force_added),
+    total_stiffness,
+)[0]
+
+assert expr_equals(_total_stiffness_derived, law.rhs)
 
 
 def print_law() -> str:
