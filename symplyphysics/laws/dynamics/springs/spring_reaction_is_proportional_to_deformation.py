@@ -1,4 +1,4 @@
-from sympy import Eq
+from sympy import Eq, sympify, solve
 from symplyphysics import (
     units,
     Symbol,
@@ -6,6 +6,11 @@ from symplyphysics import (
     validate_input,
     validate_output,
     print_expression,
+    Vector,
+)
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.dynamics.springs.vector import (
+    spring_reaction_is_proportional_to_deformation as hookes_vector_law,
 )
 
 # Description
@@ -35,6 +40,25 @@ stiffness = Symbol("stiffness", units.force / units.length)
 deformation = Symbol("deformation", units.length)
 
 law = Eq(spring_reaction, -1 * stiffness * deformation)
+
+# Derive current law from its vector counterpart
+
+_deformation_vector = Vector([deformation])
+_spring_reaction_vector_derived = hookes_vector_law.force_law(_deformation_vector)
+assert len(_spring_reaction_vector_derived.components) == 1
+_spring_reaction_derived = sympify(_spring_reaction_vector_derived.components[0]).subs(
+    hookes_vector_law.stiffness, stiffness
+)
+assert expr_equals(_spring_reaction_derived, law.rhs)
+
+_spring_reaction_vector = Vector([spring_reaction])
+_deformation_vector_derived = hookes_vector_law.deformation_law(_spring_reaction_vector)
+assert len(_deformation_vector_derived.components) == 1
+_deformation_derived = sympify(_deformation_vector_derived.components[0]).subs(
+    hookes_vector_law.stiffness, stiffness
+)
+_deformation_from_law = solve(law, deformation)[0]
+assert expr_equals(_deformation_derived, _deformation_from_law)
 
 
 def print_law() -> str:
