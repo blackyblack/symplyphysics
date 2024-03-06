@@ -24,7 +24,7 @@ from symplyphysics.core.quantity_decorator import validate_output_same
 
 # Note
 ## - The form of the traveling waves the standing wave is the sum of is `u_max * sin(k * x + w * t)`
-## - This is no longer a traveling wave because 
+## - This is no longer a traveling wave because for that it need to be moving in one direction
 
 displacement = symbols("displacement", cls=SymFunction, real=True)
 amplitude = symbols("amplitude", positive=True)
