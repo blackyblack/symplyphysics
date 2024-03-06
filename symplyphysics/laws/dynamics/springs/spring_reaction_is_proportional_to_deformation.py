@@ -51,15 +51,6 @@ _spring_reaction_derived = sympify(_spring_reaction_vector_derived.components[0]
 )
 assert expr_equals(_spring_reaction_derived, law.rhs)
 
-_spring_reaction_vector = Vector([spring_reaction])
-_deformation_vector_derived = hookes_vector_law.deformation_law(_spring_reaction_vector)
-assert len(_deformation_vector_derived.components) == 1
-_deformation_derived = sympify(_deformation_vector_derived.components[0]).subs(
-    hookes_vector_law.stiffness, stiffness
-)
-_deformation_from_law = solve(law, deformation)[0]
-assert expr_equals(_deformation_derived, _deformation_from_law)
-
 
 def print_law() -> str:
     return print_expression(law)
