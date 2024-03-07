@@ -34,6 +34,8 @@ def print_law() -> str:
 @validate_input(small_semi_axis_=small_semi_axis, large_semi_axis_=large_semi_axis)
 @validate_output(eccentricity)
 def calculate_eccentricity(small_semi_axis_: Quantity, large_semi_axis_: Quantity) -> float:
+    if small_semi_axis_.scale_factor > large_semi_axis_.scale_factor:
+        raise ValueError("The small semi-axis must be less than or equal to the large semi-axis")
     result_expr = solve(law, eccentricity, dict=True)[0][eccentricity]
     result_expr = result_expr.subs({
         small_semi_axis: small_semi_axis_,

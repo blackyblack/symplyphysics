@@ -33,3 +33,5 @@ def test_bad_semi_axis(test_args: Args) -> None:
         eccentricity_law.calculate_eccentricity(test_args.small_semi_axis, bad_semi_axis)
     with raises(TypeError):
         eccentricity_law.calculate_eccentricity(test_args.small_semi_axis, 100)
+    with raises(ValueError):
+        eccentricity_law.calculate_eccentricity(test_args.large_semi_axis, test_args.small_semi_axis)
