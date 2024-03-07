@@ -50,6 +50,8 @@ _total_force_hooke = _force_expr.subs(hookes_law.stiffness, total_stiffness)
 _first_force_vector = Vector([_first_force])
 _second_force_vector = Vector([_second_force])
 _total_force_vector = superposition_law.superposition_law([_first_force_vector, _second_force_vector])
+for component in _total_force_vector.components[1:]:
+    assert expr_equals(component, 0)
 _total_force_added = _total_force_vector.components[0]
 
 _total_stiffness_derived = solve(
@@ -57,7 +59,7 @@ _total_stiffness_derived = solve(
     total_stiffness,
 )[0]
 
-assert expr_equals(_total_stiffness_derived, abs(law.rhs))
+assert expr_equals(_total_stiffness_derived, law.rhs)
 
 
 def print_law() -> str:
