@@ -15,7 +15,7 @@ from symplyphysics import (
 ## number of half-waves can fit into the total length of the string:
 
 # Law: n * (lambda / 2) = L
-## n - positive integer (order of the harmonic)
+## n - positive integer, also known as harmonic number of the n-th harmonic
 ## lambda - wavelength of standing wave
 ## L - length of the string
 
