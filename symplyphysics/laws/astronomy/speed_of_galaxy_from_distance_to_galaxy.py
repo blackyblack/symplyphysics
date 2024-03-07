@@ -13,7 +13,7 @@ from symplyphysics import (
 ## depends on the distance to it.
 
 ## Law is: v = H * r, where
-## v - speed of galaxy,
+## v - speed of galaxy (it is directed away from the observer looking at the galaxy),
 ## H - Hubble's constant,
 ## r - distance to galaxy.
 
@@ -21,7 +21,7 @@ speed_of_galaxy = Symbol("speed_of_galaxy", units.velocity)
 
 distance_to_galaxy = Symbol("distance_to_galaxy", units.length)
 
-hubble_constant = Quantity(2.2e-18 * (units.second)**(-1))
+hubble_constant = Quantity(2.2e-18 / units.second)
 
 law = Eq(speed_of_galaxy, hubble_constant * distance_to_galaxy)
 

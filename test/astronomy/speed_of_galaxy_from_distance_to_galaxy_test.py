@@ -22,7 +22,7 @@ def test_basic_speed(test_args: Args) -> None:
     assert_equal(result, 101827 * units.kilometer / units.second)
 
 
-def test_bad_distance_to_galaxy(test_args: Args) -> None:
+def test_bad_distance_to_galaxy() -> None:
     distance_to_galaxy = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         speed_law.calculate_speed(distance_to_galaxy)
