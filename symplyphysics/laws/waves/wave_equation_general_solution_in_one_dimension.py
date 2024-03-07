@@ -3,6 +3,7 @@ from symplyphysics import (
     units,
     angle_type,
     Symbol,
+    Function,
     Quantity,
     print_expression,
     validate_input,
@@ -11,31 +12,24 @@ from symplyphysics.core.quantity_decorator import validate_output_same
 from symplyphysics.core.symbols.quantities import scale_factor
 
 # Description
-## The solution of the 1D wave equation are sums of a right-traveling function and a left-traveling function.
-## Here, "traveling" means that the shape of these individual arbitrary functions with respect to x stays constant, 
-## however, the functions are translated left and right with time with a certain velocity called phase velocity.
+## The solution of the 1D wave equation ...
 
-# Law: u(x, t) = u_minus(k*x - w*t) + u_plus(k*x + w*t)
+# Law: u(x, t) = f(psi(x, t))
 ## u - solution of the 1D wave equation
-## u_minus - solution moving in the positive (right) direction of x-axis
-## u_plus - solution moving in the negative (left) direction of x-axis
-## k - angular wavenumber
+## f - unary function that accepts angle-type input
+## psi - [phase of the wave](./phase_of_traveling_wave.py)
 ## x - spatial variable
-## w - angular frequency
 ## t - time
 
 general_solution = symbols("general_solution", cls=SymFunction)
-left_traveling_solution = symbols("left_traveling_solution", cls=SymFunction)
-right_traveling_solution = symbols("right_traveling_solution", cls=SymFunction)
-angular_wavenumber = Symbol("angular_wavenumber", angle_type / units.length)
+solution_function = symbols("solution_function", cls=SymFunction)
+wave_phase = Function("wave_phase", angle_type)
 position = Symbol("position", units.length)
-angular_frequency = Symbol("angular_frequency", angle_type / units.time)
 time = Symbol("time", units.time)
 
 law = Eq(
-    general_solution(time),
-    right_traveling_solution(angular_wavenumber * position - angular_frequency * time)
-    + left_traveling_solution(angular_wavenumber * position + angular_frequency * time)
+    general_solution(position, time),
+    solution_function(wave_phase(position, time))
 )
 
 # TODO: prove it's a solution of the wave equation
@@ -45,34 +39,13 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(
-    angular_wavenumber_=angular_wavenumber,
-    position_=position,
-    angular_frequency_=angular_frequency,
-    time_=time,
-    phase_lag_=angle_type,
-)
+@validate_input(wave_phase_=wave_phase)
 @validate_output_same("amplitude_")
 def calculate_displacement(
     amplitude_: Quantity,
-    angular_wavenumber_: Quantity,
-    position_: Quantity,
-    angular_frequency_: Quantity,
-    time_: Quantity,
-    phase_lag_: Quantity | float,
+    wave_phase_: Quantity | float,
 ) -> Quantity:
-    """Solution of the wave equation in the form `A * cos(k*x + w*t + phi)`"""
-
-    solution = law.rhs.subs({
-        right_traveling_solution(angular_wavenumber * position - angular_frequency * time): (
-            amplitude_ * cos(angular_wavenumber * position - angular_frequency * time + scale_factor(phase_lag_))
-        ),
-        left_traveling_solution(angular_wavenumber * position + angular_frequency * time): 0,
-    })
-    result = solution.subs({
-        angular_wavenumber: angular_wavenumber_,
-        position: position_,
-        angular_frequency: angular_frequency_,
-        time: time_,
-    })
+    """Solution of the wave equation in the form `A * cos(psi)`"""
+    wave_phase_ = scale_factor(wave_phase_)
+    result = amplitude_ * law.rhs.subs(solution_function(wave_phase(position, time)), cos(wave_phase_))
     return Quantity(result)
