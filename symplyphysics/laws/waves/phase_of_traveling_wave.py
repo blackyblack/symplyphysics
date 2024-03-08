@@ -14,7 +14,7 @@ from symplyphysics import (
 ## wave if `x` and `t` appear solely in the form of `k*x + omega*t`, i.e. the function depends
 ## on the wave phase described below.
 
-# Law: phi(x, t) = k * x + omega * t
+# Law: phi(x, t) = k * x - omega * t
 ## phi - wave phase
 ## k - angular wavenumber
 ## x - position
@@ -22,8 +22,8 @@ from symplyphysics import (
 ## t - time
 
 # Note
-## `omega` can be both positive (the wave travels in the negative direction of x-axis)
-## and negative (the wave travels in the positive direction of x-axis)
+## `omega` can be both positive (the wave travels in the positive direction of x-axis)
+## or negative (the wave travels in the negative direction of x-axis)
 
 # Condition
 ## - This is the case of a wave traveling in a single spatial dimension.
@@ -35,7 +35,7 @@ position = Symbol("position", units.length, real=True)
 angular_frequency = Symbol("angular_frequency", angle_type / units.time, real=True)
 time = Symbol("time", units.time, positive=True)
 
-law = Eq(wave_phase, angular_wavenumber * position + angular_frequency * time)
+law = Eq(wave_phase, angular_wavenumber * position - angular_frequency * time)
 
 
 def print_law() -> str:
