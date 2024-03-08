@@ -11,7 +11,7 @@ from symplyphysics import (
 
 # Description
 ## The gravitational radius is a characteristic radius defined for any physical body with mass. This is the radius of the sphere
-## on which the event horizon created by this mass would be located (from the point of view of GRT) if it were distributed spherically
+## on which the event horizon created by this mass would be located (from the point of view of general theory of relativity) if it were distributed spherically
 ## symmetrically, would be stationary (in particular, it would not rotate, but radial movements are permissible) and would lie entirely
 ## inside this sphere.
 

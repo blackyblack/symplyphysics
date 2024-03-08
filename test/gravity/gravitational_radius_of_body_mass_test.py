@@ -22,7 +22,7 @@ def test_basic_gravitational_radius(test_args: Args) -> None:
     assert_equal(result, 8.882e-3 * units.meter)
 
 
-def test_bad_body_mass(test_args: Args) -> None:
+def test_bad_body_mass() -> None:
     body_mass = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         radius_law.calculate_radius(body_mass)
