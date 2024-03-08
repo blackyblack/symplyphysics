@@ -16,7 +16,7 @@ from symplyphysics import (
 ## The apparent magnitude is a measure of the brightness of a celestial body (more precisely, the illumination created
 ## by this body) from the observer's point of view. The brighter the object, the smaller its magnitude.
 
-## Law is: M = m - 5 * lg(d / d0), where
+## Law is: M = m - 5 * lg(d / d0),(it does not apply to very distant objects) where
 ## M - absolute magnitude,
 ## m - apparent magnitude,
 ## d - distance to the object,
