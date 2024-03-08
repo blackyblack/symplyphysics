@@ -10,7 +10,8 @@ from symplyphysics.laws.waves import phase_of_traveling_wave as phase_law
 
 # Description
 ## A traveling wave has angular wavenumber k = 3 rad/m and angular frequency w = 0.8 Hz.
-## Then at position x = 0.1 m and time t = 10 s its phase is 8.3 rad
+## Then at position x = 0.1 m and time t = 10 s its phase is -7.7 rad. The wave is moving
+## in the positive direction of the x-axis.
 
 Args = namedtuple("Args", "k x w t")
 
@@ -26,7 +27,7 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = phase_law.calculate_wave_phase(test_args.k, test_args.x, test_args.w, test_args.t)
-    assert_equal(result, 8.3 * units.radian)
+    assert_equal(result, -7.7 * units.radian)
 
 
 def test_bad_wavenumber(test_args: Args) -> None:
