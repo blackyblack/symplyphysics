@@ -47,5 +47,5 @@ def calculate_displacement(
 ) -> Quantity:
     """Solution of the wave equation in the form `A * cos(psi)`"""
     wave_phase_ = scale_factor(wave_phase_)
-    result = amplitude_ * law.rhs.subs(solution_function(wave_phase(position, time)), cos(wave_phase_))
+    result = amplitude_ * cos(wave_phase_)
     return Quantity(result)
