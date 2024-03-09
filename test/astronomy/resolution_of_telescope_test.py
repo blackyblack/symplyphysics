@@ -21,7 +21,7 @@ def test_args_fixture() -> Args:
 
 def test_basic_resolution(test_args: Args) -> None:
     result = resolution_law.calculate_resolution(test_args.wavelength, test_args.lens_diameter)
-    assert_equal(result, 1.678e-4)
+    assert_equal(result, 1.678e-4 * units.radian)
 
 
 def test_bad_wavelength(test_args: Args) -> None:
