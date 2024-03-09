@@ -39,12 +39,19 @@ acceleration_law_applied = acceleration_law.law.subs({
 })
 force_derived = solve(acceleration_law_applied, acceleration_law.force, dict=True)[0][acceleration_law.force]
 
+# Let's write down Newton's second law: ma = F. F is, in this case, the force of gravity. And in the general case,
+# when a body moves along a circle with a constant velocity in modulus, its acceleration is equal to the centripetal
+# acceleration.
 gravity_force_law_applied = gravity_force_law.law.subs({
     gravity_force_law.first_object_mass: planet_mass,
     gravity_force_law.gravitational_force: force_derived,
     gravity_force_law.second_object_mass: acceleration_law.mass,
     gravity_force_law.distance_between_mass_centers: radius + height,
 })
+# The first cosmic velocity is the minimum horizontal velocity that must be given to an object so that it moves in
+# a circular orbit around the planet. Based on this definition, the velocity could be left negative, implying a different
+# direction. But most often they are written with a plus sign, implying the modulus of the horizontal component of the
+# velocity tangent to the orbit. Therefore, the first solution that returns a minus is ignored.
 velocity_derived = solve(gravity_force_law_applied, velocity, dict=True)[1][velocity]
 
 # Check if derived velocity is same as declared.
