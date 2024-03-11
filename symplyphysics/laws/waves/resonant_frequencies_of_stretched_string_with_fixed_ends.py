@@ -21,14 +21,14 @@ from symplyphysics import (
 ## v - phase velocity of wave
 ## L - length of string
 
-resonant_frequency = Symbol("resonant_frequency", 1 / units.time, positive=True)
+resonant_frequency = Symbol("resonant_frequency", units.frequency, positive=True)
 harmonic_number = Symbol("harmonic_number", dimensionless, integer=True, positive=True)
 phase_velocity = Symbol("phase_velocity", units.velocity, positive=True)
 string_length = Symbol("string_length", units.length, positive=True)
 
 law = Eq(resonant_frequency, harmonic_number * phase_velocity / (2 * string_length))
 
-# TODO: Derive from the condition ofa  wave along a stretched string with fixed ends
+# TODO: Derive from the condition of a wave along a stretched string with fixed ends
 
 
 def print_law() -> str:
