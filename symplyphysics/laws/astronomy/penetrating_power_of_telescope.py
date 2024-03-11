@@ -21,7 +21,9 @@ penetrating_power_telescope= Symbol("penetrating_power_telescope", dimensionless
 
 lens_diameter = Symbol("lens_diameter", units.length)
 
-law = Eq(penetrating_power_telescope, 2.5 + 5 * log(lens_diameter / Quantity(1 * units.millimeter),10))
+one_millimeter = Quantity(1 * units.millimeter)
+
+law = Eq(penetrating_power_telescope, 2.5 + 5 * log(lens_diameter / one_millimeter, 10))
 
 
 def print_law() -> str:
