@@ -22,11 +22,15 @@ from symplyphysics.laws.waves import displacement_in_standing_wave as standing_w
 ## m - integer
 ## lambda - wavelength
 
+# Note
+## - Amplitude refers to absolute value of displacement from rest, therefore positions of 
+## maximum amplitude are such positions where there is maximum or minimum displacement from rest.
+
 antinode_position = Symbol("antinode_position", units.length, real=True)
 integer_factor = Symbol("integer_factor", dimensionless, integer=True)
 wavelength = Symbol("wavelength", units.length, positive=True)
 
-law = Eq(antinode_position, (integer_factor + S(1)/2) * wavelength / 2)
+law = Eq(antinode_position, (integer_factor + S.One/2) * wavelength / 2)
 
 # Proving these are indeed locations of maximum amplitude.
 # Deriving it from the standing wave expression is impossible since `sympy` does not produce
@@ -46,8 +50,8 @@ _standing_wave_spatial_derivative_at_antinodes = _standing_wave_spatial_derivati
 assert expr_equals(_standing_wave_spatial_derivative_at_antinodes, 0)
 
 # Since the spatial derivative of the wave is zero in antinodes, according to calculus
-# these are the points of extrema of the wave, therefore the locations of the maximum
-# amplitude of the wave.
+# these are the points of extrema of the wave, hence they are locations of maximum and
+# minimum displacement of the wave, hence they are locations of maximum amplitude.
 
 
 def print_law() -> str:
