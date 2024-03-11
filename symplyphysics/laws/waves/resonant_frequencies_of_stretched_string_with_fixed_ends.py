@@ -1,4 +1,4 @@
-from sympy import Eq
+from sympy import Eq, solve
 from symplyphysics import (
     units,
     dimensionless,
@@ -7,6 +7,14 @@ from symplyphysics import (
     print_expression,
     validate_input,
     validate_output,
+)
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.kinematic import (
+    temporal_frequency_from_period as frequency_law,
+)
+from symplyphysics.laws.waves import (
+    wavelength_from_wave_speed_and_period as wavelength_law,
+    wavelength_of_standing_wave_in_string_with_fixed_ends as resonance_law,
 )
 
 # Description
@@ -28,7 +36,29 @@ string_length = Symbol("string_length", units.length, positive=True)
 
 law = Eq(resonant_frequency, harmonic_number * phase_velocity / (2 * string_length))
 
-# TODO: Derive from the condition of a wave along a stretched string with fixed ends
+# Derive from the condition for a standing wave along a stretched string with fixed ends
+
+_wavelength = solve(
+    resonance_law.law, resonance_law.wavelength
+)[0].subs({
+    resonance_law.integer_factor: harmonic_number,
+    resonance_law.string_length: string_length,
+})
+
+_period = solve(
+    wavelength_law.law, wavelength_law.oscillation_period
+)[0].subs({
+    wavelength_law.wavelength: _wavelength,
+    wavelength_law.propagation_speed: phase_velocity,
+})
+
+_frequency = solve(
+    frequency_law.law, frequency_law.temporal_frequency
+)[0].subs(
+    frequency_law.period, _period
+)
+
+assert expr_equals(_frequency, law.rhs)
 
 
 def print_law() -> str:
