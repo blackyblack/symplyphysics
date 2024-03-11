@@ -1,4 +1,4 @@
-from sympy import Eq, symbols, Function as SymFunction, cos
+from sympy import Eq, symbols, Function as SymFunction, cos, S
 from symplyphysics import (
     units,
     angle_type,
@@ -10,6 +10,11 @@ from symplyphysics import (
 )
 from symplyphysics.core.quantity_decorator import validate_output_same
 from symplyphysics.core.symbols.quantities import scale_factor
+from symplyphysics.definitions import wave_equation_in_one_dimension as wave_eqn
+from symplyphysics.laws.waves import (
+    phase_of_traveling_wave as phase_law,
+    phase_velocity_from_angular_frequency_and_wavenumber as phase_velocity_law,
+)
 
 # Description
 ## The solution of the 1D wave equation ...
@@ -32,7 +37,37 @@ law = Eq(
     solution_function(wave_phase(position, time))
 )
 
-# TODO: prove it's a solution of the wave equation
+# Prove this is a solution of the wave equation
+
+_angular_frequency, _angular_wavenumber = symbols("angular_frequency angular_wavenumber")
+
+_phase_velocity = phase_velocity_law.law.rhs.subs({
+    phase_velocity_law.angular_frequency: _angular_frequency,
+    phase_velocity_law.angular_wavenumber: _angular_wavenumber,
+})
+
+_phase = phase_law.law.rhs.subs({
+    phase_law.angular_wavenumber: _angular_wavenumber,
+    phase_law.position: position,
+    phase_law.angular_frequency: _angular_frequency,
+    phase_law.time: time,
+})
+
+_solution = law.rhs.subs(
+    wave_phase(position, time), _phase
+)
+
+_eqn = wave_eqn.definition.subs({
+    wave_eqn.position: position,
+    wave_eqn.time: time,
+    wave_eqn.phase_velocity: _phase_velocity,
+})
+
+_eqn_subs = _eqn.subs(
+    wave_eqn.displacement(position, time), _solution
+).doit()
+
+assert _eqn_subs is S.true
 
 
 def print_law() -> str:
