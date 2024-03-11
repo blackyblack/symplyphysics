@@ -15,8 +15,11 @@ from symplyphysics import (
 
 # Law: v = sqrt(B / rho)
 ## v - phase velocity of sound wave
-## B - bulk modulus of medium
+## B - [bulk modulus of medium](../hydro/hydraulic_stress_is_bulk_modulus_times_strain.py)
 ## rho - density of medium
+
+# Note
+## - Bulk modulus of a substance is a measure of its resistance to bulk compression.
 
 phase_velocity = Symbol("phase_velocity", units.velocity, positive=True)
 bulk_modulus = Symbol("bulk_modulus", units.pressure, real=True)
