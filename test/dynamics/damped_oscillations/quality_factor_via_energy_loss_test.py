@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.dynamics.damped_oscillations import q_factor_via_energy_loss as q_factor_law
+from symplyphysics.laws.dynamics.damped_oscillations import quality_factor_via_energy_loss as q_factor_law
 
 # Description
 ## An oscillator with resonant angular frequency w = 100 rad/s has 5 J of energy stored in it.
