@@ -23,17 +23,17 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = q_factor_law.calculate_q_factor(test_args.f, test_args.df)
+    result = q_factor_law.calculate_quality_factor(test_args.f, test_args.df)
     assert_equal(result, 20)
 
 
 def test_bad_frequency(test_args: Args) -> None:
     fb = Quantity(1.0 * units.second)
     with raises(errors.UnitsError):
-        q_factor_law.calculate_q_factor(fb, test_args.df)
+        q_factor_law.calculate_quality_factor(fb, test_args.df)
     with raises(TypeError):
-        q_factor_law.calculate_q_factor(100, test_args.df)
+        q_factor_law.calculate_quality_factor(100, test_args.df)
     with raises(errors.UnitsError):
-        q_factor_law.calculate_q_factor(test_args.f, fb)
+        q_factor_law.calculate_quality_factor(test_args.f, fb)
     with raises(TypeError):
-        q_factor_law.calculate_q_factor(test_args.f, 100)
+        q_factor_law.calculate_quality_factor(test_args.f, 100)

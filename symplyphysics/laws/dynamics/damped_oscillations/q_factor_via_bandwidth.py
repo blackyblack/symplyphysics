@@ -24,11 +24,11 @@ from symplyphysics import (
 # Note
 ## - An equivalent definition uses angular frequencies instead of linear ones.
 
-q_factor = Symbol("q_factor", dimensionless)
+quality_factor = Symbol("quality_factor", dimensionless)
 resonant_frequency = Symbol("resonant_frequency", units.frequency)
 resonance_width = Symbol("resonance_width", units.frequency)
 
-law = Eq(q_factor, resonant_frequency / resonance_width)
+law = Eq(quality_factor, resonant_frequency / resonance_width)
 
 
 def print_law() -> str:
@@ -39,8 +39,8 @@ def print_law() -> str:
     resonant_frequency_=resonant_frequency,
     resonance_width_=resonance_width,
 )
-@validate_output(q_factor)
-def calculate_q_factor(
+@validate_output(quality_factor)
+def calculate_quality_factor(
     resonant_frequency_: Quantity,
     resonance_width_: Quantity,
 ) -> Quantity:
