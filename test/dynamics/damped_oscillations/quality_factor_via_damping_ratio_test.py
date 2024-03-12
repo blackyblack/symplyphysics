@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.dynamics.damped_oscillations import q_factor_via_damping_ratio as q_factor_law
+from symplyphysics.laws.dynamics.damped_oscillations import quality_factor_via_damping_ratio as q_factor_law
 
 # Description
 ## A damped oscillator is described as having damping ratio zeta = 0.01. Then its Q factor
