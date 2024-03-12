@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.dynamics.damped_oscillations import q_factor_via_bandwidth as q_factor_law
+from symplyphysics.laws.dynamics.damped_oscillations import quality_factor_via_bandwidth as q_factor_law
 
 # Description
 ## The resonant frequency of the oscillator is 100 Hz and its bandwidth is 5 Hz. 
