@@ -1,20 +1,23 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.astronomy import speed_of_rocket_close_to_speed_of_light_depends_on_mass_and_impulse as speed_law
+from sympy.physics.units import speed_of_light
+from symplyphysics.laws.astronomy.relativistic import speed_of_rocket_depends_on_mass_and_impulse as speed_law
 
 # Description
-## With the initial mass of the rocket equal to 100 tons, the final mass of the rocket equal to 20 tons,
-## and a specific impulse equal to 3000 meters per second, the rocket speed will be 4828.31 meters per second.
+## Let the specific impulse be equal to the speed of light. Then, with an initial mass of 72200 tons and
+## a final mass of 200 tons, the speed will be 299787857 meters per second.
+## https://scask.ru/d_book_msp.php?id=164
 
 Args = namedtuple("Args", ["specific_impulse", "initial_mass", "final_mass"])
 
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
-    specific_impulse = Quantity(3000 * units.meter / units.second)
-    initial_mass = Quantity(100 * units.tonne)
-    final_mass = Quantity(20 * units.tonne)
+    # specific_impulse = Quantity(270000 * units.meter / units.second)
+    specific_impulse = speed_of_light
+    initial_mass = Quantity(72200 * units.tonne)
+    final_mass = Quantity(200 * units.tonne)
 
     return Args(specific_impulse=specific_impulse,
         initial_mass=initial_mass,
@@ -24,7 +27,7 @@ def test_args_fixture() -> Args:
 def test_basic_speed(test_args: Args) -> None:
     result = speed_law.calculate_speed(test_args.specific_impulse,
         test_args.initial_mass, test_args.final_mass)
-    assert_equal(result, 4828.31 * units.meter / units.second)
+    assert_equal(result, 299787857 * units.meter / units.second)
 
 
 def test_bad_specific_impulse(test_args: Args) -> None:

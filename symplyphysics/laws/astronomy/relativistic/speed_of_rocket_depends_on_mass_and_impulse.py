@@ -15,7 +15,7 @@ from symplyphysics import (
 ## For a rocket flying at a speed close to the speed of light, the generalized Tsiolkovsky formula is valid,
 ## in which the speed of light is present.
 
-## Law is: M2 / M1 = ((1 - (V / c)) / (1 + (V / c))) ^(c / (2 * I)), where
+## Law is: M2 / M1 = ((1 - (V / c)) / (1 + (V / c)))^(c / (2 * I)), where
 ## V - final speed of the rocket,
 ## I- specific impulse of a rocket engine,
 ## M1 - initial mass of the rocket,
