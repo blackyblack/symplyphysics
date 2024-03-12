@@ -22,13 +22,13 @@ from symplyphysics import (
 ## E_stored - energy stored in oscillator
 ## P_loss - power loss of oscillator, i.e. rate of energy dissipation from it
 
-q_factor = Symbol("q_factor", dimensionless)
+quality_factor = Symbol("quality_factor", dimensionless)
 resonant_angular_frequency = Symbol("resonant_angular_frequency", angle_type / units.time)
 energy_stored = Symbol("energy_stored", units.energy)
 power_loss = Symbol("power_loss", units.power)
 
 law = Eq(
-    q_factor,
+    quality_factor,
     resonant_angular_frequency * (energy_stored / power_loss)
 )
 
@@ -42,15 +42,15 @@ def print_law() -> str:
     energy_stored_=energy_stored,
     power_loss_=power_loss,
 )
-@validate_output(q_factor)
-def calculate_q_factor(
+@validate_output(quality_factor)
+def calculate_quality_factor(
     resonant_angular_frequency_: Quantity,
     energy_stored_: Quantity,
     power_loss_: Quantity,
-) -> Quantity:
+) -> float:
     result = law.rhs.subs({
         resonant_angular_frequency: resonant_angular_frequency_,
         energy_stored: energy_stored_,
         power_loss: power_loss_,
     })
-    return Quantity(result)
+    return Quantity(result).scale_factor

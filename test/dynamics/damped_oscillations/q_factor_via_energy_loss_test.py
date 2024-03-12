@@ -24,29 +24,29 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = q_factor_law.calculate_q_factor(test_args.w, test_args.e, test_args.p)
+    result = q_factor_law.calculate_quality_factor(test_args.w, test_args.e, test_args.p)
     assert_equal(result, 2.5)
 
 
 def test_bad_angular_frequency(test_args: Args) -> None:
     wb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        q_factor_law.calculate_q_factor(wb, test_args.e, test_args.p)
+        q_factor_law.calculate_quality_factor(wb, test_args.e, test_args.p)
     with raises(TypeError):
-        q_factor_law.calculate_q_factor(100, test_args.e, test_args.p)
+        q_factor_law.calculate_quality_factor(100, test_args.e, test_args.p)
 
 
 def test_bad_energy(test_args: Args) -> None:
     eb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        q_factor_law.calculate_q_factor(test_args.w, eb, test_args.p)
+        q_factor_law.calculate_quality_factor(test_args.w, eb, test_args.p)
     with raises(TypeError):
-        q_factor_law.calculate_q_factor(test_args.w, 100, test_args.p)
+        q_factor_law.calculate_quality_factor(test_args.w, 100, test_args.p)
 
 
 def test_bad_power(test_args: Args) -> None:
     pb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        q_factor_law.calculate_q_factor(test_args.w, test_args.e, pb)
+        q_factor_law.calculate_quality_factor(test_args.w, test_args.e, pb)
     with raises(TypeError):
-        q_factor_law.calculate_q_factor(test_args.w, test_args.e, 100)
+        q_factor_law.calculate_quality_factor(test_args.w, test_args.e, 100)
