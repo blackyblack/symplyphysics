@@ -18,8 +18,10 @@ from symplyphysics import (
 # Law: Q = f_r / delta_f
 ## Q - Q factor
 ## f_r - oscillator's resonant frequency
-## delta_f - resonance width, or full width at half maximum, i.e. the bandwidth over which
-##           the power of vibration is greater than half the power at the resonant frequency
+## delta_f - resonance width, or full width at half maximum, of the peak in the graph of the
+##           dissipated power as a function of driving frequency, i.e. the difference between
+##           the frequencies at which the dissipated power is half the peak dissipated power,
+##           which happens ad the resonant frequency, see [this figure](http://spiff.rit.edu/classes/phys283/lectures/forced_ii/half_power.png)
 
 # Note
 ## - An equivalent definition uses angular frequencies instead of linear ones.
