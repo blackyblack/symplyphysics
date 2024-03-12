@@ -7,8 +7,8 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## The orbital velocity of a body (usually a planet, a natural or artificial satellite, or a multiple star) is the speed at which it rotates around the barycenter of the system, usually around a more massive body.
 ## Law: V = √(G * M * ((2 / r) - 1 / a))
 ## Where:
-## V is orbital velocity
-## M is mass of planet
+## V is orbital velocity (velocity of rotating body)
+## M is mass of planet (mass of central body)
 ## G is gravitational constant
 ## r is the distance between the rotating body and the central body
 ## a - is length of the large half-axis
