@@ -13,7 +13,7 @@ from symplyphysics import (
 # Description
 ## The apparent magnitude is a measure of the brightness of a celestial body (more precisely, the illumination created
 ## by this body) from the observer's point of view. The brighter the object, the smaller its magnitude.
-## The relationship of the stellar magnitude school with real physical quantities is logarithmic, since a change in brightness
+## The relationship of the stellar magnitude scale with real physical quantities is logarithmic, since a change in brightness
 ## by the same number of times is perceived by the eye as a change by the same amount.
 ## The difference in the stellar magnitudes of two objects is equal to the decimal logarithm of the ratio of their illuminances,
 ## up to a multiplier.
@@ -24,8 +24,8 @@ from symplyphysics import (
 ## l2 - illuminance of second object,
 ## l1 - illuminance of first object.
 
-apparent_magnitude_second = Symbol("apparent_magnitude_second", dimensionless)
 apparent_magnitude_first = Symbol("apparent_magnitude_first", dimensionless)
+apparent_magnitude_second = Symbol("apparent_magnitude_second", dimensionless)
 illuminance_first = Symbol("illuminance_first", units.energy / units.area)
 illuminance_second = Symbol("illuminance_second", units.energy / units.area)
 
