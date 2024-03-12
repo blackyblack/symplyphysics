@@ -18,7 +18,7 @@ from symplyphysics import (
 ## R - radius of geostationary orbit,
 ## G - gravitational constant,
 ## M - mass of planet.
-## w - speed of rotation of satellite.
+## w - angular speed of rotation of satellite.
 
 radius_of_orbit = Symbol("radius_of_orbit", units.length)
 

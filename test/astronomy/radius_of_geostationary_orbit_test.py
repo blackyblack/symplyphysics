@@ -22,3 +22,19 @@ def test_args_fixture() -> Args:
 def test_basic_radius_of_orbit(test_args: Args) -> None:
     result = radius_law.calculate_radius_of_orbit(test_args.mass_of_planet, test_args.speed_rotation_satellite)
     assert_equal(result, 42164 * units.kilometer)
+
+
+def test_bad_mass_of_planet(test_args: Args) -> None:
+    mass_of_planet = Quantity(1 * units.coulomb)
+    with raises(errors.UnitsError):
+        radius_law.calculate_radius_of_orbit(mass_of_planet, test_args.speed_rotation_satellite)
+    with raises(TypeError):
+        radius_law.calculate_radius_of_orbit(100, test_args.speed_rotation_satellite)
+
+
+def test_bad_speed_rotation_satellite(test_args: Args) -> None:
+    speed_rotation_satellite = Quantity(1 * units.coulomb)
+    with raises(errors.UnitsError):
+        radius_law.calculate_radius_of_orbit(test_args.mass_of_planet, speed_rotation_satellite)
+    with raises(TypeError):
+        radius_law.calculate_radius_of_orbit(test_args.mass_of_planet, 100)
