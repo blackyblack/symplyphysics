@@ -22,11 +22,11 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = q_factor_law.calculate_q_factor(test_args.zeta)
+    result = q_factor_law.calculate_quality_factor(test_args.zeta)
     assert_equal(result, 50)
 
 
 def test_bad_damping_ratio() -> None:
     zeta_bad = Quantity(1.0 * units.meter)
     with raises(errors.UnitsError):
-        q_factor_law.calculate_q_factor(zeta_bad)
+        q_factor_law.calculate_quality_factor(zeta_bad)

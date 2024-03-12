@@ -17,10 +17,10 @@ from symplyphysics import (
 ## Q - Q factor
 ## zeta - [damping ratio](../../../definitions/damped_harmonic_oscillator_equation.py)
 
-q_factor = Symbol("q_factor", dimensionless)
+quality_factor = Symbol("quality_factor", dimensionless)
 damping_ratio = Symbol("damping_ratio", dimensionless)
 
-law = Eq(q_factor, 1 / (2 * damping_ratio))
+law = Eq(quality_factor, 1 / (2 * damping_ratio))
 
 
 def print_law() -> str:
@@ -28,7 +28,7 @@ def print_law() -> str:
 
 
 @validate_input(damping_ratio_=damping_ratio)
-@validate_output(q_factor)
-def calculate_q_factor(damping_ratio_: float) -> float:
+@validate_output(quality_factor)
+def calculate_quality_factor(damping_ratio_: float) -> float:
     result = law.rhs.subs(damping_ratio, damping_ratio_)
     return float(result)
