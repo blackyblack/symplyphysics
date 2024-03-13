@@ -16,7 +16,7 @@ from symplyphysics import (
 ## the planet around which the maneuver is performed, and the speed of the rocket relative to this planet.
 
 ## Law is: phi = arctg((v1 / v2)^2), where
-## phi - maximum angle of rotation during a gravitational maneuver,
+## phi - maximum angle of rotation during a gravitational maneuver (angle at which the velocity vector of the rocket rotates),
 ## v1 - first cosmic velocity for a given planet,
 ## v2 - rocket's velocity relative to the planet.
 
