@@ -10,7 +10,7 @@ from symplyphysics import (
 from symplyphysics.laws.waves import fully_destructive_interference_condition as condition_law
 
 # Description
-## The interference of two waves is fully denstructive and the phase shift between them is
+## The interference of two waves is fully destructive and the phase shift between them is
 ## -pi, i.e. n = -1.
 
 Args = namedtuple("Args", "n")
