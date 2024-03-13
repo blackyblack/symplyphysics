@@ -15,6 +15,7 @@ from symplyphysics import (
 # Law: delta_p_max = v * rho * w * s_max
 ## delta_p_max - amplitude of pressure change
 ## v - speed of sound in medium
+## rho - density of medium
 ## w - angular frequency of the sound wave
 ## s_max - displacement amplitude of medium particles
 
