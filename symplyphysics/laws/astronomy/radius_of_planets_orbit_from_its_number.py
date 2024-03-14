@@ -15,7 +15,7 @@ from symplyphysics import (
 
 ## Law is: R = 0.4 + 0.3 * 2^i, where
 ## R - radius of the planet of the solar system in astronomical units,
-## i - number of planet.
+## i - number of planet (starts with -1).
 
 radius_of_orbit = Symbol("radius_of_orbit", units.length)
 
@@ -33,7 +33,7 @@ def print_law() -> str:
 
 @validate_input(number_of_planet_=number_of_planet)
 @validate_output(radius_of_orbit)
-def calculate_radius_of_orbit(number_of_planet_: float) -> Quantity:
+def calculate_radius_of_orbit(number_of_planet_: int) -> Quantity:
     if number_of_planet_ < -1:
         raise ValueError(
             "The planet number must be greater than -1 or equal."
