@@ -19,9 +19,10 @@ from symplyphysics import (
 ## I0 = 1e-12 W/m**2 - reference intensity level
 
 sound_level = Symbol("sound_level", dimensionless)
-reference_sound_level = Symbol("reference_sound_level", dimensionless)
 intensity = Symbol("intensity", units.power / units.area)
-reference_intensity = Symbol("reference_intensity", units.power / units.area)
+
+reference_sound_level = Quantity(10)
+reference_intensity = Quantity(1e-12 * units.watt / units.meter**2)
 
 definition = Eq(
     sound_level,
@@ -36,11 +37,5 @@ def print_law() -> str:
 @validate_input(intensity_=intensity)
 @validate_output(sound_level)
 def calculate_sound_level(intensity_: Quantity) -> float:
-    reference_sound_level_ = 10
-    reference_intensity_ = Quantity(1e-12 * units.watt / units.meter**2)
-    result = definition.rhs.subs({
-        reference_sound_level: reference_sound_level_,
-        intensity: intensity_,
-        reference_intensity: reference_intensity_,
-    })
+    result = definition.rhs.subs(intensity, intensity_)
     return Quantity(result).scale_factor
