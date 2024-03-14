@@ -7,7 +7,6 @@ from symplyphysics.laws.astronomy import maximum_angle_of_rotation_during_gravit
 ## The Earth's first cosmic velocity is 7.91 kilometers per second. Let the speed of the rocket be equal to the Earth's
 ## second cosmic velocity of 11.2 kilometers per second. Then the maximum angle of rotation during a gravitational maneuver
 ## is 0.463 radians.
-## https://ru.wikipedia.org/wiki/%D0%9A%D0%BE%D1%81%D0%BC%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F_%D1%81%D0%BA%D0%BE%D1%80%D0%BE%D1%81%D1%82%D1%8C
 
 Args = namedtuple("Args", ["first_cosmic_velocity_planet", "rocket_speed"])
 
