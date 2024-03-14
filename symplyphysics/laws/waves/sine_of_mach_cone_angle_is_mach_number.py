@@ -19,6 +19,9 @@ from symplyphysics import (
 ## theta - Mach cone angle
 ## M - Mach number of moving source
 
+# Condition
+## - M >= 1, i.e. the source moves with a speed greater than the speed of sound in the medium
+
 mach_cone_angle = Symbol("mach_cone_angle", angle_type, positive=True)
 mach_number = Symbol("mach_number", dimensionless, positive=True)
 
