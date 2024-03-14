@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
 from sympy.physics.units import speed_of_light
-from symplyphysics.laws.astronomy.relativistic import relativ_speed_of_rocket_depends_on_mass_and_impulse as speed_law
+from symplyphysics.laws.astronomy.relativistic import relative_speed_of_rocket_depends_on_mass_and_impulse as speed_law
 
 # Description
 ## Let the specific impulse be equal to the speed of light. Then, with an initial mass of 72200 tons and
