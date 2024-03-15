@@ -22,9 +22,11 @@ from symplyphysics import (
 luminosity_future = Symbol("luminosity_future", dimensionless)
 
 luminosity_present = Symbol("luminosity_present", dimensionless)
-time = Symbol("time", dimensionless)
+time = Symbol("time", units.time)
 
-law = Eq(luminosity_future, luminosity_present * ((5.59 / time) - 1.41 + 0.26 * time))
+time_constant = Quantity(1e9 * units.common_year)
+
+law = Eq(luminosity_future, luminosity_present * ((5.59 / (time / time_constant)) - 1.41 + 0.26 * (time / time_constant)))
 
 
 def print_law() -> str:
@@ -33,7 +35,7 @@ def print_law() -> str:
 
 @validate_input(luminosity_present_=luminosity_present, time_=time)
 @validate_output(luminosity_future)
-def calculate_luminosity_future(luminosity_present_: float, time_: float) -> float:
+def calculate_luminosity_future(luminosity_present_: float, time_: Quantity) -> float:
     result_expr = solve(law, luminosity_future, dict=True)[0][luminosity_future]
     result_expr = result_expr.subs({
         luminosity_present: luminosity_present_,
