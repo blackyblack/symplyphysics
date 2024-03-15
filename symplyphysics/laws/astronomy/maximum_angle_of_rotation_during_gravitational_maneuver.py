@@ -22,7 +22,7 @@ from symplyphysics import (
 ## v2 - rocket's velocity relative to the planet.
 
 # Conditions:
-# - law describes the closest possible maneuver, when aiming range is at planet radius.
+# - Aiming range equals to planet radius.
 
 maximum_angle = Symbol("maximum_angle", angle_type)
 
