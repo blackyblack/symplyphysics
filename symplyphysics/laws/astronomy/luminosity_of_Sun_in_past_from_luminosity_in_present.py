@@ -13,6 +13,8 @@ from symplyphysics import (
 # Description
 ## The luminosity of the Sun in the past is related to the luminosity of the Sun in the present. Luminosity is
 ## indicated in units of solar luminosity. One unit is equal to the luminosity of the Sun at a given time.
+## The luminosity in the past is the luminosity of the sun with a lower age than at the current moment. The luminosity
+## in the future is the luminosity of the sun with a greater age than at the current moment.
 
 ## Law is: Lpast = L / (1 + 0.4 * (1 - (t / 4.6))), where
 ## Lpast - luminosity of the sun in past,
@@ -22,9 +24,11 @@ from symplyphysics import (
 luminosity_past = Symbol("luminosity_past", dimensionless)
 
 luminosity_present = Symbol("luminosity_present", dimensionless)
-time = Symbol("time", dimensionless)
+time = Symbol("time", units.time)
 
-law = Eq(luminosity_past, luminosity_present / (1 + 0.4 * (1 - (time / 4.6))))
+time_constant = Quantity(1e9 * units.common_year)
+
+law = Eq(luminosity_past, luminosity_present / (1 + 0.4 * (1 - ((time / time_constant) / 4.6))))
 
 
 def print_law() -> str:
@@ -33,7 +37,7 @@ def print_law() -> str:
 
 @validate_input(luminosity_present_=luminosity_present, time_=time)
 @validate_output(luminosity_past)
-def calculate_luminosity_past(luminosity_present_: float, time_: float) -> float:
+def calculate_luminosity_past(luminosity_present_: float, time_: Quantity) -> float:
     result_expr = solve(law, luminosity_past, dict=True)[0][luminosity_past]
     result_expr = result_expr.subs({
         luminosity_present: luminosity_present_,
