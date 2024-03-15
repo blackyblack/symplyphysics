@@ -9,6 +9,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## The angle of the gravitational maneuver depends on the aiming range, the mass of the planet and the velocity of the rocket relative to the planet.
 ## The aiming range is the distance between the asymptote of the hyperbolic trajectory of the circumnavigation of the planet and its focus
 ## coinciding with the center of the planet.
+## https://ru.wikipedia.org/wiki/Гравитационный_манёвр#/media/Файл:Gravity_assist_-_ru.svg
 
 ## Law is: phi = 2 * arctg(G * M / (c * v^2)), where
 ## phi - angle of rotation during a gravitational maneuver (angle at which the velocity vector of the rocket rotates),
