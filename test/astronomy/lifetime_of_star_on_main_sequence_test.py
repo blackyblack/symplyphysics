@@ -14,7 +14,7 @@ Args = namedtuple("Args", ["mass_of_star", "indicator"])
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
-    mass_of_star = 1
+    mass_of_star = Quantity(1.989e30 * units.kilogram)
     indicator = 4.75
 
     return Args(mass_of_star=mass_of_star, indicator=indicator)
@@ -22,7 +22,7 @@ def test_args_fixture() -> Args:
 
 def test_basic_lifetime(test_args: Args) -> None:
     result = lifetime_law.calculate_lifetime(test_args.mass_of_star, test_args.indicator)
-    assert_equal(result, 10)
+    assert_equal(result, 1 * units.common_year)
 
 
 def test_bad_mass_of_star(test_args: Args) -> None:
