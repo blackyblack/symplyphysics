@@ -13,8 +13,8 @@ from symplyphysics import (
 # Description
 ## The luminosity of the Sun in the past is related to the luminosity of the Sun in the present. Luminosity is
 ## indicated in units of solar luminosity. One unit is equal to the luminosity of the Sun at a given time.
-## The luminosity in the past is the luminosity of the sun with a lower age than at the current moment. The luminosity
-## in the future is the luminosity of the sun with a greater age than at the current moment.
+## There are two different formulas to calculate luminosity in the past and in the future. It is because it is
+## non linear and requires different approximations for past and future.
 
 ## Law is: Lpast = L / (1 + 0.4 * (1 - (t / 4.6))), where
 ## Lpast - luminosity of the sun in past,
@@ -26,9 +26,9 @@ luminosity_past = Symbol("luminosity_past", dimensionless)
 luminosity_present = Symbol("luminosity_present", dimensionless)
 time = Symbol("time", units.time)
 
-time_constant = Quantity(1e9 * units.common_year)
+one_billion_years = Quantity(1e9 * units.common_year)
 
-law = Eq(luminosity_past, luminosity_present / (1 + 0.4 * (1 - ((time / time_constant) / 4.6))))
+law = Eq(luminosity_past, luminosity_present / (1 + 0.4 * (1 - ((time / one_billion_years) / 4.6))))
 
 
 def print_law() -> str:
