@@ -19,14 +19,17 @@ from symplyphysics import (
 ## L - luminosity of the sun in present,
 ## t - time in billions of years.
 
+# Conditions:
+# - formula is valid while Sun is on the main sequence (https://faculty.wcas.northwestern.edu/infocom/The%20Website/end.html).
+
 luminosity_future = Symbol("luminosity_future", dimensionless)
 
 luminosity_present = Symbol("luminosity_present", dimensionless)
 time = Symbol("time", units.time)
 
-time_constant = Quantity(1e9 * units.common_year)
+one_billion_years = Quantity(1e9 * units.common_year)
 
-law = Eq(luminosity_future, luminosity_present * ((5.59 / (time / time_constant)) - 1.41 + 0.26 * (time / time_constant)))
+law = Eq(luminosity_future, luminosity_present * ((5.59 / (time / one_billion_years)) - 1.41 + 0.26 * (time / one_billion_years)))
 
 
 def print_law() -> str:
