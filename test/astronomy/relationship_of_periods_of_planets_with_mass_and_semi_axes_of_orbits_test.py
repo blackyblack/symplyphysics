@@ -16,7 +16,7 @@ def test_args_fixture() -> Args:
     first_semi_axis = Quantity(1 * units.astronomical_unit)
     second_semi_axis = Quantity(1.524 * units.astronomical_unit)
     first_mass = Quantity(5.9742e24 * units.kilogram)
-    second_mass = Quantity(6.39E23 * units.kilogram)
+    second_mass = Quantity(6.39e23 * units.kilogram)
 
     return Args(second_period=second_period,
         first_semi_axis=first_semi_axis,

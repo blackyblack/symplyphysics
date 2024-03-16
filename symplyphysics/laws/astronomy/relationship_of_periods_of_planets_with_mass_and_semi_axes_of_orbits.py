@@ -9,9 +9,8 @@ from symplyphysics import (
 )
 
 # Description
-## Kepler's third law is as follows. The squares of the periods of rotation of the planets around the Sun are referred to
-## as cubes of the large semi-axes of the orbits of the planets. But Newton found that Kepler's third law is not entirely
-## accurate — in fact, it includes the masses of the planets and the Sun.
+## Kepler's third law relates the ratio of the rotation periods of the planets to the ratio of the large semi-axes
+## of the orbits. Newton also clarified this law by adding the mass of the planet and the mass of the Sun.
 
 ## Law is: ((M + m1) * T1^2) / ((M + m2) * T2^2) = a1^2 / a2^2, where
 ## T1 - rotation period of the first planet,
@@ -31,7 +30,7 @@ second_mass = Symbol("second_mass", units.mass)
 
 mass_of_sun = Quantity(1.989e30 * units.kilogram)
 
-law = Eq(((mass_of_sun + first_mass) * (first_period)**2) / ((mass_of_sun + second_mass) * (second_period)**2), (first_semi_axis)**3 / (second_semi_axis)**3)
+law = Eq(((mass_of_sun + first_mass) * first_period**2) / ((mass_of_sun + second_mass) * second_period**2), first_semi_axis**3 / second_semi_axis**3)
 
 
 def print_law() -> str:
