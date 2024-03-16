@@ -28,9 +28,9 @@ mass_of_star = Symbol("mass_of_star", units.mass)
 indicator = Symbol("indicator", dimensionless)
 
 mass_of_sun = Quantity(1.989e30 * units.kilogram)
-time_constant = Quantity(1e9 * units.common_year)
+one_billion_years = Quantity(1e9 * units.common_year)
 
-law = Eq(lifetime, 10 * time_constant * ((mass_of_star / mass_of_sun)**(1 - indicator)))
+law = Eq(lifetime, 10 * one_billion_years * ((mass_of_star / mass_of_sun)**(1 - indicator)))
 
 
 def print_law() -> str:
