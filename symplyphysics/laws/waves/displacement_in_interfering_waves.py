@@ -55,6 +55,7 @@ def print_law() -> str:
     return print_expression(law)
 
 
+#pylint: disable=too-many-arguments
 @validate_input(
     phase_shift_=phase_shift,
     angular_wavenumber_=angular_wavenumber,

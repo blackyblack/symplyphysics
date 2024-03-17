@@ -1,7 +1,5 @@
-from sympy import (
-    Eq,
-    solve,
-)
+from sympy import Eq, solve
+from sympy.physics.units import gravitational_constant
 from symplyphysics import (
     units,
     Quantity,
@@ -10,7 +8,6 @@ from symplyphysics import (
     validate_input,
     validate_output,
 )
-from sympy.physics.units import gravitational_constant
 
 # Description
 ## Let the body move in an elliptical orbit. Then its large semi-axis depends on the mass of the body around which it

@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (assert_equal, units, Quantity, errors)
 from sympy.physics.units import speed_of_light
+from symplyphysics import (assert_equal, units, Quantity, errors)
 from symplyphysics.laws.astronomy.relativistic import relative_speed_of_rocket_depends_on_mass_and_impulse as speed_law
 
 # Description

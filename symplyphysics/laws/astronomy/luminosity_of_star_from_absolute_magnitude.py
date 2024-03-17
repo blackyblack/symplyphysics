@@ -4,8 +4,8 @@ from sympy import (
     log,
     S,
 )
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless, convert_to)
+from symplyphysics import (Quantity, Symbol, print_expression, validate_input, validate_output,
+    dimensionless, convert_to)
 
 # Description
 ## The luminosity of a star is related to the absolute magnitude of the star.
