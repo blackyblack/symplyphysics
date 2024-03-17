@@ -35,9 +35,8 @@ def print_law() -> str:
     time_=time,
     initial_phase_=initial_phase)
 @validate_output(energy)
-def calculate_energy(inductance_: Quantity, maximum_current_: Quantity,
-    frequency_: Quantity, time_: Quantity,
-    initial_phase_: float | Quantity) -> Quantity:
+def calculate_energy(inductance_: Quantity, maximum_current_: Quantity, frequency_: Quantity,
+    time_: Quantity, initial_phase_: float | Quantity) -> Quantity:
     result_expr = solve(law, energy, dict=True)[0][energy]
     result_expr = result_expr.subs({
         inductance: inductance_,

@@ -29,7 +29,9 @@ contour_area = Symbol("contour_area", units.area)
 rotation_frequency = Symbol("rotation_frequency", angle_type / units.time)
 time = Symbol("time", units.time)
 
-law = Eq(voltage, -number_turns * induction * contour_area * rotation_frequency * sin(rotation_frequency * time))
+law = Eq(
+    voltage,
+    -number_turns * induction * contour_area * rotation_frequency * sin(rotation_frequency * time))
 
 
 def print_law() -> str:
@@ -42,9 +44,8 @@ def print_law() -> str:
     rotation_frequency_=rotation_frequency,
     time_=time)
 @validate_output(voltage)
-def calculate_voltage(number_turns_: int, induction_: Quantity,
-    contour_area_: Quantity, rotation_frequency_: Quantity,
-    time_: Quantity) -> Quantity:
+def calculate_voltage(number_turns_: int, induction_: Quantity, contour_area_: Quantity,
+    rotation_frequency_: Quantity, time_: Quantity) -> Quantity:
     result_expr = solve(law, voltage, dict=True)[0][voltage]
     result_expr = result_expr.subs({
         number_turns: number_turns_,

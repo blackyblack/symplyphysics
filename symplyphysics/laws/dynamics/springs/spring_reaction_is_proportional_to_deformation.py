@@ -10,8 +10,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.dynamics.springs.vector import (
-    spring_reaction_is_proportional_to_deformation as hookes_vector_law,
-)
+    spring_reaction_is_proportional_to_deformation as hookes_vector_law,)
 
 # Description
 ## Also called Hooke's law, it is an empirical law which states that the force needed to extend
@@ -47,8 +46,7 @@ _deformation_vector = Vector([deformation])
 _spring_reaction_vector_derived = hookes_vector_law.force_law(_deformation_vector)
 assert len(_spring_reaction_vector_derived.components) == 1
 _spring_reaction_derived = sympify(_spring_reaction_vector_derived.components[0]).subs(
-    hookes_vector_law.stiffness, stiffness
-)
+    hookes_vector_law.stiffness, stiffness)
 assert expr_equals(_spring_reaction_derived, law.rhs)
 
 

@@ -19,17 +19,20 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_angular_magnification(test_args: Args) -> None:
-    result = magnification_law.calculate_angular_magnification(test_args.focal_length_lens, test_args.focal_length_eyepiece)
+    result = magnification_law.calculate_angular_magnification(test_args.focal_length_lens,
+        test_args.focal_length_eyepiece)
     assert_equal(result, 40)
 
 
 def test_bad_focal_lengths(test_args: Args) -> None:
     bad_focal_length = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        magnification_law.calculate_angular_magnification(bad_focal_length, test_args.focal_length_eyepiece)
+        magnification_law.calculate_angular_magnification(bad_focal_length,
+            test_args.focal_length_eyepiece)
     with raises(TypeError):
         magnification_law.calculate_angular_magnification(100, test_args.focal_length_eyepiece)
     with raises(errors.UnitsError):
-        magnification_law.calculate_angular_magnification(test_args.focal_length_lens, bad_focal_length)
+        magnification_law.calculate_angular_magnification(test_args.focal_length_lens,
+            bad_focal_length)
     with raises(TypeError):
         magnification_law.calculate_angular_magnification(test_args.focal_length_lens, 100)

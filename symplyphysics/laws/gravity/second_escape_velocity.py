@@ -35,13 +35,17 @@ potential_energy_law_applied = potential_energy_law.law.subs({
     potential_energy_law.first_mass: planet_mass,
     potential_energy_law.distance_between_mass_centers: radius + height,
 })
-potential_energy_derived = solve(potential_energy_law_applied, potential_energy_law.gravitational_potential_energy, dict=True)[0][potential_energy_law.gravitational_potential_energy]
+potential_energy_derived = solve(potential_energy_law_applied,
+    potential_energy_law.gravitational_potential_energy,
+    dict=True)[0][potential_energy_law.gravitational_potential_energy]
 
 kinetic_energy_law_applied = kinetic_energy_law.law.subs({
-    kinetic_energy_law.body_mass: potential_energy_law.second_mass,
+    kinetic_energy_law.symbols.basic.mass: potential_energy_law.second_mass,
     kinetic_energy_law.body_velocity: velocity,
 })
-kinetic_energy_derived = solve(kinetic_energy_law_applied, kinetic_energy_law.kinetic_energy_of_body, dict=True)[0][kinetic_energy_law.kinetic_energy_of_body]
+kinetic_energy_derived = solve(kinetic_energy_law_applied,
+    kinetic_energy_law.kinetic_energy_of_body,
+    dict=True)[0][kinetic_energy_law.kinetic_energy_of_body]
 
 # Here we consider the fall of a body onto a planet from infinity. In this case, the law of conservation of energy will
 # look like: kinetic energy minus potential. But in the law "gravitational_potential_energy", the potential energy has
@@ -58,6 +62,7 @@ velocity_derived = solve(conservation_law_applied, velocity, dict=True)[1][veloc
 
 # Check if derived velocity is same as declared.
 assert expr_equals(velocity_derived, law.rhs)
+
 
 def print_law() -> str:
     return print_expression(law)

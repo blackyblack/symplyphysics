@@ -35,7 +35,8 @@ _standing_wave_expr = standing_wave_law.law.rhs
 
 _angular_wavenumber = wavenumber_def.definition.rhs.subs(wavenumber_def.wavelength, wavelength)
 
-_standing_wave_expr = _standing_wave_expr.subs(standing_wave_law.angular_wavenumber, _angular_wavenumber)
+_standing_wave_expr = _standing_wave_expr.subs(standing_wave_law.angular_wavenumber,
+    _angular_wavenumber)
 
 _node_amplitude = _standing_wave_expr.subs(standing_wave_law.position, law.rhs)
 
@@ -52,7 +53,7 @@ def print_law() -> str:
 )
 @validate_output(node_position)
 def calculate_node_position(
-    integer_factor_: int, 
+    integer_factor_: int,
     wavelength_: Quantity,
 ) -> Quantity:
     result = law.rhs.subs({

@@ -25,7 +25,8 @@ radius_of_orbit = Symbol("radius_of_orbit", units.length)
 mass_of_planet = Symbol("mass_of_planet", units.mass)
 speed_rotation_satellite = Symbol("speed_rotation_satellite", angle_type / units.time)
 
-law = Eq(radius_of_orbit, (gravitational_constant * mass_of_planet / (speed_rotation_satellite**2))**(1/3))
+law = Eq(radius_of_orbit,
+    (gravitational_constant * mass_of_planet / (speed_rotation_satellite**2))**(1 / 3))
 
 
 def print_law() -> str:
@@ -34,7 +35,8 @@ def print_law() -> str:
 
 @validate_input(mass_of_planet_=mass_of_planet, speed_rotation_satellite_=speed_rotation_satellite)
 @validate_output(radius_of_orbit)
-def calculate_radius_of_orbit(mass_of_planet_: Quantity, speed_rotation_satellite_: Quantity) -> Quantity:
+def calculate_radius_of_orbit(mass_of_planet_: Quantity,
+    speed_rotation_satellite_: Quantity) -> Quantity:
     result_expr = solve(law, radius_of_orbit, dict=True)[0][radius_of_orbit]
     result_expr = result_expr.subs({
         mass_of_planet: mass_of_planet_,

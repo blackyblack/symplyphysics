@@ -19,7 +19,8 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_absolute_magnitude(test_args: Args) -> None:
-    result = magnitude_law.calculate_absolute_magnitude(test_args.apparent_magnitude, test_args.distance)
+    result = magnitude_law.calculate_absolute_magnitude(test_args.apparent_magnitude,
+        test_args.distance)
     assert_equal(result, 4.775)
 
 

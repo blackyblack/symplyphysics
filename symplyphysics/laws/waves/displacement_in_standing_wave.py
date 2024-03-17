@@ -11,7 +11,7 @@ from symplyphysics.core.quantity_decorator import validate_output_same
 
 # Description
 ## A standing, or stationary, wave is the result of the interference of two identical waves
-## moving in the opposite direction. For a wave occuring along a string, the standing wave 
+## moving in the opposite direction. For a wave occuring along a string, the standing wave
 ## is described by the following equation:
 
 # Law: u(x, t) = 2 * u_max * sin(k * x) * cos(w * t)
@@ -34,12 +34,8 @@ position = Symbol("position", units.length, real=True)
 angular_frequency = Symbol("angular_frequency", angle_type / units.time, positive=True)
 time = Symbol("time", units.time, real=True)
 
-law = Eq(
-    displacement(position, time),
-    (2 * amplitude)
-    * sin(angular_wavenumber * position)
-    * cos(angular_frequency * time)
-)
+law = Eq(displacement(position, time),
+    (2 * amplitude) * sin(angular_wavenumber * position) * cos(angular_frequency * time))
 
 # TODO: Derive from the sum of two traveling waves
 

@@ -25,12 +25,12 @@ energy_heating_value = energy_heating_law.law.subs({
     energy_heating_law.specific_heat_capacity: specific_heat_heating,
     energy_heating_law.temperature_origin: temperature_start,
     energy_heating_law.temperature_end: temperature_end,
-    energy_heating_law.body_mass: mass_of_liquid
+    energy_heating_law.symbols.basic.mass: mass_of_liquid
 }).rhs
 
 energy_combustion_value = combustion_energy_law.law.subs({
     combustion_energy_law.specific_heat_combustion: specific_heat_combustion,
-    combustion_energy_law.mass_of_matter: mass_of_fuel
+    combustion_energy_law.symbols.basic.mass: mass_of_fuel
 }).rhs
 
 efficiency_equation = efficiency_law.law.subs({

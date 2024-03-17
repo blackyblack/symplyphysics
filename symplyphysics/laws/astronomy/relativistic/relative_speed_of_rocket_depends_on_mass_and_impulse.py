@@ -28,7 +28,8 @@ specific_impulse = Symbol("specific_impulse", units.velocity)
 initial_mass = Symbol("initial_mass", units.mass)
 final_mass = Symbol("final_mass", units.mass)
 
-law = Eq(final_mass / initial_mass, ((1 - (speed / speed_of_light)) / (1 + (speed / speed_of_light)))**(speed_of_light / (2 * specific_impulse)))
+law = Eq(final_mass / initial_mass, ((1 - (speed / speed_of_light)) / (1 +
+    (speed / speed_of_light)))**(speed_of_light / (2 * specific_impulse)))
 
 
 def print_law() -> str:

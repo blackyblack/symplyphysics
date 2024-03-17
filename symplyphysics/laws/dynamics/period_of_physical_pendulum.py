@@ -3,7 +3,7 @@ from sympy import (
     pi,
     sqrt,
     solve,
-    symbols,
+    symbols as SymSymbols,
     Symbol as SymSymbol,
     Function as SymFunction,
     Derivative,
@@ -16,6 +16,8 @@ from symplyphysics import (
     print_expression,
     validate_input,
     validate_output,
+    symbols,
+    clone_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import (
@@ -42,9 +44,9 @@ from symplyphysics.laws.kinematic import (
 ## g - acceleration due to gravity
 ## h - distance between pivot and pendulum's center of mass
 
+pendulum_mass = clone_symbol(symbols.basic.mass, "pendulum_mass", positive=True)
 oscillation_period = Symbol("oscillation_period", units.time, positive=True)
 rotational_inertia = Symbol("rotational_inertia", units.mass * units.length**2, positive=True)
-pendulum_mass = Symbol("pendulum_mass", units.mass, positive=True)
 distance_to_pivot = Symbol("distance_to_pivot", units.length, positive=True)
 
 law = Eq(
@@ -55,13 +57,14 @@ law = Eq(
 
 time = SymSymbol("time")
 # use symbols to avoid "not callable" warning
-angle_function = symbols("angle_function", cls=SymFunction)
+angle_function = SymSymbols("angle_function", cls=SymFunction)
 torque = SymSymbol("torque")
 
-gravitational_force = solve(newtons_second_law.law, newtons_second_law.force)[0].subs({
-    newtons_second_law.mass: pendulum_mass,
-    newtons_second_law.acceleration: acceleration_due_to_gravity,
-})
+gravitational_force = solve(newtons_second_law.law,
+    newtons_second_law.symbols.dynamics.force)[0].subs({
+    newtons_second_law.symbols.basic.mass: pendulum_mass,
+    newtons_second_law.symbols.kinematic.acceleration: acceleration_due_to_gravity,
+    })
 
 angular_velocity = (angular_velocity_def.definition.rhs.subs(angular_velocity_def.time,
     time).subs(angular_velocity_def.angle_function(time), angle_function(time)))

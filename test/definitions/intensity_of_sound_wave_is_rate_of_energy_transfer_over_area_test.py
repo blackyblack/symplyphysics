@@ -8,8 +8,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.definitions import (
-    intensity_of_sound_wave_is_rate_of_energy_transfer_over_area as intensity_def,
-)
+    intensity_of_sound_wave_is_rate_of_energy_transfer_over_area as intensity_def,)
 
 # Description
 ## A sound wave of power P = 1 pW is hitting a surface of area A = 0.5 m**2. Then its

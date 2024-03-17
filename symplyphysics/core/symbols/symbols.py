@@ -125,3 +125,9 @@ def tuple_of_symbols(display_name: str,
     dimension: Dimension = Dimension(S.One),
     length: int = 1) -> tuple[Symbol, ...]:
     return tuple(Symbol(display_name + "_" + str(i), dimension) for i in range(length))
+
+
+def clone_symbol(source: Symbol, display_name: Optional[str] = None, **assumptions: Any) -> Symbol:
+    assumptions = source.assumptions0 if assumptions is None or len(
+        assumptions) == 0 else assumptions
+    return Symbol(display_name, source.dimension, **assumptions)

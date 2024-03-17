@@ -45,12 +45,8 @@ angular_frequency = Symbol("angular_frequency", angle_type / units.time, positiv
 position = Symbol("position", units.length, real=True)
 time = Symbol("time", units.time, real=True)
 
-law = Eq(
-    displacement(position, time),
-    (2 * amplitude)
-    * cos(phase_shift / 2)
-    * sin(angular_wavenumber * position - angular_frequency * time + phase_shift / 2)
-)
+law = Eq(displacement(position, time), (2 * amplitude) * cos(phase_shift / 2) *
+    sin(angular_wavenumber * position - angular_frequency * time + phase_shift / 2))
 
 # TODO: derive from the sum of two waves
 
@@ -59,6 +55,7 @@ def print_law() -> str:
     return print_expression(law)
 
 
+#pylint: disable=too-many-arguments
 @validate_input(
     phase_shift_=phase_shift,
     angular_wavenumber_=angular_wavenumber,

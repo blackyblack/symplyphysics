@@ -33,7 +33,8 @@ def print_law() -> str:
 
 @validate_input(focal_length_lens_=focal_length_lens, focal_length_eyepiece_=focal_length_eyepiece)
 @validate_output(angular_magnification)
-def calculate_angular_magnification(focal_length_lens_: Quantity, focal_length_eyepiece_: Quantity) -> float:
+def calculate_angular_magnification(focal_length_lens_: Quantity,
+    focal_length_eyepiece_: Quantity) -> float:
     result_expr = solve(law, angular_magnification, dict=True)[0][angular_magnification]
     result_expr = result_expr.subs({
         focal_length_lens: focal_length_lens_,

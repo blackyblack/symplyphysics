@@ -10,9 +10,9 @@ from symplyphysics import (
 )
 
 # Description
-## Q factor (quality factor) is a dimensionless parameter that describes how underdamped 
-## an oscillator or resonator is: the larger the Q factor is, the less damped it is. There 
-## are two nearly equivalent definitions of it that become approximately equivalent as Q 
+## Q factor (quality factor) is a dimensionless parameter that describes how underdamped
+## an oscillator or resonator is: the larger the Q factor is, the less damped it is. There
+## are two nearly equivalent definitions of it that become approximately equivalent as Q
 ## becomes larger, meaning that the resonator becomes less damped.
 
 # Law: Q = f_r / delta_f

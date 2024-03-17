@@ -1,4 +1,7 @@
-from sympy import (Eq, solve,)
+from sympy import (
+    Eq,
+    solve,
+)
 from symplyphysics import (
     units,
     Quantity,
@@ -35,9 +38,7 @@ def print_law() -> str:
 @validate_output(radius_of_orbit)
 def calculate_radius_of_orbit(number_of_planet_: int) -> Quantity:
     if number_of_planet_ < -1:
-        raise ValueError(
-            "The planet number must be greater than -1 or equal."
-        )
+        raise ValueError("The planet number must be greater than -1 or equal.")
 
     result_expr = solve(law, radius_of_orbit, dict=True)[0][radius_of_orbit]
     result_expr = result_expr.subs({

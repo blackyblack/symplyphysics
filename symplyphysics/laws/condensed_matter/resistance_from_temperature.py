@@ -6,6 +6,7 @@ from symplyphysics import (
     print_expression,
     validate_input,
     validate_output,
+    quantities,
 )
 
 # Description
@@ -25,10 +26,9 @@ resistance_initial = Symbol("resistance_initial", units.impedance)
 temperature_coefficient = Symbol("temperature_coefficient", 1 / units.temperature)
 temperature = Symbol("temperature", units.temperature)
 
-celsius_to_kelvin = Quantity(273.15 * units.kelvin)
-
-law = Eq(resistance,
-    resistance_initial * (1 + temperature_coefficient * (temperature - celsius_to_kelvin)))
+law = Eq(
+    resistance,
+    resistance_initial * (1 + temperature_coefficient * (temperature - quantities.zero_celsius)))
 
 
 def print_law() -> str:

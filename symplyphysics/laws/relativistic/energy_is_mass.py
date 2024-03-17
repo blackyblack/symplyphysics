@@ -10,6 +10,7 @@ from symplyphysics import units, Quantity, Symbol, print_expression, validate_in
 ## c is speed of light.
 
 rest_energy = Symbol("rest_energy", units.energy)
+# This is equivalent of symbols.basic.mass
 rest_mass = Symbol("rest_mass", units.mass)
 
 law = Eq(rest_energy, rest_mass * units.speed_of_light**2)

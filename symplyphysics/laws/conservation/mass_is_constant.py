@@ -21,18 +21,18 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, Function, 
 ## of the constant value is zero.
 
 time = Symbol("time", units.time)
-mass = Function("mass", units.mass)
+mass_function = Function("mass_function", units.mass)
 
-law = Eq(Derivative(mass(time), time), 0)
+law = Eq(Derivative(mass_function(time), time), 0)
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(mass_before_=mass)
-@validate_output(mass)
+@validate_input(mass_before_=mass_function)
+@validate_output(mass_function)
 def calculate_mass_after(mass_before_: Quantity) -> Quantity:
-    solved = dsolve(law, mass(time))
+    solved = dsolve(law, mass_function(time))
     result_expr = solved.subs("C1", mass_before_).rhs
     return Quantity(result_expr)

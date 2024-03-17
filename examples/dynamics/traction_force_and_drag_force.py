@@ -22,8 +22,8 @@ acceleration_force = superposition_law.definition.subs(superposition_law.forces,
     (traction_force, -drag_force)).doit().rhs
 
 acceleration_value = second_newton_law.law.subs({
-    second_newton_law.mass: mass_of_trolleybus,
-    second_newton_law.force: acceleration_force
+    second_newton_law.symbols.basic.mass: mass_of_trolleybus,
+    second_newton_law.symbols.dynamics.force: acceleration_force
 }).rhs
 
 distance_value = distance_law.law.subs({

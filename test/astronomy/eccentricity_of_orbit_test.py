@@ -19,7 +19,8 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_eccentricity(test_args: Args) -> None:
-    result = eccentricity_law.calculate_eccentricity(test_args.small_semi_axis, test_args.large_semi_axis)
+    result = eccentricity_law.calculate_eccentricity(test_args.small_semi_axis,
+        test_args.large_semi_axis)
     assert_equal(result, 0.866)
 
 
@@ -34,4 +35,5 @@ def test_bad_semi_axis(test_args: Args) -> None:
     with raises(TypeError):
         eccentricity_law.calculate_eccentricity(test_args.small_semi_axis, 100)
     with raises(ValueError):
-        eccentricity_law.calculate_eccentricity(test_args.large_semi_axis, test_args.small_semi_axis)
+        eccentricity_law.calculate_eccentricity(test_args.large_semi_axis,
+            test_args.small_semi_axis)

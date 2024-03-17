@@ -1,7 +1,6 @@
 from sympy import (Eq, solve)
-from sympy.physics.units import boltzmann
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output)
+    validate_output, symbols)
 
 # Description
 ## The kinetic theory of ideal gases allows us to determine the average kinetic energy for an ideal gas.
@@ -17,20 +16,18 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## The gas must be ideal
 
 average_kinetic_energy = Symbol("average_kinetic_energy", units.energy)
-temperature = Symbol("temperature", units.temperature)
 
-law = Eq(average_kinetic_energy, 1.5 * boltzmann * temperature)
+law = Eq(average_kinetic_energy, 1.5 * units.boltzmann * symbols.thermodynamics.temperature)
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(temperature_=temperature)
+@validate_input(temperature_=symbols.thermodynamics.temperature)
 @validate_output(average_kinetic_energy)
 def calculate_average_kinetic_energy(temperature_: Quantity) -> Quantity:
     result_expr = solve(law, average_kinetic_energy, dict=True)[0][average_kinetic_energy]
-    result_average_kinetic_energy = result_expr.subs({
-        temperature: temperature_,
-    })
+    result_average_kinetic_energy = result_expr.subs(symbols.thermodynamics.temperature,
+        temperature_)
     return Quantity(result_average_kinetic_energy)

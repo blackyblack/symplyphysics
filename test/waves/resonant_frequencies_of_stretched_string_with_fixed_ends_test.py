@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.waves import (
-    resonant_frequencies_of_stretched_string_with_fixed_ends as frequencies_law,
-)
+    resonant_frequencies_of_stretched_string_with_fixed_ends as frequencies_law,)
 
 # Description
 ## The resonant frequency of the second harmonic of the wave traveling with a phase speed of 10 m/s

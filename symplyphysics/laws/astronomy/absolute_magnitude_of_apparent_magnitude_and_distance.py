@@ -1,14 +1,6 @@
 from sympy import (Eq, solve, log, S)
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    print_expression,
-    validate_input,
-    validate_output,
-    convert_to,
-    dimensionless
-)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output, convert_to, dimensionless)
 
 # Description
 ## The absolute magnitude for stars is defined as the apparent magnitude of an object if it were located at a distance

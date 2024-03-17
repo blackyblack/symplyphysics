@@ -6,6 +6,8 @@ from symplyphysics import (
     print_expression,
     validate_input,
     validate_output,
+    symbols,
+    clone_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematic.rotational_inertia import (
@@ -21,11 +23,11 @@ from symplyphysics.definitions import density_from_mass_volume as density_def
 ## a, b - sizes of slab in the directions perpendicular to rotation axis
 
 rotational_inertia = Symbol("rotational_inertia", units.mass * units.length**2)
-mass = Symbol("mass", units.mass)
 length = Symbol("length", units.length)
 width = Symbol("width", units.length)
+slab_mass = clone_symbol(symbols.basic.mass, "slab_mass")
 
-law = Eq(rotational_inertia, mass * (length**2 + width**2) / 12)
+law = Eq(rotational_inertia, slab_mass * (length**2 + width**2) / 12)
 
 # Derive this law from the integral definition of rotational inertia in cartesian coordiantes.
 # Condition: density of slab is constant.
@@ -38,7 +40,7 @@ height = Symbol("height", units.length)
 volume = length * width * height
 
 density = density_def.definition.rhs.subs({
-    density_def.mass: mass,
+    density_def.symbols.basic.mass: slab_mass,
     density_def.volume: volume,
 })
 
@@ -62,11 +64,11 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(mass_=mass, length_=length, width_=width)
+@validate_input(mass_=slab_mass, length_=length, width_=width)
 @validate_output(rotational_inertia)
 def calculate_rotational_inertia(mass_: Quantity, length_: Quantity, width_: Quantity) -> Quantity:
     result = law.rhs.subs({
-        mass: mass_,
+        slab_mass: mass_,
         length: length_,
         width: width_,
     })

@@ -33,38 +33,38 @@ density_of_water_equation = density_law.definition.subs({
     density_law.volume: volume_of_bath,
     density_law.density: density_of_water
 })
-mass_of_all_water = solve(density_of_water_equation, density_law.mass,
-    dict=True)[0][density_law.mass]
+mass_of_all_water = solve(density_of_water_equation, density_law.symbols.basic.mass,
+    dict=True)[0][density_law.symbols.basic.mass]
 
 mass_of_all_water_equation = sum_masses_law.law.subs({
     sum_masses_law.masses_of_components: (mass_of_ice, mass_of_hot_water),
-    sum_masses_law.mass_of_mixture: mass_of_all_water
+    sum_masses_law.symbols.basic.mass: mass_of_all_water
 }).doit()
 mass_of_hot_water_value = solve(mass_of_all_water_equation, mass_of_hot_water,
     dict=True)[0][mass_of_hot_water]
 
 energy_cooling_hot_water = energy_heating_law.law.subs({
     energy_heating_law.specific_heat_capacity: specific_heat_heating_water,
-    energy_heating_law.body_mass: mass_of_hot_water_value,
+    energy_heating_law.symbols.basic.mass: mass_of_hot_water_value,
     energy_heating_law.temperature_origin: temperature_of_hot_water,
     energy_heating_law.temperature_end: temperature_end
 })
 
 energy_to_heating_ice_equation = energy_heating_law.law.subs({
     energy_heating_law.specific_heat_capacity: specific_heat_heating_ice,
-    energy_heating_law.body_mass: mass_of_ice,
+    energy_heating_law.symbols.basic.mass: mass_of_ice,
     energy_heating_law.temperature_origin: temperature_of_ice,
     energy_heating_law.temperature_end: temperature_melt_ice
 })
 
 energy_to_melt_ice_equation = energy_melting_law.law.subs({
     energy_melting_law.specific_heat_melting: specific_heat_melting_ice,
-    energy_melting_law.mass_of_matter: mass_of_ice
+    energy_melting_law.symbols.basic.mass: mass_of_ice
 })
 
 energy_to_heat_melted_ice_equation = energy_heating_law.law.subs({
     energy_heating_law.specific_heat_capacity: specific_heat_heating_water,
-    energy_heating_law.body_mass: mass_of_ice,
+    energy_heating_law.symbols.basic.mass: mass_of_ice,
     energy_heating_law.temperature_origin: temperature_melt_ice,
     energy_heating_law.temperature_end: temperature_end
 })

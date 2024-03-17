@@ -1,4 +1,4 @@
-from sympy import (Eq, solve, S)
+from sympy import Eq, solve
 from symplyphysics import (
     units,
     Quantity,
@@ -6,7 +6,6 @@ from symplyphysics import (
     print_expression,
     validate_input,
     validate_output,
-    convert_to,
     dimensionless,
 )
 

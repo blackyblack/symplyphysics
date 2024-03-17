@@ -1,7 +1,7 @@
 from sympy import (Eq, solve)
 from sympy.physics.units import gravitational_constant
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output)
+    validate_output, symbols, clone_symbol)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.gravity import gravity_force_from_mass_and_distance as gravity_law
 from symplyphysics.laws.dynamics import acceleration_from_force as newton2_law
@@ -17,9 +17,9 @@ from symplyphysics.laws.dynamics import acceleration_from_force as newton2_law
 ## h is height above the planet surface
 
 free_fall_acceleration = Symbol("free_fall_acceleration", units.acceleration)
-planet_mass = Symbol("planet_mass", units.mass)
 planet_radius = Symbol("planet_radius", units.length)
 height_above_surface = Symbol("height_above_surface", units.length)
+planet_mass = clone_symbol(symbols.basic.mass, "planet_mass")
 
 law = Eq(free_fall_acceleration,
     gravitational_constant * planet_mass / (planet_radius + height_above_surface)**2)
@@ -27,14 +27,15 @@ law = Eq(free_fall_acceleration,
 # This law might be easily derived from gravitational law via Newton's law #2
 ## Distance between mass centers is radius of the planet plus height above it's surface.
 gravitational_force = gravity_law.law.rhs.subs({
-    gravity_law.first_object_mass: planet_mass,
+    gravity_law.first_mass: planet_mass,
     gravity_law.distance_between_mass_centers: planet_radius + height_above_surface
 })
 
-derived_free_fall_acceleration = newton2_law.law.rhs.subs({
-    newton2_law.force: gravitational_force,
-    newton2_law.mass: gravity_law.second_object_mass
-})
+# Substitute mass first
+derived_free_fall_acceleration = newton2_law.law.rhs.subs(newton2_law.symbols.basic.mass,
+    gravity_law.second_mass)
+derived_free_fall_acceleration = derived_free_fall_acceleration.subs(
+    newton2_law.symbols.dynamics.force, gravitational_force)
 
 # Check if derived acceleration is same as declared
 assert expr_equals(derived_free_fall_acceleration, law.rhs)

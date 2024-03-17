@@ -26,7 +26,8 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = harmonic_law.calculate_displacement(test_args.f_m, test_args.w, test_args.phi, test_args.t)
+    result = harmonic_law.calculate_displacement(test_args.f_m, test_args.w, test_args.phi,
+        test_args.t)
     assert_equal(result, 0.965 * units.newton)
 
 

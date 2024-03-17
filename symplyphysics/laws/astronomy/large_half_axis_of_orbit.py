@@ -1,4 +1,5 @@
-from sympy import (Eq, solve,)
+from sympy import Eq, solve
+from sympy.physics.units import gravitational_constant
 from symplyphysics import (
     units,
     Quantity,
@@ -7,7 +8,6 @@ from symplyphysics import (
     validate_input,
     validate_output,
 )
-from sympy.physics.units import gravitational_constant
 
 # Description
 ## Let the body move in an elliptical orbit. Then its large semi-axis depends on the mass of the body around which it
@@ -33,7 +33,8 @@ def print_law() -> str:
 
 @validate_input(orbital_velocity_=orbital_velocity, planet_mass_=planet_mass)
 @validate_output(large_half_axis_length)
-def calculate_large_half_axis_length(orbital_velocity_: Quantity, planet_mass_: Quantity) -> Quantity:
+def calculate_large_half_axis_length(orbital_velocity_: Quantity,
+    planet_mass_: Quantity) -> Quantity:
     result_expr = solve(law, large_half_axis_length, dict=True)[0][large_half_axis_length]
     result_expr = result_expr.subs({
         orbital_velocity: orbital_velocity_,

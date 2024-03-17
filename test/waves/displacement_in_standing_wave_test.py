@@ -27,37 +27,46 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = standing_wave_law.calculate_displacement(test_args.a, test_args.k, test_args.x, test_args.w, test_args.t)
+    result = standing_wave_law.calculate_displacement(test_args.a, test_args.k, test_args.x,
+        test_args.w, test_args.t)
     assert_equal(result, -3.6 * units.centimeter, tolerance=6e-3)
 
 
 def test_bad_angular_wavenumber(test_args: Args) -> None:
     kb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        standing_wave_law.calculate_displacement(test_args.a, kb, test_args.x, test_args.w, test_args.t)
+        standing_wave_law.calculate_displacement(test_args.a, kb, test_args.x, test_args.w,
+            test_args.t)
     with raises(TypeError):
-        standing_wave_law.calculate_displacement(test_args.a, 100, test_args.x, test_args.w, test_args.t)
+        standing_wave_law.calculate_displacement(test_args.a, 100, test_args.x, test_args.w,
+            test_args.t)
 
 
 def test_bad_position(test_args: Args) -> None:
     xb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        standing_wave_law.calculate_displacement(test_args.a, test_args.k, xb, test_args.w, test_args.t)
+        standing_wave_law.calculate_displacement(test_args.a, test_args.k, xb, test_args.w,
+            test_args.t)
     with raises(TypeError):
-        standing_wave_law.calculate_displacement(test_args.a, test_args.k, 100, test_args.w, test_args.t)
+        standing_wave_law.calculate_displacement(test_args.a, test_args.k, 100, test_args.w,
+            test_args.t)
 
 
 def test_bad_angular_frequency(test_args: Args) -> None:
     wb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        standing_wave_law.calculate_displacement(test_args.a, test_args.k, test_args.x, wb, test_args.t)
+        standing_wave_law.calculate_displacement(test_args.a, test_args.k, test_args.x, wb,
+            test_args.t)
     with raises(TypeError):
-        standing_wave_law.calculate_displacement(test_args.a, test_args.k, test_args.x, 100, test_args.t)
+        standing_wave_law.calculate_displacement(test_args.a, test_args.k, test_args.x, 100,
+            test_args.t)
 
 
 def test_bad_time(test_args: Args) -> None:
     tb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        standing_wave_law.calculate_displacement(test_args.a, test_args.k, test_args.x, test_args.w, tb)
+        standing_wave_law.calculate_displacement(test_args.a, test_args.k, test_args.x, test_args.w,
+            tb)
     with raises(TypeError):
-        standing_wave_law.calculate_displacement(test_args.a, test_args.k, test_args.x, test_args.w, 100)
+        standing_wave_law.calculate_displacement(test_args.a, test_args.k, test_args.x, test_args.w,
+            100)

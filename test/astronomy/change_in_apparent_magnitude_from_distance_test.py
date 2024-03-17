@@ -31,15 +31,15 @@ def test_basic_apparent_magnitude_second(test_args: Args) -> None:
 def test_bad_apparent_magnitude_first(test_args: Args) -> None:
     apparent_magnitude_first = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        magnitude_law.calculate_apparent_magnitude_second(apparent_magnitude_first, test_args.illuminance_first,
-            test_args.illuminance_second)
+        magnitude_law.calculate_apparent_magnitude_second(apparent_magnitude_first,
+            test_args.illuminance_first, test_args.illuminance_second)
 
 
 def test_bad_illuminance(test_args: Args) -> None:
     bad_illuminance = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        magnitude_law.calculate_apparent_magnitude_second(test_args.apparent_magnitude_first, bad_illuminance,
-            test_args.illuminance_second)
+        magnitude_law.calculate_apparent_magnitude_second(test_args.apparent_magnitude_first,
+            bad_illuminance, test_args.illuminance_second)
     with raises(TypeError):
         magnitude_law.calculate_apparent_magnitude_second(test_args.apparent_magnitude_first, 100,
             test_args.illuminance_second)

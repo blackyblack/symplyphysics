@@ -6,6 +6,8 @@ from symplyphysics import (
     print_expression,
     validate_input,
     validate_output,
+    symbols,
+    clone_symbol,
 )
 
 # Description
@@ -19,13 +21,12 @@ from symplyphysics import (
 ## I - current,
 ## t - time.
 
-mass = Symbol("mass", units.mass)
-
 equivalent = Symbol("equivalent", units.mass / units.charge)
 current = Symbol("current", units.current)
 time = Symbol("time", units.time)
+mass_deposited = clone_symbol(symbols.basic.mass, "mass_deposited")
 
-law = Eq(mass, equivalent * current * time)
+law = Eq(mass_deposited, equivalent * current * time)
 
 
 def print_law() -> str:
@@ -33,8 +34,8 @@ def print_law() -> str:
 
 
 @validate_input(equivalent_=equivalent, current_=current, time_=time)
-@validate_output(mass)
+@validate_output(mass_deposited)
 def calculate_mass(equivalent_: Quantity, current_: Quantity, time_: Quantity) -> Quantity:
-    result_expr = solve(law, mass, dict=True)[0][mass]
+    result_expr = solve(law, mass_deposited, dict=True)[0][mass_deposited]
     result_expr = result_expr.subs({equivalent: equivalent_, current: current_, time: time_})
     return Quantity(result_expr)

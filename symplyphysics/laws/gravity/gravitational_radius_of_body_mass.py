@@ -1,4 +1,7 @@
-from sympy import (Eq, solve,)
+from sympy import (
+    Eq,
+    solve,
+)
 from sympy.physics.units import gravitational_constant, speed_of_light
 from symplyphysics import (
     units,

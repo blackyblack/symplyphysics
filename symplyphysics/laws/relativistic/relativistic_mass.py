@@ -15,6 +15,7 @@ from symplyphysics import (Quantity, Symbol, print_expression, units, validate_i
 # Conditions
 ## Non-zero rest mass
 
+# This is equivalent of symbols.basic.mass
 rest_mass = Symbol("rest_mass", units.mass)
 velocity = Symbol("velocity", units.velocity)
 relativistic_mass = Symbol("relativistic_mass", units.mass)

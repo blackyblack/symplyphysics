@@ -23,14 +23,14 @@ from symplyphysics.laws.waves import displacement_in_standing_wave as standing_w
 ## lambda - wavelength
 
 # Note
-## - Amplitude refers to absolute value of displacement from rest, therefore positions of 
+## - Amplitude refers to absolute value of displacement from rest, therefore positions of
 ## maximum amplitude are such positions where there is maximum or minimum displacement from rest.
 
 antinode_position = Symbol("antinode_position", units.length, real=True)
 integer_factor = Symbol("integer_factor", dimensionless, integer=True)
 wavelength = Symbol("wavelength", units.length, positive=True)
 
-law = Eq(antinode_position, (integer_factor + S.One/2) * wavelength / 2)
+law = Eq(antinode_position, (integer_factor + S.One / 2) * wavelength / 2)
 
 # Proving these are indeed locations of maximum amplitude.
 # Deriving it from the standing wave expression is impossible since `sympy` does not produce
@@ -40,12 +40,12 @@ _standing_wave_expr = standing_wave_law.law.rhs
 
 _angular_wavenumber = wavenumber_def.definition.rhs.subs(wavenumber_def.wavelength, wavelength)
 
-_standing_wave_expr = _standing_wave_expr.subs(standing_wave_law.angular_wavenumber, _angular_wavenumber)
+_standing_wave_expr = _standing_wave_expr.subs(standing_wave_law.angular_wavenumber,
+    _angular_wavenumber)
 _standing_wave_spatial_derivative = _standing_wave_expr.diff(standing_wave_law.position)
 
 _standing_wave_spatial_derivative_at_antinodes = _standing_wave_spatial_derivative.subs(
-    standing_wave_law.position, law.rhs
-)
+    standing_wave_law.position, law.rhs)
 
 assert expr_equals(_standing_wave_spatial_derivative_at_antinodes, 0)
 
