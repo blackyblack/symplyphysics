@@ -6,6 +6,8 @@ from symplyphysics import (
     print_expression,
     validate_input,
     validate_output,
+    symbols,
+    clone_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematic.rotational_inertia.geometries import (
@@ -20,17 +22,17 @@ from symplyphysics.laws.kinematic.rotational_inertia.geometries import (
 ## L - length of rod
 
 rotational_inertia = Symbol("rotational_inertia", units.mass * units.length**2)
-mass = Symbol("mass", units.mass)
 length = Symbol("length", units.length)
+rod_mass = clone_symbol(symbols.basic.mass, "rod_mass")
 
-law = Eq(rotational_inertia, mass * length**2 / 12)
+law = Eq(rotational_inertia, rod_mass * length**2 / 12)
 
 # Derive law from formula for a slab rotating about the axis perpendicular to its lenght and width
 # passing through its center. The thin rod is a particular case of it, when the width of the slab
 # approaches zero.
 
 rotational_inertia_derived = slab_formula.law.rhs.subs({
-    slab_formula.mass: mass,
+    slab_formula.slab_mass: rod_mass,
     slab_formula.length: length,
     slab_formula.width: 0,
 })
@@ -42,11 +44,11 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(mass_=mass, length_=length)
+@validate_input(mass_=rod_mass, length_=length)
 @validate_output(rotational_inertia)
 def calculate_rotational_inertia(mass_: Quantity, length_: Quantity) -> Quantity:
     result = law.rhs.subs({
-        mass: mass_,
+        rod_mass: mass_,
         length: length_,
     })
     return Quantity(result)

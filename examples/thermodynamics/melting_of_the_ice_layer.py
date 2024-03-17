@@ -38,20 +38,20 @@ density_of_ice_equation = density_law.definition.subs({
     density_law.density: density_of_ice,
     density_law.volume: volume_of_ice_value
 })
-mass_of_ice = solve(density_of_ice_equation, density_law.mass, dict=True)[0][density_law.mass]
+mass_of_ice = solve(density_of_ice_equation, density_law.symbols.basic.mass, dict=True)[0][density_law.symbols.basic.mass]
 
 density_of_water_equation = density_law.definition.subs({
     density_law.density: density_of_water,
     density_law.volume: volume_of_water_value
 })
-mass_of_water = solve(density_of_water_equation, density_law.mass, dict=True)[0][density_law.mass]
+mass_of_water = solve(density_of_water_equation, density_law.symbols.basic.mass, dict=True)[0][density_law.symbols.basic.mass]
 
 energy_for_melting_ice_value = energy_melting_law.law.subs({
-    energy_melting_law.mass_of_matter: mass_of_ice,
+    energy_melting_law.symbols.basic.mass: mass_of_ice,
     energy_melting_law.specific_heat_melting: specific_heat_melting_of_ice
 }).rhs
 energy_from_cooling_water_value = energy_heating_law.law.subs({
-    energy_heating_law.body_mass: mass_of_water,
+    energy_heating_law.symbols.basic.mass: mass_of_water,
     energy_heating_law.specific_heat_capacity: specific_heat_heating_of_water,
     energy_heating_law.temperature_origin: temperature_of_water,
     energy_heating_law.temperature_end: temperature_of_ice

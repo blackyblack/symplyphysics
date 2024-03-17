@@ -8,6 +8,8 @@ from symplyphysics import (
     validate_input,
     validate_output,
     vector_magnitude,
+    clone_symbol,
+    symbols,
 )
 from symplyphysics.core.dimensions import ScalarValue
 from symplyphysics.core.points.cartesian_point import CartesianPoint
@@ -28,20 +30,19 @@ from symplyphysics.laws.gravity import gravitational_potential_energy
 ## G - gravitational constant
 
 gravitational_force = Symbol("gravitational_force", units.force)
-first_object_mass = Symbol("first_object_mass", units.mass)
-second_object_mass = Symbol("second_object_mass", units.mass)
+first_mass = clone_symbol(symbols.basic.mass, "first_mass")
+second_mass = clone_symbol(symbols.basic.mass, "second_mass")
 distance_between_mass_centers = Symbol("distance_between_mass_centers", units.length)
 
-law = Eq(
-    gravitational_force, gravitational_constant * first_object_mass * second_object_mass /
-    distance_between_mass_centers**2)
+law = Eq(gravitational_force,
+    gravitational_constant * first_mass * second_mass / distance_between_mass_centers**2)
 
 # Derive law from the gravitational potential energy
 # Condition: space must be 3-dimensional and flat
 
 potential = gravitational_potential_energy.law.rhs.subs({
-    gravitational_potential_energy.first_mass: first_object_mass,
-    gravitational_potential_energy.second_mass: second_object_mass,
+    gravitational_potential_energy.first_mass: first_mass,
+    gravitational_potential_energy.second_mass: second_mass,
     gravitational_potential_energy.distance_between_mass_centers: distance_between_mass_centers,
 })
 
@@ -70,16 +71,16 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(first_object_mass_=first_object_mass,
-    second_object_mass_=second_object_mass,
+@validate_input(first_object_mass_=first_mass,
+    second_object_mass_=second_mass,
     distance_between_objects_=distance_between_mass_centers)
 @validate_output(gravitational_force)
 def calculate_force(first_object_mass_: Quantity, second_object_mass_: Quantity,
     distance_between_objects_: Quantity) -> Quantity:
     result_force_expr = solve(law, gravitational_force, dict=True)[0][gravitational_force]
     result_expr = result_force_expr.subs({
-        first_object_mass: first_object_mass_,
-        second_object_mass: second_object_mass_,
+        first_mass: first_object_mass_,
+        second_mass: second_object_mass_,
         distance_between_mass_centers: distance_between_objects_
     })
     return Quantity(result_expr)

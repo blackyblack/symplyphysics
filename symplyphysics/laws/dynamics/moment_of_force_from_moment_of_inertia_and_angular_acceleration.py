@@ -33,5 +33,4 @@ def calculate_moment_of_force(moment_of_inertia_: Quantity,
         moment_of_inertia: moment_of_inertia_,
         angular_acceleration: angular_acceleration_
     })
-    result = Quantity(result_expr)
-    return result
+    return Quantity(result_expr)

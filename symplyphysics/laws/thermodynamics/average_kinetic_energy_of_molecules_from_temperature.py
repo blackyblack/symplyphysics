@@ -17,16 +17,17 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 
 average_kinetic_energy = Symbol("average_kinetic_energy", units.energy)
 
-law = Eq(average_kinetic_energy, 1.5 * units.boltzmann * symbols.basic.temperature)
+law = Eq(average_kinetic_energy, 1.5 * units.boltzmann * symbols.thermodynamics.temperature)
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(temperature_=symbols.basic.temperature)
+@validate_input(temperature_=symbols.thermodynamics.temperature)
 @validate_output(average_kinetic_energy)
 def calculate_average_kinetic_energy(temperature_: Quantity) -> Quantity:
     result_expr = solve(law, average_kinetic_energy, dict=True)[0][average_kinetic_energy]
-    result_average_kinetic_energy = result_expr.subs(symbols.basic.temperature, temperature_)
+    result_average_kinetic_energy = result_expr.subs(symbols.thermodynamics.temperature,
+        temperature_)
     return Quantity(result_average_kinetic_energy)

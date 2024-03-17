@@ -6,7 +6,6 @@ from symplyphysics import (
     Quantity,
     convert_to,
     units,
-    dimensionless,
 )
 from symplyphysics.laws.kinematic import linear_velocity_from_angular_velocity_and_radius as velocity_law
 from symplyphysics.laws.kinematic import period_from_angular_frequency as period_law

@@ -1,15 +1,12 @@
 from ..core.symbols.symbols import Symbol
 from . import (
     basic,
+    kinematic,
     dynamics,
     thermodynamics,
 )
 
-__all__ = [
-    "basic",
-    "dynamics",
-    "thermodynamics"
-]
+__all__ = ["basic", "kinematic", "dynamics", "thermodynamics"]
 
 _all_symbols = set()
 for k, v in list(globals().items()):

@@ -16,18 +16,19 @@ gravity_force = solve(gravity_law.law, gravity_law.gravitational_force,
     dict=True)[0][gravity_law.gravitational_force]
 
 # Acceleration from Newton's 2 law
-acceleration_expr = solve(newtons_law_2.law, newtons_law_2.acceleration,
-    dict=True)[0][newtons_law_2.acceleration]
+acceleration_expr = solve(newtons_law_2.law,
+    newtons_law_2.symbols.kinematic.acceleration,
+    dict=True)[0][newtons_law_2.symbols.kinematic.acceleration]
 
 # probe mass disappears
 result_expr = acceleration_expr.subs({
-    newtons_law_2.force: gravity_force,
-    newtons_law_2.mass: gravity_law.second_object_mass
+    newtons_law_2.symbols.dynamics.force: gravity_force,
+    newtons_law_2.symbols.basic.mass: gravity_law.second_mass
 })
 print(f"Gravitation acceleration expression is {print_expression(result_expr)}")
 
 result_acceleration_expr = result_expr.subs({
-    gravity_law.first_object_mass: earth_mass,
+    gravity_law.first_mass: earth_mass,
     gravity_law.distance_between_mass_centers: earth_radius
 })
 result_acceleration = Quantity(result_acceleration_expr)

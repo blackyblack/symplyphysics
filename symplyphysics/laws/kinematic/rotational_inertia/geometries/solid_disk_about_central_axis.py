@@ -6,6 +6,8 @@ from symplyphysics import (
     print_expression,
     validate_input,
     validate_output,
+    symbols,
+    clone_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematic.rotational_inertia import rotational_inertia_cylindrical_integral as integral_law
@@ -20,10 +22,10 @@ from symplyphysics.definitions import density_from_mass_volume as density_def
 ## R - radius of disk
 
 rotational_inertia = Symbol("rotational_inertia", units.mass * units.length**2)
-mass = Symbol("mass", units.mass)
 radius = Symbol("radius", units.length)
+disk_mass = clone_symbol(symbols.basic.mass, "disk_mass")
 
-law = Eq(rotational_inertia, mass * radius**2 / 2)
+law = Eq(rotational_inertia, disk_mass * radius**2 / 2)
 
 # Derive law from general integral in cylindrical coordinates
 
@@ -31,7 +33,7 @@ length = Symbol("length", units.length)
 volume = pi * radius**2 * length
 
 density = density_def.definition.rhs.subs({
-    density_def.mass: mass,
+    density_def.symbols.basic.mass: disk_mass,
     density_def.volume: volume,
 })
 
@@ -59,11 +61,11 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(mass_=mass, radius_=radius)
+@validate_input(mass_=disk_mass, radius_=radius)
 @validate_output(rotational_inertia)
 def calculate_rotational_inertia(mass_: Quantity, radius_: Quantity) -> Quantity:
     result = law.rhs.subs({
-        mass: mass_,
+        disk_mass: mass_,
         radius: radius_,
     })
     return Quantity(result)

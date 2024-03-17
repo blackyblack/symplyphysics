@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output)
+    validate_output, symbols, clone_symbol)
 
 # Description
 ## For an ideal gas, the average square of velocity is directly proportional to its temperature and inversely proportional to the molar mass of the gas: <V^2> = 3 k T / m
@@ -11,19 +11,18 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## k - Boltzman's constant
 
 temperature_in_gas = Symbol("temperature_in_gas", units.temperature)
-mass_of_molecule = Symbol("mass_of_molecule", units.mass)
 
 average_square_velocity = Symbol("average_square_velocity", units.velocity**2)
+molecule_mass = clone_symbol(symbols.basic.mass, "molecule_mass")
 
-law = Eq(average_square_velocity,
-    3 * units.boltzmann_constant * temperature_in_gas / mass_of_molecule)
+law = Eq(average_square_velocity, 3 * units.boltzmann_constant * temperature_in_gas / molecule_mass)
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(temperature_in_gas_=temperature_in_gas, mass_of_molecule_=mass_of_molecule)
+@validate_input(temperature_in_gas_=temperature_in_gas, mass_of_molecule_=molecule_mass)
 @validate_output(average_square_velocity)
 def calculate_average_square_velocity(temperature_in_gas_: Quantity,
     mass_of_molecule_: Quantity) -> Quantity:
@@ -31,6 +30,6 @@ def calculate_average_square_velocity(temperature_in_gas_: Quantity,
         dict=True)[0][average_square_velocity]
     result_expr = result_average_square_velocity.subs({
         temperature_in_gas: temperature_in_gas_,
-        mass_of_molecule: mass_of_molecule_
+        molecule_mass: mass_of_molecule_
     })
     return Quantity(result_expr)

@@ -1,7 +1,7 @@
 from sympy import Eq, solve, sqrt
 from sympy.physics.units import gravitational_constant
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output)
+    validate_output, symbols, clone_symbol)
 
 # Law: V = √(G * M / (R + h))
 # Where:
@@ -12,9 +12,9 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 # R - radius of planet
 
 velocity = Symbol("initial_velocity", units.velocity)
-planet_mass = Symbol("planet_mass", units.mass)
 radius = Symbol("radius", units.length)
 height = Symbol("height", units.length)
+planet_mass = clone_symbol(symbols.basic.mass, "planet_mass")
 
 law = Eq(velocity, sqrt(gravitational_constant * planet_mass / (radius + height)))
 

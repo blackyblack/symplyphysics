@@ -31,31 +31,19 @@ def velocity_law(damping_force_: Vector) -> Vector:
     return scale_vector(-1 / damping_constant, damping_force_)
 
 
-@validate_input(
-    damping_constant_=damping_constant,
-    velocity_=units.velocity
-)
+@validate_input(damping_constant_=damping_constant, velocity_=units.velocity)
 @validate_output(units.force)
-def calculate_damping_force(
-    damping_constant_: Quantity, velocity_: QuantityVector
-) -> QuantityVector:
+def calculate_damping_force(damping_constant_: Quantity,
+    velocity_: QuantityVector) -> QuantityVector:
     vector = damping_force_definition(velocity_.to_base_vector())
-    result_components = subs_list(
-        vector.components, {damping_constant: damping_constant_}
-    )
+    result_components = subs_list(vector.components, {damping_constant: damping_constant_})
     return QuantityVector(result_components, velocity_.coordinate_system)
 
 
-@validate_input(
-    damping_constant_=damping_constant,
-    damping_force_=units.force
-)
+@validate_input(damping_constant_=damping_constant, damping_force_=units.force)
 @validate_output(units.velocity)
-def calculate_velocity(
-    damping_constant_: Quantity, damping_force_: QuantityVector
-) -> QuantityVector:
+def calculate_velocity(damping_constant_: Quantity,
+    damping_force_: QuantityVector) -> QuantityVector:
     vector = velocity_law(damping_force_.to_base_vector())
-    result_components = subs_list(
-        vector.components, {damping_constant: damping_constant_}
-    )
+    result_components = subs_list(vector.components, {damping_constant: damping_constant_})
     return QuantityVector(result_components, damping_force_.coordinate_system)
