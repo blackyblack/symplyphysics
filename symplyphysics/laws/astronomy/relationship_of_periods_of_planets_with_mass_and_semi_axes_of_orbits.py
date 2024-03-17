@@ -12,7 +12,7 @@ from symplyphysics import (
 ## Kepler's third law relates the ratio of the rotation periods of the planets to the ratio of the large semi-axes
 ## of the orbits. Newton also clarified this law by adding the mass of the planet and the mass of the Sun.
 
-## Law is: ((M + m1) * T1^2) / ((M + m2) * T2^2) = a1^2 / a2^2, where
+## Law is: ((M + m1) * T1^2) / ((M + m2) * T2^2) = a1^3 / a2^3, where
 ## T1 - rotation period of the first planet,
 ## T2- rotation period of the second planet,
 ## a1 - large semi-axis of the orbit of the first planet,
