@@ -8,7 +8,6 @@ from symplyphysics import (
     scale_vector,
     validate_input,
     validate_output,
-    subs_list,
     symbols,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
@@ -70,14 +69,12 @@ for component_derived, component_from_law in zip(force_derived.components,
 @validate_input(mass_=symbols.basic.mass, acceleration_=units.acceleration)
 @validate_output(units.force)
 def calculate_force(mass_: Quantity, acceleration_: QuantityVector) -> QuantityVector:
-    result_force = force_law(acceleration_.to_base_vector())
-    force_components = subs_list(result_force.components, {symbols.basic.mass: mass_})
-    return QuantityVector(force_components, acceleration_.coordinate_system)
+    result_vector = force_law(acceleration_.to_base_vector())
+    return QuantityVector.from_base_vector(result_vector, subs={symbols.basic.mass: mass_})
 
 
 @validate_input(mass_=symbols.basic.mass, force_=units.force)
 @validate_output(units.acceleration)
 def calculate_acceleration(mass_: Quantity, force_: QuantityVector) -> QuantityVector:
-    result_acceleration = acceleration_law(force_.to_base_vector())
-    acceleration_components = subs_list(result_acceleration.components, {symbols.basic.mass: mass_})
-    return QuantityVector(acceleration_components, force_.coordinate_system)
+    result_vector = acceleration_law(force_.to_base_vector())
+    return QuantityVector.from_base_vector(result_vector, subs={symbols.basic.mass: mass_})

@@ -7,7 +7,6 @@ from symplyphysics import (
     Symbol,
     validate_input,
     validate_output,
-    subs_list,
     angle_type,
 )
 
@@ -36,8 +35,8 @@ def rotation_vector_law(torque_: Vector) -> Vector:
 def calculate_torque(torsion_constant_: Quantity,
     rotation_vector_: QuantityVector) -> QuantityVector:
     result_vector = torque_law(rotation_vector_.to_base_vector())
-    result_components = subs_list(result_vector.components, {torsion_constant: torsion_constant_})
-    return QuantityVector(result_components, rotation_vector_.coordinate_system)
+    return QuantityVector.from_base_vector(result_vector,
+        subs={torsion_constant: torsion_constant_})
 
 
 @validate_input(torsion_constant_=torsion_constant, torque_=units.force * units.length)
@@ -45,5 +44,5 @@ def calculate_torque(torsion_constant_: Quantity,
 def calculate_rotation_vector(torsion_constant_: Quantity,
     torque_: QuantityVector) -> QuantityVector:
     result_vector = rotation_vector_law(torque_.to_base_vector())
-    result_components = subs_list(result_vector.components, {torsion_constant: torsion_constant_})
-    return QuantityVector(result_components, torque_.coordinate_system)
+    return QuantityVector.from_base_vector(result_vector,
+        subs={torsion_constant: torsion_constant_})
