@@ -24,7 +24,7 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = condition_law.calculate_phase_shift(test_args.n)
-    assert_equal(result, 4*pi)
+    assert_equal(result, 4 * pi)
 
 
 def test_bad_integer_factor() -> None:

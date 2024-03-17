@@ -26,6 +26,7 @@ def test_law(test_args: Args) -> None:
     result = wave_law.calculate_displacement(test_args.a, test_args.psi)
     assert_equal(result, -3.33 * units.centimeter)
 
+
 def test_bad_wave_phase(test_args: Args) -> None:
     psi_bad = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):

@@ -38,13 +38,15 @@ density_of_ice_equation = density_law.definition.subs({
     density_law.density: density_of_ice,
     density_law.volume: volume_of_ice_value
 })
-mass_of_ice = solve(density_of_ice_equation, density_law.symbols.basic.mass, dict=True)[0][density_law.symbols.basic.mass]
+mass_of_ice = solve(density_of_ice_equation, density_law.symbols.basic.mass,
+    dict=True)[0][density_law.symbols.basic.mass]
 
 density_of_water_equation = density_law.definition.subs({
     density_law.density: density_of_water,
     density_law.volume: volume_of_water_value
 })
-mass_of_water = solve(density_of_water_equation, density_law.symbols.basic.mass, dict=True)[0][density_law.symbols.basic.mass]
+mass_of_water = solve(density_of_water_equation, density_law.symbols.basic.mass,
+    dict=True)[0][density_law.symbols.basic.mass]
 
 energy_for_melting_ice_value = energy_melting_law.law.subs({
     energy_melting_law.symbols.basic.mass: mass_of_ice,

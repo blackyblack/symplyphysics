@@ -36,7 +36,8 @@ density_of_gasoline_equation = density_law.definition.subs({
     density_law.density: density_of_gasoline,
     density_law.volume: volume_of_gasoline
 })
-mass_of_gasoline_value = solve(density_of_gasoline_equation, density_law.symbols.basic.mass,
+mass_of_gasoline_value = solve(density_of_gasoline_equation,
+    density_law.symbols.basic.mass,
     dict=True)[0][density_law.symbols.basic.mass]
 
 amount_heat_value = combustion_energy_law.law.subs({

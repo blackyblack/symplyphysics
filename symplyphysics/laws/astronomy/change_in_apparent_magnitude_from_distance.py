@@ -29,7 +29,8 @@ apparent_magnitude_second = Symbol("apparent_magnitude_second", dimensionless)
 illuminance_first = Symbol("illuminance_first", units.energy / units.area)
 illuminance_second = Symbol("illuminance_second", units.energy / units.area)
 
-law = Eq(apparent_magnitude_second - apparent_magnitude_first, -2.5 * log(illuminance_second / illuminance_first, 10))
+law = Eq(apparent_magnitude_second - apparent_magnitude_first,
+    -2.5 * log(illuminance_second / illuminance_first, 10))
 
 
 def print_law() -> str:
@@ -40,8 +41,8 @@ def print_law() -> str:
     illuminance_first_=illuminance_first,
     illuminance_second_=illuminance_second)
 @validate_output(apparent_magnitude_second)
-def calculate_apparent_magnitude_second(apparent_magnitude_first_: float, illuminance_first_: Quantity,
-    illuminance_second_: Quantity) -> float:
+def calculate_apparent_magnitude_second(apparent_magnitude_first_: float,
+    illuminance_first_: Quantity, illuminance_second_: Quantity) -> float:
     result_expr = solve(law, apparent_magnitude_second, dict=True)[0][apparent_magnitude_second]
     result_expr = result_expr.subs({
         apparent_magnitude_first: apparent_magnitude_first_,

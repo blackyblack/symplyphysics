@@ -27,10 +27,7 @@ wave_phase = Function("wave_phase", angle_type)
 position = Symbol("position", units.length)
 time = Symbol("time", units.time)
 
-law = Eq(
-    general_solution(position, time),
-    solution_function(wave_phase(position, time))
-)
+law = Eq(general_solution(position, time), solution_function(wave_phase(position, time)))
 
 # TODO: prove it's a solution of the wave equation
 
@@ -49,7 +46,7 @@ def calculate_displacement(
 
     wave_phase_ = scale_factor(wave_phase_)
     result = law.rhs.subs(
-        solution_function(wave_phase(position, time)), 
+        solution_function(wave_phase(position, time)),
         amplitude_ * cos(wave_phase_),
     )
     return Quantity(result)

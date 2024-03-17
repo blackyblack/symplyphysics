@@ -1,6 +1,11 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (assert_equal, units, Quantity, errors,)
+from symplyphysics import (
+    assert_equal,
+    units,
+    Quantity,
+    errors,
+)
 from symplyphysics.laws.astronomy import radius_of_geostationary_orbit as radius_law
 
 # Description
@@ -20,7 +25,8 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_radius_of_orbit(test_args: Args) -> None:
-    result = radius_law.calculate_radius_of_orbit(test_args.mass_of_planet, test_args.speed_rotation_satellite)
+    result = radius_law.calculate_radius_of_orbit(test_args.mass_of_planet,
+        test_args.speed_rotation_satellite)
     assert_equal(result, 42164 * units.kilometer)
 
 

@@ -31,9 +31,7 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(planet_mass_=planet_mass,
-    aiming_range_=aiming_range,
-    rocket_speed_=rocket_speed)
+@validate_input(planet_mass_=planet_mass, aiming_range_=aiming_range, rocket_speed_=rocket_speed)
 @validate_output(angle)
 def calculate_angle(planet_mass_: Quantity, aiming_range_: Quantity,
     rocket_speed_: Quantity) -> Quantity:

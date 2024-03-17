@@ -3,8 +3,7 @@
 from sympy import solve, symbols, Eq
 from symplyphysics import Quantity, units, print_expression, convert_to
 from symplyphysics.laws.dynamics import (
-    period_of_spring_from_mass as spring_period_law,
-)
+    period_of_spring_from_mass as spring_period_law,)
 from symplyphysics.laws.kinematic import (
     period_from_angular_frequency as period_def,
     displacement_in_simple_harmonic_motion as harmonic_law,
@@ -16,8 +15,10 @@ from symplyphysics.laws.kinematic import (
 ## and v = 3.415 m/s. (a) What is the amplitude of the oscillations? What were the (b) position
 ## and (c) velocity of the block at t = 0 s?
 
-block_mass, spring_stiffness, amplitude = symbols("block_mass spring_stiffness amplitude", positive=True)
-time, initial_time, position1, velocity1, phase_lag = symbols("time initial_time position1 velocity1 phase_lag", real=True)
+block_mass, spring_stiffness, amplitude = symbols("block_mass spring_stiffness amplitude",
+    positive=True)
+time, initial_time, position1, velocity1, phase_lag = symbols(
+    "time initial_time position1 velocity1 phase_lag", real=True)
 
 values = {
     block_mass: Quantity(2.00 * units.kilogram),
@@ -30,15 +31,12 @@ values = {
 # Find angular frequency of spring's oscillations
 
 period_expr = spring_period_law.law.rhs.subs({
-    spring_period_law.object_mass: block_mass,
+    spring_period_law.symbols.basic.mass: block_mass,
     spring_period_law.spring_elasticity: spring_stiffness,
 })
 
-angular_frequency_expr = solve(
-    period_def.law, period_def.circular_frequency
-)[0].subs(
-    period_def.period, period_expr
-)
+angular_frequency_expr = solve(period_def.law,
+    period_def.circular_frequency)[0].subs(period_def.period, period_expr)
 
 # Expression of simple harmonic oscillations of spring
 
@@ -90,8 +88,10 @@ initial_subs = {
 initial_position_expr = position_expr.subs(initial_subs).simplify()
 initial_velocity_expr = velocity_expr.subs(initial_subs).simplify()
 
-initial_position_value = convert_to(Quantity(initial_position_expr.subs(values)), units.meter).evalf(2)
-initial_velocity_value = convert_to(Quantity(initial_velocity_expr.subs(values)), units.meter / units.second).evalf(2)
+initial_position_value = convert_to(Quantity(initial_position_expr.subs(values)),
+    units.meter).evalf(2)
+initial_velocity_value = convert_to(Quantity(initial_velocity_expr.subs(values)),
+    units.meter / units.second).evalf(2)
 
 print(f"Initial position of the block is {initial_position_value} m.")
 print(f"Initial velocity of the block is {initial_velocity_value} m/s.")

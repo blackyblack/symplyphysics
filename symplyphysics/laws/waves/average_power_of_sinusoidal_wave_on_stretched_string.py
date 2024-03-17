@@ -28,11 +28,7 @@ wave_amplitude = Symbol("wave_amplitude", units.length)
 
 law = Eq(
     wave_average_power,
-    string_linear_density
-    * wave_phase_velocity
-    * wave_angular_frequency**2
-    * wave_amplitude**2
-    / 2,
+    string_linear_density * wave_phase_velocity * wave_angular_frequency**2 * wave_amplitude**2 / 2,
 )
 
 

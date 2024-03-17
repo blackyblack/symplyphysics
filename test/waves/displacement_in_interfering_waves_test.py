@@ -29,63 +29,53 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = interference_law.calculate_displacement(
-        test_args.a, test_args.phi, test_args.k, test_args.w, test_args.x, test_args.t
-    )
+    result = interference_law.calculate_displacement(test_args.a, test_args.phi, test_args.k,
+        test_args.w, test_args.x, test_args.t)
     assert_equal(result, 1.33 * units.centimeter, tolerance=3e-3)
 
 
 def test_bad_phase_shift(test_args: Args) -> None:
     phi_bad = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        interference_law.calculate_displacement(
-            test_args.a, phi_bad, test_args.k, test_args.w, test_args.x, test_args.t
-        )
+        interference_law.calculate_displacement(test_args.a, phi_bad, test_args.k, test_args.w,
+            test_args.x, test_args.t)
 
 
 def test_bad_angular_wavenumber(test_args: Args) -> None:
     kb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        interference_law.calculate_displacement(
-            test_args.a, test_args.phi, kb, test_args.w, test_args.x, test_args.t
-        )
+        interference_law.calculate_displacement(test_args.a, test_args.phi, kb, test_args.w,
+            test_args.x, test_args.t)
     with raises(TypeError):
-        interference_law.calculate_displacement(
-            test_args.a, test_args.phi, 100, test_args.w, test_args.x, test_args.t
-        )
+        interference_law.calculate_displacement(test_args.a, test_args.phi, 100, test_args.w,
+            test_args.x, test_args.t)
 
 
 def test_bad_angular_frequency(test_args: Args) -> None:
     wb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        interference_law.calculate_displacement(
-            test_args.a, test_args.phi, test_args.k, wb, test_args.x, test_args.t
-        )
+        interference_law.calculate_displacement(test_args.a, test_args.phi, test_args.k, wb,
+            test_args.x, test_args.t)
     with raises(TypeError):
-        interference_law.calculate_displacement(
-            test_args.a, test_args.phi, test_args.k, 100, test_args.x, test_args.t
-        )
+        interference_law.calculate_displacement(test_args.a, test_args.phi, test_args.k, 100,
+            test_args.x, test_args.t)
 
 
 def test_bad_position(test_args: Args) -> None:
     xb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        interference_law.calculate_displacement(
-            test_args.a, test_args.phi, test_args.k, test_args.w, xb, test_args.t
-        )
+        interference_law.calculate_displacement(test_args.a, test_args.phi, test_args.k,
+            test_args.w, xb, test_args.t)
     with raises(TypeError):
-        interference_law.calculate_displacement(
-            test_args.a, test_args.phi, test_args.k, test_args.w, 100, test_args.t
-        )
+        interference_law.calculate_displacement(test_args.a, test_args.phi, test_args.k,
+            test_args.w, 100, test_args.t)
 
 
 def test_bad_time(test_args: Args) -> None:
     tb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        interference_law.calculate_displacement(
-            test_args.a, test_args.phi, test_args.k, test_args.w, test_args.x, tb
-        )
+        interference_law.calculate_displacement(test_args.a, test_args.phi, test_args.k,
+            test_args.w, test_args.x, tb)
     with raises(TypeError):
-        interference_law.calculate_displacement(
-            test_args.a, test_args.phi, test_args.k, test_args.w, test_args.x, 100
-        )
+        interference_law.calculate_displacement(test_args.a, test_args.phi, test_args.k,
+            test_args.w, test_args.x, 100)

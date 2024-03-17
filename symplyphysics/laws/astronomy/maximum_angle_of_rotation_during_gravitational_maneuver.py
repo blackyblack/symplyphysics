@@ -26,19 +26,21 @@ from symplyphysics import (
 
 maximum_angle = Symbol("maximum_angle", angle_type)
 
-first_cosmic_velocity_planet= Symbol("first_cosmic_velocity_planet", units.velocity)
+first_cosmic_velocity_planet = Symbol("first_cosmic_velocity_planet", units.velocity)
 rocket_speed = Symbol("rocket_speed", units.velocity)
 
-law = Eq(maximum_angle, atan((first_cosmic_velocity_planet/ rocket_speed)**2))
+law = Eq(maximum_angle, atan((first_cosmic_velocity_planet / rocket_speed)**2))
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(first_cosmic_velocity_planet_=first_cosmic_velocity_planet, rocket_speed_=rocket_speed)
+@validate_input(first_cosmic_velocity_planet_=first_cosmic_velocity_planet,
+    rocket_speed_=rocket_speed)
 @validate_output(maximum_angle)
-def calculate_maximum_angle(first_cosmic_velocity_planet_: Quantity, rocket_speed_: Quantity) -> Quantity:
+def calculate_maximum_angle(first_cosmic_velocity_planet_: Quantity,
+    rocket_speed_: Quantity) -> Quantity:
     result_expr = solve(law, maximum_angle, dict=True)[0][maximum_angle]
     result_expr = result_expr.subs({
         first_cosmic_velocity_planet: first_cosmic_velocity_planet_,

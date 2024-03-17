@@ -15,9 +15,7 @@ def test_args_fixture() -> Args:
     planet_mass = Quantity(5.97e24 * units.kilograms)
     aiming_range = Quantity(43000 * units.kilometers)
     rocket_speed = Quantity(11.2 * units.kilometers / units.second)
-    return Args(planet_mass=planet_mass,
-        aiming_range=aiming_range,
-        rocket_speed=rocket_speed)
+    return Args(planet_mass=planet_mass, aiming_range=aiming_range, rocket_speed=rocket_speed)
 
 
 def test_basic_angle(test_args: Args) -> None:
@@ -29,29 +27,22 @@ def test_basic_angle(test_args: Args) -> None:
 def test_bad_planet_mass(test_args: Args) -> None:
     bad_planet_mass = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        angle_law.calculate_angle(bad_planet_mass, test_args.aiming_range,
-            test_args.rocket_speed)
+        angle_law.calculate_angle(bad_planet_mass, test_args.aiming_range, test_args.rocket_speed)
     with raises(TypeError):
-        angle_law.calculate_angle(100, test_args.aiming_range,
-            test_args.rocket_speed)
+        angle_law.calculate_angle(100, test_args.aiming_range, test_args.rocket_speed)
 
 
 def test_bad_aiming_range(test_args: Args) -> None:
     bad_aiming_range = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        angle_law.calculate_angle(test_args.planet_mass, bad_aiming_range,
-            test_args.rocket_speed)
+        angle_law.calculate_angle(test_args.planet_mass, bad_aiming_range, test_args.rocket_speed)
     with raises(TypeError):
-        angle_law.calculate_angle(test_args.planet_mass, 100,
-            test_args.rocket_speed)
+        angle_law.calculate_angle(test_args.planet_mass, 100, test_args.rocket_speed)
 
 
 def test_bad_rocket_speed(test_args: Args) -> None:
     bad_rocket_speed = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        angle_law.calculate_angle(test_args.planet_mass, test_args.aiming_range,
-            bad_rocket_speed)
+        angle_law.calculate_angle(test_args.planet_mass, test_args.aiming_range, bad_rocket_speed)
     with raises(TypeError):
-        angle_law.calculate_angle(test_args.planet_mass, test_args.aiming_range,
-            100)
-
+        angle_law.calculate_angle(test_args.planet_mass, test_args.aiming_range, 100)

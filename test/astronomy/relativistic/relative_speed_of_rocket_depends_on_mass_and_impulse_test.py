@@ -19,22 +19,19 @@ def test_args_fixture() -> Args:
     initial_mass = Quantity(72200 * units.tonne)
     final_mass = Quantity(200 * units.tonne)
 
-    return Args(specific_impulse=specific_impulse,
-        initial_mass=initial_mass,
-        final_mass=final_mass)
+    return Args(specific_impulse=specific_impulse, initial_mass=initial_mass, final_mass=final_mass)
 
 
 def test_basic_speed(test_args: Args) -> None:
-    result = speed_law.calculate_speed(test_args.specific_impulse,
-        test_args.initial_mass, test_args.final_mass)
+    result = speed_law.calculate_speed(test_args.specific_impulse, test_args.initial_mass,
+        test_args.final_mass)
     assert_equal(result, 299787857 * units.meter / units.second)
 
 
 def test_bad_specific_impulse(test_args: Args) -> None:
     specific_impulse = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        speed_law.calculate_speed(specific_impulse, test_args.initial_mass,
-            test_args.final_mass)
+        speed_law.calculate_speed(specific_impulse, test_args.initial_mass, test_args.final_mass)
     with raises(TypeError):
         speed_law.calculate_speed(100, test_args.initial_mass, test_args.final_mass)
 
@@ -42,14 +39,10 @@ def test_bad_specific_impulse(test_args: Args) -> None:
 def test_bad_mass(test_args: Args) -> None:
     bad_mass = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        speed_law.calculate_speed(test_args.specific_impulse, bad_mass,
-            test_args.final_mass)
+        speed_law.calculate_speed(test_args.specific_impulse, bad_mass, test_args.final_mass)
     with raises(TypeError):
-        speed_law.calculate_speed(test_args.specific_impulse, 100,
-            test_args.final_mass)
+        speed_law.calculate_speed(test_args.specific_impulse, 100, test_args.final_mass)
     with raises(errors.UnitsError):
-        speed_law.calculate_speed(test_args.specific_impulse,
-            test_args.initial_mass, bad_mass)
+        speed_law.calculate_speed(test_args.specific_impulse, test_args.initial_mass, bad_mass)
     with raises(TypeError):
-        speed_law.calculate_speed(test_args.specific_impulse,
-            test_args.initial_mass, 100)
+        speed_law.calculate_speed(test_args.specific_impulse, test_args.initial_mass, 100)

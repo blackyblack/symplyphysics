@@ -1,6 +1,11 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (assert_equal, units, Quantity, errors,)
+from symplyphysics import (
+    assert_equal,
+    units,
+    Quantity,
+    errors,
+)
 from symplyphysics.laws.astronomy import third_cosmic_velocity_from_orbital_and_second_velocities as velocity_law
 
 # Description
@@ -20,7 +25,8 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_third_velocity(test_args: Args) -> None:
-    result = velocity_law.calculate_third_velocity(test_args.orbital_velocity, test_args.second_velocity)
+    result = velocity_law.calculate_third_velocity(test_args.orbital_velocity,
+        test_args.second_velocity)
     assert_equal(result, 16.65 * (units.kilometer / units.second))
 
 

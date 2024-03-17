@@ -1,6 +1,11 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (assert_equal, units, Quantity, errors,)
+from symplyphysics import (
+    assert_equal,
+    units,
+    Quantity,
+    errors,
+)
 from symplyphysics.laws.astronomy import luminosity_of_sun_in_past_from_luminosity_in_present as luminosity_law
 
 # Description

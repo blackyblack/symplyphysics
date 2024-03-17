@@ -1,4 +1,4 @@
-from sympy import Eq, cos, sin, symbols, Function as SymFunction, dsolve, solve
+from sympy import Eq, cos, symbols, Function as SymFunction, dsolve
 from symplyphysics import (
     units,
     Quantity,
@@ -37,21 +37,17 @@ law = Eq(displacement(time), amplitude * cos(angular_frequency * time + phase_la
 _eqn = harmonic_eqn.definition.subs({
     harmonic_eqn.time: time,
     harmonic_eqn.angular_frequency: angular_frequency,
-}).subs(
-    harmonic_eqn.displacement_function(time), displacement(time)
-)
+}).subs(harmonic_eqn.displacement_function(time), displacement(time))
 
 _initial_position = law.rhs.subs(time, 0)
 _initial_velocity = law.rhs.diff(time).subs(time, 0)
 
-_dsolved = dsolve(
-    _eqn,
+_dsolved = dsolve(_eqn,
     displacement(time),
     ics={
-        displacement(0): _initial_position,
-        displacement(time).diff(time).subs(time, 0): _initial_velocity,
-    }
-).rhs
+    displacement(0): _initial_position,
+    displacement(time).diff(time).subs(time, 0): _initial_velocity,
+    }).rhs
 
 assert expr_equals(law.rhs, _dsolved)
 

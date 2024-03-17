@@ -1,14 +1,11 @@
-from sympy import (Eq, solve, log, S,)
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    print_expression,
-    validate_input,
-    validate_output,
-    dimensionless,
-    convert_to
+from sympy import (
+    Eq,
+    solve,
+    log,
+    S,
 )
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output, dimensionless, convert_to)
 
 # Description
 ## The penetrating force is the magnitude of the faintest stars visible with a telescope when observed at the zenith.
@@ -17,7 +14,7 @@ from symplyphysics import (
 ## m - penetrating power of telescope,
 ## D - diameter of the lens in millimeters.
 
-penetrating_power_telescope= Symbol("penetrating_power_telescope", dimensionless)
+penetrating_power_telescope = Symbol("penetrating_power_telescope", dimensionless)
 
 lens_diameter = Symbol("lens_diameter", units.length)
 

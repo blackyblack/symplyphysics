@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.dynamics.springs import (
-    spring_reaction_is_proportional_to_deformation as hookes_law,
-)
+    spring_reaction_is_proportional_to_deformation as hookes_law,)
 
 # Description
 ## A spring of stiffness k = 150 N/m is being compressed by 10 cm. The force exerted by the

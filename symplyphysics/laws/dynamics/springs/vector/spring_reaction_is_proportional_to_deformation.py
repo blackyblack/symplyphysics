@@ -28,15 +28,11 @@ def deformation_law(force_: Vector) -> Vector:
 @validate_output(units.force)
 def calculate_force(coefficient_: Quantity, deformation_: QuantityVector) -> QuantityVector:
     result_vector = force_law(deformation_.to_base_vector())
-    return QuantityVector.from_base_vector(
-        result_vector, subs={stiffness: coefficient_}
-    )
+    return QuantityVector.from_base_vector(result_vector, subs={stiffness: coefficient_})
 
 
 @validate_input(coefficient_=stiffness, force_=units.force)
 @validate_output(units.length)
 def calculate_deformation(coefficient_: Quantity, force_: QuantityVector) -> QuantityVector:
     result_vector = deformation_law(force_.to_base_vector())
-    return QuantityVector.from_base_vector(
-        result_vector, subs={stiffness: coefficient_}
-    )
+    return QuantityVector.from_base_vector(result_vector, subs={stiffness: coefficient_})

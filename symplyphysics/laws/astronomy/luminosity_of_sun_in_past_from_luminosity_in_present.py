@@ -1,4 +1,8 @@
-from sympy import (Eq, solve, S,)
+from sympy import (
+    Eq,
+    solve,
+    S,
+)
 from symplyphysics import (
     units,
     Quantity,

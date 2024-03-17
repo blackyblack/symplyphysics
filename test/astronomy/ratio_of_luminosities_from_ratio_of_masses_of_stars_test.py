@@ -17,9 +17,11 @@ def test_args_fixture() -> Args:
     mass_second = Quantity(3.97694e30 * units.kilogram)
     illuminance_first = Quantity(2 * units.joule / units.meter**2)
 
-    return Args(mass_first=mass_first,
+    return Args(
+        mass_first=mass_first,
         mass_second=mass_second,
-        illuminance_first=illuminance_first,)
+        illuminance_first=illuminance_first,
+    )
 
 
 def test_basic_illuminance_second(test_args: Args) -> None:
@@ -47,8 +49,8 @@ def test_bad_mass(test_args: Args) -> None:
 def test_bad_illuminance_first(test_args: Args) -> None:
     illuminance_first = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        illuminance_law.calculate_illuminance_second(test_args.mass_first,
-            test_args.mass_second, illuminance_first)
+        illuminance_law.calculate_illuminance_second(test_args.mass_first, test_args.mass_second,
+            illuminance_first)
     with raises(TypeError):
-        illuminance_law.calculate_illuminance_second(test_args.mass_first,
-            test_args.mass_second, 100)
+        illuminance_law.calculate_illuminance_second(test_args.mass_first, test_args.mass_second,
+            100)

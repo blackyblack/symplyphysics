@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.waves import (
-    wavelength_of_standing_wave_in_string_with_fixed_ends as standing_wave_law,
-)
+    wavelength_of_standing_wave_in_string_with_fixed_ends as standing_wave_law,)
 
 # Description
 ## A harmonic standing wave is occurring in a string of length l = 30 cm. The wavelength

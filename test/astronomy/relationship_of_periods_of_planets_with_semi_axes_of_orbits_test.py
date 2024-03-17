@@ -23,8 +23,8 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_first_period(test_args: Args) -> None:
-    result = period_law.calculate_first_period(test_args.second_period,
-        test_args.first_semi_axis, test_args.second_semi_axis)
+    result = period_law.calculate_first_period(test_args.second_period, test_args.first_semi_axis,
+        test_args.second_semi_axis)
     assert_equal(result, 12 * units.year)
 
 
@@ -34,7 +34,8 @@ def test_bad_second_period(test_args: Args) -> None:
         period_law.calculate_first_period(second_period, test_args.first_semi_axis,
             test_args.second_semi_axis)
     with raises(TypeError):
-        period_law.calculate_first_period(100, test_args.first_semi_axis, test_args.second_semi_axis)
+        period_law.calculate_first_period(100, test_args.first_semi_axis,
+            test_args.second_semi_axis)
 
 
 def test_bad_bad_semi_axis(test_args: Args) -> None:
@@ -43,11 +44,9 @@ def test_bad_bad_semi_axis(test_args: Args) -> None:
         period_law.calculate_first_period(test_args.second_period, bad_semi_axis,
             test_args.second_semi_axis)
     with raises(TypeError):
-        period_law.calculate_first_period(test_args.second_period, 100,
-            test_args.second_semi_axis)
+        period_law.calculate_first_period(test_args.second_period, 100, test_args.second_semi_axis)
     with raises(errors.UnitsError):
-        period_law.calculate_first_period(test_args.second_period,
-            test_args.first_semi_axis, bad_semi_axis)
+        period_law.calculate_first_period(test_args.second_period, test_args.first_semi_axis,
+            bad_semi_axis)
     with raises(TypeError):
-        period_law.calculate_first_period(test_args.second_period,
-            test_args.first_semi_axis, 100)
+        period_law.calculate_first_period(test_args.second_period, test_args.first_semi_axis, 100)

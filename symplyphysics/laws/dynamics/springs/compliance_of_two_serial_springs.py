@@ -38,18 +38,19 @@ law = Eq(total_compliance, first_compliance + second_compliance)
 # When external force is applied to the first spring, it produces a reaction force on both sides of
 # that spring. That in turn produces a reaction force on both sides of the other spring.
 _external_force = SymSymbol("_external_force")
-_first_spring_reaction = abs(newtons_third_law.law.rhs.subs(newtons_third_law.force_action, _external_force))
-_second_spring_reaction = abs(newtons_third_law.law.rhs.subs(newtons_third_law.force_action, _first_spring_reaction))
-_total_reaction = abs(newtons_third_law.law.rhs.subs(newtons_third_law.force_action, _second_spring_reaction))
+_first_spring_reaction = abs(
+    newtons_third_law.law.rhs.subs(newtons_third_law.force_action, _external_force))
+_second_spring_reaction = abs(
+    newtons_third_law.law.rhs.subs(newtons_third_law.force_action, _first_spring_reaction))
+_total_reaction = abs(
+    newtons_third_law.law.rhs.subs(newtons_third_law.force_action, _second_spring_reaction))
 
 _stiffness_expr = solve(compliance_def.definition, compliance_def.stiffness)[0]
 _first_stiffness = _stiffness_expr.subs(compliance_def.compliance, first_compliance)
 _second_stiffness = _stiffness_expr.subs(compliance_def.compliance, second_compliance)
 _total_stiffness = _stiffness_expr.subs(compliance_def.compliance, total_compliance)
 
-_deformation_expr = solve(
-    hookes_law.law, hookes_law.deformation
-)[0]
+_deformation_expr = solve(hookes_law.law, hookes_law.deformation)[0]
 
 _first_deformation = _deformation_expr.subs({
     hookes_law.spring_reaction: _first_spring_reaction,

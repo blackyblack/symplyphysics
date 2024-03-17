@@ -1,6 +1,11 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (assert_equal, units, Quantity, errors,)
+from symplyphysics import (
+    assert_equal,
+    units,
+    Quantity,
+    errors,
+)
 from symplyphysics.laws.astronomy import luminosity_of_sun_in_future_from_luminosity_in_present as luminosity_law
 
 # Description
@@ -18,7 +23,8 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_luminosity_future(test_args: Args) -> None:
-    result = luminosity_law.calculate_luminosity_future(test_args.luminosity_present, test_args.time)
+    result = luminosity_law.calculate_luminosity_future(test_args.luminosity_present,
+        test_args.time)
     assert_equal(result, 2.863)
 
 

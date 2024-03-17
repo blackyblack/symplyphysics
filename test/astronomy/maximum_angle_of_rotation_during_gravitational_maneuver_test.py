@@ -1,6 +1,11 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (assert_equal, units, Quantity, errors,)
+from symplyphysics import (
+    assert_equal,
+    units,
+    Quantity,
+    errors,
+)
 from symplyphysics.laws.astronomy import maximum_angle_of_rotation_during_gravitational_maneuver as angle_law
 
 # Description
@@ -16,11 +21,13 @@ def test_args_fixture() -> Args:
     first_cosmic_velocity_planet = Quantity(7.91 * units.kilometer / units.second)
     rocket_speed = Quantity(11.2 * units.kilometer / units.second)
 
-    return Args(first_cosmic_velocity_planet=first_cosmic_velocity_planet, rocket_speed=rocket_speed)
+    return Args(first_cosmic_velocity_planet=first_cosmic_velocity_planet,
+        rocket_speed=rocket_speed)
 
 
 def test_basic_maximum_angle(test_args: Args) -> None:
-    result = angle_law.calculate_maximum_angle(test_args.first_cosmic_velocity_planet, test_args.rocket_speed)
+    result = angle_law.calculate_maximum_angle(test_args.first_cosmic_velocity_planet,
+        test_args.rocket_speed)
     assert_equal(result, 0.463 * units.radian)
 
 

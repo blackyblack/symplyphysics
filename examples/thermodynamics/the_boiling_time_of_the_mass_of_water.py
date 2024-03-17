@@ -36,7 +36,8 @@ time = Symbol("time")
 mass_flow_rate_constant = Symbol("mass_flow_rate_constant", constant=True)
 mass_flow_rate_constant_equation = mass_rate_law.definition.subs(
     {mass_rate_law.mass_flow_rate(mass_rate_law.time): mass_flow_rate_constant})
-mass_gas_integral = dsolve(mass_flow_rate_constant_equation, mass_rate_law.mass_function(mass_rate_law.time))
+mass_gas_integral = dsolve(mass_flow_rate_constant_equation,
+    mass_rate_law.mass_function(mass_rate_law.time))
 mass_of_gas_equation = mass_gas_integral.subs({
     "C1": 0,
     mass_flow_rate_constant: mass_rate_alcohol

@@ -1,14 +1,11 @@
-from sympy import (Eq, solve, log, S,)
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    print_expression,
-    validate_input,
-    validate_output,
-    dimensionless,
-    convert_to
+from sympy import (
+    Eq,
+    solve,
+    log,
+    S,
 )
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output, dimensionless, convert_to)
 
 # Description
 ## The luminosity of a star is related to the absolute magnitude of the star.

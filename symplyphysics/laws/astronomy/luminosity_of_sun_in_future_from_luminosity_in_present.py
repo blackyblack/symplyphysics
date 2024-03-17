@@ -1,4 +1,8 @@
-from sympy import (Eq, solve, S,)
+from sympy import (
+    Eq,
+    solve,
+    S,
+)
 from symplyphysics import (
     units,
     Quantity,
@@ -29,7 +33,10 @@ time = Symbol("time", units.time)
 
 one_billion_years = Quantity(1e9 * units.common_year)
 
-law = Eq(luminosity_future, luminosity_present * ((5.59 / (time / one_billion_years)) - 1.41 + 0.26 * (time / one_billion_years)))
+law = Eq(
+    luminosity_future,
+    luminosity_present * ((5.59 / (time / one_billion_years)) - 1.41 + 0.26 *
+    (time / one_billion_years)))
 
 
 def print_law() -> str:

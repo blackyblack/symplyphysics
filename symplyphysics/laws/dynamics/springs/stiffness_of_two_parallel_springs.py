@@ -36,11 +36,8 @@ law = Eq(total_stiffness, first_stiffness + second_stiffness)
 
 _deformation = SymSymbol("deformation", real=True)
 
-_force_expr = solve(
-    hookes_law.law, hookes_law.spring_reaction
-)[0].subs(
-    hookes_law.deformation, _deformation
-)
+_force_expr = solve(hookes_law.law,
+    hookes_law.spring_reaction)[0].subs(hookes_law.deformation, _deformation)
 
 _first_force = _force_expr.subs(hookes_law.stiffness, first_stiffness)
 _second_force = _force_expr.subs(hookes_law.stiffness, second_stiffness)
@@ -49,7 +46,8 @@ _total_force_hooke = _force_expr.subs(hookes_law.stiffness, total_stiffness)
 
 _first_force_vector = Vector([_first_force])
 _second_force_vector = Vector([_second_force])
-_total_force_vector = superposition_law.superposition_law([_first_force_vector, _second_force_vector])
+_total_force_vector = superposition_law.superposition_law(
+    [_first_force_vector, _second_force_vector])
 for component in _total_force_vector.components[1:]:
     assert expr_equals(component, 0)
 _total_force_added = _total_force_vector.components[0]

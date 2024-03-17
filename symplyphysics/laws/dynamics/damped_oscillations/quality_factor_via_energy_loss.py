@@ -11,9 +11,9 @@ from symplyphysics import (
 )
 
 # Description
-## Q factor (quality factor) is a dimensionless parameter that describes how underdamped 
-## an oscillator or resonator is: the larger the Q factor is, the less damped it is. There 
-## are two nearly equivalent definitions of it that become approximately equivalent as Q 
+## Q factor (quality factor) is a dimensionless parameter that describes how underdamped
+## an oscillator or resonator is: the larger the Q factor is, the less damped it is. There
+## are two nearly equivalent definitions of it that become approximately equivalent as Q
 ## becomes larger, meaning that the resonator becomes less damped.
 
 # Law: Q = w_r * (E_stored / P_loss)
@@ -27,10 +27,7 @@ resonant_angular_frequency = Symbol("resonant_angular_frequency", angle_type / u
 energy_stored = Symbol("energy_stored", units.energy)
 power_loss = Symbol("power_loss", units.power)
 
-law = Eq(
-    quality_factor,
-    resonant_angular_frequency * (energy_stored / power_loss)
-)
+law = Eq(quality_factor, resonant_angular_frequency * (energy_stored / power_loss))
 
 
 def print_law() -> str:
