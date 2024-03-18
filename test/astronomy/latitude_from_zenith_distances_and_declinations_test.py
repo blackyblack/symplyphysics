@@ -4,8 +4,8 @@ from symplyphysics import (assert_equal, units, Quantity, errors)
 from symplyphysics.laws.astronomy import latitude_from_zenith_distances_and_declinations as latitude_law
 
 # Description
-## If the zenith distance and declination of the northern luminary are equal to 30 and 25 degrees, respectively,
-## and the zenith distance and declination of the southern luminary are equal to 150 and -15 degrees, respectively,
+## If the zenith distance and declination of the star north of the zenith are equal to 30 and 25 degrees, respectively,
+## and the zenith distance and declination of the star south of the zenith are equal to 150 and -15 degrees, respectively,
 ## then the latitude is 65 degrees.
 
 Args = namedtuple("Args", ["zenith_distance_north", "zenith_distance_south", "declination_north", "declination_south",])
@@ -13,10 +13,10 @@ Args = namedtuple("Args", ["zenith_distance_north", "zenith_distance_south", "de
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
-    zenith_distance_north = 30
-    zenith_distance_south = 150
-    declination_north = 25
-    declination_south = -15
+    zenith_distance_north = Quantity(30 * units.deg)
+    zenith_distance_south = Quantity(150 * units.deg)
+    declination_north = Quantity(25 * units.deg)
+    declination_south = Quantity(-15 * units.deg)
 
     return Args(zenith_distance_north=zenith_distance_north,
         zenith_distance_south=zenith_distance_south,
@@ -27,7 +27,7 @@ def test_args_fixture() -> Args:
 def test_basic_latitude(test_args: Args) -> None:
     result = latitude_law.calculate_latitude(test_args.zenith_distance_north,
         test_args.zenith_distance_south, test_args.declination_north, test_args.declination_south)
-    assert_equal(result, 65)
+    assert_equal(result, 65 * units.deg)
 
 
 def test_bad_zenith_distance(test_args: Args) -> None:

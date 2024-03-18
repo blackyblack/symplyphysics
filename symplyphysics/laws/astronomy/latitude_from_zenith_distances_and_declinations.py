@@ -13,6 +13,8 @@ from symplyphysics import (
 # Description
 ## Knowing the zenith distances and declinations of the northern and southern stars, respectively, it is possible
 ## to determine the latitude of the observation site.
+## Northern star is any star north of the zenith with known declination.
+## Southern star is any star south of the zenith with known declination.
 
 ## Law is: phi = (zs - zn + ds + dn) / 2, where
 ## phi - latitude,
@@ -20,6 +22,9 @@ from symplyphysics import (
 ## zn - zenith distance for the south star,
 ## ds - declination for the north star,
 ## dn - declination for the south star.
+
+# Conditions:
+# - both stars are at upper transit (culmination).
 
 latitude = Symbol("zenith_distance_north", angle_type)
 
