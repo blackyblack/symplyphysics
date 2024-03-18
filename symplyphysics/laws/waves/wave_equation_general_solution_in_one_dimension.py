@@ -8,6 +8,7 @@ from symplyphysics import (
     print_expression,
     validate_input,
 )
+from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.quantity_decorator import validate_output_same
 from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.definitions import wave_equation_in_one_dimension as wave_eqn
@@ -17,7 +18,9 @@ from symplyphysics.laws.waves import (
 )
 
 # Description
-## The solution of the 1D wave equation ...
+## Any function of a single variable can be a solution of the wave equation if
+## it depends on the phase of the wave, i.e. the position and time variables
+## only appear in its expression in the form of the [phase of the wave](./phase_of_traveling_wave.py)
 
 # Law: u(x, t) = f(psi(x, t))
 ## u - solution of the 1D wave equation
@@ -63,11 +66,15 @@ _eqn = wave_eqn.definition.subs({
     wave_eqn.phase_velocity: _phase_velocity,
 })
 
-_eqn_subs = _eqn.subs(
+_eqn_lhs_subs = _eqn.lhs.subs(
     wave_eqn.displacement(position, time), _solution
 ).doit()
 
-assert _eqn_subs is S.true
+_eqn_rhs_subs = _eqn.rhs.subs(
+    wave_eqn.displacement(position, time), _solution
+).doit()
+
+assert expr_equals(_eqn_lhs_subs, _eqn_rhs_subs)
 
 
 def print_law() -> str:
