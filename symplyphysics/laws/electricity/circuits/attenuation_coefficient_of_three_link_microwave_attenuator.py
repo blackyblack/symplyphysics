@@ -17,7 +17,8 @@ from symplyphysics import (
 ## Law is: N = exp(arcosh(1 + R1 / R2)), where
 ## N - attenuation coefficient of attenuator,
 ## R1 - resistance of the first resistor,
-## R2 - resistance of the second resistor.
+## R2 - resistance of the second resistor,
+## arcosh - this is areakosinus hyperbolicus (https://de.wikipedia.org/wiki/Areasinus_hyperbolicus_und_Areakosinus_hyperbolicus).
 
 attenuation_coefficient = Symbol("attenuation_coefficient", dimensionless)
 
