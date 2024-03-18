@@ -1,4 +1,4 @@
-from sympy import Eq, symbols, Function as SymFunction, cos
+from sympy import Eq, symbols, Function as SymFunction, cos, S
 from symplyphysics import (
     units,
     angle_type,
@@ -8,11 +8,19 @@ from symplyphysics import (
     print_expression,
     validate_input,
 )
+from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.quantity_decorator import validate_output_same
 from symplyphysics.core.symbols.quantities import scale_factor
+from symplyphysics.definitions import wave_equation_in_one_dimension as wave_eqn
+from symplyphysics.laws.waves import (
+    phase_of_traveling_wave as phase_law,
+    phase_velocity_from_angular_frequency_and_wavenumber as phase_velocity_law,
+)
 
 # Description
-## The solution of the 1D wave equation ...
+## Any function of a single variable can be a solution of the wave equation if
+## it depends on the phase of the wave, i.e. the position and time variables
+## only appear in its expression in the form of the [phase of the wave](./phase_of_traveling_wave.py)
 
 # Law: u(x, t) = f(psi(x, t))
 ## u - solution of the 1D wave equation
@@ -29,7 +37,41 @@ time = Symbol("time", units.time)
 
 law = Eq(general_solution(position, time), solution_function(wave_phase(position, time)))
 
-# TODO: prove it's a solution of the wave equation
+# Prove this is a solution of the wave equation
+
+_angular_frequency, _angular_wavenumber = symbols("angular_frequency angular_wavenumber")
+
+_phase_velocity = phase_velocity_law.law.rhs.subs({
+    phase_velocity_law.angular_frequency: _angular_frequency,
+    phase_velocity_law.angular_wavenumber: _angular_wavenumber,
+})
+
+_phase = phase_law.law.rhs.subs({
+    phase_law.angular_wavenumber: _angular_wavenumber,
+    phase_law.position: position,
+    phase_law.angular_frequency: _angular_frequency,
+    phase_law.time: time,
+})
+
+_solution = law.rhs.subs(
+    wave_phase(position, time), _phase
+)
+
+_eqn = wave_eqn.definition.subs({
+    wave_eqn.position: position,
+    wave_eqn.time: time,
+    wave_eqn.phase_velocity: _phase_velocity,
+})
+
+_eqn_lhs_subs = _eqn.lhs.subs(
+    wave_eqn.displacement(position, time), _solution
+).doit()
+
+_eqn_rhs_subs = _eqn.rhs.subs(
+    wave_eqn.displacement(position, time), _solution
+).doit()
+
+assert expr_equals(_eqn_lhs_subs, _eqn_rhs_subs)
 
 
 def print_law() -> str:
