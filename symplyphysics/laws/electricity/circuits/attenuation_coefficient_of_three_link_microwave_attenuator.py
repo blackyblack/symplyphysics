@@ -18,7 +18,7 @@ from symplyphysics import (
 ## N - attenuation coefficient of attenuator,
 ## R1 - resistance of the first resistor,
 ## R2 - resistance of the second resistor,
-## arcosh - this is areakosinus hyperbolicus (https://de.wikipedia.org/wiki/Areasinus_hyperbolicus_und_Areakosinus_hyperbolicus).
+## arcosh - this is area hyperbolic cosine (https://en.wikipedia.org/wiki/Hyperbolic_functions).
 
 attenuation_coefficient = Symbol("attenuation_coefficient", dimensionless)
 
