@@ -7,12 +7,12 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## A coaxial waveguide is an electrical cable consisting of a central conductor and a shield arranged coaxially and separated
 ## by an insulating material or an air gap. It is used to transmit radio frequency electrical signals.
 ## The specific inductance of a coaxial waveguide depends on the radius of the outer conductor and the radius of the inner conductor,
-## as well as on the relative permeability of the conductor.
+## as well as on the relative permeability of the insulator material.
 
 ## Law is: L = (mu0 * mur / (2 * pi)) * ln(b / a), where
 ## L - specific inductance of coaxial waveguide,
 ## mu0 - magnetic constant,
-## mur - relative permeability,
+## mur - relative permeability of the insulator material,
 ## b - radius of the outer conductor,
 ## a - radius of the inner conductor.
 
@@ -33,6 +33,8 @@ def print_law() -> str:
 @validate_output(specific_inductance)
 def calculate_specific_inductance(relative_permeability_: float, outer_radius_: Quantity,
     inner_radius_: Quantity) -> Quantity:
+    if outer_radius_.scale_factor <= inner_radius_.scale_factor:
+        raise ValueError("The outer radius must be greater than the inner radius")
     result_velocity_expr = solve(law, specific_inductance, dict=True)[0][specific_inductance]
     result_expr = result_velocity_expr.subs({
         relative_permeability: relative_permeability_,
