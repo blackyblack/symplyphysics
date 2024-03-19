@@ -6,7 +6,8 @@ from symplyphysics.laws.electricity.circuits import specific_resistance_of_coaxi
 
 # Description
 ## Parameters of the coaxial waveguide: the radius of the inner wire is 1.35 millimeters, the radius of the outer conductor
-## is 9.0 millimeters, the relative permeability of the dielectric is 1. The specific resistance will be 1 ohm per meter.
+## is 9.0 millimeters, the relative permeability of the dielectric is 1, the specific conductivity of the conductor is 59.5e6 siemens per meter.
+## The frequency of signal is 2 * pi * 100e6 radians per second. The specific resistance will be 1 ohm per meter.
 ## https://old.study.urfu.ru/view/aid/67/1/resonators.pdf
 
 Args = namedtuple("Args", [
