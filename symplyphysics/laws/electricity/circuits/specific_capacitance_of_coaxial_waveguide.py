@@ -10,19 +10,19 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## as well as on the relative permittivity of the insulator material.
 
 ## Law is: C = (2 * pi * e0 * er ) / ln(b / a), where
-## C - specific capacity of coaxial waveguide,
+## C - specific capacitance of coaxial waveguide,
 ## e0 - electric constant,
-## er - relative permittivity,
+## er - relative permittivity of insulating material,
 ## b - radius of the outer conductor,
 ## a - radius of the inner conductor.
 
-specific_capacity = Symbol("specific_capacity", units.capacitance / units.length)
+specific_capacitance = Symbol("specific_capacitance", units.capacitance / units.length)
 
 relative_permittivity = Symbol("relative_permittivity", dimensionless)
 outer_radius = Symbol("outer_radius", units.length)
 inner_radius = Symbol("inner_radius", units.length)
 
-law = Eq(specific_capacity, (2 * pi * electric_constant * relative_permittivity) / ln(outer_radius / inner_radius))
+law = Eq(specific_capacitance, (2 * pi * electric_constant * relative_permittivity) / ln(outer_radius / inner_radius))
 
 
 def print_law() -> str:
@@ -30,10 +30,12 @@ def print_law() -> str:
 
 
 @validate_input(relative_permittivity_=relative_permittivity, outer_radius_=outer_radius, inner_radius_=inner_radius)
-@validate_output(specific_capacity)
-def calculate_specific_capacity(relative_permittivity_: float, outer_radius_: Quantity,
+@validate_output(specific_capacitance)
+def calculate_specific_capacitance(relative_permittivity_: float, outer_radius_: Quantity,
     inner_radius_: Quantity) -> Quantity:
-    result_velocity_expr = solve(law, specific_capacity, dict=True)[0][specific_capacity]
+    if outer_radius_.scale_factor <= inner_radius_.scale_factor:
+        raise ValueError("The outer radius must be greater than the inner radius")
+    result_velocity_expr = solve(law, specific_capacitance, dict=True)[0][specific_capacitance]
     result_expr = result_velocity_expr.subs({
         relative_permittivity: relative_permittivity_,
         outer_radius: outer_radius_,
