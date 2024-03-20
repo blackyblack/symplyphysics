@@ -22,12 +22,12 @@ from sympy.physics.units import magnetic_constant
 specific_resistance = Symbol("specific_resistance", units.impedance / units.length)
 
 relative_permeability = Symbol("relative_permeability", dimensionless)
-frequency = Symbol("frequency", angle_type / units.time)
+angular_frequency = Symbol("angular_frequency", angle_type / units.time)
 specific_conductivity = Symbol("specific_conductivity", units.conductance / units.length)
 outer_radius = Symbol("outer_radius", units.length)
 inner_radius = Symbol("inner_radius", units.length)
 
-law = Eq(specific_resistance, (1 / (2 * pi)) * sqrt(frequency * magnetic_constant * relative_permeability / (2 * specific_conductivity)) * (1 / inner_radius - 1 / outer_radius))
+law = Eq(specific_resistance, (1 / (2 * pi)) * sqrt(angular_frequency * magnetic_constant * relative_permeability / (2 * specific_conductivity)) * (1 / inner_radius - 1 / outer_radius))
 
 
 def print_law() -> str:
@@ -35,12 +35,12 @@ def print_law() -> str:
 
 
 @validate_input(relative_permeability_=relative_permeability,
-    frequency_=frequency,
+    angular_frequency_=angular_frequency,
     specific_conductivity_=specific_conductivity,
     outer_radius_=outer_radius,
     inner_radius_=inner_radius)
 @validate_output(specific_resistance)
-def calculate_specific_resistance(relative_permeability_: float, frequency_: Quantity,
+def calculate_specific_resistance(relative_permeability_: float, angular_frequency_: Quantity,
     specific_conductivity_: Quantity, outer_radius_: Quantity,
     inner_radius_: Quantity) -> Quantity:
     if outer_radius_.scale_factor <= inner_radius_.scale_factor:
@@ -48,7 +48,7 @@ def calculate_specific_resistance(relative_permeability_: float, frequency_: Qua
     result_expr = solve(law, specific_resistance, dict=True)[0][specific_resistance]
     result_expr = result_expr.subs({
         relative_permeability: relative_permeability_,
-        frequency: frequency_,
+        angular_frequency: angular_frequency_,
         specific_conductivity: specific_conductivity_,
         outer_radius: outer_radius_,
         inner_radius: inner_radius_
