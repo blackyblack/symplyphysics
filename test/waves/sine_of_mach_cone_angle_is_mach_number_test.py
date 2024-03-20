@@ -30,3 +30,7 @@ def test_bad_mach_number() -> None:
     mb = Quantity(1.0 * units.second)
     with raises(errors.UnitsError):
         mach_angle_law.calculate_mach_cone_angle(mb)
+
+    mb = 0.5
+    with raises(ValueError):
+        mach_angle_law.calculate_mach_cone_angle(mb)
