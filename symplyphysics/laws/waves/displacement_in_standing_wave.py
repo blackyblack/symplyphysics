@@ -9,7 +9,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.quantity_decorator import validate_output_same
-# from symplyphysics.
+from symplyphysics.laws.waves import phase_of_traveling_wave as phase_law
 
 # Description
 ## A standing, or stationary, wave is the result of the interference of two identical waves
@@ -41,7 +41,15 @@ law = Eq(displacement(position, time),
 
 # Derive from the sum of two traveling waves
 
-_forward_wave = amplitude * sin(angular_wavenumber * position - angular_frequency * time)
+_wave_phase = phase_law.law.rhs.subs({
+    phase_law.angular_wavenumber: angular_wavenumber,
+    phase_law.position: position,
+    phase_law.angular_frequency: angular_frequency,
+    phase_law.time: time,
+})
+
+# The form of the waves is taken from the note above
+_forward_wave = amplitude * sin(_wave_phase)
 
 _backward_wave = _forward_wave.subs(angular_frequency, -1 * angular_frequency)
 
