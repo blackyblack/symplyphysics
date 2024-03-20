@@ -7,6 +7,7 @@ from symplyphysics import (
     print_expression,
     validate_input,
 )
+from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.core.quantity_decorator import validate_output_same
 
@@ -48,7 +49,14 @@ time = Symbol("time", units.time, real=True)
 law = Eq(displacement(position, time), (2 * amplitude) * cos(phase_shift / 2) *
     sin(angular_wavenumber * position - angular_frequency * time + phase_shift / 2))
 
-# TODO: derive from the sum of two waves
+# Derive from the sum of two waves
+
+_first_wave = amplitude * sin(angular_wavenumber * position - angular_frequency * time)
+_second_wave = amplitude * sin(angular_wavenumber * position - angular_frequency * time + phase_shift)
+
+_sum_of_waves = (_first_wave + _second_wave).simplify()
+
+assert expr_equals(_sum_of_waves, law.rhs)
 
 
 def print_law() -> str:
