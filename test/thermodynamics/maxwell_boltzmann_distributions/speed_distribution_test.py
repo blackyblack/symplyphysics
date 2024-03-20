@@ -13,7 +13,7 @@ from symplyphysics.laws.thermodynamics.maxwell_boltzmann_distributions import (
 
 # Description
 ## The value of the speed distribution function for an ensemble of Argon particles (particle mass m = 39.948 u)
-## at equilibrium temperature T = 10°C at speed v = 10 m/s is 5.57e-6 s/m.
+## at equilibrium temperature T = 10°C at speed v = 10 m/s is 5.57e-6 1/(m/s).
 
 Args = namedtuple("Args", "v m t")
 
@@ -28,7 +28,7 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = distribution_law.calculate_speed_distribution_function(test_args.v, test_args.m, test_args.t)
-    assert_equal(result, 5.57e-6 * units.second / units.meter)
+    assert_equal(result, 5.57e-6 / (units.meter / units.second))
 
 
 def test_bad_speed(test_args: Args) -> None:

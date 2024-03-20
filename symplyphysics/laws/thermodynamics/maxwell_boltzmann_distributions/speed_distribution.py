@@ -6,6 +6,8 @@ from symplyphysics import (
     print_expression,
     validate_input,
     validate_output,
+    clone_symbol,
+    symbols,
 )
 
 # Description
@@ -27,8 +29,8 @@ from symplyphysics import (
 
 speed_distribution_function = Symbol("speed_distribution_function", 1 / units.velocity)
 particle_speed = Symbol("particle_speed", units.velocity)
-particle_mass = Symbol("particle_mass", units.mass)
-equilibrium_temperature = Symbol("equilibrium_temperature", units.temperature)
+particle_mass = clone_symbol(symbols.basic.mass, "particle_mass")
+equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature, "equilibrium_temperature")
 
 law = Eq(
     speed_distribution_function,
