@@ -19,6 +19,7 @@ from symplyphysics import (
 ## A - area of slab face
 ## L - thickness of slab (distance between the two faces)
 ## delta_T - difference between the temperatures of the faces
+## |x| - the absolute value of x
 
 energy_conduction_rate = Symbol("energy_conduction_rate", units.power, positive=True)
 thermal_conductivity = Symbol("thermal_conductivity", units.power / (units.length * units.temperature), positive=True)
