@@ -7,6 +7,9 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## by an insulating material or an air gap. It is used to transmit radio frequency electrical signals.
 ## The specific conductivity of a coaxial waveguide depends on the frequency of signal and the specific capacitance of coaxial waveguide,
 ## as well as on the tangent of the dielectric loss angle of the insulator material.
+## In general, the tangent of the dielectric loss angle is a characteristic of the material. The angle itself is usually not searched for or indicated.
+## The tangent of this angle is found as the ratio of the active current to the reactive current. The value of this value for each material is in the tables
+## in the public domain.
 
 ## Law is: G = w * C * tan(d), where
 ## G - specific conductivity of coaxial waveguide,
