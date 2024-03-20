@@ -1,6 +1,6 @@
 from sympy import (Eq, solve, pi, sqrt,)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless,)
+    validate_output, dimensionless, angle_type,)
 from sympy.physics.units import magnetic_constant
 
 
@@ -12,7 +12,7 @@ from sympy.physics.units import magnetic_constant
 
 ## Law is: R = (1 / (2 * pi)) * sqrt(w * mu0 * mur / (2 * sig)) * (1 / a - 1 / b), where
 ## R - specific resistance of coaxial waveguide,
-## w - frequency of signal,
+## w - angular frequency of signal,
 ## sig - specific conductivity of conductor,
 ## mu0 - magnetic constant,
 ## mur - relative permeability of the insulator material,
@@ -22,7 +22,7 @@ from sympy.physics.units import magnetic_constant
 specific_resistance = Symbol("specific_resistance", units.impedance / units.length)
 
 relative_permeability = Symbol("relative_permeability", dimensionless)
-frequency = Symbol("frequency", 1 / units.time)
+frequency = Symbol("frequency", angle_type / units.time)
 specific_conductivity = Symbol("specific_conductivity", units.conductance / units.length)
 outer_radius = Symbol("outer_radius", units.length)
 inner_radius = Symbol("inner_radius", units.length)

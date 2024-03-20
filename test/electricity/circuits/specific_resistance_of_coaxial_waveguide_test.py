@@ -7,7 +7,7 @@ from symplyphysics.laws.electricity.circuits import specific_resistance_of_coaxi
 # Description
 ## Parameters of the coaxial waveguide: the radius of the inner wire is 1.35 millimeters, the radius of the outer conductor
 ## is 9.0 millimeters, the relative permeability of the dielectric is 1, the specific conductivity of the conductor is 59.5e6 siemens per meter.
-## The frequency of signal is 2 * pi * 100e6 radians per second. The specific resistance will be 1 ohm per meter.
+## The angular frequency of signal is 2 * pi * 100e6 radians per second. The specific resistance will be 1 ohm per meter.
 ## https://old.study.urfu.ru/view/aid/67/1/resonators.pdf
 
 Args = namedtuple("Args", [
@@ -19,7 +19,7 @@ Args = namedtuple("Args", [
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
     relative_permeability = 1
-    frequency = Quantity(2 * pi * 100e6 * (1 / units.second))
+    frequency = Quantity(2 * pi * 100e6 * (units.radian / units.second))
     specific_conductivity = Quantity(59.5e6 * (units.siemens / units.meter))
     outer_radius = Quantity(9 * units.millimeter)
     inner_radius = Quantity(1.35 * units.millimeter)
