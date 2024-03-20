@@ -31,6 +31,6 @@ def test_bad_mach_number() -> None:
     with raises(errors.UnitsError):
         mach_angle_law.calculate_mach_cone_angle(mb)
 
-    mb = 0.5
+    m_bad_value = 0.5
     with raises(ValueError):
-        mach_angle_law.calculate_mach_cone_angle(mb)
+        mach_angle_law.calculate_mach_cone_angle(m_bad_value)
