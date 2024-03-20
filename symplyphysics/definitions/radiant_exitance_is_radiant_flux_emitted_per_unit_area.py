@@ -37,10 +37,7 @@ def calculate_radiant_exitance(
     radiant_flux_: Quantity,
     surface_area_: Quantity,
 ) -> Quantity:
-    """\
-    Calculate radiant exitance for a surface small enough that \
-    the radiant flux passed through it is constant.\
-    """
+    # Calculate radiant exitance in case of constant radiant flux
 
     flux_function = radiant_flux_ * surface_area / surface_area_
     result = definition.rhs.subs(radiant_flux(surface_area), flux_function).doit()
