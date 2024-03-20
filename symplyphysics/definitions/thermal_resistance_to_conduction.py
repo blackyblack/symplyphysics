@@ -9,7 +9,7 @@ from symplyphysics import (
 )
 
 # Description
-## The thermal resistance to conduction is a physical quantity that was introduces in the engineering
+## The thermal resistance to conduction is a physical quantity that was introduced in the engineering
 ## practice for insulators: greater values of thermal resistance mean better insulation properties of
 ## a material of given thickness.
 
