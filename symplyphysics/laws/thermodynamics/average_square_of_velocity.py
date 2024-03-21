@@ -1,4 +1,4 @@
-from sympy import (Eq, solve, integrate, S)
+from sympy import (Eq, solve, integrate, S, stats, Interval)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
     validate_output, symbols, clone_symbol)
 from symplyphysics.core.expr_comparisons import expr_equals
@@ -20,21 +20,20 @@ molecule_mass = clone_symbol(symbols.basic.mass, "molecule_mass", positive=True)
 
 law = Eq(average_square_velocity, 3 * units.boltzmann_constant * temperature_in_gas / molecule_mass)
 
-# Derive law from Maxwell-Boltzmann distribution function using the probability formula 
-# of finding the average value of a function y(x) when the distribution function f(x) of 
-# the random variable x is known, which is calculating the integral of y(x)*f(x) with the 
-# integration limits being the lowest and highest possible values of x. In the case of 
-# this law, it is the integral of (v**2)*f(v) with v ranging from 0 to infinity.
+# Derive law from Maxwell-Boltzmann distribution function
 
 _distribution = speed_distribution.law.rhs.subs({
     speed_distribution.particle_mass: molecule_mass,
     speed_distribution.equilibrium_temperature: temperature_in_gas,
 })
 
-_average_square_of_speed_derived = integrate(
-    speed_distribution.particle_speed**2 * _distribution,
-    (speed_distribution.particle_speed, 0, S.Infinity)
+_speed_random_variable = stats.ContinuousRV(
+    speed_distribution.particle_speed,
+    _distribution,
+    set=Interval(0, S.Infinity),
 )
+
+_average_square_of_speed_derived = stats.E(_speed_random_variable**2)
 
 assert expr_equals(_average_square_of_speed_derived, law.rhs)
 
