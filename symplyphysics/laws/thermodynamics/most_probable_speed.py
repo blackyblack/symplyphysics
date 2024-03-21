@@ -1,4 +1,4 @@
-from sympy import Eq, sqrt
+from sympy import Eq, sqrt, solve
 from symplyphysics import (
     units,
     Quantity,
@@ -9,6 +9,8 @@ from symplyphysics import (
     symbols,
     clone_symbol,
 )
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.thermodynamics.maxwell_boltzmann_distributions import speed_distribution
 
 # Description
 ## The most probable speed is the speed at which the Maxwell-Boltzmann speed distribution function
@@ -28,6 +30,19 @@ law = Eq(
     most_probable_speed,
     sqrt(2 * units.boltzmann_constant * equilibrium_temperature / particle_mass)
 )
+
+# Derive from the Maxwell-Boltzmann speed distribution function
+
+_distribution = speed_distribution.law.rhs.subs({
+    speed_distribution.particle_mass: particle_mass,
+    speed_distribution.equilibrium_temperature: equilibrium_temperature,
+})
+
+_distribution_derivative = _distribution.diff(speed_distribution.particle_speed)
+
+_most_probable_speed_derived = solve(_distribution_derivative, speed_distribution.particle_speed)[0]
+
+assert expr_equals(_most_probable_speed_derived, law.rhs)
 
 
 def print_law() -> str:
