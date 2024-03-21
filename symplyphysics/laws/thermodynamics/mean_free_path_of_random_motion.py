@@ -14,7 +14,7 @@ from symplyphysics import (
 
 # Law: lambda = 1 / (sqrt(2) * pi * d**2 * (N / V))
 ## lambda - mean free path estimate
-## d - molecular diameter
+## d - molecular diameter (assuming the spherical model of molecules)
 ## N - number of molecules found in volume V
 ## V - volume
 
