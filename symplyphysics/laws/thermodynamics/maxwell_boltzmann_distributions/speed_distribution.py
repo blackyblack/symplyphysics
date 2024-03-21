@@ -29,7 +29,7 @@ from symplyphysics import (
 ## - The ensemble of particles is at thermodynamic equilibrium.
 
 speed_distribution_function = Function("speed_distribution_function", 1 / units.velocity, positive=True)
-particle_speed = Symbol("particle_speed", units.velocity, nonnegative=True)
+particle_speed = Symbol("particle_speed", units.velocity, positive=True)
 particle_mass = clone_symbol(symbols.basic.mass, "particle_mass", positive=True)
 equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature, "equilibrium_temperature", positive=True)
 
