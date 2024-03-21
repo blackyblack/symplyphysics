@@ -20,7 +20,11 @@ molecule_mass = clone_symbol(symbols.basic.mass, "molecule_mass", positive=True)
 
 law = Eq(average_square_velocity, 3 * units.boltzmann_constant * temperature_in_gas / molecule_mass)
 
-# Derive from the Maxwell-Boltzmann speed distribution
+# Derive law from Maxwell-Boltzmann distribution function using the probability formula 
+# of finding the average value of a function y(x) when the distribution function f(x) of 
+# the random variable x is known, which is calculating the integral of y(x)*f(x) with the 
+# integration limits being the lowest and highest possible values of x. In the case of 
+# this law, it is the integral of (v**2)*f(v) with v ranging from 0 to infinity.
 
 _distribution = speed_distribution.law.rhs.subs({
     speed_distribution.particle_mass: molecule_mass,
