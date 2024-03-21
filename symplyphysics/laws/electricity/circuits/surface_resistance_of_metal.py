@@ -7,7 +7,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## A coaxial waveguide is an electrical cable consisting of a central conductor and a shield arranged coaxially and separated
 ## by an insulating material or an air gap. It is used to transmit radio frequency electrical signals.
 ## The resistance formed by the surface of the metal sheath of the cable can be calculated by knowing the signal frequency,
-## magnetic permeability and specific conductivity conductivity of the metal.
+## magnetic permeability and specific conductivity of the metal.
 
 ## Law is: Rs = sqrt(w * mu0 * mur / (2 * sig)), where
 ## Rs - surface resistance,
