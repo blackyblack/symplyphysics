@@ -1,4 +1,4 @@
-from sympy import Eq, sqrt, solve
+from sympy import Eq, sqrt, solve, sign, S
 from symplyphysics import (
     units,
     Quantity,
@@ -38,12 +38,21 @@ _distribution = speed_distribution.law.rhs.subs({
     speed_distribution.equilibrium_temperature: equilibrium_temperature,
 })
 
-_distribution_derivative = _distribution.diff(speed_distribution.particle_speed)
+_distribution_first_derivative = _distribution.diff(speed_distribution.particle_speed)
 
-_most_probable_speed_derived = solve(_distribution_derivative, speed_distribution.particle_speed)[0]
+# Found the point of extremum of the speed distribution function
+_most_probable_speed_derived = solve(_distribution_first_derivative, speed_distribution.particle_speed)[0]
 
 assert expr_equals(_most_probable_speed_derived, law.rhs)
 
+_distribution_second_derivative = _distribution_first_derivative.diff(speed_distribution.particle_speed)
+
+_distribution_second_derivative_at_most_probable_speed = _distribution_second_derivative.subs(
+    speed_distribution.particle_speed, _most_probable_speed_derived
+)
+
+# Proved that the point of extremum found is the point of maximum
+assert sign(_distribution_second_derivative_at_most_probable_speed) == S.NegativeOne
 
 def print_law() -> str:
     return print_expression(law)
