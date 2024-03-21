@@ -1,4 +1,4 @@
-from sympy import Eq, sqrt, pi
+from sympy import Eq, sqrt, pi, integrate, S
 from symplyphysics import (
     units,
     Quantity,
@@ -9,6 +9,8 @@ from symplyphysics import (
     symbols,
     clone_symbol,
 )
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.thermodynamics.maxwell_boltzmann_distributions import speed_distribution
 
 # Description
 ## The average (mean) speed is the expected value of the speed distribution.
@@ -20,16 +22,30 @@ from symplyphysics import (
 ## m - molecular mass
 
 # Conditions
-## - Assuming the molecules are distributed according to Maxwell-Boltzmann statistics.
+## - Assuming the particles are distributed according to Maxwell-Boltzmann statistics.
 
-average_speed = Symbol("average_speed", units.velocity)
-equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature, "equilibrium_temperature")
-molecular_mass = clone_symbol(symbols.basic.mass, "molecular_mass")
+average_speed = Symbol("average_speed", units.velocity, positive=True)
+equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature, "equilibrium_temperature", positive=True)
+particle_mass = clone_symbol(symbols.basic.mass, "particle_mass", positive=True)
 
 law = Eq(
     average_speed, 
-    sqrt(8 * units.boltzmann_constant * equilibrium_temperature / (pi * molecular_mass)),
+    sqrt(8 * units.boltzmann_constant * equilibrium_temperature / (pi * particle_mass)),
 )
+
+# Derive law from Maxwell-Boltzmann distribution functions
+
+_distribution = speed_distribution.law.rhs.subs({
+    speed_distribution.equilibrium_temperature: equilibrium_temperature,
+    speed_distribution.particle_mass: particle_mass,
+})
+
+_average_speed_derived = integrate(
+    speed_distribution.particle_speed * _distribution,
+    (speed_distribution.particle_speed, 0, S.Infinity)
+)
+
+assert expr_equals(_average_speed_derived, law.rhs)
 
 
 def print_law() -> str:
@@ -38,15 +54,15 @@ def print_law() -> str:
 
 @validate_input(
     equilibrium_temperature_=equilibrium_temperature,
-    molecular_mass_=molecular_mass,
+    particle_mass_=particle_mass,
 )
 @validate_output(average_speed)
 def calculate_average_speed(
     equilibrium_temperature_: Quantity,
-    molecular_mass_: Quantity,
+    particle_mass_: Quantity,
 ) -> Quantity:
     result = law.rhs.subs({
         equilibrium_temperature: equilibrium_temperature_,
-        molecular_mass: molecular_mass_,
+        particle_mass: particle_mass_,
     })
     return Quantity(result)
