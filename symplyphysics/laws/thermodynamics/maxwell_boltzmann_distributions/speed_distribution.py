@@ -3,6 +3,7 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
+    Function,
     print_expression,
     validate_input,
     validate_output,
@@ -27,13 +28,13 @@ from symplyphysics import (
 ## - Particles are identical, non-interacting, non-relativistic, and obeying classical laws of physics.
 ## - The ensemble of particles is at thermodynamic equilibrium.
 
-speed_distribution_function = Symbol("speed_distribution_function", 1 / units.velocity, positive=True)
+speed_distribution_function = Function("speed_distribution_function", 1 / units.velocity, positive=True)
 particle_speed = Symbol("particle_speed", units.velocity, positive=True)
 particle_mass = clone_symbol(symbols.basic.mass, "particle_mass", positive=True)
 equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature, "equilibrium_temperature", positive=True)
 
 law = Eq(
-    speed_distribution_function,
+    speed_distribution_function(particle_speed),
     sqrt(2 / pi)
     * (particle_mass / (units.boltzmann_constant * equilibrium_temperature))**Rational(3, 2)
     * particle_speed**2

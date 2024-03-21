@@ -1,21 +1,42 @@
-from sympy import (Eq, solve)
+from sympy import (Eq, solve, integrate, S)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
     validate_output, symbols, clone_symbol)
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.thermodynamics.maxwell_boltzmann_distributions import speed_distribution
 
 # Description
-## For an ideal gas, the average square of velocity is directly proportional to its temperature and inversely proportional to the molar mass of the gas: <V^2> = 3 k T / m
-## Where:
+## For an ideal gas, the average square of velocity is directly proportional to its temperature
+## and inversely proportional to the molar mass of the gas.
+
+# Law: <V^2> = 3 k T / m
 ## <V^2> - average square of velocity
 ## T - temperature in gas
 ## m - mass of molecule
-## k - Boltzman's constant
+## k - Boltzmann constant
 
-temperature_in_gas = Symbol("temperature_in_gas", units.temperature)
-
-average_square_velocity = Symbol("average_square_velocity", units.velocity**2)
-molecule_mass = clone_symbol(symbols.basic.mass, "molecule_mass")
+average_square_velocity = Symbol("average_square_velocity", units.velocity**2, positive=True)
+temperature_in_gas = Symbol("temperature_in_gas", units.temperature, positive=True)
+molecule_mass = clone_symbol(symbols.basic.mass, "molecule_mass", positive=True)
 
 law = Eq(average_square_velocity, 3 * units.boltzmann_constant * temperature_in_gas / molecule_mass)
+
+# Derive law from Maxwell-Boltzmann distribution function using the probability formula 
+# of finding the average value of a function y(x) when the distribution function f(x) of 
+# the random variable x is known, which is calculating the integral of y(x)*f(x) with the 
+# integration limits being the lowest and highest possible values of x. In the case of 
+# this law, it is the integral of (v**2)*f(v) with v ranging from 0 to infinity.
+
+_distribution = speed_distribution.law.rhs.subs({
+    speed_distribution.particle_mass: molecule_mass,
+    speed_distribution.equilibrium_temperature: temperature_in_gas,
+})
+
+_average_square_of_speed_derived = integrate(
+    speed_distribution.particle_speed**2 * _distribution,
+    (speed_distribution.particle_speed, 0, S.Infinity)
+)
+
+assert expr_equals(_average_square_of_speed_derived, law.rhs)
 
 
 def print_law() -> str:
