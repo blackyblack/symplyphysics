@@ -1,4 +1,4 @@
-from sympy import Eq, sqrt, pi, integrate, S
+from sympy import Eq, sqrt, pi, integrate, S, stats, Interval
 from symplyphysics import (
     units,
     Quantity,
@@ -33,21 +33,21 @@ law = Eq(
     sqrt(8 * units.boltzmann_constant * equilibrium_temperature / (pi * particle_mass)),
 )
 
-# Derive law from Maxwell-Boltzmann distribution function using the probability formula 
-# of finding the average value of a function y(x) when the distribution function f(x) of 
-# the random variable x is known, which is calculating the integral of y(x)*f(x) with the 
-# integration limits being the lowest and highest possible values of x. In the case of 
-# this law, it is the integral of v*f(v) with v ranging from 0 to infinity.
+# Derive law from Maxwell-Boltzmann distribution function
 
 _distribution = speed_distribution.law.rhs.subs({
     speed_distribution.equilibrium_temperature: equilibrium_temperature,
     speed_distribution.particle_mass: particle_mass,
 })
 
-_average_speed_derived = integrate(
-    speed_distribution.particle_speed * _distribution,
-    (speed_distribution.particle_speed, 0, S.Infinity)
+_speed_random_variable = stats.ContinuousRV(
+    speed_distribution.particle_speed,
+    _distribution,
+    set=Interval(0, S.Infinity),
 )
+
+# Average speed is the expected value of the speed random variable
+_average_speed_derived = stats.E(_speed_random_variable)
 
 assert expr_equals(_average_speed_derived, law.rhs)
 
