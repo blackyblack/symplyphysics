@@ -2,7 +2,7 @@ from sympy import (Eq, solve, integrate, S, stats, Interval)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
     validate_output, symbols, clone_symbol)
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.thermodynamics.maxwell_boltzmann_distributions import speed_distribution
+from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed_distribution
 
 # Description
 ## For an ideal gas, the average square of velocity is directly proportional to its temperature

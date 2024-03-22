@@ -10,7 +10,7 @@ from symplyphysics import (
     clone_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.thermodynamics.maxwell_boltzmann_distributions import speed_distribution
+from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed_distribution
 
 # Description
 ## The most probable speed is the speed at which the Maxwell-Boltzmann speed distribution function
