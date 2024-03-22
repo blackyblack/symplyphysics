@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.core.symbols.celsius import Celsius, to_kelvin_quantity
-from symplyphysics.laws.thermodynamics.maxwell_boltzmann_distributions import (
+from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import (
     speed_distribution as distribution_law,
 )
 
