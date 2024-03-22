@@ -40,8 +40,12 @@ _distribution = speed_distribution.law.rhs.subs({
 
 _distribution_first_derivative = _distribution.diff(speed_distribution.particle_speed)
 
-# Found the point of extremum of the speed distribution function
-_most_probable_speed_derived = solve(_distribution_first_derivative, speed_distribution.particle_speed)[0]
+# Found the points of extremum of the speed distribution function
+_solutions = solve(_distribution_first_derivative, speed_distribution.particle_speed)
+
+# Asserting there is only one point of extremum
+assert len(_solutions) == 1
+_most_probable_speed_derived = _solutions[0]
 
 assert expr_equals(_most_probable_speed_derived, law.rhs)
 
