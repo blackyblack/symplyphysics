@@ -16,7 +16,7 @@ from symplyphysics.core.symbols.symbols import tuple_of_symbols
 ## constant. For a classical discrete system the partition function is the sum of the Boltzmann factors
 ## of all the possible energy states:
 
-# Law: Z = sum_i f_i
+# Law: Z = sum_i(f_i)
 ## Z - partition function
 ## f_i - Boltzmann factor of energy state i
 ## sum_i - summation over all energy states
