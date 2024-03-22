@@ -8,8 +8,9 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## by an insulating material or an air gap. It is used to transmit radio frequency electrical signals.
 ## The attenuation coefficient of a coaxial waveguide depends on the frequency of signal, as well as on the relative permittivity,
 ## the relative permeability and the dielectric loss angle of the insulator material.
+## The attenuation coefficient shows how many times the transmitted signal weakens per unit length of the coaxial waveguide.
 
-## Law is: ad = (1 / 2) * w * sqrt(mu0 * mur * e0 * er) * tan(d), where
+## Law is: ad = w * sqrt(mu0 * mur * e0 * er) * tan(d) / 2, where
 ## ad - attenuation coefficient of coaxial waveguide,
 ## w - angular frequency of signal,
 ## e0 - electric constant,
@@ -25,7 +26,7 @@ relative_permeability = Symbol("relative_permeability", dimensionless)
 angular_frequency = Symbol("angular_frequency", angle_type / units.time)
 tangent_dielectric_loss_angle = Symbol("tangent_dielectric_loss_angle", dimensionless)
 
-law = Eq(attenuation_coefficient, (1 / 2) * angular_frequency * sqrt(magnetic_constant * relative_permeability * electric_constant * relative_permittivity) * tangent_dielectric_loss_angle)
+law = Eq(attenuation_coefficient, angular_frequency * sqrt(magnetic_constant * relative_permeability * electric_constant * relative_permittivity) * tangent_dielectric_loss_angle / 2)
 
 
 def print_law() -> str:
