@@ -27,9 +27,9 @@ from symplyphysics import (
 ## - Particles are identical, non-interacting, non-relativistic, and obeying classical laws of physics.
 ## - The ensemble of particles is at thermodynamic equilibrium.
 
-energy_distribution_function = Function("energy_distribution_function", 1 / units.energy)
-energy = Symbol("energy", units.energy)
-equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature, "equilibrium_temperature")
+energy_distribution_function = Function("energy_distribution_function", 1 / units.energy, positive=True)
+energy = Symbol("energy", units.energy, positive=True)
+equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature, "equilibrium_temperature", positive=True)
 
 law = Eq(
     energy_distribution_function(energy),
