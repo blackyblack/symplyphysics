@@ -14,8 +14,8 @@ from symplyphysics import (
 # Description
 ## For a system containing a large number of identical non-interacting non-relativistic
 ## classical particles in thermodynamic equilibrium, the velocity component distribution
-## is a function `f(v_k)` such that `f(v_k) * dv_k` gives the fraction of particles with
-## speeds in the interval `dv_k` around velocity component v_k (k = x, y, z).
+## is a function `f(v_x)` such that `f(v_x) * dv_x` gives the fraction of particles with
+## speeds in the interval `dv_x` around velocity component v_x. Also see Note below.
 
 # Law: f(v_k) = sqrt(m / (2 * pi * k * T)) * exp(-m * v_k**2 / (2 * k * T))
 ## f(v_k) - distribution function of velocity component v_k
@@ -23,6 +23,9 @@ from symplyphysics import (
 ## m - mass of particle
 ## k - Boltzmann constant
 ## T - equilibrium temperature of the particle ensemble
+
+# Note
+## - Works for any velocity component in Cartesian coordinates: v_x, v_y, v_z.
 
 # Conditions
 ## - Number of particles is big enough that the laws of thermodynamics can be applied.
