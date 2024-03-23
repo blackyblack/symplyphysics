@@ -21,6 +21,8 @@ linear_expansion_coefficient = Symbol("linear_expansion_coefficient", 1 / units.
 
 law = Eq(volumetric_expansion_coefficient, 3 * linear_expansion_coefficient)
 
+# TODO: Derive from their definitions for a cube
+
 
 def print_law() -> str:
     return print_expression(law)
