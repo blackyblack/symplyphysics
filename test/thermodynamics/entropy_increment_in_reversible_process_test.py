@@ -12,7 +12,7 @@ from symplyphysics.laws.thermodynamics import entropy_increment_in_reversible_pr
 
 # Description
 ## The entropy increment in a reversible prossess of heat exchange where the amount of heat transferred
-## is δQ = 0.1 J and the thermodynamic temperature of the systems is 200 K, is dS = 0.5 mJ/K
+## is δQ = 0.1 J and the common temperature of the systems is 200 K, is dS = 0.5 mJ/K
 
 Args = namedtuple("Args", "dq t")
 

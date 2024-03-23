@@ -20,7 +20,7 @@ from symplyphysics import (
 # Law: dS = δQ / T
 ## dS - infinitesimal increase in entropy of system of interest (B)
 ## δQ - infinitesimal amount of heat transfered to system of interest (B)
-## T - thermodynamic temperature of the systems (A and B)
+## T - common thermodynamic temperature of the systems (A and B)
 
 # Notes
 ## - dS is an exact differential (since entropy S is a state function) whereas δQ is an inexact differential
@@ -28,9 +28,9 @@ from symplyphysics import (
 
 infinitesimal_entropy_change = Symbol("infinitesimal_entropy_change", units.energy / units.temperature)
 infinitesimal_transfer_of_heat = Symbol("infinitesimal_transfer_of_heat", units.energy)
-thermodynamic_temperature = clone_symbol(symbols.thermodynamics.temperature, "thermodynamic_temperature")
+common_temperature = clone_symbol(symbols.thermodynamics.temperature, "common_temperature")
 
-law = Eq(infinitesimal_entropy_change, infinitesimal_transfer_of_heat / thermodynamic_temperature)
+law = Eq(infinitesimal_entropy_change, infinitesimal_transfer_of_heat / common_temperature)
 
 
 def print_law() -> str:
@@ -39,15 +39,15 @@ def print_law() -> str:
 
 @validate_input(
     infinitesimal_transfer_of_heat_=infinitesimal_transfer_of_heat,
-    thermodynamic_temperature_=thermodynamic_temperature,
+    common_temperature_=common_temperature,
 )
 @validate_output(infinitesimal_entropy_change)
 def calculate_infinitesimal_entropy_change(
     infinitesimal_transfer_of_heat_: Quantity,
-    thermodynamic_temperature_: Quantity,
+    common_temperature_: Quantity,
 ) -> Quantity:
     result = law.rhs.subs({
         infinitesimal_transfer_of_heat: infinitesimal_transfer_of_heat_,
-        thermodynamic_temperature: thermodynamic_temperature_,
+        common_temperature: common_temperature_,
     })
     return Quantity(result)
