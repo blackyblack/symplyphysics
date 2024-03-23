@@ -23,7 +23,7 @@ def test_args_fixture() -> Args:
     return Args(a=a)
 
 
-def test_law(test_args) -> str:
+def test_law(test_args: Args) -> None:
     result = coefficients_law.calculate_volumetric_expansion_coefficient(test_args.a)
     assert_equal(result, 0.6 / units.kelvin)
 
