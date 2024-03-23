@@ -1,4 +1,13 @@
-from sympy import Eq, Rational, sqrt, pi, exp
+from sympy import (
+    Eq,
+    Rational,
+    sqrt,
+    pi,
+    exp,
+    symbols as sym_symbols,
+    solve,
+    sympify,
+)
 from symplyphysics import (
     units,
     Quantity,
@@ -9,7 +18,11 @@ from symplyphysics import (
     validate_output,
     clone_symbol,
     symbols,
+    CoordinateSystem,
 )
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.core.geometry.elements import volume_element_magnitude
+from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import velocity_component_distribution
 
 # Description
 ## For a system containing a large number of identical non-interacting non-relativistic classical
@@ -40,6 +53,59 @@ law = Eq(
     * particle_speed**2
     * exp(-1 * particle_mass * particle_speed**2 / (2 * units.boltzmann_constant * equilibrium_temperature))
 )
+
+# Derive from Maxwell-Boltzmann distribution of velocity vector components
+
+_velocity_component_distribution = velocity_component_distribution.law.rhs.subs({
+    velocity_component_distribution.particle_mass: particle_mass,
+    velocity_component_distribution.equilibrium_temperature: equilibrium_temperature,
+})
+
+_velocity_x, _velocity_y, _velocity_z = sym_symbols("velocity_x:z", real=True)
+
+_velocity_x_distribution = _velocity_component_distribution.subs(
+    velocity_component_distribution.velocity_component, _velocity_x
+)
+
+_velocity_y_distribution = _velocity_component_distribution.subs(
+    velocity_component_distribution.velocity_component, _velocity_y
+)
+
+_velocity_z_distribution = _velocity_component_distribution.subs(
+    velocity_component_distribution.velocity_component, _velocity_z
+)
+
+_spherical_coordinate_system = CoordinateSystem(CoordinateSystem.System.SPHERICAL)
+
+_radius, _azimuthal_angle, _polar_angle = _spherical_coordinate_system.coord_system.base_scalars()
+
+# The speed distribution depends solely on the radial component of the velocity vector.
+# Therefore we integrate over polar and azimuthal angles to get rid of them.
+_spherical_volume_element = (
+    sympify(volume_element_magnitude(_spherical_coordinate_system))
+    .subs(_radius, particle_speed)
+    .integrate((_polar_angle, 0, pi), (_azimuthal_angle, 0, 2*pi))
+)
+
+_speed_distribution = (
+    _velocity_x_distribution
+    * _velocity_y_distribution
+    * _velocity_z_distribution
+    * _spherical_volume_element
+)
+
+_speed_eqn = Eq(
+    particle_speed ** 2,
+    _velocity_x ** 2 + _velocity_y ** 2 + _velocity_z ** 2
+)
+
+_speed_distribution_derived = solve(
+    [Eq(speed_distribution_function(particle_speed), _speed_distribution), _speed_eqn],
+    (speed_distribution_function(particle_speed), _velocity_x),
+    dict=True,
+)[0][speed_distribution_function(particle_speed)]
+
+assert expr_equals(_speed_distribution_derived, law.rhs)
 
 
 def print_law() -> str:
