@@ -12,7 +12,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## Vph - phase velocity of wave in rectangular waveguide,
 ## c - speed of light,
 ## er - relative permittivity of insulating material,
-## mur - relative permeability of the insulator material,
+## mur - relative permeability of the insulating material,
 ## L - wavelength,
 ## L1 - critical wavelength.
 
