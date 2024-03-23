@@ -12,7 +12,7 @@ from symplyphysics import (
 )
 
 # For a system containing a large number of identical non-interacting non-relativistic classical
-## particles in thermodynamic equilibrium, the speed distribution function is a function such that
+## particles in thermodynamic equilibrium, the energy distribution function is a function such that
 ## `f(E) * dE` gives the fraction of particles with energies in the interval `dE` around energy
 ## value `E`.
 
