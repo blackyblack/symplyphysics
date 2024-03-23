@@ -1,4 +1,4 @@
-from sympy import (Eq, solve, integrate, S, stats, Interval)
+from sympy import (Eq, solve, S, stats, Interval)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
     validate_output, symbols, clone_symbol)
 from symplyphysics.core.expr_comparisons import expr_equals

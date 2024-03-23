@@ -1,4 +1,4 @@
-from sympy import Eq, sqrt, pi, integrate, S, stats, Interval
+from sympy import Eq, sqrt, pi, S, stats, Interval
 from symplyphysics import (
     units,
     Quantity,
