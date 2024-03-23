@@ -23,9 +23,9 @@ resistance = Symbol("resistance", units.impedance)
 relative_permittivity = Symbol("relative_permittivity", dimensionless)
 relative_permeability = Symbol("relative_permeability", dimensionless)
 
-resistance_vacuum = Quantity(120 * pi * units.ohm)
+impedance_vacuum = Quantity(120 * pi * units.ohm)
 
-law = Eq(resistance, resistance_vacuum * sqrt(relative_permeability / relative_permittivity))
+law = Eq(resistance, impedance_vacuum * sqrt(relative_permeability / relative_permittivity))
 
 
 def print_law() -> str:

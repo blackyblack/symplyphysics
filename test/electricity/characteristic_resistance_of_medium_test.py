@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.electricity.circuits import characteristic_resistance_of_medium as resistance_law
+from symplyphysics.laws.electricity import characteristic_resistance_of_medium as resistance_law
 
 # Description
 ## The magnetic permeability of the medium is 1, the relative_permittivity is 2.2. Then the characteristic
