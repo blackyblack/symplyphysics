@@ -56,6 +56,6 @@ def print_law() -> str:
 @validate_output(average_kinetic_energy)
 def calculate_average_kinetic_energy(temperature_: Quantity) -> Quantity:
     result_expr = solve(law, average_kinetic_energy, dict=True)[0][average_kinetic_energy]
-    result_average_kinetic_energy = result_expr.subs(symbols.thermodynamics.temperature,
+    result_average_kinetic_energy = result_expr.subs(equilibrium_temperature,
         temperature_)
     return Quantity(result_average_kinetic_energy)
