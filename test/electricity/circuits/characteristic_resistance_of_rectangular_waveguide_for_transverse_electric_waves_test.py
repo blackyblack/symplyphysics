@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (errors, units, Quantity, assert_equal,)
 
-from symplyphysics.laws.electricity.circuits import characteristic_resistance_of_rectangular_waveguide_for_h_mn_waves as resistance_law
+from symplyphysics.laws.electricity.circuits import characteristic_resistance_of_rectangular_waveguide_for_transverse_electric_waves as resistance_law
 
 ## The critical wavelength is 17.9 millimeters.The wavelength is 10 millimeters. The characteristic resistance
 ## of the medium is 254.167 ohms. Then the resistance in the waveguide will be 306.45 ohms.

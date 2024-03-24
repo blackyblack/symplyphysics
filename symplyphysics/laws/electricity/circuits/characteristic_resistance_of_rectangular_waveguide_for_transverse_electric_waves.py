@@ -8,12 +8,16 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## do not propagate in the waveguide.
 ## The characteristic resistance of a wave is a value determined by the ratio of the transverse component
 ## of the electric field strength to the transverse component of the magnetic field strength of a traveling wave.
+## Transverse electric waves are waves in which the electric field has no longitudinal component.
 
 ## Law is: Z = Z0 / sqrt(1 - (L / L1)^2), where
 ## Z - characteristic resistance of rectangular waveguide,
 ## Z0 - characteristic resistance of the material filling the waveguide,
 ## L - wavelength,
 ## L1 - critical wavelength.
+
+# Conditions:
+# - waves propagating in the waveguide must be transverse electric waves.
 
 resistance = Symbol("resistance", units.impedance)
 
