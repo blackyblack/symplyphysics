@@ -9,7 +9,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 
 ## Law is: Lw = L / sqrt(1 - (L / L1)^2), where
 ## Lw - wavelength in a rectangular waveguide,
-## L - wavelength,
+## L - wavelength of a signal in a waveguide,
 ## L1 - critical wavelength.
 
 waveguide_wavelength = Symbol("waveguide_wavelength", units.length)
