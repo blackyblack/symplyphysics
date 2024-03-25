@@ -10,7 +10,7 @@ from symplyphysics.laws.electricity.circuits import attenuation_coefficient_in_m
 ## The width is 2 centimeter, the height is 1 centimeter.
 ## The resistance of medium is 254.167 ohm.
 ## The critical wavelength is 17.9 millimeters. The wavelength is 10 millimeters.
-## Then the attenuation coefficient will be 0.00492 [1 / meter].
+## Then the attenuation coefficient will be 0.0019 [1 / meter].
 
 Args = namedtuple("Args", [
     "surface_resistance", "first_index", "second_index", "width",
@@ -45,7 +45,7 @@ def test_basic_attenuation_coefficient(test_args: Args) -> None:
     result = coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
         test_args.first_index, test_args.second_index, test_args.width,
         test_args.height, test_args.resistance_of_medium, test_args.signal_wavelength, test_args.critical_wavelength)
-    assert_equal(result, 0.00492 * (1 / units.meter))
+    assert_equal(result, 0.0019 * (1 / units.meter))
 
 
 def test_bad_surface_resistance(test_args: Args) -> None:

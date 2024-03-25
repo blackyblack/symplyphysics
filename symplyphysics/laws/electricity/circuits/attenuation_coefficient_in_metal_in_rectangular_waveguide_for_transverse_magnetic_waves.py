@@ -9,8 +9,11 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## The specific resistance of a coaxial waveguide depends on the radius of the outer conductor and the radius of the inner conductor,
 ## as well as on the relative permeability of the insulator material, frequency of signal and specific conductivity of conductor.
 ## The attenuation coefficient shows how many times the transmitted signal weakens per unit length of the coaxial waveguide.
+## The first index shows how many half-wave lengths fit horizontally across the cross section. The second index
+## shows how many half-wave lengths fit vertically across the cross section.
 
-## Law is: am = 2 * Rs * (n^2 * (b / a)^3 + m^2) / (Z0 * b * sqrt((1 - (L / L1)^2) * (n^2 * (b / a)^2 + m^2))), where
+
+## Law is: am = 2 * Rs * (n^2 * (b / a)^3 + m^2) / (Z0 * b * sqrt(1 - (L / L1)^2) * (n^2 * (b / a)^2 + m^2)), where
 ## am - attenuation coefficient in metal,
 ## Rs - surface resistance,
 ## m - first index,
@@ -22,7 +25,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## L1 - critical wavelength.
 
 
-attenuation_coefficient = Symbol("attenuation_coefficient", dimensionless / units.length)
+attenuation_coefficient = Symbol("attenuation_coefficient", 1 / units.length)
 
 surface_resistance = Symbol("surface_resistance", units.impedance)
 first_index = Symbol("first_index", dimensionless)
@@ -34,9 +37,9 @@ signal_wavelength = Symbol("signal_wavelength", units.length)
 critical_wavelength = Symbol("critical_wavelength", units.length)
 
 expression_1 = 2 * surface_resistance * (second_index**2 * (width / height)**3 + first_index**2)
-expression_2 = (1 - (signal_wavelength / critical_wavelength)**2) * (second_index**2 * (width / height)**2 + first_index**2)
+expression_2 = sqrt(1 - (signal_wavelength / (2 * critical_wavelength))**2) * (second_index**2 * (width / height)**2 + first_index**2)
 
-law = Eq(attenuation_coefficient, expression_1 / (resistance_of_medium * width * sqrt(expression_2)))
+law = Eq(attenuation_coefficient, expression_1 / (resistance_of_medium * width * expression_2))
 
 
 def print_law() -> str:
