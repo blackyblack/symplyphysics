@@ -29,7 +29,6 @@ from symplyphysics import (
 # Conditions
 ## - The system is closed
 ## - The system is in thermal equilibrium with its surroundings
-## - The process of supplying heat to the system is reversible
 
 internal_energy_change = Function("internal_energy_change", units.energy)
 temperature = symbols.thermodynamics.temperature
