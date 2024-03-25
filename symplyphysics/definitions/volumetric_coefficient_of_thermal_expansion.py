@@ -14,7 +14,7 @@ from symplyphysics import (
 ## The coefficient of thermal expansion describes how the size of an object changes with a change in temperature
 ## at constant pressure.
 
-# Law: alpha_V = (dV/dT)_p / V
+# Law: alpha_V = (dV(T)/dT)_p / V(T)
 ## alpha_V - volumetric coefficient of thermal expansion
 ## V - volume of body (gas, liquid or solid)
 ## T - temperature
@@ -50,15 +50,18 @@ def calculate_volumetric_expansion_coefficient(
     temperature_before_: Quantity,
     temperature_after_: Quantity,
 ) -> Quantity:
+    # The RHS of the equation is calculated at the temperature point after expansion (`temperature_after_`)
+
     volume_function = (
         volume_before_
         + (volume_after_ - volume_before_)
         * (temperature - temperature_before_)
         / (temperature_after_ - temperature_before_)
     )
-    result = law.rhs.subs(
-        volume(temperature), volume_function
-    ).doit().subs(
-        temperature, (temperature_after_ + temperature_before_) / 2,
+    result = (
+        (law.rhs)
+        .subs(volume(temperature), volume_function)
+        .doit()
+        .subs(temperature, temperature_after_)
     )
     return Quantity(result)
