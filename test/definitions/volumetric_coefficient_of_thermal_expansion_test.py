@@ -10,7 +10,7 @@ from symplyphysics.definitions import volumetric_coefficient_of_thermal_expansio
 
 # Description
 ## A body is heated up and changes its volume from 1.00 m**3 at temperature T = 400 K to 1.001 m**3 at
-## T = 401 K. Then its volumetric coefficient of thermal expansion is 9.9e-3 1/K.
+## T = 401 K. Then its volumetric coefficient of thermal expansion is 9.9e-3 1/K (at T = 401 K).
 
 Args = namedtuple("Args", "v0 v1 t0 t1")
 
