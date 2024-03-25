@@ -29,7 +29,7 @@ def test_args_fixture() -> Args:
     return Args(t=t, ds=ds, p=p, dv=dv)
 
 
-def test_law(test_args: Args) -> Args:
+def test_law(test_args: Args) -> None:
     result = internal_energy_law.calculate_internal_energy_change(test_args.t, test_args.ds, test_args.p, test_args.dv)
     assert_equal(result, -300 * units.joule)
 
