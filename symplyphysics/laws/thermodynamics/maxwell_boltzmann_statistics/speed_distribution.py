@@ -81,17 +81,21 @@ _radius, _azimuthal_angle, _polar_angle = _spherical_coordinate_system.coord_sys
 
 # The speed distribution depends solely on the radial component of the velocity vector.
 # Therefore we integrate over polar and azimuthal angles to get rid of them.
-_spherical_volume_element = (
+# We work in the three-dimensional velocity space `d^3(v)` so radius is speed (magnitude of velocity vector)
+_spherical_volume_velocity_element = (
     sympify(volume_element_magnitude(_spherical_coordinate_system))
     .subs(_radius, particle_speed)
     .integrate((_polar_angle, 0, pi), (_azimuthal_angle, 0, 2*pi))
 )
 
+# The first three terms arise from the distribution of the velocity vector in Cartesian coordinates
+# and in order to switch to spherical coordinates we multiply by the spherical volume element of the
+# 3D velocity space found above.
 _speed_distribution = (
     _velocity_x_distribution
     * _velocity_y_distribution
     * _velocity_z_distribution
-    * _spherical_volume_element
+    * _spherical_volume_velocity_element
 )
 
 _speed_eqn = Eq(
