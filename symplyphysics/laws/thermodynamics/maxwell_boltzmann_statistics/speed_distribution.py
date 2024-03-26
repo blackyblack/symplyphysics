@@ -88,15 +88,13 @@ _spherical_volume_velocity_element = (
     .integrate((_polar_angle, 0, pi), (_azimuthal_angle, 0, 2*pi))
 )
 
-# The first three terms arise from the distribution of the velocity vector in Cartesian coordinates
-# and in order to switch to spherical coordinates we multiply by the spherical volume element of the
+# `v_x`, `v_y` and `v_z` are independent random variables, therefore we can get the distribution of
+# the velocity vector `v` by multiplying the distributions of its coordinates.
+_cartesian_speed_distribution = _velocity_x_distribution * _velocity_y_distribution * _velocity_z_distribution
+
+# In order to switch to spherical coordinates we multiply it by the spherical volume element of the
 # 3D velocity space found above.
-_speed_distribution = (
-    _velocity_x_distribution
-    * _velocity_y_distribution
-    * _velocity_z_distribution
-    * _spherical_volume_velocity_element
-)
+_spherical_speed_distribution = _cartesian_speed_distribution * _spherical_volume_velocity_element
 
 _speed_eqn = Eq(
     particle_speed ** 2,
@@ -104,7 +102,10 @@ _speed_eqn = Eq(
 )
 
 _speed_distribution_derived = solve(
-    [Eq(speed_distribution_function(particle_speed), _speed_distribution), _speed_eqn],
+    [
+        Eq(speed_distribution_function(particle_speed), _spherical_speed_distribution), 
+        _speed_eqn,
+    ],
     (speed_distribution_function(particle_speed), _velocity_x),
     dict=True,
 )[0][speed_distribution_function(particle_speed)]
