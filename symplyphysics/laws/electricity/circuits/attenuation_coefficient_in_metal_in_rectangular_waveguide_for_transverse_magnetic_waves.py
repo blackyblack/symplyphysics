@@ -13,7 +13,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## shows how many half-wave lengths fit vertically across the cross section.
 
 
-## Law is: am = 2 * Rs * (n^2 * (b / a)^3 + m^2) / (Z0 * b * sqrt(1 - (L / L1)^2) * (n^2 * (b / a)^2 + m^2)), where
+## Law is: am = 2 * Rs * (n^2 * (b / a)^3 + m^2) / (Z0 * b * sqrt(1 - (L / (2 * L1))^2) * (n^2 * (b / a)^2 + m^2)), where
 ## am - attenuation coefficient in metal,
 ## Rs - surface resistance,
 ## m - first index,
