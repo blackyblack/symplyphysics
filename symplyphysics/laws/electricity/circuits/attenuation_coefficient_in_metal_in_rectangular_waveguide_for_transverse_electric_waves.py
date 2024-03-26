@@ -13,7 +13,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## shows how many half-wave lengths fit vertically across the cross section.
 
 
-## Law is: am = 2 * Rs * (n^2 * (b / a)^3 + m^2) / (Z0 * b * sqrt(1 - (L / L1)^2) * (n^2 * (b / a)^2 + m^2)), where
+## Law is: am = (2 * Rs / (Z0 * b * sqrt(1 - (L / (2 * L1))^2))) * ((1 + b / a) * (L / (2 * L1))^2 + (1 - (L / (2 * L1))^2) * (b / a) * (b * n^2 / a + m^2) / ((b * n / a)^2 + m^2)), where
 ## am - attenuation coefficient in metal,
 ## Rs - surface resistance,
 ## m - first index,
@@ -40,12 +40,12 @@ resistance_of_medium = Symbol("resistance_of_medium", units.impedance)
 signal_wavelength = Symbol("signal_wavelength", units.length)
 critical_wavelength = Symbol("critical_wavelength", units.length)
 
-expression_1 = 2 * surface_resistance / (resistance_of_medium * width * sqrt(1 - (signal_wavelength / critical_wavelength)**2))
-expression_2 = (1 + width / height) * (signal_wavelength / critical_wavelength)**2
+expression_1 = 2 * surface_resistance / (resistance_of_medium * width * sqrt(1 - (signal_wavelength / (2 * critical_wavelength))**2))
+expression_2 = (1 + width / height) * (signal_wavelength / (2 * critical_wavelength))**2
 expression_3 = (width / height) * ((width / height) * second_index**2 + first_index**2)
 expression_4 = (width * second_index / height)**2 + first_index**2
 
-law = Eq(attenuation_coefficient, expression_1 * (expression_2 + (1 - (signal_wavelength / critical_wavelength)**2) * expression_3 / expression_4))
+law = Eq(attenuation_coefficient, expression_1 * (expression_2 + (1 - (signal_wavelength / (2 * critical_wavelength))**2) * expression_3 / expression_4))
 
 
 def print_law() -> str:
