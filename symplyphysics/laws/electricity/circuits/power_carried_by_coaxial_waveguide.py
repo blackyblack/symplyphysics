@@ -9,7 +9,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 
 ## Law is: P = (U^2 / 120) *  sqrt(er / (mur * ln(D / d))), where
 ## P - power carried by the waveguide,
-## U - voltage,
+## U - voltage between the central conductor and the outer conductor,
 ## er - relative permittivity of insulating material,
 ## mur - relative permeability of the insulator material,
 ## D - diameter of the outer conductor,
@@ -23,9 +23,9 @@ voltage = Symbol("voltage", units.voltage)
 outer_diameter = Symbol("outer_diameter", units.length)
 inner_diameter = Symbol("inner_diameter", units.length)
 
-resistance = Quantity(120 * units.ohm)
+vacuum_impedance = Quantity(120 * units.ohm)
 
-law = Eq(waveguide_power, (voltage**2 / resistance) * sqrt(relative_permittivity / (relative_permeability * ln(outer_diameter / inner_diameter))))
+law = Eq(waveguide_power, (voltage**2 / vacuum_impedance) * sqrt(relative_permittivity / (relative_permeability * ln(outer_diameter / inner_diameter))))
 
 
 def print_law() -> str:
@@ -38,7 +38,7 @@ def print_law() -> str:
     outer_diameter_=outer_diameter,
     inner_diameter_=inner_diameter)
 @validate_output(waveguide_power)
-def calculate_waveguide_power(relative_permittivity_: float, relative_permeability_: Quantity,
+def calculate_waveguide_power(relative_permittivity_: float, relative_permeability_: float,
     voltage_: Quantity, outer_diameter_: Quantity,
     inner_diameter_: Quantity) -> Quantity:
     if outer_diameter_.scale_factor <= inner_diameter_.scale_factor:
