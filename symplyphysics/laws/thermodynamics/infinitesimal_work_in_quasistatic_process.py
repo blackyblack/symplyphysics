@@ -15,9 +15,12 @@ from symplyphysics import (
 ## increment of volume of the system.
 
 # Law: delta W = P * dV
-## delta W - inexact differential of an infinitesimal increment of work done _by_ the system
+## delta W - an infinitesimal increment of work done _by_ the system
 ## P - pressure inside the system
 ## dV - exact differential of an infinitesimal increment of volume of the system
+
+# Note:
+## - `delta` means that the increment is an inexact differential.
 
 infinitesimal_work_done = Symbol("infinitesimal_work_done", units.energy)
 pressure_inside_system = Symbol("pressure_inside_system", units.pressure)
