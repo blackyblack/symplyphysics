@@ -1,4 +1,4 @@
-from sympy import Eq
+from sympy import Eq, solve
 from symplyphysics import (
     units,
     Quantity,
@@ -8,6 +8,12 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
+)
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.thermodynamics import (
+    internal_energy_change_via_amount_of_heat_and_work_done as first_law,
+    entropy_increment_in_reversible_process as second_law,
+    infinitesimal_work_in_quasistatic_process as work_law,
 )
 
 # Description
@@ -41,7 +47,26 @@ law = Eq(
     temperature * entropy_change - pressure * volume_change,
 )
 
-# TODO: Derive from the first and second laws of thermodynamics
+# Derive from the first and second laws of thermodynamics
+
+_heat_supplied_to_system = solve(
+    second_law.law, second_law.infinitesimal_transfer_of_heat
+)[0].subs({
+    second_law.infinitesimal_entropy_change: entropy_change,
+    second_law.common_temperature: temperature,
+})
+
+_work_done_by_system = work_law.law.rhs.subs({
+    work_law.pressure_inside_system: pressure,
+    work_law.infinitesimal_volume_change: volume_change,
+})
+
+_internal_energy_change = first_law.law.rhs.subs({
+    first_law.heat_supplied_to_system: _heat_supplied_to_system,
+    first_law.work_done_by_system: _work_done_by_system,
+})
+
+assert expr_equals(law.rhs, _internal_energy_change)
 
 
 def print_law() -> str:
