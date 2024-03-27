@@ -23,9 +23,11 @@ from symplyphysics import (
 ## delta W - inexact differential of infinitesimal work done by the system
 
 # Note
-## - Work done _by_ the system is negative, work done _on_ the system by the environment is positive.
-## - Heat supplied _to_ the system is positive, heat lost _by_ the system is negative.
-## - This formula can be extended to finite processes, with the only change being that the
+## - The sign before work `W` is negative for work done _by_ the system and positive for 
+##   work done  _on_ the system by the environment.
+## - The sign before the amount of heat `Q` is positive for heat flowing from the environment 
+##   _into_ the system and negative for heat flowing _out of_ the system into the environment.
+## - This formula can be extended to finite processes, with the only difference being that the
 ##   changes are not infinitesimal but finite (`dU` would refer to a finite change in the system's
 ##   internal energy, delta Q would be the total amount of heat supplied and delta W would be the total
 ##   work done by the system).
