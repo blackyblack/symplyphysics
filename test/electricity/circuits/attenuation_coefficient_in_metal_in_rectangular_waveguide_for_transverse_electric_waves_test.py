@@ -70,6 +70,10 @@ def test_bad_index(test_args: Args) -> None:
         coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
             test_args.first_index, bad_index, test_args.width,
             test_args.height, test_args.resistance_of_medium, test_args.signal_wavelength, test_args.critical_wavelength)
+    with raises(ValueError):
+        coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
+            test_args.first_index, 0, test_args.width,
+            test_args.height, test_args.resistance_of_medium, test_args.signal_wavelength, test_args.critical_wavelength)
 
 
 def test_bad_width(test_args: Args) -> None:
