@@ -5,9 +5,12 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## Description
 ## A coaxial waveguide is an electrical cable consisting of a central conductor and a shield arranged coaxially and separated
 ## by an insulating material or an air gap. It is used to transmit radio frequency electrical signals.
+## An electrical breakdown is a phenomenon of a sharp increase in current that occurs when the field intensity is higher
+## than the critical one - dielectric breakdown intensity.
+
 
 ## Law is: Umax = E * D * ln(D / d) / 2, where
-## Umax - maximum voltage,
+## Umax - maximum voltage between the central conductor and the outer conductor,
 ## E - dielectric breakdown intensity,
 ## D - diameter of the outer conductor,
 ## d - diameter of the inner conductor.
