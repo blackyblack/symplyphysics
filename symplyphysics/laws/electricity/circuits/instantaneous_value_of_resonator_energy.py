@@ -33,4 +33,10 @@ def print_law() -> str:
 def calculate_instantaneous_energy(initial_energy_: Quantity, time_: Quantity, resonant_frequency_: Quantity,
     quality_factor_: float) -> Quantity:
     result_velocity_expr = solve(law, instantaneous_energy, dict=True)[0][instantaneous_energy]
-    
+    result_expr = result_velocity_expr.subs({
+        initial_energy: initial_energy_,
+        time: time_,
+        resonant_frequency: resonant_frequency_,
+        quality_factor: quality_factor_
+    })
+    return Quantity(result_expr)
