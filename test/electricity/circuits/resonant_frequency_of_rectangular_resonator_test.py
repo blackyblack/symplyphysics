@@ -38,63 +38,55 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_resonant_frequency(test_args: Args) -> None:
-    result = frequency_law.calculate_resonant_frequency(test_args.first_index,
-        test_args.second_index, test_args.third_index, test_args.resonator_width,
-        test_args.resonator_height, test_args.resonator_length, test_args.relative_permittivity, test_args.relative_permeability)
+    result = frequency_law.calculate_resonant_frequency((test_args.first_index,
+        test_args.second_index, test_args.third_index), (test_args.resonator_width,
+        test_args.resonator_height, test_args.resonator_length), test_args.relative_permittivity, test_args.relative_permeability)
     assert_equal(result, 8.752 * prefixes.giga * units.hertz)
 
 
 def test_bad_index(test_args: Args) -> None:
     bad_index = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        frequency_law.calculate_resonant_frequency(bad_index,
-            test_args.second_index, test_args.third_index, test_args.resonator_width,
-            test_args.resonator_height, test_args.resonator_length, test_args.relative_permittivity, test_args.relative_permeability)
+        frequency_law.calculate_resonant_frequency((bad_index,
+            test_args.second_index, test_args.third_index), (test_args.resonator_width,
+            test_args.resonator_height, test_args.resonator_length), test_args.relative_permittivity, test_args.relative_permeability)
     with raises(errors.UnitsError):
-        frequency_law.calculate_resonant_frequency(test_args.first_index,
-            bad_index, test_args.third_index, test_args.resonator_width,
-            test_args.resonator_height, test_args.resonator_length, test_args.relative_permittivity, test_args.relative_permeability)
+        frequency_law.calculate_resonant_frequency((test_args.first_index,
+            bad_index, test_args.third_index), (test_args.resonator_width,
+            test_args.resonator_height, test_args.resonator_length), test_args.relative_permittivity, test_args.relative_permeability)
     with raises(errors.UnitsError):
-        frequency_law.calculate_resonant_frequency(test_args.first_index,
-            test_args.second_index, bad_index, test_args.resonator_width,
-            test_args.resonator_height, test_args.resonator_length, test_args.relative_permittivity, test_args.relative_permeability)
+        frequency_law.calculate_resonant_frequency((test_args.first_index,
+            test_args.second_index, bad_index), (test_args.resonator_width,
+            test_args.resonator_height, test_args.resonator_length), test_args.relative_permittivity, test_args.relative_permeability)
 
 
-def test_bad_resonator_width(test_args: Args) -> None:
-    resonator_width = Quantity(1 * units.coulomb)
+def test_bad_resonator_dimensions(test_args: Args) -> None:
+    resonator_dimension = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        frequency_law.calculate_resonant_frequency(test_args.first_index, test_args.second_index, test_args.third_index, resonator_width, test_args.resonator_height, test_args.resonator_length, test_args.relative_permittivity, test_args.relative_permeability)
+        frequency_law.calculate_resonant_frequency((test_args.first_index, test_args.second_index, test_args.third_index), (resonator_dimension, test_args.resonator_height, test_args.resonator_length), test_args.relative_permittivity, test_args.relative_permeability)
     with raises(TypeError):
-        frequency_law.calculate_resonant_frequency(test_args.first_index, test_args.second_index, test_args.third_index, 100, test_args.resonator_height, test_args.resonator_length, test_args.relative_permittivity, test_args.relative_permeability)
-
-
-def test_bad_resonator_height(test_args: Args) -> None:
-    resonator_height = Quantity(1 * units.coulomb)
+        frequency_law.calculate_resonant_frequency((test_args.first_index, test_args.second_index, test_args.third_index), (100, test_args.resonator_height, test_args.resonator_length), test_args.relative_permittivity, test_args.relative_permeability)
     with raises(errors.UnitsError):
-        frequency_law.calculate_resonant_frequency(test_args.first_index, test_args.second_index, test_args.third_index, test_args.resonator_width, resonator_height, test_args.resonator_length, test_args.relative_permittivity, test_args.relative_permeability)
+        frequency_law.calculate_resonant_frequency((test_args.first_index, test_args.second_index, test_args.third_index), (test_args.resonator_width, resonator_dimension, test_args.resonator_length), test_args.relative_permittivity, test_args.relative_permeability)
     with raises(TypeError):
-        frequency_law.calculate_resonant_frequency(test_args.first_index, test_args.second_index, test_args.third_index, test_args.resonator_width, 100, test_args.resonator_length, test_args.relative_permittivity, test_args.relative_permeability)
-
-
-def test_bad_resonator_length(test_args: Args) -> None:
-    resonator_length = Quantity(1 * units.coulomb)
+        frequency_law.calculate_resonant_frequency((test_args.first_index, test_args.second_index, test_args.third_index), (test_args.resonator_width, 100, test_args.resonator_length), test_args.relative_permittivity, test_args.relative_permeability)
     with raises(errors.UnitsError):
-        frequency_law.calculate_resonant_frequency(test_args.first_index,
-            test_args.second_index, test_args.third_index, test_args.resonator_width,
-            test_args.resonator_height, resonator_length, test_args.relative_permittivity, test_args.relative_permeability)
+        frequency_law.calculate_resonant_frequency((test_args.first_index,
+            test_args.second_index, test_args.third_index), (test_args.resonator_width,
+            test_args.resonator_height, resonator_dimension), test_args.relative_permittivity, test_args.relative_permeability)
     with raises(TypeError):
-        frequency_law.calculate_resonant_frequency(test_args.first_index,
-            test_args.second_index, test_args.third_index, test_args.resonator_width,
-            test_args.resonator_height, 100, test_args.relative_permittivity, test_args.relative_permeability)
+        frequency_law.calculate_resonant_frequency((test_args.first_index,
+            test_args.second_index, test_args.third_index), (test_args.resonator_width,
+            test_args.resonator_height, 100), test_args.relative_permittivity, test_args.relative_permeability)
 
 
 def test_bad_relative_permittivity(test_args: Args) -> None:
     relative_permittivity = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        frequency_law.calculate_resonant_frequency(test_args.first_index, test_args.second_index, test_args.third_index, test_args.resonator_width, test_args.resonator_height, test_args.resonator_length, relative_permittivity, test_args.relative_permeability)
+        frequency_law.calculate_resonant_frequency((test_args.first_index, test_args.second_index, test_args.third_index), (test_args.resonator_width, test_args.resonator_height, test_args.resonator_length), relative_permittivity, test_args.relative_permeability)
 
 
 def test_bad_relative_permeability(test_args: Args) -> None:
     relative_permeability = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        frequency_law.calculate_resonant_frequency(test_args.first_index, test_args.second_index, test_args.third_index, test_args.resonator_width, test_args.resonator_height, test_args.resonator_length, test_args.relative_permittivity, relative_permeability)
+        frequency_law.calculate_resonant_frequency((test_args.first_index, test_args.second_index, test_args.third_index), (test_args.resonator_width, test_args.resonator_height, test_args.resonator_length), test_args.relative_permittivity, relative_permeability)

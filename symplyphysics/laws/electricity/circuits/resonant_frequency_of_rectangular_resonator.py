@@ -32,25 +32,23 @@ resonator_length = Symbol("resonator_length", units.length)
 relative_permittivity = Symbol("relative_permittivity", dimensionless)
 relative_permeability = Symbol("relative_permeability", dimensionless)
 
-law = Eq(resonant_frequency, speed_of_light * sqrt((first_index / resonator_width)**2 + (second_index / resonator_height)**2 + (third_index / resonator_length)**2) / (2 * sqrt(relative_permittivity * relative_permeability)))
+law = Eq(resonant_frequency, speed_of_light * sqrt((first_index / resonator_height)**2 + (second_index / resonator_width)**2 + (third_index / resonator_length)**2) / (2 * sqrt(relative_permittivity * relative_permeability)))
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(first_index_=first_index,
-    second_index_=second_index,
-    third_index_=third_index,
-    resonator_width_=resonator_width,
-    resonator_height_=resonator_height,
-    resonator_length_=resonator_length,
+@validate_input(indexes_=dimensionless,
+    resonator_dimensions_=units.length,
     relative_permittivity_=relative_permittivity,
     relative_permeability_=relative_permeability)
 @validate_output(resonant_frequency)
-def calculate_resonant_frequency(first_index_: Quantity, second_index_: float,
-    third_index_: float, resonator_width_: Quantity, resonator_height_: Quantity,
-    resonator_length_: Quantity, relative_permittivity_: Quantity, relative_permeability_: Quantity) -> Quantity:
+def calculate_resonant_frequency(
+    indexes_: tuple[float, float, float], resonator_dimensions_: tuple[Quantity, Quantity, Quantity],
+    relative_permittivity_: Quantity, relative_permeability_: Quantity) -> Quantity:
+    first_index_, second_index_, third_index_ = indexes_
+    resonator_width_, resonator_height_, resonator_length_ = resonator_dimensions_
     result_expr = solve(law, resonant_frequency, dict=True)[0][resonant_frequency]
     result_expr = result_expr.subs({
         first_index: first_index_,
