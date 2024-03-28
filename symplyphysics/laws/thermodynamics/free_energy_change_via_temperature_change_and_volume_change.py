@@ -43,6 +43,10 @@ law = Eq(
 )
 
 
+def print_law() -> str:
+    return print_expression(law)
+
+
 @validate_input(
     entropy_=entropy,
     temperature_change_=temperature_change,
