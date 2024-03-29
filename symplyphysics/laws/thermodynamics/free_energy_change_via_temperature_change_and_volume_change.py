@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    Function,
     print_expression,
     validate_input,
     validate_output,
@@ -29,14 +28,14 @@ from symplyphysics import (
 ## - The system is closed
 ## - The system is in thermal equilibrium with its surroundings
 
-free_energy_change = Function("free_energy_change", units.energy)
+free_energy_change = Symbol("free_energy_change", units.energy)
 entropy = Symbol("entropy", units.energy / units.temperature)
 temperature_change = Symbol("temperature_change", units.temperature)
 pressure = Symbol("pressure", units.pressure)
 volume_change = Symbol("volume_change", units.volume)
 
 law = Eq(
-    free_energy_change(temperature_change, volume_change),
+    free_energy_change,
     -1 * entropy * temperature_change - pressure * volume_change,
 )
 
