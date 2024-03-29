@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    Function,
     print_expression,
     validate_input,
     validate_output,
@@ -31,14 +30,14 @@ from symplyphysics import (
 ## - The system is in thermal equilibrium with the environment
 ## - Only reversible prossesses or pure heat transfer are considered
 
-enthalpy_change = Function("enthalpy_change", units.energy)
+enthalpy_change = Symbol("enthalpy_change", units.energy)
 temperature = symbols.thermodynamics.temperature
 entropy_change = Symbol("entropy_change", units.energy / units.temperature)
 volume = Symbol("volume", units.volume)
 pressure_change = Symbol("pressure_change", units.pressure)
 
 law = Eq(
-    enthalpy_change(entropy_change, pressure_change),
+    enthalpy_change,
     temperature * entropy_change + volume * pressure_change,
 )
 
