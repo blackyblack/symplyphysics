@@ -7,8 +7,6 @@ from symplyphysics import (
     print_expression,
     validate_input,
     validate_output,
-    symbols,
-    clone_symbol,
 )
 
 # Description
@@ -33,7 +31,7 @@ from symplyphysics import (
 
 free_energy_change = Function("free_energy_change", units.energy)
 entropy = Symbol("entropy", units.energy / units.temperature)
-temperature_change = clone_symbol(symbols.thermodynamics.temperature, "temperature_change")
+temperature_change = Symbol("temperature_change", units.temperature)
 pressure = Symbol("pressure", units.pressure)
 volume_change = Symbol("volume_change", units.volume)
 
