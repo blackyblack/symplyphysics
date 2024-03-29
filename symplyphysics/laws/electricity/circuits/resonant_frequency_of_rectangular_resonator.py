@@ -14,8 +14,8 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## m - first index,
 ## n - second index,
 ## p - third index,
-## a - height of the resonator,
-## b - width of the resonator,
+## a - width of the resonator,
+## b - height of the resonator,
 ## l - length of the resonator,
 ## er - relative permittivity of the material filling the resonator,
 ## mur - relative permeability of the material filling the resonator.
@@ -32,7 +32,7 @@ resonator_length = Symbol("resonator_length", units.length)
 relative_permittivity = Symbol("relative_permittivity", dimensionless)
 relative_permeability = Symbol("relative_permeability", dimensionless)
 
-law = Eq(resonant_frequency, speed_of_light * sqrt((first_index / resonator_height)**2 + (second_index / resonator_width)**2 + (third_index / resonator_length)**2) / (2 * sqrt(relative_permittivity * relative_permeability)))
+law = Eq(resonant_frequency, speed_of_light * sqrt((first_index / resonator_width)**2 + (second_index / resonator_height)**2 + (third_index / resonator_length)**2) / (2 * sqrt(relative_permittivity * relative_permeability)))
 
 
 def print_law() -> str:
