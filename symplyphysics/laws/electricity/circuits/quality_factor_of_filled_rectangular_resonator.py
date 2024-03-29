@@ -1,11 +1,10 @@
-from sympy import (Eq, solve, S)
+from sympy import (Eq, solve,)
 from symplyphysics import (
     Quantity,
     Symbol,
     print_expression,
     validate_input,
     validate_output,
-    convert_to,
     dimensionless
 )
 
@@ -40,4 +39,4 @@ def calculate_quality_factor(empty_resonator_quality_factor_: float, tangent_die
         empty_resonator_quality_factor: empty_resonator_quality_factor_,
         tangent_dielectric_loss_angle: tangent_dielectric_loss_angle_,
     })
-    return float(convert_to(Quantity(result_expr), S.One).evalf())
+    return float(result_expr)
