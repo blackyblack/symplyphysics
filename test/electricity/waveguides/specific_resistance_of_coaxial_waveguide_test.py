@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy import pi
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.electricity.circuits import specific_resistance_of_coaxial_waveguide as resistance_law
+from symplyphysics.laws.electricity.waveguides import specific_resistance_of_coaxial_waveguide as resistance_law
 
 # Description
 ## Parameters of the coaxial waveguide: the radius of the inner wire is 1.35 millimeters, the radius of the outer conductor

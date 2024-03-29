@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (errors, units, Quantity, assert_equal,)
 
-from symplyphysics.laws.electricity.circuits import wave_resistance_of_coaxial_waveguide as resistance_law
+from symplyphysics.laws.electricity.waveguides import wave_resistance_of_coaxial_waveguide as resistance_law
 
 ## Parameters of the coaxial waveguide: the radius of the inner wire is 1.35 millimeters, the radius of the outer conductor
 ## is 9.0 millimeters, the relative permittivity of the dielectric is 2.2, the relative permeability of the dielectric is 1.

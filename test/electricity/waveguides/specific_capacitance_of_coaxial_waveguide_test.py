@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (errors, units, Quantity, assert_equal, prefixes)
 
-from symplyphysics.laws.electricity.circuits import specific_capacitance_of_coaxial_waveguide as capacitance_law
+from symplyphysics.laws.electricity.waveguides import specific_capacitance_of_coaxial_waveguide as capacitance_law
 
 ## Parameters of the coaxial waveguide: the radius of the inner wire is 1.35 millimeters, the radius of the outer conductor
 ## is 9.0 millimeters, the relative permittivity of the dielectric is 2.2. The specific capacitance will be 64.5 picofarad per meter.
