@@ -9,7 +9,7 @@ from symplyphysics import (
 from symplyphysics.definitions import lorentz_factor
 
 # Description
-## The speed of an object is 2e5 km/s. Its Lorentz factor is 1.32
+## The speed of an object is 2e5 km/s. Its Lorentz factor is 1.34
 
 Args = namedtuple("Args", "v")
 
