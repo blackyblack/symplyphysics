@@ -56,7 +56,7 @@ def print_law() -> str:
     pressure_change_=pressure_change,
 )
 @validate_output(enthalpy_change)
-def calculate_entropy_change(
+def calculate_enthalpy_change(
     temperature_: Quantity,
     entropy_change_: Quantity,
     volume_: Quantity,
