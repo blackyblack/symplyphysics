@@ -3,7 +3,7 @@ from pytest import fixture, raises
 from sympy import pi
 from symplyphysics import (errors, units, Quantity, assert_equal,)
 
-from symplyphysics.laws.electricity.circuits import attenuation_coefficient_in_dielectric as coefficient_law
+from symplyphysics.laws.electricity.waveguides import attenuation_coefficient_in_dielectric as coefficient_law
 
 ## Parameters of the coaxial waveguide: the relative permittivity of the dielectric is 2.2, the relative permeability of the dielectric is 1,
 ## the tangent of the dielectric loss angle is 1e-4. The angular frequency of signal is 2 * pi * 100e6 radians per second.

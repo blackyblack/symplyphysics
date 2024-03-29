@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (errors, units, Quantity, assert_equal,)
 
-from symplyphysics.laws.electricity.circuits import phase_velocity_of_wave_in_rectangular_waveguide as velocity_law
+from symplyphysics.laws.electricity.waveguides import phase_velocity_of_wave_in_rectangular_waveguide as velocity_law
 
 ## The critical wavelength is 17.9 millimeters.The wavelength is 10 millimeters.
 ## The relative permittivity of the dielectric is 2.2, the relative permeability of the dielectric is 1.

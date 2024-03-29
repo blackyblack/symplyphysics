@@ -3,7 +3,7 @@ from pytest import fixture, raises
 from sympy import pi
 from symplyphysics import (errors, units, Quantity, assert_equal,)
 
-from symplyphysics.laws.electricity.circuits import attenuation_coefficient_in_dielectric_in_rectangular_waveguide as coefficient_law
+from symplyphysics.laws.electricity.waveguides import attenuation_coefficient_in_dielectric_in_rectangular_waveguide as coefficient_law
 
 ## The resistance of the waveguide is 306.45 ohm. The resistance of the material filling the waveguide is equal to 254.167 ohm.
 ## the tangent of the dielectric loss angle is 1e-4. The wavelength is equal to 10 millimeter.

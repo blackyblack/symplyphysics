@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (errors, units, Quantity, assert_equal,)
 
-from symplyphysics.laws.electricity.circuits import critical_wavelength_in_rectangular_waveguide as wavelength_law
+from symplyphysics.laws.electricity.waveguides import critical_wavelength_in_rectangular_waveguide as wavelength_law
 
 ## Parameters of a rectangular waveguide: width is 2 centimeters, height is 1 cm. The first index is 1, the second index is 1.
 ## The critical wavelength will be 17.9 millimeters.

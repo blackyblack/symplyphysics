@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy import pi
 from symplyphysics import (assert_equal, units, Quantity, errors, prefixes)
-from symplyphysics.laws.electricity.circuits import attenuation_coefficient_in_metal as coefficient_law
+from symplyphysics.laws.electricity.waveguides import attenuation_coefficient_in_metal as coefficient_law
 
 # Description
 ## Parameters of the coaxial waveguide: the diameter of the inner wire is 1.35 millimeters, the diameter of the outer conductor

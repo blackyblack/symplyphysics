@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy import pi
 from symplyphysics import (assert_equal, units, Quantity, errors, prefixes,)
-from symplyphysics.laws.electricity.circuits import attenuation_coefficient_in_metal_in_rectangular_waveguide_for_transverse_magnetic_waves as coefficient_law
+from symplyphysics.laws.electricity.waveguides import attenuation_coefficient_in_metal_in_rectangular_waveguide_for_transverse_magnetic_waves as coefficient_law
 
 # Description
 ## The surface resistance is 2.576 milliohm. 

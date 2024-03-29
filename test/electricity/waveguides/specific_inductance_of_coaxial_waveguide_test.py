@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (errors, units, Quantity, assert_equal, prefixes)
 
-from symplyphysics.laws.electricity.circuits import specific_inductance_of_coaxial_waveguide as inductance_law
+from symplyphysics.laws.electricity.waveguides import specific_inductance_of_coaxial_waveguide as inductance_law
 
 ## Parameters of the coaxial waveguide: the radius of the inner wire is 1.35 millimeters, the radius of the outer conductor
 ## is 9.0 millimeters, the relative permeability of the dielectric is 1. The specific inductance will be 379.424 nanohenry per meter.

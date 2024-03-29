@@ -3,7 +3,7 @@ from pytest import fixture, raises
 from sympy import pi
 from symplyphysics import (errors, units, Quantity, assert_equal, prefixes)
 
-from symplyphysics.laws.electricity.circuits import specific_conductivity_of_coaxial_waveguide as conductivity_law
+from symplyphysics.laws.electricity.waveguides import specific_conductivity_of_coaxial_waveguide as conductivity_law
 
 ## Parameters of the coaxial waveguide: the tangent of the dielectric loss angle is 1e-4, the specific capacitance is 64.5 picofarad per meter.
 ## The angular frequency of signal is 2 * pi * 100e6 radians per second. The specific conductivity will be 4.053 microsiemens per meter.
