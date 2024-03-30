@@ -5,8 +5,6 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 
 # Description
 ## A rectangular waveguide is a rectangular metal waveguide capable of supporting waves propagating along it.
-## There is a critical wavelength. Signals with a wavelength greater than the critical one are attenuated and
-## do not propagate in the waveguide.
 ## The main wave is a transverse electric wave with the first index equal to 1 and the second index equal to 0.
 ## The first index shows how many half-wave lengths fit horizontally across the cross section. The second index
 ## shows how many half-wave lengths fit vertically across the cross section.
@@ -43,7 +41,7 @@ def print_law() -> str:
     material_resistance_=material_resistance,
     electric_intensity_=electric_intensity)
 @validate_output(waveguide_power)
-def calculate_waveguide_power(waveguide_width_: float, waveguide_height_: float,
+def calculate_waveguide_power(waveguide_width_: Quantity, waveguide_height_: Quantity,
     wavelength_: Quantity, material_resistance_: Quantity,
     electric_intensity_: Quantity) -> Quantity:
     result_expr = solve(law, waveguide_power, dict=True)[0][waveguide_power]
