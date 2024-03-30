@@ -21,17 +21,17 @@ from symplyphysics import (
 ## r - radius of Newton's ring,
 ## k - order of interference,
 ## R - radius of curvature of lens
-## L - wavelength in medium surrounding lens and plate,
+## L - wavelength in a vacuum,
 ## n - refractive index of medium between lens and plate.
 
 radius = Symbol("radius", units.length)
 
 wavelength = Symbol("wavelength", units.length)
-order_interference = Symbol("order_interference", dimensionless)
+double_order_interference = Symbol("double_order_interference", dimensionless)
 radius_curvature = Symbol("radius_curvature", units.length)
 refractive_index = Symbol("refractive_index", dimensionless)
 
-law = Eq(radius, sqrt(order_interference * radius_curvature * wavelength / refractive_index))
+law = Eq(radius, sqrt(double_order_interference * radius_curvature * wavelength / refractive_index))
 
 
 def print_law() -> str:
@@ -39,21 +39,18 @@ def print_law() -> str:
 
 
 @validate_input(wavelength_=wavelength,
-    order_interference_=order_interference,
+    double_order_interference_=double_order_interference,
     refractive_index_=refractive_index,
     radius_curvature_=radius_curvature)
 @validate_output(radius)
-def calculate_radius(wavelength_: Quantity, order_interference_: float, refractive_index_: float, radius_curvature_: Quantity) -> Quantity:
-    check = order_interference_ * 2 % 2
-    if not (isinstance(order_interference_, int) or check == 1 or check == 0):
-        raise ValueError("order_interference_ must be an integer or an odd number divided by 2.")
-    if order_interference_ <= 0:
-        raise ValueError("order_interference_ must be greater than 0.") 
+def calculate_radius(wavelength_: Quantity, double_order_interference_: int, refractive_index_: float, radius_curvature_: Quantity) -> Quantity:
+    if double_order_interference_ <= 0:
+        raise ValueError("double order interference must be greater than 0.") 
 
     result_expr = solve(law, radius, dict=True)[0][radius]
     result_expr = result_expr.subs({
         wavelength: wavelength_,
-        order_interference: order_interference_,
+        double_order_interference: double_order_interference_,
         refractive_index: refractive_index_,
         radius_curvature: radius_curvature_,
     })
