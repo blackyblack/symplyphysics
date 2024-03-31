@@ -11,7 +11,7 @@ class Point:
     # may contain not number but sympy expression, eg C.x
     _coordinates: list[Coordinate] = []
 
-    def __init__(self, *coordinates: Coordinate):
+    def __init__(self, *coordinates: Coordinate) -> None:
         self._coordinates = list(coordinates)
 
     @property
@@ -23,7 +23,7 @@ class Point:
             return 0
         return self._coordinates[index]
 
-    def set_coordinate(self, index: int, value: Coordinate):
+    def set_coordinate(self, index: int, value: Coordinate) -> None:
         if value is None:
             value = 0
         if len(self._coordinates) <= index:

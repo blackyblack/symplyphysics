@@ -13,6 +13,9 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, angle_type
 ## ω is angular velocity
 ## R is curve radius in this point of trajectory.
 
+# Note
+## - This formula also applies to the speed of the center of mass of a wheel that is rolling smoothly.
+
 linear_velocity = Symbol("linear_velocity", units.velocity)
 angular_velocity = Symbol("angular_velocity", angle_type / units.time)
 curve_radius = Symbol("curve_radius", units.length)

@@ -1,10 +1,9 @@
 from __future__ import annotations
 from functools import partial
-from typing import Callable, Sequence, TypeAlias
+from typing import Callable, Sequence, TypeAlias, TypeVar
 from sympy import Expr, sympify
 from sympy.vector import Vector as SymVector
 
-from .scalar_field import AnyPoint
 from ..points.point import Point
 from ..points.cartesian_point import CartesianPoint
 from ..points.sphere_point import SpherePoint
@@ -13,7 +12,8 @@ from ..coordinate_systems.coordinate_systems import CoordinateSystem
 from ..vectors.vectors import Vector
 from ...core.dimensions import ScalarValue
 
-FieldFunction: TypeAlias = Callable[[AnyPoint], Sequence[ScalarValue]] | Sequence[ScalarValue]
+T = TypeVar("T", bound="Point")
+FieldFunction: TypeAlias = Callable[[T], Sequence[ScalarValue]] | Sequence[ScalarValue]
 
 
 def _subs_with_point(expr: Sequence[ScalarValue], coordinate_system: CoordinateSystem,
@@ -38,9 +38,11 @@ class VectorField:
     #      that allows rebasing vector field to different coordinate systems.
     _coordinate_system: CoordinateSystem
 
-    def __init__(self,
+    def __init__(
+        self,
         point_function: FieldFunction,
-        coordinate_system: CoordinateSystem = CoordinateSystem(CoordinateSystem.System.CARTESIAN)):
+        coordinate_system: CoordinateSystem = CoordinateSystem(CoordinateSystem.System.CARTESIAN)
+    ) -> None:
         self._point_function = point_function
         self._coordinate_system = coordinate_system
 
@@ -96,7 +98,7 @@ class VectorField:
     # Applies field to a trajectory / surface / volume - calls field functions with each element of the trajectory as parameter.
     # trajectory_ - list of expressions that correspond to a function in some space, eg [param, param] for a linear function y = x
     # return - vector parametrized by trajectory parameters.
-    def apply(self, trajectory_: Sequence[Expr]) -> Vector:
+    def apply(self, trajectory_: Sequence[Expr | float]) -> Vector:
         trajectory_as_point = Point(*trajectory_)
         if self._coordinate_system.coord_system_type == CoordinateSystem.System.CARTESIAN:
             trajectory_as_point = CartesianPoint(*trajectory_)

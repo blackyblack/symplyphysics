@@ -1,30 +1,28 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.conservation import momentum_of_colliding_objects_is_constant as conservation_law
 
+Args = namedtuple("Args", ["Ps"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     Ps = Quantity(5 * units.kilogram * units.meter / units.second)
-    Args = namedtuple("Args", ["Ps"])
     return Args(Ps=Ps)
 
 
-def test_basic_conservation(test_args):
+def test_basic_conservation(test_args: Args) -> None:
     result = conservation_law.calculate_momentum_after(test_args.Ps)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.momentum)
-    result_ = convert_to(result, units.kilogram * units.meter / units.second).evalf(2)
-    assert result_ == approx(5.0, 0.01)
+    assert_equal(result, 5 * units.kilogram * units.meter / units.second)
 
 
-def test_bad_momentum():
+def test_bad_momentum() -> None:
     Pb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         conservation_law.calculate_momentum_after(Pb)

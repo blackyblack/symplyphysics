@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
-from sympy import solve, symbols, Symbol
+from sympy import Symbol
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
-from symplyphysics import (print_expression, units, Quantity, convert_to)
 
 from symplyphysics.laws.electricity import force_from_charge_and_distance as coulomb_law
 

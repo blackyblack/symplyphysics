@@ -1,13 +1,6 @@
 from sympy import (Eq, solve, sin)
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    print_expression,
-    validate_input,
-    validate_output,
-    angle_type
-)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output, angle_type)
 
 # Description
 ## Lorentz force is force acting on a charge moving at speed from magnetic field.
@@ -38,7 +31,8 @@ def print_law() -> str:
 
 @validate_input(charge_=charge, velocity_=velocity, angle_=angle, induction_=induction)
 @validate_output(force)
-def calculate_force(charge_: Quantity, velocity_: Quantity, angle_: float | Quantity, induction_: Quantity) -> Quantity:
+def calculate_force(charge_: Quantity, velocity_: Quantity, angle_: float | Quantity,
+    induction_: Quantity) -> Quantity:
     result_expr = solve(law, force, dict=True)[0][force]
     result_expr = result_expr.subs({
         charge: charge_,

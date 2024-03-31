@@ -33,9 +33,9 @@ from symplyphysics import (
 
 wavenumber = Symbol("wavenumber", 1 / units.length)
 energy_function = Function("energy_function", units.energy)
-mass = Symbol("mass", units.mass)
+effective_mass = Symbol("mass", units.mass)
 
-law = Eq(mass, ((planck_constant / 2 / pi)**2) / Derivative(energy_function(wavenumber),
+law = Eq(effective_mass, ((planck_constant / 2 / pi)**2) / Derivative(energy_function(wavenumber),
     (wavenumber, 2)))
 
 
@@ -49,12 +49,12 @@ def apply_energy_function(energy_function_: Expr) -> Expr:
 
 
 @validate_input(wavenumber_=wavenumber)
-@validate_output(mass)
+@validate_output(effective_mass)
 def calculate_mass(energy_function_: Expr, wavenumber_: Quantity) -> Quantity:
     energy_function_quantity = Quantity(energy_function_)
     assert SI.get_dimension_system().equivalent_dims(energy_function_quantity.dimension,
         energy_function.dimension)
     applied_law = apply_energy_function(energy_function_)
     result_expr = applied_law.subs(wavenumber, wavenumber_)
-    result = solve(result_expr, mass, dict=True)[0][mass]
+    result = solve(result_expr, effective_mass, dict=True)[0][effective_mass]
     return Quantity(result)

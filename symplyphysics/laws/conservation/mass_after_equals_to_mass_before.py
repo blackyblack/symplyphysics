@@ -16,23 +16,25 @@ from symplyphysics.laws.conservation import mass_is_constant
 
 time_before = Symbol("time_before", units.time)
 time_after = Symbol("time_after", units.time)
-mass = Function("mass", units.mass)
+mass_function = Function("mass_function", units.mass)
 
-law = Eq(mass(time_after), mass(time_before))
+law = Eq(mass_function(time_after), mass_function(time_before))
 
 # Derive the same law from constant mass
 
 ## dsolve() shows that solution is constant C1
-dsolved = dsolve(mass_is_constant.law, mass_is_constant.mass(mass_is_constant.time))
+dsolved = dsolve(mass_is_constant.law, mass_is_constant.mass_function(mass_is_constant.time))
 
 mass_before_eq = dsolved.subs(mass_is_constant.time, time_before)
-mass_before_eq = mass_before_eq.subs(mass_is_constant.mass(time_before), mass(time_before))
+mass_before_eq = mass_before_eq.subs(mass_is_constant.mass_function(time_before),
+    mass_function(time_before))
 mass_after_eq = dsolved.subs(mass_is_constant.time, time_after)
-mass_after_eq = mass_after_eq.subs(mass_is_constant.mass(time_after), mass(time_after))
+mass_after_eq = mass_after_eq.subs(mass_is_constant.mass_function(time_after),
+    mass_function(time_after))
 
 ## Show that when mass is constant, mass_before equals to mass_after
-mass_after_solved = solve([mass_after_eq, mass_before_eq], (mass(time_after), "C1"),
-    dict=True)[0][mass(time_after)]
+mass_after_solved = solve([mass_after_eq, mass_before_eq], (mass_function(time_after), "C1"),
+    dict=True)[0][mass_function(time_after)]
 assert expr_equals(mass_after_solved, law.rhs)
 
 
@@ -40,9 +42,9 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(mass_before_=mass)
-@validate_output(mass)
+@validate_input(mass_before_=mass_function)
+@validate_output(mass_function)
 def calculate_mass_after(mass_before_: Quantity) -> Quantity:
-    solved = solve(law, mass(time_after), dict=True)[0][mass(time_after)]
-    result_expr = solved.subs(mass(time_before), mass_before_)
+    solved = solve(law, mass_function(time_after), dict=True)[0][mass_function(time_after)]
+    result_expr = solved.subs(mass_function(time_before), mass_before_)
     return Quantity(result_expr)

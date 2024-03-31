@@ -2,6 +2,7 @@ from sympy import (Eq, cos, solve, sqrt)
 from sympy.physics.units import speed_of_light
 from symplyphysics import (angle_type, units, Quantity, Symbol, print_expression, validate_input,
     validate_output)
+from symplyphysics.core.symbols.quantities import scale_factor
 
 # Description
 ## See [doppler effect](./longitudinal_frequency_shift_from_velocity.py) description. When objects are not moving collinear, one
@@ -45,8 +46,7 @@ def print_law() -> str:
 def calculate_observed_frequency(real_frequency_: Quantity, relative_speed_: Quantity,
     source_angle_: float | Quantity) -> Quantity:
     #HACK: sympy angles are always in radians
-    source_angle_radians = source_angle_.scale_factor if isinstance(source_angle_,
-        Quantity) else source_angle_
+    source_angle_radians = scale_factor(source_angle_)
     result_expr = solve(law, observed_frequency, dict=True)[0][observed_frequency]
     frequency_applied = result_expr.subs({
         real_frequency: real_frequency_,

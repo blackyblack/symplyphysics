@@ -1,6 +1,5 @@
 from symplyphysics import Vector, scale_vector
 from symplyphysics.core.fields.scalar_field import ScalarField
-from symplyphysics.core.fields.vector_field import VectorField
 from symplyphysics.core.fields.operators import gradient_operator
 
 # Description

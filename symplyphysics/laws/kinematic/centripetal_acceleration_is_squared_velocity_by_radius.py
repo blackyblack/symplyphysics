@@ -6,7 +6,7 @@ from symplyphysics.core.vectors.arithmetics import dot_vectors
 from symplyphysics.definitions import velocity_is_movement_derivative as velocity_def
 from symplyphysics.definitions import angular_velocity_is_angle_derivative as angular_velocity_def
 from symplyphysics.definitions import acceleration_is_velocity_derivative as acceleration_def
-from symplyphysics.laws.kinematic import planar_projection_is_cosine as projector
+from symplyphysics.laws.geometry import planar_projection_is_cosine as projector
 from symplyphysics.laws.kinematic import linear_velocity_from_angular_velocity_and_radius as linear_velocity_law
 
 # Description

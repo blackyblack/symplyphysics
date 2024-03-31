@@ -1,11 +1,12 @@
 from pytest import raises
-from sympy import Derivative, cos, pi
+from sympy import Derivative, cos, pi, Symbol as SymSymbol
 from symplyphysics import (units, Quantity, SI, dimensionless)
+from symplyphysics.core.symbols.quantities import scale_factor
 
 # Test Quantity constructor
 
 
-def test_basic_quantity():
+def test_basic_quantity() -> None:
     a = Quantity(10 * units.meter / units.second)
     expr = a
     q = Quantity(expr)
@@ -13,7 +14,7 @@ def test_basic_quantity():
     assert SI.get_dimension_system().equivalent_dims(q.dimension, units.speed)
 
 
-def test_prefixed_quantity():
+def test_prefixed_quantity() -> None:
     a = Quantity(10 * units.kilometer)
     expr = a
     q = Quantity(expr)
@@ -21,7 +22,7 @@ def test_prefixed_quantity():
     assert SI.get_dimension_system().equivalent_dims(q.dimension, units.length)
 
 
-def test_dimensionless_quantity():
+def test_dimensionless_quantity() -> None:
     a = Quantity(10)
     expr = a
     q = Quantity(expr)
@@ -29,7 +30,7 @@ def test_dimensionless_quantity():
     assert SI.get_dimension_system().equivalent_dims(q.dimension, dimensionless)
 
 
-def test_sum_quantity():
+def test_sum_quantity() -> None:
     a = Quantity(10 * units.meter / units.second)
     b = Quantity(5 * units.meter / units.second)
     expr = a + b
@@ -43,7 +44,7 @@ def test_sum_quantity():
     assert SI.get_dimension_system().equivalent_dims(q.dimension, units.speed)
 
 
-def test_invalid_sum_quantity():
+def test_invalid_sum_quantity() -> None:
     a = Quantity(10 * units.meter / units.second)
     b = Quantity(5 * units.meter)
     expr = a + b
@@ -54,7 +55,7 @@ def test_invalid_sum_quantity():
         Quantity(expr)
 
 
-def test_mul_quantity():
+def test_mul_quantity() -> None:
     a = Quantity(10 * units.meter / units.second)
     b = Quantity(5 * units.second)
     expr = a * b
@@ -68,7 +69,7 @@ def test_mul_quantity():
     assert SI.get_dimension_system().equivalent_dims(q.dimension, units.length)
 
 
-def test_pow_quantity():
+def test_pow_quantity() -> None:
     a = Quantity(10 * units.meter / units.second)
     b = Quantity(2)
     expr = a**b
@@ -77,7 +78,7 @@ def test_pow_quantity():
     assert SI.get_dimension_system().equivalent_dims(q.dimension, units.speed**2)
 
 
-def test_invalid_pow_quantity():
+def test_invalid_pow_quantity() -> None:
     a = Quantity(10 * units.meter / units.second)
     b = Quantity(2)
     expr = b**a
@@ -85,20 +86,20 @@ def test_invalid_pow_quantity():
         Quantity(expr)
 
 
-def test_dimension_quantity():
+def test_dimension_quantity() -> None:
     q = Quantity(units.length)
     assert q.scale_factor == 1
     assert SI.get_dimension_system().equivalent_dims(q.dimension, units.length)
 
 
-def test_invalid_derivative_quantity():
+def test_invalid_derivative_quantity() -> None:
     a = Quantity(10 * units.second)
     expr = Derivative(a**2, a)
     with raises(ValueError):
         Quantity(expr)
 
 
-def test_function_quantity():
+def test_function_quantity() -> None:
     a = Quantity(pi)
     expr = cos(a)
     # Make sure it is unevaluated
@@ -108,7 +109,7 @@ def test_function_quantity():
     assert SI.get_dimension_system().equivalent_dims(q.dimension, dimensionless)
 
 
-def test_invalid_function_quantity():
+def test_invalid_function_quantity() -> None:
     a = Quantity(pi * units.second)
     expr = cos(a)
     # Make sure it is unevaluated
@@ -117,7 +118,7 @@ def test_invalid_function_quantity():
         Quantity(expr)
 
 
-def test_dimensionless_expr_function_quantity():
+def test_dimensionless_expr_function_quantity() -> None:
     a = Quantity(pi * units.second)
     b = Quantity(1 * units.second)
     expr = cos(a / b)
@@ -126,3 +127,21 @@ def test_dimensionless_expr_function_quantity():
     q = Quantity(expr)
     assert q.scale_factor == -1
     assert SI.get_dimension_system().equivalent_dims(q.dimension, dimensionless)
+
+
+def test_scale_factor() -> None:
+    a_quantity = Quantity(1.0 * units.ampere)
+    a_float = 1.0
+    assert scale_factor(a_quantity) == 1.0
+    assert scale_factor(a_float) == 1.0
+
+
+def test_invalid_free_symbol_quantity() -> None:
+    a = Quantity(10 * units.meter / units.second)
+    b = SymSymbol("b")
+    expr = a * b
+    with raises(ValueError):
+        Quantity(expr)
+    expr = b * a
+    with raises(ValueError):
+        Quantity(expr)

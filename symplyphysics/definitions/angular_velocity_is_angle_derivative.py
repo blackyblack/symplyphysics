@@ -1,6 +1,7 @@
 from sympy import (Eq, Derivative)
 from symplyphysics import (angle_type, units, Quantity, Function, Symbol, print_expression,
     validate_input, validate_output)
+from symplyphysics.core.symbols.quantities import scale_factor
 
 # Description
 ## The movement along circle might be easily represented in polar coordinates with the pole in the center of the circle.
@@ -30,9 +31,8 @@ def print_law() -> str:
 def calculate_angular_velocity(angle_start_: Quantity | float, angle_end_: Quantity | float,
     moving_time_: Quantity) -> Quantity:
     #HACK: SymPy angles are always in radians
-    angle_start_radians = angle_start_.scale_factor if isinstance(angle_start_,
-        Quantity) else angle_start_
-    angle_end_radians = angle_end_.scale_factor if isinstance(angle_end_, Quantity) else angle_end_
+    angle_start_radians = scale_factor(angle_start_)
+    angle_end_radians = scale_factor(angle_end_)
     angle_function_ = time * (angle_end_radians - angle_start_radians) / moving_time_
     applied_definition = definition.subs(angle_function(time), angle_function_)
     dsolved = applied_definition.doit()

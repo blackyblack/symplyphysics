@@ -2,7 +2,7 @@ from sympy import (Derivative, Eq, Function as SymFunction, diff, sin, solve, pi
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.kinematic import planar_projection_is_cosine as projector
+from symplyphysics.laws.geometry import planar_projection_is_cosine as projector
 from symplyphysics.laws.dynamics import potential_energy_from_mass_and_height as potential_energy
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_velocity as kinetic_energy
 from symplyphysics.laws.kinematic import linear_velocity_from_angular_velocity_and_radius as angular_velocity_law
@@ -51,7 +51,7 @@ pendulum_height_after = projector.law.subs({
     projector.vector_angle: pendulum_angle(time)
 }).rhs
 amount_of_potential_energy = potential_energy.law.subs({
-    potential_energy.body_mass: pendulum_mass,
+    potential_energy.symbols.basic.mass: pendulum_mass,
     potential_energy.free_fall_acceleration: free_fall_acceleration,
     potential_energy.height: (pendulum_height_before - pendulum_height_after)
 }).rhs
@@ -64,7 +64,7 @@ linear_velocity = angular_velocity_law.law.subs({
     angular_velocity_law.angular_velocity: Derivative(pendulum_angle(time), time),
 }).rhs
 amount_of_kinetic_energy = kinetic_energy.law.subs({
-    kinetic_energy.body_mass: pendulum_mass,
+    kinetic_energy.symbols.basic.mass: pendulum_mass,
     kinetic_energy.body_velocity: linear_velocity
 }).rhs
 

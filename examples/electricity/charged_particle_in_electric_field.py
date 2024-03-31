@@ -34,9 +34,9 @@ electrostatic_force_y_expr = sympify(electrostatic_force_vector.components[1])
 electrostatic_force_y = electrostatic_force_y_expr.subs(electric_field_law.test_charge, drop_charge)
 
 drop_acceleration_y = solve(acceleration_from_force.law,
-    acceleration_from_force.acceleration)[0].subs({
-    acceleration_from_force.force: electrostatic_force_y,
-    acceleration_from_force.mass: drop_mass,
+    acceleration_from_force.symbols.kinematic.acceleration)[0].subs({
+    acceleration_from_force.symbols.dynamics.force: electrostatic_force_y,
+    acceleration_from_force.symbols.basic.mass: drop_mass,
     })
 
 movement_time = symbols("movement_time")
