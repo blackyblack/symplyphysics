@@ -18,8 +18,8 @@ from symplyphysics import (
 ## point with the same faces and demonstrate interference.
 
 ## Law is: r = sqrt(k * R * L / n), where
-## r - radius of Newton's ring,
-## k - order of interference,
+## r - radius of dark Newton's ring,
+## k - order of ring,
 ## R - radius of curvature of lens
 ## L - wavelength in a vacuum,
 ## n - refractive index of medium between lens and plate.
@@ -27,11 +27,11 @@ from symplyphysics import (
 radius = Symbol("radius", units.length)
 
 wavelength = Symbol("wavelength", units.length)
-double_order_interference = Symbol("double_order_interference", dimensionless)
+order_of_ring = Symbol("order_of_ring", dimensionless)
 radius_curvature = Symbol("radius_curvature", units.length)
-refractive_index = Symbol("refractive_index", dimensionless)
+refractive_index_between_lens_plate = Symbol("refractive_index_between_lens_plate", dimensionless)
 
-law = Eq(radius, sqrt(double_order_interference * radius_curvature * wavelength / refractive_index))
+law = Eq(radius, sqrt(order_of_ring * radius_curvature * wavelength / refractive_index_between_lens_plate))
 
 
 def print_law() -> str:
@@ -39,19 +39,19 @@ def print_law() -> str:
 
 
 @validate_input(wavelength_=wavelength,
-    double_order_interference_=double_order_interference,
-    refractive_index_=refractive_index,
+    order_of_ring_=order_of_ring,
+    refractive_index_between_lens_plate_=refractive_index_between_lens_plate,
     radius_curvature_=radius_curvature)
 @validate_output(radius)
-def calculate_radius(wavelength_: Quantity, double_order_interference_: int, refractive_index_: float, radius_curvature_: Quantity) -> Quantity:
-    if double_order_interference_ <= 0:
-        raise ValueError("double order interference must be greater than 0.") 
+def calculate_radius(wavelength_: Quantity, order_of_ring_: int, refractive_index_between_lens_plate_: float, radius_curvature_: Quantity) -> Quantity:
+    if order_of_ring_ <= 0:
+        raise ValueError("Order of ring must be greater than 0.") 
 
     result_expr = solve(law, radius, dict=True)[0][radius]
     result_expr = result_expr.subs({
         wavelength: wavelength_,
-        double_order_interference: double_order_interference_,
-        refractive_index: refractive_index_,
+        order_of_ring: order_of_ring_,
+        refractive_index_between_lens_plate: refractive_index_between_lens_plate_,
         radius_curvature: radius_curvature_,
     })
     return Quantity(result_expr)
