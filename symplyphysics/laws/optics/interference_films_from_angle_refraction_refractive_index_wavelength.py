@@ -31,11 +31,11 @@ from symplyphysics import (
 film_thickness = Symbol("film_thickness", units.length)
 
 wavelength = Symbol("wavelength", units.length)
-double_order_interference = Symbol("double_order_interference", dimensionless)
+order_interference = Symbol("order_interference", dimensionless)
 angle_refraction = Symbol("angle_refraction", angle_type)
 refractive_index = Symbol("refractive_index", dimensionless)
 
-law = Eq(film_thickness, double_order_interference * wavelength / (2 * refractive_index * cos(angle_refraction)))
+law = Eq(film_thickness, order_interference * wavelength / (2 * refractive_index * cos(angle_refraction)))
 
 
 def print_law() -> str:
@@ -43,18 +43,18 @@ def print_law() -> str:
 
 
 @validate_input(wavelength_=wavelength,
-    double_order_interference_=double_order_interference,
+    order_interference_=order_interference,
     refractive_index_=refractive_index,
     angle_refraction_=angle_refraction)
 @validate_output(film_thickness)
-def calculate_film_thickness(wavelength_: Quantity, double_order_interference_: int, refractive_index_: float, angle_refraction_: float | Quantity) -> Quantity:
-    if double_order_interference_ <= 0:
-        raise ValueError("double_order_interference_ must be greater than 0.") 
+def calculate_film_thickness(wavelength_: Quantity, order_interference_: int, refractive_index_: float, angle_refraction_: float | Quantity) -> Quantity:
+    if order_interference_ <= 0:
+        raise ValueError("Order interference must be greater than 0.") 
 
     result_expr = solve(law, film_thickness, dict=True)[0][film_thickness]
     result_expr = result_expr.subs({
         wavelength: wavelength_,
-        double_order_interference: double_order_interference_,
+        order_interference: order_interference_,
         refractive_index: refractive_index_,
         angle_refraction: angle_refraction_,
     })
