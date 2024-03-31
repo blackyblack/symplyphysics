@@ -1,6 +1,6 @@
 from __future__ import annotations
 from typing import Any, Optional, Sequence, Self
-from sympy import S, Symbol as SymSymbol, Expr, Equality
+from sympy import S, Symbol as SymSymbol, Expr, Equality, IndexedBase
 from sympy.physics.units import Dimension
 from sympy.core.function import UndefinedFunction
 from sympy.printing.pretty.pretty import PrettyPrinter
@@ -44,6 +44,31 @@ class Symbol(DimensionSymbol, SymSymbol):  # pylint: disable=too-many-ancestors
         super().__init__(display_name, dimension)
 
 
+class SymbolIndexed(DimensionSymbol, IndexedBase):  # pylint: disable=too-many-ancestors
+
+    def __new__(cls,
+        name_or_symbol: Optional[str | SymSymbol] = None,
+        _dimension: Dimension = Dimension(S.One),
+        **assumptions: Any) -> Self:
+        # SymPy subs() and solve() creates dummy symbols. Allow create new indexed symbols
+        # without renaming
+        if isinstance(name_or_symbol, SymSymbol):
+            return IndexedBase.__new__(cls, name_or_symbol, **assumptions)
+        name = next_name("SYM") if name_or_symbol is None else next_name(name_or_symbol)
+        obj = IndexedBase.__new__(cls, name, **assumptions)
+        return obj
+
+    def __init__(self,
+        display_name: Optional[str] = None,
+        dimension: Dimension = Dimension(S.One),
+        **_assumptions: Any) -> None:
+        display_name = self.name if display_name is None else display_name
+        super().__init__(display_name, dimension)
+
+    def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
+        pass
+
+
 class Function(DimensionSymbol, UndefinedFunction):
 
     name: str
@@ -83,6 +108,12 @@ class SymbolPrinter(PrettyPrinter):
         symb = pretty_symbol(symb_name, bold_name)
         return prettyForm(symb)
 
+    # pylint: disable-next=invalid-name
+    def _print_SymbolIndexed(self, e: Expr, bold_name: bool = False) -> prettyForm:
+        symb_name = e.display_name if isinstance(e, SymbolIndexed) else getattr(e, "name")
+        symb = pretty_symbol(symb_name, bold_name)
+        return prettyForm(symb)
+
     # pylint: disable-next=too-many-arguments
     def _print_Function(self,
         e: Expr,
@@ -103,6 +134,10 @@ class SymbolPrinter(PrettyPrinter):
     # pylint: disable-next=invalid-name
     def _print_SumArray(self, e: Expr) -> prettyForm:
         return self._print_Function(e, func_name="SumArray")
+
+    # pylint: disable-next=invalid-name
+    def _print_SumIndexed(self, e: Expr) -> prettyForm:
+        return self._print_Function(e, func_name="SumIndexed")
 
 
 def next_name(name: str) -> str:

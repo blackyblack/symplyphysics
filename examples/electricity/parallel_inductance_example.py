@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 
-from sympy import solve, simplify
+from sympy import Idx, solve, simplify
 from symplyphysics import (print_expression, units, Symbol)
-from symplyphysics.core.symbols.symbols import tuple_of_symbols
 from symplyphysics.laws.electricity import coil_impedance_from_inductivity_and_frequency as coil_impedance_law
 from symplyphysics.definitions import admittance_is_inversed_impedance as admittance_def
 from symplyphysics.laws.electricity.circuits import admittance_of_parallel_dipoles as parallel_admittance_law
@@ -28,14 +27,13 @@ admittance_2 = admittance_solved.subs(coil_impedance_law.coil_inductivity, induc
 admittances = [admittance_1, admittance_2]
 
 # Then apply parallel admittance law
-admittance_symbols = tuple_of_symbols("admittance", units.conductance, len(admittances))
-admittances_law = parallel_admittance_law.law.subs(parallel_admittance_law.admittances,
-    admittance_symbols).doit()
-solved = solve(admittances_law, parallel_admittance_law.parallel_admittance,
+index_local = Idx("index_local", (1, len(admittances)))
+admittances_law = parallel_admittance_law.law.subs(parallel_admittance_law.admittance_index, index_local).doit()
+for (from_, to_) in zip(range(1, len(admittances) + 1), admittances):
+    admittances_law = admittances_law.subs(parallel_admittance_law.admittance[from_], to_)
+
+result_admittance = solve(admittances_law, parallel_admittance_law.parallel_admittance,
     dict=True)[0][parallel_admittance_law.parallel_admittance]
-for (from_, to_) in zip(admittance_symbols, admittances):
-    solved = solved.subs(from_, to_)
-result_admittance = solved
 
 # And finally find resulting inductivity back through the impedance
 result_impedance = solve(admittance_def.definition, admittance_def.dipole_impedance,

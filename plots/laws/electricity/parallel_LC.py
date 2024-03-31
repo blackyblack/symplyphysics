@@ -7,7 +7,7 @@
 ## This is a resonant frequency of this circuit.
 ## Also we have here a real LC with some resistive leakage. Resonant frequency stays the same as ideal LC, but resonant peak is not so sharp. The sharpness of resonant peak shows quality factor of LC circuit.
 
-from sympy import Abs, solve
+from sympy import Abs, Idx, solve
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import Symbol
@@ -37,17 +37,20 @@ C_admittance = admittance_def.definition.rhs.subs({
     admittance_def.dipole_impedance: C_impedance
 }).subs({capacitor_impedance.capacitor_capacitance: EXAMPLE_CAPACITANCE})
 
-R_impedance = EXAMPLE_RESISTANCE
-R_admittance = admittance_def.definition.rhs.subs({admittance_def.dipole_impedance: R_impedance})
+R_admittance = admittance_def.definition.rhs.subs({admittance_def.dipole_impedance: EXAMPLE_RESISTANCE})
 
 ideal_elements = (L_admittance, C_admittance)
 real_elements = (L_admittance, C_admittance, R_admittance)
 
-admittance_ideal = parallel_admittance_law.law.rhs.subs(parallel_admittance_law.admittances,
-    ideal_elements).doit()
+index_local = Idx("index_local", (1, len(ideal_elements)))
+admittance_ideal = parallel_admittance_law.law.rhs.subs(parallel_admittance_law.admittance_index, index_local).doit()
+for (from_, to_) in zip(range(1, len(ideal_elements) + 1), ideal_elements):
+    admittance_ideal = admittance_ideal.subs(parallel_admittance_law.admittance[from_], to_)
 
-admittance_real = parallel_admittance_law.law.rhs.subs(parallel_admittance_law.admittances,
-    real_elements).doit()
+index_local = Idx("index_local", (1, len(real_elements)))
+admittance_real = parallel_admittance_law.law.rhs.subs(parallel_admittance_law.admittance_index, index_local).doit()
+for (from_, to_) in zip(range(1, len(real_elements) + 1), real_elements):
+    admittance_real = admittance_real.subs(parallel_admittance_law.admittance[from_], to_)
 
 impedance_from_admittance_law = solve(admittance_def.definition,
     admittance_def.dipole_impedance,
