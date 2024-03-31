@@ -1,6 +1,5 @@
 from typing import Sequence
-from symplyphysics import (units, validate_output)
-from symplyphysics.core.dimensions import assert_equivalent_dimension
+from symplyphysics import (units, validate_input, validate_output)
 from symplyphysics.core.vectors.arithmetics import add_cartesian_vectors
 from symplyphysics.core.vectors.vectors import QuantityVector, Vector
 
@@ -15,19 +14,17 @@ from symplyphysics.core.vectors.vectors import QuantityVector, Vector
 
 
 def superposition_law(forces_: Sequence[Vector]) -> Vector:
-    forces_ = list(forces_)
-    result = Vector([]) if len(forces_) == 0 else Vector([], forces_[0].coordinate_system)
+    result = Vector([0, 0, 0], next(iter(forces_)).coordinate_system)
     for f in forces_:
         result = add_cartesian_vectors(result, f)
     return result
 
 
+@validate_input(forces_=units.force)
 @validate_output(units.force)
 def calculate_resultant_force(forces_: Sequence[QuantityVector]) -> QuantityVector:
     if len(forces_) == 0:
-        return QuantityVector([])
-    forces_ = list(forces_)
-    for f in forces_:
-        assert_equivalent_dimension(f.dimension, f.display_name, "calculate_resultant_force",
-            units.force)
-    return QuantityVector(superposition_law(forces_).components, forces_[0].coordinate_system)
+        raise ValueError("At least one force should be present")
+    forces_base_vectors = [f.to_base_vector() for f in forces_]
+    result_force_vector = superposition_law(forces_base_vectors)
+    return QuantityVector.from_base_vector(result_force_vector)

@@ -1,34 +1,32 @@
 from collections import namedtuple
 from sympy import I
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.definitions import admittance_is_inversed_impedance as admittance_def
 
 # Description
-## If the dipole has 2i Ohm impedance, it should have 0.5i Siemens conductivity. No external calculators were used for such computation.
+## If the dipole has 2i Ohm impedance, it should have -0.5i Siemens admittance. No external calculators were used for such computation.
+
+Args = namedtuple("Args", ["Z"])
 
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     Z = Quantity(2 * I * units.ohm)
-    Args = namedtuple("Args", ["Z"])
     return Args(Z=Z)
 
 
-def test_basic_admittance(test_args):
+def test_basic_admittance(test_args: Args) -> None:
     result = admittance_def.calculate_admittance(test_args.Z)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.conductance)
-    result_admittance = abs(convert_to(result, admittance_def.definition_units_SI).evalf(2))
-    assert result_admittance == approx(0.5, 0.001)
+    assert_equal(result, -0.5 * I * units.siemens)
 
 
-def test_bad_impedance():
+def test_bad_impedance() -> None:
     Rb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         admittance_def.calculate_admittance(Rb)

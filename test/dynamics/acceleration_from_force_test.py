@@ -1,31 +1,29 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.dynamics import acceleration_from_force as newton_second_law
 
+Args = namedtuple("Args", ["m", "a"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     m = Quantity(1 * units.kilogram)
     a = Quantity(3 * units.meter / units.second**2)
-    Args = namedtuple("Args", ["m", "a"])
     return Args(m=m, a=a)
 
 
-def test_basic_force(test_args):
+def test_basic_force(test_args: Args) -> None:
     result = newton_second_law.calculate_force(test_args.m, test_args.a)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.force)
-    result_force = convert_to(result, units.newton).evalf(2)
-    assert result_force == approx(3.0, 0.01)
+    assert_equal(result, 3 * units.newton)
 
 
-def test_bad_mass(test_args):
+def test_bad_mass(test_args: Args) -> None:
     mb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         newton_second_law.calculate_force(mb, test_args.a)
@@ -33,7 +31,7 @@ def test_bad_mass(test_args):
         newton_second_law.calculate_force(100, test_args.a)
 
 
-def test_bad_acceleration(test_args):
+def test_bad_acceleration(test_args: Args) -> None:
     ab = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         newton_second_law.calculate_force(test_args.m, ab)

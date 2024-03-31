@@ -1,7 +1,7 @@
 from typing import Sequence
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, print_expression, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, print_expression, validate_input, validate_output,
+    symbols, clone_symbol)
 from symplyphysics.core.operations.sum_array import SumArray
 from symplyphysics.core.symbols.symbols import tuple_of_symbols
 
@@ -17,22 +17,21 @@ from symplyphysics.core.symbols.symbols import tuple_of_symbols
 ##   and they are always inside;
 ## - Mass is not transformed to energy, for example due to annihilation.
 
-masses_of_components = Symbol("masses_of_components", units.mass)
-mass_of_mixture = Symbol("mass_of_mixture", units.mass)
-law = Eq(mass_of_mixture, SumArray(masses_of_components), evaluate=False)
+masses_of_components = clone_symbol(symbols.basic.mass, "masses_of_components")
+law = Eq(symbols.basic.mass, SumArray(masses_of_components), evaluate=False)
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(mass_of_mixture_=mass_of_mixture)
-@validate_output(units.mass)
-def calculate_mass_of_mixture(mass_of_mixture_: Sequence[Quantity]) -> Quantity:
+@validate_input(masses_of_components_=masses_of_components)
+@validate_output(symbols.basic.mass)
+def calculate_mass_of_mixture(masses_of_components_: Sequence[Quantity]) -> Quantity:
     mass_of_component_symbols = tuple_of_symbols("mass_of_component", units.mass,
-        len(mass_of_mixture_))
+        len(masses_of_components_))
     masses_of_components_law = law.subs(masses_of_components, mass_of_component_symbols).doit()
-    solved = solve(masses_of_components_law, mass_of_mixture, dict=True)[0][mass_of_mixture]
-    for (from_, to_) in zip(mass_of_component_symbols, mass_of_mixture_):
+    solved = solve(masses_of_components_law, symbols.basic.mass, dict=True)[0][symbols.basic.mass]
+    for (from_, to_) in zip(mass_of_component_symbols, masses_of_components_):
         solved = solved.subs(from_, to_)
     return Quantity(solved)

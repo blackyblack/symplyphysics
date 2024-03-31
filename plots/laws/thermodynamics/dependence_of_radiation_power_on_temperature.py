@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from sympy import solve, symbols
+from sympy import solve
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import (print_expression, units, Quantity, convert_to)

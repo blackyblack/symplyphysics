@@ -13,7 +13,7 @@ class DimensionSymbol:
     _dimension: Dimension
     _display_name: str
 
-    def __init__(self, display_name: str, dimension: Dimension = Dimension(S.One)):
+    def __init__(self, display_name: str, dimension: Dimension = Dimension(S.One)) -> None:
         self._dimension = dimension
         self._display_name = display_name
 
@@ -39,7 +39,7 @@ class Symbol(DimensionSymbol, SymSymbol):  # pylint: disable=too-many-ancestors
     def __init__(self,
         display_name: Optional[str] = None,
         dimension: Dimension = Dimension(S.One),
-        **_assumptions: Any):
+        **_assumptions: Any) -> None:
         display_name = self.name if display_name is None else display_name
         super().__init__(display_name, dimension)
 
@@ -60,7 +60,7 @@ class Function(DimensionSymbol, UndefinedFunction):
     def __init__(cls,
         display_name: Optional[str] = None,
         dimension: Dimension = Dimension(S.One),
-        **_options: Any):
+        **_options: Any) -> None:
         display_name = cls.name if display_name is None else display_name
         super().__init__(display_name, dimension)
 
@@ -72,7 +72,7 @@ class Function(DimensionSymbol, UndefinedFunction):
 
 class SymbolPrinter(PrettyPrinter):
 
-    def __init__(self, **settings: Any):
+    def __init__(self, **settings: Any) -> None:
         super().__init__(settings)
 
     def is_unicode(self) -> bool:
@@ -125,3 +125,9 @@ def tuple_of_symbols(display_name: str,
     dimension: Dimension = Dimension(S.One),
     length: int = 1) -> tuple[Symbol, ...]:
     return tuple(Symbol(display_name + "_" + str(i), dimension) for i in range(length))
+
+
+def clone_symbol(source: Symbol, display_name: Optional[str] = None, **assumptions: Any) -> Symbol:
+    assumptions = source.assumptions0 if assumptions is None or len(
+        assumptions) == 0 else assumptions
+    return Symbol(display_name, source.dimension, **assumptions)

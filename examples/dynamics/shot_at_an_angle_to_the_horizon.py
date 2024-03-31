@@ -3,7 +3,7 @@
 import math
 from sympy import solve, Symbol, Eq
 from symplyphysics import print_expression
-from symplyphysics.laws.kinematic import planar_projection_is_cosine as projection_velocity
+from symplyphysics.laws.geometry import planar_projection_is_cosine as projection_velocity
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_velocity as kinetic_energy
 
 # The initial velocity of the bullet is 600 m/s, its mass is 10 g.
@@ -26,7 +26,7 @@ velocity_projection_equation = projection_velocity.law.subs(({
 kinetic_energy_equation = kinetic_energy.law.subs({
     kinetic_energy.kinetic_energy_of_body: kinetic_energy_in_peak,
     kinetic_energy.body_velocity: velocity_projection_equation,
-    kinetic_energy.body_mass: mass_of_bullet
+    kinetic_energy.symbols.basic.mass: mass_of_bullet
 })
 print(f"Final equation: {print_expression(kinetic_energy_equation)}")
 

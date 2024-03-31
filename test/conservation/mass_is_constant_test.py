@@ -1,30 +1,28 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.conservation import mass_is_constant as conservation_law
 
+Args = namedtuple("Args", ["ms"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     ms = Quantity(5 * units.kilograms)
-    Args = namedtuple("Args", ["ms"])
     return Args(ms=ms)
 
 
-def test_basic_conservation(test_args):
+def test_basic_conservation(test_args: Args) -> None:
     result = conservation_law.calculate_mass_after(test_args.ms)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.mass)
-    result_ = convert_to(result, units.kilograms).evalf(2)
-    assert result_ == approx(5.0, 0.01)
+    assert_equal(result, 5 * units.kilograms)
 
 
-def test_bad_mass():
+def test_bad_mass() -> None:
     mb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         conservation_law.calculate_mass_after(mb)

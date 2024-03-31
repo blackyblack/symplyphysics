@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.electricity.circuits import conductivity_of_parallel_resistors as parallel_resistor
 
@@ -13,31 +12,28 @@ from symplyphysics.laws.electricity.circuits import conductivity_of_parallel_res
 ## Assert we have two resistors with 1/2 Siemens and 1/4 Siemens conductance.
 ## Accordind to calculator (https://www.chipdip.ru/calc/parallel-resistors) resulting conductance should be 0.75 Siemens.
 
+Args = namedtuple("Args", ["S1", "S2"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     S1 = Quantity(1 / 2 * units.siemens)
     S2 = Quantity(1 / 4 * units.siemens)
-    Args = namedtuple("Args", ["S1", "S2"])
     return Args(S1=S1, S2=S2)
 
 
-def test_basic_conductivity(test_args):
+def test_basic_conductivity(test_args: Args) -> None:
     result = parallel_resistor.calculate_parallel_conductance([test_args.S1, test_args.S2])
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.conductance)
-    result_conductance = convert_to(result, units.siemens).evalf(3)
-    assert result_conductance == approx(0.75, 0.001)
+    assert_equal(result, 0.75 * units.siemens)
 
 
-def test_three_resistors_array(test_args):
+def test_three_resistors_array(test_args: Args) -> None:
     S3 = Quantity(1 * units.siemens)
     result = parallel_resistor.calculate_parallel_conductance([test_args.S1, test_args.S2, S3])
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.conductance)
-    result_conductance = convert_to(result, units.siemens).evalf(3)
-    assert result_conductance == approx(1.75, 0.01)
+    assert_equal(result, 1.75 * units.siemens)
 
 
-def test_bad_conductivity(test_args):
+def test_bad_conductivity(test_args: Args) -> None:
     Sb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         parallel_resistor.calculate_parallel_conductance([Sb, test_args.S2])

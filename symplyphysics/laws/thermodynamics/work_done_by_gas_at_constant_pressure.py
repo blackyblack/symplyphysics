@@ -25,8 +25,8 @@ work = Symbol("work", units.energy)
 law = Eq(work, pressure * (result_volume - init_volume))
 
 
-def print_law():
-    print_expression(law)
+def print_law() -> str:
+    return print_expression(law)
 
 
 @validate_input(pressure_=pressure, init_volume_=init_volume, result_volume_=result_volume)

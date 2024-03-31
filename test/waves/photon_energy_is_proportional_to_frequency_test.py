@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.waves import photon_energy_is_proportional_to_frequency as planck_law
 
@@ -15,22 +14,21 @@ from symplyphysics.laws.waves import photon_energy_is_proportional_to_frequency 
 ## https://www.center-pss.ru/math/raschet-energii-fotona.htm
 ## we obtain energy of single photone equal to 1.9878528e-17 Joule.
 
+Args = namedtuple("Args", ["frequency"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     frequency = Quantity(3e16 * units.hertz)
-    Args = namedtuple("Args", ["frequency"])
     return Args(frequency=frequency)
 
 
-def test_basic_energy(test_args):
+def test_basic_energy(test_args: Args) -> None:
     result = planck_law.calculate_energy(test_args.frequency)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_current = convert_to(result, units.joule).evalf(6)
-    assert result_current == approx(1.9878528e-17, 0.00001)
+    assert_equal(result, 1.9878528e-17 * units.joule)
 
 
-def test_bad_frequency():
+def test_bad_frequency() -> None:
     fb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         planck_law.calculate_energy(fb)

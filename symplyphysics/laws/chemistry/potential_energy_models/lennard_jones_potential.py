@@ -26,10 +26,8 @@ dispersion_energy = Symbol("dispersion_energy", units.energy)
 particle_size = Symbol("particle_size", units.length)
 distance = Symbol("distance", units.length)
 
-law = Eq(
-    potential, 
-    4 * dispersion_energy * ((particle_size / distance)**12 - (particle_size / distance)**6)
-)
+law = Eq(potential,
+    4 * dispersion_energy * ((particle_size / distance)**12 - (particle_size / distance)**6))
 
 
 def print_law() -> str:
@@ -46,7 +44,7 @@ def calculate_potential(
     dispersion_energy_: Quantity,
     particle_size_: Quantity,
     distance_: Quantity,
-):
+) -> Quantity:
     result = law.rhs.subs({
         dispersion_energy: dispersion_energy_,
         particle_size: particle_size_,

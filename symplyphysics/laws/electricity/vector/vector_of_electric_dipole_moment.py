@@ -5,7 +5,6 @@ from symplyphysics import (
     validate_output,
     Quantity,
     scale_vector,
-    list_of_quantities,
 )
 from symplyphysics.core.vectors.vectors import QuantityVector, Vector
 
@@ -30,9 +29,5 @@ def dipole_moment_law(displacement_vector_: Vector) -> Vector:
 @validate_output(units.charge * units.length)
 def calculate_dipole_moment(charge_: Quantity,
     displacement_vector_: QuantityVector) -> QuantityVector:
-    result_dipole_moment = dipole_moment_law(displacement_vector_)
-    dipole_moment_components = list_of_quantities(
-        result_dipole_moment.components,
-        {charge: charge_},
-    )
-    return QuantityVector(dipole_moment_components, displacement_vector_.coordinate_system)
+    result_vector = dipole_moment_law(displacement_vector_.to_base_vector())
+    return QuantityVector.from_base_vector(result_vector, subs={charge: charge_})

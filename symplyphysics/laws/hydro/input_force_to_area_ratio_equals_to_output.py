@@ -60,7 +60,7 @@ def print_law() -> str:
     input_area_=input_area,
     output_forces_area_=output_forces_area)
 @validate_output(output_force)
-def calculate_output_force(input_force_: Quantity, input_area_,
+def calculate_output_force(input_force_: Quantity, input_area_: Quantity,
     output_forces_area_: Quantity) -> Quantity:
     result_expr = solve(law, output_force, dict=True)[0][output_force]
     result_force = result_expr.subs({

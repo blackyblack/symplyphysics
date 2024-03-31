@@ -32,15 +32,17 @@ mass_of_salt_and_sediment = mixture_mass_law.law.subs({
     mixture_mass_law.masses_of_components: (mass_of_salt_after, mass_of_sediment)
 }).doit().rhs
 conservation_salt_mass_equation = conservation_mass_law.law.subs({
-    conservation_mass_law.mass(conservation_mass_law.time_before): mass_of_salt_before_value,
-    conservation_mass_law.mass(conservation_mass_law.time_after): mass_of_salt_and_sediment
+    conservation_mass_law.mass_function(conservation_mass_law.time_before):
+        mass_of_salt_before_value,
+    conservation_mass_law.mass_function(conservation_mass_law.time_after):
+        mass_of_salt_and_sediment
 })
 mass_of_salt_after_value = solve(conservation_salt_mass_equation, mass_of_salt_after,
     dict=True)[0][mass_of_salt_after]
 
 mass_of_mixture_equation = mixture_mass_law.law.subs({
     mixture_mass_law.masses_of_components: (mass_of_water, mass_of_salt_before_value),
-    mixture_mass_law.mass_of_mixture: mass_of_mixture
+    mixture_mass_law.symbols.basic.mass: mass_of_mixture
 }).doit()
 mass_of_water_value = solve(mass_of_mixture_equation, mass_of_water, dict=True)[0][mass_of_water]
 

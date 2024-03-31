@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
     errors,
     units,
     Quantity,
-    SI,
-    convert_to,
+    assert_equal,
 )
 from symplyphysics.laws.chemistry.potential_energy_models import lennard_jones_potential
 
@@ -13,24 +12,23 @@ from symplyphysics.laws.chemistry.potential_energy_models import lennard_jones_p
 ## The value of the Lennard-Jones potential for two interacting Xenon atoms at the distance of
 ## 1 Å is 2.65e-13 J (e = 2.94e-21 J, sigma = 4.1 Å)
 
+Args = namedtuple("Args", "e sigma r")
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     e = Quantity(2.94e-21 * units.joule)
     sigma = Quantity(4.10 * units.angstrom)
     r = Quantity(1.0 * units.angstrom)
-    Args = namedtuple("Args", "e sigma r")
     return Args(e=e, sigma=sigma, r=r)
 
 
-def test_basic_law(test_args):
+def test_basic_law(test_args: Args) -> None:
     result = lennard_jones_potential.calculate_potential(test_args.e, test_args.sigma, test_args.r)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.energy)
-    result_value = convert_to(result, units.joule).evalf(3)
-    assert result_value == approx(2.65e-13, abs=1e-15)
+    assert_equal(result, 2.6529e-13 * units.joule)
 
 
-def test_bad_energy(test_args):
+def test_bad_energy(test_args: Args) -> None:
     eb = Quantity(1.0 * units.second)
     with raises(errors.UnitsError):
         lennard_jones_potential.calculate_potential(eb, test_args.sigma, test_args.r)
@@ -38,7 +36,7 @@ def test_bad_energy(test_args):
         lennard_jones_potential.calculate_potential(100, test_args.sigma, test_args.r)
 
 
-def test_bad_distances(test_args):
+def test_bad_distances(test_args: Args) -> None:
     rb = Quantity(1.0 * units.second)
     with raises(errors.UnitsError):
         lennard_jones_potential.calculate_potential(test_args.e, rb, test_args.r)

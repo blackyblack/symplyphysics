@@ -1,14 +1,7 @@
 from sympy import (Eq, solve)
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    print_expression,
-    validate_input,
-    validate_output,
-    dimensionless
-)
 from sympy.physics.units import faraday_constant
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output, dimensionless)
 
 # Description
 ## Faraday's second law of electrolysis. The equivalent mass of a substance in general in chemistry is its molar mass divided by an integer

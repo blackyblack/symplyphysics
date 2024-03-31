@@ -1,6 +1,6 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from symplyphysics import (units, SI, convert_to, Quantity, errors)
+from pytest import fixture, raises
+from symplyphysics import (assert_equal, units, Quantity, errors)
 from symplyphysics.laws.condensed_matter import resistance_from_temperature as resistance_law
 
 # Description
@@ -8,38 +8,37 @@ from symplyphysics.laws.condensed_matter import resistance_from_temperature as r
 ## and an initial resistance of [25 ohm], the resistance will be 112525 [ohm].
 ## https://www.calculatoratoz.com/ru/temperature-dependence-of-resistance-calculator/Calc-2232
 
+Args = namedtuple("Args", ["resistance_initial", "temperature_coefficient", "temperature"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     resistance_initial = Quantity(25 * units.ohm)
     temperature_coefficient = Quantity(15 * (1 / units.kelvin))
     temperature = Quantity(573.15 * units.kelvin)
 
-    Args = namedtuple("Args",
-        ["resistance_initial", "temperature_coefficient", "temperature"])
     return Args(resistance_initial=resistance_initial,
         temperature_coefficient=temperature_coefficient,
         temperature=temperature)
 
 
-def test_basic_resistance(test_args):
+def test_basic_resistance(test_args: Args) -> None:
     result = resistance_law.calculate_resistance(test_args.resistance_initial,
         test_args.temperature_coefficient, test_args.temperature)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.impedance)
-    result = convert_to(result, units.ohm).evalf(5)
-    assert result == approx(112525, rel=0.01)
+    assert_equal(result, 112525 * units.ohm)
 
 
-def test_bad_resistance_initial(test_args):
+def test_bad_resistance_initial(test_args: Args) -> None:
     resistance_initial = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         resistance_law.calculate_resistance(resistance_initial, test_args.temperature_coefficient,
             test_args.temperature)
     with raises(TypeError):
-        resistance_law.calculate_resistance(100, test_args.temperature_coefficient, test_args.temperature)
+        resistance_law.calculate_resistance(100, test_args.temperature_coefficient,
+            test_args.temperature)
 
 
-def test_bad_temperature_coefficient(test_args):
+def test_bad_temperature_coefficient(test_args: Args) -> None:
     temperature_coefficient = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         resistance_law.calculate_resistance(test_args.resistance_initial, temperature_coefficient,
@@ -49,7 +48,7 @@ def test_bad_temperature_coefficient(test_args):
             test_args.temperature)
 
 
-def test_bad_temperature(test_args):
+def test_bad_temperature(test_args: Args) -> None:
     temperature = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         resistance_law.calculate_resistance(test_args.resistance_initial,

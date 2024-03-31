@@ -1,11 +1,10 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
 )
 from symplyphysics.laws.electricity.circuits import admittance_of_parallel_dipoles as parallel_law
 
@@ -14,31 +13,28 @@ from symplyphysics.laws.electricity.circuits import admittance_of_parallel_dipol
 ## Accordind to calculator (https://www.chipdip.ru/calc/parallel-resistors) resulting conductance should be 0.75 Siemens.
 ## Hence resistors are dipoles, test fixture for parallel resistors law should be suitable for parallel dipoles law as well.
 
+Args = namedtuple("Args", ["S1", "S2"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     S1 = Quantity(1 / 2 * units.siemens)
     S2 = Quantity(1 / 4 * units.siemens)
-    Args = namedtuple("Args", ["S1", "S2"])
     return Args(S1=S1, S2=S2)
 
 
-def test_basic_admittance(test_args):
+def test_basic_admittance(test_args: Args) -> None:
     result = parallel_law.calculate_parallel_admittance([test_args.S1, test_args.S2])
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.conductance)
-    result_admittance = convert_to(result, units.siemens).evalf(3)
-    assert result_admittance == approx(0.75, 0.001)
+    assert_equal(result, 0.75 * units.siemens)
 
 
-def test_three_resistors_array(test_args):
+def test_three_resistors_array(test_args: Args) -> None:
     S3 = Quantity(1 * units.siemens)
     result = parallel_law.calculate_parallel_admittance([test_args.S1, test_args.S2, S3])
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.conductance)
-    result_admittance = convert_to(result, units.siemens).evalf(3)
-    assert result_admittance == approx(1.75, 0.01)
+    assert_equal(result, 1.75 * units.siemens)
 
 
-def test_bad_admittance(test_args):
+def test_bad_admittance(test_args: Args) -> None:
     Sb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
         parallel_law.calculate_parallel_admittance([Sb, test_args.S2])

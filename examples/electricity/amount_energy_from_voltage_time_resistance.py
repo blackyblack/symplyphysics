@@ -33,7 +33,8 @@ ohm_law_applied = ohm_law.law.subs({
     ohm_law.voltage: joule_lenz_law.voltage
 })
 operate_power_applied = operate_power.law.subs(operate_power.voltage, joule_lenz_law.voltage)
-density_applied = density_law.definition.subs(density_law.mass, operate_energy.body_mass)
+density_applied = density_law.definition.subs(density_law.symbols.basic.mass,
+    operate_energy.symbols.basic.mass)
 joule_lenz_applied = joule_lenz_law.law.subs(joule_lenz_law.amount_energy,
     operate_energy.amount_energy)
 
@@ -41,7 +42,7 @@ law = [
     density_applied, ohm_law_applied, operate_power_applied, operate_energy.law, joule_lenz_applied
 ]
 heating_time_solved = solve(law, (operate_energy.amount_energy, joule_lenz_law.resistance,
-    operate_power.current, operate_energy.body_mass, joule_lenz_law.time),
+    operate_power.current, operate_energy.symbols.basic.mass, joule_lenz_law.time),
     dict=True)[0][joule_lenz_law.time]
 heating_time_eq = Eq(joule_lenz_law.time, heating_time_solved)
 

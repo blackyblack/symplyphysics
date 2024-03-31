@@ -6,7 +6,6 @@ from symplyphysics import (
     Quantity,
     convert_to,
     units,
-    dimensionless,
 )
 from symplyphysics.laws.kinematic import linear_velocity_from_angular_velocity_and_radius as velocity_law
 from symplyphysics.laws.kinematic import period_from_angular_frequency as period_law
@@ -36,10 +35,12 @@ sun_angular_velocity = solve(
 })
 
 sun_period = solve(period_law.law, period_law.period)[0].subs(
-    period_law.circular_frequency, sun_angular_velocity,
+    period_law.circular_frequency,
+    sun_angular_velocity,
 )
 sun_period_value = convert_to(
-    Quantity(sun_period.subs(values)), units.year,
+    Quantity(sun_period.subs(values)),
+    units.year,
 ).evalf(3)
 
 print(f"Formula for the Sun's period of revolution:\n{print_expression(sun_period)}")
@@ -50,4 +51,6 @@ count_revolutions_value = Quantity(count_revolutions.subs(values)).scale_factor.
 
 time_elapsed_value = convert_to(values[time_elapsed], units.year).evalf(3)
 
-print(f"The Sun has made {count_revolutions_value} revolutions during the past {time_elapsed_value} years")
+print(
+    f"The Sun has made {count_revolutions_value} revolutions during the past {time_elapsed_value} years"
+)

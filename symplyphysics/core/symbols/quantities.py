@@ -6,6 +6,7 @@ from sympy.physics.units.systems.si import SI
 
 from .symbols import DimensionSymbol, next_name
 from ..dimensions import collect_factor_and_dimension
+from ..errors import UnitsError
 
 
 class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancestors
@@ -23,8 +24,12 @@ class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancest
         obj = SymQuantity.__new__(cls, name, None, None, None, None, None, False, **assumptions)
         return obj
 
-    def __init__(self, expr: Basic | float = S.One, *, dimension: Optional[Dimension] = None):
+    def __init__(self, expr: Basic | float = S.One, *,
+        dimension: Optional[Dimension] = None) -> None:
         (scale, dimension_) = collect_factor_and_dimension(sympify(expr))
+        if scale.free_symbols:
+            raise UnitsError(f"Argument '{expr}' to function 'Quantity()' should "
+                f"not contain free symbols")
         dimension = dimension_ if dimension is None else dimension
         super().__init__(self.name, dimension)
         SI.set_quantity_dimension(self, dimension)
@@ -38,7 +43,16 @@ class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancest
     def identity(self, *_args: Any) -> Self:
         return self
 
+    def _eval_is_positive(self) -> bool:
+        return self.scale_factor >= 0
 
-def list_of_quantities(input_: Sequence[Expr | float], subs_: dict[Expr,
-    Quantity]) -> Sequence[Quantity]:
+    def _eval_Abs(self) -> Self:
+        return self if self.scale_factor >= 0 else (-1 * self)
+
+
+def subs_list(input_: Sequence[Expr | float], subs_: dict[Expr, Quantity]) -> Sequence[Quantity]:
     return [Quantity(sympify(c).subs(subs_)) for c in input_]
+
+
+def scale_factor(quantity_: Quantity | float) -> float:
+    return quantity_.scale_factor if isinstance(quantity_, Quantity) else quantity_

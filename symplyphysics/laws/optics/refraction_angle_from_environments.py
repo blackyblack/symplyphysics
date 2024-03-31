@@ -4,7 +4,8 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, dimensionl
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import refractive_index_is_wave_speeds_ratio as refractive_index_definition
 from symplyphysics.laws.kinematic import distance_from_constant_velocity as distance_law
-from symplyphysics.laws.kinematic import planar_projection_is_cosine as projection_law
+from symplyphysics.laws.geometry import planar_projection_is_cosine as projection_law
+from symplyphysics.core.symbols.quantities import scale_factor
 
 # Description
 ## If ray of light comes from one medium to another, it refracts.
@@ -83,19 +84,24 @@ projection_refraction_eq = projection_law.law.subs({
 projection_refraction_distance = solve(projection_refraction_eq, medium_travel_distance)[0]
 medium_travel_distance_polar_eq = Eq(medium_travel_distance, projection_refraction_distance)
 
-# Substitute l1, l2 in travel_time, differentiate by x and equate the derivative to zero - minimal time case.
+# NOTE: derivative of the path equals to zero does not always correspond to minumum travel time. It
+#       can also be a maximum time. Here we prove that Snell's law is applicable to cases
+#       with extreme travel time.
+# NOTE: light travel path is known to have minimum time, which is an extreme time case.
+
+# Substitute l1, l2 in travel_time, differentiate by x and equate the derivative to zero - extreme time case.
 travel_time_on_cartesian = travel_time.subs({
     outer_travel_distance_cartesian_eq.lhs: outer_travel_distance_cartesian_eq.rhs,
     medium_travel_distance_cartesian_eq.lhs: medium_travel_distance_cartesian_eq.rhs
 })
-min_time_case = Eq(diff(travel_time_on_cartesian, x), 0)
+extreme_time_case = Eq(diff(travel_time_on_cartesian, x), 0)
 
 # Let's get the same expression using the sines of the angles.
-min_time_case = min_time_case.subs({
+extreme_time_case = extreme_time_case.subs({
     outer_travel_distance_cartesian_eq.rhs: outer_travel_distance_cartesian_eq.lhs,
     medium_travel_distance_cartesian_eq.rhs: medium_travel_distance_cartesian_eq.lhs
 })
-min_time_case = min_time_case.subs({
+extreme_time_case = extreme_time_case.subs({
     outer_travel_distance_polar_eq.lhs: outer_travel_distance_polar_eq.rhs,
     medium_travel_distance_polar_eq.lhs: medium_travel_distance_polar_eq.rhs
 }).simplify()
@@ -112,13 +118,13 @@ medium_refraction_velocity = solve(medium_refreaction_definition,
     refractive_index_definition.refracting_speed,
     dict=True)[0][refractive_index_definition.refracting_speed]
 
-min_time_case = min_time_case.subs({
+extreme_time_case = extreme_time_case.subs({
     outer_velocity: outer_refraction_velocity,
     medium_velocity: medium_refraction_velocity
 })
 resulting_expression = Eq(
     incidence_refractive_index * sin(incidence_angle),
-    solve(min_time_case, incidence_refractive_index * sin(incidence_angle),
+    solve(extreme_time_case, incidence_refractive_index * sin(incidence_angle),
     dict=True)[0][incidence_refractive_index * sin(incidence_angle)])
 
 # Verify that the resulting_expression corresponds to the law.
@@ -137,8 +143,7 @@ def print_law() -> str:
 def calculate_refraction_angle(incidence_angle_: Quantity | float,
     incidence_refractive_index_: float, resulting_refractive_index_: float) -> Quantity:
     #HACK: sympy angles are always in radians
-    incidence_angle_radians = incidence_angle_.scale_factor if isinstance(
-        incidence_angle_, Quantity) else incidence_angle_
+    incidence_angle_radians = scale_factor(incidence_angle_)
     # Check for boundary conditions
     assert incidence_angle_radians <= pi / 2
     assert incidence_angle_radians >= -pi / 2

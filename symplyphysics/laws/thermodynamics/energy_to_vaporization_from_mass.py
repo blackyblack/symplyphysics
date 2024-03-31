@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output)
+    validate_output, symbols)
 
 # Description
 ## The heat of vaporization of a substance is the amount of heat that must be communicated
@@ -24,9 +24,8 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 
 amount_energy = Symbol("amount_energy", units.energy)
 specific_heat_vaporization = Symbol("specific_heat_vaporization", units.energy / units.mass)
-mass_of_matter = Symbol("mass_of_matter", units.mass)
 
-law = Eq(amount_energy, specific_heat_vaporization * mass_of_matter)
+law = Eq(amount_energy, specific_heat_vaporization * symbols.basic.mass)
 
 
 def print_law() -> str:
@@ -34,13 +33,13 @@ def print_law() -> str:
 
 
 @validate_input(specific_heat_vaporization_=specific_heat_vaporization,
-    mass_of_matter_=mass_of_matter)
+    mass_of_matter_=symbols.basic.mass)
 @validate_output(amount_energy)
 def calculate_amount_energy(specific_heat_vaporization_: Quantity,
     mass_of_matter_: Quantity) -> Quantity:
     result_amount_energy_expr = solve(law, amount_energy, dict=True)[0][amount_energy]
     result_expr = result_amount_energy_expr.subs({
         specific_heat_vaporization: specific_heat_vaporization_,
-        mass_of_matter: mass_of_matter_
+        symbols.basic.mass: mass_of_matter_
     })
     return Quantity(result_expr)

@@ -1,7 +1,7 @@
-from sympy import (Derivative, Eq, Function as SymFunction, diff, solve, pi, sqrt, symbols,
-    simplify)
+from sympy import (Derivative, Eq, Function as SymFunction, diff, solve, pi, sqrt, symbols as
+    SymSymbols, simplify)
 from symplyphysics import (Quantity, units, Symbol, print_expression, validate_input,
-    validate_output)
+    validate_output, symbols)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.dynamics import potential_energy_from_deformation as spring_energy
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_velocity as kinetic_energy
@@ -24,11 +24,10 @@ from symplyphysics.definitions import harmonic_oscillator_is_second_derivative_e
 ## - Another end of a spring is not moving in current coordinate system.
 ## - Spring is weightless.
 
-object_mass = Symbol("object_mass", units.mass)
 spring_elasticity = Symbol("spring_elasticity", units.force / units.length)
 oscillation_period = Symbol("oscillation_period", units.time)
 
-law = Eq(oscillation_period, 2 * pi * sqrt(object_mass / spring_elasticity))
+law = Eq(oscillation_period, 2 * pi * sqrt(symbols.basic.mass / spring_elasticity))
 
 
 def print_law() -> str:
@@ -38,8 +37,8 @@ def print_law() -> str:
 # Derive this law from conservation of energy
 
 ## Spring displacement is distance between current and balanced positions.
-spring_displacement = symbols("spring_displacement", cls=SymFunction)
-time = symbols("time")
+spring_displacement = SymSymbols("spring_displacement", cls=SymFunction)
+time = SymSymbols("time")
 
 ## Spring oscillation is cyclic transfer of energy from kinetic to potential. To set oscillation up we have to input some energy. Usually it is done by biasing the spring and letting it go.
 ## Biasing the spring is giving to it some amount of potential energy.
@@ -54,12 +53,12 @@ amount_of_potential_energy = spring_energy.law.subs({
 velocity_def_eq = velocity_def.definition.subs(velocity_def.moving_time, time)
 linear_velocity = velocity_def_eq.subs(velocity_def.movement(time), spring_displacement(time)).rhs
 amount_of_kinetic_energy = kinetic_energy.law.subs({
-    kinetic_energy.body_mass: object_mass,
+    kinetic_energy.symbols.basic.mass: symbols.basic.mass,
     kinetic_energy.body_velocity: linear_velocity
 }).rhs
 
 ## Total energy is constant and any of it's derivatives is 0.
-total_energy = symbols("total_energy", constant=True)
+total_energy = SymSymbols("total_energy", constant=True)
 total_energy_eq = Eq(total_energy, amount_of_kinetic_energy + amount_of_potential_energy)
 
 ## Differentiate twice both sides of equation
@@ -88,9 +87,12 @@ period_solved = solve(period_law, period_definition.period, dict=True)[0][period
 assert expr_equals(period_solved**2, law.rhs**2)
 
 
-@validate_input(spring_elasticity_=spring_elasticity, object_mass_=object_mass)
+@validate_input(spring_elasticity_=spring_elasticity, object_mass_=symbols.basic.mass)
 @validate_output(oscillation_period)
 def calculate_period(spring_elasticity_: Quantity, object_mass_: Quantity) -> Quantity:
     solved = solve(law, oscillation_period, dict=True)[0][oscillation_period]
-    result_expr = solved.subs({spring_elasticity: spring_elasticity_, object_mass: object_mass_})
+    result_expr = solved.subs({
+        spring_elasticity: spring_elasticity_,
+        symbols.basic.mass: object_mass_
+    })
     return Quantity(result_expr)

@@ -1,6 +1,6 @@
 from sympy import (Eq, solve, S)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless, convert_to)
+from symplyphysics import (Quantity, Symbol, print_expression, validate_input, validate_output,
+    dimensionless, convert_to, clone_symbol, symbols)
 from symplyphysics.core.symbols.fraction import Fraction
 
 # Description
@@ -12,8 +12,8 @@ from symplyphysics.core.symbols.fraction import Fraction
 ## omega - mass fraction of the mixture
 
 mass_fraction = Symbol("mass_fraction", dimensionless)
-mass_of_component = Symbol("mass_of_component", units.mass)
-mass_of_mixture = Symbol("mass_of_mixture", units.mass)
+mass_of_component = clone_symbol(symbols.basic.mass, "mass_of_component")
+mass_of_mixture = clone_symbol(symbols.basic.mass, "mass_of_mixture")
 
 definition = Eq(mass_fraction, mass_of_component / mass_of_mixture)
 

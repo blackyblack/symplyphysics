@@ -9,7 +9,7 @@ class SpherePoint(Point):
         return self.coordinate(0)
 
     @radius.setter
-    def radius(self, value_: Coordinate):
+    def radius(self, value_: Coordinate) -> None:
         self.set_coordinate(0, value_)
 
     @property
@@ -17,7 +17,7 @@ class SpherePoint(Point):
         return self.coordinate(1)
 
     @azimuthal_angle.setter
-    def azimuthal_angle(self, value_: Coordinate):
+    def azimuthal_angle(self, value_: Coordinate) -> None:
         self.set_coordinate(1, value_)
 
     @property
@@ -25,7 +25,7 @@ class SpherePoint(Point):
         return self.coordinate(2)
 
     @polar_angle.setter
-    def polar_angle(self, value_: Coordinate):
+    def polar_angle(self, value_: Coordinate) -> None:
         self.set_coordinate(2, value_)
 
     @property
@@ -33,7 +33,7 @@ class SpherePoint(Point):
         return self.radius
 
     @r.setter
-    def r(self, value_: Coordinate):
+    def r(self, value_: Coordinate) -> None:
         self.radius = value_
 
     @property
@@ -41,7 +41,7 @@ class SpherePoint(Point):
         return self.azimuthal_angle
 
     @theta.setter
-    def theta(self, value_: Coordinate):
+    def theta(self, value_: Coordinate) -> None:
         self.azimuthal_angle = value_
 
     @property
@@ -49,5 +49,5 @@ class SpherePoint(Point):
         return self.polar_angle
 
     @phi.setter
-    def phi(self, value_: Coordinate):
+    def phi(self, value_: Coordinate) -> None:
         self.polar_angle = value_

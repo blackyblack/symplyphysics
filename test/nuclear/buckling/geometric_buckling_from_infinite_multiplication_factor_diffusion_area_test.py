@@ -1,45 +1,39 @@
 from collections import namedtuple
-from pytest import approx, fixture, raises
-from sympy import S
+from pytest import fixture, raises
 from symplyphysics import (
+    assert_equal,
     errors,
     units,
-    convert_to,
     Quantity,
-    SI,
-    dimensionless,
 )
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_infinite_multiplication_factor_diffusion_area as buckling
 
+Args = namedtuple("Args", ["k_inf", "k_eff", "L2"])
+
 
 @fixture(name="test_args")
-def test_args_fixture():
+def test_args_fixture() -> Args:
     infinite_multiplication_factor = 1.0247
     # critical reactor
     effective_multiplication_factor = 1
     diffusion_area = Quantity(60.117 * units.centimeter**2)
-    Args = namedtuple("Args", ["k_inf", "k_eff", "L2"])
     return Args(k_inf=infinite_multiplication_factor,
         k_eff=effective_multiplication_factor,
         L2=diffusion_area)
 
 
-def test_basic_buckling(test_args):
+def test_basic_buckling(test_args: Args) -> None:
     result = buckling.calculate_geometric_buckling_squared(test_args.k_inf, test_args.k_eff,
         test_args.L2)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, 1 / units.area)
-    result_buckling = convert_to(result, 1 / units.centimeter**2).evalf(4)
-    assert result_buckling == approx(0.000412, 0.01)
+    assert_equal(result, 0.0004109 / units.centimeter**2)
 
 
-def test_zero_buckling(test_args):
+def test_zero_buckling(test_args: Args) -> None:
     result = buckling.calculate_geometric_buckling_squared(1, 1, test_args.L2)
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, dimensionless)
-    result_buckling = convert_to(result, S.One).evalf(4)
-    assert result_buckling == approx(0, 0.01)
+    assert_equal(result, 0)
 
 
-def test_bad_diffusion_area(test_args):
+def test_bad_diffusion_area(test_args: Args) -> None:
     Lb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         buckling.calculate_geometric_buckling_squared(test_args.k_inf, test_args.k_eff, Lb)

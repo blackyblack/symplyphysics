@@ -7,7 +7,7 @@ print(f"Formula is:\n{kinetic_energy.print_law()}")
 
 solved = solve(kinetic_energy.law, kinetic_energy.kinetic_energy_of_body,
     dict=True)[0][kinetic_energy.kinetic_energy_of_body]
-result_energy = solved.subs(kinetic_energy.body_mass, 1)
+result_energy = solved.subs(kinetic_energy.symbols.basic.mass, 1)
 
 p1 = plot(result_energy, (kinetic_energy.body_velocity, 0, 6),
     ylim=(0, 3),
