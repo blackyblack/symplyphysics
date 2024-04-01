@@ -1,7 +1,17 @@
-from sympy import (Eq, solve, sqrt,)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless,)
-
+from sympy import (
+    Eq,
+    solve,
+    sqrt,
+)
+from symplyphysics import (
+    units,
+    Quantity,
+    Symbol,
+    print_expression,
+    validate_input,
+    validate_output,
+    dimensionless,
+)
 
 # Description
 ## A coaxial waveguide is an electrical cable consisting of a central conductor and a shield arranged coaxially and separated
@@ -11,7 +21,6 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## The attenuation coefficient shows how many times the transmitted signal weakens per unit length of the coaxial waveguide.
 ## The first index shows how many half-wave lengths fit horizontally across the cross section. The second index
 ## shows how many half-wave lengths fit vertically across the cross section.
-
 
 ## Law is: am = 2 * Rs * (n^2 * (b / a)^3 + m^2) / (Z0 * b * sqrt(1 - (L / (2 * L1))^2) * (n^2 * (b / a)^2 + m^2)), where
 ## am - attenuation coefficient in metal,
@@ -23,7 +32,6 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## Z0 - characteristic resistance of the material filling the waveguide,
 ## L - wavelength,
 ## L1 - critical wavelength.
-
 
 attenuation_coefficient = Symbol("attenuation_coefficient", 1 / units.length)
 
@@ -37,7 +45,8 @@ signal_wavelength = Symbol("signal_wavelength", units.length)
 critical_wavelength = Symbol("critical_wavelength", units.length)
 
 expression_1 = 2 * surface_resistance * (second_index**2 * (width / height)**3 + first_index**2)
-expression_2 = sqrt(1 - (signal_wavelength / (2 * critical_wavelength))**2) * (second_index**2 * (width / height)**2 + first_index**2)
+expression_2 = sqrt(1 - (signal_wavelength / (2 * critical_wavelength))**2) * (second_index**2 *
+    (width / height)**2 + first_index**2)
 
 law = Eq(attenuation_coefficient, expression_1 / (resistance_of_medium * width * expression_2))
 
@@ -46,6 +55,7 @@ def print_law() -> str:
     return print_expression(law)
 
 
+#pylint: disable=too-many-arguments
 @validate_input(surface_resistance_=surface_resistance,
     first_index_=first_index,
     second_index_=second_index,
@@ -56,8 +66,8 @@ def print_law() -> str:
     critical_wavelength_=critical_wavelength)
 @validate_output(attenuation_coefficient)
 def calculate_attenuation_coefficient(surface_resistance_: Quantity, first_index_: float,
-    second_index_: float, width_: Quantity, height_: Quantity,
-    resistance_of_medium_: Quantity, signal_wavelength_: Quantity, critical_wavelength_: Quantity) -> Quantity:
+    second_index_: float, width_: Quantity, height_: Quantity, resistance_of_medium_: Quantity,
+    signal_wavelength_: Quantity, critical_wavelength_: Quantity) -> Quantity:
     result_expr = solve(law, attenuation_coefficient, dict=True)[0][attenuation_coefficient]
     result_expr = result_expr.subs({
         surface_resistance: surface_resistance_,

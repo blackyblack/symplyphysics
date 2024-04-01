@@ -1,8 +1,6 @@
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, print_expression, Symbol, validate_input,
-    validate_output)
-from symplyphysics.core.operations.sum_array import SumArray
-from symplyphysics.core.symbols.symbols import tuple_of_symbols
+from sympy import (Eq, Idx, solve)
+from symplyphysics import (units, Quantity, print_expression, validate_input, validate_output,
+    SymbolIndexed, SumIndexed, global_index)
 
 # Description
 ## The first law of thermodynamics for a closed and adiabatically isolated
@@ -12,22 +10,22 @@ from symplyphysics.core.symbols.symbols import tuple_of_symbols
 ## sum(Q) = 0
 ## Where Q is amount of heat
 
-amounts_energy = Symbol("amounts_energy", units.energy)
-law = Eq(SumArray(amounts_energy), 0, evaluate=False)
+amount_energy = SymbolIndexed("amount_energy", units.energy)
+law = Eq(SumIndexed(amount_energy[global_index], global_index), 0)
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(amounts_energy_=amounts_energy)
+@validate_input(amounts_energy_=amount_energy)
 @validate_output(units.energy)
 def calculate_amount_energy(amounts_energy_: list[Quantity]) -> Quantity:
-    amounts_energy_symbols = tuple_of_symbols("amount_energy", units.energy,
-        len(amounts_energy_) + 1)
-    unknown_amount_energy = amounts_energy_symbols[len(amounts_energy_)]
-    amounts_energy_law = law.subs(amounts_energy, amounts_energy_symbols).doit()
+    local_index = Idx("index_local", (1, len(amounts_energy_) + 1))
+    amounts_energy_law = law.subs(global_index, local_index)
+    amounts_energy_law = amounts_energy_law.doit()
+    unknown_amount_energy = amount_energy[len(amounts_energy_) + 1]
     solved = solve(amounts_energy_law, unknown_amount_energy, dict=True)[0][unknown_amount_energy]
-    for (from_, to_) in zip(amounts_energy_symbols, amounts_energy_):
-        solved = solved.subs(from_, to_)
+    for i, v in enumerate(amounts_energy_):
+        solved = solved.subs(amount_energy[i + 1], v)
     return Quantity(solved)

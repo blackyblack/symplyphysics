@@ -3,11 +3,9 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    Function,
     print_expression,
     validate_input,
     validate_output,
-    # symbols,
 )
 
 # Description

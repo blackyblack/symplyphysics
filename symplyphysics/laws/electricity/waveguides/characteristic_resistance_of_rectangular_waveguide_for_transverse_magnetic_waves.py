@@ -1,6 +1,12 @@
 from sympy import Eq, solve, sqrt
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output,)
+from symplyphysics import (
+    units,
+    Quantity,
+    Symbol,
+    print_expression,
+    validate_input,
+    validate_output,
+)
 
 ## Description
 ## A rectangular waveguide is a rectangular metal waveguide capable of supporting waves propagating along it.
@@ -32,7 +38,9 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(resistance_of_medium_=resistance_of_medium, wavelength_=wavelength, critical_wavelength_=critical_wavelength)
+@validate_input(resistance_of_medium_=resistance_of_medium,
+    wavelength_=wavelength,
+    critical_wavelength_=critical_wavelength)
 @validate_output(resistance)
 def calculate_resistance(resistance_of_medium_: Quantity, wavelength_: Quantity,
     critical_wavelength_: Quantity) -> Quantity:

@@ -1,6 +1,11 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (errors, units, Quantity, assert_equal,)
+from symplyphysics import (
+    errors,
+    units,
+    Quantity,
+    assert_equal,
+)
 
 from symplyphysics.laws.electricity.circuits import maximum_voltage_in_coaxial_line as voltage_law
 
@@ -17,32 +22,41 @@ def test_args_fixture() -> Args:
     breakdown_intensity = Quantity(300 * units.volt / units.meter)
     outer_diameter = Quantity(9 * units.millimeter)
     inner_diameter = Quantity(1.35 * units.millimeter)
-    return Args(breakdown_intensity=breakdown_intensity, outer_diameter=outer_diameter, inner_diameter=inner_diameter)
+    return Args(breakdown_intensity=breakdown_intensity,
+        outer_diameter=outer_diameter,
+        inner_diameter=inner_diameter)
 
 
 def test_basic_maximum_voltage(test_args: Args) -> None:
-    result = voltage_law.calculate_maximum_voltage(test_args.breakdown_intensity, test_args.outer_diameter,
-        test_args.inner_diameter)
+    result = voltage_law.calculate_maximum_voltage(test_args.breakdown_intensity,
+        test_args.outer_diameter, test_args.inner_diameter)
     assert_equal(result, 2.561 * units.volt)
 
 
 def test_bad_breakdown_intensity(test_args: Args) -> None:
     bad_breakdown_intensity = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        voltage_law.calculate_maximum_voltage(bad_breakdown_intensity, test_args.outer_diameter, test_args.inner_diameter)
+        voltage_law.calculate_maximum_voltage(bad_breakdown_intensity, test_args.outer_diameter,
+            test_args.inner_diameter)
     with raises(TypeError):
-        voltage_law.calculate_maximum_voltage(100, test_args.outer_diameter, test_args.inner_diameter)
+        voltage_law.calculate_maximum_voltage(100, test_args.outer_diameter,
+            test_args.inner_diameter)
 
 
 def test_bad_diameter(test_args: Args) -> None:
     bad_diameter = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        voltage_law.calculate_maximum_voltage(test_args.breakdown_intensity, bad_diameter, test_args.inner_diameter)
+        voltage_law.calculate_maximum_voltage(test_args.breakdown_intensity, bad_diameter,
+            test_args.inner_diameter)
     with raises(TypeError):
-        voltage_law.calculate_maximum_voltage(test_args.breakdown_intensity, 100, test_args.inner_diameter)
+        voltage_law.calculate_maximum_voltage(test_args.breakdown_intensity, 100,
+            test_args.inner_diameter)
     with raises(errors.UnitsError):
-        voltage_law.calculate_maximum_voltage(test_args.breakdown_intensity, test_args.outer_diameter, bad_diameter)
+        voltage_law.calculate_maximum_voltage(test_args.breakdown_intensity,
+            test_args.outer_diameter, bad_diameter)
     with raises(TypeError):
-        voltage_law.calculate_maximum_voltage(test_args.breakdown_intensity, test_args.outer_diameter, 100)
+        voltage_law.calculate_maximum_voltage(test_args.breakdown_intensity,
+            test_args.outer_diameter, 100)
     with raises(ValueError):
-        voltage_law.calculate_maximum_voltage(test_args.breakdown_intensity, test_args.inner_diameter, test_args.outer_diameter)
+        voltage_law.calculate_maximum_voltage(test_args.breakdown_intensity,
+            test_args.inner_diameter, test_args.outer_diameter)

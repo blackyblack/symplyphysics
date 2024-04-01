@@ -8,7 +8,12 @@ from symplyphysics.laws.astronomy import latitude_from_zenith_distances_and_decl
 ## and the zenith distance and declination of the star south of the zenith are equal to 150 and -15 degrees, respectively,
 ## then the latitude is 65 degrees.
 
-Args = namedtuple("Args", ["zenith_distance_north", "zenith_distance_south", "declination_north", "declination_south",])
+Args = namedtuple("Args", [
+    "zenith_distance_north",
+    "zenith_distance_south",
+    "declination_north",
+    "declination_south",
+])
 
 
 @fixture(name="test_args")
@@ -18,10 +23,12 @@ def test_args_fixture() -> Args:
     declination_north = Quantity(25 * units.deg)
     declination_south = Quantity(-15 * units.deg)
 
-    return Args(zenith_distance_north=zenith_distance_north,
+    return Args(
+        zenith_distance_north=zenith_distance_north,
         zenith_distance_south=zenith_distance_south,
         declination_north=declination_north,
-        declination_south=declination_south,)
+        declination_south=declination_south,
+    )
 
 
 def test_basic_latitude(test_args: Args) -> None:
@@ -43,8 +50,8 @@ def test_bad_zenith_distance(test_args: Args) -> None:
 def test_bad_declination(test_args: Args) -> None:
     bad_declination = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        latitude_law.calculate_latitude(test_args.zenith_distance_north, test_args.zenith_distance_south,
-            bad_declination, test_args.declination_south)
+        latitude_law.calculate_latitude(test_args.zenith_distance_north,
+            test_args.zenith_distance_south, bad_declination, test_args.declination_south)
     with raises(errors.UnitsError):
         latitude_law.calculate_latitude(test_args.zenith_distance_north,
             test_args.zenith_distance_south, test_args.declination_north, bad_declination)

@@ -15,11 +15,13 @@ def test_args_fixture() -> Args:
     relative_permittivity = 2.2
     relative_permeability = 1
 
-    return Args(relative_permittivity=relative_permittivity, relative_permeability=relative_permeability)
+    return Args(relative_permittivity=relative_permittivity,
+        relative_permeability=relative_permeability)
 
 
 def test_basic_resistance(test_args: Args) -> None:
-    result = resistance_law.calculate_resistance(test_args.relative_permittivity, test_args.relative_permeability)
+    result = resistance_law.calculate_resistance(test_args.relative_permittivity,
+        test_args.relative_permeability)
     assert_equal(result, 254.167 * units.ohm)
 
 

@@ -22,14 +22,17 @@ relative_permeability = Symbol("relative_permeability", dimensionless)
 outer_radius = Symbol("outer_radius", units.length)
 inner_radius = Symbol("inner_radius", units.length)
 
-law = Eq(specific_inductance, (magnetic_constant * relative_permeability / (2 * pi)) * ln(outer_radius / inner_radius))
+law = Eq(specific_inductance,
+    (magnetic_constant * relative_permeability / (2 * pi)) * ln(outer_radius / inner_radius))
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(relative_permeability_=relative_permeability, outer_radius_=outer_radius, inner_radius_=inner_radius)
+@validate_input(relative_permeability_=relative_permeability,
+    outer_radius_=outer_radius,
+    inner_radius_=inner_radius)
 @validate_output(specific_inductance)
 def calculate_specific_inductance(relative_permeability_: float, outer_radius_: Quantity,
     inner_radius_: Quantity) -> Quantity:

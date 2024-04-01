@@ -1,14 +1,6 @@
 from sympy import (Eq, solve, exp, acosh, S)
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    print_expression,
-    validate_input,
-    validate_output,
-    convert_to,
-    dimensionless
-)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output, convert_to, dimensionless)
 
 # Description
 ## Microwave attenuators are used to attenuate the microwave signal. For a three-link T-type attenuator or a π-type
@@ -34,7 +26,8 @@ def print_law() -> str:
 
 @validate_input(first_resistance_=first_resistance, second_resistance_=second_resistance)
 @validate_output(attenuation_coefficient)
-def calculate_attenuation_coefficient(first_resistance_: Quantity, second_resistance_: Quantity) -> float:
+def calculate_attenuation_coefficient(first_resistance_: Quantity,
+    second_resistance_: Quantity) -> float:
     result_expr = solve(law, attenuation_coefficient, dict=True)[0][attenuation_coefficient]
     result_expr = result_expr.subs({
         first_resistance: first_resistance_,

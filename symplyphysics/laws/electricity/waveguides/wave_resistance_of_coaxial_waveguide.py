@@ -25,17 +25,21 @@ relative_permeability = Symbol("relative_permeability", dimensionless)
 outer_radius = Symbol("outer_radius", units.length)
 inner_radius = Symbol("inner_radius", units.length)
 
-law = Eq(wave_resistance, (1 / (2 * pi)) * sqrt(magnetic_constant * relative_permeability / (electric_constant * relative_permittivity)) * ln(outer_radius / inner_radius))
+law = Eq(wave_resistance, (1 / (2 * pi)) * sqrt(magnetic_constant * relative_permeability /
+    (electric_constant * relative_permittivity)) * ln(outer_radius / inner_radius))
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(relative_permittivity_=relative_permittivity, relative_permeability_=relative_permeability, outer_radius_=outer_radius, inner_radius_=inner_radius)
+@validate_input(relative_permittivity_=relative_permittivity,
+    relative_permeability_=relative_permeability,
+    outer_radius_=outer_radius,
+    inner_radius_=inner_radius)
 @validate_output(wave_resistance)
-def calculate_wave_resistance(relative_permittivity_: float, relative_permeability_: float, outer_radius_: Quantity,
-    inner_radius_: Quantity) -> Quantity:
+def calculate_wave_resistance(relative_permittivity_: float, relative_permeability_: float,
+    outer_radius_: Quantity, inner_radius_: Quantity) -> Quantity:
     if outer_radius_.scale_factor <= inner_radius_.scale_factor:
         raise ValueError("The outer radius must be greater than the inner radius")
     result_velocity_expr = solve(law, wave_resistance, dict=True)[0][wave_resistance]

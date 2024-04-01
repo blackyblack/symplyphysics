@@ -53,7 +53,8 @@ law = Eq(displacement(position, time), (2 * amplitude) * cos(phase_shift / 2) *
 
 # The form of the waves is taken from the notes above
 _first_wave = amplitude * sin(angular_wavenumber * position - angular_frequency * time)
-_second_wave = amplitude * sin(angular_wavenumber * position - angular_frequency * time + phase_shift)
+_second_wave = amplitude * sin(angular_wavenumber * position - angular_frequency * time +
+    phase_shift)
 
 _sum_of_waves = (_first_wave + _second_wave).simplify()
 

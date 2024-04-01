@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.thermodynamics import (
-    volumetric_expansion_coefficient_of_ideal_gas as expansion_law,
-)
+    volumetric_expansion_coefficient_of_ideal_gas as expansion_law,)
 
 # Description
 ## The volumetric expansion coefficient of an ideal gas at temperature T = 100 K is 0.01 1/K.

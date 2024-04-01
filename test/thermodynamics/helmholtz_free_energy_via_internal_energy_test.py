@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.thermodynamics import (
-    helmholtz_free_energy_via_internal_energy as free_energy_law,
-)
+    helmholtz_free_energy_via_internal_energy as free_energy_law,)
 
 # Description
 ## The internal energy of a system in thermodynamic equilibrium is 1 J, its temperature is

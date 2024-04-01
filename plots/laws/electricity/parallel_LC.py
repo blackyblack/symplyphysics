@@ -7,10 +7,10 @@
 ## This is a resonant frequency of this circuit.
 ## Also we have here a real LC with some resistive leakage. Resonant frequency stays the same as ideal LC, but resonant peak is not so sharp. The sharpness of resonant peak shows quality factor of LC circuit.
 
-from sympy import Abs, solve
+from sympy import Abs, Idx, solve
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
-from symplyphysics import Symbol
+from symplyphysics import Symbol, global_index
 from symplyphysics.laws.electricity.circuits import admittance_of_parallel_dipoles as parallel_admittance_law
 from symplyphysics.definitions import admittance_is_inversed_impedance as admittance_def
 from symplyphysics.laws.electricity import capacitor_impedance_from_capacitance_and_frequency as capacitor_impedance
@@ -37,17 +37,21 @@ C_admittance = admittance_def.definition.rhs.subs({
     admittance_def.dipole_impedance: C_impedance
 }).subs({capacitor_impedance.capacitor_capacitance: EXAMPLE_CAPACITANCE})
 
-R_impedance = EXAMPLE_RESISTANCE
-R_admittance = admittance_def.definition.rhs.subs({admittance_def.dipole_impedance: R_impedance})
+R_admittance = admittance_def.definition.rhs.subs(
+    {admittance_def.dipole_impedance: EXAMPLE_RESISTANCE})
 
 ideal_elements = (L_admittance, C_admittance)
 real_elements = (L_admittance, C_admittance, R_admittance)
 
-admittance_ideal = parallel_admittance_law.law.rhs.subs(parallel_admittance_law.admittances,
-    ideal_elements).doit()
+index_local = Idx("index_local", (1, len(ideal_elements)))
+admittance_ideal = parallel_admittance_law.law.rhs.subs(global_index, index_local).doit()
+for i, v in enumerate(ideal_elements):
+    admittance_ideal = admittance_ideal.subs(parallel_admittance_law.admittance[i + 1], v)
 
-admittance_real = parallel_admittance_law.law.rhs.subs(parallel_admittance_law.admittances,
-    real_elements).doit()
+index_local = Idx("index_local", (1, len(real_elements)))
+admittance_real = parallel_admittance_law.law.rhs.subs(global_index, index_local).doit()
+for i, v in enumerate(real_elements):
+    admittance_real = admittance_real.subs(parallel_admittance_law.admittance[i + 1], v)
 
 impedance_from_admittance_law = solve(admittance_def.definition,
     admittance_def.dipole_impedance,

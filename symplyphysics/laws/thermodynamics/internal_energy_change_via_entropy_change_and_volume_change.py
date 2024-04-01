@@ -48,12 +48,11 @@ law = Eq(
 
 # Derive from the first and second laws of thermodynamics
 
-_heat_supplied_to_system = solve(
-    second_law.law, second_law.infinitesimal_transfer_of_heat
-)[0].subs({
+_heat_supplied_to_system = solve(second_law.law,
+    second_law.infinitesimal_transfer_of_heat)[0].subs({
     second_law.infinitesimal_entropy_change: entropy_change,
     second_law.common_temperature: temperature,
-})
+    })
 
 _work_done_by_system = work_law.law.rhs.subs({
     work_law.pressure_inside_system: pressure,

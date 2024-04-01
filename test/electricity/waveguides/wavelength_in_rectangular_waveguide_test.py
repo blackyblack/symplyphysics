@@ -1,6 +1,11 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (errors, units, Quantity, assert_equal,)
+from symplyphysics import (
+    errors,
+    units,
+    Quantity,
+    assert_equal,
+)
 
 from symplyphysics.laws.electricity.waveguides import wavelength_in_rectangular_waveguide as wavelength_law
 
@@ -19,7 +24,8 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_waveguide_wavelength(test_args: Args) -> None:
-    result = wavelength_law.calculate_waveguide_wavelength(test_args.signal_wavelength, test_args.critical_wavelength)
+    result = wavelength_law.calculate_waveguide_wavelength(test_args.signal_wavelength,
+        test_args.critical_wavelength)
     assert_equal(result, 12.057 * units.millimeter)
 
 

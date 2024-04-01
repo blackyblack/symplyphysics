@@ -1,8 +1,6 @@
-from sympy import (Eq, solve)
+from sympy import (Eq, Idx, solve)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output)
-from symplyphysics.core.operations.sum_array import SumArray
-from symplyphysics.core.symbols.symbols import tuple_of_symbols
+    validate_output, SymbolIndexed, SumIndexed, global_index)
 
 # Description
 ## If resistors are connected in series, total resistance is a sum of resistances of each resistor.
@@ -10,21 +8,22 @@ from symplyphysics.core.symbols.symbols import tuple_of_symbols
 ## R_serial is total resistance,
 ## R[i] is resistance of i-th resistor.
 
-resistances = Symbol("resistances", units.impedance)
 serial_resistance = Symbol("serial_resistance", units.impedance)
-law = Eq(serial_resistance, SumArray(resistances), evaluate=False)
+resistance = SymbolIndexed("resistance", units.impedance)
+law = Eq(serial_resistance, SumIndexed(resistance[global_index], global_index))
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(resistances_=resistances)
-@validate_output(units.impedance)
+@validate_input(resistances_=resistance)
+@validate_output(serial_resistance)
 def calculate_serial_resistance(resistances_: list[Quantity]) -> Quantity:
-    resistance_symbols = tuple_of_symbols("resistance", units.impedance, len(resistances_))
-    resistances_law = law.subs(resistances, resistance_symbols).doit()
+    local_index = Idx("index_local", (1, len(resistances_)))
+    resistances_law = law.subs(global_index, local_index)
+    resistances_law = resistances_law.doit()
     solved = solve(resistances_law, serial_resistance, dict=True)[0][serial_resistance]
-    for (from_, to_) in zip(resistance_symbols, resistances_):
-        solved = solved.subs(from_, to_)
+    for i, v in enumerate(resistances_):
+        solved = solved.subs(resistance[i + 1], v)
     return Quantity(solved)

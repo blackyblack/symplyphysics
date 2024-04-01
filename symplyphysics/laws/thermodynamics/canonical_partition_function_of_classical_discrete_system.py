@@ -1,14 +1,15 @@
-from typing import Collection
-from sympy import Eq
+from typing import Sequence
+from sympy import Eq, Idx, solve
 from symplyphysics import (
     dimensionless,
     Symbol,
     print_expression,
     validate_input,
     validate_output,
+    SymbolIndexed,
+    SumIndexed,
+    global_index,
 )
-from symplyphysics.core.operations.sum_array import SumArray
-from symplyphysics.core.symbols.symbols import tuple_of_symbols
 
 # Description
 ## Let us assume a canonical ensemble, i.e. a thermodynamically large system that is in thermal contact
@@ -21,21 +22,22 @@ from symplyphysics.core.symbols.symbols import tuple_of_symbols
 ## f_i - Boltzmann factor of energy state i
 ## sum_i - summation over all energy states
 
-boltzmann_factors = Symbol("boltzmann_factors", dimensionless)
 partition_function = Symbol("partition_function", dimensionless)
-
-law = Eq(partition_function, SumArray(boltzmann_factors))
+boltzmann_factor = SymbolIndexed("boltzmann_factor", dimensionless)
+law = Eq(partition_function, SumIndexed(boltzmann_factor[global_index], global_index))
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(boltzmann_factors_=boltzmann_factors)
+@validate_input(boltzmann_factors_=boltzmann_factor)
 @validate_output(partition_function)
-def calculate_partition_function(boltzmann_factors_: Collection[float]) -> float:
-    boltzmann_factor_symbols = tuple_of_symbols("boltzmann_factor", dimensionless, len(boltzmann_factors_))
-    expr = law.rhs.subs(boltzmann_factors, boltzmann_factor_symbols).doit()
-    for symbol, value in zip(boltzmann_factor_symbols, boltzmann_factors_):
-        expr = expr.subs(symbol, value)
-    return float(expr)
+def calculate_partition_function(boltzmann_factors_: Sequence[float]) -> float:
+    local_index = Idx("index_local", (1, len(boltzmann_factors_)))
+    partition_function_law = law.subs(global_index, local_index)
+    partition_function_law = partition_function_law.doit()
+    solved = solve(partition_function_law, partition_function, dict=True)[0][partition_function]
+    for i, v in enumerate(boltzmann_factors_):
+        solved = solved.subs(boltzmann_factor[i + 1], v)
+    return float(solved)

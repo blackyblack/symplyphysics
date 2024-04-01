@@ -31,14 +31,14 @@ from symplyphysics import (
 particle_count_in_microstate = Symbol("particle_count_in_microstate", dimensionless)
 total_particle_count = Symbol("total_particle_count", dimensionless)
 energy_of_microstate = Symbol("energy_of_microstate", units.energy)
-equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature, "equilibrium_temperature")
+equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature,
+    "equilibrium_temperature")
 single_particle_partition_function = Symbol("single_particle_partition_function", dimensionless)
 
 law = Eq(
     particle_count_in_microstate / total_particle_count,
-    exp(-1 * energy_of_microstate / (units.boltzmann_constant * equilibrium_temperature))
-    / single_particle_partition_function
-)
+    exp(-1 * energy_of_microstate / (units.boltzmann_constant * equilibrium_temperature)) /
+    single_particle_partition_function)
 
 
 def print_law() -> str:

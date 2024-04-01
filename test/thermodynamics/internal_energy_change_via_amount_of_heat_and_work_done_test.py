@@ -3,13 +3,11 @@ from pytest import fixture, raises
 from symplyphysics import (
     assert_equal,
     errors,
-    prefixes,
     units,
     Quantity,
 )
 from symplyphysics.laws.thermodynamics import (
-    internal_energy_change_via_amount_of_heat_and_work_done as first_law,
-)
+    internal_energy_change_via_amount_of_heat_and_work_done as first_law,)
 
 # Description
 ## The amount of heat supplied to the system is 1 J and the work done by the system is 2 J.

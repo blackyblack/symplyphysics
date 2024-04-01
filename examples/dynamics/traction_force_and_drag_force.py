@@ -1,5 +1,5 @@
-from sympy import solve, Symbol, Eq
-from symplyphysics import print_expression
+from sympy import Idx, solve, Symbol, Eq
+from symplyphysics import print_expression, global_index
 from symplyphysics.laws.dynamics import acceleration_from_force as second_newton_law
 from symplyphysics.laws.kinematic import constant_acceleration_movement_is_parabolic as distance_law
 from symplyphysics.definitions import superposition_of_forces_is_sum as superposition_law
@@ -18,8 +18,13 @@ traction_force = Symbol("traction_force")
 # The traction force is directed horizontally in the direction of movement
 # of the trolleybus, and the drag force is directed horizontally against
 # the movement.
-acceleration_force = superposition_law.definition.subs(superposition_law.forces,
-    (traction_force, -drag_force)).doit().rhs
+index_local = Idx("index_local", (1, 2))
+superposition_of_two_forces = superposition_law.definition.subs(global_index, index_local).doit()
+
+acceleration_force = superposition_of_two_forces.subs({
+    superposition_law.force[1]: traction_force,
+    superposition_law.force[2]: -drag_force,
+}).rhs
 
 acceleration_value = second_newton_law.law.subs({
     second_newton_law.symbols.basic.mass: mass_of_trolleybus,

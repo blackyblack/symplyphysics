@@ -23,9 +23,9 @@ Data = namedtuple("Data", "phi label")
 
 plot_data_ = (
     Data(phi=0, label="0"),
-    Data(phi=pi/3, label=r"\frac{\pi}{3}"),
-    Data(phi=pi/2, label=r"\frac{\pi}{2}"),
-    Data(phi=2*pi/3, label=r"\frac{2\pi}{3}"),
+    Data(phi=pi / 3, label=r"\frac{\pi}{3}"),
+    Data(phi=pi / 2, label=r"\frac{\pi}{2}"),
+    Data(phi=2 * pi / 3, label=r"\frac{2\pi}{3}"),
     Data(phi=pi, label=r"\pi"),
 )
 

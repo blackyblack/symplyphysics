@@ -32,16 +32,20 @@ from symplyphysics import (
 ## - Particles are identical, non-interacting, non-relativistic, and obeying classical laws of physics.
 ## - The ensemble of particles is at thermodynamic equilibrium.
 
-velocity_component_distribution = Function("velocity_component_distribution", 1 / units.velocity, positive=True)
+velocity_component_distribution = Function("velocity_component_distribution",
+    1 / units.velocity,
+    positive=True)
 velocity_component = Symbol("velocity_component", units.velocity, positive=True)
 particle_mass = clone_symbol(symbols.basic.mass, "particle_mass", positive=True)
-equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature, "equilibrium_temperature", positive=True)
+equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature,
+    "equilibrium_temperature",
+    positive=True)
 
 law = Eq(
     velocity_component_distribution(velocity_component),
-    sqrt(particle_mass / (2 * pi * units.boltzmann_constant * equilibrium_temperature))
-    * exp(-1 * particle_mass * velocity_component**2 / (2 * units.boltzmann_constant * equilibrium_temperature))
-)
+    sqrt(particle_mass / (2 * pi * units.boltzmann_constant * equilibrium_temperature)) *
+    exp(-1 * particle_mass * velocity_component**2 /
+    (2 * units.boltzmann_constant * equilibrium_temperature)))
 
 
 def print_law() -> str:

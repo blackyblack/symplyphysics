@@ -1,8 +1,6 @@
-from sympy import (Eq, solve)
+from sympy import (Eq, Idx, solve)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output)
-from symplyphysics.core.operations.sum_array import SumArray
-from symplyphysics.core.symbols.symbols import tuple_of_symbols
+    validate_output, SymbolIndexed, SumIndexed, global_index)
 
 # Description
 ## If inductors are connected in series, total inductance is a sum of inductances of each inductor.
@@ -13,21 +11,22 @@ from symplyphysics.core.symbols.symbols import tuple_of_symbols
 # Conditions
 ## All inductors are NOT magnetically coupled.
 
-inductances = Symbol("inductances", units.inductance)
 serial_inductance = Symbol("serial_inductance", units.inductance)
-law = Eq(serial_inductance, SumArray(inductances), evaluate=False)
+inductance = SymbolIndexed("inductance", units.inductance)
+law = Eq(serial_inductance, SumIndexed(inductance[global_index], global_index))
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(inductances_=inductances)
-@validate_output(units.inductance)
+@validate_input(inductances_=inductance)
+@validate_output(serial_inductance)
 def calculate_serial_inductance(inductances_: list[Quantity]) -> Quantity:
-    inductance_symbols = tuple_of_symbols("inductance", units.inductance, len(inductances_))
-    inductances_law = law.subs(inductances, inductance_symbols).doit()
+    local_index = Idx("index_local", (1, len(inductances_)))
+    inductances_law = law.subs(global_index, local_index)
+    inductances_law = inductances_law.doit()
     solved = solve(inductances_law, serial_inductance, dict=True)[0][serial_inductance]
-    for (from_, to_) in zip(inductance_symbols, inductances_):
-        solved = solved.subs(from_, to_)
+    for i, v in enumerate(inductances_):
+        solved = solved.subs(inductance[i + 1], v)
     return Quantity(solved)

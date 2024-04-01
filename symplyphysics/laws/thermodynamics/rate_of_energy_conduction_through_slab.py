@@ -22,7 +22,9 @@ from symplyphysics import (
 ## |x| - the absolute value of x
 
 energy_conduction_rate = Symbol("energy_conduction_rate", units.power, positive=True)
-thermal_conductivity = Symbol("thermal_conductivity", units.power / (units.length * units.temperature), positive=True)
+thermal_conductivity = Symbol("thermal_conductivity",
+    units.power / (units.length * units.temperature),
+    positive=True)
 face_area = Symbol("face_area", units.area, positive=True)
 slab_thickness = Symbol("slab_thickness", units.length, positive=True)
 temperature_difference = Symbol("temperature_difference", units.temperature, real=True)

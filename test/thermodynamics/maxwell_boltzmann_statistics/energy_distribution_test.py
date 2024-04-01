@@ -12,7 +12,6 @@ from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import energ
 ## The value of the energy distribution function for an ensemble of Argon particles at
 ## equilibrium temperature T = 300 K around energy value E = 1.24 eV is f(E) = 2.78 1/J.
 
-
 Args = namedtuple("Args", "e t")
 
 

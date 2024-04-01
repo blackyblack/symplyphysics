@@ -1,6 +1,11 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (errors, units, Quantity, assert_equal,)
+from symplyphysics import (
+    errors,
+    units,
+    Quantity,
+    assert_equal,
+)
 
 from symplyphysics.laws.electricity.waveguides import critical_wavelength_in_rectangular_waveguide as wavelength_law
 
@@ -21,34 +26,42 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_critical_wavelength(test_args: Args) -> None:
-    result = wavelength_law.calculate_critical_wavelength(test_args.first_index, test_args.second_index, test_args.width,
-        test_args.height)
+    result = wavelength_law.calculate_critical_wavelength(test_args.first_index,
+        test_args.second_index, test_args.width, test_args.height)
     assert_equal(result, 17.9 * units.millimeter)
 
 
 def test_bad_index(test_args: Args) -> None:
     bad_index = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        wavelength_law.calculate_critical_wavelength(bad_index, test_args.second_index, test_args.width, test_args.height)
+        wavelength_law.calculate_critical_wavelength(bad_index, test_args.second_index,
+            test_args.width, test_args.height)
     with raises(errors.UnitsError):
-        wavelength_law.calculate_critical_wavelength(test_args.first_index, bad_index, test_args.width, test_args.height)
+        wavelength_law.calculate_critical_wavelength(test_args.first_index, bad_index,
+            test_args.width, test_args.height)
     with raises(ValueError):
-        wavelength_law.calculate_critical_wavelength(-1, test_args.second_index, test_args.width, test_args.height)
+        wavelength_law.calculate_critical_wavelength(-1, test_args.second_index, test_args.width,
+            test_args.height)
     with raises(ValueError):
-        wavelength_law.calculate_critical_wavelength(test_args.first_index, -1, test_args.width, test_args.height)
+        wavelength_law.calculate_critical_wavelength(test_args.first_index, -1, test_args.width,
+            test_args.height)
 
 
 def test_bad_width(test_args: Args) -> None:
     width = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        wavelength_law.calculate_critical_wavelength(test_args.first_index, test_args.second_index, width, test_args.height)
+        wavelength_law.calculate_critical_wavelength(test_args.first_index, test_args.second_index,
+            width, test_args.height)
     with raises(TypeError):
-        wavelength_law.calculate_critical_wavelength(test_args.first_index, test_args.second_index, 100, test_args.height)
+        wavelength_law.calculate_critical_wavelength(test_args.first_index, test_args.second_index,
+            100, test_args.height)
 
 
 def test_bad_height(test_args: Args) -> None:
     height = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        wavelength_law.calculate_critical_wavelength(test_args.first_index, test_args.second_index, test_args.width, height)
+        wavelength_law.calculate_critical_wavelength(test_args.first_index, test_args.second_index,
+            test_args.width, height)
     with raises(TypeError):
-        wavelength_law.calculate_critical_wavelength(test_args.first_index, test_args.second_index, test_args.width, 100)
+        wavelength_law.calculate_critical_wavelength(test_args.first_index, test_args.second_index,
+            test_args.width, 100)

@@ -8,8 +8,7 @@ from symplyphysics import (
     prefixes,
 )
 from symplyphysics.laws.thermodynamics import (
-    enthalpy_is_internal_energy_plus_pressure_energy as enthalpy_law,
-)
+    enthalpy_is_internal_energy_plus_pressure_energy as enthalpy_law,)
 
 # Description
 ## The internal energy of a system is 1 kJ, its internal pressure is 1 kPa and its volume

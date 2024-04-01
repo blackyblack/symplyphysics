@@ -26,7 +26,9 @@ from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import energ
 ## The gas must be ideal
 
 average_kinetic_energy = Symbol("average_kinetic_energy", units.energy, positive=True)
-equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature, "equilibrium_temperature", positive=True)
+equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature,
+    "equilibrium_temperature",
+    positive=True)
 
 law = Eq(average_kinetic_energy, Rational(3, 2) * units.boltzmann * equilibrium_temperature)
 
@@ -56,6 +58,5 @@ def print_law() -> str:
 @validate_output(average_kinetic_energy)
 def calculate_average_kinetic_energy(temperature_: Quantity) -> Quantity:
     result_expr = solve(law, average_kinetic_energy, dict=True)[0][average_kinetic_energy]
-    result_average_kinetic_energy = result_expr.subs(equilibrium_temperature,
-        temperature_)
+    result_average_kinetic_energy = result_expr.subs(equilibrium_temperature, temperature_)
     return Quantity(result_average_kinetic_energy)

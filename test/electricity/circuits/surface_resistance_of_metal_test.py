@@ -19,32 +19,39 @@ def test_args_fixture() -> Args:
     relative_permeability = 1
     angular_frequency = Quantity(2 * pi * 100e6 * (units.radian / units.second))
     specific_conductivity = Quantity(59.5e6 * (units.siemens / units.meter))
-    return Args(relative_permeability=relative_permeability, angular_frequency=angular_frequency, specific_conductivity=specific_conductivity)
+    return Args(relative_permeability=relative_permeability,
+        angular_frequency=angular_frequency,
+        specific_conductivity=specific_conductivity)
 
 
 def test_basic_surface_resistance(test_args: Args) -> None:
-    result = resistance_law.calculate_surface_resistance(test_args.relative_permeability, test_args.angular_frequency,
-        test_args.specific_conductivity)
+    result = resistance_law.calculate_surface_resistance(test_args.relative_permeability,
+        test_args.angular_frequency, test_args.specific_conductivity)
     assert_equal(result, 2.576 * prefixes.milli * units.ohm)
 
 
 def test_bad_relative_permeability(test_args: Args) -> None:
     bad_relative_permeability = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        resistance_law.calculate_surface_resistance(bad_relative_permeability, test_args.angular_frequency, test_args.specific_conductivity)
+        resistance_law.calculate_surface_resistance(bad_relative_permeability,
+            test_args.angular_frequency, test_args.specific_conductivity)
 
 
 def test_bad_angular_frequency(test_args: Args) -> None:
     bad_angular_frequency = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        resistance_law.calculate_surface_resistance(test_args.relative_permeability, bad_angular_frequency, test_args.specific_conductivity)
+        resistance_law.calculate_surface_resistance(test_args.relative_permeability,
+            bad_angular_frequency, test_args.specific_conductivity)
     with raises(TypeError):
-        resistance_law.calculate_surface_resistance(test_args.relative_permeability, 100, test_args.specific_conductivity)
+        resistance_law.calculate_surface_resistance(test_args.relative_permeability, 100,
+            test_args.specific_conductivity)
 
 
 def test_bad_specific_conductivity(test_args: Args) -> None:
     specific_conductivity = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        resistance_law.calculate_surface_resistance(test_args.relative_permeability, test_args.angular_frequency, specific_conductivity)
+        resistance_law.calculate_surface_resistance(test_args.relative_permeability,
+            test_args.angular_frequency, specific_conductivity)
     with raises(TypeError):
-        resistance_law.calculate_surface_resistance(test_args.relative_permeability, test_args.angular_frequency, 100)
+        resistance_law.calculate_surface_resistance(test_args.relative_permeability,
+            test_args.angular_frequency, 100)

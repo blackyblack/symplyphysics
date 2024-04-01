@@ -1,6 +1,14 @@
 from sympy import Eq, solve, exp
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless, angle_type,)
+from symplyphysics import (
+    units,
+    Quantity,
+    Symbol,
+    print_expression,
+    validate_input,
+    validate_output,
+    dimensionless,
+    angle_type,
+)
 
 ## Description
 ## A rectangular resonator consists of metal walls and a material filling it.
@@ -28,10 +36,13 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(initial_energy_=initial_energy, time_=time, angular_frequency_=angular_frequency, quality_factor_=quality_factor)
+@validate_input(initial_energy_=initial_energy,
+    time_=time,
+    angular_frequency_=angular_frequency,
+    quality_factor_=quality_factor)
 @validate_output(instantaneous_energy)
-def calculate_instantaneous_energy(initial_energy_: Quantity, time_: Quantity, angular_frequency_: Quantity,
-    quality_factor_: float) -> Quantity:
+def calculate_instantaneous_energy(initial_energy_: Quantity, time_: Quantity,
+    angular_frequency_: Quantity, quality_factor_: float) -> Quantity:
     result_velocity_expr = solve(law, instantaneous_energy, dict=True)[0][instantaneous_energy]
     result_expr = result_velocity_expr.subs({
         initial_energy: initial_energy_,

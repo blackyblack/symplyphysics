@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.thermodynamics import (
-    canonical_partition_function_of_classical_discrete_system as partition_function_law,
-)
+    canonical_partition_function_of_classical_discrete_system as partition_function_law,)
 
 # Description
 ## A canonical ensemble is described as having Boltzmann factors of 0.1, 0.66, 0.3 and 0.9.
@@ -27,12 +26,14 @@ def test_args_fixture() -> Args:
 
 
 def test_law_four_factors(test_args: Args) -> None:
-    result = partition_function_law.calculate_partition_function([test_args.f1, test_args.f2, test_args.f3, test_args.f4])
+    result = partition_function_law.calculate_partition_function(
+        [test_args.f1, test_args.f2, test_args.f3, test_args.f4])
     assert_equal(result, 1.96)
 
 
 def test_law_three_factors(test_args: Args) -> None:
-    result = partition_function_law.calculate_partition_function([test_args.f1, test_args.f2, test_args.f3])
+    result = partition_function_law.calculate_partition_function(
+        [test_args.f1, test_args.f2, test_args.f3])
     assert_equal(result, 1.06)
 
 

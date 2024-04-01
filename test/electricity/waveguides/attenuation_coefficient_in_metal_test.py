@@ -1,6 +1,5 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from sympy import pi
 from symplyphysics import (assert_equal, units, Quantity, errors, prefixes)
 from symplyphysics.laws.electricity.waveguides import attenuation_coefficient_in_metal as coefficient_law
 
@@ -12,8 +11,8 @@ from symplyphysics.laws.electricity.waveguides import attenuation_coefficient_in
 ## https://old.study.urfu.ru/view/aid/67/1/resonators.pdf
 
 Args = namedtuple("Args", [
-    "relative_permittivity", "relative_permeability", "surface_resistance_outer", "surface_resistance_inner", "outer_diameter",
-    "inner_diameter"
+    "relative_permittivity", "relative_permeability", "surface_resistance_outer",
+    "surface_resistance_inner", "outer_diameter", "inner_diameter"
 ])
 
 
@@ -36,56 +35,66 @@ def test_args_fixture() -> Args:
 
 def test_basic_attenuation_coefficient(test_args: Args) -> None:
     result = coefficient_law.calculate_attenuation_coefficient(test_args.relative_permittivity,
-        test_args.relative_permeability,
-        test_args.surface_resistance_outer, test_args.surface_resistance_inner, test_args.outer_diameter,
-        test_args.inner_diameter)
+        test_args.relative_permeability, test_args.surface_resistance_outer,
+        test_args.surface_resistance_inner, test_args.outer_diameter, test_args.inner_diameter)
     assert_equal(result, 0.0013 * (1 / units.meter))
 
 
 def test_bad_relative_permittivity(test_args: Args) -> None:
     relative_permittivity = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        coefficient_law.calculate_attenuation_coefficient(relative_permittivity, test_args.relative_permeability,
-            test_args.surface_resistance_outer, test_args.surface_resistance_inner, test_args.outer_diameter,
-            test_args.inner_diameter)
+        coefficient_law.calculate_attenuation_coefficient(relative_permittivity,
+            test_args.relative_permeability, test_args.surface_resistance_outer,
+            test_args.surface_resistance_inner, test_args.outer_diameter, test_args.inner_diameter)
 
 
 def test_bad_relative_permeability(test_args: Args) -> None:
     relative_permeability = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        coefficient_law.calculate_attenuation_coefficient(test_args.relative_permittivity, relative_permeability,
-            test_args.surface_resistance_outer, test_args.surface_resistance_inner, test_args.outer_diameter,
-            test_args.inner_diameter)
+        coefficient_law.calculate_attenuation_coefficient(test_args.relative_permittivity,
+            relative_permeability, test_args.surface_resistance_outer,
+            test_args.surface_resistance_inner, test_args.outer_diameter, test_args.inner_diameter)
 
 
 def test_bad_surface_resistance(test_args: Args) -> None:
     bad_surface_resistance = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        coefficient_law.calculate_attenuation_coefficient(test_args.relative_permittivity, test_args.relative_permeability,
-            bad_surface_resistance, test_args.surface_resistance_inner, test_args.outer_diameter,
-            test_args.inner_diameter)
-    with raises(TypeError):
-        coefficient_law.calculate_attenuation_coefficient(test_args.relative_permittivity, test_args.relative_permeability, 100,
+        coefficient_law.calculate_attenuation_coefficient(test_args.relative_permittivity,
+            test_args.relative_permeability, bad_surface_resistance,
             test_args.surface_resistance_inner, test_args.outer_diameter, test_args.inner_diameter)
-    with raises(errors.UnitsError):
-        coefficient_law.calculate_attenuation_coefficient(test_args.relative_permittivity, test_args.relative_permeability,
-            test_args.surface_resistance_outer, bad_surface_resistance, test_args.outer_diameter,
-            test_args.inner_diameter)
     with raises(TypeError):
-        coefficient_law.calculate_attenuation_coefficient(test_args.relative_permittivity, test_args.relative_permeability,
-            test_args.surface_resistance_outer, 100, test_args.outer_diameter,
-            test_args.inner_diameter)
+        coefficient_law.calculate_attenuation_coefficient(test_args.relative_permittivity,
+            test_args.relative_permeability, 100, test_args.surface_resistance_inner,
+            test_args.outer_diameter, test_args.inner_diameter)
+    with raises(errors.UnitsError):
+        coefficient_law.calculate_attenuation_coefficient(test_args.relative_permittivity,
+            test_args.relative_permeability, test_args.surface_resistance_outer,
+            bad_surface_resistance, test_args.outer_diameter, test_args.inner_diameter)
+    with raises(TypeError):
+        coefficient_law.calculate_attenuation_coefficient(test_args.relative_permittivity,
+            test_args.relative_permeability, test_args.surface_resistance_outer, 100,
+            test_args.outer_diameter, test_args.inner_diameter)
 
 
 def test_bad_radius(test_args: Args) -> None:
     bad_radius = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        coefficient_law.calculate_attenuation_coefficient(test_args.relative_permittivity, test_args.relative_permeability, test_args.surface_resistance_outer, test_args.surface_resistance_inner, bad_radius, test_args.inner_diameter)
+        coefficient_law.calculate_attenuation_coefficient(test_args.relative_permittivity,
+            test_args.relative_permeability, test_args.surface_resistance_outer,
+            test_args.surface_resistance_inner, bad_radius, test_args.inner_diameter)
     with raises(TypeError):
-        coefficient_law.calculate_attenuation_coefficient(test_args.relative_permittivity, test_args.relative_permeability, test_args.surface_resistance_outer, test_args.surface_resistance_inner, 100, test_args.inner_diameter)
+        coefficient_law.calculate_attenuation_coefficient(test_args.relative_permittivity,
+            test_args.relative_permeability, test_args.surface_resistance_outer,
+            test_args.surface_resistance_inner, 100, test_args.inner_diameter)
     with raises(errors.UnitsError):
-        coefficient_law.calculate_attenuation_coefficient(test_args.relative_permittivity, test_args.relative_permeability, test_args.surface_resistance_outer, test_args.surface_resistance_inner, test_args.outer_diameter, bad_radius)
+        coefficient_law.calculate_attenuation_coefficient(test_args.relative_permittivity,
+            test_args.relative_permeability, test_args.surface_resistance_outer,
+            test_args.surface_resistance_inner, test_args.outer_diameter, bad_radius)
     with raises(TypeError):
-        coefficient_law.calculate_attenuation_coefficient(test_args.relative_permittivity, test_args.relative_permeability, test_args.surface_resistance_outer, test_args.surface_resistance_inner, test_args.outer_diameter, 100)
+        coefficient_law.calculate_attenuation_coefficient(test_args.relative_permittivity,
+            test_args.relative_permeability, test_args.surface_resistance_outer,
+            test_args.surface_resistance_inner, test_args.outer_diameter, 100)
     with raises(ValueError):
-        coefficient_law.calculate_attenuation_coefficient(test_args.relative_permittivity, test_args.relative_permeability, test_args.surface_resistance_outer, test_args.surface_resistance_inner, test_args.inner_diameter, test_args.outer_diameter)
+        coefficient_law.calculate_attenuation_coefficient(test_args.relative_permittivity,
+            test_args.relative_permeability, test_args.surface_resistance_outer,
+            test_args.surface_resistance_inner, test_args.inner_diameter, test_args.outer_diameter)

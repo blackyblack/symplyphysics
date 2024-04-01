@@ -25,11 +25,13 @@ from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed
 ## - Assuming the particles are distributed according to Maxwell-Boltzmann statistics.
 
 average_speed = Symbol("average_speed", units.velocity, positive=True)
-equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature, "equilibrium_temperature", positive=True)
+equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature,
+    "equilibrium_temperature",
+    positive=True)
 particle_mass = clone_symbol(symbols.basic.mass, "particle_mass", positive=True)
 
 law = Eq(
-    average_speed, 
+    average_speed,
     sqrt(8 * units.boltzmann_constant * equilibrium_temperature / (pi * particle_mass)),
 )
 

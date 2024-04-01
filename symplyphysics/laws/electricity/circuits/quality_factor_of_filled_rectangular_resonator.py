@@ -1,12 +1,9 @@
-from sympy import (Eq, solve,)
-from symplyphysics import (
-    Quantity,
-    Symbol,
-    print_expression,
-    validate_input,
-    validate_output,
-    dimensionless
+from sympy import (
+    Eq,
+    solve,
 )
+from symplyphysics import (Symbol, print_expression, validate_input, validate_output,
+    dimensionless)
 
 # Description
 ## A rectangular resonator consists of metal walls and a material filling it.
@@ -31,9 +28,11 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(empty_resonator_quality_factor_=empty_resonator_quality_factor, tangent_dielectric_loss_angle_=tangent_dielectric_loss_angle)
+@validate_input(empty_resonator_quality_factor_=empty_resonator_quality_factor,
+    tangent_dielectric_loss_angle_=tangent_dielectric_loss_angle)
 @validate_output(quality_factor)
-def calculate_quality_factor(empty_resonator_quality_factor_: float, tangent_dielectric_loss_angle_: float) -> float:
+def calculate_quality_factor(empty_resonator_quality_factor_: float,
+    tangent_dielectric_loss_angle_: float) -> float:
     result_expr = solve(law, quality_factor, dict=True)[0][quality_factor]
     result_expr = result_expr.subs({
         empty_resonator_quality_factor: empty_resonator_quality_factor_,

@@ -8,8 +8,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.symbols.celsius import Celsius, to_kelvin_quantity
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import (
-    velocity_component_distribution as distribution_law,
-)
+    velocity_component_distribution as distribution_law,)
 
 # Description
 ## The value of the velocity component distribution function for an ensemble of
@@ -28,7 +27,8 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = distribution_law.calculate_velocity_component_distribution(test_args.v, test_args.m, test_args.t)
+    result = distribution_law.calculate_velocity_component_distribution(
+        test_args.v, test_args.m, test_args.t)
     assert_equal(result, 1.64e-3 / (units.meter / units.second), tolerance=2e-3)
 
 

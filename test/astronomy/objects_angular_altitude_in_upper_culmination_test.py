@@ -1,6 +1,11 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (assert_equal, units, Quantity, errors,)
+from symplyphysics import (
+    assert_equal,
+    units,
+    Quantity,
+    errors,
+)
 from symplyphysics.laws.astronomy import objects_angular_altitude_in_upper_culmination as altitude_law
 
 # Description

@@ -1,6 +1,6 @@
-from sympy import (Eq, solve)
+from sympy import (Eq, Idx, solve)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output)
+    validate_output, global_index)
 from symplyphysics.definitions import electrical_conductivity_is_inversed_resistance as conductance_definition
 from symplyphysics.laws.electricity.circuits import conductivity_of_parallel_resistors as parallel_resistors_law
 
@@ -19,8 +19,12 @@ law = Eq(parallel_conductance, first_conductance + second_conductance)
 
 # Derive the same law from more general law for any number of resistors
 
-two_resistors_law = parallel_resistors_law.law.subs(parallel_resistors_law.conductances,
-    (first_conductance, second_conductance)).doit()
+local_index_ = Idx("local_index_", (1, 2))
+two_resistors_law = parallel_resistors_law.law.subs(global_index, local_index_).doit()
+two_resistors_law = two_resistors_law.subs({
+    parallel_resistors_law.conductance[1]: first_conductance,
+    parallel_resistors_law.conductance[2]: second_conductance,
+})
 assert two_resistors_law.rhs == law.rhs
 
 

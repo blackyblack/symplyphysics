@@ -37,11 +37,9 @@ dimensionless_temperature = Symbol("dimensionless_temperature", dimensionless)
 
 law = Eq(
     distribution_function(lorentz_factor),
-    lorentz_factor
-    * sqrt(lorentz_factor**2 - 1)
-    / (dimensionless_temperature * besselk(2, 1 / dimensionless_temperature))
-    * exp(-1 * lorentz_factor / dimensionless_temperature)
-)
+    lorentz_factor * sqrt(lorentz_factor**2 - 1) /
+    (dimensionless_temperature * besselk(2, 1 / dimensionless_temperature)) *
+    exp(-1 * lorentz_factor / dimensionless_temperature))
 
 
 def print_law() -> str:

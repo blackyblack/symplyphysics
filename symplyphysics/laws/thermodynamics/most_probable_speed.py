@@ -23,13 +23,13 @@ from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed
 ## m - particle mass
 
 most_probable_speed = Symbol("most_probable_speed", units.velocity, positive=True)
-equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature, "equilibrium_temperature", positive=True)
+equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature,
+    "equilibrium_temperature",
+    positive=True)
 particle_mass = clone_symbol(symbols.basic.mass, "particle_mass", positive=True)
 
-law = Eq(
-    most_probable_speed,
-    sqrt(2 * units.boltzmann_constant * equilibrium_temperature / particle_mass)
-)
+law = Eq(most_probable_speed,
+    sqrt(2 * units.boltzmann_constant * equilibrium_temperature / particle_mass))
 
 # Derive from the Maxwell-Boltzmann speed distribution function
 
@@ -49,14 +49,15 @@ _most_probable_speed_derived = _solutions[0]
 
 assert expr_equals(_most_probable_speed_derived, law.rhs)
 
-_distribution_second_derivative = _distribution_first_derivative.diff(speed_distribution.particle_speed)
+_distribution_second_derivative = _distribution_first_derivative.diff(
+    speed_distribution.particle_speed)
 
 _distribution_second_derivative_at_most_probable_speed = _distribution_second_derivative.subs(
-    speed_distribution.particle_speed, _most_probable_speed_derived
-)
+    speed_distribution.particle_speed, _most_probable_speed_derived)
 
 # Proved that the point of extremum found is the point of maximum
 assert sign(_distribution_second_derivative_at_most_probable_speed) == S.NegativeOne
+
 
 def print_law() -> str:
     return print_expression(law)

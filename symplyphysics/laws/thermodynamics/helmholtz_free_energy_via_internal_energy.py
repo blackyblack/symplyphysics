@@ -10,7 +10,7 @@ from symplyphysics import (
 )
 
 # Description
-## The Helmholtz free energy is a thermodynamic potential that measures the useful work obtainable 
+## The Helmholtz free energy is a thermodynamic potential that measures the useful work obtainable
 ## from a closed thermodynamic system at a constant temperature (isothermal).
 
 # Law: F = U - T * S

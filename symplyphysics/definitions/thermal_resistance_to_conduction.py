@@ -20,7 +20,8 @@ from symplyphysics import (
 
 thermal_resistance = Symbol("thermal_resistance", units.area * units.temperature / units.power)
 slab_thickness = Symbol("slab_thickness", units.length)
-thermal_conductivity = Symbol("thermal_conductivity", units.power / (units.length * units.temperature))
+thermal_conductivity = Symbol("thermal_conductivity",
+    units.power / (units.length * units.temperature))
 
 definition = Eq(thermal_resistance, slab_thickness / thermal_conductivity)
 

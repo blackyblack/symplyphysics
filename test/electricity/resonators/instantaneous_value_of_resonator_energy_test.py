@@ -18,40 +18,50 @@ def test_args_fixture() -> Args:
     time = Quantity(1 * prefixes.micro * units.second)
     angular_frequency = Quantity(2 * pi * 100e6 * (units.radian / units.second))
     quality_factor = 10000
-    return Args(initial_energy=initial_energy, time=time, angular_frequency=angular_frequency, quality_factor=quality_factor)
+    return Args(initial_energy=initial_energy,
+        time=time,
+        angular_frequency=angular_frequency,
+        quality_factor=quality_factor)
 
 
 def test_basic_instantaneous_energy(test_args: Args) -> None:
-    result = energy_law.calculate_instantaneous_energy(test_args.initial_energy, test_args.time, test_args.angular_frequency,
-        test_args.quality_factor)
+    result = energy_law.calculate_instantaneous_energy(test_args.initial_energy, test_args.time,
+        test_args.angular_frequency, test_args.quality_factor)
     assert_equal(result, 9391 * units.joule)
 
 
 def test_bad_initial_energy(test_args: Args) -> None:
     bad_initial_energy = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        energy_law.calculate_instantaneous_energy(bad_initial_energy, test_args.time, test_args.angular_frequency, test_args.quality_factor)
+        energy_law.calculate_instantaneous_energy(bad_initial_energy, test_args.time,
+            test_args.angular_frequency, test_args.quality_factor)
     with raises(TypeError):
-        energy_law.calculate_instantaneous_energy(100, test_args.time, test_args.angular_frequency, test_args.quality_factor)
+        energy_law.calculate_instantaneous_energy(100, test_args.time, test_args.angular_frequency,
+            test_args.quality_factor)
 
 
 def test_bad_time(test_args: Args) -> None:
     bad_time = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        energy_law.calculate_instantaneous_energy(test_args.initial_energy, bad_time, test_args.angular_frequency, test_args.quality_factor)
+        energy_law.calculate_instantaneous_energy(test_args.initial_energy, bad_time,
+            test_args.angular_frequency, test_args.quality_factor)
     with raises(TypeError):
-        energy_law.calculate_instantaneous_energy(test_args.initial_energy, 100, test_args.angular_frequency, test_args.quality_factor)
+        energy_law.calculate_instantaneous_energy(test_args.initial_energy, 100,
+            test_args.angular_frequency, test_args.quality_factor)
 
 
 def test_bad_angular_frequency(test_args: Args) -> None:
     bad_angular_frequency = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        energy_law.calculate_instantaneous_energy(test_args.initial_energy, test_args.time, bad_angular_frequency, test_args.quality_factor)
+        energy_law.calculate_instantaneous_energy(test_args.initial_energy, test_args.time,
+            bad_angular_frequency, test_args.quality_factor)
     with raises(TypeError):
-        energy_law.calculate_instantaneous_energy(test_args.initial_energy, test_args.time, 100, test_args.quality_factor)
+        energy_law.calculate_instantaneous_energy(test_args.initial_energy, test_args.time, 100,
+            test_args.quality_factor)
 
 
 def test_bad_quality_factor(test_args: Args) -> None:
     quality_factor = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        energy_law.calculate_instantaneous_energy(test_args.initial_energy, test_args.time, test_args.angular_frequency, quality_factor)
+        energy_law.calculate_instantaneous_energy(test_args.initial_energy, test_args.time,
+            test_args.angular_frequency, quality_factor)
