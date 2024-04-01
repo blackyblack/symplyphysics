@@ -16,10 +16,12 @@ from symplyphysics import (
 ## can interfere.
 ## The order of interference indicates the number of whole wavelengths. When the difference in the path of the
 ## beam reflected from the upper boundary of the film and the beam reflected from the lower boundary of the
-## film is equal to an integer wave "n", then these two waves enter the observation point with the same phases
-## and demonstrate interference.
+## film is equal to an integer number of half-waves, then these two waves enter the observation point and demonstrate
+## minimum interference.
 ## Order of interference can be chosen arbitrarily, to achieve the desired thin film thickness.
 ## Angle of refraction is angle between refracted ray and the normal.
+## Thickness that gives interference minimum at a certain point on the interference pattern depends on the
+## angle of refraction, the order of interference, and the refractive index of the film.
 
 ## Law is: h = k * L / (2 * n * cos(O)), where
 ## h - film thickness,

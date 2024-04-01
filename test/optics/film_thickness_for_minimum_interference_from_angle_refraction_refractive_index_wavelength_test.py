@@ -2,11 +2,11 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy import pi
 from symplyphysics import (units, Quantity, errors, assert_equal)
-from symplyphysics.laws.optics import interference_films_from_angle_refraction_refractive_index_wavelength as thickness_law
+from symplyphysics.laws.optics import film_thickness_for_minimum_interference_from_angle_refraction_refractive_index_wavelength as thickness_law
 
 # Description
 ## Let the wavelength be 400 nanometer, the order of interference is 4, the angle of refraction is
-## 30 degree (pi / 6 radian), and the refractive index is 1.33. Then the film thickness will be 694 nanometer.
+## 22 degree (0.12 * pi radian), and the refractive index is 1.33. Then the film thickness will be 694 nanometer.
 ## https://exir.ru/5/resh/5_80.htm
 
 Args = namedtuple("Args", ["wavelength", "order_interference", "angle_refraction", "refractive_index"])
@@ -15,7 +15,7 @@ Args = namedtuple("Args", ["wavelength", "order_interference", "angle_refraction
 def test_args_fixture() -> Args:
     wavelength = Quantity(400 * units.nanometer)
     order_interference = 4
-    angle_refraction = pi / 6
+    angle_refraction = 0.12 * pi
     refractive_index = 1.33
 
     return Args(wavelength=wavelength, order_interference=order_interference, refractive_index=refractive_index, angle_refraction=angle_refraction)
@@ -23,7 +23,7 @@ def test_args_fixture() -> Args:
 
 def test_basic_thickness(test_args: Args) -> None:
     result = thickness_law.calculate_film_thickness(test_args.wavelength, test_args.order_interference, test_args.refractive_index, test_args.angle_refraction)
-    assert_equal(result, 694 * units.nanometer)
+    assert_equal(result, 647 * units.nanometer)
 
 
 def test_bad_wavelength(test_args: Args) -> None:
