@@ -1,10 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (units, Quantity, errors, assert_equal)
-from symplyphysics.laws.optics import radius_newton_ring_from_wavelength_order_radius_curvature_refractive_index as radius_law
+from symplyphysics.laws.optics import radius_dark_newton_ring_from_wavelength_order_radius_curvature_refractive_index as radius_law
 
 # Description
-## Let the wavelength be 589 nanometer, the order of interference is 6,
+## Let the wavelength be 589 nanometer, the order of ring is 6,
 ## radius of curvature is 4.99 meter and the refractive index is 1.
 ## Then the radius of the dark Newtons's ring will be 4.2 millimeter.
 ## https://uchi.ru/otvety/questions/diametr-shestogo-temnogo-koltsa-nyutona-okazalsya-ravnim-d6-84mm-ustanovka-dlya-polucheni?utm_referrer=https%3a%2f%2fwww.google.ru%2f
