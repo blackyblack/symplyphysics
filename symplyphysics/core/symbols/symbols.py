@@ -1,6 +1,6 @@
 from __future__ import annotations
 from typing import Any, Optional, Sequence, Self
-from sympy import S, Symbol as SymSymbol, Expr, Equality, IndexedBase
+from sympy import S, Idx, Symbol as SymSymbol, Expr, Equality, IndexedBase
 from sympy.physics.units import Dimension
 from sympy.core.function import UndefinedFunction
 from sympy.printing.pretty.pretty import PrettyPrinter
@@ -132,10 +132,6 @@ class SymbolPrinter(PrettyPrinter):
             right=right)
 
     # pylint: disable-next=invalid-name
-    def _print_SumArray(self, e: Expr) -> prettyForm:
-        return self._print_Function(e, func_name="SumArray")
-
-    # pylint: disable-next=invalid-name
     def _print_SumIndexed(self, e: Expr) -> prettyForm:
         return self._print_Function(e, func_name="SumIndexed")
 
@@ -155,14 +151,11 @@ def print_expression(expr: Expr | Equality | Sequence[Expr | Equality]) -> str:
         pretty_use_unicode(uflag)
 
 
-# Helper method for easier interaction with SumArray
-def tuple_of_symbols(display_name: str,
-    dimension: Dimension = Dimension(S.One),
-    length: int = 1) -> tuple[Symbol, ...]:
-    return tuple(Symbol(display_name + "_" + str(i), dimension) for i in range(length))
-
-
 def clone_symbol(source: Symbol, display_name: Optional[str] = None, **assumptions: Any) -> Symbol:
     assumptions = source.assumptions0 if assumptions is None or len(
         assumptions) == 0 else assumptions
     return Symbol(display_name, source.dimension, **assumptions)
+
+
+# This is default index for indexed parameters, eg for using in SumIndexed
+global_index = Idx("global_index")

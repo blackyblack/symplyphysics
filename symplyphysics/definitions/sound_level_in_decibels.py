@@ -24,10 +24,7 @@ intensity = Symbol("intensity", units.power / units.area)
 reference_sound_level = Quantity(10)
 reference_intensity = Quantity(1e-12 * units.watt / units.meter**2)
 
-definition = Eq(
-    sound_level,
-    reference_sound_level * log(intensity / reference_intensity, 10)
-)
+definition = Eq(sound_level, reference_sound_level * log(intensity / reference_intensity, 10))
 
 
 def print_law() -> str:

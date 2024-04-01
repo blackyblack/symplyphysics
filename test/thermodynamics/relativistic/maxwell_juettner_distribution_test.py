@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.thermodynamics.relativistic import (
-    maxwell_juettner_distribution as distribution_law,
-)
+    maxwell_juettner_distribution as distribution_law,)
 
 # Description
 ## The value of the Maxwell-Juettner distribution for dimensionless temperature theta = 100 and Lorentz

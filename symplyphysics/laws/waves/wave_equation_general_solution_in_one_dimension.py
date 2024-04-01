@@ -1,4 +1,4 @@
-from sympy import Eq, symbols, Function as SymFunction, cos, S
+from sympy import Eq, symbols, Function as SymFunction, cos
 from symplyphysics import (
     units,
     angle_type,
@@ -53,9 +53,7 @@ _phase = phase_law.law.rhs.subs({
     phase_law.time: time,
 })
 
-_solution = law.rhs.subs(
-    wave_phase(position, time), _phase
-)
+_solution = law.rhs.subs(wave_phase(position, time), _phase)
 
 _eqn = wave_eqn.definition.subs({
     wave_eqn.position: position,
@@ -63,13 +61,9 @@ _eqn = wave_eqn.definition.subs({
     wave_eqn.phase_velocity: _phase_velocity,
 })
 
-_eqn_lhs_subs = _eqn.lhs.subs(
-    wave_eqn.displacement(position, time), _solution
-).doit()
+_eqn_lhs_subs = _eqn.lhs.subs(wave_eqn.displacement(position, time), _solution).doit()
 
-_eqn_rhs_subs = _eqn.rhs.subs(
-    wave_eqn.displacement(position, time), _solution
-).doit()
+_eqn_rhs_subs = _eqn.rhs.subs(wave_eqn.displacement(position, time), _solution).doit()
 
 assert expr_equals(_eqn_lhs_subs, _eqn_rhs_subs)
 

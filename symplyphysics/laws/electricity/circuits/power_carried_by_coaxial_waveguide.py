@@ -1,7 +1,18 @@
-from sympy import (Eq, solve, sqrt, ln,)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless,)
-
+from sympy import (
+    Eq,
+    solve,
+    sqrt,
+    ln,
+)
+from symplyphysics import (
+    units,
+    Quantity,
+    Symbol,
+    print_expression,
+    validate_input,
+    validate_output,
+    dimensionless,
+)
 
 # Description
 ## A coaxial waveguide is an electrical cable consisting of a central conductor and a shield arranged coaxially and separated
@@ -25,7 +36,8 @@ inner_diameter = Symbol("inner_diameter", units.length)
 
 vacuum_impedance = Quantity(120 * units.ohm)
 
-law = Eq(waveguide_power, (voltage**2 / vacuum_impedance) * sqrt(relative_permittivity / (relative_permeability * ln(outer_diameter / inner_diameter))))
+law = Eq(waveguide_power, (voltage**2 / vacuum_impedance) * sqrt(relative_permittivity /
+    (relative_permeability * ln(outer_diameter / inner_diameter))))
 
 
 def print_law() -> str:
@@ -39,8 +51,7 @@ def print_law() -> str:
     inner_diameter_=inner_diameter)
 @validate_output(waveguide_power)
 def calculate_waveguide_power(relative_permittivity_: float, relative_permeability_: float,
-    voltage_: Quantity, outer_diameter_: Quantity,
-    inner_diameter_: Quantity) -> Quantity:
+    voltage_: Quantity, outer_diameter_: Quantity, inner_diameter_: Quantity) -> Quantity:
     if outer_diameter_.scale_factor <= inner_diameter_.scale_factor:
         raise ValueError("The outer diameter must be greater than the inner diameter")
     result_expr = solve(law, waveguide_power, dict=True)[0][waveguide_power]

@@ -19,17 +19,20 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_attenuation_coefficient(test_args: Args) -> None:
-    result = coefficient_law.calculate_attenuation_coefficient(test_args.first_resistance, test_args.second_resistance)
+    result = coefficient_law.calculate_attenuation_coefficient(test_args.first_resistance,
+        test_args.second_resistance)
     assert_equal(result, 2.62)
 
 
 def test_bad_resistance(test_args: Args) -> None:
     bad_resistance = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        coefficient_law.calculate_attenuation_coefficient(bad_resistance, test_args.second_resistance)
+        coefficient_law.calculate_attenuation_coefficient(bad_resistance,
+            test_args.second_resistance)
     with raises(TypeError):
         coefficient_law.calculate_attenuation_coefficient(100, test_args.second_resistance)
     with raises(errors.UnitsError):
-        coefficient_law.calculate_attenuation_coefficient(test_args.first_resistance, bad_resistance)
+        coefficient_law.calculate_attenuation_coefficient(test_args.first_resistance,
+            bad_resistance)
     with raises(TypeError):
         coefficient_law.calculate_attenuation_coefficient(test_args.first_resistance, 100)

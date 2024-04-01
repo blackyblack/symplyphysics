@@ -1,6 +1,11 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (assert_equal, units, Quantity, errors,)
+from symplyphysics import (
+    assert_equal,
+    units,
+    Quantity,
+    errors,
+)
 from symplyphysics.laws.astronomy import approximate_time_of_stars_location_on_the_main_sequence as time_law
 
 # Description

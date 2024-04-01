@@ -1,4 +1,7 @@
-from sympy import (Eq, solve,)
+from sympy import (
+    Eq,
+    solve,
+)
 from symplyphysics import (
     units,
     Quantity,
@@ -32,7 +35,8 @@ mass_of_sun = Quantity(1.989e30 * units.kilogram)
 lifetime_of_sun = Quantity(1e10 * units.common_year)
 luminosity_of_sun = Quantity(3.827e26 * units.watt)
 
-law = Eq(lifetime, lifetime_of_sun * (mass_of_star / mass_of_sun) * (luminosity_of_sun / luminosity_of_star))
+law = Eq(lifetime,
+    lifetime_of_sun * (mass_of_star / mass_of_sun) * (luminosity_of_sun / luminosity_of_star))
 
 
 def print_law() -> str:

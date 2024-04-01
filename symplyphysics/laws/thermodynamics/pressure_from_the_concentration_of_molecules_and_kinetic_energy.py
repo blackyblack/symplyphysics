@@ -28,8 +28,7 @@ law = Eq(pressure, 2 / 3 * molecules_concentration * average_kinetic_energy)
 temperature_eq = kinetic_energy.law.subs(
     {kinetic_energy.average_kinetic_energy: average_kinetic_energy})
 
-derived_temperature = solve(temperature_eq,
-    kinetic_energy.equilibrium_temperature,
+derived_temperature = solve(temperature_eq, kinetic_energy.equilibrium_temperature,
     dict=True)[0][kinetic_energy.equilibrium_temperature]
 
 particles_number_eq = volume_number_density.definition.subs({

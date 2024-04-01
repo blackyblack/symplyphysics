@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.thermodynamics import (
-    free_energy_change_via_temperature_change_and_volume_change as free_energy_law,
-)
+    free_energy_change_via_temperature_change_and_volume_change as free_energy_law,)
 
 # Description
 ## A closed system in thermal equlibrium has entropy S = 1 J/k and pressure p = 1 Pa inside.
@@ -28,7 +27,8 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = free_energy_law.calculate_free_energy_change(test_args.s, test_args.dt, test_args.p, test_args.dv)
+    result = free_energy_law.calculate_free_energy_change(test_args.s, test_args.dt, test_args.p,
+        test_args.dv)
     assert_equal(result, -0.01 * units.joule)
 
 

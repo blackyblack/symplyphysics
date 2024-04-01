@@ -1,6 +1,14 @@
 from sympy import Eq, solve
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless, angle_type,)
+from symplyphysics import (
+    units,
+    Quantity,
+    Symbol,
+    print_expression,
+    validate_input,
+    validate_output,
+    dimensionless,
+    angle_type,
+)
 
 ## Description
 ## A coaxial waveguide is an electrical cable consisting of a central conductor and a shield arranged coaxially and separated
@@ -23,14 +31,17 @@ angular_frequency = Symbol("angular_frequency", angle_type / units.time)
 specific_capacitance = Symbol("specific_capacitance", units.capacitance / units.length)
 tangent_dielectric_loss_angle = Symbol("tangent_dielectric_loss_angle", dimensionless)
 
-law = Eq(specific_conductivity, angular_frequency * specific_capacitance * tangent_dielectric_loss_angle)
+law = Eq(specific_conductivity,
+    angular_frequency * specific_capacitance * tangent_dielectric_loss_angle)
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(angular_frequency_=angular_frequency, specific_capacitance_=specific_capacitance, tangent_dielectric_loss_angle_=tangent_dielectric_loss_angle)
+@validate_input(angular_frequency_=angular_frequency,
+    specific_capacitance_=specific_capacitance,
+    tangent_dielectric_loss_angle_=tangent_dielectric_loss_angle)
 @validate_output(specific_conductivity)
 def calculate_specific_conductivity(angular_frequency_: Quantity, specific_capacitance_: Quantity,
     tangent_dielectric_loss_angle_: float) -> Quantity:

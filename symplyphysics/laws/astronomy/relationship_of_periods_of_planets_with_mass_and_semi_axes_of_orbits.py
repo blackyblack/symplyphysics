@@ -30,7 +30,8 @@ second_mass = Symbol("second_mass", units.mass)
 
 mass_of_sun = Quantity(1.989e30 * units.kilogram)
 
-law = Eq(((mass_of_sun + first_mass) * first_period**2) / ((mass_of_sun + second_mass) * second_period**2), first_semi_axis**3 / second_semi_axis**3)
+law = Eq(((mass_of_sun + first_mass) * first_period**2) /
+    ((mass_of_sun + second_mass) * second_period**2), first_semi_axis**3 / second_semi_axis**3)
 
 
 def print_law() -> str:
@@ -40,7 +41,8 @@ def print_law() -> str:
 @validate_input(second_period_=second_period,
     first_semi_axis_=first_semi_axis,
     second_semi_axis_=second_semi_axis,
-    first_mass_=first_mass, second_mass_=second_mass)
+    first_mass_=first_mass,
+    second_mass_=second_mass)
 @validate_output(first_period)
 def calculate_first_period(second_period_: Quantity, first_semi_axis_: Quantity,
     second_semi_axis_: Quantity, first_mass_: Quantity, second_mass_: Quantity) -> Quantity:

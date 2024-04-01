@@ -1,7 +1,20 @@
-from sympy import (Eq, solve, pi, sqrt,)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless, angle_type,)
+from sympy import (
+    Eq,
+    solve,
+    pi,
+    sqrt,
+)
 from sympy.physics.units import magnetic_constant
+from symplyphysics import (
+    units,
+    Quantity,
+    Symbol,
+    print_expression,
+    validate_input,
+    validate_output,
+    dimensionless,
+    angle_type,
+)
 
 
 # Description
@@ -27,7 +40,9 @@ specific_conductivity = Symbol("specific_conductivity", units.conductance / unit
 outer_radius = Symbol("outer_radius", units.length)
 inner_radius = Symbol("inner_radius", units.length)
 
-law = Eq(specific_resistance, (1 / (2 * pi)) * sqrt(angular_frequency * magnetic_constant * relative_permeability / (2 * specific_conductivity)) * (1 / inner_radius - 1 / outer_radius))
+law = Eq(specific_resistance,
+    (1 / (2 * pi)) * sqrt(angular_frequency * magnetic_constant * relative_permeability /
+    (2 * specific_conductivity)) * (1 / inner_radius - 1 / outer_radius))
 
 
 def print_law() -> str:
@@ -41,8 +56,7 @@ def print_law() -> str:
     inner_radius_=inner_radius)
 @validate_output(specific_resistance)
 def calculate_specific_resistance(relative_permeability_: float, angular_frequency_: Quantity,
-    specific_conductivity_: Quantity, outer_radius_: Quantity,
-    inner_radius_: Quantity) -> Quantity:
+    specific_conductivity_: Quantity, outer_radius_: Quantity, inner_radius_: Quantity) -> Quantity:
     if outer_radius_.scale_factor <= inner_radius_.scale_factor:
         raise ValueError("The outer radius must be greater than the inner radius")
     result_expr = solve(law, specific_resistance, dict=True)[0][specific_resistance]

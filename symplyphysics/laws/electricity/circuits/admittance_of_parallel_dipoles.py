@@ -1,9 +1,6 @@
 from sympy import (Eq, Idx, solve)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output)
-from symplyphysics.core.operations.sum_indexed import SumIndexed
-from symplyphysics.core.symbols.symbols import SymbolIndexed
-
+    validate_output, global_index, SumIndexed, SymbolIndexed)
 
 # Description
 ## If dipoles (resistor, capacitor or coil) are connected in parallel, total admittance is a sum of admittance of each dipole.
@@ -13,8 +10,7 @@ from symplyphysics.core.symbols.symbols import SymbolIndexed
 
 parallel_admittance = Symbol("parallel_admittance", units.conductance)
 admittance = SymbolIndexed("admittance", units.conductance)
-admittance_index = Idx("admittance_index")
-law = Eq(parallel_admittance, SumIndexed(admittance[admittance_index], admittance_index))
+law = Eq(parallel_admittance, SumIndexed(admittance[global_index], global_index))
 
 
 def print_law() -> str:
@@ -24,10 +20,10 @@ def print_law() -> str:
 @validate_input(admittances_=admittance)
 @validate_output(units.conductance)
 def calculate_parallel_admittance(admittances_: list[Quantity]) -> Quantity:
-    index_local = Idx("index_local", (1, len(admittances_)))
-    admittances_law = law.subs(admittance_index, index_local)
+    local_index = Idx("local_index", (1, len(admittances_)))
+    admittances_law = law.subs(global_index, local_index)
     admittances_law = admittances_law.doit()
     solved = solve(admittances_law, parallel_admittance, dict=True)[0][parallel_admittance]
-    for (from_, to_) in zip(range(1, len(admittances_) + 1), admittances_):
-        solved = solved.subs(admittance[from_], to_)
+    for i, v in enumerate(admittances_):
+        solved = solved.subs(admittance[i + 1], v)
     return Quantity(solved)

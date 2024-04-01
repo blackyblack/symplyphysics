@@ -65,19 +65,28 @@ def test_bad_specific_conductivity(test_args: Args) -> None:
             test_args.inner_radius)
     with raises(TypeError):
         resistance_law.calculate_specific_resistance(test_args.relative_permeability,
-            test_args.angular_frequency, 100, test_args.outer_radius,
-            test_args.inner_radius)
+            test_args.angular_frequency, 100, test_args.outer_radius, test_args.inner_radius)
 
 
 def test_bad_radius(test_args: Args) -> None:
     bad_radius = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        resistance_law.calculate_specific_resistance(test_args.relative_permeability, test_args.angular_frequency, test_args.specific_conductivity, bad_radius, test_args.inner_radius)
+        resistance_law.calculate_specific_resistance(test_args.relative_permeability,
+            test_args.angular_frequency, test_args.specific_conductivity, bad_radius,
+            test_args.inner_radius)
     with raises(TypeError):
-        resistance_law.calculate_specific_resistance(test_args.relative_permeability, test_args.angular_frequency, test_args.specific_conductivity, 100, test_args.inner_radius)
+        resistance_law.calculate_specific_resistance(test_args.relative_permeability,
+            test_args.angular_frequency, test_args.specific_conductivity, 100,
+            test_args.inner_radius)
     with raises(errors.UnitsError):
-        resistance_law.calculate_specific_resistance(test_args.relative_permeability, test_args.angular_frequency, test_args.specific_conductivity, test_args.outer_radius, bad_radius)
+        resistance_law.calculate_specific_resistance(test_args.relative_permeability,
+            test_args.angular_frequency, test_args.specific_conductivity, test_args.outer_radius,
+            bad_radius)
     with raises(TypeError):
-        resistance_law.calculate_specific_resistance(test_args.relative_permeability, test_args.angular_frequency, test_args.specific_conductivity, test_args.outer_radius, 100)
+        resistance_law.calculate_specific_resistance(test_args.relative_permeability,
+            test_args.angular_frequency, test_args.specific_conductivity, test_args.outer_radius,
+            100)
     with raises(ValueError):
-        resistance_law.calculate_specific_resistance(test_args.relative_permeability, test_args.angular_frequency, test_args.specific_conductivity, test_args.inner_radius, test_args.outer_radius)
+        resistance_law.calculate_specific_resistance(test_args.relative_permeability,
+            test_args.angular_frequency, test_args.specific_conductivity, test_args.inner_radius,
+            test_args.outer_radius)

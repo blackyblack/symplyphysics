@@ -1,4 +1,9 @@
-from sympy import (Eq, solve, pi, sqrt,)
+from sympy import (
+    Eq,
+    solve,
+    pi,
+    sqrt,
+)
 from symplyphysics import (
     units,
     Quantity,
@@ -32,7 +37,8 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(relative_permittivity_=relative_permittivity, relative_permeability_=relative_permeability)
+@validate_input(relative_permittivity_=relative_permittivity,
+    relative_permeability_=relative_permeability)
 @validate_output(resistance)
 def calculate_resistance(relative_permittivity_: float, relative_permeability_: float) -> Quantity:
     result_expr = solve(law, resistance, dict=True)[0][resistance]

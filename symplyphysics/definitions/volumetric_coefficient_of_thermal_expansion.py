@@ -52,16 +52,8 @@ def calculate_volumetric_expansion_coefficient(
 ) -> Quantity:
     # The RHS of the equation is calculated at the temperature point after expansion (`temperature_after_`)
 
-    volume_function = (
-        volume_before_
-        + (volume_after_ - volume_before_)
-        * (temperature - temperature_before_)
-        / (temperature_after_ - temperature_before_)
-    )
-    result = (
-        (law.rhs)
-        .subs(volume(temperature), volume_function)
-        .doit()
-        .subs(temperature, temperature_after_)
-    )
+    volume_function = (volume_before_ + (volume_after_ - volume_before_) *
+        (temperature - temperature_before_) / (temperature_after_ - temperature_before_))
+    result = ((law.rhs).subs(volume(temperature),
+        volume_function).doit().subs(temperature, temperature_after_))
     return Quantity(result)

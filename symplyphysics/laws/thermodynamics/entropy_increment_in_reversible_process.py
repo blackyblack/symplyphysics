@@ -1,4 +1,4 @@
-from sympy import Eq, solve
+from sympy import Eq
 from symplyphysics import (
     units,
     Quantity,
@@ -26,7 +26,8 @@ from symplyphysics import (
 ## - dS is an exact differential (since entropy S is a state function) whereas δQ is an inexact differential
 ## - Also applicable to actually possible quasistatic irreversible processes without composition change
 
-infinitesimal_entropy_change = Symbol("infinitesimal_entropy_change", units.energy / units.temperature)
+infinitesimal_entropy_change = Symbol("infinitesimal_entropy_change",
+    units.energy / units.temperature)
 infinitesimal_transfer_of_heat = Symbol("infinitesimal_transfer_of_heat", units.energy)
 common_temperature = clone_symbol(symbols.thermodynamics.temperature, "common_temperature")
 

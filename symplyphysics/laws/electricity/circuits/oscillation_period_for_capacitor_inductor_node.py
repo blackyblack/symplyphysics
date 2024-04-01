@@ -1,8 +1,7 @@
-from sympy import (Eq, solve, pi, sqrt, Derivative, simplify)
+from sympy import (Eq, Idx, solve, pi, sqrt, Derivative, simplify)
 from symplyphysics import (units, Quantity, Symbol, Function, print_expression, validate_input,
-    validate_output)
+    validate_output, global_index)
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.core.symbols.symbols import tuple_of_symbols
 
 from symplyphysics.definitions import capacitance_from_charge_and_voltage as capacitance_definition
 from symplyphysics.definitions import current_is_charge_derivative as charge_definition
@@ -50,12 +49,12 @@ time = Symbol("time", units.time)
 capacitor_current = Function("capacitor_current", units.current)
 inductor_current = Function("inductor_current", units.current)
 
-current_symbols = tuple_of_symbols("current", units.current, 2)
-two_currents_law = kirchhoff_law.law.subs(kirchhoff_law.currents, current_symbols).doit()
+local_index_ = Idx("local_index_", (1, 2))
+two_currents_law = kirchhoff_law.law.subs(global_index, local_index_).doit()
 # capacitor current is in, inductor current is out
 two_currents_applied = two_currents_law.subs({
-    current_symbols[0]: capacitor_current(time),
-    current_symbols[1]: -1 * inductor_current(time)
+    kirchhoff_law.current[1]: capacitor_current(time),
+    kirchhoff_law.current[2]: -1 * inductor_current(time)
 })
 capacitor_current_applied = solve(two_currents_applied, capacitor_current(time),
     dict=True)[0][capacitor_current(time)]
@@ -69,12 +68,11 @@ assert capacitor_current_eq.rhs == inductor_current(time)
 capacitor_voltage = Function("capacitor_voltage", units.voltage)
 inductor_voltage = Function("inductor_voltage", units.voltage)
 
-voltage_symbols = tuple_of_symbols("voltage", units.voltage, 2)
-two_voltages_law = kirchhoff_law_2.law.subs(kirchhoff_law_2.voltages, voltage_symbols).doit()
+two_voltages_law = kirchhoff_law_2.law.subs(global_index, local_index_).doit()
 # capacitor is voltage source, inductor is voltage consumer
 two_voltages_applied = two_voltages_law.subs({
-    voltage_symbols[0]: -1 * inductor_voltage(time),
-    voltage_symbols[1]: capacitor_voltage(time)
+    kirchhoff_law_2.voltage[1]: -1 * inductor_voltage(time),
+    kirchhoff_law_2.voltage[2]: capacitor_voltage(time)
 })
 inductor_voltage_applied = solve(two_voltages_applied, inductor_voltage(time),
     dict=True)[0][inductor_voltage(time)]

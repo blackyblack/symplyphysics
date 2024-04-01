@@ -1,7 +1,15 @@
 from sympy import Eq, solve, sqrt
 from sympy.physics.units import electric_constant, magnetic_constant
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless, angle_type,)
+from symplyphysics import (
+    units,
+    Quantity,
+    Symbol,
+    print_expression,
+    validate_input,
+    validate_output,
+    dimensionless,
+    angle_type,
+)
 
 ## Description
 ## A coaxial waveguide is an electrical cable consisting of a central conductor and a shield arranged coaxially and separated
@@ -26,18 +34,26 @@ relative_permeability = Symbol("relative_permeability", dimensionless)
 angular_frequency = Symbol("angular_frequency", angle_type / units.time)
 tangent_dielectric_loss_angle = Symbol("tangent_dielectric_loss_angle", dimensionless)
 
-law = Eq(attenuation_coefficient, angular_frequency * sqrt(magnetic_constant * relative_permeability * electric_constant * relative_permittivity) * tangent_dielectric_loss_angle / 2)
+law = Eq(
+    attenuation_coefficient,
+    angular_frequency *
+    sqrt(magnetic_constant * relative_permeability * electric_constant * relative_permittivity) *
+    tangent_dielectric_loss_angle / 2)
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(relative_permittivity_=relative_permittivity, relative_permeability_=relative_permeability, angular_frequency_=angular_frequency, tangent_dielectric_loss_angle_=tangent_dielectric_loss_angle)
+@validate_input(relative_permittivity_=relative_permittivity,
+    relative_permeability_=relative_permeability,
+    angular_frequency_=angular_frequency,
+    tangent_dielectric_loss_angle_=tangent_dielectric_loss_angle)
 @validate_output(attenuation_coefficient)
-def calculate_attenuation_coefficient(relative_permittivity_: float, relative_permeability_: float, angular_frequency_: Quantity,
-    tangent_dielectric_loss_angle_: float) -> Quantity:
-    result_velocity_expr = solve(law, attenuation_coefficient, dict=True)[0][attenuation_coefficient]
+def calculate_attenuation_coefficient(relative_permittivity_: float, relative_permeability_: float,
+    angular_frequency_: Quantity, tangent_dielectric_loss_angle_: float) -> Quantity:
+    result_velocity_expr = solve(law, attenuation_coefficient,
+        dict=True)[0][attenuation_coefficient]
     result_expr = result_velocity_expr.subs({
         relative_permittivity: relative_permittivity_,
         relative_permeability: relative_permeability_,

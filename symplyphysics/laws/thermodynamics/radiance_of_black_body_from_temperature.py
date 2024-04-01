@@ -3,8 +3,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import (
-    radiant_exitance_is_radiant_flux_emitted_per_unit_area as exitance_def,
-)
+    radiant_exitance_is_radiant_flux_emitted_per_unit_area as exitance_def,)
 from symplyphysics.laws.thermodynamics import rate_of_thermal_radiation as radiation_law
 
 # Description

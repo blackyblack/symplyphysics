@@ -31,15 +31,18 @@ law = Eq(integer_factor * wavelength / 2, string_length)
 # Derive from boundary condition `u(L, t) = 0`
 
 _wavenumber = wavenumber_def.definition.rhs.subs(
-    wavenumber_def.wavelength, wavelength,
+    wavenumber_def.wavelength,
+    wavelength,
 )
 
 _standing_wave = standing_wave_law.law.rhs.subs(
-    standing_wave_law.angular_wavenumber, _wavenumber,
+    standing_wave_law.angular_wavenumber,
+    _wavenumber,
 )
 
 _standing_wave_at_string_end = _standing_wave.subs(
-    standing_wave_law.position, string_length,
+    standing_wave_law.position,
+    string_length,
 )
 
 _wavelength_solution = solve(_standing_wave_at_string_end, wavelength)[0]

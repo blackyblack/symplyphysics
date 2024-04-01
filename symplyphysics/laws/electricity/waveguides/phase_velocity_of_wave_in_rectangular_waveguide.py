@@ -1,7 +1,14 @@
 from sympy import Eq, solve, sqrt
 from sympy.physics.units import speed_of_light
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless,)
+from symplyphysics import (
+    units,
+    Quantity,
+    Symbol,
+    print_expression,
+    validate_input,
+    validate_output,
+    dimensionless,
+)
 
 ## Description
 ## A rectangular waveguide is a rectangular metal waveguide capable of supporting waves propagating along it.
@@ -23,17 +30,22 @@ relative_permeability = Symbol("relative_permeability", dimensionless)
 wavelength = Symbol("wavelength", units.length)
 critical_wavelength = Symbol("critical_wavelength", units.length)
 
-law = Eq(phase_velocity, speed_of_light / sqrt(relative_permittivity * relative_permeability * (1 - (wavelength / critical_wavelength)**2)))
+law = Eq(
+    phase_velocity, speed_of_light / sqrt(relative_permittivity * relative_permeability * (1 -
+    (wavelength / critical_wavelength)**2)))
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(relative_permittivity_=relative_permittivity, relative_permeability_=relative_permeability, wavelength_=wavelength, critical_wavelength_=critical_wavelength)
+@validate_input(relative_permittivity_=relative_permittivity,
+    relative_permeability_=relative_permeability,
+    wavelength_=wavelength,
+    critical_wavelength_=critical_wavelength)
 @validate_output(phase_velocity)
-def calculate_phase_velocity(relative_permittivity_: float, relative_permeability_: float, wavelength_: Quantity,
-    critical_wavelength_: Quantity) -> Quantity:
+def calculate_phase_velocity(relative_permittivity_: float, relative_permeability_: float,
+    wavelength_: Quantity, critical_wavelength_: Quantity) -> Quantity:
     result_velocity_expr = solve(law, phase_velocity, dict=True)[0][phase_velocity]
     result_expr = result_velocity_expr.subs({
         relative_permittivity: relative_permittivity_,

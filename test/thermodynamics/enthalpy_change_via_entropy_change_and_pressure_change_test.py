@@ -8,8 +8,7 @@ from symplyphysics import (
     prefixes,
 )
 from symplyphysics.laws.thermodynamics import (
-    enthalpy_change_via_entropy_change_and_pressure_change as enthalpy_law,
-)
+    enthalpy_change_via_entropy_change_and_pressure_change as enthalpy_law,)
 
 # Description
 ## A closed homogeneous system is in thermal equilibrium. Its temperature is 400 K and
@@ -30,7 +29,8 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = enthalpy_law.calculate_enthalpy_change(test_args.t, test_args.ds, test_args.v, test_args.dp)
+    result = enthalpy_law.calculate_enthalpy_change(test_args.t, test_args.ds, test_args.v,
+        test_args.dp)
     assert_equal(result, 1 * prefixes.milli * units.joule)
 
 

@@ -28,7 +28,8 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = conduction_law.calculate_energy_conduction_rate(test_args.k, test_args.a, test_args.l, test_args.dt)
+    result = conduction_law.calculate_energy_conduction_rate(test_args.k, test_args.a, test_args.l,
+        test_args.dt)
     assert_equal(result, 57.6 * prefixes.kilo * units.watt)
 
 

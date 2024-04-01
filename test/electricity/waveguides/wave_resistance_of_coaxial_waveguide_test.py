@@ -1,6 +1,11 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (errors, units, Quantity, assert_equal,)
+from symplyphysics import (
+    errors,
+    units,
+    Quantity,
+    assert_equal,
+)
 
 from symplyphysics.laws.electricity.waveguides import wave_resistance_of_coaxial_waveguide as resistance_law
 
@@ -9,7 +14,8 @@ from symplyphysics.laws.electricity.waveguides import wave_resistance_of_coaxial
 ## The wave resistance will be 76.69 ohm.
 ## https://old.study.urfu.ru/view/aid/67/1/resonators.pdf
 
-Args = namedtuple("Args", ["relative_permittivity", "relative_permeability", "outer_radius", "inner_radius"])
+Args = namedtuple("Args",
+    ["relative_permittivity", "relative_permeability", "outer_radius", "inner_radius"])
 
 
 @fixture(name="test_args")
@@ -18,36 +24,46 @@ def test_args_fixture() -> Args:
     relative_permeability = 1
     outer_radius = Quantity(9 * units.millimeter)
     inner_radius = Quantity(1.35 * units.millimeter)
-    return Args(relative_permittivity=relative_permittivity, relative_permeability=relative_permeability, outer_radius=outer_radius, inner_radius=inner_radius)
+    return Args(relative_permittivity=relative_permittivity,
+        relative_permeability=relative_permeability,
+        outer_radius=outer_radius,
+        inner_radius=inner_radius)
 
 
 def test_basic_wave_resistance(test_args: Args) -> None:
-    result = resistance_law.calculate_wave_resistance(test_args.relative_permittivity, test_args.relative_permeability, test_args.outer_radius,
-        test_args.inner_radius)
+    result = resistance_law.calculate_wave_resistance(test_args.relative_permittivity,
+        test_args.relative_permeability, test_args.outer_radius, test_args.inner_radius)
     assert_equal(result, 76.69 * units.ohm)
 
 
 def test_bad_relative_permittivity(test_args: Args) -> None:
     bad_relative_permittivity = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        resistance_law.calculate_wave_resistance(bad_relative_permittivity, test_args.relative_permeability, test_args.outer_radius, test_args.inner_radius)
+        resistance_law.calculate_wave_resistance(bad_relative_permittivity,
+            test_args.relative_permeability, test_args.outer_radius, test_args.inner_radius)
 
 
 def test_bad_relative_permeability(test_args: Args) -> None:
     bad_relative_permeability = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        resistance_law.calculate_wave_resistance(bad_relative_permeability, test_args.relative_permeability, test_args.outer_radius, test_args.inner_radius)
+        resistance_law.calculate_wave_resistance(bad_relative_permeability,
+            test_args.relative_permeability, test_args.outer_radius, test_args.inner_radius)
 
 
 def test_bad_radius(test_args: Args) -> None:
     bad_radius = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        resistance_law.calculate_wave_resistance(test_args.relative_permittivity, test_args.relative_permeability, bad_radius, test_args.inner_radius)
+        resistance_law.calculate_wave_resistance(test_args.relative_permittivity,
+            test_args.relative_permeability, bad_radius, test_args.inner_radius)
     with raises(TypeError):
-        resistance_law.calculate_wave_resistance(test_args.relative_permittivity, test_args.relative_permeability, 100, test_args.inner_radius)
+        resistance_law.calculate_wave_resistance(test_args.relative_permittivity,
+            test_args.relative_permeability, 100, test_args.inner_radius)
     with raises(errors.UnitsError):
-        resistance_law.calculate_wave_resistance(test_args.relative_permittivity, test_args.relative_permeability, test_args.outer_radius, bad_radius)
+        resistance_law.calculate_wave_resistance(test_args.relative_permittivity,
+            test_args.relative_permeability, test_args.outer_radius, bad_radius)
     with raises(TypeError):
-        resistance_law.calculate_wave_resistance(test_args.relative_permittivity, test_args.relative_permeability, test_args.outer_radius, 100)
+        resistance_law.calculate_wave_resistance(test_args.relative_permittivity,
+            test_args.relative_permeability, test_args.outer_radius, 100)
     with raises(ValueError):
-        resistance_law.calculate_wave_resistance(test_args.relative_permittivity, test_args.relative_permeability, test_args.inner_radius, test_args.outer_radius)
+        resistance_law.calculate_wave_resistance(test_args.relative_permittivity,
+            test_args.relative_permeability, test_args.inner_radius, test_args.outer_radius)

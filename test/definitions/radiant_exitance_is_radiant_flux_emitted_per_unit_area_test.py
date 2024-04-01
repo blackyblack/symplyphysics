@@ -8,8 +8,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.definitions import (
-    radiant_exitance_is_radiant_flux_emitted_per_unit_area as radiant_exitance_def,
-)
+    radiant_exitance_is_radiant_flux_emitted_per_unit_area as radiant_exitance_def,)
 
 # Description
 ## The radiant exitance of a surface of area A = 0.1 mm**2 which emits radiant flux Phi_e = 1 mW

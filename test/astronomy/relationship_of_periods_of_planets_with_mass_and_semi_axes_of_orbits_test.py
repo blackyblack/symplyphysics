@@ -7,7 +7,8 @@ from symplyphysics.laws.astronomy import relationship_of_periods_of_planets_with
 ## The semimajor axis of the Earth is 1 astronomical unit, and the semimajor axis of the Mars is 1.524 astronomical unit.
 ## The rotation period of the Mars is 1.88 year. Then the rotation period of the Earth will be 1 year.
 
-Args = namedtuple("Args", ["second_period", "first_semi_axis", "second_semi_axis", "first_mass", "second_mass"])
+Args = namedtuple("Args",
+    ["second_period", "first_semi_axis", "second_semi_axis", "first_mass", "second_mass"])
 
 
 @fixture(name="test_args")
@@ -21,13 +22,13 @@ def test_args_fixture() -> Args:
     return Args(second_period=second_period,
         first_semi_axis=first_semi_axis,
         second_semi_axis=second_semi_axis,
-        first_mass=first_mass, second_mass=second_mass)
+        first_mass=first_mass,
+        second_mass=second_mass)
 
 
 def test_basic_first_period(test_args: Args) -> None:
-    result = period_law.calculate_first_period(test_args.second_period,
-        test_args.first_semi_axis, test_args.second_semi_axis,
-        test_args.first_mass, test_args.second_mass)
+    result = period_law.calculate_first_period(test_args.second_period, test_args.first_semi_axis,
+        test_args.second_semi_axis, test_args.first_mass, test_args.second_mass)
     assert_equal(result, 1 * units.year)
 
 
@@ -37,8 +38,8 @@ def test_bad_second_period(test_args: Args) -> None:
         period_law.calculate_first_period(second_period, test_args.first_semi_axis,
             test_args.second_semi_axis, test_args.first_mass, test_args.second_mass)
     with raises(TypeError):
-        period_law.calculate_first_period(100, test_args.first_semi_axis, test_args.second_semi_axis,
-            test_args.first_mass, test_args.second_mass)
+        period_law.calculate_first_period(100, test_args.first_semi_axis,
+            test_args.second_semi_axis, test_args.first_mass, test_args.second_mass)
 
 
 def test_bad_semi_axis(test_args: Args) -> None:
@@ -47,14 +48,14 @@ def test_bad_semi_axis(test_args: Args) -> None:
         period_law.calculate_first_period(test_args.second_period, bad_semi_axis,
             test_args.second_semi_axis, test_args.first_mass, test_args.second_mass)
     with raises(TypeError):
-        period_law.calculate_first_period(test_args.second_period, 100,
-            test_args.second_semi_axis, test_args.first_mass, test_args.second_mass)
+        period_law.calculate_first_period(test_args.second_period, 100, test_args.second_semi_axis,
+            test_args.first_mass, test_args.second_mass)
     with raises(errors.UnitsError):
-        period_law.calculate_first_period(test_args.second_period,
-            test_args.first_semi_axis, bad_semi_axis, test_args.first_mass, test_args.second_mass)
+        period_law.calculate_first_period(test_args.second_period, test_args.first_semi_axis,
+            bad_semi_axis, test_args.first_mass, test_args.second_mass)
     with raises(TypeError):
-        period_law.calculate_first_period(test_args.second_period,
-            test_args.first_semi_axis, 100, test_args.first_mass, test_args.second_mass)
+        period_law.calculate_first_period(test_args.second_period, test_args.first_semi_axis, 100,
+            test_args.first_mass, test_args.second_mass)
 
 
 def test_bad_mass(test_args: Args) -> None:
@@ -66,8 +67,8 @@ def test_bad_mass(test_args: Args) -> None:
         period_law.calculate_first_period(test_args.second_period, test_args.first_semi_axis,
             test_args.second_semi_axis, 100, test_args.second_mass)
     with raises(errors.UnitsError):
-        period_law.calculate_first_period(test_args.second_period,
-            test_args.first_semi_axis, test_args.second_semi_axis, test_args.first_mass, bad_mass)
+        period_law.calculate_first_period(test_args.second_period, test_args.first_semi_axis,
+            test_args.second_semi_axis, test_args.first_mass, bad_mass)
     with raises(TypeError):
-        period_law.calculate_first_period(test_args.second_period,
-            test_args.first_semi_axis, test_args.second_semi_axis, test_args.first_mass, 100)
+        period_law.calculate_first_period(test_args.second_period, test_args.first_semi_axis,
+            test_args.second_semi_axis, test_args.first_mass, 100)

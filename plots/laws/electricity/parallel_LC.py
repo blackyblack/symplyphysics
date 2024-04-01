@@ -10,7 +10,7 @@
 from sympy import Abs, Idx, solve
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
-from symplyphysics import Symbol
+from symplyphysics import Symbol, global_index
 from symplyphysics.laws.electricity.circuits import admittance_of_parallel_dipoles as parallel_admittance_law
 from symplyphysics.definitions import admittance_is_inversed_impedance as admittance_def
 from symplyphysics.laws.electricity import capacitor_impedance_from_capacitance_and_frequency as capacitor_impedance
@@ -37,18 +37,19 @@ C_admittance = admittance_def.definition.rhs.subs({
     admittance_def.dipole_impedance: C_impedance
 }).subs({capacitor_impedance.capacitor_capacitance: EXAMPLE_CAPACITANCE})
 
-R_admittance = admittance_def.definition.rhs.subs({admittance_def.dipole_impedance: EXAMPLE_RESISTANCE})
+R_admittance = admittance_def.definition.rhs.subs(
+    {admittance_def.dipole_impedance: EXAMPLE_RESISTANCE})
 
 ideal_elements = (L_admittance, C_admittance)
 real_elements = (L_admittance, C_admittance, R_admittance)
 
 index_local = Idx("index_local", (1, len(ideal_elements)))
-admittance_ideal = parallel_admittance_law.law.rhs.subs(parallel_admittance_law.admittance_index, index_local).doit()
+admittance_ideal = parallel_admittance_law.law.rhs.subs(global_index, index_local).doit()
 for (from_, to_) in zip(range(1, len(ideal_elements) + 1), ideal_elements):
     admittance_ideal = admittance_ideal.subs(parallel_admittance_law.admittance[from_], to_)
 
 index_local = Idx("index_local", (1, len(real_elements)))
-admittance_real = parallel_admittance_law.law.rhs.subs(parallel_admittance_law.admittance_index, index_local).doit()
+admittance_real = parallel_admittance_law.law.rhs.subs(global_index, index_local).doit()
 for (from_, to_) in zip(range(1, len(real_elements) + 1), real_elements):
     admittance_real = admittance_real.subs(parallel_admittance_law.admittance[from_], to_)
 

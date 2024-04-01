@@ -8,8 +8,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.thermodynamics import (
-    internal_energy_change_via_entropy_change_and_volume_change as internal_energy_law,
-)
+    internal_energy_change_via_entropy_change_and_volume_change as internal_energy_law,)
 
 # Description
 ## An ensamble of particles in a closed reservoir is in thermodynamic equilibrium with the environment.
@@ -30,37 +29,46 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = internal_energy_law.calculate_internal_energy_change(test_args.t, test_args.ds, test_args.p, test_args.dv)
+    result = internal_energy_law.calculate_internal_energy_change(test_args.t, test_args.ds,
+        test_args.p, test_args.dv)
     assert_equal(result, -300 * units.joule)
 
 
 def test_bad_temperature(test_args: Args) -> None:
     tb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        internal_energy_law.calculate_internal_energy_change(tb, test_args.ds, test_args.p, test_args.dv)
+        internal_energy_law.calculate_internal_energy_change(tb, test_args.ds, test_args.p,
+            test_args.dv)
     with raises(TypeError):
-        internal_energy_law.calculate_internal_energy_change(100, test_args.ds, test_args.p, test_args.dv)
+        internal_energy_law.calculate_internal_energy_change(100, test_args.ds, test_args.p,
+            test_args.dv)
 
 
 def test_bad_entropy(test_args: Args) -> None:
     sb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        internal_energy_law.calculate_internal_energy_change(test_args.t, sb, test_args.p, test_args.dv)
+        internal_energy_law.calculate_internal_energy_change(test_args.t, sb, test_args.p,
+            test_args.dv)
     with raises(TypeError):
-        internal_energy_law.calculate_internal_energy_change(test_args.t, 100, test_args.p, test_args.dv)
+        internal_energy_law.calculate_internal_energy_change(test_args.t, 100, test_args.p,
+            test_args.dv)
 
 
 def test_bad_pressure(test_args: Args) -> None:
     pb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        internal_energy_law.calculate_internal_energy_change(test_args.t, test_args.ds, pb, test_args.dv)
+        internal_energy_law.calculate_internal_energy_change(test_args.t, test_args.ds, pb,
+            test_args.dv)
     with raises(TypeError):
-        internal_energy_law.calculate_internal_energy_change(test_args.t, test_args.ds, 100, test_args.dv)
+        internal_energy_law.calculate_internal_energy_change(test_args.t, test_args.ds, 100,
+            test_args.dv)
 
 
 def test_bad_volume(test_args: Args) -> None:
     vb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        internal_energy_law.calculate_internal_energy_change(test_args.t, test_args.ds, test_args.p, vb)
+        internal_energy_law.calculate_internal_energy_change(test_args.t, test_args.ds, test_args.p,
+            vb)
     with raises(TypeError):
-        internal_energy_law.calculate_internal_energy_change(test_args.t, test_args.ds, test_args.p, 100)
+        internal_energy_law.calculate_internal_energy_change(test_args.t, test_args.ds, test_args.p,
+            100)

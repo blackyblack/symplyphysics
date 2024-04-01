@@ -1,8 +1,7 @@
-from sympy import (Eq, solve)
-from symplyphysics import (Symbol, units, Quantity, print_expression, validate_input,
-    validate_output)
-from symplyphysics.core.operations.sum_array import SumArray
-from symplyphysics.core.symbols.symbols import tuple_of_symbols
+from typing import Sequence
+from sympy import (Eq, Idx, solve)
+from symplyphysics import (units, Quantity, print_expression, validate_input, validate_output,
+    SymbolIndexed, SumIndexed, global_index)
 
 # Description
 ## sum(I) = 0
@@ -14,21 +13,22 @@ from symplyphysics.core.symbols.symbols import tuple_of_symbols
 ## This property of electrical node is called Kirchhoff law #1.
 ## Assert there are minimum 2 currents flowing through any node
 
-currents = Symbol("currents", units.current)
-law = Eq(SumArray(currents), 0, evaluate=False)
+current = SymbolIndexed("current", units.current)
+law = Eq(SumIndexed(current[global_index], global_index), 0)
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(currents_=currents)
+@validate_input(currents_=current)
 @validate_output(units.current)
-def calculate_current_from_array(currents_: list[Quantity]) -> Quantity:
-    current_symbols = tuple_of_symbols("current", units.current, len(currents_) + 1)
-    unknown_current = current_symbols[len(currents_)]
-    currents_law = law.subs(currents, current_symbols).doit()
+def calculate_current_from_array(currents_: Sequence[Quantity]) -> Quantity:
+    local_index = Idx("index_local", (1, len(currents_) + 1))
+    currents_law = law.subs(global_index, local_index)
+    currents_law = currents_law.doit()
+    unknown_current = current[len(currents_) + 1]
     solved = solve(currents_law, unknown_current, dict=True)[0][unknown_current]
-    for (from_, to_) in zip(current_symbols, currents_):
-        solved = solved.subs(from_, to_)
+    for i, v in enumerate(currents_):
+        solved = solved.subs(current[i + 1], v)
     return Quantity(solved)

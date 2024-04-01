@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.thermodynamics import (
-    volumetric_and_linear_expansion_coefficients_in_isotropic_materials as coefficients_law,
-)
+    volumetric_and_linear_expansion_coefficients_in_isotropic_materials as coefficients_law,)
 
 # Description
 ## The volumetric coefficient of thermal expansion of a material with linear coefficient of thermal

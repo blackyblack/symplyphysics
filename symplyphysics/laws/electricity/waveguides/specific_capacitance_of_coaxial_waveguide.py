@@ -22,14 +22,17 @@ relative_permittivity = Symbol("relative_permittivity", dimensionless)
 outer_radius = Symbol("outer_radius", units.length)
 inner_radius = Symbol("inner_radius", units.length)
 
-law = Eq(specific_capacitance, (2 * pi * electric_constant * relative_permittivity) / ln(outer_radius / inner_radius))
+law = Eq(specific_capacitance,
+    (2 * pi * electric_constant * relative_permittivity) / ln(outer_radius / inner_radius))
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(relative_permittivity_=relative_permittivity, outer_radius_=outer_radius, inner_radius_=inner_radius)
+@validate_input(relative_permittivity_=relative_permittivity,
+    outer_radius_=outer_radius,
+    inner_radius_=inner_radius)
 @validate_output(specific_capacitance)
 def calculate_specific_capacitance(relative_permittivity_: float, outer_radius_: Quantity,
     inner_radius_: Quantity) -> Quantity:

@@ -1,11 +1,16 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from sympy import pi
-from symplyphysics import (assert_equal, units, Quantity, errors, prefixes,)
+from symplyphysics import (
+    assert_equal,
+    units,
+    Quantity,
+    errors,
+    prefixes,
+)
 from symplyphysics.laws.electricity.waveguides import attenuation_coefficient_in_metal_in_rectangular_waveguide_for_transverse_magnetic_waves as coefficient_law
 
 # Description
-## The surface resistance is 2.576 milliohm. 
+## The surface resistance is 2.576 milliohm.
 ## The first index and the second index are 1.
 ## The width is 2 centimeter, the height is 1 centimeter.
 ## The resistance of medium is 254.167 ohm.
@@ -13,8 +18,8 @@ from symplyphysics.laws.electricity.waveguides import attenuation_coefficient_in
 ## Then the attenuation coefficient will be 0.0019 [1 / meter].
 
 Args = namedtuple("Args", [
-    "surface_resistance", "first_index", "second_index", "width",
-    "height", "resistance_of_medium", "signal_wavelength", "critical_wavelength"
+    "surface_resistance", "first_index", "second_index", "width", "height", "resistance_of_medium",
+    "signal_wavelength", "critical_wavelength"
 ])
 
 
@@ -37,84 +42,99 @@ def test_args_fixture() -> Args:
         height=height,
         resistance_of_medium=resistance_of_medium,
         signal_wavelength=signal_wavelength,
-        critical_wavelength=critical_wavelength
-        )
+        critical_wavelength=critical_wavelength)
 
 
 def test_basic_attenuation_coefficient(test_args: Args) -> None:
     result = coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
-        test_args.first_index, test_args.second_index, test_args.width,
-        test_args.height, test_args.resistance_of_medium, test_args.signal_wavelength, test_args.critical_wavelength)
+        test_args.first_index, test_args.second_index, test_args.width, test_args.height,
+        test_args.resistance_of_medium, test_args.signal_wavelength, test_args.critical_wavelength)
     assert_equal(result, 0.0019 * (1 / units.meter))
 
 
 def test_bad_surface_resistance(test_args: Args) -> None:
     surface_resistance = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        coefficient_law.calculate_attenuation_coefficient(surface_resistance,
-            test_args.first_index, test_args.second_index, test_args.width,
-            test_args.height, test_args.resistance_of_medium, test_args.signal_wavelength, test_args.critical_wavelength)
+        coefficient_law.calculate_attenuation_coefficient(surface_resistance, test_args.first_index,
+            test_args.second_index, test_args.width, test_args.height,
+            test_args.resistance_of_medium, test_args.signal_wavelength,
+            test_args.critical_wavelength)
     with raises(TypeError):
-        coefficient_law.calculate_attenuation_coefficient(100,
-            test_args.first_index, test_args.second_index, test_args.width,
-            test_args.height, test_args.resistance_of_medium, test_args.signal_wavelength, test_args.critical_wavelength)
+        coefficient_law.calculate_attenuation_coefficient(100, test_args.first_index,
+            test_args.second_index, test_args.width, test_args.height,
+            test_args.resistance_of_medium, test_args.signal_wavelength,
+            test_args.critical_wavelength)
 
 
 def test_bad_index(test_args: Args) -> None:
     bad_index = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
-            bad_index, test_args.second_index, test_args.width,
-            test_args.height, test_args.resistance_of_medium, test_args.signal_wavelength, test_args.critical_wavelength)
+        coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance, bad_index,
+            test_args.second_index, test_args.width, test_args.height,
+            test_args.resistance_of_medium, test_args.signal_wavelength,
+            test_args.critical_wavelength)
     with raises(errors.UnitsError):
         coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
-            test_args.first_index, bad_index, test_args.width,
-            test_args.height, test_args.resistance_of_medium, test_args.signal_wavelength, test_args.critical_wavelength)
+            test_args.first_index, bad_index, test_args.width, test_args.height,
+            test_args.resistance_of_medium, test_args.signal_wavelength,
+            test_args.critical_wavelength)
 
 
 def test_bad_width(test_args: Args) -> None:
     width = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance, test_args.first_index, test_args.second_index, width, test_args.height, test_args.resistance_of_medium, test_args.signal_wavelength, test_args.critical_wavelength)
+        coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
+            test_args.first_index, test_args.second_index, width, test_args.height,
+            test_args.resistance_of_medium, test_args.signal_wavelength,
+            test_args.critical_wavelength)
     with raises(TypeError):
-        coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance, test_args.first_index, test_args.second_index, 100, test_args.height, test_args.resistance_of_medium, test_args.signal_wavelength, test_args.critical_wavelength)
+        coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
+            test_args.first_index, test_args.second_index, 100, test_args.height,
+            test_args.resistance_of_medium, test_args.signal_wavelength,
+            test_args.critical_wavelength)
 
 
 def test_bad_height(test_args: Args) -> None:
     height = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance, test_args.first_index, test_args.second_index, test_args.width, height, test_args.resistance_of_medium, test_args.signal_wavelength, test_args.critical_wavelength)
+        coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
+            test_args.first_index, test_args.second_index, test_args.width, height,
+            test_args.resistance_of_medium, test_args.signal_wavelength,
+            test_args.critical_wavelength)
     with raises(TypeError):
-        coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance, test_args.first_index, test_args.second_index, test_args.width, 100, test_args.resistance_of_medium, test_args.signal_wavelength, test_args.critical_wavelength)
+        coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
+            test_args.first_index, test_args.second_index, test_args.width, 100,
+            test_args.resistance_of_medium, test_args.signal_wavelength,
+            test_args.critical_wavelength)
 
 
 def test_bad_resistance_of_medium(test_args: Args) -> None:
     resistance_of_medium = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
-            test_args.first_index, test_args.second_index, test_args.width,
-            test_args.height, resistance_of_medium, test_args.signal_wavelength, test_args.critical_wavelength)
+            test_args.first_index, test_args.second_index, test_args.width, test_args.height,
+            resistance_of_medium, test_args.signal_wavelength, test_args.critical_wavelength)
     with raises(TypeError):
         coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
-            test_args.first_index, test_args.second_index, test_args.width,
-            test_args.height, 100, test_args.signal_wavelength, test_args.critical_wavelength)
+            test_args.first_index, test_args.second_index, test_args.width, test_args.height, 100,
+            test_args.signal_wavelength, test_args.critical_wavelength)
 
 
 def test_bad_wavelength(test_args: Args) -> None:
     wavelength = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
-            test_args.first_index, test_args.second_index, test_args.width,
-            test_args.height, test_args.resistance_of_medium, wavelength, test_args.critical_wavelength)
+            test_args.first_index, test_args.second_index, test_args.width, test_args.height,
+            test_args.resistance_of_medium, wavelength, test_args.critical_wavelength)
     with raises(TypeError):
         coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
-            test_args.first_index, test_args.second_index, test_args.width,
-            test_args.height, test_args.resistance_of_medium, 100, test_args.critical_wavelength)
+            test_args.first_index, test_args.second_index, test_args.width, test_args.height,
+            test_args.resistance_of_medium, 100, test_args.critical_wavelength)
     with raises(errors.UnitsError):
         coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
-            test_args.first_index, test_args.second_index, test_args.width,
-            test_args.height, test_args.resistance_of_medium, test_args.signal_wavelength, wavelength)
+            test_args.first_index, test_args.second_index, test_args.width, test_args.height,
+            test_args.resistance_of_medium, test_args.signal_wavelength, wavelength)
     with raises(TypeError):
         coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
-            test_args.first_index, test_args.second_index, test_args.width,
-            test_args.height, test_args.resistance_of_medium, test_args.signal_wavelength, 100)
+            test_args.first_index, test_args.second_index, test_args.width, test_args.height,
+            test_args.resistance_of_medium, test_args.signal_wavelength, 100)

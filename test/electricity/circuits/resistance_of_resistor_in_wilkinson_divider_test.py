@@ -15,11 +15,13 @@ def test_args_fixture() -> Args:
     transmission_line_resistance = Quantity(50 * units.ohm)
     ratio_of_power = 2
 
-    return Args(transmission_line_resistance=transmission_line_resistance, ratio_of_power=ratio_of_power)
+    return Args(transmission_line_resistance=transmission_line_resistance,
+        ratio_of_power=ratio_of_power)
 
 
 def test_basic_resistance(test_args: Args) -> None:
-    result = resistance_law.calculate_resistance(test_args.transmission_line_resistance, test_args.ratio_of_power)
+    result = resistance_law.calculate_resistance(test_args.transmission_line_resistance,
+        test_args.ratio_of_power)
     assert_equal(result, 125 * units.ohm)
 
 

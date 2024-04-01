@@ -10,8 +10,7 @@ from symplyphysics.laws.electricity.circuits import power_carried_by_coaxial_wav
 ## https://old.study.urfu.ru/view/aid/67/1/resonators.pdf
 
 Args = namedtuple("Args", [
-    "relative_permittivity", "relative_permeability", "voltage", "outer_diameter",
-    "inner_diameter"
+    "relative_permittivity", "relative_permeability", "voltage", "outer_diameter", "inner_diameter"
 ])
 
 
@@ -40,17 +39,15 @@ def test_basic_waveguide_power(test_args: Args) -> None:
 def test_bad_relative_permittivity(test_args: Args) -> None:
     relative_permittivity = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        power_law.calculate_waveguide_power(relative_permittivity,
-            test_args.relative_permeability, test_args.voltage, test_args.outer_diameter,
-            test_args.inner_diameter)
+        power_law.calculate_waveguide_power(relative_permittivity, test_args.relative_permeability,
+            test_args.voltage, test_args.outer_diameter, test_args.inner_diameter)
 
 
 def test_bad_relative_permeability(test_args: Args) -> None:
     relative_permeability = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        power_law.calculate_waveguide_power(test_args.relative_permittivity,
-            relative_permeability, test_args.voltage, test_args.outer_diameter,
-            test_args.inner_diameter)
+        power_law.calculate_waveguide_power(test_args.relative_permittivity, relative_permeability,
+            test_args.voltage, test_args.outer_diameter, test_args.inner_diameter)
 
 
 def test_bad_voltage(test_args: Args) -> None:
@@ -68,12 +65,20 @@ def test_bad_voltage(test_args: Args) -> None:
 def test_bad_diameter(test_args: Args) -> None:
     bad_diameter = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        power_law.calculate_waveguide_power(test_args.relative_permittivity, test_args.relative_permeability, test_args.voltage, bad_diameter, test_args.inner_diameter)
+        power_law.calculate_waveguide_power(test_args.relative_permittivity,
+            test_args.relative_permeability, test_args.voltage, bad_diameter,
+            test_args.inner_diameter)
     with raises(TypeError):
-        power_law.calculate_waveguide_power(test_args.relative_permittivity, test_args.relative_permeability, test_args.voltage, 100, test_args.inner_diameter)
+        power_law.calculate_waveguide_power(test_args.relative_permittivity,
+            test_args.relative_permeability, test_args.voltage, 100, test_args.inner_diameter)
     with raises(errors.UnitsError):
-        power_law.calculate_waveguide_power(test_args.relative_permittivity, test_args.relative_permeability, test_args.voltage, test_args.outer_diameter, bad_diameter)
+        power_law.calculate_waveguide_power(test_args.relative_permittivity,
+            test_args.relative_permeability, test_args.voltage, test_args.outer_diameter,
+            bad_diameter)
     with raises(TypeError):
-        power_law.calculate_waveguide_power(test_args.relative_permittivity, test_args.relative_permeability, test_args.voltage, test_args.outer_diameter, 100)
+        power_law.calculate_waveguide_power(test_args.relative_permittivity,
+            test_args.relative_permeability, test_args.voltage, test_args.outer_diameter, 100)
     with raises(ValueError):
-        power_law.calculate_waveguide_power(test_args.relative_permittivity, test_args.relative_permeability, test_args.voltage, test_args.inner_diameter, test_args.outer_diameter)
+        power_law.calculate_waveguide_power(test_args.relative_permittivity,
+            test_args.relative_permeability, test_args.voltage, test_args.inner_diameter,
+            test_args.outer_diameter)

@@ -25,29 +25,38 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = coefficient_def.calculate_volumetric_expansion_coefficient(test_args.v0, test_args.v1, test_args.t0, test_args.t1)
+    result = coefficient_def.calculate_volumetric_expansion_coefficient(
+        test_args.v0, test_args.v1, test_args.t0, test_args.t1)
     assert_equal(result, 9.9e-3 / units.kelvin, tolerance=6e-3)
 
 
 def test_bad_volume(test_args: Args) -> None:
     vb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        coefficient_def.calculate_volumetric_expansion_coefficient(vb, test_args.v1, test_args.t0, test_args.t1)
+        coefficient_def.calculate_volumetric_expansion_coefficient(vb, test_args.v1, test_args.t0,
+            test_args.t1)
     with raises(TypeError):
-        coefficient_def.calculate_volumetric_expansion_coefficient(100, test_args.v1, test_args.t0, test_args.t1)
+        coefficient_def.calculate_volumetric_expansion_coefficient(100, test_args.v1, test_args.t0,
+            test_args.t1)
     with raises(errors.UnitsError):
-        coefficient_def.calculate_volumetric_expansion_coefficient(test_args.v0, vb, test_args.t0, test_args.t1)
+        coefficient_def.calculate_volumetric_expansion_coefficient(test_args.v0, vb, test_args.t0,
+            test_args.t1)
     with raises(TypeError):
-        coefficient_def.calculate_volumetric_expansion_coefficient(test_args.v0, 100, test_args.t0, test_args.t1)
+        coefficient_def.calculate_volumetric_expansion_coefficient(test_args.v0, 100, test_args.t0,
+            test_args.t1)
 
 
 def test_bad_temperature(test_args: Args) -> None:
     tb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        coefficient_def.calculate_volumetric_expansion_coefficient(test_args.v0, test_args.v1, tb, test_args.t1)
+        coefficient_def.calculate_volumetric_expansion_coefficient(test_args.v0, test_args.v1, tb,
+            test_args.t1)
     with raises(TypeError):
-        coefficient_def.calculate_volumetric_expansion_coefficient(test_args.v0, test_args.v1, 100, test_args.t1)
+        coefficient_def.calculate_volumetric_expansion_coefficient(test_args.v0, test_args.v1, 100,
+            test_args.t1)
     with raises(errors.UnitsError):
-        coefficient_def.calculate_volumetric_expansion_coefficient(test_args.v0, test_args.v1, test_args.t0, tb)
+        coefficient_def.calculate_volumetric_expansion_coefficient(test_args.v0, test_args.v1,
+            test_args.t0, tb)
     with raises(TypeError):
-        coefficient_def.calculate_volumetric_expansion_coefficient(test_args.v0, test_args.v1, test_args.t0, 100)
+        coefficient_def.calculate_volumetric_expansion_coefficient(test_args.v0, test_args.v1,
+            test_args.t0, 100)

@@ -11,8 +11,8 @@ from symplyphysics import (
 )
 
 # Description
-## The Lorentz factor, a.k.a. Lorentz term or gamma factor, is a quantity that expresses 
-## how much the measurements of time, length, and other physical properties change for 
+## The Lorentz factor, a.k.a. Lorentz term or gamma factor, is a quantity that expresses
+## how much the measurements of time, length, and other physical properties change for
 ## an object while that object is moving.
 
 # Definition: gamma = 1 / sqrt(1 - v**2/c**2)

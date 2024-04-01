@@ -1,6 +1,12 @@
 from sympy import Eq, solve, sqrt
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output,)
+from symplyphysics import (
+    units,
+    Quantity,
+    Symbol,
+    print_expression,
+    validate_input,
+    validate_output,
+)
 
 ## Description
 ## A rectangular waveguide is a rectangular metal waveguide capable of supporting waves propagating along it.
@@ -17,7 +23,8 @@ waveguide_wavelength = Symbol("waveguide_wavelength", units.length)
 signal_wavelength = Symbol("signal_wavelength", units.length)
 critical_wavelength = Symbol("critical_wavelength", units.length)
 
-law = Eq(waveguide_wavelength, signal_wavelength / sqrt(1 - (signal_wavelength / critical_wavelength)**2))
+law = Eq(waveguide_wavelength,
+    signal_wavelength / sqrt(1 - (signal_wavelength / critical_wavelength)**2))
 
 
 def print_law() -> str:
@@ -26,7 +33,8 @@ def print_law() -> str:
 
 @validate_input(signal_wavelength_=signal_wavelength, critical_wavelength_=critical_wavelength)
 @validate_output(waveguide_wavelength)
-def calculate_waveguide_wavelength(signal_wavelength_: Quantity, critical_wavelength_: Quantity) -> Quantity:
+def calculate_waveguide_wavelength(signal_wavelength_: Quantity,
+    critical_wavelength_: Quantity) -> Quantity:
     result_velocity_expr = solve(law, waveguide_wavelength, dict=True)[0][waveguide_wavelength]
     result_expr = result_velocity_expr.subs({
         signal_wavelength: signal_wavelength_,

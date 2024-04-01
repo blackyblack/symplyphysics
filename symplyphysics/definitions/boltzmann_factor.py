@@ -24,12 +24,11 @@ from symplyphysics import (
 
 boltzmann_factor = Symbol("boltzmann_factor", dimensionless)
 energy_of_state = Symbol("energy_of_state", units.energy)
-equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature, "equilibrium_temperature")
+equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature,
+    "equilibrium_temperature")
 
-definition = Eq(
-    boltzmann_factor,
-    exp(-1 * energy_of_state / (units.boltzmann_constant * equilibrium_temperature))
-)
+definition = Eq(boltzmann_factor,
+    exp(-1 * energy_of_state / (units.boltzmann_constant * equilibrium_temperature)))
 
 
 def print_law() -> str:

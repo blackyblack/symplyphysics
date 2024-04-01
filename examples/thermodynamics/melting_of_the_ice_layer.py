@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-from sympy import solve, Symbol, Eq
-from symplyphysics import print_expression, Quantity, prefixes, units, convert_to
+from sympy import Idx, solve, Symbol, Eq
+from symplyphysics import print_expression, Quantity, prefixes, units, convert_to, global_index
 from symplyphysics.core.symbols.celsius import to_kelvin_quantity, Celsius
 from symplyphysics.laws.thermodynamics import thermal_energy_from_mass_and_temperature as energy_heating_law
 from symplyphysics.laws.thermodynamics import energy_to_melt_from_mass as energy_melting_law
@@ -59,10 +59,12 @@ energy_from_cooling_water_value = energy_heating_law.law.subs({
     energy_heating_law.temperature_end: temperature_of_ice
 }).rhs
 
-heat_balance_equation = thermodinamics_law_1.law.subs({
-    thermodinamics_law_1.amounts_energy:
-    (energy_for_melting_ice_value, energy_from_cooling_water_value)
-}).doit()
+local_index_ = Idx("local_index_", (1, 2))
+thermodinamics_law_1_two_energies = thermodinamics_law_1.law.subs(global_index, local_index_).doit()
+heat_balance_equation = thermodinamics_law_1_two_energies.subs({
+    thermodinamics_law_1.amount_energy[1]: energy_for_melting_ice_value,
+    thermodinamics_law_1.amount_energy[2]: energy_from_cooling_water_value,
+})
 
 print(print_expression(heat_balance_equation))
 
@@ -80,4 +82,5 @@ height_of_water_value = height_of_water_solve.subs({
     specific_heat_heating_of_water: Quantity(4200 * units.joules / (units.kilogram * units.kelvin)),
     specific_heat_melting_of_ice: Quantity(330 * prefixes.kilo * units.joules / units.kilogram)
 })
-print(f"Need height of water is: {convert_to(Quantity(height_of_water_value), units.meters)}")
+print(
+    f"Need height of water is: {convert_to(Quantity(height_of_water_value), units.meters)} meters")

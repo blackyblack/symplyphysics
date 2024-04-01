@@ -1,8 +1,6 @@
-from sympy import (Eq, solve)
+from sympy import (Eq, Idx, solve)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output)
-from symplyphysics.core.operations.sum_array import SumArray
-from symplyphysics.core.symbols.symbols import tuple_of_symbols
+    validate_output, SymbolIndexed, SumIndexed, global_index)
 
 # Description
 ## If resistors are connected in parallel, total conductance is a sum of conductances of each resistor.
@@ -10,21 +8,22 @@ from symplyphysics.core.symbols.symbols import tuple_of_symbols
 ## sigma_parallel is total conductance,
 ## sigma[i] is conductance of i-th resistor.
 
-conductances = Symbol("conductances", units.conductance)
 parallel_conductance = Symbol("parallel_conductance", units.conductance)
-law = Eq(parallel_conductance, SumArray(conductances), evaluate=False)
+conductance = SymbolIndexed("conductance", units.conductance)
+law = Eq(parallel_conductance, SumIndexed(conductance[global_index], global_index))
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(conductances_=conductances)
-@validate_output(units.conductance)
+@validate_input(conductances_=conductance)
+@validate_output(parallel_conductance)
 def calculate_parallel_conductance(conductances_: list[Quantity]) -> Quantity:
-    conductance_symbols = tuple_of_symbols("conductance", units.conductance, len(conductances_))
-    conductances_law = law.subs(conductances, conductance_symbols).doit()
+    local_index = Idx("index_local", (1, len(conductances_)))
+    conductances_law = law.subs(global_index, local_index)
+    conductances_law = conductances_law.doit()
     solved = solve(conductances_law, parallel_conductance, dict=True)[0][parallel_conductance]
-    for (from_, to_) in zip(conductance_symbols, conductances_):
-        solved = solved.subs(from_, to_)
+    for i, v in enumerate(conductances_):
+        solved = solved.subs(conductance[i + 1], v)
     return Quantity(solved)

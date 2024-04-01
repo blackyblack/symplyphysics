@@ -1,6 +1,13 @@
 from sympy import Eq, solve, pi
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless,)
+from symplyphysics import (
+    units,
+    Quantity,
+    Symbol,
+    print_expression,
+    validate_input,
+    validate_output,
+    dimensionless,
+)
 
 ## Description
 ## A rectangular waveguide is a rectangular metal waveguide capable of supporting waves propagating along it.
@@ -22,18 +29,24 @@ resistance_of_medium = Symbol("resistance_of_medium", units.impedance)
 wavelength = Symbol("wavelength", units.length)
 tangent_dielectric_loss_angle = Symbol("tangent_dielectric_loss_angle", dimensionless)
 
-law = Eq(attenuation_coefficient, (pi / wavelength) * tangent_dielectric_loss_angle * resistance_of_waveguide / resistance_of_medium)
+law = Eq(attenuation_coefficient, (pi / wavelength) * tangent_dielectric_loss_angle *
+    resistance_of_waveguide / resistance_of_medium)
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(resistance_of_waveguide_=resistance_of_waveguide, resistance_of_medium_=resistance_of_medium, wavelength_=wavelength, tangent_dielectric_loss_angle_=tangent_dielectric_loss_angle)
+@validate_input(resistance_of_waveguide_=resistance_of_waveguide,
+    resistance_of_medium_=resistance_of_medium,
+    wavelength_=wavelength,
+    tangent_dielectric_loss_angle_=tangent_dielectric_loss_angle)
 @validate_output(attenuation_coefficient)
-def calculate_attenuation_coefficient(resistance_of_waveguide_: Quantity, resistance_of_medium_: Quantity, wavelength_: Quantity,
+def calculate_attenuation_coefficient(resistance_of_waveguide_: Quantity,
+    resistance_of_medium_: Quantity, wavelength_: Quantity,
     tangent_dielectric_loss_angle_: float) -> Quantity:
-    result_velocity_expr = solve(law, attenuation_coefficient, dict=True)[0][attenuation_coefficient]
+    result_velocity_expr = solve(law, attenuation_coefficient,
+        dict=True)[0][attenuation_coefficient]
     result_expr = result_velocity_expr.subs({
         resistance_of_waveguide: resistance_of_waveguide_,
         resistance_of_medium: resistance_of_medium_,
