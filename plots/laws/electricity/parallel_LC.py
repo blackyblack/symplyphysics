@@ -45,13 +45,13 @@ real_elements = (L_admittance, C_admittance, R_admittance)
 
 index_local = Idx("index_local", (1, len(ideal_elements)))
 admittance_ideal = parallel_admittance_law.law.rhs.subs(global_index, index_local).doit()
-for (from_, to_) in zip(range(1, len(ideal_elements) + 1), ideal_elements):
-    admittance_ideal = admittance_ideal.subs(parallel_admittance_law.admittance[from_], to_)
+for i, v in enumerate(ideal_elements):
+    admittance_ideal = admittance_ideal.subs(parallel_admittance_law.admittance[i + 1], v)
 
 index_local = Idx("index_local", (1, len(real_elements)))
 admittance_real = parallel_admittance_law.law.rhs.subs(global_index, index_local).doit()
-for (from_, to_) in zip(range(1, len(real_elements) + 1), real_elements):
-    admittance_real = admittance_real.subs(parallel_admittance_law.admittance[from_], to_)
+for i, v in enumerate(real_elements):
+    admittance_real = admittance_real.subs(parallel_admittance_law.admittance[i + 1], v)
 
 impedance_from_admittance_law = solve(admittance_def.definition,
     admittance_def.dipole_impedance,

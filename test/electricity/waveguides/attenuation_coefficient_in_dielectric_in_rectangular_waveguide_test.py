@@ -1,6 +1,5 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from sympy import pi
 from symplyphysics import (
     errors,
     units,

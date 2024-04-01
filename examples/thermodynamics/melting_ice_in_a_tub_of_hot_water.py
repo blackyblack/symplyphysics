@@ -73,7 +73,7 @@ energy_to_heat_melted_ice_equation = energy_heating_law.law.subs({
     energy_heating_law.temperature_end: temperature_end
 })
 
-local_index_ = Idx("local_index_", (1, 2))
+local_index_ = Idx("local_index_", (1, 4))
 thermodinamics_law_1_four_energies = thermodinamics_law_1.law.subs(global_index,
     local_index_).doit()
 thermodinamics_law_1_equation = thermodinamics_law_1_four_energies.subs({
