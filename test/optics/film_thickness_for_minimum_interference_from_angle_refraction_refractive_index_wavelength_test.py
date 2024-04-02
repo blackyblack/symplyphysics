@@ -6,7 +6,7 @@ from symplyphysics.laws.optics import film_thickness_for_minimum_interference_fr
 
 # Description
 ## Let the wavelength be 400 nanometer, the order of interference is 4, the angle of refraction is
-## 22 degree (0.12 * pi radian), and the refractive index is 1.33. Then the film thickness will be 694 nanometer.
+## 22 degree (0.12 * pi radian), and the refractive index is 1.33. Then the film thickness will be 647 nanometer.
 ## https://exir.ru/5/resh/5_80.htm
 
 Args = namedtuple("Args", ["wavelength", "order_interference", "angle_refraction", "refractive_index"])
