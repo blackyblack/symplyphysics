@@ -43,7 +43,7 @@ for temperature_, label in zip((400, 800, 1200), "lower middle upper".split()):
         (volume, 1, 5),
         # ideally the label should go to the right end of the corresponding line
         # although I reckon this is only possible to do via matplotlib
-        label=f"$T = {temperature_} \\, \\text{{K}}$ ({label})",  
+        label=f"$T = {temperature_} \\, \\text{{K}}$ ({label})",
         line_color="yellow",
         show=False,
     )
@@ -51,14 +51,14 @@ for temperature_, label in zip((400, 800, 1200), "lower middle upper".split()):
 
 # Let the prossesses start at V = 1.5 m**3 and T = 800 K
 
-initial_volume = 1.5  # m**3
+INITIAL_VOLUME = 1.5  # m**3
 
-initial_temperature = 800  # K
-final_temperature = 400  # K
+INITIAL_TEMPERATURE = 800  # K
+FINAL_TEMPERATURE = 400  # K
 
 initial_pressure = pressure_expr.subs({
-    volume: initial_volume,
-    temperature: initial_temperature,
+    volume: INITIAL_VOLUME,
+    temperature: INITIAL_TEMPERATURE,
 })
 
 # Plot adiabate
@@ -69,7 +69,7 @@ adiabatic_index = Rational(5, 3)
 adiabate_eqn = adiabatic_law.adiabatic_condition.subs({
     adiabatic_law.specific_heats_ratio: adiabatic_index,
     adiabatic_law.pressure_start: initial_pressure,
-    adiabatic_law.volume_start: initial_volume,
+    adiabatic_law.volume_start: INITIAL_VOLUME,
     adiabatic_law.pressure_end: pressure,
     adiabatic_law.volume_end: volume,
 })
@@ -77,7 +77,7 @@ adiabate_eqn = adiabatic_law.adiabatic_condition.subs({
 final_volume = solve(
     [
         adiabate_eqn,
-        ideal_gas_eqn.subs(temperature, final_temperature),
+        ideal_gas_eqn.subs(temperature, FINAL_TEMPERATURE),
     ],
     (pressure, volume),
     dict=True,
@@ -87,7 +87,7 @@ adiabate_pressure_expr = solve(adiabate_eqn, pressure)[0]
 
 adiabate_plot = plot(
     adiabate_pressure_expr,
-    (volume, initial_volume, final_volume),
+    (volume, INITIAL_VOLUME, final_volume),
     label=r"adiabate, $Q = 0$",
     line_color="blue",
     show=False,
@@ -98,7 +98,7 @@ base_plot.extend(adiabate_plot)
 
 isobar_plot = plot(
     initial_pressure,
-    (volume, initial_volume, final_volume),
+    (volume, INITIAL_VOLUME, final_volume),
     label=r"isobar, $p = \text{const}$",
     line_color="green",
     show=False,
@@ -108,8 +108,8 @@ base_plot.extend(isobar_plot)
 # Plot isotherm
 
 isotherm_plot = plot(
-    pressure_expr.subs(temperature, initial_temperature),
-    (volume, initial_volume, final_volume),
+    pressure_expr.subs(temperature, INITIAL_TEMPERATURE),
+    (volume, INITIAL_VOLUME, final_volume),
     label=r"isotherm, $T = \text{const}$",
     line_color="red",
     show=False,
@@ -119,12 +119,12 @@ base_plot.extend(isotherm_plot)
 # Plot isochore
 
 isochore_final_pressure = pressure_expr.subs({
-    volume: initial_volume,
-    temperature: final_temperature,
+    volume: INITIAL_VOLUME,
+    temperature: FINAL_TEMPERATURE,
 })
 
 isochore_plot = plot_parametric(
-    (initial_volume, pressure),
+    (INITIAL_VOLUME, pressure),
     (pressure, initial_pressure, isochore_final_pressure),
     label=r"isochore, $V = \text{const}$",
     line_color="violet",
