@@ -24,9 +24,9 @@ mass_data_ = [
 print(f"Maxwell-Boltzmann speed distribution function:\n{print_expression(speed_distribution.law)}\n")
 
 mass_plot = plot(
-    title="Maxwell—Boltzmann speed distribution, varying mass",
-    xlabel=r"$v, \frac{m}{s}$",
-    ylabel=r"$f_v, (\frac{m}{s})^{-1}$",
+    title="MB speed distribution for particles of different masses, $T$ = const",
+    xlabel=r"speed $v, \frac{m}{s}$",
+    ylabel=r"probability density, $(\frac{m}{s})^{-1}$",
     backend=MatplotlibBackend,
     legend=True,
     show=False,
