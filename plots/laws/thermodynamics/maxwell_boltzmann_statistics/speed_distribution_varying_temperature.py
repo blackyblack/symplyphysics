@@ -2,7 +2,7 @@
 
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
-from symplyphysics import print_expression, convert_to, Quantity, units, quantities, convert_to
+from symplyphysics import print_expression, convert_to, Quantity, units, quantities
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed_distribution
 
 argon_mass_ = convert_to(Quantity(39.948 * units.amu), units.kilogram)
