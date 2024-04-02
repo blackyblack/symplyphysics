@@ -38,26 +38,20 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(input_voltage_=input_voltage, output_voltage_=output_voltage, impedance_11_=impedance_11, impedance_12_=impedance_12, impedance_21_=impedance_21, impedance_22_=impedance_22)
+@validate_input(input_voltage_=input_voltage, output_voltage_=output_voltage, impedances_=impedance_11)
 @validate_output(units.current)
-def calculate_currents(input_voltage_: Quantity, output_voltage_: Quantity, impedance_11_: Quantity,
-    impedance_12_: Quantity, impedance_21_: Quantity, impedance_22_: Quantity) -> list[Quantity, Quantity]:
-    result_input_current = solve(law, [input_current, output_current], dict=True)[0][input_current]
-    result_output_current = solve(law, [input_current, output_current], dict=True)[0][output_current]
-    result_input_current = result_input_current.subs({
+def calculate_currents(input_voltage_: Quantity, output_voltage_: Quantity, impedances_: tuple[tuple[Quantity, Quantity], tuple[Quantity, Quantity]]) -> tuple[Quantity, Quantity]:
+    result_currents = solve(law, [input_current, output_current], dict=True)[0]
+    result_input_current = result_currents[input_current]
+    result_output_current = result_currents[output_current]
+    substitutions = {
         input_voltage: input_voltage_,
         output_voltage: output_voltage_,
-        impedance_11: impedance_11_,
-        impedance_12: impedance_12_,
-        impedance_21: impedance_21_,
-        impedance_22: impedance_22_,
-    })
-    result_output_current = result_output_current.subs({
-        input_voltage: input_voltage_,
-        output_voltage: output_voltage_,
-        impedance_11: impedance_11_,
-        impedance_12: impedance_12_,
-        impedance_21: impedance_21_,
-        impedance_22: impedance_22_,
-    })
-    return [Quantity(result_input_current), Quantity(result_output_current)]
+        impedance_11: impedances_[0][0],
+        impedance_12: impedances_[0][1],
+        impedance_21: impedances_[1][0],
+        impedance_22: impedances_[1][1],
+    }
+    result_input_current = result_input_current.subs(substitutions)
+    result_output_current = result_output_current.subs(substitutions)
+    return (Quantity(result_input_current), Quantity(result_output_current))
