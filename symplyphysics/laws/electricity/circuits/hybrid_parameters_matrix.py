@@ -6,8 +6,9 @@ from symplyphysics import (
     print_expression,
     validate_input,
     validate_output,
-    dimensionless
+    dimensionless,
 )
+from symplyphysics.core.dimensions import assert_equivalent_dimension
 
 ## Description
 ## The hybrid parameters matrix is one of the ways to describe a microwave device. The H-parameters of the device act as elements
@@ -27,31 +28,36 @@ input_voltage = Symbol("input_voltage", units.voltage)
 output_voltage = Symbol("output_voltage", units.voltage)
 input_current = Symbol("input_current", units.current)
 output_current = Symbol("output_current", units.current)
-parameter_11 = Symbol("parameter_11", units.impedance)
-parameter_12 = Symbol("parameter_12", dimensionless)
-parameter_21 = Symbol("parameter_21", dimensionless)
-parameter_22 = Symbol("parameter_22", units.conductance)
+parameter_input_input = Symbol("parameter_input_input", units.impedance)
+parameter_input_output = Symbol("parameter_input_output", dimensionless)
+parameter_output_input = Symbol("parameter_output_input", dimensionless)
+parameter_output_output = Symbol("parameter_output_output", units.conductance)
 
-law = Eq(Matrix([input_voltage, output_current]), Matrix([[parameter_11, parameter_12], [parameter_21, parameter_22]]) * Matrix([input_current, output_voltage]))
+law = Eq(Matrix([input_voltage, output_current]), Matrix([[parameter_input_input, parameter_input_output], [parameter_output_input, parameter_output_output]]) * Matrix([input_current, output_voltage]))
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(input_voltage_=input_voltage, output_current_=output_current,)# parameters_=parameter_11)
+@validate_input(input_voltage_=input_voltage, output_current_=output_current,)
 @validate_output((units.current, units.voltage))
 def calculate_current_and_voltage(input_voltage_: Quantity, output_current_: Quantity, parameters_: tuple[tuple[Quantity, float], tuple[float, Quantity]]) -> tuple[Quantity, Quantity]:
+    dimension_list = [units.impedance, dimensionless, dimensionless, units.conductance]
+    for parameter, dimension in zip([x for y in parameters_ for x in y], dimension_list):
+        if (parameter == parameters_[0][1] or parameter == parameters_[1][0]) and isinstance(parameter , (int, float)):
+            continue
+        assert_equivalent_dimension(parameter, parameter.dimension.name, "calculate_current_and_voltage", dimension)
     result = solve(law, [input_current, output_voltage], dict=True)[0]
     result_input_current = result[input_current]
     result_output_voltage = result[output_voltage]
     substitutions = {
         input_voltage: input_voltage_,
         output_current: output_current_,
-        parameter_11: parameters_[0][0],
-        parameter_12: parameters_[0][1],
-        parameter_21: parameters_[1][0],
-        parameter_22: parameters_[1][1],
+        parameter_input_input: parameters_[0][0],
+        parameter_input_output: parameters_[0][1],
+        parameter_output_input: parameters_[1][0],
+        parameter_output_output: parameters_[1][1],
     }
     result_input_current = result_input_current.subs(substitutions)
     result_output_voltage = result_output_voltage.subs(substitutions)
