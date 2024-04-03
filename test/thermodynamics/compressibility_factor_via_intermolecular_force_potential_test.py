@@ -20,7 +20,7 @@ Args = namedtuple("Args", "n v r")
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
-    n = 3e25
+    n = 3 * 10**25
     v = Quantity(1 * units.meter**3)
     r = Quantity(4 * units.angstrom)
     return Args(n=n, v=v, r=r)
