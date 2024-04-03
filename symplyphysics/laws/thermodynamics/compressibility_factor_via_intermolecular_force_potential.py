@@ -23,8 +23,8 @@ from symplyphysics.core.expr_comparisons import expr_equals
 ## Z - [compressibility factor](../../definitions/compressibility_factor_is_deviation_from_ideal_gas.py)
 ## N - number of particles
 ## V - volume
-## r - radius
-## phi(r) - intermolecular force potential as a function of radius
+## r - intermolecular distance
+## phi(r) - intermolecular force potential as a function of intermolecular distance
 ## k - Boltzmann constant
 ## T - absolute temperature
 
@@ -60,7 +60,7 @@ _hard_spheres_compressibility_factor = law.rhs.subs(
     intermolecular_force_potential(radius), _hard_spheres_potential
 ).doit()
 
-# Notice that the compressibility factor does not depend on temperature in this model
+# Note that the compressibility factor does not depend on temperature in this model
 assert expr_equals(_hard_spheres_compressibility_factor.diff(temperature), 0)
 
 
@@ -75,7 +75,7 @@ def print_law() -> str:
 )
 @validate_output(compressibility_factor)
 def calculate_compressibility_factor(
-    number_of_particles_: int | float,  # float to allow numbers written in exponent notation
+    number_of_particles_: int,
     volume_: Quantity,
     sphere_radius_: Quantity,
 ) -> float:
