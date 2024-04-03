@@ -19,7 +19,8 @@ from symplyphysics import (
 ## V - volume
 ## T - temperature
 ## alpha_V - [thermal expansion coefficient](../../definitions/volumetric_coefficient_of_thermal_expansion.py)
-## beta_T - isothermal compressibility
+## beta_T - isothermal compressibility, see [this](../../definitions/thermodynamic_compressibility.py) 
+##          with the derivative taken at constant temperature
 
 # Note
 ## - Applicable to any homogeneous substances, not just ideal gases.
