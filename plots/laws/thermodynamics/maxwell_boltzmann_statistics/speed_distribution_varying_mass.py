@@ -22,7 +22,7 @@ mass_data_ = [
 print(f"Maxwell-Boltzmann speed distribution function:\n{print_expression(speed_distribution.law)}\n")
 
 mass_plot = plot(
-    title="MB speed distribution for particles of different masses, $T$ = const",
+    title="Maxwell—Boltzmann speed distribution for particles of different masses, $T$ = const",
     xlabel=r"speed $v, \frac{m}{s}$",
     ylabel=r"probability density, $(\frac{m}{s})^{-1}$",
     backend=MatplotlibBackend,
@@ -32,7 +32,7 @@ mass_plot = plot(
 
 distribution = speed_distribution.law.rhs.subs({
     speed_distribution.equilibrium_temperature: convert_to(quantities.zero_celsius, units.kelvin),
-    units.boltzmann_constant: convert_to(quantities.boltzmann_constant, units.joule / units.kelvin),
+    units.boltzmann_constant: convert_to(units.boltzmann_constant, units.joule / units.kelvin),
 })
 
 for mass_datum_ in mass_data_:
