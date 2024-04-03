@@ -11,12 +11,6 @@ zero_celsius = Quantity(273.15 * units.kelvin)
 # purposes.
 standard_conditions_temperature = Quantity(298 * units.kelvin)
 
-# A physical constant commonly used in thermodynamics and statistical physics.
-# It is the proportionality factor relating the average relative thermal energy
-# of particles in a gas with the thermodynamic temperature of the gas.
-boltzmann_constant = Quantity(1.380649e-23 * units.joule / units.kelvin)
-
 __all__ = [
     "zero_celsius",
-    "boltzmann_constant",
 ]
