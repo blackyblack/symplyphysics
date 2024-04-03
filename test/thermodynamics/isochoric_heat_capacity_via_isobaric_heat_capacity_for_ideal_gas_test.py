@@ -20,7 +20,7 @@ Args = namedtuple("Args", "cp n")
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
     cp = Quantity(5 * units.joule / units.kelvin)
-    n = Quantity(0.24 * units.mol)
+    n = Quantity(0.24 * units.mole)
     return Args(cp=cp, n=n)
 
 
