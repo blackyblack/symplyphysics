@@ -28,6 +28,12 @@ def test_law(test_args: Args) -> None:
     assert_equal(result, 0.96)
 
 
+def test_negative_compressibility_factor(test_args: Args) -> None:
+    rho_bad = Quantity(1000 * units.mole / units.meter**3)
+    with raises(ValueError):
+        virial_equation.calculate_compressibility_factor(test_args.b, test_args.c, rho_bad)
+
+
 def test_bad_second_virial_coefficient(test_args: Args) -> None:
     bb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
@@ -45,8 +51,8 @@ def test_bad_third_virial_coefficient(test_args: Args) -> None:
 
 
 def test_bad_molar_density(test_args: Args) -> None:
-    rhob = Quantity(1 * units.coulomb)
+    rho_bad = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        virial_equation.calculate_compressibility_factor(test_args.b, test_args.c, rhob)
+        virial_equation.calculate_compressibility_factor(test_args.b, test_args.c, rho_bad)
     with raises(TypeError):
         virial_equation.calculate_compressibility_factor(test_args.b, test_args.c, 100)
