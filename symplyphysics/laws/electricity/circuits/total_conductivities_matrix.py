@@ -6,6 +6,7 @@ from symplyphysics import (
     print_expression,
     validate_input,
     validate_output,
+    SI,
 )
 
 ## Description
@@ -26,31 +27,36 @@ input_voltage = Symbol("input_voltage", units.voltage)
 output_voltage = Symbol("output_voltage", units.voltage)
 input_current = Symbol("input_current", units.current)
 output_current = Symbol("output_current", units.current)
-conductivity_11 = Symbol("conductivity_11", units.conductance)
-conductivity_12 = Symbol("conductivity_12", units.conductance)
-conductivity_21 = Symbol("conductivity_21", units.conductance)
-conductivity_22 = Symbol("conductivity_22", units.conductance)
+conductivity_input_input = Symbol("conductivity_input_input", units.conductance)
+conductivity_input_output = Symbol("conductivity_input_output", units.conductance)
+conductivity_output_input = Symbol("conductivity_output_input", units.conductance)
+conductivity_output_output = Symbol("conductivity_output_output", units.conductance)
 
-law = Eq(Matrix([input_current, output_current]), Matrix([[conductivity_11, conductivity_12], [conductivity_21, conductivity_22]]) * Matrix([input_voltage, output_voltage]))
+law = Eq(Matrix([input_current, output_current]), Matrix([[conductivity_input_input, conductivity_input_output], [conductivity_output_input, conductivity_output_output]]) * Matrix([input_voltage, output_voltage]))
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(input_current_=input_current, output_current_=output_current,) #conductivities_=conductivity_11)
+@validate_input(input_current_=input_current, output_current_=output_current,)
 @validate_output(units.voltage)
 def calculate_voltages(input_current_: Quantity, output_current_: Quantity, conductivities_: tuple[tuple[Quantity, Quantity], tuple[Quantity, Quantity]]) -> tuple[Quantity, Quantity]:
+    for conductivity_1, conductivity_2 in conductivities_:
+        assert SI.get_dimension_system().equivalent_dims(conductivity_1.dimension,
+            units.conductance)
+        assert SI.get_dimension_system().equivalent_dims(conductivity_2.dimension,
+            units.conductance)
     result_voltages = solve(law, [input_voltage, output_voltage], dict=True)[0]
     result_input_voltage = result_voltages[input_voltage]
     result_output_voltage = result_voltages[output_voltage]
     substitutions = {
         input_current: input_current_,
         output_current: output_current_,
-        conductivity_11: conductivities_[0][0],
-        conductivity_12: conductivities_[0][1],
-        conductivity_21: conductivities_[1][0],
-        conductivity_22: conductivities_[1][1],
+        conductivity_input_input: conductivities_[0][0],
+        conductivity_input_output: conductivities_[0][1],
+        conductivity_output_input: conductivities_[1][0],
+        conductivity_output_output: conductivities_[1][1],
     }
     result_input_voltage = result_input_voltage.subs(substitutions)
     result_output_voltage = result_output_voltage.subs(substitutions)
