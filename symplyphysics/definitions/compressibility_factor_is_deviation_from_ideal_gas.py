@@ -18,6 +18,7 @@ from symplyphysics import (
 ## the temperature or the larger the pressure.
 
 # Definition: Z = (p * V) / (n * R * T)
+## Z - compressibility factor
 ## p - pressure
 ## V - volume
 ## n - amount of substance
@@ -25,8 +26,13 @@ from symplyphysics import (
 ## T - temperature
 
 # Note
-## - Z = 1 is the case of ideal gas behaviour
-## - Z < 1 is when
+## - Can be equivalently defined as the ratio of the molar volume of the real gas (V / n) to the
+##   molar volume of the corresponding ideal gas (R * T / p) at the same temperature and pressure.
+## - Z = 1 is the case of ideal gas behaviour.
+## - At high pressures molecules collide more often leading to an increase of repulsive forces between
+##   molecules, making the molar volume of the real gas (V / n) greater than that of ideal gas (R * T / p),
+##   in other words the particles have a larger extended volume, leading to Z > 1.
+## - At lower pressures, molecules are free to move and attractive forces dominate, leading to Z < 1.
 
 compressibility_factor = Symbol("compressibility_factor", dimensionless)
 pressure = Symbol("pressure", units.pressure)
