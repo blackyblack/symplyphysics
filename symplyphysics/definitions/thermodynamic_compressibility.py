@@ -23,6 +23,8 @@ from symplyphysics import (
 ## - This definition is incomplete in the sense that the value of the compressibility coefficient
 ##   depends on whether the process is isentropic or isothermal, hence the partial derivative should
 ##   be taken at either constant entropy or constant temperature.
+## - For solids the the difference between isentropic and isothermal compressibility coefficients
+##   is usually negligible.
 
 compressibility = Symbol("compressibility", 1 / units.pressure)
 volume = Function("volume", units.volume)
