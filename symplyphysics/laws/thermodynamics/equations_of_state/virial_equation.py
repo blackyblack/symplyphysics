@@ -59,4 +59,8 @@ def calculate_compressibility_factor(
         third_virial_coefficient: third_virial_coefficient_,
         molar_density: molar_density_,
     })
-    return float(convert_to(Quantity(result), S.One))
+
+    result_value = float(convert_to(Quantity(result), S.One))
+    if result_value < 0:
+        raise ValueError(f"Compressibility factor cannot be negative, got {result_value} instead")
+    return result_value
