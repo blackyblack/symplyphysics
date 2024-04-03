@@ -16,7 +16,7 @@ from symplyphysics import (
 
 # Law: Z = 1 + B * rho + C * rho**2 + ...
 ## Z - compressibility factor; TODO: add link to definition
-## B, C, ... - virial coefficients
+## B, C, ... - virial coefficients (technically they are functions of temperature)
 ## rho - molar density (amount of substance divided by volume)
 
 # Note
