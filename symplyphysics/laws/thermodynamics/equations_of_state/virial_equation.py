@@ -15,7 +15,7 @@ from symplyphysics import (
 ## (and therefore the pressure) of a real gas in local equilibrium as a power series of the density.
 
 # Law: Z = 1 + B * rho + C * rho**2 + ...
-## Z - compressibility factor; TODO: add link to definition
+## Z - [compressibility factor](../../../definitions/compressibility_factor_is_deviation_from_ideal_gas.py)
 ## B, C, ... - virial coefficients (technically they are functions of temperature)
 ## rho - molar density (amount of substance divided by volume)
 
