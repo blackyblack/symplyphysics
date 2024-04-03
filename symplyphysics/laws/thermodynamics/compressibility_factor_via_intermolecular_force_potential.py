@@ -8,6 +8,7 @@ from symplyphysics import (
     print_expression,
     validate_input,
     validate_output,
+    convert_to,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 
@@ -85,4 +86,4 @@ def calculate_compressibility_factor(
         volume: volume_,
         _sphere_radius: sphere_radius_,
     })
-    return Quantity(result)
+    return float(convert_to(Quantity(result), S.One))
