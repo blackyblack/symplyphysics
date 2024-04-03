@@ -34,7 +34,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 compressibility_factor = Symbol("compressibility_factor", dimensionless, positive=True)
 number_of_particles = Symbol("number_of_particles", dimensionless, integer=True, positive=True)
 volume = Symbol("volume", units.volume, positive=True)
-radius = Symbol("radius", units.length, positive=True)
+intermolecular_distance = Symbol("intermolecular_distance", units.length, positive=True)
 intermolecular_force_potential = Function("intermolecular_force_potential", units.energy, real=True)
 temperature = Symbol("temperature", units.temperature, positive=True)
 
@@ -42,8 +42,8 @@ law = Eq(
     compressibility_factor,
     1 + 2 * pi * number_of_particles / volume
     * Integral(
-        (1 - exp(-1 * intermolecular_force_potential(radius) / (units.boltzmann_constant * temperature))) * radius**2,
-        (radius, 0, S.Infinity),
+        (1 - exp(-1 * intermolecular_force_potential(intermolecular_distance) / (units.boltzmann_constant * temperature))) * intermolecular_distance**2,
+        (intermolecular_distance, 0, S.Infinity),
     )
 )
 
@@ -52,12 +52,12 @@ law = Eq(
 _sphere_radius = Symbol("sphere_radius", units.length, positive=True)
 
 _hard_spheres_potential = Piecewise(
-    (S.Infinity, radius < _sphere_radius),
-    (0, radius >= _sphere_radius),
+    (S.Infinity, intermolecular_distance < _sphere_radius),
+    (0, intermolecular_distance >= _sphere_radius),
 )
 
 _hard_spheres_compressibility_factor = law.rhs.subs(
-    intermolecular_force_potential(radius), _hard_spheres_potential
+    intermolecular_force_potential(intermolecular_distance), _hard_spheres_potential
 ).doit()
 
 # Note that the compressibility factor does not depend on temperature in this model
@@ -71,7 +71,7 @@ def print_law() -> str:
 @validate_input(
     number_of_particles_=number_of_particles,
     volume_=volume,
-    sphere_radius_=radius,
+    sphere_radius_=intermolecular_distance,
 )
 @validate_output(compressibility_factor)
 def calculate_compressibility_factor(
