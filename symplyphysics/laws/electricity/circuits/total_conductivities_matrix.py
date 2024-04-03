@@ -8,6 +8,7 @@ from symplyphysics import (
     validate_output,
     SI,
 )
+from symplyphysics.core.dimensions import assert_equivalent_dimension
 
 ## Description
 ## The conductivity matrix is one of the ways to describe a microwave device. The Y-parameters of the device act as elements
@@ -42,11 +43,8 @@ def print_law() -> str:
 @validate_input(input_current_=input_current, output_current_=output_current,)
 @validate_output(units.voltage)
 def calculate_voltages(input_current_: Quantity, output_current_: Quantity, conductivities_: tuple[tuple[Quantity, Quantity], tuple[Quantity, Quantity]]) -> tuple[Quantity, Quantity]:
-    for conductivity_1, conductivity_2 in conductivities_:
-        assert SI.get_dimension_system().equivalent_dims(conductivity_1.dimension,
-            units.conductance)
-        assert SI.get_dimension_system().equivalent_dims(conductivity_2.dimension,
-            units.conductance)
+    for conductivity in [x for y in conductivities_ for x in y]:
+        assert_equivalent_dimension(conductivity, conductivity.dimension.name, "calculate_voltages", units.conductance)
     result_voltages = solve(law, [input_voltage, output_voltage], dict=True)[0]
     result_input_voltage = result_voltages[input_voltage]
     result_output_voltage = result_voltages[output_voltage]

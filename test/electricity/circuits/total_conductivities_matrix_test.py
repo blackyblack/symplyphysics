@@ -41,19 +41,19 @@ def test_bad_voltages(test_args: Args) -> None:
 
 def test_bad_conductivities(test_args: Args) -> None:
     bad_conductivity = Quantity(1 * units.coulomb)
-    with raises(AssertionError):
+    with raises(errors.UnitsError):
         conductivity_matrix_law.calculate_voltages(test_args.input_current, test_args.output_current, ((bad_conductivity, test_args.conductivities[0][1]), (test_args.conductivities[1][0], test_args.conductivities[1][1])))
     with raises(AttributeError):
         conductivity_matrix_law.calculate_voltages(test_args.input_current, test_args.output_current, ((100, test_args.conductivities[0][1]), (test_args.conductivities[1][0], test_args.conductivities[1][1])))
-    with raises(AssertionError):
+    with raises(errors.UnitsError):
         conductivity_matrix_law.calculate_voltages(test_args.input_current, test_args.output_current, ((test_args.conductivities[0][0], bad_conductivity), (test_args.conductivities[1][0], test_args.conductivities[1][1])))
     with raises(AttributeError):
         conductivity_matrix_law.calculate_voltages(test_args.input_current, test_args.output_current, ((test_args.conductivities[0][0], 100), (test_args.conductivities[1][0], test_args.conductivities[1][1])))
-    with raises(AssertionError):
+    with raises(errors.UnitsError):
         conductivity_matrix_law.calculate_voltages(test_args.input_current, test_args.output_current, ((test_args.conductivities[0][0], test_args.conductivities[0][1]), (bad_conductivity, test_args.conductivities[1][1])))
     with raises(AttributeError):
         conductivity_matrix_law.calculate_voltages(test_args.input_current, test_args.output_current, ((test_args.conductivities[0][0], test_args.conductivities[0][1]), (100, test_args.conductivities[1][1])))
-    with raises(AssertionError):
+    with raises(errors.UnitsError):
         conductivity_matrix_law.calculate_voltages(test_args.input_current, test_args.output_current, ((test_args.conductivities[0][0], test_args.conductivities[0][1]), (test_args.conductivities[1][0], bad_conductivity)))
     with raises(AttributeError):
         conductivity_matrix_law.calculate_voltages(test_args.input_current, test_args.output_current, ((test_args.conductivities[0][0], test_args.conductivities[0][1]), (test_args.conductivities[1][0], 100)))
