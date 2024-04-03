@@ -1,11 +1,13 @@
-from sympy import Eq
+from sympy import Eq, S
 from symplyphysics import (
     units,
+    dimensionless,
     Quantity,
     Symbol,
     print_expression,
     validate_input,
     validate_output,
+    convert_to,
 )
 
 # Description
@@ -22,7 +24,7 @@ from symplyphysics import (
 # Note:
 ## One can also use specific or molar heat capacities in place of the normal heat capacity.
 
-heat_capacity_ratio = Symbol("heat_capacity_ratio")
+heat_capacity_ratio = Symbol("heat_capacity_ratio", dimensionless)
 isobaric_heat_capacity = Symbol("isobaric_heat_capacity", units.energy / units.temperature)
 isochoric_heat_capacity = Symbol("isochoric_heat_capacity", units.energy / units.temperature)
 
@@ -46,4 +48,4 @@ def calculate_heat_capacity_ratio(
         isobaric_heat_capacity: isobaric_heat_capacity_,
         isochoric_heat_capacity: isochoric_heat_capacity_,
     })
-    return Quantity(result).scale_factor
+    return float(convert_to(Quantity(result), S.One))
