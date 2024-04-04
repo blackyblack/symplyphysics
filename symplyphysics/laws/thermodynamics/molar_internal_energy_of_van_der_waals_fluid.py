@@ -14,7 +14,7 @@ from symplyphysics import (
 ## If the equation of state is known, the internal energy of a substance can be found
 ## as a function of volume at constant temperature.
 
-# Law: u(T) = Integral(c_V(T), T) - a / v
+# Law: u = Integral(c_V(T), T) - a / v
 ## u - molar internal energy of van der Waals fluid at constant temperature
 ## c_V - isochoric molar heat capacity as a function of temperature
 ## T - absolute temperature
@@ -24,7 +24,7 @@ from symplyphysics import (
 # Conditions
 ## - The fluid is homogeneous and in a single phase state.
 
-molar_internal_energy = Function("molar_internal_energy", units.energy / units.amount_of_substance)
+molar_internal_energy = Symbol("molar_internal_energy", units.energy / units.amount_of_substance)
 isochoric_molar_heat_capacity = Function(
     "isochoric_molar_heat_capacity",
     units.energy / (units.temperature * units.amount_of_substance),
@@ -37,7 +37,7 @@ bonding_forces_parameter = Symbol(
 molar_volume = Symbol("molar_volume", units.volume / units.amount_of_substance)
 
 law = Eq(
-    molar_internal_energy(temperature),
+    molar_internal_energy,
     Integral(isochoric_molar_heat_capacity(temperature), temperature) - bonding_forces_parameter / molar_volume,
 )
 
