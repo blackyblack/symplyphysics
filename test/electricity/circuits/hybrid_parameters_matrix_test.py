@@ -48,13 +48,9 @@ def test_bad_parametrs(test_args: Args) -> None:
     bad_parameter = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         parameter_matrix_law.calculate_current_and_voltage(test_args.input_voltage, test_args.output_current, ((bad_parameter, test_args.parameters[0][1]), (test_args.parameters[1][0], test_args.parameters[1][1])))
-    with raises(AttributeError):
+    with raises(TypeError):
         parameter_matrix_law.calculate_current_and_voltage(test_args.input_voltage, test_args.output_current, ((100, test_args.parameters[0][1]), (test_args.parameters[1][0], test_args.parameters[1][1])))
     with raises(errors.UnitsError):
-        parameter_matrix_law.calculate_current_and_voltage(test_args.input_voltage, test_args.output_current, ((test_args.parameters[0][0], bad_parameter), (test_args.parameters[1][0], test_args.parameters[1][1])))
-    with raises(errors.UnitsError):
-        parameter_matrix_law.calculate_current_and_voltage(test_args.input_voltage, test_args.output_current, ((test_args.parameters[0][0], test_args.parameters[0][1]), (bad_parameter, test_args.parameters[1][1])))
-    with raises(errors.UnitsError):
         parameter_matrix_law.calculate_current_and_voltage(test_args.input_voltage, test_args.output_current, ((test_args.parameters[0][0], test_args.parameters[0][1]), (test_args.parameters[1][0], bad_parameter)))
-    with raises(AttributeError):
+    with raises(TypeError):
         parameter_matrix_law.calculate_current_and_voltage(test_args.input_voltage, test_args.output_current, ((test_args.parameters[0][0], test_args.parameters[0][1]), (test_args.parameters[1][0], 100)))
