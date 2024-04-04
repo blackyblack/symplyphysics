@@ -88,6 +88,29 @@ def validate_output(
     return validate_func
 
 
+def validate_multiple_output(
+    expected_unit: Dimension | Symbol | Function,
+    *expected_units: Dimension | Symbol | Function
+) -> Callable[[Any], Callable[..., Any]]:
+    if len(expected_units) == 0:
+        return validate_output(expected_unit)
+    
+    expected_units = (expected_unit,) + expected_units
+
+    def validate_func(func: Callable[..., Any]) -> Callable[..., Any]:
+
+        @functools.wraps(func)
+        def wrapper_validate(*args: Any, **kwargs: Any) -> Any:
+            rets = func(*args, **kwargs)
+            for expected_unit, ret in zip(expected_units, rets, strict=True):
+                _assert_expected_unit(ret, expected_unit, "return", func.__name__)
+            return rets
+
+        return wrapper_validate
+    
+    return validate_func
+
+
 # Validates that output quantity has the same dimension as input quantity. Output and input parameter should be
 # sympy.physics.units.Quantity, list of Quantity or Vector of Quantity type.
 # Example:
