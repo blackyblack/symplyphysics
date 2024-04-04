@@ -56,6 +56,8 @@ def print_law() -> str:
 @validate_input(
     molar_volume_=molar_volume,
     temperature_=temperature,
+    bonding_forces_parameter_=bonding_forces_parameter,
+    molecules_volume_parameter_=molecules_volume_parameter,
 )
 @validate_output(pressure)
 def calculate_pressure(
