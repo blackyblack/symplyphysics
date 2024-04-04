@@ -14,7 +14,7 @@ from symplyphysics import (
 ## which are simply the usual thermodynamic quantities divided by their value at the [critical
 ## point](TODO: add link). One notable property of the dimensionless equation of state is that
 ## it contains no substance-specific quantities, i.e. all van der Waals fluids will plot on the
-## same reduced pressure-volume curve at the same reduce temperature.
+## same reduced pressure-volume curve at the same reduced temperature.
 
 # Law: (p* + 3 / (V*)**2) * (V* - 1/3) = 8/3 * T*
 ## p* = p/p_c - reduced pressure
