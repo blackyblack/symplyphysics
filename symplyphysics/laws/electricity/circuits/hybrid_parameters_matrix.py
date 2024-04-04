@@ -41,7 +41,6 @@ def print_law() -> str:
 
 
 @validate_input(input_voltage_=input_voltage, output_current_=output_current,)
-# @validate_output((units.current, units.voltage))
 def calculate_current_and_voltage(input_voltage_: Quantity, output_current_: Quantity, parameters_: tuple[tuple[Quantity, float], tuple[float, Quantity]]) -> tuple[Quantity, Quantity]:
     assert_equivalent_dimension(parameters_[0][0], f"parameters_[{0}][{0}]", "calculate_current_and_voltage", units.impedance)
     assert_equivalent_dimension(parameters_[1][1], f"parameters_[{1}][{1}]", "calculate_current_and_voltage", units.conductance)
@@ -56,8 +55,8 @@ def calculate_current_and_voltage(input_voltage_: Quantity, output_current_: Qua
         parameter_output_input: parameters_[1][0],
         parameter_output_output: parameters_[1][1],
     }
-    result_input_current = result_input_current.subs(substitutions)
-    result_output_voltage = result_output_voltage.subs(substitutions)
+    result_input_current = Quantity(result_input_current.subs(substitutions))
+    result_output_voltage = Quantity(result_output_voltage.subs(substitutions))
     assert_equivalent_dimension(result_input_current, 'result_input_current', "calculate_current_and_voltage", units.current)
     assert_equivalent_dimension(result_output_voltage, 'result_output_voltage', "calculate_current_and_voltage", units.voltage)
-    return (Quantity(result_input_current), Quantity(result_output_voltage))
+    return (result_input_current, result_output_voltage)

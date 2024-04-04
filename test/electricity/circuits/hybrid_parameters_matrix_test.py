@@ -44,7 +44,7 @@ def test_bad_current(test_args: Args) -> None:
         parameter_matrix_law.calculate_current_and_voltage(test_args.input_voltage, 100, test_args.parameters)
 
 
-def test_bad_parametrs(test_args: Args) -> None:
+def test_bad_parameters(test_args: Args) -> None:
     bad_parameter = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         parameter_matrix_law.calculate_current_and_voltage(test_args.input_voltage, test_args.output_current, ((bad_parameter, test_args.parameters[0][1]), (test_args.parameters[1][0], test_args.parameters[1][1])))
