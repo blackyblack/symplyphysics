@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    Function,
     print_expression,
     validate_input,
     validate_output,
@@ -17,14 +16,14 @@ from symplyphysics import (
 ## is known, but it can also be derived from the equation of state as a series expansion with respect
 ## to inverse molar volume or equivalently to molar density.
 
-# Law: B(T) = b - a / (R * T)
-## B(T) - second virial coefficient of the virial expansion
+# Law: B = b - a / (R * T)
+## B - second virial coefficient of the virial expansion
 ## a - parameter of the van der Waals equation of state representing the magnitude of intermolecular forces
 ## b - parameter of the van der Waals equation of state representing the effective molecular size
 ## R - molar gas constant
 ## T - absolute temperature
 
-second_virial_coefficient = Function("second_virial_coefficient", units.volume / units.amount_of_substance)
+second_virial_coefficient = Symbol("second_virial_coefficient", units.volume / units.amount_of_substance)
 bonding_forces_parameter = Symbol(
     "bonding_forces_parameter",
     units.pressure * (units.volume / units.amount_of_substance)**2,
@@ -36,7 +35,7 @@ molecules_volume_parameter = Symbol(
 temperature = symbols.thermodynamics.temperature
 
 law = Eq(
-    second_virial_coefficient(temperature),
+    second_virial_coefficient,
     molecules_volume_parameter - bonding_forces_parameter / (units.molar_gas_constant * temperature)
 )
 
