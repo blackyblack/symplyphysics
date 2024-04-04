@@ -42,8 +42,9 @@ def print_law() -> str:
 @validate_input(input_voltage_=input_voltage, output_voltage_=output_voltage,)
 @validate_output(units.current)
 def calculate_currents(input_voltage_: Quantity, output_voltage_: Quantity, impedances_: tuple[tuple[Quantity, Quantity], tuple[Quantity, Quantity]]) -> tuple[Quantity, Quantity]:
-    for impedance in [x for y in impedances_ for x in y]:
-        assert_equivalent_dimension(impedance, impedance.dimension.name, "calculate_currents", units.impedance)
+    for i, cc in enumerate(impedances_):
+        for j, impedance in enumerate(cc):
+            assert_equivalent_dimension(impedance, f"impedances_[{i}][{j}]", "calculate_currents", units.impedance)
     result_currents = solve(law, [input_current, output_current], dict=True)[0]
     result_input_current = result_currents[input_current]
     result_output_current = result_currents[output_current]

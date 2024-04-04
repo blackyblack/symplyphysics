@@ -45,17 +45,17 @@ def test_bad_impedances(test_args: Args) -> None:
     bad_impedance = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         resistance_matrix_law.calculate_currents(test_args.input_voltage, test_args.output_voltage, ((bad_impedance, test_args.impedances[0][1]), (test_args.impedances[1][0], test_args.impedances[1][1])))
-    with raises(AttributeError):
+    with raises(TypeError):
         resistance_matrix_law.calculate_currents(test_args.input_voltage, test_args.output_voltage, ((100, test_args.impedances[0][1]), (test_args.impedances[1][0], test_args.impedances[1][1])))
     with raises(errors.UnitsError):
         resistance_matrix_law.calculate_currents(test_args.input_voltage, test_args.output_voltage, ((test_args.impedances[0][0], bad_impedance), (test_args.impedances[1][0], test_args.impedances[1][1])))
-    with raises(AttributeError):
+    with raises(TypeError):
         resistance_matrix_law.calculate_currents(test_args.input_voltage, test_args.output_voltage, ((test_args.impedances[0][0], 100), (test_args.impedances[1][0], test_args.impedances[1][1])))
     with raises(errors.UnitsError):
         resistance_matrix_law.calculate_currents(test_args.input_voltage, test_args.output_voltage, ((test_args.impedances[0][0], test_args.impedances[0][1]), (bad_impedance, test_args.impedances[1][1])))
-    with raises(AttributeError):
+    with raises(TypeError):
         resistance_matrix_law.calculate_currents(test_args.input_voltage, test_args.output_voltage, ((test_args.impedances[0][0], test_args.impedances[0][1]), (100, test_args.impedances[1][1])))
     with raises(errors.UnitsError):
         resistance_matrix_law.calculate_currents(test_args.input_voltage, test_args.output_voltage, ((test_args.impedances[0][0], test_args.impedances[0][1]), (test_args.impedances[1][0], bad_impedance)))
-    with raises(AttributeError):
+    with raises(TypeError):
         resistance_matrix_law.calculate_currents(test_args.input_voltage, test_args.output_voltage, ((test_args.impedances[0][0], test_args.impedances[0][1]), (test_args.impedances[1][0], 100)))
