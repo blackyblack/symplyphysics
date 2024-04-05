@@ -3,12 +3,14 @@ from typing import Any, Optional, Self, Sequence
 from sympy import S, Basic, Expr, sympify
 from sympy.physics.units import Dimension, Quantity as SymQuantity
 from sympy.physics.units.systems.si import SI
+from sympy.multipledispatch import dispatch
 
 from .symbols import DimensionSymbol, next_name
 from ..dimensions import collect_factor_and_dimension
 from ..errors import UnitsError
 
 
+#@total_ordering
 class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancestors
 
     def __new__(cls,
@@ -48,6 +50,12 @@ class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancest
 
     def _eval_Abs(self) -> Self:
         return self if self.scale_factor >= 0 else (-1 * self)
+
+
+# Allows for some SymPy comparisons, Piecewise function
+@dispatch(Quantity, Quantity)
+def _eval_is_ge(lhs: Quantity, rhs: Quantity) -> bool:
+    return lhs.scale_factor >= rhs.scale_factor
 
 
 def subs_list(input_: Sequence[Expr | float], subs_: dict[Expr, Quantity]) -> Sequence[Quantity]:

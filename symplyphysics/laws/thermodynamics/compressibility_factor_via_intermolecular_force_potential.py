@@ -1,4 +1,4 @@
-from sympy import Eq, Integral, pi, exp, S, Piecewise
+from sympy import Eq, Integral, pi, exp, S
 from symplyphysics import (
     units,
     dimensionless,
@@ -39,12 +39,14 @@ intermolecular_distance = Symbol("intermolecular_distance", units.length, positi
 intermolecular_force_potential = Function("intermolecular_force_potential", units.energy, real=True)
 temperature = Symbol("temperature", units.temperature, positive=True)
 
+infinite_distance = Quantity(S.Infinity, dimension=units.length)
+
 law = Eq(
     compressibility_factor,
     1 + 2 * pi * number_of_particles / volume
     * Integral(
         (1 - exp(-1 * intermolecular_force_potential(intermolecular_distance) / (units.boltzmann_constant * temperature))) * intermolecular_distance**2,
-        (intermolecular_distance, 0, S.Infinity),
+        (intermolecular_distance, 0, infinite_distance),
     )
 )
 
@@ -55,11 +57,14 @@ _sphere_diameter = Symbol("sphere_diameter", units.length, positive=True)
 _hard_spheres_potential = hard_spheres_potential.law.rhs.subs({
     hard_spheres_potential.distance: intermolecular_distance,
     hard_spheres_potential.sphere_diameter: _sphere_diameter,
+    # Infinite quantity cannot be integrated properly - convert it to SymPy Infinity
+    # Note, that this way we lose information about its dimension
+    hard_spheres_potential.infinite_potential: hard_spheres_potential.infinite_potential.scale_factor,
 })
 
-_hard_spheres_compressibility_factor = law.rhs.subs(
-    intermolecular_force_potential(intermolecular_distance), _hard_spheres_potential
-).doit()
+_hard_spheres_compressibility_factor = law.rhs.subs({
+    intermolecular_force_potential(intermolecular_distance): _hard_spheres_potential,
+}).doit()
 
 # Note that the compressibility factor does not depend on temperature in this model
 assert expr_equals(_hard_spheres_compressibility_factor.diff(temperature), 0)

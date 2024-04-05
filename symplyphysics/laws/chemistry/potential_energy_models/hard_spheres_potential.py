@@ -22,9 +22,11 @@ potential = Symbol("potential", units.energy)
 distance = Symbol("distance", units.length)
 sphere_diameter = Symbol("sphere_diameter", units.length)
 
+infinite_potential = Quantity(S.Infinity, dimension=units.energy)
+
 law = Eq(
     potential,
-    Piecewise((Quantity(S.Infinity, dimension=units.energy), distance <= sphere_diameter), (0, distance > sphere_diameter)),
+    Piecewise((infinite_potential, distance <= sphere_diameter), (0, distance > sphere_diameter)),
 )
 
 
@@ -42,7 +44,7 @@ def calculate_potential(
     sphere_diameter_: Quantity,
 ) -> Quantity:
     result = law.rhs.subs({
-        distance: distance_.scale_factor,
-        sphere_diameter: sphere_diameter_.scale_factor,
+        distance: distance_,
+        sphere_diameter: sphere_diameter_,
     }).doit()
     return Quantity(result)
