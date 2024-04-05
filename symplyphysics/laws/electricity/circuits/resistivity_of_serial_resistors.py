@@ -10,6 +10,9 @@ from symplyphysics.core.symbols.symbols import tuple_of_symbols
 ## R_serial is total resistance,
 ## R[i] is resistance of i-th resistor.
 
+# Conditions:
+# - it is valid for non-alternating current, or when there is no reactive load.
+
 resistances = Symbol("resistances", units.impedance)
 serial_resistance = Symbol("serial_resistance", units.impedance)
 law = Eq(serial_resistance, SumArray(resistances), evaluate=False)

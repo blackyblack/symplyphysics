@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.electricity.circuits import resistance_of_the_serial_resistor_coil_capacitor_circuit as resistance_law
+from symplyphysics.laws.electricity.circuits import impedance_module_of_the_serial_resistor_coil_capacitor_circuit as resistance_law
 
 # Description
 ## With a resistor resistance of 3 ohm, an inductive reactance of 7 ohm, a capacitive reactance of 3 ohm,
