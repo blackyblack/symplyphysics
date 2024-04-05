@@ -13,10 +13,9 @@ from symplyphysics import (
 ## temperature at which the isotherm has an inflection point whose tangent at that point is zero, i.e.
 ## the first and second derivatives of pressure with respect to volume at constant temperature are zero.
 
-# Law: T_c = (8 * a) / (27 * R * b)
-## T_c - critical temperature respectively
+# Law: p_c = a / (27 * b**2)
+## p_c - critical pressure
 ## a, b - parameters of van der Waals equation of state
-## R - molar gas constant
 
 critical_pressure = Symbol("critical_pressure", units.pressure)
 
@@ -49,8 +48,8 @@ def calculate_critical_pressure(
     bonding_forces_parameter_: Quantity,
     molecules_volume_parameter_: Quantity,
 ) -> Quantity:
-    temperature_ = law.rhs.subs({
+    pressure_ = law.rhs.subs({
         bonding_forces_parameter: bonding_forces_parameter_,
         molecules_volume_parameter: molecules_volume_parameter_,
     })
-    return temperature_
+    return Quantity(pressure_)

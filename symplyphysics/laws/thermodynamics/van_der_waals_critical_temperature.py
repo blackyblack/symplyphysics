@@ -14,7 +14,7 @@ from symplyphysics import (
 ## the first and second derivatives of pressure with respect to volume at constant temperature are zero.
 
 # Law: T_c = (8 * a) / (27 * R * b)
-## T_c - critical temperature respectively
+## T_c - critical temperature
 ## a, b - parameters of van der Waals equation of state
 ## R - molar gas constant
 
@@ -50,4 +50,4 @@ def calculate_critical_temperature(
         bonding_forces_parameter: bonding_forces_parameter_,
         molecules_volume_parameter: molecules_volume_parameter_,
     })
-    return temperature_
+    return Quantity(temperature_)

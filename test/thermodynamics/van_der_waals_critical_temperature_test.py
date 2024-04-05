@@ -9,7 +9,7 @@ from symplyphysics import (
 from symplyphysics.laws.thermodynamics import van_der_waals_critical_temperature as critical_law
 
 # Description
-## The critical temperature of Argon within the van der Waals equation of state model are
+## The critical temperature of Argon within the van der Waals equation of state model is
 ## T_c = 151 K. Van der Waals equation parameters for argon are a = 1.355 bar*(L/mol)**2
 ## and b = 0.03201 L/mol.
 

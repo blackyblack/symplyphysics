@@ -9,7 +9,7 @@ from symplyphysics import (
 from symplyphysics.laws.thermodynamics import van_der_waals_critical_pressure as critical_law
 
 # Description
-## The critical pressure of Argon within the van der Waals equation of state model are
+## The critical pressure of Argon within the van der Waals equation of state model is
 ## p_c = 48.3 atm. Van der Waals equation parameters for argon are a = 1.355 bar*(L/mol)**2
 ## and b = 0.03201 L/mol.
 
@@ -24,8 +24,8 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    tc = critical_law.calculate_critical_pressure(test_args.a, test_args.b)
-    assert_equal(tc, 48.3 * units.atmosphere)
+    pc = critical_law.calculate_critical_pressure(test_args.a, test_args.b)
+    assert_equal(pc, 48.3 * units.atmosphere)
 
 
 def test_bad_first_parameter(test_args: Args) -> None:
