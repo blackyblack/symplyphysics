@@ -9,7 +9,9 @@ from symplyphysics import (
 )
 
 # Description
-## ...
+## Hard spheres are widely used as model particles in the statistical mechanical theory, defined as
+## impenetrable spheres that cannot overlap in space, which mimics extremely strong repulsion that
+## atoms and molecules experience at very close distances
 
 # Law: U(r) = infinity if r <= sigma else 0
 ## U - hard spheres potential
@@ -22,7 +24,7 @@ sphere_diameter = Symbol("sphere_diameter", units.length)
 
 law = Eq(
     potential,
-    Piecewise((S.Infinity, distance <= sphere_diameter), (0, distance >= sphere_diameter)),
+    Piecewise((S.Infinity, distance <= sphere_diameter), (0, distance > sphere_diameter)),
 )
 
 
