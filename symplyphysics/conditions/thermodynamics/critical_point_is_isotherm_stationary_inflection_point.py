@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Symbol,
     Function,
-    symbols,
 )
 
 # Description
@@ -23,9 +22,8 @@ from symplyphysics import (
 
 pressure = Function("pressure", units.pressure)
 volume = Symbol("volume", units.volume)
-temperature = symbols.thermodynamics.temperature
 
 inflection_point_condition = Eq(Derivative(pressure(volume), volume, 1), 0)
 flat_tangent_condition = Eq(Derivative(pressure(volume), volume, 2), 0)
 
-conditions = inflection_point_condition, flat_tangent_condition
+conditions = [inflection_point_condition, flat_tangent_condition]
