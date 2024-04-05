@@ -29,11 +29,9 @@ def test_law_zero_potential(test_args: Args) -> None:
     assert_equal(result, 0)
 
 
-# FIXME: maybe allow infinity too in [here?](https://github.com/blackyblack/symplyphysics/blob/ef7a449974e977a2676e55339d38f4943e7d1ad3/symplyphysics/core/dimensions.py#L107)
-# Otherwise this raises a UnitsError
-## def test_law_infinite_potential(test_args: Args) -> None:
-##     result = hard_spheres_potential.calculate_potential(test_args.r1, test_args.d)
-##     assert_equal(result, S.Infinity * units.joule)
+def test_law_infinite_potential(test_args: Args) -> None:
+    result = hard_spheres_potential.calculate_potential(test_args.r1, test_args.d)
+    assert_equal(result, S.Infinity, dimension=units.energy)
 
 
 def test_bad_length(test_args: Args) -> None:
