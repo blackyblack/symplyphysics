@@ -30,12 +30,12 @@ input_reflected_wave = Symbol("input_reflected_wave", sqrt(units.power))
 output_reflected_wave = Symbol("output_reflected_wave", sqrt(units.power))
 input_wave = Symbol("input_wave", sqrt(units.power))
 output_wave = Symbol("output_wave", sqrt(units.power))
-parameter_input_input = Symbol("parameter_input_input", dimensionless)
-parameter_input_output = Symbol("parameter_input_output", dimensionless)
-parameter_output_input = Symbol("parameter_output_input", dimensionless)
-parameter_output_output = Symbol("parameter_output_output", dimensionless)
+reflection_coefficient = Symbol("reflection_coefficient", dimensionless)
+reverse_transmission_ratio = Symbol("reverse_transmission_ratio", dimensionless)
+transmission_ratio = Symbol("transmission_ratio", dimensionless)
+output_reflection_coefficient = Symbol("output_reflection_coefficient", dimensionless)
 
-law = Eq(Matrix([input_reflected_wave, output_reflected_wave]), Matrix([[parameter_input_input, parameter_input_output], [parameter_output_input, parameter_output_output]]) * Matrix([input_wave, output_wave]))
+law = Eq(Matrix([input_reflected_wave, output_reflected_wave]), Matrix([[reflection_coefficient, reverse_transmission_ratio], [transmission_ratio, output_reflection_coefficient]]) * Matrix([input_wave, output_wave]))
 
 
 def print_law() -> str:
@@ -45,16 +45,16 @@ def print_law() -> str:
 @validate_input(input_reflected_wave_=input_reflected_wave, output_reflected_wave_=output_reflected_wave)
 @validate_output(sqrt(units.power))
 def calculate_waves(input_reflected_wave_: Quantity, output_reflected_wave_: Quantity, parameters_: tuple[tuple[float, float], tuple[float, float]]) -> tuple[Quantity, Quantity]:
-    result_currents = solve(law, [input_wave, output_wave], dict=True)[0]
-    result_input_wave = result_currents[input_wave]
-    result_output_wave = result_currents[output_wave]
+    result = solve(law, [input_wave, output_wave], dict=True)[0]
+    result_input_wave = result[input_wave]
+    result_output_wave = result[output_wave]
     substitutions = {
         input_reflected_wave: input_reflected_wave_,
         output_reflected_wave: output_reflected_wave_,
-        parameter_input_input: parameters_[0][0],
-        parameter_input_output: parameters_[0][1],
-        parameter_output_input: parameters_[1][0],
-        parameter_output_output: parameters_[1][1],
+        reflection_coefficient: parameters_[0][0],
+        reverse_transmission_ratio: parameters_[0][1],
+        transmission_ratio: parameters_[1][0],
+        output_reflection_coefficient: parameters_[1][1],
     }
     result_input_wave = result_input_wave.subs(substitutions)
     result_output_wave = result_output_wave.subs(substitutions)
