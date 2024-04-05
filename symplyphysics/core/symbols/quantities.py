@@ -10,7 +10,6 @@ from ..dimensions import collect_factor_and_dimension
 from ..errors import UnitsError
 
 
-#@total_ordering
 class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancestors
 
     def __new__(cls,
