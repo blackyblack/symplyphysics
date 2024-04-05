@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics.equations_of_state import van_der_waals_state_equation as waals_law
+from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import equation as waals_law
 
 # Description
 ## Test example from https://studfile.net/preview/1772224/page:8/ example 2.24
