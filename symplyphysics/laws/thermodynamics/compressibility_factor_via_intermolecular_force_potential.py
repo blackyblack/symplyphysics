@@ -49,11 +49,11 @@ law = Eq(
 
 # Calculate the compressibility factor for the model of hard spheres
 
-_sphere_radius = Symbol("sphere_radius", units.length, positive=True)
+_sphere_diameter = Symbol("sphere_diameter", units.length, positive=True)
 
 _hard_spheres_potential = Piecewise(
-    (S.Infinity, intermolecular_distance < _sphere_radius),
-    (0, intermolecular_distance >= _sphere_radius),
+    (S.Infinity, intermolecular_distance < _sphere_diameter),
+    (0, intermolecular_distance >= _sphere_diameter),
 )
 
 _hard_spheres_compressibility_factor = law.rhs.subs(
@@ -71,19 +71,19 @@ def print_law() -> str:
 @validate_input(
     number_of_particles_=number_of_particles,
     volume_=volume,
-    sphere_radius_=intermolecular_distance,
+    sphere_diameter_=intermolecular_distance,
 )
 @validate_output(compressibility_factor)
 def calculate_compressibility_factor(
     number_of_particles_: int,
     volume_: Quantity,
-    sphere_radius_: Quantity,
+    sphere_diameter_: Quantity,
 ) -> float:
     # Calculate for the model of hard spheres
 
     result = _hard_spheres_compressibility_factor.subs({
         number_of_particles: number_of_particles_,
         volume: volume_,
-        _sphere_radius: sphere_radius_,
+        _sphere_diameter: sphere_diameter_,
     })
     return float(convert_to(Quantity(result), S.One))
