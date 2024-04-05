@@ -6,8 +6,8 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics import (
-    second_virial_coefficient_for_van_der_waals_equation_of_state as virial_law,
+from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import (
+    second_virial_coefficient as virial_law,
 )
 
 # Description

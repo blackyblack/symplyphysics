@@ -7,7 +7,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics import molar_internal_energy_of_van_der_waals_fluid as energy_law
+from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import molar_internal_energy as energy_law
 
 # Description
 ## For water in the model of van der Waals equation of state, the molar internal energy amounts

@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics import van_der_waals_critical_volume as critical_law
+from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import critical_volume as critical_law
 
 # Description
 ## The critical volume of Argon in the van der Waals equation of state model is V_c = 96 cm**3/mol,

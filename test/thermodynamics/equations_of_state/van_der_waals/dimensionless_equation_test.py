@@ -6,8 +6,8 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics.equations_of_state import (
-    dimensionless_van_den_waals_equation as state_equation_law,
+from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import (
+    dimensionless_equation as state_equation_law,
 )
 
 # Description
