@@ -28,7 +28,7 @@ temperature = Symbol("temperature", units.temperature)
 
 law = Eq(
     resistance,
-    resistance_initial * (1 + temperature_coefficient * (temperature - quantities.zero_celsius)))
+    resistance_initial * (1 + temperature_coefficient * (temperature - quantities.standard_conditions_temperature)))
 
 
 def print_law() -> str:
