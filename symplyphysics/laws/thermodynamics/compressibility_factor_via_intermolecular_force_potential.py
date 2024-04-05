@@ -11,6 +11,7 @@ from symplyphysics import (
     convert_to,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.chemistry.potential_energy_models import hard_spheres_potential
 
 # Description
 ## The virial equation describes the deviation of a real gas from ideal gas behaviour. The virial coefficients
@@ -51,10 +52,10 @@ law = Eq(
 
 _sphere_diameter = Symbol("sphere_diameter", units.length, positive=True)
 
-_hard_spheres_potential = Piecewise(
-    (S.Infinity, intermolecular_distance < _sphere_diameter),
-    (0, intermolecular_distance >= _sphere_diameter),
-)
+_hard_spheres_potential = hard_spheres_potential.law.rhs.subs({
+    hard_spheres_potential.distance: intermolecular_distance,
+    hard_spheres_potential.sphere_diameter: _sphere_diameter,
+})
 
 _hard_spheres_compressibility_factor = law.rhs.subs(
     intermolecular_force_potential(intermolecular_distance), _hard_spheres_potential
