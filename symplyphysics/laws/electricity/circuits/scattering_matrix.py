@@ -10,7 +10,7 @@ from symplyphysics import (
 )
 
 ## Description
-## The impedance matrix is one of the ways to describe a microwave device. The S-parameters of the device act as elements
+## The scattering matrix is one of the ways to describe a microwave device. The S-parameters of the device act as elements
 ## of this matrix. The matrix equation relates the waves reflected from the input and output to the waves incident on the
 ## input and output.
 ## a1, a2 - these coefficients are equal to the voltage incident on the port divided by the wave resistance of the transmission line.
