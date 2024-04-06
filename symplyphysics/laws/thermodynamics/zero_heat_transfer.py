@@ -1,7 +1,7 @@
 from sympy import (Eq, solve)
 from symplyphysics import (units, Quantity, Symbol, print_expression, dimensionless, validate_input,
     validate_output)
-from symplyphysics.laws.thermodynamics import pressure_from_temperature_and_volume as thermodynamics_law
+from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as thermodynamics_law
 
 # Description
 ## Adiabatic process: Q = 0, P * V^y = const

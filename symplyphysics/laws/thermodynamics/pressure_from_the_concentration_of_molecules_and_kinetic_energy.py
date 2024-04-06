@@ -2,7 +2,7 @@ from sympy import (Eq, solve)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.thermodynamics import pressure_from_temperature_and_volume as ideal_gas_law
+from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as ideal_gas_law
 from symplyphysics.laws.thermodynamics import average_kinetic_energy_of_molecules_from_temperature as kinetic_energy
 from symplyphysics.laws.chemistry import avogadro_number_from_mole_count as avogadro_number
 from symplyphysics.definitions import volume_number_density
