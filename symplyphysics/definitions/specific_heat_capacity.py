@@ -10,11 +10,11 @@ from symplyphysics import (
 )
 
 # Description
-## Specific heat capacity of a substance is its heat capacity divided by its mass.
+## Heat capacity is specific heat capacity (heat capacity per unit mass) times mass.
 
-# Definition: c = C / m
-## c - specific heat capacity
+# Definition: C = c * m
 ## C - heat capacity
+## c - specific heat capacity
 ## m - mass
 
 # Note
@@ -22,11 +22,11 @@ from symplyphysics import (
 ## whereas specific heat capacity is intensive and does not depend on the size of the system or the amount
 ## of substance in consideration.
 
-specific_heat_capacity = Symbol("specific_heat_capacity", units.energy / (units.temperature * units.mass))
 heat_capacity = Symbol("heat_capacity", units.energy / units.temperature)
+specific_heat_capacity = Symbol("specific_heat_capacity", units.energy / (units.temperature * units.mass))
 mass = symbols.basic.mass
 
-definition = Eq(specific_heat_capacity, heat_capacity / mass)
+definition = Eq(heat_capacity, specific_heat_capacity * mass)
 
 
 def print_law() -> str:
@@ -34,16 +34,16 @@ def print_law() -> str:
 
 
 @validate_input(
-    heat_capacity_=heat_capacity,
+    specific_heat_capacity_=specific_heat_capacity,
     mass_=mass,
 )
-@validate_output(specific_heat_capacity)
-def calculate_specific_heat_capacity(
-    heat_capacity_: Quantity,
+@validate_output(heat_capacity)
+def calculate_heat_capacity(
+    specific_heat_capacity_: Quantity,
     mass_: Quantity,
 ) -> Quantity:
     result = definition.rhs.subs({
-        heat_capacity: heat_capacity_,
+        specific_heat_capacity: specific_heat_capacity_,
         mass: mass_,
     })
     return Quantity(result)
