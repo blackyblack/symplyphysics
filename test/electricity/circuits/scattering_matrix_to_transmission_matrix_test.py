@@ -5,7 +5,7 @@ from symplyphysics import (errors, units, Quantity, assert_equal, prefixes)
 
 from symplyphysics.laws.electricity.circuits import scattering_matrix_to_transmission_matrix as matrix_law
 
-## S-parameters S11, S12, S21, S22 are equal to 0.2, 0,5, 0.5, 0.2, respectively.
+## S-parameters S11, S12, S21, S22 are equal to 0.2, 0.5, 0.5, 0.2, respectively.
 ## Characteristic resistance of the transmission line is equal to 50 ohm.
 ## Then the values of A, B, C, D parameters are equal, respectively: 1.21, 59.5 ohm, 7.8 millisiemens, 1.21.
 

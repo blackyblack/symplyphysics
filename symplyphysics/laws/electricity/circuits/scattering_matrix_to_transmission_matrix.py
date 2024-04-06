@@ -1,16 +1,34 @@
-from sympy import Eq, solve, Matrix
+from sympy import Eq, solve, Matrix, S
 from symplyphysics import (
     units,
     Quantity,
     Symbol,
     print_expression,
     validate_input,
-    dimensionless
+    dimensionless,
+    convert_to
 )
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 
 ## Description
-##
+## The scattering matrix is one of the ways to describe a microwave device. The S-parameters of the device act as elements
+## of this matrix. The matrix equation relates the waves reflected from the input and output to the waves incident on the
+## input and output.
+## The transmission parameters matrix is one of the ways to describe a microwave device. The ABCD-parameters of the device act as elements
+## of this matrix. The matrix equation relates the input voltage and input current to the output voltage and output current.
+## Knowing the parameters of the scattering matrix, it is possible to determine the parameters of the transmission matrix.
+
+## Law is: Matrix([[A, B], [C, D]]) = Matrix([[((1 + S11) * (1 - S22) + S12 * S21) / (2 * S21), Z0 * ((1 + S11) * (1 + S22) - S12 * S21) / (2 * S21)],
+## [(1 / Z0) * ((1 - S11) * (1 - S22) - S12 * S21) / (2 * S21), ((1 - S11) * (1 + S22) + S12 * S21) / (2 * S21)]]), where
+## A - ratio of input voltage to output voltage at idle at the output,
+## B - ratio of input voltage to output current in case of a short circuit at the output,
+## C - ratio of input current to output voltage at idle at the output,
+## D - ratio of input current to output current in case of a short circuit at the output,
+## S11 - voltage reflection coefficient,
+## S12 - reverse voltage transmission ratio,
+## S21 - voltage transmission ratio,
+## S22 - output voltage reflection coefficient,
+## Z0 - characteristic resistance of the transmission line.
 
 parameter_voltage_to_voltage = Symbol("parameter_voltage_to_voltage", dimensionless)
 parameter_impedance = Symbol("parameter_impedance", units.impedance)
@@ -50,10 +68,10 @@ def calculate_transmission_matrix(characteristic_resistance_: Quantity, paramete
         transmission_ratio: parameters_[1][0],
         output_reflection_coefficient: parameters_[1][1],
     }
-    result_A = result_A.subs(substitutions)
-    result_B = result_B.subs(substitutions)
-    result_C = result_C.subs(substitutions)
-    result_D = result_D.subs(substitutions)
+    result_A = float(convert_to(Quantity(result_A.subs(substitutions)), S.One).evalf())
+    result_B = Quantity(result_B.subs(substitutions))
+    result_C = Quantity(result_C.subs(substitutions))
+    result_D = float(convert_to(Quantity(result_D.subs(substitutions)), S.One).evalf())
     assert_equivalent_dimension(result_B, 'result_B', "calculate_transmission_matrix", units.impedance)
     assert_equivalent_dimension(result_C, 'result_C', "calculate_transmission_matrix", units.conductance)
-    return ((Quantity(result_A), Quantity(result_B)), (Quantity(result_C), Quantity(result_D)))
+    return ((result_A, result_B), (result_C, result_D))
