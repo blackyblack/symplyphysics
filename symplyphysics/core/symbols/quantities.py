@@ -51,7 +51,7 @@ class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancest
         return self if self.scale_factor >= 0 else (-1 * self)
 
 
-# Allows for some SymPy comparisons, Piecewise function
+# Allows for some SymPy comparisons, eg Piecewise function
 @dispatch(Quantity, Quantity)
 def _eval_is_ge(lhs: Quantity, rhs: Quantity) -> bool:
     return lhs.scale_factor >= rhs.scale_factor

@@ -22,11 +22,9 @@ potential = Symbol("potential", units.energy)
 distance = Symbol("distance", units.length)
 sphere_diameter = Symbol("sphere_diameter", units.length)
 
-infinite_potential = Quantity(S.Infinity, dimension=units.energy)
-
 law = Eq(
     potential,
-    Piecewise((infinite_potential, distance <= sphere_diameter), (0, distance > sphere_diameter)),
+    Piecewise((S.Infinity, distance <= sphere_diameter), (0, distance > sphere_diameter)),
 )
 
 

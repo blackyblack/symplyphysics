@@ -31,7 +31,7 @@ def test_law_zero_potential(test_args: Args) -> None:
 
 def test_law_infinite_potential(test_args: Args) -> None:
     result = hard_spheres_potential.calculate_potential(test_args.r1, test_args.d)
-    assert_equal(result, S.Infinity, dimension=units.energy)
+    assert_equal(result, S.Infinity)
 
 
 def test_bad_length(test_args: Args) -> None:

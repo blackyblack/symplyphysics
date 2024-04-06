@@ -130,6 +130,9 @@ def assert_equivalent_dimension(arg: SymQuantity | ScalarValue | Dimension, para
     # zero can be of any dimension
     if scale_factor == S.Zero:
         return
+    # infinity can be of any dimension
+    if scale_factor == S.Infinity:
+        return
     #HACK: this allows to treat angle type as dimensionless
     arg_dimension = dimension.subs("angle", S.One)
     # angle is dimensionless but equivalent_dims() fails to compare it
