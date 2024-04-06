@@ -25,11 +25,11 @@ heat_capacity = Symbol("heat_capacity", units.energy / units.temperature)
 molar_heat_capacity = Symbol("molar_heat_capacity", units.energy / (units.temperature * units.amount_of_substance))
 amount_of_substance = Symbol("amount_of_substance", units.amount_of_substance)
 
-definition = Eq(heat_capacity, molar_heat_capacity * amount_of_substance)
+law = Eq(heat_capacity, molar_heat_capacity * amount_of_substance)
 
 
 def print_law() -> str:
-    return print_expression(definition)
+    return print_expression(law)
 
 
 @validate_input(
@@ -41,7 +41,7 @@ def calculate_heat_capacity(
     molar_heat_capacity_: Quantity,
     amount_of_substance_: Quantity,
 ) -> Quantity:
-    result = definition.rhs.subs({
+    result = law.rhs.subs({
         molar_heat_capacity: molar_heat_capacity_,
         amount_of_substance: amount_of_substance_,
     })

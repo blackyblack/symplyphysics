@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.definitions import specific_heat_capacity
+from symplyphysics.laws.thermodynamics import heat_capacity_via_specific_heat_capacity
 
 # Description
 ## The heat capacity of 2 kg of a substance with specific heat capacity c = 5 J/(K*kg) is C = 10 J/K.
@@ -22,21 +22,21 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = specific_heat_capacity.calculate_heat_capacity(test_args.c, test_args.m)
+    result = heat_capacity_via_specific_heat_capacity.calculate_heat_capacity(test_args.c, test_args.m)
     assert_equal(result, 10 * units.joule / units.kelvin)
 
 
 def test_bad_specific_heat_capacity(test_args: Args) -> None:
     cb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        specific_heat_capacity.calculate_heat_capacity(cb, test_args.m)
+        heat_capacity_via_specific_heat_capacity.calculate_heat_capacity(cb, test_args.m)
     with raises(TypeError):
-        specific_heat_capacity.calculate_heat_capacity(100, test_args.m)
+        heat_capacity_via_specific_heat_capacity.calculate_heat_capacity(100, test_args.m)
 
 
 def test_bad_mass(test_args: Args) -> None:
     mb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        specific_heat_capacity.calculate_heat_capacity(test_args.c, mb)
+        heat_capacity_via_specific_heat_capacity.calculate_heat_capacity(test_args.c, mb)
     with raises(TypeError):
-        specific_heat_capacity.calculate_heat_capacity(test_args.c, 100)
+        heat_capacity_via_specific_heat_capacity.calculate_heat_capacity(test_args.c, 100)

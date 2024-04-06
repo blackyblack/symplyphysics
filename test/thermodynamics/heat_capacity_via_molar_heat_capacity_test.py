@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.definitions import molar_heat_capacity
+from symplyphysics.laws.thermodynamics import heat_capacity_via_molar_heat_capacity
 
 # Description
 ## The heat capacity of 2 mol of a substance with molar heat capacity C_m = 5 J/(K*mol) is C = 10 J/K.
@@ -22,21 +22,21 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = molar_heat_capacity.calculate_heat_capacity(test_args.c, test_args.n)
+    result = heat_capacity_via_molar_heat_capacity.calculate_heat_capacity(test_args.c, test_args.n)
     assert_equal(result, 10 * units.joule / units.kelvin)
 
 
 def test_bad_molar_heat_capacity(test_args: Args) -> None:
     cb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        molar_heat_capacity.calculate_heat_capacity(cb, test_args.n)
+        heat_capacity_via_molar_heat_capacity.calculate_heat_capacity(cb, test_args.n)
     with raises(TypeError):
-        molar_heat_capacity.calculate_heat_capacity(100, test_args.n)
+        heat_capacity_via_molar_heat_capacity.calculate_heat_capacity(100, test_args.n)
 
 
 def test_bad_amount_of_substance(test_args: Args) -> None:
     nb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        molar_heat_capacity.calculate_heat_capacity(test_args.c, nb)
+        heat_capacity_via_molar_heat_capacity.calculate_heat_capacity(test_args.c, nb)
     with raises(TypeError):
-        molar_heat_capacity.calculate_heat_capacity(test_args.c, 100)
+        heat_capacity_via_molar_heat_capacity.calculate_heat_capacity(test_args.c, 100)

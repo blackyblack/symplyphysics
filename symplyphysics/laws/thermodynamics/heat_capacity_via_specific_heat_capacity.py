@@ -26,11 +26,11 @@ heat_capacity = Symbol("heat_capacity", units.energy / units.temperature)
 specific_heat_capacity = Symbol("specific_heat_capacity", units.energy / (units.temperature * units.mass))
 mass = symbols.basic.mass
 
-definition = Eq(heat_capacity, specific_heat_capacity * mass)
+law = Eq(heat_capacity, specific_heat_capacity * mass)
 
 
 def print_law() -> str:
-    return print_expression(definition)
+    return print_expression(law)
 
 
 @validate_input(
@@ -42,7 +42,7 @@ def calculate_heat_capacity(
     specific_heat_capacity_: Quantity,
     mass_: Quantity,
 ) -> Quantity:
-    result = definition.rhs.subs({
+    result = law.rhs.subs({
         specific_heat_capacity: specific_heat_capacity_,
         mass: mass_,
     })
