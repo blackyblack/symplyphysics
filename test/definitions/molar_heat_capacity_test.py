@@ -9,7 +9,7 @@ from symplyphysics import (
 from symplyphysics.definitions import molar_heat_capacity
 
 # Description
-## The molar heat capacity of 2 mol of a substance with heat capacity C = 10 J/K is C_m = 5 J/(k*mol).
+## The molar heat capacity of 2 mol of a substance with heat capacity C = 10 J/K is C_m = 5 J/(K*mol).
 
 Args = namedtuple("Args", "c n")
 
