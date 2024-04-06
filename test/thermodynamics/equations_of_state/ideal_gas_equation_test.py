@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics import pressure_from_temperature_and_volume as ideal_gas_law
+from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as ideal_gas_law
 
 Args = namedtuple("Args", ["V", "t", "n"])
 
