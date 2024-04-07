@@ -15,6 +15,7 @@ from symplyphysics.core.dimensions import assert_equivalent_dimension
 ## of this matrix. The matrix equation relates the input voltage and input current to the output voltage and output current.
 ## Knowing the length of the transmission line, as well as the characteristic resistance of the line and the constant propagation of signal,
 ## it is possible to calculate the parameters A, B, C, D of the transmission matrix of this line.
+## The propagation constant is the inverse of the wavelength.
 
 ## Law is: Matrix([[A, B], [C, D]]) = Matrix([[cos(b * l), I * Z0 * sin(b * l)], [I * (1 / Z0) * sin(b * l), cos(b * l)]]), where
 ## A - ratio of input voltage to output voltage at idle at the output,
@@ -22,8 +23,9 @@ from symplyphysics.core.dimensions import assert_equivalent_dimension
 ## C - ratio of input current to output voltage at idle at the output,
 ## D - ratio of input current to output current in case of a short circuit at the output,
 ## Z0 - characteristic resistance of the transmission line,
-## l - line of the transmission line,
-## b - constant propagation of signal.
+## l - length of the transmission line,
+## b - constant propagation of signal,
+## I - imaginary unit.
 
 parameter_voltage_to_voltage = Symbol("parameter_voltage_to_voltage", dimensionless)
 parameter_impedance = Symbol("parameter_impedance", units.impedance)
@@ -44,7 +46,7 @@ def print_law() -> str:
 
 
 @validate_input(characteristic_resistance_=characteristic_resistance, line_length_=line_length, constant_propagation_=constant_propagation)
-def calculate_transmission_matrix(characteristic_resistance_: Quantity, line_length_: Quantity, constant_propagation_: Quantity) -> tuple[tuple[Quantity, float], tuple[float, Quantity]]:
+def calculate_transmission_matrix(characteristic_resistance_: Quantity, line_length_: Quantity, constant_propagation_: Quantity) -> tuple[tuple[float, Quantity], tuple[Quantity, float]]:
     result = solve(law, [parameter_voltage_to_voltage, parameter_impedance, parameter_conductance, parameter_current_to_current], dict=True)[0]
     result_A = result[parameter_voltage_to_voltage]
     result_B = result[parameter_impedance]
