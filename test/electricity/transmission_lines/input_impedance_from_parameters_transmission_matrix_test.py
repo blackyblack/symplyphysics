@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (errors, units, Quantity, assert_equal, prefixes)
 
-from symplyphysics.laws.electricity.circuits import input_impedance_from_parameters_transmission_matrix as impedance_law
+from symplyphysics.laws.electricity.transmission_lines import input_impedance_from_parameters_transmission_matrix as impedance_law
 
 ## ABCD-parameters: A is equal to 50, B is equal to 100 ohm,
 ## C is equal to 1000 siemens, D is equal to 50.
