@@ -27,7 +27,9 @@ from symplyphysics.core.dimensions import assert_equivalent_dimension
 ## l - length of the transmission line,
 ## b - constant propagation of signal,
 ## a - coefficient of signal loss in the transmission line,
-## I - imaginary unit.
+## I - imaginary unit,
+## sinh - hyperbolic sine,
+## cosh - hyperbolic cosine.
 
 parameter_voltage_to_voltage = Symbol("parameter_voltage_to_voltage", dimensionless)
 parameter_impedance = Symbol("parameter_impedance", units.impedance)
@@ -39,9 +41,9 @@ line_length = Symbol("line_length", units.length)
 constant_propagation = Symbol("constant_propagation", 1 / units.length)
 loss_factor = Symbol("loss_factor", 1 / units.length)
 
-
+expression = (loss_factor + I * constant_propagation) * line_length
 law = Eq(Matrix([[parameter_voltage_to_voltage, parameter_impedance], [parameter_conductance, parameter_current_to_current]]),
-         Matrix([[cosh((loss_factor + I * constant_propagation) * line_length), characteristic_resistance * sinh((loss_factor + I * constant_propagation) * line_length)], [(1 / characteristic_resistance) * sinh((loss_factor + I * constant_propagation) * line_length), cosh((loss_factor + I * constant_propagation) * line_length)]]))
+         Matrix([[cosh(expression), characteristic_resistance * sinh(expression)], [(1 / characteristic_resistance) * sinh(expression), cosh(expression)]]))
 
 
 def print_law() -> str:

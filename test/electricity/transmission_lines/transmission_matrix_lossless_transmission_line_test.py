@@ -3,7 +3,7 @@ from pytest import fixture, raises
 from sympy import I
 from symplyphysics import (errors, units, Quantity, assert_equal, prefixes)
 
-from symplyphysics.laws.electricity.circuits import transmission_matrix_lossless_transmission_line as matrix_law
+from symplyphysics.laws.electricity.transmission_lines import transmission_matrix_lossless_transmission_line as matrix_law
 
 ## Characteristic resistance of the transmission line is equal to 50 ohm, line is equal 1 meter,
 ## constant propogation is equal 6300 [1 / meter].
