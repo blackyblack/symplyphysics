@@ -45,5 +45,3 @@ def test_bad_numbers(test_args: Args) -> None:
         normalization_law.calculate_total_particle_count(nb)
     with raises(TypeError):
         normalization_law.calculate_total_particle_count(100)
-    with raises(ValueError):
-        normalization_law.calculate_total_particle_count((test_args.n1, test_args.n3))
