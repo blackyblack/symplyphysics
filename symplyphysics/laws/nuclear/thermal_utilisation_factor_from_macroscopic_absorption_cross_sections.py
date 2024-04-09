@@ -1,11 +1,11 @@
-from sympy import (Eq, solve, S)
+from sympy import Eq, solve
 from symplyphysics import (
     units,
     Quantity,
     Symbol,
     print_expression,
     dimensionless,
-    convert_to,
+    convert_to_float,
     validate_input,
     validate_output,
 )
@@ -57,4 +57,4 @@ def calculate_utilisation_factor(
         macroscopic_total_absorption_cross_section: macroscopic_total_absorption_cross_section_
     })
     result_factor = Quantity(result_expr)
-    return Probability(convert_to(result_factor, S.One).evalf())
+    return Probability(convert_to_float(result_factor))

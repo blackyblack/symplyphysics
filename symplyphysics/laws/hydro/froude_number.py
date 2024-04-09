@@ -1,6 +1,14 @@
-from sympy import Eq, solve, sqrt, S
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless, convert_to)
+from sympy import Eq, solve, sqrt
+from symplyphysics import (
+    units,
+    Quantity,
+    Symbol,
+    print_expression,
+    validate_input,
+    validate_output,
+    dimensionless,
+    convert_to_float,
+)
 
 # Description
 # Froude number characterizes the ratio between the force of inertia and
@@ -39,4 +47,4 @@ def calculate_froude_number(velocity_: Quantity, characteristic_length_: Quantit
         characteristic_length: characteristic_length_
     })
     result = Quantity(result_applied)
-    return float(convert_to(result, S.One).evalf())
+    return convert_to_float(result)

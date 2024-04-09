@@ -8,7 +8,7 @@ from symplyphysics import (
     print_expression,
     validate_input,
     validate_output,
-    convert_to,
+    convert_to_float,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.chemistry.potential_energy_models import hard_spheres_potential
@@ -87,4 +87,4 @@ def calculate_compressibility_factor(
         volume: volume_,
         _sphere_diameter: sphere_diameter_,
     })
-    return float(convert_to(Quantity(result), S.One))
+    return convert_to_float(result)
