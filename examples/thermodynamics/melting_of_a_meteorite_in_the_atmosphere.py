@@ -3,8 +3,11 @@
 from sympy import solve, Symbol, Eq
 from symplyphysics import print_expression, Quantity, prefixes, units, convert_to
 from symplyphysics.core.symbols.celsius import to_kelvin_quantity, Celsius
-from symplyphysics.laws.thermodynamics import thermal_energy_from_mass_and_temperature as energy_heating_law
-from symplyphysics.laws.thermodynamics import energy_to_melt_from_mass as energy_melting_law
+from symplyphysics.laws.thermodynamics import (
+    energy_to_melt_from_mass as energy_melting_law,
+    thermal_energy_from_heat_capacity_and_temperature as thermal_energy_law,
+    heat_capacity_via_specific_heat_capacity as specific_capacity_law,
+)
 from symplyphysics.laws.conservation import mechanical_energy_after_equals_to_mechanical_energy_before as energy_conservation_law
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_velocity as kinetic_energy_law
 
@@ -26,11 +29,13 @@ mass_of_meteorite = Symbol("mass_of_meteorite")
 mass_of_melting_meteorite = Symbol("mass_of_melting_meteorite")
 koefficient_of_melting_meteorite = Symbol("koefficient_of_melting_meteorite")
 
-energy_to_heating_meteorite = energy_heating_law.law.subs({
-    energy_heating_law.specific_heat_capacity: specific_heat_heating_meteorite,
-    energy_heating_law.symbols.basic.mass: mass_of_meteorite,
-    energy_heating_law.temperature_origin: temperature_of_meteorite,
-    energy_heating_law.temperature_end: temperature_of_meteorite_melting
+energy_to_heating_meteorite = thermal_energy_law.law.subs({
+    thermal_energy_law.heat_capacity: specific_capacity_law.law.rhs.subs({
+        specific_capacity_law.specific_heat_capacity: specific_heat_heating_meteorite,
+        specific_capacity_law.mass: mass_of_meteorite,
+    }),
+    thermal_energy_law.temperature_origin: temperature_of_meteorite,
+    thermal_energy_law.temperature_end: temperature_of_meteorite_melting
 }).rhs
 
 energy_to_meteorite_melting = energy_melting_law.law.subs({

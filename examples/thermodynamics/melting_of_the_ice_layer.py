@@ -3,10 +3,13 @@
 from sympy import Idx, solve, Symbol, Eq
 from symplyphysics import print_expression, Quantity, prefixes, units, convert_to, global_index
 from symplyphysics.core.symbols.celsius import to_kelvin_quantity, Celsius
-from symplyphysics.laws.thermodynamics import thermal_energy_from_mass_and_temperature as energy_heating_law
-from symplyphysics.laws.thermodynamics import energy_to_melt_from_mass as energy_melting_law
+from symplyphysics.laws.thermodynamics import (
+    energy_to_melt_from_mass as energy_melting_law,
+    sum_of_heat_transfer_is_zero as thermodinamics_law_1,
+    thermal_energy_from_heat_capacity_and_temperature as thermal_energy_law,
+    heat_capacity_via_specific_heat_capacity as specific_capacity_law,
+)
 from symplyphysics.definitions import density_from_mass_volume as density_law
-from symplyphysics.laws.thermodynamics import sum_of_heat_transfer_is_zero as thermodinamics_law_1
 
 # The 4.2 cm thick ice layer has a temperature of 0 °C.
 # What is the minimum thickness of the water layer at a temperature of 306 K
@@ -52,11 +55,13 @@ energy_for_melting_ice_value = energy_melting_law.law.subs({
     energy_melting_law.symbols.basic.mass: mass_of_ice,
     energy_melting_law.specific_heat_melting: specific_heat_melting_of_ice
 }).rhs
-energy_from_cooling_water_value = energy_heating_law.law.subs({
-    energy_heating_law.symbols.basic.mass: mass_of_water,
-    energy_heating_law.specific_heat_capacity: specific_heat_heating_of_water,
-    energy_heating_law.temperature_origin: temperature_of_water,
-    energy_heating_law.temperature_end: temperature_of_ice
+energy_from_cooling_water_value = thermal_energy_law.law.subs({
+    thermal_energy_law.heat_capacity: specific_capacity_law.law.rhs.subs({
+        specific_capacity_law.specific_heat_capacity: specific_heat_heating_of_water,
+        specific_capacity_law.mass: mass_of_water,
+    }),
+    thermal_energy_law.temperature_origin: temperature_of_water,
+    thermal_energy_law.temperature_end: temperature_of_ice
 }).rhs
 
 local_index_ = Idx("local_index_", (1, 2))
