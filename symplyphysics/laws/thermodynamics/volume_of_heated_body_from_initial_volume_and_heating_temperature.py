@@ -27,6 +27,8 @@ final_temperature = Symbol("final_temperature", units.temperature)
 law = Eq(final_volume,
     start_volume * (1 + expansion_coefficient * (final_temperature - start_temperature)))
 
+# TODO: derive from [definition of expansion coefficient](../../definitions/volumetric_coefficient_of_thermal_expansion.py)
+
 
 def print_law() -> str:
     return print_expression(law)

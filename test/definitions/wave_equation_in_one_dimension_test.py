@@ -30,7 +30,8 @@ def test_args_fixture() -> Args:
 
 
 def test_definition(test_args: Args) -> None:
-    result = wave_eqn.calculate_displacement(test_args.u_m, test_args.v, test_args.phi, test_args.x, test_args.t)
+    result = wave_eqn.calculate_displacement(test_args.u_m, test_args.v, test_args.phi, test_args.x,
+        test_args.t)
     assert_equal(result, 5.54 * units.centimeter)
 
 

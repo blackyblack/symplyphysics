@@ -8,8 +8,7 @@ from symplyphysics import (
     QuantityVector,
 )
 from symplyphysics.laws.waves.vector import (
-    phase_velocity_from_angular_velocity_and_wavevector as phase_velocity_law,
-)
+    phase_velocity_from_angular_velocity_and_wavevector as phase_velocity_law,)
 
 # Description
 ## A wave is propagating with the wavevector k = (2, 3, -6) rad/m and angular frequency w = 5 Hz.

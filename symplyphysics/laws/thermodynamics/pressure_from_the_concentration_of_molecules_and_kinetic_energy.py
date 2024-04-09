@@ -1,8 +1,8 @@
 from sympy import (Eq, solve)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
     validate_output)
-
-from symplyphysics.laws.thermodynamics import pressure_from_temperature_and_volume as ideal_gas_law
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as ideal_gas_law
 from symplyphysics.laws.thermodynamics import average_kinetic_energy_of_molecules_from_temperature as kinetic_energy
 from symplyphysics.laws.chemistry import avogadro_number_from_mole_count as avogadro_number
 from symplyphysics.definitions import volume_number_density
@@ -28,8 +28,8 @@ law = Eq(pressure, 2 / 3 * molecules_concentration * average_kinetic_energy)
 temperature_eq = kinetic_energy.law.subs(
     {kinetic_energy.average_kinetic_energy: average_kinetic_energy})
 
-derived_temperature = solve(temperature_eq, kinetic_energy.temperature,
-    dict=True)[0][kinetic_energy.temperature]
+derived_temperature = solve(temperature_eq, kinetic_energy.equilibrium_temperature,
+    dict=True)[0][kinetic_energy.equilibrium_temperature]
 
 particles_number_eq = volume_number_density.definition.subs({
     volume_number_density.volume: ideal_gas_law.volume,
@@ -51,7 +51,7 @@ derived_pressure = ideal_gas_law.law.subs({
     ideal_gas_law.mole_count: derived_mole_count
 })
 
-assert derived_pressure.rhs == law.rhs
+assert expr_equals(derived_pressure.rhs, law.rhs)
 
 
 def print_law() -> str:

@@ -1,11 +1,8 @@
 from typing import Sequence
-from sympy import (Eq, solve)
+from sympy import (Eq, Idx, solve)
 from symplyphysics import (units, Quantity, print_expression, Symbol, validate_input,
-    validate_output)
+    validate_output, SymbolIndexed, global_index, SumIndexed, Vector)
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.core.operations.sum_array import SumArray
-from symplyphysics.core.symbols.symbols import tuple_of_symbols
-from symplyphysics.core.vectors.vectors import Vector
 from symplyphysics.definitions.vector import superposition_of_forces_is_sum as vector_forces_sum
 
 # Description
@@ -17,9 +14,9 @@ from symplyphysics.definitions.vector import superposition_of_forces_is_sum as v
 # Conditions:
 ## - Forces are collinear vectors.
 
-forces = Symbol("forces", units.force)
 resultant_force = Symbol("resultant_force", units.force)
-definition = Eq(resultant_force, SumArray(forces), evaluate=False)
+force = SymbolIndexed("force", units.force)
+definition = Eq(resultant_force, SumIndexed(force[global_index], global_index))
 
 definition_units_SI = units.force
 
@@ -27,12 +24,12 @@ definition_units_SI = units.force
 
 # Derive the law using 2 forces. Any number of forces can be represented, using 2 of them,
 # eg A + B + C = A + (B + C) = Sum(A, Sum(B, C))
-force_symbols_ = tuple_of_symbols("force", units.force, 2)
-(force1, force2) = force_symbols_
-expected_sum = definition.subs(forces, force_symbols_).doit().rhs
+local_index_ = Idx("local_index_", (1, 2))
+forces_law_ = definition.subs(global_index, local_index_)
+expected_sum = forces_law_.doit().rhs
 
 # Using one dimensional vectors represents scalar form of the law
-vector_forces = [Vector([force1]), Vector([force2])]
+vector_forces = [Vector([force[1]]), Vector([force[2]])]
 resultant_vector = vector_forces_sum.superposition_law(vector_forces)
 assert len(resultant_vector.components) == 3
 assert expr_equals(resultant_vector.components[0], expected_sum)
@@ -44,12 +41,13 @@ def print_law() -> str:
     return print_expression(definition)
 
 
-@validate_input(forces_=forces)
+@validate_input(forces_=force)
 @validate_output(units.force)
 def calculate_resultant_force(forces_: Sequence[Quantity]) -> Quantity:
-    force_symbols = tuple_of_symbols("force", units.force, len(forces_))
-    forces_law = definition.subs(forces, force_symbols).doit()
+    local_index = Idx("index_local", (1, len(forces_)))
+    forces_law = definition.subs(global_index, local_index)
+    forces_law = forces_law.doit()
     solved = solve(forces_law, resultant_force, dict=True)[0][resultant_force]
-    for (from_, to_) in zip(force_symbols, forces_):
-        solved = solved.subs(from_, to_)
+    for i, v in enumerate(forces_):
+        solved = solved.subs(force[i + 1], v)
     return Quantity(solved)

@@ -6,6 +6,8 @@ from symplyphysics import (
     print_expression,
     validate_input,
     validate_output,
+    symbols,
+    clone_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.conservation import (
@@ -37,8 +39,8 @@ from symplyphysics.laws.kinematic import (
 
 fuel_consumption_rate = Symbol("fuel_consumption_rate", units.mass / units.time)
 relative_velocity = Symbol("relative_velocity", units.velocity)
-rocket_mass = Symbol("rocket_mass", units.mass)
 rocket_acceleration = Symbol("rocket_acceleration", units.acceleration)
+rocket_mass = clone_symbol(symbols.basic.mass, "rocket_mass")
 
 law = Eq(fuel_consumption_rate * relative_velocity, rocket_mass * rocket_acceleration)
 
@@ -49,19 +51,19 @@ rocket_speed_change = SymSymbol("rocket_speed_change")
 fuel_mass_thrusted = SymSymbol("fuel_mass_thrusted")
 
 rocket_momentum_before_release = momentum_def.definition.rhs.subs({
-    momentum_def.mass: rocket_mass,
+    momentum_def.symbols.basic.mass: rocket_mass,
     momentum_def.velocity: rocket_speed,
 })
 
 rocket_momentum_after_release = momentum_def.definition.rhs.subs({
-    momentum_def.mass: rocket_mass - fuel_mass_thrusted,
+    momentum_def.symbols.basic.mass: rocket_mass - fuel_mass_thrusted,
     momentum_def.velocity: rocket_speed + rocket_speed_change,
 })
 
 products_speed = SymSymbol("products_speed")
 
 products_momentum = momentum_def.definition.rhs.subs({
-    momentum_def.mass: fuel_mass_thrusted,
+    momentum_def.symbols.basic.mass: fuel_mass_thrusted,
     momentum_def.velocity: products_speed,
 })
 
@@ -96,7 +98,7 @@ time_change = SymSymbol("time_change")
 # solve differential equation with constant fuel_consumption_rate
 dsolved_fuel_mass = dsolve(
     flow_rate_def.definition.subs(flow_rate_def.mass_flow_rate(flow_rate_def.time),
-    fuel_consumption_rate), flow_rate_def.mass(flow_rate_def.time))
+    fuel_consumption_rate), flow_rate_def.mass_function(flow_rate_def.time))
 fuel_consumption_eqn = Eq(fuel_mass_thrusted, dsolved_fuel_mass.rhs)
 # C1 is initial fuel mass thrusted
 fuel_consumption_eqn = fuel_consumption_eqn.subs({"C1": 0, flow_rate_def.time: time_change})

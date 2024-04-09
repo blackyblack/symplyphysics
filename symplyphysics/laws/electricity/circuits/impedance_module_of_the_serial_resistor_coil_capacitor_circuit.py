@@ -1,6 +1,6 @@
-from sympy import (Eq, solve, sqrt, I)
+from sympy import (Eq, solve, sqrt, I, Idx)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output,)
+    validate_output, global_index)
 from symplyphysics.core.expr_comparisons import expr_equals
 
 from symplyphysics.laws.electricity import capacitor_impedance_from_capacitive_reactance as capacitor_impedance_law
@@ -39,7 +39,9 @@ coil_impedance_law.inductive_reactance: inductive_reactance,
 })
 coil_impedance_derived = solve(impedance_law_applied_2, coil_impedance_law.coil_impedance, dict=True)[0][coil_impedance_law.coil_impedance]
 
-serial_law_applied = serial_law.law.subs({
+local_index = Idx("index_local", (1, 3))
+serial_law_applied = serial_law.law.subs(global_index, local_index)
+serial_law_applied = serial_law_applied.subs({
     serial_law.impedances: (resistance_resistor, coil_impedance_derived, capacitive_impedance_derived)
 })
 circuit_impedance_derived = solve(serial_law_applied, serial_law.serial_impedance, dict=True)[0][serial_law.serial_impedance]

@@ -1,8 +1,6 @@
-from sympy import (Eq, solve)
+from sympy import (Eq, Idx, solve)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output)
-from symplyphysics.core.operations.sum_array import SumArray
-from symplyphysics.core.symbols.symbols import tuple_of_symbols
+    validate_output, SymbolIndexed, SumIndexed, global_index)
 
 # Description
 ## If elements of circuit are connected in series, total impedance is a sum of impedances of each element.
@@ -10,21 +8,23 @@ from symplyphysics.core.symbols.symbols import tuple_of_symbols
 ## Z_serial is total impedance,
 ## Z[i] is impedance of i-th element of circuit.
 
-impedances = Symbol("impedance", units.impedance)
+impedances = Symbol("impedances", units.impedance)
 serial_impedance = Symbol("serial_impedance", units.impedance)
-law = Eq(serial_impedance, SumArray(impedances), evaluate=False)
+impedance = SymbolIndexed("impedance", units.impedance)
+law = Eq(serial_impedance, SumIndexed(impedance[global_index], global_index))
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(impedance_=impedances)
-@validate_output(units.impedance)
-def calculate_serial_impedance(impedance_: list[Quantity]) -> Quantity:
-    impedance_symbols = tuple_of_symbols("impedance", units.impedance, len(impedance_))
-    impedance_law = law.subs(impedances, impedance_symbols).doit()
-    solved = solve(impedance_law, serial_impedance, dict=True)[0][serial_impedance]
-    for (from_, to_) in zip(impedance_symbols, impedance_):
-        solved = solved.subs(from_, to_)
+@validate_input(impedances_=impedance)
+@validate_output(serial_impedance)
+def calculate_serial_impedance(impedances_: list[Quantity]) -> Quantity:
+    local_index = Idx("index_local", (1, len(impedances_)))
+    impedances_law = law.subs(global_index, local_index)
+    impedances_law = impedances_law.doit()
+    solved = solve(impedances_law, serial_impedance, dict=True)[0][serial_impedance]
+    for i, v in enumerate(impedances_):
+        solved = solved.subs(impedance[i + 1], v)
     return Quantity(solved)

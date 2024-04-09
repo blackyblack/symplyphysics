@@ -5,13 +5,16 @@ from .core import errors
 from .core.dimensions import dimensionless
 from .core.symbols.quantities import Quantity, subs_list
 from .core.convert import convert_to
-from .core.symbols.symbols import Function, Symbol, print_expression
+from .core.operations.sum_indexed import SumIndexed
+from .core.symbols.symbols import Function, Symbol, print_expression, clone_symbol, SymbolIndexed, global_index
 from .core.symbols.prefixes import prefixes
 from .core.quantity_decorator import validate_input, validate_output
 from .core.vectors.vectors import Vector, QuantityVector
 from .core.vectors.arithmetics import scale_vector, add_cartesian_vectors, dot_vectors, cross_cartesian_vectors, vector_unit, vector_magnitude
 from .core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_transform
 from .core.approx import assert_equal
+from . import symbols
+from . import quantities
 
 __all__ = [
     # errors
@@ -28,8 +31,13 @@ __all__ = [
     "prefixes",
     "print_expression",
     "subs_list",
+    "clone_symbol",
+    "SymbolIndexed",
+    "global_index",
     # convert
     "convert_to",
+    # operations
+    "SumIndexed",
     # decorators
     "validate_input",
     "validate_output",
@@ -47,4 +55,8 @@ __all__ = [
     "coordinates_transform",
     # approx
     "assert_equal",
+    # physical symbols
+    "symbols",
+    # physical quantities
+    "quantities",
 ]

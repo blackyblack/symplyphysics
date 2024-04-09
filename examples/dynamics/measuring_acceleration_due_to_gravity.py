@@ -23,13 +23,13 @@ rod_rotational_inertia_through_com = rod_inertia_law.law.rhs.subs(rod_inertia_la
 
 rod_rotational_inertia_through_pivot = parallel_axis_theorem.law.rhs.subs({
     parallel_axis_theorem.rotational_inertia_through_com: rod_rotational_inertia_through_com,
-    parallel_axis_theorem.mass: rod_inertia_law.mass,
+    parallel_axis_theorem.symbols.basic.mass: rod_inertia_law.rod_mass,
     parallel_axis_theorem.distance_between_axes: distance_to_pivot,
 })
 
 acceleration_due_to_gravity = solve(pendulum_law.law, units.acceleration_due_to_gravity)[0].subs({
     pendulum_law.rotational_inertia: rod_rotational_inertia_through_pivot,
-    pendulum_law.pendulum_mass: rod_inertia_law.mass,
+    pendulum_law.pendulum_mass: rod_inertia_law.rod_mass,
     pendulum_law.distance_to_pivot: distance_to_pivot,
 })
 

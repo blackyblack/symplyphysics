@@ -62,18 +62,18 @@ koefficient_of_melting_meteorite = symbols("koefficient_of_melting_meteorite")
 
 energy_to_heating_meteorite = energy_heating_law.law.subs({
     energy_heating_law.specific_heat_capacity: specific_heat_heating_meteorite,
-    energy_heating_law.body_mass: mass_of_meteorite,
+    energy_heating_law.symbols.basic.mass: mass_of_meteorite,
     energy_heating_law.temperature_origin: temperature_of_meteorite,
     energy_heating_law.temperature_end: temperature_of_meteorite_melting
 }).rhs
 
 energy_to_meteorite_melting = energy_melting_law.law.subs({
-    energy_melting_law.mass_of_matter: mass_of_melting_meteorite,
+    energy_melting_law.symbols.basic.mass: mass_of_melting_meteorite,
     energy_melting_law.specific_heat_melting: specific_heat_melting_meteorite
 }).rhs
 
 kinetic_energy_of_meteorite = kinetic_energy_law.law.subs({
-    kinetic_energy_law.body_mass: mass_of_meteorite,
+    kinetic_energy_law.symbols.basic.mass: mass_of_meteorite,
     kinetic_energy_law.body_velocity: velocity_of_meteorite
 }).rhs
 

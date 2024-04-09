@@ -7,6 +7,8 @@ from symplyphysics import (
     print_expression,
     validate_input,
     validate_output,
+    clone_symbol,
+    symbols,
 )
 
 # Description
@@ -20,7 +22,7 @@ from symplyphysics import (
 ## a - semimajor axis of the planet's orbit, its radius in case of a round orbit
 
 rotation_period = Symbol("rotation_period", units.time, positive=True)
-attracting_mass = Symbol("attracting_mass", units.mass, positive=True)
+attracting_mass = clone_symbol(symbols.basic.mass, "attracting_mass", positive=True)
 semimajor_axis = Symbol("semimajor_axis", units.length, positive=True)
 
 law = Eq(

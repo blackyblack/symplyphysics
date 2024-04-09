@@ -8,7 +8,7 @@ from symplyphysics.laws.thermodynamics import energy_from_combustion as combusti
 from symplyphysics.definitions import density_from_mass_volume as density_law
 from symplyphysics.laws.thermodynamics import thermal_energy_from_mass_and_temperature as energy_heating_law
 from symplyphysics.laws.kinematic import distance_from_constant_velocity as velocity_law
-from symplyphysics.laws.thermodynamics import pressure_from_temperature_and_volume as klayperon_law
+from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as klayperon_law
 from symplyphysics.laws.chemistry import atomic_weight_from_mass_mole_count as mole_count_law
 from symplyphysics.definitions import mass_flow_rate as mass_rate_law
 
@@ -53,11 +53,11 @@ density_of_water_equation = density_law.definition.subs({
     density_law.density: density_of_water,
     density_law.volume: volume_value
 })
-mass_of_water_value = solve(density_of_water_equation, density_law.mass,
-    dict=True)[0][density_law.mass]
+mass_of_water_value = solve(density_of_water_equation, density_law.symbols.basic.mass,
+    dict=True)[0][density_law.symbols.basic.mass]
 
 energy_to_heating_water_value = energy_heating_law.law.subs({
-    energy_heating_law.body_mass: mass_of_water_value,
+    energy_heating_law.symbols.basic.mass: mass_of_water_value,
     energy_heating_law.specific_heat_capacity: specific_heat_of_heating_water,
     energy_heating_law.temperature_origin: temperature_start,
     energy_heating_law.temperature_end: temperature_water
@@ -73,10 +73,10 @@ state_equation = klayperon_law.law.subs({
     klayperon_law.temperature: temperature_start,
     klayperon_law.mole_count: mole_count_value
 })
-mass_of_gas_in_state_value = solve(state_equation, mole_count_law.substance_mass,
-    dict=True)[0][mole_count_law.substance_mass]
+mass_of_gas_in_state_value = solve(state_equation, mole_count_law.symbols.basic.mass,
+    dict=True)[0][mole_count_law.symbols.basic.mass]
 
-mass_gas_dsolved = dsolve(mass_rate_law.definition, mass_rate_law.mass(mass_rate_law.time))
+mass_gas_dsolved = dsolve(mass_rate_law.definition, mass_rate_law.mass_function(mass_rate_law.time))
 # C1 is initial mass of consumed gas
 # HACK: we should tell dsolve() that mass flow rate is constant, but solve() does not work properly with constant
 #       value. So we substitute it with constant and revert to normal mass flow rate after dsolve()
@@ -88,7 +88,7 @@ mass_gas_eq = mass_gas_dsolved.subs({
 mass_gas_eq = mass_gas_eq.subs(mass_flow_constant_rate, mass_flow_rate)
 
 mass_of_gas_in_start_equation = mass_gas_eq.subs({
-    mass_rate_law.mass(mass_rate_law.time): mass_of_gas_in_state_value,
+    mass_rate_law.mass_function(mass_rate_law.time): mass_of_gas_in_state_value,
     mass_rate_law.time: time_of_hour
 })
 mass_flow_rate_in_start_value = solve(mass_of_gas_in_start_equation, mass_flow_rate,
@@ -97,11 +97,11 @@ mass_of_gas_value = solve(
     mass_gas_eq.subs({
     mass_flow_rate: mass_flow_rate_in_start_value,
     mass_rate_law.time: velocity_law.movement_time
-    }), mass_rate_law.mass(velocity_law.movement_time))[0]
+    }), mass_rate_law.mass_function(velocity_law.movement_time))[0]
 
 energy_from_combustion_of_metan_value = combustion_energy_law.law.subs({
     combustion_energy_law.specific_heat_combustion: specific_heat_of_combustion_metan,
-    combustion_energy_law.mass_of_matter: mass_of_gas_value
+    combustion_energy_law.symbols.basic.mass: mass_of_gas_value
 }).rhs
 
 efficiency_equation = efficiency_law.law.subs({

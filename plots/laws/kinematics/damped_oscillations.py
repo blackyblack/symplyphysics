@@ -13,7 +13,8 @@ Data = namedtuple("Data", "zeta label color")
 
 DATAS = (
     Data(zeta=0.3, label="underdamping", color="green"),
-    Data(zeta=0.999999, label="critical damping", color="red"),  # cannot put 1.0 due to rounding errors
+    Data(zeta=0.999999, label="critical damping",
+    color="red"),  # cannot put 1.0 due to rounding errors
     Data(zeta=2, label="overdamping", color="blue"),
 )
 
@@ -27,7 +28,8 @@ initial_conditions = {
 }
 
 eqn = damped_eqn.definition.subs(
-    damped_eqn.time, time,
+    damped_eqn.time,
+    time,
 ).subs({
     damped_eqn.displacement(time): displacement(time),
     damped_eqn.undamped_angular_frequency: OMEGA,
@@ -43,6 +45,7 @@ def get_solution(zeta: float) -> Expr:
     ).rhs
     return dsolved
 
+
 p = plot(
     title="Damped oscillations for various values of damping ratio",
     xlabel="time, s",
@@ -55,13 +58,7 @@ p = plot(
 
 for data in DATAS:
     sol = get_solution(data.zeta)
-    sub_p = plot(
-        sol,
-        (time, 0, 10),
-        label=data.label,
-        line_color=data.color,
-        show=False
-    )
+    sub_p = plot(sol, (time, 0, 10), label=data.label, line_color=data.color, show=False)
     p.append(sub_p[0])
 
 p.show()

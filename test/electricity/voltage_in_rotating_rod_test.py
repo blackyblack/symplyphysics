@@ -35,8 +35,7 @@ def test_bad_magnetic_induction(test_args: Args) -> None:
         voltage_law.calculate_voltage(magnetic_induction, test_args.rotation_frequency,
             test_args.rod_length)
     with raises(TypeError):
-        voltage_law.calculate_voltage(100, test_args.rotation_frequency,
-            test_args.rod_length)
+        voltage_law.calculate_voltage(100, test_args.rotation_frequency, test_args.rod_length)
 
 
 def test_bad_rotation_frequency(test_args: Args) -> None:
@@ -45,15 +44,14 @@ def test_bad_rotation_frequency(test_args: Args) -> None:
         voltage_law.calculate_voltage(test_args.magnetic_induction, rotation_frequency,
             test_args.rod_length)
     with raises(TypeError):
-        voltage_law.calculate_voltage(test_args.magnetic_induction, 100,
-            test_args.rod_length)
+        voltage_law.calculate_voltage(test_args.magnetic_induction, 100, test_args.rod_length)
 
 
 def test_bad_rod_length(test_args: Args) -> None:
     rod_length = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        voltage_law.calculate_voltage(test_args.magnetic_induction,
-            test_args.rotation_frequency, rod_length)
+        voltage_law.calculate_voltage(test_args.magnetic_induction, test_args.rotation_frequency,
+            rod_length)
     with raises(TypeError):
-        voltage_law.calculate_voltage(test_args.magnetic_induction,
-            test_args.rotation_frequency, 100)
+        voltage_law.calculate_voltage(test_args.magnetic_induction, test_args.rotation_frequency,
+            100)

@@ -55,9 +55,9 @@ infinitesimal_acceleration = infinitesimal_acceleration.subs(
     acceleration_def.velocity(infinitesimal_time), infinitesimal_velocity(infinitesimal_time))
 
 # F = m*a = m*(dv/dt)
-force_ = solve(newtons_second_law.law, newtons_second_law.force)[0].subs({
-    newtons_second_law.mass: particle_mass,
-    newtons_second_law.acceleration: infinitesimal_acceleration,
+force_ = solve(newtons_second_law.law, newtons_second_law.symbols.dynamics.force)[0].subs({
+    newtons_second_law.symbols.basic.mass: particle_mass,
+    newtons_second_law.symbols.kinematic.acceleration: infinitesimal_acceleration,
 })
 
 # dW = F*dx = m*(dv/dt)*v*dt = m*v*dv
@@ -70,13 +70,13 @@ infinitesimal_work = work_def.law.rhs.subs({
 finite_work = integrate(infinitesimal_work, (infinitesimal_time, time_before, time_after))
 
 kinetic_energy_before_eq = kinetic_energy_def.law.subs({
-    kinetic_energy_def.body_mass: particle_mass,
+    kinetic_energy_def.symbols.basic.mass: particle_mass,
     kinetic_energy_def.body_velocity: infinitesimal_velocity(time_before),
     kinetic_energy_def.kinetic_energy_of_body: kinetic_energy(time_before)
 })
 
 kinetic_energy_after_eq = kinetic_energy_def.law.subs({
-    kinetic_energy_def.body_mass: particle_mass,
+    kinetic_energy_def.symbols.basic.mass: particle_mass,
     kinetic_energy_def.body_velocity: infinitesimal_velocity(time_after),
     kinetic_energy_def.kinetic_energy_of_body: kinetic_energy(time_after)
 })

@@ -21,22 +21,23 @@ from symplyphysics import (
 
 momentum = Symbol("momentum", units.momentum)
 
-mass = Symbol("mass", units.mass)
+# This is equivalent of symbols.basic.mass
+rest_mass = Symbol("rest_mass", units.mass)
 velocity = Symbol("velocity", units.velocity)
 
-law = Eq(momentum, mass * velocity / sqrt(1 - (velocity / speed_of_light)**2))
+law = Eq(momentum, rest_mass * velocity / sqrt(1 - (velocity / speed_of_light)**2))
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(mass_=mass, velocity_=velocity)
+@validate_input(mass_=rest_mass, velocity_=velocity)
 @validate_output(momentum)
 def calculate_momentum(mass_: Quantity, velocity_: Quantity) -> Quantity:
     result_expr = solve(law, momentum, dict=True)[0][momentum]
     result_expr = result_expr.subs({
-        mass: mass_,
+        rest_mass: mass_,
         velocity: velocity_,
     })
     return Quantity(result_expr)

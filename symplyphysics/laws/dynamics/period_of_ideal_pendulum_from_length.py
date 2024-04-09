@@ -51,7 +51,7 @@ pendulum_height_after = projector.law.subs({
     projector.vector_angle: pendulum_angle(time)
 }).rhs
 amount_of_potential_energy = potential_energy.law.subs({
-    potential_energy.body_mass: pendulum_mass,
+    potential_energy.symbols.basic.mass: pendulum_mass,
     potential_energy.free_fall_acceleration: free_fall_acceleration,
     potential_energy.height: (pendulum_height_before - pendulum_height_after)
 }).rhs
@@ -64,7 +64,7 @@ linear_velocity = angular_velocity_law.law.subs({
     angular_velocity_law.angular_velocity: Derivative(pendulum_angle(time), time),
 }).rhs
 amount_of_kinetic_energy = kinetic_energy.law.subs({
-    kinetic_energy.body_mass: pendulum_mass,
+    kinetic_energy.symbols.basic.mass: pendulum_mass,
     kinetic_energy.body_velocity: linear_velocity
 }).rhs
 

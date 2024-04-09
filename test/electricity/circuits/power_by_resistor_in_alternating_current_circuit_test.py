@@ -32,8 +32,8 @@ def test_basic_power(test_args: Args) -> None:
 def test_bad_current_amplitude(test_args: Args) -> None:
     current_amplitude = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        power_law.calculate_power(current_amplitude, test_args.resistance,
-            test_args.time, test_args.current_frequency)
+        power_law.calculate_power(current_amplitude, test_args.resistance, test_args.time,
+            test_args.current_frequency)
     with raises(TypeError):
         power_law.calculate_power(100, test_args.resistance, test_args.time,
             test_args.current_frequency)
@@ -42,8 +42,8 @@ def test_bad_current_amplitude(test_args: Args) -> None:
 def test_bad_resistance(test_args: Args) -> None:
     resistance = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        power_law.calculate_power(test_args.current_amplitude, resistance,
-            test_args.time, test_args.current_frequency)
+        power_law.calculate_power(test_args.current_amplitude, resistance, test_args.time,
+            test_args.current_frequency)
     with raises(TypeError):
         power_law.calculate_power(test_args.current_amplitude, 100, test_args.time,
             test_args.current_frequency)
@@ -52,8 +52,8 @@ def test_bad_resistance(test_args: Args) -> None:
 def test_bad_time(test_args: Args) -> None:
     time = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        power_law.calculate_power(test_args.current_amplitude, test_args.resistance,
-            time, test_args.current_frequency)
+        power_law.calculate_power(test_args.current_amplitude, test_args.resistance, time,
+            test_args.current_frequency)
     with raises(TypeError):
         power_law.calculate_power(test_args.current_amplitude, test_args.resistance, 100,
             test_args.current_frequency)
@@ -62,8 +62,8 @@ def test_bad_time(test_args: Args) -> None:
 def test_bad_current_frequency(test_args: Args) -> None:
     current_frequency = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        power_law.calculate_power(test_args.current_amplitude, test_args.resistance,
-            test_args.time, current_frequency)
+        power_law.calculate_power(test_args.current_amplitude, test_args.resistance, test_args.time,
+            current_frequency)
     with raises(TypeError):
-        power_law.calculate_power(test_args.current_amplitude, test_args.resistance,
-            test_args.time, 100)
+        power_law.calculate_power(test_args.current_amplitude, test_args.resistance, test_args.time,
+            100)

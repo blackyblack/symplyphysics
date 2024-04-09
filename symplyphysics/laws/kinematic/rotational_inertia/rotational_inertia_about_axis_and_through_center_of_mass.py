@@ -6,6 +6,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
     print_expression,
+    symbols,
 )
 
 # Description
@@ -27,12 +28,11 @@ from symplyphysics import (
 rotational_inertia = Symbol("rotational_inertia", units.mass * units.length**2)
 rotational_inertia_through_com = Symbol("rotational_inertia_through_com",
     units.mass * units.length**2)
-mass = Symbol("mass", units.mass)
 distance_between_axes = Symbol("distance_between_axes", units.length)
 
 law = Eq(
     rotational_inertia,
-    rotational_inertia_through_com + mass * distance_between_axes**2,
+    rotational_inertia_through_com + symbols.basic.mass * distance_between_axes**2,
 )
 
 
@@ -42,7 +42,7 @@ def print_law() -> str:
 
 @validate_input(
     rotational_inertia_through_com_=rotational_inertia_through_com,
-    mass_=mass,
+    mass_=symbols.basic.mass,
     distance_between_axes_=distance_between_axes,
 )
 @validate_output(rotational_inertia)
@@ -53,7 +53,7 @@ def calculate_rotational_inertia(
 ) -> Quantity:
     result = law.rhs.subs({
         rotational_inertia_through_com: rotational_inertia_through_com_,
-        mass: mass_,
+        symbols.basic.mass: mass_,
         distance_between_axes: distance_between_axes_,
     })
     return Quantity(result)

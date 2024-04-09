@@ -4,7 +4,7 @@ from sympy import symbols, Eq, solve
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression
-from symplyphysics.laws.thermodynamics.equations_of_state import van_der_waals_state_equation as van_der_waals_law
+from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import equation as van_der_waals_law
 
 temperature_values = [130, 140, 150, 160, 170]  # K
 

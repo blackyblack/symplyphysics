@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-from sympy import solve, Symbol, Eq
-from symplyphysics import print_expression, Quantity, units, convert_to
+from sympy import Idx, solve, Symbol, Eq
+from symplyphysics import print_expression, Quantity, units, convert_to, global_index
 from symplyphysics.definitions import mass_fraction as mass_fraction_law
 from symplyphysics.laws.conservation import mass_after_equals_to_mass_before as conservation_mass_law
 from symplyphysics.laws.conservation import mixture_mass_equal_sum_of_components_masses as mixture_mass_law
@@ -28,20 +28,28 @@ mass_of_salt_before_value = solve(mass_fraction_equation,
     mass_fraction_law.mass_of_component,
     dict=True)[0][mass_fraction_law.mass_of_component]
 
-mass_of_salt_and_sediment = mixture_mass_law.law.subs({
-    mixture_mass_law.masses_of_components: (mass_of_salt_after, mass_of_sediment)
-}).doit().rhs
+index_local = Idx("index_local", (1, 2))
+mass_of_two_components = mixture_mass_law.law.subs(global_index, index_local).doit()
+
+mass_of_salt_and_sediment = mass_of_two_components.subs({
+    mixture_mass_law.mass_of_component[1]: mass_of_salt_after,
+    mixture_mass_law.mass_of_component[2]: mass_of_sediment,
+}).rhs
 conservation_salt_mass_equation = conservation_mass_law.law.subs({
-    conservation_mass_law.mass(conservation_mass_law.time_before): mass_of_salt_before_value,
-    conservation_mass_law.mass(conservation_mass_law.time_after): mass_of_salt_and_sediment
+    conservation_mass_law.mass_function(conservation_mass_law.time_before):
+        mass_of_salt_before_value,
+    conservation_mass_law.mass_function(conservation_mass_law.time_after):
+        mass_of_salt_and_sediment
 })
 mass_of_salt_after_value = solve(conservation_salt_mass_equation, mass_of_salt_after,
     dict=True)[0][mass_of_salt_after]
 
-mass_of_mixture_equation = mixture_mass_law.law.subs({
-    mixture_mass_law.masses_of_components: (mass_of_water, mass_of_salt_before_value),
-    mixture_mass_law.mass_of_mixture: mass_of_mixture
-}).doit()
+mass_of_mixture_equation = mass_of_two_components.subs({
+    mixture_mass_law.mass_of_component[1]: mass_of_water,
+    mixture_mass_law.mass_of_component[2]: mass_of_salt_before_value,
+    mixture_mass_law.mass_of_mixture: mass_of_mixture,
+})
+
 mass_of_water_value = solve(mass_of_mixture_equation, mass_of_water, dict=True)[0][mass_of_water]
 
 solubility_value = mass_fraction_law.definition.subs({

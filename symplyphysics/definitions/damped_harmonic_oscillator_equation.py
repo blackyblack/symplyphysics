@@ -24,14 +24,14 @@ from symplyphysics import (
 
 displacement = Function("displacement", units.length)
 time = Symbol("time", units.time, positive=True)
-undamped_angular_frequency = Symbol("undamped_angular_frequency", angle_type / units.time, positive=True)
+undamped_angular_frequency = Symbol("undamped_angular_frequency",
+    angle_type / units.time,
+    positive=True)
 damping_ratio = Symbol("damping_ratio", dimensionless, positive=True)
 
-definition = (
-    Derivative(displacement(time), time, 2)
-    + 2 * damping_ratio * undamped_angular_frequency * Derivative(displacement(time), time)
-    + undamped_angular_frequency**2 * displacement(time)
-)
+definition = (Derivative(displacement(time), time, 2) +
+    2 * damping_ratio * undamped_angular_frequency * Derivative(displacement(time), time) +
+    undamped_angular_frequency**2 * displacement(time))
 
 # This solution can be used in the case of an overdamped oscillator.
 # It contains coefficients "C1" and "C2" that can be found from initial conditions.
@@ -63,8 +63,9 @@ def calculate_displacement(
     })
     c12 = solve(
         [
-            Eq(initial_position_, dsolved.subs(time, 0)),
-            Eq(initial_velocity_, dsolved.diff(time).subs(time, 0)),
+        Eq(initial_position_, dsolved.subs(time, 0)),
+        Eq(initial_velocity_,
+        dsolved.diff(time).subs(time, 0)),
         ],
         ("C1", "C2"),
     )
