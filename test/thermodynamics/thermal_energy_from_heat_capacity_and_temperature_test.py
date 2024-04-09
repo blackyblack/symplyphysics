@@ -8,7 +8,7 @@ from symplyphysics import (
     prefixes,
 )
 from symplyphysics.core.symbols.celsius import Celsius, to_kelvin_quantity
-from symplyphysics.laws.thermodynamics import thermal_energy_from_mass_and_temperature as amount_energy
+from symplyphysics.laws.thermodynamics import thermal_energy_from_heat_capacity_and_temperature as thermal_energy
 
 # How much energy does it take to heat some volume of water tо 50 degree Celsius?
 # Heat capacity of that amount of water is 2.1 kJ/K, ignore losses.
@@ -27,7 +27,7 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_amount(test_args: Args) -> None:
-    result = amount_energy.calculate_amount_energy(test_args.C, test_args.t2,
+    result = thermal_energy.calculate_amount_energy(test_args.C, test_args.t2,
         test_args.t1)
     assert_equal(result, 105000.1 * units.joule)
 
@@ -35,18 +35,18 @@ def test_basic_amount(test_args: Args) -> None:
 def test_bad_heat_capacity(test_args: Args) -> None:
     Cb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        amount_energy.calculate_amount_energy(Cb, test_args.t2, test_args.t1)
+        thermal_energy.calculate_amount_energy(Cb, test_args.t2, test_args.t1)
     with raises(TypeError):
-        amount_energy.calculate_amount_energy(100, test_args.t2, test_args.t1)
+        thermal_energy.calculate_amount_energy(100, test_args.t2, test_args.t1)
 
 
 def test_bad_temperature(test_args: Args) -> None:
     tb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        amount_energy.calculate_amount_energy(test_args.C, tb, test_args.t1)
+        thermal_energy.calculate_amount_energy(test_args.C, tb, test_args.t1)
     with raises(TypeError):
-        amount_energy.calculate_amount_energy(test_args.C, 100, test_args.t1)
+        thermal_energy.calculate_amount_energy(test_args.C, 100, test_args.t1)
     with raises(errors.UnitsError):
-        amount_energy.calculate_amount_energy(test_args.C, test_args.t2, tb)
+        thermal_energy.calculate_amount_energy(test_args.C, test_args.t2, tb)
     with raises(TypeError):
-        amount_energy.calculate_amount_energy(test_args.C, test_args.t2, 100)
+        thermal_energy.calculate_amount_energy(test_args.C, test_args.t2, 100)
