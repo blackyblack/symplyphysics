@@ -24,7 +24,7 @@ from symplyphysics import (
 ## T - absolute temperature
 
 # Note
-## If the energy levels are degenerated, i.e. two or more particles are on the same energy level,
+## If the energy levels are degenerate, i.e. two or more particles are on the same energy level,
 ## the average number of fermions can be found by multiplying by the degeneracy `g_i` of the energy
 ## level.
 
