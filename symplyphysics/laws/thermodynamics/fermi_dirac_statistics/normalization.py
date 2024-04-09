@@ -1,9 +1,7 @@
 from typing import Sequence
-from sympy import Eq, exp, solve, Idx
+from sympy import Eq, Idx
 from symplyphysics import (
-    units,
     dimensionless,
-    Quantity,
     Symbol,
     print_expression,
     validate_input,
