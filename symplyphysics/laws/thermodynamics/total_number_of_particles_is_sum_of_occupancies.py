@@ -43,4 +43,4 @@ def calculate_total_particle_count(occupancies_: Sequence[float]) -> int:
     result = law.rhs.subs(global_index, local_index_).doit()
     for idx_, count_ in enumerate(occupancies_, 1):
         result = result.subs(occupancy[idx_], count_)
-    return int(result)  # TODO: use in conjunction with convert_to_float
+    return int(result)
