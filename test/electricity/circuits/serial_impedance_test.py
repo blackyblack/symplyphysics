@@ -11,7 +11,7 @@ from symplyphysics.laws.electricity.circuits import serial_impedance as serial_r
 
 # Description
 ## Assert we have two elements of circuit with (1 + 1 * I) Ohm and (2 + 2 * I) Ohm impedances.
-## Resulting impedance should be 3 Ohm.
+## Resulting impedance should be (3 + 3 * I) Ohm.
 
 Args = namedtuple("Args", ["R1", "R2"])
 

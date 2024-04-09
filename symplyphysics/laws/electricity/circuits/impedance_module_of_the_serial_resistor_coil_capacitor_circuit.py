@@ -11,8 +11,9 @@ from symplyphysics.laws.electricity.circuits import serial_impedance as serial_l
 ## Consider an electrical circuit consisting of a capacitor, coil, and resistor connected in series.
 ## Then you can find the impedance module of such a circuit.
 
-## Law is: Z = sqrt(R0^2 + (Xl - Xc)^2), where
-## Z - impedance module of circuit,
+## Law is: |Z| = sqrt(R0^2 + (Xl - Xc)^2), where
+## Z - impedance of circuit,
+## |Z| - absolute value of Z,
 ## R0 - resistance of resistor
 ## Xl - inductive reactance,
 ## Xc - capacitive reactance.
@@ -52,7 +53,7 @@ def print_law() -> str:
 
 @validate_input(resistance_resistor_=resistance_resistor, capacitive_reactance_=capacitive_reactance, inductive_reactance_=inductive_reactance)
 @validate_output(circuit_resistance)
-def calculate_circuit_resistance(resistance_resistor_: Quantity, capacitive_reactance_: Quantity,
+def calculate_circuit_impedance_module(resistance_resistor_: Quantity, capacitive_reactance_: Quantity,
     inductive_reactance_: Quantity) -> Quantity:
     result_expr = solve(law, circuit_resistance, dict=True)[0][circuit_resistance]
     result_expr = result_expr.subs({

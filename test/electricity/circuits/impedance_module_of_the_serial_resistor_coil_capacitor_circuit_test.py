@@ -5,7 +5,7 @@ from symplyphysics.laws.electricity.circuits import impedance_module_of_the_seri
 
 # Description
 ## With a resistor resistance of 3 ohm, an inductive reactance of 7 ohm, a capacitive reactance of 3 ohm,
-# the circuit resistance will be 5 ohm.
+## the circuit impedance module will be 5 ohm.
 
 Args = namedtuple("Args", ["resistance_resistor", "capacitive_reactance", "inductive_reactance"])
 
@@ -19,7 +19,7 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_circuit_resistance(test_args: Args) -> None:
-    result = resistance_law.calculate_circuit_resistance(test_args.resistance_resistor, test_args.capacitive_reactance,
+    result = resistance_law.calculate_circuit_impedance_module(test_args.resistance_resistor, test_args.capacitive_reactance,
         test_args.inductive_reactance)
     assert_equal(result, 5 * units.ohm)
 
@@ -27,17 +27,17 @@ def test_basic_circuit_resistance(test_args: Args) -> None:
 def test_bad_reactance_resistor(test_args: Args) -> None:
     bad_reactance = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        resistance_law.calculate_circuit_resistance(bad_reactance, test_args.capacitive_reactance,
+        resistance_law.calculate_circuit_impedance_module(bad_reactance, test_args.capacitive_reactance,
             test_args.inductive_reactance)
     with raises(TypeError):
-        resistance_law.calculate_circuit_resistance(100, test_args.capacitive_reactance, test_args.inductive_reactance)
+        resistance_law.calculate_circuit_impedance_module(100, test_args.capacitive_reactance, test_args.inductive_reactance)
     with raises(errors.UnitsError):
-        resistance_law.calculate_circuit_resistance(test_args.resistance_resistor, bad_reactance,
+        resistance_law.calculate_circuit_impedance_module(test_args.resistance_resistor, bad_reactance,
             test_args.inductive_reactance)
     with raises(TypeError):
-        resistance_law.calculate_circuit_resistance(test_args.resistance_resistor, 100, test_args.inductive_reactance)
+        resistance_law.calculate_circuit_impedance_module(test_args.resistance_resistor, 100, test_args.inductive_reactance)
     with raises(errors.UnitsError):
-        resistance_law.calculate_circuit_resistance(test_args.resistance_resistor, test_args.capacitive_reactance,
+        resistance_law.calculate_circuit_impedance_module(test_args.resistance_resistor, test_args.capacitive_reactance,
             bad_reactance)
     with raises(TypeError):
-        resistance_law.calculate_circuit_resistance(test_args.resistance_resistor, test_args.capacitive_reactance, 100)
+        resistance_law.calculate_circuit_impedance_module(test_args.resistance_resistor, test_args.capacitive_reactance, 100)

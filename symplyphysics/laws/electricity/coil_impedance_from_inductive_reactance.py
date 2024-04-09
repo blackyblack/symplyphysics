@@ -5,7 +5,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 # Description
 ## The impedance of ideal coil depends on its inductive reactance. While having zero resistivity, the real part of
 ## coil impedance is zero.
-## Law: Zl = -j * Xl, where
+## Law: Zl = j * Xl, where
 ## Zl is coil impedance,
 ## Xl is inductive reactance.
 
