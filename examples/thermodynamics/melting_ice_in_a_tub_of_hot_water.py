@@ -11,7 +11,6 @@ from symplyphysics.laws.thermodynamics import (
     heat_capacity_via_specific_heat_capacity as specific_capacity_law,
 )
 from symplyphysics.definitions import density_from_mass_volume as density_law
-# from symplyphysics.laws.thermodynamics import sum_of_heat_transfer_is_zero as thermodinamics_law_1
 
 # Example from https://easyfizika.ru/zadachi/termodinamika/vannu-emkostyu-100-litrov-neobhodimo-zapolnit-vodoj-imeyushhej-temperaturu-30-c/
 # A bath with a capacity of 100 liters must be filled
