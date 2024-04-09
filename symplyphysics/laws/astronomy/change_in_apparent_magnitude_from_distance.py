@@ -7,8 +7,8 @@ from symplyphysics import (
     validate_input,
     validate_output,
     dimensionless,
+    convert_to_float,
 )
-from symplyphysics.core.convert import convert_to_dimensionless
 
 # Description
 ## The apparent magnitude is a measure of the brightness of a celestial body (more precisely, the illumination created
@@ -49,4 +49,4 @@ def calculate_apparent_magnitude_second(apparent_magnitude_first_: float,
         illuminance_first: illuminance_first_,
         illuminance_second: illuminance_second_
     })
-    return convert_to_dimensionless(Quantity(result_expr))
+    return convert_to_float(Quantity(result_expr))

@@ -7,8 +7,8 @@ from symplyphysics import (
     validate_input,
     validate_output,
     dimensionless,
+    convert_to_float,
 )
-from symplyphysics.core.convert import convert_to_dimensionless
 
 # Description
 ## Many bodies in space move in elliptical orbits. For an elliptical orbit, the eccentricity can be calculated.
@@ -41,4 +41,4 @@ def calculate_eccentricity(small_semi_axis_: Quantity, large_semi_axis_: Quantit
         small_semi_axis: small_semi_axis_,
         large_semi_axis: large_semi_axis_,
     })
-    return convert_to_dimensionless(Quantity(result_expr))
+    return convert_to_float(Quantity(result_expr))

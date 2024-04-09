@@ -7,8 +7,8 @@ from symplyphysics import (
     print_expression,
     validate_input,
     validate_output,
+    convert_to_float,
 )
-from symplyphysics.core.convert import convert_to_dimensionless
 
 # Description
 ## The heat capacity ratio, also known as the adiabatic index, the ratio of specific heats, or
@@ -48,4 +48,4 @@ def calculate_heat_capacity_ratio(
         isobaric_heat_capacity: isobaric_heat_capacity_,
         isochoric_heat_capacity: isochoric_heat_capacity_,
     })
-    return convert_to_dimensionless(Quantity(result))
+    return convert_to_float(Quantity(result))

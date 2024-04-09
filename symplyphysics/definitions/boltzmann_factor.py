@@ -9,8 +9,8 @@ from symplyphysics import (
     validate_output,
     symbols,
     clone_symbol,
+    convert_to_float,
 )
-from symplyphysics.core.convert import convert_to_dimensionless
 
 # Description
 ## The Boltzmann factor is an exponential factor that appears in many formulas of statistical physics
@@ -48,4 +48,4 @@ def calculate_boltzmann_factor(
         energy_of_state: energy_of_state_,
         equilibrium_temperature: equilibrium_temperature_,
     })
-    return convert_to_dimensionless(Quantity(result))
+    return convert_to_float(Quantity(result))

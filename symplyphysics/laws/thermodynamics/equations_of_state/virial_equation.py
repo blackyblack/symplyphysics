@@ -7,8 +7,8 @@ from symplyphysics import (
     print_expression,
     validate_input,
     validate_output,
+    convert_to_float,
 )
-from symplyphysics.core.convert import convert_to_dimensionless
 
 # Description
 ## Also called the virial expansion, the virial equation of state expresses the compressibility factor
@@ -60,7 +60,7 @@ def calculate_compressibility_factor(
         molar_density: molar_density_,
     })
 
-    result_value = convert_to_dimensionless(Quantity(result))
+    result_value = convert_to_float(Quantity(result))
     if result_value < 0:
         raise ValueError(f"Compressibility factor cannot be negative, got {result_value} instead")
     return result_value

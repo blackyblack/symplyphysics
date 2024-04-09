@@ -7,8 +7,8 @@ from symplyphysics import (
     validate_input,
     validate_output,
     dimensionless,
+    convert_to_float,
 )
-from symplyphysics.core.convert import convert_to_dimensionless
 
 # Description
 ## Magnification, in optics, the size of an image relative to the size of the object creating it.
@@ -49,4 +49,4 @@ def calculate_magnification(distance_to_image_: Quantity, distance_to_object_: Q
         distance_to_object: distance_to_object_,
     })
     result = Quantity(result_magnification)
-    return convert_to_dimensionless(Quantity(result))
+    return convert_to_float(Quantity(result))

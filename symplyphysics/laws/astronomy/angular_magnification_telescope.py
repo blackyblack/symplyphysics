@@ -7,8 +7,8 @@ from symplyphysics import (
     validate_input,
     validate_output,
     dimensionless,
+    convert_to_float,
 )
-from symplyphysics.core.convert import convert_to_dimensionless
 
 # Description
 ## The angular magnification of the telescope shows how many times the angle at which an object is visible
@@ -40,4 +40,4 @@ def calculate_angular_magnification(focal_length_lens_: Quantity,
         focal_length_lens: focal_length_lens_,
         focal_length_eyepiece: focal_length_eyepiece_,
     })
-    return convert_to_dimensionless(Quantity(result_expr))
+    return convert_to_float(Quantity(result_expr))

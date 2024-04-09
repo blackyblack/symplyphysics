@@ -8,8 +8,8 @@ from symplyphysics import (
     validate_input,
     validate_output,
     dimensionless,
+    convert_to_float,
 )
-from symplyphysics.core.convert import convert_to_dimensionless
 
 # Description
 ## The equilibrium constant is a value that determines for a given chemical reaction the ratio between
@@ -51,4 +51,4 @@ def calculate_equilibrium_constant(standard_change_isobaric_potential_: Quantity
         standard_change_isobaric_potential: standard_change_isobaric_potential_,
         temperature: temperature_
     })
-    return convert_to_dimensionless(Quantity(result_expr))
+    return convert_to_float(Quantity(result_expr))

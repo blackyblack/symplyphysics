@@ -8,8 +8,8 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
+    convert_to_float,
 )
-from symplyphysics.core.convert import convert_to_dimensionless
 
 # Description
 ## The compressibility factor, also known as the compression factor or the gas deviation factor,
@@ -69,4 +69,4 @@ def calculate_compressibility_factor(
         amount_of_substance: amount_of_substance_,
         temperature: temperature_,
     })
-    return convert_to_dimensionless(Quantity(result))
+    return convert_to_float(Quantity(result))

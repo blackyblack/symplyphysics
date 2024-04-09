@@ -7,8 +7,8 @@ from symplyphysics import (
     units,
     validate_input,
     validate_output,
+    convert_to_float,
 )
-from symplyphysics.core.convert import convert_to_dimensionless
 
 # Description
 # The Prandtl number (Pr) is a dimensionless number, defined as the ratio of
@@ -45,4 +45,4 @@ def calculate_prandtl_number(heat_capacity_: Quantity, dynamic_viscosity_: Quant
         thermal_conductivity: thermal_conductivity_
     })
     result = Quantity(result_applied)
-    return convert_to_dimensionless(Quantity(result))
+    return convert_to_float(Quantity(result))

@@ -7,8 +7,8 @@ from symplyphysics import (
     dimensionless,
     validate_input,
     validate_output,
+    convert_to_float,
 )
-from symplyphysics.core.convert import convert_to_dimensionless
 
 # Description
 ## The reproduction factor η represents the number of fast neutrons produced per thermal neutron absorbed in the fuel.
@@ -60,4 +60,4 @@ def calculate_reproduction_factor(neutrons_per_fission_: float,
         macroscopic_fuel_absorption_cross_section: macroscopic_fuel_absorption_cross_section_
     })
     result_factor = Quantity(result_expr)
-    return convert_to_dimensionless(Quantity(result_factor))
+    return convert_to_float(Quantity(result_factor))

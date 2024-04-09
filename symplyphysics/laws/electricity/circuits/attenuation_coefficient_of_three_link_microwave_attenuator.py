@@ -7,8 +7,8 @@ from symplyphysics import (
     validate_input,
     validate_output,
     dimensionless,
+    convert_to_float,
 )
-from symplyphysics.core.convert import convert_to_dimensionless
 
 # Description
 ## Microwave attenuators are used to attenuate the microwave signal. For a three-link T-type attenuator or a π-type
@@ -41,4 +41,4 @@ def calculate_attenuation_coefficient(first_resistance_: Quantity,
         first_resistance: first_resistance_,
         second_resistance: second_resistance_,
     })
-    return convert_to_dimensionless(Quantity(result_expr))
+    return convert_to_float(Quantity(result_expr))

@@ -7,8 +7,8 @@ from symplyphysics import (
     validate_input,
     validate_output,
     dimensionless,
+    convert_to_float,
 )
-from symplyphysics.core.convert import convert_to_dimensionless
 
 # Description
 # Froude number characterizes the ratio between the force of inertia and
@@ -47,4 +47,4 @@ def calculate_froude_number(velocity_: Quantity, characteristic_length_: Quantit
         characteristic_length: characteristic_length_
     })
     result = Quantity(result_applied)
-    return convert_to_dimensionless(Quantity(result))
+    return convert_to_float(Quantity(result))

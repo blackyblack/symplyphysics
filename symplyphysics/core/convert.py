@@ -15,5 +15,5 @@ def convert_to(value: SymQuantity, target_unit: SymQuantity) -> Expr:
     return sympify(value.scale_factor) * (1 / sympify(target_quantity.scale_factor))
 
 
-def convert_to_dimensionless(value: SymQuantity) -> float:
+def convert_to_float(value: SymQuantity) -> float:
     return float(convert_to(value, S.One))

@@ -6,9 +6,9 @@ from symplyphysics import (
     print_expression,
     validate_input,
     dimensionless,
+    convert_to_float,
 )
 from symplyphysics.core.dimensions import assert_equivalent_dimension
-from symplyphysics.core.convert import convert_to_dimensionless
 
 ## Description
 ## The transmission parameters matrix is one of the ways to describe a microwave device. The ABCD-parameters of the device act as elements
@@ -57,10 +57,10 @@ def calculate_transmission_matrix(characteristic_resistance_: Quantity, line_len
         line_length: line_length_,
         constant_propagation: constant_propagation_,
     }
-    result_A = convert_to_dimensionless(Quantity(result_A.subs(substitutions)))
+    result_A = convert_to_float(Quantity(result_A.subs(substitutions)))
     result_B = Quantity(result_B.subs(substitutions))
     result_C = Quantity(result_C.subs(substitutions))
-    result_D = convert_to_dimensionless(Quantity(result_D.subs(substitutions)))
+    result_D = convert_to_float(Quantity(result_D.subs(substitutions)))
     assert_equivalent_dimension(result_B, 'result_B', "calculate_transmission_matrix", units.impedance)
     assert_equivalent_dimension(result_C, 'result_C', "calculate_transmission_matrix", units.conductance)
     return ((result_A, result_B), (result_C, result_D))

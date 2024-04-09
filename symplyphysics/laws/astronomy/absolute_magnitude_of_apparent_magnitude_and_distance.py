@@ -7,8 +7,8 @@ from symplyphysics import (
     validate_input,
     validate_output,
     dimensionless,
+    convert_to_float,
 )
-from symplyphysics.core.convert import convert_to_dimensionless
 
 # Description
 ## The absolute magnitude for stars is defined as the apparent magnitude of an object if it were located at a distance
@@ -44,4 +44,4 @@ def calculate_absolute_magnitude(apparent_magnitude_: float, distance_: Quantity
         apparent_magnitude: apparent_magnitude_,
         distance: distance_,
     })
-    return convert_to_dimensionless(Quantity(result_expr))
+    return convert_to_float(Quantity(result_expr))

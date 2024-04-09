@@ -6,8 +6,8 @@ from symplyphysics import (
     print_expression,
     validate_input,
     validate_output,
+    convert_to_float,
 )
-from symplyphysics.core.convert import convert_to_dimensionless
 
 # Description
 ## The dimensionless form of the van der Waals equation of state features reduced quantities,
@@ -51,4 +51,4 @@ def calculate_reduced_pressure(
         reduced_volume: reduced_volume_,
         reduced_temperature: reduced_temperature_,
     })
-    return convert_to_dimensionless(Quantity(result))
+    return convert_to_float(Quantity(result))

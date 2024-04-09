@@ -7,8 +7,8 @@ from symplyphysics import (
     validate_input,
     validate_output,
     dimensionless,
+    convert_to_float,
 )
-from symplyphysics.core.convert import convert_to_dimensionless
 
 # Description
 ## The efficiency of a heat engine is the ratio of the useful energy used to the total amount of energy received by the system: eta = (Q_h - Q_r) / Q_h.
@@ -38,4 +38,4 @@ def calculate_efficiency_factor(heat_from_heater_: Quantity,
         heat_to_refrigerator: heat_to_refrigerator_
     })
     result = Quantity(result_expr)
-    return convert_to_dimensionless(Quantity(result))
+    return convert_to_float(Quantity(result))

@@ -9,8 +9,8 @@ from symplyphysics import (
     validate_output,
     dimensionless,
     angle_type,
+    convert_to_float,
 )
-from symplyphysics.core.convert import convert_to_dimensionless
 
 # Description
 ## A rectangular resonator consists of metal walls and a material filling it.
@@ -64,4 +64,4 @@ def calculate_quality_factor(angular_frequency_: Quantity, relative_permeability
         resonator_height: resonator_height_,
         resonator_length: resonator_length_
     })
-    return convert_to_dimensionless(Quantity(result_expr))
+    return convert_to_float(Quantity(result_expr))

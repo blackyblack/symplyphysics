@@ -7,9 +7,9 @@ from symplyphysics import (
     validate_input,
     validate_output,
     dimensionless,
+    convert_to_float,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.core.convert import convert_to_dimensionless
 from symplyphysics.laws.conservation import abbe_invariant_of_two_optical_environments_is_constant as abbe_conservation_law
 
 # Description:
@@ -73,4 +73,4 @@ def calculate_refraction_index_lens(distance_to_object_: Quantity, distance_to_i
         refraction_index_environment: refraction_index_environment_
     })
     result = Quantity(result_expr)
-    return convert_to_dimensionless(Quantity(result))
+    return convert_to_float(Quantity(result))

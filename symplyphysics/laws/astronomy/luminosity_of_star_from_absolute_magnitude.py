@@ -6,8 +6,8 @@ from symplyphysics import (
     validate_input,
     validate_output,
     dimensionless,
+    convert_to_float,
 )
-from symplyphysics.core.convert import convert_to_dimensionless
 
 # Description
 ## The luminosity of a star is related to the absolute magnitude of the star.
@@ -35,4 +35,4 @@ def calculate_luminosity(absolute_magnitude_: float) -> float:
     result_expr = result_expr.subs({
         absolute_magnitude: absolute_magnitude_,
     })
-    return convert_to_dimensionless(Quantity(result_expr))
+    return convert_to_float(Quantity(result_expr))

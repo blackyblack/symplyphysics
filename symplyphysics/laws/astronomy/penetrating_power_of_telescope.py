@@ -7,8 +7,8 @@ from symplyphysics import (
     validate_input,
     validate_output,
     dimensionless,
+    convert_to_float,
 )
-from symplyphysics.core.convert import convert_to_dimensionless
 
 # Description
 ## The penetrating force is the magnitude of the faintest stars visible with a telescope when observed at the zenith.
@@ -37,4 +37,4 @@ def calculate_penetrating_power(lens_diameter_: Quantity) -> float:
     result_expr = result_expr.subs({
         lens_diameter: lens_diameter_,
     })
-    return convert_to_dimensionless(Quantity(result_expr))
+    return convert_to_float(Quantity(result_expr))

@@ -7,8 +7,8 @@ from symplyphysics import (
     validate_input,
     validate_output,
     dimensionless,
+    convert_to_float,
 )
-from symplyphysics.core.convert import convert_to_dimensionless
 
 # Description
 ## Since the hydraulic press is a mechanism, its operation can be characterized by a coefficient of efficiency.
@@ -49,4 +49,4 @@ def calculate_efficiency(useful_force_: Quantity, useful_height_: Quantity,
         expended_height: expended_height_
     })
     result = Quantity(result_efficiency)
-    return convert_to_dimensionless(Quantity(result))
+    return convert_to_float(Quantity(result))
