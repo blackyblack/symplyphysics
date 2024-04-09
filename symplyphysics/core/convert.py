@@ -1,4 +1,4 @@
-from sympy import Expr, sympify
+from sympy import Expr, sympify, S
 from sympy.physics.units import Quantity as SymQuantity
 
 from .dimensions import assert_equivalent_dimension
@@ -13,3 +13,7 @@ def convert_to(value: SymQuantity, target_unit: SymQuantity) -> Expr:
     assert_equivalent_dimension(value, value.dimension.name, "convert_to",
         target_quantity.dimension)
     return sympify(value.scale_factor) * (1 / sympify(target_quantity.scale_factor))
+
+
+def convert_to_dimensionless(value: SymQuantity) -> float:
+    return float(convert_to(value, S.One))
