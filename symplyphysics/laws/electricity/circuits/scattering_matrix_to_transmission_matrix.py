@@ -1,4 +1,4 @@
-from sympy import Eq, solve, Matrix, S
+from sympy import Eq, solve, Matrix
 from symplyphysics import (
     units,
     Quantity,
@@ -6,9 +6,9 @@ from symplyphysics import (
     print_expression,
     validate_input,
     dimensionless,
-    convert_to
 )
 from symplyphysics.core.dimensions import assert_equivalent_dimension
+from symplyphysics.core.convert import convert_to_dimensionless
 
 ## Description
 ## The scattering matrix is one of the ways to describe a microwave device. The S-parameters of the device act as elements
@@ -68,10 +68,10 @@ def calculate_transmission_matrix(characteristic_resistance_: Quantity, paramete
         transmission_ratio: parameters_[1][0],
         output_reflection_coefficient: parameters_[1][1],
     }
-    result_A = float(convert_to(Quantity(result_A.subs(substitutions)), S.One).evalf())
+    result_A = convert_to_dimensionless(Quantity(result_A.subs(substitutions)))
     result_B = Quantity(result_B.subs(substitutions))
     result_C = Quantity(result_C.subs(substitutions))
-    result_D = float(convert_to(Quantity(result_D.subs(substitutions)), S.One).evalf())
+    result_D = convert_to_dimensionless(Quantity(result_D.subs(substitutions)))
     assert_equivalent_dimension(result_B, 'result_B', "calculate_transmission_matrix", units.impedance)
     assert_equivalent_dimension(result_C, 'result_C', "calculate_transmission_matrix", units.conductance)
     return ((result_A, result_B), (result_C, result_D))

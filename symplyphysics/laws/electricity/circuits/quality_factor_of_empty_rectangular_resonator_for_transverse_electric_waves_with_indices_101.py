@@ -1,8 +1,16 @@
-from sympy import (Eq, solve, S)
+from sympy import Eq, solve
 from sympy.physics.units import magnetic_constant
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, convert_to, dimensionless, angle_type)
-
+from symplyphysics import (
+    units,
+    Quantity,
+    Symbol,
+    print_expression,
+    validate_input,
+    validate_output,
+    dimensionless,
+    angle_type,
+)
+from symplyphysics.core.convert import convert_to_dimensionless
 
 # Description
 ## A rectangular resonator consists of metal walls and a material filling it.
@@ -56,4 +64,4 @@ def calculate_quality_factor(angular_frequency_: Quantity, relative_permeability
         resonator_height: resonator_height_,
         resonator_length: resonator_length_
     })
-    return float(convert_to(Quantity(result_expr), S.One).evalf())
+    return convert_to_dimensionless(Quantity(result_expr))

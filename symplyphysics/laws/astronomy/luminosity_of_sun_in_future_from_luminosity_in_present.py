@@ -1,8 +1,4 @@
-from sympy import (
-    Eq,
-    solve,
-    S,
-)
+from sympy import Eq, solve
 from symplyphysics import (
     units,
     Quantity,
@@ -10,9 +6,9 @@ from symplyphysics import (
     print_expression,
     validate_input,
     validate_output,
-    convert_to,
     dimensionless,
 )
+from symplyphysics.core.convert import convert_to_dimensionless
 
 # Description
 ## The luminosity of the Sun in the future is related to the luminosity of the Sun in the present. Luminosity is
@@ -51,4 +47,4 @@ def calculate_luminosity_future(luminosity_present_: float, time_: Quantity) -> 
         luminosity_present: luminosity_present_,
         time: time_,
     })
-    return float(convert_to(Quantity(result_expr), S.One).evalf())
+    return convert_to_dimensionless(Quantity(result_expr))

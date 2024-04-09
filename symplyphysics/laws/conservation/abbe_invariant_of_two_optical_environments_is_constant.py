@@ -1,6 +1,14 @@
-from sympy import Eq, solve, S
-from symplyphysics import (Symbol, units, print_expression, Quantity, validate_input,
-    validate_output, dimensionless, convert_to)
+from sympy import Eq, solve
+from symplyphysics import (
+    Symbol,
+    units,
+    print_expression,
+    Quantity,
+    validate_input,
+    validate_output,
+    dimensionless,
+)
+from symplyphysics.core.convert import convert_to_dimensionless
 
 # Description
 ## The point S is located on the front of the optical axis,
@@ -65,4 +73,4 @@ def calculate_refraction_index_lens(
         distance_from_image: distance_from_image_,
     })
     result = Quantity(result_expr)
-    return float(convert_to(result, S.One).evalf())
+    return convert_to_dimensionless(Quantity(result))

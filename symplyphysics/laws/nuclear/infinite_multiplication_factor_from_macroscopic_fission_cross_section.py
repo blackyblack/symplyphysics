@@ -1,14 +1,14 @@
-from sympy import (Eq, solve, S)
+from sympy import Eq, solve
 from symplyphysics import (
     units,
     Quantity,
     Symbol,
     print_expression,
     dimensionless,
-    convert_to,
     validate_input,
     validate_output,
 )
+from symplyphysics.core.convert import convert_to_dimensionless
 
 # Description
 ## Infinite multiplication factor: k_infinite = v * Σf / Σa
@@ -51,4 +51,4 @@ def calculate_multiplication_factor(neutrons_per_fission_: float,
         macroscopic_absorption_cross_section: macroscopic_absorption_cross_section_
     })
     result_factor = Quantity(result_expr)
-    return float(convert_to(result_factor, S.One).evalf())
+    return convert_to_dimensionless(Quantity(result_factor))

@@ -1,6 +1,14 @@
-from sympy import (Eq, solve, S)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless, convert_to)
+from sympy import Eq, solve
+from symplyphysics import (
+    units,
+    Quantity,
+    Symbol,
+    print_expression,
+    validate_input,
+    validate_output,
+    dimensionless,
+)
+from symplyphysics.core.convert import convert_to_dimensionless
 
 # Description
 # The Reynolds number is a dimensionless quantity that characterizes the flow of a fluid in a pipe.
@@ -38,4 +46,4 @@ def calculate_reynolds_number(diameter_: Quantity, density_: Quantity, velocity_
         dynamic_viscosity: dynamic_viscosity_
     })
     result = Quantity(result_applied)
-    return float(convert_to(result, S.One).evalf())
+    return convert_to_dimensionless(Quantity(result))

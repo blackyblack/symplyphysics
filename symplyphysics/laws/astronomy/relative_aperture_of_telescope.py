@@ -1,4 +1,4 @@
-from sympy import (Eq, solve, S)
+from sympy import Eq, solve
 from symplyphysics import (
     units,
     Quantity,
@@ -7,8 +7,8 @@ from symplyphysics import (
     validate_input,
     validate_output,
     dimensionless,
-    convert_to,
 )
+from symplyphysics.core.convert import convert_to_dimensionless
 
 # Description
 ## The relative aperture of a telescope is the ratio of the diameter of the lens to its focal length. For visual observations,
@@ -42,4 +42,4 @@ def calculate_relative_aperture(lens_diameter_: Quantity, focal_length_lens_: Qu
         lens_diameter: lens_diameter_,
         focal_length_lens: focal_length_lens_,
     })
-    return float(convert_to(Quantity(result_expr), S.One).evalf())
+    return convert_to_dimensionless(Quantity(result_expr))

@@ -8,9 +8,9 @@ from symplyphysics import (
     print_expression,
     validate_input,
     validate_output,
-    convert_to,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.core.convert import convert_to_dimensionless
 from symplyphysics.laws.chemistry.potential_energy_models import hard_spheres_potential
 
 # Description
@@ -87,4 +87,4 @@ def calculate_compressibility_factor(
         volume: volume_,
         _sphere_diameter: sphere_diameter_,
     })
-    return float(convert_to(Quantity(result), S.One))
+    return convert_to_dimensionless(Quantity(result))

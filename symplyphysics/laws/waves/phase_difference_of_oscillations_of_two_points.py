@@ -1,4 +1,4 @@
-from sympy import (Eq, solve, pi, S, Abs)
+from sympy import Eq, solve, pi, Abs
 from symplyphysics import (
     units,
     Quantity,
@@ -6,10 +6,9 @@ from symplyphysics import (
     print_expression,
     validate_input,
     validate_output,
-    convert_to,
     angle_type,
 )
-
+from symplyphysics.core.convert import convert_to_dimensionless
 # Description
 ## The phase difference of the oscillations of two points spaced at distances r1 and r2 from the source of
 ## the oscillations depends on these distances and wavelength.
@@ -46,4 +45,4 @@ def calculate_phase_difference(distance_first_point_: Quantity, distance_second_
         distance_second_point: distance_second_point_,
         wavelength: wavelength_
     }).doit()
-    return float(convert_to(Quantity(result_expr), S.One).evalf())
+    return convert_to_dimensionless(Quantity(result_expr))
