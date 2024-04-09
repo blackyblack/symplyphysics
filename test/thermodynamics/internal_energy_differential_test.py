@@ -8,7 +8,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.thermodynamics import (
-    internal_energy_change_via_entropy_change_and_volume_change as internal_energy_law,
+    internal_energy_differential as internal_energy_law,
 )
 
 # Description
