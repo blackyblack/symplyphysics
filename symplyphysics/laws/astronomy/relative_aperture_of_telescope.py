@@ -42,4 +42,4 @@ def calculate_relative_aperture(lens_diameter_: Quantity, focal_length_lens_: Qu
         lens_diameter: lens_diameter_,
         focal_length_lens: focal_length_lens_,
     })
-    return convert_to_float(Quantity(result_expr))
+    return convert_to_float(result_expr)

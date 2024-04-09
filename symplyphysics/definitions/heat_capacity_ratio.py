@@ -48,4 +48,4 @@ def calculate_heat_capacity_ratio(
         isobaric_heat_capacity: isobaric_heat_capacity_,
         isochoric_heat_capacity: isochoric_heat_capacity_,
     })
-    return convert_to_float(Quantity(result))
+    return convert_to_float(result)

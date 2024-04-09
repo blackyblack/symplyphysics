@@ -68,10 +68,10 @@ def calculate_transmission_matrix(characteristic_resistance_: Quantity, paramete
         transmission_ratio: parameters_[1][0],
         output_reflection_coefficient: parameters_[1][1],
     }
-    result_A = convert_to_float(Quantity(result_A.subs(substitutions)))
+    result_A = convert_to_float(result_A.subs(substitutions))
     result_B = Quantity(result_B.subs(substitutions))
     result_C = Quantity(result_C.subs(substitutions))
-    result_D = convert_to_float(Quantity(result_D.subs(substitutions)))
+    result_D = convert_to_float(result_D.subs(substitutions))
     assert_equivalent_dimension(result_B, 'result_B', "calculate_transmission_matrix", units.impedance)
     assert_equivalent_dimension(result_C, 'result_C', "calculate_transmission_matrix", units.conductance)
     return ((result_A, result_B), (result_C, result_D))

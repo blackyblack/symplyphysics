@@ -46,4 +46,4 @@ def calculate_reynolds_number(diameter_: Quantity, density_: Quantity, velocity_
         dynamic_viscosity: dynamic_viscosity_
     })
     result = Quantity(result_applied)
-    return convert_to_float(Quantity(result))
+    return convert_to_float(result)

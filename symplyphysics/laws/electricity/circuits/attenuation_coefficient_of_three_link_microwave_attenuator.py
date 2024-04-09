@@ -41,4 +41,4 @@ def calculate_attenuation_coefficient(first_resistance_: Quantity,
         first_resistance: first_resistance_,
         second_resistance: second_resistance_,
     })
-    return convert_to_float(Quantity(result_expr))
+    return convert_to_float(result_expr)

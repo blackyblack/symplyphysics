@@ -69,4 +69,4 @@ def calculate_compressibility_factor(
         amount_of_substance: amount_of_substance_,
         temperature: temperature_,
     })
-    return convert_to_float(Quantity(result))
+    return convert_to_float(result)

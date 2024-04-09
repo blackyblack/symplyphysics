@@ -37,4 +37,4 @@ def calculate_penetrating_power(lens_diameter_: Quantity) -> float:
     result_expr = result_expr.subs({
         lens_diameter: lens_diameter_,
     })
-    return convert_to_float(Quantity(result_expr))
+    return convert_to_float(result_expr)

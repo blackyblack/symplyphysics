@@ -87,4 +87,4 @@ def calculate_compressibility_factor(
         volume: volume_,
         _sphere_diameter: sphere_diameter_,
     })
-    return convert_to_float(Quantity(result))
+    return convert_to_float(result)

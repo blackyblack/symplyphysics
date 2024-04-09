@@ -60,7 +60,7 @@ def calculate_compressibility_factor(
         molar_density: molar_density_,
     })
 
-    result_value = convert_to_float(Quantity(result))
+    result_value = convert_to_float(result)
     if result_value < 0:
         raise ValueError(f"Compressibility factor cannot be negative, got {result_value} instead")
     return result_value

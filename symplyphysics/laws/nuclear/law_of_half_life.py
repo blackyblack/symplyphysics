@@ -1,6 +1,14 @@
-from sympy import (Eq, solve, S)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, convert_to, dimensionless)
+from sympy import Eq, solve
+from symplyphysics import (
+    units,
+    Quantity,
+    Symbol,
+    print_expression,
+    validate_input,
+    validate_output,
+    convert_to_float,
+    dimensionless,
+)
 
 # Description
 ## Half-life is the time required for a quantity (of substance) to reduce to half of its initial value.
@@ -41,4 +49,4 @@ def calculate_number_of_cores(number_of_cores_initial_: int, half_life_: Quantit
         half_life: half_life_,
         decay_time: decay_time_
     })
-    return int(convert_to(Quantity(result_expr), S.One).evalf())
+    return int(convert_to_float(result_expr))

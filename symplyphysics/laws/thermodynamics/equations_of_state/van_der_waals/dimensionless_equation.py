@@ -51,4 +51,4 @@ def calculate_reduced_pressure(
         reduced_volume: reduced_volume_,
         reduced_temperature: reduced_temperature_,
     })
-    return convert_to_float(Quantity(result))
+    return convert_to_float(result)

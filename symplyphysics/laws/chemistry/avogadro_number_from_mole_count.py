@@ -1,11 +1,11 @@
-from sympy import (Eq, solve, S)
+from sympy import Eq, solve
 from symplyphysics import (
     units,
     Quantity,
     Symbol,
     print_expression,
     dimensionless,
-    convert_to,
+    convert_to_float,
     validate_input,
     validate_output,
 )
@@ -36,4 +36,4 @@ def calculate_particles_count(mole_count_: Quantity) -> int:
     solved = solve(law, particles_count, dict=True)[0][particles_count]
     result_expr = solved.subs(mole_count, mole_count_)
     result = Quantity(result_expr)
-    return int(convert_to(result, S.One).evalf())
+    return int(convert_to_float(result))

@@ -64,4 +64,4 @@ def calculate_grashof_number(coefficient_of_volume_expansion_: Quantity,
         viscosity: viscosity_
     })
     result = Quantity(result_applied)
-    return convert_to_float(Quantity(result))
+    return convert_to_float(result)

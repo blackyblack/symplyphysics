@@ -64,4 +64,4 @@ def calculate_quality_factor(angular_frequency_: Quantity, relative_permeability
         resonator_height: resonator_height_,
         resonator_length: resonator_length_
     })
-    return convert_to_float(Quantity(result_expr))
+    return convert_to_float(result_expr)

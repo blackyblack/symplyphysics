@@ -45,4 +45,4 @@ def calculate_prandtl_number(heat_capacity_: Quantity, dynamic_viscosity_: Quant
         thermal_conductivity: thermal_conductivity_
     })
     result = Quantity(result_applied)
-    return convert_to_float(Quantity(result))
+    return convert_to_float(result)

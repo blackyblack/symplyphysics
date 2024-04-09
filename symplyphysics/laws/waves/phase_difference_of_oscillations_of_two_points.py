@@ -45,4 +45,4 @@ def calculate_phase_difference(distance_first_point_: Quantity, distance_second_
         distance_second_point: distance_second_point_,
         wavelength: wavelength_
     }).doit()
-    return convert_to_float(Quantity(result_expr))
+    return convert_to_float(result_expr)

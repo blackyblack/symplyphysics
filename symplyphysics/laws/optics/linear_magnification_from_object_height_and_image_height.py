@@ -43,4 +43,4 @@ def calculate_magnification(image_height_: Quantity, object_height_: Quantity) -
         object_height: object_height_,
     })
     result = Quantity(result_magnification)
-    return convert_to_float(Quantity(result))
+    return convert_to_float(result)

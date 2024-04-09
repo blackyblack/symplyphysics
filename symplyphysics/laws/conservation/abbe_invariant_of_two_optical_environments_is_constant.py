@@ -73,4 +73,4 @@ def calculate_refraction_index_lens(
         distance_from_image: distance_from_image_,
     })
     result = Quantity(result_expr)
-    return convert_to_float(Quantity(result))
+    return convert_to_float(result)

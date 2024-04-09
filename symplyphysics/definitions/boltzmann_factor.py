@@ -48,4 +48,4 @@ def calculate_boltzmann_factor(
         energy_of_state: energy_of_state_,
         equilibrium_temperature: equilibrium_temperature_,
     })
-    return convert_to_float(Quantity(result))
+    return convert_to_float(result)

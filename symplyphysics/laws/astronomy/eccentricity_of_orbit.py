@@ -41,4 +41,4 @@ def calculate_eccentricity(small_semi_axis_: Quantity, large_semi_axis_: Quantit
         small_semi_axis: small_semi_axis_,
         large_semi_axis: large_semi_axis_,
     })
-    return convert_to_float(Quantity(result_expr))
+    return convert_to_float(result_expr)

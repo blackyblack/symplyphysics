@@ -49,4 +49,4 @@ def calculate_apparent_magnitude_second(apparent_magnitude_first_: float,
         illuminance_first: illuminance_first_,
         illuminance_second: illuminance_second_
     })
-    return convert_to_float(Quantity(result_expr))
+    return convert_to_float(result_expr)

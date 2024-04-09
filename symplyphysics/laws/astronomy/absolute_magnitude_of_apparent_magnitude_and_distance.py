@@ -44,4 +44,4 @@ def calculate_absolute_magnitude(apparent_magnitude_: float, distance_: Quantity
         apparent_magnitude: apparent_magnitude_,
         distance: distance_,
     })
-    return convert_to_float(Quantity(result_expr))
+    return convert_to_float(result_expr)

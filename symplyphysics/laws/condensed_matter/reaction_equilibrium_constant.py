@@ -51,4 +51,4 @@ def calculate_equilibrium_constant(standard_change_isobaric_potential_: Quantity
         standard_change_isobaric_potential: standard_change_isobaric_potential_,
         temperature: temperature_
     })
-    return convert_to_float(Quantity(result_expr))
+    return convert_to_float(result_expr)

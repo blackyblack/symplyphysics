@@ -47,4 +47,4 @@ def calculate_luminosity_future(luminosity_present_: float, time_: Quantity) -> 
         luminosity_present: luminosity_present_,
         time: time_,
     })
-    return convert_to_float(Quantity(result_expr))
+    return convert_to_float(result_expr)

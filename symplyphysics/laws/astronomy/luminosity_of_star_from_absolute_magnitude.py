@@ -35,4 +35,4 @@ def calculate_luminosity(absolute_magnitude_: float) -> float:
     result_expr = result_expr.subs({
         absolute_magnitude: absolute_magnitude_,
     })
-    return convert_to_float(Quantity(result_expr))
+    return convert_to_float(result_expr)
