@@ -1,5 +1,4 @@
 from sympy import Expr, sympify, S
-# from sympy.physics.units import Quantity as SymQuantity
 
 from .dimensions import assert_equivalent_dimension
 from .symbols.quantities import Quantity
