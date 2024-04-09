@@ -15,6 +15,9 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 # Note: the resultant energy is the energy consumed for changing body temperature from value t1 to value t2
 # Positive value Q is for absorbed energy (heating), negative for released energy (cooling)
 
+# Note: most of the time, intensive heat capacity is known. Use [molar](./heat_capacity_via_molar_heat_capacity.py)
+# and [specific](heat_capacity_via_specific_heat_capacity.py) laws for this.
+
 amount_energy = Symbol("amount_energy", units.energy)
 heat_capacity = Symbol("heat_capacity", units.energy / units.temperature)
 temperature_origin = Symbol("temperature_origin", units.temperature)
