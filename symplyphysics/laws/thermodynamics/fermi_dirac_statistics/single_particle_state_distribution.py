@@ -17,24 +17,25 @@ from symplyphysics import (
 ## in a single-particle state `i` is given by the Fermi-Dirac distribution:
 
 # Law: N_i = 1 / (exp((E_i - mu)/(k * T)) + 1)
-## N_i - average number of fermions in single-particle state `i`
+## N_i - average number of fermions in single-particle state `i`, 
+##       also known as occupancy of energy state `i`
 ## E_i - energy of single-particle state `i`
 ## mu - total chemical potential
 ## k - Boltzmann constant
 ## T - absolute temperature
 
 # Note
-## If the energy levels are degenerate, i.e. two or more particles are on the same energy level,
+## If the energy states are degenerate, i.e. two or more particles are on the same energy level,
 ## the average number of fermions can be found by multiplying by the degeneracy `g_i` of the energy
 ## level.
 
-average_fermion_count = Symbol("average_fermion_count", dimensionless)
+occupancy_of_state = Symbol("occupancy_of_state", dimensionless)
 energy_of_state = Symbol("energy_of_state", units.energy)
 total_chemical_potential = Symbol("total_chemical_potential", units.energy)
 temperature = symbols.thermodynamics.temperature
 
 law = Eq(
-    average_fermion_count,
+    occupancy_of_state,
     1 / (exp((energy_of_state - total_chemical_potential) / (units.boltzmann_constant * temperature)) + 1)
 )
 
@@ -48,8 +49,8 @@ def print_law() -> str:
     total_chemical_potential_=total_chemical_potential,
     temperature_=temperature,
 )
-@validate_output(average_fermion_count)
-def calculate_average_fermion_count(
+@validate_output(occupancy_of_state)
+def calculate_occupancy_of_state(
     energy_of_state_: Quantity,
     total_chemical_potential_: Quantity,
     temperature_: Quantity,

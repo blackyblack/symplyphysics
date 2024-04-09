@@ -27,25 +27,25 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = state_distribution.calculate_average_fermion_count(test_args.e, test_args.mu, test_args.t)
+    result = state_distribution.calculate_occupancy_of_state(test_args.e, test_args.mu, test_args.t)
     assert_equal(result, 0.24, tolerance=6e-3)
 
 
 def test_bad_energy(test_args: Args) -> None:
     eb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        state_distribution.calculate_average_fermion_count(eb, test_args.mu, test_args.t)
+        state_distribution.calculate_occupancy_of_state(eb, test_args.mu, test_args.t)
     with raises(TypeError):
-        state_distribution.calculate_average_fermion_count(100, test_args.mu, test_args.t)
+        state_distribution.calculate_occupancy_of_state(100, test_args.mu, test_args.t)
     with raises(errors.UnitsError):
-        state_distribution.calculate_average_fermion_count(test_args.e, eb, test_args.t)
+        state_distribution.calculate_occupancy_of_state(test_args.e, eb, test_args.t)
     with raises(TypeError):
-        state_distribution.calculate_average_fermion_count(test_args.e, 100, test_args.t)
+        state_distribution.calculate_occupancy_of_state(test_args.e, 100, test_args.t)
 
 
 def test_bad_temperature(test_args: Args) -> None:
     tb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        state_distribution.calculate_average_fermion_count(test_args.e, test_args.mu, tb)
+        state_distribution.calculate_occupancy_of_state(test_args.e, test_args.mu, tb)
     with raises(TypeError):
-        state_distribution.calculate_average_fermion_count(test_args.e, test_args.mu, 100)
+        state_distribution.calculate_occupancy_of_state(test_args.e, test_args.mu, 100)
