@@ -8,6 +8,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
+    convert_to_float,
 )
 
 # Description
@@ -54,10 +55,10 @@ def calculate_occupancy_of_state(
     energy_of_state_: Quantity,
     total_chemical_potential_: Quantity,
     temperature_: Quantity,
-) -> Quantity:
+) -> float:
     result = law.rhs.subs({
         energy_of_state: energy_of_state_,
         total_chemical_potential: total_chemical_potential_,
         temperature: temperature_,
     })
-    return Quantity(result)
+    return convert_to_float(result)
