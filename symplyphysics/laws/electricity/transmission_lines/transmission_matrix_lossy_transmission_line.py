@@ -6,7 +6,7 @@ from symplyphysics import (
     print_expression,
     validate_input,
     dimensionless,
-    convert_to
+    convert_to,
 )
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 
@@ -63,10 +63,10 @@ def calculate_transmission_matrix(characteristic_resistance_: Quantity, line_len
         constant_propagation: constant_propagation_,
         loss_factor: loss_factor_,
     }
-    result_A = convert_to(Quantity(result_A.subs(substitutions)), S.One).evalf()
+    result_A = convert_to(result_A.subs(substitutions), S.One)
     result_B = Quantity(result_B.subs(substitutions))
     result_C = Quantity(result_C.subs(substitutions))
-    result_D = convert_to(Quantity(result_D.subs(substitutions)), S.One).evalf()
+    result_D = convert_to(result_D.subs(substitutions), S.One)
     assert_equivalent_dimension(result_B, 'result_B', "calculate_transmission_matrix", units.impedance)
     assert_equivalent_dimension(result_C, 'result_C', "calculate_transmission_matrix", units.conductance)
     return ((result_A, result_B), (result_C, result_D))

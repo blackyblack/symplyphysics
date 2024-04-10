@@ -4,7 +4,7 @@ from sympy.physics.units.definitions.dimension_definitions import angle as angle
 from .core import errors
 from .core.dimensions import dimensionless
 from .core.symbols.quantities import Quantity, subs_list
-from .core.convert import convert_to
+from .core.convert import convert_to, convert_to_float
 from .core.operations.sum_indexed import SumIndexed
 from .core.symbols.symbols import Function, Symbol, print_expression, clone_symbol, SymbolIndexed, global_index
 from .core.symbols.prefixes import prefixes
@@ -36,6 +36,7 @@ __all__ = [
     "global_index",
     # convert
     "convert_to",
+    "convert_to_float",
     # operations
     "SumIndexed",
     # decorators

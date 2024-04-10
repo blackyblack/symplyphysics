@@ -1,6 +1,6 @@
 from sympy import (Eq, solve, S)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless, convert_to)
+    validate_output, dimensionless, convert_to_float)
 
 # Description
 ## Consider the volume of gas in a vessel in the form of a cube and determine the number of impacts on its wall perpendicular to the x-axis.
@@ -49,4 +49,4 @@ def calculate_number_of_impacts(molecules_concentration_: Quantity, area_: Quant
         time: time_
     })
     result = Quantity(result_number_of_impacts)
-    return int(convert_to(result, S.One).evalf())
+    return int(convert_to_float(result))

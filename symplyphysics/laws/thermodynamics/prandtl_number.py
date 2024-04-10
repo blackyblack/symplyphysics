@@ -1,7 +1,14 @@
-from sympy import Eq, solve, S
-
-from symplyphysics import (Quantity, Symbol, dimensionless, print_expression, units, validate_input,
-    validate_output, convert_to)
+from sympy import Eq, solve
+from symplyphysics import (
+    Quantity,
+    Symbol,
+    dimensionless,
+    print_expression,
+    units,
+    validate_input,
+    validate_output,
+    convert_to_float,
+)
 
 # Description
 # The Prandtl number (Pr) is a dimensionless number, defined as the ratio of
@@ -38,4 +45,4 @@ def calculate_prandtl_number(heat_capacity_: Quantity, dynamic_viscosity_: Quant
         thermal_conductivity: thermal_conductivity_
     })
     result = Quantity(result_applied)
-    return float(convert_to(result, S.One).evalf())
+    return convert_to_float(result)

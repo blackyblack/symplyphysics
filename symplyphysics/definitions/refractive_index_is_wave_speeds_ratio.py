@@ -1,13 +1,13 @@
-from sympy import (Eq, solve, S)
+from sympy import Eq, solve, S
 from symplyphysics import (
     units,
     Quantity,
     Symbol,
     print_expression,
     dimensionless,
-    convert_to,
     validate_input,
     validate_output,
+    convert_to_float,
 )
 
 # Description
@@ -46,4 +46,4 @@ def calculate_refractive_index(outer_speed_: Quantity, refracting_speed_: Quanti
         refracting_speed: refracting_speed_
     })
     result = Quantity(result_expr)
-    return float(convert_to(result, S.One).evalf())
+    return convert_to_float(result)
