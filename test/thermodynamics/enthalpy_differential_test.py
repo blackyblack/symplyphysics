@@ -8,7 +8,7 @@ from symplyphysics import (
     prefixes,
 )
 from symplyphysics.laws.thermodynamics import (
-    enthalpy_change_via_entropy_change_and_pressure_change as enthalpy_law,)
+    enthalpy_differential as enthalpy_law,)
 
 # Description
 ## A closed homogeneous system is in thermal equilibrium. Its temperature is 400 K and
