@@ -16,7 +16,7 @@ from symplyphysics.core.dimensions import assert_equivalent_dimension
 ## Knowing the impedance of the load connected in parallel to the transmission line,
 ## it is possible to calculate the parameters A, B, C, D of the transmission matrix of the load.
 
-## Law is: Matrix([[A, B], [C, D]]) = Matrix([[1, Zl], [0, 1]]), where
+## Law is: Matrix([[A, B], [C, D]]) = Matrix([[1, 0], [1 / Zl, 1]]), where
 ## A - ratio of input voltage to output voltage at idle at the output,
 ## B - ratio of input voltage to output current in case of a short circuit at the output,
 ## C - ratio of input current to output voltage at idle at the output,
@@ -31,7 +31,7 @@ parameter_current_to_current = Symbol("parameter_current_to_current", dimensionl
 load_impedance = Symbol("load_impedance", units.impedance)
 
 law = Eq(Matrix([[parameter_voltage_to_voltage, parameter_impedance], [parameter_conductance, parameter_current_to_current]]),
-         Matrix([[1, Quantity(0 * units.siemens)], [1 / load_impedance, 1]]))
+         Matrix([[1, Quantity(0 * units.ohm)], [1 / load_impedance, 1]]))
 
 
 def print_law() -> str:
