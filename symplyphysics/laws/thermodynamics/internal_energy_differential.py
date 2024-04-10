@@ -33,9 +33,12 @@ from symplyphysics.laws.thermodynamics import (
 # Note
 ## - Entropy `S`, volume `V` and particle count `N` are so called natural variables of internal energy as a
 ##   thermodynamic potential.
+## - For a system with more than one type of particles, the last term can be represented as a sum over all
+##   types of particles, i.e. `Sum(mu_i * d(N_i), i)`.
 
 # Conditions
 ## - The system is in thermal equilibrium with its surroundings
+## - There is only one type of particles in the system.
 
 internal_energy_change = Symbol("internal_energy_change", units.energy)
 temperature = symbols.thermodynamics.temperature
