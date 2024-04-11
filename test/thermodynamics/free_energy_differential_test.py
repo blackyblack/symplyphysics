@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.thermodynamics import (
-    free_energy_change_via_temperature_change_and_volume_change as free_energy_law,)
+    free_energy_differential as free_energy_law,)
 
 # Description
 ## A closed system in thermal equlibrium has entropy S = 1 J/k and pressure p = 1 Pa inside.
