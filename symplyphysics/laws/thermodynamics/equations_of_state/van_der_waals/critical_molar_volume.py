@@ -14,7 +14,7 @@ from symplyphysics import (
 ## the first and second derivatives of pressure with respect to volume at constant temperature are zero.
 
 # Law: V_c = 3 * b
-## V_c - critical volume
+## V_c - critical molar volume
 ## b - parameter of van der Waals equation of state
 
 critical_molar_volume = Symbol("critical_molar_volume", units.volume / units.amount_of_substance)
