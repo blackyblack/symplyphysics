@@ -12,7 +12,11 @@ from symplyphysics import (
 )
 
 # Description
-## ...
+## The thermal de Broglie wavelength can be roughly described as the average de Broglie wavelength
+## of particles in an ideal gas at a specified temperature. When compared to average interparticle
+## spacing in the gas, it can be used to tell if the gas can be considered to be a classical or
+## Maxwell-Boltzmann gas, in which case the thermal wavelength must be much smaller than the average
+## interparticle spacing. Otherwise, quantum effects must be taken into account.
 
 # Definition: lambda = hbar * sqrt(2 * pi / (m * k * T))
 ## lambda - thermal de Broglie wavelength
