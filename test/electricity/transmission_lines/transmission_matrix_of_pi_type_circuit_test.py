@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (errors, units, Quantity, assert_equal, prefixes)
 
-from symplyphysics.laws.electricity.transmission_lines import transmission_matrix_of_π_type_circuit as matrix_law
+from symplyphysics.laws.electricity.transmission_lines import transmission_matrix_of_pi_type_circuit as matrix_law
 
 ## First impedance is equal to 50 ohm, second impedance is equal to 50 ohm,
 ## third impedance is equal to 100 ohm.
@@ -23,7 +23,7 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_transmission_matrix(test_args: Args) -> None:
-    result = matrix_law.calculate_transmission_matrix(test_args.first_impedance, test_args.second_impedance, test_args.third_impedance)
+    result = matrix_law.calculate_transmission_matrix((test_args.first_impedance, test_args.second_impedance, test_args.third_impedance))
     assert_equal(result[0][0], 3)
     assert_equal(result[0][1], 100 * units.ohm)
     assert_equal(result[1][0], 80 * prefixes.milli * units.siemens)
@@ -33,14 +33,14 @@ def test_basic_transmission_matrix(test_args: Args) -> None:
 def test_bad_impedances(test_args: Args) -> None:
     bad_impedance = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        matrix_law.calculate_transmission_matrix(bad_impedance, test_args.second_impedance, test_args.third_impedance)
+        matrix_law.calculate_transmission_matrix((bad_impedance, test_args.second_impedance, test_args.third_impedance))
     with raises(TypeError):
-        matrix_law.calculate_transmission_matrix(100, test_args.second_impedance, test_args.third_impedance)
+        matrix_law.calculate_transmission_matrix((100, test_args.second_impedance, test_args.third_impedance))
     with raises(errors.UnitsError):
-        matrix_law.calculate_transmission_matrix(test_args.first_impedance, bad_impedance, test_args.third_impedance)
+        matrix_law.calculate_transmission_matrix((test_args.first_impedance, bad_impedance, test_args.third_impedance))
     with raises(TypeError):
-        matrix_law.calculate_transmission_matrix(test_args.first_impedance, 100, test_args.third_impedance)
+        matrix_law.calculate_transmission_matrix((test_args.first_impedance, 100, test_args.third_impedance))
     with raises(errors.UnitsError):
-        matrix_law.calculate_transmission_matrix(test_args.first_impedance, test_args.second_impedance, bad_impedance)
+        matrix_law.calculate_transmission_matrix((test_args.first_impedance, test_args.second_impedance, bad_impedance))
     with raises(TypeError):
-        matrix_law.calculate_transmission_matrix(test_args.first_impedance, test_args.second_impedance, 100)
+        matrix_law.calculate_transmission_matrix((test_args.first_impedance, test_args.second_impedance, 100))

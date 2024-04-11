@@ -7,6 +7,7 @@ from symplyphysics import (
     validate_input,
     dimensionless,
     convert_to,
+    convert_to_float
 )
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 from symplyphysics.core.expr_comparisons import expr_equals
@@ -16,8 +17,8 @@ from symplyphysics.laws.electricity.transmission_lines import transmission_matri
 ## Description
 ## The transmission parameters matrix is one of the ways to describe a microwave device. The ABCD-parameters of the device act as elements
 ## of this matrix. The matrix equation relates the input voltage and input current to the output voltage and output current.
-## The π-type circuit consists of the first impedance connected in parallel, the second impedance connected in series, and the
-## third impedance connected in parallel.
+## The π-type circuit consists of the first impedance connected in parallel, the third impedance connected in series, and the
+## second impedance connected in parallel.
 ## Knowing impedances, it is possible to calculate the parameters A, B, C, D of the transmission matrix of this line.
 
 ## Law is: Matrix([[A, B], [C, D]]) = Matrix([[1 + Z3 / Z2, Z3], [(1 / Z1) + (1 / Z2) + Z3 / (Z1 * Z2), 1 + Z3 / Z1]]), where
@@ -66,35 +67,36 @@ matrix_derived_2 = solve(parallel_law_applied_2, [parallel_law.parameter_voltage
 matrix_derived_2[parallel_law.parameter_impedance] = matrix_derived_2[parallel_law.parameter_impedance].scale_factor
 matrix_derived_2 = Matrix([[matrix_derived_2[parallel_law.parameter_voltage_to_voltage], matrix_derived_2[parallel_law.parameter_impedance]], [matrix_derived_2[parallel_law.parameter_conductance], matrix_derived_2[parallel_law.parameter_current_to_current]]])
 
+# When cascading elements, the final transfer matrix will be equal to the product of the matrices of each element.
 matrix_derived = matrix_derived_1 * matrix_derived_3 * matrix_derived_2
 
 # Check if derived ABCD-parameters are same as declared.
-assert expr_equals(matrix_derived[0], law.rhs[0])
-assert expr_equals(matrix_derived[1], law.rhs[1])
-assert expr_equals(matrix_derived[2], law.rhs[2])
-assert expr_equals(matrix_derived[3], law.rhs[3])
+assert expr_equals(matrix_derived[0, 0], law.rhs[0, 0])
+assert expr_equals(matrix_derived[0, 1], law.rhs[0, 1])
+assert expr_equals(matrix_derived[1, 0], law.rhs[1, 0])
+assert expr_equals(matrix_derived[1, 1], law.rhs[1, 1])
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(first_impedance_=first_impedance, second_impedance_=second_impedance, third_impedance_=third_impedance)
-def calculate_transmission_matrix(first_impedance_: Quantity, second_impedance_: Quantity, third_impedance_: Quantity) -> tuple[tuple[float, Quantity], tuple[Quantity, float]]:
+@validate_input(impedances_=units.impedance)
+def calculate_transmission_matrix(impedances_: tuple[Quantity, Quantity, Quantity]) -> tuple[tuple[float, Quantity], tuple[Quantity, float]]:
     result = solve(law, [parameter_voltage_to_voltage, parameter_impedance, parameter_conductance, parameter_current_to_current], dict=True)[0]
     result_A = result[parameter_voltage_to_voltage]
     result_B = result[parameter_impedance]
     result_C = result[parameter_conductance]
     result_D = result[parameter_current_to_current]
     substitutions = {
-        first_impedance: first_impedance_,
-        second_impedance: second_impedance_,
-        third_impedance: third_impedance_,
+        first_impedance: impedances_[0],
+        second_impedance: impedances_[1],
+        third_impedance: impedances_[2],
     }
-    result_A = float(convert_to(Quantity(result_A.subs(substitutions)), S.One).evalf())
+    result_A = convert_to_float(Quantity(result_A.subs(substitutions)))
     result_B = Quantity(result_B.subs(substitutions))
     result_C = Quantity(result_C.subs(substitutions))
-    result_D = float(convert_to(Quantity(result_D.subs(substitutions)), S.One).evalf())
+    result_D = convert_to_float(Quantity(result_D.subs(substitutions)))
     assert_equivalent_dimension(result_B, 'result_B', "calculate_transmission_matrix", units.impedance)
     assert_equivalent_dimension(result_C, 'result_C', "calculate_transmission_matrix", units.conductance)
     return ((result_A, result_B), (result_C, result_D))
