@@ -54,7 +54,7 @@ law = Eq(
 )
 
 # Derive from the first and second laws of thermodynamics
-# Assuming the particle count does not change
+# TODO: refactor proof to take account of changes in the number of particles
 
 _heat_supplied_to_system = solve(second_law.law,
     second_law.infinitesimal_transfer_of_heat)[0].subs({
