@@ -64,7 +64,8 @@ def print_law() -> str:
     particle_count_change_=particle_count_change,
 )
 @validate_output(enthalpy_change)
-def calculate_enthalpy_change(  # pylint: disable=too-many-arguments
+# pylint: disable=too-many-arguments
+def calculate_enthalpy_change(
     temperature_: Quantity,
     entropy_change_: Quantity,
     volume_: Quantity,
