@@ -1,4 +1,4 @@
-from sympy import Eq
+from sympy import Eq, symbols, Function as SymFunction, Symbol as SymSymbol
 from symplyphysics import (
     units,
     dimensionless,
@@ -7,6 +7,11 @@ from symplyphysics import (
     print_expression,
     validate_input,
     validate_output,
+)
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.thermodynamics import (
+    helmholtz_free_energy_via_internal_energy as free_energy_def,
+    internal_energy_differential,
 )
 
 # Description
@@ -46,7 +51,57 @@ law = Eq(
     -1 * entropy * temperature_change - pressure * volume_change + chemical_potential * particle_count_change,
 )
 
-# TODO: derive from the definition of Helmholtz free energy and internal energy differential
+# Derive from the definition of Helmholtz free energy and internal energy differential
+
+_internal_energy_sym = symbols("internal_energy", cls=SymFunction)
+_entropy_change = SymSymbol("entropy_change")
+_temperature = SymSymbol("temperature")
+_volume = SymSymbol("volume")
+_particle_count = SymSymbol("particle_count")
+
+_internal_energy = _internal_energy_sym(entropy, _volume, _particle_count)
+
+_free_energy = free_energy_def.law.rhs.subs({
+    free_energy_def.internal_energy: _internal_energy,
+    free_energy_def.temperature: _temperature,
+    free_energy_def.entropy: entropy,
+})
+
+_free_energy_change = (
+    _free_energy.diff(_temperature) * temperature_change
+    + _free_energy.diff(entropy) * _entropy_change
+    + _free_energy.diff(_volume) * volume_change
+    + _free_energy.diff(_particle_count) * particle_count_change
+)
+
+_internal_energy_diff = internal_energy_differential.law.rhs.subs({
+    internal_energy_differential.temperature: _temperature,
+    internal_energy_differential.entropy_change: _entropy_change,
+    internal_energy_differential.pressure: pressure,
+    internal_energy_differential.volume_change: volume_change,
+    internal_energy_differential.chemical_potential: chemical_potential,
+    internal_energy_differential.particle_count_change: particle_count_change,
+})
+
+_internal_energy_diff_entropy = _internal_energy_diff.subs({
+    _entropy_change: 1, volume_change: 0, particle_count_change: 0
+})
+
+_internal_energy_diff_volume = _internal_energy_diff.subs({
+    _entropy_change: 0, volume_change: 1, particle_count_change: 0
+})
+
+_internal_energy_diff_particle_count = _internal_energy_diff.subs({
+    _entropy_change: 0, volume_change: 0, particle_count_change: 1
+})
+
+_free_energy_change = _free_energy_change.subs({
+    _internal_energy.diff(entropy): _internal_energy_diff_entropy,
+    _internal_energy.diff(_volume): _internal_energy_diff_volume,
+    _internal_energy.diff(_particle_count): _internal_energy_diff_particle_count,
+})
+
+assert expr_equals(_free_energy_change, law.rhs)
 
 
 def print_law() -> str:
@@ -62,6 +117,7 @@ def print_law() -> str:
     particle_count_change_=particle_count_change,
 )
 @validate_output(free_energy_change)
+# pylint: disable=too-many-arguments
 def calculate_free_energy_change(
     entropy_: Quantity,
     temperature_change_: Quantity,
