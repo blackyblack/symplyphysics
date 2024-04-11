@@ -9,7 +9,7 @@ from symplyphysics import (
 from symplyphysics.laws.thermodynamics import gibbs_energy_differential as gibbs_law
 
 # Description
-## The temperature of a system increases by 1 K and the pressure drops by 10 Pa.
+## The temperature of a system increases by 1 K and the pressure increases by 10 Pa.
 ## The entropy of the system is 100 J/K and its volume is 2 m**3. The number of
 ## particles in the system increases by 2. The chemical potential of the system
 ## is -10 J. The total change in Gibbs energy amounts to -100 J.

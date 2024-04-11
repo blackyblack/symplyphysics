@@ -14,11 +14,13 @@ from symplyphysics import (
 ## thermodynamic quantities depend on variables that are measurable experimentally.
 
 # Law: dG = - S * dT + V * dp + mu * dN
-## F - Gibbs free energy
+## G - Gibbs free energy
 ## S - entropy
 ## T - absolute temperature
 ## V - volume
 ## p - pressure
+## mu - chemical potential
+## N - number of particles in system
 ## Notation: d(x) - full differential of `x`
 
 # Note
