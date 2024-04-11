@@ -1,4 +1,4 @@
-from sympy import Eq
+from sympy import Eq, solve
 from symplyphysics import (
     units,
     Quantity,
@@ -8,6 +8,10 @@ from symplyphysics import (
     validate_output,
     symbols,
 )
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.definitions import compressibility_factor_is_deviation_from_ideal_gas as compressibility_def
+from symplyphysics.laws.thermodynamics.equations_of_state import virial_equation as virial_eqn
+from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import equation as vdw_eqn
 
 # Description
 ## The second virial coefficient is a coefficient appearing in the virial equation of state of
@@ -39,7 +43,48 @@ law = Eq(
     molecules_volume_parameter - bonding_forces_parameter / (units.molar_gas_constant * temperature)
 )
 
-# TODO: Derive from the van der Waals equation of state
+# Derive from the van der Waals equation of state and the virial equation
+
+_volume = compressibility_def.volume
+_mole_count = compressibility_def.amount_of_substance
+_compressibility_sym = compressibility_def.compressibility_factor
+_molar_density = virial_eqn.molar_density
+
+_pressure_expr = solve(vdw_eqn.law, vdw_eqn.pressure)[0].subs({
+    vdw_eqn.volume: _volume,
+    vdw_eqn.temperature: temperature,
+    vdw_eqn.amount_of_substance: _mole_count,
+    vdw_eqn.bonding_forces_parameter: bonding_forces_parameter,
+    vdw_eqn.molecules_volume_parameter: molecules_volume_parameter,
+})
+
+_compressibility_via_volume = compressibility_def.definition.rhs.subs({
+    compressibility_def.pressure: _pressure_expr,
+    compressibility_def.temperature: temperature,
+})
+
+_compressibility_via_density = solve(
+    [
+        Eq(_compressibility_sym, _compressibility_via_volume),
+        Eq(_molar_density, _mole_count / _volume),
+    ],
+    (
+        _compressibility_sym,
+        _mole_count,
+    ),
+    dict=True,
+)[0][_compressibility_sym]
+
+_compressibility_series = _compressibility_via_density.series(_molar_density, 0, 2).removeO()
+
+_virial_eqn = virial_eqn.law.rhs.subs(virial_eqn.third_virial_coefficient, 0)
+
+_second_virial_coefficient = solve(
+    Eq(_compressibility_series, _virial_eqn),
+    virial_eqn.second_virial_coefficient,
+)[0]
+
+assert expr_equals(_second_virial_coefficient, law.rhs)
 
 
 def print_law() -> str:
