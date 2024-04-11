@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.thermodynamics import (
-    chemical_potential_via_derivative_with_respect_to_particle_count as chemical_potential_law,
+    chemical_potential_is_derivative_of_thermodynamic_potential as chemical_potential_law,
 )
 
 # Description
