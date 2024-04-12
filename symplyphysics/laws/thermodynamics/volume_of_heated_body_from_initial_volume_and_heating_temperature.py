@@ -1,4 +1,4 @@
-from sympy import Eq, solve, dsolve
+from sympy import Eq, solve, dsolve, Symbol as SymSymbol
 from symplyphysics import (
     units,
     Quantity,
@@ -40,14 +40,17 @@ law = Eq(final_volume,
 
 _volume = coef_def.volume
 _temperature = coef_def.temperature
+_temperature_change = SymSymbol("temperature_change")
 
-_eqn = coef_def.definition.subs(coef_def.volumetric_expansion_coefficient, expansion_coefficient)
+_diff_eqn = coef_def.definition.subs(coef_def.volumetric_expansion_coefficient, expansion_coefficient)
 
-_volume_expr = dsolve(_eqn, _volume(_temperature), ics={_volume(0): start_volume}).rhs
+_volume_dsolved = dsolve(_diff_eqn, _volume(_temperature), ics={_volume(start_temperature): start_volume}).rhs
 
-_volume_series = _volume_expr.series(_temperature, 0, 2).removeO()
+_volume_subs = _volume_dsolved.subs(_temperature, start_temperature + _temperature_change).simplify()
 
-_volume_derived = _volume_series.subs(_temperature, final_temperature - start_temperature)
+_volume_series = _volume_subs.series(_temperature_change, 0, 2).removeO()
+
+_volume_derived = _volume_series.subs(_temperature_change, final_temperature - start_temperature)
 
 assert expr_equals(_volume_derived, law.rhs)
 
