@@ -12,7 +12,7 @@ from symplyphysics.laws.waves import spectral_energy_density_of_black_body_radia
 # Description
 ## The spectral energy density of electromagnetic radiation emitted from the Sun (assuming it is a black
 ## body radiator, the surface temperature of the Sun is about T = 5800 K) for green light (nu = 550 THz) is
-## u_nu = 5.81 keV / (m**3 * Hz).
+## u_nu = 6.85 keV / (m**3 * Hz).
 
 Args = namedtuple("Args", "nu t")
 
