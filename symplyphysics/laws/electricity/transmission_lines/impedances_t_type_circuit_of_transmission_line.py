@@ -1,4 +1,4 @@
-from sympy import Eq, solve, Matrix, I, sinh, tanh
+from sympy import Eq, solve, Matrix, I, sinh, tanh, cosh, symbols
 from symplyphysics import (
     units,
     Quantity,
@@ -9,7 +9,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity.transmission_lines import transmission_matrix_lossy_transmission_line as matrix_lossy_law
-# from symplyphysics.laws.electricity.transmission_lines import transmission_matrix_of_t_type_circuit as matrix_circuit_law
+from symplyphysics.laws.electricity.transmission_lines import transmission_matrix_of_t_type_circuit as matrix_circuit_law
 
 ## Description
 ## The T-type circuit consists of the first impedance connected in series, the third impedance connected in parallel, and the
@@ -43,31 +43,47 @@ expression = (loss_factor + I * constant_propagation) * line_length
 law = Eq(Matrix([first_impedance, second_impedance, third_impedance]),
          Matrix([characteristic_resistance * tanh(expression / 2), characteristic_resistance * tanh(expression / 2), characteristic_resistance / sinh(expression)]))
 
-# TODO: It is not possible to get impedances from the law. Solve() (matrix_derived_2) returns an empty list.
+# This law might be derived via "transmission_matrix_lossy_transmission_line" law and
+# "transmission_matrix_of_t_type_circuit" law.
 
-# # This law might be derived via "transmission_matrix_lossy_transmission_line" law and
-# # "transmission_matrix_of_t_type_circuit" law.
+matrix_lossy_law_applied = matrix_lossy_law.law.subs({
+    matrix_lossy_law.characteristic_resistance: characteristic_resistance,
+    matrix_lossy_law.line_length: line_length,
+    matrix_lossy_law.constant_propagation: constant_propagation,
+    matrix_lossy_law.loss_factor: loss_factor,
+})
+matrix_derived_1 = solve(matrix_lossy_law_applied, [matrix_lossy_law.parameter_voltage_to_voltage, matrix_lossy_law.parameter_impedance, matrix_lossy_law.parameter_conductance, matrix_lossy_law.parameter_current_to_current], dict=True)[0]
 
-# matrix_lossy_law_applied = matrix_lossy_law.law.subs({
-#     matrix_lossy_law.characteristic_resistance: characteristic_resistance,
-#     matrix_lossy_law.line_length: line_length,
-#     matrix_lossy_law.constant_propagation: constant_propagation,
-#     matrix_lossy_law.loss_factor: loss_factor,
-# })
-# matrix_derived_1 = solve(matrix_lossy_law_applied, [matrix_lossy_law.parameter_voltage_to_voltage, matrix_lossy_law.parameter_impedance, matrix_lossy_law.parameter_conductance, matrix_lossy_law.parameter_current_to_current], dict=True)[0]
+matrix_circuit_law_applied = matrix_circuit_law.law.subs({
+    matrix_circuit_law.parameter_voltage_to_voltage: matrix_derived_1[matrix_lossy_law.parameter_voltage_to_voltage],
+    matrix_circuit_law.parameter_impedance: matrix_derived_1[matrix_lossy_law.parameter_impedance],
+    matrix_circuit_law.parameter_conductance: matrix_derived_1[matrix_lossy_law.parameter_conductance],
+    matrix_circuit_law.parameter_current_to_current: matrix_derived_1[matrix_lossy_law.parameter_current_to_current],
+})
 
-# matrix_circuit_law_applied = matrix_circuit_law.law.subs({
-#     matrix_circuit_law.parameter_voltage_to_voltage: matrix_derived_1[matrix_lossy_law.parameter_voltage_to_voltage],
-#     matrix_circuit_law.parameter_impedance: matrix_derived_1[matrix_lossy_law.parameter_impedance],
-#     matrix_circuit_law.parameter_conductance: matrix_derived_1[matrix_lossy_law.parameter_conductance],
-#     matrix_circuit_law.parameter_current_to_current: matrix_derived_1[matrix_lossy_law.parameter_current_to_current],
-# })
-# # matrix_derived_2 = solve(matrix_circuit_law_applied, [matrix_circuit_law.first_impedance, matrix_circuit_law.second_impedance, matrix_circuit_law.third_impedance], dict=True)[0]
+# HACK: SymPy is unable to solve it automatically. Try with known solution and check for zero output
+matrix_circuit_law_solved = matrix_circuit_law_applied.subs({
+    matrix_circuit_law.first_impedance: law.rhs[0],
+    matrix_circuit_law.second_impedance: law.rhs[1],
+    matrix_circuit_law.third_impedance: law.rhs[2],
+})
 
-# # Check if derived ABCD-parameters are same as declared.
-# # assert expr_equals(matrix_derived_2[0], law.rhs[0])
-# # assert expr_equals(matrix_derived_2[1], law.rhs[1])
-# # assert expr_equals(matrix_derived_2[2], law.rhs[2])
+# Help SymPy by replacing all instances of `expression` to single symbol
+expression_symbol = symbols("expression_symbol")
+matrix_circuit_law_solved = matrix_circuit_law_solved.subs({
+    expression: 2 * expression_symbol,
+    expression / 2: expression_symbol,
+    expression.expand(): 2 * expression_symbol,
+    expression.expand() / 2: expression_symbol,
+})
+# From `tanh` definition
+matrix_circuit_law_solved = matrix_circuit_law_solved.subs(
+    tanh(expression_symbol), sinh(expression_symbol) / cosh(expression_symbol))
+
+# Check if solution results in all zeroes.
+assert expr_equals(matrix_circuit_law_solved.lhs[0], matrix_circuit_law_solved.rhs[0])
+assert expr_equals(matrix_circuit_law_solved.lhs[1], matrix_circuit_law_solved.rhs[1])
+assert expr_equals(matrix_circuit_law_solved.lhs[2], matrix_circuit_law_solved.rhs[2])
 
 
 def print_law() -> str:
