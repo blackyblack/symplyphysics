@@ -7,7 +7,11 @@ from symplyphysics.laws.dynamics.vector import acceleration_from_force as accele
 # Description
 ## Newton's second law: a = F / m
 
-law = Eq(symbols.kinematic.acceleration, symbols.dynamics.force / symbols.basic.mass)
+acceleration = symbols.kinematic.acceleration
+force = symbols.dynamics.force
+mass = symbols.basic.mass
+
+law = Eq(acceleration, force / mass)
 
 # Derive the same law from vector form
 
@@ -24,12 +28,12 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(mass_=symbols.basic.mass, acceleration_=symbols.kinematic.acceleration)
-@validate_output(symbols.dynamics.force)
+@validate_input(mass_=mass, acceleration_=acceleration)
+@validate_output(force)
 def calculate_force(mass_: Quantity, acceleration_: Quantity) -> Quantity:
-    result_force_expr = solve(law, symbols.dynamics.force, dict=True)[0][symbols.dynamics.force]
+    result_force_expr = solve(law, force, dict=True)[0][force]
     result_expr = result_force_expr.subs({
-        symbols.basic.mass: mass_,
-        symbols.kinematic.acceleration: acceleration_
+        mass: mass_,
+        acceleration: acceleration_
     })
     return Quantity(result_expr)
