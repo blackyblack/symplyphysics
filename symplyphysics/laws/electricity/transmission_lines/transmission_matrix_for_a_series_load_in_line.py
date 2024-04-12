@@ -31,7 +31,7 @@ parameter_current_to_current = Symbol("parameter_current_to_current", dimensionl
 load_impedance = Symbol("load_impedance", units.impedance)
 
 law = Eq(Matrix([[parameter_voltage_to_voltage, parameter_impedance], [parameter_conductance, parameter_current_to_current]]),
-         Matrix([[1, load_impedance], [Quantity(0 * units.siemens), 1]]))
+         Matrix([[1, load_impedance], [0, 1]]))
 
 
 def print_law() -> str:
@@ -39,7 +39,7 @@ def print_law() -> str:
 
 
 @validate_input(load_impedance_=load_impedance)
-def calculate_transmission_matrix(load_impedance_: Quantity) -> tuple[tuple[float, Quantity], tuple[Quantity, float]]:
+def calculate_transmission_matrix(load_impedance_: Quantity) -> tuple[tuple[float, Quantity], tuple[float, float]]:
     result = solve(law, [parameter_voltage_to_voltage, parameter_impedance, parameter_conductance, parameter_current_to_current], dict=True)[0]
     result_A = result[parameter_voltage_to_voltage]
     result_B = result[parameter_impedance]
@@ -50,8 +50,7 @@ def calculate_transmission_matrix(load_impedance_: Quantity) -> tuple[tuple[floa
     }
     result_A = float(convert_to(Quantity(result_A.subs(substitutions)), S.One).evalf())
     result_B = Quantity(result_B.subs(substitutions))
-    result_C = Quantity(result_C.subs(substitutions))
+    result_C = float(convert_to(Quantity(result_C.subs(substitutions)), S.One).evalf())
     result_D = float(convert_to(Quantity(result_D.subs(substitutions)), S.One).evalf())
     assert_equivalent_dimension(result_B, 'result_B', "calculate_transmission_matrix", units.impedance)
-    assert_equivalent_dimension(result_C, 'result_C', "calculate_transmission_matrix", units.conductance)
     return ((result_A, result_B), (result_C, result_D))

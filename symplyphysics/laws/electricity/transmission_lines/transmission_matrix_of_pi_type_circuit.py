@@ -50,21 +50,18 @@ parallel_law_applied_1 = parallel_law.law.subs({
     parallel_law.load_impedance: first_impedance,
 })
 matrix_derived_1 = solve(parallel_law_applied_1, [parallel_law.parameter_voltage_to_voltage, parallel_law.parameter_impedance, parallel_law.parameter_conductance, parallel_law.parameter_current_to_current], dict=True)[0]
-matrix_derived_1[parallel_law.parameter_impedance] = matrix_derived_1[parallel_law.parameter_impedance].scale_factor
 matrix_derived_1 = Matrix([[matrix_derived_1[parallel_law.parameter_voltage_to_voltage], matrix_derived_1[parallel_law.parameter_impedance]], [matrix_derived_1[parallel_law.parameter_conductance], matrix_derived_1[parallel_law.parameter_current_to_current]]])
 
 series_law_applied = series_law.law.subs({
     series_law.load_impedance: third_impedance,
 })
 matrix_derived_3 = solve(series_law_applied, [series_law.parameter_voltage_to_voltage, series_law.parameter_impedance, series_law.parameter_conductance, series_law.parameter_current_to_current], dict=True)[0]
-matrix_derived_3[series_law.parameter_conductance] = matrix_derived_3[series_law.parameter_conductance].scale_factor
 matrix_derived_3 = Matrix([[matrix_derived_3[series_law.parameter_voltage_to_voltage], matrix_derived_3[series_law.parameter_impedance]], [matrix_derived_3[series_law.parameter_conductance], matrix_derived_3[series_law.parameter_current_to_current]]])
 
 parallel_law_applied_2 = parallel_law.law.subs({
     parallel_law.load_impedance: second_impedance,
 })
 matrix_derived_2 = solve(parallel_law_applied_2, [parallel_law.parameter_voltage_to_voltage, parallel_law.parameter_impedance, parallel_law.parameter_conductance, parallel_law.parameter_current_to_current], dict=True)[0]
-matrix_derived_2[parallel_law.parameter_impedance] = matrix_derived_2[parallel_law.parameter_impedance].scale_factor
 matrix_derived_2 = Matrix([[matrix_derived_2[parallel_law.parameter_voltage_to_voltage], matrix_derived_2[parallel_law.parameter_impedance]], [matrix_derived_2[parallel_law.parameter_conductance], matrix_derived_2[parallel_law.parameter_current_to_current]]])
 
 # When cascading elements, the final transfer matrix will be equal to the product of the matrices of each element.
