@@ -1,4 +1,4 @@
-from sympy import Eq, solve, Matrix, S
+from sympy import Eq, solve, Matrix
 from symplyphysics import (
     units,
     Quantity,
@@ -6,7 +6,6 @@ from symplyphysics import (
     print_expression,
     validate_input,
     dimensionless,
-    convert_to,
     convert_to_float
 )
 from symplyphysics.core.dimensions import assert_equivalent_dimension
