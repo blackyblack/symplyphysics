@@ -67,6 +67,9 @@ _free_energy = free_energy_def.law.rhs.subs({
     free_energy_def.entropy: entropy,
 })
 
+# The differential of free energy can be found by adding up the products of
+# the partial derivative of free energy with respect to a thermodynamic quantity
+# and the infinitesimal change of that quantity
 _free_energy_change = (
     _free_energy.diff(_temperature) * temperature_change
     + _free_energy.diff(entropy) * _entropy_change
