@@ -3,7 +3,7 @@ from sympy import symbols, Point, Line, Expr, solve
 def two_point_function(p1: Point, p2: Point, x: Expr) -> Expr:
     """Constructs a linear function of ``x`` using two points ``p1`` and ``p2``.
     
-    Raises ``NotImplementedError`` if the line equation does not depend on ``y``.
+    Returns ``NotImplemented`` if the line equation does not depend on ``y``.
     """
 
     xsym = x
