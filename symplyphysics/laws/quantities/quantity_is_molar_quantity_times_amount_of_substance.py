@@ -6,6 +6,7 @@ from symplyphysics import (
     print_expression,
     validate_input,
 )
+from symplyphysics.core.dimensions import assert_equivalent_dimension
 
 # Description
 ## An extensive quantity of interest can be obtained by multiplying the corresponding molar-specific
@@ -37,5 +38,12 @@ def calculate_extensive_quantity(
         amount_of_substance: amount_of_substance_,
     })
     result = Quantity(result_expr)
+
+    assert_equivalent_dimension(
+        molar_quantity_,
+        "molar_quantity_",
+        "calculate_extensive_quantity",
+        result.dimension / units.amount_of_substance,
+    )
 
     return result
