@@ -40,10 +40,10 @@ def calculate_extensive_quantity(
     result = Quantity(result_expr)
 
     assert_equivalent_dimension(
-        molar_quantity_,
-        "molar_quantity_",
+        result,
+        "return",
         "calculate_extensive_quantity",
-        result.dimension / units.amount_of_substance,
+        molar_quantity_.dimension * units.amount_of_substance,
     )
 
     return result
