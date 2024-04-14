@@ -16,7 +16,7 @@ from symplyphysics import (
 # Law: T* = T / T_c
 ## T* - reduced temperature
 ## T - temperature
-## T_c - critical temperature
+## T_c - [critical temperature](./critical_temperature.py)
 
 reduced_temperature = Symbol("reduced_temperature", dimensionless)
 temperature = Symbol("temperature", units.temperature)
