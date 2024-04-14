@@ -1,20 +1,18 @@
-from sympy import symbols, Point, Line, Expr, solve
+from sympy import symbols, Point2D, Line2D, Expr, solve
 
-def two_point_function(p1: Point, p2: Point, x: Expr) -> Expr:
+def two_point_function(p1: Point2D | tuple[Expr, Expr], p2: Point2D | tuple[Expr, Expr], x: Expr) -> Expr:
     """Constructs a linear function of ``x`` using two points ``p1`` and ``p2``.
     
-    Returns ``NotImplemented`` if the line equation does not depend on ``y``.
+    Raises ``ValueError`` if the line equation does not depend on ``y`` or if the points are not unique.
     """
 
-    xsym = x
-
-    x, y = symbols("x y")
-    line = Line(p1, p2)
-    equation = line.equation(x=x, y=y)  # type: ignore[attr-defined]
+    x_, y_ = symbols("x y")
+    line = Line2D(p1, p2)
+    equation = line.equation(x=x_, y=y_)
     
-    y_functions = solve(equation, y)
+    y_functions = solve(equation, y_)
 
     if not y_functions:
-        return NotImplemented
+        raise ValueError("Line equation does not depend on y.")
 
-    return y_functions[0].subs(x, xsym)
+    return y_functions[0].subs(x_, x)
