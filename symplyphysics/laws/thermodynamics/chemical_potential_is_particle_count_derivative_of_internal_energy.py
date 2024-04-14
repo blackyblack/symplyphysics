@@ -1,4 +1,4 @@
-from sympy import Eq, Derivative, Point
+from sympy import Eq, Derivative, Point2D
 from symplyphysics import (
     units,
     dimensionless,
@@ -30,6 +30,10 @@ particle_count = Symbol("particle_count", dimensionless)
 entropy = Symbol("entropy", units.energy / units.temperature)
 volume = Symbol("volume", units.volume)
 
+# Note that `entropy` and `volume` are only used to show that the internal energy
+# function depends on them and they are held constant during differentiation with
+# respect to `particle_count`.
+
 law = Eq(
     chemical_potential,
     Derivative(internal_energy(entropy, volume, particle_count), particle_count),
@@ -54,8 +58,8 @@ def calculate_chemical_potential(
     internal_energy_after_: Quantity,
 ) -> Quantity:
     internal_energy_ = two_point_function(
-        Point(particle_count_before_, internal_energy_before_),
-        Point(particle_count_after_, internal_energy_after_),
+        Point2D(particle_count_before_, internal_energy_before_),
+        Point2D(particle_count_after_, internal_energy_after_),
         x=particle_count,
     )
 
