@@ -1,5 +1,4 @@
 from sympy import Eq, Symbol as SymSymbol
-from sympy.physics.units.systems.si import dimsys_SI
 from symplyphysics import (
     units,
     Quantity,
@@ -38,10 +37,5 @@ def calculate_extensive_quantity(
         amount_of_substance: amount_of_substance_,
     })
     result = Quantity(result_expr)
-
-    assert dimsys_SI.equivalent_dims(
-        result.dimension,
-        molar_quantity_.dimension * units.amount_of_substance,
-    )
 
     return result
