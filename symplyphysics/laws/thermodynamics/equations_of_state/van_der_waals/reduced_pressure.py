@@ -16,7 +16,7 @@ from symplyphysics import (
 # Law: p* = p / p_c
 ## p* - reduced pressure
 ## p - pressure
-## p_c - critical pressure
+## p_c - [critical pressure](./critical_pressure.py)
 
 reduced_pressure = Symbol("reduced_pressure", dimensionless)
 pressure = Symbol("pressure", units.pressure)
