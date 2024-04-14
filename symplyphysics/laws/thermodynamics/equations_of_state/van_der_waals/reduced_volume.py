@@ -16,7 +16,7 @@ from symplyphysics import (
 # Law: V* = V / V_c
 ## V* - reduced volume
 ## V - volume
-## V_c - critical volume
+## V_c - [critical volume](./critical_volume.py)
 
 # Note: one can also use specific or molar volumes in the right-hand side
 
