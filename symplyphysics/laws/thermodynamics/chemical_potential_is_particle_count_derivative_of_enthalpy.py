@@ -18,7 +18,7 @@ from symplyphysics.core.geometry.line import two_point_function
 
 # Law: mu = (dH/dN)_(S, p)
 ## mu - chemical potential
-## H = H(S, p, N) - [enthalpy](./enthalpy_is_enthalpy_plus_pressure_energy.py)
+## H = H(S, p, N) - [enthalpy](./enthalpy_is_internal_energy_plus_pressure_energy.py)
 ## N - particle count
 ## S - entropy
 ## p - pressure
@@ -60,7 +60,7 @@ def calculate_chemical_potential(
     enthalpy_ = two_point_function(
         Point2D(particle_count_before_, enthalpy_before_),
         Point2D(particle_count_after_, enthalpy_after_),
-        x=particle_count,
+        particle_count,
     )
 
     result = law.rhs.subs(
