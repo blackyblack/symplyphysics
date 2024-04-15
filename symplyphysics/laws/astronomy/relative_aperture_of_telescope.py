@@ -1,4 +1,4 @@
-from sympy import (Eq, solve, S)
+from sympy import Eq, solve
 from symplyphysics import (
     units,
     Quantity,
@@ -7,7 +7,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
     dimensionless,
-    convert_to,
+    convert_to_float,
 )
 
 # Description
@@ -42,4 +42,4 @@ def calculate_relative_aperture(lens_diameter_: Quantity, focal_length_lens_: Qu
         lens_diameter: lens_diameter_,
         focal_length_lens: focal_length_lens_,
     })
-    return float(convert_to(Quantity(result_expr), S.One).evalf())
+    return convert_to_float(result_expr)

@@ -1,6 +1,5 @@
-from sympy import Eq, exp, S
+from sympy import Eq, exp
 from symplyphysics import (
-    convert_to,
     units,
     dimensionless,
     Quantity,
@@ -10,6 +9,7 @@ from symplyphysics import (
     validate_output,
     symbols,
     clone_symbol,
+    convert_to_float,
 )
 
 # Description
@@ -48,4 +48,4 @@ def calculate_boltzmann_factor(
         energy_of_state: energy_of_state_,
         equilibrium_temperature: equilibrium_temperature_,
     })
-    return float(convert_to(Quantity(result), S.One))
+    return convert_to_float(result)

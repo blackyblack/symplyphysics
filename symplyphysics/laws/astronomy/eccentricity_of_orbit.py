@@ -1,4 +1,4 @@
-from sympy import (Eq, solve, sqrt, S)
+from sympy import Eq, solve, sqrt
 from symplyphysics import (
     units,
     Quantity,
@@ -6,8 +6,8 @@ from symplyphysics import (
     print_expression,
     validate_input,
     validate_output,
-    convert_to,
     dimensionless,
+    convert_to_float,
 )
 
 # Description
@@ -41,4 +41,4 @@ def calculate_eccentricity(small_semi_axis_: Quantity, large_semi_axis_: Quantit
         small_semi_axis: small_semi_axis_,
         large_semi_axis: large_semi_axis_,
     })
-    return float(convert_to(Quantity(result_expr), S.One).evalf())
+    return convert_to_float(result_expr)

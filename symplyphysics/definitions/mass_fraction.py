@@ -1,6 +1,15 @@
-from sympy import (Eq, solve, S)
-from symplyphysics import (Quantity, Symbol, print_expression, validate_input, validate_output,
-    dimensionless, convert_to, clone_symbol, symbols)
+from sympy import Eq, solve
+from symplyphysics import (
+    Quantity,
+    Symbol,
+    print_expression,
+    validate_input,
+    validate_output,
+    dimensionless,
+    convert_to_float,
+    clone_symbol,
+    symbols,
+)
 from symplyphysics.core.symbols.fraction import Fraction
 
 # Description
@@ -33,4 +42,4 @@ def calculate_mass_fraction(mass_of_component_: Quantity, mass_of_mixture_: Quan
         mass_of_mixture: mass_of_mixture_
     })
     result = Quantity(result_expr)
-    return Fraction(convert_to(result, S.One).evalf())
+    return Fraction(convert_to_float(result))

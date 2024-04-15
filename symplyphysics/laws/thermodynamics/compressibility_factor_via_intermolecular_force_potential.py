@@ -1,4 +1,4 @@
-from sympy import Eq, Integral, pi, exp, S, Piecewise
+from sympy import Eq, Integral, pi, exp, S
 from symplyphysics import (
     units,
     dimensionless,
@@ -8,9 +8,10 @@ from symplyphysics import (
     print_expression,
     validate_input,
     validate_output,
-    convert_to,
+    convert_to_float,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.chemistry.potential_energy_models import hard_spheres_potential
 
 # Description
 ## The virial equation describes the deviation of a real gas from ideal gas behaviour. The virial coefficients
@@ -49,16 +50,16 @@ law = Eq(
 
 # Calculate the compressibility factor for the model of hard spheres
 
-_sphere_radius = Symbol("sphere_radius", units.length, positive=True)
+_sphere_diameter = Symbol("sphere_diameter", units.length, positive=True)
 
-_hard_spheres_potential = Piecewise(
-    (S.Infinity, intermolecular_distance < _sphere_radius),
-    (0, intermolecular_distance >= _sphere_radius),
-)
+_hard_spheres_potential = hard_spheres_potential.law.rhs.subs({
+    hard_spheres_potential.distance: intermolecular_distance,
+    hard_spheres_potential.sphere_diameter: _sphere_diameter,
+})
 
-_hard_spheres_compressibility_factor = law.rhs.subs(
-    intermolecular_force_potential(intermolecular_distance), _hard_spheres_potential
-).doit()
+_hard_spheres_compressibility_factor = law.rhs.subs({
+    intermolecular_force_potential(intermolecular_distance): _hard_spheres_potential,
+}).doit()
 
 # Note that the compressibility factor does not depend on temperature in this model
 assert expr_equals(_hard_spheres_compressibility_factor.diff(temperature), 0)
@@ -71,19 +72,19 @@ def print_law() -> str:
 @validate_input(
     number_of_particles_=number_of_particles,
     volume_=volume,
-    sphere_radius_=intermolecular_distance,
+    sphere_diameter_=intermolecular_distance,
 )
 @validate_output(compressibility_factor)
 def calculate_compressibility_factor(
     number_of_particles_: int,
     volume_: Quantity,
-    sphere_radius_: Quantity,
+    sphere_diameter_: Quantity,
 ) -> float:
     # Calculate for the model of hard spheres
 
     result = _hard_spheres_compressibility_factor.subs({
         number_of_particles: number_of_particles_,
         volume: volume_,
-        _sphere_radius: sphere_radius_,
+        _sphere_diameter: sphere_diameter_,
     })
-    return float(convert_to(Quantity(result), S.One))
+    return convert_to_float(result)

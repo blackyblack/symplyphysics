@@ -1,4 +1,4 @@
-from sympy import Eq, S
+from sympy import Eq
 from symplyphysics import (
     units,
     dimensionless,
@@ -8,7 +8,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    convert_to,
+    convert_to_float,
 )
 
 # Description
@@ -69,4 +69,4 @@ def calculate_compressibility_factor(
         amount_of_substance: amount_of_substance_,
         temperature: temperature_,
     })
-    return float(convert_to(Quantity(result), S.One))
+    return convert_to_float(result)

@@ -1,4 +1,4 @@
-from sympy import Eq, S
+from sympy import Eq
 from symplyphysics import (
     units,
     dimensionless,
@@ -7,7 +7,7 @@ from symplyphysics import (
     print_expression,
     validate_input,
     validate_output,
-    convert_to,
+    convert_to_float,
 )
 
 # Description
@@ -48,4 +48,4 @@ def calculate_heat_capacity_ratio(
         isobaric_heat_capacity: isobaric_heat_capacity_,
         isochoric_heat_capacity: isochoric_heat_capacity_,
     })
-    return float(convert_to(Quantity(result), S.One))
+    return convert_to_float(result)

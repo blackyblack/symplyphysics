@@ -1,5 +1,5 @@
 from typing import Any, Callable, TypeAlias
-from sympy import Abs, Expr, S, Derivative, Function as SymFunction, Basic
+from sympy import Abs, Expr, S, Derivative, Function as SymFunction, Basic, Min, Number
 from sympy.core.add import Add
 from sympy.core.mul import Mul
 from sympy.core.power import Pow
@@ -63,6 +63,28 @@ def collect_factor_and_dimension(expr: Basic) -> tuple[Basic, Dimension]:
         (f, d) = _collect_add(Add(*expr.args))
         return (expr.func(f), d)
 
+    def _collect_min(expr: Min) -> tuple[Basic, Dimension]:
+        (factor, dim) = collect_factor_and_dimension(expr.args[0])
+        if not factor.is_Number:
+            raise ValueError(f"Min should contain Number arguments. Got {factor}")
+        min_expr = factor
+        for addend in expr.args[1:]:
+            (addend_factor, addend_dim) = collect_factor_and_dimension(addend)
+            # automatically convert zero to the dimension of it's additives
+            if dim != addend_dim and not SI.get_dimension_system().equivalent_dims(dim, addend_dim):
+                if factor == S.Zero:
+                    dim = addend_dim
+                elif addend_factor == S.Zero:
+                    addend_dim = dim
+            if dim != addend_dim and not SI.get_dimension_system().equivalent_dims(dim, addend_dim):
+                raise ValueError(f"Dimension of '{addend}' is {addend_dim}, but it should be {dim}")
+            if not addend_factor.is_Number:
+                raise ValueError(f"Min should contain Number arguments. Got {addend_factor}")
+            min_number = Number(min_expr)
+            addend_number = Number(addend_factor)
+            min_expr = min_expr if min_number <= addend_number else addend_factor
+        return (min_expr, dim)
+
     def _collect_function(expr: SymFunction) -> tuple[Basic, Dimension]:
         factors: list[Basic] = []
         for arg in expr.args:
@@ -83,6 +105,7 @@ def collect_factor_and_dimension(expr: Basic) -> tuple[Basic, Dimension]:
         Pow: _collect_pow,
         Add: _collect_add,
         Abs: _collect_abs,
+        Min: _collect_min,
         Derivative: _unsupported_derivative,
         SymFunction: _collect_function,
         Dimension: _collect_dimension,
@@ -106,6 +129,9 @@ def assert_equivalent_dimension(arg: SymQuantity | ScalarValue | Dimension, para
     (scale_factor, dimension) = collect_factor_and_dimension(arg)
     # zero can be of any dimension
     if scale_factor == S.Zero:
+        return
+    # infinity can be of any dimension
+    if scale_factor == S.Infinity:
         return
     #HACK: this allows to treat angle type as dimensionless
     arg_dimension = dimension.subs("angle", S.One)

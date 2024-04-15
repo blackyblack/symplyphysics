@@ -1,4 +1,4 @@
-from sympy import (Eq, solve, S)
+from sympy import Eq, solve
 from symplyphysics import (
     units,
     Quantity,
@@ -6,8 +6,8 @@ from symplyphysics import (
     print_expression,
     validate_input,
     validate_output,
-    convert_to,
     dimensionless,
+    convert_to_float,
 )
 
 # Description
@@ -40,4 +40,4 @@ def calculate_angular_magnification(focal_length_lens_: Quantity,
         focal_length_lens: focal_length_lens_,
         focal_length_eyepiece: focal_length_eyepiece_,
     })
-    return float(convert_to(Quantity(result_expr), S.One).evalf())
+    return convert_to_float(result_expr)
