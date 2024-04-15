@@ -9,8 +9,15 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import (
-    equation, critical_molar_volume, critical_pressure, critical_temperature,
+    equation,
+    critical_molar_volume,
+    critical_pressure,
+    critical_temperature,
+    reduced_pressure as reduced_pressure_law,
+    reduced_volume as reduced_volume_law,
+    reduced_temperature as reduced_temperature_law,
 )
+from symplyphysics.laws.quantities import quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law
 
 # Description
 ## The dimensionless form of the van der Waals equation of state features reduced quantities,
@@ -49,10 +56,36 @@ _critical_temperature_expr = critical_temperature.law.rhs.subs({
     critical_temperature.molecules_volume_parameter: equation.molecules_volume_parameter,
 })
 
+_pressure = solve(
+    reduced_pressure_law.law, reduced_pressure_law.pressure
+)[0].subs({
+    reduced_pressure_law.reduced_pressure: reduced_pressure,
+    reduced_pressure_law.critical_pressure: _critical_pressure_expr,
+})
+
+_molar_volume = solve(
+    reduced_volume_law.law, reduced_volume_law.volume
+)[0].subs({
+    reduced_volume_law.reduced_volume: reduced_volume,
+    reduced_volume_law.critical_volume: _critical_molar_volume_expr,
+})
+
+_volume = molar_qty_law.law.rhs.subs({
+    molar_qty_law.molar_quantity: _molar_volume,
+    molar_qty_law.amount_of_substance: equation.amount_of_substance,
+})
+
+_temperature = solve(
+    reduced_temperature_law.law, reduced_temperature_law.temperature
+)[0].subs({
+    reduced_temperature_law.reduced_temperature: reduced_temperature,
+    reduced_temperature_law.critical_temperature: _critical_temperature_expr,
+})
+
 _reduced_eqn = equation.law.subs({
-    equation.pressure: reduced_pressure * _critical_pressure_expr,
-    equation.volume: reduced_volume * _critical_molar_volume_expr * equation.amount_of_substance,
-    equation.temperature: reduced_temperature * _critical_temperature_expr,
+    equation.pressure: _pressure,
+    equation.volume: _volume,
+    equation.temperature: _temperature,
 })
 
 _reduced_temperature_derived = solve(_reduced_eqn, reduced_temperature)[0]
