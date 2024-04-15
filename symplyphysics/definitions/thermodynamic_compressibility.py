@@ -59,7 +59,7 @@ def calculate_compressibility(
     volume_function = two_point_function(
         Point2D(pressure_before_, volume_before_),
         Point2D(pressure_after_, volume_after_),
-        x=pressure,
+        pressure,
     )
     expr = definition.rhs.subs(volume(pressure), volume_function).doit()
     result = expr.subs(pressure, pressure_after_)

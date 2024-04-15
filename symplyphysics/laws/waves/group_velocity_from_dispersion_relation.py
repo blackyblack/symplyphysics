@@ -53,7 +53,7 @@ def calculate_group_velocity(
     dispersion_relation_ = two_point_function(
         Point2D(wavenumber_before_, angular_frequency_before_),
         Point2D(wavenumber_after_, angular_frequency_after_),
-        x=wavenumber,
+        wavenumber,
     )
     result = law.rhs.subs(
         dispersion_relation(wavenumber),

@@ -56,7 +56,7 @@ def calculate_volumetric_expansion_coefficient(
     volume_function = two_point_function(
         Point2D(temperature_before_, volume_before_),
         Point2D(temperature_after_, volume_after_),
-        x=temperature,
+        temperature,
     )
     result = ((definition.rhs).subs(volume(temperature),
         volume_function).doit().subs(temperature, temperature_after_))
