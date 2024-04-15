@@ -1,4 +1,4 @@
-from sympy import Eq, solve, pi
+from sympy import Eq, solve, pi, Symbol as SymSymbol
 from sympy.physics.units import gravitational_constant
 from symplyphysics import (
     units,
@@ -9,6 +9,17 @@ from symplyphysics import (
     validate_output,
     clone_symbol,
     symbols,
+)
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.dynamics import (
+    acceleration_from_force as newtons_second_law,
+)
+from symplyphysics.laws.gravity import (
+    gravity_force_from_mass_and_distance as gravity_law,
+)
+from symplyphysics.laws.kinematic import (
+    centripetal_acceleration_is_squared_angular_velocity_times_radius as centripetal_law,
+    period_from_angular_frequency as period_law,
 )
 
 # Description
@@ -30,8 +41,41 @@ law = Eq(
     4 * pi**2 / (gravitational_constant * attracting_mass) * semimajor_axis**3,
 )
 
-# TODO: derive law from Newton's second law of motion
+# Derive law from Newton's second law of motion
 
+_angular_speed = SymSymbol("angular_speed", positive=True)
+_radius = SymSymbol("radius", nonnegative=True)
+_attracted_mass = newtons_second_law.mass
+
+_acceleration_expr = centripetal_law.law.rhs.subs({
+    centripetal_law.angular_velocity: _angular_speed,
+    centripetal_law.curve_radius: _radius,
+})
+
+_force_expr = gravity_law.law.rhs.subs({
+    gravity_law.first_mass: attracting_mass,
+    gravity_law.distance_between_mass_centers: _radius,
+    gravity_law.second_mass: _attracted_mass,
+})
+
+_newtons_eqn = newtons_second_law.law.subs({
+    newtons_second_law.acceleration: _acceleration_expr,
+    newtons_second_law.force: _force_expr,
+})
+
+_angular_speed_expr = solve(_newtons_eqn, _angular_speed)[1]
+
+# If the eccentricity of the planet's orbit is not too big, which is the case for most
+# planets of the solar system, we can substitute the radius with the semimajor axis of
+# the orbit.
+_period_derived = period_law.law.rhs.subs({
+    period_law.circular_frequency: _angular_speed_expr,
+    _radius: semimajor_axis,
+})
+
+_period_from_law = solve(law, rotation_period)[0]
+
+assert expr_equals(_period_derived, _period_from_law)
 
 def print_law() -> str:
     return print_expression(law)
