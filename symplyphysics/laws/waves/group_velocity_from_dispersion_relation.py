@@ -9,6 +9,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
 )
+from symplyphysics.core.geometry.line import two_point_function, Point2D
 
 # Description
 ## Waves can form a group, called wave packets. The velocity with which a wave packet travels
@@ -49,8 +50,11 @@ def calculate_group_velocity(
     wavenumber_before_: Quantity,
     wavenumber_after_: Quantity,
 ) -> Quantity:
-    dispersion_relation_ = ((angular_frequency_after_ - angular_frequency_before_) *
-        (wavenumber - wavenumber_before_) / (wavenumber_after_ - wavenumber_before_))
+    dispersion_relation_ = two_point_function(
+        Point2D(wavenumber_before_, angular_frequency_before_),
+        Point2D(wavenumber_after_, angular_frequency_after_),
+        wavenumber,
+    )
     result = law.rhs.subs(
         dispersion_relation(wavenumber),
         dispersion_relation_,
