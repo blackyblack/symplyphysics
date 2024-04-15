@@ -7,7 +7,7 @@ from symplyphysics import (
     prefixes,
     Quantity,
 )
-from symplyphysics.laws.waves import spectral_energy_density_of_black_body_radiation as plancks_radiation_law
+from symplyphysics.laws.waves.blackbody_radiation.planck import spectral_energy_density as plancks_radiation_law
 
 # Description
 ## The spectral energy density of electromagnetic radiation emitted from the Sun (assuming it is a black
