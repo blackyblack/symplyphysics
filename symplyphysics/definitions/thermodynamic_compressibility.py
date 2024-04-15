@@ -8,6 +8,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
 )
+from symplyphysics.core.geometry.line import two_point_function, Point2D
 
 # Description
 ## The compressibility, or the coefficient of compressibility, is a measure of the instantaneous
@@ -55,9 +56,10 @@ def calculate_compressibility(
 ) -> Quantity:
     # The value of the volume is calculated in the `pressure_after_` point
 
-    volume_function = (
-        volume_before_ +
-        (volume_after_ - volume_before_) * (pressure - pressure_before_) / (pressure_after_ - pressure_before_)
+    volume_function = two_point_function(
+        Point2D(pressure_before_, volume_before_),
+        Point2D(pressure_after_, volume_after_),
+        x=pressure,
     )
     expr = definition.rhs.subs(volume(pressure), volume_function).doit()
     result = expr.subs(pressure, pressure_after_)
