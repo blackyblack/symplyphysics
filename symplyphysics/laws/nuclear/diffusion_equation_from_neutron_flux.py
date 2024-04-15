@@ -1,4 +1,4 @@
-from sympy import (Eq, Expr, solve, symbols, S, simplify)
+from sympy import Eq, Expr, solve, symbols, simplify
 from sympy.vector import Laplacian
 from symplyphysics import (
     SI,
@@ -8,9 +8,9 @@ from symplyphysics import (
     Symbol,
     print_expression,
     dimensionless,
-    convert_to,
     validate_input,
     validate_output,
+    convert_to_float,
 )
 from symplyphysics.core.dimensions import collect_factor_and_dimension
 
@@ -105,4 +105,4 @@ def calculate_multiplication_factor(neutron_flux_function_: Expr, neutrons_per_f
     result_factor_expr = solve(result_expr, effective_multiplication_factor,
         dict=True)[0][effective_multiplication_factor]
     result_factor = Quantity(result_factor_expr)
-    return float(convert_to(result_factor, S.One).evalf())
+    return convert_to_float(Quantity(result_factor))

@@ -1,6 +1,14 @@
-from sympy import Eq, solve, S
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless, convert_to)
+from sympy import Eq, solve
+from symplyphysics import (
+    units,
+    Quantity,
+    Symbol,
+    print_expression,
+    validate_input,
+    validate_output,
+    dimensionless,
+    convert_to_float,
+)
 
 # Description
 # Nusselt number is the ratio of convective to conductive heat transfer at
@@ -48,4 +56,4 @@ def calculate_nusselt_number(heat_transfer_coefficient_: Quantity, characteristi
         thermal_conductivity: thermal_conductivity_
     })
     result = Quantity(result_applied)
-    return float(convert_to(result, S.One).evalf())
+    return convert_to_float(result)

@@ -5,9 +5,9 @@ from sympy.plotting import plot, plot_parametric
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import convert_to, units
 from symplyphysics.laws.thermodynamics import (
-    pressure_from_temperature_and_volume as ideal_gas_law,
     zero_heat_transfer as adiabatic_law,
 )
+from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as ideal_gas_law
 
 pressure, volume, temperature = symbols("pressure volume temperature", positive=True)
 

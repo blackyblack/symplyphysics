@@ -1,11 +1,13 @@
-from sympy import (
-    Eq,
-    solve,
-    log,
-    S,
+from sympy import Eq, solve, log
+from symplyphysics import (
+    Quantity,
+    Symbol,
+    print_expression,
+    validate_input,
+    validate_output,
+    dimensionless,
+    convert_to_float,
 )
-from symplyphysics import (Quantity, Symbol, print_expression, validate_input, validate_output,
-    dimensionless, convert_to)
 
 # Description
 ## The luminosity of a star is related to the absolute magnitude of the star.
@@ -33,4 +35,4 @@ def calculate_luminosity(absolute_magnitude_: float) -> float:
     result_expr = result_expr.subs({
         absolute_magnitude: absolute_magnitude_,
     })
-    return float(convert_to(Quantity(result_expr), S.One).evalf())
+    return convert_to_float(result_expr)

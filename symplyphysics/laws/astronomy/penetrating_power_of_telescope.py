@@ -1,11 +1,14 @@
-from sympy import (
-    Eq,
-    solve,
-    log,
-    S,
+from sympy import Eq, solve, log
+from symplyphysics import (
+    units,
+    Quantity,
+    Symbol,
+    print_expression,
+    validate_input,
+    validate_output,
+    dimensionless,
+    convert_to_float,
 )
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless, convert_to)
 
 # Description
 ## The penetrating force is the magnitude of the faintest stars visible with a telescope when observed at the zenith.
@@ -34,4 +37,4 @@ def calculate_penetrating_power(lens_diameter_: Quantity) -> float:
     result_expr = result_expr.subs({
         lens_diameter: lens_diameter_,
     })
-    return float(convert_to(Quantity(result_expr), S.One).evalf())
+    return convert_to_float(result_expr)

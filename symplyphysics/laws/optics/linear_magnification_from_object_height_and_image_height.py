@@ -1,6 +1,14 @@
-from sympy import (Eq, solve, S)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless, convert_to)
+from sympy import Eq, solve
+from symplyphysics import (
+    units,
+    Quantity,
+    Symbol,
+    print_expression,
+    validate_input,
+    validate_output,
+    dimensionless,
+    convert_to_float,
+)
 
 # Description
 ## Magnification, in optics, the size of an image relative to the size of the object creating it.
@@ -35,4 +43,4 @@ def calculate_magnification(image_height_: Quantity, object_height_: Quantity) -
         object_height: object_height_,
     })
     result = Quantity(result_magnification)
-    return float(convert_to(result, S.One).evalf())
+    return convert_to_float(result)

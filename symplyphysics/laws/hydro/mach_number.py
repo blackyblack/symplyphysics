@@ -1,6 +1,14 @@
-from sympy import Eq, solve, S
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless, convert_to)
+from sympy import Eq, solve
+from symplyphysics import (
+    units,
+    Quantity,
+    Symbol,
+    print_expression,
+    validate_input,
+    validate_output,
+    dimensionless,
+    convert_to_float,
+)
 
 # Description
 # The Mach number is a dimensionless quantity in fluid dynamics representing
@@ -30,4 +38,4 @@ def calculate_mach_number(velocity_: Quantity, speed_of_sound_: Quantity) -> flo
         speed_of_sound: speed_of_sound_,
     })
     result = Quantity(result_applied)
-    return float(convert_to(result, S.One).evalf())
+    return convert_to_float(result)

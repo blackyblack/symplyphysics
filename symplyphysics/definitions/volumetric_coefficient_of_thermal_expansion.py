@@ -27,14 +27,14 @@ volumetric_expansion_coefficient = Symbol("volumetric_expansion_coefficient", 1 
 volume = Function("volume", units.volume)
 temperature = symbols.thermodynamics.temperature
 
-law = Eq(
+definition = Eq(
     volumetric_expansion_coefficient,
     Derivative(volume(temperature), temperature) / volume(temperature),
 )
 
 
 def print_law() -> str:
-    return print_expression(law)
+    return print_expression(definition)
 
 
 @validate_input(
@@ -54,6 +54,6 @@ def calculate_volumetric_expansion_coefficient(
 
     volume_function = (volume_before_ + (volume_after_ - volume_before_) *
         (temperature - temperature_before_) / (temperature_after_ - temperature_before_))
-    result = ((law.rhs).subs(volume(temperature),
+    result = ((definition.rhs).subs(volume(temperature),
         volume_function).doit().subs(temperature, temperature_after_))
     return Quantity(result)
