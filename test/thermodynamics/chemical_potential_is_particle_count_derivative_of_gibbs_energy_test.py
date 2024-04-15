@@ -11,7 +11,7 @@ from symplyphysics.laws.thermodynamics import (
 )
 
 # Description
-## In a thermodynamic system, when the particle count changed from 100 to 102 particles, the free energy
+## In a thermodynamic system, when the particle count changed from 100 to 102 particles, the Gibbs energy
 ## increased from 80 J to 100 J. The chemical potential of the system is therefore 10 J.
 
 Args = namedtuple("Args", "n0 n1 g0 g1")
