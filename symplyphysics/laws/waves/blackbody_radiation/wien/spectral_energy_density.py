@@ -37,6 +37,8 @@ law = Eq(
     * exp(-1 * planck * radiation_frequency / (boltzmann_constant * equilibrium_temperature))
 )
 
+# TODO: derive from Planck's law of blackbody radiation
+
 
 def print_law() -> str:
     return print_expression(law)
