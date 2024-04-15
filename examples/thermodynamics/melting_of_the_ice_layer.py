@@ -7,8 +7,8 @@ from symplyphysics.laws.thermodynamics import (
     energy_to_melt_from_mass as energy_melting_law,
     sum_of_heat_transfer_is_zero as thermodinamics_law_1,
     thermal_energy_from_heat_capacity_and_temperature as thermal_energy_law,
-    heat_capacity_via_specific_heat_capacity as specific_capacity_law,
 )
+from symplyphysics.laws.quantities import quantity_is_specific_quantity_times_mass as specific_qty_law
 from symplyphysics.definitions import density_from_mass_volume as density_law
 
 # The 4.2 cm thick ice layer has a temperature of 0 °C.
@@ -56,9 +56,9 @@ energy_for_melting_ice_value = energy_melting_law.law.subs({
     energy_melting_law.specific_heat_melting: specific_heat_melting_of_ice
 }).rhs
 energy_from_cooling_water_value = thermal_energy_law.law.subs({
-    thermal_energy_law.heat_capacity: specific_capacity_law.law.rhs.subs({
-        specific_capacity_law.specific_heat_capacity: specific_heat_heating_of_water,
-        specific_capacity_law.mass: mass_of_water,
+    thermal_energy_law.heat_capacity: specific_qty_law.law.rhs.subs({
+        specific_qty_law.specific_quantity: specific_heat_heating_of_water,
+        specific_qty_law.mass: mass_of_water,
     }),
     thermal_energy_law.temperature_origin: temperature_of_water,
     thermal_energy_law.temperature_end: temperature_of_ice

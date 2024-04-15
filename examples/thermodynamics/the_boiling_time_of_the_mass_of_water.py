@@ -8,8 +8,8 @@ from symplyphysics.laws.thermodynamics import (
     energy_from_combustion as combustion_energy_law,
     energy_to_vaporization_from_mass as energy_to_vapor_law,
     thermal_energy_from_heat_capacity_and_temperature as heating_law,
-    heat_capacity_via_specific_heat_capacity as specific_capacity_law,
 )
+from symplyphysics.laws.quantities import quantity_is_specific_quantity_times_mass as specific_qty_law
 from symplyphysics.definitions import mass_flow_rate as mass_rate_law
 
 # Example from https://easyfizika.ru/zadachi/termodinamika/na-zazhzhennuyu-spirtovku-s-kpd-60-postavili-sosud-s-500-g-vody-pri-20-c-cherez-kakoe/
@@ -65,9 +65,9 @@ energy_from_combustion_alcohol_value = combustion_energy_law.law.subs({
 }).rhs
 
 energy_for_heating_water_value = heating_law.law.subs({
-    heating_law.heat_capacity: specific_capacity_law.law.rhs.subs({
-        specific_capacity_law.specific_heat_capacity: specific_heat_of_heating_water,
-        specific_capacity_law.mass: mass_of_water,
+    heating_law.heat_capacity: specific_qty_law.law.rhs.subs({
+        specific_qty_law.specific_quantity: specific_heat_of_heating_water,
+        specific_qty_law.mass: mass_of_water,
     }),
     heating_law.temperature_origin: temperature_of_water,
     heating_law.temperature_end: temperature_of_vaporization_water

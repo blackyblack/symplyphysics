@@ -8,8 +8,8 @@ from symplyphysics.laws.thermodynamics import (
     energy_to_melt_from_mass as energy_melting_law,
     sum_of_heat_transfer_is_zero as thermodinamics_law_1,
     thermal_energy_from_heat_capacity_and_temperature as thermal_energy_law,
-    heat_capacity_via_specific_heat_capacity as specific_capacity_law,
 )
+from symplyphysics.laws.quantities import quantity_is_specific_quantity_times_mass as specific_qty_law
 from symplyphysics.definitions import density_from_mass_volume as density_law
 
 # Example from https://easyfizika.ru/zadachi/termodinamika/vannu-emkostyu-100-litrov-neobhodimo-zapolnit-vodoj-imeyushhej-temperaturu-30-c/
@@ -51,18 +51,18 @@ mass_of_hot_water_value = solve(mass_of_all_water_equation, mass_of_hot_water,
     dict=True)[0][mass_of_hot_water]
 
 energy_cooling_hot_water = thermal_energy_law.law.subs({
-    thermal_energy_law.heat_capacity: specific_capacity_law.law.rhs.subs({
-        specific_capacity_law.specific_heat_capacity: specific_heat_heating_water,
-        specific_capacity_law.mass: mass_of_hot_water_value,
+    thermal_energy_law.heat_capacity: specific_qty_law.law.rhs.subs({
+        specific_qty_law.specific_quantity: specific_heat_heating_water,
+        specific_qty_law.mass: mass_of_hot_water_value,
     }),
     thermal_energy_law.temperature_origin: temperature_of_hot_water,
     thermal_energy_law.temperature_end: temperature_end,
 })
 
 energy_to_heating_ice_equation = thermal_energy_law.law.subs({
-    thermal_energy_law.heat_capacity: specific_capacity_law.law.rhs.subs({
-        specific_capacity_law.specific_heat_capacity: specific_heat_heating_ice,
-        specific_capacity_law.mass: mass_of_ice,
+    thermal_energy_law.heat_capacity: specific_qty_law.law.rhs.subs({
+        specific_qty_law.specific_quantity: specific_heat_heating_ice,
+        specific_qty_law.mass: mass_of_ice,
     }),
     thermal_energy_law.temperature_origin: temperature_of_ice,
     thermal_energy_law.temperature_end: temperature_melt_ice
@@ -74,9 +74,9 @@ energy_to_melt_ice_equation = energy_melting_law.law.subs({
 })
 
 energy_to_heat_melted_ice_equation = thermal_energy_law.law.subs({
-    thermal_energy_law.heat_capacity: specific_capacity_law.law.rhs.subs({
-        specific_capacity_law.specific_heat_capacity: specific_heat_heating_water,
-        specific_capacity_law.mass: mass_of_ice,
+    thermal_energy_law.heat_capacity: specific_qty_law.law.rhs.subs({
+        specific_qty_law.specific_quantity: specific_heat_heating_water,
+        specific_qty_law.mass: mass_of_ice,
     }),
     thermal_energy_law.temperature_origin: temperature_melt_ice,
     thermal_energy_law.temperature_end: temperature_end

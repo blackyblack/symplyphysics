@@ -9,8 +9,8 @@ from symplyphysics.definitions import (
 )
 from symplyphysics.laws.thermodynamics import (
     thermal_energy_from_heat_capacity_and_temperature as thermal_energy_law,
-    heat_capacity_via_specific_heat_capacity as specific_capacity_law,
 )
+from symplyphysics.laws.quantities import quantity_is_specific_quantity_times_mass as specific_qty_law
 
 # The household electric kettle heated 0.5 liters of water from 20 degree Celsius to boiling.
 # The power of the kettle is 1500 watts. How long did the heating process take?
@@ -44,9 +44,9 @@ heat_via_power = dsolve(
 ).rhs
 
 heat_transferred = thermal_energy_law.law.rhs.subs({
-    thermal_energy_law.heat_capacity: specific_capacity_law.law.rhs.subs({
-        specific_capacity_law.specific_heat_capacity: water_heat_capacity,
-        specific_capacity_law.mass: water_mass,
+    thermal_energy_law.heat_capacity: specific_qty_law.law.rhs.subs({
+        specific_qty_law.specific_quantity: water_heat_capacity,
+        specific_qty_law.mass: water_mass,
     }),
     thermal_energy_law.temperature_origin: initial_temperature_kelvin,
     thermal_energy_law.temperature_end: final_temperature_kelvin,

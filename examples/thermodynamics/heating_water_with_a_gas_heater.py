@@ -7,8 +7,8 @@ from symplyphysics.laws.electricity import power_factor_from_active_and_full_pow
 from symplyphysics.laws.thermodynamics import (
     energy_from_combustion as combustion_energy_law,
     thermal_energy_from_heat_capacity_and_temperature as thermal_energy_law,
-    heat_capacity_via_specific_heat_capacity as specific_capacity_law,
 )
+from symplyphysics.laws.quantities import quantity_is_specific_quantity_times_mass as specific_qty_law
 from symplyphysics.definitions import density_from_mass_volume as density_law
 from symplyphysics.laws.kinematic import distance_from_constant_velocity as velocity_law
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as klayperon_law
@@ -60,9 +60,9 @@ mass_of_water_value = solve(density_of_water_equation, density_law.symbols.basic
     dict=True)[0][density_law.symbols.basic.mass]
 
 energy_to_heating_water_value = thermal_energy_law.law.subs({
-    thermal_energy_law.heat_capacity: specific_capacity_law.law.rhs.subs({
-        specific_capacity_law.specific_heat_capacity: specific_heat_of_heating_water,
-        specific_capacity_law.mass: mass_of_water_value,
+    thermal_energy_law.heat_capacity: specific_qty_law.law.rhs.subs({
+        specific_qty_law.specific_quantity: specific_heat_of_heating_water,
+        specific_qty_law.mass: mass_of_water_value,
     }),
     thermal_energy_law.temperature_origin: temperature_start,
     thermal_energy_law.temperature_end: temperature_water
