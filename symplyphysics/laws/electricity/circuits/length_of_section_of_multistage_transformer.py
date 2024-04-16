@@ -20,22 +20,22 @@ from symplyphysics import (
 length_of_section = Symbol("length_of_section", units.length)
 
 wavelength_for_upper_frequency = Symbol("wavelength_for_upper_frequency", units.length)
-wavelength_lower_frequency = Symbol("wavelength_lower_frequency", units.length)
+wavelength_for_lower_frequency = Symbol("wavelength_for_lower_frequency", units.length)
 
-law = Eq(length_of_section, wavelength_for_upper_frequency * wavelength_lower_frequency / (2 * (wavelength_for_upper_frequency + wavelength_lower_frequency)))
+law = Eq(length_of_section, wavelength_for_upper_frequency * wavelength_for_lower_frequency / (2 * (wavelength_for_upper_frequency + wavelength_for_lower_frequency)))
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(wavelength_for_upper_frequency_=wavelength_for_upper_frequency, wavelength_lower_frequency_=wavelength_lower_frequency)
+@validate_input(wavelength_for_upper_frequency_=wavelength_for_upper_frequency, wavelength_for_lower_frequency_=wavelength_for_lower_frequency)
 @validate_output(length_of_section)
 def calculate_length_of_section(wavelength_for_upper_frequency_: Quantity,
-    wavelength_lower_frequency_: Quantity) -> Quantity:
+    wavelength_for_lower_frequency_: Quantity) -> Quantity:
     result_expr = solve(law, length_of_section, dict=True)[0][length_of_section]
     result_expr = result_expr.subs({
         wavelength_for_upper_frequency: wavelength_for_upper_frequency_,
-        wavelength_lower_frequency: wavelength_lower_frequency_,
+        wavelength_for_lower_frequency: wavelength_for_lower_frequency_,
     })
     return Quantity(result_expr)
