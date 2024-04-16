@@ -11,7 +11,7 @@ from symplyphysics import (
 
 ## Description
 ## The rectangular loop coupler consists of four sections. The conductivity of each section can be calculated by calculating
-## the conductivity of the transmission line and the power ratio at the outputs.
+## the conductivity of the transmission line to which the coupler is connected and the power ratio at the outputs.
 
 ## Law is: Matrix([Y1, Y2, Y3, Y4]) = Matrix([Y0 / sqrt(k), Y0 * sqrt((k + 1) / k), Y0 * sqrt((k + 1) / k), Y0 / sqrt(k)]), where
 ## Y1 - first conductivity,
