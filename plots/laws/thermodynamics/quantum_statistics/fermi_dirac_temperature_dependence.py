@@ -13,6 +13,7 @@ energy = distribution_law.energy_of_state
 chemical_potential = distribution_law.total_chemical_potential
 temperature = distribution_law.temperature
 
+# Expressing temperature in reduced units using the quantities in the law
 reduced_temperature = symbols("reduced_temperature")
 reduced_temperature_eqn = Eq(
     reduced_temperature,
@@ -28,20 +29,28 @@ distribution_expr = solve(
 print(f"Occupancy as a function of reduced temperature:\n{print_expression(distribution_expr)}\n")
 
 base_plot = plot(
-    distribution_expr,
-    (reduced_temperature, 0, 15),
     title="Occupancy as a function of reduced temperature for Fermi—Dirac distribution",
-    xlabel=r"$\frac{k_\text{B} T}{\varepsilon - \mu}$",
-    ylabel=r"$\bar n$",
+    xlabel=r"reduced temperature $T^* = \frac{k_\text{B} T}{\varepsilon - \mu}$",
+    ylabel=r"occupancy $\bar n$",
+    legend=True,
     backend=MatplotlibBackend,
     show=False,
 )
+
+occupancy_plot = plot(
+    distribution_expr,
+    (reduced_temperature, 0, 15),
+    label=r"$\bar n (T^*)$",
+    show=False,
+)
+base_plot.extend(occupancy_plot)
 
 asymptote_expr = distribution_expr.limit(reduced_temperature, S.Infinity)
 
 asymptote_plot = plot(
     asymptote_expr,
     (reduced_temperature, 0, 15),
+    label=r"$T^* \to \infty$ asymptote",
     show=False,
 )
 base_plot.extend(asymptote_plot)
