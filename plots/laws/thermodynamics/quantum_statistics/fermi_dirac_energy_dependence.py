@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from sympy import symbols, Eq, solve
+from sympy import symbols, Eq, solve, S
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression, units
@@ -13,16 +13,19 @@ energy = distribution_law.energy_of_state
 chemical_potential = distribution_law.total_chemical_potential
 temperature = distribution_law.temperature
 
+# Expressing energy and temperature in the units of chemical potential
+
 reduced_energy = symbols("reduced_energy")
 reduced_energy_eqn = Eq(reduced_energy, energy / chemical_potential)
 
-# k * T = mu / factor => T = mu / (factor * k)
-factors_ = [1, 2, 10, 100]
-factor = symbols("factor")
-temperature_eqn = Eq(units.boltzmann_constant * temperature, chemical_potential / factor)
+reduced_temperature = symbols("reduced_temperature")
+reduced_temperature_eqn = Eq(
+    reduced_temperature,
+    units.boltzmann_constant * temperature / chemical_potential,
+)
 
 distribution_expr = solve(
-    [distribution_law.law, reduced_energy_eqn, temperature_eqn],
+    [distribution_law.law, reduced_energy_eqn, reduced_temperature_eqn],
     (occupancy, energy, temperature),
     dict=True,
 )[0][occupancy]
@@ -38,8 +41,10 @@ base_plot = plot(
     show=False,
 )
 
+factors_ = 1, 2, 10, 1000
+
 for factor_ in factors_:
-    expr_ = distribution_expr.subs(factor, factor_)
+    expr_ = distribution_expr.subs(reduced_temperature, S.One / factor_)
     label = r"$k_\text{B} T = \mu" + (f"/{factor_}$" if factor_ != 1 else "$")
     sub_plot = plot(
         expr_,
