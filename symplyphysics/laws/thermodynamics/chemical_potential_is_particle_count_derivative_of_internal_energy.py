@@ -60,7 +60,7 @@ def calculate_chemical_potential(
     internal_energy_ = two_point_function(
         Point2D(particle_count_before_, internal_energy_before_),
         Point2D(particle_count_after_, internal_energy_after_),
-        x=particle_count,
+        particle_count,
     )
 
     result = law.rhs.subs(
