@@ -88,16 +88,30 @@ adiabatic_index_expr = heat_capacity_ratio.definition.rhs.subs({
 # pressure and volume increase in the experiment
 
 isochoric_pressure_increase_factor = symbols("isochoric_pressure_increase_factor")
+isochoric_factor_eqn = Eq(
+    final_isochoric_pressure,
+    initial_pressure * isochoric_pressure_increase_factor,
+)
+
 isobaric_volume_increase_factor = symbols("isobaric_volume_increase_factor")
-
-adiabatic_index_expr_ = adiabatic_index_expr.subs({
-    final_isochoric_pressure: initial_pressure * isochoric_pressure_increase_factor,
-    final_isobaric_volume: initial_volume * isobaric_volume_increase_factor,
-}).simplify()
-
-# Display results
+isobaric_factor_eqn = Eq(
+    final_isobaric_volume,
+    initial_volume * isobaric_volume_increase_factor,
+)
 
 adiabatic_index = symbols("adiabatic_index")
+adiabatic_index_expr_ = solve(
+    [Eq(adiabatic_index, adiabatic_index_expr), isochoric_factor_eqn, isobaric_factor_eqn],
+    (adiabatic_index, initial_pressure, initial_volume),
+    dict=True,
+)[0][adiabatic_index]
+
+# adiabatic_index_expr_ = adiabatic_index_expr.subs({
+#     final_isochoric_pressure: initial_pressure * isochoric_pressure_increase_factor,
+#     final_isobaric_volume: initial_volume * isobaric_volume_increase_factor,
+# }).simplify()
+
+# Display results
 
 print(
     "The adiabatic index of an ideal gas:",
