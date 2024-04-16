@@ -74,7 +74,7 @@ _compressibility_via_density = _compressibility_via_volume.subs(_mole_count, _mo
 
 # Virial equation is a power series of `Z` around `rho = 0`, therefore we can use 
 # the formula for Taylor series coefficients to get the coefficient at `rho**2`.
-_second_virial_coefficient = _compressibility_via_density.diff(_molar_density, 1).subs(_molar_density, 0)
+_second_virial_coefficient = _compressibility_via_density.diff(_molar_density).subs(_molar_density, 0)
 
 assert expr_equals(_second_virial_coefficient, law.rhs)
 
