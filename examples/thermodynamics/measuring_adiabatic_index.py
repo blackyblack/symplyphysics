@@ -1,58 +1,107 @@
 #!/usr/bin/env python3
 
-from sympy import solve, Eq, dsolve, symbols
-from symplyphysics import print_expression, Quantity, units, convert_to
-from symplyphysics.definitions import power_is_energy_derivative as power_def
-from symplyphysics.laws.thermodynamics import thermal_energy_from_mass_and_temperature as heat_law
+from sympy import solve, Eq, symbols
+from symplyphysics import print_expression
+from symplyphysics.definitions import heat_capacity_ratio
+from symplyphysics.laws.electricity import power_from_energy_time as power_law
+from symplyphysics.laws.thermodynamics import thermal_energy_from_heat_capacity_and_temperature as thermal_eqn
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation
+from symplyphysics.laws.quantities import quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law
 
 # Description
-## In order to measure the value of the adiabatic index (gamma = C_p / C_V), one can use the following method. A certain amount of gas of known initial volume and pressure is heated twice with an electric coil for the same amount of time, firstly at constant volume measuring the resulting pressure, and secondly at constant pressure measuring the resulting volume. Calculate the adiabatic index from this data. Assume that the gas is ideal.
+## In order to measure the value of the adiabatic index (gamma = C_p / C_V), one can use the 
+## following method. A certain amount of gas of known initial volume and pressure is heated twice 
+## with an electric coil for the same amount of time, firstly at constant volume measuring the 
+## resulting pressure, and secondly at constant pressure measuring the resulting volume. Calculate 
+## the adiabatic index from this data. Assume that the gas is ideal and that the gas chamber is adiabatically
+## isolated from the environment.
 
-pprint = lambda *args, **kwargs: print(*map(print_expression, args), **kwargs)
+amount_of_gas = symbols("amount_of_gas")
+initial_pressure, final_isochoric_pressure = symbols("initial_pressure final_isochoric_pressure")
+initial_volume, final_isobaric_volume = symbols("initial_volume final_isobaric_volume")
 
-gas_amount = symbols("gas_amount")  # units.amount_of_substance
+# Calculate temperature values from the ideal gas equation of state
 
-initial_pressure, final_pressure = symbols("initial_pressure final_pressure")
-initial_volume = symbols("initial_volume final_volume")
-
-isochoric_specific_heat = symbols("isochoric_specific_heat")
-isobaric_specific_heat = symbols("isobaric_specific_heat")
-
-# The power of the coil is constant during both instances of heating.
-heating_power = symbols("heating_power")
-
-power_eqn = power_def.definition.subs({
-    power_def.power(power_def.time): heating_power,
-})
-
-heat_eqn = dsolve(
-    power_eqn,
-    power_def.energy(power_def.time),
-    ics={power_def.energy(0): 0},  # heat transferred is zero when no heating has started yet
+temperature_expr = solve(
+    ideal_gas_equation.law, ideal_gas_equation.temperature
+)[0].subs(
+    ideal_gas_equation.mole_count, amount_of_gas
 )
 
-# TODO: write about adiabatic isolation
-
-temperature_difference = symbols("temperature_difference")
-
-isochoric_heat = heat_law.law.rhs.subs({
-    heat_law.specific_heat_capacity: isochoric_specific_heat,
-    heat_law.temperature_end: temperature_difference,
-    heat_law.temperature_origin: 0,
+initial_temperature_expr = temperature_expr.subs({
+    ideal_gas_equation.pressure: initial_pressure,
+    ideal_gas_equation.volume: initial_volume,
 })
 
-isobaric_heat = heat_law.law.rhs.subs({
-    heat_law.specific_heat_capacity: isobaric_specific_heat,
-    heat_law.temperature_end: temperature_difference,
-    heat_law.temperature_origin: 0,
+final_isochoric_temperature_expr = temperature_expr.subs({
+    ideal_gas_equation.pressure: final_isochoric_pressure,
+    ideal_gas_equation.volume: initial_volume,
 })
 
-# Since the time of heating is the same, we can write the following set of equations
+final_isobaric_temperature_expr = temperature_expr.subs({
+    ideal_gas_equation.pressure: initial_pressure,
+    ideal_gas_equation.volume: final_isobaric_volume,
+})
 
-equal_amounts_of_heat = [
-    heat_eqn.subs(power_def.energy(power_def.time), isochoric_heat),
-    heat_eqn.subs(power_def.energy(power_def.time), isobaric_heat),
-]
+# Calculate amounts of heat in both cases using the temperature values above
 
+isochoric_molar_heat, isobaric_molar_heat = symbols("isochoric_molar_heat isobaric_molar_heat")
 
+isochoric_amount_of_heat = thermal_eqn.law.rhs.subs({
+    thermal_eqn.heat_capacity: molar_qty_law.law.rhs.subs({
+        molar_qty_law.molar_quantity: isochoric_molar_heat,
+        molar_qty_law.amount_of_substance: amount_of_gas,
+    }),
+    thermal_eqn.temperature_end: final_isochoric_temperature_expr,
+    thermal_eqn.temperature_origin: initial_temperature_expr,
+}).simplify()
+
+isobaric_amount_of_heat = thermal_eqn.law.rhs.subs({
+    thermal_eqn.heat_capacity: molar_qty_law.law.rhs.subs({
+        molar_qty_law.molar_quantity: isobaric_molar_heat,
+        molar_qty_law.amount_of_substance: amount_of_gas,
+    }),
+    thermal_eqn.temperature_end: final_isobaric_temperature_expr,
+    thermal_eqn.temperature_origin: initial_temperature_expr,
+}).simplify()
+
+# Calculate the adiabatic index using the quality of the amounts of heat during two heating
+# instances.
+
+isochoric_molar_heat_expr, isobaric_molar_heat_expr = solve(
+    [
+        power_law.law.subs(power_law.energy, isochoric_amount_of_heat),
+        power_law.law.subs(power_law.energy, isobaric_amount_of_heat)
+    ],
+    (isochoric_molar_heat, isobaric_molar_heat),
+    dict=True,
+)[0].values()
+
+adiabatic_index_expr = heat_capacity_ratio.definition.rhs.subs({
+    heat_capacity_ratio.isobaric_heat_capacity: isobaric_molar_heat_expr,
+    heat_capacity_ratio.isochoric_heat_capacity: isochoric_molar_heat_expr,
+})
+
+# We can show that the adiabatic index depends only on the factors by which
+# pressure and volume increase in the experiment
+
+isochoric_pressure_increase_factor = symbols("isochoric_pressure_increase_factor")
+isobaric_volume_increase_factor = symbols("isobaric_volume_increase_factor")
+
+adiabatic_index_expr_ = adiabatic_index_expr.subs({
+    final_isochoric_pressure: initial_pressure * isochoric_pressure_increase_factor,
+    final_isobaric_volume: initial_volume * isobaric_volume_increase_factor,
+}).simplify()
+
+# Display results
+
+adiabatic_index = symbols("adiabatic_index")
+
+print(
+    "The adiabatic index of an ideal gas:",
+    print_expression(Eq(adiabatic_index, adiabatic_index_expr)),
+    "An alternative expression via increase factors:",
+    print_expression(Eq(adiabatic_index, adiabatic_index_expr_)),
+    sep="\n\n",
+    end="\n",
+)
