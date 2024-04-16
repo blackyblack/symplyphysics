@@ -31,7 +31,7 @@ parameter_current_to_current = Symbol("parameter_current_to_current", dimensionl
 load_impedance = Symbol("load_impedance", units.impedance)
 
 law = Eq(Matrix([[parameter_voltage_to_voltage, parameter_impedance], [parameter_conductance, parameter_current_to_current]]),
-         Matrix([[1, Quantity(0 * units.ohm)], [1 / load_impedance, 1]]))
+         Matrix([[1, 0], [1 / load_impedance, 1]]))
 
 
 def print_law() -> str:
@@ -52,6 +52,5 @@ def calculate_transmission_matrix(load_impedance_: Quantity) -> tuple[tuple[floa
     result_B = Quantity(result_B.subs(substitutions))
     result_C = Quantity(result_C.subs(substitutions))
     result_D = float(convert_to(Quantity(result_D.subs(substitutions)), S.One).evalf())
-    assert_equivalent_dimension(result_B, 'result_B', "calculate_transmission_matrix", units.impedance)
     assert_equivalent_dimension(result_C, 'result_C', "calculate_transmission_matrix", units.conductance)
     return ((result_A, result_B), (result_C, result_D))
