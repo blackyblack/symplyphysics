@@ -26,6 +26,9 @@ from symplyphysics import (
 ## T - equilibrium temperature of black body
 ## c - speed of light
 
+# Conditions
+## - `h * nu << k * T`, i.e. the photon energy is much smaller than the thermal energy.
+
 spectral_energy_density = Symbol("spectral_energy_density", units.energy / (units.volume * units.frequency))
 radiation_frequency = Symbol("radiation_frequency", units.frequency)
 equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature, "equilibrium_temperature")
