@@ -4,9 +4,12 @@ from sympy import solve, Symbol, Eq, dsolve
 from symplyphysics import print_expression, Quantity, prefixes, units, convert_to
 from symplyphysics.core.symbols.celsius import to_kelvin_quantity, Celsius
 from symplyphysics.laws.electricity import power_factor_from_active_and_full_power as efficiency_law
-from symplyphysics.laws.thermodynamics import energy_from_combustion as combustion_energy_law
-from symplyphysics.laws.thermodynamics import thermal_energy_from_mass_and_temperature as energy_heating_law
-from symplyphysics.laws.thermodynamics import energy_to_vaporization_from_mass as energy_to_vapor_law
+from symplyphysics.laws.thermodynamics import (
+    energy_from_combustion as combustion_energy_law,
+    energy_to_vaporization_from_mass as energy_to_vapor_law,
+    thermal_energy_from_heat_capacity_and_temperature as heating_law,
+)
+from symplyphysics.laws.quantities import quantity_is_specific_quantity_times_mass as specific_qty_law
 from symplyphysics.definitions import mass_flow_rate as mass_rate_law
 
 # Example from https://easyfizika.ru/zadachi/termodinamika/na-zazhzhennuyu-spirtovku-s-kpd-60-postavili-sosud-s-500-g-vody-pri-20-c-cherez-kakoe/
@@ -61,11 +64,13 @@ energy_from_combustion_alcohol_value = combustion_energy_law.law.subs({
     combustion_energy_law.symbols.basic.mass: mass_of_alcohol_value
 }).rhs
 
-energy_for_heating_water_value = energy_heating_law.law.subs({
-    energy_heating_law.specific_heat_capacity: specific_heat_of_heating_water,
-    energy_heating_law.symbols.basic.mass: mass_of_water,
-    energy_heating_law.temperature_origin: temperature_of_water,
-    energy_heating_law.temperature_end: temperature_of_vaporization_water
+energy_for_heating_water_value = heating_law.law.subs({
+    heating_law.heat_capacity: specific_qty_law.law.rhs.subs({
+        specific_qty_law.specific_quantity: specific_heat_of_heating_water,
+        specific_qty_law.mass: mass_of_water,
+    }),
+    heating_law.temperature_origin: temperature_of_water,
+    heating_law.temperature_end: temperature_of_vaporization_water
 }).rhs
 
 energy_to_vaporization_water_value = energy_to_vapor_law.law.subs({

@@ -5,9 +5,10 @@ from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression, global_index
 from symplyphysics.core.symbols.celsius import to_kelvin, Celsius
-from symplyphysics.laws.thermodynamics import thermal_energy_from_mass_and_temperature as energy_heating_law
+from symplyphysics.laws.thermodynamics import thermal_energy_from_heat_capacity_and_temperature as thermal_energy_law
 from symplyphysics.laws.thermodynamics import energy_to_melt_from_mass as energy_melting_law
 from symplyphysics.definitions import density_from_mass_volume as density_law
+from symplyphysics.laws.quantities import quantity_is_specific_quantity_times_mass as specific_qty_law
 from symplyphysics.laws.thermodynamics import sum_of_heat_transfer_is_zero as thermodinamics_law_1
 
 temperature_of_hot_water_values = [5, 20, 35, 50, 65, 80]
@@ -19,6 +20,7 @@ temperature_balance = symbols("temperature_balance")
 specific_heat_heating_water = symbols("specific_heat_heating_water")
 specific_heat_heating_ice = symbols("specific_heat_heating_ice")
 specific_heat_melting_ice = symbols("specific_heat_melting_ice")
+
 temperature_melt_ice = symbols("temperature_melt_ice")
 
 mass_of_ice = symbols("mass_of_ice")
@@ -32,18 +34,22 @@ mass_of_all_water = solve(density_law.definition, density_law.symbols.basic.mass
 # mass_all_water = mass_of_hot_water + mass_of_ice
 mass_of_all_water_equation = Eq(mass_of_all_water, mass_of_ice + mass_of_hot_water)
 
-energy_cooling_hot_water = energy_heating_law.law.subs({
-    energy_heating_law.specific_heat_capacity: specific_heat_heating_water,
-    energy_heating_law.symbols.basic.mass: mass_of_hot_water,
-    energy_heating_law.temperature_origin: temperature_of_hot_water,
-    energy_heating_law.temperature_end: temperature_balance
+energy_cooling_hot_water = thermal_energy_law.law.subs({
+    thermal_energy_law.heat_capacity: specific_qty_law.law.rhs.subs({
+        specific_qty_law.specific_quantity: specific_heat_heating_water,
+        specific_qty_law.mass: mass_of_hot_water,
+    }),
+    thermal_energy_law.temperature_origin: temperature_of_hot_water,
+    thermal_energy_law.temperature_end: temperature_balance
 })
 
-energy_to_heating_ice_equation = energy_heating_law.law.subs({
-    energy_heating_law.specific_heat_capacity: specific_heat_heating_ice,
-    energy_heating_law.symbols.basic.mass: mass_of_ice,
-    energy_heating_law.temperature_origin: temperature_of_ice,
-    energy_heating_law.temperature_end: temperature_melt_ice
+energy_to_heating_ice_equation = thermal_energy_law.law.subs({
+    thermal_energy_law.heat_capacity: specific_qty_law.law.rhs.subs({
+        specific_qty_law.specific_quantity: specific_heat_heating_ice,
+        specific_qty_law.mass: mass_of_ice,
+    }),
+    thermal_energy_law.temperature_origin: temperature_of_ice,
+    thermal_energy_law.temperature_end: temperature_melt_ice
 })
 
 energy_to_melt_ice_equation = energy_melting_law.law.subs({
@@ -51,11 +57,13 @@ energy_to_melt_ice_equation = energy_melting_law.law.subs({
     energy_melting_law.symbols.basic.mass: mass_of_ice
 })
 
-energy_to_heat_melted_ice_equation = energy_heating_law.law.subs({
-    energy_heating_law.specific_heat_capacity: specific_heat_heating_water,
-    energy_heating_law.symbols.basic.mass: mass_of_ice,
-    energy_heating_law.temperature_origin: temperature_melt_ice,
-    energy_heating_law.temperature_end: temperature_balance
+energy_to_heat_melted_ice_equation = thermal_energy_law.law.subs({
+    thermal_energy_law.heat_capacity: specific_qty_law.law.rhs.subs({
+        specific_qty_law.specific_quantity: specific_heat_heating_water,
+        specific_qty_law.mass: mass_of_ice,
+    }),
+    thermal_energy_law.temperature_origin: temperature_melt_ice,
+    thermal_energy_law.temperature_end: temperature_balance
 })
 
 local_index_ = Idx("local_index_", (1, 4))
