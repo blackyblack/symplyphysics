@@ -65,17 +65,19 @@ isobaric_amount_of_heat = thermal_eqn.law.rhs.subs({
     thermal_eqn.temperature_origin: initial_temperature_expr,
 }).simplify()
 
-# Calculate the adiabatic index using the quality of the amounts of heat during two heating
-# instances.
+# Calculate the adiabatic index using the amounts of heat during two heating instances.
 
-isochoric_molar_heat_expr, isobaric_molar_heat_expr = solve(
+solved = solve(
     [
         power_law.law.subs(power_law.energy, isochoric_amount_of_heat),
         power_law.law.subs(power_law.energy, isobaric_amount_of_heat)
     ],
     (isochoric_molar_heat, isobaric_molar_heat),
     dict=True,
-)[0].values()
+)[0]
+
+isochoric_molar_heat_expr = solved[isochoric_molar_heat]
+isobaric_molar_heat_expr = solved[isobaric_molar_heat]
 
 adiabatic_index_expr = heat_capacity_ratio.definition.rhs.subs({
     heat_capacity_ratio.isobaric_heat_capacity: isobaric_molar_heat_expr,
@@ -103,5 +105,4 @@ print(
     "An alternative expression via increase factors:",
     print_expression(Eq(adiabatic_index, adiabatic_index_expr_)),
     sep="\n\n",
-    end="\n",
 )
