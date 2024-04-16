@@ -9,7 +9,7 @@ from symplyphysics import (
 
 from symplyphysics.laws.electricity.circuits import relative_operating_band_of_quarter_wave_transformer as bandwidth_law
 
-## Characteristic resistance of the transmission line is equal to 50 ohm.
+## Characteristic resistance of the transmission line to which the transformer is connected is equal to 50 ohm.
 ## Load resistance is equal to 100 ohm. The reflection coefficient is equal to 0.2.
 
 Args = namedtuple("Args", ["load_resistance", "characteristic_resistance", "reflection_coefficient"])

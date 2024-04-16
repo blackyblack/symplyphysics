@@ -12,8 +12,10 @@ from symplyphysics import (
 
 ## Description
 ## The relative operating bandwidth of a quarter-wave transformer depends on the reflection coefficient,
-## the characteristic resistance of the transmission line and the load resistance.
+## the characteristic resistance of the transmission line to which the transformer is connected and the load resistance.
 ## The relative operating bandwidth is the ratio of the bandwidth to the center frequency.
+## The reflection coefficient is equal to the ratio of the power of the signal reflected from the transformer to the
+## power of the signal incident on the transformer.
 
 
 relative_bandwidth = Symbol("relative_bandwidth", dimensionless)
@@ -34,11 +36,11 @@ def print_law() -> str:
     reflection_coefficient_=reflection_coefficient)
 @validate_output(relative_bandwidth)
 def calculate_relative_bandwidth(load_resistance_: Quantity, characteristic_resistance_: Quantity,
-    reflection_coefficient_: Quantity) -> float:
+    reflection_coefficient_: float) -> float:
     result_expr = solve(law, relative_bandwidth, dict=True)[0][relative_bandwidth]
     result_expr = result_expr.subs({
         load_resistance: load_resistance_,
         characteristic_resistance: characteristic_resistance_,
         reflection_coefficient: reflection_coefficient_
     })
-    return convert_to_float(Quantity(result_expr))
+    return convert_to_float(result_expr)
