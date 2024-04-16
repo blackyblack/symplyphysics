@@ -60,7 +60,7 @@ def calculate_chemical_potential(
     gibbs_energy_ = two_point_function(
         Point2D(particle_count_before_, gibbs_energy_before_),
         Point2D(particle_count_after_, gibbs_energy_after_),
-        x=particle_count,
+        particle_count,
     )
 
     result = law.rhs.subs(
