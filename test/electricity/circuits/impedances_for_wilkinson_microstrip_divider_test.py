@@ -4,7 +4,7 @@ from symplyphysics import (errors, units, Quantity, assert_equal)
 
 from symplyphysics.laws.electricity.circuits import impedances_for_wilkinson_microstrip_divider as impedances_law
 
-## The standard transmission line resistance is 50 ohms, the power ratio at the output ports equal to 2. 
+## The resistance of the transmission line to which the divider is connected is 50 ohms, the power ratio at the output ports equal to 2. 
 ## Then the values of Z1, Z2, Z3, Z4 impedances are equal, respectively: 158.11 ohm, 39.53 ohm, 70.71 ohm, 35.36 ohm.
 
 Args = namedtuple("Args", ["characteristic_resistance", "ratio_of_power"])

@@ -19,7 +19,7 @@ from symplyphysics import (
 ## Z2 - second impedance,
 ## Z3 - third impedance,
 ## Z4 - fourth impedance,
-## Z0 - transmission line resistance,
+## Z0 - resistance of the transmission line to which the divider is connected,
 ## k - ratio coefficient of the power at the outputs of the divider.
 
 first_impedance = Symbol("first_impedance", units.impedance)
