@@ -9,6 +9,7 @@ from symplyphysics import (
     validate_output,
     symbols,
 )
+from symplyphysics.core.geometry.line import two_point_function, Point2D
 
 # Description
 ## The coefficient of thermal expansion describes how the size of an object changes with a change in temperature
@@ -27,14 +28,14 @@ volumetric_expansion_coefficient = Symbol("volumetric_expansion_coefficient", 1 
 volume = Function("volume", units.volume)
 temperature = symbols.thermodynamics.temperature
 
-law = Eq(
+definition = Eq(
     volumetric_expansion_coefficient,
     Derivative(volume(temperature), temperature) / volume(temperature),
 )
 
 
 def print_law() -> str:
-    return print_expression(law)
+    return print_expression(definition)
 
 
 @validate_input(
@@ -52,8 +53,11 @@ def calculate_volumetric_expansion_coefficient(
 ) -> Quantity:
     # The RHS of the equation is calculated at the temperature point after expansion (`temperature_after_`)
 
-    volume_function = (volume_before_ + (volume_after_ - volume_before_) *
-        (temperature - temperature_before_) / (temperature_after_ - temperature_before_))
-    result = ((law.rhs).subs(volume(temperature),
+    volume_function = two_point_function(
+        Point2D(temperature_before_, volume_before_),
+        Point2D(temperature_after_, volume_after_),
+        temperature,
+    )
+    result = ((definition.rhs).subs(volume(temperature),
         volume_function).doit().subs(temperature, temperature_after_))
     return Quantity(result)

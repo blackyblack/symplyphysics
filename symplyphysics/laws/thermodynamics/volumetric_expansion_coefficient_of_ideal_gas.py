@@ -33,7 +33,7 @@ _volume_expr = solve(ideal_gas_equation.law, ideal_gas_equation.volume)[0].subs(
     ideal_gas_equation.temperature, temperature
 )
 
-_coef_expr = coef_def.law.rhs.subs(
+_coef_expr = coef_def.definition.rhs.subs(
     coef_def.temperature, temperature
 ).subs(
     coef_def.volume(temperature), _volume_expr

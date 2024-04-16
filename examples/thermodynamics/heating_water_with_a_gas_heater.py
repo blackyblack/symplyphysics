@@ -4,9 +4,12 @@ from sympy import dsolve, solve, Symbol, Eq, pi
 from symplyphysics import print_expression, Quantity, prefixes, units, convert_to
 from symplyphysics.core.symbols.celsius import to_kelvin_quantity, Celsius
 from symplyphysics.laws.electricity import power_factor_from_active_and_full_power as efficiency_law
-from symplyphysics.laws.thermodynamics import energy_from_combustion as combustion_energy_law
+from symplyphysics.laws.thermodynamics import (
+    energy_from_combustion as combustion_energy_law,
+    thermal_energy_from_heat_capacity_and_temperature as thermal_energy_law,
+)
+from symplyphysics.laws.quantities import quantity_is_specific_quantity_times_mass as specific_qty_law
 from symplyphysics.definitions import density_from_mass_volume as density_law
-from symplyphysics.laws.thermodynamics import thermal_energy_from_mass_and_temperature as energy_heating_law
 from symplyphysics.laws.kinematic import distance_from_constant_velocity as velocity_law
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as klayperon_law
 from symplyphysics.laws.chemistry import atomic_weight_from_mass_mole_count as mole_count_law
@@ -56,11 +59,13 @@ density_of_water_equation = density_law.definition.subs({
 mass_of_water_value = solve(density_of_water_equation, density_law.symbols.basic.mass,
     dict=True)[0][density_law.symbols.basic.mass]
 
-energy_to_heating_water_value = energy_heating_law.law.subs({
-    energy_heating_law.symbols.basic.mass: mass_of_water_value,
-    energy_heating_law.specific_heat_capacity: specific_heat_of_heating_water,
-    energy_heating_law.temperature_origin: temperature_start,
-    energy_heating_law.temperature_end: temperature_water
+energy_to_heating_water_value = thermal_energy_law.law.subs({
+    thermal_energy_law.heat_capacity: specific_qty_law.law.rhs.subs({
+        specific_qty_law.specific_quantity: specific_heat_of_heating_water,
+        specific_qty_law.mass: mass_of_water_value,
+    }),
+    thermal_energy_law.temperature_origin: temperature_start,
+    thermal_energy_law.temperature_end: temperature_water
 }).rhs
 
 mass_of_gas_equation = mole_count_law.law.subs({mole_count_law.atomic_weight: molar_mass_of_metan})

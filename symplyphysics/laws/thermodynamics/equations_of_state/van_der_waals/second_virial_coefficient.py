@@ -1,4 +1,4 @@
-from sympy import Eq
+from sympy import Eq, solve, Symbol as SymSymbol
 from symplyphysics import (
     units,
     Quantity,
@@ -8,6 +8,10 @@ from symplyphysics import (
     validate_output,
     symbols,
 )
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.definitions import compressibility_factor_is_deviation_from_ideal_gas as compressibility_def
+from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import equation as vdw_eqn
+from symplyphysics.laws.quantities import quantity_is_volumetric_density_times_volume as density_qty_law
 
 # Description
 ## The second virial coefficient is a coefficient appearing in the virial equation of state of
@@ -22,6 +26,9 @@ from symplyphysics import (
 ## b - parameter of the van der Waals equation of state representing the effective molecular size
 ## R - molar gas constant
 ## T - absolute temperature
+
+# Conditions
+## - Gas density is small enough within the context of perturbation theory.
 
 second_virial_coefficient = Symbol("second_virial_coefficient", units.volume / units.amount_of_substance)
 bonding_forces_parameter = Symbol(
@@ -39,7 +46,37 @@ law = Eq(
     molecules_volume_parameter - bonding_forces_parameter / (units.molar_gas_constant * temperature)
 )
 
-# TODO: Derive from the van der Waals equation of state
+# Derive from the van der Waals equation of state and the virial equation
+
+_volume = compressibility_def.volume
+_mole_count = compressibility_def.amount_of_substance
+_molar_density = SymSymbol("molar_density")
+
+_pressure_expr = solve(vdw_eqn.law, vdw_eqn.pressure)[0].subs({
+    vdw_eqn.volume: _volume,
+    vdw_eqn.temperature: temperature,
+    vdw_eqn.amount_of_substance: _mole_count,
+    vdw_eqn.bonding_forces_parameter: bonding_forces_parameter,
+    vdw_eqn.molecules_volume_parameter: molecules_volume_parameter,
+})
+
+_compressibility_via_volume = compressibility_def.definition.rhs.subs({
+    compressibility_def.pressure: _pressure_expr,
+    compressibility_def.temperature: temperature,
+})
+
+_mole_count_expr = density_qty_law.law.rhs.subs({
+    density_qty_law.volumetric_density: _molar_density,
+    density_qty_law.volume: _volume,
+})
+
+_compressibility_via_density = _compressibility_via_volume.subs(_mole_count, _mole_count_expr).simplify()
+
+# Virial equation is a power series of `Z` around `rho = 0`, therefore we can use 
+# the formula for Taylor series coefficients to get the coefficient at `rho**2`.
+_second_virial_coefficient = _compressibility_via_density.diff(_molar_density).subs(_molar_density, 0)
+
+assert expr_equals(_second_virial_coefficient, law.rhs)
 
 
 def print_law() -> str:
