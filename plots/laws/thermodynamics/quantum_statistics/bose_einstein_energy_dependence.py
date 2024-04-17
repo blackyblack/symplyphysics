@@ -34,7 +34,7 @@ distribution_expr = solve(
 print(f"Occupancy as a function of reduced energy:\n\n{print_expression(distribution_expr)}\n")
 
 base_plot = plot(
-    title="Occupancy as a function of reduced energy for Bose—Eintein distribution",
+    title="Occupancy as a function of reduced energy for Bose—Einstein distribution",
     xlabel=r"$-\varepsilon/\mu$",
     ylabel=r"$\bar n$",
     backend=MatplotlibBackend,
