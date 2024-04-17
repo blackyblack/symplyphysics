@@ -31,7 +31,7 @@ distribution_expr = solve(
 print(f"Occupancy as a function of reduced energy and chemical potential:\n\n{print_expression(distribution_expr)}\n")
 
 base_plot = plot(
-    title="Occupancy as a function of reduced energy and chemical potential for Bose—Eintein distribution",
+    title="Occupancy as a function of reduced energy and chemical potential for Bose—Einstein distribution",
     xlabel=r"$-\varepsilon / k_\text{B} T$",
     ylabel=r"$\bar n$",
     backend=MatplotlibBackend,
