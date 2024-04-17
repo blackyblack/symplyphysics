@@ -11,7 +11,7 @@ from symplyphysics.laws.thermodynamics.euler_relations import internal_energy_fo
 
 # Description
 ## The internal energy of a system at temperature T = 300 K, pressure p = 10 atm, with entropy S = 10 J/K,
-## chemical potential mu = 100 J/K, and 1e6 particles, occupying 1 m**3 of space is U = 99 MJ.
+## chemical potential mu = 100 J, and 1e6 particles, occupying 1 m**3 of space is U = 99 MJ.
 
 Args = namedtuple("Args", "t s p v mu n")
 
