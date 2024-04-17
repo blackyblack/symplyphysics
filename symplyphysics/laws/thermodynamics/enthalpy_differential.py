@@ -1,4 +1,4 @@
-from sympy import Eq
+from sympy import Eq, Function as SymFunction, Symbol as SymSymbol
 from symplyphysics import (
     units,
     dimensionless,
@@ -8,6 +8,11 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
+)
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.thermodynamics import (
+    enthalpy_is_internal_energy_plus_pressure_energy as enthalpy_def,
+    internal_energy_differential,
 )
 
 # Description
@@ -48,7 +53,62 @@ law = Eq(
     temperature * entropy_change + volume * pressure_change + chemical_potential * particle_count_change,
 )
 
-# TODO: Derive from definition of enthalpy and internal energy differential
+# Derive from definition of enthalpy and internal energy differential
+
+_internal_energy_sym = SymFunction("internal_energy")
+_temperature_change = SymSymbol("temperature_change")
+_entropy = SymSymbol("entropy")
+_pressure = SymSymbol("pressure")
+_volume_change = SymSymbol("volume_change")
+_particle_count = SymSymbol("particle_count")
+
+_internal_energy = _internal_energy_sym(_entropy, volume, _particle_count)
+
+_enthalpy = enthalpy_def.law.rhs.subs({
+    enthalpy_def.internal_energy: _internal_energy,
+    enthalpy_def.pressure: _pressure,
+    enthalpy_def.volume: volume,
+})
+
+# The differential of enthalpy can be found by adding up the products of
+# the partial derivative of enthalpy with respect to a thermodynamic quantity
+# and the infinitesimal change of that quantity
+_enthalpy_change = (
+    _enthalpy.diff(temperature) * _temperature_change
+    + _enthalpy.diff(_entropy) * entropy_change
+    + _enthalpy.diff(_pressure) * pressure_change
+    + _enthalpy.diff(volume) * _volume_change
+    + _enthalpy.diff(_particle_count) * particle_count_change
+)
+
+_internal_energy_diff = internal_energy_differential.law.rhs.subs({
+    internal_energy_differential.temperature: temperature,
+    internal_energy_differential.entropy_change: entropy_change,
+    internal_energy_differential.pressure: _pressure,
+    internal_energy_differential.volume_change: _volume_change,
+    internal_energy_differential.chemical_potential: chemical_potential,
+    internal_energy_differential.particle_count_change: particle_count_change,
+})
+
+_internal_energy_diff_entropy = _internal_energy_diff.subs({
+    entropy_change: 1, _volume_change: 0, particle_count_change: 0
+})
+
+_internal_energy_diff_volume = _internal_energy_diff.subs({
+    entropy_change: 0, _volume_change: 1, particle_count_change: 0
+})
+
+_internal_energy_diff_particle_count = _internal_energy_diff.subs({
+    entropy_change: 0, _volume_change: 0, particle_count_change: 1
+})
+
+_enthalpy_change = _enthalpy_change.subs({
+    _internal_energy.diff(_entropy): _internal_energy_diff_entropy,
+    _internal_energy.diff(volume): _internal_energy_diff_volume,
+    _internal_energy.diff(_particle_count): _internal_energy_diff_particle_count,
+})
+
+assert expr_equals(_enthalpy_change, law.rhs)
 
 
 def print_law() -> str:
