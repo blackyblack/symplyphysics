@@ -18,7 +18,7 @@ from symplyphysics import (
 ## Law is: Z = sqrt((Zo * Ze * (Zo + Ze)^2) / ((Zo + Ze * (N - 1)) * (Ze + Zo * (N - 1)))), where
 ## Z - equivalent wave resistance of the coupler,
 ## Zo - wave resistance of the odd mode,
-## Ze - wave resistance of the eveb mode,
+## Ze - wave resistance of the even mode,
 ## N - the number of segments of the Lange coupler.
 
 wave_resistance = Symbol("wave_resistance", units.impedance)
@@ -39,7 +39,7 @@ def print_law() -> str:
     number_segments_=number_segments)
 @validate_output(wave_resistance)
 def calculate_wave_resistance(wave_resistance_odd_modes_: Quantity, wave_resistance_even_modes_: Quantity,
-    number_segments_: float) -> Quantity:
+    number_segments_: int) -> Quantity:
     result_expr = solve(law, wave_resistance, dict=True)[0][wave_resistance]
     result_expr = result_expr.subs({
         wave_resistance_odd_modes: wave_resistance_odd_modes_,
