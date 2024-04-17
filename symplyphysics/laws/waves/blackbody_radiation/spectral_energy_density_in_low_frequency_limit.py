@@ -1,5 +1,5 @@
-from sympy import Eq, exp, pi
-from sympy.physics.units import planck, speed_of_light, boltzmann_constant
+from sympy import Eq, pi
+from sympy.physics.units import speed_of_light, boltzmann_constant
 from symplyphysics import (
     units,
     Quantity,
@@ -12,20 +12,22 @@ from symplyphysics import (
 )
 
 # Description
-## Wien's approximation, also known as Wien distribution law, describes the spectrum of blackbody
-## thermal radiation. It accurately describes short-wavelength (i.e. high-frequency) spectrum of
-## thermal emission, but fails to do that for long-wavelength (i.e. low-frequency) emission.
+## The Rayleigh-Jeans law is an approximation to the spectral radiance of electromagnetic radiation
+## as a function of wave frequency from a blackbody at a given temperature through classical arguments.
+## The Rayleigh-Jeans law agrees with experimental results at large wavelengths (i.e. at low frequencies)
+## but strongly disagrees at short wavelengths (i.e. at high frequencies). This inconsistency is commonly
+## known as ultraviolet catastrophe. See [Planck's law](./spectral_energy_density_at_all_frequencies.py) for
+## the correct expression of radiation at all frequencies.
 
-# Law: u_nu = (8 * pi * h * nu**3 / c**3) * exp(-h * nu / (k * T))
+# Law: u_nu = 8 * pi * nu**2 * k * T / c**3
 ## u_nu - spectral energy density (energy per unit volume per unit frequency)
-## h - Planck constant
 ## nu - radiation frequency
-## c - speed of light
 ## k - Boltzmann constant
 ## T - equilibrium temperature of black body
+## c - speed of light
 
 # Conditions
-## - `h * nu >> k * T`, i.e. the photon energy is much greater than the thermal energy.
+## - `h * nu << k * T`, i.e. the photon energy is much smaller than the thermal energy.
 
 spectral_energy_density = Symbol("spectral_energy_density", units.energy / (units.volume * units.frequency))
 radiation_frequency = Symbol("radiation_frequency", units.frequency)
@@ -33,11 +35,10 @@ equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature, "equi
 
 law = Eq(
     spectral_energy_density,
-    (8 * pi * planck * radiation_frequency**3 / speed_of_light**3)
-    * exp(-1 * planck * radiation_frequency / (boltzmann_constant * equilibrium_temperature))
+    8 * pi * radiation_frequency**2 * boltzmann_constant * equilibrium_temperature / speed_of_light**3
 )
 
-# TODO: derive from Planck's law of blackbody radiation
+# TODO: derive from Planck's law
 
 
 def print_law() -> str:
