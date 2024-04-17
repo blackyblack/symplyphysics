@@ -29,7 +29,7 @@ distribution_expr = solve(
 print(f"Occupancy as a function of reduced temperature:\n{print_expression(distribution_expr)}\n")
 
 base_plot = plot(
-    title="Occupancy as a function of reduced temperature for Bose-Einstein distribution",
+    title="Occupancy as a function of reduced temperature for Bose—Einstein distribution",
     xlabel=r"reduced temperature $T^* = \frac{k_\text{B} T}{\varepsilon - \mu}$",
     ylabel=r"occupancy $\bar n$",
     legend=True,
