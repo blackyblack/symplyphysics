@@ -1,4 +1,4 @@
-from sympy import Eq, Integral, Point2D
+from sympy import Eq, Integral, Point2D, solve
 from symplyphysics import (
     units,
     Quantity,
@@ -8,7 +8,9 @@ from symplyphysics import (
     validate_input,
     validate_output,
 )
+from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.geometry.line import two_point_function
+from symplyphysics.laws.thermodynamics import infinitesimal_work_in_quasistatic_process as work_law
 
 # Description
 ## The pressure-volume work occurs when the volume of a system changes.
@@ -29,6 +31,24 @@ volume_before = Symbol("volume_before", units.volume)
 volume_after = Symbol("volume_after", units.volume)
 
 law = Eq(work, Integral(pressure(volume), (volume, volume_before, volume_after)))
+
+# Derive law from infinitesimal counterpart
+
+# Prepare law for integration
+_infinitesimal_law = work_law.law.subs({
+    work_law.infinitesimal_work_done: 1,
+    work_law.infinitesimal_volume_change: 1,
+    work_law.pressure_inside_system: pressure(volume),
+})
+
+_integrated_law = Eq(
+    _infinitesimal_law.lhs.integrate(work),
+    _infinitesimal_law.rhs.integrate((volume, volume_before, volume_after))
+)
+
+_work_derived = solve(_integrated_law, work)[0]
+
+assert expr_equals(_work_derived, law.rhs)
 
 
 def print_law() -> str:
