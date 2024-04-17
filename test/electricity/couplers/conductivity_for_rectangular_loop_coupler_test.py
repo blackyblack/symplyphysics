@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (errors, units, Quantity, assert_equal, prefixes)
 
-from symplyphysics.laws.electricity.circuits import conductivity_for_rectangular_loop_coupler as conductivity_law
+from symplyphysics.laws.electricity.couplers import conductivity_for_rectangular_loop_coupler as conductivity_law
 
 ## The standard transmission line conductivity is 20 millisiemens, the power ratio at the output ports equal to 2. 
 ## Then the values of Y1, Y2, Y3, Y4 impedances are equal, respectively: 14.14 millisiemens, 24.49 millisiemens, 24.49 millisiemens, 14.14 millisiemens.

@@ -7,7 +7,7 @@ from symplyphysics import (
     errors,
     prefixes,
 )
-from symplyphysics.laws.electricity.circuits import resonant_frequency_of_rectangular_resonator as frequency_law
+from symplyphysics.laws.electricity.resonators import resonant_frequency_of_rectangular_resonator as frequency_law
 
 # Description
 ## The height, width and length of the resonator are 2 centimeter, respectively. The dielectric constant and magnetic permeability of the material

@@ -7,7 +7,7 @@ from symplyphysics import (
     assert_equal,
 )
 
-from symplyphysics.laws.electricity.circuits import maximum_voltage_in_coaxial_line as voltage_law
+from symplyphysics.laws.electricity.waveguides import maximum_voltage_in_coaxial_line as voltage_law
 
 ## The outer diameter is 9 millimeters. The inner diameter is 1.35 millimeters.
 ## The dielectric breakdown intensity is equal to 300 volt per meter.

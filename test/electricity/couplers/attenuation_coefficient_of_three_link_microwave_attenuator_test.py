@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.electricity.circuits import attenuation_coefficient_of_three_link_microwave_attenuator as coefficient_law
+from symplyphysics.laws.electricity.couplers import attenuation_coefficient_of_three_link_microwave_attenuator as coefficient_law
 
 # Description
 ## The resistance of the first resistor is 100 ohms, the resistance of the second resistor is 200 ohms.

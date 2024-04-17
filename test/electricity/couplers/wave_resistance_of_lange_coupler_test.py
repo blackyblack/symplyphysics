@@ -7,7 +7,7 @@ from symplyphysics import (
     assert_equal,
 )
 
-from symplyphysics.laws.electricity.circuits import wave_resistance_of_lange_coupler as resistance_law
+from symplyphysics.laws.electricity.couplers import wave_resistance_of_lange_coupler as resistance_law
 
 ## The wave resistance of the odd mode is 35 ohm, and the wave resistance of the even mode is 25 ohm.
 ## The number of segments of the Lange coupler is 4. Then the equivalent wave resistance of the coupler is 14.84 ohm.

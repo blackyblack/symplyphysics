@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.electricity.circuits import transient_attenuation_of_separate_loop_coupler_with_cascade_connection as attenuation_law
+from symplyphysics.laws.electricity.couplers import transient_attenuation_of_separate_loop_coupler_with_cascade_connection as attenuation_law
 
 # Description
 ## The required transient attenuation of the cascade is -9 decibels, number of couplers is 6.

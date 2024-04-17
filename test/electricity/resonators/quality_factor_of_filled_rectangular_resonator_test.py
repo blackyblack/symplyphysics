@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.electricity.circuits import quality_factor_of_filled_rectangular_resonator as factor_law
+from symplyphysics.laws.electricity.resonators import quality_factor_of_filled_rectangular_resonator as factor_law
 
 # Description
 ## The quality factor of an empty resonator is 1000. The tangent of the dielectric loss angle of the material
