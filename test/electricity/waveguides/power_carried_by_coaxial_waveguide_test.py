@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.electricity.circuits import power_carried_by_coaxial_waveguide as power_law
+from symplyphysics.laws.electricity.waveguides import power_carried_by_coaxial_waveguide as power_law
 
 # Description
 ## Parameters of the coaxial waveguide: the diameter of the inner wire is 1.35 millimeters, the diameter of the outer conductor

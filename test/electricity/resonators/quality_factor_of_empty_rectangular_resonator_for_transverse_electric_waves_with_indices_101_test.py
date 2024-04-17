@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy import pi
 from symplyphysics import (assert_equal, units, Quantity, errors, prefixes)
-from symplyphysics.laws.electricity.circuits import quality_factor_of_empty_rectangular_resonator_for_transverse_electric_waves_with_indices_101 as factor_law
+from symplyphysics.laws.electricity.resonators import quality_factor_of_empty_rectangular_resonator_for_transverse_electric_waves_with_indices_101 as factor_law
 
 # Description
 ## The height, width and length of the resonator are 2 centimeter, respectively.

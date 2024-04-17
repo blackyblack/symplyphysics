@@ -7,7 +7,7 @@ from symplyphysics import (
     errors,
     prefixes,
 )
-from symplyphysics.laws.electricity.circuits import attenuation_coefficient_in_metal_in_rectangular_waveguide_for_transverse_electric_waves as coefficient_law
+from symplyphysics.laws.electricity.waveguides import attenuation_coefficient_in_metal_in_rectangular_waveguide_for_transverse_electric_waves as coefficient_law
 
 # Description
 ## The surface resistance is 2.576 milliohm.
