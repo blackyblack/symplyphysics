@@ -106,11 +106,6 @@ adiabatic_index_expr_ = solve(
     dict=True,
 )[0][adiabatic_index]
 
-# adiabatic_index_expr_ = adiabatic_index_expr.subs({
-#     final_isochoric_pressure: initial_pressure * isochoric_pressure_increase_factor,
-#     final_isobaric_volume: initial_volume * isobaric_volume_increase_factor,
-# }).simplify()
-
 # Display results
 
 print(
