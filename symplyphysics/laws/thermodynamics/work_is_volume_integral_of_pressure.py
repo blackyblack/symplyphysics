@@ -1,4 +1,4 @@
-from sympy import Eq, Integral, Point2D, solve
+from sympy import Eq, Integral, Point2D, solve, Function as SymFunction, symbols
 from symplyphysics import (
     units,
     Quantity,
@@ -34,19 +34,26 @@ law = Eq(work, Integral(pressure(volume), (volume, volume_before, volume_after))
 
 # Derive law from infinitesimal counterpart
 
+_work = symbols("work", cls=SymFunction)
+
 # Prepare law for integration
+# Note that `dW = (dW/dV) * dV` and we set `dV` to 1
 _infinitesimal_law = work_law.law.subs({
-    work_law.infinitesimal_work_done: 1,
+    work_law.infinitesimal_work_done: _work(volume).diff(volume),
     work_law.infinitesimal_volume_change: 1,
     work_law.pressure_inside_system: pressure(volume),
 })
 
 _integrated_law = Eq(
-    _infinitesimal_law.lhs.integrate(work),
+    _infinitesimal_law.lhs.integrate((volume, volume_before, volume_after)),
     _infinitesimal_law.rhs.integrate((volume, volume_before, volume_after))
 )
 
-_work_derived = solve(_integrated_law, work)[0]
+_work_derived = solve(
+    (Eq(work, _work(volume_after) - _work(volume_before)), _integrated_law),
+    (_work(volume_after), work),
+    dict=True
+)[0][work]
 
 assert expr_equals(_work_derived, law.rhs)
 
