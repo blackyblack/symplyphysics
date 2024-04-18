@@ -6,6 +6,8 @@ from symplyphysics import (
     Function,
     print_expression,
 )
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.thermodynamics import internal_energy_differential as internal_energy_law
 
 # Description
 ## Internal energy is a first-order homogeneous function of its internal variables (entropy,
@@ -28,6 +30,26 @@ law = Eq(
     internal_energy(factor * entropy, factor * volume, factor * particle_count),
     factor * internal_energy(entropy, volume, particle_count),
 )
+
+# Derive from the formula of internal energy differential
+
+_internal_energy_expr = internal_energy_law.law.rhs
+
+_lhs = law.lhs.subs(
+    internal_energy(factor * entropy, factor * volume, factor * particle_count),
+    _internal_energy_expr.subs({
+        internal_energy_law.entropy_change: factor * internal_energy_law.entropy_change,
+        internal_energy_law.volume_change: factor * internal_energy_law.volume_change,
+        internal_energy_law.particle_count_change: factor * internal_energy_law.particle_count_change,
+    }),
+)
+
+_rhs = law.rhs.subs(
+    internal_energy(entropy, volume, particle_count),
+    _internal_energy_expr,
+)
+
+assert expr_equals(_lhs, _rhs)
 
 
 def print_law() -> str:
