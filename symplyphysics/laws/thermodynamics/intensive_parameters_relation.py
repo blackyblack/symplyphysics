@@ -8,10 +8,13 @@ from symplyphysics import (
     validate_input,
     validate_output,
 )
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.thermodynamics import internal_energy_differential
+from symplyphysics.laws.thermodynamics.euler_relations import internal_energy_formula
 
 # Description
 ## The Gibbs—Duhem relation is a relationship among the intensive parameters of the system.
-## Subsequently, For a system with `I` components, there is `I + 1` independent parameters,
+## Subsequently, for a system with `I` components, there is `I + 1` independent parameters,
 ## or degrees of freedom.
 
 # Law: S * dT - V * dp + N * d(mu) = 0
@@ -35,6 +38,39 @@ law = Eq(
     0,
 )
 
+# Derive from internal energy representations
+
+_internal_energy_diff_eqn = internal_energy_differential.law.subs({
+    internal_energy_differential.temperature: internal_energy_formula.temperature,
+    internal_energy_differential.pressure: internal_energy_formula.pressure,
+    internal_energy_differential.chemical_potential: internal_energy_formula.chemical_potential,
+})
+
+_internal_energy_expr = internal_energy_formula.law.rhs.subs({
+    internal_energy_formula.entropy: entropy,
+    internal_energy_formula.volume: volume,
+    internal_energy_formula.particle_count: particle_count,
+})
+
+_internal_energy_diff_expr = (
+    _internal_energy_expr.diff(internal_energy_formula.temperature) * temperature_change
+    + _internal_energy_expr.diff(entropy) * internal_energy_differential.entropy_change
+    + _internal_energy_expr.diff(internal_energy_formula.pressure) * pressure_change
+    + _internal_energy_expr.diff(volume) * internal_energy_differential.volume_change
+    + _internal_energy_expr.diff(internal_energy_formula.chemical_potential) * chemical_potential_change
+    + _internal_energy_expr.diff(particle_count) * internal_energy_differential.particle_count_change
+)
+
+_chemical_potential_change_derived = solve(
+    (_internal_energy_diff_eqn, Eq(internal_energy_differential.internal_energy_change, _internal_energy_diff_expr)),
+    (internal_energy_differential.internal_energy_change, chemical_potential_change),
+    dict=True,
+)[0][chemical_potential_change]
+
+_chemical_potential_change_from_law = solve(law, chemical_potential_change)[0]
+
+assert expr_equals(_chemical_potential_change_derived, _chemical_potential_change_from_law)
+
 
 def print_law() -> str:
     return print_expression(law)
@@ -55,7 +91,7 @@ def calculate_chemical_potential_change(
     pressure_change_: Quantity,
     particle_count_: int,
 ) -> Quantity:
-    result = solve(law, chemical_potential_change)[0].subs({
+    result = _chemical_potential_change_from_law.subs({
         entropy: entropy_,
         temperature_change: temperature_change_,
         volume: volume_,
