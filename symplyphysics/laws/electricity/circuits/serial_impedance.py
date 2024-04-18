@@ -8,7 +8,6 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## Z_serial is total impedance,
 ## Z[i] is impedance of i-th element of circuit.
 
-impedances = Symbol("impedances", units.impedance)
 serial_impedance = Symbol("serial_impedance", units.impedance)
 impedance = SymbolIndexed("impedance", units.impedance)
 law = Eq(serial_impedance, SumIndexed(impedance[global_index], global_index))

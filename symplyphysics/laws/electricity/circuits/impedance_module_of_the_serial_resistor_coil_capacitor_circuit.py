@@ -1,4 +1,4 @@
-from sympy import (Eq, solve, sqrt, I, Idx)
+from sympy import (Eq, solve, sqrt, Idx, expand)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
     validate_output, global_index)
 from symplyphysics.core.expr_comparisons import expr_equals
@@ -41,12 +41,13 @@ coil_impedance_derived = solve(impedance_law_applied_2, coil_impedance_law.coil_
 
 local_index = Idx("index_local", (1, 3))
 serial_law_applied = serial_law.law.subs(global_index, local_index)
-serial_law_applied = serial_law_applied.subs({
-    serial_law.impedances: (resistance_resistor, coil_impedance_derived, capacitive_impedance_derived)
-})
+serial_law_applied = serial_law_applied.doit()
 circuit_impedance_derived = solve(serial_law_applied, serial_law.serial_impedance, dict=True)[0][serial_law.serial_impedance]
+for i, v in enumerate((resistance_resistor, coil_impedance_derived, capacitive_impedance_derived)):
+    circuit_impedance_derived = circuit_impedance_derived.subs(serial_law.impedance[i + 1], v)
 
-assert expr_equals(abs(circuit_impedance_derived), law.rhs)
+
+assert expr_equals(abs(circuit_impedance_derived), expand(law.rhs))
 
 
 def print_law() -> str:
