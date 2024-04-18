@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.core.symbols.celsius import Celsius, to_kelvin_quantity
-from symplyphysics.laws.thermodynamics import speed_of_sound
+from symplyphysics.laws.thermodynamics import speed_of_sound_in_ideal_gas
 
 # Description
 # Input: Air, temperature=20°C, gamma=1.4, M=29 g/mol
@@ -26,29 +26,29 @@ def test_args_fixture() -> Args:
 
 
 def test_speed_of_sound(test_args: Args) -> None:
-    result = speed_of_sound.calculate_speed_of_sound(test_args.t, test_args.gamma, test_args.M)
+    result = speed_of_sound_in_ideal_gas.calculate_speed_of_sound(test_args.t, test_args.gamma, test_args.M)
     assert_equal(result, 343.21 * units.meter / units.second)
 
 
 def test_bad_temperature(test_args: Args) -> None:
     tb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        speed_of_sound.calculate_speed_of_sound(test_args.t, test_args.gamma, tb)
+        speed_of_sound_in_ideal_gas.calculate_speed_of_sound(test_args.t, test_args.gamma, tb)
     with raises(TypeError):
-        speed_of_sound.calculate_speed_of_sound(test_args.t, test_args.gamma, 100)
+        speed_of_sound_in_ideal_gas.calculate_speed_of_sound(test_args.t, test_args.gamma, 100)
 
 
 def test_bad_mole_mass(test_args: Args) -> None:
     Mb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        speed_of_sound.calculate_speed_of_sound(test_args.t, test_args.gamma, Mb)
+        speed_of_sound_in_ideal_gas.calculate_speed_of_sound(test_args.t, test_args.gamma, Mb)
     with raises(TypeError):
-        speed_of_sound.calculate_speed_of_sound(test_args.t, test_args.gamma, 100)
+        speed_of_sound_in_ideal_gas.calculate_speed_of_sound(test_args.t, test_args.gamma, 100)
 
 
 def test_bad_heat_capacity_ratio(test_args: Args) -> None:
     gamma = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        speed_of_sound.calculate_speed_of_sound(test_args.t, gamma, test_args.M)
+        speed_of_sound_in_ideal_gas.calculate_speed_of_sound(test_args.t, gamma, test_args.M)
     with raises(errors.UnitsError):
-        speed_of_sound.calculate_speed_of_sound(test_args.t, 'bad', test_args.M)
+        speed_of_sound_in_ideal_gas.calculate_speed_of_sound(test_args.t, 'bad', test_args.M)
