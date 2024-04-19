@@ -14,7 +14,7 @@ from symplyphysics import (
 
 # Law: dU = C_V * dT
 ## U - internal energy
-## C_V - isochoric heat capacity
+## C_V - isochoric heat capacity, which only depends on the temperature of the ideal gas
 ## T - temperature
 ## Notation: d(x) - exact differential of `x`
 
@@ -23,6 +23,8 @@ isochoric_heat_capacity = Symbol("isochoric_heat_capacity", units.energy / units
 temperature_change = Symbol("temperature_change", units.temperature)
 
 law = Eq(internal_energy_change, isochoric_heat_capacity * temperature_change)
+
+# TODO: derive law from Joule-Thompson effect
 
 
 def print_law() -> str:
