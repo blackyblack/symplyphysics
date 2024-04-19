@@ -10,7 +10,7 @@ from symplyphysics import (
 from symplyphysics.laws.electricity.couplers import wave_resistance_even_mode_of_lange_coupler as resistance_law
 
 ## The wave resistance of the odd mode is 80 ohm. The coupling coefficient between the segments of the
-## coupler is 0.3. The number of segments of the Lange coupler is 4. Then the wave resistance of the even mode is 1 ohm.
+## coupler is 0.3. The number of segments of the Lange coupler is 4. Then the wave resistance of the even mode is 121.05 ohm.
 
 Args = namedtuple("Args", ["coupling_factor", "wave_resistance_odd_modes", "number_segments"])
 
