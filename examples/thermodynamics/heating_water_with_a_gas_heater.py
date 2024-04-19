@@ -60,12 +60,15 @@ mass_of_water_value = solve(density_of_water_equation, density_law.symbols.basic
     dict=True)[0][density_law.symbols.basic.mass]
 
 energy_to_heating_water_value = thermal_energy_law.law.subs({
-    thermal_energy_law.heat_capacity: specific_qty_law.law.rhs.subs({
-        specific_qty_law.specific_quantity: specific_heat_of_heating_water,
-        specific_qty_law.mass: mass_of_water_value,
+    thermal_energy_law.heat_capacity:
+    specific_qty_law.law.rhs.subs({
+    specific_qty_law.specific_quantity: specific_heat_of_heating_water,
+    specific_qty_law.mass: mass_of_water_value,
     }),
-    thermal_energy_law.temperature_origin: temperature_start,
-    thermal_energy_law.temperature_end: temperature_water
+    thermal_energy_law.temperature_origin:
+        temperature_start,
+    thermal_energy_law.temperature_end:
+        temperature_water
 }).rhs
 
 mass_of_gas_equation = mole_count_law.law.subs({mole_count_law.atomic_weight: molar_mass_of_metan})

@@ -1,6 +1,8 @@
 from sympy import (Eq, solve)
 from sympy.physics.units import gravitational_constant
 from symplyphysics import (
+    clone_symbol,
+    symbols,
     units,
     Quantity,
     Symbol,
@@ -21,8 +23,7 @@ from symplyphysics import (
 ## w - angular speed of rotation of satellite.
 
 radius_of_orbit = Symbol("radius_of_orbit", units.length)
-
-mass_of_planet = Symbol("mass_of_planet", units.mass)
+mass_of_planet = clone_symbol(symbols.basic.mass, "mass_of_planet")
 speed_rotation_satellite = Symbol("speed_rotation_satellite", angle_type / units.time)
 
 law = Eq(radius_of_orbit,

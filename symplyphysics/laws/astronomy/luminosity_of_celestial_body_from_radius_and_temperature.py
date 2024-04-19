@@ -1,5 +1,5 @@
 from sympy import (Eq, solve, pi)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (symbols, units, Quantity, Symbol, print_expression, validate_input,
     validate_output)
 
 # Description
@@ -15,7 +15,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 
 luminosity = Symbol("luminosity", units.power)
 radius = Symbol("radius", units.length)
-temperature = Symbol("temperature", units.temperature)
+temperature = symbols.thermodynamics.temperature
 
 law = Eq(luminosity, 4 * pi * (radius**2) * units.stefan_boltzmann_constant * (temperature**4))
 

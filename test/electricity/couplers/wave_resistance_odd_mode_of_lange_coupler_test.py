@@ -34,15 +34,15 @@ def test_basic_wave_resistance(test_args: Args) -> None:
 def test_bad_coupling_factor(test_args: Args) -> None:
     bad_coupling_factor = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        resistance_law.calculate_wave_resistance_odd_modes(bad_coupling_factor, test_args.characteristic_resistance,
-            test_args.number_segments)
+        resistance_law.calculate_wave_resistance_odd_modes(bad_coupling_factor,
+            test_args.characteristic_resistance, test_args.number_segments)
 
 
 def test_bad_characteristic_resistance(test_args: Args) -> None:
     bad_characteristic_resistance = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        resistance_law.calculate_wave_resistance_odd_modes(test_args.coupling_factor, bad_characteristic_resistance,
-            test_args.number_segments)
+        resistance_law.calculate_wave_resistance_odd_modes(test_args.coupling_factor,
+            bad_characteristic_resistance, test_args.number_segments)
     with raises(TypeError):
         resistance_law.calculate_wave_resistance_odd_modes(test_args.coupling_factor, 100,
             test_args.number_segments)

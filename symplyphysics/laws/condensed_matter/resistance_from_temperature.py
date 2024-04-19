@@ -1,5 +1,6 @@
 from sympy import (Eq, solve)
 from symplyphysics import (
+    symbols,
     units,
     Quantity,
     Symbol,
@@ -24,11 +25,12 @@ resistance = Symbol("resistance", units.impedance)
 
 resistance_initial = Symbol("resistance_initial", units.impedance)
 temperature_coefficient = Symbol("temperature_coefficient", 1 / units.temperature)
-temperature = Symbol("temperature", units.temperature)
+temperature = symbols.thermodynamics.temperature
 
 law = Eq(
     resistance,
-    resistance_initial * (1 + temperature_coefficient * (temperature - quantities.standard_conditions_temperature)))
+    resistance_initial * (1 + temperature_coefficient *
+    (temperature - quantities.standard_conditions_temperature)))
 
 
 def print_law() -> str:

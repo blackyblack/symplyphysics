@@ -1,7 +1,6 @@
 from sympy import Eq, solve, sqrt
-
-from symplyphysics import (Quantity, Symbol, dimensionless, print_expression, units, validate_input,
-    validate_output)
+from symplyphysics import (Quantity, Symbol, dimensionless, print_expression, symbols, units,
+    validate_input, validate_output)
 
 # Speed of sound for ideal gases
 # c = sqrt( gamma * R * T / M ), where
@@ -11,7 +10,7 @@ from symplyphysics import (Quantity, Symbol, dimensionless, print_expression, un
 # R is ideal gas constant,
 # c is speed of sound.
 
-temperature = Symbol("temperature", units.temperature)
+temperature = symbols.thermodynamics.temperature
 heat_capacity_ratio = Symbol("heat_capacity_ratio", dimensionless)
 mole_mass = Symbol("mole_mass", units.mass / units.amount_of_substance)
 speed_of_sound = Symbol("speed_of_sound", units.velocity)

@@ -15,7 +15,9 @@ from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed
 ## k - Boltzmann constant
 
 average_square_velocity = Symbol("average_square_velocity", units.velocity**2, positive=True)
-temperature_in_gas = Symbol("temperature_in_gas", units.temperature, positive=True)
+temperature_in_gas = clone_symbol(symbols.thermodynamics.temperature,
+    "temperature_in_gas",
+    positive=True)
 molecule_mass = clone_symbol(symbols.basic.mass, "molecule_mass", positive=True)
 
 law = Eq(average_square_velocity, 3 * units.boltzmann_constant * temperature_in_gas / molecule_mass)

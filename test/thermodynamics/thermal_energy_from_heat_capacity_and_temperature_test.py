@@ -27,8 +27,7 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_amount(test_args: Args) -> None:
-    result = thermal_energy.calculate_amount_energy(test_args.C, test_args.t2,
-        test_args.t1)
+    result = thermal_energy.calculate_amount_energy(test_args.C, test_args.t2, test_args.t1)
     assert_equal(result, 105000.1 * units.joule)
 
 

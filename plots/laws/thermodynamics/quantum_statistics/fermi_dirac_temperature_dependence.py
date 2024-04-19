@@ -5,8 +5,7 @@ from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression, units
 from symplyphysics.laws.thermodynamics.fermi_dirac_statistics import (
-    single_particle_state_distribution as distribution_law,
-)
+    single_particle_state_distribution as distribution_law,)
 
 occupancy = distribution_law.occupancy_of_state
 energy = distribution_law.energy_of_state
@@ -20,11 +19,8 @@ reduced_temperature_eqn = Eq(
     units.boltzmann_constant * temperature / (energy - chemical_potential),
 )
 
-distribution_expr = solve(
-    [distribution_law.law, reduced_temperature_eqn],
-    (occupancy, temperature),
-    dict=True
-)[0][occupancy]
+distribution_expr = solve([distribution_law.law, reduced_temperature_eqn], (occupancy, temperature),
+    dict=True)[0][occupancy]
 
 print(f"Occupancy as a function of reduced temperature:\n{print_expression(distribution_expr)}\n")
 

@@ -1,6 +1,11 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (errors, units, Quantity, assert_equal,)
+from symplyphysics import (
+    errors,
+    units,
+    Quantity,
+    assert_equal,
+)
 
 from symplyphysics.laws.electricity.transmission_lines import transmission_matrix_for_a_series_load_in_line as matrix_law
 

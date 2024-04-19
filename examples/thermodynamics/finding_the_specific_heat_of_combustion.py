@@ -25,12 +25,15 @@ specific_heat_heating = Symbol("specific_heat_heating")
 specific_heat_combustion = Symbol("specific_heat_of_combustion")
 
 energy_heating_value = thermal_energy_law.law.subs({
-    thermal_energy_law.heat_capacity: specific_qty_law.law.rhs.subs({
-        specific_qty_law.specific_quantity: specific_heat_heating,
-        specific_qty_law.mass: mass_of_liquid,
+    thermal_energy_law.heat_capacity:
+    specific_qty_law.law.rhs.subs({
+    specific_qty_law.specific_quantity: specific_heat_heating,
+    specific_qty_law.mass: mass_of_liquid,
     }),
-    thermal_energy_law.temperature_origin: temperature_start,
-    thermal_energy_law.temperature_end: temperature_end,
+    thermal_energy_law.temperature_origin:
+        temperature_start,
+    thermal_energy_law.temperature_end:
+        temperature_end,
 }).rhs
 
 energy_combustion_value = combustion_energy_law.law.subs({

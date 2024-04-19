@@ -1,5 +1,7 @@
 from sympy import Eq
 from symplyphysics import (
+    clone_symbol,
+    symbols,
     units,
     Quantity,
     Symbol,
@@ -20,7 +22,7 @@ from symplyphysics import (
 
 internal_energy_change = Symbol("internal_energy_change", units.energy)
 isochoric_heat_capacity = Symbol("isochoric_heat_capacity", units.energy / units.temperature)
-temperature_change = Symbol("temperature_change", units.temperature)
+temperature_change = clone_symbol(symbols.thermodynamics.temperature, "temperature_change")
 
 law = Eq(internal_energy_change, isochoric_heat_capacity * temperature_change)
 

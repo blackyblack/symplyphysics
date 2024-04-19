@@ -44,13 +44,12 @@ _infinitesimal_law = work_law.law.subs({
     work_law.pressure_inside_system: pressure(volume),
 })
 
-_integrated_law = Eq(
-    _infinitesimal_law.lhs.integrate((volume, volume_before, volume_after)),
-    _infinitesimal_law.rhs.integrate((volume, volume_before, volume_after))
-).subs({
+_integrated_law = Eq(_infinitesimal_law.lhs.integrate((volume, volume_before, volume_after)),
+    _infinitesimal_law.rhs.integrate((volume, volume_before, volume_after))).subs({
     _work_function(volume_before): 0,  # there was no work done at the start of the process
-    _work_function(volume_after): work,  # the work at the end of the process is the work done during the process
-})
+    _work_function(volume_after):
+            work,  # the work at the end of the process is the work done during the process
+    })
 
 _work_derived = solve(_integrated_law, work)[0]
 

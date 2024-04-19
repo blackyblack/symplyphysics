@@ -27,43 +27,53 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = gibbs_duhem_law.calculate_chemical_potential_change(test_args.s, test_args.dt, test_args.v, test_args.dp, test_args.n)
+    result = gibbs_duhem_law.calculate_chemical_potential_change(test_args.s, test_args.dt,
+        test_args.v, test_args.dp, test_args.n)
     assert_equal(result, -0.9 * prefixes.milli * units.joule)
 
 
 def test_bad_entropy(test_args: Args) -> None:
     sb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        gibbs_duhem_law.calculate_chemical_potential_change(sb, test_args.dt, test_args.v, test_args.dp, test_args.n)
+        gibbs_duhem_law.calculate_chemical_potential_change(sb, test_args.dt, test_args.v,
+            test_args.dp, test_args.n)
     with raises(TypeError):
-        gibbs_duhem_law.calculate_chemical_potential_change(100, test_args.dt, test_args.v, test_args.dp, test_args.n)
+        gibbs_duhem_law.calculate_chemical_potential_change(100, test_args.dt, test_args.v,
+            test_args.dp, test_args.n)
 
 
 def test_bad_temperature(test_args: Args) -> None:
     tb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        gibbs_duhem_law.calculate_chemical_potential_change(test_args.s, tb, test_args.v, test_args.dp, test_args.n)
+        gibbs_duhem_law.calculate_chemical_potential_change(test_args.s, tb, test_args.v,
+            test_args.dp, test_args.n)
     with raises(TypeError):
-        gibbs_duhem_law.calculate_chemical_potential_change(test_args.s, 100, test_args.v, test_args.dp, test_args.n)
+        gibbs_duhem_law.calculate_chemical_potential_change(test_args.s, 100, test_args.v,
+            test_args.dp, test_args.n)
 
 
 def test_bad_volume(test_args: Args) -> None:
     vb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        gibbs_duhem_law.calculate_chemical_potential_change(test_args.s, test_args.dt, vb, test_args.dp, test_args.n)
+        gibbs_duhem_law.calculate_chemical_potential_change(test_args.s, test_args.dt, vb,
+            test_args.dp, test_args.n)
     with raises(TypeError):
-        gibbs_duhem_law.calculate_chemical_potential_change(test_args.s, test_args.dt, 100, test_args.dp, test_args.n)
+        gibbs_duhem_law.calculate_chemical_potential_change(test_args.s, test_args.dt, 100,
+            test_args.dp, test_args.n)
 
 
 def test_bad_pressure(test_args: Args) -> None:
     pb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        gibbs_duhem_law.calculate_chemical_potential_change(test_args.s, test_args.dt, test_args.v, pb, test_args.n)
+        gibbs_duhem_law.calculate_chemical_potential_change(test_args.s, test_args.dt, test_args.v,
+            pb, test_args.n)
     with raises(TypeError):
-        gibbs_duhem_law.calculate_chemical_potential_change(test_args.s, test_args.dt, test_args.v, 100, test_args.n)
+        gibbs_duhem_law.calculate_chemical_potential_change(test_args.s, test_args.dt, test_args.v,
+            100, test_args.n)
 
 
 def test_bad_number(test_args: Args) -> None:
     nb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        gibbs_duhem_law.calculate_chemical_potential_change(test_args.s, test_args.dt, test_args.v, test_args.dp, nb)
+        gibbs_duhem_law.calculate_chemical_potential_change(test_args.s, test_args.dt, test_args.v,
+            test_args.dp, nb)

@@ -26,7 +26,8 @@ def test_args_fixture() -> Args:
 
 
 def test_speed_of_sound(test_args: Args) -> None:
-    result = speed_of_sound_in_ideal_gas.calculate_speed_of_sound(test_args.t, test_args.gamma, test_args.M)
+    result = speed_of_sound_in_ideal_gas.calculate_speed_of_sound(test_args.t, test_args.gamma,
+        test_args.M)
     assert_equal(result, 343.21 * units.meter / units.second)
 
 

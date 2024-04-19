@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.thermodynamics import (
-    internal_energy_of_ideal_gas_is_proportional_to_temperature as energy_law,
-)
+    internal_energy_of_ideal_gas_is_proportional_to_temperature as energy_law,)
 
 # Description
 ## The internal energy change of a gas with isochoric heat capacity C_V = 100 J/K and a temperature

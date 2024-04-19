@@ -1,5 +1,7 @@
 from sympy import (Eq, solve, log)
 from symplyphysics import (
+    quantities,
+    symbols,
     units,
     Quantity,
     Symbol,
@@ -34,15 +36,15 @@ standard_thermal_effect = Symbol("standard_thermal_effect",
     units.energy / units.amount_of_substance)
 standard_change_entropy = Symbol("standard_change_entropy",
     units.energy / units.amount_of_substance / units.temperature)
-temperature = Symbol("temperature", units.temperature)
+temperature = symbols.thermodynamics.temperature
 standard_change_heat_capacity = Symbol("standard_change_heat_capacity",
     units.energy / units.amount_of_substance / units.temperature)
-standard_temperature = Quantity(298 * units.kelvin)
 
 law = Eq(
     standard_change_isobaric_potential, standard_thermal_effect -
     temperature * standard_change_entropy - standard_change_heat_capacity * temperature *
-    (log(temperature / standard_temperature) + (standard_temperature / temperature) - 1))
+    (log(temperature / quantities.standard_laboratory_temperature) +
+    (quantities.standard_laboratory_temperature / temperature) - 1))
 
 
 def print_law() -> str:

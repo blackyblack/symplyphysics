@@ -1,5 +1,7 @@
 from sympy import Eq, solve
 from symplyphysics import (
+    clone_symbol,
+    symbols,
     units,
     dimensionless,
     Quantity,
@@ -27,14 +29,15 @@ from symplyphysics.laws.thermodynamics.euler_relations import internal_energy_fo
 ## Notation: d(x) - exact differential of x
 
 entropy = Symbol("entropy", units.energy / units.temperature)
-temperature_change = Symbol("temperature_change", units.temperature)
+temperature_change = clone_symbol(symbols.thermodynamics.temperature, "temperature_change")
 volume = Symbol("volume", units.volume)
 pressure_change = Symbol("pressure_change", units.pressure)
 particle_count = Symbol("particle_count", dimensionless)
 chemical_potential_change = Symbol("chemical_potential_change", units.energy)
 
 law = Eq(
-    entropy * temperature_change - volume * pressure_change + particle_count * chemical_potential_change,
+    entropy * temperature_change - volume * pressure_change +
+    particle_count * chemical_potential_change,
     0,
 )
 
@@ -53,16 +56,17 @@ _internal_energy_expr = internal_energy_formula.law.rhs.subs({
 })
 
 _internal_energy_diff_expr = (
-    _internal_energy_expr.diff(internal_energy_formula.temperature) * temperature_change
-    + _internal_energy_expr.diff(entropy) * internal_energy_differential.entropy_change
-    + _internal_energy_expr.diff(internal_energy_formula.pressure) * pressure_change
-    + _internal_energy_expr.diff(volume) * internal_energy_differential.volume_change
-    + _internal_energy_expr.diff(internal_energy_formula.chemical_potential) * chemical_potential_change
-    + _internal_energy_expr.diff(particle_count) * internal_energy_differential.particle_count_change
-)
+    _internal_energy_expr.diff(internal_energy_formula.temperature) * temperature_change +
+    _internal_energy_expr.diff(entropy) * internal_energy_differential.entropy_change +
+    _internal_energy_expr.diff(internal_energy_formula.pressure) * pressure_change +
+    _internal_energy_expr.diff(volume) * internal_energy_differential.volume_change +
+    _internal_energy_expr.diff(internal_energy_formula.chemical_potential) *
+    chemical_potential_change +
+    _internal_energy_expr.diff(particle_count) * internal_energy_differential.particle_count_change)
 
 _chemical_potential_change_derived = solve(
-    (_internal_energy_diff_eqn, Eq(internal_energy_differential.internal_energy_change, _internal_energy_diff_expr)),
+    (_internal_energy_diff_eqn,
+    Eq(internal_energy_differential.internal_energy_change, _internal_energy_diff_expr)),
     (internal_energy_differential.internal_energy_change, chemical_potential_change),
     dict=True,
 )[0][chemical_potential_change]

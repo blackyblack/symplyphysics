@@ -13,7 +13,7 @@ from symplyphysics.laws.conservation import mechanical_energy_is_constant as mec
 
 # Description
 ## Ideal pendulum is an object hanging on a thread. In a field of gravitation it starts oscillating after been pushed out of balance.
-## Period of pendulum oscillation does not depends on its mass.
+## Period of pendulum oscillation does not depend on its mass.
 
 # Law: T = 2 * pi * sqrt(L/g)
 # Where:

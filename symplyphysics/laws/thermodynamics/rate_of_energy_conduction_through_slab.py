@@ -1,5 +1,7 @@
 from sympy import Eq
 from symplyphysics import (
+    clone_symbol,
+    symbols,
     units,
     Quantity,
     Symbol,
@@ -27,7 +29,9 @@ thermal_conductivity = Symbol("thermal_conductivity",
     positive=True)
 face_area = Symbol("face_area", units.area, positive=True)
 slab_thickness = Symbol("slab_thickness", units.length, positive=True)
-temperature_difference = Symbol("temperature_difference", units.temperature, real=True)
+temperature_difference = clone_symbol(symbols.thermodynamics.temperature,
+    "temperature_difference",
+    real=True)
 
 law = Eq(
     energy_conduction_rate,

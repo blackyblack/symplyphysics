@@ -1,6 +1,5 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from sympy import sqrt
 from symplyphysics import (errors, units, Quantity, assert_equal, prefixes)
 
 from symplyphysics.laws.electricity.circuits import scattering_matrix_to_transmission_matrix as matrix_law
@@ -16,13 +15,12 @@ Args = namedtuple("Args", ["characteristic_resistance", "parameters"])
 def test_args_fixture() -> Args:
     characteristic_resistance = Quantity(50 * units.ohm)
     parameters = ((0.2, 0.5), (0.5, 0.2))
-    return Args(characteristic_resistance=characteristic_resistance,
-        parameters=parameters
-        )
+    return Args(characteristic_resistance=characteristic_resistance, parameters=parameters)
 
 
 def test_basic_waves(test_args: Args) -> None:
-    result = matrix_law.calculate_transmission_matrix(test_args.characteristic_resistance, test_args.parameters)
+    result = matrix_law.calculate_transmission_matrix(test_args.characteristic_resistance,
+        test_args.parameters)
     assert_equal(result[0][0], 1.21)
     assert_equal(result[0][1], 59.5 * units.ohm)
     assert_equal(result[1][0], 7.8 * prefixes.milli * units.siemens)
@@ -32,6 +30,7 @@ def test_basic_waves(test_args: Args) -> None:
 def test_bad_characteristic_resistance(test_args: Args) -> None:
     bad_characteristic_resistance = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        matrix_law.calculate_transmission_matrix(bad_characteristic_resistance, test_args.parameters)
+        matrix_law.calculate_transmission_matrix(bad_characteristic_resistance,
+            test_args.parameters)
     with raises(TypeError):
         matrix_law.calculate_transmission_matrix(100, test_args.parameters)

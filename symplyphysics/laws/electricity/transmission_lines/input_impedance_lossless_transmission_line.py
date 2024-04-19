@@ -28,7 +28,11 @@ load_resistance = Symbol("load_resistance", units.impedance)
 constant_propagation = Symbol("constant_propagation", 1 / units.length)
 line_length = Symbol("line_length", units.length)
 
-law = Eq(input_impedance, characteristic_resistance * (load_resistance + I * characteristic_resistance * tan(constant_propagation * line_length)) / (characteristic_resistance + I * load_resistance * tan(constant_propagation * line_length)))
+law = Eq(
+    input_impedance,
+    characteristic_resistance *
+    (load_resistance + I * characteristic_resistance * tan(constant_propagation * line_length)) /
+    (characteristic_resistance + I * load_resistance * tan(constant_propagation * line_length)))
 
 
 def print_law() -> str:
@@ -38,8 +42,7 @@ def print_law() -> str:
 @validate_input(characteristic_resistance_=characteristic_resistance,
     load_resistance_=load_resistance,
     constant_propagation_=constant_propagation,
-    line_length_=line_length
-    )
+    line_length_=line_length)
 @validate_output(input_impedance)
 def calculate_input_impedance(characteristic_resistance_: Quantity, load_resistance_: Quantity,
     constant_propagation_: Quantity, line_length_: Quantity) -> Quantity:

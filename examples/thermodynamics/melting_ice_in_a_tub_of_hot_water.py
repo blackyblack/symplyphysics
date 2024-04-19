@@ -51,21 +51,27 @@ mass_of_hot_water_value = solve(mass_of_all_water_equation, mass_of_hot_water,
     dict=True)[0][mass_of_hot_water]
 
 energy_cooling_hot_water = thermal_energy_law.law.subs({
-    thermal_energy_law.heat_capacity: specific_qty_law.law.rhs.subs({
-        specific_qty_law.specific_quantity: specific_heat_heating_water,
-        specific_qty_law.mass: mass_of_hot_water_value,
+    thermal_energy_law.heat_capacity:
+    specific_qty_law.law.rhs.subs({
+    specific_qty_law.specific_quantity: specific_heat_heating_water,
+    specific_qty_law.mass: mass_of_hot_water_value,
     }),
-    thermal_energy_law.temperature_origin: temperature_of_hot_water,
-    thermal_energy_law.temperature_end: temperature_end,
+    thermal_energy_law.temperature_origin:
+        temperature_of_hot_water,
+    thermal_energy_law.temperature_end:
+        temperature_end,
 })
 
 energy_to_heating_ice_equation = thermal_energy_law.law.subs({
-    thermal_energy_law.heat_capacity: specific_qty_law.law.rhs.subs({
-        specific_qty_law.specific_quantity: specific_heat_heating_ice,
-        specific_qty_law.mass: mass_of_ice,
+    thermal_energy_law.heat_capacity:
+    specific_qty_law.law.rhs.subs({
+    specific_qty_law.specific_quantity: specific_heat_heating_ice,
+    specific_qty_law.mass: mass_of_ice,
     }),
-    thermal_energy_law.temperature_origin: temperature_of_ice,
-    thermal_energy_law.temperature_end: temperature_melt_ice
+    thermal_energy_law.temperature_origin:
+        temperature_of_ice,
+    thermal_energy_law.temperature_end:
+        temperature_melt_ice
 })
 
 energy_to_melt_ice_equation = energy_melting_law.law.subs({
@@ -74,12 +80,15 @@ energy_to_melt_ice_equation = energy_melting_law.law.subs({
 })
 
 energy_to_heat_melted_ice_equation = thermal_energy_law.law.subs({
-    thermal_energy_law.heat_capacity: specific_qty_law.law.rhs.subs({
-        specific_qty_law.specific_quantity: specific_heat_heating_water,
-        specific_qty_law.mass: mass_of_ice,
+    thermal_energy_law.heat_capacity:
+    specific_qty_law.law.rhs.subs({
+    specific_qty_law.specific_quantity: specific_heat_heating_water,
+    specific_qty_law.mass: mass_of_ice,
     }),
-    thermal_energy_law.temperature_origin: temperature_melt_ice,
-    thermal_energy_law.temperature_end: temperature_end
+    thermal_energy_law.temperature_origin:
+        temperature_melt_ice,
+    thermal_energy_law.temperature_end:
+        temperature_end
 })
 
 local_index_ = Idx("local_index_", (1, 4))

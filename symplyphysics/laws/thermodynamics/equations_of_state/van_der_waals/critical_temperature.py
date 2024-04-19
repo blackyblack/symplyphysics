@@ -1,5 +1,7 @@
 from sympy import Eq
 from symplyphysics import (
+    clone_symbol,
+    symbols,
     units,
     Quantity,
     Symbol,
@@ -18,10 +20,10 @@ from symplyphysics import (
 ## a, b - parameters of van der Waals equation of state
 ## R - molar gas constant
 
-critical_temperature = Symbol("critical_temperature", units.temperature)
+critical_temperature = clone_symbol(symbols.thermodynamics.temperature, "critical_temperature")
 bonding_forces_parameter = Symbol(
     "bonding_forces_parameter",
-    units.pressure * (units.volume / units.amount_of_substance) ** 2,
+    units.pressure * (units.volume / units.amount_of_substance)**2,
 )
 molecules_volume_parameter = Symbol(
     "molecules_volume_parameter",
@@ -32,6 +34,7 @@ law = Eq(
     critical_temperature,
     (8 * bonding_forces_parameter) / (27 * units.molar_gas_constant * molecules_volume_parameter),
 )
+
 
 def print_law() -> str:
     return print_expression(law)

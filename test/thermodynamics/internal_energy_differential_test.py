@@ -8,14 +8,13 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.thermodynamics import (
-    internal_energy_differential as internal_energy_law,
-)
+    internal_energy_differential as internal_energy_law,)
 
 # Description
 ## An ensamble of particles in a closed reservoir is in thermodynamic equilibrium with the environment.
 ## The temperature is 300 K and the pressure in the reservoir is 0.1 MPa. The entropy of the ensamble
 ## has dropped by 1 J/K and the volume has become bigger by 1 mm**3. With chemical potential of the system
-## equal to 20 J, the particle count increased by 1. Then the change in internal energy of the system 
+## equal to 20 J, the particle count increased by 1. Then the change in internal energy of the system
 ## amounts to -280 J.
 
 Args = namedtuple("Args", "t ds p dv mu dn")

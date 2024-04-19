@@ -1,6 +1,7 @@
 from sympy import Eq
 from symplyphysics import (
-    units,
+    clone_symbol,
+    symbols,
     dimensionless,
     Quantity,
     Symbol,
@@ -19,8 +20,8 @@ from symplyphysics import (
 ## T_c - [critical temperature](./critical_temperature.py)
 
 reduced_temperature = Symbol("reduced_temperature", dimensionless)
-temperature = Symbol("temperature", units.temperature)
-critical_temperature = Symbol("critical_temperature", units.temperature)
+temperature = symbols.thermodynamics.temperature
+critical_temperature = clone_symbol(symbols.thermodynamics.temperature, "critical_temperature")
 
 law = Eq(reduced_temperature, temperature / critical_temperature)
 

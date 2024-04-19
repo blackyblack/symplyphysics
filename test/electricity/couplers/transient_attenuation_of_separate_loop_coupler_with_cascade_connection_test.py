@@ -28,10 +28,12 @@ def test_basic_attenuation(test_args: Args) -> None:
 def test_bad_attenuation_of_cascade(test_args: Args) -> None:
     attenuation_of_cascade = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        attenuation_law.calculate_attenuation_of_coupler(attenuation_of_cascade, test_args.number_of_couplers)
+        attenuation_law.calculate_attenuation_of_coupler(attenuation_of_cascade,
+            test_args.number_of_couplers)
 
 
 def test_bad_number_of_couplers(test_args: Args) -> None:
     number_of_couplers = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        attenuation_law.calculate_attenuation_of_coupler(test_args.attenuation_of_cascade, number_of_couplers)
+        attenuation_law.calculate_attenuation_of_coupler(test_args.attenuation_of_cascade,
+            number_of_couplers)

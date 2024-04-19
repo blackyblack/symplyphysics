@@ -1,12 +1,6 @@
 from sympy import Eq, solve
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    print_expression,
-    validate_input,
-    validate_output
-)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 
 # Description
 ## A multistage resistance transformer consists of several sections. The length of each section depends on the wavelength at
@@ -22,14 +16,17 @@ length_of_section = Symbol("length_of_section", units.length)
 wavelength_for_upper_frequency = Symbol("wavelength_for_upper_frequency", units.length)
 wavelength_for_lower_frequency = Symbol("wavelength_for_lower_frequency", units.length)
 
-law = Eq(length_of_section, wavelength_for_upper_frequency * wavelength_for_lower_frequency / (2 * (wavelength_for_upper_frequency + wavelength_for_lower_frequency)))
+law = Eq(
+    length_of_section, wavelength_for_upper_frequency * wavelength_for_lower_frequency / (2 *
+    (wavelength_for_upper_frequency + wavelength_for_lower_frequency)))
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(wavelength_for_upper_frequency_=wavelength_for_upper_frequency, wavelength_for_lower_frequency_=wavelength_for_lower_frequency)
+@validate_input(wavelength_for_upper_frequency_=wavelength_for_upper_frequency,
+    wavelength_for_lower_frequency_=wavelength_for_lower_frequency)
 @validate_output(length_of_section)
 def calculate_length_of_section(wavelength_for_upper_frequency_: Quantity,
     wavelength_for_lower_frequency_: Quantity) -> Quantity:

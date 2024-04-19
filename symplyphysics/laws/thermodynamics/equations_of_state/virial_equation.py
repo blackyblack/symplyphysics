@@ -29,14 +29,17 @@ from symplyphysics import (
 ##   for many fluids.
 
 compressibility_factor = Symbol("compressibility_factor", dimensionless, positive=True)
-second_virial_coefficient = Symbol("second_virial_coefficient", units.volume / units.amount_of_substance, real=True)
-third_virial_coefficient = Symbol("third_virial_coefficient", (units.volume / units.amount_of_substance)**2, real=True)
+second_virial_coefficient = Symbol("second_virial_coefficient",
+    units.volume / units.amount_of_substance,
+    real=True)
+third_virial_coefficient = Symbol("third_virial_coefficient",
+    (units.volume / units.amount_of_substance)**2,
+    real=True)
 molar_density = Symbol("molar_density", units.amount_of_substance / units.volume, positive=True)
 
 law = Eq(
     compressibility_factor,
-    1 + second_virial_coefficient * molar_density + third_virial_coefficient * molar_density**2
-)
+    1 + second_virial_coefficient * molar_density + third_virial_coefficient * molar_density**2)
 
 
 def print_law() -> str:

@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output)
+from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print_expression,
+    validate_input, validate_output)
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as thermodynamics_law
 
 # Description
@@ -12,8 +12,8 @@ from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equat
 ## V1 is initial volume, V2 is resulting volume
 ## T1 is initial temperature, T2 is resulting temperature
 
-temperature_start = Symbol("temperature_start", units.temperature)
-temperature_end = Symbol("temperature_end", units.temperature)
+temperature_start = clone_symbol(symbols.thermodynamics.temperature, "temperature_start")
+temperature_end = clone_symbol(symbols.thermodynamics.temperature, "temperature_end")
 volume_start = Symbol("volume_start", units.volume)
 volume_end = Symbol("volume_end", units.volume)
 

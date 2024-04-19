@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output)
+from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print_expression,
+    validate_input, validate_output)
 
 # Description
 # Amount of energy for body heat Q = C * (t2 - t1)
@@ -20,8 +20,8 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 
 amount_energy = Symbol("amount_energy", units.energy)
 heat_capacity = Symbol("heat_capacity", units.energy / units.temperature)
-temperature_origin = Symbol("temperature_origin", units.temperature)
-temperature_end = Symbol("temperature_end", units.temperature)
+temperature_origin = clone_symbol(symbols.thermodynamics.temperature, "temperature_origin")
+temperature_end = clone_symbol(symbols.thermodynamics.temperature, "temperature_end")
 
 law = Eq(amount_energy, heat_capacity * (temperature_end - temperature_origin))
 
@@ -34,8 +34,8 @@ def print_law() -> str:
     temperature_end_=temperature_end,
     temperature_origin_=temperature_origin)
 @validate_output(amount_energy)
-def calculate_amount_energy(heat_capacity_: Quantity,
-    temperature_end_: Quantity, temperature_origin_: Quantity) -> Quantity:
+def calculate_amount_energy(heat_capacity_: Quantity, temperature_end_: Quantity,
+    temperature_origin_: Quantity) -> Quantity:
 
     result_amount_energy_expr = solve(law, amount_energy, dict=True)[0][amount_energy]
     result_expr = result_amount_energy_expr.subs({
