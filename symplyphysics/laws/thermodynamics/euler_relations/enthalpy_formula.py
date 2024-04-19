@@ -25,7 +25,7 @@ from symplyphysics.laws.thermodynamics.euler_relations import internal_energy_fo
 ## N - particle count
 
 # Note
-## - This formula works for single-component system. For many-component systems replace the RHS with
+## - This formula works for a single-component system. For multi-component systems replace the RHS with
 ##   a sum over each type of component.
 
 enthalpy = Symbol("enthalpy", units.energy)
@@ -71,7 +71,8 @@ def calculate_enthalpy(
     chemical_potential_: Quantity,
     particle_count_: int,
 ) -> Quantity:
-    # Note that enthalpy is known up to a constant, therefore enthalpy as well.    
+    # Note that since entropy is known up to a constant, enthalpy is also only known
+    # up to a constant.
 
     result = law.rhs.subs({
         temperature: temperature_,
