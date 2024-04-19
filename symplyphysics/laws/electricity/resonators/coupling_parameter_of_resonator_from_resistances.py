@@ -1,5 +1,5 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
     validate_output, dimensionless, convert_to_float)
 
 # Description
@@ -25,8 +25,8 @@ def print_law() -> str:
 
 @validate_input(resonator_resistance_=resonator_resistance, load_resistance_=load_resistance)
 @validate_output(coupling_parameter)
-def calculate_coupling_parameter(resonator_resistance_: float,
-    load_resistance_: float) -> float:
+def calculate_coupling_parameter(resonator_resistance_: Quantity,
+    load_resistance_: Quantity) -> float:
     result_expr = solve(law, coupling_parameter, dict=True)[0][coupling_parameter]
     result_expr = result_expr.subs({
         resonator_resistance: resonator_resistance_,
