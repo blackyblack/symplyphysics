@@ -26,7 +26,7 @@ volume = Symbol("volume", units.volume)
 particle_count = Symbol("particle_count", dimensionless)
 factor = Symbol("factor", dimensionless)
 
-law = Eq(
+homogeneity_condition = Eq(
     internal_energy(factor * entropy, factor * volume, factor * particle_count),
     factor * internal_energy(entropy, volume, particle_count),
 )
@@ -35,7 +35,7 @@ law = Eq(
 
 _internal_energy_expr = internal_energy_law.law.rhs
 
-_lhs = law.lhs.subs(
+_lhs = homogeneity_condition.lhs.subs(
     internal_energy(factor * entropy, factor * volume, factor * particle_count),
     _internal_energy_expr.subs({
         internal_energy_law.entropy_change: factor * internal_energy_law.entropy_change,
@@ -44,7 +44,7 @@ _lhs = law.lhs.subs(
     }),
 )
 
-_rhs = law.rhs.subs(
+_rhs = homogeneity_condition.rhs.subs(
     internal_energy(entropy, volume, particle_count),
     _internal_energy_expr,
 )
@@ -53,4 +53,4 @@ assert expr_equals(_lhs, _rhs)
 
 
 def print_law() -> str:
-    return print_expression(law)
+    return print_expression(homogeneity_condition)
