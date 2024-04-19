@@ -10,7 +10,7 @@ from symplyphysics import (
 
 # Description
 ## Mayer's relation is the relation between heat capacity at constant pressure and that at
-## constant temperature in the case of an ideal gas.
+## constant volume in the case of an ideal gas.
 
 # Law: C_p - C_V = n * R
 ## C_p - heat capacity at constant pressure
