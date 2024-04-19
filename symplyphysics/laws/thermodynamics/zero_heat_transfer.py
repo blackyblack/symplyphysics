@@ -1,4 +1,4 @@
-from sympy import Eq, solve, Symbol as SymSymbol, Function as SymFunction, dsolve
+from sympy import Eq, solve, Symbol as SymSymbol, Function as SymFunction, dsolve, symbols
 from sympy.abc import t
 from symplyphysics import (
     units,
@@ -89,8 +89,8 @@ _first_law_eqn = first_law.law.subs({
 
 # Expressing the temperature differential through pressure and volume differentials
 
-_parameterized_pressure = SymFunction("pressure")
-_parameterized_volume = SymFunction("volume")
+_parameterized_pressure = symbols("pressure", cls=SymFunction)
+_parameterized_volume = symbols("volume", cls=SymFunction)
 
 _temperature_change_expr = solve(
     ideal_gas_equation.law, _temperature
