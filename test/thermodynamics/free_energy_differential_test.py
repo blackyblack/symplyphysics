@@ -38,44 +38,55 @@ def test_law(test_args: Args) -> None:
 def test_bad_entropy(test_args: Args) -> None:
     sb = Quantity(1.0 * units.meter)
     with raises(errors.UnitsError):
-        free_energy_law.calculate_free_energy_change(sb, test_args.dt, test_args.p, test_args.dv, test_args.mu, test_args.dn)
+        free_energy_law.calculate_free_energy_change(sb, test_args.dt, test_args.p, test_args.dv,
+            test_args.mu, test_args.dn)
     with raises(TypeError):
-        free_energy_law.calculate_free_energy_change(100, test_args.dt, test_args.p, test_args.dv, test_args.mu, test_args.dn)
+        free_energy_law.calculate_free_energy_change(100, test_args.dt, test_args.p, test_args.dv,
+            test_args.mu, test_args.dn)
 
 
 def test_bad_temperature(test_args: Args) -> None:
     tb = Quantity(1.0 * units.meter)
     with raises(errors.UnitsError):
-        free_energy_law.calculate_free_energy_change(test_args.s, tb, test_args.p, test_args.dv, test_args.mu, test_args.dn)
+        free_energy_law.calculate_free_energy_change(test_args.s, tb, test_args.p, test_args.dv,
+            test_args.mu, test_args.dn)
     with raises(TypeError):
-        free_energy_law.calculate_free_energy_change(test_args.s, 100, test_args.p, test_args.dv, test_args.mu, test_args.dn)
+        free_energy_law.calculate_free_energy_change(test_args.s, 100, test_args.p, test_args.dv,
+            test_args.mu, test_args.dn)
 
 
 def test_bad_pressure(test_args: Args) -> None:
     pb = Quantity(1.0 * units.meter)
     with raises(errors.UnitsError):
-        free_energy_law.calculate_free_energy_change(test_args.s, test_args.dt, pb, test_args.dv, test_args.mu, test_args.dn)
+        free_energy_law.calculate_free_energy_change(test_args.s, test_args.dt, pb, test_args.dv,
+            test_args.mu, test_args.dn)
     with raises(TypeError):
-        free_energy_law.calculate_free_energy_change(test_args.s, test_args.dt, 100, test_args.dv, test_args.mu, test_args.dn)
+        free_energy_law.calculate_free_energy_change(test_args.s, test_args.dt, 100, test_args.dv,
+            test_args.mu, test_args.dn)
 
 
 def test_bad_volume(test_args: Args) -> None:
     vb = Quantity(1.0 * units.meter)
     with raises(errors.UnitsError):
-        free_energy_law.calculate_free_energy_change(test_args.s, test_args.dt, test_args.p, vb, test_args.mu, test_args.dn)
+        free_energy_law.calculate_free_energy_change(test_args.s, test_args.dt, test_args.p, vb,
+            test_args.mu, test_args.dn)
     with raises(TypeError):
-        free_energy_law.calculate_free_energy_change(test_args.s, test_args.dt, test_args.p, 100, test_args.mu, test_args.dn)
+        free_energy_law.calculate_free_energy_change(test_args.s, test_args.dt, test_args.p, 100,
+            test_args.mu, test_args.dn)
 
 
 def test_bad_chemical_potential(test_args: Args) -> None:
     mub = Quantity(1.0 * units.meter)
     with raises(errors.UnitsError):
-        free_energy_law.calculate_free_energy_change(test_args.s, test_args.dt, test_args.p, test_args.dv, mub, test_args.dn)
+        free_energy_law.calculate_free_energy_change(test_args.s, test_args.dt, test_args.p,
+            test_args.dv, mub, test_args.dn)
     with raises(TypeError):
-        free_energy_law.calculate_free_energy_change(test_args.s, test_args.dt, test_args.p, test_args.dv, 100, test_args.dn)
+        free_energy_law.calculate_free_energy_change(test_args.s, test_args.dt, test_args.p,
+            test_args.dv, 100, test_args.dn)
 
 
 def test_bad_number(test_args: Args) -> None:
     nb = Quantity(1.0 * units.meter)
     with raises(errors.UnitsError):
-        free_energy_law.calculate_free_energy_change(test_args.s, test_args.dt, test_args.p, test_args.dv, test_args.mu, nb)
+        free_energy_law.calculate_free_energy_change(test_args.s, test_args.dt, test_args.p,
+            test_args.dv, test_args.mu, nb)

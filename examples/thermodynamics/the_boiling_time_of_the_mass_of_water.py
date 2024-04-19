@@ -65,12 +65,15 @@ energy_from_combustion_alcohol_value = combustion_energy_law.law.subs({
 }).rhs
 
 energy_for_heating_water_value = heating_law.law.subs({
-    heating_law.heat_capacity: specific_qty_law.law.rhs.subs({
-        specific_qty_law.specific_quantity: specific_heat_of_heating_water,
-        specific_qty_law.mass: mass_of_water,
+    heating_law.heat_capacity:
+    specific_qty_law.law.rhs.subs({
+    specific_qty_law.specific_quantity: specific_heat_of_heating_water,
+    specific_qty_law.mass: mass_of_water,
     }),
-    heating_law.temperature_origin: temperature_of_water,
-    heating_law.temperature_end: temperature_of_vaporization_water
+    heating_law.temperature_origin:
+        temperature_of_water,
+    heating_law.temperature_end:
+        temperature_of_vaporization_water
 }).rhs
 
 energy_to_vaporization_water_value = energy_to_vapor_law.law.subs({

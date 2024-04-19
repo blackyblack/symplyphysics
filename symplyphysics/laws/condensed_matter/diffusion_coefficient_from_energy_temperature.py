@@ -1,6 +1,7 @@
 from sympy import (Eq, solve, exp)
 from sympy.physics.units import boltzmann_constant
 from symplyphysics import (
+    symbols,
     units,
     Quantity,
     Symbol,
@@ -25,7 +26,7 @@ diffusion_coefficient = Symbol("diffusion_coefficient", units.area / units.time)
 
 energy = Symbol("energy", units.energy)
 diffusion_constant = Symbol("diffusion_constant", units.area / units.time)
-temperature = Symbol("temperature", units.temperature)
+temperature = symbols.thermodynamics.temperature
 
 law = Eq(diffusion_coefficient,
     diffusion_constant * exp(-energy / (boltzmann_constant * temperature)))

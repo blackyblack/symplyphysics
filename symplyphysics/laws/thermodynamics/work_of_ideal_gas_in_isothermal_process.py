@@ -24,7 +24,7 @@ work = Symbol("work", units.energy)
 molar_mass = Symbol("molar_mass", units.mass / units.amount_of_substance)
 start_volume = Symbol("start_volume", units.volume)
 final_volume = Symbol("final_volume", units.volume)
-temperature = Symbol("temperature", units.temperature)
+temperature = symbols.thermodynamics.temperature
 gas_mass = clone_symbol(symbols.basic.mass, "gas_mass")
 
 law = Eq(work, (gas_mass / molar_mass) * units.molar_gas_constant * temperature *

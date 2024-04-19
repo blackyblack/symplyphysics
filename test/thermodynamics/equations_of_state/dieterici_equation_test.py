@@ -10,7 +10,7 @@ from symplyphysics import (
 from symplyphysics.laws.thermodynamics.equations_of_state import dieterici_equation
 
 # Description
-## For a fluid described by the Dieterici equation of molar volume V = 0.3 m**3/mol, 
+## For a fluid described by the Dieterici equation of molar volume V = 0.3 m**3/mol,
 ## temperature T = 200 K, and parameters a = 2 bar*(L/mol)**2 and b = 0.1 L/mol,
 ## the pressure is 5.54 kPa.
 
@@ -27,7 +27,8 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = dieterici_equation.calculate_pressure(test_args.vm, test_args.t, test_args.a, test_args.b)
+    result = dieterici_equation.calculate_pressure(test_args.vm, test_args.t, test_args.a,
+        test_args.b)
     assert_equal(result, 5.54 * prefixes.kilo * units.pascal)
 
 

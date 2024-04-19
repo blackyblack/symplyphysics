@@ -1,6 +1,6 @@
 from sympy import (Eq, solve, log)
 from sympy.physics.units import boltzmann
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (symbols, units, Quantity, Symbol, print_expression, validate_input,
     validate_output)
 
 # Description
@@ -22,7 +22,7 @@ height_barrier = Symbol("height_barrier", units.voltage)
 donors_concentration = Symbol("donors_concentration", 1 / units.volume)
 acceptors_concentration = Symbol("acceptors_concentration", 1 / units.volume)
 charge_carriers_concentration = Symbol("charge_carriers_concentration", 1 / units.volume)
-temperature = Symbol("temperature", units.temperature)
+temperature = symbols.thermodynamics.temperature
 
 charge_electron = Symbol("charge_electron", units.charge)
 

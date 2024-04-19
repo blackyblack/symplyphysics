@@ -1,14 +1,6 @@
 from sympy import Eq, solve, pi, acos, sqrt
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    print_expression,
-    validate_input,
-    validate_output,
-    dimensionless,
-    convert_to_float
-)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output, dimensionless, convert_to_float)
 
 ## Description
 ## The relative operating bandwidth of a quarter-wave transformer depends on the reflection coefficient,
@@ -17,14 +9,16 @@ from symplyphysics import (
 ## The reflection coefficient is equal to the ratio of the power of the signal reflected from the transformer to the
 ## power of the signal incident on the transformer.
 
-
 relative_bandwidth = Symbol("relative_bandwidth", dimensionless)
 
 load_resistance = Symbol("load_resistance", units.impedance)
 characteristic_resistance = Symbol("characteristic_resistance", units.impedance)
 reflection_coefficient = Symbol("reflection_coefficient", dimensionless)
 
-law = Eq(relative_bandwidth, 2 - (4 / pi) * acos(reflection_coefficient * 2 * sqrt(load_resistance * characteristic_resistance) / (sqrt(1 - reflection_coefficient**2) * abs(load_resistance - characteristic_resistance))))
+law = Eq(
+    relative_bandwidth, 2 -
+    (4 / pi) * acos(reflection_coefficient * 2 * sqrt(load_resistance * characteristic_resistance) /
+    (sqrt(1 - reflection_coefficient**2) * abs(load_resistance - characteristic_resistance))))
 
 
 def print_law() -> str:

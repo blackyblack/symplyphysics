@@ -5,21 +5,25 @@ from sympy.plotting import plot, plot_parametric
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import convert_to, units
 from symplyphysics.laws.thermodynamics import (
-    zero_heat_transfer as adiabatic_law,
-)
+    zero_heat_transfer as adiabatic_law,)
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as ideal_gas_law
 
 pressure, volume, temperature = symbols("pressure volume temperature", positive=True)
 
 ideal_gas_eqn = ideal_gas_law.law.subs({
-    ideal_gas_law.mole_count: 1,
-    units.molar_gas_constant: convert_to(
-        units.molar_gas_constant,
-        units.joule / (units.kelvin * units.mol),
+    ideal_gas_law.mole_count:
+        1,
+    units.molar_gas_constant:
+    convert_to(
+    units.molar_gas_constant,
+    units.joule / (units.kelvin * units.mol),
     ),
-    ideal_gas_law.pressure: pressure,
-    ideal_gas_law.volume: volume,
-    ideal_gas_law.temperature: temperature,
+    ideal_gas_law.pressure:
+        pressure,
+    ideal_gas_law.volume:
+        volume,
+    ideal_gas_law.temperature:
+        temperature,
 })
 
 pressure_expr = solve(ideal_gas_eqn, pressure)[0]
@@ -76,8 +80,8 @@ adiabate_eqn = adiabatic_law.adiabatic_condition.subs({
 
 final_volume = solve(
     [
-        adiabate_eqn,
-        ideal_gas_eqn.subs(temperature, FINAL_TEMPERATURE),
+    adiabate_eqn,
+    ideal_gas_eqn.subs(temperature, FINAL_TEMPERATURE),
     ],
     (pressure, volume),
     dict=True,

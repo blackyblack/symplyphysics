@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import (
-    second_virial_coefficient as virial_law,
-)
+    second_virial_coefficient as virial_law,)
 
 # Description
 ## The van der Waals coefficients for Argon are a = 1.355 bar*(L/mol)**2 and

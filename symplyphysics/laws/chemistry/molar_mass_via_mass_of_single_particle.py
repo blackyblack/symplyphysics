@@ -1,5 +1,6 @@
 from sympy import Eq, solve, Symbol as SymSymbol, Idx
 from symplyphysics import (
+    clone_symbol,
     units,
     Quantity,
     Symbol,
@@ -15,14 +16,13 @@ from symplyphysics.laws.chemistry import (
     avogadro_number_from_mole_count as avogadro_law,
 )
 from symplyphysics.laws.conservation import (
-    mixture_mass_equal_sum_of_components_masses as mass_sum_law,
-)
+    mixture_mass_equal_sum_of_components_masses as mass_sum_law,)
 
 # Description
 ## Molar mass of a substance is the mass of 1 mole of particles that it is comprised of.
 
 molar_mass = Symbol("molas_mass", units.mass / units.amount_of_substance)
-particle_mass = Symbol("particle_mass", units.mass)
+particle_mass = clone_symbol(symbols.basic.mass, "particle_mass")
 
 law = Eq(molar_mass, particle_mass * units.avogadro)
 
@@ -30,19 +30,13 @@ law = Eq(molar_mass, particle_mass * units.avogadro)
 
 _number_of_particles = SymSymbol("number_of_particles", integer=True)
 
-_amount_of_substance = solve(
-    avogadro_law.law, avogadro_law.mole_count
-)[0].subs(
-    avogadro_law.particles_count, _number_of_particles
-)
+_amount_of_substance = solve(avogadro_law.law,
+    avogadro_law.mole_count)[0].subs(avogadro_law.particles_count, _number_of_particles)
 
 _local_index = Idx("local_index", (1, _number_of_particles))
 
-_total_mass = mass_sum_law.law.rhs.subs(
-    global_index, _local_index
-).subs(
-    mass_sum_law.mass_of_component[_local_index], particle_mass
-).doit()
+_total_mass = mass_sum_law.law.rhs.subs(global_index,
+    _local_index).subs(mass_sum_law.mass_of_component[_local_index], particle_mass).doit()
 
 _molar_mass_derived = molar_mass_law.law.rhs.subs({
     symbols.basic.mass: _total_mass,

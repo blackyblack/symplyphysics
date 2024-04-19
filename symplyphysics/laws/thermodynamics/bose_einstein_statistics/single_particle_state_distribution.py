@@ -30,9 +30,8 @@ total_chemical_potential = Symbol("total_chemical_potential", units.energy)
 temperature = symbols.thermodynamics.temperature
 
 law = Eq(
-    occupancy_of_state,
-    1 / (exp((energy_of_state - total_chemical_potential) / (units.boltzmann * temperature)) - 1)
-)
+    occupancy_of_state, 1 / (exp(
+    (energy_of_state - total_chemical_potential) / (units.boltzmann * temperature)) - 1))
 
 
 def print_law() -> str:

@@ -8,7 +8,9 @@ from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed
 argon_mass_ = convert_to(Quantity(39.948 * units.amu), units.kilogram)
 temperatures_ = [100, 200, 300, 400, 500]  # K
 
-print(f"Maxwell-Boltzmann speed distribution function of Argon:\n{print_expression(speed_distribution.law)}\n")
+print(
+    f"Maxwell-Boltzmann speed distribution function of Argon:\n{print_expression(speed_distribution.law)}\n"
+)
 
 temperature_plot = plot(
     title="Maxwell—Boltzmann speed distribution of Argon at different temperatures",

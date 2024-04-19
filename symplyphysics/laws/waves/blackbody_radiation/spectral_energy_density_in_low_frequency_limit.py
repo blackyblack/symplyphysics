@@ -31,14 +31,15 @@ from symplyphysics.laws.waves.blackbody_radiation import spectral_energy_density
 # Conditions
 ## - `h * nu << k * T`, i.e. the photon energy is much smaller than the thermal energy.
 
-spectral_energy_density = Symbol("spectral_energy_density", units.energy / (units.volume * units.frequency))
+spectral_energy_density = Symbol("spectral_energy_density",
+    units.energy / (units.volume * units.frequency))
 radiation_frequency = Symbol("radiation_frequency", units.frequency)
-equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature, "equilibrium_temperature")
+equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature,
+    "equilibrium_temperature")
 
 law = Eq(
-    spectral_energy_density,
-    8 * pi * radiation_frequency**2 * boltzmann_constant * equilibrium_temperature / speed_of_light**3
-)
+    spectral_energy_density, 8 * pi * radiation_frequency**2 * boltzmann_constant *
+    equilibrium_temperature / speed_of_light**3)
 
 # Derive from Planck's law of blackbody radiation
 
@@ -69,6 +70,7 @@ _planck_density_series = solve(
 )[0][spectral_energy_density]
 
 assert expr_equals(_planck_density_series, law.rhs)
+
 
 def print_law() -> str:
     return print_expression(law)

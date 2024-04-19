@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.thermodynamics import (
-    total_number_of_particles_is_sum_of_occupancies as normalization_law,
-)
+    total_number_of_particles_is_sum_of_occupancies as normalization_law,)
 
 # Description
 ## The average numbers of particles are 0.3, 0.7, 2.1, and 0.9. The total number of particles is 4.
@@ -26,7 +25,8 @@ def test_args_fixture() -> Args:
 
 
 def test_law_four_levels(test_args: Args) -> None:
-    result = normalization_law.calculate_total_particle_count([test_args.n1, test_args.n2, test_args.n3, test_args.n4])
+    result = normalization_law.calculate_total_particle_count(
+        [test_args.n1, test_args.n2, test_args.n3, test_args.n4])
     assert_equal(result, 4)
 
 

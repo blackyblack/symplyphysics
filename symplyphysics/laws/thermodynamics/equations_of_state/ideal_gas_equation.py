@@ -1,5 +1,5 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (symbols, units, Quantity, Symbol, print_expression, validate_input,
     validate_output)
 
 # Description
@@ -14,7 +14,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 pressure = Symbol("pressure", units.pressure)
 volume = Symbol("volume", units.volume)
 mole_count = Symbol("mole_count", units.amount_of_substance)
-temperature = Symbol("temperature", units.temperature)
+temperature = symbols.thermodynamics.temperature
 
 law = Eq(pressure, mole_count * temperature * units.molar_gas_constant / volume)
 

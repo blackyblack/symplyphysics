@@ -31,10 +31,8 @@ volume = Symbol("volume", units.volume)
 chemical_potential = Symbol("chemical_potential", units.energy)
 particle_count = Symbol("particle_count", dimensionless)
 
-law = Eq(
-    internal_energy,
-    temperature * entropy - pressure * volume + chemical_potential * particle_count
-)
+law = Eq(internal_energy,
+    temperature * entropy - pressure * volume + chemical_potential * particle_count)
 
 # TODO: derive from Euler's theorem and internal energy differential
 

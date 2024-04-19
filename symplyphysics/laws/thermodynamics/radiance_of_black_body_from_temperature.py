@@ -1,5 +1,5 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (symbols, units, Quantity, Symbol, print_expression, validate_input,
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import (
@@ -21,15 +21,15 @@ from symplyphysics.laws.thermodynamics import rate_of_thermal_radiation as radia
 ## j* = epsilon*sigma*T^4, where ε is the integral absorption capacity of the body. For a completely black body ε = 1.
 
 radiance = Symbol("radiance", units.power / units.area)
-temperature = Symbol("temperature", units.temperature)
+temperature = symbols.thermodynamics.temperature
 
-law = Eq(radiance, units.stefan_boltzmann_constant * (temperature**4))
+law = Eq(radiance, units.stefan_boltzmann_constant * temperature**4)
 
 # Derive from law of thermal radiation power
 
 _thermal_radiation_power = radiation_law.law.rhs.subs({
     radiation_law.surface_emissivity: 1,  # see note, epsilon = 1 for idealized black body
-    radiation_law.temperature: temperature,
+    radiation_law.temperature_emission_absorption: temperature,
     radiation_law.surface_area: exitance_def.surface_area,
 })
 

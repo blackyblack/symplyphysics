@@ -5,8 +5,7 @@ from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression, units
 from symplyphysics.laws.thermodynamics.bose_einstein_statistics import (
-    single_particle_state_distribution as distribution_law,
-)
+    single_particle_state_distribution as distribution_law,)
 
 occupancy = distribution_law.occupancy_of_state
 energy = distribution_law.energy_of_state
@@ -56,4 +55,3 @@ for factor_ in factors_:
     base_plot.extend(sub_plot)
 
 base_plot.show()
-

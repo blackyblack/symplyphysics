@@ -16,7 +16,6 @@ from symplyphysics import (
     angle_type,
 )
 
-
 # Description
 ## A coaxial waveguide is an electrical cable consisting of a central conductor and a shield arranged coaxially and separated
 ## by an insulating material or an air gap. It is used to transmit radio frequency electrical signals.

@@ -56,12 +56,15 @@ energy_for_melting_ice_value = energy_melting_law.law.subs({
     energy_melting_law.specific_heat_melting: specific_heat_melting_of_ice
 }).rhs
 energy_from_cooling_water_value = thermal_energy_law.law.subs({
-    thermal_energy_law.heat_capacity: specific_qty_law.law.rhs.subs({
-        specific_qty_law.specific_quantity: specific_heat_heating_of_water,
-        specific_qty_law.mass: mass_of_water,
+    thermal_energy_law.heat_capacity:
+    specific_qty_law.law.rhs.subs({
+    specific_qty_law.specific_quantity: specific_heat_heating_of_water,
+    specific_qty_law.mass: mass_of_water,
     }),
-    thermal_energy_law.temperature_origin: temperature_of_water,
-    thermal_energy_law.temperature_end: temperature_of_ice
+    thermal_energy_law.temperature_origin:
+        temperature_of_water,
+    thermal_energy_law.temperature_end:
+        temperature_of_ice
 }).rhs
 
 local_index_ = Idx("local_index_", (1, 2))

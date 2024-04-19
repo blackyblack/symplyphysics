@@ -1,6 +1,7 @@
 from sympy import Eq, solve, exp
 from sympy.physics.units import molar_gas_constant
 from symplyphysics import (
+    symbols,
     units,
     Quantity,
     Symbol,
@@ -31,7 +32,7 @@ equilibrium_constant = Symbol("equilibrium_constant", dimensionless)
 
 standard_change_isobaric_potential = Symbol("standard_change_isobaric_potential",
     units.energy / units.amount_of_substance)
-temperature = Symbol("temperature", units.temperature)
+temperature = symbols.thermodynamics.temperature
 
 law = Eq(equilibrium_constant,
     exp(-standard_change_isobaric_potential / (molar_gas_constant * temperature)))

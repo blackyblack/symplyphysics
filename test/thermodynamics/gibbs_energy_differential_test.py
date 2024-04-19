@@ -29,51 +29,63 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = gibbs_law.calculate_gibbs_energy_change(test_args.s, test_args.dt, test_args.v, test_args.dp, test_args.mu, test_args.dn)
+    result = gibbs_law.calculate_gibbs_energy_change(test_args.s, test_args.dt, test_args.v,
+        test_args.dp, test_args.mu, test_args.dn)
     assert_equal(result, -100 * units.joule)
 
 
 def test_bad_entropy(test_args: Args) -> None:
     sb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        gibbs_law.calculate_gibbs_energy_change(sb, test_args.dt, test_args.v, test_args.dp, test_args.mu, test_args.dn)
+        gibbs_law.calculate_gibbs_energy_change(sb, test_args.dt, test_args.v, test_args.dp,
+            test_args.mu, test_args.dn)
     with raises(TypeError):
-        gibbs_law.calculate_gibbs_energy_change(100, test_args.dt, test_args.v, test_args.dp, test_args.mu, test_args.dn)
+        gibbs_law.calculate_gibbs_energy_change(100, test_args.dt, test_args.v, test_args.dp,
+            test_args.mu, test_args.dn)
 
 
 def test_bad_temperature(test_args: Args) -> None:
     tb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        gibbs_law.calculate_gibbs_energy_change(test_args.s, tb, test_args.v, test_args.dp, test_args.mu, test_args.dn)
+        gibbs_law.calculate_gibbs_energy_change(test_args.s, tb, test_args.v, test_args.dp,
+            test_args.mu, test_args.dn)
     with raises(TypeError):
-        gibbs_law.calculate_gibbs_energy_change(test_args.s, 100, test_args.v, test_args.dp, test_args.mu, test_args.dn)
+        gibbs_law.calculate_gibbs_energy_change(test_args.s, 100, test_args.v, test_args.dp,
+            test_args.mu, test_args.dn)
 
 
 def test_bad_volume(test_args: Args) -> None:
     vb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        gibbs_law.calculate_gibbs_energy_change(test_args.s, test_args.dt, vb, test_args.dp, test_args.mu, test_args.dn)
+        gibbs_law.calculate_gibbs_energy_change(test_args.s, test_args.dt, vb, test_args.dp,
+            test_args.mu, test_args.dn)
     with raises(TypeError):
-        gibbs_law.calculate_gibbs_energy_change(test_args.s, test_args.dt, 100, test_args.dp, test_args.mu, test_args.dn)
+        gibbs_law.calculate_gibbs_energy_change(test_args.s, test_args.dt, 100, test_args.dp,
+            test_args.mu, test_args.dn)
 
 
 def test_bad_pressure(test_args: Args) -> None:
     pb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        gibbs_law.calculate_gibbs_energy_change(test_args.s, test_args.dt, test_args.v, pb, test_args.mu, test_args.dn)
+        gibbs_law.calculate_gibbs_energy_change(test_args.s, test_args.dt, test_args.v, pb,
+            test_args.mu, test_args.dn)
     with raises(TypeError):
-        gibbs_law.calculate_gibbs_energy_change(test_args.s, test_args.dt, test_args.v, 100, test_args.mu, test_args.dn)
+        gibbs_law.calculate_gibbs_energy_change(test_args.s, test_args.dt, test_args.v, 100,
+            test_args.mu, test_args.dn)
 
 
 def test_bad_chemical_potential(test_args: Args) -> None:
     mub = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        gibbs_law.calculate_gibbs_energy_change(test_args.s, test_args.dt, test_args.v, test_args.dp, mub, test_args.dn)
+        gibbs_law.calculate_gibbs_energy_change(test_args.s, test_args.dt, test_args.v,
+            test_args.dp, mub, test_args.dn)
     with raises(TypeError):
-        gibbs_law.calculate_gibbs_energy_change(test_args.s, test_args.dt, test_args.v, test_args.dp, 100, test_args.dn)
+        gibbs_law.calculate_gibbs_energy_change(test_args.s, test_args.dt, test_args.v,
+            test_args.dp, 100, test_args.dn)
 
 
 def test_bad_number(test_args: Args) -> None:
     nb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        gibbs_law.calculate_gibbs_energy_change(test_args.s, test_args.dt, test_args.v, test_args.dp, test_args.mu, nb)
+        gibbs_law.calculate_gibbs_energy_change(test_args.s, test_args.dt, test_args.v,
+            test_args.dp, test_args.mu, nb)

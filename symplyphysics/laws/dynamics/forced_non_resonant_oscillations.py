@@ -1,5 +1,7 @@
 from sympy import Eq, cos, dsolve
 from symplyphysics import (
+    clone_symbol,
+    symbols,
     units,
     Quantity,
     Symbol,
@@ -41,7 +43,7 @@ from symplyphysics.laws.dynamics import forced_oscillations_equation as forced_e
 ##   the solution of simple harmonic motion equation and the particular solution presented here.
 
 driven_displacement = Function("driven_displacement", units.length)
-oscillator_mass = Symbol("oscillator_mass", units.mass)
+oscillator_mass = clone_symbol(symbols.basic.mass, "oscillator_mass")
 natural_angular_frequency = Symbol("natural_angular_frequency", angle_type / units.time)
 driving_force_amplitude = Symbol("driving_force_amplitude", units.force)
 driving_angular_frequency = Symbol("driving_angular_frequency", angle_type / units.time)

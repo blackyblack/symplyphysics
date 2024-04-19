@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output)
+from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print_expression,
+    validate_input, validate_output)
 
 # Description
 ## Viscosity is one of the phenomena of transport, the property of fluid bodies (liquids and gases) to resist the movement of one part of them relative to another.
@@ -18,8 +18,8 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## Conditions
 ## Gas is ideal
 
-set_temperature = Symbol("set_temperature", units.temperature)
-control_temperature = Symbol("control_temperature", units.temperature)
+set_temperature = clone_symbol(symbols.thermodynamics.temperature, "set_temperature")
+control_temperature = clone_symbol(symbols.thermodynamics.temperature, "control_temperature")
 dynamic_viscosity = Symbol("dynamic_viscosity", units.pressure * units.time)
 control_viscosity = Symbol("control_viscosity", units.pressure * units.time)
 sutherland_constant = Symbol("sutherland_constant", units.temperature)

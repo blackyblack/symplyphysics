@@ -1,5 +1,7 @@
 from sympy import Eq, exp
 from symplyphysics import (
+    clone_symbol,
+    symbols,
     units,
     Quantity,
     Symbol,
@@ -27,7 +29,7 @@ from symplyphysics import (
 ## - Damping ratio (zeta) is small, i.e. zeta << 1
 
 oscillator_energy = Symbol("oscillator_energy", units.energy)
-oscillator_mass = Symbol("oscillator_mass", units.mass)
+oscillator_mass = clone_symbol(symbols.basic.mass, "oscillator_mass")
 maximum_amplitude = Symbol("maximum_amplitude", units.length)
 undamped_angular_frequency = Symbol("undamped_angular_frequency", angle_type / units.time)
 exponential_decay_constant = Symbol("exponential_decay_constant", angle_type / units.time)

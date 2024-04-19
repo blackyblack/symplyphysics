@@ -24,15 +24,14 @@ from symplyphysics import (
 ## k - Boltzmann constant
 ## T - equilibrium temperature of black body
 
-spectral_energy_density = Symbol("spectral_energy_density", units.energy / (units.volume * units.frequency))
+spectral_energy_density = Symbol("spectral_energy_density",
+    units.energy / (units.volume * units.frequency))
 radiation_frequency = Symbol("radiation_frequency", units.frequency)
-equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature, "equilibrium_temperature")
+equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature,
+    "equilibrium_temperature")
 
-law = Eq(
-    spectral_energy_density,
-    (8 * pi * planck * radiation_frequency**3 / speed_of_light**3)
-    / (exp(planck * radiation_frequency / (boltzmann_constant * equilibrium_temperature)) - 1)
-)
+law = Eq(spectral_energy_density, (8 * pi * planck * radiation_frequency**3 / speed_of_light**3) /
+    (exp(planck * radiation_frequency / (boltzmann_constant * equilibrium_temperature)) - 1))
 
 
 def print_law() -> str:

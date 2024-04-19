@@ -1,5 +1,5 @@
 from sympy import (Eq, solve, exp)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (symbols, units, Quantity, Symbol, print_expression, validate_input,
     validate_output)
 
 # Description
@@ -25,7 +25,7 @@ initial_pressure = Symbol("initial_pressure", units.pressure)
 atomic_weight = Symbol("atomic_weight", units.mass / units.amount_of_substance)
 final_height = Symbol("final_height", units.length)
 initial_height = Symbol("initial_height", units.length)
-temperature = Symbol("temperature", units.temperature)
+temperature = symbols.thermodynamics.temperature
 
 law = Eq(
     final_pressure,

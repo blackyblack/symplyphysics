@@ -1,14 +1,6 @@
 from sympy import Eq
-from symplyphysics import (
-    units,
-    dimensionless,
-    Quantity,
-    Symbol,
-    print_expression,
-    validate_input,
-    validate_output,
-    symbols
-)
+from symplyphysics import (units, dimensionless, Quantity, Symbol, print_expression, validate_input,
+    validate_output, symbols)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import enthalpy_is_internal_energy_plus_pressure_energy as enthalpy_def
 from symplyphysics.laws.thermodynamics.euler_relations import internal_energy_formula
@@ -47,9 +39,7 @@ _internal_energy_expr = internal_energy_formula.law.rhs.subs({
     internal_energy_formula.particle_count: particle_count,
 })
 
-_enthalpy_expr = enthalpy_def.law.rhs.subs({
-    enthalpy_def.internal_energy: _internal_energy_expr
-})
+_enthalpy_expr = enthalpy_def.law.rhs.subs({enthalpy_def.internal_energy: _internal_energy_expr})
 
 assert expr_equals(_enthalpy_expr, law.rhs)
 

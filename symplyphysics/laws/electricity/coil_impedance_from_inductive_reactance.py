@@ -1,6 +1,12 @@
 from sympy import (I, Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output,)
+from symplyphysics import (
+    units,
+    Quantity,
+    Symbol,
+    print_expression,
+    validate_input,
+    validate_output,
+)
 
 # Description
 ## The impedance of ideal coil depends on its inductive reactance. While having zero resistivity, the real part of

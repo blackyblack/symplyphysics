@@ -1,6 +1,12 @@
 from sympy import (I, Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output,)
+from symplyphysics import (
+    units,
+    Quantity,
+    Symbol,
+    print_expression,
+    validate_input,
+    validate_output,
+)
 
 # Description
 ## While the serial resistance of ideal capacitor is zero, its impedance depends on its reactance.

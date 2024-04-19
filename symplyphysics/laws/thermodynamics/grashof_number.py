@@ -1,5 +1,7 @@
 from sympy import Eq, solve
 from symplyphysics import (
+    clone_symbol,
+    symbols,
     units,
     Quantity,
     Symbol,
@@ -30,8 +32,8 @@ from symplyphysics import (
 # Gr is Grashof number.
 
 coefficient_of_volume_expansion = Symbol("coefficient_of_volume_expansion", 1 / units.temperature)
-surface_temperature = Symbol("initial_temperature", units.temperature)
-fluid_temperature = Symbol("final_temperature", units.temperature)
+surface_temperature = clone_symbol(symbols.thermodynamics.temperature, "surface_temperature")
+fluid_temperature = clone_symbol(symbols.thermodynamics.temperature, "fluid_temperature")
 characteristic_length = Symbol("characteristic_length", units.length)
 viscosity = Symbol("viscosity", units.area / units.time)
 grashof_number = Symbol("grashof_number", dimensionless)

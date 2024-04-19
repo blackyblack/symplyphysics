@@ -9,8 +9,7 @@ from symplyphysics.laws.electricity.waveguides import power_carried_by_main_wave
 ## is 300 volt per meter. Then the power carried by the waveguide is 140.5 milliwatt.
 
 Args = namedtuple("Args", [
-    "waveguide_width", "waveguide_height", "wavelength", "material_resistance",
-    "electric_intensity"
+    "waveguide_width", "waveguide_height", "wavelength", "material_resistance", "electric_intensity"
 ])
 
 
@@ -39,46 +38,44 @@ def test_basic_waveguide_power(test_args: Args) -> None:
 def test_bad_waveguide_dimension(test_args: Args) -> None:
     waveguide_dimension = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        power_law.calculate_waveguide_power(waveguide_dimension,
-            test_args.waveguide_height, test_args.wavelength, test_args.material_resistance,
-            test_args.electric_intensity)
+        power_law.calculate_waveguide_power(waveguide_dimension, test_args.waveguide_height,
+            test_args.wavelength, test_args.material_resistance, test_args.electric_intensity)
     with raises(TypeError):
-        power_law.calculate_waveguide_power(100,
-            test_args.waveguide_height, test_args.wavelength, test_args.material_resistance,
-            test_args.electric_intensity)
+        power_law.calculate_waveguide_power(100, test_args.waveguide_height, test_args.wavelength,
+            test_args.material_resistance, test_args.electric_intensity)
     with raises(errors.UnitsError):
-        power_law.calculate_waveguide_power(test_args.waveguide_width,
-            waveguide_dimension, test_args.wavelength, test_args.material_resistance,
-            test_args.electric_intensity)
+        power_law.calculate_waveguide_power(test_args.waveguide_width, waveguide_dimension,
+            test_args.wavelength, test_args.material_resistance, test_args.electric_intensity)
     with raises(TypeError):
-        power_law.calculate_waveguide_power(test_args.waveguide_width,
-            100, test_args.wavelength, test_args.material_resistance,
-            test_args.electric_intensity)
+        power_law.calculate_waveguide_power(test_args.waveguide_width, 100, test_args.wavelength,
+            test_args.material_resistance, test_args.electric_intensity)
 
 
 def test_bad_wavelength(test_args: Args) -> None:
     wavelength = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        power_law.calculate_waveguide_power(test_args.waveguide_width,
-            test_args.waveguide_height, wavelength, test_args.material_resistance,
-            test_args.electric_intensity)
+        power_law.calculate_waveguide_power(test_args.waveguide_width, test_args.waveguide_height,
+            wavelength, test_args.material_resistance, test_args.electric_intensity)
     with raises(TypeError):
-        power_law.calculate_waveguide_power(test_args.waveguide_width,
-            test_args.waveguide_height, 100, test_args.material_resistance,
-            test_args.electric_intensity)
+        power_law.calculate_waveguide_power(test_args.waveguide_width, test_args.waveguide_height,
+            100, test_args.material_resistance, test_args.electric_intensity)
 
 
 def test_bad_material_resistance(test_args: Args) -> None:
     material_resistance = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        power_law.calculate_waveguide_power(test_args.waveguide_width, test_args.waveguide_height, test_args.wavelength, material_resistance, test_args.electric_intensity)
+        power_law.calculate_waveguide_power(test_args.waveguide_width, test_args.waveguide_height,
+            test_args.wavelength, material_resistance, test_args.electric_intensity)
     with raises(TypeError):
-        power_law.calculate_waveguide_power(test_args.waveguide_width, test_args.waveguide_height, test_args.wavelength, 100, test_args.electric_intensity)
+        power_law.calculate_waveguide_power(test_args.waveguide_width, test_args.waveguide_height,
+            test_args.wavelength, 100, test_args.electric_intensity)
 
 
 def test_bad_electric_intensity(test_args: Args) -> None:
     electric_intensity = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        power_law.calculate_waveguide_power(test_args.waveguide_width, test_args.waveguide_height, test_args.wavelength, test_args.material_resistance, electric_intensity)
+        power_law.calculate_waveguide_power(test_args.waveguide_width, test_args.waveguide_height,
+            test_args.wavelength, test_args.material_resistance, electric_intensity)
     with raises(TypeError):
-        power_law.calculate_waveguide_power(test_args.waveguide_width, test_args.waveguide_height, test_args.wavelength, test_args.material_resistance, 100)
+        power_law.calculate_waveguide_power(test_args.waveguide_width, test_args.waveguide_height,
+            test_args.wavelength, test_args.material_resistance, 100)

@@ -1,5 +1,7 @@
 from sympy import Eq
 from symplyphysics import (
+    clone_symbol,
+    symbols,
     units,
     dimensionless,
     Quantity,
@@ -35,7 +37,7 @@ from symplyphysics import (
 
 gibbs_energy_change = Symbol("gibbs_energy_change", units.energy)
 entropy = Symbol("entropy", units.energy / units.temperature)
-temperature_change = Symbol("temperature_change", units.temperature)
+temperature_change = clone_symbol(symbols.thermodynamics.temperature, "temperature_change")
 volume = Symbol("volume", units.volume)
 pressure_change = Symbol("pressure_change", units.pressure)
 chemical_potential = Symbol("chemical_potential", units.energy)
@@ -43,7 +45,8 @@ particle_count_change = Symbol("particle_count_change", dimensionless)
 
 law = Eq(
     gibbs_energy_change,
-    -1 * entropy * temperature_change + volume * pressure_change + chemical_potential * particle_count_change,
+    -1 * entropy * temperature_change + volume * pressure_change +
+    chemical_potential * particle_count_change,
 )
 
 
@@ -51,6 +54,7 @@ def print_law() -> str:
     return print_expression(law)
 
 
+#pylint: disable=too-many-arguments
 @validate_input(
     entropy_=entropy,
     temperature_change_=temperature_change,

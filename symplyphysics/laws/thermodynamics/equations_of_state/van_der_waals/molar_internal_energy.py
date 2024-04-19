@@ -38,7 +38,8 @@ molar_volume = Symbol("molar_volume", units.volume / units.amount_of_substance)
 
 law = Eq(
     molar_internal_energy,
-    Integral(isochoric_molar_heat_capacity(temperature), temperature) - bonding_forces_parameter / molar_volume,
+    Integral(isochoric_molar_heat_capacity(temperature), temperature) -
+    bonding_forces_parameter / molar_volume,
 )
 
 
@@ -63,11 +64,10 @@ def calculate_internal_energy(
     # Isochoric heat capacity is assumed to be a constant independent of temperature
 
     isochoric_molar_heat_capacity_function = isochoric_molar_heat_capacity_
-    result = law.rhs.subs(
-        isochoric_molar_heat_capacity(temperature), isochoric_molar_heat_capacity_function
-    ).doit().subs({
+    result = law.rhs.subs(isochoric_molar_heat_capacity(temperature),
+        isochoric_molar_heat_capacity_function).doit().subs({
         temperature: temperature_,
         bonding_forces_parameter: bonding_forces_parameter_,
         molar_volume: molar_volume_,
-    })
+        })
     return Quantity(result)

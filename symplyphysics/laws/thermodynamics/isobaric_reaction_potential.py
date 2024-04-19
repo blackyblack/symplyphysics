@@ -1,5 +1,6 @@
 from sympy import (Eq, solve)
 from symplyphysics import (
+    symbols,
     units,
     Quantity,
     Symbol,
@@ -28,7 +29,7 @@ isobaric_potential = Symbol("isobaric_potential", units.energy / units.amount_of
 
 thermal_effect = Symbol("thermal_effect", units.energy / units.amount_of_substance)
 entropy = Symbol("entropy", units.energy / units.amount_of_substance / units.temperature)
-temperature = Symbol("temperature", units.temperature)
+temperature = symbols.thermodynamics.temperature
 
 law = Eq(isobaric_potential, thermal_effect - temperature * entropy)
 
