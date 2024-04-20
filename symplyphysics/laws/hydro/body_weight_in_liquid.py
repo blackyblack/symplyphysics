@@ -1,5 +1,5 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print_expression, validate_input,
     validate_output)
 
 # Description
@@ -13,8 +13,8 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## ⍴_liquid is the density of the liquid
 ## ⍴ is body density
 
-weight_liquid = Symbol("weight_liquid", units.force)
-weight_air = Symbol("weight_air", units.force)
+weight_liquid = clone_symbol(symbols.dynamics.force, "weight_liquid")
+weight_air = clone_symbol(symbols.dynamics.force, "weight_air")
 liquid_density = Symbol("liquid_density", units.mass / units.volume)
 body_density = Symbol("body_density", units.mass / units.volume)
 

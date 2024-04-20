@@ -1,5 +1,5 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (symbols, units, Quantity, Symbol, print_expression, validate_input,
     validate_output)
 
 # Description
@@ -15,7 +15,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## Force and work vectors are collinear
 
 work = Symbol("work", units.energy)
-force = Symbol("force", units.force)
+force = symbols.dynamics.force
 distance = Symbol("distance", units.length)
 
 law = Eq(work, force * distance)

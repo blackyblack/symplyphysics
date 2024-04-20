@@ -1,5 +1,5 @@
 from sympy import (Eq, solve, dsolve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print_expression, validate_input,
     validate_output)
 from symplyphysics.laws.hydro import pressure_from_force_and_area as pressure_law
 from symplyphysics.core.expr_comparisons import expr_equals
@@ -20,9 +20,9 @@ from symplyphysics.laws.hydro import inner_pressure_of_fluid_is_constant as cons
 ## Conditions
 ## This ratio is performed only in an ideal hydraulic press, i.e. one in which there is no friction.
 
-input_force = Symbol("input_force", units.force)
+input_force = clone_symbol(symbols.dynamics.force, "input_force")
 input_area = Symbol("input_area", units.area)
-output_force = Symbol("output_force", units.force)
+output_force = clone_symbol(symbols.dynamics.force, "output_force")
 output_forces_area = Symbol("output_forces_area", units.area)
 
 law = Eq(input_force / input_area, output_force / output_forces_area)

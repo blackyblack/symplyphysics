@@ -1,5 +1,7 @@
 from sympy import Eq, solve
 from symplyphysics import (
+    clone_symbol,
+    symbols,
     units,
     Quantity,
     Symbol,
@@ -19,7 +21,7 @@ from symplyphysics import (
 ## A - area of the material face parallel to the applied force vector
 
 shear_stress = Symbol("shear_stress", units.pressure)
-force_applied = Symbol("force_applied", units.force)
+force_applied = clone_symbol(symbols.dynamics.force, "force_applied")
 area = Symbol("area", units.area)
 
 law = Eq(shear_stress, force_applied / area)

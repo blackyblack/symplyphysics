@@ -40,7 +40,7 @@ from symplyphysics.laws.dynamics import forced_oscillations_equation as forced_e
 resonant_displacement = Function("resonant_displacement", units.length)
 oscillator_mass = clone_symbol(symbols.basic.mass, "oscillator_mass")
 natural_angular_frequency = Symbol("natural_angular_frequency", angle_type / units.time)
-driving_force_amplitude = Symbol("driving_force_amplitude", units.force)
+driving_force_amplitude = clone_symbol(symbols.dynamics.force, "driving_force_amplitude")
 driving_phase_lag = Symbol("driving_phase_lag", angle_type)
 time = Symbol("time", units.time)
 

@@ -47,4 +47,4 @@ def test_bad_frequency(test_args: Args) -> None:
     with raises(errors.UnitsError):
         factor_law.calculate_quality_factor(test_args.resistance, test_args.inductance, frequency)
     with raises(TypeError):
-            factor_law.calculate_quality_factor(test_args.resistance, test_args.inductance, 100)
+        factor_law.calculate_quality_factor(test_args.resistance, test_args.inductance, 100)

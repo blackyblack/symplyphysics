@@ -11,7 +11,7 @@ from symplyphysics import (
 )
 
 # Description
-## The penetrating force is the magnitude of the faintest stars visible with a telescope when observed at the zenith.
+## The penetrating power is the magnitude of the faintest stars visible with a telescope when observed at the zenith.
 
 ## Law is: m = 2.5 + 5 * lg(D), where
 ## m - penetrating power of telescope,
