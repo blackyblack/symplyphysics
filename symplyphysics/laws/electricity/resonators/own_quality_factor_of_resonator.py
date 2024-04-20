@@ -16,7 +16,7 @@ quality_factor = Symbol("quality_factor", dimensionless)
 
 resistance = Symbol("resistance", units.impedance)
 inductance = Symbol("inductance", units.inductance)
-frequency = Symbol("inductance", 1 / units.time)
+frequency = Symbol("frequency", units.frequency)
 
 law = Eq(quality_factor, resistance / (2 * pi * frequency * inductance))
 

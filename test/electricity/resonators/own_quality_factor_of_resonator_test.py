@@ -4,7 +4,7 @@ from symplyphysics import (assert_equal, units, Quantity, errors, prefixes)
 from symplyphysics.laws.electricity.resonators import own_quality_factor_of_resonator as factor_law
 
 # Description
-## The resistance in the oscillatory circuit is 50 ohm, the inductance is 25 nanohenry. The oscillation frequency is 1 kilohertz.
+## The resistance in the oscillatory circuit is 50 ohm, the inductance is 25 nanohenry. The oscillation frequency is 2 kilohertz.
 ## Then the quality factor will be equal to 159154.
 
 Args = namedtuple("Args", ["resistance", "inductance", "frequency"])
