@@ -18,7 +18,7 @@ loaded_resonator_quality_factor = Symbol("loaded_resonator_quality_factor", dime
 
 resistance = Symbol("resistance", units.impedance)
 inductance = Symbol("inductance", units.inductance)
-frequency = Symbol("inductance", 1 / units.time)
+frequency = Symbol("frequency", units.frequency)
 load_resistance = Symbol("load_resistance", units.impedance)
 
 law = Eq(loaded_resonator_quality_factor, (load_resistance * resistance) / (2 * pi * frequency * inductance * (load_resistance + resistance)))
