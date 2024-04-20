@@ -1,5 +1,5 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (clone_symbol, symbols, Quantity, print_expression, validate_input,
     validate_output)
 
 # Description
@@ -8,8 +8,8 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## Fa - action force.
 ## Fr - reaction force.
 
-force_action = Symbol("force_action", units.force)
-force_reaction = Symbol("force_reaction", units.force)
+force_action = clone_symbol(symbols.dynamics.force, "force_action")
+force_reaction = clone_symbol(symbols.dynamics.force, "force_reaction")
 
 law = Eq(force_reaction, -1 * force_action)
 

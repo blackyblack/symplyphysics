@@ -29,7 +29,7 @@ from symplyphysics.laws.gravity import gravitational_potential_energy
 ## R - distance between mass centers of objects
 ## G - gravitational constant
 
-gravitational_force = Symbol("gravitational_force", units.force)
+gravitational_force = clone_symbol(symbols.dynamics.force, "gravitational_force")
 first_mass = clone_symbol(symbols.basic.mass, "first_mass")
 second_mass = clone_symbol(symbols.basic.mass, "second_mass")
 distance_between_mass_centers = Symbol("distance_between_mass_centers", units.length)

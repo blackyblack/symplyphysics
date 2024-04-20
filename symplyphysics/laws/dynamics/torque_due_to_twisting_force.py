@@ -1,5 +1,6 @@
-from sympy import Eq, solve, sin, symbols, sqrt
+from sympy import Eq, solve, sin, symbols as sympy_symbols, sqrt
 from symplyphysics import (
+    symbols,
     units,
     Quantity,
     Symbol,
@@ -29,15 +30,15 @@ from symplyphysics.laws.dynamics.vector import torque_vector_of_twisting_force a
 ## is the vector connecting the origin of the coordinate system and the given point.
 
 torque = Symbol("torque", units.force * units.length)
-force = Symbol("force", units.force)
+force = symbols.dynamics.force
 distance_to_axis = Symbol("distance_to_axis", units.length)
 angle = Symbol("angle", angle_type)
 
 law = Eq(torque, distance_to_axis * force * sin(angle))
 
 # Derive law from its vector counterpart.
-force_vector = Vector(symbols("force_x:z", real=True))
-position_vector = Vector(symbols("x:z", real=True))
+force_vector = Vector(sympy_symbols("force_x:z", real=True))
+position_vector = Vector(sympy_symbols("x:z", real=True))
 
 torque_vector_derived = torque_vector_def.torque_definition(force_vector, position_vector)
 torque_magnitude_derived = vector_magnitude(torque_vector_derived)

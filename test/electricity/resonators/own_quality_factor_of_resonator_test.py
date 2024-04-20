@@ -16,13 +16,12 @@ def test_args_fixture() -> Args:
     inductance = Quantity(25 * prefixes.nano * units.henry)
     frequency = Quantity(2 * prefixes.kilo * units.hertz)
 
-    return Args(resistance=resistance,
-        inductance=inductance,
-        frequency=frequency)
+    return Args(resistance=resistance, inductance=inductance, frequency=frequency)
 
 
 def test_basic_quality_factor(test_args: Args) -> None:
-    result = factor_law.calculate_quality_factor(test_args.resistance, test_args.inductance, test_args.frequency)
+    result = factor_law.calculate_quality_factor(test_args.resistance, test_args.inductance,
+        test_args.frequency)
     assert_equal(result, 159154)
 
 
@@ -47,4 +46,4 @@ def test_bad_frequency(test_args: Args) -> None:
     with raises(errors.UnitsError):
         factor_law.calculate_quality_factor(test_args.resistance, test_args.inductance, frequency)
     with raises(TypeError):
-            factor_law.calculate_quality_factor(test_args.resistance, test_args.inductance, 100)
+        factor_law.calculate_quality_factor(test_args.resistance, test_args.inductance, 100)

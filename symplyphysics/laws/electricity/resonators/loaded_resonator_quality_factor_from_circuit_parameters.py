@@ -1,6 +1,6 @@
 from sympy import (Eq, solve, pi)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input, validate_output,
-    dimensionless, convert_to_float)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output, dimensionless, convert_to_float)
 
 # Description
 ## The quality factor shows the ratio of the energy stored in the resonator to the energy loss during one oscillation period.
@@ -21,7 +21,8 @@ inductance = Symbol("inductance", units.inductance)
 frequency = Symbol("frequency", units.frequency)
 load_resistance = Symbol("load_resistance", units.impedance)
 
-law = Eq(loaded_resonator_quality_factor, (load_resistance * resistance) / (2 * pi * frequency * inductance * (load_resistance + resistance)))
+law = Eq(loaded_resonator_quality_factor, (load_resistance * resistance) /
+    (2 * pi * frequency * inductance * (load_resistance + resistance)))
 
 
 def print_law() -> str:
@@ -33,8 +34,10 @@ def print_law() -> str:
     frequency_=frequency,
     load_resistance_=load_resistance)
 @validate_output(loaded_resonator_quality_factor)
-def calculate_quality_factor(resistance_: Quantity, inductance_: Quantity, frequency_: Quantity, load_resistance_: Quantity) -> float:
-    result_expr = solve(law, loaded_resonator_quality_factor, dict=True)[0][loaded_resonator_quality_factor]
+def calculate_quality_factor(resistance_: Quantity, inductance_: Quantity, frequency_: Quantity,
+    load_resistance_: Quantity) -> float:
+    result_expr = solve(law, loaded_resonator_quality_factor,
+        dict=True)[0][loaded_resonator_quality_factor]
     result_expr = result_expr.subs({
         resistance: resistance_,
         inductance: inductance_,

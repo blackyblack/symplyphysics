@@ -1,6 +1,6 @@
 from sympy import (Eq, solve, pi)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input, validate_output,
-    dimensionless, convert_to_float)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output, dimensionless, convert_to_float)
 
 # Description
 ## The quality factor shows the ratio of the energy stored in the resonator to the energy loss during one oscillation period.
@@ -25,11 +25,10 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(resistance_=resistance,
-    inductance_=inductance,
-    frequency_=frequency)
+@validate_input(resistance_=resistance, inductance_=inductance, frequency_=frequency)
 @validate_output(quality_factor)
-def calculate_quality_factor(resistance_: Quantity, inductance_: Quantity, frequency_: Quantity) -> float:
+def calculate_quality_factor(resistance_: Quantity, inductance_: Quantity,
+    frequency_: Quantity) -> float:
     result_expr = solve(law, quality_factor, dict=True)[0][quality_factor]
     result_expr = result_expr.subs({
         resistance: resistance_,

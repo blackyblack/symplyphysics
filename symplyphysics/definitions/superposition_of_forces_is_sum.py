@@ -1,6 +1,6 @@
 from typing import Sequence
 from sympy import (Eq, Idx, solve)
-from symplyphysics import (units, Quantity, print_expression, Symbol, validate_input,
+from symplyphysics import (clone_symbol, symbols, units, Quantity, print_expression, validate_input,
     validate_output, SymbolIndexed, global_index, SumIndexed, Vector)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions.vector import superposition_of_forces_is_sum as vector_forces_sum
@@ -14,7 +14,8 @@ from symplyphysics.definitions.vector import superposition_of_forces_is_sum as v
 # Conditions:
 ## - Forces are collinear vectors.
 
-resultant_force = Symbol("resultant_force", units.force)
+resultant_force = clone_symbol(symbols.dynamics.force, "resultant_force")
+# TODO: clone from symbols.dynamics.force
 force = SymbolIndexed("force", units.force)
 definition = Eq(resultant_force, SumIndexed(force[global_index], global_index))
 
