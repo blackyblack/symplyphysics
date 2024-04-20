@@ -24,33 +24,42 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_loaded_resonator_quality_factor(test_args: Args) -> None:
-    result = factor_law.calculate_quality_factor(test_args.resistance, test_args.inductance, test_args.frequency, test_args.load_resistance)
+    result = factor_law.calculate_quality_factor(test_args.resistance, test_args.inductance,
+        test_args.frequency, test_args.load_resistance)
     assert_equal(result, 45472)
 
 
 def test_bad_resistances(test_args: Args) -> None:
     resistance = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        factor_law.calculate_quality_factor(resistance, test_args.inductance, test_args.frequency, test_args.load_resistance)
+        factor_law.calculate_quality_factor(resistance, test_args.inductance, test_args.frequency,
+            test_args.load_resistance)
     with raises(TypeError):
-        factor_law.calculate_quality_factor(100, test_args.inductance, test_args.frequency, test_args.load_resistance)
+        factor_law.calculate_quality_factor(100, test_args.inductance, test_args.frequency,
+            test_args.load_resistance)
     with raises(errors.UnitsError):
-        factor_law.calculate_quality_factor(test_args.resistance, test_args.inductance, test_args.frequency, resistance)
+        factor_law.calculate_quality_factor(test_args.resistance, test_args.inductance,
+            test_args.frequency, resistance)
     with raises(TypeError):
-        factor_law.calculate_quality_factor(test_args.resistance, test_args.inductance, test_args.frequency, 100)
+        factor_law.calculate_quality_factor(test_args.resistance, test_args.inductance,
+            test_args.frequency, 100)
 
 
 def test_bad_inductance(test_args: Args) -> None:
     inductance = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        factor_law.calculate_quality_factor(test_args.resistance, inductance, test_args.frequency, test_args.load_resistance)
+        factor_law.calculate_quality_factor(test_args.resistance, inductance, test_args.frequency,
+            test_args.load_resistance)
     with raises(TypeError):
-        factor_law.calculate_quality_factor(test_args.resistance, 100, test_args.frequency, test_args.load_resistance)
+        factor_law.calculate_quality_factor(test_args.resistance, 100, test_args.frequency,
+            test_args.load_resistance)
 
 
 def test_bad_frequency(test_args: Args) -> None:
     frequency = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        factor_law.calculate_quality_factor(test_args.resistance, test_args.inductance, frequency, test_args.load_resistance)
+        factor_law.calculate_quality_factor(test_args.resistance, test_args.inductance, frequency,
+            test_args.load_resistance)
     with raises(TypeError):
-        factor_law.calculate_quality_factor(test_args.resistance, test_args.inductance, 100, test_args.load_resistance)
+        factor_law.calculate_quality_factor(test_args.resistance, test_args.inductance, 100,
+            test_args.load_resistance)

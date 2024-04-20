@@ -26,23 +26,23 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_wave_resistance(test_args: Args) -> None:
-    result = resistance_law.calculate_wave_resistance_even_modes(test_args.coupling_factor,
-        test_args.wave_resistance_odd_modes, test_args.number_segments)
+    result = resistance_law.calculate_wave_resistance_even_modes(
+        test_args.coupling_factor, test_args.wave_resistance_odd_modes, test_args.number_segments)
     assert_equal(result, 121.05 * units.ohm)
 
 
 def test_bad_coupling_factor(test_args: Args) -> None:
     bad_coupling_factor = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        resistance_law.calculate_wave_resistance_even_modes(bad_coupling_factor, test_args.wave_resistance_odd_modes,
-            test_args.number_segments)
+        resistance_law.calculate_wave_resistance_even_modes(bad_coupling_factor,
+            test_args.wave_resistance_odd_modes, test_args.number_segments)
 
 
 def test_bad_wave_resistance_odd_modes(test_args: Args) -> None:
     bad_wave_resistance_odd_modes = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        resistance_law.calculate_wave_resistance_even_modes(test_args.coupling_factor, bad_wave_resistance_odd_modes,
-            test_args.number_segments)
+        resistance_law.calculate_wave_resistance_even_modes(test_args.coupling_factor,
+            bad_wave_resistance_odd_modes, test_args.number_segments)
     with raises(TypeError):
         resistance_law.calculate_wave_resistance_even_modes(test_args.coupling_factor, 100,
             test_args.number_segments)

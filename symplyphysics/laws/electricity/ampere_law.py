@@ -1,6 +1,6 @@
 from sympy import (Eq, solve, cos)
-from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, angle_type)
+from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print_expression,
+    validate_input, validate_output, angle_type)
 
 # Description
 ## Ampere's law is the law that determines the force with which a magnetic field acts on

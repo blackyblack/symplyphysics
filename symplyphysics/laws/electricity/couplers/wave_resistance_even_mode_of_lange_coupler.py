@@ -27,7 +27,12 @@ coupling_factor = Symbol("coupling_factor", dimensionless)
 wave_resistance_odd_modes = Symbol("wave_resistance_odd_modes", units.impedance)
 number_segments = Symbol("number_segments", dimensionless)
 
-law = Eq(wave_resistance_even_modes, wave_resistance_odd_modes * (coupling_factor + sqrt(coupling_factor**2 + (1 - coupling_factor**2) * (number_segments - 1)**2)) / ((number_segments - 1) * (1 - coupling_factor)))
+law = Eq(
+    wave_resistance_even_modes,
+    wave_resistance_odd_modes * (coupling_factor + sqrt(coupling_factor**2 +
+    (1 - coupling_factor**2) * (number_segments - 1)**2)) / ((number_segments - 1) *
+    (1 - coupling_factor)))
+
 
 def print_law() -> str:
     return print_expression(law)
@@ -37,8 +42,8 @@ def print_law() -> str:
     wave_resistance_odd_modes_=wave_resistance_odd_modes,
     number_segments_=number_segments)
 @validate_output(wave_resistance_even_modes)
-def calculate_wave_resistance_even_modes(coupling_factor_: float, wave_resistance_odd_modes_: Quantity,
-    number_segments_: int) -> Quantity:
+def calculate_wave_resistance_even_modes(coupling_factor_: float,
+    wave_resistance_odd_modes_: Quantity, number_segments_: int) -> Quantity:
     result_expr = solve(law, wave_resistance_even_modes, dict=True)[0][wave_resistance_even_modes]
     result_expr = result_expr.subs({
         coupling_factor: coupling_factor_,

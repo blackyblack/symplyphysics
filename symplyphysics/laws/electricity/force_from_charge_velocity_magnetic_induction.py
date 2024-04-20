@@ -1,6 +1,6 @@
 from sympy import (Eq, solve, sin)
-from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, angle_type)
+from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print_expression,
+    validate_input, validate_output, angle_type)
 
 # Description
 ## Lorentz force is force acting on a charge moving at speed from magnetic field.

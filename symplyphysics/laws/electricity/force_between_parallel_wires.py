@@ -1,7 +1,7 @@
 from sympy import (Eq, solve, pi)
 from sympy.physics.units import magnetic_constant
-from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless)
+from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print_expression,
+    validate_input, validate_output, dimensionless)
 
 # Description
 ## Two parallel wires through which current flows interact with each other.
@@ -26,8 +26,8 @@ length = Symbol("length", units.length)
 distance = Symbol("distance", units.length)
 
 law = Eq(
-    ampere_force, magnetic_constant * relative_permeability * first_wire_current * second_wire_current *
-    length / (2 * pi * distance))
+    ampere_force, magnetic_constant * relative_permeability * first_wire_current *
+    second_wire_current * length / (2 * pi * distance))
 
 
 def print_law() -> str:

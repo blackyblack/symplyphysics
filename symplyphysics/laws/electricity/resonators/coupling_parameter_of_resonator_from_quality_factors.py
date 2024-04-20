@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (Symbol, print_expression, validate_input,
-    validate_output, dimensionless, convert_to_float)
+from symplyphysics import (Symbol, print_expression, validate_input, validate_output, dimensionless,
+    convert_to_float)
 
 # Description
 ## There is a coupling parameter to describe the resonator and the load. The parameter is equal to the ratio of the
@@ -23,7 +23,8 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(resonator_quality_factor_=resonator_quality_factor, external_circuit_quality_factor_=external_circuit_quality_factor)
+@validate_input(resonator_quality_factor_=resonator_quality_factor,
+    external_circuit_quality_factor_=external_circuit_quality_factor)
 @validate_output(coupling_parameter)
 def calculate_coupling_parameter(resonator_quality_factor_: float,
     external_circuit_quality_factor_: float) -> float:

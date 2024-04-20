@@ -15,7 +15,8 @@ def test_args_fixture() -> Args:
     resonator_quality_factor = 8000
     external_circuit_quality_factor = 10000
 
-    return Args(resonator_quality_factor=resonator_quality_factor, external_circuit_quality_factor=external_circuit_quality_factor)
+    return Args(resonator_quality_factor=resonator_quality_factor,
+        external_circuit_quality_factor=external_circuit_quality_factor)
 
 
 def test_basic_coupling_parameter(test_args: Args) -> None:

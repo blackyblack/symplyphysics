@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print_expression, validate_input,
-    validate_output)
+from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print_expression,
+    validate_input, validate_output)
 
 # Description
 ## Any object, totally or partially immersed in a fluid or liquid (or gas), is buoyed up by a force equal to the

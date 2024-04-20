@@ -15,7 +15,8 @@ def test_args_fixture() -> Args:
     resonator_quality_factor = 8000
     external_circuit_quality_factor = 10000
 
-    return Args(resonator_quality_factor=resonator_quality_factor, external_circuit_quality_factor=external_circuit_quality_factor)
+    return Args(resonator_quality_factor=resonator_quality_factor,
+        external_circuit_quality_factor=external_circuit_quality_factor)
 
 
 def test_basic_loaded_resonator_quality_factor(test_args: Args) -> None:
@@ -30,5 +31,4 @@ def test_bad_quality_factors(test_args: Args) -> None:
         factor_law.calculate_quality_factor(bad_quality_factor,
             test_args.external_circuit_quality_factor)
     with raises(errors.UnitsError):
-        factor_law.calculate_quality_factor(test_args.resonator_quality_factor,
-            bad_quality_factor)
+        factor_law.calculate_quality_factor(test_args.resonator_quality_factor, bad_quality_factor)

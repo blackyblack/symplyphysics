@@ -27,8 +27,6 @@ def test_basic_coupling_parameter(test_args: Args) -> None:
 def test_bad_resistances(test_args: Args) -> None:
     bad_resistance = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        parameter_law.calculate_coupling_parameter(bad_resistance,
-            test_args.load_resistance)
+        parameter_law.calculate_coupling_parameter(bad_resistance, test_args.load_resistance)
     with raises(errors.UnitsError):
-        parameter_law.calculate_coupling_parameter(test_args.resonator_resistance,
-            bad_resistance)
+        parameter_law.calculate_coupling_parameter(test_args.resonator_resistance, bad_resistance)

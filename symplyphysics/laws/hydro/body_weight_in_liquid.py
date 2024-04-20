@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print_expression, validate_input,
-    validate_output)
+from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print_expression,
+    validate_input, validate_output)
 
 # Description
 ## The Archimedean force acting on a body immersed in a liquid (or gas) is equal to the weight of the liquid (or gas) displaced by the body.

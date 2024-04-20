@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (clone_symbol, symbols, Quantity, Symbol, print_expression, dimensionless, validate_input,
-    validate_output)
+from symplyphysics import (clone_symbol, symbols, Quantity, Symbol, print_expression, dimensionless,
+    validate_input, validate_output)
 
 # Description
 ## Friction force is tangential interaction between two objects, which impedes there relative movement.
