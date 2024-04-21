@@ -4,13 +4,19 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
     dimensionless,)
 
 # Description
-## The ring resonator is a microstrip line in the shape of a circle. The effective permeability of a transmission line is such
-## a permeability that a wave would propagate in an unlimited medium in the same way as it propagates in a transmission line.
+## The ring resonator is a microstrip line in the shape of a circle.
+## When a wave propagates along a microstrip line, part of the field goes out, since the microstrip line does
+## not have metal borders on all sides, unlike, for example, rectangular waveguides. Then imagine an environment
+## in which the field will have the same magnitude as the field of a microstrip line. The permittivity of such a
+## medium will be called the effective permittivity of the line.
+## A wave traveling through an ring resonator acquires a phase shift and interacts with a wave incident on the
+## resonator. If the phase shift is a multiple of 2*pi*m, then these waves add up in phase. m is the interference order.
 
 ## Law is: f = m * c / (l * eps), where
 ## f - the resonant frequency of the ring resonator,
 ## m - order interference,
-## l - the length of the ring resonator,
+## c - speed of light,
+## l - the length of circumference of the ring resonator,
 ## eps - effective permittivity of the resonator.
 
 frequency = Symbol("frequency", units.frequency)
