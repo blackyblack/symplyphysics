@@ -34,7 +34,9 @@ line_length = Symbol("line_length", units.length)
 loss_factor = Symbol("loss_factor", 1 / units.length)
 
 expression = (loss_factor + I * constant_propagation) * line_length
-law = Eq(input_impedance, (cosh(expression) * load_resistance + characteristic_resistance * sinh(expression)) / (load_resistance * sinh(expression) / characteristic_resistance + cosh(expression)))
+law = Eq(input_impedance,
+    (cosh(expression) * load_resistance + characteristic_resistance * sinh(expression)) /
+    (load_resistance * sinh(expression) / characteristic_resistance + cosh(expression)))
 
 
 def print_law() -> str:
@@ -45,8 +47,7 @@ def print_law() -> str:
     load_resistance_=load_resistance,
     constant_propagation_=constant_propagation,
     line_length_=line_length,
-    loss_factor_=loss_factor
-    )
+    loss_factor_=loss_factor)
 @validate_output(input_impedance)
 def calculate_input_impedance(characteristic_resistance_: Quantity, load_resistance_: Quantity,
     constant_propagation_: Quantity, line_length_: Quantity, loss_factor_: Quantity) -> Quantity:

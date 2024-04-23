@@ -1,6 +1,7 @@
 from sympy import (Eq, solve, sqrt, exp)
 from sympy.physics.units import boltzmann
 from symplyphysics import (
+    symbols,
     units,
     Quantity,
     Symbol,
@@ -26,7 +27,7 @@ charge_carriers_concentration = Symbol("charge_carriers_concentration", 1 / unit
 density_of_states_in_conduction_band = Symbol("density_of_states_in_conduction_band",
     1 / units.volume)
 density_of_states_in_valence_band = Symbol("density_of_states_in_valence_band", 1 / units.volume)
-temperature = Symbol("temperature", units.temperature)
+temperature = symbols.thermodynamics.temperature
 band_gap = Symbol("band_gap", units.energy)
 
 law = Eq(

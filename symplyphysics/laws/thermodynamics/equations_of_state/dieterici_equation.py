@@ -22,7 +22,7 @@ from symplyphysics import (
 
 # Notes
 ## - Like the van der Waals equation of state, the Dieterici equation is also semi-empirical.
-## - It approximates moderate pressures of real gases much better than the van der Waals equation, 
+## - It approximates moderate pressures of real gases much better than the van der Waals equation,
 ##   but it is absolutely inapplicable for large pressures.
 ## - Works only in the limit `b << Vm`, `a << P * Vm**2`
 ## - Can be converted to the van der Waals equation in the aforementioned limits and the additional
@@ -42,11 +42,8 @@ molecules_volume_parameter = Symbol(
 
 law = Eq(
     pressure * (molar_volume - molecules_volume_parameter),
-    units.molar_gas_constant * temperature * exp(
-        -1 * bonding_forces_parameter 
-        / (units.molar_gas_constant * temperature * molar_volume)
-    )
-)
+    units.molar_gas_constant * temperature * exp(-1 * bonding_forces_parameter /
+    (units.molar_gas_constant * temperature * molar_volume)))
 
 
 def print_law() -> str:

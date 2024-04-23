@@ -1,14 +1,6 @@
 from sympy import (Eq, solve, cos)
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    print_expression,
-    validate_input,
-    validate_output,
-    dimensionless,
-    angle_type
-)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output, dimensionless, angle_type)
 
 # Description
 ## Interference in thin films is a phenomenon that occurs as a result of the separation of a light beam when
@@ -37,7 +29,8 @@ order_interference = Symbol("order_interference", dimensionless)
 angle_refraction = Symbol("angle_refraction", angle_type)
 refractive_index = Symbol("refractive_index", dimensionless)
 
-law = Eq(film_thickness, order_interference * wavelength / (2 * refractive_index * cos(angle_refraction)))
+law = Eq(film_thickness,
+    order_interference * wavelength / (2 * refractive_index * cos(angle_refraction)))
 
 
 def print_law() -> str:
@@ -49,9 +42,10 @@ def print_law() -> str:
     refractive_index_=refractive_index,
     angle_refraction_=angle_refraction)
 @validate_output(film_thickness)
-def calculate_film_thickness(wavelength_: Quantity, order_interference_: int, refractive_index_: float, angle_refraction_: float | Quantity) -> Quantity:
+def calculate_film_thickness(wavelength_: Quantity, order_interference_: int,
+    refractive_index_: float, angle_refraction_: float | Quantity) -> Quantity:
     if order_interference_ <= 0:
-        raise ValueError("Order interference must be greater than 0.") 
+        raise ValueError("Order interference must be greater than 0.")
 
     result_expr = solve(law, film_thickness, dict=True)[0][film_thickness]
     result_expr = result_expr.subs({

@@ -1,5 +1,5 @@
 from sympy import (Eq, solve, pi)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (symbols, units, Quantity, Symbol, print_expression, validate_input,
     validate_output)
 
 # Description
@@ -24,7 +24,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## - Low Reynolds number, ie non turbulent flow
 
 diffusion_coefficient = Symbol("diffusion_coefficient", units.area / units.time)
-temperature = Symbol("temperature", units.temperature)
+temperature = symbols.thermodynamics.temperature
 particle_radius = Symbol("particle_radius", units.length)
 dynamic_viscosity = Symbol("dynamic_viscosity", units.pressure * units.time)
 

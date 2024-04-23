@@ -36,7 +36,7 @@ coulombs_law_sub = coulombs_law.law.subs({
     coulombs_law.second_charge: test_charge,
     coulombs_law.distance: distance,
 })
-force = solve(coulombs_law_sub, coulombs_law.force)[0]
+force = solve(coulombs_law_sub, coulombs_law.electrostatic_force)[0]
 
 electric_field_def_sub = electric_field_def.law.subs({
     electric_field_def.electrostatic_force: force,

@@ -8,8 +8,7 @@ from symplyphysics.definitions import (
     power_is_energy_derivative as power_def,
 )
 from symplyphysics.laws.thermodynamics import (
-    thermal_energy_from_heat_capacity_and_temperature as thermal_energy_law,
-)
+    thermal_energy_from_heat_capacity_and_temperature as thermal_energy_law,)
 from symplyphysics.laws.quantities import quantity_is_specific_quantity_times_mass as specific_qty_law
 
 # The household electric kettle heated 0.5 liters of water from 20 degree Celsius to boiling.
@@ -30,9 +29,7 @@ final_temperature = Celsius(100)
 initial_temperature_kelvin = to_kelvin_quantity(initial_temperature)
 final_temperature_kelvin = to_kelvin_quantity(final_temperature)
 
-water_mass = solve(
-    density_def.definition, density_def.mass
-)[0].subs({
+water_mass = solve(density_def.definition, density_def.mass)[0].subs({
     density_def.density: water_density,
     density_def.volume: kettle_volume,
 })
@@ -40,16 +37,21 @@ water_mass = solve(
 heat_via_power = dsolve(
     power_def.definition.subs({power_def.power(power_def.time): kettle_power}),
     power_def.energy(power_def.time),
-    ics={power_def.energy(0): 0},
+    ics={
+    power_def.energy(0): 0
+    },
 ).rhs
 
 heat_transferred = thermal_energy_law.law.rhs.subs({
-    thermal_energy_law.heat_capacity: specific_qty_law.law.rhs.subs({
-        specific_qty_law.specific_quantity: water_heat_capacity,
-        specific_qty_law.mass: water_mass,
+    thermal_energy_law.heat_capacity:
+    specific_qty_law.law.rhs.subs({
+    specific_qty_law.specific_quantity: water_heat_capacity,
+    specific_qty_law.mass: water_mass,
     }),
-    thermal_energy_law.temperature_origin: initial_temperature_kelvin,
-    thermal_energy_law.temperature_end: final_temperature_kelvin,
+    thermal_energy_law.temperature_origin:
+        initial_temperature_kelvin,
+    thermal_energy_law.temperature_end:
+        final_temperature_kelvin,
 })
 
 heating_time = solve(

@@ -50,7 +50,8 @@ particle_count_change = Symbol("particle_count_change", dimensionless)
 
 law = Eq(
     internal_energy_change,
-    temperature * entropy_change - pressure * volume_change + chemical_potential * particle_count_change,
+    temperature * entropy_change - pressure * volume_change +
+    chemical_potential * particle_count_change,
 )
 
 # Derive from the first and second laws of thermodynamics
@@ -81,6 +82,7 @@ def print_law() -> str:
     return print_expression(law)
 
 
+#pylint: disable=too-many-arguments
 @validate_input(
     temperature_=temperature,
     entropy_change_=entropy_change,

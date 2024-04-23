@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output)
+from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print_expression,
+    validate_input, validate_output)
 
 # Description
 ## Any object, totally or partially immersed in a fluid or liquid (or gas), is buoyed up by a force equal to the
@@ -15,7 +15,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## g - gravity acceleration constant.
 ## V - volume of the displaced fluid.
 
-force_buoyant = Symbol("force_buoyant", units.force)
+force_buoyant = clone_symbol(symbols.dynamics.force, "force_buoyant")
 fluid_density = Symbol("fluid_density", units.mass / units.volume)
 displaced_volume = Symbol("displaced_volume", units.volume)
 

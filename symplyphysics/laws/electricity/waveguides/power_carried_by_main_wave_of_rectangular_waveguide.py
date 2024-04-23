@@ -1,7 +1,16 @@
-from sympy import (Eq, solve, sqrt,)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output,)
-
+from sympy import (
+    Eq,
+    solve,
+    sqrt,
+)
+from symplyphysics import (
+    units,
+    Quantity,
+    Symbol,
+    print_expression,
+    validate_input,
+    validate_output,
+)
 
 # Description
 ## A rectangular waveguide is a rectangular metal waveguide capable of supporting waves propagating along it.
@@ -28,7 +37,10 @@ wavelength = Symbol("wavelength", units.length)
 material_resistance = Symbol("material_resistance", units.impedance)
 electric_intensity = Symbol("electric_intensity", units.voltage / units.length)
 
-law = Eq(waveguide_power, waveguide_width * waveguide_height * sqrt(1 - (wavelength / (2 * waveguide_width))**2) * electric_intensity**2 / (4 * material_resistance))
+law = Eq(
+    waveguide_power,
+    waveguide_width * waveguide_height * sqrt(1 - (wavelength / (2 * waveguide_width))**2) *
+    electric_intensity**2 / (4 * material_resistance))
 
 
 def print_law() -> str:

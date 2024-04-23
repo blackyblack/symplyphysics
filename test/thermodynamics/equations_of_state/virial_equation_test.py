@@ -24,7 +24,8 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = virial_equation.calculate_compressibility_factor(test_args.b, test_args.c, test_args.rho)
+    result = virial_equation.calculate_compressibility_factor(test_args.b, test_args.c,
+        test_args.rho)
     assert_equal(result, 0.96)
 
 

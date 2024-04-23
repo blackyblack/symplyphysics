@@ -1,5 +1,7 @@
 from sympy import Eq, Integral, pi, exp, S
 from symplyphysics import (
+    clone_symbol,
+    symbols,
     units,
     dimensionless,
     Quantity,
@@ -37,16 +39,14 @@ number_of_particles = Symbol("number_of_particles", dimensionless, integer=True,
 volume = Symbol("volume", units.volume, positive=True)
 intermolecular_distance = Symbol("intermolecular_distance", units.length, positive=True)
 intermolecular_force_potential = Function("intermolecular_force_potential", units.energy, real=True)
-temperature = Symbol("temperature", units.temperature, positive=True)
+temperature = clone_symbol(symbols.thermodynamics.temperature, "temperature", positive=True)
 
 law = Eq(
-    compressibility_factor,
-    1 + 2 * pi * number_of_particles / volume
-    * Integral(
-        (1 - exp(-1 * intermolecular_force_potential(intermolecular_distance) / (units.boltzmann_constant * temperature))) * intermolecular_distance**2,
-        (intermolecular_distance, 0, S.Infinity),
-    )
-)
+    compressibility_factor, 1 + 2 * pi * number_of_particles / volume * Integral(
+    (1 - exp(-1 * intermolecular_force_potential(intermolecular_distance) /
+    (units.boltzmann_constant * temperature))) * intermolecular_distance**2,
+    (intermolecular_distance, 0, S.Infinity),
+    ))
 
 # Calculate the compressibility factor for the model of hard spheres
 

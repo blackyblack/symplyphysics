@@ -18,7 +18,7 @@ from symplyphysics import (
 ## in a single-particle state `i` is given by the Fermi-Dirac distribution:
 
 # Law: N_i = 1 / (exp((E_i - mu)/(k * T)) + 1)
-## N_i - average number of fermions in single-particle state `i`, 
+## N_i - average number of fermions in single-particle state `i`,
 ##       also known as occupancy of energy state `i`
 ## E_i - energy of single-particle state `i`
 ## mu - total chemical potential
@@ -36,9 +36,8 @@ total_chemical_potential = Symbol("total_chemical_potential", units.energy)
 temperature = symbols.thermodynamics.temperature
 
 law = Eq(
-    occupancy_of_state,
-    1 / (exp((energy_of_state - total_chemical_potential) / (units.boltzmann_constant * temperature)) + 1)
-)
+    occupancy_of_state, 1 / (exp(
+    (energy_of_state - total_chemical_potential) / (units.boltzmann_constant * temperature)) + 1))
 
 
 def print_law() -> str:

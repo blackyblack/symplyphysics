@@ -56,16 +56,12 @@ _critical_temperature_expr = critical_temperature.law.rhs.subs({
     critical_temperature.molecules_volume_parameter: equation.molecules_volume_parameter,
 })
 
-_pressure = solve(
-    reduced_pressure_law.law, reduced_pressure_law.pressure
-)[0].subs({
+_pressure = solve(reduced_pressure_law.law, reduced_pressure_law.pressure)[0].subs({
     reduced_pressure_law.reduced_pressure: reduced_pressure,
     reduced_pressure_law.critical_pressure: _critical_pressure_expr,
 })
 
-_molar_volume = solve(
-    reduced_volume_law.law, reduced_volume_law.volume
-)[0].subs({
+_molar_volume = solve(reduced_volume_law.law, reduced_volume_law.volume)[0].subs({
     reduced_volume_law.reduced_volume: reduced_volume,
     reduced_volume_law.critical_volume: _critical_molar_volume_expr,
 })
@@ -75,9 +71,7 @@ _volume = molar_qty_law.law.rhs.subs({
     molar_qty_law.amount_of_substance: equation.amount_of_substance,
 })
 
-_temperature = solve(
-    reduced_temperature_law.law, reduced_temperature_law.temperature
-)[0].subs({
+_temperature = solve(reduced_temperature_law.law, reduced_temperature_law.temperature)[0].subs({
     reduced_temperature_law.reduced_temperature: reduced_temperature,
     reduced_temperature_law.critical_temperature: _critical_temperature_expr,
 })

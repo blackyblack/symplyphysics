@@ -1,5 +1,6 @@
 from sympy import (Eq, solve)
 from symplyphysics import (
+    clone_symbol,
     units,
     Quantity,
     Symbol,
@@ -26,7 +27,7 @@ from symplyphysics.laws.dynamics import mechanical_work_from_force_and_move as w
 braking_path = Symbol("braking_path", units.length)
 
 velocity = Symbol("velocity", units.velocity)
-friction_force = Symbol("friction_force", units.force)
+friction_force = clone_symbol(symbols.dynamics.force, "friction_force")
 
 law = Eq(braking_path, symbols.basic.mass * velocity**2 / (2 * friction_force))
 

@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.thermodynamics import (
-    chemical_potential_is_particle_count_derivative_of_internal_energy as chemical_potential_law,
-)
+    chemical_potential_is_particle_count_derivative_of_internal_energy as chemical_potential_law,)
 
 # Description
 ## In a thermodynamic system, when the particle count changed from 100 to 102 particles, the internal
@@ -27,25 +26,32 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = chemical_potential_law.calculate_chemical_potential(test_args.n0, test_args.n1, test_args.u0, test_args.u1)
+    result = chemical_potential_law.calculate_chemical_potential(test_args.n0, test_args.n1,
+        test_args.u0, test_args.u1)
     assert_equal(result, -10 * units.joule)
 
 
 def test_bad_number(test_args: Args) -> None:
     nb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        chemical_potential_law.calculate_chemical_potential(nb, test_args.n1, test_args.u0, test_args.u1)
+        chemical_potential_law.calculate_chemical_potential(nb, test_args.n1, test_args.u0,
+            test_args.u1)
     with raises(errors.UnitsError):
-        chemical_potential_law.calculate_chemical_potential(test_args.n0, nb, test_args.u0, test_args.u1)
+        chemical_potential_law.calculate_chemical_potential(test_args.n0, nb, test_args.u0,
+            test_args.u1)
 
 
 def test_bad_energy(test_args: Args) -> None:
     ub = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        chemical_potential_law.calculate_chemical_potential(test_args.n0, test_args.n1, ub, test_args.u1)
+        chemical_potential_law.calculate_chemical_potential(test_args.n0, test_args.n1, ub,
+            test_args.u1)
     with raises(TypeError):
-        chemical_potential_law.calculate_chemical_potential(test_args.n0, test_args.n1, 100, test_args.u1)
+        chemical_potential_law.calculate_chemical_potential(test_args.n0, test_args.n1, 100,
+            test_args.u1)
     with raises(errors.UnitsError):
-        chemical_potential_law.calculate_chemical_potential(test_args.n0, test_args.n1, test_args.u0, ub)
+        chemical_potential_law.calculate_chemical_potential(test_args.n0, test_args.n1,
+            test_args.u0, ub)
     with raises(TypeError):
-        chemical_potential_law.calculate_chemical_potential(test_args.n0, test_args.n1, test_args.u0, 100)
+        chemical_potential_law.calculate_chemical_potential(test_args.n0, test_args.n1,
+            test_args.u0, 100)

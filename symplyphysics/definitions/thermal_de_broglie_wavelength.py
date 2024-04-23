@@ -1,6 +1,5 @@
 from sympy import Eq, sqrt, pi
 from symplyphysics import (
-    dimensionless,
     units,
     Quantity,
     Symbol,
@@ -29,10 +28,8 @@ thermal_wavelength = Symbol("thermal_wavelength", units.length)
 particle_mass = clone_symbol(symbols.basic.mass, "particle_mass")
 temperature = symbols.thermodynamics.temperature
 
-law = Eq(
-    thermal_wavelength,
-    units.hbar * sqrt(2 * pi / (particle_mass * units.boltzmann_constant * temperature))
-)
+law = Eq(thermal_wavelength,
+    units.hbar * sqrt(2 * pi / (particle_mass * units.boltzmann_constant * temperature)))
 
 
 def print_law() -> str:

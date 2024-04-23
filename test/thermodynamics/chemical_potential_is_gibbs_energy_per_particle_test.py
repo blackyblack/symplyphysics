@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.thermodynamics import (
-    chemical_potential_is_gibbs_energy_per_particle as chemical_potential_law,
-)
+    chemical_potential_is_gibbs_energy_per_particle as chemical_potential_law,)
 
 # Description
 ## In a system of 100 particles, the Gibbs energy is 1000 J. The chemical potential

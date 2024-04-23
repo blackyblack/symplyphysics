@@ -27,7 +27,12 @@ wave_resistance_odd_modes = Symbol("wave_resistance_odd_modes", units.impedance)
 wave_resistance_even_modes = Symbol("wave_resistance_even_modes", units.impedance)
 number_segments = Symbol("number_segments", dimensionless)
 
-law = Eq(wave_resistance, sqrt((wave_resistance_odd_modes * wave_resistance_even_modes * (wave_resistance_odd_modes + wave_resistance_even_modes)**2) / ((wave_resistance_odd_modes + wave_resistance_even_modes * (number_segments - 1)) * (wave_resistance_even_modes + wave_resistance_odd_modes * (number_segments - 1)))))
+law = Eq(
+    wave_resistance,
+    sqrt((wave_resistance_odd_modes * wave_resistance_even_modes *
+    (wave_resistance_odd_modes + wave_resistance_even_modes)**2) /
+    ((wave_resistance_odd_modes + wave_resistance_even_modes * (number_segments - 1)) *
+    (wave_resistance_even_modes + wave_resistance_odd_modes * (number_segments - 1)))))
 
 
 def print_law() -> str:
@@ -38,8 +43,8 @@ def print_law() -> str:
     wave_resistance_even_modes_=wave_resistance_even_modes,
     number_segments_=number_segments)
 @validate_output(wave_resistance)
-def calculate_wave_resistance(wave_resistance_odd_modes_: Quantity, wave_resistance_even_modes_: Quantity,
-    number_segments_: int) -> Quantity:
+def calculate_wave_resistance(wave_resistance_odd_modes_: Quantity,
+    wave_resistance_even_modes_: Quantity, number_segments_: int) -> Quantity:
     result_expr = solve(law, wave_resistance, dict=True)[0][wave_resistance]
     result_expr = result_expr.subs({
         wave_resistance_odd_modes: wave_resistance_odd_modes_,

@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.thermodynamics import (
-    compressibility_factor_via_intermolecular_force_potential as compressibility_law,
-)
+    compressibility_factor_via_intermolecular_force_potential as compressibility_law,)
 
 # Description
 ## Assuming the model of hard spheres, for a gas with particles of diameter d = 4 Å confined
@@ -27,7 +26,8 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = compressibility_law.calculate_compressibility_factor(test_args.n, test_args.v, test_args.d)
+    result = compressibility_law.calculate_compressibility_factor(test_args.n, test_args.v,
+        test_args.d)
     assert_equal(result, 1.004)
 
 

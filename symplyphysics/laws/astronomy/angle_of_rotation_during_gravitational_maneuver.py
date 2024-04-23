@@ -1,7 +1,7 @@
 from sympy import Eq, solve, atan
 from sympy.physics.units import gravitational_constant
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, angle_type)
+from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print_expression,
+    validate_input, validate_output, angle_type)
 
 ## Description
 ## A gravitational maneuver is a purposeful change in the trajectory and flight speed of a spacecraft under the influence
@@ -19,8 +19,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## v - rocket's velocity relative to the planet.
 
 angle = Symbol("angle", angle_type)
-
-planet_mass = Symbol("planet_mass", units.mass)
+planet_mass = clone_symbol(symbols.basic.mass, "planet_mass")
 aiming_range = Symbol("aiming_range", units.length)
 rocket_speed = Symbol("rocket_speed", units.velocity)
 

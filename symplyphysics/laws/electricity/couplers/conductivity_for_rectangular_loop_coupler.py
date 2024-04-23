@@ -29,29 +29,38 @@ fourth_conductivity = Symbol("fourth_conductivity", units.conductance)
 transmission_line_conductivity = Symbol("transmission_line_conductivity", units.conductance)
 ratio_of_power = Symbol("ratio_of_power", dimensionless)
 
+law = Eq(
+    Matrix([first_conductivity, second_conductivity, third_conductivity, fourth_conductivity]),
+    Matrix([
+    transmission_line_conductivity / sqrt(ratio_of_power), transmission_line_conductivity * sqrt(
+    (ratio_of_power + 1) / ratio_of_power), transmission_line_conductivity * sqrt(
+    (ratio_of_power + 1) / ratio_of_power), transmission_line_conductivity / sqrt(ratio_of_power)
+    ]))
 
-law = Eq(Matrix([first_conductivity, second_conductivity, third_conductivity, fourth_conductivity]),
-         Matrix([transmission_line_conductivity / sqrt(ratio_of_power), transmission_line_conductivity * sqrt((ratio_of_power + 1) / ratio_of_power),
-                 transmission_line_conductivity * sqrt((ratio_of_power + 1) / ratio_of_power), transmission_line_conductivity / sqrt(ratio_of_power)]))
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(transmission_line_conductivity_=transmission_line_conductivity, ratio_of_power_=ratio_of_power)
+@validate_input(transmission_line_conductivity_=transmission_line_conductivity,
+    ratio_of_power_=ratio_of_power)
 @validate_output(units.conductance)
-def calculate_conductivities(transmission_line_conductivity_: Quantity, ratio_of_power_: float) -> tuple[Quantity, Quantity, Quantity, Quantity]:
-    result = solve(law, [first_conductivity, second_conductivity, third_conductivity, fourth_conductivity], dict=True)[0]
-    result_Y1 = result[first_conductivity]
-    result_Y2 = result[second_conductivity]
-    result_Y3 = result[third_conductivity]
-    result_Y4 = result[fourth_conductivity]
+def calculate_conductivities(
+        transmission_line_conductivity_: Quantity,
+        ratio_of_power_: float) -> tuple[Quantity, Quantity, Quantity, Quantity]:
+    result = solve(law,
+        [first_conductivity, second_conductivity, third_conductivity, fourth_conductivity],
+        dict=True)[0]
+    result_y1 = result[first_conductivity]
+    result_y2 = result[second_conductivity]
+    result_y3 = result[third_conductivity]
+    result_y4 = result[fourth_conductivity]
     substitutions = {
         transmission_line_conductivity: transmission_line_conductivity_,
         ratio_of_power: ratio_of_power_,
     }
-    result_Y1 = Quantity(result_Y1.subs(substitutions))
-    result_Y2 = Quantity(result_Y2.subs(substitutions))
-    result_Y3 = Quantity(result_Y3.subs(substitutions))
-    result_Y4 = Quantity(result_Y4.subs(substitutions))
-    return (result_Y1, result_Y2, result_Y3, result_Y4)
+    result_y1 = Quantity(result_y1.subs(substitutions))
+    result_y2 = Quantity(result_y2.subs(substitutions))
+    result_y3 = Quantity(result_y3.subs(substitutions))
+    result_y4 = Quantity(result_y4.subs(substitutions))
+    return (result_y1, result_y2, result_y3, result_y4)

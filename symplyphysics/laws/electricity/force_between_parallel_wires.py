@@ -1,7 +1,7 @@
 from sympy import (Eq, solve, pi)
 from sympy.physics.units import magnetic_constant
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless)
+from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print_expression,
+    validate_input, validate_output, dimensionless)
 
 # Description
 ## Two parallel wires through which current flows interact with each other.
@@ -17,7 +17,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## l - length of wires,
 ## r - distance.
 
-force = Symbol("force", units.force)
+ampere_force = clone_symbol(symbols.dynamics.force, "ampere_force")
 
 relative_permeability = Symbol("relative_permeability", dimensionless)
 first_wire_current = Symbol("first_wire_current", units.current)
@@ -26,8 +26,8 @@ length = Symbol("length", units.length)
 distance = Symbol("distance", units.length)
 
 law = Eq(
-    force, magnetic_constant * relative_permeability * first_wire_current * second_wire_current *
-    length / (2 * pi * distance))
+    ampere_force, magnetic_constant * relative_permeability * first_wire_current *
+    second_wire_current * length / (2 * pi * distance))
 
 
 def print_law() -> str:
@@ -39,10 +39,10 @@ def print_law() -> str:
     second_wire_current_=second_wire_current,
     length_=length,
     distance_=distance)
-@validate_output(force)
+@validate_output(ampere_force)
 def calculate_force(relative_permeability_: float, first_wire_current_: Quantity,
     second_wire_current_: Quantity, length_: Quantity, distance_: Quantity) -> Quantity:
-    result_expr = solve(law, force, dict=True)[0][force]
+    result_expr = solve(law, ampere_force, dict=True)[0][ampere_force]
     result_expr = result_expr.subs({
         relative_permeability: relative_permeability_,
         first_wire_current: first_wire_current_,

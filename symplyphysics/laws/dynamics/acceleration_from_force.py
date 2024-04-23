@@ -20,7 +20,7 @@ force_vector = Vector([symbols.dynamics.force])
 acceleration_vector = acceleration_law_vector.acceleration_law(force_vector)
 assert len(acceleration_vector.components) == 1
 acceleration_with_mass = sympify(acceleration_vector.components[0]).subs(
-    acceleration_law_vector.symbols.basic.mass, symbols.basic.mass)
+    acceleration_law_vector.symbols.basic.mass, mass)
 assert expr_equals(acceleration_with_mass, law.rhs)
 
 
@@ -32,8 +32,5 @@ def print_law() -> str:
 @validate_output(force)
 def calculate_force(mass_: Quantity, acceleration_: Quantity) -> Quantity:
     result_force_expr = solve(law, force, dict=True)[0][force]
-    result_expr = result_force_expr.subs({
-        mass: mass_,
-        acceleration: acceleration_
-    })
+    result_expr = result_force_expr.subs({mass: mass_, acceleration: acceleration_})
     return Quantity(result_expr)

@@ -1,5 +1,6 @@
 from sympy import Eq, Derivative, Point2D
 from symplyphysics import (
+    symbols,
     units,
     dimensionless,
     Quantity,
@@ -27,7 +28,7 @@ from symplyphysics.core.geometry.line import two_point_function
 chemical_potential = Symbol("chemical_potential", units.energy)
 gibbs_energy = Function("gibbs_energy", units.energy)
 particle_count = Symbol("particle_count", dimensionless)
-temperature = Symbol("temperature", units.temperature)
+temperature = symbols.thermodynamics.temperature
 pressure = Symbol("pressure", units.pressure)
 
 # Note that `temperature` and `pressure` are only used to show that the gibbs_energy

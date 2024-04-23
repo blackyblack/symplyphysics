@@ -5,8 +5,7 @@ from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression, units
 from symplyphysics.laws.thermodynamics.bose_einstein_statistics import (
-    single_particle_state_distribution as distribution_law,
-)
+    single_particle_state_distribution as distribution_law,)
 
 occupancy = distribution_law.occupancy_of_state
 energy = distribution_law.energy_of_state
@@ -17,10 +16,8 @@ reduced_energy = symbols("reduced_energy")
 reduced_energy_eqn = Eq(reduced_energy, energy / (units.boltzmann_constant * temperature))
 
 reduced_chemical_potential = symbols("reduced_chemical_potential")
-reduced_chemical_potential_eqn = Eq(
-    reduced_chemical_potential,
-    chemical_potential / (units.boltzmann_constant * temperature)
-)
+reduced_chemical_potential_eqn = Eq(reduced_chemical_potential,
+    chemical_potential / (units.boltzmann_constant * temperature))
 
 distribution_expr = solve(
     [distribution_law.law, reduced_energy_eqn, reduced_chemical_potential_eqn],
@@ -28,10 +25,13 @@ distribution_expr = solve(
     dict=True,
 )[0][occupancy]
 
-print(f"Occupancy as a function of reduced energy and chemical potential:\n\n{print_expression(distribution_expr)}\n")
+print(
+    f"Occupancy as a function of reduced energy and chemical potential:\n\n{print_expression(distribution_expr)}\n"
+)
 
 base_plot = plot(
-    title="Occupancy as a function of reduced energy and chemical potential for Bose—Einstein distribution",
+    title=
+    "Occupancy as a function of reduced energy and chemical potential for Bose—Einstein distribution",
     xlabel=r"$-\varepsilon / k_\text{B} T$",
     ylabel=r"$\bar n$",
     backend=MatplotlibBackend,

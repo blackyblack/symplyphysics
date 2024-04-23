@@ -1,14 +1,6 @@
 from sympy import Eq, solve, Symbol as SymSymbol, Function as SymFunction, dsolve, symbols
-from sympy.abc import t
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    print_expression,
-    dimensionless,
-    validate_input,
-    validate_output,
-)
+from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print_expression,
+    dimensionless, validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import heat_capacity_ratio
 from symplyphysics.laws.thermodynamics import (
@@ -31,8 +23,8 @@ from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equat
 specific_heats_ratio = Symbol("specific_heats_ratio", dimensionless)
 # Some of these parameters depend on each other. It is up to user, which of these parameters to choose
 # as known.
-temperature_start = Symbol("temperature_start", units.temperature)
-temperature_end = Symbol("temperature_end", units.temperature)
+temperature_start = clone_symbol(symbols.thermodynamics.temperature, "temperature_start")
+temperature_end = clone_symbol(symbols.thermodynamics.temperature, "temperature_end")
 volume_start = Symbol("volume_start", units.volume)
 volume_end = Symbol("volume_end", units.volume)
 pressure_start = Symbol("pressure_start", units.pressure)

@@ -1,5 +1,7 @@
 from sympy import (Eq, solve)
 from symplyphysics import (
+    clone_symbol,
+    symbols,
     units,
     Quantity,
     Symbol,
@@ -17,12 +19,11 @@ from symplyphysics import (
 ## g - coefficient of surface tension of the liquid,
 ## l - length of the liquid contour.
 
-force = Symbol("force", units.force)
-
+tension_force = clone_symbol(symbols.dynamics.force, "tension_force")
 surface_coefficient = Symbol("surface_coefficient", units.force / units.length)
 contour_length = Symbol("contour_length", units.length)
 
-law = Eq(force, surface_coefficient * contour_length)
+law = Eq(tension_force, surface_coefficient * contour_length)
 
 
 def print_law() -> str:
@@ -30,9 +31,9 @@ def print_law() -> str:
 
 
 @validate_input(surface_coefficient_=surface_coefficient, contour_length_=contour_length)
-@validate_output(force)
+@validate_output(tension_force)
 def calculate_force(surface_coefficient_: Quantity, contour_length_: Quantity) -> Quantity:
-    result_expr = solve(law, force, dict=True)[0][force]
+    result_expr = solve(law, tension_force, dict=True)[0][tension_force]
     result_expr = result_expr.subs({
         surface_coefficient: surface_coefficient_,
         contour_length: contour_length_,

@@ -32,7 +32,11 @@ conductivity_input_output = Symbol("conductivity_input_output", units.conductanc
 conductivity_output_input = Symbol("conductivity_output_input", units.conductance)
 conductivity_output_output = Symbol("conductivity_output_output", units.conductance)
 
-law = Eq(Matrix([input_current, output_current]), Matrix([[conductivity_input_input, conductivity_input_output], [conductivity_output_input, conductivity_output_output]]) * Matrix([input_voltage, output_voltage]))
+law = Eq(
+    Matrix([input_current, output_current]),
+    Matrix([[conductivity_input_input, conductivity_input_output],
+    [conductivity_output_input, conductivity_output_output]]) *
+    Matrix([input_voltage, output_voltage]))
 
 
 def print_law() -> str:
@@ -41,10 +45,14 @@ def print_law() -> str:
 
 @validate_input(input_current_=input_current, output_current_=output_current)
 @validate_output(units.voltage)
-def calculate_voltages(input_current_: Quantity, output_current_: Quantity, conductivities_: tuple[tuple[Quantity, Quantity], tuple[Quantity, Quantity]]) -> tuple[Quantity, Quantity]:
+def calculate_voltages(
+    input_current_: Quantity, output_current_: Quantity, conductivities_: tuple[tuple[Quantity,
+    Quantity], tuple[Quantity, Quantity]]
+) -> tuple[Quantity, Quantity]:
     for i, cc in enumerate(conductivities_):
         for j, conductivity in enumerate(cc):
-            assert_equivalent_dimension(conductivity, f"conductivities_[{i}][{j}]", "calculate_voltages", units.conductance)
+            assert_equivalent_dimension(conductivity, f"conductivities_[{i}][{j}]",
+                "calculate_voltages", units.conductance)
     result_voltages = solve(law, [input_voltage, output_voltage], dict=True)[0]
     result_input_voltage = result_voltages[input_voltage]
     result_output_voltage = result_voltages[output_voltage]

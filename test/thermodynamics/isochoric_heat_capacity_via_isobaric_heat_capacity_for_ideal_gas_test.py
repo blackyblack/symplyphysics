@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.thermodynamics import (
-    isochoric_heat_capacity_via_isobaric_heat_capacity_for_ideal_gas as mayers_relation,
-)
+    isochoric_heat_capacity_via_isobaric_heat_capacity_for_ideal_gas as mayers_relation,)
 
 # Description
 ## For some ideal gas the isobaric heat capacity is C_p = 5 J/K. The amount of gas substance

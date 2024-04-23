@@ -20,12 +20,12 @@ def test_args_fixture() -> Args:
     parameters = ((0.2, 0.5), (0.5, 0.2))
     return Args(input_reflected_wave=input_reflected_wave,
         output_reflected_wave=output_reflected_wave,
-        parameters=parameters
-        )
+        parameters=parameters)
 
 
 def test_basic_waves(test_args: Args) -> None:
-    result = parameters_matrix_law.calculate_waves(test_args.input_reflected_wave, test_args.output_reflected_wave, test_args.parameters)
+    result = parameters_matrix_law.calculate_waves(test_args.input_reflected_wave,
+        test_args.output_reflected_wave, test_args.parameters)
     assert_equal(result[0], 0.286 * sqrt(units.watt))
     assert_equal(result[1], 0.286 * sqrt(units.watt))
 
@@ -33,10 +33,14 @@ def test_basic_waves(test_args: Args) -> None:
 def test_bad_waves(test_args: Args) -> None:
     bad_wave = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        parameters_matrix_law.calculate_waves(bad_wave, test_args.output_reflected_wave, test_args.parameters)
+        parameters_matrix_law.calculate_waves(bad_wave, test_args.output_reflected_wave,
+            test_args.parameters)
     with raises(TypeError):
-        parameters_matrix_law.calculate_waves(100, test_args.output_reflected_wave, test_args.parameters)
+        parameters_matrix_law.calculate_waves(100, test_args.output_reflected_wave,
+            test_args.parameters)
     with raises(errors.UnitsError):
-        parameters_matrix_law.calculate_waves(test_args.input_reflected_wave, bad_wave, test_args.parameters)
+        parameters_matrix_law.calculate_waves(test_args.input_reflected_wave, bad_wave,
+            test_args.parameters)
     with raises(TypeError):
-        parameters_matrix_law.calculate_waves(test_args.input_reflected_wave, 100, test_args.parameters)
+        parameters_matrix_law.calculate_waves(test_args.input_reflected_wave, 100,
+            test_args.parameters)

@@ -3,7 +3,6 @@ from pytest import fixture, raises
 from symplyphysics import (
     assert_equal,
     errors,
-    prefixes,
     units,
     Quantity,
 )

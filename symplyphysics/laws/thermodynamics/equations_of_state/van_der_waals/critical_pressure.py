@@ -21,7 +21,7 @@ critical_pressure = Symbol("critical_pressure", units.pressure)
 
 bonding_forces_parameter = Symbol(
     "bonding_forces_parameter",
-    units.pressure * (units.volume / units.amount_of_substance) ** 2,
+    units.pressure * (units.volume / units.amount_of_substance)**2,
 )
 
 molecules_volume_parameter = Symbol(

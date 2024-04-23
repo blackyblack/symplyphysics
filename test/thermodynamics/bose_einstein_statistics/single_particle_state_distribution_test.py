@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.thermodynamics.bose_einstein_statistics import (
-    single_particle_state_distribution as distribution_law,
-)
+    single_particle_state_distribution as distribution_law,)
 
 # Description
 ## Assuming the particles follow Bose-Einstein distribution, the occupancy of the single-particle state

@@ -1,7 +1,7 @@
 from sympy import Eq, solve, sqrt
 from sympy.physics.units import gravitational_constant
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output)
+from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print_expression,
+    validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 
 from symplyphysics.laws.gravity import gravitational_potential_energy as potential_energy_law
@@ -21,7 +21,7 @@ from symplyphysics.laws.conservation import mechanical_energy_after_equals_to_me
 # R - radius of planet
 
 velocity = Symbol("initial_velocity", units.velocity)
-planet_mass = Symbol("planet_mass", units.mass)
+planet_mass = clone_symbol(symbols.basic.mass, "planet_mass")
 radius = Symbol("radius", units.length)
 height = Symbol("height", units.length)
 

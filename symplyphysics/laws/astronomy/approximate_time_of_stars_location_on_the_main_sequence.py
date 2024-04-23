@@ -3,6 +3,8 @@ from sympy import (
     solve,
 )
 from symplyphysics import (
+    clone_symbol,
+    symbols,
     units,
     Quantity,
     Symbol,
@@ -28,7 +30,7 @@ from symplyphysics import (
 
 lifetime = Symbol("lifetime", units.time)
 
-mass_of_star = Symbol("mass_of_star", units.mass)
+mass_of_star = clone_symbol(symbols.basic.mass, "mass_of_star")
 luminosity_of_star = Symbol("luminosity_of_star", units.power)
 
 mass_of_sun = Quantity(1.989e30 * units.kilogram)

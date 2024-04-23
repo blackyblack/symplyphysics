@@ -15,7 +15,8 @@ def test_args_fixture() -> Args:
     wavelength_for_upper_frequency = Quantity(1 * units.millimeter)
     wavelength_for_lower_frequency = Quantity(3 * units.millimeter)
 
-    return Args(wavelength_for_upper_frequency=wavelength_for_upper_frequency, wavelength_for_lower_frequency=wavelength_for_lower_frequency)
+    return Args(wavelength_for_upper_frequency=wavelength_for_upper_frequency,
+        wavelength_for_lower_frequency=wavelength_for_lower_frequency)
 
 
 def test_basic_length_of_section(test_args: Args) -> None:
@@ -27,10 +28,12 @@ def test_basic_length_of_section(test_args: Args) -> None:
 def test_bad_wavelength(test_args: Args) -> None:
     bad_wavelength = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        length_law.calculate_length_of_section(bad_wavelength, test_args.wavelength_for_lower_frequency)
+        length_law.calculate_length_of_section(bad_wavelength,
+            test_args.wavelength_for_lower_frequency)
     with raises(TypeError):
         length_law.calculate_length_of_section(100, test_args.wavelength_for_lower_frequency)
     with raises(errors.UnitsError):
-        length_law.calculate_length_of_section(test_args.wavelength_for_upper_frequency, bad_wavelength)
+        length_law.calculate_length_of_section(test_args.wavelength_for_upper_frequency,
+            bad_wavelength)
     with raises(TypeError):
         length_law.calculate_length_of_section(test_args.wavelength_for_upper_frequency, 100)

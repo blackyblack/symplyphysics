@@ -1,6 +1,7 @@
 from sympy import (Eq, solve, exp)
 from sympy.physics.units import boltzmann
 from symplyphysics import (
+    symbols,
     units,
     Quantity,
     Symbol,
@@ -23,13 +24,13 @@ from symplyphysics import (
 density_current = Symbol("density_current", units.current / units.area)
 
 thermodynamic_work = Symbol("thermodynamic_work", units.energy)
-temperature = Symbol("temperature", units.temperature)
+temperature = symbols.thermodynamics.temperature
 
 richardson_constant = Quantity(120.17 * (units.ampere / units.kelvin**2 / units.centimeter**2))
 
 law = Eq(
     density_current,
-    richardson_constant * (temperature**2) * exp(-thermodynamic_work / (boltzmann * temperature)))
+    richardson_constant * temperature**2 * exp(-thermodynamic_work / (boltzmann * temperature)))
 
 
 def print_law() -> str:

@@ -29,15 +29,14 @@ from symplyphysics.laws.waves.blackbody_radiation import spectral_energy_density
 # Conditions
 ## - `h * nu >> k * T`, i.e. the photon energy is much greater than the thermal energy.
 
-spectral_energy_density = Symbol("spectral_energy_density", units.energy / (units.volume * units.frequency))
+spectral_energy_density = Symbol("spectral_energy_density",
+    units.energy / (units.volume * units.frequency))
 radiation_frequency = Symbol("radiation_frequency", units.frequency)
-equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature, "equilibrium_temperature")
+equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature,
+    "equilibrium_temperature")
 
-law = Eq(
-    spectral_energy_density,
-    (8 * pi * planck * radiation_frequency**3 / speed_of_light**3)
-    * exp(-1 * planck * radiation_frequency / (boltzmann_constant * equilibrium_temperature))
-)
+law = Eq(spectral_energy_density, (8 * pi * planck * radiation_frequency**3 / speed_of_light**3) *
+    exp(-1 * planck * radiation_frequency / (boltzmann_constant * equilibrium_temperature)))
 
 # Derive from Planck's law of blackbody radiation
 
@@ -59,7 +58,8 @@ _planck_density_reduced = solve(
     dict=True,
 )[0][spectral_energy_density]
 
-_planck_density_reduced_series = _planck_density_reduced.series(_reduced_frequency, S.Infinity, 2).removeO()
+_planck_density_reduced_series = _planck_density_reduced.series(_reduced_frequency, S.Infinity,
+    2).removeO()
 
 _planck_density_series = solve(
     (Eq(spectral_energy_density, _planck_density_reduced_series), _reduced_frequency_eqn),

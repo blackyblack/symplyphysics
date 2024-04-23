@@ -40,10 +40,8 @@ volume = Symbol("volume", units.volume)
 amount_of_substance = Symbol("amount_of_substance", units.amount_of_substance)
 temperature = symbols.thermodynamics.temperature
 
-definition = Eq(
-    compressibility_factor,
-    (pressure * volume) / (amount_of_substance * units.molar_gas_constant * temperature)
-)
+definition = Eq(compressibility_factor,
+    (pressure * volume) / (amount_of_substance * units.molar_gas_constant * temperature))
 
 
 def print_law() -> str:

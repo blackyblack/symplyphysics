@@ -11,93 +11,100 @@ from .errors import UnitsError
 ScalarValue: TypeAlias = Expr | float
 
 
+def _collect_quantity(expr: SymQuantity) -> tuple[Basic, Dimension]:
+    return (expr.scale_factor, expr.dimension)
+
+
+def _collect_mul(expr: Mul) -> tuple[Basic, Dimension]:
+    factor = S.One
+    dimension = Dimension(S.One)
+    for arg in expr.args:
+        (arg_factor, arg_dim) = collect_factor_and_dimension(arg)
+        factor *= arg_factor
+        dimension *= arg_dim
+    return (factor, dimension)
+
+
+def _collect_pow(expr: Pow) -> tuple[Basic, Dimension]:
+    pow_expr: Expr = S.One
+    (factor, dim) = collect_factor_and_dimension(expr.base)
+    pow_expr *= factor
+    (exp_factor, exp_dim) = collect_factor_and_dimension(expr.exp)
+    if not SI.get_dimension_system().is_dimensionless(exp_dim):
+        raise ValueError(f"Dimension of '{expr.exp}' is {exp_dim}, but it should be dimensionless")
+    exp_dim = S.One
+    return (pow_expr**exp_factor, dim**(exp_factor * exp_dim))
+
+
+def _collect_add(expr: Add) -> tuple[Basic, Dimension]:
+    sum_expr: Expr = S.Zero
+    (factor, dim) = collect_factor_and_dimension(expr.args[0])
+    sum_expr += factor
+    for addend in expr.args[1:]:
+        (addend_factor, addend_dim) = collect_factor_and_dimension(addend)
+        # automatically convert zero to the dimension of it's additives
+        if dim != addend_dim and not SI.get_dimension_system().equivalent_dims(dim, addend_dim):
+            if factor == S.Zero:
+                dim = addend_dim
+            elif addend_factor == S.Zero:
+                addend_dim = dim
+        if dim != addend_dim and not SI.get_dimension_system().equivalent_dims(dim, addend_dim):
+            raise ValueError(f"Dimension of '{addend}' is {addend_dim}, but it should be {dim}")
+        sum_expr += addend_factor
+    return (sum_expr, dim)
+
+
+def _collect_abs(expr: Abs) -> tuple[Basic, Dimension]:
+    (f, d) = _collect_add(Add(*expr.args))
+    return (expr.func(f), d)
+
+
+def _collect_min(expr: Min) -> tuple[Basic, Dimension]:
+    (factor, dim) = collect_factor_and_dimension(expr.args[0])
+    if not factor.is_Number:
+        raise ValueError(f"Min should contain Number arguments. Got {factor}")
+    min_expr = factor
+    for addend in expr.args[1:]:
+        (addend_factor, addend_dim) = collect_factor_and_dimension(addend)
+        # automatically convert zero to the dimension of it's additives
+        if dim != addend_dim and not SI.get_dimension_system().equivalent_dims(dim, addend_dim):
+            if factor == S.Zero:
+                dim = addend_dim
+            elif addend_factor == S.Zero:
+                addend_dim = dim
+        if dim != addend_dim and not SI.get_dimension_system().equivalent_dims(dim, addend_dim):
+            raise ValueError(f"Dimension of '{addend}' is {addend_dim}, but it should be {dim}")
+        if not addend_factor.is_Number:
+            raise ValueError(f"Min should contain Number arguments. Got {addend_factor}")
+        min_number = Number(min_expr)
+        addend_number = Number(addend_factor)
+        min_expr = min_expr if min_number <= addend_number else addend_factor
+    return (min_expr, dim)
+
+
+def _collect_function(expr: SymFunction) -> tuple[Basic, Dimension]:
+    factors: list[Basic] = []
+    for arg in expr.args:
+        (f, d) = collect_factor_and_dimension(arg)
+        # only functions with dimensionless arguments are supported
+        if not SI.get_dimension_system().is_dimensionless(d):
+            raise ValueError(f"Dimension of '{arg}' is {d}, but it should be dimensionless")
+        factors.append(f)
+    ret = expr.func(*(f for f in factors))
+    return (ret, dimensionless)
+
+
+def _collect_dimension(expr: Dimension) -> tuple[Basic, Dimension]:
+    return (S.One, expr)
+
+
 def collect_factor_and_dimension(expr: Basic) -> tuple[Basic, Dimension]:
     """
     Return tuple with scale factor expression and dimension expression.
     """
 
-    def _collect_quantity(expr: SymQuantity) -> tuple[Basic, Dimension]:
-        return (expr.scale_factor, expr.dimension)
-
-    def _collect_mul(expr: Mul) -> tuple[Basic, Dimension]:
-        factor = S.One
-        dimension = Dimension(S.One)
-        for arg in expr.args:
-            (arg_factor, arg_dim) = collect_factor_and_dimension(arg)
-            factor *= arg_factor
-            dimension *= arg_dim
-        return (factor, dimension)
-
-    def _collect_pow(expr: Pow) -> tuple[Basic, Dimension]:
-        pow_expr: Expr = S.One
-        (factor, dim) = collect_factor_and_dimension(expr.base)
-        pow_expr *= factor
-        (exp_factor, exp_dim) = collect_factor_and_dimension(expr.exp)
-        if not SI.get_dimension_system().is_dimensionless(exp_dim):
-            raise ValueError(
-                f"Dimension of '{expr.exp}' is {exp_dim}, but it should be dimensionless")
-        exp_dim = S.One
-        return (pow_expr**exp_factor, dim**(exp_factor * exp_dim))
-
-    def _collect_add(expr: Add) -> tuple[Basic, Dimension]:
-        sum_expr: Expr = S.Zero
-        (factor, dim) = collect_factor_and_dimension(expr.args[0])
-        sum_expr += factor
-        for addend in expr.args[1:]:
-            (addend_factor, addend_dim) = collect_factor_and_dimension(addend)
-            # automatically convert zero to the dimension of it's additives
-            if dim != addend_dim and not SI.get_dimension_system().equivalent_dims(dim, addend_dim):
-                if factor == S.Zero:
-                    dim = addend_dim
-                elif addend_factor == S.Zero:
-                    addend_dim = dim
-            if dim != addend_dim and not SI.get_dimension_system().equivalent_dims(dim, addend_dim):
-                raise ValueError(f"Dimension of '{addend}' is {addend_dim}, but it should be {dim}")
-            sum_expr += addend_factor
-        return (sum_expr, dim)
-
     def _unsupported_derivative(expr: Derivative) -> tuple[Basic, Dimension]:
         raise ValueError(f"Dimension '{expr}' should not contain unevaluated Derivative")
-
-    def _collect_abs(expr: Abs) -> tuple[Basic, Dimension]:
-        (f, d) = _collect_add(Add(*expr.args))
-        return (expr.func(f), d)
-
-    def _collect_min(expr: Min) -> tuple[Basic, Dimension]:
-        (factor, dim) = collect_factor_and_dimension(expr.args[0])
-        if not factor.is_Number:
-            raise ValueError(f"Min should contain Number arguments. Got {factor}")
-        min_expr = factor
-        for addend in expr.args[1:]:
-            (addend_factor, addend_dim) = collect_factor_and_dimension(addend)
-            # automatically convert zero to the dimension of it's additives
-            if dim != addend_dim and not SI.get_dimension_system().equivalent_dims(dim, addend_dim):
-                if factor == S.Zero:
-                    dim = addend_dim
-                elif addend_factor == S.Zero:
-                    addend_dim = dim
-            if dim != addend_dim and not SI.get_dimension_system().equivalent_dims(dim, addend_dim):
-                raise ValueError(f"Dimension of '{addend}' is {addend_dim}, but it should be {dim}")
-            if not addend_factor.is_Number:
-                raise ValueError(f"Min should contain Number arguments. Got {addend_factor}")
-            min_number = Number(min_expr)
-            addend_number = Number(addend_factor)
-            min_expr = min_expr if min_number <= addend_number else addend_factor
-        return (min_expr, dim)
-
-    def _collect_function(expr: SymFunction) -> tuple[Basic, Dimension]:
-        factors: list[Basic] = []
-        for arg in expr.args:
-            (f, d) = collect_factor_and_dimension(arg)
-            # only functions with dimensionless arguments are supported
-            if not SI.get_dimension_system().is_dimensionless(d):
-                raise ValueError(f"Dimension of '{arg}' is {d}, but it should be dimensionless")
-            factors.append(f)
-        ret = expr.func(*(f for f in factors))
-        return (ret, dimensionless)
-
-    def _collect_dimension(expr: Dimension) -> tuple[Basic, Dimension]:
-        return (S.One, expr)
 
     cases: dict[type, Callable[[Any], tuple[Basic, Dimension]]] = {
         SymQuantity: _collect_quantity,

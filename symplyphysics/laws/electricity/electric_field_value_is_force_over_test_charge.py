@@ -1,5 +1,7 @@
 from sympy import Eq, solve
 from symplyphysics import (
+    clone_symbol,
+    symbols,
     units,
     Quantity,
     Symbol,
@@ -16,7 +18,7 @@ from symplyphysics import (
 ## q0 - test_charge
 
 electric_field = Symbol("electric_field", units.force / units.charge)
-electrostatic_force = Symbol("electrostatic_force", units.force)
+electrostatic_force = clone_symbol(symbols.dynamics.force, "electrostatic_force")
 test_charge = Symbol("test_charge", units.charge)
 
 law = Eq(electric_field, electrostatic_force / test_charge)

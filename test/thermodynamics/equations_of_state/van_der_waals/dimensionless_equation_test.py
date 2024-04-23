@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import (
-    dimensionless_equation as state_equation_law,
-)
+    dimensionless_equation as state_equation_law,)
 
 # Description
 ## The value of reduced pressure for any van der Waals fluid is p* = 0.176 at reduced
@@ -32,6 +31,6 @@ def test_law(test_args: Args) -> None:
 def test_bad_reduced_quantity(test_args: Args) -> None:
     rb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        state_equation_law.calculate_reduced_pressure(rb, test_args.tr)    
+        state_equation_law.calculate_reduced_pressure(rb, test_args.tr)
     with raises(errors.UnitsError):
         state_equation_law.calculate_reduced_pressure(test_args.vr, rb)

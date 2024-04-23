@@ -28,7 +28,8 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = energy_law.calculate_internal_energy(test_args.cv, test_args.t, test_args.a, test_args.vm)
+    result = energy_law.calculate_internal_energy(test_args.cv, test_args.t, test_args.a,
+        test_args.vm)
     assert_equal(result, -8.43 * prefixes.kilo * units.joule / units.mole)
 
 

@@ -10,7 +10,7 @@ from symplyphysics import (
 from symplyphysics.laws.thermodynamics import chemical_potential_of_ideal_gas as chemical_potential
 
 # Description
-## The chemical potential of Argon gas at standard conditions (n = 2.69e22 1/L, T = 273.15 K, 
+## The chemical potential of Argon gas at standard conditions (n = 2.69e22 1/L, T = 273.15 K,
 ## lambda = 0.16 Å) is mu = -0.377 eV.
 
 Args = namedtuple("Args", "t n l")

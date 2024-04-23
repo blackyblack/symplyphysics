@@ -12,11 +12,9 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.dynamics import (
-    acceleration_from_force as newtons_second_law,
-)
+    acceleration_from_force as newtons_second_law,)
 from symplyphysics.laws.gravity import (
-    gravity_force_from_mass_and_distance as gravity_law,
-)
+    gravity_force_from_mass_and_distance as gravity_law,)
 from symplyphysics.laws.kinematic import (
     centripetal_acceleration_is_squared_angular_velocity_times_radius as centripetal_law,
     period_from_angular_frequency as period_law,
@@ -76,6 +74,7 @@ _period_derived = period_law.law.rhs.subs({
 _period_from_law = solve(law, rotation_period)[0]
 
 assert expr_equals(_period_derived, _period_from_law)
+
 
 def print_law() -> str:
     return print_expression(law)
