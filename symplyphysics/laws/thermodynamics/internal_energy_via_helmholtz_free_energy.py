@@ -19,6 +19,7 @@ from symplyphysics.core.geometry.line import two_point_function
 ## F - Helmholtz free energy
 ## T - absolute temperature
 ## V - volume
+## (d/dT)_V - derivative with respect to temperature at constant volume
 
 internal_energy = Symbol("internal_energy", units.energy)
 free_energy = Function("free_energy", units.energy)
