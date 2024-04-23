@@ -33,8 +33,12 @@ _initial_length, _length_change = symbols("initial_length length_change")
 _temperature_change = symbols("temperature_change")
 
 _final_length_expr = _initial_length + _length_change
-_initial_volume_expr = _initial_length**3
-_final_volume_expr = _final_length_expr**3
+
+_volume, _length = symbols("volume length")
+_volume_eqn = Eq(_volume, _length**3)
+_volume_expr = solve(_volume_eqn, _volume)[0]
+_initial_volume_expr = _volume_expr.subs(_length, _initial_length)
+_final_volume_expr = _volume_expr.subs(_length, _final_length_expr)
 
 _volumetric_expr = volumetric_def.definition.rhs.subs({
     volumetric_def.volume(volumetric_def.temperature).diff(volumetric_def.temperature): _volume_change / _temperature_change,
