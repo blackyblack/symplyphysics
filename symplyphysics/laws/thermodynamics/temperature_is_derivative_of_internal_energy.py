@@ -14,7 +14,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import internal_energy_differential
 
 # Description
-## Temperature of a thermodynamic system can be found internal energy is known as a function of entropy.
+## Temperature of a thermodynamic system can be found when internal energy is known as a function of entropy.
 
 # Law: T = (dU/dS)_(V, N)
 ## T - absolute temperature
