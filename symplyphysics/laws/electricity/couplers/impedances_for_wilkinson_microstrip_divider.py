@@ -30,29 +30,37 @@ fourth_impedance = Symbol("fourth_impedance", units.impedance)
 characteristic_resistance = Symbol("characteristic_resistance", units.impedance)
 ratio_of_power = Symbol("ratio_of_power", dimensionless)
 
-
-law = Eq(Matrix([first_impedance, second_impedance, third_impedance, fourth_impedance]),
-         Matrix([characteristic_resistance * sqrt(ratio_of_power * (1 + ratio_of_power**2)), characteristic_resistance * sqrt((1 + ratio_of_power**2) / ratio_of_power**3), characteristic_resistance * sqrt(ratio_of_power), characteristic_resistance / sqrt(ratio_of_power)]))
+law = Eq(
+    Matrix([first_impedance, second_impedance, third_impedance, fourth_impedance]),
+    Matrix([
+    characteristic_resistance * sqrt(ratio_of_power * (1 + ratio_of_power**2)),
+    characteristic_resistance * sqrt(
+    (1 + ratio_of_power**2) / ratio_of_power**3), characteristic_resistance * sqrt(ratio_of_power),
+    characteristic_resistance / sqrt(ratio_of_power)
+    ]))
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(characteristic_resistance_=characteristic_resistance, ratio_of_power_=ratio_of_power)
+@validate_input(characteristic_resistance_=characteristic_resistance,
+    ratio_of_power_=ratio_of_power)
 @validate_output(units.impedance)
-def calculate_impedances(characteristic_resistance_: Quantity, ratio_of_power_: float) -> tuple[Quantity, Quantity, Quantity, Quantity]:
-    result = solve(law, [first_impedance, second_impedance, third_impedance, fourth_impedance], dict=True)[0]
-    result_Z1 = result[first_impedance]
-    result_Z2 = result[second_impedance]
-    result_Z3 = result[third_impedance]
-    result_Z4 = result[fourth_impedance]
+def calculate_impedances(characteristic_resistance_: Quantity,
+    ratio_of_power_: float) -> tuple[Quantity, Quantity, Quantity, Quantity]:
+    result = solve(law, [first_impedance, second_impedance, third_impedance, fourth_impedance],
+        dict=True)[0]
+    result_z1 = result[first_impedance]
+    result_z2 = result[second_impedance]
+    result_z3 = result[third_impedance]
+    result_z4 = result[fourth_impedance]
     substitutions = {
         characteristic_resistance: characteristic_resistance_,
         ratio_of_power: ratio_of_power_,
     }
-    result_Z1 = Quantity(result_Z1.subs(substitutions))
-    result_Z2 = Quantity(result_Z2.subs(substitutions))
-    result_Z3 = Quantity(result_Z3.subs(substitutions))
-    result_Z4 = Quantity(result_Z4.subs(substitutions))
-    return (result_Z1, result_Z2, result_Z3, result_Z4)
+    result_z1 = Quantity(result_z1.subs(substitutions))
+    result_z2 = Quantity(result_z2.subs(substitutions))
+    result_z3 = Quantity(result_z3.subs(substitutions))
+    result_z4 = Quantity(result_z4.subs(substitutions))
+    return (result_z1, result_z2, result_z3, result_z4)

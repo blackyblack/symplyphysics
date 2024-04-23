@@ -1,5 +1,5 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (symbols, units, Quantity, Symbol, print_expression, validate_input,
     validate_output)
 
 # Description
@@ -12,7 +12,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## A is the area
 
 pressure = Symbol("pressure", units.pressure)
-force = Symbol("force", units.force)
+force = symbols.dynamics.force
 area = Symbol("area", units.area)
 
 law = Eq(pressure, force / area)

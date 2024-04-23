@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.thermodynamics.fermi_dirac_statistics import (
-    single_particle_state_distribution as state_distribution,
-)
+    single_particle_state_distribution as state_distribution,)
 
 # Description
 ## The average number of fermions in a single-particle state of energy e = 4.01 eV is 0.24.

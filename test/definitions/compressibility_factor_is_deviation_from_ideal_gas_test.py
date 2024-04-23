@@ -8,8 +8,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.definitions import (
-    compressibility_factor_is_deviation_from_ideal_gas as deviation_def,
-)
+    compressibility_factor_is_deviation_from_ideal_gas as deviation_def,)
 
 # Description
 ## The compressibility factor of a gas with pressure p = 5.5 kPa, temperature T = 300 K,
@@ -28,7 +27,8 @@ def test_args_fixture() -> Args:
 
 
 def test_definition(test_args: Args) -> None:
-    result = deviation_def.calculate_compressibility_factor(test_args.p, test_args.v, test_args.n, test_args.t)
+    result = deviation_def.calculate_compressibility_factor(test_args.p, test_args.v, test_args.n,
+        test_args.t)
     assert_equal(result, 1.1, tolerance=3e-3)
 
 

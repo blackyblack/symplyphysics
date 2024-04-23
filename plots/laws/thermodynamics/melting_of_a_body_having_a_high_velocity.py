@@ -62,12 +62,15 @@ mass_of_melting_meteorite = symbols("mass_of_melting_meteorite")
 koefficient_of_melting_meteorite = symbols("koefficient_of_melting_meteorite")
 
 energy_to_heating_meteorite = thermal_energy_law.law.subs({
-    thermal_energy_law.heat_capacity: specific_qty_law.law.rhs.subs({
-        specific_qty_law.specific_quantity: specific_heat_heating_meteorite,
-        specific_qty_law.mass: mass_of_meteorite,
+    thermal_energy_law.heat_capacity:
+    specific_qty_law.law.rhs.subs({
+    specific_qty_law.specific_quantity: specific_heat_heating_meteorite,
+    specific_qty_law.mass: mass_of_meteorite,
     }),
-    thermal_energy_law.temperature_origin: temperature_of_meteorite,
-    thermal_energy_law.temperature_end: temperature_of_meteorite_melting
+    thermal_energy_law.temperature_origin:
+        temperature_of_meteorite,
+    thermal_energy_law.temperature_end:
+        temperature_of_meteorite_melting
 }).rhs
 
 energy_to_meteorite_melting = energy_melting_law.law.subs({

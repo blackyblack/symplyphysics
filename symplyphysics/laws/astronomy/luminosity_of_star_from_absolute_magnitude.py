@@ -1,6 +1,5 @@
 from sympy import Eq, solve, log
 from symplyphysics import (
-    Quantity,
     Symbol,
     print_expression,
     validate_input,

@@ -1,5 +1,5 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (symbols, units, Quantity, Symbol, print_expression, validate_input,
     validate_output)
 
 # Description
@@ -23,7 +23,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 
 pressure = Symbol("pressure", units.pressure)
 volume = Symbol("volume", units.volume)
-temperature = Symbol("temperature", units.temperature)
+temperature = symbols.thermodynamics.temperature
 amount_of_substance = Symbol("amount_of_substance", units.amount_of_substance)
 
 bonding_forces_parameter = Symbol("bonding_forces_parameter",

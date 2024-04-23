@@ -1,7 +1,7 @@
 from sympy import Eq, solve
 from sympy.physics.units import speed_of_light, planck, boltzmann
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output)
+from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print_expression,
+    validate_input, validate_output)
 
 # Description
 ## Any object with non-zero absolute temperature radiates energy. Absolutely black object is objects, which doesn't reflect any radiation.
@@ -13,7 +13,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## b is Wien's constant, b = ch/ka, where c is speed of light, h is Planck's constant, k is Boltzmann's constant and a = 4,965114.
 
 intensive_wavelength = Symbol("intensive_wavelengh", units.length)
-object_temperature = Symbol("object_temperature", units.temperature)
+object_temperature = clone_symbol(symbols.thermodynamics.temperature, "object_temperature")
 a = 4.965114
 wiens_constant = speed_of_light * planck / (boltzmann * a)
 

@@ -1,5 +1,7 @@
 from sympy import (Eq, solve, log)
 from symplyphysics import (
+    quantities,
+    symbols,
     units,
     Quantity,
     Symbol,
@@ -32,7 +34,7 @@ isobaric_potential = Symbol("isobaric_potential", units.energy / units.amount_of
 
 thermal_effect = Symbol("thermal_effect", units.energy / units.amount_of_substance)
 entropy = Symbol("entropy", units.energy / units.amount_of_substance / units.temperature)
-temperature = Symbol("temperature", units.temperature)
+temperature = symbols.thermodynamics.temperature
 heat_capacity = Symbol("heat_capacity",
     units.energy / units.amount_of_substance / units.temperature)
 coefficient_capacity_1 = Symbol("coefficient_capacity_1",
@@ -41,15 +43,15 @@ coefficient_capacity_2 = Symbol("coefficient_capacity_2",
     units.energy / units.amount_of_substance / units.temperature**2)
 coefficient_capacity_3 = Symbol("coefficient_capacity_3",
     units.energy * units.temperature / units.amount_of_substance)
-standard_temperature = Quantity(298 * units.kelvin)
 
 law = Eq(
     isobaric_potential, thermal_effect - temperature * entropy - temperature *
-    (coefficient_capacity_1 * (log(standard_temperature / temperature) +
-    (standard_temperature / temperature) - 1) + coefficient_capacity_2 * ((temperature / 2) +
-    (standard_temperature**2 / (2 * temperature)) - standard_temperature) + coefficient_capacity_3 *
-    ((temperature**(-2) / 2) + (standard_temperature**(-1) / -temperature) -
-    (standard_temperature**(-2) / -2))))
+    (coefficient_capacity_1 * (log(quantities.standard_laboratory_temperature / temperature) +
+    (quantities.standard_laboratory_temperature / temperature) - 1) + coefficient_capacity_2 *
+    ((temperature / 2) + (quantities.standard_laboratory_temperature**2 /
+    (2 * temperature)) - quantities.standard_laboratory_temperature) + coefficient_capacity_3 *
+    ((temperature**(-2) / 2) + (quantities.standard_laboratory_temperature**(-1) / -temperature) -
+    (quantities.standard_laboratory_temperature**(-2) / -2))))
 
 
 def print_law() -> str:

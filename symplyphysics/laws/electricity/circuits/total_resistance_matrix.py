@@ -32,19 +32,29 @@ impedance_input_output = Symbol("impedance_input_output", units.impedance)
 impedance_output_input = Symbol("impedance_output_input", units.impedance)
 impedance_output_output = Symbol("impedance_output_output", units.impedance)
 
-law = Eq(Matrix([input_voltage, output_voltage]), Matrix([[impedance_input_input, impedance_input_output], [impedance_output_input, impedance_output_output]]) * Matrix([input_current, output_current]))
+law = Eq(
+    Matrix([input_voltage, output_voltage]),
+    Matrix([[impedance_input_input, impedance_input_output],
+    [impedance_output_input, impedance_output_output]]) * Matrix([input_current, output_current]))
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(input_voltage_=input_voltage, output_voltage_=output_voltage,)
+@validate_input(
+    input_voltage_=input_voltage,
+    output_voltage_=output_voltage,
+)
 @validate_output(units.current)
-def calculate_currents(input_voltage_: Quantity, output_voltage_: Quantity, impedances_: tuple[tuple[Quantity, Quantity], tuple[Quantity, Quantity]]) -> tuple[Quantity, Quantity]:
+def calculate_currents(
+    input_voltage_: Quantity, output_voltage_: Quantity, impedances_: tuple[tuple[Quantity,
+    Quantity], tuple[Quantity, Quantity]]
+) -> tuple[Quantity, Quantity]:
     for i, cc in enumerate(impedances_):
         for j, impedance in enumerate(cc):
-            assert_equivalent_dimension(impedance, f"impedances_[{i}][{j}]", "calculate_currents", units.impedance)
+            assert_equivalent_dimension(impedance, f"impedances_[{i}][{j}]", "calculate_currents",
+                units.impedance)
     result_currents = solve(law, [input_current, output_current], dict=True)[0]
     result_input_current = result_currents[input_current]
     result_output_current = result_currents[output_current]

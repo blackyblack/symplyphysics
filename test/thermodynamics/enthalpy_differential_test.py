@@ -40,44 +40,55 @@ def test_law(test_args: Args) -> None:
 def test_bad_temperature(test_args: Args) -> None:
     tb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        enthalpy_law.calculate_enthalpy_change(tb, test_args.ds, test_args.v, test_args.dp, test_args.mu, test_args.dn)
+        enthalpy_law.calculate_enthalpy_change(tb, test_args.ds, test_args.v, test_args.dp,
+            test_args.mu, test_args.dn)
     with raises(TypeError):
-        enthalpy_law.calculate_enthalpy_change(100, test_args.ds, test_args.v, test_args.dp, test_args.mu, test_args.dn)
+        enthalpy_law.calculate_enthalpy_change(100, test_args.ds, test_args.v, test_args.dp,
+            test_args.mu, test_args.dn)
 
 
 def test_bad_entropy(test_args: Args) -> None:
     sb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        enthalpy_law.calculate_enthalpy_change(test_args.t, sb, test_args.v, test_args.dp, test_args.mu, test_args.dn)
+        enthalpy_law.calculate_enthalpy_change(test_args.t, sb, test_args.v, test_args.dp,
+            test_args.mu, test_args.dn)
     with raises(TypeError):
-        enthalpy_law.calculate_enthalpy_change(test_args.t, 100, test_args.v, test_args.dp, test_args.mu, test_args.dn)
+        enthalpy_law.calculate_enthalpy_change(test_args.t, 100, test_args.v, test_args.dp,
+            test_args.mu, test_args.dn)
 
 
 def test_bad_volume(test_args: Args) -> None:
     vb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        enthalpy_law.calculate_enthalpy_change(test_args.t, test_args.ds, vb, test_args.dp, test_args.mu, test_args.dn)
+        enthalpy_law.calculate_enthalpy_change(test_args.t, test_args.ds, vb, test_args.dp,
+            test_args.mu, test_args.dn)
     with raises(TypeError):
-        enthalpy_law.calculate_enthalpy_change(test_args.t, test_args.ds, 100, test_args.dp, test_args.mu, test_args.dn)
+        enthalpy_law.calculate_enthalpy_change(test_args.t, test_args.ds, 100, test_args.dp,
+            test_args.mu, test_args.dn)
 
 
 def test_bad_pressure(test_args: Args) -> None:
     pb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        enthalpy_law.calculate_enthalpy_change(test_args.t, test_args.ds, test_args.v, pb, test_args.mu, test_args.dn)
+        enthalpy_law.calculate_enthalpy_change(test_args.t, test_args.ds, test_args.v, pb,
+            test_args.mu, test_args.dn)
     with raises(TypeError):
-        enthalpy_law.calculate_enthalpy_change(test_args.t, test_args.ds, test_args.v, 100, test_args.mu, test_args.dn)
+        enthalpy_law.calculate_enthalpy_change(test_args.t, test_args.ds, test_args.v, 100,
+            test_args.mu, test_args.dn)
 
 
 def test_bad_chemical_potential(test_args: Args) -> None:
     mub = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        enthalpy_law.calculate_enthalpy_change(test_args.t, test_args.ds, test_args.v, test_args.dp, mub, test_args.dn)
+        enthalpy_law.calculate_enthalpy_change(test_args.t, test_args.ds, test_args.v, test_args.dp,
+            mub, test_args.dn)
     with raises(TypeError):
-        enthalpy_law.calculate_enthalpy_change(test_args.t, test_args.ds, test_args.v, test_args.dp, 100, test_args.dn)
+        enthalpy_law.calculate_enthalpy_change(test_args.t, test_args.ds, test_args.v, test_args.dp,
+            100, test_args.dn)
 
 
 def test_bad_number(test_args: Args) -> None:
     nb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        enthalpy_law.calculate_enthalpy_change(test_args.t, test_args.ds, test_args.v, test_args.dp, test_args.mu, nb)
+        enthalpy_law.calculate_enthalpy_change(test_args.t, test_args.ds, test_args.v, test_args.dp,
+            test_args.mu, nb)

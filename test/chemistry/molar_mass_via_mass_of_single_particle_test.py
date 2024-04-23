@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.chemistry import (
-    molar_mass_via_mass_of_single_particle as molar_mass_law,
-)
+    molar_mass_via_mass_of_single_particle as molar_mass_law,)
 
 # Description
 ## The molar mass of Argon (m = 39.948 amu) is 39.948 g/mol.

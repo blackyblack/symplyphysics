@@ -1,5 +1,7 @@
-from sympy import Eq, symbols, Function as SymFunction, Symbol as SymSymbol
+from sympy import Eq, symbols as sympy_symbols, Function as SymFunction, Symbol as SymSymbol
 from symplyphysics import (
+    clone_symbol,
+    symbols,
     units,
     dimensionless,
     Quantity,
@@ -40,7 +42,7 @@ from symplyphysics.laws.thermodynamics import (
 
 free_energy_change = Symbol("free_energy_change", units.energy)
 entropy = Symbol("entropy", units.energy / units.temperature)
-temperature_change = Symbol("temperature_change", units.temperature)
+temperature_change = clone_symbol(symbols.thermodynamics.temperature, "temperature_change")
 pressure = Symbol("pressure", units.pressure)
 volume_change = Symbol("volume_change", units.volume)
 chemical_potential = Symbol("chemical_potential", units.energy)
@@ -48,12 +50,13 @@ particle_count_change = Symbol("particle_count_change", dimensionless)
 
 law = Eq(
     free_energy_change,
-    -1 * entropy * temperature_change - pressure * volume_change + chemical_potential * particle_count_change,
+    -1 * entropy * temperature_change - pressure * volume_change +
+    chemical_potential * particle_count_change,
 )
 
 # Derive from the definition of Helmholtz free energy and internal energy differential
 
-_internal_energy_sym = symbols("internal_energy", cls=SymFunction)
+_internal_energy_sym = sympy_symbols("internal_energy", cls=SymFunction)
 _entropy_change = SymSymbol("entropy_change")
 _temperature = SymSymbol("temperature")
 _volume = SymSymbol("volume")
@@ -70,12 +73,9 @@ _free_energy = free_energy_def.law.rhs.subs({
 # The differential of free energy can be found by adding up the products of
 # the partial derivative of free energy with respect to a thermodynamic quantity
 # and the infinitesimal change of that quantity
-_free_energy_change = (
-    _free_energy.diff(_temperature) * temperature_change
-    + _free_energy.diff(entropy) * _entropy_change
-    + _free_energy.diff(_volume) * volume_change
-    + _free_energy.diff(_particle_count) * particle_count_change
-)
+_free_energy_change = (_free_energy.diff(_temperature) * temperature_change +
+    _free_energy.diff(entropy) * _entropy_change + _free_energy.diff(_volume) * volume_change +
+    _free_energy.diff(_particle_count) * particle_count_change)
 
 _internal_energy_diff = internal_energy_differential.law.rhs.subs({
     internal_energy_differential.temperature: _temperature,
@@ -87,15 +87,21 @@ _internal_energy_diff = internal_energy_differential.law.rhs.subs({
 })
 
 _internal_energy_diff_entropy = _internal_energy_diff.subs({
-    _entropy_change: 1, volume_change: 0, particle_count_change: 0
+    _entropy_change: 1,
+    volume_change: 0,
+    particle_count_change: 0
 })
 
 _internal_energy_diff_volume = _internal_energy_diff.subs({
-    _entropy_change: 0, volume_change: 1, particle_count_change: 0
+    _entropy_change: 0,
+    volume_change: 1,
+    particle_count_change: 0
 })
 
 _internal_energy_diff_particle_count = _internal_energy_diff.subs({
-    _entropy_change: 0, volume_change: 0, particle_count_change: 1
+    _entropy_change: 0,
+    volume_change: 0,
+    particle_count_change: 1
 })
 
 _free_energy_change = _free_energy_change.subs({

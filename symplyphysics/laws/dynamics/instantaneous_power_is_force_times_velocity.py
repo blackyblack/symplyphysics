@@ -1,5 +1,6 @@
 from sympy import Eq, cos
 from symplyphysics import (
+    symbols,
     units,
     Quantity,
     Symbol,
@@ -21,7 +22,7 @@ from symplyphysics.core.symbols.quantities import scale_factor
 ## phi - angle between force and velocity vectors
 
 power = Symbol("power", units.power)
-force = Symbol("force", units.force)
+force = symbols.dynamics.force
 speed = Symbol("speed", units.speed)
 angle = Symbol("angle", angle_type)
 

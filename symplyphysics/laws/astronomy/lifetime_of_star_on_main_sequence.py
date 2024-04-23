@@ -1,5 +1,7 @@
 from sympy import Eq, solve
 from symplyphysics import (
+    clone_symbol,
+    symbols,
     units,
     Quantity,
     Symbol,
@@ -22,8 +24,7 @@ from symplyphysics import (
 ## n - indicator depending on the mass of the star.
 
 lifetime = Symbol("lifetime", units.time)
-
-mass_of_star = Symbol("mass_of_star", units.mass)
+mass_of_star = clone_symbol(symbols.basic.mass, "mass_of_star")
 indicator = Symbol("indicator", dimensionless)
 
 mass_of_sun = Quantity(1.989e30 * units.kilogram)

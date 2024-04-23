@@ -10,7 +10,10 @@ from symplyphysics.laws.electricity.transmission_lines import input_impedance_lo
 ## Load resistance is equal to 100 ohm.
 ## Then the input impedance is equal to 49.33 - 0.879 * I ohm.
 
-Args = namedtuple("Args", ["characteristic_resistance", "load_resistance", "constant_propagation", "line_length", "loss_factor"])
+Args = namedtuple("Args", [
+    "characteristic_resistance", "load_resistance", "constant_propagation", "line_length",
+    "loss_factor"
+])
 
 
 @fixture(name="test_args")
@@ -20,17 +23,19 @@ def test_args_fixture() -> Args:
     constant_propagation = Quantity(6300 / units.meter)
     line_length = Quantity(1 * units.meter)
     loss_factor = Quantity(1.7 / units.meter)
-    return Args(characteristic_resistance=characteristic_resistance,
+    return Args(
+        characteristic_resistance=characteristic_resistance,
         load_resistance=load_resistance,
         constant_propagation=constant_propagation,
         line_length=line_length,
         loss_factor=loss_factor,
-        )
+    )
 
 
 def test_basic_input_impedance(test_args: Args) -> None:
     result = impedance_law.calculate_input_impedance(test_args.characteristic_resistance,
-        test_args.load_resistance, test_args.constant_propagation, test_args.line_length, test_args.loss_factor)
+        test_args.load_resistance, test_args.constant_propagation, test_args.line_length,
+        test_args.loss_factor)
     assert_equal(result, (49.33 - 0.879 * I) * units.ohm)
 
 
@@ -38,17 +43,19 @@ def test_bad_characteristic_resistance(test_args: Args) -> None:
     bad_characteristic_resistance = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         impedance_law.calculate_input_impedance(bad_characteristic_resistance,
-            test_args.load_resistance, test_args.constant_propagation, test_args.line_length, test_args.loss_factor)
+            test_args.load_resistance, test_args.constant_propagation, test_args.line_length,
+            test_args.loss_factor)
     with raises(TypeError):
-        impedance_law.calculate_input_impedance(100,
-            test_args.load_resistance, test_args.constant_propagation, test_args.line_length, test_args.loss_factor)
+        impedance_law.calculate_input_impedance(100, test_args.load_resistance,
+            test_args.constant_propagation, test_args.line_length, test_args.loss_factor)
 
 
 def test_bad_load_resistance(test_args: Args) -> None:
     bad_load_resistance = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         impedance_law.calculate_input_impedance(test_args.characteristic_resistance,
-            bad_load_resistance, test_args.constant_propagation, test_args.line_length, test_args.loss_factor)
+            bad_load_resistance, test_args.constant_propagation, test_args.line_length,
+            test_args.loss_factor)
     with raises(TypeError):
         impedance_law.calculate_input_impedance(test_args.characteristic_resistance, 100,
             test_args.constant_propagation, test_args.line_length, test_args.loss_factor)
@@ -58,7 +65,8 @@ def test_bad_constant_propagation(test_args: Args) -> None:
     constant_propagation = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         impedance_law.calculate_input_impedance(test_args.characteristic_resistance,
-            test_args.load_resistance, constant_propagation, test_args.line_length, test_args.loss_factor)
+            test_args.load_resistance, constant_propagation, test_args.line_length,
+            test_args.loss_factor)
     with raises(TypeError):
         impedance_law.calculate_input_impedance(test_args.characteristic_resistance,
             test_args.load_resistance, 100, test_args.line_length, test_args.loss_factor)
@@ -68,7 +76,8 @@ def test_bad_line_length(test_args: Args) -> None:
     line_length = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         impedance_law.calculate_input_impedance(test_args.characteristic_resistance,
-            test_args.load_resistance, test_args.constant_propagation, line_length, test_args.loss_factor)
+            test_args.load_resistance, test_args.constant_propagation, line_length,
+            test_args.loss_factor)
     with raises(TypeError):
         impedance_law.calculate_input_impedance(test_args.characteristic_resistance,
             test_args.load_resistance, test_args.constant_propagation, 100, test_args.loss_factor)
@@ -78,7 +87,8 @@ def test_bad_loss_factor(test_args: Args) -> None:
     loss_factor = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         impedance_law.calculate_input_impedance(test_args.characteristic_resistance,
-            test_args.load_resistance, test_args.constant_propagation, test_args.line_length, loss_factor)
+            test_args.load_resistance, test_args.constant_propagation, test_args.line_length,
+            loss_factor)
     with raises(TypeError):
         impedance_law.calculate_input_impedance(test_args.characteristic_resistance,
             test_args.load_resistance, test_args.constant_propagation, test_args.line_length, 100)

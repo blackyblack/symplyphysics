@@ -20,7 +20,8 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_input_impedance(test_args: Args) -> None:
-    result = impedance_law.calculate_input_impedance(test_args.load_resistance, test_args.parameters)
+    result = impedance_law.calculate_input_impedance(test_args.load_resistance,
+        test_args.parameters)
     assert_equal(result, 50.97 * prefixes.milli * units.ohm)
 
 
@@ -35,10 +36,18 @@ def test_bad_load_resistance(test_args: Args) -> None:
 def test_bad_parameters(test_args: Args) -> None:
     bad_parameter = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        impedance_law.calculate_input_impedance(test_args.load_resistance, ((test_args.parameters[0][0], bad_parameter), (test_args.parameters[1][0], test_args.parameters[1][1])))
+        impedance_law.calculate_input_impedance(test_args.load_resistance,
+            ((test_args.parameters[0][0], bad_parameter),
+            (test_args.parameters[1][0], test_args.parameters[1][1])))
     with raises(TypeError):
-        impedance_law.calculate_input_impedance(test_args.load_resistance, ((test_args.parameters[0][0], 100), (test_args.parameters[1][0], test_args.parameters[1][1])))
+        impedance_law.calculate_input_impedance(test_args.load_resistance,
+            ((test_args.parameters[0][0], 100),
+            (test_args.parameters[1][0], test_args.parameters[1][1])))
     with raises(errors.UnitsError):
-        impedance_law.calculate_input_impedance(test_args.load_resistance, ((test_args.parameters[0][0], test_args.parameters[0][1]), (bad_parameter, test_args.parameters[1][1])))
+        impedance_law.calculate_input_impedance(test_args.load_resistance,
+            ((test_args.parameters[0][0], test_args.parameters[0][1]),
+            (bad_parameter, test_args.parameters[1][1])))
     with raises(TypeError):
-        impedance_law.calculate_input_impedance(test_args.load_resistance, ((test_args.parameters[0][0], test_args.parameters[0][1]), (100, test_args.parameters[1][1])))
+        impedance_law.calculate_input_impedance(test_args.load_resistance,
+            ((test_args.parameters[0][0], test_args.parameters[0][1]),
+            (100, test_args.parameters[1][1])))

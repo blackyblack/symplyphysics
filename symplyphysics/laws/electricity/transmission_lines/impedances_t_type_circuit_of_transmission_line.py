@@ -40,8 +40,12 @@ constant_propagation = Symbol("constant_propagation", 1 / units.length)
 loss_factor = Symbol("loss_factor", 1 / units.length)
 
 expression = (loss_factor + I * constant_propagation) * line_length
-law = Eq(Matrix([first_impedance, second_impedance, third_impedance]),
-         Matrix([characteristic_resistance * tanh(expression / 2), characteristic_resistance * tanh(expression / 2), characteristic_resistance / sinh(expression)]))
+law = Eq(
+    Matrix([first_impedance, second_impedance, third_impedance]),
+    Matrix([
+    characteristic_resistance * tanh(expression / 2),
+    characteristic_resistance * tanh(expression / 2), characteristic_resistance / sinh(expression)
+    ]))
 
 # This law might be derived via "transmission_matrix_lossy_transmission_line" law and
 # "transmission_matrix_of_t_type_circuit" law.
@@ -52,13 +56,21 @@ matrix_lossy_law_applied = matrix_lossy_law.law.subs({
     matrix_lossy_law.constant_propagation: constant_propagation,
     matrix_lossy_law.loss_factor: loss_factor,
 })
-matrix_derived_1 = solve(matrix_lossy_law_applied, [matrix_lossy_law.parameter_voltage_to_voltage, matrix_lossy_law.parameter_impedance, matrix_lossy_law.parameter_conductance, matrix_lossy_law.parameter_current_to_current], dict=True)[0]
+matrix_derived_1 = solve(matrix_lossy_law_applied, [
+    matrix_lossy_law.parameter_voltage_to_voltage, matrix_lossy_law.parameter_impedance,
+    matrix_lossy_law.parameter_conductance, matrix_lossy_law.parameter_current_to_current
+],
+    dict=True)[0]
 
 matrix_circuit_law_applied = matrix_circuit_law.law.subs({
-    matrix_circuit_law.parameter_voltage_to_voltage: matrix_derived_1[matrix_lossy_law.parameter_voltage_to_voltage],
-    matrix_circuit_law.parameter_impedance: matrix_derived_1[matrix_lossy_law.parameter_impedance],
-    matrix_circuit_law.parameter_conductance: matrix_derived_1[matrix_lossy_law.parameter_conductance],
-    matrix_circuit_law.parameter_current_to_current: matrix_derived_1[matrix_lossy_law.parameter_current_to_current],
+    matrix_circuit_law.parameter_voltage_to_voltage:
+    matrix_derived_1[matrix_lossy_law.parameter_voltage_to_voltage],
+    matrix_circuit_law.parameter_impedance:
+    matrix_derived_1[matrix_lossy_law.parameter_impedance],
+    matrix_circuit_law.parameter_conductance:
+    matrix_derived_1[matrix_lossy_law.parameter_conductance],
+    matrix_circuit_law.parameter_current_to_current:
+    matrix_derived_1[matrix_lossy_law.parameter_current_to_current],
 })
 
 # HACK: SymPy is unable to solve it automatically. Try with known solution and check for zero output
@@ -78,7 +90,8 @@ matrix_circuit_law_solved = matrix_circuit_law_solved.subs({
 })
 # From `tanh` definition
 matrix_circuit_law_solved = matrix_circuit_law_solved.subs(
-    tanh(expression_symbol), sinh(expression_symbol) / cosh(expression_symbol))
+    tanh(expression_symbol),
+    sinh(expression_symbol) / cosh(expression_symbol))
 
 # Check if solution results in all zeroes.
 assert expr_equals(matrix_circuit_law_solved.lhs[0], matrix_circuit_law_solved.rhs[0])
@@ -90,9 +103,13 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(characteristic_resistance_=characteristic_resistance, line_length_=line_length, constant_propagation_=constant_propagation, loss_factor_=loss_factor)
+@validate_input(characteristic_resistance_=characteristic_resistance,
+    line_length_=line_length,
+    constant_propagation_=constant_propagation,
+    loss_factor_=loss_factor)
 @validate_output(units.impedance)
-def calculate_impedances(characteristic_resistance_: Quantity, line_length_: Quantity, constant_propagation_: Quantity, loss_factor_: Quantity) -> tuple[Quantity, Quantity, Quantity]:
+def calculate_impedances(characteristic_resistance_: Quantity, line_length_: Quantity,
+    constant_propagation_: Quantity, loss_factor_: Quantity) -> tuple[Quantity, Quantity, Quantity]:
     result = solve(law, [first_impedance, second_impedance, third_impedance], dict=True)[0]
     result_A = result[first_impedance]
     result_B = result[second_impedance]

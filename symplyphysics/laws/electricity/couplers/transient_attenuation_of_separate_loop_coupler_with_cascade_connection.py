@@ -1,12 +1,6 @@
-from sympy import (
-    Eq,
-    solve,
-    sin,
-    asin,
-    log
-)
-from symplyphysics import (Symbol, print_expression, validate_input,
-    validate_output, dimensionless, convert_to_float)
+from sympy import (Eq, solve, sin, asin, log)
+from symplyphysics import (Symbol, print_expression, validate_input, validate_output, dimensionless,
+    convert_to_float)
 
 # Description
 ## The multistage connection of the couplers allows you to expand the working band and realize less transient attenuation.
@@ -22,7 +16,8 @@ attenuation_of_coupler = Symbol("attenuation_of_coupler", dimensionless)
 attenuation_of_cascade = Symbol("attenuation_of_cascade", dimensionless)
 number_of_couplers = Symbol("number_of_couplers", dimensionless)
 
-law = Eq(attenuation_of_coupler, 20 * log(sin(number_of_couplers * asin(10**(attenuation_of_cascade / 20))), 10))
+law = Eq(attenuation_of_coupler,
+    20 * log(sin(number_of_couplers * asin(10**(attenuation_of_cascade / 20))), 10))
 
 
 def print_law() -> str:

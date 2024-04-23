@@ -22,12 +22,12 @@ from symplyphysics import (
 ## x_start, x_end - starting and ending positions of the object during its movement, respectively
 
 work = Symbol("work", units.energy)
-force = Function("force", units.force)
+force_function = Function("force_function", units.force)
 position = Symbol("position", units.length)
 position_start = Symbol("position_start", units.length)
 position_end = Symbol("position_end", units.length)
 
-law = Eq(work, Integral(force(position), (position, position_start, position_end)))
+law = Eq(work, Integral(force_function(position), (position, position_start, position_end)))
 
 
 def print_law() -> str:
@@ -36,8 +36,8 @@ def print_law() -> str:
 
 # Assuming the force changes linearly with respect to position
 @validate_input(
-    force_start_=force,
-    force_end_=force,
+    force_start_=force_function,
+    force_end_=force_function,
     position_start_=position,
     position_end_=position,
 )
@@ -49,10 +49,10 @@ def calculate_work(
     position_end_: Quantity,
 ) -> Quantity:
     # Using the two-point line equation: (y - y1)/(y2 - y1) = (x - x1)/(x2 - x1)
-    force_function = ((force_end_ - force_start_) * (position - position_start_) /
+    force_function_ = ((force_end_ - force_start_) * (position - position_start_) /
         (position_end - position_start_) + force_start_)
     result = law.rhs.subs({
-        force(position): force_function,
+        force_function(position): force_function_,
         position_start: position_start_,
         position_end: position_end_,
     })

@@ -8,6 +8,10 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## R_serial is total resistance,
 ## R[i] is resistance of i-th resistor.
 
+# Conditions:
+# - it is valid for non-alternating current, or when there is no reactive load.
+
+resistances = Symbol("resistances", units.impedance)
 serial_resistance = Symbol("serial_resistance", units.impedance)
 resistance = SymbolIndexed("resistance", units.impedance)
 law = Eq(serial_resistance, SumIndexed(resistance[global_index], global_index))

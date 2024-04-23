@@ -31,7 +31,8 @@ order_of_ring = Symbol("order_of_ring", dimensionless)
 radius_curvature = Symbol("radius_curvature", units.length)
 refractive_index_between_lens_plate = Symbol("refractive_index_between_lens_plate", dimensionless)
 
-law = Eq(radius, sqrt(order_of_ring * radius_curvature * wavelength / refractive_index_between_lens_plate))
+law = Eq(radius,
+    sqrt(order_of_ring * radius_curvature * wavelength / refractive_index_between_lens_plate))
 
 
 def print_law() -> str:
@@ -43,9 +44,10 @@ def print_law() -> str:
     refractive_index_between_lens_plate_=refractive_index_between_lens_plate,
     radius_curvature_=radius_curvature)
 @validate_output(radius)
-def calculate_radius(wavelength_: Quantity, order_of_ring_: int, refractive_index_between_lens_plate_: float, radius_curvature_: Quantity) -> Quantity:
+def calculate_radius(wavelength_: Quantity, order_of_ring_: int,
+    refractive_index_between_lens_plate_: float, radius_curvature_: Quantity) -> Quantity:
     if order_of_ring_ <= 0:
-        raise ValueError("Order of ring must be greater than 0.") 
+        raise ValueError("Order of ring must be greater than 0.")
 
     result_expr = solve(law, radius, dict=True)[0][radius]
     result_expr = result_expr.subs({

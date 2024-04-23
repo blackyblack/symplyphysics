@@ -12,8 +12,8 @@ from symplyphysics.laws.electricity.resonators import quality_factor_of_empty_re
 ## https://old.study.urfu.ru/view/aid/67/1/resonators.pdf
 
 Args = namedtuple("Args", [
-    "angular_frequency", "relative_permeability", "surface_resistance", "resonator_width", "resonator_height",
-    "resonator_length"
+    "angular_frequency", "relative_permeability", "surface_resistance", "resonator_width",
+    "resonator_height", "resonator_length"
 ])
 
 
@@ -36,9 +36,8 @@ def test_args_fixture() -> Args:
 
 def test_basic_quality_factor(test_args: Args) -> None:
     result = factor_law.calculate_quality_factor(test_args.angular_frequency,
-        test_args.relative_permeability,
-        test_args.surface_resistance, (test_args.resonator_width, test_args.resonator_height,
-        test_args.resonator_length))
+        test_args.relative_permeability, test_args.surface_resistance,
+        (test_args.resonator_width, test_args.resonator_height, test_args.resonator_length))
     assert_equal(result, 1021)
 
 
@@ -46,10 +45,11 @@ def test_bad_angular_frequency(test_args: Args) -> None:
     angular_frequency = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         factor_law.calculate_quality_factor(angular_frequency, test_args.relative_permeability,
-            test_args.surface_resistance, (test_args.resonator_width, test_args.resonator_height,
-            test_args.resonator_length))
+            test_args.surface_resistance,
+            (test_args.resonator_width, test_args.resonator_height, test_args.resonator_length))
     with raises(TypeError):
-        factor_law.calculate_quality_factor(100, test_args.relative_permeability, test_args.surface_resistance,
+        factor_law.calculate_quality_factor(100, test_args.relative_permeability,
+            test_args.surface_resistance,
             (test_args.resonator_width, test_args.resonator_height, test_args.resonator_length))
 
 
@@ -57,32 +57,45 @@ def test_bad_relative_permeability(test_args: Args) -> None:
     relative_permeability = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         factor_law.calculate_quality_factor(test_args.angular_frequency, relative_permeability,
-            test_args.surface_resistance, (test_args.resonator_width, test_args.resonator_height,
-            test_args.resonator_length))
+            test_args.surface_resistance,
+            (test_args.resonator_width, test_args.resonator_height, test_args.resonator_length))
 
 
 def test_bad_surface_resistance(test_args: Args) -> None:
     bad_surface_resistance = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        factor_law.calculate_quality_factor(test_args.angular_frequency, test_args.relative_permeability,
-            bad_surface_resistance, (test_args.resonator_width, test_args.resonator_height,
-            test_args.resonator_length))
+        factor_law.calculate_quality_factor(test_args.angular_frequency,
+            test_args.relative_permeability, bad_surface_resistance,
+            (test_args.resonator_width, test_args.resonator_height, test_args.resonator_length))
     with raises(TypeError):
-        factor_law.calculate_quality_factor(test_args.angular_frequency, test_args.relative_permeability, 100,
+        factor_law.calculate_quality_factor(test_args.angular_frequency,
+            test_args.relative_permeability, 100,
             (test_args.resonator_width, test_args.resonator_height, test_args.resonator_length))
 
 
 def test_bad_resonator_dimensions(test_args: Args) -> None:
     bad_dimension = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        factor_law.calculate_quality_factor(test_args.angular_frequency, test_args.relative_permeability, test_args.surface_resistance, (bad_dimension, test_args.resonator_height, test_args.resonator_length))
+        factor_law.calculate_quality_factor(test_args.angular_frequency,
+            test_args.relative_permeability, test_args.surface_resistance,
+            (bad_dimension, test_args.resonator_height, test_args.resonator_length))
     with raises(TypeError):
-        factor_law.calculate_quality_factor(test_args.angular_frequency, test_args.relative_permeability, test_args.surface_resistance, (100, test_args.resonator_height, test_args.resonator_length))
+        factor_law.calculate_quality_factor(test_args.angular_frequency,
+            test_args.relative_permeability, test_args.surface_resistance,
+            (100, test_args.resonator_height, test_args.resonator_length))
     with raises(errors.UnitsError):
-        factor_law.calculate_quality_factor(test_args.angular_frequency, test_args.relative_permeability, test_args.surface_resistance, (test_args.resonator_width, bad_dimension, test_args.resonator_length))
+        factor_law.calculate_quality_factor(test_args.angular_frequency,
+            test_args.relative_permeability, test_args.surface_resistance,
+            (test_args.resonator_width, bad_dimension, test_args.resonator_length))
     with raises(TypeError):
-        factor_law.calculate_quality_factor(test_args.angular_frequency, test_args.relative_permeability, test_args.surface_resistance, (test_args.resonator_width, 100, test_args.resonator_length))
+        factor_law.calculate_quality_factor(test_args.angular_frequency,
+            test_args.relative_permeability, test_args.surface_resistance,
+            (test_args.resonator_width, 100, test_args.resonator_length))
     with raises(errors.UnitsError):
-        factor_law.calculate_quality_factor(test_args.angular_frequency, test_args.relative_permeability, test_args.surface_resistance, (test_args.resonator_width, test_args.resonator_height, bad_dimension))
+        factor_law.calculate_quality_factor(test_args.angular_frequency,
+            test_args.relative_permeability, test_args.surface_resistance,
+            (test_args.resonator_width, test_args.resonator_height, bad_dimension))
     with raises(TypeError):
-        factor_law.calculate_quality_factor(test_args.angular_frequency, test_args.relative_permeability, test_args.surface_resistance, (test_args.resonator_width, test_args.resonator_height, 100))
+        factor_law.calculate_quality_factor(test_args.angular_frequency,
+            test_args.relative_permeability, test_args.surface_resistance,
+            (test_args.resonator_width, test_args.resonator_height, 100))

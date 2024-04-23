@@ -16,7 +16,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## Gas is ideal - no potential energy of any molecules interaction.
 
 inner_energy = Symbol("energy", units.energy)
-temperature = Symbol("temperature", units.temperature)
+temperature = symbols.thermodynamics.temperature
 mole_mass = Symbol("mole_mass", units.mass / units.amount_of_substance)
 
 law = Eq(inner_energy,

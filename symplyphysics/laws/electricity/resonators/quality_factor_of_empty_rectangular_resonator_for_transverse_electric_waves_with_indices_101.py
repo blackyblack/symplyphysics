@@ -39,8 +39,13 @@ resonator_width = Symbol("resonator_width", units.length)
 resonator_height = Symbol("resonator_height", units.length)
 resonator_length = Symbol("resonator_length", units.length)
 
-law = Eq(quality_factor, angular_frequency * magnetic_constant * relative_permeability * resonator_height * resonator_width * resonator_length * (resonator_width**2 + resonator_length**2)
-         / (2 * surface_resistance * (resonator_width**3 * (resonator_length + 2 * resonator_height) + resonator_length**3 * (resonator_width + 2 * resonator_height))))
+law = Eq(
+    quality_factor,
+    angular_frequency * magnetic_constant * relative_permeability * resonator_height *
+    resonator_width * resonator_length * (resonator_width**2 + resonator_length**2) /
+    (2 * surface_resistance *
+    (resonator_width**3 * (resonator_length + 2 * resonator_height) + resonator_length**3 *
+    (resonator_width + 2 * resonator_height))))
 
 
 def print_law() -> str:
@@ -52,8 +57,9 @@ def print_law() -> str:
     surface_resistance_=surface_resistance,
     resonator_dimensions_=units.length)
 @validate_output(quality_factor)
-def calculate_quality_factor(angular_frequency_: Quantity, relative_permeability_: float, surface_resistance_: Quantity,
-    resonator_dimensions_: tuple[Quantity, Quantity, Quantity]) -> float:
+def calculate_quality_factor(angular_frequency_: Quantity, relative_permeability_: float,
+    surface_resistance_: Quantity, resonator_dimensions_: tuple[Quantity, Quantity,
+    Quantity]) -> float:
     resonator_width_, resonator_height_, resonator_length_ = resonator_dimensions_
     result_expr = solve(law, quality_factor, dict=True)[0][quality_factor]
     result_expr = result_expr.subs({

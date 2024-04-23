@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output)
+from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print_expression,
+    validate_input, validate_output)
 
 # Description
 ## Coulomb's law states that the force F between two point charges, q1 and q2, in a vacuum is proportional to their product
@@ -22,12 +22,13 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## and the other is "-". This is consistent with the concept that oppositely charged objects
 ## have an attractive interaction and like charged objects have a repulsive interaction.
 
-force = Symbol("force", units.force)
+electrostatic_force = clone_symbol(symbols.dynamics.force, "electrostatic_force")
 first_charge = Symbol("first_charge", units.charge)
 second_charge = Symbol("second_charge", units.charge)
 distance = Symbol("distance", units.length)
 
-law = Eq(force, (units.coulomb_constant * first_charge * second_charge) / (distance**2))
+law = Eq(electrostatic_force,
+    (units.coulomb_constant * first_charge * second_charge) / (distance**2))
 
 
 def print_law() -> str:
@@ -35,10 +36,10 @@ def print_law() -> str:
 
 
 @validate_input(first_charge_=first_charge, second_charge_=second_charge, distance_=distance)
-@validate_output(force)
+@validate_output(electrostatic_force)
 def calculate_force(first_charge_: Quantity, second_charge_: Quantity,
     distance_: Quantity) -> Quantity:
-    solved = solve(law, force, dict=True)[0][force]
+    solved = solve(law, electrostatic_force, dict=True)[0][electrostatic_force]
     result_expr = solved.subs({
         first_charge: first_charge_,
         second_charge: second_charge_,

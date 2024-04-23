@@ -25,10 +25,8 @@ temperature = symbols.thermodynamics.temperature
 concentration = Symbol("concentration", 1 / units.volume)
 thermal_wavelength = Symbol("thermal_wavelength", units.length)
 
-law = Eq(
-    chemical_potential,
-    units.boltzmann_constant * temperature * log(concentration * thermal_wavelength**3)
-)
+law = Eq(chemical_potential,
+    units.boltzmann_constant * temperature * log(concentration * thermal_wavelength**3))
 
 
 def print_law() -> str:

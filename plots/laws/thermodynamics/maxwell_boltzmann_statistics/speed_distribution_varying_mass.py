@@ -18,8 +18,8 @@ mass_data_ = [
     MassDatum(mass=44.096, label=r"\text{C}_3\text{H}_8"),
 ]
 
-
-print(f"Maxwell-Boltzmann speed distribution function:\n{print_expression(speed_distribution.law)}\n")
+print(
+    f"Maxwell-Boltzmann speed distribution function:\n{print_expression(speed_distribution.law)}\n")
 
 mass_plot = plot(
     title="Maxwell—Boltzmann speed distribution for particles of different masses, $T$ = const",
@@ -31,8 +31,10 @@ mass_plot = plot(
 )
 
 distribution = speed_distribution.law.rhs.subs({
-    speed_distribution.equilibrium_temperature: convert_to(quantities.standard_conditions_temperature, units.kelvin),
-    units.boltzmann_constant: convert_to(units.boltzmann_constant, units.joule / units.kelvin),
+    speed_distribution.equilibrium_temperature:
+    convert_to(quantities.standard_conditions_temperature, units.kelvin),
+    units.boltzmann_constant:
+    convert_to(units.boltzmann_constant, units.joule / units.kelvin),
 })
 
 for mass_datum_ in mass_data_:

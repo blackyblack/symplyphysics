@@ -1,6 +1,6 @@
 from sympy import (Eq, solve, sin)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, angle_type)
+from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print_expression,
+    validate_input, validate_output, angle_type)
 
 # Description
 ## Lorentz force is force acting on a charge moving at speed from magnetic field.
@@ -15,14 +15,14 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## B - induction,
 ## a - angle between induction and velocity.
 
-force = Symbol("force", units.force)
+lorentz_force = clone_symbol(symbols.dynamics.force, "lorentz_force")
 
 charge = Symbol("charge", units.charge)
 velocity = Symbol("velocity", units.velocity)
 induction = Symbol("induction", units.magnetic_density)
 angle = Symbol("angle", angle_type)
 
-law = Eq(force, charge * velocity * induction * sin(angle))
+law = Eq(lorentz_force, charge * velocity * induction * sin(angle))
 
 
 def print_law() -> str:
@@ -30,10 +30,10 @@ def print_law() -> str:
 
 
 @validate_input(charge_=charge, velocity_=velocity, angle_=angle, induction_=induction)
-@validate_output(force)
+@validate_output(lorentz_force)
 def calculate_force(charge_: Quantity, velocity_: Quantity, angle_: float | Quantity,
     induction_: Quantity) -> Quantity:
-    result_expr = solve(law, force, dict=True)[0][force]
+    result_expr = solve(law, lorentz_force, dict=True)[0][lorentz_force]
     result_expr = result_expr.subs({
         charge: charge_,
         velocity: velocity_,

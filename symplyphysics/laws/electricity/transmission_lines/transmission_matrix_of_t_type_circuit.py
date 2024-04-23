@@ -1,13 +1,6 @@
 from sympy import Eq, solve, Matrix
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    print_expression,
-    validate_input,
-    dimensionless,
-    convert_to_float
-)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input, dimensionless,
+    convert_to_float)
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity.transmission_lines import transmission_matrix_for_a_series_load_in_line as series_law
@@ -38,9 +31,13 @@ first_impedance = Symbol("first_impedance", units.impedance)
 second_impedance = Symbol("second_impedance", units.impedance)
 third_impedance = Symbol("third_impedance", units.impedance)
 
-
-law = Eq(Matrix([[parameter_voltage_to_voltage, parameter_impedance], [parameter_conductance, parameter_current_to_current]]),
-         Matrix([[1 + first_impedance / third_impedance, first_impedance + second_impedance + first_impedance * second_impedance / third_impedance], [1 / third_impedance, 1 + second_impedance / third_impedance]]))
+law = Eq(
+    Matrix([[parameter_voltage_to_voltage, parameter_impedance],
+    [parameter_conductance, parameter_current_to_current]]),
+    Matrix([[
+    1 + first_impedance / third_impedance,
+    first_impedance + second_impedance + first_impedance * second_impedance / third_impedance
+    ], [1 / third_impedance, 1 + second_impedance / third_impedance]]))
 
 # This law might be derived via "transmission_matrix_for_a_series_load_in_line" law and
 # "transmission_matrix_for_a_parallel_load_in_line" law.
@@ -48,20 +45,53 @@ law = Eq(Matrix([[parameter_voltage_to_voltage, parameter_impedance], [parameter
 series_law_applied_1 = series_law.law.subs({
     series_law.load_impedance: first_impedance,
 })
-matrix_derived_1 = solve(series_law_applied_1, [series_law.parameter_voltage_to_voltage, series_law.parameter_impedance, series_law.parameter_conductance, series_law.parameter_current_to_current], dict=True)[0]
-matrix_derived_1 = Matrix([[matrix_derived_1[series_law.parameter_voltage_to_voltage], matrix_derived_1[series_law.parameter_impedance]], [matrix_derived_1[series_law.parameter_conductance], matrix_derived_1[series_law.parameter_current_to_current]]])
+matrix_derived_1 = solve(series_law_applied_1, [
+    series_law.parameter_voltage_to_voltage, series_law.parameter_impedance,
+    series_law.parameter_conductance, series_law.parameter_current_to_current
+],
+    dict=True)[0]
+matrix_derived_1 = Matrix([[
+    matrix_derived_1[series_law.parameter_voltage_to_voltage],
+    matrix_derived_1[series_law.parameter_impedance]
+],
+    [
+    matrix_derived_1[series_law.parameter_conductance],
+    matrix_derived_1[series_law.parameter_current_to_current]
+    ]])
 
 parallel_law_applied = parallel_law.law.subs({
     parallel_law.load_impedance: third_impedance,
 })
-matrix_derived_3 = solve(parallel_law_applied, [parallel_law.parameter_voltage_to_voltage, parallel_law.parameter_impedance, parallel_law.parameter_conductance, parallel_law.parameter_current_to_current], dict=True)[0]
-matrix_derived_3 = Matrix([[matrix_derived_3[parallel_law.parameter_voltage_to_voltage], matrix_derived_3[parallel_law.parameter_impedance]], [matrix_derived_3[parallel_law.parameter_conductance], matrix_derived_3[parallel_law.parameter_current_to_current]]])
+matrix_derived_3 = solve(parallel_law_applied, [
+    parallel_law.parameter_voltage_to_voltage, parallel_law.parameter_impedance,
+    parallel_law.parameter_conductance, parallel_law.parameter_current_to_current
+],
+    dict=True)[0]
+matrix_derived_3 = Matrix([[
+    matrix_derived_3[parallel_law.parameter_voltage_to_voltage],
+    matrix_derived_3[parallel_law.parameter_impedance]
+],
+    [
+    matrix_derived_3[parallel_law.parameter_conductance],
+    matrix_derived_3[parallel_law.parameter_current_to_current]
+    ]])
 
 series_law_applied_2 = series_law.law.subs({
     series_law.load_impedance: second_impedance,
 })
-matrix_derived_2 = solve(series_law_applied_2, [series_law.parameter_voltage_to_voltage, series_law.parameter_impedance, series_law.parameter_conductance, series_law.parameter_current_to_current], dict=True)[0]
-matrix_derived_2 = Matrix([[matrix_derived_2[series_law.parameter_voltage_to_voltage], matrix_derived_2[series_law.parameter_impedance]], [matrix_derived_2[series_law.parameter_conductance], matrix_derived_2[series_law.parameter_current_to_current]]])
+matrix_derived_2 = solve(series_law_applied_2, [
+    series_law.parameter_voltage_to_voltage, series_law.parameter_impedance,
+    series_law.parameter_conductance, series_law.parameter_current_to_current
+],
+    dict=True)[0]
+matrix_derived_2 = Matrix([[
+    matrix_derived_2[series_law.parameter_voltage_to_voltage],
+    matrix_derived_2[series_law.parameter_impedance]
+],
+    [
+    matrix_derived_2[series_law.parameter_conductance],
+    matrix_derived_2[series_law.parameter_current_to_current]
+    ]])
 
 # When cascading elements, the final transfer matrix will be equal to the product of the matrices of each element.
 matrix_derived = matrix_derived_1 * matrix_derived_3 * matrix_derived_2
@@ -78,8 +108,14 @@ def print_law() -> str:
 
 
 @validate_input(impedances_=units.impedance)
-def calculate_transmission_matrix(impedances_: tuple[Quantity, Quantity, Quantity]) -> tuple[tuple[float, Quantity], tuple[Quantity, float]]:
-    result = solve(law, [parameter_voltage_to_voltage, parameter_impedance, parameter_conductance, parameter_current_to_current], dict=True)[0]
+def calculate_transmission_matrix(
+    impedances_: tuple[Quantity, Quantity, Quantity]
+) -> tuple[tuple[float, Quantity], tuple[Quantity, float]]:
+    result = solve(law, [
+        parameter_voltage_to_voltage, parameter_impedance, parameter_conductance,
+        parameter_current_to_current
+    ],
+        dict=True)[0]
     result_A = result[parameter_voltage_to_voltage]
     result_B = result[parameter_impedance]
     result_C = result[parameter_conductance]
@@ -93,6 +129,8 @@ def calculate_transmission_matrix(impedances_: tuple[Quantity, Quantity, Quantit
     result_B = Quantity(result_B.subs(substitutions))
     result_C = Quantity(result_C.subs(substitutions))
     result_D = convert_to_float(Quantity(result_D.subs(substitutions)))
-    assert_equivalent_dimension(result_B, 'result_B', "calculate_transmission_matrix", units.impedance)
-    assert_equivalent_dimension(result_C, 'result_C', "calculate_transmission_matrix", units.conductance)
+    assert_equivalent_dimension(result_B, 'result_B', "calculate_transmission_matrix",
+        units.impedance)
+    assert_equivalent_dimension(result_C, 'result_C', "calculate_transmission_matrix",
+        units.conductance)
     return ((result_A, result_B), (result_C, result_D))

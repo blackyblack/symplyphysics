@@ -28,8 +28,8 @@ entropy_change = Symbol("entropy_change", units.energy / units.temperature)
 molar_mass = Symbol("molar_mass", units.mass / units.amount_of_substance)
 molar_heat_capacity = Symbol("molar_heat_capacity",
     units.energy / (units.temperature * units.amount_of_substance))
-final_temperature = Symbol("final_temperature", units.temperature)
-initial_temperature = Symbol("initial_temperature", units.temperature)
+final_temperature = clone_symbol(symbols.thermodynamics.temperature, "final_temperature")
+initial_temperature = clone_symbol(symbols.thermodynamics.temperature, "initial_temperature")
 final_volume = Symbol("final_volume", units.volume)
 start_volume = Symbol("start_volume", units.volume)
 gas_mass = clone_symbol(symbols.basic.mass, "gas_mass")
@@ -46,8 +46,8 @@ def print_law() -> str:
 @validate_input(mass_=gas_mass,
     molar_mass_=molar_mass,
     molar_heat_capacity_=molar_heat_capacity,
-    temperature_limits=units.temperature,
-    volume_limits=units.volume)
+    temperature_limits=initial_temperature,
+    volume_limits=start_volume)
 @validate_output(entropy_change)
 def calculate_entropy_change(mass_: Quantity, molar_mass_: Quantity, molar_heat_capacity_: Quantity,
     temperature_limits: tuple[Quantity, Quantity], volume_limits: tuple[Quantity,

@@ -18,10 +18,8 @@ values = {
     final_speed: Quantity(601 * units.meter / units.second),
 }
 
-molecule_mass = (
-    solve(molar_mass_law.law, molar_mass_law.particle_mass)[0]
-    .subs(molar_mass_law.molar_mass, molar_mass)
-)
+molecule_mass = (solve(molar_mass_law.law,
+    molar_mass_law.particle_mass)[0].subs(molar_mass_law.molar_mass, molar_mass))
 
 speed_distribution_expr = speed_distribution.law.rhs.subs({
     speed_distribution.particle_mass: molecule_mass,
@@ -39,7 +37,5 @@ fraction_of_molecules_value = convert_to(Quantity(fraction_of_molecules_), units
 initial_speed_value = convert_to(values[initial_speed], units.meter / units.second)
 final_speed_value = convert_to(values[final_speed], units.meter / units.second)
 
-print(
-    f"The fraction of oxygen molecules with speeds between {initial_speed_value} m/s and "
-    f"{final_speed_value} m/s is {fraction_of_molecules_value}%."
-)
+print(f"The fraction of oxygen molecules with speeds between {initial_speed_value} m/s and "
+    f"{final_speed_value} m/s is {fraction_of_molecules_value}%.")

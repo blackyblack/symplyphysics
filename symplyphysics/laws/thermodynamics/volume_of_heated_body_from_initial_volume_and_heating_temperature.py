@@ -1,5 +1,7 @@
 from sympy import Eq, solve, dsolve, Symbol as SymSymbol
 from symplyphysics import (
+    clone_symbol,
+    symbols,
     units,
     Quantity,
     Symbol,
@@ -30,8 +32,8 @@ from symplyphysics.definitions import volumetric_coefficient_of_thermal_expansio
 final_volume = Symbol("final_volume", units.volume)
 start_volume = Symbol("start_volume", units.volume)
 expansion_coefficient = Symbol("coefficient", 1 / units.temperature)
-start_temperature = Symbol("start_temperature", units.temperature)
-final_temperature = Symbol("final_temperature", units.temperature)
+start_temperature = clone_symbol(symbols.thermodynamics.temperature, "start_temperature")
+final_temperature = clone_symbol(symbols.thermodynamics.temperature, "final_temperature")
 
 law = Eq(final_volume,
     start_volume * (1 + expansion_coefficient * (final_temperature - start_temperature)))
@@ -42,11 +44,17 @@ _volume = coef_def.volume
 _temperature = coef_def.temperature
 _temperature_change = SymSymbol("temperature_change")
 
-_diff_eqn = coef_def.definition.subs(coef_def.volumetric_expansion_coefficient, expansion_coefficient)
+_diff_eqn = coef_def.definition.subs(coef_def.volumetric_expansion_coefficient,
+    expansion_coefficient)
 
-_volume_dsolved = dsolve(_diff_eqn, _volume(_temperature), ics={_volume(start_temperature): start_volume}).rhs
+_volume_dsolved = dsolve(_diff_eqn,
+    _volume(_temperature),
+    ics={
+    _volume(start_temperature): start_volume
+    }).rhs
 
-_volume_subs = _volume_dsolved.subs(_temperature, start_temperature + _temperature_change).simplify()
+_volume_subs = _volume_dsolved.subs(_temperature,
+    start_temperature + _temperature_change).simplify()
 
 _volume_series = _volume_subs.series(_temperature_change, 0, 2).removeO()
 

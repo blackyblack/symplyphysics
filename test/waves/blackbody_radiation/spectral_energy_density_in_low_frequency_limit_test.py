@@ -28,6 +28,7 @@ def test_law(test_args: Args) -> None:
     result = rj_law.calculate_spectral_energy_density(test_args.nu, test_args.t)
     assert_equal(result, 141 * prefixes.kilo * units.electronvolt / (units.meter**3 * units.hertz))
 
+
 def test_bad_frequency(test_args: Args) -> None:
     nub = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):

@@ -31,10 +31,7 @@ compressibility = Symbol("compressibility", 1 / units.pressure)
 volume = Function("volume", units.volume)
 pressure = Symbol("pressure", units.pressure)
 
-definition = Eq(
-    compressibility,
-    -1 * Derivative(volume(pressure), pressure) / volume(pressure)
-)
+definition = Eq(compressibility, -1 * Derivative(volume(pressure), pressure) / volume(pressure))
 
 
 def print_law() -> str:

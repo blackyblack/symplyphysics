@@ -19,7 +19,6 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 # - the wave propagating in the waveguide must be the main wave;
 # - the waveguide must be rectangular.
 
-
 maximum_electric_intensity = Symbol("maximum_electric_intensity", units.voltage / units.length)
 
 relative_permittivity = Symbol("relative_permittivity", dimensionless)
@@ -29,18 +28,24 @@ magnetic_intensity = Symbol("magnetic_intensity", units.current / units.length)
 
 vacuum_impedance = Quantity(120 * units.impedance)
 
-law = Eq(maximum_electric_intensity, 2 * vacuum_impedance * pi * waveguide_width * magnetic_intensity / (wavelength * sqrt(relative_permittivity)))
+law = Eq(
+    maximum_electric_intensity, 2 * vacuum_impedance * pi * waveguide_width * magnetic_intensity /
+    (wavelength * sqrt(relative_permittivity)))
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(relative_permittivity_=relative_permittivity, waveguide_width_=waveguide_width, wavelength_=wavelength, magnetic_intensity_=magnetic_intensity)
+@validate_input(relative_permittivity_=relative_permittivity,
+    waveguide_width_=waveguide_width,
+    wavelength_=wavelength,
+    magnetic_intensity_=magnetic_intensity)
 @validate_output(maximum_electric_intensity)
-def calculate_maximum_electric_intensity(relative_permittivity_: float, waveguide_width_: Quantity, wavelength_: Quantity,
-    magnetic_intensity_: Quantity) -> Quantity:
-    result_velocity_expr = solve(law, maximum_electric_intensity, dict=True)[0][maximum_electric_intensity]
+def calculate_maximum_electric_intensity(relative_permittivity_: float, waveguide_width_: Quantity,
+    wavelength_: Quantity, magnetic_intensity_: Quantity) -> Quantity:
+    result_velocity_expr = solve(law, maximum_electric_intensity,
+        dict=True)[0][maximum_electric_intensity]
     result_expr = result_velocity_expr.subs({
         relative_permittivity: relative_permittivity_,
         waveguide_width: waveguide_width_,

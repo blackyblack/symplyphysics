@@ -30,7 +30,8 @@ from symplyphysics.laws.quantities import quantity_is_volumetric_density_times_v
 # Conditions
 ## - Gas density is small enough within the context of perturbation theory.
 
-second_virial_coefficient = Symbol("second_virial_coefficient", units.volume / units.amount_of_substance)
+second_virial_coefficient = Symbol("second_virial_coefficient",
+    units.volume / units.amount_of_substance)
 bonding_forces_parameter = Symbol(
     "bonding_forces_parameter",
     units.pressure * (units.volume / units.amount_of_substance)**2,
@@ -42,9 +43,8 @@ molecules_volume_parameter = Symbol(
 temperature = symbols.thermodynamics.temperature
 
 law = Eq(
-    second_virial_coefficient,
-    molecules_volume_parameter - bonding_forces_parameter / (units.molar_gas_constant * temperature)
-)
+    second_virial_coefficient, molecules_volume_parameter - bonding_forces_parameter /
+    (units.molar_gas_constant * temperature))
 
 # Derive from the van der Waals equation of state and the virial equation
 
@@ -70,11 +70,13 @@ _mole_count_expr = density_qty_law.law.rhs.subs({
     density_qty_law.volume: _volume,
 })
 
-_compressibility_via_density = _compressibility_via_volume.subs(_mole_count, _mole_count_expr).simplify()
+_compressibility_via_density = _compressibility_via_volume.subs(_mole_count,
+    _mole_count_expr).simplify()
 
-# Virial equation is a power series of `Z` around `rho = 0`, therefore we can use 
+# Virial equation is a power series of `Z` around `rho = 0`, therefore we can use
 # the formula for Taylor series coefficients to get the coefficient at `rho**2`.
-_second_virial_coefficient = _compressibility_via_density.diff(_molar_density).subs(_molar_density, 0)
+_second_virial_coefficient = _compressibility_via_density.diff(_molar_density).subs(
+    _molar_density, 0)
 
 assert expr_equals(_second_virial_coefficient, law.rhs)
 

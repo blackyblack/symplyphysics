@@ -1,5 +1,7 @@
 from sympy import Eq
 from symplyphysics import (
+    clone_symbol,
+    symbols,
     units,
     dimensionless,
     Quantity,
@@ -24,11 +26,13 @@ from symplyphysics import (
 energy_radiation_rate = Symbol("energy_radiation_rate", units.power)
 surface_emissivity = Symbol("surface_emissivity", dimensionless)
 surface_area = Symbol("surface_area", units.area)
-temperature = Symbol("temperature", units.temperature)
+temperature_emission_absorption = clone_symbol(symbols.thermodynamics.temperature,
+    "temperature_emission_absorption")
 
 law = Eq(
     energy_radiation_rate,
-    units.stefan_boltzmann_constant * surface_emissivity * surface_area * temperature**4,
+    units.stefan_boltzmann_constant * surface_emissivity * surface_area *
+    temperature_emission_absorption**4,
 )
 
 
@@ -39,7 +43,7 @@ def print_law() -> str:
 @validate_input(
     surface_emissivity_=surface_emissivity,
     surface_area_=surface_area,
-    temperature_=temperature,
+    temperature_=temperature_emission_absorption,
 )
 @validate_output(energy_radiation_rate)
 def calculate_energy_radiation_rate(
@@ -50,6 +54,6 @@ def calculate_energy_radiation_rate(
     result = law.rhs.subs({
         surface_emissivity: surface_emissivity_,
         surface_area: surface_area_,
-        temperature: temperature_,
+        temperature_emission_absorption: temperature_,
     })
     return Quantity(result)

@@ -1,4 +1,4 @@
-from sympy import Eq, Function as SymFunction, Symbol as SymSymbol
+from sympy import Eq, Function as SymFunction, Symbol as SymSymbol, symbols as sympy_symbols
 from symplyphysics import (
     units,
     dimensionless,
@@ -50,12 +50,13 @@ particle_count_change = Symbol("particle_count_change", dimensionless)
 
 law = Eq(
     enthalpy_change,
-    temperature * entropy_change + volume * pressure_change + chemical_potential * particle_count_change,
+    temperature * entropy_change + volume * pressure_change +
+    chemical_potential * particle_count_change,
 )
 
 # Derive from definition of enthalpy and internal energy differential
 
-_internal_energy_sym = SymFunction("internal_energy")
+_internal_energy_sym = sympy_symbols("internal_energy", cls=SymFunction)
 _temperature_change = SymSymbol("temperature_change")
 _entropy = SymSymbol("entropy")
 _pressure = SymSymbol("pressure")
@@ -73,13 +74,10 @@ _enthalpy = enthalpy_def.law.rhs.subs({
 # The differential of enthalpy can be found by adding up the products of
 # the partial derivative of enthalpy with respect to a thermodynamic quantity
 # and the infinitesimal change of that quantity
-_enthalpy_change = (
-    _enthalpy.diff(temperature) * _temperature_change
-    + _enthalpy.diff(_entropy) * entropy_change
-    + _enthalpy.diff(_pressure) * pressure_change
-    + _enthalpy.diff(volume) * _volume_change
-    + _enthalpy.diff(_particle_count) * particle_count_change
-)
+_enthalpy_change = (_enthalpy.diff(temperature) * _temperature_change +
+    _enthalpy.diff(_entropy) * entropy_change + _enthalpy.diff(_pressure) * pressure_change +
+    _enthalpy.diff(volume) * _volume_change +
+    _enthalpy.diff(_particle_count) * particle_count_change)
 
 _internal_energy_diff = internal_energy_differential.law.rhs.subs({
     internal_energy_differential.temperature: temperature,
@@ -91,15 +89,21 @@ _internal_energy_diff = internal_energy_differential.law.rhs.subs({
 })
 
 _internal_energy_diff_entropy = _internal_energy_diff.subs({
-    entropy_change: 1, _volume_change: 0, particle_count_change: 0
+    entropy_change: 1,
+    _volume_change: 0,
+    particle_count_change: 0
 })
 
 _internal_energy_diff_volume = _internal_energy_diff.subs({
-    entropy_change: 0, _volume_change: 1, particle_count_change: 0
+    entropy_change: 0,
+    _volume_change: 1,
+    particle_count_change: 0
 })
 
 _internal_energy_diff_particle_count = _internal_energy_diff.subs({
-    entropy_change: 0, _volume_change: 0, particle_count_change: 1
+    entropy_change: 0,
+    _volume_change: 0,
+    particle_count_change: 1
 })
 
 _enthalpy_change = _enthalpy_change.subs({

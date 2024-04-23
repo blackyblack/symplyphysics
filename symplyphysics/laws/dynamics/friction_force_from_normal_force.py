@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, dimensionless, validate_input,
-    validate_output)
+from symplyphysics import (clone_symbol, symbols, Quantity, Symbol, print_expression, dimensionless,
+    validate_input, validate_output)
 
 # Description
 ## Friction force is tangential interaction between two objects, which impedes there relative movement.
@@ -12,9 +12,9 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, dimensionl
 ## mu is friction factor for this pair of objects,
 ## N is normal reaction from one object to another.
 
-friction_force = Symbol("friction_force", units.force)
+friction_force = clone_symbol(symbols.dynamics.force, "friction_force")
 friction_factor = Symbol("friction_factor", dimensionless)
-normal_reaction = Symbol("normal_reaction", units.force)
+normal_reaction = clone_symbol(symbols.dynamics.force, "normal_reaction")
 
 law = Eq(friction_force, friction_factor * normal_reaction)
 

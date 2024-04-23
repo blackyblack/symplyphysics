@@ -1,5 +1,6 @@
 from sympy import (Eq, solve)
 from symplyphysics import (
+    symbols,
     units,
     Quantity,
     Symbol,
@@ -26,7 +27,7 @@ pressure_change = Symbol("pressure", units.pressure)
 
 standard_pressure = Symbol("standard_pressure", units.pressure)
 thermal_coefficient = Symbol("thermal_coefficient", 1 / units.temperature)
-temperature = Symbol("temperature", units.temperature)
+temperature = symbols.thermodynamics.temperature
 
 law = Eq(pressure_change, standard_pressure * thermal_coefficient * temperature)
 

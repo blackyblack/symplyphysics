@@ -6,8 +6,8 @@ from symplyphysics import (
 )
 
 # Description
-## Critical point (in the thermodynamic sense) is such values of volume, pressure, and temperature at 
-## which only one phase exists and at the vicinity of which the physical properties of the phases of the 
+## Critical point (in the thermodynamic sense) is such values of volume, pressure, and temperature at
+## which only one phase exists and at the vicinity of which the physical properties of the phases of the
 ## substance change dramatically. Algebraically, the critical point is the stationary inflection point
 ## of the isothermal pressure-volume dependency line.
 

@@ -42,17 +42,31 @@ constant_propagation = Symbol("constant_propagation", 1 / units.length)
 loss_factor = Symbol("loss_factor", 1 / units.length)
 
 expression = (loss_factor + I * constant_propagation) * line_length
-law = Eq(Matrix([[parameter_voltage_to_voltage, parameter_impedance], [parameter_conductance, parameter_current_to_current]]),
-         Matrix([[cosh(expression), characteristic_resistance * sinh(expression)], [(1 / characteristic_resistance) * sinh(expression), cosh(expression)]]))
+law = Eq(
+    Matrix([[parameter_voltage_to_voltage, parameter_impedance],
+    [parameter_conductance, parameter_current_to_current]]),
+    Matrix([[cosh(expression), characteristic_resistance * sinh(expression)],
+    [(1 / characteristic_resistance) * sinh(expression),
+    cosh(expression)]]))
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(characteristic_resistance_=characteristic_resistance, line_length_=line_length, constant_propagation_=constant_propagation, loss_factor_=loss_factor)
-def calculate_transmission_matrix(characteristic_resistance_: Quantity, line_length_: Quantity, constant_propagation_: Quantity, loss_factor_: Quantity) -> tuple[tuple[float, Quantity], tuple[Quantity, float]]:
-    result = solve(law, [parameter_voltage_to_voltage, parameter_impedance, parameter_conductance, parameter_current_to_current], dict=True)[0]
+@validate_input(characteristic_resistance_=characteristic_resistance,
+    line_length_=line_length,
+    constant_propagation_=constant_propagation,
+    loss_factor_=loss_factor)
+def calculate_transmission_matrix(
+        characteristic_resistance_: Quantity, line_length_: Quantity,
+        constant_propagation_: Quantity,
+        loss_factor_: Quantity) -> tuple[tuple[float, Quantity], tuple[Quantity, float]]:
+    result = solve(law, [
+        parameter_voltage_to_voltage, parameter_impedance, parameter_conductance,
+        parameter_current_to_current
+    ],
+        dict=True)[0]
     result_A = result[parameter_voltage_to_voltage]
     result_B = result[parameter_impedance]
     result_C = result[parameter_conductance]
@@ -67,6 +81,8 @@ def calculate_transmission_matrix(characteristic_resistance_: Quantity, line_len
     result_B = Quantity(result_B.subs(substitutions))
     result_C = Quantity(result_C.subs(substitutions))
     result_D = convert_to(result_D.subs(substitutions), S.One)
-    assert_equivalent_dimension(result_B, 'result_B', "calculate_transmission_matrix", units.impedance)
-    assert_equivalent_dimension(result_C, 'result_C', "calculate_transmission_matrix", units.conductance)
+    assert_equivalent_dimension(result_B, 'result_B', "calculate_transmission_matrix",
+        units.impedance)
+    assert_equivalent_dimension(result_C, 'result_C', "calculate_transmission_matrix",
+        units.conductance)
     return ((result_A, result_B), (result_C, result_D))

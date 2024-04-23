@@ -5,7 +5,6 @@ from symplyphysics import (
     Symbol,
     print_expression,
     validate_input,
-    validate_output,
     dimensionless,
 )
 from symplyphysics.core.dimensions import assert_equivalent_dimension
@@ -33,17 +32,27 @@ parameter_input_output = Symbol("parameter_input_output", dimensionless)
 parameter_output_input = Symbol("parameter_output_input", dimensionless)
 parameter_output_output = Symbol("parameter_output_output", units.conductance)
 
-law = Eq(Matrix([input_voltage, output_current]), Matrix([[parameter_input_input, parameter_input_output], [parameter_output_input, parameter_output_output]]) * Matrix([input_current, output_voltage]))
+law = Eq(
+    Matrix([input_voltage, output_current]),
+    Matrix([[parameter_input_input, parameter_input_output],
+    [parameter_output_input, parameter_output_output]]) * Matrix([input_current, output_voltage]))
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(input_voltage_=input_voltage, output_current_=output_current,)
-def calculate_current_and_voltage(input_voltage_: Quantity, output_current_: Quantity, parameters_: tuple[tuple[Quantity, float], tuple[float, Quantity]]) -> tuple[Quantity, Quantity]:
-    assert_equivalent_dimension(parameters_[0][0], f"parameters_[{0}][{0}]", "calculate_current_and_voltage", units.impedance)
-    assert_equivalent_dimension(parameters_[1][1], f"parameters_[{1}][{1}]", "calculate_current_and_voltage", units.conductance)
+@validate_input(
+    input_voltage_=input_voltage,
+    output_current_=output_current,
+)
+def calculate_current_and_voltage(
+    input_voltage_: Quantity, output_current_: Quantity, parameters_: tuple[tuple[Quantity, float],
+    tuple[float, Quantity]]) -> tuple[Quantity, Quantity]:
+    assert_equivalent_dimension(parameters_[0][0], f"parameters_[{0}][{0}]",
+        "calculate_current_and_voltage", units.impedance)
+    assert_equivalent_dimension(parameters_[1][1], f"parameters_[{1}][{1}]",
+        "calculate_current_and_voltage", units.conductance)
     result = solve(law, [input_current, output_voltage], dict=True)[0]
     result_input_current = result[input_current]
     result_output_voltage = result[output_voltage]
@@ -57,6 +66,8 @@ def calculate_current_and_voltage(input_voltage_: Quantity, output_current_: Qua
     }
     result_input_current = Quantity(result_input_current.subs(substitutions))
     result_output_voltage = Quantity(result_output_voltage.subs(substitutions))
-    assert_equivalent_dimension(result_input_current, 'result_input_current', "calculate_current_and_voltage", units.current)
-    assert_equivalent_dimension(result_output_voltage, 'result_output_voltage', "calculate_current_and_voltage", units.voltage)
+    assert_equivalent_dimension(result_input_current, 'result_input_current',
+        "calculate_current_and_voltage", units.current)
+    assert_equivalent_dimension(result_output_voltage, 'result_output_voltage',
+        "calculate_current_and_voltage", units.voltage)
     return (result_input_current, result_output_voltage)
