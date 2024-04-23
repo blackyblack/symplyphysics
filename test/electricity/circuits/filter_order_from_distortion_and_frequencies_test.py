@@ -34,7 +34,7 @@ def test_args_fixture() -> Args:
 
 def test_basic_order(test_args: Args) -> None:
     result = order_law.calculate_order(test_args.filter_function, test_args.band_stop_frequency, test_args.bandwidth_distortion, test_args.band_stop_distortion)
-    assert_equal(result, 3, tolerance=0.01)
+    assert_equal(result, 3)
 
 
 def test_bad_band_stop_frequency(test_args: Args) -> None:

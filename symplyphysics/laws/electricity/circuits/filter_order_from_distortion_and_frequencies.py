@@ -19,7 +19,7 @@ from symplyphysics import (
 # Description
 ## The approximation of the power transmission coefficient of a normalized low-pass filter is given by approximating functions of the order of n.
 ## Bandwidth distortion determines the maximum distortion in the bandwidth. In other words, to determine the level of ripples in the bandwidth.
-## The band-stop distortion distortion determines the level of distortion in the band-stop.
+## The band-stop distortion sets the required suppression level in the filter band-stop.
 
 # Law: F(fs, n) = es / ep
 ## Where:
