@@ -28,25 +28,23 @@ from symplyphysics import (
 ## w - frequency.
 
 frequency = Symbol("frequency", units.frequency)
-filter_function_at_frequency = Function("filter_function_at_frequency", dimensionless)
+filter_function = Function("filter_function", dimensionless)
 bandwidth_distortion = Symbol("bandwidth_distortion", dimensionless)
 transmission_coefficient = Symbol("transmission_coefficient", dimensionless)
 
-law = Eq(transmission_coefficient, 1 / (1 + bandwidth_distortion**2 * filter_function_at_frequency(frequency)**2))
+law = Eq(transmission_coefficient, 1 / (1 + bandwidth_distortion**2 * filter_function(frequency)**2))
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(bandwidth_distortion_=bandwidth_distortion)
+@validate_input(filter_function_=filter_function,
+                bandwidth_distortion_=bandwidth_distortion)
 @validate_output(transmission_coefficient)
-def calculate_coefficient(filter_function_at_frequency_: float, bandwidth_distortion_: float) -> float:
-    filter_function_at_frequency_quantity = Quantity(filter_function_at_frequency_)
-    assert SI.get_dimension_system().equivalent_dims(filter_function_at_frequency_quantity.dimension,
-        filter_function_at_frequency.dimension)
+def calculate_coefficient(filter_function_: float, bandwidth_distortion_: float) -> float:
     result_expr = law.subs({
-        filter_function_at_frequency(frequency): filter_function_at_frequency_,
+        filter_function(frequency): filter_function_,
         bandwidth_distortion: bandwidth_distortion_,
     })
     result = solve(result_expr, transmission_coefficient, dict=True)[0][transmission_coefficient]
