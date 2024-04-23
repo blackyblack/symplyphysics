@@ -62,12 +62,6 @@ _temperature_change = SymSymbol("temperature_change")
 _pressure_change = SymSymbol("pressure_change")
 _volume_change = SymSymbol("volume_change")
 
-# _internal_energy_expr = internal_energy_law.law.rhs.subs({
-#     internal_energy_law.temperature_change: _temperature,
-#     internal_energy_law.isochoric_heat_capacity: _isochoric_heat_capacity,
-# })
-
-# _internal_energy_change_expr = _internal_energy_expr.diff(_temperature) * _temperature_change
 _internal_energy_change_expr = internal_energy_law.law.rhs.subs({
     internal_energy_law.temperature_change: _temperature_change,
     internal_energy_law.isochoric_heat_capacity: _isochoric_heat_capacity,
