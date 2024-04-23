@@ -5,6 +5,7 @@ from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import units
 from symplyphysics.laws.thermodynamics import temperature_is_constant as isothermal_law
 from symplyphysics.laws.thermodynamics import zero_heat_transfer as adiabatic_law
+from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation
 
 solved_isothermal_law = solve(isothermal_law.derived_law,
     (isothermal_law.pressure_start, isothermal_law.temperature_end, isothermal_law.pressure_end),
@@ -48,14 +49,14 @@ gas_volume_isothermal_end = solved_adiabatic_volume_law.subs({
 result_pressure_isothermal_expansion = solved_isothermal_law.subs({
     isothermal_law.temperature_start: GAS_TEMPERATURE_START,
     units.molar_gas_constant: 1,
-    isothermal_law.thermodynamics_law.mole_count: GAS_MOLE_COUNT,
+    ideal_gas_equation.mole_count: GAS_MOLE_COUNT,
     isothermal_law.volume_end: carnot_cycle_volume
 })
 
 result_pressure_isothermal_compression = solved_isothermal_law.subs({
     isothermal_law.temperature_start: GAS_TEMPERATURE_END,
     units.molar_gas_constant: 1,
-    isothermal_law.thermodynamics_law.mole_count: GAS_MOLE_COUNT,
+    ideal_gas_equation.mole_count: GAS_MOLE_COUNT,
     isothermal_law.volume_end: carnot_cycle_volume
 })
 
@@ -63,7 +64,7 @@ result_pressure_adiabatic_expansion = solved_adiabatic_law.subs({
     adiabatic_law.temperature_start: GAS_TEMPERATURE_START,
     adiabatic_law.volume_start: GAS_VOLUME_ADIABATIC_START,
     units.molar_gas_constant: 1,
-    adiabatic_law.thermodynamics_law.mole_count: GAS_MOLE_COUNT,
+    ideal_gas_equation.mole_count: GAS_MOLE_COUNT,
     adiabatic_law.specific_heats_ratio: GAS_SPECIFIC_HEATS_RATIO,
     adiabatic_law.volume_end: carnot_cycle_volume
 })
@@ -72,7 +73,7 @@ result_pressure_adiabatic_compression = solved_adiabatic_law.subs({
     adiabatic_law.temperature_start: GAS_TEMPERATURE_END,
     adiabatic_law.volume_start: gas_volume_isothermal_end,
     units.molar_gas_constant: 1,
-    adiabatic_law.thermodynamics_law.mole_count: GAS_MOLE_COUNT,
+    ideal_gas_equation.mole_count: GAS_MOLE_COUNT,
     adiabatic_law.specific_heats_ratio: GAS_SPECIFIC_HEATS_RATIO,
     adiabatic_law.volume_end: carnot_cycle_volume
 })
