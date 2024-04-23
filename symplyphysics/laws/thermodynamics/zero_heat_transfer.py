@@ -1,4 +1,5 @@
-from sympy import Eq, solve, Symbol as SymSymbol, Function as SymFunction, dsolve, symbols
+from sympy import Eq, solve, Symbol as SymSymbol, Function as SymFunction, dsolve, symbols as sym_symbols
+from sympy.abc import t
 from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print_expression,
     dimensionless, validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
@@ -61,12 +62,16 @@ _temperature_change = SymSymbol("temperature_change")
 _pressure_change = SymSymbol("pressure_change")
 _volume_change = SymSymbol("volume_change")
 
-_internal_energy_expr = internal_energy_law.law.rhs.subs({
-    internal_energy_law.temperature: _temperature,
+# _internal_energy_expr = internal_energy_law.law.rhs.subs({
+#     internal_energy_law.temperature_change: _temperature,
+#     internal_energy_law.isochoric_heat_capacity: _isochoric_heat_capacity,
+# })
+
+# _internal_energy_change_expr = _internal_energy_expr.diff(_temperature) * _temperature_change
+_internal_energy_change_expr = internal_energy_law.law.rhs.subs({
+    internal_energy_law.temperature_change: _temperature_change,
     internal_energy_law.isochoric_heat_capacity: _isochoric_heat_capacity,
 })
-
-_internal_energy_change_expr = _internal_energy_expr.diff(_temperature) * _temperature_change
 
 _work_change_expr = work_law.law.rhs.subs({
     work_law.pressure_inside_system: _pressure,
@@ -81,8 +86,8 @@ _first_law_eqn = first_law.law.subs({
 
 # Expressing the temperature differential through pressure and volume differentials
 
-_parameterized_pressure = symbols("pressure", cls=SymFunction)
-_parameterized_volume = symbols("volume", cls=SymFunction)
+_parameterized_pressure = sym_symbols("pressure", cls=SymFunction)
+_parameterized_volume = sym_symbols("volume", cls=SymFunction)
 
 _temperature_change_expr = solve(
     ideal_gas_equation.law, _temperature
