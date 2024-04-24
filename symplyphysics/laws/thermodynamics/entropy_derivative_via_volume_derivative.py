@@ -28,6 +28,8 @@ from symplyphysics.laws.thermodynamics import gibbs_energy_differential
 ## p - pressure
 ## V - volume
 ## T - absolute temperature
+## (d/dp)_T - partial derivative w.r.t. pressure at constant temperature
+## (d/dT)_p - partial derivative w.r.t. temperature at constant pressure
 
 # Conditions
 ## - Changes in particle count are not taken into account and it is assumed to be constant.
