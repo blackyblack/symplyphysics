@@ -8,6 +8,8 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## The Butterworth filter is described by the function frequency^n.
 ## Bandwidth distortion determines the maximum distortion in the bandwidth. In other words, to determine the level of ripples in the bandwidth.
 ## The band-stop distortion sets the required suppression level in the filter band-stop.
+## You can only implement an integer-order filter. And the formula itself returns the minimum order of the filter, which will have the
+## specified parameters (frequencies and distortions). Therefore, you need to round it up (use ceil()).
 
 ## Law is: N = ln(es / ep) / ln(fs / fp), where
 ## N - Butterworth filter order,
