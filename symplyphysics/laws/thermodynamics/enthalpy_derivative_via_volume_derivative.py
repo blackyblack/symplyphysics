@@ -12,7 +12,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.geometry.line import two_point_function, Point2D
 
 # Description
-## ...
+## Isothermal derivative of enthalpy w.r.t. pressure can be found as a function of volume and temperature.
 
 # (dH/dp)_T = V(T, p) - T * (dV/dT)_p
 ## H - enthalpy
