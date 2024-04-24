@@ -19,9 +19,11 @@ from symplyphysics.core.geometry.line import two_point_function, Point2D
 ## T - absolute temperature
 ## p - pressure
 ## V - volume
+## (d/dp)_T - partial derivative w.r.t. pressure at constant temperature
+## (d/dT)_p - partial derivative w.r.t. temperature at constant pressure
 
 # Conditions
-## - Assuming an infinitesimal quasi-static isothermal prossess.
+## - Assuming an infinitesimal quasi-static isothermal process.
 
 enthalpy = Function("enthalpy", units.energy)
 temperature = symbols.thermodynamics.temperature
@@ -43,7 +45,7 @@ law = Eq(
     temperature_after_=temperature,
 )
 @validate_output(units.energy / units.pressure)
-def calculate_enthapy_derivative(
+def calculate_enthalpy_derivative(
     volume_before_: Quantity,
     volume_after_: Quantity,
     temperature_before_: Quantity,
