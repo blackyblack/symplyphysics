@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     symbols,
@@ -28,10 +27,6 @@ law = Eq(
     helmholtz_free_energy,
     internal_energy - temperature * entropy,
 )
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(
