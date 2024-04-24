@@ -1,15 +1,19 @@
-from sympy import Eq, Derivative, Point2D
+from sympy import Eq, Derivative, Point2D, solve
 from symplyphysics import (
     symbols,
     units,
     Quantity,
     Symbol,
     Function,
-    print_expression,
     validate_input,
     validate_output,
 )
 from symplyphysics.core.geometry.line import two_point_function
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.thermodynamics import (
+    isobaric_reaction_potential as gibbs_energy_def,
+    entropy_is_derivative_of_gibbs_energy as entropy_law,
+)
 
 # Description
 ## Gibbs-Helmholtz relations are a set of equations that relate thermodynamic potentials between each other.
@@ -21,6 +25,9 @@ from symplyphysics.core.geometry.line import two_point_function
 ## p - pressure
 ## (d/dT)_p - derivative with respect to temperature at constant pressure
 
+# Conditions
+## - Particle count changes are not taken into account, i.e. it stays constant.
+
 enthalpy = Symbol("enthalpy", units.energy)
 gibbs_energy = Function("gibbs_energy", units.energy)
 temperature = symbols.thermodynamics.temperature
@@ -31,11 +38,25 @@ law = Eq(
     gibbs_energy(temperature, pressure) - temperature * Derivative(gibbs_energy(temperature, pressure), temperature)
 )
 
-# TODO: Derive from definition of Gibbs energy and thermodynamical relations
+# Derive from definition of Gibbs energy and thermodynamical relations
 
+_entropy_expr = entropy_law.law.rhs.subs({
+    entropy_law.temperature: temperature,
+    entropy_law.pressure: pressure,
+}).subs(
+    entropy_law.gibbs_energy(temperature, pressure, entropy_law.particle_count),
+    gibbs_energy(temperature, pressure),
+)
 
-def print_law() -> str:
-    return print_expression(law)
+_enthalpy_expr = solve(
+    gibbs_energy_def.law, gibbs_energy_def.thermal_effect
+)[0].subs({
+    gibbs_energy_def.isobaric_potential: gibbs_energy(temperature, pressure),
+    gibbs_energy_def.temperature: temperature,
+    gibbs_energy_def.entropy: _entropy_expr,
+})
+
+assert expr_equals(_enthalpy_expr, law.rhs)
 
 
 @validate_input(

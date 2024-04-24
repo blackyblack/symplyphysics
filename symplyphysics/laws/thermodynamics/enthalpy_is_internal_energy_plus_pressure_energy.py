@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
@@ -24,10 +23,6 @@ pressure = Symbol("pressure", units.pressure)
 volume = Symbol("volume", units.volume)
 
 law = Eq(enthalpy, internal_energy + pressure * volume)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(
