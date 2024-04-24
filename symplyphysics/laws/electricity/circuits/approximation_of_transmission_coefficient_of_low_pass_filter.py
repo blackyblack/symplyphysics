@@ -1,12 +1,9 @@
 from sympy import (
-    Expr,
     Eq,
     solve,
 )
 from symplyphysics import (
-    SI,
     units,
-    Quantity,
     Symbol,
     Function,
     print_expression,
@@ -39,12 +36,12 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(filter_function_=filter_function,
+@validate_input(filter_function_at_frequency=filter_function,
                 bandwidth_distortion_=bandwidth_distortion)
 @validate_output(transmission_coefficient)
-def calculate_coefficient(filter_function_: float, bandwidth_distortion_: float) -> float:
+def calculate_coefficient(filter_function_at_frequency: float, bandwidth_distortion_: float) -> float:
     result_expr = law.subs({
-        filter_function(frequency): filter_function_,
+        filter_function(frequency): filter_function_at_frequency,
         bandwidth_distortion: bandwidth_distortion_,
     })
     result = solve(result_expr, transmission_coefficient, dict=True)[0][transmission_coefficient]
