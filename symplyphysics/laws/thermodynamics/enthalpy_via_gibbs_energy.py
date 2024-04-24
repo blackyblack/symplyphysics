@@ -48,7 +48,7 @@ _entropy_expr = entropy_law.law.rhs.subs({
     gibbs_energy(temperature, pressure),
 )
 
-_internal_energy_expr = solve(
+_enthalpy_expr = solve(
     gibbs_energy_def.law, gibbs_energy_def.thermal_effect
 )[0].subs({
     gibbs_energy_def.isobaric_potential: gibbs_energy(temperature, pressure),
@@ -56,7 +56,7 @@ _internal_energy_expr = solve(
     gibbs_energy_def.entropy: _entropy_expr,
 })
 
-assert expr_equals(_internal_energy_expr, law.rhs)
+assert expr_equals(_enthalpy_expr, law.rhs)
 
 
 @validate_input(
