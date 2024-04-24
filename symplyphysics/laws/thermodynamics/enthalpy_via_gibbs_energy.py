@@ -5,7 +5,6 @@ from symplyphysics import (
     Quantity,
     Symbol,
     Function,
-    print_expression,
     validate_input,
     validate_output,
 )
@@ -32,10 +31,6 @@ law = Eq(
 )
 
 # TODO: Derive from definition of Gibbs energy and thermodynamical relations
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(
