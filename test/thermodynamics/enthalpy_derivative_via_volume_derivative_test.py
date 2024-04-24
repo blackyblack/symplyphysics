@@ -14,7 +14,7 @@ from symplyphysics.laws.thermodynamics import enthalpy_derivative_via_volume_der
 ## V = 1.001 L at T = 101 K. The isothermal derivative of enthalpy w.r.t. pressure in this process amounts to
 ## (dH/dp)_T = 91 J/atm.
 
-Args = namedtuple("Agrs", "v0 v1 t0 t1")
+Args = namedtuple("Args", "v0 v1 t0 t1")
 
 
 @fixture(name="test_args")
