@@ -4,7 +4,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
@@ -32,10 +31,6 @@ entropy = Symbol("entropy", units.energy / units.amount_of_substance / units.tem
 temperature = symbols.thermodynamics.temperature
 
 law = Eq(isobaric_potential, thermal_effect - temperature * entropy)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(thermal_effect_=thermal_effect, entropy_=entropy, temperature_=temperature)
