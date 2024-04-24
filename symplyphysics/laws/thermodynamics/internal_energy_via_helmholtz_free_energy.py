@@ -1,4 +1,4 @@
-from sympy import Eq, Derivative, Point2D
+from sympy import Eq, Derivative, Point2D, solve
 from symplyphysics import (
     symbols,
     units,
@@ -9,6 +9,11 @@ from symplyphysics import (
     validate_output,
 )
 from symplyphysics.core.geometry.line import two_point_function
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.thermodynamics import (
+    helmholtz_free_energy_via_internal_energy as free_energy_def,
+    entropy_is_derivative_of_free_energy as entropy_law,
+)
 
 # Description
 ## Gibbs-Helmholtz relations are a set of equations that relate thermodynamic potentials between each other.
@@ -19,6 +24,9 @@ from symplyphysics.core.geometry.line import two_point_function
 ## T - absolute temperature
 ## V - volume
 ## (d/dT)_V - derivative with respect to temperature at constant volume
+
+# Conditions
+## - Particle count changes are not taken into account, i.e. it stays constant.
 
 internal_energy = Symbol("internal_energy", units.energy)
 free_energy = Function("free_energy", units.energy)
@@ -32,7 +40,25 @@ law = Eq(
     free_energy(temperature, volume) - temperature * Derivative(free_energy(temperature, volume), temperature)
 )
 
-# TODO: Derive from definition of free energy and thermodynamical Maxwell relations
+# Derive from definition of free energy and thermodynamical Maxwell relations
+
+_entropy_expr = entropy_law.law.rhs.subs({
+    entropy_law.temperature: temperature,
+    entropy_law.volume: volume,
+}).subs(
+    entropy_law.free_energy(temperature, volume, entropy_law.particle_count),
+    free_energy(temperature, volume),
+)
+
+_internal_energy_expr = solve(
+    free_energy_def.law, free_energy_def.internal_energy
+)[0].subs({
+    free_energy_def.helmholtz_free_energy: free_energy(temperature, volume),
+    free_energy_def.temperature: temperature,
+    free_energy_def.entropy: _entropy_expr,
+})
+
+assert expr_equals(_internal_energy_expr, law.rhs)
 
 
 @validate_input(
