@@ -8,6 +8,9 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## The Chebyshev filter is described by the function 1 / cos(n * acos(1 / frequency)).
 ## Bandwidth distortion determines the maximum distortion in the bandwidth. In other words, to determine the level of ripples in the bandwidth.
 ## The band-stop distortion sets the required suppression level in the filter band-stop.
+## You can only implement an integer-order filter. And the formula itself returns the minimum order of the filter, which will have the
+## specified parameters (frequencies and distortions). Therefore, you need to round it up (use ceil()).
+## In this case, a high-pass filter is considered. The high-pass filter does not pass all frequencies from 0 to the set frequency.
 
 ## Law is: N = acosh(es / ep) / acosh(fp / fs), where
 ## N - Chebyshev filter order,
