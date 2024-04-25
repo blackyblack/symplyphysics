@@ -57,17 +57,19 @@ _ideal_gas_eqn = ideal_gas_equation.law.subs({
     ideal_gas_equation.temperature: temperature,
 })
 
-_pressure_expr = solve(_ideal_gas_eqn, ideal_gas_equation.pressure)[0]
+_pressure_expr = solve(
+    _ideal_gas_eqn, ideal_gas_equation.pressure
+)[0].subs(
+    ideal_gas_equation.volume, work_law.volume
+)
 
 _volume_before = SymSymbol("volume_before", positive=True)
 _volume_after = SymSymbol("volume_after", positive=True)
 
-_work_expr = work_law.law.rhs.xreplace({
-    work_law.volume: ideal_gas_equation.volume,
-}).subs({
+_work_expr = work_law.law.rhs.subs({
     work_law.volume_before: _volume_before,
     work_law.volume_after: _volume_after,
-    work_law.pressure(ideal_gas_equation.volume): _pressure_expr
+    work_law.pressure(work_law.volume): _pressure_expr
 }).doit().simplify()
 
 _work_from_law = law.rhs.subs({
