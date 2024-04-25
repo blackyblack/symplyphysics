@@ -28,7 +28,7 @@ from symplyphysics.laws.thermodynamics import volume_is_constant as isochoric_la
 pressure_change = Symbol("pressure", units.pressure)
 
 standard_pressure = Symbol("standard_pressure", units.pressure)
-thermal_coefficient = Quantity(1 / quantities.standard_conditions_temperature)
+thermal_coefficient = 1 / quantities.standard_conditions_temperature
 temperature = symbols.thermodynamics.temperature
 
 law = Eq(pressure_change, standard_pressure * (thermal_coefficient * temperature - 1))
@@ -38,7 +38,7 @@ law = Eq(pressure_change, standard_pressure * (thermal_coefficient * temperature
 _isochoric_eqn = isochoric_law.law.subs({
     isochoric_law.pressure_start: standard_pressure,
     isochoric_law.pressure_end: standard_pressure + pressure_change,
-    isochoric_law.temperature_start: 1 / thermal_coefficient,
+    isochoric_law.temperature_start: quantities.standard_conditions_temperature,
     isochoric_law.temperature_end: temperature,
 })
 

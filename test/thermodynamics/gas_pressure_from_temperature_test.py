@@ -5,7 +5,7 @@ from symplyphysics.laws.thermodynamics import gas_pressure_from_temperature as p
 
 # Description
 ## With a temperature of 293.15 kelvin and a standard pressure of 101325 pascal,
-## the pressure change will be 108744 pascal.
+## the pressure change will be 7.42 kPa.
 ## https://www.indigomath.ru/formuly-po-fizike/molekuljarnaja-kinetika/temperaturnaja-zavisimost-davlenija-gaza.html
 
 Args = namedtuple("Args", ["standard_pressure", "temperature"])
