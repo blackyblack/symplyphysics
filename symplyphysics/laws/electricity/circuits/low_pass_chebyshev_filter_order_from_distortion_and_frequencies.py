@@ -8,6 +8,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## The Chebyshev filter is described by the function 1 / cos(n * acos(1 / frequency)).
 ## Bandwidth distortion determines the maximum distortion in the bandwidth. In other words, to determine the level of ripples in the bandwidth.
 ## The band-stop distortion sets the required suppression level in the filter band-stop.
+## In this case, a low-pass filter is considered. The low-pass filter passes all frequencies from 0 to the set frequency.
 
 ## Law is: N = acos(es / ep) / acos(fs / fp), where
 ## N - Chebyshev filter order,
@@ -24,10 +25,6 @@ cutoff_frequency = Symbol("cutoff_frequency", units.frequency)
 band_stop_frequency = Symbol("band_stop_frequency", units.frequency)
 
 law = Eq(chebyshev_filter_order, acos(band_stop_distortion / bandwidth_distortion) / acos(band_stop_frequency / cutoff_frequency))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(bandwidth_distortion_=bandwidth_distortion,
