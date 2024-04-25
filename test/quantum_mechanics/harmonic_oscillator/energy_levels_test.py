@@ -19,7 +19,7 @@ Args = namedtuple("Args", "n w")
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
     n = 3
-    w = 3.14 * units.radian / (prefixes.femto * units.second)
+    w = Quantity(3.14 * units.radian / (prefixes.femto * units.second))
     return Args(n=n, w=w)
 
 

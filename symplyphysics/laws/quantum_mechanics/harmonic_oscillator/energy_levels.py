@@ -41,7 +41,7 @@ law = Eq(
 @validate_output(energy_level)
 def calculate_energy_level(
     quantum_number_: int,
-    angular_frequency_: int,
+    angular_frequency_: Quantity,
 ) -> Quantity:
     result = law.rhs.subs({
         quantum_number: quantum_number_,
