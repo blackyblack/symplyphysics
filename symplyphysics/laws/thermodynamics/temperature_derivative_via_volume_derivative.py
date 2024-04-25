@@ -22,6 +22,8 @@ from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equat
 ## V - volume
 ## H - enthalpy
 ## C_p - isobaric heat capacity
+## (d/dp)_H - partial derivative with respect to pressure at constant enthalpy
+## (d/dT)_p - partial derivative with respect to temperature at constant pressure
 
 # Notes
 ## - The left-hand side is also called the Joule-Thompson coefficient.
@@ -38,10 +40,10 @@ isobaric_heat_capacity = Symbol("isobaric_heat_capacity", units.energy / units.t
 
 law = Eq(
     Derivative(temperature(pressure, enthalpy), pressure),
-    ((temperature(pressure, enthalpy)
-      * Derivative(volume(temperature(pressure, enthalpy), pressure), temperature(pressure, enthalpy))
-      - volume(temperature(pressure, enthalpy), pressure)
-     ) / isobaric_heat_capacity)
+    (temperature(pressure, enthalpy)
+     * Derivative(volume(temperature(pressure, enthalpy), pressure), temperature(pressure, enthalpy))
+     - volume(temperature(pressure, enthalpy), pressure)
+    ) / isobaric_heat_capacity
 )
 
 # TODO: derive from enthalpy differential and Maxwell relations.
