@@ -1,12 +1,12 @@
-from sympy import (Eq, solve)
+from sympy import Eq
 from symplyphysics import (
     symbols,
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
+    quantities,
 )
 
 # Description
@@ -26,26 +26,19 @@ from symplyphysics import (
 pressure_change = Symbol("pressure", units.pressure)
 
 standard_pressure = Symbol("standard_pressure", units.pressure)
-thermal_coefficient = Symbol("thermal_coefficient", 1 / units.temperature)
+thermal_coefficient = Quantity(1 / quantities.standard_conditions_temperature)
 temperature = symbols.thermodynamics.temperature
 
 law = Eq(pressure_change, standard_pressure * thermal_coefficient * temperature)
 
 
-def print_law() -> str:
-    return print_expression(law)
-
-
 @validate_input(standard_pressure_=standard_pressure,
-    thermal_coefficient_=thermal_coefficient,
     temperature_=temperature)
 @validate_output(pressure_change)
-def calculate_pressure_change(standard_pressure_: Quantity, thermal_coefficient_: Quantity,
+def calculate_pressure_change(standard_pressure_: Quantity,
     temperature_: Quantity) -> Quantity:
-    result_expr = solve(law, pressure_change, dict=True)[0][pressure_change]
-    result_expr = result_expr.subs({
+    result_expr = law.rhs.subs({
         standard_pressure: standard_pressure_,
-        thermal_coefficient: thermal_coefficient_,
         temperature: temperature_
     })
     return Quantity(result_expr)
