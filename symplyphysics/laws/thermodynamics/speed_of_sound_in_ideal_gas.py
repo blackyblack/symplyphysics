@@ -1,5 +1,5 @@
 from sympy import Eq, solve, sqrt
-from symplyphysics import (Quantity, Symbol, dimensionless, print_expression, symbols, units,
+from symplyphysics import (Quantity, Symbol, dimensionless, symbols, units,
     validate_input, validate_output)
 
 # Speed of sound for ideal gases
@@ -17,10 +17,6 @@ speed_of_sound = Symbol("speed_of_sound", units.velocity)
 
 law = Eq(speed_of_sound,
     sqrt(heat_capacity_ratio * units.molar_gas_constant * temperature / mole_mass))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(temperature_=temperature,
