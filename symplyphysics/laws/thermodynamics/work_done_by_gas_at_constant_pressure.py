@@ -28,9 +28,8 @@ law = Eq(work, pressure * (result_volume - init_volume))
 
 # Derive law from work integral
 
-_work_expr = work_law.law.rhs.xreplace({
+_work_expr = work_law.law.rhs.subs({
     work_law.pressure(work_law.volume): pressure,
-}).subs({
     work_law.volume_before: init_volume,
     work_law.volume_after: result_volume,
 }).doit()
