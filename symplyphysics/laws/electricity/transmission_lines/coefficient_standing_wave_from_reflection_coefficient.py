@@ -26,6 +26,8 @@ def print_law() -> str:
 @validate_input(reflection_coefficient_module_=reflection_coefficient_module)
 @validate_output(coefficient_standing_wave)
 def calculate_coefficient_standing_wave(reflection_coefficient_module_: float) -> float:
+    if reflection_coefficient_module_ < 0:
+        raise ValueError("The modulus of the reflection coefficient cannot be less than zero")
     result_expr = solve(law, coefficient_standing_wave, dict=True)[0][coefficient_standing_wave]
     result_expr = result_expr.subs({
         reflection_coefficient_module: reflection_coefficient_module_,
