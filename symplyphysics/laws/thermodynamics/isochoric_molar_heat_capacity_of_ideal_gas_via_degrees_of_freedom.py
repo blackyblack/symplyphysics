@@ -19,6 +19,13 @@ from symplyphysics import (
 
 # Note
 ## - For applications, see [internal energy law](./internal_energy_of_ideal_gas_is_proportional_to_temperature)
+## - f = 3 for monatomic molecules,
+##   f = 5 for diatomic molecules,
+##   f = 6 for non-linear polyatomic molecules
+
+# Conditions
+## - This is the classical theory of heat capacity of gases, for more accurate represention refer to
+##   the quantum theory, which accounts for the "freezing" of degrees of freedom and other phenomena.
 
 isochoric_molar_heat_capacity = Symbol(
     "isochoric_molar_heat_capacity",
