@@ -1,6 +1,8 @@
 from sympy import Eq, solve
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output)
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.thermodynamics import work_is_volume_integral_of_pressure as work_law
 
 # Description
 # When energy is added to gas molecules and increases their kinetic energy,
@@ -24,9 +26,15 @@ work = Symbol("work", units.energy)
 
 law = Eq(work, pressure * (result_volume - init_volume))
 
+# Derive law from work integral
 
-def print_law() -> str:
-    return print_expression(law)
+_work_expr = work_law.law.rhs.subs({
+    work_law.pressure(work_law.volume): pressure,
+    work_law.volume_before: init_volume,
+    work_law.volume_after: result_volume,
+}).doit()
+
+assert expr_equals(_work_expr, law.rhs)
 
 
 @validate_input(pressure_=pressure, init_volume_=init_volume, result_volume_=result_volume)
