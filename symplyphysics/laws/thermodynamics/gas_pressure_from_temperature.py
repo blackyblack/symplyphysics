@@ -14,8 +14,8 @@ from symplyphysics import (
 ## standard pressure and thermal coefficient.
 ## https://www.fxyz.ru/формулы_по_физике/термодинамика_теория_теплоты/тепловое_расширение/расширение_газа/термический_коэффициент_давления/
 
-## Law is: p = p0 * y * T, where
-## p - pressure change,
+## Law is: dp = p0 * (y * T - 1), where
+## dp - pressure change,
 ## p0 - pressure at zero degrees celsius,
 ## y - thermal coefficient,
 ## T - temperature.
@@ -29,7 +29,7 @@ standard_pressure = Symbol("standard_pressure", units.pressure)
 thermal_coefficient = Quantity(1 / quantities.standard_conditions_temperature)
 temperature = symbols.thermodynamics.temperature
 
-law = Eq(pressure_change, standard_pressure * thermal_coefficient * temperature)
+law = Eq(pressure_change, standard_pressure * (thermal_coefficient * temperature - 1))
 
 
 @validate_input(standard_pressure_=standard_pressure,

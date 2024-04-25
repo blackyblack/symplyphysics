@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (assert_equal, units, Quantity, errors)
+from symplyphysics import assert_equal, units, Quantity, errors, prefixes
 from symplyphysics.laws.thermodynamics import gas_pressure_from_temperature as pressure_law
 
 # Description
@@ -20,7 +20,7 @@ def test_args_fixture() -> Args:
 
 def test_basic_pressure_change(test_args: Args) -> None:
     result = pressure_law.calculate_pressure_change(test_args.standard_pressure, test_args.temperature)
-    assert_equal(result, 108744 * units.pascal, tolerance=0.01)
+    assert_equal(result, 7.42 * prefixes.kilo * units.pascal)
 
 
 def test_bad_pressure(test_args: Args) -> None:
