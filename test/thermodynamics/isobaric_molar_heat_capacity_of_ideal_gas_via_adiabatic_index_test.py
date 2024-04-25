@@ -12,7 +12,7 @@ from symplyphysics.laws.thermodynamics import (
 )
 
 # Description
-## The isobaric molar heat capacity of a monatomic ideal gas (gamma = 5/3) is C_p = 5 cal/(K*mol).
+## The isobaric molar heat capacity of a monatomic ideal gas (gamma = 5/3) is C_p = 20.8 J/(K*mol).
 
 Args = namedtuple("Args", "gamma")
 
