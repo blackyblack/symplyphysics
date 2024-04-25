@@ -48,7 +48,7 @@ law = Eq(
 
 _gibbs_energy_expr = sym_symbols("gibbs_energy", cls=SymFunction)(temperature, pressure)
 
-# Since Gibbs energy is a differentiable function of all its parameters, the can apply
+# Since Gibbs energy is a differentiable function of all its parameters, one can apply
 # the symmetry of second derivatives, which is that for any sufficiently differentiable
 # function one can exchange the order of taking partial derivatives: d(df/dx)/dy = d(df/dy)/dx.
 # The expression for the second derivative of Gibbs energy must be the same whether one first
