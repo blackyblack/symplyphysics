@@ -9,7 +9,7 @@ from symplyphysics import (
 )
 
 # Description
-## ...
+## The heat equation coupled with a boundary condition can be solved to get a unique solution.
 
 # Law: T_n(x, t) = B_n * sin(n * pi * x / L) * exp(-chi * (n * pi / L)**2 * t)
 ## T_n - temperature function, solution to the heat equation
