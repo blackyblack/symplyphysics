@@ -29,6 +29,8 @@ def print_law() -> str:
 @validate_output(coefficient_standing_wave)
 def calculate_coefficient_standing_wave(maximum_voltage_: Quantity,
     minimum_voltage_: Quantity) -> float:
+    if maximum_voltage_.scale_factor < minimum_voltage_.scale_factor:
+        raise ValueError("The maximum voltage must be greater than the minimum voltage")
     result_expr = solve(law, coefficient_standing_wave, dict=True)[0][coefficient_standing_wave]
     result_expr = result_expr.subs({
         maximum_voltage: maximum_voltage_,

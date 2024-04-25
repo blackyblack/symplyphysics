@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.electricity.circuits import coefficient_standing_wave_from_voltages as coefficient_law
+from symplyphysics.laws.electricity.transmission_lines import coefficient_standing_wave_from_voltages as coefficient_law
 
 # Description
 ## The maximum and minimum voltages in the transmission line are 3 volt and 2 volt, respectively.
@@ -34,3 +34,5 @@ def test_bad_voltages(test_args: Args) -> None:
         coefficient_law.calculate_coefficient_standing_wave(test_args.maximum_voltage, bad_voltage)
     with raises(TypeError):
         coefficient_law.calculate_coefficient_standing_wave(test_args.maximum_voltage, 100)
+    with raises(ValueError):
+        coefficient_law.calculate_coefficient_standing_wave(test_args.minimum_voltage, test_args.maximum_voltage)
