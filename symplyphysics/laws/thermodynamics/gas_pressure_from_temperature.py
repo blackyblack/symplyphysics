@@ -1,4 +1,4 @@
-from sympy import Eq
+from sympy import Eq, solve
 from symplyphysics import (
     symbols,
     units,
@@ -8,6 +8,8 @@ from symplyphysics import (
     validate_output,
     quantities,
 )
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.thermodynamics import volume_is_constant as isochoric_law
 
 # Description
 ## The change in gas pressure when the temperature changes relative to 273 kelvin depends on temperature,
@@ -30,6 +32,19 @@ thermal_coefficient = Quantity(1 / quantities.standard_conditions_temperature)
 temperature = symbols.thermodynamics.temperature
 
 law = Eq(pressure_change, standard_pressure * (thermal_coefficient * temperature - 1))
+
+# Derive law from Charles' law of isochoric heating of gas.
+
+_isochoric_eqn = isochoric_law.law.subs({
+    isochoric_law.pressure_start: standard_pressure,
+    isochoric_law.pressure_end: standard_pressure + pressure_change,
+    isochoric_law.temperature_start: 1 / thermal_coefficient,
+    isochoric_law.temperature_end: temperature,
+})
+
+_pressure_change_expr = solve(_isochoric_eqn, pressure_change)[0]
+
+assert expr_equals(_pressure_change_expr, law.rhs)
 
 
 @validate_input(standard_pressure_=standard_pressure,
