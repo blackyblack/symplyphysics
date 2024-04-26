@@ -10,6 +10,9 @@ from symplyphysics import (
 
 # Description
 ## The heat equation coupled with a boundary condition can be solved to get a unique solution.
+## In this boundary-value problem the heat transfer within a thin rod is observed, the temperature
+## on both ends being zero. This restricts the number of functions `f(x)` that can satisfy the boundary
+## equation `f(x) = T(x, 0)`.
 
 # Law: T_n(x, t) = B_n * sin(n * pi * x / L) * exp(-chi * (n * pi / L)**2 * t)
 ## T_n - temperature function, solution to the heat equation
@@ -23,7 +26,8 @@ from symplyphysics import (
 # Notes
 ## - `x` can take a value in the range `[0, L]`.
 ## - The total solution is `T(x, t) = sum(T_n(x, t), n)`
-## - To find the values of B_n one must refer to the boundary condition `f(x) = sum(T_n(x, 0), n)`.
+## - To find the values of B_n one must refer to the boundary condition `f(x) = sum(T_n(x, 0), n)`
+##   and use the Fourier method for the calculation.
 
 temperature = Symbol("temperature", units.temperature)
 coefficient = Symbol("coefficient", units.temperature)
