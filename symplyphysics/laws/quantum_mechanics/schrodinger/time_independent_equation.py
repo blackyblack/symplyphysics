@@ -20,11 +20,15 @@ from symplyphysics import (
 ## U(x) - potential energy
 ## E - energy of particle, eigenvalue of the equation
 
-wavefunction = Function("wavefunction", 1 / sqrt(units.length), real=1)
-position = Symbol("position", units.length, real=1)
-potential_energy = Function("potential_energy", units.energy, real=1)
-particle_mass = clone_symbol(symbols.basic.mass, "particle^mass", positive=1)
-particle_energy = Symbol("particle_energy", units.energy, positive=1)
+# Conditions
+## - This law works in the case of 1 spatial dimension. To use it for the 3-dimensional space
+##   replace the second derivative with the Laplace operator.
+
+wavefunction = Function("wavefunction", 1 / sqrt(units.length))
+position = Symbol("position", units.length)
+potential_energy = Function("potential_energy", units.energy)
+particle_mass = clone_symbol(symbols.basic.mass, "particle_mass")
+particle_energy = Symbol("particle_energy", units.energy)
 
 law = Eq(
     (-1 * hbar**2 / (2 * particle_mass)) * Derivative(wavefunction(position), position, 2)
