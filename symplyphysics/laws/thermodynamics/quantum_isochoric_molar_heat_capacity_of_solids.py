@@ -11,20 +11,21 @@ from symplyphysics import (
 )
 
 # Description
-## To derived the heat capacity of a solid, one should account for quantum effects. Albert Einstein used the
+## To derive the heat capacity of a solid, one should account for quantum effects. Albert Einstein used the
 ## same model as in the classical case, namely the atoms are harmonic oscillators with three degrees
 ## of freedom, located in the nodes of the crystal lattice, performing thermal oscillations around the
 ## equlibrium positions with the same frequency. But he used a more correct expression for the energy
 ## of the oscillators, and although the result still only qualitatively describes the heat capacity of
 ## solids, it is a big achievement and the result has correct asymptotic behaviour for `T -> 0`.
 
-## Law: C_V = 3 * R * (h * nu / (k * T))**2 * exp(h * nu / (k * T)) / (exp(h * nu / (k * T)) - 1)**2
+## Law: C_V = 3 * R * x**2 * exp(x) / (exp(x) - 1)**2
 ## C_V - isochoric molar heat capacity
 ## R - molar gas constant
 ## h - Planck constant
-## nu - frequency
+## nu - frequency of thermal oscillations
 ## k - Boltzmann constant
 ## T - absolute temperature
+## x = h * nu / (k * T) - ratio between photon and thermal energy
 
 isochoric_molar_heat_capacity = Symbol(
     "isochoric_molar_heat_capacity",
@@ -33,12 +34,11 @@ isochoric_molar_heat_capacity = Symbol(
 frequency = Symbol("frequency", units.frequency)
 temperature = symbols.thermodynamics.temperature
 
+energy_ratio = (planck * frequency) / (boltzmann_constant * temperature)
+
 law = Eq(
     isochoric_molar_heat_capacity,
-    (3 * molar_gas_constant)
-    * (planck * frequency / (boltzmann_constant * temperature))
-    * exp(planck * frequency / (boltzmann_constant * temperature))
-    * (exp(planck * frequency / (boltzmann_constant * temperature)) - 1)**2
+    (3 * molar_gas_constant) * energy_ratio**2 * exp(energy_ratio) / (exp(energy_ratio) - 1)**2
 )
 
 

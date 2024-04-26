@@ -13,7 +13,7 @@ from symplyphysics.laws.thermodynamics import (
 
 # Description
 ## The isochoric molar heat capacity for a solid in the Einstein model with atomic thermal oscillator
-## frequency nu = 4 THz at temperature T = 300 K is C_V = 24.3 J/(K*mol).
+## frequency nu = 4 THz at temperature T = 300 K is C_V = 24.1 J/(K*mol).
 
 Args = namedtuple("Args", "nu t")
 
@@ -27,7 +27,7 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = einstein_law.calculate_isochoric_molar_heat_capacity(test_args.nu, test_args.t)
-    assert_equal(result, 24.3 * units.joule / (units.kelvin * units.mole))
+    assert_equal(result, 24.1 * units.joule / (units.kelvin * units.mole))
 
 
 def test_bad_frequency(test_args: Args) -> None:
