@@ -8,7 +8,9 @@ from symplyphysics import (
     validate_output,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.thermodynamics.heat_transfer import equation_in_homogeneous_medium as heat_equation
+from symplyphysics.laws.thermodynamics.heat_transfer import (
+    equation_in_homogeneous_medium_in_one_dimension as heat_equation,
+)
 
 # Description
 ## The heat equation coupled with a boundary condition can be solved to get a unique solution.
