@@ -1,4 +1,4 @@
-from sympy import Eq, exp, I
+from sympy import Eq, exp, I, S
 from sympy.physics.units import hbar
 from symplyphysics import (
     Quantity,
@@ -60,4 +60,4 @@ def calculate_wave_function(
         position: position_,
         time: time_,
     })
-    return complex(convert_to(result, 1))
+    return complex(convert_to(result, S.One))
