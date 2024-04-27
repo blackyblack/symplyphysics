@@ -63,3 +63,11 @@ def subs_list(input_: Sequence[Expr | float], subs_: dict[Expr, Quantity]) -> Se
 
 def scale_factor(quantity_: Quantity | float) -> float:
     return quantity_.scale_factor if isinstance(quantity_, Quantity) else quantity_
+
+
+def evaluate_quantity(quantity: Expr, **kwargs) -> Quantity:
+    if not isinstance(quantity, Quantity):
+        quantity = Quantity(quantity)
+    scale_factor = quantity.scale_factor.evalf(**kwargs)
+    dimension = quantity.dimension
+    return Quantity(scale_factor, dimension=dimension)
