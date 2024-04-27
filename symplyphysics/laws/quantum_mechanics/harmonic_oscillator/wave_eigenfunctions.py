@@ -1,4 +1,4 @@
-from sympy import Eq, Rational, sqrt, exp, factorial, pi, pprint
+from sympy import Eq, Rational, sqrt, exp, factorial, pi
 from sympy.functions.special.polynomials import hermite
 from sympy.physics.units import hbar
 from symplyphysics import (
@@ -11,18 +11,18 @@ from symplyphysics import (
     angle_type,
     symbols,
     clone_symbol,
-    convert_to_float,
 )
 
 # Description
-## ...
+## The time-independent Schrödinger equation for the harmonic potential can be solved using the
+## spectral method in the basis of Hermite functions.
 
 # Law: psi_n(x) = 1 / sqrt(2**n * factorial(n))
 #               * ((m * w) / (pi * hbar))**(1 / 4)
 #               * exp(-1 * (m * w) / (2 * hbar) * x**2)
 #               * H_n(sqrt((m * w) / hbar) * x)
 ## psi_n - n-th wave eigenfunction
-## n - mode number
+## n - mode number (n = 0, 1, 2, ...)
 ## m - mass of oscillating quantum particle
 ## w - angular frequency of quantum oscillator
 ## hbar - reduced Planck constant

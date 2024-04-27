@@ -65,7 +65,7 @@ def scale_factor(quantity_: Quantity | float) -> float:
     return quantity_.scale_factor if isinstance(quantity_, Quantity) else quantity_
 
 
-def evaluate_quantity(quantity: Expr, **kwargs) -> Quantity:
+def evaluate_quantity(quantity: Expr, **kwargs: Any) -> Quantity:
     if not isinstance(quantity, Quantity):
         quantity = Quantity(quantity)
     scale_factor = quantity.scale_factor.evalf(**kwargs)
