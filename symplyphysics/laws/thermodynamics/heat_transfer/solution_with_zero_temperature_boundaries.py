@@ -67,7 +67,7 @@ def calculate_temperature(
         raise ValueError("maximum position must be positive")
     if position_.scale_factor < 0:
         raise ValueError("position must be non-negative")
-    if position_.scale_factor >= maximum_position_.scale_factor:
+    if position_.scale_factor > maximum_position_.scale_factor:
         raise ValueError("position must be smaller than the maximum position")
 
     result = law.rhs.subs({
