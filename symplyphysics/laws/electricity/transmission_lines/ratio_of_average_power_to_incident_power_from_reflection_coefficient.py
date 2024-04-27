@@ -6,7 +6,6 @@ from symplyphysics import (
     validate_input,
     validate_output,
     dimensionless,
-    convert_to_float,
 )
 
 # Description
@@ -16,7 +15,7 @@ from symplyphysics import (
 ## Law is: Pa / Pi = 1 - G^2, where
 ## Pa - the average power delivered to the load,
 ## Pi - the incident power,
-## K - the absolute value reflection coefficient.
+## G - the absolute value reflection coefficient.
 
 absolute_reflection_coefficient = Symbol("absolute_reflection_coefficient", dimensionless, rel=True)
 incident_power = Symbol("incident_power", units.power, rel=True)
@@ -28,9 +27,11 @@ law = Eq(average_power / incident_power, 1 - absolute_reflection_coefficient**2)
 @validate_input(incident_power_=incident_power, average_power_=average_power)
 @validate_output(absolute_reflection_coefficient)
 def calculate_absolute_reflection_coefficient(incident_power_: Quantity, average_power_: Quantity) -> float:
+    if incident_power_.scale_factor < average_power_.scale_factor:
+        raise ValueError("The incident_power must be greater than the average power")
     result_expr = solve(law, absolute_reflection_coefficient, dict=True)[0][absolute_reflection_coefficient]
     result_expr = result_expr.subs({
         incident_power: incident_power_,
         average_power: average_power_,
     })
-    return convert_to_float(result_expr)
+    return result_expr
