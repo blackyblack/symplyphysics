@@ -6,6 +6,7 @@ from symplyphysics import (
     Quantity,
     validate_input,
     validate_output,
+    symbols,
 )
 
 # Description
@@ -29,7 +30,7 @@ from symplyphysics import (
 ## - To find the values of B_n one must refer to the boundary condition `f(x) = sum(T_n(x, 0), n)`
 ##   and use the Fourier method for the calculation.
 
-temperature = Symbol("temperature", units.temperature)
+temperature = symbols.thermodynamics.temperature
 coefficient = Symbol("coefficient", units.temperature)
 thermal_diffusivity = Symbol("thermal_diffusivity", units.area / units.time)
 mode_number = Symbol("mode_number", dimensionless, integer=True, positive=True)
@@ -62,6 +63,13 @@ def calculate_temperature(
     position_: Quantity,
     time_: Quantity,
 ) -> Quantity:
+    if maximum_position_.scale_factor <= 0:
+        raise ValueError("maximum position must be positive")
+    if position_.scale_factor < 0:
+        raise ValueError("position must be non-negative")
+    if position_.scale_factor >= maximum_position_.scale_factor:
+        raise ValueError("position must be smaller than the maximum position")
+
     result = law.rhs.subs({
         coefficient: coefficient_,
         thermal_diffusivity: thermal_diffusivity_,

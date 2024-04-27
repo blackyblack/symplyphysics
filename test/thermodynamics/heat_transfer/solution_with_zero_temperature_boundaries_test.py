@@ -65,6 +65,16 @@ def test_bad_position(test_args: Args) -> None:
     with raises(TypeError):
         solution.calculate_temperature(test_args.b, test_args.k, test_args.n, test_args.l, 100, test_args.t)
 
+    xb = Quantity(-1 * units.meter)
+    with raises(ValueError):
+        solution.calculate_temperature(test_args.b, test_args.k, test_args.n, xb, test_args.x, test_args.t)
+    with raises(ValueError):
+        solution.calculate_temperature(test_args.b, test_args.k, test_args.n, test_args.l, xb, test_args.t)
+    
+    xb = Quantity(test_args.l * 2)
+    with raises(ValueError):
+        solution.calculate_temperature(test_args.b, test_args.k, test_args.n, test_args.l, xb, test_args.t)
+
 
 def test_bad_time(test_args: Args) -> None:
     tb = Quantity(1 * units.coulomb)
