@@ -30,6 +30,8 @@ law = Eq(average_power / incident_power, 4 * standing_wave_coefficient / (standi
 @validate_input(incident_power_=incident_power, average_power_=average_power)
 @validate_output(standing_wave_coefficient)
 def calculate_standing_wave_coefficient(incident_power_: Quantity, average_power_: Quantity) -> float:
+    if incident_power_.scale_factor < average_power_.scale_factor:
+        raise ValueError("The incident_power must be greater than the average power")
     result_expr = solve(law, standing_wave_coefficient, dict=True)[1][standing_wave_coefficient]
     result_expr = result_expr.subs({
         incident_power: incident_power_,

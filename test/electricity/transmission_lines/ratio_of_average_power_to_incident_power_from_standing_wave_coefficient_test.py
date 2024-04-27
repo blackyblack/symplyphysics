@@ -32,3 +32,5 @@ def test_bad_powers(test_args: Args) -> None:
         coefficient_law.calculate_standing_wave_coefficient(test_args.incident_power, bad_power)
     with raises(TypeError):
         coefficient_law.calculate_standing_wave_coefficient(test_args.incident_power, 100)
+    with raises(ValueError):
+        coefficient_law.calculate_standing_wave_coefficient(test_args.average_power, test_args.incident_power)
