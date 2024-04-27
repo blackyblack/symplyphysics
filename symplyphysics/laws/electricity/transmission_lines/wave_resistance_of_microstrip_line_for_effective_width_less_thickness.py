@@ -50,6 +50,8 @@ def print_law() -> str:
 @validate_output(resistance)
 def calculate_resistance(effective_permittivity_: float, thickness_of_substrate_: Quantity,
     effective_width_: Quantity) -> Quantity:
+    if thickness_of_substrate_.scale_factor < effective_width_.scale_factor:
+        raise ValueError("The thickness of substrate must be not less than the effective width")
     result_expr = solve(law, resistance, dict=True)[0][resistance]
     result_expr = result_expr.subs({
         effective_permittivity: effective_permittivity_,
