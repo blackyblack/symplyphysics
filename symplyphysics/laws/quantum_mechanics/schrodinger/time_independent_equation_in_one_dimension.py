@@ -22,7 +22,7 @@ from symplyphysics import (
 
 # Notes
 ## - This law works in the case of 1 spatial dimension. To use it for the 3-dimensional space
-##   replace the second derivative with the Laplace operator.
+##   replace the spatial second derivative with the Laplace operator.
 
 wave_function = Function("wave_function", 1 / sqrt(units.length))
 position = Symbol("position", units.length)

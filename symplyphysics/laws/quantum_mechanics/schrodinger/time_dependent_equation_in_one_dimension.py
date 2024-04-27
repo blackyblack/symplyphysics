@@ -9,11 +9,13 @@ from symplyphysics import (
 )
 
 # Description
-## ...
+## The Schrödinger equation is a linear partial differential equation that governs the wave
+## function of a quantum-mechanical system. This law describes the general case of a time-dependent
+## potential and a time-dependent wave function.
 
 # Notes
 ## - This law works in the case of 1 spatial dimension. To use it for the 3-dimensional space
-##   replace the second derivative with the Laplace operator.
+##   replace the spatial second derivative with the Laplace operator.
 
 wave_function = Function("wave_function", 1 / sqrt(units.length))
 potential_energy = Function("potential_energy", units.energy)
