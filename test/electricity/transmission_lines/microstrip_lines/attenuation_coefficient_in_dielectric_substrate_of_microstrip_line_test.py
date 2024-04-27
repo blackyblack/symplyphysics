@@ -7,10 +7,10 @@ from symplyphysics import (
     assert_equal,
 )
 
-from symplyphysics.laws.electricity.transmission_lines import attenuation_coefficient_in_dielectric_substrate_of_microstrip_line as coefficient_law
+from symplyphysics.laws.electricity.transmission_lines.microstrip_lines import attenuation_coefficient_in_dielectric_substrate_of_microstrip_line as coefficient_law
 
 ## The relative permittivity of the microstrip line dielectric is 4. The effective permittivity is 2.5. The wavelength of the
-## signal is 10 millimeter, and the tangent of the dielectric loss angle is 1e-4. Then the loss value will be 0.345 [dB / meter].
+## signal is 10 millimeter, and the tangent of the dielectric loss angle is 1e-4. Then the loss value will be 0.345 [1 / meter].
 
 Args = namedtuple("Args", [
     "relative_permittivity", "effective_permittivity", "wavelength", "tangent_dielectric_loss_angle"
