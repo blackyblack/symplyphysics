@@ -1,4 +1,4 @@
-from sympy import Eq
+from sympy import Eq, solve
 from symplyphysics import (
     units,
     Quantity,
@@ -6,6 +6,13 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
+)
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.dynamics import (
+    kinetic_energy_from_mass_and_velocity as energy_law,
+)
+from symplyphysics.definitions import (
+    momentum_is_mass_times_velocity as momentum_def,
 )
 
 # Description
@@ -25,7 +32,26 @@ mass = symbols.basic.mass
 
 law = Eq(kinetic_energy, momentum**2 / (2 * mass))
 
-# TODO: derive law from kinetic energy and momentum expressions
+# Derive law from kinetic energy and momentum expressions
+
+_energy_eqn = energy_law.law.subs({
+    energy_law.kinetic_energy_of_body: kinetic_energy,
+    energy_law.body_velocity: momentum_def.velocity,
+    energy_law.mass: mass,
+})
+
+_momentum_eqn = momentum_def.definition.subs({
+    momentum_def.momentum: momentum,
+    momentum_def.mass: mass,
+})
+
+_kinetic_energy_expr = solve(
+    (_energy_eqn, _momentum_eqn),
+    (kinetic_energy, momentum_def.velocity),
+    dict=True,
+)[0][kinetic_energy]
+
+assert expr_equals(_kinetic_energy_expr, law.rhs)
 
 
 @validate_input(

@@ -1,5 +1,5 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, symbols)
 
 # Description
@@ -10,12 +10,9 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 
 kinetic_energy_of_body = Symbol("kinetic_energy_of_body", units.energy)
 body_velocity = Symbol("body_velocity", units.velocity)
+mass = symbols.basic.mass
 
-law = Eq(kinetic_energy_of_body, symbols.basic.mass * body_velocity**2 / 2)
-
-
-def print_law() -> str:
-    return print_expression(law)
+law = Eq(kinetic_energy_of_body, mass * body_velocity**2 / 2)
 
 
 @validate_input(body_mass_=symbols.basic.mass, body_velocity_=body_velocity)
