@@ -20,7 +20,7 @@ definition = Eq(momentum, mass * velocity)
 definition_units_SI = units.kilogram * units.meter / units.second
 
 
-@validate_input(velocity_=velocity, mass_=symbols.basic.mass)
+@validate_input(velocity_=velocity, mass_=mass)
 @validate_output(momentum)
 def calculate_momentum(mass_: Quantity, velocity_: Quantity) -> Quantity:
     solved = solve(definition, momentum, dict=True)[0][momentum]

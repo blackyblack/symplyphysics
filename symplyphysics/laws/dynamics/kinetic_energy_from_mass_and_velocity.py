@@ -15,7 +15,7 @@ mass = symbols.basic.mass
 law = Eq(kinetic_energy_of_body, mass * body_velocity**2 / 2)
 
 
-@validate_input(body_mass_=symbols.basic.mass, body_velocity_=body_velocity)
+@validate_input(body_mass_=mass, body_velocity_=body_velocity)
 @validate_output(kinetic_energy_of_body)
 def calculate_kinetic_energy(body_mass_: Quantity, body_velocity_: Quantity) -> Quantity:
     result_energy_expr = solve(law, kinetic_energy_of_body, dict=True)[0][kinetic_energy_of_body]
