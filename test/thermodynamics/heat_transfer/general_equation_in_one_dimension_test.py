@@ -33,7 +33,3 @@ def test_law(test_args: Args) -> None:
     lhs = heat_equation.law.lhs.subs(values).doit()
     rhs = heat_equation.law.rhs.subs(values).doit()
     assert expr_equals(lhs, rhs)
-    values = {
-        heat_equation.position: test_args.x,
-        heat_equation.time: test_args.t,
-    }
