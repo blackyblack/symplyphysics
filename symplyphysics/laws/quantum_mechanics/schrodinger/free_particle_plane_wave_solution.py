@@ -25,7 +25,12 @@ from symplyphysics import (
 # Notes
 ## - The energy and momentum of a quantum particle are related by the equation `E = p**2 / (2 * m)`
 ##   where `m` is the mass of the quantum particle.
-## - This solution is divergent in terms of normalization over the whole real line.
+## - The wave function must be normalized, i.e. the integral of the square of its absolute value
+##   over the whole range of the spatial variable must equal 1, but the integral of the complex expontential
+##   diverges if taken over the real line. This is not a problem, though, because the states described by
+##   such a wave function would never be infinite (they would not be defined over the whole real line).
+##   Moreover, the correct solution can be represented by a linear combination of planar waves, which can be
+##   made convergent.
 
 wave_function = Symbol("wave_function", dimensionless)
 particle_momentum = Symbol("particle_momentum", units.momentum)
@@ -48,7 +53,7 @@ law = Eq(
     time_=time,
 )
 @validate_output(wave_function)
-def calculate_wave_function(
+def calculate_wave_function_value(
     particle_momentum_: Quantity,
     particle_energy_: Quantity,
     position_: Quantity,
