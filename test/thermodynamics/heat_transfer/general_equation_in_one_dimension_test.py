@@ -1,25 +1,25 @@
 from collections import namedtuple
 from pytest import fixture
-from sympy import sin, exp
-from symplyphysics import units, Quantity
+from sympy import sin, exp, Rational
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics.heat_transfer import (
     general_equation_in_one_dimension as heat_equation
 )
 
-Args = namedtuple("Args", "rho cv k q T t x")
+# Description
+## The values of the parameters are that of carbon monoxide (CO).
+
+Args = namedtuple("Args", "rho cv k q T")
 
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
-    rho = 1
-    cv = 1
-    k = 1
+    rho = Rational(15, 10)  # kg/m**3
+    cv = 1500  # J/(K * kg)
+    k = Rational(24, 1000)  # W/(K*m)
     q = 0
-    T = sin(heat_equation.position) * exp(-1 * heat_equation.time)
-    t = 1
-    x = 1
-    return Args(rho=rho, cv=cv, k=k, q=q, T=T, t=t, x=x)
+    T = sin(100 * heat_equation.position) * exp(Rational(-8, 75) * heat_equation.time)
+    return Args(rho=rho, cv=cv, k=k, q=q, T=T)
 
 
 def test_law(test_args: Args) -> None:
@@ -27,16 +27,13 @@ def test_law(test_args: Args) -> None:
         heat_equation.medium_density: test_args.rho,
         heat_equation.medium_specific_heat_capacity: test_args.cv,
         heat_equation.thermal_conductivity(heat_equation.position): test_args.k,
-        heat_equation.heat_source_density(heat_equation.position): test_args.q,
+        heat_equation.heat_source_density(heat_equation.position, heat_equation.time): test_args.q,
         heat_equation.temperature(heat_equation.position, heat_equation.time): test_args.T,
     }
-    lhs = heat_equation.law.lhs.subs(values)
-    rhs = heat_equation.law.rhs.subs(values)
+    lhs = heat_equation.law.lhs.subs(values).doit()
+    rhs = heat_equation.law.rhs.subs(values).doit()
     assert expr_equals(lhs, rhs)
     values = {
         heat_equation.position: test_args.x,
         heat_equation.time: test_args.t,
     }
-    lhs = lhs.subs(values)
-    rhs = rhs.subs(values)
-    assert expr_equals(lhs, rhs)

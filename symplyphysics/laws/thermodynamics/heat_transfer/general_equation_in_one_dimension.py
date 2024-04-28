@@ -9,11 +9,12 @@ from symplyphysics import (
 ## Heat equation governs heat diffusion, as well as other diffusive processes. It describes
 ## the evolution of heat transferred from hotter to colder environments in time and space.
 
-# Law: rho * c_v * dT/dt = d(k(x) * dT/dx)/dx + q(x)
-## T - temperature
+# Law: rho * c_v * dT/dt = d(k(x) * dT/dx)/dx + q(x, t)
+## T = T(x, t) - temperature
 ## rho - density of medium
 ## c_v - mass-specific heat capacity of medium
 ## k - [thermal conductivity](https://en.wikipedia.org/wiki/Thermal_conductivity_and_resistivity#Definition) of medium
+## q - density of heat sources
 ## x - position, spatial variable
 ## t - time
 ## d/dt - time derivative
@@ -45,5 +46,5 @@ time = Symbol("time", units.time)
 law = Eq(
     medium_density * medium_specific_heat_capacity * Derivative(temperature(position, time), time),
     Derivative(thermal_conductivity(position) * Derivative(temperature(position, time), position), position)
-    + heat_source_density(position)
+    + heat_source_density(position, time)
 )
