@@ -1,5 +1,5 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, symbols)
 
 # Description
@@ -13,19 +13,16 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 
 momentum = Symbol("momentum", units.momentum)
 velocity = Symbol("velocity", units.velocity)
+mass = symbols.basic.mass
 
-definition = Eq(momentum, symbols.basic.mass * velocity)
+definition = Eq(momentum, mass * velocity)
 
 definition_units_SI = units.kilogram * units.meter / units.second
 
 
-def print_law() -> str:
-    return print_expression(definition)
-
-
-@validate_input(velocity_=velocity, mass_=symbols.basic.mass)
+@validate_input(velocity_=velocity, mass_=mass)
 @validate_output(momentum)
 def calculate_momentum(mass_: Quantity, velocity_: Quantity) -> Quantity:
     solved = solve(definition, momentum, dict=True)[0][momentum]
-    result_expr = solved.subs({symbols.basic.mass: mass_, velocity: velocity_})
+    result_expr = solved.subs({mass: mass_, velocity: velocity_})
     return Quantity(result_expr)

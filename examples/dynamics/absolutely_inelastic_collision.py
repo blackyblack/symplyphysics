@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from sympy import solve
-from symplyphysics import (units, convert_to, Quantity)
+from symplyphysics import units, convert_to, Quantity, print_expression
 from symplyphysics.laws.conservation import momentum_after_collision_equals_to_momentum_before as momentum_conservation_law
 from symplyphysics.definitions import momentum_is_mass_times_velocity as momentum_def
 
@@ -16,8 +16,8 @@ body_mass = Quantity(75 * units.kilogram)
 # Hint dimension so 'convert_to' is able to convert it to m/s
 body_velocity = Quantity(0 * units.meter / units.second, dimension=units.velocity)
 
-print(f"Formula for momentum conservation law is:\n{momentum_conservation_law.print_law()}")
-print(f"Formula for momentum is:\n{momentum_def.print_law()}")
+print(f"Formula for momentum conservation law is:\n{print_expression(momentum_conservation_law.law)}")
+print(f"Formula for momentum is:\n{print_expression(momentum_def.definition)}")
 
 # initial body velocity is 0 so the momentum is 0 as well. So the momentum of system before collision equals to momentum of bullet
 momentum_before = momentum_def.calculate_momentum(bullet_mass, bullet_velocity)
