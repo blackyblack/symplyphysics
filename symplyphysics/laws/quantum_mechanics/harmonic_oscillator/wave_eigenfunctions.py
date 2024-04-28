@@ -14,14 +14,17 @@ from symplyphysics import (
 )
 
 # Description
-## The time-independent Schrödinger equation for the harmonic potential can be solved using the
-## spectral method in the basis of Hermite functions.
+## The time-independent Schrödinger equation describing the wave function of the quantum oscillator
+## can be solved to get the corresponding wave eigenfunctions and energy eigenvalues of the Hamiltonian
+## operator. Each eigenfunction describes a stationary state of the quantum mechanical system with the
+## corresponding energy value (eigenvalue of the Hamiltonian). The combination of all eigenfunctions and
+## eigenvalues represent the energy states allowed.
 
 # Law: psi_n(x) = 1 / sqrt(2**n * factorial(n))
 #               * ((m * w) / (pi * hbar))**(1 / 4)
 #               * exp(-1 * (m * w) / (2 * hbar) * x**2)
 #               * H_n(sqrt((m * w) / hbar) * x)
-## psi_n - n-th wave eigenfunction
+## psi_n - n-th wave eigenfunction (solution of the time-independent Schrödinger equation)
 ## n - mode number (n = 0, 1, 2, ...)
 ## m - mass of oscillating quantum particle
 ## w - angular frequency of quantum oscillator
@@ -50,7 +53,7 @@ law = Eq(
     position_=position,
 )
 @validate_output(wave_function)
-def calculate_wave_function(
+def calculate_wave_function_value(
     mode_number_: int,
     oscillator_mass_: Quantity,
     angular_frequency_: Quantity,

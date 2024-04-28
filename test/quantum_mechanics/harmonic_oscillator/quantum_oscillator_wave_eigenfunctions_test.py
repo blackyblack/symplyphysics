@@ -23,35 +23,35 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = wave_law.calculate_wave_function(test_args.n, test_args.m, test_args.w, test_args.x)
+    result = wave_law.calculate_wave_function_value(test_args.n, test_args.m, test_args.w, test_args.x)
     assert_equal(result, 6.13 / sqrt(units.meter))
 
 
 def test_bad_number(test_args: Args) -> None:
     nb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        wave_law.calculate_wave_function(nb, test_args.m, test_args.w, test_args.x)
+        wave_law.calculate_wave_function_value(nb, test_args.m, test_args.w, test_args.x)
 
 
 def test_bad_mass(test_args: Args) -> None:
     mb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        wave_law.calculate_wave_function(test_args.n, mb, test_args.w, test_args.x)
+        wave_law.calculate_wave_function_value(test_args.n, mb, test_args.w, test_args.x)
     with raises(TypeError):
-        wave_law.calculate_wave_function(test_args.n, 100, test_args.w, test_args.x)
+        wave_law.calculate_wave_function_value(test_args.n, 100, test_args.w, test_args.x)
 
 
 def test_bad_frequency(test_args: Args) -> None:
     wb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        wave_law.calculate_wave_function(test_args.n, test_args.m, wb, test_args.x)
+        wave_law.calculate_wave_function_value(test_args.n, test_args.m, wb, test_args.x)
     with raises(TypeError):
-        wave_law.calculate_wave_function(test_args.n, test_args.m, 100, test_args.x)
+        wave_law.calculate_wave_function_value(test_args.n, test_args.m, 100, test_args.x)
 
 
 def test_bad_position(test_args: Args) -> None:
     xb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        wave_law.calculate_wave_function(test_args.n, test_args.m, test_args.w, xb)
+        wave_law.calculate_wave_function_value(test_args.n, test_args.m, test_args.w, xb)
     with raises(TypeError):
-        wave_law.calculate_wave_function(test_args.n, test_args.m, test_args.w, 100)
+        wave_law.calculate_wave_function_value(test_args.n, test_args.m, test_args.w, 100)
