@@ -31,7 +31,7 @@ width = Symbol("width", units.length)
 expression_1 = width / thickness_of_substrate
 expression_2 = 1.25 * strip_thickness / (pi * thickness_of_substrate)
 expression_3 = 1 + log(4 * pi * width / strip_thickness)
-constant_effective_width = Quantity(120 * pi * units.ohm)
+
 law = Eq(effective_width / thickness_of_substrate, expression_1 + expression_2 * expression_3)
 
 
@@ -43,7 +43,7 @@ def print_law() -> str:
     thickness_of_substrate_=thickness_of_substrate,
     width_=width)
 @validate_output(effective_width)
-def calculate_effective_width(strip_thickness_: float, thickness_of_substrate_: Quantity,
+def calculate_effective_width(strip_thickness_: Quantity, thickness_of_substrate_: Quantity,
     width_: Quantity) -> Quantity:
     if thickness_of_substrate_.scale_factor < width_.scale_factor * 2 * pi:
         raise ValueError("The thickness of substrate must be greater than or equal to the width * 2 * pi")

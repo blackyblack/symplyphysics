@@ -10,7 +10,7 @@ from symplyphysics import (
 from symplyphysics.laws.electricity.transmission_lines.microstrip_lines import effective_width_for_microstrip_line_for_width_less_thickness as effective_width_law
 
 ## The width of the microstrip line is 1 millimeter, and the thickness of the substrate is 7 millimeters, the strip
-## thickness is 50 micrometer. Then the effective width of the microstrip line will be equal to 1 millimeter.
+## thickness is 50 micrometer. Then the effective width of the microstrip line will be equal to 1.13 millimeter.
 
 Args = namedtuple("Args", ["strip_thickness", "thickness_of_substrate", "width"])
 
