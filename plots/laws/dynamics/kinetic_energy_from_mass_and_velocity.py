@@ -1,9 +1,10 @@
 from sympy import solve
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
+from symplyphysics import print_expression
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_velocity as kinetic_energy
 
-print(f"Formula is:\n{kinetic_energy.print_law()}")
+print(f"Formula is:\n{print_expression(kinetic_energy.law)}")
 
 solved = solve(kinetic_energy.law, kinetic_energy.kinetic_energy_of_body,
     dict=True)[0][kinetic_energy.kinetic_energy_of_body]

@@ -1,6 +1,19 @@
-from sympy import (Eq, solve, log)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, symbols, clone_symbol)
+from sympy import Eq, solve, log, Symbol as SymSymbol
+from symplyphysics import (
+    units,
+    Quantity,
+    Symbol,
+    validate_input,
+    validate_output,
+    symbols,
+    clone_symbol,
+)
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.thermodynamics import work_is_volume_integral_of_pressure as work_law
+from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation
+from symplyphysics.laws.quantities import (
+    quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law,
+)
 
 ## Description
 ## The isothermal process of expansion (or compression) of a gas can occur under conditions where heat exchange between the gas and the external environment is carried out at a constant temperature difference.
@@ -30,9 +43,41 @@ gas_mass = clone_symbol(symbols.basic.mass, "gas_mass")
 law = Eq(work, (gas_mass / molar_mass) * units.molar_gas_constant * temperature *
     log(final_volume / start_volume))
 
+# Derive from ideal gas equation
 
-def print_law() -> str:
-    return print_expression(law)
+_mole_count = solve(
+    molar_qty_law.law, molar_qty_law.amount_of_substance,
+)[0].subs({
+    molar_qty_law.extensive_quantity: gas_mass,
+    molar_qty_law.molar_quantity: molar_mass,
+})
+
+_ideal_gas_eqn = ideal_gas_equation.law.subs({
+    ideal_gas_equation.mole_count: _mole_count,
+    ideal_gas_equation.temperature: temperature,
+})
+
+_pressure_expr = solve(
+    _ideal_gas_eqn, ideal_gas_equation.pressure
+)[0].subs(
+    ideal_gas_equation.volume, work_law.volume
+)
+
+_volume_before = SymSymbol("volume_before", positive=True)
+_volume_after = SymSymbol("volume_after", positive=True)
+
+_work_expr = work_law.law.rhs.subs({
+    work_law.volume_before: _volume_before,
+    work_law.volume_after: _volume_after,
+    work_law.pressure(work_law.volume): _pressure_expr
+}).doit().simplify()
+
+_work_from_law = law.rhs.subs({
+    start_volume: _volume_before,
+    final_volume: _volume_after,
+})
+
+assert expr_equals(_work_expr, _work_from_law)
 
 
 @validate_input(mass_=gas_mass,

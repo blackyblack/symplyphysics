@@ -1,0 +1,21 @@
+from sympy import Eq, sqrt, Integral, S
+from symplyphysics import (
+    units,
+    Symbol,
+    Function,
+)
+
+# Description
+## For the wave function to be physically acceptable, it needs to be normalized, i.e.
+## the integral of the square of its absolute value must converge to one. The physical
+## meaning of this is that the particle, whose distribution in space is described by the
+## wave function, must exists _somewhere_ in space.
+
+wave_function = Function("wave_function", 1 / sqrt(units.length))
+position = Symbol("position", units.length)
+time = Symbol("time", units.time)
+
+normalization_condition = Eq(
+    Integral(abs(wave_function(position, time))**2, (position, S.NegativeInfinity, S.Infinity)),
+    1
+)
