@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy import pi
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.electricity.circuits import band_pass_chebyshev_filter_oder_from_distortion_and_frequencies as order_law
+from symplyphysics.laws.electricity.circuits.filters import band_pass_chebyshev_filter_oder_from_distortion_and_frequencies as order_law
 
 # Description
 ## The cutoff frequency is 1 hertz. The upper stop frequency is 18 Hertz. The distortion in the bandwidth is 316, the band-stop distortion

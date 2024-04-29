@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.electricity.circuits import approximation_of_transmission_coefficient_of_low_pass_filter as coefficient_law
+from symplyphysics.laws.electricity.circuits.filters import approximation_of_transmission_coefficient_of_low_pass_filter as coefficient_law
 
 # Description
 ## The cutoff frequency is 1000 Hertz. The selected frequency is 500 Hertz. The distortion in the bandwidth is 0.5, and the Butterworth

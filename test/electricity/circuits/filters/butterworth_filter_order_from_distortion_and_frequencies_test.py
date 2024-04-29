@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy import pi
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.electricity.circuits import butterworth_filter_order_from_distortion_and_frequencies as order_law
+from symplyphysics.laws.electricity.circuits.filters import butterworth_filter_order_from_distortion_and_frequencies as order_law
 
 # Description
 ## The cutoff frequency is 1 hertz. The frequency of the band-stop is 5 Hertz. The distortion in the bandwidth is 0.5, the band-stop distortion
