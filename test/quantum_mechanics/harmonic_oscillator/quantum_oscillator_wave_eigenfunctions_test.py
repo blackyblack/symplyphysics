@@ -16,6 +16,8 @@ Args = namedtuple("Args", "n m w x")
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
     n = 1
+
+    # `sympy` evaluation halts unless these quantities have been evaluated to floating point form
     m = evaluate_quantity(units.planck_mass)
     w = evaluate_quantity(units.planck_angular_frequency)
     x = evaluate_quantity(9 * units.planck_length)
