@@ -20,7 +20,7 @@ from symplyphysics import (
 ## U(x) - potential energy
 ## E - energy of particle, eigenvalue of the equation
 
-# Notes
+# Condition
 ## - This law works in the case of 1 spatial dimension. To use it for the 3-dimensional space
 ##   replace the spatial second derivative with the Laplace operator.
 
