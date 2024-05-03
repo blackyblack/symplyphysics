@@ -1,5 +1,5 @@
 from sympy import Eq, solve, log, symbols, Function as SymFunction, dsolve
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, dimensionless, assert_equal)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.chemistry import avogadro_number_from_mole_count as avogadro_law
@@ -26,19 +26,30 @@ law = Eq(entropy, units.boltzmann_constant * log(statistical_weight))
 
 # Derive the law from the properties of entropy
 
-# TODO: describe the systems
+# Let us find entropy as a function of probability of the system's state, i.e. `S = f(P)`,
+# where `S` is entropy, `P` is probability, and `f` is the functional dependency to be found.
+# This dependency must be universal for all physical systems and should only depend on the system's
+# probability.
+
+# Suppose there are two independent subsystems in states with probabilities `P_1` and `P_2`
+# respectively. If we join the two subsystems into one, the probability of the total system
+# will be `P_12`, and using their independence we have `P_12 = P_1 * P_2`.
 
 _time = symbols("time", real=True)
 _first_probability = symbols("first_probability", cls=SymFunction, positive=True)(_time)
 _second_probability = symbols("second_probability", cls=SymFunction, positive=True)(_time)
 _entropy = symbols("entropy", cls=SymFunction, real=True)
 
-# TODO: describe additive property (make a law?)
+# According to thermodynamics, the entropy of a complex system should equal the sum of entropies
+# of its independent subsystems. This is the additive property of entropy:
 
 _additive_property = Eq(
     _entropy(_first_probability * _second_probability),
     _entropy(_first_probability) + _entropy(_second_probability)
 )
+
+# To solve this functional equation, we can use the following method of variating
+# the two probabilities.
 
 _constant_condition = (_first_probability * _second_probability).diff(_time)
 
@@ -68,7 +79,9 @@ _differential_property = Eq(
 assert expr_equals(_differential_property.lhs.diff(_second_probability), 0)
 assert expr_equals(_differential_property.rhs.diff(_first_probability), 0)
 
-# TODO: write what this means for the proof
+# Since both `P_1` and `P_2` can take arbitrary values in the range of their definition,
+# the function described by `_differential_property` must be constant for all values of `P`.
+# Since `f(P)` is universal for all bodies, the constant must be universal as well
 
 _probability = symbols("probability", positive=True)
 _equation_constant = symbols("equation_constant", real=True)
@@ -79,6 +92,9 @@ _entropy_eqn = Eq(
 )
 
 _integration_constant = symbols("integration_constant", real=True)
+
+# Now we can integrate the above differential property and show that the integration constant is
+# actually zero.
 
 _entropy_via_probability = dsolve(
     _entropy_eqn,
@@ -105,7 +121,13 @@ _entropy_via_probability = _entropy_via_probability.subs(
     _integration_constant_expr,
 )
 
-# TODO: explain the following expression of probability
+# Now, the question is to find the numeric value of the equation constant.
+# To do that, we can compare the entropy difference in two arbitrary states and the
+# logarithm of the probability ratio of these two states.
+
+# Let `V` be some volume containing `N` ideal gas particles and `V_0` be a part of it.
+# Then the probability of finding one molecule in `V_0` is `V_0 / V`, and the probability
+# of finding all `N` particles is `(V_0 / V)**N`
 
 _volume, _total_volume, _particle_count = symbols(
     "volume total_volume particle_count",
@@ -116,6 +138,9 @@ _probability_via_volume = (_volume / _total_volume)**_particle_count
 
 _entropy_via_volume = _entropy_via_probability.subs(_probability, _probability_via_volume)
 
+# Let us assume that during a process the volume of the gas changes from `V_1` to `V_2` at
+# constant temperature. Then we can find the entropy of the two states via the above formula.
+
 _first_volume, _second_volume = symbols(
     "first_volume second_volume",
     positive=True,
@@ -125,6 +150,8 @@ _entropy_difference_derived = (
     _entropy_via_volume.subs(_volume, _second_volume)
     - _entropy_via_volume.subs(_volume, _first_volume)
 ).simplify()
+
+# We also utilise another law derived from completely different thermodynamic principles:
 
 _entropy_difference_from_law = entropy_change_law.law.rhs.subs({
     entropy_change_law.gas_mass: molar_qty_law.law.rhs.subs(
@@ -151,7 +178,7 @@ _equation_constant_expr = solve(
     dict=True,
 )[0][_equation_constant]
 
-# This in, in fact, the Boltzmann constant
+# Thus, we obtain that this is in, in fact, the Boltzmann constant
 assert_equal(_equation_constant_expr, units.boltzmann_constant)
 
 _entropy_via_probability = _entropy_via_probability.subs(
@@ -159,7 +186,8 @@ _entropy_via_probability = _entropy_via_probability.subs(
     units.boltzmann_constant
 )
 
-# TODO: explain the following formula
+# The derivation of the following formula is too long and it can be found in "General Course of Physics"
+# by Sivukhin D.V, Chapter 80, formula (80.8):
 
 _probability_via_statistical_weight = statistical_weight * _probability_via_volume
 
@@ -168,7 +196,7 @@ _entropy_via_statistical_weight = _entropy_via_probability.subs(
     _probability_via_statistical_weight,
 ).expand()
 
-# TODO: explain that we can get rid of the free term
+# Entropy is defined up to a constant term, therefore we can get rid of it in the formula
 
 _entropy_via_statistical_weight = (
     _entropy_via_statistical_weight
@@ -176,10 +204,6 @@ _entropy_via_statistical_weight = (
 )
 
 assert expr_equals(_entropy_via_statistical_weight, law.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(statistical_weight_=statistical_weight)
