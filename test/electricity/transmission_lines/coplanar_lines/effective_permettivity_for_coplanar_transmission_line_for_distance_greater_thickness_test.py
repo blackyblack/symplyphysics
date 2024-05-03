@@ -14,7 +14,7 @@ from symplyphysics.laws.electricity.transmission_lines.coplanar_lines import eff
 ## Then the effective permittivity is 1.895.
 
 Args = namedtuple("Args", [
-    "relative_permittivity", "distance_between_electrodes", "thickness_of_substrate", "central_electrode_width"
+    "relative_permittivity", "distance_between_electrodes", "thickness_of_substrate", "half_of_central_electrode_width"
 ])
 
 
@@ -23,17 +23,17 @@ def test_args_fixture() -> Args:
     relative_permittivity = 4
     distance_between_electrodes = Quantity(10 * units.millimeter)
     thickness_of_substrate = Quantity(4 * units.millimeter)
-    central_electrode_width = Quantity(5 * units.millimeter)
+    half_of_central_electrode_width = Quantity(5 * units.millimeter)
     return Args(relative_permittivity=relative_permittivity,
         distance_between_electrodes=distance_between_electrodes,
         thickness_of_substrate=thickness_of_substrate,
-        central_electrode_width=central_electrode_width)
+        half_of_central_electrode_width=half_of_central_electrode_width)
 
 
 def test_basic_effective_permittivity(test_args: Args) -> None:
     result = permittivity_law.calculate_effective_permittivity(
         test_args.relative_permittivity, test_args.distance_between_electrodes, test_args.thickness_of_substrate,
-        test_args.central_electrode_width)
+        test_args.half_of_central_electrode_width)
     assert_equal(result, 1.895)
 
 
@@ -42,41 +42,41 @@ def test_bad_permittivity(test_args: Args) -> None:
     with raises(errors.UnitsError):
         permittivity_law.calculate_effective_permittivity(bad_permittivity,
             test_args.distance_between_electrodes, test_args.thickness_of_substrate,
-            test_args.central_electrode_width)
+            test_args.half_of_central_electrode_width)
 
 
 def test_bad_distance_between_electrodes(test_args: Args) -> None:
     bad_distance_between_electrodes = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         permittivity_law.calculate_effective_permittivity(test_args.relative_permittivity,
-            bad_distance_between_electrodes, test_args.thickness_of_substrate, test_args.central_electrode_width)
+            bad_distance_between_electrodes, test_args.thickness_of_substrate, test_args.half_of_central_electrode_width)
     with raises(TypeError):
         permittivity_law.calculate_effective_permittivity(test_args.relative_permittivity,
-            100, test_args.thickness_of_substrate, test_args.central_electrode_width)
+            100, test_args.thickness_of_substrate, test_args.half_of_central_electrode_width)
 
 
 def test_bad_thickness_of_substrate(test_args: Args) -> None:
     bad_thickness_of_substrate = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         permittivity_law.calculate_effective_permittivity(test_args.relative_permittivity,
-            test_args.distance_between_electrodes, bad_thickness_of_substrate, test_args.central_electrode_width)
+            test_args.distance_between_electrodes, bad_thickness_of_substrate, test_args.half_of_central_electrode_width)
     with raises(TypeError):
         permittivity_law.calculate_effective_permittivity(test_args.relative_permittivity,
-            test_args.distance_between_electrodes, 100, test_args.central_electrode_width)
+            test_args.distance_between_electrodes, 100, test_args.half_of_central_electrode_width)
     with raises(ValueError):
         permittivity_law.calculate_effective_permittivity(test_args.relative_permittivity, test_args.thickness_of_substrate,
-                                                          test_args.distance_between_electrodes, test_args.central_electrode_width)
+                                                          test_args.distance_between_electrodes, test_args.half_of_central_electrode_width)
 
 
-def test_bad_central_electrode_width(test_args: Args) -> None:
-    bad_central_electrode_width = Quantity(1 * units.coulomb)
+def test_bad_half_of_central_electrode_width(test_args: Args) -> None:
+    bad_half_of_central_electrode_width = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         permittivity_law.calculate_effective_permittivity(test_args.relative_permittivity,
-            test_args.distance_between_electrodes, test_args.thickness_of_substrate, bad_central_electrode_width)
+            test_args.distance_between_electrodes, test_args.thickness_of_substrate, bad_half_of_central_electrode_width)
     with raises(TypeError):
         permittivity_law.calculate_effective_permittivity(test_args.relative_permittivity,
             test_args.distance_between_electrodes, test_args.thickness_of_substrate, 100)
     with raises(ValueError):
         permittivity_law.calculate_effective_permittivity(
-                test_args.relative_permittivity, test_args.central_electrode_width, test_args.thickness_of_substrate,
-                test_args.central_electrode_width)
+                test_args.relative_permittivity, test_args.half_of_central_electrode_width, test_args.thickness_of_substrate,
+                test_args.half_of_central_electrode_width)
