@@ -24,7 +24,7 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = law.calculate_time_dependent_wave_function_value(test_args.psi, test_args.e, test_args.t)
-    assert_equal(result, (-3.00-1.02j) / sqrt(units.meter), tolerance=3e-3)
+    assert_equal(result, (-0.844-3.05j) / sqrt(units.meter))
 
 
 def test_bad_wave_function(test_args: Args) -> None:

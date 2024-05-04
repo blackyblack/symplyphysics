@@ -48,12 +48,12 @@ _condition = condition.normalization_condition.subs({
     condition.time: time,
 })
 
-_tise_condition = _condition.replace(
+_time_independent_condition = _condition.replace(
     condition.wave_function,
     lambda position_, time_: time_independent_wave_function(position_),
 )
 
-_tdse_condition = _condition.replace(
+_time_dependent_condition = _condition.replace(
     condition.wave_function,
     lambda position_, time_: law.rhs.subs({
         position: position_,
@@ -62,8 +62,8 @@ _tdse_condition = _condition.replace(
 )
 
 # The latter condition actually reduces to the former one
-assert expr_equals(_tise_condition.lhs, _tdse_condition.lhs)
-assert expr_equals(_tise_condition.rhs, _tdse_condition.rhs)
+assert expr_equals(_time_independent_condition.lhs, _time_dependent_condition.lhs)
+assert expr_equals(_time_independent_condition.rhs, _time_dependent_condition.rhs)
 
 # TODO: prove this law
 
@@ -80,7 +80,6 @@ def calculate_time_dependent_wave_function_value(
     time_: Quantity,
 ) -> Quantity:
     result = law.rhs.subs({
-        hbar: Quantity(1.054571817e-34 * units.joule * units.second),
         time_independent_wave_function(position): time_independent_wave_function_value_,
         particle_energy: particle_energy_,
         time: time_,
