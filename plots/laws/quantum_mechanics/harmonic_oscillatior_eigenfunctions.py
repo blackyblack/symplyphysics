@@ -26,7 +26,7 @@ base_plot = plot(
 law = wave_eigenfunctions.law.rhs.subs({
     pi: pi.evalf(),
     wave_eigenfunctions.hbar: convert_to(units.hbar, units.joule * units.second).evalf(),
-}).evalf()
+})
 
 for mode_number_ in mode_numbers_:
     expr = law.subs(values).subs(
