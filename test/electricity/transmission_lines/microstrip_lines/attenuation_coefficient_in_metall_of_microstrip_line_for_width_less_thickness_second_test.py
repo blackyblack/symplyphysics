@@ -8,7 +8,7 @@ from symplyphysics import (
     prefixes
 )
 
-from symplyphysics.laws.electricity.transmission_lines.microstrip_lines import attenuation_coefficient_in_metall_of_microstrip_line_for_width_less_thickness as coefficient_law
+from symplyphysics.laws.electricity.transmission_lines.microstrip_lines import attenuation_coefficient_in_metall_of_microstrip_line_for_width_less_thickness_second as coefficient_law
 
 ## The surface resistance of the metal strip is 2.576 milliohm. The wave resistance of the line is 70 ohm. The thickness
 ## of the substrate and the metal strip is 10 millimeter and 50 micrometer, respectively. The width of the strip is 6 millimeter,
@@ -69,6 +69,13 @@ def test_bad_thickness_of_substrate(test_args: Args) -> None:
     with raises(TypeError):
         coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
             test_args.wave_resistance, 100, test_args.effective_width, test_args.strip_thickness, test_args.width)
+    with raises(ValueError):
+        coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
+            test_args.wave_resistance, test_args.effective_width, test_args.thickness_of_substrate, test_args.strip_thickness, test_args.width)
+    thickness_of_substrate = Quantity(32 * units.millimeter)
+    with raises(ValueError):
+        coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
+            test_args.wave_resistance, thickness_of_substrate, test_args.effective_width, test_args.strip_thickness, test_args.width)
 
 
 def test_bad_effective_width(test_args: Args) -> None:
