@@ -20,8 +20,8 @@ from symplyphysics import (
 
 # Conditions:
 # h - thickness of substrate,
-# 2 * b - distance between the extreme electrodes.
-# - h >= b / 2.
+# b - distance between the extreme electrodes.
+# - h >= b / 4.
 
 
 effective_permittivity = Symbol("effective_permittivity", dimensionless)
