@@ -1,4 +1,4 @@
-from typing import Iterable
+from typing import Sequence
 from sympy import Eq, Idx, factorial
 from symplyphysics import (
     Symbol,
@@ -35,7 +35,7 @@ law = Eq(
 
 @validate_input(particle_counts_=particle_count)
 @validate_output(statistical_weight)
-def calculate_statistical_weight(particle_counts_: Iterable[int]) -> int:
+def calculate_statistical_weight(particle_counts_: Sequence[int]) -> int:
     local_index = Idx("local_index", (1, len(particle_counts_)))
     result = law.rhs.subs(global_index, local_index).doit()
     for idx_, particle_count_ in enumerate(particle_counts_, 1):
