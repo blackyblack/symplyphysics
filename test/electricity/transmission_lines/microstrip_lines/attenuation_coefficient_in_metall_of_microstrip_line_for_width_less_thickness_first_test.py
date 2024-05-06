@@ -72,10 +72,6 @@ def test_bad_thickness_of_substrate(test_args: Args) -> None:
     with raises(ValueError):
         coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
             test_args.wave_resistance, test_args.effective_width, test_args.thickness_of_substrate, test_args.strip_thickness, test_args.width)
-    thickness_of_substrate = Quantity(10 * units.millimeter)
-    with raises(ValueError):
-        coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
-            test_args.wave_resistance, thickness_of_substrate, test_args.effective_width, test_args.strip_thickness, test_args.width)
 
 
 def test_bad_effective_width(test_args: Args) -> None:

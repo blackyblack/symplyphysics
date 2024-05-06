@@ -24,7 +24,6 @@ from symplyphysics import (
 ## t - strip thickness of the microstrip line.
 
 # Conditions:
-# - the thickness of the substrate of the microstrip line should be greater than or equal to the effective width;
 # - the thickness of the substrate of the microstrip line should be greater than or equal to the effective width * 2 * pi.
 
 attenuation_coefficient = Symbol("attenuation_coefficient", 1 / units.length)
@@ -53,8 +52,6 @@ law = Eq(attenuation_coefficient, expression_2 * ((32 - expression_1) / (32 + ex
 def calculate_attenuation_coefficient(surface_resistance_: Quantity,
     wave_resistance_: Quantity, thickness_of_substrate_: Quantity,
     effective_width_: Quantity, strip_thickness_: Quantity, width_: Quantity) -> Quantity:
-    if thickness_of_substrate_.scale_factor < effective_width_.scale_factor:
-        raise ValueError("The thickness of substrate must be greater than or equal to the effective width")
     if thickness_of_substrate_.scale_factor < effective_width_.scale_factor * 2 * pi:
         raise ValueError("The thickness of substrate must be greater than or equal to the effective width * 2 * pi")
 
