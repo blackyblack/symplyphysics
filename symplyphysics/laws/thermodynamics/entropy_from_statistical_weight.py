@@ -51,7 +51,7 @@ _additive_property = Eq(
 # To solve this functional equation, we can use the following method of variating
 # the two probabilities.
 
-_constant_condition = (_first_probability * _second_probability).diff(_time)
+_constant_condition = Eq((_first_probability * _second_probability).diff(_time), 0)
 
 _first_probability_diff_expr = solve(
     _constant_condition,
@@ -76,12 +76,15 @@ _differential_property = Eq(
     _first_probability_expr * _entropy(_first_probability).diff(_first_probability),
 )
 
+# Now the left-hand side only depends on `P_1` and the right-hand side only depends on `P_2`
+
 assert expr_equals(_differential_property.lhs.diff(_second_probability), 0)
 assert expr_equals(_differential_property.rhs.diff(_first_probability), 0)
 
-# Since both `P_1` and `P_2` can take arbitrary values in the range of their definition,
-# the function described by `_differential_property` must be constant for all values of `P`.
-# Since `f(P)` is universal for all bodies, the constant must be universal as well
+# 1. Since both `P_1` and `P_2` can take arbitrary values in the range of their definition,
+# the function described by `_differential_property` must be constant for all values of its argument.
+
+# 2. Since `f(P)` is universal for all bodies, the constant is universal for all bodies as well.
 
 _probability = symbols("probability", positive=True)
 _equation_constant = symbols("equation_constant", real=True)
@@ -139,7 +142,8 @@ _probability_via_volume = (_volume / _total_volume)**_particle_count
 _entropy_via_volume = _entropy_via_probability.subs(_probability, _probability_via_volume)
 
 # Let us assume that during a process the volume of the gas changes from `V_1` to `V_2` at
-# constant temperature. Then we can find the entropy of the two states via the above formula.
+# constant temperature and particle count. Then we can find the entropy of the two states 
+# via the above formula.
 
 _first_volume, _second_volume = symbols(
     "first_volume second_volume",
