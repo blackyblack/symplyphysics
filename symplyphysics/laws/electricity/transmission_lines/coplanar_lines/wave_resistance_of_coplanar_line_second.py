@@ -51,7 +51,7 @@ law = Eq(wave_resistance, expression_1 * expression_3)
 @validate_output(wave_resistance)
 def calculate_wave_resistance(effective_permittivity_: float,
     distance_between_electrodes_: Quantity,
-    central_electrode_width_: Quantity) -> float:
+    central_electrode_width_: Quantity) -> Quantity:
     if ((central_electrode_width_.scale_factor / distance_between_electrodes_.scale_factor)**2 <= 0.5) or ((central_electrode_width_.scale_factor / distance_between_electrodes_.scale_factor)**2 > 1):
         raise ValueError("k^2 must be greater than the 0.5 and less than or equal to the 1")
 
