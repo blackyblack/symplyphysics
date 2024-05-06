@@ -1,4 +1,4 @@
-from sympy import Eq, sqrt, exp, I
+from sympy import Eq, sqrt, exp, I, solve
 from sympy.physics.units import hbar
 from symplyphysics import (
     Quantity,
@@ -11,6 +11,10 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.conditions.quantum_mechanics import (
     one_dimensional_wave_function_is_normalized as condition,
+)
+from symplyphysics.laws.quantum_mechanics.schrodinger import (
+    time_independent_equation_in_one_dimension as stationary_eqn,
+    time_dependent_equation_in_one_dimension as general_eqn,
 )
 
 # Description
@@ -65,7 +69,38 @@ _time_dependent_condition = _condition.replace(
 assert expr_equals(_time_independent_condition.lhs, _time_dependent_condition.lhs)
 assert expr_equals(_time_independent_condition.rhs, _time_dependent_condition.rhs)
 
-# TODO: prove this law
+# Prove this law
+
+_stationary_eqn = stationary_eqn.law.subs({
+    stationary_eqn.position: position,
+    stationary_eqn.particle_energy: particle_energy,
+}).replace(
+    stationary_eqn.wave_function, time_independent_wave_function
+)
+
+_general_eqn = general_eqn.law.subs({
+    general_eqn.position: position,
+    general_eqn.time: time,
+    general_eqn.particle_mass: stationary_eqn.particle_mass,
+}).replace(
+    general_eqn.wave_function,
+    lambda position_, time_: law.rhs.subs(position, position_),
+).replace(
+    general_eqn.potential_energy,
+    lambda position, _time: stationary_eqn.potential_energy(position),
+).doit()
+
+_stationary_function_before = solve(
+    _stationary_eqn,
+    time_independent_wave_function(position),
+)[0]
+
+_stationary_function_after = solve(
+    _general_eqn,
+    time_independent_wave_function(position)
+)[0]
+
+assert expr_equals(_stationary_function_before, _stationary_function_after)
 
 
 @validate_input(
