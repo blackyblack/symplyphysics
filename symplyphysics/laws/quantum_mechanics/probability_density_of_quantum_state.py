@@ -11,12 +11,13 @@ from symplyphysics import (
 ## Probability density of a quantum system is the likelihood that the system will be in a particular
 ## position at a particular time.
 
-# Law: rho(x, t) = Psi(x, t) * Psi*(x, t) = abs(Psi(x, t))**2
+# Law: rho(x, t) = Psi(x, t) * conj(Psi(x, t)) = abs(Psi(x, t))**2
 ## rho - probability density
 ## Psi - wave function
 ## x - position
 ## t - time
 ## abs - absolute value
+## conj(z) - complex conjugate of `z`
 
 probability_density = Symbol("probability_density", 1 / units.length)
 wave_function = Symbol("wave_function", 1 / sqrt(units.length))
