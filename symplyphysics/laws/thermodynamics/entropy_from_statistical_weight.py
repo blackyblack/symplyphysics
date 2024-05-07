@@ -40,6 +40,7 @@ _first_probability = symbols("first_probability", cls=SymFunction, positive=True
 _second_probability = symbols("second_probability", cls=SymFunction, positive=True)(_time)
 _entropy = symbols("entropy", cls=SymFunction, real=True)
 
+# FIXME: use law for this step
 # According to thermodynamics, the entropy of a complex system should equal the sum of entropies
 # of its independent subsystems. This is the additive property of entropy:
 
@@ -137,6 +138,7 @@ _volume, _total_volume, _particle_count = symbols(
     positive=True,
 )
 
+# FIXME: use law for this step
 _probability_via_volume = (_volume / _total_volume)**_particle_count
 
 _entropy_via_volume = _entropy_via_probability.subs(_probability, _probability_via_volume)
@@ -192,7 +194,7 @@ _entropy_via_probability = _entropy_via_probability.subs(
 
 # The derivation of the following formula is too long and it can be found in "General Course of Physics"
 # by Sivukhin D.V, Chapter 80, formula (80.8):
-
+# FIXME: use law in this step
 _probability_via_statistical_weight = statistical_weight * _probability_via_volume
 
 _entropy_via_statistical_weight = _entropy_via_probability.subs(
