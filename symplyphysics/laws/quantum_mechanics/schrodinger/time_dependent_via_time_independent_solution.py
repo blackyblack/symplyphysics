@@ -54,7 +54,7 @@ _condition = condition.normalization_condition.subs({
 
 _time_independent_condition = _condition.replace(
     condition.wave_function,
-    lambda position_, time_: time_independent_wave_function(position_),
+    lambda position_, _time: time_independent_wave_function(position_),
 )
 
 _time_dependent_condition = _condition.replace(
