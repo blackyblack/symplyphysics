@@ -1,4 +1,4 @@
-from sympy import Eq, sqrt, exp, I
+from sympy import Eq, sqrt, exp, I, solve
 from sympy.physics.units import hbar
 from symplyphysics import (
     Quantity,
@@ -11,6 +11,10 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.conditions.quantum_mechanics import (
     one_dimensional_wave_function_is_normalized as condition,
+)
+from symplyphysics.laws.quantum_mechanics.schrodinger import (
+    time_independent_equation_in_one_dimension as stationary_eqn,
+    time_dependent_equation_in_one_dimension as general_eqn,
 )
 
 # Description
@@ -50,7 +54,7 @@ _condition = condition.normalization_condition.subs({
 
 _time_independent_condition = _condition.replace(
     condition.wave_function,
-    lambda position_, time_: time_independent_wave_function(position_),
+    lambda position_, _time: time_independent_wave_function(position_),
 )
 
 _time_dependent_condition = _condition.replace(
@@ -65,7 +69,45 @@ _time_dependent_condition = _condition.replace(
 assert expr_equals(_time_independent_condition.lhs, _time_dependent_condition.lhs)
 assert expr_equals(_time_independent_condition.rhs, _time_dependent_condition.rhs)
 
-# TODO: prove this law
+# Prove this law
+
+_stationary_eqn = stationary_eqn.law.subs({
+    stationary_eqn.position: position,
+    stationary_eqn.particle_energy: particle_energy,
+}).replace(
+    stationary_eqn.wave_function, time_independent_wave_function
+)
+
+# Substitute the time-dependent wave function defined in this law into the general Schrödinger equation
+
+_general_eqn = general_eqn.law.subs({
+    general_eqn.position: position,
+    general_eqn.time: time,
+    general_eqn.particle_mass: stationary_eqn.particle_mass,
+}).replace(
+    general_eqn.wave_function,
+    lambda position_, time_: law.rhs.subs(position, position_),
+).replace(
+    general_eqn.potential_energy,
+    lambda position_, time_: stationary_eqn.potential_energy(position_),
+).doit()
+
+# Solve for the stationary wave function in both equations and compare them
+
+_wave_function_of_stationary_eqn = solve(
+    _stationary_eqn,
+    time_independent_wave_function(position),
+)[0]
+
+_wave_function_of_general_eqn = solve(
+    _general_eqn,
+    time_independent_wave_function(position)
+)[0]
+
+# The two expressions happen to be equal, which means that the wave function proposed in this
+# law is indeed the solution to the general Schödinger equation.
+
+assert expr_equals(_wave_function_of_stationary_eqn, _wave_function_of_general_eqn)
 
 
 @validate_input(
