@@ -48,7 +48,7 @@ class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancest
         return self.scale_factor >= 0
 
     def _eval_Abs(self) -> Self:
-        return Quantity(Abs(self.scale_factor), dimension=self.dimension)
+        return self.__class__(Abs(self.scale_factor), dimension=self.dimension)
 
 
 # Allows for some SymPy comparisons, eg Piecewise function
