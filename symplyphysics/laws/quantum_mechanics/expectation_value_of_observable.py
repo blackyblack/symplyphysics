@@ -15,9 +15,10 @@ from symplyphysics import (
     Function,
 )
 
-
 # Description
-## TODO
+## Roughly speaking, an observable is a measurable property of a physical system, such as spin, position,
+## energy, momentum, etc. In terms of Quantum Mechanics, every physical observable corresponts to an operator
+## which acts on the wave function.
 
 # Law: <O> = Integral(conj(psi(x, t)) * O[psi(x, t)], (x, -oo, oo))
 ## O - observable operator
