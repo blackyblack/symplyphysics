@@ -20,6 +20,9 @@ from symplyphysics.core.symbols.quantities import scale_factor
 ## G - shear modulus of the object
 ## gamma - shear strain (angle of deformation, see Note for reference)
 
+# Conditions
+## - The deformation is elastic
+
 # Note
 ## For a visual representation of shear stress visit [this](https://vuzdoc.org/htm/img/3/6176/223.png)
 
