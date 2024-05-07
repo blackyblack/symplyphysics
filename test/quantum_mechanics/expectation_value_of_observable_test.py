@@ -10,7 +10,7 @@ Args = namedtuple("Args", "obs psi")
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
     def psi(position: Expr, _time: Expr) -> Expr:
-        return root(pi, -4) * exp(position**2 / 2)
+        return root(pi, -4) * exp(-position**2 / 2)
     
     def obs(psi_in: mean_law.WaveFunction) -> mean_law.WaveFunction:
         def psi_out(position: Expr, time: Expr) -> Expr:
@@ -22,4 +22,4 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = mean_law.calculate_mean_observable_value(test_args.obs, test_args.psi)
-    assert_equal(float(result), Rational(1, 4))
+    assert_equal(float(result), Rational(1, 2))
