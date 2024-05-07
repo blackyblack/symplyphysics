@@ -1,0 +1,57 @@
+from typing import Callable, TypeAlias
+from sympy import (
+    Eq,
+    Integral,
+    Function as SymFunction,
+    symbols,
+    sqrt,
+    conjugate,
+    S,
+    Expr,
+)
+from symplyphysics import (
+    units,
+    Symbol,
+    Function,
+)
+
+
+# Description
+## TODO
+
+# Law: <O> = Integral(conj(psi(x, t)) * O[psi(x, t)], (x, -oo, oo))
+## O - observable operator
+## psi - wave function
+## x - position
+## t - time
+## oo - infinity
+## conj - complex conjugate
+## O[f] - operator `O` applied to function `f`
+
+mean_observable_value = symbols("mean_observable_value")
+observable = symbols("observable", cls=SymFunction)
+wave_function = Function("wave_function", 1 / sqrt(units.length))
+position = Symbol("position", units.length, real=True)
+time = Symbol("time", units.time)
+
+law = Eq(
+    mean_observable_value,
+    Integral(
+        conjugate(wave_function(position, time))
+        * observable(wave_function(position, time)),
+        (position, S.NegativeInfinity, S.Infinity)
+    ),
+)
+
+WaveFunction: TypeAlias = Callable[[Expr, Expr], Expr]
+
+def calculate_mean_observable_value(
+    observable_: Callable[[WaveFunction], WaveFunction],
+    wave_function_: WaveFunction,
+) -> Expr:
+    result = law.rhs.replace(
+        wave_function, wave_function_,
+    ).replace(
+        observable, lambda _wave_function: observable_(wave_function_)(position, time),
+    ).doit()
+    return result
