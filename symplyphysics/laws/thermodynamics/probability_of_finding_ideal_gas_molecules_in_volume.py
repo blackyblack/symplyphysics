@@ -8,6 +8,7 @@ from symplyphysics import (
     validate_output,
     convert_to_float,
 )
+from symplyphysics.core.symbols.probability import Probability
 
 # Description
 ## For ideal gas molecules, we can calculate the probability of N molecules occupying a certain region
@@ -43,7 +44,7 @@ def calculate_probability(
     total_volume_: Quantity,
     partial_volume_: Quantity,
     particle_count_: int,
-) -> float:
+) -> Probability:
     if partial_volume_.scale_factor > total_volume_.scale_factor:
         raise ValueError("Partial volume must not exceed total volume")
 
@@ -52,4 +53,5 @@ def calculate_probability(
         partial_volume: partial_volume_,
         particle_count: particle_count_,
     })
-    return convert_to_float(result)
+
+    return Probability(convert_to_float(result))

@@ -36,6 +36,10 @@ def test_bad_volume(test_args: Args) -> None:
         probability_law.calculate_probability(test_args.v0, vb, test_args.n)
     with raises(TypeError):
         probability_law.calculate_probability(test_args.v0, 100, test_args.n)
+
+    vb = Quantity(2 * test_args.v0)
+    with raises(ValueError):
+        probability_law.calculate_probability(test_args.v0, vb, test_args.n)
     
 
 def test_bad_number(test_args: Args) -> None:
