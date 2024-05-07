@@ -19,7 +19,7 @@ from symplyphysics import (
 ## medium will be called the effective permittivity of the line.
 
 ## Law is: am = (6.1e-5 * Rs * Z0 * ef / h) * (Wef / h + (0.667 * Wef / h) / (Wef /  h + 1.444)) * F, where
-## F = 1 + (h / Wef) * (1 - 1.25 * t / (pi * h) + 1.25 * ln(2 * h / t) / pi) (if h < 2 * pi * Wef),
+## F = 1 + (h / Wef) * (1 - 1.25 * t / (pi * h) + 1.25 * ln(2 * h / t) / pi),
 ## am - attenuation coefficient of the metal of the microstrip line,
 ## Wef - effective width of the microstrip line,
 ## Rs - surface resistance of the metal strip,
