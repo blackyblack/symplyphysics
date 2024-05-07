@@ -78,6 +78,8 @@ _stationary_eqn = stationary_eqn.law.subs({
     stationary_eqn.wave_function, time_independent_wave_function
 )
 
+# Substitute the time-dependent wave function defined in this law into the general Schrödinger equation
+
 _general_eqn = general_eqn.law.subs({
     general_eqn.position: position,
     general_eqn.time: time,
@@ -87,20 +89,25 @@ _general_eqn = general_eqn.law.subs({
     lambda position_, time_: law.rhs.subs(position, position_),
 ).replace(
     general_eqn.potential_energy,
-    lambda position, _time: stationary_eqn.potential_energy(position),
+    lambda position_, time_: stationary_eqn.potential_energy(position_),
 ).doit()
 
-_stationary_function_before = solve(
+# Solve for the stationary wave function in both equations and compare them
+
+_wave_function_of_stationary_eqn = solve(
     _stationary_eqn,
     time_independent_wave_function(position),
 )[0]
 
-_stationary_function_after = solve(
+_wave_function_of_general_eqn = solve(
     _general_eqn,
     time_independent_wave_function(position)
 )[0]
 
-assert expr_equals(_stationary_function_before, _stationary_function_after)
+# The two expressions happen to be equal, which means that the wave function proposed in this
+# law is indeed the solution to the general Schödinger equation.
+
+assert expr_equals(_wave_function_of_stationary_eqn, _wave_function_of_general_eqn)
 
 
 @validate_input(
