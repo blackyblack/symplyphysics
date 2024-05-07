@@ -1,6 +1,6 @@
 from functools import partial
 from typing import Any, Optional, Self, Sequence
-from sympy import S, Basic, Expr, sympify
+from sympy import S, Basic, Expr, sympify, Abs
 from sympy.physics.units import Dimension, Quantity as SymQuantity
 from sympy.physics.units.systems.si import SI
 from sympy.multipledispatch import dispatch
@@ -48,7 +48,7 @@ class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancest
         return self.scale_factor >= 0
 
     def _eval_Abs(self) -> Self:
-        return self if self.scale_factor >= 0 else (-1 * self)
+        return self.__class__(Abs(self.scale_factor), dimension=self.dimension)
 
 
 # Allows for some SymPy comparisons, eg Piecewise function
