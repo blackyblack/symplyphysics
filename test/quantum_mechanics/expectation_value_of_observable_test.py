@@ -22,4 +22,4 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = mean_law.calculate_mean_observable_value(test_args.obs, test_args.psi)
-    assert_equal(result, Rational(1, 4))
+    assert_equal(float(result), Rational(1, 4))
