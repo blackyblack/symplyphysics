@@ -1,4 +1,4 @@
-from typing import Callable, TypeAlias
+from typing import Callable
 from sympy import (
     Eq,
     Integral,
@@ -14,10 +14,11 @@ from symplyphysics import (
     Symbol,
     Function,
 )
+from symplyphysics.core.type_aliases import WaveFunction, Observable
 
 # Description
 ## Roughly speaking, an observable is a measurable property of a physical system, such as spin, position,
-## energy, momentum, etc. In terms of Quantum Mechanics, every physical observable corresponts to an operator
+## energy, momentum, etc. In terms of Quantum Mechanics, every physical observable corresponds to an operator
 ## which acts on the wave function.
 
 # Law: <O> = Integral(conj(psi(x, t)) * O[psi(x, t)], (x, -oo, oo))
@@ -26,6 +27,7 @@ from symplyphysics import (
 ## x - position
 ## t - time
 ## oo - infinity
+## <O> - expectation value of O
 ## conj - complex conjugate
 ## O[f] - operator `O` applied to function `f`
 
@@ -44,10 +46,8 @@ law = Eq(
     ),
 )
 
-WaveFunction: TypeAlias = Callable[[Expr, Expr], Expr]
-
 def calculate_mean_observable_value(
-    observable_: Callable[[WaveFunction], WaveFunction],
+    observable_: Observable,
     wave_function_: WaveFunction,
 ) -> Expr:
     result = law.rhs.replace(
