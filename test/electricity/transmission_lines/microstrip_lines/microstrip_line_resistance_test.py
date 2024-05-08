@@ -11,7 +11,8 @@ from symplyphysics import (
 from symplyphysics.laws.electricity.transmission_lines.microstrip_lines import microstrip_line_resistance as resistance_law
 
 ## The strip width of the microstrip line is 1 millimeter, and the strip length is 5 millimeters, the strip
-## thickness is 50 micrometer. Then the resistance of the microstrip line will be equal to 10.43 milliohm.
+## thickness is 50 micrometer. The surface resistance of the metal strip is 2.576 milliohm.
+## Then the resistance of the microstrip line will be equal to 10.43 milliohm.
 
 Args = namedtuple("Args", ["strip_thickness", "strip_length", "strip_width", "surface_resistance"])
 

@@ -11,7 +11,7 @@ from symplyphysics import (
 ## Description
 ## The microstrip line is a dielectric substrate on which a metal strip is applied.
 
-## Law is: R = (1.14 + 0.217 * ln(W / (5 * t))) * Rs * l / (2 * (W + t)), where
+## Law is: R = (1.4 + 0.217 * ln(W / (5 * t))) * Rs * l / (2 * (W + t)), where
 ## R - resistance of the microstrip line,
 ## W - strip width of the microstrip line,
 ## l - strip length,
