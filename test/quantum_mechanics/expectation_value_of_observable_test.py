@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import fixture
-from sympy import Expr, pi, root, exp, Rational
+from sympy import Expr, pi, root, exp
 from symplyphysics import assert_equal
 from symplyphysics.core.type_aliases import WaveFunction
 from symplyphysics.laws.quantum_mechanics import expectation_value_of_observable as mean_law
@@ -23,4 +23,4 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = mean_law.calculate_mean_observable_value(test_args.obs, test_args.psi)
-    assert_equal(float(result), Rational(1, 2))
+    assert_equal(result.evalf(), 0.5)
