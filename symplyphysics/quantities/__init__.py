@@ -11,6 +11,9 @@ standard_conditions_temperature = Quantity(273.15 * units.kelvin)
 # purposes.
 standard_laboratory_temperature = Quantity(298 * units.kelvin)
 
+# Mass of stationary electron
+electron_rest_mass = Quantity(9.1093837015e-31 * units.kilogram)
+
 __all__ = [
     "standard_conditions_temperature",
 ]
