@@ -13,7 +13,7 @@ from symplyphysics import (
 ## The inductance of the upper metal strip without taking into account the lower electrode can be
 ## calculated by knowing the geometric parameters of the strip.
 
-## Law is: L = 2e-4 * l * (ln(l / (W + t)) + 1.193 + 0.2234 * ln((W + t) / l)), where
+## Law is: L = 2e-4 * l * (ln(l / (W + t)) + 1.193 + 0.2235 * ln((W + t) / l)), where
 ## L - inductance of the microstrip line strip,
 ## W - strip width of the microstrip line,
 ## l - strip length,
