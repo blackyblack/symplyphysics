@@ -5,7 +5,7 @@ from symplyphysics import units, Quantity, Symbol, validate_input, validate_outp
 ## Fundamentally the energy of an object is synonimical to its mass.
 
 # Law: E = m * c**2, where
-## E is energy of body/system,
+## E is total (or relativistic) energy of body/system,
 ## m is mass (relativistic mass, not only rest mass),
 ## c is speed of light.
 
