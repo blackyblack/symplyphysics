@@ -1,28 +1,23 @@
 from sympy import Eq, solve
-from symplyphysics import units, Quantity, Symbol, print_expression, validate_input, validate_output
+from symplyphysics import units, Quantity, Symbol, validate_input, validate_output, symbols
 
 # Description
-## Fundamentally inner energy of an object is synonimical to its mass.
+## Fundamentally the energy of an object is synonimical to its mass.
 
 # Law: E = m * c**2, where
-## E is rest energy of body/system,
-## m is mass,
+## E is energy of body/system,
+## m is mass (relativistic mass, not only rest mass),
 ## c is speed of light.
 
-rest_energy = Symbol("rest_energy", units.energy)
-# This is equivalent of symbols.basic.mass
-rest_mass = Symbol("rest_mass", units.mass)
+energy = Symbol("energy", units.energy)
+mass = symbols.basic.mass
 
-law = Eq(rest_energy, rest_mass * units.speed_of_light**2)
-
-
-def print_law() -> str:
-    return print_expression(law)
+law = Eq(energy, mass * units.speed_of_light**2)
 
 
-@validate_input(rest_mass_=rest_mass)
-@validate_output(rest_energy)
-def calculate_rest_energy(rest_mass_: Quantity) -> Quantity:
-    result_expr = solve(law, rest_energy, dict=True)[0][rest_energy]
-    energy_applied = result_expr.subs({rest_mass: rest_mass_})
+@validate_input(mass_=mass)
+@validate_output(energy)
+def calculate_rest_energy(mass_: Quantity) -> Quantity:
+    result_expr = solve(law, energy, dict=True)[0][energy]
+    energy_applied = result_expr.subs({mass: mass_})
     return Quantity(energy_applied)
