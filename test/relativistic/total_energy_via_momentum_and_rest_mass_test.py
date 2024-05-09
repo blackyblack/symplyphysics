@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.relativistic import energy_momentum_relation as relation
+from symplyphysics.laws.relativistic import total_energy_via_momentum_and_rest_mass as relation
 
 # For a neutrino of rest mass m0 = 1.43e-36 kg having momentum p = 1.33e-27 kg*m/s
 # the relativistic energy amounts to E = 2.61 eV.
