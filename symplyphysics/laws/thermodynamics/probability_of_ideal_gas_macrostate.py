@@ -4,13 +4,13 @@ from symplyphysics import (
     dimensionless,
     Symbol,
     convert_to_float,
-    validate_input,
     validate_output,
     ProductIndexed,
     SymbolIndexed,
     global_index,
     assert_equal,
 )
+from symplyphysics.core.quantity_decorator import _assert_expected_unit
 from symplyphysics.core.symbols.probability import Probability
 
 # Description
@@ -32,7 +32,7 @@ from symplyphysics.core.symbols.probability import Probability
 # Law: P = G * Product(p_i**N_i, i)
 ## P - probability of macrostate
 ## G - statistical weight of the macrostate
-## p_i - probability of finding one particle in i-th cell
+## p_i - probability of finding at least one particle in i-th cell
 ## N_i - number of particles in i-th cell
 
 # Conditions
@@ -56,36 +56,32 @@ law = Eq(
 )
 
 
-@validate_input(
-    one_particle_in_cell_probabilities_=one_particle_in_cell_probability,
-    particle_count_in_cells_=particle_count_in_cell,
-)
 @validate_output(macrostate_probability)
 def calculate_macrostate_probability(
-    one_particle_in_cell_probabilities_: Sequence[Probability],
-    particle_count_in_cells_: Sequence[int],
+    probabilities_and_particle_counts_: Sequence[tuple[Probability, int]],
 ) -> Probability:
-    if len(one_particle_in_cell_probabilities_) != len(particle_count_in_cells_):
-        raise ValueError("The number of particle counts must equal the number of probabilities")
+    for probability_, particle_count_ in probabilities_and_particle_counts_:
+        _assert_expected_unit(probability_, dimensionless, "probability", "calculate_macrostate_probability")
+        _assert_expected_unit(particle_count_, dimensionless, "particle_count", "calculate_macrostate_probability")
+
+    probabilities_, particle_counts_ = zip(*probabilities_and_particle_counts_)
 
     try:
-        assert_equal(sum(one_particle_in_cell_probabilities_), 1)
+        assert_equal(sum(probabilities_), 1)
     except AssertionError as e:
         raise ValueError("The probabilities must sum up to 1") from e
 
-    statistical_weight_ = factorial(sum(particle_count_in_cells_))
-    for particle_count_ in particle_count_in_cells_:
-        statistical_weight_ = statistical_weight_ // factorial(particle_count_)
+    # See [statistical weight law](./maxwell_boltzmann_statistics/statistical_weight_of_macrostate.py) for details
+    statistical_weight_ = factorial(sum(particle_counts_))
+    for particle_count_ in particle_counts_:
+        statistical_weight_ /= factorial(particle_count_)
 
     result = law.rhs.subs(statistical_weight, statistical_weight_)
 
-    local_index = Idx("local_index", (1, len(one_particle_in_cell_probabilities_)))
+    local_index = Idx("local_index", (1, len(probabilities_)))
     result = result.subs(global_index, local_index).doit()
 
-    for idx, (probability_, particle_count_) in enumerate(zip(
-        one_particle_in_cell_probabilities_,
-        particle_count_in_cells_,
-    ), 1):
+    for idx, (probability_, particle_count_) in enumerate(probabilities_and_particle_counts_, 1):
         result = result.subs({
             one_particle_in_cell_probability[idx]: probability_,
             particle_count_in_cell[idx]: particle_count_,

@@ -19,35 +19,23 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    ps = test_args.p1, test_args.p2, test_args.p3
-    ns = test_args.n1, test_args.n2, test_args.n3
-    result = macrostate_law.calculate_macrostate_probability(ps, ns)
+    ps = [test_args.p1, test_args.p2, test_args.p3]
+    ns = [test_args.n1, test_args.n2, test_args.n3]
+    result = macrostate_law.calculate_macrostate_probability(list(zip(ps, ns)))
     assert_equal(result, 2.36e-6)
 
 
-def test_bad_probabilities(test_args: Args) -> None:
-    pb = Quantity(1 * units.coulomb)
+def test_bad_argument(test_args: Args) -> None:
+    qb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        macrostate_law.calculate_macrostate_probability([pb], [test_args.n1])
+        macrostate_law.calculate_macrostate_probability([(qb, test_args.n1)])
     with raises(errors.UnitsError):
-        macrostate_law.calculate_macrostate_probability(pb, [test_args.n1])
+        macrostate_law.calculate_macrostate_probability([(test_args.p1, qb)])
     with raises(TypeError):
-        macrostate_law.calculate_macrostate_probability(test_args.p1, [test_args.n1])
+        macrostate_law.calculate_macrostate_probability(qb)
+    with raises(TypeError):
+        macrostate_law.calculate_macrostate_probability(test_args.p1)
     with raises(ValueError):
         macrostate_law.calculate_macrostate_probability(
-            [test_args.p1, test_args.p2], [test_args.n1, test_args.n2]
-        )
-
-
-def test_bad_particle_counts(test_args: Args) -> None:
-    nb = Quantity(1 * units.coulomb)
-    with raises(errors.UnitsError):
-        macrostate_law.calculate_macrostate_probability([test_args.p1], [nb])
-    with raises(errors.UnitsError):
-        macrostate_law.calculate_macrostate_probability([test_args.p1], nb)
-    with raises(TypeError):
-        macrostate_law.calculate_macrostate_probability([test_args.p1], test_args.n1)
-    with raises(ValueError):
-        macrostate_law.calculate_macrostate_probability(
-            [test_args.p1, test_args.p2, test_args.p3], [test_args.n1, test_args.n2]
+            list(zip([test_args.p1, test_args.p2], [test_args.n1, test_args.n2]))
         )
