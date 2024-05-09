@@ -12,7 +12,10 @@ from symplyphysics.laws.kinematic import temporal_frequency_from_period as frequ
 # Description
 ## Can a free photon with enough energy turn into an electron-positron pair?
 
-# TODO: explain what's happening
+# First of all, the conversion of a photon into an electron-positron pair is only possible
+# in the presence of another particle, otherwise the process would violate the law of conservation
+# of momentum. Next, the more the mass of the third particle is, the less kinetic energy it gets
+# after the conversion, and we can omit its kinetic energy out of the equation.
 
 photon_frequency = Symbol("photon_frequency")
 electron_rest_mass = Symbol("electron_rest_mass")
@@ -21,6 +24,9 @@ photon_energy = energy_law.law.rhs.subs(energy_law.photon_frequency, photon_freq
 
 electron_rest_energy = rest_mass_law.law.rhs.subs(rest_mass_law.rest_mass, electron_rest_mass)
 positron_rest_energy = electron_rest_energy
+
+# If the electron and positron are at rest after their creation, their total energy would be the lowest
+# out of all possible values and be equal to the rest energy of the system.
 
 electron_positron_pair_rest_energy = electron_rest_energy + positron_rest_energy
 
@@ -44,7 +50,7 @@ photon_wavelength_expr = solve(
     dict=True,
 )[0][wavelength_law.wavelength]
 
-print(f"Threshold photon wavelength:\n{print_expression(photon_wavelength_expr)}\n")
+print(f"Threshold photon wavelength:\n\n{print_expression(photon_wavelength_expr)}\n")
 
 photon_wavelength_value = convert_to(
     photon_wavelength_expr.subs(electron_rest_mass, quantities.electron_rest_mass),
