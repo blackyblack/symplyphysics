@@ -10,7 +10,7 @@ from symplyphysics import (
     global_index,
     assert_equal,
 )
-from symplyphysics.core.quantity_decorator import _assert_expected_unit
+from symplyphysics.core.dimensions import assert_equivalent_dimension
 from symplyphysics.core.symbols.probability import Probability
 
 # Description
@@ -61,8 +61,18 @@ def calculate_macrostate_probability(
     probabilities_and_particle_counts_: Sequence[tuple[Probability, int]],
 ) -> Probability:
     for probability_, particle_count_ in probabilities_and_particle_counts_:
-        _assert_expected_unit(probability_, dimensionless, "probability", "calculate_macrostate_probability")
-        _assert_expected_unit(particle_count_, dimensionless, "particle_count", "calculate_macrostate_probability")
+        assert_equivalent_dimension(
+            probability_,
+            "probability",
+            "calculate_macrostate_probability",
+            one_particle_in_cell_probability.dimension,
+        )
+        assert_equivalent_dimension(
+            particle_count_,
+            "particle_count",
+            "calculate_macrostate_probability",
+            particle_count_in_cell.dimension,
+        )
 
     probabilities_, particle_counts_ = zip(*probabilities_and_particle_counts_)
 
