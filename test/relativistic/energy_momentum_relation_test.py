@@ -15,7 +15,7 @@ Args = namedtuple("Args", "p m")
 
 
 @fixture(name="test_args")
-def test_args_fixture() -> Quantity:
+def test_args_fixture() -> Args:
     p = Quantity(1.33e-27 * units.kilogram * units.meter / units.second)
     m = Quantity(1.43e-36 * units.kilogram)
     return Args(p=p, m=m)
