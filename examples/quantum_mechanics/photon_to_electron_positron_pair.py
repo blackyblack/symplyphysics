@@ -31,6 +31,8 @@ positron_rest_energy = electron_rest_energy
 electron_positron_pair_rest_energy = electron_rest_energy + positron_rest_energy
 
 # TODO: make law for this
+# This equation describes the threshold (i.e. minimum) energy the photon must have to be able
+# to be converted into an electron-positron pair.
 energy_conservation_eqn = Eq(photon_energy, electron_positron_pair_rest_energy)
 
 photon_wavelength_expr = solve(
@@ -50,11 +52,13 @@ photon_wavelength_expr = solve(
     dict=True,
 )[0][wavelength_law.wavelength]
 
-print(f"Threshold photon wavelength:\n\n{print_expression(photon_wavelength_expr)}\n")
+# Since wavelength is inversely proportional to energy, threshold energy corresponds to
+# the maximum wavelength the photon can have.
+print(f"Formula of maximum photon wavelength:\n\n{print_expression(photon_wavelength_expr)}\n")
 
 photon_wavelength_value = convert_to(
     photon_wavelength_expr.subs(electron_rest_mass, quantities.electron_rest_mass),
     units.angstrom,
 ).evalf(3)
 
-print(f"Threshold value of photon wavelength is {photon_wavelength_value} Å.")
+print(f"Maximum value of photon wavelength is {photon_wavelength_value} Å.")
