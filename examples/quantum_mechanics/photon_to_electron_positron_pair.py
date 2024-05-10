@@ -6,7 +6,7 @@ from symplyphysics.laws.waves import (
     photon_energy_is_proportional_to_frequency as energy_law,
     wavelength_from_wave_speed_and_period as wavelength_law,
 )
-from symplyphysics.laws.relativistic import energy_is_mass as rest_mass_law
+from symplyphysics.laws.relativistic import total_energy_via_relativistic_mass as mass_law
 from symplyphysics.laws.kinematic import temporal_frequency_from_period as frequency_law
 
 # Description
@@ -22,7 +22,7 @@ electron_rest_mass = Symbol("electron_rest_mass")
 
 photon_energy = energy_law.law.rhs.subs(energy_law.photon_frequency, photon_frequency)
 
-electron_rest_energy = rest_mass_law.law.rhs.subs(rest_mass_law.rest_mass, electron_rest_mass)
+electron_rest_energy = mass_law.law.rhs.subs(mass_law.relativistic_mass, electron_rest_mass)
 positron_rest_energy = electron_rest_energy
 
 # If the electron and positron are at rest after their creation, their total energy would be the lowest
