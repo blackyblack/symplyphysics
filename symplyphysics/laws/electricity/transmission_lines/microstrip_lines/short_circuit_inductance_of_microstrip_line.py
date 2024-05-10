@@ -15,7 +15,7 @@ from symplyphysics import (
 ## the line. Such an opening will have a certain inductance, which can be calculated.
 
 ## Law is: L = (mu0 / (2 * pi)) * (h * ln((h + sqrt(r^2 + h^2)) / r) + 1.5 * (r - sqrt(r^2 + h^2))), where
-## L - hole inductance,
+## L - inductance of a metallized hole in a microstrip line,
 ## h - the thickness of the microstrip line substrate,
 ## r - radius of the metallized hole,
 ## mu0 - magnetic constant.
