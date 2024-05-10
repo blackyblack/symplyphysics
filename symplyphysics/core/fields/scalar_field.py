@@ -1,6 +1,6 @@
 from __future__ import annotations
 from functools import partial
-from typing import Callable, Sequence, TypeAlias, TypeVar
+from typing import Callable, Sequence, TypeAlias, TypeVar, Any
 from sympy import Expr, sympify
 from sympy.vector import express
 
@@ -136,3 +136,23 @@ class ScalarField:
             None,
             variables=True)
         return ScalarField.from_expression(transformed_expr, coordinate_system)
+
+    def diff(self, *symbols: Any, **assumptions: Any) -> ScalarField:
+        field = self.field_function
+        if callable(field):
+            def field_diff(point: T) -> ScalarValue:
+                return sympify(field(point)).diff(*symbols, **assumptions)
+            return ScalarField(field_diff, self.coordinate_system)
+        else:
+            field_diff = sympify(field).diff(*symbols, **assumptions)
+            return ScalarField(field_diff, self.coordinate_system)
+
+    def scale(self, expr: Expr) -> ScalarField:
+        field = self.field_function
+        if callable(field):
+            def field_scaled(point: T) -> ScalarValue:
+                return expr * field(point)
+            return ScalarField(field_scaled, self.coordinate_system)
+        else:
+            field_scaled = field * expr
+            return ScalarField(field_scaled, self.coordinate_system)

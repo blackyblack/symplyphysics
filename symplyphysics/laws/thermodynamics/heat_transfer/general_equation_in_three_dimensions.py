@@ -1,12 +1,11 @@
-from typing import Sequence
-from sympy import Eq, Derivative, S, Expr
+from typing import Optional
+from sympy import Eq
 from symplyphysics import (
     units,
     Symbol,
-    Function,
+    scale_vector,
 )
-from symplyphysics.core.dimensions import ScalarValue
-from symplyphysics.core.fields.scalar_field import ScalarField, T as PointType
+from symplyphysics.core.fields.scalar_field import ScalarField
 from symplyphysics.core.fields.vector_field import VectorField
 from symplyphysics.core.fields.operators import divergence_operator, gradient_operator
 
@@ -30,42 +29,38 @@ from symplyphysics.core.fields.operators import divergence_operator, gradient_op
 medium_density = Symbol("medium_density", units.mass / units.volume)
 medium_specific_heat_capacity = Symbol(
     "medium_specific_heat_capacity",
-    units.energy / (units.temperature * units.mass)
-)
-thermal_conductivity = Function(
-    "thermal_conductivity",
-    units.power / (units.length * units.temperature),
+    units.energy / (units.temperature * units.mass),
 )
 time = Symbol("time", units.time)
 
-def heat_equation(temperature_field: ScalarField, heat_source_density: ScalarField) -> Eq:
-    temperature_function = temperature_field.field_function
-    _callable = callable(temperature_function)
 
-    def _temperature_diff_time(point: PointType) -> ScalarValue:
-        temperature_value = temperature_function(point) if _callable else temperature_function
-        return Derivative(temperature_value, time)
+def heat_equation(
+    temperature_field: ScalarField,
+    thermal_conductivity_field: ScalarField,
+    heat_source_density_field: Optional[ScalarField] = None,
+) -> Eq:
+    temp_diff_time = temperature_field.diff(time).apply_to_basis()
 
-    temperature_diff_time = ScalarField(
-        _temperature_diff_time,
+    lhs = medium_density * medium_specific_heat_capacity * temp_diff_time
+
+    grad_temp = gradient_operator(temperature_field)
+    kappa = thermal_conductivity_field.apply_to_basis()
+
+    # FIXME: kappa disappears completely, possible mistake in `scale_vector`
+    kappa_times_grad_temp = scale_vector(kappa, grad_temp)
+
+    kappa_times_grad_temp_field = VectorField(
+        kappa_times_grad_temp.components,
         temperature_field.coordinate_system,
     )
 
-    grad_temperature = gradient_operator(temperature_field).components
+    div_product = divergence_operator(kappa_times_grad_temp_field)
 
-    base_scalars = temperature_field.coordinate_system.coord_system.base_scalars()
+    if heat_source_density_field:
+        q = heat_source_density_field.apply_to_basis()
+    else:
+        q = 0
 
-    def _kappa_times_grad(point: PointType) -> Sequence[ScalarValue]:
-        kappa_applied = thermal_conductivity(*point.coordinates)
-        return tuple(
-            kappa_applied * grad_component.subs(base_scalar, coordinate)
-            for grad_component, base_scalar, coordinate in zip(
-                grad_temperature, base_scalars, point.coordinates
-            )
-        )
-    
-    kappa_times_grad = VectorField(_kappa_times_grad, temperature_field.coordinate_system)
+    rhs = div_product + q
 
-    div_product = divergence_operator(kappa_times_grad)
-
-    # FIXME: finish this function
+    return Eq(lhs, rhs)
