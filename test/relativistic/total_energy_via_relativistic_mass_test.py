@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.relativistic import energy_is_mass as fundamental_formula
+from symplyphysics.laws.relativistic import total_energy_via_relativistic_mass as fundamental_formula
 
 # 6kg of some object contains 539253107242090584 Joules of inner energy, which might be released with help of nucleal reaction.
 # Calculated with "https://www.omnicalculator.com/physics/emc2"
