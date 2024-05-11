@@ -11,7 +11,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 
 
 ## Law is: N = ln(Et / E0) / ln(1 - x), where
-## N - the number of collisions of atomized atom with gas atoms (is a statistical quantity, can be neither an integer),
+## N - the number of collisions of atomized atom with gas atoms (this is a static quantity, it may not be an integer),
 ## E0 - initial energy of the atomized atom,
 ## Et - energy of thermal motion in a gas-discharge plasma,
 ## x - energy transfer coefficient between the atom and the gas atoms.
@@ -35,6 +35,11 @@ def print_law() -> str:
 @validate_output(number_of_collisions_of_atoms)
 def calculate_number_of_collisions_of_atoms(initial_energy_: Quantity, energy_of_thermal_motion_: Quantity,
                                             energy_transfer_coefficient_: float) -> float:
+    if energy_transfer_coefficient_ >= 1:
+        raise ValueError("Energy transfer coefficient must be less than the 1")
+    if initial_energy_.scale_factor <= energy_of_thermal_motion_.scale_factor:
+        raise ValueError("The initial energy of the atom must be greater than the thermal energy")
+
     result_expr = solve(law, number_of_collisions_of_atoms, dict=True)[0][number_of_collisions_of_atoms]
     result_expr = result_expr.subs({
         initial_energy: initial_energy_,

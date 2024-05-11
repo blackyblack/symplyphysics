@@ -33,6 +33,8 @@ def test_bad_initial_energy(test_args: Args) -> None:
         number_law.calculate_number_of_collisions_of_atoms(initial_energy, test_args.energy_of_thermal_motion, test_args.energy_transfer_coefficient)
     with raises(TypeError):
         number_law.calculate_number_of_collisions_of_atoms(100, test_args.energy_of_thermal_motion, test_args.energy_transfer_coefficient)
+    with raises(ValueError):
+        number_law.calculate_number_of_collisions_of_atoms(test_args.energy_of_thermal_motion, test_args.initial_energy, test_args.energy_transfer_coefficient)  
 
 
 def test_bad_energy_of_thermal_motion(test_args: Args) -> None:
@@ -47,3 +49,5 @@ def test_bad_energy_transfer_coefficient(test_args: Args) -> None:
     energy_transfer_coefficient = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         number_law.calculate_number_of_collisions_of_atoms(test_args.initial_energy, test_args.energy_of_thermal_motion, energy_transfer_coefficient)
+    with raises(ValueError):
+        number_law.calculate_number_of_collisions_of_atoms(test_args.initial_energy, test_args.energy_of_thermal_motion, 2)
