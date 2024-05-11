@@ -7,32 +7,32 @@ from symplyphysics.laws.chemistry import boundary_of_thermalization_zone_of_atom
 ## The number of collisions of atomized atom with gas atoms is 6.3. The free path length of atomized atom is 62 millimeter.
 ## Then boundary of thermalization zone is 39.06 centimeter.
 
-Args = namedtuple("Args", ["number_of_collisions_of_atoms", "free_path_length"])
+Args = namedtuple("Args", ["number_of_collisions_of_atom", "free_path_length"])
 
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
-    number_of_collisions_of_atoms = 6.3
+    number_of_collisions_of_atom = 6.3
     free_path_length = Quantity(62 * units.millimeter)
 
-    return Args(number_of_collisions_of_atoms=number_of_collisions_of_atoms,
+    return Args(number_of_collisions_of_atom=number_of_collisions_of_atom,
         free_path_length=free_path_length)
 
 
 def test_basic_boundary_of_thermalization_zone(test_args: Args) -> None:
-    result = boundary_law.calculate_boundary_of_thermalization_zone(test_args.number_of_collisions_of_atoms, test_args.free_path_length)
+    result = boundary_law.calculate_boundary_of_thermalization_zone(test_args.number_of_collisions_of_atom, test_args.free_path_length)
     assert_equal(result, 39.06 * units.centimeter)
 
 
-def test_bad_number_of_collisions_of_atoms(test_args: Args) -> None:
-    number_of_collisions_of_atoms = Quantity(1 * units.coulomb)
+def test_bad_number_of_collisions_of_atom(test_args: Args) -> None:
+    number_of_collisions_of_atom = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        boundary_law.calculate_boundary_of_thermalization_zone(number_of_collisions_of_atoms, test_args.free_path_length)
+        boundary_law.calculate_boundary_of_thermalization_zone(number_of_collisions_of_atom, test_args.free_path_length)
 
 
 def test_bad_free_path_length(test_args: Args) -> None:
     free_path_length = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        boundary_law.calculate_boundary_of_thermalization_zone(test_args.number_of_collisions_of_atoms, free_path_length)
+        boundary_law.calculate_boundary_of_thermalization_zone(test_args.number_of_collisions_of_atom, free_path_length)
     with raises(TypeError):
-        boundary_law.calculate_boundary_of_thermalization_zone(test_args.number_of_collisions_of_atoms, 100)
+        boundary_law.calculate_boundary_of_thermalization_zone(test_args.number_of_collisions_of_atom, 100)
