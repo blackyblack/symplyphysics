@@ -1,5 +1,5 @@
 from sympy import Eq, solve, pi
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output,)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, clone_symbol, symbols)
 
 # Description
 ## The effective cross section is a physical quantity characterizing the probability of transition of a system of
@@ -15,8 +15,8 @@ from symplyphysics import (units, Quantity, Symbol, validate_input, validate_out
 cross_sectional_area_of_interaction = Symbol("cross_sectional_area_of_interaction", units.area)
 
 diameter_of_atom = Symbol("diameter_of_atom", units.length)
-constant_sutherland = Symbol("constant_sutherland", units.temperature)
-temperature = Symbol("temperature", units.temperature)
+constant_sutherland = clone_symbol(symbols.thermodynamics.temperature, "constant_sutherland")
+temperature = clone_symbol(symbols.thermodynamics.temperature, "temperature")
 
 law = Eq(cross_sectional_area_of_interaction, pi * diameter_of_atom**2 * (1 + constant_sutherland / temperature))
 
