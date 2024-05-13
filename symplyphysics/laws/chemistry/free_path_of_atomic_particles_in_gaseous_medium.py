@@ -1,23 +1,22 @@
 from sympy import Eq, solve
 from sympy.physics.units import boltzmann_constant
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output,)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, clone_symbol, symbols)
 
 # Description
 ## The atoms of the target material evaporate and move towards the substrate inside the magnetron. At the same time,
-## it collides with gas atoms. The free path length is the distance that a atomized atom travels between two collisions.
+## it collides with gas atoms. The free path length is the distance that a traveling atom travels between two collisions.
 
 ## Law is: l = k * T / (P * g), where
-## l - free path length of atomized atom,
+## l - free path length of traveling atom,
 ## k - boltzmann constant,
 ## T - temperature,
 ## P - pressure,
-## g - the cross section of the interaction of a atomized atom and a gas atom.
+## g - the cross section of the interaction of a traveling atom and a gas atom.
 
 free_path_length = Symbol("free_path_length", units.length)
 
 pressure = Symbol("pressure", units.pressure)
-temperature = Symbol("temperature", units.temperature)
+temperature = clone_symbol(symbols.thermodynamics.temperature, "temperature")
 cross_sectional_area_of_interaction = Symbol("cross_sectional_area_of_interaction", units.area)
 
 law = Eq(free_path_length, boltzmann_constant * temperature / (pressure * cross_sectional_area_of_interaction))
