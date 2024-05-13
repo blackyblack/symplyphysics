@@ -4,17 +4,17 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 
 # Description
 ## The atoms of the target material evaporate and move towards the substrate inside the magnetron.
-## The atomized atom moves towards the substrate in the magnetron. At the same time, it collides with gas atoms.
-## The number of collisions of a atomized atom, after which its energy will be equal to the energy of thermal motion
-## in a gas-discharge plasma, can be calculated. This amount will depend on the initial energy of the atomized atom and
+## The traveling atom moves towards the substrate in the magnetron. At the same time, it collides with gas atoms.
+## The number of collisions of a traveling atom, after which its energy will be equal to the energy of thermal motion
+## in a gas-discharge plasma, can be calculated. This amount will depend on the initial energy of the traveling atom and
 ## the energy transfer coefficient between the atom and the gas atoms.
 
 
 ## Law is: N = ln(Et / E0) / ln(1 - x), where
-## N - the number of collisions of atomized atom with gas atoms (this is a static quantity, it may not be an integer),
-## E0 - initial energy of the atomized atom,
+## N - the number of collisions of traveling atom with gas atoms (this is a statistical quantity, it can be integer, but it can be fractional as well),
+## E0 - initial energy of the traveling atom,
 ## Et - energy of thermal motion in a gas-discharge plasma,
-## x - energy transfer coefficient between the atom and the gas atoms.
+## x - energy transfer coefficient between the traveling atom and the gas atoms.
 
 number_of_collisions_of_atoms = Symbol("number_of_collisions_of_atoms", dimensionless)
 
@@ -36,9 +36,9 @@ def print_law() -> str:
 def calculate_number_of_collisions_of_atoms(initial_energy_: Quantity, energy_of_thermal_motion_: Quantity,
                                             energy_transfer_coefficient_: float) -> float:
     if energy_transfer_coefficient_ >= 1:
-        raise ValueError("Energy transfer coefficient must be less than the 1")
-    if initial_energy_.scale_factor <= energy_of_thermal_motion_.scale_factor:
-        raise ValueError("The initial energy of the atom must be greater than the thermal energy")
+        raise ValueError("Energy transfer coefficient must be less than 1")
+    if initial_energy_.scale_factor < energy_of_thermal_motion_.scale_factor:
+        raise ValueError("The initial energy of the atom must be greater than or equal to the thermal energy")
 
     result_expr = solve(law, number_of_collisions_of_atoms, dict=True)[0][number_of_collisions_of_atoms]
     result_expr = result_expr.subs({
