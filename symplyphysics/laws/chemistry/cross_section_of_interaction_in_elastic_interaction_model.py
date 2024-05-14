@@ -15,8 +15,8 @@ from symplyphysics import (units, Quantity, Symbol, validate_input, validate_out
 cross_sectional_area_of_interaction = Symbol("cross_sectional_area_of_interaction", units.area)
 
 diameter_of_atom = Symbol("diameter_of_atom", units.length)
-constant_sutherland = clone_symbol(symbols.thermodynamics.temperature, "constant_sutherland")
-temperature = clone_symbol(symbols.thermodynamics.temperature, "temperature")
+constant_sutherland = Symbol("constant_sutherland", units.temperature)
+temperature = symbols.thermodynamics.temperature
 
 law = Eq(cross_sectional_area_of_interaction, pi * diameter_of_atom**2 * (1 + constant_sutherland / temperature))
 
