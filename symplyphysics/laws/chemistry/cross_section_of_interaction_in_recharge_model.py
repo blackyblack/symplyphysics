@@ -9,6 +9,7 @@ from symplyphysics import (
     clone_symbol,
     symbols
 )
+from symplyphysics.quantities import bohr_radius, hydrogen_ionization_energy
 
 # Description
 ## The effective cross section is a physical quantity characterizing the probability of transition of a system of
@@ -17,11 +18,11 @@ from symplyphysics import (
 
 ## Law is: g = pi * a0^2 * (Uh / Ui) * (ln(sqrt(3 * k * T / m) * (g * P * m / (2 * k * T * q * E)) * sqrt(Ui / Uh)))^2, where
 ## g - the cross-sectional area of the interaction of particles,
-## Ui - the ionization energy of atoms,
+## Ui - the ionization energy of interacting atoms,
 ## T - temperature,
-## m - mass of atom,
+## m - mass of gas atom,
 ## P - pressure
-## E - electric intensity,
+## E - electric intensity in gas,
 ## Uh - hydrogen ionization energy,
 ## a0 - bohr radius,
 ## k - boltzmann constant,
@@ -32,11 +33,8 @@ cross_sectional_area_of_interaction = Symbol("cross_sectional_area_of_interactio
 ionization_energy = Symbol("ionization_energy", units.energy)
 mass_of_atom = clone_symbol(symbols.basic.mass, "mass_of_atom")
 pressure = Symbol("pressure", units.pressure)
-temperature = clone_symbol(symbols.thermodynamics.temperature, "temperature")
+temperature = symbols.thermodynamics.temperature
 electric_intensity = Symbol("electric_intensity", units.voltage / units.length)
-
-bohr_radius = Quantity(0.529e-10 * units.meter)
-hydrogen_ionization_energy = Quantity(13.6 * units.electronvolt)
 
 expression_1 = sqrt(ionization_energy / hydrogen_ionization_energy)
 expression_2 = sqrt(3 * boltzmann_constant * temperature / mass_of_atom)
