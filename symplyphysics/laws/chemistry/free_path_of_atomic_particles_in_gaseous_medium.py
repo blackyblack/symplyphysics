@@ -16,7 +16,7 @@ from symplyphysics import (units, Quantity, Symbol, validate_input, validate_out
 free_path_length = Symbol("free_path_length", units.length)
 
 pressure = Symbol("pressure", units.pressure)
-temperature = clone_symbol(symbols.thermodynamics.temperature, "temperature")
+temperature = symbols.thermodynamics.temperature
 cross_sectional_area_of_interaction = Symbol("cross_sectional_area_of_interaction", units.area)
 
 law = Eq(free_path_length, boltzmann_constant * temperature / (pressure * cross_sectional_area_of_interaction))
