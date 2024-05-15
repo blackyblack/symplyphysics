@@ -32,7 +32,7 @@ def test_bad_time(test_args: Args) -> None:
         law.calculate_spacetime_interval(100, test_args.dx)
 
 
-def test_bad_time(test_args: Args) -> None:
+def test_bad_position(test_args: Args) -> None:
     xb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         law.calculate_spacetime_interval(test_args.dt, xb)
