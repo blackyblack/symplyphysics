@@ -1,4 +1,4 @@
-from sympy import Eq
+from sympy import Eq, im
 from sympy.physics.units import speed_of_light
 from symplyphysics import (
     units,
@@ -15,7 +15,7 @@ from symplyphysics import (
 ## independent of coordinates, and is a Lorentz scalar.
 
 # Law: Δτ = Δs / c
-## Δτ - proper time
+## Δτ - proper time interval
 ## Δs - spacetime interval between two events
 ## c - speed of light
 
@@ -23,7 +23,7 @@ from symplyphysics import (
 ## - The interval is timelike, i.e. `Δs` is real
 
 proper_time = Symbol("proper_time", units.time, real=True)
-spacetime_interval = Symbol("spacetime_interval", units.length)
+spacetime_interval = Symbol("spacetime_interval", units.length, real=True)
 
 law = Eq(proper_time, spacetime_interval / speed_of_light)
 
@@ -33,11 +33,7 @@ law = Eq(proper_time, spacetime_interval / speed_of_light)
 def calculate_proper_time(
     spacetime_interval_: Quantity,
 ) -> Quantity:
-    _, imag = spacetime_interval_.scale_factor.as_real_imag()
-    try:
-        assert_equal(imag, 0)
-    except AssertionError as e:
-        raise ValueError("Interval must be real") from e
+    assert_equal(im(spacetime_interval_.scale_factor), 0)
 
     result = law.rhs.subs({spacetime_interval: spacetime_interval_})
     return Quantity(result)

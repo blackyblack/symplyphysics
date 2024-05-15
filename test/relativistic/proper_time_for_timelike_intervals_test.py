@@ -1,5 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
+from sympy import I
 from symplyphysics import (
     assert_equal,
     errors,
@@ -29,3 +30,7 @@ def test_bad_interval() -> None:
         time_law.calculate_proper_time(sb)
     with raises(TypeError):
         time_law.calculate_proper_time(100)
+
+    sb = Quantity((1 + 2 * I) * units.meter)
+    with raises(ValueError):
+        time_law.calculate_proper_time(sb)
