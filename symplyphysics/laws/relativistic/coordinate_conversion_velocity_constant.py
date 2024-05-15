@@ -15,7 +15,7 @@ from symplyphysics import (
 ## Then there are simple transformations that can be used to get the x coordinate in one frame of reference,
 ## knowing the x coordinate in another frame of reference.
 
-## Law is: x_2 = (x_1 - v * t) / (1 - (v / c)^2), where
+## Law is: x_2 = (x_1 - v * t) / sqrt(1 - (v / c)^2), where
 ## x_2 - another coordinate (in the second frame of reference),
 ## x_1 - coordinate (in the first frame of reference),
 ## v - velocity at which the second frame of reference moves relative to the first,
