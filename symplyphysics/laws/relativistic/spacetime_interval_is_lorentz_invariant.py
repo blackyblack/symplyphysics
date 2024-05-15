@@ -8,7 +8,8 @@ from symplyphysics import (
 )
 
 # Description
-## TODO
+## The spacetime interval is invariant under Lorentz transformations, i.e. it remains the same in all
+## inertial frames of reference.
 
 # Law: (Δs)_2 = (Δs)_1
 ## Δs - spacetime interval
