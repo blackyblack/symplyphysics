@@ -14,6 +14,7 @@ Args = namedtuple("Args", "s")
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
+    # Spacetime interval can be imaginary if it is spacelike.
     s = Quantity(5 * I * units.meter)
     return Args(s=s)
 
