@@ -4,7 +4,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
@@ -29,10 +28,6 @@ time_first_frame = Symbol("time_first_frame", units.time)
 
 law = Eq(coordinate_second_frame, (coordinate_first_frame - velocity * time_first_frame) / sqrt(
     (1 - (velocity / speed_of_light)**2)))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(coordinate_first_frame_=coordinate_first_frame,
