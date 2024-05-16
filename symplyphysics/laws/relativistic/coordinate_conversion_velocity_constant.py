@@ -4,7 +4,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
@@ -15,7 +14,7 @@ from symplyphysics import (
 ## Then there are simple transformations that can be used to get the x coordinate in one frame of reference,
 ## knowing the x coordinate in another frame of reference.
 
-## Law is: x_2 = (x_1 - v * t) / (1 - (v / c)^2), where
+## Law is: x_2 = (x_1 - v * t) / sqrt(1 - (v / c)^2), where
 ## x_2 - another coordinate (in the second frame of reference),
 ## x_1 - coordinate (in the first frame of reference),
 ## v - velocity at which the second frame of reference moves relative to the first,
@@ -29,10 +28,6 @@ time_first_frame = Symbol("time_first_frame", units.time)
 
 law = Eq(coordinate_second_frame, (coordinate_first_frame - velocity * time_first_frame) / sqrt(
     (1 - (velocity / speed_of_light)**2)))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(coordinate_first_frame_=coordinate_first_frame,
