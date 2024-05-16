@@ -37,7 +37,7 @@ def test_basic_cross_sectional_area_of_interaction(test_args: Args) -> None:
     result = cross_section_law.calculate_cross_sectional_area_of_interaction(
         test_args.ionization_energy, test_args.mass_of_atom, test_args.pressure,
         test_args.temperature, test_args.electric_intensity,)
-    assert_equal(result, 1 * units.meter**2)
+    assert_equal(result, 1.31e-18 * units.meter**2, tolerance=0.01)
 
 
 def test_bad_ionization_energy(test_args: Args) -> None:

@@ -1,4 +1,4 @@
-from sympy import Eq, solve, pi, log, sqrt
+from sympy import Eq, nsolve, pi, log, sqrt
 from sympy.physics.units import elementary_charge, boltzmann_constant
 from symplyphysics import (
     units,
@@ -56,12 +56,17 @@ law = Eq(cross_sectional_area_of_interaction, pi * bohr_radius**2 * expression_5
 def calculate_cross_sectional_area_of_interaction(ionization_energy_: Quantity,
     mass_of_atom_: Quantity, pressure_: Quantity,
     temperature_: Quantity, electric_intensity_: Quantity) -> Quantity:
-    result_expr = solve(law, cross_sectional_area_of_interaction, dict=True)[0][cross_sectional_area_of_interaction]
-    result_expr = result_expr.subs({
-        ionization_energy: ionization_energy_,
-        mass_of_atom: mass_of_atom_,
-        pressure: pressure_,
-        temperature: temperature_,
-        electric_intensity: electric_intensity_,
+    # nsolve() only works with numerical equations
+    applied_law = law.subs({
+        ionization_energy: ionization_energy_.scale_factor,
+        mass_of_atom: mass_of_atom_.scale_factor,
+        pressure: pressure_.scale_factor,
+        temperature: temperature_.scale_factor,
+        electric_intensity: electric_intensity_.scale_factor,
+        bohr_radius: bohr_radius.scale_factor,
+        hydrogen_ionization_energy: hydrogen_ionization_energy.scale_factor,
+        elementary_charge: elementary_charge.scale_factor,
+        boltzmann_constant: boltzmann_constant.scale_factor
     })
-    return Quantity(result_expr)
+    result_expr = nsolve(applied_law, cross_sectional_area_of_interaction, 1)
+    return Quantity(result_expr, dimension=units.area)
