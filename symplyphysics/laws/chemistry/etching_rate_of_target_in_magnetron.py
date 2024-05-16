@@ -7,7 +7,7 @@ from symplyphysics import (units, Quantity, Symbol, validate_input, validate_out
 ## The ions of the gas-discharge plasma in the magnetron fall on the target and knock the atoms out of it.
 ## The sputtering coefficient shows how many target atoms are knocked out of the target by a single ion.
 ## The etching rate is how many nanometers of the target substance are etched per unit of time. In other words,
-## this is how much thinner a nanometer becomes a target per unit of time.
+## this is how much thinner a target becomes per unit of time.
 
 ## Law is: V =  J * M * Y / (q * po * Na), where
 ## V - target etching rate,
