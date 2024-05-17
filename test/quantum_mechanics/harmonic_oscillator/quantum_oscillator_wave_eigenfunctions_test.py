@@ -25,7 +25,8 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = wave_law.calculate_wave_function_value(test_args.n, test_args.m, test_args.w, test_args.x)
+    result = wave_law.calculate_wave_function_value(test_args.n, test_args.m, test_args.w,
+        test_args.x)
     assert_equal(result, 6.13 / sqrt(units.meter))
 
 

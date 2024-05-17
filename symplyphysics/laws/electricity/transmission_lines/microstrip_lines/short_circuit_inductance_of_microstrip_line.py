@@ -26,7 +26,8 @@ thickness_of_substrate = Symbol("thickness_of_substrate", units.length)
 radius_of_hole = Symbol("radius_of_hole", units.length)
 
 expression_1 = sqrt(radius_of_hole**2 + thickness_of_substrate**2)
-expression_2 = thickness_of_substrate * log((thickness_of_substrate + expression_1) / radius_of_hole)
+expression_2 = thickness_of_substrate * log(
+    (thickness_of_substrate + expression_1) / radius_of_hole)
 expression_3 = 1.5 * (radius_of_hole - expression_1)
 
 law = Eq(inductance, (magnetic_constant / (2 * pi)) * (expression_2 + expression_3))
@@ -36,8 +37,10 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(thickness_of_substrate_=thickness_of_substrate,
-    radius_of_hole_=radius_of_hole,)
+@validate_input(
+    thickness_of_substrate_=thickness_of_substrate,
+    radius_of_hole_=radius_of_hole,
+)
 @validate_output(inductance)
 def calculate_inductance(thickness_of_substrate_: Quantity, radius_of_hole_: Quantity) -> Quantity:
     result_expr = solve(law, inductance, dict=True)[0][inductance]

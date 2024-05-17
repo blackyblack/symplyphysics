@@ -33,10 +33,7 @@ isochoric_molar_heat_capacity = Symbol(
 )
 degrees_of_freedom = Symbol("degrees_of_freedom", integer=True)
 
-law = Eq(
-    isochoric_molar_heat_capacity,
-    (degrees_of_freedom / 2) * units.molar_gas_constant
-)
+law = Eq(isochoric_molar_heat_capacity, (degrees_of_freedom / 2) * units.molar_gas_constant)
 
 
 @validate_input(degrees_of_freedom_=degrees_of_freedom)

@@ -1,13 +1,6 @@
 from sympy import Eq, solve, sqrt, pi, log, sinh
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    validate_input,
-    validate_output,
-    dimensionless,
-    convert_to_float
-)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless,
+    convert_to_float)
 
 ## Description
 ## The coplanar transmission line is a dielectric substrate on the surface of which 3 electrodes are located.
@@ -30,7 +23,6 @@ from symplyphysics import (
 # - 0 < k^2 <= 0.5;
 # - 0 < k1^2 <= 0.5.
 
-
 effective_permittivity = Symbol("effective_permittivity", dimensionless)
 
 relative_permittivity = Symbol("relative_permittivity", dimensionless)
@@ -39,12 +31,13 @@ thickness_of_substrate = Symbol("thickness_of_substrate", units.length)
 central_electrode_width = Symbol("central_electrode_width", units.length)
 
 expression_1 = (relative_permittivity - 1) / 2
-expression_2 = sinh(pi * central_electrode_width / (4 * thickness_of_substrate)) / sinh(pi * distance_between_electrodes / (4 * thickness_of_substrate))
+expression_2 = sinh(pi * central_electrode_width /
+    (4 * thickness_of_substrate)) / sinh(pi * distance_between_electrodes /
+    (4 * thickness_of_substrate))
 expression_3 = sqrt(1 - expression_2**2)
-expression_4 =  pi / log(2 * (1 + sqrt(expression_3)) / (1 - sqrt(expression_3)))
+expression_4 = pi / log(2 * (1 + sqrt(expression_3)) / (1 - sqrt(expression_3)))
 expression_5 = sqrt(1 - (central_electrode_width / distance_between_electrodes)**2)
-expression_6 =  log(2 * (1 + sqrt(expression_5)) / (1 - sqrt(expression_5))) / pi
-
+expression_6 = log(2 * (1 + sqrt(expression_5)) / (1 - sqrt(expression_5))) / pi
 
 law = Eq(effective_permittivity, 1 + expression_1 * expression_6 * expression_4)
 
@@ -58,11 +51,14 @@ def calculate_effective_permittivity(relative_permittivity_: float,
     distance_between_electrodes_: Quantity, thickness_of_substrate_: Quantity,
     central_electrode_width_: Quantity) -> float:
     if thickness_of_substrate_.scale_factor >= distance_between_electrodes_.scale_factor / 4:
-        raise ValueError("The thickness of substrate must be less than the distance between electrodes divided in 4")
+        raise ValueError(
+            "The thickness of substrate must be less than the distance between electrodes divided in 4"
+        )
     if (central_electrode_width_.scale_factor / distance_between_electrodes_.scale_factor)**2 > 0.5:
         raise ValueError("k^2 must be less than or equal to the 0.5")
     if (sinh(pi * central_electrode_width_.scale_factor / 4 / thickness_of_substrate_.scale_factor)
-        / sinh(pi* distance_between_electrodes_.scale_factor / 4 / thickness_of_substrate_.scale_factor))**2 > 0.5:
+            / sinh(pi * distance_between_electrodes_.scale_factor / 4 /
+        thickness_of_substrate_.scale_factor))**2 > 0.5:
         raise ValueError("k1^2 must be less than or equal to the 0.5")
     result_expr = solve(law, effective_permittivity, dict=True)[0][effective_permittivity]
     result_expr = result_expr.subs({

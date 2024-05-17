@@ -7,8 +7,7 @@ from symplyphysics import (
     errors,
 )
 from symplyphysics.laws.quantum_mechanics.schrodinger import (
-    free_particle_plane_wave_solution as solution_law,
-)
+    free_particle_plane_wave_solution as solution_law,)
 
 Args = namedtuple("Args", "p e x t")
 
@@ -23,7 +22,8 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = solution_law.calculate_wave_function_value(test_args.p, test_args.e, test_args.x, test_args.t)
+    result = solution_law.calculate_wave_function_value(test_args.p, test_args.e, test_args.x,
+        test_args.t)
     assert_equal(result.real, 0.70, tolerance=5e-3)
     assert_equal(result.imag, -0.72, tolerance=5e-3)
 

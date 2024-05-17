@@ -1,12 +1,5 @@
 from sympy import Eq, solve, pi, log
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    validate_input,
-    validate_output,
-    dimensionless
-)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless)
 
 ## Description
 ## The microstrip line is a dielectric substrate on which a metal strip is applied.
@@ -43,10 +36,12 @@ effective_permittivity = Symbol("effective_permittivity", dimensionless)
 expression_1 = effective_width / thickness_of_substrate
 constant = Quantity(6.1e-5 * units.ohm**(-2))
 expression_2 = constant * surface_resistance * wave_resistance * effective_permittivity / thickness_of_substrate
-expression_3 = 1 + (thickness_of_substrate / effective_width) * (1 - 1.25 * strip_thickness / (pi * thickness_of_substrate) + 1.25 * log(2 * thickness_of_substrate / strip_thickness) / pi)
+expression_3 = 1 + (thickness_of_substrate / effective_width) * (1 - 1.25 * strip_thickness /
+    (pi * thickness_of_substrate) + 1.25 * log(2 * thickness_of_substrate / strip_thickness) / pi)
 
-
-law = Eq(attenuation_coefficient, expression_2 * (expression_1 + 0.667 * expression_1 / (expression_1 + 1.444)) * expression_3)
+law = Eq(
+    attenuation_coefficient,
+    expression_2 * (expression_1 + 0.667 * expression_1 / (expression_1 + 1.444)) * expression_3)
 
 
 @validate_input(surface_resistance_=surface_resistance,
@@ -56,9 +51,8 @@ law = Eq(attenuation_coefficient, expression_2 * (expression_1 + 0.667 * express
     strip_thickness_=strip_thickness,
     effective_permittivity_=effective_permittivity)
 @validate_output(attenuation_coefficient)
-def calculate_attenuation_coefficient(surface_resistance_: Quantity,
-    wave_resistance_: Quantity, thickness_of_substrate_: Quantity,
-    effective_width_: Quantity, strip_thickness_: Quantity,
+def calculate_attenuation_coefficient(surface_resistance_: Quantity, wave_resistance_: Quantity,
+    thickness_of_substrate_: Quantity, effective_width_: Quantity, strip_thickness_: Quantity,
     effective_permittivity_: float) -> Quantity:
     if thickness_of_substrate_.scale_factor >= effective_width_.scale_factor:
         raise ValueError("The thickness of substrate must be less than the effective width")

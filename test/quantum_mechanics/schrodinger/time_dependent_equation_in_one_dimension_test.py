@@ -3,8 +3,7 @@ from pytest import fixture
 from sympy import exp, I, symbols, sqrt
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.quantum_mechanics.schrodinger import (
-    time_dependent_equation_in_one_dimension as wave_function_eqn,
-)
+    time_dependent_equation_in_one_dimension as wave_function_eqn,)
 
 Args = namedtuple("Args", "u psi")
 
@@ -23,8 +22,10 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     values = {
-        wave_function_eqn.potential_energy(wave_function_eqn.position, wave_function_eqn.time): test_args.u,
-        wave_function_eqn.wave_function(wave_function_eqn.position, wave_function_eqn.time): test_args.psi,
+        wave_function_eqn.potential_energy(wave_function_eqn.position, wave_function_eqn.time):
+        test_args.u,
+        wave_function_eqn.wave_function(wave_function_eqn.position, wave_function_eqn.time):
+        test_args.psi,
     }
     lhs = wave_function_eqn.law.lhs.subs(values).doit()
     rhs = wave_function_eqn.law.rhs.subs(values).doit()

@@ -39,12 +39,12 @@ _internal_energy_change_eqn = internal_energy_differential.law.subs({
     internal_energy_differential.particle_count_change: 0,
 })
 
-_temperature_derived = solve(
-    _internal_energy_change_eqn, internal_energy_differential.temperature
-)[0].subs(
+_temperature_derived = solve(_internal_energy_change_eqn,
+    internal_energy_differential.temperature)[0].subs(
     internal_energy_differential.internal_energy_change,
-    Derivative(internal_energy(entropy, volume, particle_count), entropy) * internal_energy_differential.entropy_change,
-)
+    Derivative(internal_energy(entropy, volume, particle_count), entropy) *
+    internal_energy_differential.entropy_change,
+    )
 
 assert expr_equals(_temperature_derived, law.rhs)
 
@@ -63,7 +63,5 @@ def calculate_temperature(
     entropy_change_: Quantity,
 ) -> Quantity:
     internal_energy_ = (internal_energy_change_ / entropy_change_) * entropy
-    result = law.rhs.subs(
-        internal_energy(entropy, volume, particle_count), internal_energy_
-    ).doit()
+    result = law.rhs.subs(internal_energy(entropy, volume, particle_count), internal_energy_).doit()
     return Quantity(result)

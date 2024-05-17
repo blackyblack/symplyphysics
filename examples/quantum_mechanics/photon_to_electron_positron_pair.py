@@ -37,17 +37,17 @@ energy_conservation_eqn = Eq(photon_energy, electron_positron_pair_rest_energy)
 
 photon_wavelength_expr = solve(
     (
-        energy_conservation_eqn,
-        frequency_law.law.subs({
-            frequency_law.period: wavelength_law.oscillation_period,
-            frequency_law.temporal_frequency: photon_frequency,
-        }),
-        wavelength_law.law.subs(wavelength_law.propagation_speed, units.speed_of_light),
+    energy_conservation_eqn,
+    frequency_law.law.subs({
+    frequency_law.period: wavelength_law.oscillation_period,
+    frequency_law.temporal_frequency: photon_frequency,
+    }),
+    wavelength_law.law.subs(wavelength_law.propagation_speed, units.speed_of_light),
     ),
     (
-        photon_frequency,
-        wavelength_law.oscillation_period,
-        wavelength_law.wavelength,
+    photon_frequency,
+    wavelength_law.oscillation_period,
+    wavelength_law.wavelength,
     ),
     dict=True,
 )[0][wavelength_law.wavelength]

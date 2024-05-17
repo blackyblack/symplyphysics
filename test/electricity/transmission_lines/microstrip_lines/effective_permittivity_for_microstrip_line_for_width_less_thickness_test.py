@@ -13,9 +13,8 @@ from symplyphysics.laws.electricity.transmission_lines.microstrip_lines import e
 ## the thickness of the substrate is 7 millimeters, the strip thickness is 50 micrometer.
 ## Then the effective permittivity is 2.694.
 
-Args = namedtuple("Args", [
-    "relative_permittivity", "strip_thickness", "thickness_of_substrate", "width"
-])
+Args = namedtuple("Args",
+    ["relative_permittivity", "strip_thickness", "thickness_of_substrate", "width"])
 
 
 @fixture(name="test_args")
@@ -31,9 +30,8 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_effective_permittivity(test_args: Args) -> None:
-    result = permittivity_law.calculate_effective_permittivity(
-        test_args.relative_permittivity, test_args.strip_thickness, test_args.thickness_of_substrate,
-        test_args.width)
+    result = permittivity_law.calculate_effective_permittivity(test_args.relative_permittivity,
+        test_args.strip_thickness, test_args.thickness_of_substrate, test_args.width)
     assert_equal(result, 2.694)
 
 
@@ -41,8 +39,7 @@ def test_bad_permittivity(test_args: Args) -> None:
     bad_permittivity = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         permittivity_law.calculate_effective_permittivity(bad_permittivity,
-            test_args.strip_thickness, test_args.thickness_of_substrate,
-            test_args.width)
+            test_args.strip_thickness, test_args.thickness_of_substrate, test_args.width)
 
 
 def test_bad_strip_thickness(test_args: Args) -> None:
@@ -51,8 +48,8 @@ def test_bad_strip_thickness(test_args: Args) -> None:
         permittivity_law.calculate_effective_permittivity(test_args.relative_permittivity,
             bad_strip_thickness, test_args.thickness_of_substrate, test_args.width)
     with raises(TypeError):
-        permittivity_law.calculate_effective_permittivity(test_args.relative_permittivity,
-            100, test_args.thickness_of_substrate, test_args.width)
+        permittivity_law.calculate_effective_permittivity(test_args.relative_permittivity, 100,
+            test_args.thickness_of_substrate, test_args.width)
 
 
 def test_bad_thickness_of_substrate(test_args: Args) -> None:

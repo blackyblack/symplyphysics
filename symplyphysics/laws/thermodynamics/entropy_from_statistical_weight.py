@@ -1,14 +1,12 @@
 from sympy import Eq, solve, log, symbols, Function as SymFunction, dsolve
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output, dimensionless, assert_equal)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless,
+    assert_equal)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.chemistry import avogadro_number_from_mole_count as avogadro_law
 from symplyphysics.laws.thermodynamics import (
-    change_in_entropy_of_ideal_gas_from_volume_and_temperature as entropy_change_law,
-)
+    change_in_entropy_of_ideal_gas_from_volume_and_temperature as entropy_change_law,)
 from symplyphysics.laws.quantities import (
-    quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law,
-)
+    quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law,)
 
 # Description
 ## The entropy of a system depends on the statistical weight of the state of the system.
@@ -44,33 +42,21 @@ _entropy = symbols("entropy", cls=SymFunction, real=True)
 # According to thermodynamics, the entropy of a complex system should equal the sum of entropies
 # of its independent subsystems. This is the additive property of entropy:
 
-_additive_property = Eq(
-    _entropy(_first_probability * _second_probability),
-    _entropy(_first_probability) + _entropy(_second_probability)
-)
+_additive_property = Eq(_entropy(_first_probability * _second_probability),
+    _entropy(_first_probability) + _entropy(_second_probability))
 
 # To solve this functional equation, we can use the following method of variating
 # the two probabilities.
 
 _constant_condition = Eq((_first_probability * _second_probability).diff(_time), 0)
 
-_first_probability_diff_expr = solve(
-    _constant_condition,
-    _first_probability.diff(_time)
-)[0]
+_first_probability_diff_expr = solve(_constant_condition, _first_probability.diff(_time))[0]
 
-_additive_property_diff = Eq(
-    _additive_property.lhs.diff(_time),
-    _additive_property.rhs.diff(_time)
-).subs(
-    _first_probability.diff(_time),
-    _first_probability_diff_expr
-)
+_additive_property_diff = Eq(_additive_property.lhs.diff(_time),
+    _additive_property.rhs.diff(_time)).subs(_first_probability.diff(_time),
+    _first_probability_diff_expr)
 
-_first_probability_expr = solve(
-    _additive_property_diff,
-    _first_probability
-)[0]
+_first_probability_expr = solve(_additive_property_diff, _first_probability)[0]
 
 _differential_property = Eq(
     _first_probability * _entropy(_first_probability).diff(_first_probability),
@@ -100,18 +86,13 @@ _integration_constant = symbols("integration_constant", real=True)
 # Now we can integrate the above differential property and show that the integration constant is
 # actually zero.
 
-_entropy_via_probability = dsolve(
-    _entropy_eqn,
-    _entropy(_probability)
-).rhs.subs(
+_entropy_via_probability = dsolve(_entropy_eqn, _entropy(_probability)).rhs.subs(
     "C1",
     _integration_constant,
 )
 
 _additive_property_updated = _additive_property.replace(
-    _entropy,
-    lambda probability: _entropy_via_probability.subs(_probability, probability)
-)
+    _entropy, lambda probability: _entropy_via_probability.subs(_probability, probability))
 
 _integration_constant_expr = solve(
     _additive_property_updated,
@@ -144,7 +125,7 @@ _probability_via_volume = (_volume / _total_volume)**_particle_count
 _entropy_via_volume = _entropy_via_probability.subs(_probability, _probability_via_volume)
 
 # Let us assume that during a process the volume of the gas changes from `V_1` to `V_2` at
-# constant temperature and particle count. Then we can find the entropy of the two states 
+# constant temperature and particle count. Then we can find the entropy of the two states
 # via the above formula.
 
 _first_volume, _second_volume = symbols(
@@ -152,34 +133,34 @@ _first_volume, _second_volume = symbols(
     positive=True,
 )
 
-_entropy_difference_derived = (
-    _entropy_via_volume.subs(_volume, _second_volume)
-    - _entropy_via_volume.subs(_volume, _first_volume)
-).simplify()
+_entropy_difference_derived = (_entropy_via_volume.subs(_volume, _second_volume) -
+    _entropy_via_volume.subs(_volume, _first_volume)).simplify()
 
 # We also utilise another law derived from completely different thermodynamic principles:
 
 _entropy_difference_from_law = entropy_change_law.law.rhs.subs({
-    entropy_change_law.gas_mass: molar_qty_law.law.rhs.subs(
-        molar_qty_law.molar_quantity,
-        entropy_change_law.molar_mass,
+    entropy_change_law.gas_mass:
+    molar_qty_law.law.rhs.subs(
+    molar_qty_law.molar_quantity,
+    entropy_change_law.molar_mass,
     ),
-    entropy_change_law.final_temperature: entropy_change_law.initial_temperature,
-    entropy_change_law.start_volume: _first_volume,
-    entropy_change_law.final_volume: _second_volume,
+    entropy_change_law.final_temperature:
+    entropy_change_law.initial_temperature,
+    entropy_change_law.start_volume:
+        _first_volume,
+    entropy_change_law.final_volume:
+        _second_volume,
 })
 
 _equation_constant_expr = solve(
+    (Eq(_entropy_difference_derived, _entropy_difference_from_law),
+    avogadro_law.law.subs({
+    avogadro_law.particles_count: _particle_count,
+    avogadro_law.mole_count: molar_qty_law.amount_of_substance,
+    })),
     (
-        Eq(_entropy_difference_derived, _entropy_difference_from_law),
-        avogadro_law.law.subs({
-            avogadro_law.particles_count: _particle_count,
-            avogadro_law.mole_count: molar_qty_law.amount_of_substance,
-        })
-    ),
-    (
-        _equation_constant,
-        molar_qty_law.amount_of_substance,
+    _equation_constant,
+    molar_qty_law.amount_of_substance,
     ),
     dict=True,
 )[0][_equation_constant]
@@ -187,10 +168,8 @@ _equation_constant_expr = solve(
 # Thus, we obtain that this is in, in fact, the Boltzmann constant
 assert_equal(_equation_constant_expr, units.boltzmann_constant)
 
-_entropy_via_probability = _entropy_via_probability.subs(
-    _equation_constant,
-    units.boltzmann_constant
-)
+_entropy_via_probability = _entropy_via_probability.subs(_equation_constant,
+    units.boltzmann_constant)
 
 # The derivation of the following formula is too long and it can be found in "General Course of Physics"
 # by Sivukhin D.V, Chapter 80, formula (80.8):
@@ -204,10 +183,8 @@ _entropy_via_statistical_weight = _entropy_via_probability.subs(
 
 # Entropy is defined up to a constant term, therefore we can get rid of it in the formula
 
-_entropy_via_statistical_weight = (
-    _entropy_via_statistical_weight
-    - _entropy_via_statistical_weight.subs(statistical_weight, 1)
-)
+_entropy_via_statistical_weight = (_entropy_via_statistical_weight -
+    _entropy_via_statistical_weight.subs(statistical_weight, 1))
 
 assert expr_equals(_entropy_via_statistical_weight, law.rhs)
 

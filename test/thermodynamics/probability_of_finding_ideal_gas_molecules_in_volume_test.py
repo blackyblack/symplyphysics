@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.thermodynamics import (
-    probability_of_finding_ideal_gas_molecules_in_volume as probability_law,
-)
+    probability_of_finding_ideal_gas_molecules_in_volume as probability_law,)
 
 Args = namedtuple("Args", "v0 v n")
 
@@ -40,7 +39,7 @@ def test_bad_volume(test_args: Args) -> None:
     vb = Quantity(2 * test_args.v0)
     with raises(ValueError):
         probability_law.calculate_probability(test_args.v0, vb, test_args.n)
-    
+
 
 def test_bad_number(test_args: Args) -> None:
     nb = Quantity(1 * units.coulomb)

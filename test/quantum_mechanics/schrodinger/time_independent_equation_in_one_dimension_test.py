@@ -4,8 +4,7 @@ from sympy import sin, pi, sqrt
 from symplyphysics import units
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.quantum_mechanics.schrodinger import (
-    time_independent_equation_in_one_dimension as wave_function_eqn,
-)
+    time_independent_equation_in_one_dimension as wave_function_eqn,)
 
 Args = namedtuple("Args", "psi m u e")
 

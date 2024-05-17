@@ -51,7 +51,8 @@ def test_bad_wavelength(test_args: Args) -> None:
     bad_wavelength = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         coefficient_law.calculate_attenuation_coefficient(test_args.relative_permittivity,
-            test_args.effective_permittivity, bad_wavelength, test_args.tangent_dielectric_loss_angle)
+            test_args.effective_permittivity, bad_wavelength,
+            test_args.tangent_dielectric_loss_angle)
     with raises(TypeError):
         coefficient_law.calculate_attenuation_coefficient(test_args.relative_permittivity,
             test_args.effective_permittivity, 100, test_args.tangent_dielectric_loss_angle)

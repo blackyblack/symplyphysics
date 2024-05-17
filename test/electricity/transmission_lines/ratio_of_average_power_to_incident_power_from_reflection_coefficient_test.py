@@ -18,19 +18,23 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_absolute_reflection_coefficient(test_args: Args) -> None:
-    result = coefficient_law.calculate_absolute_reflection_coefficient(test_args.incident_power, test_args.average_power)
+    result = coefficient_law.calculate_absolute_reflection_coefficient(
+        test_args.incident_power, test_args.average_power)
     assert_equal(result, 0.5)
 
 
 def test_bad_powers(test_args: Args) -> None:
     bad_power = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        coefficient_law.calculate_absolute_reflection_coefficient(bad_power, test_args.average_power)
+        coefficient_law.calculate_absolute_reflection_coefficient(bad_power,
+            test_args.average_power)
     with raises(TypeError):
         coefficient_law.calculate_absolute_reflection_coefficient(100, test_args.average_power)
     with raises(errors.UnitsError):
-        coefficient_law.calculate_absolute_reflection_coefficient(test_args.incident_power, bad_power)
+        coefficient_law.calculate_absolute_reflection_coefficient(test_args.incident_power,
+            bad_power)
     with raises(TypeError):
         coefficient_law.calculate_absolute_reflection_coefficient(test_args.incident_power, 100)
     with raises(ValueError):
-        coefficient_law.calculate_absolute_reflection_coefficient(test_args.average_power, test_args.incident_power)
+        coefficient_law.calculate_absolute_reflection_coefficient(test_args.average_power,
+            test_args.incident_power)

@@ -19,14 +19,16 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_reflection_coefficient(test_args: Args) -> None:
-    result = coefficient_law.calculate_reflection_coefficient(test_args.load_impedance, test_args.characteristic_impedance)
+    result = coefficient_law.calculate_reflection_coefficient(test_args.load_impedance,
+        test_args.characteristic_impedance)
     assert_equal(result, 0.412)
 
 
 def test_bad_powers(test_args: Args) -> None:
     bad_power = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        coefficient_law.calculate_reflection_coefficient(bad_power, test_args.characteristic_impedance)
+        coefficient_law.calculate_reflection_coefficient(bad_power,
+            test_args.characteristic_impedance)
     with raises(TypeError):
         coefficient_law.calculate_reflection_coefficient(100, test_args.characteristic_impedance)
     with raises(errors.UnitsError):

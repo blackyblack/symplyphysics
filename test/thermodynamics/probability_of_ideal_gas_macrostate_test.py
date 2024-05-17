@@ -37,5 +37,4 @@ def test_bad_argument(test_args: Args) -> None:
         macrostate_law.calculate_macrostate_probability(test_args.p1)
     with raises(ValueError):
         macrostate_law.calculate_macrostate_probability(
-            list(zip([test_args.p1, test_args.p2], [test_args.n1, test_args.n2]))
-        )
+            list(zip([test_args.p1, test_args.p2], [test_args.n1, test_args.n2])))

@@ -32,8 +32,8 @@ volume = Function("volume", units.volume)
 
 law = Eq(
     Derivative(enthalpy(temperature, pressure), pressure),
-    volume(temperature, pressure) - temperature * Derivative(volume(temperature, pressure), temperature)
-)
+    volume(temperature, pressure) -
+    temperature * Derivative(volume(temperature, pressure), temperature))
 
 # TODO: Derive from differential of enthalpy and Maxwell relation
 

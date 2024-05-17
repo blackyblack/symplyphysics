@@ -41,9 +41,12 @@ _initial_volume_expr = _volume_expr.subs(_length, _initial_length)
 _final_volume_expr = _volume_expr.subs(_length, _final_length_expr)
 
 _volumetric_expr = volumetric_def.definition.rhs.subs({
-    volumetric_def.volume(volumetric_def.temperature).diff(volumetric_def.temperature): _volume_change / _temperature_change,
-    _volume_change: _final_volume_expr - _initial_volume_expr,
-    volumetric_def.volume(volumetric_def.temperature): _initial_volume_expr,
+    volumetric_def.volume(volumetric_def.temperature).diff(volumetric_def.temperature):
+    _volume_change / _temperature_change,
+    _volume_change:
+    _final_volume_expr - _initial_volume_expr,
+    volumetric_def.volume(volumetric_def.temperature):
+        _initial_volume_expr,
 })
 
 # Note: if dimension changes are not small, the third and fourth terms of the following series expansion
@@ -51,9 +54,12 @@ _volumetric_expr = volumetric_def.definition.rhs.subs({
 _volumetric_expr_series = _volumetric_expr.series(_length_change, 0, 2).removeO()
 
 _linear_eqn = linear_def.definition.subs({
-    linear_def.length(linear_def.temperature).diff(linear_def.temperature): _length_change / _temperature_change,
-    linear_def.length(linear_def.temperature): _initial_length,
-    linear_def.linear_expansion_coefficient: linear_expansion_coefficient,
+    linear_def.length(linear_def.temperature).diff(linear_def.temperature):
+    _length_change / _temperature_change,
+    linear_def.length(linear_def.temperature):
+        _initial_length,
+    linear_def.linear_expansion_coefficient:
+        linear_expansion_coefficient,
 })
 
 _volumetric_expr_derived = solve(

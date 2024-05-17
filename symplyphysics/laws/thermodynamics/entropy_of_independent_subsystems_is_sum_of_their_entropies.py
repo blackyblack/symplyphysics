@@ -27,10 +27,7 @@ from symplyphysics import (
 total_entropy = Symbol("total_entropy", units.energy / units.temperature)
 subsystem_entropy = SymbolIndexed("subsystem_entropy", units.energy / units.temperature)
 
-law = Eq(
-    total_entropy,
-    SumIndexed(subsystem_entropy[global_index], global_index)
-)
+law = Eq(total_entropy, SumIndexed(subsystem_entropy[global_index], global_index))
 
 
 @validate_input(subsystem_entropies_=subsystem_entropy)

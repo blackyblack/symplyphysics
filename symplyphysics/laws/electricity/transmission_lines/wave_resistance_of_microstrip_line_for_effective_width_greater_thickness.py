@@ -1,13 +1,6 @@
 from sympy import Eq, solve, sqrt, log, pi
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    print_expression,
-    validate_input,
-    validate_output,
-    dimensionless
-)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output, dimensionless)
 
 ## Description
 ## The microstrip line is a dielectric substrate on which a metal strip is applied.

@@ -1,13 +1,6 @@
 from sympy import Eq, solve, sqrt
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    print_expression,
-    validate_input,
-    validate_output,
-    dimensionless
-)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output, dimensionless)
 
 ## Description
 ## The microstrip line is a dielectric substrate on which a metal strip is applied.
@@ -28,7 +21,8 @@ wave_resistance = Symbol("wave_resistance", units.impedance)
 
 wave_resistance_without_frequency = Symbol("wave_resistance_without_frequency", units.impedance)
 effective_permittivity = Symbol("effective_permittivity", dimensionless)
-effective_permittivity_without_frequency = Symbol("effective_permittivity_without_frequency", dimensionless)
+effective_permittivity_without_frequency = Symbol("effective_permittivity_without_frequency",
+    dimensionless)
 
 expression_1 = sqrt(effective_permittivity_without_frequency / effective_permittivity)
 expression_2 = (effective_permittivity - 1) / (effective_permittivity_without_frequency - 1)
@@ -44,8 +38,8 @@ def print_law() -> str:
     effective_permittivity_=effective_permittivity,
     effective_permittivity_without_frequency_=effective_permittivity_without_frequency)
 @validate_output(wave_resistance)
-def calculate_wave_resistance(wave_resistance_without_frequency_: Quantity, effective_permittivity_: float,
-    effective_permittivity_without_frequency_: float) -> Quantity:
+def calculate_wave_resistance(wave_resistance_without_frequency_: Quantity,
+    effective_permittivity_: float, effective_permittivity_without_frequency_: float) -> Quantity:
     result_expr = solve(law, wave_resistance, dict=True)[0][wave_resistance]
     result_expr = result_expr.subs({
         wave_resistance_without_frequency: wave_resistance_without_frequency_,

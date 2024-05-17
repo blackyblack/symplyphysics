@@ -4,17 +4,8 @@ from sympy import (
     Eq,
     solve,
 )
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    Function,
-    print_expression,
-    validate_input,
-    validate_output,
-    dimensionless,
-    convert_to_float
-)
+from symplyphysics import (units, Quantity, Symbol, Function, print_expression, validate_input,
+    validate_output, dimensionless, convert_to_float)
 
 # Description
 ## The approximation of the power transmission coefficient of a normalized low-pass filter is given by approximating functions of the order of n.
@@ -34,7 +25,8 @@ filter_function = Function("filter_function", dimensionless)
 bandwidth_distortion = Symbol("bandwidth_distortion", dimensionless)
 band_stop_distortion = Symbol("band_stop_distortion", dimensionless)
 
-law = Eq(filter_function(band_stop_frequency, filter_order), band_stop_distortion / bandwidth_distortion)
+law = Eq(filter_function(band_stop_frequency, filter_order),
+    band_stop_distortion / bandwidth_distortion)
 
 
 def print_law() -> str:
@@ -47,11 +39,11 @@ def apply_filter_function(filter_function_: Expr) -> Expr:
 
 
 @validate_input(band_stop_frequency_=band_stop_frequency,
-                bandwidth_distortion_=bandwidth_distortion,
-                band_stop_distortion_=band_stop_distortion)
+    bandwidth_distortion_=bandwidth_distortion,
+    band_stop_distortion_=band_stop_distortion)
 @validate_output(filter_order)
-def calculate_order(filter_function_: Expr, band_stop_frequency_: Quantity, bandwidth_distortion_: float,
-                          band_stop_distortion_: float) -> int:
+def calculate_order(filter_function_: Expr, band_stop_frequency_: Quantity,
+    bandwidth_distortion_: float, band_stop_distortion_: float) -> int:
     applied_law = apply_filter_function(filter_function_)
     result_expr = applied_law.subs({
         band_stop_frequency: band_stop_frequency_,

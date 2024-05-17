@@ -48,18 +48,16 @@ particle_count_in_cell = SymbolIndexed("particle_count_in_cell", dimensionless)
 
 law = Eq(
     macrostate_probability,
-    statistical_weight
-    * ProductIndexed(
-        one_particle_in_cell_probability[global_index]**particle_count_in_cell[global_index],
-        global_index,
+    statistical_weight * ProductIndexed(
+    one_particle_in_cell_probability[global_index]**particle_count_in_cell[global_index],
+    global_index,
     ),
 )
 
 
 @validate_output(macrostate_probability)
 def calculate_macrostate_probability(
-    probabilities_and_particle_counts_: Sequence[tuple[Probability, int]],
-) -> Probability:
+    probabilities_and_particle_counts_: Sequence[tuple[Probability, int]],) -> Probability:
     for probability_, particle_count_ in probabilities_and_particle_counts_:
         assert_equivalent_dimension(
             probability_,

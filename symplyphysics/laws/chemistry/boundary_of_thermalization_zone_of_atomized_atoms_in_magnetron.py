@@ -1,6 +1,13 @@
 from sympy import Eq, solve
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless,)
+from symplyphysics import (
+    units,
+    Quantity,
+    Symbol,
+    print_expression,
+    validate_input,
+    validate_output,
+    dimensionless,
+)
 
 # Description
 ## The atoms of the target material evaporate and move towards the substrate inside the magnetron. There is a distance at which the energy of the traveling
@@ -33,7 +40,8 @@ def print_law() -> str:
 @validate_output(boundary_of_thermalization_zone)
 def calculate_boundary_of_thermalization_zone(number_of_collisions_of_atom_: float,
     free_path_length_: Quantity) -> Quantity:
-    result_expr = solve(law, boundary_of_thermalization_zone, dict=True)[0][boundary_of_thermalization_zone]
+    result_expr = solve(law, boundary_of_thermalization_zone,
+        dict=True)[0][boundary_of_thermalization_zone]
     result_expr = result_expr.subs({
         number_of_collisions_of_atom: number_of_collisions_of_atom_,
         free_path_length: free_path_length_,

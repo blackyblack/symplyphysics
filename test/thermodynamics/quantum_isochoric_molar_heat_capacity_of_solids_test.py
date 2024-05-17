@@ -8,8 +8,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.thermodynamics import (
-    quantum_isochoric_molar_heat_capacity_of_solids as einstein_law,
-)
+    quantum_isochoric_molar_heat_capacity_of_solids as einstein_law,)
 
 # Description
 ## The isochoric molar heat capacity for a solid in the Einstein model with atomic thermal oscillator

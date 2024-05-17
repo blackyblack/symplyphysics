@@ -16,6 +16,4 @@ position = Symbol("position", units.length)
 time = Symbol("time", units.time)
 
 normalization_condition = Eq(
-    Integral(abs(wave_function(position, time))**2, (position, S.NegativeInfinity, S.Infinity)),
-    1
-)
+    Integral(abs(wave_function(position, time))**2, (position, S.NegativeInfinity, S.Infinity)), 1)

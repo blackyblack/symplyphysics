@@ -10,14 +10,17 @@ Args = namedtuple("Args", "obs psi")
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
+
     def psi(position: Expr, _time: Expr) -> Expr:
         return root(pi, -4) * exp(-position**2 / 2)
-    
+
     def obs(psi_in: WaveFunction) -> WaveFunction:
+
         def psi_out(position: Expr, time: Expr) -> Expr:
             return position**2 * psi_in(position, time)
+
         return psi_out
-    
+
     return Args(obs=obs, psi=psi)
 
 

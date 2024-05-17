@@ -28,7 +28,7 @@ angular_frequency = Symbol("angular_frequency", angle_type / units.time)
 position = Symbol("position", units.length)
 
 law = Eq(
-    (-1 * hbar**2 / (2 * particle_mass)) * Derivative(wave_function(position), position, 2)
-    + (particle_mass * angular_frequency**2 / 2) * position**2 * wave_function(position),
+    (-1 * hbar**2 / (2 * particle_mass)) * Derivative(wave_function(position), position, 2) +
+    (particle_mass * angular_frequency**2 / 2) * position**2 * wave_function(position),
     particle_energy * wave_function(position),
 )

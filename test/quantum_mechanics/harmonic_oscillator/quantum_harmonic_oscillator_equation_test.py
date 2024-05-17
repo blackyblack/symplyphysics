@@ -9,6 +9,7 @@ from symplyphysics.laws.quantum_mechanics.harmonic_oscillator import equation
 
 Args = namedtuple("Args", "m w e psi")
 
+
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
     m = 1

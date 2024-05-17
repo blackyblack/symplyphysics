@@ -2,16 +2,8 @@ from sympy import (
     Eq,
     solve,
 )
-from symplyphysics import (
-    units,
-    Symbol,
-    Function,
-    print_expression,
-    validate_input,
-    validate_output,
-    dimensionless,
-    convert_to_float
-)
+from symplyphysics import (units, Symbol, Function, print_expression, validate_input,
+    validate_output, dimensionless, convert_to_float)
 
 # Description
 ## The approximation of the power transmission coefficient of a normalized low-pass filter is given by approximating functions of the order of n.
@@ -29,7 +21,8 @@ filter_function = Function("filter_function", dimensionless)
 bandwidth_distortion = Symbol("bandwidth_distortion", dimensionless)
 transmission_coefficient = Symbol("transmission_coefficient", dimensionless)
 
-law = Eq(transmission_coefficient, 1 / (1 + bandwidth_distortion**2 * filter_function(frequency)**2))
+law = Eq(transmission_coefficient,
+    1 / (1 + bandwidth_distortion**2 * filter_function(frequency)**2))
 
 
 def print_law() -> str:
@@ -37,9 +30,10 @@ def print_law() -> str:
 
 
 @validate_input(filter_function_at_frequency=filter_function,
-                bandwidth_distortion_=bandwidth_distortion)
+    bandwidth_distortion_=bandwidth_distortion)
 @validate_output(transmission_coefficient)
-def calculate_coefficient(filter_function_at_frequency: float, bandwidth_distortion_: float) -> float:
+def calculate_coefficient(filter_function_at_frequency: float,
+    bandwidth_distortion_: float) -> float:
     result_expr = law.subs({
         filter_function(frequency): filter_function_at_frequency,
         bandwidth_distortion: bandwidth_distortion_,

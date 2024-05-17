@@ -14,7 +14,7 @@ Args = namedtuple("Args", "psi")
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
-    psi = Quantity((1 + 3*I) / sqrt(units.meter))
+    psi = Quantity((1 + 3 * I) / sqrt(units.meter))
     return Args(psi=psi)
 
 

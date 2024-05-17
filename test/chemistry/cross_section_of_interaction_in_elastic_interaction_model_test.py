@@ -16,35 +16,65 @@ def test_args_fixture() -> Args:
     constant_sutherland = Quantity(133.5 * units.kelvin)
     temperature = Quantity(573 * units.kelvin)
 
-    return Args(diameter_of_atom=diameter_of_atom,
-                constant_sutherland=constant_sutherland,
-                temperature=temperature,)
+    return Args(
+        diameter_of_atom=diameter_of_atom,
+        constant_sutherland=constant_sutherland,
+        temperature=temperature,
+    )
 
 
 def test_basic_cross_sectional_area_of_interaction(test_args: Args) -> None:
-    result = cross_section_law.calculate_cross_sectional_area_of_interaction(test_args.diameter_of_atom, test_args.constant_sutherland, test_args.temperature,)
+    result = cross_section_law.calculate_cross_sectional_area_of_interaction(
+        test_args.diameter_of_atom,
+        test_args.constant_sutherland,
+        test_args.temperature,
+    )
     assert_equal(result, 6.65e-20 * units.meter**2)
 
 
 def test_bad_diameter_of_atom(test_args: Args) -> None:
     diameter_of_atom = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        cross_section_law.calculate_cross_sectional_area_of_interaction(diameter_of_atom, test_args.constant_sutherland, test_args.temperature,)
+        cross_section_law.calculate_cross_sectional_area_of_interaction(
+            diameter_of_atom,
+            test_args.constant_sutherland,
+            test_args.temperature,
+        )
     with raises(TypeError):
-        cross_section_law.calculate_cross_sectional_area_of_interaction(100, test_args.constant_sutherland, test_args.temperature,)
+        cross_section_law.calculate_cross_sectional_area_of_interaction(
+            100,
+            test_args.constant_sutherland,
+            test_args.temperature,
+        )
 
 
 def test_bad_constant_sutherland(test_args: Args) -> None:
     constant_sutherland = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        cross_section_law.calculate_cross_sectional_area_of_interaction(test_args.diameter_of_atom, constant_sutherland, test_args.temperature,)
+        cross_section_law.calculate_cross_sectional_area_of_interaction(
+            test_args.diameter_of_atom,
+            constant_sutherland,
+            test_args.temperature,
+        )
     with raises(TypeError):
-        cross_section_law.calculate_cross_sectional_area_of_interaction(test_args.diameter_of_atom, 100, test_args.temperature,)
+        cross_section_law.calculate_cross_sectional_area_of_interaction(
+            test_args.diameter_of_atom,
+            100,
+            test_args.temperature,
+        )
 
 
 def test_bad_temperature(test_args: Args) -> None:
     temperature = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        cross_section_law.calculate_cross_sectional_area_of_interaction(test_args.diameter_of_atom, test_args.constant_sutherland, temperature,)
+        cross_section_law.calculate_cross_sectional_area_of_interaction(
+            test_args.diameter_of_atom,
+            test_args.constant_sutherland,
+            temperature,
+        )
     with raises(TypeError):
-        cross_section_law.calculate_cross_sectional_area_of_interaction(test_args.diameter_of_atom, test_args.constant_sutherland, 100,)
+        cross_section_law.calculate_cross_sectional_area_of_interaction(
+            test_args.diameter_of_atom,
+            test_args.constant_sutherland,
+            100,
+        )

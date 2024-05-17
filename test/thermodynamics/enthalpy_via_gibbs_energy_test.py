@@ -28,33 +28,44 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = gibbs_helmholtz_law.calculate_enthalpy(test_args.g0, test_args.g1, test_args.t0, test_args.t1, test_args.t)
+    result = gibbs_helmholtz_law.calculate_enthalpy(test_args.g0, test_args.g1, test_args.t0,
+        test_args.t1, test_args.t)
     assert_equal(result, -1.4 * prefixes.kilo * units.joule, tolerance=4e-3)
 
 
 def test_bad_energy(test_args: Args) -> None:
     gb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        gibbs_helmholtz_law.calculate_enthalpy(gb, test_args.g1, test_args.t0, test_args.t1, test_args.t)
+        gibbs_helmholtz_law.calculate_enthalpy(gb, test_args.g1, test_args.t0, test_args.t1,
+            test_args.t)
     with raises(TypeError):
-        gibbs_helmholtz_law.calculate_enthalpy(100, test_args.g1, test_args.t0, test_args.t1, test_args.t)
+        gibbs_helmholtz_law.calculate_enthalpy(100, test_args.g1, test_args.t0, test_args.t1,
+            test_args.t)
     with raises(errors.UnitsError):
-        gibbs_helmholtz_law.calculate_enthalpy(test_args.g0, gb, test_args.t0, test_args.t1, test_args.t)
+        gibbs_helmholtz_law.calculate_enthalpy(test_args.g0, gb, test_args.t0, test_args.t1,
+            test_args.t)
     with raises(TypeError):
-        gibbs_helmholtz_law.calculate_enthalpy(test_args.g0, 100, test_args.t0, test_args.t1, test_args.t)
+        gibbs_helmholtz_law.calculate_enthalpy(test_args.g0, 100, test_args.t0, test_args.t1,
+            test_args.t)
 
 
 def test_bad_temperature(test_args: Args) -> None:
     tb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        gibbs_helmholtz_law.calculate_enthalpy(test_args.g0, test_args.g1, tb, test_args.t1, test_args.t)
+        gibbs_helmholtz_law.calculate_enthalpy(test_args.g0, test_args.g1, tb, test_args.t1,
+            test_args.t)
     with raises(TypeError):
-        gibbs_helmholtz_law.calculate_enthalpy(test_args.g0, test_args.g1, 100, test_args.t1, test_args.t)
+        gibbs_helmholtz_law.calculate_enthalpy(test_args.g0, test_args.g1, 100, test_args.t1,
+            test_args.t)
     with raises(errors.UnitsError):
-        gibbs_helmholtz_law.calculate_enthalpy(test_args.g0, test_args.g1, test_args.t0, tb, test_args.t)
+        gibbs_helmholtz_law.calculate_enthalpy(test_args.g0, test_args.g1, test_args.t0, tb,
+            test_args.t)
     with raises(TypeError):
-        gibbs_helmholtz_law.calculate_enthalpy(test_args.g0, test_args.g1, test_args.t0, 100, test_args.t)
+        gibbs_helmholtz_law.calculate_enthalpy(test_args.g0, test_args.g1, test_args.t0, 100,
+            test_args.t)
     with raises(errors.UnitsError):
-        gibbs_helmholtz_law.calculate_enthalpy(test_args.g0, test_args.g1, test_args.t0, test_args.t1, tb)
+        gibbs_helmholtz_law.calculate_enthalpy(test_args.g0, test_args.g1, test_args.t0,
+            test_args.t1, tb)
     with raises(TypeError):
-        gibbs_helmholtz_law.calculate_enthalpy(test_args.g0, test_args.g1, test_args.t0, test_args.t1, 100)
+        gibbs_helmholtz_law.calculate_enthalpy(test_args.g0, test_args.g1, test_args.t0,
+            test_args.t1, 100)

@@ -12,9 +12,7 @@ from symplyphysics.laws.electricity.circuits.filters import approximation_of_tra
 ## The cutoff frequency is 1000 Hertz. The selected frequency is 500 Hertz. The distortion in the bandwidth is 0.5, and the Butterworth
 ## filter function of order 1 will be used as an approximating function. Then the value of the transfer coefficient will be equal to 0.94.
 
-Args = namedtuple("Args", [
-    "filter_function_at_frequency", "frequency", "bandwidth_distortion"
-])
+Args = namedtuple("Args", ["filter_function_at_frequency", "frequency", "bandwidth_distortion"])
 
 
 @fixture(name="test_args")
@@ -31,11 +29,13 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_coefficient(test_args: Args) -> None:
-    result = coefficient_law.calculate_coefficient(test_args.filter_function_at_frequency, test_args.bandwidth_distortion)
+    result = coefficient_law.calculate_coefficient(test_args.filter_function_at_frequency,
+        test_args.bandwidth_distortion)
     assert_equal(result, 0.94, tolerance=0.01)
 
 
 def test_bad_bandwidth_distortion(test_args: Args) -> None:
     bandwidth_distortion = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        coefficient_law.calculate_coefficient(test_args.filter_function_at_frequency, bandwidth_distortion)
+        coefficient_law.calculate_coefficient(test_args.filter_function_at_frequency,
+            bandwidth_distortion)

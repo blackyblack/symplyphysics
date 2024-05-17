@@ -20,19 +20,23 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_boundary_of_thermalization_zone(test_args: Args) -> None:
-    result = boundary_law.calculate_boundary_of_thermalization_zone(test_args.number_of_collisions_of_atom, test_args.free_path_length)
+    result = boundary_law.calculate_boundary_of_thermalization_zone(
+        test_args.number_of_collisions_of_atom, test_args.free_path_length)
     assert_equal(result, 39.06 * units.centimeter)
 
 
 def test_bad_number_of_collisions_of_atom(test_args: Args) -> None:
     number_of_collisions_of_atom = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        boundary_law.calculate_boundary_of_thermalization_zone(number_of_collisions_of_atom, test_args.free_path_length)
+        boundary_law.calculate_boundary_of_thermalization_zone(number_of_collisions_of_atom,
+            test_args.free_path_length)
 
 
 def test_bad_free_path_length(test_args: Args) -> None:
     free_path_length = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        boundary_law.calculate_boundary_of_thermalization_zone(test_args.number_of_collisions_of_atom, free_path_length)
+        boundary_law.calculate_boundary_of_thermalization_zone(
+            test_args.number_of_collisions_of_atom, free_path_length)
     with raises(TypeError):
-        boundary_law.calculate_boundary_of_thermalization_zone(test_args.number_of_collisions_of_atom, 100)
+        boundary_law.calculate_boundary_of_thermalization_zone(
+            test_args.number_of_collisions_of_atom, 100)

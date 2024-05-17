@@ -7,7 +7,6 @@ from symplyphysics import (
     Symbol,
     validate_input,
     validate_output,
-    symbols,
 )
 
 # Description
@@ -28,18 +27,14 @@ from symplyphysics import (
 ## x = h * nu / (k * T) - ratio between photon and thermal energy
 
 isochoric_molar_heat_capacity = Symbol(
-    "isochoric_molar_heat_capacity",
-    units.energy / (units.temperature * units.amount_of_substance)
-)
+    "isochoric_molar_heat_capacity", units.energy / (units.temperature * units.amount_of_substance))
 frequency = Symbol("frequency", units.frequency)
 temperature = symbols.thermodynamics.temperature
 
 energy_ratio = (planck * frequency) / (boltzmann_constant * temperature)
 
-law = Eq(
-    isochoric_molar_heat_capacity,
-    (3 * molar_gas_constant) * energy_ratio**2 * exp(energy_ratio) / (exp(energy_ratio) - 1)**2
-)
+law = Eq(isochoric_molar_heat_capacity,
+    (3 * molar_gas_constant) * energy_ratio**2 * exp(energy_ratio) / (exp(energy_ratio) - 1)**2)
 
 
 @validate_input(

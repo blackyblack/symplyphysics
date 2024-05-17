@@ -27,37 +27,48 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = joule_thompson_law.calculate_temperature_derivative(test_args.v0, test_args.v1, test_args.t0, test_args.t1, test_args.cp)
+    result = joule_thompson_law.calculate_temperature_derivative(test_args.v0, test_args.v1,
+        test_args.t0, test_args.t1, test_args.cp)
     assert_equal(result, 2 * prefixes.milli * units.kelvin / units.pascal)
 
 
 def test_bad_volume(test_args: Args) -> None:
     vb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        joule_thompson_law.calculate_temperature_derivative(vb, test_args.v1, test_args.t0, test_args.t1, test_args.cp)
+        joule_thompson_law.calculate_temperature_derivative(vb, test_args.v1, test_args.t0,
+            test_args.t1, test_args.cp)
     with raises(TypeError):
-        joule_thompson_law.calculate_temperature_derivative(100, test_args.v1, test_args.t0, test_args.t1, test_args.cp)
+        joule_thompson_law.calculate_temperature_derivative(100, test_args.v1, test_args.t0,
+            test_args.t1, test_args.cp)
     with raises(errors.UnitsError):
-        joule_thompson_law.calculate_temperature_derivative(test_args.v0, vb, test_args.t0, test_args.t1, test_args.cp)
+        joule_thompson_law.calculate_temperature_derivative(test_args.v0, vb, test_args.t0,
+            test_args.t1, test_args.cp)
     with raises(TypeError):
-        joule_thompson_law.calculate_temperature_derivative(test_args.v0, 100, test_args.t0, test_args.t1, test_args.cp)
+        joule_thompson_law.calculate_temperature_derivative(test_args.v0, 100, test_args.t0,
+            test_args.t1, test_args.cp)
 
 
 def test_bad_temperature(test_args: Args) -> None:
     tb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        joule_thompson_law.calculate_temperature_derivative(test_args.v0, test_args.v1, tb, test_args.t1, test_args.cp)
+        joule_thompson_law.calculate_temperature_derivative(test_args.v0, test_args.v1, tb,
+            test_args.t1, test_args.cp)
     with raises(TypeError):
-        joule_thompson_law.calculate_temperature_derivative(test_args.v0, test_args.v1, 100, test_args.t1, test_args.cp)
+        joule_thompson_law.calculate_temperature_derivative(test_args.v0, test_args.v1, 100,
+            test_args.t1, test_args.cp)
     with raises(errors.UnitsError):
-        joule_thompson_law.calculate_temperature_derivative(test_args.v0, test_args.v1, test_args.t0, tb, test_args.cp)
+        joule_thompson_law.calculate_temperature_derivative(test_args.v0, test_args.v1,
+            test_args.t0, tb, test_args.cp)
     with raises(TypeError):
-        joule_thompson_law.calculate_temperature_derivative(test_args.v0, test_args.v1, test_args.t0, 100, test_args.cp)
+        joule_thompson_law.calculate_temperature_derivative(test_args.v0, test_args.v1,
+            test_args.t0, 100, test_args.cp)
 
 
 def test_bad_heat_capacity(test_args: Args) -> None:
     cb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        joule_thompson_law.calculate_temperature_derivative(test_args.v0, test_args.v1, test_args.t0, test_args.t1, cb)
+        joule_thompson_law.calculate_temperature_derivative(test_args.v0, test_args.v1,
+            test_args.t0, test_args.t1, cb)
     with raises(TypeError):
-        joule_thompson_law.calculate_temperature_derivative(test_args.v0, test_args.v1, test_args.t0, test_args.t1, 100)
+        joule_thompson_law.calculate_temperature_derivative(test_args.v0, test_args.v1,
+            test_args.t0, test_args.t1, 100)

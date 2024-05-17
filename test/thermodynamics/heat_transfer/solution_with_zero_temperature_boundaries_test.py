@@ -28,57 +28,72 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = solution.calculate_temperature(test_args.b, test_args.k, test_args.n, test_args.l, test_args.x, test_args.t)
+    result = solution.calculate_temperature(test_args.b, test_args.k, test_args.n, test_args.l,
+        test_args.x, test_args.t)
     assert_equal(result, 67 * units.kelvin)
 
 
 def test_bad_temperature_coefficient(test_args: Args) -> None:
     bb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        solution.calculate_temperature(bb, test_args.k, test_args.n, test_args.l, test_args.x, test_args.t)
+        solution.calculate_temperature(bb, test_args.k, test_args.n, test_args.l, test_args.x,
+            test_args.t)
     with raises(TypeError):
-        solution.calculate_temperature(100, test_args.k, test_args.n, test_args.l, test_args.x, test_args.t)
+        solution.calculate_temperature(100, test_args.k, test_args.n, test_args.l, test_args.x,
+            test_args.t)
 
 
 def test_bad_diffusivity(test_args: Args) -> None:
     kb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        solution.calculate_temperature(test_args.b, kb, test_args.n, test_args.l, test_args.x, test_args.t)
+        solution.calculate_temperature(test_args.b, kb, test_args.n, test_args.l, test_args.x,
+            test_args.t)
     with raises(TypeError):
-        solution.calculate_temperature(test_args.b, 100, test_args.n, test_args.l, test_args.x, test_args.t)
+        solution.calculate_temperature(test_args.b, 100, test_args.n, test_args.l, test_args.x,
+            test_args.t)
 
 
 def test_bad_number(test_args: Args) -> None:
     nb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        solution.calculate_temperature(test_args.b, test_args.k, nb, test_args.l, test_args.x, test_args.t)
+        solution.calculate_temperature(test_args.b, test_args.k, nb, test_args.l, test_args.x,
+            test_args.t)
 
 
 def test_bad_position(test_args: Args) -> None:
     xb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        solution.calculate_temperature(test_args.b, test_args.k, test_args.n, xb, test_args.x, test_args.t)
+        solution.calculate_temperature(test_args.b, test_args.k, test_args.n, xb, test_args.x,
+            test_args.t)
     with raises(TypeError):
-        solution.calculate_temperature(test_args.b, test_args.k, test_args.n, 100, test_args.x, test_args.t)
+        solution.calculate_temperature(test_args.b, test_args.k, test_args.n, 100, test_args.x,
+            test_args.t)
     with raises(errors.UnitsError):
-        solution.calculate_temperature(test_args.b, test_args.k, test_args.n, test_args.l, xb, test_args.t)
+        solution.calculate_temperature(test_args.b, test_args.k, test_args.n, test_args.l, xb,
+            test_args.t)
     with raises(TypeError):
-        solution.calculate_temperature(test_args.b, test_args.k, test_args.n, test_args.l, 100, test_args.t)
+        solution.calculate_temperature(test_args.b, test_args.k, test_args.n, test_args.l, 100,
+            test_args.t)
 
     xb = Quantity(-1 * units.meter)
     with raises(ValueError):
-        solution.calculate_temperature(test_args.b, test_args.k, test_args.n, xb, test_args.x, test_args.t)
+        solution.calculate_temperature(test_args.b, test_args.k, test_args.n, xb, test_args.x,
+            test_args.t)
     with raises(ValueError):
-        solution.calculate_temperature(test_args.b, test_args.k, test_args.n, test_args.l, xb, test_args.t)
-    
+        solution.calculate_temperature(test_args.b, test_args.k, test_args.n, test_args.l, xb,
+            test_args.t)
+
     xb = Quantity(test_args.l * 2)
     with raises(ValueError):
-        solution.calculate_temperature(test_args.b, test_args.k, test_args.n, test_args.l, xb, test_args.t)
+        solution.calculate_temperature(test_args.b, test_args.k, test_args.n, test_args.l, xb,
+            test_args.t)
 
 
 def test_bad_time(test_args: Args) -> None:
     tb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        solution.calculate_temperature(test_args.b, test_args.k, test_args.n, test_args.l, test_args.x, tb)
+        solution.calculate_temperature(test_args.b, test_args.k, test_args.n, test_args.l,
+            test_args.x, tb)
     with raises(TypeError):
-        solution.calculate_temperature(test_args.b, test_args.k, test_args.n, test_args.l, test_args.x, 100)
+        solution.calculate_temperature(test_args.b, test_args.k, test_args.n, test_args.l,
+            test_args.x, 100)

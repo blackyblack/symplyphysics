@@ -28,33 +28,44 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = gibbs_helmholtz_law.calculate_internal_energy(test_args.f0, test_args.f1, test_args.t0, test_args.t1, test_args.t)
+    result = gibbs_helmholtz_law.calculate_internal_energy(test_args.f0, test_args.f1, test_args.t0,
+        test_args.t1, test_args.t)
     assert_equal(result, -1.4 * prefixes.kilo * units.joule, tolerance=4e-3)
 
 
 def test_bad_energy(test_args: Args) -> None:
     fb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        gibbs_helmholtz_law.calculate_internal_energy(fb, test_args.f1, test_args.t0, test_args.t1, test_args.t)
+        gibbs_helmholtz_law.calculate_internal_energy(fb, test_args.f1, test_args.t0, test_args.t1,
+            test_args.t)
     with raises(TypeError):
-        gibbs_helmholtz_law.calculate_internal_energy(100, test_args.f1, test_args.t0, test_args.t1, test_args.t)
+        gibbs_helmholtz_law.calculate_internal_energy(100, test_args.f1, test_args.t0, test_args.t1,
+            test_args.t)
     with raises(errors.UnitsError):
-        gibbs_helmholtz_law.calculate_internal_energy(test_args.f0, fb, test_args.t0, test_args.t1, test_args.t)
+        gibbs_helmholtz_law.calculate_internal_energy(test_args.f0, fb, test_args.t0, test_args.t1,
+            test_args.t)
     with raises(TypeError):
-        gibbs_helmholtz_law.calculate_internal_energy(test_args.f0, 100, test_args.t0, test_args.t1, test_args.t)
+        gibbs_helmholtz_law.calculate_internal_energy(test_args.f0, 100, test_args.t0, test_args.t1,
+            test_args.t)
 
 
 def test_bad_temperature(test_args: Args) -> None:
     tb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        gibbs_helmholtz_law.calculate_internal_energy(test_args.f0, test_args.f1, tb, test_args.t1, test_args.t)
+        gibbs_helmholtz_law.calculate_internal_energy(test_args.f0, test_args.f1, tb, test_args.t1,
+            test_args.t)
     with raises(TypeError):
-        gibbs_helmholtz_law.calculate_internal_energy(test_args.f0, test_args.f1, 100, test_args.t1, test_args.t)
+        gibbs_helmholtz_law.calculate_internal_energy(test_args.f0, test_args.f1, 100, test_args.t1,
+            test_args.t)
     with raises(errors.UnitsError):
-        gibbs_helmholtz_law.calculate_internal_energy(test_args.f0, test_args.f1, test_args.t0, tb, test_args.t)
+        gibbs_helmholtz_law.calculate_internal_energy(test_args.f0, test_args.f1, test_args.t0, tb,
+            test_args.t)
     with raises(TypeError):
-        gibbs_helmholtz_law.calculate_internal_energy(test_args.f0, test_args.f1, test_args.t0, 100, test_args.t)
+        gibbs_helmholtz_law.calculate_internal_energy(test_args.f0, test_args.f1, test_args.t0, 100,
+            test_args.t)
     with raises(errors.UnitsError):
-        gibbs_helmholtz_law.calculate_internal_energy(test_args.f0, test_args.f1, test_args.t0, test_args.t1, tb)
+        gibbs_helmholtz_law.calculate_internal_energy(test_args.f0, test_args.f1, test_args.t0,
+            test_args.t1, tb)
     with raises(TypeError):
-        gibbs_helmholtz_law.calculate_internal_energy(test_args.f0, test_args.f1, test_args.t0, test_args.t1, 100)
+        gibbs_helmholtz_law.calculate_internal_energy(test_args.f0, test_args.f1, test_args.t0,
+            test_args.t1, 100)

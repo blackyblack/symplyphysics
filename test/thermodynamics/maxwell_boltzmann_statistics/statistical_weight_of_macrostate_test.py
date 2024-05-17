@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import (
-    statistical_weight_of_macrostate as weight_law,
-)
+    statistical_weight_of_macrostate as weight_law,)
 
 Args = namedtuple("Args", "n1 n2 n3")
 

@@ -38,10 +38,7 @@ particle_energy = Symbol("particle_energy", units.energy)
 position = Symbol("position", units.length)
 time = Symbol("time", units.time)
 
-law = Eq(
-    wave_function,
-    exp((I / hbar) * (particle_momentum * position - particle_energy * time))
-)
+law = Eq(wave_function, exp((I / hbar) * (particle_momentum * position - particle_energy * time)))
 
 # TODO: derive from Schrödinger equation
 

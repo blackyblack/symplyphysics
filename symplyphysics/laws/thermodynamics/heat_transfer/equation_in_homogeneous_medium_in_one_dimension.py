@@ -20,10 +20,8 @@ position = Symbol("position", units.length)
 time = Symbol("time", units.time)
 thermal_diffusivity = Symbol("thermal_diffusivity", units.area / units.time)
 
-law = Eq(
-    Derivative(temperature(position, time), time),
-    thermal_diffusivity * Derivative(temperature(position, time), position, 2)
-)
+law = Eq(Derivative(temperature(position, time), time),
+    thermal_diffusivity * Derivative(temperature(position, time), position, 2))
 
 # There is no simple solution to this equation, and it depends on the boundary conditions
 # as well.

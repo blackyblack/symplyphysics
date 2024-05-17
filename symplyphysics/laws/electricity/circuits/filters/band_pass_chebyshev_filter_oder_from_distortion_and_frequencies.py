@@ -1,7 +1,7 @@
 from math import ceil
 from sympy import (Eq, solve, acosh)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless, convert_to_float)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless,
+    convert_to_float)
 
 # Description
 ## The approximation of the power transmission coefficient of a normalized high-pass filter is given by approximating functions of the order of n.
@@ -29,7 +29,10 @@ cutoff_frequency = Symbol("cutoff_frequency", units.frequency)
 band_stop_frequency = Symbol("band_stop_frequency", units.frequency)
 bandwidth = Symbol("bandwidth", units.frequency)
 
-law = Eq(band_pass_chebyshev_filter_order, acosh(bandwidth_distortion / band_stop_distortion) / acosh((band_stop_frequency**2 - cutoff_frequency**2) / (bandwidth * band_stop_frequency)))
+law = Eq(
+    band_pass_chebyshev_filter_order,
+    acosh(bandwidth_distortion / band_stop_distortion) / acosh(
+    (band_stop_frequency**2 - cutoff_frequency**2) / (bandwidth * band_stop_frequency)))
 
 
 @validate_input(bandwidth_distortion_=bandwidth_distortion,
@@ -38,9 +41,11 @@ law = Eq(band_pass_chebyshev_filter_order, acosh(bandwidth_distortion / band_sto
     cutoff_frequency_=cutoff_frequency,
     bandwidth_=bandwidth)
 @validate_output(band_pass_chebyshev_filter_order)
-def calculate_band_pass_chebyshev_filter_order(bandwidth_distortion_: float, band_stop_distortion_: float, band_stop_frequency_: Quantity,
-    cutoff_frequency_: Quantity, bandwidth_: Quantity) -> int:
-    result_expr = solve(law, band_pass_chebyshev_filter_order, dict=True)[0][band_pass_chebyshev_filter_order]
+def calculate_band_pass_chebyshev_filter_order(bandwidth_distortion_: float,
+    band_stop_distortion_: float, band_stop_frequency_: Quantity, cutoff_frequency_: Quantity,
+    bandwidth_: Quantity) -> int:
+    result_expr = solve(law, band_pass_chebyshev_filter_order,
+        dict=True)[0][band_pass_chebyshev_filter_order]
     result_expr = result_expr.subs({
         bandwidth_distortion: bandwidth_distortion_,
         band_stop_distortion: band_stop_distortion_,

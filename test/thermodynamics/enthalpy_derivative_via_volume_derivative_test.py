@@ -4,7 +4,6 @@ from symplyphysics import (
     assert_equal,
     errors,
     units,
-    prefixes,
     Quantity,
 )
 from symplyphysics.laws.thermodynamics import enthalpy_derivative_via_volume_derivative as enthalpy_law
@@ -27,7 +26,8 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = enthalpy_law.calculate_enthalpy_derivative(test_args.v0, test_args.v1, test_args.t0, test_args.t1)
+    result = enthalpy_law.calculate_enthalpy_derivative(test_args.v0, test_args.v1, test_args.t0,
+        test_args.t1)
     assert_equal(result, 92 * units.joule / units.atmosphere, tolerance=1e-2)
 
 
@@ -41,7 +41,7 @@ def test_bad_volume(test_args: Args) -> None:
         enthalpy_law.calculate_enthalpy_derivative(test_args.v0, vb, test_args.t0, test_args.t1)
     with raises(TypeError):
         enthalpy_law.calculate_enthalpy_derivative(test_args.v0, 100, test_args.t0, test_args.t1)
-    
+
 
 def test_bad_temperature(test_args: Args) -> None:
     tb = Quantity(1 * units.coulomb)
@@ -53,4 +53,3 @@ def test_bad_temperature(test_args: Args) -> None:
         enthalpy_law.calculate_enthalpy_derivative(test_args.v0, test_args.v1, test_args.t0, tb)
     with raises(TypeError):
         enthalpy_law.calculate_enthalpy_derivative(test_args.v0, test_args.v1, test_args.t0, 100)
-

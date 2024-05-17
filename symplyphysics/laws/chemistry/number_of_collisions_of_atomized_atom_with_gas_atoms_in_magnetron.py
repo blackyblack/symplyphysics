@@ -9,7 +9,6 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## in a gas-discharge plasma, can be calculated. This amount will depend on the initial energy of the traveling atom and
 ## the energy transfer coefficient between the atom and the gas atoms.
 
-
 ## Law is: N = ln(Et / E0) / ln(1 - x), where
 ## N - the number of collisions of traveling atom with gas atoms (this is a statistical quantity, it can be integer, but it can be fractional as well),
 ## E0 - initial energy of the traveling atom,
@@ -22,7 +21,8 @@ initial_energy = Symbol("initial_energy", units.energy)
 energy_of_thermal_motion = Symbol("energy_of_thermal_motion", units.energy)
 energy_transfer_coefficient = Symbol("energy transfer coefficient", dimensionless)
 
-law = Eq(number_of_collisions_of_atoms, log(energy_of_thermal_motion / initial_energy) / log(1 - energy_transfer_coefficient))
+law = Eq(number_of_collisions_of_atoms,
+    log(energy_of_thermal_motion / initial_energy) / log(1 - energy_transfer_coefficient))
 
 
 def print_law() -> str:
@@ -33,14 +33,16 @@ def print_law() -> str:
     energy_of_thermal_motion_=energy_of_thermal_motion,
     energy_transfer_coefficient_=energy_transfer_coefficient)
 @validate_output(number_of_collisions_of_atoms)
-def calculate_number_of_collisions_of_atoms(initial_energy_: Quantity, energy_of_thermal_motion_: Quantity,
-                                            energy_transfer_coefficient_: float) -> float:
+def calculate_number_of_collisions_of_atoms(initial_energy_: Quantity,
+    energy_of_thermal_motion_: Quantity, energy_transfer_coefficient_: float) -> float:
     if energy_transfer_coefficient_ >= 1:
         raise ValueError("Energy transfer coefficient must be less than 1")
     if initial_energy_.scale_factor < energy_of_thermal_motion_.scale_factor:
-        raise ValueError("The initial energy of the atom must be greater than or equal to the thermal energy")
+        raise ValueError(
+            "The initial energy of the atom must be greater than or equal to the thermal energy")
 
-    result_expr = solve(law, number_of_collisions_of_atoms, dict=True)[0][number_of_collisions_of_atoms]
+    result_expr = solve(law, number_of_collisions_of_atoms,
+        dict=True)[0][number_of_collisions_of_atoms]
     result_expr = result_expr.subs({
         initial_energy: initial_energy_,
         energy_of_thermal_motion: energy_of_thermal_motion_,

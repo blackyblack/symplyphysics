@@ -8,8 +8,7 @@ from symplyphysics import (
 )
 
 from symplyphysics.laws.thermodynamics import (
-    entropy_of_independent_subsystems_is_sum_of_their_entropies as subadditivity_law,
-)
+    entropy_of_independent_subsystems_is_sum_of_their_entropies as subadditivity_law,)
 
 Args = namedtuple("Args", "s1 s2 s3")
 

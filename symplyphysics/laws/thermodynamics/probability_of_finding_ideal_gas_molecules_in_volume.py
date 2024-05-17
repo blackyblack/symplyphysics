@@ -30,7 +30,6 @@ total_volume = Symbol("total_volume", units.volume)
 partial_volume = Symbol("partial_volume", units.volume)
 particle_count = Symbol("particle_count", dimensionless, integer=True)
 
-
 law = Eq(probability, (partial_volume / total_volume)**particle_count)
 
 

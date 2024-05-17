@@ -10,8 +10,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.conditions.quantum_mechanics import (
-    one_dimensional_wave_function_is_normalized as condition,
-)
+    one_dimensional_wave_function_is_normalized as condition,)
 from symplyphysics.laws.quantum_mechanics.schrodinger import (
     time_independent_equation_in_one_dimension as stationary_eqn,
     time_dependent_equation_in_one_dimension as general_eqn,
@@ -58,12 +57,10 @@ _time_independent_condition = _condition.replace(
 )
 
 _time_dependent_condition = _condition.replace(
-    condition.wave_function,
-    lambda position_, time_: law.rhs.subs({
-        position: position_,
-        time: time_,
-    })
-)
+    condition.wave_function, lambda position_, time_: law.rhs.subs({
+    position: position_,
+    time: time_,
+    }))
 
 # The latter condition actually reduces to the former one
 assert expr_equals(_time_independent_condition.lhs, _time_dependent_condition.lhs)
@@ -74,9 +71,7 @@ assert expr_equals(_time_independent_condition.rhs, _time_dependent_condition.rh
 _stationary_eqn = stationary_eqn.law.subs({
     stationary_eqn.position: position,
     stationary_eqn.particle_energy: particle_energy,
-}).replace(
-    stationary_eqn.wave_function, time_independent_wave_function
-)
+}).replace(stationary_eqn.wave_function, time_independent_wave_function)
 
 # Substitute the time-dependent wave function defined in this law into the general Schrödinger equation
 
@@ -99,10 +94,7 @@ _wave_function_of_stationary_eqn = solve(
     time_independent_wave_function(position),
 )[0]
 
-_wave_function_of_general_eqn = solve(
-    _general_eqn,
-    time_independent_wave_function(position)
-)[0]
+_wave_function_of_general_eqn = solve(_general_eqn, time_independent_wave_function(position))[0]
 
 # The two expressions happen to be equal, which means that the wave function proposed in this
 # law is indeed the solution to the general Schödinger equation.

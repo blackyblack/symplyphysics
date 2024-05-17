@@ -38,9 +38,12 @@ _internal_energy_expr = internal_energy_law.law.rhs
 _lhs = homogeneity_condition.lhs.subs(
     internal_energy(factor * entropy, factor * volume, factor * particle_count),
     _internal_energy_expr.subs({
-        internal_energy_law.entropy_change: factor * internal_energy_law.entropy_change,
-        internal_energy_law.volume_change: factor * internal_energy_law.volume_change,
-        internal_energy_law.particle_count_change: factor * internal_energy_law.particle_count_change,
+    internal_energy_law.entropy_change:
+    factor * internal_energy_law.entropy_change,
+    internal_energy_law.volume_change:
+    factor * internal_energy_law.volume_change,
+    internal_energy_law.particle_count_change:
+    factor * internal_energy_law.particle_count_change,
     }),
 )
 

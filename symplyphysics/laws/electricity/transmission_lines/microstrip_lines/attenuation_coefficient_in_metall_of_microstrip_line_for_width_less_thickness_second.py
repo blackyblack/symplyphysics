@@ -38,9 +38,11 @@ width = Symbol("width", units.length)
 
 expression_1 = (effective_width / thickness_of_substrate)**2
 expression_2 = 1.38 * surface_resistance / (thickness_of_substrate * wave_resistance)
-expression_3 = 1 + (thickness_of_substrate / effective_width) * (1 - 1.25 * strip_thickness / (pi * thickness_of_substrate) + 1.25 * log(2 * thickness_of_substrate / strip_thickness) / pi)
+expression_3 = 1 + (thickness_of_substrate / effective_width) * (1 - 1.25 * strip_thickness /
+    (pi * thickness_of_substrate) + 1.25 * log(2 * thickness_of_substrate / strip_thickness) / pi)
 
-law = Eq(attenuation_coefficient, expression_2 * ((32 - expression_1) / (32 + expression_1)) * expression_3)
+law = Eq(attenuation_coefficient,
+    expression_2 * ((32 - expression_1) / (32 + expression_1)) * expression_3)
 
 
 @validate_input(surface_resistance_=surface_resistance,
@@ -50,13 +52,15 @@ law = Eq(attenuation_coefficient, expression_2 * ((32 - expression_1) / (32 + ex
     strip_thickness_=strip_thickness,
     width_=width)
 @validate_output(attenuation_coefficient)
-def calculate_attenuation_coefficient(surface_resistance_: Quantity,
-    wave_resistance_: Quantity, thickness_of_substrate_: Quantity,
-    effective_width_: Quantity, strip_thickness_: Quantity, width_: Quantity) -> Quantity:
+def calculate_attenuation_coefficient(surface_resistance_: Quantity, wave_resistance_: Quantity,
+    thickness_of_substrate_: Quantity, effective_width_: Quantity, strip_thickness_: Quantity,
+    width_: Quantity) -> Quantity:
     if thickness_of_substrate_.scale_factor < effective_width_.scale_factor:
-        raise ValueError("The thickness of substrate must be greater than or equal to the effective width")
+        raise ValueError(
+            "The thickness of substrate must be greater than or equal to the effective width")
     if thickness_of_substrate_.scale_factor >= effective_width_.scale_factor * 2 * pi:
-        raise ValueError("The thickness of substrate must be less than the effective width * 2 * pi")
+        raise ValueError(
+            "The thickness of substrate must be less than the effective width * 2 * pi")
 
     result_expr = solve(law, attenuation_coefficient, dict=True)[0][attenuation_coefficient]
     result_expr = result_expr.subs({

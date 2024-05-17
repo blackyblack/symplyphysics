@@ -18,7 +18,8 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_coefficient_standing_wave(test_args: Args) -> None:
-    result = coefficient_law.calculate_coefficient_standing_wave(test_args.reflection_coefficient_module)
+    result = coefficient_law.calculate_coefficient_standing_wave(
+        test_args.reflection_coefficient_module)
     assert_equal(result, 1.5)
 
 
@@ -27,4 +28,5 @@ def test_bad_reflection_coefficient_module(test_args: Args) -> None:
     with raises(errors.UnitsError):
         coefficient_law.calculate_coefficient_standing_wave(bad_reflection_coefficient_module)
     with raises(ValueError):
-        coefficient_law.calculate_coefficient_standing_wave(-test_args.reflection_coefficient_module)
+        coefficient_law.calculate_coefficient_standing_wave(
+            -test_args.reflection_coefficient_module)

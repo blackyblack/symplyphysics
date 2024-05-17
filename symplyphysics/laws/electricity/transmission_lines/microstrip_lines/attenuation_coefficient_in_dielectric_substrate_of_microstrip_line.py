@@ -23,7 +23,6 @@ from symplyphysics import (
 ## tan(d) - tangent of the dielectric loss angle of the dielectric substrate of the microstrip line,
 ## L - wavelength in vacuum.
 
-
 attenuation_coefficient = Symbol("attenuation_coefficient", 1 / units.length)
 
 relative_permittivity = Symbol("relative_permittivity", dimensionless)
@@ -43,9 +42,8 @@ law = Eq(attenuation_coefficient, constant_coefficient * expression_1 * expressi
     wavelength_=wavelength,
     tangent_dielectric_loss_angle_=tangent_dielectric_loss_angle)
 @validate_output(attenuation_coefficient)
-def calculate_attenuation_coefficient(relative_permittivity_: float,
-    effective_permittivity_: float, wavelength_: Quantity,
-    tangent_dielectric_loss_angle_: float) -> Quantity:
+def calculate_attenuation_coefficient(relative_permittivity_: float, effective_permittivity_: float,
+    wavelength_: Quantity, tangent_dielectric_loss_angle_: float) -> Quantity:
     result_expr = solve(law, attenuation_coefficient, dict=True)[0][attenuation_coefficient]
     result_expr = result_expr.subs({
         relative_permittivity: relative_permittivity_,

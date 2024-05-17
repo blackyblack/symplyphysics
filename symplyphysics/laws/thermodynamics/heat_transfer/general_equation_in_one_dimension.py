@@ -28,10 +28,8 @@ from symplyphysics import (
 
 temperature = Function("temperature", units.temperature)
 medium_density = Symbol("medium_density", units.mass / units.volume)
-medium_specific_heat_capacity = Symbol(
-    "medium_specific_heat_capacity",
-    units.energy / (units.temperature * units.mass)
-)
+medium_specific_heat_capacity = Symbol("medium_specific_heat_capacity",
+    units.energy / (units.temperature * units.mass))
 thermal_conductivity = Function(
     "thermal_conductivity",
     units.power / (units.length * units.temperature),
@@ -45,6 +43,6 @@ time = Symbol("time", units.time)
 
 law = Eq(
     medium_density * medium_specific_heat_capacity * Derivative(temperature(position, time), time),
-    Derivative(thermal_conductivity(position) * Derivative(temperature(position, time), position), position)
-    + heat_source_density(position, time)
-)
+    Derivative(
+    thermal_conductivity(position) * Derivative(temperature(position, time), position), position) +
+    heat_source_density(position, time))

@@ -1,14 +1,7 @@
 from sympy import Eq, solve, sqrt, log
 from sympy.physics.units import speed_of_light
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    validate_input,
-    validate_output,
-    dimensionless,
-    convert_to_float
-)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless,
+    convert_to_float)
 
 ## Description
 ## The microstrip line is a dielectric substrate on which a metal strip is applied.
@@ -33,14 +26,16 @@ relative_permittivity = Symbol("relative_permittivity", dimensionless)
 frequency = Symbol("frequency", units.frequency)
 thickness_of_substrate = Symbol("thickness_of_substrate", units.length)
 width = Symbol("width", units.length)
-effective_permittivity_without_frequency = Symbol("effective_permittivity_without_frequency", dimensionless)
+effective_permittivity_without_frequency = Symbol("effective_permittivity_without_frequency",
+    dimensionless)
 
 expression_1 = 4 * thickness_of_substrate * sqrt(relative_permittivity - 1) / speed_of_light / 2
 expression_2 = (1 + 2 * log(1 + width / thickness_of_substrate))**2
 expression_3 = expression_1 * expression_2
 expression_4 = sqrt(relative_permittivity) - sqrt(effective_permittivity_without_frequency)
 
-law = Eq(effective_permittivity, ((expression_4 / (1 + 4 * (expression_3 * frequency)**(-1.5))) + sqrt(effective_permittivity_without_frequency))**2)
+law = Eq(effective_permittivity, ((expression_4 / (1 + 4 * (expression_3 * frequency)**(-1.5))) +
+    sqrt(effective_permittivity_without_frequency))**2)
 
 
 @validate_input(relative_permittivity_=relative_permittivity,
@@ -49,9 +44,9 @@ law = Eq(effective_permittivity, ((expression_4 / (1 + 4 * (expression_3 * frequ
     width_=width,
     effective_permittivity_without_frequency_=effective_permittivity_without_frequency)
 @validate_output(effective_permittivity)
-def calculate_effective_permittivity(relative_permittivity_: float,
-    frequency_: Quantity, thickness_of_substrate_: Quantity,
-    width_: Quantity, effective_permittivity_without_frequency_: float) -> float:
+def calculate_effective_permittivity(relative_permittivity_: float, frequency_: Quantity,
+    thickness_of_substrate_: Quantity, width_: Quantity,
+    effective_permittivity_without_frequency_: float) -> float:
     result_expr = solve(law, effective_permittivity, dict=True)[0][effective_permittivity]
     result_expr = result_expr.subs({
         relative_permittivity: relative_permittivity_,

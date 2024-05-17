@@ -75,18 +75,18 @@ _hermite = wave_eigenfunctions.hermite
 # See [this](https://en.wikipedia.org/wiki/Hermite_polynomials#Recurrence_relation)
 _hermite_recurrence_relation = Eq(
     _hermite(mode_number + 1, _reduced_position),
-    2 * _reduced_position * _hermite(mode_number, _reduced_position)
-    - 2 * mode_number * _hermite(mode_number - 1, _reduced_position),
+    2 * _reduced_position * _hermite(mode_number, _reduced_position) -
+    2 * mode_number * _hermite(mode_number - 1, _reduced_position),
 )
 
 _energy_expr = solve(
     (
-        Eq(energy_level, _energy_expr),
-        _hermite_recurrence_relation.subs(mode_number, mode_number - 1),
+    Eq(energy_level, _energy_expr),
+    _hermite_recurrence_relation.subs(mode_number, mode_number - 1),
     ),
     (
-        energy_level,
-        _hermite(mode_number - 2, _reduced_position),
+    energy_level,
+    _hermite(mode_number - 2, _reduced_position),
     ),
     dict=True,
 )[0][energy_level].simplify()

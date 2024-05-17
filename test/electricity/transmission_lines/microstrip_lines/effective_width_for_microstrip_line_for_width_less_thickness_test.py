@@ -34,15 +34,15 @@ def test_basic_effective_width(test_args: Args) -> None:
 def test_bad_strip_thickness(test_args: Args) -> None:
     bad_strip_thickness = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        effective_width_law.calculate_effective_width(bad_strip_thickness, test_args.thickness_of_substrate,
-            test_args.width)
+        effective_width_law.calculate_effective_width(bad_strip_thickness,
+            test_args.thickness_of_substrate, test_args.width)
 
 
 def test_bad_thickness_of_substrate(test_args: Args) -> None:
     bad_thickness_of_substrate = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        effective_width_law.calculate_effective_width(test_args.strip_thickness, bad_thickness_of_substrate,
-            test_args.width)
+        effective_width_law.calculate_effective_width(test_args.strip_thickness,
+            bad_thickness_of_substrate, test_args.width)
     with raises(TypeError):
         effective_width_law.calculate_effective_width(test_args.strip_thickness, 100,
             test_args.width)
@@ -51,11 +51,11 @@ def test_bad_thickness_of_substrate(test_args: Args) -> None:
 def test_bad_width(test_args: Args) -> None:
     bad_width = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        effective_width_law.calculate_effective_width(test_args.strip_thickness, test_args.thickness_of_substrate,
-            bad_width)
+        effective_width_law.calculate_effective_width(test_args.strip_thickness,
+            test_args.thickness_of_substrate, bad_width)
     with raises(TypeError):
-        effective_width_law.calculate_effective_width(test_args.strip_thickness, test_args.thickness_of_substrate,
-            100)
+        effective_width_law.calculate_effective_width(test_args.strip_thickness,
+            test_args.thickness_of_substrate, 100)
     with raises(ValueError):
         effective_width_law.calculate_effective_width(test_args.strip_thickness, test_args.width,
             test_args.thickness_of_substrate)

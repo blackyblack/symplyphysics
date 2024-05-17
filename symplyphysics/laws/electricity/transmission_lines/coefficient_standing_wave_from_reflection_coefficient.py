@@ -1,9 +1,9 @@
 from sympy import Eq, solve
-from symplyphysics import (Symbol, print_expression, validate_input,
-    validate_output, dimensionless, convert_to_float)
+from symplyphysics import (Symbol, print_expression, validate_input, validate_output, dimensionless,
+    convert_to_float)
 
 # Description
-## Standing wave coefficient is the ratio of the highest voltage in the transmission line to the lowest voltage. It is a measure of matching the load 
+## Standing wave coefficient is the ratio of the highest voltage in the transmission line to the lowest voltage. It is a measure of matching the load
 ## with the transmission line. The coefficient in the transmission line does not depend on the internal resistance of the electromagnetic
 ## wave source and (in the case of a linear load) on the power of the generator.
 ## Also, the standing wave coefficient can be calculated by knowing the reflection coefficient module.
@@ -16,7 +16,8 @@ coefficient_standing_wave = Symbol("coefficient_standing_wave", dimensionless)
 
 reflection_coefficient_module = Symbol("reflection_coefficient_module", dimensionless)
 
-law = Eq(coefficient_standing_wave, (1 + reflection_coefficient_module) / (1 - reflection_coefficient_module))
+law = Eq(coefficient_standing_wave,
+    (1 + reflection_coefficient_module) / (1 - reflection_coefficient_module))
 
 
 def print_law() -> str:
