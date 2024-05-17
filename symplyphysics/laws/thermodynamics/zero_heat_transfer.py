@@ -83,9 +83,7 @@ _first_law_eqn = first_law.law.subs({
 _parameterized_pressure = sym_symbols("pressure", cls=SymFunction)
 _parameterized_volume = sym_symbols("volume", cls=SymFunction)
 
-_temperature_change_expr = solve(
-    ideal_gas_equation.law, _temperature
-)[0].subs({
+_temperature_change_expr = solve(ideal_gas_equation.law, _temperature)[0].subs({
     _pressure: _parameterized_pressure(t),
     _volume: _parameterized_volume(t),
 }).diff(t).subs({
@@ -95,9 +93,8 @@ _temperature_change_expr = solve(
     _parameterized_volume(t): _volume,
 })
 
-_mayers_relation = mayers_relation.law.subs(
-    mayers_relation.amount_of_substance, ideal_gas_equation.mole_count
-)
+_mayers_relation = mayers_relation.law.subs(mayers_relation.amount_of_substance,
+    ideal_gas_equation.mole_count)
 
 _temperature_change_expr = solve(
     (Eq(_temperature_change, _temperature_change_expr), _mayers_relation),
@@ -120,22 +117,18 @@ _pressure_change_expr = solve(
 _diff_eqn = Eq(
     _parameterized_pressure(_volume).diff(_volume),
     _pressure_change_expr.subs({
-        _pressure: _parameterized_pressure(_volume),
-        _volume_change: 1,
-    })
-)
+    _pressure: _parameterized_pressure(_volume),
+    _volume_change: 1,
+    }))
 
-_pressure_eqn = dsolve(
-    _diff_eqn,
+_pressure_eqn = dsolve(_diff_eqn,
     _parameterized_pressure(_volume),
-    ics={_parameterized_pressure(volume_start): pressure_start}
-)
+    ics={_parameterized_pressure(volume_start): pressure_start})
 
 _pressure_derived = _pressure_eqn.rhs.subs(_volume, volume_end)
 
-_pressure_from_law = solve(adiabatic_condition, pressure_end)[0].subs(
-    specific_heats_ratio, _adiabatic_index
-)
+_pressure_from_law = solve(adiabatic_condition, pressure_end)[0].subs(specific_heats_ratio,
+    _adiabatic_index)
 
 assert expr_equals(_pressure_derived, _pressure_from_law)
 

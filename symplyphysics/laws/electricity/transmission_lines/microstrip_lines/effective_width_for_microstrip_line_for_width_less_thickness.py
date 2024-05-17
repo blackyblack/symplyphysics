@@ -46,7 +46,8 @@ def print_law() -> str:
 def calculate_effective_width(strip_thickness_: Quantity, thickness_of_substrate_: Quantity,
     width_: Quantity) -> Quantity:
     if thickness_of_substrate_.scale_factor < width_.scale_factor * 2 * pi:
-        raise ValueError("The thickness of substrate must be greater than or equal to the width * 2 * pi")
+        raise ValueError(
+            "The thickness of substrate must be greater than or equal to the width * 2 * pi")
     result_expr = solve(law, effective_width, dict=True)[0][effective_width]
     result_expr = result_expr.subs({
         strip_thickness: strip_thickness_,

@@ -1,6 +1,6 @@
 from sympy import Eq, solve
 from sympy.physics.units import boltzmann_constant
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, clone_symbol, symbols)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols)
 
 # Description
 ## The atoms of the target material evaporate and move towards the substrate inside the magnetron. At the same time,
@@ -19,7 +19,8 @@ pressure = Symbol("pressure", units.pressure)
 temperature = symbols.thermodynamics.temperature
 cross_sectional_area_of_interaction = Symbol("cross_sectional_area_of_interaction", units.area)
 
-law = Eq(free_path_length, boltzmann_constant * temperature / (pressure * cross_sectional_area_of_interaction))
+law = Eq(free_path_length,
+    boltzmann_constant * temperature / (pressure * cross_sectional_area_of_interaction))
 
 
 @validate_input(pressure_=pressure,
@@ -27,7 +28,7 @@ law = Eq(free_path_length, boltzmann_constant * temperature / (pressure * cross_
     cross_sectional_area_of_interaction_=cross_sectional_area_of_interaction)
 @validate_output(free_path_length)
 def calculate_free_path_length(pressure_: Quantity, temperature_: Quantity,
-                                            cross_sectional_area_of_interaction_: Quantity) -> Quantity:
+    cross_sectional_area_of_interaction_: Quantity) -> Quantity:
     result_expr = solve(law, free_path_length, dict=True)[0][free_path_length]
     result_expr = result_expr.subs({
         pressure: pressure_,

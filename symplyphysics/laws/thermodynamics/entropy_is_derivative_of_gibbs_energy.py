@@ -39,11 +39,12 @@ _gibbs_energy_change_eqn = gibbs_energy_differential.law.subs({
 })
 
 _entropy_derived = solve(
-    _gibbs_energy_change_eqn, gibbs_energy_differential.entropy,
+    _gibbs_energy_change_eqn,
+    gibbs_energy_differential.entropy,
 )[0].subs(
     gibbs_energy_differential.gibbs_energy_change,
-    Derivative(gibbs_energy(temperature, pressure, particle_count), temperature) * gibbs_energy_differential.temperature_change
-)
+    Derivative(gibbs_energy(temperature, pressure, particle_count), temperature) *
+    gibbs_energy_differential.temperature_change)
 
 assert expr_equals(_entropy_derived, law.rhs)
 
@@ -58,7 +59,5 @@ def calculate_entropy(
     temperature_change_: Quantity,
 ) -> Quantity:
     gibbs_energy_ = (gibbs_energy_change_ / temperature_change_) * temperature
-    result = law.rhs.subs(
-        gibbs_energy(temperature, pressure, particle_count), gibbs_energy_
-    ).doit()
+    result = law.rhs.subs(gibbs_energy(temperature, pressure, particle_count), gibbs_energy_).doit()
     return Quantity(result)

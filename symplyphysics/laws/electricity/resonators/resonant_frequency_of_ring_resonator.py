@@ -1,7 +1,14 @@
 from sympy import (Eq, solve, sqrt)
 from sympy.physics.units import speed_of_light
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input, validate_output,
-    dimensionless,)
+from symplyphysics import (
+    units,
+    Quantity,
+    Symbol,
+    print_expression,
+    validate_input,
+    validate_output,
+    dimensionless,
+)
 
 # Description
 ## The ring resonator is a microstrip line in the shape of a circle.
@@ -36,7 +43,8 @@ def print_law() -> str:
     order_interference_=order_interference,
     permittivity_=permittivity)
 @validate_output(frequency)
-def calculate_frequency(ring_length_: Quantity, order_interference_: int, permittivity_: float) -> Quantity:
+def calculate_frequency(ring_length_: Quantity, order_interference_: int,
+    permittivity_: float) -> Quantity:
     result_expr = solve(law, frequency, dict=True)[0][frequency]
     result_expr = result_expr.subs({
         ring_length: ring_length_,

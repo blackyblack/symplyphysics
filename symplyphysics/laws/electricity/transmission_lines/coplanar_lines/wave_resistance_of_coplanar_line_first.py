@@ -1,13 +1,6 @@
 from sympy import Eq, solve, sqrt, pi, log
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    validate_input,
-    validate_output,
-    dimensionless,
-    convert_to_float
-)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless,
+    convert_to_float)
 
 ## Description
 ## The coplanar transmission line is a dielectric substrate on the surface of which 3 electrodes are located.
@@ -30,7 +23,6 @@ from symplyphysics import (
 # - h < b / 4;
 # - 0 < k^2 <= 0.5.
 
-
 wave_resistance = Symbol("wave_resistance", units.impedance)
 
 effective_permittivity = Symbol("effective_permittivity", dimensionless)
@@ -40,8 +32,7 @@ central_electrode_width = Symbol("central_electrode_width", units.length)
 constant_resistance = Quantity(30 * pi * units.ohm)
 expression_1 = constant_resistance / sqrt(effective_permittivity)
 expression_2 = sqrt(1 - (central_electrode_width / distance_between_electrodes)**2)
-expression_3 =  log(2 * (1 + sqrt(expression_2)) / (1 - sqrt(expression_2))) / pi
-
+expression_3 = log(2 * (1 + sqrt(expression_2)) / (1 - sqrt(expression_2))) / pi
 
 law = Eq(wave_resistance, expression_1 * expression_3)
 
@@ -51,8 +42,7 @@ law = Eq(wave_resistance, expression_1 * expression_3)
     central_electrode_width_=central_electrode_width)
 @validate_output(wave_resistance)
 def calculate_wave_resistance(effective_permittivity_: float,
-    distance_between_electrodes_: Quantity,
-    central_electrode_width_: Quantity) -> Quantity:
+    distance_between_electrodes_: Quantity, central_electrode_width_: Quantity) -> Quantity:
     if (central_electrode_width_.scale_factor / distance_between_electrodes_.scale_factor)**2 > 0.5:
         raise ValueError("k^2 must be less than or equal to the 0.5")
 

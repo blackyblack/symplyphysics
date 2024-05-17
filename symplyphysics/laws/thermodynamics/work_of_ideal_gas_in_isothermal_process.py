@@ -12,8 +12,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import work_is_volume_integral_of_pressure as work_law
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation
 from symplyphysics.laws.quantities import (
-    quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law,
-)
+    quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law,)
 
 ## Description
 ## The isothermal process of expansion (or compression) of a gas can occur under conditions where heat exchange between the gas and the external environment is carried out at a constant temperature difference.
@@ -46,7 +45,8 @@ law = Eq(work, (gas_mass / molar_mass) * units.molar_gas_constant * temperature 
 # Derive from ideal gas equation
 
 _mole_count = solve(
-    molar_qty_law.law, molar_qty_law.amount_of_substance,
+    molar_qty_law.law,
+    molar_qty_law.amount_of_substance,
 )[0].subs({
     molar_qty_law.extensive_quantity: gas_mass,
     molar_qty_law.molar_quantity: molar_mass,
@@ -57,11 +57,8 @@ _ideal_gas_eqn = ideal_gas_equation.law.subs({
     ideal_gas_equation.temperature: temperature,
 })
 
-_pressure_expr = solve(
-    _ideal_gas_eqn, ideal_gas_equation.pressure
-)[0].subs(
-    ideal_gas_equation.volume, work_law.volume
-)
+_pressure_expr = solve(_ideal_gas_eqn,
+    ideal_gas_equation.pressure)[0].subs(ideal_gas_equation.volume, work_law.volume)
 
 _volume_before = SymSymbol("volume_before", positive=True)
 _volume_after = SymSymbol("volume_after", positive=True)

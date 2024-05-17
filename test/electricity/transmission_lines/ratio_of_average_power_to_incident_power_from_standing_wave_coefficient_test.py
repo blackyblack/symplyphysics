@@ -18,7 +18,8 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_standing_wave_coefficient(test_args: Args) -> None:
-    result = coefficient_law.calculate_standing_wave_coefficient(test_args.incident_power, test_args.average_power)
+    result = coefficient_law.calculate_standing_wave_coefficient(test_args.incident_power,
+        test_args.average_power)
     assert_equal(result, 3)
 
 
@@ -33,4 +34,5 @@ def test_bad_powers(test_args: Args) -> None:
     with raises(TypeError):
         coefficient_law.calculate_standing_wave_coefficient(test_args.incident_power, 100)
     with raises(ValueError):
-        coefficient_law.calculate_standing_wave_coefficient(test_args.average_power, test_args.incident_power)
+        coefficient_law.calculate_standing_wave_coefficient(test_args.average_power,
+            test_args.incident_power)

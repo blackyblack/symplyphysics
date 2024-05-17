@@ -37,8 +37,8 @@ volume = Symbol("volume", units.volume)
 
 law = Eq(
     internal_energy,
-    free_energy(temperature, volume) - temperature * Derivative(free_energy(temperature, volume), temperature)
-)
+    free_energy(temperature, volume) -
+    temperature * Derivative(free_energy(temperature, volume), temperature))
 
 # Derive from definition of free energy and thermodynamical Maxwell relations
 
@@ -50,9 +50,7 @@ _entropy_expr = entropy_law.law.rhs.subs({
     free_energy(temperature, volume),
 )
 
-_internal_energy_expr = solve(
-    free_energy_def.law, free_energy_def.internal_energy
-)[0].subs({
+_internal_energy_expr = solve(free_energy_def.law, free_energy_def.internal_energy)[0].subs({
     free_energy_def.helmholtz_free_energy: free_energy(temperature, volume),
     free_energy_def.temperature: temperature,
     free_energy_def.entropy: _entropy_expr,
@@ -82,10 +80,7 @@ def calculate_internal_energy(
         temperature,
     )
 
-    result = law.rhs.subs(
-        free_energy(temperature, volume), free_energy_
-    ).doit().subs(
-        temperature, temperature_
-    )
+    result = law.rhs.subs(free_energy(temperature, volume),
+        free_energy_).doit().subs(temperature, temperature_)
 
     return Quantity(result)

@@ -29,9 +29,7 @@ law = wave_eigenfunctions.law.rhs.subs({
 })
 
 for mode_number_ in mode_numbers_:
-    expr = law.subs(values).subs(
-        wave_eigenfunctions.mode_number, mode_number_
-    )
+    expr = law.subs(values).subs(wave_eigenfunctions.mode_number, mode_number_)
 
     sub_plot = plot(
         expr,

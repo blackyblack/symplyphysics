@@ -4,8 +4,7 @@ from sympy import sin, exp
 from symplyphysics import units, Quantity
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics.heat_transfer import (
-    equation_in_homogeneous_medium_in_one_dimension as heat_equation
-)
+    equation_in_homogeneous_medium_in_one_dimension as heat_equation)
 
 Args = namedtuple("Args", "temperature chi x t")
 
@@ -22,8 +21,10 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     values = {
-        heat_equation.temperature(heat_equation.position, heat_equation.time): test_args.temperature,
-        heat_equation.thermal_diffusivity: test_args.chi
+        heat_equation.temperature(heat_equation.position, heat_equation.time):
+        test_args.temperature,
+        heat_equation.thermal_diffusivity:
+        test_args.chi
     }
     lhs = heat_equation.law.lhs.subs(values)
     rhs = heat_equation.law.rhs.subs(values)

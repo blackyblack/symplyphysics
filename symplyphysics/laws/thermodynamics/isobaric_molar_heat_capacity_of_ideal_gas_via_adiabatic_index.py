@@ -10,11 +10,9 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import heat_capacity_ratio
 from symplyphysics.laws.thermodynamics import (
-    isochoric_heat_capacity_via_isobaric_heat_capacity_for_ideal_gas as mayers_law,
-)
+    isochoric_heat_capacity_via_isobaric_heat_capacity_for_ideal_gas as mayers_law,)
 from symplyphysics.laws.quantities import (
-    quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law,
-)
+    quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law,)
 
 # Description
 ## For ideal gases the isobaric and isochoric heat capacities can be calculated via the molar gas
@@ -26,15 +24,11 @@ from symplyphysics.laws.quantities import (
 ## gamma - adiabatic index, or [heat capacity ratio](../../definitions/heat_capacity_ratio.py)
 
 isobaric_molar_heat_capacity = Symbol(
-    "isobaric_molar_heat_capacity",
-    units.energy / (units.temperature * units.amount_of_substance)
-)
+    "isobaric_molar_heat_capacity", units.energy / (units.temperature * units.amount_of_substance))
 adiabatic_index = Symbol("adiabatic_index", dimensionless)
 
-law = Eq(
-    isobaric_molar_heat_capacity,
-    units.molar_gas_constant * adiabatic_index / (adiabatic_index - 1)
-)
+law = Eq(isobaric_molar_heat_capacity,
+    units.molar_gas_constant * adiabatic_index / (adiabatic_index - 1))
 
 # Derive law from the Mayer's law for heat capacities and the definition of adiabatic index
 
@@ -53,9 +47,7 @@ _isobaric_heat_expr = solve(
     dict=True,
 )[0][_isobaric_heat]
 
-_molar_isobaric_heat = solve(
-    molar_qty_law.law, molar_qty_law.molar_quantity
-)[0].subs({
+_molar_isobaric_heat = solve(molar_qty_law.law, molar_qty_law.molar_quantity)[0].subs({
     molar_qty_law.extensive_quantity: _isobaric_heat_expr,
     molar_qty_law.amount_of_substance: mayers_law.amount_of_substance,
 })

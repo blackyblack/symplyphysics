@@ -4,7 +4,6 @@ from symplyphysics import (
     assert_equal,
     errors,
     units,
-    prefixes,
     Quantity,
 )
 from symplyphysics.laws.thermodynamics import entropy_derivative_via_volume_derivative as maxwell_relation
@@ -42,4 +41,3 @@ def test_bad_temperature(test_args: Args) -> None:
         maxwell_relation.calculate_entropy_differential(test_args.dv, tb)
     with raises(TypeError):
         maxwell_relation.calculate_entropy_differential(test_args.dv, 100)
-

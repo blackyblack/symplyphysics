@@ -34,15 +34,15 @@ def test_basic_resistance(test_args: Args) -> None:
 def test_bad_effective_permittivity(test_args: Args) -> None:
     bad_effective_permittivity = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        resistance_law.calculate_resistance(bad_effective_permittivity, test_args.thickness_of_substrate,
-            test_args.effective_width)
+        resistance_law.calculate_resistance(bad_effective_permittivity,
+            test_args.thickness_of_substrate, test_args.effective_width)
 
 
 def test_bad_thickness_of_substrate(test_args: Args) -> None:
     bad_thickness_of_substrate = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        resistance_law.calculate_resistance(test_args.effective_permittivity, bad_thickness_of_substrate,
-            test_args.effective_width)
+        resistance_law.calculate_resistance(test_args.effective_permittivity,
+            bad_thickness_of_substrate, test_args.effective_width)
     with raises(TypeError):
         resistance_law.calculate_resistance(test_args.effective_permittivity, 100,
             test_args.effective_width)
@@ -51,11 +51,11 @@ def test_bad_thickness_of_substrate(test_args: Args) -> None:
 def test_bad_effective_width(test_args: Args) -> None:
     bad_effective_width = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        resistance_law.calculate_resistance(test_args.effective_permittivity, test_args.thickness_of_substrate,
-            bad_effective_width)
+        resistance_law.calculate_resistance(test_args.effective_permittivity,
+            test_args.thickness_of_substrate, bad_effective_width)
     with raises(TypeError):
-        resistance_law.calculate_resistance(test_args.effective_permittivity, test_args.thickness_of_substrate,
-            100)
+        resistance_law.calculate_resistance(test_args.effective_permittivity,
+            test_args.thickness_of_substrate, 100)
     with raises(ValueError):
-        resistance_law.calculate_resistance(test_args.effective_permittivity, test_args.effective_width,
-            test_args.thickness_of_substrate)
+        resistance_law.calculate_resistance(test_args.effective_permittivity,
+            test_args.effective_width, test_args.thickness_of_substrate)

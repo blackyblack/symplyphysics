@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.thermodynamics import (
-    isochoric_molar_heat_capacity_of_ideal_gas_via_degrees_of_freedom as heat_capacity_law,
-)
+    isochoric_molar_heat_capacity_of_ideal_gas_via_degrees_of_freedom as heat_capacity_law,)
 
 # Description
 ## The isochoric molar heat capacity of an ideal gas consisting of molecules with 6 degrees of freedom

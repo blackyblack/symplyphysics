@@ -39,19 +39,20 @@ time = Symbol("time", units.time)
 law = Eq(
     mean_observable_value,
     Integral(
-        conjugate(wave_function(position, time))
-        * observable(wave_function(position, time)),
-        (position, S.NegativeInfinity, S.Infinity)
-    ),
+    conjugate(wave_function(position, time)) * observable(wave_function(position, time)),
+    (position, S.NegativeInfinity, S.Infinity)),
 )
+
 
 def calculate_mean_observable_value(
     observable_: Observable,
     wave_function_: WaveFunction,
 ) -> Expr:
     result = law.rhs.replace(
-        wave_function, wave_function_,
+        wave_function,
+        wave_function_,
     ).replace(
-        observable, lambda _wave_function: observable_(wave_function_)(position, time),
+        observable,
+        lambda _wave_function: observable_(wave_function_)(position, time),
     ).doit()
     return result

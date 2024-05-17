@@ -18,7 +18,8 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_cross_sectional_area_of_interaction(test_args: Args) -> None:
-    result = cross_section_law.calculate_cross_sectional_area_of_interaction(test_args.ionization_energy)
+    result = cross_section_law.calculate_cross_sectional_area_of_interaction(
+        test_args.ionization_energy)
     assert_equal(result, 2.415e-19 * units.meter**2)
 
 

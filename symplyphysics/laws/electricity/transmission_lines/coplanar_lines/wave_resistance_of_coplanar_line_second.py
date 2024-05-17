@@ -29,7 +29,6 @@ from symplyphysics import (
 # - h < b / 4;
 # - 0.5 < k^2 <= 1.
 
-
 wave_resistance = Symbol("wave_resistance", units.impedance)
 
 effective_permittivity = Symbol("effective_permittivity", dimensionless)
@@ -39,8 +38,7 @@ central_electrode_width = Symbol("central_electrode_width", units.length)
 constant_resistance = Quantity(30 * pi * units.ohm)
 expression_1 = constant_resistance / sqrt(effective_permittivity)
 expression_2 = central_electrode_width / distance_between_electrodes
-expression_3 =  pi / log(2 * (1 + sqrt(expression_2)) / (1 - sqrt(expression_2)))
-
+expression_3 = pi / log(2 * (1 + sqrt(expression_2)) / (1 - sqrt(expression_2)))
 
 law = Eq(wave_resistance, expression_1 * expression_3)
 
@@ -50,9 +48,10 @@ law = Eq(wave_resistance, expression_1 * expression_3)
     central_electrode_width_=central_electrode_width)
 @validate_output(wave_resistance)
 def calculate_wave_resistance(effective_permittivity_: float,
-    distance_between_electrodes_: Quantity,
-    central_electrode_width_: Quantity) -> Quantity:
-    if ((central_electrode_width_.scale_factor / distance_between_electrodes_.scale_factor)**2 <= 0.5) or ((central_electrode_width_.scale_factor / distance_between_electrodes_.scale_factor)**2 > 1):
+    distance_between_electrodes_: Quantity, central_electrode_width_: Quantity) -> Quantity:
+    if ((central_electrode_width_.scale_factor / distance_between_electrodes_.scale_factor)**2
+            <= 0.5) or ((central_electrode_width_.scale_factor /
+        distance_between_electrodes_.scale_factor)**2 > 1):
         raise ValueError("k^2 must be greater than the 0.5 and less than or equal to the 1")
 
     result_expr = solve(law, wave_resistance, dict=True)[0][wave_resistance]

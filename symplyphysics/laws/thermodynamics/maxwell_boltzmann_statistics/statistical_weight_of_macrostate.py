@@ -28,8 +28,8 @@ particle_count = SymbolIndexed("particle_count", dimensionless, integer=True)
 
 law = Eq(
     statistical_weight,
-    factorial(SumIndexed(particle_count[global_index], global_index))
-    / ProductIndexed(factorial(particle_count[global_index]), global_index),
+    factorial(SumIndexed(particle_count[global_index], global_index)) /
+    ProductIndexed(factorial(particle_count[global_index]), global_index),
 )
 
 

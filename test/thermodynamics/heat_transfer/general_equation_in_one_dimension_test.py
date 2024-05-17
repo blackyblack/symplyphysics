@@ -2,9 +2,8 @@ from collections import namedtuple
 from pytest import fixture
 from sympy import sin, exp, Rational
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.thermodynamics.heat_transfer import (
-    general_equation_in_one_dimension as heat_equation
-)
+from symplyphysics.laws.thermodynamics.heat_transfer import (general_equation_in_one_dimension as
+    heat_equation)
 
 # Description
 ## The values of the parameters are that of carbon monoxide (CO).

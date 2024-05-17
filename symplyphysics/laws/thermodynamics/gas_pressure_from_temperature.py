@@ -47,13 +47,8 @@ _pressure_change_expr = solve(_isochoric_eqn, pressure_change)[0]
 assert expr_equals(_pressure_change_expr, law.rhs)
 
 
-@validate_input(standard_pressure_=standard_pressure,
-    temperature_=temperature)
+@validate_input(standard_pressure_=standard_pressure, temperature_=temperature)
 @validate_output(pressure_change)
-def calculate_pressure_change(standard_pressure_: Quantity,
-    temperature_: Quantity) -> Quantity:
-    result_expr = law.rhs.subs({
-        standard_pressure: standard_pressure_,
-        temperature: temperature_
-    })
+def calculate_pressure_change(standard_pressure_: Quantity, temperature_: Quantity) -> Quantity:
+    result_expr = law.rhs.subs({standard_pressure: standard_pressure_, temperature: temperature_})
     return Quantity(result_expr)

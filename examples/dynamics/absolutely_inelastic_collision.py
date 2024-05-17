@@ -16,7 +16,8 @@ body_mass = Quantity(75 * units.kilogram)
 # Hint dimension so 'convert_to' is able to convert it to m/s
 body_velocity = Quantity(0 * units.meter / units.second, dimension=units.velocity)
 
-print(f"Formula for momentum conservation law is:\n{print_expression(momentum_conservation_law.law)}")
+print(
+    f"Formula for momentum conservation law is:\n{print_expression(momentum_conservation_law.law)}")
 print(f"Formula for momentum is:\n{print_expression(momentum_def.definition)}")
 
 # initial body velocity is 0 so the momentum is 0 as well. So the momentum of system before collision equals to momentum of bullet

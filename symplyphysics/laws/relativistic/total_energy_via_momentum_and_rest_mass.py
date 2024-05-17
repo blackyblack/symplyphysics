@@ -26,8 +26,8 @@ invariant_mass = clone_symbol(symbols.basic.mass, "invariant_mass")
 
 law = Eq(
     relativistic_energy**2,
-    (relativistic_momentum * units.speed_of_light)**2
-    + (invariant_mass * units.speed_of_light**2)**2,
+    (relativistic_momentum * units.speed_of_light)**2 +
+    (invariant_mass * units.speed_of_light**2)**2,
 )
 
 

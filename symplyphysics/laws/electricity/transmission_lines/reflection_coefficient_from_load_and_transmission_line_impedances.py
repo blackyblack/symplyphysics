@@ -22,12 +22,14 @@ reflection_coefficient = Symbol("reflection_coefficient", dimensionless)
 load_impedance = Symbol("load_impedance", units.impedance)
 characteristic_impedance = Symbol("characteristic_impedance", units.impedance)
 
-law = Eq(reflection_coefficient, (load_impedance - characteristic_impedance) / (load_impedance + characteristic_impedance))
+law = Eq(reflection_coefficient,
+    (load_impedance - characteristic_impedance) / (load_impedance + characteristic_impedance))
 
 
 @validate_input(load_impedance_=load_impedance, characteristic_impedance_=characteristic_impedance)
 @validate_output(reflection_coefficient)
-def calculate_reflection_coefficient(load_impedance_: Quantity, characteristic_impedance_: Quantity) -> float:
+def calculate_reflection_coefficient(load_impedance_: Quantity,
+    characteristic_impedance_: Quantity) -> float:
     result_expr = solve(law, reflection_coefficient, dict=True)[0][reflection_coefficient]
     result_expr = result_expr.subs({
         load_impedance: load_impedance_,

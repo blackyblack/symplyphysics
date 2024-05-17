@@ -19,7 +19,8 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_pressure_change(test_args: Args) -> None:
-    result = pressure_law.calculate_pressure_change(test_args.standard_pressure, test_args.temperature)
+    result = pressure_law.calculate_pressure_change(test_args.standard_pressure,
+        test_args.temperature)
     assert_equal(result, 7.42 * prefixes.kilo * units.pascal)
 
 

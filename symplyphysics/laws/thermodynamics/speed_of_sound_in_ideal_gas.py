@@ -42,20 +42,15 @@ _adiabate_eqn = adiabate_law.adiabatic_condition.subs({
 })
 
 _pressure_derivative_eqn = Eq(
-    _adiabate_eqn.lhs.diff(_density), 
+    _adiabate_eqn.lhs.diff(_density),
     _adiabate_eqn.rhs.diff(_density),
 )
 
-_ideal_gas_pressure = solve(
-    ideal_gas_equation.law, ideal_gas_equation.pressure
-)[0].subs({
+_ideal_gas_pressure = solve(ideal_gas_equation.law, ideal_gas_equation.pressure)[0].subs({
     ideal_gas_equation.volume: _volume_expr,
 })
 
-_pressure_derivative_expr = solve(
-    _pressure_derivative_eqn,
-    _pressure.diff(_density)
-)[0].subs({
+_pressure_derivative_expr = solve(_pressure_derivative_eqn, _pressure.diff(_density))[0].subs({
     _pressure: _ideal_gas_pressure,
 })
 

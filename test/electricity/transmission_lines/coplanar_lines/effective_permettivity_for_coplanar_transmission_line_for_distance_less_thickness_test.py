@@ -12,9 +12,7 @@ from symplyphysics.laws.electricity.transmission_lines.coplanar_lines import eff
 ## The relative permittivity of the coplanar line dielectric is 4.
 ## Then the effective permittivity is 2.5.
 
-Args = namedtuple("Args", [
-    "relative_permittivity"
-])
+Args = namedtuple("Args", ["relative_permittivity"])
 
 
 @fixture(name="test_args")

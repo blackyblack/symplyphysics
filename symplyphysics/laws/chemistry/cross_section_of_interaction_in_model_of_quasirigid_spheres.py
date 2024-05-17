@@ -1,5 +1,11 @@
 from sympy import Eq, solve, pi
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output,)
+from symplyphysics import (
+    units,
+    Quantity,
+    Symbol,
+    validate_input,
+    validate_output,
+)
 
 # Description
 ## The effective cross section is a physical quantity characterizing the probability of transition of a system of
@@ -12,15 +18,18 @@ from symplyphysics import (units, Quantity, Symbol, validate_input, validate_out
 
 cross_sectional_area_of_interaction = Symbol("cross_sectional_area_of_interaction", units.area)
 
-distance_of_convergence_of_two_particles = Symbol("distance_of_convergence_of_two_particles", units.length)
+distance_of_convergence_of_two_particles = Symbol("distance_of_convergence_of_two_particles",
+    units.length)
 
 law = Eq(cross_sectional_area_of_interaction, pi * distance_of_convergence_of_two_particles**2)
 
 
 @validate_input(distance_of_convergence_of_two_particles_=distance_of_convergence_of_two_particles)
 @validate_output(cross_sectional_area_of_interaction)
-def calculate_cross_sectional_area_of_interaction(distance_of_convergence_of_two_particles_: Quantity) -> Quantity:
-    result_expr = solve(law, cross_sectional_area_of_interaction, dict=True)[0][cross_sectional_area_of_interaction]
+def calculate_cross_sectional_area_of_interaction(
+        distance_of_convergence_of_two_particles_: Quantity) -> Quantity:
+    result_expr = solve(law, cross_sectional_area_of_interaction,
+        dict=True)[0][cross_sectional_area_of_interaction]
     result_expr = result_expr.subs({
         distance_of_convergence_of_two_particles: distance_of_convergence_of_two_particles_,
     })

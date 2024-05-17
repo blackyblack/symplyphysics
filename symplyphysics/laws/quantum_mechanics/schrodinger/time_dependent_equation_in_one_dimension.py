@@ -35,7 +35,6 @@ position = Symbol("position", units.length)
 time = Symbol("time", units.time)
 
 law = Eq(
-    -1 * hbar**2 / (2 * particle_mass) * Derivative(wave_function(position, time), position, 2)
-    + potential_energy(position, time) * wave_function(position, time),
-    I * hbar * Derivative(wave_function(position, time), time)
-)
+    -1 * hbar**2 / (2 * particle_mass) * Derivative(wave_function(position, time), position, 2) +
+    potential_energy(position, time) * wave_function(position, time),
+    I * hbar * Derivative(wave_function(position, time), time))

@@ -22,14 +22,16 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_frequency(test_args: Args) -> None:
-    result = frequency_law.calculate_frequency(test_args.ring_length, test_args.order_interference, test_args.permittivity)
+    result = frequency_law.calculate_frequency(test_args.ring_length, test_args.order_interference,
+        test_args.permittivity)
     assert_equal(result, 176.35 * prefixes.giga * units.hertz)
 
 
 def test_bad_ring_length(test_args: Args) -> None:
     ring_length = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        frequency_law.calculate_frequency(ring_length, test_args.order_interference, test_args.permittivity)
+        frequency_law.calculate_frequency(ring_length, test_args.order_interference,
+            test_args.permittivity)
     with raises(TypeError):
         frequency_law.calculate_frequency(100, test_args.order_interference, test_args.permittivity)
 
@@ -37,10 +39,12 @@ def test_bad_ring_length(test_args: Args) -> None:
 def test_bad_order_interference(test_args: Args) -> None:
     order_interference = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        frequency_law.calculate_frequency(test_args.ring_length, order_interference, test_args.permittivity)
+        frequency_law.calculate_frequency(test_args.ring_length, order_interference,
+            test_args.permittivity)
 
 
 def test_bad_permittivity(test_args: Args) -> None:
     permittivity = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        frequency_law.calculate_frequency(test_args.ring_length, test_args.order_interference, permittivity)
+        frequency_law.calculate_frequency(test_args.ring_length, test_args.order_interference,
+            permittivity)

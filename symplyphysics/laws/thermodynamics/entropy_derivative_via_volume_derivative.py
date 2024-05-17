@@ -39,10 +39,8 @@ pressure = Symbol("pressure", units.pressure)
 volume = Function("volume", units.volume)
 temperature = symbols.thermodynamics.temperature
 
-law = Eq(
-    Derivative(entropy(temperature, pressure), pressure),
-    -1 * Derivative(volume(temperature, pressure), temperature)
-)
+law = Eq(Derivative(entropy(temperature, pressure), pressure),
+    -1 * Derivative(volume(temperature, pressure), temperature))
 
 # Derive from expression of Gibbs energy differential
 
@@ -63,10 +61,8 @@ _gibbs_energy_diff_temperature = gibbs_energy_differential.law.rhs.subs({
 
 _gibbs_energy_diff_temperature_diff_pressure = _gibbs_energy_diff_temperature.diff(pressure)
 
-_eqn_temperature_pressure = Eq(
-    _gibbs_energy_expr.diff(temperature, pressure),
-    _gibbs_energy_diff_temperature_diff_pressure
-)
+_eqn_temperature_pressure = Eq(_gibbs_energy_expr.diff(temperature, pressure),
+    _gibbs_energy_diff_temperature_diff_pressure)
 
 _gibbs_energy_diff_pressure = gibbs_energy_differential.law.rhs.subs({
     gibbs_energy_differential.temperature_change: 0,

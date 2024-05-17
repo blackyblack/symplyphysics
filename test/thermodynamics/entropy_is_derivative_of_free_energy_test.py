@@ -31,7 +31,7 @@ def test_law(test_args: Args) -> None:
 def test_bad_energy(test_args: Args) -> None:
     fb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        entropy_law.calculate_entropy(fb, test_args.dt)    
+        entropy_law.calculate_entropy(fb, test_args.dt)
     with raises(TypeError):
         entropy_law.calculate_entropy(100, test_args.dt)
 

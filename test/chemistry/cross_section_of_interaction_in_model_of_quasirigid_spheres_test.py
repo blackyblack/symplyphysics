@@ -18,13 +18,15 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_cross_sectional_area_of_interaction(test_args: Args) -> None:
-    result = cross_section_law.calculate_cross_sectional_area_of_interaction(test_args.distance_of_convergence_of_two_particles)
+    result = cross_section_law.calculate_cross_sectional_area_of_interaction(
+        test_args.distance_of_convergence_of_two_particles)
     assert_equal(result, 8.35e-20 * units.meter**2)
 
 
 def test_bad_distance_of_convergence_of_two_particles() -> None:
     distance_of_convergence_of_two_particles = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        cross_section_law.calculate_cross_sectional_area_of_interaction(distance_of_convergence_of_two_particles)
+        cross_section_law.calculate_cross_sectional_area_of_interaction(
+            distance_of_convergence_of_two_particles)
     with raises(TypeError):
         cross_section_law.calculate_cross_sectional_area_of_interaction(100)

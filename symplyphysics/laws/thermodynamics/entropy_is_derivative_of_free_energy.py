@@ -38,12 +38,10 @@ _free_energy_change_eqn = free_energy_differential.law.subs({
     free_energy_differential.particle_count_change: 0,
 })
 
-_entropy_derived = solve(
-    _free_energy_change_eqn, free_energy_differential.entropy
-)[0].subs(
+_entropy_derived = solve(_free_energy_change_eqn, free_energy_differential.entropy)[0].subs(
     free_energy_differential.free_energy_change,
-    Derivative(free_energy(temperature, volume, particle_count), temperature) * free_energy_differential.temperature_change
-)
+    Derivative(free_energy(temperature, volume, particle_count), temperature) *
+    free_energy_differential.temperature_change)
 
 assert expr_equals(_entropy_derived, law.rhs)
 
@@ -58,7 +56,5 @@ def calculate_entropy(
     temperature_change_: Quantity,
 ) -> Quantity:
     free_energy_ = (free_energy_change_ / temperature_change_) * temperature
-    result = law.rhs.subs(
-        free_energy(temperature, volume, particle_count), free_energy_
-    ).doit()
+    result = law.rhs.subs(free_energy(temperature, volume, particle_count), free_energy_).doit()
     return Quantity(result)

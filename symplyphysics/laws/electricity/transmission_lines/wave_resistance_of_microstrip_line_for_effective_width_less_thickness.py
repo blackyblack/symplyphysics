@@ -1,13 +1,6 @@
 from sympy import Eq, solve, sqrt, log
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    print_expression,
-    validate_input,
-    validate_output,
-    dimensionless
-)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+    validate_output, dimensionless)
 
 ## Description
 ## The microstrip line is a dielectric substrate on which a metal strip is applied.
@@ -35,7 +28,8 @@ effective_permittivity = Symbol("effective_permittivity", dimensionless)
 thickness_of_substrate = Symbol("thickness_of_substrate", units.length)
 effective_width = Symbol("effective_width", units.length)
 
-expression = log(8 * thickness_of_substrate / effective_width + effective_width / (4 * thickness_of_substrate))
+expression = log(8 * thickness_of_substrate / effective_width + effective_width /
+    (4 * thickness_of_substrate))
 constant_resistance = Quantity(60 * units.ohm)
 law = Eq(resistance, constant_resistance * expression / sqrt(effective_permittivity))
 

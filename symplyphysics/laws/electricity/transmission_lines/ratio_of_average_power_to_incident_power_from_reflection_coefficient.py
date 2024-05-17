@@ -21,7 +21,9 @@ from symplyphysics import (
 ## Pi - the incident power,
 ## G - the absolute value reflection coefficient.
 
-absolute_reflection_coefficient = Symbol("absolute_reflection_coefficient", dimensionless, real=True)
+absolute_reflection_coefficient = Symbol("absolute_reflection_coefficient",
+    dimensionless,
+    real=True)
 incident_power = Symbol("incident_power", units.power, real=True)
 average_power = Symbol("average_power", units.power, real=True)
 
@@ -30,10 +32,12 @@ law = Eq(average_power / incident_power, 1 - absolute_reflection_coefficient**2)
 
 @validate_input(incident_power_=incident_power, average_power_=average_power)
 @validate_output(absolute_reflection_coefficient)
-def calculate_absolute_reflection_coefficient(incident_power_: Quantity, average_power_: Quantity) -> float:
+def calculate_absolute_reflection_coefficient(incident_power_: Quantity,
+    average_power_: Quantity) -> float:
     if incident_power_.scale_factor < average_power_.scale_factor:
         raise ValueError("The incident_power must be greater than the average power")
-    result_expr = solve(law, absolute_reflection_coefficient, dict=True)[0][absolute_reflection_coefficient]
+    result_expr = solve(law, absolute_reflection_coefficient,
+        dict=True)[0][absolute_reflection_coefficient]
     result_expr = result_expr.subs({
         incident_power: incident_power_,
         average_power: average_power_,

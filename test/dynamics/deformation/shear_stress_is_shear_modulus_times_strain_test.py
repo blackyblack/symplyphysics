@@ -8,8 +8,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.dynamics.deformation import (
-    shear_stress_is_shear_modulus_times_strain as shear_stress_law,
-)
+    shear_stress_is_shear_modulus_times_strain as shear_stress_law,)
 
 # Description
 ## Block of wood (G = 4 GPa) is undergoing shear stress. The shear strain (angle of deformation) is 1.25e-3 rad.

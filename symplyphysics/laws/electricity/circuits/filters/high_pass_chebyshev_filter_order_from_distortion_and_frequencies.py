@@ -26,7 +26,10 @@ band_stop_distortion = Symbol("band_stop_distortion", dimensionless)
 cutoff_frequency = Symbol("cutoff_frequency", units.frequency)
 band_stop_frequency = Symbol("band_stop_frequency", units.frequency)
 
-law = Eq(chebyshev_filter_order, acosh(band_stop_distortion / bandwidth_distortion) / acosh(cutoff_frequency / band_stop_frequency))
+law = Eq(
+    chebyshev_filter_order,
+    acosh(band_stop_distortion / bandwidth_distortion) /
+    acosh(cutoff_frequency / band_stop_frequency))
 
 
 def print_law() -> str:
@@ -38,8 +41,8 @@ def print_law() -> str:
     band_stop_frequency_=band_stop_frequency,
     cutoff_frequency_=cutoff_frequency)
 @validate_output(chebyshev_filter_order)
-def calculate_chebyshev_filter_order(bandwidth_distortion_: float, band_stop_distortion_: float, band_stop_frequency_: Quantity,
-    cutoff_frequency_: Quantity) -> int:
+def calculate_chebyshev_filter_order(bandwidth_distortion_: float, band_stop_distortion_: float,
+    band_stop_frequency_: Quantity, cutoff_frequency_: Quantity) -> int:
     result_expr = solve(law, chebyshev_filter_order, dict=True)[0][chebyshev_filter_order]
     result_expr = result_expr.subs({
         bandwidth_distortion: bandwidth_distortion_,

@@ -8,8 +8,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.thermodynamics import (
-    isochoric_molar_heat_capacity_of_ideal_gas_via_adiabatic_index as heat_capacity_law,
-)
+    isochoric_molar_heat_capacity_of_ideal_gas_via_adiabatic_index as heat_capacity_law,)
 
 # Description
 ## The isochoric molar heat capacity of a monatomic ideal gas (gamma = 5/3) is C_V = 12.5 J/(K*mol).
@@ -19,7 +18,7 @@ Args = namedtuple("Args", "gamma")
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
-    gamma = S(5)/3
+    gamma = S(5) / 3
     return Args(gamma=gamma)
 
 

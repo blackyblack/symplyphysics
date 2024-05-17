@@ -40,12 +40,11 @@ time = Symbol("time", units.time)
 
 law = Eq(
     temperature,
-    coefficient
-    * sin(mode_number * pi * position / maximum_position)
-    * exp(-1 * thermal_diffusivity * (mode_number * pi / maximum_position)**2 * time)
-)
+    coefficient * sin(mode_number * pi * position / maximum_position) *
+    exp(-1 * thermal_diffusivity * (mode_number * pi / maximum_position)**2 * time))
 
 
+# pylint: disable=too-many-arguments
 @validate_input(
     coefficient_=coefficient,
     thermal_diffusivity_=thermal_diffusivity,

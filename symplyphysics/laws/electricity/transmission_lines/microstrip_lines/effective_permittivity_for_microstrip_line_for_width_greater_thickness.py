@@ -1,13 +1,6 @@
 from sympy import Eq, solve, sqrt
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    validate_input,
-    validate_output,
-    dimensionless,
-    convert_to_float
-)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless,
+    convert_to_float)
 
 ## Description
 ## The microstrip line is a dielectric substrate on which a metal strip is applied.
@@ -26,7 +19,6 @@ from symplyphysics import (
 # Conditions:
 # - the thickness of the substrate of the microstrip line should be less than the width.
 
-
 effective_permittivity = Symbol("effective_permittivity", dimensionless)
 
 relative_permittivity = Symbol("relative_permittivity", dimensionless)
@@ -37,7 +29,8 @@ width = Symbol("width", units.length)
 expression_1 = (1 + relative_permittivity) / 2
 expression_2 = (relative_permittivity - 1) / 2
 expression_3 = (1 + 12 * thickness_of_substrate / width)**(-1 / 2)
-expression_4 = ((relative_permittivity - 1) / 4.6) * (strip_thickness / thickness_of_substrate) * sqrt(thickness_of_substrate / width)
+expression_4 = ((relative_permittivity - 1) / 4.6) * (strip_thickness /
+    thickness_of_substrate) * sqrt(thickness_of_substrate / width)
 
 law = Eq(effective_permittivity, expression_1 + expression_2 * expression_3 - expression_4)
 
@@ -47,9 +40,8 @@ law = Eq(effective_permittivity, expression_1 + expression_2 * expression_3 - ex
     thickness_of_substrate_=thickness_of_substrate,
     width_=width)
 @validate_output(effective_permittivity)
-def calculate_effective_permittivity(relative_permittivity_: float,
-    strip_thickness_: Quantity, thickness_of_substrate_: Quantity,
-    width_: Quantity) -> float:
+def calculate_effective_permittivity(relative_permittivity_: float, strip_thickness_: Quantity,
+    thickness_of_substrate_: Quantity, width_: Quantity) -> float:
     if thickness_of_substrate_.scale_factor >= width_.scale_factor:
         raise ValueError("The thickness of substrate must be less than the width")
     result_expr = solve(law, effective_permittivity, dict=True)[0][effective_permittivity]

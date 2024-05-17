@@ -1,12 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (
-    errors,
-    units,
-    Quantity,
-    assert_equal,
-    prefixes
-)
+from symplyphysics import (errors, units, Quantity, assert_equal, prefixes)
 
 from symplyphysics.laws.electricity.transmission_lines.microstrip_lines import attenuation_coefficient_in_metall_of_microstrip_line_for_width_less_thickness_second as coefficient_law
 
@@ -14,9 +8,9 @@ from symplyphysics.laws.electricity.transmission_lines.microstrip_lines import a
 ## of the substrate and the metal strip is 10 millimeter and 50 micrometer, respectively. The width of the strip is 6 millimeter,
 ## and the effective width of the line is 5 millimeter. Then the losses in the metal strip will be equal to 0.0388 [1 / meter].
 
-
 Args = namedtuple("Args", [
-    "surface_resistance", "wave_resistance", "thickness_of_substrate", "effective_width", "strip_thickness", "width"
+    "surface_resistance", "wave_resistance", "thickness_of_substrate", "effective_width",
+    "strip_thickness", "width"
 ])
 
 
@@ -37,72 +31,84 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_attenuation_coefficient(test_args: Args) -> None:
-    result = coefficient_law.calculate_attenuation_coefficient(
-        test_args.surface_resistance, test_args.wave_resistance, test_args.thickness_of_substrate,
-        test_args.effective_width, test_args.strip_thickness, test_args.width)
+    result = coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
+        test_args.wave_resistance, test_args.thickness_of_substrate, test_args.effective_width,
+        test_args.strip_thickness, test_args.width)
     assert_equal(result, 0.0388 * (1 / units.meter))
 
 
 def test_bad_resistances(test_args: Args) -> None:
     bad_resistance = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        coefficient_law.calculate_attenuation_coefficient(bad_resistance,
-            test_args.wave_resistance, test_args.thickness_of_substrate,
-            test_args.effective_width, test_args.strip_thickness, test_args.width)
+        coefficient_law.calculate_attenuation_coefficient(bad_resistance, test_args.wave_resistance,
+            test_args.thickness_of_substrate, test_args.effective_width, test_args.strip_thickness,
+            test_args.width)
     with raises(TypeError):
-        coefficient_law.calculate_attenuation_coefficient(100,
-            test_args.wave_resistance, test_args.thickness_of_substrate,
-            test_args.effective_width, test_args.strip_thickness, test_args.width)
+        coefficient_law.calculate_attenuation_coefficient(100, test_args.wave_resistance,
+            test_args.thickness_of_substrate, test_args.effective_width, test_args.strip_thickness,
+            test_args.width)
     with raises(errors.UnitsError):
         coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
-            bad_resistance, test_args.thickness_of_substrate, test_args.effective_width, test_args.strip_thickness, test_args.width)
+            bad_resistance, test_args.thickness_of_substrate, test_args.effective_width,
+            test_args.strip_thickness, test_args.width)
     with raises(TypeError):
-        coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
-            100, test_args.thickness_of_substrate, test_args.effective_width, test_args.strip_thickness, test_args.width)
+        coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance, 100,
+            test_args.thickness_of_substrate, test_args.effective_width, test_args.strip_thickness,
+            test_args.width)
 
 
 def test_bad_thickness_of_substrate(test_args: Args) -> None:
     thickness_of_substrate = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
-            test_args.wave_resistance, thickness_of_substrate, test_args.effective_width, test_args.strip_thickness, test_args.width)
+            test_args.wave_resistance, thickness_of_substrate, test_args.effective_width,
+            test_args.strip_thickness, test_args.width)
     with raises(TypeError):
         coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
-            test_args.wave_resistance, 100, test_args.effective_width, test_args.strip_thickness, test_args.width)
+            test_args.wave_resistance, 100, test_args.effective_width, test_args.strip_thickness,
+            test_args.width)
     with raises(ValueError):
         coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
-            test_args.wave_resistance, test_args.effective_width, test_args.thickness_of_substrate, test_args.strip_thickness, test_args.width)
+            test_args.wave_resistance, test_args.effective_width, test_args.thickness_of_substrate,
+            test_args.strip_thickness, test_args.width)
     thickness_of_substrate = Quantity(32 * units.millimeter)
     with raises(ValueError):
         coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
-            test_args.wave_resistance, thickness_of_substrate, test_args.effective_width, test_args.strip_thickness, test_args.width)
+            test_args.wave_resistance, thickness_of_substrate, test_args.effective_width,
+            test_args.strip_thickness, test_args.width)
 
 
 def test_bad_effective_width(test_args: Args) -> None:
     effective_width = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
-            test_args.wave_resistance, test_args.thickness_of_substrate, effective_width, test_args.strip_thickness, test_args.width)
+            test_args.wave_resistance, test_args.thickness_of_substrate, effective_width,
+            test_args.strip_thickness, test_args.width)
     with raises(TypeError):
         coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
-            test_args.wave_resistance, test_args.thickness_of_substrate, 100, test_args.strip_thickness, test_args.width)
+            test_args.wave_resistance, test_args.thickness_of_substrate, 100,
+            test_args.strip_thickness, test_args.width)
 
 
 def test_bad_strip_thickness(test_args: Args) -> None:
     strip_thickness = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
-            test_args.wave_resistance, test_args.thickness_of_substrate, test_args.effective_width, strip_thickness, test_args.width)
+            test_args.wave_resistance, test_args.thickness_of_substrate, test_args.effective_width,
+            strip_thickness, test_args.width)
     with raises(TypeError):
         coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
-            test_args.wave_resistance, test_args.thickness_of_substrate, test_args.effective_width, 100, test_args.width)
+            test_args.wave_resistance, test_args.thickness_of_substrate, test_args.effective_width,
+            100, test_args.width)
 
 
 def test_bad_width(test_args: Args) -> None:
     width = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
-            test_args.wave_resistance, test_args.thickness_of_substrate, test_args.effective_width, test_args.strip_thickness, width)
+            test_args.wave_resistance, test_args.thickness_of_substrate, test_args.effective_width,
+            test_args.strip_thickness, width)
     with raises(TypeError):
         coefficient_law.calculate_attenuation_coefficient(test_args.surface_resistance,
-            test_args.wave_resistance, test_args.thickness_of_substrate, test_args.effective_width, test_args.strip_thickness, 100)
+            test_args.wave_resistance, test_args.thickness_of_substrate, test_args.effective_width,
+            test_args.strip_thickness, 100)

@@ -1,7 +1,7 @@
 from math import ceil
 from sympy import (Eq, solve, acos)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless, convert_to_float)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless,
+    convert_to_float)
 
 # Description
 ## The approximation of the power transmission coefficient of a normalized low-pass filter is given by approximating functions of the order of n.
@@ -24,7 +24,10 @@ band_stop_distortion = Symbol("band_stop_distortion", dimensionless)
 cutoff_frequency = Symbol("cutoff_frequency", units.frequency)
 band_stop_frequency = Symbol("band_stop_frequency", units.frequency)
 
-law = Eq(low_pass_chebyshev_filter_order, acos(band_stop_distortion / bandwidth_distortion) / acos(band_stop_frequency / cutoff_frequency))
+law = Eq(
+    low_pass_chebyshev_filter_order,
+    acos(band_stop_distortion / bandwidth_distortion) /
+    acos(band_stop_frequency / cutoff_frequency))
 
 
 @validate_input(bandwidth_distortion_=bandwidth_distortion,
@@ -32,9 +35,11 @@ law = Eq(low_pass_chebyshev_filter_order, acos(band_stop_distortion / bandwidth_
     band_stop_frequency_=band_stop_frequency,
     cutoff_frequency_=cutoff_frequency)
 @validate_output(low_pass_chebyshev_filter_order)
-def calculate_low_pass_chebyshev_filter_order(bandwidth_distortion_: float, band_stop_distortion_: float, band_stop_frequency_: Quantity,
+def calculate_low_pass_chebyshev_filter_order(bandwidth_distortion_: float,
+    band_stop_distortion_: float, band_stop_frequency_: Quantity,
     cutoff_frequency_: Quantity) -> int:
-    result_expr = solve(law, low_pass_chebyshev_filter_order, dict=True)[0][low_pass_chebyshev_filter_order]
+    result_expr = solve(law, low_pass_chebyshev_filter_order,
+        dict=True)[0][low_pass_chebyshev_filter_order]
     result_expr = result_expr.subs({
         bandwidth_distortion: bandwidth_distortion_,
         band_stop_distortion: band_stop_distortion_,

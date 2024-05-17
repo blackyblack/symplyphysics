@@ -12,9 +12,8 @@ from symplyphysics.laws.electricity.transmission_lines.coplanar_lines import wav
 ## The width of the central electrode of the coplanar line is 9 millimeter, and the distance between electrodes is 10 millimeter.
 ## The effective permittivity is 4. Then the wave resistance is 34.19 ohm.
 
-Args = namedtuple("Args", [
-    "effective_permittivity", "distance_between_electrodes", "central_electrode_width"
-])
+Args = namedtuple("Args",
+    ["effective_permittivity", "distance_between_electrodes", "central_electrode_width"])
 
 
 @fixture(name="test_args")
@@ -28,9 +27,8 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_wave_resistance(test_args: Args) -> None:
-    result = resistance_law.calculate_wave_resistance(
-        test_args.effective_permittivity, test_args.distance_between_electrodes,
-        test_args.central_electrode_width)
+    result = resistance_law.calculate_wave_resistance(test_args.effective_permittivity,
+        test_args.distance_between_electrodes, test_args.central_electrode_width)
     assert_equal(result, 34.19 * units.ohm)
 
 
@@ -38,8 +36,7 @@ def test_bad_permittivity(test_args: Args) -> None:
     bad_permittivity = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         resistance_law.calculate_wave_resistance(bad_permittivity,
-            test_args.distance_between_electrodes,
-            test_args.central_electrode_width)
+            test_args.distance_between_electrodes, test_args.central_electrode_width)
 
 
 def test_bad_distance_between_electrodes(test_args: Args) -> None:
@@ -48,8 +45,8 @@ def test_bad_distance_between_electrodes(test_args: Args) -> None:
         resistance_law.calculate_wave_resistance(test_args.effective_permittivity,
             bad_distance_between_electrodes, test_args.central_electrode_width)
     with raises(TypeError):
-        resistance_law.calculate_wave_resistance(test_args.effective_permittivity,
-            100, test_args.central_electrode_width)
+        resistance_law.calculate_wave_resistance(test_args.effective_permittivity, 100,
+            test_args.central_electrode_width)
 
 
 def test_bad_central_electrode_width(test_args: Args) -> None:
@@ -61,11 +58,9 @@ def test_bad_central_electrode_width(test_args: Args) -> None:
         resistance_law.calculate_wave_resistance(test_args.effective_permittivity,
             test_args.distance_between_electrodes, 100)
     with raises(ValueError):
-        resistance_law.calculate_wave_resistance(
-                test_args.effective_permittivity, test_args.central_electrode_width,
-                test_args.distance_between_electrodes)
+        resistance_law.calculate_wave_resistance(test_args.effective_permittivity,
+            test_args.central_electrode_width, test_args.distance_between_electrodes)
     central_electrode_width = Quantity(1 * units.millimeter)
     with raises(ValueError):
-        resistance_law.calculate_wave_resistance(
-                test_args.effective_permittivity, test_args.distance_between_electrodes,
-                central_electrode_width)
+        resistance_law.calculate_wave_resistance(test_args.effective_permittivity,
+            test_args.distance_between_electrodes, central_electrode_width)

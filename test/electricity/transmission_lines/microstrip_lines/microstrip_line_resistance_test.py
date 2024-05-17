@@ -1,12 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (
-    errors,
-    units,
-    Quantity,
-    assert_equal,
-    prefixes
-)
+from symplyphysics import (errors, units, Quantity, assert_equal, prefixes)
 
 from symplyphysics.laws.electricity.transmission_lines.microstrip_lines import microstrip_line_resistance as resistance_law
 
@@ -30,8 +24,8 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_resistance(test_args: Args) -> None:
-    result = resistance_law.calculate_resistance(test_args.strip_thickness,
-        test_args.strip_length, test_args.strip_width, test_args.surface_resistance)
+    result = resistance_law.calculate_resistance(test_args.strip_thickness, test_args.strip_length,
+        test_args.strip_width, test_args.surface_resistance)
     assert_equal(result, 10.43 * prefixes.milli * units.ohm)
 
 
@@ -41,8 +35,8 @@ def test_bad_strip_thickness(test_args: Args) -> None:
         resistance_law.calculate_resistance(bad_strip_thickness, test_args.strip_length,
             test_args.strip_width, test_args.surface_resistance)
     with raises(TypeError):
-        resistance_law.calculate_resistance(100, test_args.strip_length,
-            test_args.strip_width, test_args.surface_resistance)
+        resistance_law.calculate_resistance(100, test_args.strip_length, test_args.strip_width,
+            test_args.surface_resistance)
 
 
 def test_bad_strip_length(test_args: Args) -> None:
@@ -51,8 +45,8 @@ def test_bad_strip_length(test_args: Args) -> None:
         resistance_law.calculate_resistance(test_args.strip_thickness, bad_strip_length,
             test_args.strip_width, test_args.surface_resistance)
     with raises(TypeError):
-        resistance_law.calculate_resistance(test_args.strip_thickness, 100,
-            test_args.strip_width, test_args.surface_resistance)
+        resistance_law.calculate_resistance(test_args.strip_thickness, 100, test_args.strip_width,
+            test_args.surface_resistance)
 
 
 def test_bad_strip_width(test_args: Args) -> None:
@@ -61,8 +55,8 @@ def test_bad_strip_width(test_args: Args) -> None:
         resistance_law.calculate_resistance(test_args.strip_thickness, test_args.strip_length,
             bad_strip_width, test_args.surface_resistance)
     with raises(TypeError):
-        resistance_law.calculate_resistance(test_args.strip_thickness, test_args.strip_length,
-            100, test_args.surface_resistance)
+        resistance_law.calculate_resistance(test_args.strip_thickness, test_args.strip_length, 100,
+            test_args.surface_resistance)
 
 
 def test_bad_surface_resistance(test_args: Args) -> None:

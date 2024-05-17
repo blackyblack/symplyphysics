@@ -1,11 +1,5 @@
 from sympy import Eq, solve
-from symplyphysics import (
-    Symbol,
-    validate_input,
-    validate_output,
-    dimensionless,
-    convert_to_float
-)
+from symplyphysics import (Symbol, validate_input, validate_output, dimensionless, convert_to_float)
 
 ## Description
 ## The coplanar transmission line is a dielectric substrate on the surface of which 3 electrodes are located.
@@ -23,11 +17,9 @@ from symplyphysics import (
 # b - distance between the extreme electrodes.
 # - h >= b / 4.
 
-
 effective_permittivity = Symbol("effective_permittivity", dimensionless)
 
 relative_permittivity = Symbol("relative_permittivity", dimensionless)
-
 
 law = Eq(effective_permittivity, (1 + relative_permittivity) / 2)
 

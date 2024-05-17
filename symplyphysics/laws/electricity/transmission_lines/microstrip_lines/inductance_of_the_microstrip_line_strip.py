@@ -28,7 +28,9 @@ strip_width = Symbol("strip_width", units.length)
 expression_1 = strip_length / (strip_width + strip_thickness)
 constant_inductance = Quantity(2e-4 * units.inductance / units.length)
 
-law = Eq(inductance, constant_inductance * strip_length * (log(expression_1) + 1.193 + 0.2235 * (1 / expression_1)))
+law = Eq(
+    inductance,
+    constant_inductance * strip_length * (log(expression_1) + 1.193 + 0.2235 * (1 / expression_1)))
 
 
 def print_law() -> str:

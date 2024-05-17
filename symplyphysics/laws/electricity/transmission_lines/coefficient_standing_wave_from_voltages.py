@@ -3,7 +3,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
     validate_output, dimensionless, convert_to_float)
 
 # Description
-## Standing wave coefficient is the ratio of the highest voltage in the transmission line to the lowest voltage. It is a measure of matching the load 
+## Standing wave coefficient is the ratio of the highest voltage in the transmission line to the lowest voltage. It is a measure of matching the load
 ## with the transmission line. The coefficient in the transmission line does not depend on the internal resistance of the electromagnetic
 ## wave source and (in the case of a linear load) on the power of the generator.
 
@@ -24,8 +24,7 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(maximum_voltage_=maximum_voltage,
-    minimum_voltage_=minimum_voltage)
+@validate_input(maximum_voltage_=maximum_voltage, minimum_voltage_=minimum_voltage)
 @validate_output(coefficient_standing_wave)
 def calculate_coefficient_standing_wave(maximum_voltage_: Quantity,
     minimum_voltage_: Quantity) -> float:

@@ -37,13 +37,11 @@ oscillator_mass = clone_symbol(symbols.basic.mass, "oscillator_mass")
 angular_frequency = Symbol("angular_frequency", angle_type / units.time)
 position = Symbol("position", units.length)
 
-law = Eq(
-    wave_function,
-    (1 / (sqrt(2**mode_number * factorial(mode_number))))
-    * ((oscillator_mass * angular_frequency) / (pi * hbar))**Rational(1, 4)
-    * exp(-1 * (oscillator_mass * angular_frequency) / (2 * hbar) * position**2)
-    * hermite(mode_number, sqrt(oscillator_mass * angular_frequency / hbar) * position)
-)
+law = Eq(wave_function,
+    (1 / (sqrt(2**mode_number * factorial(mode_number)))) * ((oscillator_mass * angular_frequency) /
+    (pi * hbar))**Rational(1, 4) * exp(-1 * (oscillator_mass * angular_frequency) /
+    (2 * hbar) * position**2) * hermite(mode_number,
+    sqrt(oscillator_mass * angular_frequency / hbar) * position))
 
 
 @validate_input(

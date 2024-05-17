@@ -1,12 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (
-    errors,
-    units,
-    Quantity,
-    assert_equal,
-    prefixes
-)
+from symplyphysics import (errors, units, Quantity, assert_equal, prefixes)
 
 from symplyphysics.laws.electricity.transmission_lines.microstrip_lines import inductance_of_the_microstrip_line_strip as inductance_law
 
@@ -21,14 +15,12 @@ def test_args_fixture() -> Args:
     strip_thickness = Quantity(50 * units.micrometer)
     strip_length = Quantity(5 * units.millimeter)
     strip_width = Quantity(1 * units.millimeter)
-    return Args(strip_thickness=strip_thickness,
-        strip_length=strip_length,
-        strip_width=strip_width)
+    return Args(strip_thickness=strip_thickness, strip_length=strip_length, strip_width=strip_width)
 
 
 def test_basic_inductance(test_args: Args) -> None:
-    result = inductance_law.calculate_inductance(test_args.strip_thickness,
-        test_args.strip_length, test_args.strip_width)
+    result = inductance_law.calculate_inductance(test_args.strip_thickness, test_args.strip_length,
+        test_args.strip_width)
     assert_equal(result, 14 * prefixes.micro * units.henry)
 
 
@@ -38,8 +30,7 @@ def test_bad_strip_thickness(test_args: Args) -> None:
         inductance_law.calculate_inductance(bad_strip_thickness, test_args.strip_length,
             test_args.strip_width)
     with raises(TypeError):
-        inductance_law.calculate_inductance(100, test_args.strip_length,
-            test_args.strip_width)
+        inductance_law.calculate_inductance(100, test_args.strip_length, test_args.strip_width)
 
 
 def test_bad_strip_length(test_args: Args) -> None:
@@ -48,8 +39,7 @@ def test_bad_strip_length(test_args: Args) -> None:
         inductance_law.calculate_inductance(test_args.strip_thickness, bad_strip_length,
             test_args.strip_width)
     with raises(TypeError):
-        inductance_law.calculate_inductance(test_args.strip_thickness, 100,
-            test_args.strip_width)
+        inductance_law.calculate_inductance(test_args.strip_thickness, 100, test_args.strip_width)
 
 
 def test_bad_strip_width(test_args: Args) -> None:
@@ -58,5 +48,4 @@ def test_bad_strip_width(test_args: Args) -> None:
         inductance_law.calculate_inductance(test_args.strip_thickness, test_args.strip_length,
             bad_strip_width)
     with raises(TypeError):
-        inductance_law.calculate_inductance(test_args.strip_thickness, test_args.strip_length,
-            100)
+        inductance_law.calculate_inductance(test_args.strip_thickness, test_args.strip_length, 100)

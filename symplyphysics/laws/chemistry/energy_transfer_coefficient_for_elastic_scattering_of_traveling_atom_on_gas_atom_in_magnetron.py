@@ -1,6 +1,6 @@
 from sympy import Eq, solve
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless, convert_to_float, clone_symbol, symbols)
+from symplyphysics import (Quantity, Symbol, print_expression, validate_input, validate_output,
+    dimensionless, convert_to_float, clone_symbol, symbols)
 
 # Description
 ## The traveling atom moves towards the substrate in the magnetron. At the same time, it collides with gas atoms.
@@ -16,15 +16,16 @@ energy_transfer_coefficient = Symbol("energy_transfer_coefficient", dimensionles
 mass_of_traveling_atom = clone_symbol(symbols.basic.mass, "mass_of_traveling_atom")
 mass_of_gas_atom = clone_symbol(symbols.basic.mass, "mass_of_gas_atom")
 
-law = Eq(energy_transfer_coefficient, 2 * mass_of_traveling_atom * mass_of_gas_atom / (mass_of_traveling_atom + mass_of_gas_atom)**2)
+law = Eq(
+    energy_transfer_coefficient,
+    2 * mass_of_traveling_atom * mass_of_gas_atom / (mass_of_traveling_atom + mass_of_gas_atom)**2)
 
 
 def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(mass_of_traveling_atom_=mass_of_traveling_atom,
-    mass_of_gas_atom_=mass_of_gas_atom)
+@validate_input(mass_of_traveling_atom_=mass_of_traveling_atom, mass_of_gas_atom_=mass_of_gas_atom)
 @validate_output(energy_transfer_coefficient)
 def calculate_energy_transfer_coefficient(mass_of_traveling_atom_: Quantity,
     mass_of_gas_atom_: Quantity) -> float:

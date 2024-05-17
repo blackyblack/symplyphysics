@@ -38,13 +38,10 @@ volume = Function("volume", units.volume)
 enthalpy = Symbol("enthalpy", units.energy)
 isobaric_heat_capacity = Symbol("isobaric_heat_capacity", units.energy / units.temperature)
 
-law = Eq(
-    Derivative(temperature(pressure, enthalpy), pressure),
-    (temperature(pressure, enthalpy)
-     * Derivative(volume(temperature(pressure, enthalpy), pressure), temperature(pressure, enthalpy))
-     - volume(temperature(pressure, enthalpy), pressure)
-    ) / isobaric_heat_capacity
-)
+law = Eq(Derivative(temperature(pressure, enthalpy), pressure),
+    (temperature(pressure, enthalpy) * Derivative(volume(temperature(pressure, enthalpy), pressure),
+    temperature(pressure, enthalpy)) - volume(temperature(pressure, enthalpy), pressure)) /
+    isobaric_heat_capacity)
 
 # TODO: derive from enthalpy differential and Maxwell relations.
 
@@ -55,9 +52,8 @@ _volume_expr = solve(ideal_gas_equation.law, ideal_gas_equation.volume)[0].subs(
     ideal_gas_equation.temperature: temperature(pressure, enthalpy),
 })
 
-_joule_thompson_coefficient = law.rhs.subs(
-    volume(temperature(pressure, enthalpy), pressure), _volume_expr
-).doit()
+_joule_thompson_coefficient = law.rhs.subs(volume(temperature(pressure, enthalpy), pressure),
+    _volume_expr).doit()
 
 assert expr_equals(_joule_thompson_coefficient, 0)
 
@@ -86,11 +82,8 @@ def calculate_temperature_derivative(
         temperature_sym,
     )
 
-    result = expr.subs(
-        volume(temperature_sym, pressure), volume_
-    ).doit().subs(
-        isobaric_heat_capacity, isobaric_heat_capacity_
-    ).simplify()
+    result = expr.subs(volume(temperature_sym, pressure),
+        volume_).doit().subs(isobaric_heat_capacity, isobaric_heat_capacity_).simplify()
 
     # Result does not depend on temperature
     assert expr_equals(result.diff(temperature_sym), 0)
