@@ -6,12 +6,12 @@ from symplyphysics import (units, Quantity, Symbol, validate_input, validate_out
 # Description
 ## Electrolysis is a physico-chemical process consisting in the release of components of dissolved substances or other substances on the electrodes,
 ## which are the result of secondary reactions on the electrodes, which occurs when an electric current passes through a solution or melt of an electrolyte.
-## Current output is the proportion of electric current spent on the passage of the target electrochemical reaction.
+## Current output is the fraction of electric current spent on the passage of the target electrochemical reaction.
 
-## Law is: m =  J * M * B * t / (Z * q * Na), where
+## Law is: m = J * M * B * t / (Z * q * Na), where
 ## m - mass of film,
 ## J - the current in the electrolyte,
-## M - molar mass of the metall atom,
+## M - molar mass of the atom of metal,
 ## B - current output,
 ## t - time,
 ## Z - valence of the metal,

@@ -25,7 +25,7 @@ def test_args_fixture() -> Args:
                 time=time)
 
 
-def test_basic_etching_rate(test_args: Args) -> None:
+def test_basic_mass_of_film(test_args: Args) -> None:
     result = mass_law.calculate_mass_of_film(test_args.current, test_args.molar_mass, test_args.current_output, test_args.valence, test_args.time)
     assert_equal(result, 0.429 * units.milligram)
 
