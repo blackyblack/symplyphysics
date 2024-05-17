@@ -14,6 +14,14 @@ standard_laboratory_temperature = Quantity(298 * units.kelvin)
 # Mass of stationary electron
 electron_rest_mass = Quantity(9.1093837015e-31 * units.kilogram)
 
+# The Bohr radius is the radius of the electron orbit of the hydrogen atom closest
+# to the nucleus in the atomic model proposed by Niels Bohr.
+bohr_radius = Quantity(0.529e-10 * units.meter)
+
+# The ionization energy is the smallest energy required to remove an electron from
+# a free atom in its basic energy state to infinity.
+hydrogen_ionization_energy = Quantity(13.6 * units.electronvolt)
+
 __all__ = [
     "standard_conditions_temperature",
 ]

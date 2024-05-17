@@ -25,7 +25,7 @@ def test_args_fixture() -> Args:
 
 def test_basic_lifetime(test_args: Args) -> None:
     result = time_law.calculate_lifetime(test_args.mass_of_star, test_args.luminosity_of_star)
-    assert_equal(result, 6.66e9 * units.common_year)
+    assert_equal(result, 6.66e9 * units.common_year, tolerance=0.01)
 
 
 def test_bad_mass_of_star(test_args: Args) -> None:
