@@ -4,8 +4,8 @@ from symplyphysics import (assert_equal, units, Quantity, errors)
 from symplyphysics.laws.electricity.circuits import full_gain_of_transistor_amplifier as gain_law
 
 # Description
-## The gain of the input matching circuit is 0.8. The transistor gain is 3. 
-## The gain of the output matching circuit is 0.6. 
+## The gain of the input matching circuit is 0.8. The transistor gain is 3.
+## The gain of the output matching circuit is 0.6.
 ## Then the full gain of the transistor amplifier is 1.44.
 
 Args = namedtuple("Args", ["gain_of_input_matching_circuit", "transistor_gain", "gain_of_output_matching_circuit"])
