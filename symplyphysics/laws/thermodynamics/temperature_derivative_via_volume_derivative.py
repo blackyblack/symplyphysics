@@ -32,15 +32,15 @@ from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equat
 ## - Changes in particle count are not taken into account and it is assumed to be constant.
 ## - Heat capacity is assumed to be independent of temperature.
 
-temperature = Function("temperature", units.temperature)
+temperature_function = Function("temperature_function", units.temperature)
 pressure = Symbol("pressure", units.pressure)
-volume = Function("volume", units.volume)
+volume_function = Function("volume_function", units.volume)
 enthalpy = Symbol("enthalpy", units.energy)
 isobaric_heat_capacity = Symbol("isobaric_heat_capacity", units.energy / units.temperature)
 
-law = Eq(Derivative(temperature(pressure, enthalpy), pressure),
-    (temperature(pressure, enthalpy) * Derivative(volume(temperature(pressure, enthalpy), pressure),
-    temperature(pressure, enthalpy)) - volume(temperature(pressure, enthalpy), pressure)) /
+law = Eq(Derivative(temperature_function(pressure, enthalpy), pressure),
+    (temperature_function(pressure, enthalpy) * Derivative(volume_function(temperature_function(pressure, enthalpy), pressure),
+    temperature_function(pressure, enthalpy)) - volume_function(temperature_function(pressure, enthalpy), pressure)) /
     isobaric_heat_capacity)
 
 # TODO: derive from enthalpy differential and Maxwell relations.
@@ -49,20 +49,20 @@ law = Eq(Derivative(temperature(pressure, enthalpy), pressure),
 
 _volume_expr = solve(ideal_gas_equation.law, ideal_gas_equation.volume)[0].subs({
     ideal_gas_equation.pressure: pressure,
-    ideal_gas_equation.temperature: temperature(pressure, enthalpy),
+    ideal_gas_equation.temperature: temperature_function(pressure, enthalpy),
 })
 
-_joule_thompson_coefficient = law.rhs.subs(volume(temperature(pressure, enthalpy), pressure),
+_joule_thompson_coefficient = law.rhs.subs(volume_function(temperature_function(pressure, enthalpy), pressure),
     _volume_expr).doit()
 
 assert expr_equals(_joule_thompson_coefficient, 0)
 
 
 @validate_input(
-    volume_before_=volume,
-    volume_after_=volume,
-    temperature_before_=temperature,
-    temperature_after_=temperature,
+    volume_before_=volume_function,
+    volume_after_=volume_function,
+    temperature_before_=temperature_function,
+    temperature_after_=temperature_function,
     isobaric_heat_capacity_=isobaric_heat_capacity,
 )
 @validate_output(units.temperature / units.pressure)
@@ -74,7 +74,7 @@ def calculate_temperature_derivative(
     isobaric_heat_capacity_: Quantity,
 ) -> Quantity:
     temperature_sym = symbols.thermodynamics.temperature
-    expr = law.rhs.subs(temperature(pressure, enthalpy), temperature_sym)
+    expr = law.rhs.subs(temperature_function(pressure, enthalpy), temperature_sym)
 
     volume_ = two_point_function(
         Point2D(temperature_before_, volume_before_),
@@ -82,7 +82,7 @@ def calculate_temperature_derivative(
         temperature_sym,
     )
 
-    result = expr.subs(volume(temperature_sym, pressure),
+    result = expr.subs(volume_function(temperature_sym, pressure),
         volume_).doit().subs(isobaric_heat_capacity, isobaric_heat_capacity_).simplify()
 
     # Result does not depend on temperature

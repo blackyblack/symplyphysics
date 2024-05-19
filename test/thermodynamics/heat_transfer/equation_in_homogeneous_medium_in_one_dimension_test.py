@@ -21,7 +21,7 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     values = {
-        heat_equation.temperature(heat_equation.position, heat_equation.time):
+        heat_equation.temperature_function(heat_equation.position, heat_equation.time):
         test_args.temperature,
         heat_equation.thermal_diffusivity:
         test_args.chi

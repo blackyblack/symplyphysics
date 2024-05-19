@@ -26,7 +26,7 @@ from symplyphysics import (
 ## - Thermal conductivity can depend not only on position, but also on local temperature, but this case is out
 ##   of the scope of this law.
 
-temperature = Function("temperature", units.temperature)
+temperature_function = Function("temperature_function", units.temperature)
 medium_density = Symbol("medium_density", units.mass / units.volume)
 medium_specific_heat_capacity = Symbol("medium_specific_heat_capacity",
     units.energy / (units.temperature * units.mass))
@@ -42,7 +42,7 @@ position = Symbol("position", units.length)
 time = Symbol("time", units.time)
 
 law = Eq(
-    medium_density * medium_specific_heat_capacity * Derivative(temperature(position, time), time),
+    medium_density * medium_specific_heat_capacity * Derivative(temperature_function(position, time), time),
     Derivative(
-    thermal_conductivity(position) * Derivative(temperature(position, time), position), position) +
+    thermal_conductivity(position) * Derivative(temperature_function(position, time), position), position) +
     heat_source_density(position, time))

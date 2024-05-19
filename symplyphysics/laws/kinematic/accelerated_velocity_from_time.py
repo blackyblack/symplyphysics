@@ -1,5 +1,5 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (symbols, units, Quantity, Symbol, print_expression, validate_input,
     validate_output)
 
 # Description
@@ -14,7 +14,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 
 velocity = Symbol("velocity", units.velocity)
 time = Symbol("time", units.time)
-acceleration = Symbol("acceleration", units.acceleration)
+acceleration = symbols.kinematic.acceleration
 initial_velocity = Symbol("initial_velocity", units.velocity)
 
 law = Eq(velocity, initial_velocity + acceleration * time)

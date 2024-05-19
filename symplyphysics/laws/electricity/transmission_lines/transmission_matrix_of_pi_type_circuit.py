@@ -1,6 +1,5 @@
-from sympy import Eq, solve, Matrix, S
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input, dimensionless,
-    convert_to, convert_to_float)
+from sympy import Eq, solve, Matrix
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input, dimensionless, convert_to_float)
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity.transmission_lines import transmission_matrix_for_a_series_load_in_line as series_law
@@ -115,21 +114,21 @@ def calculate_transmission_matrix(
         parameter_current_to_current
     ],
         dict=True)[0]
-    result_A = result[parameter_voltage_to_voltage]
-    result_B = result[parameter_impedance]
-    result_C = result[parameter_conductance]
-    result_D = result[parameter_current_to_current]
+    result_a = result[parameter_voltage_to_voltage]
+    result_b = result[parameter_impedance]
+    result_c = result[parameter_conductance]
+    result_d = result[parameter_current_to_current]
     substitutions = {
         first_impedance: impedances_[0],
         second_impedance: impedances_[1],
         third_impedance: impedances_[2],
     }
-    result_A = convert_to_float(Quantity(result_A.subs(substitutions)))
-    result_B = Quantity(result_B.subs(substitutions))
-    result_C = Quantity(result_C.subs(substitutions))
-    result_D = convert_to_float(Quantity(result_D.subs(substitutions)))
-    assert_equivalent_dimension(result_B, 'result_B', "calculate_transmission_matrix",
+    result_a = convert_to_float(Quantity(result_a.subs(substitutions)))
+    result_b = Quantity(result_b.subs(substitutions))
+    result_c = Quantity(result_c.subs(substitutions))
+    result_d = convert_to_float(Quantity(result_d.subs(substitutions)))
+    assert_equivalent_dimension(result_b, 'result_b', "calculate_transmission_matrix",
         units.impedance)
-    assert_equivalent_dimension(result_C, 'result_C', "calculate_transmission_matrix",
+    assert_equivalent_dimension(result_c, 'result_c', "calculate_transmission_matrix",
         units.conductance)
-    return ((result_A, result_B), (result_C, result_D))
+    return ((result_a, result_b), (result_c, result_d))

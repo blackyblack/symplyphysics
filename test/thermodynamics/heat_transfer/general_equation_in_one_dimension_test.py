@@ -27,7 +27,7 @@ def test_law(test_args: Args) -> None:
         heat_equation.medium_specific_heat_capacity: test_args.cv,
         heat_equation.thermal_conductivity(heat_equation.position): test_args.k,
         heat_equation.heat_source_density(heat_equation.position, heat_equation.time): test_args.q,
-        heat_equation.temperature(heat_equation.position, heat_equation.time): test_args.T,
+        heat_equation.temperature_function(heat_equation.position, heat_equation.time): test_args.T,
     }
     lhs = heat_equation.law.lhs.subs(values).doit()
     rhs = heat_equation.law.rhs.subs(values).doit()

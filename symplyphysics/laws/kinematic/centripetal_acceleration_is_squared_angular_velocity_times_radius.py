@@ -1,5 +1,7 @@
 from sympy import Eq, solve
 from symplyphysics import (
+    clone_symbol,
+    symbols,
     units,
     Quantity,
     Symbol,
@@ -23,7 +25,7 @@ from symplyphysics.laws.kinematic import (
 ## w - angular velocity
 ## r - curve radius
 
-centripetal_acceleration = Symbol("centripetal_acceleration", units.acceleration)
+centripetal_acceleration = clone_symbol(symbols.kinematic.acceleration, "centripetal_acceleration")
 angular_velocity = Symbol("angular_velocity", angle_type / units.time)
 curve_radius = Symbol("curve_radius", units.length)
 

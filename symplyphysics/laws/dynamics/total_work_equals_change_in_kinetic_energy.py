@@ -48,7 +48,7 @@ infinitesimal_displacement = infinitesimal_displacement.subs(velocity_def.moving
 infinitesimal_displacement = infinitesimal_displacement.subs(
     velocity_def.velocity(infinitesimal_time), infinitesimal_velocity(infinitesimal_time))
 infinitesimal_acceleration = solve(acceleration_def.definition,
-    acceleration_def.acceleration(acceleration_def.time))[0]
+    acceleration_def.acceleration_function(acceleration_def.time))[0]
 infinitesimal_acceleration = infinitesimal_acceleration.subs(acceleration_def.time,
     infinitesimal_time)
 infinitesimal_acceleration = infinitesimal_acceleration.subs(

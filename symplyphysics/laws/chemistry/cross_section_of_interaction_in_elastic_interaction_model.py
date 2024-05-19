@@ -15,24 +15,24 @@ from symplyphysics import (units, Quantity, Symbol, validate_input, validate_out
 cross_sectional_area_of_interaction = Symbol("cross_sectional_area_of_interaction", units.area)
 
 diameter_of_atom = Symbol("diameter_of_atom", units.length)
-constant_sutherland = Symbol("constant_sutherland", units.temperature)
+sutherland_constant = Symbol("sutherland_constant", units.temperature)
 temperature = symbols.thermodynamics.temperature
 
 law = Eq(cross_sectional_area_of_interaction,
-    pi * diameter_of_atom**2 * (1 + constant_sutherland / temperature))
+    pi * diameter_of_atom**2 * (1 + sutherland_constant / temperature))
 
 
 @validate_input(diameter_of_atom_=diameter_of_atom,
-    constant_sutherland_=constant_sutherland,
+    sutherland_constant_=sutherland_constant,
     temperature_=temperature)
 @validate_output(cross_sectional_area_of_interaction)
 def calculate_cross_sectional_area_of_interaction(diameter_of_atom_: Quantity,
-    constant_sutherland_: Quantity, temperature_: Quantity) -> Quantity:
+    sutherland_constant_: Quantity, temperature_: Quantity) -> Quantity:
     result_expr = solve(law, cross_sectional_area_of_interaction,
         dict=True)[0][cross_sectional_area_of_interaction]
     result_expr = result_expr.subs({
         diameter_of_atom: diameter_of_atom_,
-        constant_sutherland: constant_sutherland_,
+        sutherland_constant: sutherland_constant_,
         temperature: temperature_,
     })
     return Quantity(result_expr)

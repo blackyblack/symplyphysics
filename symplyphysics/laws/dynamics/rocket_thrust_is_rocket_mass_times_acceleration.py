@@ -39,7 +39,7 @@ from symplyphysics.laws.kinematic import (
 
 fuel_consumption_rate = Symbol("fuel_consumption_rate", units.mass / units.time)
 relative_velocity = Symbol("relative_velocity", units.velocity)
-rocket_acceleration = Symbol("rocket_acceleration", units.acceleration)
+rocket_acceleration = clone_symbol(symbols.kinematic.acceleration, "rocket_acceleration")
 rocket_mass = clone_symbol(symbols.basic.mass, "rocket_mass")
 
 law = Eq(fuel_consumption_rate * relative_velocity, rocket_mass * rocket_acceleration)

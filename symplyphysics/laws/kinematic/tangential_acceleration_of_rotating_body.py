@@ -1,5 +1,5 @@
 from sympy import Eq, solve, Derivative
-from symplyphysics import (units, Quantity, Symbol, Function, print_expression, validate_input,
+from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, Function, print_expression, validate_input,
     validate_output, angle_type)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematic import linear_velocity_from_angular_velocity_and_radius as linear_velocity_law
@@ -16,7 +16,7 @@ from symplyphysics.definitions import acceleration_is_velocity_derivative as acc
 ## alpha - angular acceleration
 ## r - rotation radius
 
-tangential_acceleration = Symbol("tangential_acceleration", units.acceleration)
+tangential_acceleration = clone_symbol(symbols.kinematic.acceleration, "tangential_acceleration")
 angular_acceleration = Symbol("angular_acceleration", angle_type / units.time**2)
 rotation_radius = Symbol("rotation_radius", units.length)
 
@@ -56,8 +56,8 @@ acceleration_def_sub = acceleration_def.definition.subs(acceleration_def.time, t
 acceleration_def_sub = acceleration_def_sub.subs(acceleration_def.velocity(time),
     linear_velocity(time))
 tangential_acceleration_value = solve([linear_velocity_derivative_eq, acceleration_def_sub],
-    (Derivative(linear_velocity(time), time), acceleration_def.acceleration(time)),
-    dict=True)[0][acceleration_def.acceleration(time)]
+    (Derivative(linear_velocity(time), time), acceleration_def.acceleration_function(time)),
+    dict=True)[0][acceleration_def.acceleration_function(time)]
 tangential_acceleration_derived = tangential_acceleration_value.subs(
     angular_acceleration_def.angular_acceleration(time), angular_acceleration)
 

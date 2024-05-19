@@ -111,16 +111,16 @@ def print_law() -> str:
 def calculate_impedances(characteristic_resistance_: Quantity, line_length_: Quantity,
     constant_propagation_: Quantity, loss_factor_: Quantity) -> tuple[Quantity, Quantity, Quantity]:
     result = solve(law, [first_impedance, second_impedance, third_impedance], dict=True)[0]
-    result_A = result[first_impedance]
-    result_B = result[second_impedance]
-    result_C = result[third_impedance]
+    result_a = result[first_impedance]
+    result_b = result[second_impedance]
+    result_c = result[third_impedance]
     substitutions = {
         characteristic_resistance: characteristic_resistance_,
         line_length: line_length_,
         constant_propagation: constant_propagation_,
         loss_factor: loss_factor_,
     }
-    result_A = Quantity(result_A.subs(substitutions))
-    result_B = Quantity(result_B.subs(substitutions))
-    result_C = Quantity(result_C.subs(substitutions))
-    return (result_A, result_B, result_C)
+    result_a = Quantity(result_a.subs(substitutions))
+    result_b = Quantity(result_b.subs(substitutions))
+    result_c = Quantity(result_c.subs(substitutions))
+    return (result_a, result_b, result_c)
