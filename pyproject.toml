@@ -51,7 +51,7 @@ disable = [
 
 [tool.mypy]
 disallow_untyped_defs = true
-exclude = ["build"]
+exclude = ["build*"]
 
 [tool.yapf]
 based_on_style = "google"

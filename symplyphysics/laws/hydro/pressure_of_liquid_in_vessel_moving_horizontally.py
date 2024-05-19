@@ -3,6 +3,7 @@ from sympy.physics.units import acceleration_due_to_gravity as earth_free_fall_a
 from symplyphysics import (
     Vector,
     add_cartesian_vectors,
+    symbols,
     units,
     Quantity,
     Symbol,
@@ -31,7 +32,7 @@ from symplyphysics.laws.hydro import hydrostatic_pressure_from_density_and_depth
 pressure = Symbol("pressure", units.pressure)
 
 density_liquid = Symbol("density_liquid", units.mass / units.volume)
-acceleration = Symbol("acceleration", units.acceleration)
+acceleration = symbols.kinematic.acceleration
 height = Symbol("height", units.length)
 
 law = Eq(pressure,

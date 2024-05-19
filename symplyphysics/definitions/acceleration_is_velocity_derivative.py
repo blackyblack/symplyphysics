@@ -11,10 +11,10 @@ from symplyphysics import (units, Quantity, Function, Symbol, print_expression, 
 ## t is time
 
 time = Symbol("time", units.time)
-acceleration = Function("acceleration", units.acceleration)
+acceleration_function = Function("acceleration_function", units.acceleration)
 velocity = Function("velocity", units.velocity)
 
-definition = Eq(acceleration(time), Derivative(velocity(time), time))
+definition = Eq(acceleration_function(time), Derivative(velocity(time), time))
 
 definition_units_SI = units.meter / units.second**2
 
@@ -24,7 +24,7 @@ def print_law() -> str:
 
 
 @validate_input(velocity_start_=velocity, velocity_end_=velocity, time_=time)
-@validate_output(acceleration)
+@validate_output(acceleration_function)
 def calculate_linear_acceleration(velocity_start_: Quantity, velocity_end_: Quantity,
     time_: Quantity) -> Quantity:
     velocity_function_ = time * (velocity_end_ - velocity_start_) / time_

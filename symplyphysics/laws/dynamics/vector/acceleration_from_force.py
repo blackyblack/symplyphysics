@@ -26,12 +26,15 @@ from symplyphysics.laws.dynamics.vector import force_is_derivative_of_momentum a
 ## * - scalar multiplication (scale vector).
 
 
+mass = symbols.basic.mass
+
+
 def acceleration_law(force_: Vector) -> Vector:
-    return scale_vector(1 / symbols.basic.mass, force_)
+    return scale_vector(1 / mass, force_)
 
 
 def force_law(acceleration_: Vector) -> Vector:
-    return scale_vector(symbols.basic.mass, acceleration_)
+    return scale_vector(mass, acceleration_)
 
 
 # Derive this law from law of force and momentum
@@ -66,15 +69,15 @@ for component_derived, component_from_law in zip(force_derived.components,
     assert expr_equals(component_derived, component_from_law)
 
 
-@validate_input(mass_=symbols.basic.mass, acceleration_=units.acceleration)
+@validate_input(mass_=mass, acceleration_=units.acceleration)
 @validate_output(units.force)
 def calculate_force(mass_: Quantity, acceleration_: QuantityVector) -> QuantityVector:
     result_vector = force_law(acceleration_.to_base_vector())
-    return QuantityVector.from_base_vector(result_vector, subs={symbols.basic.mass: mass_})
+    return QuantityVector.from_base_vector(result_vector, subs={mass: mass_})
 
 
-@validate_input(mass_=symbols.basic.mass, force_=units.force)
+@validate_input(mass_=mass, force_=units.force)
 @validate_output(units.acceleration)
 def calculate_acceleration(mass_: Quantity, force_: QuantityVector) -> QuantityVector:
     result_vector = acceleration_law(force_.to_base_vector())
-    return QuantityVector.from_base_vector(result_vector, subs={symbols.basic.mass: mass_})
+    return QuantityVector.from_base_vector(result_vector, subs={mass: mass_})

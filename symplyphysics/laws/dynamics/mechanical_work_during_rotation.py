@@ -1,5 +1,6 @@
 from sympy import Eq, integrate, solve, pi
 from symplyphysics import (
+    symbols,
     units,
     Quantity,
     Symbol,
@@ -43,7 +44,7 @@ law = Eq(work, torque * angular_displacement)
 ## the x axis points in the direction of the radius vector
 ## the y axis is tangent to the part of the path in question
 
-force = Symbol("force", units.force)
+force = symbols.dynamics.force
 angle = Symbol("angle", angle_type)  # angle between force and radius vectors
 radius = Symbol("radius", units.length)
 
