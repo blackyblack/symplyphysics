@@ -33,8 +33,8 @@ tangent_dielectric_loss_angle = Symbol("tangent_dielectric_loss_angle", dimensio
 expression_1 = relative_permittivity / sqrt(effective_permittivity)
 expression_2 = (effective_permittivity - 1) / (relative_permittivity - 1)
 expression_3 = tangent_dielectric_loss_angle / wavelength
-constant_coefficient = 27.3
-law = Eq(attenuation_coefficient, constant_coefficient * expression_1 * expression_2 * expression_3)
+CONSTANT_COEFFICIENT = 27.3
+law = Eq(attenuation_coefficient, CONSTANT_COEFFICIENT * expression_1 * expression_2 * expression_3)
 
 
 @validate_input(relative_permittivity_=relative_permittivity,

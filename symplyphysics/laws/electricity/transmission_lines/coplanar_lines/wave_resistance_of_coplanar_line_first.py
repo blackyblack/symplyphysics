@@ -1,6 +1,5 @@
 from sympy import Eq, solve, sqrt, pi, log
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless,
-    convert_to_float)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless)
 
 ## Description
 ## The coplanar transmission line is a dielectric substrate on the surface of which 3 electrodes are located.

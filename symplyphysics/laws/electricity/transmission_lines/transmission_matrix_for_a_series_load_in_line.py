@@ -40,17 +40,17 @@ def calculate_transmission_matrix(
         parameter_current_to_current
     ],
         dict=True)[0]
-    result_A = result[parameter_voltage_to_voltage]
-    result_B = result[parameter_impedance]
-    result_C = result[parameter_conductance]
-    result_D = result[parameter_current_to_current]
+    result_a = result[parameter_voltage_to_voltage]
+    result_b = result[parameter_impedance]
+    result_c = result[parameter_conductance]
+    result_d = result[parameter_current_to_current]
     substitutions = {
         load_impedance: load_impedance_,
     }
-    result_A = float(convert_to(Quantity(result_A.subs(substitutions)), S.One).evalf())
-    result_B = Quantity(result_B.subs(substitutions))
-    result_C = Quantity(result_C.subs(substitutions))
-    result_D = float(convert_to(Quantity(result_D.subs(substitutions)), S.One).evalf())
-    assert_equivalent_dimension(result_B, 'result_B', "calculate_transmission_matrix",
+    result_a = float(convert_to(Quantity(result_a.subs(substitutions)), S.One).evalf())
+    result_b = Quantity(result_b.subs(substitutions))
+    result_c = Quantity(result_c.subs(substitutions))
+    result_d = float(convert_to(Quantity(result_d.subs(substitutions)), S.One).evalf())
+    assert_equivalent_dimension(result_b, 'result_b', "calculate_transmission_matrix",
         units.impedance)
-    return ((result_A, result_B), (result_C, result_D))
+    return ((result_a, result_b), (result_c, result_d))
