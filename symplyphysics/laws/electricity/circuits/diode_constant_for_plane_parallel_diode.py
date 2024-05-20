@@ -9,16 +9,16 @@ from symplyphysics import (
 )
 
 # Description
-## The volt-ampere characteristic of a vacuum diode is described by the law of degree three of the second. The diode
-## constant that is in this law depends only on the relative position, shape and size of the electrodes of the vacuum diode.
-## For a plane-parallel diode, the diode constant depends only on the area of the electrodes and the distance between them.
+## The current-voltage characteristic of a vacuum diode is described by the 3/2-power law. The diode
+## constant in this law depends only on the relative position, shape and size of the electrodes of the vacuum diode.
+## The vacuum diode may have different electrode geometries. Here we are talking about a vacuum diode with plane-parallel electrodes.
 
 ## Law is: g = (4 / 9) * e0 * sqrt(2 * e / m) * (s / d^2), where
 ## g - diode constant,
 ## e0 - electric constant,
 ## e - elementary charge,
-## m -  electron rest mass,
-## s - electrode area,
+## m - electron rest mass,
+## s - area of one electrode,
 ## d - distance between electrodes.
 
 diode_constant = Symbol("diode_constant", units.current / units.voltage**(3 / 2))
