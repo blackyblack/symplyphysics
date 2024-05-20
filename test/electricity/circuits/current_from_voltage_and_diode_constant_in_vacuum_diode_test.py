@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors, prefixes)
-from symplyphysics.laws.electricity.circuits import law_of_three_second_for_vacuum_diode as current_law
+from symplyphysics.laws.electricity.circuits import current_from_voltage_and_diode_constant_in_vacuum_diode as current_law
 
 # Description
 ## The constant of the vacuum diode is 0.685 [milliampere / volt^(3 / 2)]. The voltage between the anode and the cathode

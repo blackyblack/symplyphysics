@@ -8,13 +8,13 @@ from symplyphysics import (
 )
 
 # Description
-## The volt-ampere characteristic of a vacuum diode is described by the law of degree three of the second. The diode
-## constant that is in this law depends only on the relative position, shape and size of the electrodes of the vacuum diode.
+## The current-voltage characteristic of a vacuum diode is described by the 3/2-power law. The diode
+## constant in this law depends only on the relative position, shape and size of the electrodes of the vacuum diode.
 
 ## Law is: I = g * U^(3 / 2), where
 ## I - anode current,
 ## g - diode constant,
-## U - voltage between its cathode and anode.
+## U - voltage between cathode and anode.
 
 current = Symbol("current", units.current)
 
