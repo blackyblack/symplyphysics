@@ -6,6 +6,9 @@ from symplyphysics.laws.chemistry import mass_of_film_deposited_during_electroly
 # Description
 ## The current is 10 milliampere. The molar mass of a metal atom is 63.546 gram per mole. The current output is 1.05, and the valence of the metal atom is 29.
 ## The time is 1800 seconds. Then the mass of the resulting film will be equal to 0.429 milligram.
+## The current output characterizes only the electrochemical process, i.e., for example, with the anodic dissolution of copper in a sulfuric acid electrolyte,
+## the current output is close to 100%, but another 5% can be added due to the chemical dissolution of copper in the electrolyte. As a result, the calculated
+## current output can formally be 105% due to the chemical dissolution of copper.
 
 Args = namedtuple("Args", ["current", "molar_mass", "current_output", "valence", "time"])
 
