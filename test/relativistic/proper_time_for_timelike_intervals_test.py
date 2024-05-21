@@ -32,5 +32,5 @@ def test_bad_interval() -> None:
         time_law.calculate_proper_time(100)
 
     sb = Quantity((1 + 2 * I) * units.meter)
-    with raises(ValueError):
+    with raises(AssertionError):
         time_law.calculate_proper_time(sb)

@@ -6,7 +6,6 @@ from symplyphysics import (
     Symbol,
     validate_input,
     validate_output,
-    assert_equal,
 )
 
 # Description
@@ -33,7 +32,7 @@ law = Eq(proper_time, spacetime_interval / speed_of_light)
 def calculate_proper_time(
     spacetime_interval_: Quantity,
 ) -> Quantity:
-    assert_equal(im(spacetime_interval_.scale_factor), 0)
+    assert im(spacetime_interval_.scale_factor) == 0
 
     result = law.rhs.subs({spacetime_interval: spacetime_interval_})
     return Quantity(result)
