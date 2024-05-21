@@ -62,25 +62,37 @@ energy_conservation_eqn = energy_conservation_eqn.replace(lorentz_factor_expr, l
 print("Energy conservation equation:")
 print(print_expression(energy_conservation_eqn))
 
-# We know that the Lorentz factor is always greater than 1, so we can use that information to figure
-# out if the above equation ever holds true.
+inequalities = energy_conservation_eqn & (lorentz_factor > 1)
 
-electron_rest_mass_range = reduce_inequalities(
-    energy_conservation_eqn & (lorentz_factor > 1),
-    [electron_rest_mass],
-)
+# The above inequalities never hold, so `reduce_inequalities` returns `False`
 
-# The above inequality never holds, therefore `reduce_inequalities` returns `False`
-assert electron_rest_mass_range == False
+assert reduce_inequalities(inequalities) == False
 
 # This indicates that free electrons are unable to radiate photons. Only accelerated electrons can do that,
 # for example, when the electron is in the vicinity of the atomic nucleus or is interacting with the electric
 # field.
 
-# What is more, we can use the same expressions that we derived here to show that free electrons cannot
-# absorb light either: `total_energy_after_radiation` gives the energy of the electron + photon system before
-# the absorption has happened in a reference frame where the total momentum of the system is zero, and
-# `total_energy_before_radiation` gives the energy of the electron after photon absorption.
+# Let us now consider the case of photon getting absorbed by the electron. We assume the reference frame
+# where the total momentum of the electron + photon system is zero.
 
-# Note that this result is only true for elementary particles and doesn't hold for compound objects consisting
-# of many elementary particles. These can absorb and radiate light freely, without the need to be accelerated.
+total_energy_before_absorption = moving_electron_energy + photon_energy
+
+# The total momentum is zero before and after absorption, therefore the electron is at rest after absorption.
+
+total_energy_after_absorption = electron_rest_energy
+
+energy_conservation_eqn = Eq(
+    total_energy_before_absorption, total_energy_after_absorption
+).replace(
+    lorentz_factor_expr, lorentz_factor
+)
+
+inequalities = energy_conservation_eqn & (lorentz_factor > 1)
+
+# The inequalities are the same as in the case of photon radiation and the result is again False.
+
+assert reduce_inequalities(inequalities) == False
+
+# Note that free (un-accelerated) atoms and molecules, which consist of several elementary particles
+# are indeed able to emit and absorb photons. It is a phenomenon called [spontaneous emission](https://en.wikipedia.org/wiki/Spontaneous_emission).
+# It is fundamentally a quantum-mechanical effect which cannot be explained by classical theory.
