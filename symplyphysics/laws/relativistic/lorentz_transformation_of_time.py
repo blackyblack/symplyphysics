@@ -21,8 +21,8 @@ from symplyphysics.core.expr_comparisons import expr_equals
 # Law: t' = (t - (V * x) / c**2) / sqrt(1 - (V / c)**2)
 ## t' - time in proper (S') reference frame
 ## t - time in lab (S) reference frame
-## x - position in lab (S) reference fram
-## V - speed of proper (S') frame relative to lab (S') frame
+## x - position in lab (S) reference frame
+## V - speed of proper (S') frame relative to lab (S) frame
 ## c - speed of light
 
 # Conditions
@@ -31,6 +31,8 @@ from symplyphysics.core.expr_comparisons import expr_equals
 ## - The relative frame velocity is parallel to the `x` axis.
 
 # Notes
+## - Lab frame S is usually thought as stationary, and proper frame S' is the one that is considered to be moving
+##   relative to lab frame and the oftentimes the moving object in question is at rest in the proper frame.
 ## - In this law, the Lorentz transformation from the lab frame `S` into the proper frame `S'` is described. In order to get
 ##   an opposite transformation (from the proper frame `S'` into the lab frame `S`), replace all primed variables with unprimed
 ##   ones and vice verce, and replace `V` with `-V`. This is consistent with the fact that frame `S` can be viewed as moving
@@ -40,33 +42,33 @@ from symplyphysics.core.expr_comparisons import expr_equals
 time_in_proper_frame = Symbol("time_in_proper_frame", units.time)
 time_in_lab_frame = Symbol("time_in_lab_frame", units.time)
 position_in_lab_frame = Symbol("position_in_lab_frame", units.length)
-relative_frame_speed = Symbol("relative_frame_speed", units.velocity)  # speed of proper frame relative to lab frame
+proper_frame_speed_in_lab_frame = Symbol("proper_frame_speed_in_lab_frame", units.velocity)
 
 law = Eq(
     time_in_proper_frame,
-    (time_in_lab_frame - relative_frame_speed * position_in_lab_frame / speed_of_light**2)
-    / sqrt(1 - (relative_frame_speed / speed_of_light)**2)
+    (time_in_lab_frame - proper_frame_speed_in_lab_frame * position_in_lab_frame / speed_of_light**2)
+    / sqrt(1 - (proper_frame_speed_in_lab_frame / speed_of_light)**2)
 )
 
 # In the limit `V/c << 1`, the formula reduces to the classical relation `t' = t`.
-_classical_time_expr = law.rhs.series(relative_frame_speed, 0, 1).removeO()
+_classical_time_expr = law.rhs.series(proper_frame_speed_in_lab_frame, 0, 1).removeO()
 assert expr_equals(_classical_time_expr, time_in_lab_frame)
 
 
 @validate_input(
     time_in_lab_frame_=time_in_lab_frame,
     position_in_lab_frame_=position_in_lab_frame,
-    relative_frame_speed_=relative_frame_speed,
+    proper_frame_speed_in_lab_frame_=proper_frame_speed_in_lab_frame,
 )
 @validate_output(time_in_proper_frame)
 def calculate_time_in_proper_frame(
     time_in_lab_frame_: Quantity,
     position_in_lab_frame_: Quantity,
-    relative_frame_speed_: Quantity,
+    proper_frame_speed_in_lab_frame_: Quantity,
 ) -> Quantity:
     result = law.rhs.subs({
         time_in_lab_frame: time_in_lab_frame_,
         position_in_lab_frame: position_in_lab_frame_,
-        relative_frame_speed: relative_frame_speed_,
+        proper_frame_speed_in_lab_frame: proper_frame_speed_in_lab_frame_,
     })
     return Quantity(result)
