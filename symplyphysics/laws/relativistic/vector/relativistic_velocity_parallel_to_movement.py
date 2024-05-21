@@ -1,6 +1,7 @@
 from sympy.physics.units import speed_of_light
 from symplyphysics import (
     units,
+    Quantity,
     validate_input,
     validate_output,
     Vector,
@@ -10,11 +11,13 @@ from symplyphysics import (
     QuantityVector,
     cross_cartesian_vectors,
     vector_magnitude,
-    assert_equal,
 )
 
 # Description
-## TODO
+## Consider two inertial reference frames: one fixed (lab frame) and one tied to the moving object (proper frame).
+## The proper frame is moving with some velocity `v` relative to lab frame. Then, according to the theory of special
+## relativity, the velocity of the object relative to lab frame is not equal to the sum of its velocity in the proper
+## frame and the velocity of the proper frame relative to the lab frame.
 
 # Law: u_parallel = (u_parallel' + v) / (1 + dot(u_parallel', v) / c**2)
 ## u_parallel - velocity vector relative to lab frame in the perpendicular direction
@@ -39,7 +42,7 @@ def parallel_addition_law(
         proper_frame_velocity_,
     )
 
-    scaled = scale_vector(factor, added)
+    scaled = scale_vector(1 / factor, added)
     return scaled
 
 
@@ -57,13 +60,11 @@ def calculate_parallel_velocity_component_in_lab_frame(
         proper_frame_velocity_.to_base_vector(),
     )
 
-    try:
-        assert_equal(vector_magnitude(cross), 0)
-    except AssertionError as e:
-        raise ValueError("The two velocity vectors must be collinear") from e
+    if Quantity(vector_magnitude(cross)).scale_factor != 0:
+        raise ValueError("The two velocity vectors must be collinear")
 
     result = parallel_addition_law(
-        parallel_velocity_component_in_proper_frame_,
-        proper_frame_velocity_,
+        parallel_velocity_component_in_proper_frame_.to_base_vector(),
+        proper_frame_velocity_.to_base_vector(),
     )
     return QuantityVector.from_base_vector(result)
