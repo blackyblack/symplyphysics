@@ -32,7 +32,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 
 # Notes
 ## - Lab frame S is usually thought as stationary, and proper frame S' is the one that is considered to be moving
-##   relative to lab frame and the oftentimes the moving object in question is at rest in the proper frame.
+##   relative to lab frame and the moving object in question is at rest in the proper frame.
 ## - In this law, the Lorentz transformation from the lab frame `S` into the proper frame `S'` is described. In order to get
 ##   an opposite transformation (from the proper frame `S'` into the lab frame `S`), replace all primed variables with unprimed
 ##   ones and vice verce, and replace `V` with `-V`. This is consistent with the fact that frame `S` can be viewed as moving
