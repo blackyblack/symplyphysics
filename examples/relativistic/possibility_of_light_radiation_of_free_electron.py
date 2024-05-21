@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from sympy import Symbol, Eq, reduce_inequalities
+from sympy import Symbol, Eq, reduce_inequalities, false
 from symplyphysics import print_expression
 from symplyphysics.definitions import (
     lorentz_factor as lorentz_factor_def,
@@ -66,7 +66,7 @@ inequalities = energy_conservation_eqn & (lorentz_factor > 1)
 
 # The above inequalities never hold, so `reduce_inequalities` returns `False`
 
-assert reduce_inequalities(inequalities) == False
+assert reduce_inequalities(inequalities) is false
 
 # This indicates that free electrons are unable to radiate photons. Only accelerated electrons can do that,
 # for example, when the electron is in the vicinity of the atomic nucleus or is interacting with the electric
@@ -77,7 +77,9 @@ assert reduce_inequalities(inequalities) == False
 
 total_energy_before_absorption = moving_electron_energy + photon_energy
 
-# The total momentum is zero before and after absorption, therefore the electron is at rest after absorption.
+# The total momentum is zero before absorption, and the momenta before and after absorption are equal.
+# Therefore the momentum after absoption is zero, and the speed of the electron is zero, since it has a
+# non-zero mass.
 
 total_energy_after_absorption = electron_rest_energy
 
@@ -91,7 +93,7 @@ inequalities = energy_conservation_eqn & (lorentz_factor > 1)
 
 # The inequalities are the same as in the case of photon radiation and the result is again False.
 
-assert reduce_inequalities(inequalities) == False
+assert reduce_inequalities(inequalities) is false
 
 # Note that free (un-accelerated) atoms and molecules, which consist of several elementary particles
 # are indeed able to emit and absorb photons. It is a phenomenon called [spontaneous emission](https://en.wikipedia.org/wiki/Spontaneous_emission).
