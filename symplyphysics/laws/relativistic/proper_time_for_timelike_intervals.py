@@ -32,7 +32,8 @@ law = Eq(proper_time, spacetime_interval / speed_of_light)
 def calculate_proper_time(
     spacetime_interval_: Quantity,
 ) -> Quantity:
-    assert im(spacetime_interval_.scale_factor) == 0
+    if im(spacetime_interval_.scale_factor) != 0:
+        raise ValueError("The interval must be a real number")
 
     result = law.rhs.subs({spacetime_interval: spacetime_interval_})
     return Quantity(result)
