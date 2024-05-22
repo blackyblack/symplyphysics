@@ -112,9 +112,12 @@ reflected_wave_energy_expr = solve(
     (2 * reduced_incident_wave_energy + 1)**2,
 )
 
-reduced_mirror_speed_expr = mirror_speed_expr / speed_of_light
-
 # Print formulas
+
+print("Definition of reduced energy of incident wave:\n")
+print(print_expression(reduced_incident_wave_energy_eqn), end="\n\n\n")
+
+reduced_mirror_speed_expr = mirror_speed_expr / speed_of_light
 
 print("Formula of reduced speed of mirror:\n")
 print(print_expression(reduced_mirror_speed_expr), end="\n\n\n")
@@ -138,9 +141,9 @@ print(print_expression(reduced_reflected_wave_energy_upper_limit))
 # Plot formulas
 
 base_plot = plot(
-    title=r"Mirror speed and reflected wave energy as functions of reduced energy",
+    title=r"Mirror speed and reflected wave energy as functions of incident wave energy",
     xlabel=r"$w_0 = \frac{W_0}{m_0 c^2}$",
-    ylabel="",
+    ylabel="reduced quantities",
     legend=True,
     show=False,
 )
