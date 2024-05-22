@@ -59,7 +59,7 @@ def parallel_velocity_component_in_proper_frame_law(
     parallel_velocity_component_in_lab_frame_: Vector,
     lab_frame_velocity_: Vector,
 ) -> Vector:
-    return parallel_velocity_component_in_lab_frame_(
+    return parallel_velocity_component_in_lab_frame_law(
         parallel_velocity_component_in_lab_frame_,
         scale_vector(-1, lab_frame_velocity_),
     )
