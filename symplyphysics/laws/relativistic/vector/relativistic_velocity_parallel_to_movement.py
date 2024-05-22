@@ -32,6 +32,9 @@ from symplyphysics.core.approx import APPROX_RELATIVE_TOLERANCE
 ##   essentially the inverse Lorentz transformation from lab frame to proper frame that uses the fact that the lab frame
 ##   can be viewed as moving with velocity vector `-v` relative to the proper frame.
 
+# Conditions
+## - Works in special relativity
+
 
 def parallel_velocity_component_in_lab_frame_law(
     parallel_velocity_component_in_proper_frame_: Vector,
