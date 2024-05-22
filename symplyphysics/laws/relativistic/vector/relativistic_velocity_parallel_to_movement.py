@@ -52,6 +52,35 @@ def parallel_velocity_component_in_lab_frame_law(
     return scale_vector(1 / factor, added)
 
 
+def parallel_velocity_component_in_proper_frame_law(
+    parallel_velocity_component_in_lab_frame_: Vector,
+    lab_frame_velocity_: Vector,
+) -> Vector:
+    return parallel_velocity_component_in_lab_frame_(
+        parallel_velocity_component_in_lab_frame_,
+        scale_vector(-1, lab_frame_velocity_),
+    )
+
+
+def proper_frame_velocity_in_lab_frame_law(
+    parallel_velocity_component_in_proper_frame_: Vector,
+    parallel_velocity_component_in_lab_frame_: Vector,
+) -> Vector:
+    lab_dot_lab = dot_vectors(
+        parallel_velocity_component_in_lab_frame_,
+        parallel_velocity_component_in_lab_frame_,
+    )
+
+    proper_dot_lab = dot_vectors(
+        parallel_velocity_component_in_proper_frame_,
+        parallel_velocity_component_in_lab_frame_,
+    )
+
+    factor = (lab_dot_lab - proper_dot_lab) / (1 - proper_dot_lab / speed_of_light**2)
+
+    return scale_vector(factor / lab_dot_lab, parallel_velocity_component_in_lab_frame_)
+
+
 @validate_input(
     parallel_velocity_component_in_proper_frame_=units.velocity,
     proper_frame_velocity_=units.velocity,
