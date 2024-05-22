@@ -22,8 +22,8 @@ from symplyphysics.core.approx import APPROX_RELATIVE_TOLERANCE
 ## frame and the velocity of the proper frame relative to the lab frame.
 
 # Law: u_parallel = (u_parallel' + v) / (1 + dot(u_parallel', v) / c**2)
-## u_parallel - velocity vector relative to lab frame in the parallel to `v`
-## u_parallel' - velocity vector relative to proper frame in the parallel to `v`
+## u_parallel - velocity vector relative to lab frame parallel to `v`
+## u_parallel' - velocity vector relative to proper frame parallel to `v`
 ## v - velocity vector of proper frame relative to lab frame
 ## c - speed of light
 
