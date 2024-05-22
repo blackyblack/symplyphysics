@@ -1,4 +1,5 @@
-from sympy.physics.units import speed_of_light
+from typing import Optional, TypedDict
+from sympy.physics.units import speed_of_light, Dimension
 from symplyphysics import (
     units,
     Quantity,
@@ -13,7 +14,6 @@ from symplyphysics import (
     vector_magnitude,
     assert_equal,
 )
-from symplyphysics.core.approx import APPROX_RELATIVE_TOLERANCE
 
 # Description
 ## Consider two inertial reference frames: one fixed (lab frame) and one tied to the moving object (proper frame).
@@ -93,14 +93,20 @@ def calculate_parallel_velocity_component_in_lab_frame(
     parallel_velocity_component_in_proper_frame_: QuantityVector,
     proper_frame_velocity_: QuantityVector,
     *,
-    tolerance_: float = APPROX_RELATIVE_TOLERANCE,
+    tolerance_: Optional[float] = None,
 ) -> QuantityVector:
     cross = cross_cartesian_vectors(
         parallel_velocity_component_in_proper_frame_.to_base_vector(),
         proper_frame_velocity_.to_base_vector(),
     )
 
-    assert_equal(Quantity(vector_magnitude(cross)).scale_factor, 0, tolerance=tolerance_)
+    class Args(TypedDict, total=False):
+        tolerance: float
+        dimension: Optional[Dimension]
+
+    args = Args() if tolerance_ is None else Args(tolerance=tolerance_)
+
+    assert_equal(Quantity(vector_magnitude(cross)).scale_factor, 0, **args)
 
     result = parallel_velocity_component_in_lab_frame_law(
         parallel_velocity_component_in_proper_frame_.to_base_vector(),
