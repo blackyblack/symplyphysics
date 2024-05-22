@@ -26,7 +26,7 @@ momentum_differential = Symbol("momentum", units.momentum)
 
 law = Eq(kinetic_energy_differential, speed * momentum_differential)
 
-# TODO: derive from the differential definition of workand the generallized Newton's second law
+# TODO: derive from the differential definition of work and the generalized Newton's second law
 
 
 @validate_input(
