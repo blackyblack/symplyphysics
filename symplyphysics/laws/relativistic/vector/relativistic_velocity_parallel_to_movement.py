@@ -11,22 +11,29 @@ from symplyphysics import (
     QuantityVector,
     cross_cartesian_vectors,
     vector_magnitude,
+    assert_equal,
 )
+from symplyphysics.core.approx import APPROX_RELATIVE_TOLERANCE
 
 # Description
 ## Consider two inertial reference frames: one fixed (lab frame) and one tied to the moving object (proper frame).
-## The proper frame is moving with some velocity `v` relative to lab frame. Then, according to the theory of special
+## The proper frame is moving with some velocity `v` relative to the lab frame. Then, according to the theory of special
 ## relativity, the velocity of the object relative to lab frame is not equal to the sum of its velocity in the proper
 ## frame and the velocity of the proper frame relative to the lab frame.
 
 # Law: u_parallel = (u_parallel' + v) / (1 + dot(u_parallel', v) / c**2)
-## u_parallel - velocity vector relative to lab frame in the perpendicular direction
-## u_parallel' - velocity vector relative to proper frame in the perpendicular direction
+## u_parallel - velocity vector relative to lab frame in the parallel to `v`
+## u_parallel' - velocity vector relative to proper frame in the parallel to `v`
 ## v - velocity vector of proper frame relative to lab frame
 ## c - speed of light
 
+# Notes
+## - One can get the same expression for `u_parallel'` in terms of `u_parallel` by replacing `v` with `-v`. This is
+##   essentially the inverse Lorentz transformation from lab frame to proper frame that uses the fact that the lab frame
+##   can be viewed as moving with velocity vector `-v` relative to the proper frame.
 
-def parallel_addition_law(
+
+def parallel_velocity_component_in_lab_frame_law(
     parallel_velocity_component_in_proper_frame_: Vector,
     proper_frame_velocity_: Vector,
 ) -> Vector:
@@ -42,8 +49,7 @@ def parallel_addition_law(
         proper_frame_velocity_,
     )
 
-    scaled = scale_vector(1 / factor, added)
-    return scaled
+    return scale_vector(1 / factor, added)
 
 
 @validate_input(
@@ -54,16 +60,17 @@ def parallel_addition_law(
 def calculate_parallel_velocity_component_in_lab_frame(
     parallel_velocity_component_in_proper_frame_: QuantityVector,
     proper_frame_velocity_: QuantityVector,
+    *,
+    tolerance_: float = APPROX_RELATIVE_TOLERANCE,
 ) -> QuantityVector:
     cross = cross_cartesian_vectors(
         parallel_velocity_component_in_proper_frame_.to_base_vector(),
         proper_frame_velocity_.to_base_vector(),
     )
 
-    if Quantity(vector_magnitude(cross)).scale_factor != 0:
-        raise ValueError("The two velocity vectors must be collinear")
+    assert_equal(Quantity(vector_magnitude(cross)).scale_factor, 0, tolerance=tolerance_)
 
-    result = parallel_addition_law(
+    result = parallel_velocity_component_in_lab_frame_law(
         parallel_velocity_component_in_proper_frame_.to_base_vector(),
         proper_frame_velocity_.to_base_vector(),
     )

@@ -11,10 +11,10 @@ from symplyphysics import (
 from symplyphysics.laws.relativistic.vector import relativistic_velocity_parallel_to_movement as law
 
 # Description
-## A body is moving parallel to a frame of reference that is moving relative to the laboratory frame of reference.
+## A body is moving parallel to the velocity vector of the proper reference frame relative to the lab frame.
 ## The velocity vector of the body in its proper frame of reference is (0.1*c, 0.2*c, 0). The velocity vector of the
 ## proper frame of reference relative to the laboratory one is (-0.2*c, -0.4*c, 0). Then the velocity of the body relative
-## to the laboratory frame of reference is (-1/9*c, -2/9*c, 0).
+## to the laboratory frame of reference is (-0.111*c, -0.222*c, 0).
 
 Args = namedtuple("Args", "u v")
 
@@ -35,20 +35,20 @@ def test_law(test_args: Args) -> None:
 
 def test_non_collinear_velocities() -> None:
     ub = QuantityVector([units.speed_of_light, 0, 0])
-    vb = QuantityVector([0, units.speed_of_light, 0])
-    with raises(ValueError):
-        law.calculate_parallel_velocity_component_in_lab_frame(ub, vb)
+    vb_vector = QuantityVector([0, units.speed_of_light, 0])
+    with raises(AssertionError):
+        law.calculate_parallel_velocity_component_in_lab_frame(ub, vb_vector)
 
 
 def test_bad_object_velocity(test_args: Args) -> None:
     qb = Quantity(1 * units.coulomb)
-    vb = QuantityVector([qb, qb, qb])
+    vb_vector = QuantityVector([qb, qb, qb])
     with raises(errors.UnitsError):
-        law.calculate_parallel_velocity_component_in_lab_frame(vb, test_args.v)
+        law.calculate_parallel_velocity_component_in_lab_frame(vb_vector, test_args.v)
 
-    vb = Quantity(units.speed_of_light)  # type: ignore
+    vb_scalar = Quantity(units.speed_of_light)
     with raises(AttributeError):
-        law.calculate_parallel_velocity_component_in_lab_frame(vb, test_args.v)
+        law.calculate_parallel_velocity_component_in_lab_frame(vb_scalar, test_args.v)
 
     with raises(TypeError):
         law.calculate_parallel_velocity_component_in_lab_frame(100, test_args.v)
@@ -58,13 +58,13 @@ def test_bad_object_velocity(test_args: Args) -> None:
 
 def test_bad_frame_velocity(test_args: Args) -> None:
     qb = Quantity(1 * units.coulomb)
-    vb = QuantityVector([qb, qb, qb])
+    vb_vector = QuantityVector([qb, qb, qb])
     with raises(errors.UnitsError):
-        law.calculate_parallel_velocity_component_in_lab_frame(test_args.u, vb)
+        law.calculate_parallel_velocity_component_in_lab_frame(test_args.u, vb_vector)
 
-    vb = Quantity(units.speed_of_light)  # type: ignore
+    vb_scalar = Quantity(units.speed_of_light)
     with raises(AttributeError):
-        law.calculate_parallel_velocity_component_in_lab_frame(test_args.u, vb)
+        law.calculate_parallel_velocity_component_in_lab_frame(test_args.u, vb_scalar)
 
     with raises(TypeError):
         law.calculate_parallel_velocity_component_in_lab_frame(test_args.u, 100)
