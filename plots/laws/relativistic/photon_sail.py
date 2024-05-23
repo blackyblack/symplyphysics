@@ -49,19 +49,20 @@ energy_conservation_eqn = energy_conservation_law.law.subs({
 
 # Conservation of momentum
 
-electromagnetic_field_momentum_expr = solve(
+# Electromagnetic waves have zero rest mass.
+electromagnetic_wave_momentum_expr = solve(
     energy_momentum_law.law.subs(energy_momentum_law.invariant_mass, 0),
     energy_momentum_law.relativistic_momentum,
 )[1]
 
-incident_wave_momentum = electromagnetic_field_momentum_expr.subs(
+incident_wave_momentum = electromagnetic_wave_momentum_expr.subs(
     energy_momentum_law.relativistic_energy,
     incident_wave_energy,
 )
 
 total_momentum_before = incident_wave_momentum
 
-reflected_wave_momentum = electromagnetic_field_momentum_expr.subs(
+reflected_wave_momentum = electromagnetic_wave_momentum_expr.subs(
     energy_momentum_law.relativistic_energy,
     reflected_wave_energy,
 )
@@ -140,9 +141,17 @@ print(print_expression(reduced_reflected_wave_energy_upper_limit))
 
 # Plot formulas
 
+# Notation
+## - `W_0, W_1` - energy of incident and reflected waves respectively
+## - `w_0, w_1` - reduced energy of incident and reflected waves respectedly
+## - `m_0` - rest mass of mirror
+## - `v` - speed of mirror after interaction
+## - `beta` - reduced speed of mirror after interaction
+## - `c` - speed of light
+
 base_plot = plot(
     title=r"Mirror speed and reflected wave energy as functions of incident wave energy",
-    xlabel=r"$w_0 = \frac{W_0}{m_0 c^2}$",
+    xlabel=r"reduced incident wave energy $w_0 = \frac{W_0}{m_0 c^2}$",
     ylabel="reduced quantities",
     legend=True,
     show=False,
@@ -153,7 +162,7 @@ plot_range = (reduced_incident_wave_energy, 0, 10)
 speed_plot = plot(
     reduced_mirror_speed_expr,
     plot_range,
-    label=r"$\beta = \frac{v}{c}$",
+    label=r"reduced mirror speed $\beta = \frac{v}{c}$",
     line_color="blue",
     show=False,
 )
@@ -162,7 +171,7 @@ base_plot.extend(speed_plot)
 energy_plot = plot(
     reduced_reflected_wave_energy_expr,
     plot_range,
-    label=r"$w_1 = \frac{W_1}{m_0 c^2}$",
+    label=r"reduced reflected wave energy $w_1 = \frac{W_1}{m_0 c^2}$",
     line_color="red",
     show=False,
 )
@@ -171,7 +180,7 @@ base_plot.extend(energy_plot)
 energy_asymptote_plot = plot(
     reduced_reflected_wave_energy_upper_limit,
     plot_range,
-    label=r"$w_1$ as $w_0 \to \infty$",
+    label=r"$w_1$ in the limit $w_0 \to \infty$",
     line_color="pink",
     show=False,
 )
