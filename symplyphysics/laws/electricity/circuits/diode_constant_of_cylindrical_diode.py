@@ -36,7 +36,7 @@ law = Eq(diode_constant, (4 / 9) * electric_constant * sqrt(2 * elementary_charg
 @validate_output(diode_constant)
 def calculate_diode_constant(anode_area_: Quantity, anode_radius_: Quantity, cathode_radius_: Quantity) -> Quantity:
     if anode_radius_.scale_factor <= cathode_radius_.scale_factor:
-        raise ValueError("The anode radiust must be greater than the cathode radius")
+        raise ValueError("The anode radius must be greater than the cathode radius")
     result_expr = solve(law, diode_constant,
         dict=True)[0][diode_constant]
     result_expr = result_expr.subs({
