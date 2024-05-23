@@ -11,7 +11,7 @@ from symplyphysics import (
 # Description
 ## A triode has three electrodes: a cathode, an anode and one control grid. The triode can be replaced with an equivalent diode
 ## and the 3/2-power law can be applied. The triode constant in this law depends only on the relative position, shape and size of
-## the electrodes of the vacuum diode.
+## the electrodes of the vacuum triode.
 
 ## Law is: I = g * (Ua + mu * Uc)^(3 / 2) , where
 ## I - anode current,
