@@ -10,7 +10,7 @@ from symplyphysics.laws.relativistic import (
 )
 
 # Description
-## A particle with a possible initial momentum `p_0` starts moving at a moment `t = 0` due to a constant
+## A particle with an initial momentum `p_0` starts moving at a moment `t = 0` due to a constant
 ## force `F`. Find the time dependence of the particle's velocity and the distance covered.
 
 # Momentum is expressible as a function of time
@@ -45,7 +45,7 @@ speed_via_time = speed_via_momentum.subs(momentum, momentum_via_time)
 print("Formula of particle speed as a function of time:\n")
 print(print_expression(Eq(speed, speed_via_time)))
 
-# Integrate the velocity formula over time to obtain the distance formula
+# Integrate the velocity formula over time to obtain the distance formula.
 # Note that the distance covered is zero at `t = 0`.
 
 distance, length_term = symbols("distance, length_term", positive=True)
@@ -69,7 +69,7 @@ print(print_expression(Eq(distance, distance_via_time)))
 print("\n\nFormula of `length_term`:")
 print(print_expression(length_term_expr))
 
-# Now let us look at the edge case `F = 0`. That is, the particle continues if movement as if no force has ever
+# Now let us look at the edge case `F = 0`. That is, the particle continues its movement as if no force has ever
 # acted upon it.
 
 zero_force_momentum = momentum_via_time.subs(force, 0)
