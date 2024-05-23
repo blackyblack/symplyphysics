@@ -45,6 +45,9 @@ def test_bad_anode_radius(test_args: Args) -> None:
     with raises(TypeError):
         constant_law.calculate_diode_constant(
             test_args.anode_area, 100, test_args.cathode_radius)
+    with raises(ValueError):
+        constant_law.calculate_diode_constant(
+            test_args.anode_area, test_args.cathode_radius, test_args.anode_radius)
 
 
 def test_bad_cathode_radius(test_args: Args) -> None:

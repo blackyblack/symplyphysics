@@ -9,8 +9,6 @@ from symplyphysics import (
 )
 
 # Description
-## The volt-ampere characteristic of a vacuum diode is described by the law of degree three of the second. The diode
-## constant that is in this law depends only on the relative position, shape and size of the electrodes of the vacuum diode.
 ## In a cylindrical diode, the cathode is located in the center, and the anode is located around it in the form of a cylinder.
 ## The radius of the anode is usually much larger than the radius of the cathode. The diode constant depends on the radii and on the area of the anode.
 
@@ -18,7 +16,7 @@ from symplyphysics import (
 ## g - diode constant,
 ## e0 - electric constant,
 ## e - elementary charge,
-## m -  electron rest mass,
+## m - electron rest mass,
 ## sa - anode area,
 ## ra - anode radius,
 ## rc - cathode radius.
@@ -37,6 +35,8 @@ law = Eq(diode_constant, (4 / 9) * electric_constant * sqrt(2 * elementary_charg
     cathode_radius_=cathode_radius)
 @validate_output(diode_constant)
 def calculate_diode_constant(anode_area_: Quantity, anode_radius_: Quantity, cathode_radius_: Quantity) -> Quantity:
+    if anode_radius_.scale_factor <= cathode_radius_.scale_factor:
+        raise ValueError("The anode radiust must be greater than the cathode radius")
     result_expr = solve(law, diode_constant,
         dict=True)[0][diode_constant]
     result_expr = result_expr.subs({
