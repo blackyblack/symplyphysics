@@ -67,7 +67,7 @@ print("\n\nFormula of particle distance as a function of time:")
 print(print_expression(Eq(distance, distance_via_time)))
 
 print("\n\nFormula of `integration_constant`:")
-print(print_expression(integration_constant_expr))
+print(print_expression(Eq(integration_constant, integration_constant_expr)))
 
 # Now let us look at the edge case `F = 0`. That is, the particle continues its movement as if no force has ever
 # acted upon it.
@@ -77,9 +77,9 @@ zero_force_momentum = momentum_via_time.subs(force, 0)
 zero_force_speed = speed_via_momentum.subs(momentum, zero_force_momentum)
 
 print("\n\nFormula of particle speed when force is zero:\n")
-print(print_expression(zero_force_speed))
+print(print_expression(Eq(speed, zero_force_speed)))
 
 zero_force_distance = zero_force_speed.integrate(time)
 
 print("\n\nFormula of particle distance when force is zero:\n")
-print(print_expression(zero_force_distance))
+print(print_expression(Eq(distance, zero_force_distance)))
