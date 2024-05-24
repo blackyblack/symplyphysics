@@ -31,8 +31,8 @@ def approx_equal_quantities(lhs: Quantity,
 
 
 # Combined with assert for better test output
-def assert_equal(lhs: Quantity | float,
-    rhs: Expr | Quantity | float,
+def assert_equal(lhs: Expr | float,
+    rhs: Expr | float,
     *,
     tolerance: float = APPROX_RELATIVE_TOLERANCE,
     dimension: Optional[Dimension] = None) -> None:
