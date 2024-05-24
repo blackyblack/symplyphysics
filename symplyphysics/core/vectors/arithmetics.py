@@ -168,3 +168,29 @@ def cross_cartesian_vectors(vector_left: Vector, vector_right: Vector) -> Vector
 # Make unit vector (vector of size 1 and same direction as original vector)
 def vector_unit(vector_: Vector) -> Vector:
     return scale_vector(1 / vector_magnitude(vector_), vector_)
+
+
+# Project `first_vector_` onto `second_vector_`
+def vector_projection(
+    first_vector_: Vector,
+    second_vector_: Vector,
+) -> Vector:
+    return scale_vector(
+        dot_vectors(first_vector_, second_vector_) / dot_vectors(second_vector_, second_vector_),
+        second_vector_,
+    )
+
+
+# Decompose `first_vector_` into its projection onto `second_vector_` and rejection from `second_vector_`
+def decompose_into_projections(
+    first_vector_: Vector,
+    second_vector_: Vector,
+) -> tuple[Vector, Vector]:
+    projection_ = vector_projection(first_vector_, second_vector_)
+
+    rejection_ = add_cartesian_vectors(
+        first_vector_,
+        scale_vector(-1, projection_)
+    )
+
+    return projection_, rejection_
