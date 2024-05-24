@@ -1,4 +1,4 @@
-from typing import Optional, Sequence
+from typing import Optional
 from pytest import approx
 from sympy import N, Expr, re, im
 from sympy.physics.units import Dimension
