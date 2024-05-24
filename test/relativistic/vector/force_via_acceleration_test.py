@@ -8,6 +8,7 @@ from symplyphysics import (
     QuantityVector,
     errors,
 )
+from symplyphysics.core.approx import assert_equal_vectors
 from symplyphysics.laws.relativistic.vector import force_via_acceleration as law
 
 Args = namedtuple("Args", "m a v f")
@@ -36,4 +37,51 @@ def test_args_fixture() -> Args:
 
 def test_force_law(test_args: Args) -> None:
     result = law.calculate_force(test_args.m, test_args.a, test_args.v)
-    # TODO Finish
+    assert_equal_vectors(result, test_args.f, tolerance=2e-3)
+
+
+def test_mass_law(test_args: Args) -> None:
+    result = law.rest_mass_law(
+        test_args.f.to_base_vector(),
+        test_args.a.to_base_vector(),
+        test_args.v.to_base_vector(),
+    )
+    assert_equal(result, test_args.m, tolerance=1e-3)
+
+
+def test_bad_mass(test_args: Args) -> None:
+    mb = Quantity(units.coulomb)
+    with raises(errors.UnitsError):
+        law.calculate_force(mb, test_args.a, test_args.v)
+    with raises(TypeError):
+        law.calculate_force(100, test_args.a, test_args.v)
+
+
+def test_bad_acceleration(test_args: Args) -> None:
+    ab_vector = QuantityVector([Quantity(units.coulomb)])
+    with raises(errors.UnitsError):
+        law.calculate_force(test_args.m, ab_vector, test_args.v)
+
+    ab_scalar = Quantity(units.planck_acceleration)
+    with raises(AttributeError):
+        law.calculate_force(test_args.m, ab_scalar, test_args.v)
+
+    with raises(TypeError):
+        law.calculate_force(test_args.m, 100, test_args.v)
+    with raises(TypeError):
+        law.calculate_force(test_args.m, [100], test_args.v)
+
+
+def test_bad_velocity(test_args: Args) -> None:
+    vb_vector = QuantityVector([Quantity(units.coulomb)])
+    with raises(errors.UnitsError):
+        law.calculate_force(test_args.m, test_args.a, vb_vector)
+
+    vb_scalar = Quantity(units.speed_of_light)
+    with raises(AttributeError):
+        law.calculate_force(test_args.m, test_args.a, vb_scalar)
+
+    with raises(TypeError):
+        law.calculate_force(test_args.m, test_args.a, 100)
+    with raises(TypeError):
+        law.calculate_force(test_args.m, test_args.a, [100])
