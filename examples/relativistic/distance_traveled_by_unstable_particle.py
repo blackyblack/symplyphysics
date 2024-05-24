@@ -18,8 +18,6 @@ values = {
     relativistic_time_law.relativistic_time: Quantity(20 * units.nanosecond),
 }
 
-time_eqn = relativistic_time_law.law
-
 particle_speed_expr = solve(relativistic_time_law.law, relativistic_time_law.velocity)[1]
 
 distance_traveled_expr = distance_law.law.rhs.subs({
@@ -41,8 +39,6 @@ print(print_expression(particle_speed_value))
 
 print("\n\nFormula of distance traveled in laboratory frame of reference:")
 print(print_expression(distance_traveled_expr))
-
-lightsecond = units.lightyear / convert_to(units.year, units.second)
 
 distance_traveled_value = convert_to(
     distance_traveled_expr.subs(values),
