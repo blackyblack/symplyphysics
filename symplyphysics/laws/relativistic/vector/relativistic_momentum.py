@@ -23,6 +23,9 @@ from symplyphysics import (
 ## v - vector of particle's velocity
 ## |v| - magnitude of velocity
 
+# Note
+## - To find rest mass `m0`, use the [scalar law](../relativistic_momentum.py).
+
 rest_mass = Symbol("rest_mass", units.mass)
 
 
