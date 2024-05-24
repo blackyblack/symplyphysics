@@ -1,9 +1,10 @@
-from typing import Optional
+from typing import Optional, Sequence
 from pytest import approx
 from sympy import N, Expr, re, im
 from sympy.physics.units import Dimension
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 from symplyphysics.core.symbols.quantities import Quantity
+from symplyphysics.core.vectors.vectors import QuantityVector
 
 APPROX_RELATIVE_TOLERANCE = 0.001
 
@@ -42,3 +43,14 @@ def assert_equal(lhs: Quantity | float,
     assert approx_equal_quantities(
         lhs_quantity, rhs_quantity, tolerance=tolerance, dimension=dimension
     ), f"Expected {N(lhs_quantity.scale_factor)} to be equal to {N(rhs_quantity.scale_factor)} with tolerance {tolerance}"
+
+
+def assert_equal_vectors(
+    lhs: QuantityVector,
+    rhs: QuantityVector,
+    *,
+    tolerance: float = APPROX_RELATIVE_TOLERANCE,
+    dimension: Optional[Dimension] = None,
+) -> None:
+    for l, r in zip(lhs.components, rhs.components, strict=True):
+        assert_equal(l, r, tolerance=tolerance, dimension=dimension)
