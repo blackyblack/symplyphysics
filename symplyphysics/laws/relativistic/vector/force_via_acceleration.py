@@ -1,4 +1,4 @@
-from sympy import sqrt
+from sympy import sqrt, Expr
 from sympy.physics.units import speed_of_light
 from symplyphysics import (
     units,
@@ -7,6 +7,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
     Vector,
+    vector_magnitude,
     add_cartesian_vectors,
     dot_vectors,
     scale_vector,
@@ -27,6 +28,9 @@ from symplyphysics.core.vectors.arithmetics import decompose_into_projections
 ## m0 - rest mass
 ## gamma = 1 / sqrt(1 - dot(v, v) / c**2) - Lorentz factor
 ## dot(a, b) - dot product between vectors `a` and `b`
+
+# Notes
+## - For the inverse relation for acceleration via force, see other law (TODO)
 
 # Conditions
 ## - This law applies to special relativity.
@@ -54,6 +58,30 @@ def force_law(acceleration_: Vector, velocity_: Vector) -> Vector:
         force_parallel_,
         force_orthogonal_,
     )
+
+
+def rest_mass_law(
+    force_: Vector,
+    acceleration_: Vector,
+    velocity_: Vector,
+) -> Expr:
+    acceleration_parallel_, acceleration_orthogonal_ = decompose_into_projections(
+        acceleration_, velocity_
+    )
+
+    lorentz_factor_ = 1 / sqrt(
+        1 - dot_vectors(velocity_, velocity_) / speed_of_light**2
+    )
+
+    lhs = vector_magnitude(force_)
+    rhs = vector_magnitude(
+        add_cartesian_vectors(
+            scale_vector(lorentz_factor_**3, acceleration_parallel_),
+            scale_vector(lorentz_factor_, acceleration_orthogonal_),
+        )
+    )
+
+    return lhs / rhs
 
 
 @validate_input(
