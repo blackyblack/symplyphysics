@@ -48,16 +48,16 @@ print(print_expression(Eq(speed, speed_via_time)))
 # Integrate the velocity formula over time to obtain the distance formula.
 # Note that the distance covered is zero at `t = 0`.
 
-distance, integration_constant = symbols("distance, integration_constant", positive=True)
+distance, initial_position = symbols("distance, initial_position", positive=True)
 
-speed_integrated_over_time = speed_via_time.integrate(time)
+position = speed_via_time.integrate(time)
 
-integration_constant_expr = speed_integrated_over_time.subs(time, 0)
+initial_position_expr = position.subs(time, 0)
 
 distance_via_time = solve(
     (
-        Eq(distance, speed_integrated_over_time - integration_constant_expr),
-        Eq(integration_constant, integration_constant_expr),
+        Eq(distance, position - initial_position_expr),
+        Eq(initial_position, initial_position_expr),
     ),
     (distance, rest_mass),
     dict=True,
@@ -66,8 +66,8 @@ distance_via_time = solve(
 print("\n\nFormula of particle distance as a function of time:")
 print(print_expression(Eq(distance, distance_via_time)))
 
-print("\n\nFormula of `integration_constant`:")
-print(print_expression(Eq(integration_constant, integration_constant_expr)))
+print("\n\nFormula of `initial_position`:")
+print(print_expression(Eq(initial_position, initial_position_expr)))
 
 # Now let us look at the edge case `F = 0`. That is, the particle continues its movement as if no force has ever
 # acted upon it.
