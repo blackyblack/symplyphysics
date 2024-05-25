@@ -7,11 +7,18 @@ from symplyphysics.core.symbols.quantities import Quantity
 from symplyphysics.core.vectors.vectors import QuantityVector
 
 APPROX_RELATIVE_TOLERANCE = 0.001
+APPROX_ABSOLUTE_TOLERANCE = 1e-20
 
 
 def approx_equal_numbers(lhs: float, rhs: float, *,
     tolerance: float = APPROX_RELATIVE_TOLERANCE) -> bool:
-    rhs_approx = approx(rhs, rel=tolerance, abs=abs(lhs * tolerance))
+    abs_tolerance = abs(lhs * tolerance)
+    # Check for zero, as relative tolerance does not work for it
+    if rhs * tolerance == rhs:
+        abs_tolerance = APPROX_ABSOLUTE_TOLERANCE
+    if lhs * tolerance == lhs:
+        abs_tolerance = APPROX_ABSOLUTE_TOLERANCE
+    rhs_approx = approx(rhs, abs=abs_tolerance)
     return lhs == rhs_approx
 
 
