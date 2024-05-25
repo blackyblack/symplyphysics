@@ -11,7 +11,7 @@ from symplyphysics import (
 from symplyphysics.laws.electricity import corona_discharge_current_from_voltage as current_section_law
 
 ## The gas coefficient is 3.57e-9 [coulomb / (meter^2 * volt)]. The mobility of charged particles is 1.6e-4 [meter^2 / (volt * second)].
-## The voltage is 3.5 kilovolt. The discharge voltage is 1.5 kilovolt. Then the current is 1.5 kilovolt.
+## The voltage is 3.5 kilovolt. The discharge voltage is 1.5 kilovolt. Then the current is 4 microampere.
 
 Args = namedtuple("Args", [
     "gas_coefficient", "mobility_of_charged_particles", "voltage", "corona_discharge_occurrence_voltage",
