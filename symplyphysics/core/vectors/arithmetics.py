@@ -168,3 +168,29 @@ def cross_cartesian_vectors(vector_left: Vector, vector_right: Vector) -> Vector
 # Make unit vector (vector of size 1 and same direction as original vector)
 def vector_unit(vector_: Vector) -> Vector:
     return scale_vector(1 / vector_magnitude(vector_), vector_)
+
+
+# Project `original_vector_` onto `target_vector_`. The result is the orthogonal projection of
+# `original_vector_` onto a straight line parallel to `target_vector_` and is parallel to 
+# `target_vector_`.
+def project_vector(
+    original_vector_: Vector,
+    target_vector_: Vector,
+) -> Vector:
+    return scale_vector(
+        dot_vectors(original_vector_, target_vector_) / dot_vectors(target_vector_, target_vector_),
+        target_vector_,
+    )
+
+
+# Reject `original_vector_` from `target_vector_`. The result is the orthogonal projection of
+# `original_vector_` onto the (hyper)plane orthogonal to `target_vector_` and is orthogonal to
+# `target_vector_`.
+def reject_cartesian_vector(
+    original_vector_: Vector,
+    target_vector_: Vector,
+) -> Vector:
+    return add_cartesian_vectors(
+        original_vector_,
+        scale_vector(-1, project_vector(original_vector_, target_vector_))
+    )
