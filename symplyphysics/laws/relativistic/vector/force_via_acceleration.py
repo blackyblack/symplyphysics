@@ -13,7 +13,7 @@ from symplyphysics import (
     scale_vector,
     QuantityVector,
 )
-from symplyphysics.core.vectors.arithmetics import decompose_into_projections
+from symplyphysics.core.vectors.arithmetics import project_vector, reject_cartesian_vector
 
 # Description
 ## In special relativity, the Newton's second law does not hold in the form `F = m * a`. There still exists a relation
@@ -39,9 +39,8 @@ rest_mass = Symbol("rest_mass", units.mass)
 
 
 def force_law(acceleration_: Vector, velocity_: Vector) -> Vector:
-    acceleration_parallel_, acceleration_orthogonal_ = decompose_into_projections(
-        acceleration_, velocity_
-    )
+    acceleration_parallel_ = project_vector(acceleration_, velocity_)
+    acceleration_orthogonal_ = reject_cartesian_vector(acceleration_, velocity_)
 
     lorentz_factor_ = 1 / sqrt(1 - dot_vectors(velocity_, velocity_) / speed_of_light**2)
 
@@ -65,13 +64,10 @@ def rest_mass_law(
     acceleration_: Vector,
     velocity_: Vector,
 ) -> Expr:
-    acceleration_parallel_, acceleration_orthogonal_ = decompose_into_projections(
-        acceleration_, velocity_
-    )
+    acceleration_parallel_ = project_vector(acceleration_, velocity_)
+    acceleration_orthogonal_ = reject_cartesian_vector(acceleration_, velocity_)
 
-    lorentz_factor_ = 1 / sqrt(
-        1 - dot_vectors(velocity_, velocity_) / speed_of_light**2
-    )
+    lorentz_factor_ = 1 / sqrt(1 - dot_vectors(velocity_, velocity_) / speed_of_light**2)
 
     lhs = vector_magnitude(force_)
     rhs = vector_magnitude(

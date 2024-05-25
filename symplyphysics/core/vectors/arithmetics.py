@@ -170,27 +170,27 @@ def vector_unit(vector_: Vector) -> Vector:
     return scale_vector(1 / vector_magnitude(vector_), vector_)
 
 
-# Project `first_vector_` onto `second_vector_`
-def vector_projection(
-    first_vector_: Vector,
-    second_vector_: Vector,
+# Project `original_vector_` onto `target_vector_`. The result is the orthogonal projection of
+# `original_vector_` onto a straight line parallel to `target_vector_` and is parallel to 
+# `target_vector_`.
+def project_vector(
+    original_vector_: Vector,
+    target_vector_: Vector,
 ) -> Vector:
     return scale_vector(
-        dot_vectors(first_vector_, second_vector_) / dot_vectors(second_vector_, second_vector_),
-        second_vector_,
+        dot_vectors(original_vector_, target_vector_) / dot_vectors(target_vector_, target_vector_),
+        target_vector_,
     )
 
 
-# Decompose `first_vector_` into its projection onto `second_vector_` and rejection from `second_vector_`
-def decompose_into_projections(
-    first_vector_: Vector,
-    second_vector_: Vector,
-) -> tuple[Vector, Vector]:
-    projection_ = vector_projection(first_vector_, second_vector_)
-
-    rejection_ = add_cartesian_vectors(
-        first_vector_,
-        scale_vector(-1, projection_)
+# Reject `original_vector_` from `target_vector_`. The result is the orthogonal projection of
+# `original_vector_` onto the (hyper)plane orthogonal to `target_vector_` and is orthogonal to
+# `target_vector_`.
+def reject_cartesian_vector(
+    original_vector_: Vector,
+    target_vector_: Vector,
+) -> Vector:
+    return add_cartesian_vectors(
+        original_vector_,
+        scale_vector(-1, project_vector(original_vector_, target_vector_))
     )
-
-    return projection_, rejection_
