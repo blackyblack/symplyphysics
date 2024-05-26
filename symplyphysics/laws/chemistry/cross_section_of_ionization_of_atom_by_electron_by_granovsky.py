@@ -13,6 +13,10 @@ from symplyphysics import (
 ## particles of a stream hitting a target with target particles. The effective cross-section has the dimension of the area.
 ## In this law, we are talking about the interaction of an atom and an electron, which ionizes an atom.
 ## In this case, the Granovsky approximation for the ionization cross section is considered.
+## As the electron energy increases, the velocities of primary and secondary electrons increase, the possibility of their
+## recombination with ions decreases, and the ionization cross-section area increases. However, at very high energies, the
+## ionization cross section decreases, as the electrons fly past the atom without having time to ionize it, since the time spent
+## by the electron near the atom decreases. Therefore, there is a maximum ionization cross section.
 
 ## Law is: g = g_max * ((U - Ui) / (Umax - Ui)) * exp((Umax - U) / (Umax - Ui)), where
 ## g - the cross-sectional area of the ionization of particles,
