@@ -1,10 +1,11 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from sympy import atan2, cos, pi, sin, sqrt
+from sympy import atan2, cos, pi, sin, sqrt, Rational, nan
 from symplyphysics import (SI, Quantity, dimensionless, units, QuantityVector, Vector,
     CoordinateSystem, coordinates_transform)
 from symplyphysics.core.vectors.arithmetics import (add_cartesian_vectors, cross_cartesian_vectors,
-    dot_vectors, equal_vectors, scale_vector, vector_magnitude, vector_unit)
+    dot_vectors, equal_vectors, scale_vector, vector_magnitude, vector_unit, project_vector,
+    reject_cartesian_vector, ScalarValue)
 
 # pylint: disable=too-many-locals
 
@@ -555,3 +556,35 @@ def test_basic_quantity_unit_vector() -> None:
         unit_vector.components[1].scale_factor] == [1 / sqrt(5), 2 / sqrt(5)]
     SI.get_dimension_system().equivalent_dims(unit_vector.components[0].dimension, units.length)
     SI.get_dimension_system().equivalent_dims(unit_vector.components[1].dimension, units.length)
+
+
+def test_cartesian_vector_projection() -> None:
+    w = Vector([1, 2, -1])
+
+    def check(v: Vector, correct: list[ScalarValue]) -> None:
+        derived = project_vector(v, w)
+        assert vector_magnitude(cross_cartesian_vectors(derived, w)) == 0
+        assert derived.components == correct
+
+    check(w, [1, 2, -1])
+    check(Vector([1, 0, 0]), [Rational(1, 6), Rational(1, 3), Rational(-1, 6)])
+    check(Vector([0, 1, 1]), [Rational(1, 6), Rational(1, 3), Rational(-1, 6)])
+    check(Vector([0, 1, 0]), [Rational(1, 3), Rational(2, 3), Rational(-1, 3)])
+    check(Vector([-2, 1, 0]), [0, 0, 0])
+
+    assert project_vector(Vector([1, 1, 1]), Vector([0, 0, 0])).components == [nan, nan, nan]
+
+
+def test_cartesian_vector_rejection() -> None:
+    w = Vector([1, 2, -1])
+
+    def check(v: Vector, correct: list[ScalarValue]) -> None:
+        derived = reject_cartesian_vector(v, w)
+        assert dot_vectors(derived, w) == 0
+        assert derived.components == correct
+
+    check(w, [0, 0, 0])
+    check(Vector([1, 0, 0]), [Rational(5, 6), Rational(-1, 3), Rational(1, 6)])
+    check(Vector([0, 1, 1]), [Rational(-1, 6), Rational(2, 3), Rational(7, 6)])
+    check(Vector([0, 1, 0]), [Rational(-1, 3), Rational(1, 3), Rational(1, 3)])
+    check(Vector([-2, 1, 0]), [-2, 1, 0])

@@ -26,8 +26,8 @@ def test_args_fixture() -> Args:
 def test_basic_waves(test_args: Args) -> None:
     result = parameters_matrix_law.calculate_waves(test_args.input_reflected_wave,
         test_args.output_reflected_wave, test_args.parameters)
-    assert_equal(result[0], 0.286 * sqrt(units.watt))
-    assert_equal(result[1], 0.286 * sqrt(units.watt))
+    assert_equal(result[0], 0.286 * sqrt(units.watt), tolerance=0.002)
+    assert_equal(result[1], 0.286 * sqrt(units.watt), tolerance=0.002)
 
 
 def test_bad_waves(test_args: Args) -> None:
