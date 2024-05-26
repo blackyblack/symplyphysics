@@ -1,4 +1,4 @@
-from sympy import Eq, exp, I, S
+from sympy import Eq, exp, I, S, dsolve, symbols
 from sympy.physics.units import hbar
 from symplyphysics import (
     Quantity,
@@ -8,6 +8,12 @@ from symplyphysics import (
     units,
     dimensionless,
     convert_to,
+)
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.dynamics import kinetic_energy_via_momentum
+from symplyphysics.laws.quantum_mechanics.schrodinger import (
+    time_independent_equation_in_one_dimension as time_independent_eqn,
+    time_dependent_via_time_independent_solution as time_dependent_law,
 )
 
 # Description
@@ -40,7 +46,42 @@ time = Symbol("time", units.time)
 
 law = Eq(wave_function, exp((I / hbar) * (particle_momentum * position - particle_energy * time)))
 
-# TODO: derive from Schrödinger equation
+# Derive from Schrödinger equation
+
+_time_independent_eqn = time_independent_eqn.law.subs(
+    time_independent_eqn.position, position,
+).subs({
+    time_independent_eqn.potential_energy(position): 0,
+    time_independent_eqn.particle_energy: kinetic_energy_via_momentum.law.rhs.subs({
+        kinetic_energy_via_momentum.mass: time_independent_eqn.particle_mass,
+        kinetic_energy_via_momentum.momentum: particle_momentum,
+    }),
+})
+
+_c1, _c2 = symbols("C_1 C_2")
+
+_time_independent_solution = dsolve(
+    _time_independent_eqn,
+    time_independent_eqn.wave_function(position),
+).rhs.subs({
+    "C1": _c1,
+    "C2": _c2,
+})
+
+_time_dependent_solution = time_dependent_law.law.rhs.subs({
+    time_dependent_law.time_independent_wave_function(time_dependent_law.position): _time_independent_solution,
+    time_dependent_law.particle_energy: particle_energy,
+    time_dependent_law.time: time,
+})
+
+# In general the solution of the Schrödinger equation can be viewed as the sum of waves traveling in opposite
+# directions.
+_current_law_solution = (
+    _c1 * law.rhs.subs(particle_momentum, -1 * particle_momentum)
+    + _c2 * law.rhs
+)
+
+assert expr_equals(_time_dependent_solution, _current_law_solution)
 
 
 @validate_input(
