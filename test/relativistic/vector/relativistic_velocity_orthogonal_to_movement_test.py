@@ -1,5 +1,5 @@
 from collections import namedtuple
-from pytest import fixture, raises, mark
+from pytest import fixture, raises
 from sympy.physics.units import speed_of_light
 from symplyphysics import (
     assert_equal,
@@ -41,8 +41,6 @@ def test_lab_law(test_args: Args) -> None:
         assert_equal(result_component, correct_component)
 
 
-# TODO: fix `assert_equal` behavior with zeros
-@mark.skip("Fix assert_equal with zeroes")
 def test_proper_law(test_args: Args) -> None:
     result = law.orthogonal_velocity_component_in_proper_frame_law(
         test_args.ul.to_base_vector(),
@@ -57,7 +55,10 @@ def test_proper_law(test_args: Args) -> None:
         [0, 0, up_orthogonal.components[2]],
         strict=True,
     ):
-        assert_equal(result_component, correct_component)
+        if correct_component == 0:
+            assert_equal(result_component, correct_component, absolute_tolerance=1e-8)
+        else:
+            assert_equal(result_component, correct_component)
 
 
 def test_bad_velocity(test_args: Args) -> None:
