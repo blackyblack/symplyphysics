@@ -7,7 +7,7 @@ from symplyphysics import (
     assert_equal,
 )
 
-from symplyphysics.laws.chemistry import coefficient_of_volumetric_ionization_of_neutral_atoms_or_gas_molecules_by_eleccules_by_electrons as coefficient_law
+from symplyphysics.laws.chemistry import coefficient_of_volumetric_ionization_of_neutral_atoms_or_gas_molecules_by_electrons as coefficient_law
 
 ## The first constant of gas is equal to 0.099 [1 / centimeter / pascal]. The second constant of gas is 1.84 [volt / centimeter / pascal].
 ## The pressure is 293 pascal. The electric intensity is 659 [volt / centimeter].
