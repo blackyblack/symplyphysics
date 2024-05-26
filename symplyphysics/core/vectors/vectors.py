@@ -1,6 +1,6 @@
 from __future__ import annotations
-from typing import Optional, Sequence
-from sympy import Expr
+from typing import Optional, Sequence, Any
+from sympy import Expr, simplify
 from sympy.vector import express, Vector as SymVector
 from sympy.vector.operators import _get_coord_systems
 from sympy.physics.units import Dimension
@@ -95,6 +95,10 @@ class Vector:
             None,
             variables=True)
         return Vector.from_sympy_vector(transformed_vector_sympy, coordinate_system)
+    
+    def simplify(self, **kwargs: Any) -> Vector:
+        components = [simplify(component, **kwargs) for component in self.components]
+        return Vector(components, self.coordinate_system)
 
 
 class QuantityVector(DimensionSymbol):
