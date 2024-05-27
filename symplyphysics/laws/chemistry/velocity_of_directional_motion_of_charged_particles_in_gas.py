@@ -6,7 +6,7 @@ from symplyphysics import (units, Quantity, Symbol, validate_input, validate_out
 ## volume between the electrodes. In this case, the speed of directional movement will depend not on the potential difference traveled,
 ## but on the local value of the electric intensity.
 
-## Law is: v =  b0 * E / p, where
+## Law is: v = b0 * E / p, where
 ## v - the velocity of the directional motion of charged particles in a gas,
 ## b0 - mobility of charged particles at a single pressure,
 ## E - electric intensity,
