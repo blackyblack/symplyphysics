@@ -16,7 +16,7 @@ velocity = Symbol("velocity", units.velocity)
 
 mobility_at_unit_pressure = Symbol("mobility_at_unit_pressure", units.velocity * units.pressure * units.length / units.voltage)
 pressure = Symbol("pressure", units.pressure)
-electric_intensity = Symbol("pressure", units.voltage / units.length)
+electric_intensity = Symbol("electric_intensity", units.voltage / units.length)
 
 law = Eq(velocity, mobility_at_unit_pressure * electric_intensity / pressure)
 
