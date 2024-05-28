@@ -12,14 +12,11 @@ APPROX_RELATIVE_TOLERANCE = 0.001
 def approx_equal_numbers(lhs: float, rhs: float, *,
     relative_tolerance: Optional[float] = None,
     absolute_tolerance: Optional[float] = None) -> bool:
-    if relative_tolerance is None and absolute_tolerance is None:
+    if relative_tolerance is None:
         relative_tolerance = APPROX_RELATIVE_TOLERANCE
-    abs_tolerance: float = 0
-    if relative_tolerance is not None:
-        abs_tolerance = abs(lhs * relative_tolerance)
-    if absolute_tolerance is not None:
-        abs_tolerance = absolute_tolerance
-    rhs_approx = approx(rhs, abs=abs_tolerance)
+    if absolute_tolerance is None:
+        absolute_tolerance = abs(lhs * relative_tolerance)
+    rhs_approx = approx(rhs, rel=relative_tolerance, abs=absolute_tolerance)
     return lhs == rhs_approx
 
 
