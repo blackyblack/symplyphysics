@@ -35,7 +35,7 @@ def test_lab_law(test_args: Args) -> None:
     )
     assert_equal_vectors(
         result,
-        ul_orthogonal,
+        QuantityVector.from_base_vector(ul_orthogonal),
         tolerance=3e-3,
         absolute_tolerance=1e-8,
     )
@@ -51,8 +51,8 @@ def test_proper_law(test_args: Args) -> None:
         test_args.v.to_base_vector(),
     )
     assert_equal_vectors(
-        result,
-        up_orthogonal,
+        QuantityVector.from_base_vector(result),
+        QuantityVector.from_base_vector(up_orthogonal),
         tolerance=3e-3,
         absolute_tolerance=1e-8,
     )
