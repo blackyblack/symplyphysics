@@ -1,7 +1,7 @@
 from functools import reduce
 from operator import add
-from typing import Optional, Sequence
-from sympy import S, Expr, cos, sin, sqrt, sympify
+from typing import Optional, Sequence, Any
+from sympy import S, Expr, cos, sin, sqrt, sympify, diff, integrate
 
 from .vectors import Vector
 from ..expr_comparisons import expr_equals
@@ -194,3 +194,49 @@ def reject_cartesian_vector(
         original_vector_,
         scale_vector(-1, project_vector(original_vector_, target_vector_))
     )
+
+
+def diff_cartesian_vector_components(
+    vector_: Vector,
+    *symbols: Any,
+    **kwargs: Any,
+) -> Vector:
+    if vector_.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
+        raise ValueError("Component-wise vector differentiation is only supported for Cartesian coordinates")
+
+    components = [
+        diff(component, *symbols, **kwargs)
+        for component in vector_.components
+    ]
+
+    return Vector(components, vector_.coordinate_system)
+
+
+def integrate_cartesian_vector_components(
+    vector_: Vector,
+    *args: Any,
+    meijerg: Optional[bool] = None,
+    conds: str = 'piecewise',
+    risch: Optional[bool] = None,
+    heurisch: Optional[bool] = None,
+    manual: Optional[bool] = None,
+    **kwargs: Any,
+) -> Vector:
+    if vector_.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
+        raise ValueError("Component-wise vector integration is only supported for Cartesian coordinates")
+
+    components = [
+        integrate(
+            component,
+            *args,
+            meijerg=meijerg,
+            conds=conds,
+            risch=risch,
+            heurisch=heurisch,
+            manual=manual,
+            **kwargs,
+        )
+        for component in vector_.components
+    ]
+
+    return Vector(components, vector_.coordinate_system)
