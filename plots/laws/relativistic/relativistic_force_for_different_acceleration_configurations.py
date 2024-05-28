@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from collections import namedtuple
-from sympy import Symbol, plot
+from sympy import Symbol, plot, sqrt
 from sympy.physics.units import speed_of_light
 from symplyphysics import Vector, vector_magnitude
 from symplyphysics.laws.relativistic.vector import force_via_acceleration
@@ -11,15 +11,15 @@ Datum = namedtuple("Datum", "label acceleration")
 data_ = [
     Datum(
         label=r"$a_{\perp} = 0$",
-        acceleration=Vector([10, 0, 0]),
-    ),
-    Datum(
-        label=r"$a_{\parallel} = 0$",
-        acceleration=Vector([0, 10, -20]),
+        acceleration=Vector([1, 0, 0]),
     ),
     Datum(
         label=r"$a_{\perp} \ne 0, a_{\parallel} \ne 0$",
-        acceleration=Vector([10, 10, -20]),
+        acceleration=Vector([1 / sqrt(3), 1 / sqrt(3), 1 / sqrt(3)]),
+    ),
+    Datum(
+        label=r"$a_{\parallel} = 0$",
+        acceleration=Vector([0, 1 / sqrt(2), 1 / sqrt(2)]),
     ),
 ]
 
@@ -29,7 +29,7 @@ velocity = Vector([reduced_velocity * speed_of_light, 0, 0])
 base_plot = plot(
     title="Force as a function of velocity for different acceleration configurations",
     xlabel=r"$\beta = \frac{v}{c}$",
-    ylabel=r"$\frac{F}{m_0}, \frac{\text{m}^2}{\text{s}^2}$",
+    ylabel=r"$\frac{F}{m_0}, \left(\frac{\text{m}}{\text{s}}\right)^2$",
     legend=True,
     show=False,
 )
@@ -40,7 +40,7 @@ for datum_ in data_:
 
     sub_plot = plot(
         expr,
-        (reduced_velocity, 0, 0.96),
+        (reduced_velocity, 0, 0.97),
         label=datum_.label,
         show=False,
     )
