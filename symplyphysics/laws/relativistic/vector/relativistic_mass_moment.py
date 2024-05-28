@@ -7,10 +7,11 @@ from symplyphysics import (
     validate_output,
     Vector,
     add_cartesian_vectors,
-    dot_vectors,
+    vector_magnitude,
     scale_vector,
     QuantityVector,
 )
+from symplyphysics.definitions import lorentz_factor as lorentz_factor_def
 
 # Description
 ## Mass moment is an additive physical quantity useful for deriving the Lorentz transformation of angular momentum.
@@ -30,14 +31,16 @@ time = Symbol("time", units.time)
 
 
 def mass_moment_law(position_: Vector, velocity_: Vector) -> Vector:
-    summed_vector = add_cartesian_vectors(
+    summed_vector_ = add_cartesian_vectors(
         position_,
         scale_vector(-1 * time, velocity_),
     )
 
-    factor = rest_mass / (1 - dot_vectors(velocity_, velocity_) / speed_of_light**2)
+    lorentz_factor_ = lorentz_factor_def.definition.rhs.subs({
+        lorentz_factor_def.velocity: vector_magnitude(velocity_),
+    })
 
-    return scale_vector(factor, summed_vector)
+    return scale_vector(rest_mass * lorentz_factor_**2, summed_vector_)
 
 
 @validate_input(

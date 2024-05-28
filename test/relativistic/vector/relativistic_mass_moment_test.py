@@ -33,11 +33,11 @@ def test_args_fixture() -> Args:
 def test_law(test_args: Args) -> None:
     result = law.calculate_mass_moment(test_args.m, test_args.x, test_args.v, test_args.t)
 
-    dimension = units.electron_rest_mass * units.kilometer
+    measurement_unit = units.electron_rest_mass * units.kilometer
     correct = QuantityVector([
-        Quantity(-29.9 * dimension),
-        Quantity(-60.0 * dimension),
-        Quantity(90.0 * dimension),
+        Quantity(-29.9 * measurement_unit),
+        Quantity(-60.0 * measurement_unit),
+        Quantity(90.0 * measurement_unit),
     ])
 
     assert_equal_vectors(result, correct)
