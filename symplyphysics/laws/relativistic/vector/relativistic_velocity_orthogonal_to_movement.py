@@ -1,15 +1,16 @@
-from sympy import sqrt
 from sympy.physics.units import speed_of_light
 from symplyphysics import (
     units,
     validate_input,
     validate_output,
     Vector,
+    vector_magnitude,
     dot_vectors,
     scale_vector,
     QuantityVector,
 )
 from symplyphysics.core.vectors.arithmetics import reject_cartesian_vector
+from symplyphysics.definitions import lorentz_factor as lorentz_factor_def
 
 # Description
 ## Consider two inertial reference frames: one fixed (lab frame) and one tied to the moving object (proper frame).
@@ -17,7 +18,7 @@ from symplyphysics.core.vectors.arithmetics import reject_cartesian_vector
 ## relativity, the velocity of the object relative to lab frame is not equal to the sum of its velocity in the proper
 ## frame and the velocity of the proper frame relative to the lab frame.
 
-# Law: u_orthogonal = u_orthogonal' / (gamma * (1 - dot(v, u_parallel') / c**2))
+# Law: u_orthogonal = u_orthogonal' / (gamma * (1 + dot(v, u_parallel') / c**2))
 ## u_orthogonal - velocity vector relative to lab frame orthogonal to `v`
 ## u_orthogonal' - velocity vector relative to proper frame orthogonal to `v`
 ## u_parallel' - velocity vector relative to proper frame parallel to `v`
@@ -40,7 +41,9 @@ def orthogonal_velocity_component_in_lab_frame_law(
 ) -> Vector:
     orthogonal_velocity_component_in_proper_frame_ = reject_cartesian_vector(velocity_in_proper_frame_, proper_frame_velocity_)
 
-    lorentz_factor_ = 1 / sqrt(1 - dot_vectors(proper_frame_velocity_, proper_frame_velocity_) / speed_of_light**2)
+    lorentz_factor_ = lorentz_factor_def.definition.rhs.subs({
+        lorentz_factor_def.velocity: vector_magnitude(proper_frame_velocity_),
+    })
 
     scale_factor_ = lorentz_factor_ * (1 + dot_vectors(proper_frame_velocity_, velocity_in_proper_frame_) / speed_of_light**2)
 

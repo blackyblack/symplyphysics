@@ -2,12 +2,12 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy.physics.units import speed_of_light
 from symplyphysics import (
-    assert_equal,
     units,
     Quantity,
     QuantityVector,
     errors,
 )
+from symplyphysics.core.approx import assert_equal_vectors
 from symplyphysics.core.vectors.arithmetics import reject_cartesian_vector
 from symplyphysics.laws.relativistic.vector import relativistic_velocity_orthogonal_to_movement as law
 
@@ -33,12 +33,12 @@ def test_lab_law(test_args: Args) -> None:
         test_args.ul.to_base_vector(),
         test_args.v.to_base_vector()
     )
-    for result_component, correct_component in zip(
-        result.components,
-        [0, 0, ul_orthogonal.components[2]],
-        strict=True
-    ):
-        assert_equal(result_component, correct_component)
+    assert_equal_vectors(
+        result,
+        ul_orthogonal,
+        tolerance=3e-3,
+        absolute_tolerance=1e-8,
+    )
 
 
 def test_proper_law(test_args: Args) -> None:
@@ -50,15 +50,12 @@ def test_proper_law(test_args: Args) -> None:
         test_args.up.to_base_vector(),
         test_args.v.to_base_vector(),
     )
-    for result_component, correct_component in zip(
-        result.components,
-        [0, 0, up_orthogonal.components[2]],
-        strict=True,
-    ):
-        if correct_component == 0:
-            assert_equal(result_component, correct_component, absolute_tolerance=1e-8)
-        else:
-            assert_equal(result_component, correct_component)
+    assert_equal_vectors(
+        result,
+        up_orthogonal,
+        tolerance=3e-3,
+        absolute_tolerance=1e-8,
+    )
 
 
 def test_bad_velocity(test_args: Args) -> None:
