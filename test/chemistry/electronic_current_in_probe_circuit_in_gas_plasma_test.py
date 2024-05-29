@@ -15,7 +15,7 @@ from symplyphysics.laws.chemistry import electronic_current_in_probe_circuit_in_
 ## Then the probe current will be 425.84 milliampere.
 
 Args = namedtuple("Args", [
-    "area_probe_surface", "electron_concentration", "electron_temperature", "floating_plasma_potential", "potential_at_location_of_probe"
+    "area_probe_surface", "electron_concentration", "plasma_temperature", "floating_plasma_potential", "probe_potential"
 ])
 
 
@@ -23,21 +23,21 @@ Args = namedtuple("Args", [
 def test_args_fixture() -> Args:
     area_probe_surface = Quantity(10 * units.millimeter**2)
     electron_concentration = Quantity(3.5e16 / units.centimeter**3)
-    electron_temperature = Quantity(6000 * units.kelvin)
+    plasma_temperature = Quantity(6000 * units.kelvin)
     floating_plasma_potential = Quantity(100 * units.volt)
-    potential_at_location_of_probe = Quantity(95 * units.volt)
+    probe_potential = Quantity(95 * units.volt)
 
     return Args(area_probe_surface=area_probe_surface,
         electron_concentration=electron_concentration,
-        electron_temperature=electron_temperature,
+        plasma_temperature=plasma_temperature,
         floating_plasma_potential=floating_plasma_potential,
-        potential_at_location_of_probe=potential_at_location_of_probe)
+        probe_potential=probe_potential)
 
 
 def test_basic_current(test_args: Args) -> None:
     result = current_law.calculate_current(
-        test_args.area_probe_surface, test_args.electron_concentration, test_args.electron_temperature,
-        test_args.floating_plasma_potential, test_args.potential_at_location_of_probe,)
+        test_args.area_probe_surface, test_args.electron_concentration, test_args.plasma_temperature,
+        test_args.floating_plasma_potential, test_args.probe_potential,)
     assert_equal(result, 425.84 * prefixes.milli * units.ampere)
 
 
@@ -45,50 +45,50 @@ def test_bad_area_probe_surface(test_args: Args) -> None:
     area_probe_surface = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         current_law.calculate_current(area_probe_surface,
-            test_args.electron_concentration, test_args.electron_temperature,
-            test_args.floating_plasma_potential, test_args.potential_at_location_of_probe)
+            test_args.electron_concentration, test_args.plasma_temperature,
+            test_args.floating_plasma_potential, test_args.probe_potential)
     with raises(TypeError):
         current_law.calculate_current(100,
-            test_args.electron_concentration, test_args.electron_temperature,
-            test_args.floating_plasma_potential, test_args.potential_at_location_of_probe)
+            test_args.electron_concentration, test_args.plasma_temperature,
+            test_args.floating_plasma_potential, test_args.probe_potential)
 
 
 def test_bad_electron_concentration(test_args: Args) -> None:
     electron_concentration = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         current_law.calculate_current(test_args.area_probe_surface,
-            electron_concentration, test_args.electron_temperature, test_args.floating_plasma_potential, test_args.potential_at_location_of_probe)
+            electron_concentration, test_args.plasma_temperature, test_args.floating_plasma_potential, test_args.probe_potential)
     with raises(TypeError):
         current_law.calculate_current(test_args.area_probe_surface,
-            100, test_args.electron_temperature, test_args.floating_plasma_potential, test_args.potential_at_location_of_probe)
+            100, test_args.plasma_temperature, test_args.floating_plasma_potential, test_args.probe_potential)
 
 
-def test_bad_electron_temperature(test_args: Args) -> None:
-    electron_temperature = Quantity(1 * units.coulomb)
+def test_bad_plasma_temperature(test_args: Args) -> None:
+    plasma_temperature = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         current_law.calculate_current(test_args.area_probe_surface,
-            test_args.electron_concentration, electron_temperature, test_args.floating_plasma_potential, test_args.potential_at_location_of_probe)
+            test_args.electron_concentration, plasma_temperature, test_args.floating_plasma_potential, test_args.probe_potential)
     with raises(TypeError):
         current_law.calculate_current(test_args.area_probe_surface,
-            test_args.electron_concentration, 100, test_args.floating_plasma_potential, test_args.potential_at_location_of_probe)
+            test_args.electron_concentration, 100, test_args.floating_plasma_potential, test_args.probe_potential)
 
 
 def test_bad_floating_plasma_potential(test_args: Args) -> None:
     floating_plasma_potential = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         current_law.calculate_current(test_args.area_probe_surface,
-            test_args.electron_concentration, test_args.electron_temperature, floating_plasma_potential, test_args.potential_at_location_of_probe)
+            test_args.electron_concentration, test_args.plasma_temperature, floating_plasma_potential, test_args.probe_potential)
     floating_plasma_potential = Quantity(1 * units.coulomb)
     with raises(TypeError):
         current_law.calculate_current(test_args.area_probe_surface,
-            test_args.electron_concentration, test_args.electron_temperature, 100, test_args.potential_at_location_of_probe)
+            test_args.electron_concentration, test_args.plasma_temperature, 100, test_args.probe_potential)
 
 
-def test_bad_potential_at_location_of_probe(test_args: Args) -> None:
-    potential_at_location_of_probe = Quantity(1 * units.coulomb)
+def test_bad_probe_potential(test_args: Args) -> None:
+    probe_potential = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         current_law.calculate_current(test_args.area_probe_surface,
-            test_args.electron_concentration, test_args.electron_temperature, test_args.floating_plasma_potential, potential_at_location_of_probe)
+            test_args.electron_concentration, test_args.plasma_temperature, test_args.floating_plasma_potential, probe_potential)
     with raises(TypeError):
         current_law.calculate_current(test_args.area_probe_surface,
-            test_args.electron_concentration, test_args.electron_temperature, test_args.floating_plasma_potential, 100)
+            test_args.electron_concentration, test_args.plasma_temperature, test_args.floating_plasma_potential, 100)

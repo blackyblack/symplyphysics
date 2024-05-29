@@ -33,33 +33,33 @@ current = Symbol("current", units.current)
 
 area_probe_surface = Symbol("area_probe_surface", units.area)
 electron_concentration = Symbol("electron_concentration", 1 / units.volume)
-electron_temperature = clone_symbol(symbols.thermodynamics.temperature, "electron_temperature")
+plasma_temperature = clone_symbol(symbols.thermodynamics.temperature, "plasma_temperature")
 floating_plasma_potential = Symbol("floating_plasma_potential", units.voltage)
-potential_at_location_of_probe = Symbol("potential_at_location_of_probe", units.voltage)
+probe_potential = Symbol("probe_potential", units.voltage)
 
 expression_1 = 0.25 * area_probe_surface * elementary_charge * electron_concentration
-expression_2 = sqrt(8 * boltzmann_constant * electron_temperature / (pi * electron_rest_mass))
-expression_3 = exp(-elementary_charge * (floating_plasma_potential - potential_at_location_of_probe) / (boltzmann_constant * electron_temperature))
+expression_2 = sqrt(8 * boltzmann_constant * plasma_temperature / (pi * electron_rest_mass))
+expression_3 = exp(-elementary_charge * (floating_plasma_potential - probe_potential) / (boltzmann_constant * plasma_temperature))
 
 law = Eq(current, expression_1 * expression_2 * expression_3)
 
 
 @validate_input(area_probe_surface_=area_probe_surface,
     electron_concentration_=electron_concentration,
-    electron_temperature_=electron_temperature,
+    plasma_temperature_=plasma_temperature,
     floating_plasma_potential_=floating_plasma_potential,
-    potential_at_location_of_probe_=potential_at_location_of_probe)
+    probe_potential_=probe_potential)
 @validate_output(current)
 def calculate_current(area_probe_surface_: Quantity,
-    electron_concentration_: Quantity, electron_temperature_: Quantity,
-    floating_plasma_potential_: Quantity, potential_at_location_of_probe_: Quantity) -> Quantity:
+    electron_concentration_: Quantity, plasma_temperature_: Quantity,
+    floating_plasma_potential_: Quantity, probe_potential_: Quantity) -> Quantity:
     result_expr = solve(law, current,
         dict=True)[0][current]
     result_expr = result_expr.subs({
         area_probe_surface: area_probe_surface_,
         electron_concentration: electron_concentration_,
-        electron_temperature: electron_temperature_,
+        plasma_temperature: plasma_temperature_,
         floating_plasma_potential: floating_plasma_potential_,
-        potential_at_location_of_probe: potential_at_location_of_probe_,
+        probe_potential: probe_potential_,
     })
     return Quantity(result_expr)
