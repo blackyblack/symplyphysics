@@ -4,7 +4,7 @@ from collections import namedtuple
 from sympy import Symbol, plot, sqrt
 from sympy.physics.units import speed_of_light
 from symplyphysics import Vector, vector_magnitude
-from symplyphysics.laws.relativistic.vector import force_via_acceleration
+from symplyphysics.laws.relativistic.vector import force_acceleration_relation
 
 Datum = namedtuple("Datum", "label acceleration")
 
@@ -35,8 +35,8 @@ base_plot = plot(
 )
 
 for datum_ in data_:
-    vector = force_via_acceleration.force_law(datum_.acceleration, velocity)
-    expr = vector_magnitude(vector).subs(force_via_acceleration.rest_mass, 1)
+    vector = force_acceleration_relation.force_law(datum_.acceleration, velocity)
+    expr = vector_magnitude(vector).subs(force_acceleration_relation.rest_mass, 1)
 
     sub_plot = plot(
         expr,
