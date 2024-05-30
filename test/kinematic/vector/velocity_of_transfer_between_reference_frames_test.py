@@ -1,6 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
+    angle_type,
     errors,
     units,
     Quantity,
@@ -16,7 +17,11 @@ Args = namedtuple("Args", "vtr v0 w r")
 def test_args_fixture() -> Args:
     vtr = QuantityVector([3, -3, 6], dimension=units.velocity)
     v0 = QuantityVector([1, -1, 4], dimension=units.velocity)
-    w = QuantityVector([1, 0, -1], dimension=units.frequency)
+    w = QuantityVector([
+        Quantity(1 * units.radian / units.second),
+        Quantity(0),
+        Quantity(-1 * units.radian / units.second),
+    ])
     r = QuantityVector([3, 2, -1], dimension=units.length)
     return Args(vtr=vtr, v0=v0, w=w, r=r)
 
