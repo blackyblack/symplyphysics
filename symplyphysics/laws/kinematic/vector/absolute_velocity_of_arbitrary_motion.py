@@ -9,15 +9,18 @@ from symplyphysics import (
 )
 
 # Description
-## Suppose two reference frames, one of which is fixed (S) and the other one is moving (S'). The movement of the
+## Suppose two reference frames, one of which is fixed (S) and the other one is moving arbitrarily (S'). The movement of the
 ## body relative to fixed frame S is called absolute movement. The movement of the body relative to moving frame S'
 ## is called relative movement. And the movement of the body due to the movement of reference frame S' is called transfer
-## velocity. The absolute velocity is the sum of these two velocities.
+## movement. The absolute velocity is the sum of relative and transfer velocities.
 
 # Law: v_abs = v_rel + v_tr
 ## v_abs - vector of absolute velocity relative to fixed frame S
 ## v_rel - vector of velocity relative to moving frame S'
-## v_tr - vector of velocity of transfer from moving frame S' to fixed frame S
+## v_tr - vector of velocity of transfer between frames S and S'
+
+# Notes
+## - Moving frame S' can perform both translational and rotational motion.
 
 
 def absolute_velocity_law(
