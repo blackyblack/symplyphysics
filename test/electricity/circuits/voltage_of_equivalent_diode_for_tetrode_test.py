@@ -86,3 +86,5 @@ def test_bad_distance_to_first_grid(test_args: Args) -> None:
         voltage_law.calculate_voltage_of_equivalent_diode(test_args.voltage_of_first_grid, test_args.voltage_of_second_grid, test_args.anode_voltage, test_args.coefficient_direct_permeability_of_first_grid, test_args.coefficient_direct_permeability_of_second_grid, test_args.distance_to_anode, distance_to_first_grid)
     with raises(TypeError):
         voltage_law.calculate_voltage_of_equivalent_diode(test_args.voltage_of_first_grid, test_args.voltage_of_second_grid, test_args.anode_voltage, test_args.coefficient_direct_permeability_of_first_grid, test_args.coefficient_direct_permeability_of_second_grid, test_args.distance_to_anode, 100)
+    with raises(ValueError):
+        voltage_law.calculate_voltage_of_equivalent_diode(test_args.voltage_of_first_grid, test_args.voltage_of_second_grid, test_args.anode_voltage, test_args.coefficient_direct_permeability_of_first_grid, test_args.coefficient_direct_permeability_of_second_grid, test_args.distance_to_first_grid, test_args.distance_to_anode)

@@ -22,7 +22,7 @@ from symplyphysics import (
 ## D1 - coefficient of direct permeability of the first grid,
 ## D2 - coefficient of direct permeability of the second grid,
 ## Xa - the distance from the cathode to the anode,
-## Xg1 - the distance from the cathode to the fisrt grid.
+## Xg1 - the distance from the cathode to the first grid.
 
 voltage_of_equivalent_diode = Symbol("voltage_of_equivalent_diode", units.voltage)
 
@@ -49,6 +49,8 @@ law = Eq(voltage_of_equivalent_diode, expression_1 / expression_2)
 def calculate_voltage_of_equivalent_diode(voltage_of_first_grid_: Quantity, voltage_of_second_grid_: Quantity, anode_voltage_: Quantity,
             coefficient_direct_permeability_of_first_grid_: float, coefficient_direct_permeability_of_second_grid_: float,
             distance_to_anode_: Quantity, distance_to_first_grid_: Quantity) -> Quantity:
+    if distance_to_anode_.scale_factor <= distance_to_first_grid_.scale_factor:
+        raise ValueError("The distance to the anode should be greater than the distance to the grid.")
     result_expr = solve(law, voltage_of_equivalent_diode, dict=True)[0][voltage_of_equivalent_diode]
     result_expr = result_expr.subs({
         voltage_of_first_grid: voltage_of_first_grid_,
