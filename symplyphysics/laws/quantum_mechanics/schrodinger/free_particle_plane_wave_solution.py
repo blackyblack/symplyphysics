@@ -1,4 +1,4 @@
-from sympy import Eq, exp, I, S, dsolve, symbols
+from sympy import Eq, exp, I, S, dsolve
 from sympy.physics.units import hbar
 from symplyphysics import (
     Quantity,
@@ -58,30 +58,27 @@ _time_independent_eqn = time_independent_eqn.law.subs(
     }),
 })
 
-_c1, _c2 = symbols("C_1 C_2")
-
 _time_independent_solution = dsolve(
     _time_independent_eqn,
     time_independent_eqn.wave_function(position),
 ).rhs.subs({
-    "C1": _c1,
-    "C2": _c2,
+    "C1": 0,
+    "C2": 1,
 })
 
-_time_dependent_solution = time_dependent_law.law.rhs.subs({
-    time_dependent_law.time_independent_wave_function(time_dependent_law.position): _time_independent_solution,
+# The solution is a linear combination of exponents corresponding to positive and negative values of particle's momentum.
+# If we can prove this law for any real value of momentum, it would be correct for any linear combination of solutions.
+# The magnitude of the constants before the exponents does not affect the solution either, so we can choose it to be 1.
+
+_time_dependent_solution = time_dependent_law.law.rhs.replace(
+    time_dependent_law.time_independent_wave_function,
+    lambda _: _time_independent_solution,
+).subs({
     time_dependent_law.particle_energy: particle_energy,
     time_dependent_law.time: time,
 })
 
-# In general the solution of the Schrödinger equation can be viewed as the sum of waves traveling in opposite
-# directions.
-_current_law_solution = (
-    _c1 * law.rhs.subs(particle_momentum, -1 * particle_momentum)
-    + _c2 * law.rhs
-)
-
-assert expr_equals(_time_dependent_solution, _current_law_solution)
+assert expr_equals(_time_dependent_solution, law.rhs)
 
 
 @validate_input(
