@@ -18,7 +18,7 @@ from symplyphysics import (
 ## Law is: D = T * h / (x * d), where
 ## D - direct permeability coefficient of the grid,
 ## T - first tabular coefficient,
-## h - grid step,
+## h - grid step(distance between the grid wires),
 ## x - distance from anode to grid,
 ## d - second tabular coefficient.
 
