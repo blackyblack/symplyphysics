@@ -1,10 +1,7 @@
-from sympy import Eq, solve, sqrt, log, pi, sin, Expr, Derivative
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless, Function, Vector, SI)
+from sympy import Eq, solve
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, SI)
 from symplyphysics.core.fields.operators import divergence_operator as div
-from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
 from symplyphysics.core.fields.vector_field import VectorField
-from sympy.physics.units import electric_constant
 
 ## Description
 ## The divergence of electrical induction at some point is equal to the bulk charge density at that
@@ -16,41 +13,35 @@ from sympy.physics.units import electric_constant
 ## p - the bulk density of the electric charge,
 ## div - divergence (the sum of partial derivatives in coordinates).
 
-electrical_induction_x = Function("D_x", units.charge / units.area)
-electrical_induction_y = Function("D_y", units.charge / units.area)
-electrical_induction_z = Function("D_z", units.charge / units.area)
-x = Symbol('x', units.length)
-y = Symbol('y', units.length)
-z = Symbol('z', units.length)
+x_coor = Symbol('x_coor', units.length)
+y_coor = Symbol('y_coor', units.length)
+z_coor = Symbol('z_coor', units.length)
+divergence_electrical_induction_vector = Symbol('divergence_electrical_induction_vector', units.charge / units.volume)
 bulk_density_of_electric_charge = Symbol('bulk_density_of_electric_charge', units.charge / units.volume)
 
-law = Eq(Derivative(electrical_induction_x(x, y, z), (x, 1)) + Derivative(electrical_induction_y(x, y, z), (y, 1)) + Derivative(electrical_induction_z(x, y, z), (z, 1)), bulk_density_of_electric_charge)
+law = Eq(divergence_electrical_induction_vector, bulk_density_of_electric_charge)
 
 
-def apply_electrical_induction_function(electrical_induction_x_: Expr, electrical_induction_y_: Expr, electrical_induction_z_: Expr) -> Expr:
-    applied_law = law.subs(electrical_induction_x(x, y, z), electrical_induction_x_)
-    applied_law = applied_law.subs(electrical_induction_y(x, y, z), electrical_induction_y_)
-    applied_law = applied_law.subs(electrical_induction_z(x, y, z), electrical_induction_z_)
-    return applied_law
-
-
-@validate_input(x_=x, y_=y, z_=z)
+@validate_input(x_=x_coor, y_=y_coor, z_=z_coor)
 @validate_output(bulk_density_of_electric_charge)
 def calculate_bulk_density_of_electric_charge(electrical_induction_: VectorField, x_: Quantity, y_: Quantity, z_: Quantity) -> Quantity:
-    electrical_induction_x_ = electrical_induction_.field_function[0]
-    electrical_induction_y_ = electrical_induction_.field_function[1]
-    electrical_induction_z_ = electrical_induction_.field_function[2]
-    assert SI.get_dimension_system().equivalent_dims(Quantity(electrical_induction_x_).dimension,
-        electrical_induction_x.dimension)
-    assert SI.get_dimension_system().equivalent_dims(Quantity(electrical_induction_y_).dimension,
-        electrical_induction_y.dimension)
-    assert SI.get_dimension_system().equivalent_dims(Quantity(electrical_induction_z_).dimension,
-        electrical_induction_z.dimension)
-    applied_law = apply_electrical_induction_function(electrical_induction_x_, electrical_induction_y_, electrical_induction_z_)
-    result_expr = applied_law.subs({
+    x = electrical_induction_.coordinate_system.coord_system.base_scalars()[0]
+    y = electrical_induction_.coordinate_system.coord_system.base_scalars()[1]
+    z = electrical_induction_.coordinate_system.coord_system.base_scalars()[2]
+    dict_xyz = {
         x: x_,
         y: y_,
         z: z_,
-    })
-    result = solve(result_expr, bulk_density_of_electric_charge, dict=True)[0][bulk_density_of_electric_charge]
+    }
+
+    field_components = list(electrical_induction_.apply_to_basis().components) + [0] * (3 - len(electrical_induction_.apply_to_basis().components))
+    assert SI.get_dimension_system().equivalent_dims(Quantity(field_components[0].subs(dict_xyz)).dimension, units.charge / units.area)
+    assert SI.get_dimension_system().equivalent_dims(Quantity(field_components[1].subs(dict_xyz)).dimension, units.charge / units.area)
+    assert SI.get_dimension_system().equivalent_dims(Quantity(field_components[2].subs(dict_xyz)).dimension, units.charge / units.area)
+
+    divergence_electrical_induction_vector_ = div(electrical_induction_)
+
+    applied_law = law.subs(divergence_electrical_induction_vector, divergence_electrical_induction_vector_)
+    result = applied_law.subs(dict_xyz)
+    result = solve(result, bulk_density_of_electric_charge, dict=True)[0][bulk_density_of_electric_charge]
     return Quantity(result)
