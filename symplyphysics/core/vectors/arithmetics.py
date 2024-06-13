@@ -199,15 +199,11 @@ def reject_cartesian_vector(
 def diff_cartesian_vector_components(
     vector_: Vector,
     *symbols: Any,
-    **kwargs: Any,
 ) -> Vector:
     if vector_.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
         raise ValueError("Component-wise vector differentiation is only supported for Cartesian coordinates")
 
-    components = [
-        diff(component, *symbols, **kwargs)
-        for component in vector_.components
-    ]
+    components = [diff(component, *symbols) for component in vector_.components]
 
     return Vector(components, vector_.coordinate_system)
 
@@ -215,28 +211,10 @@ def diff_cartesian_vector_components(
 def integrate_cartesian_vector_components(
     vector_: Vector,
     *args: Any,
-    meijerg: Optional[bool] = None,
-    conds: str = 'piecewise',
-    risch: Optional[bool] = None,
-    heurisch: Optional[bool] = None,
-    manual: Optional[bool] = None,
-    **kwargs: Any,
 ) -> Vector:
     if vector_.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
         raise ValueError("Component-wise vector integration is only supported for Cartesian coordinates")
 
-    components = [
-        integrate(
-            component,
-            *args,
-            meijerg=meijerg,
-            conds=conds,
-            risch=risch,
-            heurisch=heurisch,
-            manual=manual,
-            **kwargs,
-        )
-        for component in vector_.components
-    ]
+    components = [integrate(component, *args) for component in vector_.components]
 
     return Vector(components, vector_.coordinate_system)
