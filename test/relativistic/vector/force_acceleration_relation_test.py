@@ -9,7 +9,7 @@ from symplyphysics import (
     errors,
 )
 from symplyphysics.core.approx import assert_equal_vectors
-from symplyphysics.laws.relativistic.vector import force_via_acceleration as law
+from symplyphysics.laws.relativistic.vector import force_acceleration_relation as law
 
 Args = namedtuple("Args", "m a v f")
 
@@ -33,6 +33,18 @@ def test_args_fixture() -> Args:
         Quantity(2.75e-27 * units.newton),
     ])
     return Args(m=m, a=a, v=v, f=f)
+
+
+def test_acceleration_law(test_args: Args) -> None:
+    result_vector = law.acceleration_law(
+        test_args.f.to_base_vector(),
+        test_args.v.to_base_vector(),
+    )
+    result = QuantityVector.from_base_vector(
+        result_vector,
+        subs={law.rest_mass: test_args.m},
+    )
+    assert_equal_vectors(result, test_args.a, tolerance=3e-3)
 
 
 def test_force_law(test_args: Args) -> None:
