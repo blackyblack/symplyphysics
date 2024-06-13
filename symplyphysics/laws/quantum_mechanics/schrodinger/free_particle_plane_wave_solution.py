@@ -68,7 +68,8 @@ _time_independent_solution = dsolve(
 
 # The solution is a linear combination of exponents corresponding to positive and negative values of particle's momentum.
 # If we can prove this law for any real value of momentum, it would be correct for any linear combination of solutions.
-# The magnitude of the constants before the exponents does not affect the solution either, so we can choose it to be 1.
+# The magnitude of the constants before the exponents does not affect the solution either. Therefore we can set the constant
+# at the term with negative exponent to 0, and the constant at the term with positive exponent to 1.
 
 _time_dependent_solution = time_dependent_law.law.rhs.replace(
     time_dependent_law.time_independent_wave_function,
