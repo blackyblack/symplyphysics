@@ -47,9 +47,11 @@ def acceleration_law(force_: Vector, velocity_: Vector) -> Vector:
 
     resulting_force = add_cartesian_vectors(force_, force_parallel_to_velocity_)
 
-    mass_factor_ = sqrt(1 - dot_vectors(velocity_, velocity_) / speed_of_light**2) / rest_mass
+    mass_factor_ = rest_mass * lorentz_factor_law.definition.rhs.subs({
+        lorentz_factor_law.velocity: vector_magnitude(velocity_),
+    })
 
-    return scale_vector(mass_factor_, resulting_force)
+    return scale_vector(1 / mass_factor_, resulting_force)
 
 
 
