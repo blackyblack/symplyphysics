@@ -49,9 +49,9 @@ def print_law() -> str:
 def calculate_current_and_voltage(
     input_voltage_: Quantity, output_current_: Quantity, parameters_: tuple[tuple[Quantity, float],
     tuple[float, Quantity]]) -> tuple[Quantity, Quantity]:
-    assert_equivalent_dimension(parameters_[0][0], f"parameters_[{0}][{0}]",
+    assert_equivalent_dimension(parameters_[0][0], "parameters_[0][0]",
         "calculate_current_and_voltage", units.impedance)
-    assert_equivalent_dimension(parameters_[1][1], f"parameters_[{1}][{1}]",
+    assert_equivalent_dimension(parameters_[1][1], "parameters_[1][1]",
         "calculate_current_and_voltage", units.conductance)
     result = solve(law, [input_current, output_voltage], dict=True)[0]
     result_input_current = result[input_current]
