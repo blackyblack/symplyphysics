@@ -45,7 +45,7 @@ def orthogonal_velocity_component_in_lab_frame_law(
         lorentz_factor_def.velocity: vector_magnitude(proper_frame_velocity_),
     })
 
-    # Note that `dot(v, u_parallel') = dot(v, u)`, since `dot(v, u_orthogonal) = 0` and the dot product is linear in
+    # Note that `dot(v, u_parallel') = dot(v, u')`, since `dot(v, u_orthogonal') = 0` and the dot product is linear in
     # its second argument.
     scale_factor_ = lorentz_factor_ * (1 + dot_vectors(proper_frame_velocity_, velocity_in_proper_frame_) / speed_of_light**2)
 
