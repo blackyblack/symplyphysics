@@ -15,14 +15,27 @@ Args = namedtuple("Args", "vtr v0 w r")
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
-    vtr = QuantityVector([3, -3, 6], dimension=units.velocity)
-    v0 = QuantityVector([1, -1, 4], dimension=units.velocity)
+    velocity_unit = units.meter / units.second
+    vtr = QuantityVector([
+        3 * velocity_unit,
+        -3 * velocity_unit,
+        6 * velocity_unit,
+    ])
+    v0 = QuantityVector([
+        1 * velocity_unit,
+        -1 * velocity_unit,
+        4 * velocity_unit,
+    ])
     w = QuantityVector([
         Quantity(1 * units.radian / units.second),
         Quantity(0),
         Quantity(-1 * units.radian / units.second),
     ])
-    r = QuantityVector([3, 2, -1], dimension=units.length)
+    r = QuantityVector([
+        3 * units.meter,
+        2 * units.meter,
+        -1 * units.meter,
+    ])
     return Args(vtr=vtr, v0=v0, w=w, r=r)
 
 
