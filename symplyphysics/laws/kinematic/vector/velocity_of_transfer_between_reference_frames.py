@@ -21,7 +21,7 @@ from symplyphysics import (
 # Law: v_tr = v_0 + cross(w, r)
 ## v_tr - vector of transfer velocity of point X relative to fixed frame S.
 ## v_0 - vector of velocity of moving origin O' of frame S' relative to fixed frame S
-## w - vector of angular velocity related to rotation of moving frame S' about instantaneous axis
+## w - pseudovector of angular velocity related to rotation of moving frame S' about instantaneous axis
 ## r - vector of position of point X relative to moving frame S'
 
 
