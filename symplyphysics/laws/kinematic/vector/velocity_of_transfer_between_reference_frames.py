@@ -14,9 +14,9 @@ from symplyphysics import (
 ## Suppose two reference frames, one of which is fixed (S) and the other one is moving (S'). The movement of
 ## a body stationary in moving frame S' due to the movement of the frame itself is called transfer movement.
 ## The velocity related to such movement is called transfer velocity. For any material point X, its transfer
-## velocity relative to fixed frame S is the sum of the velocity of moving origin O' of frame S' (since S' is
-## moving) and the cross product of the angular velocity of moving frame's rotation and the position vector of X
-## in moving frame S'.
+## velocity relative to fixed frame S with origin O is the sum of the velocity of moving origin O' of frame S'
+## (since S' is moving) and the cross product of the angular velocity of moving frame's rotation and the position
+## vector of X in moving frame S'.
 
 # Law: v_tr = v_0 + cross(w, r)
 ## v_tr - vector of transfer velocity of point X relative to fixed frame S.
