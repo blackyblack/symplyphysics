@@ -125,9 +125,20 @@ def collect_factor_and_dimension(expr: Basic) -> tuple[Basic, Dimension]:
 
 
 def assert_equivalent_dimension(arg: SymQuantity | ScalarValue | Dimension, param_name: str,
-    func_name: str, expected_unit: Dimension) -> None:
+    func_name: str, expected_unit: SymQuantity | Dimension) -> None:
+    expected_dimension = dimensionless
+    if isinstance(expected_unit, Dimension):
+        expected_dimension = expected_unit
+    else:
+        (expected_scale_factor, expected_dimension) = collect_factor_and_dimension(expected_unit)
+        # zero can be of any dimension
+        if expected_scale_factor == S.Zero:
+            return
+        # infinity can be of any dimension
+        if expected_scale_factor == S.Infinity:
+            return
     #HACK: this allows to treat angle type as dimensionless
-    expected_dimension = expected_unit.subs("angle", S.One)
+    expected_dimension = expected_dimension.subs("angle", S.One)
     if isinstance(arg, (float | int)):
         if SI.get_dimension_system().is_dimensionless(expected_dimension):
             return
