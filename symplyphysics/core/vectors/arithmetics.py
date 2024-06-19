@@ -1,6 +1,6 @@
 from functools import reduce
 from operator import add
-from typing import Optional, Sequence, Any
+from typing import Optional, Sequence
 from sympy import S, Expr, cos, sin, sqrt, sympify, diff, integrate
 
 from .vectors import Vector
@@ -206,19 +206,19 @@ def reject_cartesian_vector(
 # Only works in non-rotating coordinate systems
 def diff_cartesian_vector(
     vector_: Vector,
-    *symbols: Any,
+    *args: Expr,
 ) -> Vector:
     if vector_.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
         raise ValueError("Component-wise vector differentiation is only supported for Cartesian coordinates")
 
-    components = [diff(component, *symbols) for component in vector_.components]
+    components = [diff(component, *args) for component in vector_.components]
 
     return Vector(components, vector_.coordinate_system)
 
 
-def integrate_cartesian_vector_components(
+def integrate_cartesian_vector(
     vector_: Vector,
-    *args: Any,
+    *args: Expr | tuple[Expr, Expr, Expr],
 ) -> Vector:
     if vector_.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
         raise ValueError("Component-wise vector integration is only supported for Cartesian coordinates")

@@ -12,7 +12,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.vectors.arithmetics import (
     diff_cartesian_vector,
-    integrate_cartesian_vector_components,
+    integrate_cartesian_vector,
 )
 
 # Description
@@ -40,7 +40,7 @@ def relative_position_law(
 ) -> Vector:
     return add_cartesian_vectors(
         initial_position_,
-        integrate_cartesian_vector_components(velocity_, time_),
+        integrate_cartesian_vector(velocity_, time_),
     )
 
 
