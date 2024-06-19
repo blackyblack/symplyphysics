@@ -6,6 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
     QuantityVector,
+    scale_vector,
 )
 from symplyphysics.core.approx import assert_equal_vectors
 from symplyphysics.laws.kinematic.vector import velocity_relative_to_reference_frame as law
@@ -29,6 +30,7 @@ def test_velocity_law(test_args: Args) -> None:
 
 def test_position_law(test_args: Args) -> None:
     time = symbols("time")
+
     final_position_vector = law.relative_position_law(
         test_args.r1.to_base_vector(),
         test_args.v.to_base_vector(),
@@ -39,6 +41,17 @@ def test_position_law(test_args: Args) -> None:
         subs={time: test_args.dt},
     )
     assert_equal_vectors(final_position_, test_args.r2)
+
+    initial_position_vector = law.relative_position_law(
+        test_args.r2.to_base_vector(),
+        scale_vector(-1, test_args.v.to_base_vector()),
+        time,
+    )
+    initial_position_ = QuantityVector.from_base_vector(
+        initial_position_vector,
+        subs={time: test_args.dt},
+    )
+    assert_equal_vectors(initial_position_, test_args.r1)
 
 
 def test_bad_position(test_args: Args) -> None:
