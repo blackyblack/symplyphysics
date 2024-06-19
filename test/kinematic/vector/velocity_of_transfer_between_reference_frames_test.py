@@ -44,7 +44,7 @@ def test_transfer_law(test_args: Args) -> None:
 
 
 def test_origin_law(test_args: Args) -> None:
-    result_vector = law.origin_velocity_law(
+    result_vector = law.moving_frame_velocity_law(
         test_args.vtr.to_base_vector(),
         test_args.w.to_base_vector(),
         test_args.r.to_base_vector(),
