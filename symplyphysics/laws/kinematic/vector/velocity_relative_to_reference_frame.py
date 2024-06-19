@@ -7,10 +7,11 @@ from symplyphysics import (
     Quantity,
     QuantityVector,
     add_cartesian_vectors,
+    subtract_cartesian_vectors,
     scale_vector,
 )
 from symplyphysics.core.vectors.arithmetics import (
-    diff_cartesian_vector_components,
+    diff_cartesian_vector,
     integrate_cartesian_vector_components,
 )
 
@@ -28,7 +29,7 @@ def relative_velocity_law(
     position_: Vector,
     time_: Expr,
 ) -> Vector:
-    return diff_cartesian_vector_components(position_, time_)
+    return diff_cartesian_vector(position_, time_)
 
 
 # r = r0 + Integral(v(t), t)
@@ -57,9 +58,9 @@ def calculate_relative_velocity(
     time_ = symbols("time")
     position_ = scale_vector(
         time_ / time_change_,
-        add_cartesian_vectors(
+        subtract_cartesian_vectors(
             position_after_.to_base_vector(),
-            scale_vector(-1, position_before_.to_base_vector()),
+            position_before_.to_base_vector(),
         ),
     )
     velocity_ = relative_velocity_law(position_, time_)

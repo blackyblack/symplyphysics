@@ -64,6 +64,13 @@ def add_cartesian_vectors(vector_left: Vector, vector_right: Vector) -> Vector:
     return Vector(result, vector_left.coordinate_system)
 
 
+def subtract_cartesian_vectors(vector_left: Vector, vector_right: Vector) -> Vector:
+    return add_cartesian_vectors(
+        vector_left,
+        scale_vector(-1, vector_right)
+    )
+
+
 # Change Vector magnitude (length)
 # Scalar multiplication changes the magnitude of the vector and does not change it's direction.
 def scale_vector(scalar_value: ScalarValue, vector: Vector) -> Vector:
@@ -196,7 +203,8 @@ def reject_cartesian_vector(
     )
 
 
-def diff_cartesian_vector_components(
+# Only works in non-rotating coordinate systems
+def diff_cartesian_vector(
     vector_: Vector,
     *symbols: Any,
 ) -> Vector:
