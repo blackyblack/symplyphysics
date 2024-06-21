@@ -10,13 +10,15 @@ from symplyphysics import (
 )
 
 # Description
-## Suppose two reference frames, one of which is fixed (S) and the other one is moving (S').
-## TODO
+## Suppose two reference frames, one of which is fixed (S) and the other one is moving (S'). When
+## the body is moving within a rotating coordinate system, its path deflects due to the appearance
+## of the Coriolis acceleration on it. The object does not actually deviate from its path per se
+## but it appears to do so because of the motion of the coordinate system.
 
 # Law: a_cor = 2 * cross(w, v_rel)
 ## a_cor - vector of Coriolis acceleration
 ## w - pseudovector of angular velocity
-## v_rel - vector of velocity relative to moving frame S'
+## v_rel - vector of velocity in moving frame S'
 
 
 def coriolis_acceleration_law(
