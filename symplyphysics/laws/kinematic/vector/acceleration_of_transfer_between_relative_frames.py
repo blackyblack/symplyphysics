@@ -76,10 +76,13 @@ def calculate_transfer_acceleration(
 
     # (w - w0) / (t - t0) = (w1 - w0) / (t1 - t0)
     angular_velocity_ = add_cartesian_vectors(
-        angular_velocity_before_,
+        angular_velocity_before_.to_base_vector(),
         scale_vector(
             (time - time_before_) / (time_after_ - time_before_),
-            subtract_cartesian_vectors(angular_velocity_after_, angular_velocity_before_),
+            subtract_cartesian_vectors(
+                angular_velocity_after_.to_base_vector(),
+                angular_velocity_before_.to_base_vector(),
+            ),
         ),
     )
 
