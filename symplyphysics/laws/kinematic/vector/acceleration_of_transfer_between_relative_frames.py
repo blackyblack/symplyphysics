@@ -17,7 +17,10 @@ from symplyphysics.core.vectors.arithmetics import diff_cartesian_vector
 # Description
 ## Suppose two reference frames, one of which is fixed (S) and the other one is moving (S'). The movement of
 ## a body stationary in moving frame S' due to the movement of the frame itself is called transfer movement.
-## The acceleration related to such movement is called transfer acceleration. It is composed of TODO
+## The acceleration related to such movement is called transfer acceleration. It is composed of the acceleration
+## of the moving frame relative to the fixed frame, centripetal acceleration and the acceleration due to uneven
+## rotation of the moving frame. The transfer acceleration only depends on the movement of frame S' relative to
+## stationary frame S, so it would be the acceleration in S of a point stationary in S'.
 
 # Law: a_tr = a_0 + cross(w, cross(w, r)) + cross(d(w)/dt, r)
 ## a_tr - vector of transfer acceleration of point X relative to fixed frame S
