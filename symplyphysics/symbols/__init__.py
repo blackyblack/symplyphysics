@@ -18,6 +18,4 @@ for k, v in list(globals().items()):
         if not isinstance(symbol, Symbol):
             continue
         assert val_name not in _all_symbols, f"Duplicate symbol '{val_name}' definition."
-        #if val_name in _all_symbols:
-        #    raise AttributeError(f"Duplicate symbol '{val_name}' definition.")
         _all_symbols.add(val_name)

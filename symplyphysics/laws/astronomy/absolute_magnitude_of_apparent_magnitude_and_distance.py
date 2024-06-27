@@ -1,3 +1,13 @@
+"""
+Absolute magnitude of stars from apparent magnitude and distance
+----------------------------------------------------------------
+
+The absolute magnitude for stars is defined as the apparent magnitude of an object if it were located at a distance
+of 10 parsecs (2.063e+6 astronomical units) from the observer and would not experience either interstellar or atmospheric absorption.
+The apparent magnitude is a measure of the brightness of a celestial body (more precisely, the illumination created
+by this body) from the observer's point of view. The brighter the object, the smaller its magnitude.
+"""
+
 from sympy import Eq, solve, log
 from symplyphysics import (
     units,
@@ -9,12 +19,6 @@ from symplyphysics import (
     dimensionless,
     convert_to_float,
 )
-
-# Description
-## The absolute magnitude for stars is defined as the apparent magnitude of an object if it were located at a distance
-## of 10 parsecs (2.063e+6 astronomical units) from the observer and would not experience either interstellar or atmospheric absorption.
-## The apparent magnitude is a measure of the brightness of a celestial body (more precisely, the illumination created
-## by this body) from the observer's point of view. The brighter the object, the smaller its magnitude.
 
 ## Law is: M = m - 5 * lg(d / d0), where
 ## M - absolute magnitude,

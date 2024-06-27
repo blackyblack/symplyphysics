@@ -8,3 +8,5 @@ setup.bat
 .venv
 venv/
 venv.bak/
+html/
+.vscode/

@@ -1,0 +1,1 @@
+sphinx-build.exe docs html
