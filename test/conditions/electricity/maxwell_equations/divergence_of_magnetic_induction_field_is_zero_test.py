@@ -1,3 +1,4 @@
+from sympy import simplify
 from collections import namedtuple
 from pytest import fixture
 from symplyphysics import (
@@ -26,4 +27,4 @@ def test_args_fixture() -> Args:
 
 def test_basic_magnetic_field_divergence_condition(test_args: Args) -> None:
     result = divergence_cond.magnetic_field_divergence_condition(test_args.magnetic_induction)
-    assert_equal(result.args[0], 0 * units.tesla / units.meter)
+    assert simplify(result.lhs) == result.rhs
