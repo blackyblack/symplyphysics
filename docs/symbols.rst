@@ -21,7 +21,7 @@ Dynamics:
 
 
 Kinematic:
----------
+----------
 
 .. automodule:: symplyphysics.symbols.kinematic
   :no-value:
@@ -29,7 +29,7 @@ Kinematic:
 
 
 Thermodynamics:
----------
+---------------
 
 .. automodule:: symplyphysics.symbols.thermodynamics
   :no-value:

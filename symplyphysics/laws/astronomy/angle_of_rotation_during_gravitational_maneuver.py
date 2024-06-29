@@ -1,7 +1,4 @@
 r"""
-Angle of rotation during gravitational maneuver
-----------------------------------------------------------------
-
 A gravitational maneuver is a purposeful change in the trajectory and flight speed of a spacecraft under the influence
 of the gravitational fields of celestial bodies.
 The angle of the gravitational maneuver depends on the aiming range, the mass of the planet and the velocity of the rocket relative to the planet.

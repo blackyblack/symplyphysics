@@ -10,3 +10,4 @@ venv/
 venv.bak/
 html/
 .vscode/
+docs/generated/

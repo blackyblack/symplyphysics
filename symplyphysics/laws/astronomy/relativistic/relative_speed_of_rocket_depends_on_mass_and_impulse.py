@@ -1,7 +1,4 @@
 """
-Relative speed of rocket depends on mass and impulse
-----------------------------------------------------------------
-
 The Tsiolkovsky formula determines the speed that an aircraft develops under the influence of the thrust
 of a rocket engine, unchanged in direction, in the absence of all other forces.
 For a rocket flying at a speed close to the speed of light, the generalized Tsiolkovsky formula is valid,

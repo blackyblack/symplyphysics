@@ -1,5 +1,5 @@
 Symplyphysics
-============================================
+=============
 
 Physics laws implemented as code. Based on [SymPy](https://github.com/sympy/sympy) Python library.
 

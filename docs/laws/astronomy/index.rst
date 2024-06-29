@@ -8,5 +8,6 @@ Contents:
 .. toctree::
   :maxdepth: 4
 
-  astronomy
-  relativistic
+  absolute_magnitude_of_apparent_magnitude_and_distance
+  angle_of_rotation_during_gravitational_maneuver
+  relativistic/index
