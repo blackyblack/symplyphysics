@@ -16,15 +16,16 @@ from symplyphysics import (
 )
 
 # Description
-## The acceleration due to gravity is the acceleration a body in the gravity field of another body (e.g. Earth)
-## with rotational effects such as the centripetal acceleration taken into account. It is the same for all bodies
-## at a fixed point, but can have different magnitude and direction at different points in space.
+## Suppose a reference frame S' is fixed to a rotating body A (e.g. Earth), so that frame S' rotates w.r.t.
+## another static reference frame S. The acceleration due to gravity (in moving frame S') is the
+## acceleration another body B has in the gravity field of body A, with rotational effects such as
+## the centripetal acceleration taken into account. It is the same for all bodies at a fixed point,
+## but can be different at different points in space.
 
-# Law: g = F_gravity / m - cross(w, cross(w, r))
+# Law: g = F_gravity / m - a_centripetal
 ## g - vector of acceleration due to gravity
 ## F_gravity - vector of the force of gravity pull
-## w - pseudovector of angular velocity of rotation of moving frame S'
-## r - position vector in moving frame S'
+## a_centripetal - vector of centripetal acceleration
 ## m - mass of body
 
 mass = symbols.basic.mass
