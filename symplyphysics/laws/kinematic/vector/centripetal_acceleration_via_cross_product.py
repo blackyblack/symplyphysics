@@ -1,3 +1,4 @@
+from sympy import symbols, simplify
 from symplyphysics import (
     units,
     angle_type,
@@ -8,6 +9,8 @@ from symplyphysics import (
     cross_cartesian_vectors,
     vector_magnitude,
     scale_vector,
+    subtract_cartesian_vectors,
+    assert_equal,
 )
 from symplyphysics.core.vectors.arithmetics import reject_cartesian_vector
 
@@ -43,6 +46,17 @@ def rejection_law(
         -1 * vector_magnitude(angular_velocity_)**2,
         reject_cartesian_vector(position_vector_, angular_velocity_),
     )
+
+
+# Prove that these two forms of the law are equivalent.
+
+_angular_velocity = Vector(symbols("angular_velocity_x:z"))
+_position_vector = Vector(symbols("position_vector_x:z"))
+_cross_product_result = cross_product_law(_angular_velocity, _position_vector)
+_rejection_result = rejection_law(_angular_velocity, _position_vector)
+_difference = subtract_cartesian_vectors(_cross_product_result, _rejection_result).simplify()
+for _component in _difference.components:
+    assert_equal(_component, 0)
 
 
 @validate_input(
