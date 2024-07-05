@@ -1,4 +1,3 @@
-from sympy import symbols
 from symplyphysics import (
     units,
     angle_type,
@@ -6,43 +5,32 @@ from symplyphysics import (
     validate_output,
     Vector,
     QuantityVector,
-    cross_cartesian_vectors,
-    subtract_cartesian_vectors,
-    assert_equal,
+    vector_magnitude,
+    scale_vector,
 )
-from symplyphysics.laws.kinematic.vector import centripetal_acceleration_via_vector_rejection as rejection_law
+from symplyphysics.core.vectors.arithmetics import reject_cartesian_vector
 
 
 # Description
 ## Centripetal acceleration is the acceleration of a body in a rotating coordinate system
 ## which is directed towards the axis of rotation.
 
-# Law: a_c = cross(w, cross(w, r))
+# Law: a_c = -1 * norm(w)**2 * reject(r, w)
 ## a_c - vector of centripetal acceleration
 ## w - pseudovector of angular velocity
 ## r - vector of position of body
-## cross(a, b) - cross product between vectors a and b
+## norm(a) - Euclidean norm of vector a
+## reject(a, b) - component of vector a perpendicular to vector b, i.e. rejection of a from b
 
 
 def centripetal_acceleration_law(
     angular_velocity_: Vector,
     position_vector_: Vector,
 ) -> Vector:
-    return cross_cartesian_vectors(
-        angular_velocity_,
-        cross_cartesian_vectors(angular_velocity_, position_vector_),
+    return scale_vector(
+        -1 * vector_magnitude(angular_velocity_)**2,
+        reject_cartesian_vector(position_vector_, angular_velocity_),
     )
-
-
-# Prove that these two forms of the law are equivalent.
-
-_angular_velocity = Vector(symbols("angular_velocity_x:z"))
-_position_vector = Vector(symbols("position_vector_x:z"))
-_cross_product_result = centripetal_acceleration_law(_angular_velocity, _position_vector)
-_rejection_result = rejection_law.centripetal_acceleration_law(_angular_velocity, _position_vector)
-_difference = subtract_cartesian_vectors(_cross_product_result, _rejection_result).simplify()
-for _component in _difference.components:
-    assert_equal(_component, 0)
 
 
 @validate_input(
