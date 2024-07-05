@@ -15,10 +15,14 @@ from symplyphysics import (
 ## of the Coriolis acceleration on it. The object does not actually deviate from its path per se
 ## but it appears to do so because of the motion of the coordinate system.
 
+## Suppose a reference frame S' is fixed to a rotating body A (e.g. Earth), so that frame S' rotates w.r.t.
+## another static reference frame S. The Coriolis acceleration is the acceleration another body B has when
+## moving within rotating reference frame S', so it is essentially zero for objects at rest in S'.
+
 # Law: a_cor = 2 * cross(w, v_rel)
-## a_cor - vector of Coriolis acceleration
-## w - pseudovector of angular velocity
-## v_rel - vector of velocity in moving frame S'
+## a_cor - vector of Coriolis acceleration of body B in S'
+## w - pseudovector of angular velocity of rotation of moving frame S'
+## v_rel - vector of velocity of body B in moving frame S'
 
 
 def coriolis_acceleration_law(
