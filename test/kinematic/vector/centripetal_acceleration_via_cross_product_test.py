@@ -9,24 +9,34 @@ from symplyphysics import (
 from symplyphysics.core.approx import assert_equal_vectors
 from symplyphysics.laws.kinematic.vector import centripetal_acceleration_via_cross_product as law
 
-Args = namedtuple("Args", "w r")
+Args = namedtuple("Args", "w r a")
 
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
     w_unit = units.radian / units.second
     w = QuantityVector([0, 1 * w_unit, -1 * w_unit])
+
     r = QuantityVector([1 * units.meter, 2 * units.meter, -1 * units.meter])
-    return Args(w=w, r=r)
 
-
-def test_law(test_args: Args) -> None:
-    result = law.calculate_centripetal_acceleration(test_args.w, test_args.r)
     a_unit = units.meter / units.second**2
-    assert_equal_vectors(
-        result,
-        QuantityVector([-2 * a_unit, -1 * a_unit, -1 * a_unit]),
+    a = QuantityVector([-2 * a_unit, -1 * a_unit, -1 * a_unit])
+
+    return Args(w=w, r=r, a=a)
+
+
+def test_cross_law(test_args: Args) -> None:
+    result = law.calculate_centripetal_acceleration(test_args.w, test_args.r)
+    assert_equal_vectors(result, test_args.a)
+
+
+def test_rejection_law(test_args: Args) -> None:
+    result_vector = law.rejection_law(
+        test_args.w.to_base_vector(),
+        test_args.r.to_base_vector(),
     )
+    result = QuantityVector.from_base_vector(result_vector)
+    assert_equal_vectors(result, test_args.a)
 
 
 def test_bad_angular_velocity(test_args: Args) -> None:
