@@ -14,7 +14,7 @@ from symplyphysics import (
 ## The acceleration related to such movement is called transfer acceleration. It is composed of the acceleration
 ## of the moving frame relative to the fixed frame, centripetal acceleration and the acceleration due to uneven
 ## rotation of the moving frame. The transfer acceleration only depends on the movement of frame S' relative to
-## stationary frame S, so it would be the acceleration in S of a point stationary in S'.
+## stationary frame S, so its physical meaning would be that it is the acceleration in S of a point stationary in S'.
 
 # Law: a_tr = a_0 + a_centripetal + a_non_uniform_rotation
 ## a_tr - vector of transfer acceleration of body B relative to fixed frame S
