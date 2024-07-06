@@ -8,4 +8,4 @@ Contents:
 .. toctree::
   :maxdepth: 4
 
-  generated/laws/symplyphysics.laws.astronomy
+  generated/symplyphysics.laws.astronomy

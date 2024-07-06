@@ -2,9 +2,12 @@
 
 import argparse
 import ast
+import importlib
 import os
 import sys
 from typing import Optional, Sequence
+from sphinx.pycode import ModuleAnalyzer
+from sphinx.application import Sphinx
 
 
 def get_parser() -> argparse.ArgumentParser:
@@ -61,26 +64,34 @@ def find_description(content: str) -> Optional[str]:
     if section_break == 0:
         return None
     content_lines = content_lines[section_break + 1:]
-    content_lines = [c for c in content_lines if len(c) > 0]
+    # Remove possible empty lines after title separator
+    while True:
+        if len(content_lines) == 0:
+            return ""
+        if len(content_lines[0]) == 0:
+            content_lines.pop(0)
+            continue
+        break
     return "\n".join(content_lines)
 
 
-def process_law_package(directory: str, law_package: str, output_dir: str) -> None:
-    if law_package.startswith("__"):
-        return
-    filename = os.path.normpath(os.path.join(directory, law_package))
+def process_law_package(directory: str, laws: Sequence[str], output_dir: str) -> Optional[str]:
+    _, directory_name = os.path.split(directory)
+    if directory_name.startswith("__"):
+        return None
+    filename = os.path.normpath(directory)
     filename_init = os.path.join(filename, "__init__.py")
     init_content: Optional[str] = None
     with open(filename_init, "r", encoding="utf-8") as f:
         init_content = f.read()
     if init_content is None:
-        return
+        return None
     docstring = ast.get_docstring(ast.parse(init_content))
     if docstring is None:
-        return
+        return None
     law_title = find_title(docstring)
     if law_title is None:
-        return
+        return None
     law_description = find_description(docstring)
     law_description = "" if law_description is None else law_description
 
@@ -89,69 +100,81 @@ def process_law_package(directory: str, law_package: str, output_dir: str) -> No
 
     package_content = "" + law_title + "\n" + ("=" * len(law_title)) + "\n\n" + law_description + "\n\n"
     package_content = package_content + "Contents:\n\n" + ".. toctree::\n" + "  :maxdepth: 4\n\n"
-    package_content = package_content + "  relative_speed_of_rocket_depends_on_mass_and_impulse"
+    for l in laws:
+        package_content = package_content + "  " + l + "\n"
 
     # create directory if necessary
     os.makedirs(os.path.dirname(package_doc_file), exist_ok=True)
     with open(package_doc_file, "w+", encoding="utf-8") as f:
         f.write(package_content)
+    return package_doc_name
 
 
-def process_law(directory: str, law_filename: str, output_dir: str) -> None:
+def process_law(directory: str, law_filename: str, output_dir: str) -> Optional[str]:
     if not law_filename.endswith(".py"):
-        return
+        return None
     if law_filename.startswith("__"):
-        return
+        return None
     filename = os.path.normpath(os.path.join(directory, law_filename))
-    law_content: Optional[str] = None
-    with open(filename, "r", encoding="utf-8") as f:
-        law_content = f.read()
-    if law_content is None:
-        return
-    docstring = ast.get_docstring(ast.parse(law_content))
-    if docstring is None:
-        return
-    law_title = find_title(docstring)
-    if law_title is None:
-        return
-    law_description = find_description(docstring)
-    law_description = "" if law_description is None else law_description
-
     no_extension_filename = os.path.splitext(filename)[0]
     law_module_name = no_extension_filename.replace(os.sep, ".")
+    # TODO: this is very slow
+    #module = importlib.import_module(law_module_name)
+    #docstring = module.__doc__
+    #if docstring is None:
+    #    return None
+    #law_title = find_title(docstring)
+    #if law_title is None:
+    #    return None
+    #law_description = find_description(docstring)
+    #law_description = "" if law_description is None else law_description
+    law_title = "x"
+    law_description = "y"
+
+    # TODO: this is not very fast as well
+    analyzer = ModuleAnalyzer.for_module(law_module_name)
+    law_members: list[str] = []
+    for _ns, name in analyzer.find_attr_docs():
+        law_members.append(name)
+
     law_doc_name = law_module_name + ".rst"
     law_doc_file = os.path.normpath(os.path.join(output_dir, law_doc_name))
 
-    # TODO: automodule is not perfect. Use autodata instead.
-
     law_content = "" + law_title + "\n" + ("-" * len(law_title)) + "\n\n" + law_description + "\n\n"
-    law_content = law_content + ".. automodule:: " + law_module_name + "\n"
-    law_content = law_content + "  :no-value:\n" + "  :members:\n" + "  :exclude-members: law\n\n"
-    law_content = law_content + ".. autodata:: " + law_module_name + ".law" + "\n"
-    law_content = law_content + "  :no-value:"
+    for m in law_members:
+        law_content = law_content + ".. autodata:: " + law_module_name + "." + m + "\n"
+        law_content = law_content + "  :no-value:\n\n"
 
     # create directory if necessary
     os.makedirs(os.path.dirname(law_doc_file), exist_ok=True)
     with open(law_doc_file, "w+", encoding="utf-8") as f:
         f.write(law_content)
+    return law_module_name
 
 
 def generate_laws_docs(source_dir: str, output_dir: str) -> None:
-    for path, dirs, files in os.walk(source_dir):
-        # TODO: do not process dirs. Use path instead.
-        for directory in dirs:
-            process_law_package(path, directory, output_dir)
-            # TODO: remove break
-            break
-        # TODO: save all processed modules and put into package doc
+    for path, _dirs, files in os.walk(source_dir):
+        # TODO: underlying packages should also be included in packages
+
+        laws: list[str] = []
         for filename in files:
-            process_law(path, filename, output_dir)
+            law_name = process_law(path, filename, output_dir)
+            if law_name is None:
+                continue
+            laws.append(law_name)
+        package_name = process_law_package(path, laws, output_dir)
+        if package_name is None:
+            continue
 
 
 def main(argv: Sequence[str] = (), /) -> None:
     args = get_parser().parse_args(argv or sys.argv[1:])
 
     generate_laws_docs(args.source_dir, args.output_dir)
+
+    # Build HTML docs
+    app = Sphinx("docs", "docs", "html", "html/.doctrees", "html")
+    app.build()
 
 
 if __name__ == '__main__':
