@@ -1,4 +1,7 @@
 """
+Absolute magnitude of stars from apparent magnitude and distance
+================================================================
+
 Absolute magnitude can be calculated using apparent magnitude and distance to the object.
 """
 
