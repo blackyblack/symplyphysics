@@ -1,4 +1,4 @@
-from sympy import Eq, solve, exp
+from sympy import Eq, Rational, solve, exp
 from symplyphysics import (
     units,
     Quantity,
@@ -30,7 +30,7 @@ voltage_between_electrodes = Symbol("voltage_between_electrodes", units.voltage)
 electron_energy = Symbol("electron_energy", units.energy)
 
 constant_energy = Quantity(2.07 * units.electronvolt)
-expression_1 = constant_energy * (elementary_charge * voltage_between_electrodes)**0.5 / electron_energy**1.5
+expression_1 = constant_energy * (elementary_charge * voltage_between_electrodes)**Rational(1, 2) / electron_energy**Rational(3, 2)
 expression_2 = exp(-1.55 * elementary_charge * voltage_between_electrodes / electron_energy)
 law = Eq(value_of_distribution_function, expression_1 * expression_2)
 

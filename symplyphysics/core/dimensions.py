@@ -159,7 +159,7 @@ def assert_equivalent_dimension(arg: SymQuantity | ScalarValue | Dimension, para
         return
     if not SI.get_dimension_system().equivalent_dims(arg_dimension, expected_dimension):
         raise UnitsError(f"Argument '{param_name}' to function '{func_name}' must "
-            f"be in units equivalent to '{expected_dimension.name}'")
+            f"be in units equivalent to '{expected_dimension.name}', got {arg_dimension.name}")
     if scale_factor.free_symbols:
         raise UnitsError(f"Argument '{param_name}' to function '{func_name}' should "
             f"not contain free symbols")

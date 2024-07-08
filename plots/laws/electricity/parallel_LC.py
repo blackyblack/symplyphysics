@@ -80,7 +80,6 @@ PLOT = plot(impedance_ideal_to_plot,
     title="LC impedance",
     label="LC impedance",
     legend=True,
-    annotations={},
     backend=MatplotlibBackend,
     show=False)
 

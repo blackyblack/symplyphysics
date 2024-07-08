@@ -1,4 +1,4 @@
-from sympy import Eq, solve, Symbol as SymSymbol, Function as SymFunction, dsolve, symbols as sym_symbols
+from sympy import Eq, Rational, solve, Symbol as SymSymbol, Function as SymFunction, dsolve, symbols as sym_symbols
 from sympy.abc import t
 from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print_expression,
     dimensionless, validate_input, validate_output)
@@ -144,7 +144,7 @@ def print_law() -> str:
     specific_heats_ratio_=specific_heats_ratio)
 @validate_output(pressure_end)
 def calculate_pressure(mole_count_: Quantity, temperature_start_: Quantity, volume_start_: Quantity,
-    volume_end_: Quantity, specific_heats_ratio_: float) -> Quantity:
+    volume_end_: Quantity, specific_heats_ratio_: Rational) -> Quantity:
 
     solved = solve(law, (pressure_start, temperature_end, pressure_end), dict=True)[0][pressure_end]
     result_pressure = solved.subs({

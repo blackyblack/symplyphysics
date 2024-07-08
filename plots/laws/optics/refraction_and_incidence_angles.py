@@ -111,7 +111,6 @@ p = plot(
     backend=MatplotlibBackend,
     legend=True,
     show=False,
-    annotations=None,
 )
 for data in datas:
     sub_p = make_subplot(data)

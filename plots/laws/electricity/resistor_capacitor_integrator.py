@@ -40,7 +40,6 @@ UC = plot(capacitor_voltage_function, (time, 0, 8 * RC_TIME_CONSTANT),
     title="Capacitor voltage",
     label="Capacitor voltage",
     legend=True,
-    annotations={},
     backend=MatplotlibBackend,
     show=False)
 
