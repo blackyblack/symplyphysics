@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_equal,
+    assert_equal_vectors,
     errors,
     units,
     Quantity,
@@ -32,16 +32,12 @@ def test_args_fixture() -> Args:
 
 def test_torque_law(test_args: Args) -> None:
     result = pendulum_laws.calculate_torque(test_args.kappa, test_args.theta)
-    assert len(result.components) == 3
-    for result_component, correct_component in zip(result.components, test_args.tau.components):
-        assert_equal(result_component, correct_component)
+    assert_equal_vectors(result, test_args.tau)
 
 
 def test_rotation_vector_law(test_args: Args) -> None:
     result = pendulum_laws.calculate_rotation_vector(test_args.kappa, test_args.tau)
-    assert len(result.components) == 3
-    for result_component, correct_component in zip(result.components, test_args.theta.components):
-        assert_equal(result_component, correct_component)
+    assert_equal_vectors(result, test_args.theta)
 
 
 def test_bad_torsion_constant(test_args: Args) -> None:

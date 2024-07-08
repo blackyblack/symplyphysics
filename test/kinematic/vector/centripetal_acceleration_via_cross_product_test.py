@@ -5,8 +5,8 @@ from symplyphysics import (
     units,
     Quantity,
     QuantityVector,
+    assert_equal_vectors,
 )
-from symplyphysics.core.approx import assert_equal_vectors
 from symplyphysics.laws.kinematic.vector import centripetal_acceleration_via_cross_product as law
 
 Args = namedtuple("Args", "w r a")

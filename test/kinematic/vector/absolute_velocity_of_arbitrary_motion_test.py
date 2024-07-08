@@ -5,8 +5,8 @@ from symplyphysics import (
     units,
     Quantity,
     QuantityVector,
+    assert_equal_vectors,
 )
-from symplyphysics.core.approx import assert_equal_vectors
 from symplyphysics.laws.kinematic.vector import absolute_velocity_of_arbitrary_motion as law
 
 Args = namedtuple("Args", "vabs vrel vtr")

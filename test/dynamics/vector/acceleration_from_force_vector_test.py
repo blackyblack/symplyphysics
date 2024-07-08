@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_equal,
+    assert_equal_vectors,
     units,
     errors,
     Quantity,
@@ -22,14 +22,18 @@ def test_args_fixture() -> Args:
 
 def test_basic_force(test_args: Args) -> None:
     result = newton_second_law.calculate_force(test_args.m, test_args.a)
-    assert len(result.components) == 1
-    assert_equal(result.components[0], 3 * units.newton)
+    assert_equal_vectors(
+        result,
+        QuantityVector([3 * units.newton]),
+    )
 
 
 def test_basic_acceleration(test_args: Args) -> None:
     result = newton_second_law.calculate_acceleration(test_args.m, test_args.f)
-    assert len(result.components) == 1
-    assert_equal(result.components[0], 3 * units.meter / units.second**2)
+    assert_equal_vectors(
+        result,
+        QuantityVector([3 * units.meter / units.second**2]),
+    )
 
 
 def test_bad_mass(test_args: Args) -> None:
