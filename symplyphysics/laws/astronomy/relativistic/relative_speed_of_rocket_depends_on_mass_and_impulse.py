@@ -1,4 +1,4 @@
-from sympy import (Eq, Rational, solve)
+from sympy import (Eq, solve)
 from sympy.physics.units import speed_of_light
 from symplyphysics import (
     clone_symbol,
@@ -31,7 +31,7 @@ initial_mass = clone_symbol(symbols.basic.mass, "initial_mass")
 final_mass = clone_symbol(symbols.basic.mass, "final_mass")
 
 law = Eq(final_mass / initial_mass, ((1 - (speed / speed_of_light)) / (1 +
-    (speed / speed_of_light)))**Rational(speed_of_light, (2 * specific_impulse)))
+    (speed / speed_of_light)))**(speed_of_light / (2 * specific_impulse)))
 
 
 def print_law() -> str:

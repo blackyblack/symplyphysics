@@ -1,4 +1,4 @@
-from sympy import Eq, Rational, solve
+from sympy import Eq, solve
 from symplyphysics import (
     units,
     Quantity,
@@ -28,7 +28,7 @@ number_of_cores_initial = Symbol("number_of_cores_initial", dimensionless)
 half_life = Symbol("half_life", units.time)
 decay_time = Symbol("decay_time", units.time)
 
-law = Eq(number_of_cores, number_of_cores_initial * 2**Rational(-decay_time, half_life))
+law = Eq(number_of_cores, number_of_cores_initial * 2**(-decay_time / half_life))
 
 
 def print_law() -> str:
