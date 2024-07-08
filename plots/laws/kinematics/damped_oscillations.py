@@ -53,7 +53,6 @@ p = plot(
     backend=MatplotlibBackend,
     legend=True,
     show=False,
-    annotations=None,
 )
 
 for data in DATAS:
