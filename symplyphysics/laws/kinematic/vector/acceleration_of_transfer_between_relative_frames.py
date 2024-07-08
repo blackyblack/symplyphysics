@@ -20,7 +20,7 @@ from symplyphysics import (
 ## a_tr - vector of transfer acceleration of body B relative to fixed frame S
 ## a_0 - vector of acceleration of moving frame S' relative to fixed frame S
 ## a_centripetal - vector of centripetal acceleration of body B in moving frame S'
-## a_non_uniform_rotation - vector of acceleration caused by non-uniform rotation of frame S'
+## a_non_uniform_rotation - vector of acceleration of body B caused by non-uniform rotation of frame S'
 
 
 def transfer_acceleration_law(
