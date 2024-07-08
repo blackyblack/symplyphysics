@@ -1,4 +1,4 @@
-from sympy import Eq, solve, sqrt
+from sympy import Eq, solve, sqrt, Rational
 from symplyphysics import (
     units,
     Quantity,
@@ -18,7 +18,7 @@ from symplyphysics import (
 
 internal_resistance = Symbol("internal_resistance", units.impedance)
 
-diode_constant = Symbol("diode_constant", units.current / units.voltage**(3 / 2))
+diode_constant = Symbol("diode_constant", units.current / units.voltage**Rational(3, 2))
 voltage = Symbol("voltage", units.voltage)
 
 law = Eq(internal_resistance, 2 / (3 * diode_constant * sqrt(voltage)))

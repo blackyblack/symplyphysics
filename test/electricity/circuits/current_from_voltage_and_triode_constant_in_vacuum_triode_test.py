@@ -1,5 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
+from sympy import Rational
 from symplyphysics import (assert_equal, units, Quantity, errors, prefixes)
 from symplyphysics.laws.electricity.circuits import current_from_voltage_and_triode_constant_in_vacuum_triode as current_law
 
@@ -12,7 +13,7 @@ Args = namedtuple("Args", ["triode_constant", "anode_voltage", "voltage_triode_g
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
-    triode_constant = Quantity(0.685 * prefixes.milli * units.ampere / units.volt**(3 / 2))
+    triode_constant = Quantity(0.685 * prefixes.milli * units.ampere / units.volt**Rational(3, 2))
     anode_voltage = Quantity(17 * units.volt)
     voltage_triode_gain = 3
     grid_voltage = Quantity(-2 * units.volt)

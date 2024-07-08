@@ -1,4 +1,4 @@
-from sympy import (Eq, solve, sin, asin, log)
+from sympy import (Eq, Rational, solve, sin, asin, log)
 from symplyphysics import (Symbol, print_expression, validate_input, validate_output, dimensionless,
     convert_to_float)
 
@@ -17,7 +17,7 @@ attenuation_of_cascade = Symbol("attenuation_of_cascade", dimensionless)
 number_of_couplers = Symbol("number_of_couplers", dimensionless)
 
 law = Eq(attenuation_of_coupler,
-    20 * log(sin(number_of_couplers * asin(10**(attenuation_of_cascade / 20))), 10))
+    20 * log(sin(number_of_couplers * asin(10**Rational(attenuation_of_cascade, 20))), 10))
 
 
 def print_law() -> str:

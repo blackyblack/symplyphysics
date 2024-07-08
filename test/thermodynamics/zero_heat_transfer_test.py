@@ -1,5 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
+from sympy import Rational
 from symplyphysics import (
     assert_equal,
     errors,
@@ -18,7 +19,7 @@ def test_args_fixture() -> Args:
     V0 = Quantity(1000 * units.liter)
     V1 = Quantity(2000 * units.liter)
     # Choose specific heats ratio
-    y = 1.665
+    y = Rational(1.665)
     return Args(n=n, t0=t0, V0=V0, V1=V1, y=y)
 
 

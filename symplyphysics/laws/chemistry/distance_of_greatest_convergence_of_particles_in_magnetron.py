@@ -1,4 +1,4 @@
-from sympy import Eq, solve, log
+from sympy import Eq, Rational, solve, log
 from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, dimensionless,)
 
@@ -22,10 +22,10 @@ atomic_number_of_second_atom = Symbol("atomic_number_of_first_atom", dimensionle
 
 first_constant = Quantity(0.122e-10 * units.meter)
 second_constant = Quantity(95.863 * units.volt)
-expression_1 = first_constant * (atomic_number_of_first_atom**0.0387 + atomic_number_of_second_atom**0.0387)
-expression_2 = second_constant * (atomic_number_of_first_atom * atomic_number_of_second_atom)**0.7383
+expression_1 = first_constant * (atomic_number_of_first_atom**Rational(0.0387) + atomic_number_of_second_atom**Rational(0.0387))
+expression_2 = second_constant * (atomic_number_of_first_atom * atomic_number_of_second_atom)**Rational(0.7383)
 
-law = Eq(distance_of_convergence_of_particles, -expression_1 * log(discharge_voltage / (expression_2 * (atomic_number_of_first_atom * atomic_number_of_second_atom)**0.75)))
+law = Eq(distance_of_convergence_of_particles, -expression_1 * log(discharge_voltage / (expression_2 * (atomic_number_of_first_atom * atomic_number_of_second_atom)**Rational(0.75))))
 
 
 @validate_input(discharge_voltage_=discharge_voltage,
