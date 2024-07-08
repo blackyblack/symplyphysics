@@ -1,4 +1,4 @@
-from sympy import Eq, solve
+from sympy import Eq, Rational, solve
 from symplyphysics import (
     units,
     Quantity,
@@ -34,8 +34,8 @@ coefficient_direct_permeability_of_second_grid = Symbol("coefficient_direct_perm
 distance_to_anode = Symbol("distance_to_anode", units.length)
 distance_to_first_grid = Symbol("distance_to_first_grid", units.length)
 
-expression_1 = (voltage_of_first_grid + coefficient_direct_permeability_of_first_grid * voltage_of_second_grid + coefficient_direct_permeability_of_first_grid * coefficient_direct_permeability_of_second_grid * anode_voltage)
-expression_2 = (1 + ((distance_to_anode / distance_to_first_grid)**(4 / 3)) * coefficient_direct_permeability_of_first_grid)
+expression_1 = voltage_of_first_grid + coefficient_direct_permeability_of_first_grid * voltage_of_second_grid + coefficient_direct_permeability_of_first_grid * coefficient_direct_permeability_of_second_grid * anode_voltage
+expression_2 = 1 + ((distance_to_anode / distance_to_first_grid)**Rational(4, 3)) * coefficient_direct_permeability_of_first_grid
 law = Eq(voltage_of_equivalent_diode, expression_1 / expression_2)
 
 @validate_input(voltage_of_first_grid_=voltage_of_first_grid,

@@ -35,7 +35,6 @@ potentials_plot = plot(
     ylabel="U, eV",
     backend=MatplotlibBackend,
     show=False,
-    annotations=False,
     legend=True,
 )
 

@@ -54,6 +54,10 @@ disable = [
 disallow_untyped_defs = true
 exclude = ["build*"]
 
+[[tool.mypy.overrides]]
+module = "sympy.*"
+ignore_missing_imports = true
+
 [tool.yapf]
 based_on_style = "google"
 column_limit = 100

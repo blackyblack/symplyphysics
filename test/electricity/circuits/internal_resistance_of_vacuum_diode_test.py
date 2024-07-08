@@ -1,5 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
+from sympy import Rational
 from symplyphysics import (assert_equal, units, Quantity, errors, prefixes)
 from symplyphysics.laws.electricity.circuits import internal_resistance_of_vacuum_diode as resistance_law
 
@@ -12,7 +13,7 @@ Args = namedtuple("Args", ["diode_constant", "voltage"])
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
-    diode_constant = Quantity(0.685 * prefixes.milli * units.ampere / units.volt**(3 / 2))
+    diode_constant = Quantity(0.685 * prefixes.milli * units.ampere / units.volt**Rational(3, 2))
     voltage = Quantity(17 * units.volt)
 
     return Args(diode_constant=diode_constant,

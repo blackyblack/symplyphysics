@@ -1,4 +1,4 @@
-from sympy import Eq, solve
+from sympy import Eq, Rational, solve
 from symplyphysics import (
     units,
     Quantity,
@@ -22,12 +22,12 @@ from symplyphysics import (
 
 current = Symbol("current", units.current)
 
-triode_constant = Symbol("triode_constant", units.current / units.voltage**(3 / 2))
+triode_constant = Symbol("triode_constant", units.current / units.voltage**Rational(3, 2))
 anode_voltage = Symbol("anode_voltage", units.voltage)
 voltage_triode_gain = Symbol("voltage_triode_gain", dimensionless)
 grid_voltage = Symbol("grid_voltage", units.voltage)
 
-law = Eq(current, triode_constant * (anode_voltage + voltage_triode_gain * grid_voltage)**(3 / 2))
+law = Eq(current, triode_constant * (anode_voltage + voltage_triode_gain * grid_voltage)**Rational(3, 2))
 
 
 @validate_input(triode_constant_=triode_constant,

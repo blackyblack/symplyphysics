@@ -1,4 +1,4 @@
-from sympy import Eq, solve
+from sympy import Eq, Rational, solve
 from symplyphysics import (
     units,
     Quantity,
@@ -28,7 +28,7 @@ anode_voltage = Symbol("anode_voltage", units.voltage)
 voltage_triode_gain = Symbol("voltage_triode_gain", dimensionless)
 grid_voltage = Symbol("grid_voltage", units.voltage)
 
-law = Eq(voltage_of_equivalent_diode, (grid_voltage + anode_voltage / voltage_triode_gain) / (1 + ((distance_to_anode / distance_to_grid)**(4 / 3)) / voltage_triode_gain))
+law = Eq(voltage_of_equivalent_diode, (grid_voltage + anode_voltage / voltage_triode_gain) / (1 + ((distance_to_anode / distance_to_grid)**Rational(4, 3)) / voltage_triode_gain))
 
 
 @validate_input(distance_to_anode_=distance_to_anode,

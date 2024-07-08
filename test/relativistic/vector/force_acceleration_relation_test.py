@@ -49,7 +49,7 @@ def test_acceleration_law(test_args: Args) -> None:
 
 def test_force_law(test_args: Args) -> None:
     result = law.calculate_force(test_args.m, test_args.a, test_args.v)
-    assert_equal_vectors(result, test_args.f, tolerance=2e-3)
+    assert_equal_vectors(result, test_args.f, absolute_tolerance=1e-20)
 
 
 def test_mass_law(test_args: Args) -> None:

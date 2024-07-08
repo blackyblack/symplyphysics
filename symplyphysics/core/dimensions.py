@@ -125,9 +125,20 @@ def collect_factor_and_dimension(expr: Basic) -> tuple[Basic, Dimension]:
 
 
 def assert_equivalent_dimension(arg: SymQuantity | ScalarValue | Dimension, param_name: str,
-    func_name: str, expected_unit: Dimension) -> None:
+    func_name: str, expected_unit: SymQuantity | Dimension) -> None:
+    expected_dimension = dimensionless
+    if isinstance(expected_unit, Dimension):
+        expected_dimension = expected_unit
+    else:
+        (expected_scale_factor, expected_dimension) = collect_factor_and_dimension(expected_unit)
+        # zero can be of any dimension
+        if expected_scale_factor == S.Zero:
+            return
+        # infinity can be of any dimension
+        if expected_scale_factor == S.Infinity:
+            return
     #HACK: this allows to treat angle type as dimensionless
-    expected_dimension = expected_unit.subs("angle", S.One)
+    expected_dimension = expected_dimension.subs("angle", S.One)
     if isinstance(arg, (float | int)):
         if SI.get_dimension_system().is_dimensionless(expected_dimension):
             return
@@ -148,7 +159,7 @@ def assert_equivalent_dimension(arg: SymQuantity | ScalarValue | Dimension, para
         return
     if not SI.get_dimension_system().equivalent_dims(arg_dimension, expected_dimension):
         raise UnitsError(f"Argument '{param_name}' to function '{func_name}' must "
-            f"be in units equivalent to '{expected_dimension.name}'")
+            f"be in units equivalent to '{expected_dimension.name}', got {arg_dimension.name}")
     if scale_factor.free_symbols:
         raise UnitsError(f"Argument '{param_name}' to function '{func_name}' should "
             f"not contain free symbols")

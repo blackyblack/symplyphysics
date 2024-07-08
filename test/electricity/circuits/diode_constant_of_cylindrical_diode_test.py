@@ -1,5 +1,6 @@
 from collections import namedtuple
 from pytest import fixture, raises
+from sympy import Rational
 from symplyphysics import (assert_equal, units, Quantity, errors, prefixes)
 from symplyphysics.laws.electricity.circuits import diode_constant_of_cylindrical_diode as constant_law
 
@@ -24,7 +25,7 @@ def test_args_fixture() -> Args:
 def test_basic_diode_constant(test_args: Args) -> None:
     result = constant_law.calculate_diode_constant(
         test_args.anode_area, test_args.anode_radius, test_args.cathode_radius)
-    assert_equal(result, 0.776 * prefixes.micro * units.ampere / units.volt**(3 / 2))
+    assert_equal(result, 0.776 * prefixes.micro * units.ampere / units.volt**Rational(3, 2))
 
 
 def test_bad_anode_area(test_args: Args) -> None:
