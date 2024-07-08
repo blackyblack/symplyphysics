@@ -53,7 +53,8 @@ disable = [
 disallow_untyped_defs = true
 exclude = ["build*"]
 
-[tool.mypy-sympy]
+[[tool.mypy.overrides]]
+module = "sympy"
 ignore_missing_imports = true
 
 [tool.yapf]
