@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_equal,
+    assert_equal_vectors,
     units,
     errors,
     Quantity,
@@ -34,9 +34,10 @@ def test_args_fixture() -> Args:
 
 def test_basic_law(test_args: Args) -> None:
     result_force = force_momentum_law.calculate_force(test_args.p0, test_args.p1, test_args.dt)
-    assert len(result_force.components) == 3
-    for result_component, correct_value in zip(result_force.components, (4, 2, 2)):
-        assert_equal(result_component, correct_value * units.newton)
+    assert_equal_vectors(
+        result_force,
+        QuantityVector([4 * units.newton, 2 * units.newton, 2 * units.newton]),
+    )
 
 
 def test_bad_momenta(test_args: Args) -> None:

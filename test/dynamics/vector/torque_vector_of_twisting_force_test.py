@@ -1,6 +1,12 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (assert_equal, errors, units, Quantity, QuantityVector)
+from symplyphysics import (
+    assert_equal_vectors,
+    errors,
+    units,
+    Quantity,
+    QuantityVector,
+)
 from symplyphysics.laws.dynamics.vector import torque_vector_of_twisting_force as torque_def
 
 # Description
@@ -27,8 +33,11 @@ def test_args_fixture() -> Args:
 
 def test_basic_law(test_args: Args) -> None:
     result = torque_def.calculate_torque(test_args.r, test_args.F)
-    for (result_component, correct_value) in zip(result.components, [-8, -3, -2]):
-        assert_equal(result_component, correct_value * units.newton * units.meter)
+    unit = units.newton * units.meter
+    assert_equal_vectors(
+        result,
+        QuantityVector([-8 * unit, -3 * unit, -2 * unit]),
+    )
 
 
 def test_bad_force(test_args: Args) -> None:

@@ -1,11 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_equal,
+    assert_equal_vectors,
     errors,
     units,
     Quantity,
-    SI,
     QuantityVector,
 )
 from symplyphysics.laws.kinematic.vector import (
@@ -34,10 +33,10 @@ def test_args_fixture() -> Args:
 
 def test_basic_law(test_args: Args) -> None:
     result = linear_displacement_law.calculate_linear_displacement(test_args.theta, test_args.r)
-    assert len(result.components) == 3
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
-    for result_component, correct_value in zip(result.components, [-1e-6, 0.0, 0.0]):
-        assert_equal(result_component, correct_value * units.meter)
+    assert_equal_vectors(
+        result,
+        QuantityVector([-1e-6 * units.meter, 0, 0])
+    )
 
 
 def test_bad_angular_displacement(test_args: Args) -> None:

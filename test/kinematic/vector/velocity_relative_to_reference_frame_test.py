@@ -7,8 +7,8 @@ from symplyphysics import (
     Quantity,
     QuantityVector,
     scale_vector,
+    assert_equal_vectors,
 )
-from symplyphysics.core.approx import assert_equal_vectors
 from symplyphysics.laws.kinematic.vector import velocity_relative_to_reference_frame as law
 
 Args = namedtuple("Args", "r1 r2 dt v")

@@ -6,8 +6,8 @@ from symplyphysics import (
     Quantity,
     QuantityVector,
     errors,
+    assert_equal_vectors,
 )
-from symplyphysics.core.approx import assert_equal_vectors
 from symplyphysics.laws.relativistic.vector import relativistic_mass_moment as law
 
 Args = namedtuple("Args", "m x v t")

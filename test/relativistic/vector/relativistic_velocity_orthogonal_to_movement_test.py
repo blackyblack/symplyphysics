@@ -6,8 +6,8 @@ from symplyphysics import (
     Quantity,
     QuantityVector,
     errors,
+    assert_equal_vectors,
 )
-from symplyphysics.core.approx import assert_equal_vectors
 from symplyphysics.core.vectors.arithmetics import reject_cartesian_vector
 from symplyphysics.laws.relativistic.vector import relativistic_velocity_orthogonal_to_movement as law
 

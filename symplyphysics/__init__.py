@@ -13,7 +13,7 @@ from .core.quantity_decorator import validate_input, validate_output
 from .core.vectors.vectors import Vector, QuantityVector
 from .core.vectors.arithmetics import scale_vector, add_cartesian_vectors, subtract_cartesian_vectors, dot_vectors, cross_cartesian_vectors, vector_unit, vector_magnitude
 from .core.coordinate_systems.coordinate_systems import CoordinateSystem, coordinates_transform
-from .core.approx import assert_equal
+from .core.approx import assert_equal, assert_equal_vectors
 from . import symbols
 from . import quantities
 
@@ -59,6 +59,7 @@ __all__ = [
     "coordinates_transform",
     # approx
     "assert_equal",
+    "assert_equal_vectors",
     # physical symbols
     "symbols",
     # physical quantities
