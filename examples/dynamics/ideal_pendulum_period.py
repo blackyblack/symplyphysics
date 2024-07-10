@@ -2,7 +2,7 @@
 
 from symplyphysics import Quantity, convert_to, units
 from symplyphysics.laws.dynamics import period_of_ideal_pendulum_from_length as pendulum_period
-from symplyphysics.laws.kinematic import temporal_frequency_from_period as frequency_def
+from symplyphysics.definitions import temporal_frequency_from_period as frequency_def
 
 # This example calculates ideal pendulum period from its length
 
