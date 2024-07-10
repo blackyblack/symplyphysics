@@ -24,14 +24,13 @@ from symplyphysics.definitions import (
     angular_velocity_is_angle_derivative as angular_velocity_def,
     angular_acceleration_is_angular_velocity_derivative as angular_acceleration_def,
     harmonic_oscillator_is_second_derivative_equation as oscillator_eqn,
+    period_from_angular_frequency as period_law,
 )
 from symplyphysics.laws.dynamics import (
     acceleration_from_force as newtons_second_law,
     torque_due_to_twisting_force as torque_def,
     moment_of_force_from_moment_of_inertia_and_angular_acceleration as torque_law,
 )
-from symplyphysics.laws.kinematic import (
-    period_from_angular_frequency as period_law,)
 
 # Description
 ## A physical pendulum is a pendulum with an arbitrary distribution of mass that

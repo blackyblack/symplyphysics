@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.kinematic import temporal_frequency_from_period as frequency_def
+from symplyphysics.definitions import temporal_frequency_from_period as frequency_def
 
 Args = namedtuple("Args", ["T"])
 

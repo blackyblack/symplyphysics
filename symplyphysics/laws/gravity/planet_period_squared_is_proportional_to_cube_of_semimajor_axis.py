@@ -11,13 +11,15 @@ from symplyphysics import (
     symbols,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.definitions import (
+    period_from_angular_frequency as period_law,
+)
 from symplyphysics.laws.dynamics import (
     acceleration_from_force as newtons_second_law,)
 from symplyphysics.laws.gravity import (
     gravity_force_from_mass_and_distance as gravity_law,)
 from symplyphysics.laws.kinematic import (
     centripetal_acceleration_is_squared_angular_velocity_times_radius as centripetal_law,
-    period_from_angular_frequency as period_law,
 )
 
 # Description

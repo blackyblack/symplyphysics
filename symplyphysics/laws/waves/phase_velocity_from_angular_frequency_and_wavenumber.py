@@ -11,7 +11,7 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import angular_wavenumber_is_inverse_wavelength as wavenumber_def
 from symplyphysics.laws.waves import wavelength_from_wave_speed_and_period as velocity_law
-from symplyphysics.laws.kinematic import period_from_angular_frequency as frequency_law
+from symplyphysics.definitions import period_from_angular_frequency as frequency_law
 
 # Description
 ## The phase velocity of a wave is the rate at which the wave propagates in a medium.
