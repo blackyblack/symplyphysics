@@ -14,11 +14,15 @@ from symplyphysics import (
 )
 
 # Description
-## TODO
+## Suppose reference frame S' is fixed to a moving body A (e.g. Earth). For some body B we can write a vector
+## equation of motion relative to S' in the gravitational field of body A with body A's rotation taken into
+## consideration. From this, we can gather the meaning of the acceleration due to gravity, also known as the
+## free fall acceleration: it is the acceleration of body B relative to S' in the absence of external forces
+## (`F = 0`) in the stationary case (the velocity of body B relative to S' is zero, i.e. `v = 0` and `a_cor = 0`).
 
 # Law: a = g - a_cor + F / m
-## a - vector of acceleration of body B in S'
-## g - vector of acceleration due to gravity of body B
+## a - vector of relative acceleration of body B in S'
+## g - vector of acceleration of body B due due to the gravitational field of body A
 ## a_cor - vector of Coriolis acceleration of body B in S'
 ## F - vector sum of all non-gravitational forces acting on body B
 ## m - mass of body B
