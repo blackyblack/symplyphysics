@@ -14,7 +14,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 ## x(t) is function of displacement of the oscillator over time,
 ## t is time,
 ## w is angular frequency,
-##   see [angular frequency](../laws/kinematic/period_from_angular_frequency.py) implementation,
+##   see [angular frequency](./period_from_angular_frequency.py) implementation,
 ## d^2 is second derivative.
 
 # Conditions:

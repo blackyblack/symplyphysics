@@ -16,7 +16,7 @@ from symplyphysics.definitions import admittance_is_inversed_impedance as admitt
 from symplyphysics.laws.electricity import capacitor_impedance_from_capacitance_and_frequency as capacitor_impedance
 from symplyphysics.laws.electricity import coil_impedance_from_inductivity_and_frequency as coil_impedance
 from symplyphysics.laws.electricity.circuits import oscillation_period_for_capacitor_inductor_node as thomsons_formula
-from symplyphysics.laws.kinematic import period_from_angular_frequency as period_definition
+from symplyphysics.definitions import period_from_angular_frequency as period_definition
 
 frequency_arg = Symbol("frequency_arg")
 
