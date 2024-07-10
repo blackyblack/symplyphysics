@@ -43,7 +43,7 @@ def equal_vectors(vector_left: Vector, vector_right: Vector) -> bool:
 # To subtract vectors, multiply one of the vectors to -1 and add them.
 #NOTE: adding two non-cartesian vectors is not a trivial task. We suggest to convert them to cartesian
 #      vectors, add them and convert back.
-def add_cartesian_vectors(vector_left: Vector, vector_right: Vector) -> Vector:
+def add_two_cartesian_vectors(vector_left: Vector, vector_right: Vector) -> Vector:
     if vector_left.coordinate_system != vector_right.coordinate_system:
         raise TypeError(
             f"Different coordinate systems in vectors: {str(vector_left.coordinate_system)} vs {str(vector_right.coordinate_system)}"
@@ -62,6 +62,13 @@ def add_cartesian_vectors(vector_left: Vector, vector_right: Vector) -> Vector:
     result = list(
         map(lambda lr: sympify(lr[0] + lr[1]), zip(list_left_extended, list_right_extended)))
     return Vector(result, vector_left.coordinate_system)
+
+
+def add_cartesian_vectors(vector: Vector, *vectors: Vector) -> Vector:
+    result = vector
+    for vector in vectors:
+        result = add_two_cartesian_vectors(result, vector)
+    return result
 
 
 def subtract_cartesian_vectors(vector_left: Vector, vector_right: Vector) -> Vector:
