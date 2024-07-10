@@ -16,7 +16,7 @@ from symplyphysics import (
 # Description
 ## Suppose reference S' is fixed to a moving object (e.g. Earth). For some body B we can write an equation of motion
 ## in coordinates of S' akin to the Newton's second law of motion for inertial frames, although we obtain two
-## additional components to the equation: one corresponding to the Coriolis force, and anther to the fictitious force
+## additional components to the equation: one corresponding to the Coriolis force, and another to the fictitious force
 ## of translation between inertial frame (S) and non-inertial frame S'.
 
 # Law: a_rel = F / m - a_cor - a_tr
