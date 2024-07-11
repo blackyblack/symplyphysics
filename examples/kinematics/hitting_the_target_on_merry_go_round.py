@@ -11,7 +11,12 @@ from symplyphysics.laws.kinematic import (
 )
 
 # Description
-## TODO Sivukhin 1, p. 344, ex. 2
+## A shooter and a target are positioned on a merry-go-round opposite to one another.
+## The ride rotates uniformly around its vertical axis. Find the angle between the rifle
+## and the diameter the shooter should aim at so that the shooter hits the target. Disregard
+## the maximum linear speed of the rotating ride `w * R` in contrast to the bullet's speed.
+## The radius of the ride is `R = 5 m`, the ride makes a rotating every `T = 5 s` and the
+## bullet's speed is `v = 300 m/s`.
 
 ride_radius, ride_period, bullet_speed = symbols(
     "ride_radius, ride_period, bullet_speed",
@@ -64,7 +69,6 @@ ride_rotation_angle_value = convert_to(
     units.degree,
 )
 
-print("Formula:\n", print_expression(ride_rotation_angle_expr), sep="\n", end="\n\n")
+print("Formula of the aiming angle:\n", print_expression(ride_rotation_angle_expr), sep="\n", end="\n\n")
 
-# FIXME add text
-print(f"alpha = {ride_rotation_angle_value.evalf(3)} degrees.")
+print(f"The shooter should aim at an angle of {ride_rotation_angle_value.evalf(3)} degrees.")
