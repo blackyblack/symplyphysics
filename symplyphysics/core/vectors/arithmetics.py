@@ -81,7 +81,7 @@ def subtract_cartesian_vectors(*vectors: Vector) -> Vector:
         raise ValueError("Provide at least two vectors")
 
     vector_minuend = vectors[0]
-    vector_subtrahend = add_cartesian_vectors(vectors[1:])
+    vector_subtrahend = add_cartesian_vectors(*vectors[1:])
     return add_cartesian_vectors(
         vector_minuend,
         scale_vector(-1, vector_subtrahend),
