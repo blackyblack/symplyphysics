@@ -38,6 +38,7 @@ from symplyphysics import (
 ## w - pseudovector of angular velocity of rotation of moving frame S'
 ## g - vector of acceleration due to gravity (or free fall acceleration) of body B
 ## cross(a, b) - cross product between vectors `a` and `b`
+## O - [big O](https://en.wikipedia.org/wiki/Big_O_notation)
 
 
 def displacement_law(

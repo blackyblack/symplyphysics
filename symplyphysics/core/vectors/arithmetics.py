@@ -66,8 +66,8 @@ def add_cartesian_vectors(*vectors: Vector) -> Vector:
 
         return Vector(result, vector_left.coordinate_system)
 
-    if not vectors:
-        return Vector([0, 0, 0])
+    if len(vectors) < 1:
+        raise ValueError("Provide at least one vector")
 
     result = vectors[0]
     for vector in vectors[1:]:
@@ -77,13 +77,15 @@ def add_cartesian_vectors(*vectors: Vector) -> Vector:
 
 # Subtract vectors from the first given vector
 def subtract_cartesian_vectors(*vectors: Vector) -> Vector:
-    if not vectors:
-        raise ValueError("Provide at least one vector")
+    if len(vectors) < 2:
+        raise ValueError("Provide at least two vectors")
 
-    result = vectors[0]
-    for vector in vectors[1:]:
-        result = add_cartesian_vectors(result, scale_vector(-1, vector))
-    return result
+    vector_minuend = vectors[0]
+    vector_subtrahend = add_cartesian_vectors(vectors[1:])
+    return add_cartesian_vectors(
+        vector_minuend,
+        scale_vector(-1, vector_subtrahend),
+    )
 
 
 # Change Vector magnitude (length)
