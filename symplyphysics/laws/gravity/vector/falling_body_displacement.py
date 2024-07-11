@@ -13,11 +13,19 @@ from symplyphysics import (
 )
 
 # Description
-## TODO
+## Suppose a reference frame S' is fixed to a moving object A (e.g., Earth) and some body B moving freely
+## (i.e. the sum of external non-gravitational forces acting on it is zero). In the case of an inertial
+## frame of reference, the displacement of body B from the starting position would follow the usual rule
+## `s = v0 * t + (g / 2) * t**2`. But in the case of non-inertial frames, we have to take the Coriolis and
+## the centrifugal force into account as well, which results into the following series:
 
 # Conditions
-## - F = 0
-## - g is constant
+## - The sum `F` of all other, non-gravitational forces acting on body B is 0.
+## - `g` is independent of coordinates.
+
+# Notes
+## - Note that the series is truncated at the fifth term. More terms can be obtained by plugging the result
+##   into the equation of motion `a = g + cross(v, w)` and integrating it over time.
 
 # Law: s = v0 * t
 #        + t**2 * (g / 2 + cross(v0, w))
