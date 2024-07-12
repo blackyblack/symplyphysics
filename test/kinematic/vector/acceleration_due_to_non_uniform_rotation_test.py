@@ -7,9 +7,9 @@ from symplyphysics import (
     Vector,
     Quantity,
     QuantityVector,
+    assert_equal_vectors,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.core.approx import assert_equal_vectors
 from symplyphysics.laws.kinematic.vector import acceleration_due_to_non_uniform_rotation as law
 
 

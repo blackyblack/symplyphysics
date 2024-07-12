@@ -1,10 +1,9 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_equal,
+    assert_equal_vectors,
     units,
     Quantity,
-    SI,
     errors,
     QuantityVector,
 )
@@ -35,10 +34,7 @@ def test_args_fixture() -> Args:
 
 def test_momentum_definition(test_args: Args) -> None:
     result = momentum_def.calculate_momentum(test_args.m, test_args.v)
-    assert len(result.components) == 3
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.momentum)
-    for result_component, correct_component in zip(result.components, test_args.p.components):
-        assert_equal(result_component, correct_component)
+    assert_equal_vectors(result, test_args.p)
 
 
 def test_momentum_bad_mass(test_args: Args) -> None:
@@ -70,10 +66,7 @@ def test_momentum_bad_velocity(test_args: Args) -> None:
 
 def test_velocity_law(test_args: Args) -> None:
     result = momentum_def.calculate_velocity(test_args.m, test_args.p)
-    assert len(result.components) == 3
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.velocity)
-    for result_component, correct_component in zip(result.components, test_args.v.components):
-        assert_equal(result_component, correct_component)
+    assert_equal_vectors(result, test_args.v)
 
 
 def test_velocity_bad_mass(test_args: Args) -> None:

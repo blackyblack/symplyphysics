@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.kinematic import period_from_angular_frequency as period_def
+from symplyphysics.definitions import period_from_angular_frequency as period_def
 
 Args = namedtuple("Args", ["w"])
 

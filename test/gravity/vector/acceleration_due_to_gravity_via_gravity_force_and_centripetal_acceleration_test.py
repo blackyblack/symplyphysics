@@ -5,8 +5,9 @@ from symplyphysics import (
     units,
     Quantity,
     QuantityVector,
+    assert_equal,
+    assert_equal_vectors,
 )
-from symplyphysics.core.approx import assert_equal, assert_equal_vectors
 from symplyphysics.laws.gravity.vector import acceleration_due_to_gravity_via_gravity_force_and_centripetal_acceleration as law
 
 Args = namedtuple("Args", "f a m g")

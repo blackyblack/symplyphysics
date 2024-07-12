@@ -3,12 +3,12 @@ from pytest import fixture, raises
 from sympy.physics.units import speed_of_light
 from symplyphysics import (
     assert_equal,
+    assert_equal_vectors,
     units,
     Quantity,
     QuantityVector,
     errors,
 )
-from symplyphysics.core.approx import assert_equal_vectors
 from symplyphysics.laws.relativistic.vector import force_acceleration_relation as law
 
 Args = namedtuple("Args", "m a v f")

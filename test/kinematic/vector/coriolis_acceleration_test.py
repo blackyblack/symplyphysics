@@ -4,8 +4,8 @@ from symplyphysics import (
     errors,
     units,
     QuantityVector,
+    assert_equal_vectors,
 )
-from symplyphysics.core.approx import assert_equal_vectors
 from symplyphysics.laws.kinematic.vector import coriolis_acceleration as law
 
 Args = namedtuple("Args", "w v")

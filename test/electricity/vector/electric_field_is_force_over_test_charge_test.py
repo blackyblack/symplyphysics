@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_equal,
+    assert_equal_vectors,
     units,
     errors,
     Quantity,
@@ -31,16 +31,12 @@ def test_args_fixture() -> Args:
 
 def test_basic_electric_field_definition(test_args: Args) -> None:
     result = electric_field.calculate_electric_field(test_args.F, test_args.q0)
-    assert len(result.components) == 3
-    for result_component, correct_component in zip(result.components, test_args.E.components):
-        assert_equal(result_component, correct_component)
+    assert_equal_vectors(result, test_args.E)
 
 
 def test_basic_electrostatic_force_law(test_args: Args) -> None:
     result = electric_field.calculate_electrostatic_force(test_args.E, test_args.q0)
-    assert len(result.components) == 3
-    for result_component, correct_component in zip(result.components, test_args.F.components):
-        assert_equal(result_component, correct_component)
+    assert_equal_vectors(result, test_args.F)
 
 
 def test_bad_force_in_electric_field(test_args: Args) -> None:

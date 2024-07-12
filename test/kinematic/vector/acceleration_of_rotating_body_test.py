@@ -1,11 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_equal,
+    assert_equal_vectors,
     errors,
     units,
     Quantity,
-    SI,
     QuantityVector,
 )
 from symplyphysics.laws.kinematic.vector import acceleration_of_rotating_body as acceleration_law
@@ -40,26 +39,17 @@ def test_args_fixture() -> Args:
 
 def test_basic_law(test_args: Args) -> None:
     result = acceleration_law.calculate_acceleration(test_args.a_r, test_args.a_t)
-    assert len(result.components) == 3
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.acceleration)
-    for result_component, correct_component in zip(result.components, test_args.a_total.components):
-        assert_equal(result_component, correct_component)
+    assert_equal_vectors(result, test_args.a_total)
 
 
 def test_radial_law(test_args: Args) -> None:
     result = acceleration_law.calculate_radial_acceleration(test_args.a_total, test_args.a_t)
-    assert len(result.components) == 3
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.acceleration)
-    for result_component, correct_component in zip(result.components, test_args.a_r.components):
-        assert_equal(result_component, correct_component)
+    assert_equal_vectors(result, test_args.a_r)
 
 
 def test_tangential_law(test_args: Args) -> None:
     result = acceleration_law.calculate_tangential_acceleration(test_args.a_total, test_args.a_r)
-    assert len(result.components) == 3
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.acceleration)
-    for result_component, correct_component in zip(result.components, test_args.a_t.components):
-        assert_equal(result_component, correct_component)
+    assert_equal_vectors(result, test_args.a_t)
 
 
 def test_bad_acceleration(test_args: Args) -> None:

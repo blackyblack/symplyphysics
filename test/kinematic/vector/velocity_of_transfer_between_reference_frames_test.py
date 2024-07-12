@@ -5,8 +5,8 @@ from symplyphysics import (
     units,
     Quantity,
     QuantityVector,
+    assert_equal_vectors,
 )
-from symplyphysics.core.approx import assert_equal_vectors
 from symplyphysics.laws.kinematic.vector import velocity_of_transfer_between_reference_frames as law
 
 Args = namedtuple("Args", "vtr v0 w r")
