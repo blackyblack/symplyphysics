@@ -21,31 +21,39 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = law.calculate_easterly_deviation_from_plumbline(test_args.tf, test_args.tr, test_args.h, test_args.lat)
+    result = law.calculate_easterly_deviation_from_plumbline(test_args.tf, test_args.tr,
+        test_args.h, test_args.lat)
     assert_equal(result, 1.2 * units.centimeter, tolerance=2e-2)
 
 
 def test_bad_time(test_args: Args) -> None:
     tb = Quantity(units.coulomb)
     with raises(errors.UnitsError):
-        law.calculate_easterly_deviation_from_plumbline(tb, test_args.tr, test_args.h, test_args.lat)
+        law.calculate_easterly_deviation_from_plumbline(tb, test_args.tr, test_args.h,
+            test_args.lat)
     with raises(errors.UnitsError):
-        law.calculate_easterly_deviation_from_plumbline(test_args.tf, tb, test_args.h, test_args.lat)
+        law.calculate_easterly_deviation_from_plumbline(test_args.tf, tb, test_args.h,
+            test_args.lat)
     with raises(TypeError):
-        law.calculate_easterly_deviation_from_plumbline(100, test_args.tr, test_args.h, test_args.lat)
+        law.calculate_easterly_deviation_from_plumbline(100, test_args.tr, test_args.h,
+            test_args.lat)
     with raises(TypeError):
-        law.calculate_easterly_deviation_from_plumbline(test_args.tf, 100, test_args.h, test_args.lat)
+        law.calculate_easterly_deviation_from_plumbline(test_args.tf, 100, test_args.h,
+            test_args.lat)
 
 
 def test_bad_length(test_args: Args) -> None:
     hb = Quantity(units.coulomb)
     with raises(errors.UnitsError):
-        law.calculate_easterly_deviation_from_plumbline(test_args.tf, test_args.tr, hb, test_args.lat)
+        law.calculate_easterly_deviation_from_plumbline(test_args.tf, test_args.tr, hb,
+            test_args.lat)
     with raises(TypeError):
-        law.calculate_easterly_deviation_from_plumbline(test_args.tf, test_args.tr, 100, test_args.lat)
+        law.calculate_easterly_deviation_from_plumbline(test_args.tf, test_args.tr, 100,
+            test_args.lat)
 
 
 def test_bad_angle(test_args: Args) -> None:
     latb = Quantity(units.coulomb)
     with raises(errors.UnitsError):
-        law.calculate_easterly_deviation_from_plumbline(test_args.tf, test_args.tr, test_args.h, latb)
+        law.calculate_easterly_deviation_from_plumbline(test_args.tf, test_args.tr, test_args.h,
+            latb)

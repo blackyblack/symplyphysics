@@ -11,25 +11,33 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Install Python 3
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
+
       - name: Install symplyphysics
         run: pip install .[dev,plots]
+
       - name: Run typechecking with mypy
         run: mypy .
+
       - name: Run linter with pylint
         run: pylint --fail-under=9.8 ./test/**/*.py ./symplyphysics
+
       - name: Run tests with pytest
         run: pytest
+
       - name: Run examples
         run: |
           for f in $(find ./examples -name '*.py'); do
             printf "\n-------- '%s'\n" "$(basename $f)"
             python "$f";
           done
+
       - name: Run plots
         run: |
           for f in $(find ./plots -name '*.py'); do

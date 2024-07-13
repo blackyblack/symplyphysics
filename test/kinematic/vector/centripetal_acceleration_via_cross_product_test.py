@@ -49,11 +49,11 @@ def test_bad_position(test_args: Args) -> None:
     rb_vector = QuantityVector([1 * units.coulomb])
     with raises(errors.UnitsError):
         law.calculate_centripetal_acceleration(test_args.w, rb_vector)
-    
+
     rb_scalar = Quantity(1 * units.meter)
     with raises(AttributeError):
         law.calculate_centripetal_acceleration(test_args.w, rb_scalar)
-    
+
     with raises(TypeError):
         law.calculate_centripetal_acceleration(test_args.w, 100)
     with raises(TypeError):

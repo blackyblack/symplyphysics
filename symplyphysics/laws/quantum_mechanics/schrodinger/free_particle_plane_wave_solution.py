@@ -49,12 +49,15 @@ law = Eq(wave_function, exp((I / hbar) * (particle_momentum * position - particl
 # Derive from Schrödinger equation
 
 _time_independent_eqn = time_independent_eqn.law.subs(
-    time_independent_eqn.position, position,
+    time_independent_eqn.position,
+    position,
 ).subs({
-    time_independent_eqn.potential_energy(position): 0,
-    time_independent_eqn.particle_energy: kinetic_energy_via_momentum.law.rhs.subs({
-        kinetic_energy_via_momentum.mass: time_independent_eqn.particle_mass,
-        kinetic_energy_via_momentum.momentum: particle_momentum,
+    time_independent_eqn.potential_energy(position):
+        0,
+    time_independent_eqn.particle_energy:
+    kinetic_energy_via_momentum.law.rhs.subs({
+    kinetic_energy_via_momentum.mass: time_independent_eqn.particle_mass,
+    kinetic_energy_via_momentum.momentum: particle_momentum,
     }),
 })
 

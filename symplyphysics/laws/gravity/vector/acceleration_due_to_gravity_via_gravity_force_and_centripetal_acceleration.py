@@ -47,8 +47,8 @@ def gravity_force_law(
     return scale_vector(
         mass,
         add_cartesian_vectors(
-            acceleration_due_to_gravity_,
-            centripetal_acceleration_,
+        acceleration_due_to_gravity_,
+        centripetal_acceleration_,
         ),
     )
 

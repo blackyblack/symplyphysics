@@ -39,13 +39,15 @@ def orthogonal_velocity_component_in_lab_frame_law(
     velocity_in_proper_frame_: Vector,
     proper_frame_velocity_: Vector,
 ) -> Vector:
-    orthogonal_velocity_component_in_proper_frame_ = reject_cartesian_vector(velocity_in_proper_frame_, proper_frame_velocity_)
+    orthogonal_velocity_component_in_proper_frame_ = reject_cartesian_vector(
+        velocity_in_proper_frame_, proper_frame_velocity_)
 
     lorentz_factor_ = lorentz_factor_def.definition.rhs.subs({
         lorentz_factor_def.velocity: vector_magnitude(proper_frame_velocity_),
     })
 
-    scale_factor_ = lorentz_factor_ * (1 + dot_vectors(proper_frame_velocity_, velocity_in_proper_frame_) / speed_of_light**2)
+    scale_factor_ = lorentz_factor_ * (1 +
+        dot_vectors(proper_frame_velocity_, velocity_in_proper_frame_) / speed_of_light**2)
 
     return scale_vector(1 / scale_factor_, orthogonal_velocity_component_in_proper_frame_)
 

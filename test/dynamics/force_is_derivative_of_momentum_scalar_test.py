@@ -24,7 +24,7 @@ def test_bad_momentum(test_args: Args) -> None:
         law.calculate_force(pb, test_args.dt)
     with raises(TypeError):
         law.calculate_force(100, test_args.dt)
-    
+
 
 def test_bad_time(test_args: Args) -> None:
     tb = Quantity(1 * units.coulomb)

@@ -7,8 +7,7 @@ from symplyphysics.definitions import (
     period_from_angular_frequency as period_def,
 )
 from symplyphysics.laws.kinematic import (
-    distance_from_constant_velocity as distance_law,
-)
+    distance_from_constant_velocity as distance_law,)
 
 # Description
 ## A shooter and a target are positioned on a merry-go-round opposite to one another.
@@ -37,11 +36,13 @@ time = angular_velocity_def.time
 
 ride_rotation_angle_expr = dsolve(
     angular_velocity_def.definition.subs(
-        angular_velocity_def.angular_velocity(time),
-        ride_angular_velocity,
+    angular_velocity_def.angular_velocity(time),
+    ride_angular_velocity,
     ),
     angular_velocity_def.angle_function(time),
-    ics={angular_velocity_def.angle_function(0): 0},
+    ics={
+    angular_velocity_def.angle_function(0): 0
+    },
 ).rhs
 
 period_eqn = period_def.law.subs({
@@ -69,6 +70,9 @@ ride_rotation_angle_value = convert_to(
     units.degree,
 )
 
-print("Formula of the aiming angle:\n", print_expression(ride_rotation_angle_expr), sep="\n", end="\n\n")
+print("Formula of the aiming angle:\n",
+    print_expression(ride_rotation_angle_expr),
+    sep="\n",
+    end="\n\n")
 
 print(f"The shooter should aim at an angle of {ride_rotation_angle_value.evalf(3)} degrees.")

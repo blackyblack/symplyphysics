@@ -10,7 +10,7 @@ from symplyphysics import (
 
 # Description
 ## In relativity, proper time along a timelike world line is defined as the time as measured by a clock following
-## that line. The proper time interval between two events on a world line is the change in proper time, which is 
+## that line. The proper time interval between two events on a world line is the change in proper time, which is
 ## independent of coordinates, and is a Lorentz scalar.
 
 # Law: Δτ = Δs / c
@@ -29,9 +29,7 @@ law = Eq(proper_time, spacetime_interval / speed_of_light)
 
 @validate_input(spacetime_interval_=spacetime_interval)
 @validate_output(proper_time)
-def calculate_proper_time(
-    spacetime_interval_: Quantity,
-) -> Quantity:
+def calculate_proper_time(spacetime_interval_: Quantity,) -> Quantity:
     if im(spacetime_interval_.scale_factor) != 0:
         raise ValueError("The interval must be a real number")
 

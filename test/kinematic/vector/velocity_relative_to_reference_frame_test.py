@@ -88,17 +88,17 @@ def test_bad_position(test_args: Args) -> None:
         law.calculate_relative_velocity(rb_vector, test_args.r2, test_args.dt)
     with raises(errors.UnitsError):
         law.calculate_relative_velocity(test_args.r1, rb_vector, test_args.dt)
-    
+
     rb_scalar = Quantity(1 * units.meter)
     with raises(AttributeError):
         law.calculate_relative_velocity(rb_scalar, test_args.r2, test_args.dt)
     with raises(AttributeError):
         law.calculate_relative_velocity(test_args.r1, rb_scalar, test_args.dt)
-    
+
     with raises(TypeError):
         law.calculate_relative_velocity(100, test_args.r2, test_args.dt)
     with raises(TypeError):
-        law.calculate_relative_velocity(test_args.r1, 100, test_args.dt)    
+        law.calculate_relative_velocity(test_args.r1, 100, test_args.dt)
     with raises(TypeError):
         law.calculate_relative_velocity([100], test_args.r2, test_args.dt)
     with raises(TypeError):

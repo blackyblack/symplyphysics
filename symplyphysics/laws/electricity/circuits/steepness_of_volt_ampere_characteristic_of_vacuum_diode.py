@@ -24,12 +24,10 @@ voltage = Symbol("voltage", units.voltage)
 law = Eq(steepness, (3 / 2) * diode_constant * sqrt(voltage))
 
 
-@validate_input(diode_constant_=diode_constant,
-    voltage_=voltage)
+@validate_input(diode_constant_=diode_constant, voltage_=voltage)
 @validate_output(steepness)
 def calculate_steepness(diode_constant_: Quantity, voltage_: Quantity) -> Quantity:
-    result_expr = solve(law, steepness,
-        dict=True)[0][steepness]
+    result_expr = solve(law, steepness, dict=True)[0][steepness]
     result_expr = result_expr.subs({
         diode_constant: diode_constant_,
         voltage: voltage_,

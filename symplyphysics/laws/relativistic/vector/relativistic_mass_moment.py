@@ -1,4 +1,3 @@
-from sympy.physics.units import speed_of_light
 from symplyphysics import (
     units,
     Symbol,
@@ -62,5 +61,8 @@ def calculate_mass_moment(
     )
     return QuantityVector.from_base_vector(
         result,
-        subs={rest_mass: rest_mass_, time: time_},
+        subs={
+        rest_mass: rest_mass_,
+        time: time_
+        },
     )

@@ -14,7 +14,8 @@ from symplyphysics.laws.chemistry import cross_section_of_ionization_of_atom_by_
 ## Then the cross-sectional area of the ionization will be 3.03e-20 [meter^2].
 
 Args = namedtuple("Args", [
-    "ionization_energy", "energy_of_electron", "first_calculation_coefficient", "second_calculation_coefficient", "number_of_equivalent_electrons_on_outer_orbit"
+    "ionization_energy", "energy_of_electron", "first_calculation_coefficient",
+    "second_calculation_coefficient", "number_of_equivalent_electrons_on_outer_orbit"
 ])
 
 
@@ -35,45 +36,61 @@ def test_args_fixture() -> Args:
 
 def test_basic_cross_sectional_area_of_ionization(test_args: Args) -> None:
     result = cross_section_law.calculate_cross_sectional_area_of_ionization(
-        test_args.ionization_energy, test_args.energy_of_electron, test_args.first_calculation_coefficient,
-        test_args.second_calculation_coefficient, test_args.number_of_equivalent_electrons_on_outer_orbit,)
+        test_args.ionization_energy,
+        test_args.energy_of_electron,
+        test_args.first_calculation_coefficient,
+        test_args.second_calculation_coefficient,
+        test_args.number_of_equivalent_electrons_on_outer_orbit,
+    )
     assert_equal(result, 3.03e-20 * units.meter**2)
 
 
 def test_bad_ionization_energy(test_args: Args) -> None:
     ionization_energy = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        cross_section_law.calculate_cross_sectional_area_of_ionization(ionization_energy,
-            test_args.energy_of_electron, test_args.first_calculation_coefficient,
-            test_args.second_calculation_coefficient, test_args.number_of_equivalent_electrons_on_outer_orbit)
+        cross_section_law.calculate_cross_sectional_area_of_ionization(
+            ionization_energy, test_args.energy_of_electron,
+            test_args.first_calculation_coefficient, test_args.second_calculation_coefficient,
+            test_args.number_of_equivalent_electrons_on_outer_orbit)
     with raises(TypeError):
-        cross_section_law.calculate_cross_sectional_area_of_ionization(100,
-            test_args.energy_of_electron, test_args.first_calculation_coefficient,
-            test_args.second_calculation_coefficient, test_args.number_of_equivalent_electrons_on_outer_orbit)
+        cross_section_law.calculate_cross_sectional_area_of_ionization(
+            100, test_args.energy_of_electron, test_args.first_calculation_coefficient,
+            test_args.second_calculation_coefficient,
+            test_args.number_of_equivalent_electrons_on_outer_orbit)
 
 
 def test_bad_energy_of_electron(test_args: Args) -> None:
     energy_of_electron = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        cross_section_law.calculate_cross_sectional_area_of_ionization(test_args.ionization_energy,
-            energy_of_electron, test_args.first_calculation_coefficient, test_args.second_calculation_coefficient, test_args.number_of_equivalent_electrons_on_outer_orbit)
+        cross_section_law.calculate_cross_sectional_area_of_ionization(
+            test_args.ionization_energy, energy_of_electron,
+            test_args.first_calculation_coefficient, test_args.second_calculation_coefficient,
+            test_args.number_of_equivalent_electrons_on_outer_orbit)
     with raises(TypeError):
-        cross_section_law.calculate_cross_sectional_area_of_ionization(test_args.ionization_energy,
-            100, test_args.first_calculation_coefficient, test_args.second_calculation_coefficient, test_args.number_of_equivalent_electrons_on_outer_orbit)
+        cross_section_law.calculate_cross_sectional_area_of_ionization(
+            test_args.ionization_energy, 100, test_args.first_calculation_coefficient,
+            test_args.second_calculation_coefficient,
+            test_args.number_of_equivalent_electrons_on_outer_orbit)
 
 
 def test_bad_calculation_coefficients(test_args: Args) -> None:
     calculation_coefficient = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        cross_section_law.calculate_cross_sectional_area_of_ionization(test_args.ionization_energy,
-            test_args.energy_of_electron, calculation_coefficient, test_args.second_calculation_coefficient, test_args.number_of_equivalent_electrons_on_outer_orbit)
+        cross_section_law.calculate_cross_sectional_area_of_ionization(
+            test_args.ionization_energy, test_args.energy_of_electron, calculation_coefficient,
+            test_args.second_calculation_coefficient,
+            test_args.number_of_equivalent_electrons_on_outer_orbit)
     with raises(errors.UnitsError):
-        cross_section_law.calculate_cross_sectional_area_of_ionization(test_args.ionization_energy,
-            test_args.energy_of_electron, test_args.first_calculation_coefficient, calculation_coefficient, test_args.number_of_equivalent_electrons_on_outer_orbit)
+        cross_section_law.calculate_cross_sectional_area_of_ionization(
+            test_args.ionization_energy, test_args.energy_of_electron,
+            test_args.first_calculation_coefficient, calculation_coefficient,
+            test_args.number_of_equivalent_electrons_on_outer_orbit)
 
 
 def test_bad_number_of_equivalent_electrons_on_outer_orbit(test_args: Args) -> None:
     number_of_equivalent_electrons_on_outer_orbit = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        cross_section_law.calculate_cross_sectional_area_of_ionization(test_args.ionization_energy,
-            test_args.energy_of_electron, test_args.first_calculation_coefficient, test_args.second_calculation_coefficient, number_of_equivalent_electrons_on_outer_orbit)
+        cross_section_law.calculate_cross_sectional_area_of_ionization(
+            test_args.ionization_energy, test_args.energy_of_electron,
+            test_args.first_calculation_coefficient, test_args.second_calculation_coefficient,
+            number_of_equivalent_electrons_on_outer_orbit)

@@ -1,14 +1,7 @@
 from sympy import Eq, solve, pi, exp, sqrt
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    validate_input,
-    validate_output,
-    symbols,
-    clone_symbol
-)
 from sympy.physics.units import elementary_charge, electron_rest_mass, boltzmann_constant
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols,
+    clone_symbol)
 
 # Description
 ## A gas–discharge plasma is an ionized gas in which the concentrations of positively and negatively charged particles are approximately
@@ -39,7 +32,8 @@ probe_potential = Symbol("probe_potential", units.voltage)
 
 expression_1 = 0.25 * area_probe_surface * elementary_charge * electron_concentration
 expression_2 = sqrt(8 * boltzmann_constant * plasma_temperature / (pi * electron_rest_mass))
-expression_3 = exp(-elementary_charge * (floating_plasma_potential - probe_potential) / (boltzmann_constant * plasma_temperature))
+expression_3 = exp(-elementary_charge * (floating_plasma_potential - probe_potential) /
+    (boltzmann_constant * plasma_temperature))
 
 law = Eq(current, expression_1 * expression_2 * expression_3)
 
@@ -50,11 +44,10 @@ law = Eq(current, expression_1 * expression_2 * expression_3)
     floating_plasma_potential_=floating_plasma_potential,
     probe_potential_=probe_potential)
 @validate_output(current)
-def calculate_current(area_probe_surface_: Quantity,
-    electron_concentration_: Quantity, plasma_temperature_: Quantity,
-    floating_plasma_potential_: Quantity, probe_potential_: Quantity) -> Quantity:
-    result_expr = solve(law, current,
-        dict=True)[0][current]
+def calculate_current(area_probe_surface_: Quantity, electron_concentration_: Quantity,
+    plasma_temperature_: Quantity, floating_plasma_potential_: Quantity,
+    probe_potential_: Quantity) -> Quantity:
+    result_expr = solve(law, current, dict=True)[0][current]
     result_expr = result_expr.subs({
         area_probe_surface: area_probe_surface_,
         electron_concentration: electron_concentration_,

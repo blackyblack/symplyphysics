@@ -61,24 +61,21 @@ def displacement_law(
     return add_cartesian_vectors(
         scale_vector(time_, initial_velocity_),
         scale_vector(
-            time_**2,
-            add_cartesian_vectors(
-                scale_vector(Rational(1, 2), acceleration_due_to_gravity_),
-                initial_cross_angular,
-            ),
+        time_**2,
+        add_cartesian_vectors(
+        scale_vector(Rational(1, 2), acceleration_due_to_gravity_),
+        initial_cross_angular,
+        ),
         ),
         scale_vector(
-            time_**3 / 3,
-            add_cartesian_vectors(
-                acceleration_cross_angular,
-                scale_vector(2, cross_cartesian_vectors(initial_cross_angular, angular_velocity_)),
-            ),
+        time_**3 / 3,
+        add_cartesian_vectors(
+        acceleration_cross_angular,
+        scale_vector(2, cross_cartesian_vectors(initial_cross_angular, angular_velocity_)),
         ),
-        scale_vector(
-            time_**4 / 6,
-            cross_cartesian_vectors(acceleration_cross_angular, angular_velocity_)
-        )
-    )
+        ),
+        scale_vector(time_**4 / 6,
+        cross_cartesian_vectors(acceleration_cross_angular, angular_velocity_)))
 
 
 @validate_input(

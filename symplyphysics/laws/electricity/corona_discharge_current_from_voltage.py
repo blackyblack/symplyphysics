@@ -21,11 +21,15 @@ from symplyphysics import (
 current = Symbol("current", units.current)
 
 gas_coefficient = Symbol("gas_coefficient", units.charge / (units.area * units.voltage))
-mobility_of_charged_particles = Symbol("mobility_of_charged_particles", units.area / (units.voltage * units.time))
+mobility_of_charged_particles = Symbol("mobility_of_charged_particles",
+    units.area / (units.voltage * units.time))
 voltage = Symbol("voltage", units.voltage)
 corona_discharge_occurrence_voltage = Symbol("corona_discharge_occurrence_voltage", units.voltage)
 
-law = Eq(current, gas_coefficient * mobility_of_charged_particles * voltage * (voltage - corona_discharge_occurrence_voltage))
+law = Eq(
+    current,
+    gas_coefficient * mobility_of_charged_particles * voltage *
+    (voltage - corona_discharge_occurrence_voltage))
 
 
 @validate_input(gas_coefficient_=gas_coefficient,
@@ -33,11 +37,9 @@ law = Eq(current, gas_coefficient * mobility_of_charged_particles * voltage * (v
     voltage_=voltage,
     corona_discharge_occurrence_voltage_=corona_discharge_occurrence_voltage)
 @validate_output(current)
-def calculate_current(gas_coefficient_: Quantity,
-    mobility_of_charged_particles_: Quantity, voltage_: Quantity,
-    corona_discharge_occurrence_voltage_: Quantity) -> Quantity:
-    result_expr = solve(law, current,
-        dict=True)[0][current]
+def calculate_current(gas_coefficient_: Quantity, mobility_of_charged_particles_: Quantity,
+    voltage_: Quantity, corona_discharge_occurrence_voltage_: Quantity) -> Quantity:
+    result_expr = solve(law, current, dict=True)[0][current]
     result_expr = result_expr.subs({
         gas_coefficient: gas_coefficient_,
         mobility_of_charged_particles: mobility_of_charged_particles_,

@@ -72,11 +72,11 @@ def test_bad_angular_velocity(test_args: Args) -> None:
     wb_vector = QuantityVector([Quantity(1 * units.coulomb)])
     with raises(errors.UnitsError):
         law.calculate_transfer_velocity(test_args.v0, wb_vector, test_args.r)
-    
+
     wb_scalar = Quantity(1 * units.radian / units.second)
     with raises(AttributeError):
         law.calculate_transfer_velocity(test_args.v0, wb_scalar, test_args.r)
-    
+
     with raises(TypeError):
         law.calculate_transfer_velocity(test_args.v0, 100, test_args.r)
     with raises(TypeError):
@@ -87,11 +87,11 @@ def test_bad_position(test_args: Args) -> None:
     rb_vector = QuantityVector([Quantity(1 * units.coulomb)])
     with raises(errors.UnitsError):
         law.calculate_transfer_velocity(test_args.v0, test_args.w, rb_vector)
-    
+
     rb_scalar = Quantity(1 * units.meter)
     with raises(AttributeError):
         law.calculate_transfer_velocity(test_args.v0, test_args.w, rb_scalar)
-    
+
     with raises(TypeError):
         law.calculate_transfer_velocity(test_args.v0, test_args.w, 100)
     with raises(TypeError):

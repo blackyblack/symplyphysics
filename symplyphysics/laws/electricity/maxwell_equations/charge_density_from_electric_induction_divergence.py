@@ -14,13 +14,17 @@ from symplyphysics.core.fields.vector_field import VectorField
 ## p - electric charge volumetric density (scalar field),
 ## div - divergence (the sum of partial derivatives in coordinates).
 
+
 def charge_volumetric_density_law(electric_induction: VectorField) -> ScalarField:
-    return ScalarField.from_expression(divergence_operator(electric_induction), electric_induction.coordinate_system)
+    return ScalarField.from_expression(divergence_operator(electric_induction),
+        electric_induction.coordinate_system)
 
 
 @validate_input(cartesian_point_=units.length)
 @validate_output(units.charge / units.volume)
-def calculate_charge_volumetric_density_at_point(electric_induction_: VectorField, cartesian_point_: tuple[Quantity, Quantity, Quantity]) -> Quantity:
+def calculate_charge_volumetric_density_at_point(
+        electric_induction_: VectorField, cartesian_point_: tuple[Quantity, Quantity,
+    Quantity]) -> Quantity:
     electric_induction_vector = electric_induction_.apply(cartesian_point_)
     for i, c in enumerate(electric_induction_vector.components):
         assert_equivalent_dimension(c, f"electric_induction_vector[{i}]",

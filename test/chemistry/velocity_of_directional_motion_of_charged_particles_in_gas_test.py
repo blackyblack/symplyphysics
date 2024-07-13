@@ -13,7 +13,8 @@ Args = namedtuple("Args", ["mobility_at_unit_pressure", "pressure", "electric_in
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
-    mobility_at_unit_pressure = Quantity(2450 * units.meter**2 * units.pascal / (units.volt * units.second))
+    mobility_at_unit_pressure = Quantity(2450 * units.meter**2 * units.pascal /
+        (units.volt * units.second))
     pressure = Quantity(100 * units.pascal)
     electric_intensity = Quantity(3000 * units.volt / units.meter)
 
