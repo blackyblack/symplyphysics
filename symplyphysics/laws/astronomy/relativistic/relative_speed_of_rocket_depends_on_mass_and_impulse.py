@@ -21,21 +21,55 @@ from symplyphysics import (
     validate_output,
 )
 
-## Law is: M2 / M1 = ((1 - (V / c)) / (1 + (V / c)))^(c / (2 * I)), where
-## V - final speed of the rocket,
-## I- specific impulse of a rocket engine,
-## M1 - initial mass of the rocket,
-## M2 - final mass of the rocket,
-## c - speed of light.
-
 speed = Symbol("speed", units.velocity)
+"""
+Final speed of the rocket
+
+Symbol:
+    V
+"""
 
 specific_impulse = Symbol("specific_impulse", units.velocity)
+"""
+Effective exhaust velocity of a rocket engine
+
+Symbol:
+    Ve
+
+Latex:
+    :math:`V_e`
+"""
+
 initial_mass = clone_symbol(symbols.basic.mass, "initial_mass")
+"""
+Initial mass of the rocket
+
+Symbol:
+    M1
+
+Latex:
+    :math:`M_1`
+"""
+
 final_mass = clone_symbol(symbols.basic.mass, "final_mass")
+"""
+Final mass of the rocket
+
+Symbol:
+    M2
+
+Latex:
+    :math:`M_2`
+"""
 
 law = Eq(final_mass / initial_mass, ((1 - (speed / speed_of_light)) / (1 +
     (speed / speed_of_light)))**(speed_of_light / (2 * specific_impulse)))
+r"""
+M2 / M1 = ((1 - (V / c)) / (1 + (V / c)))^(c / (2 * Ve))
+
+Latex:
+    :math:`M_2 / M_1 = ((1 - (V / c)) / (1 + (V / c)))^(c / (2 * V_e))`
+"""
 
 
 def print_law() -> str:
