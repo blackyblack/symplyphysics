@@ -1,7 +1,9 @@
 Symplyphysics
 =============
 
-Physics laws implemented as code. Based on [SymPy](https://github.com/sympy/sympy) Python library.
+Physics laws implemented as code. Based on `SymPy`_ Python library.
+
+.. _SymPy: https://github.com/sympy/sympy
 
 Contents:
 
@@ -11,6 +13,7 @@ Contents:
   generated/symplyphysics.laws
   generated/symplyphysics.definitions
   generated/symplyphysics.symbols
+  generated/symplyphysics.quantities
 
 Indices and tables
 ==================
