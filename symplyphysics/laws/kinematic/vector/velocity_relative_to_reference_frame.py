@@ -59,8 +59,8 @@ def calculate_relative_velocity(
     position_ = scale_vector(
         time_ / time_change_,
         subtract_cartesian_vectors(
-            position_after_.to_base_vector(),
-            position_before_.to_base_vector(),
+        position_after_.to_base_vector(),
+        position_before_.to_base_vector(),
         ),
     )
     velocity_ = relative_velocity_law(position_, time_)

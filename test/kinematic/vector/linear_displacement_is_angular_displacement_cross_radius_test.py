@@ -33,10 +33,7 @@ def test_args_fixture() -> Args:
 
 def test_basic_law(test_args: Args) -> None:
     result = linear_displacement_law.calculate_linear_displacement(test_args.theta, test_args.r)
-    assert_equal_vectors(
-        result,
-        QuantityVector([-1e-6 * units.meter, 0, 0])
-    )
+    assert_equal_vectors(result, QuantityVector([-1e-6 * units.meter, 0, 0]))
 
 
 def test_bad_angular_displacement(test_args: Args) -> None:

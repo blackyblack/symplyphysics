@@ -43,10 +43,7 @@ def total_energy_law(momentum_: Vector, velocity_: Vector) -> Expr:
     velocity_=units.velocity,
 )
 @validate_output(units.momentum)
-def calculate_momentum(
-    total_energy_: Quantity,
-    velocity_: QuantityVector
-) -> QuantityVector:
+def calculate_momentum(total_energy_: Quantity, velocity_: QuantityVector) -> QuantityVector:
     result_vector = momentum_law(velocity_.to_base_vector())
     return QuantityVector.from_base_vector(
         result_vector,

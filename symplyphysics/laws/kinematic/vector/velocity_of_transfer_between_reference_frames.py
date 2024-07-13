@@ -43,15 +43,13 @@ def moving_frame_velocity_law(
 ) -> Vector:
     return add_cartesian_vectors(
         transfer_velocity_,
-        scale_vector(-1, cross_cartesian_vectors(angular_velocity_, position_vector_))
-    )
+        scale_vector(-1, cross_cartesian_vectors(angular_velocity_, position_vector_)))
 
 
 @validate_input(
     moving_frame_velocity_=units.velocity,
     angular_velocity_=angle_type / units.time,
     position_vector_=units.length,
-    
 )
 @validate_output(units.velocity)
 def calculate_transfer_velocity(

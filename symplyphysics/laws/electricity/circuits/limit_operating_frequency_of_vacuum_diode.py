@@ -24,15 +24,16 @@ limit_operating_frequency = Symbol("limit_operating_frequency", units.frequency)
 distance_between_electrodes = Symbol("distance_between_electrodes", units.length)
 voltage = Symbol("voltage", units.voltage)
 
-law = Eq(limit_operating_frequency, sqrt(2 * elementary_charge * voltage / electron_rest_mass) / (6 * distance_between_electrodes))
+law = Eq(
+    limit_operating_frequency,
+    sqrt(2 * elementary_charge * voltage / electron_rest_mass) / (6 * distance_between_electrodes))
 
 
-@validate_input(distance_between_electrodes_=distance_between_electrodes,
-    voltage_=voltage)
+@validate_input(distance_between_electrodes_=distance_between_electrodes, voltage_=voltage)
 @validate_output(limit_operating_frequency)
-def calculate_limit_operating_frequency(distance_between_electrodes_: Quantity, voltage_: Quantity) -> Quantity:
-    result_expr = solve(law, limit_operating_frequency,
-        dict=True)[0][limit_operating_frequency]
+def calculate_limit_operating_frequency(distance_between_electrodes_: Quantity,
+    voltage_: Quantity) -> Quantity:
+    result_expr = solve(law, limit_operating_frequency, dict=True)[0][limit_operating_frequency]
     result_expr = result_expr.subs({
         distance_between_electrodes: distance_between_electrodes_,
         voltage: voltage_,

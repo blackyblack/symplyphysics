@@ -1,5 +1,6 @@
 from sympy import Eq, solve, Matrix
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input, dimensionless, convert_to_float)
+from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input, dimensionless,
+    convert_to_float)
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity.transmission_lines import transmission_matrix_for_a_series_load_in_line as series_law

@@ -31,10 +31,9 @@ def transfer_acceleration_law(
     return add_cartesian_vectors(
         moving_frame_acceleration_,
         add_cartesian_vectors(
-            centripetal_acceleration_,
-            rotation_acceleration_,
-        )
-    )
+        centripetal_acceleration_,
+        rotation_acceleration_,
+        ))
 
 
 # a_0 = a_tr - (a_centripetal + a_non_uniform_rotation)
@@ -46,10 +45,9 @@ def moving_frame_acceleration_law(
     return subtract_cartesian_vectors(
         transfer_acceleration_,
         add_cartesian_vectors(
-            centripetal_acceleration_,
-            rotation_acceleration_,
-        )
-    )
+        centripetal_acceleration_,
+        rotation_acceleration_,
+        ))
 
 
 # a_centripetal = a_tr - (a_0 + a_non_uniform_rotation)
@@ -61,10 +59,9 @@ def centripetal_acceleration_law(
     return subtract_cartesian_vectors(
         transfer_acceleration_,
         add_cartesian_vectors(
-            moving_frame_acceleration_,
-            rotation_acceleration_,
-        )
-    )
+        moving_frame_acceleration_,
+        rotation_acceleration_,
+        ))
 
 
 # a_non_uniform_rotation = a_tr - (a_0 + a_centripetal)
@@ -76,10 +73,9 @@ def rotation_acceleration_law(
     return subtract_cartesian_vectors(
         transfer_acceleration_,
         add_cartesian_vectors(
-            moving_frame_acceleration_,
-            centripetal_acceleration_,
-        )
-    )
+        moving_frame_acceleration_,
+        centripetal_acceleration_,
+        ))
 
 
 @validate_input(

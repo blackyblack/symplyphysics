@@ -28,7 +28,8 @@ width = Symbol("width", units.length)
 
 expression_1 = (1 + relative_permittivity) / 2
 expression_2 = (relative_permittivity - 1) / 2
-expression_3 = (1 + 12 * thickness_of_substrate / width)**Rational(-1, 2) + 0.04 * (1 - width / thickness_of_substrate)**2
+expression_3 = (1 + 12 * thickness_of_substrate / width)**Rational(-1,
+    2) + 0.04 * (1 - width / thickness_of_substrate)**2
 expression_4 = ((relative_permittivity - 1) / 4.6) * (strip_thickness /
     thickness_of_substrate) * sqrt(thickness_of_substrate / width)
 

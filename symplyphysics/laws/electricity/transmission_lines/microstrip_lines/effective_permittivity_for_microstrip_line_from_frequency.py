@@ -34,7 +34,8 @@ expression_2 = (1 + 2 * log(1 + width / thickness_of_substrate))**2
 expression_3 = expression_1 * expression_2
 expression_4 = sqrt(relative_permittivity) - sqrt(effective_permittivity_without_frequency)
 
-law = Eq(effective_permittivity, ((expression_4 / (1 + 4 * (expression_3 * frequency)**Rational(-3, 2))) +
+law = Eq(effective_permittivity,
+    ((expression_4 / (1 + 4 * (expression_3 * frequency)**Rational(-3, 2))) +
     sqrt(effective_permittivity_without_frequency))**2)
 
 

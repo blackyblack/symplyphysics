@@ -24,21 +24,21 @@ def test_basic_value_of_distribution_function(test_args: Args) -> None:
         test_args.voltage_between_electrodes, test_args.electron_energy)
     assert_equal(result, 8.32e-4)
 
+
 def test_bad_voltage_between_electrodes(test_args: Args) -> None:
     voltage_between_electrodes = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         function_law.calculate_value_of_distribution_function(voltage_between_electrodes,
             test_args.electron_energy)
     with raises(TypeError):
-        function_law.calculate_value_of_distribution_function(100,
-            test_args.electron_energy)
+        function_law.calculate_value_of_distribution_function(100, test_args.electron_energy)
 
 
 def test_bad_electron_energy(test_args: Args) -> None:
     electron_energy = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        function_law.calculate_value_of_distribution_function(
-            test_args.voltage_between_electrodes, electron_energy)
+        function_law.calculate_value_of_distribution_function(test_args.voltage_between_electrodes,
+            electron_energy)
     with raises(TypeError):
-        function_law.calculate_value_of_distribution_function(
-            test_args.voltage_between_electrodes, 100)
+        function_law.calculate_value_of_distribution_function(test_args.voltage_between_electrodes,
+            100)

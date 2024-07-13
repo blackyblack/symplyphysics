@@ -95,7 +95,7 @@ def test_bad_acceleration(test_args: Args) -> None:
         law.calculate_acceleration(ab_scalar, test_args.ac, test_args.f, test_args.m)
     with raises(AttributeError):
         law.calculate_acceleration(test_args.g, ab_scalar, test_args.f, test_args.m)
-        
+
     with raises(TypeError):
         law.calculate_acceleration(100, test_args.ac, test_args.f, test_args.m)
     with raises(TypeError):
@@ -110,7 +110,7 @@ def test_bad_force(test_args: Args) -> None:
     fb_vector = QuantityVector([units.coulomb])
     with raises(errors.UnitsError):
         law.calculate_acceleration(test_args.g, test_args.ac, fb_vector, test_args.m)
-    
+
     fb_scalar = units.newton
     with raises(AttributeError):
         law.calculate_acceleration(test_args.g, test_args.ac, fb_scalar, test_args.m)

@@ -1,12 +1,5 @@
 from sympy import Eq, Rational, solve
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    validate_input,
-    validate_output,
-    dimensionless
-)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless)
 
 # Description
 ## A triode has three electrodes: a cathode, an anode and one control grid. The triode can be replaced with an equivalent diode
@@ -27,7 +20,8 @@ anode_voltage = Symbol("anode_voltage", units.voltage)
 voltage_triode_gain = Symbol("voltage_triode_gain", dimensionless)
 grid_voltage = Symbol("grid_voltage", units.voltage)
 
-law = Eq(current, triode_constant * (anode_voltage + voltage_triode_gain * grid_voltage)**Rational(3, 2))
+law = Eq(current,
+    triode_constant * (anode_voltage + voltage_triode_gain * grid_voltage)**Rational(3, 2))
 
 
 @validate_input(triode_constant_=triode_constant,
@@ -36,9 +30,8 @@ law = Eq(current, triode_constant * (anode_voltage + voltage_triode_gain * grid_
     grid_voltage_=grid_voltage)
 @validate_output(current)
 def calculate_current(triode_constant_: Quantity, anode_voltage_: Quantity,
-                      voltage_triode_gain_: float, grid_voltage_: Quantity) -> Quantity:
-    result_expr = solve(law, current,
-        dict=True)[0][current]
+    voltage_triode_gain_: float, grid_voltage_: Quantity) -> Quantity:
+    result_expr = solve(law, current, dict=True)[0][current]
     result_expr = result_expr.subs({
         triode_constant: triode_constant_,
         anode_voltage: anode_voltage_,

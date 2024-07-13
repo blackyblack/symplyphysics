@@ -13,9 +13,8 @@ from symplyphysics.laws.chemistry import cross_section_of_interaction_in_recharg
 ## The pressure is 1 pascal, the temperature is 573 kelvin. The electric field strength is 5857 volt per meter.
 ## Then the cross-sectional area of the interaction will be 1.31e-18 [meter^2].
 
-Args = namedtuple("Args", [
-    "ionization_energy", "mass_of_atom", "pressure", "temperature", "electric_intensity"
-])
+Args = namedtuple("Args",
+    ["ionization_energy", "mass_of_atom", "pressure", "temperature", "electric_intensity"])
 
 
 @fixture(name="test_args")
@@ -35,58 +34,70 @@ def test_args_fixture() -> Args:
 
 def test_basic_cross_sectional_area_of_interaction(test_args: Args) -> None:
     result = cross_section_law.calculate_cross_sectional_area_of_interaction(
-        test_args.ionization_energy, test_args.mass_of_atom, test_args.pressure,
-        test_args.temperature, test_args.electric_intensity,)
+        test_args.ionization_energy,
+        test_args.mass_of_atom,
+        test_args.pressure,
+        test_args.temperature,
+        test_args.electric_intensity,
+    )
     assert_equal(result, 1.31e-18 * units.meter**2, tolerance=0.01)
 
 
 def test_bad_ionization_energy(test_args: Args) -> None:
     ionization_energy = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        cross_section_law.calculate_cross_sectional_area_of_interaction(ionization_energy,
-            test_args.mass_of_atom, test_args.pressure,
-            test_args.temperature, test_args.electric_intensity)
+        cross_section_law.calculate_cross_sectional_area_of_interaction(
+            ionization_energy, test_args.mass_of_atom, test_args.pressure, test_args.temperature,
+            test_args.electric_intensity)
     with raises(TypeError):
-        cross_section_law.calculate_cross_sectional_area_of_interaction(100,
-            test_args.mass_of_atom, test_args.pressure,
-            test_args.temperature, test_args.electric_intensity)
+        cross_section_law.calculate_cross_sectional_area_of_interaction(
+            100, test_args.mass_of_atom, test_args.pressure, test_args.temperature,
+            test_args.electric_intensity)
 
 
 def test_bad_mass_of_atom(test_args: Args) -> None:
     mass_of_atom = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        cross_section_law.calculate_cross_sectional_area_of_interaction(test_args.ionization_energy,
-            mass_of_atom, test_args.pressure, test_args.temperature, test_args.electric_intensity)
+        cross_section_law.calculate_cross_sectional_area_of_interaction(
+            test_args.ionization_energy, mass_of_atom, test_args.pressure, test_args.temperature,
+            test_args.electric_intensity)
     with raises(TypeError):
-        cross_section_law.calculate_cross_sectional_area_of_interaction(test_args.ionization_energy,
-            100, test_args.pressure, test_args.temperature, test_args.electric_intensity)
+        cross_section_law.calculate_cross_sectional_area_of_interaction(
+            test_args.ionization_energy, 100, test_args.pressure, test_args.temperature,
+            test_args.electric_intensity)
 
 
 def test_bad_pressure(test_args: Args) -> None:
     pressure = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        cross_section_law.calculate_cross_sectional_area_of_interaction(test_args.ionization_energy,
-            test_args.mass_of_atom, pressure, test_args.temperature, test_args.electric_intensity)
+        cross_section_law.calculate_cross_sectional_area_of_interaction(
+            test_args.ionization_energy, test_args.mass_of_atom, pressure, test_args.temperature,
+            test_args.electric_intensity)
     with raises(TypeError):
-        cross_section_law.calculate_cross_sectional_area_of_interaction(test_args.ionization_energy,
-            test_args.mass_of_atom, 100, test_args.temperature, test_args.electric_intensity)
+        cross_section_law.calculate_cross_sectional_area_of_interaction(
+            test_args.ionization_energy, test_args.mass_of_atom, 100, test_args.temperature,
+            test_args.electric_intensity)
 
 
 def test_bad_temperature(test_args: Args) -> None:
     temperature = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        cross_section_law.calculate_cross_sectional_area_of_interaction(test_args.ionization_energy,
-            test_args.mass_of_atom, test_args.pressure, temperature, test_args.electric_intensity)
+        cross_section_law.calculate_cross_sectional_area_of_interaction(
+            test_args.ionization_energy, test_args.mass_of_atom, test_args.pressure, temperature,
+            test_args.electric_intensity)
     with raises(TypeError):
-        cross_section_law.calculate_cross_sectional_area_of_interaction(test_args.ionization_energy,
-            test_args.mass_of_atom, test_args.pressure, 100, test_args.electric_intensity)
+        cross_section_law.calculate_cross_sectional_area_of_interaction(
+            test_args.ionization_energy, test_args.mass_of_atom, test_args.pressure, 100,
+            test_args.electric_intensity)
 
 
 def test_bad_electric_intensity(test_args: Args) -> None:
     electric_intensity = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        cross_section_law.calculate_cross_sectional_area_of_interaction(test_args.ionization_energy,
-            test_args.mass_of_atom, test_args.pressure, test_args.temperature, electric_intensity)
+        cross_section_law.calculate_cross_sectional_area_of_interaction(
+            test_args.ionization_energy, test_args.mass_of_atom, test_args.pressure,
+            test_args.temperature, electric_intensity)
     with raises(TypeError):
-        cross_section_law.calculate_cross_sectional_area_of_interaction(test_args.ionization_energy,
-            test_args.mass_of_atom, test_args.pressure, test_args.temperature, 100)
+        cross_section_law.calculate_cross_sectional_area_of_interaction(
+            test_args.ionization_energy, test_args.mass_of_atom, test_args.pressure,
+            test_args.temperature, 100)
