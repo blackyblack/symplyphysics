@@ -6,8 +6,7 @@ from symplyphysics.definitions import period_from_angular_frequency as period_de
 from symplyphysics.laws.dynamics import (
     period_of_spring_from_mass as spring_period_law,)
 from symplyphysics.laws.kinematic import (
-    displacement_in_simple_harmonic_motion as harmonic_law,
-)
+    displacement_in_simple_harmonic_motion as harmonic_law,)
 
 # Description
 ## A simple harmonic oscillator consists of a block of mass 2.00 kg attached to a spring of

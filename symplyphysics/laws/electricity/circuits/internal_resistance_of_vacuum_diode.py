@@ -24,12 +24,10 @@ voltage = Symbol("voltage", units.voltage)
 law = Eq(internal_resistance, 2 / (3 * diode_constant * sqrt(voltage)))
 
 
-@validate_input(diode_constant_=diode_constant,
-    voltage_=voltage)
+@validate_input(diode_constant_=diode_constant, voltage_=voltage)
 @validate_output(internal_resistance)
 def calculate_internal_resistance(diode_constant_: Quantity, voltage_: Quantity) -> Quantity:
-    result_expr = solve(law, internal_resistance,
-        dict=True)[0][internal_resistance]
+    result_expr = solve(law, internal_resistance, dict=True)[0][internal_resistance]
     result_expr = result_expr.subs({
         diode_constant: diode_constant_,
         voltage: voltage_,

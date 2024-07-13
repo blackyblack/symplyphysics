@@ -28,7 +28,7 @@ def test_bad_factor(test_args: Args) -> None:
     gb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         law.calculate_kinetic_energy(gb, test_args.m)
-    
+
     with raises(ValueError):
         law.calculate_kinetic_energy(0.3, test_args.m)
 

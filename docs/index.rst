@@ -8,9 +8,9 @@ Contents:
 .. toctree::
   :maxdepth: 4
 
-  laws
-  definitions
-  symbols
+  generated/symplyphysics.laws
+  generated/symplyphysics.definitions
+  generated/symplyphysics.symbols
 
 Indices and tables
 ==================

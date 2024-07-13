@@ -14,7 +14,10 @@ from symplyphysics.laws.chemistry import coefficient_of_volumetric_ionization_of
 ## Then the coefficient of volumetric ionization will be 12.8 [1 / centimeter].
 
 Args = namedtuple("Args", [
-    "first_constant_of_gas", "second_constant_of_gas", "pressure", "electric_intensity",
+    "first_constant_of_gas",
+    "second_constant_of_gas",
+    "pressure",
+    "electric_intensity",
 ])
 
 
@@ -41,40 +44,44 @@ def test_basic_coefficient_of_volumetric_ionization(test_args: Args) -> None:
 def test_bad_first_constant_of_gas(test_args: Args) -> None:
     first_constant_of_gas = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        coefficient_law.calculate_coefficient_of_volumetric_ionization(first_constant_of_gas,
-            test_args.second_constant_of_gas, test_args.pressure,
+        coefficient_law.calculate_coefficient_of_volumetric_ionization(
+            first_constant_of_gas, test_args.second_constant_of_gas, test_args.pressure,
             test_args.electric_intensity)
     with raises(TypeError):
-        coefficient_law.calculate_coefficient_of_volumetric_ionization(100,
-            test_args.second_constant_of_gas, test_args.pressure,
-            test_args.electric_intensity)
+        coefficient_law.calculate_coefficient_of_volumetric_ionization(
+            100, test_args.second_constant_of_gas, test_args.pressure, test_args.electric_intensity)
 
 
 def test_bad_second_constant_of_gas(test_args: Args) -> None:
     second_constant_of_gas = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        coefficient_law.calculate_coefficient_of_volumetric_ionization(test_args.first_constant_of_gas,
-            second_constant_of_gas, test_args.pressure, test_args.electric_intensity)
+        coefficient_law.calculate_coefficient_of_volumetric_ionization(
+            test_args.first_constant_of_gas, second_constant_of_gas, test_args.pressure,
+            test_args.electric_intensity)
     with raises(TypeError):
-        coefficient_law.calculate_coefficient_of_volumetric_ionization(test_args.first_constant_of_gas,
-            100, test_args.pressure, test_args.electric_intensity)
+        coefficient_law.calculate_coefficient_of_volumetric_ionization(
+            test_args.first_constant_of_gas, 100, test_args.pressure, test_args.electric_intensity)
 
 
 def test_bad_pressure(test_args: Args) -> None:
     pressure = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        coefficient_law.calculate_coefficient_of_volumetric_ionization(test_args.first_constant_of_gas,
-            test_args.second_constant_of_gas, pressure, test_args.electric_intensity)
+        coefficient_law.calculate_coefficient_of_volumetric_ionization(
+            test_args.first_constant_of_gas, test_args.second_constant_of_gas, pressure,
+            test_args.electric_intensity)
     with raises(TypeError):
-        coefficient_law.calculate_coefficient_of_volumetric_ionization(test_args.first_constant_of_gas,
-            test_args.second_constant_of_gas, 100, test_args.electric_intensity)
+        coefficient_law.calculate_coefficient_of_volumetric_ionization(
+            test_args.first_constant_of_gas, test_args.second_constant_of_gas, 100,
+            test_args.electric_intensity)
 
 
 def test_bad_electric_intensity(test_args: Args) -> None:
     electric_intensity = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        coefficient_law.calculate_coefficient_of_volumetric_ionization(test_args.first_constant_of_gas,
-            test_args.second_constant_of_gas, test_args.pressure, electric_intensity)
+        coefficient_law.calculate_coefficient_of_volumetric_ionization(
+            test_args.first_constant_of_gas, test_args.second_constant_of_gas, test_args.pressure,
+            electric_intensity)
     with raises(TypeError):
-        coefficient_law.calculate_coefficient_of_volumetric_ionization(test_args.first_constant_of_gas,
-            test_args.second_constant_of_gas, test_args.pressure, 100)
+        coefficient_law.calculate_coefficient_of_volumetric_ionization(
+            test_args.first_constant_of_gas, test_args.second_constant_of_gas, test_args.pressure,
+            100)

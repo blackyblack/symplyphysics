@@ -24,12 +24,10 @@ voltage = Symbol("voltage", units.voltage)
 law = Eq(current, diode_constant * voltage**Rational(3, 2))
 
 
-@validate_input(diode_constant_=diode_constant,
-    voltage_=voltage)
+@validate_input(diode_constant_=diode_constant, voltage_=voltage)
 @validate_output(current)
 def calculate_current(diode_constant_: Quantity, voltage_: Quantity) -> Quantity:
-    result_expr = solve(law, current,
-        dict=True)[0][current]
+    result_expr = solve(law, current, dict=True)[0][current]
     result_expr = result_expr.subs({
         diode_constant: diode_constant_,
         voltage: voltage_,

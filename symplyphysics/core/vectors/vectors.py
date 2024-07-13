@@ -95,7 +95,7 @@ class Vector:
             None,
             variables=True)
         return Vector.from_sympy_vector(transformed_vector_sympy, coordinate_system)
-    
+
     def simplify(self, **kwargs: Any) -> Vector:
         components = [simplify(component, **kwargs) for component in self.components]
         return Vector(components, self.coordinate_system)

@@ -1,3 +1,10 @@
+"""
+Physics symbols
+===============
+
+Symbols represent physical quantities, units, mathematical operations and relationships.
+"""
+
 from ..core.symbols.symbols import Symbol
 from . import (
     basic,

@@ -1,6 +1,6 @@
 from sympy import (Eq, solve, dsolve)
-from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, Function, print_expression, validate_input,
-    validate_output)
+from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, Function,
+    print_expression, validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import velocity_is_movement_derivative as velocity_definition
 from symplyphysics.definitions import acceleration_is_velocity_derivative as acceleration_definition
@@ -20,7 +20,9 @@ from symplyphysics.definitions import acceleration_is_velocity_derivative as acc
 ## - At the start of observation object is in zero position
 
 movement_time = Symbol("movement_time", units.time)
-constant_acceleration = clone_symbol(symbols.kinematic.acceleration, "constant_acceleration", constant=True)
+constant_acceleration = clone_symbol(symbols.kinematic.acceleration,
+    "constant_acceleration",
+    constant=True)
 initial_velocity = Symbol("initial_velocity", units.velocity)
 distance = Function("distance_function", units.length)
 
@@ -30,8 +32,10 @@ law = Eq(distance(movement_time),
 # Derive the same law from velocity and acceleration definitions
 
 constant_acceleration_definition = acceleration_definition.definition.subs({
-    acceleration_definition.acceleration_function(acceleration_definition.time): constant_acceleration,
-    acceleration_definition.time: movement_time
+    acceleration_definition.acceleration_function(acceleration_definition.time):
+        constant_acceleration,
+    acceleration_definition.time:
+        movement_time
 })
 dsolved_velocity = dsolve(constant_acceleration_definition,
     acceleration_definition.velocity(movement_time))

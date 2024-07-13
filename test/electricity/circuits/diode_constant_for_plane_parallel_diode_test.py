@@ -21,26 +21,22 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_diode_constant(test_args: Args) -> None:
-    result = constant_law.calculate_diode_constant(
-        test_args.electrode_area, test_args.distance_between_electrodes)
+    result = constant_law.calculate_diode_constant(test_args.electrode_area,
+        test_args.distance_between_electrodes)
     assert_equal(result, 46.7 * prefixes.micro * units.ampere / units.volt**Rational(3, 2))
 
 
 def test_bad_electrode_area(test_args: Args) -> None:
     electrode_area = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        constant_law.calculate_diode_constant(electrode_area,
-            test_args.distance_between_electrodes)
+        constant_law.calculate_diode_constant(electrode_area, test_args.distance_between_electrodes)
     with raises(TypeError):
-        constant_law.calculate_diode_constant(100,
-            test_args.distance_between_electrodes)
+        constant_law.calculate_diode_constant(100, test_args.distance_between_electrodes)
 
 
 def test_bad_distance_between_electrodes(test_args: Args) -> None:
     distance_between_electrodes = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        constant_law.calculate_diode_constant(
-            test_args.electrode_area, distance_between_electrodes)
+        constant_law.calculate_diode_constant(test_args.electrode_area, distance_between_electrodes)
     with raises(TypeError):
-        constant_law.calculate_diode_constant(
-            test_args.electrode_area, 100)
+        constant_law.calculate_diode_constant(test_args.electrode_area, 100)

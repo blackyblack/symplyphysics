@@ -14,7 +14,8 @@ from symplyphysics import (units, Quantity, Symbol, validate_input, validate_out
 
 velocity = Symbol("velocity", units.velocity)
 
-mobility_at_unit_pressure = Symbol("mobility_at_unit_pressure", units.velocity * units.pressure * units.length / units.voltage)
+mobility_at_unit_pressure = Symbol("mobility_at_unit_pressure",
+    units.velocity * units.pressure * units.length / units.voltage)
 pressure = Symbol("pressure", units.pressure)
 electric_intensity = Symbol("electric_intensity", units.voltage / units.length)
 
@@ -25,10 +26,9 @@ law = Eq(velocity, mobility_at_unit_pressure * electric_intensity / pressure)
     pressure_=pressure,
     electric_intensity_=electric_intensity)
 @validate_output(velocity)
-def calculate_velocity(mobility_at_unit_pressure_: Quantity,
-    pressure_: Quantity, electric_intensity_: Quantity) -> Quantity:
-    result_expr = solve(law, velocity,
-        dict=True)[0][velocity]
+def calculate_velocity(mobility_at_unit_pressure_: Quantity, pressure_: Quantity,
+    electric_intensity_: Quantity) -> Quantity:
+    result_expr = solve(law, velocity, dict=True)[0][velocity]
     result_expr = result_expr.subs({
         mobility_at_unit_pressure: mobility_at_unit_pressure_,
         pressure: pressure_,

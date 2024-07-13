@@ -10,7 +10,6 @@ from symplyphysics import (
 )
 from symplyphysics.core.vectors.arithmetics import reject_cartesian_vector
 
-
 # Description
 ## Centripetal acceleration is the acceleration of a body in a rotating coordinate system
 ## which is directed towards the axis of rotation.

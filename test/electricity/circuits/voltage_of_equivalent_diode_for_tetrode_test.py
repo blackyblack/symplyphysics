@@ -9,7 +9,11 @@ from symplyphysics.laws.electricity.circuits import voltage_of_equivalent_diode_
 ## The coefficient of direct permeability of the first grid is 2. The coefficient of direct permeability of the second grid is 3.
 ## Then the voltage between the cathode and the anode of an equivalent diode for a tetrode will be equal to 157.29 volt.
 
-Args = namedtuple("Args", ["voltage_of_first_grid", "voltage_of_second_grid", "anode_voltage", "coefficient_direct_permeability_of_first_grid", "coefficient_direct_permeability_of_second_grid", "distance_to_anode", "distance_to_first_grid"])
+Args = namedtuple("Args", [
+    "voltage_of_first_grid", "voltage_of_second_grid", "anode_voltage",
+    "coefficient_direct_permeability_of_first_grid",
+    "coefficient_direct_permeability_of_second_grid", "distance_to_anode", "distance_to_first_grid"
+])
 
 
 @fixture(name="test_args")
@@ -23,68 +27,125 @@ def test_args_fixture() -> Args:
     distance_to_first_grid = Quantity(0.5 * units.centimeter)
 
     return Args(voltage_of_first_grid=voltage_of_first_grid,
-                voltage_of_second_grid=voltage_of_second_grid,
-                anode_voltage=anode_voltage,
-                coefficient_direct_permeability_of_first_grid=coefficient_direct_permeability_of_first_grid,
-                coefficient_direct_permeability_of_second_grid=coefficient_direct_permeability_of_second_grid,
-                distance_to_anode=distance_to_anode,
-                distance_to_first_grid=distance_to_first_grid)
+        voltage_of_second_grid=voltage_of_second_grid,
+        anode_voltage=anode_voltage,
+        coefficient_direct_permeability_of_first_grid=coefficient_direct_permeability_of_first_grid,
+        coefficient_direct_permeability_of_second_grid=
+        coefficient_direct_permeability_of_second_grid,
+        distance_to_anode=distance_to_anode,
+        distance_to_first_grid=distance_to_first_grid)
 
 
 def test_basic_voltage_of_equivalent_diode(test_args: Args) -> None:
     result = voltage_law.calculate_voltage_of_equivalent_diode(
-        test_args.voltage_of_first_grid, test_args.voltage_of_second_grid, test_args.anode_voltage, test_args.coefficient_direct_permeability_of_first_grid, test_args.coefficient_direct_permeability_of_second_grid, test_args.distance_to_anode, test_args.distance_to_first_grid)
+        test_args.voltage_of_first_grid, test_args.voltage_of_second_grid, test_args.anode_voltage,
+        test_args.coefficient_direct_permeability_of_first_grid,
+        test_args.coefficient_direct_permeability_of_second_grid, test_args.distance_to_anode,
+        test_args.distance_to_first_grid)
     assert_equal(result, 157.29 * units.volt)
 
 
 def test_bad_voltage_of_first_grid(test_args: Args) -> None:
     voltage_of_first_grid = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        voltage_law.calculate_voltage_of_equivalent_diode(voltage_of_first_grid, test_args.voltage_of_second_grid, test_args.anode_voltage, test_args.coefficient_direct_permeability_of_first_grid, test_args.coefficient_direct_permeability_of_second_grid, test_args.distance_to_anode, test_args.distance_to_first_grid)
+        voltage_law.calculate_voltage_of_equivalent_diode(
+            voltage_of_first_grid, test_args.voltage_of_second_grid, test_args.anode_voltage,
+            test_args.coefficient_direct_permeability_of_first_grid,
+            test_args.coefficient_direct_permeability_of_second_grid, test_args.distance_to_anode,
+            test_args.distance_to_first_grid)
     with raises(TypeError):
-        voltage_law.calculate_voltage_of_equivalent_diode(100, test_args.voltage_of_second_grid, test_args.anode_voltage, test_args.coefficient_direct_permeability_of_first_grid, test_args.coefficient_direct_permeability_of_second_grid, test_args.distance_to_anode, test_args.distance_to_first_grid)
+        voltage_law.calculate_voltage_of_equivalent_diode(
+            100, test_args.voltage_of_second_grid, test_args.anode_voltage,
+            test_args.coefficient_direct_permeability_of_first_grid,
+            test_args.coefficient_direct_permeability_of_second_grid, test_args.distance_to_anode,
+            test_args.distance_to_first_grid)
+
 
 def test_bad_voltage_of_second_grid(test_args: Args) -> None:
     voltage_of_second_grid = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        voltage_law.calculate_voltage_of_equivalent_diode(test_args.voltage_of_first_grid, voltage_of_second_grid, test_args.anode_voltage, test_args.coefficient_direct_permeability_of_first_grid, test_args.coefficient_direct_permeability_of_second_grid, test_args.distance_to_anode, test_args.distance_to_first_grid)
+        voltage_law.calculate_voltage_of_equivalent_diode(
+            test_args.voltage_of_first_grid, voltage_of_second_grid, test_args.anode_voltage,
+            test_args.coefficient_direct_permeability_of_first_grid,
+            test_args.coefficient_direct_permeability_of_second_grid, test_args.distance_to_anode,
+            test_args.distance_to_first_grid)
     with raises(TypeError):
-        voltage_law.calculate_voltage_of_equivalent_diode(test_args.voltage_of_first_grid, 100, test_args.anode_voltage, test_args.coefficient_direct_permeability_of_first_grid, test_args.coefficient_direct_permeability_of_second_grid, test_args.distance_to_anode, test_args.distance_to_first_grid)
+        voltage_law.calculate_voltage_of_equivalent_diode(
+            test_args.voltage_of_first_grid, 100, test_args.anode_voltage,
+            test_args.coefficient_direct_permeability_of_first_grid,
+            test_args.coefficient_direct_permeability_of_second_grid, test_args.distance_to_anode,
+            test_args.distance_to_first_grid)
 
 
 def test_bad_anode_voltage(test_args: Args) -> None:
     anode_voltage = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        voltage_law.calculate_voltage_of_equivalent_diode(test_args.voltage_of_first_grid, test_args.voltage_of_second_grid, anode_voltage, test_args.coefficient_direct_permeability_of_first_grid, test_args.coefficient_direct_permeability_of_second_grid, test_args.distance_to_anode, test_args.distance_to_first_grid)
+        voltage_law.calculate_voltage_of_equivalent_diode(
+            test_args.voltage_of_first_grid, test_args.voltage_of_second_grid, anode_voltage,
+            test_args.coefficient_direct_permeability_of_first_grid,
+            test_args.coefficient_direct_permeability_of_second_grid, test_args.distance_to_anode,
+            test_args.distance_to_first_grid)
     with raises(TypeError):
-        voltage_law.calculate_voltage_of_equivalent_diode(test_args.voltage_of_first_grid, test_args.voltage_of_second_grid, 100, test_args.coefficient_direct_permeability_of_first_grid, test_args.coefficient_direct_permeability_of_second_grid, test_args.distance_to_anode, test_args.distance_to_first_grid)
+        voltage_law.calculate_voltage_of_equivalent_diode(
+            test_args.voltage_of_first_grid, test_args.voltage_of_second_grid, 100,
+            test_args.coefficient_direct_permeability_of_first_grid,
+            test_args.coefficient_direct_permeability_of_second_grid, test_args.distance_to_anode,
+            test_args.distance_to_first_grid)
 
 
 def test_bad_coefficient_direct_permeability_of_first_grid(test_args: Args) -> None:
     coefficient_direct_permeability_of_first_grid = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        voltage_law.calculate_voltage_of_equivalent_diode(test_args.voltage_of_first_grid, test_args.voltage_of_second_grid, test_args.anode_voltage, coefficient_direct_permeability_of_first_grid, test_args.coefficient_direct_permeability_of_second_grid, test_args.distance_to_anode, test_args.distance_to_first_grid)
+        voltage_law.calculate_voltage_of_equivalent_diode(
+            test_args.voltage_of_first_grid, test_args.voltage_of_second_grid,
+            test_args.anode_voltage, coefficient_direct_permeability_of_first_grid,
+            test_args.coefficient_direct_permeability_of_second_grid, test_args.distance_to_anode,
+            test_args.distance_to_first_grid)
 
 
 def test_bad_coefficient_direct_permeability_of_second_grid(test_args: Args) -> None:
     coefficient_direct_permeability_of_second_grid = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        voltage_law.calculate_voltage_of_equivalent_diode(test_args.voltage_of_first_grid, test_args.voltage_of_second_grid, test_args.anode_voltage, test_args.coefficient_direct_permeability_of_first_grid, coefficient_direct_permeability_of_second_grid, test_args.distance_to_anode, test_args.distance_to_first_grid)
+        voltage_law.calculate_voltage_of_equivalent_diode(
+            test_args.voltage_of_first_grid, test_args.voltage_of_second_grid,
+            test_args.anode_voltage, test_args.coefficient_direct_permeability_of_first_grid,
+            coefficient_direct_permeability_of_second_grid, test_args.distance_to_anode,
+            test_args.distance_to_first_grid)
 
 
 def test_bad_distance_to_anode(test_args: Args) -> None:
     distance_to_anode = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        voltage_law.calculate_voltage_of_equivalent_diode(test_args.voltage_of_first_grid, test_args.voltage_of_second_grid, test_args.anode_voltage, test_args.coefficient_direct_permeability_of_first_grid, test_args.coefficient_direct_permeability_of_second_grid, distance_to_anode, test_args.distance_to_first_grid)
+        voltage_law.calculate_voltage_of_equivalent_diode(
+            test_args.voltage_of_first_grid, test_args.voltage_of_second_grid,
+            test_args.anode_voltage, test_args.coefficient_direct_permeability_of_first_grid,
+            test_args.coefficient_direct_permeability_of_second_grid, distance_to_anode,
+            test_args.distance_to_first_grid)
     with raises(TypeError):
-        voltage_law.calculate_voltage_of_equivalent_diode(test_args.voltage_of_first_grid, test_args.voltage_of_second_grid, test_args.anode_voltage, test_args.coefficient_direct_permeability_of_first_grid, test_args.coefficient_direct_permeability_of_second_grid, 100, test_args.distance_to_first_grid)
+        voltage_law.calculate_voltage_of_equivalent_diode(
+            test_args.voltage_of_first_grid, test_args.voltage_of_second_grid,
+            test_args.anode_voltage, test_args.coefficient_direct_permeability_of_first_grid,
+            test_args.coefficient_direct_permeability_of_second_grid, 100,
+            test_args.distance_to_first_grid)
 
 
 def test_bad_distance_to_first_grid(test_args: Args) -> None:
     distance_to_first_grid = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        voltage_law.calculate_voltage_of_equivalent_diode(test_args.voltage_of_first_grid, test_args.voltage_of_second_grid, test_args.anode_voltage, test_args.coefficient_direct_permeability_of_first_grid, test_args.coefficient_direct_permeability_of_second_grid, test_args.distance_to_anode, distance_to_first_grid)
+        voltage_law.calculate_voltage_of_equivalent_diode(
+            test_args.voltage_of_first_grid, test_args.voltage_of_second_grid,
+            test_args.anode_voltage, test_args.coefficient_direct_permeability_of_first_grid,
+            test_args.coefficient_direct_permeability_of_second_grid, test_args.distance_to_anode,
+            distance_to_first_grid)
     with raises(TypeError):
-        voltage_law.calculate_voltage_of_equivalent_diode(test_args.voltage_of_first_grid, test_args.voltage_of_second_grid, test_args.anode_voltage, test_args.coefficient_direct_permeability_of_first_grid, test_args.coefficient_direct_permeability_of_second_grid, test_args.distance_to_anode, 100)
+        voltage_law.calculate_voltage_of_equivalent_diode(
+            test_args.voltage_of_first_grid, test_args.voltage_of_second_grid,
+            test_args.anode_voltage, test_args.coefficient_direct_permeability_of_first_grid,
+            test_args.coefficient_direct_permeability_of_second_grid, test_args.distance_to_anode,
+            100)
     with raises(ValueError):
-        voltage_law.calculate_voltage_of_equivalent_diode(test_args.voltage_of_first_grid, test_args.voltage_of_second_grid, test_args.anode_voltage, test_args.coefficient_direct_permeability_of_first_grid, test_args.coefficient_direct_permeability_of_second_grid, test_args.distance_to_first_grid, test_args.distance_to_anode)
+        voltage_law.calculate_voltage_of_equivalent_diode(
+            test_args.voltage_of_first_grid, test_args.voltage_of_second_grid,
+            test_args.anode_voltage, test_args.coefficient_direct_permeability_of_first_grid,
+            test_args.coefficient_direct_permeability_of_second_grid,
+            test_args.distance_to_first_grid, test_args.distance_to_anode)

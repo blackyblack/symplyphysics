@@ -17,7 +17,8 @@ gain_of_input_matching_circuit = Symbol("gain_of_input_matching_circuit", dimens
 transistor_gain = Symbol("transistor_gain", dimensionless)
 gain_of_output_matching_circuit = Symbol("gain_of_output_matching_circuit", dimensionless)
 
-law = Eq(full_gain, gain_of_input_matching_circuit * transistor_gain * gain_of_output_matching_circuit)
+law = Eq(full_gain,
+    gain_of_input_matching_circuit * transistor_gain * gain_of_output_matching_circuit)
 
 
 @validate_input(gain_of_input_matching_circuit_=gain_of_input_matching_circuit,

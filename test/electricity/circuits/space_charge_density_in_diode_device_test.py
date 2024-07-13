@@ -15,13 +15,12 @@ def test_args_fixture() -> Args:
     voltage_on_grid = Quantity(100 * units.volt)
     distance_to_cathode = Quantity(2 * units.centimeter)
 
-    return Args(voltage_on_grid=voltage_on_grid,
-                distance_to_cathode=distance_to_cathode)
+    return Args(voltage_on_grid=voltage_on_grid, distance_to_cathode=distance_to_cathode)
 
 
 def test_basic_space_charge_density(test_args: Args) -> None:
-    result = density_law.calculate_space_charge_density(
-        test_args.voltage_on_grid, test_args.distance_to_cathode)
+    result = density_law.calculate_space_charge_density(test_args.voltage_on_grid,
+        test_args.distance_to_cathode)
     assert_equal(result, 9.84e-7 * units.coulomb / units.meter**3)
 
 

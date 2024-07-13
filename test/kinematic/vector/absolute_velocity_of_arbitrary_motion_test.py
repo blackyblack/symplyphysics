@@ -49,7 +49,7 @@ def test_bad_velocity(test_args: Args) -> None:
         law.calculate_absolute_velocity(vb_vector, test_args.vtr)
     with raises(errors.UnitsError):
         law.calculate_absolute_velocity(test_args.vrel, vb_vector)
-    
+
     vb_scalar = Quantity(units.speed_of_light)
     with raises(AttributeError):
         law.calculate_absolute_velocity(vb_scalar, test_args.vtr)

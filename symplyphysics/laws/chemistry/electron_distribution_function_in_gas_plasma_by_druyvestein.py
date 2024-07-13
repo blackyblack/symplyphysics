@@ -1,13 +1,6 @@
 from sympy import Eq, Rational, solve, exp
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    validate_input,
-    validate_output,
-    dimensionless,
-    convert_to_float
-)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless,
+    convert_to_float)
 from sympy.physics.units import elementary_charge
 from symplyphysics.core.symbols.probability import Probability
 
@@ -31,7 +24,8 @@ voltage_between_electrodes = Symbol("voltage_between_electrodes", units.voltage)
 electron_energy = Symbol("electron_energy", units.energy)
 
 constant_energy = Quantity(1.04 * units.electronvolt)
-expression_1 = constant_energy * (elementary_charge * voltage_between_electrodes)**Rational(1, 2) / electron_energy**Rational(3, 2)
+expression_1 = constant_energy * (elementary_charge * voltage_between_electrodes)**Rational(1,
+    2) / electron_energy**Rational(3, 2)
 expression_2 = exp(-0.55 * (elementary_charge * voltage_between_electrodes)**2 / electron_energy**2)
 law = Eq(value_of_distribution_function, expression_1 * expression_2)
 

@@ -12,20 +12,21 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematic.vector import acceleration_due_to_non_uniform_rotation as law
 
-
 Args = namedtuple("Args", "dw dt r")
 
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
-    dw = QuantityVector([0, 0.001 * units.radian / units.second, -0.002 * units.radian / units.second])
+    dw = QuantityVector(
+        [0, 0.001 * units.radian / units.second, -0.002 * units.radian / units.second])
     dt = Quantity(0.001 * units.second)
     r = QuantityVector([1 * units.meter, -3 * units.meter, 0.5 * units.meter])
     return Args(dw=dw, dt=dt, r=r)
 
 
 def test_law(test_args: Args) -> None:
-    result = law.calculate_non_uniform_rotation_acceleration(test_args.dw, test_args.dt, test_args.r)
+    result = law.calculate_non_uniform_rotation_acceleration(test_args.dw, test_args.dt,
+        test_args.r)
 
     a_unit = units.meter / units.second**2
     assert_equal_vectors(

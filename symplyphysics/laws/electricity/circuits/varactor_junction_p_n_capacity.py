@@ -1,6 +1,12 @@
 from sympy import Eq, solve
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output,
-                           dimensionless,)
+from symplyphysics import (
+    units,
+    Quantity,
+    Symbol,
+    validate_input,
+    validate_output,
+    dimensionless,
+)
 
 # Description
 ## The principle of operation of the variator is based on the dependence of the barrier capacitance of the p-n junction on the voltage value.
@@ -16,21 +22,25 @@ from symplyphysics import (units, Quantity, Symbol, validate_input, validate_out
 
 junction_capacitance = Symbol("junction_capacitance", units.capacitance)
 
-junction_capacitance_without_bias_voltage = Symbol("junction_capacitance_without_bias_voltage", units.capacitance)
+junction_capacitance_without_bias_voltage = Symbol("junction_capacitance_without_bias_voltage",
+    units.capacitance)
 voltage = Symbol("voltage", units.voltage)
 material_parameter = Symbol("material_parameter", units.voltage)
 doping_coefficient = Symbol("doping_coefficient", dimensionless)
 
-law = Eq(junction_capacitance, junction_capacitance_without_bias_voltage / (1 - voltage / material_parameter)**doping_coefficient)
+law = Eq(
+    junction_capacitance, junction_capacitance_without_bias_voltage /
+    (1 - voltage / material_parameter)**doping_coefficient)
 
 
-@validate_input(junction_capacitance_without_bias_voltage_=junction_capacitance_without_bias_voltage,
-                voltage_=voltage,
-                material_parameter_=material_parameter,
-                doping_coefficient_=doping_coefficient)
+@validate_input(
+    junction_capacitance_without_bias_voltage_=junction_capacitance_without_bias_voltage,
+    voltage_=voltage,
+    material_parameter_=material_parameter,
+    doping_coefficient_=doping_coefficient)
 @validate_output(junction_capacitance)
-def calculate_junction_capacitance(junction_capacitance_without_bias_voltage_: Quantity, voltage_: Quantity,
-                                                  material_parameter_: Quantity, doping_coefficient_: float) -> Quantity:
+def calculate_junction_capacitance(junction_capacitance_without_bias_voltage_: Quantity,
+    voltage_: Quantity, material_parameter_: Quantity, doping_coefficient_: float) -> Quantity:
     result_expr = solve(law, junction_capacitance, dict=True)[0][junction_capacitance]
     result_expr = result_expr.subs({
         junction_capacitance_without_bias_voltage: junction_capacitance_without_bias_voltage_,

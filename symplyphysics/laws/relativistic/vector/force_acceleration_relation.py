@@ -54,7 +54,6 @@ def acceleration_law(force_: Vector, velocity_: Vector) -> Vector:
     return scale_vector(1 / mass_factor_, resulting_force)
 
 
-
 def force_law(acceleration_: Vector, velocity_: Vector) -> Vector:
     acceleration_parallel_ = project_vector(acceleration_, velocity_)
     acceleration_orthogonal_ = reject_cartesian_vector(acceleration_, velocity_)
@@ -93,10 +92,9 @@ def rest_mass_law(
     lhs = vector_magnitude(force_)
     rhs = vector_magnitude(
         add_cartesian_vectors(
-            scale_vector(lorentz_factor_**3, acceleration_parallel_),
-            scale_vector(lorentz_factor_, acceleration_orthogonal_),
-        )
-    )
+        scale_vector(lorentz_factor_**3, acceleration_parallel_),
+        scale_vector(lorentz_factor_, acceleration_orthogonal_),
+        ))
 
     return lhs / rhs
 
@@ -120,8 +118,7 @@ _force_via_acceleration = force_law(_acceleration, _velocity).simplify()
 _acceleration_derived = acceleration_law(_force_via_acceleration, _velocity).simplify()
 
 for _acceleration_derived_component, _acceleration_component in zip(
-    _acceleration_derived.components, _acceleration.components
-):
+        _acceleration_derived.components, _acceleration.components):
     assert expr_equals(
         sympify(_acceleration_derived_component),
         _acceleration_component,

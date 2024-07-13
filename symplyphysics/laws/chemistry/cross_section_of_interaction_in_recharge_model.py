@@ -1,14 +1,7 @@
 from sympy import Eq, nsolve, pi, log, sqrt
 from sympy.physics.units import elementary_charge, boltzmann_constant
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    validate_input,
-    validate_output,
-    clone_symbol,
-    symbols
-)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, clone_symbol,
+    symbols)
 from symplyphysics.quantities import bohr_radius, hydrogen_ionization_energy
 
 # Description
@@ -42,7 +35,9 @@ expression_3 = cross_sectional_area_of_interaction * pressure * mass_of_atom
 expression_4 = 2 * boltzmann_constant * temperature * elementary_charge * electric_intensity
 expression_5 = hydrogen_ionization_energy / ionization_energy
 
-law = Eq(cross_sectional_area_of_interaction, pi * bohr_radius**2 * expression_5 * (log(expression_2 * (expression_3 / expression_4) * expression_1))**2)
+law = Eq(
+    cross_sectional_area_of_interaction, pi * bohr_radius**2 * expression_5 * (log(expression_2 *
+    (expression_3 / expression_4) * expression_1))**2)
 
 
 @validate_input(ionization_energy_=ionization_energy,
@@ -52,8 +47,8 @@ law = Eq(cross_sectional_area_of_interaction, pi * bohr_radius**2 * expression_5
     electric_intensity_=electric_intensity)
 @validate_output(cross_sectional_area_of_interaction)
 def calculate_cross_sectional_area_of_interaction(ionization_energy_: Quantity,
-    mass_of_atom_: Quantity, pressure_: Quantity,
-    temperature_: Quantity, electric_intensity_: Quantity) -> Quantity:
+    mass_of_atom_: Quantity, pressure_: Quantity, temperature_: Quantity,
+    electric_intensity_: Quantity) -> Quantity:
     # nsolve() only works with numerical equations
     applied_law = law.subs({
         ionization_energy: ionization_energy_.scale_factor,

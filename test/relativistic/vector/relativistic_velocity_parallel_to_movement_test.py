@@ -22,7 +22,9 @@ Args = namedtuple("Args", "up ul v")
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
     up = QuantityVector([Quantity(0.1 * speed_of_light), Quantity(0.2 * units.speed_of_light), 0])
-    ul = QuantityVector([Quantity(-0.111 * speed_of_light), Quantity(-0.222 * units.speed_of_light), 0])
+    ul = QuantityVector(
+        [Quantity(-0.111 * speed_of_light),
+        Quantity(-0.222 * units.speed_of_light), 0])
     v = QuantityVector([Quantity(-0.2 * speed_of_light), Quantity(-0.4 * units.speed_of_light), 0])
     return Args(up=up, ul=ul, v=v)
 
