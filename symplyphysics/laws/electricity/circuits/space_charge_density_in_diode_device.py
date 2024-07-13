@@ -1,4 +1,5 @@
 from sympy import Eq, solve
+from sympy.physics.units import electric_constant
 from symplyphysics import (
     units,
     Quantity,
@@ -6,7 +7,6 @@ from symplyphysics import (
     validate_input,
     validate_output,
 )
-from sympy.physics.units import electric_constant
 
 # Description
 ## The simplest device implementing a cathode current control method is a diode device.

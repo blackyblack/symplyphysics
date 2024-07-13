@@ -17,26 +17,26 @@ from symplyphysics import (units, Quantity, Symbol, validate_input, validate_out
 
 direct_permeability_coefficient = Symbol("direct_permeability_coefficient", dimensionless)
 
-tabular_coefficient_T = Symbol("tabular_coefficient_T", dimensionless)
+tabular_coefficient_t = Symbol("tabular_coefficient_t", dimensionless)
 grid_step = Symbol("grid_step", units.length)
 distance_to_grid = Symbol("distance_to_grid", units.length)
 tabular_coefficient_d = Symbol("tabular_coefficient_d", dimensionless)
 
 law = Eq(direct_permeability_coefficient,
-    tabular_coefficient_T * grid_step / (distance_to_grid * tabular_coefficient_d))
+    tabular_coefficient_t * grid_step / (distance_to_grid * tabular_coefficient_d))
 
 
-@validate_input(tabular_coefficient_T_=tabular_coefficient_T,
+@validate_input(tabular_coefficient_t_=tabular_coefficient_t,
     grid_step_=grid_step,
     distance_to_grid_=distance_to_grid,
     tabular_coefficient_d_=tabular_coefficient_d)
 @validate_output(direct_permeability_coefficient)
-def calculate_direct_permeability_coefficient(tabular_coefficient_T_: float, grid_step_: Quantity,
+def calculate_direct_permeability_coefficient(tabular_coefficient_t_: float, grid_step_: Quantity,
     distance_to_grid_: Quantity, tabular_coefficient_d_: float) -> float:
     result_expr = solve(law, direct_permeability_coefficient,
         dict=True)[0][direct_permeability_coefficient]
     result_expr = result_expr.subs({
-        tabular_coefficient_T: tabular_coefficient_T_,
+        tabular_coefficient_t: tabular_coefficient_t_,
         grid_step: grid_step_,
         distance_to_grid: distance_to_grid_,
         tabular_coefficient_d: tabular_coefficient_d_

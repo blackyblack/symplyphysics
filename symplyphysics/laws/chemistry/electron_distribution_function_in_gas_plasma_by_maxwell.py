@@ -1,7 +1,7 @@
 from sympy import Eq, Rational, solve, exp
+from sympy.physics.units import elementary_charge
 from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless,
     convert_to_float)
-from sympy.physics.units import elementary_charge
 from symplyphysics.core.symbols.probability import Probability
 
 # Description

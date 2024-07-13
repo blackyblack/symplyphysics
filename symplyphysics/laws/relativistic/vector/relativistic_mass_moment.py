@@ -1,4 +1,3 @@
-from sympy.physics.units import speed_of_light
 from symplyphysics import (
     units,
     Symbol,

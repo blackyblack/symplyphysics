@@ -1,4 +1,4 @@
-from sympy import sqrt, Expr, symbols, sympify
+from sympy import Expr, symbols, sympify
 from sympy.physics.units import speed_of_light
 from symplyphysics import (
     units,

@@ -41,6 +41,7 @@ expression_3 = 1 + ((distance_to_anode / distance_to_first_grid)**Rational(4,
 law = Eq(voltage_of_equivalent_diode, (expression_1 + expression_2) / expression_3)
 
 
+#pylint: disable=too-many-arguments
 @validate_input(voltage_of_first_grid_=voltage_of_first_grid,
     voltage_of_second_grid_=voltage_of_second_grid,
     voltage_of_third_grid_=voltage_of_third_grid,
