@@ -29,7 +29,7 @@ Symbol:
     V
 """
 
-specific_impulse = Symbol("specific_impulse", units.velocity)
+exhaust_velocity = Symbol("exhaust_velocity", units.velocity)
 """
 Effective exhaust velocity of a rocket engine
 
@@ -63,12 +63,12 @@ Latex:
 """
 
 law = Eq(final_mass / initial_mass, ((1 - (speed / speed_of_light)) / (1 +
-    (speed / speed_of_light)))**(speed_of_light / (2 * specific_impulse)))
+    (speed / speed_of_light)))**(speed_of_light / (2 * exhaust_velocity)))
 r"""
 M2 / M1 = ((1 - (V / c)) / (1 + (V / c)))^(c / (2 * Ve))
 
 Latex:
-    :math:`M_2 / M_1 = ((1 - (V / c)) / (1 + (V / c)))^(c / (2 * V_e))`
+    :math:`M_2 / M_1 = ((1 - (V / c)) / (1 + (V / c)))^{c / (2 * V_e)}`
 """
 
 
@@ -76,15 +76,15 @@ def print_law() -> str:
     return print_expression(law)
 
 
-@validate_input(specific_impulse_=specific_impulse,
+@validate_input(exhaust_velocity_=exhaust_velocity,
     initial_mass_=initial_mass,
     final_mass_=final_mass)
 @validate_output(speed)
-def calculate_speed(specific_impulse_: Quantity, initial_mass_: Quantity,
+def calculate_speed(exhaust_velocity_: Quantity, initial_mass_: Quantity,
     final_mass_: Quantity) -> Quantity:
     result_expr = solve(law, speed, dict=True)[0][speed]
     result_expr = result_expr.subs({
-        specific_impulse: specific_impulse_,
+        exhaust_velocity: exhaust_velocity_,
         initial_mass: initial_mass_,
         final_mass: final_mass_
     })
