@@ -44,3 +44,6 @@ jobs:
             printf "\n-------- '%s'\n" "$(basename $f)"
             python "$f";
           done
+
+      - name: Build docs
+        run: docs/build.py -s symplyphysics -o docs/generated -e core
