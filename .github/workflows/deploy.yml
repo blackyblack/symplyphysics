@@ -38,14 +38,12 @@ jobs:
       run: |
         docs/build.py -s symplyphysics -o docs/generated -e core
 
-    - name: Push changes
-      uses: cpina/github-action-push-to-another-repository@v1.7.2
-      env:
-        SSH_DEPLOY_KEY: ${{ secrets.SYMPLYPHYSICS_PAGES_PK }}
+    - name: Deploy HTML
+      uses: peaceiris/actions-gh-pages@v4
       with:
-          # GitHub Action output files
-          source-directory: html/
-          destination-github-username: symplyphysics
-          destination-repository-name: symplyphysics.github.io
-          user-email: sam.and.tetris@gmail.com
-          target-branch: "master"
+        deploy_key: ${{ secrets.SYMPLYPHYSICS_PAGES_PK }}
+        publish_branch: master
+        publish_dir: html
+        external_repository: symplyphysics.github.io
+        user_name: symplyphysics
+        user_email: sam.and.tetris@gmail.com
