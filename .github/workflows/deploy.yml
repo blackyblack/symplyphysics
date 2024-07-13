@@ -45,8 +45,7 @@ jobs:
       with:
           # GitHub Action output files
           source-directory: html/
-          destination-github-username: <symplyphysics/symplyphysics.github.io>
-          destination-repository-name: <symplyphysics.github.io>
-          user-email: <sam.and.tetris@gmail.com>
-          # It defaults to `main`
+          destination-github-username: symplyphysics
+          destination-repository-name: symplyphysics.github.io
+          user-email: sam.and.tetris@gmail.com
           target-branch: "master"
