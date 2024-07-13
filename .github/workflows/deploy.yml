@@ -44,6 +44,6 @@ jobs:
         deploy_key: ${{ secrets.SYMPLYPHYSICS_PAGES_PK }}
         publish_branch: master
         publish_dir: html
-        external_repository: symplyphysics.github.io
+        external_repository: symplyphysics/symplyphysics.github.io
         user_name: symplyphysics
         user_email: sam.and.tetris@gmail.com
