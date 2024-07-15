@@ -37,10 +37,10 @@ def print_law() -> str:
 def calculate_input_impedance(
         load_resistance_: Quantity, parameters_: tuple[tuple[float, Quantity], tuple[Quantity,
     float]]) -> Quantity:
-    assert_equivalent_dimension(parameters_[0][1], "parameters_[0][1]",
-        "calculate_input_impedance", units.impedance)
-    assert_equivalent_dimension(parameters_[1][0], "parameters_[1][0]",
-        "calculate_input_impedance", units.conductance)
+    assert_equivalent_dimension(parameters_[0][1], "parameters_[0][1]", "calculate_input_impedance",
+        units.impedance)
+    assert_equivalent_dimension(parameters_[1][0], "parameters_[1][0]", "calculate_input_impedance",
+        units.conductance)
     result_expr = solve(law, input_impedance, dict=True)[0][input_impedance]
     result_expr = result_expr.subs({
         load_resistance: load_resistance_,

@@ -15,8 +15,7 @@ def test_args_fixture() -> Args:
     distance_between_electrodes = Quantity(1 * units.centimeter)
     voltage = Quantity(17 * units.volt)
 
-    return Args(distance_between_electrodes=distance_between_electrodes,
-        voltage=voltage)
+    return Args(distance_between_electrodes=distance_between_electrodes, voltage=voltage)
 
 
 def test_basic_limit_operating_frequency(test_args: Args) -> None:
@@ -31,15 +30,14 @@ def test_bad_distance_between_electrodes(test_args: Args) -> None:
         frequency_law.calculate_limit_operating_frequency(distance_between_electrodes,
             test_args.voltage)
     with raises(TypeError):
-        frequency_law.calculate_limit_operating_frequency(100,
-            test_args.voltage)
+        frequency_law.calculate_limit_operating_frequency(100, test_args.voltage)
 
 
 def test_bad_voltage(test_args: Args) -> None:
     voltage = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        frequency_law.calculate_limit_operating_frequency(
-            test_args.distance_between_electrodes, voltage)
+        frequency_law.calculate_limit_operating_frequency(test_args.distance_between_electrodes,
+            voltage)
     with raises(TypeError):
-        frequency_law.calculate_limit_operating_frequency(
-            test_args.distance_between_electrodes, 100)
+        frequency_law.calculate_limit_operating_frequency(test_args.distance_between_electrodes,
+            100)

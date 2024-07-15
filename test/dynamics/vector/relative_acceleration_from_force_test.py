@@ -28,7 +28,8 @@ def test_args_fixture() -> Args:
 
 
 def test_relative_law(test_args: Args) -> None:
-    result = law.calculate_relative_acceleration(test_args.m, test_args.f, test_args.a_cor, test_args.a_tr)
+    result = law.calculate_relative_acceleration(test_args.m, test_args.f, test_args.a_cor,
+        test_args.a_tr)
     assert_equal_vectors(result, test_args.a_rel)
 
 

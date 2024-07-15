@@ -35,8 +35,8 @@ def relative_acceleration_law(
 ) -> Vector:
     return subtract_cartesian_vectors(
         subtract_cartesian_vectors(
-            scale_vector(1 / mass, force_),
-            coriolis_acceleration_,
+        scale_vector(1 / mass, force_),
+        coriolis_acceleration_,
         ),
         translation_acceleration_,
     )
@@ -51,11 +51,11 @@ def force_law(
     return scale_vector(
         mass,
         add_cartesian_vectors(
-            add_cartesian_vectors(
-                relative_acceleration_,
-                coriolis_acceleration_,
-            ),
-            translation_acceleration_,
+        add_cartesian_vectors(
+        relative_acceleration_,
+        coriolis_acceleration_,
+        ),
+        translation_acceleration_,
         ),
     )
 
@@ -69,8 +69,8 @@ def mass_law(
 ) -> Expr:
     acceleration_ = add_cartesian_vectors(
         add_cartesian_vectors(
-            relative_acceleration_,
-            coriolis_acceleration_,
+        relative_acceleration_,
+        coriolis_acceleration_,
         ),
         translation_acceleration_,
     )
@@ -85,8 +85,8 @@ def coriolis_acceleration_law(
 ) -> Vector:
     return subtract_cartesian_vectors(
         subtract_cartesian_vectors(
-            scale_vector(1 / mass, force_),
-            relative_acceleration_,
+        scale_vector(1 / mass, force_),
+        relative_acceleration_,
         ),
         translation_acceleration_,
     )
@@ -100,8 +100,8 @@ def traslation_acceleration_law(
 ) -> Vector:
     return subtract_cartesian_vectors(
         subtract_cartesian_vectors(
-            scale_vector(1 / mass, force_),
-            relative_acceleration_,
+        scale_vector(1 / mass, force_),
+        relative_acceleration_,
         ),
         coriolis_acceleration_,
     )

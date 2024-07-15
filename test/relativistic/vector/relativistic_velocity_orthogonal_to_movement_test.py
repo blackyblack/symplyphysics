@@ -21,18 +21,27 @@ Args = namedtuple("Args", "up ul v")
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
-    up = QuantityVector([Quantity(0.100 * speed_of_light), Quantity(0.200 * speed_of_light), Quantity(-0.333 * speed_of_light)])
-    ul = QuantityVector([Quantity(-0.111 * speed_of_light), Quantity(-0.222 * speed_of_light), Quantity(-0.331 * speed_of_light)])
-    v = QuantityVector([Quantity(-0.200 * speed_of_light), Quantity(-0.400 * speed_of_light), Quantity(0)])
+    up = QuantityVector([
+        Quantity(0.100 * speed_of_light),
+        Quantity(0.200 * speed_of_light),
+        Quantity(-0.333 * speed_of_light)
+    ])
+    ul = QuantityVector([
+        Quantity(-0.111 * speed_of_light),
+        Quantity(-0.222 * speed_of_light),
+        Quantity(-0.331 * speed_of_light)
+    ])
+    v = QuantityVector(
+        [Quantity(-0.200 * speed_of_light),
+        Quantity(-0.400 * speed_of_light),
+        Quantity(0)])
     return Args(up=up, ul=ul, v=v)
 
 
 def test_lab_law(test_args: Args) -> None:
     result = law.calculate_orthogonal_velocity_component_in_lab_frame(test_args.up, test_args.v)
-    ul_orthogonal = reject_cartesian_vector(
-        test_args.ul.to_base_vector(),
-        test_args.v.to_base_vector()
-    )
+    ul_orthogonal = reject_cartesian_vector(test_args.ul.to_base_vector(),
+        test_args.v.to_base_vector())
     assert_equal_vectors(
         result,
         QuantityVector.from_base_vector(ul_orthogonal),
@@ -64,13 +73,13 @@ def test_bad_velocity(test_args: Args) -> None:
         law.calculate_orthogonal_velocity_component_in_lab_frame(vb_vector, test_args.v)
     with raises(errors.UnitsError):
         law.calculate_orthogonal_velocity_component_in_lab_frame(test_args.up, vb_vector)
-    
+
     vb_scalar = Quantity(units.speed_of_light)
     with raises(AttributeError):
         law.calculate_orthogonal_velocity_component_in_lab_frame(vb_scalar, test_args.v)
     with raises(AttributeError):
         law.calculate_orthogonal_velocity_component_in_lab_frame(test_args.up, vb_scalar)
-    
+
     with raises(TypeError):
         law.calculate_orthogonal_velocity_component_in_lab_frame(100, test_args.v)
     with raises(TypeError):

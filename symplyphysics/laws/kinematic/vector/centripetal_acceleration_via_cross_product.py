@@ -12,7 +12,6 @@ from symplyphysics import (
 )
 from symplyphysics.laws.kinematic.vector import centripetal_acceleration_via_vector_rejection as rejection_law
 
-
 # Description
 ## Centripetal acceleration is the acceleration of a body in a rotating coordinate system
 ## which is directed towards the axis of rotation.
