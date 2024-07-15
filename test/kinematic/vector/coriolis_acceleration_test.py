@@ -25,7 +25,7 @@ def test_law(test_args: Args) -> None:
     result = law.calculate_coriolis_acceleration(test_args.w, test_args.v)
 
     a_unit = units.meter / units.second**2
-    assert_equal_vectors(result, QuantityVector([-2 * a_unit, -2 * a_unit, 4 * a_unit]))
+    assert_equal_vectors(result, QuantityVector([2 * a_unit, 2 * a_unit, -4 * a_unit]))
 
 
 def test_bad_angular_velocity(test_args: Args) -> None:
