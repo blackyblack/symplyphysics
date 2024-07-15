@@ -8,7 +8,6 @@ from symplyphysics import (
     validate_input,
     validate_output,
     scale_vector,
-    subtract_cartesian_vectors,
     add_cartesian_vectors,
     vector_magnitude,
 )
@@ -19,7 +18,7 @@ from symplyphysics import (
 ## additional components to the equation: one corresponding to the Coriolis force, and another to the fictitious force
 ## of translation between inertial frame (S) and non-inertial frame S'.
 
-# Law: a_rel = F / m - a_cor - a_tr
+# Law: a_rel = F / m + a_cor - a_tr
 ## a_rel - vector of acceleration of body B relative to S'
 ## F - vector sum of forces acting on body B
 ## a_cor - vector of [Coriolis acceleration](../../kinematic/vector/coriolis_acceleration.py) of body B
@@ -33,34 +32,28 @@ def relative_acceleration_law(
     coriolis_acceleration_: Vector,
     translation_acceleration_: Vector,
 ) -> Vector:
-    return subtract_cartesian_vectors(
-        subtract_cartesian_vectors(
+    return add_cartesian_vectors(
         scale_vector(1 / mass, force_),
         coriolis_acceleration_,
-        ),
-        translation_acceleration_,
+        scale_vector(-1, translation_acceleration_),
     )
 
 
-# F = m * (a_rel + a_cor + a_tr)
+# F = m * (a_rel - a_cor + a_tr)
 def force_law(
     relative_acceleration_: Vector,
     coriolis_acceleration_: Vector,
     translation_acceleration_: Vector,
 ) -> Vector:
-    return scale_vector(
-        mass,
-        add_cartesian_vectors(
-        add_cartesian_vectors(
+    acceleration_ = add_cartesian_vectors(
         relative_acceleration_,
-        coriolis_acceleration_,
-        ),
+        scale_vector(-1, coriolis_acceleration_),
         translation_acceleration_,
-        ),
     )
+    return scale_vector(mass, acceleration_)
 
 
-# m = norm(F) / norm(a_rel + a_cor + a_tr), where `norm(x)` is Euclidean norm of vector `x`
+# m = norm(F) / norm(a_rel - a_cor + a_tr), where `norm(x)` is Euclidean norm of vector `x`
 def mass_law(
     relative_acceleration_: Vector,
     force_: Vector,
@@ -68,41 +61,35 @@ def mass_law(
     translation_acceleration_: Vector,
 ) -> Expr:
     acceleration_ = add_cartesian_vectors(
-        add_cartesian_vectors(
         relative_acceleration_,
-        coriolis_acceleration_,
-        ),
+        scale_vector(-1, coriolis_acceleration_),
         translation_acceleration_,
     )
     return vector_magnitude(force_) / vector_magnitude(acceleration_)
 
 
-# a_cor = F / m - a_rel - a_tr
+# a_cor = - F / m + a_rel + a_tr
 def coriolis_acceleration_law(
     relative_acceleration_: Vector,
     force_: Vector,
     translation_acceleration_: Vector,
 ) -> Vector:
-    return subtract_cartesian_vectors(
-        subtract_cartesian_vectors(
-        scale_vector(1 / mass, force_),
+    return add_cartesian_vectors(
+        scale_vector(-1 / mass, force_),
         relative_acceleration_,
-        ),
         translation_acceleration_,
     )
 
 
-# a_tr = F / m - a_rel - a_cor
+# a_tr = F / m - a_rel + a_cor
 def traslation_acceleration_law(
     relative_acceleration_: Vector,
     force_: Vector,
     coriolis_acceleration_: Vector,
 ) -> Vector:
-    return subtract_cartesian_vectors(
-        subtract_cartesian_vectors(
+    return add_cartesian_vectors(
         scale_vector(1 / mass, force_),
-        relative_acceleration_,
-        ),
+        scale_vector(-1, relative_acceleration_),
         coriolis_acceleration_,
     )
 

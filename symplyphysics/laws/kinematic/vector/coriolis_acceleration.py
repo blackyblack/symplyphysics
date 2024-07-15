@@ -19,17 +19,17 @@ from symplyphysics import (
 ## another static reference frame S. The Coriolis acceleration is the acceleration another body B has when
 ## moving within rotating reference frame S', so it is essentially zero for objects at rest in S'.
 
-# Law: a_cor = 2 * cross(w, v_rel)
+# Law: a_cor = 2 * cross(v_rel, w)
 ## a_cor - vector of Coriolis acceleration of body B in S'
-## w - pseudovector of angular velocity of rotation of moving frame S'
 ## v_rel - vector of velocity of body B in moving frame S'
+## w - pseudovector of angular velocity of rotation of moving frame S'
 
 
 def coriolis_acceleration_law(
-    angular_velocity_: Vector,
     velocity_: Vector,
+    angular_velocity_: Vector,
 ) -> Vector:
-    return scale_vector(2, cross_cartesian_vectors(angular_velocity_, velocity_))
+    return scale_vector(2, cross_cartesian_vectors(velocity_, angular_velocity_))
 
 
 @validate_input(
@@ -42,7 +42,7 @@ def calculate_coriolis_acceleration(
     velocity_: QuantityVector,
 ) -> QuantityVector:
     result = coriolis_acceleration_law(
-        angular_velocity_.to_base_vector(),
         velocity_.to_base_vector(),
+        angular_velocity_.to_base_vector(),
     )
     return QuantityVector.from_base_vector(result)

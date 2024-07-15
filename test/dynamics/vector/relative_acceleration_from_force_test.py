@@ -19,7 +19,7 @@ def test_args_fixture() -> Args:
 
     a_unit = units.meter / units.second**2
     a_rel = QuantityVector([6 * a_unit, 1 * a_unit, -5 * a_unit])
-    a_cor = QuantityVector([0, -4 * a_unit, 2 * a_unit])
+    a_cor = QuantityVector([0, 4 * a_unit, -2 * a_unit])
     a_tr = QuantityVector([-2 * a_unit, 3 * a_unit, 0])
 
     f = QuantityVector([20 * units.newton, 0, -15 * units.newton])
