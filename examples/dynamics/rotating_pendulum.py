@@ -3,6 +3,7 @@
 from sympy import (
     symbols,
     Function as SymFunction,
+    pi,
     cos,
     sin,
     solve,
@@ -36,6 +37,7 @@ from symplyphysics.laws.kinematic.vector import (
 from symplyphysics.laws.kinematic import (
     tangential_acceleration_of_rotating_body as tangential_law,
 )
+from symplyphysics.laws.geometry import planar_projection_is_cosine as cosine_law
 
 # Description
 ## A physical pendulum consisting of a ball fixed on the end of a thin rigid rod can freely
@@ -66,11 +68,22 @@ ZERO = Vector([0, 0, 0])
 disk_angular_velocity_vector = Vector([0, 0, disk_angular_velocity])
 
 # See [figure](https://www.researchgate.net/figure/The-pendulum-free-body-diagram_fig2_356752900)
+# The `y` and `x` axes in the figure are the `z` and `y` axes here, respectively.
+
+ball_y_coordinate = cosine_law.law.rhs.subs({
+    cosine_law.vector_length: rod_length,
+    cosine_law.vector_angle: pi / 2 - ball_angle(time),
+})
+
+ball_z_coordinate = cosine_law.law.rhs.subs({
+    cosine_law.vector_length: rod_length,
+    cosine_law.vector_angle: pi - ball_angle(time)
+})
 
 ball_position_vector = Vector([
     0,
-    rod_length * sin(ball_angle(time)),
-    -1 * rod_length * cos(ball_angle(time)),
+    ball_y_coordinate,
+    ball_z_coordinate,
 ])
 
 free_fall_acceleration_vector = Vector([0, 0, -1 * acceleration_due_to_gravity])
