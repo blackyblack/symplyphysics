@@ -1,3 +1,14 @@
+r"""
+Centrifugal acceleration via centripetal acceleration
+=====================================================
+
+Centrifugal acceleration has the same magnitude as centripetal acceleration but is directed oppositely to it.
+
+Law
+===
+    :math:`\vec a_\text{cf} = -\vec a_\text{cp}`
+"""
+
 from symplyphysics import (
     units,
     validate_input,
@@ -7,13 +18,21 @@ from symplyphysics import (
     scale_vector,
 )
 
-# Description
-## Centrifugal acceleration has the same magnitude as centripetal acceleration but
-## is directed oppositely to it.
+centripetal_acceleration_: Vector
+r"""
+The acceleration experienced by a rotating body in an inertial frame
 
-# Law: a_cf = -1 * a_cp
-## a_cf - vector of centrifugal acceleration
-## a_cp - vector of centripetal acceleration
+Symbol:
+    :math:`\vec a_\text{cp}`
+"""
+
+centrifugal_acceleration_: Vector
+r"""
+The acceleration experienced by a body in a non-inertial, rotating frame
+
+Symbol:
+    :math:`\vec a_\text{cf}`
+"""
 
 
 def centrifugal_law(centripetal_acceleration_: Vector) -> Vector:
