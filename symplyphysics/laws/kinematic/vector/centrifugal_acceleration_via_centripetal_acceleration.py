@@ -1,12 +1,9 @@
-r"""
+"""
 Centrifugal acceleration via centripetal acceleration
 =====================================================
 
-Centrifugal acceleration has the same magnitude as centripetal acceleration but is directed oppositely to it.
-
-Law
-===
-    :math:`\vec a_\text{cf} = -\vec a_\text{cp}`
+The vector of centrifugal acceleration has the same magnitude as the vector of centripetal
+acceleration but is directed oppositely to it.
 """
 
 from symplyphysics import (
@@ -18,28 +15,31 @@ from symplyphysics import (
     scale_vector,
 )
 
-centripetal_acceleration_: Vector
-r"""
-The acceleration experienced by a rotating body in an inertial frame
-
-Symbol:
-    :math:`\vec a_\text{cp}`
-"""
-
-centrifugal_acceleration_: Vector
-r"""
-The acceleration experienced by a body in a non-inertial, rotating frame
-
-Symbol:
-    :math:`\vec a_\text{cf}`
-"""
-
 
 def centrifugal_law(centripetal_acceleration_: Vector) -> Vector:
+    r"""Centrifugal acceleration via centripetal acceleration.
+
+    Law:
+        :math:`\vec a_\text{cf} = - \vec a_\text{cf}`
+
+    @param centripetal_acceleration_ The acceleration experienced by a rotating body in an inertial frame.
+
+    @return The acceleration experienced by a body in a non-inertial, rotating frame.
+    """
     return scale_vector(-1, centripetal_acceleration_)
 
 
 def centripetal_law(centrifugal_acceleration_: Vector) -> Vector:
+    r"""Centripetal acceleration via centrifugal acceleration.
+
+    Law:
+        :math:`\vec a_\text{cp} = - \vec a_\text{cf}`
+    
+    @param centrifugal_acceleration_ The acceleration experienced by a body in a non-inertial, rotating frame.
+
+    @return The acceleration experienced by a rotating body in an inertial frame.
+    """
+
     return scale_vector(-1, centrifugal_acceleration_)
 
 
