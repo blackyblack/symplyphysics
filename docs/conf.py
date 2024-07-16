@@ -67,7 +67,7 @@ html_static_path = ["_static"]
 # unit titles (such as .. function::).
 add_module_names = False
 
-napoleon_custom_sections = ["Symbol", "Symbols", "Latex"]
+napoleon_custom_sections = ["Symbol", "Symbols", "Latex", "Law", "Definition", "Dimension"]
 
 autosummary_generate = True
 
