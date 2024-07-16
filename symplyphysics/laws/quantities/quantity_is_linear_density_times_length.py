@@ -28,6 +28,9 @@ r"""
 Intensive linear density
 
 Symbol:
+    lambda_X
+
+Latex:
     :math:`\lambda_X`
 """
 
@@ -41,7 +44,10 @@ Symbol:
 
 law = Eq(extensive_quantity, linear_density * length)
 r"""
-:math:`X = \lambda_X L`
+X = lambda_X * L
+
+Latex:
+    :math:`X = \lambda_X L`
 """
 
 
