@@ -4,16 +4,31 @@ from sympy import (
     symbols,
     pi,
     solve,
+    refine,
+    Q,
+    cos,
 )
 from sympy.physics.units import acceleration_due_to_gravity
 from symplyphysics import (
     Vector,
+    add_cartesian_vectors,
+    vector_magnitude,
     print_expression,
 )
 from symplyphysics.core.vectors.arithmetics import integrate_cartesian_vector
+from symplyphysics.conditions.dynamics.equilibrium import (
+    total_torque_is_zero as equilibrium_law,
+)
+from symplyphysics.definitions import (
+    period_from_angular_frequency as period_def,
+)
 from symplyphysics.laws.dynamics.vector import (
     acceleration_from_force as force_law,
     torque_vector_of_twisting_force as torque_def,
+)
+from symplyphysics.laws.kinematic.vector import (
+    centripetal_acceleration_via_vector_rejection as centripetal_law,
+    centrifugal_acceleration_via_centripetal_acceleration as centrifugal_law,
 )
 from symplyphysics.laws.geometry import (
     planar_projection_is_cosine as cosine_law,
@@ -27,8 +42,8 @@ from symplyphysics.laws.quantities import (
 ## (i.e. it is a physical conical pendulum). Find the period `T` of its rotation as a function
 ## of the angle `2 * phi` at the vertex of the cone.
 
-rod_length, rod_mass, rotation_angular_velocity, cone_half_angle = symbols(
-    "rod_length, rod_mass, rotation_angular_velocity, cone_half_angle",
+rod_length, rod_mass, angular_velocity, cone_half_angle = symbols(
+    "rod_length, rod_mass, angular_velocity, cone_half_angle",
     positive=True,
 )
 
@@ -36,6 +51,12 @@ distance_to_element, element_length, element_mass = symbols(
     "distance_to_element, element_length, element_mass",
     positive=True,
 )
+
+# Let us consider a non-inertial reference frame in which the rod is at rest, i.e. it is in equilibrium.
+# The `z` axis is codirectional to the vector of angular velocity and the `y` axis lies in the plane where
+# the rod is oscillating.
+
+angular_velocity_vector = Vector([0, 0, angular_velocity])
 
 element_y_coordinate = cosine_law.law.rhs.subs({
     cosine_law.vector_length: distance_to_element,
@@ -53,38 +74,91 @@ element_position_vector = Vector([
     element_z_coordinate,
 ])
 
-# Rod is uniform
+# The rod is uniform, therefore the linear density of the rod as a whole and for any
+# of its elements is the same.
 
-# whole_rod_mass_eqn = linear_density_law.law.subs({
-#     linear_density_law.extensive_quantity: rod_mass,
-#     linear_density_law.length: rod_length,
-# })
+whole_rod_mass_eqn = linear_density_law.law.subs({
+    linear_density_law.extensive_quantity: rod_mass,
+    linear_density_law.length: rod_length,
+})
 
-# rod_element_mass_eqn = linear_density_law.law.subs({
-#     linear_density_law.extensive_quantity: element_mass,
-#     linear_density_law.length: element_length,
-# })
+rod_element_mass_eqn = linear_density_law.law.subs({
+    linear_density_law.extensive_quantity: element_mass,
+    linear_density_law.length: element_length,
+})
 
-# element_mass_expr = solve(
-#     (whole_rod_mass_eqn, rod_element_mass_eqn),
-#     (linear_density_law.linear_density, element_mass),
-#     dict=True,
-# )[0][element_mass]
+element_mass_expr = solve(
+    (whole_rod_mass_eqn, rod_element_mass_eqn),
+    (linear_density_law.linear_density, element_mass),
+    dict=True,
+)[0][element_mass]
 
-# gravity_force_acting_on_element = force_law.force_law(
-#     acceleration_=Vector([0, 0, -1 * acceleration_due_to_gravity]),
-# ).subs(
-#     force_law.mass, element_mass_expr,
-# )
+# The rod is in equilibrium, so the total torque acting on the rod is zero. There are three forces
+# acting on the rod: the gravity force, the centrifugal force, and the tension force. Since the tension
+# is parallel to the position vector, its torque will be zero.
 
-# gravity_torque_acting_on_element = torque_def.torque_definition(
-#     position_=element_position_vector,
-#     force_=gravity_force_acting_on_element,
-# )
+gravity_force_acting_on_element = force_law.force_law(
+    acceleration_=Vector([0, 0, -1 * acceleration_due_to_gravity]),
+).subs(
+    force_law.mass, element_mass_expr,
+)
 
-# gravity_torque_acting_on_rod = integrate_cartesian_vector(
-#     gravity_torque_acting_on_element.subs(element_length, 1),
-#     (distance_to_element, 0, rod_length),
-# )
+gravity_torque_acting_on_element = torque_def.torque_definition(
+    position_=element_position_vector,
+    force_=gravity_force_acting_on_element,
+)
 
-# centrifugal_force_acting_on_element = TODO
+gravity_torque_acting_on_rod = integrate_cartesian_vector(
+    gravity_torque_acting_on_element.subs(element_length, 1),
+    (distance_to_element, 0, rod_length),
+)
+
+element_centripetal_acceleration_vector = centripetal_law.centripetal_acceleration_law(
+    angular_velocity_=angular_velocity_vector,
+    position_vector_=element_position_vector,
+)
+
+element_centrifugal_acceleration_vector = centrifugal_law.centrifugal_law(
+    centripetal_acceleration_=element_centripetal_acceleration_vector,
+)
+
+centrifugal_force_acting_on_element = force_law.force_law(
+    acceleration_=element_centrifugal_acceleration_vector,
+).subs(
+    force_law.mass, element_mass
+)
+
+centrifugal_torque_acting_on_element = torque_def.torque_definition(
+    position_=element_position_vector,
+    force_=centrifugal_force_acting_on_element,
+)
+
+centrifugal_torque_acting_on_rod = integrate_cartesian_vector(
+    centrifugal_torque_acting_on_element.subs(element_length, 1),
+    (distance_to_element, 0, rod_length),
+)
+
+total_torque_vector_acting_on_rod = add_cartesian_vectors(
+    gravity_torque_acting_on_rod,
+    centrifugal_torque_acting_on_rod,
+)
+
+total_torque_acting_on_rod = vector_magnitude(total_torque_vector_acting_on_rod)
+
+equilibrium_eqn = equilibrium_law.law.subs(
+    equilibrium_law.total_torque, total_torque_acting_on_rod
+)
+
+angular_velocity_expr = solve(equilibrium_eqn, angular_velocity)[1]
+
+angular_velocity_expr = refine(
+    angular_velocity_expr,
+    Q.positive(cos(cone_half_angle))  # pylint: disable=too-many-function-args
+)
+
+rotation_period_expr = period_def.law.rhs.subs(
+    period_def.circular_frequency, angular_velocity_expr,
+)
+
+print("The expression for the rotation period of a conical pendulum:")
+print(print_expression(rotation_period_expr))
