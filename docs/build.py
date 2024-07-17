@@ -85,6 +85,9 @@ def find_members_and_functions(content: ast.Module) -> tuple[list[str], list[str
         if isinstance(e, ast.FunctionDef):
             law_functions.append(e.name)
             current_member = e.name
+            doc = ast.get_docstring(e)
+            if doc is not None:
+                docstrings[current_member] = doc
             continue
         if isinstance(e, ast.Assign):
             for t in e.targets:
