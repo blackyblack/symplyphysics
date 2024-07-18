@@ -1,6 +1,6 @@
 """
 Rotational stiffness is torque_applied over angle
-=========================================
+=================================================
 
 *Rotational stiffness* is the extent to which an object resists rotational deformation.
 """
