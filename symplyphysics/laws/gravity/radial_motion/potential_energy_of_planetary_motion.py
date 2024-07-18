@@ -2,7 +2,10 @@
 Potential energy of radial planetary motion
 ===========================================
 
-TODO
+The total energy of the planet can be viewed as the sum of the kinetic and potential energy.
+The potential energy is in turn the sum of the potential energy due to the gravitational interaction
+between the planet and the sun, and the the energy of the tangential motion, which depends on the
+planet's angular momentum.
 """
 
 from sympy import Eq
@@ -18,7 +21,7 @@ from symplyphysics import (
 
 planetary_potential_energy = Symbol("planetary_potential_energy", units.energy)
 """
-TODO
+The total potential energy of the planet.
 
 Symbol:
     V
@@ -26,9 +29,9 @@ Symbol:
 
 gravitational_potential_energy = Symbol("gravitational_potential_energy", units.energy)
 """
-TODO
+The potential energy of the planet due to the gravitational interaction of the planet and the star.
 
-:doc:`../gravitational_potential_energy.py`
+:doc:`../gravitational_potential_energy`
 
 Symbol:
     U
@@ -36,7 +39,7 @@ Symbol:
 
 planetary_angular_momentum = Symbol("planetary_angular_momentum", units.length * units.momentum)
 """
-TODO
+The angular momentum of the planet.
 
 Symbol:
     L
@@ -44,7 +47,7 @@ Symbol:
 
 planetary_mass = clone_symbol(symbols.basic.mass, "planetary_mass")
 """
-TODO
+The :attr:`symplyphysics.symbols.basic.mass` of the planet.
 
 Symbol:
     m
@@ -52,7 +55,7 @@ Symbol:
 
 planetary_distance = Symbol("planetary_distance", units.length)
 """
-TODO
+The distance between the star and the planet.
 
 Symbol:
     r
