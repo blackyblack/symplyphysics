@@ -7,6 +7,7 @@ from sympy import (
     refine,
     Q,
     cos,
+    S,
 )
 from sympy.physics.units import acceleration_due_to_gravity
 from symplyphysics import (
@@ -53,8 +54,8 @@ distance_to_element, element_length, element_mass = symbols(
 )
 
 # Let us consider a non-inertial reference frame in which the rod is at rest, i.e. it is in equilibrium.
-# The `z` axis is codirectional to the vector of angular velocity and the `y` axis lies in the plane where
-# the rod is oscillating.
+# The `z` axis is codirectional to the vector of angular velocity and the `y` axis is parallel to the radial
+# axis if a cylindrical coordinate system is assumed.
 
 angular_velocity_vector = Vector([0, 0, angular_velocity])
 
@@ -95,7 +96,8 @@ element_mass_expr = solve(
 
 # The rod is in equilibrium, so the total torque acting on the rod is zero. There are three forces
 # acting on the rod: the gravity force, the centrifugal force, and the tension force. Since the tension
-# is parallel to the position vector, its torque will be zero.
+# is parallel to the position vector, its torque will be zero as per the property of the vector cross
+# product.
 
 gravity_force_acting_on_element = force_law.force_law(
     acceleration_=Vector([0, 0, -1 * acceleration_due_to_gravity]),
@@ -110,7 +112,7 @@ gravity_torque_acting_on_element = torque_def.torque_definition(
 
 gravity_torque_acting_on_rod = integrate_cartesian_vector(
     gravity_torque_acting_on_element.subs(element_length, 1),
-    (distance_to_element, 0, rod_length),
+    (distance_to_element, S.Zero, rod_length),
 )
 
 element_centripetal_acceleration_vector = centripetal_law.centripetal_acceleration_law(
@@ -125,7 +127,7 @@ element_centrifugal_acceleration_vector = centrifugal_law.centrifugal_law(
 centrifugal_force_acting_on_element = force_law.force_law(
     acceleration_=element_centrifugal_acceleration_vector,
 ).subs(
-    force_law.mass, element_mass
+    force_law.mass, element_mass_expr
 )
 
 centrifugal_torque_acting_on_element = torque_def.torque_definition(
@@ -135,7 +137,7 @@ centrifugal_torque_acting_on_element = torque_def.torque_definition(
 
 centrifugal_torque_acting_on_rod = integrate_cartesian_vector(
     centrifugal_torque_acting_on_element.subs(element_length, 1),
-    (distance_to_element, 0, rod_length),
+    (distance_to_element, S.Zero, rod_length),
 )
 
 total_torque_vector_acting_on_rod = add_cartesian_vectors(
