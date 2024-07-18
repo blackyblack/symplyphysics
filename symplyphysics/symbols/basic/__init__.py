@@ -1,6 +1,6 @@
 """
-Basic
-======
+Symbols (Basic)
+===============
 
 Contains fundamental properties of matter.
 """

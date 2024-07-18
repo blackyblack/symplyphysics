@@ -1,5 +1,5 @@
 """
-Rotational stiffness is torque_applied over angle
+Rotational stiffness is torque applied over angle
 =================================================
 
 *Rotational stiffness* is the extent to which an object resists rotational deformation.
@@ -32,7 +32,7 @@ Symbol:
     tau
 
 Latex:
-    :math:`tau`
+    :math:`\tau`
 """
 
 rotation_angle = Symbol("rotation_angle", angle_type)
