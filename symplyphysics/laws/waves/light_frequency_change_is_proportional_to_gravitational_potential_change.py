@@ -49,8 +49,9 @@ The *gravitational potential* :math:`\varphi` is defined as a scalar quantity su
 :math:`\vec g = - \nabla \varphi` is hold where :math:`\vec g` is the vector of acceleration due to gravity
 and :math:`\nabla` is the nabla operator.
 
-Note that :math:`\Delta \varphi = - \left( \vec g, \Delta \vec r \right)` where :math:`\left( \vec a_1, \vec a_2 \right)` is
-the dot product between :math:`\vec a_1` and :math:`\vec a_2`.
+.. note::
+    :math:`\Delta \varphi = - \left( \vec g, \Delta \vec r \right)` where :math:`\left( \vec a_1, \vec a_2 \right)` is
+    the dot product between :math:`\vec a_1` and :math:`\vec a_2`.
 
 Symbol:
     dPhi
