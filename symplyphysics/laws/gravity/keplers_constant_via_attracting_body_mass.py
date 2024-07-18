@@ -30,7 +30,7 @@ Latex:
 
 attracting_body_mass = clone_symbol(symbols.basic.mass, "attracting_body_mass")
 """
-The mass of the attracting body.
+The :attr:`~symplyphysics.symbols.basic.mass` of the attracting body.
 
 Symbol:
     M
