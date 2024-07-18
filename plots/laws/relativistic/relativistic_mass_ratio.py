@@ -34,7 +34,7 @@ print(f"Formula is:\n{print_expression(solved_law)}")
 
 p1 = plot(
     result_mass_ratio,
-    (speed_ratio, 0, 1),
+    (speed_ratio, 0, 0.99999),
     ylim=(0, 100),
     axis_center=(0.0, 0.0),
     line_color="red",

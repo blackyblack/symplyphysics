@@ -40,7 +40,7 @@ base_plot = plot(
     show=False,
 )
 
-factors_ = 1, 2, 10, 1000
+factors_ = 1, 2, 10, 100
 
 for factor_ in factors_:
     expr_ = distribution_expr.subs(reduced_temperature, S.One / factor_)
