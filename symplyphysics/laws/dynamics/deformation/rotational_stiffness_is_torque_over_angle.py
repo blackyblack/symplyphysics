@@ -25,7 +25,7 @@ Symbol:
 """
 
 torque_applied = Symbol("torque_applied", units.force * units.length)
-"""
+r"""
 Torque applied to the body.
 
 Symbol:
