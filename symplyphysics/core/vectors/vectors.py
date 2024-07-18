@@ -99,7 +99,7 @@ class Vector:
     def simplify(self, **kwargs: Any) -> Vector:
         components = [simplify(component, **kwargs) for component in self.components]
         return Vector(components, self.coordinate_system)
-    
+
     def subs(self, *args: Any) -> Vector:
         components = [sympify(component).subs(*args) for component in self.components]
         return Vector(components, self.coordinate_system)

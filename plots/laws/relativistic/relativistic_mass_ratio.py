@@ -3,9 +3,9 @@
 from sympy import solve, symbols, Eq
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
-from symplyphysics import print_expression
 from sympy.physics.units import speed_of_light
-import symplyphysics.laws.relativistic.relativistic_mass as relativistic_mass
+from symplyphysics import print_expression
+from symplyphysics.laws.relativistic import relativistic_mass
 
 # Description
 ## Plot the dependency of the relativistic to rest mass ratio on the fraction of the speed of light

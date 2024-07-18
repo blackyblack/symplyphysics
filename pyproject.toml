@@ -37,6 +37,9 @@ testpaths = [
     "test",
 ]
 
+[tool.pylint.master]
+fail-under = "9.8"
+
 [tool.pylint.basic]
 good-names-rgxs = ["^[_a-z][_a-z0-9]?$,^[_A-Z][_a-z0-9]?$"]
 
@@ -48,6 +51,7 @@ disable = [
   "line-too-long",
   "similarities",
   "too-many-locals",
+  "fixme"
 ]
 
 [tool.mypy]

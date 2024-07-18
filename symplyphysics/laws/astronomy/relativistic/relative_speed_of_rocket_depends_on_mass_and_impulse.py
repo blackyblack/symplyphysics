@@ -68,7 +68,7 @@ r"""
 M2 / M1 = ((1 - (V / c)) / (1 + (V / c)))^(c / (2 * Ve))
 
 Latex:
-    :math:`M_2 / M_1 = ((1 - (V / c)) / (1 + (V / c)))^{c / (2 * V_e)}`
+    :math:`\frac{M_2}{M_1} = \left( \frac{1 - \frac{V}{c}}{1 + \frac{V}{c}} \right) ^ {\frac{c}{2 V_e}}`
 """
 
 

@@ -4,7 +4,6 @@ from symplyphysics import (
     assert_equal,
     errors,
     units,
-    prefixes,
     Quantity,
 )
 from symplyphysics.laws.waves import (
