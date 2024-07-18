@@ -16,7 +16,7 @@ Zero Celsius degrees. The temperature at which water freezes.
 It is also temperature for Standard Temperature and Pressure (STP)
 
 Symbol:
-    t0
+    t_std
 
 Latex:
     :math:`t_\text{std}`
@@ -27,7 +27,7 @@ r"""
 Approximately 25 Celsius degrees. Commonly used temperature for tabulation purposes.
 
 Symbol:
-    t_std
+    t_lab
 
 Latex:
     :math:`t_\text{lab}`

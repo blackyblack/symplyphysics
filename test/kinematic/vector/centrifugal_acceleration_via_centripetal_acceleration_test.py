@@ -4,7 +4,6 @@ from symplyphysics import (
     assert_equal_vectors,
     errors,
     units,
-    Quantity,
     QuantityVector,
 )
 from symplyphysics.laws.kinematic.vector import centrifugal_acceleration_via_centripetal_acceleration as law
@@ -33,7 +32,7 @@ def test_centripetal_law(test_args: Args) -> None:
     assert_equal_vectors(result, test_args.acp)
 
 
-def test_bad_acceleration(test_args: Args) -> None:
+def test_bad_acceleration() -> None:
     ab_vector = QuantityVector([units.coulomb])
     with raises(errors.UnitsError):
         law.calculate_centrifugal_acceleration(ab_vector)

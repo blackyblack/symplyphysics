@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from sympy import solve, symbols, S, integrate
+from sympy import solve, symbols, integrate
 from symplyphysics import Quantity, units, convert_to, quantities
 from symplyphysics.laws.chemistry import molar_mass_via_mass_of_single_particle as molar_mass_law
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed_distribution
