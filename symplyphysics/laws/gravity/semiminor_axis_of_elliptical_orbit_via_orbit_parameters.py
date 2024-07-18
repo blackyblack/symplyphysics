@@ -2,8 +2,8 @@
 Semiminor axis of elliptical orbit via orbit parameters
 =======================================================
 
-The major and minor semiaxes of a planet's orbit can be found via the laws of conservation
-of energy and angular momentum as functions of the 
+The minor semiaxis can be found as a function of the sector speed of the planet,
+the major semiaxis of its orbit, and the mass of body that attracts it, such as the Sun.
 """
 
 from sympy import Eq, sqrt
@@ -61,7 +61,7 @@ r"""
 b = 2 * sigma * sqrt(a / (G * M))
 
 Latex:
-    :math:`b = 2 \sigma \frac{a}{G M}`
+    :math:`b = 2 \sigma \sqrt{\frac{a}{G M}}`
 """
 
 
