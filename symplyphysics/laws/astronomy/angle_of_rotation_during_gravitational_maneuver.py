@@ -7,6 +7,7 @@ of the gravitational fields of celestial bodies.
 The angle of the gravitational maneuver depends on the aiming range, the mass of the planet and the velocity of the rocket relative to the planet.
 
 .. image:: https://upload.wikimedia.org/wikipedia/commons/a/ad/Gravity_assist\_-\_ru.svg
+    :width: 240px
 """
 
 from sympy import Eq, solve, atan
@@ -55,7 +56,7 @@ r"""
 phi = 2 * arctg(G * M / (b * v^2))
 
 Latex:
-    :math:`\phi = 2 * \arctan(G * M / (b * v^2))`
+    :math:`\phi = 2 \arctan \left( \frac{G M}{b v^2} \right)`
 """
 
 

@@ -1,6 +1,6 @@
 """
-Kinematics
-==========
+Symbols (Kinematics)
+====================
 
 Contains properties for 'kinematics' branch of physics
 

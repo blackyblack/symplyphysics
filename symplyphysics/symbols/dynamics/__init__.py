@@ -1,6 +1,6 @@
 """
-Dynamics
-========
+Symbols (Dynamics)
+==================
 
 Contains properties for 'dynamics' branch of physics.
 
