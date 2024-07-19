@@ -1,6 +1,6 @@
 """
-Thermodynamics
-==============
+Symbols (Thermodynamics)
+========================
 
 Contains properties for 'thermodynamics' branch of physics
 

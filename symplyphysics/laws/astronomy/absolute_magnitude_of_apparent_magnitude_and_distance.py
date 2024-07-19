@@ -56,7 +56,7 @@ r"""
 M = m - 5 * lg(d / d0)
 
 Latex:
-    :math:`M = m - 5 * \log_{10}(d / d0)`
+    :math:`M = m - 5 \log_{10} \left( \frac{d}{d0} \right)`
 """
 
 

@@ -23,7 +23,7 @@ jobs:
         run: mypy .
 
       - name: Run linter with pylint
-        run: pylint --fail-under=9.8 ./test/**/*.py ./symplyphysics
+        run: pylint ./test/**/*.py ./symplyphysics ./examples ./plots ./docs
 
       - name: Run tests with pytest
         run: pytest
