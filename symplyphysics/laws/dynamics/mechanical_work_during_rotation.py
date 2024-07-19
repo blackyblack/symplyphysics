@@ -1,10 +1,18 @@
+"""
+Mechanical work during rotation
+===============================
+
+When a torque accelerates a rigid body in rotation about a fixed axis, the torque does work on
+the body. When the torque is constant, the work done on the body is proportional to torque
+and the angular displacement during the movement of the body.
+"""
+
 from sympy import Eq, integrate, solve, pi
 from symplyphysics import (
     symbols,
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     angle_type,
@@ -15,21 +23,43 @@ from symplyphysics.laws.kinematic import angular_position_is_arc_length_over_rad
 from symplyphysics.laws.dynamics import torque_due_to_twisting_force as torque_def
 from symplyphysics.laws.geometry import planar_projection_is_cosine as projection_law
 
-# Description
-## When a torque accelerates a rigid body in rotation about a fixed axis, the torque does work on
-## the body. When the torque is constant, the work done on the body is proportional to torque
-## and the angular displacement during the movement of the body.
-
-# Law: W = tau * delta_theta
-## W - work done
-## tau - torque accelerating the body
-## delta_theta - angular displacement of the body
-
 work = Symbol("work", units.energy)
+"""
+The work done by the torque.
+
+Symbol:
+    W
+"""
+
 torque = Symbol("torque", units.force * units.length)
+r"""
+The torque acting on the body.
+
+Symbol:
+    tau
+
+Latex:
+    :math:`\tau`
+"""
+
 angular_displacement = Symbol("angular_displacement", angle_type)
+r"""
+The angular displacement of the body.
+
+Symbol:
+    delta_theta
+
+Latex:
+    :math:`\Delta \theta`
+"""
 
 law = Eq(work, torque * angular_displacement)
+r"""
+W = tau * delta_theta
+
+Latex:
+    :math:`W = \tau \Delta \theta`
+"""
 
 # Derive law from non-rotational counterpart.
 ## We assume a particle moving along a curved trajectory due to a force F applied to it.
@@ -95,10 +125,6 @@ integral_work_solved = solve(
     dict=True)[0][work]
 
 assert expr_equals(integral_work_solved, law.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(torque_=torque, angular_displacement_=angular_displacement)

@@ -1,9 +1,27 @@
+r"""
+Rocket thrust is rocket mass times acceleration
+===============================================
+
+Assuming we are at rest relative to an inertial reference frame, we observe a rocket
+through space with no gravitational or atmospheric drag forces acting on it.
+The mass of the rocket changes as it burns fuel and releases the products of burning,
+the total mass of the system does not change.
+
+**Conditions:**
+
+#. The fuel consumption rate is constant.
+#. The velocities are non-relativistic.
+
+**Notes:**
+
+#. The quantity :math:`R v_\text{rel}` is called the thrust of rocket engine
+"""
+
 from sympy import Eq, dsolve, solve, Symbol as SymSymbol
 from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     symbols,
@@ -25,12 +43,6 @@ from symplyphysics.laws.kinematic import (
 ## The mass of the rocket changes as it burns fuel and releases the products of burning,
 ## but the total mass of the system does not change.
 
-# Law: R * v_rel = M * a
-## R = -dM/dt - rate of fuel consumption
-## v_rel - velocity of rocket relative to products
-## M - rocket mass
-## a - rocket acceleration
-
 # Note: (R * v_rel) is called thrust of rocket engine
 
 # Conditions:
@@ -38,11 +50,50 @@ from symplyphysics.laws.kinematic import (
 ## - Non-relativistic velocities
 
 fuel_consumption_rate = Symbol("fuel_consumption_rate", units.mass / units.time)
+r"""
+The rate of fuel consumption.
+
+Symbol:
+    R = -1 * dM/dt
+
+Latex:
+    :math:`R = - \frac{d M}{d t}`
+"""
+
 relative_velocity = Symbol("relative_velocity", units.velocity)
+r"""
+The velocity of the rocket relative to its products.
+
+Symbol:
+    v_rel
+
+Latex:
+    :math:`v_\text{rel}`
+"""
+
 rocket_acceleration = clone_symbol(symbols.kinematic.acceleration, "rocket_acceleration")
+"""
+The :attr:`~symplyphysics.symbols.kinematic.acceleration` of the rocket.
+
+Symbol:
+    a
+"""
+
 rocket_mass = clone_symbol(symbols.basic.mass, "rocket_mass")
+"""
+The :attr:`~symplyphysics.symbols.basic.mass` of the rocket
+
+Symbol:
+    M
+"""
 
 law = Eq(fuel_consumption_rate * relative_velocity, rocket_mass * rocket_acceleration)
+r"""
+R * v_rel = M * a
+
+Latex:
+    :math:`R v_\text{rel} = M a`
+"""
 
 # Derive this law from the law of conservation of momentum.
 
@@ -125,10 +176,6 @@ relative_velocity_derived = solve(relative_velocity_eqn_system,
 relative_velocity_from_law = solve(law, relative_velocity)[0]
 
 assert expr_equals(relative_velocity_derived, relative_velocity_from_law)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(

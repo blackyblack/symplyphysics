@@ -1,3 +1,23 @@
+r"""
+Resonant oscillations
+=====================
+
+When an oscillating external force is driving the oscillations of an oscillator,
+amplitude of oscillations is greatest when the angular frequency of the driving
+is equal to the natural frequency of the oscillator. This condition is called
+resonance.
+
+**Conditions:**
+
+#. Angular frequency of the driving force is equal to the natural frequency of the oscillator.
+#. No damping is present in the system.
+
+**Notes:**
+
+#. The expression of the driving force has the form :math:`f \cos{\left( \omega t + \varphi \right)}` where :math:`\omega` is
+   the angular frequency of its oscillations.
+"""
+
 from sympy import Eq, dsolve, sin
 from symplyphysics import (
     clone_symbol,
@@ -7,7 +27,6 @@ from symplyphysics import (
     Quantity,
     Symbol,
     Function,
-    print_expression,
     validate_input,
     validate_output,
 )
@@ -15,37 +34,68 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.laws.dynamics import forced_oscillations_equation as forced_eqn
 
-# Description
-## When an oscillating external force is driving the oscillations of an oscillator,
-## the amplitude of oscillations is greatest when the angular frequency of the driving
-## force is equal to the natural frequency of the oscillator. This condition is called
-## resonance.
-
-# Law: q(t) = (f_m / m) * t * sin(w0 * t + phi) / (2 * w0)
-## q(t) - displacement of resonant oscillations
-## t - time
-## m - mass of oscillator
-## w0 - natural frequency of oscillator
-## f_m - amplitude of driving force
-## phi - phase lag of driving force
-
-# Conditions
-## - Angular frequency of the driving force is equal to the natural frequency of the oscillator.
-## - No damping is present in the system.
-
-# Note
-## - The expression of the driving force has the form `f_m * cos(w * t + phi)` where `w` is
-##   the angular frequency of its oscillations.
-
 resonant_displacement = Function("resonant_displacement", units.length)
+"""
+The displacement of resonant oscillations.
+
+Symbol:
+    q(t)
+"""
+
 oscillator_mass = clone_symbol(symbols.basic.mass, "oscillator_mass")
+"""
+The :attr:`~symplyphysics.symbols.basic.mass` of the oscillator.
+
+Symbol:
+    m
+"""
+
 natural_angular_frequency = Symbol("natural_angular_frequency", angle_type / units.time)
+r"""
+The natural angular frequency of the oscillator.
+
+Symbol:
+    w0
+
+Latex:
+    :math:`\omega_0`
+"""
+
 driving_force_amplitude = clone_symbol(symbols.dynamics.force, "driving_force_amplitude")
+"""
+The amplitude of the driving force.
+
+Symbol:
+    f
+"""
+
 driving_phase_lag = Symbol("driving_phase_lag", angle_type)
+r"""
+The phase lag of the oscillations of the driving force.
+
+Symbol:
+    phi
+
+Latex:
+    :math:`\varphi`
+"""
+
 time = Symbol("time", units.time)
+"""
+Time.
+
+Symbol:
+    t
+"""
 
 law = Eq(resonant_displacement(time), (driving_force_amplitude / oscillator_mass) * time *
     sin(natural_angular_frequency * time + driving_phase_lag) / (2 * natural_angular_frequency))
+r"""
+q(t) = (f / m) * t * sin(w0 * t + phi) / (2 * w0)
+
+Latex:
+    :math:`q(t) = \frac{f t}{2 m \omega_0} \sin{\left( \omega_0 t + \varphi \right)}`
+"""
 
 # Derive law from driven oscillations equation
 
@@ -66,10 +116,6 @@ _dsolved = dsolve(_eqn, forced_eqn.displacement(time)).rhs
 _dsolved = _dsolved.subs({"C1": 0, "C2": 0})
 
 assert expr_equals(_dsolved, law.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(

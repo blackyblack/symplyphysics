@@ -1,3 +1,14 @@
+"""
+Kinetic energy via momentum
+===========================
+
+Kinetic energy can be expressed as a function of momentum and mass.
+
+**Notes:**
+
+#. This relation also holds in Quantum Mechanics.
+"""
+
 from sympy import Eq, solve
 from symplyphysics import (
     units,
@@ -13,22 +24,37 @@ from symplyphysics.laws.dynamics import (
 from symplyphysics.definitions import (
     momentum_is_mass_times_velocity as momentum_def,)
 
-# Description
-## Kinetic energy can be expressed using linear momentum and mass.
-
-# Law: E = p**2 / (2 * m)
-## E - kinetic energy
-## p - linear momentum
-## m - mass
-
-# Notes
-## - This relation also holds in Quantum Mechanics.
-
 kinetic_energy = Symbol("kinetic_energy", units.energy)
+"""
+The kinetic energy of the object.
+
+Symbol:
+    E
+"""
+
 momentum = Symbol("momentum", units.momentum)
+"""
+The momentum of the object.
+
+Symbol:
+    p
+"""
+
 mass = symbols.basic.mass
+"""
+The :attr:`~symplyphysics.basic.mass` of the object.
+
+Symbol:
+    m
+"""
 
 law = Eq(kinetic_energy, momentum**2 / (2 * mass))
+r"""
+E = p^2 / (2 * m)
+
+Latex:
+    :math:`E = \frac{p^2}{2 m}`
+"""
 
 # Derive law from kinetic energy and momentum expressions
 

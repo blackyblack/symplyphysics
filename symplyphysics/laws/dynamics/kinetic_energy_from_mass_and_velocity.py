@@ -1,17 +1,48 @@
+"""
+Kinetic energy from mass and velocity
+=====================================
+
+The *kinetic energy* of a body is the form of energy that it possesses due to its motion.
+"""
+
 from sympy import (Eq, solve)
 from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols)
 
-# Description
-# Kinetic energy of body: EK = (m * v**2) / 2
-# Where:
-# m - body mass
-# v - body velocity
-
 kinetic_energy_of_body = Symbol("kinetic_energy_of_body", units.energy)
+r"""
+The kinetic energy of the body.
+
+Symbol:
+    EK
+
+Latex:
+    :math:`E_\text{kin}`
+"""
+
+
 body_velocity = Symbol("body_velocity", units.velocity)
+"""
+The velocity of the body.
+
+Symbol:
+    v
+"""
+
 mass = symbols.basic.mass
+"""
+The :attr:`~symplyphysics.symbols.basic.mass` of the body.
+
+Symbol:
+    m
+"""
 
 law = Eq(kinetic_energy_of_body, mass * body_velocity**2 / 2)
+r"""
+EK = m * v^2 / 2
+
+Latex:
+    :math:`E_\text{kin} = \frac{1}{2} m v^2`
+"""
 
 
 @validate_input(body_mass_=mass, body_velocity_=body_velocity)

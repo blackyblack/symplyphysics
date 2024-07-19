@@ -1,5 +1,20 @@
+"""
+Period of ideal pendulum from length
+====================================
+
+An ideal pendulum is an object hanging on a thread. In a gravitational field it starts oscillating after being pushed out of balance.
+Period of pendulum oscillation does not depend on its mass.
+
+**Conditions:**
+
+#. The angle between pendulum and gravity vector is fairly small (less than 15 degrees).
+#. Ideal pendulum doesn't gain or lose any energy, so there is no friction in the system.
+#. The object is small enough to be considered a material point.
+#. The thread is weightless and doesn't change its length.
+"""
+
 from sympy import (Derivative, Eq, Function as SymFunction, diff, sin, solve, pi, sqrt, symbols)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.geometry import planar_projection_is_cosine as projector
@@ -11,28 +26,29 @@ from symplyphysics.definitions import harmonic_oscillator_is_second_derivative_e
 from symplyphysics.definitions import mechanical_energy_is_kinetic_and_potential as mechanical_energy_def
 from symplyphysics.laws.conservation import mechanical_energy_is_constant as mechanical_energy_conservation
 
-# Description
-## Ideal pendulum is an object hanging on a thread. In a field of gravitation it starts oscillating after been pushed out of balance.
-## Period of pendulum oscillation does not depend on its mass.
+oscillation_period = Symbol("oscillation_period", units.time)
+"""
+The period of oscillations.
 
-# Law: T = 2 * pi * sqrt(L/g)
-# Where:
-## T is period of oscillation,
-## L is pendulum length,
-## g is free fall acceleration.
-
-# Conditions:
-## - Angle between pendulum and gravity vector is fairly small (less than 15 degrees).
-## - Ideal pendulum doesn't accept or loose any energy. No any friction.
-## - Object is small.
-## - Another end of a thread is not moving in current coordinate system.
-## - Thread is weightless and doesn't change its length.
+Symbol:
+    T
+"""
 
 pendulum_length = Symbol("pendulum_length", units.length)
-oscillation_period = Symbol("oscillation_period", units.time)
-free_fall_acceleration = units.acceleration_due_to_gravity
+"""
+The length of the pendulum.
 
-law = Eq(oscillation_period, 2 * pi * sqrt(pendulum_length / free_fall_acceleration))
+Symbol:
+    L
+"""
+
+law = Eq(oscillation_period, 2 * pi * sqrt(pendulum_length / units.acceleration_due_to_gravity))
+r"""
+T = 2 * pi * sqrt(L / g)
+
+Latex:
+    :math:`T = 2 \pi \sqrt{\frac{L}{g}}`
+"""
 
 # Derive this law from conservation of energy
 ## Polar coordinate system is selected for this task. Center is a fixed point of the thread.
@@ -52,7 +68,6 @@ pendulum_height_after = projector.law.subs({
 }).rhs
 amount_of_potential_energy = potential_energy.law.subs({
     potential_energy.symbols.basic.mass: pendulum_mass,
-    potential_energy.free_fall_acceleration: free_fall_acceleration,
     potential_energy.height: (pendulum_height_before - pendulum_height_after)
 }).rhs
 
@@ -111,10 +126,6 @@ angular_frequency_solved = solve([oscillator_eq, small_angle_harmonic_oscillatio
 oscillation_period_derived = angular_frequency.law.subs(angular_frequency.circular_frequency,
     angular_frequency_solved).rhs
 assert expr_equals(oscillation_period_derived**2, law.rhs**2)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(pendulum_length_=pendulum_length)

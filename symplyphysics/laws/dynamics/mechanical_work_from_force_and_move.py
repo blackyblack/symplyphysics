@@ -1,28 +1,54 @@
+"""
+Mechanical work from force and move
+===================================
+
+Work is measured result of force applied. Mechanical work is the only reason for the object energy to be changed.
+Work is scalar value equal to force multiplied by movement.
+
+**Conditions:**
+
+#. The force and displacement vectors are collinear.
+
+**Notes:**
+
+#. Use the vector form of this law for non-collinear vectors of force and movement.
+"""
+
 from sympy import (Eq, solve)
-from symplyphysics import (symbols, units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (symbols, units, Quantity, Symbol, validate_input,
     validate_output)
 
-# Description
-## Work is measured result of force applied. Mechanical work is the only reason for the object energy to be changed.
-## Work is scalar value equal to force multiplied by movement.
-## Use vector form of this law for non-collinear vectors of force and movement.
-## Law: A = F * S, where
-## A is mechanical work
-## F is magnitude of force applied to object
-## S is magnitude of movement caused by this force
-
-# Conditions:
-## Force and work vectors are collinear
-
 work = Symbol("work", units.energy)
+"""
+The mechanical work done by the force.
+
+Symbol:
+    w
+"""
+
 force = symbols.dynamics.force
+"""
+The force exerted on the body.
+
+Symbol:
+    F
+"""
+
 distance = Symbol("distance", units.length)
+"""
+The distance traveled by the body due to the force exerted on it.
+
+Symbol:
+    s
+"""
 
 law = Eq(work, force * distance)
+"""
+W = F * s
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    :math:`W = F s`
+"""
 
 
 @validate_input(force_=force, distance_=distance)

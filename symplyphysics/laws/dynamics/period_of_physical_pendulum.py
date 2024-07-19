@@ -1,3 +1,12 @@
+"""
+Period of physical pendulum
+===========================
+
+A *physical pendulum* is a pendulum with an arbitrary distribution of mass that
+oscillates about a given pivot point. The period of its oscillations depends on its rotational inertia, 
+mass and the distance between the pivot and the center of mass of the pendulum.
+"""
+
 from sympy import (
     Eq,
     pi,
@@ -13,7 +22,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     symbols,
@@ -32,25 +40,47 @@ from symplyphysics.laws.dynamics import (
     moment_of_force_from_moment_of_inertia_and_angular_acceleration as torque_law,
 )
 
-# Description
-## A physical pendulum is a pendulum with an arbitrary distribution of mass that
-## oscillates about a given pivot point.
-
-# Law: T = 2 * pi * sqrt(I / (m * g * h))
-## T - period of physical pendulum
-## I - rotational inertia of pendulum
-## m - mass of pendulum
-## g - acceleration due to gravity
-## h - distance between pivot and pendulum's center of mass
-
 pendulum_mass = clone_symbol(symbols.basic.mass, "pendulum_mass", positive=True)
+"""
+The :attr:`symplyphysics.symbols.basic.mass` of the pendulum.
+
+Symbol:
+    m
+"""
+
 oscillation_period = Symbol("oscillation_period", units.time, positive=True)
+"""
+The period of the physical pendulum.
+
+Symbol:
+    T
+"""
+
 rotational_inertia = Symbol("rotational_inertia", units.mass * units.length**2, positive=True)
+"""
+The rotational inertia of the pendulum.
+
+Symbol:
+    I
+"""
+
 distance_to_pivot = Symbol("distance_to_pivot", units.length, positive=True)
+"""
+The distance between the pivot and the pendulum's center of mass.
+
+Symbol:
+    h
+"""
 
 law = Eq(
     oscillation_period, 2 * pi * sqrt(rotational_inertia /
     (pendulum_mass * acceleration_due_to_gravity * distance_to_pivot)))
+r"""
+T = 2 * pi * sqrt(I / (m * g * h))
+
+Latex:
+    :math:`T = 2 \pi \sqrt{\frac{I}{m g h}}`
+"""
 
 # Derive from torque definition
 
@@ -100,10 +130,6 @@ angular_velocity_expr = solve([diff_eqn_derived, diff_eqn_original],
 period_derived = period_law.law.rhs.subs(period_law.circular_frequency, angular_velocity_expr)
 
 assert expr_equals(law.rhs, period_derived)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(
