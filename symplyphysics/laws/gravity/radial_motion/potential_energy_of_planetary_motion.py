@@ -31,8 +31,6 @@ gravitational_potential_energy = Symbol("gravitational_potential_energy", units.
 """
 The potential energy of the planet due to the gravitational interaction of the planet and the star.
 
-:doc:`../gravitational_potential_energy`
-
 Symbol:
     U
 """
