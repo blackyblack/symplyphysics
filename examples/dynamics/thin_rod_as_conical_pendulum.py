@@ -54,8 +54,10 @@ distance_to_element, element_length, element_mass = symbols(
 )
 
 # Let us consider a non-inertial reference frame in which the rod is at rest, i.e. it is in equilibrium.
-# The `z` axis is codirectional to the vector of angular velocity and the `y` axis is parallel to the radial
-# axis if a cylindrical coordinate system is assumed.
+# The `z` axis is codirectional to the pseudovector of angular velocity and the `y` axis is the line passing
+# through both the `z` axis and the hanging end of the rod. Namely, assuming a cylindrical coordinate system,
+# the origin is at the fixed end of the rod, the longitudinal axis is the `z` axis and the polar axis is
+# the `y` axis.
 
 angular_velocity_vector = Vector([0, 0, angular_velocity])
 
