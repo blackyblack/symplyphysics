@@ -1,6 +1,5 @@
 from sympy import solve, Eq, Symbol
-from symplyphysics import print_expression
-
+from symplyphysics import print_expression, units
 from symplyphysics.laws.dynamics import potential_energy_from_mass_and_height as potential_energy
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_velocity as kinetic_energy
 from symplyphysics.laws.conservation import mechanical_energy_after_equals_to_mechanical_energy_before as conservation
@@ -20,7 +19,6 @@ kinetic_energy_before = kinetic_energy.law.subs({
     kinetic_energy.symbols.basic.mass: body_mass
 }).rhs
 potential_energy_before = potential_energy.law.subs({
-    potential_energy.free_fall_acceleration: gravity_acceleration,
     potential_energy.height: body_height,
     potential_energy.symbols.basic.mass: body_mass
 }).rhs
@@ -33,7 +31,6 @@ kinetic_energy_after = kinetic_energy.law.subs({
     kinetic_energy.symbols.basic.mass: body_mass
 }).rhs
 potential_energy_after = potential_energy.law.subs({
-    potential_energy.free_fall_acceleration: gravity_acceleration,
     potential_energy.height: 0,
     potential_energy.symbols.basic.mass: body_mass
 }).rhs
@@ -53,6 +50,6 @@ answer = Eq(landing_speed, solved)
 
 print(f"\nSolution:\nIF potential_energy = kinetic_energy\nTHEN {print_expression(answer)}")
 
-landing_speed_ms = solved.subs({gravity_acceleration: 9.8, body_height: 11.25}).evalf(3)
+landing_speed_ms = solved.subs({units.acceleration_due_to_gravity: 9.8, body_height: 11.25}).evalf(3)
 
 print(f"\nLanding speed when falling from 11.25 meters is: {landing_speed_ms} m/s")
