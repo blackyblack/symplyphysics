@@ -23,7 +23,7 @@ law = [Ep2, Ep1]
 solved = solve(law, (height_1, potential_energy.potential_energy_of_body), dict=True)[0][height_1]
 answer = Eq(height_1, solved)
 
-print(f"\nFormula is:\n{potential_energy.print_law()}")
+print(f"\nFormula is:\n{print_expression(potential_energy.law)}")
 print(
     f"\nSolution:\nIF potential_energy_1 = potential_energy_2 AND body_mass_2 = 2 * body_mass_1 THEN {print_expression(answer)}"
 )

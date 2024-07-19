@@ -4,7 +4,7 @@ from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import (print_expression, units, convert_to, Quantity)
 from symplyphysics.laws.gravity import free_fall_acceleration_from_height as acceleration
 
-print(f"Formula is:\n{acceleration.print_law()}")
+print(f"Formula is:\n{print_expression(acceleration.law)}")
 
 height_above_ground = symbols("height_above_ground")
 gravity_constant_value = convert_to(Quantity(units.gravitational_constant),

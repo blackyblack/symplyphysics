@@ -2,13 +2,13 @@
 from sympy import Symbol
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
-
+from symplyphysics import print_expression
 from symplyphysics.laws.electricity import force_from_charge_and_distance as coulomb_law
 
 ELECTROSTATIC_CONSTANT = 9 * 1E9
 CHARGE_OF_ELECTRON = -1.6 * 1E-19
 
-print(f"Formula is:\n{coulomb_law.print_law()}")
+print(f"Formula is:\n{print_expression(coulomb_law.law)}")
 
 distance = Symbol("distance")
 

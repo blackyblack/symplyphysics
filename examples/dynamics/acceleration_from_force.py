@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
-from symplyphysics import (units, convert_to, Quantity)
+from symplyphysics import (units, convert_to, Quantity, print_expression)
 from symplyphysics.laws.dynamics import acceleration_from_force as newton_law2
 
 m = Quantity(1 * units.kilogram)
 a = Quantity(3 * units.meter / units.second**2)
 
-print(f"Formula is:\n{newton_law2.print_law()}")
+print(f"Formula is:\n{print_expression(newton_law2.law)}")
 result = newton_law2.calculate_force(m, a)
 
 result_newton = convert_to(result, units.newton).evalf(2)
