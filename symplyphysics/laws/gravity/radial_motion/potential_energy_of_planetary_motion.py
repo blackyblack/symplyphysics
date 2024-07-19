@@ -4,7 +4,7 @@ Potential energy of radial planetary motion
 
 The total energy of the planet can be viewed as the sum of the kinetic and potential energy.
 The potential energy is in turn the sum of the potential energy due to the gravitational interaction
-between the planet and the sun, and the the energy of the tangential motion, which depends on the
+between the planet and the Sun, and the the energy of the tangential motion, which depends on the
 planet's angular momentum.
 """
 
