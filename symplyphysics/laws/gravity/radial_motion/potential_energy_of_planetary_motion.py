@@ -45,7 +45,7 @@ Symbol:
 
 planetary_mass = clone_symbol(symbols.basic.mass, "planetary_mass")
 """
-The :attr:`symplyphysics.symbols.basic.mass` of the planet.
+The :attr:`~symplyphysics.symbols.basic.mass` of the planet.
 
 Symbol:
     m
