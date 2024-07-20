@@ -10,10 +10,10 @@ Contents:
 .. toctree::
   :maxdepth: 4
 
-  generated/symplyphysics.laws
-  generated/symplyphysics.definitions
-  generated/symplyphysics.symbols
-  generated/symplyphysics.quantities
+  symplyphysics/laws
+  symplyphysics/definitions
+  symplyphysics/symbols
+  symplyphysics/quantities
 
 Indices and tables
 ==================
