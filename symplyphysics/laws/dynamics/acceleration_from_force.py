@@ -41,7 +41,8 @@ r"""
 a = F / m
 
 Latex:
-    :math:`a = \frac{F}{m}`
+    .. math::
+        a = \frac{F}{m}
 """
 
 # Derive the same law from vector form

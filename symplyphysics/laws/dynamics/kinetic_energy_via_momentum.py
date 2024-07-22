@@ -53,7 +53,8 @@ r"""
 K = p^2 / (2 * m)
 
 Latex:
-    :math:`K = \frac{p^2}{2 m}`
+    .. math::
+        K = \frac{p^2}{2 m}
 """
 
 # Derive law from kinetic energy and momentum expressions

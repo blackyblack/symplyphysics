@@ -2,7 +2,7 @@
 Friction force from normal force
 ================================
 
-The *friction* force is tangential interaction between two objects, which impedes there relative movement.
+The *friction* force is tangential interaction between two objects, which impedes their relative movement.
 It is proportional to the normal force between the two objects.
 """
 

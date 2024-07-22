@@ -2,7 +2,7 @@
 Potential energy from deformation
 =================================
 
-Spring accumulates energy while being deformated. This law is known as the *Hooke's law*.
+Spring accumulates energy while being deformed. This law is known as the *Hooke's law*.
 
 **Conditions:**
 
@@ -42,7 +42,7 @@ r"""
 U = k * x^2 / 2
 
 Latex:
-    .. math:
+    .. math::
         E = \frac{1}{2} k x^2
 """
 
