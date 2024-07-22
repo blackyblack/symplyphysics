@@ -61,7 +61,8 @@ r"""
 l = m * v^2 / (2 * F_fr)
 
 Latex:
-    :math:`l = \frac{m v^2}{2 F_\text{fr}}`
+    .. math::
+        l = \frac{m v^2}{2 F_\text{fr}}
 """
 
 # This law might be derived via "kinetic_energy_from_mass_and_velocity" law and

@@ -2,7 +2,7 @@
 Forced oscillations equation
 ============================
 
-*Forced, or driven, oscillations* are a type of oscillations in the precence of an external driving
+*Forced, or driven, oscillations* are a type of oscillations in the presence of an external driving
 force acting on the oscillating system. In the case of an oscillating external force, two angular
 frequencies are associated with such a system: (1) the natural angular frequency of the system,
 which is the angular frequency the system would oscillate with if no external force were present,
