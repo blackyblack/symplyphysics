@@ -48,7 +48,7 @@ potential_energy = Symbol("potential_energy", units.energy)
 The potential energy of the planet, see :code:`./potential_energy_of_planetary_motion.py`.
 
 Symbol:
-    V
+    U
 """
 
 total_energy = Symbol("total_energy", units.energy)
@@ -61,11 +61,11 @@ Symbol:
 
 law = Eq(planetary_mass * radial_speed**2 / 2 + potential_energy, total_energy)
 r"""
-m * v_r**2 / 2 + V = E
+m * v_r**2 / 2 + U = E
 
 Latex:
     .. math::
-        \frac{1}{2} m v_r^2 + V = E
+        \frac{1}{2} m v_r^2 + U = E
 """
 
 

@@ -20,19 +20,25 @@ from symplyphysics import (
 )
 
 planetary_potential_energy = Symbol("planetary_potential_energy", units.energy)
-"""
+r"""
 The total potential energy of the planet.
 
 Symbol:
-    V
+    U_tot
+
+Latex:
+    :math:`U_\text{tot}`
 """
 
 gravitational_potential_energy = Symbol("gravitational_potential_energy", units.energy)
-"""
+r"""
 The potential energy of the planet due to the gravitational interaction of the planet and the star.
 
 Symbol:
-    U
+    U_gr
+
+Latex:
+    :math:`U_\text{gr}`
 """
 
 planetary_angular_momentum = Symbol("planetary_angular_momentum", units.length * units.momentum)
@@ -64,10 +70,10 @@ law = Eq(
     gravitational_potential_energy + planetary_angular_momentum**2 / (2 * planetary_mass * planetary_distance**2),
 )
 r"""
-V = U + L^2 / (2 * m * r^2)
+U_tot = U_gr + L^2 / (2 * m * r^2)
 
 Latex:
-    :math:`V = U + \frac{L^2}{2 m r^2}`
+    :math:`U_\text{tot} = U_\text{gr} + \frac{L^2}{2 m r^2}`
 """
 
 
