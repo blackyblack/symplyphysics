@@ -77,7 +77,7 @@ r"""
 The angular frequency of the external driving force.
 
 Symbol:
-    w0
+    w
 
 Latex:
     :math:`\omega`
