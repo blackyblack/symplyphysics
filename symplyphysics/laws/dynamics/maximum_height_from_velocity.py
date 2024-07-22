@@ -30,7 +30,8 @@ r"""
 h = v^2 / (2 * g)
 
 Latex:
-    :math:`h = \frac{v^2}{2 g}`
+    .. math::
+        h = \frac{v^2}{2 g}
 """
 
 

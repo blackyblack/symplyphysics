@@ -46,7 +46,7 @@ r"""
 The natural angular frequency of the oscillator.
 
 Symbol:
-    omega0
+    w0
 
 Latex:
     :math:`\omega_0`
@@ -65,7 +65,7 @@ r"""
 The angular frequency of the driving force.
 
 Symbol:
-    omega
+    w
 
 Latex:
     :math:`\omega`
@@ -96,10 +96,11 @@ law = Eq(
     cos(driving_angular_frequency * time + driving_phase_lag),
 )
 r"""
-d^2(q(t))/dt^2 + omega0^2 * q(t) = (f / m) * cos(omega * t + phi)
+d^2(q(t))/dt^2 + w0^2 * q(t) = (f / m) * cos(w * t + phi)
 
 Latex:
-    :math:`\frac{d^2}{d t^2} q(t) + \omega_0^2 q(t) = \frac{f}{m} \cos{\left( \omega t + \varphi \right)}`
+    .. math::
+        \frac{d^2}{d t^2} q(t) + \omega_0^2 q(t) = \frac{f}{m} \cos{\left( \omega t + \varphi \right)}
 """
 
 

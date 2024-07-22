@@ -13,6 +13,9 @@ from symplyphysics import (units, Quantity, Symbol, validate_input,
 potential_energy_of_body = Symbol("potential_energy_of_body", units.energy)
 """
 The potential energy of the body.
+
+Symbol:
+    U
 """
 
 mass = symbols.basic.mass
@@ -24,13 +27,20 @@ Symbol:
 """
 
 height = Symbol("height", units.length)
+"""
+The elevation from ground level.
+
+Symbol:
+    h
+"""
 
 law = Eq(potential_energy_of_body, mass * units.acceleration_due_to_gravity * height)
 """
-E = m * g * h
+U = m * g * h
 
 Latex:
-    :math:`E = m g h`
+    .. math::
+        U = m g h
 """
 
 

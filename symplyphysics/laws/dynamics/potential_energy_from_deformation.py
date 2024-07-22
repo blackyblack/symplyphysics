@@ -18,12 +18,12 @@ spring_energy = Symbol("spring_energy", units.energy)
 The potential energy of the spring.
 
 Symbol:
-    E
+    U
 """
 
 elastic_koefficient = Symbol("elastic_koefficient", units.force / units.length)
 """
-The elastic coefficient of the spring.
+The spring's elasticity, or spring constant.
 
 Symbol:
     k
@@ -39,10 +39,11 @@ Symbol:
 
 law = Eq(spring_energy, elastic_koefficient * deformation**2 / 2)
 r"""
-E = k * x^2 / 2
+U = k * x^2 / 2
 
 Latex:
-    :math:`E = \frac{1}{2} k x^2`
+    .. math:
+        E = \frac{1}{2} k x^2
 """
 
 

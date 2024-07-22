@@ -25,11 +25,11 @@ from symplyphysics.definitions import (
     momentum_is_mass_times_velocity as momentum_def,)
 
 kinetic_energy = Symbol("kinetic_energy", units.energy)
-"""
+r"""
 The kinetic energy of the object.
 
 Symbol:
-    E
+    K
 """
 
 momentum = Symbol("momentum", units.momentum)
@@ -50,10 +50,10 @@ Symbol:
 
 law = Eq(kinetic_energy, momentum**2 / (2 * mass))
 r"""
-E = p^2 / (2 * m)
+K = p^2 / (2 * m)
 
 Latex:
-    :math:`E = \frac{p^2}{2 m}`
+    :math:`K = \frac{p^2}{2 m}`
 """
 
 # Derive law from kinetic energy and momentum expressions

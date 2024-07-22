@@ -30,7 +30,7 @@ Symbol:
 
 force = Function("force", units.force)
 """
-The magnitude of the net force exerted on the body.
+The magnitude of the net :attr:`~symplyphysics.symbols.dynamics.force` exerted on the body.
 
 Symbol:
     F
@@ -49,7 +49,8 @@ r"""
 dp/dt = F(t)
 
 Latex:
-    :math:`\frac{d p}{d t} = F(t)`
+    .. math::
+        \frac{d p}{d t} = F(t)
 """
 
 

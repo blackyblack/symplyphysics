@@ -14,7 +14,14 @@ the total mass of the system does not change.
 
 **Notes:**
 
-#. The quantity :math:`R v_\text{rel}` is called the thrust of rocket engine
+#. The quantity :math:`R v_\text{rel}` is called the *thrust of rocket engine*.
+
+.. _rate note:
+
+#. The rate :math:`R` of fuel consumption is defined as 
+    .. math::
+        R = - \frac{d M}{d t}
+   where :math:`M` is the :ref:`rocket mass <rocket mass definition>`.
 """
 
 from sympy import Eq, dsolve, solve, Symbol as SymSymbol
@@ -37,27 +44,12 @@ from symplyphysics.laws.kinematic import (
     classical_addition_of_velocities as galilean_law,
 )
 
-# Description
-## Assuming we are at rest relative to an inertial reference frame, we observe a rocket
-## accelerate through space with no gravitational or atmospheric drag forces acting on it.
-## The mass of the rocket changes as it burns fuel and releases the products of burning,
-## but the total mass of the system does not change.
-
-# Note: (R * v_rel) is called thrust of rocket engine
-
-# Conditions:
-## - Fuel consumption rate is constant
-## - Non-relativistic velocities
-
 fuel_consumption_rate = Symbol("fuel_consumption_rate", units.mass / units.time)
 r"""
-The rate of fuel consumption.
+The rate of fuel consumption. See :ref:`Note <rate note>` for the definition.
 
 Symbol:
-    R = -1 * dM/dt
-
-Latex:
-    :math:`R = - \frac{d M}{d t}`
+    R
 """
 
 relative_velocity = Symbol("relative_velocity", units.velocity)
@@ -81,6 +73,8 @@ Symbol:
 
 rocket_mass = clone_symbol(symbols.basic.mass, "rocket_mass")
 """
+.. _rocket mass definition:
+
 The :attr:`~symplyphysics.symbols.basic.mass` of the rocket
 
 Symbol:

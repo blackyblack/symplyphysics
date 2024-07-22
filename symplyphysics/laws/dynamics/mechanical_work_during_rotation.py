@@ -58,7 +58,8 @@ r"""
 W = tau * delta_theta
 
 Latex:
-    :math:`W = \tau \Delta \theta`
+    .. math::
+        W = \tau \Delta \theta
 """
 
 # Derive law from non-rotational counterpart.

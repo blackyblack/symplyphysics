@@ -26,7 +26,7 @@ braking_path = Symbol("braking_path", units.length)
 The braking path of the object.
 
 Symbol:
-    S
+    l
 """
 
 velocity = Symbol("velocity", units.velocity)
@@ -38,11 +38,14 @@ Symbol:
 """
 
 friction_force = clone_symbol(symbols.dynamics.force, "friction_force")
-"""
+r"""
 The friction :attr:`~symplyphysics.symbols.dynamics.force` exerted on the object.
 
 Symbol:
-    F
+    F_fr
+
+Latex:
+    :math:`F_\text{fr}`
 """
 
 mass = symbols.basic.mass
@@ -55,10 +58,10 @@ Symbol:
 
 law = Eq(braking_path, mass * velocity**2 / (2 * friction_force))
 r"""
-S = m * v^2 / (2 * F)
+l = m * v^2 / (2 * F_fr)
 
 Latex:
-    :math:`S = \frac{m v^2}{2 F}`
+    :math:`l = \frac{m v^2}{2 F_\text{fr}}`
 """
 
 # This law might be derived via "kinetic_energy_from_mass_and_velocity" law and

@@ -23,7 +23,7 @@ work = Symbol("work", units.energy)
 The mechanical work done by the force.
 
 Symbol:
-    w
+    W
 """
 
 force = symbols.dynamics.force
@@ -47,7 +47,8 @@ law = Eq(work, force * distance)
 W = F * s
 
 Latex:
-    :math:`W = F s`
+    .. math::
+        W = F s
 """
 
 

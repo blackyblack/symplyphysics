@@ -13,10 +13,7 @@ r"""
 The kinetic energy of the body.
 
 Symbol:
-    EK
-
-Latex:
-    :math:`E_\text{kin}`
+    K
 """
 
 
@@ -38,10 +35,10 @@ Symbol:
 
 law = Eq(kinetic_energy_of_body, mass * body_velocity**2 / 2)
 r"""
-EK = m * v^2 / 2
+K = m * v^2 / 2
 
 Latex:
-    :math:`E_\text{kin} = \frac{1}{2} m v^2`
+    :math:`K = \frac{1}{2} m v^2`
 """
 
 

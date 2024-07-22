@@ -35,10 +35,11 @@ Latex:
 
 law = Eq(force_reaction, -1 * force_action)
 r"""
-Fa = Fr
+F_12 = -1 * F_21
 
 Latex:
-    :math:`F_{12} = - F_{21}`
+    .. math::
+        F_{12} = - F_{21}
 """
 
 

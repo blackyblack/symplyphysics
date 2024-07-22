@@ -36,7 +36,7 @@ area = Symbol("area", units.area)
 The cross-sectional area of the object.
 
 Symbol:
-    S
+    A
 """
 
 length = Symbol("length", units.length)
@@ -49,10 +49,10 @@ Symbol:
 
 law = Eq(coefficient_of_stiffness, young_modulus * area / length)
 r"""
-k = E * S / l
+k = E * A / l
 
 Latex:
-    :math:`k = E \frac{S}{l}`
+    :math:`k = E \frac{A}{l}`
 """
 
 

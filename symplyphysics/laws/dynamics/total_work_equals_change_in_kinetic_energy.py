@@ -33,7 +33,7 @@ Symbol:
 """
 
 kinetic_energy = Function("kinetic_energy", units.energy)
-"""
+r"""
 The kinetic energy of the body.
 
 Symbol:
@@ -63,11 +63,12 @@ Latex:
 """
 
 law = Eq(total_work, kinetic_energy(time_after) - kinetic_energy(time_before))
-"""
+r"""
 W = K(t1) - K(t0)
 
 Latex:
-    :math:`W = K(t_1) - K(t_0)`
+    .. math::
+        W = K(t_1) - K(t_0)
 """
 
 # Derive the law in case of rectilinear motion with infinitesimal constant total force acting on particle and

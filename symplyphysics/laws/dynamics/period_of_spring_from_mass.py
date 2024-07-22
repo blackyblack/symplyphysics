@@ -34,11 +34,17 @@ Symbol:
 mass = symbols.basic.mass
 """
 The :attr:`~symplyphysics.symbols.basic.mass` of the object attached to the spring.
+
+Symbol:
+    m
 """
 
 spring_elasticity = Symbol("spring_elasticity", units.force / units.length)
 """
+Spring's elasticity, or spring constant.
 
+Symbol:
+    k
 """
 
 law = Eq(oscillation_period, 2 * pi * sqrt(mass / spring_elasticity))
@@ -46,7 +52,8 @@ r"""
 T = 2 * pi * sqrt(m / k)
 
 Latex:
-    :math:`T = 2 \pi \sqrt{\frac{m}{k}}`
+    .. math::
+        T = 2 \pi \sqrt{\frac{m}{k}}
 """
 
 # Derive this law from conservation of energy

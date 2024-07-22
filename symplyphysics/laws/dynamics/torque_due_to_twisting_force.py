@@ -70,7 +70,8 @@ r"""
 tau = F * r * sin(phi)
 
 Latex:
-    :math:`\tau = F r \sin{\varphi}`
+    .. math::
+        \tau = F r \sin{\varphi}
 """
 
 # Derive law from its vector counterpart.

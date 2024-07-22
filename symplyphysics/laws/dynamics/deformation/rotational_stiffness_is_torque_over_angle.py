@@ -51,7 +51,8 @@ r"""
 k = tau / phi
 
 Latex:
-    :math:`k = \frac{\tau}{\varphi}`
+    .. math::
+        k = \frac{\tau}{\varphi}
 """
 
 @validate_input(

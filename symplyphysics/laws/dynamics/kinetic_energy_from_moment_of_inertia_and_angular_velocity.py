@@ -21,16 +21,16 @@ from symplyphysics.laws.kinematic import linear_velocity_from_angular_velocity_a
 from symplyphysics.laws.kinematic.rotational_inertia import rotational_inertia_of_particle as rotational_inertia_def
 
 kinetic_energy = Symbol("kinetic_energy", units.energy)
-"""
+r"""
 The kinetic energy of the object.
 
 Symbol:
-    E
+    K
 """
 
 object_inertia_moment = Symbol("object_inertia_moment", units.mass * units.area)
 """
-The moment of inertia of the object.
+The rotational inertia of the object.
 
 Symbol:
     I
@@ -41,7 +41,7 @@ r"""
 The angular velocity of the object.
 
 Symbol:
-    omega
+    w
 
 Latex:
     :math:`\omega`
@@ -49,10 +49,11 @@ Latex:
 
 law = Eq(kinetic_energy, object_inertia_moment * angular_velocity**2 / 2)
 r"""
-E = I * w^2 / 2
+K = I * w^2 / 2
 
 Latex:
-    :math:`E = \frac{1}{2} I \omega^2`
+    .. math::
+        K = \frac{1}{2} I \omega^2
 """
 
 # Derive this law from the definition of kinetic energy and the expression for linear velocity of a rotating body

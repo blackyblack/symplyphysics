@@ -2,7 +2,7 @@ r"""
 Forced non-resonant oscillations
 ================================
 
-*Forced, or driven, *oscillations* are a type of oscillations in the precence of an external driving
+*Forced, or driven, oscillations* are a type of oscillations in the presence of an external driving
 force acting on the oscillating system. In the case of an oscillating external force, two angular
 frequencies are associated with such a system: (1) the natural angular frequency of the system,
 which is the angular frequency the system would oscillate with if no external force were present,
@@ -15,7 +15,7 @@ and (2) the angular frequency of the external force driving the oscillations.
 
 **Notes:**
 
-#. The external driving force has the form of :math:`f(t) = f_m \cos{\omega t + \varphi}`.
+#. The external driving force has the form of :math:`f(t) = f_m \cos{\left( \omega t + \varphi \right)}`.
 #. The complete expression of the displacement function can be found as the sum of the solution of 
    simple harmonic motion equation and the particular solution presented here.
 """
@@ -58,7 +58,7 @@ r"""
 The natural angular frequency of the oscillator.
 
 Symbol:
-    omega0
+    w0
 
 Latex:
     :math:`\omega_0`
@@ -77,7 +77,7 @@ r"""
 The angular frequency of the external driving force.
 
 Symbol:
-    omega
+    w0
 
 Latex:
     :math:`\omega`
@@ -106,10 +106,11 @@ law = Eq(driven_displacement(time), (driving_force_amplitude / oscillator_mass) 
     cos(driving_angular_frequency * time + driving_phase_lag) /
     (natural_angular_frequency**2 - driving_angular_frequency**2))
 r"""
-q(t) = (f / m) * cos(omega * t + phi) / (omega0**2 - omega**2)
+q(t) = f / (m * (w0**2 - w**2)) * cos(w * t + phi)
 
 Latex:
-    :math:`q(t) = \frac{f}{m \left( \omega_0^2 - \omega^2 \right)} \cos{\left( \omega t + \varphi \right)}`
+    .. math::
+        q(t) = \frac{f}{m \left( \omega_0^2 - \omega^2 \right)} \cos{\left( \omega t + \varphi \right)}
 """
 
 # Derive law from forced oscillations equation

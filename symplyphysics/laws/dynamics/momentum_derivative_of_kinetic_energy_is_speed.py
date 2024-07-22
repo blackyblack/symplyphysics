@@ -17,11 +17,11 @@ from symplyphysics import (
 )
 
 kinetic_energy = Function("kinetic_energy", units.energy)
-"""
+r"""
 The kinetic energy of the object.
 
 Symbol:
-    E
+    K
 """
 
 momentum = Function("momentum", units.momentum)
@@ -45,10 +45,11 @@ law = Eq(
     speed,
 )
 r"""
-dE(p(v))/dp(v) = v
+dK(p(v))/dp(v) = v
 
 Latex:
-    :math:`\frac{d E(p(v))}{d p(v)} = v`
+    .. math::
+        \frac{d K}(p(v))}{d p(v)} = v
 """
 
 # TODO: derive from the differential definition of work and the generalized Newton's second law

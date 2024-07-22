@@ -58,7 +58,8 @@ r"""
 P = F * v * cos(phi)
 
 Latex:
-    :math:`P = F v \cos{\varphi}`
+    .. math::
+        P = F v \cos{\varphi}
 """
 
 

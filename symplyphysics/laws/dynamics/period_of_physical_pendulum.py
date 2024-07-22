@@ -42,7 +42,7 @@ from symplyphysics.laws.dynamics import (
 
 pendulum_mass = clone_symbol(symbols.basic.mass, "pendulum_mass", positive=True)
 """
-The :attr:`symplyphysics.symbols.basic.mass` of the pendulum.
+The :attr:`~symplyphysics.symbols.basic.mass` of the pendulum.
 
 Symbol:
     m
@@ -79,7 +79,8 @@ r"""
 T = 2 * pi * sqrt(I / (m * g * h))
 
 Latex:
-    :math:`T = 2 \pi \sqrt{\frac{I}{m g h}}`
+    .. math::
+        T = 2 \pi \sqrt{\frac{I}{m g h}}
 """
 
 # Derive from torque definition

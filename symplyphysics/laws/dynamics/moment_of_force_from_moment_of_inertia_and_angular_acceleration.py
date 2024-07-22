@@ -23,16 +23,19 @@ from symplyphysics import (angle_type, units, Quantity, Symbol, validate_input,
 ## M - moment of force
 
 moment_of_force = Symbol("moment_of_force", units.force * units.length * angle_type)
-"""
+r"""
 The moment of force applied on the object.
 
 Symbol:
-    M
+    tau
+
+Latex:
+    :math:`\tau`
 """
 
 moment_of_inertia = Symbol("moment_of_inertia", units.mass * units.area)
 """
-The moment of inertia of the object.
+The rotational inertia of the object.
 
 Symbol:
     I
@@ -51,10 +54,11 @@ Latex:
 
 law = Eq(moment_of_force, moment_of_inertia * angular_acceleration)
 r"""
-M = I * epsilon
+tau = I * epsilon
 
 Latex:
-    :math:`M = I \varepsilon`
+    .. math::
+        \tau = I \varepsilon
 """
 
 @validate_input(moment_of_inertia_=moment_of_inertia, angular_acceleration_=angular_acceleration)

@@ -48,7 +48,8 @@ r"""
 T = 2 * pi * sqrt(I / kappa)
 
 Latex:
-    :math:`T = 2 \pi \sqrt{\frac{I}{\kappa}}`
+    .. math::
+        T = 2 \pi \sqrt{\frac{I}{\kappa}}
 """
 
 # TODO: derive from relation between restoring torque and twist angle

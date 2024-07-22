@@ -35,7 +35,7 @@ Latex:
 
 displaced_volume = Symbol("displaced_volume", units.volume)
 """
-The volume of the displaces fluid. Equivalently, the volume of the part of the body immersed in the fluid.
+The volume of the displaced fluid. Equivalently, the volume of the part of the body immersed in the fluid.
 
 Symbols:
     V
@@ -46,7 +46,8 @@ r"""
 Fa = -1 * rho * g * V
 
 Latex:
-    :math:`F_\text{A} = - \rho g V`
+    .. math::
+        F_\text{A} = - \rho g V
 """
 
 @validate_input(fluid_density_=fluid_density, displaced_volume_=displaced_volume)

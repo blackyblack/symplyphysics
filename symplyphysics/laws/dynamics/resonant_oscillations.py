@@ -94,7 +94,8 @@ r"""
 q(t) = (f / m) * t * sin(w0 * t + phi) / (2 * w0)
 
 Latex:
-    :math:`q(t) = \frac{f t}{2 m \omega_0} \sin{\left( \omega_0 t + \varphi \right)}`
+    .. math::
+        q(t) = \frac{f t}{2 m \omega_0} \sin{\left( \omega_0 t + \varphi \right)}
 """
 
 # Derive law from driven oscillations equation

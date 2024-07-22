@@ -47,7 +47,8 @@ r"""
 T = 2 * pi * sqrt(L / g)
 
 Latex:
-    :math:`T = 2 \pi \sqrt{\frac{L}{g}}`
+    .. math::
+        T = 2 \pi \sqrt{\frac{L}{g}}
 """
 
 # Derive this law from conservation of energy

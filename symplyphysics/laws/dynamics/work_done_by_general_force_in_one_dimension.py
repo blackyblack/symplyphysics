@@ -28,7 +28,7 @@ Symbol:
 
 force_function = Function("force_function", units.force)
 r"""
-The force exerted on the object as a function of position.
+The :attr:`~symplyphysics.symbols.dynamics.force` exerted on the object as a function of position.
 
 Symbol:
     F
@@ -56,7 +56,7 @@ Latex:
 
 position_end = Symbol("position_end", units.length)
 """
-The ending position of the object.
+The end position of the object.
 
 Symbol:
     x1

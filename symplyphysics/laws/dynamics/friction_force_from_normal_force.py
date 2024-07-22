@@ -15,7 +15,7 @@ r"""
 The friction :attr:`~symplyphysics.symbols.dynamics.force`.
 
 Symbol:
-    F_friction
+    F_fr
 
 Latex:
     :math:`F_\text{fr}`
@@ -42,10 +42,11 @@ Symbol:
 
 law = Eq(friction_force, friction_factor * normal_reaction)
 r"""
-F_friction = mu * N
+F_fr = mu * N
 
 Latex:
-    :math:`F_\text{fr} = \mu N`
+    .. math::
+        F_\text{fr} = \mu N
 """
 
 
