@@ -43,4 +43,4 @@ jobs:
           done
 
       - name: Build docs
-        run: docs/build.py -s symplyphysics -o docs/generated -e core
+        run: docs/build.py -s symplyphysics -o docs/symplyphysics -e core
