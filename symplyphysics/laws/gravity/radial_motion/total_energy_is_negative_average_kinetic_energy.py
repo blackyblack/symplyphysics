@@ -1,6 +1,6 @@
 """
-Total energy is negative kinetic energy
-=======================================
+Total energy is negative average kinetic energy
+===============================================
 
 The total energy of an orbiting planet is equal to its negative kinetic energy averaged over time.
 
