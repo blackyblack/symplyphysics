@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.gravity import semiminor_axis_of_elliptical_orbit_via_orbit_parameters as law
+from symplyphysics.laws.gravity.radial_motion import semiminor_axis_of_elliptical_orbit_via_orbit_parameters as law
 
 Args = namedtuple("Args", "s a m")
 
