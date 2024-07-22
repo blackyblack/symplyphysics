@@ -1,23 +1,47 @@
+"""
+Potential energy from mass and height
+=====================================
+
+The potential energy is a form of energy a body possesses because of its position relative to
+other objects.
+"""
+
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, symbols)
 
-# Description
-## Potential energy of body EP = m * g * h
-## Where:
-## m - body mass
-## h - height from Earth surface
-## g - free fall acceleration
-
 potential_energy_of_body = Symbol("potential_energy_of_body", units.energy)
+"""
+The potential energy of the body.
+
+Symbol:
+    U
+"""
+
+mass = symbols.basic.mass
+"""
+The :attr:`~symplyphysics.symbols.basic.mass` of the body.
+
+Symbol:
+    m
+"""
+
 height = Symbol("height", units.length)
-free_fall_acceleration = units.acceleration_due_to_gravity
+"""
+The elevation from ground level.
 
-law = Eq(potential_energy_of_body, symbols.basic.mass * free_fall_acceleration * height)
+Symbol:
+    h
+"""
 
+law = Eq(potential_energy_of_body, mass * units.acceleration_due_to_gravity * height)
+"""
+U = m * g * h
 
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        U = m g h
+"""
 
 
 @validate_input(body_mass_=symbols.basic.mass, height_=height)
@@ -25,5 +49,5 @@ def print_law() -> str:
 def calculate_potential_energy(body_mass_: Quantity, height_: Quantity) -> Quantity:
     result_energy_expr = solve(law, potential_energy_of_body,
         dict=True)[0][potential_energy_of_body]
-    result_expr = result_energy_expr.subs({symbols.basic.mass: body_mass_, height: height_})
+    result_expr = result_energy_expr.subs({mass: body_mass_, height: height_})
     return Quantity(result_expr)

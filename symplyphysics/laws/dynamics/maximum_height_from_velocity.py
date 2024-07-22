@@ -1,20 +1,38 @@
+"""
+Maximum height from velocity
+============================
+
+The maximum height that a body thrown vertically will rise to depends on the initial velocity.
+"""
+
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output)
-# Description
-## The maximum height to which a body thrown vertically upwards will rise depends on the initial velocity
-## Law: h = (v**2)/(2*g)
-## v is initial velocity,
-## g is acceleration of free fall.
 
 maximum_height = Symbol("maximum_height", units.length)
+"""
+The maximum height that the object will reach.
+
+Symbol:
+    h
+"""
+
 initial_velocity = Symbol("initial_velocity", units.velocity)
+"""
+The initial velocity of the object.
+
+Symbol:
+    v
+"""
 
 law = Eq(maximum_height, initial_velocity**2 / (2 * units.acceleration_due_to_gravity))
+r"""
+h = v^2 / (2 * g)
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        h = \frac{v^2}{2 g}
+"""
 
 
 @validate_input(initial_velocity_=initial_velocity)

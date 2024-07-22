@@ -1,3 +1,11 @@
+"""
+Momentum derivative of kinetic energy is speed
+==============================================
+
+The general formula for the kinetic energy of an object features its speed and momentum. This way it can be used
+not only in the case of variable mass, but also in the relativistic case.
+"""
+
 from sympy import Eq, Derivative
 from symplyphysics import (
     units,
@@ -8,27 +16,41 @@ from symplyphysics import (
     validate_output,
 )
 
-# Description
-## The general formula for the kinetic energy of an object features its speed and momentum. This way it can be used
-## not only in the case of variable mass, but also in the relativistic case.
-
-# Law: dE(p(v))/dp(v) = v
-## E - kinetic energy
-## p - momentum
-## v - speed
-## d/dp - derivative w.r.t. momentum
-
-# Notes
-## - Works in the case of special relativity as well
-
 kinetic_energy = Function("kinetic_energy", units.energy)
+r"""
+The kinetic energy of the object.
+
+Symbol:
+    K
+"""
+
 momentum = Function("momentum", units.momentum)
+"""
+The momentum of the object.
+
+Symbol:
+    p
+"""
+
 speed = Symbol("speed", units.velocity)
+"""
+The speed of the object.
+
+Symbol:
+    v
+"""
 
 law = Eq(
     Derivative(kinetic_energy(momentum(speed)), momentum(speed)),
     speed,
 )
+r"""
+dK(p(v))/dp(v) = v
+
+Latex:
+    .. math::
+        \frac{d K}(p(v))}{d p(v)} = v
+"""
 
 # TODO: derive from the differential definition of work and the generalized Newton's second law
 

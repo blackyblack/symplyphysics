@@ -1,21 +1,46 @@
+"""
+Force reaction from force action
+================================
+
+Newton's third law of motion states that for every action there is an equal and opposite reaction.
+Namely, if two bodies exert forces on each other, these forces have the same magnitude but opposite
+directions.
+"""
+
 from sympy import (Eq, solve)
-from symplyphysics import (clone_symbol, symbols, Quantity, print_expression, validate_input,
+from symplyphysics import (clone_symbol, symbols, Quantity, validate_input,
     validate_output)
 
-# Description
-## Newton's third law: Fr = -Fa
-## Where:
-## Fa - action force.
-## Fr - reaction force.
-
 force_action = clone_symbol(symbols.dynamics.force, "force_action")
+r"""
+The projection of the :attr:`~symplyphysics.symbols.dynamics.force` that the first body exerts on the second body.
+
+Symbol:
+    F_12
+
+Latex:
+    :math:`F_{12}`
+"""
+
 force_reaction = clone_symbol(symbols.dynamics.force, "force_reaction")
+r"""
+The projection of the :attr:`~symplyphysics.symbols.dynamics.force` that the second body exerts on the first body.
+
+Symbol:
+    F_21
+
+Latex:
+    :math:`F_{21}`
+"""
 
 law = Eq(force_reaction, -1 * force_action)
+r"""
+F_12 = -1 * F_21
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        F_{12} = - F_{21}
+"""
 
 
 @validate_input(force_action_=force_action)

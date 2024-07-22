@@ -1,36 +1,66 @@
+"""
+Instantaneous power is force times velocity
+===========================================
+
+*Power* is the rate at which the work is done by a force exerted on an object.
+*Instantaneous power* is the power at a specific instant.
+"""
+
 from sympy import Eq, cos
 from symplyphysics import (
     symbols,
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     angle_type,
 )
 from symplyphysics.core.symbols.quantities import scale_factor
 
-# Description
-## Power is the rate at which the work is done by a force. The instantaneous power is the power
-## at a specific instant.
-
-# Law: P = F * v * cos(phi)
-## P - instantaneous power of force F
-## F - magnitude of force
-## v - speed
-## phi - angle between force and velocity vectors
-
 power = Symbol("power", units.power)
+"""
+The instantaneous power of force :math:`F`.
+
+Symbol:
+    P
+"""
+
 force = symbols.dynamics.force
+"""
+The :attr:`~symplyphysics.symbols.dynamics.force` exerted on the object.
+
+Symbol:
+    F
+"""
+
 speed = Symbol("speed", units.speed)
+"""
+The speed of the object
+
+Symbol:
+    v
+"""
+
 angle = Symbol("angle", angle_type)
+r"""
+The angle between the force and velocity vectors.
+
+Symbol:
+    phi
+
+Latex:
+    :math:`\varphi`
+"""
 
 law = Eq(power, force * speed * cos(angle))
+r"""
+P = F * v * cos(phi)
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        P = F v \cos{\varphi}
+"""
 
 
 # TODO: derive law from [its vector counterpart](./vector/instantaneous_power_is_force_dot_velocity.py)

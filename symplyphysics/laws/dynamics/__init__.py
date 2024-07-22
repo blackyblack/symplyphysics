@@ -2,5 +2,5 @@
 Dynamics
 ========
 
-Dynamics is the study of the cause of motion, or more precisely the cause of *changes* in motion.
+Dynamics is a branch of mechanics describing the motion of objects due to the forces applied to them.
 """

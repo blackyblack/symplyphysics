@@ -1,26 +1,53 @@
+"""
+Friction force from normal force
+================================
+
+The *friction* force is tangential interaction between two objects, which impedes there relative movement.
+It is proportional to the normal force between the two objects.
+"""
+
 from sympy import (Eq, solve)
-from symplyphysics import (clone_symbol, symbols, Quantity, Symbol, print_expression, dimensionless,
+from symplyphysics import (clone_symbol, symbols, Quantity, Symbol, dimensionless,
     validate_input, validate_output)
 
-# Description
-## Friction force is tangential interaction between two objects, which impedes there relative movement.
-## It is proportional to pressure of one object to another.
-
-## Law: Ffriction = mu * N
-## Where:
-## Ffriction is friction force,
-## mu is friction factor for this pair of objects,
-## N is normal reaction from one object to another.
-
 friction_force = clone_symbol(symbols.dynamics.force, "friction_force")
+r"""
+The friction :attr:`~symplyphysics.symbols.dynamics.force`.
+
+Symbol:
+    F_fr
+
+Latex:
+    :math:`F_\text{fr}`
+"""
+
 friction_factor = Symbol("friction_factor", dimensionless)
+r"""
+The friction factor between the two objects.
+
+Symbol:
+    mu
+
+Latex:
+    :math:`\mu`
+"""
+
 normal_reaction = clone_symbol(symbols.dynamics.force, "normal_reaction")
+"""
+The normal reaction :attr:`~symplyphysics.symbols.dynamics.force` from one object to another.
+
+Symbol:
+    N
+"""
 
 law = Eq(friction_force, friction_factor * normal_reaction)
+r"""
+F_fr = mu * N
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        F_\text{fr} = \mu N
+"""
 
 
 @validate_input(friction_factor_=friction_factor, normal_reaction_=normal_reaction)

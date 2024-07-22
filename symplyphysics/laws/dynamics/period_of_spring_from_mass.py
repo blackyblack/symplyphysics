@@ -1,6 +1,20 @@
+"""
+Period of spring from mass
+==========================
+
+Mass on spring is a system of object with mass :math:`m` and spring with elasticity :math:`k`.
+It starts oscillating after being pushed out of balance.
+
+**Conditions:**
+
+#. The spring does not gain or lose energy. There is no friction or inelastic deformation.
+#. The object is small enough to be considered a material point.
+#. The spring is weightless.
+"""
+
 from sympy import (Derivative, Eq, Function as SymFunction, diff, solve, pi, sqrt, symbols as
     SymSymbols, simplify)
-from symplyphysics import (Quantity, units, Symbol, print_expression, validate_input,
+from symplyphysics import (Quantity, units, Symbol, validate_input,
     validate_output, symbols)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.dynamics import potential_energy_from_deformation as spring_energy
@@ -9,30 +23,38 @@ from symplyphysics.definitions import velocity_is_movement_derivative as velocit
 from symplyphysics.definitions import period_from_angular_frequency as period_definition
 from symplyphysics.definitions import harmonic_oscillator_is_second_derivative_equation as oscillator
 
-# Description
-## Mass on spring is a system of object with mass m and spring with elasticity k. It starts oscillating after been pushed out of balance.
+oscillation_period = Symbol("oscillation_period", units.time)
+"""
+The period of spring oscillations.
 
-# Law: T = 2 * pi * sqrt(m/k)
-# Where:
-## T is period of oscillation,
-## m is object mass,
-## k is spring elastic coefficient.
+Symbol:
+    T
+"""
 
-# Conditions:
-## - Spring doesn't accept or loose any energy. No any friction or inelastic deformations.
-## - Object is small.
-## - Another end of a spring is not moving in current coordinate system.
-## - Spring is weightless.
+mass = symbols.basic.mass
+"""
+The :attr:`~symplyphysics.symbols.basic.mass` of the object attached to the spring.
+
+Symbol:
+    m
+"""
 
 spring_elasticity = Symbol("spring_elasticity", units.force / units.length)
-oscillation_period = Symbol("oscillation_period", units.time)
+"""
+Spring's elasticity, or spring constant.
 
-law = Eq(oscillation_period, 2 * pi * sqrt(symbols.basic.mass / spring_elasticity))
+Symbol:
+    k
+"""
 
+law = Eq(oscillation_period, 2 * pi * sqrt(mass / spring_elasticity))
+r"""
+T = 2 * pi * sqrt(m / k)
 
-def print_law() -> str:
-    return print_expression(law)
-
+Latex:
+    .. math::
+        T = 2 \pi \sqrt{\frac{m}{k}}
+"""
 
 # Derive this law from conservation of energy
 
@@ -53,7 +75,7 @@ amount_of_potential_energy = spring_energy.law.subs({
 velocity_def_eq = velocity_def.definition.subs(velocity_def.moving_time, time)
 linear_velocity = velocity_def_eq.subs(velocity_def.movement(time), spring_displacement(time)).rhs
 amount_of_kinetic_energy = kinetic_energy.law.subs({
-    kinetic_energy.symbols.basic.mass: symbols.basic.mass,
+    kinetic_energy.mass: mass,
     kinetic_energy.body_velocity: linear_velocity
 }).rhs
 
@@ -93,6 +115,6 @@ def calculate_period(spring_elasticity_: Quantity, object_mass_: Quantity) -> Qu
     solved = solve(law, oscillation_period, dict=True)[0][oscillation_period]
     result_expr = solved.subs({
         spring_elasticity: spring_elasticity_,
-        symbols.basic.mass: object_mass_
+        mass: object_mass_
     })
     return Quantity(result_expr)

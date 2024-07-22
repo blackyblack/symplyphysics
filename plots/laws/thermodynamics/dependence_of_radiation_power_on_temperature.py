@@ -5,7 +5,7 @@ from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import (print_expression, units, Quantity, convert_to)
 from symplyphysics.laws.thermodynamics import radiance_of_black_body_from_temperature as stefan_boltzmann_law
 
-print(f"Formula is:\n{stefan_boltzmann_law.print_law()}")
+print(f"Formula is:\n{print_expression(stefan_boltzmann_law.law)}")
 
 solved = solve(stefan_boltzmann_law.law, stefan_boltzmann_law.radiance,
     dict=True)[0][stefan_boltzmann_law.radiance]

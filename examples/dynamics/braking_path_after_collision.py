@@ -42,7 +42,6 @@ speed_after_2 = Symbol("speed_after_2")
 potential_energy_before_1 = potential_energy_def.law.rhs.subs({
     potential_energy_def.height: height,
     potential_energy_def.symbols.basic.mass: mass_1,
-    potential_energy_def.free_fall_acceleration: units.acceleration_due_to_gravity,
 })
 
 # Block 1 slides from rest.
