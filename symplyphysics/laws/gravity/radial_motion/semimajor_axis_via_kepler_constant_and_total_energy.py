@@ -7,7 +7,7 @@ the star---planet system and the total energy of the planet per unit of its mass
 
 **Notes:**
 
-#. Works for both elliptical (:math:`\varepsilon < 0`) and parabolical
+#. Works for both elliptical (:math:`\varepsilon < 0`) and hyperbolical
    (:math:`\varepsilon > 0`) orbits.
 """
 
