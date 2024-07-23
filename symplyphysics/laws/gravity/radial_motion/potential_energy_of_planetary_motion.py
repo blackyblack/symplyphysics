@@ -73,7 +73,8 @@ r"""
 U_tot = U_gr + L^2 / (2 * m * r^2)
 
 Latex:
-    :math:`U_\text{tot} = U_\text{gr} + \frac{L^2}{2 m r^2}`
+    .. math::
+        U_\text{tot} = U_\text{gr} + \frac{L^2}{2 m r^2}
 """
 
 

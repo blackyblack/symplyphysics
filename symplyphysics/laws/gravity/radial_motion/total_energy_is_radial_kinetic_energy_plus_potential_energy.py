@@ -42,10 +42,7 @@ Latex:
 
 potential_energy = Symbol("potential_energy", units.energy)
 """
-..
-    FIXME Link document below.
-
-The potential energy of the planet, see :code:`./potential_energy_of_planetary_motion.py`.
+The potential energy of the planet, see :doc:`laws.gravity.radial_motion.potential_energy_of_planetary_motion`.
 
 Symbol:
     U
