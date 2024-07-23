@@ -56,10 +56,9 @@ _expected_sum = _forces_law_.doit().rhs
 # Using one dimensional vectors represents scalar form of the law
 _vector_forces = [Vector([force[1]]), Vector([force[2]])]
 _resultant_vector = vector_forces_sum.superposition_law(_vector_forces)
-assert len(_resultant_vector.components) == 3
 assert expr_equals(_resultant_vector.components[0], _expected_sum)
-assert _resultant_vector.components[1] == 0
-assert _resultant_vector.components[2] == 0
+for component in _resultant_vector.components[1:]:
+    assert component == 0
 
 
 @validate_input(forces_=force)

@@ -95,5 +95,9 @@ def calculate_displacement(
         displacement(time),
         ics=ics,
     ).rhs
-    result = dsolved.subs(time, time_)
+    result = dsolved.subs(time, time_).subs({
+        undamped_angular_frequency: undamped_angular_frequency_,
+        damping_ratio: damping_ratio_,
+    })
     return Quantity(result)
+
