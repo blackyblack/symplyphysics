@@ -71,13 +71,25 @@ Latex:
 solar_mass = Quantity(1.9884e30 * units.kilogram)
 r"""
 The solar mass is a standard unit of mass in astronomy approximately equal to the mass
-of the Sun.
+of the Sun. The relative uncertainty of the measurement is :math:`4 \cdot 10^{-5}`.
 
 Symbol:
     M_Sun
 
 Latex:
-    :math:`\mathrm{M}_\odot`
+    :math:`M_\odot`
+"""
+
+earth_mass = Quantity(5.9722e24 * units.kilogram)
+"""
+The solar mass is a standard unit of mass in astronomy equal to the mass of the planet 
+Earth. The relative uncertainty of the measurement is :math:`10^{-4}`.
+
+Symbol:
+    M_Earth
+
+Latex:
+    :math:`M_\oplus`
 """
 
 __all__ = [
@@ -87,4 +99,5 @@ __all__ = [
     "bohr_radius",
     "hydrogen_ionization_energy",
     "solar_mass",
+    "earth_mass",
 ]
