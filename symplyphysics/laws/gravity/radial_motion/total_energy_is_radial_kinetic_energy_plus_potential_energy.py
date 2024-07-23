@@ -26,7 +26,7 @@ planetary_mass = clone_symbol(symbols.basic.mass, "planetary_mass")
 The :attr:`~symplyphysics.symbols.basic.mass` of the planet.
 
 Symbol:
-    m
+    :code:`m`
 """
 
 radial_speed = Symbol("radial_speed", units.velocity)
@@ -34,7 +34,7 @@ radial_speed = Symbol("radial_speed", units.velocity)
 The projection of the velocity vector in the radial direction.
 
 Symbol:
-    v_r
+    :code:`v_r`
 
 Latex:
     :math:`v_r`
@@ -45,20 +45,20 @@ potential_energy = Symbol("potential_energy", units.energy)
 The potential energy of the planet, see :doc:`laws.gravity.radial_motion.potential_energy_of_planetary_motion`.
 
 Symbol:
-    U
+    :code:`U`
 """
 
 total_energy = Symbol("total_energy", units.energy)
 """Total energy of the planet, assumed to be constant.
 
 Symbol:
-    E
+    :code:`E`
 """
 
 
 law = Eq(planetary_mass * radial_speed**2 / 2 + potential_energy, total_energy)
 r"""
-m * v_r**2 / 2 + U = E
+:code:`m * v_r**2 / 2 + U = E`
 
 Latex:
     .. math::
