@@ -20,19 +20,25 @@ from symplyphysics import (
 )
 
 planetary_potential_energy = Symbol("planetary_potential_energy", units.energy)
-"""
+r"""
 The total potential energy of the planet.
 
 Symbol:
-    V
+    :code:`U_tot`
+
+Latex:
+    :math:`U_\text{tot}`
 """
 
 gravitational_potential_energy = Symbol("gravitational_potential_energy", units.energy)
-"""
+r"""
 The potential energy of the planet due to the gravitational interaction of the planet and the star.
 
 Symbol:
-    U
+    :code:`U_gr`
+
+Latex:
+    :math:`U_\text{gr}`
 """
 
 planetary_angular_momentum = Symbol("planetary_angular_momentum", units.length * units.momentum)
@@ -40,7 +46,7 @@ planetary_angular_momentum = Symbol("planetary_angular_momentum", units.length *
 The angular momentum of the planet.
 
 Symbol:
-    L
+    :code:`L`
 """
 
 planetary_mass = clone_symbol(symbols.basic.mass, "planetary_mass")
@@ -48,7 +54,7 @@ planetary_mass = clone_symbol(symbols.basic.mass, "planetary_mass")
 The :attr:`~symplyphysics.symbols.basic.mass` of the planet.
 
 Symbol:
-    m
+    :code:`m`
 """
 
 planetary_distance = Symbol("planetary_distance", units.length)
@@ -56,7 +62,7 @@ planetary_distance = Symbol("planetary_distance", units.length)
 The distance between the star and the planet.
 
 Symbol:
-    r
+    :code:`r`
 """
 
 law = Eq(
@@ -64,10 +70,11 @@ law = Eq(
     gravitational_potential_energy + planetary_angular_momentum**2 / (2 * planetary_mass * planetary_distance**2),
 )
 r"""
-V = U + L^2 / (2 * m * r^2)
+:code:`U_tot = U_gr + L^2 / (2 * m * r^2)`
 
 Latex:
-    :math:`V = U + \frac{L^2}{2 m r^2}`
+    .. math::
+        U_\text{tot} = U_\text{gr} + \frac{L^2}{2 m r^2}
 """
 
 
