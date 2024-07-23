@@ -1,3 +1,12 @@
+"""
+Damping force is proportional to velocity
+=========================================
+
+Damping force is an external (relative to an object) force that drains energy from the object,
+reducing the motion of the object. It is a model used, for example, to describe the motion
+of an oscillator.
+"""
+
 from symplyphysics import (
     units,
     Symbol,
@@ -9,24 +18,76 @@ from symplyphysics import (
     validate_output,
 )
 
-# Description
-## Damping force is an external (relative to an object) force that drains energy from the object,
-## reducing the motion of the object. It is a model used, for example, describing the motion
-## of an oscillator.
-
-# Law: F = -b * v
-## F - vector of damping force
-## b - damping constant, b >= 0
-## v - vector of object's velocity
-
 damping_constant = Symbol("damping_constant", units.mass / units.time)
+"""
+Non-negative damping constant.
+
+Symbol:
+    :code:`b`
+
+Dimension: :math:`\mathsf{M} \mathsf{T}^{-1}`
+"""
 
 
 def damping_force_definition(velocity_: Vector) -> Vector:
+    r"""
+    Vector of *damping force* exerted on the object.
+
+    Law:
+        :code:`F = -1 * b * v`
+
+    Latex:
+        .. math::
+            \vec F = -b \vec v
+
+    :param velocity\_: velocity vector of the object.
+
+        Symbol: :code:`v`
+
+        Latex: :math:`\vec v`
+
+        Dimension: :math:`\mathsf{L} \mathsf{T}^{-1}`
+
+    :return: vector of damping :attr:`~symplyphysics.symbols.dynamics.force`.
+
+        Symbol: :code:`F`
+
+        Latex: :math:`\vec F`
+
+        Dimension: :math:`\mathsf{M} \mathsf{L} \mathsf{T}^{-2}`
+    """
+
     return scale_vector(-1 * damping_constant, velocity_)
 
 
 def velocity_law(damping_force_: Vector) -> Vector:
+    r"""
+    *Velocity* of the object which the damping force is exerted on.
+    
+    Law:
+        :code:`v = -1/b * F`
+
+    Latex:
+        .. math::
+            \vec v = - \frac{\vec F}{b}
+    
+    :param damping_force\_: damping :attr:`~symplyphysics.symbols.dynamics.force` exerted on the object.
+
+        Symbol: :code:`F`
+
+        Latex: :math:`\vec F`
+
+        Dimension: :math:`\mathsf{M} \mathsf{L} \mathsf{T}^{-2}`
+
+    :return: velocity vector of the object.
+
+        Symbol: :code:`v`
+
+        Latex: :math:`\vec v`
+
+        Dimension: :math:`\mathsf{L} \mathsf{T}^{-1}`
+    """
+
     return scale_vector(-1 / damping_constant, damping_force_)
 
 

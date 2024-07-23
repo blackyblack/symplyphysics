@@ -1,35 +1,76 @@
+"""
+Impulse due to force
+====================
+
+Impulse due to force exerted on a body during collision is the measure of both the
+magnitude and duration of the collision. Impulse can also be represented by a vector
+by applying this law to the components of the force vector.
+"""
+
 from sympy import Eq, Integral
 from symplyphysics import (
     units,
     Quantity,
     Function,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
 
-# Description
-## The impulse due to force exerted on body during collision is the measure of both the
-## magnitude and duration of the collision.
-
-# Law: J = Integral(F(t), (t, t_i, t_f))
-## J - magnitude of impulse due to force F
-## F - magnitude of force
-## t - time
-## t_i, t_f - initial and final time of collision, respectively
-
 impulse = Symbol("impulse", units.momentum)
+r"""
+Projection of impulse vector due to :attr:`~symplyphysics.symbols.dynamics.force` :math:`\vec F`.
+
+Symbol:
+    :code:`J`
+"""
+
 force_function = Function("force_function", units.force)
+r"""
+Projection of :attr:`~symplyphysics.symbols.dynamics.force` :math:`\vec F` as a function of time.
+
+Symbol:
+    :code:`F`
+"""
+
 time = Symbol("time", units.time)
+"""
+Time.
+
+Symbol:
+    :code:`t`
+"""
+
 time_start = Symbol("time_start", units.time)
+"""
+Initial time of collision.
+
+Symbol:
+    :code:`t0`
+
+Latex:
+    :math:`t_0`
+"""
+
 time_end = Symbol("time_end", units.time)
+"""
+Final time of collision.
+
+Symbol:
+    :code:`t1`
+
+Latex:
+    :math:`t_1`
+"""
 
 law = Eq(impulse, Integral(force_function(time), (time, time_start, time_end)))
+r"""
+:code:`J = Integral(F(t), (t, t0, t1))`
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        J = \int_{t_0}^{t_1} F(t) dt
+"""
 
 
 @validate_input(

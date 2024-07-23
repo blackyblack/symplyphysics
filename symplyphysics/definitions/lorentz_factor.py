@@ -1,3 +1,7 @@
+"""
+
+"""
+
 from sympy import Eq, sqrt
 from sympy.physics.units import speed_of_light
 from symplyphysics import (

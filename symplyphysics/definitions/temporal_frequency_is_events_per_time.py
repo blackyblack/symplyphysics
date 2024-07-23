@@ -1,28 +1,46 @@
+"""
+Temporal frequency is events per time
+=====================================
+
+Temporal frequency, or simply frequency, is the number of occurrences of a repeating event per unit of time.
+"""
+
 from sympy import (Eq, solve)
-from symplyphysics import (dimensionless, units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (dimensionless, units, Quantity, Symbol, validate_input,
     validate_output)
 
-# Description
-## Frequency is the number of occurrences of a repeating event per unit of time.
-## It is also referred to as temporal frequency, which emphasizes the contrast to spatial frequency and angular frequency.
+temporal_frequency = Symbol("temporal_frequency", units.frequency)
+"""
+Temporal frequency of events.
 
-# Definition: f = N / t
-# Where:
-## N is number of events per time,
-## t is time,
-## f is temporal frequency.
+Symbol:
+    :code:`f`
+"""
 
 events = Symbol("events", dimensionless)
+"""
+Number of events occurred during the given time.
+
+Symbol:
+    :code:`N`
+"""
+
 time = Symbol("period", units.time)
-temporal_frequency = Symbol("temporal_frequency", units.frequency)
+"""
+Time elapsed.
+
+Symbol:
+    :code:`t`
+"""
 
 definition = Eq(temporal_frequency, events / time)
+r"""
+:code:`f = N / t`
 
-definition_units_SI = units.hertz
-
-
-def print_law() -> str:
-    return print_expression(definition)
+Latex:
+    .. math::
+        f = \frac{N}{t}
+"""
 
 
 @validate_input(time_=time)

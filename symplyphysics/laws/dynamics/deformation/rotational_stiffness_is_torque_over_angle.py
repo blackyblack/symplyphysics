@@ -21,7 +21,7 @@ rotational_stiffness = Symbol("rotational_stiffness", units.force * units.length
 Rotational stiffness of the body.
 
 Symbol:
-    k
+    :code:`k`
 """
 
 torque_applied = Symbol("torque_applied", units.force * units.length)
@@ -29,7 +29,7 @@ r"""
 Torque applied to the body.
 
 Symbol:
-    tau
+    :code:`tau`
 
 Latex:
     :math:`\tau`
@@ -40,7 +40,7 @@ r"""
 Angle of deformation.
 
 Symbol:
-    phi
+    :code:`phi`
 
 Latex:
     :math:`\varphi`
@@ -48,7 +48,7 @@ Latex:
 
 law = Eq(rotational_stiffness, torque_applied / rotation_angle)
 r"""
-k = tau / phi
+:code:`k = tau / phi`
 
 Latex:
     .. math::

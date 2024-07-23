@@ -1,41 +1,67 @@
+r"""
+Volumetric coefficient of thermal expansion
+===========================================
+
+The *coefficient of thermal expansion* describes how the size of an object changes with a change in temperature
+at constant pressure.
+
+**Notation:**
+
+#. :math:`\left( \frac{\partial}{\partial T} \right)_p` denotes a partial derivative w.r.t. temperature
+   at constant pressure.
+
+**Conditions:**
+
+#. Pressure must be constant during the expansion process.
+"""
+
 from sympy import Eq, Derivative
 from symplyphysics import (
     units,
     Quantity,
     Symbol,
     Function,
-    print_expression,
     validate_input,
     validate_output,
     symbols,
 )
 from symplyphysics.core.geometry.line import two_point_function, Point2D
 
-# Description
-## The coefficient of thermal expansion describes how the size of an object changes with a change in temperature
-## at constant pressure.
-
-# Law: alpha_V = (dV(T)/dT)_p / V(T)
-## alpha_V - volumetric coefficient of thermal expansion
-## V - volume of body (gas, liquid or solid)
-## T - temperature
-## (d/dT)_p - temperature derivative with pressure held constant
-
-# Conditions
-## - Pressure must be constant during the expansion process
-
 volumetric_expansion_coefficient = Symbol("volumetric_expansion_coefficient", 1 / units.temperature)
+r"""
+Volumetric coefficient of thermal expansion.
+
+Symbol:
+    :code:`alpha_V`
+
+Latex:
+    :math:`\alpha_V`
+"""
+
 volume = Function("volume", units.volume)
+"""
+Volume of the body as a function of time and pressure.
+
+Symbol:
+    :code:`V`
+"""
+
 temperature = symbols.thermodynamics.temperature
+"""
+:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the body.
+"""
 
 definition = Eq(
     volumetric_expansion_coefficient,
     Derivative(volume(temperature), temperature) / volume(temperature),
 )
+r"""
+:code:`alpha_V = 1 / V * (dV/dT)_p`
 
-
-def print_law() -> str:
-    return print_expression(definition)
+Lambda:
+    .. math::
+        \alpha_V = \frac{1}{V} \left( \frac{d V}{d T} \right)_p
+"""
 
 
 @validate_input(

@@ -1,27 +1,51 @@
+r"""
+Power is energy derivative
+==========================
+
+Power is the amount of energy transferred or converted per unit time. Equally, it is the
+rate at which work is done.
+
+**Notation:**
+
+#. :math:`\frac{d}{d t}` denotes a derivative w.r.t. time.
+"""
+
 from sympy import (Eq, Derivative)
-from symplyphysics import (units, Quantity, Function, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Function, Symbol, validate_input,
     validate_output)
 
-# Description
-## Power has to be applied to casue any energy change.
+power = Function("power", units.power)
+"""
+Power as a function of time.
 
-# Definition: P = dQ/dt
-# Where:
-# P is power which has been applied
-# Q is energy
-# t is time while power has been applied.
+Symbol:
+    :code:`P`
+"""
+
+energy = Function("energy", units.energy)
+"""
+Energy as a function of time.
+
+Symbol:
+    :code:`E`
+"""
 
 time = Symbol("time", units.time)
-power = Function("power", units.power)
-energy = Function("energy", units.energy)
+"""
+Time.
+
+Symbol:
+    :code:`t`
+"""
 
 definition = Eq(power(time), Derivative(energy(time), time))
+r"""
+:code:`P = dE/dt`
 
-definition_units_SI = units.watt
-
-
-def print_law() -> str:
-    return print_expression(definition)
+Latex:
+    .. math::
+        P = \frac{d E}{d t}
+"""
 
 
 @validate_input(energy_start_=energy, energy_end_=energy, time_=time)

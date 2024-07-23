@@ -1,22 +1,53 @@
+"""
+Superposition of forces is sum
+==============================
+
+The net force exerted on an object is equal to the vector sum of all the forces exerted on it.
+
+**Notation:**
+
+#. :math:`\sum_i x_i` (:code:`Sum(x_i, i)`) denotes a sum of :math:`x_i` over the index :math:`i`.
+"""
+
 from typing import Sequence
 from symplyphysics import (units, validate_input, validate_output)
 from symplyphysics.core.vectors.arithmetics import add_cartesian_vectors
 from symplyphysics.core.vectors.vectors import QuantityVector, Vector
 
-# Description
-## R = sum(F)
-## Where:
-## F is one of the force vectors, acting on the body,
-## R - resultant (or net) force vector.
-
-# Conditions:
-## - Vectors are defined in terms of cartesian coordinate system.
-
 
 def superposition_law(forces_: Sequence[Vector]) -> Vector:
-    result = Vector([0, 0, 0], next(iter(forces_)).coordinate_system)
-    for f in forces_:
-        result = add_cartesian_vectors(result, f)
+    r"""
+    The net force vector is the sum of individual force vectors.
+
+    Law:
+        :code:`F = Sum(F_i, i)`
+
+    Latex:
+        .. math::
+            \vec F = \sum_i {\vec F}_i
+
+    :param forces\_: sequence of individual :attr:`~symplyphysics.symbols.dynamics.force` vectors.
+
+        Symbol: :code:`F_i`
+
+        Latex: :math:`{\vec F}_i`
+
+        Dimension: :math:`\mathsf{M} \mathsf{L} \mathsf{T}^{-2}`
+
+    :return: net :attr:`~symplyphysics.symbols.dynamics.force` exerted on the object.
+
+        Symbol: :code:`F`
+
+        Latex: :math:`\vec F`
+
+        Dimension: :math:`\mathsf{M} \mathsf{L} \mathsf{T}^{-2}`
+    """
+
+    result = next(iter(forces_))
+
+    for force_ in forces_[1:]:
+        result = add_cartesian_vectors(result, force_)
+
     return result
 
 

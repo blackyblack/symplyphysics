@@ -1,3 +1,10 @@
+"""
+Momentum is mass times velocity
+===============================
+
+An object's *linear momentum* is a vector quantity defined as the product of its mass and velocity vector.
+"""
+
 from symplyphysics import (
     units,
     symbols,
@@ -9,21 +16,75 @@ from symplyphysics import (
     validate_output,
 )
 
-# Description
-## A particle's linear momentum is a vector quantity defined as its velocity vector multiplied by its mass.
+mass = symbols.basic.mass
+"""
+:attr:`~symplyphysics.symbols.basic.mass` of the object.
 
-# Definition: p = m * v
-## p - vector of linear momentum
-## m - mass
-## v - velocity vector
+Symbol:
+    :code:`m`
+"""
 
 
 def momentum_definition(velocity_: Vector) -> Vector:
-    return scale_vector(symbols.basic.mass, velocity_)
+    r"""
+    Vector of *linear momentum*.
+
+    Law:
+        :code:`p = m * v`
+
+    Latex:
+        .. math::
+            \vec p = m \vec v
+
+    :param velocity\_: vector of velocity of the object.
+
+        Symbol: :code:`v`
+
+        Latex: :math:`\vec v`
+
+        Dimension: :math:`\mathsf{L} \mathsf{T}^{-1}`
+
+    :return: vector of linear momentum.
+
+        Symbol: :code:`p`
+
+        Latex: :math:`\vec p`
+
+        Dimension: :math:`\mathsf{M} \mathsf{L} \mathsf{T}^{-1}`
+    """
+
+    return scale_vector(mass, velocity_)
 
 
-def velocity_from_momentum_law(momentum_: Vector) -> Vector:
-    return scale_vector(1 / symbols.basic.mass, momentum_)
+def velocity_law(momentum_: Vector) -> Vector:
+    r"""
+    Vector of *velocity*
+
+    Law:
+        :code:`v = p / m`
+
+    Latex:
+        .. math::
+            \vec v = \frac{\vec p}{m}
+
+    :param momentum\_: vector of linear momentum.
+
+        Symbol: :code:`p`
+
+        Latex: :math:`\vec p`
+
+        Dimension: :math:`\mathsf{M} \mathsf{L} \mathsf{T}^{-1}`
+
+    :return: vector of velocity of the object.
+
+        Symbol: :code:`v`
+
+        Latex: :math:`\vec v`
+
+        Dimension: :math:`\mathsf{L} \mathsf{T}^{-1}`        
+    """
+
+    return scale_vector(1 / mass, momentum_)
 
 
 @validate_input(mass_=symbols.basic.mass, velocity_=units.velocity)
@@ -36,5 +97,5 @@ def calculate_momentum(mass_: Quantity, velocity_: QuantityVector) -> QuantityVe
 @validate_input(mass_=symbols.basic.mass, momentum_=units.momentum)
 @validate_output(units.velocity)
 def calculate_velocity(mass_: Quantity, momentum_: QuantityVector) -> QuantityVector:
-    result_vector = velocity_from_momentum_law(momentum_.to_base_vector())
+    result_vector = velocity_law(momentum_.to_base_vector())
     return QuantityVector.from_base_vector(result_vector, subs={symbols.basic.mass: mass_})

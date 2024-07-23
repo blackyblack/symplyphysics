@@ -1,28 +1,47 @@
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output)
+"""
+Capacitance from charge and voltage
+===================================
 
-# Description
-## The electrical capacitance of a capacitor is
-## charge accumulated in this capacitor divided to voltage on it
+The electrical *capacitance* of an object is a physical quantity that describes the capability
+of the object to store energy in the form of an electric charge. It is directly proportional to
+the charge accumulated in the object and inversely proportional to the voltage across it.
+"""
 
-# Definition: C = Q / U
-# Where:
-## C is capacitance
-## Q is charge
-## U is voltage
+from sympy import Eq, solve
+from symplyphysics import units, Quantity, Symbol, validate_input, validate_output
 
 capacitance = Symbol("capacitance", units.capacitance)
+"""
+Capacitance of the object.
+
+Symbol:
+    :code:`C`
+"""
+
 charge = Symbol("charge", units.charge)
+"""
+Charge accumulated in the object.
+
+Symbol:
+    :code:`q`
+"""
+
 voltage = Symbol("voltage", units.voltage)
+"""
+Voltage across the object.
+
+Symbol:
+    :code:`V`
+"""
 
 definition = Eq(capacitance, charge / voltage)
+r"""
+:code:`C = q / V`
 
-definition_units_SI = units.farad
-
-
-def print_law() -> str:
-    return print_expression(definition)
+Latex:
+    .. math::
+        C = \frac{q}{V}
+"""
 
 
 @validate_input(charge_=charge, voltage_=voltage)

@@ -1,3 +1,22 @@
+r"""
+Wave equation in one dimension
+==============================
+
+The *wave equation* is a second-order linear partial differential equation used to
+describe the propagation of waves, including standing wave fields such as mechanical
+or electromagnetic waves.
+
+**Notation:**
+
+#. :math:`\frac{\partial}{\partial x}` denotes a partial derivative w.r.t. position.
+#. :math:`\frac{\partial}{\partial t}` denotes a partial derivaitve w.r.t. time.
+
+**Notes:**
+
+#. This equation is called one-dimensional because the displacement function depends
+   only on one spatial dimension.
+"""
+
 from sympy import (
     Derivative,
     Eq,
@@ -9,39 +28,56 @@ from symplyphysics import (
     units,
     Symbol,
     Quantity,
-    print_expression,
     validate_input,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.quantity_decorator import validate_output_same
 
-# Description
-## The wave equation is a second-order linear partial differential equation used to
-## describe the propagation of waves, including standing wave fields such as mechanical
-## or electromagnetic waves.
-
-# Law: d**2(u(x, t))/dx**2 = (1/v**2) * d**2(u(x, t))/dt**2
-## u(x, t) - factor representing a displacement from rest situation,
-##           which can be pressure, position, electric field, etc
-## x - position
-## t - time
-## d**2/dx**2 - partial derivative w.r.t. position x
-## d**2/dt**2 - partial derivative w.r.t. time t
-## v - [phase velocity of wave](../laws/waves/phase_velocity_from_angular_frequency_and_wavenumber.py)
-
-# Notes
-## - This equation is called one-dimensional because the displacement function depends
-##   only on one spatial dimension.
-
 displacement = symbols("displacement", cls=SymFunction, real=True)
+"""
+Factor representing a displacement from rest position, which could be
+pressure, position, electric field, etc., as a function of position
+and time.
+
+Symbol:
+    :code:`u`
+"""
+
 position = Symbol("position", units.length, real=True)
+"""
+Position, or spatial variable.
+
+Symbol:
+    :code:`x`
+"""
+
 time = Symbol("time", units.time, positive=True)
+"""
+Time.
+
+Symbol:
+    :code:`t`
+"""
+
 phase_velocity = Symbol("phase_velocity", units.velocity, real=True)
+"""
+Phase velocity of the wave, see :doc:`laws.waves.phase_velocity_from_angular_frequency_and_wavenumber`.
+
+Symbol:
+    :code:`v`
+"""
 
 definition = Eq(
     Derivative(displacement(position, time), position, 2),
     Derivative(displacement(position, time), time, 2) / phase_velocity**2,
 )
+r"""
+:code:`d^2(u(x, t))/dx^2 = (1/v^2) * d^2(u(x, t))/dt^2`
+
+Latex:
+    .. math::
+        \frac{\partial^2 u}{\partial x^2} = \frac{1}{v^2} \frac{\partial^2 u}{\partial t^2}
+"""
 
 # A subset of solutions has the form `u = u_m * cos(x + v*t + phi)`
 ## u_m - amplitude of displacement
@@ -67,10 +103,6 @@ _rhs = definition.rhs.subs(displacement(position, time), _solution).doit()
 assert expr_equals(_lhs, _rhs)
 
 
-def print_law() -> str:
-    return print_expression(definition)
-
-
 @validate_input(
     phase_velocity_=phase_velocity,
     position_=position,
@@ -84,10 +116,8 @@ def calculate_displacement(
     position_: Quantity,
     time_: Quantity,
 ) -> Quantity:
-    """
-    This function only works for a subset of possible solutions of the wave equation,
-    namely those proportional to `cos(x + v*t + phi)` for some phase lag `phi`.
-    """
+    # This function only works for a subset of possible solutions of the wave equation,
+    # namely those proportional to `cos(x + v*t + phi)` for some phase lag `phi`.
 
     result = solution.subs({
         amplitude: amplitude_,

@@ -1,29 +1,44 @@
+"""
+Compliance is inverse stiffness
+===============================
+
+*Compliance, or flexibility*, of a spring is the inverse of its stiffness and measures
+how flexible the spring is.
+"""
+
 from sympy import Eq
 from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
 
-# Description
-## Compliance, or flexibility, of a spring is the inverse of its stiffness and measures
-## how flexible the spring is.
-
-# Law: c = 1/k
-## c - compliance of spring
-## k - stiffness of spring
-
 compliance = Symbol("compliance", units.length / units.force)
+"""
+Compliance of the spring.
+
+Symbol:
+    :code:`c`
+"""
+
 stiffness = Symbol("stiffness", units.force / units.length)
+"""
+Stiffness of the spring.
+
+Symbol:
+    :code:`k`
+"""
 
 definition = Eq(compliance, 1 / stiffness)
+r"""
+:code:`c = 1 / k`
 
-
-def print_law() -> str:
-    return print_expression(definition)
+Latex:
+    .. math::
+        c = \frac{1}{k}
+"""
 
 
 @validate_input(stiffness_=stiffness)

@@ -1,28 +1,57 @@
+r"""
+Angular acceleration is angular velocity derivative
+===================================================
+
+*Angular acceleration* is a physical quantity that describes the change in angular velocity over time.
+
+**Notation:**
+
+#. :math:`\frac{d}{d t}` (:code:`d/dt`) denotes a derivative w.r.t. time.
+"""
+
 from sympy import (Eq, Derivative)
-from symplyphysics import (angle_type, units, Quantity, Function, Symbol, print_expression,
+from symplyphysics import (angle_type, units, Quantity, Function, Symbol,
     validate_input, validate_output)
 
-# Description
-## Angular acceleration is a kinematic quantity that characterizes the change in angular velocity over time.
-## The word "kinematic" means that motion is considered without taking
-## into account the action of forces on the body, regardless of them.
+angular_acceleration = Function("angular_acceleration", angle_type / (units.time**2))
+r"""
+Angular acceleration of the body as a function of time.
 
-# Definition: epsilon(t) = ω(t)/dt
-# Where:
-## ω(t) is angular velocity function of time
-## epsilon(t) is anglular acceleration of time
+Symbol:
+    :code:`epsilon`
+
+Latex:
+    :math:`\varepsilon`
+"""
+
+angular_velocity = Function("angular_velocity", angle_type / units.time)
+r"""
+Angular velocity of the body as a function of time.
+
+Symbol:
+    :code:`w`
+
+Latex:
+    :math:`\omega`
+"""
+
 
 time = Symbol("time", units.time)
-angular_velocity = Function("angular_velocity", angle_type / units.time)
-angular_acceleration = Function("angular_acceleration", angle_type / (units.time**2))
+"""
+Time.
+
+Symbol:
+    :code:`t`
+"""
 
 definition = Eq(angular_acceleration(time), Derivative(angular_velocity(time), time))
+r"""
+:code:`epsilon = dw/dt`
 
-definition_units_SI = units.radian / (units.second**2)
-
-
-def print_law() -> str:
-    return print_expression(definition)
+Latex:
+    .. math::
+        \varepsilon = \frac{d \omega}{d t}
+"""
 
 
 @validate_input(angular_velocity_start_=angular_velocity,

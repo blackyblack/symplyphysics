@@ -1,45 +1,74 @@
+"""
+Damped harmonic oscillator equation
+===================================
+
+Assuming there is a damping force acting on an oscillating body that is linearly proportional
+to the body's velocity, we can write a differential equation for the body's position. We're
+assuming the body only moves in one direction.
+"""
+
 from sympy import Derivative, dsolve, solve, Eq
 from symplyphysics import (
     units,
     Quantity,
     Symbol,
     Function,
-    print_expression,
     validate_input,
     validate_output,
     angle_type,
     dimensionless,
 )
 
-# Description
-## Assuming there is a damping force acting on an oscillating body that is linearly proportional
-## to the body's velocity, we can write a differential equation for the body's position. We're
-## assuming the body only moves in one direction.
-
-# Definition: d**2(x(t))/dt**2 + 2*zeta*omega*d(x(t))/dt + (omega**2)*x(t) = 0
-## x(t) - position of the oscillating body
-## t - time
-## omega - undamped angular frequency
-## zeta - damping ratio, the value of which critically determines the behavior of the system
-
 displacement = Function("displacement", units.length)
+"""
+Displacement of the oscillating body as a function of time.
+
+Symbol:
+    :code:`x`
+"""
+
 time = Symbol("time", units.time, positive=True)
+"""
+Time.
+
+Symbol:
+    :code:`t`
+"""
+
 undamped_angular_frequency = Symbol("undamped_angular_frequency",
     angle_type / units.time,
     positive=True)
+r"""
+Undamped angular frequency of the oscillator.
+
+Symbol:
+    :code:`w`
+
+Latex:
+    :math:`\omega`
+"""
+
 damping_ratio = Symbol("damping_ratio", dimensionless, positive=True)
+r"""
+Damping ratio, which critically determines the behavior of the system.
+
+Symbol:
+    :code:`z`
+
+Latex:
+    :math:`\zeta`
+"""
 
 definition = (Derivative(displacement(time), time, 2) +
     2 * damping_ratio * undamped_angular_frequency * Derivative(displacement(time), time) +
     undamped_angular_frequency**2 * displacement(time))
+r"""
+:code:`d^2(x)/dt^2 + 2 * z * w * d(x)/dt + w^2 * x = 0`
 
-# This solution can be used in the case of an overdamped oscillator.
-# It contains coefficients "C1" and "C2" that can be found from initial conditions.
-general_solution = dsolve(definition, displacement(time)).rhs
-
-
-def print_law() -> str:
-    return print_expression(definition)
+Latex:
+    .. math::
+        \frac{d^2 x}{dt^2} + 2 \zeta \omega \frac{d x}{d t} + \omega^2 x = 0
+"""
 
 
 @validate_input(
@@ -57,18 +86,14 @@ def calculate_displacement(
     damping_ratio_: float,
     time_: Quantity,
 ) -> Quantity:
-    dsolved = general_solution.subs({
-        undamped_angular_frequency: undamped_angular_frequency_,
-        damping_ratio: damping_ratio_,
-    })
-    c12 = solve(
-        [
-        Eq(initial_position_, dsolved.subs(time, 0)),
-        Eq(initial_velocity_,
-        dsolved.diff(time).subs(time, 0)),
-        ],
-        ("C1", "C2"),
-    )
-    dsolved = dsolved.subs(c12)
+    ics = {
+        displacement(0): initial_position_,
+        displacement(time).diff(time).subs(time, 0): initial_velocity_,
+    }
+    dsolved = dsolve(
+        definition,
+        displacement(time),
+        ics=ics,
+    ).rhs
     result = dsolved.subs(time, time_)
     return Quantity(result)

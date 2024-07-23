@@ -1,40 +1,67 @@
-from sympy import Eq, solve, S
+"""
+Relative refractive index is ratio of wave speeds
+=================================================
+
+If a wave is moving from one medium to another, it refracts due to the difference
+of propagation speeds in the two  media. Relative refractive index describes how much
+slower the wave propagates in the refracting medium relative to the incident medium.
+
+**Conditions:**
+
+#. The media are isotropic and transparent.
+#. The wave is monochromatic. Note that the speed of wave propagation depends on the
+   wave frequency.
+"""
+
+from sympy import Eq, solve
 from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     dimensionless,
     validate_input,
     validate_output,
     convert_to_float,
 )
 
-# Description
-## If wave transfers from one medium to another, it refracts. That's because of different propagation speeds in different mediums.
-## This factor shows how much slower wave propagates in refracting medium related to outer medium.
-
-# Definition: n = Vouter/Vrefraction
-# Where:
-## n is refractive index,
-## Vouter is wave propagation speed in outer medium,
-## Vrefracting is wave propagation speed in refracting medium.
-
-# Conditions
-## - Mediums are isotropic and transparent.
-## - Wave is monochromic as propagation speed depends on frequency.
-
 refractive_index = Symbol("refractive_index", dimensionless)
+"""
+Relative refractive index between two media.
+
+Symbol:
+    :code:`n`
+"""
+
 outer_speed = Symbol("outer_speed", units.velocity)
+r"""
+Speed of the incident wave.
+
+Symbol:
+    :code:`v_incident`
+
+Latex:
+    :math:`v_\text{incident}`
+"""
+
 refracting_speed = Symbol("refracting_speed", units.velocity)
+r"""
+Speed of the refracted wave.
+
+Symbol:
+    :code:`v_refracted`
+
+Latex:
+    :math:`v_\text{refracted}`
+"""
 
 definition = Eq(refractive_index, outer_speed / refracting_speed)
+r"""
+:code:`n = v_incident / v_refracted`
 
-definition_units_SI = S.One
-
-
-def print_law() -> str:
-    return print_expression(definition)
+Latex:
+    .. math::
+        n = \frac{v_\text{incident}}{v_\text{refracted}}
+"""
 
 
 @validate_input(outer_speed_=outer_speed, refracting_speed_=refracting_speed)

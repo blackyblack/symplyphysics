@@ -1,27 +1,50 @@
+r"""
+Velocity is derivative of position
+==================================
+
+Velocity is a physical quantity that describes the rate of change in the body's position.
+
+**Notation:**
+
+#. :math:`\frac{d}{d t}` denotes a derivative w.r.t. time.
+"""
+
 from sympy import (Eq, Derivative)
-from symplyphysics import (units, Quantity, Function, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Function, Symbol, validate_input,
     validate_output)
 
-# Description
-## In mechanics, the derivative of the position vs. time graph of an object is equal to the velocity of the object.
+velocity = Function("velocity", units.velocity)
+"""
+Velocity of the body as a function of time.
 
-# Definition
-## Kinematical velocity definition: V(t) = dS(t)/dt
-# Where:
-## V(t) is velocity function of time
-## S(t) is movement function of time
+Symbol:
+    :code:`v`
+"""
+
+movement = Function("movement", units.length)
+"""
+Position of body as a function of time.
+
+Symbol:
+    :code:`s`
+"""
 
 moving_time = Symbol("moving_time", units.time)
-velocity = Function("velocity", units.velocity)
-movement = Function("movement", units.length)
+"""
+Travel time.
+
+Symbol:
+    :code:`t`
+"""
 
 definition = Eq(velocity(moving_time), Derivative(movement(moving_time), moving_time))
+r"""
+:code:`v = ds/dt`
 
-definition_units_SI = units.meter / units.second
-
-
-def print_law() -> str:
-    return print_expression(definition)
+Latex:
+    .. math::
+        v = \frac{d s}{d t}
+"""
 
 
 @validate_input(position_start_=movement, position_end_=movement, moving_time_=moving_time)

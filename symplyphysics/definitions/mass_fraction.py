@@ -1,8 +1,14 @@
+"""
+Mass fraction of mixture component
+==================================
+
+Mass fraction is the ratio of the mass of a mixture component to the total mass of the mixture.
+"""
+
 from sympy import Eq, solve
 from symplyphysics import (
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     dimensionless,
@@ -12,25 +18,44 @@ from symplyphysics import (
 )
 from symplyphysics.core.symbols.fraction import Fraction
 
-# Description
-## The mass fraction is the ratio of the mass of the mixture to the total mass of the mixture
-## omega = m_i / m
-## Where:
-## m_i - mass of component
-## m - mass of mixture
-## omega - mass fraction of the mixture
-
 mass_fraction = Symbol("mass_fraction", dimensionless)
+r"""
+Mass fraction of the mixture component.
+
+Symbol:
+    :code:`w`
+
+Latex:
+    :math:`\omega`
+"""
+
 mass_of_component = clone_symbol(symbols.basic.mass, "mass_of_component")
+"""
+:attr:`~symplyphysics.symbols.basic.mass` of the mixture component.
+
+Symbol:
+    :code:`m_i`
+
+Latex:
+    :math:`m_i`
+"""
+
 mass_of_mixture = clone_symbol(symbols.basic.mass, "mass_of_mixture")
+"""
+Total :attr:`~symplyphysics.symbols.basic.mass` of the mixture.
+
+Symbol:
+    :code:`m`
+"""
 
 definition = Eq(mass_fraction, mass_of_component / mass_of_mixture)
+r"""
+:code:`w = m_i / m`
 
-definition_units_SI = dimensionless
-
-
-def print_law() -> str:
-    return print_expression(definition)
+Latex:
+    .. math::
+        \omega = \frac{m_i}{m}
+"""
 
 
 @validate_input(mass_of_component_=mass_of_component, mass_of_mixture_=mass_of_mixture)
