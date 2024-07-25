@@ -1,6 +1,6 @@
 """
-Momentum is mass times velocity
-===============================
+Momentum is mass times velocity (Vector)
+========================================
 
 An object's *linear momentum* is a vector quantity defined as the product of its mass and velocity vector.
 """

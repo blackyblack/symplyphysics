@@ -19,7 +19,7 @@ from symplyphysics import (
 )
 
 damping_constant = Symbol("damping_constant", units.mass / units.time)
-"""
+r"""
 Non-negative damping constant.
 
 Symbol:

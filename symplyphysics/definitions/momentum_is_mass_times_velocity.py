@@ -34,7 +34,7 @@ Symbol:
 
 definition = Eq(momentum, mass * velocity)
 """
-:code:`p = m v`
+:code:`p = m * v`
 
 Latex:
     .. math::

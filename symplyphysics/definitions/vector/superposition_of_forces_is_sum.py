@@ -1,6 +1,6 @@
-"""
-Superposition of forces is sum
-==============================
+r"""
+Superposition of forces is sum (Vector)
+=======================================
 
 The net force exerted on an object is equal to the vector sum of all the forces exerted on it.
 

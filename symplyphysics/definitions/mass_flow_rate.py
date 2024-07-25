@@ -22,7 +22,7 @@ from symplyphysics import (units, Quantity, Function, Symbol, validate_input,
 
 mass_flow_rate = Function("mass_flow_rate", units.mass / units.time)
 r"""
-Mass flor rate as a function of time.
+Mass flow rate as a function of time.
 
 Symbol:
     :code:`mu`
