@@ -2,8 +2,10 @@ r"""
 Angular momentum is position cross linear momentum
 ==================================================
 
-The pseudovector of *angular momentum* of a particle is defined relative to a fixed point,
-usually an origin, as a cross product of its position vector and linear momentum.
+The pseudovector of *angular momentum* of a particle is the cross product of its
+position vector and linear momentum. Unlike linear momentum, angular momentum depends
+on where the origin of the coordinate system is chosen since it depends on the position
+vector of the particle defined relative to that origin.
 
 **Notation:**
 
