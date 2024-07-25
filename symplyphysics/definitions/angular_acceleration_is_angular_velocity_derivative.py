@@ -18,10 +18,10 @@ r"""
 Angular acceleration of the body as a function of time.
 
 Symbol:
-    :code:`epsilon`
+    :code:`epsilon = epsilon(t)`
 
 Latex:
-    :math:`\varepsilon`
+    :math:`\varepsilon = \varepsilon(t)`
 """
 
 angular_velocity = Function("angular_velocity", angle_type / units.time)
@@ -29,10 +29,10 @@ r"""
 Angular velocity of the body as a function of time.
 
 Symbol:
-    :code:`w`
+    :code:`w = w(t)`
 
 Latex:
-    :math:`\omega`
+    :math:`\omega = \omega(t)`
 """
 
 

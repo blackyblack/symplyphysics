@@ -40,15 +40,18 @@ Latex:
 
 volume = Function("volume", units.volume)
 """
-Volume of the body as a function of time and pressure.
+Volume of the body as a function of temperature and pressure.
 
 Symbol:
-    :code:`V`
+    :code:`V = V(T, p)`
 """
 
 temperature = symbols.thermodynamics.temperature
 """
 :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the body.
+
+Symbol:
+    :code:`T`
 """
 
 definition = Eq(
@@ -60,7 +63,7 @@ r"""
 
 Lambda:
     .. math::
-        \alpha_V = \frac{1}{V} \left( \frac{d V}{d T} \right)_p
+        \alpha_V = \frac{1}{V} \left( \frac{\partial V}{\partial T} \right)_p
 """
 
 

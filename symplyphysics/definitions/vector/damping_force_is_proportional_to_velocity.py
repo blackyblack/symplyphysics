@@ -24,8 +24,6 @@ Non-negative damping constant.
 
 Symbol:
     :code:`b`
-
-Dimension: :math:`\mathsf{M} \mathsf{T}^{-1}`
 """
 
 
@@ -46,7 +44,7 @@ def damping_force_definition(velocity_: Vector) -> Vector:
 
         Latex: :math:`\vec v`
 
-        Dimension: :math:`\mathsf{L} \mathsf{T}^{-1}`
+        Dimension: *velocity*
 
     :return: vector of damping :attr:`~symplyphysics.symbols.dynamics.force`.
 
@@ -54,7 +52,7 @@ def damping_force_definition(velocity_: Vector) -> Vector:
 
         Latex: :math:`\vec F`
 
-        Dimension: :math:`\mathsf{M} \mathsf{L} \mathsf{T}^{-2}`
+        Dimension: *force*
     """
 
     return scale_vector(-1 * damping_constant, velocity_)
@@ -77,7 +75,7 @@ def velocity_law(damping_force_: Vector) -> Vector:
 
         Latex: :math:`\vec F`
 
-        Dimension: :math:`\mathsf{M} \mathsf{L} \mathsf{T}^{-2}`
+        Dimension: *force*
 
     :return: velocity vector of the object.
 
@@ -85,7 +83,7 @@ def velocity_law(damping_force_: Vector) -> Vector:
 
         Latex: :math:`\vec v`
 
-        Dimension: :math:`\mathsf{L} \mathsf{T}^{-1}`
+        Dimension: *velocity*
     """
 
     return scale_vector(-1 / damping_constant, damping_force_)

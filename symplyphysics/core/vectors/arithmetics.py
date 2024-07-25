@@ -44,7 +44,7 @@ def equal_vectors(vector_left: Vector, vector_right: Vector) -> bool:
 def add_cartesian_vectors(*vectors: Vector) -> Vector:
 
     def add_two_cartesian_vectors(vector_left: Vector, vector_right: Vector) -> Vector:
-        if vector_left.coordinate_system is not vector_right.coordinate_system:
+        if vector_left.coordinate_system != vector_right.coordinate_system:
             raise ValueError("Vectors must have the same coordinate system, "
                 f"got {vector_left.coordinate_system} and {vector_right.coordinate_system}")
 

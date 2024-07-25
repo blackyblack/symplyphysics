@@ -18,7 +18,7 @@ acceleration_function = Function("acceleration_function", units.acceleration)
 :attr:`~symplyphysics.symbols.kinematic.acceleration` of the body as a function of time.
 
 Symbol:
-    :code:`a`
+    :code:`a = a(t)`
 """
 
 velocity = Function("velocity", units.velocity)
@@ -26,7 +26,7 @@ velocity = Function("velocity", units.velocity)
 Velocity of the body as a function of time.
 
 Symbol:
-    :code:`v`
+    :code:`v = v(t)`
 """
 
 time = Symbol("time", units.time)

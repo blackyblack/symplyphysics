@@ -45,7 +45,7 @@ volume = Function("volume", units.volume)
 Volume of the gas as a function of pressure and other parameters.
 
 Symbol:
-    :code:`V`
+    :code:`V = V(p)`
 """
 
 pressure = Symbol("pressure", units.pressure)
@@ -58,11 +58,11 @@ Symbol:
 
 definition = Eq(compressibility, -1 * Derivative(volume(pressure), pressure) / volume(pressure))
 r"""
-:code:`beta = -1 / V * (dV/dp)`
+:code:`beta = -1 / V * dV/dp`
 
 Latex:
     .. math::
-        \beta = - \frac{1}{V} \left( \frac{\partial V}{\partial p} \right)
+        \beta = - \frac{1}{V} \frac{\partial V}{\partial p}
 """
 
 

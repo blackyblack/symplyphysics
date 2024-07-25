@@ -41,15 +41,15 @@ def angular_momentum_definition(
 
         Latex: :math:`\vec r`
 
-        Dimension: :math:`\mathsf{L}`
+        Dimension: *length*
 
-    :param linear_momentum\_: pector of linear momentum of the particle.
+    :param linear_momentum\_: vector of linear momentum of the particle.
 
         Symbol: :code:`p`
 
         Latex: :math:`\vec p`
 
-        Dimension: :math:`\mathsf{M} \mathsf{L} \mathsf{T}^{-1}`
+        Dimension: *momentum*
 
     :return: pseudovector of angular momentum of the particle.
 

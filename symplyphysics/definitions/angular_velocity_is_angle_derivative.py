@@ -19,10 +19,10 @@ r"""
 Angular velocity of the body as a function of time.
 
 Symbol:
-    :code:`w`
+    :code:`w = w(t)`
 
 Latex:
-    :math:`\omega`
+    :math:`\omega = \omega(t)`
 """
 
 angle_function = Function("angle_function", angle_type)
@@ -30,10 +30,10 @@ r"""
 Angular displacement as a function of time.
 
 Symbol:
-    :code:`theta`
+    :code:`theta = theta(t)`
 
 Latex:
-    :math:`\theta`
+    :math:`\theta = \theta(t)`
 """
 
 time = Symbol("time", units.time)

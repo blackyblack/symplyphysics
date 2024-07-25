@@ -25,8 +25,6 @@ from symplyphysics import (
     clone_symbol,
 )
 
-# Definition: lambda = hbar * sqrt(2 * pi / (m * k * T))
-
 thermal_wavelength = Symbol("thermal_wavelength", units.length)
 r"""
 Thermal de Broglies wavelength of the gas.
@@ -40,7 +38,7 @@ Latex:
 
 particle_mass = clone_symbol(symbols.basic.mass, "particle_mass")
 """
-:attr:`~symplyphysics.symbols.basic.mass` of particles comprising the gas.
+:attr:`~symplyphysics.symbols.basic.mass` of a single gas particle.
 
 Symbol:
     :code:`m`
@@ -54,7 +52,7 @@ Symbol:
     :code:`T`
 """
 
-law = Eq(thermal_wavelength,
+definition = Eq(thermal_wavelength,
     units.hbar * sqrt(2 * pi / (particle_mass * units.boltzmann_constant * temperature)))
 r"""
 :code:`lambda = hbar * sqrt(2 * pi / (m * k_B * T))`
@@ -74,7 +72,7 @@ def calculate_thermal_wavelength(
     particle_mass_: Quantity,
     temperature_: Quantity,
 ) -> Quantity:
-    result = law.rhs.subs({
+    result = definition.rhs.subs({
         particle_mass: particle_mass_,
         temperature: temperature_,
     })

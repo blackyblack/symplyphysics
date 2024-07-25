@@ -32,7 +32,7 @@ def superposition_law(forces_: Iterable[Vector]) -> Vector:
 
         Latex: :math:`{\vec F}_i`
 
-        Dimension: :math:`\mathsf{M} \mathsf{L} \mathsf{T}^{-2}`
+        Dimension: *force*
 
     :return: net :attr:`~symplyphysics.symbols.dynamics.force` exerted on the object.
 
@@ -40,7 +40,7 @@ def superposition_law(forces_: Iterable[Vector]) -> Vector:
 
         Latex: :math:`\vec F`
 
-        Dimension: :math:`\mathsf{M} \mathsf{L} \mathsf{T}^{-2}`
+        Dimension: *force*
     """
 
     result = Vector([0, 0, 0], next(iter(forces_)).coordinate_system)

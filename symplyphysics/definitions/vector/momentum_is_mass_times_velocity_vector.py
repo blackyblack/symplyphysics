@@ -42,7 +42,7 @@ def momentum_definition(velocity_: Vector) -> Vector:
 
         Latex: :math:`\vec v`
 
-        Dimension: :math:`\mathsf{L} \mathsf{T}^{-1}`
+        Dimension: *velocity*
 
     :return: vector of linear momentum.
 
@@ -50,7 +50,7 @@ def momentum_definition(velocity_: Vector) -> Vector:
 
         Latex: :math:`\vec p`
 
-        Dimension: :math:`\mathsf{M} \mathsf{L} \mathsf{T}^{-1}`
+        Dimension: *momentum*
     """
 
     return scale_vector(mass, velocity_)
@@ -73,7 +73,7 @@ def velocity_law(momentum_: Vector) -> Vector:
 
         Latex: :math:`\vec p`
 
-        Dimension: :math:`\mathsf{M} \mathsf{L} \mathsf{T}^{-1}`
+        Dimension: *momentum*
 
     :return: vector of velocity of the object.
 
@@ -81,7 +81,7 @@ def velocity_law(momentum_: Vector) -> Vector:
 
         Latex: :math:`\vec v`
 
-        Dimension: :math:`\mathsf{L} \mathsf{T}^{-1}`        
+        Dimension: *velocity*
     """
 
     return scale_vector(1 / mass, momentum_)
