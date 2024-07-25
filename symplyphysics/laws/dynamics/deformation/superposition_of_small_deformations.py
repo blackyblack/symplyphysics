@@ -29,23 +29,29 @@ Symbol:
 """
 
 first_strain = Symbol("first_strain", dimensionless)
-"""
+r"""
 Strain caused by one force.
 
 Symbol:
     :code:`e_1`
+
+Latex:
+    :math:`e_1`
 """
 
 second_strain = Symbol("second_strain", dimensionless)
-"""
+r"""
 Strain caused by another force.
 
 Symbol:
     :code:`e_2`
+
+Latex:
+    :math:`e_2`
 """
 
 law = Eq(total_strain, first_strain + second_strain)
-"""
+r"""
 :code:`e = e_1 + e_2`
 
 Latex:
