@@ -59,7 +59,7 @@ def angular_momentum_definition(
 
         Latex: :math:`\vec L`
 
-        Dimension: :math:`\mathsf{M} \mathsf{L}^2 \mathsf{T}^{-1}`
+        Dimension: *length* * *momentum*
     """
 
     return cross_cartesian_vectors(position_vector_, linear_momentum_)
