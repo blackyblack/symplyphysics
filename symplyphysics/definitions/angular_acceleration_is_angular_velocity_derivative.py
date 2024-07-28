@@ -28,7 +28,7 @@ Symbol:
     :code:`w(t)`
 
 Latex:
-    :math:`\omega = \omega(t)`
+    :math:`\omega(t)`
 """
 
 
