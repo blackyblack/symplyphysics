@@ -3,8 +3,9 @@ Elastic energy density of compression via strain
 ================================================
 
 Volumetric density of the elastic energy of a body is proportional to
-its Young's module and the square of its strain. The Hooke's law can be used
-to obtain analogous forms of this law.
+its Young's module and the square of its strain. The
+:doc:`Hooke's law <laws.dynamics.deformation.tensile_stress_is_youngs_modulus_times_strain>`
+can be used to obtain analogous forms of this law.
 """
 
 from sympy import Eq
@@ -38,7 +39,7 @@ engineering_normal_strain = Symbol("engineering_normal_strain", dimensionless)
 Engineering normal strain of the deformed body.
 
 Symbol:
-    :code:
+    :code:`e`
 """
 
 law = Eq(elastic_energy_density, young_modulus * engineering_normal_strain**2 / 2)
