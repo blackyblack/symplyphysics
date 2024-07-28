@@ -42,7 +42,7 @@ Symbol:
 
 definition = Eq(angular_acceleration(time), Derivative(angular_velocity(time), time))
 r"""
-:code:`epsilon = Derivative(w(t), t)`
+:code:`epsilon(t) = Derivative(w(t), t)`
 
 Latex:
     .. math::
