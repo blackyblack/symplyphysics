@@ -15,7 +15,7 @@ current = Function("current", units.current)
 Electric current as a function of time.
 
 Symbol:
-    :code:`I`
+    :code:`I(t)`
 """
 
 charge = Function("charge", units.charge)
@@ -23,7 +23,7 @@ charge = Function("charge", units.charge)
 Electric charge as a function of time.
 
 Symbol:
-    :code:`q`
+    :code:`q(t)`
 """
 
 time = Symbol("time", units.time)
@@ -36,11 +36,11 @@ Symbol:
 
 definition = Eq(current(time), Derivative(charge(time), time))
 r"""
-:code:`I = dq/dt`
+:code:`I(t) = Derivative(q(t), t)`
 
 Latex:
     .. math::
-        I = \frac{d q}{d t}
+        I(t) = \frac{d q}{d t}
 """
 
 

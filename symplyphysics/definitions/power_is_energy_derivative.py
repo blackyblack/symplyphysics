@@ -4,10 +4,6 @@ Power is energy derivative
 
 Power is the amount of energy transferred or converted per unit time. Equally, it is the
 rate at which work is done.
-
-**Notation:**
-
-#. :math:`\frac{d}{d t}` denotes a derivative w.r.t. time.
 """
 
 from sympy import (Eq, Derivative)
@@ -19,7 +15,7 @@ power = Function("power", units.power)
 Power as a function of time.
 
 Symbol:
-    :code:`P`
+    :code:`P(t)`
 """
 
 energy = Function("energy", units.energy)
@@ -27,7 +23,7 @@ energy = Function("energy", units.energy)
 Energy as a function of time.
 
 Symbol:
-    :code:`E`
+    :code:`E(t)`
 """
 
 time = Symbol("time", units.time)
@@ -40,11 +36,11 @@ Symbol:
 
 definition = Eq(power(time), Derivative(energy(time), time))
 r"""
-:code:`P = dE/dt`
+:code:`P(t) = Derivative(E(t), t)`
 
 Latex:
     .. math::
-        P = \frac{d E}{d t}
+        P(t) = \frac{d E}{d t}
 """
 
 

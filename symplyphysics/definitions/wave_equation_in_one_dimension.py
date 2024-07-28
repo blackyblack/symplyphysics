@@ -6,11 +6,6 @@ The *wave equation* is a second-order linear partial differential equation used 
 describe the propagation of waves, including standing wave fields such as mechanical
 or electromagnetic waves.
 
-**Notation:**
-
-#. :math:`\frac{\partial}{\partial x}` denotes a partial derivative w.r.t. position.
-#. :math:`\frac{\partial}{\partial t}` denotes a partial derivaitve w.r.t. time.
-
 **Notes:**
 
 #. This equation is called one-dimensional because the displacement function depends
@@ -40,7 +35,7 @@ pressure, position, electric field, etc., as a function of position
 and time.
 
 Symbol:
-    :code:`u`
+    :code:`u(x, t)`
 """
 
 position = Symbol("position", units.length, real=True)
@@ -72,7 +67,7 @@ definition = Eq(
     Derivative(displacement(position, time), time, 2) / phase_velocity**2,
 )
 r"""
-:code:`d^2(u(x, t))/dx^2 = (1/v^2) * d^2(u(x, t))/dt^2`
+:code:`Derivative(u(x, t), (x, 2)) = (1/v^2) * Derivative(u(x, t), (t, 2))`
 
 Latex:
     .. math::

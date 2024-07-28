@@ -24,7 +24,7 @@ displacement = Function("displacement", units.length)
 Displacement of the oscillating body as a function of time.
 
 Symbol:
-    :code:`x`
+    :code:`x(t)`
 """
 
 time = Symbol("time", units.time, positive=True)
@@ -63,11 +63,11 @@ definition = (Derivative(displacement(time), time, 2) +
     2 * damping_ratio * undamped_angular_frequency * Derivative(displacement(time), time) +
     undamped_angular_frequency**2 * displacement(time))
 r"""
-:code:`d^2(x)/dt^2 + 2 * z * w * d(x)/dt + w^2 * x = 0`
+:code:`Derivative(x(t), (t, 2)) + 2 * z * w * Derivative(x(t), t) + w^2 * x(t) = 0`
 
 Latex:
     .. math::
-        \frac{d^2 x}{dt^2} + 2 \zeta \omega \frac{d x}{d t} + \omega^2 x = 0
+        \frac{d^2 x}{dt^2} + 2 \zeta \omega \frac{d x}{d t} + \omega^2 x(t) = 0
 """
 
 

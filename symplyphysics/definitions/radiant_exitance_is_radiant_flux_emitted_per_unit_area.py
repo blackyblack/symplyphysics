@@ -7,8 +7,6 @@ Radiant exitance is radiant flux emitted per unit area
 **Notation:**
 
 #. The subscript :math:`e` stands for *energetical* to avoid confusion with photometric quantities.
-
-#. :math:`\frac{\partial}{\partial A}` denotes a partial derivative w.r.t. area of the surface.
 """
 
 from sympy import Eq, Derivative
@@ -37,10 +35,10 @@ r"""
 Radiant flux, or radiant power, emitted from the surface.
 
 Symbol:
-    :code:`Phi_e`
+    :code:`Phi_e(A)`
 
 Latex:
-    :math:`\Phi_e`
+    :math:`\Phi_e(A)`
 """
 
 surface_area = Symbol("surface_area", units.area)
@@ -53,7 +51,7 @@ Symbol:
 
 definition = Eq(radiant_exitance, Derivative(radiant_flux(surface_area), surface_area))
 r"""
-:code:`M_e = d(Phi_e)/dA`
+:code:`M_e = Derivative(Phi_e(A), A)`
 
 Latex:
     .. math::

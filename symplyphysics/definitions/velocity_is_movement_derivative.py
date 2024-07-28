@@ -3,10 +3,6 @@ Velocity is derivative of position
 ==================================
 
 Velocity is a physical quantity that describes the rate of change in the body's position.
-
-**Notation:**
-
-#. :math:`\frac{d}{d t}` denotes a derivative w.r.t. time.
 """
 
 from sympy import (Eq, Derivative)
@@ -18,7 +14,7 @@ velocity = Function("velocity", units.velocity)
 Velocity of the body as a function of time.
 
 Symbol:
-    :code:`v`
+    :code:`v(t)`
 """
 
 movement = Function("movement", units.length)
@@ -26,7 +22,7 @@ movement = Function("movement", units.length)
 Position of body as a function of time.
 
 Symbol:
-    :code:`s`
+    :code:`s(t)`
 """
 
 moving_time = Symbol("moving_time", units.time)
@@ -39,11 +35,11 @@ Symbol:
 
 definition = Eq(velocity(moving_time), Derivative(movement(moving_time), moving_time))
 r"""
-:code:`v = ds/dt`
+:code:`v(t) = Derivative(s(t), t)`
 
 Latex:
     .. math::
-        v = \frac{d s}{d t}
+        v(t) = \frac{d s}{d t}
 """
 
 

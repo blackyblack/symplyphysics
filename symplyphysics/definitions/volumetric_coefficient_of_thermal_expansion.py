@@ -5,11 +5,6 @@ Volumetric coefficient of thermal expansion
 The *coefficient of thermal expansion* describes how the size of an object changes with a change in temperature
 at constant pressure.
 
-**Notation:**
-
-#. :math:`\left( \frac{\partial}{\partial T} \right)_p` denotes a partial derivative w.r.t. temperature
-   at constant pressure.
-
 **Conditions:**
 
 #. Pressure must be constant during the expansion process.
@@ -43,7 +38,7 @@ volume = Function("volume", units.volume)
 Volume of the body as a function of temperature and pressure.
 
 Symbol:
-    :code:`V = V(T, p)`
+    :code:`V(T, p)`
 """
 
 temperature = symbols.thermodynamics.temperature
@@ -59,11 +54,11 @@ definition = Eq(
     Derivative(volume(temperature), temperature) / volume(temperature),
 )
 r"""
-:code:`alpha_V = 1 / V * (dV/dT)_p`
+:code:`alpha_V = 1 / V(T, p) * Derivative(V(T, p), T)`
 
 Lambda:
     .. math::
-        \alpha_V = \frac{1}{V} \left( \frac{\partial V}{\partial T} \right)_p
+        \alpha_V = \frac{1}{V(T, p)} \left( \frac{\partial V}{\partial T} \right)_p
 """
 
 

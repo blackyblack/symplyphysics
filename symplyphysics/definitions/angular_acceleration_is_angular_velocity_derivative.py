@@ -3,10 +3,6 @@ Angular acceleration is angular velocity derivative
 ===================================================
 
 *Angular acceleration* is a physical quantity that describes the change in angular velocity over time.
-
-**Notation:**
-
-#. :math:`\frac{d}{d t}` (:code:`d/dt`) denotes a derivative w.r.t. time.
 """
 
 from sympy import (Eq, Derivative)
@@ -18,10 +14,10 @@ r"""
 Angular acceleration of the body as a function of time.
 
 Symbol:
-    :code:`epsilon = epsilon(t)`
+    :code:`epsilon(t)`
 
 Latex:
-    :math:`\varepsilon = \varepsilon(t)`
+    :math:`\varepsilon(t)`
 """
 
 angular_velocity = Function("angular_velocity", angle_type / units.time)
@@ -29,7 +25,7 @@ r"""
 Angular velocity of the body as a function of time.
 
 Symbol:
-    :code:`w = w(t)`
+    :code:`w(t)`
 
 Latex:
     :math:`\omega = \omega(t)`
@@ -46,11 +42,11 @@ Symbol:
 
 definition = Eq(angular_acceleration(time), Derivative(angular_velocity(time), time))
 r"""
-:code:`epsilon = dw/dt`
+:code:`epsilon = Derivative(w(t), t)`
 
 Latex:
     .. math::
-        \varepsilon = \frac{d \omega}{d t}
+        \varepsilon(t) = \frac{d \omega}{d t}
 """
 
 

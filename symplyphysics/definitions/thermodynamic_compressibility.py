@@ -5,10 +5,6 @@ Thermodynamic compressibility
 *Compressibility*, or the *coefficient of compressibility*, is a measure of the instantaneous
 relative volume change of a fluid or solid as a response to pressure or mean stress change.
 
-**Notation:**
-
-#. :math:`\frac{\partial}{\partial p}` denotes a partial derivative w.r.t. pressure.
-
 **Notes:**
 
 #. This definition is incomplete in the sense that the value of the compressibility coefficient
@@ -45,7 +41,7 @@ volume = Function("volume", units.volume)
 Volume of the gas as a function of pressure and other parameters.
 
 Symbol:
-    :code:`V = V(p)`
+    :code:`V(p)`
 """
 
 pressure = Symbol("pressure", units.pressure)
@@ -58,11 +54,11 @@ Symbol:
 
 definition = Eq(compressibility, -1 * Derivative(volume(pressure), pressure) / volume(pressure))
 r"""
-:code:`beta = -1 / V * dV/dp`
+:code:`beta = -1 / V(p) * Derivative(V(p), p)`
 
 Latex:
     .. math::
-        \beta = - \frac{1}{V} \frac{\partial V}{\partial p}
+        \beta = - \frac{1}{V(p)} \frac{\partial V}{\partial p}
 """
 
 

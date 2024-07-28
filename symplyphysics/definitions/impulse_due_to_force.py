@@ -30,7 +30,7 @@ r"""
 Projection of :attr:`~symplyphysics.symbols.dynamics.force` :math:`\vec F` as a function of time.
 
 Symbol:
-    :code:`F`
+    :code:`F(t)`
 """
 
 time = Symbol("time", units.time)

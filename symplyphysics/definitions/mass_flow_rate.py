@@ -4,31 +4,21 @@ Mass flow rate
 
 Mass flow rate is the rate of change in the mass of an object. Examples include the outflow of a substance
 from a certain volume, the flow in a pipe section, the combustion of fuel.
-
-**Notation:**
-
-#. :math:`\frac{d}{d t}` denotes a derivative w.r.t. time.
 """
 
 from sympy import (Eq, Derivative)
 from symplyphysics import (units, Quantity, Function, Symbol, validate_input,
     validate_output)
 
-# Definition: mu = dm / dt
-# Where:
-## mu is mass flow rate
-## m is mass of matter (function m(t))
-## t is time
-
 mass_flow_rate = Function("mass_flow_rate", units.mass / units.time)
 r"""
 Mass flow rate as a function of time.
 
 Symbol:
-    :code:`mu`
+    :code:`mu(t)`
 
 Latex:
-    :math:`\mu`
+    :math:`\mu(t)`
 """
 
 mass_function = Function("mass_function", units.mass)
@@ -36,7 +26,7 @@ mass_function = Function("mass_function", units.mass)
 :attr:`~symplyphysics.symbols.basic.mass` as a function of time.
 
 Symbol:
-    :code:`m`
+    :code:`m(t)`
 """
 
 time = Symbol("time", units.time)
@@ -49,11 +39,11 @@ Symbol:
 
 definition = Eq(mass_flow_rate(time), Derivative(mass_function(time), time))
 r"""
-:code:`mu = dm/dt`
+:code:`mu(t) = Derivative(m(t), t)`
 
 Latex:
     .. math::
-        \mu = \frac{d m}{d t}
+        \mu(t) = \frac{d m}{d t}
 """
 
 

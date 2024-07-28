@@ -48,7 +48,7 @@ Symbol:
 definition = Eq(Derivative(displacement_function(time), (time, 2)),
     -angular_frequency**2 * displacement_function(time))
 r"""
-:code:`d^2(x(t))/dt^2 = -1 * w^2 * x(t)`
+:code:`Derivative(x(t), (t, 2)) = -1 * w^2 * x(t)`
 
 Latex:
     .. math::

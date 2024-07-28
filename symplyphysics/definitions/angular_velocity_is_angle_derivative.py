@@ -3,10 +3,6 @@ Angular velocity is angle derivative
 ====================================
 
 *Angular velocity* is a physical quantity that describes the change in angular displacement over time.
-
-**Notation:**
-
-#. :math:`\frac{d}{d t}` (:code:`d/dt`) denotes a derivative w.r.t. time.
 """
 
 from sympy import (Eq, Derivative)
@@ -19,10 +15,10 @@ r"""
 Angular velocity of the body as a function of time.
 
 Symbol:
-    :code:`w = w(t)`
+    :code:`w(t)`
 
 Latex:
-    :math:`\omega = \omega(t)`
+    :math:`\omega(t)`
 """
 
 angle_function = Function("angle_function", angle_type)
@@ -30,10 +26,10 @@ r"""
 Angular displacement as a function of time.
 
 Symbol:
-    :code:`theta = theta(t)`
+    :code:`theta(t)`
 
 Latex:
-    :math:`\theta = \theta(t)`
+    :math:`\theta(t)`
 """
 
 time = Symbol("time", units.time)
@@ -46,11 +42,11 @@ Symbol:
 
 definition = Eq(angular_velocity(time), Derivative(angle_function(time), time))
 r"""
-:code:`w = d(theta)/dt`
+:code:`w(t) = Derivative(theta(t), t)`
 
 Latex:
     .. math::
-        \omega = \frac{d \theta}{d t}
+        \omega(t) = \frac{d \theta}{d t}
 """
 
 

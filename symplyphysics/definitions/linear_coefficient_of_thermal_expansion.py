@@ -40,10 +40,11 @@ Latex:
 
 length = Function("length", units.length)
 """
-Length of the object as a function of :attr:`~symplyphysics.symbols.thermodynamics.temperature`.
+Length of the object as a function of :attr:`~symplyphysics.symbols.thermodynamics.temperature`
+and, indirectly, pressure :math:`p`.
 
 Symbol:
-    :code:`l`
+    :code:`l(T, p)`
 """
 
 temperature = symbols.thermodynamics.temperature
@@ -59,11 +60,11 @@ definition = Eq(
     Derivative(length(temperature), temperature) / length(temperature),
 )
 r"""
-:code:`alpha_l = 1 / l(T) * (dl(T)/dT)_p`
+:code:`alpha_l = 1 / l(T, p) * Derivative(l(T, p), T)`
 
 Latex:
     .. math::
-        \alpha_l = \frac{1}{l(T)} \left( \frac{d l(T)}{d T} \right)_p
+        \alpha_l = \frac{1}{l(T, p)} \left( \frac{d l}{d T} \right)_p
 """
 
 

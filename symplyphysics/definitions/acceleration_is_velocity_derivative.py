@@ -3,10 +3,6 @@ Acceleration is velocity derivative
 ===================================
 
 *Acceleration* is the derivative of velocity w.r.t. time.
-
-**Notation:**
-
-#. :math:`\frac{d}{d t}` (:code:`d/dt`) denotes a derivative w.r.t. time.
 """
 
 from sympy import (Eq, Derivative)
@@ -18,7 +14,7 @@ acceleration_function = Function("acceleration_function", units.acceleration)
 :attr:`~symplyphysics.symbols.kinematic.acceleration` of the body as a function of time.
 
 Symbol:
-    :code:`a = a(t)`
+    :code:`a(t)`
 """
 
 velocity = Function("velocity", units.velocity)
@@ -26,7 +22,7 @@ velocity = Function("velocity", units.velocity)
 Velocity of the body as a function of time.
 
 Symbol:
-    :code:`v = v(t)`
+    :code:`v(t)`
 """
 
 time = Symbol("time", units.time)
@@ -39,11 +35,11 @@ Symbol:
 
 definition = Eq(acceleration_function(time), Derivative(velocity(time), time))
 r"""
-:code:`a = dv/dt`
+:code:`a(t) = Derivative(v(t), t)`
 
 Latex:
     .. math::
-        a = \frac{d v}{d t}
+        a(t) = \frac{d v}{d t}
 """
 
 
