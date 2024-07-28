@@ -3,7 +3,7 @@ Elastic energy density of compression via strain
 ================================================
 
 Volumetric density of the elastic energy of a body is proportional to
-its Young's module and the square of its strain. The
+its Young's modulus and the square of its strain. The
 :doc:`Hooke's law <laws.dynamics.deformation.tensile_stress_is_youngs_modulus_times_strain>`
 can be used to obtain analogous forms of this law.
 """
