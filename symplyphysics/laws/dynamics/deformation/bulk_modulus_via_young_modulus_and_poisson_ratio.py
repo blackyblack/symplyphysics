@@ -9,9 +9,10 @@ the Young modulus of the material and also depends on its Poisson ratio.
 
 **Conditions:**
 
-#. :math:`\nu < \frac{1}{2}`, see the formula for elastic energy density.
-..
-    TODO add link to source file
+#. The body is isotropic and uniform.
+#. The :ref:`Poisson ratio <poisson-ratio>` :math:`\nu < \frac{1}{2}`,
+   since :doc:`elastic energy density <laws.dynamics.deformation.elastic_energy_density_of_bulk_compression_via_pressure>`
+   cannot be negative.
 """
 
 from sympy import Eq
@@ -42,6 +43,8 @@ Symbol:
 
 poisson_ratio = Symbol("poisson_ratio", dimensionless)
 r"""
+.. _poisson-ratio:
+
 Poisson ratio of the material.
 
 Symbol:
