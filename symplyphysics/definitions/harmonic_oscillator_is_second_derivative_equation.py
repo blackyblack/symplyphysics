@@ -52,7 +52,7 @@ r"""
 
 Latex:
     .. math::
-        \frac{d^2 x(t)}{d t^2} = - \omega^2 x(t)
+        \frac{d^2 x}{d t^2} = - \omega^2 x(t)
 """
 
 # Confirm that cosine function is a solution to this equation
