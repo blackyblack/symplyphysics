@@ -1,52 +1,69 @@
-from sympy import Eq, Abs
+"""
+Tensile stress is Young's modulus times strain
+==============================================
+
+When an object is under tension or compression, the stress is related to the strain via the
+Young's modulus.
+"""
+
+from sympy import Eq
 from symplyphysics import (
     units,
+    dimensionless,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
 
-# Description
-## When an object is under tension or compression, the stress is related to the strain via the
-## Young's modulus.
-
-# Law: sigma = E * |dL|/L
-## sigma - stress
-## E - Young's modulus for the object
-## dL - change in length of object
-## L - initial length of object
-
-# Note
-## |dL|/L is called the tensile/compressive strain of the object
-
 stress = Symbol("stress", units.pressure)
+r"""
+Stress on the object.
+
+Symbol:
+    :code:`sigma`
+
+Latex:
+    :math:`\sigma`
+"""
+
 youngs_modulus = Symbol("youngs_modulus", units.pressure)
-change_in_length = Symbol("change_in_length", units.length)
-initial_length = Symbol("initial_length", units.length)
+"""
+Young's modulus of the material of the object.
 
-law = Eq(stress, youngs_modulus * Abs(change_in_length) / initial_length)
+Symbol:
+    :code:`E`
+"""
 
+engineering_normal_strain = Symbol("engineering_normal_strain", dimensionless)
+"""
+Engineering normal strain of the deformed body.
 
-def print_law() -> str:
-    return print_expression(law)
+Symbol:
+    :code:`e`
+"""
+
+law = Eq(stress, youngs_modulus * engineering_normal_strain)
+r"""
+:code:`sigma = E * e`
+
+Latex:
+    .. math::
+        \sigma = E e
+"""
 
 
 @validate_input(
     youngs_modulus_=youngs_modulus,
-    change_in_length_=change_in_length,
-    initial_length_=initial_length,
+    engineering_normal_strain_=engineering_normal_strain,
 )
 @validate_output(stress)
 def calculate_tensile_stress(
     youngs_modulus_: Quantity,
-    change_in_length_: Quantity,
-    initial_length_: Quantity,
+    engineering_normal_strain_: float,
 ) -> Quantity:
     result = law.rhs.subs({
         youngs_modulus: youngs_modulus_,
-        change_in_length: change_in_length_,
-        initial_length: initial_length_,
+        engineering_normal_strain: engineering_normal_strain_,
     })
     return Quantity(result)
