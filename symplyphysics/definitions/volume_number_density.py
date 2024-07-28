@@ -1,5 +1,12 @@
+"""
+Volume number density
+=====================
+
+*Volume number density*, or *concentration*, is the number of particles per unit volume.
+"""
+
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, dimensionless, validate_input,
+from symplyphysics import (units, Quantity, Symbol, dimensionless, validate_input,
     validate_output)
 
 # Description
@@ -11,16 +18,37 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, dimensionl
 ## V is volume
 
 number_density = Symbol("number_density", 1 / units.volume)
+"""
+Concentration of particles.
+
+Symbol:
+    :code:`n`
+"""
+
 objects = Symbol("objects", dimensionless)
+"""
+Number of particles within the volume.
+
+Symbol:
+    :code:`N`
+"""
+
 volume = Symbol("volume", units.volume)
+"""
+Volume in which the particles are located.
+
+Symbol:
+    :code:`V`
+"""
 
 definition = Eq(number_density, objects / volume)
+r"""
+:code:`n = N / V`
 
-definition_units_SI = 1 / units.meter**3
-
-
-def print_law() -> str:
-    return print_expression(definition)
+Latex:
+    .. math::
+        n = \frac{N}{V}
+"""
 
 
 @validate_input(objects_=objects, volume_=volume)

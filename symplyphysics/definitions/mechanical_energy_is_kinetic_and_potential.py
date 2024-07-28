@@ -1,27 +1,46 @@
+"""
+Mechanical energy is kinetic and potential energy
+=================================================
+
+*Mechanical energy* of the system is defined as the sum of its kinetic energy and potential energy.
+"""
+
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output)
 
-# Description
-## The mechanical energy of the system is defined as the total kinetic energy plus the total potential energy.
-
-# Definition: E = K + P
-# Where:
-## K is kinetic energy of a system,
-## P is potential energy of a system,
-## E is mechanical energy.
-
 mechanical_energy = Symbol("mechanical_energy", units.energy)
+"""
+Mechanical energy of the system.
+
+Symbol:
+    :code:`E`
+"""
+
 kinetic_energy = Symbol("kinetic_energy", units.energy)
+"""
+Kinetic energy of the system.
+
+Symbol:
+    :code:`K`
+"""
+
 potential_energy = Symbol("potential_energy", units.energy)
+"""
+Potential energy of the system.
+
+Symbol:
+    :code:`U`
+"""
 
 definition = Eq(mechanical_energy, kinetic_energy + potential_energy)
+"""
+:code:`E = K + U`
 
-definition_units_SI = units.joule
-
-
-def print_law() -> str:
-    return print_expression(definition)
+Latex:
+    .. math::
+        E = K + U
+"""
 
 
 @validate_input(kinetic_energy_=kinetic_energy, potential_energy_=potential_energy)

@@ -1,26 +1,46 @@
+r"""
+Acceleration is velocity derivative
+===================================
+
+*Acceleration* is the derivative of velocity w.r.t. time.
+"""
+
 from sympy import (Eq, Derivative)
-from symplyphysics import (units, Quantity, Function, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Function, Symbol, validate_input,
     validate_output)
 
-# Description
-## Acceleration is the derivative of velocity with respect to time.
+acceleration_function = Function("acceleration_function", units.acceleration)
+"""
+:attr:`~symplyphysics.symbols.kinematic.acceleration` of the body as a function of time.
 
-# Definition: A = dv/dt
-# Where:
-## v is velocity function of time
-## t is time
+Symbol:
+    :code:`a(t)`
+"""
+
+velocity = Function("velocity", units.velocity)
+"""
+Velocity of the body as a function of time.
+
+Symbol:
+    :code:`v(t)`
+"""
 
 time = Symbol("time", units.time)
-acceleration_function = Function("acceleration_function", units.acceleration)
-velocity = Function("velocity", units.velocity)
+"""
+Time.
+
+Symbol:
+    :code:`t`
+"""
 
 definition = Eq(acceleration_function(time), Derivative(velocity(time), time))
+r"""
+:code:`a(t) = Derivative(v(t), t)`
 
-definition_units_SI = units.meter / units.second**2
-
-
-def print_law() -> str:
-    return print_expression(definition)
+Latex:
+    .. math::
+        a(t) = \frac{d v}{d t}
+"""
 
 
 @validate_input(velocity_start_=velocity, velocity_end_=velocity, time_=time)

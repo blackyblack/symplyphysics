@@ -1,10 +1,22 @@
+r"""
+Boltzmann factor
+================
+
+The *Boltzmann factor* is an exponential factor that appears in many formulas of statistical physics
+and thermodynamics, e.g. the canonical partition function of a classical discrete system.
+
+**Notation:**
+
+#. :math:`\exp` is the exponential function.
+#. :math:`k_\text{B}` (:code:`k_B`) is the Boltzmann constant.
+"""
+
 from sympy import Eq, exp
 from symplyphysics import (
     units,
     dimensionless,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     symbols,
@@ -12,27 +24,43 @@ from symplyphysics import (
     convert_to_float,
 )
 
-# Description
-## The Boltzmann factor is an exponential factor that appears in many formulas of statistical physics
-## and thermodynamics, e.g. the canonical partition function of a classical discrete system.
-
-# Definition: f = exp(-E_i / (k * T))
-## f - Boltzmann factor
-## E_i - energy of state i
-## k - Boltzmann constant
-## T - equilibrium temperature
-
 boltzmann_factor = Symbol("boltzmann_factor", dimensionless)
+"""
+Boltzmann factor.
+
+Symbol:
+    :code:`f`
+"""
+
 energy_of_state = Symbol("energy_of_state", units.energy)
+"""
+Energy of state :math:`i`.
+
+Symbol:
+    :code:`E_i`
+
+Latex:
+    :math:`E_i`
+"""
+
 equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature,
     "equilibrium_temperature")
+"""
+Equilibrium :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
+
+Symbol:
+    :code:`T`
+"""
 
 definition = Eq(boltzmann_factor,
     exp(-1 * energy_of_state / (units.boltzmann_constant * equilibrium_temperature)))
+r"""
+:code:`f = exp(-1 * E_i / (k_B * T))`
 
-
-def print_law() -> str:
-    return print_expression(definition)
+Latex:
+    .. math::
+        f = \exp{\left( - \frac{E_i}{k_\text{B} T} \right)}
+"""
 
 
 @validate_input(

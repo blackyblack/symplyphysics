@@ -1,22 +1,45 @@
+"""
+Momentum is mass times velocity
+===============================
+
+Momentum is a physical quantity equal to the product of the object's velocity and its mass.
+"""
+
 from sympy import (Eq, solve)
 from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols)
 
-# Description
-## Momentum is the multiplication of velocity and mass. As velocity is vector, momentum is vector as well and it is collinear with velocity.
-
-# Definition: P = m * V
-# Where:
-## m is a mass of the object
-## V is it's velocity
-## P is momentum
-
 momentum = Symbol("momentum", units.momentum)
+"""
+Momentum of the object.
+
+Symbol:
+    :code:`p`
+"""
+
 velocity = Symbol("velocity", units.velocity)
+"""
+Velocity of the object.
+
+Symbol:
+    :code:`v`
+"""
+
 mass = symbols.basic.mass
+"""
+:attr:`~symplyphysics.symbols.basic.mass` of the object.
+
+Symbol:
+    :code:`m`
+"""
 
 definition = Eq(momentum, mass * velocity)
+"""
+:code:`p = m * v`
 
-definition_units_SI = units.kilogram * units.meter / units.second
+Latex:
+    .. math::
+        p = m v
+"""
 
 
 @validate_input(velocity_=velocity, mass_=mass)

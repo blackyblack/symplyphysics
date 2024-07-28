@@ -2,8 +2,8 @@
 Extensive quantity is linear density times length
 =================================================
 
-An extensive quantity of interest can be obtained by multiplying the corresponding linear
-density by length.
+An extensive quantity of interest can be obtained by multiplying the corresponding *linear
+density* by length.
 """
 
 from sympy import Eq, Symbol as SymSymbol
@@ -20,7 +20,7 @@ extensive_quantity = SymSymbol("extensive_quantity")
 Extensive quantity
 
 Symbol:
-    X
+    :code:`X`
 """
 
 linear_density = SymSymbol("linear_density")
@@ -28,7 +28,7 @@ r"""
 Intensive linear density
 
 Symbol:
-    lambda_X
+    :code:`lambda_X`
 
 Latex:
     :math:`\lambda_X`
@@ -39,15 +39,16 @@ length = Symbol("length", units.length)
 Length
 
 Symbol:
-    L
+    :code:`L`
 """
 
 law = Eq(extensive_quantity, linear_density * length)
 r"""
-X = lambda_X * L
+:code:`X = lambda_X * L`
 
 Latex:
-    :math:`X = \lambda_X L`
+    .. math::
+        X = \lambda_X L
 """
 
 

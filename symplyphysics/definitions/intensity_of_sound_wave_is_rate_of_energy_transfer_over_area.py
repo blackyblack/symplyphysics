@@ -1,31 +1,52 @@
+"""
+Intensity of sound wave is rate of energy transfer over area
+============================================================
+
+The *intensity* of a sound wave at a surface is a physical quantity defined as the average rate
+per unit area at which energy is transferred by the wave through or onto the surface.
+"""
+
 from sympy import Eq
 from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
 
-# Description
-## The intensity of a sound wave at a surface is the average rate per unit area at which
-## energy is transferred by the wave through or onto the surface.
-
-# Law: I = P / A
-## I - intensity of sound wave
-## P - rate of energy transfer (power) of sound wave
-## A - surface area
-
 intensity = Symbol("intensity", units.power / units.area)
+"""
+Intensity of the sound wave.
+
+Symbol:
+    :code:`I`
+"""
+
 power = Symbol("power", units.power)
+"""
+Power, or rate of energy transfer, of the wave.
+
+Symbol:
+    :code:`P`
+"""
+
 area = Symbol("area", units.area)
+"""
+Surface area.
+
+Symbol:
+    :code:`A`
+"""
 
 definition = Eq(intensity, power / area)
+r"""
+:code:`I = P / A`
 
-
-def print_law() -> str:
-    return print_expression(definition)
+Latex:
+    .. math::
+        I = \frac{P}{A}
+"""
 
 
 @validate_input(power_=power, area_=area)

@@ -1,28 +1,50 @@
+"""
+Surface charge density from charge and area
+===========================================
+
+*Surface charge density* is the amount of charge per area unit.
+It is a measure of how much electric charge is distributed throughout a surface.
+"""
+
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output)
 
-# Description
-## Surface charge density is the amount of charge per unit of a two-dimensional surface area. It is a measure of how much quantity of electric charge is accumulated over a surface.
-## Charge density can be either positive or negative, since electric charge can be either positive or negative.
-
-## Definition: σ = q / s
-## Where:
-## σ is surface charge density
-## q is charge
-## s is the area over which charge is distributed
-
 surface_charge_density = Symbol("surface_charge_density", units.charge / units.area)
+r"""
+Surface charge density of the surface.
+
+Symbol:
+    :code:`sigma`
+
+Latex:
+    :math:`\sigma`
+"""
+
 charge = Symbol("charge", units.charge)
+"""
+Total charge of the surface.
+
+Symbol:
+    :code:`q`
+"""
+
 area = Symbol("area", units.area)
+"""
+Area of the surface.
+
+Symbol:
+    :code:`A`
+"""
 
 definition = Eq(surface_charge_density, charge / area)
+r"""
+:code:`sigma = q / A`
 
-definition_units_SI = units.coulomb / units.meter**2
-
-
-def print_definition() -> str:
-    return print_expression(definition)
+Latex:
+    .. math::
+        \sigma = \frac{q}{A}
+"""
 
 
 @validate_input(charge_=charge, area_=area)

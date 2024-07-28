@@ -1,12 +1,16 @@
+"""
+Angular frequency from radians per time
+=======================================
+
+*Angular frequency* is a scalar physical quantity measuring the rate of change in angle with time.
+"""
+
 from sympy import (Eq, solve)
-from symplyphysics import (angle_type, units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (angle_type, units, Quantity, Symbol, validate_input,
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.definitions import temporal_frequency_is_events_per_time as frequency_def
-
-# Description
-## Angular frequency "ω" (also referred to by the terms angular speed and angular rate) is a scalar measure of the angular displacement per unit time.
 
 # Law: w = N / t
 # Where:
@@ -14,24 +18,49 @@ from symplyphysics.definitions import temporal_frequency_is_events_per_time as f
 ## t is time,
 ## w is angular frequency.
 
-radians = Symbol("radians", angle_type)
-time = Symbol("period", units.time)
-# This is equivalent to frequency, but radians per second is a common notation for angular frequency
 angular_frequency = Symbol("angular_frequency", angle_type / units.time)
+r"""
+Angular frequency.
+
+Symbol:
+    :code:`w`
+
+Latex:
+    :math:`\omega`
+"""
+
+radians = Symbol("radians", angle_type)
+"""
+Angular displacement in radians.
+
+Symbol:
+    :code:`N`
+"""
+
+time = Symbol("period", units.time)
+"""
+Time.
+
+Symbol:
+    :code:`t`
+"""
 
 law = Eq(angular_frequency, radians / time)
+r"""
+:code:`w = N / t`
+
+Latex:
+    .. math::
+        \omega = \frac{N}{t}
+"""
 
 # Derive the same law from temporal frequency definition
 
-frequency_of_radian = frequency_def.definition.subs({
+_frequency_of_radian = frequency_def.definition.subs({
     frequency_def.events: radians,
     frequency_def.time: time
 }).rhs
-assert expr_equals(frequency_of_radian, law.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
+assert expr_equals(_frequency_of_radian, law.rhs)
 
 
 @validate_input(time_=time, radians_=radians)

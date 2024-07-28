@@ -1,10 +1,17 @@
+"""
+Phase velocity from angular frequency and wavenumber
+====================================================
+
+*Phase velocity* of a wave is the rate at which the wave propagates in a medium.
+It is the velocity at which the phase of one frequency component of the wave travels.
+"""
+
 from sympy import Eq, solve
 from symplyphysics import (
     units,
     angle_type,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
@@ -13,20 +20,46 @@ from symplyphysics.definitions import angular_wavenumber_is_inverse_wavelength a
 from symplyphysics.laws.waves import wavelength_from_wave_speed_and_period as velocity_law
 from symplyphysics.definitions import period_from_angular_frequency as frequency_law
 
-# Description
-## The phase velocity of a wave is the rate at which the wave propagates in a medium.
-## It is the velocity at which the phase of one frequency component of the wave travels.
-
 # Law: v = w / k
 ## v - phase velocity of wave
 ## w - angular frequency of wave
 ## k - angular wavenumber of wave
 
 phase_velocity = Symbol("phase_velocity", units.length / units.time, real=True)
+"""
+Phase velocity of the wave.
+
+Symbol:
+    :code:`v`
+"""
+
 angular_frequency = Symbol("angular_frequency", angle_type / units.time, positive=True)
+r"""
+Angular frequency of the wave.
+
+Symbol:
+    :code:`w`
+
+Latex:
+    :math:`\omega`
+"""
+
 angular_wavenumber = Symbol("angular_wavenumber", angle_type / units.length, positive=True)
+"""
+Angular wavenumber of the wave.
+
+Symbol:
+    :code:`k`
+"""
 
 law = Eq(phase_velocity, angular_frequency / angular_wavenumber)
+r"""
+:code:`v = w / k`
+
+Latex:
+    .. math::
+        v = \frac{\omega}{k}
+"""
 
 # Derive from definition of phase velocity via wavelength and time period
 
@@ -42,10 +75,6 @@ _phase_velocity = solve(velocity_law.law, velocity_law.propagation_speed)[0].sub
 })
 
 assert expr_equals(law.rhs, _phase_velocity)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(

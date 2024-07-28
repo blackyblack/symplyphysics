@@ -1,24 +1,39 @@
+"""
+Admittance is inversed impedance
+================================
+
+*Admittance, or complex conductance*, is a physical quantity measuring the
+ability of a dipole to conduct electrical signal.
+"""
+
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output)
 
-# Description
-## Admittance (a.k.a. complex conductance) is ability of dipole to conduct electrical signal.
-
-# Definition: Y = 1 / Z, where
-## Y is admittance of dipole,
-## Z is its impedance.
-
 dipole_admittance = Symbol("dipole_admittance", units.conductance)
+"""
+Admittance of the dipole.
+
+Symbol:
+    :code:`Y`
+"""
+
 dipole_impedance = Symbol("dipole_impedance", units.impedance)
+"""
+:doc:`Impedance <definitions.impedance_is_resistance_and_reactance>` of the dipole.
+
+Symbol:
+    :code:`Z`
+"""
 
 definition = Eq(dipole_admittance, 1 / dipole_impedance)
+r"""
+:code:`Y = 1 / Z`
 
-definition_units_SI = units.siemens
-
-
-def print_law() -> str:
-    return print_expression(definition)
+Latex:
+    .. math::
+        Y = \frac{1}{Z}
+"""
 
 
 @validate_input(impedance_=dipole_impedance)

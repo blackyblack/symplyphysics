@@ -1,16 +1,19 @@
+"""
+Quantity is volumetric density times volume
+===========================================
+
+An extensive quantity of interest can be obtained by multiplying the corresponding *volumetric
+density* by volume.
+"""
+
 from sympy import Eq, Symbol as SymSymbol
 from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
 )
 from symplyphysics.core.dimensions import assert_equivalent_dimension
-
-# Description
-## An extensive quantity of interest can be obtained by multiplying the corresponding volumetric
-## density by volume
 
 # Law: X = rho_X * V
 ## X - extensive quantity
@@ -18,14 +21,40 @@ from symplyphysics.core.dimensions import assert_equivalent_dimension
 ## V - volume
 
 extensive_quantity = SymSymbol("extensive_quantity")
+"""
+Extensive quantity.
+
+Symbol:
+    :code:`X`
+"""
+
 volumetric_density = SymSymbol("volumetric_density")
+r"""
+Intensive volumetric density.
+
+Symbol:
+    :code:`rho_X`
+
+Latex:
+    :math:`\rho_X`
+"""
+
 volume = Symbol("volume", units.volume)
+"""
+Volume.
+
+Symbol:
+    :code:`V`
+"""
 
 law = Eq(extensive_quantity, volumetric_density * volume)
+r"""
+:code:`X = rho_X * V`
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        X = \rho_X V
+"""
 
 
 @validate_input(volume_=volume)

@@ -1,31 +1,62 @@
+r"""
+Radiant exitance is radiant flux emitted per unit area
+======================================================
+
+*Radiant exitance*, or *radiant emittance* is the radiant flux emitted by a surface per unit area.
+
+**Notation:**
+
+#. The subscript :math:`e` stands for *energetical* to avoid confusion with photometric quantities.
+"""
+
 from sympy import Eq, Derivative
 from symplyphysics import (
     units,
     Quantity,
     Symbol,
     Function,
-    print_expression,
     validate_input,
     validate_output,
 )
 
-# Description
-## Radiant exitance (a.k.a. radiant emittance) is the radiant flux emitted by a surface per unit area.
-
-# M_e = d(Phi_e)/dA
-## M_e - radiant exitance of a surface (e stands for "energetical" to avoid confusion with photometric quantities)
-## Phi_e - radiant flux (a.k.a. radiant power) emitted
-## d/dA - derivative w.r.t. area of the surface
-
 radiant_exitance = Symbol("radiant_exitance", units.power / units.area)
+"""
+Radiant exitance of the surface.
+
+Symbol:
+    :code:`M_e`
+
+Latex:
+    :math:`M_e`
+"""
+
 radiant_flux = Function("radiant_flux", units.power)
+r"""
+Radiant flux, or radiant power, emitted from the surface.
+
+Symbol:
+    :code:`Phi_e(A)`
+
+Latex:
+    :math:`\Phi_e(A)`
+"""
+
 surface_area = Symbol("surface_area", units.area)
+"""
+The area of the surface.
+
+Symbol:
+    :code:`A`
+"""
 
 definition = Eq(radiant_exitance, Derivative(radiant_flux(surface_area), surface_area))
+r"""
+:code:`M_e = Derivative(Phi_e(A), A)`
 
-
-def print_law() -> str:
-    return print_expression(definition)
+Latex:
+    .. math::
+        M_e = \frac{\partial \Phi_e}{\partial A}
+"""
 
 
 @validate_input(

@@ -16,12 +16,13 @@ the total mass of the system does not change.
 
 #. The quantity :math:`R v_\text{rel}` is called the *thrust of rocket engine*.
 
-.. _rate note:
+    .. _rate note:
 
 #. The rate :math:`R` of fuel consumption is defined as 
     .. math::
         R = - \frac{d M}{d t}
-   where :math:`M` is the :ref:`rocket mass <rocket mass definition>`.
+
+    where :math:`M` is the :ref:`rocket mass <rocket mass definition>`.
 """
 
 from sympy import Eq, dsolve, solve, Symbol as SymSymbol

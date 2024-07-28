@@ -1,35 +1,55 @@
+"""
+Temporal frequency from period
+==============================
+
+Frequency is a physical quantity that describes how many cycles or events happen per unit time.
+It is the inverse of period. See :doc:`definitions.temporal_frequency_is_events_per_time` for additional information.
+"""
+
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import temporal_frequency_is_events_per_time as frequency_def
-
-# Description
-## The period is the interval of time between events, so the period is the reciprocal of the frequency.
-## See [frequency definition](../../definitions/temporal_frequency_is_events_per_time.py) for additional information.
 
 # Law: f = 1 / T
 # Where:
 ## T is period of oscillation,
 ## f is temporal frequency.
 
-period = Symbol("period", units.time)
 temporal_frequency = Symbol("temporal_frequency", units.frequency)
+"""
+Temporal frequency of oscillations.
+
+Symbol:
+    :code:`f`
+"""
+
+period = Symbol("period", units.time)
+"""
+Period of oscillations.
+
+Symbol:
+    :code:`T`
+"""
 
 law = Eq(temporal_frequency, 1 / period)
+r"""
+:code:`f = 1 / T`
+
+Latex:
+    .. math::
+        f = \frac{1}{T}
+"""
 
 # Derive the same law from temporal frequency definition
 
 # Period is time span between events, so we are having 1 event per 'period' time
-frequency_of_single_event = frequency_def.definition.subs({
+_frequency_of_single_event = frequency_def.definition.subs({
     frequency_def.events: 1,
     frequency_def.time: period
 }).rhs
-assert expr_equals(frequency_of_single_event, law.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
+assert expr_equals(_frequency_of_single_event, law.rhs)
 
 
 @validate_input(period_=period)

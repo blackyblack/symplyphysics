@@ -1,29 +1,53 @@
+r"""
+Angular velocity is angle derivative
+====================================
+
+*Angular velocity* is a physical quantity that describes the change in angular displacement over time.
+"""
+
 from sympy import (Eq, Derivative)
-from symplyphysics import (angle_type, units, Quantity, Function, Symbol, print_expression,
+from symplyphysics import (angle_type, units, Quantity, Function, Symbol,
     validate_input, validate_output)
 from symplyphysics.core.symbols.quantities import scale_factor
 
-# Description
-## The movement along circle might be easily represented in polar coordinates with the pole in the center of the circle.
-## Object position is described by radius-vector from pole to object.
-## Magnitude of this vector is radius of circle. Angle between this vector and X axis it is also known as movement phase.
+angular_velocity = Function("angular_velocity", 1 / units.time)
+r"""
+Angular velocity of the body as a function of time.
 
-# Definition: ω(t) = φ(t)/dt
-# Where:
-## ω(t) is angular velocity function of time
-## φ(t) is angle function of time
+Symbol:
+    :code:`w(t)`
+
+Latex:
+    :math:`\omega(t)`
+"""
+
+angle_function = Function("angle_function", angle_type)
+r"""
+Angular displacement as a function of time.
+
+Symbol:
+    :code:`theta(t)`
+
+Latex:
+    :math:`\theta(t)`
+"""
 
 time = Symbol("time", units.time)
-angular_velocity = Function("angular_velocity", 1 / units.time)
-angle_function = Function("angle_function", angle_type)
+"""
+Time.
+
+Symbol:
+    :code:`t`
+"""
 
 definition = Eq(angular_velocity(time), Derivative(angle_function(time), time))
+r"""
+:code:`w(t) = Derivative(theta(t), t)`
 
-definition_units_SI = units.radian / units.second
-
-
-def print_law() -> str:
-    return print_expression(definition)
+Latex:
+    .. math::
+        \omega(t) = \frac{d \theta}{d t}
+"""
 
 
 @validate_input(angle_start_=angle_function, angle_end_=angle_function, moving_time_=time)
