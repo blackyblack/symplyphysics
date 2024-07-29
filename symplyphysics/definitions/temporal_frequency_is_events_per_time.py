@@ -1,8 +1,8 @@
 """
-Temporal frequency is events per time
-=====================================
+Temporal frequency is number of events per unit time
+====================================================
 
-Temporal frequency, or simply frequency, is the number of occurrences of a repeating event per unit of time.
+*Temporal frequency*, or *frequency*, is the number of occurrences of a repeating event per unit of time.
 """
 
 from sympy import (Eq, solve)
@@ -17,7 +17,7 @@ Symbol:
     :code:`f`
 """
 
-events = Symbol("events", dimensionless)
+number_of_events = Symbol("number_of_events", dimensionless)
 """
 Number of events occurred during the given time.
 
@@ -33,7 +33,7 @@ Symbol:
     :code:`t`
 """
 
-definition = Eq(temporal_frequency, events / time)
+definition = Eq(temporal_frequency, number_of_events / time)
 r"""
 :code:`f = N / t`
 
@@ -45,7 +45,7 @@ Latex:
 
 @validate_input(time_=time)
 @validate_output(temporal_frequency)
-def calculate_frequency(events_: float, time_: Quantity) -> Quantity:
+def calculate_frequency(number_of_events_: float, time_: Quantity) -> Quantity:
     solved = solve(definition, temporal_frequency, dict=True)[0][temporal_frequency]
-    result_expr = solved.subs({time: time_, events: events_})
+    result_expr = solved.subs({time: time_, number_of_events: number_of_events_})
     return Quantity(result_expr)

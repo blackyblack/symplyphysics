@@ -30,7 +30,7 @@ Symbol:
 """
 
 radial_speed = Symbol("radial_speed", units.velocity)
-"""
+r"""
 The projection of the velocity vector in the radial direction.
 
 Symbol:
@@ -42,21 +42,21 @@ Latex:
 
 potential_energy = Symbol("potential_energy", units.energy)
 """
-The potential energy of the planet, see :doc:`laws.gravity.radial_motion.potential_energy_of_planetary_motion`.
+The :doc:`potential energy <laws.gravity.radial_motion.potential_energy_of_planetary_motion>` of the planet.
 
 Symbol:
     :code:`U`
 """
 
-total_energy = Symbol("total_energy", units.energy)
-"""Total energy of the planet, assumed to be constant.
+total_mechanical_energy = Symbol("total_mechanical_energy", units.energy)
+"""Total mechanical energy of the planet, assumed to be constant.
 
 Symbol:
     :code:`E`
 """
 
 
-law = Eq(planetary_mass * radial_speed**2 / 2 + potential_energy, total_energy)
+law = Eq(planetary_mass * radial_speed**2 / 2 + potential_energy, total_mechanical_energy)
 r"""
 :code:`m * v_r**2 / 2 + U = E`
 
@@ -71,7 +71,7 @@ Latex:
     radial_speed_=radial_speed,
     potential_energy_=potential_energy,
 )
-@validate_output(total_energy)
+@validate_output(total_mechanical_energy)
 def calculate_total_energy(
     planetary_mass_: Quantity,
     radial_speed_: Quantity,

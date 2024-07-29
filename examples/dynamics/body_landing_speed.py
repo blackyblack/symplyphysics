@@ -15,24 +15,24 @@ body_mass = Symbol("mass_of_the_body")
 landing_speed = Symbol("landing_speed")
 
 kinetic_energy_before = kinetic_energy.law.subs({
-    kinetic_energy.body_velocity: 0,
-    kinetic_energy.symbols.basic.mass: body_mass
+    kinetic_energy.speed: 0,
+    kinetic_energy.mass: body_mass
 }).rhs
 potential_energy_before = potential_energy.law.subs({
     potential_energy.height: body_height,
-    potential_energy.symbols.basic.mass: body_mass
+    potential_energy.mass: body_mass
 }).rhs
 mechanical_energy_before = mechanical_energy.definition.subs({
     mechanical_energy.kinetic_energy: kinetic_energy_before,
     mechanical_energy.potential_energy: potential_energy_before,
 }).rhs
 kinetic_energy_after = kinetic_energy.law.subs({
-    kinetic_energy.body_velocity: landing_speed,
-    kinetic_energy.symbols.basic.mass: body_mass
+    kinetic_energy.speed: landing_speed,
+    kinetic_energy.mass: body_mass
 }).rhs
 potential_energy_after = potential_energy.law.subs({
     potential_energy.height: 0,
-    potential_energy.symbols.basic.mass: body_mass
+    potential_energy.mass: body_mass
 }).rhs
 mechanical_energy_after = mechanical_energy.definition.subs({
     mechanical_energy.kinetic_energy: kinetic_energy_after,

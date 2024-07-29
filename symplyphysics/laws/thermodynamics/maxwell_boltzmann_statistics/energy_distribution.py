@@ -50,9 +50,9 @@ law = Eq(
 # via the [formula](https://en.wikipedia.org/wiki/Probability_density_function#Scalar_to_scalar)
 # `f_E(E) = f_v(v(E)) * abs(dv(E)/dE)`
 
-_speed = solve(kinetic_energy_law.law, kinetic_energy_law.body_velocity)[0].subs({
-    kinetic_energy_law.kinetic_energy_of_body: energy,
-    symbols.basic.mass: speed_distribution.particle_mass,
+_speed = solve(kinetic_energy_law.law, kinetic_energy_law.speed)[0].subs({
+    kinetic_energy_law.kinetic_energy: energy,
+    kinetic_energy_law.mass: speed_distribution.particle_mass,
 })
 
 _speed_distribution = speed_distribution.law.rhs.subs(speed_distribution.equilibrium_temperature,

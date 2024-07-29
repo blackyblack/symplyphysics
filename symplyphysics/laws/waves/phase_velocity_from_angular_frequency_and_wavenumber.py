@@ -1,9 +1,9 @@
 """
-Phase velocity from angular frequency and wavenumber
-====================================================
+Phase speed from angular frequency and wavenumber
+=================================================
 
-*Phase velocity* of a wave is the rate at which the wave propagates in a medium.
-It is the velocity at which the phase of one frequency component of the wave travels.
+*Phase speed* of a wave is the rate at which the wave propagates in a medium.
+It is the speed at which the phase of one frequency component of the wave travels.
 """
 
 from sympy import Eq, solve
@@ -20,14 +20,9 @@ from symplyphysics.definitions import angular_wavenumber_is_inverse_wavelength a
 from symplyphysics.laws.waves import wavelength_from_wave_speed_and_period as velocity_law
 from symplyphysics.definitions import period_from_angular_frequency as frequency_law
 
-# Law: v = w / k
-## v - phase velocity of wave
-## w - angular frequency of wave
-## k - angular wavenumber of wave
-
-phase_velocity = Symbol("phase_velocity", units.length / units.time, real=True)
+phase_speed = Symbol("phase_speed", units.length / units.time, real=True)
 """
-Phase velocity of the wave.
+Phase speed of the wave.
 
 Symbol:
     :code:`v`
@@ -52,7 +47,7 @@ Symbol:
     :code:`k`
 """
 
-law = Eq(phase_velocity, angular_frequency / angular_wavenumber)
+law = Eq(phase_speed, angular_frequency / angular_wavenumber)
 r"""
 :code:`v = w / k`
 
@@ -67,7 +62,7 @@ _wavelength = solve(wavenumber_def.definition,
     wavenumber_def.wavelength)[0].subs(wavenumber_def.angular_wavenumber, angular_wavenumber)
 
 _time_period = solve(frequency_law.law,
-    frequency_law.period)[0].subs(frequency_law.circular_frequency, angular_frequency)
+    frequency_law.period)[0].subs(frequency_law.angular_frequency, angular_frequency)
 
 _phase_velocity = solve(velocity_law.law, velocity_law.propagation_speed)[0].subs({
     velocity_law.wavelength: _wavelength,
@@ -81,7 +76,7 @@ assert expr_equals(law.rhs, _phase_velocity)
     angular_frequency_=angular_frequency,
     angular_wavenumber_=angular_wavenumber,
 )
-@validate_output(phase_velocity)
+@validate_output(phase_speed)
 def calculate_phase_velocity(
     angular_frequency_: Quantity,
     angular_wavenumber_: Quantity,

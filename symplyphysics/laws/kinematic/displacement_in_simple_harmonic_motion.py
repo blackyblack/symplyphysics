@@ -37,7 +37,7 @@ law = Eq(displacement(time), amplitude * cos(angular_frequency * time + phase_la
 _eqn = harmonic_eqn.definition.subs({
     harmonic_eqn.time: time,
     harmonic_eqn.angular_frequency: angular_frequency,
-}).subs(harmonic_eqn.displacement_function(time), displacement(time))
+}).subs(harmonic_eqn.displacement(time), displacement(time))
 
 _initial_position = law.rhs.subs(time, 0)
 _initial_velocity = law.rhs.diff(time).subs(time, 0)

@@ -39,10 +39,10 @@ Latex:
     :math:`\mathfrak{K}`
 """
 
-total_energy_per_unit_mass = Symbol("total_energy_per_unit_mass", units.energy / units.mass)
+specific_energy = Symbol("specific_energy", units.energy / units.mass)
 r"""
 The total energy of the planet per unit of its :attr:`~symplyphysics.symbols.basic.mass`.
-Can be negative or positive.
+Can be negative or positive depending on the sign of the planet's energy.
 
 Symbol:
     epsilon
@@ -51,7 +51,7 @@ Latex:
     :math:`\varepsilon`
 """
 
-law = Eq(semimajor_axis, 2 * pi**2 * kepler_constant / abs(total_energy_per_unit_mass))
+law = Eq(semimajor_axis, 2 * pi**2 * kepler_constant / abs(specific_energy))
 r"""
 a = 2 * pi^2 * K / abs(epsilon)
 
@@ -63,7 +63,7 @@ Latex:
 
 @validate_input(
     kepler_constant_=kepler_constant,
-    total_energy_per_unit_mass_=total_energy_per_unit_mass,
+    total_energy_per_unit_mass_=specific_energy,
 )
 @validate_output(semimajor_axis)
 def calculate_semimajor_axis(
@@ -72,6 +72,6 @@ def calculate_semimajor_axis(
 ) -> Quantity:
     result = law.rhs.subs({
         kepler_constant: kepler_constant_,
-        total_energy_per_unit_mass: total_energy_per_unit_mass_,
+        specific_energy: total_energy_per_unit_mass_,
     })
     return Quantity(result)

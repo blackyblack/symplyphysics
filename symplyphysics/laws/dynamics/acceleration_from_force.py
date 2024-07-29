@@ -17,7 +17,7 @@ acceleration = symbols.kinematic.acceleration
 The :attr:`~symplyphysics.symbols.kinematic.acceleration` of the body.
 
 Symbol:
-    a
+    :code:`a`
 """
 
 force = symbols.dynamics.force
@@ -25,7 +25,7 @@ force = symbols.dynamics.force
 The net :attr:`~symplyphysics.symbols.dynamics.force` exerted on the body.
 
 Symbol:
-    F
+    :code:`F`
 """
 
 mass = symbols.basic.mass
@@ -33,12 +33,12 @@ mass = symbols.basic.mass
 The :attr:`~symplyphysics.symbols.basic.mass` of the body.
 
 Symbol:
-    m
+    :code:`m`
 """
 
 law = Eq(acceleration, force / mass)
 r"""
-a = F / m
+:code:`a = F / m`
 
 Latex:
     .. math::
@@ -48,11 +48,11 @@ Latex:
 # Derive the same law from vector form
 
 # Scalar law is equivalent to using one-dimensional vectors
-_force_vector = Vector([symbols.dynamics.force])
+_force_vector = Vector([force])
 _acceleration_vector = acceleration_law_vector.acceleration_law(_force_vector)
 assert len(_acceleration_vector.components) == 1
 _acceleration_with_mass = sympify(_acceleration_vector.components[0]).subs(
-    acceleration_law_vector.symbols.basic.mass, mass)
+    acceleration_law_vector.mass, mass)
 assert expr_equals(_acceleration_with_mass, law.rhs)
 
 

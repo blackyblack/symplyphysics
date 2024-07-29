@@ -1,11 +1,14 @@
 """
-Work done by general force in one dimension
-===========================================
+Work is integral of force over distance
+=======================================
 
 Assuming a one-dimensional environment, when the force F on a particle-like object depends
 on the position of the object, the work done by F on the object while the object moves
 from one position to another is to be found by integrating the force along the path of the
 object.
+
+..
+    TODO Rename file
 """
 
 from sympy import Eq, Integral
@@ -17,21 +20,22 @@ from symplyphysics import (
     validate_input,
     validate_output,
 )
+from symplyphysics.core.geometry.line import two_point_function, Point2D
 
 work = Symbol("work", units.energy)
 """
 The work done by force :math:`F`.
 
 Symbol:
-    W
+    :code:`W`
 """
 
-force_function = Function("force_function", units.force)
+force = Function("force", units.force)
 r"""
 The :attr:`~symplyphysics.symbols.dynamics.force` exerted on the object as a function of position.
 
 Symbol:
-    F
+    :code:`F(x)`
 """
 
 position = Symbol("position", units.length)
@@ -39,35 +43,34 @@ r"""
 The position of the object.
 
 Symbol:
-    x
+    :code:`x`
 """
 
-
-position_start = Symbol("position_start", units.length)
+position_before = Symbol("position_before", units.length)
 r"""
 The initial position of the object.
 
 Symbol:
-    x0
+    :code:`x0`
 
 Latex:
     :math:`x_0`
 """
 
-position_end = Symbol("position_end", units.length)
-"""
+position_after = Symbol("position_after", units.length)
+r"""
 The end position of the object.
 
 Symbol:
-    x1
+    :code:`x1`
 
 Latex:
     :math:`x_1`
 """
 
-law = Eq(work, Integral(force_function(position), (position, position_start, position_end)))
+law = Eq(work, Integral(force(position), (position, position_before, position_after)))
 r"""
-W = Integral(F(x), (x, x0, x1))
+:code:`W = Integral(F(x), (x, x0, x1))`
 
 Latex:
     .. math::
@@ -76,25 +79,27 @@ Latex:
 
 # Assuming the force changes linearly with respect to position
 @validate_input(
-    force_start_=force_function,
-    force_end_=force_function,
-    position_start_=position,
-    position_end_=position,
+    force_start_=force,
+    force_end_=force,
+    position_before_=position,
+    position_after_=position,
 )
 @validate_output(work)
 def calculate_work(
     force_start_: Quantity,
     force_end_: Quantity,
-    position_start_: Quantity,
-    position_end_: Quantity,
+    position_before_: Quantity,
+    position_after_: Quantity,
 ) -> Quantity:
-    # Using the two-point line equation: (y - y1)/(y2 - y1) = (x - x1)/(x2 - x1)
-    force_function_ = ((force_end_ - force_start_) * (position - position_start_) /
-        (position_end - position_start_) + force_start_)
+    force_ = two_point_function(
+        Point2D(position_before_, force_start_),
+        Point2D(position_after_, force_end_),
+        position,
+    )
     result = law.rhs.subs({
-        force_function(position): force_function_,
-        position_start: position_start_,
-        position_end: position_end_,
+        force(position): force_,
+        position_before: position_before_,
+        position_after: position_after_,
     })
     result_work = result.doit()
     return Quantity(result_work)

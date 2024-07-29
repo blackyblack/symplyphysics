@@ -24,7 +24,7 @@ Symbol:
     :code:`k`
 """
 
-torque_applied = Symbol("torque_applied", units.force * units.length)
+torque = Symbol("torque", units.force * units.length)
 r"""
 Torque applied to the body.
 
@@ -35,7 +35,7 @@ Latex:
     :math:`\tau`
 """
 
-rotation_angle = Symbol("rotation_angle", angle_type)
+angular_distance = Symbol("angular_distance", angle_type)
 r"""
 Angle of deformation.
 
@@ -46,7 +46,7 @@ Latex:
     :math:`\varphi`
 """
 
-law = Eq(rotational_stiffness, torque_applied / rotation_angle)
+law = Eq(rotational_stiffness, torque / angular_distance)
 r"""
 :code:`k = tau / phi`
 
@@ -56,8 +56,8 @@ Latex:
 """
 
 @validate_input(
-    torque_applied_=torque_applied,
-    rotation_angle_=rotation_angle,
+    torque_applied_=torque,
+    rotation_angle_=angular_distance,
 )
 @validate_output(rotational_stiffness)
 def calculate_rotational_stiffness(
@@ -65,7 +65,7 @@ def calculate_rotational_stiffness(
     rotation_angle_: float | Quantity,
 ) -> Quantity:
     result = law.rhs.subs({
-        torque_applied: torque_applied_,
-        rotation_angle: scale_factor(rotation_angle_),
+        torque: torque_applied_,
+        angular_distance: scale_factor(rotation_angle_),
     })
     return Quantity(result)

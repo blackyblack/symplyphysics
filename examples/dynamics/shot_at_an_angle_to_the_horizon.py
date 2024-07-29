@@ -24,9 +24,9 @@ velocity_projection_equation = projection_velocity.law.subs(({
 })).rhs
 
 kinetic_energy_equation = kinetic_energy.law.subs({
-    kinetic_energy.kinetic_energy_of_body: kinetic_energy_in_peak,
-    kinetic_energy.body_velocity: velocity_projection_equation,
-    kinetic_energy.symbols.basic.mass: mass_of_bullet
+    kinetic_energy.kinetic_energy: kinetic_energy_in_peak,
+    kinetic_energy.speed: velocity_projection_equation,
+    kinetic_energy.mass: mass_of_bullet
 })
 print(f"Final equation: {print_expression(kinetic_energy_equation)}")
 

@@ -41,13 +41,13 @@ speed_after_2 = Symbol("speed_after_2")
 
 potential_energy_before_1 = potential_energy_def.law.rhs.subs({
     potential_energy_def.height: height,
-    potential_energy_def.symbols.basic.mass: mass_1,
+    potential_energy_def.mass: mass_1,
 })
 
 # Block 1 slides from rest.
 kinetic_energy_before_1 = kinetic_energy_def.law.rhs.subs({
-    kinetic_energy_def.symbols.basic.mass: mass_1,
-    kinetic_energy_def.body_velocity: 0,
+    kinetic_energy_def.mass: mass_1,
+    kinetic_energy_def.speed: 0,
 })
 
 mechanical_energy_before_1 = mechanical_energy_def.definition.rhs.subs({
@@ -58,12 +58,12 @@ mechanical_energy_before_1 = mechanical_energy_def.definition.rhs.subs({
 # Block 1 slides down to zero elevation level.
 potential_energy_after_1 = potential_energy_def.law.rhs.subs({
     potential_energy_def.height: 0,
-    potential_energy_def.symbols.basic.mass: mass_1,
+    potential_energy_def.mass: mass_1,
 })
 
 kinetic_energy_after_1 = kinetic_energy_def.law.rhs.subs({
-    kinetic_energy_def.symbols.basic.mass: mass_1,
-    kinetic_energy_def.body_velocity: speed_before_1,
+    kinetic_energy_def.mass: mass_1,
+    kinetic_energy_def.speed: speed_before_1,
 })
 
 mechanical_energy_after_1 = mechanical_energy_def.definition.rhs.subs({
@@ -81,8 +81,8 @@ energy_conservation_eqn_1 = energy_conservation_law.law.subs({
 speed_before_1 = solve(energy_conservation_eqn_1, speed_before_1)[0]
 
 momentum_before_1 = momentum_def.definition.rhs.subs({
-    momentum_def.symbols.basic.mass: mass_1,
-    momentum_def.velocity: speed_before_1,
+    momentum_def.mass: mass_1,
+    momentum_def.speed: speed_before_1,
 })
 
 # (a) Elastic collision
@@ -90,13 +90,13 @@ momentum_before_1 = momentum_def.definition.rhs.subs({
 mechanical_energy_before_elastic = mechanical_energy_before_1
 
 momentum_after_1_elastic = momentum_def.definition.rhs.subs({
-    momentum_def.symbols.basic.mass: mass_1,
-    momentum_def.velocity: speed_after_1,
+    momentum_def.mass: mass_1,
+    momentum_def.speed: speed_after_1,
 })
 
 momentum_after_2_elastic = momentum_def.definition.rhs.subs({
-    momentum_def.symbols.basic.mass: mass_2,
-    momentum_def.velocity: speed_after_2,
+    momentum_def.mass: mass_2,
+    momentum_def.speed: speed_after_2,
 })
 
 momentum_after_elastic = momentum_after_1_elastic + momentum_after_2_elastic
@@ -109,13 +109,13 @@ momentum_conservation_eqn_collision = momentum_conservation_law.law.subs({
 })
 
 kinetic_energy_after_1_elastic = kinetic_energy_def.law.rhs.subs({
-    kinetic_energy_def.symbols.basic.mass: mass_1,
-    kinetic_energy_def.body_velocity: speed_after_1,
+    kinetic_energy_def.mass: mass_1,
+    kinetic_energy_def.speed: speed_after_1,
 })
 
 kinetic_energy_after_2_elastic = kinetic_energy_def.law.rhs.subs({
-    kinetic_energy_def.symbols.basic.mass: mass_2,
-    kinetic_energy_def.body_velocity: speed_after_2,
+    kinetic_energy_def.mass: mass_2,
+    kinetic_energy_def.speed: speed_after_2,
 })
 
 kinetic_energy_after_elastic = kinetic_energy_after_1_elastic + kinetic_energy_after_2_elastic
@@ -142,8 +142,8 @@ speed_after_2_elastic = solve(
 speed_after = Symbol("speed_after")
 
 momentum_after_inelastic = momentum_def.definition.rhs.subs({
-    momentum_def.symbols.basic.mass: mass_1 + mass_2,
-    momentum_def.velocity: speed_after,
+    momentum_def.mass: mass_1 + mass_2,
+    momentum_def.speed: speed_after,
 })
 
 speed_after_inelastic = solve(Eq(momentum_before_1, momentum_after_inelastic), speed_after)[0]
@@ -155,13 +155,13 @@ mass_after = Symbol("mass_after")
 normal_reaction = mass_after * units.acceleration_due_to_gravity
 
 friction_force = friction_law.law.rhs.subs({
-    friction_law.friction_factor: friction_coefficient,
-    friction_law.normal_reaction: normal_reaction,
+    friction_law.coefficient_of_friction: friction_coefficient,
+    friction_law.normal_force: normal_reaction,
 })
 
 braking_path = braking_path_law.law.rhs.subs({
-    braking_path_law.symbols.basic.mass: mass_after,
-    braking_path_law.velocity: speed_after,
+    braking_path_law.mass: mass_after,
+    braking_path_law.speed: speed_after,
     braking_path_law.friction_force: friction_force,
 })
 

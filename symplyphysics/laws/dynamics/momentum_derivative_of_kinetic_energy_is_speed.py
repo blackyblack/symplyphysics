@@ -21,7 +21,7 @@ r"""
 The kinetic energy of the object.
 
 Symbol:
-    K
+    :code:`K(p`
 """
 
 momentum = Function("momentum", units.momentum)
@@ -29,7 +29,7 @@ momentum = Function("momentum", units.momentum)
 The momentum of the object.
 
 Symbol:
-    p
+    :code:`p`
 """
 
 speed = Symbol("speed", units.velocity)
@@ -37,7 +37,7 @@ speed = Symbol("speed", units.velocity)
 The speed of the object.
 
 Symbol:
-    v
+    :code:`v`
 """
 
 law = Eq(
@@ -45,7 +45,7 @@ law = Eq(
     speed,
 )
 r"""
-dK(p(v))/dp(v) = v
+:code:`Derivative(K(p(v), p(v))) = v`
 
 Latex:
     .. math::

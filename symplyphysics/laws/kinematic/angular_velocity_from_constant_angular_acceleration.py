@@ -36,7 +36,7 @@ law = Eq(angular_velocity, initial_angular_velocity + angular_acceleration * tim
 
 angular_velocity_formula = dsolve(
     angular_acceleration_def.definition.subs(angular_acceleration_def.time, time),
-    angular_acceleration_def.angular_velocity(time),
+    angular_acceleration_def.angular_speed(time),
 ).rhs.subs(
     angular_acceleration_def.angular_acceleration(time),
     angular_acceleration,

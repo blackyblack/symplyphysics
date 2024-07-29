@@ -33,15 +33,15 @@ Latex:
     :math:`\gamma`
 """
 
-velocity = Symbol("velocity", units.velocity)
+speed = Symbol("speed", units.speed)
 """
-Velocity of the body.
+Speed of the body.
 
 Symbol:
     :code:`v`
 """
 
-definition = Eq(lorentz_factor, 1 / sqrt(1 - velocity**2 / speed_of_light**2))
+definition = Eq(lorentz_factor, 1 / sqrt(1 - speed**2 / speed_of_light**2))
 r"""
 :code:`gamma = 1 / sqrt(1 - (v / c)^2)`
 
@@ -51,8 +51,8 @@ Latex:
 """
 
 
-@validate_input(velocity_=velocity)
+@validate_input(speed_=speed)
 @validate_output(lorentz_factor)
-def calculate_lorentz_factor(velocity_: Quantity) -> Quantity:
-    result = definition.rhs.subs(velocity, velocity_)
+def calculate_lorentz_factor(speed_: Quantity) -> Quantity:
+    result = definition.rhs.subs(speed, speed_)
     return Quantity(result)

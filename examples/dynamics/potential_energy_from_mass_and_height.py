@@ -12,15 +12,15 @@ height_2 = Symbol("height_2", units.length)
 body_mass_1 = Symbol("body_mass_1", units.mass)
 
 Ep1 = potential_energy.law.subs({
-    potential_energy.symbols.basic.mass: body_mass_1,
+    potential_energy.mass: body_mass_1,
     potential_energy.height: height_1
 })
 Ep2 = potential_energy.law.subs({
-    potential_energy.symbols.basic.mass: 2 * body_mass_1,
+    potential_energy.mass: 2 * body_mass_1,
     potential_energy.height: height_2
 })
 law = [Ep2, Ep1]
-solved = solve(law, (height_1, potential_energy.potential_energy_of_body), dict=True)[0][height_1]
+solved = solve(law, (height_1, potential_energy.potential_energy), dict=True)[0][height_1]
 answer = Eq(height_1, solved)
 
 print(f"\nFormula is:\n{print_expression(potential_energy.law)}")

@@ -15,34 +15,34 @@ r"""
 The friction :attr:`~symplyphysics.symbols.dynamics.force`.
 
 Symbol:
-    F_fr
+    :code:`F_fr`
 
 Latex:
     :math:`F_\text{fr}`
 """
 
-friction_factor = Symbol("friction_factor", dimensionless)
+coefficient_of_friction = Symbol("coefficient_of_friction", dimensionless)
 r"""
-The friction factor between the two objects.
+The coefficient of friction between the two objects.
 
 Symbol:
-    mu
+    :code:`mu`
 
 Latex:
     :math:`\mu`
 """
 
-normal_reaction = clone_symbol(symbols.dynamics.force, "normal_reaction")
+normal_force = clone_symbol(symbols.dynamics.force, "normal_force")
 """
 The normal reaction :attr:`~symplyphysics.symbols.dynamics.force` from one object to another.
 
 Symbol:
-    N
+    :code:`N`
 """
 
-law = Eq(friction_force, friction_factor * normal_reaction)
+law = Eq(friction_force, coefficient_of_friction * normal_force)
 r"""
-F_fr = mu * N
+:code:`F_fr = mu * N`
 
 Latex:
     .. math::
@@ -50,12 +50,12 @@ Latex:
 """
 
 
-@validate_input(friction_factor_=friction_factor, normal_reaction_=normal_reaction)
+@validate_input(coefficient_of_friction_=coefficient_of_friction, normal_reaction_=normal_force)
 @validate_output(friction_force)
-def calculate_friction_force(friction_factor_: float, normal_reaction_: Quantity) -> Quantity:
+def calculate_friction_force(coefficient_of_friction_: float, normal_reaction_: Quantity) -> Quantity:
     result_expr = solve(law, friction_force, dict=True)[0][friction_force]
     friction_force_applied = result_expr.subs({
-        friction_factor: friction_factor_,
-        normal_reaction: normal_reaction_
+        coefficient_of_friction: coefficient_of_friction_,
+        normal_force: normal_reaction_
     })
     return Quantity(friction_force_applied)

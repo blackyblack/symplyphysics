@@ -33,7 +33,7 @@ length = Symbol("length", units.length)
 volume = pi * radius**2 * length
 
 density = density_def.definition.rhs.subs({
-    density_def.symbols.basic.mass: disk_mass,
+    density_def.mass: disk_mass,
     density_def.volume: volume,
 })
 

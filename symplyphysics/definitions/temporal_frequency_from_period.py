@@ -12,11 +12,6 @@ from symplyphysics import (units, Quantity, Symbol, validate_input,
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import temporal_frequency_is_events_per_time as frequency_def
 
-# Law: f = 1 / T
-# Where:
-## T is period of oscillation,
-## f is temporal frequency.
-
 temporal_frequency = Symbol("temporal_frequency", units.frequency)
 """
 Temporal frequency of oscillations.
@@ -46,7 +41,7 @@ Latex:
 
 # Period is time span between events, so we are having 1 event per 'period' time
 _frequency_of_single_event = frequency_def.definition.subs({
-    frequency_def.events: 1,
+    frequency_def.number_of_events: 1,
     frequency_def.time: period
 }).rhs
 assert expr_equals(_frequency_of_single_event, law.rhs)

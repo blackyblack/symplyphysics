@@ -21,9 +21,9 @@ Symbol:
     :code:`T`
 """
 
-circular_frequency = Symbol("circular_frequency", units.frequency)
+angular_frequency = Symbol("angular_frequency", units.frequency)
 r"""
-Circular, or angular, frequency of oscillations.
+Angular, or circular, frequency of oscillations.
 
 Symbol:
     :code:`w`
@@ -32,7 +32,7 @@ Latex:
     :math:`\omega`
 """
 
-law = Eq(period, 2 * pi / circular_frequency)
+law = Eq(period, 2 * pi / angular_frequency)
 r"""
 :code:`T = 2 * pi / w`
 
@@ -46,17 +46,17 @@ Latex:
 
 # 2 * pi radians is a full cycle and 'period' is time to complete full cycle rotation
 _frequency_of_full_cycle_def = frequency_def.law.subs({
-    frequency_def.radians: 2 * pi,
+    frequency_def.angular_distance: 2 * pi,
     frequency_def.time: period,
-    frequency_def.angular_frequency: circular_frequency
+    frequency_def.average_angular_frequency: angular_frequency
 })
 _full_cycle_period = solve(_frequency_of_full_cycle_def, period, dict=True)[0][period]
 assert expr_equals(_full_cycle_period, law.rhs)
 
 
-@validate_input(frequency_=circular_frequency)
+@validate_input(frequency_=angular_frequency)
 @validate_output(period)
 def calculate_period(frequency_: Quantity) -> Quantity:
     solved = solve(law, period, dict=True)[0][period]
-    result_expr = solved.subs(circular_frequency, frequency_)
+    result_expr = solved.subs(angular_frequency, frequency_)
     return Quantity(result_expr)

@@ -25,9 +25,9 @@ momentum_before = momentum_def.calculate_momentum(bullet_mass, bullet_velocity)
 momentum_after = momentum_conservation_law.calculate_momentum_after(momentum_before)
 
 # Mass of the resulting object is a sum of masses of a bullet and plasticine
-solved = solve(momentum_def.definition, momentum_def.velocity, dict=True)[0][momentum_def.velocity]
+solved = solve(momentum_def.definition, momentum_def.speed, dict=True)[0][momentum_def.speed]
 result_expr = solved.subs({
-    momentum_def.symbols.basic.mass: Quantity(bullet_mass + body_mass),
+    momentum_def.mass: Quantity(bullet_mass + body_mass),
     momentum_def.momentum: momentum_after
 })
 result_velocity = Quantity(result_expr)

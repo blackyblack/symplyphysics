@@ -1,6 +1,6 @@
 r"""
-Resonant oscillations
-=====================
+Displacement in resonant oscillations
+=====================================
 
 When an oscillating external force is driving the oscillations of an oscillator,
 amplitude of oscillations is greatest when the angular frequency of the driving
@@ -14,8 +14,8 @@ resonance.
 
 **Notes:**
 
-#. The expression of the driving force has the form :math:`f \cos{\left( \omega t + \varphi \right)}` where :math:`\omega` is
-   the angular frequency of its oscillations.
+#. The expression of the driving force has the form :math:`f \cos{\left( \omega t + \varphi \right)}`
+   where :math:`\omega` is the angular frequency of its oscillations.
 """
 
 from sympy import Eq, dsolve, sin
@@ -39,15 +39,15 @@ resonant_displacement = Function("resonant_displacement", units.length)
 The displacement of resonant oscillations.
 
 Symbol:
-    q(t)
+    :code:`q(t)`
 """
 
-oscillator_mass = clone_symbol(symbols.basic.mass, "oscillator_mass")
+mass = symbols.basic.mass
 """
 The :attr:`~symplyphysics.symbols.basic.mass` of the oscillator.
 
 Symbol:
-    m
+    :code:`m`
 """
 
 natural_angular_frequency = Symbol("natural_angular_frequency", angle_type / units.time)
@@ -55,7 +55,7 @@ r"""
 The natural angular frequency of the oscillator.
 
 Symbol:
-    w0
+    :code:`w0`
 
 Latex:
     :math:`\omega_0`
@@ -66,7 +66,7 @@ driving_force_amplitude = clone_symbol(symbols.dynamics.force, "driving_force_am
 The amplitude of the driving force.
 
 Symbol:
-    f
+    :code:`f`
 """
 
 driving_phase_lag = Symbol("driving_phase_lag", angle_type)
@@ -74,7 +74,7 @@ r"""
 The phase lag of the oscillations of the driving force.
 
 Symbol:
-    phi
+    :code:`phi`
 
 Latex:
     :math:`\varphi`
@@ -85,13 +85,13 @@ time = Symbol("time", units.time)
 Time.
 
 Symbol:
-    t
+    :code:`t`
 """
 
-law = Eq(resonant_displacement(time), (driving_force_amplitude / oscillator_mass) * time *
+law = Eq(resonant_displacement(time), (driving_force_amplitude / mass) * time *
     sin(natural_angular_frequency * time + driving_phase_lag) / (2 * natural_angular_frequency))
 r"""
-q(t) = (f / m) * t * sin(w0 * t + phi) / (2 * w0)
+:code:`q(t) = (f / m) * t * sin(w0 * t + phi) / (2 * w0)`
 
 Latex:
     .. math::
@@ -101,7 +101,7 @@ Latex:
 # Derive law from driven oscillations equation
 
 _eqn = forced_eqn.law.subs({
-    forced_eqn.oscillator_mass: oscillator_mass,
+    forced_eqn.mass: mass,
     forced_eqn.natural_angular_frequency: natural_angular_frequency,
     forced_eqn.driving_force_amplitude: driving_force_amplitude,
     forced_eqn.driving_angular_frequency: natural_angular_frequency,
@@ -120,7 +120,7 @@ assert expr_equals(_dsolved, law.rhs)
 
 
 @validate_input(
-    oscillator_mass_=oscillator_mass,
+    oscillator_mass_=mass,
     natural_angular_frequency_=natural_angular_frequency,
     driving_force_amplitude_=driving_force_amplitude,
     driving_phase_lag_=driving_phase_lag,
@@ -135,7 +135,7 @@ def calculate_resonant_displacement(
     time_: Quantity,
 ) -> Quantity:
     result = law.rhs.subs({
-        oscillator_mass: oscillator_mass_,
+        mass: oscillator_mass_,
         natural_angular_frequency: natural_angular_frequency_,
         driving_force_amplitude: driving_force_amplitude_,
         driving_phase_lag: scale_factor(driving_phase_lag_),

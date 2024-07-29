@@ -1,9 +1,9 @@
 """
-Kinetic energy from moment of inertia and angular velocity
-==========================================================
+Kinetic energy from rotational inertia and angular speed
+========================================================
 
-Every rotating object bears kinetic energy, which depends on the moment of inertia of the object
-and its angular velocity.
+Every rotating object bears kinetic energy, which depends on the rotational inertia of the object
+and its angular speed.
 """
 
 from sympy import Eq, solve
@@ -25,10 +25,10 @@ r"""
 The kinetic energy of the object.
 
 Symbol:
-    K
+    :code:`K`
 """
 
-object_inertia_moment = Symbol("object_inertia_moment", units.mass * units.area)
+rotational_inertia = Symbol("rotational_inertia", units.mass * units.area)
 """
 The rotational inertia of the object.
 
@@ -36,9 +36,9 @@ Symbol:
     I
 """
 
-angular_velocity = Symbol("angular_velocity", angle_type / units.time)
+angular_speed = Symbol("angular_speed", angle_type / units.time)
 r"""
-The angular velocity of the object.
+The angular speed of the object.
 
 Symbol:
     w
@@ -47,9 +47,9 @@ Latex:
     :math:`\omega`
 """
 
-law = Eq(kinetic_energy, object_inertia_moment * angular_velocity**2 / 2)
+law = Eq(kinetic_energy, rotational_inertia * angular_speed**2 / 2)
 r"""
-K = I * w^2 / 2
+:code:`K = I * w^2 / 2`
 
 Latex:
     .. math::
@@ -60,33 +60,33 @@ Latex:
 _rotation_radius = Symbol("_rotation_radius", units.length)
 
 _rotational_inertia_def_subs = rotational_inertia_def.law.subs({
-    rotational_inertia_def.rotational_inertia: object_inertia_moment,
+    rotational_inertia_def.rotational_inertia: rotational_inertia,
     rotational_inertia_def.radius: _rotation_radius,
 })
 _object_mass = solve(_rotational_inertia_def_subs, rotational_inertia_def.particle_mass)[0]
 
 _linear_velocity_law_sub = linear_velocity_law.law.subs({
-    linear_velocity_law.angular_velocity: angular_velocity,
+    linear_velocity_law.angular_velocity: angular_speed,
     linear_velocity_law.curve_radius: _rotation_radius
 })
 _linear_velocity = solve(_linear_velocity_law_sub, linear_velocity_law.linear_velocity)[0]
 
 _kinetic_energy_def_sub = kinetic_energy_def.law.subs({
-    kinetic_energy_def.symbols.basic.mass: _object_mass,
-    kinetic_energy_def.body_velocity: _linear_velocity,
+    kinetic_energy_def.mass: _object_mass,
+    kinetic_energy_def.speed: _linear_velocity,
 })
-_kinetic_energy_derived = solve(_kinetic_energy_def_sub, kinetic_energy_def.kinetic_energy_of_body)[0]
+_kinetic_energy_derived = solve(_kinetic_energy_def_sub, kinetic_energy_def.kinetic_energy)[0]
 _kinetic_energy_from_law = solve(law, kinetic_energy)[0]
 
 assert expr_equals(_kinetic_energy_from_law, _kinetic_energy_derived)
 
 
-@validate_input(inertia_moment_=object_inertia_moment, angular_velocity_=angular_velocity)
+@validate_input(inertia_moment_=rotational_inertia, angular_velocity_=angular_speed)
 @validate_output(kinetic_energy)
 def calculate_energy(inertia_moment_: Quantity, angular_velocity_: Quantity) -> Quantity:
     result_energy_expr = solve(law, kinetic_energy, dict=True)[0][kinetic_energy]
     result_expr = result_energy_expr.subs({
-        object_inertia_moment: inertia_moment_,
-        angular_velocity: angular_velocity_
+        rotational_inertia: inertia_moment_,
+        angular_speed: angular_velocity_
     })
     return Quantity(result_expr)

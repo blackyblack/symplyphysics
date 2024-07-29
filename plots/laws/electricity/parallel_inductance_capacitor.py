@@ -28,17 +28,17 @@ EXAMPLE_RESISTANCE = 5000000
 # First find impedances and then admittances
 L_impedance = coil_impedance.law.rhs.subs({coil_impedance.circular_frequency: frequency_arg})
 L_admittance = admittance_def.definition.rhs.subs({
-    admittance_def.dipole_impedance: L_impedance
+    admittance_def.impedance: L_impedance
 }).subs({coil_impedance.coil_inductivity: EXAMPLE_INDUCTANCE})
 
 C_impedance = capacitor_impedance.law.rhs.subs(
     {capacitor_impedance.circular_frequency: frequency_arg})
 C_admittance = admittance_def.definition.rhs.subs({
-    admittance_def.dipole_impedance: C_impedance
+    admittance_def.impedance: C_impedance
 }).subs({capacitor_impedance.capacitor_capacitance: EXAMPLE_CAPACITANCE})
 
 R_admittance = admittance_def.definition.rhs.subs(
-    {admittance_def.dipole_impedance: EXAMPLE_RESISTANCE})
+    {admittance_def.impedance: EXAMPLE_RESISTANCE})
 
 ideal_elements = (L_admittance, C_admittance)
 real_elements = (L_admittance, C_admittance, R_admittance)
@@ -54,15 +54,15 @@ for i, v in enumerate(real_elements):
     admittance_real = admittance_real.subs(parallel_admittance_law.admittance[i + 1], v)
 
 impedance_from_admittance_law = solve(admittance_def.definition,
-    admittance_def.dipole_impedance,
-    dict=True)[0][admittance_def.dipole_impedance]
+    admittance_def.impedance,
+    dict=True)[0][admittance_def.impedance]
 
 impedance_ideal = impedance_from_admittance_law.subs(
-    {admittance_def.dipole_admittance: admittance_ideal})
+    {admittance_def.admittance: admittance_ideal})
 impedance_ideal_to_plot = Abs(impedance_ideal)
 
 impedance_real = impedance_from_admittance_law.subs(
-    {admittance_def.dipole_admittance: admittance_real})
+    {admittance_def.admittance: admittance_real})
 impedance_real_to_plot = Abs(impedance_real)
 
 thomsons_period = thomsons_formula.law.rhs.subs({
@@ -70,8 +70,8 @@ thomsons_period = thomsons_formula.law.rhs.subs({
     thomsons_formula.capacitance: EXAMPLE_CAPACITANCE
 })
 frequency_from_period = solve(period_definition.law,
-    period_definition.circular_frequency,
-    dict=True)[0][period_definition.circular_frequency]
+    period_definition.angular_frequency,
+    dict=True)[0][period_definition.angular_frequency]
 thomsons_frequency = frequency_from_period.subs({period_definition.period: thomsons_period})
 
 PLOT = plot(impedance_ideal_to_plot,

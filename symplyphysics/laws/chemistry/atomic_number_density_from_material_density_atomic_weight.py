@@ -34,13 +34,13 @@ density_law = density_from_mass_volume.definition.subs({
 })
 
 avogadro_law = avogadro_number_from_mole_count.law.subs(
-    {avogadro_number_from_mole_count.particles_count: volume_number_density.objects})
+    {avogadro_number_from_mole_count.particles_count: volume_number_density.number_of_objects})
 
 atomic_weight_law = atomic_weight_from_mass_mole_count.law.subs({
     atomic_weight_from_mass_mole_count.atomic_weight:
         atomic_weight,
-    atomic_weight_from_mass_mole_count.symbols.basic.mass:
-    density_from_mass_volume.symbols.basic.mass,
+    atomic_weight_from_mass_mole_count.mass:
+    density_from_mass_volume.mass,
     atomic_weight_from_mass_mole_count.mole_count:
     avogadro_number_from_mole_count.mole_count
 })
@@ -49,7 +49,7 @@ derived_law = [volume_number_density.definition, density_law, avogadro_law, atom
 
 ## Check the equivalence of 'law' and 'derived_law'
 derived_number_density = solve(derived_law,
-    (density_from_mass_volume.symbols.basic.mass, volume_number_density.objects,
+    (density_from_mass_volume.mass, volume_number_density.number_of_objects,
     volume_number_density.number_density, avogadro_number_from_mole_count.mole_count),
     dict=True)[0][volume_number_density.number_density]
 assert solve(law, atomic_number_density,

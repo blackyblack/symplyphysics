@@ -54,9 +54,9 @@ Symbol:
     :code:`t`
 """
 
-phase_velocity = Symbol("phase_velocity", units.velocity, real=True)
+phase_speed = Symbol("phase_speed", units.velocity, real=True)
 """
-Phase velocity of the wave, see :doc:`laws.waves.phase_velocity_from_angular_frequency_and_wavenumber`.
+:doc:`Phase speed <laws.waves.phase_velocity_from_angular_frequency_and_wavenumber>` of the wave.
 
 Symbol:
     :code:`v`
@@ -64,7 +64,7 @@ Symbol:
 
 definition = Eq(
     Derivative(displacement(position, time), position, 2),
-    Derivative(displacement(position, time), time, 2) / phase_velocity**2,
+    Derivative(displacement(position, time), time, 2) / phase_speed**2,
 )
 r"""
 :code:`Derivative(u(x, t), (x, 2)) = (1/v^2) * Derivative(u(x, t), (t, 2))`
@@ -82,31 +82,31 @@ amplitude = symbols("amplitude", positive=True)
 phase_lag = symbols("phase_lag", real=True)
 _length_unit = Symbol("length_unit", units.length)
 
-# `phase_velocity` can be negative or positive, depending on the direction of wave propagation
+# `phase_speed` can be negative or positive, depending on the direction of wave propagation
 # - negative values denote propagation in the positive direction of x-axis
 # - positive values denote propagation in the negative direction of x-axis
-solution = amplitude * cos((position + phase_velocity * time) / _length_unit + phase_lag)
+solution = amplitude * cos((position + phase_speed * time) / _length_unit + phase_lag)
 
 _lhs = definition.lhs.subs(displacement(position, time), solution).doit()
 _rhs = definition.rhs.subs(displacement(position, time), solution).doit()
 assert expr_equals(_lhs, _rhs)
 
 # Check that the equation holds for waves traveling in the opposite direction
-_solution = solution.subs(phase_velocity, -1 * phase_velocity)
+_solution = solution.subs(phase_speed, -1 * phase_speed)
 _lhs = definition.lhs.subs(displacement(position, time), _solution).doit()
 _rhs = definition.rhs.subs(displacement(position, time), _solution).doit()
 assert expr_equals(_lhs, _rhs)
 
 
 @validate_input(
-    phase_velocity_=phase_velocity,
+    phase_speed_=phase_speed,
     position_=position,
     time_=time,
 )
 @validate_output_same("amplitude_")
 def calculate_displacement(
     amplitude_: Quantity,
-    phase_velocity_: Quantity,
+    phase_speed_: Quantity,
     phase_lag_: float,
     position_: Quantity,
     time_: Quantity,
@@ -116,7 +116,7 @@ def calculate_displacement(
 
     result = solution.subs({
         amplitude: amplitude_,
-        phase_velocity: phase_velocity_,
+        phase_speed: phase_speed_,
         phase_lag: phase_lag_,
         position: position_,
         time: time_,

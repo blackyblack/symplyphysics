@@ -22,9 +22,9 @@ from symplyphysics import (
     validate_output,
 )
 
-total_energy = Symbol("total_energy", units.energy)
+total_mechanical_energy = Symbol("total_mechanical_energy", units.energy)
 """
-The total energy of the planet.
+The total mechanical energy of the planet.
 
 Symbol:
     :code:`E`
@@ -41,7 +41,7 @@ Latex:
     :math:`\langle K \rangle`
 """
 
-law = Eq(total_energy, -1 * average_kinetic_energy)
+law = Eq(total_mechanical_energy, -1 * average_kinetic_energy)
 r"""
 :code:`E = -1 * <K>`
 
@@ -52,7 +52,7 @@ Latex:
 
 
 @validate_input(average_kinetic_energy_=average_kinetic_energy)
-@validate_output(total_energy)
+@validate_output(total_mechanical_energy)
 def calculate_total_energy(average_kinetic_energy_: Quantity) -> Quantity:
     result = law.rhs.subs(average_kinetic_energy, average_kinetic_energy_)
     return Quantity(result)

@@ -26,25 +26,25 @@ from symplyphysics.definitions import harmonic_oscillator_is_second_derivative_e
 from symplyphysics.definitions import mechanical_energy_is_kinetic_and_potential as mechanical_energy_def
 from symplyphysics.laws.conservation import mechanical_energy_is_constant as mechanical_energy_conservation
 
-oscillation_period = Symbol("oscillation_period", units.time)
+period = Symbol("period", units.time)
 """
 The period of oscillations.
 
 Symbol:
-    T
+    :code:`T`
 """
 
-pendulum_length = Symbol("pendulum_length", units.length)
+length = Symbol("length", units.length)
 """
 The length of the pendulum.
 
 Symbol:
-    L
+    :code:`L`
 """
 
-law = Eq(oscillation_period, 2 * pi * sqrt(pendulum_length / units.acceleration_due_to_gravity))
+law = Eq(period, 2 * pi * sqrt(length / units.acceleration_due_to_gravity))
 r"""
-T = 2 * pi * sqrt(L / g)
+:code:`T = 2 * pi * sqrt(L / g)`
 
 Latex:
     .. math::
@@ -62,26 +62,26 @@ time = symbols("time")
 ## Pendulum oscillation is cyclic transfer of energy from kinetic to potential. To set oscillation up we have to input some energy. Usually it is done by biasing the pendulum to some angle and letting it go.
 ## Biasing the pendulum is giving to it some amount of potential energy.
 
-pendulum_height_before = pendulum_length
+pendulum_height_before = length
 pendulum_height_after = projector.law.subs({
-    projector.vector_length: pendulum_length,
+    projector.vector_length: length,
     projector.vector_angle: pendulum_angle(time)
 }).rhs
 amount_of_potential_energy = potential_energy.law.subs({
-    potential_energy.symbols.basic.mass: pendulum_mass,
+    potential_energy.mass: pendulum_mass,
     potential_energy.height: (pendulum_height_before - pendulum_height_after)
 }).rhs
 
 ## Kinetic energy of the pendulum is:
-## pendulum_mass * (pendulum_length * angular_velocity)**2 / 2
+## pendulum_mass * (length * angular_velocity)**2 / 2
 
 linear_velocity = angular_velocity_law.law.subs({
-    angular_velocity_law.curve_radius: pendulum_length,
+    angular_velocity_law.curve_radius: length,
     angular_velocity_law.angular_velocity: Derivative(pendulum_angle(time), time),
 }).rhs
 amount_of_kinetic_energy = kinetic_energy.law.subs({
-    kinetic_energy.symbols.basic.mass: pendulum_mass,
-    kinetic_energy.body_velocity: linear_velocity
+    kinetic_energy.mass: pendulum_mass,
+    kinetic_energy.speed: linear_velocity
 }).rhs
 
 mechanical_energy = mechanical_energy_def.definition.subs({
@@ -115,23 +115,23 @@ small_angle_harmonic_oscillation_eq = total_energy_diff_solved_eq.subs(
     sin(pendulum_angle(time)), pendulum_angle(time))
 
 # Will result in harmonic oscillator equation:
-## Derivative(pendulum_angle(time), (time, 2)) = -free_fall_acceleration / pendulum_length * pendulum_angle(time)
+## Derivative(pendulum_angle(time), (time, 2)) = -free_fall_acceleration / length * pendulum_angle(time)
 oscillator_eq = oscillator.definition.subs(oscillator.time, time)
-oscillator_eq = oscillator_eq.subs(oscillator.displacement_function(time), pendulum_angle(time))
+oscillator_eq = oscillator_eq.subs(oscillator.displacement(time), pendulum_angle(time))
 angular_frequency_solved = solve([oscillator_eq, small_angle_harmonic_oscillation_eq],
     (oscillator.angular_frequency, pendulum_angle(time)),
     dict=True)[0][oscillator.angular_frequency]
 
 ## Check that expected period matches our law.
 ## Square roots fail to compare with each other. Raise both parts to power of 2 before checking for equality.
-oscillation_period_derived = angular_frequency.law.subs(angular_frequency.circular_frequency,
+oscillation_period_derived = angular_frequency.law.subs(angular_frequency.angular_frequency,
     angular_frequency_solved).rhs
 assert expr_equals(oscillation_period_derived**2, law.rhs**2)
 
 
-@validate_input(pendulum_length_=pendulum_length)
-@validate_output(oscillation_period)
+@validate_input(pendulum_length_=length)
+@validate_output(period)
 def calculate_period(pendulum_length_: Quantity) -> Quantity:
-    solved = solve(law, oscillation_period, dict=True)[0][oscillation_period]
-    result_expr = solved.subs(pendulum_length, pendulum_length_)
+    solved = solve(law, period, dict=True)[0][period]
+    result_expr = solved.subs(length, pendulum_length_)
     return Quantity(result_expr)
