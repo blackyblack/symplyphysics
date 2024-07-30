@@ -8,7 +8,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.dynamics import force_reaction_from_force_action as newton_third_law
+from symplyphysics.laws.dynamics import reaction_force_from_action_force as newton_third_law
 
 Args = namedtuple("Args", ["F"])
 
