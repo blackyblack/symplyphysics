@@ -10,7 +10,7 @@ from symplyphysics.laws.thermodynamics.relativistic import (
     reduced_temperature_in_maxwell_juettner_statistics as law,
 )
 
-Args = namedtuple("Arg", "t m")
+Args = namedtuple("Args", "t m")
 
 
 @fixture(name="test_args")
