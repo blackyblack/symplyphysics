@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.dynamics import work_done_by_general_force_in_one_dimension as work_law
+from symplyphysics.laws.dynamics import work_is_integral_of_force_over_distance as work_law
 
 # Description
 ## The force acting on a particle ranges linearly from 3 N to 5 N when
