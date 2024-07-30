@@ -1,11 +1,8 @@
 """
-Average angular frequency from angular displacement per time
-============================================================
+Average angular frequency is angular distance over time
+=======================================================
 
 *Angular frequency* is a scalar physical quantity measuring the rate of change in angle with time.
-
-..
-    TODO Rename file to reflect contents
 """
 
 from sympy import (Eq, solve)
