@@ -7,7 +7,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.dynamics import torque_due_to_twisting_force as torque_def
+from symplyphysics.laws.dynamics import torque_via_force_and_radial_distance as torque_def
 
 # Description
 ## A turning force of magnitude 3 N is applied at a distance of 5 cm away from the rotation axis.

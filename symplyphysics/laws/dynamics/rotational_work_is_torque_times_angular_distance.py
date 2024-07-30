@@ -23,7 +23,7 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.dynamics import mechanical_work_from_force_and_move as linear_work_law
 from symplyphysics.laws.kinematic import angular_position_is_arc_length_over_radius as angular_position_def
-from symplyphysics.laws.dynamics import torque_due_to_twisting_force as torque_def
+from symplyphysics.laws.dynamics import torque_via_force_and_radial_distance as torque_def
 from symplyphysics.laws.geometry import planar_projection_is_cosine as projection_law
 
 work = Symbol("work", units.energy)
