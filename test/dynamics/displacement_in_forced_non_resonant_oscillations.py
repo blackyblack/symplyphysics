@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.dynamics import forced_non_resonant_oscillations as forced_law
+from symplyphysics.laws.dynamics import displacement_in_forced_non_resonant_oscillations as forced_law
 
 # Description
 ## An oscillating external driving force of magnitude f = 1 N and angular frequency w = 5 rad/s is acting on
