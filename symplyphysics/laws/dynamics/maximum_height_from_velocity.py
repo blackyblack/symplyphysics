@@ -30,7 +30,7 @@ Symbol:
 
 law = Eq(maximum_height, initial_speed**2 / (2 * units.acceleration_due_to_gravity))
 r"""
-:code;`h = v^2 / (2 * g)`
+:code:`h = v^2 / (2 * g)`
 
 Latex:
     .. math::

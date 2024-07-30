@@ -19,7 +19,7 @@ Symbol:
 
 distance = Function("distance", units.length)
 """
-Distnce traveled by the body as a function of time.
+Distance traveled by the body as a function of time.
 
 Symbol:
     :code:`s(t)`

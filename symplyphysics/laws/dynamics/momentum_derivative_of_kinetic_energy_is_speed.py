@@ -21,7 +21,7 @@ r"""
 The kinetic energy of the object.
 
 Symbol:
-    :code:`K(p`
+    :code:`K(p(v))`
 """
 
 momentum = Function("momentum", units.momentum)
@@ -29,7 +29,7 @@ momentum = Function("momentum", units.momentum)
 The momentum of the object.
 
 Symbol:
-    :code:`p`
+    :code:`p(v)`
 """
 
 speed = Symbol("speed", units.velocity)

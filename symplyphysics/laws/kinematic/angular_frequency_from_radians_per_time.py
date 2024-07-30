@@ -66,7 +66,7 @@ assert expr_equals(_frequency_of_radian, law.rhs)
 @validate_input(time_=time, radians_=angular_distance)
 @validate_output(average_angular_frequency)
 def calculate_frequency(radians_: float | Quantity, time_: Quantity) -> Quantity:
-    #HACK: SymPy angles are always in angular_distance
+    #HACK: SymPy angles are always in radians
     angle_radians = scale_factor(radians_)
     solved = solve(law, average_angular_frequency, dict=True)[0][average_angular_frequency]
     result_expr = solved.subs({time: time_, angular_distance: angle_radians})

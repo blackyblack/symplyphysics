@@ -33,7 +33,7 @@ Symbol:
     :code:`q(t)`
 """
 
-mass = clone_symbol(symbols.basic.mass, "mass")
+mass = symbols.basic.mass
 """
 The :attr:`~symplyphysics.symbols.basic.mass` of the oscillating body.
 

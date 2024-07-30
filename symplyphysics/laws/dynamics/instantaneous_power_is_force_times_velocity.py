@@ -47,7 +47,7 @@ r"""
 The angle between the force and velocity vectors.
 
 Symbol:
-    :code;`phi`
+    :code:`phi`
 
 Latex:
     :math:`\varphi`

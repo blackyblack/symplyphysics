@@ -42,7 +42,7 @@ distance = Symbol("distance", units.length)
 The distance of the body due to the force exerted on it.
 
 Symbol:
-    :code`s`
+    :code:`s`
 """
 
 law = Eq(work, force * distance)
