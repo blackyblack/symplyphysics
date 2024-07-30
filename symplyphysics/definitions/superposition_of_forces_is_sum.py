@@ -16,7 +16,7 @@ from symplyphysics import (clone_symbol, symbols, units, Quantity, validate_inpu
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions.vector import superposition_of_forces_is_sum as vector_forces_sum
 
-resultant_force = clone_symbol(symbols.dynamics.force, "resultant_force")
+net_force = clone_symbol(symbols.dynamics.force, "net_force")
 """
 Net :attr:`~symplyphysics.symbols.dynamics.force`.
 
@@ -36,7 +36,7 @@ Latex:
     :math:`F_i`
 """
 
-definition = Eq(resultant_force, SumIndexed(force[global_index], global_index))
+definition = Eq(net_force, SumIndexed(force[global_index], global_index))
 r"""
 :code:`F = Sum(F_i, i)`
 
@@ -67,7 +67,7 @@ def calculate_resultant_force(forces_: Sequence[Quantity]) -> Quantity:
     local_index = Idx("index_local", (1, len(forces_)))
     forces_law = definition.subs(global_index, local_index)
     forces_law = forces_law.doit()
-    solved = solve(forces_law, resultant_force, dict=True)[0][resultant_force]
+    solved = solve(forces_law, net_force, dict=True)[0][net_force]
     for i, v in enumerate(forces_):
         solved = solved.subs(force[i + 1], v)
     return Quantity(solved)

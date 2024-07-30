@@ -33,8 +33,8 @@ def test_force_vector() -> None:
     y = getattr(cartesian_coordinates, "y")
     z = getattr(cartesian_coordinates, "z")
     Fg = 2 * x + y
-    result_force_expr = solve(archimedes_law.law, archimedes_law.force_buoyant,
-        dict=True)[0][archimedes_law.force_buoyant]
+    result_force_expr = solve(archimedes_law.law, archimedes_law.buoyant_force,
+        dict=True)[0][archimedes_law.buoyant_force]
     # set non vector variables to 1 since vector components cannot be properly calculated with quantities
     result = result_force_expr.subs({
         archimedes_law.units.acceleration_due_to_gravity: Fg,

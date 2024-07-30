@@ -45,7 +45,7 @@ Symbol:
     a
 """
 
-attracting_body_mass = clone_symbol(symbols.basic.mass, "attracting_body_mass")
+attracting_mass = clone_symbol(symbols.basic.mass, "attracting_mass")
 """
 The :attr:`~symplyphysics.symbols.basic.mass` of the attracting body, such as the Sun.
 
@@ -55,7 +55,7 @@ Symbol:
 
 law = Eq(
     semiminor_axis,
-    2 * sector_speed * sqrt(semimajor_axis / (gravitational_constant * attracting_body_mass)),
+    2 * sector_speed * sqrt(semimajor_axis / (gravitational_constant * attracting_mass)),
 )
 r"""
 b = 2 * sigma * sqrt(a / (G * M))
@@ -68,7 +68,7 @@ Latex:
 @validate_input(
     sector_speed_=sector_speed,
     semimajor_axis_=semimajor_axis,
-    attracting_body_mass_=attracting_body_mass,
+    attracting_body_mass_=attracting_mass,
 )
 @validate_output(semiminor_axis)
 def calculate_semiminor_axis(
@@ -79,6 +79,6 @@ def calculate_semiminor_axis(
     result = law.rhs.subs({
         sector_speed: sector_speed_,
         semimajor_axis: semimajor_axis_,
-        attracting_body_mass: attracting_body_mass_,
+        attracting_mass: attracting_body_mass_,
     })
     return Quantity(result)

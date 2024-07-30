@@ -38,7 +38,7 @@ energy_heating_value = thermal_energy_law.law.subs({
 
 energy_combustion_value = combustion_energy_law.law.subs({
     combustion_energy_law.specific_heat_combustion: specific_heat_combustion,
-    combustion_energy_law.symbols.basic.mass: mass_of_fuel
+    combustion_energy_law.mass: mass_of_fuel
 }).rhs
 
 efficiency_equation = efficiency_law.law.subs({

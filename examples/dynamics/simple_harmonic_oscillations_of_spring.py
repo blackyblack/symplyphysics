@@ -30,12 +30,12 @@ values = {
 # Find angular frequency of spring's oscillations
 
 period_expr = spring_period_law.law.rhs.subs({
-    spring_period_law.symbols.basic.mass: block_mass,
-    spring_period_law.spring_elasticity: spring_stiffness,
+    spring_period_law.mass: block_mass,
+    spring_period_law.stiffness: spring_stiffness,
 })
 
 angular_frequency_expr = solve(period_def.law,
-    period_def.circular_frequency)[0].subs(period_def.period, period_expr)
+    period_def.angular_frequency)[0].subs(period_def.period, period_expr)
 
 # Expression of simple harmonic oscillations of spring
 

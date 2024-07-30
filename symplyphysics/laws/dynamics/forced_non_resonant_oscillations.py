@@ -1,6 +1,6 @@
 r"""
-Forced non-resonant oscillations
-================================
+Displacement in forced non-resonant oscillations
+================================================
 
 *Forced, or driven, oscillations* are a type of oscillations in the presence of an external driving
 force acting on the oscillating system. In the case of an oscillating external force, two angular
@@ -36,16 +36,16 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.laws.dynamics import forced_oscillations_equation as forced_eqn
 
-driven_displacement = Function("driven_displacement", units.length)
+displacement = Function("displacement", units.length)
 """
 The particular solution of the forced oscillations equation that accounts for the
 oscillator's response to the driving force.
 
 Symbol:
-    q(t)
+    :code:`q(t)`
 """
 
-oscillator_mass = clone_symbol(symbols.basic.mass, "oscillator_mass")
+mass = symbols.basic.mass
 """
 The :attr:`~symplyphysics.symbols.basic.mass` of the oscillating body.
 
@@ -58,7 +58,7 @@ r"""
 The natural angular frequency of the oscillator.
 
 Symbol:
-    w0
+    :code:`w0`
 
 Latex:
     :math:`\omega_0`
@@ -69,7 +69,7 @@ driving_force_amplitude = clone_symbol(symbols.dynamics.force, "driving_force_am
 The amplitude of the external driving :attr:`~symplyphysics.symbols.dynamics.force`.
 
 Symbol:
-    f
+    :code:`f`
 """
 
 driving_angular_frequency = Symbol("driving_angular_frequency", angle_type / units.time)
@@ -77,7 +77,7 @@ r"""
 The angular frequency of the external driving force.
 
 Symbol:
-    w
+    :code:`w`
 
 Latex:
     :math:`\omega`
@@ -88,7 +88,7 @@ r"""
 The phase lag of the oscillations of the external force.
 
 Symbol:
-    phi
+    :code:`phi`
 
 Latex:
     :math:`\varphi`
@@ -99,10 +99,10 @@ time = Symbol("time", units.time)
 Time.
 
 Symbol:
-    t
+    :code:`t`
 """
 
-law = Eq(driven_displacement(time), (driving_force_amplitude / oscillator_mass) *
+law = Eq(displacement(time), (driving_force_amplitude / mass) *
     cos(driving_angular_frequency * time + driving_phase_lag) /
     (natural_angular_frequency**2 - driving_angular_frequency**2))
 r"""
@@ -116,7 +116,7 @@ Latex:
 # Derive law from forced oscillations equation
 
 _eqn = forced_eqn.law.subs({
-    forced_eqn.oscillator_mass: oscillator_mass,
+    forced_eqn.mass: mass,
     forced_eqn.natural_angular_frequency: natural_angular_frequency,
     forced_eqn.driving_force_amplitude: driving_force_amplitude,
     forced_eqn.driving_angular_frequency: driving_angular_frequency,
@@ -136,14 +136,14 @@ assert expr_equals(_dsolved, law.rhs)
 
 #pylint: disable=too-many-arguments
 @validate_input(
-    oscillator_mass_=oscillator_mass,
+    oscillator_mass_=mass,
     natural_angular_frequency_=natural_angular_frequency,
     driving_force_amplitude_=driving_force_amplitude,
     driving_angular_frequency_=driving_angular_frequency,
     driving_phase_lag_=driving_phase_lag,
     time_=time,
 )
-@validate_output(driven_displacement)
+@validate_output(displacement)
 def calculate_driven_displacement(
     oscillator_mass_: Quantity,
     natural_angular_frequency_: Quantity,
@@ -153,7 +153,7 @@ def calculate_driven_displacement(
     time_: Quantity,
 ) -> Quantity:
     result = law.rhs.subs({
-        oscillator_mass: oscillator_mass_,
+        mass: oscillator_mass_,
         natural_angular_frequency: natural_angular_frequency_,
         driving_force_amplitude: driving_force_amplitude_,
         driving_angular_frequency: driving_angular_frequency_,

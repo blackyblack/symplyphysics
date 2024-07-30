@@ -11,7 +11,7 @@ from sympy import (Eq, solve)
 from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol,
     validate_input, validate_output)
 
-force_buoyant = clone_symbol(symbols.dynamics.force, "force_buoyant")
+buoyant_force = clone_symbol(symbols.dynamics.force, "buoyant_force")
 r"""
 The buoyant (Archimedes) :attr:`~symplyphysics.symbols.dynamics.force`.
 
@@ -41,7 +41,7 @@ Symbols:
     V
 """
 
-law = Eq(force_buoyant, -1 * fluid_density * units.acceleration_due_to_gravity * displaced_volume)
+law = Eq(buoyant_force, -1 * fluid_density * units.acceleration_due_to_gravity * displaced_volume)
 r"""
 Fa = -1 * rho * g * V
 
@@ -51,9 +51,9 @@ Latex:
 """
 
 @validate_input(fluid_density_=fluid_density, displaced_volume_=displaced_volume)
-@validate_output(force_buoyant)
+@validate_output(buoyant_force)
 def calculate_force_buoyant(fluid_density_: Quantity, displaced_volume_: Quantity) -> Quantity:
-    result_force_expr = solve(law, force_buoyant, dict=True)[0][force_buoyant]
+    result_force_expr = solve(law, buoyant_force, dict=True)[0][buoyant_force]
     result_expr = result_force_expr.subs({
         fluid_density: fluid_density_,
         displaced_volume: displaced_volume_

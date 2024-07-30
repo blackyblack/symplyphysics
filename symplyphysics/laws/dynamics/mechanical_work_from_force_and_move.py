@@ -1,9 +1,9 @@
 """
-Mechanical work from force and move
-===================================
+Mechanical work is force times distance
+=======================================
 
 Work is measured result of force applied. Mechanical work is the only reason for the object energy to be changed.
-Work is scalar value equal to force multiplied by movement.
+Work is scalar value equal to force multiplied by distance.
 
 **Conditions:**
 
@@ -12,6 +12,9 @@ Work is scalar value equal to force multiplied by movement.
 **Notes:**
 
 #. Use the vector form of this law for non-collinear vectors of force and movement.
+
+..
+    TODO Rename file
 """
 
 from sympy import (Eq, solve)
@@ -23,23 +26,23 @@ work = Symbol("work", units.energy)
 The mechanical work done by the force.
 
 Symbol:
-    W
+    :code:`W`
 """
 
 force = symbols.dynamics.force
 """
-The force exerted on the body.
+The :attr:`~symplyphysics.symbols.dynamics.force` exerted on the body.
 
 Symbol:
-    F
+    :code`F`
 """
 
 distance = Symbol("distance", units.length)
 """
-The distance traveled by the body due to the force exerted on it.
+The distance of the body due to the force exerted on it.
 
 Symbol:
-    s
+    :code:`s`
 """
 
 law = Eq(work, force * distance)
@@ -52,9 +55,9 @@ Latex:
 """
 
 
-@validate_input(force_=force, distance_=distance)
+@validate_input(force_=force, displacement_=distance)
 @validate_output(work)
-def calculate_work(force_: Quantity, distance_: Quantity) -> Quantity:
+def calculate_work(force_: Quantity, displacement_: Quantity) -> Quantity:
     result_work_expr = solve(law, work, dict=True)[0][work]
-    result_expr = result_work_expr.subs({force: force_, distance: distance_})
+    result_expr = result_work_expr.subs({force: force_, distance: displacement_})
     return Quantity(result_expr)

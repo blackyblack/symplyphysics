@@ -43,13 +43,13 @@ energy_to_heating_meteorite = thermal_energy_law.law.subs({
 }).rhs
 
 energy_to_meteorite_melting = energy_melting_law.law.subs({
-    energy_melting_law.symbols.basic.mass: mass_of_melting_meteorite,
+    energy_melting_law.mass: mass_of_melting_meteorite,
     energy_melting_law.specific_heat_melting: specific_heat_melting_meteorite
 }).rhs
 
 kinetic_energy_of_meteorite = kinetic_energy_law.law.subs({
-    kinetic_energy_law.symbols.basic.mass: mass_of_meteorite,
-    kinetic_energy_law.body_velocity: velocity_of_meteorite
+    kinetic_energy_law.mass: mass_of_meteorite,
+    kinetic_energy_law.speed: velocity_of_meteorite
 }).rhs
 
 energy_conservation_equation = energy_conservation_law.law.subs({

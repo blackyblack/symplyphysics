@@ -41,7 +41,7 @@ Latex:
     :math:`\Phi_e(A)`
 """
 
-surface_area = Symbol("surface_area", units.area)
+area = Symbol("area", units.area)
 """
 The area of the surface.
 
@@ -49,7 +49,7 @@ Symbol:
     :code:`A`
 """
 
-definition = Eq(radiant_exitance, Derivative(radiant_flux(surface_area), surface_area))
+definition = Eq(radiant_exitance, Derivative(radiant_flux(area), area))
 r"""
 :code:`M_e = Derivative(Phi_e(A), A)`
 
@@ -61,7 +61,7 @@ Latex:
 
 @validate_input(
     radiant_flux_=radiant_flux,
-    surface_area_=surface_area,
+    surface_area_=area,
 )
 @validate_output(radiant_exitance)
 def calculate_radiant_exitance(
@@ -70,6 +70,6 @@ def calculate_radiant_exitance(
 ) -> Quantity:
     # Calculate radiant exitance in case of constant radiant flux
 
-    flux_function = radiant_flux_ * surface_area / surface_area_
-    result = definition.rhs.subs(radiant_flux(surface_area), flux_function).doit()
+    flux_function = radiant_flux_ * area / surface_area_
+    result = definition.rhs.subs(radiant_flux(area), flux_function).doit()
     return Quantity(result)

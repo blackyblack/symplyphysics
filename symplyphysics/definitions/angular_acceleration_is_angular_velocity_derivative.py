@@ -1,8 +1,8 @@
 r"""
-Angular acceleration is angular velocity derivative
-===================================================
+Angular acceleration is angular speed derivative
+================================================
 
-*Angular acceleration* is a physical quantity that describes the change in angular velocity over time.
+*Angular acceleration* is a physical quantity that describes the change in angular speed over time.
 """
 
 from sympy import (Eq, Derivative)
@@ -20,9 +20,9 @@ Latex:
     :math:`\varepsilon(t)`
 """
 
-angular_velocity = Function("angular_velocity", angle_type / units.time)
+angular_speed = Function("angular_speed", angle_type / units.time)
 r"""
-Angular velocity of the body as a function of time.
+Angular speed of the body as a function of time.
 
 Symbol:
     :code:`w(t)`
@@ -30,7 +30,6 @@ Symbol:
 Latex:
     :math:`\omega(t)`
 """
-
 
 time = Symbol("time", units.time)
 """
@@ -40,7 +39,7 @@ Symbol:
     :code:`t`
 """
 
-definition = Eq(angular_acceleration(time), Derivative(angular_velocity(time), time))
+definition = Eq(angular_acceleration(time), Derivative(angular_speed(time), time))
 r"""
 :code:`epsilon(t) = Derivative(w(t), t)`
 
@@ -50,8 +49,8 @@ Latex:
 """
 
 
-@validate_input(angular_velocity_start_=angular_velocity,
-    angular_velocity_end_=angular_velocity,
+@validate_input(angular_velocity_start_=angular_speed,
+    angular_velocity_end_=angular_speed,
     moving_time_=time)
 @validate_output(angular_acceleration)
 def calculate_angular_acceleration(angular_velocity_start_: Quantity,
@@ -59,7 +58,7 @@ def calculate_angular_acceleration(angular_velocity_start_: Quantity,
     #HACK: SymPy angles are always in radians
     angular_velocity_function = time * (angular_velocity_end_ -
         angular_velocity_start_) / moving_time_
-    applied_definition = definition.subs(angular_velocity(time), angular_velocity_function)
+    applied_definition = definition.subs(angular_speed(time), angular_velocity_function)
     dsolved = applied_definition.doit()
     result_expr = dsolved.rhs
     return Quantity(result_expr)

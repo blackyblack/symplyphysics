@@ -22,7 +22,6 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_symbol,
 )
 
 thermal_wavelength = Symbol("thermal_wavelength", units.length)
@@ -36,7 +35,7 @@ Latex:
     :math:`\lambda`
 """
 
-particle_mass = clone_symbol(symbols.basic.mass, "particle_mass")
+mass = symbols.basic.mass
 """
 :attr:`~symplyphysics.symbols.basic.mass` of a single gas particle.
 
@@ -53,7 +52,7 @@ Symbol:
 """
 
 definition = Eq(thermal_wavelength,
-    units.hbar * sqrt(2 * pi / (particle_mass * units.boltzmann_constant * temperature)))
+    units.hbar * sqrt(2 * pi / (mass * units.boltzmann_constant * temperature)))
 r"""
 :code:`lambda = hbar * sqrt(2 * pi / (m * k_B * T))`
 
@@ -64,16 +63,16 @@ Latex:
 
 
 @validate_input(
-    particle_mass_=particle_mass,
+    mass_=mass,
     temperature_=temperature,
 )
 @validate_output(thermal_wavelength)
 def calculate_thermal_wavelength(
-    particle_mass_: Quantity,
+    mass_: Quantity,
     temperature_: Quantity,
 ) -> Quantity:
     result = definition.rhs.subs({
-        particle_mass: particle_mass_,
+        mass: mass_,
         temperature: temperature_,
     })
     return Quantity(result)

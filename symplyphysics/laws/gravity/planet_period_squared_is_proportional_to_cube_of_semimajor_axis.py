@@ -67,7 +67,7 @@ _angular_speed_expr = solve(_newtons_eqn, _angular_speed)[1]
 # planets of the solar system, we can substitute the radius with the semimajor axis of
 # the orbit.
 _period_derived = period_law.law.rhs.subs({
-    period_law.circular_frequency: _angular_speed_expr,
+    period_law.angular_frequency: _angular_speed_expr,
     _radius: semimajor_axis,
 })
 

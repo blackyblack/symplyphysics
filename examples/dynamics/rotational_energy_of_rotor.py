@@ -31,8 +31,8 @@ rotational_inertia = disk_formula.law.rhs.subs({
 })
 
 rotational_energy = rotational_energy_law.law.rhs.subs({
-    rotational_energy_law.object_inertia_moment: rotational_inertia,
-    rotational_energy_law.angular_velocity: angular_speed,
+    rotational_energy_law.rotational_inertia: rotational_inertia,
+    rotational_energy_law.angular_speed: angular_speed,
 })
 
 rotational_energy_value = convert_to(Quantity(rotational_energy.subs(values)), units.joule).evalf(3)

@@ -29,7 +29,7 @@ r"""
 The kinetic energy of the object.
 
 Symbol:
-    K
+    :code:`K`
 """
 
 momentum = Symbol("momentum", units.momentum)
@@ -37,7 +37,7 @@ momentum = Symbol("momentum", units.momentum)
 The momentum of the object.
 
 Symbol:
-    p
+    :code:`p`
 """
 
 mass = symbols.basic.mass
@@ -45,12 +45,12 @@ mass = symbols.basic.mass
 The :attr:`~symplyphysics.basic.mass` of the object.
 
 Symbol:
-    m
+    :code:`m`
 """
 
 law = Eq(kinetic_energy, momentum**2 / (2 * mass))
 r"""
-K = p^2 / (2 * m)
+:code:`K = p^2 / (2 * m)`
 
 Latex:
     .. math::
@@ -60,8 +60,8 @@ Latex:
 # Derive law from kinetic energy and momentum expressions
 
 _energy_eqn = energy_law.law.subs({
-    energy_law.kinetic_energy_of_body: kinetic_energy,
-    energy_law.body_velocity: momentum_def.velocity,
+    energy_law.kinetic_energy: kinetic_energy,
+    energy_law.speed: momentum_def.speed,
     energy_law.mass: mass,
 })
 
@@ -72,7 +72,7 @@ _momentum_eqn = momentum_def.definition.subs({
 
 _kinetic_energy_expr = solve(
     (_energy_eqn, _momentum_eqn),
-    (kinetic_energy, momentum_def.velocity),
+    (kinetic_energy, momentum_def.speed),
     dict=True,
 )[0][kinetic_energy]
 

@@ -35,9 +35,9 @@ law = Eq(
 
 angular_position_formula = dsolve(
     angular_velocity_def.definition.subs(angular_velocity_def.time, time),
-    angular_velocity_def.angle_function(time),
+    angular_velocity_def.angular_distance(time),
 ).rhs.subs(
-    angular_velocity_def.angular_velocity(time),
+    angular_velocity_def.angular_speed(time),
     angular_velocity,
 ).doit()
 

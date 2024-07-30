@@ -2,7 +2,7 @@
 Kepler's constant via attracting body mass
 ==========================================
 
-Kepler's constant is a physical quantity that only depends on the gravitational constant and the mass of
+*Kepler's constant* is a physical quantity that only depends on the gravitational constant and the mass of
 the orbited body, such as the Sun. It is constant in the sense that all planets that orbit the same body
 approximately have the same value of the Kepler's constant.
 """
@@ -28,7 +28,7 @@ Latex:
     :math:`\mathfrak{K}`
 """
 
-attracting_body_mass = clone_symbol(symbols.basic.mass, "attracting_body_mass")
+attracting_mass = clone_symbol(symbols.basic.mass, "attracting_mass")
 """
 The :attr:`~symplyphysics.symbols.basic.mass` of the attracting body.
 
@@ -36,7 +36,7 @@ Symbol:
     M
 """
 
-law = Eq(keplers_constant, gravitational_constant * attracting_body_mass / (4 * pi**2))
+law = Eq(keplers_constant, gravitational_constant * attracting_mass / (4 * pi**2))
 r"""
 K = G * M / (4 * pi^2)
 
@@ -45,10 +45,10 @@ Latex:
 """
 
 
-@validate_input(attracting_body_mass_=attracting_body_mass)
+@validate_input(attracting_body_mass_=attracting_mass)
 @validate_output(keplers_constant)
 def calculate_keplers_constant(attracting_body_mass_: Quantity) -> Quantity:
     result = law.rhs.subs({
-        attracting_body_mass: attracting_body_mass_,
+        attracting_mass: attracting_body_mass_,
     })
     return Quantity(result)

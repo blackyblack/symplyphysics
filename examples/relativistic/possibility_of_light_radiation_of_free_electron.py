@@ -49,7 +49,7 @@ energy_conservation_eqn = Eq(total_energy_before_radiation, total_energy_after_r
 
 lorentz_factor = lorentz_factor_def.lorentz_factor
 
-lorentz_factor_expr = lorentz_factor_def.definition.rhs.subs(lorentz_factor_def.velocity,
+lorentz_factor_expr = lorentz_factor_def.definition.rhs.subs(lorentz_factor_def.speed,
     electron_speed)
 
 energy_conservation_eqn = energy_conservation_eqn.replace(lorentz_factor_expr, lorentz_factor)

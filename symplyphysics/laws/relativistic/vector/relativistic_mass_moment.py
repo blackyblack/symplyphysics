@@ -36,7 +36,7 @@ def mass_moment_law(position_: Vector, velocity_: Vector) -> Vector:
     )
 
     lorentz_factor_ = lorentz_factor_def.definition.rhs.subs({
-        lorentz_factor_def.velocity: vector_magnitude(velocity_),
+        lorentz_factor_def.speed: vector_magnitude(velocity_),
     })
 
     return scale_vector(rest_mass * lorentz_factor_**2, summed_vector_)

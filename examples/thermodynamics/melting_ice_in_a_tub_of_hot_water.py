@@ -36,8 +36,8 @@ density_of_water_equation = density_law.definition.subs({
     density_law.volume: volume_of_bath,
     density_law.density: density_of_water
 })
-mass_of_all_water = solve(density_of_water_equation, density_law.symbols.basic.mass,
-    dict=True)[0][density_law.symbols.basic.mass]
+mass_of_all_water = solve(density_of_water_equation, density_law.mass,
+    dict=True)[0][density_law.mass]
 
 local_index_ = Idx("local_index_", (1, 2))
 sum_of_two_masses = sum_masses_law.law.subs(global_index, local_index_).doit()
@@ -76,7 +76,7 @@ energy_to_heating_ice_equation = thermal_energy_law.law.subs({
 
 energy_to_melt_ice_equation = energy_melting_law.law.subs({
     energy_melting_law.specific_heat_melting: specific_heat_melting_ice,
-    energy_melting_law.symbols.basic.mass: mass_of_ice
+    energy_melting_law.mass: mass_of_ice
 })
 
 energy_to_heat_melted_ice_equation = thermal_energy_law.law.subs({

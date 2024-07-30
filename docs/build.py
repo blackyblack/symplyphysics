@@ -224,6 +224,8 @@ def generate_laws_docs(source_dir: str, output_dir: str, exclude_dirs: Sequence[
             dirs.clear()
             files.clear()
             continue
+        dirs.sort()
+        files.sort()
         laws: list[str] = []
         for filename in files:
             law_name = process_law(path, filename, output_dir)

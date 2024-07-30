@@ -36,18 +36,18 @@ time = angular_velocity_def.time
 
 ride_rotation_angle_expr = dsolve(
     angular_velocity_def.definition.subs(
-    angular_velocity_def.angular_velocity(time),
+    angular_velocity_def.angular_speed(time),
     ride_angular_velocity,
     ),
-    angular_velocity_def.angle_function(time),
+    angular_velocity_def.angular_distance(time),
     ics={
-    angular_velocity_def.angle_function(0): 0
+    angular_velocity_def.angular_distance(0): 0
     },
 ).rhs
 
 period_eqn = period_def.law.subs({
     period_def.period: ride_period,
-    period_def.circular_frequency: ride_angular_velocity,
+    period_def.angular_frequency: ride_angular_velocity,
 })
 
 distance_eqn = distance_law.law.subs({

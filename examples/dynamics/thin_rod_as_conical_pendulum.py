@@ -161,7 +161,7 @@ angular_velocity_expr = refine(
 )
 
 rotation_period_expr = period_def.law.rhs.subs(
-    period_def.circular_frequency, angular_velocity_expr,
+    period_def.angular_frequency, angular_velocity_expr,
 )
 
 print("The expression for the rotation period of a conical pendulum:")

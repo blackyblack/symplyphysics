@@ -48,8 +48,8 @@ momentum_vec = Vector([momentum_x(time), momentum_y(time), momentum_z(time)])
 
 force_derived = force_momentum_law.force_law(momentum_vec)
 
-momentum_def_sub = momentum_def.definition.subs(momentum_def.symbols.basic.mass, symbols.basic.mass)
-velocity_from_momentum = solve(momentum_def_sub, momentum_def.velocity)[0]
+momentum_def_sub = momentum_def.definition.subs(momentum_def.mass, mass)
+velocity_from_momentum = solve(momentum_def_sub, momentum_def.speed)[0]
 velocity_vec = Vector([
     velocity_from_momentum.subs(momentum_def.momentum, momentum_component)
     for momentum_component in momentum_vec.components
@@ -57,7 +57,7 @@ velocity_vec = Vector([
 
 acceleration_def_sub = acceleration_def.definition.rhs.subs(acceleration_def.time, time)
 acceleration_vec = Vector([
-    acceleration_def_sub.subs(acceleration_def.velocity(time), velocity_component)
+    acceleration_def_sub.subs(acceleration_def.speed(time), velocity_component)
     for velocity_component in velocity_vec.components
 ])
 

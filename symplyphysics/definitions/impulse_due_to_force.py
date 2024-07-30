@@ -25,7 +25,7 @@ Symbol:
     :code:`J`
 """
 
-force_function = Function("force_function", units.force)
+force = Function("force", units.force)
 r"""
 Projection of :attr:`~symplyphysics.symbols.dynamics.force` :math:`\vec F` as a function of time.
 
@@ -41,7 +41,7 @@ Symbol:
     :code:`t`
 """
 
-time_start = Symbol("time_start", units.time)
+time_before = Symbol("time_before", units.time)
 """
 Initial time of collision.
 
@@ -52,7 +52,7 @@ Latex:
     :math:`t_0`
 """
 
-time_end = Symbol("time_end", units.time)
+time_after = Symbol("time_after", units.time)
 """
 Final time of collision.
 
@@ -63,7 +63,7 @@ Latex:
     :math:`t_1`
 """
 
-law = Eq(impulse, Integral(force_function(time), (time, time_start, time_end)))
+law = Eq(impulse, Integral(force(time), (time, time_before, time_after)))
 r"""
 :code:`J = Integral(F(t), (t, t0, t1))`
 
@@ -74,10 +74,10 @@ Latex:
 
 
 @validate_input(
-    force_start_=force_function,
-    force_end_=force_function,
-    time_start_=time_start,
-    time_end_=time_end,
+    force_start_=force,
+    force_end_=force,
+    time_start_=time_before,
+    time_end_=time_after,
 )
 @validate_output(impulse)
 def calculate_impulse(
@@ -89,8 +89,8 @@ def calculate_impulse(
     force_function_ = force_start_ + (force_end_ - force_start_) / (time_end_ -
         time_start_) * (time - time_start_)
     result = law.rhs.subs({
-        force_function(time): force_function_,
-        time_start: time_start_,
-        time_end: time_end_,
+        force(time): force_function_,
+        time_before: time_start_,
+        time_after: time_end_,
     }).doit()
     return Quantity(result)

@@ -30,15 +30,15 @@ displacement = Function("displacement", units.length)
 The displacement of the oscillating body from rest value.
 
 Symbol:
-    q(t)
+    :code:`q(t)`
 """
 
-oscillator_mass = clone_symbol(symbols.basic.mass, "oscillator_mass")
+mass = symbols.basic.mass
 """
 The :attr:`~symplyphysics.symbols.basic.mass` of the oscillating body.
 
 Symbol:
-    m
+    :code:`m`
 """
 
 natural_angular_frequency = Symbol("natural_angular_frequency", angle_type / units.time)
@@ -46,7 +46,7 @@ r"""
 The natural angular frequency of the oscillator.
 
 Symbol:
-    w0
+    :code:`w0`
 
 Latex:
     :math:`\omega_0`
@@ -57,7 +57,7 @@ driving_force_amplitude = clone_symbol(symbols.dynamics.force, "driving_force_am
 The amplitude of the driving :attr:`~symplyphysics.symbols.dynamics.force`.
 
 Symbol:
-    f
+    :code:`f`
 """
 
 driving_angular_frequency = Symbol("driving_angular_frequency", angle_type / units.time)
@@ -65,7 +65,7 @@ r"""
 The angular frequency of the driving force.
 
 Symbol:
-    w
+    :code:`w`
 
 Latex:
     :math:`\omega`
@@ -76,7 +76,7 @@ r"""
 The phase lag of the driving force.
 
 Symbol:
-    phi
+    :code:`phi`
 
 Latex:
     :math:`\varphi`
@@ -87,16 +87,16 @@ time = Symbol("time", units.time)
 Time.
 
 Symbol:
-    t
+    :code:`t`
 """
 
 law = Eq(
     Derivative(displacement(time), time, 2) + natural_angular_frequency**2 * displacement(time),
-    (driving_force_amplitude / oscillator_mass) *
+    (driving_force_amplitude / mass) *
     cos(driving_angular_frequency * time + driving_phase_lag),
 )
 r"""
-d^2(q(t))/dt^2 + w0^2 * q(t) = (f / m) * cos(w * t + phi)
+Derivative(q(t), (t, 2)) + w0^2 * q(t) = (f / m) * cos(w * t + phi)
 
 Latex:
     .. math::
@@ -108,7 +108,7 @@ Latex:
 @validate_input(
     initial_position_=displacement,
     initial_velocity_=units.velocity,
-    oscillator_mass_=oscillator_mass,
+    oscillator_mass_=mass,
     natural_angular_frequency_=natural_angular_frequency,
     driving_force_amplitude_=driving_force_amplitude,
     driving_angular_frequency_=driving_angular_frequency,
@@ -133,7 +133,7 @@ def calculate_displacement(
     eqn = law.subs({
         natural_angular_frequency: natural_angular_frequency_,
         driving_angular_frequency: driving_angular_frequency_,
-        oscillator_mass: oscillator_mass_,
+        mass: oscillator_mass_,
         driving_force_amplitude: driving_force_amplitude_,
         driving_phase_lag: scale_factor(driving_phase_lag_),
     })
