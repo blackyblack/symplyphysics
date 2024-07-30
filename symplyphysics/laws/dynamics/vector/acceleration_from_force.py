@@ -12,8 +12,8 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import (
+    acceleration_is_speed_derivative as acceleration_def,
     momentum_is_mass_times_velocity as momentum_def,
-    acceleration_is_velocity_derivative as acceleration_def,
 )
 from symplyphysics.laws.dynamics.vector import force_is_derivative_of_momentum as force_momentum_law
 

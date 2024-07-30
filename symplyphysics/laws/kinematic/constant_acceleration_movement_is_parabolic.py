@@ -3,7 +3,7 @@ from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, Funct
     print_expression, validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import velocity_is_movement_derivative as velocity_definition
-from symplyphysics.definitions import acceleration_is_velocity_derivative as acceleration_definition
+from symplyphysics.definitions import acceleration_is_speed_derivative as acceleration_definition
 
 # Description
 ## Accelerated movement is the kind of movement when object has constant acceleration (e.g with the constant force applied to object).

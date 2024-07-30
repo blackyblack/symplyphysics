@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.definitions import acceleration_is_velocity_derivative as acceleration
+from symplyphysics.definitions import acceleration_is_speed_derivative as acceleration
 
 Args = namedtuple("Args", ["v0", "v1", "t"])
 
