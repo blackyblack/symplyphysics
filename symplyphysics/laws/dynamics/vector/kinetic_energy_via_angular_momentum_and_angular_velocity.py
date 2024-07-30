@@ -51,6 +51,8 @@ def kinetic_energy_law(
 
         Latex: :math:`\vec \omega`
 
+        Dimension: *angle* / *time*
+
     :return: kinetic energy of the body
 
         Symbol: :code:`K`
