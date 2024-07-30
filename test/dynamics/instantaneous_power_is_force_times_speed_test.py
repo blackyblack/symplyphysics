@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.dynamics import (
-    instantaneous_power_is_force_times_velocity as power_law,)
+    instantaneous_power_is_force_times_speed as power_law,)
 
 # Description
 ## A particle with velocity v = 2.45 m/s moves due to a force F = 2.24 N, the angle between
