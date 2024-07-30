@@ -1,4 +1,7 @@
 from sympy import Expr, sympify, S
+from sympy.physics import units
+from sympy.physics.units.systems.si import dimsys_SI
+from sympy.physics.units.definitions import dimension_definitions
 
 from .dimensions import assert_equivalent_dimension
 from .symbols.quantities import Quantity
@@ -17,3 +20,30 @@ def convert_to(value: Expr, target_unit: Expr) -> Expr:
 
 def convert_to_float(value: Expr) -> float:
     return float(convert_to(value, S.One))
+
+
+_si_conversions: dict[units.Dimension, Expr] = {
+    dimension_definitions.angle: S.One,
+    dimension_definitions.length: units.meter,
+    dimension_definitions.mass: units.kilogram,
+    dimension_definitions.time: units.second,
+    dimension_definitions.current: units.coulomb,
+    dimension_definitions.temperature: units.kelvin,
+    dimension_definitions.amount_of_substance: units.mole,
+    dimension_definitions.luminous_intensity: units.candela,
+}
+
+
+def convert_to_si(value: Expr) -> Expr:
+    quantity = value if isinstance(value, Quantity) else Quantity(value)
+    dependencies = dimsys_SI.get_dimensional_dependencies(quantity.dimension)
+    unit = S.One
+    for dimension, power in dependencies.items():
+        unit *= _si_conversions[dimension] ** power
+    return convert_to(value, unit)
+
+__all__ = [
+    "convert_to",
+    "convert_to_float",
+    "convert_to_si",
+]
