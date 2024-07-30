@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.dynamics import (
-    total_work_equals_change_in_kinetic_energy as work_energy_principle,)
+    total_work_is_change_in_kinetic_energy as work_energy_principle,)
 
 # Description
 ## Several forces act on a particle, so that at first its kinetic energy amounted to 5 J
