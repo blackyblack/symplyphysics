@@ -23,7 +23,7 @@ Absolute magnitude for stars is defined as the apparent magnitude of an object i
 of 10 parsecs (2.063e+6 astronomical units) from the observer and would not experience either interstellar or atmospheric absorption.
 
 Symbol:
-    M
+    :code:`M`
 """
 
 apparent_magnitude = Symbol("apparent_magnitude", dimensionless)
@@ -32,7 +32,7 @@ The apparent magnitude is a measure of the brightness of a celestial body (more 
 by this body) from the observer's point of view. The brighter the object, the smaller its magnitude.
 
 Symbol:
-    m
+    :code:`m`
 """
 
 distance = Symbol("distance", units.length)
@@ -40,7 +40,7 @@ distance = Symbol("distance", units.length)
 Distance to the object.
 
 Symbol:
-    d
+    :code:`d`
 """
 
 distance_constant = Quantity(2.063e+6 * units.astronomical_unit)
@@ -48,15 +48,19 @@ distance_constant = Quantity(2.063e+6 * units.astronomical_unit)
 Constant equal to 2.063e+6 astronomical units.
 
 Symbol:
-    d0
+    :code:`d0`
+
+Latex:
+    :math:`d_0`
 """
 
 law = Eq(absolute_magnitude, apparent_magnitude - 5 * log(distance / distance_constant, 10))
 r"""
-M = m - 5 * lg(d / d0)
+:code:`M = m - 5 * lg(d / d0)`
 
 Latex:
-    :math:`M = m - 5 \log_{10} \left( \frac{d}{d0} \right)`
+    .. math::
+        M = m - 5 \log_{10} \left( \frac{d}{d0} \right)
 """
 
 

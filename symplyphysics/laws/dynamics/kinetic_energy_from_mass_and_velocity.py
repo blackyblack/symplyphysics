@@ -13,7 +13,7 @@ r"""
 The kinetic energy of the body.
 
 Symbol:
-    K
+    :code:`K`
 """
 
 speed = Symbol("speed", units.velocity)
@@ -21,7 +21,7 @@ speed = Symbol("speed", units.velocity)
 The speed of the body.
 
 Symbol:
-    v
+    :code:`v`
 """
 
 mass = symbols.basic.mass
@@ -29,7 +29,7 @@ mass = symbols.basic.mass
 The :attr:`~symplyphysics.symbols.basic.mass` of the body.
 
 Symbol:
-    m
+    :code:`m`
 """
 
 law = Eq(kinetic_energy, mass * speed**2 / 2)

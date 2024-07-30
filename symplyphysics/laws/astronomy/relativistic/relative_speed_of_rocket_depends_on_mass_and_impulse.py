@@ -26,7 +26,7 @@ speed = Symbol("speed", units.velocity)
 Final speed of the rocket
 
 Symbol:
-    V
+    :code:`V`
 """
 
 exhaust_velocity = Symbol("exhaust_velocity", units.velocity)
@@ -34,7 +34,7 @@ exhaust_velocity = Symbol("exhaust_velocity", units.velocity)
 Effective exhaust velocity of a rocket engine
 
 Symbol:
-    Ve
+    :code:`Ve`
 
 Latex:
     :math:`V_e`
@@ -45,7 +45,7 @@ initial_mass = clone_symbol(symbols.basic.mass, "initial_mass")
 Initial mass of the rocket
 
 Symbol:
-    M1
+    :code:`M1`
 
 Latex:
     :math:`M_1`
@@ -56,7 +56,7 @@ final_mass = clone_symbol(symbols.basic.mass, "final_mass")
 Final mass of the rocket
 
 Symbol:
-    M2
+    :code:`M2`
 
 Latex:
     :math:`M_2`
@@ -65,10 +65,11 @@ Latex:
 law = Eq(final_mass / initial_mass, ((1 - (speed / speed_of_light)) / (1 +
     (speed / speed_of_light)))**(speed_of_light / (2 * exhaust_velocity)))
 r"""
-M2 / M1 = ((1 - (V / c)) / (1 + (V / c)))^(c / (2 * Ve))
+:code:`M2 / M1 = ((1 - V / c) / (1 + V / c))^(c / (2 * Ve))`
 
 Latex:
-    :math:`\frac{M_2}{M_1} = \left( \frac{1 - \frac{V}{c}}{1 + \frac{V}{c}} \right) ^ {\frac{c}{2 V_e}}`
+    .. math::
+        \frac{M_2}{M_1} = \left( \frac{1 - \frac{V}{c}}{1 + \frac{V}{c}} \right) ^ {\frac{c}{2 V_e}}
 """
 
 

@@ -20,7 +20,7 @@ r"""
 Angle of rotation during a gravitational maneuver (angle at which the velocity vector of the rocket rotates)
 
 Symbol:
-    phi
+    :code:`phi`
 
 Latex:
     :math:`\phi`
@@ -31,7 +31,7 @@ planet_mass = clone_symbol(symbols.basic.mass, "planet_mass")
 Mass of the planet.
 
 Symbol:
-    M
+    :code:`M`
 """
 
 aiming_range = Symbol("aiming_range", units.length)
@@ -40,7 +40,7 @@ The aiming range is the distance between the asymptote of the hyperbolic traject
 coinciding with the center of the planet.
 
 Symbol:
-    b
+    :code:`b`
 """
 
 rocket_speed = Symbol("rocket_speed", units.velocity)
@@ -48,15 +48,16 @@ rocket_speed = Symbol("rocket_speed", units.velocity)
 Rocket's velocity relative to the planet.
 
 Symbol:
-    v
+    :code:`v`
 """
 
 law = Eq(angle, 2 * atan(gravitational_constant * planet_mass / (aiming_range * rocket_speed**2)))
 r"""
-phi = 2 * arctg(G * M / (b * v^2))
+:code:`phi = 2 * arctg(G * M / (b * v^2))`
 
 Latex:
-    :math:`\phi = 2 \arctan \left( \frac{G M}{b v^2} \right)`
+    .. math::
+        \phi = 2 \arctan \left( \frac{G M}{b v^2} \right)
 """
 
 

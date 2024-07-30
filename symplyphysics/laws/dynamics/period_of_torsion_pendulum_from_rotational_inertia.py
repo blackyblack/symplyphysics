@@ -29,7 +29,7 @@ rotational_inertia = Symbol("rotational_inertia", units.mass * units.length**2)
 The rotational inertia of the disk.
 
 Symbol:
-    I
+    :code:`I`
 """
 
 torsion_constant = Symbol("torsion_constant", units.force * units.length)
