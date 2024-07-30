@@ -57,7 +57,7 @@ r"""
 The speed of the rocket relative to its products.
 
 Symbol:
-    :code`v_rel`
+    :code:`v_rel`
 
 Latex:
     :math:`v_\text{rel}`
@@ -68,7 +68,7 @@ acceleration = symbols.kinematic.acceleration
 The :attr:`~symplyphysics.symbols.kinematic.acceleration` of the rocket.
 
 Symbol:
-    :code`a`
+    :code:`a`
 """
 
 mass = symbols.basic.mass
@@ -78,7 +78,7 @@ mass = symbols.basic.mass
 The :attr:`~symplyphysics.symbols.basic.mass` of the rocket
 
 Symbol:
-    :code`M`
+    :code:`M`
 """
 
 law = Eq(fuel_consumption_rate * relative_speed, mass * acceleration)

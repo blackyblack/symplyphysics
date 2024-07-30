@@ -34,7 +34,7 @@ force = symbols.dynamics.force
 The :attr:`~symplyphysics.symbols.dynamics.force` exerted on the body.
 
 Symbol:
-    :code`F`
+    :code:`F`
 """
 
 distance = Symbol("distance", units.length)
@@ -47,7 +47,7 @@ Symbol:
 
 law = Eq(work, force * distance)
 """
-W = F * s
+:code:`W = F * s`
 
 Latex:
     .. math::

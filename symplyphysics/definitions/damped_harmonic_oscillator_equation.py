@@ -7,7 +7,7 @@ to the body's velocity, we can write a differential equation for the body's posi
 assuming the body only moves in one direction.
 """
 
-from sympy import Derivative, dsolve, solve, Eq
+from sympy import Derivative, dsolve
 from symplyphysics import (
     units,
     Quantity,
@@ -100,4 +100,3 @@ def calculate_displacement(
         damping_ratio: damping_ratio_,
     })
     return Quantity(result)
-

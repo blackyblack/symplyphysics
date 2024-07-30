@@ -28,7 +28,7 @@ def kinetic_energy_law(
 
     **Notation:**
 
-    #. :math:`\left(\vec a, \vec b)` (:code:`dot(a, b)`) is the dot product between vectors
+    #. :math:`\left(\vec a, \vec b \right)` (:code:`dot(a, b)`) is the dot product between vectors
        :math:`\vec a` and :math:`\vec b`.
 
     Law:

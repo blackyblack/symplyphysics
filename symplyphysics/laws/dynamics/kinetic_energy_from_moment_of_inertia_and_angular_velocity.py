@@ -33,7 +33,7 @@ rotational_inertia = Symbol("rotational_inertia", units.mass * units.area)
 The rotational inertia of the object.
 
 Symbol:
-    I
+    :code:`I`
 """
 
 angular_speed = Symbol("angular_speed", angle_type / units.time)
@@ -41,7 +41,7 @@ r"""
 The angular speed of the object.
 
 Symbol:
-    w
+    :code:`w`
 
 Latex:
     :math:`\omega`

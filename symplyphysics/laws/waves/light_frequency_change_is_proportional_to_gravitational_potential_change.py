@@ -8,6 +8,17 @@ change in the potential of the gravitational field.
 Let us consider an infinitesimally small section :math:`d \vec r` of the light's path, such that
 the frequency of light is constant within that section. In that case we can obtain a dependency
 between the change in light's frequency and the change in the gravitational potential.
+
+**Notes:**
+
+    .. _gravitational potential:
+
+#. The *gravitational potential* :math:`\varphi` is defined as a scalar quantity such that the equation
+   :math:`\vec g = - \nabla \varphi` is hold where :math:`\vec g` is the vector of acceleration due to gravity
+   and :math:`\nabla` is the nabla operator.
+
+#. :math:`d \varphi = - \left( \vec g, d \vec r \right)` where :math:`\left( \vec a_1, \vec a_2 \right)` is
+   the dot product between :math:`\vec a_1` and :math:`\vec a_2`.
 """
 
 from sympy import Eq, solve
@@ -43,15 +54,7 @@ Latex:
 
 gravitational_potential_change = Symbol("gravitational_potential_change", units.velocity**2)
 r"""
-The infinitesimal change in gravitational potential after passing an infinitesimal section :math:`d \vec r`.
-
-The *gravitational potential* :math:`\varphi` is defined as a scalar quantity such that the equation
-:math:`\vec g = - \nabla \varphi` is hold where :math:`\vec g` is the vector of acceleration due to gravity
-and :math:`\nabla` is the nabla operator.
-
-.. note::
-    :math:`d \varphi = - \left( \vec g, d \vec r \right)` where :math:`\left( \vec a_1, \vec a_2 \right)` is
-    the dot product between :math:`\vec a_1` and :math:`\vec a_2`.
+The infinitesimal change in :ref:`gravitational potential <gravitational potential>` after passing an infinitesimal section :math:`d \vec r`.
 
 Symbol:
     :code:`dphi`
@@ -68,7 +71,8 @@ r"""
 :code:`dnu / nu = -1 * dphi / c^2`
 
 Latex:
-    :math:`\frac{d \nu}{\nu} = - \frac{d \varphi}{c^2}`
+    .. math::
+        \frac{d \nu}{\nu} = - \frac{d \varphi}{c^2}
 """
 
 
