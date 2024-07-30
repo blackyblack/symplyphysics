@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.gravity.radial_motion import (
-    total_energy_is_radial_kinetic_energy_plus_potential_energy as law,
+    radial_kinetic_energy_plus_potential_energy_is_constant as law,
 )
 
 Args = namedtuple("Args", "m v u")
