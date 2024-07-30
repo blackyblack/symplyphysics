@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_velocity as kinetic_energy
+from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_speed as kinetic_energy
 
 Args = namedtuple("Args", ["m", "v"])
 

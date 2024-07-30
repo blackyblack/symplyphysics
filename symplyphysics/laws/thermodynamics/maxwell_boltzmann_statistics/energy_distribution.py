@@ -11,7 +11,7 @@ from symplyphysics import (
     symbols,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_velocity as kinetic_energy_law
+from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_speed as kinetic_energy_law
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed_distribution
 
 # For a system containing a large number of identical non-interacting non-relativistic classical

@@ -1,7 +1,7 @@
 from sympy import solve, Eq, Symbol
 from symplyphysics import print_expression, units
 from symplyphysics.laws.dynamics import potential_energy_from_mass_and_height as potential_energy
-from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_velocity as kinetic_energy
+from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_speed as kinetic_energy
 from symplyphysics.laws.conservation import mechanical_energy_after_equals_to_mechanical_energy_before as conservation
 from symplyphysics.definitions import mechanical_energy_is_kinetic_and_potential as mechanical_energy
 

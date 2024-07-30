@@ -16,7 +16,7 @@ from symplyphysics import (
     validate_output,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_velocity as kinetic_energy_def
+from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_speed as kinetic_energy_def
 from symplyphysics.laws.kinematic import linear_velocity_from_angular_velocity_and_radius as linear_velocity_law
 from symplyphysics.laws.kinematic.rotational_inertia import rotational_inertia_of_particle as rotational_inertia_def
 

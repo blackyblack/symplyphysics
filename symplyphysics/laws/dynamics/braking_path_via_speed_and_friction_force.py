@@ -21,7 +21,7 @@ from symplyphysics import (
     clone_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_velocity as energy_law
+from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_speed as energy_law
 from symplyphysics.laws.dynamics import mechanical_work_from_force_and_move as work_law
 
 braking_path = Symbol("braking_path", units.length)
