@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.dynamics import mechanical_work_during_rotation as work_law
+from symplyphysics.laws.dynamics import rotational_work_is_torque_times_angular_distance as work_law
 
 # Description
 ## A torque of magnitude 3.0 N*m is applied to a rigid body. The work done on the body amounts to
