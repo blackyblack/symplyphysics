@@ -7,7 +7,7 @@ from symplyphysics.definitions import momentum_is_mass_times_velocity as momentu
 from symplyphysics.laws.conservation import momentum_after_collision_equals_to_momentum_before as momentum_conservation
 from symplyphysics.laws.conservation import mechanical_energy_after_equals_to_mechanical_energy_before as energy_conservation
 from symplyphysics.laws.dynamics import force_reaction_from_force_action as third_newton_law
-from symplyphysics.laws.dynamics import acceleration_from_force as second_newton_law
+from symplyphysics.laws.dynamics import acceleration_is_force_over_mass as second_newton_law
 
 # Example from https://uchitel.pro/%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B8-%D0%BD%D0%B0-%D0%B7%D0%B0%D0%BA%D0%BE%D0%BD-%D1%81%D0%BE%D1%85%D1%80%D0%B0%D0%BD%D0%B5%D0%BD%D0%B8%D1%8F-%D0%B8%D0%BC%D0%BF%D1%83%D0%BB%D1%8C%D1%81%D0%B0/
 # A skater with a mass of M = 70 kg, standing on the ice,

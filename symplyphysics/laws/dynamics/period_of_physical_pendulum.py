@@ -35,7 +35,7 @@ from symplyphysics.definitions import (
     period_from_angular_frequency as period_law,
 )
 from symplyphysics.laws.dynamics import (
-    acceleration_from_force as newtons_second_law,
+    acceleration_is_force_over_mass as newtons_second_law,
     torque_due_to_twisting_force as torque_def,
     moment_of_force_from_moment_of_inertia_and_angular_acceleration as torque_law,
 )

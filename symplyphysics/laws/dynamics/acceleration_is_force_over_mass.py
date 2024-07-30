@@ -1,6 +1,6 @@
 """
-Acceleration from force
-=======================
+Acceleration is force over mass
+===============================
 
 Newton's second law of motion states that the acceleration of a body is directly proportional
 to the net force exerted on the body.

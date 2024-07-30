@@ -4,7 +4,7 @@ from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression, units
 from symplyphysics.laws.dynamics import buoyant_force_from_density_and_volume as archimedes_law
-from symplyphysics.laws.dynamics import acceleration_from_force as gravity_law
+from symplyphysics.laws.dynamics import acceleration_is_force_over_mass as gravity_law
 
 print(f"Formula is:\n{print_expression(archimedes_law.law)}")
 

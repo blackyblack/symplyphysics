@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.dynamics import acceleration_from_force as newton_second_law
+from symplyphysics.laws.dynamics import acceleration_is_force_over_mass as newton_second_law
 
 Args = namedtuple("Args", ["m", "a"])
 

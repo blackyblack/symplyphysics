@@ -1,6 +1,6 @@
 from sympy import Idx, solve, Symbol, Eq
 from symplyphysics import print_expression, global_index
-from symplyphysics.laws.dynamics import acceleration_from_force as second_newton_law
+from symplyphysics.laws.dynamics import acceleration_is_force_over_mass as second_newton_law
 from symplyphysics.laws.kinematic import constant_acceleration_movement_is_parabolic as distance_law
 from symplyphysics.definitions import superposition_of_forces_is_sum as superposition_law
 
