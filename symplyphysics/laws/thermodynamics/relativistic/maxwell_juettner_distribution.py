@@ -1,54 +1,90 @@
+r"""
+Maxwell—Jüttner distribution
+============================
+
+The Maxwell-Juettner distribution is the distribution of speeds of particles in a hypothetical
+gas of relativistic particles. It is similar to Maxwell-Boltzmann distribution in that it consideres
+an ideal gas where particles are dilute and do not interact with each other, but the effects of special
+relativity are taken into account. In the limit of low temperatures, this distribution becomes identical
+to the Maxwell-Boltzmann distribution.
+
+**Notation:**
+
+#. :math:`K_2` is the `modified Bessel function of the second kind <https://docs.sympy.org/latest/modules/functions/special.html#sympy.functions.special.bessel.besselk>`_.
+
+**Conditions:**
+
+#. The system is in thermal equilibrium with the environment.
+
+**Limitations:**
+
+#. Particle interactions are not taken into account.
+#. No quantum effects occur in the system.
+#. Antiparticles cannot occur in the system.
+#. Temperature must be isotropic, i.e. each degree of freedom has to have the same translational kinetic energy.
+"""
+
 from sympy import Eq, exp, sqrt
 from sympy.functions.special.bessel import besselk
 from symplyphysics import (
     dimensionless,
     Symbol,
-    Function,
-    print_expression,
     validate_input,
     validate_output,
 )
 
-# Description
-## The Maxwell-Juettner distribution is the distribution of speeds of particles in a hypothetical
-## gas of relativistic particles. It is similar to Maxwell-Boltzmann distribution in that it consideres
-## an ideal gas where particles are dilute and do not interact with each other, but the effects of special
-## relativity are taken into account. In the limit of low temperatures, this distribution becomes identical
-## to the Maxwell-Boltzmann distribution.
+distribution_function = Symbol("distribution_function", dimensionless)
+r"""
+Lorentz factor distribution function.
 
-# Law: f(gamma) = (gamma * sqrt(gamma**2 - 1) / (theta * K_2(1 / theta)) * exp(-gamma/theta)
-## f(gamma) - probability distribution function
-## gamma - [Lorentz factor](../../../definitions/lorentz_factor.py)
-## theta = (k * T)/(m * c**2) - dimensionless temperature
-## K_2 - modified Bessel function of the second kind
+Symbol:
+    :code:`f = f(gamma)`
 
-# Conditions
-## - The system is in thermal equilibrium with the environment.
+Latex:
+    :math:`f = f(\gamma)`
+"""
 
-# Limitations
-## - Particle interactions are not taken into account
-## - No quantum effects in the system
-## - Antiparticles cannot occur in the system
-## - Temperature must be isotropic (each degree of freedom has to have the same translational kinetic energy)
-
-distribution_function = Function("distribution_function", dimensionless)
 lorentz_factor = Symbol("lorentz_factor", dimensionless)
-dimensionless_temperature = Symbol("dimensionless_temperature", dimensionless)
+r"""
+Lorentz factor of relativistic particles.
+
+Symbol:
+    :code:`gamma`
+
+Latex:
+    :math:`\gamma`
+"""
+
+reduced_temperature = Symbol("reduced_temperature", dimensionless)
+r"""
+Reduced temperature of the system.
+
+Symbol:
+    :code:`theta`
+
+Latex:
+    :math:`\theta`
+"""
 
 law = Eq(
-    distribution_function(lorentz_factor),
+    distribution_function,
     lorentz_factor * sqrt(lorentz_factor**2 - 1) /
-    (dimensionless_temperature * besselk(2, 1 / dimensionless_temperature)) *
-    exp(-1 * lorentz_factor / dimensionless_temperature))
+    (reduced_temperature * besselk(2, 1 / reduced_temperature)) *
+    exp(-1 * lorentz_factor / reduced_temperature))
+r"""
+:code:`f(gamma) = (gamma * sqrt(gamma^2 - 1)) / (theta * K_2(1 / theta)) * exp(-1 * gamma / theta)`
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        f(\gamma) = \frac{\gamma \sqrt{\gamma^2 - 1}}
+                         {\theta K_2 \left( \frac{1}{\theta} \right)} 
+                    \exp{\left( -\frac{\gamma}{\theta} \right)}
+"""
 
 
 @validate_input(
     lorentz_factor_=lorentz_factor,
-    dimensionless_temperature_=dimensionless_temperature,
+    dimensionless_temperature_=reduced_temperature,
 )
 @validate_output(distribution_function)
 def calculate_distribution_function(
@@ -57,6 +93,6 @@ def calculate_distribution_function(
 ) -> float:
     result = law.rhs.subs({
         lorentz_factor: lorentz_factor_,
-        dimensionless_temperature: dimensionless_temperature_,
+        reduced_temperature: dimensionless_temperature_,
     })
     return float(result)
