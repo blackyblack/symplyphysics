@@ -10,10 +10,10 @@ from symplyphysics.laws.conservation import (
     mechanical_energy_after_equals_to_mechanical_energy_before as energy_conservation_law,
     momentum_after_collision_equals_to_momentum_before as momentum_conservation_law)
 from symplyphysics.laws.dynamics import (
+    braking_path_via_speed_and_friction_force as braking_path_law,
     kinetic_energy_from_mass_and_velocity as kinetic_energy_def,
     potential_energy_from_mass_and_height as potential_energy_def,
     friction_force_from_normal_force as friction_law,
-    braking_path as braking_path_law,
 )
 
 # Description

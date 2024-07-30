@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.dynamics import braking_path as path_law
+from symplyphysics.laws.dynamics import braking_path_via_speed_and_friction_force as path_law
 
 # Description
 ## Let the mass of the object be 10 kilogram, the speed is 20 meter per second, and the friction force
