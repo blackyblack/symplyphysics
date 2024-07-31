@@ -1,6 +1,6 @@
 """
-Superposition of forces is sum
-==============================
+Net force is sum of individual forces
+=====================================
 
 The net force is the arithmetic sum of forces.
 

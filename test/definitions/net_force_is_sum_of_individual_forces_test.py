@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.definitions import superposition_of_forces_is_sum as forces_law
+from symplyphysics.definitions import net_force_is_sum_of_individual_forces as forces_law
 
 Args = namedtuple("Args", ["F1", "F2"])
 
