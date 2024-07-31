@@ -7,7 +7,7 @@ from symplyphysics import (
     prefixes,
     Quantity,
 )
-from symplyphysics.definitions import impulse_due_to_force as impulse_def
+from symplyphysics.definitions import impulse_is_integral_of_force_over_time as impulse_def
 
 # Description
 ## During the collision the force was constant and equal to 200 N. The collision started

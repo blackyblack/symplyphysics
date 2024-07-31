@@ -1,8 +1,8 @@
 """
-Impulse due to force
-====================
+Impulse is integral of force over time
+======================================
 
-Impulse due to force exerted on a body during collision is the measure of both the
+*Impulse due to force* exerted on a body during collision is the measure of both the
 magnitude and duration of the collision. Impulse can also be represented by a vector
 by applying this law to the components of the force vector.
 """
