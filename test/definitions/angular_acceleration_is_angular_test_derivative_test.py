@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy import pi
 from symplyphysics import (assert_equal, errors, units, Quantity)
-from symplyphysics.definitions import angular_acceleration_is_angular_velocity_derivative as angular_acceleration_def
+from symplyphysics.definitions import angular_acceleration_is_angular_speed_derivative as angular_acceleration_def
 
 # Description
 ## Suppose that the object starts rotating with some angular acceleration. After 5 seconds, it rotates at 180 radians per second.

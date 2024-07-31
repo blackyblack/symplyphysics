@@ -10,7 +10,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import (
-    angular_acceleration_is_angular_velocity_derivative as angular_acceleration_def,
+    angular_acceleration_is_angular_speed_derivative as angular_acceleration_def,
     angular_velocity_is_angle_derivative as angular_velocity_def,
 )
 

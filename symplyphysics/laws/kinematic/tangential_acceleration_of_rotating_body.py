@@ -3,7 +3,7 @@ from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, Funct
     print_expression, validate_input, validate_output, angle_type)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematic import linear_velocity_from_angular_velocity_and_radius as linear_velocity_law
-from symplyphysics.definitions import angular_acceleration_is_angular_velocity_derivative as angular_acceleration_def
+from symplyphysics.definitions import angular_acceleration_is_angular_speed_derivative as angular_acceleration_def
 from symplyphysics.definitions import acceleration_is_speed_derivative as acceleration_def
 
 # Description
