@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.astronomy import absolute_magnitude_of_apparent_magnitude_and_distance as magnitude_law
+from symplyphysics.laws.astronomy import absolute_magnitude_from_apparent_magnitude_and_distance as magnitude_law
 
 # Description
 ## With an apparent magnitude of 29 and a distance of 1.443854e11 astronomical units, the absolute magnitude will be 4.775.
