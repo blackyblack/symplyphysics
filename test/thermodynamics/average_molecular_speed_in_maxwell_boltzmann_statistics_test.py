@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics import average_speed
+from symplyphysics.laws.thermodynamics import average_molecular_speed_in_maxwell_boltzmann_statistics
 
 # Description
 ## The average speed of Argon (m = 39.948 u) at equilibrium temperature T = 100 K amounts
@@ -23,21 +23,21 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = average_speed.calculate_average_speed(test_args.t, test_args.m)
+    result = average_molecular_speed_in_maxwell_boltzmann_statistics.calculate_average_speed(test_args.t, test_args.m)
     assert_equal(result, 230 * units.meter / units.second)
 
 
 def test_bad_temperature(test_args: Args) -> None:
     tb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        average_speed.calculate_average_speed(tb, test_args.m)
+        average_molecular_speed_in_maxwell_boltzmann_statistics.calculate_average_speed(tb, test_args.m)
     with raises(TypeError):
-        average_speed.calculate_average_speed(100, test_args.m)
+        average_molecular_speed_in_maxwell_boltzmann_statistics.calculate_average_speed(100, test_args.m)
 
 
 def test_bad_mass(test_args: Args) -> None:
     mb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        average_speed.calculate_average_speed(test_args.t, mb)
+        average_molecular_speed_in_maxwell_boltzmann_statistics.calculate_average_speed(test_args.t, mb)
     with raises(TypeError):
-        average_speed.calculate_average_speed(test_args.t, 100)
+        average_molecular_speed_in_maxwell_boltzmann_statistics.calculate_average_speed(test_args.t, 100)

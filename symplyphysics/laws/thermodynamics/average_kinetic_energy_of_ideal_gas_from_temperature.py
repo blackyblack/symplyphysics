@@ -40,7 +40,7 @@ r"""
 Average kinetic energy of the ideal gas.
 
 Symbol:
-    :math:`K_avg`
+    :code:`K_avg`
 
 Latex:
     :math:`\overline K`
