@@ -7,7 +7,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.definitions import admittance_is_inversed_impedance as admittance_def
+from symplyphysics.definitions import admittance_is_inverse_impedance as admittance_def
 
 # Description
 ## If the dipole has 2i Ohm impedance, it should have -0.5i Siemens admittance. No external calculators were used for such computation.

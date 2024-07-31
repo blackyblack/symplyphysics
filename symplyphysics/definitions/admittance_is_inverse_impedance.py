@@ -1,6 +1,6 @@
 """
-Admittance is inversed impedance
-================================
+Admittance is inverse impedance
+===============================
 
 *Admittance, or complex conductance*, is a physical quantity measuring the
 ability of a circuit or device to conduct electrical current.
