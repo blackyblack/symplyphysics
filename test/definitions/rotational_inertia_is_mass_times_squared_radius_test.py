@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.definitions import moment_of_inertia_is_mass_times_squared_radius as moment_of_inertia_def
+from symplyphysics.definitions import rotational_inertia_is_mass_times_squared_radius as moment_of_inertia_def
 
 # Description
 ## Assume particle with 5kgs of mass is about to spin around axle, and a distance to this axle is 3m.
