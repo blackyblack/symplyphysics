@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.definitions import temporal_frequency_is_events_per_time as frequency_def
+from symplyphysics.definitions import temporal_frequency_is_number_of_events_per_unit_time as frequency_def
 
 # Description
 ## Pendulum is making 25 complete oscillations in 60 seconds. It should have frequency of 0.4167 Hz.

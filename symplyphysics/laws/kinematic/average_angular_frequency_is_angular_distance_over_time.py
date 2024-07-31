@@ -10,7 +10,7 @@ from symplyphysics import (angle_type, units, Quantity, Symbol, validate_input,
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import scale_factor
-from symplyphysics.definitions import temporal_frequency_is_events_per_time as frequency_def
+from symplyphysics.definitions import temporal_frequency_is_number_of_events_per_unit_time as frequency_def
 
 average_angular_frequency = Symbol("average_angular_frequency", angle_type / units.time)
 r"""
