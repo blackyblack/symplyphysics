@@ -23,7 +23,7 @@ from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_speed as ki
 from symplyphysics.laws.kinematic import linear_velocity_from_angular_velocity_and_radius as angular_velocity_law
 from symplyphysics.definitions import period_from_angular_frequency as angular_frequency
 from symplyphysics.definitions import harmonic_oscillator_is_second_derivative_equation as oscillator
-from symplyphysics.definitions import mechanical_energy_is_kinetic_and_potential as mechanical_energy_def
+from symplyphysics.definitions import mechanical_energy_is_kinetic_and_potential_energy as mechanical_energy_def
 from symplyphysics.laws.conservation import mechanical_energy_is_constant as mechanical_energy_conservation
 
 period = Symbol("period", units.time)

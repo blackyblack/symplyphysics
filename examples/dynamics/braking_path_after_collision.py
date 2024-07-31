@@ -3,8 +3,8 @@
 from sympy import solve, Symbol, Eq
 from symplyphysics import Quantity, convert_to, units, print_expression
 from symplyphysics.definitions import (
+    mechanical_energy_is_kinetic_and_potential_energy as mechanical_energy_def,
     momentum_is_mass_times_velocity as momentum_def,
-    mechanical_energy_is_kinetic_and_potential as mechanical_energy_def,
 )
 from symplyphysics.laws.conservation import (
     mechanical_energy_after_equals_to_mechanical_energy_before as energy_conservation_law,

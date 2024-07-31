@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.definitions import mechanical_energy_is_kinetic_and_potential as mechanical_energy_def
+from symplyphysics.definitions import mechanical_energy_is_kinetic_and_potential_energy as mechanical_energy_def
 
 Args = namedtuple("Args", ["K", "P"])
 
