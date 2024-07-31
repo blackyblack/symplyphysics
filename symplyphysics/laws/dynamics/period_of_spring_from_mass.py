@@ -19,7 +19,7 @@ from symplyphysics import (Quantity, units, Symbol, validate_input,
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.dynamics import potential_energy_from_deformation as spring_energy
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_speed as kinetic_energy
-from symplyphysics.definitions import velocity_is_movement_derivative as velocity_def
+from symplyphysics.definitions import speed_is_distance_derivative as velocity_def
 from symplyphysics.definitions import period_from_angular_frequency as period_definition
 from symplyphysics.definitions import harmonic_oscillator_is_second_derivative_equation as oscillator
 

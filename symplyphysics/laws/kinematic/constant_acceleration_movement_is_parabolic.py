@@ -2,7 +2,7 @@ from sympy import (Eq, solve, dsolve)
 from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, Function,
     print_expression, validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.definitions import velocity_is_movement_derivative as velocity_definition
+from symplyphysics.definitions import speed_is_distance_derivative as velocity_definition
 from symplyphysics.definitions import acceleration_is_speed_derivative as acceleration_definition
 
 # Description

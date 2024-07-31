@@ -1,6 +1,6 @@
 r"""
-Speed is derivative of distance
-===============================
+Speed is distance derivative
+============================
 
 Speed is a physical quantity that describes the rate of change in the body's position.
 """

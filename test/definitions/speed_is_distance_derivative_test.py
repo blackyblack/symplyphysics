@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.definitions import velocity_is_movement_derivative as velocity_def
+from symplyphysics.definitions import speed_is_distance_derivative as velocity_def
 
 # Description
 ## Assume object starts moving with some velocity. After 5 seconds it's distance is 80 meters.
