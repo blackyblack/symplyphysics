@@ -1,6 +1,6 @@
 r"""
 Angular speed is angular distance derivative
-===============================================
+============================================
 
 *Angular speed* is a physical quantity that describes the change in angular distance over time.
 """

@@ -3,7 +3,7 @@
 from sympy import symbols, dsolve, solve
 from symplyphysics import Quantity, units, convert_to, print_expression
 from symplyphysics.definitions import (
-    angular_speed_is_angle_derivative as angular_velocity_def,
+    angular_speed_is_angular_distance_derivative as angular_velocity_def,
     period_from_angular_frequency as period_def,
 )
 from symplyphysics.laws.kinematic import (

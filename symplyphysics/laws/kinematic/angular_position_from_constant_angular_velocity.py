@@ -9,7 +9,7 @@ from symplyphysics import (
     angle_type,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.definitions import angular_speed_is_angle_derivative as angular_velocity_def
+from symplyphysics.definitions import angular_speed_is_angular_distance_derivative as angular_velocity_def
 
 # Description
 ## If a body is rotating about a fixed axis with constant angular velocity, its angular position
