@@ -58,28 +58,7 @@ print(print_expression(Eq(reduced_frequency, reduced_frequency_expr)))
 # `v` is wave speed, `v_S` is source speed, and `v_O` is observer speed
 # `f_O` is observed frequency, and `f_S` is source frequency
 
-base_source_plot = plot(
-    title="Reduced observed frequency as a function of reduced source speed",
-    xlabel=r"reduced source speed $\frac{v_S}{v}$",
-    ylabel=r"reduced observed frequency $\frac{f_O}{f_S}$",
-    legend=True,
-    backend=MatplotlibBackend,
-    show=False,
-)
-
-for reduced_observer_speed_ in (-2, -1, -0.5, 0, 0.5, 1):
-    expr = reduced_frequency_expr.subs(reduced_observer_speed, reduced_observer_speed_)
-    sub_plot = plot(
-        expr,
-        (reduced_source_speed, -0.8, 1),
-        label=rf"$\frac{{v_O}}{{v}} = {reduced_observer_speed_}$",
-        show=False,
-    )
-    base_source_plot.extend(sub_plot)
-
-base_source_plot.show()
-
-base_observer_plot = plot(
+base_plot = plot(
     title="Reduced observed frequency as a function of reduced observer speed",
     xlabel=r"reduced observer speed $\frac{v_O}{v}$",
     ylabel=r"reduced observed frequency $\frac{f_O}{f_S}$",
@@ -96,6 +75,6 @@ for reduced_source_speed_ in (-0.8, -0.5, 0, 0.5, 1):
         label=rf"$\frac{{v_S}}{{v}} = {reduced_source_speed_}$",
         show=False,
     )
-    base_observer_plot.extend(sub_plot)
+    base_plot.extend(sub_plot)
 
-base_observer_plot.show()
+base_plot.show()
