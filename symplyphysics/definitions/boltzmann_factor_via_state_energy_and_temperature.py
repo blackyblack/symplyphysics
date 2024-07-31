@@ -1,6 +1,6 @@
 r"""
-Boltzmann factor
-================
+Boltzmann factor via state energy and temperature
+=================================================
 
 The *Boltzmann factor* is an exponential factor that appears in many formulas of statistical physics
 and thermodynamics, e.g. the canonical partition function of a classical discrete system.
