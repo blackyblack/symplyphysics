@@ -1,8 +1,8 @@
 r"""
-Angular velocity is angular distance derivative
+Angular speed is angular distance derivative
 ===============================================
 
-*Angular velocity* is a physical quantity that describes the change in angular distance over time.
+*Angular speed* is a physical quantity that describes the change in angular distance over time.
 """
 
 from sympy import (Eq, Derivative)

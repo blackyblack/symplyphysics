@@ -7,7 +7,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.definitions import angular_velocity_is_angle_derivative as angular_velocity_def
+from symplyphysics.definitions import angular_speed_is_angle_derivative as angular_velocity_def
 
 # Description
 ## Assume object starts rotating with some angular velocity. After 5 seconds it rotates to 180 degrees.

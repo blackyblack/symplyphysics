@@ -30,7 +30,7 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import (
     angular_acceleration_is_angular_speed_derivative as angular_acceleration_def,
-    angular_velocity_is_angle_derivative as angular_velocity_def,
+    angular_speed_is_angle_derivative as angular_velocity_def,
     harmonic_oscillator_is_second_derivative_equation as oscillator_eqn,
     period_from_angular_frequency as period_law,
 )
