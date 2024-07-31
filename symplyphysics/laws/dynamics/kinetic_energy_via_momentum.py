@@ -22,7 +22,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.dynamics import (
     kinetic_energy_from_mass_and_speed as energy_law,)
 from symplyphysics.definitions import (
-    momentum_is_mass_times_velocity as momentum_def,)
+    momentum_is_mass_times_speed as momentum_def,)
 
 kinetic_energy = Symbol("kinetic_energy", units.energy)
 r"""

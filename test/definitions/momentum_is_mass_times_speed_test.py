@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.definitions import momentum_is_mass_times_velocity as momentum_def
+from symplyphysics.definitions import momentum_is_mass_times_speed as momentum_def
 
 Args = namedtuple("Args", ["m", "v"])
 

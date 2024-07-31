@@ -3,7 +3,7 @@ from symplyphysics import print_expression
 from symplyphysics.laws.dynamics import friction_force_from_normal_force as friction_force
 from symplyphysics.laws.dynamics import mechanical_work_from_force_and_move as work_friction
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_speed as kinetic_energy
-from symplyphysics.definitions import momentum_is_mass_times_velocity as momentum
+from symplyphysics.definitions import momentum_is_mass_times_speed as momentum
 from symplyphysics.laws.conservation import momentum_after_collision_equals_to_momentum_before as momentum_conservation
 from symplyphysics.laws.conservation import mechanical_energy_after_equals_to_mechanical_energy_before as energy_conservation
 from symplyphysics.laws.dynamics import reaction_force_from_action_force as third_newton_law
