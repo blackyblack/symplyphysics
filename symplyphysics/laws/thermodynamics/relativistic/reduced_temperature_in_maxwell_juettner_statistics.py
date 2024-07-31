@@ -2,9 +2,10 @@ r"""
 Reduced temperature in Maxwell—Jüttner statistics
 =================================================
 
-Reduced temperature is a dimensionless quantity used in the Maxwell—Jüttner distribution function.
-It depends on the temperature on the system, as well as on the mass of a particle of the gas in
-question.
+Reduced temperature is a dimensionless quantity used in the
+:doc:`Maxwell—Jüttner distribution <laws.thermodynamics.relativistic.maxwell_juettner_distribution>`
+function. It depends on the temperature of the system, as well as on the mass of a particle of
+the gas in question.
 
 **Notation:**
 

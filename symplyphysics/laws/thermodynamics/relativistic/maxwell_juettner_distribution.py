@@ -2,11 +2,11 @@ r"""
 Maxwell—Jüttner distribution
 ============================
 
-The Maxwell-Juettner distribution is the distribution of speeds of particles in a hypothetical
-gas of relativistic particles. It is similar to Maxwell-Boltzmann distribution in that it consideres
+The Maxwell—Jüttner distribution is the distribution of speeds of particles in a hypothetical
+gas of relativistic particles. It is similar to the Maxwell—Boltzmann distribution in that it considers 
 an ideal gas where particles are dilute and do not interact with each other, but the effects of special
 relativity are taken into account. In the limit of low temperatures, this distribution becomes identical
-to the Maxwell-Boltzmann distribution.
+to the Maxwell—Boltzmann distribution.
 
 **Notation:**
 
@@ -15,9 +15,6 @@ to the Maxwell-Boltzmann distribution.
 **Conditions:**
 
 #. The system is in thermal equilibrium with the environment.
-
-**Limitations:**
-
 #. Particle interactions are not taken into account.
 #. No quantum effects occur in the system.
 #. Antiparticles cannot occur in the system.
@@ -38,10 +35,10 @@ r"""
 Lorentz factor distribution function.
 
 Symbol:
-    :code:`f = f(gamma)`
+    :code:`f(gamma)`
 
 Latex:
-    :math:`f = f(\gamma)`
+    :math:`f(\gamma)`
 """
 
 lorentz_factor = Symbol("lorentz_factor", dimensionless)
@@ -57,7 +54,7 @@ Latex:
 
 reduced_temperature = Symbol("reduced_temperature", dimensionless)
 r"""
-Reduced temperature of the system.
+:doc:`Reduced temperature <laws.thermodynamics.relativistic.reduced_temperature_in_maxwell_juettner_statistics>` of the system.
 
 Symbol:
     :code:`theta`
