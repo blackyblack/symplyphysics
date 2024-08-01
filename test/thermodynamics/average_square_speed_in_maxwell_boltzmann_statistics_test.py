@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics import average_square_of_velocity as velocity_law
+from symplyphysics.laws.thermodynamics import average_square_speed_in_maxwell_boltzmann_statistics as velocity_law
 
 # Description
 ## Example from https://easyfizika.ru/zadachi/molekulyarnaya-fizika/opredelit-srednyuyu-kvadratichnuyu-skorost-molekul-vodoroda/
