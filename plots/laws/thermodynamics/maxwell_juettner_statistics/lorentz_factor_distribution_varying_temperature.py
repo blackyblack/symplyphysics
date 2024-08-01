@@ -30,7 +30,7 @@ rhs = rhs.subs({
     reduced_law.mass: convert_to_si(units.electron_rest_mass)
 })
 
-temperatures_ = [1e10, 2e10]  # K
+temperatures_ = [1e10, 2e10, 5e10]  # K
 
 base_plot = plot(
     title="Maxwell—Jüttner distribution of Lorentz factor at different temperatures",

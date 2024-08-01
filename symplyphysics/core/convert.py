@@ -39,7 +39,7 @@ def convert_to_si(value: Expr) -> Expr:
     dependencies = dimsys_SI.get_dimensional_dependencies(quantity.dimension)
     unit = S.One
     for dimension, power in dependencies.items():
-        unit *= _si_conversions[dimension] ** power
+        unit *= _si_conversions[dimension]**power
     return convert_to(value, unit)
 
 __all__ = [
