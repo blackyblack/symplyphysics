@@ -1,34 +1,58 @@
+"""
+Chemical potential is Gibbs energy per particle
+===============================================
+
+Chemical potential of a thermodynamic system can be expressed as the Gibbs energy of the system
+per particle. Therefore, chemical potential is an intensive physical quantity, whereas Gibbs energy
+and particle count are extensive.
+"""
+
 from sympy import Eq
 from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
 
-# Description
-## Chemical potential of a thermodynamic system can be viewed as the Gibbs energy of the system
-## per particle. Therefore, chemical potential is an intensive physical quantity, whereas Gibbs energy
-## and particle count are extensive.
-
-# Law: mu = G / N
-## mu - chemical potential
-## G - [Gibbs energy](./isobaric_reaction_potential.py)
-## N - particle count
-
 chemical_potential = Symbol("chemical_potential", units.energy)
+r"""
+Chemical potential of the system.
+
+Symbol:
+    :code:`mu`
+
+Latex:
+    :math:`\mu`
+"""
+
 gibbs_energy = Symbol("gibbs_energy", units.energy)
+"""
+Gibbs energy of the system.
+
+Symbol:
+    :code:`G`
+"""
+
 particle_count = Symbol("particle_count")
+"""
+Number of particles in the system.
+
+Symbol:
+    :code:`N`
+"""
 
 law = Eq(chemical_potential, gibbs_energy / particle_count)
+r"""
+:code:`mu = G / N`
+
+Latex:
+    .. math::
+        \mu = \frac{G}{N}
+"""
 
 # TODO: derive law from the extensive property of chemical potential
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(
