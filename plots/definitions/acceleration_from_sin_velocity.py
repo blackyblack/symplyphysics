@@ -3,7 +3,7 @@ from sympy import sin
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression
-from symplyphysics.definitions import acceleration_is_velocity_derivative as acceleration
+from symplyphysics.definitions import acceleration_is_speed_derivative as acceleration
 
 print(f"Formula is:\n{print_expression(acceleration.definition)}")
 

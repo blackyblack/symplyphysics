@@ -3,9 +3,9 @@ from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, Funct
     print_expression, angle_type, CoordinateSystem, Vector, validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals, expr_equals_abs
 from symplyphysics.core.vectors.arithmetics import dot_vectors
-from symplyphysics.definitions import velocity_is_movement_derivative as velocity_def
-from symplyphysics.definitions import angular_velocity_is_angle_derivative as angular_velocity_def
-from symplyphysics.definitions import acceleration_is_velocity_derivative as acceleration_def
+from symplyphysics.definitions import speed_is_distance_derivative as velocity_def
+from symplyphysics.definitions import angular_speed_is_angular_distance_derivative as angular_velocity_def
+from symplyphysics.definitions import acceleration_is_speed_derivative as acceleration_def
 from symplyphysics.laws.geometry import planar_projection_is_cosine as projector
 from symplyphysics.laws.kinematic import linear_velocity_from_angular_velocity_and_radius as linear_velocity_law
 

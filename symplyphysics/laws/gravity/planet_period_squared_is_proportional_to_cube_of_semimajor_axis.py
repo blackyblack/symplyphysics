@@ -14,7 +14,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import (
     period_from_angular_frequency as period_law,)
 from symplyphysics.laws.dynamics import (
-    acceleration_from_force as newtons_second_law,)
+    acceleration_is_force_over_mass as newtons_second_law,)
 from symplyphysics.laws.gravity import (
     gravity_force_from_mass_and_distance as gravity_law,)
 from symplyphysics.laws.kinematic import (

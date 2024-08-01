@@ -5,7 +5,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as ideal_gas_law
 from symplyphysics.laws.thermodynamics import average_kinetic_energy_of_molecules_from_temperature as kinetic_energy
 from symplyphysics.laws.chemistry import avogadro_number_from_mole_count as avogadro_number
-from symplyphysics.definitions import volume_number_density
+from symplyphysics.definitions import number_density_is_number_of_objects_per_unit_volume
 # Description
 
 ## Ideal gas equation: p = 2/3 * n * E
@@ -31,13 +31,13 @@ temperature_eq = kinetic_energy.law.subs(
 derived_temperature = solve(temperature_eq, kinetic_energy.equilibrium_temperature,
     dict=True)[0][kinetic_energy.equilibrium_temperature]
 
-particles_number_eq = volume_number_density.definition.subs({
-    volume_number_density.volume: ideal_gas_law.volume,
-    volume_number_density.number_density: molecules_concentration
+particles_number_eq = number_density_is_number_of_objects_per_unit_volume.definition.subs({
+    number_density_is_number_of_objects_per_unit_volume.volume: ideal_gas_law.volume,
+    number_density_is_number_of_objects_per_unit_volume.number_density: molecules_concentration
 })
 
-derived_particles_number = solve(particles_number_eq, volume_number_density.number_of_objects,
-    dict=True)[0][volume_number_density.number_of_objects]
+derived_particles_number = solve(particles_number_eq, number_density_is_number_of_objects_per_unit_volume.number_of_objects,
+    dict=True)[0][number_density_is_number_of_objects_per_unit_volume.number_of_objects]
 
 mole_count_eq = avogadro_number.law.subs(
     {avogadro_number.particles_count: derived_particles_number})

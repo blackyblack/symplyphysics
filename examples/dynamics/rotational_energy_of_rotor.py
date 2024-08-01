@@ -2,7 +2,7 @@
 
 from sympy import Symbol, pi
 from symplyphysics import Quantity, convert_to, print_expression, units
-from symplyphysics.laws.dynamics import (kinetic_energy_from_moment_of_inertia_and_angular_velocity
+from symplyphysics.laws.dynamics import (kinetic_energy_from_rotational_inertia_and_angular_speed
     as rotational_energy_law)
 from symplyphysics.laws.kinematic.rotational_inertia.geometries import (
     solid_disk_about_central_axis as disk_formula)

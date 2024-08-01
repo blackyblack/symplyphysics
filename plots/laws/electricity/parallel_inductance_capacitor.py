@@ -12,7 +12,7 @@ from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import Symbol, global_index
 from symplyphysics.laws.electricity.circuits import admittance_of_parallel_dipoles as parallel_admittance_law
-from symplyphysics.definitions import admittance_is_inversed_impedance as admittance_def
+from symplyphysics.definitions import admittance_is_inverse_impedance as admittance_def
 from symplyphysics.laws.electricity import capacitor_impedance_from_capacitance_and_frequency as capacitor_impedance
 from symplyphysics.laws.electricity import coil_impedance_from_inductivity_and_frequency as coil_impedance
 from symplyphysics.laws.electricity.circuits import oscillation_period_for_capacitor_inductor_node as thomsons_formula

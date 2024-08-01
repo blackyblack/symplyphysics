@@ -9,7 +9,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import compliance_is_inverse_stiffness as compliance_def
-from symplyphysics.laws.dynamics import force_reaction_from_force_action as newtons_third_law
+from symplyphysics.laws.dynamics import reaction_force_from_action_force as newtons_third_law
 from symplyphysics.laws.dynamics.springs import spring_reaction_is_proportional_to_deformation as hookes_law
 
 # Description

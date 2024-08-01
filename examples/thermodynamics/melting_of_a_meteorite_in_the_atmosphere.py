@@ -10,7 +10,7 @@ from symplyphysics.laws.thermodynamics import (
 from symplyphysics.laws.quantities import quantity_is_specific_quantity_times_mass as specific_qty_law
 from symplyphysics.laws.conservation import (
     mechanical_energy_after_equals_to_mechanical_energy_before as energy_conservation_law,)
-from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_velocity as kinetic_energy_law
+from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_speed as kinetic_energy_law
 
 # Example from https://easyfizika.ru/zadachi/termodinamika/zheleznyj-meteorit-vletaet-v-atmosferu-zemli-so-skorostyu-1-5x10-3-m-s/
 # An iron meteorite flies into the Earth's atmosphere at a speed of 1.5 km/s,
