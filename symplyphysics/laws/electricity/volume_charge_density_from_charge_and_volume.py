@@ -25,7 +25,7 @@ law = Eq(volume_charge_density, charge / volume)
 ## In this case, the objects are charged particles.
 expr = volume_number_density.definition.subs({
     volume_number_density.volume: volume,
-    volume_number_density.objects: charge
+    volume_number_density.number_of_objects: charge
 })
 
 derived_law = solve(expr, volume_number_density.number_density,

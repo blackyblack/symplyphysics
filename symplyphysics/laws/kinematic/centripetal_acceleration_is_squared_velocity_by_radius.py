@@ -55,10 +55,10 @@ curve_radius_vertical = projector.law.rhs.subs({
 ## Velocity projections are derivatives of respective coordinates.
 
 #NOTE: replace 'moving_time' first as Derivative can have difficulties when processing both substitutions at once
-velocity_horisontal = velocity_def.definition.rhs.subs(velocity_def.moving_time,
-    time).subs(velocity_def.movement(time), curve_radius_horisontal).doit()
-velocity_vertical = velocity_def.definition.rhs.subs(velocity_def.moving_time,
-    time).subs(velocity_def.movement(time), curve_radius_vertical).doit()
+velocity_horisontal = velocity_def.definition.rhs.subs(velocity_def.time,
+    time).subs(velocity_def.distance(time), curve_radius_horisontal).doit()
+velocity_vertical = velocity_def.definition.rhs.subs(velocity_def.time,
+    time).subs(velocity_def.distance(time), curve_radius_vertical).doit()
 velocity_vector = Vector([velocity_horisontal, velocity_vertical], cartesian_coordinates)
 
 ## These unit vectors should not necessary be derived. We can choose them at will and prove that
@@ -75,10 +75,10 @@ assert expr_equals(dot_vectors(tangential_unit_vector, radial_unit_vector), 0)
 
 ## Use acceleration definition to calculate 'acceleration_vector'
 acceleration_horisontal = acceleration_def.definition.rhs.subs(acceleration_def.time, time)
-acceleration_horisontal = acceleration_horisontal.subs(acceleration_def.velocity(time),
+acceleration_horisontal = acceleration_horisontal.subs(acceleration_def.speed(time),
     velocity_horisontal).doit()
 acceleration_vertical = acceleration_def.definition.rhs.subs(acceleration_def.time, time)
-acceleration_vertical = acceleration_vertical.subs(acceleration_def.velocity(time),
+acceleration_vertical = acceleration_vertical.subs(acceleration_def.speed(time),
     velocity_vertical).doit()
 acceleration_vector = Vector([acceleration_horisontal, acceleration_vertical],
     cartesian_coordinates)
@@ -103,7 +103,7 @@ assert expr_equals(radial_acceleration_component, radial_acceleration_magnitude)
 ## in our proof.
 
 angular_velocity_applied = angular_velocity_def.definition.rhs.subs(angular_velocity_def.time, time)
-angular_velocity_applied = angular_velocity_applied.subs(angular_velocity_def.angle_function(time),
+angular_velocity_applied = angular_velocity_applied.subs(angular_velocity_def.angular_distance(time),
     alpha(time))
 linear_velocity_applied = linear_velocity_law.law.rhs.subs({
     linear_velocity_law.angular_velocity: angular_velocity_applied,

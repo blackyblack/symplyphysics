@@ -148,13 +148,13 @@ ball_tangential_acceleration_via_forces = dot_vectors(
 ball_angular_speed = angular_speed_def.definition.rhs.subs(
     angular_speed_def.time, time
 ).replace(
-    angular_speed_def.angle_function, ball_angle
+    angular_speed_def.angular_distance, ball_angle
 ).doit()
 
 ball_angular_acceleration = angular_acceleration_def.definition.rhs.subs(
     angular_acceleration_def.time, time
 ).replace(
-    angular_acceleration_def.angular_velocity,
+    angular_acceleration_def.angular_speed,
     lambda time_: ball_angular_speed.subs(time, time_),
 )
 
@@ -171,7 +171,7 @@ oscillation_eqn_derived = Eq(
 oscillation_eqn_from_def = harmonic_def.definition.subs(
     harmonic_def.time, time
 ).replace(
-    harmonic_def.displacement_function, ball_angle,
+    harmonic_def.displacement, ball_angle,
 )
 
 # The first solution is negative
@@ -182,7 +182,7 @@ ball_angular_frequency = solve(
 )[1][harmonic_def.angular_frequency]
 
 ball_period = period_def.law.rhs.subs(
-    period_def.circular_frequency, ball_angular_frequency
+    period_def.angular_frequency, ball_angular_frequency
 )
 
 print("The formula for the period of the ball pendulum:\n")

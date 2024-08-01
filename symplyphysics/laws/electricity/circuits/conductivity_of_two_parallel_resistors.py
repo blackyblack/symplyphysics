@@ -38,22 +38,22 @@ def calculate_resistance(first_resistance_: Quantity, second_resistance_: Quanti
     first_resistance = Symbol("first_resistance", units.impedance)
     second_resistance = Symbol("second_resistance", units.impedance)
     conductance1 = solve(conductance_definition.definition,
-        conductance_definition.object_conductivity,
-        dict=True)[0][conductance_definition.object_conductivity].subs(
-        {conductance_definition.object_resistance: first_resistance})
+        conductance_definition.conductivity,
+        dict=True)[0][conductance_definition.conductivity].subs(
+        {conductance_definition.resistance: first_resistance})
     conductance2 = solve(conductance_definition.definition,
-        conductance_definition.object_conductivity,
-        dict=True)[0][conductance_definition.object_conductivity].subs(
-        {conductance_definition.object_resistance: second_resistance})
+        conductance_definition.conductivity,
+        dict=True)[0][conductance_definition.conductivity].subs(
+        {conductance_definition.resistance: second_resistance})
     result_conductance_expr = solve(law, parallel_conductance,
         dict=True)[0][parallel_conductance].subs({
         first_conductance: conductance1,
         second_conductance: conductance2
         })
     result_resistance = solve(conductance_definition.definition,
-        conductance_definition.object_resistance,
-        dict=True)[0][conductance_definition.object_resistance].subs(
-        {conductance_definition.object_conductivity: result_conductance_expr})
+        conductance_definition.resistance,
+        dict=True)[0][conductance_definition.resistance].subs(
+        {conductance_definition.conductivity: result_conductance_expr})
 
     result_expr = result_resistance.subs({
         first_resistance: first_resistance_,

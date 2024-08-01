@@ -58,7 +58,7 @@ _solution = law.rhs.subs(wave_phase(position, time), _phase)
 _eqn = wave_eqn.definition.subs({
     wave_eqn.position: position,
     wave_eqn.time: time,
-    wave_eqn.phase_velocity: _phase_velocity,
+    wave_eqn.phase_speed: _phase_velocity,
 })
 
 _eqn_lhs_subs = _eqn.lhs.subs(wave_eqn.displacement(position, time), _solution).doit()

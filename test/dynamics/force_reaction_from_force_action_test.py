@@ -26,9 +26,9 @@ def test_basic_force() -> None:
     y = getattr(cartesian_coordinates, "y")
     z = getattr(cartesian_coordinates, "z")
     Fa = 2 * x + y
-    result_force = solve(newton_third_law.law, newton_third_law.force_reaction,
-        dict=True)[0][newton_third_law.force_reaction]
-    result = result_force.subs(newton_third_law.force_action, Fa)
+    result_force = solve(newton_third_law.law, newton_third_law.reaction_force,
+        dict=True)[0][newton_third_law.reaction_force]
+    result = result_force.subs(newton_third_law.action_force, Fa)
     # force action and force reaction should compensate each other
     assert (result + Fa) == 0
     # vector components should compensate each other

@@ -123,13 +123,13 @@ voltage_diff_eq = Eq(capacitor_voltage(time), capacitor_voltage_solved)
 ## A * e^(i * w * t) + B * e^(-i * w * t), where w = 1 / sqrt(LC)
 
 oscillator_eq = oscillator.definition.subs(oscillator.time, time)
-oscillator_eq = oscillator_eq.subs(oscillator.displacement_function(time), capacitor_voltage(time))
+oscillator_eq = oscillator_eq.subs(oscillator.displacement(time), capacitor_voltage(time))
 angular_frequency_solved = simplify(
     solve([oscillator_eq, voltage_diff_eq], (oscillator.angular_frequency, capacitor_voltage(time)),
     dict=True)[0][oscillator.angular_frequency])
 
 # 6. Derive period from frequency
-period_law = period_definition.law.subs(period_definition.circular_frequency,
+period_law = period_definition.law.subs(period_definition.angular_frequency,
     angular_frequency_solved)
 period_solved = solve(period_law, period_definition.period, dict=True)[0][period_definition.period]
 ## Square roots fail to compare with each other. Raise both parts to power of 2 before checking for equality.

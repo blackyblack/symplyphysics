@@ -16,12 +16,12 @@ from symplyphysics import (
     validate_output,
 )
 
-oscillation_period = Symbol("oscillation_period", units.time)
+period = Symbol("period", units.time)
 """
 The period of pendulum's oscillations.
 
 Symbol:
-    T
+    :code:`T`
 """
 
 rotational_inertia = Symbol("rotational_inertia", units.mass * units.length**2)
@@ -29,7 +29,7 @@ rotational_inertia = Symbol("rotational_inertia", units.mass * units.length**2)
 The rotational inertia of the disk.
 
 Symbol:
-    I
+    :code:`I`
 """
 
 torsion_constant = Symbol("torsion_constant", units.force * units.length)
@@ -37,15 +37,15 @@ r"""
 The torsion constant, which depends on the properties of the suspension wire.
 
 Symbol:
-    kappa
+    :code:`kappa`
 
 Latex:
     :math:`\kappa`
 """
 
-law = Eq(oscillation_period, 2 * pi * sqrt(rotational_inertia / torsion_constant))
+law = Eq(period, 2 * pi * sqrt(rotational_inertia / torsion_constant))
 r"""
-T = 2 * pi * sqrt(I / kappa)
+:code:`T = 2 * pi * sqrt(I / kappa)`
 
 Latex:
     .. math::
@@ -56,7 +56,7 @@ Latex:
 
 
 @validate_input(rotational_inertia_=rotational_inertia, torsion_constant_=torsion_constant)
-@validate_output(oscillation_period)
+@validate_output(period)
 def calculate_period(rotational_inertia_: Quantity, torsion_constant_: Quantity) -> Quantity:
     result = law.rhs.subs({
         rotational_inertia: rotational_inertia_,

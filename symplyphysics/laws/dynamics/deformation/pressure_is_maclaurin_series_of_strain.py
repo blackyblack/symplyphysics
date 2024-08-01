@@ -16,7 +16,7 @@ its physical state.
 **Conditions:**
 
 #. The deformations are elastic.
-#. The deformations are small, i.e. :math:`e << 1`.
+#. The deformations are small, i.e. :math:`e \ll 1`.
 #. This law features the expansion up to the third power of strain, higher terms can be added
    if needed.
 """

@@ -36,8 +36,8 @@ particles_number_eq = volume_number_density.definition.subs({
     volume_number_density.number_density: molecules_concentration
 })
 
-derived_particles_number = solve(particles_number_eq, volume_number_density.objects,
-    dict=True)[0][volume_number_density.objects]
+derived_particles_number = solve(particles_number_eq, volume_number_density.number_of_objects,
+    dict=True)[0][volume_number_density.number_of_objects]
 
 mole_count_eq = avogadro_number.law.subs(
     {avogadro_number.particles_count: derived_particles_number})

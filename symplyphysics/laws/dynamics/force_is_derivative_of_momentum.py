@@ -25,7 +25,7 @@ momentum = Function("momentum", units.momentum)
 The magnitude of the momentum of the body.
 
 Symbol:
-    p
+    :code:`p(t)`
 """
 
 force = Function("force", units.force)
@@ -33,7 +33,7 @@ force = Function("force", units.force)
 The magnitude of the net :attr:`~symplyphysics.symbols.dynamics.force` exerted on the body.
 
 Symbol:
-    F
+    :code:`F(t)`
 """
 
 time = Symbol("time", units.time)
@@ -41,12 +41,12 @@ time = Symbol("time", units.time)
 Time.
 
 Symbol:
-    t
+    :code:`t`
 """
 
 law = Eq(Derivative(momentum(time), time), force(time))
 r"""
-dp/dt = F(t)
+Derivative(p(t), t) = F(t)
 
 Latex:
     .. math::

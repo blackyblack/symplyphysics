@@ -35,7 +35,7 @@ sun_angular_velocity = solve(
 })
 
 sun_period = solve(period_law.law, period_law.period)[0].subs(
-    period_law.circular_frequency,
+    period_law.angular_frequency,
     sun_angular_velocity,
 )
 sun_period_value = convert_to(

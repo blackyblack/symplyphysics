@@ -1,6 +1,6 @@
 """
-Torque due to twisting force
-============================
+Torque via force and radial distance
+====================================
 
 *Torque* is a turning action on a body about a rotation axis due to a force.
 
@@ -32,7 +32,7 @@ r"""
 The magnitude of the torque applied at the given point.
 
 Symbol:
-    tau
+    :code:`tau`
 
 Latex:
     :math:`\tau`
@@ -43,31 +43,31 @@ force = symbols.dynamics.force
 The magnitude of the :attr:`~symplyphysics.symbols.dynamics.force` exerted on the given point.
 
 Symbol:
-    F
+    :code:`F`
 """
 
-distance_to_axis = Symbol("distance_to_axis", units.length)
+radial_distance = Symbol("radial_distance", units.length)
 """
 The distance to axis from the given point.
 
 Symbol:
-    r
+    :code:`r`
 """
 
-angle = Symbol("angle", angle_type)
+angle_between_vectors = Symbol("angle_between_vectors", angle_type)
 r"""
 The angle between the position vector of the given point and the force vector.
 
 Symbol:
-    phi
+    :code:`phi`
 
 Latex:
     :math:`\varphi`
 """
 
-law = Eq(torque, distance_to_axis * force * sin(angle))
+law = Eq(torque, radial_distance * force * sin(angle_between_vectors))
 r"""
-tau = F * r * sin(phi)
+:code:`tau = F * r * sin(phi)`
 
 Latex:
     .. math::
@@ -84,29 +84,29 @@ torque_magnitude_derived = vector_magnitude(torque_vector_derived)
 force_magnitude = vector_magnitude(force_vector)
 position_magnitude = vector_magnitude(position_vector)
 
-# Use the definition of dot product (a, b) = |a| * |b| * cos(a, b) to find the sine of angle between vectors
+# Use the definition of dot product (a, b) = |a| * |b| * cos(a, b) to find the sine of angle_between_vectors between vectors
 cosine_of_angle_in_between = (dot_vectors(force_vector, position_vector) / force_magnitude /
     position_magnitude)
 sine_of_angle_in_between = sqrt(1 - cosine_of_angle_in_between**2)
 
 torque_magnitude_from_law = solve(law, torque)[0].subs({
     force: force_magnitude,
-    distance_to_axis: position_magnitude,
-    sin(angle): sine_of_angle_in_between,
+    radial_distance: position_magnitude,
+    sin(angle_between_vectors): sine_of_angle_in_between,
 })
 
 assert expr_equals(torque_magnitude_derived, torque_magnitude_from_law)
 
 
-@validate_input(force_=force, distance_to_axis_=distance_to_axis, angle_=angle)
+@validate_input(force_=force, distance_to_axis_=radial_distance, angle_=angle_between_vectors)
 @validate_output(torque)
 def calculate_torque(force_: Quantity, distance_to_axis_: Quantity,
     angle_: Quantity | float) -> Quantity:
     result = solve(law, torque)[0]
     angle_value = scale_factor(angle_)
     result_torque = result.subs({
-        distance_to_axis: distance_to_axis_,
+        radial_distance: distance_to_axis_,
         force: force_,
-        angle: angle_value,
+        angle_between_vectors: angle_value,
     })
     return Quantity(result_torque)

@@ -10,12 +10,12 @@ from sympy import (Eq, solve)
 from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, symbols)
 
-potential_energy_of_body = Symbol("potential_energy_of_body", units.energy)
+potential_energy = Symbol("potential_energy", units.energy)
 """
 The potential energy of the body.
 
 Symbol:
-    U
+    :code:`U`
 """
 
 mass = symbols.basic.mass
@@ -23,7 +23,7 @@ mass = symbols.basic.mass
 The :attr:`~symplyphysics.symbols.basic.mass` of the body.
 
 Symbol:
-    m
+    :code:`m`
 """
 
 height = Symbol("height", units.length)
@@ -31,12 +31,12 @@ height = Symbol("height", units.length)
 The elevation from ground level.
 
 Symbol:
-    h
+    :code:`h`
 """
 
-law = Eq(potential_energy_of_body, mass * units.acceleration_due_to_gravity * height)
+law = Eq(potential_energy, mass * units.acceleration_due_to_gravity * height)
 """
-U = m * g * h
+:code:`U = m * g * h`
 
 Latex:
     .. math::
@@ -44,10 +44,10 @@ Latex:
 """
 
 
-@validate_input(body_mass_=symbols.basic.mass, height_=height)
-@validate_output(potential_energy_of_body)
+@validate_input(body_mass_=mass, height_=height)
+@validate_output(potential_energy)
 def calculate_potential_energy(body_mass_: Quantity, height_: Quantity) -> Quantity:
-    result_energy_expr = solve(law, potential_energy_of_body,
-        dict=True)[0][potential_energy_of_body]
+    result_energy_expr = solve(law, potential_energy,
+        dict=True)[0][potential_energy]
     result_expr = result_energy_expr.subs({mass: body_mass_, height: height_})
     return Quantity(result_expr)

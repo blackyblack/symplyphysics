@@ -18,7 +18,7 @@ from symplyphysics import (units, Quantity, Symbol, validate_input,
 from symplyphysics.core.expr_comparisons import expr_equals
 
 # Can have various dimensions - do not specify it
-displacement_function = symbols("displacement", cls=SymFunction)
+displacement = symbols("displacement", cls=SymFunction)
 """
 Displacement of oscillator from equilibrium as a function of time.
 
@@ -45,8 +45,8 @@ Symbol:
     :code:`t`
 """
 
-definition = Eq(Derivative(displacement_function(time), (time, 2)),
-    -angular_frequency**2 * displacement_function(time))
+definition = Eq(Derivative(displacement(time), (time, 2)),
+    -angular_frequency**2 * displacement(time))
 r"""
 :code:`Derivative(x(t), (t, 2)) = -1 * w^2 * x(t)`
 
@@ -67,16 +67,16 @@ Latex:
 
 _amplitude = symbols("amplitude")
 _initial_phase = symbols("initial_phase")
-_displacement_function_eq = Eq(displacement_function(time),
+_displacement_function_eq = Eq(displacement(time),
     _amplitude * cos(angular_frequency * time + _initial_phase))
-_dsolved = definition.subs(displacement_function(time), _displacement_function_eq.rhs)
+_dsolved = definition.subs(displacement(time), _displacement_function_eq.rhs)
 assert expr_equals(_dsolved.lhs, _dsolved.rhs)
 
 ## There are many solutions for harmonic_oscillation_eq. Add condition, that at initial point of time (time = 0)
 ## there is max displacement (displacement(time) = _amplitude).
 ## Let's prove that initial phase of cosine function (_displacement_function_eq) should be zero.
 
-_initial_condition = Eq(displacement_function(0), _amplitude)
+_initial_condition = Eq(displacement(0), _amplitude)
 _displacement_function_at_zero_time_eq = _displacement_function_eq.subs(time, 0)
 ## Initial phase solutions have period of 2*pi. Take first solution.
 _initial_phase_solved = solve([_displacement_function_at_zero_time_eq, _initial_condition],

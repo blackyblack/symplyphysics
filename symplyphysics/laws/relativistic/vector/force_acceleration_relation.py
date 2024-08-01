@@ -48,7 +48,7 @@ def acceleration_law(force_: Vector, velocity_: Vector) -> Vector:
     resulting_force = add_cartesian_vectors(force_, force_parallel_to_velocity_)
 
     mass_factor_ = rest_mass * lorentz_factor_law.definition.rhs.subs({
-        lorentz_factor_law.velocity: vector_magnitude(velocity_),
+        lorentz_factor_law.speed: vector_magnitude(velocity_),
     })
 
     return scale_vector(1 / mass_factor_, resulting_force)
@@ -59,7 +59,7 @@ def force_law(acceleration_: Vector, velocity_: Vector) -> Vector:
     acceleration_orthogonal_ = reject_cartesian_vector(acceleration_, velocity_)
 
     lorentz_factor_ = lorentz_factor_law.definition.rhs.subs({
-        lorentz_factor_law.velocity: vector_magnitude(velocity_),
+        lorentz_factor_law.speed: vector_magnitude(velocity_),
     })
 
     force_parallel_ = scale_vector(
@@ -86,7 +86,7 @@ def rest_mass_law(
     acceleration_orthogonal_ = reject_cartesian_vector(acceleration_, velocity_)
 
     lorentz_factor_ = lorentz_factor_law.definition.rhs.subs({
-        lorentz_factor_law.velocity: vector_magnitude(velocity_),
+        lorentz_factor_law.speed: vector_magnitude(velocity_),
     })
 
     lhs = vector_magnitude(force_)

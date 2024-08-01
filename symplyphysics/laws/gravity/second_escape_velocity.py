@@ -40,12 +40,12 @@ potential_energy_derived = solve(potential_energy_law_applied,
     dict=True)[0][potential_energy_law.gravitational_potential_energy]
 
 kinetic_energy_law_applied = kinetic_energy_law.law.subs({
-    kinetic_energy_law.symbols.basic.mass: potential_energy_law.second_mass,
-    kinetic_energy_law.body_velocity: velocity,
+    kinetic_energy_law.mass: potential_energy_law.second_mass,
+    kinetic_energy_law.speed: velocity,
 })
 kinetic_energy_derived = solve(kinetic_energy_law_applied,
-    kinetic_energy_law.kinetic_energy_of_body,
-    dict=True)[0][kinetic_energy_law.kinetic_energy_of_body]
+    kinetic_energy_law.kinetic_energy,
+    dict=True)[0][kinetic_energy_law.kinetic_energy]
 
 # Here we consider the fall of a body onto a planet from infinity. In this case, the law of conservation of energy will
 # look like: kinetic energy minus potential. But in the law "gravitational_potential_energy", the potential energy has
@@ -53,7 +53,7 @@ kinetic_energy_derived = solve(kinetic_energy_law_applied,
 # the conservation law looks like: E1=E2. Therefore, a minus sign is placed before the potential energy.
 conservation_law_applied = conservation_law.law.subs({
     conservation_law.mechanical_energy(conservation_law.time_after): kinetic_energy_derived,
-    conservation_law.mechanical_energy(conservation_law.time_before): -potential_energy_derived,
+    conservation_law.mechanical_energy(conservation_law.time_before): -1 * potential_energy_derived,
 })
 # The proof considers the fall of a body from infinity to the earth. But at the same time, in most cases, I consider
 # this speed as directed from the planet from which the body starts, which corresponds to the plus sign. Therefore,

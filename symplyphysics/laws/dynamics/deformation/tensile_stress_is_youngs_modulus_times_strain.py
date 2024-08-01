@@ -27,7 +27,7 @@ Latex:
     :math:`\sigma`
 """
 
-youngs_modulus = Symbol("youngs_modulus", units.pressure)
+young_modulus = Symbol("young_modulus", units.pressure)
 """
 Young's modulus of the material of the object.
 
@@ -43,7 +43,7 @@ Symbol:
     :code:`e`
 """
 
-law = Eq(stress, youngs_modulus * engineering_normal_strain)
+law = Eq(stress, young_modulus * engineering_normal_strain)
 r"""
 :code:`sigma = E * e`
 
@@ -54,16 +54,16 @@ Latex:
 
 
 @validate_input(
-    youngs_modulus_=youngs_modulus,
+    young_modulus_=young_modulus,
     engineering_normal_strain_=engineering_normal_strain,
 )
 @validate_output(stress)
 def calculate_tensile_stress(
-    youngs_modulus_: Quantity,
+    young_modulus_: Quantity,
     engineering_normal_strain_: float,
 ) -> Quantity:
     result = law.rhs.subs({
-        youngs_modulus: youngs_modulus_,
+        young_modulus: young_modulus_,
         engineering_normal_strain: engineering_normal_strain_,
     })
     return Quantity(result)

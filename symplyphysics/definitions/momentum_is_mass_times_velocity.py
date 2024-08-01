@@ -1,8 +1,8 @@
 """
-Momentum is mass times velocity
-===============================
+Momentum is mass times speed
+============================
 
-Momentum is a physical quantity equal to the product of the object's velocity and its mass.
+Momentum is a physical quantity equal to the product of the object's speed and its mass.
 """
 
 from sympy import (Eq, solve)
@@ -16,9 +16,9 @@ Symbol:
     :code:`p`
 """
 
-velocity = Symbol("velocity", units.velocity)
+speed = Symbol("speed", units.speed)
 """
-Velocity of the object.
+Speed of the object.
 
 Symbol:
     :code:`v`
@@ -32,7 +32,7 @@ Symbol:
     :code:`m`
 """
 
-definition = Eq(momentum, mass * velocity)
+definition = Eq(momentum, mass * speed)
 """
 :code:`p = m * v`
 
@@ -42,9 +42,9 @@ Latex:
 """
 
 
-@validate_input(velocity_=velocity, mass_=mass)
+@validate_input(speed_=speed, mass_=mass)
 @validate_output(momentum)
-def calculate_momentum(mass_: Quantity, velocity_: Quantity) -> Quantity:
+def calculate_momentum(mass_: Quantity, speed_: Quantity) -> Quantity:
     solved = solve(definition, momentum, dict=True)[0][momentum]
-    result_expr = solved.subs({mass: mass_, velocity: velocity_})
+    result_expr = solved.subs({mass: mass_, speed: speed_})
     return Quantity(result_expr)
