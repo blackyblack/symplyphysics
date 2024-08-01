@@ -1,9 +1,18 @@
+"""
+Canonical partition function of a classical discrete system
+===========================================================
+
+Let us assume a canonical ensemble, i.e. a thermodynamically large system that is in thermal contact
+with the environment, with a temperature T and whose volume and number of constituent particles remain
+constant. For a classical discrete system the partition function is the sum of the Boltzmann factors
+of all the possible energy states:
+"""
+
 from typing import Sequence
 from sympy import Eq, Idx, solve
 from symplyphysics import (
     dimensionless,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     SymbolIndexed,
@@ -11,24 +20,33 @@ from symplyphysics import (
     global_index,
 )
 
-# Description
-## Let us assume a canonical ensemble, i.e. a thermodynamically large system that is in thermal contact
-## with the environment, with a temperature T and whose volume and number of constituent particles remain
-## constant. For a classical discrete system the partition function is the sum of the Boltzmann factors
-## of all the possible energy states:
-
-# Law: Z = sum_i(f_i)
-## Z - partition function
-## f_i - Boltzmann factor of energy state i
-## sum_i - summation over all energy states
-
 partition_function = Symbol("partition_function", dimensionless)
+"""
+Partition function of the system.
+
+Symbol:
+    :code:`Z`
+"""
+
 boltzmann_factor = SymbolIndexed("boltzmann_factor", dimensionless)
+r"""
+:doc:`Boltzmann factor <definitions.boltzmann_factor>` of energy state :math:`i`.
+
+Symbol:
+    :code:`f_i`
+
+Latex:
+    :math:`f_i`
+"""
+
 law = Eq(partition_function, SumIndexed(boltzmann_factor[global_index], global_index))
+r"""
+:code:`Z = Sum(f_i, i)`
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        Z = \sum_i f_i
+"""
 
 
 @validate_input(boltzmann_factors_=boltzmann_factor)
