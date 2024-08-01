@@ -28,13 +28,6 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import energy_distribution
 
-## Definition: E = 1.5 * k * T
-## Where:
-## E is average kinetic energy of molecules
-## k is Boltzmann constant,
-## T is temperature.
-
-
 average_kinetic_energy = Symbol("average_kinetic_energy", units.energy, positive=True)
 r"""
 Average kinetic energy of the ideal gas.
@@ -49,7 +42,7 @@ Latex:
 equilibrium_temperature = clone_symbol(
     symbols.thermodynamics.temperature,
     "equilibrium_temperature",
-    positive=True
+    positive=True,
 )
 """
 Equilibrium temperature of the gas.
