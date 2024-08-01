@@ -59,7 +59,7 @@ energy_to_heating_ice_equation = thermal_energy_law.law.subs({
 })
 
 energy_to_melt_ice_equation = energy_melting_law.law.subs({
-    energy_melting_law.specific_heat_of_melting: specific_heat_melting_ice,
+    energy_melting_law.specific_heat_of_fusion: specific_heat_melting_ice,
     energy_melting_law.mass: mass_of_ice
 })
 

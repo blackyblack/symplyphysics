@@ -53,7 +53,7 @@ mass_of_water = solve(density_of_water_equation, density_law.mass,
 
 energy_for_melting_ice_value = energy_melting_law.law.subs({
     energy_melting_law.mass: mass_of_ice,
-    energy_melting_law.specific_heat_of_melting: specific_heat_melting_of_ice
+    energy_melting_law.specific_heat_of_fusion: specific_heat_melting_of_ice
 }).rhs
 energy_from_cooling_water_value = thermal_energy_law.law.subs({
     thermal_energy_law.heat_capacity:
