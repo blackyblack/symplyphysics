@@ -64,7 +64,7 @@ _heat_supplied_to_system = solve(second_law.law,
     })
 
 _work_done_by_system = work_law.law.rhs.subs({
-    work_law.pressure_inside_system: pressure,
+    work_law.pressure: pressure,
     work_law.infinitesimal_volume_change: volume_change,
 })
 
