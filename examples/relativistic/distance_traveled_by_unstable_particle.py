@@ -3,11 +3,9 @@
 from sympy import solve
 from symplyphysics import print_expression, Quantity, convert_to, units
 from symplyphysics.laws.kinematic import (
-    distance_from_constant_velocity as distance_law,
-)
+    distance_from_constant_velocity as distance_law,)
 from symplyphysics.laws.relativistic import (
-    relativistic_time_dilation as relativistic_time_law,
-)
+    relativistic_time_dilation as relativistic_time_law,)
 
 # Description
 ## The proper lifetime of an unstable particle is `10 ns`. Find the distance this particle will traverse

@@ -9,7 +9,7 @@ from symplyphysics import (
     validate_output,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.kinematic import (
+from symplyphysics.definitions import (
     temporal_frequency_from_period as frequency_law,)
 from symplyphysics.laws.waves import (
     wavelength_from_wave_speed_and_period as wavelength_law,

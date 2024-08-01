@@ -34,12 +34,12 @@ resistance1 = Symbol("resistance1", units.impedance)
 resistance2 = Symbol("resistance2", units.impedance)
 
 conductance1 = solve(
-    conductance_definition.definition.subs(conductance_definition.object_resistance, resistance1),
-    conductance_definition.object_conductivity)[0]
+    conductance_definition.definition.subs(conductance_definition.resistance, resistance1),
+    conductance_definition.conductivity)[0]
 
 conductance2 = solve(
-    conductance_definition.definition.subs(conductance_definition.object_resistance, resistance2),
-    conductance_definition.object_conductivity)[0]
+    conductance_definition.definition.subs(conductance_definition.resistance, resistance2),
+    conductance_definition.conductivity)[0]
 
 local_index_ = Idx("index_local_", (1, 2))
 parallel_conductance_law = parallel_conductivity.law.subs(global_index, local_index_)
@@ -52,8 +52,8 @@ parallel_conductance = solve(parallel_conductance_law,
     parallel_conductivity.parallel_conductance)[0]
 
 parallel_resistance_from_conductivity_law = solve(
-    conductance_definition.definition.subs(conductance_definition.object_conductivity,
-    parallel_conductance), conductance_definition.object_resistance)[0]
+    conductance_definition.definition.subs(conductance_definition.conductivity,
+    parallel_conductance), conductance_definition.resistance)[0]
 
 parallel_resistance_law = law.subs(global_index, local_index_)
 parallel_resistance_law = parallel_resistance_law.doit()

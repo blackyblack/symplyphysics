@@ -1,0 +1,47 @@
+name: Deploy
+
+on:
+  push:
+    branches: ["master"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Install Python 3
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install symplyphysics
+      run: pip install .[dev,plots]
+
+    - name: Build docs
+      run: docs/build.py -s symplyphysics -o docs/symplyphysics -e core
+
+    - name: Deploy HTML
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        deploy_key: ${{ secrets.SYMPLYPHYSICS_PAGES_PK }}
+        publish_branch: master
+        publish_dir: html
+        external_repository: symplyphysics/symplyphysics.github.io
+        user_name: symplyphysics
+        user_email: sam.and.tetris@gmail.com

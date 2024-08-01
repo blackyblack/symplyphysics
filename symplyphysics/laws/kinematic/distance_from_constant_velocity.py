@@ -2,7 +2,7 @@ from sympy import (Eq, solve, dsolve)
 from symplyphysics import (units, Quantity, Symbol, Function, print_expression, validate_input,
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.definitions import velocity_is_movement_derivative as velocity_definition
+from symplyphysics.definitions import speed_is_distance_derivative as velocity_definition
 
 # Description
 ## The velocity of a particle is constant if an object is moving equal distances at equal intervals of time and does not change its direction.
@@ -29,11 +29,11 @@ law = Eq(distance(movement_time), initial_position + constant_velocity * movemen
 # Derive the same law from velocity definition
 
 constant_velocity_movement_definition = velocity_definition.definition.subs({
-    velocity_definition.velocity(velocity_definition.moving_time): constant_velocity,
-    velocity_definition.moving_time: movement_time
+    velocity_definition.speed(velocity_definition.time): constant_velocity,
+    velocity_definition.time: movement_time
 })
 dsolved_movement = dsolve(constant_velocity_movement_definition,
-    velocity_definition.movement(movement_time))
+    velocity_definition.distance(movement_time))
 
 # Prove that derived movement function equals to law.rhs, given C1 = initial_position
 assert (expr_equals(dsolved_movement.rhs.subs("C1", initial_position), law.rhs))

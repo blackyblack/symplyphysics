@@ -1,5 +1,5 @@
-from typing import Optional, TypedDict
-from sympy.physics.units import speed_of_light, Dimension
+from typing import Optional
+from sympy.physics.units import speed_of_light
 from symplyphysics import (
     units,
     Quantity,
@@ -100,13 +100,7 @@ def calculate_parallel_velocity_component_in_lab_frame(
         proper_frame_velocity_.to_base_vector(),
     )
 
-    class Args(TypedDict, total=False):
-        tolerance: float
-        dimension: Optional[Dimension]
-
-    args = Args() if tolerance_ is None else Args(tolerance=tolerance_)
-
-    assert_equal(Quantity(vector_magnitude(cross)).scale_factor, 0, **args)
+    assert_equal(Quantity(vector_magnitude(cross)).scale_factor, 0, tolerance=tolerance_)
 
     result = parallel_velocity_component_in_lab_frame_law(
         parallel_velocity_component_in_proper_frame_.to_base_vector(),

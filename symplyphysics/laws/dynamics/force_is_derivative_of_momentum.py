@@ -1,3 +1,15 @@
+"""
+Force is derivative of momentum
+===============================
+
+Newton's second law of motion can be generalized in terms of linear momentum. Precisely,
+the net force exerted on a body is equal to the time derivative of the body's momentum.
+
+**Notes:**
+
+#. Works in relativistic mechanics as well as in classical mechanics.
+"""
+
 from sympy import Eq, Derivative
 from symplyphysics import (
     units,
@@ -8,23 +20,38 @@ from symplyphysics import (
     validate_output,
 )
 
-# Description
-## Newton's second law of motion can be generalized in terms of linear momentum.
-
-# Law: dp/dt = F
-## p - momentum projection
-## F - force projection
-## t - time
-
-# Notes
-## - Works in the relativistic case as well
-## - Also see its [vector counterpart](./vector/force_is_derivative_of_momentum.py)
-
 momentum = Function("momentum", units.momentum)
+"""
+The magnitude of the momentum of the body.
+
+Symbol:
+    :code:`p(t)`
+"""
+
 force = Function("force", units.force)
+"""
+The magnitude of the net :attr:`~symplyphysics.symbols.dynamics.force` exerted on the body.
+
+Symbol:
+    :code:`F(t)`
+"""
+
 time = Symbol("time", units.time)
+"""
+Time.
+
+Symbol:
+    :code:`t`
+"""
 
 law = Eq(Derivative(momentum(time), time), force(time))
+r"""
+Derivative(p(t), t) = F(t)
+
+Latex:
+    .. math::
+        \frac{d p}{d t} = F(t)
+"""
 
 
 @validate_input(

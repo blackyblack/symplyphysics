@@ -8,7 +8,8 @@ from symplyphysics.laws.electricity.circuits import full_gain_of_transistor_ampl
 ## The gain of the output matching circuit is 0.6.
 ## Then the full gain of the transistor amplifier is 1.44.
 
-Args = namedtuple("Args", ["gain_of_input_matching_circuit", "transistor_gain", "gain_of_output_matching_circuit"])
+Args = namedtuple("Args",
+    ["gain_of_input_matching_circuit", "transistor_gain", "gain_of_output_matching_circuit"])
 
 
 @fixture(name="test_args")
@@ -23,8 +24,8 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_full_gain(test_args: Args) -> None:
-    result = gain_law.calculate_full_gain(test_args.gain_of_input_matching_circuit, test_args.transistor_gain,
-        test_args.gain_of_output_matching_circuit)
+    result = gain_law.calculate_full_gain(test_args.gain_of_input_matching_circuit,
+        test_args.transistor_gain, test_args.gain_of_output_matching_circuit)
     assert_equal(result, 1.44)
 
 
@@ -45,5 +46,5 @@ def test_bad_transistor_gain(test_args: Args) -> None:
 def test_bad_gain_of_output_matching_circuit(test_args: Args) -> None:
     gain_of_output_matching_circuit = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        gain_law.calculate_full_gain(test_args.gain_of_input_matching_circuit, test_args.transistor_gain,
-            gain_of_output_matching_circuit)
+        gain_law.calculate_full_gain(test_args.gain_of_input_matching_circuit,
+            test_args.transistor_gain, gain_of_output_matching_circuit)

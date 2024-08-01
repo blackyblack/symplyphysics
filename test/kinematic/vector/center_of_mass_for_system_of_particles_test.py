@@ -1,11 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_equal,
+    assert_equal_vectors,
     errors,
     units,
     Quantity,
-    SI,
     QuantityVector,
 )
 from symplyphysics.laws.kinematic.vector import (
@@ -49,10 +48,10 @@ def test_basic_law_two_particles(test_args: Args) -> None:
         [test_args.m1, test_args.m2],
         [test_args.r1, test_args.r2],
     )
-    assert len(result.components) == 3
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
-    for result_component, correct_value in zip(result.components, [1.6, 2.2, 1.2]):
-        assert_equal(result_component, correct_value * units.meter)
+    assert_equal_vectors(
+        result,
+        QuantityVector([1.6 * units.meter, 2.2 * units.meter, 1.2 * units.meter]),
+    )
 
 
 def test_basic_law_three_particles(test_args: Args) -> None:
@@ -60,10 +59,10 @@ def test_basic_law_three_particles(test_args: Args) -> None:
         [test_args.m1, test_args.m2, test_args.m3],
         [test_args.r1, test_args.r2, test_args.r3],
     )
-    assert len(result.components) == 3
-    assert SI.get_dimension_system().equivalent_dims(result.dimension, units.length)
-    for result_component, correct_value in zip(result.components, [-0.5, 1.75, 0.0]):
-        assert_equal(result_component, correct_value * units.meter)
+    assert_equal_vectors(
+        result,
+        QuantityVector([-0.5 * units.meter, 1.75 * units.meter, 0]),
+    )
 
 
 def test_bad_masses(test_args: Args) -> None:

@@ -92,7 +92,7 @@ def test_rebased_add_vectors(test_args: Args) -> None:
 
 def test_invalid_add_vectors(test_args: Args) -> None:
     C1 = CoordinateSystem()
-    with raises(TypeError):
+    with raises(ValueError):
         add_cartesian_vectors(Vector([1, 2], test_args.C), Vector([1, 2], C1))
     # non-cartesian addition is not supported
     C2 = CoordinateSystem(CoordinateSystem.System.CYLINDRICAL)

@@ -1,25 +1,46 @@
+"""
+Maximum height from initial speed
+=================================
+
+The maximum height that a body thrown vertically will rise to depends on the initial speed.
+
+..
+    TODO Rename file
+"""
+
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output)
-# Description
-## The maximum height to which a body thrown vertically upwards will rise depends on the initial velocity
-## Law: h = (v**2)/(2*g)
-## v is initial velocity,
-## g is acceleration of free fall.
 
 maximum_height = Symbol("maximum_height", units.length)
-initial_velocity = Symbol("initial_velocity", units.velocity)
+"""
+The maximum height that the object will reach.
 
-law = Eq(maximum_height, initial_velocity**2 / (2 * units.acceleration_due_to_gravity))
+Symbol:
+    :code:`h`
+"""
+
+initial_speed = Symbol("initial_speed", units.velocity)
+"""
+The initial speed of the object.
+
+Symbol:
+    :code:`v`
+"""
+
+law = Eq(maximum_height, initial_speed**2 / (2 * units.acceleration_due_to_gravity))
+r"""
+:code:`h = v^2 / (2 * g)`
+
+Latex:
+    .. math::
+        h = \frac{v^2}{2 g}
+"""
 
 
-def print_law() -> str:
-    return print_expression(law)
-
-
-@validate_input(initial_velocity_=initial_velocity)
+@validate_input(initial_velocity_=initial_speed)
 @validate_output(maximum_height)
 def calculate_maximum_height(initial_velocity_: Quantity) -> Quantity:
     result_maximum_height = solve(law, maximum_height, dict=True)[0][maximum_height]
-    result_expr = result_maximum_height.subs({initial_velocity: initial_velocity_})
+    result_expr = result_maximum_height.subs({initial_speed: initial_velocity_})
     return Quantity(result_expr)

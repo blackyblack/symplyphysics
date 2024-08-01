@@ -30,12 +30,14 @@ eqn = Eq(electric_field_first_charge + electric_field_second_charge, 0)
 # This equation has 2 solutions
 solved = solve(eqn, zero_position)
 
+FIRST_CHARGE_VALUE = 2.1e-8
+SECOND_CHARGE_VALUE = -4.0 * FIRST_CHARGE_VALUE
 values = {
-    first_charge: Quantity(2.1e-8 * units.coulomb),
+    first_charge: Quantity(FIRST_CHARGE_VALUE * units.coulomb),
+    second_charge: Quantity(SECOND_CHARGE_VALUE * units.coulomb),
     first_position: Quantity(20.0 * units.centimeter),
     second_position: Quantity(70.0 * units.centimeter)
 }
-values[second_charge] = -4.0 * values[first_charge]
 
 for name, solution in zip(["first", "second"], solved):
     quantity = Quantity(solution.subs(values))

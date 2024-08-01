@@ -1,4 +1,4 @@
-from sympy import Eq, exp, I, S
+from sympy import Eq, exp, I, S, dsolve
 from sympy.physics.units import hbar
 from symplyphysics import (
     Quantity,
@@ -8,6 +8,12 @@ from symplyphysics import (
     units,
     dimensionless,
     convert_to,
+)
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.dynamics import kinetic_energy_via_momentum
+from symplyphysics.laws.quantum_mechanics.schrodinger import (
+    time_independent_equation_in_one_dimension as time_independent_eqn,
+    time_dependent_via_time_independent_solution as time_dependent_law,
 )
 
 # Description
@@ -40,7 +46,43 @@ time = Symbol("time", units.time)
 
 law = Eq(wave_function, exp((I / hbar) * (particle_momentum * position - particle_energy * time)))
 
-# TODO: derive from Schrödinger equation
+# Derive from Schrödinger equation
+
+_time_independent_eqn = time_independent_eqn.law.subs(
+    time_independent_eqn.position,
+    position,
+).subs({
+    time_independent_eqn.potential_energy(position):
+        0,
+    time_independent_eqn.particle_energy:
+    kinetic_energy_via_momentum.law.rhs.subs({
+    kinetic_energy_via_momentum.mass: time_independent_eqn.particle_mass,
+    kinetic_energy_via_momentum.momentum: particle_momentum,
+    }),
+})
+
+_time_independent_solution = dsolve(
+    _time_independent_eqn,
+    time_independent_eqn.wave_function(position),
+).rhs.subs({
+    "C1": 0,
+    "C2": 1,
+})
+
+# The solution is a linear combination of exponents corresponding to positive and negative values of particle's momentum.
+# If we can prove this law for any real value of momentum, it would be correct for any linear combination of solutions.
+# The magnitude of the constants before the exponents does not affect the solution either. Therefore we can set the constant
+# at the term with negative exponent to 0, and the constant at the term with positive exponent to 1.
+
+_time_dependent_solution = time_dependent_law.law.rhs.replace(
+    time_dependent_law.time_independent_wave_function,
+    lambda _: _time_independent_solution,
+).subs({
+    time_dependent_law.particle_energy: particle_energy,
+    time_dependent_law.time: time,
+})
+
+assert expr_equals(_time_dependent_solution, law.rhs)
 
 
 @validate_input(

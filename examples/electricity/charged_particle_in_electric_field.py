@@ -3,7 +3,7 @@
 from sympy import solve, symbols, sympify
 from symplyphysics import print_expression, Vector, Quantity, units, convert_to
 from symplyphysics.laws.electricity.vector import electric_field_is_force_over_test_charge as electric_field_law
-from symplyphysics.laws.dynamics import acceleration_from_force
+from symplyphysics.laws.dynamics import acceleration_is_force_over_mass
 from symplyphysics.laws.kinematic import constant_acceleration_movement_is_parabolic as const_acceleration_law
 from symplyphysics.laws.kinematic import distance_from_constant_velocity as const_velocity_law
 
@@ -33,10 +33,11 @@ electrostatic_force_vector = electric_field_law.electrostatic_force_law(electric
 electrostatic_force_y_expr = sympify(electrostatic_force_vector.components[1])
 electrostatic_force_y = electrostatic_force_y_expr.subs(electric_field_law.test_charge, drop_charge)
 
-drop_acceleration_y = solve(acceleration_from_force.law,
-    acceleration_from_force.symbols.kinematic.acceleration)[0].subs({
-    acceleration_from_force.symbols.dynamics.force: electrostatic_force_y,
-    acceleration_from_force.symbols.basic.mass: drop_mass,
+drop_acceleration_y = solve(acceleration_is_force_over_mass.law,
+    acceleration_is_force_over_mass.acceleration
+)[0].subs({
+    acceleration_is_force_over_mass.force: electrostatic_force_y,
+    acceleration_is_force_over_mass.mass: drop_mass,
     })
 
 movement_time = symbols("movement_time")

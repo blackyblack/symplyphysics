@@ -7,7 +7,7 @@ from symplyphysics.definitions import capacitance_from_charge_and_voltage as cap
 from symplyphysics.definitions import current_is_charge_derivative as charge_definition
 from symplyphysics.definitions import harmonic_oscillator_is_second_derivative_equation as oscillator
 from symplyphysics.laws.electricity import self_induction_voltage_from_current_derivative as induction_voltage_definition
-from symplyphysics.laws.kinematic import period_from_angular_frequency as period_definition
+from symplyphysics.definitions import period_from_angular_frequency as period_definition
 from symplyphysics.laws.electricity.circuits import sum_of_all_currents_through_an_electrical_node_is_zero as kirchhoff_law
 from symplyphysics.laws.electricity.circuits import sum_of_all_voltages_in_loop_is_zero as kirchhoff_law_2
 
@@ -123,13 +123,13 @@ voltage_diff_eq = Eq(capacitor_voltage(time), capacitor_voltage_solved)
 ## A * e^(i * w * t) + B * e^(-i * w * t), where w = 1 / sqrt(LC)
 
 oscillator_eq = oscillator.definition.subs(oscillator.time, time)
-oscillator_eq = oscillator_eq.subs(oscillator.displacement_function(time), capacitor_voltage(time))
+oscillator_eq = oscillator_eq.subs(oscillator.displacement(time), capacitor_voltage(time))
 angular_frequency_solved = simplify(
     solve([oscillator_eq, voltage_diff_eq], (oscillator.angular_frequency, capacitor_voltage(time)),
     dict=True)[0][oscillator.angular_frequency])
 
 # 6. Derive period from frequency
-period_law = period_definition.law.subs(period_definition.circular_frequency,
+period_law = period_definition.law.subs(period_definition.angular_frequency,
     angular_frequency_solved)
 period_solved = solve(period_law, period_definition.period, dict=True)[0][period_definition.period]
 ## Square roots fail to compare with each other. Raise both parts to power of 2 before checking for equality.

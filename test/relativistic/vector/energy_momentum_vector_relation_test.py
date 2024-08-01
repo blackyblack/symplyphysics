@@ -2,6 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy.physics.units import speed_of_light
 from symplyphysics import (
+    assert_equal_vectors,
     assert_equal,
     units,
     Quantity,
@@ -35,9 +36,7 @@ def test_args_fixture() -> Args:
 
 def test_momentum_law(test_args: Args) -> None:
     result = law.calculate_momentum(test_args.e, test_args.v)
-    assert len(result.components) == 3
-    for result_component, correct_component in zip(result.components, test_args.p.components):
-        assert_equal(result_component, correct_component)
+    assert_equal_vectors(result, test_args.p)
 
 
 def test_velocity_law(test_args: Args) -> None:
@@ -46,9 +45,7 @@ def test_velocity_law(test_args: Args) -> None:
         result_vector,
         subs={law.total_energy: test_args.e},
     )
-    assert len(result.components) == 3
-    for result_component, correct_component in zip(result.components, test_args.v.components):
-        assert_equal(result_component, correct_component)
+    assert_equal_vectors(result, test_args.v)
 
 
 def test_energy_law(test_args: Args) -> None:

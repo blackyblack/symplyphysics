@@ -84,7 +84,6 @@ p0 = plot(flight_distance_plotted, (throwing_angle, 0, pi / 2),
     xlabel="throwing angle, radians",
     ylabel="distance",
     legend=True,
-    annotations={},
     backend=MatplotlibBackend,
     show=False)
 

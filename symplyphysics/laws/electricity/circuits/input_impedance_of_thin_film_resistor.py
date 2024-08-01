@@ -21,12 +21,17 @@ capacitance = Symbol("capacitance", units.capacitance)
 law = Eq(input_impedance, resistance / (1 + I * 2 * pi * frequency * resistance * capacitance / 3))
 
 
-@validate_input(resistance_=resistance,
-                frequency_=frequency,
-                capacitance_=capacitance,)
+@validate_input(
+    resistance_=resistance,
+    frequency_=frequency,
+    capacitance_=capacitance,
+)
 @validate_output(input_impedance)
-def calculate_input_impedance(resistance_: Quantity, frequency_: Quantity,
-                                                  capacitance_: Quantity,) -> Quantity:
+def calculate_input_impedance(
+    resistance_: Quantity,
+    frequency_: Quantity,
+    capacitance_: Quantity,
+) -> Quantity:
     result_expr = solve(law, input_impedance, dict=True)[0][input_impedance]
     result_expr = result_expr.subs({
         resistance: resistance_,

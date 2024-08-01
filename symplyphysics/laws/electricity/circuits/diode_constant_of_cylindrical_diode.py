@@ -1,4 +1,4 @@
-from sympy import Eq, solve, sqrt
+from sympy import Eq, Rational, solve, sqrt
 from sympy.physics.units import electric_constant, elementary_charge, electron_rest_mass
 from symplyphysics import (
     units,
@@ -21,24 +21,25 @@ from symplyphysics import (
 ## ra - anode radius,
 ## rc - cathode radius.
 
-diode_constant = Symbol("diode_constant", units.current / units.voltage**(3 / 2))
+diode_constant = Symbol("diode_constant", units.current / units.voltage**Rational(3, 2))
 
 anode_area = Symbol("anode_area", units.area)
 anode_radius = Symbol("anode_radius", units.length)
 cathode_radius = Symbol("cathode_radius", units.length)
 
-law = Eq(diode_constant, (4 / 9) * electric_constant * sqrt(2 * elementary_charge / electron_rest_mass) * anode_area / (anode_radius**2 * (1 - cathode_radius / anode_radius)**2))
+law = Eq(
+    diode_constant,
+    Rational(4, 9) * electric_constant * sqrt(2 * elementary_charge / electron_rest_mass) *
+    anode_area / (anode_radius**2 * (1 - cathode_radius / anode_radius)**2))
 
 
-@validate_input(anode_area_=anode_area,
-    anode_radius_=anode_radius,
-    cathode_radius_=cathode_radius)
+@validate_input(anode_area_=anode_area, anode_radius_=anode_radius, cathode_radius_=cathode_radius)
 @validate_output(diode_constant)
-def calculate_diode_constant(anode_area_: Quantity, anode_radius_: Quantity, cathode_radius_: Quantity) -> Quantity:
+def calculate_diode_constant(anode_area_: Quantity, anode_radius_: Quantity,
+    cathode_radius_: Quantity) -> Quantity:
     if anode_radius_.scale_factor <= cathode_radius_.scale_factor:
         raise ValueError("The anode radius must be greater than the cathode radius")
-    result_expr = solve(law, diode_constant,
-        dict=True)[0][diode_constant]
+    result_expr = solve(law, diode_constant, dict=True)[0][diode_constant]
     result_expr = result_expr.subs({
         anode_area: anode_area_,
         anode_radius: anode_radius_,

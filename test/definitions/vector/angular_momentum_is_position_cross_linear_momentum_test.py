@@ -1,11 +1,10 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_equal,
+    assert_equal_vectors,
     units,
     Quantity,
     QuantityVector,
-    SI,
     errors,
 )
 from symplyphysics.definitions.vector import (
@@ -35,12 +34,11 @@ def test_args_fixture() -> Args:
 
 def test_definition(test_args: Args) -> None:
     result = angular_momentum_def.calculate_angular_momentum(test_args.r, test_args.p)
-    assert len(result.components) == 3
-    assert SI.get_dimension_system().equivalent_dims(result.dimension,
-        units.length * units.momentum)
-    for result_component, correct_value in zip(result.components, [3.0, -2.0, -1.0]):
-        assert_equal(result_component,
-            correct_value * units.kilogram * units.meter**2 / units.second)
+    unit = units.kilogram * units.meter**2 / units.second
+    assert_equal_vectors(
+        result,
+        QuantityVector([3.0 * unit, -2.0 * unit, -1.0 * unit]),
+    )
 
 
 def test_bad_position_vector(test_args: Args) -> None:

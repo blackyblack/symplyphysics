@@ -2,7 +2,7 @@
 
 from sympy import solve, symbols, pi
 from symplyphysics import units, print_expression
-from symplyphysics.laws.kinematic import angular_frequency_from_radians_per_time as angular_velocity_law
+from symplyphysics.laws.kinematic import average_angular_frequency_is_angular_distance_over_time as angular_velocity_law
 from symplyphysics.laws.kinematic import constant_acceleration_movement_is_parabolic as const_acceleration_law
 
 # Description
@@ -23,14 +23,14 @@ dive_time = solve(const_acceleration_law_sub, const_acceleration_law.movement_ti
 # Average angular velocity can be found as ratio of total angular displacement to total rotation time.
 # This is analogous to average linear velocity being ratio of total distance traveled to total travel time.
 angular_velocity_law_sub = angular_velocity_law.law.subs({
-    angular_velocity_law.radians: total_angular_displacement,
+    angular_velocity_law.angular_distance: total_angular_displacement,
     angular_velocity_law.time: dive_time,
 })
 # We are not interested in the sign of angular velocity, thus angular frequency and angular velocity
 # are interchangeable terms in this context.
 average_angular_velocity = solve(
     angular_velocity_law_sub,
-    angular_velocity_law.angular_frequency,
+    angular_velocity_law.average_angular_frequency,
 )[0]
 
 average_angular_velocity_value = average_angular_velocity.subs({

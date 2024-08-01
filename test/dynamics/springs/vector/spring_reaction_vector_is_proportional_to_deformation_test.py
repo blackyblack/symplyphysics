@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_equal,
+    assert_equal_vectors,
     errors,
     units,
     Quantity,
@@ -26,14 +26,18 @@ def test_args_fixture() -> Args:
 
 def test_basic_force(test_args: Args) -> None:
     result = spring_law.calculate_force(test_args.k, test_args.d)
-    assert_equal(result.components[0], -0.3 * units.newton)
-    assert_equal(result.components[1], -0.1 * units.newton)
+    assert_equal_vectors(
+        result,
+        QuantityVector([-0.3 * units.newton, -0.1 * units.newton]),
+    )
 
 
 def test_basic_deformation(test_args: Args) -> None:
     result = spring_law.calculate_deformation(test_args.k, test_args.f)
-    assert_equal(result.components[0], 3 * units.meter)
-    assert_equal(result.components[1], 1 * units.meter)
+    assert_equal_vectors(
+        result,
+        QuantityVector([3 * units.meter, 1 * units.meter]),
+    )
 
 
 def test_bad_elastic_coefficient(test_args: Args) -> None:
