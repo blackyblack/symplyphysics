@@ -1,3 +1,12 @@
+"""
+Chemical potential is particle count derivative of Gibbs energy
+===============================================================
+
+The chemical potential of the system is the amount of energy the system absorbs or releases
+due to the introduction of a particle into the system, i.e. when the particle count increases
+by one.
+"""
+
 from sympy import Eq, Derivative, Point2D
 from symplyphysics import (
     symbols,
@@ -6,43 +15,65 @@ from symplyphysics import (
     Quantity,
     Symbol,
     Function,
-    print_expression,
     validate_input,
     validate_output,
 )
 from symplyphysics.core.geometry.line import two_point_function
 
-# Description
-## The chemical potential of the system is the amount of energy the system absorbs or releases
-## due to the introduction of a particle into the system, i.e. when the particle count increases
-## by one.
-
-# Law: mu = (dG/dN)_(T, p)
-## mu - chemical potential
-## G = G(T, p, N) - [Gibbs energy](./isobaric_reaction_potential.py)
-## N - particle count
-## T - temperature
-## p - pressure
-## (d/dN)_(T, p) - derivative w.r.t. particle count at constant temperature and pressure
-
 chemical_potential = Symbol("chemical_potential", units.energy)
-gibbs_energy = Function("gibbs_energy", units.energy)
-particle_count = Symbol("particle_count", dimensionless)
-temperature = symbols.thermodynamics.temperature
-pressure = Symbol("pressure", units.pressure)
+r"""
+Chemical potential of the system.
 
-# Note that `temperature` and `pressure` are only used to show that the gibbs_energy
-# function depends on them and they are held constant during differentiation with
-# respect to `particle_count`.
+Symbol:
+    :code:`mu`
+
+Latex:
+    :math:`\mu`
+"""
+
+gibbs_energy = Function("gibbs_energy", units.energy)
+"""
+Gibbs energy of the system as a function of its natural variables.
+
+Symbol:
+    :code:`G(T, p, N)`
+"""
+
+particle_count = Symbol("particle_count", dimensionless)
+"""
+Number of particles in the system.
+
+Symbol:
+    :code:`N`
+"""
+
+temperature = symbols.thermodynamics.temperature
+"""
+Temperature of the system.
+
+Symbol:
+    :code:`T`
+"""
+
+pressure = Symbol("pressure", units.pressure)
+"""
+Pressure inside the system.
+
+Symbol:
+    :code:`p`
+"""
 
 law = Eq(
     chemical_potential,
     Derivative(gibbs_energy(temperature, pressure, particle_count), particle_count),
 )
+r"""
+:code:`mu = Derivative(G(T, p, N), N)`
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        \mu = \left( \frac{\partial G}{\partial N} \right)_{T, p}
+"""
 
 
 @validate_input(
