@@ -5,7 +5,7 @@ from symplyphysics import print_expression, Quantity, prefixes, units, convert_t
 from symplyphysics.core.symbols.celsius import to_kelvin_quantity, Celsius
 from symplyphysics.laws.electricity import power_factor_from_active_and_full_power as efficiency_law
 from symplyphysics.laws.thermodynamics import (
-    energy_from_combustion as combustion_energy_law,
+    heat_of_combustion_via_mass as combustion_energy_law,
     thermal_energy_from_heat_capacity_and_temperature as thermal_energy_law,
 )
 from symplyphysics.laws.quantities import quantity_is_specific_quantity_times_mass as specific_qty_law
@@ -108,7 +108,7 @@ mass_of_gas_value = solve(
     }), mass_rate_law.mass(velocity_law.movement_time))[0]
 
 energy_from_combustion_of_metan_value = combustion_energy_law.law.subs({
-    combustion_energy_law.specific_heat_combustion: specific_heat_of_combustion_metan,
+    combustion_energy_law.specific_heat_of_combustion: specific_heat_of_combustion_metan,
     combustion_energy_law.mass: mass_of_gas_value
 }).rhs
 
