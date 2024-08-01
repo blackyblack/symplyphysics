@@ -1,10 +1,8 @@
-from sympy import simplify
 from collections import namedtuple
 from pytest import fixture
 from symplyphysics import (
     units,
     Quantity,
-    assert_equal,
     prefixes
 )
 from symplyphysics.core.fields.vector_field import VectorField
@@ -27,4 +25,13 @@ def test_args_fixture() -> Args:
 
 def test_basic_magnetic_field_divergence_condition(test_args: Args) -> None:
     result = divergence_cond.magnetic_field_divergence_condition(test_args.magnetic_induction)
-    assert simplify(result.lhs) == result.rhs
+    assert result is True
+
+
+def test_bad_condition() -> None:
+    magnetic_amplitude = Quantity(1 * prefixes.kilo * units.tesla)
+    magnetic_induction = VectorField(lambda point: [(point.x / Quantity(1 * units.meter)) * magnetic_amplitude,
+                                                      (point.y / Quantity(1 * units.meter)) * magnetic_amplitude,
+                                                      magnetic_amplitude])
+    result = divergence_cond.magnetic_field_divergence_condition(magnetic_induction)
+    assert result is False
