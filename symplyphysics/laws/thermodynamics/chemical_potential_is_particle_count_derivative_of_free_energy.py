@@ -1,3 +1,12 @@
+"""
+Chemical potential is particle count derivative of free energy
+==============================================================
+
+The chemical potential of the system is the amount of energy the system absorbs or releases
+due to the introduction of a particle into the system, i.e. when the particle count increases
+by one.
+"""
+
 from sympy import Eq, Derivative, Point2D
 from symplyphysics import (
     symbols,
@@ -6,16 +15,10 @@ from symplyphysics import (
     Quantity,
     Symbol,
     Function,
-    print_expression,
     validate_input,
     validate_output,
 )
 from symplyphysics.core.geometry.line import two_point_function
-
-# Description
-## The chemical potential of the system is the amount of energy the system absorbs or releases
-## due to the introduction of a particle into the system, i.e. when the particle count increases
-## by one.
 
 # Law: mu = (dF/dN)_(T, V)
 ## mu - chemical potential
@@ -26,23 +29,62 @@ from symplyphysics.core.geometry.line import two_point_function
 ## (d/dN)_(T, V) - derivative w.r.t. particle count at constant temperature and volume
 
 chemical_potential = Symbol("chemical_potential", units.energy)
-free_energy = Function("free_energy", units.energy)
-particle_count = Symbol("particle_count", dimensionless)
-temperature = symbols.thermodynamics.temperature
-volume = Symbol("volume", units.volume)
+r"""
+Chemical potential of the system.
 
-# Note that `temperature` and `volume` are only used to show that the free_energy
-# function depends on them and they are held constant during differentiation with
-# respect to `particle_count`.
+Symbol:
+    :code:`mu`
+
+Latex:
+    :math:`\mu`
+"""
+
+free_energy = Function("free_energy", units.energy)
+"""
+Helmholtz free energy of the system as a function of its natural variables.
+
+..
+    TODO add link to definition file
+
+Symbol:
+    :code:`F`
+"""
+
+particle_count = Symbol("particle_count", dimensionless)
+"""
+Number of particles in the system.
+
+Symbol:
+    :code:`N`
+"""
+
+temperature = symbols.thermodynamics.temperature
+"""
+Temperature of the system.
+
+Symbol:
+    :code:`T`
+"""
+
+volume = Symbol("volume", units.volume)
+"""
+Volume of the system.
+
+Symbol:
+    :code:`V`
+"""
 
 law = Eq(
     chemical_potential,
     Derivative(free_energy(temperature, volume, particle_count), particle_count),
 )
+r"""
+:code:`mu = Derivative(F(T, V, N), N)`
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        \mu = \left( \frac{\partial F}{\partial N} \right)_{T, V}
+"""
 
 
 @validate_input(
