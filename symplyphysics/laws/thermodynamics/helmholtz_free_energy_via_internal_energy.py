@@ -1,3 +1,11 @@
+"""
+Helmholtz free energy via internal energy
+=========================================
+
+*Helmholtz free energy* is a thermodynamic potential that measures the useful work obtainable
+from a closed thermodynamic system at a constant temperature (isothermal process).
+"""
+
 from sympy import Eq
 from symplyphysics import (
     units,
@@ -8,25 +16,46 @@ from symplyphysics import (
     symbols,
 )
 
-# Description
-## The Helmholtz free energy is a thermodynamic potential that measures the useful work obtainable
-## from a closed thermodynamic system at a constant temperature (isothermal).
-
-# Law: F = U - T * S
-## F - Helmholtz free energy
-## U - internal energy of system
-## T - absolute temperature of surroundings
-## S - entropy of system
-
 helmholtz_free_energy = Symbol("helmholtz_free_energy", units.energy)
-internal_energy = Symbol("internal_energy", units.energy)
-temperature = symbols.thermodynamics.temperature
-entropy = Symbol("entropy", units.energy / units.temperature)
+"""
+Helmholtz free energy of the system.
 
-law = Eq(
-    helmholtz_free_energy,
-    internal_energy - temperature * entropy,
-)
+Symbol:
+    :code:`F`
+"""
+
+internal_energy = Symbol("internal_energy", units.energy)
+"""
+Internal energy of the system.
+
+Symbol:
+    :code:`U`
+"""
+
+temperature = symbols.thermodynamics.temperature
+"""
+Temperature of the system.
+
+Symbol:
+    :code:`T`
+"""
+
+entropy = Symbol("entropy", units.energy / units.temperature)
+"""
+Entropy of the system.
+
+Symbol:
+    :code:`S`
+"""
+
+law = Eq(helmholtz_free_energy, internal_energy - temperature * entropy)
+r"""
+:code:`F = U - T * S`
+
+Latex:
+    .. math::
+        F = U - T S
+"""
 
 
 @validate_input(
