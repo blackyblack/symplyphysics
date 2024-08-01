@@ -1,3 +1,25 @@
+r"""
+Compressibility factor via intermolecular force potential
+=========================================================
+
+The virial equation describes the deviation of a real gas from ideal gas behaviour. The virial coefficients
+in the virial expansion account for interactions between successively larger groups of molecules. Since
+interactions between large numbers of molecules are rare, the virial equation is usually truncated at the third
+term onwards. Under the assumption that only pair interactions are present, the compressibility factor can be
+linked to the intermolecular force potential.
+
+**Notation:**
+
+#. :math:`k_\text{B}` is the Boltzmann constant.
+
+**Conditions:**
+
+#. The virial expansion is done up to the second virial coefficient inclusively.
+
+..
+    TODO Simplify this law by reducing it to the formula of the second virial coefficient
+"""
+
 from sympy import Eq, Integral, pi, exp, S
 from symplyphysics import (
     clone_symbol,
@@ -7,7 +29,6 @@ from symplyphysics import (
     Quantity,
     Symbol,
     Function,
-    print_expression,
     validate_input,
     validate_output,
     convert_to_float,
@@ -15,38 +36,71 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.chemistry.potential_energy_models import hard_spheres_potential
 
-# Description
-## The virial equation describes the deviation of a real gas from ideal gas behaviour. The virial coefficients
-## in the virial expansion account for interactions between successively larger groups of molecules. Since
-## interactions between large numbers of molecules are rare, the virial equation is usually truncated at the third
-## term onwards. Under the assumption that only pair interactions are present, the compressibility factor can be
-## linked to the intermolecular force potential:
-
-# Law: Z = 1 + 2 * pi * N / V * Integral((1 - exp(-phi(r) / (k * T))) * r**2, (r, 0, infinity))
-## Z - [compressibility factor](../../definitions/compressibility_factor_is_deviation_from_ideal_gas.py)
-## N - number of particles
-## V - volume
-## r - intermolecular distance
-## phi(r) - intermolecular force potential as a function of intermolecular distance
-## k - Boltzmann constant
-## T - absolute temperature
-
-# Conditions
-## - The virial expansion is done up to the second virial coefficient inclusively.
-
 compressibility_factor = Symbol("compressibility_factor", dimensionless, positive=True)
-number_of_particles = Symbol("number_of_particles", dimensionless, integer=True, positive=True)
+"""
+:doc:`Compressibility factor <definitions.compressibility_factor_is_deviation_from_ideal_gas>` of the gas.
+
+Symbol:
+    :code:`Z`
+"""
+
+particle_count = Symbol("particle_count", dimensionless, integer=True, positive=True)
+"""
+Number of particles in the system.
+
+Symbol:
+    :code:`N`
+"""
+
 volume = Symbol("volume", units.volume, positive=True)
+"""
+Volume of the system.
+
+Symbol:
+    :code:`V`
+"""
+
 intermolecular_distance = Symbol("intermolecular_distance", units.length, positive=True)
+"""
+Distance between gas molecules.
+
+Symbol:
+    :code:`r`
+"""
+
 intermolecular_force_potential = Function("intermolecular_force_potential", units.energy, real=True)
+r"""
+Intermolecular force potential as a function of intermolecular distance.
+
+Symbol:
+    :code:`phi(r)`
+
+Latex:
+    :math:`\varphi(r)`
+"""
+
 temperature = clone_symbol(symbols.thermodynamics.temperature, "temperature", positive=True)
+"""
+Temperature of the system.
+
+Symbol:
+    :code:`T`
+"""
 
 law = Eq(
-    compressibility_factor, 1 + 2 * pi * number_of_particles / volume * Integral(
+    compressibility_factor, 1 + 2 * pi * particle_count / volume * Integral(
     (1 - exp(-1 * intermolecular_force_potential(intermolecular_distance) /
     (units.boltzmann_constant * temperature))) * intermolecular_distance**2,
     (intermolecular_distance, 0, S.Infinity),
     ))
+r"""
+:code:`Z = 1 + 2 * pi * (N / V) * Integral((1 - exp(-1 * phi(r) / (k_B * T))) * r^2, (r, 0, Infinity))`
+
+Latex:
+    .. math::
+        Z = 1 + \frac{2 \pi N}{V}
+                \int \limits_0^{\infty} \left( 1 - \exp{\left( - \frac{\varphi(r)}{k_\text{B} T} \right)} \right) r^2 dr
+"""
 
 # Calculate the compressibility factor for the model of hard spheres
 
@@ -65,12 +119,8 @@ _hard_spheres_compressibility_factor = law.rhs.subs({
 assert expr_equals(_hard_spheres_compressibility_factor.diff(temperature), 0)
 
 
-def print_law() -> str:
-    return print_expression(law)
-
-
 @validate_input(
-    number_of_particles_=number_of_particles,
+    number_of_particles_=particle_count,
     volume_=volume,
     sphere_diameter_=intermolecular_distance,
 )
@@ -83,7 +133,7 @@ def calculate_compressibility_factor(
     # Calculate for the model of hard spheres
 
     result = _hard_spheres_compressibility_factor.subs({
-        number_of_particles: number_of_particles_,
+        particle_count: number_of_particles_,
         volume: volume_,
         _sphere_diameter: sphere_diameter_,
     })
