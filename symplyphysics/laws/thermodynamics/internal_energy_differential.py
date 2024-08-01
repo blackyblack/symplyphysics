@@ -1,10 +1,33 @@
+r"""
+Internal energy differential
+============================
+
+The *fundamental thermodynamic relations* are fundamental equations which demonstate how important
+thermodynamic quantities depend on variables that are measurable experimentally.
+
+**Notation:**
+
+#. :math:`d` denotes an exact, path-independent differential.
+
+**Notes:**
+
+#. Entropy, volume, and particle count are so called natural variables of internal energy as a
+   thermodynamic potential.
+#. For a system with more than one type of particles, the last term can be represented as a sum over all
+   types of particles, i.e. :math:`\sum_i \mu_i \, d N_i`.
+
+**Conditions:**
+
+#. The system is in thermal equilibrium with its surroundings
+#. The system is composed of only one component.
+"""
+
 from sympy import Eq, solve
 from symplyphysics import (
     units,
     dimensionless,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     symbols,
@@ -16,43 +39,77 @@ from symplyphysics.laws.thermodynamics import (
     internal_energy_change_via_heat_and_work as first_law,
 )
 
-# Description
-## The fundamental thermodynamic relation are fundamental equations which demonstate how important
-## thermodynamic quantities depend on variables that are measurable experimentally.
-
-# Law: dU = T * dS - P * dV + mu * dN
-## U - internal energy
-## T - absolute temperature
-## S - entropy
-## P - pressure
-## V - volume
-## mu - chemical potential
-## N - number of particles in the system
-## Notation: d(x) - full differential of `x`
-
-# Note
-## - Entropy `S`, volume `V` and particle count `N` are so called natural variables of internal energy as a
-##   thermodynamic potential.
-## - For a system with more than one type of particles, the last term can be represented as a sum over all
-##   types of particles, i.e. `Sum(mu_i * d(N_i), i)`.
-
-# Conditions
-## - The system is in thermal equilibrium with its surroundings
-## - There is only one type of particles in the system.
-
 internal_energy_change = Symbol("internal_energy_change", units.energy)
+"""
+Infinitesimal change in internal energy of the system.
+
+Symbol:
+    :code:`dU`
+"""
+
 temperature = symbols.thermodynamics.temperature
+"""
+Temperature of the system.
+
+Symbol:
+    :code:`T`
+"""
+
 entropy_change = Symbol("entropy_change", units.energy / units.temperature)
+"""
+Infinitesimal change in entropy of the system.
+
+Symbol:
+    :code:`dS`
+"""
+
 pressure = Symbol("pressure", units.pressure)
+"""
+Pressure inside the system.
+
+Symbol:
+    :code:`p`
+"""
+
 volume_change = Symbol("volume_change", units.volume)
+"""
+Infinitesimal change in volume of the system.
+
+Symbol:
+    :code:`dV`
+"""
+
 chemical_potential = Symbol("chemical_potential", units.energy)
+r"""
+Chemical potential of the system.
+
+Symbol:
+    :code:`mu`
+
+Latex:
+    :math:`\mu`
+"""
+
 particle_count_change = Symbol("particle_count_change", dimensionless)
+"""
+Infinitesimal change in the number of particles in the system.
+
+Symbol:
+    :code:`dN`
+"""
 
 law = Eq(
     internal_energy_change,
     temperature * entropy_change - pressure * volume_change +
     chemical_potential * particle_count_change,
 )
+r"""
+:code:`dU = T * dS - p * dV + mu * dN`
+
+Latex:
+    .. math::
+        dU = T \, dS - p \, dV + \mu \, dN
+"""
 
 # Derive from the first and second laws of thermodynamics
 # TODO: refactor proof to take account of changes in the number of particles
@@ -76,10 +133,6 @@ _internal_energy_change = first_law.law.rhs.subs({
 _expr_from_law = law.rhs.subs({particle_count_change: 0})
 
 assert expr_equals(_expr_from_law, _internal_energy_change)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 #pylint: disable=too-many-arguments
