@@ -2,7 +2,7 @@ from sympy import solve
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression
-from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_velocity as kinetic_energy
+from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_speed as kinetic_energy
 
 print(f"Formula is:\n{print_expression(kinetic_energy.law)}")
 

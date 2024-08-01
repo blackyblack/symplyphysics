@@ -2,7 +2,7 @@
 
 from sympy import solve, symbols, pi
 from symplyphysics import units, print_expression
-from symplyphysics.laws.kinematic import angular_frequency_from_radians_per_time as angular_velocity_law
+from symplyphysics.laws.kinematic import average_angular_frequency_is_angular_distance_over_time as angular_velocity_law
 from symplyphysics.laws.kinematic import constant_acceleration_movement_is_parabolic as const_acceleration_law
 
 # Description

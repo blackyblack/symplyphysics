@@ -10,8 +10,8 @@ from symplyphysics import (
     Vector,
 )
 from symplyphysics.definitions import (
-    angular_velocity_is_angle_derivative as angular_velocity_def,
-    angular_acceleration_is_angular_velocity_derivative as angular_acceleration_def,
+    angular_acceleration_is_angular_speed_derivative as angular_acceleration_def,
+    angular_speed_is_angular_distance_derivative as angular_velocity_def,
 )
 from symplyphysics.laws.kinematic import (
     linear_velocity_from_angular_velocity_and_radius as linear_velocity_law,

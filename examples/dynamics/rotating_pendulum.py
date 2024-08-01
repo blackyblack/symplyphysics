@@ -20,10 +20,10 @@ from symplyphysics import (
     print_expression,
 )
 from symplyphysics.definitions import (
+    angular_acceleration_is_angular_speed_derivative as angular_acceleration_def,
+    angular_speed_is_angular_distance_derivative as angular_speed_def,
     harmonic_oscillator_is_second_derivative_equation as harmonic_def,
     period_from_angular_frequency as period_def,
-    angular_velocity_is_angle_derivative as angular_speed_def,
-    angular_acceleration_is_angular_velocity_derivative as angular_acceleration_def,
 )
 from symplyphysics.laws.dynamics.vector import (
     relative_acceleration_from_force as motion_law,

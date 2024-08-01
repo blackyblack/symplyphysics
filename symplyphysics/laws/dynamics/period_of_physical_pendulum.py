@@ -29,15 +29,15 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import (
-    angular_velocity_is_angle_derivative as angular_velocity_def,
-    angular_acceleration_is_angular_velocity_derivative as angular_acceleration_def,
+    angular_acceleration_is_angular_speed_derivative as angular_acceleration_def,
+    angular_speed_is_angular_distance_derivative as angular_velocity_def,
     harmonic_oscillator_is_second_derivative_equation as oscillator_eqn,
     period_from_angular_frequency as period_law,
 )
 from symplyphysics.laws.dynamics import (
-    acceleration_from_force as newtons_second_law,
-    torque_due_to_twisting_force as torque_def,
+    acceleration_is_force_over_mass as newtons_second_law,
     moment_of_force_from_moment_of_inertia_and_angular_acceleration as torque_law,
+    torque_via_force_and_radial_distance as torque_def,
 )
 
 period = Symbol("period", units.time, positive=True)

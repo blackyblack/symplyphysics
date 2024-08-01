@@ -4,14 +4,14 @@ Period from angular frequency
 
 The period of oscillations is the time it takes for the system to perform a single oscillation cycle.
 The Period is inversely proportional to the angular frequency of oscillations. See
-:doc:`laws.kinematic.angular_frequency_from_radians_per_time` for additional information.
+:doc:`laws.kinematic.average_angular_frequency_is_angular_distance_over_time` for additional information.
 """
 
 from sympy import (Eq, solve, pi)
 from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.kinematic import angular_frequency_from_radians_per_time as frequency_def
+from symplyphysics.laws.kinematic import average_angular_frequency_is_angular_distance_over_time as frequency_def
 
 period = Symbol("period", units.time)
 """

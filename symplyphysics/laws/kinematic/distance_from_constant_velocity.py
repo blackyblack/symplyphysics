@@ -2,7 +2,7 @@ from sympy import (Eq, solve, dsolve)
 from symplyphysics import (units, Quantity, Symbol, Function, print_expression, validate_input,
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.definitions import velocity_is_movement_derivative as velocity_definition
+from symplyphysics.definitions import speed_is_distance_derivative as velocity_definition
 
 # Description
 ## The velocity of a particle is constant if an object is moving equal distances at equal intervals of time and does not change its direction.

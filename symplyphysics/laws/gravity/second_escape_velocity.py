@@ -5,7 +5,7 @@ from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print
 from symplyphysics.core.expr_comparisons import expr_equals
 
 from symplyphysics.laws.gravity import gravitational_potential_energy as potential_energy_law
-from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_velocity as kinetic_energy_law
+from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_speed as kinetic_energy_law
 from symplyphysics.laws.conservation import mechanical_energy_after_equals_to_mechanical_energy_before as conservation_law
 
 # The second cosmic velocity is the lowest velocity that must be given to an object starting from the surface of
