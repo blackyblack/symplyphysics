@@ -11,9 +11,9 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import (
-    internal_energy_change_via_amount_of_heat_and_work_done as first_law,
     entropy_increment_in_reversible_process as second_law,
     infinitesimal_work_in_quasistatic_process as work_law,
+    internal_energy_change_via_heat_and_work as first_law,
 )
 
 # Description
