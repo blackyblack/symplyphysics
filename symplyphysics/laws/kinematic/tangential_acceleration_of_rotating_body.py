@@ -1,10 +1,10 @@
 from sympy import Eq, solve, Derivative
-from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, Function, print_expression, validate_input,
-    validate_output, angle_type)
+from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, Function,
+    print_expression, validate_input, validate_output, angle_type)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematic import linear_velocity_from_angular_velocity_and_radius as linear_velocity_law
-from symplyphysics.definitions import angular_acceleration_is_angular_velocity_derivative as angular_acceleration_def
-from symplyphysics.definitions import acceleration_is_velocity_derivative as acceleration_def
+from symplyphysics.definitions import angular_acceleration_is_angular_speed_derivative as angular_acceleration_def
+from symplyphysics.definitions import acceleration_is_speed_derivative as acceleration_def
 
 # Description
 ## The tangential acceleration of a rotating body represents the change in magnitude
@@ -43,7 +43,7 @@ diff_linear_velocity_law = Eq(linear_velocity_law_sub.lhs.diff(time),
 angular_acceleration_def_sub = angular_acceleration_def.definition.subs(
     angular_acceleration_def.time, time)
 angular_acceleration_def_sub = angular_acceleration_def_sub.subs(
-    angular_acceleration_def.angular_velocity(time), angular_velocity(time))
+    angular_acceleration_def.angular_speed(time), angular_velocity(time))
 
 linear_velocity_derivative = solve([diff_linear_velocity_law, angular_acceleration_def_sub],
     (Derivative(angular_velocity(time), time), Derivative(linear_velocity(time), time)),
@@ -53,11 +53,11 @@ linear_velocity_derivative_eq = Eq(Derivative(linear_velocity(time), time),
 
 # a_t = dv/dt
 acceleration_def_sub = acceleration_def.definition.subs(acceleration_def.time, time)
-acceleration_def_sub = acceleration_def_sub.subs(acceleration_def.velocity(time),
+acceleration_def_sub = acceleration_def_sub.subs(acceleration_def.speed(time),
     linear_velocity(time))
 tangential_acceleration_value = solve([linear_velocity_derivative_eq, acceleration_def_sub],
-    (Derivative(linear_velocity(time), time), acceleration_def.acceleration_function(time)),
-    dict=True)[0][acceleration_def.acceleration_function(time)]
+    (Derivative(linear_velocity(time), time), acceleration_def.acceleration(time)),
+    dict=True)[0][acceleration_def.acceleration(time)]
 tangential_acceleration_derived = tangential_acceleration_value.subs(
     angular_acceleration_def.angular_acceleration(time), angular_acceleration)
 

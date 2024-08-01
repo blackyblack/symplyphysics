@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_equal,
+    assert_equal_vectors,
     units,
     errors,
     Quantity,
@@ -34,9 +34,10 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     result = torque_law.calculate_torque(test_args.L0, test_args.L1, test_args.t)
-    assert len(result.components) == 3
-    for result_component, correct_value in zip(result.components, (-1, 0, 2)):
-        assert_equal(result_component, correct_value * units.newton * units.meter)
+    assert_equal_vectors(
+        result,
+        QuantityVector([-1 * units.newton * units.meter, 0, 2 * units.newton * units.meter]),
+    )
 
 
 def test_bad_angular_momenta(test_args: Args) -> None:

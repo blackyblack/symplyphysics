@@ -29,12 +29,15 @@ cross_sectional_area_of_ionization = Symbol("cross_sectional_area_of_ionization"
 
 ionization_energy = Symbol("ionization_energy", units.energy)
 energy_of_electron = Symbol("energy_of_electron", units.energy)
-maximum_cross_sectional_area_of_ionization = Symbol("maximum_cross_sectional_area_of_ionization", units.area)
+maximum_cross_sectional_area_of_ionization = Symbol("maximum_cross_sectional_area_of_ionization",
+    units.area)
 energy_of_electron_at_max_area = Symbol("energy_of_electron_at_max_area", units.energy)
 
-expression_1 = (energy_of_electron - ionization_energy) / (energy_of_electron_at_max_area - ionization_energy)
+expression_1 = (energy_of_electron - ionization_energy) / (energy_of_electron_at_max_area -
+    ionization_energy)
 expression_2 = maximum_cross_sectional_area_of_ionization * expression_1
-expression_3 = exp((energy_of_electron_at_max_area - energy_of_electron) / (energy_of_electron_at_max_area - ionization_energy))
+expression_3 = exp((energy_of_electron_at_max_area - energy_of_electron) /
+    (energy_of_electron_at_max_area - ionization_energy))
 
 law = Eq(cross_sectional_area_of_ionization, expression_2 * expression_3)
 
@@ -44,9 +47,10 @@ law = Eq(cross_sectional_area_of_ionization, expression_2 * expression_3)
     maximum_cross_sectional_area_of_ionization_=maximum_cross_sectional_area_of_ionization,
     energy_of_electron_at_max_area_=energy_of_electron_at_max_area)
 @validate_output(cross_sectional_area_of_ionization)
-def calculate_cross_sectional_area_of_ionization(ionization_energy_: Quantity,
-    energy_of_electron_: Quantity, maximum_cross_sectional_area_of_ionization_: Quantity,
-    energy_of_electron_at_max_area_: Quantity) -> Quantity:
+def calculate_cross_sectional_area_of_ionization(
+        ionization_energy_: Quantity, energy_of_electron_: Quantity,
+        maximum_cross_sectional_area_of_ionization_: Quantity,
+        energy_of_electron_at_max_area_: Quantity) -> Quantity:
     result_expr = solve(law, cross_sectional_area_of_ionization,
         dict=True)[0][cross_sectional_area_of_ionization]
     result_expr = result_expr.subs({

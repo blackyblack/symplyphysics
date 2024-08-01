@@ -11,14 +11,14 @@ from symplyphysics import (
     symbols,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.definitions import (
+    period_from_angular_frequency as period_law,)
 from symplyphysics.laws.dynamics import (
-    acceleration_from_force as newtons_second_law,)
+    acceleration_is_force_over_mass as newtons_second_law,)
 from symplyphysics.laws.gravity import (
     gravity_force_from_mass_and_distance as gravity_law,)
 from symplyphysics.laws.kinematic import (
-    centripetal_acceleration_is_squared_angular_velocity_times_radius as centripetal_law,
-    period_from_angular_frequency as period_law,
-)
+    centripetal_acceleration_is_squared_angular_velocity_times_radius as centripetal_law,)
 
 # Description
 ## Also known as Kepler's third law of planetary motion, the law of periods relates
@@ -67,7 +67,7 @@ _angular_speed_expr = solve(_newtons_eqn, _angular_speed)[1]
 # planets of the solar system, we can substitute the radius with the semimajor axis of
 # the orbit.
 _period_derived = period_law.law.rhs.subs({
-    period_law.circular_frequency: _angular_speed_expr,
+    period_law.angular_frequency: _angular_speed_expr,
     _radius: semimajor_axis,
 })
 

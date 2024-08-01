@@ -1,7 +1,7 @@
 from functools import reduce
 from operator import add
 from typing import Optional, Sequence
-from sympy import S, Expr, cos, sin, sqrt, sympify
+from sympy import S, Expr, cos, sin, sqrt, sympify, diff, integrate
 
 from .vectors import Vector
 from ..expr_comparisons import expr_equals
@@ -38,30 +38,52 @@ def equal_vectors(vector_left: Vector, vector_right: Vector) -> bool:
     return True
 
 
-# Sum of two vectors
-# Sum of two vectors can be seen as a diagonal of the parallelogram, where vectors are adjacent sides of this parallelogram.
-# To subtract vectors, multiply one of the vectors to -1 and add them.
+# Add any number of vectors
 #NOTE: adding two non-cartesian vectors is not a trivial task. We suggest to convert them to cartesian
 #      vectors, add them and convert back.
-def add_cartesian_vectors(vector_left: Vector, vector_right: Vector) -> Vector:
-    if vector_left.coordinate_system != vector_right.coordinate_system:
-        raise TypeError(
-            f"Different coordinate systems in vectors: {str(vector_left.coordinate_system)} vs {str(vector_right.coordinate_system)}"
-        )
-    if vector_left.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
-        coord_name_from = CoordinateSystem.system_to_transformation_name(
-            vector_left.coordinate_system.coord_system_type)
-        raise ValueError(
-            f"Addition is only supported for cartesian coordinates: got {coord_name_from}")
-    if vector_right.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
-        coord_name_from = CoordinateSystem.system_to_transformation_name(
-            vector_right.coordinate_system.coord_system_type)
-        raise ValueError(
-            f"Addition is only supported for cartesian coordinates: got {coord_name_from}")
-    (list_left_extended, list_right_extended) = _extend_two_vectors(vector_left, vector_right)
-    result = list(
-        map(lambda lr: sympify(lr[0] + lr[1]), zip(list_left_extended, list_right_extended)))
-    return Vector(result, vector_left.coordinate_system)
+def add_cartesian_vectors(*vectors: Vector) -> Vector:
+
+    def add_two_cartesian_vectors(vector_left: Vector, vector_right: Vector) -> Vector:
+        if vector_left.coordinate_system != vector_right.coordinate_system:
+            raise ValueError("Vectors must have the same coordinate system, "
+                f"got {vector_left.coordinate_system} and {vector_right.coordinate_system}")
+
+        left_type = vector_left.coordinate_system.coord_system_type
+        right_type = vector_right.coordinate_system.coord_system_type
+
+        if left_type != CoordinateSystem.System.CARTESIAN or right_type != CoordinateSystem.System.CARTESIAN:
+            left_name = CoordinateSystem.system_to_transformation_name(left_type)
+            right_name = CoordinateSystem.system_to_transformation_name(right_type)
+            raise ValueError(f"Expect two Cartesian vectors, got {left_name} and {right_name}")
+
+        (list_left_extended, list_right_extended) = _extend_two_vectors(vector_left, vector_right)
+        result = [
+            sympify(left_component + right_component)
+            for (left_component, right_component) in zip(list_left_extended, list_right_extended)
+        ]
+
+        return Vector(result, vector_left.coordinate_system)
+
+    if len(vectors) < 1:
+        raise ValueError("Provide at least one vector")
+
+    result = vectors[0]
+    for vector in vectors[1:]:
+        result = add_two_cartesian_vectors(result, vector)
+    return result
+
+
+# Subtract vectors from the first given vector
+def subtract_cartesian_vectors(*vectors: Vector) -> Vector:
+    if len(vectors) < 2:
+        raise ValueError("Provide at least two vectors")
+
+    vector_minuend = vectors[0]
+    vector_subtrahend = add_cartesian_vectors(*vectors[1:])
+    return add_cartesian_vectors(
+        vector_minuend,
+        scale_vector(-1, vector_subtrahend),
+    )
 
 
 # Change Vector magnitude (length)
@@ -171,7 +193,7 @@ def vector_unit(vector_: Vector) -> Vector:
 
 
 # Project `original_vector_` onto `target_vector_`. The result is the orthogonal projection of
-# `original_vector_` onto a straight line parallel to `target_vector_` and is parallel to 
+# `original_vector_` onto a straight line parallel to `target_vector_` and is parallel to
 # `target_vector_`.
 def project_vector(
     original_vector_: Vector,
@@ -190,7 +212,32 @@ def reject_cartesian_vector(
     original_vector_: Vector,
     target_vector_: Vector,
 ) -> Vector:
-    return add_cartesian_vectors(
-        original_vector_,
-        scale_vector(-1, project_vector(original_vector_, target_vector_))
-    )
+    return add_cartesian_vectors(original_vector_,
+        scale_vector(-1, project_vector(original_vector_, target_vector_)))
+
+
+# Only works in non-rotating coordinate systems
+def diff_cartesian_vector(
+    vector_: Vector,
+    *args: Expr,
+) -> Vector:
+    if vector_.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
+        raise ValueError(
+            "Component-wise vector differentiation is only supported for Cartesian coordinates")
+
+    components = [diff(component, *args) for component in vector_.components]
+
+    return Vector(components, vector_.coordinate_system)
+
+
+def integrate_cartesian_vector(
+    vector_: Vector,
+    *args: Expr | tuple[Expr, Expr, Expr],
+) -> Vector:
+    if vector_.coordinate_system.coord_system_type != CoordinateSystem.System.CARTESIAN:
+        raise ValueError(
+            "Component-wise vector integration is only supported for Cartesian coordinates")
+
+    components = [integrate(component, *args) for component in vector_.components]
+
+    return Vector(components, vector_.coordinate_system)

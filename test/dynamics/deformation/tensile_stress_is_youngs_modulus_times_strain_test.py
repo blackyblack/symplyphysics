@@ -10,40 +10,33 @@ from symplyphysics.laws.dynamics.deformation import (tensile_stress_is_youngs_mo
     as stress_strain_law)
 
 # Description
-## An object is being compressed, its initial length is 1 m, and it became 2 mm shorter.
-## The object's Young's modulus is 10 Pa. The stress on the object amounts to 0.02 Pa.
+## An object is being compressed, its strain amounts to -0.002. The object's Young's
+## modulus is 10 Pa. The stress on the object amounts to -0.02 Pa.
 
-Args = namedtuple("Args", "L D E")
+Args = namedtuple("Args", "e s")
 
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
-    L = Quantity(1.0 * units.meter)
-    D = Quantity(-2.0 * units.millimeter)
-    E = Quantity(10.0 * units.pascal)
-    return Args(L=L, D=D, E=E)
+    e = Quantity(10.0 * units.pascal)
+    s = -0.002
+    return Args(e=e, s=s)
 
 
 def test_law(test_args: Args) -> None:
-    result = stress_strain_law.calculate_tensile_stress(test_args.E, test_args.D, test_args.L)
-    assert_equal(result, 0.02 * units.pascal)
+    result = stress_strain_law.calculate_tensile_stress(test_args.e, test_args.s)
+    assert_equal(result, -0.02 * units.pascal)
 
 
 def test_bad_modulus(test_args: Args) -> None:
     Eb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        stress_strain_law.calculate_tensile_stress(Eb, test_args.D, test_args.L)
+        stress_strain_law.calculate_tensile_stress(Eb, test_args.s)
     with raises(TypeError):
-        stress_strain_law.calculate_tensile_stress(100, test_args.D, test_args.L)
+        stress_strain_law.calculate_tensile_stress(100, test_args.s)
 
 
-def test_bad_length(test_args: Args) -> None:
-    Lb = Quantity(1.0 * units.coulomb)
+def test_bad_strain(test_args: Args) -> None:
+    sb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        stress_strain_law.calculate_tensile_stress(test_args.E, Lb, test_args.L)
-    with raises(TypeError):
-        stress_strain_law.calculate_tensile_stress(test_args.E, 100, test_args.L)
-    with raises(errors.UnitsError):
-        stress_strain_law.calculate_tensile_stress(test_args.E, test_args.D, Lb)
-    with raises(TypeError):
-        stress_strain_law.calculate_tensile_stress(test_args.E, test_args.D, 100)
+        stress_strain_law.calculate_tensile_stress(test_args.e, sb)

@@ -6,9 +6,9 @@ from symplyphysics import (
     errors,
     units,
     Quantity,
+    QuantityVector,
 )
 from symplyphysics.core.coordinate_systems.coordinate_systems import CoordinateSystem
-from symplyphysics.core.vectors.vectors import QuantityVector
 from symplyphysics.laws.dynamics.vector import mechanical_work_from_force_and_move as work_law
 
 # Description

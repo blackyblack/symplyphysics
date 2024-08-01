@@ -44,11 +44,9 @@ time_in_lab_frame = Symbol("time_in_lab_frame", units.time)
 position_in_lab_frame = Symbol("position_in_lab_frame", units.length)
 proper_frame_speed_in_lab_frame = Symbol("proper_frame_speed_in_lab_frame", units.velocity)
 
-law = Eq(
-    time_in_proper_frame,
-    (time_in_lab_frame - proper_frame_speed_in_lab_frame * position_in_lab_frame / speed_of_light**2)
-    / sqrt(1 - (proper_frame_speed_in_lab_frame / speed_of_light)**2)
-)
+law = Eq(time_in_proper_frame, (time_in_lab_frame -
+    proper_frame_speed_in_lab_frame * position_in_lab_frame / speed_of_light**2) / sqrt(1 -
+    (proper_frame_speed_in_lab_frame / speed_of_light)**2))
 
 # In the limit `V/c << 1`, the formula reduces to the classical relation `t' = t`.
 _classical_time_expr = law.rhs.series(proper_frame_speed_in_lab_frame, 0, 1).removeO()

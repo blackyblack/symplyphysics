@@ -9,7 +9,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import compliance_is_inverse_stiffness as compliance_def
-from symplyphysics.laws.dynamics import force_reaction_from_force_action as newtons_third_law
+from symplyphysics.laws.dynamics import reaction_force_from_action_force as newtons_third_law
 from symplyphysics.laws.dynamics.springs import spring_reaction_is_proportional_to_deformation as hookes_law
 
 # Description
@@ -39,11 +39,11 @@ law = Eq(total_compliance, first_compliance + second_compliance)
 # that spring. That in turn produces a reaction force on both sides of the other spring.
 _external_force = SymSymbol("_external_force")
 _first_spring_reaction = abs(
-    newtons_third_law.law.rhs.subs(newtons_third_law.force_action, _external_force))
+    newtons_third_law.law.rhs.subs(newtons_third_law.action_force, _external_force))
 _second_spring_reaction = abs(
-    newtons_third_law.law.rhs.subs(newtons_third_law.force_action, _first_spring_reaction))
+    newtons_third_law.law.rhs.subs(newtons_third_law.action_force, _first_spring_reaction))
 _total_reaction = abs(
-    newtons_third_law.law.rhs.subs(newtons_third_law.force_action, _second_spring_reaction))
+    newtons_third_law.law.rhs.subs(newtons_third_law.action_force, _second_spring_reaction))
 
 _stiffness_expr = solve(compliance_def.definition, compliance_def.stiffness)[0]
 _first_stiffness = _stiffness_expr.subs(compliance_def.compliance, first_compliance)

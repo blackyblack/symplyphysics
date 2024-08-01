@@ -38,5 +38,5 @@ thin_lens_2 = thin_lens.law.subs({
 distance_to_image_2 = solve(thin_lens_2, thin_lens.distance_to_image)[0]
 distance_to_image_2_value = distance_to_image_2.subs(values).evalf(3)
 
-side = "right" if distance_to_image_2_value > 0 else "left"
-print(f"The image is located {abs(distance_to_image_2_value)} cm to the {side} of lens 2.")
+SIDE = "right" if distance_to_image_2_value > 0 else "left"
+print(f"The image is located {abs(distance_to_image_2_value)} cm to the {SIDE} of lens 2.")

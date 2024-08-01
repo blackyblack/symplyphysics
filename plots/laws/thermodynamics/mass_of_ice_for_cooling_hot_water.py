@@ -26,8 +26,8 @@ temperature_melt_ice = symbols("temperature_melt_ice")
 mass_of_ice = symbols("mass_of_ice")
 mass_of_hot_water = symbols("mass_of_hot_water")
 
-mass_of_all_water = solve(density_law.definition, density_law.symbols.basic.mass,
-    dict=True)[0][density_law.symbols.basic.mass]
+mass_of_all_water = solve(density_law.definition, density_law.mass,
+    dict=True)[0][density_law.mass]
 
 # the mass of all the water filling the bath consists of the mass of hot water
 # that was in the bathroom initially, and the mass of water of melted ice
@@ -60,7 +60,7 @@ energy_to_heating_ice_equation = thermal_energy_law.law.subs({
 
 energy_to_melt_ice_equation = energy_melting_law.law.subs({
     energy_melting_law.specific_heat_melting: specific_heat_melting_ice,
-    energy_melting_law.symbols.basic.mass: mass_of_ice
+    energy_melting_law.mass: mass_of_ice
 })
 
 energy_to_heat_melted_ice_equation = thermal_energy_law.law.subs({

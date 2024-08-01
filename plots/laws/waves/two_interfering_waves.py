@@ -36,7 +36,6 @@ p = plot(
     backend=MatplotlibBackend,
     legend=True,
     show=False,
-    annotations=None,
 )
 
 for plot_datum in plot_data_:

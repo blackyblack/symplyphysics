@@ -2,9 +2,10 @@ from dataclasses import dataclass
 from sympy import symbols
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
+from symplyphysics import print_expression
 from symplyphysics.laws.chemistry.potential_energy_models import lennard_jones_potential
 
-print(f"Formula of Lennard-Jones potential:\n{lennard_jones_potential.print_law()}\n")
+print(f"Formula of Lennard-Jones potential:\n{print_expression(lennard_jones_potential.law)}\n")
 
 
 @dataclass
@@ -35,7 +36,6 @@ potentials_plot = plot(
     ylabel="U, eV",
     backend=MatplotlibBackend,
     show=False,
-    annotations=False,
     legend=True,
 )
 

@@ -7,7 +7,7 @@ from symplyphysics.laws.waves import (
     wavelength_from_wave_speed_and_period as wavelength_law,
 )
 from symplyphysics.laws.relativistic import total_energy_via_relativistic_mass as mass_law
-from symplyphysics.laws.kinematic import temporal_frequency_from_period as frequency_law
+from symplyphysics.definitions import temporal_frequency_from_period as frequency_law
 
 # Description
 ## Can a free photon with enough energy turn into an electron-positron pair?

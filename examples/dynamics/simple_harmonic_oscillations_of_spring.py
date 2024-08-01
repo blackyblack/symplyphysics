@@ -2,12 +2,11 @@
 
 from sympy import solve, symbols, Eq
 from symplyphysics import Quantity, units, print_expression, convert_to
+from symplyphysics.definitions import period_from_angular_frequency as period_def
 from symplyphysics.laws.dynamics import (
     period_of_spring_from_mass as spring_period_law,)
 from symplyphysics.laws.kinematic import (
-    period_from_angular_frequency as period_def,
-    displacement_in_simple_harmonic_motion as harmonic_law,
-)
+    displacement_in_simple_harmonic_motion as harmonic_law,)
 
 # Description
 ## A simple harmonic oscillator consists of a block of mass 2.00 kg attached to a spring of
@@ -31,12 +30,12 @@ values = {
 # Find angular frequency of spring's oscillations
 
 period_expr = spring_period_law.law.rhs.subs({
-    spring_period_law.symbols.basic.mass: block_mass,
-    spring_period_law.spring_elasticity: spring_stiffness,
+    spring_period_law.mass: block_mass,
+    spring_period_law.stiffness: spring_stiffness,
 })
 
 angular_frequency_expr = solve(period_def.law,
-    period_def.circular_frequency)[0].subs(period_def.period, period_expr)
+    period_def.angular_frequency)[0].subs(period_def.period, period_expr)
 
 # Expression of simple harmonic oscillations of spring
 

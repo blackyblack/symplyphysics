@@ -37,20 +37,14 @@ def relative_velocity_law(
     absolute_velocity_: Vector,
     transfer_velocity_: Vector,
 ) -> Vector:
-    return add_cartesian_vectors(
-        absolute_velocity_,
-        scale_vector(-1, transfer_velocity_)
-    )
+    return add_cartesian_vectors(absolute_velocity_, scale_vector(-1, transfer_velocity_))
 
 
 def transfer_velocity_law(
     absolute_velocity_: Vector,
     relative_velocity_: Vector,
 ) -> Vector:
-    return add_cartesian_vectors(
-        absolute_velocity_,
-        scale_vector(-1, relative_velocity_)
-    )
+    return add_cartesian_vectors(absolute_velocity_, scale_vector(-1, relative_velocity_))
 
 
 @validate_input(

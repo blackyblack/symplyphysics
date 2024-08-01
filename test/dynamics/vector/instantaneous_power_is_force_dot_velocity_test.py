@@ -5,8 +5,8 @@ from symplyphysics import (
     errors,
     units,
     Quantity,
+    QuantityVector,
 )
-from symplyphysics.core.vectors.vectors import QuantityVector
 from symplyphysics.laws.dynamics.vector import instantaneous_power_is_force_dot_velocity as power_law
 
 # Description

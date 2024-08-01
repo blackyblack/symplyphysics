@@ -3,12 +3,12 @@ from sympy import sin
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression
-from symplyphysics.definitions import acceleration_is_velocity_derivative as acceleration
+from symplyphysics.definitions import acceleration_is_speed_derivative as acceleration
 
-print(f"Formula is:\n{acceleration.print_law()}")
+print(f"Formula is:\n{print_expression(acceleration.definition)}")
 
 VelocityFunction = sin
-applied_law = acceleration.definition.subs(acceleration.velocity, VelocityFunction)
+applied_law = acceleration.definition.subs(acceleration.speed, VelocityFunction)
 dsolved = applied_law.doit()
 
 print(f"Velocity function is:\n{print_expression(VelocityFunction(acceleration.time))}")

@@ -30,11 +30,11 @@ law = Eq(radiance, units.stefan_boltzmann_constant * temperature**4)
 _thermal_radiation_power = radiation_law.law.rhs.subs({
     radiation_law.surface_emissivity: 1,  # see note, epsilon = 1 for idealized black body
     radiation_law.temperature_emission_absorption: temperature,
-    radiation_law.surface_area: exitance_def.surface_area,
+    radiation_law.surface_area: exitance_def.area,
 })
 
 _radiant_exitance_derived = exitance_def.definition.rhs.subs(
-    exitance_def.radiant_flux(exitance_def.surface_area),
+    exitance_def.radiant_flux(exitance_def.area),
     _thermal_radiation_power,
 ).doit()
 

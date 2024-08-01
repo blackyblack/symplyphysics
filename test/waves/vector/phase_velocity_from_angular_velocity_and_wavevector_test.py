@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_equal,
+    assert_equal_vectors,
     errors,
     units,
     Quantity,
@@ -35,16 +35,12 @@ def test_args_fixture() -> Args:
 
 def test_law_velocity(test_args: Args) -> None:
     result = phase_velocity_law.calculate_phase_velocity(test_args.w, test_args.k)
-    assert len(result.components) == 3
-    for result_component, correct_component in zip(result.components, test_args.v.components):
-        assert_equal(result_component, correct_component)
+    assert_equal_vectors(result, test_args.v)
 
 
 def test_law_wavevector(test_args: Args) -> None:
     result = phase_velocity_law.calculate_wavevector(test_args.w, test_args.v)
-    assert len(result.components) == 3
-    for result_component, correct_component in zip(result.components, test_args.k.components):
-        assert_equal(result_component, correct_component)
+    assert_equal_vectors(result, test_args.k)
 
 
 def test_bad_frequency(test_args: Args) -> None:

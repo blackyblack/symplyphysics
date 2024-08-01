@@ -34,7 +34,6 @@ base_plot = plot(
     ylabel=r"pressure, $\text{Pa}$",
     backend=MatplotlibBackend,
     legend=True,
-    annotations=None,
     show=False,
 )
 

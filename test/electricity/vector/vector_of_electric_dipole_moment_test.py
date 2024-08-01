@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_equal,
+    assert_equal_vectors,
     units,
     errors,
     Quantity,
@@ -29,10 +29,11 @@ def test_args_fixture() -> Args:
 
 def test_basic_law(test_args: Args) -> None:
     result = dipole_moment.calculate_dipole_moment(test_args.q, test_args.l)
-    assert len(result.components) == 3
-    correct_values = [2e-13, -2e-13, 1e-13]
-    for result_component, correct_value in zip(result.components, correct_values):
-        assert_equal(result_component, correct_value * units.coulomb * units.meter)
+    unit = units.coulomb * units.meter
+    assert_equal_vectors(
+        result,
+        QuantityVector([2e-13 * unit, -2e-13 * unit, 1e-13 * unit]),
+    )
 
 
 def test_bad_charge(test_args: Args) -> None:

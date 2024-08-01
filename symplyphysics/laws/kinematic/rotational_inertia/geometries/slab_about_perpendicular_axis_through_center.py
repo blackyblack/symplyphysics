@@ -40,7 +40,7 @@ height = Symbol("height", units.length)
 volume = length * width * height
 
 density = density_def.definition.rhs.subs({
-    density_def.symbols.basic.mass: slab_mass,
+    density_def.mass: slab_mass,
     density_def.volume: volume,
 })
 

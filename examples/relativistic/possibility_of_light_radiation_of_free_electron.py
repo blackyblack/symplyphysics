@@ -3,11 +3,9 @@
 from sympy import Symbol, Eq, reduce_inequalities, false
 from symplyphysics import print_expression
 from symplyphysics.definitions import (
-    lorentz_factor as lorentz_factor_def,
-)
+    lorentz_factor as lorentz_factor_def,)
 from symplyphysics.laws.waves import (
-    photon_energy_is_proportional_to_frequency as energy_law,
-)
+    photon_energy_is_proportional_to_frequency as energy_law,)
 from symplyphysics.laws.relativistic import (
     total_energy_via_relativistic_mass as energy_is_mass,
     relativistic_mass as moving_mass_law,
@@ -20,7 +18,8 @@ electron_rest_mass = Symbol("electron_rest_mass", positive=True)
 
 # Consider the reference frame where the electron is stationary.
 
-electron_rest_energy = energy_is_mass.law.rhs.subs(energy_is_mass.relativistic_mass, electron_rest_mass)
+electron_rest_energy = energy_is_mass.law.rhs.subs(energy_is_mass.relativistic_mass,
+    electron_rest_mass)
 
 total_energy_before_radiation = electron_rest_energy
 
@@ -28,9 +27,7 @@ total_energy_before_radiation = electron_rest_energy
 
 photon_frequency = Symbol("photon_frequency", positive=True)
 
-photon_energy = energy_law.law.rhs.subs(
-    energy_law.photon_frequency, photon_frequency
-)
+photon_energy = energy_law.law.rhs.subs(energy_law.photon_frequency, photon_frequency)
 
 electron_speed = Symbol("electron_speed", positive=True)
 
@@ -39,9 +36,8 @@ moving_electron_mass = moving_mass_law.law.rhs.subs({
     moving_mass_law.velocity: electron_speed,
 })
 
-moving_electron_energy = energy_is_mass.law.rhs.subs(
-    energy_is_mass.relativistic_mass, moving_electron_mass
-)
+moving_electron_energy = energy_is_mass.law.rhs.subs(energy_is_mass.relativistic_mass,
+    moving_electron_mass)
 
 total_energy_after_radiation = moving_electron_energy + photon_energy
 
@@ -53,9 +49,8 @@ energy_conservation_eqn = Eq(total_energy_before_radiation, total_energy_after_r
 
 lorentz_factor = lorentz_factor_def.lorentz_factor
 
-lorentz_factor_expr = lorentz_factor_def.definition.rhs.subs(
-    lorentz_factor_def.velocity, electron_speed
-)
+lorentz_factor_expr = lorentz_factor_def.definition.rhs.subs(lorentz_factor_def.speed,
+    electron_speed)
 
 energy_conservation_eqn = energy_conservation_eqn.replace(lorentz_factor_expr, lorentz_factor)
 
@@ -83,11 +78,8 @@ total_energy_before_absorption = moving_electron_energy + photon_energy
 
 total_energy_after_absorption = electron_rest_energy
 
-energy_conservation_eqn = Eq(
-    total_energy_before_absorption, total_energy_after_absorption
-).replace(
-    lorentz_factor_expr, lorentz_factor
-)
+energy_conservation_eqn = Eq(total_energy_before_absorption,
+    total_energy_after_absorption).replace(lorentz_factor_expr, lorentz_factor)
 
 inequalities = energy_conservation_eqn & (lorentz_factor > 1)
 

@@ -1,30 +1,58 @@
+"""
+Quality factor is ratio of energies
+===================================
+
+*Quality factor* is a property of an oscillating system defined as the ratio between the amount of
+energy stored in system and the power losses.
+"""
+
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless)
-
-# Description
-## Quality factor is the property of oscillatiing system. It shows the ratio between amount of energy stored in system and power losses.
-
-# Definition: Q = w * W / P.
-
-# Where:
-## Q is quality factor,
-## w is resonant circular frequency,
-## W is energy stored in system,
-## P is dissipated power.
+from symplyphysics import (units, Quantity, Symbol, validate_input,
+    validate_output, dimensionless, angle_type)
 
 quality_factor = Symbol("quality_factor", dimensionless)
-resonant_frequency = Symbol("resonant_frequency", units.frequency)
+"""
+Quality factor of the oscillator.
+
+Symbol:
+    :code:`Q`
+"""
+
+resonant_frequency = Symbol("resonant_frequency", angle_type / units.time)
+r"""
+Resonant angular frequency of the oscillator.
+
+Symbol:
+    :code:`w`
+
+Latex:
+    :math:`\omega`
+"""
+
 stored_energy = Symbol("stored_energy", units.energy)
+"""
+Energy stored in the oscillator.
+
+Symbol:
+    :code:`E`
+"""
+
 dissipated_power = Symbol("dissipated_power", units.power)
+"""
+Power dissipated from the oscillater.
+
+Symbol:
+    :code:`P`
+"""
 
 definition = Eq(quality_factor, resonant_frequency * stored_energy / dissipated_power)
+r"""
+:code:`Q = w * E / P`
 
-definition_units_SI = dimensionless
-
-
-def print_law() -> str:
-    return print_expression(definition)
+Latex:
+    .. math::
+        Q = \frac{\omega E}{P}
+"""
 
 
 @validate_input(frequency_=resonant_frequency, energy_=stored_energy, power_=dissipated_power)

@@ -2,6 +2,8 @@
 
 Physics laws implemented as code. Based on [SymPy](https://github.com/sympy/sympy) Python library.
 
+[Main Page](https://symplyphysics.github.io/) of the project contains full list of the laws.
+
 # Sample generated plots
 
 ![Carnot Cycle](./img/carnot_cycle.png)

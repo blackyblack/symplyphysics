@@ -1,4 +1,4 @@
-from sympy import (Eq, solve)
+from sympy import (Eq, Rational, solve)
 from sympy.physics.units import gravitational_constant
 from symplyphysics import (
     clone_symbol,
@@ -27,7 +27,7 @@ mass_of_planet = clone_symbol(symbols.basic.mass, "mass_of_planet")
 speed_rotation_satellite = Symbol("speed_rotation_satellite", angle_type / units.time)
 
 law = Eq(radius_of_orbit,
-    (gravitational_constant * mass_of_planet / (speed_rotation_satellite**2))**(1 / 3))
+    (gravitational_constant * mass_of_planet / (speed_rotation_satellite**2))**Rational(1, 3))
 
 
 def print_law() -> str:

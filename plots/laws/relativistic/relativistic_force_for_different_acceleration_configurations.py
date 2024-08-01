@@ -10,16 +10,16 @@ Datum = namedtuple("Datum", "label acceleration")
 
 data_ = [
     Datum(
-        label=r"$a_{\perp} = 0$",
-        acceleration=Vector([1, 0, 0]),
+    label=r"$a_{\perp} = 0$",
+    acceleration=Vector([1, 0, 0]),
     ),
     Datum(
-        label=r"$a_{\perp} \ne 0, a_{\parallel} \ne 0$",
-        acceleration=Vector([1 / sqrt(3), 1 / sqrt(3), 1 / sqrt(3)]),
+    label=r"$a_{\perp} \ne 0, a_{\parallel} \ne 0$",
+    acceleration=Vector([1 / sqrt(3), 1 / sqrt(3), 1 / sqrt(3)]),
     ),
     Datum(
-        label=r"$a_{\parallel} = 0$",
-        acceleration=Vector([0, 1 / sqrt(2), 1 / sqrt(2)]),
+    label=r"$a_{\parallel} = 0$",
+    acceleration=Vector([0, 1 / sqrt(2), 1 / sqrt(2)]),
     ),
 ]
 

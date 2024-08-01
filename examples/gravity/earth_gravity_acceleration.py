@@ -3,7 +3,7 @@
 from sympy import solve
 from symplyphysics import (print_expression, units, convert_to, Quantity)
 from symplyphysics.laws.gravity import gravity_force_from_mass_and_distance as gravity_law
-from symplyphysics.laws.dynamics import acceleration_from_force as newtons_law_2
+from symplyphysics.laws.dynamics import acceleration_is_force_over_mass as newtons_law_2
 
 # This example calculates gravity acceleration on Earth surface with gravity law and Newton's law 2.
 # Earth radius is 6371km, Earth mass is 5.9722 × 10^24 kg. Gravitation acceleration is indeed independent from probe mass.
@@ -17,13 +17,13 @@ gravity_force = solve(gravity_law.law, gravity_law.gravitational_force,
 
 # Acceleration from Newton's 2 law
 acceleration_expr = solve(newtons_law_2.law,
-    newtons_law_2.symbols.kinematic.acceleration,
-    dict=True)[0][newtons_law_2.symbols.kinematic.acceleration]
+    newtons_law_2.acceleration,
+    dict=True)[0][newtons_law_2.acceleration]
 
 # probe mass disappears
 result_expr = acceleration_expr.subs({
-    newtons_law_2.symbols.dynamics.force: gravity_force,
-    newtons_law_2.symbols.basic.mass: gravity_law.second_mass
+    newtons_law_2.force: gravity_force,
+    newtons_law_2.mass: gravity_law.second_mass
 })
 print(f"Gravitation acceleration expression is {print_expression(result_expr)}")
 

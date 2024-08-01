@@ -4,7 +4,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
     validate_output, symbols, clone_symbol)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.gravity import gravity_force_from_mass_and_distance as gravity_law
-from symplyphysics.laws.dynamics import acceleration_from_force as newton2_law
+from symplyphysics.laws.dynamics import acceleration_is_force_over_mass as newton2_law
 
 # Description
 ## Every planet generates gravity field which causes free falling. Free fall acceleration depends on height above the planet surface.
@@ -32,10 +32,10 @@ gravitational_force = gravity_law.law.rhs.subs({
 })
 
 # Substitute mass first
-derived_free_fall_acceleration = newton2_law.law.rhs.subs(newton2_law.symbols.basic.mass,
+derived_free_fall_acceleration = newton2_law.law.rhs.subs(newton2_law.mass,
     gravity_law.second_mass)
 derived_free_fall_acceleration = derived_free_fall_acceleration.subs(
-    newton2_law.symbols.dynamics.force, gravitational_force)
+    newton2_law.force, gravitational_force)
 
 # Check if derived acceleration is same as declared
 assert expr_equals(derived_free_fall_acceleration, law.rhs)

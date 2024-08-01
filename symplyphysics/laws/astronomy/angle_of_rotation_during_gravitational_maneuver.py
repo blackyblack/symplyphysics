@@ -1,29 +1,64 @@
+r"""
+Angle of rotation during gravitational maneuver
+===============================================
+
+A gravitational maneuver is a purposeful change in the trajectory and flight speed of a spacecraft under the influence
+of the gravitational fields of celestial bodies.
+The angle of the gravitational maneuver depends on the aiming range, the mass of the planet and the velocity of the rocket relative to the planet.
+
+.. image:: https://upload.wikimedia.org/wikipedia/commons/a/ad/Gravity_assist\_-\_ru.svg
+    :width: 240px
+"""
+
 from sympy import Eq, solve, atan
 from sympy.physics.units import gravitational_constant
 from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print_expression,
     validate_input, validate_output, angle_type)
 
-## Description
-## A gravitational maneuver is a purposeful change in the trajectory and flight speed of a spacecraft under the influence
-## of the gravitational fields of celestial bodies.
-## The angle of the gravitational maneuver depends on the aiming range, the mass of the planet and the velocity of the rocket relative to the planet.
-## The aiming range is the distance between the asymptote of the hyperbolic trajectory of the circumnavigation of the planet and its focus
-## coinciding with the center of the planet.
-## https://ru.wikipedia.org/wiki/Гравитационный_манёвр#/media/Файл:Gravity_assist_-_ru.svg
-
-## Law is: phi = 2 * arctg(G * M / (c * v^2)), where
-## phi - angle of rotation during a gravitational maneuver (angle at which the velocity vector of the rocket rotates),
-## G - gravitational constant,
-## M - mass of the planet,
-## c - aiming range,
-## v - rocket's velocity relative to the planet.
-
 angle = Symbol("angle", angle_type)
+r"""
+Angle of rotation during a gravitational maneuver (angle at which the velocity vector of the rocket rotates)
+
+Symbol:
+    :code:`phi`
+
+Latex:
+    :math:`\phi`
+"""
+
 planet_mass = clone_symbol(symbols.basic.mass, "planet_mass")
+"""
+Mass of the planet.
+
+Symbol:
+    :code:`M`
+"""
+
 aiming_range = Symbol("aiming_range", units.length)
+"""
+The aiming range is the distance between the asymptote of the hyperbolic trajectory of the circumnavigation of the planet and its focus
+coinciding with the center of the planet.
+
+Symbol:
+    :code:`b`
+"""
+
 rocket_speed = Symbol("rocket_speed", units.velocity)
+"""
+Rocket's velocity relative to the planet.
+
+Symbol:
+    :code:`v`
+"""
 
 law = Eq(angle, 2 * atan(gravitational_constant * planet_mass / (aiming_range * rocket_speed**2)))
+r"""
+:code:`phi = 2 * arctg(G * M / (b * v^2))`
+
+Latex:
+    .. math::
+        \phi = 2 \arctan \left( \frac{G M}{b v^2} \right)
+"""
 
 
 def print_law() -> str:

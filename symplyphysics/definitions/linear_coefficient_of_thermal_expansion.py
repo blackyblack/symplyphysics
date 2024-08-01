@@ -1,41 +1,71 @@
+r"""
+Linear coefficient of thermal expansion
+=======================================
+
+The coefficient of thermal expansion describes how the size of an object changes with a change in temperature
+at constant pressure.
+
+**Notation:**
+
+#. :math:`\left( \frac{\partial}{\partial T} \right)_p` is the derivative w.r.t. temperature 
+   at constant pressure.
+
+**Conditions:**
+
+#. Pressure must be constant during the expansion process.
+"""
+
 from sympy import Eq, Derivative
 from symplyphysics import (
     units,
     Quantity,
     Symbol,
     Function,
-    print_expression,
     validate_input,
     validate_output,
     symbols,
 )
 from symplyphysics.core.geometry.line import two_point_function, Point2D
 
-# Description
-## The coefficient of thermal expansion describes how the size of an object changes with a change in temperature
-## at constant pressure.
-
-# Law: alpha_L = (dL(T)/dT)_p / L(T)
-## alpha_L - linear coefficient of thermal expansion
-## L - body length
-## T - temperature
-## (d/dT)_p - temperature derivative with pressure held constant
-
-# Conditions
-## - Pressure must be constant during the expansion process
-
 linear_expansion_coefficient = Symbol("linear_expansion_coefficient", 1 / units.temperature)
+r"""
+Linear coefficient of thermal expansion of the object.
+
+Symbol:
+    :code:`alpha_l`
+
+Latex:
+    :math:`\alpha_l`
+"""
+
 length = Function("length", units.length)
+"""
+Length of the object as a function of :attr:`~symplyphysics.symbols.thermodynamics.temperature`
+and, indirectly, pressure :math:`p`.
+
+Symbol:
+    :code:`l(T, p)`
+"""
+
 temperature = symbols.thermodynamics.temperature
+"""
+:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the object.
+
+Symbol:
+    :code:`T`
+"""
 
 definition = Eq(
     linear_expansion_coefficient,
     Derivative(length(temperature), temperature) / length(temperature),
 )
+r"""
+:code:`alpha_l = 1 / l(T, p) * Derivative(l(T, p), T)`
 
-
-def print_law() -> str:
-    return print_expression(definition)
+Latex:
+    .. math::
+        \alpha_l = \frac{1}{l(T, p)} \left( \frac{d l}{d T} \right)_p
+"""
 
 
 @validate_input(

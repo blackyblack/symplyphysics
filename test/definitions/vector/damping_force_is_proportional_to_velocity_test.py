@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (
-    assert_equal,
+    assert_equal_vectors,
     units,
     Quantity,
     errors,
@@ -34,16 +34,12 @@ def test_args_fixture() -> Args:
 
 def test_damping_force_definition(test_args: Args) -> None:
     result = damping_def.calculate_damping_force(test_args.b, test_args.v)
-    assert len(result.components) == 3
-    for result_component, correct_component in zip(result.components, test_args.f.components):
-        assert_equal(result_component, correct_component)
+    assert_equal_vectors(result, test_args.f)
 
 
 def test_velocity_law(test_args: Args) -> None:
     result = damping_def.calculate_velocity(test_args.b, test_args.f)
-    assert len(result.components) == 3
-    for result_component, correct_component in zip(result.components, test_args.v.components):
-        assert_equal(result_component, correct_component)
+    assert_equal_vectors(result, test_args.v)
 
 
 def test_bad_damping_constant(test_args: Args) -> None:

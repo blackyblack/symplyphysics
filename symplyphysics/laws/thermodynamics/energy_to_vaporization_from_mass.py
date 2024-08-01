@@ -23,9 +23,10 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## must be expended to evaporate one kilogram of a substance taken at boiling point.
 
 amount_energy = Symbol("amount_energy", units.energy)
+mass = symbols.basic.mass
 specific_heat_vaporization = Symbol("specific_heat_vaporization", units.energy / units.mass)
 
-law = Eq(amount_energy, specific_heat_vaporization * symbols.basic.mass)
+law = Eq(amount_energy, specific_heat_vaporization * mass)
 
 
 def print_law() -> str:
@@ -33,13 +34,13 @@ def print_law() -> str:
 
 
 @validate_input(specific_heat_vaporization_=specific_heat_vaporization,
-    mass_of_matter_=symbols.basic.mass)
+    mass_of_matter_=mass)
 @validate_output(amount_energy)
 def calculate_amount_energy(specific_heat_vaporization_: Quantity,
     mass_of_matter_: Quantity) -> Quantity:
     result_amount_energy_expr = solve(law, amount_energy, dict=True)[0][amount_energy]
     result_expr = result_amount_energy_expr.subs({
         specific_heat_vaporization: specific_heat_vaporization_,
-        symbols.basic.mass: mass_of_matter_
+        mass: mass_of_matter_
     })
     return Quantity(result_expr)
