@@ -1,3 +1,14 @@
+"""
+Internal energy via Helmholtz free energy
+=========================================
+
+*Gibbs—Helmholtz relations* are a set of equations that relate thermodynamic potentials between each other.
+
+**Conditions:**
+
+#. The number of particles in the system is held constant.
+"""
+
 from sympy import Eq, Derivative, Point2D, solve
 from symplyphysics import (
     symbols,
@@ -15,23 +26,37 @@ from symplyphysics.laws.thermodynamics import (
     entropy_is_derivative_of_free_energy as entropy_law,
 )
 
-# Description
-## Gibbs-Helmholtz relations are a set of equations that relate thermodynamic potentials between each other.
-
-# Law: U = F - T * (dF/dT)_V
-## U - internal energy
-## F - Helmholtz free energy
-## T - absolute temperature
-## V - volume
-## (d/dT)_V - derivative with respect to temperature at constant volume
-
-# Conditions
-## - Particle count changes are not taken into account, i.e. it stays constant.
-
 internal_energy = Symbol("internal_energy", units.energy)
+"""
+Internal energy of the system.
+
+Symbol:
+    :code:`U`
+"""
+
 free_energy = Function("free_energy", units.energy)
+"""
+Helmholtz free energy of the system as a function of temperature and volume.
+
+Symbol:
+    :code:`F(T, V)`
+"""
+
 temperature = symbols.thermodynamics.temperature
+"""
+Temperature of the system.
+
+Symbol:
+    :code:`T`
+"""
+
 volume = Symbol("volume", units.volume)
+"""
+Volume of the system.
+
+Symbol:
+    :code:`V`
+"""
 
 # Volume is held constant during the evalution of the derivative
 
@@ -39,6 +64,13 @@ law = Eq(
     internal_energy,
     free_energy(temperature, volume) -
     temperature * Derivative(free_energy(temperature, volume), temperature))
+r"""
+:code:`U = F(T, V) - T * Derivative(F(T, V), T)`
+
+Latex:
+    .. math::
+        U = F(T, V) - T \left( \frac{\partial F}{\partial T} \right)_V
+"""
 
 # Derive from definition of free energy and thermodynamical Maxwell relations
 
