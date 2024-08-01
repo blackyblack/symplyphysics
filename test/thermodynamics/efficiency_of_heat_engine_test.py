@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, errors, units, Quantity)
-from symplyphysics.laws.thermodynamics import efficiency_factor as efficiency_law
+from symplyphysics.laws.thermodynamics import efficiency_of_heat_engine as efficiency_law
 
 # Description
 ## Suppose we have a heat engine that receives 2 Joules of heat from the heater, and gives 1.5 Joules to the refrigerator. Then its efficiency should be (2 - 1.5) / 2 = 0.25
