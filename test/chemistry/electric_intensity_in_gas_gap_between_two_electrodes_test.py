@@ -36,6 +36,10 @@ def test_bad_coordinate(test_args: Args) -> None:
     with raises(TypeError):
         intensity_law.calculate_electric_intensity(100, test_args.distance_between_electrodes,
             test_args.voltage_between_electrodes)
+    coordinate = Quantity(5 * units.centimeter)
+    with raises(ValueError):
+        intensity_law.calculate_electric_intensity(coordinate, test_args.distance_between_electrodes,
+            test_args.voltage_between_electrodes)
 
 
 def test_bad_distance_between_electrodes(test_args: Args) -> None:

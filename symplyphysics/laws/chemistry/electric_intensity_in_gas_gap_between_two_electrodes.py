@@ -11,6 +11,10 @@ from symplyphysics import (units, Quantity, Symbol, validate_input, validate_out
 ## L - the distance between the electrodes,
 ## U - voltage between the electrodes.
 
+# Conditions:
+## - Emittivity of the emitter is unlimited (emission of charged particles is much greater than current between electrodes)
+## - Gaseous medium between electrodes
+
 electric_intensity = Symbol("electric_intensity", units.voltage / units.length)
 
 coordinate = Symbol("coordinate", units.length)
@@ -26,6 +30,8 @@ law = Eq(electric_intensity, (3 / 2) * sqrt(coordinate / distance_between_electr
 @validate_output(electric_intensity)
 def calculate_electric_intensity(coordinate_: Quantity, distance_between_electrodes_: Quantity,
     voltage_between_electrodes_: Quantity) -> Quantity:
+    if coordinate_.scale_factor > distance_between_electrodes_.scale_factor:
+        raise ValueError("The point of interest should be between electrodes")
     result_expr = solve(law, electric_intensity, dict=True)[0][electric_intensity]
     result_expr = result_expr.subs({
         coordinate: coordinate_,
