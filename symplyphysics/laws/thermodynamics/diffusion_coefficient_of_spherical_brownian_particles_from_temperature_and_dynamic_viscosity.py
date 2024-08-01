@@ -1,40 +1,78 @@
+r"""
+Diffusion coefficient of spherical Brownian particles from temperature and dynamic viscosity
+============================================================================================
+
+Brownian motion is the random motion of microscopic visible suspended particles of a solid
+substance in a liquid or gas caused by the thermal motion of particles of a liquid or gas.
+The *diffusion coefficient* is a quantitative characteristic of the diffusion rate, equal to
+the amount of matter passing per unit time through a section of a unit area as a result of
+the thermal motion of molecules with a concentration gradient equal to one (corresponding to
+a change from :math:`1 \frac{\text{mol}}{\text{L}}` to :math:`0 \frac{\text{mol}}{\text{L}}`
+per unit length). The diffusion coefficient is determined by the properties of the medium and
+the type of diffusing particles. This law is also known as the *Stokes—Einstein—Sutherland relation*.
+
+**Notation:**
+
+#. :math:`R` is the molar gas constant.
+#. :math:`N_\text{A}` is the Avogadro constant.
+
+**Conditions:**
+
+#. Particle displacements are equally likely in any direction.
+#. The inertia of a Brownian particle can be neglected compared to the influence of friction forces.
+#. Particles are spherical.
+#. Low Reynolds number, i.e. non-turbulent flow.
+"""
+
 from sympy import (Eq, solve, pi)
-from symplyphysics import (symbols, units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (symbols, units, Quantity, Symbol, validate_input,
     validate_output)
 
-# Description
-## Brownian motion is the random motion of microscopic visible suspended particles of a solid substance in a liquid or gas caused by the thermal motion of particles of a liquid or gas.
-## The diffusion coefficient is a quantitative characteristic of the diffusion rate, equal to the amount of matter passing per unit time through a section of a unit area as a result of the thermal motion of molecules with a concentration gradient equal to one(corresponding to a change of 1 mol/l → 0 mol/l per unit length).
-## The diffusion coefficient is determined by the properties of the medium and the type of diffusing particles.
-## This law is also known as Stokes–Einstein–Sutherland relation.
-
-## Law: D = R * T / (6 * Na * pi * r * eta)
-## Where:
-## D is diffusion coefficient
-## R is universal gas constant
-## T is temperature
-## Na is avogadro number
-## r is particle radius
-## eta is dynamic viscosity
-
-# Conditions:
-## - Particle displacements in any direction are equally likely
-## - The inertia of a Brownian particle can be neglected compared to the influence of friction forces
-## - Particles are spherical
-## - Low Reynolds number, ie non turbulent flow
-
 diffusion_coefficient = Symbol("diffusion_coefficient", units.area / units.time)
+"""
+Diffusion coefficient of the particles.
+
+Symbol:
+    :code:`D`
+"""
+
 temperature = symbols.thermodynamics.temperature
+"""
+Temperature of the system.
+
+Symbol:
+    :code:`T`
+"""
+
 particle_radius = Symbol("particle_radius", units.length)
+"""
+Radius of the particles.
+
+Symbol:
+    :code:`r`
+"""
+
 dynamic_viscosity = Symbol("dynamic_viscosity", units.pressure * units.time)
+r"""
+Dynamic viscosity of the particles.
+
+Symbol:
+    :code:`eta`
+
+Latex:
+    :math:`\eta`
+"""
 
 law = Eq(
     diffusion_coefficient, units.molar_gas_constant * temperature /
-    (6 * units.avogadro * pi * particle_radius * dynamic_viscosity))
+    (6 * units.avogadro_constant * pi * particle_radius * dynamic_viscosity))
+r"""
+:code:`D = (R * T) / (6 * N_A * pi * r * eta)`
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        D = \frac{R T}{6 N_\text{A} \pi r \eta}
+"""
 
 
 @validate_input(temperature_=temperature,
