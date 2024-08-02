@@ -27,7 +27,7 @@ Symbol:
 
 mass = symbols.basic.mass
 """
-Mass of the gas.
+:attr:`~symplyphysics.symbols.basic.mass` of the gas.
 
 Symbol:
     :code:`m`

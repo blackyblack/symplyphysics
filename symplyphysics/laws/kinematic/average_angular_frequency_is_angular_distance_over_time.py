@@ -17,10 +17,10 @@ r"""
 Average angular frequency of rotation.
 
 Symbol:
-    :code:`w_avg`
+    :code:`avg(w)`
 
 Latex:
-    :math:`\overline \omega`
+    :math:`\langle \omega \rangle`
 """
 
 angular_distance = Symbol("angular_distance", angle_type)
@@ -44,11 +44,11 @@ Symbol:
 
 law = Eq(average_angular_frequency, angular_distance / time)
 r"""
-:code:`w_avg = theta / t`
+:code:`avg(w) = theta / t`
 
 Latex:
     .. math::
-        \overline \omega = \frac{\theta}{t}
+        \langle \omega \rangle = \frac{\theta}{t}
 """
 
 # Derive the same law from temporal frequency definition

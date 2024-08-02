@@ -25,7 +25,7 @@ diffusion_flux = Function("diffusion_flux", units.amount_of_substance / (units.a
 Diffusion flux.
 
 Symbol:
-    :code:`J`
+    :code:`J(x)`
 """
 
 diffusion_coefficient = Symbol("diffusion_coefficient", units.area / units.time)
@@ -55,11 +55,11 @@ Symbol:
 law = Eq(diffusion_flux(position),
     -diffusion_coefficient * Derivative(concentration(position), position))
 r"""
-:code:`J = -1 * D * Derivative(n(x), x)`
+:code:`J(x) = -1 * D * Derivative(n(x), x)`
 
 Latex:
     .. math::
-        J = - D \frac{d n}{d x}
+        J(x) = - D \frac{d n}{d x}
 """
 
 

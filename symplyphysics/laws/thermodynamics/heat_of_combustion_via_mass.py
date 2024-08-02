@@ -35,7 +35,7 @@ Symbol:
 
 law = Eq(heat, specific_heat_of_combustion * mass)
 """
-Q = q * m
+:code:`Q = q * m`
 
 Latex:
     .. math::

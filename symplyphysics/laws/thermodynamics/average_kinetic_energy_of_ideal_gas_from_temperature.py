@@ -33,10 +33,10 @@ r"""
 Average kinetic energy of the ideal gas.
 
 Symbol:
-    :code:`K_avg`
+    :code:`avg(K)`
 
 Latex:
-    :math:`\overline K`
+    :math:`\langle K \rangle`
 """
 
 equilibrium_temperature = clone_symbol(
@@ -53,10 +53,10 @@ Symbol:
 
 law = Eq(average_kinetic_energy, Rational(3, 2) * units.boltzmann * equilibrium_temperature)
 r"""
-:code:`K_avg = 3/2 * k_B * T`
+:code:`avg(K) = 3/2 * k_B * T`
 
 Latex:
-    :math:`\overline K = \frac{3}{2} k_\text{B} T`
+    :math:`\langle K \rangle = \frac{3}{2} k_\text{B} T`
 """
 
 # Derive from Maxwell-Boltzmann energy distribution

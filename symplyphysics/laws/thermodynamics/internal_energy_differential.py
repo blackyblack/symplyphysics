@@ -2,7 +2,7 @@ r"""
 Internal energy differential
 ============================
 
-The *fundamental thermodynamic relations* are fundamental equations which demonstate how important
+The *fundamental thermodynamic relations* are fundamental equations which demonstrate how important
 thermodynamic quantities depend on variables that are measurable experimentally.
 
 **Notation:**
@@ -19,7 +19,7 @@ thermodynamic quantities depend on variables that are measurable experimentally.
 **Conditions:**
 
 #. The system is in thermal equilibrium with its surroundings
-#. The system is composed of only one component.
+#. The system is composed of only one type of particles, i.e. the system is a pure substance.
 """
 
 from sympy import Eq, solve

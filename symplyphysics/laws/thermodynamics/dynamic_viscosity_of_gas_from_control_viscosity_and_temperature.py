@@ -3,7 +3,7 @@ Dynamic viscosity of gas from temperature
 =========================================
 
 Viscosity is a phenomenon of molecular transport, the property of fluid bodies (liquids and gases)
-to resistthe movement of one part of them relative to another. As a result, the macroscopic work
+to resist the movement of one part of them relative to another. As a result, the macroscopic work
 expended on this movement is dissipated as heat. Unlike liquids, the viscosity of gases increases
 with increasing temperature, whereas for liquids it decreases with increasing temperature.
 
