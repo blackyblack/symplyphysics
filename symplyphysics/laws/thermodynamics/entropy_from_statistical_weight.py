@@ -139,14 +139,14 @@ _entropy_difference_derived = (_entropy_via_volume.subs(_volume, _second_volume)
 # We also utilise another law derived from completely different thermodynamic principles:
 
 _entropy_difference_from_law = entropy_change_law.law.rhs.subs({
-    entropy_change_law.gas_mass:
+    entropy_change_law.mass:
     molar_qty_law.law.rhs.subs(
     molar_qty_law.molar_quantity,
     entropy_change_law.molar_mass,
     ),
     entropy_change_law.final_temperature:
     entropy_change_law.initial_temperature,
-    entropy_change_law.start_volume:
+    entropy_change_law.initial_volume:
         _first_volume,
     entropy_change_law.final_volume:
         _second_volume,

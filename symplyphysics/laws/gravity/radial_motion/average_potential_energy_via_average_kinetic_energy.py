@@ -8,10 +8,6 @@ kinetic energy. The average of both energies is taken w.r.t. time.
 **Conditions:**
 
 #. Works for elliptical orbits, i.e. the total energy :math:`E` of the planet is negative.
-
-**Notes:**
-
-#. :code:`<A>` denotes the average of the quantity :code:`A`.
 """
 
 from sympy import Eq
@@ -28,7 +24,7 @@ r"""
 The potential energy of the planet averaged over time.
 
 Symbol:
-    :code:`<U>`
+    :code:`avg(U)`
 
 Latex:
     :math:`\langle U \rangle`
@@ -39,7 +35,7 @@ r"""
 The kinetic energy of the planet averaged over time.
 
 Symbol:
-    :code:`<K>`
+    :code:`avg(K)`
 
 Latex:
     :math:`\langle K \rangle`
@@ -47,7 +43,7 @@ Latex:
 
 law = Eq(average_potential_energy, -2 * average_kinetic_energy)
 r"""
-:code:`<U> = -2 * <K>`
+:code:`avg(U) = -2 * avg(K)`
 
 Latex:
     .. math::

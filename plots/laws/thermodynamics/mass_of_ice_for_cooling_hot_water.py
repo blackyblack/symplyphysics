@@ -6,7 +6,7 @@ from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression, global_index
 from symplyphysics.core.symbols.celsius import to_kelvin, Celsius
 from symplyphysics.laws.thermodynamics import thermal_energy_from_heat_capacity_and_temperature as thermal_energy_law
-from symplyphysics.laws.thermodynamics import energy_to_melt_from_mass as energy_melting_law
+from symplyphysics.laws.thermodynamics import latent_heat_of_fusion_via_mass as energy_melting_law
 from symplyphysics.definitions import density_from_mass_volume as density_law
 from symplyphysics.laws.quantities import quantity_is_specific_quantity_times_mass as specific_qty_law
 from symplyphysics.laws.thermodynamics import sum_of_heat_transfer_is_zero as thermodinamics_law_1
@@ -59,7 +59,7 @@ energy_to_heating_ice_equation = thermal_energy_law.law.subs({
 })
 
 energy_to_melt_ice_equation = energy_melting_law.law.subs({
-    energy_melting_law.specific_heat_melting: specific_heat_melting_ice,
+    energy_melting_law.specific_heat_of_fusion: specific_heat_melting_ice,
     energy_melting_law.mass: mass_of_ice
 })
 

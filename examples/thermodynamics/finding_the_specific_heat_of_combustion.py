@@ -5,7 +5,7 @@ from symplyphysics.core.symbols.celsius import to_kelvin_quantity, Celsius
 from symplyphysics import print_expression, Quantity, prefixes, units, convert_to
 from symplyphysics.laws.electricity import power_factor_from_active_and_full_power as efficiency_law
 from symplyphysics.laws.thermodynamics import (
-    energy_from_combustion as combustion_energy_law,
+    heat_of_combustion_via_mass as combustion_energy_law,
     thermal_energy_from_heat_capacity_and_temperature as thermal_energy_law,
 )
 from symplyphysics.laws.quantities import quantity_is_specific_quantity_times_mass as specific_qty_law
@@ -37,7 +37,7 @@ energy_heating_value = thermal_energy_law.law.subs({
 }).rhs
 
 energy_combustion_value = combustion_energy_law.law.subs({
-    combustion_energy_law.specific_heat_combustion: specific_heat_combustion,
+    combustion_energy_law.specific_heat_of_combustion: specific_heat_combustion,
     combustion_energy_law.mass: mass_of_fuel
 }).rhs
 

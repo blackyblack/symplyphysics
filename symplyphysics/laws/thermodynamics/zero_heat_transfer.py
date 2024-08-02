@@ -5,8 +5,8 @@ from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import heat_capacity_ratio
 from symplyphysics.laws.thermodynamics import (
-    internal_energy_change_via_amount_of_heat_and_work_done as first_law,
-    internal_energy_of_ideal_gas_is_proportional_to_temperature as internal_energy_law,
+    internal_energy_change_of_ideal_gas_via_temperature as internal_energy_law,
+    internal_energy_change_via_heat_and_work as first_law,
     infinitesimal_work_in_quasistatic_process as work_law,
     isochoric_heat_capacity_via_isobaric_heat_capacity_for_ideal_gas as mayers_relation,
 )
@@ -68,7 +68,7 @@ _internal_energy_change_expr = internal_energy_law.law.rhs.subs({
 })
 
 _work_change_expr = work_law.law.rhs.subs({
-    work_law.pressure_inside_system: _pressure,
+    work_law.pressure: _pressure,
     work_law.infinitesimal_volume_change: _volume_change,
 })
 

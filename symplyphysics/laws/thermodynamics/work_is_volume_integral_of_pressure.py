@@ -41,7 +41,7 @@ _work_function = symbols("work", cls=SymFunction)
 _infinitesimal_law = work_law.law.subs({
     work_law.infinitesimal_work_done: _work_function(volume).diff(volume),
     work_law.infinitesimal_volume_change: 1,
-    work_law.pressure_inside_system: pressure(volume),
+    work_law.pressure: pressure(volume),
 })
 
 _integrated_law = Eq(_infinitesimal_law.lhs.integrate((volume, volume_before, volume_after)),

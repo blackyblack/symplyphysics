@@ -5,7 +5,7 @@ from symplyphysics import print_expression, Quantity, prefixes, units, convert_t
 from symplyphysics.core.symbols.celsius import to_kelvin_quantity, Celsius
 from symplyphysics.laws.conservation import mixture_mass_equal_sum_of_components_masses as sum_masses_law
 from symplyphysics.laws.thermodynamics import (
-    energy_to_melt_from_mass as energy_melting_law,
+    latent_heat_of_fusion_via_mass as energy_melting_law,
     sum_of_heat_transfer_is_zero as thermodinamics_law_1,
     thermal_energy_from_heat_capacity_and_temperature as thermal_energy_law,
 )
@@ -75,7 +75,7 @@ energy_to_heating_ice_equation = thermal_energy_law.law.subs({
 })
 
 energy_to_melt_ice_equation = energy_melting_law.law.subs({
-    energy_melting_law.specific_heat_melting: specific_heat_melting_ice,
+    energy_melting_law.specific_heat_of_fusion: specific_heat_melting_ice,
     energy_melting_law.mass: mass_of_ice
 })
 

@@ -7,10 +7,6 @@ The total energy of an orbiting planet is equal to its negative kinetic energy a
 **Conditions:**
 
 #. Works for elliptical (:math:`E < 0`) orbits.
-
-**Notes:**
-
-#. :code:`<A>` denotes the average of the quantity :code:`A`.
 """
 
 from sympy import Eq
@@ -35,7 +31,7 @@ r"""
 The kinetic energy of the planet averaged over time.
 
 Symbol:
-    :code:`<K>`
+    :code:`avg(K)`
 
 Latex:
     :math:`\langle K \rangle`
@@ -43,7 +39,7 @@ Latex:
 
 law = Eq(total_mechanical_energy, -1 * average_kinetic_energy)
 r"""
-:code:`E = -1 * <K>`
+:code:`E = -1 * avg(K)`
 
 Latex:
     .. math::

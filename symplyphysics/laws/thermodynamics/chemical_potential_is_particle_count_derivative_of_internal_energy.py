@@ -1,3 +1,12 @@
+"""
+Chemical potential is particle count derivative of internal energy
+==================================================================
+
+The chemical potential of a system is the amount of energy the system absorbs or releases
+due to the introduction of a particle into the system, i.e. when the particle count increases
+by one.
+"""
+
 from sympy import Eq, Derivative, Point2D
 from symplyphysics import (
     units,
@@ -5,43 +14,65 @@ from symplyphysics import (
     Quantity,
     Symbol,
     Function,
-    print_expression,
     validate_input,
     validate_output,
 )
 from symplyphysics.core.geometry.line import two_point_function
 
-# Description
-## The chemical potential of a system is the amount of energy the system absorbs or releases
-## due to the introduction of a particle into the system, i.e. when the particle count increases
-## by one.
-
-# Law: mu = (dU/dN)_(S, V)
-## mu - chemical potential
-## U = U(S, V, N) - internal energy
-## N - particle count
-## S - entropy
-## V - volume
-## (d/dN)_(S, V) - derivative w.r.t. particle count at constant entropy and volume
-
 chemical_potential = Symbol("chemical_potential", units.energy)
-internal_energy = Function("internal_energy", units.energy)
-particle_count = Symbol("particle_count", dimensionless)
-entropy = Symbol("entropy", units.energy / units.temperature)
-volume = Symbol("volume", units.volume)
+r"""
+Chemical potential of the system.
 
-# Note that `entropy` and `volume` are only used to show that the internal energy
-# function depends on them and they are held constant during differentiation with
-# respect to `particle_count`.
+Symbol:
+    :code:`mu`
+
+Latex:
+    :math:`\mu`
+"""
+
+internal_energy = Function("internal_energy", units.energy)
+"""
+Internal energy of the system as a function of its natural variables.
+
+Symbol:
+    :code:`U`
+"""
+
+particle_count = Symbol("particle_count", dimensionless)
+"""
+Number of particles in the system.
+
+Symbol:
+    :code:`N`
+"""
+
+entropy = Symbol("entropy", units.energy / units.temperature)
+"""
+Entropy of the system.
+
+Symbol:
+    :code:`S`
+"""
+
+volume = Symbol("volume", units.volume)
+"""
+Volume of the system.
+
+Symbol:
+    :code:`V`
+"""
 
 law = Eq(
     chemical_potential,
     Derivative(internal_energy(entropy, volume, particle_count), particle_count),
 )
+r"""
+:code:`mu = Derivative(U(S, V, N), N)`
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        \mu = \left( \frac{\partial U}{\partial N} \right)_{S, V}
+"""
 
 
 @validate_input(

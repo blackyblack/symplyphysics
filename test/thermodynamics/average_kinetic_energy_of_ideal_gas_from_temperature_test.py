@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics import average_kinetic_energy_of_molecules_from_temperature as average_kinetic_energy
+from symplyphysics.laws.thermodynamics import average_kinetic_energy_of_ideal_gas_from_temperature as average_kinetic_energy
 
 Args = namedtuple("Args", ["temperature"])
 

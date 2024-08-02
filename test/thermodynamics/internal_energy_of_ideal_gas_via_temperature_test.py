@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.core.symbols.celsius import Celsius, to_kelvin_quantity
-from symplyphysics.laws.thermodynamics import inner_energy_from_temperature as inner_energy_law
+from symplyphysics.laws.thermodynamics import internal_energy_of_ideal_gas_via_temperature as inner_energy_law
 
 # Description
 ## With help of calculator on https://www.calculatoratoz.com/ru/molar-internal-energy-of-ideal-gas-calculator/Calc-1705 I calculated inner energy of 1 mole (4 gram) of Helium with it's molar mass 4 gramm/mole at 20 Celsius degrees.
