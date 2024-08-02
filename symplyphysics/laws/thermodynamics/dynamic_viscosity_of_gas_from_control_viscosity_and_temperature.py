@@ -31,7 +31,7 @@ Latex:
 """
 
 reference_dynamic_viscosity = Symbol("reference_dynamic_viscosity", units.pressure * units.time)
-"""
+r"""
 Dynamic viscosity of the gas at the reference temperature :math:`T_0`.
 
 Symbol:

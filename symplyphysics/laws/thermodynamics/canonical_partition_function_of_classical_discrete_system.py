@@ -30,7 +30,7 @@ Symbol:
 
 boltzmann_factor = SymbolIndexed("boltzmann_factor", dimensionless)
 r"""
-:doc:`Boltzmann factor <definitions.boltzmann_factor>` of energy state :math:`i`.
+:doc:`Boltzmann factor <definitions.boltzmann_factor_via_state_energy_and_temperature>` of energy state :math:`i`.
 
 Symbol:
     :code:`f_i`

@@ -1,4 +1,4 @@
-"""
+r"""
 Internal energy change via heat and work
 ========================================
 
