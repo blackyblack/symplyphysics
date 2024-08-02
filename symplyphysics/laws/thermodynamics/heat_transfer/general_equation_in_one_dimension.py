@@ -42,7 +42,8 @@ position = Symbol("position", units.length)
 time = Symbol("time", units.time)
 
 law = Eq(
-    medium_density * medium_specific_heat_capacity * Derivative(temperature_function(position, time), time),
+    medium_density * medium_specific_heat_capacity *
+    Derivative(temperature_function(position, time), time),
     Derivative(
-    thermal_conductivity(position) * Derivative(temperature_function(position, time), position), position) +
-    heat_source_density(position, time))
+    thermal_conductivity(position) * Derivative(temperature_function(position, time), position),
+    position) + heat_source_density(position, time))

@@ -10,8 +10,8 @@ from symplyphysics import (
     Vector,
 )
 from symplyphysics.definitions import (
-    angular_velocity_is_angle_derivative as angular_velocity_def,
-    angular_acceleration_is_angular_velocity_derivative as angular_acceleration_def,
+    angular_acceleration_is_angular_speed_derivative as angular_acceleration_def,
+    angular_speed_is_angular_distance_derivative as angular_velocity_def,
 )
 from symplyphysics.laws.kinematic import (
     linear_velocity_from_angular_velocity_and_radius as linear_velocity_law,
@@ -42,12 +42,12 @@ angular_acceleration_eqn = angular_acceleration_def.definition.subs(angular_acce
 angular_position = factor * time**2
 
 angular_velocity = angular_velocity_eqn.rhs.subs(
-    angular_velocity_def.angle_function(time),
+    angular_velocity_def.angular_distance(time),
     angular_position,
 ).doit()
 
 angular_acceleration = angular_acceleration_eqn.rhs.subs(
-    angular_acceleration_def.angular_velocity(time),
+    angular_acceleration_def.angular_speed(time),
     angular_velocity,
 ).doit()
 

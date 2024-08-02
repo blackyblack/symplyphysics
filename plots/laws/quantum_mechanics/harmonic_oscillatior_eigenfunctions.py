@@ -20,7 +20,6 @@ base_plot = plot(
     backend=MatplotlibBackend,
     legend=True,
     show=False,
-    annotations=None,
 )
 
 law = wave_eigenfunctions.law.rhs.subs({

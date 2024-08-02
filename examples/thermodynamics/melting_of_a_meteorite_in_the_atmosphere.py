@@ -4,13 +4,13 @@ from sympy import solve, Symbol, Eq
 from symplyphysics import print_expression, Quantity, prefixes, units, convert_to
 from symplyphysics.core.symbols.celsius import to_kelvin_quantity, Celsius
 from symplyphysics.laws.thermodynamics import (
-    energy_to_melt_from_mass as energy_melting_law,
+    latent_heat_of_fusion_via_mass as energy_melting_law,
     thermal_energy_from_heat_capacity_and_temperature as thermal_energy_law,
 )
 from symplyphysics.laws.quantities import quantity_is_specific_quantity_times_mass as specific_qty_law
 from symplyphysics.laws.conservation import (
     mechanical_energy_after_equals_to_mechanical_energy_before as energy_conservation_law,)
-from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_velocity as kinetic_energy_law
+from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_speed as kinetic_energy_law
 
 # Example from https://easyfizika.ru/zadachi/termodinamika/zheleznyj-meteorit-vletaet-v-atmosferu-zemli-so-skorostyu-1-5x10-3-m-s/
 # An iron meteorite flies into the Earth's atmosphere at a speed of 1.5 km/s,
@@ -43,13 +43,13 @@ energy_to_heating_meteorite = thermal_energy_law.law.subs({
 }).rhs
 
 energy_to_meteorite_melting = energy_melting_law.law.subs({
-    energy_melting_law.symbols.basic.mass: mass_of_melting_meteorite,
-    energy_melting_law.specific_heat_melting: specific_heat_melting_meteorite
+    energy_melting_law.mass: mass_of_melting_meteorite,
+    energy_melting_law.specific_heat_of_fusion: specific_heat_melting_meteorite
 }).rhs
 
 kinetic_energy_of_meteorite = kinetic_energy_law.law.subs({
-    kinetic_energy_law.symbols.basic.mass: mass_of_meteorite,
-    kinetic_energy_law.body_velocity: velocity_of_meteorite
+    kinetic_energy_law.mass: mass_of_meteorite,
+    kinetic_energy_law.speed: velocity_of_meteorite
 }).rhs
 
 energy_conservation_equation = energy_conservation_law.law.subs({

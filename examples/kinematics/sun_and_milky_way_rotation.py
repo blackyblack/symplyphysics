@@ -8,7 +8,7 @@ from symplyphysics import (
     units,
 )
 from symplyphysics.laws.kinematic import linear_velocity_from_angular_velocity_and_radius as velocity_law
-from symplyphysics.laws.kinematic import period_from_angular_frequency as period_law
+from symplyphysics.definitions import period_from_angular_frequency as period_law
 
 # Description
 ## The Sun is 2.3*10^4 ly (light-years) away from the center of the Milky Way galaxy. For this example
@@ -35,7 +35,7 @@ sun_angular_velocity = solve(
 })
 
 sun_period = solve(period_law.law, period_law.period)[0].subs(
-    period_law.circular_frequency,
+    period_law.angular_frequency,
     sun_angular_velocity,
 )
 sun_period_value = convert_to(

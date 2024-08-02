@@ -4,7 +4,7 @@ from sympy import solve, symbols
 from symplyphysics import Quantity, units, convert_to, print_expression
 from symplyphysics.laws.dynamics.springs import stiffness_of_two_parallel_springs as stiffness_law
 from symplyphysics.laws.dynamics import period_of_spring_from_mass as spring_period_law
-from symplyphysics.laws.kinematic import temporal_frequency_from_period as frequency_def
+from symplyphysics.definitions import temporal_frequency_from_period as frequency_def
 
 # Description
 ## Two identical springs of stiffness k = 7.580 kN/m are attached to a block of mass m = 0.245 kg.
@@ -22,9 +22,9 @@ total_stiffness = solve(stiffness_law.law, stiffness_law.total_stiffness)[0].sub
     stiffness_law.second_stiffness: stiffness_sym,
 })
 
-period = solve(spring_period_law.law, spring_period_law.oscillation_period)[0].subs({
-    spring_period_law.symbols.basic.mass: mass_sym,
-    spring_period_law.spring_elasticity: total_stiffness,
+period = solve(spring_period_law.law, spring_period_law.period)[0].subs({
+    spring_period_law.mass: mass_sym,
+    spring_period_law.stiffness: total_stiffness,
 })
 
 frequency = solve(frequency_def.law, frequency_def.temporal_frequency)[0].subs(

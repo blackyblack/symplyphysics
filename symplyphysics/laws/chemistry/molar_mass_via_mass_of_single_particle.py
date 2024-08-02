@@ -39,7 +39,7 @@ _total_mass = mass_sum_law.law.rhs.subs(global_index,
     _local_index).subs(mass_sum_law.mass_of_component[_local_index], particle_mass).doit()
 
 _molar_mass_derived = molar_mass_law.law.rhs.subs({
-    symbols.basic.mass: _total_mass,
+    molar_mass_law.mass: _total_mass,
     molar_mass_law.mole_count: _amount_of_substance,
 })
 

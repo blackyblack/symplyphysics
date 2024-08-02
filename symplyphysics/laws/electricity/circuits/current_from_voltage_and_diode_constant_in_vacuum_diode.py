@@ -1,4 +1,4 @@
-from sympy import Eq, solve
+from sympy import Eq, solve, Rational
 from symplyphysics import (
     units,
     Quantity,
@@ -18,18 +18,16 @@ from symplyphysics import (
 
 current = Symbol("current", units.current)
 
-diode_constant = Symbol("diode_constant", units.current / units.voltage**(3 / 2))
+diode_constant = Symbol("diode_constant", units.current / units.voltage**Rational(3, 2))
 voltage = Symbol("voltage", units.voltage)
 
-law = Eq(current, diode_constant * voltage**(3 / 2))
+law = Eq(current, diode_constant * voltage**Rational(3, 2))
 
 
-@validate_input(diode_constant_=diode_constant,
-    voltage_=voltage)
+@validate_input(diode_constant_=diode_constant, voltage_=voltage)
 @validate_output(current)
 def calculate_current(diode_constant_: Quantity, voltage_: Quantity) -> Quantity:
-    result_expr = solve(law, current,
-        dict=True)[0][current]
+    result_expr = solve(law, current, dict=True)[0][current]
     result_expr = result_expr.subs({
         diode_constant: diode_constant_,
         voltage: voltage_,

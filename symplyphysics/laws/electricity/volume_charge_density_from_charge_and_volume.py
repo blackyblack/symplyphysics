@@ -1,7 +1,7 @@
 from sympy import (Eq, solve)
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
     validate_output)
-from symplyphysics.definitions import volume_number_density
+from symplyphysics.definitions import number_density_is_number_of_objects_per_unit_volume
 
 # Description
 ## The volume charge density is defined as the amount of charge present over a unit volume of the conductor.
@@ -23,13 +23,13 @@ law = Eq(volume_charge_density, charge / volume)
 
 ## Let's express the number of objects from the volume number density definition
 ## In this case, the objects are charged particles.
-expr = volume_number_density.definition.subs({
-    volume_number_density.volume: volume,
-    volume_number_density.objects: charge
+expr = number_density_is_number_of_objects_per_unit_volume.definition.subs({
+    number_density_is_number_of_objects_per_unit_volume.volume: volume,
+    number_density_is_number_of_objects_per_unit_volume.number_of_objects: charge
 })
 
-derived_law = solve(expr, volume_number_density.number_density,
-    dict=True)[0][volume_number_density.number_density]
+derived_law = solve(expr, number_density_is_number_of_objects_per_unit_volume.number_density,
+    dict=True)[0][number_density_is_number_of_objects_per_unit_volume.number_density]
 assert law.rhs == derived_law
 
 

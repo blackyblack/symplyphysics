@@ -3,11 +3,9 @@
 from sympy import symbols, dsolve, solve, Eq
 from symplyphysics import print_expression
 from symplyphysics.laws.dynamics import (
-    force_is_derivative_of_momentum as newtons_second_law,
-)
+    force_is_derivative_of_momentum as newtons_second_law,)
 from symplyphysics.laws.relativistic import (
-    relativistic_momentum as relativistic_momentum_law,
-)
+    relativistic_momentum as relativistic_momentum_law,)
 
 # Description
 ## A particle with an initial momentum `p_0` starts moving at a moment `t = 0` due to a constant
@@ -23,7 +21,9 @@ momentum_function = newtons_second_law.momentum
 momentum_via_time = dsolve(
     newtons_second_law.law.subs(newtons_second_law.force(time), force),
     momentum_function(time),
-    ics={momentum_function(0): initial_momentum},
+    ics={
+    momentum_function(0): initial_momentum
+    },
 ).rhs
 
 # We can find velocity as a function of momentum
@@ -56,8 +56,8 @@ initial_position_expr = position.subs(time, 0)
 
 distance_via_time = solve(
     (
-        Eq(distance, position - initial_position_expr),
-        Eq(initial_position, initial_position_expr),
+    Eq(distance, position - initial_position_expr),
+    Eq(initial_position, initial_position_expr),
     ),
     (distance, rest_mass),
     dict=True,

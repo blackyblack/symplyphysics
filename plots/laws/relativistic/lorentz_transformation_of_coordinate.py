@@ -4,8 +4,8 @@ from collections import namedtuple
 from sympy import solve, symbols, Eq
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
-from symplyphysics import print_expression
 from sympy.physics.units import speed_of_light
+from symplyphysics import print_expression
 from symplyphysics.laws.relativistic import coordinate_conversion_velocity_constant as transform_law
 
 reduced_speed = symbols("reduced_speed")

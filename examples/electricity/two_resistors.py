@@ -24,10 +24,10 @@ I_parallel = symbols("I_parallel")
 ## Find resistance R12 using the law of conductance
 
 sigma1 = solve(conductivity_law.definition,
-    conductivity_law.object_conductivity)[0].subs({conductivity_law.object_resistance: R1})
+    conductivity_law.conductivity)[0].subs({conductivity_law.resistance: R1})
 
 sigma2 = solve(conductivity_law.definition,
-    conductivity_law.object_conductivity)[0].subs({conductivity_law.object_resistance: R2})
+    conductivity_law.conductivity)[0].subs({conductivity_law.resistance: R2})
 
 parallel_law = parallel_conductance.law.subs({
     parallel_conductance.first_conductance: sigma1,
@@ -36,8 +36,8 @@ parallel_law = parallel_conductance.law.subs({
 sigma_parallel = solve(parallel_law, parallel_conductance.parallel_conductance)[0]
 
 resistance_definition = conductivity_law.definition.subs(
-    {conductivity_law.object_conductivity: sigma_parallel})
-R12_parallel = solve(resistance_definition, conductivity_law.object_resistance)[0]
+    {conductivity_law.conductivity: sigma_parallel})
+R12_parallel = solve(resistance_definition, conductivity_law.resistance)[0]
 
 ## The sum resistance R12 is still connected in series to the internal resistance of the battery
 

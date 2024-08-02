@@ -1,3 +1,12 @@
+"""
+Chemical potential is particle count derivative of enthalpy
+===========================================================
+
+The chemical potential of the system is the amount of energy the system absorbs or releases
+due to the introduction of a particle into the system, i.e. when the particle count increases
+by one.
+"""
+
 from sympy import Eq, Derivative, Point2D
 from symplyphysics import (
     units,
@@ -5,43 +14,65 @@ from symplyphysics import (
     Quantity,
     Symbol,
     Function,
-    print_expression,
     validate_input,
     validate_output,
 )
 from symplyphysics.core.geometry.line import two_point_function
 
-# Description
-## The chemical potential of the system is the amount of energy the system absorbs or releases
-## due to the introduction of a particle into the system, i.e. when the particle count increases
-## by one.
-
-# Law: mu = (dH/dN)_(S, p)
-## mu - chemical potential
-## H = H(S, p, N) - [enthalpy](./enthalpy_is_internal_energy_plus_pressure_energy.py)
-## N - particle count
-## S - entropy
-## p - pressure
-## (d/dN)_(S, p) - derivative w.r.t. particle count at constant entropy and pressure
-
 chemical_potential = Symbol("chemical_potential", units.energy)
-enthalpy = Function("enthalpy", units.energy)
-particle_count = Symbol("particle_count", dimensionless)
-entropy = Symbol("entropy", units.energy / units.temperature)
-pressure = Symbol("pressure", units.pressure)
+r"""
+Chemical potential of the system.
 
-# Note that `entropy` and `pressure` are only used to show that the enthalpy
-# function depends on them and they are held constant during differentiation with
-# respect to `particle_count`.
+Symbol:
+    :code:`mu`
+
+Latex:
+    :math:`\mu`
+"""
+
+enthalpy = Function("enthalpy", units.energy)
+"""
+Enthalpy as a function of its natural variables.
+
+Symbol:
+    :code:`H(S, p, N)`
+"""
+
+particle_count = Symbol("particle_count", dimensionless)
+"""
+Number of particles in the system.
+
+Symbol:
+    :code:`N`
+"""
+
+entropy = Symbol("entropy", units.energy / units.temperature)
+"""
+Entropy of the system.
+
+Symbol:
+    :code:`S`
+"""
+
+pressure = Symbol("pressure", units.pressure)
+"""
+Pressure inside the system.
+
+Symbol:
+    :code:`p`
+"""
 
 law = Eq(
     chemical_potential,
     Derivative(enthalpy(entropy, pressure, particle_count), particle_count),
 )
+r"""
+:code:`mu = Derivative(H(S, p, N), N)`
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        \mu = \left( \frac{\partial H}{\partial N} \right)_{S, p}
+"""
 
 
 @validate_input(

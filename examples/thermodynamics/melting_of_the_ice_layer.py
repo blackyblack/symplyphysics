@@ -4,7 +4,7 @@ from sympy import Idx, solve, Symbol, Eq
 from symplyphysics import print_expression, Quantity, prefixes, units, convert_to, global_index
 from symplyphysics.core.symbols.celsius import to_kelvin_quantity, Celsius
 from symplyphysics.laws.thermodynamics import (
-    energy_to_melt_from_mass as energy_melting_law,
+    latent_heat_of_fusion_via_mass as energy_melting_law,
     sum_of_heat_transfer_is_zero as thermodinamics_law_1,
     thermal_energy_from_heat_capacity_and_temperature as thermal_energy_law,
 )
@@ -41,19 +41,19 @@ density_of_ice_equation = density_law.definition.subs({
     density_law.density: density_of_ice,
     density_law.volume: volume_of_ice_value
 })
-mass_of_ice = solve(density_of_ice_equation, density_law.symbols.basic.mass,
-    dict=True)[0][density_law.symbols.basic.mass]
+mass_of_ice = solve(density_of_ice_equation, density_law.mass,
+    dict=True)[0][density_law.mass]
 
 density_of_water_equation = density_law.definition.subs({
     density_law.density: density_of_water,
     density_law.volume: volume_of_water_value
 })
-mass_of_water = solve(density_of_water_equation, density_law.symbols.basic.mass,
-    dict=True)[0][density_law.symbols.basic.mass]
+mass_of_water = solve(density_of_water_equation, density_law.mass,
+    dict=True)[0][density_law.mass]
 
 energy_for_melting_ice_value = energy_melting_law.law.subs({
-    energy_melting_law.symbols.basic.mass: mass_of_ice,
-    energy_melting_law.specific_heat_melting: specific_heat_melting_of_ice
+    energy_melting_law.mass: mass_of_ice,
+    energy_melting_law.specific_heat_of_fusion: specific_heat_melting_of_ice
 }).rhs
 energy_from_cooling_water_value = thermal_energy_law.law.subs({
     thermal_energy_law.heat_capacity:

@@ -1,41 +1,65 @@
+r"""
+Thermodynamic compressibility
+=============================
+
+*Compressibility*, or the *coefficient of compressibility*, is a measure of the instantaneous
+relative volume change of a fluid or solid as a response to pressure or mean stress change.
+
+**Notes:**
+
+#. This definition is incomplete in the sense that the value of the compressibility coefficient
+   depends on whether the process is isentropic or isothermal, hence the partial derivative should
+   be taken at either constant entropy or constant temperature.
+#. For solids the difference between isentropic and isothermal compressibility coefficients
+   is usually negligible.
+"""
+
 from sympy import Eq, Derivative
 from symplyphysics import (
     units,
     Quantity,
     Symbol,
     Function,
-    print_expression,
     validate_input,
     validate_output,
 )
 from symplyphysics.core.geometry.line import two_point_function, Point2D
 
-# Description
-## The compressibility, or the coefficient of compressibility, is a measure of the instantaneous
-## relative volume change of a fluid or solid as a response to pressure or mean stress change.
-
-# Definition: beta = -1/V(p) * (dV/dp)
-## beta - compressibility
-## V - volume (as a function of pressure and other parameters)
-## p - pressure
-## d/dp - partial derivative with respect to pressure
-
-# Note
-## - This definition is incomplete in the sense that the value of the compressibility coefficient
-##   depends on whether the process is isentropic or isothermal, hence the partial derivative should
-##   be taken at either constant entropy or constant temperature.
-## - For solids the difference between isentropic and isothermal compressibility coefficients
-##   is usually negligible.
-
 compressibility = Symbol("compressibility", 1 / units.pressure)
+r"""
+Compressibility of the gas.
+
+Symbol:
+    :code:`beta`
+
+Latex:
+    :math:`\beta`
+"""
+
 volume = Function("volume", units.volume)
+"""
+Volume of the gas as a function of pressure and other parameters.
+
+Symbol:
+    :code:`V(p)`
+"""
+
 pressure = Symbol("pressure", units.pressure)
+"""
+Pressure in the gas.
+
+Symbol:
+    :code:`p`
+"""
 
 definition = Eq(compressibility, -1 * Derivative(volume(pressure), pressure) / volume(pressure))
+r"""
+:code:`beta = -1 / V(p) * Derivative(V(p), p)`
 
-
-def print_law() -> str:
-    return print_expression(definition)
+Latex:
+    .. math::
+        \beta = - \frac{1}{V(p)} \frac{\partial V}{\partial p}
+"""
 
 
 @validate_input(

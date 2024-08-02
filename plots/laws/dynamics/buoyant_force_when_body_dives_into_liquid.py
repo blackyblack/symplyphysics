@@ -2,11 +2,11 @@
 from sympy import solve, symbols, pi
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
-from symplyphysics import print_expression
+from symplyphysics import print_expression, units
 from symplyphysics.laws.dynamics import buoyant_force_from_density_and_volume as archimedes_law
-from symplyphysics.laws.dynamics import acceleration_from_force as gravity_law
+from symplyphysics.laws.dynamics import acceleration_is_force_over_mass as gravity_law
 
-print(f"Formula is:\n{archimedes_law.print_law()}")
+print(f"Formula is:\n{print_expression(archimedes_law.law)}")
 
 height = symbols("height")
 
@@ -19,25 +19,25 @@ cylinder_volume_function = pi * height * CYLINDER_RADIUS**2
 cylinder_volume = cylinder_volume_function.subs(height, CYLINDER_HEIGHT)
 
 solved = abs(
-    solve(archimedes_law.law, archimedes_law.force_buoyant,
-    dict=True)[0][archimedes_law.force_buoyant])
+    solve(archimedes_law.law, archimedes_law.buoyant_force,
+    dict=True)[0][archimedes_law.buoyant_force])
 result_buoyant_force_above_liquid = solved.subs({
-    archimedes_law.units.acceleration_due_to_gravity: 9.8,
+    units.acceleration_due_to_gravity: 9.8,
     archimedes_law.fluid_density: FLUID_DENSITY,
     archimedes_law.displaced_volume: cylinder_volume_function
 })
 
 result_buoyant_force_below_liquid = solved.subs({
-    archimedes_law.units.acceleration_due_to_gravity: 9.8,
+    units.acceleration_due_to_gravity: 9.8,
     archimedes_law.fluid_density: FLUID_DENSITY,
     archimedes_law.displaced_volume: cylinder_volume
 })
 
-solved_gravity = solve(gravity_law.law, gravity_law.symbols.dynamics.force,
-    dict=True)[0][gravity_law.symbols.dynamics.force]
+solved_gravity = solve(gravity_law.law, gravity_law.force,
+    dict=True)[0][gravity_law.force]
 result_gravity_force = solved_gravity.subs({
-    gravity_law.symbols.basic.mass: CYLINDER_MASS,
-    gravity_law.symbols.kinematic.acceleration: 9.8
+    gravity_law.mass: CYLINDER_MASS,
+    gravity_law.acceleration: 9.8
 })
 
 print(

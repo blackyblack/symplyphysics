@@ -1,49 +1,76 @@
-from sympy import Eq, solve, S
+"""
+Relative refractive index is ratio of wave speeds
+=================================================
+
+If a wave is moving from one medium to another, it refracts due to the difference
+of propagation speeds in the two  media. Relative refractive index describes how much
+slower the wave propagates in the refracting medium relative to the incident medium.
+
+**Conditions:**
+
+#. Both media are isotropic and transparent.
+#. The wave is monochromatic. Note that the speed of wave propagation depends on the
+   wave frequency.
+"""
+
+from sympy import Eq, solve
 from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     dimensionless,
     validate_input,
     validate_output,
     convert_to_float,
 )
 
-# Description
-## If wave transfers from one medium to another, it refracts. That's because of different propagation speeds in different mediums.
-## This factor shows how much slower wave propagates in refracting medium related to outer medium.
+relative_refractive_index = Symbol("relative_refractive_index", dimensionless)
+"""
+Relative refractive index between two media.
 
-# Definition: n = Vouter/Vrefraction
-# Where:
-## n is refractive index,
-## Vouter is wave propagation speed in outer medium,
-## Vrefracting is wave propagation speed in refracting medium.
+Symbol:
+    :code:`n`
+"""
 
-# Conditions
-## - Mediums are isotropic and transparent.
-## - Wave is monochromic as propagation speed depends on frequency.
+incident_wave_speed = Symbol("incident_wave_speed", units.velocity)
+r"""
+Speed of the incident wave.
 
-refractive_index = Symbol("refractive_index", dimensionless)
-outer_speed = Symbol("outer_speed", units.velocity)
-refracting_speed = Symbol("refracting_speed", units.velocity)
+Symbol:
+    :code:`v_incident`
 
-definition = Eq(refractive_index, outer_speed / refracting_speed)
+Latex:
+    :math:`v_\text{incident}`
+"""
 
-definition_units_SI = S.One
+refracted_wave_speed = Symbol("refracted_wave_speed", units.velocity)
+r"""
+Speed of the refracted wave.
+
+Symbol:
+    :code:`v_refracted`
+
+Latex:
+    :math:`v_\text{refracted}`
+"""
+
+definition = Eq(relative_refractive_index, incident_wave_speed / refracted_wave_speed)
+r"""
+:code:`n = v_incident / v_refracted`
+
+Latex:
+    .. math::
+        n = \frac{v_\text{incident}}{v_\text{refracted}}
+"""
 
 
-def print_law() -> str:
-    return print_expression(definition)
-
-
-@validate_input(outer_speed_=outer_speed, refracting_speed_=refracting_speed)
-@validate_output(refractive_index)
-def calculate_refractive_index(outer_speed_: Quantity, refracting_speed_: Quantity) -> float:
-    result_index_expr = solve(definition, refractive_index, dict=True)[0][refractive_index]
+@validate_input(incident_wave_speed_=incident_wave_speed, refracted_wave_speed_=refracted_wave_speed)
+@validate_output(relative_refractive_index)
+def calculate_refractive_index(incident_wave_speed_: Quantity, refracted_wave_speed_: Quantity) -> float:
+    result_index_expr = solve(definition, relative_refractive_index, dict=True)[0][relative_refractive_index]
     result_expr = result_index_expr.subs({
-        outer_speed: outer_speed_,
-        refracting_speed: refracting_speed_
+        incident_wave_speed: incident_wave_speed_,
+        refracted_wave_speed: refracted_wave_speed_
     })
     result = Quantity(result_expr)
     return convert_to_float(result)

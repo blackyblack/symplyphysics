@@ -1,3 +1,16 @@
+r"""
+Intensive parameters relation
+=============================
+
+The *Gibbs—Duhem relation* is a relationship among the intensive parameters of the system.
+Subsequently, for a system with :math:`i` components, there are :math:`(i + 1)` independent
+parameters, or degrees of freedom.
+
+**Notation:**
+
+#. :math:`d` denotes an exact, path-independent differential.
+"""
+
 from sympy import Eq, solve
 from symplyphysics import (
     clone_symbol,
@@ -6,7 +19,6 @@ from symplyphysics import (
     dimensionless,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
@@ -14,32 +26,69 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import internal_energy_differential
 from symplyphysics.laws.thermodynamics.euler_relations import internal_energy_formula
 
-# Description
-## The Gibbs—Duhem relation is a relationship among the intensive parameters of the system.
-## Subsequently, for a system with `I` components, there is `I + 1` independent parameters,
-## or degrees of freedom.
-
-# Law: S * dT - V * dp + N * d(mu) = 0
-## S - entropy
-## T - absolute temperature
-## V - volume
-## p - pressure
-## N - particle count
-## mu - chemical potential
-## Notation: d(x) - exact differential of x
-
 entropy = Symbol("entropy", units.energy / units.temperature)
+"""
+Entropy of the system.
+
+Symbol:
+    :code:`S`
+"""
+
 temperature_change = clone_symbol(symbols.thermodynamics.temperature, "temperature_change")
+"""
+Infinitesimal change in temperature of the system.
+
+Symbol:
+    :code:`dT`
+"""
+
 volume = Symbol("volume", units.volume)
+"""
+Volume of the system.
+
+Symbol:
+    :code:`V`
+"""
+
 pressure_change = Symbol("pressure_change", units.pressure)
+"""
+Infinitesimal change in pressure inside the system.
+
+Symbol:
+    :code:`dp`
+"""
+
 particle_count = Symbol("particle_count", dimensionless)
+"""
+Number of particles in the system.
+
+Symbol:
+    :code:`N`
+"""
+
 chemical_potential_change = Symbol("chemical_potential_change", units.energy)
+r"""
+Infinitesimal change in chemical potential of the system.
+
+Symbol:
+    :code:`dmu`
+
+Latex:
+    :math:`d \mu`
+"""
 
 law = Eq(
     entropy * temperature_change - volume * pressure_change +
     particle_count * chemical_potential_change,
     0,
 )
+r"""
+:code:`E * dT - V * dp + N * dmu = 0`
+
+Latex:
+    .. math::
+        E \, dT - V \, dp + N \, d \mu = 0
+"""
 
 # Derive from internal energy representations
 
@@ -74,10 +123,6 @@ _chemical_potential_change_derived = solve(
 _chemical_potential_change_from_law = solve(law, chemical_potential_change)[0]
 
 assert expr_equals(_chemical_potential_change_derived, _chemical_potential_change_from_law)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(

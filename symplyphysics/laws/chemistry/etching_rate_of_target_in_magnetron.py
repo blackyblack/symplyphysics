@@ -1,7 +1,13 @@
 from sympy import Eq, solve
 from sympy.physics.units import elementary_charge, avogadro_constant
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output,
-                           dimensionless,)
+from symplyphysics import (
+    units,
+    Quantity,
+    Symbol,
+    validate_input,
+    validate_output,
+    dimensionless,
+)
 
 # Description
 ## The ions of the gas-discharge plasma in the magnetron fall on the target and knock the atoms out of it.
@@ -21,20 +27,23 @@ from symplyphysics import (units, Quantity, Symbol, validate_input, validate_out
 etching_rate = Symbol("etching_rate", units.velocity)
 
 ion_current_density = Symbol("ion_current_density", units.current / units.area)
-molar_mass_of_target_atom = Symbol("molar_mass_of_target_atom", units.mass / units.amount_of_substance)
+molar_mass_of_target_atom = Symbol("molar_mass_of_target_atom",
+    units.mass / units.amount_of_substance)
 sputtering_coefficient = Symbol("sputtering_coefficient", dimensionless)
 target_density = Symbol("target_density", units.mass / units.volume)
 
-law = Eq(etching_rate, ion_current_density * molar_mass_of_target_atom * sputtering_coefficient / (elementary_charge * target_density * avogadro_constant))
+law = Eq(
+    etching_rate, ion_current_density * molar_mass_of_target_atom * sputtering_coefficient /
+    (elementary_charge * target_density * avogadro_constant))
 
 
 @validate_input(ion_current_density_=ion_current_density,
-                molar_mass_of_target_atom_=molar_mass_of_target_atom,
-                sputtering_coefficient_=sputtering_coefficient,
-                target_density_=target_density)
+    molar_mass_of_target_atom_=molar_mass_of_target_atom,
+    sputtering_coefficient_=sputtering_coefficient,
+    target_density_=target_density)
 @validate_output(etching_rate)
 def calculate_etching_rate(ion_current_density_: Quantity, molar_mass_of_target_atom_: Quantity,
-                                                  sputtering_coefficient_: float, target_density_: Quantity) -> Quantity:
+    sputtering_coefficient_: float, target_density_: Quantity) -> Quantity:
     result_expr = solve(law, etching_rate, dict=True)[0][etching_rate]
     result_expr = result_expr.subs({
         ion_current_density: ion_current_density_,

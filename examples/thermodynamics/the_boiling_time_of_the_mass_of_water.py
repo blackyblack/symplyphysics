@@ -5,8 +5,8 @@ from symplyphysics import print_expression, Quantity, prefixes, units, convert_t
 from symplyphysics.core.symbols.celsius import to_kelvin_quantity, Celsius
 from symplyphysics.laws.electricity import power_factor_from_active_and_full_power as efficiency_law
 from symplyphysics.laws.thermodynamics import (
-    energy_from_combustion as combustion_energy_law,
     energy_to_vaporization_from_mass as energy_to_vapor_law,
+    heat_of_combustion_via_mass as combustion_energy_law,
     thermal_energy_from_heat_capacity_and_temperature as heating_law,
 )
 from symplyphysics.laws.quantities import quantity_is_specific_quantity_times_mass as specific_qty_law
@@ -40,14 +40,14 @@ mass_flow_rate_constant = Symbol("mass_flow_rate_constant", constant=True)
 mass_flow_rate_constant_equation = mass_rate_law.definition.subs(
     {mass_rate_law.mass_flow_rate(mass_rate_law.time): mass_flow_rate_constant})
 mass_gas_integral = dsolve(mass_flow_rate_constant_equation,
-    mass_rate_law.mass_function(mass_rate_law.time))
+    mass_rate_law.mass(mass_rate_law.time))
 mass_of_gas_equation = mass_gas_integral.subs({
     "C1": 0,
     mass_flow_rate_constant: mass_rate_alcohol
 }).doit()
 
 mass_of_alcohol_in_start_equation = mass_of_gas_equation.subs({
-    mass_rate_law.mass_function(mass_rate_law.time): mass_of_alcohol,
+    mass_rate_law.mass(mass_rate_law.time): mass_of_alcohol,
     mass_rate_law.time: time_of_minute,
 }).doit()
 mass_flow_rate_in_start_value = solve(mass_of_alcohol_in_start_equation,
@@ -60,8 +60,8 @@ mass_of_alcohol_value = mass_of_gas_equation.subs({
 }).doit().rhs
 
 energy_from_combustion_alcohol_value = combustion_energy_law.law.subs({
-    combustion_energy_law.specific_heat_combustion: specific_heat_of_combustion_alcohol,
-    combustion_energy_law.symbols.basic.mass: mass_of_alcohol_value
+    combustion_energy_law.specific_heat_of_combustion: specific_heat_of_combustion_alcohol,
+    combustion_energy_law.mass: mass_of_alcohol_value
 }).rhs
 
 energy_for_heating_water_value = heating_law.law.subs({
@@ -77,7 +77,7 @@ energy_for_heating_water_value = heating_law.law.subs({
 }).rhs
 
 energy_to_vaporization_water_value = energy_to_vapor_law.law.subs({
-    energy_to_vapor_law.symbols.basic.mass: mass_of_booling_water,
+    energy_to_vapor_law.mass: mass_of_booling_water,
     energy_to_vapor_law.specific_heat_vaporization: specific_heat_of_vaporization_water
 }).rhs
 

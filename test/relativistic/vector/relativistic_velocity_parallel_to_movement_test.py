@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy.physics.units import speed_of_light
 from symplyphysics import (
-    assert_equal,
+    assert_equal_vectors,
     units,
     Quantity,
     QuantityVector,
@@ -22,16 +22,16 @@ Args = namedtuple("Args", "up ul v")
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
     up = QuantityVector([Quantity(0.1 * speed_of_light), Quantity(0.2 * units.speed_of_light), 0])
-    ul = QuantityVector([Quantity(-0.111 * speed_of_light), Quantity(-0.222 * units.speed_of_light), 0])
+    ul = QuantityVector(
+        [Quantity(-0.111 * speed_of_light),
+        Quantity(-0.222 * units.speed_of_light), 0])
     v = QuantityVector([Quantity(-0.2 * speed_of_light), Quantity(-0.4 * units.speed_of_light), 0])
     return Args(up=up, ul=ul, v=v)
 
 
 def test_lab_law(test_args: Args) -> None:
     result = law.calculate_parallel_velocity_component_in_lab_frame(test_args.up, test_args.v)
-    assert len(result.components) == 3
-    for result_component, correct_component in zip(result.components, test_args.ul.components):
-        assert_equal(result_component, correct_component, tolerance=2e-3)
+    assert_equal_vectors(result, test_args.ul, tolerance=2e-3)
 
 
 def test_proper_law(test_args: Args) -> None:
@@ -40,9 +40,7 @@ def test_proper_law(test_args: Args) -> None:
         test_args.v.to_base_vector(),
     )
     result = QuantityVector.from_base_vector(result_vector)
-    assert len(result.components) == 3
-    for result_component, correct_component in zip(result.components, test_args.up.components):
-        assert_equal(result_component, correct_component, tolerance=2e-3)
+    assert_equal_vectors(result, test_args.up, tolerance=2e-3)
 
 
 def test_relative_law(test_args: Args) -> None:
@@ -51,9 +49,7 @@ def test_relative_law(test_args: Args) -> None:
         test_args.ul.to_base_vector(),
     )
     result = QuantityVector.from_base_vector(result_vector)
-    assert len(result.components) == 3
-    for result_component, correct_component in zip(result.components, test_args.v.components):
-        assert_equal(result_component, correct_component, tolerance=2e-3)
+    assert_equal_vectors(result, test_args.v, tolerance=2e-3)
 
 
 def test_non_collinear_velocities() -> None:

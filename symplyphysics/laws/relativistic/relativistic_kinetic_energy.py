@@ -41,7 +41,7 @@ def calculate_kinetic_energy(
 ) -> Quantity:
     if lorentz_factor_ < 1:
         raise ValueError("Lorentz factor must be greater or equal to 1")
-    
+
     result = law.rhs.subs({
         lorentz_factor: lorentz_factor_,
         rest_mass: rest_mass_,

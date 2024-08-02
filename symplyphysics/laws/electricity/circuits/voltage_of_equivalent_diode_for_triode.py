@@ -1,12 +1,5 @@
-from sympy import Eq, solve
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    validate_input,
-    validate_output,
-    dimensionless
-)
+from sympy import Eq, Rational, solve
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless)
 
 # Description
 ## A triode has three electrodes: a cathode, an anode and one control grid. The triode can be replaced with an equivalent diode
@@ -28,7 +21,8 @@ anode_voltage = Symbol("anode_voltage", units.voltage)
 voltage_triode_gain = Symbol("voltage_triode_gain", dimensionless)
 grid_voltage = Symbol("grid_voltage", units.voltage)
 
-law = Eq(voltage_of_equivalent_diode, (grid_voltage + anode_voltage / voltage_triode_gain) / (1 + ((distance_to_anode / distance_to_grid)**(4 / 3)) / voltage_triode_gain))
+law = Eq(voltage_of_equivalent_diode, (grid_voltage + anode_voltage / voltage_triode_gain) / (1 +
+    ((distance_to_anode / distance_to_grid)**Rational(4, 3)) / voltage_triode_gain))
 
 
 @validate_input(distance_to_anode_=distance_to_anode,
@@ -37,10 +31,9 @@ law = Eq(voltage_of_equivalent_diode, (grid_voltage + anode_voltage / voltage_tr
     voltage_triode_gain_=voltage_triode_gain,
     grid_voltage_=grid_voltage)
 @validate_output(voltage_of_equivalent_diode)
-def calculate_voltage_of_equivalent_diode(distance_to_anode_: Quantity, distance_to_grid_: Quantity, anode_voltage_: Quantity,
-                      voltage_triode_gain_: float, grid_voltage_: Quantity) -> Quantity:
-    result_expr = solve(law, voltage_of_equivalent_diode,
-        dict=True)[0][voltage_of_equivalent_diode]
+def calculate_voltage_of_equivalent_diode(distance_to_anode_: Quantity, distance_to_grid_: Quantity,
+    anode_voltage_: Quantity, voltage_triode_gain_: float, grid_voltage_: Quantity) -> Quantity:
+    result_expr = solve(law, voltage_of_equivalent_diode, dict=True)[0][voltage_of_equivalent_diode]
     result_expr = result_expr.subs({
         distance_to_anode: distance_to_anode_,
         distance_to_grid: distance_to_grid_,
