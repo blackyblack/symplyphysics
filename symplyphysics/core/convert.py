@@ -27,7 +27,7 @@ _si_conversions: dict[units.Dimension, Expr] = {
     dimension_definitions.length: units.meter,
     dimension_definitions.mass: units.kilogram,
     dimension_definitions.time: units.second,
-    dimension_definitions.current: units.coulomb,
+    dimension_definitions.current: units.ampere,
     dimension_definitions.temperature: units.kelvin,
     dimension_definitions.amount_of_substance: units.mole,
     dimension_definitions.luminous_intensity: units.candela,
