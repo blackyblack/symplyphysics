@@ -7,8 +7,7 @@ See :doc:`laws.quantities.quantity_is_linear_density_times_length` for a general
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
 
 linear_charge_density = Symbol("linear_charge_density", units.charge / units.length)
 r"""

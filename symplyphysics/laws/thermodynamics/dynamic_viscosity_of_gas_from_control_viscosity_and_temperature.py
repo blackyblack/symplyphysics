@@ -16,8 +16,8 @@ with increasing temperature, whereas for liquids it decreases with increasing te
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol,
-    validate_input, validate_output)
+from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, validate_input,
+    validate_output)
 
 dynamic_viscosity = Symbol("dynamic_viscosity", units.pressure * units.time)
 r"""

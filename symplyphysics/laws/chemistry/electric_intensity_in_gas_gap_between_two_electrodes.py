@@ -1,5 +1,11 @@
 from sympy import Eq, solve, sqrt
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output,)
+from symplyphysics import (
+    units,
+    Quantity,
+    Symbol,
+    validate_input,
+    validate_output,
+)
 
 # Description
 ## Consider a two-electrode gas-filled gap with flat electrodes. Let one of the electrodes emit charged particles into a gaseous medium.
@@ -21,7 +27,8 @@ coordinate = Symbol("coordinate", units.length)
 distance_between_electrodes = Symbol("distance_between_electrodes", units.length)
 voltage_between_electrodes = Symbol("voltage_between_electrodes", units.voltage)
 
-law = Eq(electric_intensity, (3 / 2) * sqrt(coordinate / distance_between_electrodes) * voltage_between_electrodes / distance_between_electrodes)
+law = Eq(electric_intensity, (3 / 2) * sqrt(coordinate / distance_between_electrodes) *
+    voltage_between_electrodes / distance_between_electrodes)
 
 
 @validate_input(coordinate_=coordinate,

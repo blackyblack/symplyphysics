@@ -7,8 +7,7 @@ rate at which work is done.
 """
 
 from sympy import (Eq, Derivative)
-from symplyphysics import (units, Quantity, Function, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Function, Symbol, validate_input, validate_output)
 
 power = Function("power", units.power)
 """

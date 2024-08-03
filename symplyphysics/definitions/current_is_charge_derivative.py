@@ -7,8 +7,7 @@ defined as the time derivative of the flowing charge.
 """
 
 from sympy import (Eq, Derivative)
-from symplyphysics import (units, Quantity, Function, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Function, Symbol, validate_input, validate_output)
 
 current = Function("current", units.current)
 """

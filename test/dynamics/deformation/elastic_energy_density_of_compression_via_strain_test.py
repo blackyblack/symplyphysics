@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.dynamics.deformation import (
-    elastic_energy_density_of_compression_via_strain as law,
-)
+    elastic_energy_density_of_compression_via_strain as law,)
 
 Args = namedtuple("Args", "e s")
 

@@ -28,7 +28,8 @@ expr = number_density_is_number_of_objects_per_unit_volume.definition.subs({
     number_density_is_number_of_objects_per_unit_volume.number_of_objects: charge
 })
 
-derived_law = solve(expr, number_density_is_number_of_objects_per_unit_volume.number_density,
+derived_law = solve(expr,
+    number_density_is_number_of_objects_per_unit_volume.number_density,
     dict=True)[0][number_density_is_number_of_objects_per_unit_volume.number_density]
 assert law.rhs == derived_law
 

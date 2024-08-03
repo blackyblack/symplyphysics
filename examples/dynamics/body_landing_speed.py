@@ -50,6 +50,9 @@ answer = Eq(landing_speed, solved)
 
 print(f"\nSolution:\nIF potential_energy = kinetic_energy\nTHEN {print_expression(answer)}")
 
-landing_speed_ms = solved.subs({units.acceleration_due_to_gravity: 9.8, body_height: 11.25}).evalf(3)
+landing_speed_ms = solved.subs({
+    units.acceleration_due_to_gravity: 9.8,
+    body_height: 11.25
+}).evalf(3)
 
 print(f"\nLanding speed when falling from 11.25 meters is: {landing_speed_ms} m/s")

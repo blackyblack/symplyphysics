@@ -86,10 +86,8 @@ def calculate_frequency_change(
     gravitational_potential_change_: Quantity,
 ) -> Quantity:
     expr = solve(law, frequency_change)[0]
-    result = expr.subs(
-        {
-            frequency: frequency_,
-            gravitational_potential_change: gravitational_potential_change_,
-        }
-    )
+    result = expr.subs({
+        frequency: frequency_,
+        gravitational_potential_change: gravitational_potential_change_,
+    })
     return Quantity(result)

@@ -13,8 +13,7 @@ Spring accumulates energy while being deformed. This law is known as the *Hooke'
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
 
 elastic_potential_energy = Symbol("elastic_potential_energy", units.energy)
 """
@@ -53,9 +52,7 @@ Latex:
 @validate_input(stiffness_=stiffness, deformation_=displacement)
 @validate_output(elastic_potential_energy)
 def calculate_energy(stiffness_: Quantity, deformation_: Quantity) -> Quantity:
-    result_energy_expr = solve(law, elastic_potential_energy, dict=True)[0][elastic_potential_energy]
-    result_expr = result_energy_expr.subs({
-        stiffness: stiffness_,
-        displacement: deformation_
-    })
+    result_energy_expr = solve(law, elastic_potential_energy,
+        dict=True)[0][elastic_potential_energy]
+    result_expr = result_energy_expr.subs({stiffness: stiffness_, displacement: deformation_})
     return Quantity(result_expr)

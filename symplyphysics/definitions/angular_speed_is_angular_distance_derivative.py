@@ -6,8 +6,8 @@ Angular speed is angular distance derivative
 """
 
 from sympy import (Eq, Derivative)
-from symplyphysics import (angle_type, units, Quantity, Function, Symbol,
-    validate_input, validate_output)
+from symplyphysics import (angle_type, units, Quantity, Function, Symbol, validate_input,
+    validate_output)
 from symplyphysics.core.symbols.quantities import scale_factor
 
 angular_speed = Function("angular_speed", 1 / units.time)

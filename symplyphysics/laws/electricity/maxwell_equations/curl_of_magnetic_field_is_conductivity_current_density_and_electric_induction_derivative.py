@@ -10,14 +10,14 @@ from symplyphysics.core.vectors.vectors import Vector
 ## The magnetic field circulation theorem states that an electric current and a change in electric induction generate
 ## a vortex magnetic field. Also known as Ampere's circuital law.
 
-## Law is: rot(H(r, t)) = j + d(D(r, t)) / dt, where
+## Law is: curl(H(r, t)) = j + d(D(r, t)) / dt, where
 ## H - magnetic intensity (vector field),
 ## D - electric induction (vector field),
 ## j - conductivity current density vector,
 ## r - radius vector (i.e. x, y, z for point in cartesian coodrinates),
 ## t - time,
 ## d / dt - partial time derivative,
-## rot - rotor (curl) of vector field.
+## curl - curl of vector field.
 
 # Note:
 ## Curl operator is only defined in 3D space. Therefore magnetic intensity should not be defined

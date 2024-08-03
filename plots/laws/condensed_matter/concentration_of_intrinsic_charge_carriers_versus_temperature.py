@@ -4,15 +4,12 @@ from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression, units
 from symplyphysics.laws.condensed_matter import (
-    concentration_of_intrinsic_charge_carriers as carriers_law,
-)
+    concentration_of_intrinsic_charge_carriers as carriers_law,)
 
 reduced_concentration = symbols("reduced_concentration")
 
-density_product_expr = (
-    carriers_law.density_of_states_in_conduction_band
-    * carriers_law.density_of_states_in_valence_band
-)
+density_product_expr = (carriers_law.density_of_states_in_conduction_band *
+    carriers_law.density_of_states_in_valence_band)
 
 reduced_concentration_eqn = Eq(
     reduced_concentration,

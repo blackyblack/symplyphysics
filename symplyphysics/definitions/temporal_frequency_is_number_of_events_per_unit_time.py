@@ -6,8 +6,7 @@ Temporal frequency is number of events per unit time
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (dimensionless, units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (dimensionless, units, Quantity, Symbol, validate_input, validate_output)
 
 temporal_frequency = Symbol("temporal_frequency", units.frequency)
 """

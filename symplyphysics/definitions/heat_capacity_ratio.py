@@ -24,7 +24,6 @@ from symplyphysics import (
     convert_to_float,
 )
 
-
 heat_capacity_ratio = Symbol("heat_capacity_ratio", dimensionless)
 r"""
 Heat capacity ratio of the system.

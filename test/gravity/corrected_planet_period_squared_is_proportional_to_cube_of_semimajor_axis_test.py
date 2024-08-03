@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.gravity import (
-    corrected_planet_period_squared_is_proportional_to_cube_of_semimajor_axis as law,
-)
+    corrected_planet_period_squared_is_proportional_to_cube_of_semimajor_axis as law,)
 from symplyphysics.quantities import solar_mass
 
 Args = namedtuple("Args", "a ms mp")

@@ -7,8 +7,7 @@ It is defined as the inverse of resistance.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
 
 conductivity = Symbol("conductivity", units.conductance)
 r"""

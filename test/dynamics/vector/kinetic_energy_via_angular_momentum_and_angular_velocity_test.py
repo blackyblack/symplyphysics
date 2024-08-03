@@ -7,8 +7,7 @@ from symplyphysics import (
     QuantityVector,
 )
 from symplyphysics.laws.dynamics.vector import (
-    kinetic_energy_via_angular_momentum_and_angular_velocity as law,
-)
+    kinetic_energy_via_angular_momentum_and_angular_velocity as law,)
 
 Args = namedtuple("Args", "l w")
 

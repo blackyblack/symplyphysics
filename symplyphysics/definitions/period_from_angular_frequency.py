@@ -8,8 +8,7 @@ The Period is inversely proportional to the angular frequency of oscillations. S
 """
 
 from sympy import (Eq, solve, pi)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematic import average_angular_frequency_is_angular_distance_over_time as frequency_def
 
@@ -40,7 +39,6 @@ Latex:
     .. math::
         T = \frac{2 \pi}{\omega}
 """
-
 
 # Derive the same law from angular frequency
 

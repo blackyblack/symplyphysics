@@ -6,8 +6,7 @@ Heat of combustion via mass
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output, symbols)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols)
 
 heat = Symbol("heat", units.energy)
 """
@@ -43,8 +42,7 @@ Latex:
 """
 
 
-@validate_input(specific_heat_combustion_=specific_heat_of_combustion,
-    mass_of_matter_=mass)
+@validate_input(specific_heat_combustion_=specific_heat_of_combustion, mass_of_matter_=mass)
 @validate_output(heat)
 def calculate_amount_energy(specific_heat_combustion_: Quantity,
     mass_of_matter_: Quantity) -> Quantity:

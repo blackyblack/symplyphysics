@@ -10,8 +10,7 @@ print(f"Pendulum oscillation period formula is:\n{print_expression(pendulum_peri
 
 pendulum_length = Quantity(24 * units.inch)
 
-oscillating_period_expr = pendulum_period.law.subs(pendulum_period.length,
-    pendulum_length).rhs
+oscillating_period_expr = pendulum_period.law.subs(pendulum_period.length, pendulum_length).rhs
 oscillating_period = Quantity(oscillating_period_expr)
 oscillating_period_seconds = convert_to(oscillating_period, units.second).evalf(5)
 

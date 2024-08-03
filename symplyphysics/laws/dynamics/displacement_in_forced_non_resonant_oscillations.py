@@ -102,8 +102,8 @@ Symbol:
     :code:`t`
 """
 
-law = Eq(displacement(time), (driving_force_amplitude / mass) *
-    cos(driving_angular_frequency * time + driving_phase_lag) /
+law = Eq(displacement(time),
+    (driving_force_amplitude / mass) * cos(driving_angular_frequency * time + driving_phase_lag) /
     (natural_angular_frequency**2 - driving_angular_frequency**2))
 r"""
 q(t) = f / (m * (w0**2 - w**2)) * cos(w * t + phi)

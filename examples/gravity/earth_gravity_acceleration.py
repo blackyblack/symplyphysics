@@ -16,8 +16,7 @@ gravity_force = solve(gravity_law.law, gravity_law.gravitational_force,
     dict=True)[0][gravity_law.gravitational_force]
 
 # Acceleration from Newton's 2 law
-acceleration_expr = solve(newtons_law_2.law,
-    newtons_law_2.acceleration,
+acceleration_expr = solve(newtons_law_2.law, newtons_law_2.acceleration,
     dict=True)[0][newtons_law_2.acceleration]
 
 # probe mass disappears

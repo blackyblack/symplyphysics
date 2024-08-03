@@ -73,8 +73,8 @@ Symbol:
 """
 
 law = Eq(
-    period, 2 * pi * sqrt(rotational_inertia /
-    (mass * acceleration_due_to_gravity * distance_to_pivot)))
+    period,
+    2 * pi * sqrt(rotational_inertia / (mass * acceleration_due_to_gravity * distance_to_pivot)))
 r"""
 :code:`T = 2 * pi * sqrt(I / (m * g * h))`
 
@@ -90,11 +90,10 @@ time = SymSymbol("time")
 angle_function = SymSymbols("angle_function", cls=SymFunction)
 torque = SymSymbol("torque")
 
-gravitational_force = solve(newtons_second_law.law,
-    newtons_second_law.force)[0].subs({
+gravitational_force = solve(newtons_second_law.law, newtons_second_law.force)[0].subs({
     newtons_second_law.mass: mass,
     newtons_second_law.acceleration: acceleration_due_to_gravity,
-    })
+})
 
 angular_velocity = (angular_velocity_def.definition.rhs.subs(angular_velocity_def.time,
     time).subs(angular_velocity_def.angular_distance(time), angle_function(time)))

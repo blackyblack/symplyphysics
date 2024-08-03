@@ -8,8 +8,7 @@ for a general version of this law.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output, symbols)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols)
 
 density = Symbol("density", units.mass / units.volume)
 r"""

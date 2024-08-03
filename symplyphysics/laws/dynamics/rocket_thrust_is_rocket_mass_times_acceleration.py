@@ -37,8 +37,8 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.conservation import (
     momentum_after_collision_equals_to_momentum_before as momentum_conservation_law,)
-from symplyphysics.definitions import (momentum_is_mass_times_speed as momentum_def,
-    mass_flow_rate as flow_rate_def)
+from symplyphysics.definitions import (momentum_is_mass_times_speed as momentum_def, mass_flow_rate
+    as flow_rate_def)
 from symplyphysics.laws.kinematic import (
     accelerated_velocity_from_time as acceleration_def,
     classical_addition_of_velocities as galilean_law,

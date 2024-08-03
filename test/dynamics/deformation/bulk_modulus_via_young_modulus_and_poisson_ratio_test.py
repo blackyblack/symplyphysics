@@ -8,8 +8,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.dynamics.deformation import (
-    bulk_modulus_via_young_modulus_and_poisson_ratio as law,
-)
+    bulk_modulus_via_young_modulus_and_poisson_ratio as law,)
 
 # Averaged values for stainless steel are being used here.
 # Taken from [source](https://www.azom.com/properties.aspx?ArticleID=965)

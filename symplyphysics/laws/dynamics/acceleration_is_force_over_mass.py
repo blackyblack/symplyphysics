@@ -7,8 +7,7 @@ to the net force exerted on the body.
 """
 
 from sympy import (Eq, solve, sympify)
-from symplyphysics import (Vector, Quantity, validate_input, validate_output,
-    symbols)
+from symplyphysics import (Vector, Quantity, validate_input, validate_output, symbols)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.dynamics.vector import acceleration_from_force as acceleration_law_vector
 

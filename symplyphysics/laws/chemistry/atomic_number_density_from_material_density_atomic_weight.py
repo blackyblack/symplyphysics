@@ -33,24 +33,27 @@ density_law = density_from_mass_volume.definition.subs({
     density_from_mass_volume.density: material_density
 })
 
-avogadro_law = avogadro_number_from_mole_count.law.subs(
-    {avogadro_number_from_mole_count.particles_count: number_density_is_number_of_objects_per_unit_volume.number_of_objects})
-
-atomic_weight_law = atomic_weight_from_mass_mole_count.law.subs({
-    atomic_weight_from_mass_mole_count.atomic_weight:
-        atomic_weight,
-    atomic_weight_from_mass_mole_count.mass:
-    density_from_mass_volume.mass,
-    atomic_weight_from_mass_mole_count.mole_count:
-    avogadro_number_from_mole_count.mole_count
+avogadro_law = avogadro_number_from_mole_count.law.subs({
+    avogadro_number_from_mole_count.particles_count:
+    number_density_is_number_of_objects_per_unit_volume.number_of_objects
 })
 
-derived_law = [number_density_is_number_of_objects_per_unit_volume.definition, density_law, avogadro_law, atomic_weight_law]
+atomic_weight_law = atomic_weight_from_mass_mole_count.law.subs({
+    atomic_weight_from_mass_mole_count.atomic_weight: atomic_weight,
+    atomic_weight_from_mass_mole_count.mass: density_from_mass_volume.mass,
+    atomic_weight_from_mass_mole_count.mole_count: avogadro_number_from_mole_count.mole_count
+})
+
+derived_law = [
+    number_density_is_number_of_objects_per_unit_volume.definition, density_law, avogadro_law,
+    atomic_weight_law
+]
 
 ## Check the equivalence of 'law' and 'derived_law'
-derived_number_density = solve(derived_law,
-    (density_from_mass_volume.mass, number_density_is_number_of_objects_per_unit_volume.number_of_objects,
-    number_density_is_number_of_objects_per_unit_volume.number_density, avogadro_number_from_mole_count.mole_count),
+derived_number_density = solve(derived_law, (density_from_mass_volume.mass,
+    number_density_is_number_of_objects_per_unit_volume.number_of_objects,
+    number_density_is_number_of_objects_per_unit_volume.number_density,
+    avogadro_number_from_mole_count.mole_count),
     dict=True)[0][number_density_is_number_of_objects_per_unit_volume.number_density]
 assert solve(law, atomic_number_density,
     dict=True)[0][atomic_number_density] == derived_number_density

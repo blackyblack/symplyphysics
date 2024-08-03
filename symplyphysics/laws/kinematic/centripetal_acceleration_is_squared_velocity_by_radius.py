@@ -103,8 +103,8 @@ assert expr_equals(radial_acceleration_component, radial_acceleration_magnitude)
 ## in our proof.
 
 angular_velocity_applied = angular_velocity_def.definition.rhs.subs(angular_velocity_def.time, time)
-angular_velocity_applied = angular_velocity_applied.subs(angular_velocity_def.angular_distance(time),
-    alpha(time))
+angular_velocity_applied = angular_velocity_applied.subs(
+    angular_velocity_def.angular_distance(time), alpha(time))
 linear_velocity_applied = linear_velocity_law.law.rhs.subs({
     linear_velocity_law.angular_velocity: angular_velocity_applied,
     linear_velocity_law.curve_radius: curve_radius

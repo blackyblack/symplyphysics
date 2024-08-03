@@ -6,8 +6,7 @@ Acceleration is speed derivative
 """
 
 from sympy import (Eq, Derivative)
-from symplyphysics import (units, Quantity, Function, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Function, Symbol, validate_input, validate_output)
 
 acceleration = Function("acceleration", units.acceleration)
 """

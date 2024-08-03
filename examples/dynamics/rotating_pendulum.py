@@ -35,8 +35,7 @@ from symplyphysics.laws.kinematic.vector import (
     coriolis_acceleration as coriolis_law,
 )
 from symplyphysics.laws.kinematic import (
-    tangential_acceleration_of_rotating_body as tangential_law,
-)
+    tangential_acceleration_of_rotating_body as tangential_law,)
 from symplyphysics.laws.geometry import planar_projection_is_cosine as cosine_law
 
 # Description
@@ -88,11 +87,8 @@ ball_position_vector = Vector([
 
 free_fall_acceleration_vector = Vector([0, 0, -1 * acceleration_due_to_gravity])
 
-gravity_force_vector = force_law.force_law(
-    free_fall_acceleration_vector
-).subs(
-    force_law.mass, motion_law.mass
-)
+gravity_force_vector = force_law.force_law(free_fall_acceleration_vector).subs(
+    force_law.mass, motion_law.mass)
 
 ball_velocity_vector = Vector([
     0,
@@ -139,24 +135,16 @@ ball_tangential_acceleration_via_forces = dot_vectors(
 ).subs({
     sin(ball_angle(time)): sin(ball_angle_sym),
     cos(ball_angle(time)): cos(ball_angle_sym),
-}).series(
-    ball_angle_sym, 0, 2
-).removeO().subs(
-    ball_angle_sym, ball_angle(time)
-)
+}).series(ball_angle_sym, 0, 2).removeO().subs(ball_angle_sym, ball_angle(time))
 
-ball_angular_speed = angular_speed_def.definition.rhs.subs(
-    angular_speed_def.time, time
-).replace(
-    angular_speed_def.angular_distance, ball_angle
-).doit()
+ball_angular_speed = angular_speed_def.definition.rhs.subs(angular_speed_def.time,
+    time).replace(angular_speed_def.angular_distance, ball_angle).doit()
 
 ball_angular_acceleration = angular_acceleration_def.definition.rhs.subs(
-    angular_acceleration_def.time, time
-).replace(
+    angular_acceleration_def.time, time).replace(
     angular_acceleration_def.angular_speed,
     lambda time_: ball_angular_speed.subs(time, time_),
-)
+    )
 
 ball_tangential_acceleration_via_angle = tangential_law.law.rhs.subs({
     tangential_law.angular_acceleration: ball_angular_acceleration,
@@ -168,10 +156,9 @@ oscillation_eqn_derived = Eq(
     ball_tangential_acceleration_via_forces,
 )
 
-oscillation_eqn_from_def = harmonic_def.definition.subs(
-    harmonic_def.time, time
-).replace(
-    harmonic_def.displacement, ball_angle,
+oscillation_eqn_from_def = harmonic_def.definition.subs(harmonic_def.time, time).replace(
+    harmonic_def.displacement,
+    ball_angle,
 )
 
 # The first solution is negative
@@ -181,9 +168,7 @@ ball_angular_frequency = solve(
     dict=True,
 )[1][harmonic_def.angular_frequency]
 
-ball_period = period_def.law.rhs.subs(
-    period_def.angular_frequency, ball_angular_frequency
-)
+ball_period = period_def.law.rhs.subs(period_def.angular_frequency, ball_angular_frequency)
 
 print("The formula for the period of the ball pendulum:\n")
 print(print_expression(ball_period))

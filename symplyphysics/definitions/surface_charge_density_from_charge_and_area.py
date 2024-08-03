@@ -7,8 +7,7 @@ It is a measure of how much electric charge is distributed throughout a surface.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
 
 surface_charge_density = Symbol("surface_charge_density", units.charge / units.area)
 r"""

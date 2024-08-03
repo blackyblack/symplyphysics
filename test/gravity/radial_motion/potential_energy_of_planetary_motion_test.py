@@ -21,7 +21,8 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = law.calculate_planetary_potential_energy(test_args.u, test_args.l, test_args.m, test_args.r)
+    result = law.calculate_planetary_potential_energy(test_args.u, test_args.l, test_args.m,
+        test_args.r)
     assert_equal(result, -5.3e33 * units.joule)
 
 

@@ -78,7 +78,6 @@ def centripetal_law(centrifugal_acceleration_: Vector) -> Vector:
 @validate_input(centripetal_acceleration_=units.acceleration)
 @validate_output(units.acceleration)
 def calculate_centrifugal_acceleration(
-    centripetal_acceleration_: QuantityVector,
-) -> QuantityVector:
+    centripetal_acceleration_: QuantityVector,) -> QuantityVector:
     result_vector = centrifugal_law(centripetal_acceleration_.to_base_vector())
     return QuantityVector.from_base_vector(result_vector)

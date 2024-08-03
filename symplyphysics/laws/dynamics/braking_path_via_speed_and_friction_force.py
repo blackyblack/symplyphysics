@@ -71,10 +71,7 @@ Latex:
 # This law might be derived via "kinetic_energy_from_mass_and_velocity" law and
 # "mechanical_work_from_force_and_move" law.
 
-_energy_law_applied = energy_law.law.subs({
-    energy_law.mass: mass,
-    energy_law.speed: speed
-})
+_energy_law_applied = energy_law.law.subs({energy_law.mass: mass, energy_law.speed: speed})
 _energy_derived = solve(_energy_law_applied, energy_law.kinetic_energy,
     dict=True)[0][energy_law.kinetic_energy]
 

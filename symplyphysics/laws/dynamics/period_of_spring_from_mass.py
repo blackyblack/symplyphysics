@@ -14,8 +14,7 @@ It starts oscillating after being pushed out of balance.
 
 from sympy import (Derivative, Eq, Function as SymFunction, diff, solve, pi, sqrt, symbols as
     SymSymbols, simplify)
-from symplyphysics import (Quantity, units, Symbol, validate_input,
-    validate_output, symbols)
+from symplyphysics import (Quantity, units, Symbol, validate_input, validate_output, symbols)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.dynamics import potential_energy_from_deformation as spring_energy
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_speed as kinetic_energy
@@ -94,8 +93,7 @@ spring_acceleration_diff_eq = Eq(Derivative(spring_displacement(time), (time, 2)
     spring_acceleration_derived_from_energy)
 
 oscillator_eq = oscillator.definition.subs(oscillator.time, time)
-oscillator_eq = oscillator_eq.subs(oscillator.displacement(time),
-    spring_displacement(time))
+oscillator_eq = oscillator_eq.subs(oscillator.displacement(time), spring_displacement(time))
 angular_frequency_solved = simplify(
     solve([oscillator_eq, spring_acceleration_diff_eq],
     (oscillator.angular_frequency, spring_displacement(time)),
@@ -113,8 +111,5 @@ assert expr_equals(period_solved**2, law.rhs**2)
 @validate_output(period)
 def calculate_period(stiffness_: Quantity, object_mass_: Quantity) -> Quantity:
     solved = solve(law, period, dict=True)[0][period]
-    result_expr = solved.subs({
-        stiffness: stiffness_,
-        mass: object_mass_
-    })
+    result_expr = solved.subs({stiffness: stiffness_, mass: object_mass_})
     return Quantity(result_expr)

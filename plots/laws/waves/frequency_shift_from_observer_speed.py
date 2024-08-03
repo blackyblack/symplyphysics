@@ -29,16 +29,16 @@ reduced_source_speed_eqn = Eq(
 
 reduced_frequency_expr = solve(
     (
-        shift_law.law,
-        reduced_frequency_eqn,
-        reduced_observer_speed_eqn,
-        reduced_source_speed_eqn,
+    shift_law.law,
+    reduced_frequency_eqn,
+    reduced_observer_speed_eqn,
+    reduced_source_speed_eqn,
     ),
     (
-        shift_law.real_frequency,
-        reduced_frequency,
-        shift_law.observer_velocity,
-        shift_law.source_velocity,
+    shift_law.real_frequency,
+    reduced_frequency,
+    shift_law.observer_velocity,
+    shift_law.source_velocity,
     ),
     dict=True,
 )[0][reduced_frequency]

@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.dynamics.deformation import (
-    poisson_ratio_is_transverse_to_axial_strain_ratio as law
-)
+    poisson_ratio_is_transverse_to_axial_strain_ratio as law)
 
 Args = namedtuple("Args", "et ea")
 
