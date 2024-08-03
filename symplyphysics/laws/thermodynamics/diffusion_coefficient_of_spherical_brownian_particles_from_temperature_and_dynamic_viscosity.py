@@ -25,8 +25,7 @@ the type of diffusing particles. This law is also known as the *Stokes—Einstei
 """
 
 from sympy import (Eq, solve, pi)
-from symplyphysics import (symbols, units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output)
 
 diffusion_coefficient = Symbol("diffusion_coefficient", units.area / units.time)
 """

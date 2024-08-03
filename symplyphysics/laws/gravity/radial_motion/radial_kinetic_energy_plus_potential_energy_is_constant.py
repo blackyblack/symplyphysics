@@ -55,7 +55,6 @@ Symbol:
     :code:`E`
 """
 
-
 law = Eq(planetary_mass * radial_speed**2 / 2 + potential_energy, total_mechanical_energy)
 r"""
 :code:`m * v_r**2 / 2 + U = E`

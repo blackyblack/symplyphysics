@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.dynamics.deformation import (
-    superposition_of_small_deformations as law,
-)
+    superposition_of_small_deformations as law,)
 
 Args = namedtuple("Args", "e1 e2")
 

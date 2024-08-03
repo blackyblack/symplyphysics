@@ -7,8 +7,7 @@ ability of a circuit or device to conduct electrical current.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
 
 admittance = Symbol("admittance", units.conductance)
 """

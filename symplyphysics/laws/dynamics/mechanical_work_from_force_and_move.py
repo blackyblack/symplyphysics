@@ -18,8 +18,7 @@ Work is scalar value equal to force multiplied by distance.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (symbols, units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output)
 
 work = Symbol("work", units.energy)
 """

@@ -12,8 +12,7 @@ resistance, and the imaginary part is reactance.
 """
 
 from sympy import (I, Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
 
 impedance = Symbol("impedance", units.impedance)
 """

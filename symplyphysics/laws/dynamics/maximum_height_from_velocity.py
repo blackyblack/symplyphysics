@@ -9,8 +9,7 @@ The maximum height that a body thrown vertically will rise to depends on the ini
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
 
 maximum_height = Symbol("maximum_height", units.length)
 """

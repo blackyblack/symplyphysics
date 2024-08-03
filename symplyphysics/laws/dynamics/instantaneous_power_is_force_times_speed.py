@@ -62,7 +62,6 @@ Latex:
         P = F v \cos{\varphi}
 """
 
-
 # TODO: derive law from [its vector counterpart](./vector/instantaneous_power_is_force_dot_velocity.py)
 
 

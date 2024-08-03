@@ -32,10 +32,9 @@ gravitational_force = gravity_law.law.rhs.subs({
 })
 
 # Substitute mass first
-derived_free_fall_acceleration = newton2_law.law.rhs.subs(newton2_law.mass,
-    gravity_law.second_mass)
-derived_free_fall_acceleration = derived_free_fall_acceleration.subs(
-    newton2_law.force, gravitational_force)
+derived_free_fall_acceleration = newton2_law.law.rhs.subs(newton2_law.mass, gravity_law.second_mass)
+derived_free_fall_acceleration = derived_free_fall_acceleration.subs(newton2_law.force,
+    gravitational_force)
 
 # Check if derived acceleration is same as declared
 assert expr_equals(derived_free_fall_acceleration, law.rhs)

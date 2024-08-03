@@ -18,11 +18,9 @@ from symplyphysics import (
 )
 from symplyphysics.core.vectors.arithmetics import integrate_cartesian_vector
 from symplyphysics.conditions.dynamics.equilibrium import (
-    total_torque_is_zero as equilibrium_law,
-)
+    total_torque_is_zero as equilibrium_law,)
 from symplyphysics.definitions import (
-    period_from_angular_frequency as period_def,
-)
+    period_from_angular_frequency as period_def,)
 from symplyphysics.laws.dynamics.vector import (
     acceleration_from_force as force_law,
     torque_vector_of_twisting_force as torque_def,
@@ -32,11 +30,9 @@ from symplyphysics.laws.kinematic.vector import (
     centrifugal_acceleration_via_centripetal_acceleration as centrifugal_law,
 )
 from symplyphysics.laws.geometry import (
-    planar_projection_is_cosine as cosine_law,
-)
+    planar_projection_is_cosine as cosine_law,)
 from symplyphysics.laws.quantities import (
-    quantity_is_linear_density_times_length as linear_density_law,
-)
+    quantity_is_linear_density_times_length as linear_density_law,)
 
 # Description
 ## A thin rod of length `l` is rotating around one of its ends describing a circular cone
@@ -101,11 +97,11 @@ element_mass_expr = solve(
 # is parallel to the position vector, its torque will be zero as per the property of the vector cross
 # product.
 
-gravity_force_acting_on_element = force_law.force_law(
-    acceleration_=Vector([0, 0, -1 * acceleration_due_to_gravity]),
-).subs(
-    force_law.mass, element_mass_expr,
-)
+gravity_force_acting_on_element = force_law.force_law(acceleration_=Vector(
+    [0, 0, -1 * acceleration_due_to_gravity]),).subs(
+    force_law.mass,
+    element_mass_expr,
+    )
 
 gravity_torque_acting_on_element = torque_def.torque_definition(
     position_=element_position_vector,
@@ -123,14 +119,10 @@ element_centripetal_acceleration_vector = centripetal_law.centripetal_accelerati
 )
 
 element_centrifugal_acceleration_vector = centrifugal_law.centrifugal_law(
-    centripetal_acceleration_=element_centripetal_acceleration_vector,
-)
+    centripetal_acceleration_=element_centripetal_acceleration_vector,)
 
 centrifugal_force_acting_on_element = force_law.force_law(
-    acceleration_=element_centrifugal_acceleration_vector,
-).subs(
-    force_law.mass, element_mass_expr
-)
+    acceleration_=element_centrifugal_acceleration_vector,).subs(force_law.mass, element_mass_expr)
 
 centrifugal_torque_acting_on_element = torque_def.torque_definition(
     position_=element_position_vector,
@@ -149,9 +141,7 @@ total_torque_vector_acting_on_rod = add_cartesian_vectors(
 
 total_torque_acting_on_rod = vector_magnitude(total_torque_vector_acting_on_rod)
 
-equilibrium_eqn = equilibrium_law.law.subs(
-    equilibrium_law.total_torque, total_torque_acting_on_rod
-)
+equilibrium_eqn = equilibrium_law.law.subs(equilibrium_law.total_torque, total_torque_acting_on_rod)
 
 angular_velocity_expr = solve(equilibrium_eqn, angular_velocity)[1]
 
@@ -161,7 +151,8 @@ angular_velocity_expr = refine(
 )
 
 rotation_period_expr = period_def.law.rhs.subs(
-    period_def.angular_frequency, angular_velocity_expr,
+    period_def.angular_frequency,
+    angular_velocity_expr,
 )
 
 print("The expression for the rotation period of a conical pendulum:")

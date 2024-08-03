@@ -7,8 +7,8 @@ It is proportional to the normal force between the two objects.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (clone_symbol, symbols, Quantity, Symbol, dimensionless,
-    validate_input, validate_output)
+from symplyphysics import (clone_symbol, symbols, Quantity, Symbol, dimensionless, validate_input,
+    validate_output)
 
 friction_force = clone_symbol(symbols.dynamics.force, "friction_force")
 r"""
@@ -52,7 +52,8 @@ Latex:
 
 @validate_input(coefficient_of_friction_=coefficient_of_friction, normal_reaction_=normal_force)
 @validate_output(friction_force)
-def calculate_friction_force(coefficient_of_friction_: float, normal_reaction_: Quantity) -> Quantity:
+def calculate_friction_force(coefficient_of_friction_: float,
+    normal_reaction_: Quantity) -> Quantity:
     result_expr = solve(law, friction_force, dict=True)[0][friction_force]
     friction_force_applied = result_expr.subs({
         coefficient_of_friction: coefficient_of_friction_,

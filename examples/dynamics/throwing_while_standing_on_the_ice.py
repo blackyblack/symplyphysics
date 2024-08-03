@@ -41,8 +41,7 @@ acceleration_equation = second_newton_law.law.subs({
     second_newton_law.mass: mass_of_skater,
     second_newton_law.acceleration: gravity_acceleration
 })
-gravity_force_value = solve(acceleration_equation,
-    second_newton_law.force,
+gravity_force_value = solve(acceleration_equation, second_newton_law.force,
     dict=True)[0][second_newton_law.force]
 reaction_force_value = third_newton_law.law.subs({
     third_newton_law.action_force: gravity_force_value

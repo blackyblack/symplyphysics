@@ -37,8 +37,7 @@ result_admittance = solve(admittances_law, parallel_admittance_law.parallel_admi
 
 # And finally find resulting inductivity back through the impedance
 result_impedance = solve(admittance_def.definition, admittance_def.impedance,
-    dict=True)[0][admittance_def.impedance].subs(admittance_def.admittance,
-    result_admittance)
+    dict=True)[0][admittance_def.impedance].subs(admittance_def.admittance, result_admittance)
 
 result_inductivity = solve(coil_impedance_law.law, coil_impedance_law.coil_inductivity,
     dict=True)[0][coil_impedance_law.coil_inductivity].subs(coil_impedance_law.coil_impedance,

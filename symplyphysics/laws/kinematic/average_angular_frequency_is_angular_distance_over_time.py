@@ -6,8 +6,7 @@ Average angular frequency is angular distance over time
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (angle_type, units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (angle_type, units, Quantity, Symbol, validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.definitions import temporal_frequency_is_number_of_events_per_unit_time as frequency_def

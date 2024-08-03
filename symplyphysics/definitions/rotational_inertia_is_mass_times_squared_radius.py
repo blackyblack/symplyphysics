@@ -12,8 +12,7 @@ linear motion.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output, symbols)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols)
 
 rotational_inertia = Symbol("rotational_inertia", units.mass * units.area)
 """

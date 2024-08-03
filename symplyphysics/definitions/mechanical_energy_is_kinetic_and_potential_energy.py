@@ -6,8 +6,7 @@ Mechanical energy is kinetic and potential energy
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
 
 mechanical_energy = Symbol("mechanical_energy", units.energy)
 """

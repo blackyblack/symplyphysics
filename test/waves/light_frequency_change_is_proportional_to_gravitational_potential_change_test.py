@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.waves import (
-    light_frequency_change_is_proportional_to_gravitational_potential_change as law,
-)
+    light_frequency_change_is_proportional_to_gravitational_potential_change as law,)
 
 Args = namedtuple("Args", "nu dphi")
 

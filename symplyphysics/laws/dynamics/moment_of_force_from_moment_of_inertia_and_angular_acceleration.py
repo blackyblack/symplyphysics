@@ -10,8 +10,7 @@ on a mechanical object causing its rotational motion.
 """
 
 from sympy import Eq, solve
-from symplyphysics import (angle_type, units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (angle_type, units, Quantity, Symbol, validate_input, validate_output)
 
 torque = Symbol("torque", units.force * units.length)
 r"""
@@ -51,6 +50,7 @@ Latex:
     .. math::
         \tau = I \varepsilon
 """
+
 
 @validate_input(moment_of_inertia_=rotational_inertia, angular_acceleration_=angular_acceleration)
 @validate_output(torque)

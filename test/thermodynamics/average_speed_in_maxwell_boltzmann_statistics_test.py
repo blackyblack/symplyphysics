@@ -23,7 +23,8 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = average_speed_in_maxwell_boltzmann_statistics.calculate_average_speed(test_args.t, test_args.m)
+    result = average_speed_in_maxwell_boltzmann_statistics.calculate_average_speed(
+        test_args.t, test_args.m)
     assert_equal(result, 230 * units.meter / units.second)
 
 

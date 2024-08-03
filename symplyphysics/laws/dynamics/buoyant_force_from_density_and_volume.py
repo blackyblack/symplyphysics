@@ -8,8 +8,8 @@ vector is directed opposite to the gravity vector.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol,
-    validate_input, validate_output)
+from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, validate_input,
+    validate_output)
 
 buoyant_force = clone_symbol(symbols.dynamics.force, "buoyant_force")
 r"""
@@ -49,6 +49,7 @@ Latex:
     .. math::
         F_\text{A} = - \rho g V
 """
+
 
 @validate_input(fluid_density_=fluid_density, displaced_volume_=displaced_volume)
 @validate_output(buoyant_force)

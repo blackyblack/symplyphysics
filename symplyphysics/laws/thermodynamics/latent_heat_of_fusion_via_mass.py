@@ -9,8 +9,7 @@ specific heat of solidification is equal by magnitude to that of fusion.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output, symbols)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols)
 
 latent_heat = Symbol("latent_heat", units.energy)
 """

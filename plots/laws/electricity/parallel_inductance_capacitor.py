@@ -37,8 +37,7 @@ C_admittance = admittance_def.definition.rhs.subs({
     admittance_def.impedance: C_impedance
 }).subs({capacitor_impedance.capacitor_capacitance: EXAMPLE_CAPACITANCE})
 
-R_admittance = admittance_def.definition.rhs.subs(
-    {admittance_def.impedance: EXAMPLE_RESISTANCE})
+R_admittance = admittance_def.definition.rhs.subs({admittance_def.impedance: EXAMPLE_RESISTANCE})
 
 ideal_elements = (L_admittance, C_admittance)
 real_elements = (L_admittance, C_admittance, R_admittance)
@@ -57,20 +56,17 @@ impedance_from_admittance_law = solve(admittance_def.definition,
     admittance_def.impedance,
     dict=True)[0][admittance_def.impedance]
 
-impedance_ideal = impedance_from_admittance_law.subs(
-    {admittance_def.admittance: admittance_ideal})
+impedance_ideal = impedance_from_admittance_law.subs({admittance_def.admittance: admittance_ideal})
 impedance_ideal_to_plot = Abs(impedance_ideal)
 
-impedance_real = impedance_from_admittance_law.subs(
-    {admittance_def.admittance: admittance_real})
+impedance_real = impedance_from_admittance_law.subs({admittance_def.admittance: admittance_real})
 impedance_real_to_plot = Abs(impedance_real)
 
 thomsons_period = thomsons_formula.law.rhs.subs({
     thomsons_formula.inductance: EXAMPLE_INDUCTANCE,
     thomsons_formula.capacitance: EXAMPLE_CAPACITANCE
 })
-frequency_from_period = solve(period_definition.law,
-    period_definition.angular_frequency,
+frequency_from_period = solve(period_definition.law, period_definition.angular_frequency,
     dict=True)[0][period_definition.angular_frequency]
 thomsons_frequency = frequency_from_period.subs({period_definition.period: thomsons_period})
 

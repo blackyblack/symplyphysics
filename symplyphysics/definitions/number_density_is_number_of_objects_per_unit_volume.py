@@ -7,8 +7,7 @@ See :doc:`laws.quantities.quantity_is_volumetric_density_times_volume` for a mor
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, dimensionless, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, dimensionless, validate_input, validate_output)
 
 number_density = Symbol("number_density", 1 / units.volume)
 """

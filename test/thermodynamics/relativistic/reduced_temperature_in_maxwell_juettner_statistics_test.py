@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.thermodynamics.relativistic import (
-    reduced_temperature_in_maxwell_juettner_statistics as law,
-)
+    reduced_temperature_in_maxwell_juettner_statistics as law,)
 
 Args = namedtuple("Args", "t m")
 

@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.dynamics.deformation import (
-    engineering_normal_strain_is_total_deformation_over_initial_dimension as law,
-)
+    engineering_normal_strain_is_total_deformation_over_initial_dimension as law,)
 
 Args = namedtuple("Args", "dl l")
 

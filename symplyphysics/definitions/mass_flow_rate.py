@@ -7,8 +7,7 @@ from a certain volume, the flow in a pipe section, the combustion of fuel.
 """
 
 from sympy import (Eq, Derivative)
-from symplyphysics import (units, Quantity, Function, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Function, Symbol, validate_input, validate_output)
 
 mass_flow_rate = Function("mass_flow_rate", units.mass / units.time)
 r"""

@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.dynamics.deformation import (
-    pressure_is_maclaurin_series_of_strain as law,
-)
+    pressure_is_maclaurin_series_of_strain as law,)
 
 Args = namedtuple("Args", "e a b s")
 

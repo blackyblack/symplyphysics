@@ -8,8 +8,7 @@ for additional information.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import temporal_frequency_is_number_of_events_per_unit_time as frequency_def
 

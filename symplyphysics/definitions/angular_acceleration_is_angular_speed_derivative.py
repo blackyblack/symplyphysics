@@ -6,8 +6,8 @@ Angular acceleration is angular speed derivative
 """
 
 from sympy import (Eq, Derivative)
-from symplyphysics import (angle_type, units, Quantity, Function, Symbol,
-    validate_input, validate_output)
+from symplyphysics import (angle_type, units, Quantity, Function, Symbol, validate_input,
+    validate_output)
 
 angular_acceleration = Function("angular_acceleration", angle_type / (units.time**2))
 r"""

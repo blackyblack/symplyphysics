@@ -7,8 +7,8 @@ energy stored in system and the power losses.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output, dimensionless, angle_type)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless,
+    angle_type)
 
 quality_factor = Symbol("quality_factor", dimensionless)
 """

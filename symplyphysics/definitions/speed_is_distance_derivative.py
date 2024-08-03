@@ -6,8 +6,7 @@ Speed is a physical quantity that describes the rate of change in the body's pos
 """
 
 from sympy import (Eq, Derivative)
-from symplyphysics import (units, Quantity, Function, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Function, Symbol, validate_input, validate_output)
 
 speed = Function("speed", units.velocity)
 """

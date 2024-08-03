@@ -18,8 +18,8 @@ as they always tend to arrive at a state of thermodynamic equilibrium, where the
 """
 
 from sympy import (Eq, solve, log)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output, symbols, clone_symbol)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols,
+    clone_symbol)
 
 entropy_change = Symbol("entropy_change", units.energy / units.temperature)
 """
@@ -45,8 +45,8 @@ Symbol:
     :code:`M`
 """
 
-molar_isochoric_heat_capacity = Symbol("molar_isochoric_heat_capacity",
-    units.energy / (units.temperature * units.amount_of_substance))
+molar_isochoric_heat_capacity = Symbol(
+    "molar_isochoric_heat_capacity", units.energy / (units.temperature * units.amount_of_substance))
 r"""
 Heat capacity at constant volume per unit amount of substance.
 
@@ -100,7 +100,6 @@ Symbol:
 Latex:
     :math:`V_1`
 """
-
 
 law = Eq(entropy_change, (mass / molar_mass) *
     ((molar_isochoric_heat_capacity * log(final_temperature / initial_temperature)) +

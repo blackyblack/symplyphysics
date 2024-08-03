@@ -8,8 +8,7 @@ directions.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (clone_symbol, symbols, Quantity, validate_input,
-    validate_output)
+from symplyphysics import (clone_symbol, symbols, Quantity, validate_input, validate_output)
 
 action_force = clone_symbol(symbols.dynamics.force, "action_force")
 r"""

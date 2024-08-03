@@ -77,6 +77,7 @@ Latex:
         W = \int_{x_0}^{x_1} F(x) dx
 """
 
+
 # Assuming the force changes linearly with respect to position
 @validate_input(
     force_start_=force,

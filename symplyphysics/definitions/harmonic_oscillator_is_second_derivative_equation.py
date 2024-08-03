@@ -13,8 +13,7 @@ Displacement is not only limited to physical motion, but should be interpreted i
 """
 
 from sympy import (Derivative, Eq, cos, solve, symbols, Function as SymFunction)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 
 # Can have various dimensions - do not specify it

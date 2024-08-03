@@ -55,6 +55,7 @@ Latex:
         k = \frac{\tau}{\varphi}
 """
 
+
 @validate_input(
     torque_applied_=torque,
     rotation_angle_=angular_distance,

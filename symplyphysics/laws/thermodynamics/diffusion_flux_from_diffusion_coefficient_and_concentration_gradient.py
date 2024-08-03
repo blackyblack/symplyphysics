@@ -17,8 +17,7 @@ and the gradient is directed towards a higher concentration.
 """
 
 from sympy import (Eq, Derivative)
-from symplyphysics import (units, Function, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (units, Function, Quantity, Symbol, validate_input, validate_output)
 
 diffusion_flux = Function("diffusion_flux", units.amount_of_substance / (units.area * units.time))
 """

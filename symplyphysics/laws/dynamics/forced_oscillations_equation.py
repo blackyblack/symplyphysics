@@ -92,8 +92,7 @@ Symbol:
 
 law = Eq(
     Derivative(displacement(time), time, 2) + natural_angular_frequency**2 * displacement(time),
-    (driving_force_amplitude / mass) *
-    cos(driving_angular_frequency * time + driving_phase_lag),
+    (driving_force_amplitude / mass) * cos(driving_angular_frequency * time + driving_phase_lag),
 )
 r"""
 Derivative(q(t), (t, 2)) + w0^2 * q(t) = (f / m) * cos(w * t + phi)

@@ -33,8 +33,7 @@ result_buoyant_force_below_liquid = solved.subs({
     archimedes_law.displaced_volume: cylinder_volume
 })
 
-solved_gravity = solve(gravity_law.law, gravity_law.force,
-    dict=True)[0][gravity_law.force]
+solved_gravity = solve(gravity_law.law, gravity_law.force, dict=True)[0][gravity_law.force]
 result_gravity_force = solved_gravity.subs({
     gravity_law.mass: CYLINDER_MASS,
     gravity_law.acceleration: 9.8

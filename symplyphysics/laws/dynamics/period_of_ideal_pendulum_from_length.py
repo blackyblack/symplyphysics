@@ -14,8 +14,7 @@ Period of pendulum oscillation does not depend on its mass.
 """
 
 from sympy import (Derivative, Eq, Function as SymFunction, diff, sin, solve, pi, sqrt, symbols)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.geometry import planar_projection_is_cosine as projector
 from symplyphysics.laws.dynamics import potential_energy_from_mass_and_height as potential_energy
