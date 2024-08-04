@@ -3,8 +3,8 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
     validate_output, global_index)
 from symplyphysics.core.expr_comparisons import expr_equals
 
-from symplyphysics.laws.electricity import capacitor_impedance_from_capacitive_reactance as capacitor_impedance_law
-from symplyphysics.laws.electricity import coil_impedance_from_inductive_reactance as coil_impedance_law
+from symplyphysics.laws.electricity.circuits import capacitor_impedance_from_capacitive_reactance as capacitor_impedance_law
+from symplyphysics.laws.electricity.circuits import coil_impedance_from_inductive_reactance as coil_impedance_law
 from symplyphysics.laws.electricity.circuits import serial_impedance as serial_law
 
 # Description

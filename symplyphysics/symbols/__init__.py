@@ -1,6 +1,6 @@
 """
-Physics symbols
-===============
+Physical symbols
+================
 
 Symbols represent physical quantities, units, mathematical operations and relationships.
 """

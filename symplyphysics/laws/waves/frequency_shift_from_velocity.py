@@ -4,7 +4,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.waves import frequency_shift_from_velocity_and_angle as classical_doppler_with_angle
-from symplyphysics.laws.relativistic.waves import longitudinal_frequency_shift_from_absolute_velocities as general_doppler_law
+from symplyphysics.laws.waves.relativistic import longitudinal_frequency_shift_from_absolute_velocities as general_doppler_law
 
 # Description
 ## The Doppler effect or Doppler shift is the apparent change in frequency of a wave in relation to an observer moving relative to the wave source.

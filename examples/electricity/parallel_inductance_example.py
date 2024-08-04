@@ -2,7 +2,7 @@
 
 from sympy import Idx, solve, simplify
 from symplyphysics import (print_expression, units, Symbol, global_index)
-from symplyphysics.laws.electricity import coil_impedance_from_inductivity_and_frequency as coil_impedance_law
+from symplyphysics.laws.electricity.circuits import coil_impedance_from_inductivity_and_frequency as coil_impedance_law
 from symplyphysics.definitions import admittance_is_inverse_impedance as admittance_def
 from symplyphysics.laws.electricity.circuits import admittance_of_parallel_dipoles as parallel_admittance_law
 
