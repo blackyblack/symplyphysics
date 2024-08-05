@@ -50,7 +50,7 @@ r"""
 The angular displacement of the body.
 
 Symbol:
-    :code:`delta_theta`
+    :code:`delta(theta)`
 
 Latex:
     :math:`\Delta \theta`
@@ -58,7 +58,7 @@ Latex:
 
 law = Eq(work, torque * angular_distance)
 r"""
-:code:`W = tau * delta_theta`
+:code:`W = tau * delta(theta)`
 
 Latex:
     .. math::

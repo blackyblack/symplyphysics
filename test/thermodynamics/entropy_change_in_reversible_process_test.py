@@ -8,7 +8,7 @@ from symplyphysics import (
     Quantity,
 )
 
-from symplyphysics.laws.thermodynamics import entropy_increment_in_reversible_process as entropy_law
+from symplyphysics.laws.thermodynamics import entropy_change_in_reversible_process as entropy_law
 
 # Description
 ## The entropy increment in a reversible prossess of heat exchange where the amount of heat transferred
