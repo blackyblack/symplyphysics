@@ -1,3 +1,16 @@
+r"""
+Enthalpy via Gibbs energy
+=========================
+
+Gibbs-Helmholtz relations are a set of equations that relate thermodynamic potentials between each other.
+For example, enthalpy :math:`H` can be found using the Gibbs energy :math:`G` under isobaric conditions.
+
+**Conditions:**
+
+#. Particle count must be constant.
+#. Pressure in the system must be constant.
+"""
+
 from sympy import Eq, Derivative, Point2D, solve
 from symplyphysics import (
     symbols,
@@ -15,28 +28,49 @@ from symplyphysics.laws.thermodynamics import (
     entropy_is_derivative_of_gibbs_energy as entropy_law,
 )
 
-# Description
-## Gibbs-Helmholtz relations are a set of equations that relate thermodynamic potentials between each other.
-
-# Law: H = G - T * (dG/dT)_p
-## H - enthalpy
-## G - Gibbs energy
-## T - absolute temperature
-## p - pressure
-## (d/dT)_p - derivative with respect to temperature at constant pressure
-
-# Conditions
-## - Particle count changes are not taken into account, i.e. it stays constant.
-
 enthalpy = Symbol("enthalpy", units.energy)
+"""
+Enthalpy of the system.
+
+Symbol:
+    :code:`T`
+"""
+
 gibbs_energy = Function("gibbs_energy", units.energy)
+"""
+Gibbs energy of the system.
+
+Symbol:
+    :code:`G`
+"""
+
 temperature = symbols.thermodynamics.temperature
+"""
+:attr:`~symplyphysics.symbols.basic.temperature` of the system.
+
+Symbol:
+    :code:`T`
+"""
+
 pressure = Symbol("pressure", units.pressure)
+"""
+Pressure inside the system.
+
+Symbol:
+    :code:`p`
+"""
 
 law = Eq(
     enthalpy,
     gibbs_energy(temperature, pressure) -
     temperature * Derivative(gibbs_energy(temperature, pressure), temperature))
+r"""
+:code:`H = G(T, p) - T * Derivative(G(T, p), T)`
+
+Latex:
+    .. math::
+        H = G(T, p) - T \left( \frac{\partial G}{\partial T} \right)_p
+"""
 
 # Derive from definition of Gibbs energy and thermodynamical relations
 
