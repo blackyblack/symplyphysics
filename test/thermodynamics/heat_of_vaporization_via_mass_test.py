@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
     prefixes,
 )
-from symplyphysics.laws.thermodynamics import energy_to_vaporization_from_mass as amount_energy
+from symplyphysics.laws.thermodynamics import heat_of_vaporization_via_mass as amount_energy
 
 # https://easyfizika.ru/zadachi/termodinamika/na-zazhzhennuyu-spirtovku-s-kpd-60-postavili-sosud-s-500-g-vody-pri-20-c-cherez-kakoe/
 # If mass of water equal 20 g and specific heat of vaporization equal 29 MJ/kg,
