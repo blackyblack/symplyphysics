@@ -5,7 +5,7 @@ from sympy.plotting import plot, plot_parametric
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import convert_to, units
 from symplyphysics.laws.thermodynamics import (
-    zero_heat_transfer as adiabatic_law,)
+    adiabatic_process_equation_via_pressure_and_volume as adiabatic_law,)
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as ideal_gas_law
 
 pressure, volume, temperature = symbols("pressure volume temperature", positive=True)
@@ -70,11 +70,11 @@ initial_pressure = pressure_expr.subs({
 adiabatic_index = Rational(5, 3)
 
 adiabate_eqn = adiabatic_law.adiabatic_condition.subs({
-    adiabatic_law.specific_heats_ratio: adiabatic_index,
-    adiabatic_law.pressure_start: initial_pressure,
-    adiabatic_law.volume_start: INITIAL_VOLUME,
-    adiabatic_law.pressure_end: pressure,
-    adiabatic_law.volume_end: volume,
+    adiabatic_law.adiabatic_index: adiabatic_index,
+    adiabatic_law.initial_pressure: initial_pressure,
+    adiabatic_law.initial_volume: INITIAL_VOLUME,
+    adiabatic_law.final_pressure: pressure,
+    adiabatic_law.final_volume: volume,
 })
 
 final_volume = solve(

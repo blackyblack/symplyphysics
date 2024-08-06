@@ -2,8 +2,8 @@ from sympy import Eq, solve, sqrt, Function as SymFunction, symbols as sym_symbo
 from symplyphysics import Quantity, Symbol, dimensionless, symbols, units, validate_input, validate_output
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import (
+    adiabatic_process_equation_via_pressure_and_volume as adiabate_law,
     isentropic_speed_of_sound_via_pressure_derivative as sound_law,
-    zero_heat_transfer as adiabate_law,
 )
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation
 from symplyphysics.laws.quantities import (
@@ -36,9 +36,9 @@ _pressure = sym_symbols("pressure", cls=SymFunction)(_density)
 _volume_expr = solve(density_law.law, density_law.volume)[0]
 
 _adiabate_eqn = adiabate_law.adiabatic_condition.subs({
-    adiabate_law.specific_heats_ratio: heat_capacity_ratio,
-    adiabate_law.volume_end: _volume_expr,
-    adiabate_law.pressure_end: _pressure,
+    adiabate_law.adiabatic_index: heat_capacity_ratio,
+    adiabate_law.final_volume: _volume_expr,
+    adiabate_law.final_pressure: _pressure,
 })
 
 _pressure_derivative_eqn = Eq(

@@ -1,6 +1,14 @@
+"""
+Adiabatic process equation via pressure and volume
+==================================================
+
+An *adiabatic process* is a type of thermodynamic process that occurs without transferring
+heat or mass between the thermodynamic system and its environment.
+"""
+
 from sympy import Eq, Rational, solve, Symbol as SymSymbol, Function as SymFunction, dsolve, symbols as sym_symbols
 from sympy.abc import t
-from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print_expression,
+from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol,
     dimensionless, validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import heat_capacity_ratio
@@ -12,38 +20,107 @@ from symplyphysics.laws.thermodynamics import (
 )
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation
 
-# Description
-## Adiabatic process: Q = 0, P * V^y = const
-## Where:
-## Q is amount of transferred heat between system and environment
-## P is pressure,
-## V is volume,
-## y is the ratio of specific heats (also known as heat capacity
-##   ratio) (https://en.wikipedia.org/wiki/Heat_capacity_ratio)
+adiabatic_index = Symbol("adiabatic_index", dimensionless)
+r"""
+Adiabatic index, also known as :doc:`heat capacity ratio <definitions.heat_capacity_ratio>`, of the gas.
 
-specific_heats_ratio = Symbol("specific_heats_ratio", dimensionless)
-# Some of these parameters depend on each other. It is up to user, which of these parameters to choose
-# as known.
-temperature_start = clone_symbol(symbols.thermodynamics.temperature, "temperature_start")
-temperature_end = clone_symbol(symbols.thermodynamics.temperature, "temperature_end")
-volume_start = Symbol("volume_start", units.volume)
-volume_end = Symbol("volume_end", units.volume)
-pressure_start = Symbol("pressure_start", units.pressure)
-pressure_end = Symbol("pressure_end", units.pressure)
+Symbol:
+    :code:`gamma`
 
-adiabatic_condition = Eq(pressure_start * (volume_start**specific_heats_ratio),
-    pressure_end * (volume_end**specific_heats_ratio))
+Latex:
+    :math:`\gamma`
+"""
+
+# Some of the following parameters depend on each other. It is up to user which to choose as known.
+
+initial_temperature = clone_symbol(symbols.thermodynamics.temperature, "initial_temperature")
+r"""
+Initial :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
+
+Symbol:
+    :code:`T_0`
+
+Latex:
+    :math:`T_0`
+"""
+
+final_temperature = clone_symbol(symbols.thermodynamics.temperature, "final_temperature")
+r"""
+Final :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
+
+Symbol:
+    :code:`T_1`
+
+Latex:
+    :math:`T_1`
+"""
+
+initial_volume = Symbol("initial_volume", units.volume)
+r"""
+Initial volume of the system.
+
+Symbol:
+    :code:`V_0`
+
+Latex:
+    :math:`V_0`
+"""
+
+final_volume = Symbol("final_volume", units.volume)
+r"""
+Final volume of the system.
+
+Symbol:
+    :code:`V_1`
+
+Latex:
+    :math:`V_1`
+"""
+
+initial_pressure = Symbol("initial_pressure", units.pressure)
+r"""
+Initial pressure inside the system.
+
+Symbol:
+    :code:`p_0`
+
+Latex:
+    :math:`p_0`
+"""
+
+final_pressure = Symbol("final_pressure", units.pressure)
+r"""
+Final pressure inside the system.
+
+Symbol:
+    :code:`p_1`
+
+Latex:
+    :math:`p_1`
+"""
+
+adiabatic_condition = Eq(
+    initial_pressure * (initial_volume**adiabatic_index),
+    final_pressure * (final_volume**adiabatic_index),
+)
+r"""
+:code:`p_0 * V_0^gamma = p_1 * V_1^gamma`
+
+Latex:
+    .. math::
+        p_0 V_0^\gamma = p_1 V_1^\gamma
+"""
 
 eq_start = ideal_gas_equation.law.subs({
-    ideal_gas_equation.temperature: temperature_start,
-    ideal_gas_equation.volume: volume_start,
-    ideal_gas_equation.pressure: pressure_start
+    ideal_gas_equation.temperature: initial_temperature,
+    ideal_gas_equation.volume: initial_volume,
+    ideal_gas_equation.pressure: initial_pressure
 })
 
 eq_end = ideal_gas_equation.law.subs({
-    ideal_gas_equation.temperature: temperature_end,
-    ideal_gas_equation.volume: volume_end,
-    ideal_gas_equation.pressure: pressure_end
+    ideal_gas_equation.temperature: final_temperature,
+    ideal_gas_equation.volume: final_volume,
+    ideal_gas_equation.pressure: final_pressure
 })
 
 law = [eq_start, eq_end, adiabatic_condition]
@@ -123,35 +200,31 @@ _diff_eqn = Eq(
 
 _pressure_eqn = dsolve(_diff_eqn,
     _parameterized_pressure(_volume),
-    ics={_parameterized_pressure(volume_start): pressure_start})
+    ics={_parameterized_pressure(initial_volume): initial_pressure})
 
-_pressure_derived = _pressure_eqn.rhs.subs(_volume, volume_end)
+_pressure_derived = _pressure_eqn.rhs.subs(_volume, final_volume)
 
-_pressure_from_law = solve(adiabatic_condition, pressure_end)[0].subs(specific_heats_ratio,
+_pressure_from_law = solve(adiabatic_condition, final_pressure)[0].subs(adiabatic_index,
     _adiabatic_index)
 
 assert expr_equals(_pressure_derived, _pressure_from_law)
 
 
-def print_law() -> str:
-    return print_expression(law)
-
-
 @validate_input(mole_count_=ideal_gas_equation.mole_count,
-    temperature_start_=temperature_start,
-    volume_start_=volume_start,
-    volume_end_=volume_end,
-    specific_heats_ratio_=specific_heats_ratio)
-@validate_output(pressure_end)
+    temperature_start_=initial_temperature,
+    volume_start_=initial_volume,
+    volume_end_=final_volume,
+    specific_heats_ratio_=adiabatic_index)
+@validate_output(final_pressure)
 def calculate_pressure(mole_count_: Quantity, temperature_start_: Quantity, volume_start_: Quantity,
     volume_end_: Quantity, specific_heats_ratio_: Rational) -> Quantity:
 
-    solved = solve(law, (pressure_start, temperature_end, pressure_end), dict=True)[0][pressure_end]
+    solved = solve(law, (initial_pressure, final_temperature, final_pressure), dict=True)[0][final_pressure]
     result_pressure = solved.subs({
         ideal_gas_equation.mole_count: mole_count_,
-        temperature_start: temperature_start_,
-        volume_start: volume_start_,
-        volume_end: volume_end_,
-        specific_heats_ratio: specific_heats_ratio_
+        initial_temperature: temperature_start_,
+        initial_volume: volume_start_,
+        final_volume: volume_end_,
+        adiabatic_index: specific_heats_ratio_
     })
     return Quantity(result_pressure)
