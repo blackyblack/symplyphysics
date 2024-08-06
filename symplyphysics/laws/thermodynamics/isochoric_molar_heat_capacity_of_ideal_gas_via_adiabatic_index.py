@@ -1,3 +1,15 @@
+r"""
+Isochoric molar heat capacity of ideal gas via adiabatic index
+==============================================================
+
+For ideal gases the isobaric and isochoric heat capacities can be calculated via the molar gas
+constant and the adiabatic index of the gas.
+
+**Notation:**
+
+#. :math:`R` is the molar gas constant.
+"""
+
 from sympy import Eq, solve
 from symplyphysics import (
     units,
@@ -14,20 +26,37 @@ from symplyphysics.laws.thermodynamics import (
 from symplyphysics.laws.quantities import (
     quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law,)
 
-# Description
-## For ideal gases the isobaric and isochoric heat capacities can be calculated via the molar gas
-## constant and the adiabatic index of the gas.
-
-# Law: C_V = R / (gamma - 1)
-## C_V - isochoric molar heat capacity
-## R - molar gas constant
-## gamma - adiabatic index, or [heat capacity ratio](../../definitions/heat_capacity_ratio.py)
-
 isochoric_molar_heat_capacity = Symbol(
     "isochoric_molar_heat_capacity", units.energy / (units.temperature * units.amount_of_substance))
+r"""
+Heat capacity of ideal gas at constant volume per unit amount of substance.
+
+Symbol:
+    :code:`C_V`
+
+Latex:
+    :math:`C_V`
+"""
+
 adiabatic_index = Symbol("adiabatic_index", dimensionless)
+r"""
+Adiabatic index, also known as :doc:`heat capacity ratio <definitions.heat_capacity_ratio>`, of the gas.
+
+Symbol:
+    :code:`gamma`
+
+Latex:
+    :math:`\gamma`
+"""
 
 law = Eq(isochoric_molar_heat_capacity, units.molar_gas_constant / (adiabatic_index - 1))
+r"""
+:code:`C_V = R / (gamma - 1)`
+
+Latex:
+    .. math::
+        C_V = \frac{R}{\gamma - 1}
+"""
 
 # Derive law from the Mayer's law for heat capacities and the definition of adiabatic index
 
