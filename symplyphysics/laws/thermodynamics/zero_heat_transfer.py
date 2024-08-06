@@ -8,7 +8,7 @@ from symplyphysics.laws.thermodynamics import (
     internal_energy_change_of_ideal_gas_via_temperature as internal_energy_law,
     internal_energy_change_via_heat_and_work as first_law,
     infinitesimal_work_in_quasistatic_process as work_law,
-    isochoric_heat_capacity_via_isobaric_heat_capacity_for_ideal_gas as mayers_relation,
+    isochoric_and_isobaric_heat_capacity_of_ideal_gas as mayers_relation,
 )
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation
 
