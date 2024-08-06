@@ -24,7 +24,7 @@ from symplyphysics import (
 from symplyphysics.core.geometry.line import two_point_function
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import (
-    isobaric_reaction_potential as gibbs_energy_def,
+    gibbs_energy_via_enthalpy as gibbs_energy_def,
     entropy_is_derivative_of_gibbs_energy as entropy_law,
 )
 

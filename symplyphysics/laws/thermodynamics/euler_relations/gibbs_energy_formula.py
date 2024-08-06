@@ -9,7 +9,7 @@ from symplyphysics import (
     validate_output,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.thermodynamics import isobaric_reaction_potential as gibbs_energy_def
+from symplyphysics.laws.thermodynamics import gibbs_energy_via_enthalpy as gibbs_energy_def
 from symplyphysics.laws.thermodynamics.euler_relations import enthalpy_formula
 
 # Description

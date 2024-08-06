@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.thermodynamics import isobaric_reaction_potential as potential_law
+from symplyphysics.laws.thermodynamics import gibbs_energy_via_enthalpy as potential_law
 
 # Description
 ## The decomposition of barium carbonate by the reaction: BaCO3 = BaO + CO2.
