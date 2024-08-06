@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics import laplace_pressure as laplace_law
+from symplyphysics.laws.thermodynamics import laplace_pressure_of_spherical_shapes as laplace_law
 
 # Description
 ## Test example from http://ru.solverbook.com/spravochnik/molekulyarnaya-fizika-i-termodinamika/davlenie-pod-iskrivlennoj-poverxnostyu-zhidkosti/
