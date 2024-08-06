@@ -2,7 +2,7 @@ from sympy import Eq, solve, sqrt, Function as SymFunction, symbols as sym_symbo
 from symplyphysics import Quantity, Symbol, dimensionless, symbols, units, validate_input, validate_output
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import (
-    isentropic_speed_of_sound as sound_law,
+    isentropic_speed_of_sound_via_pressure_derivative as sound_law,
     zero_heat_transfer as adiabate_law,
 )
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation

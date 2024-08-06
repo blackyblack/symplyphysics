@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics import isentropic_speed_of_sound as speed_law
+from symplyphysics.laws.thermodynamics import isentropic_speed_of_sound_via_pressure_derivative as speed_law
 
 # Description
 ## When gas density increased by 1 mg/L, the pressure in the gas increased by around 110 Pa.
