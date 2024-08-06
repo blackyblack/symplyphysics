@@ -82,8 +82,8 @@ _entropy_expr = entropy_law.law.rhs.subs({
     gibbs_energy(temperature, pressure),
 )
 
-_enthalpy_expr = solve(gibbs_energy_def.law, gibbs_energy_def.thermal_effect)[0].subs({
-    gibbs_energy_def.isobaric_potential: gibbs_energy(temperature, pressure),
+_enthalpy_expr = solve(gibbs_energy_def.law, gibbs_energy_def.enthalpy)[0].subs({
+    gibbs_energy_def.gibbs_energy: gibbs_energy(temperature, pressure),
     gibbs_energy_def.temperature: temperature,
     gibbs_energy_def.entropy: _entropy_expr,
 })

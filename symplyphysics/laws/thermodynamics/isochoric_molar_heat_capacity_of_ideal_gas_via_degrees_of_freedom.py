@@ -1,3 +1,29 @@
+r"""
+Isochoric molar heat capacity of ideal gas via degrees of freedom
+=================================================================
+
+The internal energy of an ideal gas consisting of molecules whose energy is all kinetic
+depends only on the degrees of freedom of the molecule and the temperature of the gas.
+From that one can derive the expression of the isochoric heat capacity of ideal gases.
+
+**Notation:**
+
+#. :math:`R` is the molar gas constant.
+
+**Notes:**
+
+#. For applications, see :doc:`internal energy of ideal gas <laws.thermodynamics.internal_energy_of_ideal_gas_via_temperature>`.
+#. :math:`f = 3` for monatomic molecules.
+#. :math:`f = 5` for diatomic molecules.
+#. :math:`f = 6` for non-linear polyatomic molecules.
+
+**Conditions:**
+
+#. Gas is ideal.
+#. Works in the classical theory of heat capacity of gases. For a more accurate represention refer to
+   the quantum theory, which accounts for the "freezing" of the degrees of freedom and other phenomena.
+"""
+
 from sympy import Eq
 from symplyphysics import (
     units,
@@ -7,33 +33,36 @@ from symplyphysics import (
     validate_output,
 )
 
-# Description
-## The internal energy of an ideal gas consisting of molecules whose energy is all kinetic
-## depends only on the degrees of freedom of the molecule and the temperature of the gas.
-## From that can be derived the expression of the isochoric heat capacity of ideal gases.
-
-# Law: C_V = (f / 2) * R
-## C_V - isochoric molar heat capacity
-## f - degrees of freedom of gas molecules
-## R - molar gas constant
-
-# Note
-## - For applications, see [internal energy law](./internal_energy_of_ideal_gas_is_proportional_to_temperature)
-## - f = 3 for monatomic molecules,
-##   f = 5 for diatomic molecules,
-##   f = 6 for non-linear polyatomic molecules
-
-# Conditions
-## - This is the classical theory of heat capacity of gases, for more accurate represention refer to
-##   the quantum theory, which accounts for the "freezing" of degrees of freedom and other phenomena.
-
 isochoric_molar_heat_capacity = Symbol(
     "isochoric_molar_heat_capacity",
     units.energy / (units.temperature * units.amount_of_substance),
 )
+r"""
+Heat capacity of ideal gas at constant volume per unit amount of substance.
+
+Symbol:
+    :code:`C_V`
+
+Latex:
+    :math:`C_V`
+"""
+
 degrees_of_freedom = Symbol("degrees_of_freedom", integer=True)
+"""
+Number of degrees of freedom of gas molecules.
+
+Symbol:
+    :code:`f`
+"""
 
 law = Eq(isochoric_molar_heat_capacity, (degrees_of_freedom / 2) * units.molar_gas_constant)
+r"""
+:code:`C_V = (f / 2) * R`
+
+Latex:
+    .. math::
+        C_V = \frac{f}{2} R
+"""
 
 
 @validate_input(degrees_of_freedom_=degrees_of_freedom)
