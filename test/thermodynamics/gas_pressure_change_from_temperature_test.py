@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import assert_equal, units, Quantity, errors, prefixes
-from symplyphysics.laws.thermodynamics import gas_pressure_from_temperature as pressure_law
+from symplyphysics.laws.thermodynamics import gas_pressure_change_from_temperature as pressure_law
 
 # Description
 ## With a temperature of 293.15 kelvin and a standard pressure of 101325 pascal,
