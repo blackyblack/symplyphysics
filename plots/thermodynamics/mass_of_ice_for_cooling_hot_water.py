@@ -9,7 +9,7 @@ from symplyphysics.laws.thermodynamics import heat_is_heat_capacity_times_temper
 from symplyphysics.laws.thermodynamics import latent_heat_of_fusion_via_mass as energy_melting_law
 from symplyphysics.definitions import density_from_mass_volume as density_law
 from symplyphysics.laws.quantities import quantity_is_specific_quantity_times_mass as specific_qty_law
-from symplyphysics.laws.thermodynamics import sum_of_heat_transfer_is_zero as thermodinamics_law_1
+from symplyphysics.laws.thermodynamics import total_energy_transfer_is_zero_in_isolated_system as thermodinamics_law_1
 
 temperature_of_hot_water_values = [5, 20, 35, 50, 65, 80]
 
@@ -72,10 +72,10 @@ local_index_ = Idx("local_index_", (1, 4))
 thermodinamics_law_1_four_energies = thermodinamics_law_1.law.subs(global_index,
     local_index_).doit()
 thermodinamics_law_1_equation = thermodinamics_law_1_four_energies.subs({
-    thermodinamics_law_1.amount_energy[1]: energy_cooling_hot_water.rhs,
-    thermodinamics_law_1.amount_energy[2]: energy_to_heating_ice_equation.rhs,
-    thermodinamics_law_1.amount_energy[3]: energy_to_melt_ice_equation.rhs,
-    thermodinamics_law_1.amount_energy[4]: energy_to_heat_melted_ice_equation.rhs,
+    thermodinamics_law_1.amount_of_energy[1]: energy_cooling_hot_water.rhs,
+    thermodinamics_law_1.amount_of_energy[2]: energy_to_heating_ice_equation.rhs,
+    thermodinamics_law_1.amount_of_energy[3]: energy_to_melt_ice_equation.rhs,
+    thermodinamics_law_1.amount_of_energy[4]: energy_to_heat_melted_ice_equation.rhs,
 })
 
 solve_system_equations = solve((thermodinamics_law_1_equation, mass_of_all_water_equation),
