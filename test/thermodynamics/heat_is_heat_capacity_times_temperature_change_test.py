@@ -8,7 +8,7 @@ from symplyphysics import (
     prefixes,
 )
 from symplyphysics.core.symbols.celsius import Celsius, to_kelvin_quantity
-from symplyphysics.laws.thermodynamics import thermal_energy_from_heat_capacity_and_temperature as thermal_energy
+from symplyphysics.laws.thermodynamics import heat_is_heat_capacity_times_temperature_change as thermal_energy
 
 # How much energy does it take to heat some volume of water tо 50 degree Celsius?
 # Heat capacity of that amount of water is 2.1 kJ/K, ignore losses.

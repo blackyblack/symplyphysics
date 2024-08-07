@@ -5,9 +5,9 @@ from symplyphysics import print_expression, Quantity, prefixes, units, convert_t
 from symplyphysics.core.symbols.celsius import to_kelvin_quantity, Celsius
 from symplyphysics.laws.electricity import power_factor_from_active_and_full_power as efficiency_law
 from symplyphysics.laws.thermodynamics import (
+    heat_is_heat_capacity_times_temperature_change as heating_law,
     heat_of_combustion_via_mass as combustion_energy_law,
     heat_of_vaporization_via_mass as energy_to_vapor_law,
-    thermal_energy_from_heat_capacity_and_temperature as heating_law,
 )
 from symplyphysics.laws.quantities import quantity_is_specific_quantity_times_mass as specific_qty_law
 from symplyphysics.definitions import mass_flow_rate as mass_rate_law
@@ -63,16 +63,14 @@ energy_from_combustion_alcohol_value = combustion_energy_law.law.subs({
     combustion_energy_law.mass: mass_of_alcohol_value
 }).rhs
 
-energy_for_heating_water_value = heating_law.law.subs({
-    heating_law.heat_capacity:
-    specific_qty_law.law.rhs.subs({
+water_heat_capacity = specific_qty_law.law.rhs.subs({
     specific_qty_law.specific_quantity: specific_heat_of_heating_water,
     specific_qty_law.mass: mass_of_water,
-    }),
-    heating_law.temperature_origin:
-        temperature_of_water,
-    heating_law.temperature_end:
-        temperature_of_vaporization_water
+})
+
+energy_for_heating_water_value = heating_law.law.subs({
+    heating_law.heat_capacity: water_heat_capacity,
+    heating_law.temperature_change: temperature_of_vaporization_water - temperature_of_water,
 }).rhs
 
 energy_to_vaporization_water_value = energy_to_vapor_law.law.subs({
