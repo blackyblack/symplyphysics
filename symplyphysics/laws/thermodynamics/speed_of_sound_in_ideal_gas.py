@@ -1,3 +1,16 @@
+"""
+Speed of sound in ideal gas
+===========================
+
+Also known as the Laplace's formula of the speed of sound, it provides a correct expression
+for the speed of sound for ideal gases compared to the Newton's formula. See
+:doc:`laws.thermodynamics.isentropic_speed_of_sound_via_pressure_derivative`.
+
+**Notation:**
+
+#. :math:`R` is the molar gas constant.
+"""
+
 from sympy import Eq, solve, sqrt, Function as SymFunction, symbols as sym_symbols
 from symplyphysics import Quantity, Symbol, dimensionless, symbols, units, validate_input, validate_output
 from symplyphysics.core.expr_comparisons import expr_equals
@@ -11,21 +24,50 @@ from symplyphysics.laws.quantities import (
     quantity_is_volumetric_density_times_volume as density_law,
 )
 
-# Speed of sound for ideal gases
-# c = sqrt( gamma * R * T / M ), where
-# gamma is heat capacity ratio (adiabatic index),
-# T is temperature,
-# M is mass of one mole of this gas.
-# R is ideal gas constant,
-# c is speed of sound.
+speed_of_sound = Symbol("speed_of_sound", units.velocity)
+"""
+Speed of sound in gas.
+
+Symbol:
+    :code:`c`
+"""
 
 temperature = symbols.thermodynamics.temperature
+"""
+:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas.
+
+Symbol:
+    :code:`T`
+"""
+
 heat_capacity_ratio = Symbol("heat_capacity_ratio", dimensionless)
-mole_mass = Symbol("mole_mass", units.mass / units.amount_of_substance)
-speed_of_sound = Symbol("speed_of_sound", units.velocity)
+r"""
+Heat capacity ratio, or adiabatic index, of the gas.
+
+Symbol:
+    :code:`gamma`
+
+Latex:
+    :math:`\gamma`
+"""
+
+molar_mass = Symbol("molar_mass", units.mass / units.amount_of_substance)
+"""
+Mass of one mole of the gas.
+
+Symbol:
+    :code:`M`
+"""
 
 law = Eq(speed_of_sound,
-    sqrt(heat_capacity_ratio * units.molar_gas_constant * temperature / mole_mass))
+    sqrt(heat_capacity_ratio * units.molar_gas_constant * temperature / molar_mass))
+r"""
+:code:`c = sqrt(gamma * R * T / M)`
+
+Latex:
+    .. math::
+        c = \sqrt{\frac{\gamma R T}{M}}
+"""
 
 # Derive from law of speed of sound and adiabate equation.
 
@@ -56,7 +98,7 @@ _pressure_derivative_expr = solve(_pressure_derivative_eqn, _pressure.diff(_dens
 
 _molar_qty_eqn = molar_qty_law.law.subs({
     molar_qty_law.extensive_quantity: _gas_mass,
-    molar_qty_law.molar_quantity: mole_mass,
+    molar_qty_law.molar_quantity: molar_mass,
     molar_qty_law.amount_of_substance: ideal_gas_equation.mole_count,
 })
 
@@ -76,7 +118,7 @@ assert expr_equals(_speed_of_sound_expr, law.rhs)
 
 @validate_input(temperature_=temperature,
     heat_capacity_ratio_=heat_capacity_ratio,
-    mole_mass_=mole_mass)
+    mole_mass_=molar_mass)
 @validate_output(speed_of_sound)
 def calculate_speed_of_sound(
     temperature_: Quantity,
@@ -87,6 +129,6 @@ def calculate_speed_of_sound(
     result_applied = result_expr.subs({
         temperature: temperature_,
         heat_capacity_ratio: heat_capacity_ratio_,
-        mole_mass: mole_mass_,
+        molar_mass: mole_mass_,
     })
     return Quantity(result_applied)
