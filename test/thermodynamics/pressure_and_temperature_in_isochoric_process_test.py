@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics import volume_is_constant as isochoric_law
+from symplyphysics.laws.thermodynamics import pressure_and_temperature_in_isochoric_process as isochoric_law
 
 Args = namedtuple("Args", ["t0", "t1", "P0"])
 

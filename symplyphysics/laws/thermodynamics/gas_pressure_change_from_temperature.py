@@ -22,7 +22,7 @@ from symplyphysics import (
     quantities,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.thermodynamics import volume_is_constant as isochoric_law
+from symplyphysics.laws.thermodynamics import pressure_and_temperature_in_isochoric_process as isochoric_law
 
 pressure_change = Symbol("pressure", units.pressure)
 r"""
@@ -77,10 +77,10 @@ Latex:
 # Derive law from Charles' law of isochoric heating of gas.
 
 _isochoric_eqn = isochoric_law.law.subs({
-    isochoric_law.pressure_start: initial_pressure,
-    isochoric_law.pressure_end: initial_pressure + pressure_change,
-    isochoric_law.temperature_start: quantities.standard_conditions_temperature,
-    isochoric_law.temperature_end: final_temperature,
+    isochoric_law.initial_pressure: initial_pressure,
+    isochoric_law.final_pressure: initial_pressure + pressure_change,
+    isochoric_law.initial_temperature: quantities.standard_conditions_temperature,
+    isochoric_law.final_temperature: final_temperature,
 })
 
 _pressure_change_expr = solve(_isochoric_eqn, pressure_change)[0]
