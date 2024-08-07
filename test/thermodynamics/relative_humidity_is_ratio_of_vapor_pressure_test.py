@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.thermodynamics import relative_humidity as humidity_law
+from symplyphysics.laws.thermodynamics import relative_humidity_is_ratio_of_vapor_pressure as humidity_law
 
 # Description
 ## With a water vapor pressure of 1340 pascal and a saturated vapor pressure of 2984 pascal,
