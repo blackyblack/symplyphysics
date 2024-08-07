@@ -1,3 +1,10 @@
+"""
+Temperature is derivative of internal energy
+============================================
+
+Temperature of a thermodynamic system can be found when internal energy is known as a function of entropy.
+"""
+
 from sympy import Eq, Derivative, solve
 from symplyphysics import (
     units,
@@ -5,7 +12,6 @@ from symplyphysics import (
     Quantity,
     Symbol,
     Function,
-    print_expression,
     validate_input,
     validate_output,
     symbols,
@@ -13,24 +19,54 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import internal_energy_differential
 
-# Description
-## Temperature of a thermodynamic system can be found when internal energy is known as a function of entropy.
-
-# Law: T = (dU/dS)_(V, N)
-## T - absolute temperature
-## U - internal energy
-## S - entropy
-## V - volume
-## N - particle count
-## (d/dS)_(V, N) - derivative with respect to entropy at constant volume and particle count
-
 temperature = symbols.thermodynamics.temperature
+"""
+:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
+
+Symbol:
+    :code:`T`
+"""
+
 internal_energy = Function("internal_energy", units.energy)
+"""
+Internal energy of the system as a function of temperature, volume, and particle count.
+
+Symbol:
+    :code:`U(T, V, N)`
+"""
+
 entropy = Symbol("entropy", units.energy / units.temperature)
+"""
+Entropy of the system.
+
+Symbol:
+    :code:`S`
+"""
+
 volume = Symbol("volume", units.volume)
+"""
+Volume of the system.
+
+Symbol:
+    :code:`V`
+"""
+
 particle_count = Symbol("particle_count", dimensionless)
+"""
+Number of particles in the system.
+
+Symbol:
+    :code:`N`
+"""
 
 law = Eq(temperature, Derivative(internal_energy(entropy, volume, particle_count), entropy))
+r"""
+:code:`T = Derivative(U(S, V, N), S)`
+
+Latex:
+    .. math::
+        T = \left( \frac{\partial U}{\partial S} \right)_{V, N}
+"""
 
 # Derive from fundamental relation for internal energy
 
@@ -47,10 +83,6 @@ _temperature_derived = solve(_internal_energy_change_eqn,
     )
 
 assert expr_equals(_temperature_derived, law.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(
