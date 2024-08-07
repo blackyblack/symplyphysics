@@ -22,7 +22,7 @@ from symplyphysics import (
     symbols,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.thermodynamics import work_is_volume_integral_of_pressure as work_law
+from symplyphysics.laws.thermodynamics import work_is_integral_of_pressure_over_volume as work_law
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation
 
 work = Symbol("work", units.energy)
@@ -95,8 +95,8 @@ _volume_before = SymSymbol("volume_before", positive=True)
 _volume_after = SymSymbol("volume_after", positive=True)
 
 _work_expr = work_law.law.rhs.subs({
-    work_law.volume_before: _volume_before,
-    work_law.volume_after: _volume_after,
+    work_law.initial_volume: _volume_before,
+    work_law.final_volume: _volume_after,
     work_law.pressure(work_law.volume): _pressure_expr
 }).doit().simplify()
 

@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics import work_is_volume_integral_of_pressure as work_law
+from symplyphysics.laws.thermodynamics import work_is_integral_of_pressure_over_volume as work_law
 
 # Description
 ## At the start of a quasi-static process, the volume of the system was 1 L and the pressure in the system
