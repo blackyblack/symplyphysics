@@ -1,3 +1,20 @@
+"""
+Temperature derivative via volume derivative
+============================================
+
+The *Joule—Thompson effect* describes the change in temperature that accompanies the expansion of
+a gas without production of work or transfer of heat, which is in effect an isenthalpic process.
+
+**Notes:**
+
+#. The left-hand side of the equation is also called the *Joule—Thompson coefficient*.
+
+**Conditions:**
+
+#. Particle count is assumed to be constant.
+#. Heat capacity is assumed to be independent of temperature.
+"""
+
 from sympy import Eq, Derivative, solve
 from symplyphysics import (
     Quantity,
@@ -12,37 +29,64 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.geometry.line import two_point_function, Point2D
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation
 
-# Description
-## The Joule-Thompson effect describes the change in temperature that accompanies the expansion of
-## a gas without production of work or transfer of heat, in effect this is an isenthalpic process.
+temperature = Function("temperature", units.temperature)
+"""
+Temperature of the system as a function of pressure and enthalpy.
 
-# Law: (dT/dp)_H = (T * (dV/dT)_p - V)/C_p
-## T - temperature
-## p - pressure
-## V - volume
-## H - enthalpy
-## C_p - isobaric heat capacity
-## (d/dp)_H - partial derivative with respect to pressure at constant enthalpy
-## (d/dT)_p - partial derivative with respect to temperature at constant pressure
+Symbol:
+    :code:`T(p, H)`
+"""
 
-# Notes
-## - The left-hand side is also called the Joule-Thompson coefficient.
-
-# Conditions
-## - Changes in particle count are not taken into account and it is assumed to be constant.
-## - Heat capacity is assumed to be independent of temperature.
-
-temperature_function = Function("temperature_function", units.temperature)
 pressure = Symbol("pressure", units.pressure)
-volume_function = Function("volume_function", units.volume)
-enthalpy = Symbol("enthalpy", units.energy)
-isobaric_heat_capacity = Symbol("isobaric_heat_capacity", units.energy / units.temperature)
+"""
+Pressure inside the system.
 
-law = Eq(Derivative(temperature_function(pressure, enthalpy), pressure),
-    (temperature_function(pressure, enthalpy) *
-    Derivative(volume_function(temperature_function(pressure, enthalpy), pressure),
-    temperature_function(pressure, enthalpy)) -
-    volume_function(temperature_function(pressure, enthalpy), pressure)) / isobaric_heat_capacity)
+Symbol:
+    :code:`p`
+"""
+
+volume = Function("volume", units.volume)
+"""
+Volume of the system as a function of temperature and pressure.
+
+Symbol:
+    :code:`V(T(p, H), p)`
+"""
+
+enthalpy = Symbol("enthalpy", units.energy)
+"""
+Enthalpy of the system.
+
+Symbol:
+    :code:`H`
+"""
+
+isobaric_heat_capacity = Symbol("isobaric_heat_capacity", units.energy / units.temperature)
+r"""
+Heat capacity of the system at constant pressure.
+
+Symbol:
+    :code:`C_p`
+"""
+
+law = Eq(
+    Derivative(temperature(pressure, enthalpy), pressure),
+    (1 / isobaric_heat_capacity)
+    * (
+        temperature(pressure, enthalpy)
+        * Derivative(volume(temperature(pressure, enthalpy), pressure), temperature(pressure, enthalpy))
+        - volume(temperature(pressure, enthalpy), pressure)
+    )
+)
+r"""
+:code:`Derivative(T(p, H), p) = (1 / C_p) * (T(p, H) * Derivative(V(T(p, H), p), T(p, H)) - V(T(p, H), p))`
+
+Latex:
+    .. math::
+        \left( \frac{\partial T}{\partial p} \right)_H = \frac{1}{C_p} \left(
+            T(p, H) \left( \frac{\partial V}{\partial T} \right)_p - V(T(p, H), p)
+        \right)
+"""
 
 # TODO: derive from enthalpy differential and Maxwell relations.
 
@@ -50,20 +94,20 @@ law = Eq(Derivative(temperature_function(pressure, enthalpy), pressure),
 
 _volume_expr = solve(ideal_gas_equation.law, ideal_gas_equation.volume)[0].subs({
     ideal_gas_equation.pressure: pressure,
-    ideal_gas_equation.temperature: temperature_function(pressure, enthalpy),
+    ideal_gas_equation.temperature: temperature(pressure, enthalpy),
 })
 
 _joule_thompson_coefficient = law.rhs.subs(
-    volume_function(temperature_function(pressure, enthalpy), pressure), _volume_expr).doit()
+    volume(temperature(pressure, enthalpy), pressure), _volume_expr).doit()
 
 assert expr_equals(_joule_thompson_coefficient, 0)
 
 
 @validate_input(
-    volume_before_=volume_function,
-    volume_after_=volume_function,
-    temperature_before_=temperature_function,
-    temperature_after_=temperature_function,
+    volume_before_=volume,
+    volume_after_=volume,
+    temperature_before_=temperature,
+    temperature_after_=temperature,
     isobaric_heat_capacity_=isobaric_heat_capacity,
 )
 @validate_output(units.temperature / units.pressure)
@@ -75,7 +119,7 @@ def calculate_temperature_derivative(
     isobaric_heat_capacity_: Quantity,
 ) -> Quantity:
     temperature_sym = symbols.thermodynamics.temperature
-    expr = law.rhs.subs(temperature_function(pressure, enthalpy), temperature_sym)
+    expr = law.rhs.subs(temperature(pressure, enthalpy), temperature_sym)
 
     volume_ = two_point_function(
         Point2D(temperature_before_, volume_before_),
@@ -83,7 +127,7 @@ def calculate_temperature_derivative(
         temperature_sym,
     )
 
-    result = expr.subs(volume_function(temperature_sym, pressure),
+    result = expr.subs(volume(temperature_sym, pressure),
         volume_).doit().subs(isobaric_heat_capacity, isobaric_heat_capacity_).simplify()
 
     # Result does not depend on temperature
