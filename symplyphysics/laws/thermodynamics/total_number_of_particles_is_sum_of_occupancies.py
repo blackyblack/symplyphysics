@@ -1,9 +1,23 @@
+r"""
+Total particle count is sum of occupancies
+==========================================
+
+Maxwell—Boltzmann, Fermi—Dirac and Bose—Einstein distributions describe the average number of particles
+in some energy level or particle state. They are normalized by the condition that the sum of the number
+of particles in each energy level or particle state should be equal to the total number of particles
+in the system.
+
+**Notes:**
+
+#. This law can be used to express chemical potential :math:`\mu` as a function of temperature :math:`T`
+   and total particle count :math:`N` for Fermi—Dirac and Bose—Einstein distributions.
+"""
+
 from typing import Sequence
 from sympy import Eq, Idx
 from symplyphysics import (
     dimensionless,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     global_index,
@@ -11,29 +25,33 @@ from symplyphysics import (
     SumIndexed,
 )
 
-# Description
-## Maxwell-Boltzmann, Fermi-Dirac and Bose-Einstein distributions describe the average number of particles
-## in some energy level or particle state. They are normalized by the condition that the sum of the number
-## of particles in each energy level or particle state should be equal to the total number of particles
-## in the system.
-
-# Law: N = Sum(n_i, i)
-## N - total number of particles
-## n_i - occupancy of energy level or particle state of index `i`
-## i - index
-
-# Note
-## This can be used to express chemical potential `mu` as a function of temperature `T` and total number
-## of particles `N` for Fermi-Dirac and Bose-Einstein distributions.
-
 total_particle_count = Symbol("total_particle_count", dimensionless)
+"""
+Total number of particles in the system.
+
+Symbol:
+    :code:`N`
+"""
+
 occupancy = SymbolIndexed("occupancy", dimensionless)
+r"""
+Occupancy of energy level or particle state of index :math:`i`
+
+Symbol:
+    :code:`N_i`
+
+Latex:
+    :math:`N_i`
+"""
 
 law = Eq(total_particle_count, SumIndexed(occupancy[global_index], global_index))
+r"""
+:code:`N = sum(N_i, i)`
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        N = \sum_i N_i
+"""
 
 
 @validate_input(occupancies_=occupancy)
