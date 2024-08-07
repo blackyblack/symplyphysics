@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics import temperature_is_constant as boyles_law
+from symplyphysics.laws.thermodynamics import pressure_and_volume_in_isothermal_process as boyles_law
 
 Args = namedtuple("Args", ["P0", "P1", "V0"])
 

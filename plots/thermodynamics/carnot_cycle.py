@@ -3,23 +3,29 @@ from sympy import solve, symbols
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import units
-from symplyphysics.laws.thermodynamics import temperature_is_constant as isothermal_law
-from symplyphysics.laws.thermodynamics import adiabatic_process_equation_via_pressure_and_volume as adiabatic_law
+from symplyphysics.laws.thermodynamics import pressure_and_volume_in_isothermal_process as isothermal_law
+from symplyphysics.laws.thermodynamics import pressure_and_volume_in_adiabatic_process as adiabatic_law
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation
 
-solved_isothermal_law = solve(isothermal_law.derived_law,
-    (isothermal_law.pressure_start, isothermal_law.temperature_end, isothermal_law.pressure_end),
-    dict=True)[0][isothermal_law.pressure_end]
+solved_isothermal_law = solve(
+    isothermal_law._derived_law,
+    (isothermal_law.initial_pressure, isothermal_law._temperature_end, isothermal_law.final_pressure),
+    dict=True,
+)[0][isothermal_law.final_pressure]
 
-solved_adiabatic_law = solve(adiabatic_law.law,
+solved_adiabatic_law = solve(
+    adiabatic_law.law,
     (adiabatic_law.initial_pressure, adiabatic_law.final_temperature, adiabatic_law.final_pressure),
-    dict=True)[0][adiabatic_law.final_pressure]
+    dict=True,
+)[0][adiabatic_law.final_pressure]
 
 # We need adiabatic volume law to detect the point on the 'volume' axis where
 # we adiabatic compression should begin in order to close the cycle
-solved_adiabatic_volume_law = solve(adiabatic_law.law,
+solved_adiabatic_volume_law = solve(
+    adiabatic_law.law,
     (adiabatic_law.initial_pressure, adiabatic_law.final_pressure, adiabatic_law.final_volume),
-    dict=True)[0][adiabatic_law.final_volume]
+    dict=True,
+)[0][adiabatic_law.final_volume]
 
 carnot_cycle_volume = symbols("carnot_cycle_volume")
 
@@ -47,17 +53,17 @@ gas_volume_isothermal_end = solved_adiabatic_volume_law.subs({
 })
 
 result_pressure_isothermal_expansion = solved_isothermal_law.subs({
-    isothermal_law.temperature_start: GAS_TEMPERATURE_START,
+    isothermal_law._temperature_start: GAS_TEMPERATURE_START,
     units.molar_gas_constant: 1,
     ideal_gas_equation.mole_count: GAS_MOLE_COUNT,
-    isothermal_law.volume_end: carnot_cycle_volume
+    isothermal_law.final_volume: carnot_cycle_volume
 })
 
 result_pressure_isothermal_compression = solved_isothermal_law.subs({
-    isothermal_law.temperature_start: GAS_TEMPERATURE_END,
+    isothermal_law._temperature_start: GAS_TEMPERATURE_END,
     units.molar_gas_constant: 1,
     ideal_gas_equation.mole_count: GAS_MOLE_COUNT,
-    isothermal_law.volume_end: carnot_cycle_volume
+    isothermal_law.final_volume: carnot_cycle_volume
 })
 
 result_pressure_adiabatic_expansion = solved_adiabatic_law.subs({
@@ -66,7 +72,7 @@ result_pressure_adiabatic_expansion = solved_adiabatic_law.subs({
     units.molar_gas_constant: 1,
     ideal_gas_equation.mole_count: GAS_MOLE_COUNT,
     adiabatic_law.adiabatic_index: GAS_SPECIFIC_HEATS_RATIO,
-    adiabatic_law.volume_end: carnot_cycle_volume
+    adiabatic_law.final_volume: carnot_cycle_volume
 })
 
 result_pressure_adiabatic_compression = solved_adiabatic_law.subs({
@@ -75,7 +81,7 @@ result_pressure_adiabatic_compression = solved_adiabatic_law.subs({
     units.molar_gas_constant: 1,
     ideal_gas_equation.mole_count: GAS_MOLE_COUNT,
     adiabatic_law.adiabatic_index: GAS_SPECIFIC_HEATS_RATIO,
-    adiabatic_law.volume_end: carnot_cycle_volume
+    adiabatic_law.final_volume: carnot_cycle_volume
 })
 
 p1 = plot(result_pressure_isothermal_expansion,

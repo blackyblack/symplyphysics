@@ -2,8 +2,8 @@ from sympy import Eq, solve, sqrt, Function as SymFunction, symbols as sym_symbo
 from symplyphysics import Quantity, Symbol, dimensionless, symbols, units, validate_input, validate_output
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import (
-    adiabatic_process_equation_via_pressure_and_volume as adiabate_law,
     isentropic_speed_of_sound_via_pressure_derivative as sound_law,
+    pressure_and_volume_in_adiabatic_process as adiabate_law,
 )
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation
 from symplyphysics.laws.quantities import (

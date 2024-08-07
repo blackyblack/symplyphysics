@@ -7,7 +7,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics import adiabatic_process_equation_via_pressure_and_volume as law
+from symplyphysics.laws.thermodynamics import pressure_and_volume_in_adiabatic_process as law
 
 Args = namedtuple("Args", ["n", "t0", "V0", "V1", "y"])
 
