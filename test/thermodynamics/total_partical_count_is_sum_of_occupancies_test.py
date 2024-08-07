@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.thermodynamics import (
-    total_number_of_particles_is_sum_of_occupancies as normalization_law,)
+    total_partical_count_is_sum_of_occupancies as normalization_law,)
 
 # Description
 ## The average numbers of particles are 0.3, 0.7, 2.1, and 0.9. The total number of particles is 4.
