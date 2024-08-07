@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics import rate_of_thermal_radiation as radiation_law
+from symplyphysics.laws.thermodynamics import radiation_power_via_temperature as radiation_law
 
 # Description
 ## The rate of thermal emission of a body with surface emissivity epsilon = 0.5, area A = 1 m**2
