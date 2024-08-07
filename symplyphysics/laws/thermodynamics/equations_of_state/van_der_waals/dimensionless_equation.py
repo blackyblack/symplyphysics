@@ -48,7 +48,7 @@ _critical_pressure_expr = critical_pressure.law.rhs.subs({
 })
 
 _critical_molar_volume_expr = critical_molar_volume.law.rhs.subs({
-    critical_molar_volume.molecules_volume_parameter: equation.molecules_volume_parameter,
+    critical_molar_volume.excluded_volume_parameter: equation.molecules_volume_parameter,
 })
 
 _critical_temperature_expr = critical_temperature.law.rhs.subs({
