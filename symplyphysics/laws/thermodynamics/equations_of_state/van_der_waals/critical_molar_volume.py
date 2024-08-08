@@ -18,7 +18,7 @@ from symplyphysics import (
 
 critical_molar_volume = Symbol("critical_molar_volume", units.volume / units.amount_of_substance)
 r"""
-Critical volume of a van der Waals fluid per unit amount of substance.
+Critical volume of the van der Waals fluid per unit amount of substance.
 
 Symbol:
     :code:`v_c`
