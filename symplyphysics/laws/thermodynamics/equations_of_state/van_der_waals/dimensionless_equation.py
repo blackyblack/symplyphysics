@@ -66,11 +66,6 @@ _molar_volume = solve(reduced_volume_law.law, reduced_volume_law.volume)[0].subs
     reduced_volume_law.critical_volume: _critical_molar_volume_expr,
 })
 
-_volume = molar_qty_law.law.rhs.subs({
-    molar_qty_law.molar_quantity: _molar_volume,
-    molar_qty_law.amount_of_substance: equation.amount_of_substance,
-})
-
 _temperature = solve(reduced_temperature_law.law, reduced_temperature_law.temperature)[0].subs({
     reduced_temperature_law.reduced_temperature: reduced_temperature,
     reduced_temperature_law.critical_temperature: _critical_temperature_expr,
@@ -78,7 +73,7 @@ _temperature = solve(reduced_temperature_law.law, reduced_temperature_law.temper
 
 _reduced_eqn = equation.law.subs({
     equation.pressure: _pressure,
-    equation.volume: _volume,
+    equation.molar_volume: _molar_volume,
     equation.temperature: _temperature,
 })
 

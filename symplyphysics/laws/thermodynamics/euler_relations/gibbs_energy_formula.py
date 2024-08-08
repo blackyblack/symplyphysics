@@ -41,7 +41,7 @@ _enthalpy_expr = enthalpy_formula.law.rhs.subs({
 })
 
 _gibbs_energy_expr = gibbs_energy_def.law.rhs.subs({
-    gibbs_energy_def.thermal_effect: _enthalpy_expr,
+    gibbs_energy_def.enthalpy: _enthalpy_expr,
 })
 
 assert expr_equals(_gibbs_energy_expr, law.rhs)
