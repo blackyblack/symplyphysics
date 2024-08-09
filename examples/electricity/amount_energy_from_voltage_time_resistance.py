@@ -35,11 +35,9 @@ water_mass = solve(density_def.definition, density_def.mass)[0].subs({
 })
 
 heat_via_power = dsolve(
-    power_def.definition.subs({power_def.power(power_def.time): kettle_power}),
+    power_def.definition.subs(power_def.power(power_def.time), kettle_power),
     power_def.energy(power_def.time),
-    ics={
-    power_def.energy(0): 0
-    },
+    ics={power_def.energy(0): 0},
 ).rhs
 
 water_heat_capacity = specific_qty_law.law.rhs.subs({
@@ -50,7 +48,7 @@ water_heat_capacity = specific_qty_law.law.rhs.subs({
 water_temperature_change = final_temperature_kelvin - initial_temperature_kelvin
 
 heat_transferred = thermal_energy_law.law.rhs.subs({
-    thermal_energy_law.heat: water_heat_capacity,
+    thermal_energy_law.heat_capacity: water_heat_capacity,
     thermal_energy_law.temperature_change: water_temperature_change,
 })
 
