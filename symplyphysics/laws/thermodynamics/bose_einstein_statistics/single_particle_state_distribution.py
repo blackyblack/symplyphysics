@@ -2,10 +2,13 @@
 Single particle state distribution
 ==================================
 
-Bose-Einstein statistics is a type of quantum statistics that applies to the physics of a
-system consisting of many non-interacting, identical particles that strictly do not obey
-the Pauli exclusion principle. Particles following Bose-Einstein statistics are called bosons
-and have integer values of spin.
+Occupancy of a single-particle state of bosons is the probability of a single boson
+to occupy a state with a certain amount of energy. The occupancy depends on the energy
+of the state and the temperature and the chemical potential of the system.
+
+**Conditions:**
+
+#. :math:`E_i > \mu`.
 """
 
 from sympy import Eq, exp, S

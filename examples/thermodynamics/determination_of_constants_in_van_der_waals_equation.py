@@ -3,6 +3,7 @@
 from sympy import solve, Symbol, Eq
 from symplyphysics import print_expression, Quantity, units, convert_to
 from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import equation as van_der_waals_law
+from symplyphysics.laws.quantities import quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law
 
 # Example from 2.24 in https://studfile.net/preview/1772224/page:8/
 
@@ -16,8 +17,15 @@ pressure_after = Symbol("pressure_after")
 parameter_a = Symbol("parameter_a")
 parameter_b = Symbol("parameter_b")
 
+molar_volume = solve(
+    molar_qty_law.law, molar_qty_law.molar_quantity
+)[0].subs({
+    molar_qty_law.extensive_quantity: volume,
+    molar_qty_law.amount_of_substance: amount_of_substance,
+})
+
 base_variables_of_state_equation = {
-    van_der_waals_law.molar_volume: volume / amount_of_substance,
+    van_der_waals_law.molar_volume: molar_volume,
     van_der_waals_law.attractive_forces_parameter: parameter_a,
     van_der_waals_law.excluded_volume_parameter: parameter_b,
 }

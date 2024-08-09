@@ -32,7 +32,7 @@ molar_volume = Symbol("molar_volume", units.volume / units.amount_of_substance)
 Volume of the van der Waals fluid per unit amount of substance.
 
 Symbol:
-    :code:`v`
+    :code:`V_m`
 """
 
 temperature = symbols.thermodynamics.temperature
@@ -60,7 +60,7 @@ excluded_volume_parameter = Symbol(
     units.volume / units.amount_of_substance,
 )
 """
-Parameter of the van der Waals equation denoting an excluded molar molar_volume
+Parameter of the van der Waals equation denoting an excluded molar volume
 due to a finite size of molecules.
 
 Symbol:

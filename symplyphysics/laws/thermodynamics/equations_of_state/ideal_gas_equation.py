@@ -1,9 +1,13 @@
-"""
+r"""
 Ideal gas equation
 ==================
 
 The ideal gas law, also known as the general gas equation, is an equation of state used to
 describe a hypothetical ideal gas.
+
+**Notation:**
+
+#. :math:`R` is the molar gas constant.
 """
 
 from sympy import (Eq, solve)

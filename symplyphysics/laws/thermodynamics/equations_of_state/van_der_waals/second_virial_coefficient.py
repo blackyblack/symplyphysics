@@ -30,7 +30,10 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import compressibility_factor_is_deviation_from_ideal_gas as compressibility_def
 from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import equation as vdw_eqn
-from symplyphysics.laws.quantities import quantity_is_volumetric_density_times_volume as density_qty_law
+from symplyphysics.laws.quantities import (
+    quantity_is_volumetric_density_times_volume as density_qty_law,
+    quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law,
+)
 
 second_virial_coefficient = Symbol("second_virial_coefficient",
     units.volume / units.amount_of_substance)
@@ -90,8 +93,15 @@ _volume = compressibility_def.volume
 _mole_count = compressibility_def.amount_of_substance
 _molar_density = SymSymbol("molar_density")
 
+_molar_volume = solve(
+    molar_qty_law.law, molar_qty_law.molar_quantity
+)[0].subs({
+    molar_qty_law.extensive_quantity: _volume,
+    molar_qty_law.amount_of_substance: _mole_count,
+})
+
 _pressure_expr = solve(vdw_eqn.law, vdw_eqn.pressure)[0].subs({
-    vdw_eqn.molar_volume: _volume / _mole_count,
+    vdw_eqn.molar_volume: _molar_volume,
     vdw_eqn.temperature: temperature,
     vdw_eqn.attractive_forces_parameter: attractive_forces_parameter,
     vdw_eqn.excluded_volume_parameter: excluded_volume_parameter,

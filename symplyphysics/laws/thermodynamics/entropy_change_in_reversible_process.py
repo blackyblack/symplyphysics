@@ -2,7 +2,7 @@ r"""
 Entropy change in reversible process
 ====================================
 
-The second law of thermodynamics applied to a closed system and an idealized, reversible or quasistatic process
+The second law of thermodynamics applied to a closed system and an idealized, reversible or quasistatic process,
 states that in such a process of transfer of energy as heat to closed thermodynamic system :math:`B`, which
 allows energy but not matter exchanges, from an auxiliary thermodynamic system :math:`A`, an infinitesimal
 increment in the entropy of system :math:`B` is defined to result from an infinitesimal transfer of heat to

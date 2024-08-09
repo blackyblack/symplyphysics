@@ -1,9 +1,13 @@
-"""
+r"""
 Entropy from statistical weight
 ===============================
 
 Entropy of a system depends on the statistical weight of the system's state. Statistical weight
 is the average number of microstates of a system that implement its macrostate.
+
+**Notation:**
+
+#. :math:`k_\text{B}` (:code:`k_B`) is the Boltzmann constant.
 """
 
 from sympy import Eq, solve, log, symbols, Function as SymFunction, dsolve
@@ -34,11 +38,11 @@ Symbol:
 
 law = Eq(entropy, units.boltzmann_constant * log(statistical_weight))
 r"""
-:code:`S = k * log(W)`
+:code:`S = k_B * log(W)`
 
 Latex:
     .. math::
-        S = k \log W
+        S = k_text{B} \log W
 """
 
 # Derive the law from the properties of entropy

@@ -28,12 +28,12 @@ enthalpy = Function("enthalpy", units.energy)
 Enthalpy of the system.
 
 Symbol:
-    :code:`H`
+    :code:`H(T, p)`
 """
 
 temperature = symbols.thermodynamics.temperature
 """
-Temperature of the system.
+:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
 
 Symbol:
     :code:`T`
@@ -60,7 +60,7 @@ law = Eq(
     volume(temperature, pressure) -
     temperature * Derivative(volume(temperature, pressure), temperature))
 r"""
-:code:`Derivative(H(T, p), T) = V(T, p) - T * Derivative(V(T, p), p)`
+:code:`Derivative(H(T, p), p) = V(T, p) - T * Derivative(V(T, p), T)`
 
 Latex:
     .. math::

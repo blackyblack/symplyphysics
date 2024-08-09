@@ -41,7 +41,7 @@ gibbs_energy = Function("gibbs_energy", units.energy)
 Gibbs energy of the system.
 
 Symbol:
-    :code:`G`
+    :code:`G(T, p)`
 """
 
 temperature = symbols.thermodynamics.temperature

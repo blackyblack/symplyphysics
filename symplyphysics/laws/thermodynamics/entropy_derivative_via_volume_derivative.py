@@ -66,7 +66,7 @@ Symbol:
 law = Eq(Derivative(entropy(temperature, pressure), pressure),
     -1 * Derivative(volume(temperature, pressure), temperature))
 r"""
-:code:`Derivative(S(T, p), p) = -1 * Derivative(V(T, p), p)`
+:code:`Derivative(S(T, p), p) = -1 * Derivative(V(T, p), T)`
 
 Latex:
     .. math::
