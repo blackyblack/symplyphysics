@@ -99,7 +99,7 @@ _pressure_derivative_expr = solve(_pressure_derivative_eqn, _pressure.diff(_dens
 _molar_qty_eqn = molar_qty_law.law.subs({
     molar_qty_law.extensive_quantity: _gas_mass,
     molar_qty_law.molar_quantity: molar_mass,
-    molar_qty_law.amount_of_substance: ideal_gas_equation.mole_count,
+    molar_qty_law.amount_of_substance: ideal_gas_equation.amount_of_substance,
 })
 
 _pressure_derivative_expr = solve(

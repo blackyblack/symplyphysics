@@ -84,7 +84,7 @@ Latex:
 # Derive from ideal gas equation
 
 _ideal_gas_eqn = ideal_gas_equation.law.subs({
-    ideal_gas_equation.mole_count: amount_of_substance,
+    ideal_gas_equation.amount_of_substance: amount_of_substance,
     ideal_gas_equation.temperature: temperature,
 })
 

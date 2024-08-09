@@ -55,7 +55,7 @@ gas_volume_isothermal_end = solved_adiabatic_volume_law.subs({
 result_pressure_isothermal_expansion = solved_isothermal_law.subs({
     isothermal_law._temperature_start: GAS_TEMPERATURE_START,
     units.molar_gas_constant: 1,
-    ideal_gas_equation.mole_count: GAS_MOLE_COUNT,
+    ideal_gas_equation.amount_of_substance: GAS_MOLE_COUNT,
     isothermal_law.final_volume: carnot_cycle_volume
 })
 

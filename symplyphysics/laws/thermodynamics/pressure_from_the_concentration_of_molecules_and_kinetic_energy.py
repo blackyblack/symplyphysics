@@ -5,7 +5,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as ideal_gas_law
 from symplyphysics.laws.thermodynamics import average_kinetic_energy_of_ideal_gas_from_temperature as kinetic_energy
 from symplyphysics.laws.chemistry import avogadro_number_from_mole_count as avogadro_number
-from symplyphysics.definitions import number_density_is_number_of_objects_per_unit_volume
+from symplyphysics.definitions import number_density_is_number_of_objects_per_unit_volume as number_density_def
 # Description
 
 ## Ideal gas equation: p = 2/3 * n * E
@@ -25,34 +25,33 @@ law = Eq(pressure, 2 / 3 * molecules_concentration * average_kinetic_energy)
 
 ## Proof
 
-temperature_eq = kinetic_energy.law.subs(
-    {kinetic_energy.average_kinetic_energy: average_kinetic_energy})
-
-derived_temperature = solve(temperature_eq, kinetic_energy.equilibrium_temperature,
-    dict=True)[0][kinetic_energy.equilibrium_temperature]
-
-particles_number_eq = number_density_is_number_of_objects_per_unit_volume.definition.subs({
-    number_density_is_number_of_objects_per_unit_volume.volume: ideal_gas_law.volume,
-    number_density_is_number_of_objects_per_unit_volume.number_density: molecules_concentration
+temperature_eq = kinetic_energy.law.subs({
+    kinetic_energy.average_kinetic_energy: average_kinetic_energy,
 })
 
-derived_particles_number = solve(particles_number_eq,
-    number_density_is_number_of_objects_per_unit_volume.number_of_objects,
-    dict=True)[0][number_density_is_number_of_objects_per_unit_volume.number_of_objects]
+derived_temperature = solve(temperature_eq, kinetic_energy.equilibrium_temperature)[0]
+
+particles_number_eq = number_density_def.definition.subs({
+    number_density_def.volume: ideal_gas_law.volume,
+    number_density_def.number_density: molecules_concentration
+})
+
+derived_particles_number = solve(particles_number_eq, number_density_def.number_of_objects)[0]
 
 mole_count_eq = avogadro_number.law.subs(
     {avogadro_number.particles_count: derived_particles_number})
 
-derived_mole_count = solve(mole_count_eq, avogadro_number.mole_count,
-    dict=True)[0][avogadro_number.mole_count]
+derived_mole_count = solve(mole_count_eq, avogadro_number.mole_count)[0]
 
-derived_pressure = ideal_gas_law.law.subs({
+ideal_gas_law_subs = ideal_gas_law.law.subs({
     ideal_gas_law.temperature: derived_temperature,
-    ideal_gas_law.units.molar_gas_constant: units.boltzmann * units.avogadro,
-    ideal_gas_law.mole_count: derived_mole_count
+    units.molar_gas_constant: units.boltzmann * units.avogadro,
+    ideal_gas_law.amount_of_substance: derived_mole_count
 })
 
-assert expr_equals(derived_pressure.rhs, law.rhs)
+derived_pressure = solve(ideal_gas_law_subs, ideal_gas_law.pressure)[0]
+
+assert expr_equals(derived_pressure, law.rhs)
 
 
 def print_law() -> str:

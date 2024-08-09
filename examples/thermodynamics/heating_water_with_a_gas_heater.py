@@ -77,7 +77,7 @@ state_equation = klayperon_law.law.subs({
     klayperon_law.volume: volume_of_gas,
     klayperon_law.pressure: pressure_in_gas_heater,
     klayperon_law.temperature: temperature_start,
-    klayperon_law.mole_count: mole_count_value
+    klayperon_law.amount_of_substance: mole_count_value
 })
 mass_of_gas_in_state_value = solve(state_equation, mole_count_law.mass,
     dict=True)[0][mole_count_law.mass]

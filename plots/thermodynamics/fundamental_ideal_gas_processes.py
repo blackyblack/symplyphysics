@@ -11,7 +11,7 @@ from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equat
 pressure, volume, temperature = symbols("pressure volume temperature", positive=True)
 
 ideal_gas_eqn = ideal_gas_law.law.subs({
-    ideal_gas_law.mole_count:
+    ideal_gas_law.amount_of_substance:
         1,
     units.molar_gas_constant:
     convert_to(

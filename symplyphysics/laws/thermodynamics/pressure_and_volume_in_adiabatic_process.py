@@ -171,11 +171,11 @@ _temperature_change_expr = solve(ideal_gas_equation.law, _temperature)[0].subs({
 })
 
 _mayers_relation = mayers_relation.law.subs(mayers_relation.amount_of_substance,
-    ideal_gas_equation.mole_count)
+    ideal_gas_equation.amount_of_substance)
 
 _temperature_change_expr = solve(
     (Eq(_temperature_change, _temperature_change_expr), _mayers_relation),
-    (_temperature_change, ideal_gas_equation.mole_count),
+    (_temperature_change, ideal_gas_equation.amount_of_substance),
     dict=True,
 )[0][_temperature_change]
 
@@ -210,7 +210,7 @@ _pressure_from_law = solve(adiabatic_condition, final_pressure)[0].subs(adiabati
 assert expr_equals(_pressure_derived, _pressure_from_law)
 
 
-@validate_input(mole_count_=ideal_gas_equation.mole_count,
+@validate_input(mole_count_=ideal_gas_equation.amount_of_substance,
     temperature_start_=initial_temperature,
     volume_start_=initial_volume,
     volume_end_=final_volume,
@@ -221,7 +221,7 @@ def calculate_pressure(mole_count_: Quantity, temperature_start_: Quantity, volu
 
     solved = solve(law, (initial_pressure, final_temperature, final_pressure), dict=True)[0][final_pressure]
     result_pressure = solved.subs({
-        ideal_gas_equation.mole_count: mole_count_,
+        ideal_gas_equation.amount_of_substance: mole_count_,
         initial_temperature: temperature_start_,
         initial_volume: volume_start_,
         final_volume: volume_end_,
