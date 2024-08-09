@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import assert_equal, Quantity, units, errors
-from symplyphysics.laws.thermodynamics import prandtl_number
+from symplyphysics.laws.thermodynamics import prandtl_number_via_dynamic_viscosity_and_thermal_conductivity as law
 
 # Example from https://www.omnicalculator.com/physics/prandtl-number
 
@@ -19,7 +19,7 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_prandtl_number(test_args: Args) -> None:
-    result = prandtl_number.calculate_prandtl_number(test_args.heat_capacity,
+    result = law.calculate_prandtl_number(test_args.heat_capacity,
         test_args.dynamic_viscosity, test_args.thermal_conductivity)
     assert_equal(result, 0.000715)
 
@@ -27,13 +27,13 @@ def test_basic_prandtl_number(test_args: Args) -> None:
 def test_bad_heat_capacity(test_args: Args) -> None:
     bc = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        prandtl_number.calculate_prandtl_number(
+        law.calculate_prandtl_number(
             bc,
             test_args.dynamic_viscosity,
             test_args.thermal_conductivity,
         )
     with raises(TypeError):
-        prandtl_number.calculate_prandtl_number(
+        law.calculate_prandtl_number(
             100,
             test_args.dynamic_viscosity,
             test_args.thermal_conductivity,
@@ -43,13 +43,13 @@ def test_bad_heat_capacity(test_args: Args) -> None:
 def test_bad_dynamic_viscosity(test_args: Args) -> None:
     bdv = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        prandtl_number.calculate_prandtl_number(
+        law.calculate_prandtl_number(
             test_args.heat_capacity,
             bdv,
             test_args.thermal_conductivity,
         )
     with raises(TypeError):
-        prandtl_number.calculate_prandtl_number(
+        law.calculate_prandtl_number(
             test_args.heat_capacity,
             100,
             test_args.thermal_conductivity,
@@ -59,13 +59,13 @@ def test_bad_dynamic_viscosity(test_args: Args) -> None:
 def test_bad_thermal_conductivity(test_args: Args) -> None:
     btk = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        prandtl_number.calculate_prandtl_number(
+        law.calculate_prandtl_number(
             test_args.heat_capacity,
             test_args.dynamic_viscosity,
             btk,
         )
     with raises(TypeError):
-        prandtl_number.calculate_prandtl_number(
+        law.calculate_prandtl_number(
             test_args.heat_capacity,
             test_args.dynamic_viscosity,
             100,
