@@ -1,4 +1,4 @@
-"""
+r"""
 Gibbs energy differential
 =========================
 

@@ -72,7 +72,7 @@ r"""
 
 Latex:
     .. math::
-        n_i = frac{1}{\exp{\frac{E_i - \mu}{k_\text{B} T}} - 1}
+        n_i = \frac{1}{\exp{\frac{E_i - \mu}{k_\text{B} T}} - 1}
 """
 
 
