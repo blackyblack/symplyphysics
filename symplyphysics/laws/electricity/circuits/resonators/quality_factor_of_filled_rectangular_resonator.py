@@ -2,7 +2,7 @@ from sympy import (
     Eq,
     solve,
 )
-from symplyphysics import (Symbol, print_expression, validate_input, validate_output, dimensionless)
+from symplyphysics import (Symbol, convert_to_float, print_expression, validate_input, validate_output, dimensionless)
 
 # Description
 ## A rectangular resonator consists of metal walls and a material filling it.
@@ -37,4 +37,4 @@ def calculate_quality_factor(empty_resonator_quality_factor_: float,
         empty_resonator_quality_factor: empty_resonator_quality_factor_,
         tangent_dielectric_loss_angle: tangent_dielectric_loss_angle_,
     })
-    return float(result_expr)
+    return convert_to_float(result_expr)

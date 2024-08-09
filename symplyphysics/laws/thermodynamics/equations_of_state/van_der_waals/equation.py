@@ -32,7 +32,7 @@ molar_volume = Symbol("molar_volume", units.volume / units.amount_of_substance)
 Volume of the van der Waals fluid per unit amount of substance.
 
 Symbol:
-    :code:`V_m`
+    :code:`v`
 """
 
 temperature = symbols.thermodynamics.temperature

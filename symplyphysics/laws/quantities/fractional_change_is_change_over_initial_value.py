@@ -7,6 +7,7 @@ Fractional change is change over initial value
 
 from sympy import Eq, Symbol as SymSymbol
 from symplyphysics import (
+    convert_to_float,
     dimensionless,
     Quantity,
     Symbol,
@@ -58,7 +59,7 @@ Latex:
 def calculate_fractional_change(
     change_: Quantity,
     initial_value_: Quantity,
-) -> Quantity:
+) -> float:
     assert_equivalent_dimension(
         change_,
         "change_",
@@ -70,5 +71,5 @@ def calculate_fractional_change(
         change: change_,
         initial_value: initial_value_,
     })
-    
-    return Quantity(result)
+
+    return convert_to_float(result)

@@ -1,4 +1,4 @@
-"""
+r"""
 Single particle state distribution
 ==================================
 
@@ -11,8 +11,9 @@ of the state and the temperature and the chemical potential of the system.
 #. :math:`E_i > \mu`.
 """
 
-from sympy import Eq, exp, S
+from sympy import Eq, exp
 from symplyphysics import (
+    convert_to_float,
     units,
     dimensionless,
     Quantity,
@@ -20,7 +21,6 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    convert_to,
 )
 
 occupancy_of_state = Symbol("occupancy_of_state", dimensionless)
@@ -92,4 +92,4 @@ def calculate_occupancy_of_state(
         total_chemical_potential: total_chemical_potential_,
         temperature: temperature_,
     })
-    return float(convert_to(Quantity(result), S.One))
+    return convert_to_float(result)

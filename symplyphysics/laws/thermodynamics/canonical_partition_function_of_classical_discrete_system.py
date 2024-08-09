@@ -11,6 +11,7 @@ of all the possible energy states:
 from typing import Sequence
 from sympy import Eq, Idx, solve
 from symplyphysics import (
+    convert_to_float,
     dimensionless,
     Symbol,
     validate_input,
@@ -58,4 +59,4 @@ def calculate_partition_function(boltzmann_factors_: Sequence[float]) -> float:
     solved = solve(partition_function_law, partition_function, dict=True)[0][partition_function]
     for i, v in enumerate(boltzmann_factors_):
         solved = solved.subs(boltzmann_factor[i + 1], v)
-    return float(solved)
+    return convert_to_float(solved)

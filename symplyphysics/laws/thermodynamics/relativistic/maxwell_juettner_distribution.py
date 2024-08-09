@@ -24,6 +24,7 @@ to the Maxwell—Boltzmann distribution.
 from sympy import Eq, exp, sqrt
 from sympy.functions.special.bessel import besselk
 from symplyphysics import (
+    convert_to_float,
     dimensionless,
     Symbol,
     validate_input,
@@ -92,4 +93,4 @@ def calculate_distribution_function(
         lorentz_factor: lorentz_factor_,
         reduced_temperature: dimensionless_temperature_,
     })
-    return float(result)
+    return convert_to_float(result)
