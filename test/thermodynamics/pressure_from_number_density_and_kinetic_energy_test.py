@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 
-from symplyphysics.laws.thermodynamics import pressure_from_the_concentration_of_molecules_and_kinetic_energy as ideal_gas_pressure
+from symplyphysics.laws.thermodynamics import pressure_from_number_density_and_kinetic_energy as ideal_gas_pressure
 
 Args = namedtuple("Args", ["average_kinetic_energy", "molecules_concentration"])
 
