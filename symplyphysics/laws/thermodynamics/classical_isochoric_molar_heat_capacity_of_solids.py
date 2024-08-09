@@ -1,5 +1,5 @@
 r"""
-Classical isochoric molar head capacity of solids
+Classical isochoric molar heat capacity of solids
 =================================================
 
 The *Dulong-Petit law* states that the classical expression for the molar specific heat capacity
