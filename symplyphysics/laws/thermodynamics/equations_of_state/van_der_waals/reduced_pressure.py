@@ -1,32 +1,59 @@
+r"""
+Reduced pressure
+================
+
+Reduced units are used in the dimensionless van der Waals equation of state.
+"""
+
 from sympy import Eq
 from symplyphysics import (
     units,
     dimensionless,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     convert_to_float,
 )
 
-# Description
-## Reduced units are used in the dimensionless van der Waals equation of state.
-
-# Law: p* = p / p_c
-## p* - reduced pressure
-## p - pressure
-## p_c - [critical pressure](./critical_pressure.py)
-
 reduced_pressure = Symbol("reduced_pressure", dimensionless)
+r"""
+Reduced pressure of the van der Waals fluid.
+
+Symbol:
+    :code:`p*`
+
+Latex:
+    :math:`p^*`
+"""
+
 pressure = Symbol("pressure", units.pressure)
+"""
+Pressure of the van der Waals fluid.
+
+Symbol:
+    :code:`p`
+"""
+
 critical_pressure = Symbol("critical_pressure", units.pressure)
+r"""
+See :doc:`laws.thermodynamics.equations_of_state.van_der_waals.critical_pressure`
+
+Symbol:
+    :code:`p_c`
+
+Latex:
+    :math:`p_\text{c}`
+"""
 
 law = Eq(reduced_pressure, pressure / critical_pressure)
+r"""
+:code:`p* = p / p_c`
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        p^* = \frac{p}{p_\text{c}}
+"""
 
 
 @validate_input(

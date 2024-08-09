@@ -1,3 +1,15 @@
+"""
+Enthalpy derivative via volume derivative
+=========================================
+
+Isothermal derivative of enthalpy w.r.t. pressure can be found using volume as a function
+of temperature and pressure.
+
+**Conditions:**
+
+#. Works for an infinitesimal quasi-static isothermal process.
+"""
+
 from sympy import Eq, Derivative
 from symplyphysics import (
     units,
@@ -11,29 +23,49 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.geometry.line import two_point_function, Point2D
 
-# Description
-## Isothermal derivative of enthalpy w.r.t. pressure can be found as a function of volume and temperature.
-
-# (dH/dp)_T = V(T, p) - T * (dV/dT)_p
-## H - enthalpy
-## T - absolute temperature
-## p - pressure
-## V - volume
-## (d/dp)_T - partial derivative w.r.t. pressure at constant temperature
-## (d/dT)_p - partial derivative w.r.t. temperature at constant pressure
-
-# Conditions
-## - Assuming an infinitesimal quasi-static isothermal process.
-
 enthalpy = Function("enthalpy", units.energy)
+"""
+Enthalpy of the system.
+
+Symbol:
+    :code:`H(T, p)`
+"""
+
 temperature = symbols.thermodynamics.temperature
+"""
+:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
+
+Symbol:
+    :code:`T`
+"""
+
 pressure = Symbol("pressure", units.pressure)
+"""
+Pressure inside the system.
+
+Symbol:
+    :code:`p`
+"""
+
 volume = Function("volume", units.volume)
+"""
+Volume of the system.
+
+Symbol:
+    :code:`V`
+"""
 
 law = Eq(
     Derivative(enthalpy(temperature, pressure), pressure),
     volume(temperature, pressure) -
     temperature * Derivative(volume(temperature, pressure), temperature))
+r"""
+:code:`Derivative(H(T, p), p) = V(T, p) - T * Derivative(V(T, p), T)`
+
+Latex:
+    .. math::
+        \left( \frac{\partial H}{\partial p} \right)_T = V(T, p) - T \left( \frac{\partial V}{\partial T} \right)_p
+"""
 
 # TODO: Derive from differential of enthalpy and Maxwell relation
 

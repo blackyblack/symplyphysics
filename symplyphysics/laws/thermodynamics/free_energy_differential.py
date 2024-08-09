@@ -1,3 +1,27 @@
+r"""
+Free energy differential
+========================
+
+The fundamental thermodynamic relations are fundamental equations which demonstate how important
+thermodynamic quantities depend on variables that are measurable experimentally.
+
+**Notation:**
+
+#. :math:`d` denotes an exact, path-independent differential.
+
+**Notes:**
+
+#. Temperature, volume, and particle count are so called natural variables of free energy as a
+   thermodynamic potential.
+#. For a system with more than one type of particles, the last term can be represented as a sum over all
+   types of particles, i.e. :math:`\sum_i \mu_i \, d N_i`.
+
+**Conditions:**
+
+#. The system is in thermal equilibrium with its surroundings.
+#. The system is composed of only one type of particles, i.e. the system is a pure substance.
+"""
+
 from sympy import Eq, symbols as sympy_symbols, Function as SymFunction, Symbol as SymSymbol
 from symplyphysics import (
     clone_symbol,
@@ -6,7 +30,6 @@ from symplyphysics import (
     dimensionless,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
@@ -16,43 +39,77 @@ from symplyphysics.laws.thermodynamics import (
     internal_energy_differential,
 )
 
-# Description
-## The fundamental thermodynamic relation are fundamental equations which demonstate how important
-## thermodynamic quantities depend on variables that are measurable experimentally.
-
-# Law: dF = -S * dT - p * dV + mu * dN
-## F - Helmholtz free energy
-## S - entropy
-## T - absolute temperature
-## p - pressure
-## V - volume
-## mu - chemical potential
-## N - number of particles in the system
-## Notation: d(x) - full differential of `x`
-
-# Note
-## - Temperature `T`, volume `V`, and particle count N are so called natural variables of Helmholtz free energy
-##   as a thermodynamic potential.
-## - For a system with more than one type of particles, the last term can be represented as a sum over all
-##   types of particles, i.e. `Sum(mu_i * d(N_i), i)`.
-
-# Conditions
-## - The system is in thermal equilibrium with its surroundings
-## - There is only one type of particles in the system
-
 free_energy_change = Symbol("free_energy_change", units.energy)
+"""
+Infinitesimal change in free energy of the system.
+
+Symbol:
+    :code:`dF`
+"""
+
 entropy = Symbol("entropy", units.energy / units.temperature)
+"""
+Enthalpy of the system.
+
+Symbol:
+    :code:`S`
+"""
+
 temperature_change = clone_symbol(symbols.thermodynamics.temperature, "temperature_change")
+"""
+Infinitesimal change in :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
+
+Symbol:
+    :code:`dT`
+"""
+
 pressure = Symbol("pressure", units.pressure)
+"""
+Pressure inside the system.
+
+Symbol:
+    :code:`p`
+"""
+
 volume_change = Symbol("volume_change", units.volume)
+"""
+Infinitesimal change in volume of the system.
+
+Symbol:
+    :code:`dV`
+"""
+
 chemical_potential = Symbol("chemical_potential", units.energy)
+r"""
+Chemical potential of the system.
+
+Symbol:
+    :code:`mu`
+
+Latex:
+    :math:`\mu`
+"""
+
 particle_count_change = Symbol("particle_count_change", dimensionless)
+"""
+Infinitesimal change in the number of particles in the system.
+
+Symbol:
+    :code:`dN`
+"""
 
 law = Eq(
     free_energy_change,
     -1 * entropy * temperature_change - pressure * volume_change +
     chemical_potential * particle_count_change,
 )
+r"""
+:code:`dF = -1 * S * dT - p * dV + mu * dN`
+
+Latex:
+    .. math::
+        dF = -S \, dT - p \, dV + \mu \, dN
+"""
 
 # Derive from the definition of Helmholtz free energy and internal energy differential
 
@@ -111,10 +168,6 @@ _free_energy_change = _free_energy_change.subs({
 })
 
 assert expr_equals(_free_energy_change, law.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(

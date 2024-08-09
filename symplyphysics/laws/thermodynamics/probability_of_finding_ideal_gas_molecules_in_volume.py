@@ -1,3 +1,17 @@
+r"""
+Probability of finding ideal gas molecules in volume
+====================================================
+
+For ideal gas molecules, we can calculate the probability of N molecules occupying a certain region
+in space, say, a container with gas particles.
+
+**Conditions:**
+
+#. The gas is ideal.
+#. :math:`V \le V_0`
+#. There are no external fields acting on the particles.
+"""
+
 from sympy import Eq
 from symplyphysics import (
     Quantity,
@@ -10,27 +24,49 @@ from symplyphysics import (
 )
 from symplyphysics.core.symbols.probability import Probability
 
-# Description
-## For ideal gas molecules, we can calculate the probability of N molecules occupying a certain region
-## in space, say, a container with gas particles.
-
-# Law: P = (V / V0)**N
-## P - probability
-## V0 - total volume of container
-## V - volume of part of container
-## N - particle count
-
-# Conditions
-## - Gas is ideal
-## - `V <= V0`
-## - There are no external fields acting on the particles
-
 probability = Symbol("probability", dimensionless)
+r"""
+Probability of finding :math:`N` gas particles in volume :math:`V`.
+
+Symbol:
+    :code:`P`
+"""
+
 total_volume = Symbol("total_volume", units.volume)
+r"""
+Total volume of the region.
+
+Symbol:
+    :code:`V_0`
+
+Latex:
+    :math:`V_0`
+"""
+
 partial_volume = Symbol("partial_volume", units.volume)
+"""
+Volume of part of the container where we are looking for the particles.
+
+Symbol:
+    :code:`V`
+"""
+
 particle_count = Symbol("particle_count", dimensionless, integer=True)
+r"""
+Number of gas particles in :math:`V`.
+
+Symbol:
+    :code:`N`
+"""
 
 law = Eq(probability, (partial_volume / total_volume)**particle_count)
+r"""
+:code:`P = (V / V_0)^N`
+
+Latex:
+    .. math::
+        P = \left( \frac{V}{V_0} \right)^N
+"""
 
 
 @validate_input(

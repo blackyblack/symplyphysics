@@ -1,10 +1,33 @@
+r"""
+Enthalpy differential
+=====================
+
+The fundamental thermodynamic relations are fundamental equations which demonstate how the important
+thermodynamic quantities depend on variables that are measurable experimentally.
+
+**Notation:**
+
+#. :math:`d` denotes an exact, path-independent differential.
+
+**Notes:**
+
+#. Entropy, pressure, and particle count are so called natural variables of enthalpy as a
+   thermodynamic potential.
+#. For a system with more than one type of particles, the last term can be represented as a sum over all
+   types of particles, i.e. :math:`\sum_i \mu_i \, d N_i`.
+
+**Conditions:**
+
+#. The system is in thermal equilibrium with its surroundings.
+#. The system is composed of only one type of particles, i.e. the system is a pure substance.
+"""
+
 from sympy import Eq, Function as SymFunction, Symbol as SymSymbol, symbols as sympy_symbols
 from symplyphysics import (
     units,
     dimensionless,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     symbols,
@@ -15,44 +38,77 @@ from symplyphysics.laws.thermodynamics import (
     internal_energy_differential,
 )
 
-# Description
-## The fundamental thermodynamic relation are fundamental equations which demonstate how important
-## thermodynamic quantities depend on variables that are measurable experimentally.
-
-# Law: dH = T * dS + V * dp + mu * dN
-## H - [enthalpy](./enthalpy_is_internal_energy_plus_pressure_energy.py)
-## T - absolute temperature
-## S - entropy
-## p - pressure
-## V - volume
-## mu - chemical potential
-## N - number of particles in system
-## Notation: `d(x)` is an exact differential of `x`
-
-# Note
-## - Entropy `S`, pressure `p`, and particle count `N` are so called natural variables of enthalpy as a
-##   thermodynamic potential
-## - For a system with more than one type of particles, the last term can be represented as a sum over all
-##   types of particles, i.e. `Sum(mu_i * d(N_i), i)`.
-
-# Conditions
-## - The system is in thermal equilibrium with the environment
-## - Only reversible prossesses or pure heat transfer are considered
-## - There is only one type of particles in the system.
-
 enthalpy_change = Symbol("enthalpy_change", units.energy)
+"""
+Infinitesimal change in enthalpy of the system.
+
+Symbol:
+    :code:`dH`
+"""
+
 temperature = symbols.thermodynamics.temperature
+"""
+:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
+
+Symbol:
+    :code:`T`
+"""
+
 entropy_change = Symbol("entropy_change", units.energy / units.temperature)
+"""
+Infinitesimal change in entropy of the system.
+
+Symbol:
+    :code:`dS`
+"""
+
 volume = Symbol("volume", units.volume)
+"""
+Volume of the system.
+
+Symbol:
+    :code:`V`
+"""
+
 pressure_change = Symbol("pressure_change", units.pressure)
+"""
+Infinitesimal change in pressure inside the system.
+
+Symbol:
+    :code:`dp`
+"""
+
 chemical_potential = Symbol("chemical_potential", units.energy)
+r"""
+Chemical potential of the system.
+
+Symbol:
+    :code:`mu`
+
+Latex:
+    :math:`\mu`
+"""
+
 particle_count_change = Symbol("particle_count_change", dimensionless)
+"""
+Infinitesimal change in the number of particles in the system.
+
+Symbol:
+    :code:`dN`
+"""
 
 law = Eq(
     enthalpy_change,
     temperature * entropy_change + volume * pressure_change +
     chemical_potential * particle_count_change,
 )
+r"""
+:code:`dH = T * dS + V * dp + mu * dN`
+
+Latex:
+    .. math::
+        dH = T \, dS + V \, dp + \mu \, dN
+"""
 
 # Derive from definition of enthalpy and internal energy differential
 
@@ -113,10 +169,6 @@ _enthalpy_change = _enthalpy_change.subs({
 })
 
 assert expr_equals(_enthalpy_change, law.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(

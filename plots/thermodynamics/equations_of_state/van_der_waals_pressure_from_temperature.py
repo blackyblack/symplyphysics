@@ -5,8 +5,9 @@ from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression
 from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import equation as van_der_waals_law
+from symplyphysics.laws.quantities import quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law
 
-volume_values = [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45]  # liters
+volume_values = [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45]  # liters
 
 temperature = symbols("temperature")
 pressure = symbols("pressure")
@@ -16,13 +17,19 @@ amount_of_substance = symbols("amount_of_substance")
 parameter_a = symbols("parameter_a")
 parameter_b = symbols("parameter_b")
 
+molar_volume = solve(
+    molar_qty_law.law, molar_qty_law.molar_quantity
+)[0].subs({
+    molar_qty_law.extensive_quantity: volume,
+    molar_qty_law.amount_of_substance: amount_of_substance,
+})
+
 state_equation = van_der_waals_law.law.subs({
     van_der_waals_law.pressure: pressure,
     van_der_waals_law.temperature: temperature,
-    van_der_waals_law.volume: volume,
-    van_der_waals_law.amount_of_substance: amount_of_substance,
-    van_der_waals_law.bonding_forces_parameter: parameter_a,
-    van_der_waals_law.molecules_volume_parameter: parameter_b
+    van_der_waals_law.molar_volume: molar_volume,
+    van_der_waals_law.attractive_forces_parameter: parameter_a,
+    van_der_waals_law.excluded_volume_parameter: parameter_b
 })
 pressure_value = solve(state_equation, pressure, dict=True)[0][pressure]
 answer = Eq(pressure, pressure_value)

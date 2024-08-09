@@ -1,3 +1,17 @@
+r"""
+Entropy derivative via volume derivative
+========================================
+
+Maxwell relations are a set of equations that unite the most common thermodynamic quantities between
+one another. They are derived from the fundamental themodynamic relations featuring differentials
+of thermodynamic potentials, and this method of derivation is called the method of thermodynamic
+potentials.
+
+**Conditions:**
+
+#. Particle count must be constant.
+"""
+
 from sympy import (
     Eq,
     Derivative,
@@ -17,30 +31,47 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import gibbs_energy_differential
 
-# Description
-## Maxwell relations are a set of equations that unite the most common thermodynamic quantities between
-## one another. They are derived from the fundamental themodynamic relations featuring differentials
-## of thermodynamic potentials, and this method of derivation is called the method of thermodynamic
-## potentials.
-
-# Law: (dS/dp)_T = -(dV/dT)_p
-## S - entropy
-## p - pressure
-## V - volume
-## T - absolute temperature
-## (d/dp)_T - partial derivative w.r.t. pressure at constant temperature
-## (d/dT)_p - partial derivative w.r.t. temperature at constant pressure
-
-# Conditions
-## - Changes in particle count are not taken into account and it is assumed to be constant.
-
 entropy = Function("entropy", units.energy / units.temperature)
+"""
+Entropy of the system as a function of temperature and pressure.
+
+Symbol:
+    :code:`S(T, p)`
+"""
+
 pressure = Symbol("pressure", units.pressure)
+"""
+Pressure inside the system.
+
+Symbol:
+    :code:`p`
+"""
+
 volume = Function("volume", units.volume)
+"""
+Volume of the system as a function of temperature and pressure.
+
+Symbol:
+    :code:`V(T, p)`
+"""
+
 temperature = symbols.thermodynamics.temperature
+"""
+:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
+
+Symbol:
+    :code:`T`
+"""
 
 law = Eq(Derivative(entropy(temperature, pressure), pressure),
     -1 * Derivative(volume(temperature, pressure), temperature))
+r"""
+:code:`Derivative(S(T, p), p) = -1 * Derivative(V(T, p), T)`
+
+Latex:
+    .. math::
+        \left( \frac{\partial S}{\partial p} \right)_T = - \left( \frac{\partial V}{\partial T} \right)_p
+"""
 
 # Derive from expression of Gibbs energy differential
 

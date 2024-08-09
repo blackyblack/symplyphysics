@@ -1,41 +1,79 @@
-from sympy import Eq, exp, S
+r"""
+Single particle state distribution
+==================================
+
+Occupancy of a single-particle state of bosons is the probability of a single boson
+to occupy a state with a certain amount of energy. The occupancy depends on the energy
+of the state and the temperature and the chemical potential of the system.
+
+**Conditions:**
+
+#. :math:`E_i > \mu`.
+"""
+
+from sympy import Eq, exp
 from symplyphysics import (
+    convert_to_float,
     units,
     dimensionless,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     symbols,
-    convert_to,
 )
 
-# Description
-## Bose-Einstein statistics is a type of quantum statistics that applies to the physics of a
-## system consisting of many non-interacting, identical particles that strictly do not obey
-## the Pauli exclusion principle. Particles following Bose-Einstein statistics are called bosons
-## and have integer values of spin.
-
-# Law: n_i = 1 / (exp((E_i - mu)/(k * T)) - 1)
-## n_i - occupancy of single-particle state `i`
-## E_i - energy of single-particle state `i`
-## mu - total chemical potential of system
-## k - Boltzmann constant
-## T - absolute temperature of the system
-
 occupancy_of_state = Symbol("occupancy_of_state", dimensionless)
+r"""
+Occupancy of single-particle state :math:`i`.
+
+Symbol:
+    :code:`n_i`
+
+Latex:
+    :math:`n_i`
+"""
+
 energy_of_state = Symbol("energy_of_state", units.energy)
+r"""
+Energy of single-particle state :math:`i`.
+
+Symbol:
+    :code:`E_i`
+
+Latex:
+    :math:`E_i`
+"""
+
 total_chemical_potential = Symbol("total_chemical_potential", units.energy)
+r"""
+Total chemical potential of the system.
+
+Symbol:
+    :code:`mu`
+
+Latex:
+    :math:`\mu`
+"""
+
 temperature = symbols.thermodynamics.temperature
+"""
+:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
+
+Symbol:
+    :code:`T`
+"""
 
 law = Eq(
     occupancy_of_state, 1 / (exp(
     (energy_of_state - total_chemical_potential) / (units.boltzmann * temperature)) - 1))
+r"""
+:code:`n_i = 1 / (exp((E_i - mu) / (k_B * T)) - 1)`
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        n_i = \frac{1}{\exp{\frac{E_i - \mu}{k_\text{B} T}} - 1}
+"""
 
 
 @validate_input(
@@ -54,4 +92,4 @@ def calculate_occupancy_of_state(
         total_chemical_potential: total_chemical_potential_,
         temperature: temperature_,
     })
-    return float(convert_to(Quantity(result), S.One))
+    return convert_to_float(result)

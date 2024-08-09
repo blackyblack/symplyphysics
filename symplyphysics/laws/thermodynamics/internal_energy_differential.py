@@ -34,7 +34,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import (
-    entropy_increment_in_reversible_process as second_law,
+    entropy_change_in_reversible_process as second_law,
     infinitesimal_work_in_quasistatic_process as work_law,
     internal_energy_change_via_heat_and_work as first_law,
 )
@@ -115,8 +115,8 @@ Latex:
 # TODO: refactor proof to take account of changes in the number of particles
 
 _heat_supplied_to_system = solve(second_law.law,
-    second_law.infinitesimal_transfer_of_heat)[0].subs({
-    second_law.infinitesimal_entropy_change: entropy_change,
+    second_law.heat)[0].subs({
+    second_law.entropy_change: entropy_change,
     second_law.common_temperature: temperature,
     })
 

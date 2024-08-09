@@ -44,7 +44,7 @@ r"""
 Infinitesimal amount of heat supplied to the system during its interaction with the environment.
 
 Symbol:
-    :code:`delta Q`
+    :code:`delta(Q)`
 
 Latex:
     :math:`\delta Q`
@@ -55,7 +55,7 @@ r"""
 Infinitesimal work done by the system on its environment.
 
 Symbol:
-    :code:`delta W`
+    :code:`delta(W)`
 
 Latex:
     :math:`\delta W`
@@ -63,7 +63,7 @@ Latex:
 
 law = Eq(internal_energy_change, heat_supplied_to_system - work_done_by_system)
 r"""
-:code:`dU = delta Q - delta W`
+:code:`dU = delta(Q) - delta(W)`
 
 Latex:
     .. math::

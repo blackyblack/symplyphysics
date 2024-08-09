@@ -1,3 +1,17 @@
+"""
+Entropy of independent subsystems is sum of their entropies
+===========================================================
+
+If a thermodynamic system can be decomposed into several subsystems which are all statistically
+independent, the total entropy of the system can be calculated as the sum of the entropies of all
+the subsystems. Mathematically speaking, this is a representation of such a property of entropy
+known as `subadditivity <https://en.wikipedia.org/wiki/Subadditivity>`_.
+
+**Conditions:**
+
+#. The subsystems must be (approximately) independent in the statistical sense.
+"""
+
 from typing import Sequence
 from sympy import Eq, Idx
 from symplyphysics import (
@@ -11,23 +25,33 @@ from symplyphysics import (
     global_index,
 )
 
-# Description
-## If a thermodynamic system can be decomposed into several subsystems which are all statistically
-## independent, the total entropy of the system can be calculated as the sum of the entropies of all
-## the subsystems. Mathematically speaking, this is a representation of such a property of entropy
-## known as [subadditivity](https://en.wikipedia.org/wiki/Subadditivity).
-
-# Law: S = Sum(S_i, i)
-## S - total entropy of system
-## S_i - entropy of i-th subsystem
-
-# Conditions
-## - The subsystems are (approximately) independent in the statistical sense
-
 total_entropy = Symbol("total_entropy", units.energy / units.temperature)
+"""
+Total entropy of the system as a whole.
+
+Symbol:
+    :code:`S`
+"""
+
 subsystem_entropy = SymbolIndexed("subsystem_entropy", units.energy / units.temperature)
+r"""
+Entropy of the :math:`i`-th subsystem.
+
+Symbol:
+    :code:`S_i`
+
+Latex:
+    :math:`S_i`
+"""
 
 law = Eq(total_entropy, SumIndexed(subsystem_entropy[global_index], global_index))
+r"""
+:code:`S = Sum(S_i, i)`
+
+Latex:
+    .. math::
+        S = \sum_i S_i
+"""
 
 
 @validate_input(subsystem_entropies_=subsystem_entropy)

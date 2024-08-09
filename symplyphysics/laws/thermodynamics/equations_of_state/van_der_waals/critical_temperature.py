@@ -1,3 +1,15 @@
+r"""
+Critical temperature
+====================
+
+Critical temperature of a van der Waals fluid depends on the parameters :math:`a` and :math:`b`
+of the van der Waals equation and the molar gas constant :math:`R`. See :ref:`vdw_critical_parameters_def`.
+
+**Notation:**
+
+#. :math:`R` is the molar gas constant.
+"""
+
 from sympy import Eq
 from symplyphysics import (
     clone_symbol,
@@ -5,44 +17,61 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
 
-# Description
-## Critical parameters of the van der Waals equation of state are such value of volume, pressure, and
-## temperature at which the isotherm has an inflection point whose tangent at that point is zero, i.e.
-## the first and second derivatives of pressure with respect to volume at constant temperature are zero.
-
-# Law: T_c = (8 * a) / (27 * R * b)
-## T_c - critical temperature
-## a, b - parameters of van der Waals equation of state
-## R - molar gas constant
-
 critical_temperature = clone_symbol(symbols.thermodynamics.temperature, "critical_temperature")
-bonding_forces_parameter = Symbol(
-    "bonding_forces_parameter",
+r"""
+Critical :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the van der Waals fluid.
+
+Symbol:
+    :code:`T_c`
+
+Latex:
+    :math:`T_\text{c}`
+"""
+
+attractive_forces_parameter = Symbol(
+    "attractive_forces_parameter",
     units.pressure * (units.volume / units.amount_of_substance)**2,
 )
-molecules_volume_parameter = Symbol(
-    "molecules_volume_parameter",
+"""
+Parameter of the van der Waals equation denoting the magnitude of attractive
+forces between gas molecules.
+
+Symbol:
+    :code:`a`
+"""
+
+excluded_volume_parameter = Symbol(
+    "excluded_volume_parameter",
     units.volume / units.amount_of_substance,
 )
+"""
+Parameter of the van der Waals equation denoting an excluded molar volume
+due to a finite size of molecules.
+
+Symbol:
+    :code:`b`
+"""
 
 law = Eq(
     critical_temperature,
-    (8 * bonding_forces_parameter) / (27 * units.molar_gas_constant * molecules_volume_parameter),
+    (8 * attractive_forces_parameter) / (27 * units.molar_gas_constant * excluded_volume_parameter),
 )
+r"""
+:code:`T_c = 8 * a / (27 * R * b)`
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        T_\text{c} = \frac{8 a}{27 R b}
+"""
 
 
 @validate_input(
-    bonding_forces_parameter_=bonding_forces_parameter,
-    molecules_volume_parameter_=molecules_volume_parameter,
+    bonding_forces_parameter_=attractive_forces_parameter,
+    molecules_volume_parameter_=excluded_volume_parameter,
 )
 @validate_output(critical_temperature)
 def calculate_critical_temperature(
@@ -50,7 +79,7 @@ def calculate_critical_temperature(
     molecules_volume_parameter_: Quantity,
 ) -> Quantity:
     temperature_ = law.rhs.subs({
-        bonding_forces_parameter: bonding_forces_parameter_,
-        molecules_volume_parameter: molecules_volume_parameter_,
+        attractive_forces_parameter: bonding_forces_parameter_,
+        excluded_volume_parameter: molecules_volume_parameter_,
     })
     return Quantity(temperature_)

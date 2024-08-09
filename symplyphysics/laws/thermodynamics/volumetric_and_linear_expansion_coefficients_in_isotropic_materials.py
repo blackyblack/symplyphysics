@@ -1,9 +1,16 @@
+"""
+Volumetric and linear expansion coefficients in isotropic materials
+===================================================================
+
+Coefficients of thermal expansion describe how the size of an object changes with a change in temperature
+at a constant pressure. In isotropic materials, the volumetric coefficient is three times the linear one.
+"""
+
 from sympy import Eq, symbols, solve
 from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
@@ -13,18 +20,36 @@ from symplyphysics.definitions import (
     volumetric_coefficient_of_thermal_expansion as volumetric_def,
 )
 
-# Description
-## Coefficients of thermal expansion describe how the size of an object changes with a change in temperature
-## at a constant pressure. In isotropic materials, the volumetric coefficient is three times the linear one.
-
-# Law: beta = 3 * alpha
-## beta - volumetric coefficient of thermal expansion
-## alpha - linear coefficient of thermal expansion
-
 volumetric_expansion_coefficient = Symbol("volumetric_expansion_coefficient", 1 / units.temperature)
+r"""
+:doc:`Volumetric expansion coefficient <definitions.volumetric_coefficient_of_thermal_expansion>` of the material.
+
+Symbol:
+    :code:`alpha_V`
+
+Latex:
+    :math:`\alpha_V`
+"""
+
 linear_expansion_coefficient = Symbol("linear_expansion_coefficient", 1 / units.temperature)
+r"""
+:doc:`Linear expansion coefficient <definitions.linear_coefficient_of_thermal_expansion>` of the material.
+
+Symbol:
+    :code:`alpha_L`
+
+Latex:
+    :math:`\alpha_L`
+"""
 
 law = Eq(volumetric_expansion_coefficient, 3 * linear_expansion_coefficient)
+r"""
+:code:`alpha_V = 3 * alpha_L`
+
+Latex:
+    .. math::
+        \alpha_V = 3 \alpha_L
+"""
 
 # Derive from their definitions for a cube-sized object
 
@@ -69,10 +94,6 @@ _volumetric_expr_derived = solve(
 )[0][volumetric_expansion_coefficient]
 
 assert expr_equals(_volumetric_expr_derived, law.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(linear_expansion_coefficient_=linear_expansion_coefficient)

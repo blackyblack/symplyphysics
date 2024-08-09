@@ -1,3 +1,16 @@
+r"""
+Enthalpy via Gibbs energy
+=========================
+
+Gibbs-Helmholtz relations are a set of equations that relate thermodynamic potentials between each other.
+For example, enthalpy :math:`H` can be found using the Gibbs energy :math:`G` under isobaric conditions.
+
+**Conditions:**
+
+#. Particle count must be constant.
+#. Pressure in the system must be constant.
+"""
+
 from sympy import Eq, Derivative, Point2D, solve
 from symplyphysics import (
     symbols,
@@ -11,32 +24,53 @@ from symplyphysics import (
 from symplyphysics.core.geometry.line import two_point_function
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import (
-    isobaric_reaction_potential as gibbs_energy_def,
+    gibbs_energy_via_enthalpy as gibbs_energy_def,
     entropy_is_derivative_of_gibbs_energy as entropy_law,
 )
 
-# Description
-## Gibbs-Helmholtz relations are a set of equations that relate thermodynamic potentials between each other.
-
-# Law: H = G - T * (dG/dT)_p
-## H - enthalpy
-## G - Gibbs energy
-## T - absolute temperature
-## p - pressure
-## (d/dT)_p - derivative with respect to temperature at constant pressure
-
-# Conditions
-## - Particle count changes are not taken into account, i.e. it stays constant.
-
 enthalpy = Symbol("enthalpy", units.energy)
+"""
+Enthalpy of the system.
+
+Symbol:
+    :code:`H`
+"""
+
 gibbs_energy = Function("gibbs_energy", units.energy)
+"""
+Gibbs energy of the system.
+
+Symbol:
+    :code:`G(T, p)`
+"""
+
 temperature = symbols.thermodynamics.temperature
+"""
+:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
+
+Symbol:
+    :code:`T`
+"""
+
 pressure = Symbol("pressure", units.pressure)
+"""
+Pressure inside the system.
+
+Symbol:
+    :code:`p`
+"""
 
 law = Eq(
     enthalpy,
     gibbs_energy(temperature, pressure) -
     temperature * Derivative(gibbs_energy(temperature, pressure), temperature))
+r"""
+:code:`H = G(T, p) - T * Derivative(G(T, p), T)`
+
+Latex:
+    .. math::
+        H = G(T, p) - T \left( \frac{\partial G}{\partial T} \right)_p
+"""
 
 # Derive from definition of Gibbs energy and thermodynamical relations
 
@@ -48,8 +82,8 @@ _entropy_expr = entropy_law.law.rhs.subs({
     gibbs_energy(temperature, pressure),
 )
 
-_enthalpy_expr = solve(gibbs_energy_def.law, gibbs_energy_def.thermal_effect)[0].subs({
-    gibbs_energy_def.isobaric_potential: gibbs_energy(temperature, pressure),
+_enthalpy_expr = solve(gibbs_energy_def.law, gibbs_energy_def.enthalpy)[0].subs({
+    gibbs_energy_def.gibbs_energy: gibbs_energy(temperature, pressure),
     gibbs_energy_def.temperature: temperature,
     gibbs_energy_def.entropy: _entropy_expr,
 })

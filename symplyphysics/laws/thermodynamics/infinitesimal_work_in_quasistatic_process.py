@@ -27,7 +27,7 @@ r"""
 Infinitesimal increment of work done *by* the system.
 
 Symbol:
-    :code:`delta W`
+    :code:`delta(W)`
 
 Latex:
     :math:`\delta W`
@@ -54,7 +54,7 @@ Latex:
 
 law = Eq(infinitesimal_work_done, pressure * infinitesimal_volume_change)
 r"""
-:code:`delta W = p * dV`
+:code:`delta(W) = p * dV`
 
 Latex:
     .. math::

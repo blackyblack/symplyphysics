@@ -4,9 +4,9 @@ from sympy import Idx, solve, Symbol, Eq
 from symplyphysics import print_expression, Quantity, prefixes, units, convert_to, global_index
 from symplyphysics.core.symbols.celsius import to_kelvin_quantity, Celsius
 from symplyphysics.laws.thermodynamics import (
+    heat_is_heat_capacity_times_temperature_change as thermal_energy_law,
     latent_heat_of_fusion_via_mass as energy_melting_law,
-    sum_of_heat_transfer_is_zero as thermodinamics_law_1,
-    thermal_energy_from_heat_capacity_and_temperature as thermal_energy_law,
+    total_energy_transfer_is_zero_in_isolated_system as thermodinamics_law_1,
 )
 from symplyphysics.laws.quantities import quantity_is_specific_quantity_times_mass as specific_qty_law
 from symplyphysics.definitions import density_from_mass_volume as density_law
@@ -53,23 +53,22 @@ energy_for_melting_ice_value = energy_melting_law.law.subs({
     energy_melting_law.mass: mass_of_ice,
     energy_melting_law.specific_heat_of_fusion: specific_heat_melting_of_ice
 }).rhs
-energy_from_cooling_water_value = thermal_energy_law.law.subs({
-    thermal_energy_law.heat_capacity:
-    specific_qty_law.law.rhs.subs({
+
+water_heat_capacity = specific_qty_law.law.rhs.subs({
     specific_qty_law.specific_quantity: specific_heat_heating_of_water,
     specific_qty_law.mass: mass_of_water,
-    }),
-    thermal_energy_law.temperature_origin:
-        temperature_of_water,
-    thermal_energy_law.temperature_end:
-        temperature_of_ice
+})
+
+energy_from_cooling_water_value = thermal_energy_law.law.subs({
+    thermal_energy_law.heat_capacity: water_heat_capacity,
+    thermal_energy_law.temperature_change: temperature_of_ice - temperature_of_water,
 }).rhs
 
 local_index_ = Idx("local_index_", (1, 2))
 thermodinamics_law_1_two_energies = thermodinamics_law_1.law.subs(global_index, local_index_).doit()
 heat_balance_equation = thermodinamics_law_1_two_energies.subs({
-    thermodinamics_law_1.amount_energy[1]: energy_for_melting_ice_value,
-    thermodinamics_law_1.amount_energy[2]: energy_from_cooling_water_value,
+    thermodinamics_law_1.amount_of_energy[1]: energy_for_melting_ice_value,
+    thermodinamics_law_1.amount_of_energy[2]: energy_from_cooling_water_value,
 })
 
 print(print_expression(heat_balance_equation))

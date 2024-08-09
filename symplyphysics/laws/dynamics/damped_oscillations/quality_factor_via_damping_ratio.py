@@ -1,5 +1,6 @@
 from sympy import Eq
 from symplyphysics import (
+    convert_to_float,
     dimensionless,
     Symbol,
     print_expression,
@@ -31,4 +32,4 @@ def print_law() -> str:
 @validate_output(quality_factor)
 def calculate_quality_factor(damping_ratio_: float) -> float:
     result = law.rhs.subs(damping_ratio, damping_ratio_)
-    return float(result)
+    return convert_to_float(result)

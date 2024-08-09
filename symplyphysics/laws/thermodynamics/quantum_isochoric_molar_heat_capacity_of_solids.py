@@ -1,7 +1,23 @@
+r"""
+Quantum isochoric molar heat capacity of solids
+===============================================
+
+To derive the heat capacity of a solid, one should account for quantum effects. Albert Einstein used the
+same model as in the classical case, namely the atoms are harmonic oscillators with three degrees
+of freedom, located in the nodes of the crystal lattice, performing thermal oscillations around the
+equlibrium positions with the same frequency. But he used a more correct expression for the energy
+of the oscillators, and although the result still only qualitatively describes the heat capacity of
+solids, it is a big achievement and the result has correct asymptotic behaviour for :math:`T \to 0`.
+
+**Notation:**
+
+#. :math:`R` is the molar gas constant.
+"""
+
 from sympy import Eq, exp
-from sympy.physics.units import boltzmann_constant, molar_gas_constant, planck
+from sympy.physics.units import molar_gas_constant
 from symplyphysics import (
-    symbols,
+    dimensionless,
     units,
     Quantity,
     Symbol,
@@ -9,45 +25,41 @@ from symplyphysics import (
     validate_output,
 )
 
-# Description
-## To derive the heat capacity of a solid, one should account for quantum effects. Albert Einstein used the
-## same model as in the classical case, namely the atoms are harmonic oscillators with three degrees
-## of freedom, located in the nodes of the crystal lattice, performing thermal oscillations around the
-## equlibrium positions with the same frequency. But he used a more correct expression for the energy
-## of the oscillators, and although the result still only qualitatively describes the heat capacity of
-## solids, it is a big achievement and the result has correct asymptotic behaviour for `T -> 0`.
-
-## Law: C_V = 3 * R * x**2 * exp(x) / (exp(x) - 1)**2
-## C_V - isochoric molar heat capacity
-## R - molar gas constant
-## h - Planck constant
-## nu - frequency of thermal oscillations
-## k - Boltzmann constant
-## T - absolute temperature
-## x = h * nu / (k * T) - ratio between photon and thermal energy
-
 isochoric_molar_heat_capacity = Symbol(
     "isochoric_molar_heat_capacity", units.energy / (units.temperature * units.amount_of_substance))
-frequency = Symbol("frequency", units.frequency)
-temperature = symbols.thermodynamics.temperature
+r"""
+Heat capacity at constant volume per unit amount of substance.
 
-energy_ratio = (planck * frequency) / (boltzmann_constant * temperature)
+Symbol:
+    :code:`C_V`
+
+Latex:
+    :math:`C_V`
+"""
+
+reduced_photon_energy = Symbol("reduced_photon_energy", dimensionless)
+r"""
+Reduced photon energy, defined as the ratio of photon energy :math:`\hbar \omega` or :math:`h \nu` to
+thermal energy :math:`k_\text{B} T`.
+"""
 
 law = Eq(isochoric_molar_heat_capacity,
-    (3 * molar_gas_constant) * energy_ratio**2 * exp(energy_ratio) / (exp(energy_ratio) - 1)**2)
+    (3 * molar_gas_constant) * reduced_photon_energy**2 * exp(reduced_photon_energy) / (exp(reduced_photon_energy) - 1)**2)
+r"""
+:code:`C_V = 3 * R * x^2 * exp(x) / (exp(x) - 1)^2`
+
+Latex:
+    .. math::
+        C_V = 3 R \frac{x^2 e^x}{\left( e^x - 1 \right)^2}
+"""
 
 
-@validate_input(
-    frequency_=frequency,
-    temperature_=temperature,
-)
+@validate_input(reduced_photon_energy_=reduced_photon_energy)
 @validate_output(isochoric_molar_heat_capacity)
 def calculate_isochoric_molar_heat_capacity(
-    frequency_: Quantity,
-    temperature_: Quantity,
+    reduced_photon_energy_: float,
 ) -> Quantity:
     result = law.rhs.subs({
-        frequency: frequency_,
-        temperature: temperature_,
+        reduced_photon_energy: reduced_photon_energy_,
     })
     return Quantity(result)
