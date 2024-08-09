@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics import pressure_is_constant as gay_lussacs_law
+from symplyphysics.laws.thermodynamics import volume_and_temperature_in_isobaric_process as gay_lussacs_law
 
 Args = namedtuple("Args", ["t0", "t1", "V0"])
 

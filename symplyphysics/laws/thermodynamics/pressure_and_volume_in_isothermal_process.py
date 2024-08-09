@@ -57,6 +57,13 @@ Latex:
 """
 
 law = Eq(initial_pressure * initial_volume, final_pressure * final_volume)
+r"""
+:code:`p_0 V_0 = p_1 V_1`
+
+Latex:
+    .. math::
+        p_0 V_0 = p_1 V_1
+"""
 
 ## Derive the same law from the general ideal gas law
 
