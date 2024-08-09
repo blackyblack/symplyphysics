@@ -33,7 +33,7 @@ enthalpy = Symbol("enthalpy", units.energy)
 Enthalpy of the system.
 
 Symbol:
-    :code:`T`
+    :code:`H`
 """
 
 gibbs_energy = Function("gibbs_energy", units.energy)

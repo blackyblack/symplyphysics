@@ -1,4 +1,4 @@
-"""
+r"""
 Free energy differential
 ========================
 

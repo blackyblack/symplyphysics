@@ -42,7 +42,7 @@ Symbol:
     :code:`p_s`
 
 Latex:
-    :code:`p_\text{s}`
+    :math:`p_\text{s}`
 """
 
 law = Eq(relative_humidity, actual_vapor_pressure / saturation_vapor_pressure)
