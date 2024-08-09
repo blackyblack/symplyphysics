@@ -17,10 +17,9 @@ parameter_a = Symbol("parameter_a")
 parameter_b = Symbol("parameter_b")
 
 base_variables_of_state_equation = {
-    van_der_waals_law.volume: volume,
-    van_der_waals_law.amount_of_substance: amount_of_substance,
-    van_der_waals_law.bonding_forces_parameter: parameter_a,
-    van_der_waals_law.molecules_volume_parameter: parameter_b,
+    van_der_waals_law.molar_volume: volume / amount_of_substance,
+    van_der_waals_law.attractive_forces_parameter: parameter_a,
+    van_der_waals_law.excluded_volume_parameter: parameter_b,
 }
 base_values_of_state_equation = {
     temperature_before: Quantity(300 * units.kelvins),
