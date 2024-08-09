@@ -42,7 +42,7 @@ r"""
 
 Latex:
     .. math::
-        S = k_text{B} \log W
+        S = k_\text{B} \log W
 """
 
 # Derive the law from the properties of entropy
