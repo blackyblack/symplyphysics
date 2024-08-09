@@ -2,7 +2,7 @@
 Free energy differential
 ========================
 
-The fundamental thermodynamic relation are fundamental equations which demonstate how important
+The fundamental thermodynamic relations are fundamental equations which demonstate how important
 thermodynamic quantities depend on variables that are measurable experimentally.
 
 **Notation:**
@@ -57,7 +57,7 @@ Symbol:
 
 temperature_change = clone_symbol(symbols.thermodynamics.temperature, "temperature_change")
 """
-Infinitesimal change in temperature of the system.
+Infinitesimal change in :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
 
 Symbol:
     :code:`dT`

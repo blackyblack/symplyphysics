@@ -2,7 +2,7 @@
 Gibbs energy differential
 =========================
 
-The fundamental thermodynamic relation are fundamental equations which demonstate how important
+The fundamental thermodynamic relations are fundamental equations which demonstate how important
 thermodynamic quantities depend on variables that are measurable experimentally.
 
 **Notation:**

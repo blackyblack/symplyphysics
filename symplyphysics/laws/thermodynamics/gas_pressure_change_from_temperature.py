@@ -2,7 +2,7 @@
 Gas pressure change from temperature
 ====================================
 
-The change in pressure of ideal gas depends on final_temperature, standard pressure and thermal coefficient.
+The change in pressure of ideal gas depends on temperature, standard pressure and thermal coefficient.
 
 **Conditions:**
 
@@ -48,7 +48,8 @@ Latex:
 
 thermal_coefficient = 1 / quantities.standard_conditions_temperature
 r"""
-Isochoric thermal pressure coefficient is equal to the inversed temperature of standard conditions.
+Isochoric thermal pressure coefficient equal to the inverse of
+:attr:`standard conditions temperature <quantities.standard_conditions_temperature>`.
 
 Symbol:
     :code:`beta_V`
