@@ -23,7 +23,12 @@ from symplyphysics import (
     validate_output,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.definitions import volumetric_coefficient_of_thermal_expansion as coefficient_def
+from symplyphysics.definitions import (
+    volumetric_coefficient_of_thermal_expansion as coefficient_def,
+)
+from symplyphysics.laws.quantities import (
+    fractional_change_is_change_over_initial_value as fractional_change_law,
+)
 
 fractional_volume_change = Symbol("fractional_volume_change", dimensionless)
 r"""
@@ -79,10 +84,11 @@ _coefficient_eqn = coefficient_def.definition.subs({
     _volume.diff(_temperature): _volume_change / temperature_change,
 })
 
-_volume_change_eqn = Eq(
-    fractional_volume_change,
-    _volume_change / _volume,
-)
+_volume_change_eqn = fractional_change_law.law.subs({
+    fractional_change_law.fractional_change: fractional_volume_change,
+    fractional_change_law.change: _volume_change,
+    fractional_change_law.initial_value: _volume,
+})
 
 _fractional_change_expr = solve(
     (_coefficient_eqn, _volume_change_eqn),
