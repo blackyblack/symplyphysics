@@ -26,7 +26,7 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import heat_capacity_ratio
 from symplyphysics.laws.thermodynamics import (
-    isochoric_heat_capacity_via_isobaric_heat_capacity_for_ideal_gas as mayers_law,)
+    isochoric_and_isobaric_heat_capacity_of_ideal_gas as mayers_law,)
 from symplyphysics.laws.quantities import (
     quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law,)
 

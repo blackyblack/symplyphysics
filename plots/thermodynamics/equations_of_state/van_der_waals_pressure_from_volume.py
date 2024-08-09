@@ -19,10 +19,9 @@ parameter_b = symbols("parameter_b")
 state_equation = van_der_waals_law.law.subs({
     van_der_waals_law.pressure: pressure,
     van_der_waals_law.temperature: temperature,
-    van_der_waals_law.volume: volume,
-    van_der_waals_law.amount_of_substance: amount_of_substance,
-    van_der_waals_law.bonding_forces_parameter: parameter_a,
-    van_der_waals_law.molecules_volume_parameter: parameter_b
+    van_der_waals_law.molar_volume: volume / amount_of_substance,
+    van_der_waals_law.attractive_forces_parameter: parameter_a,
+    van_der_waals_law.excluded_volume_parameter: parameter_b
 })
 pressure_value = solve(state_equation, pressure, dict=True)[0][pressure]
 answer = Eq(pressure, pressure_value)

@@ -1,3 +1,16 @@
+r"""
+Grashof number
+==============
+
+The Grashof number (Gr) is a dimensionless number which approximates the ratio of the
+buoyancy to viscous forces acting on a fluid. It arises in situations involving natural convection
+and is analogous to the Reynolds number.
+
+**Notation:**
+
+#. :math:`g` is the acceleration due to gravity.
+"""
+
 from sympy import Eq, solve
 from symplyphysics import (
     clone_symbol,
@@ -5,65 +18,105 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     dimensionless,
     convert_to_float,
 )
 
-# Description
-# The Grashof number (Gr) is a dimensionless number which the ratio of
-# the buoyancy to viscous forces acting on a fluid. There is a characteristic
-# length in the formula. The characteristic length is the dimension
-# that defines the length scale of a physical system. A characteristic length
-# is usually the volume of a system divided by its surface: L = V / A,
-# where V is the volume of the body, and A is the cross-sectional area.
-# For example, it is used to calculate flow through circular and non-circular
-# tubes in order to examine flow conditions. D = 4 * A / p, where
-# D is characteristic diameter, A is the cross-sectional are, p is wetted perimeter.
-# Law: Gr = g * beta * (t_s - t_f) * L**3 / (nu ** 2), where
-# g is gravitational acceleration,
-# beta is coefficient of volume expansion,
-# t_s is temperature of heat transfer surface,
-# t_f is fluid temperature,
-# L is characteristic length,
-# nu is kinematic viscosity,
-# Gr is Grashof number.
-
-coefficient_of_volume_expansion = Symbol("coefficient_of_volume_expansion", 1 / units.temperature)
-surface_temperature = clone_symbol(symbols.thermodynamics.temperature, "surface_temperature")
-fluid_temperature = clone_symbol(symbols.thermodynamics.temperature, "fluid_temperature")
-characteristic_length = Symbol("characteristic_length", units.length)
-viscosity = Symbol("viscosity", units.area / units.time)
 grashof_number = Symbol("grashof_number", dimensionless)
+r"""
+Grashof number of the fluid.
+
+Symbol:
+    :code:`Gr`
+
+Latex:
+    :math:`\text{Gr}`
+"""
+
+volumetric_expansion_coefficient = Symbol("volumetric_expansion_coefficient", 1 / units.temperature)
+r"""
+Volumetric coefficient of thermal expansion of the body.
+
+Symbol:
+    :code:`beta`
+
+Latex:
+    :math:`\beta`
+"""
+
+surface_temperature = clone_symbol(symbols.thermodynamics.temperature, "surface_temperature")
+r"""
+:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the surface of the fluid.
+
+Symbol:
+    :code:`T_s`
+
+Latex:
+    :math:`T_\text{s}`
+"""
+
+bulk_temperature = clone_symbol(symbols.thermodynamics.temperature, "bulk_temperature")
+r"""
+Average :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the inside of the fluid.
+
+Symbol:
+    :code:`T_b`
+
+Latex:
+    :math:`T_\text{b}`
+"""
+
+characteristic_length = Symbol("characteristic_length", units.length)
+"""
+An important dimension of the given fluid, usually defined as the volume of the body
+divided by its area.
+
+Symbol:
+    :code:`L`
+"""
+
+kinematic_viscosity = Symbol("kinematic_viscosity", units.area / units.time)
+r"""
+Kinematic viscosity of the fluid.
+
+Symbol:
+    :code:`nu`
+
+Latex:
+    :math:`\nu`
+"""
 
 law = Eq(
     grashof_number,
-    units.acceleration_due_to_gravity * coefficient_of_volume_expansion *
-    (surface_temperature - fluid_temperature) * characteristic_length**3 / (viscosity**2))
+    units.acceleration_due_to_gravity * volumetric_expansion_coefficient *
+    (surface_temperature - bulk_temperature) * characteristic_length**3 / (kinematic_viscosity**2))
+r"""
+:code:`Gr = g * beta * (T_s - T_b) * L^3 / nu^2`
+
+Latex:
+    .. math::
+        \text{Gr} = g \beta (T_\text{s} - T_\text{b}) \frac{L^3}{\nu^2}
+"""
 
 
-def print_law() -> str:
-    return print_expression(law)
-
-
-@validate_input(coefficient_of_volume_expansion_=coefficient_of_volume_expansion,
+@validate_input(coefficient_of_volume_expansion_=volumetric_expansion_coefficient,
     surface_temperature_=surface_temperature,
-    fluid_temperature_=fluid_temperature,
+    fluid_temperature_=bulk_temperature,
     characteristic_length_=characteristic_length,
-    viscosity_=viscosity)
+    viscosity_=kinematic_viscosity)
 @validate_output(grashof_number)
 def calculate_grashof_number(coefficient_of_volume_expansion_: Quantity,
     surface_temperature_: Quantity, fluid_temperature_: Quantity, characteristic_length_: Quantity,
     viscosity_: Quantity) -> float:
     result_expr = solve(law, grashof_number, dict=True)[0][grashof_number]
     result_applied = result_expr.subs({
-        coefficient_of_volume_expansion: coefficient_of_volume_expansion_,
+        volumetric_expansion_coefficient: coefficient_of_volume_expansion_,
         surface_temperature: surface_temperature_,
-        fluid_temperature: fluid_temperature_,
+        bulk_temperature: fluid_temperature_,
         characteristic_length: characteristic_length_,
-        viscosity: viscosity_
+        kinematic_viscosity: viscosity_
     })
     result = Quantity(result_applied)
     return convert_to_float(result)

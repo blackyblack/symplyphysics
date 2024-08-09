@@ -1,3 +1,22 @@
+r"""
+Second virial coefficient
+=========================
+
+The *second virial coefficient* is a coefficient appearing in the virial equation of state of
+a gas which describes the deviation from ideal gas behaviour. This coefficient describes pair
+interaction between molecules of the substance and can be found if the pair interaction potential
+is known, but it can also be derived from the equation of state as a series expansion with respect
+to inverse molar volume or equivalently, to molar density.
+
+**Notation:**
+
+#. :math:`R` is the molar gas constant.
+
+**Conditions:**
+
+#. The gas density is small enough within the context of perturbation theory.
+"""
+
 from sympy import Eq, solve, Symbol as SymSymbol
 from symplyphysics import (
     units,
@@ -13,38 +32,57 @@ from symplyphysics.definitions import compressibility_factor_is_deviation_from_i
 from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import equation as vdw_eqn
 from symplyphysics.laws.quantities import quantity_is_volumetric_density_times_volume as density_qty_law
 
-# Description
-## The second virial coefficient is a coefficient appearing in the virial equation of state of
-## a gas which describes the deviation from ideal gas behaviour. This coefficient describes pair
-## interaction between molecules of the substance and can be found if the pair interaction potential
-## is known, but it can also be derived from the equation of state as a series expansion with respect
-## to inverse molar volume or equivalently to molar density.
-
-# Law: B = b - a / (R * T)
-## B - second virial coefficient of the virial expansion
-## a - parameter of the van der Waals equation of state representing the magnitude of intermolecular forces
-## b - parameter of the van der Waals equation of state representing the effective molecular size
-## R - molar gas constant
-## T - absolute temperature
-
-# Conditions
-## - Gas density is small enough within the context of perturbation theory.
-
 second_virial_coefficient = Symbol("second_virial_coefficient",
     units.volume / units.amount_of_substance)
-bonding_forces_parameter = Symbol(
-    "bonding_forces_parameter",
+"""
+Second virial coefficient of the virial expansion.
+
+Symbol:
+    :code:`B`
+"""
+
+attractive_forces_parameter = Symbol(
+    "attractive_forces_parameter",
     units.pressure * (units.volume / units.amount_of_substance)**2,
 )
-molecules_volume_parameter = Symbol(
-    "molecules_volume_parameter",
+"""
+Parameter of the van der Waals equation denoting the magnitude of attractive
+forces between gas molecules.
+
+Symbol:
+    :code:`a`
+"""
+
+excluded_volume_parameter = Symbol(
+    "excluded_volume_parameter",
     units.volume / units.amount_of_substance,
 )
+"""
+Parameter of the van der Waals equation denoting an excluded molar molar_volume
+due to a finite size of molecules.
+
+Symbol:
+    :code:`b`
+"""
+
 temperature = symbols.thermodynamics.temperature
+"""
+:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the van der Waals fluid.
+
+Symbol:
+    :code:`T`
+"""
 
 law = Eq(
-    second_virial_coefficient, molecules_volume_parameter - bonding_forces_parameter /
+    second_virial_coefficient, excluded_volume_parameter - attractive_forces_parameter /
     (units.molar_gas_constant * temperature))
+r"""
+:code:`B = b - a / (R * T)`
+
+Latex:
+    .. math::
+        B = b - \frac{a}{R T}
+"""
 
 # Derive from the van der Waals equation of state and the virial equation
 
@@ -53,11 +91,10 @@ _mole_count = compressibility_def.amount_of_substance
 _molar_density = SymSymbol("molar_density")
 
 _pressure_expr = solve(vdw_eqn.law, vdw_eqn.pressure)[0].subs({
-    vdw_eqn.volume: _volume,
+    vdw_eqn.molar_volume: _volume / _mole_count,
     vdw_eqn.temperature: temperature,
-    vdw_eqn.amount_of_substance: _mole_count,
-    vdw_eqn.bonding_forces_parameter: bonding_forces_parameter,
-    vdw_eqn.molecules_volume_parameter: molecules_volume_parameter,
+    vdw_eqn.attractive_forces_parameter: attractive_forces_parameter,
+    vdw_eqn.excluded_volume_parameter: excluded_volume_parameter,
 })
 
 _compressibility_via_volume = compressibility_def.definition.rhs.subs({
@@ -86,8 +123,8 @@ def print_law() -> str:
 
 
 @validate_input(
-    bonding_forces_parameter_=bonding_forces_parameter,
-    molecules_volume_parameter_=molecules_volume_parameter,
+    bonding_forces_parameter_=attractive_forces_parameter,
+    molecules_volume_parameter_=excluded_volume_parameter,
     temperature_=temperature,
 )
 @validate_output(second_virial_coefficient)
@@ -97,8 +134,8 @@ def calculate_second_virial_coefficient(
     temperature_: Quantity,
 ) -> Quantity:
     result = law.rhs.subs({
-        bonding_forces_parameter: bonding_forces_parameter_,
-        molecules_volume_parameter: molecules_volume_parameter_,
+        attractive_forces_parameter: bonding_forces_parameter_,
+        excluded_volume_parameter: molecules_volume_parameter_,
         temperature: temperature_,
     })
     return Quantity(result)

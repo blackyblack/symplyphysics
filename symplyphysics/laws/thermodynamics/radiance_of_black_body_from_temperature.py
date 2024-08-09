@@ -1,10 +1,12 @@
+
+
 from sympy import (Eq, solve)
 from symplyphysics import (symbols, units, Quantity, Symbol, print_expression, validate_input,
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import (
     radiant_exitance_is_radiant_flux_emitted_per_unit_area as exitance_def,)
-from symplyphysics.laws.thermodynamics import rate_of_thermal_radiation as radiation_law
+from symplyphysics.laws.thermodynamics import radiation_power_via_temperature as radiation_law
 
 # Description
 ## The Stefan–Boltzmann law, also known as Stefan's law, states that the total energy radiated per
@@ -28,8 +30,8 @@ law = Eq(radiance, units.stefan_boltzmann_constant * temperature**4)
 # Derive from law of thermal radiation power
 
 _thermal_radiation_power = radiation_law.law.rhs.subs({
-    radiation_law.surface_emissivity: 1,  # see note, epsilon = 1 for idealized black body
-    radiation_law.temperature_emission_absorption: temperature,
+    radiation_law.emissivity: 1,  # see note, epsilon = 1 for idealized black body
+    radiation_law.temperature: temperature,
     radiation_law.surface_area: exitance_def.area,
 })
 

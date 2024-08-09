@@ -1,32 +1,61 @@
+"""
+Ideal gas equation
+==================
+
+The ideal gas law, also known as the general gas equation, is an equation of state used to
+describe a hypothetical ideal gas.
+"""
+
 from sympy import (Eq, solve)
-from symplyphysics import (symbols, units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (symbols, units, Quantity, Symbol, validate_input,
     validate_output)
 
-# Description
-## Ideal gas law: P * V = n * R * T
-## Where:
-## P is pressure,
-## V is volume,
-## n is number of moles,
-## R is ideal gas constant,
-## T is temperature
-
 pressure = Symbol("pressure", units.pressure)
+"""
+Pressure inside the gas.
+
+Symbol:
+    :code:`p`
+"""
+
 volume = Symbol("volume", units.volume)
-mole_count = Symbol("mole_count", units.amount_of_substance)
+"""
+Volume of the gas.
+
+Symbol:
+    :code:`V`
+"""
+
+amount_of_substance = Symbol("amount_of_substance", units.amount_of_substance)
+"""
+Amount of gas.
+
+Symbol:
+    :code:`n`
+"""
+
 temperature = symbols.thermodynamics.temperature
+r"""
+:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas.
 
-law = Eq(pressure, mole_count * temperature * units.molar_gas_constant / volume)
+Symbol:
+    :code:`T`
+"""
+
+law = Eq(pressure * volume, amount_of_substance * units.molar_gas_constant * temperature)
+r"""
+:code:`p V = n * R * T`
+
+Latex:
+    .. math::
+        p V = n R T
+"""
 
 
-def print_law() -> str:
-    return print_expression(law)
-
-
-@validate_input(volume_=volume, temperature_=temperature, mole_count_=mole_count)
+@validate_input(volume_=volume, temperature_=temperature, mole_count_=amount_of_substance)
 @validate_output(pressure)
 def calculate_pressure(volume_: Quantity, temperature_: Quantity,
     mole_count_: Quantity) -> Quantity:
     solved = solve(law, pressure, dict=True)[0][pressure]
-    result_expr = solved.subs({volume: volume_, temperature: temperature_, mole_count: mole_count_})
+    result_expr = solved.subs({volume: volume_, temperature: temperature_, amount_of_substance: mole_count_})
     return Quantity(result_expr)

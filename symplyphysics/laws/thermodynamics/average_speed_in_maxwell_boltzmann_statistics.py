@@ -42,7 +42,7 @@ equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature,
     "equilibrium_temperature",
     positive=True)
 """
-Equilibrium temperature of the gas.
+Equilibrium :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas.
 
 Symbol:
     :code:`T`

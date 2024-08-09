@@ -1,23 +1,44 @@
+"""
+Gas mixture pressure from partial pressures
+===========================================
+
+The pressure of a mixture of gases is equal to the sum of their partial pressures. *Partial pressure*
+of a gas is the pressure that the gas would exert on the walls of a vessel when it is the only gas present
+in the vessel.
+"""
+
 from typing import Sequence
 from sympy import (Eq, Idx, solve)
-from symplyphysics import (units, Quantity, print_expression, Symbol, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, SymbolIndexed, SumIndexed, global_index)
 
-# Description
-## The pressure of a mixture of gases is equal to the sum of their partial pressures.
-## Partial pressure of a gas is the pressure that the gas would exert on the walls of a vessel while alone in it.
-
-## Law: p = sum(p_partial)
-## Where:
-## p_partial is partial pressure of a gas
-
 total_pressure = Symbol("total_pressure", units.pressure)
+"""
+Total pressure inside the system.
+
+Symbol:
+    :code:`p`
+"""
+
 partial_pressure = SymbolIndexed("partial_pressure", units.pressure)
+r"""
+Partial pressure of the :math:`i`-th gas component.
+
+Symbol:
+    :code:`p_i`
+
+Latex:
+    :math:`p_i`
+"""
+
 law = Eq(total_pressure, SumIndexed(partial_pressure[global_index], global_index))
+r"""
+:code:`p = Sum(p_i, i)`
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        p = \sum_i p_i
+"""
 
 
 @validate_input(partial_pressures_=partial_pressure)

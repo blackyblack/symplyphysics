@@ -1,3 +1,10 @@
+"""
+Entropy is derivative of free energy
+====================================
+
+Entropy of a system can be found if its free energy is known as a function of temperature.
+"""
+
 from sympy import Eq, Derivative, solve
 from symplyphysics import (
     units,
@@ -12,24 +19,54 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import free_energy_differential
 
-# Description
-## Entropy of a system can be found if its free energy is known as a function of temperature.
-
-# Law: S = -(dF/dT)_(V, N)
-## S - entropy
-## F - Helmholtz free energy
-## T - absolute temperature
-## V - volume
-## N - particle count
-## (d/dT)_(V, N) - derivative with respect to temperature at constant volume and particle count
-
 entropy = Symbol("entropy", units.energy / units.temperature)
+"""
+Entropy of the system.
+
+Symbol:
+    :code:`S`
+"""
+
 free_energy = Function("free_energy", units.energy)
+"""
+Free energy of the system.
+
+Symbol:
+    :code:`F(T, V, N)`
+"""
+
 temperature = symbols.thermodynamics.temperature
+"""
+:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
+
+Symbol:
+    :code:`T`
+"""
+
 volume = Symbol("volume", units.volume)
+"""
+Volume of the system.
+
+Symbol:
+    :code:`V`
+"""
+
 particle_count = Symbol("particle_count", dimensionless)
+"""
+Number of particles in the system.
+
+Symbol:
+    :code:`N`
+"""
 
 law = Eq(entropy, -1 * Derivative(free_energy(temperature, volume, particle_count), temperature))
+r"""
+:code:`S = -1 * Derivative(F(T, V, N), T)`
+
+Latex:
+    .. math::
+        S = - \left( \frac{\partial F}{\partial T} \right)_{V, N}
+"""
 
 # Derive from expression of free energy differential
 

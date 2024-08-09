@@ -5,7 +5,7 @@ from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression
 from symplyphysics.core.symbols.celsius import to_kelvin, Celsius
-from symplyphysics.laws.thermodynamics import thermal_energy_from_heat_capacity_and_temperature as thermal_energy_law
+from symplyphysics.laws.thermodynamics import heat_is_heat_capacity_times_temperature_change as thermal_energy_law
 from symplyphysics.laws.quantities import quantity_is_specific_quantity_times_mass as specific_qty_law
 from symplyphysics.laws.thermodynamics import latent_heat_of_fusion_via_mass as energy_melting_law
 from symplyphysics.laws.conservation import mechanical_energy_after_equals_to_mechanical_energy_before as energy_conservation_law
@@ -61,16 +61,14 @@ mass_of_meteorite = symbols("mass_of_meteorite")
 mass_of_melting_meteorite = symbols("mass_of_melting_meteorite")
 koefficient_of_melting_meteorite = symbols("koefficient_of_melting_meteorite")
 
-energy_to_heating_meteorite = thermal_energy_law.law.subs({
-    thermal_energy_law.heat_capacity:
-    specific_qty_law.law.rhs.subs({
+meteorite_heat_capacity = specific_qty_law.law.rhs.subs({
     specific_qty_law.specific_quantity: specific_heat_heating_meteorite,
     specific_qty_law.mass: mass_of_meteorite,
-    }),
-    thermal_energy_law.temperature_origin:
-        temperature_of_meteorite,
-    thermal_energy_law.temperature_end:
-        temperature_of_meteorite_melting
+})
+
+energy_to_heating_meteorite = thermal_energy_law.law.subs({
+    thermal_energy_law.heat_capacity: meteorite_heat_capacity,
+    thermal_energy_law.temperature_change: temperature_of_meteorite_melting - temperature_of_meteorite,
 }).rhs
 
 energy_to_meteorite_melting = energy_melting_law.law.subs({
@@ -101,8 +99,8 @@ koefficient_of_melting_meteorite_to_plots = answer.subs({
 })
 
 base_plot = plot(title="The proportion of a molten meteorite depending on its velocity",
-    xlabel=r"$v, m/s$",
-    ylabel=r"$molten ratio$",
+    xlabel=r"$v, \text{m}/\text{s}$",
+    ylabel=r"$\text{molten ratio}$",
     backend=MatplotlibBackend,
     legend=True,
     show=False)

@@ -1,3 +1,27 @@
+"""
+Gibbs energy differential
+=========================
+
+The fundamental thermodynamic relation are fundamental equations which demonstate how important
+thermodynamic quantities depend on variables that are measurable experimentally.
+
+**Notation:**
+
+#. :math:`d` denotes an exact, path-independent differential.
+
+**Notes:**
+
+#. Temperature, pressure, and particle count are so called natural variables of Gibbs energy as a
+   thermodynamic potential.
+#. For a system with more than one type of particles, the last term can be represented as a sum over all
+   types of particles, i.e. :math:`\sum_i \mu_i \, d N_i`.
+
+**Conditions:**
+
+#. The system is in thermal equilibrium with its surroundings.
+#. The system is composed of only one type of particles, i.e. the system is a pure substance.
+"""
+
 from sympy import Eq
 from symplyphysics import (
     clone_symbol,
@@ -6,52 +30,81 @@ from symplyphysics import (
     dimensionless,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
 
-# Description
-## The fundamental thermodynamic relation are fundamental equations which demonstate how important
-## thermodynamic quantities depend on variables that are measurable experimentally.
-
-# Law: dG = - S * dT + V * dp + mu * dN
-## G - Gibbs free energy
-## S - entropy
-## T - absolute temperature
-## V - volume
-## p - pressure
-## mu - chemical potential
-## N - number of particles in system
-## Notation: d(x) - full differential of `x`
-
-# Note
-## - Temperature `T`, pressure `P`, and particle count `N` are so called natural variables of Gibbs energy
-##   as a thermodynamic potential. Note that `N` is the only extensive natural variable, the other two are intensive.
-## - For a system with more than one type of particles, the last term can be represented as a sum over all
-##   types of particles, i.e. `Sum(mu_i * d(N_i), i)`.
-
-# Conditions
-## - The system is in thermal equilibrium with its surroundings
-## - There is only one type of particles in the system
-
 gibbs_energy_change = Symbol("gibbs_energy_change", units.energy)
+"""
+Infinitesimal change in Gibbs energy of the system.
+
+Symbol:
+    :code:`dG`
+"""
+
 entropy = Symbol("entropy", units.energy / units.temperature)
+"""
+Entropy of the system.
+
+Symbol:
+    :code:`S`
+"""
+
 temperature_change = clone_symbol(symbols.thermodynamics.temperature, "temperature_change")
+"""
+Infinitesimal change in :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
+
+Symbol:
+    :code:`dT`
+"""
+
 volume = Symbol("volume", units.volume)
+"""
+Volume of the system.
+
+Symbol:
+    :code:`V`
+"""
+
 pressure_change = Symbol("pressure_change", units.pressure)
+"""
+Infinitesimal change in pressure inside the system.
+
+Symbol:
+    :code:`dp`
+"""
+
 chemical_potential = Symbol("chemical_potential", units.energy)
+r"""
+Chemical potential of the system.
+
+Symbol:
+    :code:`mu`
+
+Latex:
+    :math:`\mu`
+"""
+
 particle_count_change = Symbol("particle_count_change", dimensionless)
+"""
+Infinitesimal change in the number of particles in the system.
+
+Symbol:
+    :code:`dN`
+"""
 
 law = Eq(
     gibbs_energy_change,
     -1 * entropy * temperature_change + volume * pressure_change +
     chemical_potential * particle_count_change,
 )
+r"""
+:code:`dG = -1 * S * dT + V * dp + mu * dN`
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        dG = - S \, dT + V \, dp + \mu \, dN
+"""
 
 
 #pylint: disable=too-many-arguments

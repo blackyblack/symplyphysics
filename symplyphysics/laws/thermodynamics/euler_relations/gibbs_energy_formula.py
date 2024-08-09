@@ -9,7 +9,7 @@ from symplyphysics import (
     validate_output,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.thermodynamics import isobaric_reaction_potential as gibbs_energy_def
+from symplyphysics.laws.thermodynamics import gibbs_energy_via_enthalpy as gibbs_energy_def
 from symplyphysics.laws.thermodynamics.euler_relations import enthalpy_formula
 
 # Description
@@ -41,7 +41,7 @@ _enthalpy_expr = enthalpy_formula.law.rhs.subs({
 })
 
 _gibbs_energy_expr = gibbs_energy_def.law.rhs.subs({
-    gibbs_energy_def.thermal_effect: _enthalpy_expr,
+    gibbs_energy_def.enthalpy: _enthalpy_expr,
 })
 
 assert expr_equals(_gibbs_energy_expr, law.rhs)

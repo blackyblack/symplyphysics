@@ -91,7 +91,10 @@ def find_members_and_functions(content: ast.Module) -> tuple[list[str], list[str
             continue
         if isinstance(e, ast.Assign):
             for t in e.targets:
-                name = getattr(t, "id")
+                try:
+                    name = getattr(t, "id")
+                except AttributeError:
+                    continue
                 law_members.append(name)
                 current_member = name
             continue

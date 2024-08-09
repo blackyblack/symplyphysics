@@ -1,3 +1,11 @@
+"""
+Entropy from statistical weight
+===============================
+
+Entropy of a system depends on the statistical weight of the system's state. Statistical weight
+is the average number of microstates of a system that implement its macrostate.
+"""
+
 from sympy import Eq, solve, log, symbols, Function as SymFunction, dsolve
 from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless,
     assert_equal)
@@ -8,19 +16,30 @@ from symplyphysics.laws.thermodynamics import (
 from symplyphysics.laws.quantities import (
     quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law,)
 
-# Description
-## The entropy of a system depends on the statistical weight of the state of the system.
-## Statistical weight is the average number of microstates of a system that implement its macrostate.
-
-## Law: S = k * ln(W), where
-## S - entropy,
-## k - boltzmann constant,
-## W - statistical weight of state of the system.
-
 entropy = Symbol("entropy", units.energy / units.temperature)
+"""
+Entropy of the system.
+
+Symbol:
+    :code:`S`
+"""
+
 statistical_weight = Symbol("statistical_weight", dimensionless)
+"""
+Statistical weight of the system's state.
+
+Symbol:
+    :code:`W`
+"""
 
 law = Eq(entropy, units.boltzmann_constant * log(statistical_weight))
+r"""
+:code:`S = k * log(W)`
+
+Latex:
+    .. math::
+        S = k \log W
+"""
 
 # Derive the law from the properties of entropy
 

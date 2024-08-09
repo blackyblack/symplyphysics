@@ -1,3 +1,12 @@
+r"""
+Enthalpy is internal energy plus pressure energy
+================================================
+
+Enthalpy :math:`H` of a thermodynamic system is defined as the sum of its internal energy
+:math:`U` and the product of its pressure :math:`p` and volume :math:`V`, which is sometimes
+referred to as the pressure energy.
+"""
+
 from sympy import Eq
 from symplyphysics import (
     units,
@@ -7,22 +16,46 @@ from symplyphysics import (
     validate_output,
 )
 
-# Description
-## Enthalpy of a thermodynamic system is defined as the sum of its internal energy and the product of
-## its pressure and volume, which is sometimes referred to as the pressure energy.
-
-# Law: H = U + p * V
-## H - enthalpy of the system
-## U - internal energy of the system
-## p - pressure inside the system
-## V - volume of the system
-
 enthalpy = Symbol("enthalpy", units.energy)
+"""
+Enthalpy of the system.
+
+Symbol:
+    :code:`H`
+"""
+
 internal_energy = Symbol("internal_energy", units.energy)
+"""
+Internal energy of the system.
+
+Symbol:
+    :code:`U`
+"""
+
 pressure = Symbol("pressure", units.pressure)
+"""
+Pressure inside the system.
+
+Symbol:
+    :code:`p`
+"""
+
 volume = Symbol("volume", units.volume)
+"""
+Volume of the system.
+
+Symbol:
+    :code:`V`
+"""
 
 law = Eq(enthalpy, internal_energy + pressure * volume)
+r"""
+:code:`H = U + p * V`
+
+Latex
+    .. math::
+        H = U + p V
+"""
 
 
 @validate_input(

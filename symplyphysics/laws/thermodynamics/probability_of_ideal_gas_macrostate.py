@@ -1,3 +1,33 @@
+r"""
+Probability of ideal gas macrostate
+===================================
+
+Suppose there is a vessel of volume :math:`V` with :math:`N` identical ideal gas particles whose movement is described
+by classical mechanics. Let us divide the volume of the vessel into :math:`m` small enough cells with volumes :math:`V_1`
+up to :math:`V_m`. Let us for a moment also attach a number to each gas particle to be able to tell them apart.
+
+The *microstate* of the gas is the complete description of
+
+#. the particle count of each cell of the vessel
+#. the particles of which numbers appear in each cell.
+
+A particle moving within the same cell does not change the microstate of the gas, but a particle moving
+from one cell to another does.
+
+The *macrostate* of the gas only requires the description of the particle count in each cell of the vessel.
+If we assume the particles to be identical, it doesn't make a difference, from a macroscopic standpoint, particles
+of which number appear in which cells. Hence the probability of the macrostate is larger than that of the microstate
+by the factor of the number of permutations of the particles among the cells, which is exactly the statistical weight
+of the macrostate.
+
+**Conditions:**
+
+#. There are no external fields acting on the system.
+#. All particles are identical.
+#. The gas is ideal.
+#. Probabilities must sum up to :math:`1`.
+"""
+
 from typing import Sequence
 from sympy import Eq, Idx, factorial
 from symplyphysics import (
@@ -13,46 +43,63 @@ from symplyphysics import (
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 from symplyphysics.core.symbols.probability import Probability
 
-# Description
-## Suppose there is a vessel of volume `V` with `N` identical ideal gas particles whose movement is described
-## by classical mechanics. Let us divide the volume of the vessel into `m` small enough cells with volumes `V_1`
-## upto `V_m`. Let us for a moment also attach a number to each gas particle to be able to tell them apart.
-
-## The _microstate_ of the gas is the complete description of (a) the particle count of each cell of the vessel
-## and (b) the particles of which numbers appear in each cell. A particle's moving within the same cell does not
-## change the microstate of the gas, whereas a particle's moving from one cell to another constitutes the change
-## of the microstate.
-
-## The _macrostate_ of the gas only requires the description of the particle count in each cell of the vessel.
-## If we assume the particles to be identical, it doesn't make a difference, from a macroscopic standpoint, particles
-## of which number appear in which cells. Hence the probability of the macrostate is larger than that of the microstate
-## by the factor of the number of permutations of the particles among the cells, which is exactly the statistical weight
-## of the macrostate.
-
-# Law: P = G * Product(p_i**N_i, i)
-## P - probability of macrostate
-## G - statistical weight of the macrostate
-## p_i - probability of finding at least one particle in i-th cell
-## N_i - number of particles in i-th cell
-
-# Conditions
-## - There are no external fields acting on the system
-## - All particles are identical
-## - Gas is ideal
-## - Probabilities must sum up to 1
-
 macrostate_probability = Symbol("macrostate_probability", dimensionless)
+r"""
+Probability of the macrostate.
+
+Symbol:
+    :code:`P_macro`
+
+Latex:
+    :math:`P_\text{macro}`
+"""
+
 statistical_weight = Symbol("statistical_weight", dimensionless)
-one_particle_in_cell_probability = SymbolIndexed("one_particle_in_cell_probability", dimensionless)
+"""
+Statistical weight of the macrostate.
+
+Symbol:
+    :code:`G`
+"""
+
+particle_in_cell_probability = SymbolIndexed("particle_in_cell_probability", dimensionless)
+"""
+Probability of finding at least one particle in cell :math:`i`.
+
+Symbol:
+    :code:`p_i`
+
+Latex:
+    :math:`p_i`
+"""
+
 particle_count_in_cell = SymbolIndexed("particle_count_in_cell", dimensionless)
+r"""
+Number of particles in cell :math:`i`.
+
+Symbol:
+    :code:`N_i`
+
+Latex:
+    :math:`N_i`
+"""
+
+# TODO: Create law for probability of microstate and move the product there
 
 law = Eq(
     macrostate_probability,
     statistical_weight * ProductIndexed(
-    one_particle_in_cell_probability[global_index]**particle_count_in_cell[global_index],
+    particle_in_cell_probability[global_index]**particle_count_in_cell[global_index],
     global_index,
     ),
 )
+r"""
+:code:`P_macro = G * Product(p_i^N_i, i)`
+
+Latex:
+    .. math::
+        P_\text{macro} = G \prod_i p_i^{N_i}
+"""
 
 
 @validate_output(macrostate_probability)
@@ -63,7 +110,7 @@ def calculate_macrostate_probability(
             probability_,
             "probability",
             "calculate_macrostate_probability",
-            one_particle_in_cell_probability.dimension,
+            particle_in_cell_probability.dimension,
         )
         assert_equivalent_dimension(
             particle_count_,
@@ -91,7 +138,7 @@ def calculate_macrostate_probability(
 
     for idx, (probability_, particle_count_) in enumerate(probabilities_and_particle_counts_, 1):
         result = result.subs({
-            one_particle_in_cell_probability[idx]: probability_,
+            particle_in_cell_probability[idx]: probability_,
             particle_count_in_cell[idx]: particle_count_,
         })
 

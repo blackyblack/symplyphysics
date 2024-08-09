@@ -5,8 +5,8 @@ from symplyphysics.core.symbols.celsius import to_kelvin_quantity, Celsius
 from symplyphysics import print_expression, Quantity, prefixes, units, convert_to
 from symplyphysics.laws.electricity import power_factor_from_active_and_full_power as efficiency_law
 from symplyphysics.laws.thermodynamics import (
+    heat_is_heat_capacity_times_temperature_change as thermal_energy_law,
     heat_of_combustion_via_mass as combustion_energy_law,
-    thermal_energy_from_heat_capacity_and_temperature as thermal_energy_law,
 )
 from symplyphysics.laws.quantities import quantity_is_specific_quantity_times_mass as specific_qty_law
 
@@ -24,16 +24,14 @@ specific_heat_heating = Symbol("specific_heat_heating")
 
 specific_heat_combustion = Symbol("specific_heat_of_combustion")
 
-energy_heating_value = thermal_energy_law.law.subs({
-    thermal_energy_law.heat_capacity:
-    specific_qty_law.law.rhs.subs({
+heat_capacity = specific_qty_law.law.rhs.subs({
     specific_qty_law.specific_quantity: specific_heat_heating,
     specific_qty_law.mass: mass_of_liquid,
-    }),
-    thermal_energy_law.temperature_origin:
-        temperature_start,
-    thermal_energy_law.temperature_end:
-        temperature_end,
+})
+
+energy_heating_value = thermal_energy_law.law.subs({
+    thermal_energy_law.heat_capacity: heat_capacity,
+    thermal_energy_law.temperature_change: temperature_end - temperature_start,
 }).rhs
 
 energy_combustion_value = combustion_energy_law.law.subs({

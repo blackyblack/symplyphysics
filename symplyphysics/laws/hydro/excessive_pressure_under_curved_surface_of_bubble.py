@@ -3,7 +3,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 
-from symplyphysics.laws.thermodynamics import laplace_pressure as laplace_law
+from symplyphysics.laws.thermodynamics import laplace_pressure_of_spherical_shapes as laplace_law
 
 # Description
 ## Under the curved surface of the liquid, in addition to the internal pressure,
@@ -25,7 +25,7 @@ law = Eq(excessive_pressure, 4 * surface_tension_of_the_liquid / radius_of_bubbl
 # This law might be derived via Laplace law.
 
 laplace_law_applied = laplace_law.law.subs({
-    laplace_law.surface_tension_of_the_liquid: surface_tension_of_the_liquid,
+    laplace_law.surface_tension: surface_tension_of_the_liquid,
     laplace_law.radius_of_curvature: radius_of_bubble
 })
 

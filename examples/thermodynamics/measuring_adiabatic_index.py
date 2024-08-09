@@ -4,7 +4,7 @@ from sympy import solve, Eq, symbols
 from symplyphysics import print_expression
 from symplyphysics.definitions import heat_capacity_ratio
 from symplyphysics.laws.electricity import power_from_energy_time as power_law
-from symplyphysics.laws.thermodynamics import thermal_energy_from_heat_capacity_and_temperature as thermal_eqn
+from symplyphysics.laws.thermodynamics import heat_is_heat_capacity_times_temperature_change as thermal_eqn
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation
 from symplyphysics.laws.quantities import quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law
 
@@ -23,7 +23,7 @@ initial_volume, final_isobaric_volume = symbols("initial_volume final_isobaric_v
 # Calculate temperature values from the ideal gas equation of state
 
 temperature_expr = solve(ideal_gas_equation.law,
-    ideal_gas_equation.temperature)[0].subs(ideal_gas_equation.mole_count, amount_of_gas)
+    ideal_gas_equation.temperature)[0].subs(ideal_gas_equation.amount_of_substance, amount_of_gas)
 
 initial_temperature_expr = temperature_expr.subs({
     ideal_gas_equation.pressure: initial_pressure,
@@ -44,28 +44,24 @@ final_isobaric_temperature_expr = temperature_expr.subs({
 
 isochoric_molar_heat, isobaric_molar_heat = symbols("isochoric_molar_heat isobaric_molar_heat")
 
-isochoric_amount_of_heat = thermal_eqn.law.rhs.subs({
-    thermal_eqn.heat_capacity:
-    molar_qty_law.law.rhs.subs({
+isochoric_heat_capacity = molar_qty_law.law.rhs.subs({
     molar_qty_law.molar_quantity: isochoric_molar_heat,
     molar_qty_law.amount_of_substance: amount_of_gas,
-    }),
-    thermal_eqn.temperature_end:
-        final_isochoric_temperature_expr,
-    thermal_eqn.temperature_origin:
-        initial_temperature_expr,
+})
+
+isochoric_amount_of_heat = thermal_eqn.law.rhs.subs({
+    thermal_eqn.heat_capacity: isochoric_heat_capacity,
+    thermal_eqn.temperature_change: final_isobaric_temperature_expr - initial_temperature_expr,
 }).simplify()
 
-isobaric_amount_of_heat = thermal_eqn.law.rhs.subs({
-    thermal_eqn.heat_capacity:
-    molar_qty_law.law.rhs.subs({
+isobaric_heat_capacity = molar_qty_law.law.rhs.subs({
     molar_qty_law.molar_quantity: isobaric_molar_heat,
     molar_qty_law.amount_of_substance: amount_of_gas,
-    }),
-    thermal_eqn.temperature_end:
-        final_isobaric_temperature_expr,
-    thermal_eqn.temperature_origin:
-        initial_temperature_expr,
+})
+
+isobaric_amount_of_heat = thermal_eqn.law.rhs.subs({
+    thermal_eqn.heat_capacity: isobaric_heat_capacity,
+    thermal_eqn.temperature_change: final_isobaric_temperature_expr - initial_temperature_expr,
 }).simplify()
 
 # Calculate the adiabatic index using the amounts of heat during two heating instances.

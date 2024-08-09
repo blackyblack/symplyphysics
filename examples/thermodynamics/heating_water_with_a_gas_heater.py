@@ -5,8 +5,8 @@ from symplyphysics import print_expression, Quantity, prefixes, units, convert_t
 from symplyphysics.core.symbols.celsius import to_kelvin_quantity, Celsius
 from symplyphysics.laws.electricity import power_factor_from_active_and_full_power as efficiency_law
 from symplyphysics.laws.thermodynamics import (
+    heat_is_heat_capacity_times_temperature_change as thermal_energy_law,
     heat_of_combustion_via_mass as combustion_energy_law,
-    thermal_energy_from_heat_capacity_and_temperature as thermal_energy_law,
 )
 from symplyphysics.laws.quantities import quantity_is_specific_quantity_times_mass as specific_qty_law
 from symplyphysics.definitions import density_from_mass_volume as density_law
@@ -59,16 +59,14 @@ density_of_water_equation = density_law.definition.subs({
 mass_of_water_value = solve(density_of_water_equation, density_law.mass,
     dict=True)[0][density_law.mass]
 
-energy_to_heating_water_value = thermal_energy_law.law.subs({
-    thermal_energy_law.heat_capacity:
-    specific_qty_law.law.rhs.subs({
+water_heat_capacity = specific_qty_law.law.rhs.subs({
     specific_qty_law.specific_quantity: specific_heat_of_heating_water,
     specific_qty_law.mass: mass_of_water_value,
-    }),
-    thermal_energy_law.temperature_origin:
-        temperature_start,
-    thermal_energy_law.temperature_end:
-        temperature_water
+})
+
+energy_to_heating_water_value = thermal_energy_law.law.subs({
+    thermal_energy_law.heat_capacity: water_heat_capacity,
+    thermal_energy_law.temperature_change: temperature_water - temperature_start,
 }).rhs
 
 mass_of_gas_equation = mole_count_law.law.subs({mole_count_law.atomic_weight: molar_mass_of_metan})
@@ -79,7 +77,7 @@ state_equation = klayperon_law.law.subs({
     klayperon_law.volume: volume_of_gas,
     klayperon_law.pressure: pressure_in_gas_heater,
     klayperon_law.temperature: temperature_start,
-    klayperon_law.mole_count: mole_count_value
+    klayperon_law.amount_of_substance: mole_count_value
 })
 mass_of_gas_in_state_value = solve(state_equation, mole_count_law.mass,
     dict=True)[0][mole_count_law.mass]
