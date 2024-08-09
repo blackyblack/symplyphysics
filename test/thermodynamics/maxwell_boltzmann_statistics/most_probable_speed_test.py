@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics import most_probable_speed
+from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import most_probable_speed
 
 # Description
 ## The most probable speed of Argon particles (m = 39.948 u) at equilibrium temperature T = 150 K
