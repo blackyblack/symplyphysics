@@ -1,8 +1,18 @@
+"""
+Dimensionless equation
+======================
+
+The *dimensionless form* of the van der Waals equation of state features reduced quantities,
+which are simply the usual thermodynamic quantities divided by their value at the critical
+point. One notable property of the dimensionless equation of state is that it contains no
+substance-specific quantities, i.e. all van der Waals fluids will plot on the same reduced
+pressure-volume curve at the same reduced temperature.
+"""
+
 from sympy import Eq, Rational, solve
 from symplyphysics import (
     dimensionless,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     convert_to_float,
@@ -19,41 +29,65 @@ from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import (
 )
 from symplyphysics.laws.quantities import quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law
 
-# Description
-## The dimensionless form of the van der Waals equation of state features reduced quantities,
-## which are simply the usual thermodynamic quantities divided by their value at the critical
-## point. One notable property of the dimensionless equation of state is that it contains no
-## substance-specific quantities, i.e. all van der Waals fluids will plot on the same reduced
-## pressure-volume curve at the same reduced temperature.
-
-# Law: (p* + 3 / (V*)**2) * (V* - 1/3) = 8/3 * T*
-## p* = p/p_c - reduced pressure, see [critical pressure](./critical_pressure.py)
-## V* = V/V_c - reduced volume, see [critical volume](./critical_volume.py)
-## T* = T/T_c - reduced temperature, see [critical temperature](./critical_temperature.py)
-
 reduced_pressure = Symbol("reduced_pressure", dimensionless)
+r"""
+See :doc:`laws.thermodynamics.equations_of_state.van_der_waals.reduced_pressure`.
+
+Symbol:
+    :code:`p*`
+
+Latex:
+    :math:`p^*`
+"""
+
 reduced_volume = Symbol("reduced_volume", dimensionless)
+r"""
+See :doc:`laws.thermodynamics.equations_of_state.van_der_waals.reduced_volume`.
+
+Symbol:
+    :code:`V*`
+
+Latex:
+    :math:`V^*`
+"""
+
 reduced_temperature = Symbol("reduced_temperature", dimensionless)
+r"""
+See :doc:`laws.thermodynamics.equations_of_state.van_der_waals.reduced_temperature`.
+
+Symbol:
+    :code:`T*`
+
+Latex:
+    :math:`T^*`
+"""
 
 law = Eq(
     (reduced_pressure + 3 / reduced_volume**2) * (reduced_volume - Rational(1, 3)),
     Rational(8, 3) * reduced_temperature,
 )
+r"""
+:code:`(p* + 3 / (V*)^2) * (V* - 1/3) = 8/3 * T*`
+
+Latex:
+    .. math::
+        \left( p^* + \frac{3}{\left(V^*\right)^2} \right) \left( V^* - \frac{1}{3} \right) = \frac{8}{3} T^*
+"""
 
 # Derive from van der Waals equation of state
 
 _critical_pressure_expr = critical_pressure.law.rhs.subs({
-    critical_pressure.bonding_forces_parameter: equation.bonding_forces_parameter,
-    critical_pressure.molecules_volume_parameter: equation.molecules_volume_parameter,
+    critical_pressure.attractive_forces_parameter: equation.attractive_forces_parameter,
+    critical_pressure.excluded_volume_parameter: equation.excluded_volume_parameter,
 })
 
 _critical_molar_volume_expr = critical_molar_volume.law.rhs.subs({
-    critical_molar_volume.excluded_volume_parameter: equation.molecules_volume_parameter,
+    critical_molar_volume.excluded_volume_parameter: equation.excluded_volume_parameter,
 })
 
 _critical_temperature_expr = critical_temperature.law.rhs.subs({
-    critical_temperature.bonding_forces_parameter: equation.bonding_forces_parameter,
-    critical_temperature.molecules_volume_parameter: equation.molecules_volume_parameter,
+    critical_temperature.attractive_forces_parameter: equation.attractive_forces_parameter,
+    critical_temperature.excluded_volume_parameter: equation.excluded_volume_parameter,
 })
 
 _pressure = solve(reduced_pressure_law.law, reduced_pressure_law.pressure)[0].subs({
@@ -82,10 +116,6 @@ _reduced_temperature_derived = solve(_reduced_eqn, reduced_temperature)[0]
 _reduced_temperature_from_law = solve(law, reduced_temperature)[0]
 
 assert expr_equals(_reduced_temperature_derived, _reduced_temperature_from_law)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(
