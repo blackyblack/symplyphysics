@@ -2,11 +2,10 @@
 Dimensionless equation
 ======================
 
-The *dimensionless form* of the van der Waals equation of state features reduced quantities,
-which are simply the usual thermodynamic quantities divided by their value at the critical
-point. One notable property of the dimensionless equation of state is that it contains no
-substance-specific quantities, i.e. all van der Waals fluids will plot on the same reduced
-pressure-volume curve at the same reduced temperature.
+The *dimensionless form* of the van der Waals equation of state features :ref:`reduced quantities
+<vdw_reduced_units_def>`. One notable property of the dimensionless equation of state is that it
+contains no substance-specific quantities, i.e. all van der Waals fluids will plot on the same
+reduced pressure-volume curve at the same reduced temperature.
 """
 
 from sympy import Eq, Rational, solve

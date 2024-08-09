@@ -2,9 +2,8 @@ r"""
 Critical temperature
 ====================
 
-Critical parameters of the van der Waals equation of state are such values of volume, pressure, and
-temperature at which the isotherm has an inflection point whose tangent at that point is zero, i.e.
-the first and second derivatives of pressure with respect to volume at constant temperature are zero.
+Critical temperature of a van der Waals fluid depends on the parameters :math:`a` and :math:`b`
+of the van der Waals equation and the molar gas constant :math:`R`. See :ref:`vdw_critical_parameters_def`.
 
 **Notation:**
 
