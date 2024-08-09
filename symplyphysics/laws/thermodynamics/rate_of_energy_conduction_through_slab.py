@@ -1,3 +1,12 @@
+"""
+Rate of energy conduction through slab
+======================================
+
+The rate at which energy is conducted through a slab for which one face is maintained at a higher
+temperature than the other face is proportional to the temperature difference of the faces and
+its face area and inversely proportional to its length.
+"""
+
 from sympy import Eq
 from symplyphysics import (
     clone_symbol,
@@ -5,42 +14,68 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
 
-# Description
-## The rate at which energy is conducted through a slab for which one face is maintained at a higher
-## temperature than the other face is proportional to the temperature difference of the faces and
-## its face area and inversely proportional to its length.
-
-# Law: P_cond = k * A * |delta_T| / L
-## P_cond - rate of energy conductivity through slab
-## k - thermal conductivity of material of slab
-## A - area of slab face
-## L - thickness of slab (distance between the two faces)
-## delta_T - difference between the temperatures of the faces
-## |x| - the absolute value of x
-
 energy_conduction_rate = Symbol("energy_conduction_rate", units.power, positive=True)
+"""
+Rate of energy conductivity through the slab.
+
+Symbol:
+    :code:`P`
+"""
+
 thermal_conductivity = Symbol("thermal_conductivity",
     units.power / (units.length * units.temperature),
     positive=True)
+"""
+Thermal conductivity of the slab's material.
+
+Symbol:
+    :code:`k`
+"""
+
 face_area = Symbol("face_area", units.area, positive=True)
+"""
+Area of the face of the slab.
+
+Symbol:
+    :code:`A`
+"""
+
 slab_thickness = Symbol("slab_thickness", units.length, positive=True)
+"""
+Distance between the two faces of the slab.
+
+Symbol:
+    :code:`l`
+"""
+
 temperature_difference = clone_symbol(symbols.thermodynamics.temperature,
     "temperature_difference",
     real=True)
+r"""
+:attr:`~symplyphysics.symbols.thermodynamics.temperature` difference between the two faces of the slab.
+
+Symbol:
+    :code:`dT`
+
+Latex:
+    :math:`\Delta T`
+"""
 
 law = Eq(
     energy_conduction_rate,
     thermal_conductivity * face_area * abs(temperature_difference) / slab_thickness,
 )
+r"""
+:code:`P = k * A * abs(dT) / l`
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        P = k A \frac{|\Delta T|}{l}
+"""
 
 
 @validate_input(
