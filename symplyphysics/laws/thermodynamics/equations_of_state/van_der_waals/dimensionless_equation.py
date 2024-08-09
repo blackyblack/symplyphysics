@@ -26,7 +26,6 @@ from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import (
     reduced_volume as reduced_volume_law,
     reduced_temperature as reduced_temperature_law,
 )
-from symplyphysics.laws.quantities import quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law
 
 reduced_pressure = Symbol("reduced_pressure", dimensionless)
 r"""
