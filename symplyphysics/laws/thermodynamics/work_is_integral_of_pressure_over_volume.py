@@ -72,7 +72,7 @@ Latex:
 
 law = Eq(work, Integral(pressure(volume), (volume, initial_volume, final_volume)))
 r"""
-:code:`W = Integral(p(V), (V, V_1, V_0))`
+:code:`W = Integral(p(V), (V, V_0, V_1))`
 
 Latex:
     .. math::

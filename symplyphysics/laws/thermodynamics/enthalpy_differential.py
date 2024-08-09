@@ -2,7 +2,7 @@ r"""
 Enthalpy differential
 =====================
 
-The fundamental thermodynamic relation are fundamental equations which demonstate how important
+The fundamental thermodynamic relations are fundamental equations which demonstate how the important
 thermodynamic quantities depend on variables that are measurable experimentally.
 
 **Notation:**
@@ -48,7 +48,7 @@ Symbol:
 
 temperature = symbols.thermodynamics.temperature
 """
-Temperature of the system.
+:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
 
 Symbol:
     :code:`T`

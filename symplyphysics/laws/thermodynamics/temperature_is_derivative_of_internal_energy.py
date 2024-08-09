@@ -29,10 +29,10 @@ Symbol:
 
 internal_energy = Function("internal_energy", units.energy)
 """
-Internal energy of the system as a function of temperature, volume, and particle count.
+Internal energy of the system as a function of entropy, volume, and particle count.
 
 Symbol:
-    :code:`U(T, V, N)`
+    :code:`U(S, V, N)`
 """
 
 entropy = Symbol("entropy", units.energy / units.temperature)

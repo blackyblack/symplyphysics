@@ -10,6 +10,10 @@ To do this, the heat capacity of the external environment must be large enough, 
 **Notation:**
 
 #. :math:`R` is the molar gas constant.
+
+**Conditions:**
+
+#. The temperature of the gas stays constant during the expansion.
 """
 
 from sympy import Eq, solve, log, Symbol as SymSymbol
@@ -65,7 +69,7 @@ Latex:
 
 temperature = symbols.thermodynamics.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas, constant throughout the process.
+:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas..
 
 Symbol:
     :code:`T`
