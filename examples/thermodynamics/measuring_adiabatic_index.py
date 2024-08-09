@@ -23,7 +23,7 @@ initial_volume, final_isobaric_volume = symbols("initial_volume final_isobaric_v
 # Calculate temperature values from the ideal gas equation of state
 
 temperature_expr = solve(ideal_gas_equation.law,
-    ideal_gas_equation.temperature)[0].subs(ideal_gas_equation.mole_count, amount_of_gas)
+    ideal_gas_equation.temperature)[0].subs(ideal_gas_equation.amount_of_substance, amount_of_gas)
 
 initial_temperature_expr = temperature_expr.subs({
     ideal_gas_equation.pressure: initial_pressure,

@@ -50,8 +50,8 @@ water_heat_capacity = specific_qty_law.law.rhs.subs({
 water_temperature_change = final_temperature_kelvin - initial_temperature_kelvin
 
 heat_transferred = thermal_energy_law.law.rhs.subs({
-    thermal_energy_law.water_heat_capacity: water_heat_capacity,
-    thermal_energy_law.water_temperature_change: water_temperature_change,
+    thermal_energy_law.heat: water_heat_capacity,
+    thermal_energy_law.temperature_change: water_temperature_change,
 })
 
 heating_time = solve(

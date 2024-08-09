@@ -62,7 +62,7 @@ result_pressure_isothermal_expansion = solved_isothermal_law.subs({
 result_pressure_isothermal_compression = solved_isothermal_law.subs({
     isothermal_law._temperature_start: GAS_TEMPERATURE_END,
     units.molar_gas_constant: 1,
-    ideal_gas_equation.mole_count: GAS_MOLE_COUNT,
+    ideal_gas_equation.amount_of_substance: GAS_MOLE_COUNT,
     isothermal_law.final_volume: carnot_cycle_volume
 })
 
@@ -70,7 +70,7 @@ result_pressure_adiabatic_expansion = solved_adiabatic_law.subs({
     adiabatic_law.initial_temperature: GAS_TEMPERATURE_START,
     adiabatic_law.initial_volume: GAS_VOLUME_ADIABATIC_START,
     units.molar_gas_constant: 1,
-    ideal_gas_equation.mole_count: GAS_MOLE_COUNT,
+    ideal_gas_equation.amount_of_substance: GAS_MOLE_COUNT,
     adiabatic_law.adiabatic_index: GAS_SPECIFIC_HEATS_RATIO,
     adiabatic_law.final_volume: carnot_cycle_volume
 })
@@ -79,7 +79,7 @@ result_pressure_adiabatic_compression = solved_adiabatic_law.subs({
     adiabatic_law.initial_temperature: GAS_TEMPERATURE_END,
     adiabatic_law.initial_volume: gas_volume_isothermal_end,
     units.molar_gas_constant: 1,
-    ideal_gas_equation.mole_count: GAS_MOLE_COUNT,
+    ideal_gas_equation.amount_of_substance: GAS_MOLE_COUNT,
     adiabatic_law.adiabatic_index: GAS_SPECIFIC_HEATS_RATIO,
     adiabatic_law.final_volume: carnot_cycle_volume
 })
