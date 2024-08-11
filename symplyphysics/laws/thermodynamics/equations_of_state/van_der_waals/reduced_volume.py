@@ -2,7 +2,7 @@ r"""
 Reduced volume
 ==============
 
-Reduced units are used in the dimensionless van der Waals equation of state.
+See :ref:`vdw_reduced_units_def`.
 
 **Note:**
 
