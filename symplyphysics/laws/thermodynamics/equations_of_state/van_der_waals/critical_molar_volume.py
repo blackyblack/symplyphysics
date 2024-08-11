@@ -20,10 +20,10 @@ r"""
 Critical volume of the van der Waals fluid per unit amount of substance.
 
 Symbol:
-    :code:`v_c`
+    :code:`V_cm`
 
 Latex:
-    :math:`v_\text{c}`
+    :math:`V_\text{c, m}`
 """
 
 excluded_volume_parameter = Symbol(
@@ -40,11 +40,11 @@ Symbol:
 
 law = Eq(critical_molar_volume, 3 * excluded_volume_parameter)
 r"""
-:code:`v_c = 3 * b`
+:code:`V_cm = 3 * b`
 
 Latex:
     .. math::
-        v_c = 3 b
+        V_\text{c, m} = 3 b
 """
 
 
