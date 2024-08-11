@@ -1,32 +1,75 @@
+"""
+Enthalpy formula
+================
+
+The enthalpy differential can be integrated using the Euler's theorem on homogeneous functions for
+internal energy.
+
+**Notes:**
+
+#. This formula words for a single-component system. For multi-component system replace the
+   right-hand side with a sum over each type of components.
+"""
+
 from sympy import Eq
-from symplyphysics import (units, dimensionless, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, dimensionless, Quantity, Symbol, validate_input,
     validate_output, symbols)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import enthalpy_is_internal_energy_plus_pressure_energy as enthalpy_def
 from symplyphysics.laws.thermodynamics.euler_relations import internal_energy_formula
 
-# Description
-## The enthalpy differential can be integrated using the Euler's theorem on homogeneous functions for
-## internal energy.
-
-# Law: H = T * S + mu * N
-## H - enthalpy
-## T - temperature
-## S - entropy
-## mu - chemical potential
-## N - particle count
-
-# Note
-## - This formula works for a single-component system. For multi-component systems replace the RHS with
-##   a sum over each type of component.
-
 enthalpy = Symbol("enthalpy", units.energy)
+"""
+:doc:`Enthalpy <laws.thermodynamics.enthalpy_is_internal_energy_plus_pressure_energy>` of the system.
+
+Symbol:
+    :code:`H`
+"""
+
 temperature = symbols.thermodynamics.temperature
+"""
+:attr:`symbols.thermodynamics.temperature` of the system.
+
+Symbol:
+    :code:`T`
+"""
+
 entropy = Symbol("entropy", units.energy / units.temperature)
+"""
+:doc:`Entropy <laws.thermodynamics.entropy_change_in_reversible_process>` of the system.
+
+Symbol:
+    :code:`S`
+"""
+
 chemical_potential = Symbol("chemical_potential", units.energy)
+r"""
+:doc:`Chemical potential <laws.thermodynamics.chemical_potential_is_particle_count_derivative_of_internal_energy>`
+of the system.
+
+Symbol:
+    :code:`mu`
+
+Latex:
+    :math:`\mu`
+"""
+
 particle_count = Symbol("particle_count", dimensionless)
+"""
+Number of particles in the system.
+
+Symbol:
+    :code:`N`
+"""
 
 law = Eq(enthalpy, temperature * entropy + chemical_potential * particle_count)
+r"""
+:code:`H = T * S + mu * N`
+
+Latex:
+    .. math::
+        H = T S + \mu N
+"""
 
 # Derive from enthalpy definition and internal energy Euler relation
 
@@ -42,10 +85,6 @@ _internal_energy_expr = internal_energy_formula.law.rhs.subs({
 _enthalpy_expr = enthalpy_def.law.rhs.subs({enthalpy_def.internal_energy: _internal_energy_expr})
 
 assert expr_equals(_enthalpy_expr, law.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(
