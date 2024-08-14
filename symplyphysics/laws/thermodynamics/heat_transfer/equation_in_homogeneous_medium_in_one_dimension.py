@@ -1,4 +1,4 @@
-"""
+r"""
 Equation in homogeneous medium in one dimension
 ===============================================
 
@@ -9,6 +9,12 @@ the evolution of heat transferred from hotter to colder environments in time and
 
 #. There is no straghtforward solution to this equation, and it depends on initial
    conditions as well.
+
+**Conditions:**
+
+#. There are not heat sources in the system, i.e. the heat distribution only depends on
+   the initial conditions.
+#. Thermal diffusivity :math:`\chi` does not depend on position.
 """
 
 from sympy import Eq, Derivative
