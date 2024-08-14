@@ -8,7 +8,7 @@ internal energy.
 **Notes:**
 
 #. This formula words for a single-component system. For multi-component system replace the
-   right-hand side with a sum over each type of components.
+   product of chemical potential and particle count with a sum over each type of components.
 """
 
 from sympy import Eq

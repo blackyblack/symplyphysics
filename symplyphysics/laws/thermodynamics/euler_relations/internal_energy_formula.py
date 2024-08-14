@@ -1,44 +1,97 @@
+"""
+Internal energy formula
+=======================
+
+The formula of the internal energy differential can be integrated using the Euler's theorem on
+homogeneous functions to get the following expression.
+
+**Notes:**
+
+#. This formula words for a single-component system. For multi-component system replace the
+   product of chemical potential and particle count with a sum over each type of components.
+"""
+
 from sympy import Eq
 from symplyphysics import (
     units,
     dimensionless,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     symbols,
 )
 
-# Description
-## The formula of the internal energy differential can be integrated using the Euler's theorem on
-## homogeneous functions to get the following expression:
-
-# Law: U = T * S - p * V + mu * N
-## U - internal energy
-## T - temperature
-## S - entropy
-## p - pressure
-## V - volume
-## mu - chemical potential
-## N - particle count
-
 internal_energy = Symbol("internal_energy", units.energy)
+"""
+Internal energy of the system.
+
+Symbol:
+    :code:`U`
+"""
+
 temperature = symbols.thermodynamics.temperature
+"""
+:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
+
+Symbol:
+    :code:`T`
+"""
+
 entropy = Symbol("entropy", units.energy / units.temperature)
+"""
+Entropy of the system.
+
+Symbol:
+    :code:`S`
+"""
+
 pressure = Symbol("pressure", units.pressure)
+"""
+Pressure in the system.
+
+Symbol:
+    :code:`p`
+"""
+
 volume = Symbol("volume", units.volume)
+"""
+Volume of the system.
+
+Symbol:
+    :code:`V`
+"""
+
 chemical_potential = Symbol("chemical_potential", units.energy)
+r"""
+Chemical potential of the system.
+
+Symbol:
+    :code:`mu`
+
+Latex:
+    :math:`\mu`
+"""
+
 particle_count = Symbol("particle_count", dimensionless)
+"""
+Number of particles in the system.
+
+Symbol:
+    :code:`N`
+"""
 
 law = Eq(internal_energy,
     temperature * entropy - pressure * volume + chemical_potential * particle_count)
+r"""
+:code:`U = T * S - p * V + mu * N`
+
+Latex:
+    .. math::
+        U = T S - p V + \mu N
+"""
 
 # TODO: derive from Euler's theorem and internal energy differential
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(
