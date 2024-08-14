@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import discrete_distribution
+from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import single_particle_discrete_distribution as law
 
 # Description
 ## A classical system of non-interacting particles in thermal equilibrium contains 1000 particles.
@@ -26,7 +26,7 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = discrete_distribution.calculate_particle_count_in_microstate(
+    result = law.calculate_particle_count_in_microstate(
         test_args.n, test_args.e, test_args.t, test_args.z)
     assert_equal(result, 188, tolerance=2e-3)
 
@@ -34,32 +34,32 @@ def test_law(test_args: Args) -> None:
 def test_bad_particle_count(test_args: Args) -> None:
     nb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        discrete_distribution.calculate_particle_count_in_microstate(nb, test_args.e, test_args.t,
+        law.calculate_particle_count_in_microstate(nb, test_args.e, test_args.t,
             test_args.z)
 
 
 def test_bad_energy(test_args: Args) -> None:
     eb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        discrete_distribution.calculate_particle_count_in_microstate(test_args.n, eb, test_args.t,
+        law.calculate_particle_count_in_microstate(test_args.n, eb, test_args.t,
             test_args.z)
     with raises(TypeError):
-        discrete_distribution.calculate_particle_count_in_microstate(test_args.n, 100, test_args.t,
+        law.calculate_particle_count_in_microstate(test_args.n, 100, test_args.t,
             test_args.z)
 
 
 def test_bad_temperature(test_args: Args) -> None:
     tb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        discrete_distribution.calculate_particle_count_in_microstate(test_args.n, test_args.e, tb,
+        law.calculate_particle_count_in_microstate(test_args.n, test_args.e, tb,
             test_args.z)
     with raises(TypeError):
-        discrete_distribution.calculate_particle_count_in_microstate(test_args.n, test_args.e, 100,
+        law.calculate_particle_count_in_microstate(test_args.n, test_args.e, 100,
             test_args.z)
 
 
 def test_bad_partition_function(test_args: Args) -> None:
     zb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        discrete_distribution.calculate_particle_count_in_microstate(test_args.n, test_args.e,
+        law.calculate_particle_count_in_microstate(test_args.n, test_args.e,
             test_args.t, zb)
