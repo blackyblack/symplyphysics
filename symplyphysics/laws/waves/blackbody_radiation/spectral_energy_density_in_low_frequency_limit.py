@@ -1,10 +1,31 @@
+r"""
+Spectral energy density at low frequency limit
+==============================================
+
+The *Rayleigh-Jeans law* is an approximation to the spectral radiance of electromagnetic radiation
+as a function of wave frequency from a blackbody at a given temperature through classical arguments.
+The Rayleigh-Jeans law agrees with experimental results at large wavelengths (i.e. at low frequencies)
+but strongly disagrees at short wavelengths (i.e. at high frequencies). This inconsistency is commonly
+known as the *ultraviolet catastrophe*.
+
+**Notation:**
+
+#. :math:`c` is the speed of light.
+#. :math:`k_\text{B}` (:code:`k_B`) is the Boltzmann constant.
+
+**Conditions:**
+
+#. The black body is isolated from the environment.
+#. :math:`h \nu \ll k_\text{B} T`, i.e. photon energy is much smaller than thermal energy.
+
+"""
+
 from sympy import Eq, pi, Symbol as SymSymbol, solve
 from sympy.physics.units import speed_of_light, boltzmann_constant
 from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     symbols,
@@ -13,33 +34,48 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.waves.blackbody_radiation import spectral_energy_density_at_all_frequencies as planck_law
 
-# Description
-## The Rayleigh-Jeans law is an approximation to the spectral radiance of electromagnetic radiation
-## as a function of wave frequency from a blackbody at a given temperature through classical arguments.
-## The Rayleigh-Jeans law agrees with experimental results at large wavelengths (i.e. at low frequencies)
-## but strongly disagrees at short wavelengths (i.e. at high frequencies). This inconsistency is commonly
-## known as ultraviolet catastrophe. See [Planck's law](./spectral_energy_density_at_all_frequencies.py) for
-## the correct expression of radiation at all frequencies.
-
-# Law: u_nu = 8 * pi * nu**2 * k * T / c**3
-## u_nu - spectral energy density (energy per unit volume per unit frequency)
-## nu - radiation frequency
-## k - Boltzmann constant
-## T - equilibrium temperature of black body
-## c - speed of light
-
-# Conditions
-## - `h * nu << k * T`, i.e. the photon energy is much smaller than the thermal energy.
-
 spectral_energy_density = Symbol("spectral_energy_density",
     units.energy / (units.volume * units.frequency))
+r"""
+Spectral energy density, which is energy per unit volume per unit frequency.
+
+Symbol:
+    :code:`u_nu`
+
+Latex:
+    :math:`u_\nu`
+"""
+
 radiation_frequency = Symbol("radiation_frequency", units.frequency)
+r"""
+(Linear) frequency of the radiation.
+
+Symbol:
+    :code:`nu`
+
+Latex:
+    :math:`\nu`
+"""
+
 equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature,
     "equilibrium_temperature")
+"""
+Equilibrium :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the ensemble.
+
+Symbol:
+    :code:`T`
+"""
 
 law = Eq(
     spectral_energy_density, 8 * pi * radiation_frequency**2 * boltzmann_constant *
     equilibrium_temperature / speed_of_light**3)
+r"""
+:code:`u_nu = 8 * pi * nu^2 * k_B * T / c^3`
+
+Latex:
+    .. math::
+        u_\nu = \frac{8 \pi \nu^2 k_\text{B} T}{c^3}
+"""
 
 # Derive from Planck's law of blackbody radiation
 
@@ -70,10 +106,6 @@ _planck_density_series = solve(
 )[0][spectral_energy_density]
 
 assert expr_equals(_planck_density_series, law.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(
