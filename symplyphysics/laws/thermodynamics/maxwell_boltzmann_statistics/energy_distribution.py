@@ -54,7 +54,7 @@ equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature,
     "equilibrium_temperature",
     positive=True)
 """
-Equilibrium temperature of the ensemble.
+Equilibrium :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the ensemble.
 
 Symbol:
     :code:`T`
