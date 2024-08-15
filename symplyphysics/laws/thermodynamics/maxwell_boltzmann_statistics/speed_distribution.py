@@ -62,7 +62,7 @@ Symbol:
 
 particle_mass = clone_symbol(symbols.basic.mass, "particle_mass", positive=True)
 """
-Mass of a particle.
+:attr:`~symplyphysics.symbols.basic.mass` of a particle.
 
 Symbol:
     :code:`m`
