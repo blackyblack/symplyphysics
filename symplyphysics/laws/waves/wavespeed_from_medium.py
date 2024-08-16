@@ -3,6 +3,10 @@ Wave speed from medium
 ======================
 
 Speed of electromagnetic wave propagation depends on the refractive index of the medium.
+
+**Notation:**
+
+#. :math:`c` is the speed of light.
 """
 
 from sympy.physics.units import speed_of_light
