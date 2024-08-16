@@ -27,7 +27,7 @@ rhs = solve(
 rhs = rhs.subs({
     units.boltzmann_constant: convert_to_si(units.boltzmann_constant),
     units.speed_of_light: convert_to_si(units.speed_of_light),
-    reduced_law.mass: convert_to_si(units.electron_rest_mass)
+    reduced_law.particle_mass: convert_to_si(units.electron_rest_mass)
 })
 
 temperatures_ = [1e10, 2e10, 5e10]  # K
