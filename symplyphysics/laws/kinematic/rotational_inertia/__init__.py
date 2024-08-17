@@ -1,5 +1,5 @@
 """
-**Rotational inertia (kinematics)**
+**Rotational inertia (Kinematics)**
 ===================================
 
 Rotational inertia is a quantity that determines the torque needed for a desired angular

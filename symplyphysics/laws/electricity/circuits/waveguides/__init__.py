@@ -1,5 +1,5 @@
 """
-**Waveguides (circuits)**
+**Waveguides*
 =========================
 
 A *waveguide* is a structure that guides waves by restricting the transmission of energy

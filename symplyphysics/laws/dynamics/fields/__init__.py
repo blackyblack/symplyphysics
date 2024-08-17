@@ -1,5 +1,5 @@
 """
-**Fields (dynamics)**
+**Fields (Dynamics)**
 =====================
 
 A field is a physical quantity that has a value for each point in space and time. Using fields

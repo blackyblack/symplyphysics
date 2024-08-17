@@ -1,5 +1,5 @@
 """
-**Damped oscillations (kinematics)**
+**Damped oscillations (Kinematics)**
 ====================================
 
 *Damping* is the loss of energy of an oscillating system by dissipation. It is an influence within or
