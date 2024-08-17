@@ -2,9 +2,14 @@
 Wavelength of standing wave in string with fixed ends
 =====================================================
 
-If a standing wave occurs in a string with fixed ends, the value of the displacement function
-must be zero on both ends of the string. To satisfy this boundary condition, only an integer
-number of half-waves can fit into the total length of the string.
+If a standing wave occurs in a string with fixed ends, the value of the displacement
+function :math:`q(x)` must be zero on both ends of the string. To satisfy this boundary
+condition, only an integer number of half-waves can fit into the total length of the
+string.
+
+**Conditions:**
+
+#. Boundary condition: :math:`q(0) = q(L) = 0`.
 """
 
 from sympy import Eq, solve
