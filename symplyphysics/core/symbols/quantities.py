@@ -26,13 +26,15 @@ class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancest
         return obj
 
     def __init__(self, expr: Basic | float = S.One, *,
+        display_symbol: Optional[str] = None,
+        display_latex: Optional[str] = None,
         dimension: Optional[Dimension] = None) -> None:
         (scale, dimension_) = collect_factor_and_dimension(sympify(expr))
         if scale.free_symbols:
             raise UnitsError(f"Argument '{expr}' to function 'Quantity()' should "
                 f"not contain free symbols")
         dimension = dimension_ if dimension is None else dimension
-        super().__init__(self.name, dimension)
+        super().__init__(str(self.name), dimension, display_symbol=display_symbol, display_latex=display_latex)
         SI.set_quantity_dimension(self, dimension)
         SI.set_quantity_scale_factor(self, scale)
 

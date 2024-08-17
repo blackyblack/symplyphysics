@@ -6,6 +6,8 @@ import os
 import sys
 from typing import Optional, Sequence
 from sphinx.application import Sphinx
+from docs.parse import find_description, find_members_and_functions, find_title
+from docs.view import print_law, print_package
 
 
 def get_parser() -> argparse.ArgumentParser:
@@ -36,131 +38,32 @@ def get_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def find_title(content: str) -> Optional[str]:
-    content_lines = content.splitlines()
-    for i, c in enumerate(content_lines):
-        l = len(c)
-        if l == 0:
-            continue
-        if c == ("=" * l) and i > 0:
-            return "\n".join(content_lines[0:i])
-        if c == ("-" * l) and i > 0:
-            return "\n".join(content_lines[0:i])
-    return None
-
-
-def find_description(content: str) -> Optional[str]:
-    content_lines = content.splitlines()
-    section_break = 0
-    for i, c in enumerate(content_lines):
-        l = len(c)
-        if l == 0:
-            continue
-        if c == ("=" * l) and i > 0:
-            section_break = i
-            break
-        if c == ("-" * l) and i > 0:
-            section_break = i
-            break
-    if section_break == 0:
-        return None
-    content_lines = content_lines[section_break + 1:]
-    # Remove possible empty lines after title separator
-    while True:
-        if len(content_lines) == 0:
-            return ""
-        if len(content_lines[0]) == 0:
-            content_lines.pop(0)
-            continue
-        break
-    return "\n".join(content_lines)
-
-
-def find_members_and_functions(content: ast.Module) -> tuple[list[str], list[str]]:
-    law_functions: list[str] = []
-    law_members: list[str] = []
-    current_member: Optional[str] = None
-    docstrings: dict[str, str] = {}
-    for e in content.body:
-        if isinstance(e, ast.FunctionDef):
-            law_functions.append(e.name)
-            current_member = e.name
-            doc = ast.get_docstring(e)
-            if doc is not None:
-                docstrings[current_member] = doc
-            continue
-        if isinstance(e, ast.Assign):
-            for t in e.targets:
-                try:
-                    name = getattr(t, "id")
-                except AttributeError:
-                    continue
-                law_members.append(name)
-                current_member = name
-            continue
-        if isinstance(e, ast.Expr) and current_member is not None and isinstance(
-                e.value, ast.Constant):
-            docstrings[current_member] = e.value.value
-            continue
-    return ([m for m in law_members if m in docstrings],
-        [m for m in law_functions if m in docstrings])
-
-
-def members_to_doc(members: Sequence[str], doc_name: str) -> str:
-    content = ""
-    for m in members:
-        if m.startswith("_"):
-            continue
-        content = content + ".. autodata:: " + doc_name + "." + m + "\n"
-        content = content + "  :no-value:\n\n"
-    return content
-
-
-def functions_to_doc(members: Sequence[str], doc_name: str) -> str:
-    content = ""
-    for m in members:
-        if m.startswith("_"):
-            continue
-        content = content + ".. autofunction:: " + doc_name + "." + m + "\n\n"
-    return content
-
-
 def process_law_package(directory: str, laws: Sequence[str], packages: Sequence[str],
     output_dir: str) -> Optional[str]:
     filename = os.path.normpath(directory)
     filename_init = os.path.join(filename, "__init__.py")
-    init_content: Optional[str] = None
+    package_content: Optional[str] = None
     with open(filename_init, "r", encoding="utf-8") as f:
-        init_content = f.read()
-    law_parsed = ast.parse(init_content)
-    docstring = ast.get_docstring(law_parsed)
+        package_content = f.read()
+    package_parsed = ast.parse(package_content)
+    docstring = ast.get_docstring(package_parsed)
     if docstring is None:
         return None
-    law_title = find_title(docstring)
-    if law_title is None:
+    package_title = find_title(docstring)
+    if package_title is None:
         return None
-    law_description = find_description(docstring)
-    law_description = "" if law_description is None else law_description
-
-    law_members, law_functions = find_members_and_functions(law_parsed)
+    package_description = find_description(docstring)
+    if package_description is None:
+        package_description = ""
 
     package_name = filename.replace(os.sep, ".")
     package_name_strip_root = ".".join(package_name.split(".")[1:])
-    package_doc_file = os.path.normpath(os.path.join(output_dir, package_name_strip_root + ".rst"))
-
     packages = [p for p in packages if not (p.startswith(".") or p.startswith("_"))]
+    packages = [package_name_strip_root + "." + p for p in packages]
+    package_items = find_members_and_functions(package_parsed)
+    package_content = print_package(package_title, package_description, package_items, package_name, laws, packages)
 
-    package_content = "" + law_title + "\n" + ("=" *
-        len(law_title)) + "\n\n" + law_description + "\n\n"
-    if len(packages) > 0 or len(laws) > 0:
-        package_content = package_content + "Contents:\n\n" + ".. toctree::\n" + "  :maxdepth: 4\n\n"
-        for p in packages:
-            package_content = package_content + "  " + package_name_strip_root + "." + p + "\n"
-        for l in laws:
-            package_content = package_content + "  " + l + "\n"
-
-    package_content = package_content + members_to_doc(law_members, package_name)
-    package_content = package_content + functions_to_doc(law_functions, package_name)
+    package_doc_file = os.path.normpath(os.path.join(output_dir, package_name_strip_root + ".rst"))
 
     # create directory if necessary
     os.makedirs(os.path.dirname(package_doc_file), exist_ok=True)
@@ -175,13 +78,10 @@ def process_law(directory: str, law_filename: str, output_dir: str) -> Optional[
     if law_filename.startswith("__"):
         return None
     filename = os.path.normpath(os.path.join(directory, law_filename))
-    no_extension_filename = os.path.splitext(filename)[0]
-    law_module_name = no_extension_filename.replace(os.sep, ".")
-    law_module_name_strip_root = ".".join(law_module_name.split(".")[1:])
-
     with open(filename, "r", encoding="utf-8") as f:
         law_content = f.read()
     law_parsed = ast.parse(law_content)
+
     docstring = ast.get_docstring(law_parsed)
     if docstring is None:
         return None
@@ -189,21 +89,22 @@ def process_law(directory: str, law_filename: str, output_dir: str) -> Optional[
     if law_title is None:
         return None
     law_description = find_description(docstring)
-    law_description = "" if law_description is None else law_description
+    if law_description is None:
+        law_description = ""
 
-    law_members, law_functions = find_members_and_functions(law_parsed)
+    no_extension_filename = os.path.splitext(filename)[0]
+    law_module_name = no_extension_filename.replace(os.sep, ".")
+    law_items = find_members_and_functions(law_parsed)
+    doc_content = print_law(law_title, law_description, law_items, law_module_name)
 
-    law_doc_name = law_module_name_strip_root + ".rst"
-    law_doc_file = os.path.normpath(os.path.join(output_dir, law_doc_name))
-
-    law_content = "" + law_title + "\n" + ("-" * len(law_title)) + "\n\n" + law_description + "\n\n"
-    law_content = law_content + members_to_doc(law_members, law_module_name)
-    law_content = law_content + functions_to_doc(law_functions, law_module_name)
+    law_module_name_strip_root = ".".join(law_module_name.split(".")[1:])
+    doc_name = law_module_name_strip_root + ".rst"
+    doc_file = os.path.normpath(os.path.join(output_dir, doc_name))
 
     # create directory if necessary
-    os.makedirs(os.path.dirname(law_doc_file), exist_ok=True)
-    with open(law_doc_file, "w+", encoding="utf-8") as f:
-        f.write(law_content)
+    os.makedirs(os.path.dirname(doc_file), exist_ok=True)
+    with open(doc_file, "w+", encoding="utf-8") as f:
+        f.write(doc_content)
     return law_module_name_strip_root
 
 

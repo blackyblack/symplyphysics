@@ -12,10 +12,14 @@ from .id_generator import next_id
 class DimensionSymbol:
     _dimension: Dimension
     _display_name: str
+    _display_symbol: str
+    _display_latex: str
 
-    def __init__(self, display_name: str, dimension: Dimension = Dimension(S.One)) -> None:
+    def __init__(self, display_name: str, dimension: Dimension = Dimension(S.One), *, display_symbol: Optional[str] = None, display_latex: Optional[str] = None) -> None:
         self._dimension = dimension
         self._display_name = display_name
+        self._display_symbol = self._display_name if display_symbol is None else display_symbol
+        self._display_latex = ("\\text{"  + self._display_symbol + "}") if display_latex is None else display_latex
 
     @property
     def dimension(self) -> Dimension:
@@ -24,6 +28,14 @@ class DimensionSymbol:
     @property
     def display_name(self) -> str:
         return self._display_name
+
+    @property
+    def display_symbol(self) -> str:
+        return self._display_symbol
+
+    @property
+    def display_latex(self) -> str:
+        return self._display_latex
 
 
 class Symbol(DimensionSymbol, SymSymbol):  # pylint: disable=too-many-ancestors
@@ -39,9 +51,12 @@ class Symbol(DimensionSymbol, SymSymbol):  # pylint: disable=too-many-ancestors
     def __init__(self,
         display_name: Optional[str] = None,
         dimension: Dimension = Dimension(S.One),
+        *,
+        display_symbol: Optional[str] = None,
+        display_latex: Optional[str] = None,
         **_assumptions: Any) -> None:
         display_name = self.name if display_name is None else display_name
-        super().__init__(display_name, dimension)
+        super().__init__(str(display_name), dimension, display_symbol=display_symbol, display_latex=display_latex)
 
 
 class SymbolIndexed(DimensionSymbol, IndexedBase):  # pylint: disable=too-many-ancestors
@@ -61,9 +76,12 @@ class SymbolIndexed(DimensionSymbol, IndexedBase):  # pylint: disable=too-many-a
     def __init__(self,
         display_name: Optional[str] = None,
         dimension: Dimension = Dimension(S.One),
+        *,
+        display_symbol: Optional[str] = None,
+        display_latex: Optional[str] = None,
         **_assumptions: Any) -> None:
         display_name = self.name if display_name is None else display_name
-        super().__init__(display_name, dimension)
+        super().__init__(str(display_name), dimension, display_symbol=display_symbol, display_latex=display_latex)
 
     def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
         pass
@@ -85,9 +103,12 @@ class Function(DimensionSymbol, UndefinedFunction):
     def __init__(cls,
         display_name: Optional[str] = None,
         dimension: Dimension = Dimension(S.One),
+        *,
+        display_symbol: Optional[str] = None,
+        display_latex: Optional[str] = None,
         **_options: Any) -> None:
         display_name = cls.name if display_name is None else display_name
-        super().__init__(display_name, dimension)
+        super().__init__(str(display_name), dimension, display_symbol=display_symbol, display_latex=display_latex)
 
 
 # Symbol and Function have generated names, hence their display is not readable.
