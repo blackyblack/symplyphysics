@@ -1,10 +1,29 @@
+r"""
+Spectral energy density at high frequency limit
+===============================================
+
+*Wien's approximation*, also known as *Wien distribution law*, describes the spectrum of blackbody
+thermal radiation. It accurately describes short-wavelength (i.e. high-frequency) spectrum of
+thermal emission, but fails to do that for long-wavelength (i.e. low-frequency) emission.
+
+**Notation:**
+
+#. :math:`h` is the Planck constant.
+#. :math:`c` is the speed of light.
+#. :math:`k_\text{B}` (:code:`k_B`) is the Boltzmann constant.
+
+**Conditions:**
+
+#. The black body is isolated from the environment.
+#. :math:`h \nu \gg k_\text{B} T`, i.e. photon energy is much greater than thermal energy.
+"""
+
 from sympy import Eq, exp, pi, Symbol as SymSymbol, solve, S
 from sympy.physics.units import planck, speed_of_light, boltzmann_constant
 from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     symbols,
@@ -13,30 +32,47 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.waves.blackbody_radiation import spectral_energy_density_at_all_frequencies as planck_law
 
-# Description
-## Wien's approximation, also known as Wien distribution law, describes the spectrum of blackbody
-## thermal radiation. It accurately describes short-wavelength (i.e. high-frequency) spectrum of
-## thermal emission, but fails to do that for long-wavelength (i.e. low-frequency) emission.
-
-# Law: u_nu = (8 * pi * h * nu**3 / c**3) * exp(-h * nu / (k * T))
-## u_nu - spectral energy density (energy per unit volume per unit frequency)
-## h - Planck constant
-## nu - radiation frequency
-## c - speed of light
-## k - Boltzmann constant
-## T - equilibrium temperature of black body
-
-# Conditions
-## - `h * nu >> k * T`, i.e. the photon energy is much greater than the thermal energy.
-
 spectral_energy_density = Symbol("spectral_energy_density",
     units.energy / (units.volume * units.frequency))
+r"""
+Spectral energy density, which is energy per unit volume per unit frequency.
+
+Symbol:
+    :code:`u_nu`
+
+Latex:
+    :math:`u_\nu`
+"""
+
 radiation_frequency = Symbol("radiation_frequency", units.frequency)
+r"""
+Frequency (linear) of the radiation.
+
+Symbol:
+    :code:`nu`
+
+Latex:
+    :math:`\nu`
+"""
+
 equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature,
     "equilibrium_temperature")
+"""
+Equilibrium :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the ensemble.
+
+Symbol:
+    :code:`T`
+"""
 
 law = Eq(spectral_energy_density, (8 * pi * planck * radiation_frequency**3 / speed_of_light**3) *
     exp(-1 * planck * radiation_frequency / (boltzmann_constant * equilibrium_temperature)))
+r"""
+:code:`u_nu = (8 * pi * h * nu^3 / c^3) * exp(-1 * h * nu / (k_B * T))`
+
+Latex:
+    .. math::
+        u_\nu = \frac{8 \pi h \nu^3}{c^3} \exp \left( - \frac{h \nu}{k_B T} \right)
+"""
 
 # Derive from Planck's law of blackbody radiation
 
@@ -68,10 +104,6 @@ _planck_density_series = solve(
 )[0][spectral_energy_density]
 
 assert expr_equals(_planck_density_series, law.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(

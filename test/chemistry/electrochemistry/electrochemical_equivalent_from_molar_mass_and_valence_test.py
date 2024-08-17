@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors, prefixes)
-from symplyphysics.laws.electricity.chemistry import electrochemical_equivalent_from_molar_mass_and_valence as equivalent_law
+from symplyphysics.laws.chemistry.electrochemistry import electrochemical_equivalent_from_molar_mass_and_valence as equivalent_law
 
 # Description
 ## Consider molybdenum with a molar mass of 96 gram per mol. With a valence of 4,

@@ -1,3 +1,23 @@
+r"""
+Speed distribution
+==================
+
+For a system containing a large number of identical non-interacting non-relativistic classical
+particles in thermodynamic equilibrium, the speed distribution function is a function such that
+:math:`f(v) dv` gives the fraction of particles with speeds in the interval :math:`dv` at speed
+:math:`v`.
+
+**Notation:**
+
+#. :math:`k_\text{B}` (:code:`k_B`) is the Boltzmann constant.
+
+**Notes:**
+
+#. Number of particles is big enough that the laws of thermodynamics can be applied.
+#. Particles are identical, non-interacting, non-relativistic, and classical.
+#. The ensemble of particles is at thermodynamic equilibrium.
+"""
+
 from sympy import (
     Eq,
     Rational,
@@ -12,8 +32,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    Function,
-    print_expression,
     validate_input,
     validate_output,
     clone_symbol,
@@ -24,38 +42,55 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.geometry.elements import volume_element_magnitude
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import velocity_component_distribution
 
-# Description
-## For a system containing a large number of identical non-interacting non-relativistic classical
-## particles in thermodynamic equilibrium, the speed distribution function is a function such that
-## `f(v) * dv` gives the fraction of particles with speeds in the interval `dv` at speed `v`.
-
-# Law: f(v) = sqrt(2 / pi) * (m / (k * T))**(3/2) * v**2 * exp(-m * v**2 / (2 * k * T))
-## f(v) - speed distribution function
-## v - speed of particles, i.e. magnitude of velocity vector
-## m - mass of particle
-## k - Boltzmann constant
-## T - equilibrium temperature of the particle ensemble
-
-# Conditions
-## - Number of particles is big enough that the laws of thermodynamics can be applied.
-## - Particles are identical, non-interacting, non-relativistic, and obeying classical laws of physics.
-## - The ensemble of particles is at thermodynamic equilibrium.
-
-speed_distribution_function = Function("speed_distribution_function",
+speed_distribution_function = Symbol("speed_distribution_function",
     1 / units.velocity,
     positive=True)
+"""
+Speed distribution function.
+
+Symbol:
+    :code:`f(v)`
+"""
+
 particle_speed = Symbol("particle_speed", units.velocity, positive=True)
+"""
+Particle speed.
+
+Symbol:
+    :code:`v`
+"""
+
 particle_mass = clone_symbol(symbols.basic.mass, "particle_mass", positive=True)
+"""
+:attr:`~symplyphysics.symbols.basic.mass` of a particle.
+
+Symbol:
+    :code:`m`
+"""
+
 equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature,
     "equilibrium_temperature",
     positive=True)
+"""
+Equilibrium :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the ensemble.
+
+Symbol:
+    :code:`T`
+"""
 
 law = Eq(
-    speed_distribution_function(particle_speed),
+    speed_distribution_function,
     sqrt(2 / pi) * (particle_mass /
     (units.boltzmann_constant * equilibrium_temperature))**Rational(3, 2) * particle_speed**2 *
     exp(-1 * particle_mass * particle_speed**2 /
     (2 * units.boltzmann_constant * equilibrium_temperature)))
+r"""
+:code:`f(v) = sqrt(2 / pi) * (m / (k_B * T))^(3/2) * v^2 * exp(-1 * m * v^2 / (2 * k_B * T))`
+
+Latex:
+    .. math::
+        f(v) = \sqrt{\frac{2}{\pi}} \left( \frac{m}{k_\text{B} T} \right)^{3/2} v^2 \exp \left( - \frac{m v^2}{2 k_\text{B} T} \right)
+"""
 
 # Derive from Maxwell-Boltzmann distribution of velocity vector components
 
@@ -98,18 +133,14 @@ _speed_eqn = Eq(particle_speed**2, _velocity_x**2 + _velocity_y**2 + _velocity_z
 
 _speed_distribution_derived = solve(
     [
-    Eq(speed_distribution_function(particle_speed), _spherical_speed_distribution),
+    Eq(speed_distribution_function, _spherical_speed_distribution),
     _speed_eqn,
     ],
-    (speed_distribution_function(particle_speed), _velocity_x),
+    (speed_distribution_function, _velocity_x),
     dict=True,
-)[0][speed_distribution_function(particle_speed)]
+)[0][speed_distribution_function]
 
 assert expr_equals(_speed_distribution_derived, law.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(

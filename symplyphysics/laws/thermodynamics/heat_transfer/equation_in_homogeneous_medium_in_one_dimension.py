@@ -1,3 +1,22 @@
+r"""
+Equation in homogeneous medium in one dimension
+===============================================
+
+Heat equation governs heat diffusion, as well as other diffusive processes. It describes
+the evolution of heat transferred from hotter to colder environments in time and space.
+
+**Notes:**
+
+#. There is no straghtforward solution to this equation, and it depends on initial
+   conditions as well.
+
+**Conditions:**
+
+#. There are not heat sources in the system, i.e. the heat distribution only depends on
+   the initial conditions.
+#. Thermal diffusivity :math:`\chi` does not depend on position.
+"""
+
 from sympy import Eq, Derivative
 from symplyphysics import (
     units,
@@ -5,23 +24,49 @@ from symplyphysics import (
     Function,
 )
 
-# Description
-## Heat equation governs heat diffusion, as well as other diffusive processes. It describes
-## the evolution of heat transferred from hotter to colder environments in time and space.
+temperature = Function("temperature", units.temperature)
+"""
+Temperature as a function of position and time.
 
-# Law: dT/dt = chi * d^2(T)/dx^2
-## T = T(x, t) - temperature
-## x - spatial coordinate (position)
-## t - time
-## chi - [thermal diffusivity](https://en.wikipedia.org/wiki/Thermal_diffusivity)
+Symbol:
+    :code:`T(x, t)`
+"""
 
-temperature_function = Function("temperature_function", units.temperature)
 position = Symbol("position", units.length)
+"""
+Position, or spatial variable.
+
+Symbol:
+    :code:`x`
+"""
+
 time = Symbol("time", units.time)
+"""
+Time.
+
+Symbol:
+    :code:`t`
+"""
+
+# TODO: Create law of thermal diffusivity via thermal conductivity
+
 thermal_diffusivity = Symbol("thermal_diffusivity", units.area / units.time)
+r"""
+`Thermal diffusivity <https://en.wikipedia.org/wiki/Thermal_diffusivity>`_.
 
-law = Eq(Derivative(temperature_function(position, time), time),
-    thermal_diffusivity * Derivative(temperature_function(position, time), position, 2))
+Symbol:
+    :code:`chi`
 
-# There is no simple solution to this equation, and it depends on the boundary conditions
-# as well.
+Latex:
+    :math:`\chi`
+"""
+
+law = Eq(Derivative(temperature(position, time), time),
+    thermal_diffusivity * Derivative(temperature(position, time), position, 2))
+r"""
+:code:`Derivative(T(x, t), t) = chi * Derivative(T(x, t), (x, 2))`
+
+Latex:
+    .. math::
+        \frac{\partial T}{\partial t} = \chi \frac{\partial^2 T}{\partial x^2}
+"""

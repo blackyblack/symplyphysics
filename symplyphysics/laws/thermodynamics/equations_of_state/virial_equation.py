@@ -1,49 +1,89 @@
+r"""
+Virial equation
+===============
+
+Also called the *virial expansion*, the *virial equation of state* expresses the compressibility factor
+(and therefore the pressure) of a real gas in local equilibrium as a power series of molar density.
+
+#. :math:`O(\dots)` is the mathematical *Big O*. In this law the limit :math:`\rho \to 0` is
+   assumed.
+
+**Notes:**
+
+#. The first virial coefficient :math:`A` is defined to be 1 in order to enforce that the equation
+   reduces to the ideal gas equation as gas density approaches zero.
+#. The :math:`n`-th virial coefficient represents non-additive :math:`n`-body interactions of
+   particles and all mutual interactions of :math:`2` up to :math:`(n - 1)` particles.
+#. In general, virial coefficients are functions of temperature.
+
+**Conditions:**
+
+#. Interactions between 4 and more bodies are quite rare to happen, so the expansion is truncated to contain only
+   the second and third virial coefficients. Moreover, the latter have been extensively studied and tabulated
+   for many fluids.
+"""
+
 from sympy import Eq
 from symplyphysics import (
     units,
     dimensionless,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     convert_to_float,
 )
 
-# Description
-## Also called the virial expansion, the virial equation of state expresses the compressibility factor
-## (and therefore the pressure) of a real gas in local equilibrium as a power series of the density.
-
-# Law: Z = 1 + B * rho + C * rho**2 + ...
-## Z - [compressibility factor](../../../definitions/compressibility_factor_is_deviation_from_ideal_gas.py)
-## B, C, ... - virial coefficients (technically they are functions of temperature)
-## rho - molar density (amount of substance divided by volume)
-
-# Note
-## - The first virial coefficient A is defined as the constant of value 1 in order to enforce that the equation
-##   reduces to the ideal gas equation as the gas density approaches zero.
-## - N-th virial coefficient represents the non-additive n-body interactions of particles plus all
-##   mutual interactions of 2 up to `n - 1` particles.
-## - 4- and more body interactions are quite rare to happen, so the expansion is truncated to contain only
-##   the second and third virial coefficients. Moreover, the latter have been extensively studied and tabulated
-##   for many fluids.
-
 compressibility_factor = Symbol("compressibility_factor", dimensionless, positive=True)
+"""
+See :doc:`definitions.compressibility_factor_is_deviation_from_ideal_gas`.
+
+Symbol:
+    :code:`Z`
+"""
+
 second_virial_coefficient = Symbol("second_virial_coefficient",
     units.volume / units.amount_of_substance,
     real=True)
+"""
+Second virial coefficient correponding to pair interactions between particles.
+
+Symbol:
+    :code:`B`
+"""
+
 third_virial_coefficient = Symbol("third_virial_coefficient",
     (units.volume / units.amount_of_substance)**2,
     real=True)
+"""
+Third virial coefficient corresponding to 3-body interaction between particles.
+
+Symbol:
+    :code:`C`
+"""
+
 molar_density = Symbol("molar_density", units.amount_of_substance / units.volume, positive=True)
+r"""
+Molar density of the system, or as amount of substance per unit volume.
+See :doc:`laws.quantities.quantity_is_volumetric_density_times_volume`.
+
+Symbol:
+    :code:`rho`
+
+Latex:
+    :math:`\rho`
+"""
 
 law = Eq(
     compressibility_factor,
     1 + second_virial_coefficient * molar_density + third_virial_coefficient * molar_density**2)
+r"""
+:code:`Z = 1 + B * rho + C * rho^2 + O(rho^3)`
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        Z = 1 + B \rho + C \rho^2 + O \! \left( \rho^3 \right)
+"""
 
 
 @validate_input(

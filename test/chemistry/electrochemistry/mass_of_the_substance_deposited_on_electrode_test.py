@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.electricity.chemistry import mass_of_the_substance_deposited_on_electrode as mass_law
+from symplyphysics.laws.chemistry.electrochemistry import mass_of_the_substance_deposited_on_electrode as mass_law
 
 # Description
 ## Consider copper with an electrochemical equivalent of 1.19 [gram / (ampere * hour)]. Let the current be 2 ampere and the time

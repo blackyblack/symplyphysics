@@ -2,7 +2,7 @@ r"""
 Reduced pressure
 ================
 
-Reduced units are used in the dimensionless van der Waals equation of state.
+See :ref:`vdw_reduced_units_def`.
 """
 
 from sympy import Eq
