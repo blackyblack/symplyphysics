@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.electricity.chemistry import energy_of_an_electron_in_a_hydrogen_atom as energy_law
+from symplyphysics.laws.chemistry.electrochemistry import energy_of_an_electron_in_a_hydrogen_atom as energy_law
 
 # Description
 ## The energy value is known for the radius of the first Bohr orbit of the electron. It is equal to 13.6 [eV].
