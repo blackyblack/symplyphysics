@@ -4,6 +4,10 @@ Average power of sinusoidal wave on stretched string
 
 The average power of a wave of any type is proportional to the square of its amplitude and to the
 square of its angular frequency.
+
+**Conditions:**
+
+#. The wave is sinusoidal.
 """
 
 from sympy import Eq
