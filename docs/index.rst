@@ -1,19 +1,17 @@
 Symplyphysics
 =============
 
-Physics laws implemented as code. Based on `SymPy`_ Python library.
-
-.. _SymPy: https://github.com/sympy/sympy
+Physics laws implemented as code. Based on `SymPy <https://github.com/sympy/sympy>`_ Python library.
 
 Contents:
 
 .. toctree::
   :maxdepth: 4
 
-  symplyphysics/laws
-  symplyphysics/definitions
-  symplyphysics/symbols
-  symplyphysics/quantities
+  laws
+  definitions
+  symbols
+  quantities
 
 Indices and tables
 ==================

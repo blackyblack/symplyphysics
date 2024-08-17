@@ -3,36 +3,59 @@
 import argparse
 import ast
 import os
+import pathlib
+import shutil
 import sys
 from typing import Optional, Sequence
 from sphinx.application import Sphinx
-from docs.parse import find_description, find_members_and_functions, find_title
-from docs.view import print_law, print_package
+from symplyphysics.docs.parse import find_description, find_members_and_functions, find_title
+from symplyphysics.docs.view import print_law, print_package
 
 
 def get_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(usage='%(prog)s [OPTIONS] <SOURCE_FILE>...',
-        description='Generate ReStructuredText for Symplyphysics laws.')
+    parser = argparse.ArgumentParser(usage="%(prog)s [OPTIONS] <SOURCE_FILE>...",
+        description="Generate ReStructuredText for Symplyphysics laws.")
 
-    parser.add_argument('-s',
-        '--source-dir',
-        action='store',
-        dest='source_dir',
-        help='source directory to generate rST files for')
+    parser.add_argument("-l",
+        "--laws-source-dir",
+        action="store",
+        dest="laws_source_dir",
+        default="symplyphysics",
+        help="laws source directory to generate rST files from")
 
     parser.add_argument(
-        '-o',
-        '--output-dir',
-        action='store',
-        dest='output_dir',
-        help='directory to place all output in',
+        "-g",
+        "--generated-dir",
+        action="store",
+        dest="generated_dir",
+        default="docs/generated",
+        help="directory to place all generated files",
     )
 
     parser.add_argument(
-        '-e',
-        '--exclude-dirs',
+        "-e",
+        "--exclude-dirs",
         nargs="*",
-        help='directory to exclude from parsing',
+        default=["core"],
+        help="directories to exclude from parsing",
+    )
+
+    parser.add_argument(
+        "-o",
+        "--output-dir",
+        action="store",
+        dest="output_dir",
+        default="html",
+        help="directory to generate HTML output into"
+    )
+
+    parser.add_argument(
+        "-c",
+        "--conf-dir",
+        action="store",
+        dest="conf_dir",
+        default="docs",
+        help="directory where conf.py file is stored"
     )
 
     return parser
@@ -141,15 +164,19 @@ def generate_laws_docs(source_dir: str, output_dir: str, exclude_dirs: Sequence[
             continue
 
 
-def main(argv: Sequence[str] = (), /) -> None:
+def main(argv: Sequence[str] = ()) -> None:
     args = get_parser().parse_args(argv or sys.argv[1:])
 
-    generate_laws_docs(args.source_dir, args.output_dir, args.exclude_dirs)
+    generate_laws_docs(args.laws_source_dir, args.generated_dir, args.exclude_dirs)
+    index_file = pathlib.Path(args.conf_dir).joinpath("index.rst")
+    out_index_file = pathlib.Path(args.generated_dir).joinpath("index.rst")
+    shutil.copyfile(index_file, out_index_file, follow_symlinks=True)
 
     # Build HTML docs
-    app = Sphinx("docs", "docs", "html", "html/.doctrees", "html")
+    doctrees = pathlib.Path(args.output_dir).joinpath(".doctrees/")
+    app = Sphinx(args.generated_dir, args.conf_dir, "html", doctrees, args.output_dir)
     app.build()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main(sys.argv[1:])

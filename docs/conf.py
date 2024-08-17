@@ -34,15 +34,11 @@ release = "1.0.0"
 # extensions coming with Sphinx (named "sphinx.ext.*") or your custom
 # ones.
 extensions = [
-    "sphinx.ext.autodoc",
     "sphinx.ext.viewcode",
     "sphinx.ext.autosectionlabel",
     "sphinx.ext.mathjax",
     "sphinx.ext.githubpages",
 ]
-
-# Add any paths that contain templates here, relative to this directory.
-templates_path = ["templates"]
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -60,9 +56,5 @@ html_theme = "alabaster"
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
-
-# If true, the current module name will be prepended to all description
-# unit titles (such as .. function::).
-add_module_names = False
 
 mathjax_path = "scipy-mathjax/MathJax.js?config=scipy-mathjax"
