@@ -21,7 +21,7 @@ they are exactly out of phase and their interference is *fully destructive*.
 #. They have the same amplitude, wavenumber and frequency.
 """
 
-from sympy import Eq, sin, cos, symbols, Function as SymFunction
+from sympy import Eq, sin, cos, symbols
 from symplyphysics import (
     units,
     angle_type,
