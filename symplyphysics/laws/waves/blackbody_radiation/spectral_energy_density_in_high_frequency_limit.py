@@ -46,7 +46,7 @@ Latex:
 
 radiation_frequency = Symbol("radiation_frequency", units.frequency)
 r"""
-(Linear) frequency of the radiation.
+Frequency (linear) of the radiation.
 
 Symbol:
     :code:`nu`
@@ -71,7 +71,7 @@ r"""
 
 Latex:
     .. math::
-        u_nu = \frac{8 \pi h \nu^3}{c^3} \exp \left( - \frac{h \nu}{k_B T} \right)
+        u_\nu = \frac{8 \pi h \nu^3}{c^3} \exp \left( - \frac{h \nu}{k_B T} \right)
 """
 
 # Derive from Planck's law of blackbody radiation

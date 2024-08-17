@@ -43,7 +43,7 @@ Latex:
 
 radiation_frequency = Symbol("radiation_frequency", units.frequency)
 r"""
-(Linear) frequency of the radiation.
+Frequency (linear) of the radiation.
 
 Symbol:
     :code:`nu`
