@@ -12,7 +12,7 @@ the evolution of heat transferred from hotter to colder environments in time and
 
 **Conditions:**
 
-#. There are not heat sources in the system, i.e. the heat distribution only depends on
+#. There are no heat sources in the system, i.e. the heat distribution only depends on
    the initial conditions.
 #. Thermal diffusivity :math:`\chi` does not depend on position.
 """

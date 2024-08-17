@@ -9,15 +9,18 @@ the boundary equation :math:`f(x) = T(x, 0)`.
 
 **Notes:**
 
-.. _heat_transfer_zero_temperature_solution_coefficient_note:
+#. :math:`f(x)` represents initial spatial distribution of temperature.
 
-1. Values :math:`B_n` are found using the boundary condition :math:`f(x) = \sum_n T_n(x, 0)`
+    .. _heat_transfer_zero_temperature_solution_coefficient_note:
+
+#. Values :math:`B_n` are found using the boundary condition :math:`f(x) = \sum_n T_n(x, 0)`
    with the help of the Fourier method.
-2. The total solution :math:`T(x, t) = \sum_n T_n(x, t)`.
+#. The total solution :math:`T(x, t) = \sum_n T_n(x, t)`.
 
 **Conditions:**
 
-1. Position :math:`x \in [0, L]`.
+#. Position :math:`x \in [0, L]`.
+#. Temperature on both ends is zero: :math:`T_n(0, t) = 0`, :math:`T_n(L, t) = 0`
 """
 
 from sympy import Eq, sin, exp, pi
@@ -48,6 +51,9 @@ Scaling coefficient of the solution, see :ref:`Notes <heat_transfer_zero_tempera
 
 Symbol:
     :code:`B_n`
+
+Latex:
+    :math:`B_n`
 """
 
 thermal_diffusivity = Symbol("thermal_diffusivity", units.area / units.time)
@@ -98,7 +104,7 @@ law = Eq(
     scaling_coefficient * sin(mode_number * pi * position / maximum_position) *
     exp(-1 * thermal_diffusivity * (mode_number * pi / maximum_position)**2 * time))
 r"""
-:code:`T_n(x, t) = B_n * sin(n * pi * x / L) * exp(-1 * chi * (n * pi / L)^2 t)`
+:code:`T_n(x, t) = B_n * sin(n * pi * x / L) * exp(-1 * chi * (n * pi / L)^2 * t)`
 
 Latex:
     .. math::

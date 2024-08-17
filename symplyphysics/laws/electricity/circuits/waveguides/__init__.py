@@ -1,6 +1,6 @@
 """
-**Waveguides*
-=========================
+**Waveguides**
+==============
 
 A *waveguide* is a structure that guides waves by restricting the transmission of energy
 to one direction. Common types of waveguides include acoustic waveguides which direct
