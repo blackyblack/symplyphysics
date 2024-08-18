@@ -57,4 +57,8 @@ html_theme = "alabaster"
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
 
+# If true, the current module name will be prepended to all description
+# unit titles (such as .. function::).
+add_module_names = False
+
 mathjax_path = "scipy-mathjax/MathJax.js?config=scipy-mathjax"
