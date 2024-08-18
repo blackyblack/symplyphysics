@@ -1,4 +1,4 @@
-"""
+r"""
 Statistical weight of macrostate
 ================================
 
@@ -6,6 +6,11 @@ If a physical system can be described as having several states which can be occu
 different numbers of particles but with the total number of particles being conserved and
 a condition that all allowed microstates of the closed system are equiprobable, the formula
 for the statistical weight of the system can be found in combinatorics.
+
+**Notes:**
+
+#. Law can also be represented in form :math:`W = \frac{N!}{\prod_i (N_i!)}`
+   (:code:`W = factorial(N) / Product(factorial(N_i), i)`)
 """
 
 from typing import Sequence
@@ -46,11 +51,11 @@ law = Eq(
     ProductIndexed(factorial(particle_count_in_state[global_index]), global_index),
 )
 r"""
-:code:`W = factorial(N) / Product(factorial(N_i), i) = factorial(Sum(N_i, i)) / Product(factorial(N_i), i)`
+:code:`W = factorial(Sum(N_i, i)) / Product(factorial(N_i), i)`
 
 Latex:
     .. math::
-        W = \frac{N}{\prod_i (N_i!)} = \frac{(\sum_i N_i)!}{\prod_i (N_i!)}
+        W = \frac{(\sum_i N_i)!}{\prod_i (N_i!)}
 """
 
 

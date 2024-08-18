@@ -19,7 +19,7 @@ along with the more well-known van der Waals equation of state.
 **Conditions:**
 
 #. Only applicable in the limits :math:`b \ll V_m` and :math:`a \ll p V_m^2`.
-#. Inapplicable for large pressures.
+#. Inapplicable for high pressures.
 """
 
 from sympy import Eq, solve, exp
@@ -78,6 +78,9 @@ excluded_volume_parameter = Symbol(
 """
 Parameter specific to each individual substance, usually attributed to the amount of
 excluded molar volume due to a finite size of particles.
+
+Symbol:
+    :code:`b`
 """
 
 law = Eq(

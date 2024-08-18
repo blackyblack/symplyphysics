@@ -5,9 +5,6 @@ Virial equation
 Also called the *virial expansion*, the *virial equation of state* expresses the compressibility factor
 (and therefore the pressure) of a real gas in local equilibrium as a power series of molar density.
 
-#. :math:`O(\dots)` is the mathematical *Big O*. In this law the limit :math:`\rho \to 0` is
-   assumed.
-
 **Notes:**
 
 #. The first virial coefficient :math:`A` is defined to be 1 in order to enforce that the equation
@@ -15,12 +12,14 @@ Also called the *virial expansion*, the *virial equation of state* expresses the
 #. The :math:`n`-th virial coefficient represents non-additive :math:`n`-body interactions of
    particles and all mutual interactions of :math:`2` up to :math:`(n - 1)` particles.
 #. In general, virial coefficients are functions of temperature.
+#. :math:`O(\dots)` is the mathematical *Big O*.
 
 **Conditions:**
 
 #. Interactions between 4 and more bodies are quite rare to happen, so the expansion is truncated to contain only
    the second and third virial coefficients. Moreover, the latter have been extensively studied and tabulated
    for many fluids.
+#. In this law the limit :math:`\rho \to 0` is assumed.
 """
 
 from sympy import Eq
