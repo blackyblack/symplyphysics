@@ -3,7 +3,7 @@
 from sympy import solve, Symbol, Eq
 from symplyphysics import print_expression, units, convert_to, quantities
 from symplyphysics.laws.waves import (
-    photon_energy_is_proportional_to_frequency as energy_law,
+    photon_energy_is_proportional_to_linear_frequency as energy_law,
     wavelength_from_wave_speed_and_period as wavelength_law,
 )
 from symplyphysics.laws.relativistic import total_energy_via_relativistic_mass as mass_law

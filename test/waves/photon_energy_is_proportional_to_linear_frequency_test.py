@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.waves import photon_energy_is_proportional_to_frequency as planck_law
+from symplyphysics.laws.waves import photon_energy_is_proportional_to_linear_frequency as planck_law
 
 # Description
 ## Assert we have ultraviolet radiation with frequency of 3e16 Hz.
