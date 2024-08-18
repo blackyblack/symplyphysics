@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.waves import frequency_of_the_electron_transition_in_hydrogen as frequency_law
+from symplyphysics.laws.waves import frequency_of_electron_transition_in_hydrogen as frequency_law
 
 # Description
 ## It is known that the electron transition frequency is 4.56e14 Hz at m=2 and n=3.
