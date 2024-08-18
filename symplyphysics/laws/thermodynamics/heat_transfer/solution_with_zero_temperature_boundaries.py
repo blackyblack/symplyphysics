@@ -1,3 +1,28 @@
+r"""
+Solution with zero temperature boundaries
+=========================================
+
+The heat equation coupled with a boundary condition can be solved to get a unique solution.
+In this boundary-value problem the heat transfer within a thin rod is observed, the temperature
+on both ends being zero. This restricts the number of functions :math:`f(x)` that can satisfy
+the boundary equation :math:`f(x) = T(x, 0)`.
+
+**Notes:**
+
+#. :math:`f(x)` represents initial spatial distribution of temperature.
+
+    .. _heat_transfer_zero_temperature_solution_coefficient_note:
+
+#. Values :math:`B_n` are found using the boundary condition :math:`f(x) = \sum_n T_n(x, 0)`
+   with the help of the Fourier method.
+#. The total solution :math:`T(x, t) = \sum_n T_n(x, t)`.
+
+**Conditions:**
+
+#. Position :math:`x \in [0, L]`.
+#. Temperature on both ends is zero: :math:`T_n(0, t) = 0`, :math:`T_n(L, t) = 0`
+"""
+
 from sympy import Eq, sin, exp, pi
 from symplyphysics import (
     dimensionless,
@@ -9,44 +34,87 @@ from symplyphysics import (
     symbols,
 )
 
-# Description
-## The heat equation coupled with a boundary condition can be solved to get a unique solution.
-## In this boundary-value problem the heat transfer within a thin rod is observed, the temperature
-## on both ends being zero. This restricts the number of functions `f(x)` that can satisfy the boundary
-## equation `f(x) = T(x, 0)`.
-
-# Law: T_n(x, t) = B_n * sin(n * pi * x / L) * exp(-chi * (n * pi / L)**2 * t)
-## T_n - temperature function, solution to the heat equation
-## B_n - real-valued coefficient
-## x - position, spatial coordinate
-## t - time
-## L - length of rod
-## chi - thermal diffusivity
-## n - any positive integer (1, 2, 3, ...)
-
-# Notes
-## - `x` can take a value in the range `[0, L]`.
-## - The total solution is `T(x, t) = sum(T_n(x, t), n)`
-## - To find the values of B_n one must refer to the boundary condition `f(x) = sum(T_n(x, 0), n)`
-##   and use the Fourier method for the calculation.
-
 temperature = symbols.thermodynamics.temperature
-coefficient = Symbol("coefficient", units.temperature)
+"""
+Solution to the heat equation corresponding to the :math:`n`:sup:`th` mode.
+
+Symbol:
+    :code:`T_n(x, t)`
+
+Latex:
+    :math:`T_n(x, t)`
+"""
+
+scaling_coefficient = Symbol("scaling_coefficient", units.temperature)
+"""
+Scaling coefficient of the solution, see :ref:`Notes <heat_transfer_zero_temperature_solution_coefficient_note>`.
+
+Symbol:
+    :code:`B_n`
+
+Latex:
+    :math:`B_n`
+"""
+
 thermal_diffusivity = Symbol("thermal_diffusivity", units.area / units.time)
+r"""
+`Thermal diffusivity <https://en.wikipedia.org/wiki/Thermal_diffusivity>`_.
+
+Symbol:
+    :code:`chi`
+
+Latex:
+    :math:`\chi`
+"""
+
 mode_number = Symbol("mode_number", dimensionless, integer=True, positive=True)
+"""
+Number of the mode, which is a positive integer.
+
+Symbol:
+    :code:`n`
+"""
+
 maximum_position = Symbol("maximum_position", units.length, positive=True)
+"""
+Maximum possible position.
+
+Symbol:
+    :code:`L`
+"""
+
 position = Symbol("position", units.length)
+"""
+Position, or spatial variable.
+
+Symbol: 
+    :code:`x`
+"""
+
 time = Symbol("time", units.time)
+"""
+Time.
+
+Symbol:
+    :code:`t`
+"""
 
 law = Eq(
     temperature,
-    coefficient * sin(mode_number * pi * position / maximum_position) *
+    scaling_coefficient * sin(mode_number * pi * position / maximum_position) *
     exp(-1 * thermal_diffusivity * (mode_number * pi / maximum_position)**2 * time))
+r"""
+:code:`T_n(x, t) = B_n * sin(n * pi * x / L) * exp(-1 * chi * (n * pi / L)^2 * t)`
+
+Latex:
+    .. math::
+        T_n(x, t) = B_n \sin \left( \frac{n \pi x}{L} \right) \exp \left[ -\chi \left( \frac{n \pi}{L} \right)^2 t \right]
+"""
 
 
 # pylint: disable=too-many-arguments
 @validate_input(
-    coefficient_=coefficient,
+    coefficient_=scaling_coefficient,
     thermal_diffusivity_=thermal_diffusivity,
     mode_number_=mode_number,
     maximum_position_=maximum_position,
@@ -70,7 +138,7 @@ def calculate_temperature(
         raise ValueError("position must be not greater than the maximum position")
 
     result = law.rhs.subs({
-        coefficient: coefficient_,
+        scaling_coefficient: coefficient_,
         thermal_diffusivity: thermal_diffusivity_,
         mode_number: mode_number_,
         maximum_position: maximum_position_,

@@ -4,7 +4,7 @@ from symplyphysics import (
     assert_equal,
     units,
 )
-from symplyphysics.laws.waves import wavespeed_from_medium_permittivity_permeability as speed_law
+from symplyphysics.laws.waves import wavespeed_from_medium_permittivity_and_permeability as speed_law
 
 # Description
 ## Known propagation speed of electromagnetical wave in vacuum is 299792458 m/s.

@@ -1,55 +1,92 @@
+r"""
+Velocity component distribution
+===============================
+
+For a system containing a large number of identical non-interacting non-relativistic
+classical particles in thermodynamic equilibrium, the velocity component distribution
+is a function :math:`f(v_k)` such that :math:`f(v_k) dv_k` gives the fraction of particles with
+speeds in the interval :math:`dv_k` around velocity component :math:`v_k`.
+
+**Notation:**
+
+#. :math:`k_\text{B}` (:code:`k_B`) is the Boltzmann constant.
+
+**Notes:**
+
+#. Applicable for any velocity component in Cartesian coordinates.
+
+**Conditions:**
+
+#. Number of particles is big enough that the laws of thermodynamics can be applied.
+#. Particles are identical, non-interacting, non-relativistic, and classical.
+#. The ensemble of particles is at thermodynamic equilibrium.
+"""
+
 from sympy import Eq, sqrt, pi, exp
 from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    Function,
-    print_expression,
     validate_input,
     validate_output,
     clone_symbol,
     symbols,
 )
 
-# Description
-## For a system containing a large number of identical non-interacting non-relativistic
-## classical particles in thermodynamic equilibrium, the velocity component distribution
-## is a function `f(v_x)` such that `f(v_x) * dv_x` gives the fraction of particles with
-## speeds in the interval `dv_x` around velocity component v_x. Also see Note below.
-
-# Law: f(v_k) = sqrt(m / (2 * pi * k * T)) * exp(-m * v_k**2 / (2 * k * T))
-## f(v_k) - distribution function of velocity component v_k
-## v_k - component of velocity vector in Cartesian coordinates (k = x, y, z)
-## m - mass of particle
-## k - Boltzmann constant
-## T - equilibrium temperature of the particle ensemble
-
-# Note
-## - Works for any velocity component in Cartesian coordinates: v_x, v_y, v_z.
-
-# Conditions
-## - Number of particles is big enough that the laws of thermodynamics can be applied.
-## - Particles are identical, non-interacting, non-relativistic, and obeying classical laws of physics.
-## - The ensemble of particles is at thermodynamic equilibrium.
-
-velocity_component_distribution = Function("velocity_component_distribution",
+velocity_component_distribution = Symbol("velocity_component_distribution",
     1 / units.velocity,
     positive=True)
+r"""
+Distribution function of velocity component :math:`v_k`.
+
+Symbol:
+    :code:`f(v_k)`
+
+Latex:
+    :math:`f(v_k)`
+"""
+
 velocity_component = Symbol("velocity_component", units.velocity, positive=True)
+"""
+Velocity component in Cartesian coordinates, :math:`k = x, y, z`.
+
+Symbol:
+    :code:`v_k`
+
+Latex:
+    :math:`v_k`
+"""
+
 particle_mass = clone_symbol(symbols.basic.mass, "particle_mass", positive=True)
+"""
+:attr:`~symplyphysics.symbols.basic.mass` of a particle.
+
+Symbol:
+    :code:`m`
+"""
+
 equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature,
     "equilibrium_temperature",
     positive=True)
+"""
+Equilibrium :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the ensemble.
+
+Symbol:
+    :code:`T`
+"""
 
 law = Eq(
-    velocity_component_distribution(velocity_component),
+    velocity_component_distribution,
     sqrt(particle_mass / (2 * pi * units.boltzmann_constant * equilibrium_temperature)) *
     exp(-1 * particle_mass * velocity_component**2 /
     (2 * units.boltzmann_constant * equilibrium_temperature)))
+r"""
+:code:`f(v_k) = sqrt(m / (2 * pi * k_B * T)) * exp(-1 * m * v_k^2 / (2 * k_B * T))`
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        f(v_k) = \sqrt{\frac{m}{2 \pi k_\text{B} T}} \exp \left( - \frac{m v_k^2}{2 k_\text{B} T} \right)
+"""
 
 
 @validate_input(

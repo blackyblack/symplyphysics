@@ -1,10 +1,22 @@
+"""
+Gibbs energy formula
+====================
+
+Gibbs energy differential cannot be integrated directly using the Euler's theorem on homogeneous
+functions but it can be derived via its definition and the relation for internal energy.
+
+**Notes:**
+
+#. This formula words for a single-component system. For multi-component system replace the
+   right-hand side with a sum over each type of components.
+"""
+
 from sympy import Eq
 from symplyphysics import (
     units,
     dimensionless,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
@@ -12,24 +24,41 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import gibbs_energy_via_enthalpy as gibbs_energy_def
 from symplyphysics.laws.thermodynamics.euler_relations import enthalpy_formula
 
-# Description
-## Gibbs energy differential cannot be integrated directly using the Euler's theorem on homogeneous
-## functions but it can be derived via its definition and the relation for internal energy.
-
-# Law: G = mu * N
-## G - Gibbs energy
-## mu - chemical potential
-## N - particle count
-
-# Note
-## - This formula works for single-component system. For many-component systems replace the RHS with
-##   a sum over each type of component.
-
 gibbs_energy = Symbol("gibbs_energy", units.energy)
+"""
+Gibbs energy of the system.
+
+Symbol:
+    :code:`G`
+"""
+
 chemical_potential = Symbol("chemical_potential", units.energy)
+r"""
+Chemical potential of the system.
+
+Symbol:
+    :code:`mu`
+
+Latex:
+    :math:`\mu`
+"""
+
 particle_count = Symbol("particle_count", dimensionless)
+"""
+Number of particles in the system.
+
+Symbol:
+    :code:`N`
+"""
 
 law = Eq(gibbs_energy, chemical_potential * particle_count)
+r"""
+:code:`G = mu * N`
+
+Latex:
+    .. math::
+        G = \mu N
+"""
 
 # Derive from Gibbs energy definition and enthalpy formula
 
@@ -45,10 +74,6 @@ _gibbs_energy_expr = gibbs_energy_def.law.rhs.subs({
 })
 
 assert expr_equals(_gibbs_energy_expr, law.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(

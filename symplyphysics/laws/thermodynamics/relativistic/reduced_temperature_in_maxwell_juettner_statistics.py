@@ -38,15 +38,15 @@ Latex:
 
 temperature = symbols.thermodynamics.temperature
 """
-Temperature of the gas.
+:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas.
 
 Symbol:
     :code:`T`
 """
 
-mass = symbols.basic.mass
+particle_mass = symbols.basic.mass
 """
-Mass of a relativistic particle comprising the gas.
+:attr:`~symplyphysics.symbols.basic.mass` of a relativistic particle comprising the gas.
 
 Symbol:
     :code:`m`
@@ -54,7 +54,7 @@ Symbol:
 
 law = Eq(
     reduced_temperature,
-    (units.boltzmann_constant * temperature) / (mass * units.speed_of_light**2),
+    (units.boltzmann_constant * temperature) / (particle_mass * units.speed_of_light**2),
 )
 r"""
 :code:`theta = (k_B * T) / (m * c^2)`
@@ -67,7 +67,7 @@ Latex:
 
 @validate_input(
     temperature_=temperature,
-    mass_=mass,
+    mass_=particle_mass,
 )
 @validate_output(reduced_temperature)
 def calculate_reduced_temperature(
@@ -76,6 +76,6 @@ def calculate_reduced_temperature(
 ) -> float:
     result = law.rhs.subs({
         temperature: temperature_,
-        mass: mass_,
+        particle_mass: mass_,
     })
     return convert_to_float(result)
