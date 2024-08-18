@@ -4,27 +4,27 @@ from sympy import symbols, Eq, solve
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression
-from symplyphysics.laws.waves import frequency_shift_from_velocity as shift_law
+from symplyphysics.laws.waves import frequency_shift_from_speed_in_collinear_motion as shift_law
 
 reduced_frequency = symbols("reduced_frequency")
 
 reduced_frequency_eqn = Eq(
     reduced_frequency,
-    shift_law.observed_frequency / shift_law.real_frequency,
+    shift_law.observed_frequency / shift_law.source_frequency,
 )
 
 reduced_observer_speed = symbols("reduced_observer_speed")
 
 reduced_observer_speed_eqn = Eq(
     reduced_observer_speed,
-    shift_law.observer_velocity / shift_law.wave_velocity,
+    shift_law.observer_speed / shift_law.wave_speed,
 )
 
 reduced_source_speed = symbols("reduced_source_speed")
 
 reduced_source_speed_eqn = Eq(
     reduced_source_speed,
-    shift_law.source_velocity / shift_law.wave_velocity,
+    shift_law.source_speed / shift_law.wave_speed,
 )
 
 reduced_frequency_expr = solve(
@@ -35,10 +35,10 @@ reduced_frequency_expr = solve(
     reduced_source_speed_eqn,
     ),
     (
-    shift_law.real_frequency,
+    shift_law.source_frequency,
     reduced_frequency,
-    shift_law.observer_velocity,
-    shift_law.source_velocity,
+    shift_law.observer_speed,
+    shift_law.source_speed,
     ),
     dict=True,
 )[0][reduced_frequency]

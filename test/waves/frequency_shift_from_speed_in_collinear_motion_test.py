@@ -8,7 +8,7 @@ from symplyphysics import (
     SI,
     convert_to,
 )
-from symplyphysics.laws.waves import frequency_shift_from_velocity as doppler_law
+from symplyphysics.laws.waves import frequency_shift_from_speed_in_collinear_motion as doppler_law
 
 # Man stands near railroad and hears horn of incoming train. Train comes with velocity of 9km/h and horns with 2000Hz frequency. What frequency hears the man?
 ## We have online calc for Dopler effect here: https://planetcalc.ru/2351/. With our parameters we should obtain 2015Hz observed frequency.
