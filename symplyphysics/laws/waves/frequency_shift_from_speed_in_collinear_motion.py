@@ -23,7 +23,7 @@ from sympy.physics.units import speed_of_light
 from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.waves import frequency_shift_from_velocity_and_angle as classical_doppler_with_angle
+from symplyphysics.laws.waves import frequency_shift_from_speed_in_arbitrary_motion as classical_doppler_with_angle
 from symplyphysics.laws.waves.relativistic import longitudinal_frequency_shift_from_absolute_velocities as general_doppler_law
 
 observed_frequency = Symbol("observed_frequency", units.frequency)
@@ -93,7 +93,7 @@ Latex:
 # This is a general formula for Doppler effect that has both classical and relativistic parts of equation.
 
 # Relativistic part is zero for velocities much less than speed of light
-classical_law = general_doppler_law.law.subs({
+_classical_law = general_doppler_law.law.subs({
     general_doppler_law.real_frequency: source_frequency,
     general_doppler_law.wave_velocity: wave_speed,
     general_doppler_law.source_velocity: source_speed,
@@ -101,7 +101,7 @@ classical_law = general_doppler_law.law.subs({
     (general_doppler_law.source_velocity / speed_of_light)**2: 0,
     (general_doppler_law.observer_velocity / speed_of_light)**2: 0
 })
-assert expr_equals(classical_law.rhs, law.rhs)
+assert expr_equals(_classical_law.rhs, law.rhs)
 
 # Confirm that Doppler effect for collinear movement is a subset of Doppler effect with angles
 
@@ -110,16 +110,16 @@ assert expr_equals(classical_law.rhs, law.rhs)
 ## its cosine is positive, when moving towards observer.
 ## This law has reverse notation - source velocity is positive when moving away from the observer.
 ## Therefore we should use opposite direction for source - set pi as source angle.
-observed_frequency_zero_angles = classical_doppler_with_angle.law.subs({
+_observed_frequency_zero_angles = classical_doppler_with_angle.law.subs({
     classical_doppler_with_angle.observer_angle: 0,
     classical_doppler_with_angle.source_angle: pi,
     classical_doppler_with_angle.observer_speed: observer_speed,
     classical_doppler_with_angle.source_speed: source_speed,
-    classical_doppler_with_angle.real_frequency: source_frequency,
-    classical_doppler_with_angle.wave_velocity: wave_speed
+    classical_doppler_with_angle.source_frequency: source_frequency,
+    classical_doppler_with_angle.wave_speed: wave_speed
 }).rhs
 
-assert expr_equals(observed_frequency_zero_angles, law.rhs)
+assert expr_equals(_observed_frequency_zero_angles, law.rhs)
 
 
 @validate_input(real_frequency_=source_frequency,

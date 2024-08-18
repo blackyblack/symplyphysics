@@ -7,7 +7,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.waves import frequency_shift_from_velocity_and_angle as doppler_law
+from symplyphysics.laws.waves import frequency_shift_from_speed_in_arbitrary_motion as doppler_law
 
 ## Man stands near railroad and hears horn of incoming train. Angle between line of sight to the train is 30 degrees.
 ## Train comes with velocity of 9km/h and horns with 2000Hz frequency. What frequency hears the man?
