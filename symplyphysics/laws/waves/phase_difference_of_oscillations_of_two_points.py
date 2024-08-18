@@ -1,48 +1,71 @@
-from sympy import Eq, solve, pi, Abs
+"""
+Phase shift between two points
+==============================
+
+The phase shift of wave oscillations between two points is proportional to the ratio
+of the distance between the points and the wavelength of the wave.
+"""
+
+from sympy import Eq, solve, pi
 from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     angle_type,
     convert_to_float,
 )
-# Description
-## The phase difference of the oscillations of two points spaced at distances r1 and r2 from the source of
-## the oscillations depends on these distances and wavelength.
 
-## Law is: phi = 2 * pi * |r2 - r1| / L, where
-## phi - phase difference,
-## r2 - distance to the second point,
-## r1 - distance to the first point,
-## L - wavelength,
-## || - absolute value.
+phase_shift = Symbol("phase_shift", angle_type)
+r"""
+Phase shift between the two points.
 
-phase_difference = Symbol("phase_difference", angle_type)
+Symbol:
+    :code:`phi`
 
-distance_first_point = Symbol("distance_first_point", units.length)
-distance_second_point = Symbol("distance_second_point", units.length)
+Latex:
+    :math:`\varphi`
+"""
+
+distance = Symbol("distance", units.length)
+"""
+Distance between the two points.
+
+Symbol:
+    :code:`d`
+"""
+
 wavelength = Symbol("wavelength", units.length)
+r"""
+Wavelength of the wave.
 
-law = Eq(phase_difference, 2 * pi * Abs(distance_second_point - distance_first_point) / wavelength)
+Symbol:
+    :code:`lambda`
+
+Latex:
+    :math:`\lambda`
+"""
+
+law = Eq(phase_shift, 2 * pi * distance / wavelength)
+r"""
+:code:`phi = 2 * pi * d / lambda`
+
+Latex:
+    .. math::
+        \varphi = 2 \pi \frac{d}{\lambda}
+"""
 
 
-def print_law() -> str:
-    return print_expression(law)
-
-
-@validate_input(distance_first_point_=distance_first_point,
-    distance_second_point_=distance_second_point,
+@validate_input(
+    distance_between_points_=distance,
     wavelength_=wavelength)
-@validate_output(phase_difference)
-def calculate_phase_difference(distance_first_point_: Quantity, distance_second_point_: Quantity,
+@validate_output(phase_shift)
+def calculate_phase_difference(distance_between_points_: Quantity,
     wavelength_: Quantity) -> float:
-    result_expr = solve(law, phase_difference, dict=True)[0][phase_difference]
+    result_expr = solve(law, phase_shift, dict=True)[0][phase_shift]
     result_expr = result_expr.subs({
-        distance_first_point: distance_first_point_,
-        distance_second_point: distance_second_point_,
+        distance: distance_between_points_,
         wavelength: wavelength_
     }).doit()
     return convert_to_float(result_expr)
