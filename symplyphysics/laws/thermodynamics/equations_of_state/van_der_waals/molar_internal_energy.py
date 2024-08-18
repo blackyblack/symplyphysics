@@ -68,7 +68,10 @@ r"""
 Volume of the van der Waals fluid per unit amount of substance.
 
 Symbol:
-    :code:`v`
+    :code:`V_m`
+
+Latex:
+    :math:`V_m`
 """
 
 law = Eq(
@@ -77,11 +80,11 @@ law = Eq(
     attractive_forces_parameter / molar_volume,
 )
 r"""
-:code:`u = Integral(c_V(T), T) - a / v`
+:code:`u = Integral(c_V(T), T) - a / V_m`
 
 Latex:
     .. math::
-        u = \int c_V(T) \, dT - \frac{a}{v}
+        u = \int c_V(T) \, dT - \frac{a}{V_m}
 """
 
 

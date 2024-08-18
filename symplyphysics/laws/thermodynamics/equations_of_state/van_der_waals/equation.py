@@ -4,7 +4,7 @@ Van der Waals equation
 
 To more accurately describe the behavior of real gases at low temperatures,
 a Van der Waals gas model was created, taking into account the forces of intermolecular interaction.
-In this model, internal energy becomes a function not only of temperature, but also of molar_volume.
+In this model, internal energy becomes a function not only of temperature, but also of molar volume.
 
 The Van der Waals equation is one of the well-known approximate equations of state describing
 the properties of a real gas, having a compact form and taking
@@ -32,7 +32,10 @@ molar_volume = Symbol("molar_volume", units.volume / units.amount_of_substance)
 Volume of the van der Waals fluid per unit amount of substance.
 
 Symbol:
-    :code:`v`
+    :code:`V_m`
+
+Latex:
+    :math:`V_m`
 """
 
 temperature = symbols.thermodynamics.temperature
@@ -72,11 +75,11 @@ law = Eq(
     units.molar_gas_constant * temperature,
 )
 r"""
-:code:`(p + a / v^2) * (v - b) = R * T`
+:code:`(p + a / V_m^2) * (V_m - b) = R * T`
 
 Latex:
     .. math::
-        \left( p + \frac{a}{v^2} \right) (v - b) = R T
+        \left( p + \frac{a}{V_m^2} \right) (V_m - b) = R T
 """
 
 

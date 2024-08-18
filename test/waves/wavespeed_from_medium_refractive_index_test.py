@@ -4,7 +4,7 @@ from symplyphysics import (
     assert_equal,
     units,
 )
-from symplyphysics.laws.waves import wavespeed_from_medium as speed_law
+from symplyphysics.laws.waves import wavespeed_from_medium_refractive_index as speed_law
 
 # Description
 ## Known propagation speed of electromagnetical wave in air (with it's refraction factor of 1.0003) is 2.997925e8 km/s.

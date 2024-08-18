@@ -1,6 +1,6 @@
 """
-Astronomy (Relativistic)
-========================
+**Astronomy (Relativistic)**
+============================
 
-Relativistic extension of astronomy.
+Collection of laws related to relativistic description of astronomy.
 """

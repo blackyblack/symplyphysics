@@ -1,10 +1,28 @@
+r"""
+Energy distribution
+===================
+
+For a system containing a large number of identical non-interacting non-relativistic classical
+particles in thermodynamic equilibrium, the energy distribution function is a function such that
+:math:`f(E) dE` gives the fraction of particles with energies in the interval :math:`dE`
+around energy value :math:`E`.
+
+**Notation:**
+
+#. :math:`k_\text{B}` (:code:`k_B`) is the Boltzmann constant.
+
+**Notes:**
+
+#. Number of particles is big enough that the laws of thermodynamics can be applied.
+#. Particles are identical, non-interacting, non-relativistic, and classical.
+#. The ensemble of particles is at thermodynamic equilibrium.
+"""
+
 from sympy import Eq, Rational, sqrt, pi, exp, solve
 from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    Function,
-    print_expression,
     validate_input,
     validate_output,
     clone_symbol,
@@ -14,34 +32,45 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_speed as kinetic_energy_law
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed_distribution
 
-# For a system containing a large number of identical non-interacting non-relativistic classical
-## particles in thermodynamic equilibrium, the energy distribution function is a function such that
-## `f(E) * dE` gives the fraction of particles with energies in the interval `dE` around energy
-## value `E`.
-
-# Law: f(E) = 2 * sqrt(E / pi) * (k * T)**(-3/2) * exp(-E / (k * T))
-## f(E) - energy distribution function
-## E - energy
-## k - Boltzmann constant
-## T - equilibrium temperature
-
-# Conditions
-## - Number of particles is big enough that the laws of thermodynamics can be applied.
-## - Particles are identical, non-interacting, non-relativistic, and obeying classical laws of physics.
-## - The ensemble of particles is at thermodynamic equilibrium.
-
-energy_distribution_function = Function("energy_distribution_function",
+energy_distribution_function = Symbol("energy_distribution_function",
     1 / units.energy,
     positive=True)
+"""
+Energy distribution function.
+
+Symbol:
+    :code:`f(E)`
+"""
+
 energy = Symbol("energy", units.energy, positive=True)
+"""
+Energy of the ensemble.
+
+Symbol:
+    :code:`E`
+"""
+
 equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature,
     "equilibrium_temperature",
     positive=True)
+"""
+Equilibrium :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the ensemble.
+
+Symbol:
+    :code:`T`
+"""
 
 law = Eq(
-    energy_distribution_function(energy),
+    energy_distribution_function,
     2 * sqrt(energy / pi) * (units.boltzmann_constant * equilibrium_temperature)**Rational(-3, 2) *
     exp(-1 * energy / (units.boltzmann_constant * equilibrium_temperature)))
+r"""
+:code:`f(E) = 2 * sqrt(E / pi) * (k_B * T)^(3/2) * exp(-1 * E / (k_B * T))`
+
+Latex:
+    .. math::
+        f(E) = 2 \sqrt \frac{E}{\pi} \left( k_\text{B} T \right)^{3/2} \exp \left( - \frac{E}{k_\text{B} T} \right)
+"""
 
 # Derive from speed distribution and kinetic energy formula
 
@@ -65,10 +94,6 @@ _energy_distribution_derived = (
     abs(_speed_derivative_wrt_energy))
 
 assert expr_equals(_energy_distribution_derived, law.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(
