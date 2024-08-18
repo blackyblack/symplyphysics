@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy import pi
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.waves import phase_difference_of_oscillations_of_two_points as phase_difference_law
+from symplyphysics.laws.waves import phase_shift_between_two_points as phase_difference_law
 
 # Description
 ## The distance to the first point is 10 meter, the distance to the second point is 16 meter, and the wavelength is 12 meter.
