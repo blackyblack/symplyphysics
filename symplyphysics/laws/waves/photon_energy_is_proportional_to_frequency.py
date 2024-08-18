@@ -1,24 +1,46 @@
+"""
+Photon energy is proportional to linear frequency
+=================================================
+
+Photon is the elementary part of any electromagnetical radiation, having no mass and moving with speed of light
+in any reference frame. The energy of a photon depends only on its frequency.
+"""
+
 from sympy import (Eq, solve)
 from sympy.physics.units import planck as planck_constant
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output)
 
-# Description
-## Photon is the elementary part of any electromagnetical radiation which has no mass and always moves with speed of light.
-## It carries some energy. The amount of energy depends only on the frequency of the photon.
-## Law is: E = h * nu, where
-## E is energy of photon,
-## h is Planck constant,
-## nu is frequency of photon.
-
 photon_energy = Symbol("photon_energy", units.energy)
+r"""
+Energy of a photon.
+
+Symbol:
+    :code:`E_ph`
+
+Latex:
+    :math:`E_\text{ph}`
+"""
+
 photon_frequency = Symbol("frequency", units.frequency)
+r"""
+Frequency of a photon.
+
+Symbol:
+    :code:`nu`
+
+Latex:
+    :math:`\nu`
+"""
 
 law = Eq(photon_energy, planck_constant * photon_frequency)
+r"""
+:code:`E_ph = h * nu`
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        E_\text{ph} = h \nu
+"""
 
 
 @validate_input(photon_frequency_=photon_frequency)
