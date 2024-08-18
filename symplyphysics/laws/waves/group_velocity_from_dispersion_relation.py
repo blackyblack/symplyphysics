@@ -1,3 +1,13 @@
+"""
+Group velocity from dispersion relation
+=======================================
+
+Waves can form a group, called wave packets. The speed with which a wave packet travels
+is called group velocity. In other words, it is the speed with which the overall envelope
+shape of the wave's amplitudes — called envelope of modulation of the wave — propagates
+through space.
+"""
+
 from sympy import Eq, Derivative
 from symplyphysics import (
     units,
@@ -5,43 +15,60 @@ from symplyphysics import (
     Quantity,
     Symbol,
     Function,
-    print_expression,
     validate_input,
     validate_output,
 )
 from symplyphysics.core.geometry.line import two_point_function, Point2D
 
-# Description
-## Waves can form a group, called wave packets. The velocity with which a wave packet travels
-## is called group velocity. In other words, it is the velocity with which the overall envelope
-## shape of the wave's amplitudes - called envelope of modulation of the wave -  propagates
-## through space.
-
-# Law: v_group = dw(k)/dk
-## v_group - group velocity of a collection of waves
-## w = w(k) - dispersion relation which describes how the wave's angular frequency depends on wavenumber
-## k - wavenumber
-## d/dk - partial derivative w.r.t. k
-
 group_velocity = Symbol("group_velocity", units.velocity, real=True)
-dispersion_relation = Function("dispersion_relation", angle_type / units.time, real=True)
-wavenumber = Symbol("wavenumber", angle_type / units.length, positive=True)
+r"""
+Group velocity of the wave packet.
+
+Symbol:
+    :code:`v_group`
+
+Latex:
+    :math:`v_\text{group}`
+"""
+
+angular_frequency = Function("angular_frequency", angle_type / units.time, real=True)
+r"""
+Angular frequency of the wave as a function of angular wavenumber, also called the
+*dispersion relation* of the wave.
+
+Symbol:
+    :code:`w(k)`
+
+Latex:
+    :math:`\omega(k)`
+"""
+
+angular_wavenumber = Symbol("angular_wavenumber", angle_type / units.length, positive=True)
+"""
+Angular wavenumber of the wave.
+
+Symbol:
+    :code:`k`
+"""
 
 law = Eq(
     group_velocity,
-    Derivative(dispersion_relation(wavenumber), wavenumber),
+    Derivative(angular_frequency(angular_wavenumber), angular_wavenumber),
 )
+r"""
+:code:`v_group = Derivative(w(k), k)`
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        v_\text{group} = \frac{\partial \omega}{\partial k}
+"""
 
 
 @validate_input(
-    angular_frequency_before_=dispersion_relation,
-    angular_frequency_after_=dispersion_relation,
-    wavenumber_before_=wavenumber,
-    wavenumber_after_=wavenumber,
+    angular_frequency_before_=angular_frequency,
+    angular_frequency_after_=angular_frequency,
+    wavenumber_before_=angular_wavenumber,
+    wavenumber_after_=angular_wavenumber,
 )
 @validate_output(group_velocity)
 def calculate_group_velocity(
@@ -53,10 +80,10 @@ def calculate_group_velocity(
     dispersion_relation_ = two_point_function(
         Point2D(wavenumber_before_, angular_frequency_before_),
         Point2D(wavenumber_after_, angular_frequency_after_),
-        wavenumber,
+        angular_wavenumber,
     )
     result = law.rhs.subs(
-        dispersion_relation(wavenumber),
+        angular_frequency(angular_wavenumber),
         dispersion_relation_,
     ).doit()
     return Quantity(result)
