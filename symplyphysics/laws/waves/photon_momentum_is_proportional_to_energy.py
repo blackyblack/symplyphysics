@@ -25,7 +25,7 @@ Symbol:
     :code:`p`
 """
 
-energy = Symbol("frequency", units.frequency)
+energy = Symbol("frequency", units.energy)
 """
 Energy of a photon.
 
@@ -43,9 +43,9 @@ Latex:
 """
 
 
-@validate_input(photon_frequency_=energy)
+@validate_input(photon_energy_=energy)
 @validate_output(momentum)
-def calculate_momentum(photon_frequency_: Quantity) -> Quantity:
+def calculate_momentum(photon_energy_: Quantity) -> Quantity:
     result_momentum_expr = solve(law, momentum, dict=True)[0][momentum]
-    result_expr = result_momentum_expr.subs({energy: photon_frequency_})
+    result_expr = result_momentum_expr.subs({energy: photon_energy_})
     return Quantity(result_expr)
