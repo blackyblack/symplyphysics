@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.waves import wavelength_from_temperature as wiens_law
+from symplyphysics.laws.waves import peak_wavelength_via_temperature as wiens_law
 
 # Description
 ## Assert we are having preheated black object with temperature of 4000K.
