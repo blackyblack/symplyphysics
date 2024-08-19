@@ -7,7 +7,7 @@ of time.
 
 **Conditions:**
 
-#. :math:`a = \text{const} \Leftrightarrow \frac{d a}{d t} = 0`.
+#. :math:`a = \text{const} \Leftrightarrow \frac{d a}{d t} = 0.`
 """
 
 from sympy import (Eq, solve)

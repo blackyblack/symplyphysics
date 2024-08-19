@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.kinematics import (
-    angular_position_from_constant_angular_velocity as angular_position_law,)
+    angular_position_via_constant_angular_speed_and_time as angular_position_law,)
 
 # Description
 ## A body is rotating about a fixed axis with a constant angular velocity of 0.5 rad/s.
