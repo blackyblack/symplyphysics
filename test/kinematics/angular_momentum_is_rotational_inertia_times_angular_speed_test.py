@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.kinematics import (
-    angular_momentum_is_rotational_inertia_times_angular_velocity as angular_momentum_law,)
+    angular_momentum_is_rotational_inertia_times_angular_speed as angular_momentum_law,)
 
 # Description
 ## A rigid body with rotational inertia of 1.5 kg*m**2 is rotating about a fixed axis
