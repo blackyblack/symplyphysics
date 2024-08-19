@@ -1,6 +1,6 @@
 """
-Photoelectron energy from frequency
-===================================
+Photoelectron energy from energy
+================================
 
 The photoelectric effect is the emission of electrons from a material caused by
 electromagnetic radiation. Electrons emitted in this manner are called photoelectrons.
@@ -32,14 +32,11 @@ Latex:
 """
 
 photon_energy = Symbol("photon_energy", units.energy)
-r"""
+"""
 Energy of absorbed photon.
 
 Symbol:
-    :code:`E_ph`
-
-Latex:
-    :math:`E_\text{ph}`
+    :code:`E`
 """
 
 work_function = Symbol("work_function", units.energy)
@@ -52,11 +49,11 @@ Symbol:
 
 law = Eq(maximum_kinetic_energy, photon_energy - work_function)
 r"""
-:code:`K_max = E_ph - W`
+:code:`K_max = E - W`
 
 Latex:
     .. math::
-        K_\text{max} = E_\text{ph} - W
+        K_\text{max} = E - W
 """
 
 
