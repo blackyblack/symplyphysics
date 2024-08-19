@@ -7,7 +7,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.waves import photon_momentum_is_proportional_to_propagation_vec as photon_momentum_law
+from symplyphysics.laws.waves import photon_momentum_is_proportional_to_angular_wavenumber as photon_momentum_law
 
 # Description
 ## Assert we have ultraviolet radiation with frequency of 3e16 [Hz].

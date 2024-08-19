@@ -7,7 +7,7 @@ in any reference frame. The energy of a photon depends only on its frequency.
 
 **Notation:**
 
-#. :math:`\hbar` is the reduced Planck constant.
+#. :math:`\hbar` (:code:`hbar`) is the reduced Planck constant.
 """
 
 from sympy import Eq
