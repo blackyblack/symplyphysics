@@ -5,7 +5,6 @@ from symplyphysics import (
     Symbol,
     angle_type,
     validate_input,
-    print_expression,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.quantity_decorator import validate_output_same
@@ -50,10 +49,6 @@ _dsolved = dsolve(_eqn,
     }).rhs
 
 assert expr_equals(law.rhs, _dsolved)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(

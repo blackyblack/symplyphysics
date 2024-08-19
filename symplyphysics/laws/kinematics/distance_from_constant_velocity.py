@@ -1,5 +1,5 @@
 from sympy import (Eq, solve, dsolve)
-from symplyphysics import (units, Quantity, Symbol, Function, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, Function, validate_input,
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import speed_is_distance_derivative as velocity_definition
@@ -28,19 +28,15 @@ law = Eq(distance(movement_time), initial_position + constant_velocity * movemen
 
 # Derive the same law from velocity definition
 
-constant_velocity_movement_definition = velocity_definition.definition.subs({
+_constant_velocity_movement_definition = velocity_definition.definition.subs({
     velocity_definition.speed(velocity_definition.time): constant_velocity,
     velocity_definition.time: movement_time
 })
-dsolved_movement = dsolve(constant_velocity_movement_definition,
+_dsolved_movement = dsolve(_constant_velocity_movement_definition,
     velocity_definition.distance(movement_time))
 
 # Prove that derived movement function equals to law.rhs, given C1 = initial_position
-assert (expr_equals(dsolved_movement.rhs.subs("C1", initial_position), law.rhs))
-
-
-def print_law() -> str:
-    return print_expression(law)
+assert (expr_equals(_dsolved_movement.rhs.subs("C1", initial_position), law.rhs))
 
 
 @validate_input(initial_distance_=initial_position,

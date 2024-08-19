@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
@@ -32,10 +31,6 @@ law = Eq(
     body_velocity_in_first_frame,
     body_velocity_in_second_frame + second_frame_velocity_in_first_frame,
 )
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(

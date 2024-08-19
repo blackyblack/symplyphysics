@@ -55,69 +55,65 @@ curve_radius_vertical = projector.law.rhs.subs({
 ## Velocity projections are derivatives of respective coordinates.
 
 #NOTE: replace 'moving_time' first as Derivative can have difficulties when processing both substitutions at once
-velocity_horisontal = velocity_def.definition.rhs.subs(velocity_def.time,
+_velocity_horisontal = velocity_def.definition.rhs.subs(velocity_def.time,
     time).subs(velocity_def.distance(time), curve_radius_horisontal).doit()
-velocity_vertical = velocity_def.definition.rhs.subs(velocity_def.time,
+_velocity_vertical = velocity_def.definition.rhs.subs(velocity_def.time,
     time).subs(velocity_def.distance(time), curve_radius_vertical).doit()
-velocity_vector = Vector([velocity_horisontal, velocity_vertical], cartesian_coordinates)
+_velocity_vector = Vector([_velocity_horisontal, _velocity_vertical], cartesian_coordinates)
 
 ## These unit vectors should not necessary be derived. We can choose them at will and prove that
-## they are orthogonal to each other and radial_unit_vector is orthogonal to 'velocity_vector'.
-## One can also show that 'tangential_unit_vector' is 'radial_unit_vector' derivative.
-radial_unit_vector = Vector([cos(alpha(time)), sin(alpha(time))], cartesian_coordinates)
-tangential_unit_vector = Vector([-sin(alpha(time)), cos(alpha(time))], cartesian_coordinates)
+## they are orthogonal to each other and _radial_unit_vector is orthogonal to '_velocity_vector'.
+## One can also show that '_tangential_unit_vector' is '_radial_unit_vector' derivative.
+_radial_unit_vector = Vector([cos(alpha(time)), sin(alpha(time))], cartesian_coordinates)
+_tangential_unit_vector = Vector([-sin(alpha(time)), cos(alpha(time))], cartesian_coordinates)
 
 ## This is Dot product of radial vector and velocity vector. Radial vector is orthogonal to velocity hence vector
 ## multiplication result should be zero.
-assert expr_equals(dot_vectors(radial_unit_vector, velocity_vector), 0)
+assert expr_equals(dot_vectors(_radial_unit_vector, _velocity_vector), 0)
 ## Radial vector is orthogonal to tangential vector hence tangential vector should be parallel to velocity vector.
-assert expr_equals(dot_vectors(tangential_unit_vector, radial_unit_vector), 0)
+assert expr_equals(dot_vectors(_tangential_unit_vector, _radial_unit_vector), 0)
 
-## Use acceleration definition to calculate 'acceleration_vector'
-acceleration_horisontal = acceleration_def.definition.rhs.subs(acceleration_def.time, time)
-acceleration_horisontal = acceleration_horisontal.subs(acceleration_def.speed(time),
-    velocity_horisontal).doit()
-acceleration_vertical = acceleration_def.definition.rhs.subs(acceleration_def.time, time)
-acceleration_vertical = acceleration_vertical.subs(acceleration_def.speed(time),
-    velocity_vertical).doit()
-acceleration_vector = Vector([acceleration_horisontal, acceleration_vertical],
+## Use acceleration definition to calculate '_acceleration_vector'
+_acceleration_horisontal = acceleration_def.definition.rhs.subs(acceleration_def.time, time)
+_acceleration_horisontal = _acceleration_horisontal.subs(acceleration_def.speed(time),
+    _velocity_horisontal).doit()
+_acceleration_vertical = acceleration_def.definition.rhs.subs(acceleration_def.time, time)
+_acceleration_vertical = _acceleration_vertical.subs(acceleration_def.speed(time),
+    _velocity_vertical).doit()
+_acceleration_vector = Vector([_acceleration_horisontal, _acceleration_vertical],
     cartesian_coordinates)
 
-## Prove that 'acceleration_vector' has tangential and radial parts.
+## Prove that '_acceleration_vector' has tangential and radial parts.
 
-tangential_acceleration_magnitude = curve_radius * Derivative(alpha(time), (time, 2))
-radial_acceleration_magnitude = -curve_radius * Derivative(alpha(time), time)**2
+_tangential_acceleration_magnitude = curve_radius * Derivative(alpha(time), (time, 2))
+_radial_acceleration_magnitude = -curve_radius * Derivative(alpha(time), time)**2
 
 ## Use Dot product to find tangential and radial components of acceleration. Confirm they are
-## equal to expected value: tangential_acceleration_magnitude, radial_acceleration_magnitude
-tangential_acceleration_component = dot_vectors(acceleration_vector, tangential_unit_vector)
-radial_acceleration_component = dot_vectors(acceleration_vector, radial_unit_vector)
-assert expr_equals(tangential_acceleration_component, tangential_acceleration_magnitude)
-assert expr_equals(radial_acceleration_component, radial_acceleration_magnitude)
+## equal to expected value: _tangential_acceleration_magnitude, _radial_acceleration_magnitude
+_tangential_acceleration_component = dot_vectors(_acceleration_vector, _tangential_unit_vector)
+_radial_acceleration_component = dot_vectors(_acceleration_vector, _radial_unit_vector)
+assert expr_equals(_tangential_acceleration_component, _tangential_acceleration_magnitude)
+assert expr_equals(_radial_acceleration_component, _radial_acceleration_magnitude)
 
-## Here we've proven that tangential_acceleration + radial_acceleration equals to acceleration_vector. It means, we've
-## changed basis of acceleration_vector to tangential and radial vectors instead of cartesian coordinates.
+## Here we've proven that tangential_acceleration + radial_acceleration equals to _acceleration_vector. It means, we've
+## changed basis of _acceleration_vector to tangential and radial vectors instead of cartesian coordinates.
 ## Same result could be achieved by rotating coordinate system by velocity vector angle.
 
 ## We are not interested in tangential_acceleration as we are looking for centripetal acceleration which is 'radial_acceleration'
 ## in our proof.
 
-angular_velocity_applied = angular_velocity_def.definition.rhs.subs(angular_velocity_def.time, time)
-angular_velocity_applied = angular_velocity_applied.subs(
+_angular_velocity_applied = angular_velocity_def.definition.rhs.subs(angular_velocity_def.time, time)
+_angular_velocity_applied = _angular_velocity_applied.subs(
     angular_velocity_def.angular_distance(time), alpha(time))
-linear_velocity_applied = linear_velocity_law.law.rhs.subs({
-    linear_velocity_law.angular_velocity: angular_velocity_applied,
+_linear_velocity_applied = linear_velocity_law.law.rhs.subs({
+    linear_velocity_law.angular_velocity: _angular_velocity_applied,
     linear_velocity_law.curve_radius: curve_radius
 })
-law_acceleration = law.rhs.subs(linear_velocity, linear_velocity_applied)
+_law_acceleration = law.rhs.subs(linear_velocity, _linear_velocity_applied)
 
-## radial_acceleration_magnitude has minus sign. It means it is directed towards the center of the curve. The centripetal
+## _radial_acceleration_magnitude has minus sign. It means it is directed towards the center of the curve. The centripetal
 ## acceleration law is not defined in vector terms so we should only compare acceleration magnitudes (absolute values).
-assert expr_equals_abs(radial_acceleration_magnitude, law_acceleration)
-
-
-def print_law() -> str:
-    return print_expression(law)
+assert expr_equals_abs(_radial_acceleration_magnitude, _law_acceleration)
 
 
 @validate_input(linear_velocity_=linear_velocity, curve_radius_=curve_radius)

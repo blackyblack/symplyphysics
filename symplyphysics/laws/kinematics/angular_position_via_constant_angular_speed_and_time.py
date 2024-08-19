@@ -76,7 +76,7 @@ Latex:
 
 # Derive law from definition of angular velocity
 
-angular_position_formula = dsolve(
+_angular_position_formula = dsolve(
     angular_velocity_def.definition.subs(angular_velocity_def.time, time),
     angular_velocity_def.angular_distance(time),
 ).rhs.subs(
@@ -84,11 +84,11 @@ angular_position_formula = dsolve(
     angular_speed,
 ).doit()
 
-C1 = solve(Eq(initial_angular_position, angular_position_formula.subs(time, 0)), "C1")[0]
+_c1 = solve(Eq(initial_angular_position, _angular_position_formula.subs(time, 0)), "C1")[0]
 
-angular_position_derived = angular_position_formula.subs("C1", C1)
+_angular_position_derived = _angular_position_formula.subs("C1", _c1)
 
-assert expr_equals(angular_position_derived, law.rhs)
+assert expr_equals(_angular_position_derived, law.rhs)
 
 
 @validate_input(

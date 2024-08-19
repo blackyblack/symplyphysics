@@ -76,7 +76,7 @@ Latex:
 
 # Derive this law from definition of angular acceleration
 
-angular_velocity_formula = dsolve(
+_angular_velocity_formula = dsolve(
     angular_acceleration_def.definition.subs(angular_acceleration_def.time, time),
     angular_acceleration_def.angular_speed(time),
 ).rhs.subs(
@@ -84,13 +84,13 @@ angular_velocity_formula = dsolve(
     angular_acceleration,
 ).doit()
 
-angular_velocity_derived = solve([
-    Eq(initial_angular_speed, angular_velocity_formula.subs(time, 0)),
-    Eq(final_angular_speed, angular_velocity_formula)
+_angular_velocity_derived = solve([
+    Eq(initial_angular_speed, _angular_velocity_formula.subs(time, 0)),
+    Eq(final_angular_speed, _angular_velocity_formula)
 ], ("C1", final_angular_speed),
     dict=True)[0][final_angular_speed]
 
-assert expr_equals(angular_velocity_derived, law.rhs)
+assert expr_equals(_angular_velocity_derived, law.rhs)
 
 
 @validate_input(

@@ -1,6 +1,6 @@
 from sympy import Eq, solve, Derivative
-from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, Function,
-    print_expression, validate_input, validate_output, angle_type)
+from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, Function
+    , validate_input, validate_output, angle_type)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematics import linear_velocity_from_angular_velocity_and_radius as linear_velocity_law
 from symplyphysics.definitions import angular_acceleration_is_angular_speed_derivative as angular_acceleration_def
@@ -25,50 +25,46 @@ law = Eq(tangential_acceleration, angular_acceleration * rotation_radius)
 # Derive the law from the law of linear velocity in case of a rotating body
 # Condition: radius of rotation remains constant.
 
-linear_velocity = Function("linear_velocity", units.velocity)
-angular_velocity = Function("angular_velocity", angle_type / units.time)
-time = Symbol("time", units.time)
+_linear_velocity = Function("_linear_velocity", units.velocity)
+_angular_velocity = Function("_angular_velocity", angle_type / units.time)
+_time = Symbol("_time", units.time)
 
-linear_velocity_law_sub = linear_velocity_law.law.subs({
-    linear_velocity_law.linear_velocity: linear_velocity(time),
-    linear_velocity_law.angular_velocity: angular_velocity(time),
+_linear_velocity_law_sub = linear_velocity_law.law.subs({
+    linear_velocity_law.linear_velocity: _linear_velocity(_time),
+    linear_velocity_law.angular_velocity: _angular_velocity(_time),
     linear_velocity_law.curve_radius: rotation_radius,
 })
 
-# Differentiate both sides of the equation w.r.t. time
-diff_linear_velocity_law = Eq(linear_velocity_law_sub.lhs.diff(time),
-    linear_velocity_law_sub.rhs.diff(time))
+# Differentiate both sides of the equation w.r.t. _time
+_diff_linear_velocity_law = Eq(_linear_velocity_law_sub.lhs.diff(_time),
+    _linear_velocity_law_sub.rhs.diff(_time))
 
 # alpha = d(omega)/dt
-angular_acceleration_def_sub = angular_acceleration_def.definition.subs(
-    angular_acceleration_def.time, time)
-angular_acceleration_def_sub = angular_acceleration_def_sub.subs(
-    angular_acceleration_def.angular_speed(time), angular_velocity(time))
+_angular_acceleration_def_sub = angular_acceleration_def.definition.subs(
+    angular_acceleration_def.time, _time)
+_angular_acceleration_def_sub = _angular_acceleration_def_sub.subs(
+    angular_acceleration_def.angular_speed(_time), _angular_velocity(_time))
 
-linear_velocity_derivative = solve([diff_linear_velocity_law, angular_acceleration_def_sub],
-    (Derivative(angular_velocity(time), time), Derivative(linear_velocity(time), time)),
-    dict=True)[0][Derivative(linear_velocity(time), time)]
-linear_velocity_derivative_eq = Eq(Derivative(linear_velocity(time), time),
-    linear_velocity_derivative)
+_linear_velocity_derivative = solve([_diff_linear_velocity_law, _angular_acceleration_def_sub],
+    (Derivative(_angular_velocity(_time), _time), Derivative(_linear_velocity(_time), _time)),
+    dict=True)[0][Derivative(_linear_velocity(_time), _time)]
+linear_velocity_derivative_eq = Eq(Derivative(_linear_velocity(_time), _time),
+    _linear_velocity_derivative)
 
 # a_t = dv/dt
-acceleration_def_sub = acceleration_def.definition.subs(acceleration_def.time, time)
-acceleration_def_sub = acceleration_def_sub.subs(acceleration_def.speed(time),
-    linear_velocity(time))
-tangential_acceleration_value = solve([linear_velocity_derivative_eq, acceleration_def_sub],
-    (Derivative(linear_velocity(time), time), acceleration_def.acceleration(time)),
-    dict=True)[0][acceleration_def.acceleration(time)]
-tangential_acceleration_derived = tangential_acceleration_value.subs(
-    angular_acceleration_def.angular_acceleration(time), angular_acceleration)
+_acceleration_def_sub = acceleration_def.definition.subs(acceleration_def.time, _time)
+_acceleration_def_sub = _acceleration_def_sub.subs(acceleration_def.speed(_time),
+    _linear_velocity(_time))
+_tangential_acceleration_value = solve([linear_velocity_derivative_eq, _acceleration_def_sub],
+    (Derivative(_linear_velocity(_time), _time), acceleration_def.acceleration(_time)),
+    dict=True)[0][acceleration_def.acceleration(_time)]
+_tangential_acceleration_derived = _tangential_acceleration_value.subs(
+    angular_acceleration_def.angular_acceleration(_time), angular_acceleration)
 
 assert expr_equals(
-    tangential_acceleration_derived,
+    _tangential_acceleration_derived,
     law.rhs,
 )
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(

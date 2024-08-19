@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     angle_type,
@@ -41,7 +40,7 @@ law = Eq(
 
 # Derive law from definitions of angular velocity and acceleration
 
-angular_velocity_formula = dsolve(
+_angular_velocity_formula = dsolve(
     angular_acceleration_def.definition.subs(angular_acceleration_def.time, time),
     angular_acceleration_def.angular_speed(time),
 ).rhs.subs(
@@ -49,39 +48,35 @@ angular_velocity_formula = dsolve(
     angular_acceleration,
 ).doit()
 
-angular_velocity = Symbol("angular_velocity", angle_type / units.time)
-angular_velocity_derived = solve(
+_angular_velocity = Symbol("_angular_velocity", angle_type / units.time)
+_angular_velocity_derived = solve(
     [
-    Eq(initial_angular_velocity, angular_velocity_formula.subs(time, 0)),
-    Eq(angular_velocity, angular_velocity_formula)
+    Eq(initial_angular_velocity, _angular_velocity_formula.subs(time, 0)),
+    Eq(_angular_velocity, _angular_velocity_formula)
     ],
-    ("C1", angular_velocity),
+    ("C1", _angular_velocity),
     dict=True,
-)[0][angular_velocity]
+)[0][_angular_velocity]
 
-angular_displacement_formula = dsolve(
+_angular_displacement_formula = dsolve(
     angular_velocity_def.definition.subs(angular_velocity_def.time, time),
     angular_velocity_def.angular_distance(time),
 ).rhs.subs(
     angular_velocity_def.angular_speed(time),
-    angular_velocity_derived,
+    _angular_velocity_derived,
 ).doit()
 
-angular_displacement_derived = solve(
+_angular_displacement_derived = solve(
     [
     # initial angular displacement is 0 by condition
-    Eq(0, angular_displacement_formula.subs(time, 0)),
-    Eq(angular_displacement, angular_displacement_formula)
+    Eq(0, _angular_displacement_formula.subs(time, 0)),
+    Eq(angular_displacement, _angular_displacement_formula)
     ],
     ("C1", angular_displacement),
     dict=True,
 )[0][angular_displacement]
 
-assert expr_equals(angular_displacement_derived, law.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
+assert expr_equals(_angular_displacement_derived, law.rhs)
 
 
 @validate_input(

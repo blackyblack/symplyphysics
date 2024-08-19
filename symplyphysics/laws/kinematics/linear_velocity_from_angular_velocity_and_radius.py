@@ -1,5 +1,5 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, angle_type, validate_input,
+from symplyphysics import (units, Quantity, Symbol, angle_type, validate_input,
     validate_output)
 
 # Description
@@ -21,10 +21,6 @@ angular_velocity = Symbol("angular_velocity", angle_type / units.time)
 curve_radius = Symbol("curve_radius", units.length)
 
 law = Eq(linear_velocity, angular_velocity * curve_radius)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(angular_velocity_=angular_velocity, curve_radius_=curve_radius)
