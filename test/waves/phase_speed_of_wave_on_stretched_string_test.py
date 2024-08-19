@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.waves import speed_of_wave_on_stretched_string as speed_law
+from symplyphysics.laws.waves import phase_speed_of_wave_on_stretched_string as speed_law
 
 # Description
 ## A string of linear density mu = 10 g/m is stretched so that its tension tau is 1 N.
