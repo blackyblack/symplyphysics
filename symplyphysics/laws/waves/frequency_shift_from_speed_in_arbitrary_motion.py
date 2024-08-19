@@ -19,7 +19,7 @@ from symplyphysics import (units, angle_type, Quantity, Symbol, validate_input,
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import scale_factor
-from symplyphysics.laws.waves import wavelength_from_wave_speed_and_period as period_law
+from symplyphysics.laws.waves import wavelength_from_phase_speed_and_period as period_law
 from symplyphysics.definitions import temporal_frequency_from_period as frequency_def
 from symplyphysics.laws.geometry import planar_projection_is_cosine as projector
 from symplyphysics.laws.kinematic import distance_from_constant_velocity as distance_law
@@ -122,8 +122,8 @@ _wave_period = _period_from_frequency.subs(frequency_def.temporal_frequency, sou
 _wavelength_from_period = solve(period_law.law, period_law.wavelength,
     dict=True)[0][period_law.wavelength]
 _wavelength = _wavelength_from_period.subs({
-    period_law.oscillation_period: _wave_period,
-    period_law.propagation_speed: wave_speed
+    period_law.period: _wave_period,
+    period_law.phase_velocity: wave_speed
 })
 
 ## While wave travels (_wave_period * wave_speed) distance, moving source travels (_wave_period * source_velocity)
@@ -146,11 +146,11 @@ _moving_source_distance_for_period = distance_law.law.subs({
 ## Assuming signal vector pointing from source to observer, positive projection should decrease _wavelength.
 _wavelength_observed = _wavelength - _moving_source_distance_for_period
 
-_period_from_wavelength = solve(period_law.law, period_law.oscillation_period,
-    dict=True)[0][period_law.oscillation_period]
+_period_from_wavelength = solve(period_law.law, period_law.period,
+    dict=True)[0][period_law.period]
 _observed_wave_period = _period_from_wavelength.subs({
     period_law.wavelength: _wavelength_observed,
-    period_law.propagation_speed: wave_speed
+    period_law.phase_velocity: wave_speed
 })
 
 ## Confirm that derived law is the same as expected for idle observer
@@ -175,7 +175,7 @@ _relative_wave_speed = wave_speed - observer_speed_projection_on_signal
 
 _period_relative_source = _period_from_wavelength.subs({
     period_law.wavelength: _wavelength_observed,
-    period_law.propagation_speed: _relative_wave_speed
+    period_law.phase_velocity: _relative_wave_speed
 })
 
 _frequency_relative_observer = _frequency_from_period.subs(frequency_def.period,

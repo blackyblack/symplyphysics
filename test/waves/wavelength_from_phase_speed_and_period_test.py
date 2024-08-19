@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.waves import wavelength_from_wave_speed_and_period as wavelength_law
+from symplyphysics.laws.waves import wavelength_from_phase_speed_and_period as wavelength_law
 
 # Description.
 ## Speed of light in air is 299910 km/s. Frequency of radio Europa+ is 101.6 MHz and therefore has oscillation period of 9,84252e-9 seconds.

@@ -21,7 +21,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import (
     temporal_frequency_from_period as frequency_law,)
 from symplyphysics.laws.waves import (
-    wavelength_from_wave_speed_and_period as wavelength_law,
+    wavelength_from_phase_speed_and_period as wavelength_law,
     wavelength_of_standing_wave_in_string_with_fixed_ends as resonance_law,
 )
 
@@ -73,9 +73,9 @@ _wavelength = solve(resonance_law.law, resonance_law.wavelength)[0].subs({
     resonance_law.string_length: string_length,
 })
 
-_period = solve(wavelength_law.law, wavelength_law.oscillation_period)[0].subs({
+_period = solve(wavelength_law.law, wavelength_law.period)[0].subs({
     wavelength_law.wavelength: _wavelength,
-    wavelength_law.propagation_speed: phase_velocity,
+    wavelength_law.phase_velocity: phase_velocity,
 })
 
 _frequency = solve(frequency_law.law,
