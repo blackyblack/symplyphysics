@@ -2,7 +2,7 @@
 
 from sympy import solve, symbols, pi
 from symplyphysics import units, print_expression
-from symplyphysics.laws.kinematics import average_angular_frequency_is_angular_distance_over_time as angular_velocity_law
+from symplyphysics.laws.kinematics import average_angular_speed_is_angular_distance_over_time as angular_velocity_law
 from symplyphysics.laws.kinematics import constant_acceleration_movement_is_parabolic as const_acceleration_law
 
 # Description
@@ -30,7 +30,7 @@ angular_velocity_law_sub = angular_velocity_law.law.subs({
 # are interchangeable terms in this context.
 average_angular_velocity = solve(
     angular_velocity_law_sub,
-    angular_velocity_law.average_angular_frequency,
+    angular_velocity_law.average_angular_speed,
 )[0]
 
 average_angular_velocity_value = average_angular_velocity.subs({
