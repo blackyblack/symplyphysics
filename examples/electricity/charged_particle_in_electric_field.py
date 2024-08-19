@@ -4,7 +4,7 @@ from sympy import solve, symbols, sympify
 from symplyphysics import print_expression, Vector, Quantity, units, convert_to
 from symplyphysics.laws.electricity.vector import electric_field_is_force_over_test_charge as electric_field_law
 from symplyphysics.laws.dynamics import acceleration_is_force_over_mass
-from symplyphysics.laws.kinematics import constant_acceleration_movement_is_parabolic as const_acceleration_law
+from symplyphysics.laws.kinematics import position_via_constant_acceleration_and_time as const_acceleration_law
 from symplyphysics.laws.kinematics import distance_from_constant_velocity as const_velocity_law
 
 # Description
@@ -50,14 +50,15 @@ horizontal_movement_law = const_velocity_law.law.subs({
 })
 
 vertical_movement_law = const_acceleration_law.law.subs({
-    const_acceleration_law.constant_acceleration: drop_acceleration_y,
-    const_acceleration_law.initial_velocity: 0,
-    const_acceleration_law.movement_time: movement_time,
+    const_acceleration_law.acceleration: drop_acceleration_y,
+    const_acceleration_law.initial_speed: 0,
+    const_acceleration_law.time: movement_time,
+    const_acceleration_law.initial_position: 0,
 })
 
 vertical_deflection = solve([horizontal_movement_law, vertical_movement_law],
-    (movement_time, const_acceleration_law.distance(movement_time)),
-    dict=True)[0][const_acceleration_law.distance(movement_time)]
+    (movement_time, const_acceleration_law.final_position),
+    dict=True)[0][const_acceleration_law.final_position]
 
 vertical_deflection_expr = Quantity(vertical_deflection.subs(values))
 vertical_deflection_value = convert_to(vertical_deflection_expr, units.millimeter).evalf(3)

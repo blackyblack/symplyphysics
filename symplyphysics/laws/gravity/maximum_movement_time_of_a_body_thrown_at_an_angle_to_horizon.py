@@ -3,7 +3,7 @@ from sympy.physics.units import acceleration_due_to_gravity as earth_free_fall_a
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
     validate_output, angle_type)
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.kinematics import constant_acceleration_movement_is_parabolic as distance_law
+from symplyphysics.laws.kinematics import position_via_constant_acceleration_and_time as distance_law
 from symplyphysics.laws.geometry import planar_projection_is_cosine as projection_law
 
 # Description
@@ -40,12 +40,13 @@ projection_derived = solve(projection_law_applied, projection_law.projection,
 # The acceleration of gravity is directed opposite to the vertical coordinate axis,
 ## so there is a minus sign before the acceleration.
 distance_law_applied = distance_law.law.subs({
-    distance_law.initial_velocity: projection_derived,
-    distance_law.constant_acceleration: -earth_free_fall_acceleration,
-    distance_law.distance(distance_law.movement_time): 0,
+    distance_law.initial_speed: projection_derived,
+    distance_law.acceleration: -earth_free_fall_acceleration,
+    distance_law.initial_position: 0,
+    distance_law.final_position: 0,
 })
-time_derived = solve(distance_law_applied, distance_law.movement_time,
-    dict=True)[1][distance_law.movement_time]
+time_derived = solve(distance_law_applied, distance_law.time,
+    dict=True)[1][distance_law.time]
 
 # Check if derived movement time is same as declared.
 assert expr_equals(time_derived, law.rhs)

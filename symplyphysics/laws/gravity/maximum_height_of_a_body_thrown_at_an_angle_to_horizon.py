@@ -3,7 +3,7 @@ from sympy.physics.units import acceleration_due_to_gravity as earth_free_fall_a
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
     validate_output, angle_type)
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.kinematics import constant_acceleration_movement_is_parabolic as distance_law
+from symplyphysics.laws.kinematics import position_via_constant_acceleration_and_time as distance_law
 from symplyphysics.laws.kinematics import speed_via_constant_acceleration_and_time as velocity_law
 from symplyphysics.laws.geometry import planar_projection_is_cosine as projection_law
 
@@ -49,9 +49,10 @@ time_derived = solve(velocity_law_applied, velocity_law.time, dict=True)[0][velo
 # The acceleration of gravity is directed opposite to the vertical coordinate axis,
 ## so there is a minus sign before the acceleration.
 height_law_applied = distance_law.law.subs({
-    distance_law.initial_velocity: vertical_projection_derived,
-    distance_law.movement_time: time_derived,
-    distance_law.constant_acceleration: -earth_free_fall_acceleration,
+    distance_law.initial_speed: vertical_projection_derived,
+    distance_law.time: time_derived,
+    distance_law.acceleration: -earth_free_fall_acceleration,
+    distance_law.initial_position: 0,
 })
 
 # Check if derived height is same as declared.

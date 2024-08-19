@@ -6,7 +6,7 @@
 from sympy import diff, symbols, Eq, solve, simplify, pi
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
-from symplyphysics.laws.kinematics import constant_acceleration_movement_is_parabolic as movement_law
+from symplyphysics.laws.kinematics import position_via_constant_acceleration_and_time as movement_law
 from symplyphysics.laws.geometry import planar_projection_is_cosine as projector
 
 flight_time = symbols("flight_time")
@@ -40,16 +40,18 @@ initial_vertical_velocity = solve(projector.law, projector.projection,
 print(f"Initial vertical velocity: {initial_vertical_velocity}")
 
 horizontal_movement = movement_law.law.rhs.subs({
-    movement_law.initial_velocity: initial_horizontal_velocity,
-    movement_law.movement_time: time_argument,
-    movement_law.constant_acceleration: 0
+    movement_law.initial_speed: initial_horizontal_velocity,
+    movement_law.time: time_argument,
+    movement_law.acceleration: 0,
+    movement_law.initial_position: 0,
 })
 print(f"x(t): {horizontal_movement}")
 
 vertical_movement = movement_law.law.rhs.subs({
-    movement_law.initial_velocity: initial_vertical_velocity,
-    movement_law.movement_time: time_argument,
-    movement_law.constant_acceleration: -1 * gravitational_acceleration
+    movement_law.initial_speed: initial_vertical_velocity,
+    movement_law.time: time_argument,
+    movement_law.acceleration: -1 * gravitational_acceleration,
+    movement_law.initial_position: 0,
 })
 print(f"y(t): {vertical_movement}")
 

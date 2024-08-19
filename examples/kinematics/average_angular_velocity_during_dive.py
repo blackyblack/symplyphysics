@@ -3,7 +3,7 @@
 from sympy import solve, symbols, pi
 from symplyphysics import units, print_expression
 from symplyphysics.laws.kinematics import average_angular_speed_is_angular_distance_over_time as angular_velocity_law
-from symplyphysics.laws.kinematics import constant_acceleration_movement_is_parabolic as const_acceleration_law
+from symplyphysics.laws.kinematics import position_via_constant_acceleration_and_time as const_acceleration_law
 
 # Description
 ## A diver makes 2.5 revolutions on the way from a 10-m-high platform to the water. Assuming zero initial
@@ -13,12 +13,13 @@ total_angular_displacement = symbols("total_angular_displacement")
 height = symbols("height")
 
 const_acceleration_law_sub = const_acceleration_law.law.subs({
-    const_acceleration_law.constant_acceleration: units.acceleration_due_to_gravity,
-    const_acceleration_law.initial_velocity: 0,
-    const_acceleration_law.distance(const_acceleration_law.movement_time): height,
+    const_acceleration_law.acceleration: units.acceleration_due_to_gravity,
+    const_acceleration_law.initial_speed: 0,
+    const_acceleration_law.initial_position: 0,
+    const_acceleration_law.final_position: height,
 })
 # First solution is negative
-dive_time = solve(const_acceleration_law_sub, const_acceleration_law.movement_time)[1]
+dive_time = solve(const_acceleration_law_sub, const_acceleration_law.time)[1]
 
 # Average angular velocity can be found as ratio of total angular displacement to total rotation time.
 # This is analogous to average linear velocity being ratio of total distance traveled to total travel time.
