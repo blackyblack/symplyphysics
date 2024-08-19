@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.kinematics import (
-    centripetal_acceleration_is_squared_angular_velocity_times_radius as centripetal_law)
+    centripetal_acceleration_via_angular_speed_and_radius as centripetal_law)
 
 # Description
 ## A body is rotating about an axis with an angular velocity of 5 rad/s. Its perpendicular

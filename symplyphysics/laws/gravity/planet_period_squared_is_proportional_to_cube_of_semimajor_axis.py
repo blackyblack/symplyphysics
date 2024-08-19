@@ -18,7 +18,7 @@ from symplyphysics.laws.dynamics import (
 from symplyphysics.laws.gravity import (
     gravity_force_from_mass_and_distance as gravity_law,)
 from symplyphysics.laws.kinematics import (
-    centripetal_acceleration_is_squared_angular_velocity_times_radius as centripetal_law,)
+    centripetal_acceleration_via_angular_speed_and_radius as centripetal_law,)
 
 # Description
 ## Also known as Kepler's third law of planetary motion, the law of periods relates
@@ -46,8 +46,8 @@ _radius = SymSymbol("radius", nonnegative=True)
 _attracted_mass = newtons_second_law.mass
 
 _acceleration_expr = centripetal_law.law.rhs.subs({
-    centripetal_law.angular_velocity: _angular_speed,
-    centripetal_law.curve_radius: _radius,
+    centripetal_law.angular_speed: _angular_speed,
+    centripetal_law.radius_of_curvature: _radius,
 })
 
 _force_expr = gravity_law.law.rhs.subs({
