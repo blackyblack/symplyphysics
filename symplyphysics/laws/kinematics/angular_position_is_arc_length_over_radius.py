@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     angle_type,
@@ -25,10 +24,6 @@ arc_length = Symbol("arc_length", units.length)
 path_radius = Symbol("path_radius", units.length)
 
 law = Eq(angular_position, arc_length / path_radius)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(arc_length_=arc_length, path_radius_=path_radius)

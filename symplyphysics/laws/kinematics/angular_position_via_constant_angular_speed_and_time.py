@@ -14,7 +14,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     angle_type,
@@ -90,10 +89,6 @@ C1 = solve(Eq(initial_angular_position, angular_position_formula.subs(time, 0)),
 angular_position_derived = angular_position_formula.subs("C1", C1)
 
 assert expr_equals(angular_position_derived, law.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(
