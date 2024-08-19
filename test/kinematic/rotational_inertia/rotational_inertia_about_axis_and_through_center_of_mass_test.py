@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.kinematic.rotational_inertia import (
+from symplyphysics.laws.kinematics.rotational_inertia import (
     rotational_inertia_about_axis_and_through_center_of_mass as parallel_axis_theorem,)
 
 # Description

@@ -13,12 +13,12 @@ from symplyphysics.definitions import (
     angular_acceleration_is_angular_speed_derivative as angular_acceleration_def,
     angular_speed_is_angular_distance_derivative as angular_velocity_def,
 )
-from symplyphysics.laws.kinematic import (
+from symplyphysics.laws.kinematics import (
     linear_velocity_from_angular_velocity_and_radius as linear_velocity_law,
     tangential_acceleration_of_rotating_body as tangential_acceleration_law,
     centripetal_acceleration_is_squared_velocity_by_radius as centripetal_acceleration_law,
 )
-from symplyphysics.laws.kinematic.vector import acceleration_of_rotating_body as total_acceleration_law
+from symplyphysics.laws.kinematics.vector import acceleration_of_rotating_body as total_acceleration_law
 
 # Description
 ## A wheel is rotating about a fixed axis so that the angular displacement is expressed as k*t^2, where

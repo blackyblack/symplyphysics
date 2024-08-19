@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     QuantityVector,
 )
-from symplyphysics.laws.kinematic.vector import centrifugal_acceleration_via_centripetal_acceleration as law
+from symplyphysics.laws.kinematics.vector import centrifugal_acceleration_via_centripetal_acceleration as law
 
 Args = namedtuple("Args", "acp acf")
 

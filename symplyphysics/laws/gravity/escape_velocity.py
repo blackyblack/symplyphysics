@@ -6,7 +6,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 
 from symplyphysics.laws.gravity import gravity_force_from_mass_and_distance as gravity_force_law
 from symplyphysics.laws.dynamics import acceleration_is_force_over_mass as acceleration_law
-from symplyphysics.laws.kinematic import centripetal_acceleration_is_squared_velocity_by_radius as centripetal_law
+from symplyphysics.laws.kinematics import centripetal_acceleration_is_squared_velocity_by_radius as centripetal_law
 
 # Law: V = √(G * M / (R + h))
 # Where:
@@ -36,7 +36,7 @@ acceleration_derived = solve(centripetal_law_applied,
     dict=True)[0][centripetal_law.centripetal_acceleration]
 
 acceleration_law_applied = acceleration_law.law.subs({
-    acceleration_law.symbols.kinematic.acceleration: acceleration_derived,
+    acceleration_law.symbols.kinematics.acceleration: acceleration_derived,
 })
 force_derived = solve(acceleration_law_applied, acceleration_law.symbols.dynamics.force,
     dict=True)[0][acceleration_law.symbols.dynamics.force]

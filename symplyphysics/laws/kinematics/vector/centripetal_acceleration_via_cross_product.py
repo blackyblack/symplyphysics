@@ -10,7 +10,7 @@ from symplyphysics import (
     subtract_cartesian_vectors,
     assert_equal,
 )
-from symplyphysics.laws.kinematic.vector import centripetal_acceleration_via_vector_rejection as rejection_law
+from symplyphysics.laws.kinematics.vector import centripetal_acceleration_via_vector_rejection as rejection_law
 
 # Description
 ## Centripetal acceleration is the acceleration of a body in a rotating coordinate system

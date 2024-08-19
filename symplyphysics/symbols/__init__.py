@@ -8,12 +8,12 @@ Symbols represent physical quantities, units, mathematical operations and relati
 from ..core.symbols.symbols import Symbol
 from . import (
     basic,
-    kinematic,
+    kinematics,
     dynamics,
     thermodynamics,
 )
 
-__all__ = ["basic", "kinematic", "dynamics", "thermodynamics"]
+__all__ = ["basic", "kinematics", "dynamics", "thermodynamics"]
 
 _all_symbols = set()
 for k, v in list(globals().items()):

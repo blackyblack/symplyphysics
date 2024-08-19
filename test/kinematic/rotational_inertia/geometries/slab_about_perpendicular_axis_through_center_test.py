@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.kinematic.rotational_inertia.geometries import (
+from symplyphysics.laws.kinematics.rotational_inertia.geometries import (
     slab_about_perpendicular_axis_through_center as slab_formula)
 
 # Description

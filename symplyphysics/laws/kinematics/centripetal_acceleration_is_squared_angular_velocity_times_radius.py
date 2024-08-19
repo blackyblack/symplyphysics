@@ -11,7 +11,7 @@ from symplyphysics import (
     validate_output,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.kinematic import (
+from symplyphysics.laws.kinematics import (
     linear_velocity_from_angular_velocity_and_radius as velocities_law,
     centripetal_acceleration_is_squared_velocity_by_radius as centripetal_law,
 )
@@ -25,7 +25,7 @@ from symplyphysics.laws.kinematic import (
 ## w - angular velocity
 ## r - curve radius
 
-centripetal_acceleration = clone_symbol(symbols.kinematic.acceleration, "centripetal_acceleration")
+centripetal_acceleration = clone_symbol(symbols.kinematics.acceleration, "centripetal_acceleration")
 angular_velocity = Symbol("angular_velocity", angle_type / units.time)
 curve_radius = Symbol("curve_radius", units.length)
 

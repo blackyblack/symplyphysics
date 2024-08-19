@@ -7,7 +7,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.kinematic import average_angular_frequency_is_angular_distance_over_time as frequency_def
+from symplyphysics.laws.kinematics import average_angular_frequency_is_angular_distance_over_time as frequency_def
 
 # Description
 ## Circle is rotating to 9.42 radians in 5.4 seconds. It should have angular frequency of 1.744 rad/s.

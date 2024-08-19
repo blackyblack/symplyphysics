@@ -12,7 +12,7 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.definitions import damped_harmonic_oscillator_equation as damped_eqn
-from symplyphysics.laws.kinematic.damped_oscillations import (
+from symplyphysics.laws.kinematics.damped_oscillations import (
     damping_ratio_from_decay_constant_and_undamped_frequency as damping_ratio_law,
     damped_angular_frequency as damped_frequency_law,
 )

@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
     QuantityVector,
 )
-from symplyphysics.laws.kinematic.vector import (
+from symplyphysics.laws.kinematics.vector import (
     linear_displacement_is_angular_displacement_cross_radius as linear_displacement_law,)
 
 # Description

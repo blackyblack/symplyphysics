@@ -1,7 +1,7 @@
 from sympy import Idx, solve, Symbol, Eq
 from symplyphysics import print_expression, global_index
 from symplyphysics.laws.dynamics import acceleration_is_force_over_mass as second_newton_law
-from symplyphysics.laws.kinematic import constant_acceleration_movement_is_parabolic as distance_law
+from symplyphysics.laws.kinematics import constant_acceleration_movement_is_parabolic as distance_law
 from symplyphysics.definitions import net_force_is_sum_of_individual_forces as superposition_law
 
 # A trolleybus with a mass of 12 tons, starting from a place,

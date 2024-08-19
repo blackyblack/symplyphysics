@@ -7,7 +7,7 @@ from symplyphysics import (
     QuantityVector,
     assert_equal_vectors,
 )
-from symplyphysics.laws.kinematic.vector import centripetal_acceleration_via_cross_product as law
+from symplyphysics.laws.kinematics.vector import centripetal_acceleration_via_cross_product as law
 
 Args = namedtuple("Args", "w r a")
 

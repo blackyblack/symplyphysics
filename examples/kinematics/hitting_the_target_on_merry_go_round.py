@@ -6,7 +6,7 @@ from symplyphysics.definitions import (
     angular_speed_is_angular_distance_derivative as angular_velocity_def,
     period_from_angular_frequency as period_def,
 )
-from symplyphysics.laws.kinematic import (
+from symplyphysics.laws.kinematics import (
     distance_from_constant_velocity as distance_law,)
 
 # Description

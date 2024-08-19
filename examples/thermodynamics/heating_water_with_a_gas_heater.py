@@ -10,7 +10,7 @@ from symplyphysics.laws.thermodynamics import (
 )
 from symplyphysics.laws.quantities import quantity_is_specific_quantity_times_mass as specific_qty_law
 from symplyphysics.definitions import density_from_mass_volume as density_law
-from symplyphysics.laws.kinematic import distance_from_constant_velocity as velocity_law
+from symplyphysics.laws.kinematics import distance_from_constant_velocity as velocity_law
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as klayperon_law
 from symplyphysics.laws.chemistry import atomic_weight_from_mass_mole_count as mole_count_law
 from symplyphysics.definitions import mass_flow_rate as mass_rate_law

@@ -6,7 +6,7 @@ from symplyphysics import (
     QuantityVector,
     assert_equal_vectors,
 )
-from symplyphysics.laws.kinematic.vector import coriolis_acceleration as law
+from symplyphysics.laws.kinematics.vector import coriolis_acceleration as law
 
 Args = namedtuple("Args", "w v")
 

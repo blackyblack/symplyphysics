@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.kinematic.damped_oscillations import (damped_angular_frequency as
+from symplyphysics.laws.kinematics.damped_oscillations import (damped_angular_frequency as
     damped_law)
 
 # Description

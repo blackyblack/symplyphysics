@@ -17,7 +17,7 @@ from symplyphysics.laws.dynamics import (
     acceleration_is_force_over_mass as newtons_second_law,)
 from symplyphysics.laws.gravity import (
     gravity_force_from_mass_and_distance as gravity_law,)
-from symplyphysics.laws.kinematic import (
+from symplyphysics.laws.kinematics import (
     centripetal_acceleration_is_squared_angular_velocity_times_radius as centripetal_law,)
 
 # Description

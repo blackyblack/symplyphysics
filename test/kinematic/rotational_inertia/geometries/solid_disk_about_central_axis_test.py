@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.kinematic.rotational_inertia.geometries import (
+from symplyphysics.laws.kinematics.rotational_inertia.geometries import (
     solid_disk_about_central_axis as solid_disk)
 
 # Description

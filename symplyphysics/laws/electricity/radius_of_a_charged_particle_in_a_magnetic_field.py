@@ -11,7 +11,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity import period_of_a_charged_particle_in_a_magnetic_field as period_law
-from symplyphysics.laws.kinematic import distance_from_constant_velocity as distance_law
+from symplyphysics.laws.kinematics import distance_from_constant_velocity as distance_law
 
 # Description
 ## Let an arbitrary particle move in a magnetic field around a circle. Then radius of its motion depends on

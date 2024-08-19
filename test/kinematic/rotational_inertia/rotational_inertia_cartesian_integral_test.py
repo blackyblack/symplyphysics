@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.kinematic.rotational_inertia import (
+from symplyphysics.laws.kinematics.rotational_inertia import (
     rotational_inertia_cartesian_integral as rotational_inertia_law,)
 
 # Description

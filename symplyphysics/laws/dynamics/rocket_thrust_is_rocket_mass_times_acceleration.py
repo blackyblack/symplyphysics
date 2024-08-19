@@ -39,7 +39,7 @@ from symplyphysics.laws.conservation import (
     momentum_after_collision_equals_to_momentum_before as momentum_conservation_law,)
 from symplyphysics.definitions import (momentum_is_mass_times_speed as momentum_def, mass_flow_rate
     as flow_rate_def)
-from symplyphysics.laws.kinematic import (
+from symplyphysics.laws.kinematics import (
     accelerated_velocity_from_time as acceleration_def,
     classical_addition_of_velocities as galilean_law,
 )
@@ -63,9 +63,9 @@ Latex:
     :math:`v_\text{rel}`
 """
 
-acceleration = symbols.kinematic.acceleration
+acceleration = symbols.kinematics.acceleration
 """
-The :attr:`~symplyphysics.symbols.kinematic.acceleration` of the rocket.
+The :attr:`~symplyphysics.symbols.kinematics.acceleration` of the rocket.
 
 Symbol:
     :code:`a`

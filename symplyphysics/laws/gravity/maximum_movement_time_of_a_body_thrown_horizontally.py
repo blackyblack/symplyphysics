@@ -9,7 +9,7 @@ from symplyphysics import (
     validate_output,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.kinematic import constant_acceleration_movement_is_parabolic as distance_law
+from symplyphysics.laws.kinematics import constant_acceleration_movement_is_parabolic as distance_law
 
 # Description
 ## Let the body be thrown horizontally with some initial velocity. Then the time of motion (time of fall)

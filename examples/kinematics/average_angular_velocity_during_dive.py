@@ -2,8 +2,8 @@
 
 from sympy import solve, symbols, pi
 from symplyphysics import units, print_expression
-from symplyphysics.laws.kinematic import average_angular_frequency_is_angular_distance_over_time as angular_velocity_law
-from symplyphysics.laws.kinematic import constant_acceleration_movement_is_parabolic as const_acceleration_law
+from symplyphysics.laws.kinematics import average_angular_frequency_is_angular_distance_over_time as angular_velocity_law
+from symplyphysics.laws.kinematics import constant_acceleration_movement_is_parabolic as const_acceleration_law
 
 # Description
 ## A diver makes 2.5 revolutions on the way from a 10-m-high platform to the water. Assuming zero initial

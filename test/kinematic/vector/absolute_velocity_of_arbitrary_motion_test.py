@@ -7,7 +7,7 @@ from symplyphysics import (
     QuantityVector,
     assert_equal_vectors,
 )
-from symplyphysics.laws.kinematic.vector import absolute_velocity_of_arbitrary_motion as law
+from symplyphysics.laws.kinematics.vector import absolute_velocity_of_arbitrary_motion as law
 
 Args = namedtuple("Args", "vabs vrel vtr")
 

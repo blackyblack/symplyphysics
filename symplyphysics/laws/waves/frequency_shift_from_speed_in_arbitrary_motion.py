@@ -22,7 +22,7 @@ from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.laws.waves import wavelength_from_phase_speed_and_period as period_law
 from symplyphysics.definitions import temporal_frequency_from_period as frequency_def
 from symplyphysics.laws.geometry import planar_projection_is_cosine as projector
-from symplyphysics.laws.kinematic import distance_from_constant_velocity as distance_law
+from symplyphysics.laws.kinematics import distance_from_constant_velocity as distance_law
 
 observed_frequency = Symbol("observed_frequency", units.frequency)
 r"""

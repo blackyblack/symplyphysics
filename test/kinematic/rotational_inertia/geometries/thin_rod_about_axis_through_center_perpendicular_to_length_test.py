@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.kinematic.rotational_inertia.geometries import (
+from symplyphysics.laws.kinematics.rotational_inertia.geometries import (
     thin_rod_about_axis_through_center_perpendicular_to_length as thin_rod_formula)
 
 # Description

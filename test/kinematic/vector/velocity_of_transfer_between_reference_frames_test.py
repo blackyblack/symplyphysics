@@ -7,7 +7,7 @@ from symplyphysics import (
     QuantityVector,
     assert_equal_vectors,
 )
-from symplyphysics.laws.kinematic.vector import velocity_of_transfer_between_reference_frames as law
+from symplyphysics.laws.kinematics.vector import velocity_of_transfer_between_reference_frames as law
 
 Args = namedtuple("Args", "vtr v0 w r")
 

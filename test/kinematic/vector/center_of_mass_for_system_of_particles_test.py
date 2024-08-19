@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
     QuantityVector,
 )
-from symplyphysics.laws.kinematic.vector import (
+from symplyphysics.laws.kinematics.vector import (
     center_of_mass_for_system_of_particles as com_def,)
 
 # Description

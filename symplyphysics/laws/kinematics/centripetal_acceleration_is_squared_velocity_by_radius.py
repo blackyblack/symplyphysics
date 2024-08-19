@@ -7,7 +7,7 @@ from symplyphysics.definitions import speed_is_distance_derivative as velocity_d
 from symplyphysics.definitions import angular_speed_is_angular_distance_derivative as angular_velocity_def
 from symplyphysics.definitions import acceleration_is_speed_derivative as acceleration_def
 from symplyphysics.laws.geometry import planar_projection_is_cosine as projector
-from symplyphysics.laws.kinematic import linear_velocity_from_angular_velocity_and_radius as linear_velocity_law
+from symplyphysics.laws.kinematics import linear_velocity_from_angular_velocity_and_radius as linear_velocity_law
 
 # Description
 ## When the object moves not straight but along some curve, acceleration not only changes the magnitude of velocity, but also the velocity direction.
@@ -28,7 +28,7 @@ from symplyphysics.laws.kinematic import linear_velocity_from_angular_velocity_a
 ## - Curve is smooth and continuous. Does not have 0 radius.
 ## - Motion is in 2-D space.
 
-centripetal_acceleration = clone_symbol(symbols.kinematic.acceleration, "centripetal_acceleration")
+centripetal_acceleration = clone_symbol(symbols.kinematics.acceleration, "centripetal_acceleration")
 linear_velocity = Symbol("linear_velocity", units.velocity)
 curve_radius = Symbol("curve_radius", units.length)
 

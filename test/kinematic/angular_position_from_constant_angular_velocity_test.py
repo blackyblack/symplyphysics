@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.kinematic import (
+from symplyphysics.laws.kinematics import (
     angular_position_from_constant_angular_velocity as angular_position_law,)
 
 # Description

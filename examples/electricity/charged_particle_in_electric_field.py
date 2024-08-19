@@ -4,8 +4,8 @@ from sympy import solve, symbols, sympify
 from symplyphysics import print_expression, Vector, Quantity, units, convert_to
 from symplyphysics.laws.electricity.vector import electric_field_is_force_over_test_charge as electric_field_law
 from symplyphysics.laws.dynamics import acceleration_is_force_over_mass
-from symplyphysics.laws.kinematic import constant_acceleration_movement_is_parabolic as const_acceleration_law
-from symplyphysics.laws.kinematic import distance_from_constant_velocity as const_velocity_law
+from symplyphysics.laws.kinematics import constant_acceleration_movement_is_parabolic as const_acceleration_law
+from symplyphysics.laws.kinematics import distance_from_constant_velocity as const_velocity_law
 
 # Description
 ## A charged drop with a mass of m = 1.5e-7 g and a negative charge of magnitude Q = 2.8e-13 C enters

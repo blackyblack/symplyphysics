@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.kinematic import classical_addition_of_velocities as galilean_law
+from symplyphysics.laws.kinematics import classical_addition_of_velocities as galilean_law
 
 # Description
 ## A kayak is moving down a river with a speed of 1 m/s relative to the water in the river.

@@ -10,7 +10,7 @@ from symplyphysics import (
     assert_equal_vectors,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.kinematic.vector import acceleration_due_to_non_uniform_rotation as law
+from symplyphysics.laws.kinematics.vector import acceleration_due_to_non_uniform_rotation as law
 
 Args = namedtuple("Args", "dw dt r")
 

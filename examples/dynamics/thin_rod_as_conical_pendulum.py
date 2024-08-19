@@ -25,7 +25,7 @@ from symplyphysics.laws.dynamics.vector import (
     acceleration_from_force as force_law,
     torque_vector_of_twisting_force as torque_def,
 )
-from symplyphysics.laws.kinematic.vector import (
+from symplyphysics.laws.kinematics.vector import (
     centripetal_acceleration_via_vector_rejection as centripetal_law,
     centrifugal_acceleration_via_centripetal_acceleration as centrifugal_law,
 )

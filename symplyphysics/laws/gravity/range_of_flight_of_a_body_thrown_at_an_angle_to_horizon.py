@@ -3,7 +3,7 @@ from sympy.physics.units import acceleration_due_to_gravity as earth_free_fall_a
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
     validate_output, angle_type)
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.kinematic import distance_from_constant_velocity as distance_law
+from symplyphysics.laws.kinematics import distance_from_constant_velocity as distance_law
 from symplyphysics.laws.geometry import planar_projection_is_cosine as projection_law
 from symplyphysics.laws.gravity import maximum_movement_time_of_a_body_thrown_at_an_angle_to_horizon as time_law
 

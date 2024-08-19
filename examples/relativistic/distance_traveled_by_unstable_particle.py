@@ -2,7 +2,7 @@
 
 from sympy import solve
 from symplyphysics import print_expression, Quantity, convert_to, units
-from symplyphysics.laws.kinematic import (
+from symplyphysics.laws.kinematics import (
     distance_from_constant_velocity as distance_law,)
 from symplyphysics.laws.relativistic import (
     relativistic_time_dilation as relativistic_time_law,)

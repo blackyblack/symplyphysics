@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.kinematic import centripetal_acceleration_is_squared_velocity_by_radius as centripetal_acceleration_def
+from symplyphysics.laws.kinematics import centripetal_acceleration_is_squared_velocity_by_radius as centripetal_acceleration_def
 
 # Description
 ## The object is rotating with linear velocity of 10 m/s tied to the center with 0/5 m thread, it's centripetal acceleration should be 200 m/s/s (according to calc.ru online calculator)

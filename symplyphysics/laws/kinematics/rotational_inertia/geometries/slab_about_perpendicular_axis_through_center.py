@@ -10,7 +10,7 @@ from symplyphysics import (
     clone_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.kinematic.rotational_inertia import (
+from symplyphysics.laws.kinematics.rotational_inertia import (
     rotational_inertia_cartesian_integral as integral_law,)
 from symplyphysics.definitions import density_from_mass_volume as density_def
 

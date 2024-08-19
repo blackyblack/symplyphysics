@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import assert_equal, Quantity, units, errors
-from symplyphysics.laws.kinematic import angular_position_is_arc_length_over_radius as angular_position_def
+from symplyphysics.laws.kinematics import angular_position_is_arc_length_over_radius as angular_position_def
 
 # Description
 ## A rigid body is rotating about an axis. At the radius of 1 m, the arc length of the its path is measured

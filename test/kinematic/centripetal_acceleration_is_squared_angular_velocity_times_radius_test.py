@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.kinematic import (
+from symplyphysics.laws.kinematics import (
     centripetal_acceleration_is_squared_angular_velocity_times_radius as centripetal_law)
 
 # Description

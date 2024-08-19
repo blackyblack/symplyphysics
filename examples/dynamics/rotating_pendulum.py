@@ -29,12 +29,12 @@ from symplyphysics.laws.dynamics.vector import (
     relative_acceleration_from_force as motion_law,
     acceleration_from_force as force_law,
 )
-from symplyphysics.laws.kinematic.vector import (
+from symplyphysics.laws.kinematics.vector import (
     acceleration_of_transfer_between_relative_frames as tranfer_law,
     centripetal_acceleration_via_cross_product as centripetal_law,
     coriolis_acceleration as coriolis_law,
 )
-from symplyphysics.laws.kinematic import (
+from symplyphysics.laws.kinematics import (
     tangential_acceleration_of_rotating_body as tangential_law,)
 from symplyphysics.laws.geometry import planar_projection_is_cosine as cosine_law
 

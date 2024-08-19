@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.kinematic.damped_oscillations import underdamping
+from symplyphysics.laws.kinematics.damped_oscillations import underdamping
 
 # Description
 ## An oscillator is underdamped, its undamped angular frequency w = 5 Hz, exponential

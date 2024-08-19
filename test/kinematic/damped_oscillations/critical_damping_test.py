@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.kinematic.damped_oscillations import critical_damping
+from symplyphysics.laws.kinematics.damped_oscillations import critical_damping
 
 # Description
 ## An damped oscillator is in the critically damped state. Its angular frequency

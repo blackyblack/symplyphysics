@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.kinematic import displacement_in_simple_harmonic_motion as harmonic_law
+from symplyphysics.laws.kinematics import displacement_in_simple_harmonic_motion as harmonic_law
 
 # Description
 ## An force of oscillating magnitude is acting on a particle. The amplitude of its oscillatons is 1.0 N,

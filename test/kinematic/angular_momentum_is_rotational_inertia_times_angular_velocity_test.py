@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.kinematic import (
+from symplyphysics.laws.kinematics import (
     angular_momentum_is_rotational_inertia_times_angular_velocity as angular_momentum_law,)
 
 # Description

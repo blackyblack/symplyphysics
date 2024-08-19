@@ -2,7 +2,7 @@
 
 from sympy import solve, Eq, simplify
 from symplyphysics import (print_expression, units, convert_to, Quantity)
-from symplyphysics.laws.kinematic import centripetal_acceleration_is_squared_velocity_by_radius as centripetal_acceleration_law
+from symplyphysics.laws.kinematics import centripetal_acceleration_is_squared_velocity_by_radius as centripetal_acceleration_law
 from symplyphysics.laws.gravity import free_fall_acceleration_from_height as free_fall_law
 
 # This example calculates the velocity an object has to reach to become a satellite of the planet.

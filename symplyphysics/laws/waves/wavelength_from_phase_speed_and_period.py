@@ -11,7 +11,7 @@ from sympy import (Eq, solve)
 from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.kinematic import distance_from_constant_velocity as velocity_definition
+from symplyphysics.laws.kinematics import distance_from_constant_velocity as velocity_definition
 
 wavelength = Symbol("wavelength", units.length)
 r"""

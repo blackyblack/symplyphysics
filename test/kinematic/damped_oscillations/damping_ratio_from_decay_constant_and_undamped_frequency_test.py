@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.kinematic.damped_oscillations import (
+from symplyphysics.laws.kinematics.damped_oscillations import (
     damping_ratio_from_decay_constant_and_undamped_frequency as decay_law,)
 
 # Description

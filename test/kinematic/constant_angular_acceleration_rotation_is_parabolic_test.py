@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.kinematic import (
+from symplyphysics.laws.kinematics import (
     constant_angular_acceleration_rotation_is_parabolic as angular_displacement_law,)
 
 # Description

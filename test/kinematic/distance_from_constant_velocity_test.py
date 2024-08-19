@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.kinematic import distance_from_constant_velocity as movement_law
+from symplyphysics.laws.kinematics import distance_from_constant_velocity as movement_law
 
 # Description
 ## If an object is traveling at a constant velocity of 12m/s, then calculate the distance covered by the object after 1 minute.

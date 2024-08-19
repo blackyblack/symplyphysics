@@ -2,7 +2,7 @@ from sympy import Eq, solve, Derivative
 from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, Function,
     print_expression, validate_input, validate_output, angle_type)
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.kinematic import linear_velocity_from_angular_velocity_and_radius as linear_velocity_law
+from symplyphysics.laws.kinematics import linear_velocity_from_angular_velocity_and_radius as linear_velocity_law
 from symplyphysics.definitions import angular_acceleration_is_angular_speed_derivative as angular_acceleration_def
 from symplyphysics.definitions import acceleration_is_speed_derivative as acceleration_def
 
@@ -16,7 +16,7 @@ from symplyphysics.definitions import acceleration_is_speed_derivative as accele
 ## alpha - angular acceleration
 ## r - rotation radius
 
-tangential_acceleration = clone_symbol(symbols.kinematic.acceleration, "tangential_acceleration")
+tangential_acceleration = clone_symbol(symbols.kinematics.acceleration, "tangential_acceleration")
 angular_acceleration = Symbol("angular_acceleration", angle_type / units.time**2)
 rotation_radius = Symbol("rotation_radius", units.length)
 

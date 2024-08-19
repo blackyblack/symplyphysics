@@ -20,7 +20,7 @@ from symplyphysics.definitions import acceleration_is_speed_derivative as accele
 ## - At the start of observation object is in zero position
 
 movement_time = Symbol("movement_time", units.time)
-constant_acceleration = clone_symbol(symbols.kinematic.acceleration,
+constant_acceleration = clone_symbol(symbols.kinematics.acceleration,
     "constant_acceleration",
     constant=True)
 initial_velocity = Symbol("initial_velocity", units.velocity)

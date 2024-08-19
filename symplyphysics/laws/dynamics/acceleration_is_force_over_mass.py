@@ -11,9 +11,9 @@ from symplyphysics import (Vector, Quantity, validate_input, validate_output, sy
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.dynamics.vector import acceleration_from_force as acceleration_law_vector
 
-acceleration = symbols.kinematic.acceleration
+acceleration = symbols.kinematics.acceleration
 """
-The :attr:`~symplyphysics.symbols.kinematic.acceleration` of the body.
+The :attr:`~symplyphysics.symbols.kinematics.acceleration` of the body.
 
 Symbol:
     :code:`a`

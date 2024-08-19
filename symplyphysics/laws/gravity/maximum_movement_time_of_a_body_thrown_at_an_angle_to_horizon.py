@@ -3,7 +3,7 @@ from sympy.physics.units import acceleration_due_to_gravity as earth_free_fall_a
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
     validate_output, angle_type)
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.kinematic import constant_acceleration_movement_is_parabolic as distance_law
+from symplyphysics.laws.kinematics import constant_acceleration_movement_is_parabolic as distance_law
 from symplyphysics.laws.geometry import planar_projection_is_cosine as projection_law
 
 # Description
