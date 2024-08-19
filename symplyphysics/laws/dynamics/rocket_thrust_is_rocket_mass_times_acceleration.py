@@ -40,8 +40,8 @@ from symplyphysics.laws.conservation import (
 from symplyphysics.definitions import (momentum_is_mass_times_speed as momentum_def, mass_flow_rate
     as flow_rate_def)
 from symplyphysics.laws.kinematics import (
-    accelerated_velocity_from_time as acceleration_def,
     classical_addition_of_velocities as galilean_law,
+    speed_via_constant_acceleration_and_time as acceleration_def,
 )
 
 fuel_consumption_rate = Symbol("fuel_consumption_rate", units.mass / units.time)
@@ -152,9 +152,9 @@ rocket_acceleration_expr = solve(
     acceleration_def.law,
     acceleration_def.acceleration,
 )[0].subs({
-    acceleration_def.velocity: rocket_speed_change,
+    acceleration_def.final_speed: rocket_speed_change,
     acceleration_def.time: time_change,
-    acceleration_def.initial_velocity: 0,
+    acceleration_def.initial_speed: 0,
 })
 
 relative_velocity_eqn_system = [

@@ -4,7 +4,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
     validate_output, angle_type)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematics import constant_acceleration_movement_is_parabolic as distance_law
-from symplyphysics.laws.kinematics import accelerated_velocity_from_time as velocity_law
+from symplyphysics.laws.kinematics import speed_via_constant_acceleration_and_time as velocity_law
 from symplyphysics.laws.geometry import planar_projection_is_cosine as projection_law
 
 # Description
@@ -40,8 +40,8 @@ vertical_projection_derived = solve(projection_law_applied, projection_law.proje
 
 # Vertical velocity is zero in the highest point of trajectory.
 velocity_law_applied = velocity_law.law.subs({
-    velocity_law.initial_velocity: vertical_projection_derived,
-    velocity_law.velocity: 0,
+    velocity_law.initial_speed: vertical_projection_derived,
+    velocity_law.final_speed: 0,
     velocity_law.acceleration: -earth_free_fall_acceleration,
 })
 time_derived = solve(velocity_law_applied, velocity_law.time, dict=True)[0][velocity_law.time]

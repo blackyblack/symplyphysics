@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.kinematics import accelerated_velocity_from_time as accelerated_velocity_law
+from symplyphysics.laws.kinematics import speed_via_constant_acceleration_and_time as accelerated_velocity_law
 
 # Description
 ## We are having object falling with initial speed 2 m/s directed upwards and 9.8 m/s**2 gravitation acceleration.
