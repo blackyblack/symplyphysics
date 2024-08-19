@@ -27,7 +27,7 @@ total_energy_before_radiation = electron_rest_energy
 
 photon_frequency = Symbol("photon_frequency", positive=True)
 
-photon_energy = energy_law.law.rhs.subs(energy_law.photon_frequency, photon_frequency)
+photon_energy = energy_law.law.rhs.subs(energy_law.frequency, photon_frequency)
 
 electron_speed = Symbol("electron_speed", positive=True)
 

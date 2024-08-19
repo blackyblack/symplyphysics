@@ -20,7 +20,7 @@ from symplyphysics.definitions import temporal_frequency_from_period as frequenc
 photon_frequency = Symbol("photon_frequency")
 electron_rest_mass = Symbol("electron_rest_mass")
 
-photon_energy = energy_law.law.rhs.subs(energy_law.photon_frequency, photon_frequency)
+photon_energy = energy_law.law.rhs.subs(energy_law.frequency, photon_frequency)
 
 electron_rest_energy = mass_law.law.rhs.subs(mass_law.relativistic_mass, electron_rest_mass)
 positron_rest_energy = electron_rest_energy
