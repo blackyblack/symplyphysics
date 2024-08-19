@@ -1,9 +1,13 @@
-"""
+r"""
 Photon energy is proportional to linear frequency
 =================================================
 
 Photon is the elementary part of any electromagnetical radiation, having no mass and moving with speed of light
 in any reference frame. The energy of a photon depends only on its frequency.
+
+**Notation:**
+
+#. :math:`h` is the Planck constant.
 """
 
 from sympy import (Eq, solve)
@@ -12,14 +16,11 @@ from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output)
 
 energy = Symbol("energy", units.energy)
-r"""
+"""
 Energy of a photon.
 
 Symbol:
-    :code:`E_ph`
-
-Latex:
-    :math:`E_\text{ph}`
+    :code:`E`
 """
 
 frequency = Symbol("frequency", units.frequency)
@@ -35,11 +36,11 @@ Latex:
 
 law = Eq(energy, planck_constant * frequency)
 r"""
-:code:`E_ph = h * nu`
+:code:`E = h * nu`
 
 Latex:
     .. math::
-        E_\text{ph} = h \nu
+        E = h \nu
 """
 
 

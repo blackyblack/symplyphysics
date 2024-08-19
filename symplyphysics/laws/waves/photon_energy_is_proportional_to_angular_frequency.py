@@ -1,9 +1,13 @@
-"""
-Photon energy is proportional to angular angular_frequency
+r"""
+Photon energy is proportional to angular frequency
 ==================================================
 
 Photon is the elementary part of any electromagnetical radiation, having no mass and moving with speed of light
-in any reference frame. The energy of a photon depends only on its angular_frequency.
+in any reference frame. The energy of a photon depends only on its frequency.
+
+**Notation:**
+
+#. :math:`\hbar` is the reduced Planck constant.
 """
 
 from sympy import Eq
@@ -17,14 +21,11 @@ from symplyphysics import (
 )
 
 energy = Symbol("energy", units.energy)
-r"""
+"""
 Energy of a photon.
 
 Symbol:
-    :code:`E_ph`
-
-Latex:
-    :math:`E_\text{ph}`
+    :code:`E`
 """
 
 angular_frequency = Symbol("angular_frequency", angle_type / units.time)
