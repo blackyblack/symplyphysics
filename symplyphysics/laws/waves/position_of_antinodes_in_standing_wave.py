@@ -7,6 +7,7 @@ not arbitrary, however, and are integer multiples of half the wavelength shifted
 of the wavelength.
 
 **Notes:**
+
 #. *Amplitude* refers to the absolute value of displacement from rest, therefore positions of
    maximum amplitude are such positions where the displacement is maximum or minimum .
 """
