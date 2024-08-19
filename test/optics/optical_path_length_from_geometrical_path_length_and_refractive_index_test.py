@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.waves import optical_path_length_from_geometrical_path_length_and_refractive_index as optical_path
+from symplyphysics.laws.optics import optical_path_length_from_geometrical_path_length_and_refractive_index as optical_path
 
 Args = namedtuple("Args", ["geometric_path", "refractive_index"])
 
