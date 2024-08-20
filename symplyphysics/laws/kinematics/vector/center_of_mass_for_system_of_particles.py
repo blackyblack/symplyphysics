@@ -1,5 +1,12 @@
-from typing import Sequence
+"""
+Center of mass for a system of particles
+========================================
 
+The center of mass (com) of a system of particles is a unique point at any given time where
+the sum of weighted relative positions of the distributed mass is zero.
+"""
+
+from typing import Sequence
 from sympy import S
 from symplyphysics import (
     units,
@@ -13,21 +20,45 @@ from symplyphysics import (
 )
 from symplyphysics.core.dimensions import ScalarValue
 
-# Description
-## The center of mass (com) of a system of particles is a unique point at any given time where
-## the weighted relative position of the distributed mass sums to zero.
-
-# Law: r_com = sum_i(m_i * r_i) / sum(m_i)
-## r_com - position vector of system's center of mass
-## m_i - mass of i'th particle
-## r_i - position vector of i'th particle
-## sum_i(x_i) denotes the sum of all x_i over index i
-
-
 def center_of_mass_law(
     masses_: Sequence[ScalarValue],
     position_vectors_: Sequence[Vector],
 ) -> Vector:
+    r"""
+    Vector of the center of mass from masses and position vectors.
+
+    Law:
+        :code:`r_com = Sum(m_i * r_i, i) / Sum(m_i, i)`
+
+    Latex:
+        .. math::
+            {\vec r}_\text{com} = \frac{\sum_i m_i {\vec r}_i}{\sum_i m_i}
+
+    :param masses\_: sequence of masses of individual parts
+
+        Symbol: :code:`m_i`
+
+        Latex: :math:`m_i`
+
+        Dimension: *mass*
+
+    :param position_vectors\_: sequence of position vectors of individual parts
+
+        Symbol: :code:`r_i`
+
+        Latex: :math:`{\vec r}_i`
+
+        Dimension: *length*
+
+    :return: vector of the center of mass
+
+        Symbol: :code:`r_com`
+
+        Latex: :math:`{\vec r}_\text{com}`
+
+        Dimension: *length*
+    """
+
     result = Vector([0, 0, 0], next(iter(position_vectors_)).coordinate_system)
     total_mass = S.Zero
     for mass, position_vector in zip(masses_, position_vectors_):
