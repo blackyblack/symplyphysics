@@ -3,7 +3,7 @@
 from sympy import solve
 from symplyphysics import print_expression, Quantity, convert_to, units
 from symplyphysics.laws.kinematics import (
-    distance_from_constant_velocity as distance_law,)
+    position_via_constant_speed_and_time as distance_law,)
 from symplyphysics.laws.relativistic import (
     relativistic_time_dilation as relativistic_time_law,)
 
@@ -20,8 +20,8 @@ particle_speed_expr = solve(relativistic_time_law.law, relativistic_time_law.vel
 
 distance_traveled_expr = distance_law.law.rhs.subs({
     distance_law.initial_position: 0,
-    distance_law.constant_velocity: particle_speed_expr,
-    distance_law.movement_time: relativistic_time_law.relativistic_time,
+    distance_law.speed: particle_speed_expr,
+    distance_law.time: relativistic_time_law.relativistic_time,
 })
 
 print("Formula of particle speed:\n")

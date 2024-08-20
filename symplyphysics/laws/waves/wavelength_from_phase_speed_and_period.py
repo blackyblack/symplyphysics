@@ -11,7 +11,7 @@ from sympy import (Eq, solve)
 from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.kinematics import distance_from_constant_velocity as velocity_definition
+from symplyphysics.laws.kinematics import position_via_constant_speed_and_time as velocity_definition
 
 wavelength = Symbol("wavelength", units.length)
 r"""
@@ -55,8 +55,8 @@ Latex:
 # Prove that derived movement function equals to law.rhs, given initial position = 0
 # and phase_velocity is constant_velocity
 _constant_velocity_movement_definition = velocity_definition.law.subs({
-    velocity_definition.constant_velocity: phase_velocity,
-    velocity_definition.movement_time: period,
+    velocity_definition.speed: phase_velocity,
+    velocity_definition.time: period,
     velocity_definition.initial_position: 0
 })
 assert expr_equals(_constant_velocity_movement_definition.rhs, law.rhs)

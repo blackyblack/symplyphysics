@@ -3,7 +3,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, dimensionl
     validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import refractive_index_is_wave_speeds_ratio as refractive_index_definition
-from symplyphysics.laws.kinematics import distance_from_constant_velocity as distance_law
+from symplyphysics.laws.kinematics import position_via_constant_speed_and_time as distance_law
 from symplyphysics.laws.geometry import planar_projection_is_cosine as projection_law
 from symplyphysics.core.symbols.quantities import scale_factor
 
@@ -44,17 +44,17 @@ outer_velocity = Symbol("outer_velocity", units.velocity)
 medium_velocity = Symbol("medium_velocity", units.velocity)
 
 distance_law_outer_eq = distance_law.law.subs({
-    distance_law.distance(distance_law.movement_time): outer_travel_distance,
-    distance_law.constant_velocity: outer_velocity,
+    distance_law.final_position: outer_travel_distance,
+    distance_law.speed: outer_velocity,
     distance_law.initial_position: 0
 })
 distance_law_medium_eq = distance_law.law.subs({
-    distance_law.distance(distance_law.movement_time): medium_travel_distance,
-    distance_law.constant_velocity: medium_velocity,
+    distance_law.final_position: medium_travel_distance,
+    distance_law.speed: medium_velocity,
     distance_law.initial_position: 0
 })
-outer_travel_time = solve(distance_law_outer_eq, distance_law.movement_time)[0]
-medium_travel_time = solve(distance_law_medium_eq, distance_law.movement_time)[0]
+outer_travel_time = solve(distance_law_outer_eq, distance_law.time)[0]
+medium_travel_time = solve(distance_law_medium_eq, distance_law.time)[0]
 
 travel_time = outer_travel_time + medium_travel_time
 

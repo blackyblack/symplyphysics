@@ -10,7 +10,7 @@ from symplyphysics.laws.thermodynamics import (
 )
 from symplyphysics.laws.quantities import quantity_is_specific_quantity_times_mass as specific_qty_law
 from symplyphysics.definitions import density_from_mass_volume as density_law
-from symplyphysics.laws.kinematics import distance_from_constant_velocity as velocity_law
+from symplyphysics.laws.kinematics import position_via_constant_speed_and_time as velocity_law
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as klayperon_law
 from symplyphysics.laws.chemistry import atomic_weight_from_mass_mole_count as mole_count_law
 from symplyphysics.definitions import mass_flow_rate as mass_rate_law
@@ -40,7 +40,7 @@ density_of_water = Symbol("density_of_water")
 temperature_water = Symbol("temperature_water")
 
 distance_value = velocity_law.law.subs({
-    velocity_law.constant_velocity: velocity_of_water,
+    velocity_law.speed: velocity_of_water,
     velocity_law.initial_position: 0
 }).rhs
 
@@ -102,8 +102,8 @@ mass_flow_rate_in_start_value = solve(mass_of_gas_in_start_equation, mass_flow_r
 mass_of_gas_value = solve(
     mass_gas_eq.subs({
     mass_flow_rate: mass_flow_rate_in_start_value,
-    mass_rate_law.time: velocity_law.movement_time
-    }), mass_rate_law.mass(velocity_law.movement_time))[0]
+    mass_rate_law.time: velocity_law.time
+    }), mass_rate_law.mass(velocity_law.time))[0]
 
 energy_from_combustion_of_metan_value = combustion_energy_law.law.subs({
     combustion_energy_law.specific_heat_of_combustion: specific_heat_of_combustion_metan,

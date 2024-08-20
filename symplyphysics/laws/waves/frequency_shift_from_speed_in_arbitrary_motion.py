@@ -22,7 +22,7 @@ from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.laws.waves import wavelength_from_phase_speed_and_period as period_law
 from symplyphysics.definitions import temporal_frequency_from_period as frequency_def
 from symplyphysics.laws.geometry import planar_projection_is_cosine as projector
-from symplyphysics.laws.kinematics import distance_from_constant_velocity as distance_law
+from symplyphysics.laws.kinematics import position_via_constant_speed_and_time as distance_law
 
 observed_frequency = Symbol("observed_frequency", units.frequency)
 r"""
@@ -139,8 +139,8 @@ _source_speed_projection_on_signal = projector.law.subs({
 ## Assume constant velocity during '_wave_period'
 _moving_source_distance_for_period = distance_law.law.subs({
     distance_law.initial_position: 0,
-    distance_law.movement_time: _wave_period,
-    distance_law.constant_velocity: _source_speed_projection_on_signal,
+    distance_law.time: _wave_period,
+    distance_law.speed: _source_speed_projection_on_signal,
 }).rhs
 
 ## Assuming signal vector pointing from source to observer, positive projection should decrease _wavelength.
