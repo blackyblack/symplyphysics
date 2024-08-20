@@ -68,16 +68,14 @@ damped_angular_frequency = Symbol("damped_angular_frequency",
     angle_type / units.time,
     positive=True)
 r"""
-Damped angular frequency of the oscillator.
+:doc:`Damped angular frequency <laws.kinematics.damped_oscillations.damped_angular_frequency>`
+of the oscillator.
 
 Symbol:
     :code:`w'`
 
 Latex:
     :math:`\omega'`
-
-..
-    TODO add link to laws.kinematics.damped_oscillations.damped_angular_frequency
 """
 
 phase_shift = Symbol("phase_shift", angle_type, real=True)
