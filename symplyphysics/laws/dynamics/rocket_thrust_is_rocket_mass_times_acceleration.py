@@ -120,9 +120,9 @@ rocket_speed_relative_to_products = relative_speed
 products_speed_relative_to_frame = products_speed
 
 relative_speed_eqn = galilean_law.law.subs({
-    galilean_law.body_velocity_in_first_frame: rocket_speed_relative_to_frame,
-    galilean_law.body_velocity_in_second_frame: rocket_speed_relative_to_products,
-    galilean_law.second_frame_velocity_in_first_frame: products_speed_relative_to_frame,
+    galilean_law.body_speed_in_first_frame: rocket_speed_relative_to_frame,
+    galilean_law.body_speed_in_second_frame: rocket_speed_relative_to_products,
+    galilean_law.second_frame_speed_in_first_frame: products_speed_relative_to_frame,
 })
 
 momentum_conservation_eqn = momentum_conservation_law.law.subs({
