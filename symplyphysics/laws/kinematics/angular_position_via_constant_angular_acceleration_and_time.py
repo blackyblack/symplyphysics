@@ -1,3 +1,10 @@
+"""
+Angular position via constant angular acceleration and time
+===========================================================
+
+If a body is rotating with a constant acceleration, its angular position is a quadratic function of time.
+"""
+
 from sympy import Eq, solve, dsolve
 from symplyphysics import (
     units,
@@ -8,35 +15,76 @@ from symplyphysics import (
     angle_type,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.definitions import (
     angular_acceleration_is_angular_speed_derivative as angular_acceleration_def,
     angular_speed_is_angular_distance_derivative as angular_velocity_def,
 )
 
-# Description
-## A body is rotating about a fixed axis with constant angular acceleration. Its angular
-## displacement from initial position is a quadratic function of time and depends on
-## its initial angular velocity and angular acceleration.
+final_angular_position = Symbol("final_angular_position", angle_type)
+r"""
+Angular position at time :math:`t`.
 
-# Law: theta = w0 * t + alpha * t**2 / 2
-## theta - angular displacement from initial position
-## w0 - initial angular velocity
-## alpha - constant angular acceleration
-## t - time
+Symbol:
+    :code:`theta`
 
-## Conditions:
-## - Angular acceleration of the body is constant.
-## - Initial displacement is zero.
+Latex:
+    :math:`\theta`
+"""
 
-angular_displacement = Symbol("angular_displacement", angle_type)
-initial_angular_velocity = Symbol("initial_angular_velocity", angle_type / units.time)
+initial_angular_position = Symbol("initial_angular_position", angle_type)
+r"""
+Angular position at :math:`t = 0`.
+
+Symbol:
+    :code:`theta_0`
+
+Latex:
+    :math:`\theta_0`
+"""
+
+initial_angular_speed = Symbol("initial_angular_speed", angle_type / units.time)
+r"""
+Angular speed at :math:`t = 0`.
+
+Symbol:
+    :code:`w_0`
+
+Latex:
+    :math:`\omega_0`
+"""
+
 angular_acceleration = Symbol("angular_acceleration", angle_type / units.time**2)
+r"""
+Constant angular acceleration.
+
+Symbol:
+    :code:`alpha`
+
+Latex:
+    :math:`\alpha`
+"""
+
 time = Symbol("time", units.time)
+r"""
+Time at which :math:`\theta` is measured.
+
+Symbol:
+    :code:`t`
+"""
 
 law = Eq(
-    angular_displacement,
-    initial_angular_velocity * time + angular_acceleration * time**2 / 2,
+    final_angular_position,
+    initial_angular_position + initial_angular_speed * time + angular_acceleration * time**2 / 2,
 )
+r"""
+:code:`theta = theta_0 + w_0 * t + 1/2 * alpha * t^2`
+
+Latex:
+    .. math::
+        \theta = \theta_0 + \omega_0 t + \frac{1}{2} \alpha t^2
+"""
+
 
 # Derive law from definitions of angular velocity and acceleration
 
@@ -51,7 +99,7 @@ _angular_velocity_formula = dsolve(
 _angular_velocity = Symbol("_angular_velocity", angle_type / units.time)
 _angular_velocity_derived = solve(
     [
-    Eq(initial_angular_velocity, _angular_velocity_formula.subs(time, 0)),
+    Eq(initial_angular_speed, _angular_velocity_formula.subs(time, 0)),
     Eq(_angular_velocity, _angular_velocity_formula)
     ],
     ("C1", _angular_velocity),
@@ -69,29 +117,32 @@ _angular_displacement_formula = dsolve(
 _angular_displacement_derived = solve(
     [
     # initial angular displacement is 0 by condition
-    Eq(0, _angular_displacement_formula.subs(time, 0)),
-    Eq(angular_displacement, _angular_displacement_formula)
+    Eq(initial_angular_position, _angular_displacement_formula.subs(time, 0)),
+    Eq(final_angular_position, _angular_displacement_formula)
     ],
-    ("C1", angular_displacement),
+    ("C1", final_angular_position),
     dict=True,
-)[0][angular_displacement]
+)[0][final_angular_position]
 
 assert expr_equals(_angular_displacement_derived, law.rhs)
 
 
 @validate_input(
-    initial_angular_velocity_=initial_angular_velocity,
+    initial_angular_position_=initial_angular_position,
+    initial_angular_velocity_=initial_angular_speed,
     angular_acceleration_=angular_acceleration,
     time_=time,
 )
-@validate_output(angular_displacement)
+@validate_output(final_angular_position)
 def calculate_angular_displacement(
+    initial_angular_position_: Quantity | float,
     initial_angular_velocity_: Quantity,
     angular_acceleration_: Quantity,
     time_: Quantity,
 ) -> Quantity:
     result = law.rhs.subs({
-        initial_angular_velocity: initial_angular_velocity_,
+        initial_angular_position: scale_factor(initial_angular_position_),
+        initial_angular_speed: initial_angular_velocity_,
         angular_acceleration: angular_acceleration_,
         time: time_,
     })
