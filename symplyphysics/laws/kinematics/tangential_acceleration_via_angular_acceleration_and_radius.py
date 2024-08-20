@@ -14,7 +14,7 @@ from sympy import Eq, solve, Derivative
 from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, Function
     , validate_input, validate_output, angle_type)
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.kinematics import linear_velocity_from_angular_velocity_and_radius as linear_velocity_law
+from symplyphysics.laws.kinematics import speed_via_angular_speed_and_radius as linear_velocity_law
 from symplyphysics.definitions import angular_acceleration_is_angular_speed_derivative as angular_acceleration_def
 from symplyphysics.definitions import acceleration_is_speed_derivative as acceleration_def
 
@@ -65,9 +65,9 @@ _angular_velocity = Function("_angular_velocity", angle_type / units.time)
 _time = Symbol("_time", units.time)
 
 _linear_velocity_law_sub = linear_velocity_law.law.subs({
-    linear_velocity_law.linear_velocity: _linear_velocity(_time),
-    linear_velocity_law.angular_velocity: _angular_velocity(_time),
-    linear_velocity_law.curve_radius: radius_of_curvature,
+    linear_velocity_law.speed: _linear_velocity(_time),
+    linear_velocity_law.angular_speed: _angular_velocity(_time),
+    linear_velocity_law.radius_of_curvature: radius_of_curvature,
 })
 
 # Differentiate both sides of the equation w.r.t. _time

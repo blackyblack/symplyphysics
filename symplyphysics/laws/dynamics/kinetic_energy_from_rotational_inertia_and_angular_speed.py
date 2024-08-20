@@ -17,7 +17,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_speed as kinetic_energy_def
-from symplyphysics.laws.kinematics import linear_velocity_from_angular_velocity_and_radius as linear_velocity_law
+from symplyphysics.laws.kinematics import speed_via_angular_speed_and_radius as linear_velocity_law
 from symplyphysics.laws.kinematics.rotational_inertia import rotational_inertia_of_particle as rotational_inertia_def
 
 kinetic_energy = Symbol("kinetic_energy", units.energy)
@@ -66,10 +66,10 @@ _rotational_inertia_def_subs = rotational_inertia_def.law.subs({
 _object_mass = solve(_rotational_inertia_def_subs, rotational_inertia_def.particle_mass)[0]
 
 _linear_velocity_law_sub = linear_velocity_law.law.subs({
-    linear_velocity_law.angular_velocity: angular_speed,
-    linear_velocity_law.curve_radius: _rotation_radius
+    linear_velocity_law.angular_speed: angular_speed,
+    linear_velocity_law.radius_of_curvature: _rotation_radius
 })
-_linear_velocity = solve(_linear_velocity_law_sub, linear_velocity_law.linear_velocity)[0]
+_linear_velocity = solve(_linear_velocity_law_sub, linear_velocity_law.speed)[0]
 
 _kinetic_energy_def_sub = kinetic_energy_def.law.subs({
     kinetic_energy_def.mass: _object_mass,

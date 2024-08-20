@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.kinematics import linear_velocity_from_angular_velocity_and_radius as linear_velocity_law
+from symplyphysics.laws.kinematics import speed_via_angular_speed_and_radius as linear_velocity_law
 
 # Description
 ## A rotating cake stand has a circular birthday cake with a candle on it. When the stand is rotating, the candle has an angular velocity of

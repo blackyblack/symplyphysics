@@ -19,7 +19,7 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematics import (
     centripetal_acceleration_via_linear_speed_and_radius as centripetal_law,
-    linear_velocity_from_angular_velocity_and_radius as velocities_law,
+    speed_via_angular_speed_and_radius as velocities_law,
 )
 
 centripetal_acceleration = clone_symbol(symbols.kinematics.acceleration, "centripetal_acceleration")
@@ -67,9 +67,9 @@ _centripetal_acceleration_derived = centripetal_law.law.rhs.subs(centripetal_law
     radius_of_curvature)
 
 _velocities_law_sub = velocities_law.law.subs({
-    velocities_law.linear_velocity: centripetal_law.speed,
-    velocities_law.angular_velocity: angular_speed,
-    velocities_law.curve_radius: radius_of_curvature,
+    velocities_law.speed: centripetal_law.speed,
+    velocities_law.angular_speed: angular_speed,
+    velocities_law.radius_of_curvature: radius_of_curvature,
 })
 
 _centripetal_acceleration_derived = solve([

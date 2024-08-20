@@ -14,7 +14,7 @@ from symplyphysics.definitions import speed_is_distance_derivative as velocity_d
 from symplyphysics.definitions import angular_speed_is_angular_distance_derivative as angular_velocity_def
 from symplyphysics.definitions import acceleration_is_speed_derivative as acceleration_def
 from symplyphysics.laws.geometry import planar_projection_is_cosine as projector
-from symplyphysics.laws.kinematics import linear_velocity_from_angular_velocity_and_radius as linear_velocity_law
+from symplyphysics.laws.kinematics import speed_via_angular_speed_and_radius as linear_velocity_law
 
 centripetal_acceleration = clone_symbol(symbols.kinematics.acceleration, "centripetal_acceleration")
 r"""
@@ -124,8 +124,8 @@ _angular_velocity_applied = angular_velocity_def.definition.rhs.subs(angular_vel
 _angular_velocity_applied = _angular_velocity_applied.subs(
     angular_velocity_def.angular_distance(_time), _alpha(_time))
 _linear_velocity_applied = linear_velocity_law.law.rhs.subs({
-    linear_velocity_law.angular_velocity: _angular_velocity_applied,
-    linear_velocity_law.curve_radius: radius_of_curvature
+    linear_velocity_law.angular_speed: _angular_velocity_applied,
+    linear_velocity_law.radius_of_curvature: radius_of_curvature
 })
 _law_acceleration = law.rhs.subs(speed, _linear_velocity_applied)
 
