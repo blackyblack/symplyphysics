@@ -1,3 +1,11 @@
+"""
+Damping ratio from decay constant and undamped frequency
+========================================================
+
+The damping ratio of an oscillator can be calculated via the exponential decay constant,
+which describes how fast its oscillations decay, and its undamped angular frequency.
+"""
+
 from sympy import Eq
 from symplyphysics import (
     units,
@@ -7,27 +15,49 @@ from symplyphysics import (
     dimensionless,
     validate_input,
     validate_output,
-    print_expression,
 )
 
-# Description
-## The damping ratio of an oscillator can be calculated via the exponential decay constant,
-## which describes how fast the oscillations decay, and its undamped angular frequency.
-
-# Law: zeta = lambda / omega
-## zeta - damping ratio
-## lambda - exponential decay constant
-## omega - undamped angular frequency of oscillator
-
 damping_ratio = Symbol("damping_ratio", dimensionless)
+r"""
+Damping ratio of the oscillator.
+
+Symbol:
+    :code:`zeta`
+
+Latex:
+    :math:`\zeta`
+"""
+
 exponential_decay_constant = Symbol("exponential_decay_constant", 1 / units.time)
+r"""
+Exponential decay constant of the oscillator.
+
+Symbol:
+    :code:`lambda`
+
+Latex:
+    :math:`\lambda`
+"""
+
 undamped_angular_frequency = Symbol("undamped_angular_frequency", angle_type / units.time)
+"""
+Undamped angular frequency of the oscillator.
+
+Symbol:
+    :code:`w`
+
+Latex:
+    :math:`\omega`
+"""
 
 law = Eq(damping_ratio, exponential_decay_constant / undamped_angular_frequency)
+r"""
+:code:`zeta = lambda / w`
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        \zeta = \frac{\lambda}{\omega}
+"""
 
 
 @validate_input(
