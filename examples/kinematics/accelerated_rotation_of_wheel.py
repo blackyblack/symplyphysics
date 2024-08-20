@@ -14,9 +14,9 @@ from symplyphysics.definitions import (
     angular_speed_is_angular_distance_derivative as angular_velocity_def,
 )
 from symplyphysics.laws.kinematics import (
+    centripetal_acceleration_via_linear_speed_and_radius as centripetal_acceleration_law,
     linear_velocity_from_angular_velocity_and_radius as linear_velocity_law,
     tangential_acceleration_of_rotating_body as tangential_acceleration_law,
-    centripetal_acceleration_is_squared_velocity_by_radius as centripetal_acceleration_law,
 )
 from symplyphysics.laws.kinematics.vector import acceleration_of_rotating_body as total_acceleration_law
 
@@ -65,8 +65,8 @@ tangential_acceleration = tangential_acceleration_law.law.rhs.subs({
 })
 
 centripetal_acceleration = centripetal_acceleration_law.law.rhs.subs({
-    centripetal_acceleration_law.linear_velocity: linear_velocity,
-    centripetal_acceleration_law.curve_radius: rotation_radius,
+    centripetal_acceleration_law.speed: linear_velocity,
+    centripetal_acceleration_law.radius_of_curvature: rotation_radius,
 })
 
 # Tangential and centripetal accelerations are perpendicular to one another. Therefore, we can

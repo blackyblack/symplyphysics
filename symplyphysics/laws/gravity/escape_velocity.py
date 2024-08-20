@@ -6,7 +6,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 
 from symplyphysics.laws.gravity import gravity_force_from_mass_and_distance as gravity_force_law
 from symplyphysics.laws.dynamics import acceleration_is_force_over_mass as acceleration_law
-from symplyphysics.laws.kinematics import centripetal_acceleration_is_squared_velocity_by_radius as centripetal_law
+from symplyphysics.laws.kinematics import centripetal_acceleration_via_linear_speed_and_radius as centripetal_law
 
 # Law: V = √(G * M / (R + h))
 # Where:

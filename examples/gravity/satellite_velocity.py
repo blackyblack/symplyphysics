@@ -2,7 +2,7 @@
 
 from sympy import solve, Eq, simplify
 from symplyphysics import (print_expression, units, convert_to, Quantity)
-from symplyphysics.laws.kinematics import centripetal_acceleration_is_squared_velocity_by_radius as centripetal_acceleration_law
+from symplyphysics.laws.kinematics import centripetal_acceleration_via_linear_speed_and_radius as centripetal_acceleration_law
 from symplyphysics.laws.gravity import free_fall_acceleration_from_height as free_fall_law
 
 # This example calculates the velocity an object has to reach to become a satellite of the planet.
@@ -16,13 +16,13 @@ from symplyphysics.laws.gravity import free_fall_acceleration_from_height as fre
 ## Note, that satellite is non-inertial system, so we cannot apply first Newton's law to solve this problem.
 
 solution = Eq(centripetal_acceleration_law.law.rhs, free_fall_law.law.rhs)
-solution_applied = solution.subs(centripetal_acceleration_law.curve_radius,
+solution_applied = solution.subs(centripetal_acceleration_law.radius_of_curvature,
     free_fall_law.planet_radius + free_fall_law.height_above_surface)
 
 # first solution is negative and corresponds to the backwards direction of velocity - ignore it
 satellite_velocity = solve(solution_applied,
-    centripetal_acceleration_law.linear_velocity,
-    dict=True)[1][centripetal_acceleration_law.linear_velocity]
+    centripetal_acceleration_law.speed,
+    dict=True)[1][centripetal_acceleration_law.speed]
 
 print(
     f"The formula for satellite linear velocity is: {print_expression(simplify(satellite_velocity))}"
