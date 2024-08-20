@@ -79,7 +79,7 @@ assert (expr_equals(_dsolved_movement.rhs.subs("C1", initial_position), law.rhs)
 @validate_output(final_position)
 def calculate_distance(initial_distance_: Quantity, velocity_: Quantity,
     time_: Quantity) -> Quantity:
-    result_expr = solve(law, final_position(time), dict=True)[0][final_position(time)]
+    result_expr = solve(law, final_position, dict=True)[0][final_position]
     result_expr_substituted = result_expr.subs({
         initial_position: initial_distance_,
         speed: velocity_,

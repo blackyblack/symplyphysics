@@ -28,8 +28,8 @@ law = Eq(velocity, sqrt(gravitational_constant * planet_mass / (radius + height)
 
 # The radius of the orbit consists of the radius of the planet and the height above its surface.
 centripetal_law_applied = centripetal_law.law.subs({
-    centripetal_law.linear_velocity: velocity,
-    centripetal_law.curve_radius: radius + height,
+    centripetal_law.speed: velocity,
+    centripetal_law.radius_of_curvature: radius + height,
 })
 acceleration_derived = solve(centripetal_law_applied,
     centripetal_law.centripetal_acceleration,
