@@ -1,3 +1,15 @@
+r"""
+Tangential acceleration via angular acceleration and radius
+===========================================================
+
+The tangential acceleration of a rotating body represents the change in magnitude
+of the velocity vector, and its vector is tangent to the path of the body.
+
+**Conditions:**
+
+#. :math:`r = \text{const} \Leftrightarrow = \frac{d r}{d t} = 0.`
+"""
+
 from sympy import Eq, solve, Derivative
 from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, Function
     , validate_input, validate_output, angle_type)
@@ -6,21 +18,44 @@ from symplyphysics.laws.kinematics import linear_velocity_from_angular_velocity_
 from symplyphysics.definitions import angular_acceleration_is_angular_speed_derivative as angular_acceleration_def
 from symplyphysics.definitions import acceleration_is_speed_derivative as acceleration_def
 
-# Description
-## The tangential acceleration of a rotating body represents the change in magnitude
-## of the velocity vector, and is tangent to the path of the body. It is proportional
-## to the angular acceleration of the body and its rotation radius.
-
-# Law: a_t = alpha * r
-## a_t - tangential acceleration
-## alpha - angular acceleration
-## r - rotation radius
-
 tangential_acceleration = clone_symbol(symbols.kinematics.acceleration, "tangential_acceleration")
-angular_acceleration = Symbol("angular_acceleration", angle_type / units.time**2)
-rotation_radius = Symbol("rotation_radius", units.length)
+r"""
+Tangential :attr:`~symplyphysics.symbols.kinematics.acceleration`.
 
-law = Eq(tangential_acceleration, angular_acceleration * rotation_radius)
+Symbol:
+    :code:`a_t`
+
+Latex:
+    :math:`a_\tau`
+"""
+
+angular_acceleration = Symbol("angular_acceleration", angle_type / units.time**2)
+r"""
+Angular acceleration.
+
+Symbol:
+    :code:`alpha`
+
+Latex:
+    :math:`\alpha`
+"""
+
+radius_of_curvature = Symbol("radius_of_curvature", units.length)
+"""
+Instantaneous radius of curvature.
+
+Symbol:
+    :code:`r`
+"""
+
+law = Eq(tangential_acceleration, angular_acceleration * radius_of_curvature)
+r"""
+:code:`a_t = alpha * r`
+
+Latex:
+    .. math::
+        a_\tau = \alpha r
+"""
 
 # Derive the law from the law of linear velocity in case of a rotating body
 # Condition: radius of rotation remains constant.
@@ -32,7 +67,7 @@ _time = Symbol("_time", units.time)
 _linear_velocity_law_sub = linear_velocity_law.law.subs({
     linear_velocity_law.linear_velocity: _linear_velocity(_time),
     linear_velocity_law.angular_velocity: _angular_velocity(_time),
-    linear_velocity_law.curve_radius: rotation_radius,
+    linear_velocity_law.curve_radius: radius_of_curvature,
 })
 
 # Differentiate both sides of the equation w.r.t. _time
@@ -69,7 +104,7 @@ assert expr_equals(
 
 @validate_input(
     angular_acceleration_=angular_acceleration,
-    rotation_radius_=rotation_radius,
+    rotation_radius_=radius_of_curvature,
 )
 @validate_output(tangential_acceleration)
 def calculate_tangential_acceleration(angular_acceleration_: Quantity,
@@ -77,6 +112,6 @@ def calculate_tangential_acceleration(angular_acceleration_: Quantity,
     result_expr = solve(law, tangential_acceleration)[0]
     result = result_expr.subs({
         angular_acceleration: angular_acceleration_,
-        rotation_radius: rotation_radius_,
+        radius_of_curvature: rotation_radius_,
     })
     return Quantity(result)

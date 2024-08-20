@@ -16,7 +16,7 @@ from symplyphysics.definitions import (
 from symplyphysics.laws.kinematics import (
     centripetal_acceleration_via_linear_speed_and_radius as centripetal_acceleration_law,
     linear_velocity_from_angular_velocity_and_radius as linear_velocity_law,
-    tangential_acceleration_of_rotating_body as tangential_acceleration_law,
+    tangential_acceleration_via_angular_acceleration_and_radius as tangential_acceleration_law,
 )
 from symplyphysics.laws.kinematics.vector import acceleration_of_rotating_body as total_acceleration_law
 
@@ -61,7 +61,7 @@ rotation_radius = solve(
 
 tangential_acceleration = tangential_acceleration_law.law.rhs.subs({
     tangential_acceleration_law.angular_acceleration: angular_acceleration,
-    tangential_acceleration_law.rotation_radius: rotation_radius,
+    tangential_acceleration_law.radius_of_curvature: rotation_radius,
 })
 
 centripetal_acceleration = centripetal_acceleration_law.law.rhs.subs({

@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.kinematics import tangential_acceleration_of_rotating_body as tangential_acceleration_law
+from symplyphysics.laws.kinematics import tangential_acceleration_via_angular_acceleration_and_radius as tangential_acceleration_law
 
 # Description
 ## A body is moving along a curve. Its angular acceleration is 3.5 rad/s^2 and its rotation radius

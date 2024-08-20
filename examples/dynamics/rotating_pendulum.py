@@ -35,7 +35,7 @@ from symplyphysics.laws.kinematics.vector import (
     coriolis_acceleration as coriolis_law,
 )
 from symplyphysics.laws.kinematics import (
-    tangential_acceleration_of_rotating_body as tangential_law,)
+    tangential_acceleration_via_angular_acceleration_and_radius as tangential_law,)
 from symplyphysics.laws.geometry import planar_projection_is_cosine as cosine_law
 
 # Description
@@ -148,7 +148,7 @@ ball_angular_acceleration = angular_acceleration_def.definition.rhs.subs(
 
 ball_tangential_acceleration_via_angle = tangential_law.law.rhs.subs({
     tangential_law.angular_acceleration: ball_angular_acceleration,
-    tangential_law.rotation_radius: rod_length,
+    tangential_law.radius_of_curvature: rod_length,
 })
 
 oscillation_eqn_derived = Eq(
