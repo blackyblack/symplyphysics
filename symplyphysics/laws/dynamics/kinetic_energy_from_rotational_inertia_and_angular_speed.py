@@ -61,9 +61,9 @@ _rotation_radius = Symbol("_rotation_radius", units.length)
 
 _rotational_inertia_def_subs = rotational_inertia_def.law.subs({
     rotational_inertia_def.rotational_inertia: rotational_inertia,
-    rotational_inertia_def.radius: _rotation_radius,
+    rotational_inertia_def.distance_to_axis: _rotation_radius,
 })
-_object_mass = solve(_rotational_inertia_def_subs, rotational_inertia_def.particle_mass)[0]
+_object_mass = solve(_rotational_inertia_def_subs, rotational_inertia_def.mass)[0]
 
 _linear_velocity_law_sub = linear_velocity_law.law.subs({
     linear_velocity_law.angular_speed: angular_speed,
