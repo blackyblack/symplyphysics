@@ -1,4 +1,13 @@
-from sympy import Eq, cos, symbols, Function as SymFunction, dsolve
+"""
+Displacement in simple harmonic motion
+======================================
+
+Any motion that repeats at regular intervals is called periodic, or harmonic, motion.
+Simple harmonic motion is a particular type of repeated motion that is a sinusoidal
+function of time.
+"""
+
+from sympy import Eq, cos, symbols, dsolve, Function as SymFunction
 from symplyphysics import (
     units,
     Quantity,
@@ -11,41 +20,83 @@ from symplyphysics.core.quantity_decorator import validate_output_same
 from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.definitions import harmonic_oscillator_is_second_derivative_equation as harmonic_eqn
 
-# Description
-## Any motion that repeats at regular intervals is called periodic, or harmonic, motion.
-## Simple harmonic motion is a particular type of repeated motion that is a sinusoidal
-## function of time.
+displacement = symbols("displacement", real=True)
+"""
+Displacement from rest, usually a function of time.
 
-# Law: q(t) = q_m * cos(w * t + phi)
-## q(t) - displacement function
-## t - time
-## q_m - oscillation amplitude
-## w - angular frequency of oscillations
-## phi - phase lag
+Symbol:
+    :code:`q`
+"""
 
-displacement = symbols("displacement", cls=SymFunction)
 amplitude = symbols("amplitude", positive=True)
-angular_frequency = Symbol("angular_frequency", angle_type / units.time, positive=True)
-phase_lag = Symbol("phase_lag", angle_type, real=True)
-time = Symbol("time", units.time, real=True)
+r"""
+The maximum absolute value of the displacement.
 
-law = Eq(displacement(time), amplitude * cos(angular_frequency * time + phase_lag))
+Symbol:
+    :code:`q_max`
+
+Latex:
+    :math:`q_\text{max}`
+"""
+
+angular_frequency = Symbol("angular_frequency", angle_type / units.time, positive=True)
+r"""
+Angular frequency of oscillations.
+
+Symbol:
+    :code:`w`
+
+Latex:
+    :math:`\omega`
+"""
+
+phase_shift = Symbol("phase_shift", angle_type, real=True)
+r"""
+Phase shift of oscillations, which is the phase at :math:`t = 0`.
+
+Symbol:
+    :code:`phi`
+
+Latex:
+    :math:`\varphi`
+"""
+
+time = Symbol("time", units.time, real=True)
+"""
+Time at which :math:`q` is measured.
+
+Symbol:
+    :code:`t`
+"""
+
+law = Eq(displacement, amplitude * cos(angular_frequency * time + phase_shift))
+r"""
+:code:`q = q_max * cos(w * t + phi)`
+
+Latex:
+    .. math::
+        q = q_\text{max} \cos(\omega t + \varphi)
+"""
 
 # Derive law from [oscillator equation](../../definitions/harmonic_oscillator_is_second_derivative_equation.py)
 
-_eqn = harmonic_eqn.definition.subs({
+_displacement = SymFunction("displacement", real=True)
+
+_eqn = harmonic_eqn.definition.replace(
+    harmonic_eqn.displacement, _displacement
+).subs({
     harmonic_eqn.time: time,
     harmonic_eqn.angular_frequency: angular_frequency,
-}).subs(harmonic_eqn.displacement(time), displacement(time))
+})
 
 _initial_position = law.rhs.subs(time, 0)
 _initial_velocity = law.rhs.diff(time).subs(time, 0)
 
 _dsolved = dsolve(_eqn,
-    displacement(time),
+    _displacement(time),
     ics={
-    displacement(0): _initial_position,
-    displacement(time).diff(time).subs(time, 0): _initial_velocity,
+    _displacement(0): _initial_position,
+    _displacement(time).diff(time).subs(time, 0): _initial_velocity,
     }).rhs
 
 assert expr_equals(law.rhs, _dsolved)
@@ -53,7 +104,7 @@ assert expr_equals(law.rhs, _dsolved)
 
 @validate_input(
     angular_frequency_=angular_frequency,
-    phase_lag_=phase_lag,
+    phase_lag_=phase_shift,
     time_=time,
 )
 @validate_output_same("amplitude_")
@@ -66,7 +117,7 @@ def calculate_displacement(
     result = law.rhs.subs({
         amplitude: amplitude_,
         angular_frequency: angular_frequency_,
-        phase_lag: scale_factor(phase_lag_),
+        phase_shift: scale_factor(phase_lag_),
         time: time_,
     })
     return Quantity(result)

@@ -42,7 +42,7 @@ angular_frequency_expr = solve(period_def.law,
 position_expr = harmonic_law.law.rhs.subs({
     harmonic_law.amplitude: amplitude,
     harmonic_law.angular_frequency: angular_frequency_expr,
-    harmonic_law.phase_lag: phase_lag,
+    harmonic_law.phase_shift: phase_lag,
     harmonic_law.time: time,
 })
 
