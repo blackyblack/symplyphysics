@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.kinematics.damped_oscillations import critical_damping
+from symplyphysics.laws.kinematics.damped_oscillations import displacement_in_critical_damping
 
 # Description
 ## An damped oscillator is in the critically damped state. Its angular frequency
@@ -26,7 +26,7 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = critical_damping.calculate_displacement(test_args.x0, test_args.v0, test_args.omega,
+    result = displacement_in_critical_damping.calculate_displacement(test_args.x0, test_args.v0, test_args.omega,
         test_args.t)
     assert_equal(result, 8.12 * units.centimeter)
 
@@ -34,30 +34,30 @@ def test_law(test_args: Args) -> None:
 def test_bad_initial_position(test_args: Args) -> None:
     xb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        critical_damping.calculate_displacement(xb, test_args.v0, test_args.omega, test_args.t)
+        displacement_in_critical_damping.calculate_displacement(xb, test_args.v0, test_args.omega, test_args.t)
     with raises(TypeError):
-        critical_damping.calculate_displacement(100, test_args.v0, test_args.omega, test_args.t)
+        displacement_in_critical_damping.calculate_displacement(100, test_args.v0, test_args.omega, test_args.t)
 
 
 def test_bad_initial_velocity(test_args: Args) -> None:
     vb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        critical_damping.calculate_displacement(test_args.x0, vb, test_args.omega, test_args.t)
+        displacement_in_critical_damping.calculate_displacement(test_args.x0, vb, test_args.omega, test_args.t)
     with raises(TypeError):
-        critical_damping.calculate_displacement(test_args.x0, 100, test_args.omega, test_args.t)
+        displacement_in_critical_damping.calculate_displacement(test_args.x0, 100, test_args.omega, test_args.t)
 
 
 def test_bad_angular_frequency(test_args: Args) -> None:
     omega_bad = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        critical_damping.calculate_displacement(test_args.x0, test_args.v0, omega_bad, test_args.t)
+        displacement_in_critical_damping.calculate_displacement(test_args.x0, test_args.v0, omega_bad, test_args.t)
     with raises(TypeError):
-        critical_damping.calculate_displacement(test_args.x0, test_args.v0, 100, test_args.t)
+        displacement_in_critical_damping.calculate_displacement(test_args.x0, test_args.v0, 100, test_args.t)
 
 
 def test_bad_time(test_args: Args) -> None:
     tb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        critical_damping.calculate_displacement(test_args.x0, test_args.v0, test_args.omega, tb)
+        displacement_in_critical_damping.calculate_displacement(test_args.x0, test_args.v0, test_args.omega, tb)
     with raises(TypeError):
-        critical_damping.calculate_displacement(test_args.x0, test_args.v0, test_args.omega, 100)
+        displacement_in_critical_damping.calculate_displacement(test_args.x0, test_args.v0, test_args.omega, 100)
