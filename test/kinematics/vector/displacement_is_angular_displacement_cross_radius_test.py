@@ -8,7 +8,7 @@ from symplyphysics import (
     QuantityVector,
 )
 from symplyphysics.laws.kinematics.vector import (
-    linear_displacement_is_angular_displacement_cross_radius as linear_displacement_law,)
+    displacement_is_angular_displacement_cross_radius as linear_displacement_law,)
 
 # Description
 ## A body is rotating about a fixes axis. It makes a rotation of 1e-5 rad in the positive direction around the

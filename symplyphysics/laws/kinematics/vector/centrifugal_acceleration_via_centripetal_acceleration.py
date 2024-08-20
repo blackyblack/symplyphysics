@@ -24,7 +24,8 @@ def centrifugal_law(centripetal_acceleration_: Vector) -> Vector:
         :code:`a_centrifugal = -1 * a_centripetal`
 
     Latex:
-        :math:`\vec a_\text{cf} = - \vec a_\text{cp}`
+        .. math::
+            \vec a_\text{cf} = - \vec a_\text{cp}
 
     :param centripetal_acceleration\_: :attr:`~symplyphysics.symbols.kinematics.acceleration` experienced by the rotating body in an inertial frame.
 
@@ -42,6 +43,7 @@ def centrifugal_law(centripetal_acceleration_: Vector) -> Vector:
 
         Dimension: *acceleration*
     """
+
     return scale_vector(-1, centripetal_acceleration_)
 
 
@@ -53,7 +55,8 @@ def centripetal_law(centrifugal_acceleration_: Vector) -> Vector:
         :code:`a_centripetal = -1 * a_centrifugal`
     
     Latex:
-        :math:`\vec a_\text{cp} = - \vec a_\text{cf}`
+        .. math::
+            \vec a_\text{cp} = - \vec a_\text{cf}
     
     :param centrifugal_acceleration\_: :attr:`~symplyphysics.symbols.kinematics.acceleration` experienced by the body in a non-inertial, rotating frame.
 
