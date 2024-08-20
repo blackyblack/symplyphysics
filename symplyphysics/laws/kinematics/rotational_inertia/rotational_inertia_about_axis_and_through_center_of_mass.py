@@ -1,3 +1,19 @@
+r"""
+Rotational inertia about axis and through center of mass
+========================================================
+
+The *parallel-axis theorem* relates the rotational inertia of a body about any axis to
+that of the same body about a parallel axis that extends through the body's center of mass
+of mass).
+
+
+**Conditions:**
+
+#. The two axis must be parallel to each other.
+#. The axis used in the calculation of :math:`I_\text{com}` must pass through the body's center of mass.
+"""
+
+
 from sympy import Eq
 from symplyphysics import (
     units,
@@ -5,40 +21,57 @@ from symplyphysics import (
     Quantity,
     validate_input,
     validate_output,
-    print_expression,
     symbols,
 )
 
-# Description
-## The parallel-axis theorem relates the rotational inertia of a body about any axis to
-## that of the same body about a parallel axis that extends through the body's center of mass
-## of mass).
-
-# Law: I = I_com + M*(h**2)
-## I - rotational inertia about some axis
-## I_com - rotational inertia about such an axis that is parallel to the given one
-##         and that passes through the center of mass
-## M - body mass
-## h - perpendicular distance between the two axes
-
-# Conditions:
-## - The two axis must be parallel to each other.
-## - The axis used in the calculation of I_com must pass through the body's center of mass.
-
 rotational_inertia = Symbol("rotational_inertia", units.mass * units.length**2)
+"""
+Rotational inertia about some axis.
+
+Symbol:
+    :code:`I`
+"""
+
 rotational_inertia_through_com = Symbol("rotational_inertia_through_com",
     units.mass * units.length**2)
+r"""
+Rotational inertia about an axis that is parallel to the given one and passes through
+the center of mass.
+
+Symbol:
+    :code:`I_com`
+
+Latex:
+    :math:`I_\text{com}`
+"""
+
 mass = symbols.basic.mass
+"""
+:attr:`~symplyphysics.symbols.basic.mass` of the body.
+
+Symbol:
+    :code:`m`
+"""
+
 distance_between_axes = Symbol("distance_between_axes", units.length)
+"""
+Perpendicular distance between the axes.
+
+Symbol:
+    :code:`h`
+"""
 
 law = Eq(
     rotational_inertia,
     rotational_inertia_through_com + mass * distance_between_axes**2,
 )
+r"""
+:code:`I = I_com + m * h^2`
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        I = I_\text{com} + m h^2
+"""
 
 
 @validate_input(
