@@ -1,10 +1,21 @@
+"""
+Rotational inertia is additive
+==============================
+
+For a system composed of several parts, its total rotational inertia is the sum of the rotational
+inertia of each part of the system.
+
+**Conditions:**
+
+#. The rotational inertia is calculated for the same axis for all parts of the system.
+"""
+
 from typing import Sequence
 from sympy import Eq, Idx, solve
 from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     SymbolIndexed,
@@ -12,17 +23,33 @@ from symplyphysics import (
     global_index,
 )
 
-# Description
-## For a system of particles, its total rotational inertia is the sum of the rotational
-## inertia of each particle of the system.
-
 total_rotational_inertia = Symbol("rotational_inertia", units.mass * units.length**2)
+"""
+Total rotational inertia of the system.
+
+Symbol:
+    :code:`I`
+"""
+
 rotational_inertia = SymbolIndexed("rotational_inertia", units.mass * units.length**2)
+r"""
+Rotational inertia of the :math:`k`-th part of the system.
+
+Symbol:
+    :code:`I_k`
+
+Latex:
+    :math:`I_k`
+"""
+
 law = Eq(total_rotational_inertia, SumIndexed(rotational_inertia[global_index], global_index))
+r"""
+:code:`I = Sum(I_k, k)`
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        I = \sum_k I_k
+"""
 
 
 @validate_input(rotational_inertias_=rotational_inertia)
