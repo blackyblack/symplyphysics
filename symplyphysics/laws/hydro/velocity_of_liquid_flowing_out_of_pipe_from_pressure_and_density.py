@@ -8,7 +8,7 @@ from symplyphysics import (
     validate_output,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.hydro import hydrostatic_pressure_from_density_and_depth as pressure_law
+from symplyphysics.laws.hydro import hydrostatic_pressure_via_density_and_height as pressure_law
 from symplyphysics.laws.hydro import velocity_from_height as velocity_law
 
 # Description
@@ -34,7 +34,7 @@ pressure_law_applied = pressure_law.law.subs({
     pressure_law.density: density,
     pressure_law.hydrostatic_pressure: pressure
 })
-height_derived = solve(pressure_law_applied, pressure_law.depth, dict=True)[0][pressure_law.depth]
+height_derived = solve(pressure_law_applied, pressure_law.height, dict=True)[0][pressure_law.height]
 
 velocity_law_applied = velocity_law.law.subs({velocity_law.height_above_hole: height_derived})
 velocity_derived = solve(velocity_law_applied, velocity_law.liquid_velocity,

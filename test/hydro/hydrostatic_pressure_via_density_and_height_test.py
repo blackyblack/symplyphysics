@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.hydro.hydrostatic_pressure_from_density_and_depth import calculate_hydrostatic_pressure
+from symplyphysics.laws.hydro.hydrostatic_pressure_via_density_and_height import calculate_hydrostatic_pressure
 
 # Description
 # A body at a depth of 10 m in water (1000 kg/m³) with a free fall acceleration of 9.81 m/s²
