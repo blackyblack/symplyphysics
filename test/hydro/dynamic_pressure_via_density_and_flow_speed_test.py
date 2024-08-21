@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.hydro import dynamic_pressure_from_velocity as dynamic_pressure_formula
+from symplyphysics.laws.hydro import dynamic_pressure_via_density_and_flow_speed as dynamic_pressure_formula
 
 # Description
 ## Water with density 1000kg/m3 flows with 0.2m/s. This flow should cause dynamic pressure of 20 Pa.
