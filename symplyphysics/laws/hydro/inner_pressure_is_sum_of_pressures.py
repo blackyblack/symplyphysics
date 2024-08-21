@@ -1,38 +1,70 @@
+"""
+Inner pressure is sum of pressures
+==================================
+
+Inner pressure of an ideal fluid is the sum of static, dynamic, and hydrostatic
+pressures at a chosen point in space.
+
+**Conditions:**
+
+#. The fluid is :ref:`ideal <ideal_fluid_def>`.
+"""
+
 from sympy import Eq, solve
 from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
 
-# Description
-## Inner pressure of an ideal fluid is the sum of static, dynamic, and hydrostatic pressure at chosen point.
-
-# Law: P_inner = P_static + P_dynamic + P_hydrostatic
-## P_inner - inner pressure
-## P_static - static pressure
-## P_dynamic - dynamic pressure
-## P_hydrostatic - hydrostatic pressure
-
-# Condition: this definition applies to an ideal liquid, namely one that is
-## 1) nonviscous
-## 2) in steady (laminar) flow
-## 3) incompressible
-## 4) irrotational
-
 inner_pressure = Symbol("inner_pressure", units.pressure)
+r"""
+Inner pressure of the fluid.
+
+Symbol:
+    :code:`p_inner`
+
+Latex:
+    :math:`p_\text{inner}`
+"""
+
 static_pressure = Symbol("static_pressure", units.pressure)
+r"""
+Static pressure of the fluid.
+
+Symbol:
+    :code:`p_static`
+
+Latex:
+    :math:`p_\text{static}`
+"""
+
 dynamic_pressure = Symbol("dynamic_pressure", units.pressure)
+"""
+Dynamic pressure of the fluid.
+
+Symbol:
+    :code:`q`
+"""
+
 hydrostatic_pressure = Symbol("hydrostatic_pressure", units.pressure)
+"""
+Hydrostatic pressure of the fluid.
+
+Symbol:
+    :code:`p`
+"""
 
 law = Eq(inner_pressure, static_pressure + dynamic_pressure + hydrostatic_pressure)
+r"""
+:code:`p_inner = p_static + q + p`
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        p_\text{inner} = p_\text{static} + q + p
+"""
 
 
 @validate_input(

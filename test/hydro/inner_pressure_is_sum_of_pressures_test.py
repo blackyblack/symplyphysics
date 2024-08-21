@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-import symplyphysics.laws.hydro.inner_pressure_of_fluid as inner_pressure
+import symplyphysics.laws.hydro.inner_pressure_is_sum_of_pressures as inner_pressure
 
 Args = namedtuple("Args", "p_static, p_dynamic, p_hydrostatic")
 

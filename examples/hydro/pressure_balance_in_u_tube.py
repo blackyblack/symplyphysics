@@ -2,7 +2,7 @@
 
 from sympy import dsolve, solve, symbols, Eq
 from symplyphysics import units, convert_to, Quantity, print_expression
-from symplyphysics.laws.hydro import inner_pressure_of_fluid as inner_pressure
+from symplyphysics.laws.hydro import inner_pressure_is_sum_of_pressures as inner_pressure
 from symplyphysics.laws.hydro import hydrostatic_pressure_via_density_and_height as hydrostatic_pressure
 from symplyphysics.laws.hydro import inner_pressure_of_fluid_is_constant as constant_pressure_law
 
