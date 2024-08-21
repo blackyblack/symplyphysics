@@ -1,37 +1,55 @@
+"""
+Inner pressure of fluid is constant
+===================================
+
+Bernoulli's equation applied to an ideal liquid specifies that the inner
+pressure of the fluid is constant at all points along a streamline.
+
+**Conditions:**
+
+#. The fluid must be :ref:`ideal <ideal_fluid_def>`.
+"""
+
 from sympy import Eq, dsolve, Derivative
 from symplyphysics import (
     units,
     Quantity,
     Symbol,
     Function,
-    print_expression,
     validate_input,
     validate_output,
 )
 
-# Description
-## Bernoulli's equation applied to an ideal liquid specifies that the inner
-## pressure of the fluid is constant at all points along a streamline.
+inner_pressure = Function("inner_pressure", units.pressure)
+r"""
+Inner presure of the fluid at a chosen point in space.
 
-# Law: d(P_inner)/dt = 0
-## P_inner - inner pressure of fluid at chosen point
-## t - time
+Symbol:
+    :code:`p_inner(t)`
 
-# Condition
-## The fluid must be ideal, i.e.
-## 1) nonviscous
-## 2) in steady (laminar) flow
-## 3) incompressible
-## 4) irrotational
+Latex:
+    :math:`p_\text{inner}(t)`
+
+..
+    TODO add link to definition
+"""
 
 time = Symbol("time", units.time)
-inner_pressure = Function("inner_pressure", units.pressure)
+"""
+Time.
+
+Symbol:
+    :code:`t`
+"""
 
 law = Eq(Derivative(inner_pressure(time), time), 0)
+r"""
+:code:`Derivative(p_inner(t), t) = 0`
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        \frac{d p_\text{inner}}{d t} = 0
+"""
 
 
 @validate_input(inner_pressure_before_=inner_pressure)
