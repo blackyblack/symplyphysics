@@ -23,7 +23,7 @@ from symplyphysics.laws.kinematics.vector import centripetal_acceleration_via_ve
 
 def centripetal_acceleration_law(
     angular_velocity_: Vector,
-    position_vector_: Vector,
+    radius_vector_: Vector,
 ) -> Vector:
     r"""
     Centripetal acceleration via angular velocity and radius vector.
@@ -43,7 +43,7 @@ def centripetal_acceleration_law(
 
         Dimension: *angle* / *time*
 
-    :param position_vector\_: radius vector, or position vector
+    :param radius_vector\_: radius vector, or position vector
 
         Symbol: :code:`r`
 
@@ -62,7 +62,7 @@ def centripetal_acceleration_law(
 
     return cross_cartesian_vectors(
         angular_velocity_,
-        cross_cartesian_vectors(angular_velocity_, position_vector_),
+        cross_cartesian_vectors(angular_velocity_, radius_vector_),
     )
 
 
@@ -79,15 +79,15 @@ for _component in _difference.components:
 
 @validate_input(
     angular_velocity_=angle_type / units.time,
-    position_vector_=units.length,
+    radius_vector_=units.length,
 )
 @validate_output(units.acceleration)
 def calculate_centripetal_acceleration(
     angular_velocity_: QuantityVector,
-    position_vector_: QuantityVector,
+    radius_vector_: QuantityVector,
 ) -> QuantityVector:
     vector = centripetal_acceleration_law(
         angular_velocity_.to_base_vector(),
-        position_vector_.to_base_vector(),
+        radius_vector_.to_base_vector(),
     )
     return QuantityVector.from_base_vector(vector)
