@@ -1,3 +1,16 @@
+"""
+Volume flux is constant
+=======================
+
+The product of the area and the fluid speed, which is called the *volume flux*, is constant
+at all points along the tube of flow of an incompressible liquid. This equation is also
+known as the *equation of continuity*.
+
+**Conditions:**
+
+#. The fluid is :ref:`ideal <ideal_fluid_def>`.
+"""
+
 from sympy import Eq, solve, dsolve, Derivative
 from symplyphysics import (
     units,
@@ -8,28 +21,38 @@ from symplyphysics import (
     validate_output,
 )
 
-# Description
-## The product of the area and the fluid speed, which is called volume flux, is constant
-## at all points along the tube of flow of an incompressible liquid.
+tube_area = Function("tube_area", units.area)
+"""
+Area of the tube of flow as a function of time.
 
-# Law: d(A*v)/dt = 0
-## A - area of the tube of flow
-## v - fluid speed
+Symbol:
+    :code:`A(t)`
+"""
 
-# It is also called the equation of continuity
+fluid_speed = Function("fluid_speed", units.velocity)
+"""
+Fluid speed as a function of time.
 
-# Condition
-## The fluid should be ideal, i.e.
-## 1) nonviscous,
-## 2) in steady (laminar) flow,
-## 3) incompressible,
-## 4) irrotational.
+Symbol:
+    :code:`u(t)`
+"""
 
 time = Symbol("time", units.time)
-tube_area = Function("tube_area", units.area)
-fluid_speed = Function("fluid_speed", units.velocity)
+"""
+Time.
+
+Symbol:
+    :code:`t`
+"""
 
 law = Eq(Derivative(tube_area(time) * fluid_speed(time), time), 0)
+r"""
+:code:`Derivative(A(t) * v(t), t) = 0`
+
+Latex:
+    .. math::
+        \frac{d (A v)}{d t} = 0
+"""
 
 
 @validate_input(tube_area_before_=tube_area,
