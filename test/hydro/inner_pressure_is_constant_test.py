@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-import symplyphysics.laws.hydro.inner_pressure_of_fluid_is_constant as bernoullis_equation
+import symplyphysics.laws.hydro.inner_pressure_is_constant as bernoullis_equation
 
 Args = namedtuple("Args", "inner_pressure_before")
 
