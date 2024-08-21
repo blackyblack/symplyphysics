@@ -92,7 +92,7 @@ distance_traveled = solve(
     angular_position_def.arc_length,
 )[0].subs({
     angular_position_def.angular_position: angular_distance,
-    angular_position_def.path_radius: radius,
+    angular_position_def.distance_to_axis: radius,
 })
 
 work_derived = linear_work_law.law.rhs.subs({
