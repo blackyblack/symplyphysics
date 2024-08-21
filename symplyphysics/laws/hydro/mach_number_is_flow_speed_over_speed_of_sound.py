@@ -28,7 +28,7 @@ Latex:
     :math:`\text{M}`
 """
 
-flow_speed = Symbol("flow_speed", units.flow_speed)
+flow_speed = Symbol("flow_speed", units.velocity)
 r"""
 Local flow speed with respect to internal or external boundaries.
 
@@ -36,7 +36,7 @@ Symbol:
     :code:`u`
 """
 
-speed_of_sound = Symbol("speed_of_sound", units.flow_speed)
+speed_of_sound = Symbol("speed_of_sound", units.velocity)
 """
 Local speed of sound in the medium.
 
