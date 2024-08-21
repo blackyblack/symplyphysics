@@ -18,7 +18,9 @@ from symplyphysics.laws.kinematics import (
     speed_via_angular_speed_and_radius as linear_velocity_law,
     tangential_acceleration_via_angular_acceleration_and_radius as tangential_acceleration_law,
 )
-from symplyphysics.laws.kinematics.vector import acceleration_of_rotating_body as total_acceleration_law
+from symplyphysics.laws.kinematics.vector import (
+    acceleration_is_normal_plus_tangential_acceleration as total_acceleration_law,
+)
 
 # Description
 ## A wheel is rotating about a fixed axis so that the angular displacement is expressed as k*t^2, where
@@ -73,8 +75,8 @@ centripetal_acceleration = centripetal_acceleration_law.law.rhs.subs({
 # align the tangential acceleration with the x axis, and the centripetal one with the y axis.
 total_acceleration = vector_magnitude(
     total_acceleration_law.acceleration_law(
-    Vector([tangential_acceleration, 0]),
-    Vector([0, centripetal_acceleration]),
+    tangential_acceleration_=Vector([tangential_acceleration, 0]),
+    normal_acceleration_=Vector([0, centripetal_acceleration]),
     )).simplify()
 total_acceleration_value = convert_to(
     Quantity(total_acceleration.subs(values)),

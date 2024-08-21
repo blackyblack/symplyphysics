@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
     QuantityVector,
 )
-from symplyphysics.laws.kinematics.vector import acceleration_of_rotating_body as acceleration_law
+from symplyphysics.laws.kinematics.vector import acceleration_is_normal_plus_tangential_acceleration as acceleration_law
 
 # Description
 ## A body is moving along a curve. At a certain point in time, its radial acceleration
