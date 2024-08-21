@@ -1,6 +1,6 @@
 """
-Inner pressure of fluid is constant
-===================================
+Inner pressure is constant
+==========================
 
 Bernoulli's equation applied to an ideal liquid specifies that the inner
 pressure of the fluid is constant at all points along a streamline.
