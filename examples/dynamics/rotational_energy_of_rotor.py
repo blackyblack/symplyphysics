@@ -26,7 +26,7 @@ values = {
 }
 
 rotational_inertia = disk_formula.law.rhs.subs({
-    disk_formula.disk_mass: mass,
+    disk_formula.mass: mass,
     disk_formula.radius: radius,
 })
 

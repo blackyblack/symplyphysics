@@ -103,7 +103,7 @@ ball_coriolis_acceleration_vector = coriolis_law.coriolis_acceleration_law(
 
 ball_centripetal_acceleration_vector = centripetal_law.centripetal_acceleration_law(
     angular_velocity_=disk_angular_velocity_vector,
-    position_vector_=ball_position_vector,
+    radius_vector_=ball_position_vector,
 )
 
 ball_transfer_acceleration_vector = tranfer_law.transfer_acceleration_law(
