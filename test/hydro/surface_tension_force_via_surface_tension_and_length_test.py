@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors, prefixes)
-from symplyphysics.laws.hydro import surface_tension_force_of_liquid as force_law
+from symplyphysics.laws.hydro import surface_tension_force_via_surface_tension_and_length as force_law
 
 # Description
 ## Let the liquid be water with a surface tension coefficient equal to 7.286e-2 newton.
