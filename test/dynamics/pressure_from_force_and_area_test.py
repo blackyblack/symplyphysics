@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 
-from symplyphysics.laws.hydro import pressure_from_force_and_area as pressure
+from symplyphysics.laws.dynamics import pressure_from_force_and_area as pressure
 
 Args = namedtuple("Args", ["area", "force"])
 
