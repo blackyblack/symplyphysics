@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.hydro import velocity_from_height as torricellis_formula
+from symplyphysics.laws.hydro import efflux_speed_via_height as torricellis_formula
 
 # Description
 ## In the bottom of water tank there is a small hole. Height of liquid in tank is 3m. Velocity of jet according to Torricelli's formula should be

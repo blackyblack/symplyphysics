@@ -5,6 +5,11 @@ Efflux speed via pressure and density
 The speed of a fluid flowing out from a small orifice can be expressed as a function
 of the fluid's :doc:`hydrostatic pressure <laws.hydro.hydrostatic_pressure_via_density_and_height>`
 and density.
+
+**Conditions:**
+
+#. The orifice is very small relative to the horizontal cross-section of the container.
+#. The fluid is :ref:`ideal <ideal_fluid_def>`.
 """
 
 from sympy import (Eq, solve, sqrt)
@@ -17,7 +22,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.hydro import hydrostatic_pressure_via_density_and_height as pressure_law
-from symplyphysics.laws.hydro import velocity_from_height as velocity_law
+from symplyphysics.laws.hydro import efflux_speed_via_height as velocity_law
 
 efflux_speed = Symbol("efflux_speed", units.velocity)
 """
@@ -64,9 +69,9 @@ _pressure_law_applied = pressure_law.law.subs({
 })
 _height_derived = solve(_pressure_law_applied, pressure_law.height, dict=True)[0][pressure_law.height]
 
-_velocity_law_applied = velocity_law.law.subs({velocity_law.height_above_hole: _height_derived})
-_velocity_derived = solve(_velocity_law_applied, velocity_law.liquid_velocity,
-    dict=True)[0][velocity_law.liquid_velocity]
+_velocity_law_applied = velocity_law.law.subs({velocity_law.height: _height_derived})
+_velocity_derived = solve(_velocity_law_applied, velocity_law.efflux_speed,
+    dict=True)[0][velocity_law.efflux_speed]
 
 # Check if derived efflux_speed is same as declared.
 assert expr_equals(_velocity_derived, law.rhs)
