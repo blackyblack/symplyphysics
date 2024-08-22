@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import assert_equal, errors, units, Quantity
-from symplyphysics.laws.hydro import shear_stress_is_proportional_to_velocity_gradient as newtons_law
+from symplyphysics.laws.hydro import shear_stress_is_proportional_to_speed_gradient as newtons_law
 
 # Description
 ## Water (dynamic viscosity of which is 8.9e-4 Pa*s) is flowing steadily on top of a flat solid plate.
