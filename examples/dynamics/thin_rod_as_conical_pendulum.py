@@ -115,7 +115,7 @@ gravity_torque_acting_on_rod = integrate_cartesian_vector(
 
 element_centripetal_acceleration_vector = centripetal_law.centripetal_acceleration_law(
     angular_velocity_=angular_velocity_vector,
-    position_vector_=element_position_vector,
+    radius_vector_=element_position_vector,
 )
 
 element_centrifugal_acceleration_vector = centrifugal_law.centrifugal_law(
