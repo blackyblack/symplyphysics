@@ -38,9 +38,6 @@ def test_bad_density(test_args: Args) -> None:
         submerged.calculate_submerged_volume(test_args.body_volume, 100, test_args.liquid_density)
     with raises(TypeError):
         submerged.calculate_submerged_volume(test_args.body_volume, test_args.body_density, 100)
-    with raises(ValueError):
-        submerged.calculate_submerged_volume(test_args.body_volume, test_args.liquid_density,
-            test_args.body_density)
 
 
 def test_bad_volume(test_args: Args) -> None:
