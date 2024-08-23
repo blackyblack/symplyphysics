@@ -1,5 +1,8 @@
 from typing import Sequence
-from .parse import FunctionWithDoc, MemberWithDoc
+
+from sympy import latex, mathematica_code, print_python, python
+from symplyphysics.core.symbols.symbols import print_expression
+from .parse import FunctionWithDoc, LawDirectiveTypes, MemberWithDoc
 
 
 INDENT_SPACES = 4
@@ -19,9 +22,29 @@ def _members_to_doc(members: Sequence[MemberWithDoc]) -> str:
     for m in members:
         if m.name.startswith("_"):
             continue
-        doc = _indent_docstring(m.docstring, INDENT_SPACES)
+        doc = m.docstring
+        offset = 0
+        for d in m.directives:
+            doc_length = len(doc)
+            if d.directive_type == LawDirectiveTypes.SYMBOL:
+                doc = doc[0 + offset:d.start + offset] + ":code:`" + mathematica_code(m.value) + "`\n\n" + doc[d.end + offset:]
+                offset = offset + len(doc) - doc_length
+                continue
+            if d.directive_type == LawDirectiveTypes.LATEX:
+                doc = doc[0 + offset:d.start + offset] + ":math:`" + latex(m.value) + "`\n\n" + doc[d.end + offset:]
+                offset = offset + len(doc) - doc_length
+                continue
+        doc = _indent_docstring(doc, INDENT_SPACES)
         content = content + ".. py:data:: " + m.name + "\n\n"
         content = content + doc + "\n\n"
+        if m.symbol is not None:
+            symbol_name = "Symbol:\n" + "" + _indent_docstring(":code:`" + m.symbol.symbol + "`", INDENT_SPACES)
+            content = content + _indent_docstring(symbol_name, INDENT_SPACES) + "\n\n"
+            if m.symbol.latex is not None:
+                symbol_latex = "Latex:\n" + "" + _indent_docstring(":math:`" + m.symbol.latex + "`", INDENT_SPACES)
+                content = content + _indent_docstring(symbol_latex, INDENT_SPACES) + "\n\n"
+            symbol_dimension = "Dimension:\n" + "" + _indent_docstring(":code:`" + m.symbol.dimension + "`", INDENT_SPACES)
+            content = content + _indent_docstring(symbol_dimension, INDENT_SPACES) + "\n\n"
     return content
 
 

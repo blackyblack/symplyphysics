@@ -24,10 +24,12 @@ def process_law_package(directory: str, laws: Sequence[str], packages: Sequence[
         package_description = ""
 
     package_name = filename.replace(os.sep, ".")
+    print(f"Generating rST for package {package_name}")
+
     package_name_strip_root = ".".join(package_name.split(".")[1:])
     packages = [p for p in packages if not (p.startswith(".") or p.startswith("_"))]
     packages = [package_name_strip_root + "." + p for p in packages]
-    package_items = find_members_and_functions(package_parsed)
+    package_items = find_members_and_functions(package_name)
     package_content = print_package(package_title, package_description, package_items, package_name, laws, packages)
 
     package_doc_file = os.path.normpath(os.path.join(output_dir, package_name_strip_root + ".rst"))
@@ -61,7 +63,9 @@ def process_law(directory: str, law_filename: str, output_dir: str) -> Optional[
 
     no_extension_filename = os.path.splitext(filename)[0]
     law_module_name = no_extension_filename.replace(os.sep, ".")
-    law_items = find_members_and_functions(law_parsed)
+    print(f"Generating rST for law {law_module_name}")
+
+    law_items = find_members_and_functions(law_module_name)
     doc_content = print_law(law_title, law_description, law_items, law_module_name)
 
     law_module_name_strip_root = ".".join(law_module_name.split(".")[1:])

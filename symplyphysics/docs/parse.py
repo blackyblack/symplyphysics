@@ -1,12 +1,36 @@
 import ast
 from dataclasses import dataclass
-from typing import Optional
+from enum import Enum
+import importlib
+from typing import Any, Optional
+from sympy.physics.units.systems.si import SI
 
+from ..core.symbols.symbols import DimensionSymbol
+
+
+class LawDirectiveTypes(Enum):
+    SYMBOL = 0
+    LATEX = 1
+
+@dataclass
+class LawDirective:
+    start: int
+    end: int
+    directive_type: LawDirectiveTypes
+
+@dataclass
+class LawSymbol:
+    symbol: str
+    latex: Optional[str]
+    dimension: str
 
 @dataclass
 class MemberWithDoc:
     name: str
     docstring: str
+    symbol: Optional[LawSymbol]
+    directives: list[LawDirective]
+    value: Any
 
 @dataclass
 class FunctionWithDoc:
@@ -28,6 +52,17 @@ def _docstring_clean(doc: str) -> str:
             break
         doc = doc.removesuffix("\n")
     return doc
+
+
+def _docstring_find_law_directives(doc: str) -> list[LawDirective]:
+    directives = []
+    position = doc.find(":laws:symbol::\n")
+    if position >= 0:
+        directives.append(LawDirective(position, position + len(":laws:symbol::\n"), LawDirectiveTypes.SYMBOL))
+    position = doc.find(":laws:latex::\n")
+    if position >= 0:
+        directives.append(LawDirective(position, position + len(":laws:latex::\n"), LawDirectiveTypes.LATEX))
+    return directives
 
 
 def find_title(content: str) -> Optional[str]:
@@ -70,11 +105,18 @@ def find_description(content: str) -> Optional[str]:
     return "\n".join(content_lines)
 
 
-def find_members_and_functions(content: ast.Module) -> list[MemberWithDoc | FunctionWithDoc]:
+def find_members_and_functions(module_name: str) -> list[MemberWithDoc | FunctionWithDoc]:
     law_functions: list[FunctionWithDoc] = []
     law_members: list[str] = []
     current_member: Optional[str] = None
     docstrings: dict[str, str] = {}
+    module = importlib.import_module(module_name)
+    if module.__file__ is None:
+        print(f"Unable to read {module} contents")
+        return []
+    with open(module.__file__, "r", encoding="utf-8") as f:
+        package_content = f.read()
+    content = ast.parse(package_content)
     for e in content.body:
         if isinstance(e, ast.FunctionDef):
             doc = ast.get_docstring(e)
@@ -104,7 +146,13 @@ def find_members_and_functions(content: ast.Module) -> list[MemberWithDoc | Func
         if doc is None:
             continue
         doc = _docstring_clean(doc)
-        result.append(MemberWithDoc(v, doc))
-    for f in law_functions:
-        result.append(f)
+        sym = getattr(module, v)
+        law_symbol = None
+        if isinstance(sym, DimensionSymbol):
+            dimension = "dimensionless" if SI.get_dimension_system().is_dimensionless(sym.dimension) else str(sym.dimension.name)
+            law_symbol = LawSymbol(sym.display_symbol, sym.display_latex, dimension)
+        directives = _docstring_find_law_directives(doc)
+        result.append(MemberWithDoc(v, doc, law_symbol, directives, sym))
+    for lf in law_functions:
+        result.append(lf)
     return result
