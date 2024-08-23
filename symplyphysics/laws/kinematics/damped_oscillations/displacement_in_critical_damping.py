@@ -12,7 +12,7 @@ initial velocity is nonzero. This behaviour is also called *critical damping*.
 #. The system is critically damped, i.e. its damping ratio :math:`\zeta = 1`.
 """
 
-from sympy import Eq, exp, dsolve, solve, Function as SymFunction
+from sympy import Eq, exp, dsolve, solve, Function as SymFunction, symbols
 from symplyphysics import (
     units,
     Quantity,
@@ -43,7 +43,7 @@ Symbol:
 undamped_angular_frequency = Symbol("undamped_angular_frequency",
     angle_type / units.time,
     positive=True)
-"""
+r"""
 Angular frequency of the undamped oscillator.
 
 Symbol:
@@ -90,7 +90,7 @@ Latex:
 
 # Derive from damped oscillator equation
 
-_displacement = SymFunction("displacement", real=True)
+_displacement = symbols("displacement", real=True, cls=SymFunction)
 
 _eqn = damped_eqn.definition.subs(damped_eqn.time, time).subs({
     damped_eqn.displacement(time): _displacement(time),

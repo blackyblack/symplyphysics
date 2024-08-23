@@ -40,7 +40,7 @@ Latex:
 """
 
 undamped_angular_frequency = Symbol("undamped_angular_frequency", angle_type / units.time)
-"""
+r"""
 Undamped angular frequency of the oscillator.
 
 Symbol:

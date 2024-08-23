@@ -58,7 +58,7 @@ Latex:
 """
 
 time = Symbol("time", units.time)
-"""
+r"""
 Time at which :math:`\omega` is measured.
 
 Symbol:

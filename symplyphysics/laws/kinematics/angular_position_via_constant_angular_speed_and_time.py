@@ -44,7 +44,7 @@ Latex:
 """
 
 angular_speed = Symbol("angular_speed", angle_type / units.time)
-"""
+r"""
 Constant angular speed.
 
 Symbol:
