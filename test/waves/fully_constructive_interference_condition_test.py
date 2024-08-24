@@ -7,7 +7,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.waves import fully_constuctive_interference_condition as condition_law
+from symplyphysics.laws.waves import fully_constructive_interference_condition as condition_law
 
 # Description
 ## The interference of two waves is fully constructive and the phase shift between them is

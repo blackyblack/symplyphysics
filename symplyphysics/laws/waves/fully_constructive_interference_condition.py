@@ -4,7 +4,7 @@ Fully constructive interference condition
 
 The interference of two waves is said to be *fully constructive* when the amplitude of the
 resulting wave is precisely the sum of the amplitudes of the comprising waves. In that case,
-they must be an even number of half-cycles out of phase between each other.
+there must be an even number of half-cycles out of phase between each other.
 """
 
 from sympy import Eq, pi

@@ -11,7 +11,7 @@ from symplyphysics.laws.waves import frequency_shift_from_speed_in_arbitrary_mot
 
 ## Man stands near railroad and hears horn of incoming train. Angle between line of sight to the train is 30 degrees.
 ## Train comes with velocity of 9km/h and horns with 2000Hz frequency. What frequency hears the man?
-## We have online calc for Dopler effect here: https://planetcalc.ru/2351/. With our parameters we should obtain 2013Hz observed frequency.
+## We have online calc for Doppler effect here: https://planetcalc.ru/2351/. With our parameters we should obtain 2013Hz observed frequency.
 ## Another situation is when man rides a bike towards horning standing train with the same velocity. Observed frequency should be same.
 
 Args = namedtuple("Args", [

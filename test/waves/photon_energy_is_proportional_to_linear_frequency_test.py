@@ -12,7 +12,7 @@ from symplyphysics.laws.waves import photon_energy_is_proportional_to_linear_fre
 ## Assert we have ultraviolet radiation with frequency of 3e16 Hz.
 ## With online calculator
 ## https://www.center-pss.ru/math/raschet-energii-fotona.htm
-## we obtain energy of single photone equal to 1.9878528e-17 Joule.
+## we obtain energy of single photon equal to 1.9878528e-17 Joule.
 
 Args = namedtuple("Args", ["frequency"])
 

@@ -10,7 +10,7 @@ from symplyphysics import (
 from symplyphysics.laws.waves import displacement_in_interfering_waves as interference_law
 
 # Description
-## Two waves with amplitide u_max = 1 cm, angular wavenumber k = 0.3 rad/m and angular frequency
+## Two waves with amplitude u_max = 1 cm, angular wavenumber k = 0.3 rad/m and angular frequency
 ## w = 50 rad/s are traveling in the same direction and are shifted by pi/2 relative to one another.
 ## Then at position x = 1 m and time t = 0.5 s the displacement of the resulting wave is 1.33 cm.
 
