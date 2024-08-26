@@ -12,7 +12,7 @@ from symplyphysics import (
 )
 
 # Description
-## In the presense of a damping force the oscillating system is no longer closed and its energy
+## In the presence of a damping force the oscillating system is no longer closed and its energy
 ## dissipates to the environment. The total energy of the oscillator becomes converted into thermal
 ## energy. For small values of the damping ratio, the following equation approximately describes
 ## the total mechanical energy of the underdamped oscillator:

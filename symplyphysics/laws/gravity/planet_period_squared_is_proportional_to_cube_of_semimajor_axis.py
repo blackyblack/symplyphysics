@@ -22,13 +22,13 @@ from symplyphysics.laws.kinematics import (
 
 # Description
 ## Also known as Kepler's third law of planetary motion, the law of periods relates
-## the period of rotation of any planet to the semimajor axis of its orbit.
+## the period of rotation of any planet to the semi-major axis of its orbit.
 
 # Law: T**2 = 4*pi**2 / (G*M) * a**3
 ## T - planet's period of rotation
 ## G - gravitational constant
 ## M - mass of the attracting body, the Sun in case of the solar system
-## a - semimajor axis of the planet's orbit, its radius in case of a round orbit
+## a - semi-major axis of the planet's orbit, its radius in case of a round orbit
 
 rotation_period = Symbol("rotation_period", units.time, positive=True)
 attracting_mass = clone_symbol(symbols.basic.mass, "attracting_mass", positive=True)
@@ -64,7 +64,7 @@ _newtons_eqn = newtons_second_law.law.subs({
 _angular_speed_expr = solve(_newtons_eqn, _angular_speed)[1]
 
 # If the eccentricity of the planet's orbit is not too big, which is the case for most
-# planets of the solar system, we can substitute the radius with the semimajor axis of
+# planets of the solar system, we can substitute the radius with the semi-major axis of
 # the orbit.
 _period_derived = period_law.law.rhs.subs({
     period_law.angular_frequency: _angular_speed_expr,

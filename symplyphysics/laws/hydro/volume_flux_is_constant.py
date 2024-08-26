@@ -23,7 +23,7 @@ from symplyphysics import (
 
 tube_area = Function("tube_area", units.area)
 """
-Area of the tube of flow as a function of time.
+Cross-sectional area of the tube of flow as a function of time.
 
 Symbol:
     :code:`A(t)`
@@ -47,11 +47,11 @@ Symbol:
 
 law = Eq(Derivative(tube_area(time) * fluid_speed(time), time), 0)
 r"""
-:code:`Derivative(A(t) * v(t), t) = 0`
+:code:`Derivative(A(t) * u(t), t) = 0`
 
 Latex:
     .. math::
-        \frac{d (A v)}{d t} = 0
+        \frac{d (A u)}{d t} = 0
 """
 
 

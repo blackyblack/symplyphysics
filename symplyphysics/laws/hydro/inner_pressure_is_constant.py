@@ -22,16 +22,14 @@ from symplyphysics import (
 
 inner_pressure = Function("inner_pressure", units.pressure)
 r"""
-Inner presure of the fluid at a chosen point in space.
+Inner pressure of the fluid at a chosen point in space.
+See :doc:`laws.hydro.inner_pressure_is_sum_of_pressures`.
 
 Symbol:
     :code:`p_inner(t)`
 
 Latex:
     :math:`p_\text{inner}(t)`
-
-..
-    TODO add link to definition
 """
 
 time = Symbol("time", units.time)

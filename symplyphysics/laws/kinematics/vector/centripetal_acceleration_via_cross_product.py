@@ -1,9 +1,15 @@
-"""
+r"""
 Centripetal acceleration via cross product
 ==========================================
 
 *Centripetal acceleration* is the acceleration of a body in a rotating coordinate system
 which is directed towards the axis of rotation.
+
+Also see :doc:`laws.kinematics.vector.centrifugal_acceleration_via_centripetal_acceleration`.
+
+**Notation:**
+
+#. :math:`\vec a \times \vec b` (:code:`cross(a, b)`) is the cross product between :math:`\vec a` and :math:`\vec b`.
 """
 
 from sympy import symbols
@@ -66,7 +72,8 @@ def centripetal_acceleration_law(
     )
 
 
-# Prove that these two forms of the law are equivalent.
+# Prove that it is equivalent to derive centripetal acceleration via cross product
+# and via vector rejection.
 
 _angular_velocity = Vector(symbols("angular_velocity_x:z"))
 _position_vector = Vector(symbols("position_vector_x:z"))

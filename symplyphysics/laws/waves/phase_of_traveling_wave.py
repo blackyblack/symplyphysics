@@ -12,7 +12,8 @@ can only appear in the form of the wave phase described below.
 **Notes:**
 
 #. :math:`\omega = (\vec \omega \cdot {\vec e}_x)`, i.e. the angular frequency is a positive quantity
-   if the wave travels in the positive direction of the :math:`x`-axis.
+   if the wave travels in the positive direction of the :math:`x`-axis. Here :math:`{\vec e}_x` is the
+   unit vector pointing in the positive direction of the :math:`x`-axis.
 
 **Conditions:**
 

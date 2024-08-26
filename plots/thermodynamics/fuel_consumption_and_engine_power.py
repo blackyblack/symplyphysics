@@ -72,10 +72,10 @@ base_plot = plot(title="Gasoline consumption and engine power",
 
 # Create plots for every efficient factor in sequence and add plot to base plot
 for efficiency_factor_value in efficiency_factor_values:
-    gasoline_compustion_value = gasoline_consumption_equation.subs({
+    gasoline_combustion_value = gasoline_consumption_equation.subs({
         efficiency_factor: efficiency_factor_value
     }).rhs
-    subplot = plot(gasoline_compustion_value, (power_of_car, 1_000, 100_000),
+    subplot = plot(gasoline_combustion_value, (power_of_car, 1_000, 100_000),
         label=r"$\eta_{engine}=" + f"{efficiency_factor_value}$",
         show=False)
     base_plot.append(subplot[0])

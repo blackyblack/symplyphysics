@@ -90,7 +90,7 @@ def relative_position_law(
 
         Symbol: :code:`v_rel(t)`
 
-        Latex: :math:`{\vec v}_\text{rel}`
+        Latex: :math:`{\vec v}_\text{rel}(t)`
 
         Dimension: *velocity*
 

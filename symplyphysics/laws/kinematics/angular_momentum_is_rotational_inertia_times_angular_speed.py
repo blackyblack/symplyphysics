@@ -27,7 +27,7 @@ angular_momentum = Symbol("angular_momentum", units.length * units.momentum)
 Component of the vector of angular momentum parallel to the rotational axis.
 
 Symbol:
-    :code:`I`
+    :code:`L`
 """
 
 rotational_inertia = Symbol("rotational_inertia", units.mass * units.length**2)

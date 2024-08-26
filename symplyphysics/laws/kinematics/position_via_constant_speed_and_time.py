@@ -7,7 +7,7 @@ of time.
 
 **Conditions:**
 
-#. :math:`v = \text{const} \Leftrightarrow \frac{d v}{d t} = 0.`
+#. Speed is constant, i.e. :math:`\frac{d v}{d t} = 0.`
 """
 
 from sympy import (Eq, solve, dsolve)

@@ -7,6 +7,7 @@ A thin rod is rotating about an axis that passes through its center perpendicula
 **Conditions:**
 
 #. The rod is uniform.
+#. The rod is thin, i.e. its diameter is much less than its length.
 """
 
 from sympy import Eq
@@ -55,7 +56,7 @@ Latex:
         I = \frac{1}{12} m l^2
 """
 
-# Derive law from formula for a slab rotating about the axis perpendicular to its lenght and width
+# Derive law from formula for a slab rotating about the axis perpendicular to its length and width
 # passing through its center. The thin rod is a particular case of it, when the width of the slab
 # approaches zero.
 

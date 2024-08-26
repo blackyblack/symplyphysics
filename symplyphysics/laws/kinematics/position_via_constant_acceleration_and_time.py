@@ -6,7 +6,7 @@ If a body is moving with a constant acceleration, its position in space is a qua
 
 **Conditions:**
 
-#. :math:`a = \text{const} \Leftrightarrow \frac{d a}{d t} = 0.`
+#. Acceleration is constant, i.e. :math:`\frac{d a}{d t} = 0.`
 """
 
 from sympy import (Eq, solve, dsolve)

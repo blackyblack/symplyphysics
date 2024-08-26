@@ -25,7 +25,7 @@ Symbol:
     :code:`p`
 """
 
-energy = Symbol("frequency", units.energy)
+energy = Symbol("energy", units.energy)
 """
 Energy of a photon.
 

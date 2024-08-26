@@ -30,7 +30,7 @@ from symplyphysics.laws.dynamics.vector import (
     acceleration_from_force as force_law,
 )
 from symplyphysics.laws.kinematics.vector import (
-    acceleration_of_transfer_between_relative_frames as tranfer_law,
+    acceleration_of_transfer_between_relative_frames as transfer_law,
     centripetal_acceleration_via_cross_product as centripetal_law,
     coriolis_acceleration as coriolis_law,
 )
@@ -60,7 +60,7 @@ ball_angle = symbols("ball_angle", real=True, cls=SymFunction)
 
 ZERO = Vector([0, 0, 0])
 
-# The z axis is vertical and codirectional to the disk's angular velocity. The y axis runs from
+# The z axis is vertical and co-directional to the disk's angular velocity. The y axis runs from
 # left to right and is parallel to the plane where the pendulum's oscillations occur. The x
 # axis is thus perpendicular to that plane.
 
@@ -106,7 +106,7 @@ ball_centripetal_acceleration_vector = centripetal_law.centripetal_acceleration_
     radius_vector_=ball_position_vector,
 )
 
-ball_transfer_acceleration_vector = tranfer_law.transfer_acceleration_law(
+ball_transfer_acceleration_vector = transfer_law.transfer_acceleration_law(
     moving_frame_acceleration_=ZERO,  # the frame is fixed
     centripetal_acceleration_=ball_centripetal_acceleration_vector,
     rotation_acceleration_=ZERO,  # the disk's rotation is uniform

@@ -82,7 +82,7 @@ def coriolis_acceleration_law(
 
 
 # a_tr = F / m - a_rel + a_cor
-def traslation_acceleration_law(
+def translation_acceleration_law(
     relative_acceleration_: Vector,
     force_: Vector,
     coriolis_acceleration_: Vector,

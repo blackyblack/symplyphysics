@@ -3,7 +3,8 @@ Surface tension force via surface tension and length
 ====================================================
 
 The surface tension force is directed tangentially to the surface of the fluid, perpendicular to
-the section of the contour on which it acts and is proportional to the length of this section.
+the section of the fluid contour on which it acts and is proportional to the length of this section.
+Also see `figure <https://www.researchgate.net/publication/312093145/figure/fig7/AS:655095716921345@1533198398154/Illustration-of-surface-tension-as-a-force-per-unit-length-An-operator-extends-the-area.png>`_.
 """
 
 from sympy import (Eq, solve)

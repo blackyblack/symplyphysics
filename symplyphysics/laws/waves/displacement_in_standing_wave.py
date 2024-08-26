@@ -3,7 +3,7 @@ Displacement in standing wave
 =============================
 
 A *standing*, or *stationary*, *wave* is the result of the interference of two identical waves
-moving in the opposite direction.
+moving in opposite directions.
 
 **Notes:**
 

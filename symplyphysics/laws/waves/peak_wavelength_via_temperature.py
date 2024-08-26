@@ -30,8 +30,7 @@ Symbol:
     :code:`T`
 """
 
-a = 4.965114
-wien_displacement_constant = speed_of_light * planck / (boltzmann * a)
+wien_displacement_constant = speed_of_light * planck / (boltzmann * 4.965114)
 """
 A constant of proportionality.
 

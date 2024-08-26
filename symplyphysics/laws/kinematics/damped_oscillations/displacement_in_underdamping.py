@@ -2,10 +2,10 @@ r"""
 Displacement in underdamping
 ============================
 
-In the presence of a damping force in the oscillating system, the system's behaviour
+In the presence of a damping force in the oscillating system, the system's behavior
 depends on the value of the damping ratio. When it is less than :math:`1`, the system oscillates
 with a slightly different frequency than in the undamped case, and its amplitude decreasing
-to zero. This behaviour is also known as *underdamping*.
+to zero. This behavior is also known as *underdamping*.
 
 **Conditions:**
 
@@ -55,7 +55,7 @@ Symbol:
 
 exponential_decay_constant = Symbol("exponential_decay_constant", 1 / units.time, positive=True)
 r"""
-Expontential decay constant of the oscillator.
+Exponential decay constant of the oscillator.
 
 Symbol:
     :code:`lambda`
@@ -72,10 +72,10 @@ r"""
 of the oscillator.
 
 Symbol:
-    :code:`w'`
+    :code:`w_d`
 
 Latex:
-    :math:`\omega'`
+    :math:`\omega_\text{d}`
 """
 
 phase_shift = Symbol("phase_shift", angle_type, real=True)
@@ -94,11 +94,11 @@ law = Eq(
     scaling_coefficient * exp(-1 * exponential_decay_constant * time) *
     cos(damped_angular_frequency * time + phase_shift))
 r"""
-:code:`q = a * exp(-1 * lambda * t) * cos(w' * t + phi)`
+:code:`q = a * exp(-1 * lambda * t) * cos(w_d * t + phi)`
 
 Latex:
     .. math::
-        q = a \exp(-\lambda t) \cos(\omega' t + \varphi)
+        q = a \exp(-\lambda t) \cos(\omega_\text{d} t + \varphi)
 """
 
 # Relating to [damped oscillations equation](../../../definitions/damped_harmonic_oscillator_equation.py)

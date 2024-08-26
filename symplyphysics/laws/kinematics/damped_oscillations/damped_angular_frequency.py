@@ -9,7 +9,7 @@ there is no damping force acting on the system.
 **Notes:**
 
 #. In the case of overdamping when the damping ratio is greater than 1, the value of damped
-   angular frequency becomes imaginary, which indicates the absense of oscillations.
+   angular frequency becomes imaginary, which indicates the absence of oscillations.
 """
 
 from sympy import Eq, sqrt
@@ -28,10 +28,10 @@ r"""
 Angular frequency of a damped oscillator.
 
 Symbol:
-    :code:`w'`
+    :code:`w_d`
 
 Latex:
-    :math:`\omega'`
+    :math:`\omega_\text{d}`
 """
 
 undamped_angular_frequency = Symbol("undamped_angular_frequency", angle_type / units.time)
@@ -58,11 +58,11 @@ Latex:
 
 law = Eq(damped_angular_frequency, undamped_angular_frequency * sqrt(1 - damping_ratio**2))
 r"""
-:code:`w' = w * sqrt(1 - zeta^2)`
+:code:`w_d = w * sqrt(1 - zeta^2)`
 
 Latex:
     .. math::
-        \omega' = \omega \sqrt{1 - \zeta^2}
+        \omega_\text{d} = \omega \sqrt{1 - \zeta^2}
 """
 
 

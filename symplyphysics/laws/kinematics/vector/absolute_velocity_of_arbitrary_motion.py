@@ -22,11 +22,6 @@ from symplyphysics import (
     scale_vector,
 )
 
-# Law: v_abs = v_rel + v_tr
-## v_abs - vector of absolute velocity relative to fixed frame S
-## v_rel - vector of velocity relative to moving frame S'
-## v_tr - vector of velocity of transfer between frames S and S'
-
 def absolute_velocity_law(
     relative_velocity_: Vector,
     transfer_velocity_: Vector,

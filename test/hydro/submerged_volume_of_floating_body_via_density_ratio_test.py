@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 
-from symplyphysics.laws.hydro import submerged_volume_ratio_via_density_ratio as submerged
+from symplyphysics.laws.hydro import submerged_volume_of_floating_body_via_density_ratio as submerged
 
 Args = namedtuple("Args", ["body_volume", "body_density", "liquid_density"])
 

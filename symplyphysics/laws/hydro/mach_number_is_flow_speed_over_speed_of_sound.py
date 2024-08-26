@@ -3,7 +3,7 @@ Mach number is flow speed over speed of sound
 =============================================
 
 *Mach number* is a dimensionless quantity in fluid dynamics representing
-the ratio of local flow speed divided by the speed of sound in the medium.
+the ratio of flow speed divided by the speed of sound in the medium.
 """
 
 from sympy import Eq, solve
@@ -30,7 +30,7 @@ Latex:
 
 flow_speed = Symbol("flow_speed", units.velocity)
 r"""
-Local flow speed with respect to internal or external boundaries.
+Flow speed with respect to internal or external boundaries.
 
 Symbol:
     :code:`u`
@@ -38,7 +38,7 @@ Symbol:
 
 speed_of_sound = Symbol("speed_of_sound", units.velocity)
 """
-Local speed of sound in the medium.
+Speed of sound in the medium.
 
 Symbol:
     :code:`c`

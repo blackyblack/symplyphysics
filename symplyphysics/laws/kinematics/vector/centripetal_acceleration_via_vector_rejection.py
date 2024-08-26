@@ -2,8 +2,10 @@ r"""
 Centripetal acceleration via vector rejection
 =============================================
 
-Centripetal acceleration is the acceleration of a body in a rotating coordinate system
+*Centripetal acceleration* is the acceleration of a body in a rotating coordinate system
 which is directed towards the axis of rotation.
+
+Also see :doc:`laws.kinematics.vector.centripetal_acceleration_via_cross_product`.
 
 **Notation:**
 

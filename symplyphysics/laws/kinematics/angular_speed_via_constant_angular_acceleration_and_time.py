@@ -8,7 +8,7 @@ speed is a linear function of time.
 **Conditions:**
 
 #. The axis is fixed.
-#. :math:`\alpha = \text{const} \Leftrightarrow \frac{d \alpha}{d t} = 0.`
+#. Angular acceleration is constant, i.e. :math:`\frac{d \alpha}{d t} = 0.`
 """
 
 from sympy import Eq, dsolve, solve

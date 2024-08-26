@@ -11,9 +11,9 @@ Ideal fluid
 -----------
 
 An ideal fluid is a model of fluids often used in fluid mechanics to approximate
-the behaviour of real fluids. Ideal fluids are:
+the behavior of real fluids. Ideal fluids are:
 
-#. nonviscous, i.e. there is no internal resistance to flow;
+#. non-viscous, i.e. there is no internal resistance to flow;
 #. in steady, or laminar, flow;
 #. incompressible;
 #. irrotational, i.e. its particles undergo no rotation around their center of mass.

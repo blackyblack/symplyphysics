@@ -9,6 +9,7 @@ due to the force of gravity.
 
 #. The fluid is in statical equilibrium.
 #. The only force acting on the fluid is the force of gravity.
+#. The fluid is subjected to the gravity force of Earth.
 """
 
 from sympy import Eq, solve

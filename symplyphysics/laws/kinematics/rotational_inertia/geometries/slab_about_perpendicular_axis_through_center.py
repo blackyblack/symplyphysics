@@ -64,7 +64,7 @@ Latex:
         I = \frac{1}{12} m (a^2 + b^2)
 """
 
-# Derive this law from the integral definition of rotational inertia in cartesian coordiantes.
+# Derive this law from the integral definition of rotational inertia in cartesian coordinates.
 # Condition: _density of slab is constant.
 
 # Reference frame:

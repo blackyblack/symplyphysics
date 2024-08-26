@@ -54,7 +54,7 @@ def print_law() -> str:
     return print_expression(law)
 
 
-# Assuming constant density thoughout the body.
+# Assuming constant density throughout the body.
 # The body is a cylinder with given radius and height.
 # The rotational axis is the axis of the cylinder.
 @validate_input(density_=density, radius_=radius, height_=height)

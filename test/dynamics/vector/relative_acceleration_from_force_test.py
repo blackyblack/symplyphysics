@@ -70,7 +70,7 @@ def test_coriolis_law(test_args: Args) -> None:
 
 
 def test_translation_law(test_args: Args) -> None:
-    result_vector = law.traslation_acceleration_law(
+    result_vector = law.translation_acceleration_law(
         test_args.a_rel.to_base_vector(),
         test_args.f.to_base_vector(),
         test_args.a_cor.to_base_vector(),

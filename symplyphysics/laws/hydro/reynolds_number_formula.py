@@ -32,7 +32,8 @@ Latex:
 
 characteristic_length = Symbol("characteristic_length", units.length)
 """
-Characteristic length of the fluid container.
+`Characteristic length <https://en.wikipedia.org/wiki/Characteristic_length>`_ of the fluid
+container whose value depends on its shape.
 
 Symbol:
     :code:`L`

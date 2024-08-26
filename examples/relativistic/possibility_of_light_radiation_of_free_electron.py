@@ -73,7 +73,7 @@ assert reduce_inequalities(inequalities) is false
 total_energy_before_absorption = moving_electron_energy + photon_energy
 
 # The total momentum is zero before absorption, and the momenta before and after absorption are equal.
-# Therefore the momentum after absoption is zero, and the speed of the electron is zero, since it has a
+# Therefore the momentum after absorption is zero, and the speed of the electron is zero, since it has a
 # non-zero mass.
 
 total_energy_after_absorption = electron_rest_energy

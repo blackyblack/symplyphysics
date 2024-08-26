@@ -2,10 +2,10 @@ r"""
 Displacement in critical damping
 ================================
 
-In the presence of a damping force in the oscillating system, the system's behaviour
+In the presence of a damping force in the oscillating system, the system's behavior
 depends on the value of the damping ratio. When it is equal to :math:`1`, the system returns
 to equilibrium as quickly as possible without oscillating, but overshoot can occur if
-initial velocity is nonzero. This behaviour is also called *critical damping*.
+initial velocity is nonzero. This behavior is also called *critical damping*.
 
 **Conditions:**
 

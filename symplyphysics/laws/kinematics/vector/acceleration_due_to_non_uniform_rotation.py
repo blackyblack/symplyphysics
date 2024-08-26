@@ -5,6 +5,10 @@ Acceleration due to non-uniform rotation
 Imagine two reference frames, one of which is fixed (:math:`S`) and the other is moving (:math:`S'`). When :math:`S'` rotates
 around :math:`S` in a non-uniform way, the acceleration of some body :math:`B` in :math:`S` has a component corresponding to
 that non-uniform rotation of :math:`S'`. It is part of the transfer acceleration of body :math:`B` in :math:`S`.
+
+**Notation:**
+
+#. :math:`\vec a \times \vec b` (:code:`cross(a, b)`) is vector product of :math:`\vec a` and :math:`\vec b`.
 """
 
 from sympy import Expr, abc

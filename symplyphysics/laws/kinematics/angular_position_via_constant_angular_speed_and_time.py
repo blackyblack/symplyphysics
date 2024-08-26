@@ -6,7 +6,7 @@ When a body is rotating around a fixed axis with a constant angular speed, its a
 position is a linear function of time.
 
 #. The axis is fixed.
-#. :math:`\omega = \text{const} \Leftrightarrow \frac{d \omega}{d t} = 0.`
+#. Angular speed is constant, i.e. :math:`\frac{d \omega}{d t} = 0.`
 """
 
 from sympy import Eq, solve, dsolve

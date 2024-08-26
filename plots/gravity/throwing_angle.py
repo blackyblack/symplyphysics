@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # Description
-## You throw the grenade to enemies. Which angle of throwing should you choose to hit the farest enemy?
+## You throw the grenade to enemies. Which angle of throwing should you choose to hit the farthest enemy?
 
 from sympy import diff, symbols, Eq, solve, simplify, pi
 from sympy.plotting import plot
@@ -16,7 +16,7 @@ throwing_angle = symbols("throwing_angle", positive=True)
 time_argument = symbols("time_argument")
 gravitational_acceleration = symbols("gravitational_acceleration")
 
-## Choose coordinates: object starts its flight from (0, 0), vertical axis is upwards, horisontal axis is toward object's destination.
+## Choose coordinates: object starts its flight from (0, 0), vertical axis is upwards, horizontal axis is toward object's destination.
 ## So the angle between X-axis and initial speed is throwing_angle, and the angle between Y-axis and gravitational acceleration is pi / 2 - throwing_angle.
 ## Both X and Y projections of movement are constant acceleration movements.
 ## The vertical initial speed is projection of throwing_velocity to Y, acceleration is projection of gravitational acceleration to Y and it is -g

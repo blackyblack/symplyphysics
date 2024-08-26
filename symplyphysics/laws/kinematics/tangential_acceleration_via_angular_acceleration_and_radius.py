@@ -7,7 +7,7 @@ of the velocity vector, and its vector is tangent to the path of the body.
 
 **Conditions:**
 
-#. :math:`r = \text{const} \Leftrightarrow = \frac{d r}{d t} = 0.`
+#. Radius is constant, i.e. :math:`\frac{d r}{d t} = 0.`
 """
 
 from sympy import Eq, solve, Derivative

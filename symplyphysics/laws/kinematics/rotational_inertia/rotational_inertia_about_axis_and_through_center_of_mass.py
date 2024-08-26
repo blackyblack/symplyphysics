@@ -9,7 +9,7 @@ of mass).
 
 **Conditions:**
 
-#. The two axis must be parallel to each other.
+#. The two axes must be parallel to each other.
 #. The axis used in the calculation of :math:`I_\text{com}` must pass through the body's center of mass.
 """
 

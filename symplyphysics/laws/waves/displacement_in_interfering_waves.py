@@ -54,7 +54,7 @@ Latex:
 
 phase_shift = Symbol("phase_shift", angle_type)
 r"""
-Phase shift between the interphering waves.
+Phase shift between the interfering waves.
 
 Symbol:
     :code:`phi`

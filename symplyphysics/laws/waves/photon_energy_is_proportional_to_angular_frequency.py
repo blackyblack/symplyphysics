@@ -30,7 +30,7 @@ Symbol:
 
 angular_frequency = Symbol("angular_frequency", angle_type / units.time)
 r"""
-Angular angular_frequency of a photon.
+Angular frequency of a photon.
 
 Symbol:
     :code:`w`

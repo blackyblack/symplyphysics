@@ -29,7 +29,7 @@ from symplyphysics import units, Quantity, Symbol, Function, validate_input, val
 
 shear_stress = Symbol("shear_stress", units.pressure)
 r"""
-:doc:`Shear stress <laws.hydro.shear_stress_is_shear_force_over_area>`.
+Shear stress. See :doc:`laws.dynamics.pressure_from_force_and_area`.
 
 Symbol:
     :code:`tau`
