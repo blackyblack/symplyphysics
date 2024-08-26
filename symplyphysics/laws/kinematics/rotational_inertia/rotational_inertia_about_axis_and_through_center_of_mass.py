@@ -55,10 +55,10 @@ Symbol:
 
 distance_between_axes = Symbol("distance_between_axes", units.length)
 """
-Perpendicular distance between the axes.
+Distance between the axes.
 
 Symbol:
-    :code:`h`
+    :code:`d`
 """
 
 law = Eq(
@@ -66,11 +66,11 @@ law = Eq(
     rotational_inertia_through_com + mass * distance_between_axes**2,
 )
 r"""
-:code:`I = I_com + m * h^2`
+:code:`I = I_com + m * d^2`
 
 Latex:
     .. math::
-        I = I_\text{com} + m h^2
+        I = I_\text{com} + m d^2
 """
 
 
