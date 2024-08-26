@@ -12,9 +12,9 @@ be *Newtonian*.
 
 As an example of this law, consider two solid flat plates that contain water in between.
 The bottom plate is fixed in place, while the top plate moves parallel to the bottom one with
-a small speed :code:`v` such that the flow of the water is steady. If we were to measure the force that
+a small speed :code:`u` such that the flow of the water is steady. If we were to measure the force that
 needed to make the top plate continue to move, we would find that it is proportional to the area
-of the plate and the ratio :math:`\frac{v}{d}` where :math:`d` is the distance between the plates.
+of the plate and the ratio :math:`\frac{u}{d}` where :math:`d` is the distance between the plates.
 
 **Conditions:**
 
@@ -54,7 +54,7 @@ fluid_speed = Function("fluid_speed", units.velocity)
 Fluid speed as a function of position perpendicular to the fluid flow, or layer position.
 
 Symbol:
-    :code:`v(y)`
+    :code:`u(y)`
 """
 
 layer_position = Symbol("layer_position", units.length)
@@ -67,11 +67,11 @@ Symbol:
 
 law = Eq(shear_stress, dynamic_viscosity * Derivative(fluid_speed(layer_position), layer_position))
 r"""
-:code:`tau = eta * Derivative(v(y), y)`
+:code:`tau = eta * Derivative(u(y), y)`
 
 Latex:
     .. math::
-        \tau = \eta \frac{d v}{d y}
+        \tau = \eta \frac{d u}{d y}
 """
 
 @validate_input(
