@@ -19,7 +19,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.geometry import planar_projection_is_cosine as projector
 from symplyphysics.laws.dynamics import potential_energy_from_mass_and_height as potential_energy
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_speed as kinetic_energy
-from symplyphysics.laws.kinematic import linear_velocity_from_angular_velocity_and_radius as angular_velocity_law
+from symplyphysics.laws.kinematics import speed_via_angular_speed_and_radius as angular_velocity_law
 from symplyphysics.definitions import period_from_angular_frequency as angular_frequency
 from symplyphysics.definitions import harmonic_oscillator_is_second_derivative_equation as oscillator
 from symplyphysics.definitions import mechanical_energy_is_kinetic_and_potential_energy as mechanical_energy_def
@@ -75,8 +75,8 @@ amount_of_potential_energy = potential_energy.law.subs({
 ## pendulum_mass * (length * angular_velocity)**2 / 2
 
 linear_velocity = angular_velocity_law.law.subs({
-    angular_velocity_law.curve_radius: length,
-    angular_velocity_law.angular_velocity: Derivative(pendulum_angle(time), time),
+    angular_velocity_law.radius_of_curvature: length,
+    angular_velocity_law.angular_speed: Derivative(pendulum_angle(time), time),
 }).rhs
 amount_of_kinetic_energy = kinetic_energy.law.subs({
     kinetic_energy.mass: pendulum_mass,

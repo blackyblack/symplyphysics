@@ -1,37 +1,57 @@
+r"""
+Sine of Mach cone angle via Mach number
+=======================================
+
+If the speed of a source relative to the medium exceeds the speed of sound in the medium,
+the Doppler equation no longer applies and this results in shock waves. The wavefronts
+of the waves originating from the source form a cone, namely a *Mach cone*. The half-angle
+of the cone is called the *Mach cone angle*, which is related to the Mach number of the source.
+See the `illustration <https://www.grc.nasa.gov/www/k-12/airplane/machang.html>`_ of the
+phenomenon.
+
+**Conditions:**
+
+#. :math:`M \ge 1`, i.e. the source speed exceeds the speed of sound in the medium.
+"""
+
 from sympy import Eq, sin, solve
 from symplyphysics import (
     angle_type,
     dimensionless,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
 
-# Description
-## If the speed of a source relative to the medium exceeds the speed of sound in the medium,
-## the Doppler equation no longer applies and this results in shock waves. The wavefronts
-## of the waves originating from the source form a cone, namely a Mach cone. The half-angle
-## of the cone is called the Mach cone angle, which is related to the Mach number of the source.
-## See [this for the illustration](https://www.grc.nasa.gov/www/k-12/airplane/machang.html) of the phenomenon.
-
-# Law: sin(theta) = 1 / M
-## theta - Mach cone angle, i.e. the angle between the Mach wave wavefront (the Mach cone) and
-##         the vector pointing opposite to the vector of motion
-## M - Mach number of moving source
-
-# Condition
-## - M >= 1, i.e. the source moves with a speed greater than the speed of sound in the medium
-
 mach_cone_angle = Symbol("mach_cone_angle", angle_type, positive=True)
+r"""
+Mach cone angle, which is the angle between the Mach wave wavefront (the Mach cone) and
+the vector pointing opposite to the velocity vector of the source.
+
+Symbol:
+    :code:`theta`
+
+Latex:
+    :math:`\theta`
+"""
+
 mach_number = Symbol("mach_number", dimensionless, positive=True)
+"""
+Mach number of the moving source.
+
+Symbol:
+    :code:`M`
+"""
 
 law = Eq(sin(mach_cone_angle), 1 / mach_number)
+r"""
+:code:`sin(theta) = 1 / M`
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        \sin \theta = \frac{1}{M}
+"""
 
 
 @validate_input(mach_number_=mach_number)

@@ -6,8 +6,8 @@ from symplyphysics.definitions import (
     angular_speed_is_angular_distance_derivative as angular_velocity_def,
     period_from_angular_frequency as period_def,
 )
-from symplyphysics.laws.kinematic import (
-    distance_from_constant_velocity as distance_law,)
+from symplyphysics.laws.kinematics import (
+    position_via_constant_speed_and_time as distance_law,)
 
 # Description
 ## A shooter and a target are positioned on a merry-go-round opposite to one another.
@@ -51,10 +51,10 @@ period_eqn = period_def.law.subs({
 })
 
 distance_eqn = distance_law.law.subs({
-    distance_law.distance(distance_law.movement_time): 2 * ride_radius,
+    distance_law.final_position: 2 * ride_radius,
     distance_law.initial_position: 0,
-    distance_law.constant_velocity: bullet_speed,
-    distance_law.movement_time: time,
+    distance_law.speed: bullet_speed,
+    distance_law.time: time,
 })
 
 ride_rotation_angle_expr = ride_rotation_angle_expr.subs(

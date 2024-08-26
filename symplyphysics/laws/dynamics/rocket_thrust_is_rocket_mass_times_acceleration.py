@@ -39,9 +39,9 @@ from symplyphysics.laws.conservation import (
     momentum_after_collision_equals_to_momentum_before as momentum_conservation_law,)
 from symplyphysics.definitions import (momentum_is_mass_times_speed as momentum_def, mass_flow_rate
     as flow_rate_def)
-from symplyphysics.laws.kinematic import (
-    accelerated_velocity_from_time as acceleration_def,
+from symplyphysics.laws.kinematics import (
     classical_addition_of_velocities as galilean_law,
+    speed_via_constant_acceleration_and_time as acceleration_def,
 )
 
 fuel_consumption_rate = Symbol("fuel_consumption_rate", units.mass / units.time)
@@ -63,9 +63,9 @@ Latex:
     :math:`v_\text{rel}`
 """
 
-acceleration = symbols.kinematic.acceleration
+acceleration = symbols.kinematics.acceleration
 """
-The :attr:`~symplyphysics.symbols.kinematic.acceleration` of the rocket.
+The :attr:`~symplyphysics.symbols.kinematics.acceleration` of the rocket.
 
 Symbol:
     :code:`a`
@@ -120,9 +120,9 @@ rocket_speed_relative_to_products = relative_speed
 products_speed_relative_to_frame = products_speed
 
 relative_speed_eqn = galilean_law.law.subs({
-    galilean_law.body_velocity_in_first_frame: rocket_speed_relative_to_frame,
-    galilean_law.body_velocity_in_second_frame: rocket_speed_relative_to_products,
-    galilean_law.second_frame_velocity_in_first_frame: products_speed_relative_to_frame,
+    galilean_law.body_speed_in_first_frame: rocket_speed_relative_to_frame,
+    galilean_law.body_speed_in_second_frame: rocket_speed_relative_to_products,
+    galilean_law.second_frame_speed_in_first_frame: products_speed_relative_to_frame,
 })
 
 momentum_conservation_eqn = momentum_conservation_law.law.subs({
@@ -152,9 +152,9 @@ rocket_acceleration_expr = solve(
     acceleration_def.law,
     acceleration_def.acceleration,
 )[0].subs({
-    acceleration_def.velocity: rocket_speed_change,
+    acceleration_def.final_speed: rocket_speed_change,
     acceleration_def.time: time_change,
-    acceleration_def.initial_velocity: 0,
+    acceleration_def.initial_speed: 0,
 })
 
 relative_velocity_eqn_system = [

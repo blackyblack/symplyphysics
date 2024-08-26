@@ -21,8 +21,8 @@ from symplyphysics import (
 # Law: a_rel = F / m + a_cor - a_tr
 ## a_rel - vector of acceleration of body B relative to S'
 ## F - vector sum of forces acting on body B
-## a_cor - vector of [Coriolis acceleration](../../kinematic/vector/coriolis_acceleration.py) of body B
-## a_tr - vector of [translation acceleration](../../kinematic/vector/acceleration_of_transfer_between_relative_frames.py) of body B
+## a_cor - vector of [Coriolis acceleration](../../kinematics/vector/coriolis_acceleration.py) of body B
+## a_tr - vector of [translation acceleration](../../kinematics/vector/acceleration_of_transfer_between_relative_frames.py) of body B
 
 mass = symbols.basic.mass
 
@@ -82,7 +82,7 @@ def coriolis_acceleration_law(
 
 
 # a_tr = F / m - a_rel + a_cor
-def traslation_acceleration_law(
+def translation_acceleration_law(
     relative_acceleration_: Vector,
     force_: Vector,
     coriolis_acceleration_: Vector,

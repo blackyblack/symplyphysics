@@ -5,7 +5,7 @@ from symplyphysics import print_expression
 from symplyphysics.definitions import (
     lorentz_factor as lorentz_factor_def,)
 from symplyphysics.laws.waves import (
-    photon_energy_is_proportional_to_frequency as energy_law,)
+    photon_energy_is_proportional_to_linear_frequency as energy_law,)
 from symplyphysics.laws.relativistic import (
     total_energy_via_relativistic_mass as energy_is_mass,
     relativistic_mass as moving_mass_law,
@@ -27,7 +27,7 @@ total_energy_before_radiation = electron_rest_energy
 
 photon_frequency = Symbol("photon_frequency", positive=True)
 
-photon_energy = energy_law.law.rhs.subs(energy_law.photon_frequency, photon_frequency)
+photon_energy = energy_law.law.rhs.subs(energy_law.frequency, photon_frequency)
 
 electron_speed = Symbol("electron_speed", positive=True)
 
@@ -73,7 +73,7 @@ assert reduce_inequalities(inequalities) is false
 total_energy_before_absorption = moving_electron_energy + photon_energy
 
 # The total momentum is zero before absorption, and the momenta before and after absorption are equal.
-# Therefore the momentum after absoption is zero, and the speed of the electron is zero, since it has a
+# Therefore the momentum after absorption is zero, and the speed of the electron is zero, since it has a
 # non-zero mass.
 
 total_energy_after_absorption = electron_rest_energy

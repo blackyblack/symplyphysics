@@ -12,7 +12,7 @@ from symplyphysics import (
 )
 
 # Description
-## In the presense of a damping force the oscillating system is no longer closed and its energy
+## In the presence of a damping force the oscillating system is no longer closed and its energy
 ## dissipates to the environment. The total energy of the oscillator becomes converted into thermal
 ## energy. For small values of the damping ratio, the following equation approximately describes
 ## the total mechanical energy of the underdamped oscillator:
@@ -22,7 +22,7 @@ from symplyphysics import (
 ## m - mass of oscillating object
 ## A - maximum amplitude of oscillations
 ## w0 - undamped (natural) angular frequency of oscillations
-## lambda - [exponential decay constant](../../kinematic/damped_oscillations/damping_ratio_from_decay_constant_and_undamped_frequency.py)
+## lambda - [exponential decay constant](../../kinematics/damped_oscillations/damping_ratio_from_decay_constant_and_undamped_frequency.py)
 ## t - time
 
 # Conditions
@@ -39,7 +39,7 @@ law = Eq(
     oscillator_energy, oscillator_mass * undamped_angular_frequency**2 * maximum_amplitude**2 *
     exp(-2 * exponential_decay_constant * time) / 2)
 
-# TODO Derive from [underdamped oscillations](../../kinematic/damped_oscillations/underdamping.py)
+# TODO Derive from [underdamped oscillations](../../kinematics/damped_oscillations/underdamping.py)
 
 
 def print_law() -> str:

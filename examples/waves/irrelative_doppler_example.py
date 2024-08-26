@@ -2,7 +2,7 @@
 
 from sympy import solve
 from symplyphysics import (units, convert_to, Quantity, prefixes)
-from symplyphysics.laws.waves import frequency_shift_from_velocity as doppler_law
+from symplyphysics.laws.waves import frequency_shift_from_speed_in_collinear_motion as doppler_law
 
 # This example show usefulness of Doppler law.
 ## Doppler effect is widely used in systems like radars. This effect is applicable not only to waves emitted by source, but also to waves reflected by it.
@@ -18,13 +18,13 @@ emitter_frequency = Quantity(40 * prefixes.kilo * units.hertz)
 # Choose any frequency and obtain the result
 signal_frequency = Quantity(41.2 * prefixes.kilo * units.hertz)
 
-solution = solve(doppler_law.law, doppler_law.source_velocity,
-    dict=True)[0][doppler_law.source_velocity]
+solution = solve(doppler_law.law, doppler_law.source_speed,
+    dict=True)[0][doppler_law.source_speed]
 applied_solution = solution.subs({
     doppler_law.observed_frequency: signal_frequency,
-    doppler_law.real_frequency: emitter_frequency,
-    doppler_law.wave_velocity: sound_velocity,
-    doppler_law.observer_velocity: zero_velocity
+    doppler_law.source_frequency: emitter_frequency,
+    doppler_law.wave_speed: sound_velocity,
+    doppler_law.observer_speed: zero_velocity
 })
 
 result_velocity = Quantity(applied_solution)

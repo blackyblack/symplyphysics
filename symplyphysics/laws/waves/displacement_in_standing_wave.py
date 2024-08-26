@@ -1,43 +1,92 @@
-from sympy import Eq, sin, cos, symbols, Function as SymFunction
+r"""
+Displacement in standing wave
+=============================
+
+A *standing*, or *stationary*, *wave* is the result of the interference of two identical waves
+moving in opposite directions.
+
+**Notes:**
+
+#. In this law we assume the standing wave to be composed of two identical traveling sinusoidal
+   waves of the form :math:`u_\text{max} \sin(k x \pm \omega t)`
+#. A standing wave is no longer a traveling one because it doesn't move in a single direction.
+"""
+
+from sympy import Eq, sin, cos, symbols
 from symplyphysics import (
     units,
     angle_type,
     Symbol,
     Quantity,
-    print_expression,
     validate_input,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.quantity_decorator import validate_output_same
 from symplyphysics.laws.waves import phase_of_traveling_wave as phase_law
 
-# Description
-## A standing, or stationary, wave is the result of the interference of two identical waves
-## moving in the opposite direction. For a wave occuring along a string, the standing wave
-## is described by the following equation:
+total_displacement = symbols("total_displacement")
+"""
+Displacement of the resulting wave.
 
-# Law: u(x, t) = 2 * u_max * sin(k * x) * cos(w * t)
-## u(x, t) - displacement from rest (position, pressure, electric field, etc)
-## u_max - wave amplitude
-## k - angular wavenumber
-## x - spatial variable
-## w - angular frequency
-## t - time
+Symbol:
+    :code:`u`
+"""
 
-# Note
-## - In this law we assume that the standing wave is composed of two identical sinusoidal traveling
-##   waves whose form is described by the expression `u_max * sin(k*x +/- w*t)`
-## - This is no longer a traveling wave because for that it should be moving in one direction
+amplitude = symbols("amplitude")
+r"""
+Amplitude of the interfering waves.
 
-displacement = symbols("displacement", cls=SymFunction, real=True)
-amplitude = symbols("amplitude", positive=True)
-angular_wavenumber = Symbol("angular_wavenumber", angle_type / units.length, positive=True)
-position = Symbol("position", units.length, real=True)
-angular_frequency = Symbol("angular_frequency", angle_type / units.time, positive=True)
-time = Symbol("time", units.time, real=True)
+Symbol:
+    :code:`u_max`
 
-law = Eq(displacement(position, time),
+Latex:
+    :math:`u_\text{max}`
+"""
+
+angular_wavenumber = Symbol("angular_wavenumber", angle_type / units.length)
+r"""
+Angular wavenumber of the interfering waves.
+
+Symbol:
+    :code:`k`
+"""
+
+position = Symbol("position", units.length)
+"""
+Position, or spatial coordinate.
+
+Symbol:
+    :code:`x`
+"""
+
+angular_frequency = Symbol("angular_frequency", angle_type / units.time)
+r"""
+Angular frequency of the interfering waves.
+
+Symbol:
+    :code:`w`
+
+Latex:
+    :math:`\omega`
+"""
+
+time = Symbol("time", units.time)
+"""
+Time.
+
+Symbol:
+    :code:`t`
+"""
+
+law = Eq(total_displacement,
     (2 * amplitude) * sin(angular_wavenumber * position) * cos(angular_frequency * time))
+r"""
+:code:`u = 2 * u_max * sin(k * x) * cos(w * t)`
+
+Latex:
+    .. math::
+        u = 2 u_\text{max} \sin(k x) \cos(\omega t)
+"""
 
 # Derive from the sum of two traveling waves
 
@@ -56,10 +105,6 @@ _backward_wave = _forward_wave.subs(angular_frequency, -1 * angular_frequency)
 _sum_of_waves = (_forward_wave + _backward_wave).simplify()
 
 assert expr_equals(_sum_of_waves, law.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(

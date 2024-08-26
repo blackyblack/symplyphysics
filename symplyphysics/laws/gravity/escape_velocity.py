@@ -6,7 +6,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 
 from symplyphysics.laws.gravity import gravity_force_from_mass_and_distance as gravity_force_law
 from symplyphysics.laws.dynamics import acceleration_is_force_over_mass as acceleration_law
-from symplyphysics.laws.kinematic import centripetal_acceleration_is_squared_velocity_by_radius as centripetal_law
+from symplyphysics.laws.kinematics import centripetal_acceleration_via_linear_speed_and_radius as centripetal_law
 
 # Law: V = √(G * M / (R + h))
 # Where:
@@ -28,15 +28,15 @@ law = Eq(velocity, sqrt(gravitational_constant * planet_mass / (radius + height)
 
 # The radius of the orbit consists of the radius of the planet and the height above its surface.
 centripetal_law_applied = centripetal_law.law.subs({
-    centripetal_law.linear_velocity: velocity,
-    centripetal_law.curve_radius: radius + height,
+    centripetal_law.speed: velocity,
+    centripetal_law.radius_of_curvature: radius + height,
 })
 acceleration_derived = solve(centripetal_law_applied,
     centripetal_law.centripetal_acceleration,
     dict=True)[0][centripetal_law.centripetal_acceleration]
 
 acceleration_law_applied = acceleration_law.law.subs({
-    acceleration_law.symbols.kinematic.acceleration: acceleration_derived,
+    acceleration_law.symbols.kinematics.acceleration: acceleration_derived,
 })
 force_derived = solve(acceleration_law_applied, acceleration_law.symbols.dynamics.force,
     dict=True)[0][acceleration_law.symbols.dynamics.force]

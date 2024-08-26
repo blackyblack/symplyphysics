@@ -2,9 +2,9 @@
 
 from sympy import dsolve, solve, symbols, Eq
 from symplyphysics import units, convert_to, Quantity, print_expression
-from symplyphysics.laws.hydro import inner_pressure_of_fluid as inner_pressure
-from symplyphysics.laws.hydro import hydrostatic_pressure_from_density_and_depth as hydrostatic_pressure
-from symplyphysics.laws.hydro import inner_pressure_of_fluid_is_constant as constant_pressure_law
+from symplyphysics.laws.hydro import inner_pressure_is_sum_of_pressures as inner_pressure
+from symplyphysics.laws.hydro import hydrostatic_pressure_via_density_and_height as hydrostatic_pressure
+from symplyphysics.laws.hydro import inner_pressure_is_constant as constant_pressure_law
 
 # Description
 ## A U-tube contains two liquids at static equilibrium:
@@ -31,7 +31,7 @@ given_values = {
 
 hydrostatic_pressure_left_arm_law = hydrostatic_pressure.law.subs({
     hydrostatic_pressure.density: oil_density,
-    hydrostatic_pressure.depth: oil_column_height,
+    hydrostatic_pressure.height: oil_column_height,
 })
 hydrostatic_pressure_left_arm = solve(hydrostatic_pressure_left_arm_law,
     hydrostatic_pressure.hydrostatic_pressure)[0]
@@ -47,7 +47,7 @@ inner_pressure_left_arm = solve(inner_pressure_left_arm_law, inner_pressure.inne
 
 hydrostatic_pressure_right_arm_law = hydrostatic_pressure.law.subs({
     hydrostatic_pressure.density: water_density,
-    hydrostatic_pressure.depth: water_column_height,
+    hydrostatic_pressure.height: water_column_height,
 })
 hydrostatic_pressure_right_arm = solve(hydrostatic_pressure_right_arm_law,
     hydrostatic_pressure.hydrostatic_pressure)[0]
