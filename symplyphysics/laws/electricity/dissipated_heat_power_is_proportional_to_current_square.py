@@ -1,10 +1,11 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.electricity import energy_via_constant_power_and_time as energy_law
-from symplyphysics.laws.electricity import current_is_proportional_to_voltage as ohm_law
-from symplyphysics.laws.electricity import amount_energy_from_voltage_time_resistance as joule_lenz_law
+from symplyphysics.laws.electricity import (
+    current_is_proportional_to_voltage as ohm_law,
+    power_via_voltage_and_resistance as power_law,
+)
 
 # Description
 # Dissipated heat power is proportional to current square and resistance
@@ -20,30 +21,27 @@ resistance = Symbol("resistance", units.impedance)
 
 law = Eq(heat_power, current**2 * resistance)
 
-# This law might be easily derived via Joule-Lenz law and dependence of power from energy and time
+# Derive law using Ohm's law and power law
 
-ohm_law_applied = ohm_law.law.subs({
-    ohm_law.voltage: joule_lenz_law.voltage,
+_ohm_eqn = ohm_law.law.subs({
     ohm_law.current: current,
-    ohm_law.resistance: resistance
+    ohm_law.resistance: resistance,
+    ohm_law.voltage: power_law.voltage,
 })
-power_and_time_applied = energy_law.law.subs({
-    energy_law.energy: joule_lenz_law.amount_energy,
-    energy_law.time: joule_lenz_law.time
-})
-joule_lenz_law_applied = joule_lenz_law.law.subs({joule_lenz_law.resistance: resistance})
 
-law_derived = [ohm_law_applied, power_and_time_applied, joule_lenz_law_applied]
-power_derived = solve(law_derived,
-    (joule_lenz_law.voltage, joule_lenz_law.amount_energy, energy_law.power),
-    dict=True)[0][energy_law.power]
+_power_eqn = power_law.law.subs({
+    power_law.power: heat_power,
+    power_law.resistance: resistance,
+})
+
+_power_derived = solve(
+    (_ohm_eqn, _power_eqn),
+    (power_law.voltage, heat_power),
+    dict=True,
+)[0][heat_power]
 
 # Check if derived power is same as declared
-assert expr_equals(power_derived, law.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
+assert expr_equals(_power_derived, law.rhs)
 
 
 @validate_input(current_=current, resistance_=resistance)
