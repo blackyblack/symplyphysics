@@ -7,7 +7,7 @@ from symplyphysics import print_expression
 from symplyphysics.definitions import density_from_mass_volume as density_law
 from symplyphysics.laws.kinematics import position_via_constant_speed_and_time as distance_law
 from symplyphysics.laws.electricity import power_factor_from_active_and_full_power as efficiency_law
-from symplyphysics.laws.electricity import power_from_energy_time as power_law
+from symplyphysics.laws.electricity import energy_via_constant_power_and_time as energy_law
 from symplyphysics.laws.thermodynamics import heat_of_combustion_via_mass as combustion_energy_law
 
 # Create efficiency factor values from 15% to 75% in increments of 15%
@@ -29,8 +29,10 @@ velocity_equation = distance_law.law.subs({
 time_value = solve(velocity_equation, distance_law.time,
     dict=True)[0][distance_law.time]
 
-power_equation = power_law.law.subs({power_law.time: time_value, power_law.power: power_of_car})
-energy_from_power_value = solve(power_equation, power_law.energy, dict=True)[0][power_law.energy]
+energy_from_power_value = energy_law.law.rhs.subs({
+    energy_law.time: time_value,
+    energy_law.power: power_of_car,
+})
 
 density_of_gasoline_equation = density_law.definition.subs({
     density_law.density: density_of_gasoline,
