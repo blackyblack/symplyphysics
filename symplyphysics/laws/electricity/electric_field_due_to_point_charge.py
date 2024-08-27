@@ -8,7 +8,7 @@ from symplyphysics import (
     validate_output,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.electricity import force_from_charge_and_distance as coulombs_law
+from symplyphysics.laws.electricity import electrostatic_force_via_charges_and_distance as coulombs_law
 from symplyphysics.laws.electricity import electric_field_value_is_force_over_test_charge as electric_field_def
 
 # Description
