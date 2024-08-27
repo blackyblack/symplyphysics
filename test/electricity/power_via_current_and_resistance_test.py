@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.electricity import dissipated_heat_power_is_proportional_to_current_square as joule_lenz_law
+from symplyphysics.laws.electricity import power_via_current_and_resistance as joule_lenz_law
 
 # Description
 ## Assert we are having 1Amp flowing through 2-Ohm resistor.

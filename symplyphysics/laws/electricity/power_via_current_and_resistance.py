@@ -1,3 +1,11 @@
+"""
+Power via current and resistance
+================================
+
+Electric power can be expressed using current flowing through a
+conductor and its resistance.
+"""
+
 from sympy import (Eq, solve)
 from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output)
@@ -7,19 +15,38 @@ from symplyphysics.laws.electricity import (
     power_via_voltage_and_resistance as power_law,
 )
 
-# Description
-# Dissipated heat power is proportional to current square and resistance
-# P = I**2 * R
-# where :
-# P - is dissipated heat power of the element
-# I is current flowing through this element
-# R is impedance of this element
+power = Symbol("power", units.power)
+"""
+Electric power.
 
-heat_power = Symbol("heat_power", units.power)
+Symbol:
+    :code:`P`
+"""
+
 current = Symbol("current", units.current)
-resistance = Symbol("resistance", units.impedance)
+"""
+Electric current.
 
-law = Eq(heat_power, current**2 * resistance)
+Symbol:
+    :code:`I`
+"""
+
+resistance = Symbol("resistance", units.impedance)
+r"""
+Electrical resistance.
+
+Symbol:
+    :code:`R`
+"""
+
+law = Eq(power, current**2 * resistance)
+r"""
+:code:`P = I^2 * R`
+
+Latex:
+    .. math::
+        P = I^2 R
+"""
 
 # Derive law using Ohm's law and power law
 
@@ -30,23 +57,23 @@ _ohm_eqn = ohm_law.law.subs({
 })
 
 _power_eqn = power_law.law.subs({
-    power_law.power: heat_power,
+    power_law.power: power,
     power_law.resistance: resistance,
 })
 
 _power_derived = solve(
     (_ohm_eqn, _power_eqn),
-    (power_law.voltage, heat_power),
+    (power_law.voltage, power),
     dict=True,
-)[0][heat_power]
+)[0][power]
 
 # Check if derived power is same as declared
 assert expr_equals(_power_derived, law.rhs)
 
 
 @validate_input(current_=current, resistance_=resistance)
-@validate_output(heat_power)
+@validate_output(power)
 def calculate_heat_power(current_: Quantity, resistance_: Quantity) -> Quantity:
-    result_power_expr = solve(law, heat_power, dict=True)[0][heat_power]
+    result_power_expr = solve(law, power, dict=True)[0][power]
     result_expr = result_power_expr.subs({current: current_, resistance: resistance_})
     return Quantity(result_expr)
