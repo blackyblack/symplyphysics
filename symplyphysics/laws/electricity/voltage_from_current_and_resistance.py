@@ -3,7 +3,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 
-from symplyphysics.laws.electricity import current_is_proportional_to_voltage as ohm_law
+from symplyphysics.laws.electricity import current_is_voltage_over_resistance as ohm_law
 
 # Description
 ## The voltage in the circuit depends on the current in the circuit, as well as on the internal

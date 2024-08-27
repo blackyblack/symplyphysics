@@ -3,7 +3,7 @@ from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity import (
-    current_is_proportional_to_voltage as ohm_law,
+    current_is_voltage_over_resistance as ohm_law,
     power_via_voltage_and_resistance as power_law,
 )
 

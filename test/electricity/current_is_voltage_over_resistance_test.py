@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.electricity import current_is_proportional_to_voltage as ohms_law
+from symplyphysics.laws.electricity import current_is_voltage_over_resistance as ohms_law
 
 # Description
 ## Assert we have 3 Volts applied to 2-Ohm resistor.

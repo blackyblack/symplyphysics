@@ -2,7 +2,7 @@
 
 from sympy import Idx, solve, symbols
 from symplyphysics import units, global_index
-from symplyphysics.laws.electricity import current_is_proportional_to_voltage as ohm_law
+from symplyphysics.laws.electricity import current_is_voltage_over_resistance as ohm_law
 from symplyphysics.laws.electricity.circuits import conductivity_of_two_parallel_resistors as parallel_conductance
 from symplyphysics.laws.electricity.circuits import resistivity_of_serial_resistors as serial_resistance
 from symplyphysics.definitions import electrical_conductivity_is_inversed_resistance as conductivity_law
