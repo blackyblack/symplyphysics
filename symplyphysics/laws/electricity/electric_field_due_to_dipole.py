@@ -1,4 +1,4 @@
-from sympy import Eq, solve, series
+from sympy import Eq, solve, series, pi
 from symplyphysics import (
     units,
     Quantity,
@@ -18,7 +18,7 @@ from symplyphysics.laws.electricity import electric_dipole_moment_is_charge_time
 ## to the dipole and the value of the dipole moment.
 
 # Law:
-## E = 2 * k_e * p / z^3
+## E = 1 / (2 * pi * e0) * p / z^3
 ## E - value of electric field of dipole
 ## k_e - Coulomb's constant
 ## p = ql - value of the dipole moment
@@ -31,7 +31,7 @@ electric_field = Symbol("electric_field", units.force / units.charge)
 dipole_moment = Symbol("dipole_moment", units.charge * units.length)
 distance_to_dipole = Symbol("distance_to_dipole", units.length)
 
-law = Eq(electric_field, 2 * units.coulomb_constant * dipole_moment / distance_to_dipole**3)
+law = Eq(electric_field, 1 / (2 * pi * units.vacuum_permittivity) * dipole_moment / distance_to_dipole**3)
 
 # Derive the law from the expression for the electric field of point charges.
 # Assuming the dipole is made up of two point charges q and -q (q > 0) with distance d in between.
@@ -43,11 +43,11 @@ distance_between_charges = Symbol("distance_between_charges", units.length)
 distance_to_origin = Symbol("distance_to_origin", units.length)
 
 positive_charge_field = point_field.law.rhs.subs({
-    point_field.point_charge: charge,
+    point_field.charge: charge,
     point_field.distance: distance_to_origin - distance_between_charges / 2
 })
 negative_charge_field = point_field.law.rhs.subs({
-    point_field.point_charge: -charge,
+    point_field.charge: -charge,
     point_field.distance: distance_to_origin + distance_between_charges / 2
 })
 

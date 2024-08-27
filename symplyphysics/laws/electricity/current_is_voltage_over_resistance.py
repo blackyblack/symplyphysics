@@ -37,6 +37,10 @@ Symbol:
 law = Eq(current, voltage / resistance)
 r"""
 :code:`I = V / R`
+
+Latex:
+    .. math::
+        I = \frac{V}{R}
 """
 
 

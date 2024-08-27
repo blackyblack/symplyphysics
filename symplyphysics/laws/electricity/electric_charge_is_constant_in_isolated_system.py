@@ -33,6 +33,13 @@ Latex:
 """
 
 law = Eq(final_charge, initial_charge)
+r"""
+:code:`q_0 = q_1`
+
+Latex:
+    .. math::
+        q_0 = q_1
+"""
 
 
 @validate_input(charge_before_=initial_charge)
