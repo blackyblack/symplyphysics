@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.electricity import electric_dipole_moment as moment_law
+from symplyphysics.laws.electricity import electric_dipole_moment_is_charge_times_distance as moment_law
 
 # Description
 ## It is known that with a charge of 1 coulomb and a distance of 2 meters,
