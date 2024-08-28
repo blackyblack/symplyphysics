@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.electricity import electric_field_of_infinite_charged_plane as intensity_law
+from symplyphysics.laws.electricity import electric_field_of_uniformly_charged_plane as intensity_law
 
 # Description
 ## It is known that with a surface charge density of 2.5 [coulomb / meter^2], the electric field strength is 1.4e11 [volt / meter].
