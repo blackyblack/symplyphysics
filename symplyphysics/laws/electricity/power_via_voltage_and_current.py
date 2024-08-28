@@ -1,23 +1,47 @@
+"""
+Power via voltage and current
+=============================
+
+Electric power can be expressed using current flowing through a
+conductor and voltage applied.
+"""
+
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output)
 
-# Description
-# Power of current is proportional to current and voltage
-# P = I * U
-# where:
-# I - the current flowing through element
-# U - is voltage  on this element
-
 power = Symbol("power", units.power)
+"""
+Electric power.
+
+Symbol:
+    :code:`P`
+"""
+
 current = Symbol("current", units.current)
+"""
+Electric current.
+
+Symbol:
+    :code:`I`
+"""
+
 voltage = Symbol("voltage", units.voltage)
+"""
+Voltage applied.
+
+Symbol:
+    :code:`V`
+"""
 
 law = Eq(power, current * voltage)
+r"""
+:code:`P = I * V`
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        P = I V
+"""
 
 
 @validate_input(current_=current, voltage_=voltage)

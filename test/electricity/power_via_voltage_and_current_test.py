@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.electricity import power_is_proportional_voltage_and_current as power_law
+from symplyphysics.laws.electricity import power_via_voltage_and_current as power_law
 
 # What is the power can be released by the battery at 9 V and a current of 0.5 A?
 
