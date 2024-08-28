@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.electricity import energy_density_of_electric_field_depends_on_strength_and_permittivity as energy_density_law
+from symplyphysics.laws.electricity import energy_density_via_permittivity_and_electric_field as energy_density_law
 
 # Description
 ## It is known that with a permittivity equal to 5 and an electric field intensity equal to 5 Volt / meter,
