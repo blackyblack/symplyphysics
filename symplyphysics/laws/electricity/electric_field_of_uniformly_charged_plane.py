@@ -25,7 +25,7 @@ from symplyphysics import (
 
 electric_field = Symbol("electric_field", units.voltage / units.length)
 """
-Electric field.
+Value of the electric field.
 
 Symbol:
     :code:`E`
