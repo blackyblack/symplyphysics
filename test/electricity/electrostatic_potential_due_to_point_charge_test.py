@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.electricity import potential_of_field_of_point_charge as potential_law
+from symplyphysics.laws.electricity import electrostatic_potential_due_to_point_charge as potential_law
 
 # Description
 ## For an electron at a distance of 1 meter, the field potential will be 1.439e-6 volts.
