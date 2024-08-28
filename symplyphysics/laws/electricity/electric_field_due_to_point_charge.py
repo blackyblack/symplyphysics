@@ -20,7 +20,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity import electrostatic_force_via_charges_and_distance as coulombs_law
-from symplyphysics.laws.electricity import electric_field_value_is_force_over_test_charge as electric_field_def
+from symplyphysics.laws.electricity import electric_field_is_force_over_test_charge as electric_field_def
 
 electric_field = Symbol("electric_field", units.force / units.charge)
 r"""
