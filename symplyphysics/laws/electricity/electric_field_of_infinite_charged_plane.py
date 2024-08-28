@@ -1,39 +1,61 @@
+r"""
+Electric field of uniformly charged plane
+=========================================
+
+The electric field of a uniformly charged plane is proportional to its
+charge density.
+
+**Notation:**
+
+#. :math:`\varepsilon_0` (:code:`epsilon_0`) is vacuum permittivity.
+
+**Conditions:**
+
+#. The plane is thin, i.e. its thickness approaches zero.
+"""
+
 from sympy import (Eq, solve)
-from sympy.physics.units import electric_constant
 from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
 
-# Description
-## An infinite plane has an arbitrary surface charge density. The tension lines are perpendicular
-## to the plane and directed in both directions from the plane. Then the field strength will depend
-## only on the surface dense charge.
+electric_field = Symbol("electric_field", units.voltage / units.length)
+"""
+Electric field.
 
-## Law is: E = g / (2 * e0), where
-## E - electric field intensity,
-## g - surface charge density,
-## e - electric constant.
-
-electric_intensity = Symbol("electric_intensity", units.voltage / units.length)
+Symbol:
+    :code:`E`
+"""
 
 surface_charge_density = Symbol("surface_charge_density", units.charge / units.area)
+r"""
+Surface charge density of the plane.
 
-law = Eq(electric_intensity, surface_charge_density / (2 * electric_constant))
+Symbol:
+    :code:`sigma`
 
+Latex:
+    :math:`\sigma`
+"""
 
-def print_law() -> str:
-    return print_expression(law)
+law = Eq(electric_field, surface_charge_density / (2 * units.vacuum_permittivity))
+r"""
+:code:`E = sigma / (2 * epsilon_0)`
+
+Latex:
+    .. math::
+        E = \frac{\sigma}{2 \varepsilon_0}
+"""
 
 
 @validate_input(surface_charge_density_=surface_charge_density)
-@validate_output(electric_intensity)
+@validate_output(electric_field)
 def calculate_electric_intensity(surface_charge_density_: Quantity) -> Quantity:
-    result_expr = solve(law, electric_intensity, dict=True)[0][electric_intensity]
+    result_expr = solve(law, electric_field, dict=True)[0][electric_field]
     result_expr = result_expr.subs({
         surface_charge_density: surface_charge_density_,
     })
