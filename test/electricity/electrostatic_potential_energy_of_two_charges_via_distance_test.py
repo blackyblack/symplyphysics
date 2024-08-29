@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.electricity import energy_two_charges_from_distance_and_relative_permittivity as energy_law
+from symplyphysics.laws.electricity import electrostatic_potential_energy_of_two_charges_via_distance as energy_law
 
 # Description
 ## It is known that with a charge of q1 equal to 0.25 coulomb and a charge of q2 equal to 4 coulomb,
