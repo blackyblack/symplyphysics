@@ -19,7 +19,7 @@ from symplyphysics import (
     validate_output,
 )
 
-electrostatic_potential = Symbol("electrostatic_potential", units.electrostatic_potential)
+electrostatic_potential = Symbol("electrostatic_potential", units.energy)
 """
 Electrostatic potential of a point in an electric field.
 
