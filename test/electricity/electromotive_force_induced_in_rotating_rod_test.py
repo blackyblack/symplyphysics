@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy import pi
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.electricity import voltage_in_rotating_rod as voltage_law
+from symplyphysics.laws.electricity import electromotive_force_induced_in_rotating_rod as voltage_law
 
 # Description
 ## The length of the rod is 0.1 meter, the magnetic field induction is 0.4 tesla, and the rotation
