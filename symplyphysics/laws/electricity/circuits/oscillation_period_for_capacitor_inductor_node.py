@@ -6,7 +6,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import capacitance_from_charge_and_voltage as capacitance_definition
 from symplyphysics.definitions import current_is_charge_derivative as charge_definition
 from symplyphysics.definitions import harmonic_oscillator_is_second_derivative_equation as oscillator
-from symplyphysics.laws.electricity import self_induction_voltage_from_current_derivative as induction_voltage_definition
+from symplyphysics.laws.electricity import self_induced_emf_via_time_derivative_of_current as induction_voltage_definition
 from symplyphysics.definitions import period_from_angular_frequency as period_definition
 from symplyphysics.laws.electricity.circuits import sum_of_all_currents_through_an_electrical_node_is_zero as kirchhoff_law
 from symplyphysics.laws.electricity.circuits import sum_of_all_voltages_in_loop_is_zero as kirchhoff_law_2
@@ -101,11 +101,11 @@ capacitor_current_law_derivative = Eq(Derivative(capacitor_current_law.lhs, time
 ## 4. Prove that inductor voltage equals to -1 * capacitance * inductance * (second order derivative of voltage of capacitor)
 
 ## Inductor voltage is the self-inductance.
-inductor_voltage_law = induction_voltage_definition.definition.subs(
+inductor_voltage_law = induction_voltage_definition.law.subs(
     induction_voltage_definition.time, time)
 inductor_voltage_law = inductor_voltage_law.subs({
     induction_voltage_definition.inductance: inductance,
-    induction_voltage_definition.self_induction_voltage(time): capacitor_voltage(time),
+    induction_voltage_definition.electromotive_force(time): capacitor_voltage(time),
     induction_voltage_definition.current(time): charge_definition.current(time)
 })
 
