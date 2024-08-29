@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, errors, units, Quantity, prefixes)
-from symplyphysics.laws.electricity import resistance_is_proportional_to_length as wire_law
+from symplyphysics.laws.electricity import resistance_via_resistivity_and_dimensions as wire_law
 
 # Description
 ## Assert we have 3 meters of copper wire with 2 mm^2 section. Resistivity of copper is 1.75e-8 Ohm*m.
