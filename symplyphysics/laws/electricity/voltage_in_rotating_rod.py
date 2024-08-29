@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     angle_type,
@@ -28,10 +27,6 @@ rotation_frequency = Symbol("rotation_frequency", angle_type / units.time)
 rod_length = Symbol("rod_length", units.length)
 
 law = Eq(voltage, (1 / 2) * magnetic_induction * rotation_frequency * rod_length**2)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(magnetic_induction_=magnetic_induction,

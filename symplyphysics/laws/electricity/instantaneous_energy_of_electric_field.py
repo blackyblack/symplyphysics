@@ -1,5 +1,5 @@
 from sympy import (Eq, solve, cos)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, angle_type)
 
 # Description
@@ -23,10 +23,6 @@ time = Symbol("time", units.time)
 initial_phase = Symbol("initial_phase", angle_type)
 
 law = Eq(energy, (inductance * maximum_current**2 / 2) * cos(frequency * time + initial_phase)**2)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(inductance_=inductance,

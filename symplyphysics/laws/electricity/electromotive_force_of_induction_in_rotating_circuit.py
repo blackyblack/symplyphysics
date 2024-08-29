@@ -1,5 +1,5 @@
 from sympy import (Eq, solve, sin)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, dimensionless, angle_type)
 
 # Description
@@ -32,10 +32,6 @@ time = Symbol("time", units.time)
 law = Eq(
     voltage,
     -number_turns * induction * contour_area * rotation_frequency * sin(rotation_frequency * time))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(number_turns_=number_turns,

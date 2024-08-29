@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
 from sympy.physics.units import magnetic_constant
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, dimensionless)
 
 # Description
@@ -21,10 +21,6 @@ intensity = Symbol("intensity", units.current / units.length)
 volume = Symbol("volume", units.volume)
 
 law = Eq(energy, relative_permeability * magnetic_constant * intensity**2 * volume / 2)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(relative_permeability_=relative_permeability, intensity_=intensity, volume_=volume)

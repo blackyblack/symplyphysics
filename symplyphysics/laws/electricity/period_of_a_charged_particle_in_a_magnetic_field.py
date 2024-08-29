@@ -1,5 +1,5 @@
 from sympy import (Eq, solve, pi)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, symbols, clone_symbol)
 
 # Description
@@ -19,10 +19,6 @@ induction = Symbol("induction", units.magnetic_density)
 particle_mass = clone_symbol(symbols.basic.mass, "particle_mass")
 
 law = Eq(period, 2 * pi * particle_mass / (charge * induction))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(mass_=particle_mass, charge_=charge, induction_=induction)

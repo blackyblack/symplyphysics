@@ -11,16 +11,6 @@ from symplyphysics import (units, Quantity, Function, Symbol, validate_input,
     validate_output)
 from symplyphysics.core.geometry.line import two_point_function, Point2D
 
-# Description
-## Self-induction voltage (or EMF - electromotive force) can be expressed in form of modified Faraday's law.
-## In a circuit, it is much easier to measure current than it is to measure magnetic flux, so the induced voltage
-## can be found if the inductance and frequency of the current are known.
-
-## Self-induction voltage law: E = -L * dI/dt, where
-## E is the self-induction voltage
-## L is the inductance of the inductor
-## I(t) is the current through the inductor
-
 electromotive_force = Function("electromotive_force", units.voltage)
 r"""
 Self-induced electromotive force.

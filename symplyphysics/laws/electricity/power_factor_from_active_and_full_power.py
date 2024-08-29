@@ -1,5 +1,5 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, dimensionless)
 
 # Description
@@ -16,10 +16,6 @@ active_power = Symbol("active_power", units.power)
 power_factor = Symbol("power_factor", dimensionless)
 
 law = Eq(power_factor, active_power / full_power)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(active_power_=active_power, full_power_=full_power)

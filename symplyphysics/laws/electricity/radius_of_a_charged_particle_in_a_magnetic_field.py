@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     symbols,
@@ -54,10 +53,6 @@ radius_derived = solve(law_applied, radius, dict=True)[0][radius]
 
 # Check if derived radius is same as declared.
 assert expr_equals(radius_derived, law.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(mass_=particle_mass, velocity_=velocity, induction_=induction, charge_=charge)

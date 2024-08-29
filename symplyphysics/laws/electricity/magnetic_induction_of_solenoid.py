@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
 from sympy.physics.units import magnetic_constant
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, dimensionless)
 
 # Description
@@ -23,10 +23,6 @@ number_turns = Symbol("number_turns", dimensionless)
 relative_permeability = Symbol("relative_permeability", dimensionless)
 
 law = Eq(induction, relative_permeability * magnetic_constant * current * number_turns / length)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(current_=current,

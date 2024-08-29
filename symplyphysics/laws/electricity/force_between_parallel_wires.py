@@ -1,6 +1,6 @@
 from sympy import (Eq, solve, pi)
 from sympy.physics.units import magnetic_constant
-from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print_expression,
+from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol,
     validate_input, validate_output, dimensionless)
 
 # Description
@@ -28,10 +28,6 @@ distance = Symbol("distance", units.length)
 law = Eq(
     ampere_force, magnetic_constant * relative_permeability * first_wire_current *
     second_wire_current * length / (2 * pi * distance))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(relative_permeability_=relative_permeability,

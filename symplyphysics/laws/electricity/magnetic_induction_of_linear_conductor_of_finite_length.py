@@ -1,6 +1,6 @@
 from sympy import (Eq, solve, pi, cos)
 from sympy.physics.units import magnetic_constant
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, dimensionless, angle_type)
 
 # Description
@@ -34,10 +34,6 @@ law = Eq(
     induction,
     relative_permeability * magnetic_constant * current * (cos(first_angle) + cos(second_angle)) /
     (4 * pi * distance))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(relative_permeability_=relative_permeability,
