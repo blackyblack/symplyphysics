@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
     QuantityVector,
 )
-from symplyphysics.laws.electricity.vector import vector_of_electric_dipole_moment as dipole_moment
+from symplyphysics.laws.electricity.vector import electric_dipole_moment_is_charge_times_displacement as dipole_moment
 
 # Description
 ## The vector of the dipole moment of two point charges of magnitude Q = 2e-13 C, the displacement
