@@ -43,15 +43,15 @@ Symbol:
     :code:`q`
 """
 
-magnetic_field = Symbol("magnetic_field", units.magnetic_density)
+magnetic_flux_density = Symbol("magnetic_flux_density", units.magnetic_density)
 """
-Value of the magnetic field.
+Magnitude of magnetic flux density.
 
 Symbol:
     :code:`B`
 """
 
-law = Eq(period, 2 * pi * mass / (charge * magnetic_field))
+law = Eq(period, 2 * pi * mass / (charge * magnetic_flux_density))
 r"""
 :code:`T = 2 * pi * m / (q * B)`
 
@@ -61,13 +61,13 @@ Latex:
 """
 
 
-@validate_input(mass_=mass, charge_=charge, induction_=magnetic_field)
+@validate_input(mass_=mass, charge_=charge, induction_=magnetic_flux_density)
 @validate_output(period)
 def calculate_period(mass_: Quantity, charge_: Quantity, induction_: Quantity) -> Quantity:
     result_period_expr = solve(law, period, dict=True)[0][period]
     result_expr = result_period_expr.subs({
         mass: mass_,
         charge: charge_,
-        magnetic_field: induction_
+        magnetic_flux_density: induction_
     })
     return Quantity(result_expr)
