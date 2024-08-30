@@ -4,7 +4,7 @@ from sympy import solve, Symbol, Eq
 from symplyphysics import print_expression, Quantity, prefixes, units, convert_to
 from symplyphysics.definitions import density_from_mass_volume as density_law
 from symplyphysics.laws.kinematics import position_via_constant_speed_and_time as distance_law
-from symplyphysics.laws.electricity import power_factor_from_active_and_full_power as efficiency_law
+from symplyphysics.laws.electricity import power_factor_is_real_power_over_apparent_power as efficiency_law
 from symplyphysics.laws.electricity import energy_via_constant_power_and_time as energy_law
 from symplyphysics.laws.thermodynamics import heat_of_combustion_via_mass as combustion_energy_law
 
@@ -49,8 +49,8 @@ amount_heat_value = combustion_energy_law.law.subs({
 }).rhs
 
 efficiency_factor_equation = efficiency_law.law.subs({
-    efficiency_law.active_power: energy_from_power_value,
-    efficiency_law.full_power: amount_heat_value,
+    efficiency_law.real_power: energy_from_power_value,
+    efficiency_law.apparent_power: amount_heat_value,
     efficiency_law.power_factor: efficiency_factor
 })
 distance_value = solve(efficiency_factor_equation, distance, dict=True)[0][distance]
