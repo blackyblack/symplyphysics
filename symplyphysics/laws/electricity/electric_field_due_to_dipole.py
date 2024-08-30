@@ -2,9 +2,9 @@ r"""
 Electric field due to dipole
 ============================
 
-The value of the electric field set up by a dipole at a distant point on the dipole axis,
+The strength of the electric field set up by a dipole at a distant point on the dipole axis,
 which runs through both point charges comprising the dipole, is proportional to the inverse
-cube of the distance to the dipole and the value of the dipole moment.
+cube of the distance to the dipole and the value of the electric dipole moment.
 
 **Notation:**
 
@@ -30,9 +30,9 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity import electric_field_due_to_point_charge as point_field
 from symplyphysics.laws.electricity import electric_dipole_moment_is_charge_times_distance as dipole_law
 
-electric_field = Symbol("electric_field", units.force / units.charge)
+electric_field_strength = Symbol("electric_field_strength", units.force / units.charge)
 """
-Electric field due to dipole.
+Electric field strength due to dipole.
 
 Symbol:
     :code:`E`
@@ -54,7 +54,7 @@ Symbol:
     :code:`r`
 """
 
-law = Eq(electric_field, 1 / (2 * pi * units.vacuum_permittivity) * electric_dipole_moment / distance**3)
+law = Eq(electric_field_strength, 1 / (2 * pi * units.vacuum_permittivity) * electric_dipole_moment / distance**3)
 r"""
 :code:`E = 1 / (2 * pi * epsilon_0) * p / r^3`
 
@@ -107,12 +107,12 @@ _dipole_eqn = dipole_law.law.subs({
 # Replace _charge*_distance_between_charges back with electric_dipole_moment
 _net_field_derived = solve(
     [
-        Eq(electric_field, _net_field_approx_sub),
+        Eq(electric_field_strength, _net_field_approx_sub),
         _dipole_eqn
     ],
-    (_charge, electric_field),
+    (_charge, electric_field_strength),
     dict=True,
-)[0][electric_field]
+)[0][electric_field_strength]
 
 _net_field_from_law = law.rhs.subs(distance, _distance_to_origin)
 
@@ -120,9 +120,9 @@ assert expr_equals(_net_field_from_law, _net_field_derived)
 
 
 @validate_input(dipole_moment_=electric_dipole_moment, distance_to_dipole_=distance)
-@validate_output(electric_field)
+@validate_output(electric_field_strength)
 def calculate_electric_field(dipole_moment_: Quantity, distance_to_dipole_: Quantity) -> Quantity:
-    result = solve(law, electric_field)[0]
+    result = solve(law, electric_field_strength)[0]
     result_field = result.subs({
         electric_dipole_moment: dipole_moment_,
         distance: distance_to_dipole_,
