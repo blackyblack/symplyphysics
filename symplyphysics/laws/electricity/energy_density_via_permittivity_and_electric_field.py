@@ -3,7 +3,7 @@ Energy density via permittivity and electric field
 ==================================================
 
 Volumetric energy density of the electric field depends on the permittivity of the medium and
-on the strength (value) of the electric field at that point.
+on the strength of the electric field at that point.
 
 **Notation:**
 
@@ -33,15 +33,15 @@ Latex:
     :math:`\varepsilon`
 """
 
-electric_field = Symbol("electric_field", units.voltage / units.length)
+electric_field_strength = Symbol("electric_field_strength", units.voltage / units.length)
 """
-Value of the electric field.
+Strength of the electric field.
 
 Symbol:
     :code:`E`
 """
 
-law = Eq(energy_density, (units.vacuum_permittivity * relative_permittivity * electric_field**2) / 2)
+law = Eq(energy_density, (units.vacuum_permittivity * relative_permittivity * electric_field_strength**2) / 2)
 r"""
 :code:`w = 1/2 * epsilon_0 * epsilon * E^2`
 
@@ -52,13 +52,13 @@ Latex:
 
 
 @validate_input(relative_permittivity_=relative_permittivity,
-    electric_intensity_=electric_field)
+    electric_intensity_=electric_field_strength)
 @validate_output(energy_density)
 def calculate_energy_density(relative_permittivity_: float,
     electric_intensity_: Quantity) -> Quantity:
     result_expr = solve(law, energy_density, dict=True)[0][energy_density]
     result_expr = result_expr.subs({
         relative_permittivity: relative_permittivity_,
-        electric_field: electric_intensity_,
+        electric_field_strength: electric_intensity_,
     })
     return Quantity(result_expr)
