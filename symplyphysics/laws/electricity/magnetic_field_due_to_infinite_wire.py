@@ -5,6 +5,10 @@ Magnetic field due to infinite wire
 The magnitude of the magnetic field due to a thin, straight, infinite wire depends on the
 current through it and the radial distance to the wire.
 
+**Notation:**
+
+#. :math:`\mu_0` (:code:`mu_0`) is vacuum permeability.
+
 **Conditions:**
 
 #. The wire is uniform, straight, and thin.
