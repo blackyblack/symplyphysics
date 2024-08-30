@@ -19,7 +19,7 @@ from sympy import (Eq, solve)
 from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, dimensionless)
 
-magnetic_field = Symbol("magnetic_field", units.magnetic_flux_density)
+magnetic_flux_density = Symbol("magnetic_flux_density", units.magnetic_flux_density)
 """
 Value of the magnetic field.
 
@@ -51,7 +51,7 @@ Symbol:
     :code:`N`
 """
 
-law = Eq(magnetic_field, units.vacuum_permeability * current * coil_turn_count / length)
+law = Eq(magnetic_flux_density, units.vacuum_permeability * current * coil_turn_count / length)
 r"""
 :code:`B = mu_0 * I * N / l`
 
@@ -64,12 +64,12 @@ Latex:
 @validate_input(current_=current,
     length_=length,
     number_turns_=coil_turn_count)
-@validate_output(magnetic_field)
+@validate_output(magnetic_flux_density)
 def calculate_induction(current_: Quantity, length_: Quantity,
     number_turns_: float) -> Quantity:
     if number_turns_ < 0:
         raise ValueError("Number of turns cannot be negative")
-    result_expr = solve(law, magnetic_field, dict=True)[0][magnetic_field]
+    result_expr = solve(law, magnetic_flux_density, dict=True)[0][magnetic_flux_density]
     result_expr = result_expr.subs({
         current: current_,
         length: length_,
