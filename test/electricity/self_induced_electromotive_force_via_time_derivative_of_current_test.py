@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, errors, units, Quantity, prefixes)
-from symplyphysics.laws.electricity import self_induced_emf_via_time_derivative_of_current as self_induction_def
+from symplyphysics.laws.electricity import self_induced_electromotive_force_via_time_derivative_of_current as self_induction_def
 
 # Description
 ## Current through 2.5 millihenry inductor increases from 0 to 0.5A in 5 seconds.

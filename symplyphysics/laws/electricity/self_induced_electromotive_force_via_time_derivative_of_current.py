@@ -1,6 +1,6 @@
 """
-Self-induced emf via time derivative of current
-===============================================
+Self-induced electromotive force via time derivative of current
+===============================================================
 
 Expression for the self-induced emf can be derived from the Faraday's law featuring
 the time derivative of current flowing through the circuit.
