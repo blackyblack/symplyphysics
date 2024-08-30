@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.electricity import radius_of_a_charged_particle_in_a_magnetic_field as radius_law
+from symplyphysics.laws.electricity import radius_of_curvature_of_charged_particle_in_magnetic_field as radius_law
 
 # Description
 ## The mass of the particle is 0.1 kilogram, the charge is 0.2 coulomb, the speed is 5 meter per second.

@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.electricity import period_of_a_charged_particle_in_a_magnetic_field as period_law
+from symplyphysics.laws.electricity import period_of_rotation_of_charged_particle_in_magnetic_field as period_law
 
 # Description
 ## The mass of the particle is 0.1 kilogram, the charge is 0.2 coulomb.

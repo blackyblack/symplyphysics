@@ -11,7 +11,7 @@ magnitude of the magnetic induction, the rotation frequency and the length of th
 
 #. The angular velocity of the rod is parallel to the magnetic field. This means that
    the rod is rotating in a plane perpendicular to the magnetic field.
-#. The magnetic field is constant.
+#. The magnetic field is uniform.
 #. The angular velocity of the rod is constant.
 """
 
