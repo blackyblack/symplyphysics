@@ -4,13 +4,13 @@ Electromotive force induced in rotating coil
 
 Suppose a coil is being rotated in a magnetic field under the conditions described
 below. Then an electromotive will be induced in the contour of the coil. Its amplitude
-depends on the number of turns in the coil, the strength of the magnetic field, the
+depends on the number of turns in the coil, the magnetic flux density, the
 angular frequency of the coil's rotation and the area of the coil's contour.
 
 **Notes:**
 
-#. The angle :math:`\varphi` between the normal to the coil's contour and the magnetic field
-   is :math:`\varphi \propto \cos(\omega t)`.
+#. The angle :math:`\varphi` between the normal to the coil's contour and the magnetic flux
+   density is :math:`\varphi \propto \cos(\omega t)`.
 
 **Conditions:**
 
@@ -43,9 +43,9 @@ Symbol:
     :code:`N`
 """
 
-magnetic_field = Symbol("magnetic_field", units.magnetic_density)
+magnetic_flux_density = Symbol("magnetic_flux_density", units.magnetic_density)
 """
-Magnitude of the magnetic field.
+Magnetic flux density.
 
 Symbol:
     :code:`B`
@@ -74,7 +74,7 @@ time = Symbol("time", units.time)
 
 law = Eq(
     electromotive_force,
-    -1 * coil_turn_count * magnetic_field * contour_area * angular_frequency * sin(angular_frequency * time))
+    -1 * coil_turn_count * magnetic_flux_density * contour_area * angular_frequency * sin(angular_frequency * time))
 r"""
 :code:`E = -1 * N * B * A * w * sin(w * t)`
 
@@ -85,7 +85,7 @@ Latex:
 
 
 @validate_input(number_turns_=coil_turn_count,
-    induction_=magnetic_field,
+    induction_=magnetic_flux_density,
     contour_area_=contour_area,
     rotation_frequency_=angular_frequency,
     time_=time)
@@ -95,7 +95,7 @@ def calculate_voltage(number_turns_: int, induction_: Quantity, contour_area_: Q
     result_expr = solve(law, electromotive_force, dict=True)[0][electromotive_force]
     result_expr = result_expr.subs({
         coil_turn_count: number_turns_,
-        magnetic_field: induction_,
+        magnetic_flux_density: induction_,
         contour_area: contour_area_,
         angular_frequency: rotation_frequency_,
         time: time_
