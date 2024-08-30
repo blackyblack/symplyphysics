@@ -20,12 +20,12 @@ POSITION_OF_CHARGE_2 = 0.7  # m
 position = symbols("position")
 
 field_of_charge_1 = electric_field.law.rhs.subs({
-    electric_field.point_charge: CHARGE_1,
+    electric_field.charge: CHARGE_1,
     electric_field.distance: position - POSITION_OF_CHARGE_1,
     units.coulomb_constant: COULOMB_CONSTANT,
 })
 field_of_charge_2 = electric_field.law.rhs.subs({
-    electric_field.point_charge: CHARGE_2,
+    electric_field.charge: CHARGE_2,
     electric_field.distance: position - POSITION_OF_CHARGE_2,
     units.coulomb_constant: COULOMB_CONSTANT,
 })
