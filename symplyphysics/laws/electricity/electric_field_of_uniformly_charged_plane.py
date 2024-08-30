@@ -2,7 +2,7 @@ r"""
 Electric field of uniformly charged plane
 =========================================
 
-The electric field of a uniformly charged plane is proportional to its
+The electric field strength of a uniformly charged plane is proportional to its
 charge density.
 
 **Notation:**
@@ -23,7 +23,7 @@ from symplyphysics import (
     validate_output,
 )
 
-electric_field = Symbol("electric_field", units.voltage / units.length)
+electric_field_strength = Symbol("electric_field_strength", units.voltage / units.length)
 """
 Value of the electric field.
 
@@ -42,7 +42,7 @@ Latex:
     :math:`\sigma`
 """
 
-law = Eq(electric_field, surface_charge_density / (2 * units.vacuum_permittivity))
+law = Eq(electric_field_strength, surface_charge_density / (2 * units.vacuum_permittivity))
 r"""
 :code:`E = sigma / (2 * epsilon_0)`
 
@@ -53,9 +53,9 @@ Latex:
 
 
 @validate_input(surface_charge_density_=surface_charge_density)
-@validate_output(electric_field)
+@validate_output(electric_field_strength)
 def calculate_electric_intensity(surface_charge_density_: Quantity) -> Quantity:
-    result_expr = solve(law, electric_field, dict=True)[0][electric_field]
+    result_expr = solve(law, electric_field_strength, dict=True)[0][electric_field_strength]
     result_expr = result_expr.subs({
         surface_charge_density: surface_charge_density_,
     })
