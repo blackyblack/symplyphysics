@@ -2,10 +2,10 @@
 Electric field is force over test charge
 ========================================
 
-The value of the electric field at any point in space can be found by placing a
+The strength of the electric field at any point in space can be found by placing a
 so called test charge in that point and measuring the electrostatic force applied to
-the test charge. The resulting value of the electric field is the ratio of the
-force applied to the value of the test charge.
+the test charge. The resulting electric field is the ratio of the force applied to
+the value of the test charge.
 """
 
 from sympy import Eq, solve
@@ -19,9 +19,9 @@ from symplyphysics import (
     validate_output,
 )
 
-electric_field = Symbol("electric_field", units.force / units.charge)
+electric_field_strength = Symbol("electric_field_strength", units.force / units.charge)
 """
-Value of the electric field.
+Strength of the electric field.
 
 Symbol:
     :code:`E`
@@ -29,7 +29,7 @@ Symbol:
 
 electrostatic_force = clone_symbol(symbols.dynamics.force, "electrostatic_force")
 """
-Value of the electrostatic force applied to the test charge.
+Projection of the electrostatic force applied to the test charge.
 
 Symbol:
     :code:`F`
@@ -46,7 +46,7 @@ Latex:
     :math:`q_0`
 """
 
-law = Eq(electric_field, electrostatic_force / test_charge)
+law = Eq(electric_field_strength, electrostatic_force / test_charge)
 r"""
 :code:`E = F / q_0`
 
@@ -57,9 +57,9 @@ Latex:
 
 
 @validate_input(electrostatic_force_=electrostatic_force, test_charge_=test_charge)
-@validate_output(electric_field)
+@validate_output(electric_field_strength)
 def calculate_electric_field(electrostatic_force_: Quantity, test_charge_: Quantity) -> Quantity:
-    result = solve(law, electric_field)[0]
+    result = solve(law, electric_field_strength)[0]
     result_field = result.subs({
         electrostatic_force: electrostatic_force_,
         test_charge: test_charge_,
