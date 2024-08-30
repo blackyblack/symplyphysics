@@ -6,7 +6,7 @@ When a charged particle enters a magnetic field, it experiences an :doc:`electro
 force <laws.electricity.vector.lorentz_force_via_electromagnetic_field>` upon itself.
 In the absence of the electric field, the particle starts moving in a circular orbit. The
 radius of curvature of the particle's orbit is determined by the mass, speed, and charge
-of the particle as well as by the magnetic field.
+of the particle as well as by the magnetic flux density.
 
 **Conditions:**
 
@@ -60,15 +60,15 @@ Symbol:
     :code:`q`
 """
 
-magnetic_field = Symbol("magnetic_field", units.magnetic_density)
+magnetic_flux_density = Symbol("magnetic_flux_density", units.magnetic_density)
 """
-Value of the magnetic field.
+Magnitude of magnetic flux density.
 
 Symbol:
     :code:`B`
 """
 
-law = Eq(radius_of_curvature, mass * speed / (charge * magnetic_field))
+law = Eq(radius_of_curvature, mass * speed / (charge * magnetic_flux_density))
 r"""
 :code:`r = m * v / (q * B)`
 
@@ -91,7 +91,7 @@ _period_derived = solve(_distance_law_applied, distance_law.time,
 _law_applied = period_law.law.subs({
     period_law.mass: mass,
     period_law.charge: charge,
-    period_law.magnetic_flux_density: magnetic_field,
+    period_law.magnetic_flux_density: magnetic_flux_density,
     period_law.period: _period_derived,
 })
 _radius_derived = solve(_law_applied, radius_of_curvature, dict=True)[0][radius_of_curvature]
@@ -100,7 +100,7 @@ _radius_derived = solve(_law_applied, radius_of_curvature, dict=True)[0][radius_
 assert expr_equals(_radius_derived, law.rhs)
 
 
-@validate_input(mass_=mass, velocity_=speed, induction_=magnetic_field, charge_=charge)
+@validate_input(mass_=mass, velocity_=speed, induction_=magnetic_flux_density, charge_=charge)
 @validate_output(radius_of_curvature)
 def calculate_radius(mass_: Quantity, velocity_: Quantity, induction_: Quantity,
     charge_: Quantity) -> Quantity:
@@ -108,7 +108,7 @@ def calculate_radius(mass_: Quantity, velocity_: Quantity, induction_: Quantity,
     result_expr = result_expr.subs({
         mass: mass_,
         speed: velocity_,
-        magnetic_field: induction_,
+        magnetic_flux_density: induction_,
         charge: charge_,
     })
     return Quantity(result_expr)
