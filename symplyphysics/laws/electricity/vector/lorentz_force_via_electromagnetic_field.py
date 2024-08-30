@@ -48,7 +48,7 @@ Symbol:
 
 def lorentz_force_law(
     electric_field_: Vector,
-    magnetic_field_: Vector,
+    magnetic_flux_density_: Vector,
     velocity_: Vector,
 ) -> Vector:
     r"""
@@ -69,7 +69,7 @@ def lorentz_force_law(
 
         Dimension: *voltage* / *length*
     
-    :param magnetic\_field\_: pseudovector of magnetic field
+    :param magnetic\_flux\_density\_: pseudovector of magnetic flux density
 
         Symbol: :code:`B`
 
@@ -96,7 +96,7 @@ def lorentz_force_law(
 
     velocity_cross_magnetic_field_ = cross_cartesian_vectors(
         velocity_,
-        magnetic_field_,
+        magnetic_flux_density_,
     )
 
     total_field_ = add_cartesian_vectors(
@@ -109,7 +109,7 @@ def lorentz_force_law(
 
 def electric_field_law(
     lorentz_force_: Vector,
-    magnetic_field_: Vector,
+    magnetic_flux_density_: Vector,
     velocity_: Vector,
 ) -> Vector:
     r"""
@@ -130,7 +130,7 @@ def electric_field_law(
 
         Dimension: *force*
 
-    :param magnetic\_field\_: pseudovector of magnetic field
+    :param magnetic\_flux\_density\_: pseudovector of magnetic flux density
 
         Symbol: :code:`B`
 
@@ -157,7 +157,7 @@ def electric_field_law(
 
     velocity_cross_magnetic_field_ = cross_cartesian_vectors(
         velocity_,
-        magnetic_field_,
+        magnetic_flux_density_,
     )
 
     total_field_ = scale_vector(1 / charge, lorentz_force_)
@@ -171,7 +171,7 @@ def electric_field_law(
 def charge_law(
     lorentz_force_: Vector,
     electric_field_: Vector,
-    magnetic_field_: Vector,
+    magnetic_flux_density_: Vector,
     velocity_: Vector,
 ) -> Expr:
     r"""
@@ -200,7 +200,7 @@ def charge_law(
 
         Dimension: *voltage* / *length*
     
-    :param magnetic\_field\_: pseudovector of magnetic field
+    :param magnetic\_flux\_density\_: pseudovector of magnetic flux density
 
         Symbol: :code:`B`
 
@@ -225,7 +225,7 @@ def charge_law(
 
     velocity_cross_magnetic_field_ = cross_cartesian_vectors(
         velocity_,
-        magnetic_field_,
+        magnetic_flux_density_,
     )
 
     total_field_ = add_cartesian_vectors(
@@ -239,19 +239,19 @@ def charge_law(
 @validate_input(
     charge_=charge,
     electric_field_=units.voltage / units.length,
-    magnetic_field_=units.magnetic_flux_density,
+    magnetic_flux_density_=units.magnetic_flux_density,
     velocity_=units.velocity,
 )
 @validate_output(units.force)
 def calculate_lorentz_force(
     charge_: Quantity,
     electric_field_: QuantityVector,
-    magnetic_field_: QuantityVector,
+    magnetic_flux_density_: QuantityVector,
     velocity_: QuantityVector,
 ) -> QuantityVector:
     result = lorentz_force_law(
         electric_field_=electric_field_.to_base_vector(),
-        magnetic_field_=magnetic_field_.to_base_vector(),
+        magnetic_flux_density_=magnetic_flux_density_.to_base_vector(),
         velocity_=velocity_.to_base_vector(),
     )
     return QuantityVector.from_base_vector(

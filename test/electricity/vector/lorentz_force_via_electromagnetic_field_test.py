@@ -39,7 +39,7 @@ def test_basic_law(test_args: Args) -> None:
 def test_electric_field_law(test_args: Args) -> None:
     result_vector = law.electric_field_law(
         lorentz_force_=test_args.f.to_base_vector(),
-        magnetic_field_=test_args.b.to_base_vector(),
+        magnetic_flux_density_=test_args.b.to_base_vector(),
         velocity_=test_args.v.to_base_vector(),
     )
     result = QuantityVector.from_base_vector(
@@ -58,7 +58,7 @@ def test_charge_magnitude_law(test_args: Args) -> None:
     result = law.charge_law(
         lorentz_force_=test_args.f.to_base_vector(),
         electric_field_=test_args.e.to_base_vector(),
-        magnetic_field_=test_args.b.to_base_vector(),
+        magnetic_flux_density_=test_args.b.to_base_vector(),
         velocity_=test_args.v.to_base_vector(),
     )
     assert_equal(result, abs(test_args.q))
