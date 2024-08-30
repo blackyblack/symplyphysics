@@ -24,7 +24,7 @@ from symplyphysics import (
     validate_output,
 )
 
-electric_field = Symbol("electric_field", units.voltage / units.length)
+electric_field_strength = Symbol("electric_field_strength", units.voltage / units.length)
 """
 Value of the electric field.
 
@@ -48,7 +48,7 @@ Symbol:
     :code:`r`
 """
 
-law = Eq(electric_field, charge / (4 * pi * units.vacuum_permittivity * distance**2))
+law = Eq(electric_field_strength, charge / (4 * pi * units.vacuum_permittivity * distance**2))
 r"""
 :code:`E = 1 / (4 * pi * epsilon_0) * q / r^2`
 
@@ -59,9 +59,9 @@ Latex:
 
 
 @validate_input(charge_=charge, distance_=distance)
-@validate_output(electric_field)
+@validate_output(electric_field_strength)
 def calculate_electric_intensity(charge_: Quantity, distance_: Quantity) -> Quantity:
-    result_expr = solve(law, electric_field, dict=True)[0][electric_field]
+    result_expr = solve(law, electric_field_strength, dict=True)[0][electric_field_strength]
     result_expr = result_expr.subs({
         charge: charge_,
         distance: distance_,
