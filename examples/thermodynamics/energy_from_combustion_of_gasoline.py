@@ -30,7 +30,6 @@ velocity_equation = distance_law.law.subs({
 time_value = solve(velocity_equation, distance_law.time,
     dict=True)[0][distance_law.time]
 
-# power_equation = power_law.law.subs({power_law.time: time_value, power_law.power: power_of_car})
 energy_from_power_value = energy_law.law.rhs.subs({
     energy_law.time: time_value,
     energy_law.power: power_of_car,
