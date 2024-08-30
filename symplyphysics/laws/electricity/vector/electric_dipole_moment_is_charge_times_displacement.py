@@ -5,6 +5,10 @@ Electric dipole moment is charge times displacement
 The vector of electric dipole moment is a vector whose magnitude describes the
 :doc:`electric dipole moment <laws.electricity.electric_dipole_moment_is_charge_times_distance>`
 of the system. It is collinear to the vector connecting the two point charges.
+
+**Conditions:**
+
+#. The charges must be equal by magnitude and have opposite signs.
 """
 
 from symplyphysics import (
