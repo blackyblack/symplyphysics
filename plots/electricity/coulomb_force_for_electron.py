@@ -3,10 +3,11 @@ from sympy import Symbol
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression, units
+from symplyphysics.core.convert import convert_to_si
 from symplyphysics.laws.electricity import electrostatic_force_via_charges_and_distance as coulomb_law
 
 CHARGE_OF_ELECTRON = -1.6 * 1E-19
-VACUUM_PERMITTIVITY = 8.854e-12
+VACUUM_PERMITTIVITY = convert_to_si(units.vacuum_permittivity)
 
 print(f"Formula is:\n{print_expression(coulomb_law.law)}")
 

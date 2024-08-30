@@ -3,13 +3,14 @@
 from sympy import symbols, plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression, units
+from symplyphysics.core.convert import convert_to_si
 from symplyphysics.laws.electricity import electric_field_due_to_point_charge as electric_field
 
 # Description
 ## Reference to example (net_field_is_zero_from_two_point_charges.py)[../../../examples/electricity/net_field_is_zero_from_two_point_charges.py]
 ## Plot the net field of two point charges along the x-axis.
 
-COULOMB_CONSTANT = 8.99e9  # N * m^2 * C^(-2)
+VACUUM_PERMITTIVITY = convert_to_si(units.vacuum_permittivity)
 
 CHARGE_1 = 2.1e-8  # C
 CHARGE_2 = -4.0 * CHARGE_1
@@ -22,12 +23,12 @@ position = symbols("position")
 field_of_charge_1 = electric_field.law.rhs.subs({
     electric_field.charge: CHARGE_1,
     electric_field.distance: position - POSITION_OF_CHARGE_1,
-    units.coulomb_constant: COULOMB_CONSTANT,
+    units.vacuum_permittivity: VACUUM_PERMITTIVITY,
 })
 field_of_charge_2 = electric_field.law.rhs.subs({
     electric_field.charge: CHARGE_2,
     electric_field.distance: position - POSITION_OF_CHARGE_2,
-    units.coulomb_constant: COULOMB_CONSTANT,
+    units.vacuum_permittivity: VACUUM_PERMITTIVITY,
 })
 net_field = field_of_charge_1 + field_of_charge_2
 
