@@ -15,7 +15,7 @@ from symplyphysics import (
     angle_type,
 )
 
-angular_wavenumber = Symbol("angular_wave_number", angle_type / units.length)
+angular_wavenumber = Symbol("angular_wave_number", angle_type / units.length, display_symbol="k")
 """
 Angular wavenumber of the wave.
 
@@ -23,24 +23,16 @@ Symbol:
     :code:`k`
 """
 
-wavelength = Symbol("wavelength", units.length)
-r"""
+wavelength = Symbol("wavelength", units.length, display_symbol="lambda", display_latex="\\lambda")
+"""
 Wavelength of the wave.
-
-Symbol:
-    :code:`lambda`
-
-Latex:
-    :math:`\lambda`
 """
 
 definition = Eq(angular_wavenumber, 2 * pi / wavelength)
-r"""
-:code:`k = 2 * pi / lambda`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        k = \frac{2 \pi}{\lambda}
+:laws:latex::
 """
 
 

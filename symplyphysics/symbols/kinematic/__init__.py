@@ -10,12 +10,9 @@ Kinematics is a subfield of physics and mathematics, developed in classical mech
 from sympy.physics import units
 from ...core.symbols.symbols import Symbol
 
-acceleration = Symbol("acceleration", units.acceleration)
+acceleration = Symbol(None, units.acceleration, display_symbol="a")
 """
 Acceleration is the rate of change of the velocity of an object with respect to time.
-
-Symbols:
-    a
 """
 
 __all__ = [

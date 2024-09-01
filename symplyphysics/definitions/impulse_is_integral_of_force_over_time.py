@@ -17,59 +17,36 @@ from symplyphysics import (
     validate_output,
 )
 
-impulse = Symbol("impulse", units.momentum)
+impulse = Symbol(None, units.momentum, display_symbol="J")
 r"""
 Projection of impulse vector due to :attr:`~symplyphysics.symbols.dynamics.force` :math:`\vec F`.
-
-Symbol:
-    :code:`J`
 """
 
-force = Function("force", units.force)
+force = Function(None, units.force, display_symbol="F(t)", display_latex="F")
 r"""
 Projection of :attr:`~symplyphysics.symbols.dynamics.force` :math:`\vec F` as a function of time.
-
-Symbol:
-    :code:`F(t)`
 """
 
-time = Symbol("time", units.time)
+time = Symbol(None, units.time, display_symbol="t")
 """
 Time.
-
-Symbol:
-    :code:`t`
 """
 
-time_before = Symbol("time_before", units.time)
+time_before = Symbol(None, units.time, display_symbol="t0", display_latex="t_0")
 """
 Initial time of collision.
-
-Symbol:
-    :code:`t0`
-
-Latex:
-    :math:`t_0`
 """
 
-time_after = Symbol("time_after", units.time)
+time_after = Symbol(None, units.time, display_symbol="t1", display_latex="t_1")
 """
 Final time of collision.
-
-Symbol:
-    :code:`t1`
-
-Latex:
-    :math:`t_1`
 """
 
 law = Eq(impulse, Integral(force(time), (time, time_before, time_after)))
-r"""
-:code:`J = Integral(F(t), (t, t0, t1))`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        J = \int_{t_0}^{t_1} F(t) dt
+:laws:latex::
 """
 
 

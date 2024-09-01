@@ -5,12 +5,16 @@ import importlib
 from typing import Any, Optional
 from sympy.physics.units.systems.si import SI
 
-from ..core.symbols.symbols import DimensionSymbol
+from ..core.symbols.symbols import DimensionSymbol, Function
 
 
 class LawDirectiveTypes(Enum):
     SYMBOL = 0
     LATEX = 1
+
+class LawSymbolTypes(Enum):
+    SYMBOL = 0
+    FUNCTION = 1
 
 @dataclass
 class LawDirective:
@@ -21,6 +25,7 @@ class LawDirective:
 @dataclass
 class LawSymbol:
     symbol: str
+    symbol_type: LawSymbolTypes
     latex: Optional[str]
     dimension: str
 
@@ -56,12 +61,12 @@ def _docstring_clean(doc: str) -> str:
 
 def _docstring_find_law_directives(doc: str) -> list[LawDirective]:
     directives = []
-    position = doc.find(":laws:symbol::\n")
+    position = doc.find(":laws:symbol::")
     if position >= 0:
-        directives.append(LawDirective(position, position + len(":laws:symbol::\n"), LawDirectiveTypes.SYMBOL))
-    position = doc.find(":laws:latex::\n")
+        directives.append(LawDirective(position, position + len(":laws:symbol::"), LawDirectiveTypes.SYMBOL))
+    position = doc.find(":laws:latex::")
     if position >= 0:
-        directives.append(LawDirective(position, position + len(":laws:latex::\n"), LawDirectiveTypes.LATEX))
+        directives.append(LawDirective(position, position + len(":laws:latex::"), LawDirectiveTypes.LATEX))
     return directives
 
 
@@ -150,7 +155,10 @@ def find_members_and_functions(module_name: str) -> list[MemberWithDoc | Functio
         law_symbol = None
         if isinstance(sym, DimensionSymbol):
             dimension = "dimensionless" if SI.get_dimension_system().is_dimensionless(sym.dimension) else str(sym.dimension.name)
-            law_symbol = LawSymbol(sym.display_symbol, sym.display_latex, dimension)
+            symbol_type = LawSymbolTypes.SYMBOL
+            if isinstance(sym, Function):
+                symbol_type = LawSymbolTypes.FUNCTION
+            law_symbol = LawSymbol(sym.display_symbol, symbol_type, sym.display_latex, dimension)
         directives = _docstring_find_law_directives(doc)
         result.append(MemberWithDoc(v, doc, law_symbol, directives, sym))
     for lf in law_functions:

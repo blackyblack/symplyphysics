@@ -3,6 +3,7 @@ from typing import Any, Optional, Sequence, Self
 from sympy import S, Idx, Symbol as SymSymbol, Expr, Equality, IndexedBase
 from sympy.physics.units import Dimension
 from sympy.core.function import UndefinedFunction
+from sympy.printing.printer import Printer
 from sympy.printing.pretty.pretty import PrettyPrinter
 from sympy.printing.pretty.stringpict import prettyForm
 from sympy.printing.pretty.pretty_symbology import pretty_symbol, pretty_use_unicode
@@ -19,7 +20,7 @@ class DimensionSymbol:
         self._dimension = dimension
         self._display_name = display_name
         self._display_symbol = self._display_name if display_symbol is None else display_symbol
-        self._display_latex = ("\\text{"  + self._display_symbol + "}") if display_latex is None else display_latex
+        self._display_latex = self._display_symbol if display_latex is None else display_latex
 
     @property
     def dimension(self) -> Dimension:
@@ -43,6 +44,9 @@ class Symbol(DimensionSymbol, SymSymbol):  # pylint: disable=too-many-ancestors
     def __new__(cls,
         display_name: Optional[str] = None,
         _dimension: Dimension = Dimension(S.One),
+        *,
+        display_symbol: Optional[str] = None,
+        display_latex: Optional[str] = None,
         **assumptions: Any) -> Self:
         name = next_name("SYM") if display_name is None else next_name(display_name)
         obj = SymSymbol.__new__(cls, name, **assumptions)
@@ -64,6 +68,9 @@ class SymbolIndexed(DimensionSymbol, IndexedBase):  # pylint: disable=too-many-a
     def __new__(cls,
         name_or_symbol: Optional[str | SymSymbol] = None,
         _dimension: Dimension = Dimension(S.One),
+        *,
+        display_symbol: Optional[str] = None,
+        display_latex: Optional[str] = None,
         **assumptions: Any) -> Self:
         # SymPy subs() and solve() creates dummy symbols. Allow create new indexed symbols
         # without renaming
@@ -74,17 +81,20 @@ class SymbolIndexed(DimensionSymbol, IndexedBase):  # pylint: disable=too-many-a
         return obj
 
     def __init__(self,
-        display_name: Optional[str] = None,
+        name_or_symbol: Optional[str | SymSymbol] = None,
         dimension: Dimension = Dimension(S.One),
         *,
         display_symbol: Optional[str] = None,
         display_latex: Optional[str] = None,
         **_assumptions: Any) -> None:
-        display_name = self.name if display_name is None else display_name
-        super().__init__(str(display_name), dimension, display_symbol=display_symbol, display_latex=display_latex)
+        display_name = self.name if name_or_symbol is None else str(name_or_symbol)
+        super().__init__(display_name, dimension, display_symbol=display_symbol, display_latex=display_latex)
 
     def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
         pass
+
+    def _sympystr(self, p: Printer) -> str:
+        return p.doprint(self.label if self.display_symbol is None else self.display_symbol)
 
 
 class Function(DimensionSymbol, UndefinedFunction):
@@ -95,6 +105,9 @@ class Function(DimensionSymbol, UndefinedFunction):
     def __new__(mcs,
         display_name: Optional[str] = None,
         _dimension: Dimension = Dimension(S.One),
+        *,
+        display_symbol: Optional[str] = None,
+        display_latex: Optional[str] = None,
         **options: Any) -> Function:
         name = next_name("FUN") if display_name is None else next_name(display_name)
         obj = UndefinedFunction.__new__(mcs, name, **options)
@@ -175,7 +188,7 @@ def print_expression(expr: Expr | Equality | Sequence[Expr | Equality]) -> str:
 def clone_symbol(source: Symbol, display_name: Optional[str] = None, **assumptions: Any) -> Symbol:
     assumptions = source.assumptions0 if assumptions is None or len(
         assumptions) == 0 else assumptions
-    return Symbol(display_name, source.dimension, **assumptions)
+    return Symbol(display_name, source.dimension, display_symbol=source.display_symbol, display_latex=source.display_latex, **assumptions)
 
 
 # This is default index for indexed parameters, eg for using in SumIndexed

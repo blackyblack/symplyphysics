@@ -17,19 +17,19 @@ from symplyphysics import (
     convert_to_float,
 )
 
-absolute_magnitude = Symbol("absolute_magnitude", dimensionless, display_symbol="M")
+absolute_magnitude = Symbol(None, dimensionless, display_symbol="M")
 """
 Absolute magnitude for stars is defined as the apparent magnitude of an object if it were located at a distance
 of 10 parsecs (2.063e+6 astronomical units) from the observer and would not experience either interstellar or atmospheric absorption.
 """
 
-apparent_magnitude = Symbol("apparent_magnitude", dimensionless, display_symbol="m")
+apparent_magnitude = Symbol(None, dimensionless, display_symbol="m")
 """
 The apparent magnitude is a measure of the brightness of a celestial body (more precisely, the illumination created
 by this body) from the observer's point of view. The brighter the object, the smaller its magnitude.
 """
 
-distance = Symbol("distance", units.length, display_symbol="d")
+distance = Symbol(None, units.length, display_symbol="d")
 """
 Distance to the object.
 """
@@ -41,9 +41,10 @@ Constant equal to 2.063e+6 astronomical units.
 
 law = Eq(absolute_magnitude, apparent_magnitude - 5 * log(distance / distance_constant, 10))
 r"""
-:laws:symbol::
+.. only:: comment
 
-:laws:latex::
+    Logarithms with not natural base are not properly displayed with SymPy. Manually
+    define formula representation.
 
 :code:`M = m - 5 * lg(d / d0)`
 

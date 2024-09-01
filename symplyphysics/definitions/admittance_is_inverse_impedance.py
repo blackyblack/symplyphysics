@@ -9,24 +9,22 @@ ability of a circuit or device to conduct electrical current.
 from sympy import (Eq, solve)
 from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
 
-admittance = Symbol("admittance", units.conductance)
+admittance = Symbol(None, units.conductance, display_symbol="Y")
 """
 Admittance of the object.
-
-Symbol:
-    :code:`Y`
 """
 
-impedance = Symbol("impedance", units.impedance)
+impedance = Symbol(None, units.impedance, display_symbol="Z")
 """
 :doc:`Impedance <definitions.impedance_is_resistance_and_reactance>` of the object.
-
-Symbol:
-    :code:`Z`
 """
 
 definition = Eq(admittance, 1 / impedance)
 r"""
+:laws:symbol::
+
+:laws:latex::
+
 :code:`Y = 1 / Z`
 
 Latex:

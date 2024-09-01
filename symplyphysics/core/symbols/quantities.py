@@ -12,17 +12,14 @@ from ..errors import UnitsError
 
 class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancestors
 
+    # pylint: disable-next=signature-differs
     def __new__(cls,
-        _name: Basic,
-        _abbrev: Optional[str] = None,
-        _latex_repr: Optional[str] = None,
-        _pretty_unicode_repr: Optional[str] = None,
-        _pretty_ascii_repr: Optional[str] = None,
-        _mathml_presentation_repr: Optional[str] = None,
-        _is_prefixed: bool = False,
+        _expr: Basic | float = S.One, *,
+        display_symbol: Optional[str] = None,
+        display_latex: Optional[str] = None,
         **assumptions: Any) -> Self:
         name = next_name("QTY")
-        obj = SymQuantity.__new__(cls, name, None, None, None, None, None, False, **assumptions)
+        obj = SymQuantity.__new__(cls, name, None, display_latex, None, None, None, False, **assumptions)
         return obj
 
     def __init__(self, expr: Basic | float = S.One, *,

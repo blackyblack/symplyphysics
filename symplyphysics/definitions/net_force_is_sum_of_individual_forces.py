@@ -16,33 +16,22 @@ from symplyphysics import (clone_symbol, symbols, units, Quantity, validate_inpu
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions.vector import superposition_of_forces_is_sum as vector_forces_sum
 
-net_force = clone_symbol(symbols.dynamics.force, "net_force")
+net_force = clone_symbol(symbols.dynamics.force)
 """
 Net :attr:`~symplyphysics.symbols.dynamics.force`.
-
-Symbol:
-    :code:`F`
 """
 
 # TODO: clone from symbols.dynamics.force
-force = SymbolIndexed("force", units.force)
+force = SymbolIndexed(None, units.force, display_symbol="F[i]", display_latex="F_i")
 """
 Individual :attr:`~symplyphysics.symbols.dynamics.force`.
-
-Symbol:
-    :code:`F_i`
-
-Latex:
-    :math:`F_i`
 """
 
 definition = Eq(net_force, SumIndexed(force[global_index], global_index))
-r"""
-:code:`F = Sum(F_i, i)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        F = \sum_i F_i
+:laws:latex::
 """
 
 # Derive the same law from the vector form

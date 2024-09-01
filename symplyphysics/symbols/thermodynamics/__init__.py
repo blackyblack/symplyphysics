@@ -10,12 +10,9 @@ Thermodynamics is a branch of physics that deals with heat, work, and temperatur
 from sympy.physics import units
 from ...core.symbols.symbols import Symbol
 
-temperature = Symbol("temperature", units.temperature)
+temperature = Symbol(None, units.temperature, display_symbol="T")
 """
 Temperature reflects the average kinetic energy of the vibrating and colliding atoms making up a substance.
-
-Symbols:
-    t, T
 """
 
 __all__ = [

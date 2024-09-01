@@ -1,7 +1,6 @@
 from typing import Sequence
-
-from sympy import latex, mathematica_code, print_python, python
-from symplyphysics.core.symbols.symbols import print_expression
+from .printer_latex import latex_str
+from .printer_code import code_str
 from .parse import FunctionWithDoc, LawDirectiveTypes, MemberWithDoc
 
 
@@ -24,26 +23,32 @@ def _members_to_doc(members: Sequence[MemberWithDoc]) -> str:
             continue
         doc = m.docstring
         offset = 0
-        for d in m.directives:
+        sorted_directives = m.directives
+        sorted_directives.sort(key=lambda k: k.start)
+        for d in sorted_directives:
             doc_length = len(doc)
             if d.directive_type == LawDirectiveTypes.SYMBOL:
-                doc = doc[0 + offset:d.start + offset] + ":code:`" + mathematica_code(m.value) + "`\n\n" + doc[d.end + offset:]
+                directive_str = ":code:`" + code_str(m.value) + "`"
+                doc = doc[0:d.start + offset] + directive_str + "\n" + doc[d.end + offset:]
                 offset = offset + len(doc) - doc_length
                 continue
             if d.directive_type == LawDirectiveTypes.LATEX:
-                doc = doc[0 + offset:d.start + offset] + ":math:`" + latex(m.value) + "`\n\n" + doc[d.end + offset:]
+                directive_str = "Latex:\n" + _indent_docstring(".. math::\n", INDENT_SPACES)
+                directive_str = directive_str + _indent_docstring(latex_str(m.value), INDENT_SPACES * 2)
+                doc = doc[0:d.start + offset] + directive_str + "\n" + doc[d.end + offset:]
                 offset = offset + len(doc) - doc_length
                 continue
         doc = _indent_docstring(doc, INDENT_SPACES)
         content = content + ".. py:data:: " + m.name + "\n\n"
         content = content + doc + "\n\n"
         if m.symbol is not None:
-            symbol_name = "Symbol:\n" + "" + _indent_docstring(":code:`" + m.symbol.symbol + "`", INDENT_SPACES)
+            symbol_name = "Symbol:\n" + _indent_docstring(":code:`" + m.symbol.symbol + "`", INDENT_SPACES)
             content = content + _indent_docstring(symbol_name, INDENT_SPACES) + "\n\n"
             if m.symbol.latex is not None:
-                symbol_latex = "Latex:\n" + "" + _indent_docstring(":math:`" + m.symbol.latex + "`", INDENT_SPACES)
+                latex_string = m.symbol.latex
+                symbol_latex = "Latex:\n" + _indent_docstring(":math:`" + latex_string + "`", INDENT_SPACES)
                 content = content + _indent_docstring(symbol_latex, INDENT_SPACES) + "\n\n"
-            symbol_dimension = "Dimension:\n" + "" + _indent_docstring(":code:`" + m.symbol.dimension + "`", INDENT_SPACES)
+            symbol_dimension = "Dimension:\n" + _indent_docstring(":code:`" + m.symbol.dimension + "`", INDENT_SPACES)
             content = content + _indent_docstring(symbol_dimension, INDENT_SPACES) + "\n\n"
     return content
 

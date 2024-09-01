@@ -10,12 +10,9 @@ Dynamics is subdivision of mechanics that is concerned with the motion of materi
 from sympy.physics import units
 from ...core.symbols.symbols import Symbol
 
-force = Symbol("force", units.force)
+force = Symbol(None, units.force, display_symbol="F")
 """
 Force is an influence that can cause an object to change its velocity, i.e., to accelerate, meaning a change in speed or direction, unless counterbalanced by other forces.
-
-Symbols:
-    f, F
 """
 
 __all__ = [
