@@ -16,7 +16,7 @@ from symplyphysics.core.symbols.quantities import scale_factor
 ## the shearing force before (AB) and after the deformation (AB'), see Note for reference.
 
 # Law: tau = G * gamma
-## tau - [shear stress](../../hydro/shear_stress_is_shear_force_over_area.py)
+## tau - shear stress
 ## G - shear modulus of the object
 ## gamma - shear strain (angle of deformation, see Note for reference)
 

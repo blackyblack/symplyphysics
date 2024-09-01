@@ -32,7 +32,7 @@ from symplyphysics.laws.hydro import hydrostatic_pressure_from_density_and_depth
 pressure = Symbol("pressure", units.pressure)
 
 density_liquid = Symbol("density_liquid", units.mass / units.volume)
-acceleration = symbols.kinematic.acceleration
+acceleration = symbols.kinematics.acceleration
 height = Symbol("height", units.length)
 
 law = Eq(pressure,

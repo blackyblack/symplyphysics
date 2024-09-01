@@ -10,7 +10,7 @@ from symplyphysics import (units, Quantity, Function, Symbol, validate_input, va
 
 acceleration = Function(None, units.acceleration, display_symbol="a(t)", display_latex="a")
 """
-:attr:`~symplyphysics.symbols.kinematic.acceleration` of the body as a function of time.
+:attr:`~symplyphysics.symbols.kinematics.acceleration` of the body as a function of time.
 """
 
 speed = Function(None, units.speed, display_symbol="v(t)", display_latex="v")

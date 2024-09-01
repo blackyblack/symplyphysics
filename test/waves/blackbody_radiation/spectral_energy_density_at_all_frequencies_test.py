@@ -7,7 +7,7 @@ from symplyphysics import (
     prefixes,
     Quantity,
 )
-from symplyphysics.laws.waves.blackbody_radiation import spectral_energy_density_at_all_frequencies as plancks_radiation_law
+from symplyphysics.laws.waves.blackbody_radiation import spectral_energy_density_at_all_frequencies as planck_radiation_law
 
 # Description
 ## The spectral energy density of electromagnetic radiation emitted from the Sun (assuming it is a black
@@ -25,21 +25,21 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = plancks_radiation_law.calculate_spectral_energy_density(test_args.nu, test_args.t)
+    result = planck_radiation_law.calculate_spectral_energy_density(test_args.nu, test_args.t)
     assert_equal(result, 6.85 * prefixes.kilo * units.electronvolt / (units.meter**3 * units.hertz))
 
 
 def test_bad_frequency(test_args: Args) -> None:
     nub = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        plancks_radiation_law.calculate_spectral_energy_density(nub, test_args.t)
+        planck_radiation_law.calculate_spectral_energy_density(nub, test_args.t)
     with raises(TypeError):
-        plancks_radiation_law.calculate_spectral_energy_density(100, test_args.t)
+        planck_radiation_law.calculate_spectral_energy_density(100, test_args.t)
 
 
 def test_bad_temperature(test_args: Args) -> None:
     tb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        plancks_radiation_law.calculate_spectral_energy_density(test_args.nu, tb)
+        planck_radiation_law.calculate_spectral_energy_density(test_args.nu, tb)
     with raises(TypeError):
-        plancks_radiation_law.calculate_spectral_energy_density(test_args.nu, 100)
+        planck_radiation_law.calculate_spectral_energy_density(test_args.nu, 100)

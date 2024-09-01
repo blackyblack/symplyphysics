@@ -5,7 +5,7 @@ from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression
 from symplyphysics.definitions import density_from_mass_volume as density_law
-from symplyphysics.laws.kinematic import distance_from_constant_velocity as distance_law
+from symplyphysics.laws.kinematics import position_via_constant_speed_and_time as distance_law
 from symplyphysics.laws.electricity import power_factor_from_active_and_full_power as efficiency_law
 from symplyphysics.laws.electricity import power_from_energy_time as power_law
 from symplyphysics.laws.thermodynamics import heat_of_combustion_via_mass as combustion_energy_law
@@ -22,12 +22,12 @@ density_of_gasoline, gasoline_specific_heat_combustion = symbols(
 fuel_consumption = symbols("fuel_consumption")
 
 velocity_equation = distance_law.law.subs({
-    distance_law.distance(distance_law.movement_time): distance,
-    distance_law.constant_velocity: velocity_of_car,
+    distance_law.final_position: distance,
+    distance_law.speed: velocity_of_car,
     distance_law.initial_position: 0
 })
-time_value = solve(velocity_equation, distance_law.movement_time,
-    dict=True)[0][distance_law.movement_time]
+time_value = solve(velocity_equation, distance_law.time,
+    dict=True)[0][distance_law.time]
 
 power_equation = power_law.law.subs({power_law.time: time_value, power_law.power: power_of_car})
 energy_from_power_value = solve(power_equation, power_law.energy, dict=True)[0][power_law.energy]
@@ -72,10 +72,10 @@ base_plot = plot(title="Gasoline consumption and engine power",
 
 # Create plots for every efficient factor in sequence and add plot to base plot
 for efficiency_factor_value in efficiency_factor_values:
-    gasoline_compustion_value = gasoline_consumption_equation.subs({
+    gasoline_combustion_value = gasoline_consumption_equation.subs({
         efficiency_factor: efficiency_factor_value
     }).rhs
-    subplot = plot(gasoline_compustion_value, (power_of_car, 1_000, 100_000),
+    subplot = plot(gasoline_combustion_value, (power_of_car, 1_000, 100_000),
         label=r"$\eta_{engine}=" + f"{efficiency_factor_value}$",
         show=False)
     base_plot.append(subplot[0])

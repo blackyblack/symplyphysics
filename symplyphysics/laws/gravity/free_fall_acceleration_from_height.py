@@ -16,7 +16,7 @@ from symplyphysics.laws.dynamics import acceleration_is_force_over_mass as newto
 ## R is radius of the planet
 ## h is height above the planet surface
 
-free_fall_acceleration = clone_symbol(symbols.kinematic.acceleration, "free_fall_acceleration")
+free_fall_acceleration = clone_symbol(symbols.kinematics.acceleration, "free_fall_acceleration")
 planet_radius = Symbol("planet_radius", units.length)
 height_above_surface = Symbol("height_above_surface", units.length)
 planet_mass = clone_symbol(symbols.basic.mass, "planet_mass")

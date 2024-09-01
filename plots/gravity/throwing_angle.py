@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
 # Description
-## You throw the grenade to enemies. Which angle of throwing should you choose to hit the farest enemy?
+## You throw the grenade to enemies. Which angle of throwing should you choose to hit the farthest enemy?
 
 from sympy import diff, symbols, Eq, solve, simplify, pi
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
-from symplyphysics.laws.kinematic import constant_acceleration_movement_is_parabolic as movement_law
+from symplyphysics.laws.kinematics import position_via_constant_acceleration_and_time as movement_law
 from symplyphysics.laws.geometry import planar_projection_is_cosine as projector
 
 flight_time = symbols("flight_time")
@@ -16,7 +16,7 @@ throwing_angle = symbols("throwing_angle", positive=True)
 time_argument = symbols("time_argument")
 gravitational_acceleration = symbols("gravitational_acceleration")
 
-## Choose coordinates: object starts its flight from (0, 0), vertical axis is upwards, horisontal axis is toward object's destination.
+## Choose coordinates: object starts its flight from (0, 0), vertical axis is upwards, horizontal axis is toward object's destination.
 ## So the angle between X-axis and initial speed is throwing_angle, and the angle between Y-axis and gravitational acceleration is pi / 2 - throwing_angle.
 ## Both X and Y projections of movement are constant acceleration movements.
 ## The vertical initial speed is projection of throwing_velocity to Y, acceleration is projection of gravitational acceleration to Y and it is -g
@@ -40,16 +40,18 @@ initial_vertical_velocity = solve(projector.law, projector.projection,
 print(f"Initial vertical velocity: {initial_vertical_velocity}")
 
 horizontal_movement = movement_law.law.rhs.subs({
-    movement_law.initial_velocity: initial_horizontal_velocity,
-    movement_law.movement_time: time_argument,
-    movement_law.constant_acceleration: 0
+    movement_law.initial_speed: initial_horizontal_velocity,
+    movement_law.time: time_argument,
+    movement_law.acceleration: 0,
+    movement_law.initial_position: 0,
 })
 print(f"x(t): {horizontal_movement}")
 
 vertical_movement = movement_law.law.rhs.subs({
-    movement_law.initial_velocity: initial_vertical_velocity,
-    movement_law.movement_time: time_argument,
-    movement_law.constant_acceleration: -1 * gravitational_acceleration
+    movement_law.initial_speed: initial_vertical_velocity,
+    movement_law.time: time_argument,
+    movement_law.acceleration: -1 * gravitational_acceleration,
+    movement_law.initial_position: 0,
 })
 print(f"y(t): {vertical_movement}")
 

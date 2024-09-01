@@ -17,7 +17,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import angular_wavenumber_is_inverse_wavelength as wavenumber_def
-from symplyphysics.laws.waves import wavelength_from_wave_speed_and_period as velocity_law
+from symplyphysics.laws.waves import wavelength_from_phase_speed_and_period as velocity_law
 from symplyphysics.definitions import period_from_angular_frequency as frequency_law
 
 phase_speed = Symbol("phase_speed", units.length / units.time, real=True)
@@ -64,9 +64,9 @@ _wavelength = solve(wavenumber_def.definition,
 _time_period = solve(frequency_law.law,
     frequency_law.period)[0].subs(frequency_law.angular_frequency, angular_frequency)
 
-_phase_velocity = solve(velocity_law.law, velocity_law.propagation_speed)[0].subs({
+_phase_velocity = solve(velocity_law.law, velocity_law.phase_velocity)[0].subs({
     velocity_law.wavelength: _wavelength,
-    velocity_law.oscillation_period: _time_period,
+    velocity_law.period: _time_period,
 })
 
 assert expr_equals(law.rhs, _phase_velocity)

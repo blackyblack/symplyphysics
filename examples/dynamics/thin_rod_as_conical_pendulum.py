@@ -25,7 +25,7 @@ from symplyphysics.laws.dynamics.vector import (
     acceleration_from_force as force_law,
     torque_vector_of_twisting_force as torque_def,
 )
-from symplyphysics.laws.kinematic.vector import (
+from symplyphysics.laws.kinematics.vector import (
     centripetal_acceleration_via_vector_rejection as centripetal_law,
     centrifugal_acceleration_via_centripetal_acceleration as centrifugal_law,
 )
@@ -50,7 +50,7 @@ distance_to_element, element_length, element_mass = symbols(
 )
 
 # Let us consider a non-inertial reference frame in which the rod is at rest, i.e. it is in equilibrium.
-# The `z` axis is codirectional to the pseudovector of angular velocity and the `y` axis is the line passing
+# The `z` axis is co-directional to the pseudovector of angular velocity and the `y` axis is the line passing
 # through both the `z` axis and the hanging end of the rod. Namely, assuming a cylindrical coordinate system,
 # the origin is at the fixed end of the rod, the longitudinal axis is the `z` axis and the polar axis is
 # the `y` axis.
@@ -115,7 +115,7 @@ gravity_torque_acting_on_rod = integrate_cartesian_vector(
 
 element_centripetal_acceleration_vector = centripetal_law.centripetal_acceleration_law(
     angular_velocity_=angular_velocity_vector,
-    position_vector_=element_position_vector,
+    radius_vector_=element_position_vector,
 )
 
 element_centrifugal_acceleration_vector = centrifugal_law.centrifugal_law(

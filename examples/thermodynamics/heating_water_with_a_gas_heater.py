@@ -10,8 +10,8 @@ from symplyphysics.laws.thermodynamics import (
 )
 from symplyphysics.laws.quantities import quantity_is_specific_quantity_times_mass as specific_qty_law
 from symplyphysics.definitions import density_from_mass_volume as density_law
-from symplyphysics.laws.kinematic import distance_from_constant_velocity as velocity_law
-from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as klayperon_law
+from symplyphysics.laws.kinematics import position_via_constant_speed_and_time as velocity_law
+from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as clapeyron_law
 from symplyphysics.laws.chemistry import atomic_weight_from_mass_mole_count as mole_count_law
 from symplyphysics.definitions import mass_flow_rate as mass_rate_law
 
@@ -32,15 +32,15 @@ temperature_start = Symbol("temperature_start")
 
 mass_flow_rate = Symbol("mass_flow_rate")
 
-molar_mass_of_metan = Symbol("molar_mass_of_metan")
-specific_heat_of_combustion_metan = Symbol("specific_heat_of_combustion_metan")
+molar_mass_of_methane = Symbol("molar_mass_of_methane")
+specific_heat_of_combustion_methane = Symbol("specific_heat_of_combustion_methane")
 specific_heat_of_heating_water = Symbol("specific_heat_of_heating_water")
 density_of_water = Symbol("density_of_water")
 
 temperature_water = Symbol("temperature_water")
 
 distance_value = velocity_law.law.subs({
-    velocity_law.constant_velocity: velocity_of_water,
+    velocity_law.speed: velocity_of_water,
     velocity_law.initial_position: 0
 }).rhs
 
@@ -69,15 +69,15 @@ energy_to_heating_water_value = thermal_energy_law.law.subs({
     thermal_energy_law.temperature_change: temperature_water - temperature_start,
 }).rhs
 
-mass_of_gas_equation = mole_count_law.law.subs({mole_count_law.atomic_weight: molar_mass_of_metan})
+mass_of_gas_equation = mole_count_law.law.subs({mole_count_law.atomic_weight: molar_mass_of_methane})
 mole_count_value = solve(mass_of_gas_equation, mole_count_law.mole_count,
     dict=True)[0][mole_count_law.mole_count]
 
-state_equation = klayperon_law.law.subs({
-    klayperon_law.volume: volume_of_gas,
-    klayperon_law.pressure: pressure_in_gas_heater,
-    klayperon_law.temperature: temperature_start,
-    klayperon_law.amount_of_substance: mole_count_value
+state_equation = clapeyron_law.law.subs({
+    clapeyron_law.volume: volume_of_gas,
+    clapeyron_law.pressure: pressure_in_gas_heater,
+    clapeyron_law.temperature: temperature_start,
+    clapeyron_law.amount_of_substance: mole_count_value
 })
 mass_of_gas_in_state_value = solve(state_equation, mole_count_law.mass,
     dict=True)[0][mole_count_law.mass]
@@ -102,17 +102,17 @@ mass_flow_rate_in_start_value = solve(mass_of_gas_in_start_equation, mass_flow_r
 mass_of_gas_value = solve(
     mass_gas_eq.subs({
     mass_flow_rate: mass_flow_rate_in_start_value,
-    mass_rate_law.time: velocity_law.movement_time
-    }), mass_rate_law.mass(velocity_law.movement_time))[0]
+    mass_rate_law.time: velocity_law.time
+    }), mass_rate_law.mass(velocity_law.time))[0]
 
-energy_from_combustion_of_metan_value = combustion_energy_law.law.subs({
-    combustion_energy_law.specific_heat_of_combustion: specific_heat_of_combustion_metan,
+energy_from_combustion_of_methane_value = combustion_energy_law.law.subs({
+    combustion_energy_law.specific_heat_of_combustion: specific_heat_of_combustion_methane,
     combustion_energy_law.mass: mass_of_gas_value
 }).rhs
 
 efficiency_equation = efficiency_law.law.subs({
     efficiency_law.active_power: energy_to_heating_water_value,
-    efficiency_law.full_power: energy_from_combustion_of_metan_value,
+    efficiency_law.full_power: energy_from_combustion_of_methane_value,
     efficiency_law.power_factor: efficiency_of_gas_heater
 })
 
@@ -129,8 +129,8 @@ temperature_water_k = temperature_water_value.subs({
     pressure_in_gas_heater: Quantity(120 * prefixes.kilo * units.pascals),
     efficiency_of_gas_heater: Quantity(60 * units.percents),
     temperature_start: to_kelvin_quantity(Celsius(11)),
-    molar_mass_of_metan: Quantity(16 * units.grams / units.mole),
-    specific_heat_of_combustion_metan: Quantity(55 * prefixes.mega * units.joules / units.kilogram),
+    molar_mass_of_methane: Quantity(16 * units.grams / units.mole),
+    specific_heat_of_combustion_methane: Quantity(55 * prefixes.mega * units.joules / units.kilogram),
     specific_heat_of_heating_water: Quantity(4200 * units.joules / (units.kilogram * units.kelvin)),
     density_of_water: Quantity(1_000 * units.kilograms / (units.meter**3))
 })

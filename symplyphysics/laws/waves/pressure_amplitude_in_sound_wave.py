@@ -1,43 +1,89 @@
+"""
+Pressure amplitude in sound wave
+================================
+
+Sound waves cause a pressure change of the medium from the equilibrium pressure.
+This change is proportional to the speed of sound and the density of the medium,
+the angular frequency of the wave and the displacement of particles in the medium.
+"""
+
 from sympy import Eq
 from symplyphysics import (
     units,
     angle_type,
     Symbol,
     Quantity,
-    print_expression,
     validate_input,
     validate_output,
 )
 
-# Description
-## Sound waves cause a pressure change of the medium from the equilibrium pressure.
-
-# Law: delta_p_max = v * rho * w * s_max
-## delta_p_max - amplitude of pressure change
-## v - speed of sound in medium
-## rho - density of medium
-## w - angular frequency of the sound wave
-## s_max - displacement amplitude of medium particles
-
 pressure_amplitude = Symbol("pressure_amplitude", units.pressure)
+r"""
+Amplitude of pressure change.
+
+Symbol:
+    :code:`Delta(p)_max`
+
+Latex:
+    :math:`(\Delta p)_\text{max}`
+"""
+
 speed_of_sound = Symbol("speed_of_sound", units.velocity)
-density_of_medium = Symbol("density_of_medium", units.mass / units.volume)
+"""
+Speed of sound in the medium.
+
+Symbol:
+    :code:`v`
+"""
+
+medium_density = Symbol("medium_density", units.mass / units.volume)
+r"""
+Density of the medium.
+
+Symbol:
+    :code:`rho`
+
+Latex:
+    :math:`\rho`
+"""
+
 angular_frequency = Symbol("angular_frequency", angle_type / units.time)
+r"""
+Angular frequency of the sound wave.
+
+Symbol:
+    :code:`w`
+
+Latex:
+    :math:`\omega`
+"""
+
 displacement_amplitude = Symbol("displacement_amplitude", units.length)
+r"""
+Displacement amplitude of particles in the medium.
+
+Symbol:
+    :code:`s_max`
+
+Latex:
+    :math:`s_\text{max}`
+"""
 
 law = Eq(
     pressure_amplitude,
-    speed_of_sound * density_of_medium * angular_frequency * displacement_amplitude,
+    speed_of_sound * medium_density * angular_frequency * displacement_amplitude,
 )
+r"""
+:code:`Delta(p)_max = v * rho * w * s_max`
 
-
-def print_law() -> str:
-    return print_expression(law)
-
+Latex:
+    .. math::
+        (\Delta p)_\text{max} = v \rho \omega s_\text{max}
+"""
 
 @validate_input(
     speed_of_sound_=speed_of_sound,
-    density_of_medium_=density_of_medium,
+    density_of_medium_=medium_density,
     angular_frequency_=angular_frequency,
     displacement_amplitude_=displacement_amplitude,
 )
@@ -50,7 +96,7 @@ def calculate_pressure_amplitude(
 ) -> Quantity:
     result = law.rhs.subs({
         speed_of_sound: speed_of_sound_,
-        density_of_medium: density_of_medium_,
+        medium_density: density_of_medium_,
         angular_frequency: angular_frequency_,
         displacement_amplitude: displacement_amplitude_,
     })

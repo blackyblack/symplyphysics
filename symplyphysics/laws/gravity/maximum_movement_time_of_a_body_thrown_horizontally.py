@@ -9,7 +9,7 @@ from symplyphysics import (
     validate_output,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.kinematic import constant_acceleration_movement_is_parabolic as distance_law
+from symplyphysics.laws.kinematics import position_via_constant_acceleration_and_time as distance_law
 
 # Description
 ## Let the body be thrown horizontally with some initial velocity. Then the time of motion (time of fall)
@@ -30,12 +30,13 @@ law = Eq(movement_time, sqrt(2 * height / earth_free_fall_acceleration))
 # Horizontal vector of movement does not change falling time.
 
 distance_law_applied = distance_law.law.subs({
-    distance_law.initial_velocity: 0,
-    distance_law.constant_acceleration: earth_free_fall_acceleration,
-    distance_law.distance(distance_law.movement_time): height,
+    distance_law.initial_speed: 0,
+    distance_law.acceleration: earth_free_fall_acceleration,
+    distance_law.initial_position: 0,
+    distance_law.final_position: height,
 })
-time_derived = solve(distance_law_applied, distance_law.movement_time,
-    dict=True)[1][distance_law.movement_time]
+time_derived = solve(distance_law_applied, distance_law.time,
+    dict=True)[1][distance_law.time]
 
 # Check if derived movement time is same as declared.
 assert expr_equals(time_derived, law.rhs)

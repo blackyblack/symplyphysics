@@ -11,7 +11,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity import period_of_a_charged_particle_in_a_magnetic_field as period_law
-from symplyphysics.laws.kinematic import distance_from_constant_velocity as distance_law
+from symplyphysics.laws.kinematics import position_via_constant_speed_and_time as distance_law
 
 # Description
 ## Let an arbitrary particle move in a magnetic field around a circle. Then radius of its motion depends on
@@ -37,12 +37,12 @@ law = Eq(radius, particle_mass * velocity / (charge * induction))
 
 distance_law_applied = distance_law.law.subs({
     distance_law.initial_position: 0,
-    distance_law.distance(distance_law.movement_time): 2 * pi * radius,
-    distance_law.constant_velocity: velocity,
+    distance_law.final_position: 2 * pi * radius,
+    distance_law.speed: velocity,
 })
 # Period is a time taken to cover a full circle.
-period_derived = solve(distance_law_applied, distance_law.movement_time,
-    dict=True)[0][distance_law.movement_time]
+period_derived = solve(distance_law_applied, distance_law.time,
+    dict=True)[0][distance_law.time]
 
 law_applied = period_law.law.subs({
     period_law.particle_mass: particle_mass,

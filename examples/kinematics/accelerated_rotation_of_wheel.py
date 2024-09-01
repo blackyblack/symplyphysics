@@ -13,12 +13,14 @@ from symplyphysics.definitions import (
     angular_acceleration_is_angular_speed_derivative as angular_acceleration_def,
     angular_speed_is_angular_distance_derivative as angular_velocity_def,
 )
-from symplyphysics.laws.kinematic import (
-    linear_velocity_from_angular_velocity_and_radius as linear_velocity_law,
-    tangential_acceleration_of_rotating_body as tangential_acceleration_law,
-    centripetal_acceleration_is_squared_velocity_by_radius as centripetal_acceleration_law,
+from symplyphysics.laws.kinematics import (
+    centripetal_acceleration_via_linear_speed_and_radius as centripetal_acceleration_law,
+    speed_via_angular_speed_and_radius as linear_velocity_law,
+    tangential_acceleration_via_angular_acceleration_and_radius as tangential_acceleration_law,
 )
-from symplyphysics.laws.kinematic.vector import acceleration_of_rotating_body as total_acceleration_law
+from symplyphysics.laws.kinematics.vector import (
+    acceleration_is_normal_plus_tangential_acceleration as total_acceleration_law,
+)
 
 # Description
 ## A wheel is rotating about a fixed axis so that the angular displacement is expressed as k*t^2, where
@@ -53,28 +55,28 @@ angular_acceleration = angular_acceleration_eqn.rhs.subs(
 
 rotation_radius = solve(
     linear_velocity_law.law,
-    linear_velocity_law.curve_radius,
+    linear_velocity_law.radius_of_curvature,
 )[0].subs({
-    linear_velocity_law.linear_velocity: linear_velocity,
-    linear_velocity_law.angular_velocity: angular_velocity,
+    linear_velocity_law.speed: linear_velocity,
+    linear_velocity_law.angular_speed: angular_velocity,
 })
 
 tangential_acceleration = tangential_acceleration_law.law.rhs.subs({
     tangential_acceleration_law.angular_acceleration: angular_acceleration,
-    tangential_acceleration_law.rotation_radius: rotation_radius,
+    tangential_acceleration_law.radius_of_curvature: rotation_radius,
 })
 
 centripetal_acceleration = centripetal_acceleration_law.law.rhs.subs({
-    centripetal_acceleration_law.linear_velocity: linear_velocity,
-    centripetal_acceleration_law.curve_radius: rotation_radius,
+    centripetal_acceleration_law.speed: linear_velocity,
+    centripetal_acceleration_law.radius_of_curvature: rotation_radius,
 })
 
 # Tangential and centripetal accelerations are perpendicular to one another. Therefore, we can
 # align the tangential acceleration with the x axis, and the centripetal one with the y axis.
 total_acceleration = vector_magnitude(
     total_acceleration_law.acceleration_law(
-    Vector([tangential_acceleration, 0]),
-    Vector([0, centripetal_acceleration]),
+    tangential_acceleration_=Vector([tangential_acceleration, 0]),
+    normal_acceleration_=Vector([0, centripetal_acceleration]),
     )).simplify()
 total_acceleration_value = convert_to(
     Quantity(total_acceleration.subs(values)),

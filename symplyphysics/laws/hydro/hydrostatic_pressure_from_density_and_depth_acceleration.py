@@ -13,7 +13,7 @@ from symplyphysics import symbols, units, Quantity, Symbol, print_expression, va
 
 density = Symbol("density", units.mass / units.volume)
 depth = Symbol("depth", units.length)
-acceleration = symbols.kinematic.acceleration
+acceleration = symbols.kinematics.acceleration
 hydrostatic_pressure = Symbol("hydrostatic_pressure", units.pressure)
 
 law = Eq(hydrostatic_pressure, density * acceleration * depth)

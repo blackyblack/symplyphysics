@@ -4,7 +4,7 @@ from sympy import Symbol, pi
 from symplyphysics import Quantity, convert_to, print_expression, units
 from symplyphysics.laws.dynamics import (kinetic_energy_from_rotational_inertia_and_angular_speed as
     rotational_energy_law)
-from symplyphysics.laws.kinematic.rotational_inertia.geometries import (
+from symplyphysics.laws.kinematics.rotational_inertia.geometries import (
     solid_disk_about_central_axis as disk_formula)
 
 # Description
@@ -26,7 +26,7 @@ values = {
 }
 
 rotational_inertia = disk_formula.law.rhs.subs({
-    disk_formula.disk_mass: mass,
+    disk_formula.mass: mass,
     disk_formula.radius: radius,
 })
 

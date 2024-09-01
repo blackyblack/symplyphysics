@@ -3,8 +3,8 @@
 from sympy import solve, Symbol, Eq
 from symplyphysics import print_expression, units, convert_to, quantities
 from symplyphysics.laws.waves import (
-    photon_energy_is_proportional_to_frequency as energy_law,
-    wavelength_from_wave_speed_and_period as wavelength_law,
+    photon_energy_is_proportional_to_linear_frequency as energy_law,
+    wavelength_from_phase_speed_and_period as wavelength_law,
 )
 from symplyphysics.laws.relativistic import total_energy_via_relativistic_mass as mass_law
 from symplyphysics.definitions import temporal_frequency_from_period as frequency_law
@@ -20,7 +20,7 @@ from symplyphysics.definitions import temporal_frequency_from_period as frequenc
 photon_frequency = Symbol("photon_frequency")
 electron_rest_mass = Symbol("electron_rest_mass")
 
-photon_energy = energy_law.law.rhs.subs(energy_law.photon_frequency, photon_frequency)
+photon_energy = energy_law.law.rhs.subs(energy_law.frequency, photon_frequency)
 
 electron_rest_energy = mass_law.law.rhs.subs(mass_law.relativistic_mass, electron_rest_mass)
 positron_rest_energy = electron_rest_energy
@@ -39,14 +39,14 @@ photon_wavelength_expr = solve(
     (
     energy_conservation_eqn,
     frequency_law.law.subs({
-    frequency_law.period: wavelength_law.oscillation_period,
+    frequency_law.period: wavelength_law.period,
     frequency_law.temporal_frequency: photon_frequency,
     }),
-    wavelength_law.law.subs(wavelength_law.propagation_speed, units.speed_of_light),
+    wavelength_law.law.subs(wavelength_law.phase_velocity, units.speed_of_light),
     ),
     (
     photon_frequency,
-    wavelength_law.oscillation_period,
+    wavelength_law.period,
     wavelength_law.wavelength,
     ),
     dict=True,

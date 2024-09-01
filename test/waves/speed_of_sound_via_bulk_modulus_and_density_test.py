@@ -10,7 +10,7 @@ from symplyphysics import (
 from symplyphysics.laws.waves import speed_of_sound_via_bulk_modulus_and_density as sound_speed_law
 
 # Description
-## In air at 20 degrees Celcius (bulk modulus B = 142 kPa, density rho = 1.204 kg/m**3)
+## In air at 20 degrees Celsius (bulk modulus B = 142 kPa, density rho = 1.204 kg/m**3)
 ## and atmospheric pressure, the speed of sound is approximately 343 m/s.
 
 Args = namedtuple("Args", "b rho")

@@ -3,7 +3,7 @@ from sympy.physics.units import acceleration_due_to_gravity as earth_free_fall_a
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
     validate_output, angle_type)
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.kinematic import distance_from_constant_velocity as distance_law
+from symplyphysics.laws.kinematics import position_via_constant_speed_and_time as distance_law
 from symplyphysics.laws.geometry import planar_projection_is_cosine as projection_law
 from symplyphysics.laws.gravity import maximum_movement_time_of_a_body_thrown_at_an_angle_to_horizon as time_law
 
@@ -43,8 +43,8 @@ time_derived = solve(time_law_applied, time_law.movement_time, dict=True)[0][tim
 
 range_law_applied = distance_law.law.subs({
     distance_law.initial_position: 0,
-    distance_law.constant_velocity: horizontal_projection_derived,
-    distance_law.movement_time: time_derived,
+    distance_law.speed: horizontal_projection_derived,
+    distance_law.time: time_derived,
 })
 
 # Check if derived range is same as declared.

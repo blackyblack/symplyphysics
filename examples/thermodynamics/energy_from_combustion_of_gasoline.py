@@ -3,7 +3,7 @@
 from sympy import solve, Symbol, Eq
 from symplyphysics import print_expression, Quantity, prefixes, units, convert_to
 from symplyphysics.definitions import density_from_mass_volume as density_law
-from symplyphysics.laws.kinematic import distance_from_constant_velocity as distance_law
+from symplyphysics.laws.kinematics import position_via_constant_speed_and_time as distance_law
 from symplyphysics.laws.electricity import power_factor_from_active_and_full_power as efficiency_law
 from symplyphysics.laws.electricity import power_from_energy_time as power_law
 from symplyphysics.laws.thermodynamics import heat_of_combustion_via_mass as combustion_energy_law
@@ -23,12 +23,12 @@ gasoline_specific_heat_combustion = Symbol("gasoline_specific_heat_combustion")
 distance = Symbol("distance")
 
 velocity_equation = distance_law.law.subs({
-    distance_law.distance(distance_law.movement_time): distance,
-    distance_law.constant_velocity: velocity_of_car,
+    distance_law.final_position: distance,
+    distance_law.speed: velocity_of_car,
     distance_law.initial_position: 0
 })
-time_value = solve(velocity_equation, distance_law.movement_time,
-    dict=True)[0][distance_law.movement_time]
+time_value = solve(velocity_equation, distance_law.time,
+    dict=True)[0][distance_law.time]
 
 power_equation = power_law.law.subs({power_law.time: time_value, power_law.power: power_of_car})
 energy_from_power_value = solve(power_equation, power_law.energy, dict=True)[0][power_law.energy]

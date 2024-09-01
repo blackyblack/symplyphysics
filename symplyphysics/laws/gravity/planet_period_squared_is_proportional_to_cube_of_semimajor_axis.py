@@ -17,18 +17,18 @@ from symplyphysics.laws.dynamics import (
     acceleration_is_force_over_mass as newtons_second_law,)
 from symplyphysics.laws.gravity import (
     gravity_force_from_mass_and_distance as gravity_law,)
-from symplyphysics.laws.kinematic import (
-    centripetal_acceleration_is_squared_angular_velocity_times_radius as centripetal_law,)
+from symplyphysics.laws.kinematics import (
+    centripetal_acceleration_via_angular_speed_and_radius as centripetal_law,)
 
 # Description
 ## Also known as Kepler's third law of planetary motion, the law of periods relates
-## the period of rotation of any planet to the semimajor axis of its orbit.
+## the period of rotation of any planet to the semi-major axis of its orbit.
 
 # Law: T**2 = 4*pi**2 / (G*M) * a**3
 ## T - planet's period of rotation
 ## G - gravitational constant
 ## M - mass of the attracting body, the Sun in case of the solar system
-## a - semimajor axis of the planet's orbit, its radius in case of a round orbit
+## a - semi-major axis of the planet's orbit, its radius in case of a round orbit
 
 rotation_period = Symbol("rotation_period", units.time, positive=True)
 attracting_mass = clone_symbol(symbols.basic.mass, "attracting_mass", positive=True)
@@ -46,8 +46,8 @@ _radius = SymSymbol("radius", nonnegative=True)
 _attracted_mass = newtons_second_law.mass
 
 _acceleration_expr = centripetal_law.law.rhs.subs({
-    centripetal_law.angular_velocity: _angular_speed,
-    centripetal_law.curve_radius: _radius,
+    centripetal_law.angular_speed: _angular_speed,
+    centripetal_law.radius_of_curvature: _radius,
 })
 
 _force_expr = gravity_law.law.rhs.subs({
@@ -64,7 +64,7 @@ _newtons_eqn = newtons_second_law.law.subs({
 _angular_speed_expr = solve(_newtons_eqn, _angular_speed)[1]
 
 # If the eccentricity of the planet's orbit is not too big, which is the case for most
-# planets of the solar system, we can substitute the radius with the semimajor axis of
+# planets of the solar system, we can substitute the radius with the semi-major axis of
 # the orbit.
 _period_derived = period_law.law.rhs.subs({
     period_law.angular_frequency: _angular_speed_expr,
