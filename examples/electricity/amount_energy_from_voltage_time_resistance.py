@@ -37,7 +37,9 @@ water_mass = solve(density_def.definition, density_def.mass)[0].subs({
 heat_via_power = dsolve(
     power_def.definition.subs(power_def.power(power_def.time), kettle_power),
     power_def.energy(power_def.time),
-    ics={power_def.energy(0): 0},
+    ics={
+    power_def.energy(0): 0
+    },
 ).rhs
 
 water_heat_capacity = specific_qty_law.law.rhs.subs({

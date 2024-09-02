@@ -19,7 +19,7 @@ from symplyphysics.laws.kinematics import centripetal_acceleration_via_linear_sp
 velocity = Symbol("initial_velocity", units.velocity)
 radius = Symbol("radius", units.length)
 height = Symbol("height", units.length)
-planet_mass = clone_symbol(symbols.basic.mass, "planet_mass")
+planet_mass = clone_symbol(symbols.basic.mass)
 
 law = Eq(velocity, sqrt(gravitational_constant * planet_mass / (radius + height)))
 

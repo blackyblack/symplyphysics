@@ -45,6 +45,7 @@ Latex:
         \varphi = (1 + 2 n) \pi
 """
 
+
 @validate_input(integer_factor_=integer_factor)
 @validate_output(phase_shift)
 def calculate_phase_shift(integer_factor_: int) -> Quantity:

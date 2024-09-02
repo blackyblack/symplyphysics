@@ -7,8 +7,7 @@ per unit area over which the force is distributed.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (symbols, units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output)
 
 pressure = Symbol("pressure", units.pressure)
 """
@@ -21,9 +20,6 @@ Symbol:
 force = symbols.dynamics.force
 """
 :attr:`~symplyphysics.symbols.dynamics.force` applied.
-
-Symbol:
-    :code:`F`
 """
 
 area = Symbol("area", units.area)

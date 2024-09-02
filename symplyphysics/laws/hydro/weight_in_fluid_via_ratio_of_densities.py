@@ -8,29 +8,21 @@ on the ratio of the fluid density and body density.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol,
-    validate_input, validate_output)
+from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, validate_input,
+    validate_output)
 
-weight_in_fluid = clone_symbol(symbols.dynamics.force, "weight_in_fluid")
-r"""
+weight_in_fluid = clone_symbol(symbols.dynamics.force,
+    display_symbol="W_fl",
+    display_latex="W_\\text{fl}")
+"""
 Weight of the body immersed in the fluid.
-
-Symbol:
-    :code:`W_fl`
-
-Latex:
-    :math:`W_\text{fl}`
 """
 
-weight_in_vacuum = clone_symbol(symbols.dynamics.force, "weight_in_vacuum")
-r"""
+weight_in_vacuum = clone_symbol(symbols.dynamics.force,
+    display_symbol="W_vac",
+    display_latex="W_\\text{vac}")
+"""
 Weight of the body in vacuum, i.e. its true weight.
-
-Symbol:
-    :code:`W_vac`
-
-Latex:
-    :math:`W_\text{vac}`
 """
 
 fluid_density = Symbol("fluid_density", units.mass / units.volume)
@@ -65,7 +57,9 @@ Latex:
 """
 
 
-@validate_input(weight_air_=weight_in_vacuum, liquid_density_=fluid_density, body_density_=body_density)
+@validate_input(weight_air_=weight_in_vacuum,
+    liquid_density_=fluid_density,
+    body_density_=body_density)
 @validate_output(weight_in_fluid)
 def calculate_weight(weight_air_: Quantity, liquid_density_: Quantity,
     body_density_: Quantity) -> Quantity:

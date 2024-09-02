@@ -7,8 +7,7 @@ electron transition to the levels between which the transition is occurring.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, dimensionless, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, dimensionless, validate_input, validate_output)
 
 transition_frequency = Symbol("transition_frequency", units.frequency)
 r"""
@@ -54,8 +53,10 @@ Latex:
     :math:`R_\text{H}`
 """
 
-law = Eq(transition_frequency,
-    rydberg_constant * ((1 / lower_principal_quantum_number**2) - (1 / higher_principal_quantum_number**2)))
+law = Eq(
+    transition_frequency,
+    rydberg_constant * ((1 / lower_principal_quantum_number**2) -
+    (1 / higher_principal_quantum_number**2)))
 r"""
 :code:`nu = R_H * (1 / n_1^2 - 1 / n_2^2)`
 

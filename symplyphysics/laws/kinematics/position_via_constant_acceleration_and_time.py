@@ -10,8 +10,7 @@ If a body is moving with a constant acceleration, its position in space is a qua
 """
 
 from sympy import (Eq, solve, dsolve)
-from symplyphysics import (symbols, units, Quantity, Symbol,
-    validate_input, validate_output)
+from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import speed_is_distance_derivative as _velocity_definition
 from symplyphysics.definitions import acceleration_is_speed_derivative as _acceleration_definition
@@ -44,11 +43,8 @@ Symbol:
 """
 
 acceleration = symbols.kinematics.acceleration
-r"""
+"""
 Constant :attr:`~symplyphysics.symbols.kinematics.acceleration`.
-
-Symbol:
-    :code:`a`
 """
 
 time = Symbol("time", units.time)
@@ -74,8 +70,7 @@ _constant_acceleration_definition = _acceleration_definition.definition.subs({
     _acceleration_definition.acceleration(_acceleration_definition.time): acceleration,
     _acceleration_definition.time: time
 })
-_dsolved_velocity = dsolve(_constant_acceleration_definition,
-    _acceleration_definition.speed(time))
+_dsolved_velocity = dsolve(_constant_acceleration_definition, _acceleration_definition.speed(time))
 _constant_accelerated_velocity_function = _dsolved_velocity.rhs
 
 _constant_accelerated_movement_definition = _velocity_definition.definition.subs({
@@ -93,14 +88,13 @@ _derived_law = Eq(initial_position, _constant_accelerated_movement_function)
 assert expr_equals(_derived_law.rhs.subs({"C1": initial_speed, "C2": initial_position}), law.rhs)
 
 
-@validate_input(
-    initial_position_=initial_position,
+@validate_input(initial_position_=initial_position,
     initial_velocity_=initial_speed,
     acceleration_=acceleration,
     time_=time)
 @validate_output(final_position)
-def calculate_distance(initial_position_: Quantity, initial_velocity_: Quantity, acceleration_: Quantity,
-    time_: Quantity) -> Quantity:
+def calculate_distance(initial_position_: Quantity, initial_velocity_: Quantity,
+    acceleration_: Quantity, time_: Quantity) -> Quantity:
     result_expr = solve(law, final_position, dict=True)[0][final_position]
     result_expr_substituted = result_expr.subs({
         initial_position: initial_position_,

@@ -13,7 +13,6 @@ of mass).
 #. The axis used in the calculation of :math:`I_\text{com}` must pass through the body's center of mass.
 """
 
-
 from sympy import Eq
 from symplyphysics import (
     units,
@@ -48,9 +47,6 @@ Latex:
 mass = symbols.basic.mass
 """
 :attr:`~symplyphysics.symbols.basic.mass` of the body.
-
-Symbol:
-    :code:`m`
 """
 
 distance_between_axes = Symbol("distance_between_axes", units.length)

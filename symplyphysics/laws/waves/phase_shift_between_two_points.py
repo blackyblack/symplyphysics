@@ -57,12 +57,9 @@ Latex:
 """
 
 
-@validate_input(
-    distance_between_points_=distance,
-    wavelength_=wavelength)
+@validate_input(distance_between_points_=distance, wavelength_=wavelength)
 @validate_output(phase_shift)
-def calculate_phase_difference(distance_between_points_: Quantity,
-    wavelength_: Quantity) -> float:
+def calculate_phase_difference(distance_between_points_: Quantity, wavelength_: Quantity) -> float:
     result_expr = solve(law, phase_shift, dict=True)[0][phase_shift]
     result_expr = result_expr.subs({
         distance: distance_between_points_,

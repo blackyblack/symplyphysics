@@ -19,8 +19,8 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_prandtl_number(test_args: Args) -> None:
-    result = law.calculate_prandtl_number(test_args.heat_capacity,
-        test_args.dynamic_viscosity, test_args.thermal_conductivity)
+    result = law.calculate_prandtl_number(test_args.heat_capacity, test_args.dynamic_viscosity,
+        test_args.thermal_conductivity)
     assert_equal(result, 0.000715)
 
 

@@ -34,12 +34,9 @@ Symbol:
     :code:`S`
 """
 
-temperature_change = clone_symbol(symbols.thermodynamics.temperature, "temperature_change")
+temperature_change = clone_symbol(symbols.thermodynamics.temperature, display_symbol="dT")
 """
 Infinitesimal change in temperature of the system.
-
-Symbol:
-    :code:`dT`
 """
 
 volume = Symbol("volume", units.volume)

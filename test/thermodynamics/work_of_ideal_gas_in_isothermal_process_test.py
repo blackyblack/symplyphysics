@@ -25,42 +25,42 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_law(test_args: Args) -> None:
-    result = work_of_ideal_gas.calculate_work(test_args.amount,
-        test_args.start_volume, test_args.final_volume, test_args.temperature)
+    result = work_of_ideal_gas.calculate_work(test_args.amount, test_args.start_volume,
+        test_args.final_volume, test_args.temperature)
     assert_equal(result, 6481.8 * units.joule)
 
 
 def test_bad_amount(test_args: Args) -> None:
     bad_amount = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
-        work_of_ideal_gas.calculate_work(bad_amount, test_args.start_volume,
-            test_args.final_volume, test_args.temperature)
+        work_of_ideal_gas.calculate_work(bad_amount, test_args.start_volume, test_args.final_volume,
+            test_args.temperature)
     with raises(TypeError):
-        work_of_ideal_gas.calculate_work(100, test_args.start_volume,
-            test_args.final_volume, test_args.temperature)
+        work_of_ideal_gas.calculate_work(100, test_args.start_volume, test_args.final_volume,
+            test_args.temperature)
 
 
 def test_bad_volume(test_args: Args) -> None:
     bad_volume = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        work_of_ideal_gas.calculate_work(test_args.amount, bad_volume,
-            test_args.final_volume, test_args.temperature)
+        work_of_ideal_gas.calculate_work(test_args.amount, bad_volume, test_args.final_volume,
+            test_args.temperature)
     with raises(TypeError):
-        work_of_ideal_gas.calculate_work(test_args.amount, 100,
-            test_args.final_volume, test_args.temperature)
+        work_of_ideal_gas.calculate_work(test_args.amount, 100, test_args.final_volume,
+            test_args.temperature)
     with raises(errors.UnitsError):
-        work_of_ideal_gas.calculate_work(test_args.amount,
-            test_args.start_volume, bad_volume, test_args.temperature)
+        work_of_ideal_gas.calculate_work(test_args.amount, test_args.start_volume, bad_volume,
+            test_args.temperature)
     with raises(TypeError):
-        work_of_ideal_gas.calculate_work(test_args.amount,
-            test_args.start_volume, 100, test_args.temperature)
+        work_of_ideal_gas.calculate_work(test_args.amount, test_args.start_volume, 100,
+            test_args.temperature)
 
 
 def test_bad_temperature(test_args: Args) -> None:
     bad_temperature = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
-        work_of_ideal_gas.calculate_work(test_args.amount,
-            test_args.start_volume, test_args.final_volume, bad_temperature)
+        work_of_ideal_gas.calculate_work(test_args.amount, test_args.start_volume,
+            test_args.final_volume, bad_temperature)
     with raises(TypeError):
         work_of_ideal_gas.calculate_work(test_args.amount, test_args.start_volume,
             test_args.final_volume, 100)

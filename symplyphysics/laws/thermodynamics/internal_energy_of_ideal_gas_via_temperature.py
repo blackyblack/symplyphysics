@@ -27,17 +27,11 @@ Symbol:
 mass = symbols.basic.mass
 """
 :attr:`~symplyphysics.symbols.basic.mass` of the gas.
-
-Symbol:
-    :code:`m`
 """
 
 temperature = symbols.thermodynamics.temperature
 """
 Temperature of the gas.
-
-Symbol:
-    :code:`T`
 """
 
 molar_mass = Symbol("molar_mass", units.mass / units.amount_of_substance)

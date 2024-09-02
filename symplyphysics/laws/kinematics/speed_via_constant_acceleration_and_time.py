@@ -11,9 +11,7 @@ of time.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (symbols, units, Quantity, Symbol, validate_input,
-    validate_output)
-
+from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output)
 
 final_speed = Symbol("final_speed", units.velocity)
 r"""
@@ -34,9 +32,6 @@ Symbol:
 acceleration = symbols.kinematics.acceleration
 """
 Constant acceleration.
-
-Symbol:
-    :code:`a`
 """
 
 initial_speed = Symbol("initial_speed", units.velocity)

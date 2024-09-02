@@ -35,8 +35,7 @@ distance_law_applied = distance_law.law.subs({
     distance_law.initial_position: 0,
     distance_law.final_position: height,
 })
-time_derived = solve(distance_law_applied, distance_law.time,
-    dict=True)[1][distance_law.time]
+time_derived = solve(distance_law_applied, distance_law.time, dict=True)[1][distance_law.time]
 
 # Check if derived movement time is same as declared.
 assert expr_equals(time_derived, law.rhs)

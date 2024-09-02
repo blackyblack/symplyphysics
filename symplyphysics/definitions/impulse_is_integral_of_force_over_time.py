@@ -11,65 +11,42 @@ from sympy import Eq, Integral
 from symplyphysics import (
     units,
     Quantity,
-    Function,
-    Symbol,
+    FunctionNew,
+    SymbolNew,
     validate_input,
     validate_output,
 )
 
-impulse = Symbol("impulse", units.momentum)
+impulse = SymbolNew("J", units.momentum)
 r"""
 Projection of impulse vector due to :attr:`~symplyphysics.symbols.dynamics.force` :math:`\vec F`.
-
-Symbol:
-    :code:`J`
 """
 
-force = Function("force", units.force)
+force = FunctionNew("F(t)", units.force, display_latex="F")
 r"""
 Projection of :attr:`~symplyphysics.symbols.dynamics.force` :math:`\vec F` as a function of time.
-
-Symbol:
-    :code:`F(t)`
 """
 
-time = Symbol("time", units.time)
+time = SymbolNew("t", units.time)
 """
 Time.
-
-Symbol:
-    :code:`t`
 """
 
-time_before = Symbol("time_before", units.time)
+time_before = SymbolNew("t0", units.time, display_latex="t_0")
 """
 Initial time of collision.
-
-Symbol:
-    :code:`t0`
-
-Latex:
-    :math:`t_0`
 """
 
-time_after = Symbol("time_after", units.time)
+time_after = SymbolNew("t1", units.time, display_latex="t_1")
 """
 Final time of collision.
-
-Symbol:
-    :code:`t1`
-
-Latex:
-    :math:`t_1`
 """
 
 law = Eq(impulse, Integral(force(time), (time, time_before, time_after)))
-r"""
-:code:`J = Integral(F(t), (t, t0, t1))`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        J = \int_{t_0}^{t_1} F(t) dt
+:laws:latex::
 """
 
 

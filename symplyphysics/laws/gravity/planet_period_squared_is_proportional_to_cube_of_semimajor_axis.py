@@ -31,7 +31,7 @@ from symplyphysics.laws.kinematics import (
 ## a - semi-major axis of the planet's orbit, its radius in case of a round orbit
 
 rotation_period = Symbol("rotation_period", units.time, positive=True)
-attracting_mass = clone_symbol(symbols.basic.mass, "attracting_mass", positive=True)
+attracting_mass = clone_symbol(symbols.basic.mass, positive=True)
 semimajor_axis = Symbol("semimajor_axis", units.length, positive=True)
 
 law = Eq(

@@ -19,8 +19,7 @@ from symplyphysics.laws.kinematics import (
     tangential_acceleration_via_angular_acceleration_and_radius as tangential_acceleration_law,
 )
 from symplyphysics.laws.kinematics.vector import (
-    acceleration_is_normal_plus_tangential_acceleration as total_acceleration_law,
-)
+    acceleration_is_normal_plus_tangential_acceleration as total_acceleration_law,)
 
 # Description
 ## A wheel is rotating about a fixed axis so that the angular displacement is expressed as k*t^2, where

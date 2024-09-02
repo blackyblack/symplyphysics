@@ -1,4 +1,4 @@
-r"""
+"""
 Acceleration is speed derivative
 ================================
 
@@ -6,39 +6,28 @@ Acceleration is speed derivative
 """
 
 from sympy import (Eq, Derivative)
-from symplyphysics import (units, Quantity, Function, Symbol, validate_input, validate_output)
+from symplyphysics import (units, Quantity, FunctionNew, SymbolNew, validate_input, validate_output)
 
-acceleration = Function("acceleration", units.acceleration)
+acceleration = FunctionNew("a(t)", units.acceleration, display_latex="a")
 """
 :attr:`~symplyphysics.symbols.kinematics.acceleration` of the body as a function of time.
-
-Symbol:
-    :code:`a(t)`
 """
 
-speed = Function("speed", units.speed)
+speed = FunctionNew("v(t)", units.speed, display_latex="v")
 """
 Speed of the body as a function of time.
-
-Symbol:
-    :code:`v(t)`
 """
 
-time = Symbol("time", units.time)
+time = SymbolNew("t", units.time)
 """
 Time.
-
-Symbol:
-    :code:`t`
 """
 
 definition = Eq(acceleration(time), Derivative(speed(time), time))
-r"""
-:code:`a(t) = Derivative(v(t), t)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        a(t) = \frac{d v}{d t}
+:laws:latex::
 """
 
 

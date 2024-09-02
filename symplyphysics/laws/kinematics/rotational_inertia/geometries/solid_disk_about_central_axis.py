@@ -41,9 +41,6 @@ Symbol:
 mass = symbols.basic.mass
 """
 :attr:`~symplyphysics.symbols.basic.mass` of the disk.
-
-Symbol:
-    :code:`m`
 """
 
 law = Eq(rotational_inertia, mass * radius**2 / 2)
@@ -65,7 +62,8 @@ _density = density_def.definition.rhs.subs({
     density_def.volume: _volume,
 })
 
-_density_applied_sym = integral_law.density(integral_law.radius, integral_law.polar_angle, integral_law.height)
+_density_applied_sym = integral_law.density(integral_law.radius, integral_law.polar_angle,
+    integral_law.height)
 
 _rotational_inertia_derived = integral_law.law.rhs.subs({
     _density_applied_sym: _density,

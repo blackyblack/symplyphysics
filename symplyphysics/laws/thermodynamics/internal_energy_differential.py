@@ -50,9 +50,6 @@ Symbol:
 temperature = symbols.thermodynamics.temperature
 """
 Temperature of the system.
-
-Symbol:
-    :code:`T`
 """
 
 entropy_change = Symbol("entropy_change", units.energy / units.temperature)
@@ -114,11 +111,10 @@ Latex:
 # Derive from the first and second laws of thermodynamics
 # TODO: refactor proof to take account of changes in the number of particles
 
-_heat_supplied_to_system = solve(second_law.law,
-    second_law.heat)[0].subs({
+_heat_supplied_to_system = solve(second_law.law, second_law.heat)[0].subs({
     second_law.entropy_change: entropy_change,
     second_law.common_temperature: temperature,
-    })
+})
 
 _work_done_by_system = work_law.law.rhs.subs({
     work_law.pressure: pressure,

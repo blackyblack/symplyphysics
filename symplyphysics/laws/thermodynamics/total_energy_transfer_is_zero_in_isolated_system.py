@@ -7,8 +7,8 @@ This is a direct consequence of the first law of thermodynamics.
 """
 
 from sympy import (Eq, Idx, solve)
-from symplyphysics import (units, Quantity, validate_input, validate_output,
-    SymbolIndexed, SumIndexed, global_index)
+from symplyphysics import (units, Quantity, validate_input, validate_output, SymbolIndexed,
+    SumIndexed, global_index)
 
 amount_of_energy = SymbolIndexed("amount_of_energy", units.energy)
 r"""

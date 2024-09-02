@@ -7,8 +7,7 @@ in which it is converted from liquid into gaseous state.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output, symbols)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols)
 
 heat = Symbol("heat", units.energy)
 """
@@ -21,9 +20,6 @@ Symbol:
 mass = symbols.basic.mass
 """
 :attr:`~symplyphysics.symbols.basic.mass` of the body subjected to vaporization.
-
-Symbol:
-    :code:`m`
 """
 
 specific_heat_of_vaporization = Symbol("specific_heat_of_vaporization", units.energy / units.mass)

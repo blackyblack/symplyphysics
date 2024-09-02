@@ -8,8 +8,8 @@ heat or mass between the thermodynamic system and its environment.
 
 from sympy import Eq, Rational, solve, Symbol as SymSymbol, Function as SymFunction, dsolve, symbols as sym_symbols
 from sympy.abc import t
-from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol,
-    dimensionless, validate_input, validate_output)
+from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, dimensionless,
+    validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import heat_capacity_ratio
 from symplyphysics.laws.thermodynamics import (
@@ -33,26 +33,18 @@ Latex:
 
 # Some of the following parameters depend on each other. It is up to user which to choose as known.
 
-initial_temperature = clone_symbol(symbols.thermodynamics.temperature, "initial_temperature")
-r"""
+initial_temperature = clone_symbol(symbols.thermodynamics.temperature,
+    display_symbol="T_0",
+    display_latex="T_0")
+"""
 Initial :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
-
-Symbol:
-    :code:`T_0`
-
-Latex:
-    :math:`T_0`
 """
 
-final_temperature = clone_symbol(symbols.thermodynamics.temperature, "final_temperature")
-r"""
+final_temperature = clone_symbol(symbols.thermodynamics.temperature,
+    display_symbol="T_1",
+    display_latex="T_1")
+"""
 Final :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
-
-Symbol:
-    :code:`T_1`
-
-Latex:
-    :math:`T_1`
 """
 
 initial_volume = Symbol("initial_volume", units.volume)
@@ -204,8 +196,8 @@ _pressure_eqn = dsolve(_diff_eqn,
 
 _pressure_derived = _pressure_eqn.rhs.subs(_volume, final_volume)
 
-_pressure_from_law = solve(adiabatic_condition, final_pressure)[0].subs(adiabatic_index,
-    _adiabatic_index)
+_pressure_from_law = solve(adiabatic_condition,
+    final_pressure)[0].subs(adiabatic_index, _adiabatic_index)
 
 assert expr_equals(_pressure_derived, _pressure_from_law)
 
@@ -219,7 +211,8 @@ assert expr_equals(_pressure_derived, _pressure_from_law)
 def calculate_pressure(mole_count_: Quantity, temperature_start_: Quantity, volume_start_: Quantity,
     volume_end_: Quantity, specific_heats_ratio_: Rational) -> Quantity:
 
-    solved = solve(law, (initial_pressure, final_temperature, final_pressure), dict=True)[0][final_pressure]
+    solved = solve(law, (initial_pressure, final_temperature, final_pressure),
+        dict=True)[0][final_pressure]
     result_pressure = solved.subs({
         ideal_gas_equation.amount_of_substance: mole_count_,
         initial_temperature: temperature_start_,

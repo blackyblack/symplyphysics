@@ -1,4 +1,4 @@
-r"""
+"""
 Angular acceleration is angular speed derivative
 ================================================
 
@@ -6,46 +6,31 @@ Angular acceleration is angular speed derivative
 """
 
 from sympy import (Eq, Derivative)
-from symplyphysics import (angle_type, units, Quantity, Function, Symbol, validate_input,
+from symplyphysics import (angle_type, units, Quantity, FunctionNew, SymbolNew, validate_input,
     validate_output)
 
-angular_acceleration = Function("angular_acceleration", angle_type / (units.time**2))
-r"""
+angular_acceleration = FunctionNew("epsilon(t)",
+    angle_type / (units.time**2),
+    display_latex="\\varepsilon")
+"""
 Angular acceleration of the body as a function of time.
-
-Symbol:
-    :code:`epsilon(t)`
-
-Latex:
-    :math:`\varepsilon(t)`
 """
 
-angular_speed = Function("angular_speed", angle_type / units.time)
-r"""
+angular_speed = FunctionNew("w(t)", angle_type / units.time, display_latex="\\omega")
+"""
 Angular speed of the body as a function of time.
-
-Symbol:
-    :code:`w(t)`
-
-Latex:
-    :math:`\omega(t)`
 """
 
-time = Symbol("time", units.time)
+time = SymbolNew("t", units.time)
 """
 Time.
-
-Symbol:
-    :code:`t`
 """
 
 definition = Eq(angular_acceleration(time), Derivative(angular_speed(time), time))
-r"""
-:code:`epsilon(t) = Derivative(w(t), t)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \varepsilon(t) = \frac{d \omega}{d t}
+:laws:latex::
 """
 
 

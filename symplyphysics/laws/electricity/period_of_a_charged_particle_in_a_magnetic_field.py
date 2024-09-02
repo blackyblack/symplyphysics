@@ -16,7 +16,7 @@ period = Symbol("period", units.time)
 
 charge = Symbol("charge", units.charge)
 induction = Symbol("induction", units.magnetic_density)
-particle_mass = clone_symbol(symbols.basic.mass, "particle_mass")
+particle_mass = clone_symbol(symbols.basic.mass)
 
 law = Eq(period, 2 * pi * particle_mass / (charge * induction))
 

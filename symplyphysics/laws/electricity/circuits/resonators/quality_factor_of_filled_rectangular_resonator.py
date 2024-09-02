@@ -2,7 +2,8 @@ from sympy import (
     Eq,
     solve,
 )
-from symplyphysics import (Symbol, convert_to_float, print_expression, validate_input, validate_output, dimensionless)
+from symplyphysics import (Symbol, convert_to_float, print_expression, validate_input,
+    validate_output, dimensionless)
 
 # Description
 ## A rectangular resonator consists of metal walls and a material filling it.

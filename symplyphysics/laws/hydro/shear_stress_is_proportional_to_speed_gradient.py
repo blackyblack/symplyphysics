@@ -74,6 +74,7 @@ Latex:
         \tau = \eta \frac{d u}{d y}
 """
 
+
 @validate_input(
     dynamic_viscosity_=dynamic_viscosity,
     fluid_speed_before_=fluid_speed,

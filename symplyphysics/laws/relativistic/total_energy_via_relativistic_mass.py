@@ -18,7 +18,7 @@ from symplyphysics import (
 ## c is speed of light.
 
 relativistic_energy = Symbol("energy", units.energy)
-relativistic_mass = clone_symbol(symbols.basic.mass, "relativistic_mass")
+relativistic_mass = clone_symbol(symbols.basic.mass)
 
 law = Eq(relativistic_energy, relativistic_mass * units.speed_of_light**2)
 

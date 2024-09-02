@@ -11,15 +11,11 @@ from sympy import (Eq, solve)
 from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, validate_input,
     validate_output)
 
-buoyant_force = clone_symbol(symbols.dynamics.force, "buoyant_force")
-r"""
+buoyant_force = clone_symbol(symbols.dynamics.force,
+    display_symbol="Fa",
+    display_latex="F_\\text{A}")
+"""
 The buoyant (Archimedes) :attr:`~symplyphysics.symbols.dynamics.force`.
-
-Symbol:
-    Fa
-
-Latex:
-    :math:`F_\text{A}`
 """
 
 fluid_density = Symbol("fluid_density", units.mass / units.volume)

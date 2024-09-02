@@ -36,9 +36,6 @@ Symbol:
 mass = symbols.basic.mass
 """
 The :attr:`~symplyphysics.symbols.basic.mass` of the oscillating body.
-
-Symbol:
-    :code:`m`
 """
 
 natural_angular_frequency = Symbol("natural_angular_frequency", angle_type / units.time)
@@ -52,12 +49,9 @@ Latex:
     :math:`\omega_0`
 """
 
-driving_force_amplitude = clone_symbol(symbols.dynamics.force, "driving_force_amplitude")
+driving_force_amplitude = clone_symbol(symbols.dynamics.force)
 """
 The amplitude of the driving :attr:`~symplyphysics.symbols.dynamics.force`.
-
-Symbol:
-    :code:`f`
 """
 
 driving_angular_frequency = Symbol("driving_angular_frequency", angle_type / units.time)
@@ -95,11 +89,11 @@ law = Eq(
     (driving_force_amplitude / mass) * cos(driving_angular_frequency * time + driving_phase_lag),
 )
 r"""
-Derivative(q(t), (t, 2)) + w0^2 * q(t) = (f / m) * cos(w * t + phi)
+Derivative(q(t), (t, 2)) + w0^2 * q(t) = (F / m) * cos(w * t + phi)
 
 Latex:
     .. math::
-        \frac{d^2}{d t^2} q(t) + \omega_0^2 q(t) = \frac{f}{m} \cos{\left( \omega t + \varphi \right)}
+        \frac{d^2}{d t^2} q(t) + \omega_0^2 q(t) = \frac{F}{m} \cos{\left( \omega t + \varphi \right)}
 """
 
 

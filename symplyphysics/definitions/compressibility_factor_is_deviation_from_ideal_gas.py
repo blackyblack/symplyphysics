@@ -69,9 +69,6 @@ Symbol:
 temperature = symbols.thermodynamics.temperature
 """
 Gas :attr:`~symplyphysics.symbols.thermodynamics.temperature`.
-
-Symbol:
-    :code:`T`
 """
 
 definition = Eq(compressibility_factor,

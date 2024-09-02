@@ -80,11 +80,9 @@ Latex:
 
 # Derive law from [oscillator equation](../../definitions/harmonic_oscillator_is_second_derivative_equation.py)
 
-_displacement = SymFunction("displacement", real=True)
+_displacement = symbols("displacement", cls=SymFunction, real=True)
 
-_eqn = harmonic_eqn.definition.replace(
-    harmonic_eqn.displacement, _displacement
-).subs({
+_eqn = harmonic_eqn.definition.replace(harmonic_eqn.displacement, _displacement).subs({
     harmonic_eqn.time: time,
     harmonic_eqn.angular_frequency: angular_frequency,
 })

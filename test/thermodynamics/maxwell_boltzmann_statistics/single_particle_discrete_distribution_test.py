@@ -26,40 +26,34 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = law.calculate_particle_count_in_microstate(
-        test_args.n, test_args.e, test_args.t, test_args.z)
+    result = law.calculate_particle_count_in_microstate(test_args.n, test_args.e, test_args.t,
+        test_args.z)
     assert_equal(result, 188, tolerance=2e-3)
 
 
 def test_bad_particle_count(test_args: Args) -> None:
     nb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        law.calculate_particle_count_in_microstate(nb, test_args.e, test_args.t,
-            test_args.z)
+        law.calculate_particle_count_in_microstate(nb, test_args.e, test_args.t, test_args.z)
 
 
 def test_bad_energy(test_args: Args) -> None:
     eb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        law.calculate_particle_count_in_microstate(test_args.n, eb, test_args.t,
-            test_args.z)
+        law.calculate_particle_count_in_microstate(test_args.n, eb, test_args.t, test_args.z)
     with raises(TypeError):
-        law.calculate_particle_count_in_microstate(test_args.n, 100, test_args.t,
-            test_args.z)
+        law.calculate_particle_count_in_microstate(test_args.n, 100, test_args.t, test_args.z)
 
 
 def test_bad_temperature(test_args: Args) -> None:
     tb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        law.calculate_particle_count_in_microstate(test_args.n, test_args.e, tb,
-            test_args.z)
+        law.calculate_particle_count_in_microstate(test_args.n, test_args.e, tb, test_args.z)
     with raises(TypeError):
-        law.calculate_particle_count_in_microstate(test_args.n, test_args.e, 100,
-            test_args.z)
+        law.calculate_particle_count_in_microstate(test_args.n, test_args.e, 100, test_args.z)
 
 
 def test_bad_partition_function(test_args: Args) -> None:
     zb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        law.calculate_particle_count_in_microstate(test_args.n, test_args.e,
-            test_args.t, zb)
+        law.calculate_particle_count_in_microstate(test_args.n, test_args.e, test_args.t, zb)

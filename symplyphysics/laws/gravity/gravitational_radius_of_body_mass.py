@@ -27,7 +27,7 @@ from symplyphysics import (
 ## c - speed of light.
 
 gravitational_radius = Symbol("gravitational_radius", units.length)
-body_mass = clone_symbol(symbols.basic.mass, "body_mass")
+body_mass = clone_symbol(symbols.basic.mass)
 
 law = Eq(gravitational_radius, 2 * gravitational_constant * body_mass / speed_of_light**2)
 

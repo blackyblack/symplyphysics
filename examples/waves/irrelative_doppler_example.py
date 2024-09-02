@@ -18,8 +18,7 @@ emitter_frequency = Quantity(40 * prefixes.kilo * units.hertz)
 # Choose any frequency and obtain the result
 signal_frequency = Quantity(41.2 * prefixes.kilo * units.hertz)
 
-solution = solve(doppler_law.law, doppler_law.source_speed,
-    dict=True)[0][doppler_law.source_speed]
+solution = solve(doppler_law.law, doppler_law.source_speed, dict=True)[0][doppler_law.source_speed]
 applied_solution = solution.subs({
     doppler_law.observed_frequency: signal_frequency,
     doppler_law.source_frequency: emitter_frequency,

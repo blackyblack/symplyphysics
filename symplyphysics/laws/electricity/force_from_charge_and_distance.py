@@ -22,7 +22,7 @@ from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print
 ## and the other is "-". This is consistent with the concept that oppositely charged objects
 ## have an attractive interaction and like charged objects have a repulsive interaction.
 
-electrostatic_force = clone_symbol(symbols.dynamics.force, "electrostatic_force")
+electrostatic_force = clone_symbol(symbols.dynamics.force)
 first_charge = Symbol("first_charge", units.charge)
 second_charge = Symbol("second_charge", units.charge)
 distance = Symbol("distance", units.length)

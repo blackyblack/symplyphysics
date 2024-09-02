@@ -58,12 +58,9 @@ Latex:
     :math:`\beta_V`
 """
 
-final_temperature = clone_symbol(symbols.thermodynamics.temperature, "final_temperature")
+final_temperature = clone_symbol(symbols.thermodynamics.temperature)
 """
 :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas.
-
-Symbol:
-    :code:`T`
 """
 
 law = Eq(pressure_change, initial_pressure * (thermal_coefficient * final_temperature - 1))
@@ -92,5 +89,8 @@ assert expr_equals(_pressure_change_expr, law.rhs)
 @validate_input(standard_pressure_=initial_pressure, temperature_=final_temperature)
 @validate_output(pressure_change)
 def calculate_pressure_change(standard_pressure_: Quantity, temperature_: Quantity) -> Quantity:
-    result_expr = law.rhs.subs({initial_pressure: standard_pressure_, final_temperature: temperature_})
+    result_expr = law.rhs.subs({
+        initial_pressure: standard_pressure_,
+        final_temperature: temperature_
+    })
     return Quantity(result_expr)

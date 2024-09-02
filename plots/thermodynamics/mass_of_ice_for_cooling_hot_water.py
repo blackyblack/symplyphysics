@@ -113,7 +113,8 @@ for temperature_of_hot_water_value in temperature_of_hot_water_values:
 
     subplot = plot(mass_ratio_to_subplot,
         (temperature_balance, to_kelvin(Celsius(0)), temperature_supremum),
-        label=r"$T_\text{water}=" + f"{to_kelvin(Celsius(temperature_of_hot_water_value))}" + r"\, K$",
+        label=r"$T_\text{water}=" + f"{to_kelvin(Celsius(temperature_of_hot_water_value))}" +
+        r"\, K$",
         show=False)
     base_plot.append(subplot[0])
 
