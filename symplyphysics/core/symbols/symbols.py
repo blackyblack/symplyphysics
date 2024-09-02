@@ -13,19 +13,12 @@ from .id_generator import next_id
 class DimensionSymbol:
     _dimension: Dimension
     _display_name: str
-    _display_symbol: str
-    _display_latex: str
 
     def __init__(self,
         display_name: str,
-        dimension: Dimension = Dimension(S.One),
-        *,
-        display_symbol: Optional[str] = None,
-        display_latex: Optional[str] = None) -> None:
+        dimension: Dimension = Dimension(S.One)) -> None:
         self._dimension = dimension
         self._display_name = display_name
-        self._display_symbol = self._display_name if display_symbol is None else display_symbol
-        self._display_latex = self._display_symbol if display_latex is None else display_latex
 
     @property
     def dimension(self) -> Dimension:
@@ -34,14 +27,6 @@ class DimensionSymbol:
     @property
     def display_name(self) -> str:
         return self._display_name
-
-    @property
-    def display_symbol(self) -> str:
-        return self._display_symbol
-
-    @property
-    def display_latex(self) -> str:
-        return self._display_latex
 
 
 class DimensionSymbolNew:
@@ -76,26 +61,16 @@ class Symbol(DimensionSymbol, SymSymbol):  # pylint: disable=too-many-ancestors
     def __new__(cls,
         display_name: Optional[str] = None,
         _dimension: Dimension = Dimension(S.One),
-        *,
-        display_symbol: Optional[str] = None,
-        display_latex: Optional[str] = None,
         **assumptions: Any) -> Self:
         name = next_name("SYM") if display_name is None else next_name(display_name)
-        obj = SymSymbol.__new__(cls, name, **assumptions)
-        return obj
+        return SymSymbol.__new__(cls, name, **assumptions)
 
     def __init__(self,
         display_name: Optional[str] = None,
         dimension: Dimension = Dimension(S.One),
-        *,
-        display_symbol: Optional[str] = None,
-        display_latex: Optional[str] = None,
         **_assumptions: Any) -> None:
-        display_name = self.name if display_name is None else display_name
-        super().__init__(str(display_name),
-            dimension,
-            display_symbol=display_symbol,
-            display_latex=display_latex)
+        display_name = str(self.name) if display_name is None else display_name
+        super().__init__(display_name, dimension)
 
 
 class SymbolNew(DimensionSymbolNew, SymSymbol):  # pylint: disable=too-many-ancestors
@@ -123,36 +98,26 @@ class SymbolIndexed(DimensionSymbol, IndexedBase):  # pylint: disable=too-many-a
     def __new__(cls,
         name_or_symbol: Optional[str | SymSymbol] = None,
         _dimension: Dimension = Dimension(S.One),
-        *,
-        display_symbol: Optional[str] = None,
-        display_latex: Optional[str] = None,
         **assumptions: Any) -> Self:
         # SymPy subs() and solve() creates dummy symbols. Allow create new indexed symbols
         # without renaming
         if isinstance(name_or_symbol, SymSymbol):
             return IndexedBase.__new__(cls, name_or_symbol, **assumptions)
         name = next_name("SYM") if name_or_symbol is None else next_name(name_or_symbol)
-        obj = IndexedBase.__new__(cls, name, **assumptions)
-        return obj
+        return IndexedBase.__new__(cls, name, **assumptions)
 
     def __init__(self,
         name_or_symbol: Optional[str | SymSymbol] = None,
         dimension: Dimension = Dimension(S.One),
-        *,
-        display_symbol: Optional[str] = None,
-        display_latex: Optional[str] = None,
         **_assumptions: Any) -> None:
-        display_name = self.name if name_or_symbol is None else str(name_or_symbol)
-        super().__init__(display_name,
-            dimension,
-            display_symbol=display_symbol,
-            display_latex=display_latex)
+        display_name = str(self.name) if name_or_symbol is None else str(name_or_symbol)
+        super().__init__(display_name, dimension)
 
     def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
         pass
 
     def _sympystr(self, p: Printer) -> str:
-        return p.doprint(self.label if self.display_symbol is None else self.display_symbol)
+        return p.doprint(self.display_name)
 
 
 class SymbolIndexedNew(DimensionSymbolNew, IndexedBase):  # pylint: disable=too-many-ancestors
@@ -182,42 +147,28 @@ class SymbolIndexedNew(DimensionSymbolNew, IndexedBase):  # pylint: disable=too-
         pass
 
     def _sympystr(self, p: Printer) -> str:
-        return p.doprint(self.label if self.display_name is None else self.display_name)
+        return p.doprint(self.display_name)
 
 
 class Function(DimensionSymbol, UndefinedFunction):
-
-    name: str
 
     # NOTE: Self type cannot be used in a metaclass and 'mcs' is a metaclass here
     def __new__(mcs,
         display_name: Optional[str] = None,
         _dimension: Dimension = Dimension(S.One),
-        *,
-        display_symbol: Optional[str] = None,
-        display_latex: Optional[str] = None,
         **options: Any) -> Function:
         name = next_name("FUN") if display_name is None else next_name(display_name)
-        obj = UndefinedFunction.__new__(mcs, name, **options)
-        return obj
+        return UndefinedFunction.__new__(mcs, name, **options)
 
     def __init__(cls,
         display_name: Optional[str] = None,
         dimension: Dimension = Dimension(S.One),
-        *,
-        display_symbol: Optional[str] = None,
-        display_latex: Optional[str] = None,
         **_options: Any) -> None:
-        display_name = cls.name if display_name is None else display_name
-        super().__init__(str(display_name),
-            dimension,
-            display_symbol=display_symbol,
-            display_latex=display_latex)
+        display_name = str(cls.name) if display_name is None else display_name
+        super().__init__(display_name, dimension)
 
 
 class FunctionNew(DimensionSymbolNew, UndefinedFunction):
-
-    name: str
 
     # NOTE: Self type cannot be used in a metaclass and 'mcs' is a metaclass here
     def __new__(mcs,

@@ -45,7 +45,8 @@ class SymbolCodePrinter(StrPrinter):
             return expr.display_name
         if isinstance(expr.func, DimensionSymbolNew):
             return expr.func.display_name
-        return expr.func.__name__ + f"({self.stringify(expr.args, ", ")})"
+        args_str = self.stringify(expr.args, ", ")
+        return expr.func.__name__ + f"({args_str})"
 
     # pylint: disable-next=invalid-name
     def _print_SumIndexedNew(self, expr: Any) -> str:
