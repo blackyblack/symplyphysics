@@ -203,15 +203,13 @@ class SymbolPrinter(PrettyPrinter):
         return self._settings["use_unicode"]
 
     def _print_Symbol(self, e: Expr, bold_name: bool = False) -> prettyForm:
-        symb_name = e.display_name if isinstance(e, Symbol) else getattr(e, "name")
+        symb_name = e.display_name if isinstance(e, (Symbol, SymbolNew)) else getattr(e, "name")
         symb = pretty_symbol(symb_name, bold_name)
         return prettyForm(symb)
 
     # pylint: disable-next=invalid-name
     def _print_SymbolIndexed(self, e: Expr, bold_name: bool = False) -> prettyForm:
-        symb_name = e.display_name if isinstance(e, SymbolIndexed) else getattr(e, "name")
-        symb = pretty_symbol(symb_name, bold_name)
-        return prettyForm(symb)
+        return self._print_Symbol(e, bold_name)
 
     # pylint: disable-next=too-many-arguments
     def _print_Function(self,
@@ -222,7 +220,7 @@ class SymbolPrinter(PrettyPrinter):
         right: str = ")") -> prettyForm:
         # optional argument func_name for supplying custom names
         # works only for applied functions
-        func_name = e.func.display_name if isinstance(e.func, Function) else func_name
+        func_name = e.func.display_name if isinstance(e.func, (Function, FunctionNew)) else func_name
         return self._helper_print_function(e.func,
             e.args,
             sort=sort,
