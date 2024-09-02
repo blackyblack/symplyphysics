@@ -29,23 +29,14 @@ Latex:
     :math:`\omega`
 """
 
-mass_of_component = clone_symbol(symbols.basic.mass, "mass_of_component")
+mass_of_component = clone_symbol(symbols.basic.mass, display_symbol="m_i", display_latex="m_i")
 """
 :attr:`~symplyphysics.symbols.basic.mass` of the mixture component.
-
-Symbol:
-    :code:`m_i`
-
-Latex:
-    :math:`m_i`
 """
 
-mass_of_mixture = clone_symbol(symbols.basic.mass, "mass_of_mixture")
+mass_of_mixture = clone_symbol(symbols.basic.mass)
 """
 Total :attr:`~symplyphysics.symbols.basic.mass` of the mixture.
-
-Symbol:
-    :code:`m`
 """
 
 definition = Eq(mass_fraction, mass_of_component / mass_of_mixture)

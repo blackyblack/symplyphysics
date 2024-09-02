@@ -43,13 +43,9 @@ Latex:
     :math:`E_i`
 """
 
-equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature,
-    "equilibrium_temperature")
+equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature)
 """
 Equilibrium :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
-
-Symbol:
-    :code:`T`
 """
 
 definition = Eq(boltzmann_factor,

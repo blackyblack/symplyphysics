@@ -40,12 +40,9 @@ Latex:
     :math:`C_V`
 """
 
-temperature_change = clone_symbol(symbols.thermodynamics.temperature, "temperature_change")
+temperature_change = clone_symbol(symbols.thermodynamics.temperature, display_symbol="dT")
 """
 Infinitesimal change in temperature of the system.
-
-Symbol:
-    :code:`dT`
 """
 
 law = Eq(internal_energy_change, isochoric_heat_capacity * temperature_change)

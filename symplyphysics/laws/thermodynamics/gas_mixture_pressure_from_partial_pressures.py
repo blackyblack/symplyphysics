@@ -9,8 +9,8 @@ in the vessel.
 
 from typing import Sequence
 from sympy import (Eq, Idx, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output, SymbolIndexed, SumIndexed, global_index)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, SymbolIndexed,
+    SumIndexed, global_index)
 
 total_pressure = Symbol("total_pressure", units.pressure)
 """

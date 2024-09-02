@@ -7,7 +7,7 @@ from .core.symbols.quantities import Quantity, subs_list
 from .core.convert import convert_to, convert_to_float
 from .core.operations.sum_indexed import SumIndexed
 from .core.operations.product_indexed import ProductIndexed
-from .core.symbols.symbols import Function, Symbol, print_expression, clone_symbol, SymbolIndexed, global_index
+from .core.symbols.symbols import Function, Symbol, print_expression, clone_symbol, SymbolIndexed, global_index, FunctionNew, SymbolNew, SymbolIndexedNew
 from .core.symbols.prefixes import prefixes
 from .core.quantity_decorator import validate_input, validate_output
 from .core.vectors.vectors import Vector, QuantityVector

@@ -8,8 +8,7 @@ temperature. This law is known as the *Wien's displacement law*.
 
 from sympy import Eq, solve
 from sympy.physics.units import speed_of_light, planck, boltzmann
-from symplyphysics import (symbols, units, Quantity, Symbol,
-    validate_input, validate_output)
+from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output)
 
 peak_wavelength = Symbol("peak_wavelength", units.length)
 r"""
@@ -25,9 +24,6 @@ Latex:
 temperature = symbols.thermodynamics.temperature
 """
 :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the blackbody.
-
-Symbol:
-    :code:`T`
 """
 
 wien_displacement_constant = speed_of_light * planck / (boltzmann * 4.965114)

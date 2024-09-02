@@ -42,8 +42,7 @@ Latex:
     :math:`u'`
 """
 
-second_frame_speed_in_first_frame = Symbol("second_frame_speed_in_first_frame",
-    units.velocity)
+second_frame_speed_in_first_frame = Symbol("second_frame_speed_in_first_frame", units.velocity)
 """
 Speed of frame :math:`B` relative to frame :math:`A`.
 

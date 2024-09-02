@@ -10,18 +10,24 @@ Contains useful physical constants. Fundamental constants can be also found in `
 from sympy.physics import units
 from ..core.symbols.quantities import Quantity
 
-standard_conditions_temperature = Quantity(273.15 * units.kelvin, display_symbol="t_std", display_latex="t_\\text{std}")
+standard_conditions_temperature = Quantity(273.15 * units.kelvin,
+    display_symbol="t_std",
+    display_latex="t_\\text{std}")
 """
 Zero Celsius degrees. The temperature at which water freezes.
 It is also temperature for Standard Temperature and Pressure (STP)
 """
 
-standard_laboratory_temperature = Quantity(298 * units.kelvin, display_symbol="t_lab", display_latex="t_\\text{lab}")
+standard_laboratory_temperature = Quantity(298 * units.kelvin,
+    display_symbol="t_lab",
+    display_latex="t_\\text{lab}")
 """
 Approximately 25 Celsius degrees. Commonly used temperature for tabulation purposes.
 """
 
-electron_rest_mass = Quantity(9.1093837015e-31 * units.kilogram, display_symbol="m_e", display_latex="m_\\text{e}")
+electron_rest_mass = Quantity(9.1093837015e-31 * units.kilogram,
+    display_symbol="m_e",
+    display_latex="m_\\text{e}")
 """
 Mass of stationary electron
 """
@@ -32,7 +38,9 @@ The Bohr radius is the radius of the electron orbit of the hydrogen atom closest
 to the nucleus in the atomic model proposed by Niels Bohr.
 """
 
-hydrogen_ionization_energy = Quantity(13.6 * units.electronvolt, display_symbol="IE_h", display_latex="\\mathrm{IE}_\\text{H}")
+hydrogen_ionization_energy = Quantity(13.6 * units.electronvolt,
+    display_symbol="IE_h",
+    display_latex="\\mathrm{IE}_\\text{H}")
 """
 The ionization energy is the smallest energy required to remove an electron from
 a free atom in its basic energy state to infinity.
@@ -44,7 +52,9 @@ The solar mass is a standard unit of mass in astronomy approximately equal to th
 of the Sun. The relative uncertainty of the measurement is :math:`4 \cdot 10^{-5}`.
 """
 
-earth_mass = Quantity(5.9722e24 * units.kilogram, display_symbol="M_Earth", display_latex="M_\\oplus")
+earth_mass = Quantity(5.9722e24 * units.kilogram,
+    display_symbol="M_Earth",
+    display_latex="M_\\oplus")
 """
 The Earth mass is a standard unit of mass in astronomy equal to the mass of the planet 
 Earth. The relative uncertainty of the measurement is :math:`10^{-4}`.

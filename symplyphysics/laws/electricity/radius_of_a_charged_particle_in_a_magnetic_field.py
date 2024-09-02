@@ -29,7 +29,7 @@ radius = Symbol("radius", units.length)
 velocity = Symbol("velocity", units.velocity)
 charge = Symbol("charge", units.charge)
 induction = Symbol("induction", units.magnetic_density)
-particle_mass = clone_symbol(symbols.basic.mass, "particle_mass")
+particle_mass = clone_symbol(symbols.basic.mass)
 
 law = Eq(radius, particle_mass * velocity / (charge * induction))
 
@@ -41,8 +41,7 @@ distance_law_applied = distance_law.law.subs({
     distance_law.speed: velocity,
 })
 # Period is a time taken to cover a full circle.
-period_derived = solve(distance_law_applied, distance_law.time,
-    dict=True)[0][distance_law.time]
+period_derived = solve(distance_law_applied, distance_law.time, dict=True)[0][distance_law.time]
 
 law_applied = period_law.law.subs({
     period_law.particle_mass: particle_mass,

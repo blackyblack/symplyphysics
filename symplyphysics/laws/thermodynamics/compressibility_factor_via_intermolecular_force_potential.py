@@ -79,12 +79,9 @@ Latex:
     :math:`\varphi(r)`
 """
 
-temperature = clone_symbol(symbols.thermodynamics.temperature, "temperature", positive=True)
+temperature = clone_symbol(symbols.thermodynamics.temperature, positive=True)
 """
 Temperature of the system.
-
-Symbol:
-    :code:`T`
 """
 
 law = Eq(

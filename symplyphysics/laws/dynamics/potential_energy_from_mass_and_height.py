@@ -20,9 +20,6 @@ Symbol:
 mass = symbols.basic.mass
 """
 The :attr:`~symplyphysics.symbols.basic.mass` of the body.
-
-Symbol:
-    :code:`m`
 """
 
 height = Symbol("height", units.length)

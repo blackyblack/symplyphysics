@@ -15,8 +15,7 @@ Also see :doc:`laws.waves.frequency_shift_from_speed_in_collinear_motion`.
 """
 
 from sympy import (Eq, cos, solve)
-from symplyphysics import (units, angle_type, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (units, angle_type, Quantity, Symbol, validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.laws.waves import wavelength_from_phase_speed_and_period as period_law
@@ -146,8 +145,7 @@ _moving_source_distance_for_period = distance_law.law.subs({
 ## Assuming signal vector pointing from source to observer, positive projection should decrease _wavelength.
 _wavelength_observed = _wavelength - _moving_source_distance_for_period
 
-_period_from_wavelength = solve(period_law.law, period_law.period,
-    dict=True)[0][period_law.period]
+_period_from_wavelength = solve(period_law.law, period_law.period, dict=True)[0][period_law.period]
 _observed_wave_period = _period_from_wavelength.subs({
     period_law.wavelength: _wavelength_observed,
     period_law.phase_velocity: wave_speed

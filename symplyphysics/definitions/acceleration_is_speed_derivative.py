@@ -6,19 +6,19 @@ Acceleration is speed derivative
 """
 
 from sympy import (Eq, Derivative)
-from symplyphysics import (units, Quantity, Function, Symbol, validate_input, validate_output)
+from symplyphysics import (units, Quantity, FunctionNew, SymbolNew, validate_input, validate_output)
 
-acceleration = Function(None, units.acceleration, display_symbol="a(t)", display_latex="a")
+acceleration = FunctionNew("a(t)", units.acceleration, display_latex="a")
 """
 :attr:`~symplyphysics.symbols.kinematics.acceleration` of the body as a function of time.
 """
 
-speed = Function(None, units.speed, display_symbol="v(t)", display_latex="v")
+speed = FunctionNew("v(t)", units.speed, display_latex="v")
 """
 Speed of the body as a function of time.
 """
 
-time = Symbol(None, units.time, display_symbol="t")
+time = SymbolNew("t", units.time)
 """
 Time.
 """

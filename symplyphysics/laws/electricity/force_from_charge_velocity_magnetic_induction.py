@@ -15,7 +15,7 @@ from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print
 ## B - induction,
 ## a - angle between induction and velocity.
 
-lorentz_force = clone_symbol(symbols.dynamics.force, "lorentz_force")
+lorentz_force = clone_symbol(symbols.dynamics.force)
 
 charge = Symbol("charge", units.charge)
 velocity = Symbol("velocity", units.velocity)

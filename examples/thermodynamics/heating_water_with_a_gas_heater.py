@@ -69,7 +69,8 @@ energy_to_heating_water_value = thermal_energy_law.law.subs({
     thermal_energy_law.temperature_change: temperature_water - temperature_start,
 }).rhs
 
-mass_of_gas_equation = mole_count_law.law.subs({mole_count_law.atomic_weight: molar_mass_of_methane})
+mass_of_gas_equation = mole_count_law.law.subs(
+    {mole_count_law.atomic_weight: molar_mass_of_methane})
 mole_count_value = solve(mass_of_gas_equation, mole_count_law.mole_count,
     dict=True)[0][mole_count_law.mole_count]
 
@@ -122,17 +123,28 @@ answer = Eq(temperature_water, temperature_water_value)
 print(f"Total equation:\n{print_expression(answer)}")
 
 temperature_water_k = temperature_water_value.subs({
-    volume_of_gas: Quantity(1.8 * units.meters**3),
-    diameter_of_pipe: Quantity(1 * prefixes.centi * units.meters),
-    time_of_hour: Quantity(1 * units.hours),
-    velocity_of_water: Quantity(0.5 * units.meters / units.second),
-    pressure_in_gas_heater: Quantity(120 * prefixes.kilo * units.pascals),
-    efficiency_of_gas_heater: Quantity(60 * units.percents),
-    temperature_start: to_kelvin_quantity(Celsius(11)),
-    molar_mass_of_methane: Quantity(16 * units.grams / units.mole),
-    specific_heat_of_combustion_methane: Quantity(55 * prefixes.mega * units.joules / units.kilogram),
-    specific_heat_of_heating_water: Quantity(4200 * units.joules / (units.kilogram * units.kelvin)),
-    density_of_water: Quantity(1_000 * units.kilograms / (units.meter**3))
+    volume_of_gas:
+    Quantity(1.8 * units.meters**3),
+    diameter_of_pipe:
+    Quantity(1 * prefixes.centi * units.meters),
+    time_of_hour:
+    Quantity(1 * units.hours),
+    velocity_of_water:
+    Quantity(0.5 * units.meters / units.second),
+    pressure_in_gas_heater:
+    Quantity(120 * prefixes.kilo * units.pascals),
+    efficiency_of_gas_heater:
+    Quantity(60 * units.percents),
+    temperature_start:
+    to_kelvin_quantity(Celsius(11)),
+    molar_mass_of_methane:
+    Quantity(16 * units.grams / units.mole),
+    specific_heat_of_combustion_methane:
+    Quantity(55 * prefixes.mega * units.joules / units.kilogram),
+    specific_heat_of_heating_water:
+    Quantity(4200 * units.joules / (units.kilogram * units.kelvin)),
+    density_of_water:
+    Quantity(1_000 * units.kilograms / (units.meter**3))
 })
 print(
     f"Temperature of water in out is: {convert_to(Quantity(temperature_water_k), units.kelvins).evalf(5)} K"

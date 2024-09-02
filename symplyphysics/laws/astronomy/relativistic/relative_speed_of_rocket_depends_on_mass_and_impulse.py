@@ -40,26 +40,14 @@ Latex:
     :math:`V_e`
 """
 
-initial_mass = clone_symbol(symbols.basic.mass, "initial_mass")
+initial_mass = clone_symbol(symbols.basic.mass, display_symbol="M1", display_latex="M_1")
 """
 Initial mass of the rocket
-
-Symbol:
-    :code:`M1`
-
-Latex:
-    :math:`M_1`
 """
 
-final_mass = clone_symbol(symbols.basic.mass, "final_mass")
+final_mass = clone_symbol(symbols.basic.mass, display_symbol="M2", display_latex="M_2")
 """
 Final mass of the rocket
-
-Symbol:
-    :code:`M2`
-
-Latex:
-    :math:`M_2`
 """
 
 law = Eq(final_mass / initial_mass, ((1 - (speed / speed_of_light)) / (1 +

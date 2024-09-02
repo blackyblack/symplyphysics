@@ -44,20 +44,13 @@ Latex:
 temperature = symbols.thermodynamics.temperature
 """
 Temperature at which the viscosity value is calculated.
-
-Symbol:
-    :code:`T`
 """
 
-reference_temperature = clone_symbol(symbols.thermodynamics.temperature, "reference_temperature")
-r"""
+reference_temperature = clone_symbol(symbols.thermodynamics.temperature,
+    display_symbol="T_0",
+    display_latex="T_0")
+"""
 Temperature at which the reference viscosity value is calculated.
-
-Symbol:
-    :code:`T_0`
-
-Latex:
-    :math:`T_0`
 """
 
 sutherland_constant = Symbol("sutherland_constant", units.temperature)

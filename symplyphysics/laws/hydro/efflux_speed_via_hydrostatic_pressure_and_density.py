@@ -67,7 +67,8 @@ _pressure_law_applied = pressure_law.law.subs({
     pressure_law.density: density,
     pressure_law.hydrostatic_pressure: hydrostatic_pressure
 })
-_height_derived = solve(_pressure_law_applied, pressure_law.height, dict=True)[0][pressure_law.height]
+_height_derived = solve(_pressure_law_applied, pressure_law.height,
+    dict=True)[0][pressure_law.height]
 
 _velocity_law_applied = velocity_law.law.subs({velocity_law.height: _height_derived})
 _velocity_derived = solve(_velocity_law_applied, velocity_law.efflux_speed,

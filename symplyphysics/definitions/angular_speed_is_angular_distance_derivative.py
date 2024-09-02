@@ -6,21 +6,21 @@ Angular speed is angular distance derivative
 """
 
 from sympy import (Eq, Derivative)
-from symplyphysics import (angle_type, units, Quantity, Function, Symbol, validate_input,
+from symplyphysics import (angle_type, units, Quantity, FunctionNew, SymbolNew, validate_input,
     validate_output)
 from symplyphysics.core.symbols.quantities import scale_factor
 
-angular_speed = Function("angular_speed", 1 / units.time, display_symbol="w(t)", display_latex="\\omega")
+angular_speed = FunctionNew("w(t)", 1 / units.time, display_latex="\\omega")
 """
 Angular speed of the body as a function of time.
 """
 
-angular_distance = Function("angular_distance", angle_type, display_symbol="theta(t)", display_latex="\\theta")
+angular_distance = FunctionNew("theta(t)", angle_type, display_latex="\\theta")
 """
 Angular distance as a function of time.
 """
 
-time = Symbol("time", units.time, display_symbol="t")
+time = SymbolNew("t", units.time)
 """
 Time.
 """

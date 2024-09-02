@@ -22,15 +22,11 @@ from symplyphysics.laws.kinematics import (
     speed_via_angular_speed_and_radius as velocities_law,
 )
 
-centripetal_acceleration = clone_symbol(symbols.kinematics.acceleration, "centripetal_acceleration")
-r"""
+centripetal_acceleration = clone_symbol(symbols.kinematics.acceleration,
+    display_symbol="a_n",
+    display_latex="a_n")
+"""
 Centripetal, or normal, :attr:`~symplyphysics.symbols.kinematics.acceleration`.
-
-Symbol:
-    :code:`a_n`
-
-Latex:
-    :math:`a_n`
 """
 
 angular_speed = Symbol("angular_speed", angle_type / units.time)
@@ -63,8 +59,8 @@ Latex:
 
 # Derive law from expression for linear velocity in circular motion
 
-_centripetal_acceleration_derived = centripetal_law.law.rhs.subs(centripetal_law.radius_of_curvature,
-    radius_of_curvature)
+_centripetal_acceleration_derived = centripetal_law.law.rhs.subs(
+    centripetal_law.radius_of_curvature, radius_of_curvature)
 
 _velocities_law_sub = velocities_law.law.subs({
     velocities_law.speed: centripetal_law.speed,

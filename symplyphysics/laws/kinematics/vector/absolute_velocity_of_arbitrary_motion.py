@@ -22,6 +22,7 @@ from symplyphysics import (
     scale_vector,
 )
 
+
 def absolute_velocity_law(
     relative_velocity_: Vector,
     transfer_velocity_: Vector,

@@ -25,6 +25,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.vectors.arithmetics import diff_cartesian_vector
 
+
 def non_uniform_rotation_acceleration_law(
     angular_velocity_: Vector,
     time_: Expr,

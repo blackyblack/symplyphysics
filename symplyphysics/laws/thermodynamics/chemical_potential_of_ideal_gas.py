@@ -38,9 +38,6 @@ Latex:
 temperature = symbols.thermodynamics.temperature
 """
 Temperature of the gas.
-
-Symbol:
-    :code:`T`
 """
 
 concentration = Symbol("concentration", 1 / units.volume)

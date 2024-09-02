@@ -5,7 +5,7 @@ Symplyphysics latex printer
 from typing import Any
 from sympy.printing.latex import LatexPrinter, accepted_latex_functions
 from sympy.core.function import AppliedUndef
-from ..core.symbols.symbols import DimensionSymbol
+from ..core.symbols.symbols import DimensionSymbolNew
 
 
 class SymbolLatexPrinter(LatexPrinter):
@@ -14,11 +14,13 @@ class SymbolLatexPrinter(LatexPrinter):
     """
     language = "Symplyphysics"
 
-    def __init__(self, settings: Any=None) -> None:
+    def __init__(self, settings: Any = None) -> None:
         LatexPrinter.__init__(self, settings)
 
-    def _print_Symbol(self, expr: Any, style: str="plain") -> str:
-        display_name = expr.display_latex if isinstance(expr, DimensionSymbol) else getattr(expr, "name")
+    # pylint: disable-next=invalid-name
+    def _print_SymbolNew(self, expr: Any, style: str = "plain") -> str:
+        display_name = expr.display_latex if isinstance(expr, DimensionSymbolNew) else getattr(
+            expr, "name")
         name: str = self._settings["symbol_names"].get(display_name)
         if name is not None:
             return name
@@ -29,14 +31,15 @@ class SymbolLatexPrinter(LatexPrinter):
         return self._print_Symbol(expr)
 
     # pylint: disable-next=invalid-name
-    def _print_SymbolIndexed(self, expr: Any) -> str:
+    def _print_SymbolIndexedNew(self, expr: Any) -> str:
         return self._print_Symbol(expr)
 
-    def _print_Function(self, expr: Any, exp: Any=None) -> str:
+    #pylint: disable-next=too-many-branches
+    def _print_Function(self, expr: Any, exp: Any = None) -> str:
         func = expr.func.__name__
-        if isinstance(expr, DimensionSymbol):
+        if isinstance(expr, DimensionSymbolNew):
             func = expr.display_latex
-        if isinstance(expr.func, DimensionSymbol):
+        if isinstance(expr.func, DimensionSymbolNew):
             func = expr.func.display_latex
 
         if hasattr(self, "_print_" + func) and not isinstance(expr, AppliedUndef):
@@ -54,10 +57,18 @@ class SymbolLatexPrinter(LatexPrinter):
             not self._needs_function_brackets(expr.args[0])
 
         inv_trig_table = [
-            "asin", "acos", "atan",
-            "acsc", "asec", "acot",
-            "asinh", "acosh", "atanh",
-            "acsch", "asech", "acoth",
+            "asin",
+            "acos",
+            "atan",
+            "acsc",
+            "asec",
+            "acot",
+            "asinh",
+            "acosh",
+            "atanh",
+            "acsch",
+            "asech",
+            "acoth",
         ]
 
         # If the function is an inverse trig function, handle the style
@@ -102,7 +113,7 @@ class SymbolLatexPrinter(LatexPrinter):
         return name % ",".join(args)
 
     # pylint: disable-next=invalid-name
-    def _print_SumIndexed(self, expr: Any) -> str:
+    def _print_SumIndexedNew(self, expr: Any) -> str:
         # only one index of sum is supported
         # expr.args[0] contains indexed symbol with index applied
         # expr.args[0].args[0] contains just indexed symbol

@@ -27,9 +27,6 @@ Symbol:
 mass = symbols.basic.mass
 """
 :attr:`~symplyphysics.symbols.basic.mass` of the object.
-
-Symbol:
-    :code:`m`
 """
 
 definition = Eq(momentum, mass * speed)

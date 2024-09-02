@@ -57,22 +57,14 @@ Latex:
     :math:`v_k`
 """
 
-particle_mass = clone_symbol(symbols.basic.mass, "particle_mass", positive=True)
+particle_mass = clone_symbol(symbols.basic.mass, positive=True)
 """
 :attr:`~symplyphysics.symbols.basic.mass` of a particle.
-
-Symbol:
-    :code:`m`
 """
 
-equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature,
-    "equilibrium_temperature",
-    positive=True)
+equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature, positive=True)
 """
 Equilibrium :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the ensemble.
-
-Symbol:
-    :code:`T`
 """
 
 law = Eq(

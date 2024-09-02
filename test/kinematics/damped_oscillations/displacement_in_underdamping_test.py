@@ -27,53 +27,53 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = displacement_in_underdamping.calculate_displacement(test_args.x_init, test_args.lambda_, test_args.w,
-        test_args.phi, test_args.t)
+    result = displacement_in_underdamping.calculate_displacement(test_args.x_init,
+        test_args.lambda_, test_args.w, test_args.phi, test_args.t)
     assert_equal(result, -0.215 * units.meter, tolerance=2e-3)
 
 
 def test_bad_initial_position(test_args: Args) -> None:
     xb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        displacement_in_underdamping.calculate_displacement(xb, test_args.lambda_, test_args.w, test_args.phi,
-            test_args.t)
+        displacement_in_underdamping.calculate_displacement(xb, test_args.lambda_, test_args.w,
+            test_args.phi, test_args.t)
     with raises(TypeError):
-        displacement_in_underdamping.calculate_displacement(100, test_args.lambda_, test_args.w, test_args.phi,
-            test_args.t)
+        displacement_in_underdamping.calculate_displacement(100, test_args.lambda_, test_args.w,
+            test_args.phi, test_args.t)
 
 
 def test_bad_decay_constant(test_args: Args) -> None:
     lambda_bad = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        displacement_in_underdamping.calculate_displacement(test_args.x_init, lambda_bad, test_args.w,
-            test_args.phi, test_args.t)
+        displacement_in_underdamping.calculate_displacement(test_args.x_init, lambda_bad,
+            test_args.w, test_args.phi, test_args.t)
     with raises(TypeError):
-        displacement_in_underdamping.calculate_displacement(test_args.x_init, 100, test_args.w, test_args.phi,
-            test_args.t)
+        displacement_in_underdamping.calculate_displacement(test_args.x_init, 100, test_args.w,
+            test_args.phi, test_args.t)
 
 
 def test_bad_undamped_frequency(test_args: Args) -> None:
     wb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        displacement_in_underdamping.calculate_displacement(test_args.x_init, test_args.lambda_, wb, test_args.phi,
-            test_args.t)
+        displacement_in_underdamping.calculate_displacement(test_args.x_init, test_args.lambda_, wb,
+            test_args.phi, test_args.t)
     with raises(TypeError):
-        displacement_in_underdamping.calculate_displacement(test_args.x_init, test_args.lambda_, 100, test_args.phi,
-            test_args.t)
+        displacement_in_underdamping.calculate_displacement(test_args.x_init, test_args.lambda_,
+            100, test_args.phi, test_args.t)
 
 
 def test_bad_phase_lag(test_args: Args) -> None:
     phi_bad = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        displacement_in_underdamping.calculate_displacement(test_args.x_init, test_args.lambda_, test_args.w,
-            phi_bad, test_args.t)
+        displacement_in_underdamping.calculate_displacement(test_args.x_init, test_args.lambda_,
+            test_args.w, phi_bad, test_args.t)
 
 
 def test_bad_time(test_args: Args) -> None:
     tb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        displacement_in_underdamping.calculate_displacement(test_args.x_init, test_args.lambda_, test_args.w,
-            test_args.phi, tb)
+        displacement_in_underdamping.calculate_displacement(test_args.x_init, test_args.lambda_,
+            test_args.w, test_args.phi, tb)
     with raises(TypeError):
-        displacement_in_underdamping.calculate_displacement(test_args.x_init, test_args.lambda_, test_args.w,
-            test_args.phi, 100)
+        displacement_in_underdamping.calculate_displacement(test_args.x_init, test_args.lambda_,
+            test_args.w, test_args.phi, 100)

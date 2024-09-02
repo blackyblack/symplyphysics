@@ -21,7 +21,7 @@ from symplyphysics.laws.conservation import mechanical_energy_after_equals_to_me
 # R - radius of planet
 
 velocity = Symbol("initial_velocity", units.velocity)
-planet_mass = clone_symbol(symbols.basic.mass, "planet_mass")
+planet_mass = clone_symbol(symbols.basic.mass)
 radius = Symbol("radius", units.length)
 height = Symbol("height", units.length)
 

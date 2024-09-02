@@ -69,13 +69,12 @@ Latex:
 
 temperature = symbols.thermodynamics.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas..
-
-Symbol:
-    :code:`T`
+:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas.
 """
 
-law = Eq(work, amount_of_substance * units.molar_gas_constant * temperature *
+law = Eq(
+    work,
+    amount_of_substance * units.molar_gas_constant * temperature *
     log(final_volume / initial_volume))
 r"""
 :code:`W = n * R * T * log(V_1 / V_0)`
@@ -112,14 +111,13 @@ _work_from_law = law.rhs.subs({
 assert expr_equals(_work_expr, _work_from_law)
 
 
-@validate_input(
-    amount_of_substance_=amount_of_substance,
+@validate_input(amount_of_substance_=amount_of_substance,
     start_volume_=initial_volume,
     final_volume_=final_volume,
     temperature_=temperature)
 @validate_output(work)
-def calculate_work(amount_of_substance_: Quantity, start_volume_: Quantity,
-    final_volume_: Quantity, temperature_: Quantity) -> Quantity:
+def calculate_work(amount_of_substance_: Quantity, start_volume_: Quantity, final_volume_: Quantity,
+    temperature_: Quantity) -> Quantity:
     solved = solve(law, work, dict=True)[0][work]
     result_expr = solved.subs({
         amount_of_substance: amount_of_substance_,

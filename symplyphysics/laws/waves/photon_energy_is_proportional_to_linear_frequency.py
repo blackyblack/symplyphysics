@@ -12,8 +12,7 @@ in any reference frame. The energy of a photon depends only on its frequency.
 
 from sympy import (Eq, solve)
 from sympy.physics.units import planck as planck_constant
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
 
 energy = Symbol("energy", units.energy)
 """

@@ -6,8 +6,8 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.kinematics import (
-    centripetal_acceleration_via_angular_speed_and_radius as centripetal_law)
+from symplyphysics.laws.kinematics import (centripetal_acceleration_via_angular_speed_and_radius as
+    centripetal_law)
 
 # Description
 ## A body is rotating about an axis with an angular velocity of 5 rad/s. Its perpendicular

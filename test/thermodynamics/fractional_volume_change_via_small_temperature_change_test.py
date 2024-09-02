@@ -2,8 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import assert_equal, units, Quantity, errors
 from symplyphysics.laws.thermodynamics import (
-    fractional_volume_change_via_small_temperature_change as law,
-)
+    fractional_volume_change_via_small_temperature_change as law,)
 
 Args = namedtuple("Args", "a dt")
 

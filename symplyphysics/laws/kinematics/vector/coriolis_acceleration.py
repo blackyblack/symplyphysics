@@ -23,6 +23,7 @@ from symplyphysics import (
     cross_cartesian_vectors,
 )
 
+
 def coriolis_acceleration_law(
     velocity_: Vector,
     angular_velocity_: Vector,

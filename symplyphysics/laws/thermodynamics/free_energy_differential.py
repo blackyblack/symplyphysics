@@ -55,12 +55,9 @@ Symbol:
     :code:`S`
 """
 
-temperature_change = clone_symbol(symbols.thermodynamics.temperature, "temperature_change")
+temperature_change = clone_symbol(symbols.thermodynamics.temperature, display_symbol="dT")
 """
 Infinitesimal change in :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
-
-Symbol:
-    :code:`dT`
 """
 
 pressure = Symbol("pressure", units.pressure)

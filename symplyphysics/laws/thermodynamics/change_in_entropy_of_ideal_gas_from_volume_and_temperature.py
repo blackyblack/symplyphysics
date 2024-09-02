@@ -32,9 +32,6 @@ Symbol:
 mass = symbols.basic.mass
 """
 Mass of the gas.
-
-Symbol:
-    :code:`m`
 """
 
 molar_mass = Symbol("molar_mass", units.mass / units.amount_of_substance)
@@ -57,42 +54,23 @@ Latex:
     :math:`C_V`
 """
 
-final_temperature = clone_symbol(symbols.thermodynamics.temperature, "final_temperature")
-r"""
+final_temperature = clone_symbol(symbols.thermodynamics.temperature,
+    display_symbol="T_1",
+    display_latex="T_1")
+"""
 Temperature of the final state.
-
-Symbol:
-    :code:`T_2`
-
-Latex:
-    :math:`T_2`
 """
 
-initial_temperature = clone_symbol(symbols.thermodynamics.temperature, "initial_temperature")
+initial_temperature = clone_symbol(symbols.thermodynamics.temperature,
+    display_symbol="T_0",
+    display_latex="T_0")
 """
 Temperature of the initial state.
-
-Symbol:
-    :code:`T_1`
-
-Latex:
-    :math:`T_1`
 """
 
 final_volume = Symbol("final_volume", units.volume)
 """
 Volume of the final state.
-
-Symbol:
-    :code:`V_2`
-
-Latex:
-    :math:`V_2`
-"""
-
-initial_volume = Symbol("initial_volume", units.volume)
-"""
-Volume of the initial state.
 
 Symbol:
     :code:`V_1`
@@ -101,15 +79,26 @@ Latex:
     :math:`V_1`
 """
 
+initial_volume = Symbol("initial_volume", units.volume)
+"""
+Volume of the initial state.
+
+Symbol:
+    :code:`V_0`
+
+Latex:
+    :math:`V_0`
+"""
+
 law = Eq(entropy_change, (mass / molar_mass) *
     ((molar_isochoric_heat_capacity * log(final_temperature / initial_temperature)) +
     (units.molar_gas_constant * log(final_volume / initial_volume))))
 r"""
-:code:`S = (m / M) * (C_V * log(T_2 / T_1) + R * log(V_2 / V_1))`
+:code:`S = (m / M) * (C_V * log(T_1 / T_0) + R * log(V_1 / V_0))`
 
 Latex:
     .. math::
-        S = \frac{m}{M} \left( C_V \log \frac{T_2}{T_1} + R \log \frac{V_2}{V_1} \right)
+        S = \frac{m}{M} \left( C_V \log \frac{T_1}{T_0} + R \log \frac{V_1}{V_0} \right)
 """
 
 

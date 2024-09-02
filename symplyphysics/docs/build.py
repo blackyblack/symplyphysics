@@ -30,7 +30,8 @@ def process_law_package(directory: str, laws: Sequence[str], packages: Sequence[
     packages = [p for p in packages if not (p.startswith(".") or p.startswith("_"))]
     packages = [package_name_strip_root + "." + p for p in packages]
     package_items = find_members_and_functions(package_name)
-    package_content = print_package(package_title, package_description, package_items, package_name, laws, packages)
+    package_content = print_package(package_title, package_description, package_items, package_name,
+        laws, packages)
 
     package_doc_file = os.path.normpath(os.path.join(output_dir, package_name_strip_root + ".rst"))
 

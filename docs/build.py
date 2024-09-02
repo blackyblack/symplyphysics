@@ -38,23 +38,19 @@ def get_parser() -> argparse.ArgumentParser:
         help="directories to exclude from parsing",
     )
 
-    parser.add_argument(
-        "-o",
+    parser.add_argument("-o",
         "--output-dir",
         action="store",
         dest="output_dir",
         default="html",
-        help="directory to generate HTML output into"
-    )
+        help="directory to generate HTML output into")
 
-    parser.add_argument(
-        "-c",
+    parser.add_argument("-c",
         "--conf-dir",
         action="store",
         dest="conf_dir",
         default="docs",
-        help="directory where conf.py file is stored"
-    )
+        help="directory where conf.py file is stored")
 
     return parser
 

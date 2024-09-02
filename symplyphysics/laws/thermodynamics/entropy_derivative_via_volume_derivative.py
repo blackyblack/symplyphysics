@@ -58,9 +58,6 @@ Symbol:
 temperature = symbols.thermodynamics.temperature
 """
 :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
-
-Symbol:
-    :code:`T`
 """
 
 law = Eq(Derivative(entropy(temperature, pressure), pressure),

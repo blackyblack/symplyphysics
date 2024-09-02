@@ -9,21 +9,18 @@ from sympy import Eq, pi
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
     angle_type,
 )
 
-angular_wavenumber = Symbol("angular_wave_number", angle_type / units.length, display_symbol="k")
+angular_wavenumber = SymbolNew("k", angle_type / units.length)
 """
 Angular wavenumber of the wave.
-
-Symbol:
-    :code:`k`
 """
 
-wavelength = Symbol("wavelength", units.length, display_symbol="lambda", display_latex="\\lambda")
+wavelength = SymbolNew("lambda", units.length, display_latex="\\lambda")
 """
 Wavelength of the wave.
 """

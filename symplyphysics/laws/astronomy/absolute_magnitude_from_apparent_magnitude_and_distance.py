@@ -9,7 +9,7 @@ from sympy import Eq, solve, log
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
+    SymbolNew,
     print_expression,
     validate_input,
     validate_output,
@@ -17,24 +17,26 @@ from symplyphysics import (
     convert_to_float,
 )
 
-absolute_magnitude = Symbol(None, dimensionless, display_symbol="M")
+absolute_magnitude = SymbolNew("M", dimensionless)
 """
 Absolute magnitude for stars is defined as the apparent magnitude of an object if it were located at a distance
 of 10 parsecs (2.063e+6 astronomical units) from the observer and would not experience either interstellar or atmospheric absorption.
 """
 
-apparent_magnitude = Symbol(None, dimensionless, display_symbol="m")
+apparent_magnitude = SymbolNew("m", dimensionless)
 """
 The apparent magnitude is a measure of the brightness of a celestial body (more precisely, the illumination created
 by this body) from the observer's point of view. The brighter the object, the smaller its magnitude.
 """
 
-distance = Symbol(None, units.length, display_symbol="d")
+distance = SymbolNew("d", units.length)
 """
 Distance to the object.
 """
 
-distance_constant = Quantity(2.063e+6 * units.astronomical_unit, display_symbol="d0", display_latex="d_0")
+distance_constant = Quantity(2.063e+6 * units.astronomical_unit,
+    display_symbol="d0",
+    display_latex="d_0")
 """
 Constant equal to 2.063e+6 astronomical units.
 """

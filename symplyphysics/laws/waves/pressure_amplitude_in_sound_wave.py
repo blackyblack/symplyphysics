@@ -81,6 +81,7 @@ Latex:
         (\Delta p)_\text{max} = v \rho \omega s_\text{max}
 """
 
+
 @validate_input(
     speed_of_sound_=speed_of_sound,
     density_of_medium_=medium_density,

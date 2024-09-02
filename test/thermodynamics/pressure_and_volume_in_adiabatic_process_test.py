@@ -24,52 +24,42 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_pressure(test_args: Args) -> None:
-    result = law.calculate_pressure(test_args.n, test_args.t0, test_args.V0,
-        test_args.V1, test_args.y)
+    result = law.calculate_pressure(test_args.n, test_args.t0, test_args.V0, test_args.V1,
+        test_args.y)
     assert_equal(result, 262.19 * units.pascal)
 
 
 def test_bad_mole_count(test_args: Args) -> None:
     nb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        law.calculate_pressure(nb, test_args.t0, test_args.V0, test_args.V1,
-            test_args.y)
+        law.calculate_pressure(nb, test_args.t0, test_args.V0, test_args.V1, test_args.y)
     with raises(TypeError):
-        law.calculate_pressure(100, test_args.t0, test_args.V0, test_args.V1,
-            test_args.y)
+        law.calculate_pressure(100, test_args.t0, test_args.V0, test_args.V1, test_args.y)
 
 
 def test_bad_temperature(test_args: Args) -> None:
     tb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        law.calculate_pressure(test_args.n, tb, test_args.V0, test_args.V1,
-            test_args.y)
+        law.calculate_pressure(test_args.n, tb, test_args.V0, test_args.V1, test_args.y)
     with raises(TypeError):
-        law.calculate_pressure(test_args.n, 100, test_args.V0, test_args.V1,
-            test_args.y)
+        law.calculate_pressure(test_args.n, 100, test_args.V0, test_args.V1, test_args.y)
 
 
 def test_bad_volume(test_args: Args) -> None:
     Vb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        law.calculate_pressure(test_args.n, test_args.t0, Vb, test_args.V1,
-            test_args.y)
+        law.calculate_pressure(test_args.n, test_args.t0, Vb, test_args.V1, test_args.y)
     with raises(errors.UnitsError):
-        law.calculate_pressure(test_args.n, test_args.t0, test_args.V0, Vb,
-            test_args.y)
+        law.calculate_pressure(test_args.n, test_args.t0, test_args.V0, Vb, test_args.y)
     with raises(TypeError):
-        law.calculate_pressure(test_args.n, test_args.t0, 100, test_args.V1,
-            test_args.y)
+        law.calculate_pressure(test_args.n, test_args.t0, 100, test_args.V1, test_args.y)
     with raises(TypeError):
-        law.calculate_pressure(test_args.n, test_args.t0, test_args.V0, 100,
-            test_args.y)
+        law.calculate_pressure(test_args.n, test_args.t0, test_args.V0, 100, test_args.y)
 
 
 def test_bad_specific_heats_ratio(test_args: Args) -> None:
     yb = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        law.calculate_pressure(test_args.n, test_args.t0, test_args.V0, test_args.V1,
-            yb)
+        law.calculate_pressure(test_args.n, test_args.t0, test_args.V0, test_args.V1, yb)
     with raises(errors.UnitsError):
-        law.calculate_pressure(test_args.n, test_args.t0, test_args.V0, test_args.V1,
-            'bad')
+        law.calculate_pressure(test_args.n, test_args.t0, test_args.V0, test_args.V1, 'bad')

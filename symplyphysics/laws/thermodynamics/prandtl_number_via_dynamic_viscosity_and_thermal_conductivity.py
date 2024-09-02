@@ -20,7 +20,8 @@ from symplyphysics import (
 
 # TODO Create "definition" law: Pr = momentum diffusivity / thermal diffusivity
 
-isobaric_specific_heat_capacity = Symbol("isobaric_specific_heat_capacity", units.energy / units.mass / units.temperature)
+isobaric_specific_heat_capacity = Symbol("isobaric_specific_heat_capacity",
+    units.energy / units.mass / units.temperature)
 r"""
 Heat capacity at constant pressure per unit mass.
 

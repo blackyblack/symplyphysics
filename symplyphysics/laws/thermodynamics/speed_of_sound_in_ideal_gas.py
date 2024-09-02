@@ -35,9 +35,6 @@ Symbol:
 temperature = symbols.thermodynamics.temperature
 """
 :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas.
-
-Symbol:
-    :code:`T`
 """
 
 heat_capacity_ratio = Symbol("heat_capacity_ratio", dimensionless)

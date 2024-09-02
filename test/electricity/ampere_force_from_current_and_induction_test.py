@@ -24,38 +24,46 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_force(test_args: Args) -> None:
-    result = ampere_force_from_current_and_induction.calculate_force(test_args.current, test_args.length, test_args.angle,
-        test_args.induction)
+    result = ampere_force_from_current_and_induction.calculate_force(test_args.current,
+        test_args.length, test_args.angle, test_args.induction)
     assert_equal(result, 3 * units.newton)
 
 
 def test_bad_current(test_args: Args) -> None:
     current = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        ampere_force_from_current_and_induction.calculate_force(current, test_args.length, test_args.angle, test_args.induction)
+        ampere_force_from_current_and_induction.calculate_force(current, test_args.length,
+            test_args.angle, test_args.induction)
     with raises(TypeError):
-        ampere_force_from_current_and_induction.calculate_force(100, test_args.length, test_args.angle, test_args.induction)
+        ampere_force_from_current_and_induction.calculate_force(100, test_args.length,
+            test_args.angle, test_args.induction)
 
 
 def test_bad_length(test_args: Args) -> None:
     length = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        ampere_force_from_current_and_induction.calculate_force(test_args.current, length, test_args.angle, test_args.induction)
+        ampere_force_from_current_and_induction.calculate_force(test_args.current, length,
+            test_args.angle, test_args.induction)
     with raises(TypeError):
-        ampere_force_from_current_and_induction.calculate_force(test_args.current, 100, test_args.angle, test_args.induction)
+        ampere_force_from_current_and_induction.calculate_force(test_args.current, 100,
+            test_args.angle, test_args.induction)
 
 
 def test_bad_angle(test_args: Args) -> None:
     angle = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        ampere_force_from_current_and_induction.calculate_force(test_args.current, test_args.length, angle, test_args.induction)
+        ampere_force_from_current_and_induction.calculate_force(test_args.current, test_args.length,
+            angle, test_args.induction)
     with raises(AttributeError):
-        ampere_force_from_current_and_induction.calculate_force(test_args.current, test_args.length, True, test_args.induction)
+        ampere_force_from_current_and_induction.calculate_force(test_args.current, test_args.length,
+            True, test_args.induction)
 
 
 def test_bad_induction(test_args: Args) -> None:
     induction = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        ampere_force_from_current_and_induction.calculate_force(test_args.current, test_args.length, test_args.angle, induction)
+        ampere_force_from_current_and_induction.calculate_force(test_args.current, test_args.length,
+            test_args.angle, induction)
     with raises(TypeError):
-        ampere_force_from_current_and_induction.calculate_force(test_args.current, test_args.length, test_args.angle, 100)
+        ampere_force_from_current_and_induction.calculate_force(test_args.current, test_args.length,
+            test_args.angle, 100)

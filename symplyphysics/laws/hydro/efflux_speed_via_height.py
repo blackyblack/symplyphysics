@@ -13,8 +13,7 @@ of the height of the fluid column. It is also known as the *Torricelli's law*.
 """
 
 from sympy import (Eq, solve, sqrt)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
 
 efflux_speed = Symbol("efflux_speed", units.velocity)
 """

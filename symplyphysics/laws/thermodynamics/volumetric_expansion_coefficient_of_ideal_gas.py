@@ -36,9 +36,6 @@ Latex:
 temperature = symbols.thermodynamics.temperature
 """
 :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas.
-
-Symbol:
-    :code:`T`
 """
 
 law = Eq(volumetric_expansion_coefficient, 1 / temperature)

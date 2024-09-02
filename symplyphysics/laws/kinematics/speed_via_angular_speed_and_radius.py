@@ -7,8 +7,7 @@ radius of curvature of the body's path.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, angle_type, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, angle_type, validate_input, validate_output)
 
 speed = Symbol("speed", units.velocity)
 """
@@ -51,5 +50,8 @@ Latex:
 @validate_output(speed)
 def calculate_linear_velocity(angular_velocity_: Quantity, curve_radius_: Quantity) -> Quantity:
     solved = solve(law, speed, dict=True)[0][speed]
-    result_expr = solved.subs({angular_speed: angular_velocity_, radius_of_curvature: curve_radius_})
+    result_expr = solved.subs({
+        angular_speed: angular_velocity_,
+        radius_of_curvature: curve_radius_
+    })
     return Quantity(result_expr)

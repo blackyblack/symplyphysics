@@ -8,8 +8,7 @@ with the same wave phase.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematics import position_via_constant_speed_and_time as velocity_definition
 
@@ -66,8 +65,5 @@ assert expr_equals(_constant_velocity_movement_definition.rhs, law.rhs)
 @validate_output(wavelength)
 def calculate_wavelength(velocity_: Quantity, period_: Quantity) -> Quantity:
     applied_definition = solve(law, wavelength, dict=True)[0][wavelength]
-    result_expr = applied_definition.subs({
-        phase_velocity: velocity_,
-        period: period_
-    })
+    result_expr = applied_definition.subs({phase_velocity: velocity_, period: period_})
     return Quantity(result_expr)

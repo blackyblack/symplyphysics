@@ -5,22 +5,25 @@ import importlib
 from typing import Any, Optional
 from sympy.physics.units.systems.si import SI
 
-from ..core.symbols.symbols import DimensionSymbol, Function
+from ..core.symbols.symbols import DimensionSymbolNew, FunctionNew
 
 
 class LawDirectiveTypes(Enum):
     SYMBOL = 0
     LATEX = 1
 
+
 class LawSymbolTypes(Enum):
     SYMBOL = 0
     FUNCTION = 1
+
 
 @dataclass
 class LawDirective:
     start: int
     end: int
     directive_type: LawDirectiveTypes
+
 
 @dataclass
 class LawSymbol:
@@ -29,6 +32,7 @@ class LawSymbol:
     latex: Optional[str]
     dimension: str
 
+
 @dataclass
 class MemberWithDoc:
     name: str
@@ -36,6 +40,7 @@ class MemberWithDoc:
     symbol: Optional[LawSymbol]
     directives: list[LawDirective]
     value: Any
+
 
 @dataclass
 class FunctionWithDoc:
@@ -63,10 +68,12 @@ def _docstring_find_law_directives(doc: str) -> list[LawDirective]:
     directives = []
     position = doc.find(":laws:symbol::")
     if position >= 0:
-        directives.append(LawDirective(position, position + len(":laws:symbol::"), LawDirectiveTypes.SYMBOL))
+        directives.append(
+            LawDirective(position, position + len(":laws:symbol::"), LawDirectiveTypes.SYMBOL))
     position = doc.find(":laws:latex::")
     if position >= 0:
-        directives.append(LawDirective(position, position + len(":laws:latex::"), LawDirectiveTypes.LATEX))
+        directives.append(
+            LawDirective(position, position + len(":laws:latex::"), LawDirectiveTypes.LATEX))
     return directives
 
 
@@ -110,6 +117,7 @@ def find_description(content: str) -> Optional[str]:
     return "\n".join(content_lines)
 
 
+#pylint: disable-next=too-many-branches
 def find_members_and_functions(module_name: str) -> list[MemberWithDoc | FunctionWithDoc]:
     law_functions: list[FunctionWithDoc] = []
     law_members: list[str] = []
@@ -128,7 +136,8 @@ def find_members_and_functions(module_name: str) -> list[MemberWithDoc | Functio
             if doc is None:
                 continue
             args_list_str: list[str] = [a.arg for a in e.args.args]
-            maybe_return_str = None if e.returns is None else (e.returns.id if isinstance(e.returns, ast.Name) else None)
+            maybe_return_str = None if e.returns is None else (
+                e.returns.id if isinstance(e.returns, ast.Name) else None)
             doc = _docstring_clean(doc)
             law_functions.append(FunctionWithDoc(e.name, args_list_str, maybe_return_str, doc))
             continue
@@ -153,12 +162,13 @@ def find_members_and_functions(module_name: str) -> list[MemberWithDoc | Functio
         doc = _docstring_clean(doc)
         sym = getattr(module, v)
         law_symbol = None
-        if isinstance(sym, DimensionSymbol):
-            dimension = "dimensionless" if SI.get_dimension_system().is_dimensionless(sym.dimension) else str(sym.dimension.name)
+        if isinstance(sym, DimensionSymbolNew):
+            dimension = "dimensionless" if SI.get_dimension_system().is_dimensionless(
+                sym.dimension) else str(sym.dimension.name)
             symbol_type = LawSymbolTypes.SYMBOL
-            if isinstance(sym, Function):
+            if isinstance(sym, FunctionNew):
                 symbol_type = LawSymbolTypes.FUNCTION
-            law_symbol = LawSymbol(sym.display_symbol, symbol_type, sym.display_latex, dimension)
+            law_symbol = LawSymbol(sym.display_name, symbol_type, sym.display_latex, dimension)
         directives = _docstring_find_law_directives(doc)
         result.append(MemberWithDoc(v, doc, law_symbol, directives, sym))
     for lf in law_functions:

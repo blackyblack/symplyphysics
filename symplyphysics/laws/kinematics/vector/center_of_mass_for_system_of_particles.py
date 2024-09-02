@@ -20,6 +20,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.dimensions import ScalarValue
 
+
 def center_of_mass_law(
     masses_: Sequence[ScalarValue],
     position_vectors_: Sequence[Vector],

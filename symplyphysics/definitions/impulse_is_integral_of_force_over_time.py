@@ -11,33 +11,33 @@ from sympy import Eq, Integral
 from symplyphysics import (
     units,
     Quantity,
-    Function,
-    Symbol,
+    FunctionNew,
+    SymbolNew,
     validate_input,
     validate_output,
 )
 
-impulse = Symbol(None, units.momentum, display_symbol="J")
+impulse = SymbolNew("J", units.momentum)
 r"""
 Projection of impulse vector due to :attr:`~symplyphysics.symbols.dynamics.force` :math:`\vec F`.
 """
 
-force = Function(None, units.force, display_symbol="F(t)", display_latex="F")
+force = FunctionNew("F(t)", units.force, display_latex="F")
 r"""
 Projection of :attr:`~symplyphysics.symbols.dynamics.force` :math:`\vec F` as a function of time.
 """
 
-time = Symbol(None, units.time, display_symbol="t")
+time = SymbolNew("t", units.time)
 """
 Time.
 """
 
-time_before = Symbol(None, units.time, display_symbol="t0", display_latex="t_0")
+time_before = SymbolNew("t0", units.time, display_latex="t_0")
 """
 Initial time of collision.
 """
 
-time_after = Symbol(None, units.time, display_symbol="t1", display_latex="t_1")
+time_after = SymbolNew("t1", units.time, display_latex="t_1")
 """
 Final time of collision.
 """

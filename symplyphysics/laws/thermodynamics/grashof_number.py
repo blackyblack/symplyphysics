@@ -46,26 +46,18 @@ Latex:
     :math:`\beta`
 """
 
-surface_temperature = clone_symbol(symbols.thermodynamics.temperature, "surface_temperature")
-r"""
+surface_temperature = clone_symbol(symbols.thermodynamics.temperature,
+    display_symbol="T_s",
+    display_latex="T_\\text{s}")
+"""
 :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the surface of the fluid.
-
-Symbol:
-    :code:`T_s`
-
-Latex:
-    :math:`T_\text{s}`
 """
 
-bulk_temperature = clone_symbol(symbols.thermodynamics.temperature, "bulk_temperature")
-r"""
+bulk_temperature = clone_symbol(symbols.thermodynamics.temperature,
+    display_symbol="T_b",
+    display_latex="T_\\text{b}")
+"""
 Average :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the inside of the fluid.
-
-Symbol:
-    :code:`T_b`
-
-Latex:
-    :math:`T_\text{b}`
 """
 
 characteristic_length = Symbol("characteristic_length", units.length)

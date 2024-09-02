@@ -11,8 +11,7 @@ of time.
 """
 
 from sympy import (Eq, solve, dsolve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import speed_is_distance_derivative as velocity_definition
 
@@ -73,9 +72,7 @@ _dsolved_movement = dsolve(_constant_velocity_movement_definition,
 assert (expr_equals(_dsolved_movement.rhs.subs("C1", initial_position), law.rhs))
 
 
-@validate_input(initial_distance_=initial_position,
-    velocity_=speed,
-    time_=time)
+@validate_input(initial_distance_=initial_position, velocity_=speed, time_=time)
 @validate_output(final_position)
 def calculate_distance(initial_distance_: Quantity, velocity_: Quantity,
     time_: Quantity) -> Quantity:

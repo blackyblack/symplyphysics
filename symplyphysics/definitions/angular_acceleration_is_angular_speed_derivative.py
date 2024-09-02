@@ -6,20 +6,22 @@ Angular acceleration is angular speed derivative
 """
 
 from sympy import (Eq, Derivative)
-from symplyphysics import (angle_type, units, Quantity, Function, Symbol, validate_input,
+from symplyphysics import (angle_type, units, Quantity, FunctionNew, SymbolNew, validate_input,
     validate_output)
 
-angular_acceleration = Function(None, angle_type / (units.time**2), display_symbol="epsilon(t)", display_latex="\\varepsilon")
+angular_acceleration = FunctionNew("epsilon(t)",
+    angle_type / (units.time**2),
+    display_latex="\\varepsilon")
 """
 Angular acceleration of the body as a function of time.
 """
 
-angular_speed = Function(None, angle_type / units.time, display_symbol="w(t)", display_latex="\\omega")
+angular_speed = FunctionNew("w(t)", angle_type / units.time, display_latex="\\omega")
 """
 Angular speed of the body as a function of time.
 """
 
-time = Symbol(None, units.time, display_symbol="t")
+time = SymbolNew("t", units.time)
 """
 Time.
 """

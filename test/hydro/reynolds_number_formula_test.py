@@ -20,38 +20,46 @@ def test_args_fixture() -> Args:
 
 
 def test_reynolds_number(test_args: Args) -> None:
-    result = reynolds_number_formula.calculate_reynolds_number(test_args.d, test_args.rho, test_args.v,
-        test_args.mu)
+    result = reynolds_number_formula.calculate_reynolds_number(test_args.d, test_args.rho,
+        test_args.v, test_args.mu)
     assert_equal(result, 111856.823)
 
 
 def test_bad_velocity(test_args: Args) -> None:
     bv = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        reynolds_number_formula.calculate_reynolds_number(test_args.d, test_args.rho, bv, test_args.mu)
+        reynolds_number_formula.calculate_reynolds_number(test_args.d, test_args.rho, bv,
+            test_args.mu)
     with raises(TypeError):
-        reynolds_number_formula.calculate_reynolds_number(test_args.d, test_args.rho, 0, test_args.mu)
+        reynolds_number_formula.calculate_reynolds_number(test_args.d, test_args.rho, 0,
+            test_args.mu)
 
 
 def test_bad_diameter(test_args: Args) -> None:
     bd = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        reynolds_number_formula.calculate_reynolds_number(bd, test_args.rho, test_args.v, test_args.mu)
+        reynolds_number_formula.calculate_reynolds_number(bd, test_args.rho, test_args.v,
+            test_args.mu)
     with raises(TypeError):
-        reynolds_number_formula.calculate_reynolds_number(0, test_args.rho, test_args.v, test_args.mu)
+        reynolds_number_formula.calculate_reynolds_number(0, test_args.rho, test_args.v,
+            test_args.mu)
 
 
 def test_bad_density(test_args: Args) -> None:
     bd = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        reynolds_number_formula.calculate_reynolds_number(test_args.d, bd, test_args.v, test_args.mu)
+        reynolds_number_formula.calculate_reynolds_number(test_args.d, bd, test_args.v,
+            test_args.mu)
     with raises(TypeError):
-        reynolds_number_formula.calculate_reynolds_number(test_args.d, 10, test_args.v, test_args.mu)
+        reynolds_number_formula.calculate_reynolds_number(test_args.d, 10, test_args.v,
+            test_args.mu)
 
 
 def test_bad_dynamic_viscosity(test_args: Args) -> None:
     bd = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        reynolds_number_formula.calculate_reynolds_number(test_args.d, test_args.rho, test_args.v, bd)
+        reynolds_number_formula.calculate_reynolds_number(test_args.d, test_args.rho, test_args.v,
+            bd)
     with raises(TypeError):
-        reynolds_number_formula.calculate_reynolds_number(test_args.d, test_args.rho, test_args.v, 0.05)
+        reynolds_number_formula.calculate_reynolds_number(test_args.d, test_args.rho, test_args.v,
+            0.05)

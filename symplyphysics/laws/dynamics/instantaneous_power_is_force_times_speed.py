@@ -29,9 +29,6 @@ Symbol:
 force = symbols.dynamics.force
 """
 The :attr:`~symplyphysics.symbols.dynamics.force` exerted on the object.
-
-Symbol:
-    :code:`F`
 """
 
 speed = Symbol("speed", units.speed)

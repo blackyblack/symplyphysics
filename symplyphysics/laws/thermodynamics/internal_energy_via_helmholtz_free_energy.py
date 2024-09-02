@@ -45,9 +45,6 @@ Symbol:
 temperature = symbols.thermodynamics.temperature
 """
 Temperature of the system.
-
-Symbol:
-    :code:`T`
 """
 
 volume = Symbol("volume", units.volume)

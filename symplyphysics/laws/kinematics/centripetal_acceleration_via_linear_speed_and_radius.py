@@ -6,8 +6,8 @@ Centripetal acceleration via linear speed and radius
 """
 
 from sympy import (Eq, solve, sin, cos, Derivative, pi)
-from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, Function,
-    angle_type, CoordinateSystem, Vector, validate_input, validate_output)
+from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, Function, angle_type,
+    CoordinateSystem, Vector, validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals, expr_equals_abs
 from symplyphysics.core.vectors.arithmetics import dot_vectors
 from symplyphysics.definitions import speed_is_distance_derivative as velocity_def
@@ -16,15 +16,11 @@ from symplyphysics.definitions import acceleration_is_speed_derivative as accele
 from symplyphysics.laws.geometry import planar_projection_is_cosine as projector
 from symplyphysics.laws.kinematics import speed_via_angular_speed_and_radius as linear_velocity_law
 
-centripetal_acceleration = clone_symbol(symbols.kinematics.acceleration, "centripetal_acceleration")
-r"""
+centripetal_acceleration = clone_symbol(symbols.kinematics.acceleration,
+    display_symbol="a_n",
+    display_latex="a_n")
+"""
 Centripetal, or normal, :attr:`~symplyphysics.symbols.kinematics.acceleration`.
-
-Symbol:
-    :code:`a_n`
-
-Latex:
-    :math:`a_n`
 """
 
 speed = Symbol("speed", units.velocity)
@@ -120,7 +116,8 @@ assert expr_equals(_radial_acceleration_component, _radial_acceleration_magnitud
 ## We are not interested in tangential_acceleration as we are looking for centripetal acceleration which is 'radial_acceleration'
 ## in our proof.
 
-_angular_velocity_applied = angular_velocity_def.definition.rhs.subs(angular_velocity_def.time, _time)
+_angular_velocity_applied = angular_velocity_def.definition.rhs.subs(angular_velocity_def.time,
+    _time)
 _angular_velocity_applied = _angular_velocity_applied.subs(
     angular_velocity_def.angular_distance(_time), _alpha(_time))
 _linear_velocity_applied = linear_velocity_law.law.rhs.subs({

@@ -17,9 +17,7 @@ pressure_after = Symbol("pressure_after")
 parameter_a = Symbol("parameter_a")
 parameter_b = Symbol("parameter_b")
 
-molar_volume = solve(
-    molar_qty_law.law, molar_qty_law.molar_quantity
-)[0].subs({
+molar_volume = solve(molar_qty_law.law, molar_qty_law.molar_quantity)[0].subs({
     molar_qty_law.extensive_quantity: volume,
     molar_qty_law.amount_of_substance: amount_of_substance,
 })

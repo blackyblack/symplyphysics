@@ -16,8 +16,7 @@ into account the main characteristics of a gas with intermolecular interaction.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (symbols, units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output)
 
 pressure = Symbol("pressure", units.pressure)
 """
@@ -41,9 +40,6 @@ Latex:
 temperature = symbols.thermodynamics.temperature
 """
 :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the van der Waals fluid.
-
-Symbol:
-    :code:`T`
 """
 
 attractive_forces_parameter = Symbol(
@@ -71,7 +67,8 @@ Symbol:
 """
 
 law = Eq(
-    (pressure + attractive_forces_parameter / molar_volume**2) * (molar_volume - excluded_volume_parameter),
+    (pressure + attractive_forces_parameter / molar_volume**2) *
+    (molar_volume - excluded_volume_parameter),
     units.molar_gas_constant * temperature,
 )
 r"""

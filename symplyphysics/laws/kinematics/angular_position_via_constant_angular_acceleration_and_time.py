@@ -88,7 +88,6 @@ Latex:
         \theta = \theta_0 + \omega_0 t + \frac{1}{2} \alpha t^2
 """
 
-
 # Derive law from definitions of angular velocity and acceleration
 
 _angular_velocity_formula = dsolve(

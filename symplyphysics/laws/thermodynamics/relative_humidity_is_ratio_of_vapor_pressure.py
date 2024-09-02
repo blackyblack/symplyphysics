@@ -10,8 +10,7 @@ molecules per unit time.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output, dimensionless)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless)
 
 relative_humidity = Symbol("relative_humidity", dimensionless)
 r"""
