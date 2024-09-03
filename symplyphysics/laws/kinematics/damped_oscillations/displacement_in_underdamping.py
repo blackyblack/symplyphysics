@@ -151,8 +151,8 @@ def calculate_displacement(
 ) -> Quantity:
     coefficient_expr = solve(
         law.subs({
-            displacement: initial_position_,
-            time: 0
+        displacement: initial_position_,
+        time: 0
         }),
         scaling_coefficient,
     )[0]

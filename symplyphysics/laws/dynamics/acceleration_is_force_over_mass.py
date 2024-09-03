@@ -14,25 +14,16 @@ from symplyphysics.laws.dynamics.vector import acceleration_from_force as accele
 acceleration = symbols.kinematics.acceleration
 """
 The :attr:`~symplyphysics.symbols.kinematics.acceleration` of the body.
-
-Symbol:
-    :code:`a`
 """
 
 force = symbols.dynamics.force
 """
 The net :attr:`~symplyphysics.symbols.dynamics.force` exerted on the body.
-
-Symbol:
-    :code:`F`
 """
 
 mass = symbols.basic.mass
 """
 The :attr:`~symplyphysics.symbols.basic.mass` of the body.
-
-Symbol:
-    :code:`m`
 """
 
 law = Eq(acceleration, force / mass)

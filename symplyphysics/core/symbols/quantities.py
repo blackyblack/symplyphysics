@@ -5,34 +5,38 @@ from sympy.physics.units import Dimension, Quantity as SymQuantity
 from sympy.physics.units.systems.si import SI
 from sympy.multipledispatch import dispatch
 
-from .symbols import DimensionSymbol, next_name
+from .symbols import DimensionSymbolNew, next_name
 from ..dimensions import collect_factor_and_dimension
 from ..errors import UnitsError
 
 
-class Quantity(DimensionSymbol, SymQuantity):  # pylint: disable=too-many-ancestors
+class Quantity(DimensionSymbolNew, SymQuantity):  # pylint: disable=too-many-ancestors
 
+    # pylint: disable-next=signature-differs
     def __new__(cls,
-        _name: Basic,
-        _abbrev: Optional[str] = None,
-        _latex_repr: Optional[str] = None,
-        _pretty_unicode_repr: Optional[str] = None,
-        _pretty_ascii_repr: Optional[str] = None,
-        _mathml_presentation_repr: Optional[str] = None,
-        _is_prefixed: bool = False,
+        _expr: Basic | float = S.One,
+        *,
+        display_symbol: Optional[str] = None,
+        display_latex: Optional[str] = None,
         **assumptions: Any) -> Self:
         name = next_name("QTY")
-        obj = SymQuantity.__new__(cls, name, None, None, None, None, None, False, **assumptions)
+        obj = SymQuantity.__new__(cls, name, None, display_latex, None, None, None, False,
+            **assumptions)
         return obj
 
-    def __init__(self, expr: Basic | float = S.One, *,
+    def __init__(self,
+        expr: Basic | float = S.One,
+        *,
+        display_symbol: Optional[str] = None,
+        display_latex: Optional[str] = None,
         dimension: Optional[Dimension] = None) -> None:
         (scale, dimension_) = collect_factor_and_dimension(sympify(expr))
         if scale.free_symbols:
             raise UnitsError(f"Argument '{expr}' to function 'Quantity()' should "
                 f"not contain free symbols")
         dimension = dimension_ if dimension is None else dimension
-        super().__init__(self.name, dimension)
+        display_symbol = str(self.name) if display_symbol is None else display_symbol
+        super().__init__(display_symbol, dimension, display_latex=display_latex)
         SI.set_quantity_dimension(self, dimension)
         SI.set_quantity_scale_factor(self, scale)
 

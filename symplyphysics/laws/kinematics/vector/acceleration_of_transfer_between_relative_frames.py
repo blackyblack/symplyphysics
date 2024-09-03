@@ -21,6 +21,7 @@ from symplyphysics import (
     subtract_cartesian_vectors,
 )
 
+
 def transfer_acceleration_law(
     moving_frame_acceleration_: Vector,
     centripetal_acceleration_: Vector,

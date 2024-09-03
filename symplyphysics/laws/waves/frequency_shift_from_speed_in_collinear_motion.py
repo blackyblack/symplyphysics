@@ -20,8 +20,7 @@ relation to an observer moving relative to the wave source.
 
 from sympy import (Eq, pi, solve)
 from sympy.physics.units import speed_of_light
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.waves import frequency_shift_from_speed_in_arbitrary_motion as classical_doppler_with_angle
 from symplyphysics.laws.waves.relativistic import longitudinal_frequency_shift_from_absolute_velocities as general_doppler_law

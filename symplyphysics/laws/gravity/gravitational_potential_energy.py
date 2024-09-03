@@ -24,8 +24,8 @@ from symplyphysics import (
 ## r - distance between mass centers of particles
 
 gravitational_potential_energy = Symbol("gravitational_potential_energy", units.energy)
-first_mass = clone_symbol(symbols.basic.mass, "first_mass")
-second_mass = clone_symbol(symbols.basic.mass, "second_mass")
+first_mass = clone_symbol(symbols.basic.mass)
+second_mass = clone_symbol(symbols.basic.mass)
 distance_between_mass_centers = Symbol("distance_between_mass_centers", units.length)
 
 law = Eq(gravitational_potential_energy,

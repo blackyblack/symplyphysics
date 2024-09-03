@@ -71,9 +71,6 @@ Symbol:
 temperature = symbols.thermodynamics.temperature
 """
 :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the van der Waals fluid.
-
-Symbol:
-    :code:`T`
 """
 
 law = Eq(
@@ -93,9 +90,7 @@ _volume = compressibility_def.volume
 _mole_count = compressibility_def.amount_of_substance
 _molar_density = SymSymbol("molar_density")
 
-_molar_volume = solve(
-    molar_qty_law.law, molar_qty_law.molar_quantity
-)[0].subs({
+_molar_volume = solve(molar_qty_law.law, molar_qty_law.molar_quantity)[0].subs({
     molar_qty_law.extensive_quantity: _volume,
     molar_qty_law.amount_of_substance: _mole_count,
 })

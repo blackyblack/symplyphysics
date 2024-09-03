@@ -33,9 +33,6 @@ Symbol:
 mass = symbols.basic.mass
 """
 The :attr:`~symplyphysics.symbols.basic.mass` of the object attached to the spring.
-
-Symbol:
-    :code:`m`
 """
 
 stiffness = Symbol("stiffness", units.force / units.length)

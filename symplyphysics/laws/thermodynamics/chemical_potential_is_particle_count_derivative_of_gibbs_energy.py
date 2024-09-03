@@ -50,9 +50,6 @@ Symbol:
 temperature = symbols.thermodynamics.temperature
 """
 Temperature of the system.
-
-Symbol:
-    :code:`T`
 """
 
 pressure = Symbol("pressure", units.pressure)

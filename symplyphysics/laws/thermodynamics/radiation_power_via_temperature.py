@@ -53,9 +53,6 @@ Symbol:
 temperature = symbols.thermodynamics.temperature
 """
 :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the body.
-
-Symbol:
-    :code:`T`
 """
 
 law = Eq(

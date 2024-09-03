@@ -52,13 +52,9 @@ Latex:
     :math:`\nu`
 """
 
-equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature,
-    "equilibrium_temperature")
+equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature)
 """
 Equilibrium :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the ensemble.
-
-Symbol:
-    :code:`T`
 """
 
 law = Eq(spectral_energy_density, (8 * pi * planck * radiation_frequency**3 / speed_of_light**3) /

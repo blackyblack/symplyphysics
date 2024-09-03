@@ -26,7 +26,7 @@ current = Symbol("current", units.current)
 
 area_probe_surface = Symbol("area_probe_surface", units.area)
 electron_concentration = Symbol("electron_concentration", 1 / units.volume)
-plasma_temperature = clone_symbol(symbols.thermodynamics.temperature, "plasma_temperature")
+plasma_temperature = clone_symbol(symbols.thermodynamics.temperature)
 floating_plasma_potential = Symbol("floating_plasma_potential", units.voltage)
 probe_potential = Symbol("probe_potential", units.voltage)
 

@@ -20,8 +20,7 @@ solution_applied = solution.subs(centripetal_acceleration_law.radius_of_curvatur
     free_fall_law.planet_radius + free_fall_law.height_above_surface)
 
 # first solution is negative and corresponds to the backwards direction of velocity - ignore it
-satellite_velocity = solve(solution_applied,
-    centripetal_acceleration_law.speed,
+satellite_velocity = solve(solution_applied, centripetal_acceleration_law.speed,
     dict=True)[1][centripetal_acceleration_law.speed]
 
 print(

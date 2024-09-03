@@ -16,8 +16,8 @@ The *barometric formula* determines the dependence of the pressure or density of
 """
 
 from sympy import (Eq, solve, exp)
-from symplyphysics import (symbols, units, Quantity, Symbol, validate_input,
-    validate_output, clone_symbol)
+from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output,
+    clone_symbol)
 
 final_pressure = Symbol("final_pressure", units.pressure)
 """
@@ -38,12 +38,9 @@ Latex:
     :math:`p_0`
 """
 
-molecular_mass = clone_symbol(symbols.basic.mass, "molecular_mass")
+molecular_mass = clone_symbol(symbols.basic.mass)
 """
 :attr:`~symplyphysics.symbols.basic.mass` of a single gas molecule.
-
-Symbol:
-    :code:`m`
 """
 
 height_change = Symbol("height_change", units.length)
@@ -58,17 +55,14 @@ Latex:
 """
 
 temperature = symbols.thermodynamics.temperature
-r"""
+"""
 :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas.
-
-Symbol:
-    :code:`T`
 """
 
 law = Eq(
     final_pressure,
-    initial_pressure * exp(-units.acceleration_due_to_gravity * molecular_mass *
-    height_change / (units.boltzmann_constant * temperature)))
+    initial_pressure * exp(-units.acceleration_due_to_gravity * molecular_mass * height_change /
+    (units.boltzmann_constant * temperature)))
 r"""
 :code:`p = p_0 * exp(-1 * g * m * dh / (k_B * T))`
 

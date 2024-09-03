@@ -59,13 +59,9 @@ Latex:
     :math:`E_i`
 """
 
-equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature,
-    "equilibrium_temperature")
+equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature)
 """
 :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
-
-Symbol:
-    :code:`T`
 """
 
 single_particle_partition_function = Symbol("single_particle_partition_function", dimensionless)
@@ -76,11 +72,8 @@ Symbol:
     :code:`Z`
 """
 
-law = Eq(
-    occupancy_of_state,
-    (particle_count / single_particle_partition_function) *
-    exp(-1 * energy_of_state / (units.boltzmann_constant * equilibrium_temperature))
-)
+law = Eq(occupancy_of_state, (particle_count / single_particle_partition_function) *
+    exp(-1 * energy_of_state / (units.boltzmann_constant * equilibrium_temperature)))
 r"""
 :code:`N_i = (N / Z) * exp(-1 * E_i / (k_B * T))`
 

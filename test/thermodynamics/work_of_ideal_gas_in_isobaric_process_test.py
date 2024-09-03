@@ -20,8 +20,7 @@ def test_args_fixture() -> Args:
 
 
 def test_gas_work(test_args: Args) -> None:
-    result = law.calculate_work(test_args.p, test_args.v_1,
-        test_args.v_2)
+    result = law.calculate_work(test_args.p, test_args.v_1, test_args.v_2)
     assert_equal(result, 2.52 * units.joule)
 
 

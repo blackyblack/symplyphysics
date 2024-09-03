@@ -16,37 +16,19 @@ from symplyphysics import (
     clone_symbol,
 )
 
-reduced_mass = clone_symbol(symbols.basic.mass, "reduced_mass")
-r"""
+reduced_mass = clone_symbol(symbols.basic.mass, display_symbol="mu", display_latex="\\mu")
+"""
 The reduced :attr:`~symplyphysics.symbols.basic.mass` of the system.
-
-Symbol:
-    :code:`mu`
-
-Latex:
-    :math:`\mu`
 """
 
-first_mass = clone_symbol(symbols.basic.mass, "first_mass")
+first_mass = clone_symbol(symbols.basic.mass, display_symbol="m1", display_latex="m_1")
 """
 The :attr:`~symplyphysics.symbols.basic.mass` of the first body.
-
-Symbol:
-    :code:`m1`
-
-Latex:
-    :math:`m_1`
 """
 
-second_mass = clone_symbol(symbols.basic.mass, "second_mass")
+second_mass = clone_symbol(symbols.basic.mass, display_symbol="m2", display_latex="m_2")
 """
 The :attr:`~symplyphysics.symbols.basic.mass` of the second body.
-
-Symbol:
-    :code:`m2`
-
-Latex:
-    :math:`m_2`
 """
 
 law = Eq(reduced_mass, 1 / (1 / first_mass + 1 / second_mass))

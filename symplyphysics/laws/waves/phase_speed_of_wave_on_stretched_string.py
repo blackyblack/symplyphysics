@@ -25,15 +25,9 @@ Symbol:
     :code:`v`
 """
 
-tension = clone_symbol(symbols.dynamics.force, "tension")
-r"""
+tension = clone_symbol(symbols.dynamics.force, display_symbol="tau", display_latex="\\tau")
+"""
 Tension in the string.
-
-Symbol:
-    :code:`tau`
-
-Latex:
-    :math:`\tau`
 """
 
 linear_density = Symbol("linear_density", units.mass / units.length)

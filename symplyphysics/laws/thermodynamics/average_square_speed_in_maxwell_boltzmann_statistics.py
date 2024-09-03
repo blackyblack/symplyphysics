@@ -32,22 +32,14 @@ Latex:
     :math:`\langle v^2 \rangle`
 """
 
-equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature,
-    "equilibrium_temperature",
-    positive=True)
+equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature, positive=True)
 """
 Equilibrium temperature of the gas.
-
-Symbol:
-    :code:`T`
 """
 
-molecular_mass = clone_symbol(symbols.basic.mass, "molecular_mass", positive=True)
+molecular_mass = clone_symbol(symbols.basic.mass, positive=True)
 """
 :attr:`~symplyphysics.symbols.basic.mass` of a gas molecule.
-
-Symbol:
-    :code:`m`
 """
 
 law = Eq(

@@ -27,36 +27,43 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_law(test_args: Args) -> None:
-    result = angular_displacement_law.calculate_angular_displacement(test_args.th0, test_args.w0, test_args.alpha,
-        test_args.t)
+    result = angular_displacement_law.calculate_angular_displacement(test_args.th0, test_args.w0,
+        test_args.alpha, test_args.t)
     assert_equal(result, -20 * units.radian)
 
 
 def test_bad_angle(test_args: Args) -> None:
     thb = Quantity(units.coulomb)
     with raises(errors.UnitsError):
-        angular_displacement_law.calculate_angular_displacement(thb, test_args.w0, test_args.alpha, test_args.t)
+        angular_displacement_law.calculate_angular_displacement(thb, test_args.w0, test_args.alpha,
+            test_args.t)
 
 
 def test_bad_angular_velocity(test_args: Args) -> None:
     w0b = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        angular_displacement_law.calculate_angular_displacement(test_args.th0, w0b, test_args.alpha, test_args.t)
+        angular_displacement_law.calculate_angular_displacement(test_args.th0, w0b, test_args.alpha,
+            test_args.t)
     with raises(TypeError):
-        angular_displacement_law.calculate_angular_displacement(test_args.th0, 100, test_args.alpha, test_args.t)
+        angular_displacement_law.calculate_angular_displacement(test_args.th0, 100, test_args.alpha,
+            test_args.t)
 
 
 def test_bad_angular_acceleration(test_args: Args) -> None:
     alpha_b = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        angular_displacement_law.calculate_angular_displacement(test_args.th0, test_args.w0, alpha_b, test_args.t)
+        angular_displacement_law.calculate_angular_displacement(test_args.th0, test_args.w0,
+            alpha_b, test_args.t)
     with raises(TypeError):
-        angular_displacement_law.calculate_angular_displacement(test_args.th0, test_args.w0, 100, test_args.t)
+        angular_displacement_law.calculate_angular_displacement(test_args.th0, test_args.w0, 100,
+            test_args.t)
 
 
 def test_bad_time(test_args: Args) -> None:
     tb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        angular_displacement_law.calculate_angular_displacement(test_args.th0, test_args.w0, test_args.alpha, tb)
+        angular_displacement_law.calculate_angular_displacement(test_args.th0, test_args.w0,
+            test_args.alpha, tb)
     with raises(TypeError):
-        angular_displacement_law.calculate_angular_displacement(test_args.th0, test_args.w0, test_args.alpha, 100)
+        angular_displacement_law.calculate_angular_displacement(test_args.th0, test_args.w0,
+            test_args.alpha, 100)

@@ -17,8 +17,7 @@ of the material.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
 
 maximum_kinetic_energy = Symbol("maximum_kinetic_energy", units.energy)
 r"""

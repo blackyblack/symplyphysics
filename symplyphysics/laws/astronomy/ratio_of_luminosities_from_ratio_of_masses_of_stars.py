@@ -23,8 +23,8 @@ from symplyphysics import (
 ## L2 - illuminance of second object,
 ## L1 - illuminance of first object.
 
-mass_first = clone_symbol(symbols.basic.mass, "mass_first")
-mass_second = clone_symbol(symbols.basic.mass, "mass_second")
+mass_first = clone_symbol(symbols.basic.mass)
+mass_second = clone_symbol(symbols.basic.mass)
 illuminance_first = Symbol("illuminance_first", units.energy / units.area)
 illuminance_second = Symbol("illuminance_second", units.energy / units.area)
 

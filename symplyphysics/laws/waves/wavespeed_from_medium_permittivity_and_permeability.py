@@ -12,8 +12,7 @@ permeability of the medium.
 
 from sympy.physics.units import speed_of_light
 from sympy import (Eq, solve, sqrt)
-from symplyphysics import (units, Quantity, Symbol, dimensionless, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, dimensionless, validate_input, validate_output)
 
 wave_speed = Symbol("wave_speed", units.velocity)
 """

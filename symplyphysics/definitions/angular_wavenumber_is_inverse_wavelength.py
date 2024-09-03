@@ -9,38 +9,27 @@ from sympy import Eq, pi
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
     angle_type,
 )
 
-angular_wavenumber = Symbol("angular_wave_number", angle_type / units.length)
+angular_wavenumber = SymbolNew("k", angle_type / units.length)
 """
 Angular wavenumber of the wave.
-
-Symbol:
-    :code:`k`
 """
 
-wavelength = Symbol("wavelength", units.length)
-r"""
+wavelength = SymbolNew("lambda", units.length, display_latex="\\lambda")
+"""
 Wavelength of the wave.
-
-Symbol:
-    :code:`lambda`
-
-Latex:
-    :math:`\lambda`
 """
 
 definition = Eq(angular_wavenumber, 2 * pi / wavelength)
-r"""
-:code:`k = 2 * pi / lambda`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        k = \frac{2 \pi}{\lambda}
+:laws:latex::
 """
 
 

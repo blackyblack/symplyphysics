@@ -50,9 +50,6 @@ Symbol:
 temperature = symbols.thermodynamics.temperature
 """
 Temperature of the substance.
-
-Symbol:
-    :code:`T`
 """
 
 thermal_expansion_coefficient = Symbol("thermal_expansion_coefficient", 1 / units.temperature)

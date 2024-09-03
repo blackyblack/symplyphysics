@@ -8,8 +8,7 @@ the fluid is called *Laplace pressure*.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
 
 laplace_pressure = Symbol("laplace_pressure", units.pressure)
 r"""

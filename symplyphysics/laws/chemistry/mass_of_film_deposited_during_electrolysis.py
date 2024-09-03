@@ -18,7 +18,7 @@ from symplyphysics import (units, Quantity, Symbol, validate_input, validate_out
 ## q - elementary charge,
 ## Na - avogadro constant.
 
-mass_of_film = clone_symbol(symbols.basic.mass, "mass_of_film")
+mass_of_film = clone_symbol(symbols.basic.mass)
 
 current = Symbol("current", units.current)
 molar_mass = Symbol("molar_mass", units.mass / units.amount_of_substance)

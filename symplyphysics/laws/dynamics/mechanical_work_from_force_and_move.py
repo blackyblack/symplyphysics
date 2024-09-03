@@ -31,9 +31,6 @@ Symbol:
 force = symbols.dynamics.force
 """
 The :attr:`~symplyphysics.symbols.dynamics.force` exerted on the body.
-
-Symbol:
-    :code:`F`
 """
 
 distance = Symbol("distance", units.length)

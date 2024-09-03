@@ -24,11 +24,9 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import (
-    volumetric_coefficient_of_thermal_expansion as coefficient_def,
-)
+    volumetric_coefficient_of_thermal_expansion as coefficient_def,)
 from symplyphysics.laws.quantities import (
-    fractional_change_is_change_over_initial_value as fractional_change_law,
-)
+    fractional_change_is_change_over_initial_value as fractional_change_law,)
 
 fractional_volume_change = Symbol("fractional_volume_change", dimensionless)
 r"""

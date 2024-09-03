@@ -23,6 +23,7 @@ from symplyphysics.core.vectors.arithmetics import (
     integrate_cartesian_vector,
 )
 
+
 def relative_velocity_law(
     position_: Vector,
     time_: Expr,

@@ -29,8 +29,7 @@ from symplyphysics import (
     clone_symbol,
 )
 
-entropy_change = Symbol("entropy_change",
-    units.energy / units.temperature)
+entropy_change = Symbol("entropy_change", units.energy / units.temperature)
 """
 Infinitesimal change in entropy of system :math:`B`.
 
@@ -49,12 +48,9 @@ Latex:
     :math:`\delta Q`
 """
 
-common_temperature = clone_symbol(symbols.thermodynamics.temperature, "common_temperature")
+common_temperature = clone_symbol(symbols.thermodynamics.temperature)
 """
 Common :attr:`~symplyphysics.symbols.thermodynamics.temperature` of systems :math:`A` and :math:`B`.
-
-Symbol:
-    :code:`T`
 """
 
 law = Eq(entropy_change, heat / common_temperature)

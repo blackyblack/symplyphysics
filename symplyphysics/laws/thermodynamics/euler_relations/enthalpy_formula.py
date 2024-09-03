@@ -12,8 +12,8 @@ internal energy.
 """
 
 from sympy import Eq
-from symplyphysics import (units, dimensionless, Quantity, Symbol, validate_input,
-    validate_output, symbols)
+from symplyphysics import (units, dimensionless, Quantity, Symbol, validate_input, validate_output,
+    symbols)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import enthalpy_is_internal_energy_plus_pressure_energy as enthalpy_def
 from symplyphysics.laws.thermodynamics.euler_relations import internal_energy_formula
@@ -29,9 +29,6 @@ Symbol:
 temperature = symbols.thermodynamics.temperature
 """
 :attr:`symbols.thermodynamics.temperature` of the system.
-
-Symbol:
-    :code:`T`
 """
 
 entropy = Symbol("entropy", units.energy / units.temperature)

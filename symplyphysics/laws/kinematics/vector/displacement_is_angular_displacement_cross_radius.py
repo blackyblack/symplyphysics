@@ -24,6 +24,7 @@ from symplyphysics import (
     cross_cartesian_vectors,
 )
 
+
 def displacement_law(angular_displacement_: Vector, rotation_radius_: Vector) -> Vector:
     r"""
     Displacement vector.

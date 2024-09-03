@@ -43,8 +43,8 @@ Reduced photon energy, defined as the ratio of photon energy :math:`\hbar \omega
 thermal energy :math:`k_\text{B} T`.
 """
 
-law = Eq(isochoric_molar_heat_capacity,
-    (3 * molar_gas_constant) * reduced_photon_energy**2 * exp(reduced_photon_energy) / (exp(reduced_photon_energy) - 1)**2)
+law = Eq(isochoric_molar_heat_capacity, (3 * molar_gas_constant) * reduced_photon_energy**2 *
+    exp(reduced_photon_energy) / (exp(reduced_photon_energy) - 1)**2)
 r"""
 :code:`C_V = 3 * R * x^2 * exp(x) / (exp(x) - 1)^2`
 
@@ -56,9 +56,7 @@ Latex:
 
 @validate_input(reduced_photon_energy_=reduced_photon_energy)
 @validate_output(isochoric_molar_heat_capacity)
-def calculate_isochoric_molar_heat_capacity(
-    reduced_photon_energy_: float,
-) -> Quantity:
+def calculate_isochoric_molar_heat_capacity(reduced_photon_energy_: float,) -> Quantity:
     result = law.rhs.subs({
         reduced_photon_energy: reduced_photon_energy_,
     })

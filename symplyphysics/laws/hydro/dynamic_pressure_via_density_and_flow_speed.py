@@ -13,8 +13,7 @@ fluid per unit volume (see :doc:`laws.quantities.quantity_is_volumetric_density_
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
 
 dynamic_pressure = Symbol("dynamic_pressure", units.pressure)
 """

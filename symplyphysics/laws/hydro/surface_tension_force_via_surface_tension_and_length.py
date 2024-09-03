@@ -18,12 +18,9 @@ from symplyphysics import (
     validate_output,
 )
 
-surface_tension_force = clone_symbol(symbols.dynamics.force, "surface_tension_force")
+surface_tension_force = clone_symbol(symbols.dynamics.force)
 """
 Surface tension :attr:`~symplyphysics.symbols.dynamics.force`.
-
-Symbol:
-    :code:`F`
 """
 
 surface_tension = Symbol("surface_tension", units.force / units.length)

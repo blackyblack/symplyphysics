@@ -16,8 +16,8 @@ to the heat capacity of the body times the change in the body's temperature.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol,
-    validate_input, validate_output)
+from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, validate_input,
+    validate_output)
 
 heat = Symbol("heat", units.energy)
 """
@@ -35,15 +35,11 @@ Symbol:
     :code:`C`
 """
 
-temperature_change = clone_symbol(symbols.thermodynamics.temperature, "temperature_change")
-r"""
+temperature_change = clone_symbol(symbols.thermodynamics.temperature,
+    display_symbol="dT",
+    display_latex="\\Delta T")
+"""
 Change in the body's :attr:`~symplyphysics.symbols.thermodynamics.temperature`
-
-Symbol:
-    :code:`dT`
-
-Latex:
-    :math:`\Delta T`
 """
 
 law = Eq(heat, heat_capacity * temperature_change)
@@ -56,8 +52,7 @@ Latex:
 """
 
 
-@validate_input(heat_capacity_=heat_capacity,
-    temperature_change_=temperature_change)
+@validate_input(heat_capacity_=heat_capacity, temperature_change_=temperature_change)
 @validate_output(heat)
 def calculate_amount_energy(heat_capacity_: Quantity, temperature_change_: Quantity) -> Quantity:
     result_amount_energy_expr = solve(law, heat, dict=True)[0][heat]

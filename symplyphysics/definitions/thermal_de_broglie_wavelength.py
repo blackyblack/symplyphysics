@@ -38,17 +38,11 @@ Latex:
 mass = symbols.basic.mass
 """
 :attr:`~symplyphysics.symbols.basic.mass` of a single gas particle.
-
-Symbol:
-    :code:`m`
 """
 
 temperature = symbols.thermodynamics.temperature
 """
 :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas.
-
-Symbol:
-    :code:`T`
 """
 
 definition = Eq(thermal_wavelength,

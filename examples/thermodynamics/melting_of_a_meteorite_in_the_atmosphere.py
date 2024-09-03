@@ -36,8 +36,10 @@ meteorite_heat_capacity = specific_qty_law.law.rhs.subs({
 })
 
 energy_to_heating_meteorite = thermal_energy_law.law.subs({
-    thermal_energy_law.heat_capacity: meteorite_heat_capacity,
-    thermal_energy_law.temperature_change: temperature_of_meteorite_melting - temperature_of_meteorite,
+    thermal_energy_law.heat_capacity:
+        meteorite_heat_capacity,
+    thermal_energy_law.temperature_change:
+    temperature_of_meteorite_melting - temperature_of_meteorite,
 }).rhs
 
 energy_to_meteorite_melting = energy_melting_law.law.subs({

@@ -16,16 +16,19 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_mach_number(test_args: Args) -> None:
-    result = mach_number_is_flow_speed_over_speed_of_sound.calculate_mach_number(test_args.velocity, test_args.speed_of_sound)
+    result = mach_number_is_flow_speed_over_speed_of_sound.calculate_mach_number(
+        test_args.velocity, test_args.speed_of_sound)
     assert_equal(result, 0.09712)
 
 
 def test_bad_velocity(test_args: Args) -> None:
     bv = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        mach_number_is_flow_speed_over_speed_of_sound.calculate_mach_number(bv, test_args.speed_of_sound)
+        mach_number_is_flow_speed_over_speed_of_sound.calculate_mach_number(
+            bv, test_args.speed_of_sound)
     with raises(TypeError):
-        mach_number_is_flow_speed_over_speed_of_sound.calculate_mach_number(0, test_args.speed_of_sound)
+        mach_number_is_flow_speed_over_speed_of_sound.calculate_mach_number(
+            0, test_args.speed_of_sound)
 
 
 def test_bad_speed_of_sound(test_args: Args) -> None:

@@ -21,15 +21,11 @@ from symplyphysics import (
     validate_output,
 )
 
-critical_temperature = clone_symbol(symbols.thermodynamics.temperature, "critical_temperature")
-r"""
+critical_temperature = clone_symbol(symbols.thermodynamics.temperature,
+    display_symbol="T_c",
+    display_latex="T_\\text{c}")
+"""
 Critical :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the van der Waals fluid.
-
-Symbol:
-    :code:`T_c`
-
-Latex:
-    :math:`T_\text{c}`
 """
 
 attractive_forces_parameter = Symbol(

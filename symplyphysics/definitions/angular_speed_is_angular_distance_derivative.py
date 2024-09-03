@@ -1,4 +1,4 @@
-r"""
+"""
 Angular speed is angular distance derivative
 ============================================
 
@@ -6,47 +6,30 @@ Angular speed is angular distance derivative
 """
 
 from sympy import (Eq, Derivative)
-from symplyphysics import (angle_type, units, Quantity, Function, Symbol, validate_input,
+from symplyphysics import (angle_type, units, Quantity, FunctionNew, SymbolNew, validate_input,
     validate_output)
 from symplyphysics.core.symbols.quantities import scale_factor
 
-angular_speed = Function("angular_speed", 1 / units.time)
-r"""
+angular_speed = FunctionNew("w(t)", 1 / units.time, display_latex="\\omega")
+"""
 Angular speed of the body as a function of time.
-
-Symbol:
-    :code:`w(t)`
-
-Latex:
-    :math:`\omega(t)`
 """
 
-angular_distance = Function("angular_distance", angle_type)
-r"""
+angular_distance = FunctionNew("theta(t)", angle_type, display_latex="\\theta")
+"""
 Angular distance as a function of time.
-
-Symbol:
-    :code:`theta(t)`
-
-Latex:
-    :math:`\theta(t)`
 """
 
-time = Symbol("time", units.time)
+time = SymbolNew("t", units.time)
 """
 Time.
-
-Symbol:
-    :code:`t`
 """
 
 definition = Eq(angular_speed(time), Derivative(angular_distance(time), time))
-r"""
-:code:`w(t) = Derivative(theta(t), t)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \omega(t) = \frac{d \theta}{d t}
+:laws:latex::
 """
 
 

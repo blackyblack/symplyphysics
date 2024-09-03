@@ -54,9 +54,6 @@ Latex:
 temperature = symbols.thermodynamics.temperature
 """
 :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
-
-Symbol:
-    :code:`T`
 """
 
 attractive_forces_parameter = Symbol(

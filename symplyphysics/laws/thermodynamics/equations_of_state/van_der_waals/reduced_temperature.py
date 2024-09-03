@@ -29,22 +29,15 @@ Latex:
 """
 
 temperature = symbols.thermodynamics.temperature
-r"""
+"""
 :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the van der Waals fluid.
-
-Symbol: 
-    :code:`T`
 """
 
-critical_temperature = clone_symbol(symbols.thermodynamics.temperature, "critical_temperature")
-r"""
+critical_temperature = clone_symbol(symbols.thermodynamics.temperature,
+    display_symbol="T_c",
+    display_latex="T_\text{c}")
+"""
 See :doc:`laws.thermodynamics.equations_of_state.van_der_waals.critical_temperature`.
-
-Symbol:
-    :code:`T_c`
-
-Latex:
-    :math:`T_\text{c}`
 """
 
 law = Eq(reduced_temperature, temperature / critical_temperature)

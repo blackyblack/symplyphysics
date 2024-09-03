@@ -69,15 +69,9 @@ Symbol:
     :code:`C_p`
 """
 
-law = Eq(
-    Derivative(temperature(pressure, enthalpy), pressure),
-    (1 / isobaric_heat_capacity)
-    * (
-        temperature(pressure, enthalpy)
-        * Derivative(volume(temperature(pressure, enthalpy), pressure), temperature(pressure, enthalpy))
-        - volume(temperature(pressure, enthalpy), pressure)
-    )
-)
+law = Eq(Derivative(temperature(pressure, enthalpy), pressure), (1 / isobaric_heat_capacity) *
+    (temperature(pressure, enthalpy) * Derivative(volume(temperature(pressure, enthalpy), pressure),
+    temperature(pressure, enthalpy)) - volume(temperature(pressure, enthalpy), pressure)))
 r"""
 :code:`Derivative(T(p, H), p) = (1 / C_p) * (T(p, H) * Derivative(V(T(p, H), p), T(p, H)) - V(T(p, H), p))`
 
@@ -97,8 +91,8 @@ _volume_expr = solve(ideal_gas_equation.law, ideal_gas_equation.volume)[0].subs(
     ideal_gas_equation.temperature: temperature(pressure, enthalpy),
 })
 
-_joule_thompson_coefficient = law.rhs.subs(
-    volume(temperature(pressure, enthalpy), pressure), _volume_expr).doit()
+_joule_thompson_coefficient = law.rhs.subs(volume(temperature(pressure, enthalpy), pressure),
+    _volume_expr).doit()
 
 assert expr_equals(_joule_thompson_coefficient, 0)
 

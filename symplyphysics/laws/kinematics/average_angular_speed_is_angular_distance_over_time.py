@@ -34,7 +34,6 @@ Latex:
     :math:`\theta`
 """
 
-
 time = Symbol("time", units.time)
 """
 Time elapsed during rotation.

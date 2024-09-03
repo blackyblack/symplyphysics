@@ -19,7 +19,7 @@ from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol,
 ## - Сonductor must be of finite length.
 
 # NOTE: Ampere force is macroscopic result of Lorentz forces
-ampere_force = clone_symbol(symbols.dynamics.force, "ampere_force")
+ampere_force = clone_symbol(symbols.dynamics.force)
 current = Symbol("current", units.current)
 length = Symbol("length", units.length)
 induction = Symbol("induction", units.magnetic_density)

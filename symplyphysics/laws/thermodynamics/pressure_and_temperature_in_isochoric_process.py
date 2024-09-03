@@ -12,8 +12,8 @@ of the gas.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol,
-    validate_input, validate_output)
+from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, validate_input,
+    validate_output)
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as thermodynamics_law
 
 initial_pressure = Symbol("initial_pressure", units.pressure)
@@ -38,26 +38,18 @@ Latex:
     :math:`p_1`
 """
 
-initial_temperature = clone_symbol(symbols.thermodynamics.temperature, "initial_temperature")
-r"""
+initial_temperature = clone_symbol(symbols.thermodynamics.temperature,
+    display_symbol="T_0",
+    display_latex="T_0")
+"""
 Initial :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas.
-
-Symbol:
-    :code:`T_0`
-
-Latex:
-    :math:`T_0`
 """
 
-final_temperature = clone_symbol(symbols.thermodynamics.temperature, "final_temperature")
-r"""
+final_temperature = clone_symbol(symbols.thermodynamics.temperature,
+    display_symbol="T_1",
+    display_latex="T_1")
+"""
 Final :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas.
-
-Symbol:
-    :code:`T_1`
-
-Latex:
-    :math:`T_1`
 """
 
 law = Eq(initial_pressure / final_pressure, initial_temperature / final_temperature)

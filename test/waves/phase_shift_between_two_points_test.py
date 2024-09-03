@@ -19,12 +19,12 @@ def test_args_fixture() -> Args:
     distance = abs(d1 - d2)
     wavelength = Quantity(12 * units.meter)
 
-    return Args(distance=distance,
-        wavelength=wavelength)
+    return Args(distance=distance, wavelength=wavelength)
 
 
 def test_basic_phase_difference(test_args: Args) -> None:
-    result = phase_difference_law.calculate_phase_difference(test_args.distance, test_args.wavelength)
+    result = phase_difference_law.calculate_phase_difference(test_args.distance,
+        test_args.wavelength)
     assert_equal(result, pi)
 
 

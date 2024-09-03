@@ -96,8 +96,8 @@ law = Eq(
     medium_density * medium_specific_isobaric_heat_capacity *
     Derivative(temperature(position, time), time),
     Derivative(
-    thermal_conductivity(position) * Derivative(temperature(position, time), position),
-    position) + heat_source_density(position, time))
+    thermal_conductivity(position) * Derivative(temperature(position, time), position), position) +
+    heat_source_density(position, time))
 r"""
 :code:`rho * c_p * Derivative(T(x, t), t) = Derivative(k(x) * Derivative(T(x, t), x), x) + q(x, t)`
 

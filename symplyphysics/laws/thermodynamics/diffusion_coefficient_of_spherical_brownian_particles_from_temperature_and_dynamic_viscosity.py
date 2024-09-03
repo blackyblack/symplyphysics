@@ -38,9 +38,6 @@ Symbol:
 temperature = symbols.thermodynamics.temperature
 """
 Temperature of the system.
-
-Symbol:
-    :code:`T`
 """
 
 particle_radius = Symbol("particle_radius", units.length)

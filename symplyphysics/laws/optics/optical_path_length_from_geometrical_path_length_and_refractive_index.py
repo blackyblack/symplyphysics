@@ -15,8 +15,7 @@ between any two points.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output, dimensionless)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless)
 
 optical_path = Symbol("optical_path", units.length)
 """

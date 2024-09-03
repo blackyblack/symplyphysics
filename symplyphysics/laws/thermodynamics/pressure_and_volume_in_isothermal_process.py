@@ -8,8 +8,7 @@ process.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as thermodynamics_law
 
 initial_pressure = Symbol("initial_pressure", units.pressure)

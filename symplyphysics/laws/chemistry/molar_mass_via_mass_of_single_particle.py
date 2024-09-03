@@ -22,7 +22,7 @@ from symplyphysics.laws.conservation import (
 ## Molar mass of a substance is the mass of 1 mole of particles that it is comprised of.
 
 molar_mass = Symbol("molas_mass", units.mass / units.amount_of_substance)
-particle_mass = clone_symbol(symbols.basic.mass, "particle_mass")
+particle_mass = clone_symbol(symbols.basic.mass)
 
 law = Eq(molar_mass, particle_mass * units.avogadro)
 
