@@ -60,7 +60,7 @@ Latex:
 
 driving_force_amplitude = clone_symbol(symbols.dynamics.force)
 """
-The amplitude of the driving force.
+The amplitude of the driving :attr:`~symplyphysics.symbols.dynamics.force`.
 """
 
 driving_phase_lag = Symbol("driving_phase_lag", angle_type)

@@ -49,7 +49,7 @@ Symbol:
 
 temperature = symbols.thermodynamics.temperature
 """
-Temperature of the substance.
+:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the substance.
 """
 
 thermal_expansion_coefficient = Symbol("thermal_expansion_coefficient", 1 / units.temperature)

@@ -31,7 +31,7 @@ Symbol:
 
 acceleration = symbols.kinematics.acceleration
 """
-Constant acceleration.
+Constant :attr:`~symplyphysics.symbols.kinematics.acceleration`.
 """
 
 initial_speed = Symbol("initial_speed", units.velocity)
