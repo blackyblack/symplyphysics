@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.electricity.circuits import capacity_of_parallel_capacitors as parallel_capacitor
+from symplyphysics.laws.electricity.circuits import capacitance_in_parallel_connection as parallel_capacitor
 
 # Description
 ## Assert we are having two capacitors with 2 and 3 Farads of capacitance.
