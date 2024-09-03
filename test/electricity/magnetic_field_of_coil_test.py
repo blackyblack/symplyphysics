@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.electricity import magnetic_field_of_solenoid as induction_law
+from symplyphysics.laws.electricity import magnetic_field_of_coil as induction_law
 
 # Description
 ## With the number of turns equal to 11, a current of 1 ampere, a solenoid length of 0.5 meter

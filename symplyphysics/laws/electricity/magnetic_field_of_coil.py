@@ -1,9 +1,9 @@
 """
-Magnetic field of solenoid
-==========================
+Magnetic field of coil
+======================
 
-Near the center of the solenoid, the magnetic field is quite uniform and directly
-proportional to the current in the solenoid's wire.
+Near the center of the coil, the magnetic field is quite uniform and directly
+proportional to the current in the coil's wire.
 
 **Notation:**
 
@@ -12,7 +12,7 @@ proportional to the current in the solenoid's wire.
 **Conditions:**
 
 #. The medium is vacuum.
-#. The magnetic field is measured near the center of the solenoid.
+#. The magnetic field is measured near the center of the coil.
 """
 
 from sympy import (Eq, solve)
@@ -29,7 +29,7 @@ Symbol:
 
 current = Symbol("current", units.current)
 """
-Current flowing through the solenoid.
+Current flowing through the coil.
 
 Symbol:
     :code:`I`
@@ -37,7 +37,7 @@ Symbol:
 
 length = Symbol("length", units.length)
 """
-Length of the solenoid.
+Length of the coil.
 
 Symbol:
     :code:`l`
