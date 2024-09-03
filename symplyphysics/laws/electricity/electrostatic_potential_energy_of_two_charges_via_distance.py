@@ -76,11 +76,11 @@ Latex:
 law = Eq(electrostatic_potential_energy,
     1 / (4 * pi * units.vacuum_permittivity) * (first_charge * second_charge) / (relative_permittivity * distance))
 r"""
-:code:`V = 1 / (4 * pi * epsilon_0) * q_1 * q_2 / (epsilon * r)`
+:code:`U_E = 1 / (4 * pi * epsilon_0) * q_1 * q_2 / (epsilon * r)`
 
 Latex:
     .. math::
-        V = \frac{1}{4 \pi \varepsilon_0} \frac{q_1 q_2}{\varepsilon r}
+        U_E = \frac{1}{4 \pi \varepsilon_0} \frac{q_1 q_2}{\varepsilon r}
 """
 
 @validate_input(relative_permittivity_=relative_permittivity,
