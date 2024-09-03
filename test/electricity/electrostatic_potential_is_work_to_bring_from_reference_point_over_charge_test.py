@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.electricity import electrostatic_potential_is_work_to_bring_from_infinity_over_charge as work_law
+from symplyphysics.laws.electricity import electrostatic_potential_is_work_to_bring_from_reference_point_over_charge as work_law
 
 # Description
 ## At a voltage of 5 volts and a charge of 1 coulomb, work of charge transfer

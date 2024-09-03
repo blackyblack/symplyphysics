@@ -1,6 +1,6 @@
 """
-Electrostatic potential is work to bring from infinity over charge
-==================================================================
+Electrostatic potential is work to bring from reference point over charge
+=========================================================================
 
 Electrostatic potential is a physical quantity defined as the amount of
 work needed per unit electric charge to move it from a reference point,
@@ -8,6 +8,10 @@ usually infinity, to a specific point in an electric field.
 
 Infinity is usually used as the reference point because this would make
 the potential approach zero at an infinitely remote point.
+
+**Notes:**
+
+#. The electric potential is defined up to a constant.
 """
 
 from sympy import (Eq, solve)
@@ -29,7 +33,7 @@ Symbol:
 
 work = Symbol("work", units.energy)
 """
-Work needed to bring the charge from the infinity.
+Work needed to bring the charge from the reference point.
 
 Symbol:
     :code:`A`
