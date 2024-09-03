@@ -27,7 +27,7 @@ Symbol:
     :code:`E`
 """
 
-electrostatic_force = clone_symbol(symbols.dynamics.force, "electrostatic_force")
+electrostatic_force = clone_symbol(symbols.dynamics.force)
 """
 Projection of the electrostatic force applied to the test charge.
 
