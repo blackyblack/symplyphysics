@@ -4,7 +4,7 @@ from sympy import Idx, solve, simplify
 from symplyphysics import (print_expression, units, Symbol, global_index)
 from symplyphysics.laws.electricity.circuits import coil_impedance_from_inductivity_and_frequency as coil_impedance_law
 from symplyphysics.definitions import admittance_is_inverse_impedance as admittance_def
-from symplyphysics.laws.electricity.circuits import admittance_of_parallel_dipoles as parallel_admittance_law
+from symplyphysics.laws.electricity.circuits import admittance_in_parallel_connection as parallel_admittance_law
 
 # This example shows how resulting inductivity of 2 parallel coils might be calculated from inductivities of single coils.
 
@@ -32,8 +32,8 @@ admittances_law = parallel_admittance_law.law.subs(global_index, index_local).do
 for i, v in enumerate(admittances):
     admittances_law = admittances_law.subs(parallel_admittance_law.admittance[i + 1], v)
 
-result_admittance = solve(admittances_law, parallel_admittance_law.parallel_admittance,
-    dict=True)[0][parallel_admittance_law.parallel_admittance]
+result_admittance = solve(admittances_law, parallel_admittance_law.total,
+    dict=True)[0][parallel_admittance_law.total]
 
 # And finally find resulting inductivity back through the impedance
 result_impedance = solve(admittance_def.definition, admittance_def.impedance,

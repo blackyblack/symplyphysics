@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.electricity.circuits import admittance_of_parallel_dipoles as parallel_law
+from symplyphysics.laws.electricity.circuits import admittance_in_parallel_connection as parallel_law
 
 # Description
 ## Assert we have two resistors with 1/2 Siemens and 1/4 Siemens conductance.
