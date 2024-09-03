@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, errors, units, Quantity, prefixes)
-from symplyphysics.laws.electricity.circuits import capacitance_is_proportional_to_plates_area as capacitance_law
+from symplyphysics.laws.electricity.circuits import capacitance_is_proportional_to_plate_area as capacitance_law
 
 # Description
 ## Assert we have a capacitor with 20mm2 plate area and 5micrometer clearance with dielectric permeability of insulator of 5.
