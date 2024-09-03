@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.electricity.circuits import capacity_of_spherical_capacitor as capacity_law
+from symplyphysics.laws.electricity.circuits import capacitance_of_spherical_capacitor as capacity_law
 
 # Description
 ## For a spherical capacitor with a first radius of 1e-2 meter and a second radius of 3e-2 meter,
