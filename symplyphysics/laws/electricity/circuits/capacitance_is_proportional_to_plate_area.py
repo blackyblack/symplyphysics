@@ -3,7 +3,8 @@ Capacitance is proportional to plate area
 =========================================
 
 If a capacitor is composed of two equal parallel plates, its capacitance is proportional to
-the area of the plates and the inverse of the distance between the plates.
+the area of the plates and the inverse of the distance between the plates. It also depends
+on the permittivity of the medium that fills the space between the plates.
 
 **Conditions:**
 
