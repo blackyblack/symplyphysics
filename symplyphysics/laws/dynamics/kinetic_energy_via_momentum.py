@@ -42,7 +42,7 @@ Symbol:
 
 mass = symbols.basic.mass
 """
-The :attr:`~symplyphysics.basic.mass` of the object.
+The :attr:`~symplyphysics.symbols.basic.mass` of the object.
 """
 
 law = Eq(kinetic_energy, momentum**2 / (2 * mass))

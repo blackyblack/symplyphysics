@@ -49,7 +49,7 @@ Latex:
 thermal_coefficient = 1 / quantities.standard_conditions_temperature
 r"""
 Isochoric thermal pressure coefficient equal to the inverse of
-:attr:`standard conditions temperature <quantities.standard_conditions_temperature>`.
+:attr:`standard conditions temperature <symplyphysics.quantities.standard_conditions_temperature>`.
 
 Symbol:
     :code:`beta_V`

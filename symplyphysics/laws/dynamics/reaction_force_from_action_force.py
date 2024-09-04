@@ -15,7 +15,7 @@ action_force = clone_symbol(symbols.dynamics.force, display_symbol="F_12", displ
 The projection of the :attr:`~symplyphysics.symbols.dynamics.force` that the first body exerts on the second body.
 """
 
-reaction_force = clone_symbol(symbols.dynamics.force, display_symbol="F_21", display_latex="F_21")
+reaction_force = clone_symbol(symbols.dynamics.force, display_symbol="F_21", display_latex="F_{21}")
 """
 The projection of the :attr:`~symplyphysics.symbols.dynamics.force` that the second body exerts on the first body.
 """

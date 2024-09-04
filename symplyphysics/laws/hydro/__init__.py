@@ -7,8 +7,7 @@ Fluid mechanics is the branch of physics concerned with the mechanics of fluids
 
 .. _ideal_fluid_def:
 
-Ideal fluid
------------
+**Ideal fluid**
 
 An ideal fluid is a model of fluids often used in fluid mechanics to approximate
 the behavior of real fluids. Ideal fluids are:

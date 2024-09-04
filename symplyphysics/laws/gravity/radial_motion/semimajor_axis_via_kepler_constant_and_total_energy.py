@@ -30,7 +30,8 @@ Symbol:
 
 kepler_constant = Symbol("kepler_constant", units.length**3 / units.time**2)
 r"""
-The Kepler's constant, whose value is determined by the mass of the orbited star.
+The Kepler's constant, whose value is determined by the :attr:`~symplyphysics.symbols.basic.mass`
+of the orbited star.
 
 Symbol:
     K

@@ -3,8 +3,7 @@ Rotational inertia is mass times squared radius
 ===============================================
 
 Rotational inertia, or moment of inertia, is a physical quantity that describes a body's ability to
-be inertial during rotation. It is a rotational analog of :attr:`~symplyphysics.symbols.basic.mass` in
-linear motion.
+be inertial during rotation. It is a rotational analog of mass in linear motion.
 
 **Conditions:**
 

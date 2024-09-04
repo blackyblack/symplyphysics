@@ -55,6 +55,9 @@ class DimensionSymbolNew:
     def display_latex(self) -> str:
         return self._display_latex
 
+    def _sympystr(self, p: Printer) -> str:
+        return p.doprint(self.display_name)
+
 
 class Symbol(DimensionSymbol, SymSymbol):  # pylint: disable=too-many-ancestors
 
@@ -89,8 +92,8 @@ class SymbolNew(DimensionSymbolNew, SymSymbol):  # pylint: disable=too-many-ance
         *,
         display_latex: Optional[str] = None,
         **_assumptions: Any) -> None:
-        display_name = self.name if display_symbol is None else display_symbol
-        super().__init__(str(display_name), dimension, display_latex=display_latex)
+        display_name = str(self.name) if display_symbol is None else display_symbol
+        super().__init__(display_name, dimension, display_latex=display_latex)
 
 
 class SymbolIndexed(DimensionSymbol, IndexedBase):  # pylint: disable=too-many-ancestors
@@ -145,9 +148,6 @@ class SymbolIndexedNew(DimensionSymbolNew, IndexedBase):  # pylint: disable=too-
 
     def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
         pass
-
-    def _sympystr(self, p: Printer) -> str:
-        return p.doprint(self.display_name)
 
 
 class Function(DimensionSymbol, UndefinedFunction):
@@ -255,9 +255,13 @@ def clone_symbol(source: SymbolNew,
     **assumptions: Any) -> SymbolNew:
     assumptions = source.assumptions0 if assumptions is None or len(
         assumptions) == 0 else assumptions
-    display_symbol = source.display_name if display_symbol is None else display_symbol
-    display_latex = source.display_latex if display_latex is None else display_latex
-    return SymbolNew(display_symbol, source.dimension, display_latex=display_latex, **assumptions)
+    display_symbol_new = source.display_name if display_symbol is None else display_symbol
+    display_latex_new = display_latex
+    if display_latex_new is None:
+        display_latex_new = display_symbol
+    if display_latex_new is None:
+        display_latex_new = source.display_latex
+    return SymbolNew(display_symbol_new, source.dimension, display_latex=display_latex_new, **assumptions)
 
 
 # This is default index for indexed parameters, eg for using in SumIndexed
