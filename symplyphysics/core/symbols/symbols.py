@@ -54,7 +54,7 @@ class DimensionSymbolNew:
     @property
     def display_latex(self) -> str:
         return self._display_latex
-    
+
     def _sympystr(self, p: Printer) -> str:
         return p.doprint(self.display_name)
 
