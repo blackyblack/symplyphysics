@@ -45,5 +45,4 @@ def calculate_probability(thermal_diffusion_area_: Quantity,
         thermal_diffusion_area: thermal_diffusion_area_,
         geometric_buckling: geometric_buckling_
     })
-    result_factor = Quantity(result_expr)
-    return Probability(convert_to_float(result_factor))
+    return Probability(convert_to_float(result_expr))

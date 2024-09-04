@@ -73,5 +73,4 @@ def calculate_resonance_escape_probability(
         macroscopic_scattering_cross_section_moderator:
             macroscopic_scattering_cross_section_moderator_
     })
-    result_factor = Quantity(result_expr)
-    return Probability(convert_to_float(result_factor))
+    return Probability(convert_to_float(result_expr))

@@ -30,5 +30,4 @@ def print_law() -> str:
 def calculate_travel_difference(wave_length_: Quantity, number_minimum_: int) -> Quantity:
     solved = solve(law, travel_difference, dict=True)[0][travel_difference]
     result_expr = solved.subs({wave_length: wave_length_, number_minimum: number_minimum_})
-    result = Quantity(result_expr)
-    return result
+    return Quantity(result_expr)

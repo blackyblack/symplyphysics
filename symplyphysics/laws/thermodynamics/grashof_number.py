@@ -110,5 +110,4 @@ def calculate_grashof_number(coefficient_of_volume_expansion_: Quantity,
         characteristic_length: characteristic_length_,
         kinematic_viscosity: viscosity_
     })
-    result = Quantity(result_applied)
-    return convert_to_float(result)
+    return convert_to_float(result_applied)

@@ -62,5 +62,4 @@ def calculate_angular_position(arc_length_: Quantity, path_radius_: Quantity) ->
         arc_length: arc_length_,
         distance_to_axis: path_radius_,
     })
-    result_angle = Quantity(result)
-    return result_angle
+    return Quantity(result)

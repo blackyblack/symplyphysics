@@ -48,5 +48,4 @@ def calculate_magnification(distance_to_image_: Quantity, distance_to_object_: Q
         distance_to_image: distance_to_image_,
         distance_to_object: distance_to_object_,
     })
-    result = Quantity(result_magnification)
-    return convert_to_float(result)
+    return convert_to_float(result_magnification)

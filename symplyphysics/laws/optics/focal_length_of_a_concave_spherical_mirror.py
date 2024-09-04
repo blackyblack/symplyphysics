@@ -60,5 +60,4 @@ def print_law() -> str:
 def calculate_focus_distance(curvature_radius_: Quantity) -> Quantity:
     solved = solve(law, focus_distance, dict=True)[0][focus_distance]
     result_expr = solved.subs({curvature_radius: curvature_radius_})
-    result = Quantity(result_expr)
-    return result
+    return Quantity(result_expr)

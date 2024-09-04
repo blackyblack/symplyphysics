@@ -69,5 +69,4 @@ def calculate_efficiency_factor(heat_from_heater_: Quantity,
         heat_from_heater: heat_from_heater_,
         heat_to_refrigerator: heat_to_refrigerator_
     })
-    result = Quantity(result_expr)
-    return convert_to_float(result)
+    return convert_to_float(result_expr)

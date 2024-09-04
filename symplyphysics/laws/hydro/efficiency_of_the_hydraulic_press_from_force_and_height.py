@@ -50,5 +50,4 @@ def calculate_efficiency(useful_force_: Quantity, useful_height_: Quantity,
         expended_force: expended_force_,
         expended_height: expended_height_
     })
-    result = Quantity(result_efficiency)
-    return convert_to_float(result)
+    return convert_to_float(result_efficiency)

@@ -45,5 +45,4 @@ def calculate_travel_difference(coordinate_: Quantity, distance_between_slits_: 
         distance_between_slits: distance_between_slits_,
         distance_to_picture: distance_to_picture_,
     })
-    result = Quantity(result_expr)
-    return result
+    return Quantity(result_expr)
