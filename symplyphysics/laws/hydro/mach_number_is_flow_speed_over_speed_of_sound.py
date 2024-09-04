@@ -62,5 +62,4 @@ def calculate_mach_number(velocity_: Quantity, speed_of_sound_: Quantity) -> flo
         flow_speed: velocity_,
         speed_of_sound: speed_of_sound_,
     })
-    result = Quantity(result_applied)
-    return convert_to_float(result)
+    return convert_to_float(result_applied)

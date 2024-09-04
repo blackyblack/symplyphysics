@@ -35,26 +35,14 @@ Symbol:
     :code:`I`
 """
 
-reference_sound_level = Quantity(10)
-r"""
+reference_sound_level = Quantity(10, display_symbol="beta0", display_latex="\\beta_0")
+"""
 The sound level when the wave's intensity equals the reference intensity.
-
-Symbol:
-    :code:`beta0`
-
-Latex:
-    :math:`\beta_0`
 """
 
-reference_intensity = Quantity(1e-12 * units.watt / units.meter**2)
+reference_intensity = Quantity(1e-12 * units.watt / units.meter**2, display_symbol="I0", display_latex="I_0")
 """
 The intensity of a sound wave, relative to which the sound level is measured.
-
-Symbol:
-    :code:`I0`
-
-Latex:
-    :math:`I_0`
 """
 
 definition = Eq(sound_level, reference_sound_level * log(intensity / reference_intensity, 10))

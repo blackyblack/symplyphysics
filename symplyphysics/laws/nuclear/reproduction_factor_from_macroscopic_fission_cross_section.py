@@ -59,5 +59,4 @@ def calculate_reproduction_factor(neutrons_per_fission_: float,
         macroscopic_fuel_fission_cross_section: macroscopic_fuel_fission_cross_section_,
         macroscopic_fuel_absorption_cross_section: macroscopic_fuel_absorption_cross_section_
     })
-    result_factor = Quantity(result_expr)
-    return convert_to_float(Quantity(result_factor))
+    return convert_to_float(result_expr)

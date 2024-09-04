@@ -46,5 +46,4 @@ def calculate_froude_number(velocity_: Quantity, characteristic_length_: Quantit
         velocity: velocity_,
         characteristic_length: characteristic_length_
     })
-    result = Quantity(result_applied)
-    return convert_to_float(result)
+    return convert_to_float(result_applied)
