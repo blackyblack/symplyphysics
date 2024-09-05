@@ -4,7 +4,7 @@ from sympy import Idx, solve, symbols
 from symplyphysics import units, global_index
 from symplyphysics.laws.electricity import current_is_proportional_to_voltage as ohm_law
 from symplyphysics.laws.electricity.circuits import conductivity_of_two_parallel_resistors as parallel_conductance
-from symplyphysics.laws.electricity.circuits import resistivity_of_serial_resistors as serial_resistance
+from symplyphysics.laws.electricity.circuits import resistance_in_serial_connection as serial_resistance
 from symplyphysics.definitions import electrical_conductivity_is_inversed_resistance as conductivity_law
 
 # Two resistors are connected across a 12 V battery with internal resistance of 1 Ohm.
@@ -48,7 +48,7 @@ total_parallel_law = parallel_law_two_resistors.subs({
     serial_resistance.resistance[1]: R_battery,
     serial_resistance.resistance[2]: R12_parallel,
 })
-R_total_parallel = solve(total_parallel_law, serial_resistance.serial_resistance)[0]
+R_total_parallel = solve(total_parallel_law, serial_resistance.total_resistance)[0]
 
 ohm_law_parallel = ohm_law.law.subs({
     ohm_law.current: I_parallel,
@@ -64,7 +64,7 @@ serial_law = serial_law_two_resistors.subs({
     serial_resistance.resistance[1]: R1,
     serial_resistance.resistance[2]: R2,
 })
-R12_serial = solve(serial_law, serial_resistance.serial_resistance)[0]
+R12_serial = solve(serial_law, serial_resistance.total_resistance)[0]
 
 serial_law_resistors_and_battery = serial_resistance.law.subs(global_index, index_local).doit()
 
@@ -72,7 +72,7 @@ total_serial_law = serial_law_resistors_and_battery.subs({
     serial_resistance.resistance[1]: R_battery,
     serial_resistance.resistance[2]: R12_serial,
 })
-R_total_serial = solve(total_serial_law, serial_resistance.serial_resistance)[0]
+R_total_serial = solve(total_serial_law, serial_resistance.total_resistance)[0]
 
 ohm_law_serial = ohm_law.law.subs({
     ohm_law.current: I_series,

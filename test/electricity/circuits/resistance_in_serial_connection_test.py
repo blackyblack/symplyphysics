@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.electricity.circuits import resistivity_of_serial_resistors as serial_resistor
+from symplyphysics.laws.electricity.circuits import resistance_in_serial_connection as serial_resistor
 
 # Description
 ## Assert we have two resistors with 1 Ohm and 2 Ohm resistances.
