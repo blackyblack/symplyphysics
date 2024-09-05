@@ -3,7 +3,7 @@ from pytest import fixture, raises
 from sympy import pi
 from symplyphysics import (errors, units, Quantity, assert_equal, prefixes)
 
-from symplyphysics.laws.electricity.circuits import surface_resistance_of_metal as resistance_law
+from symplyphysics.laws.electricity.circuits.waveguides import surface_resistance_of_metal as resistance_law
 
 ## Parameters of the coaxial waveguide: the relative permeability of the dielectric is 1,
 ## the specific conductivity of the conductor is 59.5e6 siemens per meter.
