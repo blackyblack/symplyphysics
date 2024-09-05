@@ -4,7 +4,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     symbols,
@@ -44,10 +43,6 @@ _molar_mass_derived = molar_mass_law.law.rhs.subs({
 })
 
 assert expr_equals(_molar_mass_derived, law.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(particle_mass_=particle_mass)

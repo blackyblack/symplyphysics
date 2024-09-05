@@ -1,5 +1,5 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, symbols)
 
 # Description
@@ -17,10 +17,6 @@ mass = symbols.basic.mass
 mole_count = Symbol("mole_count", units.amount_of_substance)
 
 law = Eq(atomic_weight, mass / mole_count)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(substance_mass_=mass, mole_count_=mole_count)

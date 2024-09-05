@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     dimensionless,
     convert_to_float,
     validate_input,
@@ -24,10 +23,6 @@ particles_count = Symbol("particles_count", dimensionless)
 mole_count = Symbol("mole_count", units.amount_of_substance)
 
 law = Eq(units.avogadro, particles_count / mole_count)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(mole_count_=mole_count)
