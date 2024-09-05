@@ -1,3 +1,11 @@
+"""
+Molar mass via molecular mass
+=============================
+
+The Avogadro constant is also the constant of proportionality between molar mass and
+molecular mass.
+"""
+
 from sympy import Eq, solve, Symbol as SymSymbol, Idx
 from symplyphysics import (
     clone_symbol,
@@ -19,13 +27,33 @@ from symplyphysics.laws.quantities import (
     quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law,
 )
 
-# Description
-## Molar mass of a substance is the mass of 1 mole of particles that it is comprised of.
-
 molar_mass = Symbol("molas_mass", units.mass / units.amount_of_substance)
-particle_mass = clone_symbol(symbols.basic.mass)
+"""
+Mass per unit amount of substance.
 
-law = Eq(molar_mass, particle_mass * units.avogadro)
+Symbol:
+    :code:`M`
+"""
+
+molecular_mass = clone_symbol(symbols.basic.mass, display_symbol="m_0", display_latex="m_0")
+r"""
+Mass of a single molecule.
+
+Symbol:
+    :code:`m_0`
+
+Latex:
+    :math:`m_0`
+"""
+
+law = Eq(molar_mass, molecular_mass * units.avogadro)
+r"""
+:code:`M = m_0 * N_A`
+
+Latex:
+    .. math::
+        M = m_0 N_\text{A}
+"""
 
 # Derive from another definition of molar mass
 
@@ -37,7 +65,7 @@ _amount_of_substance = solve(avogadro_law.law,
 _local_index = Idx("local_index", (1, _number_of_particles))
 
 _total_mass = mass_sum_law.law.rhs.subs(global_index,
-    _local_index).subs(mass_sum_law.mass_of_component[_local_index], particle_mass).doit()
+    _local_index).subs(mass_sum_law.mass_of_component[_local_index], molecular_mass).doit()
 
 _molar_mass_derived = solve(
     molar_qty_law.law,
@@ -50,8 +78,8 @@ _molar_mass_derived = solve(
 assert expr_equals(_molar_mass_derived, law.rhs)
 
 
-@validate_input(particle_mass_=particle_mass)
+@validate_input(particle_mass_=molecular_mass)
 @validate_output(molar_mass)
 def calculate_molar_mass(particle_mass_: Quantity) -> Quantity:
-    result = law.rhs.subs(particle_mass, particle_mass_)
+    result = law.rhs.subs(molecular_mass, particle_mass_)
     return Quantity(result)
