@@ -9,7 +9,7 @@ from symplyphysics import (
     Quantity,
     SI,
 )
-from symplyphysics.laws.electricity.circuits import sum_of_all_voltages_in_loop_is_zero as kirchhoff_law_2
+from symplyphysics.laws.electricity.circuits import sum_of_voltages_in_loop_is_zero as kirchhoff_law_2
 
 Args = namedtuple("Args", ["U1", "U2"])
 

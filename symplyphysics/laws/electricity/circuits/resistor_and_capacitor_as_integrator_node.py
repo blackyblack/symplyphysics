@@ -5,7 +5,7 @@ from symplyphysics.definitions import current_is_charge_derivative as charge_def
 from symplyphysics.definitions import capacitance_from_charge_and_voltage as capacitance_definition
 from symplyphysics.laws.electricity import current_is_proportional_to_voltage as ohms_law
 from symplyphysics.laws.electricity.circuits import sum_of_currents_through_junction_is_zero as kirchhoff_law
-from symplyphysics.laws.electricity.circuits import sum_of_all_voltages_in_loop_is_zero as kirchhoff_law_2
+from symplyphysics.laws.electricity.circuits import sum_of_voltages_in_loop_is_zero as kirchhoff_law_2
 
 # Description
 ## RC integrator is a circuit with capacitor and resistor in series. Initial_voltage is applied to whole circuit and integrated voltage is obtained from capacitor.

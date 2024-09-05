@@ -9,7 +9,7 @@ from symplyphysics.definitions import harmonic_oscillator_is_second_derivative_e
 from symplyphysics.laws.electricity import self_induction_voltage_from_current_derivative as induction_voltage_definition
 from symplyphysics.definitions import period_from_angular_frequency as period_definition
 from symplyphysics.laws.electricity.circuits import sum_of_currents_through_junction_is_zero as kirchhoff_law
-from symplyphysics.laws.electricity.circuits import sum_of_all_voltages_in_loop_is_zero as kirchhoff_law_2
+from symplyphysics.laws.electricity.circuits import sum_of_voltages_in_loop_is_zero as kirchhoff_law_2
 
 # Description
 ## LC-oscillator is the circuit of inductor and capacitor.

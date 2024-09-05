@@ -1,22 +1,35 @@
+"""
+Sum of voltages in loop is zero
+===============================
+
+The directed sum of the potential differences, or voltages, around any closed loop
+is zero. Directed sum implies that the sign of the voltages must be taken into account.
+This law is also known as **Kirchhoff's second law**, or **Kirchhoff's loop rule**.
+"""
+
 from typing import Sequence
 from sympy import (Eq, Idx, solve)
-from symplyphysics import (units, Quantity, print_expression, validate_input, validate_output,
+from symplyphysics import (units, Quantity, validate_input, validate_output,
     SymbolIndexed, SumIndexed, global_index)
 
-# Description
-## sum(U) = 0
-## Where U is a voltage on the element of an electrical loop.
-## Loop is a closed sub-circuit in an electrical circuit.
-## In other words, sum of all voltage sources in the loop equals to sum of all voltage consumers in this loop.
-## This property of electrical loop is also known as second Kirchhoff law.
-## This law also demonstrates that work to move the unit of charge in electrical field along the closed path is zero.
-
 voltage = SymbolIndexed("voltage", units.voltage)
+r"""
+:math:`i`-th voltage.
+
+Symbol:
+    :code:`V_i`
+
+Latex:
+    :math:`V_i`
+"""
+
 law = Eq(SumIndexed(voltage[global_index], global_index), 0)
+r"""
+:code:`Sum(V_i, i) = 0`
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    :math:`\sum_i V_i = 0`
+"""
 
 
 @validate_input(voltages_=voltage)
