@@ -1,35 +1,59 @@
+"""
+Hard spheres potential
+======================
+
+Hard spheres are widely used as model particles in the statistical mechanical theory, defined as
+impenetrable spheres that cannot overlap in space, which mimics extremely strong repulsion that
+atoms and molecules experience at very close distances
+"""
+
 from sympy import Eq, Piecewise, S
 from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
 
-# Description
-## Hard spheres are widely used as model particles in the statistical mechanical theory, defined as
-## impenetrable spheres that cannot overlap in space, which mimics extremely strong repulsion that
-## atoms and molecules experience at very close distances
-
-# Law: U(r) = infinity if r <= sigma else 0
-## U - hard spheres potential
-## r - distance between particles
-## sigma - diameter of sphere
-
 potential = Symbol("potential", units.energy)
+"""
+Potential energy of the configuration.
+
+Symbol:
+    :code:`U`
+"""
+
 distance = Symbol("distance", units.length)
+"""
+Distance between the centers of the particles.
+
+Symbol:
+    :code:`r`
+"""
+
 sphere_diameter = Symbol("sphere_diameter", units.length)
+r"""
+Diameter of the spheres.
+
+Symbol:
+    :code:`sigma`
+
+Latex:
+    :math:`\sigma`
+"""
 
 law = Eq(
     potential,
     Piecewise((S.Infinity, distance <= sphere_diameter), (0, distance > sphere_diameter)),
 )
+r"""
+:code:`U = Piecewise((Infinity, r <= sigma), (0, r > sigma))`
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        U = \begin{cases} \infty & r \le \sigma \\ 0 & r > \sigma \end{cases}
+"""
 
 
 @validate_input(
