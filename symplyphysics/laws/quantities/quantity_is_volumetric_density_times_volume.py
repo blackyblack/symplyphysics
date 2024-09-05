@@ -15,11 +15,6 @@ from symplyphysics import (
 )
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 
-# Law: X = rho_X * V
-## X - extensive quantity
-## rho_X - (intensive) volumetric density
-## V - volume
-
 extensive_quantity = SymSymbol("extensive_quantity")
 """
 Extensive quantity.
