@@ -9,7 +9,7 @@ from symplyphysics import (
     Quantity,
     SI,
 )
-from symplyphysics.laws.electricity.circuits import sum_of_all_currents_through_an_electrical_node_is_zero as kirchhoff_law
+from symplyphysics.laws.electricity.circuits import sum_of_currents_through_junction_is_zero as kirchhoff_law
 
 Args = namedtuple("Args", ["I1", "I2"])
 
