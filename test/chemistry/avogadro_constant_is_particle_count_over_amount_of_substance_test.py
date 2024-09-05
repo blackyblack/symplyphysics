@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.chemistry import avogadro_number_from_mole_count
+from symplyphysics.laws.chemistry import avogadro_constant_is_particle_count_over_amount_of_substance
 
 Args = namedtuple("Args", ["M"])
 
@@ -18,7 +18,7 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_particles_count(test_args: Args) -> None:
-    result = avogadro_number_from_mole_count.calculate_particles_count(test_args.M)
+    result = avogadro_constant_is_particle_count_over_amount_of_substance.calculate_particles_count(test_args.M)
     assert isinstance(result, int)
     assert_equal(result, 3.011e24)
 
@@ -26,6 +26,6 @@ def test_basic_particles_count(test_args: Args) -> None:
 def test_bad_mole_count() -> None:
     Mb = Quantity(1 * units.meter)
     with raises(errors.UnitsError):
-        avogadro_number_from_mole_count.calculate_particles_count(Mb)
+        avogadro_constant_is_particle_count_over_amount_of_substance.calculate_particles_count(Mb)
     with raises(TypeError):
-        avogadro_number_from_mole_count.calculate_particles_count(100)
+        avogadro_constant_is_particle_count_over_amount_of_substance.calculate_particles_count(100)

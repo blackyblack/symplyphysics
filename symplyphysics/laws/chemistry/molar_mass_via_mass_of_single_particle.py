@@ -11,7 +11,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.chemistry import (
-    avogadro_number_from_mole_count as avogadro_law,
+    avogadro_constant_is_particle_count_over_amount_of_substance as avogadro_law,
 )
 from symplyphysics.laws.conservation import (
     mixture_mass_equal_sum_of_components_masses as mass_sum_law,)
@@ -32,7 +32,7 @@ law = Eq(molar_mass, particle_mass * units.avogadro)
 _number_of_particles = SymSymbol("number_of_particles", integer=True)
 
 _amount_of_substance = solve(avogadro_law.law,
-    avogadro_law.mole_count)[0].subs(avogadro_law.particles_count, _number_of_particles)
+    avogadro_law.amount_of_substance)[0].subs(avogadro_law.particle_count, _number_of_particles)
 
 _local_index = Idx("local_index", (1, _number_of_particles))
 
