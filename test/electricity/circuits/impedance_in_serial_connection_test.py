@@ -7,7 +7,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.electricity.circuits import serial_impedance as serial_resistor
+from symplyphysics.laws.electricity.circuits import impedance_in_serial_connection as serial_resistor
 
 # Description
 ## Assert we have two elements of circuit with (1 + 1 * I) Ohm and (2 + 2 * I) Ohm impedances.
