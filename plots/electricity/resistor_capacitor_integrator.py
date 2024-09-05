@@ -11,7 +11,7 @@
 from sympy import symbols, solve
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
-from symplyphysics.laws.electricity.circuits import resistor_and_capacitor_as_integrator_node as rc_node
+from symplyphysics.laws.electricity.circuits import voltage_across_charging_capacitor_in_serial_resistor_capacitor_circuit as rc_node
 
 time = symbols("time")
 

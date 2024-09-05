@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.electricity.circuits import resistor_and_capacitor_as_integrator_node as rc_node
+from symplyphysics.laws.electricity.circuits import voltage_across_charging_capacitor_in_serial_resistor_capacitor_circuit as rc_node
 
 # Description
 ## Assert we have 3 Volts applied to 2-Ohm resistor in series with 2 Farads capacitor.
