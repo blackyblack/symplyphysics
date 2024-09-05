@@ -1,3 +1,16 @@
+r"""
+Number density via volumetric density and molar mass
+====================================================
+
+Number density, or number of molecules per unit volume, can be expressed using
+the volumetric density, or mass per unit volume, and molar mass, or mass per unit
+amount or substance.
+
+**Notation:**
+
+#. :math:`N_\text{A}` (:code:`N_A`) is the Avogadro constant.
+"""
+
 from sympy import (Eq, solve)
 from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output)
@@ -6,31 +19,47 @@ from symplyphysics.definitions import density_from_mass_volume
 from symplyphysics.laws.chemistry import avogadro_number_from_mole_count
 from symplyphysics.laws.chemistry import atomic_weight_from_mass_mole_count
 
-# Description
-## The atomic number density (N; atoms/cm^3) is the number of atoms of a given type per unit volume (V; cm^3)
-## of the material.
+number_density = Symbol("number_density", 1 / units.volume)
+"""
+Number density, or number of molecules per unit volume.
 
-## Law: N = ⍴ * Na / M
-## Where:
-## ⍴ (material density) is density of the material.
-##   See [material density](symplyphysics/definitions/density_from_mass_volume.py) implementation.
-## Na is Avogadro's number.
-##   See [avogadro number](./avogadro_number_from_mole_count.py) implementation.
-## M (atomic or molecular weight) - total weight of an atom.
-##   See [atomic weight](./atomic_weight_from_mass_mole_count.py) implementation.
-## N is the atomic number density.
+Symbol:
+    :code:`n`
+"""
 
-atomic_number_density = Symbol("atomic_number_density", 1 / units.volume)
-material_density = Symbol("material_density", units.mass / units.volume)
-atomic_weight = Symbol("atomic_weight", units.mass / units.amount_of_substance)
+volumetric_density = Symbol("volumetric_density", units.mass / units.volume)
+r"""
+Volumetric density, or mass per unit volume.
 
-law = Eq(atomic_number_density, material_density * units.avogadro / atomic_weight)
+Symbol:
+    :code:`rho`
+
+Latex:
+    :math:`\rho`
+"""
+
+molar_mass = Symbol("molar_mass", units.mass / units.amount_of_substance)
+"""
+Molar mass, or mass per unit amount of substance.
+
+Symbol:
+    :code:`M`
+"""
+
+law = Eq(number_density, volumetric_density * units.avogadro / molar_mass)
+r"""
+:code:`n = rho * N_A / M`
+
+Latex:
+    .. math::
+        n = \frac{\rho N_\text{A}}{M}
+"""
 
 # Derive the same law from volume number density law
 
 _density_law = density_from_mass_volume.definition.subs({
     density_from_mass_volume.volume: number_density_is_number_of_objects_per_unit_volume.volume,
-    density_from_mass_volume.density: material_density
+    density_from_mass_volume.density: volumetric_density
 })
 
 _avogadro_law = avogadro_number_from_mole_count.law.subs({
@@ -39,7 +68,7 @@ _avogadro_law = avogadro_number_from_mole_count.law.subs({
 })
 
 _atomic_weight_law = atomic_weight_from_mass_mole_count.law.subs({
-    atomic_weight_from_mass_mole_count.atomic_weight: atomic_weight,
+    atomic_weight_from_mass_mole_count.atomic_weight: molar_mass,
     atomic_weight_from_mass_mole_count.mass: density_from_mass_volume.mass,
     atomic_weight_from_mass_mole_count.mole_count: avogadro_number_from_mole_count.mole_count
 })
@@ -55,14 +84,14 @@ _derived_number_density = solve(_derived_law, (density_from_mass_volume.mass,
     number_density_is_number_of_objects_per_unit_volume.number_density,
     avogadro_number_from_mole_count.mole_count),
     dict=True)[0][number_density_is_number_of_objects_per_unit_volume.number_density]
-assert solve(law, atomic_number_density,
-    dict=True)[0][atomic_number_density] == _derived_number_density
+assert solve(law, number_density,
+    dict=True)[0][number_density] == _derived_number_density
 
 
-@validate_input(material_density_=material_density, atomic_weight_=atomic_weight)
-@validate_output(atomic_number_density)
+@validate_input(material_density_=volumetric_density, atomic_weight_=molar_mass)
+@validate_output(number_density)
 def calculate_atomic_number_density(material_density_: Quantity,
     atomic_weight_: Quantity) -> Quantity:
-    solved = solve(law, atomic_number_density, dict=True)[0][atomic_number_density]
-    result_expr = solved.subs({material_density: material_density_, atomic_weight: atomic_weight_})
+    solved = solve(law, number_density, dict=True)[0][number_density]
+    result_expr = solved.subs({volumetric_density: material_density_, molar_mass: atomic_weight_})
     return Quantity(result_expr)

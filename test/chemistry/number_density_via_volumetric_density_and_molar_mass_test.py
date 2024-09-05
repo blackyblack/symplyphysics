@@ -6,7 +6,7 @@ from symplyphysics import (
     Quantity,
     assert_equal,
 )
-from symplyphysics.laws.chemistry import atomic_number_density_from_material_density_atomic_weight as atomic_number_density
+from symplyphysics.laws.chemistry import number_density_via_volumetric_density_and_molar_mass as atomic_number_density
 
 Args = namedtuple("Args", ["p", "M"])
 
