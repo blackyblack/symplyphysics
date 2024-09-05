@@ -17,7 +17,7 @@ from symplyphysics import (units, Quantity, Symbol, validate_input,
 from symplyphysics.definitions import number_density_is_number_of_objects_per_unit_volume
 from symplyphysics.definitions import density_from_mass_volume
 from symplyphysics.laws.chemistry import avogadro_number_from_mole_count
-from symplyphysics.laws.chemistry import atomic_weight_from_mass_mole_count
+from symplyphysics.laws.quantities import quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law
 
 number_density = Symbol("number_density", 1 / units.volume)
 """
@@ -67,10 +67,10 @@ _avogadro_law = avogadro_number_from_mole_count.law.subs({
     number_density_is_number_of_objects_per_unit_volume.number_of_objects
 })
 
-_atomic_weight_law = atomic_weight_from_mass_mole_count.law.subs({
-    atomic_weight_from_mass_mole_count.atomic_weight: molar_mass,
-    atomic_weight_from_mass_mole_count.mass: density_from_mass_volume.mass,
-    atomic_weight_from_mass_mole_count.mole_count: avogadro_number_from_mole_count.mole_count
+_atomic_weight_law = molar_qty_law.law.subs({
+    molar_qty_law.molar_quantity: molar_mass,
+    molar_qty_law.extensive_quantity: density_from_mass_volume.mass,
+    molar_qty_law.amount_of_substance: avogadro_number_from_mole_count.mole_count
 })
 
 _derived_law = [

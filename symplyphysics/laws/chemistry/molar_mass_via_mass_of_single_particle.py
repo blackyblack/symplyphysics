@@ -11,11 +11,13 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.chemistry import (
-    atomic_weight_from_mass_mole_count as molar_mass_law,
     avogadro_number_from_mole_count as avogadro_law,
 )
 from symplyphysics.laws.conservation import (
     mixture_mass_equal_sum_of_components_masses as mass_sum_law,)
+from symplyphysics.laws.quantities import (
+    quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law,
+)
 
 # Description
 ## Molar mass of a substance is the mass of 1 mole of particles that it is comprised of.
@@ -37,9 +39,12 @@ _local_index = Idx("local_index", (1, _number_of_particles))
 _total_mass = mass_sum_law.law.rhs.subs(global_index,
     _local_index).subs(mass_sum_law.mass_of_component[_local_index], particle_mass).doit()
 
-_molar_mass_derived = molar_mass_law.law.rhs.subs({
-    molar_mass_law.mass: _total_mass,
-    molar_mass_law.mole_count: _amount_of_substance,
+_molar_mass_derived = solve(
+    molar_qty_law.law,
+    molar_qty_law.molar_quantity,
+)[0].subs({
+    molar_qty_law.extensive_quantity: _total_mass,
+    molar_qty_law.amount_of_substance: _amount_of_substance,
 })
 
 assert expr_equals(_molar_mass_derived, law.rhs)
