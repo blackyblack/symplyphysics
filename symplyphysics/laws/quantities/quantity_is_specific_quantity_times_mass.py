@@ -1,31 +1,52 @@
+"""
+Quantity is specific quantity times mass
+========================================
+
+An extensive quantity of interest can be obtained by multiplying the corresponding mass-specific
+intensive quantity by the mass.
+"""
+
 from sympy import Eq, Symbol as SymSymbol
 from symplyphysics import (
     units,
     Quantity,
-    print_expression,
     validate_input,
     symbols,
 )
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 
-# Description
-## An extensive quantity of interest can be obtained by multiplying the corresponding mass-specific
-## intensive quantity by the mass.
-
-# Law: X = x * m
-## X - extensive quantity
-## x - (intensive) mass-specific quantity
-## m - mass
-
 extensive_quantity = SymSymbol("extensive_quantity")
+"""
+Extensive quantity.
+
+Symbol:
+    :code:`X`
+"""
+
 specific_quantity = SymSymbol("specific_quantity")
+r"""
+Intensive mass-specific quantity.
+
+Symbol:
+    :code:`x`
+"""
+
 mass = symbols.basic.mass
+"""
+:attr:`~symplyphysics.symbols.basic.mass`.
+
+Symbol:
+    :code:`m`
+"""
 
 law = Eq(extensive_quantity, specific_quantity * mass)
+r"""
+:code:`X = x * m`
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        X = x m
+"""
 
 
 @validate_input(mass_=mass)
