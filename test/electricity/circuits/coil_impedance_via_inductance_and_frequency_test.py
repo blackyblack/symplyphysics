@@ -2,7 +2,7 @@ from collections import namedtuple
 from sympy import I
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, errors, units, Quantity)
-from symplyphysics.laws.electricity.circuits import coil_impedance_from_inductivity_and_frequency as coil_impedance_law
+from symplyphysics.laws.electricity.circuits import coil_impedance_via_inductance_and_frequency as coil_impedance_law
 
 # Description
 ## Assert we have a coil with 5H inductivity. In 50Hz (314.159 rad/s) circuit impedance of this coil should be 1570.8 Ohm.
