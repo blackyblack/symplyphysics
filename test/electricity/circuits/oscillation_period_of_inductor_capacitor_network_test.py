@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.electricity.circuits import oscillation_period_for_capacitor_inductor_node as lc
+from symplyphysics.laws.electricity.circuits import oscillation_period_of_inductor_capacitor_network as lc
 
 # Description
 ## Assert we have a capacitor with 1 farad capacitance and 1 henry inductor.

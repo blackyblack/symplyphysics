@@ -15,7 +15,7 @@ from symplyphysics.laws.electricity.circuits import admittance_in_parallel_conne
 from symplyphysics.definitions import admittance_is_inverse_impedance as admittance_def
 from symplyphysics.laws.electricity.circuits import capacitor_impedance_from_capacitance_and_frequency as capacitor_impedance
 from symplyphysics.laws.electricity.circuits import coil_impedance_via_inductance_and_frequency as coil_impedance
-from symplyphysics.laws.electricity.circuits import oscillation_period_for_capacitor_inductor_node as thomsons_formula
+from symplyphysics.laws.electricity.circuits import oscillation_period_of_inductor_capacitor_network as thomsons_formula
 from symplyphysics.definitions import period_from_angular_frequency as period_definition
 
 frequency_arg = Symbol("frequency_arg")
