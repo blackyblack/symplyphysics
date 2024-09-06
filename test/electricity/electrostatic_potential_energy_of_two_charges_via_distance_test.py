@@ -5,7 +5,7 @@ from symplyphysics.laws.electricity import electrostatic_potential_energy_of_two
 
 # Description
 ## It is known that with a charge of q1 equal to 0.25 coulomb and a charge of q2 equal to 4 coulomb,
-## interaction energy is 4.49e9 joule at a distance of 2 meters between charges and absolute_permittivity equal to 1.
+## interaction energy is 4.49e9 joule at a distance of 2 meters between charges and relative permittivity equal to 1.
 ## https://matematika-club.ru/potencialnaya-ehnergiya-zaryada-q-kalkulyator-onlajn
 
 Args = namedtuple("Args", ["absolute_permittivity", "distance", "charge_1", "charge_2"])

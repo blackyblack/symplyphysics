@@ -51,7 +51,7 @@ Symbol:
 """
 
 law = Eq(electrostatic_potential,
-    1 / (4 * pi) * charge / (absolute_permittivity * distance))
+    charge / (4 * pi * absolute_permittivity * distance))
 r"""
 :code:`V = q / (4 * pi * epsilon * r)`
 
