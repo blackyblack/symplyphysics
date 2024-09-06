@@ -14,6 +14,9 @@ from symplyphysics import (units, Quantity, Symbol, validate_input,
 impedance = Symbol("impedance", units.impedance)
 """
 Impedance of the capacitor.
+
+Symbol:
+    :code:`Z`
 """
 
 angular_frequency = Symbol("angular_frequency", angle_type / units.time)

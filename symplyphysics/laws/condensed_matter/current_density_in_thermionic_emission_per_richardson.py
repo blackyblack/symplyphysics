@@ -42,12 +42,9 @@ temperature = symbols.thermodynamics.temperature
 :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the metal.
 """
 
-richardson_constant = Quantity(120.17 * (units.ampere / units.kelvin**2 / units.centimeter**2))
+richardson_constant = Quantity(120.17 * (units.ampere / units.kelvin**2 / units.centimeter**2), display_symbol="A")
 """
 Constant of proportionality proposed by Richardson.
-
-Symbol:
-    :code:`A`
 """
 
 law = Eq(

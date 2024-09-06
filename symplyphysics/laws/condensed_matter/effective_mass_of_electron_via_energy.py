@@ -19,6 +19,8 @@ from sympy import (
     solve,
 )
 from symplyphysics import (
+    symbols,
+    clone_symbol,
     SI,
     units,
     Quantity,
@@ -28,15 +30,9 @@ from symplyphysics import (
     validate_output,
 )
 
-effective_mass = Symbol("mass", units.mass)
+effective_mass = clone_symbol(symbols.basic.mass, "effective_mass", display_symbol="m_eff", display_latex=r"m_\text{eff}")
 r"""
 Effective mass of the electron.
-
-Symbol:
-    :code:`m_eff`
-
-Latex:
-    :math:`m_\text{eff}`
 """
 
 energy = Function("energy", units.energy)
