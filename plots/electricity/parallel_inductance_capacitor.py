@@ -35,7 +35,7 @@ C_impedance = capacitor_impedance.law.rhs.subs(
     {capacitor_impedance.angular_frequency: frequency_arg})
 C_admittance = admittance_def.definition.rhs.subs({
     admittance_def.impedance: C_impedance
-}).subs({capacitor_impedance.angular_frequency: EXAMPLE_CAPACITANCE})
+}).subs({capacitor_impedance.capacitance: EXAMPLE_CAPACITANCE})
 
 R_admittance = admittance_def.definition.rhs.subs({admittance_def.impedance: EXAMPLE_RESISTANCE})
 
