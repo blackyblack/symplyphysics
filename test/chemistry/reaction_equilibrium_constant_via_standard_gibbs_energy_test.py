@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.condensed_matter import reaction_equilibrium_constant as constant_law
+from symplyphysics.laws.condensed_matter import reaction_equilibrium_constant_via_standard_gibbs_energy as constant_law
 
 # Description
 ## The decomposition of barium carbonate by the reaction: BaCO3 = BaO + CO2.
