@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, errors, units, Quantity, prefixes)
-from symplyphysics.laws.electricity.circuits import energy_accumulated_in_inductor_from_inductance_and_current as inductor_law
+from symplyphysics.laws.electricity.circuits import energy_stored_in_inductor_via_inductance_and_current as inductor_law
 
 # Description
 ## Assert we have 150mH inductor with 0.5A current flowing through it.
