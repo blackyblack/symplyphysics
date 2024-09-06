@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.condensed_matter import thermionic_emission_current as emission_law
+from symplyphysics.laws.condensed_matter import current_density_in_thermionic_emission_per_richardson as emission_law
 
 # Description
 ## It is known that for strontium, the current density of thermionic emission at
