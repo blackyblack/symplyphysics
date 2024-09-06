@@ -4,15 +4,11 @@ Energy density via permittivity and electric field
 
 Volumetric energy density of the electric field depends on the permittivity of the medium and
 on the strength of the electric field at that point.
-
-**Notation:**
-
-#. :math:`\varepsilon_0` (:code:`epsilon_0`) is vacuum permittivity.
 """
 
 from sympy import (Eq, solve)
 from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output, dimensionless)
+    validate_output)
 
 energy_density = Symbol("energy_density", units.energy / units.volume)
 """

@@ -4,10 +4,6 @@ Electrostatic potential due to point charge
 
 Electrostatic potential of electric field due to a point charge is inversely proportional
 to the distance to the point charge. Also see :doc:`laws.electricity.electrostatic_potential_is_work_to_bring_from_reference_point_over_charge`.
-
-**Notation:**
-
-#. :math:`\varepsilon_0` (:code:`epsilon_0`) is vacuum permittivity.
 """
 
 from sympy import (Eq, solve, pi)
@@ -15,7 +11,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    dimensionless,
     validate_input,
     validate_output,
 )
@@ -28,9 +23,9 @@ Symbol:
     :code:`V`
 """
 
-relative_permittivity = Symbol("relative_permittivity", dimensionless)
+absolute_permittivity = Symbol("absolute_permittivity", units.capacitance / units.length)
 r"""
-Relative permittivity of the medium.
+Absolute permittivity of the medium.
 
 Symbol:
     :code:`epsilon`
@@ -56,23 +51,23 @@ Symbol:
 """
 
 law = Eq(electrostatic_potential,
-    1 / (4 * pi * units.vacuum_permittivity) * charge / (relative_permittivity * distance))
+    1 / (4 * pi) * charge / (absolute_permittivity * distance))
 r"""
-:code:`V = 1 / (4 * pi * epsilon_0) * q / (epsilon * r)`
+:code:`V = q / (4 * pi * epsilon * r)`
 
 Latex:
     .. math::
-        V = \frac{1}{4 \pi \varepsilon_0} \frac{q}{\varepsilon r}
+        V = \frac{q}{4 \pi \varepsilon r}
 """
 
 
-@validate_input(relative_permittivity_=relative_permittivity, distance_=distance, charge_=charge)
+@validate_input(absolute_permittivity_=absolute_permittivity, distance_=distance, charge_=charge)
 @validate_output(electrostatic_potential)
-def calculate_electrostatic_potential(relative_permittivity_: float, distance_: Quantity,
+def calculate_electrostatic_potential(absolute_permittivity_: Quantity, distance_: Quantity,
     charge_: Quantity) -> Quantity:
     result_expr = solve(law, electrostatic_potential, dict=True)[0][electrostatic_potential]
     result_expr = result_expr.subs({
-        relative_permittivity: relative_permittivity_,
+        absolute_permittivity: absolute_permittivity_,
         distance: distance_,
         charge: charge_,
     })
