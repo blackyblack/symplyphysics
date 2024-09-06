@@ -3,7 +3,7 @@
 from sympy import dsolve, solve, Symbol, Eq, pi
 from symplyphysics import print_expression, Quantity, prefixes, units, convert_to
 from symplyphysics.core.symbols.celsius import to_kelvin_quantity, Celsius
-from symplyphysics.laws.electricity import power_factor_from_active_and_full_power as efficiency_law
+from symplyphysics.laws.electricity import power_factor_is_real_power_over_apparent_power as efficiency_law
 from symplyphysics.laws.thermodynamics import (
     heat_is_heat_capacity_times_temperature_change as thermal_energy_law,
     heat_of_combustion_via_mass as combustion_energy_law,
@@ -112,8 +112,8 @@ energy_from_combustion_of_methane_value = combustion_energy_law.law.subs({
 }).rhs
 
 efficiency_equation = efficiency_law.law.subs({
-    efficiency_law.active_power: energy_to_heating_water_value,
-    efficiency_law.full_power: energy_from_combustion_of_methane_value,
+    efficiency_law.real_power: energy_to_heating_water_value,
+    efficiency_law.apparent_power: energy_from_combustion_of_methane_value,
     efficiency_law.power_factor: efficiency_of_gas_heater
 })
 

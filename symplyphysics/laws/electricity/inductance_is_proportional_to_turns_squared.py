@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
 from sympy.physics.units import magnetic_constant
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, dimensionless)
 
 # Description
@@ -21,10 +21,6 @@ coil_length = Symbol("coil_length", units.length)
 
 law = Eq(coil_inductance,
     magnetic_constant * magnetic_permeability * number_of_turns**2 * turn_area / coil_length)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(turn_area_=turn_area, coil_length_=coil_length)

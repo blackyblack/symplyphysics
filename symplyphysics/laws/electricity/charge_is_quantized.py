@@ -1,30 +1,48 @@
+r"""
+Charge is quantized
+===================
+
+Electric charge is quantized, i.e. restricted to certain values.
+
+**Notation:**
+
+#. :math:`e` is the elementary charge.
+"""
+
 from sympy import Eq
 from symplyphysics import (
     Symbol,
     units,
     dimensionless,
-    print_expression,
     Quantity,
     validate_input,
     validate_output,
 )
 
-# Description
-## Electric charge is quantized, i.e. restricted to certain values.
-
-# Law: q = n*e
-## q - electric charge
-## n - an integer factor (from the set of whole numbers, i.e. positive, zero, or negative)
-## e - elementary charge
-
 charge = Symbol("charge", units.charge)
+"""
+Total charge of the body.
+
+Symbol:
+    :code:`q`
+"""
+
 integer_factor = Symbol("factor", dimensionless)  # positive, zero or negative
+"""
+Integer factor of any sign.
+
+Symbol:
+    :code:`n`
+"""
 
 law = Eq(charge, integer_factor * units.elementary_charge)
+r"""
+:code:`q = n * e`
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        q = n e
+"""
 
 
 @validate_input(integer_factor_=integer_factor)

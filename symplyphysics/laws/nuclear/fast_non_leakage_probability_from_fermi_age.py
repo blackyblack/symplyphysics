@@ -46,5 +46,4 @@ def calculate_probability(geometric_buckling_: Quantity,
         geometric_buckling: geometric_buckling_,
         neutron_fermi_age: neutron_fermi_age_
     })
-    result_factor = Quantity(result_expr)
-    return Probability(convert_to_float(result_factor))
+    return Probability(convert_to_float(result_expr))

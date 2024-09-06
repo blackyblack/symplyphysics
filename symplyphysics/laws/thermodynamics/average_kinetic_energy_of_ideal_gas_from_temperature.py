@@ -44,7 +44,7 @@ equilibrium_temperature = clone_symbol(
     positive=True,
 )
 """
-Equilibrium temperature of the gas.
+Equilibrium :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas.
 """
 
 law = Eq(average_kinetic_energy, Rational(3, 2) * units.boltzmann * equilibrium_temperature)

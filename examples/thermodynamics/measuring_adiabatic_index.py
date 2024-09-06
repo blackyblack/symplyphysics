@@ -3,7 +3,7 @@
 from sympy import solve, Eq, symbols
 from symplyphysics import print_expression
 from symplyphysics.definitions import heat_capacity_ratio
-from symplyphysics.laws.electricity import power_from_energy_time as power_law
+from symplyphysics.laws.electricity import energy_via_constant_power_and_time as energy_law
 from symplyphysics.laws.thermodynamics import heat_is_heat_capacity_times_temperature_change as thermal_eqn
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation
 from symplyphysics.laws.quantities import quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law
@@ -68,8 +68,8 @@ isobaric_amount_of_heat = thermal_eqn.law.rhs.subs({
 
 solved = solve(
     [
-    power_law.law.subs(power_law.energy, isochoric_amount_of_heat),
-    power_law.law.subs(power_law.energy, isobaric_amount_of_heat)
+        energy_law.law.subs(energy_law.energy, isochoric_amount_of_heat),
+        energy_law.law.subs(energy_law.energy, isobaric_amount_of_heat)
     ],
     (isochoric_molar_heat, isobaric_molar_heat),
     dict=True,

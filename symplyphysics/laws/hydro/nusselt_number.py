@@ -55,5 +55,4 @@ def calculate_nusselt_number(heat_transfer_coefficient_: Quantity, characteristi
         characteristic_length: characteristic_length_,
         thermal_conductivity: thermal_conductivity_
     })
-    result = Quantity(result_applied)
-    return convert_to_float(result)
+    return convert_to_float(result_applied)

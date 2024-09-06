@@ -57,7 +57,7 @@ Latex:
 
 law = Eq(initial_pressure * initial_volume, final_pressure * final_volume)
 r"""
-:code:`p_0 V_0 = p_1 V_1`
+:code:`p_0 * V_0 = p_1 * V_1`
 
 Latex:
     .. math::

@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
@@ -30,10 +29,6 @@ current = Symbol("current", units.current)
 area = Symbol("area", units.area)
 
 law = Eq(moment, current * area)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(current_=current, area_=area)

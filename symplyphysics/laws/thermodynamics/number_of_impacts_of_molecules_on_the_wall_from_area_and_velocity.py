@@ -48,5 +48,4 @@ def calculate_number_of_impacts(molecules_concentration_: Quantity, area_: Quant
         velocity_projection: velocity_projection_,
         time: time_
     })
-    result = Quantity(result_number_of_impacts)
-    return int(convert_to_float(result))
+    return int(convert_to_float(result_number_of_impacts))

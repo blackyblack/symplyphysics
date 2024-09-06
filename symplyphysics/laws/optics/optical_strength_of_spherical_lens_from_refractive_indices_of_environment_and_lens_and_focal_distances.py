@@ -72,5 +72,4 @@ def calculate_refraction_index_lens(distance_to_object_: Quantity, distance_to_i
         curvature_radius_lens: curvature_radius_lens_,
         refraction_index_environment: refraction_index_environment_
     })
-    result = Quantity(result_expr)
-    return convert_to_float(result)
+    return convert_to_float(result_expr)

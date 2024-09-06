@@ -12,17 +12,17 @@ first_position, second_position, zero_position = symbols(
     "first_position second_position zero_position")
 
 law_electric_field_first_charge = point_charge.law.subs({
-    point_charge.point_charge: first_charge,
+    point_charge.charge: first_charge,
     point_charge.distance: zero_position - first_position,
 })
-electric_field_first_charge = solve(law_electric_field_first_charge, point_charge.electric_field)[0]
+electric_field_first_charge = solve(law_electric_field_first_charge, point_charge.electric_field_strength)[0]
 
 law_electric_field_second_charge = point_charge.law.subs({
-    point_charge.point_charge: second_charge,
+    point_charge.charge: second_charge,
     point_charge.distance: zero_position - second_position,
 })
 electric_field_second_charge = solve(law_electric_field_second_charge,
-    point_charge.electric_field)[0]
+    point_charge.electric_field_strength)[0]
 
 # By condition the total field is zero.
 eqn = Eq(electric_field_first_charge + electric_field_second_charge, 0)

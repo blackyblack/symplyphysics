@@ -50,5 +50,4 @@ def calculate_multiplication_factor(neutrons_per_fission_: float,
         macroscopic_fission_cross_section: macroscopic_fission_cross_section_,
         macroscopic_absorption_cross_section: macroscopic_absorption_cross_section_
     })
-    result_factor = Quantity(result_expr)
-    return convert_to_float(Quantity(result_factor))
+    return convert_to_float(result_expr)

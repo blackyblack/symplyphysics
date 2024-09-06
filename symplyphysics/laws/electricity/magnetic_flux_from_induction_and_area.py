@@ -1,5 +1,5 @@
 from sympy import (Eq, solve, cos)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, angle_type)
 
 # Description
@@ -17,10 +17,6 @@ area = Symbol("area", units.area)
 angle = Symbol("angle", angle_type)
 
 law = Eq(flux, induction * area * cos(angle))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(induction_=induction, area_=area, angle_=angle)

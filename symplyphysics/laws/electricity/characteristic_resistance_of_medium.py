@@ -8,7 +8,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     dimensionless,
@@ -31,10 +30,6 @@ relative_permeability = Symbol("relative_permeability", dimensionless)
 impedance_vacuum = Quantity(120 * pi * units.ohm)
 
 law = Eq(resistance, impedance_vacuum * sqrt(relative_permeability / relative_permittivity))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(relative_permittivity_=relative_permittivity,
