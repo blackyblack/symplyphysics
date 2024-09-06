@@ -11,7 +11,10 @@
 from sympy import symbols, solve
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
-from symplyphysics.laws.electricity.circuits import voltage_across_charging_capacitor_in_serial_resistor_capacitor_circuit as rc_node
+from symplyphysics.laws.electricity.circuits import (
+    voltage_across_charging_capacitor_in_serial_resistor_capacitor_circuit as rc_node,
+    time_constant_of_resistor_capacitor_circuit as time_constant_law,
+)
 
 time = symbols("time")
 
@@ -21,14 +24,18 @@ EXAMPLE_IMPEDANCE = 1
 
 RC_TIME_CONSTANT = EXAMPLE_CAPACITANCE * EXAMPLE_IMPEDANCE
 
+time_constant_expr = time_constant_law.law.rhs.subs({
+    time_constant_law.resistance: EXAMPLE_IMPEDANCE,
+    time_constant_law.capacitance: EXAMPLE_CAPACITANCE,
+})
+
 applied_law = rc_node.law.subs({
     rc_node.time: time,
-    rc_node.resistance: EXAMPLE_IMPEDANCE,
-    rc_node.capacitance: EXAMPLE_CAPACITANCE,
-    rc_node.initial_voltage: INITIAL_VOLTAGE
+    rc_node.time_constant: time_constant_expr,
+    rc_node.source_voltage: INITIAL_VOLTAGE
 })
-capacitor_voltage_function = solve(applied_law, rc_node.capacitor_voltage(time),
-    dict=True)[0][rc_node.capacitor_voltage(time)]
+capacitor_voltage_function = solve(applied_law, rc_node.capacitor_voltage,
+    dict=True)[0][rc_node.capacitor_voltage]
 
 # see resistor_and_capacitor_as_integrator_node.capacitor_current_eq for a proof the current on resistor equals to current on capacitor
 # see resistor_and_capacitor_as_integrator_node.resistor_voltage_eq for a proof the voltage on resistor is (initial_voltage - capacitor_voltage_function)

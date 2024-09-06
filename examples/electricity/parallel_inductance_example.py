@@ -32,8 +32,8 @@ admittances_law = parallel_admittance_law.law.subs(global_index, index_local).do
 for i, v in enumerate(admittances):
     admittances_law = admittances_law.subs(parallel_admittance_law.admittance[i + 1], v)
 
-result_admittance = solve(admittances_law, parallel_admittance_law.total,
-    dict=True)[0][parallel_admittance_law.total]
+result_admittance = solve(admittances_law, parallel_admittance_law.total_admittance,
+    dict=True)[0][parallel_admittance_law.total_admittance]
 
 # And finally find resulting inductivity back through the impedance
 result_impedance = solve(admittance_def.definition, admittance_def.impedance,

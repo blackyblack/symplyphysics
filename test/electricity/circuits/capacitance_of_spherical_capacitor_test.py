@@ -8,35 +8,36 @@ from symplyphysics.laws.electricity.circuits import capacitance_of_spherical_cap
 ## the capacitance is 8.34e-12 farad with a dielectric constant of 5.
 ## https://matematika-club.ru/ehlektroemkost-kondensatora-kalkulyator-onlajn
 
-Args = namedtuple("Args", ["relative_permittivity", "first_radius", "second_radius"])
+Args = namedtuple("Args", ["absolute_permittivity", "first_radius", "second_radius"])
 
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
-    relative_permittivity = 5
+    _relative_permittivity = 5
+    absolute_permittivity = Quantity(units.vacuum_permittivity * _relative_permittivity)
     first_radius = Quantity(1e-2 * units.meter)
     second_radius = Quantity(3e-2 * units.meter)
-    return Args(relative_permittivity=relative_permittivity,
+    return Args(absolute_permittivity=absolute_permittivity,
         first_radius=first_radius,
         second_radius=second_radius)
 
 
 def test_basic_capacity(test_args: Args) -> None:
-    result = capacity_law.calculate_capacity(test_args.relative_permittivity,
+    result = capacity_law.calculate_capacity(test_args.absolute_permittivity,
         test_args.first_radius, test_args.second_radius)
     assert_equal(result, 8.34e-12 * units.farad)
 
 
 def test_swap_radius(test_args: Args) -> None:
-    result = capacity_law.calculate_capacity(test_args.relative_permittivity,
+    result = capacity_law.calculate_capacity(test_args.absolute_permittivity,
         test_args.second_radius, test_args.first_radius)
     assert_equal(result, 8.34e-12 * units.farad)
 
 
 def test_bad_relative_permittivity(test_args: Args) -> None:
-    relative_permittivity = Quantity(1 * units.coulomb)
+    absolute_permittivity = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        capacity_law.calculate_capacity(relative_permittivity, test_args.first_radius,
+        capacity_law.calculate_capacity(absolute_permittivity, test_args.first_radius,
             test_args.second_radius)
 
 
@@ -44,7 +45,7 @@ def test_bad_radius(test_args: Args) -> None:
     first_radius = Quantity(1 * units.coulomb)
     second_radius = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        capacity_law.calculate_capacity(test_args.relative_permittivity, first_radius,
+        capacity_law.calculate_capacity(test_args.absolute_permittivity, first_radius,
             second_radius)
     with raises(TypeError):
-        capacity_law.calculate_capacity(test_args.relative_permittivity, 100, 100)
+        capacity_law.calculate_capacity(test_args.absolute_permittivity, 100, 100)

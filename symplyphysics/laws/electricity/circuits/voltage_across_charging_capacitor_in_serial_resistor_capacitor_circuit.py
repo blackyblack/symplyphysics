@@ -155,8 +155,8 @@ assert simplify(_voltage_diff_solution.lhs - _voltage_diff_solution.rhs) == 0
 @validate_output(capacitor_voltage)
 def calculate_capacitor_voltage(initial_voltage_: Quantity, time_constant_: Quantity,
     time_: Quantity) -> Quantity:
-    capacitor_voltage_expr = solve(law, capacitor_voltage(time),
-        dict=True)[0][capacitor_voltage(time)]
+    capacitor_voltage_expr = solve(law, capacitor_voltage,
+        dict=True)[0][capacitor_voltage]
     result_expr = capacitor_voltage_expr.subs({
         source_voltage: initial_voltage_,
         time_constant: time_constant_,
