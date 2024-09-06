@@ -24,7 +24,7 @@ Symbol:
 
 absolute_permittivity = Symbol("absolute_permittivity", units.capacitance / units.length)
 r"""
-Relative permittivity of the medium.
+Absolute permittivity of the medium.
 
 Symbol:
     :code:`epsilon`
@@ -54,7 +54,7 @@ Latex:
 @validate_input(absolute_permittivity_=absolute_permittivity,
     electric_intensity_=electric_field_strength)
 @validate_output(energy_density)
-def calculate_energy_density(absolute_permittivity_: float,
+def calculate_energy_density(absolute_permittivity_: Quantity,
     electric_intensity_: Quantity) -> Quantity:
     result_expr = solve(law, energy_density, dict=True)[0][energy_density]
     result_expr = result_expr.subs({
