@@ -5,10 +5,6 @@ Electrostatic potential energy of two charges via distance
 Electrostatic potential energy due to two point charges depends on the inverse 
 distance to the distance between the charges. Note that this is the energy of
 interaction belonging to the entire system.
-
-**Notation:**
-
-#. :math:`\varepsilon_0` (:code:`epsilon_0`) is vacuum permittivity.
 """
 
 from sympy import (Eq, solve, pi)
@@ -16,7 +12,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    dimensionless,
     validate_input,
     validate_output,
 )
@@ -32,9 +27,9 @@ Latex:
     :math:`U_E`
 """
 
-relative_permittivity = Symbol("relative_permittivity", dimensionless)
+absolute_permittivity = Symbol("absolute_permittivity", units.capacitance / units.length)
 r"""
-Relative permittivity of the medium.
+Absolute permittivity of the medium.
 
 Symbol:
     :code:`epsilon`
@@ -74,25 +69,25 @@ Latex:
 """
 
 law = Eq(electrostatic_potential_energy,
-    1 / (4 * pi * units.vacuum_permittivity) * (first_charge * second_charge) / (relative_permittivity * distance))
+    (first_charge * second_charge) / (4 * pi * absolute_permittivity * distance))
 r"""
-:code:`U_E = 1 / (4 * pi * epsilon_0) * q_1 * q_2 / (epsilon * r)`
+:code:`U_E = q_1 * q_2 / (4 * pi * epsilon * r)`
 
 Latex:
     .. math::
-        U_E = \frac{1}{4 \pi \varepsilon_0} \frac{q_1 q_2}{\varepsilon r}
+        U_E = \frac{q_1 q_2}{4 \pi \varepsilon r}
 """
 
-@validate_input(relative_permittivity_=relative_permittivity,
+@validate_input(absolute_permittivity_=absolute_permittivity,
     distance_=distance,
     charge_1_=first_charge,
     charge_2_=second_charge)
 @validate_output(electrostatic_potential_energy)
-def calculate_energy(relative_permittivity_: float, distance_: Quantity, charge_1_: Quantity,
+def calculate_energy(absolute_permittivity_: Quantity, distance_: Quantity, charge_1_: Quantity,
     charge_2_: Quantity) -> Quantity:
     result_expr = solve(law, electrostatic_potential_energy, dict=True)[0][electrostatic_potential_energy]
     result_expr = result_expr.subs({
-        relative_permittivity: relative_permittivity_,
+        absolute_permittivity: absolute_permittivity_,
         distance: distance_,
         first_charge: charge_1_,
         second_charge: charge_2_,
