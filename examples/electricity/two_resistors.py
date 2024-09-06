@@ -2,7 +2,7 @@
 
 from sympy import Idx, solve, symbols
 from symplyphysics import units, global_index
-from symplyphysics.laws.electricity import current_is_proportional_to_voltage as ohm_law
+from symplyphysics.laws.electricity import current_is_voltage_over_resistance as ohm_law
 from symplyphysics.laws.electricity.circuits import admittance_in_parallel_connection as total_admittance_law
 from symplyphysics.laws.electricity import admittance_is_conductance_and_susceptance as admittance_law
 from symplyphysics.laws.electricity.circuits import resistance_in_serial_connection as serial_resistance
