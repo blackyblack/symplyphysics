@@ -3,7 +3,8 @@ Power via current and resistance
 ================================
 
 Electric power can be expressed using current flowing through a
-conductor and its resistance.
+conductor and its resistance. Applied to AC circuits, the power in this law is the
+instantaneous power in the circuit.
 """
 
 from sympy import (Eq, solve)
