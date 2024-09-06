@@ -8,7 +8,7 @@ from symplyphysics import (
     convert_to,
     Quantity,
 )
-from symplyphysics.laws.condensed_matter import effective_mass_of_the_electron_from_the_energy as ef_mass_el
+from symplyphysics.laws.condensed_matter import effective_mass_of_electron_via_energy as ef_mass_el
 
 # Description
 ## Let's consider the one-dimensional model for an electron presented on the website:
