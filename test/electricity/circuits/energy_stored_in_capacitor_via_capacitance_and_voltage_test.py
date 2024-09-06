@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, errors, units, Quantity, prefixes)
-from symplyphysics.laws.electricity.circuits import energy_accumulated_in_capacitor_from_capacitance_and_voltage as capacitor_law
+from symplyphysics.laws.electricity.circuits import energy_stored_in_capacitor_via_capacitance_and_voltage as capacitor_law
 
 # Description
 ## Assert we have 220 uF capacitor charged to 10 volts.
