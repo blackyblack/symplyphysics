@@ -3,17 +3,16 @@ Electromotive force induced in rotating coil
 ============================================
 
 Suppose a coil is being rotated around the axis that lies in the coil's cross section
-(see `Figure`_) in a magnetic field under the conditions described below. Then an 
-electromotive will be induced in the contour of the coil. Its amplitude
-depends on the number of turns in the coil, the magnetic flux density, the
-angular frequency of the coil's rotation and the area of the coil's contour.
-
-.. _Figure: https://www.schoolphysics.co.uk/age16-19/Electricity%20and%20magnetism/Electromagnetic%20induction/text/Induced_emf_in_a_rotating_coil/index.html
+(see `Figure <https://www.schoolphysics.co.uk/age16-19/Electricity%20and%20magnetism/Electromagnetic%20induction/text/Induced_emf_in_a_rotating_coil/index.html>`__)
+in a magnetic field under the conditions described below. Then an electromotive will
+be induced in the contour of the coil. Its amplitude depends on the number of turns in
+the coil, the magnetic flux density, the angular frequency of the coil's rotation and
+the area of the coil's contour.
 
 **Notes:**
 
 #. The angle :math:`\varphi` between the normal to the coil's contour and the magnetic flux
-   density is :math:`\varphi \propto \cos(\omega t)`.
+   density is :math:`\varphi \propto \cos(\omega t)`. See `Figure <https://thefactfactor.com/wp-content/uploads/2020/03/Self-Induction-17.png>`__. 
 
 **Conditions:**
 

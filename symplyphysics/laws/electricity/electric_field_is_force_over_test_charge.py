@@ -30,9 +30,6 @@ Symbol:
 electrostatic_force = clone_symbol(symbols.dynamics.force)
 """
 Projection of the electrostatic force applied to the test charge.
-
-Symbol:
-    :code:`F`
 """
 
 test_charge = Symbol("test_charge", units.charge)

@@ -75,7 +75,7 @@ def lorentz_force_law(
 
         Latex: :math:`\vec B`
 
-        Dimension: *magnetic flux density*
+        Dimension: *magnetic density*
 
     :param velocity\_: vector of particle's velocity
 

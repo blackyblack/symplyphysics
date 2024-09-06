@@ -22,7 +22,7 @@ Symbol:
     :code:`w`
 """
 
-relative_permittivity = Symbol("relative_permittivity", dimensionless)
+absolute_permittivity = Symbol("absolute_permittivity", units.capacitance / units.length)
 r"""
 Relative permittivity of the medium.
 
@@ -41,24 +41,24 @@ Symbol:
     :code:`E`
 """
 
-law = Eq(energy_density, (units.vacuum_permittivity * relative_permittivity * electric_field_strength**2) / 2)
+law = Eq(energy_density, (absolute_permittivity * electric_field_strength**2) / 2)
 r"""
-:code:`w = 1/2 * epsilon_0 * epsilon * E^2`
+:code:`w = 1/2 * epsilon * E^2`
 
 Latex:
     .. math::
-        w = \frac{1}{2} \varepsilon_0 \varepsilon E^2
+        w = \frac{1}{2} \varepsilon E^2
 """
 
 
-@validate_input(relative_permittivity_=relative_permittivity,
+@validate_input(absolute_permittivity_=absolute_permittivity,
     electric_intensity_=electric_field_strength)
 @validate_output(energy_density)
-def calculate_energy_density(relative_permittivity_: float,
+def calculate_energy_density(absolute_permittivity_: float,
     electric_intensity_: Quantity) -> Quantity:
     result_expr = solve(law, energy_density, dict=True)[0][energy_density]
     result_expr = result_expr.subs({
-        relative_permittivity: relative_permittivity_,
+        absolute_permittivity: absolute_permittivity_,
         electric_field_strength: electric_intensity_,
     })
     return Quantity(result_expr)
