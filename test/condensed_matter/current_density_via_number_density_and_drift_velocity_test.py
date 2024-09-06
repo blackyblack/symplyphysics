@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.condensed_matter import current_density_from_concentration_and_velocity_of_charge_carriers as current_law
+from symplyphysics.laws.condensed_matter import current_density_via_number_density_and_drift_velocity as current_law
 
 # Description
 ## Calculate the current density for a copper conductor. It is known that it is equal to 1e6 [amper / meter**2]
