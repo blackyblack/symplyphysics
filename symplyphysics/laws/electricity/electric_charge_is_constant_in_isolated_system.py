@@ -1,26 +1,50 @@
+"""
+Electric charge is constant in isolated system
+==============================================
+
+The electric charge of an isolated system is conserved. As a result, its charge is constant
+at all times.
+"""
+
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output)
 
-# Description
-## Q_after = Q_before
-## Where Q_after - summary electric charge of isolated electric system after any period of time, and Q_before - initial summary charge.
-## In other words, with no external charge flowing thougth the bouds of system the summary electric charge of all system components remains constant
-## during any current flows (charge interchanges) between components. Charge is neither being created in isolated system nor dissapearing.
+initial_charge = Symbol("initial_charge", units.charge)
+r"""
+Initial charge of the system.
 
-charge_before = Symbol("charge_before", units.charge)
-charge_after = Symbol("charge_after", units.charge)
+Symbol:
+    :code:`q_0`
 
-law = Eq(charge_after, charge_before)
+Latex:
+    :math:`q_1`
+"""
+
+final_charge = Symbol("final_charge", units.charge)
+r"""
+Final charge of the system.
+
+Symbol:
+    :code:`q_1`
+
+Latex:
+    :math:`q_1`
+"""
+
+law = Eq(final_charge, initial_charge)
+r"""
+:code:`q_0 = q_1`
+
+Latex:
+    .. math::
+        q_0 = q_1
+"""
 
 
-def print_law() -> str:
-    return print_expression(law)
-
-
-@validate_input(charge_before_=charge_before)
-@validate_output(charge_after)
+@validate_input(charge_before_=initial_charge)
+@validate_output(final_charge)
 def calculate_charge_after(charge_before_: Quantity) -> Quantity:
-    solved = solve(law, charge_after, dict=True)[0][charge_after]
-    result_expr = solved.subs(charge_before, charge_before_)
+    solved = solve(law, final_charge, dict=True)[0][final_charge]
+    result_expr = solved.subs(initial_charge, charge_before_)
     return Quantity(result_expr)

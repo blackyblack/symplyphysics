@@ -3,7 +3,7 @@ from symplyphysics import (units, Quantity, Symbol, Function, print_expression, 
     validate_output, global_index)
 from symplyphysics.definitions import current_is_charge_derivative as charge_definition
 from symplyphysics.definitions import capacitance_from_charge_and_voltage as capacitance_definition
-from symplyphysics.laws.electricity import current_is_proportional_to_voltage as ohms_law
+from symplyphysics.laws.electricity import current_is_voltage_over_resistance as ohms_law
 from symplyphysics.laws.electricity.circuits import sum_of_all_currents_through_an_electrical_node_is_zero as kirchhoff_law
 from symplyphysics.laws.electricity.circuits import sum_of_all_voltages_in_loop_is_zero as kirchhoff_law_2
 

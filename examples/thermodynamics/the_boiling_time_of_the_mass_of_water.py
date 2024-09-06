@@ -3,7 +3,7 @@
 from sympy import solve, Symbol, Eq, dsolve
 from symplyphysics import print_expression, Quantity, prefixes, units, convert_to
 from symplyphysics.core.symbols.celsius import to_kelvin_quantity, Celsius
-from symplyphysics.laws.electricity import power_factor_from_active_and_full_power as efficiency_law
+from symplyphysics.laws.electricity import power_factor_is_real_power_over_apparent_power as efficiency_law
 from symplyphysics.laws.thermodynamics import (
     heat_is_heat_capacity_times_temperature_change as heating_law,
     heat_of_combustion_via_mass as combustion_energy_law,
@@ -18,7 +18,7 @@ from symplyphysics.definitions import mass_flow_rate as mass_rate_law
 # burns in a spirit lamp in a minute?
 
 efficiency = Symbol("efficiency")
-mass_of_booling_water = Symbol("mass_of_booling_water")
+mass_of_boiling_water = Symbol("mass_of_boiling_water")
 mass_of_water = Symbol("mass_of_water")
 temperature_of_water = Symbol("temperature_of_water")
 mass_of_alcohol = Symbol("mass_of_alcohol")
@@ -74,16 +74,16 @@ energy_for_heating_water_value = heating_law.law.subs({
 }).rhs
 
 energy_to_vaporization_water_value = energy_to_vapor_law.law.subs({
-    energy_to_vapor_law.mass: mass_of_booling_water,
+    energy_to_vapor_law.mass: mass_of_boiling_water,
     energy_to_vapor_law.specific_heat_of_vaporization: specific_heat_of_vaporization_water
 }).rhs
 
 # Active work in this example is done to heat water to boiling point and to evaporate. Then
 # A_{active} = Q_{heating} + Q_{vaporization}
 efficiency_equation = efficiency_law.law.subs({
-    efficiency_law.active_power:
+    efficiency_law.real_power:
     energy_for_heating_water_value + energy_to_vaporization_water_value,
-    efficiency_law.full_power:
+    efficiency_law.apparent_power:
         energy_from_combustion_alcohol_value,
     efficiency_law.power_factor:
         efficiency
@@ -95,7 +95,7 @@ print(f"Total equation:\n{print_expression(answer)}")
 time_of_vaporization_s = time_of_vaporization.subs({
     efficiency:
     Quantity(60 * units.percents),
-    mass_of_booling_water:
+    mass_of_boiling_water:
     Quantity(20 * units.grams),
     mass_of_water:
     Quantity(500 * units.grams),

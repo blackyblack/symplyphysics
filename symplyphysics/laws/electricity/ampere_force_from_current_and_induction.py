@@ -1,5 +1,5 @@
 from sympy import (Eq, solve, cos)
-from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print_expression,
+from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol,
     validate_input, validate_output, angle_type)
 
 # Description
@@ -26,10 +26,6 @@ induction = Symbol("induction", units.magnetic_density)
 angle = Symbol("angle", angle_type)
 
 law = Eq(ampere_force, current * length * induction * cos(angle))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(current_=current, length_=length, angle_=angle, induction_=induction)
