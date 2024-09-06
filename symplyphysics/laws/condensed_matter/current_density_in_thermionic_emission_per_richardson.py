@@ -40,9 +40,6 @@ Symbol:
 temperature = symbols.thermodynamics.temperature
 """
 :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the metal.
-
-Symbol:
-    :code:`T`
 """
 
 richardson_constant = Quantity(120.17 * (units.ampere / units.kelvin**2 / units.centimeter**2))

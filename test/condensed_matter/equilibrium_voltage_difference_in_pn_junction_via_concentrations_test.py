@@ -6,7 +6,7 @@ from symplyphysics import (
     errors,
     Quantity,
 )
-from symplyphysics.laws.condensed_matter import height_of_the_pn_transition_barrier as barrier_law
+from symplyphysics.laws.condensed_matter import equilibrium_voltage_difference_in_pn_junction_via_concentrations as barrier_law
 
 # Description
 ## For concentration of donors equal to 3e16 [1 / cm^3] and concentration of acceptors equal to 2e12 [1 / cm^3]
