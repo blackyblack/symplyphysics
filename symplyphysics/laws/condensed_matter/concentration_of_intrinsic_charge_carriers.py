@@ -1,3 +1,19 @@
+r"""
+Concentration of intrinsic charge carriers
+==========================================
+
+In the absence of external influences (lighting, electric field, etc.), there is a
+nonzero concentration of free charge carriers in the semiconductor.
+
+**Notation:**
+
+#. :math:`k_\text{B}` (:code:`k_B`) is the Boltzmann constant.
+
+**Links:**
+
+#. `Intrinsic carrier concentration <https://www.universitywafer.com/intrinsic-carrier-concentration.html>`_.
+"""
+
 from sympy import (Eq, solve, sqrt, exp)
 from sympy.physics.units import boltzmann
 from symplyphysics import (
@@ -5,39 +21,71 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
 
-# Description
-## In the absence of external influences (lighting, electric field, etc.), there is a
-## concentration of free charge carriers in the semiconductor.
-
-## Law is: n = sqrt(Nc*Nv) * exp(-Eg / 2kT), where
-## n is concentration of intrinsic charge carriers,
-## Nc - effective density of states in the conduction band,
-## Nv - effective density of states in the valence band,
-## Eg - the width of band gap,
-## k - Boltzmann constant,
-## T - temperature.
-
 charge_carriers_concentration = Symbol("charge_carriers_concentration", 1 / units.volume)
+r"""
+Concentration of intrinsic charge carriers.
+
+Symbol:
+    :code:`n_i`
+
+Latex:
+    :math:`n_\text{i}`
+"""
 
 density_of_states_in_conduction_band = Symbol("density_of_states_in_conduction_band",
     1 / units.volume)
+r"""
+Effective density of states in the conduction band.
+
+Symbol:
+    :code:`N_c`
+
+Latex:
+    :math:`N_\text{c}`
+"""
+
 density_of_states_in_valence_band = Symbol("density_of_states_in_valence_band", 1 / units.volume)
+r"""
+Effective density of states in the valence band.
+
+Symbol:
+    :code:`N_v`
+
+Latex:
+    :math:`N_\text{v}`
+"""
+
 temperature = symbols.thermodynamics.temperature
+"""
+:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the semiconductor.
+"""
+
 band_gap = Symbol("band_gap", units.energy)
+r"""
+Band gap of the semiconductor.
+
+Symbol:
+    :code:`E_g`
+
+Latex:
+    :math:`E_\text{g}`
+"""
 
 law = Eq(
     charge_carriers_concentration,
     sqrt(density_of_states_in_conduction_band * density_of_states_in_valence_band) * exp(-band_gap /
     (2 * boltzmann * temperature)))
+r"""
+:code:`n_i = sqrt(N_c * N_v) * exp(-1 * E_g / (2 * k_B * T))`
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        n_\text{i} = \sqrt{N_\text{c} N_\text{v}} \exp \left( -\frac{E_\text{g}}{2 k_\text{B} T} \right)
+"""
 
 
 @validate_input(density_of_states_in_conduction_band_=density_of_states_in_conduction_band,
