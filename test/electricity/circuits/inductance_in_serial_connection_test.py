@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.electricity.circuits import inductivity_of_serial_inductors as serial_inductor
+from symplyphysics.laws.electricity.circuits import inductance_in_serial_connection as serial_inductor
 
 # Description
 ## Assert we have two inductors with 1H and 2H inductances connected in series.

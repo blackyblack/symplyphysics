@@ -3,7 +3,7 @@ Resistivity of serial resistors
 ===============================
 
 The total resistance of the circuit whose components are connected in series is the sum
-of the resistance of individual components.
+of the resistances of individual components.
 
 **Conditions:**
 
