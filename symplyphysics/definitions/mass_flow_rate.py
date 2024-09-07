@@ -1,4 +1,4 @@
-r"""
+"""
 Mass flow rate
 ==============
 
@@ -7,42 +7,28 @@ from a certain volume, the flow in a pipe section, the combustion of fuel.
 """
 
 from sympy import (Eq, Derivative)
-from symplyphysics import (units, Quantity, Function, Symbol, validate_input, validate_output)
+from symplyphysics import (units, Quantity, FunctionNew, SymbolNew, validate_input, validate_output)
 
-mass_flow_rate = Function("mass_flow_rate", units.mass / units.time)
-r"""
+mass_flow_rate = FunctionNew("mu(t)", units.mass / units.time, display_latex="\\mu")
+"""
 Mass flow rate as a function of time.
-
-Symbol:
-    :code:`mu(t)`
-
-Latex:
-    :math:`\mu(t)`
 """
 
-mass = Function("mass", units.mass)
+mass = FunctionNew("m(t)", units.mass, display_latex="m")
 """
 :attr:`~symplyphysics.symbols.basic.mass` as a function of time.
-
-Symbol:
-    :code:`m(t)`
 """
 
-time = Symbol("time", units.time)
+time = SymbolNew("t", units.time)
 """
 Time.
-
-Symbol:
-    :code:`t`
 """
 
 definition = Eq(mass_flow_rate(time), Derivative(mass(time), time))
-r"""
-:code:`mu(t) = Derivative(m(t), t)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \mu(t) = \frac{d m}{d t}
+:laws:latex::
 """
 
 

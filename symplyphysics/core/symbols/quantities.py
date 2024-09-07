@@ -79,3 +79,18 @@ def evaluate_quantity(quantity: Expr, **kwargs: Any) -> Quantity:
     scale_factor_ = quantity.scale_factor.evalf(**kwargs)
     dimension = quantity.dimension
     return Quantity(scale_factor_, dimension=dimension)
+
+
+def evaluate_expression(expr: Expr, **kwargs: Any) -> Expr:
+    quantities = []
+    def _evaluate_inner(expr: Expr) -> None:
+        for arg in expr.args:
+            if isinstance(arg, SymQuantity):
+                quantities.append(arg)
+                continue
+            if isinstance(arg, Expr):
+                _evaluate_inner(arg)
+    _evaluate_inner(expr)
+    for q in quantities:
+        expr = expr.subs(q, q.scale_factor.evalf(**kwargs))
+    return expr

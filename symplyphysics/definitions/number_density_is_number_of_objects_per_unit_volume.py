@@ -7,39 +7,28 @@ See :doc:`laws.quantities.quantity_is_volumetric_density_times_volume` for a mor
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, dimensionless, validate_input, validate_output)
+from symplyphysics import (units, Quantity, SymbolNew, dimensionless, validate_input, validate_output)
 
-number_density = Symbol("number_density", 1 / units.volume)
+number_density = SymbolNew("n", 1 / units.volume)
 """
 Concentration of particles.
-
-Symbol:
-    :code:`n`
 """
 
-number_of_objects = Symbol("number_of_objects", dimensionless)
+number_of_objects = SymbolNew("N", dimensionless)
 """
 Number of particles within the volume.
-
-Symbol:
-    :code:`N`
 """
 
-volume = Symbol("volume", units.volume)
+volume = SymbolNew("V", units.volume)
 """
 Volume in which the particles are located.
-
-Symbol:
-    :code:`V`
 """
 
 definition = Eq(number_density, number_of_objects / volume)
-r"""
-:code:`n = N / V`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        n = \frac{N}{V}
+:laws:latex::
 """
 
 

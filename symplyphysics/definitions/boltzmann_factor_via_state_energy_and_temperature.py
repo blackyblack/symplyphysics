@@ -29,7 +29,7 @@ boltzmann_factor = SymbolNew("f", dimensionless)
 Boltzmann factor.
 """
 
-energy_of_state = SymbolNew("E_i", units.energy, display_latex="E_i")
+energy_of_state = SymbolNew("E[i]", units.energy, display_latex="E_i")
 """
 Energy of state :math:`i`.
 """
