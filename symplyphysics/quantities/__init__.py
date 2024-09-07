@@ -88,4 +88,5 @@ __all__ = [
     "earth_mass",
     "boltzmann_constant",
     "molar_gas_constant",
+    "speed_of_light",
 ]
