@@ -18,52 +18,32 @@ from symplyphysics import (
     units,
     dimensionless,
     Quantity,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
     convert_to_float,
 )
 
-heat_capacity_ratio = Symbol("heat_capacity_ratio", dimensionless)
-r"""
+heat_capacity_ratio = SymbolNew("gamma", dimensionless, display_latex="\\gamma")
+"""
 Heat capacity ratio of the system.
-
-Symbol:
-    :code:`gamma`
-
-Latex:
-    :math:`\gamma`
 """
 
-isobaric_heat_capacity = Symbol("isobaric_heat_capacity", units.energy / units.temperature)
+isobaric_heat_capacity = SymbolNew("C_p", units.energy / units.temperature)
 """
 Heat capacity of the system at constant pressure.
-
-Symbol:
-    :code:`C_p`
-
-Latex:
-    :math:`C_p`
 """
 
-isochoric_heat_capacity = Symbol("isochoric_heat_capacity", units.energy / units.temperature)
+isochoric_heat_capacity = SymbolNew("C_V", units.energy / units.temperature)
 """
 Heat capacity of the system at constant volume.
-
-Symbol:
-    :code:`C_V`
-
-Latex:
-    :math:`C_V`
 """
 
 definition = Eq(heat_capacity_ratio, isobaric_heat_capacity / isochoric_heat_capacity)
-r"""
-:code:`gamma = C_p / C_V`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \gamma = \frac{C_p}{C_V}
+:laws:latex::
 """
 
 

@@ -35,7 +35,7 @@ Latex:
 """
 
 length = Symbol("length", units.length)
-r"""
+"""
 Length of the contour to which the force is applied.
 
 Symbol:

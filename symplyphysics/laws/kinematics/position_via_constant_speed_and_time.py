@@ -16,7 +16,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import speed_is_distance_derivative as velocity_definition
 
 final_position = Symbol("distance_function", units.length)
-r"""
+"""
 Position at time :math:`t`.
 
 Symbol:
@@ -24,11 +24,11 @@ Symbol:
 """
 
 initial_position = Symbol("initial_position", units.length)
-r"""
+"""
 Position at :math:`t = 0`.
 
 Symbol:
-    :code:`x_0`
+    :code:`x0`
 
 Latex:
     :math:`x_0`
@@ -43,7 +43,7 @@ Symbol:
 """
 
 time = Symbol("time", units.time)
-r"""
+"""
 Time at which :math:`x` is measured.
 
 Symbol:
@@ -52,7 +52,7 @@ Symbol:
 
 law = Eq(final_position, initial_position + speed * time)
 r"""
-:code:`x = x_0 + v * t`
+:code:`x = x0 + v * t`
 
 Latex:
     .. math::

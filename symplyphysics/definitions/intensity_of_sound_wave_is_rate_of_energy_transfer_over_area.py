@@ -10,42 +10,31 @@ from sympy import Eq
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
 )
 
-intensity = Symbol("intensity", units.power / units.area)
+intensity = SymbolNew("I", units.power / units.area)
 """
 Intensity of the sound wave.
-
-Symbol:
-    :code:`I`
 """
 
-power = Symbol("power", units.power)
+power = SymbolNew("P", units.power)
 """
 Power, or rate of energy transfer, of the wave.
-
-Symbol:
-    :code:`P`
 """
 
-area = Symbol("area", units.area)
+area = SymbolNew("A", units.area)
 """
 Surface area.
-
-Symbol:
-    :code:`A`
 """
 
 definition = Eq(intensity, power / area)
-r"""
-:code:`I = P / A`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        I = \frac{P}{A}
+:laws:latex::
 """
 
 

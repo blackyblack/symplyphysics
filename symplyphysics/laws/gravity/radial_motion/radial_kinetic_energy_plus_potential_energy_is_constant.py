@@ -27,7 +27,7 @@ The :attr:`~symplyphysics.symbols.basic.mass` of the planet.
 """
 
 radial_speed = Symbol("radial_speed", units.velocity)
-r"""
+"""
 The projection of the velocity vector in the radial direction.
 
 Symbol:

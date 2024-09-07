@@ -55,14 +55,14 @@ Latex:
 """
 
 final_temperature = clone_symbol(symbols.thermodynamics.temperature,
-    display_symbol="T_1",
+    display_symbol="T1",
     display_latex="T_1")
 """
 :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the final state.
 """
 
 initial_temperature = clone_symbol(symbols.thermodynamics.temperature,
-    display_symbol="T_0",
+    display_symbol="T0",
     display_latex="T_0")
 """
 :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the initial state.
@@ -73,7 +73,7 @@ final_volume = Symbol("final_volume", units.volume)
 Volume of the final state.
 
 Symbol:
-    :code:`V_1`
+    :code:`V1`
 
 Latex:
     :math:`V_1`
@@ -84,7 +84,7 @@ initial_volume = Symbol("initial_volume", units.volume)
 Volume of the initial state.
 
 Symbol:
-    :code:`V_0`
+    :code:`V0`
 
 Latex:
     :math:`V_0`
@@ -94,7 +94,7 @@ law = Eq(entropy_change, (mass / molar_mass) *
     ((molar_isochoric_heat_capacity * log(final_temperature / initial_temperature)) +
     (units.molar_gas_constant * log(final_volume / initial_volume))))
 r"""
-:code:`S = (m / M) * (C_V * log(T_1 / T_0) + R * log(V_1 / V_0))`
+:code:`S = (m / M) * (C_V * log(T1 / T0) + R * log(V1 / V0))`
 
 Latex:
     .. math::

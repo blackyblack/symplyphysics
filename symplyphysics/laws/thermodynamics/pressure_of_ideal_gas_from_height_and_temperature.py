@@ -28,11 +28,11 @@ Symbol:
 """
 
 initial_pressure = Symbol("initial_pressure", units.pressure)
-r"""
+"""
 Pressure of the gas at initial height.
 
 Symbol:
-    :code:`p_0`
+    :code:`p0`
 
 Latex:
     :math:`p_0`
@@ -64,7 +64,7 @@ law = Eq(
     initial_pressure * exp(-units.acceleration_due_to_gravity * molecular_mass * height_change /
     (units.boltzmann_constant * temperature)))
 r"""
-:code:`p = p_0 * exp(-1 * g * m * dh / (k_B * T))`
+:code:`p = p0 * exp(-1 * g * m * dh / (k_B * T))`
 
 Latex:
     .. math::

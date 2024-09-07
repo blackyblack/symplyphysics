@@ -27,7 +27,7 @@ Symbol:
 """
 
 resistance = Symbol("resistance", units.impedance)
-r"""
+"""
 Resistance of the conductor.
 
 Symbol:

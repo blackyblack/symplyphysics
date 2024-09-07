@@ -1,4 +1,4 @@
-r"""
+"""
 Power is energy derivative
 ==========================
 
@@ -7,39 +7,28 @@ rate at which work is done.
 """
 
 from sympy import (Eq, Derivative)
-from symplyphysics import (units, Quantity, Function, Symbol, validate_input, validate_output)
+from symplyphysics import (units, Quantity, FunctionNew, SymbolNew, validate_input, validate_output)
 
-power = Function("power", units.power)
+power = FunctionNew("P(t)", units.power, display_latex="P")
 """
 Power as a function of time.
-
-Symbol:
-    :code:`P(t)`
 """
 
-energy = Function("energy", units.energy)
+energy = FunctionNew("E(t)", units.energy, display_latex="E")
 """
 Energy as a function of time.
-
-Symbol:
-    :code:`E(t)`
 """
 
-time = Symbol("time", units.time)
+time = SymbolNew("t", units.time)
 """
 Time.
-
-Symbol:
-    :code:`t`
 """
 
 definition = Eq(power(time), Derivative(energy(time), time))
-r"""
-:code:`P(t) = Derivative(E(t), t)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        P(t) = \frac{d E}{d t}
+:laws:latex::
 """
 
 

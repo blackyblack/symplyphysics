@@ -1,4 +1,4 @@
-r"""
+"""
 Radiant exitance is radiant flux emitted per unit area
 ======================================================
 
@@ -13,49 +13,32 @@ from sympy import Eq, Derivative
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
-    Function,
+    SymbolNew,
+    FunctionNew,
     validate_input,
     validate_output,
 )
 
-radiant_exitance = Symbol("radiant_exitance", units.power / units.area)
+radiant_exitance = SymbolNew("M_e", units.power / units.area)
 """
 Radiant exitance of the surface.
-
-Symbol:
-    :code:`M_e`
-
-Latex:
-    :math:`M_e`
 """
 
-radiant_flux = Function("radiant_flux", units.power)
-r"""
+radiant_flux = FunctionNew("Phi_e(A)", units.power, display_latex="\\Phi_e")
+"""
 Radiant flux, or radiant power, emitted from the surface.
-
-Symbol:
-    :code:`Phi_e(A)`
-
-Latex:
-    :math:`\Phi_e(A)`
 """
 
-area = Symbol("area", units.area)
+area = SymbolNew("A", units.area)
 """
 The area of the surface.
-
-Symbol:
-    :code:`A`
 """
 
 definition = Eq(radiant_exitance, Derivative(radiant_flux(area), area))
-r"""
-:code:`M_e = Derivative(Phi_e(A), A)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        M_e = \frac{\partial \Phi_e}{\partial A}
+:laws:latex::
 """
 
 

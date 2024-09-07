@@ -7,51 +7,34 @@ energy stored in system and the power losses.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless,
+from symplyphysics import (units, Quantity, SymbolNew, validate_input, validate_output, dimensionless,
     angle_type)
 
-quality_factor = Symbol("quality_factor", dimensionless)
+quality_factor = SymbolNew("Q", dimensionless)
 """
 Quality factor of the oscillator.
-
-Symbol:
-    :code:`Q`
 """
 
-resonant_frequency = Symbol("resonant_frequency", angle_type / units.time)
-r"""
+resonant_frequency = SymbolNew("w", angle_type / units.time, display_latex="\\omega")
+"""
 Resonant angular frequency of the oscillator.
-
-Symbol:
-    :code:`w`
-
-Latex:
-    :math:`\omega`
 """
 
-stored_energy = Symbol("stored_energy", units.energy)
+stored_energy = SymbolNew("E", units.energy)
 """
 Energy stored in the oscillator.
-
-Symbol:
-    :code:`E`
 """
 
-dissipated_power = Symbol("dissipated_power", units.power)
+dissipated_power = SymbolNew("P", units.power)
 """
 Power dissipated from the oscillater.
-
-Symbol:
-    :code:`P`
 """
 
 definition = Eq(quality_factor, resonant_frequency * stored_energy / dissipated_power)
-r"""
-:code:`Q = w * E / P`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        Q = \frac{\omega E}{P}
+:laws:latex::
 """
 
 

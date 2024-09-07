@@ -30,9 +30,6 @@ Symbol:
 mass = symbols.basic.mass
 """
 :attr:`~symplyphysics.symbols.basic.mass` of the particle.
-
-Symbol:
-    :code:`m`
 """
 
 charge = Symbol("charge", units.charge)

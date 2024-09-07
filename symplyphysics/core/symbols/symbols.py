@@ -188,6 +188,9 @@ class FunctionNew(DimensionSymbolNew, UndefinedFunction):
         display_name = str(cls.name) if display_symbol is None else display_symbol
         super().__init__(display_name, dimension, display_latex=display_latex)
 
+    def __repr__(cls) -> str:
+        return str(cls.display_name)
+
 
 # Symbol and Function have generated names, hence their display is not readable.
 # Use custom implementation of the PrettyPrinter to convert real symbol names

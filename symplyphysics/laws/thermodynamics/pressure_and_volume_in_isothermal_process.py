@@ -12,44 +12,44 @@ from symplyphysics import (units, Quantity, Symbol, validate_input, validate_out
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as thermodynamics_law
 
 initial_pressure = Symbol("initial_pressure", units.pressure)
-r"""
+"""
 Initial pressure inside the system.
 
 Symbol:
-    :code:`p_0`
+    :code:`p0`
 
 Latex:
     :math:`p_0`
 """
 
 final_pressure = Symbol("final_pressure", units.pressure)
-r"""
+"""
 Final pressure inside the system.
 
 Symbol:
-    :code:`p_1`
+    :code:`p1`
 
 Latex:
     :math:`p_1`
 """
 
 initial_volume = Symbol("initial_volume", units.volume)
-r"""
+"""
 Initial volume of the system.
 
 Symbol:
-    :code:`V_0`
+    :code:`V0`
 
 Latex:
     :math:`V_0`
 """
 
 final_volume = Symbol("final_volume", units.volume)
-r"""
+"""
 Final volume of the system.
 
 Symbol:
-    :code:`V_1`
+    :code:`V1`
 
 Latex:
     :math:`V_1`
@@ -57,7 +57,7 @@ Latex:
 
 law = Eq(initial_pressure * initial_volume, final_pressure * final_volume)
 r"""
-:code:`p_0 * V_0 = p_1 * V_1`
+:code:`p0 * V0 = p1 * V1`
 
 Latex:
     .. math::

@@ -11,22 +11,22 @@ from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output)
 
 initial_charge = Symbol("initial_charge", units.charge)
-r"""
+"""
 Initial charge of the system.
 
 Symbol:
-    :code:`q_0`
+    :code:`q0`
 
 Latex:
-    :math:`q_1`
+    :math:`q_0`
 """
 
 final_charge = Symbol("final_charge", units.charge)
-r"""
+"""
 Final charge of the system.
 
 Symbol:
-    :code:`q_1`
+    :code:`q1`
 
 Latex:
     :math:`q_1`
@@ -34,7 +34,7 @@ Latex:
 
 law = Eq(final_charge, initial_charge)
 r"""
-:code:`q_0 = q_1`
+:code:`q0 = q1`
 
 Latex:
     .. math::

@@ -25,9 +25,7 @@ definition = Eq(admittance, 1 / impedance)
 r"""
 :code:`Y = 1 / Z`
 
-Latex:
-    .. math::
-        Y = \frac{1}{Z}
+:laws:latex::
 """
 
 

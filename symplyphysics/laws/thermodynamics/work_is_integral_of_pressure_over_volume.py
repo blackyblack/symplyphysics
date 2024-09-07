@@ -49,22 +49,22 @@ Symbol:
 """
 
 initial_volume = Symbol("initial_volume", units.volume)
-r"""
+"""
 Initial volume of the system.
 
 Symbol:
-    :code:`V_0`
+    :code:`V0`
 
 Latex:
     :math:`V_0`
 """
 
 final_volume = Symbol("final_volume", units.volume)
-r"""
+"""
 Final volume of the system.
 
 Symbol:
-    :code:`V_1`
+    :code:`V1`
 
 Latex:
     :math:`V_1`
@@ -72,7 +72,7 @@ Latex:
 
 law = Eq(work, Integral(pressure(volume), (volume, initial_volume, final_volume)))
 r"""
-:code:`W = Integral(p(V), (V, V_0, V_1))`
+:code:`W = Integral(p(V), (V, V0, V1))`
 
 Latex:
     .. math::

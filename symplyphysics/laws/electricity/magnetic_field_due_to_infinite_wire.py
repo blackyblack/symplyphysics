@@ -1,4 +1,4 @@
-"""
+r"""
 Magnetic field due to infinite wire
 ===================================
 

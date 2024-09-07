@@ -15,6 +15,7 @@ class SymbolCodePrinter(StrPrinter):
     """
 
     def __init__(self, settings: Any = None) -> None:
+        settings["order"] = "lex"
         StrPrinter.__init__(self, settings)
 
     # pylint: disable-next=invalid-name

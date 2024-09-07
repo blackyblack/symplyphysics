@@ -131,7 +131,7 @@ _diff_eqn_subs = _diff_eqn.subs({
     damped_eqn.damping_ratio: _damping_ratio_expr,
 }).doit()
 
-assert expr_equals(_diff_eqn_subs, 0)
+assert expr_equals(_diff_eqn_subs.lhs, _diff_eqn_subs.rhs)
 
 
 @validate_input(

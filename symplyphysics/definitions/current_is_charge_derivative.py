@@ -7,39 +7,28 @@ defined as the time derivative of the flowing charge.
 """
 
 from sympy import (Eq, Derivative)
-from symplyphysics import (units, Quantity, Function, Symbol, validate_input, validate_output)
+from symplyphysics import (units, Quantity, FunctionNew, SymbolNew, validate_input, validate_output)
 
-current = Function("current", units.current)
+current = FunctionNew("I(t)", units.current, display_latex="I")
 """
 Electric current as a function of time.
-
-Symbol:
-    :code:`I(t)`
 """
 
-charge = Function("charge", units.charge)
+charge = FunctionNew("q(t)", units.charge, display_latex="q")
 """
 Electric charge as a function of time.
-
-Symbol:
-    :code:`q(t)`
 """
 
-time = Symbol("time", units.time)
+time = SymbolNew("t", units.time)
 """
 Time.
-
-Symbol:
-    :code:`t`
 """
 
 definition = Eq(current(time), Derivative(charge(time), time))
-r"""
-:code:`I(t) = Derivative(q(t), t)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        I(t) = \frac{d q}{d t}
+:laws:latex::
 """
 
 

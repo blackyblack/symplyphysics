@@ -22,7 +22,7 @@ r"""
 Value of the test charge.
 
 Symbol:
-    :code:`q_0`
+    :code:`q0`
 
 Latex:
     :math:`q_0`
@@ -34,7 +34,7 @@ def electric_field_law(electrostatic_force_: Vector) -> Vector:
     Electric field via electrostatic force.
 
     Law:
-        :code:`E = F / q_0`
+        :code:`E = F / q0`
 
     Latex:
         .. math::
@@ -65,7 +65,7 @@ def electrostatic_force_law(electric_field_: Vector) -> Vector:
     Electrostatic force via electric field.
 
     Law:
-        :code:`F = q_0 * E`
+        :code:`F = q0 * E`
 
     Latex:
         .. math::
