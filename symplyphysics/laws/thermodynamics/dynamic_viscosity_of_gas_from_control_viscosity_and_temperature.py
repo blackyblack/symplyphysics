@@ -47,7 +47,7 @@ temperature = symbols.thermodynamics.temperature
 """
 
 reference_temperature = clone_symbol(symbols.thermodynamics.temperature,
-    display_symbol="T_0",
+    display_symbol="T0",
     display_latex="T_0")
 """
 :attr:`~symplyphysics.symbols.thermodynamics.temperature` at which the reference viscosity value is calculated.
@@ -66,7 +66,7 @@ law = Eq(
     reference_dynamic_viscosity * ((reference_temperature + sutherland_constant) /
     (temperature + sutherland_constant)) * (temperature / reference_temperature)**1.5)
 r"""
-:code:`mu = mu_0 * ((T_0 + C) / (T + C)) * (T / T_0)^(3/2)`
+:code:`mu = mu_0 * ((T0 + C) / (T + C)) * (T / T0)^(3/2)`
 
 Latex:
     .. math::

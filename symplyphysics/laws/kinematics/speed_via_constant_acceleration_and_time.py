@@ -35,11 +35,11 @@ Constant :attr:`~symplyphysics.symbols.kinematics.acceleration`.
 """
 
 initial_speed = Symbol("initial_speed", units.velocity)
-r"""
+"""
 Speed at :math:`t = 0`.
 
 Symbol:
-    :code:`v_0`
+    :code:`v0`
 
 Latex:
     :math:`v_0`
@@ -47,7 +47,7 @@ Latex:
 
 law = Eq(final_speed, initial_speed + acceleration * time)
 r"""
-:code:`v = v_0 + a * t`
+:code:`v = v0 + a * t`
 
 Latex:
     .. math::

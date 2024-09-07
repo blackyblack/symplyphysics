@@ -15,6 +15,7 @@ class SymbolLatexPrinter(LatexPrinter):
     language = "Symplyphysics"
 
     def __init__(self, settings: Any = None) -> None:
+        settings["order"] = "lex"
         LatexPrinter.__init__(self, settings)
 
     # pylint: disable-next=invalid-name
@@ -111,6 +112,17 @@ class SymbolLatexPrinter(LatexPrinter):
             name += r"^{%s}" % exp
 
         return name % ",".join(args)
+
+    # TODO: use e^ for shorter expressions
+    def _print_ExpBase(self, expr: Any, exp: Any = None) -> str:
+        args = [str(self._print(arg)) for arg in expr.args]
+        can_fold_brackets = self._settings["fold_func_brackets"] and \
+            len(args) == 1 and \
+            not self._needs_function_brackets(expr.args[0])
+        args_str = self._print(expr.args[0])
+        name = f"{args_str}" if can_fold_brackets else f"\\left({args_str} \\right)"
+        tex = r"exp{%s}" % name
+        return self._do_exponent(tex, exp)
 
     # pylint: disable-next=invalid-name
     def _print_SumIndexed(self, expr: Any) -> str:

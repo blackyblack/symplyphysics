@@ -47,22 +47,22 @@ Symbol:
 """
 
 first_charge = Symbol("first_charge", units.charge)
-r"""
+"""
 Value of the first charge.
 
 Symbol:
-    :code:`q_1`
+    :code:`q1`
 
 Latex:
     :math:`q_1`
 """
 
 second_charge = Symbol("second_charge", units.charge)
-r"""
+"""
 Value of the second charge.
 
 Symbol:
-    :code:`q_2`
+    :code:`q2`
 
 Latex:
     :math:`q_2`
@@ -71,7 +71,7 @@ Latex:
 law = Eq(electrostatic_potential_energy,
     (first_charge * second_charge) / (4 * pi * absolute_permittivity * distance))
 r"""
-:code:`U_E = q_1 * q_2 / (4 * pi * epsilon * r)`
+:code:`U_E = q1 * q2 / (4 * pi * epsilon * r)`
 
 Latex:
     .. math::

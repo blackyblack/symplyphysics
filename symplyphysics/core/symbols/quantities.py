@@ -20,6 +20,10 @@ class Quantity(DimensionSymbolNew, SymQuantity):  # pylint: disable=too-many-anc
         display_latex: Optional[str] = None,
         **assumptions: Any) -> Self:
         name = next_name("QTY")
+        # Latex symbol is set in SymPy Quantity, not in DimensionSymbol, due to Latex printer
+        # specifics
+        display_symbol = name if display_symbol is None else display_symbol
+        display_latex = display_symbol if display_latex is None else display_latex
         obj = SymQuantity.__new__(cls, name, None, display_latex, None, None, None, False,
             **assumptions)
         return obj

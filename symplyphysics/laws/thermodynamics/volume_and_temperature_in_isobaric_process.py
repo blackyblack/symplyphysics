@@ -13,36 +13,36 @@ from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, valid
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as thermodynamics_law
 
 initial_temperature = clone_symbol(symbols.thermodynamics.temperature,
-    display_symbol="T_0",
+    display_symbol="T0",
     display_latex="T_0")
 """
 Initial :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
 """
 
 final_temperature = clone_symbol(symbols.thermodynamics.temperature,
-    display_symbol="T_1",
+    display_symbol="T1",
     display_latex="T_1")
 """
 Final :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
 """
 
 initial_volume = Symbol("initial_volume", units.volume)
-r"""
+"""
 Initial volume of the system.
 
 Symbol: 
-    :code:`V_0`
+    :code:`V0`
 
 Latex:
     :math:`V_0`
 """
 
 final_volume = Symbol("final_volume", units.volume)
-r"""
+"""
 Final volume of the system.
 
 Symbol: 
-    :code:`V_1`
+    :code:`V1`
 
 Latex:
     :math:`V_1`
@@ -50,7 +50,7 @@ Latex:
 
 law = Eq(initial_volume / final_volume, initial_temperature / final_temperature)
 r"""
-:code:`V_0 / V_1 = T_0 / T_1`
+:code:`V0 / V1 = T0 / T1`
 
 Latex:
     .. math::

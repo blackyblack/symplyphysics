@@ -8,17 +8,11 @@ for a general version of this law.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols)
+from symplyphysics import (units, Quantity, SymbolNew, validate_input, validate_output, symbols)
 
-density = Symbol("density", units.mass / units.volume)
-r"""
+density = SymbolNew("rho", units.mass / units.volume, display_latex="\\rho")
+"""
 Volumetric density of the object.
-
-Symbol:
-    :code:`rho`
-
-Latex:
-    :math:`\rho`
 """
 
 mass = symbols.basic.mass
@@ -26,21 +20,16 @@ mass = symbols.basic.mass
 :attr:`~symplyphysics.symbols.basic.mass` of the object.
 """
 
-volume = Symbol("volume", units.volume)
+volume = SymbolNew("V", units.volume)
 """
 Volume of the object.
-
-Symbol:
-    :code:`V`
 """
 
 definition = Eq(density, mass / volume)
-r"""
-:code:`rho = m / V`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \rho = \frac{m}{V}
+:laws:latex::
 """
 
 

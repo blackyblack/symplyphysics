@@ -36,11 +36,11 @@ Latex:
 """
 
 initial_pressure = Symbol("initial_pressure", units.pressure)
-r"""
+"""
 Pressure at :attr:`standard conditions <symplyphysics.quantities.standard_conditions_temperature>`.
 
 Symbol:
-    :code:`p_0`
+    :code:`p0`
 
 Latex:
     :math:`p_0`
@@ -65,7 +65,7 @@ final_temperature = clone_symbol(symbols.thermodynamics.temperature)
 
 law = Eq(pressure_change, initial_pressure * (thermal_coefficient * final_temperature - 1))
 r"""
-:code:`dp = p_0 * (beta_V * T - 1)`
+:code:`dp = p0 * (beta_V * T - 1)`
 
 Latex:
     .. math::

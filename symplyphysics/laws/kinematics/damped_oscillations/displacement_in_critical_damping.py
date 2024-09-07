@@ -54,22 +54,22 @@ Latex:
 """
 
 initial_position = Symbol("initial_position", units.length, real=True)
-r"""
+"""
 Initial position of the oscillator.
 
 Symbol:
-    :code:`x_0`
+    :code:`x0`
 
 Latex:
     :math:`x_0`
 """
 
 initial_speed = Symbol("initial_speed", units.velocity, real=True)
-r"""
+"""
 Initial speed of the oscillator.
 
 Symbol:
-    :code:`v_0`
+    :code:`v0`
 
 Latex:
     :math:`v_0`
@@ -81,7 +81,7 @@ law = Eq(
     (initial_speed + initial_position * undamped_angular_frequency) * time),
 )
 r"""
-:code:`q = exp(-1 * w * t) * (x_0 + (v_0 + x_0 * w) * t)`
+:code:`q = exp(-1 * w * t) * (x0 + (v0 + x0 * w) * t)`
 
 Latex:
     .. math::

@@ -17,29 +17,26 @@ from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol,
 
 electrostatic_force = clone_symbol(symbols.dynamics.force)
 """
-Electrostatic force between two charges.
-
-Symbol:
-    :code:`F`
+Electrostatic :attr:`~symplyphysics.symbols.dynamics.force` between two charges.
 """
 
 first_charge = Symbol("first_charge", units.charge)
-r"""
+"""
 First charge.
 
 Symbol:
-    :code:`q_1`
+    :code:`q1`
 
 Latex:
     :math:`q_1`
 """
 
 second_charge = Symbol("second_charge", units.charge)
-r"""
+"""
 Second charge.
 
 Symbol:
-    :code:`q_2`
+    :code:`q2`
 
 Latex:
     :math:`q_2`
@@ -56,7 +53,7 @@ Symbol:
 law = Eq(electrostatic_force,
     1 / (4 * pi * units.vacuum_permittivity) * first_charge * second_charge / (distance**2))
 r"""
-:code:`F = 1 / (4 * pi * epsilon_0) * q_1 * q_2 / r^2`
+:code:`F = 1 / (4 * pi * epsilon_0) * q1 * q2 / r^2`
 
 Latex:
     .. math::

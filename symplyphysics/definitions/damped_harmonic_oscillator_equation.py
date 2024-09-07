@@ -7,67 +7,50 @@ to the body's velocity, we can write a differential equation for the body's posi
 assuming the body only moves in one direction.
 """
 
-from sympy import Derivative, dsolve
+from sympy import Derivative, Eq, dsolve
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
-    Function,
+    SymbolNew,
+    FunctionNew,
     validate_input,
     validate_output,
     angle_type,
     dimensionless,
 )
 
-displacement = Function("displacement", units.length)
+displacement = FunctionNew("x(t)", units.length, display_latex="x")
 """
 Displacement of the oscillating body as a function of time.
-
-Symbol:
-    :code:`x(t)`
 """
 
-time = Symbol("time", units.time, positive=True)
+time = SymbolNew("t", units.time, positive=True)
 """
 Time.
-
-Symbol:
-    :code:`t`
 """
 
-undamped_angular_frequency = Symbol("undamped_angular_frequency",
+undamped_angular_frequency = SymbolNew("w",
     angle_type / units.time,
+    display_latex="\\omega",
     positive=True)
-r"""
+"""
 Undamped angular frequency of the oscillator.
-
-Symbol:
-    :code:`w`
-
-Latex:
-    :math:`\omega`
 """
 
-damping_ratio = Symbol("damping_ratio", dimensionless, positive=True)
-r"""
+damping_ratio = SymbolNew("z", dimensionless, display_latex="\\zeta", positive=True)
+"""
 Damping ratio, which critically determines the behavior of the system.
-
-Symbol:
-    :code:`z`
-
-Latex:
-    :math:`\zeta`
 """
 
-definition = (Derivative(displacement(time), time, 2) +
-    2 * damping_ratio * undamped_angular_frequency * Derivative(displacement(time), time) +
-    undamped_angular_frequency**2 * displacement(time))
-r"""
-:code:`Derivative(x(t), (t, 2)) + 2 * z * w * Derivative(x(t), t) + w^2 * x(t) = 0`
+definition = Eq(
+    Derivative(displacement(time), time, 2) +
+        2 * damping_ratio * undamped_angular_frequency * Derivative(displacement(time), time) +
+        undamped_angular_frequency**2 * displacement(time),
+    0)
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \frac{d^2 x}{dt^2} + 2 \zeta \omega \frac{d x}{d t} + \omega^2 x(t) = 0
+:laws:latex::
 """
 
 

@@ -46,11 +46,11 @@ Symbol:
 """
 
 initial_volume = Symbol("initial_volume", units.volume)
-r"""
+"""
 Initial volume of the gas.
 
 Symbol:
-    :code:`V_0`
+    :code:`V0`
 
 Latex:
     :math:`V_0`
@@ -61,7 +61,7 @@ final_volume = Symbol("final_volume", units.volume)
 Final volume of the gas.
 
 Symbol:
-    :code:`V_1`
+    :code:`V1`
 
 Latex:
     :math:`V_1`
@@ -77,7 +77,7 @@ law = Eq(
     amount_of_substance * units.molar_gas_constant * temperature *
     log(final_volume / initial_volume))
 r"""
-:code:`W = n * R * T * log(V_1 / V_0)`
+:code:`W = n * R * T * log(V1 / V0)`
 
 Latex:
     .. math::

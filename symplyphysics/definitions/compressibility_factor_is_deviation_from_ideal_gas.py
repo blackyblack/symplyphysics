@@ -7,10 +7,6 @@ describes the deviation of a real gas from ideal gas behaviour. In general, the 
 ideal gas behaviour becomes more prominent the closer the gas is to a phase change, the lower
 the temperature or the larger the pressure.
 
-**Notation:**
-
-#. :math:`R` is the molar gas constant.
-
 **Notes:**
 
 #. Can be equivalently defined as the ratio of the molar volume :math:`\frac{V}{n}` of the real gas to the
@@ -24,46 +20,35 @@ the temperature or the larger the pressure.
 
 from sympy import Eq
 from symplyphysics import (
+    quantities,
     units,
     dimensionless,
     Quantity,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
     symbols,
     convert_to_float,
 )
 
-compressibility_factor = Symbol("compressibility_factor", dimensionless)
+compressibility_factor = SymbolNew("Z", dimensionless)
 """
 Compressibility factor of the real gas.
-
-Symbol:
-    :code:`Z`
 """
 
-pressure = Symbol("pressure", units.pressure)
+pressure = SymbolNew("p", units.pressure)
 """
 Pressure of the gas.
-
-Symbol:
-    :code:`p`
 """
 
-volume = Symbol("volume", units.volume)
+volume = SymbolNew("V", units.volume)
 """
 Volume of the gas.
-
-Symbol:
-    :code:`V`
 """
 
-amount_of_substance = Symbol("amount_of_substance", units.amount_of_substance)
+amount_of_substance = SymbolNew("n", units.amount_of_substance)
 """
 Amount of gas substance.
-
-Symbol:
-    :code:`n`
 """
 
 temperature = symbols.thermodynamics.temperature
@@ -71,14 +56,17 @@ temperature = symbols.thermodynamics.temperature
 Gas :attr:`~symplyphysics.symbols.thermodynamics.temperature`.
 """
 
-definition = Eq(compressibility_factor,
-    (pressure * volume) / (amount_of_substance * units.molar_gas_constant * temperature))
-r"""
-:code:`Z = (p * V) / (n * R * T)`
+molar_gas_constant = quantities.molar_gas_constant
+"""
+:attr:`~symplyphysics.quantities.molar_gas_constant`
+"""
 
-Latex:
-    .. math::
-        Z = \frac{p V}{n R T}
+definition = Eq(compressibility_factor,
+    (pressure * volume) / (amount_of_substance * molar_gas_constant * temperature))
+"""
+:laws:symbol::
+
+:laws:latex::
 """
 
 

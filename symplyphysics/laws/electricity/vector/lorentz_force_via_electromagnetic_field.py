@@ -136,7 +136,7 @@ def electric_field_law(
 
         Latex: :math:`\vec B`
 
-        Dimension: *magnetic flux density*
+        Dimension: *magnetic density*
 
     :param velocity\_: vector of particle's velocity
 
@@ -206,7 +206,7 @@ def charge_law(
 
         Latex: :math:`\vec B`
 
-        Dimension: *magnetic flux density*
+        Dimension: *magnetic density*
 
     :param velocity\_: vector of particle's velocity
 

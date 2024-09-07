@@ -29,15 +29,15 @@ Symbol:
 
 electrostatic_force = clone_symbol(symbols.dynamics.force)
 """
-Projection of the electrostatic force applied to the test charge.
+Projection of the electrostatic :attr:`~symplyphysics.symbols.dynamics.force` applied to the test charge.
 """
 
 test_charge = Symbol("test_charge", units.charge)
-r"""
+"""
 Value of the test charge.
 
 Symbol:
-    :code:`q_0`
+    :code:`q0`
 
 Latex:
     :math:`q_0`
@@ -45,7 +45,7 @@ Latex:
 
 law = Eq(electric_field_strength, electrostatic_force / test_charge)
 r"""
-:code:`E = F / q_0`
+:code:`E = F / q0`
 
 Latex:
     .. math::

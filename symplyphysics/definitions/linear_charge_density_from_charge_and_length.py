@@ -7,42 +7,28 @@ See :doc:`laws.quantities.quantity_is_linear_density_times_length` for a general
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
+from symplyphysics import (units, Quantity, SymbolNew, validate_input, validate_output)
 
-linear_charge_density = Symbol("linear_charge_density", units.charge / units.length)
-r"""
+linear_charge_density = SymbolNew("lambda", units.charge / units.length, display_latex="\\lambda")
+"""
 Linear charge density of the object.
-
-Symbol:
-    :code:`lambda`
-
-Latex:
-    :math:`\lambda`
 """
 
-charge = Symbol("charge", units.charge)
+charge = SymbolNew("q", units.charge)
 """
 Charge accumulated in the object.
-
-Symbol:
-    :code:`q`
 """
 
-length = Symbol("length", units.length)
+length = SymbolNew("l", units.length)
 """
 Length of the object.
-
-Symbol:
-    :code:`l`
 """
 
 definition = Eq(linear_charge_density, charge / length)
-r"""
-:code:`lambda = q / l`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \lambda = \frac{q}{l}
+:laws:latex::
 """
 
 

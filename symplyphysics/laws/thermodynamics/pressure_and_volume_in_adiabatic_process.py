@@ -34,58 +34,58 @@ Latex:
 # Some of the following parameters depend on each other. It is up to user which to choose as known.
 
 initial_temperature = clone_symbol(symbols.thermodynamics.temperature,
-    display_symbol="T_0",
+    display_symbol="T0",
     display_latex="T_0")
 """
 Initial :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
 """
 
 final_temperature = clone_symbol(symbols.thermodynamics.temperature,
-    display_symbol="T_1",
+    display_symbol="T1",
     display_latex="T_1")
 """
 Final :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
 """
 
 initial_volume = Symbol("initial_volume", units.volume)
-r"""
+"""
 Initial volume of the system.
 
 Symbol:
-    :code:`V_0`
+    :code:`V0`
 
 Latex:
     :math:`V_0`
 """
 
 final_volume = Symbol("final_volume", units.volume)
-r"""
+"""
 Final volume of the system.
 
 Symbol:
-    :code:`V_1`
+    :code:`V1`
 
 Latex:
     :math:`V_1`
 """
 
 initial_pressure = Symbol("initial_pressure", units.pressure)
-r"""
+"""
 Initial pressure inside the system.
 
 Symbol:
-    :code:`p_0`
+    :code:`p0`
 
 Latex:
     :math:`p_0`
 """
 
 final_pressure = Symbol("final_pressure", units.pressure)
-r"""
+"""
 Final pressure inside the system.
 
 Symbol:
-    :code:`p_1`
+    :code:`p1`
 
 Latex:
     :math:`p_1`
@@ -96,7 +96,7 @@ adiabatic_condition = Eq(
     final_pressure * (final_volume**adiabatic_index),
 )
 r"""
-:code:`p_0 * V_0^gamma = p_1 * V_1^gamma`
+:code:`p0 * V0^gamma = p1 * V1^gamma`
 
 Latex:
     .. math::

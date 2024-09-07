@@ -25,7 +25,7 @@ from symplyphysics import (
 from symplyphysics.core.symbols.probability import Probability
 
 probability = Symbol("probability", dimensionless)
-r"""
+"""
 Probability of finding :math:`N` gas particles in volume :math:`V`.
 
 Symbol:
@@ -33,11 +33,11 @@ Symbol:
 """
 
 total_volume = Symbol("total_volume", units.volume)
-r"""
+"""
 Total volume of the region.
 
 Symbol:
-    :code:`V_0`
+    :code:`V0`
 
 Latex:
     :math:`V_0`
@@ -52,7 +52,7 @@ Symbol:
 """
 
 particle_count = Symbol("particle_count", dimensionless, integer=True)
-r"""
+"""
 Number of gas particles in :math:`V`.
 
 Symbol:
@@ -61,7 +61,7 @@ Symbol:
 
 law = Eq(probability, (partial_volume / total_volume)**particle_count)
 r"""
-:code:`P = (V / V_0)^N`
+:code:`P = (V / V0)^N`
 
 Latex:
     .. math::

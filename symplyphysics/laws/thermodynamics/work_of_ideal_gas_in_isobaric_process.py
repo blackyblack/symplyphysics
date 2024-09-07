@@ -32,22 +32,22 @@ Symbol:
 """
 
 initial_volume = Symbol("initial_volume", units.volume)
-r"""
+"""
 Initial volume of the gas.
 
 Symbol:
-    :code:`V_0`
+    :code:`V0`
 
 Latex:
     :math:`V_0`
 """
 
 final_volume = Symbol("final_volume", units.volume)
-r"""
+"""
 Final volume of the gas
 
 Symbol:
-    :code:`V_1`
+    :code:`V1`
 
 Latex:
     :math:`V_1`
@@ -55,7 +55,7 @@ Latex:
 
 law = Eq(work, pressure * (final_volume - initial_volume))
 r"""
-:code:`W = p * (V_1 - V_0)`
+:code:`W = p * (V1 - V0)`
 
 Latex:
     .. math::

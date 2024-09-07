@@ -16,7 +16,7 @@ from symplyphysics.definitions import speed_is_distance_derivative as _velocity_
 from symplyphysics.definitions import acceleration_is_speed_derivative as _acceleration_definition
 
 final_position = Symbol("final_position", units.length)
-r"""
+"""
 Position at time :math:`t`.
 
 Symbol:
@@ -24,22 +24,25 @@ Symbol:
 """
 
 initial_position = Symbol("initial_position", units.length)
-r"""
+"""
 Position at :math:`t = 0`.
 
 Symbol:
-    :code:`x_0`
+    :code:`x0`
 
 Latex:
     :math:`x_0`
 """
 
 initial_speed = Symbol("initial_speed", units.velocity)
-r"""
+"""
 Speed at :math:`t = 0`.
 
 Symbol:
-    :code:`v_0`
+    :code:`v0`
+
+Latex:
+    :math:`v_0`
 """
 
 acceleration = symbols.kinematics.acceleration
@@ -48,7 +51,7 @@ Constant :attr:`~symplyphysics.symbols.kinematics.acceleration`.
 """
 
 time = Symbol("time", units.time)
-r"""
+"""
 Time at which :math:`x` is measured.
 
 Symbol:
@@ -57,7 +60,7 @@ Symbol:
 
 law = Eq(final_position, initial_position + initial_speed * time + acceleration * time**2 / 2)
 r"""
-:code:`x = x_0 + v_0 * t + (1/2) * a * t^2`
+:code:`x = x0 + v0 * t + (1/2) * a * t^2`
 
 Latex:
     .. math::

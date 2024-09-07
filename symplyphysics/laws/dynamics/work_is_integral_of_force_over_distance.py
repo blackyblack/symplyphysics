@@ -31,7 +31,7 @@ Symbol:
 """
 
 force = Function("force", units.force)
-r"""
+"""
 The :attr:`~symplyphysics.symbols.dynamics.force` exerted on the object as a function of position.
 
 Symbol:
@@ -39,7 +39,7 @@ Symbol:
 """
 
 position = Symbol("position", units.length)
-r"""
+"""
 The position of the object.
 
 Symbol:
@@ -47,7 +47,7 @@ Symbol:
 """
 
 position_before = Symbol("position_before", units.length)
-r"""
+"""
 The initial position of the object.
 
 Symbol:
@@ -58,7 +58,7 @@ Latex:
 """
 
 position_after = Symbol("position_after", units.length)
-r"""
+"""
 The end position of the object.
 
 Symbol:

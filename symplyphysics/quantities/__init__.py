@@ -60,6 +60,24 @@ The Earth :attr:`~symplyphysics.symbols.basic.mass` is a standard unit of mass i
 Earth. The relative uncertainty of the measurement is :math:`10^{-4}`.
 """
 
+boltzmann_constant = Quantity(units.boltzmann_constant, display_symbol="k_B", display_latex="k_\\text{B}")
+"""
+The Boltzmann constant is the proportionality factor that relates the average relative thermal energy of particles
+in a gas with the thermodynamic temperature of the gas.
+"""
+
+molar_gas_constant = Quantity(units.molar_gas_constant, display_symbol="R")
+"""
+The gas constant is the constant of proportionality that relates the energy scale in physics to the temperature
+scale and the scale used for amount of substance.
+It is molar equivalent to the :attr:`~symplyphysics.quantities.boltzmann_constant`
+"""
+
+speed_of_light = Quantity(units.speed_of_light, display_symbol="c")
+"""
+The speed of light in vacuum is a universal physical constant that is exactly equal to 299,792,458 metres per second.
+"""
+
 __all__ = [
     "standard_conditions_temperature",
     "standard_laboratory_temperature",
@@ -68,4 +86,6 @@ __all__ = [
     "hydrogen_ionization_energy",
     "solar_mass",
     "earth_mass",
+    "boltzmann_constant",
+    "molar_gas_constant",
 ]
