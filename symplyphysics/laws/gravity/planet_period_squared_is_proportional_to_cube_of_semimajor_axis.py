@@ -66,10 +66,8 @@ _angular_speed_expr = solve(_newtons_eqn, _angular_speed)[1]
 # If the eccentricity of the planet's orbit is not too big, which is the case for most
 # planets of the solar system, we can substitute the radius with the semi-major axis of
 # the orbit.
-_period_derived = period_law.law.rhs.subs({
-    period_law.angular_frequency: _angular_speed_expr,
-    _radius: semimajor_axis,
-})
+_period_derived = period_law.law.rhs.subs(period_law.angular_frequency, _angular_speed_expr)
+_period_derived = _period_derived.subs(_radius, semimajor_axis)
 
 _period_from_law = solve(law, rotation_period)[0]
 
