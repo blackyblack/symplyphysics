@@ -57,6 +57,8 @@ html_theme = "alabaster"
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
 
+html_extra_path = ["_extra/googlea3669135f4e8d2d0.html"]
+
 # If true, the current module name will be prepended to all description
 # unit titles (such as .. function::).
 add_module_names = False
