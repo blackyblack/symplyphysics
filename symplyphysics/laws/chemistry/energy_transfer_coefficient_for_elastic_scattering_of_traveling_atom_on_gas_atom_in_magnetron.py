@@ -1,5 +1,5 @@
 from sympy import Eq, solve
-from symplyphysics import (Quantity, Symbol, print_expression, validate_input, validate_output,
+from symplyphysics import (Quantity, Symbol, validate_input, validate_output,
     dimensionless, convert_to_float, clone_symbol, symbols)
 
 # Description
@@ -19,10 +19,6 @@ mass_of_gas_atom = clone_symbol(symbols.basic.mass)
 law = Eq(
     energy_transfer_coefficient,
     2 * mass_of_traveling_atom * mass_of_gas_atom / (mass_of_traveling_atom + mass_of_gas_atom)**2)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(mass_of_traveling_atom_=mass_of_traveling_atom, mass_of_gas_atom_=mass_of_gas_atom)

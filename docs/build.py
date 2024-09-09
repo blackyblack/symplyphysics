@@ -51,6 +51,13 @@ def get_parser() -> argparse.ArgumentParser:
         dest="conf_dir",
         default="docs",
         help="directory where conf.py file is stored")
+    
+    parser.add_argument("-q",
+        "--quiet",
+        action="store_true",
+        dest="quiet",
+        help="suppress rST files generation text",
+        )
 
     return parser
 
@@ -59,7 +66,7 @@ def main(argv: Sequence[str] = ()) -> None:
     args = get_parser().parse_args(argv or sys.argv[1:])
 
     # Generate Symplyphysics rst files
-    generate_laws_docs(args.laws_source_dir, args.generated_dir, args.exclude_dirs)
+    generate_laws_docs(args.laws_source_dir, args.generated_dir, args.exclude_dirs, args.quiet)
 
     # Copy index.rst to 'generated' folder
     index_file = pathlib.Path(args.conf_dir).joinpath("index.rst")

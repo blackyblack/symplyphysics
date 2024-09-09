@@ -6,7 +6,7 @@ from .view import print_law, print_package
 
 
 def process_law_package(directory: str, laws: Sequence[str], packages: Sequence[str],
-    output_dir: str) -> Optional[str]:
+    output_dir: str, quiet: bool) -> Optional[str]:
     filename = os.path.normpath(directory)
     filename_init = os.path.join(filename, "__init__.py")
     package_content: Optional[str] = None
@@ -24,7 +24,9 @@ def process_law_package(directory: str, laws: Sequence[str], packages: Sequence[
         package_description = ""
 
     package_name = filename.replace(os.sep, ".")
-    print(f"Generating rST for package {package_name}")
+
+    if not quiet:
+        print(f"Generating rST for package {package_name}")
 
     package_name_strip_root = ".".join(package_name.split(".")[1:])
     packages = [p for p in packages if not (p.startswith(".") or p.startswith("_"))]
@@ -42,7 +44,7 @@ def process_law_package(directory: str, laws: Sequence[str], packages: Sequence[
     return package_name_strip_root
 
 
-def process_law(directory: str, law_filename: str, output_dir: str) -> Optional[str]:
+def process_law(directory: str, law_filename: str, output_dir: str, quiet: bool) -> Optional[str]:
     if not law_filename.endswith(".py"):
         return None
     if law_filename.startswith("__"):
@@ -64,7 +66,9 @@ def process_law(directory: str, law_filename: str, output_dir: str) -> Optional[
 
     no_extension_filename = os.path.splitext(filename)[0]
     law_module_name = no_extension_filename.replace(os.sep, ".")
-    print(f"Generating rST for law {law_module_name}")
+
+    if not quiet:
+        print(f"Generating rST for law {law_module_name}")
 
     law_items = find_members_and_functions(law_module_name)
     doc_content = print_law(law_title, law_description, law_items, law_module_name)
@@ -80,7 +84,7 @@ def process_law(directory: str, law_filename: str, output_dir: str) -> Optional[
     return law_module_name_strip_root
 
 
-def generate_laws_docs(source_dir: str, output_dir: str, exclude_dirs: Sequence[str]) -> None:
+def generate_laws_docs(source_dir: str, output_dir: str, exclude_dirs: Sequence[str], quiet: bool) -> None:
     exclude_dirs_with_source: list[str] = []
     for e in exclude_dirs:
         to_exclude = os.path.join(source_dir, e)
@@ -104,10 +108,10 @@ def generate_laws_docs(source_dir: str, output_dir: str, exclude_dirs: Sequence[
         files.sort()
         laws: list[str] = []
         for filename in files:
-            law_name = process_law(path, filename, output_dir)
+            law_name = process_law(path, filename, output_dir, quiet)
             if law_name is None:
                 continue
             laws.append(law_name)
-        package_name = process_law_package(path, laws, dirs, output_dir)
+        package_name = process_law_package(path, laws, dirs, output_dir, quiet)
         if package_name is None:
             continue

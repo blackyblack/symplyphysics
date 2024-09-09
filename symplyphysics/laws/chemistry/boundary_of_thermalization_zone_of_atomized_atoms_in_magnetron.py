@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     dimensionless,
@@ -29,10 +28,6 @@ number_of_collisions_of_atom = Symbol("number_of_collisions_of_atom", dimensionl
 free_path_length = Symbol("free_path_length", units.length)
 
 law = Eq(boundary_of_thermalization_zone, number_of_collisions_of_atom * free_path_length)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(number_of_collisions_of_atom_=number_of_collisions_of_atom,

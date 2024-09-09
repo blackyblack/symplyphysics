@@ -9,10 +9,10 @@ from symplyphysics.laws.thermodynamics import (
     heat_of_combustion_via_mass as combustion_energy_law,
 )
 from symplyphysics.laws.quantities import quantity_is_specific_quantity_times_mass as specific_qty_law
+from symplyphysics.laws.quantities import quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law
 from symplyphysics.definitions import density_from_mass_volume as density_law
 from symplyphysics.laws.kinematics import position_via_constant_speed_and_time as velocity_law
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as clapeyron_law
-from symplyphysics.laws.chemistry import atomic_weight_from_mass_mole_count as mole_count_law
 from symplyphysics.definitions import mass_flow_rate as mass_rate_law
 
 # Example from https://easyfizika.ru/zadachi/termodinamika/gazovaya-nagrevatelnaya-kolonka-potreblyaet-1-8-m3-metana-ch4-v-chas-najti-temperaturu/
@@ -69,10 +69,10 @@ energy_to_heating_water_value = thermal_energy_law.law.subs({
     thermal_energy_law.temperature_change: temperature_water - temperature_start,
 }).rhs
 
-mass_of_gas_equation = mole_count_law.law.subs(
-    {mole_count_law.atomic_weight: molar_mass_of_methane})
-mole_count_value = solve(mass_of_gas_equation, mole_count_law.mole_count,
-    dict=True)[0][mole_count_law.mole_count]
+mass_of_gas_equation = molar_qty_law.law.subs(
+    {molar_qty_law.molar_quantity: molar_mass_of_methane})
+mole_count_value = solve(mass_of_gas_equation, molar_qty_law.amount_of_substance,
+    dict=True)[0][molar_qty_law.amount_of_substance]
 
 state_equation = clapeyron_law.law.subs({
     clapeyron_law.volume: volume_of_gas,
@@ -80,8 +80,8 @@ state_equation = clapeyron_law.law.subs({
     clapeyron_law.temperature: temperature_start,
     clapeyron_law.amount_of_substance: mole_count_value
 })
-mass_of_gas_in_state_value = solve(state_equation, mole_count_law.mass,
-    dict=True)[0][mole_count_law.mass]
+mass_of_gas_in_state_value = solve(state_equation, molar_qty_law.extensive_quantity,
+    dict=True)[0][molar_qty_law.extensive_quantity]
 
 mass_gas_dsolved = dsolve(mass_rate_law.definition, mass_rate_law.mass(mass_rate_law.time))
 # C1 is initial mass of consumed gas

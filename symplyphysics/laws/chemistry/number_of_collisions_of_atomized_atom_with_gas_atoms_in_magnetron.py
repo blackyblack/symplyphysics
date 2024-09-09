@@ -1,5 +1,5 @@
 from sympy import Eq, solve, log
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, dimensionless, convert_to_float)
 
 # Description
@@ -23,10 +23,6 @@ energy_transfer_coefficient = Symbol("energy transfer coefficient", dimensionles
 
 law = Eq(number_of_collisions_of_atoms,
     log(energy_of_thermal_motion / initial_energy) / log(1 - energy_transfer_coefficient))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(initial_energy_=initial_energy,
