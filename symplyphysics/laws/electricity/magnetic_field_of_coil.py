@@ -19,7 +19,7 @@ from sympy import (Eq, solve)
 from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, dimensionless)
 
-magnetic_flux_density = Symbol("magnetic_flux_density", units.magnetic_flux_density)
+magnetic_flux_density = Symbol("magnetic_flux_density", units.magnetic_density)
 """
 Value of the magnetic field.
 
