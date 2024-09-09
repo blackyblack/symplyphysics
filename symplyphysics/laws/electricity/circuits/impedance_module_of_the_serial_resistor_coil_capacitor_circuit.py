@@ -5,7 +5,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 
 from symplyphysics.laws.electricity.circuits import capacitor_impedance_from_capacitive_reactance as capacitor_impedance_law
 from symplyphysics.laws.electricity.circuits import coil_impedance_from_inductive_reactance as coil_impedance_law
-from symplyphysics.laws.electricity.circuits import serial_impedance as serial_law
+from symplyphysics.laws.electricity.circuits import impedance_in_serial_connection as serial_law
 
 # Description
 ## Consider an electrical circuit consisting of a capacitor, coil, and resistor connected in series.
@@ -47,8 +47,8 @@ coil_impedance_derived = solve(impedance_law_applied_2,
 local_index = Idx("index_local", (1, 3))
 serial_law_applied = serial_law.law.subs(global_index, local_index)
 serial_law_applied = serial_law_applied.doit()
-circuit_impedance_derived = solve(serial_law_applied, serial_law.serial_impedance,
-    dict=True)[0][serial_law.serial_impedance]
+circuit_impedance_derived = solve(serial_law_applied, serial_law.total_impedance,
+    dict=True)[0][serial_law.total_impedance]
 for i, v in enumerate((resistance_resistor, coil_impedance_derived, capacitive_impedance_derived)):
     circuit_impedance_derived = circuit_impedance_derived.subs(serial_law.impedance[i + 1], v)
 

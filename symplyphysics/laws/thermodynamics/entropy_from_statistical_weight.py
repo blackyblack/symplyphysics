@@ -14,7 +14,7 @@ from sympy import Eq, solve, log, symbols, Function as SymFunction, dsolve
 from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless,
     assert_equal)
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.chemistry import avogadro_number_from_mole_count as avogadro_law
+from symplyphysics.laws.chemistry import avogadro_constant_is_particle_count_over_amount_of_substance as avogadro_law
 from symplyphysics.laws.thermodynamics import (
     change_in_entropy_of_ideal_gas_from_volume_and_temperature as entropy_change_law,)
 from symplyphysics.laws.quantities import (
@@ -178,8 +178,8 @@ _entropy_difference_from_law = entropy_change_law.law.rhs.subs({
 _equation_constant_expr = solve(
     (Eq(_entropy_difference_derived, _entropy_difference_from_law),
     avogadro_law.law.subs({
-    avogadro_law.particles_count: _particle_count,
-    avogadro_law.mole_count: molar_qty_law.amount_of_substance,
+    avogadro_law.particle_count: _particle_count,
+    avogadro_law.amount_of_substance: molar_qty_law.amount_of_substance,
     })),
     (
     _equation_constant,

@@ -11,11 +11,11 @@ from sympy import Abs, Idx, solve
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import Symbol, global_index
-from symplyphysics.laws.electricity.circuits import admittance_of_parallel_dipoles as parallel_admittance_law
+from symplyphysics.laws.electricity.circuits import admittance_in_parallel_connection as parallel_admittance_law
 from symplyphysics.definitions import admittance_is_inverse_impedance as admittance_def
 from symplyphysics.laws.electricity.circuits import capacitor_impedance_from_capacitance_and_frequency as capacitor_impedance
-from symplyphysics.laws.electricity.circuits import coil_impedance_from_inductivity_and_frequency as coil_impedance
-from symplyphysics.laws.electricity.circuits import oscillation_period_for_capacitor_inductor_node as thomsons_formula
+from symplyphysics.laws.electricity.circuits import coil_impedance_via_inductance_and_frequency as coil_impedance
+from symplyphysics.laws.electricity.circuits import oscillation_period_of_inductor_capacitor_network as thomsons_formula
 from symplyphysics.definitions import period_from_angular_frequency as period_definition
 
 frequency_arg = Symbol("frequency_arg")
@@ -26,16 +26,16 @@ EXAMPLE_RESISTANCE = 5000000
 
 # Parallel connection of dipoles summarizes their admittances.
 # First find impedances and then admittances
-L_impedance = coil_impedance.law.rhs.subs({coil_impedance.circular_frequency: frequency_arg})
+L_impedance = coil_impedance.law.rhs.subs({coil_impedance.angular_frequency: frequency_arg})
 L_admittance = admittance_def.definition.rhs.subs({
     admittance_def.impedance: L_impedance
-}).subs({coil_impedance.coil_inductivity: EXAMPLE_INDUCTANCE})
+}).subs({coil_impedance.inductance: EXAMPLE_INDUCTANCE})
 
 C_impedance = capacitor_impedance.law.rhs.subs(
-    {capacitor_impedance.circular_frequency: frequency_arg})
+    {capacitor_impedance.angular_frequency: frequency_arg})
 C_admittance = admittance_def.definition.rhs.subs({
     admittance_def.impedance: C_impedance
-}).subs({capacitor_impedance.capacitor_capacitance: EXAMPLE_CAPACITANCE})
+}).subs({capacitor_impedance.capacitance: EXAMPLE_CAPACITANCE})
 
 R_admittance = admittance_def.definition.rhs.subs({admittance_def.impedance: EXAMPLE_RESISTANCE})
 

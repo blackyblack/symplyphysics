@@ -15,7 +15,7 @@ from symplyphysics import (units, Quantity, Symbol, validate_input, validate_out
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as ideal_gas_law
 from symplyphysics.laws.thermodynamics import average_kinetic_energy_of_ideal_gas_from_temperature as kinetic_energy
-from symplyphysics.laws.chemistry import avogadro_number_from_mole_count as avogadro_number
+from symplyphysics.laws.chemistry import avogadro_constant_is_particle_count_over_amount_of_substance as avogadro_number
 from symplyphysics.definitions import number_density_is_number_of_objects_per_unit_volume as number_density_def
 
 average_kinetic_energy = Symbol("average_kinetic_energy", units.energy)
@@ -70,9 +70,9 @@ _particles_number_eq = number_density_def.definition.subs({
 _derived_particles_number = solve(_particles_number_eq, number_density_def.number_of_objects)[0]
 
 _mole_count_eq = avogadro_number.law.subs(
-    {avogadro_number.particles_count: _derived_particles_number})
+    {avogadro_number.particle_count: _derived_particles_number})
 
-_derived_mole_count = solve(_mole_count_eq, avogadro_number.mole_count)[0]
+_derived_mole_count = solve(_mole_count_eq, avogadro_number.amount_of_substance)[0]
 
 _ideal_gas_law_subs = ideal_gas_law.law.subs({
     ideal_gas_law.temperature: _derived_temperature,

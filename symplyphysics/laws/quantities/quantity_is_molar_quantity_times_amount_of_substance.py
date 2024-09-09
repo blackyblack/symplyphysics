@@ -1,31 +1,55 @@
+"""
+Quantity is molar quantity times amount of substance
+====================================================
+
+An extensive quantity of interest can be obtained by multiplying the corresponding molar-specific
+intensive quantity by the amount of substance.
+"""
+
 from sympy import Eq, Symbol as SymSymbol
 from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
 )
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 
-# Description
-## An extensive quantity of interest can be obtained by multiplying the corresponding molar-specific
-## intensive quantity by the amount of substance.
-
-# Law: X = X_m * n
-## X - extensive quantity
-## X_m - (intensive) molar quantity
-## n - amount of substance
-
 extensive_quantity = SymSymbol("extensive_quantity")
+"""
+Extensive property.
+
+Symbol:
+    :code:`X`
+"""
+
 molar_quantity = SymSymbol("molar_quantity")
+r"""
+Intensive molar quantity.
+
+Symbol:
+    :code:`X_m`
+
+Latex:
+    :math:`X_m`
+"""
+
 amount_of_substance = Symbol("amount_of_substance", units.amount_of_substance)
+"""
+Amount of substance.
+
+Symbol:
+    :code:`n`
+"""
 
 law = Eq(extensive_quantity, molar_quantity * amount_of_substance)
+r"""
+:code:`X = X_m * n`
 
-
-def print_law() -> str:
-    return print_expression(law)
+Latex:
+    .. math::
+        X = X_m n
+"""
 
 
 @validate_input(amount_of_substance_=amount_of_substance)

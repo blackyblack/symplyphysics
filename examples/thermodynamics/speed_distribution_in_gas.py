@@ -2,7 +2,7 @@
 
 from sympy import solve, symbols, integrate
 from symplyphysics import Quantity, units, convert_to, quantities
-from symplyphysics.laws.chemistry import molar_mass_via_mass_of_single_particle as molar_mass_law
+from symplyphysics.laws.chemistry import molar_mass_via_molecular_mass as molar_mass_law
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed_distribution
 
 # Description
@@ -19,7 +19,7 @@ values = {
 }
 
 molecule_mass = (solve(molar_mass_law.law,
-    molar_mass_law.particle_mass)[0].subs(molar_mass_law.molar_mass, molar_mass))
+    molar_mass_law.molecular_mass)[0].subs(molar_mass_law.molar_mass, molar_mass))
 
 speed_distribution_expr = speed_distribution.law.rhs.subs({
     speed_distribution.particle_mass: molecule_mass,

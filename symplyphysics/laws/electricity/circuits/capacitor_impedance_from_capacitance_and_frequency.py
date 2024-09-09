@@ -1,32 +1,59 @@
+"""
+Capacitor impedance from capacitance and frequency
+==================================================
+
+The impedance of the capacitor is a purely imaginary reactive impedance which
+is inversely proportional to its capacitance. Note that the resistance of the
+capacitor is infinite, i.e. it is considered to be an opened connection.
+"""
+
 from sympy import (I, Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, angle_type)
 
-# Description
-## While the serial resistance of ideal capacitor is zero, its reactance depends on its capacitance and frequency.
-## Law: Zc = -j/wС, where
-## Zc is capacitor impedance,
-## j is imaginary number,
-## w is circular frequency,
-## C is capacitance of capacitor.
+impedance = Symbol("impedance", units.impedance)
+"""
+Impedance of the capacitor.
 
-capacitor_impedance = Symbol("capacitor_impedance", units.impedance)
-circular_frequency = Symbol("circular_frequency", angle_type / units.time)
-capacitor_capacitance = Symbol("capacitor_capacitance", units.capacitance)
+Symbol:
+    :code:`Z`
+"""
 
-law = Eq(capacitor_impedance, -I / (circular_frequency * capacitor_capacitance))
+angular_frequency = Symbol("angular_frequency", angle_type / units.time)
+r"""
+Angular frequency of the alternating current.
+
+Symbol:
+    :code:`w`
+
+Latex:
+    :math:`\omega`
+"""
+
+capacitance = Symbol("capacitance", units.capacitance)
+"""
+Capacitance of the capacitor.
+
+Symbol:
+    :code:`C`
+"""
+
+law = Eq(impedance, -I / (angular_frequency * capacitance))
+r"""
+:code:`Z = -i / (w * C)`
+
+Latex:
+    .. math::
+        Z = -\frac{i}{\omega C}
+"""
 
 
-def print_law() -> str:
-    return print_expression(law)
-
-
-@validate_input(capacitance_=capacitor_capacitance, circular_frequency_=circular_frequency)
-@validate_output(capacitor_impedance)
+@validate_input(capacitance_=capacitance, circular_frequency_=angular_frequency)
+@validate_output(impedance)
 def calculate_impedance(capacitance_: Quantity, circular_frequency_: Quantity) -> Quantity:
-    result_impedance_expr = solve(law, capacitor_impedance, dict=True)[0][capacitor_impedance]
+    result_impedance_expr = solve(law, impedance, dict=True)[0][impedance]
     result_expr = result_impedance_expr.subs({
-        capacitor_capacitance: capacitance_,
-        circular_frequency: circular_frequency_
+        capacitance: capacitance_,
+        angular_frequency: circular_frequency_
     })
     return Quantity(result_expr)
