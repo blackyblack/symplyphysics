@@ -1,6 +1,6 @@
 r"""
-Electromotive force induced in rotating coil
-============================================
+Electromotive force induced in sinusoidally rotating coil
+=========================================================
 
 Suppose a coil is being rotated around the axis that lies in the coil's cross section
 (see `Figure <https://www.schoolphysics.co.uk/age16-19/Electricity%20and%20magnetism/Electromagnetic%20induction/text/Induced_emf_in_a_rotating_coil/index.html>`__)
