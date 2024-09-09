@@ -42,6 +42,12 @@ reaction_standard_gibbs_energy = Symbol("reaction_standard_gibbs_energy",
 r"""
 Reaction standard Gibbs energy, which is the sum of the standard Gibbs energies of the reaction
 products minus that of reactants.
+
+Symbol:
+    :code:`Delta(G)`
+
+Latex:
+    :math:`\Delta G`
 """
 
 temperature = symbols.thermodynamics.temperature

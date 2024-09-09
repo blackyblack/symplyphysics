@@ -4,6 +4,10 @@ Admittance in parallel connection
 
 The total admittance of the circuit whose components are connected in parallel is the sum
 of the admittances of individual components.
+
+**Conditions:**
+
+#. Components are connected in parallel.
 """
 
 from sympy import (Eq, Idx, solve)

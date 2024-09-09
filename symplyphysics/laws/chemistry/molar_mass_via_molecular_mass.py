@@ -36,7 +36,7 @@ Symbol:
 """
 
 molecular_mass = clone_symbol(symbols.basic.mass, display_symbol="m_0", display_latex="m_0")
-r"""
+"""
 :attr:`~symplyphysics.symbols.basic.mass` of a single molecule.
 """
 

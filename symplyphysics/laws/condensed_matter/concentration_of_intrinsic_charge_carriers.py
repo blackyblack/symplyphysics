@@ -12,6 +12,10 @@ nonzero concentration of free charge carriers in the semiconductor.
 **Links:**
 
 #. `Intrinsic carrier concentration <https://www.universitywafer.com/intrinsic-carrier-concentration.html>`_.
+
+**Conditions:**
+
+#. There are no external influences, such as lighting, electric field, etc.
 """
 
 from sympy import (Eq, solve, sqrt, exp)
@@ -30,10 +34,7 @@ r"""
 Concentration of intrinsic charge carriers.
 
 Symbol:
-    :code:`n_i`
-
-Latex:
-    :math:`n_\text{i}`
+    :code:`n`
 """
 
 density_of_states_in_conduction_band = Symbol("density_of_states_in_conduction_band",
@@ -80,11 +81,11 @@ law = Eq(
     sqrt(density_of_states_in_conduction_band * density_of_states_in_valence_band) * exp(-band_gap /
     (2 * boltzmann * temperature)))
 r"""
-:code:`n_i = sqrt(N_c * N_v) * exp(-1 * E_g / (2 * k_B * T))`
+:code:`n = sqrt(N_c * N_v) * exp(-1 * E_g / (2 * k_B * T))`
 
 Latex:
     .. math::
-        n_\text{i} = \sqrt{N_\text{c} N_\text{v}} \exp \left( -\frac{E_\text{g}}{2 k_\text{B} T} \right)
+        n = \sqrt{N_\text{c} N_\text{v}} \exp \left( -\frac{E_\text{g}}{2 k_\text{B} T} \right)
 """
 
 

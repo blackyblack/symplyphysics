@@ -4,7 +4,11 @@ Hard spheres potential
 
 Hard spheres are widely used as model particles in the statistical mechanical theory, defined as
 impenetrable spheres that cannot overlap in space, which mimics extremely strong repulsion that
-atoms and molecules experience at very close distances
+atoms and molecules experience at very close distances.
+
+**Conditions:**
+
+#. Spheres are identical.
 """
 
 from sympy import Eq, Piecewise, S

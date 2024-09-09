@@ -41,10 +41,10 @@ r"""
 Radius of the inner sphere.
 
 Symbol:
-    :code:`r_1`
+    :code:`r_in`
 
 Latex:
-    :math:`r_1`
+    :math:`r_\text{in}`
 """
 
 outer_radius = Symbol("outer_radius", units.length)
@@ -52,21 +52,21 @@ r"""
 Radius of the outer sphere.
 
 Symbol:
-    :code:`r_2`
+    :code:`r_out`
 
 Latex:
-    :math:`r_2`
+    :math:`r_\text{out}`
 """
 
 law = Eq(
     capacitance, 4 * pi * absolute_permittivity * inner_radius * outer_radius /
     (outer_radius - inner_radius))
 r"""
-:code:`C = 4 * pi * epsilon * r_1 * r_2 / (r_2 - r_1)`
+:code:`C = 4 * pi * epsilon * r_in * r_out / (r_out - r_in)`
 
 Latex:
     .. math::
-        C = \frac{4 \pi \varepsilon r_1 r_2}{r_2 - r_1}
+        C = \frac{4 \pi \varepsilon r_\text{in} r_\text{out}}{r_\text{out} - r_\text{in}}
 """
 
 
@@ -74,11 +74,11 @@ Latex:
     inner_radius_=inner_radius,
     outer_radius_=outer_radius)
 @validate_output(capacitance)
-def calculate_capacity(relative_permittivity_: float, inner_radius_: Quantity,
+def calculate_capacity(absolute_permittivity_: Quantity, inner_radius_: Quantity,
     outer_radius_: Quantity) -> Quantity:
     result_expr = solve(law, capacitance, dict=True)[0][capacitance]
     result_expr = result_expr.subs({
-        absolute_permittivity: relative_permittivity_,
+        absolute_permittivity: absolute_permittivity_,
         inner_radius: min([inner_radius_, outer_radius_], key=lambda x: x.scale_factor),
         outer_radius: max([inner_radius_, outer_radius_], key=lambda x: x.scale_factor)
     })

@@ -4,6 +4,10 @@ Impedance in serial connection
 
 The total impedance of a circuit whose components are connected in series is the sum
 of the impedances of individual components.
+
+**Conditions:**
+
+#. Components are connected in series.
 """
 
 from sympy import (Eq, Idx, solve)

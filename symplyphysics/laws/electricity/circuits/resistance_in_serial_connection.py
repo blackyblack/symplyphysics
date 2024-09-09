@@ -7,7 +7,7 @@ of the resistances of individual components.
 
 **Conditions:**
 
-#. The circuit is a DC one or the reactance is zero.
+#. Applies to direct current circuits.
 """
 
 from sympy import (Eq, Idx, solve)

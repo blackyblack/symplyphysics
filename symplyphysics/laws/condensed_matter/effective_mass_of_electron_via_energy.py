@@ -32,7 +32,7 @@ from symplyphysics import (
 
 effective_mass = clone_symbol(symbols.basic.mass, display_symbol="m_eff", display_latex=r"m_\text{eff}")
 r"""
-Effective mass of the electron.
+Effective :attr:`~symplyphysics.symbols.basic.mass` of the electron.
 """
 
 energy = Function("energy", units.energy)
@@ -54,7 +54,7 @@ Symbol:
 law = Eq(effective_mass, units.hbar**2 / Derivative(energy(wavenumber),
     (wavenumber, 2)))
 r"""
-:code:`m_eff = hbar^2 * Derivative(E(k), (k, 2))^(-1)`
+:code:`m_eff = hbar^2 / Derivative(E(k), (k, 2))`
 
 Latex:
     .. math::

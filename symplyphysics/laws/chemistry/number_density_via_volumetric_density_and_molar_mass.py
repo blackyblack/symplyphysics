@@ -4,7 +4,7 @@ Number density via volumetric density and molar mass
 
 Number density, or number of molecules per unit volume, can be expressed using
 the volumetric density, or mass per unit volume, and molar mass, or mass per unit
-amount or substance.
+amount of substance.
 
 **Notation:**
 

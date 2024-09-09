@@ -7,6 +7,7 @@ of the inductances of individual components.
 
 **Conditions:**
 
+#. Components are connected in series.
 #. Inductors are not magnetically coupled.
 """
 
@@ -19,7 +20,7 @@ total_inductance = Symbol("total_inductance", units.inductance)
 Total inductance of the circuit.
 
 Symbol:
-    :code:`R`
+    :code:`L`
 """
 
 inductance = SymbolIndexed("inductance", units.inductance)

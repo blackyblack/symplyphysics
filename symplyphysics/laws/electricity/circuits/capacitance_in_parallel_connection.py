@@ -4,6 +4,10 @@ Capacitance in parallel connection
 
 The total capacitance of capacitors connected in parallel is the sum of the
 capacitances of individual capacitors.
+
+**Conditions:**
+
+#. Components are connected in parallel.
 """
 
 from sympy import (Eq, Idx, solve)

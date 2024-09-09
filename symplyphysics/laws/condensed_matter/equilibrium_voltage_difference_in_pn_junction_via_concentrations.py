@@ -63,10 +63,7 @@ r"""
 Concentration of intrinsic charge carriers.
 
 Symbol:
-    :code:`n_i`
-
-Latex:
-    :math:`n_\text{i}`
+    :code:`n`
 """
 
 temperature = symbols.thermodynamics.temperature
@@ -85,11 +82,11 @@ Symbol:
 law = Eq(equilibrium_voltage_difference, (boltzmann * temperature / charge_electron) *
     log(donor_concentration * acceptor_concentration / charge_carriers_concentration**2))
 r"""
-:code:`Delta(V) = (k_B * T / q) * log(n_a * n_d / n_i^2)`
+:code:`Delta(V) = (k_B * T / q) * log(n_a * n_d / n^2)`
 
 Latex:
     .. math::
-        \Delta V = \frac{k_\text{B} T}{q} \log \left( \frac{n_\text{a} n_\text{d}}{n_\text{i}^2} \right)
+        \Delta V = \frac{k_\text{B} T}{q} \log \left( \frac{n_\text{a} n_\text{d}}{n^2} \right)
 """
 
 
