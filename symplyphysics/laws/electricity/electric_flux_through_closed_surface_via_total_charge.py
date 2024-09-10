@@ -4,7 +4,7 @@ Electric flux through closed surface via total charge
 
 Known as **Gauss's law**, it states that the electric flux through any closed surface :math:`S` is equal to
 the total charge within volume :math:`V` enclosed by that surface, and in the SI units, divided by the
-vacuum permittivity.
+vacuum permittivity. The closed surface is also referred to as **Gaussian surface**.
 
 **Conditions:**
 
