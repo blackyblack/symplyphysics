@@ -88,7 +88,7 @@ _period_derived = solve(_distance_law_applied, distance_law.time,
 _law_applied = period_law.law.subs({
     period_law.mass: mass,
     period_law.charge: charge,
-    period_law.magnetic_density: magnetic_flux_density,
+    period_law.magnetic_flux_density: magnetic_flux_density,
     period_law.period: _period_derived,
 })
 _radius_derived = solve(_law_applied, radius_of_curvature, dict=True)[0][radius_of_curvature]
