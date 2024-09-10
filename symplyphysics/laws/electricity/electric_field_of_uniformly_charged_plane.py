@@ -12,43 +12,40 @@ charge density.
 **Conditions:**
 
 #. The plane is thin, i.e. its thickness approaches zero.
+
+**Links:**
+
+#. `Electric field of a uniformly charged plane <https://farside.ph.utexas.edu/teaching/316/lectures/node27.html>`__
 """
 
 from sympy import (Eq, solve)
 from symplyphysics import (
     units,
+    quantities,
     Quantity,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
 )
+from symplyphysics.laws.electricity import (
+    electric_flux_through_closed_surface_via_total_charge as _gauss_law,
+)
 
-electric_field_strength = Symbol("electric_field_strength", units.voltage / units.length)
+electric_field_strength = SymbolNew("E", units.voltage / units.length)
 """
 Value of the electric field.
-
-Symbol:
-    :code:`E`
 """
 
-surface_charge_density = Symbol("surface_charge_density", units.charge / units.area)
-r"""
+surface_charge_density = SymbolNew("sigma", units.charge / units.area, display_latex="\\sigma")
+"""
 Surface charge density of the plane.
-
-Symbol:
-    :code:`sigma`
-
-Latex:
-    :math:`\sigma`
 """
 
-law = Eq(electric_field_strength, surface_charge_density / (2 * units.vacuum_permittivity))
-r"""
-:code:`E = sigma / (2 * epsilon_0)`
+law = Eq(electric_field_strength, surface_charge_density / (2 * quantities.vacuum_permittivity))
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        E = \frac{\sigma}{2 \varepsilon_0}
+:laws:latex::
 """
 
 
