@@ -18,14 +18,19 @@ charge density.
 #. `Electric field of a uniformly charged plane <https://farside.ph.utexas.edu/teaching/316/lectures/node27.html>`__
 """
 
-from sympy import (Eq, solve)
+from sympy import (Eq, solve, symbols as sympy_symbols)
 from symplyphysics import (
     units,
     quantities,
     Quantity,
     SymbolNew,
+    Vector,
     validate_input,
     validate_output,
+    scale_vector,
+)
+from symplyphysics.laws.electricity.vector import (
+    electric_flux_of_uniform_electric_field as _flux_law,
 )
 from symplyphysics.laws.electricity import (
     electric_flux_through_closed_surface_via_total_charge as _gauss_law,
@@ -47,6 +52,34 @@ law = Eq(electric_field_strength, surface_charge_density / (2 * quantities.vacuu
 
 :laws:latex::
 """
+
+# Derive law from Gauss's law
+
+_electric_field_left = Vector([-1 * electric_field_strength, 0, 0])
+_electric_field_right = Vector([electric_field_strength, 0, 0])
+
+_cross_sectional_area = sympy_symbols("cross_sectional_area")
+
+_area_left = scale_vector(_cross_sectional_area, Vector([-1, 0, 0]))
+_area_right = scale_vector(_cross_sectional_area, Vector([1, 0, 0]))
+
+_electric_flux_left = _flux_law.electric_flux_law(
+    electric_field_=_electric_field_left,
+    area_=_area_left,
+)
+
+_electric_flux_right = _flux_law.electric_flux_law(
+    electric_field_=_electric_field_right,
+    area_=_area_right,
+)
+
+# The electric field is orthogonal to the normal vector of the cylinder's side at all points.
+# This, the flux would be zero.
+_electric_flux_side = 0
+
+_total_electric_flux = _electric_flux_left + _electric_flux_right + _electric_flux_side
+
+# TODO finish proof
 
 
 @validate_input(surface_charge_density_=surface_charge_density)
