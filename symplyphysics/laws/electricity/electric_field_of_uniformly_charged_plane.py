@@ -12,6 +12,7 @@ charge density.
 **Conditions:**
 
 #. The plane is thin, i.e. its thickness approaches zero.
+#. The plane is in vacuum.
 
 **Links:**
 
