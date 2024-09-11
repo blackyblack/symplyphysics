@@ -24,7 +24,7 @@ from symplyphysics import (
 ## a_cor - vector of [Coriolis acceleration](../../kinematics/vector/coriolis_acceleration.py) of body B
 ## a_tr - vector of [translation acceleration](../../kinematics/vector/acceleration_of_transfer_between_relative_frames.py) of body B
 
-mass = symbols.basic.mass
+mass = symbols.mass
 
 
 def relative_acceleration_law(

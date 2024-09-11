@@ -37,9 +37,9 @@ Symbol:
     :code:`n`
 """
 
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas.
+:attr:`~symplyphysics.symbols.temperature` of the gas.
 """
 
 law = Eq(pressure * volume, amount_of_substance * units.molar_gas_constant * temperature)

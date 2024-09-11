@@ -35,9 +35,9 @@ Symbol:
     :code:`M`
 """
 
-molecular_mass = clone_symbol(symbols.basic.mass, display_symbol="m_0", display_latex="m_0")
+molecular_mass = clone_symbol(symbols.mass, display_symbol="m_0", display_latex="m_0")
 """
-:attr:`~symplyphysics.symbols.basic.mass` of a single molecule.
+:attr:`~symplyphysics.symbols.mass` of a single molecule.
 """
 
 law = Eq(molar_mass, molecular_mass * units.avogadro)

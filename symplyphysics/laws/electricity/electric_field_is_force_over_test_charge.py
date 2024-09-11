@@ -27,9 +27,9 @@ Symbol:
     :code:`E`
 """
 
-electrostatic_force = clone_symbol(symbols.dynamics.force)
+electrostatic_force = clone_symbol(symbols.force)
 """
-Projection of the electrostatic :attr:`~symplyphysics.symbols.dynamics.force` applied to the test charge.
+Projection of the electrostatic :attr:`~symplyphysics.symbols.force` applied to the test charge.
 """
 
 test_charge = Symbol("test_charge", units.charge)

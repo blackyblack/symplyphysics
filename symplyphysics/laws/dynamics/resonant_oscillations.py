@@ -42,9 +42,9 @@ Symbol:
     :code:`q(t)`
 """
 
-mass = symbols.basic.mass
+mass = symbols.mass
 """
-The :attr:`~symplyphysics.symbols.basic.mass` of the oscillator.
+The :attr:`~symplyphysics.symbols.mass` of the oscillator.
 """
 
 natural_angular_frequency = Symbol("natural_angular_frequency", angle_type / units.time)
@@ -58,9 +58,9 @@ Latex:
     :math:`\omega_0`
 """
 
-driving_force_amplitude = clone_symbol(symbols.dynamics.force)
+driving_force_amplitude = clone_symbol(symbols.force)
 """
-The amplitude of the driving :attr:`~symplyphysics.symbols.dynamics.force`.
+The amplitude of the driving :attr:`~symplyphysics.symbols.force`.
 """
 
 driving_phase_lag = Symbol("driving_phase_lag", angle_type)

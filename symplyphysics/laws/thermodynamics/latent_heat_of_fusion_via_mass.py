@@ -19,9 +19,9 @@ Symbol:
     :code:`Q`
 """
 
-mass = symbols.basic.mass
+mass = symbols.mass
 """
-:attr:`~symplyphysics.symbols.basic.mass` of a melting or solidifying body.
+:attr:`~symplyphysics.symbols.mass` of a melting or solidifying body.
 """
 
 specific_heat_of_fusion = Symbol("specific_heat_of_fusion", units.energy / units.mass)

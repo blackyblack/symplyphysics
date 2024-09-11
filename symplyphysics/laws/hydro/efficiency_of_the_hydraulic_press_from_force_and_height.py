@@ -23,9 +23,9 @@ from symplyphysics import (
 ## h1 is expended height
 ## n is coefficient of efficiency
 
-useful_force = clone_symbol(symbols.dynamics.force)
+useful_force = clone_symbol(symbols.force)
 useful_height = Symbol("useful_height", units.length)
-expended_force = clone_symbol(symbols.dynamics.force)
+expended_force = clone_symbol(symbols.force)
 expended_height = Symbol("expended_height", units.length)
 efficiency = Symbol("efficiency", dimensionless)
 

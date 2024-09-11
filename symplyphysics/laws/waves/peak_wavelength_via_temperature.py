@@ -21,9 +21,9 @@ Latex:
     :math:`\lambda_\text{peak}`
 """
 
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the blackbody.
+:attr:`~symplyphysics.symbols.temperature` of the blackbody.
 """
 
 wien_displacement_constant = speed_of_light * planck / (boltzmann * 4.965114)

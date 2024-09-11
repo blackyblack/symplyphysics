@@ -35,11 +35,11 @@ Symbol:
     :code:`C`
 """
 
-temperature_change = clone_symbol(symbols.thermodynamics.temperature,
+temperature_change = clone_symbol(symbols.temperature,
     display_symbol="dT",
     display_latex="\\Delta T")
 """
-Change in the body's :attr:`~symplyphysics.symbols.thermodynamics.temperature`
+Change in the body's :attr:`~symplyphysics.symbols.temperature`
 """
 
 law = Eq(heat, heat_capacity * temperature_change)

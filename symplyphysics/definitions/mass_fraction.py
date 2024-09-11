@@ -23,14 +23,14 @@ mass_fraction = SymbolNew("w", dimensionless, display_latex="\\omega")
 Mass fraction of the mixture component.
 """
 
-mass_of_component = clone_symbol(symbols.basic.mass, display_symbol="m[i]", display_latex="m_i")
+mass_of_component = clone_symbol(symbols.mass, display_symbol="m[i]", display_latex="m_i")
 """
-:attr:`~symplyphysics.symbols.basic.mass` of the mixture component.
+:attr:`~symplyphysics.symbols.mass` of the mixture component.
 """
 
-mass_of_mixture = clone_symbol(symbols.basic.mass)
+mass_of_mixture = clone_symbol(symbols.mass)
 """
-Total :attr:`~symplyphysics.symbols.basic.mass` of the mixture.
+Total :attr:`~symplyphysics.symbols.mass` of the mixture.
 """
 
 definition = Eq(mass_fraction, mass_of_component / mass_of_mixture)

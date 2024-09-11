@@ -45,9 +45,9 @@ Symbol:
     a
 """
 
-attracting_mass = clone_symbol(symbols.basic.mass, display_symbol="M")
+attracting_mass = clone_symbol(symbols.mass, display_symbol="M")
 """
-The :attr:`~symplyphysics.symbols.basic.mass` of the attracting body, such as the Sun.
+The :attr:`~symplyphysics.symbols.mass` of the attracting body, such as the Sun.
 """
 
 law = Eq(

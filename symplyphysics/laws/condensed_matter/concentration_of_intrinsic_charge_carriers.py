@@ -60,9 +60,9 @@ Latex:
     :math:`N_\text{v}`
 """
 
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the semiconductor.
+:attr:`~symplyphysics.symbols.temperature` of the semiconductor.
 """
 
 band_gap = Symbol("band_gap", units.energy)

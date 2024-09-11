@@ -35,7 +35,7 @@ from symplyphysics import (
     clone_symbol,
 )
 
-temperature = clone_symbol(symbols.thermodynamics.temperature,
+temperature = clone_symbol(symbols.temperature,
     display_symbol="T_n(x, t)",
     display_latex="T_n")
 """

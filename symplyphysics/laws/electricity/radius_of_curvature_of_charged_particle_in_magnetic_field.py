@@ -36,9 +36,9 @@ Symbol:
     :code:`r`
 """
 
-mass = symbols.basic.mass
+mass = symbols.mass
 """
-:attr:`~symplyphysics.symbols.basic.mass` of the particle.
+:attr:`~symplyphysics.symbols.mass` of the particle.
 """
 
 speed = Symbol("speed", units.speed)

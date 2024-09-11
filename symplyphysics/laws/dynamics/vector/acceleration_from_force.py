@@ -25,7 +25,7 @@ from symplyphysics.laws.dynamics.vector import force_is_derivative_of_momentum a
 ## a - acceleration vector,
 ## * - scalar multiplication (scale vector).
 
-mass = symbols.basic.mass
+mass = symbols.mass
 
 
 def acceleration_law(force_: Vector) -> Vector:

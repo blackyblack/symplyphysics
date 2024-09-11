@@ -36,14 +36,14 @@ Latex:
     :math:`\theta`
 """
 
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas.
+:attr:`~symplyphysics.symbols.temperature` of the gas.
 """
 
-particle_mass = symbols.basic.mass
+particle_mass = symbols.mass
 """
-:attr:`~symplyphysics.symbols.basic.mass` of a relativistic particle comprising the gas.
+:attr:`~symplyphysics.symbols.mass` of a relativistic particle comprising the gas.
 """
 
 law = Eq(

@@ -15,9 +15,9 @@ from sympy import (Eq, solve, pi)
 from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol,
     validate_input, validate_output)
 
-electrostatic_force = clone_symbol(symbols.dynamics.force)
+electrostatic_force = clone_symbol(symbols.force)
 """
-Electrostatic :attr:`~symplyphysics.symbols.dynamics.force` between two charges.
+Electrostatic :attr:`~symplyphysics.symbols.force` between two charges.
 """
 
 first_charge = Symbol("first_charge", units.charge)

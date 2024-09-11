@@ -33,9 +33,9 @@ Latex:
     :math:`\alpha_V`
 """
 
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas.
+:attr:`~symplyphysics.symbols.temperature` of the gas.
 """
 
 law = Eq(volumetric_expansion_coefficient, 1 / temperature)

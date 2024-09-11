@@ -1,4 +1,4 @@
-"""
+r"""
 Effective mass of electron via energy
 =====================================
 
@@ -30,9 +30,9 @@ from symplyphysics import (
     validate_output,
 )
 
-effective_mass = clone_symbol(symbols.basic.mass, display_symbol="m_eff", display_latex=r"m_\text{eff}")
+effective_mass = clone_symbol(symbols.mass, display_symbol="m_eff", display_latex="m_\\text{eff}")
 r"""
-Effective :attr:`~symplyphysics.symbols.basic.mass` of the electron.
+Effective :attr:`~symplyphysics.symbols.mass` of the electron.
 """
 
 energy = Function("energy", units.energy)

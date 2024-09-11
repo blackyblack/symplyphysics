@@ -112,7 +112,7 @@ def calculate_temperature_derivative(
     temperature_after_: Quantity,
     isobaric_heat_capacity_: Quantity,
 ) -> Quantity:
-    temperature_sym = symbols.thermodynamics.temperature
+    temperature_sym = symbols.temperature
     expr = law.rhs.subs(temperature(pressure, enthalpy), temperature_sym)
 
     volume_ = two_point_function(

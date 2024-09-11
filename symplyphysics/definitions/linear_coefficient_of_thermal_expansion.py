@@ -34,13 +34,13 @@ Linear coefficient of thermal expansion of the object.
 
 length = FunctionNew("l(T, p)", units.length, display_latex="l")
 """
-Length of the object as a function of :attr:`~symplyphysics.symbols.thermodynamics.temperature`
+Length of the object as a function of :attr:`~symplyphysics.symbols.temperature`
 and, indirectly, pressure :math:`p`.
 """
 
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the object.
+:attr:`~symplyphysics.symbols.temperature` of the object.
 """
 
 definition = Eq(

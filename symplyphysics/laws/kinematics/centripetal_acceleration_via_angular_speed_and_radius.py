@@ -22,11 +22,11 @@ from symplyphysics.laws.kinematics import (
     speed_via_angular_speed_and_radius as velocities_law,
 )
 
-centripetal_acceleration = clone_symbol(symbols.kinematics.acceleration,
+centripetal_acceleration = clone_symbol(symbols.acceleration,
     display_symbol="a_n",
     display_latex="a_n")
 """
-Centripetal, or normal, :attr:`~symplyphysics.symbols.kinematics.acceleration`.
+Centripetal, or normal, :attr:`~symplyphysics.symbols.acceleration`.
 """
 
 angular_speed = Symbol("angular_speed", angle_type / units.time)

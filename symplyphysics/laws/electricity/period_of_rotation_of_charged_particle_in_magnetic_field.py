@@ -35,9 +35,9 @@ Symbol:
     :code:`T`
 """
 
-mass = symbols.basic.mass
+mass = symbols.mass
 """
-:attr:`~symplyphysics.symbols.basic.mass` of the particle.
+:attr:`~symplyphysics.symbols.mass` of the particle.
 """
 
 charge = Symbol("charge", units.charge)

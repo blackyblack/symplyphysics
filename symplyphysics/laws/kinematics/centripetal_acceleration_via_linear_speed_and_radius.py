@@ -16,11 +16,11 @@ from symplyphysics.definitions import acceleration_is_speed_derivative as accele
 from symplyphysics.laws.geometry import planar_projection_is_cosine as projector
 from symplyphysics.laws.kinematics import speed_via_angular_speed_and_radius as linear_velocity_law
 
-centripetal_acceleration = clone_symbol(symbols.kinematics.acceleration,
+centripetal_acceleration = clone_symbol(symbols.acceleration,
     display_symbol="a_n",
     display_latex="a_n")
 """
-Centripetal, or normal, :attr:`~symplyphysics.symbols.kinematics.acceleration`.
+Centripetal, or normal, :attr:`~symplyphysics.symbols.acceleration`.
 """
 
 speed = Symbol("speed", units.velocity)

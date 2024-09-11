@@ -15,8 +15,8 @@ from symplyphysics import (units, Quantity, print_expression, validate_input, va
 ##   and they are always inside;
 ## - Mass is not transformed to energy, for example due to annihilation.
 
-mass_of_mixture = clone_symbol(symbols.basic.mass)
-# TODO: clone from symbols.basic.mass
+mass_of_mixture = clone_symbol(symbols.mass)
+# TODO: clone from symbols.mass
 mass_of_component = SymbolIndexed("mass_of_component", units.mass)
 law = Eq(mass_of_mixture, SumIndexed(mass_of_component[global_index], global_index))
 

@@ -5,24 +5,36 @@ Physical symbols
 Symbols represent physical quantities, units, mathematical operations and relationships.
 """
 
-from ..core.symbols.symbols import Symbol
-from . import (
-    basic,
-    kinematics,
-    dynamics,
-    thermodynamics,
-)
+from symplyphysics import units, SymbolNew
 
-__all__ = ["basic", "kinematics", "dynamics", "thermodynamics"]
+mass = SymbolNew("m", units.mass)
+"""
+Mass is an intrinsic scalar property of a body, and one can distinguish at least seven different aspects
+of mass that define it. Experiments have shown that these values are proportional, and in some cases
+equal. Often, the inertial mass is being used, which is a measure of the object's resistance to acceleration
+when a force is applied.
+"""
 
-_all_symbols = set()
-for k, v in list(globals().items()):
-    if not k in __all__:
-        continue
-    if isinstance(v, str):
-        continue
-    for val_name, symbol in v.__dict__.items():
-        if not isinstance(symbol, Symbol):
-            continue
-        assert val_name not in _all_symbols, f"Duplicate symbol '{val_name}' definition."
-        _all_symbols.add(val_name)
+force = SymbolNew("F", units.force)
+"""
+Force is a vector quantity denoting an influence that can cause an object to change its velocity
+unless counterbalanced by other forces.
+"""
+
+acceleration = SymbolNew("a", units.acceleration)
+"""
+Acceleration is the rate of change of the object's velocity with respect to time. It is a vector quantity.
+"""
+
+temperature = SymbolNew("T", units.temperature)
+"""
+Temperature is a scalar quantity that quantitatively expresses the attribute of hotness and coldness. It reflects
+the average kinetic energy of the vibrating and colliding atoms making up a substance.
+"""
+
+__all__ = [
+    "mass",
+    "force",
+    "acceleration",
+    "temperature",
+]

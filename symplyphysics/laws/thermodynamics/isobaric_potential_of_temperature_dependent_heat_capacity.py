@@ -34,7 +34,7 @@ isobaric_potential = Symbol("isobaric_potential", units.energy / units.amount_of
 
 thermal_effect = Symbol("thermal_effect", units.energy / units.amount_of_substance)
 entropy = Symbol("entropy", units.energy / units.amount_of_substance / units.temperature)
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 heat_capacity = Symbol("heat_capacity",
     units.energy / units.amount_of_substance / units.temperature)
 coefficient_capacity_1 = Symbol("coefficient_capacity_1",

@@ -52,12 +52,12 @@ Symbol:
     :code:`l`
 """
 
-temperature_difference = clone_symbol(symbols.thermodynamics.temperature,
+temperature_difference = clone_symbol(symbols.temperature,
     display_symbol="dT",
     display_latex="\\Delta T",
     real=True)
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` difference between the two faces of the slab.
+:attr:`~symplyphysics.symbols.temperature` difference between the two faces of the slab.
 """
 
 law = Eq(

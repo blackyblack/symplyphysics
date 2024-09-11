@@ -19,7 +19,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 orbital_velocity = Symbol("orbital_velocity", units.velocity)
 distance = Symbol("distance", units.length)
 large_half_axis_length = Symbol("large_half_axis_length", units.length)
-planet_mass = clone_symbol(symbols.basic.mass)
+planet_mass = clone_symbol(symbols.mass)
 
 law = Eq(
     orbital_velocity,

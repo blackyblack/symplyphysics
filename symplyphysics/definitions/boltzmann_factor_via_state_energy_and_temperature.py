@@ -34,9 +34,9 @@ energy_of_state = SymbolNew("E[i]", units.energy, display_latex="E_i")
 Energy of state :math:`i`.
 """
 
-equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature)
+equilibrium_temperature = clone_symbol(symbols.temperature)
 """
-Equilibrium :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
+Equilibrium :attr:`~symplyphysics.symbols.temperature` of the system.
 """
 
 boltzmann_constant = quantities.boltzmann_constant

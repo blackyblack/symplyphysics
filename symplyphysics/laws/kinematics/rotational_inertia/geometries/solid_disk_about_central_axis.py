@@ -38,9 +38,9 @@ Symbol:
     :code:`r`
 """
 
-mass = symbols.basic.mass
+mass = symbols.mass
 """
-The :attr:`~symplyphysics.symbols.basic.mass` of the disk.
+The :attr:`~symplyphysics.symbols.mass` of the disk.
 """
 
 law = Eq(rotational_inertia, mass * radius**2 / 2)

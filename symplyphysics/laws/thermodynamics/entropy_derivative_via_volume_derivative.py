@@ -55,9 +55,9 @@ Symbol:
     :code:`V(T, p)`
 """
 
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
+:attr:`~symplyphysics.symbols.temperature` of the system.
 """
 
 law = Eq(Derivative(entropy(temperature, pressure), pressure),

@@ -46,9 +46,9 @@ Symbol:
     :code:`dH`
 """
 
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
+:attr:`~symplyphysics.symbols.temperature` of the system.
 """
 
 entropy_change = Symbol("entropy_change", units.energy / units.temperature)

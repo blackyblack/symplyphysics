@@ -50,9 +50,9 @@ Symbol:
     :code:`E`
 """
 
-equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature, positive=True)
+equilibrium_temperature = clone_symbol(symbols.temperature, positive=True)
 """
-Equilibrium :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the ensemble.
+Equilibrium :attr:`~symplyphysics.symbols.temperature` of the ensemble.
 """
 
 law = Eq(

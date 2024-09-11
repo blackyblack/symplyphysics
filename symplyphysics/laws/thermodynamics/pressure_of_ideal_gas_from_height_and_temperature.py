@@ -38,9 +38,9 @@ Latex:
     :math:`p_0`
 """
 
-molecular_mass = clone_symbol(symbols.basic.mass)
+molecular_mass = clone_symbol(symbols.mass)
 """
-:attr:`~symplyphysics.symbols.basic.mass` of a single gas molecule.
+:attr:`~symplyphysics.symbols.mass` of a single gas molecule.
 """
 
 height_change = Symbol("height_change", units.length)
@@ -54,9 +54,9 @@ Latex:
     :math:`\Delta h`
 """
 
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas.
+:attr:`~symplyphysics.symbols.temperature` of the gas.
 """
 
 law = Eq(

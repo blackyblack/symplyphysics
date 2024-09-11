@@ -18,11 +18,11 @@ from symplyphysics.laws.kinematics import speed_via_angular_speed_and_radius as 
 from symplyphysics.definitions import angular_acceleration_is_angular_speed_derivative as angular_acceleration_def
 from symplyphysics.definitions import acceleration_is_speed_derivative as acceleration_def
 
-tangential_acceleration = clone_symbol(symbols.kinematics.acceleration,
+tangential_acceleration = clone_symbol(symbols.acceleration,
     display_symbol="a_t",
     display_latex="a_\\tau")
 """
-Tangential :attr:`~symplyphysics.symbols.kinematics.acceleration`.
+Tangential :attr:`~symplyphysics.symbols.acceleration`.
 """
 
 angular_acceleration = Symbol("angular_acceleration", angle_type / units.time**2)

@@ -35,14 +35,14 @@ Latex:
     :math:`\lambda`
 """
 
-mass = symbols.basic.mass
+mass = symbols.mass
 """
-:attr:`~symplyphysics.symbols.basic.mass` of a single gas particle.
+:attr:`~symplyphysics.symbols.mass` of a single gas particle.
 """
 
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas.
+:attr:`~symplyphysics.symbols.temperature` of the gas.
 """
 
 definition = Eq(thermal_wavelength,

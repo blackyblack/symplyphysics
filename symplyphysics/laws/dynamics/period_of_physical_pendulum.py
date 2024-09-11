@@ -48,9 +48,9 @@ Symbol:
     :code:`T`
 """
 
-mass = clone_symbol(symbols.basic.mass, positive=True)
+mass = clone_symbol(symbols.mass, positive=True)
 """
-The :attr:`~symplyphysics.symbols.basic.mass` of the pendulum.
+The :attr:`~symplyphysics.symbols.mass` of the pendulum.
 """
 
 rotational_inertia = Symbol("rotational_inertia", units.mass * units.length**2, positive=True)

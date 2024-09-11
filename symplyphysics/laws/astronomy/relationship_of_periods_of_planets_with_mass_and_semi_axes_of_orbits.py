@@ -27,8 +27,8 @@ first_period = Symbol("first_period", units.time)
 second_period = Symbol("second_period", units.time)
 first_semi_axis = Symbol("first_semi_axis", units.length)
 second_semi_axis = Symbol("second_semi_axis", units.length)
-first_mass = clone_symbol(symbols.basic.mass)
-second_mass = clone_symbol(symbols.basic.mass)
+first_mass = clone_symbol(symbols.mass)
+second_mass = clone_symbol(symbols.mass)
 
 mass_of_sun = Quantity(1.989e30 * units.kilogram)
 

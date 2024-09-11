@@ -25,7 +25,7 @@ Symbol:
     :code:`v`
 """
 
-tension = clone_symbol(symbols.dynamics.force, display_symbol="tau", display_latex="\\tau")
+tension = clone_symbol(symbols.force, display_symbol="tau", display_latex="\\tau")
 """
 Tension in the string.
 """

@@ -32,9 +32,9 @@ Symbol:
     :code:`c`
 """
 
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas.
+:attr:`~symplyphysics.symbols.temperature` of the gas.
 """
 
 heat_capacity_ratio = Symbol("heat_capacity_ratio", dimensionless)

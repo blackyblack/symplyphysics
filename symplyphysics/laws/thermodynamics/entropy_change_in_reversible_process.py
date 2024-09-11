@@ -48,9 +48,9 @@ Latex:
     :math:`\delta Q`
 """
 
-common_temperature = clone_symbol(symbols.thermodynamics.temperature)
+common_temperature = clone_symbol(symbols.temperature)
 """
-Common :attr:`~symplyphysics.symbols.thermodynamics.temperature` of systems :math:`A` and :math:`B`.
+Common :attr:`~symplyphysics.symbols.temperature` of systems :math:`A` and :math:`B`.
 """
 
 law = Eq(entropy_change, heat / common_temperature)

@@ -37,9 +37,9 @@ Symbol:
     :code:`W`
 """
 
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the metal.
+:attr:`~symplyphysics.symbols.temperature` of the metal.
 """
 
 richardson_constant = Quantity(120.17 * (units.ampere / units.kelvin**2 / units.centimeter**2), display_symbol="A")

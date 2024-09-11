@@ -26,9 +26,9 @@ Latex:
     :math:`\phi`
 """
 
-planet_mass = clone_symbol(symbols.basic.mass, display_symbol="M")
+planet_mass = clone_symbol(symbols.mass, display_symbol="M")
 """
-The :attr:`~symplyphysics.symbols.basic.mass` of the planet.
+The :attr:`~symplyphysics.symbols.mass` of the planet.
 """
 
 aiming_range = Symbol("aiming_range", units.length)

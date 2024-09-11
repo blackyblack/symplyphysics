@@ -33,7 +33,7 @@ from symplyphysics import (
 
 wave_function = Symbol("wave_function", 1 / sqrt(units.length))
 mode_number = Symbol("mode_number", dimensionless, integer=True, nonnegative=True)
-oscillator_mass = clone_symbol(symbols.basic.mass)
+oscillator_mass = clone_symbol(symbols.mass)
 angular_frequency = Symbol("angular_frequency", angle_type / units.time)
 position = Symbol("position", units.length)
 

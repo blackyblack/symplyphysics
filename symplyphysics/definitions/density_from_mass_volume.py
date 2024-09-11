@@ -15,9 +15,9 @@ density = SymbolNew("rho", units.mass / units.volume, display_latex="\\rho")
 Volumetric density of the object.
 """
 
-mass = symbols.basic.mass
+mass = symbols.mass
 """
-:attr:`~symplyphysics.symbols.basic.mass` of the object.
+:attr:`~symplyphysics.symbols.mass` of the object.
 """
 
 volume = SymbolNew("V", units.volume)

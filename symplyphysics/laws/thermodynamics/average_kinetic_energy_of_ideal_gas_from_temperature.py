@@ -40,11 +40,11 @@ Latex:
 """
 
 equilibrium_temperature = clone_symbol(
-    symbols.thermodynamics.temperature,
+    symbols.temperature,
     positive=True,
 )
 """
-Equilibrium :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas.
+Equilibrium :attr:`~symplyphysics.symbols.temperature` of the gas.
 """
 
 law = Eq(average_kinetic_energy, Rational(3, 2) * units.boltzmann * equilibrium_temperature)
@@ -73,7 +73,7 @@ _average_energy_derived = stats.E(_random_energy_variable)
 assert expr_equals(_average_energy_derived, law.rhs)
 
 
-@validate_input(temperature_=symbols.thermodynamics.temperature)
+@validate_input(temperature_=symbols.temperature)
 @validate_output(average_kinetic_energy)
 def calculate_average_kinetic_energy(temperature_: Quantity) -> Quantity:
     result_expr = solve(law, average_kinetic_energy, dict=True)[0][average_kinetic_energy]

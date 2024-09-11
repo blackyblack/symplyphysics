@@ -60,14 +60,14 @@ Symbol:
     :code:`v`
 """
 
-particle_mass = clone_symbol(symbols.basic.mass, positive=True)
+particle_mass = clone_symbol(symbols.mass, positive=True)
 """
-:attr:`~symplyphysics.symbols.basic.mass` of a particle.
+:attr:`~symplyphysics.symbols.mass` of a particle.
 """
 
-equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature, positive=True)
+equilibrium_temperature = clone_symbol(symbols.temperature, positive=True)
 """
-Equilibrium :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the ensemble.
+Equilibrium :attr:`~symplyphysics.symbols.temperature` of the ensemble.
 """
 
 law = Eq(

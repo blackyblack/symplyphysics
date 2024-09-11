@@ -46,7 +46,7 @@ def damping_force_definition(velocity_: Vector) -> Vector:
 
         Dimension: *velocity*
 
-    :return: vector of damping :attr:`~symplyphysics.symbols.dynamics.force`.
+    :return: vector of damping :attr:`~symplyphysics.symbols.force`.
 
         Symbol: :code:`F`
 
@@ -69,7 +69,7 @@ def velocity_law(damping_force_: Vector) -> Vector:
         .. math::
             \vec v = - \frac{\vec F}{b}
     
-    :param damping_force\_: damping :attr:`~symplyphysics.symbols.dynamics.force` exerted on the object.
+    :param damping_force\_: damping :attr:`~symplyphysics.symbols.force` exerted on the object.
 
         Symbol: :code:`F`
 

@@ -59,9 +59,9 @@ Latex:
     :math:`E_i`
 """
 
-equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature)
+equilibrium_temperature = clone_symbol(symbols.temperature)
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
+:attr:`~symplyphysics.symbols.temperature` of the system.
 """
 
 single_particle_partition_function = Symbol("single_particle_partition_function", dimensionless)

@@ -49,9 +49,9 @@ Symbol:
     :code:`L`
 """
 
-planetary_mass = clone_symbol(symbols.basic.mass)
+planetary_mass = clone_symbol(symbols.mass)
 """
-The :attr:`~symplyphysics.symbols.basic.mass` of the planet.
+The :attr:`~symplyphysics.symbols.mass` of the planet.
 """
 
 distance = Symbol("distance", units.length)

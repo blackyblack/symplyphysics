@@ -68,9 +68,9 @@ Symbol:
     :code:`b`
 """
 
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the van der Waals fluid.
+:attr:`~symplyphysics.symbols.temperature` of the van der Waals fluid.
 """
 
 law = Eq(

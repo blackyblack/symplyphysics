@@ -58,9 +58,9 @@ Latex:
     :math:`\beta_V`
 """
 
-final_temperature = clone_symbol(symbols.thermodynamics.temperature)
+final_temperature = clone_symbol(symbols.temperature)
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas.
+:attr:`~symplyphysics.symbols.temperature` of the gas.
 """
 
 law = Eq(pressure_change, initial_pressure * (thermal_coefficient * final_temperature - 1))

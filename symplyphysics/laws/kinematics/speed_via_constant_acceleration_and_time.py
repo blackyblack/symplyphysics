@@ -29,9 +29,9 @@ Symbol:
     :code:`t`
 """
 
-acceleration = symbols.kinematics.acceleration
+acceleration = symbols.acceleration
 """
-Constant :attr:`~symplyphysics.symbols.kinematics.acceleration`.
+Constant :attr:`~symplyphysics.symbols.acceleration`.
 """
 
 initial_speed = Symbol("initial_speed", units.velocity)

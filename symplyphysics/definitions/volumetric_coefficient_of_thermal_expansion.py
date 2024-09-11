@@ -41,9 +41,9 @@ Symbol:
     :code:`V(T, p)`
 """
 
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the body.
+:attr:`~symplyphysics.symbols.temperature` of the body.
 """
 
 definition = Eq(

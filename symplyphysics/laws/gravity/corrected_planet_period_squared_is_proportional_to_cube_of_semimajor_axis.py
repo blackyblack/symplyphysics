@@ -37,14 +37,14 @@ Symbol:
     :code:`a`
 """
 
-attracting_mass = clone_symbol(symbols.basic.mass, display_symbol="M")
+attracting_mass = clone_symbol(symbols.mass, display_symbol="M")
 """
-The :attr:`~symplyphysics.symbols.basic.mass` of the attracting body, such as the Sun.
+The :attr:`~symplyphysics.symbols.mass` of the attracting body, such as the Sun.
 """
 
-planetary_mass = clone_symbol(symbols.basic.mass)
+planetary_mass = clone_symbol(symbols.mass)
 """
-The :attr:`~symplyphysics.symbols.basic.mass` of the orbiting planet.
+The :attr:`~symplyphysics.symbols.mass` of the orbiting planet.
 """
 
 law = Eq(

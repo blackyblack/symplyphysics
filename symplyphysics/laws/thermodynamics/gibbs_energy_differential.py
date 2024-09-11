@@ -50,9 +50,9 @@ Symbol:
     :code:`S`
 """
 
-temperature_change = clone_symbol(symbols.thermodynamics.temperature, display_symbol="dT")
+temperature_change = clone_symbol(symbols.temperature, display_symbol="dT")
 """
-Infinitesimal change in :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
+Infinitesimal change in :attr:`~symplyphysics.symbols.temperature` of the system.
 """
 
 volume = Symbol("volume", units.volume)

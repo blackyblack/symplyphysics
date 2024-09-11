@@ -31,9 +31,9 @@ Symbol:
     :code:`x`
 """
 
-mass = symbols.basic.mass
+mass = symbols.mass
 """
-:attr:`~symplyphysics.symbols.basic.mass`.
+:attr:`~symplyphysics.symbols.mass`.
 
 Symbol:
     :code:`m`

@@ -28,12 +28,12 @@ Latex:
     :math:`T^*`
 """
 
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the van der Waals fluid.
+:attr:`~symplyphysics.symbols.temperature` of the van der Waals fluid.
 """
 
-critical_temperature = clone_symbol(symbols.thermodynamics.temperature,
+critical_temperature = clone_symbol(symbols.temperature,
     display_symbol="T_c",
     display_latex="T_\\text{c}")
 """

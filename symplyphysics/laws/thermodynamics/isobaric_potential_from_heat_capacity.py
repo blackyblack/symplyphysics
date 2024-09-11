@@ -36,7 +36,7 @@ standard_thermal_effect = Symbol("standard_thermal_effect",
     units.energy / units.amount_of_substance)
 standard_change_entropy = Symbol("standard_change_entropy",
     units.energy / units.amount_of_substance / units.temperature)
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 standard_change_heat_capacity = Symbol("standard_change_heat_capacity",
     units.energy / units.amount_of_substance / units.temperature)
 

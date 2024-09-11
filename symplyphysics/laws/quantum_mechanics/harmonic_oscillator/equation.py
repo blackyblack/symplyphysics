@@ -22,7 +22,7 @@ from symplyphysics import (
 ## E - energy eigenvalue of the equation
 
 wave_function = Function("wave_function", 1 / sqrt(units.length))
-particle_mass = clone_symbol(symbols.basic.mass)
+particle_mass = clone_symbol(symbols.mass)
 particle_energy = Symbol("particle_energy", units.energy)
 angular_frequency = Symbol("angular_frequency", angle_type / units.time)
 position = Symbol("position", units.length)

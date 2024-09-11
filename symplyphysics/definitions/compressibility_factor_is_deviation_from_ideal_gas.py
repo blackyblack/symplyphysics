@@ -51,9 +51,9 @@ amount_of_substance = SymbolNew("n", units.amount_of_substance)
 Amount of gas substance.
 """
 
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 """
-Gas :attr:`~symplyphysics.symbols.thermodynamics.temperature`.
+Gas :attr:`~symplyphysics.symbols.temperature`.
 """
 
 molar_gas_constant = quantities.molar_gas_constant

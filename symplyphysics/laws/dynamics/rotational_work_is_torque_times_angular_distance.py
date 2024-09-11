@@ -78,7 +78,7 @@ Latex:
 ## the x axis points in the direction of the radius vector
 ## the y axis is tangent to the part of the path in question
 
-force = symbols.dynamics.force
+force = symbols.force
 angle = Symbol("angle", angle_type)  # angle between force and radius vectors
 radius = Symbol("radius", units.length)
 

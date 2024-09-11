@@ -38,18 +38,18 @@ Latex:
     :math:`p_1`
 """
 
-initial_temperature = clone_symbol(symbols.thermodynamics.temperature,
+initial_temperature = clone_symbol(symbols.temperature,
     display_symbol="T0",
     display_latex="T_0")
 """
-Initial :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas.
+Initial :attr:`~symplyphysics.symbols.temperature` of the gas.
 """
 
-final_temperature = clone_symbol(symbols.thermodynamics.temperature,
+final_temperature = clone_symbol(symbols.temperature,
     display_symbol="T1",
     display_latex="T_1")
 """
-Final :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas.
+Final :attr:`~symplyphysics.symbols.temperature` of the gas.
 """
 
 law = Eq(initial_pressure / final_pressure, initial_temperature / final_temperature)

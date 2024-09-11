@@ -57,9 +57,9 @@ Latex:
     :math:`\nu`
 """
 
-equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature)
+equilibrium_temperature = clone_symbol(symbols.temperature)
 """
-Equilibrium :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the ensemble.
+Equilibrium :attr:`~symplyphysics.symbols.temperature` of the ensemble.
 """
 
 law = Eq(

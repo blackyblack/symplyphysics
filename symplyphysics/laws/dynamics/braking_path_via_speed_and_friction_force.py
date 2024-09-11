@@ -40,16 +40,16 @@ Symbol:
     :code:`v`
 """
 
-friction_force = clone_symbol(symbols.dynamics.force,
+friction_force = clone_symbol(symbols.force,
     display_symbol="F_fr",
     display_latex="F_\\text{fr}")
 """
-The friction :attr:`~symplyphysics.symbols.dynamics.force` exerted on the object.
+The friction :attr:`~symplyphysics.symbols.force` exerted on the object.
 """
 
-mass = symbols.basic.mass
+mass = symbols.mass
 """
-The :attr:`~symplyphysics.symbols.basic.mass` of the object.
+The :attr:`~symplyphysics.symbols.mass` of the object.
 """
 
 law = Eq(braking_path, mass * speed**2 / (2 * friction_force))
