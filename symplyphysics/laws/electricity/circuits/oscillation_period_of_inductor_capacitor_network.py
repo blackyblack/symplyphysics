@@ -13,7 +13,7 @@ from symplyphysics import (units, Quantity, Symbol, Function, validate_input,
     validate_output, global_index)
 from symplyphysics.core.expr_comparisons import expr_equals
 
-from symplyphysics.definitions import capacitance_from_charge_and_voltage as capacitance_definition
+from symplyphysics.laws.electricity import capacitance_from_charge_and_voltage as capacitance_definition
 from symplyphysics.definitions import current_is_charge_derivative as charge_definition
 from symplyphysics.definitions import harmonic_oscillator_is_second_derivative_equation as oscillator
 from symplyphysics.laws.electricity import self_induced_electromotive_force_via_time_derivative_of_current as induction_voltage_definition
