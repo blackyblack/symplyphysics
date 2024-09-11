@@ -12,52 +12,34 @@ on the permittivity of the medium that fills the space between the plates.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
+from symplyphysics import (units, Quantity, SymbolNew, validate_input,
     validate_output)
 
-capacitance = Symbol("capacitance", units.capacitance)
+capacitance = SymbolNew("C", units.capacitance)
 """
 Capacitance of the capacitor.
-
-Symbol:
-    :code:`C`
 """
 
-absolute_permittivity = Symbol("absolute_permittivity", units.capacitance / units.length)
-r"""
+absolute_permittivity = SymbolNew("epsilon", units.capacitance / units.length, display_latex="\\varepsilon")
+"""
 Absolute permittivity of the medium between the plates.
-
-Symbol:
-    :code:`epsilon`
-
-Latex:
-    :math:`\varepsilon`
 """
 
-area = Symbol("area", units.area)
+area = SymbolNew("A", units.area)
 """
 Area of the plates.
-
-Symbol:
-    :code:`A`
 """
 
-distance = Symbol("distance", units.length)
+distance = SymbolNew("d", units.length)
 """
 Distance between the plates.
-
-Symbol:
-    :code:`d`
 """
 
-law = Eq(capacitance,
-    absolute_permittivity * area / distance)
-r"""
-:code:`C = epsilon * A / d`
+law = Eq(capacitance, absolute_permittivity * area / distance)
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        C = \frac{\varepsilon A}{d}
+:laws:latex::
 """
 
 
