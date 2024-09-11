@@ -6,67 +6,48 @@ A spherical capacitor is composed of two concentric spheres with the space betwe
 filled with a dielectric medium. See `Figure`_.
 
 .. _Figure: http://hyperphysics.phy-astr.gsu.edu/hbase/electric/capsph.html
+
+**Links:**
+
+#. `Spherical capacitor <http://hyperphysics.phy-astr.gsu.edu/hbase/electric/capsph.html>`__.
 """
 
 from sympy import (Eq, solve, pi)
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
 )
 
-capacitance = Symbol("capacitance", units.capacitance)
+capacitance = SymbolNew("C", units.capacitance)
 """
 Capacitance of the capacitor.
-
-Symbol:
-    :code:`C`
 """
 
-absolute_permittivity = Symbol("absolute_permittivity", units.capacitance / units.length)
-r"""
+absolute_permittivity = SymbolNew("epsilon", units.capacitance / units.length, display_latex="\\varepsilon")
+"""
 Absolute permittivity of the medium between the spheres.
-
-Symbol:
-    :code:`epsilon`
-
-Latex:
-    :math:`\varepsilon`
 """
 
-inner_radius = Symbol("inner_radius", units.length)
-r"""
+inner_radius = SymbolNew("r_in", units.length, display_latex="r_\\text{in}")
+"""
 Radius of the inner sphere.
-
-Symbol:
-    :code:`r_in`
-
-Latex:
-    :math:`r_\text{in}`
 """
 
-outer_radius = Symbol("outer_radius", units.length)
-r"""
+outer_radius = SymbolNew("r_out", units.length, display_latex="r_\\text{out}")
+"""
 Radius of the outer sphere.
-
-Symbol:
-    :code:`r_out`
-
-Latex:
-    :math:`r_\text{out}`
 """
 
 law = Eq(
     capacitance, 4 * pi * absolute_permittivity * inner_radius * outer_radius /
     (outer_radius - inner_radius))
-r"""
-:code:`C = 4 * pi * epsilon * r_in * r_out / (r_out - r_in)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        C = \frac{4 \pi \varepsilon r_\text{in} r_\text{out}}{r_\text{out} - r_\text{in}}
+:laws:latex::
 """
 
 
