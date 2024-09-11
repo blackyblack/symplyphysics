@@ -7,6 +7,13 @@ Symbols represent physical quantities, units, mathematical operations and relati
 
 from symplyphysics import units, SymbolNew
 
+time = SymbolNew("t", units.time)
+"""
+Time is a scalar physical quantity operationally defined as the reading of a clock, specifically
+a count of repeating events such as the SI second. It is a fundamental concept used to define other
+physical quantities.
+"""
+
 mass = SymbolNew("m", units.mass)
 """
 Mass is an intrinsic scalar property of a body, and one can distinguish at least seven different aspects
@@ -21,6 +28,12 @@ Force is a vector quantity denoting an influence that can cause an object to cha
 unless counterbalanced by other forces.
 """
 
+speed = SymbolNew("v", units.velocity)
+"""
+Speed is the rate of change of the object's position with respect to time. It is the scalar counterpart
+of the velocity vector, which is the rate of change of the object's displacement with respect to time.
+"""
+
 acceleration = SymbolNew("a", units.acceleration)
 """
 Acceleration is the rate of change of the object's velocity with respect to time. It is a vector quantity.
@@ -32,9 +45,13 @@ Temperature is a scalar quantity that quantitatively expresses the attribute of 
 the average kinetic energy of the vibrating and colliding atoms making up a substance.
 """
 
+
+
 __all__ = [
+    "time",
     "mass",
     "force",
+    "speed",
     "acceleration",
     "temperature",
 ]

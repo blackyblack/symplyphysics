@@ -251,7 +251,7 @@ def print_expression(expr: Expr | Equality | Sequence[Expr | Equality]) -> str:
         pretty_use_unicode(uflag)
 
 
-def clone_symbol(source: SymbolNew,
+def clone_symbol(source: SymbolNew | FunctionNew,
     *,
     display_symbol: Optional[str] = None,
     display_latex: Optional[str] = None,
@@ -265,6 +265,23 @@ def clone_symbol(source: SymbolNew,
     if display_latex_new is None:
         display_latex_new = source.display_latex
     return SymbolNew(display_symbol_new, source.dimension, display_latex=display_latex_new, **assumptions)
+
+
+def clone_function(
+    source: SymbolNew | FunctionNew,
+    *,
+    display_symbol: Optional[str] = None,
+    display_latex: Optional[str] = None,
+    **assumptions: Any,
+) -> FunctionNew:
+    display_symbol = display_symbol or source.display_name
+    display_latex = display_latex or source.display_latex or display_symbol
+    return FunctionNew(
+        display_symbol,
+        source.dimension,
+        display_latex=display_latex,
+        **assumptions,
+    )
 
 
 # This is default index for indexed parameters, eg for using in SumIndexed
