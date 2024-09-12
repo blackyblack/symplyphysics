@@ -38,6 +38,7 @@ extensions = [
     "sphinx.ext.autosectionlabel",
     "sphinx.ext.mathjax",
     "sphinx.ext.githubpages",
+    "sphinx_sitemap",
 ]
 
 # List of patterns, relative to source directory, that match files and
@@ -58,6 +59,8 @@ html_theme = "alabaster"
 html_static_path = ["_static"]
 
 html_extra_path = ["_extra/googlea3669135f4e8d2d0.html"]
+
+html_baseurl = "https://symplyphysics.github.io"
 
 # If true, the current module name will be prepended to all description
 # unit titles (such as .. function::).
