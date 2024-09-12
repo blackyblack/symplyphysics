@@ -19,6 +19,13 @@ from symplyphysics import (
     SymbolNew,
     validate_input,
     validate_output,
+    quantities,
+)
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.electricity import (
+    electric_field_outside_charged_sphere as _electric_field_law,
+    voltage_is_line_integral_of_electric_field as _voltage_law,
+    capacitance_from_charge_and_voltage as _capacitance_law,
 )
 
 capacitance = SymbolNew("C", units.capacitance)
@@ -49,6 +56,32 @@ law = Eq(
 
 :laws:latex::
 """
+
+# Derive law for spherical capacitor filled with vacuum
+
+_distance = _voltage_law.distance
+
+_electric_field_expr = _electric_field_law.law.rhs.subs({
+    _electric_field_law.charge: _capacitance_law.charge,
+    _electric_field_law.distance: _distance,
+})
+
+_voltage_expr = _voltage_law.law.rhs.subs({
+    _voltage_law.electric_field_component(_distance): _electric_field_expr,
+    _voltage_law.initial_distance: inner_radius,
+    _voltage_law.final_distance: outer_radius,
+}).doit()
+
+# Multiply by -1 to make the ratio positive
+_capacitance_expr = -1 * _capacitance_law.definition.rhs.subs({
+    _capacitance_law.voltage: _voltage_expr,
+}).simplify()
+
+_capacitance_from_law = law.rhs.subs({
+    absolute_permittivity: quantities.vacuum_permittivity,
+})
+
+assert expr_equals(_capacitance_expr, _capacitance_from_law)
 
 
 @validate_input(relative_permittivity_=absolute_permittivity,
