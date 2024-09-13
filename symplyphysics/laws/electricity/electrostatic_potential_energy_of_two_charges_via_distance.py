@@ -9,73 +9,44 @@ interaction belonging to the entire system.
 
 from sympy import (Eq, solve, pi)
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
+    clone_symbol,
 )
 
-electrostatic_potential_energy = Symbol("electrostatic_potential_energy", units.energy)
+electrostatic_potential_energy = symbols.electric_potential
 """
 Electrostatic potential energy of system.
-
-Symbol:
-    :code:`U_E`
-
-Latex:
-    :math:`U_E`
 """
 
-absolute_permittivity = Symbol("absolute_permittivity", units.capacitance / units.length)
-r"""
+absolute_permittivity = symbols.absolute_permittivity
+"""
 Absolute permittivity of the medium.
-
-Symbol:
-    :code:`epsilon`
-
-Latex:
-    :math:`\varepsilon`
 """
 
-distance = Symbol("distance", units.length)
+distance = symbols.radial_distance
 """
 Distance between the point charges.
-
-Symbol:
-    :code:`r`
 """
 
-first_charge = Symbol("first_charge", units.charge)
+first_charge = clone_symbol(symbols.charge, "q_1")
 """
 Value of the first charge.
-
-Symbol:
-    :code:`q1`
-
-Latex:
-    :math:`q_1`
 """
 
-second_charge = Symbol("second_charge", units.charge)
+second_charge = clone_symbol(symbols.charge, "q_2")
 """
 Value of the second charge.
-
-Symbol:
-    :code:`q2`
-
-Latex:
-    :math:`q_2`
 """
 
 law = Eq(electrostatic_potential_energy,
     (first_charge * second_charge) / (4 * pi * absolute_permittivity * distance))
-r"""
-:code:`U_E = q1 * q2 / (4 * pi * epsilon * r)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        U_E = \frac{q_1 q_2}{4 \pi \varepsilon r}
+:laws:latex::
 """
 
 @validate_input(absolute_permittivity_=absolute_permittivity,
