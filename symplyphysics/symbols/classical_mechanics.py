@@ -59,3 +59,8 @@ angular_frequency = clone_symbol(angular_speed)
 **Angular frequency**, also called **angular rate**, is a scalar measure of the temporal
 rate of change of the phase argument of a sinusoidal waveform or sine function.
 """
+
+angular_acceleration = SymbolNew("alpha", angle_type / units.time**2, display_latex="\\alpha")
+"""
+**Angular acceleration** is the rate of change of angular speed with respect to time.
+"""

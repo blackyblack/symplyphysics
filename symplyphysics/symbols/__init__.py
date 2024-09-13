@@ -31,6 +31,7 @@ __all__ = [
     "angular_speed",
     "angular_frequency",
     "distance_to_axis",
+    "angular_acceleration",
     # thermodynamics
     "temperature",
     # electrodynamics
