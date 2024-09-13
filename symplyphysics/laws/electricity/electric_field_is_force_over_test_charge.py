@@ -12,44 +12,31 @@ from sympy import Eq, solve
 from symplyphysics import (
     clone_symbol,
     symbols,
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
 )
 
-electric_field_strength = Symbol("electric_field_strength", units.force / units.charge)
+electric_field_strength = symbols.electric_field_strength
 """
 Strength of the electric field.
-
-Symbol:
-    :code:`E`
 """
 
-electrostatic_force = clone_symbol(symbols.force)
+electrostatic_force = symbols.force
 """
 Projection of the electrostatic :attr:`~symplyphysics.symbols.force` applied to the test charge.
 """
 
-test_charge = Symbol("test_charge", units.charge)
+test_charge = clone_symbol(symbols.charge, display_symbol="q_0")
 """
 Value of the test charge.
-
-Symbol:
-    :code:`q0`
-
-Latex:
-    :math:`q_0`
 """
 
 law = Eq(electric_field_strength, electrostatic_force / test_charge)
-r"""
-:code:`E = F / q0`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        E = \frac{F}{q_0}
+:laws:latex::
 """
 
 
