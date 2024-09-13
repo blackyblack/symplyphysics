@@ -54,4 +54,5 @@ __all__ = [
     "magnetic_flux_density",
     "electric_potential",
     "power_factor",
+    "resistivity",
 ]

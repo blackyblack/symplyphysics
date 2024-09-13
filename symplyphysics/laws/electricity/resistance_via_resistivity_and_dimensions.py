@@ -16,51 +16,34 @@ property of the material and does not depend on its geometry.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (Quantity, validate_input,
+    validate_output, symbols)
 
-resistance = Symbol("resistance", units.impedance)
+resistance = symbols.resistance
 """
 Resistance of the conductor.
-
-Symbol:
-    :code:`R`
 """
 
-resistivity = Symbol("resistivity", units.impedance * units.length)
-r"""
+resistivity = symbols.resistivity
+"""
 Resistivity of the material.
-
-Symbol:
-    :code:`rho`
-
-Latex:
-    :math:`\rho`
 """
 
-length = Symbol("length", units.length)
+length = symbols.length
 """
 Length of the conductor.
-
-Symbol:
-    :code:`l`
 """
 
-area = Symbol("area", units.area)
+area = symbols.area
 """
 Cross-sectional area of the conductor.
-
-Symbol:
-    :code:`A`
 """
 
 law = Eq(resistance, resistivity * length / area)
-r"""
-:code:`R = rho * l / A`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        R = \rho \frac{l}{A}
+:laws:latex::
 """
 
 

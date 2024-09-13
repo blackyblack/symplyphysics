@@ -118,3 +118,9 @@ power_factor = SymbolNew("pf", dimensionless, display_latex="\\mathrm{pf}")
 **Power factor** of an AC power system is defined as the ratio of the real power absorbed by the load to the apparent power
 flowing in the circuit.
 """
+
+resistivity = SymbolNew("rho", units.impedance * units.length, display_latex="\\rho")
+"""
+**Electrical resistivity** is a fundamental specific property of a material that measures its electrical resistance or how
+strongly it resists electric current.
+"""
