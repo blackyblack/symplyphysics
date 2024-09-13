@@ -32,4 +32,6 @@ __all__ = [
     "capacitance",
     "charge",
     "voltage",
+    "current",
+    "resistance",
 ]

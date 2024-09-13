@@ -7,40 +7,29 @@ inversely proportional to its resistance. This is also known as the **Ohm's law*
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (Quantity, validate_input,
+    validate_output, symbols)
 
-current = Symbol("current", units.current)
+current = symbols.current
 """
 Current flowing through the conductor.
-
-Symbol:
-    :code:`I`
 """
 
-voltage = Symbol("voltage", units.voltage)
+voltage = symbols.voltage
 """
 Voltage applied to the conductor.
-
-Symbol:
-    :code:`V`
 """
 
-resistance = Symbol("resistance", units.impedance)
+resistance = symbols.resistance
 """
 Resistance of the conductor.
-
-Symbol:
-    :code:`R`
 """
 
 law = Eq(current, voltage / resistance)
-r"""
-:code:`I = V / R`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        I = \frac{V}{R}
+:laws:latex::
 """
 
 

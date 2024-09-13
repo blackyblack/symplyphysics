@@ -67,3 +67,14 @@ voltage = SymbolNew("V", units.voltage)
 """
 **Voltage** is the difference in electric potential between two points.
 """
+
+current = SymbolNew("I", units.current)
+"""
+**Current** is a flow of charged particles moving through an electrical conductor or space.
+"""
+
+resistance = SymbolNew("R", units.impedance)
+"""
+**Resistance** is the measure of the degree to which a conductor opposes an electric current through that conductor.
+It is the real part of the complex-valued impedance.
+"""
