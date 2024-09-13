@@ -36,4 +36,5 @@ __all__ = [
     "current",
     "resistance",
     "electric_dipole_moment",
+    "electric_field_strength",
 ]

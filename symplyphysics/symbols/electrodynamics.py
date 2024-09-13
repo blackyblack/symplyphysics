@@ -84,3 +84,8 @@ electric_dipole_moment = SymbolNew("p", units.charge * units.length)
 **Electric dipole moment** is a measure of the separation of positive and negative electrical charges within a system:
 that is, a measure of the system's overall polarity.
 """
+
+electric_field_strength = SymbolNew("E", units.voltage / units.length)
+"""
+**Electric field strength** refers to the magnitude of the electric field.
+"""
