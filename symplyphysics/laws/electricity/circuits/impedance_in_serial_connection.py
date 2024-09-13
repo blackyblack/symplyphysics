@@ -10,36 +10,33 @@ of the impedances of individual components.
 #. Components are connected in series.
 """
 
-from sympy import (Eq, Idx, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output, SymbolIndexed, SumIndexed, global_index)
+from sympy import Eq, Idx, solve
+from symplyphysics import (
+    units,
+    Quantity,
+    validate_input,
+    validate_output,
+    SymbolIndexedNew,
+    SumIndexed,
+    global_index,
+    symbols,
+)
 
-total_impedance = Symbol("total_impedance", units.impedance)
+total_impedance = symbols.electrical_impedance
 """
 Total impedance of the circuit.
-
-Symbol:
-    :code:`Z`
 """
 
-impedance = SymbolIndexed("impedance", units.impedance)
+impedance = SymbolIndexedNew("Z_i", units.impedance)
 r"""
 Impedance of the :math:`i`-th component.
-
-Symbol:
-    :code:`Z_i`
-
-Latex:
-    :math:`Z_i`
 """
 
 law = Eq(total_impedance, SumIndexed(impedance[global_index], global_index))
-r"""
-:code:`Z = Sum(Z_i, i)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        Z = \sum_i Z_i
+:laws:latex::
 """
 
 
