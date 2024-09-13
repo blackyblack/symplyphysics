@@ -14,9 +14,10 @@ from symplyphysics import (
     validate_output,
     symbols,
     clone_symbol,
+    clone_function,
 )
 
-displacement = clone_symbol(symbols.distance, display_symbol="x(t)", display_latex="x")
+displacement = clone_function(symbols.distance, display_symbol="x(t)", display_latex="x")
 """
 Displacement of the oscillating body as a function of time.
 """

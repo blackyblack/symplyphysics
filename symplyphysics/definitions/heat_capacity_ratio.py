@@ -28,12 +28,12 @@ heat_capacity_ratio = symbols.adiabatic_index
 Heat capacity ratio of the system.
 """
 
-isobaric_heat_capacity = clone_symbol(symbols.heat_capacity, "C_p")
+isobaric_heat_capacity = clone_symbol(symbols.heat_capacity, display_symbol="C_p")
 """
 Heat capacity of the system at constant pressure.
 """
 
-isochoric_heat_capacity = clone_symbol(symbols.heat_capacity, "C_V")
+isochoric_heat_capacity = clone_symbol(symbols.heat_capacity, display_symbol="C_V")
 """
 Heat capacity of the system at constant volume.
 """
