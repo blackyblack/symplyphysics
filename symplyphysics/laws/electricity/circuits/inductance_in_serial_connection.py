@@ -11,36 +11,33 @@ of the inductances of individual components.
 #. Inductors are not magnetically coupled.
 """
 
-from sympy import (Eq, Idx, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output, SymbolIndexed, SumIndexed, global_index)
+from sympy import Eq, Idx, solve
+from symplyphysics import (
+    units,
+    Quantity,
+    validate_input,
+    validate_output,
+    SymbolIndexedNew,
+    SumIndexed,
+    global_index,
+    symbols,
+)
 
-total_inductance = Symbol("total_inductance", units.inductance)
+total_inductance = symbols.inductance
 """
 Total inductance of the circuit.
-
-Symbol:
-    :code:`L`
 """
 
-inductance = SymbolIndexed("inductance", units.inductance)
+inductance = SymbolIndexedNew("L_i", units.inductance)
 r"""
 Inductance of the :math:`i`-th component.
-
-Symbol:
-    :code:`L_i`
-
-Latex:
-    :math:`L_i`
 """
 
 law = Eq(total_inductance, SumIndexed(inductance[global_index], global_index))
-r"""
-:code:`L = Sum(L_i, i)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        L = \sum_i L_i
+:laws:latex::
 """
 
 
