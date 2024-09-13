@@ -9,35 +9,29 @@ assuming the body only moves in one direction.
 
 from sympy import Derivative, Eq, dsolve
 from symplyphysics import (
-    units,
     Quantity,
-    SymbolNew,
-    FunctionNew,
     validate_input,
     validate_output,
-    angle_type,
-    dimensionless,
+    symbols,
+    clone_symbol,
 )
 
-displacement = FunctionNew("x(t)", units.length, display_latex="x")
+displacement = clone_symbol(symbols.distance, display_symbol="x(t)", display_latex="x")
 """
 Displacement of the oscillating body as a function of time.
 """
 
-time = SymbolNew("t", units.time, positive=True)
+time = clone_symbol(symbols.time, positive=True)
 """
 Time.
 """
 
-undamped_angular_frequency = SymbolNew("w",
-    angle_type / units.time,
-    display_latex="\\omega",
-    positive=True)
+undamped_angular_frequency = clone_symbol(symbols.angular_frequency, positive=True)
 """
 Undamped angular frequency of the oscillator.
 """
 
-damping_ratio = SymbolNew("z", dimensionless, display_latex="\\zeta", positive=True)
+damping_ratio = clone_symbol(symbols.damping_ratio, positive=True)
 """
 Damping ratio, which critically determines the behavior of the system.
 """
@@ -55,8 +49,8 @@ definition = Eq(
 
 
 @validate_input(
-    initial_position_=units.length,
-    initial_velocity_=units.velocity,
+    initial_position_=symbols.distance,
+    initial_velocity_=symbols.speed,
     undamped_angular_frequency_=undamped_angular_frequency,
     damping_ratio_=damping_ratio,
     time_=time,

@@ -5,7 +5,7 @@ Classical mechanics
 Symbols related to classical mechanics.
 """
 
-from symplyphysics import units, SymbolNew, angle_type, clone_symbol
+from symplyphysics import units, SymbolNew, angle_type, clone_symbol, dimensionless
 
 force = SymbolNew("F", units.force)
 """
@@ -78,4 +78,9 @@ angular_wavenumber = SymbolNew("k", angle_type / units.length)
 wavelength = SymbolNew("lambda", units.length, display_latex="\\lambda")
 """
 **Wavelength** or **spatial period** is the distance over which the wave's shape repeats.
+"""
+
+damping_ratio = SymbolNew("zeta", dimensionless, display_latex="\\zeta")
+"""
+**Damping ratio** is a dimensionless measure describing how oscillations in a system decay after a disturbance.
 """

@@ -35,6 +35,7 @@ __all__ = [
     "angular_distance",
     "angular_wavenumber",
     "wavelength",
+    "damping_ratio",
     # thermodynamics
     "temperature",
     # electrodynamics
