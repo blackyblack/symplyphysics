@@ -16,48 +16,34 @@ proportional to the current in the coil's wire.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output, dimensionless)
+from symplyphysics import (Quantity, SymbolNew, validate_input,
+    validate_output, dimensionless, symbols, quantities)
 
-magnetic_flux_density = Symbol("magnetic_flux_density", units.magnetic_density)
+magnetic_flux_density = symbols.magnetic_flux_density
 """
 Value of the magnetic field.
-
-Symbol:
-    :code:`B`
 """
 
-current = Symbol("current", units.current)
+current = symbols.current
 """
 Current flowing through the coil.
-
-Symbol:
-    :code:`I`
 """
 
-length = Symbol("length", units.length)
+length = symbols.length
 """
 Length of the coil.
-
-Symbol:
-    :code:`l`
 """
 
-coil_turn_count = Symbol("coil_turn_count", dimensionless)
+coil_turn_count = SymbolNew("N", dimensionless)
 """
 Number of turns in the coil.
-
-Symbol:
-    :code:`N`
 """
 
-law = Eq(magnetic_flux_density, units.vacuum_permeability * current * coil_turn_count / length)
-r"""
-:code:`B = mu_0 * I * N / l`
+law = Eq(magnetic_flux_density, quantities.vacuum_permeability * current * coil_turn_count / length)
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        B = \mu_0 I \frac{N}{l}
+:laws:latex::
 """
 
 
