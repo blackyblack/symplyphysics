@@ -14,28 +14,27 @@ known as the **first Kirchhoff's law**, or the **Kirchhoff's junction rule**.
 """
 
 from typing import Sequence
-from sympy import (Eq, Idx, solve)
-from symplyphysics import (units, Quantity, validate_input, validate_output,
-    SymbolIndexed, SumIndexed, global_index)
+from sympy import Eq, Idx, solve
+from symplyphysics import (
+    units,
+    Quantity,
+    validate_input,
+    validate_output,
+    SymbolIndexedNew,
+    SumIndexed,
+    global_index,
+)
 
-current = SymbolIndexed("current", units.current)
+current = SymbolIndexedNew("I_k", units.current)
 r"""
 :math:`k`-th current flowing through the node.
-
-Symbol:
-    :code:`I_k`
-
-Latex:
-    :math:`I_k`
 """
 
 law = Eq(SumIndexed(current[global_index], global_index), 0)
-r"""
-:code:`Sum(I_k, k) = 0`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \sum_k I_k = 0
+:laws:latex::
 """
 
 # TODO Derive from law of conservation of charge
