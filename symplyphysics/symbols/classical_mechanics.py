@@ -5,7 +5,7 @@ Classical mechanics
 Symbols related to classical mechanics.
 """
 
-from symplyphysics import units, SymbolNew, angle_type
+from symplyphysics import units, SymbolNew, angle_type, clone_symbol
 
 force = SymbolNew("F", units.force)
 """
@@ -49,7 +49,13 @@ area = SymbolNew("A", units.area)
 **Area** is the size of a region on a two-dimensional surface.
 """
 
-angular_speed = angular_frequency = SymbolNew("w", angle_type / units.time, display_latex="\\omega")
+angular_speed = SymbolNew("w", angle_type / units.time, display_latex="\\omega")
 """
 **Angular speed** is the rate of change of angular distance with respect to time.
+"""
+
+angular_frequency = clone_symbol(angular_speed)
+"""
+**Angular frequency**, also called **angular rate**, is a scalar measure of the temporal
+rate of change of the phase argument of a sinusoidal waveform or sine function.
 """
