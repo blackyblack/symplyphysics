@@ -10,11 +10,19 @@ of the admittances of individual components.
 #. Components are connected in parallel.
 """
 
-from sympy import (Eq, Idx, solve)
-from symplyphysics import (units, Quantity, SymbolNew, validate_input,
-    validate_output, global_index, SumIndexed, SymbolIndexedNew)
+from sympy import Eq, Idx, solve
+from symplyphysics import (
+    units,
+    Quantity,
+    validate_input,
+    validate_output,
+    global_index,
+    SumIndexed,
+    SymbolIndexedNew,
+    symbols,
+)
 
-total_admittance = SymbolNew("Y", units.conductance)
+total_admittance = symbols.admittance
 """
 Total admittance of the circuit.
 """
