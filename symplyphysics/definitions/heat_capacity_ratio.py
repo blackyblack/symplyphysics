@@ -3,7 +3,7 @@ Heat capacity ratio
 ===================
 
 The *heat capacity ratio*, also known as the *adiabatic index*, the *ratio of specific heats*, or
-the *insentropic expansion factor*, is the ratio of the heat capacity at constant pressure
+the *isentropic expansion factor*, is the ratio of the heat capacity at constant pressure
 to that of constant volume. The heat capacity ratio is used in the description of thermodynamic
 reversible processes; the speed of sound also depends on this factor.
 
@@ -15,26 +15,25 @@ reversible processes; the speed of sound also depends on this factor.
 
 from sympy import Eq
 from symplyphysics import (
-    units,
-    dimensionless,
     Quantity,
-    SymbolNew,
     validate_input,
     validate_output,
     convert_to_float,
+    symbols,
+    clone_symbol,
 )
 
-heat_capacity_ratio = SymbolNew("gamma", dimensionless, display_latex="\\gamma")
+heat_capacity_ratio = symbols.adiabatic_index
 """
 Heat capacity ratio of the system.
 """
 
-isobaric_heat_capacity = SymbolNew("C_p", units.energy / units.temperature)
+isobaric_heat_capacity = clone_symbol(symbols.heat_capacity, "C_p")
 """
 Heat capacity of the system at constant pressure.
 """
 
-isochoric_heat_capacity = SymbolNew("C_V", units.energy / units.temperature)
+isochoric_heat_capacity = clone_symbol(symbols.heat_capacity, "C_V")
 """
 Heat capacity of the system at constant volume.
 """

@@ -40,6 +40,8 @@ __all__ = [
     "volume",
     # thermodynamics
     "temperature",
+    "adiabatic_index",
+    "heat_capacity",
     # electrodynamics
     "admittance",
     "conductance",
