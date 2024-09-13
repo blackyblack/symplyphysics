@@ -22,9 +22,17 @@ the area of the coil's contour.
 #. The rotation of the coil is uniform.
 """
 
-from sympy import (Eq, solve, sin)
+from sympy import (Eq, solve, sin, cos)
 from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, dimensionless, angle_type)
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.electricity import (
+    magnetic_flux_from_induction_and_area as _magnetic_flux_law,
+    electromotive_force_induced_in_rotating_coil as _emf_law,
+)
+from symplyphysics.definitions import (
+    angular_speed_is_angular_distance_derivative as _angular_speed_law,
+)
 
 electromotive_force = Symbol("electromotive_force", units.voltage)
 r"""
@@ -84,6 +92,26 @@ Latex:
     .. math::
         \mathcal{E} = -N B A \omega \sin(\omega t)
 """
+
+# Derive law
+
+_area = contour_area * cos(angular_frequency * _emf_law.time)
+
+_magnetic_flux = _magnetic_flux_law.law.rhs.subs({
+    _magnetic_flux_law.induction: magnetic_flux_density,
+    _magnetic_flux_law.area: _area,
+    _magnetic_flux_law.angle: 0,
+})
+
+_emf = _emf_law.law.rhs.subs({
+    _emf_law.coil_turn_count: coil_turn_count,
+    _emf_law.magnetic_flux(_emf_law.time): _magnetic_flux,
+}).doit().subs(
+    _emf_law.time, time
+)
+
+# We're interested in the absolute values of the EMF
+assert expr_equals(abs(_emf), abs(law.rhs))
 
 
 @validate_input(number_turns_=coil_turn_count,
