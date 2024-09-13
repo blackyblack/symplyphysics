@@ -4,6 +4,7 @@ from enum import Enum
 import importlib
 from typing import Any, Optional
 from sympy.physics.units.systems.si import SI
+import re
 
 from ..core.symbols.symbols import DimensionSymbolNew, FunctionNew
 
@@ -50,6 +51,9 @@ class FunctionWithDoc:
     docstring: str
 
 
+_symbol_pattern = re.compile(r":symbol:`(\w+)`")
+
+
 def _docstring_clean(doc: str) -> str:
     doc = doc.replace("\r\n", "\n")
     doc = doc.replace("\n\r", "\n")
@@ -61,6 +65,8 @@ def _docstring_clean(doc: str) -> str:
         if not doc.endswith("\n"):
             break
         doc = doc.removesuffix("\n")
+
+    doc = _symbol_pattern.sub(r":attr:`~symplyphysics.symbols.\1`", doc)
     return doc
 
 
