@@ -38,4 +38,5 @@ __all__ = [
     "resistance",
     "electric_dipole_moment",
     "electric_field_strength",
+    "surface_charge_density",
 ]

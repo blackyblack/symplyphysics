@@ -89,3 +89,8 @@ electric_field_strength = SymbolNew("E", units.voltage / units.length)
 """
 **Electric field strength** refers to the magnitude of the electric field.
 """
+
+surface_charge_density = SymbolNew("sigma", units.charge / units.area, display_latex="\\sigma")
+"""
+**Surface charge density** is charge per unit surface area.
+"""
