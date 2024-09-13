@@ -7,52 +7,35 @@ the time derivative of current flowing through the circuit.
 """
 
 from sympy import (Eq, Derivative)
-from symplyphysics import (units, Quantity, Function, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (Quantity, validate_input,
+    validate_output, symbols, clone_function)
 from symplyphysics.core.geometry.line import two_point_function, Point2D
 
-electromotive_force = Function("electromotive_force", units.voltage)
-r"""
+electromotive_force = clone_function(symbols.electromotive_force, display_symbol="E(t)")
+"""
 Self-induced electromotive force.
-
-Symbol:
-    :code:`E(t)`
-
-Latex:
-    :math:`\mathcal{E}(t)`
 """
 
-inductance = Symbol("inductance", units.inductance)
+inductance = symbols.inductance
 """
 Inductance of the circuit.
-
-Symbol:
-    :code:`L`
 """
 
-current = Function("current", units.current)
+current = clone_function(symbols.current, display_symbol="I(t)")
 """
 Current in the circuit.
-
-Symbol:
-    :code:`I(t)`
 """
 
-time = Symbol("time", units.time)
+time = symbols.time
 """
 Time.
-
-Symbol:
-    :code:`t`
 """
 
 law = Eq(electromotive_force(time), -1 * inductance * Derivative(current(time), time))
-r"""
-:code:`E(t) = -1 * L * Derivative(I(t), t)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \mathcal{E}(t) = -L \frac{d I}{d t}
+:laws:latex::
 """
 
 

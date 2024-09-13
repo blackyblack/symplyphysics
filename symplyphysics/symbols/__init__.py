@@ -55,4 +55,5 @@ __all__ = [
     "electric_potential",
     "power_factor",
     "resistivity",
+    "inductance",
 ]

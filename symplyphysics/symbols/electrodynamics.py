@@ -124,3 +124,8 @@ resistivity = SymbolNew("rho", units.impedance * units.length, display_latex="\\
 **Electrical resistivity** is a fundamental specific property of a material that measures its electrical resistance or how
 strongly it resists electric current.
 """
+
+inductance = SymbolNew("L", units.inductance)
+"""
+**Inductance** is the tendency of an electrical conductor to oppose a change in the electric current flowing through it.
+"""
