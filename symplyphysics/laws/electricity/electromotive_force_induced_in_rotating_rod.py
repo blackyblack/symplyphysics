@@ -9,7 +9,7 @@ magnitude of the magnetic flux density, the rotation frequency and the length of
 
 **Links:**
 
-#. `Example 13.4.2 <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/University_Physics_II_-_Thermodynamics_Electricity_and_Magnetism_(OpenStax)/13%3A_Electromagnetic_Induction/13.04%3A_Motional_Emf>`_.
+#. `Example 13.4.2 <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/University_Physics_II_-_Thermodynamics_Electricity_and_Magnetism_(OpenStax)/13%3A_Electromagnetic_Induction/13.04%3A_Motional_Emf>`__.
 
 **Conditions:**
 
@@ -27,6 +27,14 @@ from symplyphysics import (
     validate_input,
     validate_output,
     angle_type,
+)
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.electricity import (
+    magnetic_flux_from_induction_and_area as _magnetic_flux_law,
+    electromotive_force_induced_in_rotating_coil as _emf_law,
+)
+from symplyphysics.definitions import (
+    angular_speed_is_angular_distance_derivative as _angular_speed_law,
 )
 
 electromotive_force = Symbol("electromotive_force", units.voltage)
@@ -75,6 +83,31 @@ Latex:
     .. math::
         \mathcal{E} = \frac{1}{2} B \omega l^2
 """
+
+# Derive law
+
+_time = _emf_law.time
+
+_angle = _angular_speed_law.angular_distance(_time)
+
+# Area of the circular sector
+_loop_area = length**2 * _angle / 2
+
+_magnetic_flux = _magnetic_flux_law.law.rhs.subs({
+    _magnetic_flux_law.induction: magnetic_flux_density,
+    _magnetic_flux_law.area: _loop_area,
+    _magnetic_flux_law.angle: 0,  # rod is orthogonal to magnetic field
+})
+
+_emf = _emf_law.law.rhs.subs({
+    _emf_law.coil_turn_count: 1,
+    _emf_law.magnetic_flux(_time): _magnetic_flux,
+}).doit().subs({
+    _angle.diff(_time): angular_frequency,
+})
+
+# We're interested in the absolute values of the EMF
+assert expr_equals(abs(_emf), abs(law.rhs))
 
 
 @validate_input(magnetic_induction_=magnetic_flux_density,
