@@ -6,39 +6,24 @@ The electric charge of an isolated system is conserved. As a result, its charge 
 at all times.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from sympy import Eq, solve
+from symplyphysics import Quantity, validate_input, validate_output, symbols, clone_symbol
 
-initial_charge = Symbol("initial_charge", units.charge)
+initial_charge = clone_symbol(symbols.charge, display_symbol="q_0")
 """
 Initial charge of the system.
-
-Symbol:
-    :code:`q0`
-
-Latex:
-    :math:`q_0`
 """
 
-final_charge = Symbol("final_charge", units.charge)
+final_charge = clone_symbol(symbols.charge, display_symbol="q_1")
 """
 Final charge of the system.
-
-Symbol:
-    :code:`q1`
-
-Latex:
-    :math:`q_1`
 """
 
 law = Eq(final_charge, initial_charge)
-r"""
-:code:`q0 = q1`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        q_0 = q_1
+:laws:latex::
 """
 
 
