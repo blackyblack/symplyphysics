@@ -5,17 +5,24 @@ Angular speed is angular distance derivative
 *Angular speed* is a physical quantity that describes the change in angular distance over time.
 """
 
-from sympy import (Eq, Derivative)
-from symplyphysics import (angle_type, units, Quantity, FunctionNew, SymbolNew, validate_input,
-    validate_output)
-from symplyphysics.core.symbols.quantities import scale_factor
+from sympy import Eq, Derivative
+from symplyphysics import (
+    units,
+    Quantity,
+    SymbolNew,
+    validate_input,
+    validate_output,
+    clone_function,
+    symbols,
+)
+from symplyphysics.core.convert import convert_to_si
 
-angular_speed = FunctionNew("w(t)", 1 / units.time, display_latex="\\omega")
+angular_speed = clone_function(symbols.angular_speed, display_symbol="w(t)")
 """
 Angular speed of the body as a function of time.
 """
 
-angular_distance = FunctionNew("theta(t)", angle_type, display_latex="\\theta")
+angular_distance = clone_function(symbols.angular_distance, display_symbol="theta(t)")
 """
 Angular distance as a function of time.
 """
@@ -38,8 +45,8 @@ definition = Eq(angular_speed(time), Derivative(angular_distance(time), time))
 def calculate_angular_velocity(angle_start_: Quantity | float, angle_end_: Quantity | float,
     moving_time_: Quantity) -> Quantity:
     #HACK: SymPy angles are always in radians
-    angle_start_radians = scale_factor(angle_start_)
-    angle_end_radians = scale_factor(angle_end_)
+    angle_start_radians = convert_to_si(angle_start_)
+    angle_end_radians = convert_to_si(angle_end_)
     angle_function_ = time * (angle_end_radians - angle_start_radians) / moving_time_
     applied_definition = definition.subs(angular_distance(time), angle_function_)
     dsolved = applied_definition.doit()

@@ -64,3 +64,8 @@ angular_acceleration = SymbolNew("alpha", angle_type / units.time**2, display_la
 """
 **Angular acceleration** is the rate of change of angular speed with respect to time.
 """
+
+angular_distance = SymbolNew("theta", angle_type, display_latex="\\theta")
+"""
+**Angular distance** is a measure of an angular separation between two points.
+"""
