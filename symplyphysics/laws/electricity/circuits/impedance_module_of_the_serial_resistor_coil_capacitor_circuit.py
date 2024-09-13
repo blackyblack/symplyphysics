@@ -1,5 +1,5 @@
 from sympy import (Eq, solve, sqrt, Idx, expand)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, global_index)
 from symplyphysics.core.expr_comparisons import expr_equals
 
@@ -30,33 +30,29 @@ law = Eq(circuit_resistance,
 # This law might be derived via "serial_impedance" law, "capacitor_impedance_from_capacitive_reactance" law,
 # "coil_impedance_from_inductive_reactance" law.
 
-impedance_law_applied_1 = capacitor_impedance_law.law.subs({
+_impedance_law_applied_1 = capacitor_impedance_law.law.subs({
     capacitor_impedance_law.capacitive_reactance: capacitive_reactance,
 })
-capacitive_impedance_derived = solve(impedance_law_applied_1,
+_capacitive_impedance_derived = solve(_impedance_law_applied_1,
     capacitor_impedance_law.capacitor_impedance,
     dict=True)[0][capacitor_impedance_law.capacitor_impedance]
 
-impedance_law_applied_2 = coil_impedance_law.law.subs({
+_impedance_law_applied_2 = coil_impedance_law.law.subs({
     coil_impedance_law.inductive_reactance: inductive_reactance,
 })
-coil_impedance_derived = solve(impedance_law_applied_2,
+_coil_impedance_derived = solve(_impedance_law_applied_2,
     coil_impedance_law.coil_impedance,
     dict=True)[0][coil_impedance_law.coil_impedance]
 
-local_index = Idx("index_local", (1, 3))
-serial_law_applied = serial_law.law.subs(global_index, local_index)
-serial_law_applied = serial_law_applied.doit()
-circuit_impedance_derived = solve(serial_law_applied, serial_law.total_impedance,
+_local_index = Idx("index_local", (1, 3))
+_serial_law_applied = serial_law.law.subs(global_index, _local_index)
+_serial_law_applied = _serial_law_applied.doit()
+_circuit_impedance_derived = solve(_serial_law_applied, serial_law.total_impedance,
     dict=True)[0][serial_law.total_impedance]
-for i, v in enumerate((resistance_resistor, coil_impedance_derived, capacitive_impedance_derived)):
-    circuit_impedance_derived = circuit_impedance_derived.subs(serial_law.impedance[i + 1], v)
+for i, v in enumerate((resistance_resistor, _coil_impedance_derived, _capacitive_impedance_derived)):
+    _circuit_impedance_derived = _circuit_impedance_derived.subs(serial_law.impedance[i + 1], v)
 
-assert expr_equals(abs(circuit_impedance_derived), expand(law.rhs))
-
-
-def print_law() -> str:
-    return print_expression(law)
+assert expr_equals(abs(_circuit_impedance_derived), expand(law.rhs))
 
 
 @validate_input(resistance_resistor_=resistance_resistor,
