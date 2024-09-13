@@ -10,44 +10,30 @@ efficiency. It is the ratio of real power to apparent power of the circuit.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output, dimensionless)
+from symplyphysics import (Quantity, validate_input,
+    validate_output, symbols, clone_symbol)
 
-apparent_power = Symbol("apparent_power", units.power)
+apparent_power = clone_symbol(symbols.power, display_symbol="S")
 """
 Apparent power of the circuit, which is the absolute value of the complex
 power.
-
-Symbol:
-    :code:`S`
 """
 
-real_power = Symbol("real_power", units.power)
+real_power = clone_symbol(symbols.power, symbols="P")
 """
 Real power, or active power, of the circuit.
-
-Symbol:
-    :code:`P`
 """
 
-power_factor = Symbol("power_factor", dimensionless)
-r"""
+power_factor = symbols.power_factor
+"""
 Power factor of the circuit.
-
-Symbol:
-    :code:`pf`
-
-Latex:
-    :math:`\mathrm{pf}`
 """
 
 law = Eq(power_factor, real_power / apparent_power)
-r"""
-:code:`pf = P / S`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \mathrm{pf} = \frac{P}{S}
+:laws:latex::
 """
 
 

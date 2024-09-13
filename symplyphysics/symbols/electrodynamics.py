@@ -112,3 +112,9 @@ electric_potential = SymbolNew("U_E", units.voltage, display_latex="U_\mathbf{E}
 **Electric potential** is defined as the amount of work or energy needed per unit of electric charge to move the charge from
 a reference point to a specific point in an electric field.
 """
+
+power_factor = SymbolNew("pf", dimensionless, display_latex="\\mathrm{pf}")
+"""
+**Power factor** of an AC power system is defined as the ratio of the real power absorbed by the load to the apparent power
+flowing in the circuit.
+"""
