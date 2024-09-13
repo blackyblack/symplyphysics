@@ -17,7 +17,7 @@ cube of the distance to the dipole and the value of the electric dipole moment.
    from the dipole itself.
 """
 
-from sympy import Eq, solve, series, pi, SymSymbol as SymSymbol
+from sympy import Eq, solve, series, pi, Symbol as SymSymbol
 from symplyphysics import (
     Quantity,
     validate_input,

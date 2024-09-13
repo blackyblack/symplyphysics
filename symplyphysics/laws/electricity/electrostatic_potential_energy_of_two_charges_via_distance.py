@@ -16,7 +16,7 @@ from symplyphysics import (
     clone_symbol,
 )
 
-electrostatic_potential_energy = symbols.electric_potential
+electrostatic_potential_energy = clone_symbol(symbols.energy, display_symbol="U_E", display_latex="U_\mathbf{E}")
 """
 Electrostatic potential energy of system.
 """
@@ -31,12 +31,12 @@ distance = symbols.radial_distance
 Distance between the point charges.
 """
 
-first_charge = clone_symbol(symbols.charge, "q_1")
+first_charge = clone_symbol(symbols.charge, display_symbol="q_1")
 """
 Value of the first charge.
 """
 
-second_charge = clone_symbol(symbols.charge, "q_2")
+second_charge = clone_symbol(symbols.charge, display_symbol="q_2")
 """
 Value of the second charge.
 """
