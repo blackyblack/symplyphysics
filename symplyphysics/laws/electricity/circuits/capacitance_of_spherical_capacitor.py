@@ -14,29 +14,29 @@ filled with a dielectric medium. See `Figure`_.
 
 from sympy import (Eq, solve, pi)
 from symplyphysics import (
-    units,
     Quantity,
-    SymbolNew,
     validate_input,
     validate_output,
+    symbols,
+    clone_symbol,
 )
 
-capacitance = SymbolNew("C", units.capacitance)
+capacitance = symbols.capacitance
 """
 Capacitance of the capacitor.
 """
 
-absolute_permittivity = SymbolNew("epsilon", units.capacitance / units.length, display_latex="\\varepsilon")
+absolute_permittivity = symbols.absolute_permittivity
 """
 Absolute permittivity of the medium between the spheres.
 """
 
-inner_radius = SymbolNew("r_in", units.length, display_latex="r_\\text{in}")
+inner_radius = clone_symbol(symbols.radial_distance, display_symbol="r_in", display_latex="r_\\text{in}")
 """
 Radius of the inner sphere.
 """
 
-outer_radius = SymbolNew("r_out", units.length, display_latex="r_\\text{out}")
+outer_radius = clone_symbol(symbols.radial_distance, display_symbol="r_out", display_latex="r_\\text{out}")
 """
 Radius of the outer sphere.
 """
