@@ -30,8 +30,8 @@ from symplyphysics.laws.gravity import gravitational_potential_energy
 ## G - gravitational constant
 
 gravitational_force = symbols.force
-first_mass = symbols.mass
-second_mass = symbols.mass
+first_mass = clone_symbol(symbols.mass, display_symbol="m_1")
+second_mass = clone_symbol(symbols.mass, display_symbol="m_2")
 distance_between_mass_centers = Symbol("distance_between_mass_centers", units.length)
 
 law = Eq(gravitational_force,

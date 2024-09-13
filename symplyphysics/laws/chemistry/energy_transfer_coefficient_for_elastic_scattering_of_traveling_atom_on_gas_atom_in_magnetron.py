@@ -13,8 +13,8 @@ from symplyphysics import (Quantity, Symbol, validate_input, validate_output,
 
 energy_transfer_coefficient = Symbol("energy_transfer_coefficient", dimensionless)
 
-mass_of_traveling_atom = symbols.mass
-mass_of_gas_atom = symbols.mass
+mass_of_traveling_atom = clone_symbol(symbols.mass, display_symbol="m_1")
+mass_of_gas_atom = clone_symbol(symbols.mass, display_symbol="m_2")
 
 law = Eq(
     energy_transfer_coefficient,
