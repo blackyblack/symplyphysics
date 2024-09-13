@@ -19,6 +19,7 @@ __all__ = [
     "speed",
     "acceleration",
     "distance",
+    "radial_distance",
     # thermodynamics
     "temperature",
     # electrodynamics

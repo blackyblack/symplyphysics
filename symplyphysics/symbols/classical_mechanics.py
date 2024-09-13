@@ -28,3 +28,8 @@ distance = SymbolNew("d", units.length)
 """
 Distance is is a measure of the spatial separation between two points.
 """
+
+radial_distance = SymbolNew("r", units.length)
+"""
+Distance to the origin of the coordinate system.
+"""
