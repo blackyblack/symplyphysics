@@ -51,3 +51,19 @@ relative_permittivity = SymbolNew("epsilon_r", dimensionless, display_latex="\\v
 **Relative permittivity** is the permittivity of a medium relative to that of free space.
 Also see :attr:`~symplyphysics.quantities.vacuum_permittivity`.
 """
+
+capacitance = SymbolNew("C", units.capacitance)
+"""
+**Capacitance** is the capacity of a material object or device to store electric charge.
+"""
+
+charge = SymbolNew("q", units.charge)
+"""
+**Electric charge** is the physical property of matter that causes it to experience a force when placed in an electromagnetic field.
+It can be positive or negative. Like charges repel each other and unlike charges attract each other.
+"""
+
+voltage = SymbolNew("V", units.voltage)
+"""
+**Voltage** is the difference in electric potential between two points.
+"""

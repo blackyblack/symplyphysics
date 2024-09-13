@@ -29,4 +29,7 @@ __all__ = [
     "magnetic_flux",
     "absolute_permittivity",
     "relative_permittivity",
+    "capacitance",
+    "charge",
+    "voltage",
 ]
