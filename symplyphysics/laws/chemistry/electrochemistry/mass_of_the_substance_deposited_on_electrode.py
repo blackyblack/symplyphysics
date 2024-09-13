@@ -24,7 +24,7 @@ from symplyphysics import (
 equivalent = Symbol("equivalent", units.mass / units.charge)
 current = Symbol("current", units.current)
 time = Symbol("time", units.time)
-mass_deposited = clone_symbol(symbols.mass)
+mass_deposited = symbols.mass
 
 law = Eq(mass_deposited, equivalent * current * time)
 

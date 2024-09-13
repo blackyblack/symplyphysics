@@ -21,7 +21,7 @@ from symplyphysics import (
     clone_symbol,
 )
 
-planetary_mass = clone_symbol(symbols.mass)
+planetary_mass = symbols.mass
 """
 The :attr:`~symplyphysics.symbols.mass` of the planet.
 """

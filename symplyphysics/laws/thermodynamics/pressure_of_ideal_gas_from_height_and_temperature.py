@@ -38,7 +38,7 @@ Latex:
     :math:`p_0`
 """
 
-molecular_mass = clone_symbol(symbols.mass)
+molecular_mass = symbols.mass
 """
 :attr:`~symplyphysics.symbols.mass` of a single gas molecule.
 """

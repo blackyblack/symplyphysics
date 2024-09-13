@@ -59,7 +59,7 @@ Latex:
     :math:`E_i`
 """
 
-equilibrium_temperature = clone_symbol(symbols.temperature)
+equilibrium_temperature = symbols.temperature
 """
 :attr:`~symplyphysics.symbols.temperature` of the system.
 """

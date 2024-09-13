@@ -48,7 +48,7 @@ Latex:
     :math:`\delta Q`
 """
 
-common_temperature = clone_symbol(symbols.temperature)
+common_temperature = symbols.temperature
 """
 Common :attr:`~symplyphysics.symbols.temperature` of systems :math:`A` and :math:`B`.
 """

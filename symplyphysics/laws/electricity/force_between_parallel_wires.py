@@ -17,7 +17,7 @@ from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol,
 ## l - length of wires,
 ## r - distance.
 
-ampere_force = clone_symbol(symbols.force)
+ampere_force = symbols.force
 
 relative_permeability = Symbol("relative_permeability", dimensionless)
 first_wire_current = Symbol("first_wire_current", units.current)

@@ -52,7 +52,7 @@ Latex:
     :math:`\nu`
 """
 
-equilibrium_temperature = clone_symbol(symbols.temperature)
+equilibrium_temperature = symbols.temperature
 """
 Equilibrium :attr:`~symplyphysics.symbols.temperature` of the ensemble.
 """

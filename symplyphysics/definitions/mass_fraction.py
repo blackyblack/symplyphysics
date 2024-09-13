@@ -28,7 +28,7 @@ mass_of_component = clone_symbol(symbols.mass, display_symbol="m[i]", display_la
 :attr:`~symplyphysics.symbols.mass` of the mixture component.
 """
 
-mass_of_mixture = clone_symbol(symbols.mass)
+mass_of_mixture = symbols.mass
 """
 Total :attr:`~symplyphysics.symbols.mass` of the mixture.
 """

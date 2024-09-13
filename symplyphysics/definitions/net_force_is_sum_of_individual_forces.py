@@ -16,7 +16,7 @@ from symplyphysics import (clone_symbol, symbols, units, Quantity, validate_inpu
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions.vector import superposition_of_forces_is_sum as vector_forces_sum
 
-net_force = clone_symbol(symbols.force)
+net_force = symbols.force
 """
 Net :attr:`~symplyphysics.symbols.force`.
 """

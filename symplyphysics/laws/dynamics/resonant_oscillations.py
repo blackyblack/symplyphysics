@@ -58,7 +58,7 @@ Latex:
     :math:`\omega_0`
 """
 
-driving_force_amplitude = clone_symbol(symbols.force)
+driving_force_amplitude = symbols.force
 """
 The amplitude of the driving :attr:`~symplyphysics.symbols.force`.
 """

@@ -18,7 +18,7 @@ from symplyphysics import (
     validate_output,
 )
 
-surface_tension_force = clone_symbol(symbols.force)
+surface_tension_force = symbols.force
 """
 Surface tension :attr:`~symplyphysics.symbols.force`.
 """

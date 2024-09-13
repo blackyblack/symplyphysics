@@ -23,7 +23,7 @@ from symplyphysics import (
 
 large_half_axis_length = Symbol("large_half_axis_length", units.length)
 orbital_velocity = Symbol("orbital_velocity", units.velocity)
-planet_mass = clone_symbol(symbols.mass)
+planet_mass = symbols.mass
 
 law = Eq(large_half_axis_length, gravitational_constant * planet_mass / orbital_velocity**2)
 

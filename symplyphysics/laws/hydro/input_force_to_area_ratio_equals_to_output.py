@@ -20,9 +20,9 @@ from symplyphysics.laws.hydro import inner_pressure_is_constant as constant_pres
 ## Conditions
 ## This ratio is performed only in an ideal hydraulic press, i.e. one in which there is no friction.
 
-input_force = clone_symbol(symbols.force)
+input_force = symbols.force
 input_area = Symbol("input_area", units.area)
-output_force = clone_symbol(symbols.force)
+output_force = symbols.force
 output_forces_area = Symbol("output_forces_area", units.area)
 
 law = Eq(input_force / input_area, output_force / output_forces_area)

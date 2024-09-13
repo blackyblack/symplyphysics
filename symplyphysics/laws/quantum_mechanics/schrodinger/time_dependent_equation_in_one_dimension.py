@@ -30,7 +30,7 @@ from symplyphysics import (
 
 wave_function = Function("wave_function", 1 / sqrt(units.length))
 potential_energy = Function("potential_energy", units.energy)
-particle_mass = clone_symbol(symbols.mass)
+particle_mass = symbols.mass
 position = Symbol("position", units.length)
 time = Symbol("time", units.time)
 

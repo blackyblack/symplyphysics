@@ -24,7 +24,7 @@ from symplyphysics.quantities import bohr_radius, hydrogen_ionization_energy
 cross_sectional_area_of_interaction = Symbol("cross_sectional_area_of_interaction", units.area)
 
 ionization_energy = Symbol("ionization_energy", units.energy)
-mass_of_atom = clone_symbol(symbols.mass)
+mass_of_atom = symbols.mass
 pressure = Symbol("pressure", units.pressure)
 temperature = symbols.temperature
 electric_intensity = Symbol("electric_intensity", units.voltage / units.length)

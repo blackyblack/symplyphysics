@@ -58,7 +58,7 @@ Latex:
     :math:`\beta_V`
 """
 
-final_temperature = clone_symbol(symbols.temperature)
+final_temperature = symbols.temperature
 """
 :attr:`~symplyphysics.symbols.temperature` of the gas.
 """
