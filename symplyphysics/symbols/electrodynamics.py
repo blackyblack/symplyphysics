@@ -135,3 +135,8 @@ time_constant = SymbolNew("tau", units.time, display_latex="\\tau")
 **Time constant** is the parameter characterizing the response to a step input of a first-order, linear time-invariant
 system. It is related to the speed of the response.
 """
+
+reactance = SymbolNew("X", units.impedance)
+"""
+**Reactance** is the opposition presented to alternating current by inductance and capacitance.
+"""

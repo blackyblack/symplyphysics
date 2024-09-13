@@ -66,4 +66,5 @@ __all__ = [
     "resistivity",
     "inductance",
     "time_constant",
+    "reactance",
 ]
