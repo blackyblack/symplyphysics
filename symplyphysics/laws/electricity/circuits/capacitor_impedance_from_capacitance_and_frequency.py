@@ -7,44 +7,34 @@ is inversely proportional to its capacitance. Note that the resistance of the
 capacitor is infinite, i.e. it is considered to be an opened connection.
 """
 
-from sympy import (I, Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output, angle_type)
+from sympy import I, Eq, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+)
 
-impedance = Symbol("impedance", units.impedance)
+impedance = symbols.electrical_impedance
 """
 Impedance of the capacitor.
-
-Symbol:
-    :code:`Z`
 """
 
-angular_frequency = Symbol("angular_frequency", angle_type / units.time)
-r"""
+angular_frequency = symbols.angular_frequency
+"""
 Angular frequency of the alternating current.
-
-Symbol:
-    :code:`w`
-
-Latex:
-    :math:`\omega`
 """
 
-capacitance = Symbol("capacitance", units.capacitance)
+capacitance = symbols.capacitance
 """
 Capacitance of the capacitor.
-
-Symbol:
-    :code:`C`
 """
 
 law = Eq(impedance, -I / (angular_frequency * capacitance))
-r"""
-:code:`Z = -i / (w * C)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        Z = -\frac{i}{\omega C}
+:laws:latex::
 """
 
 
