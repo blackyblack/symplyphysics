@@ -7,7 +7,7 @@ on the strength of the electric field at that point.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
+from symplyphysics import (Quantity, validate_input,
     validate_output, symbols)
 
 energy_density = symbols.energy_density

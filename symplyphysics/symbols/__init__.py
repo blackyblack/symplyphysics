@@ -16,6 +16,8 @@ __all__ = [
     "mass",
     "work",
     "energy_density",
+    "energy",
+    "power",
     # classical mechanics
     "force",
     "speed",

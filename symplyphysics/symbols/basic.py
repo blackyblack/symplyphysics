@@ -31,3 +31,14 @@ energy_density = SymbolNew("w", units.energy / units.volume)
 """
 Energy per unit volume.
 """
+
+energy = SymbolNew("E", units.energy)
+"""
+**Energy** is the quantitative property that is transferred to a body or to a physical system, recognizable in
+the performance of work and in the form of heat and light.
+"""
+
+power = SymbolNew("P", units.power)
+"""
+**Power** is the amount of energy transferred or converted per unit time.
+"""
