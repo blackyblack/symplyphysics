@@ -94,3 +94,9 @@ surface_charge_density = SymbolNew("sigma", units.charge / units.area, display_l
 """
 **Surface charge density** is charge per unit surface area.
 """
+
+electric_flux = SymbolNew("Phi_E", units.voltage * units.length, display_latex="\\Phi_E")
+"""
+**Electric flux** through a surface is the surface integral of the normal component of the electric field :math:`\mathbf{E}`
+over that surface.
+"""
