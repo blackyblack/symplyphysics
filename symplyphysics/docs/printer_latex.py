@@ -121,7 +121,7 @@ class SymbolLatexPrinter(LatexPrinter):
             not self._needs_function_brackets(expr.args[0])
         args_str = self._print(expr.args[0])
         name = f"{args_str}" if can_fold_brackets else f"\\left({args_str} \\right)"
-        tex = r"exp{%s}" % name
+        tex = r"\exp{%s}" % name
         return self._do_exponent(tex, exp)
 
     # pylint: disable-next=invalid-name
