@@ -26,7 +26,8 @@ dev = [
   "pytest",
   "mypy",
   "pylint",
-  "Sphinx"
+  "Sphinx",
+  "sphinx-sitemap",
 ]
 
 [tool.setuptools.packages.find]
