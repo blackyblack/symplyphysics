@@ -60,10 +60,13 @@ html_static_path = ["_static"]
 
 html_extra_path = ["_extra/googlea3669135f4e8d2d0.html"]
 
-html_baseurl = "https://symplyphysics.github.io"
-
 # If true, the current module name will be prepended to all description
 # unit titles (such as .. function::).
 add_module_names = False
 
 mathjax_path = "scipy-mathjax/MathJax.js?config=scipy-mathjax"
+
+# -- Options for sphinx-sitemap
+
+html_baseurl = "https://symplyphysics.github.io/"
+sitemap_url_scheme = "{link}"
