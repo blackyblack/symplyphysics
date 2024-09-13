@@ -8,11 +8,25 @@ of circuit can act as an electrical resonator, storing energy oscillating at the
 resonant frequency.
 """
 
-from sympy import (Eq, Idx, solve, pi, sqrt, Derivative, simplify)
-from symplyphysics import (units, Quantity, Symbol, Function, validate_input,
-    validate_output, global_index)
+from sympy import (
+    Eq,
+    Idx,
+    solve,
+    pi,
+    sqrt,
+    Derivative,
+    simplify,
+    Symbol as SymSymbol,
+    Function as SymFunction,
+)
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    global_index,
+    symbols,
+)
 from symplyphysics.core.expr_comparisons import expr_equals
-
 from symplyphysics.laws.electricity import capacitance_from_charge_and_voltage as capacitance_definition
 from symplyphysics.definitions import current_is_charge_derivative as charge_definition
 from symplyphysics.definitions import harmonic_oscillator_is_second_derivative_equation as oscillator
@@ -21,37 +35,26 @@ from symplyphysics.definitions import period_from_angular_frequency as period_de
 from symplyphysics.laws.electricity.circuits import sum_of_currents_through_junction_is_zero as kirchhoff_law
 from symplyphysics.laws.electricity.circuits import sum_of_voltages_in_loop_is_zero as kirchhoff_law_2
 
-period = Symbol("period", units.time)
+period = symbols.period
 """
 Natural period of oscillations.
-
-Symbol:
-    :code:`T`
 """
 
-inductance = Symbol("inductance", units.inductance)
+inductance = symbols.inductance
 """
 Inductance of the inductor.
-
-Symbol:
-    :code:`L`
 """
 
-capacitance = Symbol("capacitance", units.capacitance)
+capacitance = symbols.capacitance
 """
 Capacitance of the capacitor.
-
-Symbol:
-    :code:`C`
 """
 
 law = Eq(period, 2 * pi * sqrt(inductance * capacitance))
-r"""
-:code:`T = 2 * pi * sqrt(L * C)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        T = 2 \pi \sqrt{L C}
+:laws:latex::
 """
 
 ## Derive the same law from the capacitor, charge and self-induction voltage laws
@@ -65,9 +68,9 @@ Latex:
 
 ## 1. Prove that _capacitor_current(_time) = _inductor_current(_time)
 
-_time = Symbol("_time", units.time)
-_capacitor_current = Function("_capacitor_current", units.current)
-_inductor_current = Function("_inductor_current", units.current)
+_time = SymSymbol("_time")
+_capacitor_current = SymFunction("_capacitor_current")
+_inductor_current = SymFunction("_inductor_current")
 
 _local_index_ = Idx("_local_index_", (1, 2))
 _two_currents_law = kirchhoff_law.law.subs(global_index, _local_index_).doit()
@@ -85,8 +88,8 @@ assert _capacitor_current_eq.rhs == _inductor_current(_time)
 
 ## 2. Prove that _capacitor_voltage(_time) = _inductor_voltage(_time)
 
-_capacitor_voltage = Function("_capacitor_voltage", units.voltage)
-_inductor_voltage = Function("_inductor_voltage", units.voltage)
+_capacitor_voltage = SymFunction("_capacitor_voltage")
+_inductor_voltage = SymFunction("_inductor_voltage")
 
 _two_voltages_law = kirchhoff_law_2.law.subs(global_index, _local_index_).doit()
 # capacitor is voltage source, inductor is voltage consumer
