@@ -12,16 +12,16 @@ in the coil and the rate of change of magnetic flux through the coil.
 from sympy import (Eq, Derivative)
 from symplyphysics import (
     dimensionless,
-    units,
     Quantity,
     SymbolNew,
-    FunctionNew,
     validate_input,
     validate_output,
+    symbols,
 )
+from symplyphysics.core.symbols.symbols import clone_function
 from symplyphysics.core.geometry.line import two_point_function, Point2D
 
-electromotive_force = SymbolNew("E", units.voltage, display_latex="\\mathcal{E}")
+electromotive_force = symbols.electromotive_force
 r"""
 Electromotive force induced in the coil.
 """
@@ -31,12 +31,12 @@ coil_turn_count = SymbolNew("N", dimensionless)
 Number of turns in the coil.
 """
 
-magnetic_flux = FunctionNew("Phi", units.magnetic_flux, display_latex="\\Phi")
+magnetic_flux = clone_function(symbols.magnetic_flux)
 """
 Magnetic flux through the coil.
 """
 
-time = SymbolNew("t", units.time)
+time = symbols.time
 """
 Time.
 """
