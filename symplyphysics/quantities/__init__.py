@@ -87,6 +87,14 @@ Vacuum permittivity, also known as permittivity of free space or the electric co
 dielectric permittivity of classical vacuum.
 """
 
+vacuum_permeability = Quantity(units.vacuum_permeability,
+    display_symbol="mu_0",
+    display_latex="\\mu_0")
+"""
+Vacuum permeability, also known as permeability of free space of the magnetic constant, is the value of the absolute
+permeability of classical volume.
+"""
+
 elementary_charge = Quantity(units.elementary_charge, display_symbol="e")
 """
 **Elementary charge** is a fundamental physical constant defined as the electric charge carried by a single proton
@@ -106,4 +114,6 @@ __all__ = [
     "molar_gas_constant",
     "speed_of_light",
     "vacuum_permittivity",
+    "vacuum_permeability",
+    "elementary_charge",
 ]

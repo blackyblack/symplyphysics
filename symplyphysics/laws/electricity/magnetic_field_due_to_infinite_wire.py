@@ -16,44 +16,33 @@ current through it and the radial distance to the wire.
 
 from sympy import (Eq, pi)
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
+    quantities,
 )
 
-magnetic_flux_density = Symbol("magnetic_flux_density", units.magnetic_density)
+magnetic_flux_density = symbols.magnetic_flux_density
 """
 Magnitude of magnetic flux density.
-
-Symbol:
-    :code:`B`
 """
 
-current = Symbol("current", units.current)
+current = symbols.current
 """
 Current flowing through the wire.
-
-Symbol:
-    :code:`I`
 """
 
-radial_distance = Symbol("radial_distance", units.length)
+radial_distance = symbols.distance_to_axis
 """
 Radial distance to wire.
-
-Symbol:
-    :code:`r`
 """
 
-law = Eq(magnetic_flux_density, units.vacuum_permeability * current / (2 * pi * radial_distance))
-r"""
-:code:`B = mu_0 * I / (2 * pi * r)`
+law = Eq(magnetic_flux_density, quantities.vacuum_permeability * current / (2 * pi * radial_distance))
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        B = \frac{\mu_0 I}{2 \pi r}
+:laws:latex::
 """
 
 

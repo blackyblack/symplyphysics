@@ -34,6 +34,11 @@ radial_distance = SymbolNew("r", units.length)
 Distance to the origin of the coordinate system.
 """
 
+distance_to_axis = SymbolNew("r", units.length)
+"""
+Distance to reference axis.
+"""
+
 length = SymbolNew("l", units.length)
 """
 **Length** is a measure of distance.

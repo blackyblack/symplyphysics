@@ -28,6 +28,7 @@ __all__ = [
     "area",
     "angular_speed",
     "angular_frequency",
+    "distance_to_axis",
     # thermodynamics
     "temperature",
     # electrodynamics
