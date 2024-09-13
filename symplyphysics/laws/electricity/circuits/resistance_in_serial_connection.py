@@ -10,36 +10,33 @@ of the resistances of individual components.
 #. Applies to direct current circuits.
 """
 
-from sympy import (Eq, Idx, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output, SymbolIndexed, SumIndexed, global_index)
+from sympy import Eq, Idx, solve
+from symplyphysics import (
+    units,
+    Quantity,
+    validate_input,
+    validate_output,
+    SymbolIndexedNew,
+    SumIndexed,
+    global_index,
+    symbols,
+)
 
-total_resistance = Symbol("total_resistance", units.impedance)
+total_resistance = symbols.resistance
 """
 Total resistance of the circuit.
-
-Symbol:
-    :code:`R`
 """
 
-resistance = SymbolIndexed("resistance", units.impedance)
+resistance = SymbolIndexedNew("R_i", units.impedance)
 r"""
 Resistance of the :math:`i`-th component.
-
-Symbol:
-    :code:`R_i`
-
-Latex:
-    :math:`R_i`
 """
 
 law = Eq(total_resistance, SumIndexed(resistance[global_index], global_index))
-r"""
-:code:`R = Sum(R_i, i)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        R = \sum_i R_i
+:laws:latex::
 """
 
 
