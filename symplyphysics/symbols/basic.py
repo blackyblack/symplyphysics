@@ -14,6 +14,11 @@ a count of repeating events such as the SI second. It is a fundamental concept u
 physical quantities.
 """
 
+period = SymbolNew("T", units.time)
+"""
+**Period** is the duration of time of one cycle in a repeating event.
+"""
+
 mass = SymbolNew("m", units.mass)
 """
 **Mass** is an intrinsic scalar property of a body, and one can distinguish at least seven different aspects

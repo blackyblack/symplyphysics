@@ -13,6 +13,7 @@ from .electrodynamics import *
 __all__ = [
     # basic
     "time",
+    "period",
     "mass",
     "work",
     "energy_density",

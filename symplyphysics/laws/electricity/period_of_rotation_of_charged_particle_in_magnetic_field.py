@@ -27,12 +27,9 @@ from symplyphysics.laws.kinematics import (
 )
 from symplyphysics.definitions import period_from_angular_frequency as _period_law
 
-period = Symbol("period", units.time)
+period = symbols.period
 """
 Period of the particle's rotation.
-
-Symbol:
-    :code:`T`
 """
 
 mass = symbols.mass
@@ -40,29 +37,21 @@ mass = symbols.mass
 :attr:`~symplyphysics.symbols.mass` of the particle.
 """
 
-charge = Symbol("charge", units.charge)
+charge = symbols.charge
 """
 Charge of the particle.
-
-Symbol:
-    :code:`q`
 """
 
-magnetic_flux_density = Symbol("magnetic_flux_density", units.magnetic_density)
+magnetic_flux_density = symbols.magnetic_flux_density
 """
 Magnitude of magnetic flux density.
-
-Symbol:
-    :code:`B`
 """
 
 law = Eq(period, 2 * pi * mass / (charge * magnetic_flux_density))
-r"""
-:code:`T = 2 * pi * m / (q * B)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        T = 2 \pi \frac{m}{q B}
+:laws:latex::
 """
 
 # Derive law from Lorentz force
