@@ -129,3 +129,9 @@ inductance = SymbolNew("L", units.inductance)
 """
 **Inductance** is the tendency of an electrical conductor to oppose a change in the electric current flowing through it.
 """
+
+time_constant = SymbolNew("tau", units.time, display_latex="\\tau")
+"""
+**Time constant** is the parameter characterizing the response to a step input of a first-order, linear time-invariant
+system. It is related to the speed of the response.
+"""

@@ -13,10 +13,9 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_symbol,
 )
 
-time_constant = clone_symbol(symbols.time, display_symbol="tau", display_latex="\\tau")
+time_constant = symbols.time_constant
 """
 Time constant of the circuit.
 """
