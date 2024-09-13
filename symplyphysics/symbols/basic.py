@@ -47,3 +47,8 @@ power = SymbolNew("P", units.power)
 """
 **Power** is the amount of energy transferred or converted per unit time.
 """
+
+radius_of_curvature = SymbolNew("r", units.length)
+"""
+Radius of curvature is the inverse of curvature and is equal to the distance to the center of curvature.
+"""

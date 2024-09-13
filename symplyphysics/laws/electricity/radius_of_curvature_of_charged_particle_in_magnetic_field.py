@@ -17,9 +17,7 @@ of the particle as well as by the magnetic flux density.
 
 from sympy import (Eq, solve, pi)
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     symbols,
@@ -28,12 +26,9 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity import period_of_rotation_of_charged_particle_in_magnetic_field as period_law
 from symplyphysics.laws.kinematics import position_via_constant_speed_and_time as distance_law
 
-radius_of_curvature = Symbol("radius_of_curvature", units.length)
+radius_of_curvature = symbols.radius_of_curvature
 """
 Radius of curvature of the particle's orbit.
-
-Symbol:
-    :code:`r`
 """
 
 mass = symbols.mass
@@ -41,37 +36,26 @@ mass = symbols.mass
 :attr:`~symplyphysics.symbols.mass` of the particle.
 """
 
-speed = Symbol("speed", units.speed)
+speed = symbols.speed
 """
 Speed of the particle.
-
-Symbol:
-    :code:`v`
 """
 
-charge = Symbol("charge", units.charge)
+charge = symbols.charge
 """
 Charge of the particle.
-
-Symbol:
-    :code:`q`
 """
 
-magnetic_flux_density = Symbol("magnetic_flux_density", units.magnetic_density)
+magnetic_flux_density = symbols.magnetic_flux_density
 """
 Magnitude of magnetic flux density.
-
-Symbol:
-    :code:`B`
 """
 
 law = Eq(radius_of_curvature, mass * speed / (charge * magnetic_flux_density))
-r"""
-:code:`r = m * v / (q * B)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        r = \frac{m v}{q B}
+:laws:latex::
 """
 
 # This law might be derived via period of a charged particle in a magnetic field and distance from constant speed.

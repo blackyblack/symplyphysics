@@ -19,6 +19,7 @@ __all__ = [
     "energy_density",
     "energy",
     "power",
+    "radius_of_curvature",
     # classical mechanics
     "force",
     "speed",
