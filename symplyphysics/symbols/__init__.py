@@ -22,6 +22,8 @@ __all__ = [
     "temperature",
     # electrodynamics
     "admittance",
+    "conductance",
+    "susceptance",
     "electrical_impedance",
     "electromotive_force",
     "magnetic_flux",

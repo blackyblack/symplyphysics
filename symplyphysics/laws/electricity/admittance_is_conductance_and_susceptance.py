@@ -8,44 +8,32 @@ and whose imaginary part is called susceptance.
 
 from sympy import (Eq, I)
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
 )
 
-admittance = Symbol("admittance", units.conductance)
+admittance = symbols.admittance
 """
 Admittance.
-
-Symbol:
-    :code:`Y`
 """
 
-conductance = Symbol("conductance", units.conductance)
+conductance = symbols.conductance
 """
 Conductance.
-
-Symbol:
-    :code:`G`
 """
 
-susceptance = Symbol("susceptance", units.conductance)
+susceptance = symbols.susceptance
 """
 Susceptance.
-
-Symbol:
-    :code:`B`
 """
 
 law = Eq(admittance, conductance + I * susceptance)
-r"""
-:code:`Y = G + i * B`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        Y = G + i B
+:laws:latex::
 """
 
 

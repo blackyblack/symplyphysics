@@ -13,6 +13,16 @@ admittance = SymbolNew("Y", units.conductance)
 of impedance.
 """
 
+conductance = SymbolNew("G", units.conductance)
+"""
+**Conductance** is the ability of charge to flow in a certain path. It is the reciprocal of electrical resistance.
+"""
+
+susceptance = SymbolNew("B", units.conductance)
+"""
+**Susceptance** is the imaginary part of the electrical admittance.
+"""
+
 electrical_impedance = SymbolNew("Z", units.impedance)
 """
 **Electrical impedance** is the opposition to current presented by the combined effect of
