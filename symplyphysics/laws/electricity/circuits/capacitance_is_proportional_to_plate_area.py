@@ -11,26 +11,30 @@ on the permittivity of the medium that fills the space between the plates.
 #. The plates must be large enough for the electric field to be constant between the plates.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, SymbolNew, validate_input,
-    validate_output)
+from sympy import Eq, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+)
 
-capacitance = SymbolNew("C", units.capacitance)
+capacitance = symbols.capacitance
 """
 Capacitance of the capacitor.
 """
 
-absolute_permittivity = SymbolNew("epsilon", units.capacitance / units.length, display_latex="\\varepsilon")
+absolute_permittivity = symbols.absolute_permittivity
 """
 Absolute permittivity of the medium between the plates.
 """
 
-area = SymbolNew("A", units.area)
+area = symbols.area
 """
 Area of the plates.
 """
 
-distance = SymbolNew("d", units.length)
+distance = symbols.distance
 """
 Distance between the plates.
 """
