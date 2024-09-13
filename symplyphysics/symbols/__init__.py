@@ -20,6 +20,9 @@ __all__ = [
     "acceleration",
     "distance",
     "radial_distance",
+    "length",
+    "angular_speed",
+    "angular_frequency",
     # thermodynamics
     "temperature",
     # electrodynamics
@@ -40,4 +43,5 @@ __all__ = [
     "electric_field_strength",
     "surface_charge_density",
     "electric_flux",
+    "magnetic_flux_density",
 ]

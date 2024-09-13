@@ -21,59 +21,37 @@ magnitude of the magnetic flux density, the rotation frequency and the length of
 
 from sympy import (Eq, solve)
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
-    angle_type,
+    symbols,
 )
 
-electromotive_force = Symbol("electromotive_force", units.voltage)
-r"""
+electromotive_force = symbols.electromotive_force
+"""
 Electromotive force induced in the rod.
-
-Symbol:
-    :code:`E`
-
-Latex:
-    :math:`\mathcal{E}`
 """
 
-magnetic_flux_density = Symbol("magnetic_flux_density", units.magnetic_density)
+magnetic_flux_density = symbols.magnetic_flux_density
 """
 Magnitude of magnetic flux density.
-
-Symbol:
-    :code:`B`
 """
 
-angular_frequency = Symbol("angular_frequency", angle_type / units.time)
-r"""
+angular_frequency = symbols.angular_frequency
+"""
 Angular frequency of rod's rotation.
-
-Symbol:
-    :code:`w`
-
-Latex:
-    :math:`\omega`
 """
 
-length = Symbol("length", units.length)
+length = symbols.length
 """
 Length of the rod.
-
-Symbol:
-    :code:`l`
 """
 
 law = Eq(electromotive_force, (1 / 2) * magnetic_flux_density * angular_frequency * length**2)
-r"""
-:code:`E = 1/2 * B * w * l^2`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \mathcal{E} = \frac{1}{2} B \omega l^2
+:laws:latex::
 """
 
 

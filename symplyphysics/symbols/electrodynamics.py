@@ -100,3 +100,9 @@ electric_flux = SymbolNew("Phi_E", units.voltage * units.length, display_latex="
 **Electric flux** through a surface is the surface integral of the normal component of the electric field :math:`\mathbf{E}`
 over that surface.
 """
+
+magnetic_flux_density = SymbolNew("B", units.magnetic_flux_density)
+"""
+**Magnetic flux density**, also called **magnetic induction**, is a physical quantity that predicts the force on a charged
+particle in the Lorentz force law.
+"""
