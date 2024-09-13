@@ -13,43 +13,28 @@ and vacuum permittivity.
 
 from sympy import Eq
 from symplyphysics import (
-    Symbol,
-    units,
-    dimensionless,
     Quantity,
     validate_input,
     validate_output,
+    symbols,
+    quantities,
 )
 
-absolute_permittivity = Symbol("absolute_permittivity", units.capacitance / units.length)
-r"""
+absolute_permittivity = symbols.absolute_permittivity
+"""
 Absolute permittivity.
-
-Symbol:
-    :code:`epsilon`
-
-Latex:
-    :math:`\varepsilon`
 """
 
-relative_permittivity = Symbol("relative_permittivity", dimensionless)
-r"""
+relative_permittivity = symbols.relative_permittivity
+"""
 Permittivity relative to that of vacuum.
-
-Symbol:
-    :code:`epsilon_r`
-
-Latex:
-    :math:`\varepsilon_r`
 """
 
-law = Eq(absolute_permittivity, units.vacuum_permittivity * relative_permittivity)
-r"""
-:code:`epsilon = epsilon_0 * epsilon_r`
+law = Eq(absolute_permittivity, quantities.vacuum_permittivity * relative_permittivity)
+"""
+:laws:symbols::
 
-Latex:
-    .. math::
-        \varepsilon = \varepsilon_0 \varepsilon_r
+:laws:latex::
 """
 
 

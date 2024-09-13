@@ -1,6 +1,11 @@
-from symplyphysics import units, SymbolNew
+"""
+Thermodynamics
+==============
 
-# Thermodynamics
+Symbols related to thermodynamics.
+"""
+
+from symplyphysics import units, SymbolNew
 
 temperature = SymbolNew("T", units.temperature)
 """

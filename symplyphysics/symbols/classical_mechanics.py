@@ -1,3 +1,10 @@
+"""
+Classical mechanics
+===================
+
+Symbols related to classical mechanics.
+"""
+
 from symplyphysics import units, SymbolNew
 
 force = SymbolNew("F", units.force)

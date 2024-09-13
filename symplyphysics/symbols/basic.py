@@ -1,3 +1,10 @@
+"""
+Basic
+=====
+
+Symbols of fundamental physical quantities.
+"""
+
 from symplyphysics import units, SymbolNew
 
 time = SymbolNew("t", units.time)

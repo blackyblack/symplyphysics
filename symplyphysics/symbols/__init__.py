@@ -6,7 +6,7 @@ Symbols represent physical quantities, units, mathematical operations and relati
 """
 
 from .basic import *
-from .mechanics import *
+from .classical_mechanics import *
 from .thermodynamics import *
 from .electrodynamics import *
 
@@ -14,7 +14,7 @@ __all__ = [
     # basic
     "time",
     "mass",
-    # mechanics
+    # classical mechanics
     "force",
     "speed",
     "acceleration",
@@ -25,4 +25,6 @@ __all__ = [
     "electrical_impedance",
     "electromotive_force",
     "magnetic_flux",
+    "absolute_permittivity",
+    "relative_permittivity",
 ]
