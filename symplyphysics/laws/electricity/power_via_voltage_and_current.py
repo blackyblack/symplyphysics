@@ -6,41 +6,29 @@ Electric power can be expressed using current flowing through a
 conductor and voltage applied.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from sympy import Eq, solve
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 
-power = Symbol("power", units.power)
+power = symbols.power
 """
 Electric power.
-
-Symbol:
-    :code:`P`
 """
 
-current = Symbol("current", units.current)
+current = symbols.current
 """
 Electric current.
-
-Symbol:
-    :code:`I`
 """
 
-voltage = Symbol("voltage", units.voltage)
+voltage = symbols.voltage
 """
 Voltage applied.
-
-Symbol:
-    :code:`V`
 """
 
 law = Eq(power, current * voltage)
-r"""
-:code:`P = I * V`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        P = I V
+:laws:latex::
 """
 
 
