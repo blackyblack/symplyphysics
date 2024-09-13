@@ -10,15 +10,23 @@ capacitances of individual capacitors.
 #. Components are connected in parallel.
 """
 
-from sympy import (Eq, Idx, solve, symbols as sympy_symbols)
-from symplyphysics import (units, Quantity, SymbolNew, validate_input,
-    validate_output, SymbolIndexedNew, SumIndexed, global_index)
+from sympy import Eq, Idx, solve, symbols as sympy_symbols
+from symplyphysics import (
+    units,
+    Quantity,
+    validate_input,
+    validate_output,
+    SymbolIndexedNew,
+    SumIndexed,
+    global_index,
+    symbols,
+)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity import (
     capacitance_from_charge_and_voltage as _capacitance_law,
 )
 
-total_capacitance = SymbolNew("C", units.capacitance)
+total_capacitance = symbols.capacitance
 """
 Total capacitance.
 """
