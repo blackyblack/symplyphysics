@@ -87,6 +87,12 @@ Vacuum permittivity, also known as permittivity of free space or the electric co
 dielectric permittivity of classical vacuum.
 """
 
+elementary_charge = Quantity(units.elementary_charge, display_symbol="e")
+"""
+**Elementary charge** is a fundamental physical constant defined as the electric charge carried by a single proton
+or, equivalently, the magnitude of the negative charge carried by a single electron.
+"""
+
 
 __all__ = [
     "standard_conditions_temperature",
