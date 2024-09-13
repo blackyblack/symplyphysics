@@ -45,4 +45,5 @@ __all__ = [
     "surface_charge_density",
     "electric_flux",
     "magnetic_flux_density",
+    "electric_potential",
 ]

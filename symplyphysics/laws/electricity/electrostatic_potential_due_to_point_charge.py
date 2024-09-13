@@ -8,56 +8,38 @@ to the distance to the point charge. Also see :doc:`laws.electricity.electrostat
 
 from sympy import (Eq, solve, pi)
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
 )
 
-electrostatic_potential = Symbol("electrostatic_potential", units.voltage)
+electrostatic_potential = symbols.electric_potential
 """
 Electrostatic potential at given point.
-
-Symbol:
-    :code:`V`
 """
 
-absolute_permittivity = Symbol("absolute_permittivity", units.capacitance / units.length)
-r"""
+absolute_permittivity = symbols.absolute_permittivity
+"""
 Absolute permittivity of the medium.
-
-Symbol:
-    :code:`epsilon`
-
-Latex:
-    :math:`\varepsilon`
 """
 
-distance = Symbol("distance", units.length)
+distance = symbols.radial_distance
 """
 Distance to the point charge.
-
-Symbol:
-    :code:`r`
 """
 
-charge = Symbol("charge", units.charge)
+charge = symbols.charge
 """
 Electric charge.
-
-Symbol:
-    :code:`q`
 """
 
 law = Eq(electrostatic_potential,
     charge / (4 * pi * absolute_permittivity * distance))
-r"""
-:code:`V = q / (4 * pi * epsilon * r)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        V = \frac{q}{4 \pi \varepsilon r}
+:laws:latex::
 """
 
 
