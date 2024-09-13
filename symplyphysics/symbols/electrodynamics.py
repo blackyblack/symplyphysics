@@ -78,3 +78,9 @@ resistance = SymbolNew("R", units.impedance)
 **Resistance** is the measure of the degree to which a conductor opposes an electric current through that conductor.
 It is the real part of the complex-valued impedance.
 """
+
+electric_dipole_moment = SymbolNew("p", units.charge * units.length)
+"""
+**Electric dipole moment** is a measure of the separation of positive and negative electrical charges within a system:
+that is, a measure of the system's overall polarity.
+"""

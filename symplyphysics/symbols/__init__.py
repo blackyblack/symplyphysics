@@ -18,6 +18,7 @@ __all__ = [
     "force",
     "speed",
     "acceleration",
+    "distance",
     # thermodynamics
     "temperature",
     # electrodynamics
@@ -34,4 +35,5 @@ __all__ = [
     "voltage",
     "current",
     "resistance",
+    "electric_dipole_moment",
 ]

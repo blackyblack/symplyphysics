@@ -23,3 +23,8 @@ acceleration = SymbolNew("a", units.acceleration)
 """
 Acceleration is the rate of change of the object's velocity with respect to time. It is a vector quantity.
 """
+
+distance = SymbolNew("d", units.length)
+"""
+Distance is is a measure of the spatial separation between two points.
+"""
