@@ -8,27 +8,27 @@ This law is also known as **Kirchhoff's second law**, or **Kirchhoff's loop rule
 """
 
 from typing import Sequence
-from sympy import (Eq, Idx, solve)
-from symplyphysics import (units, Quantity, validate_input, validate_output,
-    SymbolIndexed, SumIndexed, global_index)
+from sympy import Eq, Idx, solve
+from symplyphysics import (
+    units,
+    Quantity,
+    validate_input,
+    validate_output,
+    SymbolIndexedNew,
+    SumIndexed,
+    global_index,
+)
 
-voltage = SymbolIndexed("voltage", units.voltage)
+voltage = SymbolIndexedNew("V_i", units.voltage)
 r"""
 :math:`i`-th voltage.
-
-Symbol:
-    :code:`V_i`
-
-Latex:
-    :math:`V_i`
 """
 
 law = Eq(SumIndexed(voltage[global_index], global_index), 0)
-r"""
-:code:`Sum(V_i, i) = 0`
+"""
+:laws:symbol::
 
-Latex:
-    :math:`\sum_i V_i = 0`
+:laws:latex::
 """
 
 
