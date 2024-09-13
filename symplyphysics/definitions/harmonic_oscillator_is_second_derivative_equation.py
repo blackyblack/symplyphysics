@@ -12,8 +12,14 @@ Displacement is not only limited to physical motion, but should be interpreted i
 #. There is no damping (i.e. friction) in the system.
 """
 
-from sympy import (Derivative, Eq, cos, solve, symbols, Function as SymFunction)
-from symplyphysics import (units, Quantity, SymbolNew, validate_input, validate_output)
+from sympy import Derivative, Eq, cos, solve, symbols, Function as SymFunction
+from symplyphysics import (
+    units,
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+)
 from symplyphysics.core.expr_comparisons import expr_equals
 
 # Can have various dimensions - do not specify it
@@ -28,12 +34,12 @@ Latex:
     :math:`x`
 """
 
-angular_frequency = SymbolNew("w", units.frequency, display_latex="\\omega")
+angular_frequency = symbols.angular_frequency
 """
 Angular frequency of the oscillator.
 """
 
-time = SymbolNew("t", units.time)
+time = symbols.time
 """
 Time.
 """
