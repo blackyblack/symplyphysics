@@ -84,3 +84,8 @@ damping_ratio = SymbolNew("zeta", dimensionless, display_latex="\\zeta")
 """
 **Damping ratio** is a dimensionless measure describing how oscillations in a system decay after a disturbance.
 """
+
+volume = SymbolNew("V", units.volume)
+"""
+Volume is a measure of regions in three-dimensional space.
+"""

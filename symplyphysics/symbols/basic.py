@@ -50,5 +50,10 @@ power = SymbolNew("P", units.power)
 
 radius_of_curvature = SymbolNew("r", units.length)
 """
-Radius of curvature is the inverse of curvature and is equal to the distance to the center of curvature.
+**Radius of curvature** is the inverse of curvature and is equal to the distance to the center of curvature.
+"""
+
+density = SymbolNew("rho", units.mass / units.volume, display_latex="\\rho")
+"""
+**Density** is mass per unit volume.
 """

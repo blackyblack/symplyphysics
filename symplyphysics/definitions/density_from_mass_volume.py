@@ -7,10 +7,15 @@ object per unit of its volume. See :doc:`laws.quantities.quantity_is_volumetric_
 for a general version of this law.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, SymbolNew, validate_input, validate_output, symbols)
+from sympy import Eq, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+)
 
-density = SymbolNew("rho", units.mass / units.volume, display_latex="\\rho")
+density = symbols.density
 """
 Volumetric density of the object.
 """
@@ -20,7 +25,7 @@ mass = symbols.mass
 :attr:`~symplyphysics.symbols.mass` of the object.
 """
 
-volume = SymbolNew("V", units.volume)
+volume = symbols.volume
 """
 Volume of the object.
 """

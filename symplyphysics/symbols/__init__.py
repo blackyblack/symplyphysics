@@ -20,6 +20,7 @@ __all__ = [
     "energy",
     "power",
     "radius_of_curvature",
+    "density",
     # classical mechanics
     "force",
     "speed",
@@ -36,6 +37,7 @@ __all__ = [
     "angular_wavenumber",
     "wavelength",
     "damping_ratio",
+    "volume",
     # thermodynamics
     "temperature",
     # electrodynamics
