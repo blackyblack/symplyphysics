@@ -15,6 +15,7 @@ __all__ = [
     "time",
     "mass",
     "work",
+    "energy_density",
     # classical mechanics
     "force",
     "speed",

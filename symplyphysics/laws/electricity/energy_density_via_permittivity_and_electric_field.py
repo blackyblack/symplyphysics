@@ -8,42 +8,28 @@ on the strength of the electric field at that point.
 
 from sympy import (Eq, solve)
 from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+    validate_output, symbols)
 
-energy_density = Symbol("energy_density", units.energy / units.volume)
+energy_density = symbols.energy_density
 """
 Volumetric energy density of the electric field, see :doc:`laws.quantities.quantity_is_volumetric_density_times_volume`.
-
-Symbol:
-    :code:`w`
 """
 
-absolute_permittivity = Symbol("absolute_permittivity", units.capacitance / units.length)
-r"""
+absolute_permittivity = symbols.absolute_permittivity
+"""
 Absolute permittivity of the medium.
-
-Symbol:
-    :code:`epsilon`
-
-Latex:
-    :math:`\varepsilon`
 """
 
-electric_field_strength = Symbol("electric_field_strength", units.voltage / units.length)
+electric_field_strength = symbols.electric_field_strength
 """
 Strength of the electric field.
-
-Symbol:
-    :code:`E`
 """
 
 law = Eq(energy_density, (absolute_permittivity * electric_field_strength**2) / 2)
 r"""
-:code:`w = 1/2 * epsilon * E^2`
+:laws:symbol::
 
-Latex:
-    .. math::
-        w = \frac{1}{2} \varepsilon E^2
+:laws:latex::
 """
 
 
