@@ -38,6 +38,7 @@ __all__ = [
     "wavelength",
     "damping_ratio",
     "volume",
+    "impulse",
     # thermodynamics
     "temperature",
     "adiabatic_index",

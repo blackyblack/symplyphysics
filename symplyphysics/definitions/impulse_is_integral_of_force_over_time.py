@@ -9,35 +9,35 @@ by applying this law to the components of the force vector.
 
 from sympy import Eq, Integral
 from symplyphysics import (
-    units,
     Quantity,
-    FunctionNew,
-    SymbolNew,
     validate_input,
     validate_output,
+    symbols,
+    clone_function,
+    clone_symbol,
 )
 
-impulse = SymbolNew("J", units.momentum)
+impulse = symbols.impulse
 r"""
 Projection of impulse vector due to :attr:`~symplyphysics.symbols.force` :math:`\vec F`.
 """
 
-force = FunctionNew("F(t)", units.force, display_latex="F")
+force = clone_function(symbols.force, display_symbol="F(t)")
 r"""
 Projection of :attr:`~symplyphysics.symbols.force` :math:`\vec F` as a function of time.
 """
 
-time = SymbolNew("t", units.time)
+time = symbols.time
 """
 Time.
 """
 
-time_before = SymbolNew("t0", units.time, display_latex="t_0")
+time_before = clone_symbol(symbols.time, display_symbol="t_0")
 """
 Initial time of collision.
 """
 
-time_after = SymbolNew("t1", units.time, display_latex="t_1")
+time_after = clone_symbol(symbols.time, display_symbol="t_1")
 """
 Final time of collision.
 """

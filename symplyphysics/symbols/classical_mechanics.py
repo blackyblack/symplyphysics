@@ -89,3 +89,8 @@ volume = SymbolNew("V", units.volume)
 """
 Volume is a measure of regions in three-dimensional space.
 """
+
+impulse = SymbolNew("J", units.momentum)
+"""
+**Impulse** is the change in momentum of an object.
+"""
