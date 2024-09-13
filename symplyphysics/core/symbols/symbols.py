@@ -251,24 +251,25 @@ def print_expression(expr: Expr | Equality | Sequence[Expr | Equality]) -> str:
         pretty_use_unicode(uflag)
 
 
-def clone_symbol(source: SymbolNew | FunctionNew,
+def clone_symbol(source: DimensionSymbolNew,
     *,
     display_symbol: Optional[str] = None,
     display_latex: Optional[str] = None,
     **assumptions: Any) -> SymbolNew:
     assumptions = source.assumptions0 if assumptions is None or len(
         assumptions) == 0 else assumptions
-    display_symbol_new = source.display_name if display_symbol is None else display_symbol
-    display_latex_new = display_latex
-    if display_latex_new is None:
-        display_latex_new = display_symbol
-    if display_latex_new is None:
-        display_latex_new = source.display_latex
-    return SymbolNew(display_symbol_new, source.dimension, display_latex=display_latex_new, **assumptions)
+    display_symbol = display_symbol or source.display_name
+    display_latex = display_latex or source.display_latex or display_symbol
+    return SymbolNew(
+        display_symbol,
+        source.dimension,
+        display_latex=display_latex,
+        **assumptions,
+    )
 
 
 def clone_function(
-    source: SymbolNew | FunctionNew,
+    source: DimensionSymbolNew,
     *,
     display_symbol: Optional[str] = None,
     display_latex: Optional[str] = None,
