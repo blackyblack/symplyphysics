@@ -14,6 +14,7 @@ __all__ = [
     # basic
     "time",
     "mass",
+    "work",
     # classical mechanics
     "force",
     "speed",

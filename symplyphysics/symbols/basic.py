@@ -21,3 +21,8 @@ of mass that define it. Experiments have shown that these values are proportiona
 equal. Often, the inertial mass is being used, which is a measure of the object's resistance to acceleration
 when a force is applied.
 """
+
+work = SymbolNew("W", units.energy)
+"""
+Work is the energy transferred to or from an object via the application of force.
+"""
