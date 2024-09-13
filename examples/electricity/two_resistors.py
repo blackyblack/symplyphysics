@@ -6,7 +6,7 @@ from symplyphysics.laws.electricity import current_is_voltage_over_resistance as
 from symplyphysics.laws.electricity.circuits import admittance_in_parallel_connection as total_admittance_law
 from symplyphysics.laws.electricity import admittance_is_conductance_and_susceptance as admittance_law
 from symplyphysics.laws.electricity.circuits import resistance_in_serial_connection as serial_resistance
-from symplyphysics.definitions import electrical_conductivity_is_inversed_resistance as conductivity_law
+from symplyphysics.definitions import electrical_conductance_is_inversed_resistance as conductivity_law
 
 # Two resistors are connected across a 12 V battery with internal resistance of 1 Ohm.
 # When they are connected in parallel, the current in the circuit is 4 A.
@@ -25,10 +25,10 @@ I_parallel = symbols("I_parallel")
 ## Find resistance R12 using the law of conductance
 
 sigma1 = solve(conductivity_law.definition,
-    conductivity_law.conductivity)[0].subs({conductivity_law.resistance: R1})
+    conductivity_law.conductance)[0].subs({conductivity_law.resistance: R1})
 
 sigma2 = solve(conductivity_law.definition,
-    conductivity_law.conductivity)[0].subs({conductivity_law.resistance: R2})
+    conductivity_law.conductance)[0].subs({conductivity_law.resistance: R2})
 
 index_local = Idx("index_local", (1, 2))
 
@@ -47,7 +47,7 @@ sigma_parallel = (
 )
 
 resistance_definition = conductivity_law.definition.subs(
-    {conductivity_law.conductivity: sigma_parallel})
+    {conductivity_law.conductance: sigma_parallel})
 R12_parallel = solve(resistance_definition, conductivity_law.resistance)[0]
 
 ## The sum resistance R12 is still connected in series to the internal resistance of the battery

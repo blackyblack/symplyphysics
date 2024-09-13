@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.definitions import electrical_conductivity_is_inversed_resistance as conductivity_def
+from symplyphysics.definitions import electrical_conductance_is_inversed_resistance as conductivity_def
 
 # Description
 ## If the object has 2 Ohm resistance, it should have 0.5 Siemens conductivity. No external calculators were used for such computation.
