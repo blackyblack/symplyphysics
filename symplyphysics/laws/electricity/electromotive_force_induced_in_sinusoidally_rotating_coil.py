@@ -23,66 +23,46 @@ the area of the coil's contour.
 """
 
 from sympy import (Eq, solve, sin)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output, dimensionless, angle_type)
+from symplyphysics import (Quantity, SymbolNew, validate_input,
+    validate_output, dimensionless, symbols)
 
-electromotive_force = Symbol("electromotive_force", units.voltage)
-r"""
+electromotive_force = symbols.electromotive_force
+"""
 Electromotive force induced in the coil.
-
-Symbol:
-    :code:`E`
-
-Latex:
-    :math:`\mathcal{E}`
 """
 
-coil_turn_count = Symbol("coil_turn_count", dimensionless)
+coil_turn_count = SymbolNew("N", dimensionless)
 """
 Number of turns in the coil.
-
-Symbol:
-    :code:`N`
 """
 
-magnetic_flux_density = Symbol("magnetic_flux_density", units.magnetic_density)
+magnetic_flux_density = symbols.magnetic_flux_density
 """
 Magnetic flux density.
-
-Symbol:
-    :code:`B`
 """
 
-contour_area = Symbol("contour_area", units.area)
+contour_area = symbols.area
 """
 Cross-sectional area of the contour enclosed by the coil.
-
-Symbol:
-    :code:`A`
 """
 
-angular_frequency = Symbol("angular_frequency", angle_type / units.time)
-r"""
+angular_frequency = symbols.angular_frequency
+"""
 Angular frequency of the coil's rotation.
-
-Symbol:
-    :code:`w`
-
-Latex:
-    :math:`\omega`
 """
 
-time = Symbol("time", units.time)
+time = symbols.time
+"""
+Time.
+"""
 
 law = Eq(
     electromotive_force,
     -1 * coil_turn_count * magnetic_flux_density * contour_area * angular_frequency * sin(angular_frequency * time))
-r"""
-:code:`E = -1 * N * B * A * w * sin(w * t)`
+"""
+:laws:symbols::
 
-Latex:
-    .. math::
-        \mathcal{E} = -N B A \omega \sin(\omega t)
+:laws:latex::
 """
 
 

@@ -39,6 +39,11 @@ length = SymbolNew("l", units.length)
 **Length** is a measure of distance.
 """
 
+area = SymbolNew("A", units.area)
+"""
+**Area** is the size of a region on a two-dimensional surface.
+"""
+
 angular_speed = angular_frequency = SymbolNew("w", angle_type / units.time, display_latex="\\omega")
 """
 **Angular speed** is the rate of change of angular distance with respect to time.

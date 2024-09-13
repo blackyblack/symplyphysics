@@ -21,6 +21,7 @@ __all__ = [
     "distance",
     "radial_distance",
     "length",
+    "area",
     "angular_speed",
     "angular_frequency",
     # thermodynamics
