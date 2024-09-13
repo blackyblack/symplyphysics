@@ -33,6 +33,8 @@ __all__ = [
     "distance_to_axis",
     "angular_acceleration",
     "angular_distance",
+    "angular_wavenumber",
+    "wavelength",
     # thermodynamics
     "temperature",
     # electrodynamics

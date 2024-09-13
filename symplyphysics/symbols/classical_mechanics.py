@@ -69,3 +69,13 @@ angular_distance = SymbolNew("theta", angle_type, display_latex="\\theta")
 """
 **Angular distance** is a measure of an angular separation between two points.
 """
+
+angular_wavenumber = SymbolNew("k", angle_type / units.length)
+"""
+**Angular wavenumber** is the spatial analog of temporal frequency equal to radians per unit length.
+"""
+
+wavelength = SymbolNew("lambda", units.length, display_latex="\\lambda")
+"""
+**Wavelength** or **spatial period** is the distance over which the wave's shape repeats.
+"""
