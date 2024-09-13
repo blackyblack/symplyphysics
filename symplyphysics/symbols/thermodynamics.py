@@ -24,3 +24,9 @@ heat_capacity = SymbolNew("C", units.energy / units.temperature)
 **Heat capacity** or **thermal capacity** is a physical property of matter, defined as the amount of heat to be
 supplied to an object to produce a unit change in its temperature.
 """
+
+thermal_expansion_coefficient = SymbolNew("alpha", 1 / units.temperature, display_latex="\\alpha")
+"""
+**Thermal expansion coefficient** describes how the size of an object changes with a change in temperature at
+constant pressure.
+"""

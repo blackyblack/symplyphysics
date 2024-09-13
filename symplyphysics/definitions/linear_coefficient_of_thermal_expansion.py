@@ -17,22 +17,25 @@ at constant pressure.
 
 from sympy import Eq, Derivative
 from symplyphysics import (
-    units,
     Quantity,
-    SymbolNew,
-    FunctionNew,
     validate_input,
     validate_output,
     symbols,
+    clone_symbol,
+    clone_function,
 )
 from symplyphysics.core.geometry.line import two_point_function, Point2D
 
-linear_expansion_coefficient = SymbolNew("alpha_l", 1 / units.temperature, display_latex="\\alpha_l")
+linear_expansion_coefficient = clone_symbol(
+    symbols.thermal_expansion_coefficient,
+    display_symbol="alpha_l",
+    display_latex="\\alpha_l",
+)
 """
 Linear coefficient of thermal expansion of the object.
 """
 
-length = FunctionNew("l(T, p)", units.length, display_latex="l")
+length = clone_function(symbols.length, display_symbol="l(T, p)")
 """
 Length of the object as a function of :attr:`~symplyphysics.symbols.temperature`
 and, indirectly, pressure :math:`p`.

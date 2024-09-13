@@ -44,6 +44,7 @@ __all__ = [
     "temperature",
     "adiabatic_index",
     "heat_capacity",
+    "thermal_expansion_coefficient",
     # electrodynamics
     "admittance",
     "conductance",
