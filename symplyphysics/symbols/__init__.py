@@ -21,6 +21,7 @@ __all__ = [
     "power",
     "radius_of_curvature",
     "density",
+    "intensity",
     # classical mechanics
     "force",
     "speed",

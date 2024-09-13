@@ -57,3 +57,9 @@ density = SymbolNew("rho", units.mass / units.volume, display_latex="\\rho")
 """
 **Density** is mass per unit volume.
 """
+
+intensity = SymbolNew("I", units.power / units.area)
+"""
+**Intensity** or **flux** of radiant energy is the power transferred per unit area,  where the area is measured
+on the plane perpendicular to the direction of propagation of the energy.
+"""

@@ -8,24 +8,23 @@ per unit area at which energy is transferred by the wave through or onto the sur
 
 from sympy import Eq
 from symplyphysics import (
-    units,
     Quantity,
-    SymbolNew,
     validate_input,
     validate_output,
+    symbols,
 )
 
-intensity = SymbolNew("I", units.power / units.area)
+intensity = symbols.intensity
 """
 Intensity of the sound wave.
 """
 
-power = SymbolNew("P", units.power)
+power = symbols.power
 """
 Power, or rate of energy transfer, of the wave.
 """
 
-area = SymbolNew("A", units.area)
+area = symbols.area
 """
 Surface area.
 """
