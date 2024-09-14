@@ -22,15 +22,16 @@ from symplyphysics import (
     validate_output,
     SymbolIndexedNew,
     SumIndexed,
-    global_index,
 )
 
-current = SymbolIndexedNew("I_k", units.current)
+current = SymbolIndexedNew("I[k]", units.current, display_latex="I_k")
 r"""
 :math:`k`-th current flowing through the node.
 """
 
-law = Eq(SumIndexed(current[global_index], global_index), 0)
+index = Idx("k")
+
+law = Eq(SumIndexed(current[index], index), 0)
 """
 :laws:symbol::
 
@@ -44,7 +45,7 @@ law = Eq(SumIndexed(current[global_index], global_index), 0)
 @validate_output(units.current)
 def calculate_current_from_array(currents_: Sequence[Quantity]) -> Quantity:
     local_index = Idx("index_local", (1, len(currents_) + 1))
-    currents_law = law.subs(global_index, local_index)
+    currents_law = law.subs(index, local_index)
     currents_law = currents_law.doit()
     unknown_current = current[len(currents_) + 1]
     solved = solve(currents_law, unknown_current, dict=True)[0][unknown_current]

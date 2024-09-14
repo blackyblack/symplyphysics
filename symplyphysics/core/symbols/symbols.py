@@ -286,4 +286,4 @@ def clone_function(
 
 
 # This is default index for indexed parameters, eg for using in SumIndexed
-global_index = Idx("global_index")
+global_index = Idx("i")

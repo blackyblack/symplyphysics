@@ -67,7 +67,7 @@ _resistor_current = clone_function(symbols.current, display_symbol="I_R")
 _resistor_voltage = clone_function(symbols.voltage, display_symbol="V_R")
 
 _local_index_ = Idx("_local_index_", (1, 2))
-_two_currents_law = kirchhoff_law.law.subs(global_index, _local_index_).doit()
+_two_currents_law = kirchhoff_law.law.subs(kirchhoff_law.index, _local_index_).doit()
 # capacitor current is in, resistor current is out
 _two_currents_applied = _two_currents_law.subs({
     kirchhoff_law.current[1]: _capacitor_current(time),
