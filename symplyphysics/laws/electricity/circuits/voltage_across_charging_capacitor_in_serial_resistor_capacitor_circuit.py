@@ -20,8 +20,8 @@ from symplyphysics import (
     validate_output,
     global_index,
     symbols,
-    clone_symbol,
-    clone_function,
+    clone_as_symbol,
+    clone_as_function,
 )
 from symplyphysics.definitions import current_is_charge_derivative as charge_definition
 from symplyphysics.laws.electricity import capacitance_from_charge_and_voltage as capacitance_definition
@@ -35,7 +35,7 @@ capacitor_voltage = symbols.voltage
 Voltage across the capacitor.
 """
 
-source_voltage = clone_symbol(symbols.voltage, display_symbol="V_0")
+source_voltage = clone_as_symbol(symbols.voltage, display_symbol="V_0")
 """
 Voltage of the source, which is the initial voltage across the resistor.
 """
@@ -62,9 +62,9 @@ law = Eq(capacitor_voltage, source_voltage * (1 - exp(-time / time_constant)))
 _resistance = time_constant_law.resistance
 _capacitance = time_constant_law.capacitance
 
-_capacitor_current = clone_function(symbols.current, display_symbol="I_C")
-_resistor_current = clone_function(symbols.current, display_symbol="I_R")
-_resistor_voltage = clone_function(symbols.voltage, display_symbol="V_R")
+_capacitor_current = clone_as_function(symbols.current, display_symbol="I_C")
+_resistor_current = clone_as_function(symbols.current, display_symbol="I_R")
+_resistor_voltage = clone_as_function(symbols.voltage, display_symbol="V_R")
 
 _local_index_ = Idx("_local_index_", (1, 2))
 _two_currents_law = kirchhoff_law.law.subs(kirchhoff_law.index, _local_index_).doit()

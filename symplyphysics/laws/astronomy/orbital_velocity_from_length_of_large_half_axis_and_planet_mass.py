@@ -1,7 +1,7 @@
 from sympy import Eq, solve, sqrt
 from sympy.physics.units import gravitational_constant
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, symbols, clone_symbol)
+    validate_output, symbols)
 
 ## Description
 ## The orbital velocity of a body (usually a planet, a natural or artificial satellite, or a multiple star) is the speed at which it rotates around the barycenter of the system, usually around a more massive body.

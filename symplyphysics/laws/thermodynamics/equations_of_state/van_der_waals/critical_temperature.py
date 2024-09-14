@@ -12,7 +12,7 @@ of the van der Waals equation and the molar gas constant :math:`R`. See :ref:`vd
 
 from sympy import Eq
 from symplyphysics import (
-    clone_symbol,
+    clone_as_symbol,
     symbols,
     units,
     Quantity,
@@ -21,7 +21,7 @@ from symplyphysics import (
     validate_output,
 )
 
-critical_temperature = clone_symbol(symbols.temperature,
+critical_temperature = clone_as_symbol(symbols.temperature,
     display_symbol="T_c",
     display_latex="T_\\text{c}")
 """

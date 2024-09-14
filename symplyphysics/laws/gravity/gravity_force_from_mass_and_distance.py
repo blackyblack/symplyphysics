@@ -8,7 +8,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
     vector_magnitude,
-    clone_symbol,
+    clone_as_symbol,
     symbols,
 )
 from symplyphysics.core.dimensions import ScalarValue
@@ -30,8 +30,8 @@ from symplyphysics.laws.gravity import gravitational_potential_energy
 ## G - gravitational constant
 
 gravitational_force = symbols.force
-first_mass = clone_symbol(symbols.mass, display_symbol="m_1")
-second_mass = clone_symbol(symbols.mass, display_symbol="m_2")
+first_mass = clone_as_symbol(symbols.mass, display_symbol="m_1")
+second_mass = clone_as_symbol(symbols.mass, display_symbol="m_2")
 distance_between_mass_centers = Symbol("distance_between_mass_centers", units.length)
 
 law = Eq(gravitational_force,

@@ -13,7 +13,7 @@ parameters, or degrees of freedom.
 
 from sympy import Eq, solve
 from symplyphysics import (
-    clone_symbol,
+    clone_as_symbol,
     symbols,
     units,
     dimensionless,
@@ -34,7 +34,7 @@ Symbol:
     :code:`S`
 """
 
-temperature_change = clone_symbol(symbols.temperature, display_symbol="dT")
+temperature_change = clone_as_symbol(symbols.temperature, display_symbol="dT")
 """
 Infinitesimal change in :attr:`~symplyphysics.symbols.temperature` of the system.
 """

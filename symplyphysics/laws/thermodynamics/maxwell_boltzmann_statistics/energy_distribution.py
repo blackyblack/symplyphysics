@@ -25,7 +25,7 @@ from symplyphysics import (
     Symbol,
     validate_input,
     validate_output,
-    clone_symbol,
+    clone_as_symbol,
     symbols,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
@@ -50,7 +50,7 @@ Symbol:
     :code:`E`
 """
 
-equilibrium_temperature = clone_symbol(symbols.temperature, positive=True)
+equilibrium_temperature = clone_as_symbol(symbols.temperature, positive=True)
 """
 Equilibrium :attr:`~symplyphysics.symbols.temperature` of the ensemble.
 """

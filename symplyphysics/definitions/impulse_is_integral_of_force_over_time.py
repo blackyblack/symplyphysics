@@ -13,8 +13,8 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_function,
-    clone_symbol,
+    clone_as_function,
+    clone_as_symbol,
 )
 
 impulse = symbols.impulse
@@ -22,7 +22,7 @@ r"""
 Projection of impulse vector due to :attr:`~symplyphysics.symbols.force` :math:`\vec F`.
 """
 
-force = clone_function(symbols.force, display_symbol="F(t)")
+force = clone_as_function(symbols.force, display_symbol="F(t)")
 r"""
 Projection of :attr:`~symplyphysics.symbols.force` :math:`\vec F` as a function of time.
 """
@@ -32,12 +32,12 @@ time = symbols.time
 Time.
 """
 
-time_before = clone_symbol(symbols.time, display_symbol="t_0")
+time_before = clone_as_symbol(symbols.time, display_symbol="t_0")
 """
 Initial time of collision.
 """
 
-time_after = clone_symbol(symbols.time, display_symbol="t_1")
+time_after = clone_as_symbol(symbols.time, display_symbol="t_1")
 """
 Final time of collision.
 """

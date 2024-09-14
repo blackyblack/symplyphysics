@@ -18,7 +18,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_symbol,
+    clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_speed as energy_law
@@ -40,7 +40,7 @@ Symbol:
     :code:`v`
 """
 
-friction_force = clone_symbol(symbols.force,
+friction_force = clone_as_symbol(symbols.force,
     display_symbol="F_fr",
     display_latex="F_\\text{fr}")
 """

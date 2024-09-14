@@ -32,10 +32,10 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_symbol,
+    clone_as_symbol,
 )
 
-temperature = clone_symbol(symbols.temperature,
+temperature = clone_as_symbol(symbols.temperature,
     display_symbol="T_n(x, t)",
     display_latex="T_n")
 """

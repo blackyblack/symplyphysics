@@ -1,6 +1,6 @@
 from sympy import (Eq, solve, pi)
 from sympy.physics.units import magnetic_constant
-from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol,
+from symplyphysics import (symbols, units, Quantity, Symbol,
     validate_input, validate_output, dimensionless)
 
 # Description

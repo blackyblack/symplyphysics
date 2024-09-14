@@ -7,7 +7,7 @@ from symplyphysics import (
     print_expression,
     validate_input,
     validate_output,
-    clone_symbol,
+    clone_as_symbol,
     symbols,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
@@ -31,7 +31,7 @@ from symplyphysics.laws.kinematics import (
 ## a - semi-major axis of the planet's orbit, its radius in case of a round orbit
 
 rotation_period = Symbol("rotation_period", units.time, positive=True)
-attracting_mass = clone_symbol(symbols.mass, positive=True)
+attracting_mass = clone_as_symbol(symbols.mass, positive=True)
 semimajor_axis = Symbol("semimajor_axis", units.length, positive=True)
 
 law = Eq(

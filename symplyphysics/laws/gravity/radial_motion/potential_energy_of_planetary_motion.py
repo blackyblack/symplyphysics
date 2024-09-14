@@ -16,7 +16,6 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_symbol,
 )
 
 total_potential_energy = Symbol("total_potential_energy", units.energy)

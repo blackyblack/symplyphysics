@@ -1,7 +1,6 @@
 from sympy import Eq, solve
 from sympy.physics.units import gravitational_constant
 from symplyphysics import (
-    clone_symbol,
     symbols,
     units,
     Quantity,

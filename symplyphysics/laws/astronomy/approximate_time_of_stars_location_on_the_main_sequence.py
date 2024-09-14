@@ -1,9 +1,5 @@
-from sympy import (
-    Eq,
-    solve,
-)
+from sympy import (Eq, solve)
 from symplyphysics import (
-    clone_symbol,
     symbols,
     units,
     Quantity,

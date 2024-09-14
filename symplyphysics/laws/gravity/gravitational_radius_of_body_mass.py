@@ -4,7 +4,6 @@ from sympy import (
 )
 from sympy.physics.units import gravitational_constant, speed_of_light
 from symplyphysics import (
-    clone_symbol,
     symbols,
     units,
     Quantity,

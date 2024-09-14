@@ -16,7 +16,7 @@ to the heat capacity of the body times the change in the body's temperature.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, validate_input,
+from symplyphysics import (clone_as_symbol, symbols, units, Quantity, Symbol, validate_input,
     validate_output)
 
 heat = Symbol("heat", units.energy)
@@ -35,7 +35,7 @@ Symbol:
     :code:`C`
 """
 
-temperature_change = clone_symbol(symbols.temperature,
+temperature_change = clone_as_symbol(symbols.temperature,
     display_symbol="dT",
     display_latex="\\Delta T")
 """

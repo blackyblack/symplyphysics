@@ -14,7 +14,7 @@ from symplyphysics import (
     Symbol,
     validate_input,
     validate_output,
-    clone_symbol,
+    clone_as_symbol,
     symbols,
 )
 
@@ -45,7 +45,7 @@ Symbol:
     a
 """
 
-attracting_mass = clone_symbol(symbols.mass, display_symbol="M")
+attracting_mass = clone_as_symbol(symbols.mass, display_symbol="M")
 """
 The :attr:`~symplyphysics.symbols.mass` of the attracting body, such as the Sun.
 """

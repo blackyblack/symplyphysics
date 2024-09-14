@@ -22,7 +22,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_symbol,
+    clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed_distribution
@@ -38,12 +38,12 @@ Latex:
     :math:`\langle v \rangle`
 """
 
-equilibrium_temperature = clone_symbol(symbols.temperature, positive=True)
+equilibrium_temperature = clone_as_symbol(symbols.temperature, positive=True)
 """
 Equilibrium :attr:`~symplyphysics.symbols.temperature` of the gas.
 """
 
-molecular_mass = clone_symbol(symbols.mass, positive=True)
+molecular_mass = clone_as_symbol(symbols.mass, positive=True)
 """
 :attr:`~symplyphysics.symbols.mass` of a gas molecule.
 """

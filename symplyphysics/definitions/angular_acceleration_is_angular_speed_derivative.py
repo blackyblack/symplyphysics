@@ -10,16 +10,16 @@ from symplyphysics import (
     Quantity,
     validate_input,
     validate_output,
-    clone_function,
+    clone_as_function,
     symbols,
 )
 
-angular_acceleration = clone_function(symbols.angular_acceleration, display_symbol="alpha(t)")
+angular_acceleration = clone_as_function(symbols.angular_acceleration, display_symbol="alpha(t)")
 """
 Angular acceleration of the body as a function of time.
 """
 
-angular_speed = clone_function(symbols.angular_speed, display_symbol="w(t)")
+angular_speed = clone_as_function(symbols.angular_speed, display_symbol="w(t)")
 """
 Angular speed of the body as a function of time.
 """

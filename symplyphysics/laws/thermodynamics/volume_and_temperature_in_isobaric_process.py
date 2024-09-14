@@ -8,18 +8,18 @@ by the same amount as the temperature during an isobaric process.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, validate_input,
+from symplyphysics import (clone_as_symbol, symbols, units, Quantity, Symbol, validate_input,
     validate_output)
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as thermodynamics_law
 
-initial_temperature = clone_symbol(symbols.temperature,
+initial_temperature = clone_as_symbol(symbols.temperature,
     display_symbol="T0",
     display_latex="T_0")
 """
 Initial :attr:`~symplyphysics.symbols.temperature` of the system.
 """
 
-final_temperature = clone_symbol(symbols.temperature,
+final_temperature = clone_as_symbol(symbols.temperature,
     display_symbol="T1",
     display_latex="T_1")
 """

@@ -12,7 +12,7 @@ square of the distance between them.
 """
 
 from sympy import (Eq, solve, pi)
-from symplyphysics import (clone_symbol, symbols, Quantity,
+from symplyphysics import (clone_as_symbol, symbols, Quantity,
     validate_input, validate_output, quantities)
 
 electrostatic_force = symbols.force
@@ -20,12 +20,12 @@ electrostatic_force = symbols.force
 Electrostatic :attr:`~symplyphysics.symbols.force` between two charges.
 """
 
-first_charge = clone_symbol(symbols.charge, display_symbol="q_1")
+first_charge = clone_as_symbol(symbols.charge, display_symbol="q_1")
 """
 First charge.
 """
 
-second_charge = clone_symbol(symbols.charge, display_symbol="q_2")
+second_charge = clone_as_symbol(symbols.charge, display_symbol="q_2")
 """
 Second charge.
 """

@@ -22,7 +22,6 @@ and (2) the angular frequency of the external force driving the oscillations.
 
 from sympy import Eq, cos, dsolve
 from symplyphysics import (
-    clone_symbol,
     symbols,
     units,
     Quantity,

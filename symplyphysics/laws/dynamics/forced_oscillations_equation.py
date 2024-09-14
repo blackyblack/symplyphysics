@@ -13,7 +13,6 @@ frequency of the oscillator.
 
 from sympy import Derivative, Eq, cos, dsolve
 from symplyphysics import (
-    clone_symbol,
     symbols,
     units,
     angle_type,

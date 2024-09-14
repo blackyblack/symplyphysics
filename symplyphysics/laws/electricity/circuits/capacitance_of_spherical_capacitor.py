@@ -18,7 +18,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_symbol,
+    clone_as_symbol,
 )
 
 capacitance = symbols.capacitance
@@ -31,12 +31,12 @@ absolute_permittivity = symbols.absolute_permittivity
 Absolute permittivity of the medium between the spheres.
 """
 
-inner_radius = clone_symbol(symbols.radial_distance, display_symbol="r_in", display_latex="r_\\text{in}")
+inner_radius = clone_as_symbol(symbols.radial_distance, display_symbol="r_in", display_latex="r_\\text{in}")
 """
 Radius of the inner sphere.
 """
 
-outer_radius = clone_symbol(symbols.radial_distance, display_symbol="r_out", display_latex="r_\\text{out}")
+outer_radius = clone_as_symbol(symbols.radial_distance, display_symbol="r_out", display_latex="r_\\text{out}")
 """
 Radius of the outer sphere.
 """

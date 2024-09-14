@@ -9,7 +9,6 @@ Also see `figure <https://www.researchgate.net/publication/312093145/figure/fig7
 
 from sympy import (Eq, solve)
 from symplyphysics import (
-    clone_symbol,
     symbols,
     units,
     Quantity,

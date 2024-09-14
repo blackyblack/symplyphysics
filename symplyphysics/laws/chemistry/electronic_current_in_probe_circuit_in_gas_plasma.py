@@ -1,7 +1,6 @@
 from sympy import Eq, solve, pi, exp, sqrt
 from sympy.physics.units import elementary_charge, electron_rest_mass, boltzmann_constant
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols,
-    clone_symbol)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols)
 
 # Description
 ## A gas–discharge plasma is an ionized gas in which the concentrations of positively and negatively charged particles are approximately

@@ -17,7 +17,7 @@ and inversely proportional to the mass of the gas.
 
 from sympy import (Eq, solve, S, stats, Interval)
 from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols,
-    clone_symbol)
+    clone_as_symbol)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed_distribution
 
@@ -32,12 +32,12 @@ Latex:
     :math:`\langle v^2 \rangle`
 """
 
-equilibrium_temperature = clone_symbol(symbols.temperature, positive=True)
+equilibrium_temperature = clone_as_symbol(symbols.temperature, positive=True)
 """
 Equilibrium :attr:`~symplyphysics.symbols.temperature` of the gas.
 """
 
-molecular_mass = clone_symbol(symbols.mass, positive=True)
+molecular_mass = clone_as_symbol(symbols.mass, positive=True)
 """
 :attr:`~symplyphysics.symbols.mass` of a gas molecule.
 """

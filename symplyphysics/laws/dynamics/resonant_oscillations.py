@@ -20,7 +20,6 @@ resonance.
 
 from sympy import Eq, dsolve, sin
 from symplyphysics import (
-    clone_symbol,
     symbols,
     units,
     angle_type,

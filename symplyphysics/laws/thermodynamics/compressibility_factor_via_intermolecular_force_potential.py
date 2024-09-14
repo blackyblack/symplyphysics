@@ -22,7 +22,7 @@ linked to the intermolecular force potential.
 
 from sympy import Eq, Integral, pi, exp, S
 from symplyphysics import (
-    clone_symbol,
+    clone_as_symbol,
     symbols,
     units,
     dimensionless,
@@ -79,7 +79,7 @@ Latex:
     :math:`\varphi(r)`
 """
 
-temperature = clone_symbol(symbols.temperature, positive=True)
+temperature = clone_as_symbol(symbols.temperature, positive=True)
 """
 :attr:`~symplyphysics.symbols.temperature` of the system.
 """

@@ -12,15 +12,15 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_function,
+    clone_as_function,
 )
 
-current = clone_function(symbols.current, display_symbol="I(t)")
+current = clone_as_function(symbols.current, display_symbol="I(t)")
 """
 Electric current as a function of time.
 """
 
-charge = clone_function(symbols.charge, display_symbol="q(t)")
+charge = clone_as_function(symbols.charge, display_symbol="q(t)")
 """
 Electric charge as a function of time.
 """

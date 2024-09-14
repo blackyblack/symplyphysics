@@ -26,7 +26,6 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_symbol,
 )
 
 spectral_energy_density = Symbol("spectral_energy_density",

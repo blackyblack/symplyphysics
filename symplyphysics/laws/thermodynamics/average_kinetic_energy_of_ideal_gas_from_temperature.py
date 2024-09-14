@@ -23,7 +23,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_symbol,
+    clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import energy_distribution
@@ -39,7 +39,7 @@ Latex:
     :math:`\langle K \rangle`
 """
 
-equilibrium_temperature = clone_symbol(
+equilibrium_temperature = clone_as_symbol(
     symbols.temperature,
     positive=True,
 )

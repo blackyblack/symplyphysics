@@ -16,8 +16,7 @@ The *barometric formula* determines the dependence of the pressure or density of
 """
 
 from sympy import (Eq, solve, exp)
-from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output,
-    clone_symbol)
+from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output)
 
 final_pressure = Symbol("final_pressure", units.pressure)
 """

@@ -1,7 +1,6 @@
 from sympy import Eq, solve
 from symplyphysics import (
     symbols,
-    clone_symbol,
     units,
     Quantity,
     Symbol,

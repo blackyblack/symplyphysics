@@ -1,6 +1,5 @@
 from sympy import Eq, sympify
 from symplyphysics import (
-    clone_symbol,
     symbols,
     units,
     Symbol,

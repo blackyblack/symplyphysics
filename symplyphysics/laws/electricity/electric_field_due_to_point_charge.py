@@ -17,7 +17,7 @@ from symplyphysics import (
     validate_output,
     symbols,
     quantities,
-    clone_symbol,
+    clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity import electrostatic_force_via_charges_and_distance as coulombs_law
@@ -47,7 +47,7 @@ law = Eq(electric_field_strength, 1 / (4 * pi * quantities.vacuum_permittivity) 
 
 # Derive this law from Coulomb's law and the definition of electric field
 
-_test_charge = clone_symbol(symbols.charge, display_symbol="test_charge")
+_test_charge = clone_as_symbol(symbols.charge, display_symbol="test_charge")
 
 _coulombs_law_sub = coulombs_law.law.subs({
     coulombs_law.first_charge: charge,

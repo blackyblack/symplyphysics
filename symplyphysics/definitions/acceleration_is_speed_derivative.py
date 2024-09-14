@@ -11,15 +11,15 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_function,
+    clone_as_function,
 )
 
-acceleration = clone_function(symbols.acceleration, display_symbol="a(t)")
+acceleration = clone_as_function(symbols.acceleration, display_symbol="a(t)")
 """
 :attr:`~symplyphysics.symbols.classical_mechanics.acceleration` of the body as a function of time.
 """
 
-speed = clone_function(symbols.speed, display_symbol="v(t)")
+speed = clone_as_function(symbols.speed, display_symbol="v(t)")
 """
 :attr:`~symplyphysics.symbols.classical_mechanics.speed` of the body as a function of time.
 """

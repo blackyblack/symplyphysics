@@ -25,7 +25,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_symbol,
+    clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import (
@@ -48,7 +48,7 @@ Symbol:
     :code:`T`
 """
 
-mass = clone_symbol(symbols.mass, positive=True)
+mass = clone_as_symbol(symbols.mass, positive=True)
 """
 The :attr:`~symplyphysics.symbols.mass` of the pendulum.
 """

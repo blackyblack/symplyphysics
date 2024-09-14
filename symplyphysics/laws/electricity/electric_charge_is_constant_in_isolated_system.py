@@ -7,14 +7,14 @@ at all times.
 """
 
 from sympy import Eq, solve
-from symplyphysics import Quantity, validate_input, validate_output, symbols, clone_symbol
+from symplyphysics import Quantity, validate_input, validate_output, symbols, clone_as_symbol
 
-initial_charge = clone_symbol(symbols.charge, display_symbol="q_0")
+initial_charge = clone_as_symbol(symbols.charge, display_symbol="q_0")
 """
 Initial charge of the system.
 """
 
-final_charge = clone_symbol(symbols.charge, display_symbol="q_1")
+final_charge = clone_as_symbol(symbols.charge, display_symbol="q_1")
 """
 Final charge of the system.
 """

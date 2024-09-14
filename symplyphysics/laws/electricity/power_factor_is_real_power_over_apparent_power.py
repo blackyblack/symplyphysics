@@ -11,15 +11,15 @@ efficiency. It is the ratio of real power to apparent power of the circuit.
 
 from sympy import (Eq, solve)
 from symplyphysics import (Quantity, validate_input,
-    validate_output, symbols, clone_symbol)
+    validate_output, symbols, clone_as_symbol)
 
-apparent_power = clone_symbol(symbols.power, display_symbol="S")
+apparent_power = clone_as_symbol(symbols.power, display_symbol="S")
 """
 Apparent power of the circuit, which is the absolute value of the complex
 power.
 """
 
-real_power = clone_symbol(symbols.power, symbols="P")
+real_power = clone_as_symbol(symbols.power, symbols="P")
 """
 Real power, or active power, of the circuit.
 """

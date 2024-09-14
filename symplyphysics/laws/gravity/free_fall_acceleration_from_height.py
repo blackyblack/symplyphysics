@@ -1,7 +1,7 @@
 from sympy import (Eq, solve)
 from sympy.physics.units import gravitational_constant
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, symbols, clone_symbol)
+    validate_output, symbols)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.gravity import gravity_force_from_mass_and_distance as gravity_law
 from symplyphysics.laws.dynamics import acceleration_is_force_over_mass as newton2_law

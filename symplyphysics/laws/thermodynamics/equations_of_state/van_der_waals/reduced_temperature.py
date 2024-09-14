@@ -7,7 +7,7 @@ See :ref:`vdw_reduced_units_def`.
 
 from sympy import Eq
 from symplyphysics import (
-    clone_symbol,
+    clone_as_symbol,
     symbols,
     dimensionless,
     Quantity,
@@ -33,7 +33,7 @@ temperature = symbols.temperature
 :attr:`~symplyphysics.symbols.temperature` of the van der Waals fluid.
 """
 
-critical_temperature = clone_symbol(symbols.temperature,
+critical_temperature = clone_as_symbol(symbols.temperature,
     display_symbol="T_c",
     display_latex="T_\\text{c}")
 """

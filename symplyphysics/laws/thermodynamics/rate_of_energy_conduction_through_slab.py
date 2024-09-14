@@ -9,7 +9,7 @@ its face area and inversely proportional to its length.
 
 from sympy import Eq
 from symplyphysics import (
-    clone_symbol,
+    clone_as_symbol,
     symbols,
     units,
     Quantity,
@@ -52,7 +52,7 @@ Symbol:
     :code:`l`
 """
 
-temperature_difference = clone_symbol(symbols.temperature,
+temperature_difference = clone_as_symbol(symbols.temperature,
     display_symbol="dT",
     display_latex="\\Delta T",
     real=True)

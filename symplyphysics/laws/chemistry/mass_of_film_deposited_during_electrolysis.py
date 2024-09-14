@@ -1,7 +1,7 @@
 from sympy import Eq, solve
 from sympy.physics.units import elementary_charge, avogadro_constant
 from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless,
-    clone_symbol, symbols)
+    symbols)
 
 # Description
 ## Electrolysis is a physico-chemical process consisting in the release of components of dissolved substances or other substances on the electrodes,

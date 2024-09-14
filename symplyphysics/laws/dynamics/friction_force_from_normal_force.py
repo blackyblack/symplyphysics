@@ -7,10 +7,10 @@ It is proportional to the normal force between the two objects.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (clone_symbol, symbols, Quantity, Symbol, dimensionless, validate_input,
+from symplyphysics import (clone_as_symbol, symbols, Quantity, Symbol, dimensionless, validate_input,
     validate_output)
 
-friction_force = clone_symbol(symbols.force,
+friction_force = clone_as_symbol(symbols.force,
     display_symbol="F_fr",
     display_latex="F_\\text{fr}")
 """
@@ -28,7 +28,7 @@ Latex:
     :math:`\mu`
 """
 
-normal_force = clone_symbol(symbols.force, display_symbol="N")
+normal_force = clone_as_symbol(symbols.force, display_symbol="N")
 """
 The normal reaction :attr:`~symplyphysics.symbols.force` from one object to another.
 """

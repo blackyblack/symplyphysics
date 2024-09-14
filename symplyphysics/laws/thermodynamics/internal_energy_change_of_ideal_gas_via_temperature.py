@@ -12,7 +12,7 @@ and is independent of other thermodynamic quantities such as pressure or density
 
 from sympy import Eq
 from symplyphysics import (
-    clone_symbol,
+    clone_as_symbol,
     symbols,
     units,
     Quantity,
@@ -40,7 +40,7 @@ Latex:
     :math:`C_V`
 """
 
-temperature_change = clone_symbol(symbols.temperature, display_symbol="dT")
+temperature_change = clone_as_symbol(symbols.temperature, display_symbol="dT")
 """
 Infinitesimal change in :attr:`~symplyphysics.symbols.temperature` of the system.
 """

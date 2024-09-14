@@ -25,7 +25,6 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_symbol,
 )
 
 occupancy_of_state = Symbol("occupancy_of_state", dimensionless)

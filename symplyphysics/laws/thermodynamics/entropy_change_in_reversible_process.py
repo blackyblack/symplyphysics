@@ -26,7 +26,6 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_symbol,
 )
 
 entropy_change = Symbol("entropy_change", units.energy / units.temperature)

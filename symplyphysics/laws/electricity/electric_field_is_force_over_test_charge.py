@@ -10,7 +10,7 @@ the value of the test charge.
 
 from sympy import Eq, solve
 from symplyphysics import (
-    clone_symbol,
+    clone_as_symbol,
     symbols,
     Quantity,
     validate_input,
@@ -27,7 +27,7 @@ electrostatic_force = symbols.force
 Projection of the electrostatic :attr:`~symplyphysics.symbols.force` applied to the test charge.
 """
 
-test_charge = clone_symbol(symbols.charge, display_symbol="q_0")
+test_charge = clone_as_symbol(symbols.charge, display_symbol="q_0")
 """
 Value of the test charge.
 """

@@ -13,7 +13,7 @@ and is analogous to the Reynolds number.
 
 from sympy import Eq, solve
 from symplyphysics import (
-    clone_symbol,
+    clone_as_symbol,
     symbols,
     units,
     Quantity,
@@ -46,14 +46,14 @@ Latex:
     :math:`\beta`
 """
 
-surface_temperature = clone_symbol(symbols.temperature,
+surface_temperature = clone_as_symbol(symbols.temperature,
     display_symbol="T_s",
     display_latex="T_\\text{s}")
 """
 :attr:`~symplyphysics.symbols.temperature` of the surface of the fluid.
 """
 
-bulk_temperature = clone_symbol(symbols.temperature,
+bulk_temperature = clone_as_symbol(symbols.temperature,
     display_symbol="T_b",
     display_latex="T_\\text{b}")
 """

@@ -13,7 +13,6 @@ The change in pressure of ideal gas depends on temperature, standard pressure an
 from sympy import Eq, solve
 from symplyphysics import (
     symbols,
-    clone_symbol,
     units,
     Quantity,
     Symbol,

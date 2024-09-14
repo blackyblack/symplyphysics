@@ -5,7 +5,6 @@ from symplyphysics import (
     Symbol,
     Function,
     symbols,
-    clone_symbol,
 )
 
 # Description

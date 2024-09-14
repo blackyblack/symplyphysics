@@ -21,12 +21,12 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_symbol,
-    clone_function,
+    clone_as_symbol,
+    clone_as_function,
 )
 from symplyphysics.core.geometry.line import two_point_function, Point2D
 
-linear_expansion_coefficient = clone_symbol(
+linear_expansion_coefficient = clone_as_symbol(
     symbols.thermal_expansion_coefficient,
     display_symbol="alpha_l",
     display_latex="\\alpha_l",
@@ -35,7 +35,7 @@ linear_expansion_coefficient = clone_symbol(
 Linear coefficient of thermal expansion of the object.
 """
 
-length = clone_function(symbols.length, display_symbol="l(T, p)")
+length = clone_as_function(symbols.length, display_symbol="l(T, p)")
 """
 Length of the object as a function of :attr:`~symplyphysics.symbols.temperature`
 and, indirectly, pressure :math:`p`.

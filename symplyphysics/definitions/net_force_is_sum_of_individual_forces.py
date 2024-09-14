@@ -11,7 +11,7 @@ The net force is the arithmetic sum of forces.
 
 from typing import Sequence
 from sympy import (Eq, Idx, solve)
-from symplyphysics import (clone_symbol, symbols, units, Quantity, validate_input, validate_output,
+from symplyphysics import (symbols, units, Quantity, validate_input, validate_output,
     SymbolIndexedNew, global_index, SumIndexed, Vector)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions.vector import superposition_of_forces_is_sum as vector_forces_sum

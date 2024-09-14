@@ -19,7 +19,7 @@ as they always tend to arrive at a state of thermodynamic equilibrium, where the
 
 from sympy import (Eq, solve, log)
 from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols,
-    clone_symbol)
+    clone_as_symbol)
 
 entropy_change = Symbol("entropy_change", units.energy / units.temperature)
 """
@@ -54,14 +54,14 @@ Latex:
     :math:`C_V`
 """
 
-final_temperature = clone_symbol(symbols.temperature,
+final_temperature = clone_as_symbol(symbols.temperature,
     display_symbol="T1",
     display_latex="T_1")
 """
 :attr:`~symplyphysics.symbols.temperature` of the final state.
 """
 
-initial_temperature = clone_symbol(symbols.temperature,
+initial_temperature = clone_as_symbol(symbols.temperature,
     display_symbol="T0",
     display_latex="T_0")
 """

@@ -13,20 +13,20 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_symbol,
+    clone_as_symbol,
 )
 
-reduced_mass = clone_symbol(symbols.mass, display_symbol="mu", display_latex="\\mu")
+reduced_mass = clone_as_symbol(symbols.mass, display_symbol="mu", display_latex="\\mu")
 """
 The reduced :attr:`~symplyphysics.symbols.mass` of the system.
 """
 
-first_mass = clone_symbol(symbols.mass, display_symbol="m1", display_latex="m_1")
+first_mass = clone_as_symbol(symbols.mass, display_symbol="m1", display_latex="m_1")
 """
 The :attr:`~symplyphysics.symbols.mass` of the first body.
 """
 
-second_mass = clone_symbol(symbols.mass, display_symbol="m2", display_latex="m_2")
+second_mass = clone_as_symbol(symbols.mass, display_symbol="m2", display_latex="m_2")
 """
 The :attr:`~symplyphysics.symbols.mass` of the second body.
 """

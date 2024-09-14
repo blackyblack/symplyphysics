@@ -18,7 +18,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_symbol,
+    clone_as_symbol,
 )
 
 rotation_period = Symbol("rotation_period", units.time)
@@ -37,7 +37,7 @@ Symbol:
     :code:`a`
 """
 
-attracting_mass = clone_symbol(symbols.mass, display_symbol="M")
+attracting_mass = clone_as_symbol(symbols.mass, display_symbol="M")
 """
 The :attr:`~symplyphysics.symbols.mass` of the attracting body, such as the Sun.
 """

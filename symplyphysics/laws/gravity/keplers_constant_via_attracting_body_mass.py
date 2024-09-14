@@ -16,7 +16,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_symbol,
+    clone_as_symbol,
 )
 
 keplers_constant = Symbol("keplers_constant", units.length**3 / units.time**2)
@@ -28,7 +28,7 @@ Latex:
     :math:`\mathfrak{K}`
 """
 
-attracting_mass = clone_symbol(symbols.mass, display_symbol="M")
+attracting_mass = clone_as_symbol(symbols.mass, display_symbol="M")
 """
 The :attr:`~symplyphysics.symbols.mass` of the attracting body.
 """

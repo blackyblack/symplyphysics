@@ -33,7 +33,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_symbol,
+    clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.conservation import (
@@ -69,7 +69,7 @@ acceleration = symbols.acceleration
 The :attr:`~symplyphysics.symbols.acceleration` of the rocket.
 """
 
-mass = clone_symbol(symbols.mass, display_symbol="M")
+mass = clone_as_symbol(symbols.mass, display_symbol="M")
 """
 .. _rocket mass definition:
 

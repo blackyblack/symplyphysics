@@ -10,7 +10,6 @@ from symplyphysics import (
     dimensionless,
     angle_type,
     symbols,
-    clone_symbol,
 )
 
 # Description

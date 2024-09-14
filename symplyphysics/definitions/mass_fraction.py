@@ -13,7 +13,7 @@ from symplyphysics import (
     validate_output,
     dimensionless,
     convert_to_float,
-    clone_symbol,
+    clone_as_symbol,
     symbols,
 )
 from symplyphysics.core.symbols.fraction import Fraction
@@ -23,7 +23,7 @@ mass_fraction = SymbolNew("w", dimensionless, display_latex="\\omega")
 Mass fraction of the mixture component.
 """
 
-mass_of_component = clone_symbol(symbols.mass, display_symbol="m[i]", display_latex="m_i")
+mass_of_component = clone_as_symbol(symbols.mass, display_symbol="m[i]", display_latex="m_i")
 """
 :attr:`~symplyphysics.symbols.mass` of the mixture component.
 """

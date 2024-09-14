@@ -18,7 +18,7 @@ from symplyphysics import (
     validate_output,
     symbols,
 )
-from symplyphysics.core.symbols.symbols import clone_function
+from symplyphysics.core.symbols.symbols import clone_as_function
 from symplyphysics.core.geometry.line import two_point_function, Point2D
 
 electromotive_force = symbols.electromotive_force
@@ -31,7 +31,7 @@ coil_turn_count = SymbolNew("N", dimensionless)
 Number of turns in the coil.
 """
 
-magnetic_flux = clone_function(symbols.magnetic_flux)
+magnetic_flux = clone_as_function(symbols.magnetic_flux)
 """
 Magnetic flux through the coil.
 """

@@ -12,17 +12,17 @@ from symplyphysics import (
     SymbolNew,
     validate_input,
     validate_output,
-    clone_function,
+    clone_as_function,
     symbols,
 )
 from symplyphysics.core.convert import convert_to_si
 
-angular_speed = clone_function(symbols.angular_speed, display_symbol="w(t)")
+angular_speed = clone_as_function(symbols.angular_speed, display_symbol="w(t)")
 """
 Angular speed of the body as a function of time.
 """
 
-angular_distance = clone_function(symbols.angular_distance, display_symbol="theta(t)")
+angular_distance = clone_as_function(symbols.angular_distance, display_symbol="theta(t)")
 """
 Angular distance as a function of time.
 """
