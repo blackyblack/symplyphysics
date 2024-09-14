@@ -31,7 +31,7 @@ coil_turn_count = SymbolNew("N", dimensionless)
 Number of turns in the coil.
 """
 
-magnetic_flux = clone_as_function(symbols.magnetic_flux)
+magnetic_flux = clone_as_function(symbols.magnetic_flux, display_symbol="B(t)")
 """
 Magnetic flux through the coil.
 """

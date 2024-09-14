@@ -92,7 +92,7 @@ vacuum_permeability = Quantity(units.vacuum_permeability,
     display_latex="\\mu_0")
 """
 Vacuum permeability, also known as permeability of free space of the magnetic constant, is the value of the absolute
-permeability of classical volume.
+permeability of classical vacuum.
 """
 
 elementary_charge = Quantity(units.elementary_charge, display_symbol="e")

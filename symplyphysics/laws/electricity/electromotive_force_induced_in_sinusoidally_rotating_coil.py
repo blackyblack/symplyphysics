@@ -4,7 +4,7 @@ Electromotive force induced in sinusoidally rotating coil
 
 Suppose a coil is being rotated around the axis that lies in the coil's cross section
 (see `Figure <https://www.schoolphysics.co.uk/age16-19/Electricity%20and%20magnetism/Electromagnetic%20induction/text/Induced_emf_in_a_rotating_coil/index.html>`__)
-in a magnetic field under the conditions described below. Then an electromotive will
+in a magnetic field under the conditions described below. Then an electromotive force will
 be induced in the contour of the coil. Its amplitude depends on the number of turns in
 the coil, the magnetic flux density, the angular frequency of the coil's rotation and
 the area of the coil's contour.
