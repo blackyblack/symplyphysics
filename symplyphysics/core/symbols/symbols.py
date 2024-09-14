@@ -194,7 +194,7 @@ class FunctionNew(DimensionSymbolNew, UndefinedFunction):
 
 # Symbol and Function have generated names, hence their display is not readable.
 # Use custom implementation of the PrettyPrinter to convert real symbol names
-# to user fiendly names.
+# to user friendly names.
 
 
 class SymbolPrinter(PrettyPrinter):
@@ -251,13 +251,12 @@ def print_expression(expr: Expr | Equality | Sequence[Expr | Equality]) -> str:
         pretty_use_unicode(uflag)
 
 
-def clone_as_symbol(source: DimensionSymbolNew,
+def clone_as_symbol(source: SymbolNew | FunctionNew | SymbolIndexedNew,
     *,
     display_symbol: Optional[str] = None,
     display_latex: Optional[str] = None,
     **assumptions: Any) -> SymbolNew:
-    assumptions = source.assumptions0 if assumptions is None or len(
-        assumptions) == 0 else assumptions
+    assumptions = assumptions or source.assumptions0
     display_symbol = display_symbol or source.display_name
     display_latex = display_latex or source.display_latex or display_symbol
     return SymbolNew(
@@ -269,12 +268,13 @@ def clone_as_symbol(source: DimensionSymbolNew,
 
 
 def clone_as_function(
-    source: DimensionSymbolNew,
+    source: SymbolNew | FunctionNew | SymbolIndexedNew,
     *,
     display_symbol: Optional[str] = None,
     display_latex: Optional[str] = None,
     **assumptions: Any,
 ) -> FunctionNew:
+    assumptions = assumptions or source.assumptions0
     display_symbol = display_symbol or source.display_name
     display_latex = display_latex or source.display_latex or display_symbol
     return FunctionNew(
