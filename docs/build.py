@@ -8,6 +8,7 @@ from typing import Sequence
 from sphinx.application import Sphinx
 
 from symplyphysics.docs.build import generate_laws_docs
+from symplyphysics.docs import symbols_role
 
 
 def get_parser() -> argparse.ArgumentParser:
@@ -72,6 +73,8 @@ def main(argv: Sequence[str] = ()) -> None:
     index_file = pathlib.Path(args.conf_dir).joinpath("index.rst")
     out_index_file = pathlib.Path(args.generated_dir).joinpath("index.rst")
     shutil.copyfile(index_file, out_index_file, follow_symlinks=True)
+
+    symbols_role.process_dir(args.generated_dir)
 
     # Build HTML docs
     doctrees = pathlib.Path(args.output_dir).joinpath(".doctrees/")
