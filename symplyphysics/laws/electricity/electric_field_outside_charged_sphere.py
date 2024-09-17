@@ -34,7 +34,7 @@ charge = symbols.charge
 Total charge of the sphere.
 """
 
-distance = symbols.radial_distance
+distance = symbols.distance_to_origin
 """
 Distance to the center of the sphere.
 """

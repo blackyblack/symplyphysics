@@ -31,12 +31,12 @@ absolute_permittivity = symbols.absolute_permittivity
 Absolute permittivity of the medium between the spheres.
 """
 
-inner_radius = clone_as_symbol(symbols.radial_distance, display_symbol="r_in", display_latex="r_\\text{in}")
+inner_radius = clone_as_symbol(symbols.distance_to_origin, display_symbol="r_in", display_latex="r_\\text{in}")
 """
 Radius of the inner sphere.
 """
 
-outer_radius = clone_as_symbol(symbols.radial_distance, display_symbol="r_out", display_latex="r_\\text{out}")
+outer_radius = clone_as_symbol(symbols.distance_to_origin, display_symbol="r_out", display_latex="r_\\text{out}")
 """
 Radius of the outer sphere.
 """

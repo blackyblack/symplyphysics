@@ -30,7 +30,7 @@ second_charge = clone_as_symbol(symbols.charge, display_symbol="q_2")
 Second charge.
 """
 
-distance = symbols.radial_distance
+distance = symbols.distance_to_origin
 """
 Distance between the charges.
 """

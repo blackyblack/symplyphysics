@@ -24,7 +24,7 @@ absolute_permittivity = symbols.absolute_permittivity
 Absolute permittivity of the medium.
 """
 
-distance = symbols.radial_distance
+distance = symbols.distance_to_origin
 """
 Distance to the point charge.
 """

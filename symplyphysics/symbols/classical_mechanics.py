@@ -29,7 +29,7 @@ distance = SymbolNew("d", units.length)
 **Distance** is is a measure of the spatial separation between two points.
 """
 
-radial_distance = SymbolNew("r", units.length)
+distance_to_origin = SymbolNew("r", units.length)
 """
 Distance to the origin of the coordinate system.
 """
@@ -41,7 +41,7 @@ Distance to reference axis.
 
 length = SymbolNew("l", units.length)
 """
-**Length** is a measure of distance.
+**Length** is a measure of a size of an object..
 """
 
 area = SymbolNew("A", units.area)

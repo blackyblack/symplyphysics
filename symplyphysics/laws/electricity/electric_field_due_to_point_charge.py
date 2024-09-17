@@ -33,7 +33,7 @@ charge = symbols.charge
 Value of the point charge.
 """
 
-distance = symbols.radial_distance
+distance = symbols.distance_to_origin
 """
 Distance to the charge.
 """
