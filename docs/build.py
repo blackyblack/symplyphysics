@@ -59,6 +59,13 @@ def get_parser() -> argparse.ArgumentParser:
         dest="quiet",
         help="suppress rST files generation text",
         )
+    
+    parser.add_argument("-R",
+        "--rst-only",
+        action="store_true",
+        dest="rst_only",
+        help="only generate rST files and suppress HTML generation",
+        )
 
     return parser
 
@@ -86,6 +93,9 @@ def main(argv: Sequence[str] = ()) -> None:
     shutil.copyfile(index_file, out_index_file, follow_symlinks=True)
 
     process_generated_files(args.generated_dir)
+
+    if args.rst_only:
+        return
 
     # Build HTML docs
     doctrees = Path(args.output_dir) / ".doctrees/"
