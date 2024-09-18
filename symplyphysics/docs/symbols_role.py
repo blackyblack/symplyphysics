@@ -5,7 +5,7 @@ import re
 
 from symplyphysics import symbols, SymbolNew
 
-_symbols_pattern = re.compile(r":symbols:`([^`]*)`")
+_symbols_pattern = re.compile(r":symbols:`(\w*)`")
 
 # Automatically find the necessaty modules so that we don't need to write the logic by hand
 _symbols_by_module: dict[str, set[str]] = {}
@@ -22,7 +22,7 @@ for _attr in set(dir(symbols)) - set(symbols.__all__):
                 _symbols_by_module[_attr].add(_subattr)
 
 
-def process_string(doc: str) -> str:
+def process_string(doc: str, path: str) -> str:
     parts = []
 
     last_index_to = 0
@@ -41,7 +41,7 @@ def process_string(doc: str) -> str:
                 last_index_to = index_to
                 break
         else:
-            raise ValueError(f"Unknown symbol {name}.")
+            raise ValueError(f"Unknown symbol {name} in '{path}'.")
 
     # no substitution happened
     if not parts:

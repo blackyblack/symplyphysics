@@ -8,7 +8,7 @@ from pathlib import Path
 from sphinx.application import Sphinx
 
 from symplyphysics.docs.build import generate_laws_docs
-from symplyphysics.docs import symbols_role
+from symplyphysics.docs import symbols_role, quantity_notation_role
 
 
 def get_parser() -> argparse.ArgumentParser:
@@ -73,14 +73,15 @@ def get_parser() -> argparse.ArgumentParser:
 def process_generated_files(generated_dir: str) -> None:
     for file_path in Path(generated_dir).iterdir():
         with open(file_path, "r+", encoding="utf-8") as file:
-            old_doc = file.read()
+            doc = file.read()
             
             # processing logic goes here
-            new_doc = symbols_role.process_string(old_doc)
+            doc = symbols_role.process_string(doc, file_path)
+            doc = quantity_notation_role.process_string(doc, file_path)
 
             file.seek(0)
             file.truncate(0)
-            file.write(new_doc)
+            file.write(doc)
 
 
 def main(argv: Sequence[str] = ()) -> None:

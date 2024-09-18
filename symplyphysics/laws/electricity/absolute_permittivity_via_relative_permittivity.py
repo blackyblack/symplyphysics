@@ -7,8 +7,7 @@ and vacuum permittivity.
 
 **Notation:**
 
-#. :math:`\varepsilon_0` (:code:`epsilon_0`) is **vacuum permittivity**, also called **permittivity
-   of free space** or the **electric constant**.
+#. :quantity_notation:`vacuum_permittivity`.
 """
 
 from sympy import Eq
