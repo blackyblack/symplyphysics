@@ -20,7 +20,7 @@ Speed of the object.
 
 mass = symbols.mass
 """
-:attr:`~symplyphysics.symbols.mass` of the object.
+:symbols:`mass` of the object.
 """
 
 definition = Eq(momentum, mass * speed)

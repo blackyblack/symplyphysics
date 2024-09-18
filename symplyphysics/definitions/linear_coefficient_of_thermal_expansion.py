@@ -37,13 +37,13 @@ Linear coefficient of thermal expansion of the object.
 
 length = clone_as_function(symbols.length, display_symbol="l(T, p)")
 """
-Length of the object as a function of :attr:`~symplyphysics.symbols.temperature`
+Length of the object as a function of :symbols:`temperature`
 and, indirectly, pressure :math:`p`.
 """
 
 temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.temperature` of the object.
+:symbols:`temperature` of the object.
 """
 
 definition = Eq(

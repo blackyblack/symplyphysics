@@ -19,12 +19,12 @@ from symplyphysics import (
 
 impulse = symbols.impulse
 r"""
-Projection of impulse vector due to :attr:`~symplyphysics.symbols.force` :math:`\vec F`.
+Projection of impulse vector due to :symbols:`force` :math:`\vec F`.
 """
 
 force = clone_as_function(symbols.force, display_symbol="F(t)")
 r"""
-Projection of :attr:`~symplyphysics.symbols.force` :math:`\vec F` as a function of time.
+Projection of :symbols:`force` :math:`\vec F` as a function of time.
 """
 
 time = symbols.time

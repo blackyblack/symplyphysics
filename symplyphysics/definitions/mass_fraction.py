@@ -25,12 +25,12 @@ Mass fraction of the mixture component.
 
 mass_of_component = clone_as_symbol(symbols.mass, display_symbol="m[i]", display_latex="m_i")
 """
-:attr:`~symplyphysics.symbols.mass` of the mixture component.
+:symbols:`mass` of the mixture component.
 """
 
 mass_of_mixture = symbols.mass
 """
-Total :attr:`~symplyphysics.symbols.mass` of the mixture.
+Total :symbols:`mass` of the mixture.
 """
 
 definition = Eq(mass_fraction, mass_of_component / mass_of_mixture)

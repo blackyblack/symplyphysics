@@ -53,7 +53,7 @@ Amount of gas substance.
 
 temperature = symbols.temperature
 """
-Gas :attr:`~symplyphysics.symbols.temperature`.
+Gas :symbols:`temperature`.
 """
 
 molar_gas_constant = quantities.molar_gas_constant

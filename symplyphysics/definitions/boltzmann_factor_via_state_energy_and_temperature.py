@@ -35,7 +35,7 @@ Energy of state :math:`i`.
 
 equilibrium_temperature = symbols.temperature
 """
-Equilibrium :attr:`~symplyphysics.symbols.temperature` of the system.
+Equilibrium :symbols:`temperature` of the system.
 """
 
 boltzmann_constant = quantities.boltzmann_constant

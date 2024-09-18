@@ -18,7 +18,7 @@ from symplyphysics import (
 
 mass = symbols.mass
 """
-:attr:`~symplyphysics.symbols.mass` of the object.
+:symbols:`mass` of the object.
 """
 
 

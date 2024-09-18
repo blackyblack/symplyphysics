@@ -16,7 +16,7 @@ Mass flow rate as a function of time.
 
 mass = FunctionNew("m(t)", units.mass, display_latex="m")
 """
-:attr:`~symplyphysics.symbols.mass` as a function of time.
+:symbols:`mass` as a function of time.
 """
 
 time = SymbolNew("t", units.time)

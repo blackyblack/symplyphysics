@@ -23,7 +23,7 @@ Symbol:
 
 mass = symbols.mass
 """
-:attr:`~symplyphysics.symbols.mass` of the material point.
+:symbols:`mass` of the material point.
 """
 
 radial_distance = Symbol("radial_distance", units.length)

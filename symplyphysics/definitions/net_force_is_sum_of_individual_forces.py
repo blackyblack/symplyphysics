@@ -18,13 +18,13 @@ from symplyphysics.definitions.vector import superposition_of_forces_is_sum as v
 
 net_force = symbols.force
 """
-Net :attr:`~symplyphysics.symbols.force`.
+Net :symbols:`force`.
 """
 
 # TODO: clone from symbols.force
 force = SymbolIndexedNew("F[i]", units.force, display_latex="F_i")
 """
-Individual :attr:`~symplyphysics.symbols.force`.
+Individual :symbols:`force`.
 """
 
 definition = Eq(net_force, SumIndexed(force[global_index], global_index))
