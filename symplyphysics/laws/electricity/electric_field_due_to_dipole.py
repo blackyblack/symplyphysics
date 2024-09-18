@@ -8,7 +8,7 @@ cube of the distance to the dipole and the value of the electric dipole moment.
 
 **Notation:**
 
-#. :math:`\varepsilon_0` (:code:`epsilon_0`) is vacuum permittivity.
+#. :quantity_notation:`vacuum_permittivity`.
 
 **Conditions:**
 

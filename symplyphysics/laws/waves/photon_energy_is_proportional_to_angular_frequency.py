@@ -7,7 +7,7 @@ in any reference frame. The energy of a photon depends only on its frequency.
 
 **Notation:**
 
-#. :math:`\hbar` (:code:`hbar`) is the reduced Planck constant.
+#. :quantity_notation:`hbar`.
 """
 
 from sympy import Eq
@@ -18,6 +18,7 @@ from symplyphysics import (
     Symbol,
     validate_input,
     validate_output,
+    quantities,
 )
 
 energy = Symbol("energy", units.energy)
@@ -39,7 +40,7 @@ Latex:
     :math:`\omega`
 """
 
-law = Eq(energy, units.hbar * angular_frequency)
+law = Eq(energy, quantities.hbar * angular_frequency)
 r"""
 :code:`E = hbar * w`
 

@@ -8,7 +8,7 @@ of the sphere. However, due to the Gauss's law, on the inside the electric field
 
 **Notation:**
 
-#. :math:`\varepsilon_0` (:code:`epsilon_0`) is vacuum permittivity.
+#. :quantity_notation:`vacuum_permittivity`.
 
 **Conditions:**
 

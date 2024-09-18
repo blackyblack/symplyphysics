@@ -7,7 +7,7 @@ is maximum.
 
 **Notation:**
 
-#. :math:`k_\text{B}` is the Boltzmann constant.
+#. :quantity_notation:`boltzmann_constant`.
 
 **Conditions:**
 
@@ -24,6 +24,7 @@ from symplyphysics import (
     validate_output,
     symbols,
     clone_as_symbol,
+    quantities,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed_distribution
@@ -50,7 +51,7 @@ molecular_mass = clone_as_symbol(symbols.mass, positive=True)
 """
 
 law = Eq(most_probable_speed,
-    sqrt(2 * units.boltzmann_constant * equilibrium_temperature / molecular_mass))
+    sqrt(2 * quantities.boltzmann_constant * equilibrium_temperature / molecular_mass))
 r"""
 :code:`v_prob = sqrt(2 * k_B * T / m)`
 

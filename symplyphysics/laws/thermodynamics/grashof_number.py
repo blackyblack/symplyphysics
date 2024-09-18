@@ -8,7 +8,7 @@ and is analogous to the Reynolds number.
 
 **Notation:**
 
-#. :math:`g` is the acceleration due to gravity.
+#. :quantity_notation:`acceleration_due_to_gravity`.
 """
 
 from sympy import Eq, solve
@@ -22,6 +22,7 @@ from symplyphysics import (
     validate_output,
     dimensionless,
     convert_to_float,
+    quantities,
 )
 
 grashof_number = Symbol("grashof_number", dimensionless)
@@ -82,7 +83,7 @@ Latex:
 
 law = Eq(
     grashof_number,
-    units.acceleration_due_to_gravity * volumetric_expansion_coefficient *
+    quantities.acceleration_due_to_gravity * volumetric_expansion_coefficient *
     (surface_temperature - bulk_temperature) * characteristic_length**3 / (kinematic_viscosity**2))
 r"""
 :code:`Gr = g * beta * (T_s - T_b) * L^3 / nu^2`

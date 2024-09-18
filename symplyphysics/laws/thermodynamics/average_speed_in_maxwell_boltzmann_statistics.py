@@ -6,7 +6,7 @@ The *average*, or mean, *speed* is the expected value of the speed distribution 
 
 **Notation:**
 
-#. :math:`k_\text{B}` is the Boltzmann constant.
+#. :quantity_notation:`boltzmann_constant`.
 
 **Conditions:**
 
@@ -23,6 +23,7 @@ from symplyphysics import (
     validate_output,
     symbols,
     clone_as_symbol,
+    quantities,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed_distribution
@@ -50,7 +51,7 @@ molecular_mass = clone_as_symbol(symbols.mass, positive=True)
 
 law = Eq(
     average_speed,
-    sqrt(8 * units.boltzmann_constant * equilibrium_temperature / (pi * molecular_mass)),
+    sqrt(8 * quantities.boltzmann_constant * equilibrium_temperature / (pi * molecular_mass)),
 )
 r"""
 :code:`avg(v) = sqrt(8 * k_B * T / (pi * m))`

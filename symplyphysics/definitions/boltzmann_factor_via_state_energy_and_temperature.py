@@ -7,7 +7,7 @@ and thermodynamics, e.g. the canonical partition function of a classical discret
 
 **Notation:**
 
-#. :math:`k_\text{B}` (:code:`k_B`) is the Boltzmann constant.
+#. :quantity_notation:`boltzmann_constant`.
 """
 
 from sympy import Eq, exp

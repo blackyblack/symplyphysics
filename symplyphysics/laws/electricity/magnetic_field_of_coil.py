@@ -7,7 +7,7 @@ proportional to the current in the coil's wire.
 
 **Notation:**
 
-#. :math:`\mu_0` (:code:`mu_0`) is vacuum permeability.
+#. :quantity_notation:`vacuum_permeability`.
 
 **Conditions:**
 

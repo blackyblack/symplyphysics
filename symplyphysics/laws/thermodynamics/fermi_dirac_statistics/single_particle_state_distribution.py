@@ -7,7 +7,7 @@ in a single-particle state :math:`i` is given by the Fermi—Dirac distribution.
 
 **Notation:**
 
-#. :math:`k_\text{B}` (:code:`k_B`) is the Boltzmann constant.
+#. :quantity_notation:`boltzmann_constant`.
 
 **Notes:**
 
@@ -25,6 +25,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
+    quantities,
     convert_to_float,
 )
 
@@ -68,7 +69,7 @@ temperature = symbols.temperature
 
 law = Eq(
     occupancy_of_state, 1 / (exp(
-    (energy_of_state - total_chemical_potential) / (units.boltzmann_constant * temperature)) + 1))
+    (energy_of_state - total_chemical_potential) / (quantities.boltzmann_constant * temperature)) + 1))
 r"""
 :code:`N_i = 1 / (exp((E_i - mu) / (k_B * T)) + 1)`
 

@@ -10,7 +10,7 @@ to inverse molar volume or equivalently, to molar density.
 
 **Notation:**
 
-#. :math:`R` is the molar gas constant.
+#. :quantity_notation:`molar_gas_constant`.
 
 **Conditions:**
 
@@ -26,6 +26,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
+    quantities,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import compressibility_factor_is_deviation_from_ideal_gas as compressibility_def
@@ -75,7 +76,7 @@ temperature = symbols.temperature
 
 law = Eq(
     second_virial_coefficient, excluded_volume_parameter - attractive_forces_parameter /
-    (units.molar_gas_constant * temperature))
+    (quantities.molar_gas_constant * temperature))
 r"""
 :code:`B = b - a / (R * T)`
 

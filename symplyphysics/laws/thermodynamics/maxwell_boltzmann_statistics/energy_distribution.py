@@ -9,7 +9,7 @@ around energy value :math:`E`.
 
 **Notation:**
 
-#. :math:`k_\text{B}` (:code:`k_B`) is the Boltzmann constant.
+#. :quantity_notation:`boltzmann_constant`.
 
 **Notes:**
 
@@ -27,6 +27,7 @@ from symplyphysics import (
     validate_output,
     clone_as_symbol,
     symbols,
+    quantities,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_speed as kinetic_energy_law
@@ -57,8 +58,8 @@ Equilibrium :symbols:`temperature` of the ensemble.
 
 law = Eq(
     energy_distribution_function,
-    2 * sqrt(energy / pi) * (units.boltzmann_constant * equilibrium_temperature)**Rational(-3, 2) *
-    exp(-1 * energy / (units.boltzmann_constant * equilibrium_temperature)))
+    2 * sqrt(energy / pi) * (quantities.boltzmann_constant * equilibrium_temperature)**Rational(-3, 2) *
+    exp(-1 * energy / (quantities.boltzmann_constant * equilibrium_temperature)))
 r"""
 :code:`f(E) = 2 * sqrt(E / pi) * (k_B * T)^(3/2) * exp(-1 * E / (k_B * T))`
 

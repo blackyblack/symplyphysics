@@ -7,7 +7,7 @@ and inversely proportional to the mass of the gas.
 
 **Notation:**
 
-#. :math:`k_\text{B}` is the Boltzmann constant.
+#. :quantity_notation:`boltzmann_constant`.
 
 **Conditions:**
 
@@ -17,7 +17,7 @@ and inversely proportional to the mass of the gas.
 
 from sympy import (Eq, solve, S, stats, Interval)
 from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols,
-    clone_as_symbol)
+    clone_as_symbol, quantities)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed_distribution
 
@@ -44,7 +44,7 @@ molecular_mass = clone_as_symbol(symbols.mass, positive=True)
 
 law = Eq(
     average_square_speed,
-    3 * units.boltzmann_constant * equilibrium_temperature / molecular_mass,
+    3 * quantities.boltzmann_constant * equilibrium_temperature / molecular_mass,
 )
 r"""
 :code:`avg(v^2) = 3 * k_B * T / m`

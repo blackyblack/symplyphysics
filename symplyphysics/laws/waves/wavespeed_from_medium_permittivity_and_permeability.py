@@ -7,12 +7,11 @@ permeability of the medium.
 
 **Notation:**
 
-#. :math:`c` is the speed of light.
+#. :quantity_notation:`speed_of_light`.
 """
 
-from sympy.physics.units import speed_of_light
 from sympy import (Eq, solve, sqrt)
-from symplyphysics import (units, Quantity, Symbol, dimensionless, validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, dimensionless, validate_input, validate_output, quantities)
 
 wave_speed = Symbol("wave_speed", units.velocity)
 """
@@ -44,7 +43,7 @@ Latex:
     :math:`\mu`
 """
 
-law = Eq(wave_speed, speed_of_light / sqrt(relative_permittivity * relative_permeability))
+law = Eq(wave_speed, quantities.speed_of_light / sqrt(relative_permittivity * relative_permeability))
 r"""
 :code:`v = c / sqrt(epsilon * mu)`
 

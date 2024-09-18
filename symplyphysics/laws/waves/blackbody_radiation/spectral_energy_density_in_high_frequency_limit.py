@@ -8,9 +8,9 @@ thermal emission, but fails to do that for long-wavelength (i.e. low-frequency) 
 
 **Notation:**
 
-#. :math:`h` is the Planck constant.
-#. :math:`c` is the speed of light.
-#. :math:`k_\text{B}` (:code:`k_B`) is the Boltzmann constant.
+#. :quantity_notation:`planck`.
+#. :quantity_notation:`speed_of_light`.
+#. :quantity_notation:`boltzmann_constant`.
 
 **Conditions:**
 
@@ -19,7 +19,6 @@ thermal emission, but fails to do that for long-wavelength (i.e. low-frequency) 
 """
 
 from sympy import Eq, exp, pi, Symbol as SymSymbol, solve, S
-from sympy.physics.units import planck, speed_of_light, boltzmann_constant
 from symplyphysics import (
     units,
     Quantity,
@@ -28,6 +27,7 @@ from symplyphysics import (
     validate_output,
     symbols,
 )
+from symplyphysics.quantities import planck, speed_of_light, boltzmann_constant
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.waves.blackbody_radiation import spectral_energy_density_at_all_frequencies as planck_law
 
@@ -80,7 +80,7 @@ _reduced_frequency = SymSymbol("reduced_frequency")
 
 _reduced_frequency_eqn = Eq(
     _reduced_frequency,
-    units.planck * radiation_frequency / (boltzmann_constant * equilibrium_temperature),
+    planck * radiation_frequency / (boltzmann_constant * equilibrium_temperature),
 )
 
 _planck_density_reduced = solve(

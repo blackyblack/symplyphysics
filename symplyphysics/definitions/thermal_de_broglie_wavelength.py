@@ -10,12 +10,13 @@ interparticle spacing. Otherwise, quantum effects must be taken into account.
 
 **Notation:**
 
-#. :math:`\hbar` (:code:`hbar`) is the reduced Planck constant.
-#. :math:`k_\text{B}` (:code:`k_B`) is the Boltzmann constant.
+#. :quantity_notation:`hbar`.
+#. :quantity_notation:`boltzmann_constant`.
 """
 
 from sympy import Eq, sqrt, pi
 from symplyphysics import (
+    quantities,
     units,
     Quantity,
     Symbol,
@@ -46,7 +47,7 @@ temperature = symbols.temperature
 """
 
 definition = Eq(thermal_wavelength,
-    units.hbar * sqrt(2 * pi / (mass * units.boltzmann_constant * temperature)))
+    quantities.hbar * sqrt(2 * pi / (mass * quantities.boltzmann_constant * temperature)))
 r"""
 :code:`lambda = hbar * sqrt(2 * pi / (m * k_B * T))`
 

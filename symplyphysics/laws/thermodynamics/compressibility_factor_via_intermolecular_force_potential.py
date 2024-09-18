@@ -10,7 +10,7 @@ linked to the intermolecular force potential.
 
 **Notation:**
 
-#. :math:`k_\text{B}` is the Boltzmann constant.
+#. :quantity_notation:`boltzmann_constant`.
 
 **Conditions:**
 
@@ -32,6 +32,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
     convert_to_float,
+    quantities,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.chemistry.potential_energy_models import hard_spheres_potential
@@ -87,7 +88,7 @@ temperature = clone_as_symbol(symbols.temperature, positive=True)
 law = Eq(
     compressibility_factor, 1 + 2 * pi * particle_count / volume * Integral(
     (1 - exp(-1 * intermolecular_force_potential(intermolecular_distance) /
-    (units.boltzmann_constant * temperature))) * intermolecular_distance**2,
+    (quantities.boltzmann_constant * temperature))) * intermolecular_distance**2,
     (intermolecular_distance, 0, S.Infinity),
     ))
 r"""

@@ -6,12 +6,11 @@ Speed of electromagnetic wave propagation depends on the refractive index of the
 
 **Notation:**
 
-#. :math:`c` is the speed of light.
+#. :quantity_notation:`speed_of_light`.
 """
 
-from sympy.physics.units import speed_of_light
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, dimensionless, validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, dimensionless, validate_input, validate_output, quantities)
 
 wave_speed = Symbol("wave_speed", units.velocity)
 """
@@ -29,7 +28,7 @@ Symbol:
     :code:`n`
 """
 
-law = Eq(wave_speed, speed_of_light / refractive_index)
+law = Eq(wave_speed, quantities.speed_of_light / refractive_index)
 r"""
 :code:`v = c / n`
 

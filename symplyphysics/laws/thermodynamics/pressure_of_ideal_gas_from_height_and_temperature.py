@@ -6,8 +6,8 @@ The *barometric formula* determines the dependence of the pressure or density of
 
 **Notation:**
 
-#. :math:`g` is the acceleration due to gravity.
-#. :math:`k_\text{B}` (:code:`k_B`) is the Boltzmann constant.
+#. :quantity_notation:`acceleration_due_to_gravity`.
+#. :quantity_notation:`boltzmann_constant`.
 
 **Conditions:**
 
@@ -16,7 +16,7 @@ The *barometric formula* determines the dependence of the pressure or density of
 """
 
 from sympy import (Eq, solve, exp)
-from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output)
+from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output, quantities)
 
 final_pressure = Symbol("final_pressure", units.pressure)
 """
@@ -60,8 +60,8 @@ temperature = symbols.temperature
 
 law = Eq(
     final_pressure,
-    initial_pressure * exp(-units.acceleration_due_to_gravity * molecular_mass * height_change /
-    (units.boltzmann_constant * temperature)))
+    initial_pressure * exp(-quantities.acceleration_due_to_gravity * molecular_mass * height_change /
+    (quantities.boltzmann_constant * temperature)))
 r"""
 :code:`p = p0 * exp(-1 * g * m * dh / (k_B * T))`
 

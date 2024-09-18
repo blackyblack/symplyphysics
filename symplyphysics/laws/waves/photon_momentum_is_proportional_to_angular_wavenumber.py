@@ -6,7 +6,7 @@ The momentum of a photon is proportional to its wavenumber.
 
 **Notation:**
 
-#. :math:`\hbar` (:code:`hbar`) is the reduced Planck constant.
+#. :quantity_notation:`hbar`.
 """
 
 from sympy import (Eq, solve)
@@ -16,6 +16,7 @@ from symplyphysics import (
     Symbol,
     validate_input,
     validate_output,
+    quantities,
 )
 
 momentum = Symbol("momentum", units.momentum)
@@ -34,7 +35,7 @@ Symbol:
     :code:`k`
 """
 
-law = Eq(momentum, units.hbar * angular_wavenumber)
+law = Eq(momentum, quantities.hbar * angular_wavenumber)
 r"""
 :code:`p = hbar * k`
 

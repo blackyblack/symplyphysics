@@ -9,8 +9,8 @@ the gas in question.
 
 **Notation:**
 
-#. :math:`k_\text{B}` is the Boltzmann constant.
-#. :math:`c` is the speed of light.
+#. :quantity_notation:`boltzmann_constant`.
+#. :quantity_notation:`speed_of_light`.
 """
 
 from sympy import Eq
@@ -23,6 +23,7 @@ from symplyphysics import (
     validate_output,
     convert_to_float,
     symbols,
+    quantities,
 )
 
 reduced_temperature = Symbol("reduced_temperature", dimensionless)
@@ -48,7 +49,7 @@ particle_mass = symbols.mass
 
 law = Eq(
     reduced_temperature,
-    (units.boltzmann_constant * temperature) / (particle_mass * units.speed_of_light**2),
+    (quantities.boltzmann_constant * temperature) / (particle_mass * quantities.speed_of_light**2),
 )
 r"""
 :code:`theta = (k_B * T) / (m * c^2)`

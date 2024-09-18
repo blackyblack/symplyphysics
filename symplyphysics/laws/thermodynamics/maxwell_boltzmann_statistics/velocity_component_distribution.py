@@ -9,7 +9,7 @@ speeds in the interval :math:`dv_k` around velocity component :math:`v_k`.
 
 **Notation:**
 
-#. :math:`k_\text{B}` (:code:`k_B`) is the Boltzmann constant.
+#. :quantity_notation:`boltzmann_constant`.
 
 **Notes:**
 
@@ -31,6 +31,7 @@ from symplyphysics import (
     validate_output,
     clone_as_symbol,
     symbols,
+    quantities,
 )
 
 velocity_component_distribution = Symbol("velocity_component_distribution",
@@ -69,9 +70,9 @@ Equilibrium :symbols:`temperature` of the ensemble.
 
 law = Eq(
     velocity_component_distribution,
-    sqrt(particle_mass / (2 * pi * units.boltzmann_constant * equilibrium_temperature)) *
+    sqrt(particle_mass / (2 * pi * quantities.boltzmann_constant * equilibrium_temperature)) *
     exp(-1 * particle_mass * velocity_component**2 /
-    (2 * units.boltzmann_constant * equilibrium_temperature)))
+    (2 * quantities.boltzmann_constant * equilibrium_temperature)))
 r"""
 :code:`f(v_k) = sqrt(m / (2 * pi * k_B * T)) * exp(-1 * m * v_k^2 / (2 * k_B * T))`
 

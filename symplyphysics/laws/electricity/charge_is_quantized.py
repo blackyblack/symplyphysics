@@ -6,7 +6,7 @@ Electric charge is quantized, i.e. restricted to certain values.
 
 **Notation:**
 
-#. :math:`e` is the elementary charge.
+#. :quantity_notation:`elementary_charge`.
 """
 
 from sympy import Eq

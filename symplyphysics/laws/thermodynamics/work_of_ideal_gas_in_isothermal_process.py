@@ -9,7 +9,7 @@ To do this, the heat capacity of the external environment must be large enough, 
 
 **Notation:**
 
-#. :math:`R` is the molar gas constant.
+#. :quantity_notation:`molar_gas_constant`.
 
 **Conditions:**
 
@@ -24,6 +24,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
+    quantities,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import work_is_integral_of_pressure_over_volume as work_law
@@ -74,7 +75,7 @@ temperature = symbols.temperature
 
 law = Eq(
     work,
-    amount_of_substance * units.molar_gas_constant * temperature *
+    amount_of_substance * quantities.molar_gas_constant * temperature *
     log(final_volume / initial_volume))
 r"""
 :code:`W = n * R * T * log(V1 / V0)`

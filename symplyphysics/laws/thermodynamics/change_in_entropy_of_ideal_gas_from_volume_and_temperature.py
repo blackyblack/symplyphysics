@@ -10,7 +10,7 @@ as they always tend to arrive at a state of thermodynamic equilibrium, where the
 
 **Notation:**
 
-#. :math:`R` is the molar gas constant.
+#. :quantity_notation:`molar_gas_constant`.
 
 **Conditions:**
 
@@ -19,7 +19,7 @@ as they always tend to arrive at a state of thermodynamic equilibrium, where the
 
 from sympy import (Eq, solve, log)
 from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols,
-    clone_as_symbol)
+    clone_as_symbol, quantities)
 
 entropy_change = Symbol("entropy_change", units.energy / units.temperature)
 """
@@ -92,7 +92,7 @@ Latex:
 
 law = Eq(entropy_change, (mass / molar_mass) *
     ((molar_isochoric_heat_capacity * log(final_temperature / initial_temperature)) +
-    (units.molar_gas_constant * log(final_volume / initial_volume))))
+    (quantities.molar_gas_constant * log(final_volume / initial_volume))))
 r"""
 :code:`S = (m / M) * (C_V * log(T1 / T0) + R * log(V1 / V0))`
 

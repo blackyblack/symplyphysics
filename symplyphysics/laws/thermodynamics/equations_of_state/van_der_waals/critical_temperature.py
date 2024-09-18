@@ -7,7 +7,7 @@ of the van der Waals equation and the molar gas constant :math:`R`. See :ref:`vd
 
 **Notation:**
 
-#. :math:`R` is the molar gas constant.
+#. :quantity_notation:`molar_gas_constant`.
 """
 
 from sympy import Eq
@@ -19,6 +19,7 @@ from symplyphysics import (
     Symbol,
     validate_input,
     validate_output,
+    quantities,
 )
 
 critical_temperature = clone_as_symbol(symbols.temperature,
@@ -54,7 +55,7 @@ Symbol:
 
 law = Eq(
     critical_temperature,
-    (8 * attractive_forces_parameter) / (27 * units.molar_gas_constant * excluded_volume_parameter),
+    (8 * attractive_forces_parameter) / (27 * quantities.molar_gas_constant * excluded_volume_parameter),
 )
 r"""
 :code:`T_c = 8 * a / (27 * R * b)`

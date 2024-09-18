@@ -101,6 +101,34 @@ elementary_charge = Quantity(units.elementary_charge, display_symbol="e")
 or, equivalently, the magnitude of the negative charge carried by a single electron.
 """
 
+hbar = Quantity(units.hbar, display_symbol="hbar", display_latex="\\hbar")
+"""
+**Reduced Planck constnat** is a modified version of the Planck constant used in the description of
+Quantum Mechanics.
+"""
+
+planck = Quantity(units.planck, display_symbol="h")
+"""
+TODO
+"""
+
+avogadro_constant = Quantity(units.avogadro, display_symbol="N_A", display_latex="N_\\text{A}")
+"""
+The **Avogadro constant** is an SI defining constant defined as the number of constituent particles
+per mole.
+"""
+
+acceleration_due_to_gravity = Quantity(units.acceleration_due_to_gravity, display_symbol="g")
+"""
+A conventional standard value of the gravitational acceleration at Earth's surface.
+"""
+
+stefan_boltzmann_constant = Quantity(units.stefan_boltzmann_constant, display_symbol="sigma", display_latex="\\sigma")
+"""
+The **Stefan—Boltzmann constant** is the constant of proportionality between radiant exitance and black body's temperature
+in the Stefan—Boltzmann law.
+"""
+
 
 __all__ = [
     "standard_conditions_temperature",
@@ -116,4 +144,9 @@ __all__ = [
     "vacuum_permittivity",
     "vacuum_permeability",
     "elementary_charge",
+    "hbar",
+    "planck",
+    "avogadro_constant",
+    "acceleration_due_to_gravity",
+    "stefan_boltzmann_constant",
 ]

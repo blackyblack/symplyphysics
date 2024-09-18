@@ -8,7 +8,7 @@ square of the distance between them.
 
 **Notation:**
 
-#. :math:`\varepsilon_0` (:code:`epsilon_0`) is vacuum permittivity.
+#. :quantity_notation:`vacuum_permittivity`.
 """
 
 from sympy import (Eq, solve, pi)

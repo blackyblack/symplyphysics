@@ -7,12 +7,11 @@ in any reference frame. The energy of a photon depends only on its frequency.
 
 **Notation:**
 
-#. :math:`h` is the Planck constant.
+#. :quantity_notation:`planck`.
 """
 
 from sympy import (Eq, solve)
-from sympy.physics.units import planck as planck_constant
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, quantities)
 
 energy = Symbol("energy", units.energy)
 """
@@ -33,7 +32,7 @@ Latex:
     :math:`\nu`
 """
 
-law = Eq(energy, planck_constant * frequency)
+law = Eq(energy, quantities.planck * frequency)
 r"""
 :code:`E = h * nu`
 

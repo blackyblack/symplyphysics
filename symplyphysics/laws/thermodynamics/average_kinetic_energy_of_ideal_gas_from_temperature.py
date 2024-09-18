@@ -8,7 +8,7 @@ temperature of the gas and only depends on the temperature.
 
 **Notation:**
 
-#. :math:`k_\text{B}` is the Boltzmann constant.
+#. :quantity_notation:`boltzmann_constant`.
 
 **Conditions:**
 
@@ -24,6 +24,7 @@ from symplyphysics import (
     validate_output,
     symbols,
     clone_as_symbol,
+    quantities,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import energy_distribution
@@ -47,7 +48,7 @@ equilibrium_temperature = clone_as_symbol(
 Equilibrium :symbols:`temperature` of the gas.
 """
 
-law = Eq(average_kinetic_energy, Rational(3, 2) * units.boltzmann * equilibrium_temperature)
+law = Eq(average_kinetic_energy, Rational(3, 2) * quantities.boltzmann_constant * equilibrium_temperature)
 r"""
 :code:`avg(K) = 3/2 * k_B * T`
 

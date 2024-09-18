@@ -7,7 +7,7 @@ and thermal wavelength.
 
 **Notation:**
 
-#. :math:`k_\text{B}` is the Boltzmann constant.
+#. :quantity_notation:`boltzmann_constant`.
 
 **Conditions:**
 
@@ -22,6 +22,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
+    quantities,
 )
 
 chemical_potential = Symbol("chemical_potential", units.energy)
@@ -60,7 +61,7 @@ Latex:
 """
 
 law = Eq(chemical_potential,
-    units.boltzmann_constant * temperature * log(concentration * thermal_wavelength**3))
+    quantities.boltzmann_constant * temperature * log(concentration * thermal_wavelength**3))
 r"""
 :code:`mu = k_B * T * log(n * lambda^3)`
 

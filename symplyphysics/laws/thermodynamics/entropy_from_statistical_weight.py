@@ -7,12 +7,12 @@ is the average number of microstates of a system that implement its macrostate.
 
 **Notation:**
 
-#. :math:`k_\text{B}` (:code:`k_B`) is the Boltzmann constant.
+#. :quantity_notation:`boltzmann_constant`.
 """
 
 from sympy import Eq, solve, log, symbols, Function as SymFunction, dsolve
 from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless,
-    assert_equal)
+    assert_equal, quantities)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.chemistry import avogadro_constant_is_particle_count_over_amount_of_substance as avogadro_law
 from symplyphysics.laws.thermodynamics import (
@@ -36,7 +36,7 @@ Symbol:
     :code:`W`
 """
 
-law = Eq(entropy, units.boltzmann_constant * log(statistical_weight))
+law = Eq(entropy, quantities.boltzmann_constant * log(statistical_weight))
 r"""
 :code:`S = k_B * log(W)`
 

@@ -9,7 +9,7 @@ the temperature or the larger the pressure.
 
 **Notation:**
 
-#. :math:`R` is the molar gas constant.
+#. :quantity_notation:`molar_gas_constant`.
 
 **Notes:**
 

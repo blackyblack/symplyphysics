@@ -7,7 +7,7 @@ current through it and the radial distance to the wire.
 
 **Notation:**
 
-#. :math:`\mu_0` (:code:`mu_0`) is vacuum permeability.
+#. :quantity_notation:`vacuum_permeability`.
 
 **Conditions:**
 

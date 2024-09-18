@@ -10,8 +10,8 @@ known as the *ultraviolet catastrophe*.
 
 **Notation:**
 
-#. :math:`c` is the speed of light.
-#. :math:`k_\text{B}` (:code:`k_B`) is the Boltzmann constant.
+#. :quantity_notation:`speed_of_light`.
+#. :quantity_notation:`boltzmann_constant`.
 
 **Conditions:**
 
@@ -21,7 +21,6 @@ known as the *ultraviolet catastrophe*.
 """
 
 from sympy import Eq, pi, Symbol as SymSymbol, solve
-from sympy.physics.units import speed_of_light, boltzmann_constant
 from symplyphysics import (
     units,
     Quantity,
@@ -30,6 +29,7 @@ from symplyphysics import (
     validate_output,
     symbols,
 )
+from symplyphysics.quantities import planck, speed_of_light, boltzmann_constant
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.waves.blackbody_radiation import spectral_energy_density_at_all_frequencies as planck_law
 
@@ -83,7 +83,7 @@ _reduced_frequency = SymSymbol("reduced_frequency")
 
 _reduced_frequency_eqn = Eq(
     _reduced_frequency,
-    units.planck * radiation_frequency / (boltzmann_constant * equilibrium_temperature),
+    planck * radiation_frequency / (boltzmann_constant * equilibrium_temperature),
 )
 
 _planck_density_reduced = solve(

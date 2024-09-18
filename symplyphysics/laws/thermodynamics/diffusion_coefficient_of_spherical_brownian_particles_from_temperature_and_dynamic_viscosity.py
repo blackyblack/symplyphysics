@@ -13,8 +13,8 @@ the type of diffusing particles. This law is also known as the *Stokes—Einstei
 
 **Notation:**
 
-#. :math:`R` is the molar gas constant.
-#. :math:`N_\text{A}` is the Avogadro constant.
+#. :quantity_notation:`molar_gas_constant`.
+#. :quantity_notation:`avogadro_constant`.
 
 **Conditions:**
 
@@ -25,7 +25,7 @@ the type of diffusing particles. This law is also known as the *Stokes—Einstei
 """
 
 from sympy import (Eq, solve, pi)
-from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output)
+from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output, quantities)
 
 diffusion_coefficient = Symbol("diffusion_coefficient", units.area / units.time)
 """
@@ -60,8 +60,8 @@ Latex:
 """
 
 law = Eq(
-    diffusion_coefficient, units.molar_gas_constant * temperature /
-    (6 * units.avogadro_constant * pi * particle_radius * dynamic_viscosity))
+    diffusion_coefficient, quantities.molar_gas_constant * temperature /
+    (6 * quantities.avogadro_constant * pi * particle_radius * dynamic_viscosity))
 r"""
 :code:`D = (R * T) / (6 * N_A * pi * r * eta)`
 

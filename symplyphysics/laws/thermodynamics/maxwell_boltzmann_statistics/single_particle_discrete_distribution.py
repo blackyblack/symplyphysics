@@ -8,7 +8,7 @@ found in a given single-particle microstate.
 
 **Notation:**
 
-#. :math:`k_\text{B}` (:code:`k_B`) is the Boltzmann constant.
+#. :quantity_notation:`boltzmann_constant`.
 
 **Conditions:**
 
@@ -25,6 +25,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
+    quantities,
 )
 
 occupancy_of_state = Symbol("occupancy_of_state", dimensionless)
@@ -72,7 +73,7 @@ Symbol:
 """
 
 law = Eq(occupancy_of_state, (particle_count / single_particle_partition_function) *
-    exp(-1 * energy_of_state / (units.boltzmann_constant * equilibrium_temperature)))
+    exp(-1 * energy_of_state / (quantities.boltzmann_constant * equilibrium_temperature)))
 r"""
 :code:`N_i = (N / Z) * exp(-1 * E_i / (k_B * T))`
 
