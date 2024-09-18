@@ -18,17 +18,17 @@ from symplyphysics.laws.electricity import (
 
 power = symbols.power
 """
-Electric power.
+Electric :symbols:`power`.
 """
 
 current = symbols.current
 """
-Electric current.
+Electric :symbols:`current`.
 """
 
 resistance = symbols.resistance
 """
-Electrical resistance.
+Electrical :symbols:`resistance`.
 """
 
 law = Eq(power, current**2 * resistance)

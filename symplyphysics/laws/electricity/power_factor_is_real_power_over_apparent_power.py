@@ -15,18 +15,18 @@ from symplyphysics import (Quantity, validate_input,
 
 apparent_power = clone_as_symbol(symbols.power, display_symbol="S")
 """
-Apparent power of the circuit, which is the absolute value of the complex
+Apparent :symbols:`power` of the circuit, which is the absolute value of the complex
 power.
 """
 
 real_power = clone_as_symbol(symbols.power, symbols="P")
 """
-Real power, or active power, of the circuit.
+Real :symbols:`power`, or active power, of the circuit.
 """
 
 power_factor = symbols.power_factor
 """
-Power factor of the circuit.
+:symbols:`power_factor` of the circuit.
 """
 
 law = Eq(power_factor, real_power / apparent_power)

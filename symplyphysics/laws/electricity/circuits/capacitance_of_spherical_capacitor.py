@@ -23,22 +23,22 @@ from symplyphysics import (
 
 capacitance = symbols.capacitance
 """
-Capacitance of the capacitor.
+:symbols:`capacitance` of the capacitor.
 """
 
 absolute_permittivity = symbols.absolute_permittivity
 """
-Absolute permittivity of the medium between the spheres.
+:symbols:`absolute_permittivity` of the medium between the spheres.
 """
 
 inner_radius = clone_as_symbol(symbols.distance_to_origin, display_symbol="r_in", display_latex="r_\\text{in}")
 """
-Radius of the inner sphere.
+Radius of the inner sphere. See :symbols:`distance_to_origin`.
 """
 
 outer_radius = clone_as_symbol(symbols.distance_to_origin, display_symbol="r_out", display_latex="r_\\text{out}")
 """
-Radius of the outer sphere.
+Radius of the outer sphere. See :symbols:`distance_to_origin`.
 """
 
 law = Eq(

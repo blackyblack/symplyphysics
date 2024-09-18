@@ -68,6 +68,6 @@ __all__ = [
     "power_factor",
     "resistivity",
     "inductance",
-    "time_constant",
+    "electric_time_constant",
     "reactance",
 ]

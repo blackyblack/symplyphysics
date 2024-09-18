@@ -31,17 +31,18 @@ from symplyphysics.laws.electricity import electric_dipole_moment_is_charge_time
 
 electric_field_strength = symbols.electric_field_strength
 """
-Electric field strength due to dipole.
+:symbols:`electric_field_strength` due to dipole.
 """
 
 electric_dipole_moment = symbols.electric_dipole_moment
 """
-See :doc:`laws.electricity.electric_dipole_moment_is_charge_times_distance`.
+See :doc:`laws.electricity.electric_dipole_moment_is_charge_times_distance` and
+:symbols:`electric_dipole_moment`.
 """
 
-distance = symbols.distance
+distance = symbols.distance_to_origin
 """
-Distance to dipole.
+:symbols:`distance` to dipole.
 """
 
 law = Eq(electric_field_strength, 1 / (2 * pi * quantities.vacuum_permittivity) * electric_dipole_moment / distance**3)

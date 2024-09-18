@@ -12,17 +12,17 @@ from symplyphysics import Quantity, validate_input, validate_output, symbols
 
 capacitance = symbols.capacitance
 """
-Capacitance of the object.
+:symbols:`capacitance` of the object.
 """
 
 charge = symbols.charge
 """
-Charge accumulated in the object.
+:symbols:`charge` accumulated in the object.
 """
 
 voltage = symbols.voltage
 """
-Voltage across the object.
+:symbols:`voltage` across the object.
 """
 
 definition = Eq(capacitance, charge / voltage)

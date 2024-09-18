@@ -16,17 +16,17 @@ from symplyphysics import (
 
 admittance = symbols.admittance
 """
-Admittance.
+:symbols:`admittance`.
 """
 
 conductance = symbols.conductance
 """
-Conductance.
+:symbols:`conductance`.
 """
 
 susceptance = symbols.susceptance
 """
-Susceptance.
+:symbols:`susceptance`.
 """
 
 law = Eq(admittance, conductance + I * susceptance)

@@ -17,17 +17,17 @@ from symplyphysics import (
 
 impedance = symbols.electrical_impedance
 """
-Impedance of the capacitor.
+:symbols:`electrical_impedance` of the capacitor.
 """
 
 angular_frequency = symbols.angular_frequency
 """
-Angular frequency of the alternating current.
+:symbols:`angular_frequency` of the alternating current.
 """
 
 capacitance = symbols.capacitance
 """
-Capacitance of the capacitor.
+:symbols:`capacitance` of the capacitor.
 """
 
 law = Eq(impedance, -I / (angular_frequency * capacitance))

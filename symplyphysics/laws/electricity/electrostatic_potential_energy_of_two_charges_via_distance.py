@@ -18,27 +18,27 @@ from symplyphysics import (
 
 electrostatic_potential_energy = clone_as_symbol(symbols.energy, display_symbol="U_E", display_latex="U_\mathbf{E}")
 """
-Electrostatic potential energy of system.
+Electrostatic potential :symbols:`energy` of system.
 """
 
 absolute_permittivity = symbols.absolute_permittivity
 """
-Absolute permittivity of the medium.
+:symbols:`absolute_permittivity` of the medium.
 """
 
 distance = symbols.distance_to_origin
 """
-Distance between the point charges.
+:symbols:`distance` between the point charges.
 """
 
 first_charge = clone_as_symbol(symbols.charge, display_symbol="q_1")
 """
-Value of the first charge.
+Value of the first :symbols:`charge`.
 """
 
 second_charge = clone_as_symbol(symbols.charge, display_symbol="q_2")
 """
-Value of the second charge.
+Value of the second :symbols:`charge`.
 """
 
 law = Eq(electrostatic_potential_energy,

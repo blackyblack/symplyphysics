@@ -22,7 +22,7 @@ from symplyphysics import (
 
 charge = symbols.charge
 """
-Total charge of the body.
+Total :symbols:`charge` of the body.
 """
 
 integer_factor = SymbolNew("n", dimensionless)  # positive, zero or negative

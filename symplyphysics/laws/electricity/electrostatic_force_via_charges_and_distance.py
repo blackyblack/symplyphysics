@@ -22,17 +22,17 @@ Electrostatic :symbols:`force` between two charges.
 
 first_charge = clone_as_symbol(symbols.charge, display_symbol="q_1")
 """
-First charge.
+First :symbols:`charge`.
 """
 
 second_charge = clone_as_symbol(symbols.charge, display_symbol="q_2")
 """
-Second charge.
+Second :symbols:`charge`.
 """
 
 distance = symbols.distance_to_origin
 """
-Distance between the charges.
+:symbols:`distance` between the charges.
 """
 
 law = Eq(electrostatic_force,

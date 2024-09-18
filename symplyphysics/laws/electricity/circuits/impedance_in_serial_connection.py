@@ -24,12 +24,12 @@ from symplyphysics import (
 
 total_impedance = symbols.electrical_impedance
 """
-Total impedance of the circuit.
+Total :symbols:`electrical_impedance` of the circuit.
 """
 
 impedance = SymbolIndexedNew("Z_i", units.impedance)
 r"""
-Impedance of the :math:`i`-th component.
+:symbols:`electrical_impedance` of the :math:`i`-th component.
 """
 
 law = Eq(total_impedance, SumIndexed(impedance[global_index], global_index))

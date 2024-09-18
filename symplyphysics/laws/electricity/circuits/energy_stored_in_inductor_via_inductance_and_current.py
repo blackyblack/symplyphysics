@@ -16,17 +16,17 @@ from symplyphysics import (
 
 energy = symbols.work
 """
-Energy stored in the magnetic field.
+:symbols:`energy` stored in the magnetic field.
 """
 
 inductance = symbols.inductance
 """
-Inductance of the inductor.
+:symbols:`inductance` of the inductor.
 """
 
 current = symbols.current
 """
-Current flowing through the inductor.
+:symbols:`current` flowing through the inductor.
 """
 
 law = Eq(energy, inductance * current**2 / 2)

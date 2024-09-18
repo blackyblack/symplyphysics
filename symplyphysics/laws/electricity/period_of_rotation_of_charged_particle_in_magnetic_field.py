@@ -29,7 +29,7 @@ from symplyphysics.definitions import period_from_angular_frequency as _period_l
 
 period = symbols.period
 """
-Period of the particle's rotation.
+:symbols:`period` of the particle's rotation.
 """
 
 mass = symbols.mass
@@ -39,12 +39,12 @@ mass = symbols.mass
 
 charge = symbols.charge
 """
-Charge of the particle.
+:symbols:`charge` of the particle.
 """
 
 magnetic_flux_density = symbols.magnetic_flux_density
 """
-Magnitude of magnetic flux density.
+Magnitude of :symbols:`magnetic_flux_density`.
 """
 
 law = Eq(period, 2 * pi * mass / (charge * magnetic_flux_density))

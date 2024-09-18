@@ -25,17 +25,17 @@ from symplyphysics import (
 
 magnetic_flux_density = symbols.magnetic_flux_density
 """
-Magnitude of magnetic flux density.
+Magnitude of :symbols:`magnetic_flux_density`.
 """
 
 current = symbols.current
 """
-Current flowing through the wire.
+:symbols:`current` flowing through the wire.
 """
 
 radial_distance = symbols.distance_to_axis
 """
-Radial distance to wire.
+Radial distance to wire. See :symbols:`distance_to_axis`.
 """
 
 law = Eq(magnetic_flux_density, quantities.vacuum_permeability * current / (2 * pi * radial_distance))

@@ -19,7 +19,7 @@ from symplyphysics import (
 
 electric_field_strength = symbols.electric_field_strength
 """
-Strength of the electric field.
+:symbols:`electric_field_strength`.
 """
 
 electrostatic_force = symbols.force
@@ -29,7 +29,7 @@ Projection of the electrostatic :symbols:`force` applied to the test charge.
 
 test_charge = clone_as_symbol(symbols.charge, display_symbol="q_0")
 """
-Value of the test charge.
+Value of the test :symbols:`charge`.
 """
 
 law = Eq(electric_field_strength, electrostatic_force / test_charge)

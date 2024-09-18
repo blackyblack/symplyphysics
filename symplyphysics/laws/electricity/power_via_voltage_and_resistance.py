@@ -20,17 +20,17 @@ from symplyphysics.laws.electricity import (
 
 power = symbols.power
 """
-Power.
+:symbols:`power`.
 """
 
 voltage = symbols.voltage
 """
-Voltage.
+:symbols:`voltage`.
 """
 
 resistance = symbols.resistance
 """
-Resistance.
+:symbols:`resistance`.
 """
 
 law = Eq(power, voltage**2 / resistance)

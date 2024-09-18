@@ -12,17 +12,18 @@ from symplyphysics import (Quantity, validate_input,
 
 energy_density = symbols.energy_density
 """
-Volumetric energy density of the electric field, see :doc:`laws.quantities.quantity_is_volumetric_density_times_volume`.
+Volumetric :symbols:`energy_density` of the electric field, see
+:doc:`laws.quantities.quantity_is_volumetric_density_times_volume`.
 """
 
 absolute_permittivity = symbols.absolute_permittivity
 """
-Absolute permittivity of the medium.
+:symbols:`absolute_permittivity` of the medium.
 """
 
 electric_field_strength = symbols.electric_field_strength
 """
-Strength of the electric field.
+:symbols:`electric_field_strength`.
 """
 
 law = Eq(energy_density, (absolute_permittivity * electric_field_strength**2) / 2)

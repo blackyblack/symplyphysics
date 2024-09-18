@@ -25,17 +25,17 @@ from symplyphysics.laws.electricity import electric_field_is_force_over_test_cha
 
 electric_field_strength = symbols.electric_field_strength
 r"""
-Strength of the electric field due to point charge :math:`q`.
+:symbols:`electric_field_strength` due to point charge :math:`q`.
 """
 
 charge = symbols.charge
 """
-Value of the point charge.
+Value of the point :symbols:`charge`.
 """
 
 distance = symbols.distance_to_origin
 """
-Distance to the charge.
+:symbols:`distance` to the charge.
 """
 
 law = Eq(electric_field_strength, 1 / (4 * pi * quantities.vacuum_permittivity) * charge / distance**2)

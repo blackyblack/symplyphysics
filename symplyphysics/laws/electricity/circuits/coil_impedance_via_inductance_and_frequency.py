@@ -16,17 +16,17 @@ from symplyphysics import (
 
 impedance = symbols.electrical_impedance
 """
-Impedance of the coil.
+:symbols:`electrical_impedance` of the coil.
 """
 
 angular_frequency = symbols.angular_frequency
 """
-Angular frequency of the current.
+:symbols:`angular_frequency` of the current.
 """
 
 inductance = symbols.inductance
 """
-Coil inductance.
+Coil :symbols:`inductance`.
 """
 
 law = Eq(impedance, I * angular_frequency * inductance)

@@ -27,7 +27,7 @@ Symbol:
 
 tension = clone_as_symbol(symbols.force, display_symbol="tau", display_latex="\\tau")
 """
-Tension in the string.
+Tension in the string. See :symbols:`force`.
 """
 
 linear_density = Symbol("linear_density", units.mass / units.length)

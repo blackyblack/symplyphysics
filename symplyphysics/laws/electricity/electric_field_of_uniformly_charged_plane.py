@@ -42,12 +42,12 @@ from symplyphysics.laws.quantities import (
 
 electric_field_strength = symbols.electric_field_strength
 """
-Value of the electric field.
+:symbols:`electric_field_strength`.
 """
 
 surface_charge_density = symbols.surface_charge_density
 """
-Surface charge density of the plane.
+:symbols:`surface_charge_density`.
 """
 
 law = Eq(electric_field_strength, surface_charge_density / (2 * quantities.vacuum_permittivity))

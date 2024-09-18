@@ -24,17 +24,17 @@ from symplyphysics.definitions import power_is_energy_derivative as power_def
 
 energy = symbols.energy
 """
-Energy consumed or released during time :math:`t`.
+:symbols:`energy` consumed or released during time :math:`t`.
 """
 
 power = symbols.power
 """
-Constant power.
+Constant :symbols:`power`.
 """
 
 time = symbols.time
 """
-Time.
+:symbols:`time`.
 """
 
 law = Eq(energy, power * time)

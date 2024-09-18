@@ -24,17 +24,17 @@ from symplyphysics import (
 
 electrostatic_potential = symbols.electric_potential
 """
-Electrostatic potential of a point in an electric field.
+Electrostatic potential of a point in an electric field. See :symbols:`electric_potential`.
 """
 
 work = symbols.work
 """
-Work needed to bring the charge from the reference point.
+:symbols:`work` needed to bring the charge from the reference point.
 """
 
 charge = symbols.charge
 """
-Value of the electric charge.
+Value of the electric :symbols:`charge`.
 """
 
 law = Eq(electrostatic_potential, work / charge)

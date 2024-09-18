@@ -29,22 +29,22 @@ from symplyphysics import (
 
 electromotive_force = symbols.electromotive_force
 """
-Electromotive force induced in the rod.
+:symbols:`electromotive_force` induced in the rod.
 """
 
 magnetic_flux_density = symbols.magnetic_flux_density
 """
-Magnitude of magnetic flux density.
+Magnitude of :symbols:`magnetic_flux_density`.
 """
 
 angular_frequency = symbols.angular_frequency
 """
-Angular frequency of rod's rotation.
+:symbols:`angular_frequency` of rod's rotation.
 """
 
 length = symbols.length
 """
-Length of the rod.
+:symbols:`length` of the rod.
 """
 
 law = Eq(electromotive_force, magnetic_flux_density * angular_frequency * length**2 / 2)

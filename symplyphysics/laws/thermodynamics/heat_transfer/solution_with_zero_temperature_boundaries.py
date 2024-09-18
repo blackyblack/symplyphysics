@@ -40,6 +40,7 @@ temperature = clone_as_symbol(symbols.temperature,
     display_latex="T_n")
 """
 Solution to the heat equation corresponding to the :math:`n`:sup:`th` mode.
+See :symbols:`temperature`.
 """
 
 scaling_coefficient = Symbol("scaling_coefficient", units.temperature)

@@ -32,22 +32,23 @@ from symplyphysics.laws.electricity.circuits import time_constant_of_resistor_ca
 
 capacitor_voltage = symbols.voltage
 """
-Voltage across the capacitor.
+:symbols:`voltage` across the capacitor.
 """
 
 source_voltage = clone_as_symbol(symbols.voltage, display_symbol="V_0")
 """
-Voltage of the source, which is the initial voltage across the resistor.
+:symbols:`voltage` of the source, which is the initial voltage across the resistor.
 """
 
 time = symbols.time
 """
-Time.
+:symbols:`time`.
 """
 
-time_constant = symbols.time_constant
+time_constant = symbols.electric_time_constant
 """
 :doc:`Time constant <laws.electricity.circuits.time_constant_of_resistor_capacitor_circuit>` of the circuit.
+See :symbols:`electric_time_constant`.
 """
 
 law = Eq(capacitor_voltage, source_voltage * (1 - exp(-time / time_constant)))

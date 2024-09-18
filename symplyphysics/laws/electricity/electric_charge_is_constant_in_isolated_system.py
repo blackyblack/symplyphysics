@@ -11,12 +11,12 @@ from symplyphysics import Quantity, validate_input, validate_output, symbols, cl
 
 initial_charge = clone_as_symbol(symbols.charge, display_symbol="q_0")
 """
-Initial charge of the system.
+Initial :symbols:`charge` of the system.
 """
 
 final_charge = clone_as_symbol(symbols.charge, display_symbol="q_1")
 """
-Final charge of the system.
+Final :symbols:`charge` of the system.
 """
 
 law = Eq(final_charge, initial_charge)

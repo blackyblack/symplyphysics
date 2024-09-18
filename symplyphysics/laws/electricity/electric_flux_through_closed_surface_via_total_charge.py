@@ -23,12 +23,12 @@ from symplyphysics import (
 
 total_electric_flux = symbols.electric_flux
 """
-Electric flux through surface :math:`S`.
+:symbols:`electric_flux` through surface :math:`S`.
 """
 
 total_charge = symbols.charge
 """
-Total charge inside volume :math:`V`.
+Total :symbols:`charge` inside volume :math:`V`.
 """
 
 law = Eq(total_electric_flux, total_charge / quantities.vacuum_permittivity)

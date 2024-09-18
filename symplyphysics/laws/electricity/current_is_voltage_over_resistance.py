@@ -12,17 +12,17 @@ from symplyphysics import (Quantity, validate_input,
 
 current = symbols.current
 """
-Current flowing through the conductor.
+:symbols:`current` flowing through the conductor.
 """
 
 voltage = symbols.voltage
 """
-Voltage applied to the conductor.
+:symbols:`voltage` applied to the conductor.
 """
 
 resistance = symbols.resistance
 """
-Resistance of the conductor.
+:symbols:`resistance` of the conductor.
 """
 
 law = Eq(current, voltage / resistance)

@@ -21,22 +21,22 @@ from symplyphysics import (Quantity, validate_input,
 
 resistance = symbols.resistance
 """
-Resistance of the conductor.
+:symbols:`resistance` of the conductor.
 """
 
 resistivity = symbols.resistivity
 """
-Resistivity of the material.
+:symbols:`resistivity` of the material.
 """
 
 length = symbols.length
 """
-Length of the conductor.
+:symbols:`length` of the conductor.
 """
 
 area = symbols.area
 """
-Cross-sectional area of the conductor.
+Cross-sectional :symbols:`area` of the conductor.
 """
 
 law = Eq(resistance, resistivity * length / area)

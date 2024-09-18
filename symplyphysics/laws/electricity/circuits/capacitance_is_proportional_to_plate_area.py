@@ -21,22 +21,22 @@ from symplyphysics import (
 
 capacitance = symbols.capacitance
 """
-Capacitance of the capacitor.
+:symbols:`capacitance` of the capacitor.
 """
 
 absolute_permittivity = symbols.absolute_permittivity
 """
-Absolute permittivity of the medium between the plates.
+:symbols:`absolute_permittivity` of the medium between the plates.
 """
 
 area = symbols.area
 """
-Area of the plates.
+:symbols:`area` of the plates.
 """
 
 distance = symbols.distance
 """
-Distance between the plates.
+:symbols:`distance` between the plates.
 """
 
 law = Eq(capacitance, absolute_permittivity * area / distance)

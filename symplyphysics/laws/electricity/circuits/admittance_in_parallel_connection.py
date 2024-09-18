@@ -24,12 +24,12 @@ from symplyphysics import (
 
 total_admittance = symbols.admittance
 """
-Total admittance of the circuit.
+Total :symbols:`admittance` of the circuit.
 """
 
-admittance = SymbolIndexedNew("Y_i", units.conductance)
+admittance = SymbolIndexedNew("Y[i]", units.conductance, display_latex="Y_i")
 """
-Admittance of :math:`i`-th circuit.
+:symbols:`admittance` of :math:`i`-th circuit.
 """
 
 law = Eq(total_admittance, SumIndexed(admittance[global_index], global_index))

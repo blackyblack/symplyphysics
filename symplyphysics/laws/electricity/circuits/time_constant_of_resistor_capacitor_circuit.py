@@ -15,19 +15,19 @@ from symplyphysics import (
     symbols,
 )
 
-time_constant = symbols.time_constant
+time_constant = symbols.electric_time_constant
 """
-Time constant of the circuit.
+:symbols:`electric_time_constant` of the circuit.
 """
 
 resistance = symbols.resistance
 """
-Resistance of the resistor.
+:symbols:`resistance` of the resistor.
 """
 
 capacitance = symbols.capacitance
 """
-Capacitance of the capacitor.
+:symbols:`capacitance` of the capacitor.
 """
 
 law = Eq(time_constant, resistance * capacitance)

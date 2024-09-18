@@ -21,17 +21,17 @@ from symplyphysics import (Quantity, SymbolNew, validate_input,
 
 magnetic_flux_density = symbols.magnetic_flux_density
 """
-Value of the magnetic field.
+:symbols:`magnetic_flux_density`.
 """
 
 current = symbols.current
 """
-Current flowing through the coil.
+:symbols:`current` flowing through the coil.
 """
 
 length = symbols.length
 """
-Length of the coil.
+:symbols:`length` of the coil.
 """
 
 coil_turn_count = SymbolNew("N", dimensionless)

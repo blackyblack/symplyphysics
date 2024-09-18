@@ -26,17 +26,17 @@ from symplyphysics import (
 
 electric_field_strength = symbols.electric_field_strength
 """
-Value of the electric field.
+:symbols:`electric_field_strength`.
 """
 
 charge = symbols.charge
 """
-Total charge of the sphere.
+Total :symbols:`charge` of the sphere.
 """
 
 distance = symbols.distance_to_origin
 """
-Distance to the center of the sphere.
+:symbols:`distance` to the center of the sphere.
 """
 
 law = Eq(electric_field_strength, charge / (4 * pi * quantities.vacuum_permittivity * distance**2))

@@ -28,7 +28,7 @@ from symplyphysics import (Quantity, SymbolNew, validate_input,
 
 electromotive_force = symbols.electromotive_force
 """
-Electromotive force induced in the coil.
+:symbols:`electromotive_force` induced in the coil.
 """
 
 coil_turn_count = SymbolNew("N", dimensionless)
@@ -38,17 +38,17 @@ Number of turns in the coil.
 
 magnetic_flux_density = symbols.magnetic_flux_density
 """
-Magnetic flux density.
+:symbols:`magnetic_flux_density`.
 """
 
 contour_area = symbols.area
 """
-Cross-sectional area of the contour enclosed by the coil.
+Cross-sectional :symbols:`area` of the contour enclosed by the coil.
 """
 
 angular_frequency = symbols.angular_frequency
 """
-Angular frequency of the coil's rotation.
+:symbols:`angular_frequency` of the coil's rotation.
 """
 
 time = symbols.time
@@ -60,7 +60,7 @@ law = Eq(
     electromotive_force,
     -1 * coil_turn_count * magnetic_flux_density * contour_area * angular_frequency * sin(angular_frequency * time))
 """
-:laws:symbols::
+:laws:symbol::
 
 :laws:latex::
 """

@@ -11,17 +11,17 @@ from symplyphysics import Quantity, validate_input, validate_output, symbols
 
 power = symbols.power
 """
-Electric power.
+Electric :symbols:`power`.
 """
 
 current = symbols.current
 """
-Electric current.
+Electric ;symbols:`current`.
 """
 
 voltage = symbols.voltage
 """
-Voltage applied.
+:symbols:`voltage` applied.
 """
 
 law = Eq(power, current * voltage)

@@ -31,14 +31,14 @@ coil_turn_count = SymbolNew("N", dimensionless)
 Number of turns in the coil.
 """
 
-magnetic_flux = clone_as_function(symbols.magnetic_flux, display_symbol="B(t)")
+magnetic_flux = clone_as_function(symbols.magnetic_flux, display_symbol="Phi_B(t)")
 """
-Magnetic flux through the coil.
+:symbols:`magnetic_flux` through the coil.
 """
 
 time = symbols.time
 """
-Time.
+:symbols:`time`.
 """
 
 law = Eq(electromotive_force, -1 * coil_turn_count * Derivative(magnetic_flux(time), time))

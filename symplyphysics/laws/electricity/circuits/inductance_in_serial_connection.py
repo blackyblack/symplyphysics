@@ -25,12 +25,12 @@ from symplyphysics import (
 
 total_inductance = symbols.inductance
 """
-Total inductance of the circuit.
+Total :symbols:`inductance` of the circuit.
 """
 
-inductance = SymbolIndexedNew("L_i", units.inductance)
+inductance = SymbolIndexedNew("L[i]", units.inductance, display_latex="L_i")
 r"""
-Inductance of the :math:`i`-th component.
+:symbols:`inductance` of the :math:`i`-th component.
 """
 
 law = Eq(total_inductance, SumIndexed(inductance[global_index], global_index))

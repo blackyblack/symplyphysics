@@ -28,7 +28,7 @@ from symplyphysics.laws.kinematics import position_via_constant_speed_and_time a
 
 radius_of_curvature = symbols.radius_of_curvature
 """
-Radius of curvature of the particle's orbit.
+:symbols:`radius_of_curvature` of the particle's orbit.
 """
 
 mass = symbols.mass
@@ -38,17 +38,17 @@ mass = symbols.mass
 
 speed = symbols.speed
 """
-Speed of the particle.
+:symbols:`speed` of the particle.
 """
 
 charge = symbols.charge
 """
-Charge of the particle.
+:symbols:`charge` of the particle.
 """
 
 magnetic_flux_density = symbols.magnetic_flux_density
 """
-Magnitude of magnetic flux density.
+Magnitude of :symbols:`magnetic_flux_density`.
 """
 
 law = Eq(radius_of_curvature, mass * speed / (charge * magnetic_flux_density))

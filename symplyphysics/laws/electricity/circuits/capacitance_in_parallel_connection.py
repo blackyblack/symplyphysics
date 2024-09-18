@@ -28,12 +28,12 @@ from symplyphysics.laws.electricity import (
 
 total_capacitance = symbols.capacitance
 """
-Total capacitance.
+Total :symbols:`capacitance`.
 """
 
-capacitance = SymbolIndexedNew("C_i", units.capacitance)
+capacitance = SymbolIndexedNew("C[i]", units.capacitance, display_latex="C_i")
 """
-Capacitance of :math:`i`-th capacitor.
+:symbols:`capacitance` of :math:`i`-th capacitor.
 """
 
 law = Eq(total_capacitance, SumIndexed(capacitance[global_index], global_index))

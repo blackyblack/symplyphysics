@@ -37,17 +37,17 @@ from symplyphysics.laws.electricity.circuits import sum_of_voltages_in_loop_is_z
 
 period = symbols.period
 """
-Natural period of oscillations.
+Natural :symbols:`period` of oscillations.
 """
 
 inductance = symbols.inductance
 """
-Inductance of the inductor.
+:symbols:`inductance` of the inductor.
 """
 
 capacitance = symbols.capacitance
 """
-Capacitance of the capacitor.
+:symbols:`capacitance` of the capacitor.
 """
 
 law = Eq(period, 2 * pi * sqrt(inductance * capacitance))

@@ -22,12 +22,12 @@ from symplyphysics import (
 
 absolute_permittivity = symbols.absolute_permittivity
 """
-Absolute permittivity.
+:symbols:`absolute_permittivity`.
 """
 
 relative_permittivity = symbols.relative_permittivity
 """
-Permittivity relative to that of vacuum.
+:symbols:`relative_permittivity`.
 """
 
 law = Eq(absolute_permittivity, quantities.vacuum_permittivity * relative_permittivity)

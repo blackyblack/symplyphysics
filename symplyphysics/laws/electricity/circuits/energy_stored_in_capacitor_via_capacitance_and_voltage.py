@@ -15,17 +15,17 @@ from symplyphysics import (
 
 energy = symbols.work
 """
-Energy stored in the electric field.
+:symbols:`energy` stored in the electric field.
 """
 
 capacitance = symbols.capacitance
 """
-Capacitance of the capacitor.
+:symbols:`capacitance` of the capacitor.
 """
 
 voltage = symbols.voltage
 """
-Voltage across the capacitor.
+:symbols:`voltage` across the capacitor.
 """
 
 law = Eq(energy, capacitance * voltage**2 / 2)

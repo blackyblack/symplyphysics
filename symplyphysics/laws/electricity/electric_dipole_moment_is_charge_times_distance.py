@@ -22,17 +22,17 @@ from symplyphysics import (
 
 electric_dipole_moment = symbols.electric_dipole_moment
 """
-Electric dipole moment of the system.
+:symbols:`electric_dipole_moment` of the system.
 """
 
 charge = symbols.charge
 """
-Magnitude of one the two point charges comprising the system.
+Magnitude of one the two point :symbols:`charge`-s comprising the system.
 """
 
 distance = symbols.distance
 """
-Distance between point charges.
+:symbols:`distance` between point charges.
 """
 
 law = Eq(electric_dipole_moment, charge * distance)

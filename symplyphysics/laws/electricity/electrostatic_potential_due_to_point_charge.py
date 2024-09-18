@@ -16,22 +16,22 @@ from symplyphysics import (
 
 electrostatic_potential = symbols.electric_potential
 """
-Electrostatic potential at given point.
+Electrostatic potential at given point. See :symbols:`electric_potential`.
 """
 
 absolute_permittivity = symbols.absolute_permittivity
 """
-Absolute permittivity of the medium.
+:symbols:`absolute_permittivity` of the medium.
 """
 
 distance = symbols.distance_to_origin
 """
-Distance to the point charge.
+:symbols:`distance` to the point charge.
 """
 
 charge = symbols.charge
 """
-Electric charge.
+Electric :symbols:`charge`.
 """
 
 law = Eq(electrostatic_potential,
