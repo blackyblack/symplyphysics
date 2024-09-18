@@ -7,6 +7,7 @@ from symplyphysics import symbols, SymbolNew
 
 _symbols_pattern = re.compile(r":symbols:`([^`]*)`")
 
+# Automatically find the necessaty modules so that we don't need to write the logic by hand
 _symbols_by_module: dict[str, set[str]] = {}
 for _attr in set(dir(symbols)) - set(symbols.__all__):
     _obj = getattr(symbols, _attr)
@@ -22,24 +23,31 @@ for _attr in set(dir(symbols)) - set(symbols.__all__):
 
 
 def process_string(doc: str) -> str:
-    matches = tuple(_symbols_pattern.finditer(doc))
     parts = []
 
-    for match in reversed(matches):
+    last_index_to = 0
+    for match in _symbols_pattern.finditer(doc):
         index_from, index_to = match.span()
         name = match.group(1)
 
-        directory = None
-        for the_directory, the_symbols in _symbols_by_module.items():
-            if name in the_symbols:
-                directory = the_directory
-        if directory is None:
+        for directory, collection in _symbols_by_module.items():
+            if name in collection:
+                part_before = doc[last_index_to:index_from]
+                text = f":attr:`~symplyphysics.symbols.{directory}.{name}`"
+
+                parts.append(part_before)
+                parts.append(text)
+
+                last_index_to = index_to
+                break
+        else:
             raise ValueError(f"Unknown symbol {name}.")
 
-        text = f":attr:`~symplyphysics.symbols.{directory}.{name}`"
+    # no substitution happened
+    if not parts:
+        return doc
 
-        parts.append(doc[index_to:])
-        parts.append(text)
-        doc = doc[:index_from]
+    part_after = doc[last_index_to:]
+    parts.append(part_after)
 
-    return "".join(reversed(parts))
+    return "".join(parts)

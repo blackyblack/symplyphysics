@@ -73,12 +73,14 @@ def get_parser() -> argparse.ArgumentParser:
 def process_generated_files(generated_dir: str) -> None:
     for file_path in Path(generated_dir).iterdir():
         with open(file_path, "r+", encoding="utf-8") as file:
-            doc = file.read()
+            old_doc = file.read()
             
             # processing logic goes here
-            doc = symbols_role.process_string(doc)
+            new_doc = symbols_role.process_string(old_doc)
 
-            file.write(doc)
+            file.seek(0)
+            file.truncate(0)
+            file.write(new_doc)
 
 
 def main(argv: Sequence[str] = ()) -> None:

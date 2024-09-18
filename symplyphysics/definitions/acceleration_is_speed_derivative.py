@@ -16,17 +16,17 @@ from symplyphysics import (
 
 acceleration = clone_as_function(symbols.acceleration, display_symbol="a(t)")
 """
-:attr:`~symplyphysics.symbols.classical_mechanics.acceleration` of the body as a function of time.
+:symbols:`acceleration` of the body as a function of time.
 """
 
 speed = clone_as_function(symbols.speed, display_symbol="v(t)")
 """
-:attr:`~symplyphysics.symbols.classical_mechanics.speed` of the body as a function of time.
+:symbols:`speed` of the body as a function of time.
 """
 
 time = symbols.time
 """
-:attr:`~symplyphysics.symbols.basic.time`.
+:symbols:`time`.
 """
 
 definition = Eq(acceleration(time), Derivative(speed(time), time))
