@@ -285,5 +285,23 @@ def clone_as_function(
     )
 
 
+def clone_as_indexed(
+    source: SymbolNew | FunctionNew | SymbolIndexedNew,
+    *,
+    display_symbol: Optional[str] = None,
+    display_latex: Optional[str] = None,
+    **assumptions: Any,
+) -> SymbolIndexedNew:
+    assumptions = assumptions or source.assumptions0
+    display_symbol = display_symbol or source.display_name
+    display_latex = display_latex or source.display_latex or display_symbol
+    return SymbolIndexedNew(
+        display_symbol,
+        source.dimension,
+        display_latex=display_latex,
+        **assumptions,
+    )
+
+
 # This is default index for indexed parameters, eg for using in SumIndexed
 global_index = Idx("i")

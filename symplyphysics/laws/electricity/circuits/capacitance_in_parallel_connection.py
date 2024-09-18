@@ -16,12 +16,12 @@ from symplyphysics import (
     Quantity,
     validate_input,
     validate_output,
-    SymbolIndexedNew,
     SumIndexed,
     global_index,
     symbols,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.core.symbols.symbols import clone_as_indexed
 from symplyphysics.laws.electricity import (
     capacitance_from_charge_and_voltage as _capacitance_law,
 )
@@ -31,7 +31,7 @@ total_capacitance = symbols.capacitance
 Total :symbols:`capacitance`.
 """
 
-capacitance = SymbolIndexedNew("C[i]", units.capacitance, display_latex="C_i")
+capacitance = clone_as_indexed(symbols.capacitance, display_symbol="C[i]", display_latex="C_i")
 """
 :symbols:`capacitance` of :math:`i`-th capacitor.
 """

@@ -16,15 +16,15 @@ known as the **first Kirchhoff's law**, or the **Kirchhoff's junction rule**.
 from typing import Sequence
 from sympy import Eq, Idx, solve
 from symplyphysics import (
-    units,
     Quantity,
     validate_input,
     validate_output,
-    SymbolIndexedNew,
     SumIndexed,
+    symbols,
 )
+from symplyphysics.core.symbols.symbols import clone_as_indexed
 
-current = SymbolIndexedNew("I[k]", units.current, display_latex="I_k")
+current = clone_as_indexed(symbols.current, display_symbol="I[k]", display_latex="I_k")
 r"""
 :math:`k`-th current flowing through the node.
 """
@@ -42,7 +42,7 @@ law = Eq(SumIndexed(current[index], index), 0)
 
 
 @validate_input(currents_=current)
-@validate_output(units.current)
+@validate_output(current)
 def calculate_current_from_array(currents_: Sequence[Quantity]) -> Quantity:
     local_index = Idx("index_local", (1, len(currents_) + 1))
     currents_law = law.subs(index, local_index)

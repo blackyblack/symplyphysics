@@ -10,16 +10,16 @@ This law is also known as **Kirchhoff's second law**, or **Kirchhoff's loop rule
 from typing import Sequence
 from sympy import Eq, Idx, solve
 from symplyphysics import (
-    units,
     Quantity,
     validate_input,
     validate_output,
-    SymbolIndexedNew,
     SumIndexed,
     global_index,
+    symbols,
 )
+from symplyphysics.core.symbols.symbols import clone_as_indexed
 
-voltage = SymbolIndexedNew("V_i", units.voltage)
+voltage = clone_as_indexed(symbols.voltage, display_symbol="V[i]", display_latex="V_i")
 r"""
 :math:`i`-th voltage.
 """
@@ -33,7 +33,7 @@ law = Eq(SumIndexed(voltage[global_index], global_index), 0)
 
 
 @validate_input(voltages_=voltage)
-@validate_output(units.voltage)
+@validate_output(voltage)
 def calculate_voltage(voltages_: Sequence[Quantity]) -> Quantity:
     local_index = Idx("index_local", (1, len(voltages_) + 1))
     voltages_law = law.subs(global_index, local_index)

@@ -13,22 +13,21 @@ of the inductances of individual components.
 
 from sympy import Eq, Idx, solve
 from symplyphysics import (
-    units,
     Quantity,
     validate_input,
     validate_output,
-    SymbolIndexedNew,
     SumIndexed,
     global_index,
     symbols,
 )
+from symplyphysics.core.symbols.symbols import clone_as_indexed
 
 total_inductance = symbols.inductance
 """
 Total :symbols:`inductance` of the circuit.
 """
 
-inductance = SymbolIndexedNew("L[i]", units.inductance, display_latex="L_i")
+inductance = clone_as_indexed(symbols.inductance, display_symbol="L[i]", display_latex="L_i")
 r"""
 :symbols:`inductance` of the :math:`i`-th component.
 """

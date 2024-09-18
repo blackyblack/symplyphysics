@@ -18,16 +18,16 @@ from symplyphysics import (
     validate_output,
     global_index,
     SumIndexed,
-    SymbolIndexedNew,
     symbols,
 )
+from symplyphysics.core.symbols.symbols import clone_as_indexed
 
 total_admittance = symbols.admittance
 """
 Total :symbols:`admittance` of the circuit.
 """
 
-admittance = SymbolIndexedNew("Y[i]", units.conductance, display_latex="Y_i")
+admittance = clone_as_indexed(symbols.admittance, display_symbol="Y[i]", display_latex="Y_i")
 """
 :symbols:`admittance` of :math:`i`-th circuit.
 """

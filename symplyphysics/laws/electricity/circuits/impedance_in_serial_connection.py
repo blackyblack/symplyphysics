@@ -12,22 +12,21 @@ of the impedances of individual components.
 
 from sympy import Eq, Idx, solve
 from symplyphysics import (
-    units,
     Quantity,
     validate_input,
     validate_output,
-    SymbolIndexedNew,
     SumIndexed,
     global_index,
     symbols,
 )
+from symplyphysics.core.symbols.symbols import clone_as_indexed
 
 total_impedance = symbols.electrical_impedance
 """
 Total :symbols:`electrical_impedance` of the circuit.
 """
 
-impedance = SymbolIndexedNew("Z_i", units.impedance)
+impedance = clone_as_indexed(symbols.electrical_impedance, display_symbol="Z[i]", display_latex="Z_i")
 r"""
 :symbols:`electrical_impedance` of the :math:`i`-th component.
 """

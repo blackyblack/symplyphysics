@@ -36,6 +36,9 @@ __all__ = [
     "SymbolIndexed",
     "global_index",    
     "clone_as_function",
+    "FunctionNew",
+    "SymbolNew",
+    "SymbolIndexedNew",
     # convert
     "convert_to",
     "convert_to_float",
