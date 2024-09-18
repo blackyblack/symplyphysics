@@ -109,7 +109,8 @@ Quantum Mechanics.
 
 planck = Quantity(units.planck, display_symbol="h")
 """
-TODO
+The **Planck constant** is a fundamental physical constant of foundational importance in quantum mechanics.
+It is the constant of proportionality between a photon's energy and frequency.
 """
 
 avogadro_constant = Quantity(units.avogadro, display_symbol="N_A", display_latex="N_\\text{A}")
