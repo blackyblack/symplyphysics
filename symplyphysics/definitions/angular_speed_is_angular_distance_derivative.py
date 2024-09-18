@@ -19,17 +19,17 @@ from symplyphysics.core.convert import convert_to_si
 
 angular_speed = clone_as_function(symbols.angular_speed, display_symbol="w(t)")
 """
-Angular speed of the body as a function of time.
+:symbols:`angular_speed` of the body as a function of time.
 """
 
 angular_distance = clone_as_function(symbols.angular_distance, display_symbol="theta(t)")
 """
-Angular distance as a function of time.
+:symbols:`angular_distance` as a function of time.
 """
 
-time = SymbolNew("t", units.time)
+time = symbols.time
 """
-Time.
+:symbols:`time`.
 """
 
 definition = Eq(angular_speed(time), Derivative(angular_distance(time), time))

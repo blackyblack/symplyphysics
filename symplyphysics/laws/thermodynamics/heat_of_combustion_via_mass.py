@@ -18,7 +18,7 @@ Symbol:
 
 mass = symbols.mass
 """
-:attr:`~symplyphysics.symbols.mass` of the body subjected to combustion.
+:symbols:`mass` of the body subjected to combustion.
 """
 
 specific_heat_of_combustion = Symbol("specific_heat_of_combustion", units.energy / units.mass)

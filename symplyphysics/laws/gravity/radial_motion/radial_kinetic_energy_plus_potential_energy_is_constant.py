@@ -22,7 +22,7 @@ from symplyphysics import (
 
 planetary_mass = symbols.mass
 """
-The :attr:`~symplyphysics.symbols.mass` of the planet.
+The :symbols:`mass` of the planet.
 """
 
 radial_speed = Symbol("radial_speed", units.velocity)

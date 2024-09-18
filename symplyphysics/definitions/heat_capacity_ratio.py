@@ -25,17 +25,17 @@ from symplyphysics import (
 
 heat_capacity_ratio = symbols.adiabatic_index
 """
-Heat capacity ratio of the system.
+:symbols:`adiabatic_index` of the system.
 """
 
 isobaric_heat_capacity = clone_as_symbol(symbols.heat_capacity, display_symbol="C_p")
 """
-Heat capacity of the system at constant pressure.
+:symbols:`heat_capacity` of the system at constant pressure.
 """
 
 isochoric_heat_capacity = clone_as_symbol(symbols.heat_capacity, display_symbol="C_V")
 """
-Heat capacity of the system at constant volume.
+:symbols:`heat_capacity` of the system at constant volume.
 """
 
 definition = Eq(heat_capacity_ratio, isobaric_heat_capacity / isochoric_heat_capacity)

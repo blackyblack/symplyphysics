@@ -39,12 +39,12 @@ Symbol:
 
 attracting_mass = clone_as_symbol(symbols.mass, display_symbol="M")
 """
-The :attr:`~symplyphysics.symbols.mass` of the attracting body, such as the Sun.
+The :symbols:`mass` of the attracting body, such as the Sun.
 """
 
 planetary_mass = symbols.mass
 """
-The :attr:`~symplyphysics.symbols.mass` of the orbiting planet.
+The :symbols:`mass` of the orbiting planet.
 """
 
 law = Eq(

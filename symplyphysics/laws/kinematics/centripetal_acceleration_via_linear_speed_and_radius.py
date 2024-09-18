@@ -20,7 +20,7 @@ centripetal_acceleration = clone_as_symbol(symbols.acceleration,
     display_symbol="a_n",
     display_latex="a_n")
 """
-Centripetal, or normal, :attr:`~symplyphysics.symbols.acceleration`.
+Centripetal, or normal, :symbols:`acceleration`.
 """
 
 speed = Symbol("speed", units.velocity)

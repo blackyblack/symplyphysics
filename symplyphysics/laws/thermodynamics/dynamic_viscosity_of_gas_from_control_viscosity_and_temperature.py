@@ -43,14 +43,14 @@ Latex:
 
 temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.temperature` at which the viscosity value is calculated.
+:symbols:`temperature` at which the viscosity value is calculated.
 """
 
 reference_temperature = clone_as_symbol(symbols.temperature,
     display_symbol="T0",
     display_latex="T_0")
 """
-:attr:`~symplyphysics.symbols.temperature` at which the reference viscosity value is calculated.
+:symbols:`temperature` at which the reference viscosity value is calculated.
 """
 
 sutherland_constant = Symbol("sutherland_constant", units.temperature)

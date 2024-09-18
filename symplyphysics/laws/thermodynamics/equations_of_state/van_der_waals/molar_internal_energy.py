@@ -45,7 +45,7 @@ Latex:
 
 temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.temperature` of the van der Waals fluid.
+:symbols:`temperature` of the van der Waals fluid.
 """
 
 attractive_forces_parameter = Symbol(

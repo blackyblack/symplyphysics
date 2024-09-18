@@ -57,7 +57,7 @@ temperature_difference = clone_as_symbol(symbols.temperature,
     display_latex="\\Delta T",
     real=True)
 """
-:attr:`~symplyphysics.symbols.temperature` difference between the two faces of the slab.
+:symbols:`temperature` difference between the two faces of the slab.
 """
 
 law = Eq(

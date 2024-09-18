@@ -57,7 +57,7 @@ Symbol:
 
 temperature_change = clone_as_symbol(symbols.temperature, display_symbol="dT")
 """
-Infinitesimal change in :attr:`~symplyphysics.symbols.temperature` of the system.
+Infinitesimal change in :symbols:`temperature` of the system.
 """
 
 pressure = Symbol("pressure", units.pressure)

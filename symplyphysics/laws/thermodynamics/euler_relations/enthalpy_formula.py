@@ -28,7 +28,7 @@ Symbol:
 
 temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.temperature` of the system.
+:symbols:`temperature` of the system.
 """
 
 entropy = Symbol("entropy", units.energy / units.temperature)

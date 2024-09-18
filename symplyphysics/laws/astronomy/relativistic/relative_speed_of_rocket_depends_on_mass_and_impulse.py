@@ -42,12 +42,12 @@ Latex:
 
 initial_mass = clone_as_symbol(symbols.mass, display_symbol="M1", display_latex="M_1")
 """
-Initial :attr:`~symplyphysics.symbols.mass` of the rocket
+Initial :symbols:`mass` of the rocket
 """
 
 final_mass = clone_as_symbol(symbols.mass, display_symbol="M2", display_latex="M_2")
 """
-Final :attr:`~symplyphysics.symbols.mass` of the rocket
+Final :symbols:`mass` of the rocket
 """
 
 law = Eq(final_mass / initial_mass, ((1 - (speed / speed_of_light)) / (1 +

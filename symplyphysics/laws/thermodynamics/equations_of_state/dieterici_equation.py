@@ -53,7 +53,7 @@ Latex:
 
 temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.temperature` of the system.
+:symbols:`temperature` of the system.
 """
 
 attractive_forces_parameter = Symbol(

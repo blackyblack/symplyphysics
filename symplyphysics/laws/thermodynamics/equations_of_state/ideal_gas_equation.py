@@ -39,7 +39,7 @@ Symbol:
 
 temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.temperature` of the gas.
+:symbols:`temperature` of the gas.
 """
 
 law = Eq(pressure * volume, amount_of_substance * units.molar_gas_constant * temperature)

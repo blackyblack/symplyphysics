@@ -34,7 +34,7 @@ Symbol:
 
 mass = symbols.mass
 """
-The :attr:`~symplyphysics.symbols.mass` of the oscillating body.
+The :symbols:`mass` of the oscillating body.
 """
 
 natural_angular_frequency = Symbol("natural_angular_frequency", angle_type / units.time)
@@ -50,7 +50,7 @@ Latex:
 
 driving_force_amplitude = symbols.force
 """
-The amplitude of the driving :attr:`~symplyphysics.symbols.force`.
+The amplitude of the driving :symbols:`force`.
 """
 
 driving_angular_frequency = Symbol("driving_angular_frequency", angle_type / units.time)

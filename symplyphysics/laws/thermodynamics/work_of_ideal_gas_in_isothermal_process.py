@@ -69,7 +69,7 @@ Latex:
 
 temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.temperature` of the gas.
+:symbols:`temperature` of the gas.
 """
 
 law = Eq(

@@ -46,7 +46,7 @@ Symbol:
 
 temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.temperature` of the system.
+:symbols:`temperature` of the system.
 """
 
 pressure = Symbol("pressure", units.pressure)

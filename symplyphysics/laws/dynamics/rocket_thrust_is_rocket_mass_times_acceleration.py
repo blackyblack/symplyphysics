@@ -66,14 +66,14 @@ Latex:
 
 acceleration = symbols.acceleration
 """
-The :attr:`~symplyphysics.symbols.acceleration` of the rocket.
+The :symbols:`acceleration` of the rocket.
 """
 
 mass = clone_as_symbol(symbols.mass, display_symbol="M")
 """
 .. _rocket mass definition:
 
-The :attr:`~symplyphysics.symbols.mass` of the rocket
+The :symbols:`mass` of the rocket
 """
 
 law = Eq(fuel_consumption_rate * relative_speed, mass * acceleration)

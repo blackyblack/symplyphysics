@@ -50,7 +50,7 @@ Symbol:
 
 planetary_mass = symbols.mass
 """
-The :attr:`~symplyphysics.symbols.mass` of the planet.
+The :symbols:`mass` of the planet.
 """
 
 distance = Symbol("distance", units.length)

@@ -19,7 +19,7 @@ Symbol:
 
 force = symbols.force
 """
-:attr:`~symplyphysics.symbols.force` applied.
+:symbols:`force` applied.
 """
 
 area = Symbol("area", units.area)

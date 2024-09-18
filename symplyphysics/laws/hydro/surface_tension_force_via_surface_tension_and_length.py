@@ -19,7 +19,7 @@ from symplyphysics import (
 
 surface_tension_force = symbols.force
 """
-Surface tension :attr:`~symplyphysics.symbols.force`.
+Surface tension :symbols:`force`.
 """
 
 surface_tension = Symbol("surface_tension", units.force / units.length)

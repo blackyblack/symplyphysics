@@ -21,7 +21,7 @@ Symbol:
 
 mass = symbols.mass
 """
-:attr:`~symplyphysics.symbols.mass` of a melting or solidifying body.
+:symbols:`mass` of a melting or solidifying body.
 """
 
 specific_heat_of_fusion = Symbol("specific_heat_of_fusion", units.energy / units.mass)

@@ -16,14 +16,14 @@ initial_temperature = clone_as_symbol(symbols.temperature,
     display_symbol="T0",
     display_latex="T_0")
 """
-Initial :attr:`~symplyphysics.symbols.temperature` of the system.
+Initial :symbols:`temperature` of the system.
 """
 
 final_temperature = clone_as_symbol(symbols.temperature,
     display_symbol="T1",
     display_latex="T_1")
 """
-Final :attr:`~symplyphysics.symbols.temperature` of the system.
+Final :symbols:`temperature` of the system.
 """
 
 initial_volume = Symbol("initial_volume", units.volume)

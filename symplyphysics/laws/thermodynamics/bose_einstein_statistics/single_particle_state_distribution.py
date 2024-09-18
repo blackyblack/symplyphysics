@@ -58,7 +58,7 @@ Latex:
 
 temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.temperature` of the system.
+:symbols:`temperature` of the system.
 """
 
 law = Eq(

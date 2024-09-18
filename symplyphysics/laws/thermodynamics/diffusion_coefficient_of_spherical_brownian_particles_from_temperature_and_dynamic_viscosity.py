@@ -37,7 +37,7 @@ Symbol:
 
 temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.temperature` of the system.
+:symbols:`temperature` of the system.
 """
 
 particle_radius = Symbol("particle_radius", units.length)

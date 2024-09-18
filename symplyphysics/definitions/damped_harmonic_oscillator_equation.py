@@ -19,7 +19,7 @@ from symplyphysics import (
 
 displacement = clone_as_function(symbols.distance, display_symbol="x(t)", display_latex="x")
 """
-Displacement of the oscillating body as a function of time.
+Displacement of the oscillating body as a function of time. See :symbols:`distance`.
 """
 
 time = clone_as_symbol(symbols.time, positive=True)
@@ -29,12 +29,12 @@ Time.
 
 undamped_angular_frequency = clone_as_symbol(symbols.angular_frequency, positive=True)
 """
-Undamped angular frequency of the oscillator.
+Undamped :symbols:`angular_frequency` of the oscillator.
 """
 
 damping_ratio = clone_as_symbol(symbols.damping_ratio, positive=True)
 """
-Damping ratio, which critically determines the behavior of the system.
+:symbols:`damping_ratio`, which critically determines the behavior of the system.
 """
 
 definition = Eq(

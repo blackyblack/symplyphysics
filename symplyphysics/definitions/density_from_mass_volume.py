@@ -17,7 +17,7 @@ from symplyphysics import (
 
 density = symbols.density
 """
-Volumetric density of the object.
+Volumetric :symbols:`density` of the object.
 """
 
 mass = symbols.mass
@@ -27,7 +27,7 @@ mass = symbols.mass
 
 volume = symbols.volume
 """
-Volume of the object.
+:symbols:`volume` of the object.
 """
 
 definition = Eq(density, mass / volume)

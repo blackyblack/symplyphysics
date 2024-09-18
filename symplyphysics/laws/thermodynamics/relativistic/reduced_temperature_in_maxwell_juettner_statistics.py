@@ -38,12 +38,12 @@ Latex:
 
 temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.temperature` of the gas.
+:symbols:`temperature` of the gas.
 """
 
 particle_mass = symbols.mass
 """
-:attr:`~symplyphysics.symbols.mass` of a relativistic particle comprising the gas.
+:symbols:`mass` of a relativistic particle comprising the gas.
 """
 
 law = Eq(

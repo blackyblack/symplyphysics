@@ -16,17 +16,17 @@ from symplyphysics import (
 
 intensity = symbols.intensity
 """
-Intensity of the sound wave.
+:symbols:`intensity` of the sound wave.
 """
 
 power = symbols.power
 """
-Power, or rate of energy transfer, of the wave.
+:symbols:`power`, or rate of energy transfer, of the wave.
 """
 
 area = symbols.area
 """
-Surface area.
+Surface :symbols:`area`.
 """
 
 definition = Eq(intensity, power / area)

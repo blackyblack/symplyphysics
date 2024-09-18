@@ -21,7 +21,7 @@ from symplyphysics.laws.thermodynamics import internal_energy_differential
 
 temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.temperature` of the system.
+:symbols:`temperature` of the system.
 """
 
 internal_energy = Function("internal_energy", units.energy)

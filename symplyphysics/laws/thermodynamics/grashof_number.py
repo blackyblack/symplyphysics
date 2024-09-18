@@ -50,14 +50,14 @@ surface_temperature = clone_as_symbol(symbols.temperature,
     display_symbol="T_s",
     display_latex="T_\\text{s}")
 """
-:attr:`~symplyphysics.symbols.temperature` of the surface of the fluid.
+:symbols:`temperature` of the surface of the fluid.
 """
 
 bulk_temperature = clone_as_symbol(symbols.temperature,
     display_symbol="T_b",
     display_latex="T_\\text{b}")
 """
-Average :attr:`~symplyphysics.symbols.temperature` of the inside of the fluid.
+Average :symbols:`temperature` of the inside of the fluid.
 """
 
 characteristic_length = Symbol("characteristic_length", units.length)

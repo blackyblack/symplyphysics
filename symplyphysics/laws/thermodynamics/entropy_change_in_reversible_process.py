@@ -49,7 +49,7 @@ Latex:
 
 common_temperature = symbols.temperature
 """
-Common :attr:`~symplyphysics.symbols.temperature` of systems :math:`A` and :math:`B`.
+Common :symbols:`temperature` of systems :math:`A` and :math:`B`.
 """
 
 law = Eq(entropy_change, heat / common_temperature)

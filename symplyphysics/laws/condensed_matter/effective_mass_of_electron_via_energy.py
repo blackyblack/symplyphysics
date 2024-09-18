@@ -32,7 +32,7 @@ from symplyphysics import (
 
 effective_mass = clone_as_symbol(symbols.mass, display_symbol="m_eff", display_latex="m_\\text{eff}")
 r"""
-Effective :attr:`~symplyphysics.symbols.mass` of the electron.
+Effective :symbols:`mass` of the electron.
 """
 
 energy = Function("energy", units.energy)

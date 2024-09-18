@@ -33,7 +33,7 @@ Symbol:
 
 mass = symbols.mass
 """
-:attr:`~symplyphysics.symbols.mass`.
+:symbols:`mass`.
 
 Symbol:
     :code:`m`

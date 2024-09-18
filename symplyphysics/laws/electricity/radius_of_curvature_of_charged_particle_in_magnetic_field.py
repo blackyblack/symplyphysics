@@ -33,7 +33,7 @@ Radius of curvature of the particle's orbit.
 
 mass = symbols.mass
 """
-:attr:`~symplyphysics.symbols.mass` of the particle.
+:symbols:`mass` of the particle.
 """
 
 speed = symbols.speed

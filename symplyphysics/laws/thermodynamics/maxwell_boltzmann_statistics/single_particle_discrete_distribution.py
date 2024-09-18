@@ -60,7 +60,7 @@ Latex:
 
 equilibrium_temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.temperature` of the system.
+:symbols:`temperature` of the system.
 """
 
 single_particle_partition_function = Symbol("single_particle_partition_function", dimensionless)

@@ -34,7 +34,7 @@ Period of the particle's rotation.
 
 mass = symbols.mass
 """
-:attr:`~symplyphysics.symbols.mass` of the particle.
+:symbols:`mass` of the particle.
 """
 
 charge = symbols.charge

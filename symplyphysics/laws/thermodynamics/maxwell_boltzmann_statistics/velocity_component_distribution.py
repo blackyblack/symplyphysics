@@ -59,12 +59,12 @@ Latex:
 
 particle_mass = clone_as_symbol(symbols.mass, positive=True)
 """
-:attr:`~symplyphysics.symbols.mass` of a particle.
+:symbols:`mass` of a particle.
 """
 
 equilibrium_temperature = clone_as_symbol(symbols.temperature, positive=True)
 """
-Equilibrium :attr:`~symplyphysics.symbols.temperature` of the ensemble.
+Equilibrium :symbols:`temperature` of the ensemble.
 """
 
 law = Eq(

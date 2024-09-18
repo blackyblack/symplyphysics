@@ -34,7 +34,7 @@ Symbol:
 
 mass = symbols.mass
 """
-The :attr:`~symplyphysics.symbols.mass` of the particle.
+The :symbols:`mass` of the particle.
 """
 
 law = Eq(rotational_inertia, mass * distance_to_axis**2)

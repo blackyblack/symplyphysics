@@ -28,7 +28,7 @@ Symbol:
 
 force = symbols.force
 """
-The :attr:`~symplyphysics.symbols.force` exerted on the object.
+The :symbols:`force` exerted on the object.
 """
 
 speed = Symbol("speed", units.speed)

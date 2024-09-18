@@ -68,7 +68,7 @@ Symbol:
 
 temperature = symbols.temperature
 r"""
-:attr:`~symplyphysics.symbols.temperature` of the semiconductor.
+:symbols:`temperature` of the semiconductor.
 """
 
 charge_electron = Symbol("charge_electron", units.charge)

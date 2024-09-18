@@ -15,12 +15,12 @@ from symplyphysics import (
 
 angular_wavenumber = symbols.angular_wavenumber
 """
-Angular wavenumber of the wave.
+:symbols:`angular_wavenumber` of the wave.
 """
 
 wavelength = symbols.wavelength
 """
-Wavelength of the wave.
+:symbols:`wavelength` of the wave.
 """
 
 definition = Eq(angular_wavenumber, 2 * pi / wavelength)

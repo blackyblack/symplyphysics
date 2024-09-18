@@ -28,7 +28,7 @@ Latex:
 
 planet_mass = clone_as_symbol(symbols.mass, display_symbol="M")
 """
-The :attr:`~symplyphysics.symbols.mass` of the planet.
+The :symbols:`mass` of the planet.
 """
 
 aiming_range = Symbol("aiming_range", units.length)

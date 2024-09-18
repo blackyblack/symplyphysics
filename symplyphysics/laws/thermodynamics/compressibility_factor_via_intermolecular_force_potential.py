@@ -81,7 +81,7 @@ Latex:
 
 temperature = clone_as_symbol(symbols.temperature, positive=True)
 """
-:attr:`~symplyphysics.symbols.temperature` of the system.
+:symbols:`temperature` of the system.
 """
 
 law = Eq(

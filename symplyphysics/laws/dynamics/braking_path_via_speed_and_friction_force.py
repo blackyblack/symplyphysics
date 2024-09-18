@@ -44,12 +44,12 @@ friction_force = clone_as_symbol(symbols.force,
     display_symbol="F_fr",
     display_latex="F_\\text{fr}")
 """
-The friction :attr:`~symplyphysics.symbols.force` exerted on the object.
+The friction :symbols:`force` exerted on the object.
 """
 
 mass = symbols.mass
 """
-The :attr:`~symplyphysics.symbols.mass` of the object.
+The :symbols:`mass` of the object.
 """
 
 law = Eq(braking_path, mass * speed**2 / (2 * friction_force))

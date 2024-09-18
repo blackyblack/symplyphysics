@@ -30,7 +30,7 @@ Symbol:
 
 force = Function("force", units.force)
 """
-The magnitude of the net :attr:`~symplyphysics.symbols.force` exerted on the body.
+The magnitude of the net :symbols:`force` exerted on the body.
 
 Symbol:
     :code:`F(t)`

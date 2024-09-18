@@ -16,17 +16,17 @@ from symplyphysics import (Quantity, validate_input, validate_output, symbols)
 
 impedance = symbols.electrical_impedance
 """
-Impedance of the system.
+:symbols:`electrical_impedance` of the system.
 """
 
 resistance = symbols.resistance
 """
-Resistance of the system.
+:symbols:`resistance` of the system.
 """
 
 reactance = symbols.reactance
 """
-Reactance of the system.
+:symbols:`reactance` of the system.
 """
 
 definition = Eq(impedance, resistance + I * reactance)

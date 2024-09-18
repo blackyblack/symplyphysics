@@ -14,7 +14,7 @@ friction_force = clone_as_symbol(symbols.force,
     display_symbol="F_fr",
     display_latex="F_\\text{fr}")
 """
-The friction :attr:`~symplyphysics.symbols.force`.
+The friction :symbols:`force`.
 """
 
 coefficient_of_friction = Symbol("coefficient_of_friction", dimensionless)
@@ -30,7 +30,7 @@ Latex:
 
 normal_force = clone_as_symbol(symbols.force, display_symbol="N")
 """
-The normal reaction :attr:`~symplyphysics.symbols.force` from one object to another.
+The normal reaction :symbols:`force` from one object to another.
 """
 
 law = Eq(friction_force, coefficient_of_friction * normal_force)

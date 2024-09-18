@@ -19,7 +19,7 @@ from symplyphysics import (
 
 impulse = symbols.impulse
 r"""
-Projection of impulse vector due to :symbols:`force` :math:`\vec F`.
+Projection of :symbols:`impulse` vector due to force :math:`\vec F`.
 """
 
 force = clone_as_function(symbols.force, display_symbol="F(t)")
@@ -29,17 +29,17 @@ Projection of :symbols:`force` :math:`\vec F` as a function of time.
 
 time = symbols.time
 """
-Time.
+:symbols:`time`.
 """
 
 time_before = clone_as_symbol(symbols.time, display_symbol="t_0")
 """
-Initial time of collision.
+Initial :symbols:`time` of collision.
 """
 
 time_after = clone_as_symbol(symbols.time, display_symbol="t_1")
 """
-Final time of collision.
+Final :symbols:`time` of collision.
 """
 
 law = Eq(impulse, Integral(force(time), (time, time_before, time_after)))

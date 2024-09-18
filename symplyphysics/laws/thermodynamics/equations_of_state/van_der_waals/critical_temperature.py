@@ -25,7 +25,7 @@ critical_temperature = clone_as_symbol(symbols.temperature,
     display_symbol="T_c",
     display_latex="T_\\text{c}")
 """
-Critical :attr:`~symplyphysics.symbols.temperature` of the van der Waals fluid.
+Critical :symbols:`temperature` of the van der Waals fluid.
 """
 
 attractive_forces_parameter = Symbol(

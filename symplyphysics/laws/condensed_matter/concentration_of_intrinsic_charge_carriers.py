@@ -62,7 +62,7 @@ Latex:
 
 temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.temperature` of the semiconductor.
+:symbols:`temperature` of the semiconductor.
 """
 
 band_gap = Symbol("band_gap", units.energy)

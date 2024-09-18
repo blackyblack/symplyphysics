@@ -7,6 +7,10 @@ describes the deviation of a real gas from ideal gas behaviour. In general, the 
 ideal gas behaviour becomes more prominent the closer the gas is to a phase change, the lower
 the temperature or the larger the pressure.
 
+**Notation:**
+
+#. :math:`R` is the molar gas constant.
+
 **Notes:**
 
 #. Can be equivalently defined as the ratio of the molar volume :math:`\frac{V}{n}` of the real gas to the
@@ -56,13 +60,8 @@ temperature = symbols.temperature
 Gas :symbols:`temperature`.
 """
 
-molar_gas_constant = quantities.molar_gas_constant
-"""
-:attr:`~symplyphysics.quantities.molar_gas_constant`
-"""
-
 definition = Eq(compressibility_factor,
-    (pressure * volume) / (amount_of_substance * molar_gas_constant * temperature))
+    (pressure * volume) / (amount_of_substance * quantities.molar_gas_constant * temperature))
 """
 :laws:symbol::
 

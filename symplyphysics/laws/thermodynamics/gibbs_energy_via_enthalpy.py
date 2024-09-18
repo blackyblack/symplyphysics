@@ -44,7 +44,7 @@ Symbol:
 
 temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.temperature` of the system.
+:symbols:`temperature` of the system.
 """
 
 law = Eq(gibbs_energy, enthalpy - temperature * entropy)

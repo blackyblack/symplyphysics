@@ -34,7 +34,7 @@ Symbol:
 
 temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.temperature` of the gas.
+:symbols:`temperature` of the gas.
 """
 
 heat_capacity_ratio = Symbol("heat_capacity_ratio", dimensionless)

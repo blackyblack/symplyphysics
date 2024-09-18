@@ -30,7 +30,7 @@ Symbol:
 
 kepler_constant = Symbol("kepler_constant", units.length**3 / units.time**2)
 r"""
-The Kepler's constant, whose value is determined by the :attr:`~symplyphysics.symbols.mass`
+The Kepler's constant, whose value is determined by the :symbols:`mass`
 of the orbited star.
 
 Symbol:
@@ -42,7 +42,7 @@ Latex:
 
 specific_energy = Symbol("specific_energy", units.energy / units.mass)
 r"""
-The total energy of the planet per unit of its :attr:`~symplyphysics.symbols.mass`.
+The total energy of the planet per unit of its :symbols:`mass`.
 Can be negative or positive depending on the sign of the planet's energy.
 
 Symbol:

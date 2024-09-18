@@ -27,7 +27,7 @@ def centrifugal_law(centripetal_acceleration_: Vector) -> Vector:
         .. math::
             \vec a_\text{cf} = - \vec a_\text{cp}
 
-    :param centripetal_acceleration\_: :attr:`~symplyphysics.symbols.acceleration` experienced by the rotating body in an inertial frame.
+    :param centripetal_acceleration\_: :symbols:`acceleration` experienced by the rotating body in an inertial frame.
 
         Symbol: :code:`a_centripetal`
 
@@ -35,7 +35,7 @@ def centrifugal_law(centripetal_acceleration_: Vector) -> Vector:
 
         Dimension: *acceleration*
     
-    :return: :attr:`~symplyphysics.symbols.acceleration` experienced by the body in a non-inertial, rotating frame.
+    :return: :symbols:`acceleration` experienced by the body in a non-inertial, rotating frame.
 
         Symbol: :code:`a_centrifugal`
 
@@ -58,7 +58,7 @@ def centripetal_law(centrifugal_acceleration_: Vector) -> Vector:
         .. math::
             \vec a_\text{cp} = - \vec a_\text{cf}
     
-    :param centrifugal_acceleration\_: :attr:`~symplyphysics.symbols.acceleration` experienced by the body in a non-inertial, rotating frame.
+    :param centrifugal_acceleration\_: :symbols:`acceleration` experienced by the body in a non-inertial, rotating frame.
 
         Symbol: :code:`a_centripetal`
 
@@ -66,7 +66,7 @@ def centripetal_law(centrifugal_acceleration_: Vector) -> Vector:
 
         Dimension: *acceleration*
 
-    :return: :attr:`~symplyphysics.symbols.acceleration` experienced by the rotating body in an inertial frame.
+    :return: :symbols:`acceleration` experienced by the rotating body in an inertial frame.
     
         Symbol: :code:`a_centripetal`
 

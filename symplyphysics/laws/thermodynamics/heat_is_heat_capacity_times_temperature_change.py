@@ -39,7 +39,7 @@ temperature_change = clone_as_symbol(symbols.temperature,
     display_symbol="dT",
     display_latex="\\Delta T")
 """
-Change in the body's :attr:`~symplyphysics.symbols.temperature`
+Change in the body's :symbols:`temperature`
 """
 
 law = Eq(heat, heat_capacity * temperature_change)

@@ -36,12 +36,12 @@ Latex:
 
 angular_frequency = symbols.angular_frequency
 """
-Angular frequency of the oscillator.
+:symbols:`angular_frequency` of the oscillator.
 """
 
 time = symbols.time
 """
-Time.
+:symbols:`time`.
 """
 
 definition = Eq(Derivative(displacement(time), (time, 2)),

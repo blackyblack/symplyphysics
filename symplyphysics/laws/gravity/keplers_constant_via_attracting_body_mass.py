@@ -30,7 +30,7 @@ Latex:
 
 attracting_mass = clone_as_symbol(symbols.mass, display_symbol="M")
 """
-The :attr:`~symplyphysics.symbols.mass` of the attracting body.
+The :symbols:`mass` of the attracting body.
 """
 
 law = Eq(keplers_constant, gravitational_constant * attracting_mass / (4 * pi**2))

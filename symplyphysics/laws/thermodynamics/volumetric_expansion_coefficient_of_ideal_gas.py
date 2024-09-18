@@ -35,7 +35,7 @@ Latex:
 
 temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.temperature` of the gas.
+:symbols:`temperature` of the gas.
 """
 
 law = Eq(volumetric_expansion_coefficient, 1 / temperature)

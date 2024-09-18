@@ -52,7 +52,7 @@ Symbol:
 
 temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.temperature` of the body.
+:symbols:`temperature` of the body.
 """
 
 law = Eq(

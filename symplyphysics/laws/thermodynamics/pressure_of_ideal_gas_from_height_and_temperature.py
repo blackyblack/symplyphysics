@@ -39,7 +39,7 @@ Latex:
 
 molecular_mass = symbols.mass
 """
-:attr:`~symplyphysics.symbols.mass` of a single gas molecule.
+:symbols:`mass` of a single gas molecule.
 """
 
 height_change = Symbol("height_change", units.length)
@@ -55,7 +55,7 @@ Latex:
 
 temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.temperature` of the gas.
+:symbols:`temperature` of the gas.
 """
 
 law = Eq(

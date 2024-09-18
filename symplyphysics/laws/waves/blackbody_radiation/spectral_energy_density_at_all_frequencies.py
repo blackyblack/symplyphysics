@@ -53,7 +53,7 @@ Latex:
 
 equilibrium_temperature = symbols.temperature
 """
-Equilibrium :attr:`~symplyphysics.symbols.temperature` of the ensemble.
+Equilibrium :symbols:`temperature` of the ensemble.
 """
 
 law = Eq(spectral_energy_density, (8 * pi * planck * radiation_frequency**3 / speed_of_light**3) /

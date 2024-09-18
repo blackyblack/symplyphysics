@@ -22,7 +22,7 @@ tangential_acceleration = clone_as_symbol(symbols.acceleration,
     display_symbol="a_t",
     display_latex="a_\\tau")
 """
-Tangential :attr:`~symplyphysics.symbols.acceleration`.
+Tangential :symbols:`acceleration`.
 """
 
 angular_acceleration = Symbol("angular_acceleration", angle_type / units.time**2)

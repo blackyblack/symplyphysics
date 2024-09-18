@@ -24,7 +24,7 @@ Strength of the electric field.
 
 electrostatic_force = symbols.force
 """
-Projection of the electrostatic :attr:`~symplyphysics.symbols.force` applied to the test charge.
+Projection of the electrostatic :symbols:`force` applied to the test charge.
 """
 
 test_charge = clone_as_symbol(symbols.charge, display_symbol="q_0")

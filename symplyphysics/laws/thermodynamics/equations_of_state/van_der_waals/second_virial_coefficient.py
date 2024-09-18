@@ -70,7 +70,7 @@ Symbol:
 
 temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.temperature` of the van der Waals fluid.
+:symbols:`temperature` of the van der Waals fluid.
 """
 
 law = Eq(

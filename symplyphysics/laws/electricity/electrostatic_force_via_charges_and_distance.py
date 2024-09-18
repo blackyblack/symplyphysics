@@ -17,7 +17,7 @@ from symplyphysics import (clone_as_symbol, symbols, Quantity,
 
 electrostatic_force = symbols.force
 """
-Electrostatic :attr:`~symplyphysics.symbols.force` between two charges.
+Electrostatic :symbols:`force` between two charges.
 """
 
 first_charge = clone_as_symbol(symbols.charge, display_symbol="q_1")

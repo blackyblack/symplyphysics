@@ -16,17 +16,17 @@ from symplyphysics import (
 
 angular_acceleration = clone_as_function(symbols.angular_acceleration, display_symbol="alpha(t)")
 """
-Angular acceleration of the body as a function of time.
+:symbols:`angular_acceleration` of the body as a function of time.
 """
 
 angular_speed = clone_as_function(symbols.angular_speed, display_symbol="w(t)")
 """
-Angular speed of the body as a function of time.
+:symbols:`angular_speed` of the body as a function of time.
 """
 
 time = symbols.time
 """
-Time.
+:symbols:`time`.
 """
 
 definition = Eq(angular_acceleration(time), Derivative(angular_speed(time), time))

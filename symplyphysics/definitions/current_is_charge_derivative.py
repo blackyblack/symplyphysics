@@ -17,12 +17,12 @@ from symplyphysics import (
 
 current = clone_as_function(symbols.current, display_symbol="I(t)")
 """
-Electric current as a function of time.
+Electric :symbols:`current` as a function of time.
 """
 
 charge = clone_as_function(symbols.charge, display_symbol="q(t)")
 """
-Electric charge as a function of time.
+Electric :symbols:`charge` as a function of time.
 """
 
 time = symbols.time

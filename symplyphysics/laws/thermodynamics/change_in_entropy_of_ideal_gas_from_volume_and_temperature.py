@@ -31,7 +31,7 @@ Symbol:
 
 mass = symbols.mass
 """
-:attr:`~symplyphysics.symbols.mass` of the gas.
+:symbols:`mass` of the gas.
 """
 
 molar_mass = Symbol("molar_mass", units.mass / units.amount_of_substance)
@@ -58,14 +58,14 @@ final_temperature = clone_as_symbol(symbols.temperature,
     display_symbol="T1",
     display_latex="T_1")
 """
-:attr:`~symplyphysics.symbols.temperature` of the final state.
+:symbols:`temperature` of the final state.
 """
 
 initial_temperature = clone_as_symbol(symbols.temperature,
     display_symbol="T0",
     display_latex="T_0")
 """
-:attr:`~symplyphysics.symbols.temperature` of the initial state.
+:symbols:`temperature` of the initial state.
 """
 
 final_volume = Symbol("final_volume", units.volume)

@@ -19,7 +19,7 @@ Symbol:
 
 mass = symbols.mass
 """
-:attr:`~symplyphysics.symbols.mass` of the body subjected to vaporization.
+:symbols:`mass` of the body subjected to vaporization.
 """
 
 specific_heat_of_vaporization = Symbol("specific_heat_of_vaporization", units.energy / units.mass)

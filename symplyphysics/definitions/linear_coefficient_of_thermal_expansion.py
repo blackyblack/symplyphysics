@@ -32,12 +32,12 @@ linear_expansion_coefficient = clone_as_symbol(
     display_latex="\\alpha_l",
 )
 """
-Linear coefficient of thermal expansion of the object.
+Linear :symbols:`thermal_expansion_coefficient` of the object.
 """
 
 length = clone_as_function(symbols.length, display_symbol="l(T, p)")
 """
-Length of the object as a function of :symbols:`temperature`
+:symbols:`length` of the object as a function of temperature
 and, indirectly, pressure :math:`p`.
 """
 

@@ -49,7 +49,7 @@ Symbol:
 
 mass = symbols.mass
 """
-The :attr:`~symplyphysics.symbols.mass` of the slab.
+The :symbols:`mass` of the slab.
 """
 
 law = Eq(rotational_inertia, mass * (length**2 + width**2) / 12)

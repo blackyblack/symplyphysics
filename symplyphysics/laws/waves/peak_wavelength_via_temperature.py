@@ -23,7 +23,7 @@ Latex:
 
 temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.temperature` of the blackbody.
+:symbols:`temperature` of the blackbody.
 """
 
 wien_displacement_constant = speed_of_light * planck / (boltzmann * 4.965114)

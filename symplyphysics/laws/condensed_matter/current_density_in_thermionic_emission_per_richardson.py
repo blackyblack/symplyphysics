@@ -39,7 +39,7 @@ Symbol:
 
 temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.temperature` of the metal.
+:symbols:`temperature` of the metal.
 """
 
 richardson_constant = Quantity(120.17 * (units.ampere / units.kelvin**2 / units.centimeter**2), display_symbol="A")

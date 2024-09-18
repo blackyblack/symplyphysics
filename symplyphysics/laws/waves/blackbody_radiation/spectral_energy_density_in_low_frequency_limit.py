@@ -58,7 +58,7 @@ Latex:
 
 equilibrium_temperature = symbols.temperature
 """
-Equilibrium :attr:`~symplyphysics.symbols.temperature` of the ensemble.
+Equilibrium :symbols:`temperature` of the ensemble.
 """
 
 law = Eq(

@@ -59,7 +59,7 @@ Latex:
 
 final_temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.temperature` of the gas.
+:symbols:`temperature` of the gas.
 """
 
 law = Eq(pressure_change, initial_pressure * (thermal_coefficient * final_temperature - 1))

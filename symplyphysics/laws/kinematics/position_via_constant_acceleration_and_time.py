@@ -47,7 +47,7 @@ Latex:
 
 acceleration = symbols.acceleration
 """
-Constant :attr:`~symplyphysics.symbols.acceleration`.
+Constant :symbols:`acceleration`.
 """
 
 time = Symbol("time", units.time)

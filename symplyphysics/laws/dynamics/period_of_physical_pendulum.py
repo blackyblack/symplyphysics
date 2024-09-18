@@ -50,7 +50,7 @@ Symbol:
 
 mass = clone_as_symbol(symbols.mass, positive=True)
 """
-The :attr:`~symplyphysics.symbols.mass` of the pendulum.
+The :symbols:`mass` of the pendulum.
 """
 
 rotational_inertia = Symbol("rotational_inertia", units.mass * units.length**2, positive=True)

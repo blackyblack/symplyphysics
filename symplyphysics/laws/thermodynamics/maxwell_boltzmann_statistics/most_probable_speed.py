@@ -41,12 +41,12 @@ Latex:
 
 equilibrium_temperature = clone_as_symbol(symbols.temperature, positive=True)
 """
-Equilibrium :attr:`~symplyphysics.symbols.temperature` of the gas.
+Equilibrium :symbols:`temperature` of the gas.
 """
 
 molecular_mass = clone_as_symbol(symbols.mass, positive=True)
 """
-:attr:`~symplyphysics.symbols.mass` of a gas molecule.
+:symbols:`mass` of a gas molecule.
 """
 
 law = Eq(most_probable_speed,

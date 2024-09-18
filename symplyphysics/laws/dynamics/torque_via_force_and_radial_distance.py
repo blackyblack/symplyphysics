@@ -40,7 +40,7 @@ Latex:
 
 force = symbols.force
 """
-The magnitude of the :attr:`~symplyphysics.symbols.force` exerted on the given point.
+The magnitude of the :symbols:`force` exerted on the given point.
 """
 
 radial_distance = Symbol("radial_distance", units.length)

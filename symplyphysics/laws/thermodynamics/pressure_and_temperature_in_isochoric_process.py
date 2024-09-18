@@ -42,14 +42,14 @@ initial_temperature = clone_as_symbol(symbols.temperature,
     display_symbol="T0",
     display_latex="T_0")
 """
-Initial :attr:`~symplyphysics.symbols.temperature` of the gas.
+Initial :symbols:`temperature` of the gas.
 """
 
 final_temperature = clone_as_symbol(symbols.temperature,
     display_symbol="T1",
     display_latex="T_1")
 """
-Final :attr:`~symplyphysics.symbols.temperature` of the gas.
+Final :symbols:`temperature` of the gas.
 """
 
 law = Eq(initial_pressure / final_pressure, initial_temperature / final_temperature)
