@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
 import argparse
-import pathlib
 import shutil
 import sys
 from typing import Sequence
+from pathlib import Path
 from sphinx.application import Sphinx
 
 from symplyphysics.docs.build import generate_laws_docs
@@ -63,6 +63,17 @@ def get_parser() -> argparse.ArgumentParser:
     return parser
 
 
+def process_generated_files(generated_dir: str) -> None:
+    for file_path in Path(generated_dir).iterdir():
+        with open(file_path, "r+", encoding="utf-8") as file:
+            doc = file.read()
+            
+            # processing logic goes here
+            doc = symbols_role.process_string(doc)
+
+            file.write(doc)
+
+
 def main(argv: Sequence[str] = ()) -> None:
     args = get_parser().parse_args(argv or sys.argv[1:])
 
@@ -70,14 +81,14 @@ def main(argv: Sequence[str] = ()) -> None:
     generate_laws_docs(args.laws_source_dir, args.generated_dir, args.exclude_dirs, args.quiet)
 
     # Copy index.rst to 'generated' folder
-    index_file = pathlib.Path(args.conf_dir).joinpath("index.rst")
-    out_index_file = pathlib.Path(args.generated_dir).joinpath("index.rst")
+    index_file = Path(args.conf_dir) / "index.rst"
+    out_index_file = Path(args.generated_dir) / "index.rst"
     shutil.copyfile(index_file, out_index_file, follow_symlinks=True)
 
-    symbols_role.process_dir(args.generated_dir)
+    process_generated_files(args.generated_dir)
 
     # Build HTML docs
-    doctrees = pathlib.Path(args.output_dir).joinpath(".doctrees/")
+    doctrees = Path(args.output_dir) / ".doctrees/"
     app = Sphinx(args.generated_dir, args.conf_dir, "html", doctrees, args.output_dir)
     app.build()
 

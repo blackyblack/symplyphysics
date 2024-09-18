@@ -21,7 +21,7 @@ for _attr in set(dir(symbols)) - set(symbols.__all__):
                 _symbols_by_module[_attr].add(_subattr)
 
 
-def _replace_in_doc(doc: str) -> str:
+def process_string(doc: str) -> str:
     matches = tuple(_symbols_pattern.finditer(doc))
     parts = []
 
@@ -42,14 +42,4 @@ def _replace_in_doc(doc: str) -> str:
         parts.append(text)
         doc = doc[:index_from]
 
-    doc = "".join(reversed(parts))
-    return doc
-
-
-def process_dir(generated_dir: str) -> None:
-    dir_path = Path(generated_dir)
-    for file_path in dir_path.iterdir():
-        with open(file_path, "r+", encoding="utf-8") as file:
-            old_doc = file.read()
-            new_doc = _replace_in_doc(old_doc)
-            file.write(new_doc)
+    return "".join(reversed(parts))
