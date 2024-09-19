@@ -124,3 +124,8 @@ temporal_frequency = SymbolNew("f", units.frequency)
 """
 **Temporal frequency** is the number of occurrences of a repeating event per unit of time.
 """
+
+sound_intensity_level = SymbolNew("L_I", dimensionless)
+"""
+**Sound intensity level** is the measure of the *intensity* of a sound relative to a reference value.
+"""

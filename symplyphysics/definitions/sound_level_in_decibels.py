@@ -9,49 +9,37 @@ intensity.
 from sympy import Eq, log
 from symplyphysics import (
     units,
-    dimensionless,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
 )
 
-sound_level = Symbol("sound_level", dimensionless)
-r"""
-Sound level of the sound wave.
-
-Symbol:
-    :code:`beta`
-
-Latex:
-    :math:`\beta`
+sound_level = symbols.sound_intensity_level
+"""
+:symbols:`sound_intensity_level` of the sound wave.
 """
 
-intensity = Symbol("intensity", units.power / units.area)
+intensity = symbols.intensity
 """
-Intensity of the sound wave.
-
-Symbol:
-    :code:`I`
+:symbols:`intensity` of the sound wave.
 """
 
-reference_sound_level = Quantity(10, display_symbol="beta0", display_latex="\\beta_0")
+reference_sound_level = Quantity(10, display_symbol="L_I0", display_latex="L_{I0}")
 """
 The sound level when the wave's intensity equals the reference intensity.
 """
 
-reference_intensity = Quantity(1e-12 * units.watt / units.meter**2, display_symbol="I0", display_latex="I_0")
+reference_intensity = Quantity(1e-12 * units.watt / units.meter**2, display_symbol="I_0")
 """
-The intensity of a sound wave, relative to which the sound level is measured.
+The intensity of a sound wave relative to which the sound level is measured.
 """
 
 definition = Eq(sound_level, reference_sound_level * log(intensity / reference_intensity, 10))
-r"""
-:code:`beta = beta0 * log10(I / I0)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \beta = \beta_0 \log_{10} \left( \frac{I}{I_0} \right)
+:laws:latex::
 """
 
 
