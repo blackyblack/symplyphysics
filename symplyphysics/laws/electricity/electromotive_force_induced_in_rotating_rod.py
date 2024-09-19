@@ -96,7 +96,7 @@ _loop_area = length**2 * _angle / 2
 _magnetic_flux = _magnetic_flux_law.law.rhs.subs({
     _magnetic_flux_law.induction: magnetic_flux_density,
     _magnetic_flux_law.area: _loop_area,
-    _magnetic_flux_law.angle: 0,  # the normal to the rot is parallel to the magnetix flux density
+    _magnetic_flux_law.angle: 0,  # the normal to the rod is parallel to the magnetix flux density
 })
 
 _emf = _emf_law.law.rhs.subs({
