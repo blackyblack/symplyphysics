@@ -78,6 +78,16 @@ speed_of_light = Quantity(units.speed_of_light, display_symbol="c")
 The speed of light in vacuum is a universal physical constant that is exactly equal to 299,792,458 metres per second.
 """
 
+vacuum_permittivity = Quantity(units.vacuum_permittivity,
+    display_symbol="epsilon_0",
+    display_latex="\\varepsilon_0",
+)
+"""
+Vacuum permittivity, also known as permittivity of free space or the electric constant, is the value of the absolute
+dielectric permittivity of classical vacuum.
+"""
+
+
 __all__ = [
     "standard_conditions_temperature",
     "standard_laboratory_temperature",
@@ -89,4 +99,5 @@ __all__ = [
     "boltzmann_constant",
     "molar_gas_constant",
     "speed_of_light",
+    "vacuum_permittivity",
 ]

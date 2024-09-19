@@ -6,68 +6,82 @@ A spherical capacitor is composed of two concentric spheres with the space betwe
 filled with a dielectric medium. See `Figure`_.
 
 .. _Figure: http://hyperphysics.phy-astr.gsu.edu/hbase/electric/capsph.html
+
+**Links:**
+
+#. `Spherical capacitor <http://hyperphysics.phy-astr.gsu.edu/hbase/electric/capsph.html>`__.
 """
 
 from sympy import (Eq, solve, pi)
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
+    quantities,
+)
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.electricity import (
+    electric_field_outside_charged_sphere as _electric_field_law,
+    voltage_is_line_integral_of_electric_field as _voltage_law,
+    capacitance_from_charge_and_voltage as _capacitance_law,
 )
 
-capacitance = Symbol("capacitance", units.capacitance)
+capacitance = SymbolNew("C", units.capacitance)
 """
 Capacitance of the capacitor.
-
-Symbol:
-    :code:`C`
 """
 
-absolute_permittivity = Symbol("absolute_permittivity", units.capacitance / units.length)
-r"""
+absolute_permittivity = SymbolNew("epsilon", units.capacitance / units.length, display_latex="\\varepsilon")
+"""
 Absolute permittivity of the medium between the spheres.
-
-Symbol:
-    :code:`epsilon`
-
-Latex:
-    :math:`\varepsilon`
 """
 
-inner_radius = Symbol("inner_radius", units.length)
-r"""
+inner_radius = SymbolNew("r_in", units.length, display_latex="r_\\text{in}")
+"""
 Radius of the inner sphere.
-
-Symbol:
-    :code:`r_in`
-
-Latex:
-    :math:`r_\text{in}`
 """
 
-outer_radius = Symbol("outer_radius", units.length)
-r"""
+outer_radius = SymbolNew("r_out", units.length, display_latex="r_\\text{out}")
+"""
 Radius of the outer sphere.
-
-Symbol:
-    :code:`r_out`
-
-Latex:
-    :math:`r_\text{out}`
 """
 
 law = Eq(
     capacitance, 4 * pi * absolute_permittivity * inner_radius * outer_radius /
     (outer_radius - inner_radius))
-r"""
-:code:`C = 4 * pi * epsilon * r_in * r_out / (r_out - r_in)`
-
-Latex:
-    .. math::
-        C = \frac{4 \pi \varepsilon r_\text{in} r_\text{out}}{r_\text{out} - r_\text{in}}
 """
+:laws:symbol::
+
+:laws:latex::
+"""
+
+# Derive law for spherical capacitor filled with vacuum
+
+_distance = _voltage_law.distance
+
+_electric_field_expr = _electric_field_law.law.rhs.subs({
+    _electric_field_law.charge: _capacitance_law.charge,
+    _electric_field_law.distance: _distance,
+})
+
+# TODO: make use of symbols with proper assumptions
+_voltage_expr = _voltage_law.law.rhs.subs({
+    _voltage_law.electric_field_component(_distance): _electric_field_expr,
+    _voltage_law.initial_distance: outer_radius,
+    _voltage_law.final_distance: inner_radius,
+}).doit()
+
+_capacitance_expr = _capacitance_law.definition.rhs.subs({
+    _capacitance_law.voltage: _voltage_expr,
+}).simplify()
+
+_capacitance_from_law = law.rhs.subs({
+    absolute_permittivity: quantities.vacuum_permittivity,
+})
+
+assert expr_equals(_capacitance_expr, _capacitance_from_law)
 
 
 @validate_input(relative_permittivity_=absolute_permittivity,

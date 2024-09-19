@@ -1,6 +1,6 @@
 r"""
-Electromotive force induced in rotating coil
-============================================
+Electromotive force induced in sinusoidally rotating coil
+=========================================================
 
 Suppose a coil is being rotated around the axis that lies in the coil's cross section
 (see `Figure <https://www.schoolphysics.co.uk/age16-19/Electricity%20and%20magnetism/Electromagnetic%20induction/text/Induced_emf_in_a_rotating_coil/index.html>`__)
@@ -19,12 +19,20 @@ the area of the coil's contour.
 #. The magnetic field is uniform.
 #. The angular velocity of the coil's rotation is orthogonal to the magnetic field.
 #. The area of the coil's contour is constant.
-#. The rotation of the coil is uniform.
+#. The angular speed of the coil's rotation constant.
 """
 
 from sympy import (Eq, solve, sin)
 from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, dimensionless, angle_type)
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.electricity import (
+    electromotive_force_induced_in_moving_contour as _emf_law,
+    magnetic_flux_from_induction_and_area as _magnetic_flux_law,
+)
+from symplyphysics.laws.kinematics import (
+    angular_position_via_constant_angular_speed_and_time as _angle_law,
+)
 
 electromotive_force = Symbol("electromotive_force", units.voltage)
 r"""
@@ -84,6 +92,32 @@ Latex:
     .. math::
         \mathcal{E} = -N B A \omega \sin(\omega t)
 """
+
+# Derive law
+
+_time = _emf_law.time
+
+_angle = _angle_law.law.rhs.subs({
+    _angle_law.initial_angular_position: 0,
+    _angle_law.angular_speed: angular_frequency,
+    _angle_law.time: _time,
+})
+
+_magnetic_flux = _magnetic_flux_law.law.rhs.subs({
+    _magnetic_flux_law.induction: magnetic_flux_density,
+    _magnetic_flux_law.area: contour_area,
+    _magnetic_flux_law.angle: _angle,
+})
+
+_emf = _emf_law.law.rhs.subs({
+    _emf_law.current_turn_count: coil_turn_count,
+    _emf_law.magnetic_flux(_time): _magnetic_flux,
+}).doit().subs(
+    _emf_law.time, time
+)
+
+# We're interested in the absolute values of the EMF
+assert expr_equals(abs(_emf), abs(law.rhs))
 
 
 @validate_input(number_turns_=coil_turn_count,

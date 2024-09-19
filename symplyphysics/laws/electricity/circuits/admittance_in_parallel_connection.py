@@ -11,35 +11,24 @@ of the admittances of individual components.
 """
 
 from sympy import (Eq, Idx, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output, global_index, SumIndexed, SymbolIndexed)
+from symplyphysics import (units, Quantity, SymbolNew, validate_input,
+    validate_output, global_index, SumIndexed, SymbolIndexedNew)
 
-total_admittance = Symbol("total_admittance", units.conductance)
+total_admittance = SymbolNew("Y", units.conductance)
 """
 Total admittance of the circuit.
-
-Symbol:
-    :code:`Y`
 """
 
-admittance = SymbolIndexed("admittance", units.conductance)
-r"""
+admittance = SymbolIndexedNew("Y_i", units.conductance)
+"""
 Admittance of :math:`i`-th circuit.
-
-Symbol:
-    :code:`Y_i`
-
-Latex:
-    :math:`Y_i`
 """
 
 law = Eq(total_admittance, SumIndexed(admittance[global_index], global_index))
-r"""
-:code:`Y = Sum(Y_i, i)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        Y = \sum_i Y_i
+:laws:latex::
 """
 
 

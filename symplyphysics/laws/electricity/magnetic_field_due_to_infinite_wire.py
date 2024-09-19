@@ -23,7 +23,7 @@ from symplyphysics import (
     validate_output,
 )
 
-magnetic_flux_density = Symbol("magnetic_flux_density", units.magnetic_flux_density)
+magnetic_flux_density = Symbol("magnetic_flux_density", units.magnetic_density)
 """
 Magnitude of magnetic flux density.
 

@@ -10,7 +10,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.definitions import capacitance_from_charge_and_voltage as capacitance_def
+from symplyphysics.laws.electricity import capacitance_from_charge_and_voltage as capacitance_def
 
 Args = namedtuple("Args", ["C", "Q", "U"])
 

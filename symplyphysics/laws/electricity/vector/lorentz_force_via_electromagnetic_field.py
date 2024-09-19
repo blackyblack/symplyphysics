@@ -239,7 +239,7 @@ def charge_law(
 @validate_input(
     charge_=charge,
     electric_field_=units.voltage / units.length,
-    magnetic_flux_density_=units.magnetic_flux_density,
+    magnetic_flux_density_=units.magnetic_density,
     velocity_=units.velocity,
 )
 @validate_output(units.force)

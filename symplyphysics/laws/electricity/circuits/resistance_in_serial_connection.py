@@ -13,6 +13,10 @@ of the resistances of individual components.
 from sympy import (Eq, Idx, solve)
 from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, SymbolIndexed, SumIndexed, global_index)
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.electricity import (
+    current_is_voltage_over_resistance as _ohm_law,
+)
 
 total_resistance = Symbol("total_resistance", units.impedance)
 """
@@ -41,6 +45,29 @@ Latex:
     .. math::
         R = \sum_i R_i
 """
+
+# Derive for two resistors.
+# In a parallel connection, the same current flows through the components.
+
+_voltage_expr = solve(_ohm_law.law, _ohm_law.voltage)[0]
+
+_voltage1 = _voltage_expr.subs(_ohm_law.resistance, resistance[1])
+
+_voltage2 = _voltage_expr.subs(_ohm_law.resistance, resistance[2])
+
+# TODO: create law of voltage in serial connection and use it here
+_total_voltage = _voltage1 + _voltage2
+
+_total_resistance = solve(
+    _ohm_law.law, _ohm_law.resistance
+)[0].subs(
+    _ohm_law.voltage, _total_voltage,
+)
+
+_local_idx = Idx("local_idx", (1, 2))
+_resistance_from_law = law.rhs.subs(global_index, _local_idx).doit()
+
+assert expr_equals(_total_resistance, _resistance_from_law)
 
 
 @validate_input(resistances_=resistance)

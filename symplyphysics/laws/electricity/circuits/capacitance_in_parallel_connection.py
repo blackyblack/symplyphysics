@@ -10,37 +10,59 @@ capacitances of individual capacitors.
 #. Components are connected in parallel.
 """
 
-from sympy import (Eq, Idx, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output, SymbolIndexed, SumIndexed, global_index)
+from sympy import (Eq, Idx, solve, symbols as sympy_symbols)
+from symplyphysics import (units, Quantity, SymbolNew, validate_input,
+    validate_output, SymbolIndexedNew, SumIndexed, global_index)
+from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.laws.electricity import (
+    capacitance_from_charge_and_voltage as _capacitance_law,
+)
 
-total_capacitance = Symbol("total_capacitance", units.capacitance)
+total_capacitance = SymbolNew("C", units.capacitance)
 """
 Total capacitance.
-
-Symbol:
-    :code:`C`
 """
 
-capacitance = SymbolIndexed("capacitance", units.capacitance)
-r"""
+capacitance = SymbolIndexedNew("C_i", units.capacitance)
+"""
 Capacitance of :math:`i`-th capacitor.
-
-Symbol:
-    :code:`C_i`
-
-Latex:
-    :math:`C_i`
 """
 
 law = Eq(total_capacitance, SumIndexed(capacitance[global_index], global_index))
-r"""
-:code:`C = Sum(C_i), i`
-
-Latex:
-    .. math::
-        C = \sum_i C_i
 """
+:laws:symbol::
+
+:laws:latex::
+"""
+
+# Derive from expression of capacitance via charge and voltage.
+
+# Voltage is the same for all components connected in parallel.
+# The proof is for two capacitors, but the same can be done for more capacitors.
+
+_voltage = sympy_symbols("voltage")
+
+_charge_expr = solve(
+    _capacitance_law.definition, _capacitance_law.charge
+)[0].subs(
+    _capacitance_law.voltage, _voltage
+)
+
+_charge1 = _charge_expr.subs(_capacitance_law.capacitance, capacitance[1])
+_charge2 = _charge_expr.subs(_capacitance_law.capacitance, capacitance[2])
+
+# TODO Create law of additivity of electric charge
+_total_charge_expr = _charge1 + _charge2
+
+_total_capacitance_expr = _capacitance_law.definition.rhs.subs({
+    _capacitance_law.charge: _total_charge_expr,
+    _capacitance_law.voltage: _voltage,
+})
+
+_local_idx = Idx("i", (1, 2))
+_capacitance_from_law = law.rhs.subs(global_index, _local_idx).doit()
+
+assert expr_equals(_total_capacitance_expr, _capacitance_from_law)
 
 
 @validate_input(capacitances_=capacitance)

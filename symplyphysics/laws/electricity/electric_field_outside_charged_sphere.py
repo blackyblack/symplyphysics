@@ -19,42 +19,32 @@ from sympy import (Eq, solve, pi)
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
+    quantities,
 )
 
-electric_field_strength = Symbol("electric_field_strength", units.voltage / units.length)
+electric_field_strength = SymbolNew("E", units.voltage / units.length)
 """
 Value of the electric field.
-
-Symbol:
-    :code:`E`
 """
 
-charge = Symbol("charge", units.charge)
+charge = SymbolNew("q", units.charge)
 """
 Total charge of the sphere.
-
-Symbol:
-    :code:`q`
 """
 
-distance = Symbol("distance", units.length)
+distance = SymbolNew("r", units.length)
 """
 Distance to the center of the sphere.
-
-Symbol:
-    :code:`r`
 """
 
-law = Eq(electric_field_strength, charge / (4 * pi * units.vacuum_permittivity * distance**2))
-r"""
-:code:`E = 1 / (4 * pi * epsilon_0) * q / r^2`
+law = Eq(electric_field_strength, charge / (4 * pi * quantities.vacuum_permittivity * distance**2))
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        E = \frac{1}{4 \pi \varepsilon_0} \frac{q}{r^2}
+:laws:latex::
 """
 
 
