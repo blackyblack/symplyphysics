@@ -40,6 +40,8 @@ __all__ = [
     "damping_ratio",
     "volume",
     "impulse",
+    "position",
+    "phase_speed",
     # thermodynamics
     "temperature",
     "adiabatic_index",

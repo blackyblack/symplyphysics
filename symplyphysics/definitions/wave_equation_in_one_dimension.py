@@ -15,7 +15,7 @@ or electromagnetic waves.
 from sympy import (
     Derivative,
     Eq,
-    symbols,
+    symbols as sym_symbols,
     Function as SymFunction,
     cos,
 )
@@ -24,11 +24,13 @@ from symplyphysics import (
     Symbol,
     Quantity,
     validate_input,
+    symbols,
+    clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.quantity_decorator import validate_output_same
 
-displacement = symbols("displacement", cls=SymFunction, real=True)
+displacement = sym_symbols("u", cls=SymFunction, real=True)
 """
 Factor representing a displacement from rest position, which could be
 pressure, position, electric field, etc., as a function of position
@@ -38,28 +40,19 @@ Symbol:
     :code:`u(x, t)`
 """
 
-position = Symbol("position", units.length, real=True)
+position = symbols.position
 """
 Position, or spatial variable.
-
-Symbol:
-    :code:`x`
 """
 
-time = Symbol("time", units.time, positive=True)
+time = clone_as_symbol(symbols.time, positive=True)
 """
 Time.
-
-Symbol:
-    :code:`t`
 """
 
-phase_speed = Symbol("phase_speed", units.velocity, real=True)
+phase_speed = clone_as_symbol(symbols.phase_speed, positive=True)
 """
 :doc:`Phase speed <laws.waves.phase_velocity_from_angular_frequency_and_wavenumber>` of the wave.
-
-Symbol:
-    :code:`v`
 """
 
 definition = Eq(
@@ -67,19 +60,25 @@ definition = Eq(
     Derivative(displacement(position, time), time, 2) / phase_speed**2,
 )
 r"""
-:code:`Derivative(u(x, t), (x, 2)) = (1/v^2) * Derivative(u(x, t), (t, 2))`
+.. only:: comment
 
-Latex:
-    .. math::
-        \frac{\partial^2 u}{\partial x^2} = \frac{1}{v^2} \frac{\partial^2 u}{\partial t^2}
+    :code:`Derivative(u(x, t), (x, 2)) = (1/v^2) * Derivative(u(x, t), (t, 2))`
+
+    Latex:
+        .. math::
+            \frac{\partial^2 u}{\partial x^2} = \frac{1}{v^2} \frac{\partial^2 u}{\partial t^2}
+
+:laws:symbol::
+
+:laws:latex::
 """
 
 # A subset of solutions has the form `u = u_m * cos(x + v*t + phi)`
 ## u_m - amplitude of displacement
 ## phi - phase lag
 
-amplitude = symbols("amplitude", positive=True)
-phase_lag = symbols("phase_lag", real=True)
+amplitude = sym_symbols("amplitude", positive=True)
+phase_lag = sym_symbols("phase_lag", real=True)
 _length_unit = Symbol("length_unit", units.length)
 
 # `phase_speed` can be negative or positive, depending on the direction of wave propagation

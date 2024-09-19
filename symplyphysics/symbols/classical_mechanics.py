@@ -27,6 +27,11 @@ acceleration = SymbolNew("a", units.acceleration)
 **Acceleration** is the rate of change of the object's velocity with respect to time. It is a vector quantity.
 """
 
+position = SymbolNew("x", units.length)
+"""
+**Position** is defined as the spatial location of an object with respect to a coordinate system.
+"""
+
 distance = SymbolNew("d", units.length)
 """
 **Distance** is is a measure of the spatial separation between two points.
@@ -96,4 +101,9 @@ Volume is a measure of regions in three-dimensional space.
 impulse = SymbolNew("J", units.momentum)
 """
 **Impulse** is the change in momentum of an object.
+"""
+
+phase_speed = SymbolNew("v", units.speed)
+"""
+**Phase speed** is the speed at which the phase of the wave travels.
 """
