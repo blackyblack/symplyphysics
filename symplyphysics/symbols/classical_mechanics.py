@@ -5,7 +5,10 @@ Classical mechanics (Symbols)
 Symbols related to classical mechanics.
 """
 
-from symplyphysics import units, SymbolNew, angle_type, dimensionless
+from sympy.physics import units
+from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
+from ..core.symbols.symbols import SymbolNew
+from ..core.dimensions import dimensionless
 
 force = SymbolNew("F", units.force)
 """

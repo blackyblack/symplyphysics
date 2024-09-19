@@ -17,11 +17,6 @@ from symplyphysics.laws.electricity import (
     power_via_voltage_and_current as _power_law,
     current_is_voltage_over_resistance as _ohm_law,
 )
-from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.electricity import (
-    power_via_voltage_and_current as _power_law,
-    current_is_voltage_over_resistance as _ohm_law,
-)
 
 power = symbols.power
 """

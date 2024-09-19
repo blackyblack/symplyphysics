@@ -86,10 +86,10 @@ _electric_flux_right = _flux_law.electric_flux_law(
 
 # The electric field is orthogonal to the normal vector of the cylinder's side at all points.
 # This, the flux there would be zero.
-_electric_flux_side = 0
+ELECTRIC_FLUX_SIDE = 0
 
 # The whole integration area is composed of the two cross-sections and the cylinder side.
-_total_electric_flux = _electric_flux_left + _electric_flux_right + _electric_flux_side
+_total_electric_flux = _electric_flux_left + _electric_flux_right + ELECTRIC_FLUX_SIDE
 
 # The total charge of the cylinder is contained in the part of the charged plane that is
 # contained within the cylinder.

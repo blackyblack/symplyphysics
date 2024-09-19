@@ -52,14 +52,14 @@ def get_parser() -> argparse.ArgumentParser:
         dest="conf_dir",
         default="docs",
         help="directory where conf.py file is stored")
-    
+
     parser.add_argument("-q",
         "--quiet",
         action="store_true",
         dest="quiet",
         help="suppress rST files generation text",
         )
-    
+
     parser.add_argument("-R",
         "--rst-only",
         action="store_true",
@@ -74,7 +74,7 @@ def process_generated_files(generated_dir: str) -> None:
     for file_path in Path(generated_dir).iterdir():
         with open(file_path, "r+", encoding="utf-8") as file:
             doc = file.read()
-            
+
             # processing logic goes here
             doc = symbols_role.process_string(doc, file_path)
             doc = quantity_notation_role.process_string(doc, file_path)

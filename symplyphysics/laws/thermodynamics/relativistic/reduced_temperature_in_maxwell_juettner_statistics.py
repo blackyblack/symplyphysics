@@ -15,7 +15,6 @@ the gas in question.
 
 from sympy import Eq
 from symplyphysics import (
-    units,
     dimensionless,
     Symbol,
     Quantity,

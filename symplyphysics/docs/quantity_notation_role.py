@@ -1,3 +1,4 @@
+from pathlib import Path
 import re
 
 from symplyphysics import quantities, Quantity
@@ -10,7 +11,7 @@ for _attr in dir(quantities):
     if isinstance(_obj, Quantity):
         _collection.add(_attr)
 
-def process_string(doc: str, path: str) -> str:
+def process_string(doc: str, path: Path) -> str:
     parts = []
 
     last_index_to = 0

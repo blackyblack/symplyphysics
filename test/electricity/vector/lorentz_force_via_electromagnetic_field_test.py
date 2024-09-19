@@ -17,7 +17,7 @@ Args = namedtuple("Args", "f q e b v")
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
     f = QuantityVector([-7e-4 * units.newton, 2e-4 * units.newton, -5e-4 * units.newton])
-    
+
     q = Quantity(-10 * prefixes.micro * units.coulomb)
 
     e_unit = units.volt / units.meter

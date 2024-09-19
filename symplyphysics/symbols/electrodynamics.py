@@ -5,7 +5,9 @@ Electrodynamics (Symbols)
 Symbols related to electrodynamics.
 """
 
-from symplyphysics import units, SymbolNew, dimensionless
+from sympy.physics import units
+from ..core.symbols.symbols import SymbolNew
+from ..core.dimensions import dimensionless
 
 admittance = SymbolNew("Y", units.conductance)
 """

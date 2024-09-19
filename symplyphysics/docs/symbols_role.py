@@ -23,7 +23,7 @@ for _attr in set(dir(symbols)) - set(symbols.__all__):
                 _symbols_by_module[_attr].add(_subattr)
 
 
-def process_string(doc: str, path: str) -> str:
+def process_string(doc: str, path: Path) -> str:
     parts = []
 
     last_index_to = 0

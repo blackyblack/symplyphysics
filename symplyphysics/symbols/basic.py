@@ -5,7 +5,8 @@ Basic (Symbols)
 Symbols of fundamental physical quantities.
 """
 
-from symplyphysics import units, SymbolNew
+from sympy.physics import units
+from ..core.symbols.symbols import SymbolNew
 
 time = SymbolNew("t", units.time)
 """
