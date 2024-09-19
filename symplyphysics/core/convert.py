@@ -34,13 +34,13 @@ _si_conversions: dict[units.Dimension, Expr] = {
 }
 
 
-def convert_to_si(value: Expr) -> Expr:
+def convert_to_si(value: Expr | float) -> Expr:
     quantity = value if isinstance(value, Quantity) else Quantity(value)
     dependencies = dimsys_SI.get_dimensional_dependencies(quantity.dimension)
     unit = S.One
     for dimension, power in dependencies.items():
         unit *= _si_conversions[dimension]**power
-    return convert_to(value, unit)
+    return convert_to(quantity, unit)
 
 
 __all__ = [

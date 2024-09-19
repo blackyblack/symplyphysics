@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.electricity import electromotive_force_induced_in_rotating_coil as law
+from symplyphysics.laws.electricity import electromotive_force_induced_in_moving_contour as law
 
 Args = namedtuple("Args", "n dphi dt")
 

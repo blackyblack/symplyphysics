@@ -164,7 +164,7 @@ class Function(DimensionSymbol, UndefinedFunction):
         display_name: Optional[str] = None,
         dimension: Dimension = Dimension(S.One),
         **_options: Any) -> None:
-        display_name = str(cls.name) if display_name is None else display_name
+        display_name = str(cls.name) if display_name is None else display_name  # type: ignore[attr-defined]
         super().__init__(display_name, dimension)
 
 
@@ -185,7 +185,7 @@ class FunctionNew(DimensionSymbolNew, UndefinedFunction):
         *,
         display_latex: Optional[str] = None,
         **_options: Any) -> None:
-        display_name = str(cls.name) if display_symbol is None else display_symbol
+        display_name = str(cls.name) if display_symbol is None else display_symbol  # type: ignore[attr-defined]
         super().__init__(display_name, dimension, display_latex=display_latex)
 
     def __repr__(cls) -> str:
@@ -251,7 +251,7 @@ def print_expression(expr: Expr | Equality | Sequence[Expr | Equality]) -> str:
         pretty_use_unicode(uflag)
 
 
-def clone_as_symbol(source: SymbolNew | FunctionNew | SymbolIndexedNew,
+def clone_as_symbol(source: SymbolNew | SymbolIndexedNew,
     *,
     display_symbol: Optional[str] = None,
     display_latex: Optional[str] = None,
@@ -268,7 +268,7 @@ def clone_as_symbol(source: SymbolNew | FunctionNew | SymbolIndexedNew,
 
 
 def clone_as_function(
-    source: SymbolNew | FunctionNew | SymbolIndexedNew,
+    source: SymbolNew | SymbolIndexedNew,
     *,
     display_symbol: Optional[str] = None,
     display_latex: Optional[str] = None,
@@ -286,7 +286,7 @@ def clone_as_function(
 
 
 def clone_as_indexed(
-    source: SymbolNew | FunctionNew | SymbolIndexedNew,
+    source: SymbolNew | SymbolIndexedNew,
     *,
     display_symbol: Optional[str] = None,
     display_latex: Optional[str] = None,

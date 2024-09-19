@@ -30,7 +30,7 @@ second_charge = clone_as_symbol(symbols.charge, display_symbol="q_2", display_la
 Second :symbols:`charge`.
 """
 
-distance = symbols.distance_to_origin
+distance = symbols.distance
 """
 :symbols:`distance` between the charges.
 """

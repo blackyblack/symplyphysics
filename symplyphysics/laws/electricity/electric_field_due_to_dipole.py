@@ -40,7 +40,7 @@ See :doc:`laws.electricity.electric_dipole_moment_is_charge_times_distance` and
 :symbols:`electric_dipole_moment`.
 """
 
-distance = symbols.distance_to_origin
+distance = symbols.distance
 """
 :symbols:`distance` to dipole.
 """
