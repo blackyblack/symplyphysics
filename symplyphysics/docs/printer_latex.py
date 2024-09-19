@@ -15,7 +15,6 @@ class SymbolLatexPrinter(LatexPrinter):
     language = "Symplyphysics"
 
     def __init__(self, settings: Any = None) -> None:
-        settings["order"] = "lex"
         LatexPrinter.__init__(self, settings)
 
     # pylint: disable-next=invalid-name
