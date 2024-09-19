@@ -10,18 +10,26 @@ of the admittances of individual components.
 #. Components are connected in parallel.
 """
 
-from sympy import (Eq, Idx, solve)
-from symplyphysics import (units, Quantity, SymbolNew, validate_input,
-    validate_output, global_index, SumIndexed, SymbolIndexedNew)
+from sympy import Eq, Idx, solve
+from symplyphysics import (
+    units,
+    Quantity,
+    validate_input,
+    validate_output,
+    global_index,
+    SumIndexed,
+    symbols,
+)
+from symplyphysics.core.symbols.symbols import clone_as_indexed
 
-total_admittance = SymbolNew("Y", units.conductance)
+total_admittance = symbols.admittance
 """
-Total admittance of the circuit.
+Total :symbols:`admittance` of the circuit.
 """
 
-admittance = SymbolIndexedNew("Y_i", units.conductance)
+admittance = clone_as_indexed(symbols.admittance, display_symbol="Y[i]", display_latex="Y_i")
 """
-Admittance of :math:`i`-th circuit.
+:symbols:`admittance` of :math:`i`-th circuit.
 """
 
 law = Eq(total_admittance, SumIndexed(admittance[global_index], global_index))

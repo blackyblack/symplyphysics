@@ -11,7 +11,7 @@ in which the speed of light is present.
 from sympy import (Eq, solve)
 from sympy.physics.units import speed_of_light
 from symplyphysics import (
-    clone_symbol,
+    clone_as_symbol,
     symbols,
     units,
     Quantity,
@@ -40,14 +40,14 @@ Latex:
     :math:`V_e`
 """
 
-initial_mass = clone_symbol(symbols.basic.mass, display_symbol="M1", display_latex="M_1")
+initial_mass = clone_as_symbol(symbols.mass, display_symbol="M1", display_latex="M_1")
 """
-Initial :attr:`~symplyphysics.symbols.basic.mass` of the rocket
+Initial :symbols:`mass` of the rocket
 """
 
-final_mass = clone_symbol(symbols.basic.mass, display_symbol="M2", display_latex="M_2")
+final_mass = clone_as_symbol(symbols.mass, display_symbol="M2", display_latex="M_2")
 """
-Final :attr:`~symplyphysics.symbols.basic.mass` of the rocket
+Final :symbols:`mass` of the rocket
 """
 
 law = Eq(final_mass / initial_mass, ((1 - (speed / speed_of_light)) / (1 +

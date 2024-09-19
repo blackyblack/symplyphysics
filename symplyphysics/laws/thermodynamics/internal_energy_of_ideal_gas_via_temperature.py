@@ -6,7 +6,7 @@ Internal energy of an ideal gas is the sum of the kinetic energy of all of its m
 
 **Notation:**
 
-#. :math:`R` is the molar gas constant.
+#. :quantity_notation:`molar_gas_constant`.
 
 **Conditions:**
 
@@ -14,7 +14,7 @@ Internal energy of an ideal gas is the sum of the kinetic energy of all of its m
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols, quantities)
 
 internal_energy = Symbol("energy", units.energy)
 """
@@ -24,14 +24,14 @@ Symbol:
     :code:`U`
 """
 
-mass = symbols.basic.mass
+mass = symbols.mass
 """
-:attr:`~symplyphysics.symbols.basic.mass` of the gas.
+:symbols:`mass` of the gas.
 """
 
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas.
+:symbols:`temperature` of the gas.
 """
 
 molar_mass = Symbol("molar_mass", units.mass / units.amount_of_substance)
@@ -42,7 +42,7 @@ Symbol:
     :code:`M`
 """
 
-law = Eq(internal_energy, 1.5 * mass * units.molar_gas_constant * temperature / molar_mass)
+law = Eq(internal_energy, 1.5 * mass * quantities.molar_gas_constant * temperature / molar_mass)
 r"""
 :code:`U = (3 / 2) * (m / M) * R * T`
 

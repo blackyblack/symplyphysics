@@ -25,7 +25,7 @@ resistance = Symbol("resistance", units.impedance)
 
 resistance_initial = Symbol("resistance_initial", units.impedance)
 temperature_coefficient = Symbol("temperature_coefficient", 1 / units.temperature)
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 
 law = Eq(
     resistance,

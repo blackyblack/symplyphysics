@@ -16,44 +16,32 @@ the potential approach zero at an infinitely remote point.
 
 from sympy import (Eq, solve)
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
 )
 
-electrostatic_potential = Symbol("electrostatic_potential", units.voltage)
+electrostatic_potential = symbols.electric_potential
 """
-Electrostatic potential of a point in an electric field.
-
-Symbol:
-    :code:`V`
+Electrostatic potential of a point in an electric field. See :symbols:`electric_potential`.
 """
 
-work = Symbol("work", units.energy)
+work = symbols.work
 """
-Work needed to bring the charge from the reference point.
-
-Symbol:
-    :code:`A`
+:symbols:`work` needed to bring the charge from the reference point.
 """
 
-charge = Symbol("charge", units.charge)
+charge = symbols.charge
 """
-Value of the electric charge.
-
-Symbol:
-    :code:`q`
+Value of the electric :symbols:`charge`.
 """
 
 law = Eq(electrostatic_potential, work / charge)
-r"""
-:code:`V = A / q`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        V = \frac{A}{q}
+:laws:latex::
 """
 
 

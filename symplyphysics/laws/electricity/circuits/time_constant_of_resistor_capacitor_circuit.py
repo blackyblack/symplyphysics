@@ -8,42 +8,33 @@ The time constant of an RC circuit is the time it takes for the current to becom
 """
 
 from sympy import Eq
-from symplyphysics import units, Quantity, Symbol, validate_input, validate_output
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+)
 
-time_constant = Symbol("time_constant", units.time)
-r"""
-Time constant of the circuit.
-
-Symbol:
-    :code:`tau`
-
-Latex:
-    :math:`\tau`
+time_constant = symbols.electric_time_constant
+"""
+:symbols:`electric_time_constant` of the circuit.
 """
 
-resistance = Symbol("resistance", units.impedance)
+resistance = symbols.resistance
 """
-Resistance of the resistor.
-
-Symbol:
-    :code:`R`
+:symbols:`resistance` of the resistor.
 """
 
-capacitance = Symbol("capacitance", units.capacitance)
+capacitance = symbols.capacitance
 """
-Capacitance of the capacitor.
-
-Symbol:
-    :code:`C`
+:symbols:`capacitance` of the capacitor.
 """
 
 law = Eq(time_constant, resistance * capacitance)
-r"""
-:code:`tau = R * C`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \tau = R C
+:laws:latex::
 """
 
 

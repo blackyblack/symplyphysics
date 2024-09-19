@@ -7,7 +7,7 @@ See :ref:`vdw_reduced_units_def`.
 
 from sympy import Eq
 from symplyphysics import (
-    clone_symbol,
+    clone_as_symbol,
     symbols,
     dimensionless,
     Quantity,
@@ -28,16 +28,17 @@ Latex:
     :math:`T^*`
 """
 
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the van der Waals fluid.
+:symbols:`temperature` of the van der Waals fluid.
 """
 
-critical_temperature = clone_symbol(symbols.thermodynamics.temperature,
+critical_temperature = clone_as_symbol(symbols.temperature,
     display_symbol="T_c",
     display_latex="T_\\text{c}")
 """
-See :doc:`laws.thermodynamics.equations_of_state.van_der_waals.critical_temperature`.
+See :doc:`laws.thermodynamics.equations_of_state.van_der_waals.critical_temperature`
+and :symbols:`temperature`.
 """
 
 law = Eq(reduced_temperature, temperature / critical_temperature)

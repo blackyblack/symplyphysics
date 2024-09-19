@@ -8,7 +8,7 @@ concentrations or fugitives) of reactants and products in a state of chemical eq
 
 **Notation:**
 
-#. :math:`R` is the molar gas constant.
+#. :quantity_notation:`molar_gas_constant`.
 
 **Conditions:**
 
@@ -17,10 +17,10 @@ concentrations or fugitives) of reactants and products in a state of chemical eq
 """
 
 from sympy import Eq, solve, exp
-from sympy.physics.units import molar_gas_constant
 from symplyphysics import (
     symbols,
     units,
+    quantities,
     Quantity,
     Symbol,
     validate_input,
@@ -50,13 +50,13 @@ Latex:
     :math:`\Delta G`
 """
 
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
+:symbols:`temperature` of the system.
 """
 
 law = Eq(equilibrium_constant,
-    exp(-reaction_standard_gibbs_energy / (molar_gas_constant * temperature)))
+    exp(-reaction_standard_gibbs_energy / (quantities.molar_gas_constant * temperature)))
 r"""
 :code:`K = exp(-1 * Delta(G) / (R * T))`
 

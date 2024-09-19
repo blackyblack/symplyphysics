@@ -10,7 +10,7 @@ as they always tend to arrive at a state of thermodynamic equilibrium, where the
 
 **Notation:**
 
-#. :math:`R` is the molar gas constant.
+#. :quantity_notation:`molar_gas_constant`.
 
 **Conditions:**
 
@@ -19,7 +19,7 @@ as they always tend to arrive at a state of thermodynamic equilibrium, where the
 
 from sympy import (Eq, solve, log)
 from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols,
-    clone_symbol)
+    clone_as_symbol, quantities)
 
 entropy_change = Symbol("entropy_change", units.energy / units.temperature)
 """
@@ -29,9 +29,9 @@ Symbol:
     :code:`S`
 """
 
-mass = symbols.basic.mass
+mass = symbols.mass
 """
-:attr:`~symplyphysics.symbols.basic.mass` of the gas.
+:symbols:`mass` of the gas.
 """
 
 molar_mass = Symbol("molar_mass", units.mass / units.amount_of_substance)
@@ -54,18 +54,18 @@ Latex:
     :math:`C_V`
 """
 
-final_temperature = clone_symbol(symbols.thermodynamics.temperature,
+final_temperature = clone_as_symbol(symbols.temperature,
     display_symbol="T1",
     display_latex="T_1")
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the final state.
+:symbols:`temperature` of the final state.
 """
 
-initial_temperature = clone_symbol(symbols.thermodynamics.temperature,
+initial_temperature = clone_as_symbol(symbols.temperature,
     display_symbol="T0",
     display_latex="T_0")
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the initial state.
+:symbols:`temperature` of the initial state.
 """
 
 final_volume = Symbol("final_volume", units.volume)
@@ -92,7 +92,7 @@ Latex:
 
 law = Eq(entropy_change, (mass / molar_mass) *
     ((molar_isochoric_heat_capacity * log(final_temperature / initial_temperature)) +
-    (units.molar_gas_constant * log(final_volume / initial_volume))))
+    (quantities.molar_gas_constant * log(final_volume / initial_volume))))
 r"""
 :code:`S = (m / M) * (C_V * log(T1 / T0) + R * log(V1 / V0))`
 

@@ -12,21 +12,21 @@ resistance, and the imaginary part is reactance.
 """
 
 from sympy import (I, Eq, solve)
-from symplyphysics import (units, Quantity, SymbolNew, validate_input, validate_output)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols)
 
-impedance = SymbolNew("Z", units.impedance)
+impedance = symbols.electrical_impedance
 """
-Impedance of the system.
-"""
-
-resistance = SymbolNew("R", units.impedance)
-"""
-Resistance of the system.
+:symbols:`electrical_impedance` of the system.
 """
 
-reactance = SymbolNew("X", units.impedance)
+resistance = symbols.resistance
 """
-Reactance of the system.
+:symbols:`resistance` of the system.
+"""
+
+reactance = symbols.reactance
+"""
+:symbols:`reactance` of the system.
 """
 
 definition = Eq(impedance, resistance + I * reactance)

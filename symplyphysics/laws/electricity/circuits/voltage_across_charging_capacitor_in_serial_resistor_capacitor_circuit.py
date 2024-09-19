@@ -10,12 +10,19 @@ reaches the voltage of the source.
 
 **Conditions:**
 
-#. The circuit is a DC one.
+#. Applies to direct current circuits.
 """
 
-from sympy import (Derivative, Eq, Idx, solve, exp, simplify)
-from symplyphysics import (units, Quantity, Symbol, Function, validate_input,
-    validate_output, global_index)
+from sympy import Derivative, Eq, Idx, solve, exp, simplify
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    global_index,
+    symbols,
+    clone_as_symbol,
+    clone_as_function,
+)
 from symplyphysics.definitions import current_is_charge_derivative as charge_definition
 from symplyphysics.laws.electricity import capacitance_from_charge_and_voltage as capacitance_definition
 from symplyphysics.laws.electricity import current_is_voltage_over_resistance as ohms_law
@@ -23,51 +30,32 @@ from symplyphysics.laws.electricity.circuits import sum_of_currents_through_junc
 from symplyphysics.laws.electricity.circuits import sum_of_voltages_in_loop_is_zero as kirchhoff_law_2
 from symplyphysics.laws.electricity.circuits import time_constant_of_resistor_capacitor_circuit as time_constant_law
 
-capacitor_voltage = Symbol("capacitor_voltage", units.voltage)
+capacitor_voltage = symbols.voltage
 """
-Voltage across the capacitor.
-
-Symbol:
-    :code:`V`
+:symbols:`voltage` across the capacitor.
 """
 
-source_voltage = Symbol("source_voltage", units.voltage)
-r"""
-Voltage of the source, which is the initial voltage across the resistor.
-
-Symbol:
-    :code:`V_0`
-
-Latex:
-    :math:`V_0`
+source_voltage = clone_as_symbol(symbols.voltage, display_symbol="V_0", display_latex="V_0")
+"""
+:symbols:`voltage` of the source, which is the initial voltage across the resistor.
 """
 
-time = Symbol("time", units.time)
+time = symbols.time
 """
-Time.
-
-Symbol:
-    :code:`t`
+:symbols:`time`.
 """
 
-time_constant = Symbol("time_constant", units.time)
-r"""
+time_constant = symbols.electric_time_constant
+"""
 :doc:`Time constant <laws.electricity.circuits.time_constant_of_resistor_capacitor_circuit>` of the circuit.
-
-Symbol:
-    :code:`tau`
-
-Latex:
-    :math:`\tau`
+See :symbols:`electric_time_constant`.
 """
 
 law = Eq(capacitor_voltage, source_voltage * (1 - exp(-time / time_constant)))
-r"""
-:code:`V = V_0 * (1 - exp(-1 * t / tau))`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        V = V_0 \left( 1 - \exp \left( - \frac{t}{\tau} \right) \right)
+:laws:latex::
 """
 
 ## Derive the same law from the Ohms and Kirchhoff laws
@@ -75,12 +63,12 @@ Latex:
 _resistance = time_constant_law.resistance
 _capacitance = time_constant_law.capacitance
 
-_capacitor_current = Function("_capacitor_current", units.current)
-_resistor_current = Function("_resistor_current", units.current)
-_resistor_voltage = Function("_resistor_voltage", units.voltage)
+_capacitor_current = clone_as_function(symbols.current, display_symbol="I_C")
+_resistor_current = clone_as_function(symbols.current, display_symbol="I_R")
+_resistor_voltage = clone_as_function(symbols.voltage, display_symbol="V_R")
 
 _local_index_ = Idx("_local_index_", (1, 2))
-_two_currents_law = kirchhoff_law.law.subs(global_index, _local_index_).doit()
+_two_currents_law = kirchhoff_law.law.subs(kirchhoff_law.index, _local_index_).doit()
 # capacitor current is in, resistor current is out
 _two_currents_applied = _two_currents_law.subs({
     kirchhoff_law.current[1]: _capacitor_current(time),

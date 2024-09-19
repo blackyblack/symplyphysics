@@ -11,11 +11,10 @@ solids, it is a big achievement and the result has correct asymptotic behaviour 
 
 **Notation:**
 
-#. :math:`R` is the molar gas constant.
+#. :quantity_notation:`molar_gas_constant`.
 """
 
 from sympy import Eq, exp
-from sympy.physics.units import molar_gas_constant
 from symplyphysics import (
     dimensionless,
     units,
@@ -23,6 +22,7 @@ from symplyphysics import (
     Symbol,
     validate_input,
     validate_output,
+    quantities,
 )
 
 isochoric_molar_heat_capacity = Symbol(
@@ -43,7 +43,7 @@ Reduced photon energy, defined as the ratio of photon energy :math:`\hbar \omega
 thermal energy :math:`k_\text{B} T`.
 """
 
-law = Eq(isochoric_molar_heat_capacity, (3 * molar_gas_constant) * reduced_photon_energy**2 *
+law = Eq(isochoric_molar_heat_capacity, (3 * quantities.molar_gas_constant) * reduced_photon_energy**2 *
     exp(reduced_photon_energy) / (exp(reduced_photon_energy) - 1)**2)
 r"""
 :code:`C_V = 3 * R * x^2 * exp(x) / (exp(x) - 1)^2`

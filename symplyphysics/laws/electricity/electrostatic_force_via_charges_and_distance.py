@@ -8,56 +8,39 @@ square of the distance between them.
 
 **Notation:**
 
-#. :math:`\varepsilon_0` (:code:`epsilon_0`) is vacuum permittivity.
+#. :quantity_notation:`vacuum_permittivity`.
 """
 
 from sympy import (Eq, solve, pi)
-from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol,
-    validate_input, validate_output)
+from symplyphysics import (clone_as_symbol, symbols, Quantity,
+    validate_input, validate_output, quantities)
 
-electrostatic_force = clone_symbol(symbols.dynamics.force)
+electrostatic_force = symbols.force
 """
-Electrostatic :attr:`~symplyphysics.symbols.dynamics.force` between two charges.
-"""
-
-first_charge = Symbol("first_charge", units.charge)
-"""
-First charge.
-
-Symbol:
-    :code:`q1`
-
-Latex:
-    :math:`q_1`
+Electrostatic :symbols:`force` between two charges.
 """
 
-second_charge = Symbol("second_charge", units.charge)
+first_charge = clone_as_symbol(symbols.charge, display_symbol="q_1", display_latex="q_1")
 """
-Second charge.
-
-Symbol:
-    :code:`q2`
-
-Latex:
-    :math:`q_2`
+First :symbols:`charge`.
 """
 
-distance = Symbol("distance", units.length)
+second_charge = clone_as_symbol(symbols.charge, display_symbol="q_2", display_latex="q_2")
 """
-Distance between the charges.
+Second :symbols:`charge`.
+"""
 
-Symbol:
-    :code:`r`
+distance = symbols.distance
+"""
+:symbols:`distance` between the charges.
 """
 
 law = Eq(electrostatic_force,
-    1 / (4 * pi * units.vacuum_permittivity) * first_charge * second_charge / (distance**2))
-r"""
-:code:`F = 1 / (4 * pi * epsilon_0) * q1 * q2 / r^2`
+    1 / (4 * pi * quantities.vacuum_permittivity) * first_charge * second_charge / (distance**2))
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        F = \frac{1}{4 \pi \varepsilon_0} \frac{q_1 q_2}{r^2}
+:laws:latex::
 """
 
 

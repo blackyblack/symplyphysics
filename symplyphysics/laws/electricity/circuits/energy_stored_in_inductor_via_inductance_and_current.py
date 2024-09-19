@@ -6,41 +6,34 @@ Inductors store energy in the magnetic field when the current is flowing
 through it.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from sympy import Eq, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+)
 
-energy = Symbol("energy", units.energy)
+energy = symbols.work
 """
-Energy stored in the magnetic field.
-
-Symbol:
-    :code:`W`
-"""
-
-inductance = Symbol("inductance", units.inductance)
-"""
-Inductance of the inductor.
-
-Symbol:
-    :code:`L`
+:symbols:`energy` stored in the magnetic field.
 """
 
-current = Symbol("current", units.current)
+inductance = symbols.inductance
 """
-Current flowing through the inductor.
+:symbols:`inductance` of the inductor.
+"""
 
-Symbol:
-    :code:`I`
+current = symbols.current
+"""
+:symbols:`current` flowing through the inductor.
 """
 
 law = Eq(energy, inductance * current**2 / 2)
-r"""
-:code:`W = 1/2 * L * I^2`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        W = \frac{1}{2} L I^2
+:laws:latex::
 """
 
 

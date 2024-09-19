@@ -9,13 +9,12 @@ the gas in question.
 
 **Notation:**
 
-#. :math:`k_\text{B}` is the Boltzmann constant.
-#. :math:`c` is the speed of light.
+#. :quantity_notation:`boltzmann_constant`.
+#. :quantity_notation:`speed_of_light`.
 """
 
 from sympy import Eq
 from symplyphysics import (
-    units,
     dimensionless,
     Symbol,
     Quantity,
@@ -23,6 +22,7 @@ from symplyphysics import (
     validate_output,
     convert_to_float,
     symbols,
+    quantities,
 )
 
 reduced_temperature = Symbol("reduced_temperature", dimensionless)
@@ -36,19 +36,19 @@ Latex:
     :math:`\theta`
 """
 
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas.
+:symbols:`temperature` of the gas.
 """
 
-particle_mass = symbols.basic.mass
+particle_mass = symbols.mass
 """
-:attr:`~symplyphysics.symbols.basic.mass` of a relativistic particle comprising the gas.
+:symbols:`mass` of a relativistic particle comprising the gas.
 """
 
 law = Eq(
     reduced_temperature,
-    (units.boltzmann_constant * temperature) / (particle_mass * units.speed_of_light**2),
+    (quantities.boltzmann_constant * temperature) / (particle_mass * quantities.speed_of_light**2),
 )
 r"""
 :code:`theta = (k_B * T) / (m * c^2)`

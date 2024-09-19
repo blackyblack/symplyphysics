@@ -8,12 +8,12 @@ and is analogous to the Reynolds number.
 
 **Notation:**
 
-#. :math:`g` is the acceleration due to gravity.
+#. :quantity_notation:`acceleration_due_to_gravity`.
 """
 
 from sympy import Eq, solve
 from symplyphysics import (
-    clone_symbol,
+    clone_as_symbol,
     symbols,
     units,
     Quantity,
@@ -22,6 +22,7 @@ from symplyphysics import (
     validate_output,
     dimensionless,
     convert_to_float,
+    quantities,
 )
 
 grashof_number = Symbol("grashof_number", dimensionless)
@@ -46,18 +47,18 @@ Latex:
     :math:`\beta`
 """
 
-surface_temperature = clone_symbol(symbols.thermodynamics.temperature,
+surface_temperature = clone_as_symbol(symbols.temperature,
     display_symbol="T_s",
     display_latex="T_\\text{s}")
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the surface of the fluid.
+:symbols:`temperature` of the surface of the fluid.
 """
 
-bulk_temperature = clone_symbol(symbols.thermodynamics.temperature,
+bulk_temperature = clone_as_symbol(symbols.temperature,
     display_symbol="T_b",
     display_latex="T_\\text{b}")
 """
-Average :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the inside of the fluid.
+Average :symbols:`temperature` of the inside of the fluid.
 """
 
 characteristic_length = Symbol("characteristic_length", units.length)
@@ -82,7 +83,7 @@ Latex:
 
 law = Eq(
     grashof_number,
-    units.acceleration_due_to_gravity * volumetric_expansion_coefficient *
+    quantities.acceleration_due_to_gravity * volumetric_expansion_coefficient *
     (surface_temperature - bulk_temperature) * characteristic_length**3 / (kinematic_viscosity**2))
 r"""
 :code:`Gr = g * beta * (T_s - T_b) * L^3 / nu^2`

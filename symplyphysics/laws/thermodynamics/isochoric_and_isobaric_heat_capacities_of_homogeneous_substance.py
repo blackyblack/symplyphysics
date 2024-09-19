@@ -47,9 +47,9 @@ Symbol:
     :code:`V`
 """
 
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the substance.
+:symbols:`temperature` of the substance.
 """
 
 thermal_expansion_coefficient = Symbol("thermal_expansion_coefficient", 1 / units.temperature)

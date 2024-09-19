@@ -70,9 +70,9 @@ def calculate_voltage(
         Point2D(final_distance_, final_electric_field_component),
         distance,
     )
-    voltage = law.rhs.subs({
+    _voltage = law.rhs.subs({
         electric_field_component(distance): electric_field_component_,
         initial_distance: initial_distance_,
         final_distance: final_distance_,
     }).doit()
-    return Quantity(voltage)
+    return Quantity(_voltage)

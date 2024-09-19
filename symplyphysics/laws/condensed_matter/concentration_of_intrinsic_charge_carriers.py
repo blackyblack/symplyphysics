@@ -7,7 +7,7 @@ nonzero concentration of free charge carriers in the semiconductor.
 
 **Notation:**
 
-#. :math:`k_\text{B}` (:code:`k_B`) is the Boltzmann constant.
+#. :quantity_notation:`boltzmann_constant`.
 
 **Links:**
 
@@ -19,10 +19,10 @@ nonzero concentration of free charge carriers in the semiconductor.
 """
 
 from sympy import (Eq, solve, sqrt, exp)
-from sympy.physics.units import boltzmann
 from symplyphysics import (
     symbols,
     units,
+    quantities,
     Quantity,
     Symbol,
     validate_input,
@@ -60,9 +60,9 @@ Latex:
     :math:`N_\text{v}`
 """
 
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the semiconductor.
+:symbols:`temperature` of the semiconductor.
 """
 
 band_gap = Symbol("band_gap", units.energy)
@@ -79,7 +79,7 @@ Latex:
 law = Eq(
     charge_carriers_concentration,
     sqrt(density_of_states_in_conduction_band * density_of_states_in_valence_band) * exp(-band_gap /
-    (2 * boltzmann * temperature)))
+    (2 * quantities.boltzmann_constant * temperature)))
 r"""
 :code:`n = sqrt(N_c * N_v) * exp(-1 * E_g / (2 * k_B * T))`
 

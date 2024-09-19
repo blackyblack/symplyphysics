@@ -8,11 +8,11 @@ for the speed of sound for ideal gases compared to the Newton's formula. See
 
 **Notation:**
 
-#. :math:`R` is the molar gas constant.
+#. :quantity_notation:`molar_gas_constant`.
 """
 
 from sympy import Eq, solve, sqrt, Function as SymFunction, symbols as sym_symbols
-from symplyphysics import Quantity, Symbol, dimensionless, symbols, units, validate_input, validate_output
+from symplyphysics import Quantity, Symbol, dimensionless, symbols, units, validate_input, validate_output, quantities
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import (
     isentropic_speed_of_sound_via_pressure_derivative as sound_law,
@@ -32,9 +32,9 @@ Symbol:
     :code:`c`
 """
 
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas.
+:symbols:`temperature` of the gas.
 """
 
 heat_capacity_ratio = Symbol("heat_capacity_ratio", dimensionless)
@@ -57,7 +57,7 @@ Symbol:
 """
 
 law = Eq(speed_of_sound,
-    sqrt(heat_capacity_ratio * units.molar_gas_constant * temperature / molar_mass))
+    sqrt(heat_capacity_ratio * quantities.molar_gas_constant * temperature / molar_mass))
 r"""
 :code:`c = sqrt(gamma * R * T / M)`
 

@@ -14,11 +14,11 @@ filled with a dielectric medium. See `Figure`_.
 
 from sympy import (Eq, solve, pi)
 from symplyphysics import (
-    units,
     Quantity,
-    SymbolNew,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
     quantities,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
@@ -28,24 +28,24 @@ from symplyphysics.laws.electricity import (
     capacitance_from_charge_and_voltage as _capacitance_law,
 )
 
-capacitance = SymbolNew("C", units.capacitance)
+capacitance = symbols.capacitance
 """
-Capacitance of the capacitor.
-"""
-
-absolute_permittivity = SymbolNew("epsilon", units.capacitance / units.length, display_latex="\\varepsilon")
-"""
-Absolute permittivity of the medium between the spheres.
+:symbols:`capacitance` of the capacitor.
 """
 
-inner_radius = SymbolNew("r_in", units.length, display_latex="r_\\text{in}")
+absolute_permittivity = symbols.absolute_permittivity
 """
-Radius of the inner sphere.
+:symbols:`absolute_permittivity` of the medium between the spheres.
 """
 
-outer_radius = SymbolNew("r_out", units.length, display_latex="r_\\text{out}")
+inner_radius = clone_as_symbol(symbols.distance_to_origin, display_symbol="r_in", display_latex="r_\\text{in}")
 """
-Radius of the outer sphere.
+Radius of the inner sphere. See :symbols:`distance_to_origin`.
+"""
+
+outer_radius = clone_as_symbol(symbols.distance_to_origin, display_symbol="r_out", display_latex="r_\\text{out}")
+"""
+Radius of the outer sphere. See :symbols:`distance_to_origin`.
 """
 
 law = Eq(

@@ -21,7 +21,7 @@ from symplyphysics.laws.thermodynamics import radiation_power_via_temperature as
 ## j* = epsilon*sigma*T^4, where ε is the integral absorption capacity of the body. For a completely black body ε = 1.
 
 radiance = Symbol("radiance", units.power / units.area)
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 
 law = Eq(radiance, units.stefan_boltzmann_constant * temperature**4)
 

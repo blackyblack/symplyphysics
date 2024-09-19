@@ -18,16 +18,18 @@ of the magnetic flux density, the rotation frequency and the length of the rod.
    the rod is rotating in a plane perpendicular to the magnetic field.
 #. The magnetic field is uniform.
 #. The angular velocity of the rod is constant.
+
+**Links:**
+
+#. `Example 13.4.2 <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/University_Physics_II_-_Thermodynamics_Electricity_and_Magnetism_(OpenStax)/13%3A_Electromagnetic_Induction/13.04%3A_Motional_Emf>`_.
 """
 
 from sympy import (Eq, solve)
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
-    angle_type,
+    symbols,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity import (
@@ -38,51 +40,31 @@ from symplyphysics.definitions import (
     angular_speed_is_angular_distance_derivative as _angular_speed_law,
 )
 
-electromotive_force = Symbol("electromotive_force", units.voltage)
-r"""
-Electromotive force induced in the rod.
-
-Symbol:
-    :code:`E`
-
-Latex:
-    :math:`\mathcal{E}`
+electromotive_force = symbols.electromotive_force
+"""
+:symbols:`electromotive_force` induced in the rod.
 """
 
-magnetic_flux_density = Symbol("magnetic_flux_density", units.magnetic_density)
+magnetic_flux_density = symbols.magnetic_flux_density
 """
-Magnitude of magnetic flux density.
-
-Symbol:
-    :code:`B`
+Magnitude of :symbols:`magnetic_flux_density`.
 """
 
-angular_frequency = Symbol("angular_frequency", angle_type / units.time)
-r"""
-Angular frequency of rod's rotation.
-
-Symbol:
-    :code:`w`
-
-Latex:
-    :math:`\omega`
+angular_frequency = symbols.angular_frequency
+"""
+:symbols:`angular_frequency` of rod's rotation.
 """
 
-length = Symbol("length", units.length)
+length = symbols.length
 """
-Length of the rod.
-
-Symbol:
-    :code:`l`
+:symbols:`length` of the rod.
 """
 
-law = Eq(electromotive_force, (1 / 2) * magnetic_flux_density * angular_frequency * length**2)
-r"""
-:code:`E = 1/2 * B * w * l^2`
+law = Eq(electromotive_force, magnetic_flux_density * angular_frequency * length**2 / 2)
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \mathcal{E} = \frac{1}{2} B \omega l^2
+:laws:latex::
 """
 
 # Derive law

@@ -7,22 +7,20 @@ Angular wavenumber is inverse wavelength
 
 from sympy import Eq, pi
 from symplyphysics import (
-    units,
     Quantity,
-    SymbolNew,
     validate_input,
     validate_output,
-    angle_type,
+    symbols,
 )
 
-angular_wavenumber = SymbolNew("k", angle_type / units.length)
+angular_wavenumber = symbols.angular_wavenumber
 """
-Angular wavenumber of the wave.
+:symbols:`angular_wavenumber` of the wave.
 """
 
-wavelength = SymbolNew("lambda", units.length, display_latex="\\lambda")
+wavelength = symbols.wavelength
 """
-Wavelength of the wave.
+:symbols:`wavelength` of the wave.
 """
 
 definition = Eq(angular_wavenumber, 2 * pi / wavelength)

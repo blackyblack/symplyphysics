@@ -35,9 +35,9 @@ Symbol:
     :code:`G(T, p, N)`
 """
 
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
+:symbols:`temperature` of the system.
 """
 
 pressure = Symbol("pressure", units.pressure)

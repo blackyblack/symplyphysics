@@ -24,9 +24,9 @@ Symbol:
     :code:`v`
 """
 
-mass = symbols.basic.mass
+mass = symbols.mass
 """
-The :attr:`~symplyphysics.symbols.basic.mass` of the body.
+The :symbols:`mass` of the body.
 """
 
 law = Eq(kinetic_energy, mass * speed**2 / 2)

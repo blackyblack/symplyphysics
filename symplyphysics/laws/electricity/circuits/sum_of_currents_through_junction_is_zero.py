@@ -14,38 +14,38 @@ known as the **first Kirchhoff's law**, or the **Kirchhoff's junction rule**.
 """
 
 from typing import Sequence
-from sympy import (Eq, Idx, solve)
-from symplyphysics import (units, Quantity, validate_input, validate_output,
-    SymbolIndexed, SumIndexed, global_index)
+from sympy import Eq, Idx, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    SumIndexed,
+    symbols,
+)
+from symplyphysics.core.symbols.symbols import clone_as_indexed
 
-current = SymbolIndexed("current", units.current)
+current = clone_as_indexed(symbols.current, display_symbol="I[k]", display_latex="I_k")
 r"""
 :math:`k`-th current flowing through the node.
-
-Symbol:
-    :code:`I_k`
-
-Latex:
-    :math:`I_k`
 """
 
-law = Eq(SumIndexed(current[global_index], global_index), 0)
-r"""
-:code:`Sum(I_k, k) = 0`
+index = Idx("k")
 
-Latex:
-    .. math::
-        \sum_k I_k = 0
+law = Eq(SumIndexed(current[index], index), 0)
+"""
+:laws:symbol::
+
+:laws:latex::
 """
 
 # TODO Derive from law of conservation of charge
 
 
 @validate_input(currents_=current)
-@validate_output(units.current)
+@validate_output(current)
 def calculate_current_from_array(currents_: Sequence[Quantity]) -> Quantity:
     local_index = Idx("index_local", (1, len(currents_) + 1))
-    currents_law = law.subs(global_index, local_index)
+    currents_law = law.subs(index, local_index)
     currents_law = currents_law.doit()
     unknown_current = current[len(currents_) + 1]
     solved = solve(currents_law, unknown_current, dict=True)[0][unknown_current]

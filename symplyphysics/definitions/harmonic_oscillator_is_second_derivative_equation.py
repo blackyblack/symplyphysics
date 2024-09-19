@@ -12,12 +12,18 @@ Displacement is not only limited to physical motion, but should be interpreted i
 #. There is no damping (i.e. friction) in the system.
 """
 
-from sympy import (Derivative, Eq, cos, solve, symbols, Function as SymFunction)
-from symplyphysics import (units, Quantity, SymbolNew, validate_input, validate_output)
+from sympy import Derivative, Eq, cos, solve, symbols as sympy_symbols, Function as SymFunction
+from symplyphysics import (
+    units,
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+)
 from symplyphysics.core.expr_comparisons import expr_equals
 
 # Can have various dimensions - do not specify it
-displacement = symbols("displacement", cls=SymFunction)
+displacement = sympy_symbols("displacement", cls=SymFunction)
 """
 Displacement of oscillator from equilibrium as a function of time.
 
@@ -28,14 +34,14 @@ Latex:
     :math:`x`
 """
 
-angular_frequency = SymbolNew("w", units.frequency, display_latex="\\omega")
+angular_frequency = symbols.angular_frequency
 """
-Angular frequency of the oscillator.
+:symbols:`angular_frequency` of the oscillator.
 """
 
-time = SymbolNew("t", units.time)
+time = symbols.time
 """
-Time.
+:symbols:`time`.
 """
 
 definition = Eq(Derivative(displacement(time), (time, 2)),
@@ -63,8 +69,8 @@ Latex:
 
 ## dsolve() gives us solution in exponential form - we are looking for the solution as trigonometric function
 
-_amplitude = symbols("amplitude")
-_initial_phase = symbols("initial_phase")
+_amplitude = sympy_symbols("amplitude")
+_initial_phase = sympy_symbols("initial_phase")
 _displacement_function_eq = Eq(displacement(time),
     _amplitude * cos(angular_frequency * time + _initial_phase))
 _dsolved = definition.subs(displacement(time), _displacement_function_eq.rhs)

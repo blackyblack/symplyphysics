@@ -7,11 +7,10 @@ Power can be found using voltage and resistance.
 
 from sympy import Eq, solve
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity import (
@@ -19,38 +18,50 @@ from symplyphysics.laws.electricity import (
     current_is_voltage_over_resistance as _ohm_law,
 )
 
-power = Symbol("power", units.power)
+power = symbols.power
 """
-Power.
-
-Symbol:
-    :code:`P`
+:symbols:`power`.
 """
 
-voltage = Symbol("voltage", units.voltage)
+voltage = symbols.voltage
 """
-Voltage.
-
-Symbol:
-    :code:`V`
+:symbols:`voltage`.
 """
 
-resistance = Symbol("resistance", units.impedance)
+resistance = symbols.resistance
 """
-Resistance.
-
-Symbol:
-    :code:`R`
+:symbols:`resistance`.
 """
 
 law = Eq(power, voltage**2 / resistance)
-r"""
-:code:`P = V^2 / R`
-
-Latex:
-    .. math::
-        P = \frac{V^2}{R}
 """
+:laws:symbol::
+
+:laws:latex::
+"""
+
+# Derive from power and Ohm's laws
+
+_current = _ohm_law.current
+
+_power_eqn = _power_law.law.subs({
+    _power_law.power: power,
+    _power_law.current: _current,
+    _power_law.voltage: voltage,
+})
+
+_ohm_eqn = _ohm_law.law.subs({
+    _ohm_law.voltage: voltage,
+    _ohm_law.resistance: resistance,
+})
+
+_power_expr = solve(
+    (_power_eqn, _ohm_eqn),
+    (power, _current),
+    dict=True,
+)[0][power]
+
+assert expr_equals(_power_expr, law.rhs)
 
 # Derive from power and Ohm's laws
 

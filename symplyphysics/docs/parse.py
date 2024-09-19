@@ -61,6 +61,7 @@ def _docstring_clean(doc: str) -> str:
         if not doc.endswith("\n"):
             break
         doc = doc.removesuffix("\n")
+
     return doc
 
 

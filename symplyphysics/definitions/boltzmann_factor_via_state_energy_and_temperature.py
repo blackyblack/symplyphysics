@@ -7,21 +7,20 @@ and thermodynamics, e.g. the canonical partition function of a classical discret
 
 **Notation:**
 
-#. :math:`\exp` is the exponential function.
+#. :quantity_notation:`boltzmann_constant`.
 """
 
 from sympy import Eq, exp
 from symplyphysics import (
     quantities,
-    units,
     dimensionless,
     Quantity,
     validate_input,
     validate_output,
     symbols,
-    clone_symbol,
     convert_to_float,
     SymbolNew,
+    clone_as_symbol,
 )
 
 boltzmann_factor = SymbolNew("f", dimensionless)
@@ -29,23 +28,18 @@ boltzmann_factor = SymbolNew("f", dimensionless)
 Boltzmann factor.
 """
 
-energy_of_state = SymbolNew("E[i]", units.energy, display_latex="E_i")
+energy_of_state = clone_as_symbol(symbols.energy, display_symbol="E[i]", display_latex="E_i")
 """
-Energy of state :math:`i`.
-"""
-
-equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature)
-"""
-Equilibrium :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
+:symbols:`energy` of state :math:`i`.
 """
 
-boltzmann_constant = quantities.boltzmann_constant
+equilibrium_temperature = symbols.temperature
 """
-:attr:`~symplyphysics.quantities.boltzmann_constant`
+Equilibrium :symbols:`temperature` of the system.
 """
 
 definition = Eq(boltzmann_factor,
-    exp(-1 * energy_of_state / (boltzmann_constant * equilibrium_temperature)))
+    exp(-1 * energy_of_state / (quantities.boltzmann_constant * equilibrium_temperature)))
 """
 :laws:symbol::
 

@@ -28,9 +28,9 @@ Symbol:
     :code:`W`
 """
 
-force = symbols.dynamics.force
+force = symbols.force
 """
-The :attr:`~symplyphysics.symbols.dynamics.force` exerted on the body.
+The :symbols:`force` exerted on the body.
 """
 
 distance = Symbol("distance", units.length)

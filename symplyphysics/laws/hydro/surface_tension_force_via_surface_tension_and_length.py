@@ -9,7 +9,6 @@ Also see `figure <https://www.researchgate.net/publication/312093145/figure/fig7
 
 from sympy import (Eq, solve)
 from symplyphysics import (
-    clone_symbol,
     symbols,
     units,
     Quantity,
@@ -18,9 +17,9 @@ from symplyphysics import (
     validate_output,
 )
 
-surface_tension_force = clone_symbol(symbols.dynamics.force)
+surface_tension_force = symbols.force
 """
-Surface tension :attr:`~symplyphysics.symbols.dynamics.force`.
+Surface tension :symbols:`force`.
 """
 
 surface_tension = Symbol("surface_tension", units.force / units.length)

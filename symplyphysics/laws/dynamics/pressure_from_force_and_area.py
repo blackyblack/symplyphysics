@@ -17,9 +17,9 @@ Symbol:
     :code:`p`
 """
 
-force = symbols.dynamics.force
+force = symbols.force
 """
-:attr:`~symplyphysics.symbols.dynamics.force` applied.
+:symbols:`force` applied.
 """
 
 area = Symbol("area", units.area)

@@ -26,7 +26,7 @@ from symplyphysics import (
 ## a_centripetal - vector of centripetal acceleration of body B
 ## m - mass of body B
 
-mass = symbols.basic.mass
+mass = symbols.mass
 
 
 def acceleraton_due_to_gravity_law(

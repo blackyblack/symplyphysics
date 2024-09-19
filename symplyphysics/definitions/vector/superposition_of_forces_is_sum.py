@@ -26,7 +26,7 @@ def superposition_law(forces_: Iterable[Vector]) -> Vector:
         .. math::
             \vec F = \sum_i {\vec F}_i
 
-    :param forces\_: sequence of individual :attr:`~symplyphysics.symbols.dynamics.force` vectors.
+    :param forces\_: sequence of individual :symbols:`force` vectors.
 
         Symbol: :code:`F_i`
 
@@ -34,7 +34,7 @@ def superposition_law(forces_: Iterable[Vector]) -> Vector:
 
         Dimension: *force*
 
-    :return: net :attr:`~symplyphysics.symbols.dynamics.force` exerted on the object.
+    :return: net :symbols:`force` exerted on the object.
 
         Symbol: :code:`F`
 

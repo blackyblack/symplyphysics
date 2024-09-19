@@ -9,7 +9,7 @@ of a free particle with that mass.
 
 **Notation:**
 
-#. :math:`\hbar` (:code:`hbar`) is the reduced Planck constant.
+#. :quantity_notation:`hbar`.
 """
 
 from sympy import (
@@ -20,9 +20,10 @@ from sympy import (
 )
 from symplyphysics import (
     symbols,
-    clone_symbol,
+    clone_as_symbol,
     SI,
     units,
+    quantities,
     Quantity,
     Symbol,
     Function,
@@ -30,9 +31,9 @@ from symplyphysics import (
     validate_output,
 )
 
-effective_mass = clone_symbol(symbols.basic.mass, display_symbol="m_eff", display_latex="m_\\text{eff}")
+effective_mass = clone_as_symbol(symbols.mass, display_symbol="m_eff", display_latex="m_\\text{eff}")
 r"""
-Effective :attr:`~symplyphysics.symbols.basic.mass` of the electron.
+Effective :symbols:`mass` of the electron.
 """
 
 energy = Function("energy", units.energy)
@@ -51,7 +52,7 @@ Symbol:
     :code:`k`
 """
 
-law = Eq(effective_mass, units.hbar**2 / Derivative(energy(wavenumber),
+law = Eq(effective_mass, quantities.hbar**2 / Derivative(energy(wavenumber),
     (wavenumber, 2)))
 r"""
 :code:`m_eff = hbar^2 / Derivative(E(k), (k, 2))`

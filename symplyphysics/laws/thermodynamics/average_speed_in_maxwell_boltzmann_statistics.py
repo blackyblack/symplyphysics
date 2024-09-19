@@ -6,7 +6,7 @@ The *average*, or mean, *speed* is the expected value of the speed distribution 
 
 **Notation:**
 
-#. :math:`k_\text{B}` is the Boltzmann constant.
+#. :quantity_notation:`boltzmann_constant`.
 
 **Conditions:**
 
@@ -22,7 +22,8 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_symbol,
+    clone_as_symbol,
+    quantities,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed_distribution
@@ -38,19 +39,19 @@ Latex:
     :math:`\langle v \rangle`
 """
 
-equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature, positive=True)
+equilibrium_temperature = clone_as_symbol(symbols.temperature, positive=True)
 """
-Equilibrium :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas.
+Equilibrium :symbols:`temperature` of the gas.
 """
 
-molecular_mass = clone_symbol(symbols.basic.mass, positive=True)
+molecular_mass = clone_as_symbol(symbols.mass, positive=True)
 """
-:attr:`~symplyphysics.symbols.basic.mass` of a gas molecule.
+:symbols:`mass` of a gas molecule.
 """
 
 law = Eq(
     average_speed,
-    sqrt(8 * units.boltzmann_constant * equilibrium_temperature / (pi * molecular_mass)),
+    sqrt(8 * quantities.boltzmann_constant * equilibrium_temperature / (pi * molecular_mass)),
 )
 r"""
 :code:`avg(v) = sqrt(8 * k_B * T / (pi * m))`

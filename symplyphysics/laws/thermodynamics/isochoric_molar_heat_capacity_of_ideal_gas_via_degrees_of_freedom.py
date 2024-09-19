@@ -8,7 +8,7 @@ From that one can derive the expression of the isochoric heat capacity of ideal 
 
 **Notation:**
 
-#. :math:`R` is the molar gas constant.
+#. :quantity_notation:`molar_gas_constant`.
 
 **Notes:**
 
@@ -31,6 +31,7 @@ from symplyphysics import (
     Symbol,
     validate_input,
     validate_output,
+    quantities,
 )
 
 isochoric_molar_heat_capacity = Symbol(
@@ -55,7 +56,7 @@ Symbol:
     :code:`f`
 """
 
-law = Eq(isochoric_molar_heat_capacity, (degrees_of_freedom / 2) * units.molar_gas_constant)
+law = Eq(isochoric_molar_heat_capacity, (degrees_of_freedom / 2) * quantities.molar_gas_constant)
 r"""
 :code:`C_V = (f / 2) * R`
 

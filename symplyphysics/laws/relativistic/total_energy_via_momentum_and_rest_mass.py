@@ -1,7 +1,6 @@
 from sympy import Eq, solve
 from symplyphysics import (
     symbols,
-    clone_symbol,
     units,
     Quantity,
     Symbol,
@@ -22,7 +21,7 @@ from symplyphysics import (
 
 relativistic_energy = Symbol("relativistic_energy", units.energy)
 relativistic_momentum = Symbol("relativistic_momentum", units.momentum)
-invariant_mass = clone_symbol(symbols.basic.mass)
+invariant_mass = symbols.mass
 
 law = Eq(
     relativistic_energy**2,

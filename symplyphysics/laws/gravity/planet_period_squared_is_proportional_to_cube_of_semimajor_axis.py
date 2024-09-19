@@ -7,7 +7,7 @@ from symplyphysics import (
     print_expression,
     validate_input,
     validate_output,
-    clone_symbol,
+    clone_as_symbol,
     symbols,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
@@ -31,7 +31,7 @@ from symplyphysics.laws.kinematics import (
 ## a - semi-major axis of the planet's orbit, its radius in case of a round orbit
 
 rotation_period = Symbol("rotation_period", units.time, positive=True)
-attracting_mass = clone_symbol(symbols.basic.mass, positive=True)
+attracting_mass = clone_as_symbol(symbols.mass, positive=True)
 semimajor_axis = Symbol("semimajor_axis", units.length, positive=True)
 
 law = Eq(
@@ -51,14 +51,15 @@ _acceleration_expr = centripetal_law.law.rhs.subs({
 })
 
 _force_expr = gravity_law.law.rhs.subs({
-    gravity_law.first_mass: attracting_mass,
     gravity_law.distance_between_mass_centers: _radius,
+    gravity_law.first_mass: attracting_mass,
     gravity_law.second_mass: _attracted_mass,
 })
 
 _newtons_eqn = newtons_second_law.law.subs({
     newtons_second_law.acceleration: _acceleration_expr,
     newtons_second_law.force: _force_expr,
+    newtons_second_law.mass: attracting_mass,
 })
 
 _angular_speed_expr = solve(_newtons_eqn, _angular_speed)[1]

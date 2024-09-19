@@ -14,46 +14,34 @@ When power is constant, energy can be expressed as a product of power and time.
 
 from sympy import Eq, dsolve
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import power_is_energy_derivative as power_def
 
-energy = Symbol("energy", units.energy)
+energy = symbols.energy
 """
-Energy consumed or released during time :math:`t`.
-
-Symbol:
-    :code:`E`
+:symbols:`energy` consumed or released during time :math:`t`.
 """
 
-power = Symbol("power", units.power)
+power = symbols.power
 """
-Power.
-
-Symbol:
-    :code:`P`
+Constant :symbols:`power`.
 """
 
-time = Symbol("time", units.time)
+time = symbols.time
 """
-Time.
-
-Symbol:
-    :code:`t`
+:symbols:`time`.
 """
 
 law = Eq(energy, power * time)
-r"""
-:code:`E = P * t`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        E = P t
+:laws:latex::
 """
 
 # Derive from definition of power from energy

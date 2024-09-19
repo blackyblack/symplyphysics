@@ -30,9 +30,9 @@ Symbol:
     :code:`U`
 """
 
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
+:symbols:`temperature` of the system.
 """
 
 entropy = Symbol("entropy", units.energy / units.temperature)

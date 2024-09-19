@@ -194,7 +194,7 @@ class FunctionNew(DimensionSymbolNew, UndefinedFunction):
 
 # Symbol and Function have generated names, hence their display is not readable.
 # Use custom implementation of the PrettyPrinter to convert real symbol names
-# to user fiendly names.
+# to user friendly names.
 
 
 class SymbolPrinter(PrettyPrinter):
@@ -251,21 +251,57 @@ def print_expression(expr: Expr | Equality | Sequence[Expr | Equality]) -> str:
         pretty_use_unicode(uflag)
 
 
-def clone_symbol(source: SymbolNew,
+def clone_as_symbol(source: SymbolNew | SymbolIndexedNew,
     *,
     display_symbol: Optional[str] = None,
     display_latex: Optional[str] = None,
     **assumptions: Any) -> SymbolNew:
-    assumptions = source.assumptions0 if assumptions is None or len(
-        assumptions) == 0 else assumptions
-    display_symbol_new = source.display_name if display_symbol is None else display_symbol
-    display_latex_new = display_latex
-    if display_latex_new is None:
-        display_latex_new = display_symbol
-    if display_latex_new is None:
-        display_latex_new = source.display_latex
-    return SymbolNew(display_symbol_new, source.dimension, display_latex=display_latex_new, **assumptions)
+    assumptions = assumptions or source.assumptions0
+    display_symbol = display_symbol or source.display_name
+    display_latex = display_latex or source.display_latex
+    return SymbolNew(
+        display_symbol,
+        source.dimension,
+        display_latex=display_latex,
+        **assumptions,
+    )
+
+
+def clone_as_function(
+    source: SymbolNew | SymbolIndexedNew,
+    *,
+    display_symbol: Optional[str] = None,
+    display_latex: Optional[str] = None,
+    **assumptions: Any,
+) -> FunctionNew:
+    assumptions = assumptions or source.assumptions0
+    display_symbol = display_symbol or source.display_name
+    display_latex = display_latex or source.display_latex
+    return FunctionNew(
+        display_symbol,
+        source.dimension,
+        display_latex=display_latex,
+        **assumptions,
+    )
+
+
+def clone_as_indexed(
+    source: SymbolNew | SymbolIndexedNew,
+    *,
+    display_symbol: Optional[str] = None,
+    display_latex: Optional[str] = None,
+    **assumptions: Any,
+) -> SymbolIndexedNew:
+    assumptions = assumptions or source.assumptions0
+    display_symbol = display_symbol or source.display_name
+    display_latex = display_latex or source.display_latex
+    return SymbolIndexedNew(
+        display_symbol,
+        source.dimension,
+        display_latex=display_latex,
+        **assumptions,
+    )
 
 
 # This is default index for indexed parameters, eg for using in SumIndexed
-global_index = Idx("global_index")
+global_index = Idx("i")

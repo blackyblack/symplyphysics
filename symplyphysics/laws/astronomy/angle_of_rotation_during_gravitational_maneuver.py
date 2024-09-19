@@ -12,7 +12,7 @@ The angle of the gravitational maneuver depends on the aiming range, the mass of
 
 from sympy import Eq, solve, atan
 from sympy.physics.units import gravitational_constant
-from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, print_expression,
+from symplyphysics import (clone_as_symbol, symbols, units, Quantity, Symbol, print_expression,
     validate_input, validate_output, angle_type)
 
 angle = Symbol("angle", angle_type)
@@ -26,9 +26,9 @@ Latex:
     :math:`\phi`
 """
 
-planet_mass = clone_symbol(symbols.basic.mass, display_symbol="M")
+planet_mass = clone_as_symbol(symbols.mass, display_symbol="M", display_latex="M")
 """
-The :attr:`~symplyphysics.symbols.basic.mass` of the planet.
+The :symbols:`mass` of the planet.
 """
 
 aiming_range = Symbol("aiming_range", units.length)

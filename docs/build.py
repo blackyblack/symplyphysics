@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 
 import argparse
-import pathlib
 import shutil
 import sys
 from typing import Sequence
+from pathlib import Path
 from sphinx.application import Sphinx
 
 from symplyphysics.docs.build import generate_laws_docs
+from symplyphysics.docs import symbols_role, quantity_notation_role
 
 
 def get_parser() -> argparse.ArgumentParser:
@@ -51,7 +52,7 @@ def get_parser() -> argparse.ArgumentParser:
         dest="conf_dir",
         default="docs",
         help="directory where conf.py file is stored")
-    
+
     parser.add_argument("-q",
         "--quiet",
         action="store_true",
@@ -59,7 +60,28 @@ def get_parser() -> argparse.ArgumentParser:
         help="suppress rST files generation text",
         )
 
+    parser.add_argument("-R",
+        "--rst-only",
+        action="store_true",
+        dest="rst_only",
+        help="only generate rST files and suppress HTML generation",
+        )
+
     return parser
+
+
+def process_generated_files(generated_dir: str) -> None:
+    for file_path in Path(generated_dir).iterdir():
+        with open(file_path, "r+", encoding="utf-8") as file:
+            doc = file.read()
+
+            # processing logic goes here
+            doc = symbols_role.process_string(doc, file_path)
+            doc = quantity_notation_role.process_string(doc, file_path)
+
+            file.seek(0)
+            file.truncate(0)
+            file.write(doc)
 
 
 def main(argv: Sequence[str] = ()) -> None:
@@ -69,12 +91,17 @@ def main(argv: Sequence[str] = ()) -> None:
     generate_laws_docs(args.laws_source_dir, args.generated_dir, args.exclude_dirs, args.quiet)
 
     # Copy index.rst to 'generated' folder
-    index_file = pathlib.Path(args.conf_dir).joinpath("index.rst")
-    out_index_file = pathlib.Path(args.generated_dir).joinpath("index.rst")
+    index_file = Path(args.conf_dir) / "index.rst"
+    out_index_file = Path(args.generated_dir) / "index.rst"
     shutil.copyfile(index_file, out_index_file, follow_symlinks=True)
 
+    process_generated_files(args.generated_dir)
+
+    if args.rst_only:
+        return
+
     # Build HTML docs
-    doctrees = pathlib.Path(args.output_dir).joinpath(".doctrees/")
+    doctrees = Path(args.output_dir) / ".doctrees/"
     app = Sphinx(args.generated_dir, args.conf_dir, "html", doctrees, args.output_dir)
     app.build()
 

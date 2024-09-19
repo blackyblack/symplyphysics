@@ -9,7 +9,7 @@ particles in thermodynamic equilibrium, the speed distribution function is a fun
 
 **Notation:**
 
-#. :math:`k_\text{B}` (:code:`k_B`) is the Boltzmann constant.
+#. :quantity_notation:`boltzmann_constant`.
 
 **Notes:**
 
@@ -34,9 +34,10 @@ from symplyphysics import (
     Symbol,
     validate_input,
     validate_output,
-    clone_symbol,
+    clone_as_symbol,
     symbols,
     CoordinateSystem,
+    quantities,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.geometry.elements import volume_element_magnitude
@@ -60,22 +61,22 @@ Symbol:
     :code:`v`
 """
 
-particle_mass = clone_symbol(symbols.basic.mass, positive=True)
+particle_mass = clone_as_symbol(symbols.mass, positive=True)
 """
-:attr:`~symplyphysics.symbols.basic.mass` of a particle.
+:symbols:`mass` of a particle.
 """
 
-equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature, positive=True)
+equilibrium_temperature = clone_as_symbol(symbols.temperature, positive=True)
 """
-Equilibrium :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the ensemble.
+Equilibrium :symbols:`temperature` of the ensemble.
 """
 
 law = Eq(
     speed_distribution_function,
     sqrt(2 / pi) * (particle_mass /
-    (units.boltzmann_constant * equilibrium_temperature))**Rational(3, 2) * particle_speed**2 *
+    (quantities.boltzmann_constant * equilibrium_temperature))**Rational(3, 2) * particle_speed**2 *
     exp(-1 * particle_mass * particle_speed**2 /
-    (2 * units.boltzmann_constant * equilibrium_temperature)))
+    (2 * quantities.boltzmann_constant * equilibrium_temperature)))
 r"""
 :code:`f(v) = sqrt(2 / pi) * (m / (k_B * T))^(3/2) * v^2 * exp(-1 * m * v^2 / (2 * k_B * T))`
 

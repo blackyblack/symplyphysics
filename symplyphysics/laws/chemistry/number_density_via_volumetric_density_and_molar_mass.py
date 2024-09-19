@@ -8,12 +8,12 @@ amount of substance.
 
 **Notation:**
 
-#. :math:`N_\text{A}` (:code:`N_A`) is the Avogadro constant.
+#. :quantity_notation:`avogadro_constant`.
 """
 
 from sympy import (Eq, solve)
 from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+    validate_output, quantities)
 from symplyphysics.definitions import number_density_is_number_of_objects_per_unit_volume
 from symplyphysics.definitions import density_from_mass_volume
 from symplyphysics.laws.chemistry import avogadro_constant_is_particle_count_over_amount_of_substance
@@ -46,7 +46,7 @@ Symbol:
     :code:`M`
 """
 
-law = Eq(number_density, volumetric_density * units.avogadro / molar_mass)
+law = Eq(number_density, volumetric_density * quantities.avogadro_constant / molar_mass)
 r"""
 :code:`n = rho * N_A / M`
 

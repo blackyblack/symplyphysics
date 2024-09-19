@@ -22,7 +22,6 @@ and (2) the angular frequency of the external force driving the oscillations.
 
 from sympy import Eq, cos, dsolve
 from symplyphysics import (
-    clone_symbol,
     symbols,
     units,
     Quantity,
@@ -45,9 +44,9 @@ Symbol:
     :code:`q(t)`
 """
 
-mass = symbols.basic.mass
+mass = symbols.mass
 """
-The :attr:`~symplyphysics.symbols.basic.mass` of the oscillating body.
+The :symbols:`mass` of the oscillating body.
 """
 
 natural_angular_frequency = Symbol("natural_angular_frequency", angle_type / units.time)
@@ -61,9 +60,9 @@ Latex:
     :math:`\omega_0`
 """
 
-driving_force_amplitude = clone_symbol(symbols.dynamics.force)
+driving_force_amplitude = symbols.force
 """
-The amplitude of the external driving :attr:`~symplyphysics.symbols.dynamics.force`.
+The amplitude of the external driving :symbols:`force`.
 """
 
 driving_angular_frequency = Symbol("driving_angular_frequency", angle_type / units.time)

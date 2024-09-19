@@ -1,6 +1,6 @@
 from sympy import Eq, solve
 from symplyphysics import (Quantity, Symbol, validate_input, validate_output,
-    dimensionless, convert_to_float, clone_symbol, symbols)
+    dimensionless, convert_to_float, clone_as_symbol, symbols)
 
 # Description
 ## The traveling atom moves towards the substrate in the magnetron. At the same time, it collides with gas atoms.
@@ -13,8 +13,8 @@ from symplyphysics import (Quantity, Symbol, validate_input, validate_output,
 
 energy_transfer_coefficient = Symbol("energy_transfer_coefficient", dimensionless)
 
-mass_of_traveling_atom = clone_symbol(symbols.basic.mass)
-mass_of_gas_atom = clone_symbol(symbols.basic.mass)
+mass_of_traveling_atom = clone_as_symbol(symbols.mass, display_symbol="m_1", display_latex="m_1")
+mass_of_gas_atom = clone_as_symbol(symbols.mass, display_symbol="m_2", display_latex="m_2")
 
 law = Eq(
     energy_transfer_coefficient,

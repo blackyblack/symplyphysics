@@ -19,9 +19,9 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import internal_energy_differential
 
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
+:symbols:`temperature` of the system.
 """
 
 internal_energy = Function("internal_energy", units.energy)

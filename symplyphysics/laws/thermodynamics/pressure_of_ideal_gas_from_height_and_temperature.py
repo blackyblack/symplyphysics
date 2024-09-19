@@ -6,8 +6,8 @@ The *barometric formula* determines the dependence of the pressure or density of
 
 **Notation:**
 
-#. :math:`g` is the acceleration due to gravity.
-#. :math:`k_\text{B}` (:code:`k_B`) is the Boltzmann constant.
+#. :quantity_notation:`acceleration_due_to_gravity`.
+#. :quantity_notation:`boltzmann_constant`.
 
 **Conditions:**
 
@@ -16,8 +16,7 @@ The *barometric formula* determines the dependence of the pressure or density of
 """
 
 from sympy import (Eq, solve, exp)
-from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output,
-    clone_symbol)
+from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output, quantities)
 
 final_pressure = Symbol("final_pressure", units.pressure)
 """
@@ -38,9 +37,9 @@ Latex:
     :math:`p_0`
 """
 
-molecular_mass = clone_symbol(symbols.basic.mass)
+molecular_mass = symbols.mass
 """
-:attr:`~symplyphysics.symbols.basic.mass` of a single gas molecule.
+:symbols:`mass` of a single gas molecule.
 """
 
 height_change = Symbol("height_change", units.length)
@@ -54,15 +53,15 @@ Latex:
     :math:`\Delta h`
 """
 
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas.
+:symbols:`temperature` of the gas.
 """
 
 law = Eq(
     final_pressure,
-    initial_pressure * exp(-units.acceleration_due_to_gravity * molecular_mass * height_change /
-    (units.boltzmann_constant * temperature)))
+    initial_pressure * exp(-quantities.acceleration_due_to_gravity * molecular_mass * height_change /
+    (quantities.boltzmann_constant * temperature)))
 r"""
 :code:`p = p0 * exp(-1 * g * m * dh / (k_B * T))`
 

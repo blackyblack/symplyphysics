@@ -32,14 +32,15 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_symbol,
+    clone_as_symbol,
 )
 
-temperature = clone_symbol(symbols.thermodynamics.temperature,
+temperature = clone_as_symbol(symbols.temperature,
     display_symbol="T_n(x, t)",
     display_latex="T_n")
 """
 Solution to the heat equation corresponding to the :math:`n`:sup:`th` mode.
+See :symbols:`temperature`.
 """
 
 scaling_coefficient = Symbol("scaling_coefficient", units.temperature)

@@ -1,6 +1,6 @@
 from sympy import Eq, solve
 from symplyphysics import (
-    clone_symbol,
+    clone_as_symbol,
     symbols,
     units,
     Quantity,
@@ -23,9 +23,9 @@ from symplyphysics import (
 ## h1 is expended height
 ## n is coefficient of efficiency
 
-useful_force = clone_symbol(symbols.dynamics.force)
+useful_force = clone_as_symbol(symbols.force, display_symbol="F_1", display_latex="F_1")
 useful_height = Symbol("useful_height", units.length)
-expended_force = clone_symbol(symbols.dynamics.force)
+expended_force = clone_as_symbol(symbols.force, display_symbol="F_2", display_latex="F_2")
 expended_height = Symbol("expended_height", units.length)
 efficiency = Symbol("efficiency", dimensionless)
 

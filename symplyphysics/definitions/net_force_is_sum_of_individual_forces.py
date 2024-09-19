@@ -11,20 +11,20 @@ The net force is the arithmetic sum of forces.
 
 from typing import Sequence
 from sympy import (Eq, Idx, solve)
-from symplyphysics import (clone_symbol, symbols, units, Quantity, validate_input, validate_output,
-    SymbolIndexedNew, global_index, SumIndexed, Vector)
+from symplyphysics import (symbols, units, Quantity, validate_input, validate_output,
+    global_index, SumIndexed, Vector)
 from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.core.symbols.symbols import clone_as_indexed
 from symplyphysics.definitions.vector import superposition_of_forces_is_sum as vector_forces_sum
 
-net_force = clone_symbol(symbols.dynamics.force)
+net_force = symbols.force
 """
-Net :attr:`~symplyphysics.symbols.dynamics.force`.
+Net :symbols:`force`.
 """
 
-# TODO: clone from symbols.dynamics.force
-force = SymbolIndexedNew("F[i]", units.force, display_latex="F_i")
+force = clone_as_indexed(symbols.force, display_symbol="F[i]", display_latex="F_i")
 """
-Individual :attr:`~symplyphysics.symbols.dynamics.force`.
+Individual :symbols:`force`.
 """
 
 definition = Eq(net_force, SumIndexed(force[global_index], global_index))

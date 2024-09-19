@@ -8,7 +8,6 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_symbol,
 )
 
 # Description
@@ -28,7 +27,7 @@ from symplyphysics import (
 time = Symbol("time", units.time)
 area_swept = Function("area_swept", units.area)
 planet_angular_momentum = Symbol("planet_angular_momentum", units.length * units.momentum)
-planet_mass = clone_symbol(symbols.basic.mass)
+planet_mass = symbols.mass
 
 law = Eq(Derivative(area_swept(time), time), planet_angular_momentum / (2 * planet_mass))
 

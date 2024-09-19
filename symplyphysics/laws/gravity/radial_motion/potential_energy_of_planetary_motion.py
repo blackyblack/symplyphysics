@@ -16,7 +16,6 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_symbol,
 )
 
 total_potential_energy = Symbol("total_potential_energy", units.energy)
@@ -49,9 +48,9 @@ Symbol:
     :code:`L`
 """
 
-planetary_mass = clone_symbol(symbols.basic.mass)
+planetary_mass = symbols.mass
 """
-The :attr:`~symplyphysics.symbols.basic.mass` of the planet.
+The :symbols:`mass` of the planet.
 """
 
 distance = Symbol("distance", units.length)

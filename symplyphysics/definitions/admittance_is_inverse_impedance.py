@@ -4,19 +4,21 @@ Admittance is inverse impedance
 
 *Admittance, or complex conductance*, is a physical quantity measuring the
 ability of a circuit or device to conduct electrical current.
+
+Also see :doc:`Impedance law <definitions.impedance_is_resistance_and_reactance>`
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, SymbolNew, validate_input, validate_output)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols)
 
-admittance = SymbolNew("Y", units.conductance)
+admittance = symbols.admittance
 """
-Admittance of the object.
+:symbols:`admittance` of the object.
 """
 
-impedance = SymbolNew("Z", units.impedance)
+impedance = symbols.electrical_impedance
 """
-:doc:`Impedance <definitions.impedance_is_resistance_and_reactance>` of the object.
+:symbols:`electrical_impedance` of the object.
 """
 
 definition = Eq(admittance, 1 / impedance)

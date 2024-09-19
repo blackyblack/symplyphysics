@@ -120,7 +120,7 @@ class SymbolLatexPrinter(LatexPrinter):
             not self._needs_function_brackets(expr.args[0])
         args_str = self._print(expr.args[0])
         name = f"{args_str}" if can_fold_brackets else f"\\left({args_str} \\right)"
-        tex = r"exp{%s}" % name
+        tex = r"\exp{%s}" % name
         return self._do_exponent(tex, exp)
 
     # pylint: disable-next=invalid-name
@@ -128,7 +128,8 @@ class SymbolLatexPrinter(LatexPrinter):
         # only one index of sum is supported
         # expr.args[0] contains indexed symbol with index applied
         # expr.args[0].args[0] contains just indexed symbol
-        return r"\sum_i {%s}" % self._print(expr.args[0].args[0])
+        symbol, index = expr.args[0].args
+        return rf"\sum_{self._print(index)} {self._print(symbol)}"
 
 
 def latex_str(expr: Any, **settings: Any) -> str:

@@ -7,49 +7,33 @@ and vacuum permittivity.
 
 **Notation:**
 
-#. :math:`\varepsilon_0` (:code:`epsilon_0`) is **vacuum permittivity**, also called **permittivity
-   of free space** or the **electric constant**.
+#. :quantity_notation:`vacuum_permittivity`.
 """
 
 from sympy import Eq
 from symplyphysics import (
-    Symbol,
-    units,
-    dimensionless,
     Quantity,
     validate_input,
     validate_output,
+    symbols,
+    quantities,
 )
 
-absolute_permittivity = Symbol("absolute_permittivity", units.capacitance / units.length)
-r"""
-Absolute permittivity.
-
-Symbol:
-    :code:`epsilon`
-
-Latex:
-    :math:`\varepsilon`
+absolute_permittivity = symbols.absolute_permittivity
+"""
+:symbols:`absolute_permittivity`.
 """
 
-relative_permittivity = Symbol("relative_permittivity", dimensionless)
-r"""
-Permittivity relative to that of vacuum.
-
-Symbol:
-    :code:`epsilon_r`
-
-Latex:
-    :math:`\varepsilon_r`
+relative_permittivity = symbols.relative_permittivity
+"""
+:symbols:`relative_permittivity`.
 """
 
-law = Eq(absolute_permittivity, units.vacuum_permittivity * relative_permittivity)
-r"""
-:code:`epsilon = epsilon_0 * epsilon_r`
+law = Eq(absolute_permittivity, quantities.vacuum_permittivity * relative_permittivity)
+"""
+:laws:symbols::
 
-Latex:
-    .. math::
-        \varepsilon = \varepsilon_0 \varepsilon_r
+:laws:latex::
 """
 
 

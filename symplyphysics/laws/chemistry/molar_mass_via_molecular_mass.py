@@ -4,11 +4,15 @@ Molar mass via molecular mass
 
 The Avogadro constant is also the constant of proportionality between molar mass and
 molecular mass.
+
+**Notation:**
+
+#. :quantity_notation:`avogadro_constant`
 """
 
 from sympy import Eq, solve, Symbol as SymSymbol, Idx
 from symplyphysics import (
-    clone_symbol,
+    clone_as_symbol,
     units,
     Quantity,
     Symbol,
@@ -16,6 +20,7 @@ from symplyphysics import (
     validate_output,
     symbols,
     global_index,
+    quantities,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.chemistry import (
@@ -35,12 +40,12 @@ Symbol:
     :code:`M`
 """
 
-molecular_mass = clone_symbol(symbols.basic.mass, display_symbol="m_0", display_latex="m_0")
+molecular_mass = clone_as_symbol(symbols.mass, display_symbol="m_0", display_latex="m_0")
 """
-:attr:`~symplyphysics.symbols.basic.mass` of a single molecule.
+:symbols:`mass` of a single molecule.
 """
 
-law = Eq(molar_mass, molecular_mass * units.avogadro)
+law = Eq(molar_mass, molecular_mass * quantities.avogadro_constant)
 r"""
 :code:`M = m_0 * N_A`
 

@@ -7,7 +7,7 @@ constant volume in the case of an ideal gas.
 
 **Notation:**
 
-#. :math:`R` is the molar gas constant.
+#. :quantity_notation:`molar_gas_constant`.
 
 **Conditions:**
 
@@ -21,6 +21,7 @@ from symplyphysics import (
     Symbol,
     validate_input,
     validate_output,
+    quantities,
 )
 
 isobaric_heat_capacity = Symbol("isobaric_heat_capacity", units.energy / units.temperature)
@@ -55,7 +56,7 @@ Symbol:
 
 law = Eq(
     isobaric_heat_capacity - isochoric_heat_capacity,
-    amount_of_substance * units.molar_gas_constant,
+    amount_of_substance * quantities.molar_gas_constant,
 )
 r"""
 :code:`C_p - C_V = n * R`

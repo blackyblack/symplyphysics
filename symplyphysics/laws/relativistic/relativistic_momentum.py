@@ -21,7 +21,7 @@ from symplyphysics import (
 
 momentum = Symbol("momentum", units.momentum)
 
-# This is equivalent of symbols.basic.mass
+# This is equivalent of symbols.mass
 rest_mass = Symbol("rest_mass", units.mass)
 velocity = Symbol("velocity", units.velocity)
 

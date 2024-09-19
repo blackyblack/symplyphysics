@@ -7,57 +7,47 @@ to the value of the charge and the square inverse of the distance to it.
 
 **Notation:**
 
-#. :math:`\varepsilon_0` (:code:`epsilon_0`) is vacuum permittivity.
+#. :quantity_notation:`vacuum_permittivity`.
 """
 
 from sympy import Eq, solve, pi
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
+    quantities,
+    clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity import electrostatic_force_via_charges_and_distance as coulombs_law
 from symplyphysics.laws.electricity import electric_field_is_force_over_test_charge as electric_field_def
 
-electric_field_strength = Symbol("electric_field_strength", units.force / units.charge)
+electric_field_strength = symbols.electric_field_strength
 r"""
-Strength of the electric field due to point charge :math:`q`.
-
-Symbol:
-    :code:`E`
+:symbols:`electric_field_strength` due to point charge :math:`q`.
 """
 
-charge = Symbol("charge", units.charge)
+charge = symbols.charge
 """
-Value of the point charge.
-
-Symbol:
-    :code:`q`
+Value of the point :symbols:`charge`.
 """
 
-distance = Symbol("distance", units.length)
+distance = symbols.distance
 """
-Distance to the charge.
-
-Symbol:
-    :code:`r`
+:symbols:`distance` to the charge.
 """
 
-law = Eq(electric_field_strength, 1 / (4 * pi * units.vacuum_permittivity) * charge / distance**2)
-r"""
-:code:`E = 1 / (4 * pi * epsilon_0) * q / r^2`
+law = Eq(electric_field_strength, 1 / (4 * pi * quantities.vacuum_permittivity) * charge / distance**2)
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        E = \frac{1}{4 \pi \varepsilon_0} \frac{q}{r^2}
+:laws:latex::
 """
 
 # Derive this law from Coulomb's law and the definition of electric field
 
-_test_charge = Symbol("_test_charge", units.charge)
+_test_charge = clone_as_symbol(symbols.charge, display_symbol="test_charge")
 
 _coulombs_law_sub = coulombs_law.law.subs({
     coulombs_law.first_charge: charge,

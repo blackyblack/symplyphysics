@@ -1,7 +1,7 @@
 from typing import Sequence
 from sympy import (Eq, Idx, solve)
 from symplyphysics import (units, Quantity, print_expression, validate_input, validate_output,
-    symbols, clone_symbol, SymbolIndexed, SumIndexed, global_index)
+    symbols, SymbolIndexed, SumIndexed, global_index)
 
 # Description
 ## The mass of a mixture of liquids (gases) is equal to the sum of the masses of the components of the mixture
@@ -15,8 +15,8 @@ from symplyphysics import (units, Quantity, print_expression, validate_input, va
 ##   and they are always inside;
 ## - Mass is not transformed to energy, for example due to annihilation.
 
-mass_of_mixture = clone_symbol(symbols.basic.mass)
-# TODO: clone from symbols.basic.mass
+mass_of_mixture = symbols.mass
+# TODO: clone from symbols.mass
 mass_of_component = SymbolIndexed("mass_of_component", units.mass)
 law = Eq(mass_of_mixture, SumIndexed(mass_of_component[global_index], global_index))
 

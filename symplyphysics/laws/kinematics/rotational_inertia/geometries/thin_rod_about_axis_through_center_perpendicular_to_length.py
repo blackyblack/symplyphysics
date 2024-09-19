@@ -39,9 +39,9 @@ Symbol:
     :code:`l`
 """
 
-mass = symbols.basic.mass
+mass = symbols.mass
 """
-The :attr:`~symplyphysics.symbols.basic.mass` of the rod.
+The :symbols:`mass` of the rod.
 """
 
 law = Eq(rotational_inertia, mass * length**2 / 12)

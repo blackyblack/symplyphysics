@@ -8,45 +8,34 @@ instantaneous power in the circuit.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (Quantity, validate_input,
+    validate_output, symbols)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity import (
     current_is_voltage_over_resistance as ohm_law,
     power_via_voltage_and_resistance as power_law,
 )
 
-power = Symbol("power", units.power)
+power = symbols.power
 """
-Electric power.
-
-Symbol:
-    :code:`P`
+Electric :symbols:`power`.
 """
 
-current = Symbol("current", units.current)
+current = symbols.current
 """
-Electric current.
-
-Symbol:
-    :code:`I`
+Electric :symbols:`current`.
 """
 
-resistance = Symbol("resistance", units.impedance)
-r"""
-Electrical resistance.
-
-Symbol:
-    :code:`R`
+resistance = symbols.resistance
+"""
+Electrical :symbols:`resistance`.
 """
 
 law = Eq(power, current**2 * resistance)
-r"""
-:code:`P = I^2 * R`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        P = I^2 R
+:laws:latex::
 """
 
 # Derive law using Ohm's law and power law

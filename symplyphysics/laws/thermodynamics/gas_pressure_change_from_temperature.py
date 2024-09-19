@@ -13,7 +13,6 @@ The change in pressure of ideal gas depends on temperature, standard pressure an
 from sympy import Eq, solve
 from symplyphysics import (
     symbols,
-    clone_symbol,
     units,
     Quantity,
     Symbol,
@@ -58,9 +57,9 @@ Latex:
     :math:`\beta_V`
 """
 
-final_temperature = clone_symbol(symbols.thermodynamics.temperature)
+final_temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas.
+:symbols:`temperature` of the gas.
 """
 
 law = Eq(pressure_change, initial_pressure * (thermal_coefficient * final_temperature - 1))

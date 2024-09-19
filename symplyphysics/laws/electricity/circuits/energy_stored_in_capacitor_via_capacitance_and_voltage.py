@@ -5,41 +5,34 @@ Energy stored in capacitor via capacitance and voltage
 Capacitors store energy in the electric field when they are charged.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from sympy import Eq, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+)
 
-energy = Symbol("energy", units.energy)
+energy = symbols.work
 """
-Energy stored in the electric field.
-
-Symbol:
-    :code:`W`
-"""
-
-capacitance = Symbol("capacitance", units.capacitance)
-"""
-Capacitance of the capacitor.
-
-Symbol:
-    :code:`C`
+:symbols:`energy` stored in the electric field.
 """
 
-voltage = Symbol("voltage", units.voltage)
+capacitance = symbols.capacitance
 """
-Voltage across the capacitor.
+:symbols:`capacitance` of the capacitor.
+"""
 
-Symbol:
-    :code:`V`
+voltage = symbols.voltage
+"""
+:symbols:`voltage` across the capacitor.
 """
 
 law = Eq(energy, capacitance * voltage**2 / 2)
-r"""
-:code:`W = 1/2 * C * V^2`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        W = \frac{1}{2} C V^2
+:laws:latex::
 """
 
 

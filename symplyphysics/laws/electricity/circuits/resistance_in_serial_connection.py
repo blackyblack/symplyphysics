@@ -10,40 +10,36 @@ of the resistances of individual components.
 #. Applies to direct current circuits.
 """
 
-from sympy import (Eq, Idx, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output, SymbolIndexed, SumIndexed, global_index)
+from sympy import Eq, Idx, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    SumIndexed,
+    global_index,
+    symbols,
+)
+from symplyphysics.core.symbols.symbols import clone_as_indexed
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity import (
     current_is_voltage_over_resistance as _ohm_law,
 )
 
-total_resistance = Symbol("total_resistance", units.impedance)
+total_resistance = symbols.resistance
 """
 Total resistance of the circuit.
-
-Symbol:
-    :code:`R`
 """
 
-resistance = SymbolIndexed("resistance", units.impedance)
+resistance = clone_as_indexed(symbols.resistance, display_symbol="R[i]", display_latex="R_i")
 r"""
 Resistance of the :math:`i`-th component.
-
-Symbol:
-    :code:`R_i`
-
-Latex:
-    :math:`R_i`
 """
 
 law = Eq(total_resistance, SumIndexed(resistance[global_index], global_index))
 r"""
-:code:`R = Sum(R_i, i)`
+:laws:symbol::
 
-Latex:
-    .. math::
-        R = \sum_i R_i
+:laws:latex::
 """
 
 # Derive for two resistors.

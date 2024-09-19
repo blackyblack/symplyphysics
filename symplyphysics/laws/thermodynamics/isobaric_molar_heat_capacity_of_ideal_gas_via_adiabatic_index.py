@@ -7,7 +7,7 @@ constant and the adiabatic index of the gas.
 
 **Notation:**
 
-#. :math:`R` is the molar gas constant.
+#. :quantity_notation:`molar_gas_constant`.
 
 **Conditions:**
 
@@ -22,6 +22,7 @@ from symplyphysics import (
     Symbol,
     validate_input,
     validate_output,
+    quantities,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import heat_capacity_ratio
@@ -54,7 +55,7 @@ Latex:
 """
 
 law = Eq(isobaric_molar_heat_capacity,
-    units.molar_gas_constant * adiabatic_index / (adiabatic_index - 1))
+    quantities.molar_gas_constant * adiabatic_index / (adiabatic_index - 1))
 r"""
 :code:`C_p = R * gamma / (gamma - 1)`
 

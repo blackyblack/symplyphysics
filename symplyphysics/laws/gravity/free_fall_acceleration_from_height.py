@@ -1,7 +1,7 @@
 from sympy import (Eq, solve)
 from sympy.physics.units import gravitational_constant
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, symbols, clone_symbol)
+    validate_output, symbols)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.gravity import gravity_force_from_mass_and_distance as gravity_law
 from symplyphysics.laws.dynamics import acceleration_is_force_over_mass as newton2_law
@@ -16,10 +16,10 @@ from symplyphysics.laws.dynamics import acceleration_is_force_over_mass as newto
 ## R is radius of the planet
 ## h is height above the planet surface
 
-free_fall_acceleration = clone_symbol(symbols.kinematics.acceleration)
+free_fall_acceleration = symbols.acceleration
 planet_radius = Symbol("planet_radius", units.length)
 height_above_surface = Symbol("height_above_surface", units.length)
-planet_mass = clone_symbol(symbols.basic.mass)
+planet_mass = symbols.mass
 
 law = Eq(free_fall_acceleration,
     gravitational_constant * planet_mass / (planet_radius + height_above_surface)**2)

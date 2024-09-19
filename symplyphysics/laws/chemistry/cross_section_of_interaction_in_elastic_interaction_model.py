@@ -16,7 +16,7 @@ cross_sectional_area_of_interaction = Symbol("cross_sectional_area_of_interactio
 
 diameter_of_atom = Symbol("diameter_of_atom", units.length)
 sutherland_constant = Symbol("sutherland_constant", units.temperature)
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 
 law = Eq(cross_sectional_area_of_interaction,
     pi * diameter_of_atom**2 * (1 + sutherland_constant / temperature))

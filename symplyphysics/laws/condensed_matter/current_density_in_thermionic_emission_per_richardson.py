@@ -8,13 +8,14 @@ the material. This formula for emission current density was proposed by Owen Wil
 
 **Notation:**
 
-#. :math:`k_\text{B}` (:code:`k_B`) is the Boltzmann constant.
+#. :quantity_notation:`boltzmann_constant`.
 """
 
 from sympy import (Eq, solve, exp)
 from symplyphysics import (
     symbols,
     units,
+    quantities,
     Quantity,
     Symbol,
     validate_input,
@@ -37,9 +38,9 @@ Symbol:
     :code:`W`
 """
 
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the metal.
+:symbols:`temperature` of the metal.
 """
 
 richardson_constant = Quantity(120.17 * (units.ampere / units.kelvin**2 / units.centimeter**2), display_symbol="A")
@@ -49,7 +50,7 @@ Constant of proportionality proposed by Richardson.
 
 law = Eq(
     current_density,
-    richardson_constant * temperature**2 * exp(-1 * work_function / (units.boltzmann_constant * temperature)))
+    richardson_constant * temperature**2 * exp(-1 * work_function / (quantities.boltzmann_constant * temperature)))
 r"""
 :code:`j = A * T^2 * exp(-1 * W / (k_B * T))`
 

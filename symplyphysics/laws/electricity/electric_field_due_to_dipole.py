@@ -8,7 +8,7 @@ cube of the distance to the dipole and the value of the electric dipole moment.
 
 **Notation:**
 
-#. :math:`\varepsilon_0` (:code:`epsilon_0`) is vacuum permittivity.
+#. :quantity_notation:`vacuum_permittivity`.
 
 **Conditions:**
 
@@ -17,50 +17,39 @@ cube of the distance to the dipole and the value of the electric dipole moment.
    from the dipole itself.
 """
 
-from sympy import Eq, solve, series, pi
+from sympy import Eq, solve, series, pi, Symbol as SymSymbol
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
-    dimensionless,
+    symbols,
+    quantities,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity import electric_field_due_to_point_charge as point_field
 from symplyphysics.laws.electricity import electric_dipole_moment_is_charge_times_distance as dipole_law
 
-electric_field_strength = Symbol("electric_field_strength", units.force / units.charge)
+electric_field_strength = symbols.electric_field_strength
 """
-Electric field strength due to dipole.
-
-Symbol:
-    :code:`E`
+:symbols:`electric_field_strength` due to dipole.
 """
 
-electric_dipole_moment = Symbol("electric_dipole_moment", units.charge * units.length)
+electric_dipole_moment = symbols.electric_dipole_moment
 """
-:doc:`laws.electricity.electric_dipole_moment_is_charge_times_distance`.
-
-Symbol:
-    :code:`p`
+See :doc:`laws.electricity.electric_dipole_moment_is_charge_times_distance` and
+:symbols:`electric_dipole_moment`.
 """
 
-distance = Symbol("distance", units.length)
+distance = symbols.distance
 """
-Distance to dipole.
-
-Symbol:
-    :code:`r`
+:symbols:`distance` to dipole.
 """
 
-law = Eq(electric_field_strength, 1 / (2 * pi * units.vacuum_permittivity) * electric_dipole_moment / distance**3)
-r"""
-:code:`E = 1 / (2 * pi * epsilon_0) * p / r^3`
+law = Eq(electric_field_strength, 1 / (2 * pi * quantities.vacuum_permittivity) * electric_dipole_moment / distance**3)
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        E = \frac{1}{2 \pi \varepsilon_0} \frac{p}{r^3}
+:laws:latex::
 """
 
 # Derive the law from the expression for the electric field of point charges.
@@ -68,9 +57,9 @@ Latex:
 # Assume the z-axis running through both charges, and let its origin be at their middle point,
 # the negative charge located below and the positive one above the origin.
 
-_charge = Symbol("_charge", units.charge)
-_distance_between_charges = Symbol("_distance_between_charges", units.length)
-_distance_to_origin = Symbol("_distance_to_origin", units.length)
+_charge = SymSymbol("_charge")
+_distance_between_charges = SymSymbol("_distance_between_charges")
+_distance_to_origin = SymSymbol("_distance_to_origin")
 
 _positive_charge_field = point_field.law.rhs.subs({
     point_field.charge: _charge,
@@ -86,7 +75,7 @@ _net_field = _positive_charge_field + _negative_charge_field
 
 # The condition that _distance_to_origin/_distance_between_charges >> 1 can be analyzed as such:
 # Let _distance_between_charges = _factor * _distance_to_origin, where _factor -> 0.
-_factor = Symbol("_factor", dimensionless)
+_factor = SymSymbol("_factor")
 
 # Use the above definition of _factor to substitute _distance_to_origin in the _net_field formula
 _net_field_sub = _net_field.subs(_distance_between_charges, _factor * _distance_to_origin)

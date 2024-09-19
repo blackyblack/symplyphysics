@@ -7,7 +7,7 @@ of certain chemical elements is constant for temperatures far from the absolute 
 
 **Notation:**
 
-#. :math:`R` is the molar gas constant.
+#. :quantity_notation:`molar_gas_constant`.
 
 **Conditions:**
 
@@ -20,6 +20,7 @@ from symplyphysics import (
     Quantity,
     Symbol,
     validate_output,
+    quantities,
 )
 
 isochoric_molar_heat_capacity = Symbol(
@@ -34,7 +35,7 @@ Latex:
     :math:`C_V`
 """
 
-law = Eq(isochoric_molar_heat_capacity, 3 * units.molar_gas_constant)
+law = Eq(isochoric_molar_heat_capacity, 3 * quantities.molar_gas_constant)
 r"""
 :code:`C_V = 3 * R`
 

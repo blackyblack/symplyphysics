@@ -1,4 +1,4 @@
-"""
+r"""
 Electric flux through closed surface via total charge
 =====================================================
 
@@ -14,22 +14,21 @@ vacuum permittivity. The closed surface is also referred to as **Gaussian surfac
 
 from sympy import Eq
 from symplyphysics import (
-    units,
     Quantity,
-    SymbolNew,
     validate_input,
     validate_output,
     quantities,
+    symbols,
 )
 
-total_electric_flux = SymbolNew("Phi_E", units.voltage * units.length, display_latex="\\Phi_E")
+total_electric_flux = symbols.electric_flux
 """
-Electric flux through surface :math:`S`.
+:symbols:`electric_flux` through surface :math:`S`.
 """
 
-total_charge = SymbolNew("q", units.charge)
+total_charge = symbols.charge
 """
-Total charge inside volume :math:`V`.
+Total :symbols:`charge` inside volume :math:`V`.
 """
 
 law = Eq(total_electric_flux, total_charge / quantities.vacuum_permittivity)

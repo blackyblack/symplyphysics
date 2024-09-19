@@ -8,32 +8,32 @@ This law is also known as **Kirchhoff's second law**, or **Kirchhoff's loop rule
 """
 
 from typing import Sequence
-from sympy import (Eq, Idx, solve)
-from symplyphysics import (units, Quantity, validate_input, validate_output,
-    SymbolIndexed, SumIndexed, global_index)
+from sympy import Eq, Idx, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    SumIndexed,
+    global_index,
+    symbols,
+)
+from symplyphysics.core.symbols.symbols import clone_as_indexed
 
-voltage = SymbolIndexed("voltage", units.voltage)
+voltage = clone_as_indexed(symbols.voltage, display_symbol="V[i]", display_latex="V_i")
 r"""
 :math:`i`-th voltage.
-
-Symbol:
-    :code:`V_i`
-
-Latex:
-    :math:`V_i`
 """
 
 law = Eq(SumIndexed(voltage[global_index], global_index), 0)
-r"""
-:code:`Sum(V_i, i) = 0`
+"""
+:laws:symbol::
 
-Latex:
-    :math:`\sum_i V_i = 0`
+:laws:latex::
 """
 
 
 @validate_input(voltages_=voltage)
-@validate_output(units.voltage)
+@validate_output(voltage)
 def calculate_voltage(voltages_: Sequence[Quantity]) -> Quantity:
     local_index = Idx("index_local", (1, len(voltages_) + 1))
     voltages_law = law.subs(global_index, local_index)

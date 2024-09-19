@@ -33,7 +33,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_symbol,
+    clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.conservation import (
@@ -64,16 +64,16 @@ Latex:
     :math:`v_\text{rel}`
 """
 
-acceleration = symbols.kinematics.acceleration
+acceleration = symbols.acceleration
 """
-The :attr:`~symplyphysics.symbols.kinematics.acceleration` of the rocket.
+The :symbols:`acceleration` of the rocket.
 """
 
-mass = clone_symbol(symbols.basic.mass, display_symbol="M")
+mass = clone_as_symbol(symbols.mass, display_symbol="M", display_latex="M")
 """
 .. _rocket mass definition:
 
-The :attr:`~symplyphysics.symbols.basic.mass` of the rocket
+The :symbols:`mass` of the rocket
 """
 
 law = Eq(fuel_consumption_rate * relative_speed, mass * acceleration)

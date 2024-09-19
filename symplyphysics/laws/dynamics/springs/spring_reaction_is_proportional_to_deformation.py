@@ -1,6 +1,5 @@
 from sympy import Eq, sympify
 from symplyphysics import (
-    clone_symbol,
     symbols,
     units,
     Symbol,
@@ -36,7 +35,7 @@ from symplyphysics.laws.dynamics.springs.vector import (
 
 # Also see its [vector counterpart](../vector/spring_reaction_from_deformation.py)
 
-spring_reaction = clone_symbol(symbols.dynamics.force)
+spring_reaction = symbols.force
 stiffness = Symbol("stiffness", units.force / units.length)
 deformation = Symbol("deformation", units.length)
 

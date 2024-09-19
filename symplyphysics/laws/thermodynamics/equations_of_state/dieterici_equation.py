@@ -7,7 +7,7 @@ along with the more well-known van der Waals equation of state.
 
 **Notation:**
 
-#. :math:`R` is the molar gas constant.
+#. :quantity_notation:`molar_gas_constant`.
 
 **Notes:**
 
@@ -30,6 +30,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
+    quantities,
 )
 
 pressure = Symbol("pressure", units.pressure)
@@ -51,9 +52,9 @@ Latex:
     :math:`V_m`
 """
 
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
+:symbols:`temperature` of the system.
 """
 
 attractive_forces_parameter = Symbol(
@@ -82,8 +83,8 @@ Symbol:
 
 law = Eq(
     pressure * (molar_volume - excluded_volume_parameter),
-    units.molar_gas_constant * temperature * exp(-1 * attractive_forces_parameter /
-    (units.molar_gas_constant * temperature * molar_volume)))
+    quantities.molar_gas_constant * temperature * exp(-1 * attractive_forces_parameter /
+    (quantities.molar_gas_constant * temperature * molar_volume)))
 r"""
 :code:`p * (V_m - b) = R * T * exp(-1 * a / (R * T * V_m))`
 

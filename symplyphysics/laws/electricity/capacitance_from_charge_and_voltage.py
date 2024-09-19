@@ -8,21 +8,21 @@ the charge accumulated in the object and inversely proportional to the voltage a
 """
 
 from sympy import Eq, solve
-from symplyphysics import units, Quantity, SymbolNew, validate_input, validate_output
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 
-capacitance = SymbolNew("C", units.capacitance)
+capacitance = symbols.capacitance
 """
-Capacitance of the object.
-"""
-
-charge = SymbolNew("q", units.charge)
-"""
-Charge accumulated in the object.
+:symbols:`capacitance` of the object.
 """
 
-voltage = SymbolNew("V", units.voltage)
+charge = symbols.charge
 """
-Voltage across the object.
+:symbols:`charge` accumulated in the object.
+"""
+
+voltage = symbols.voltage
+"""
+:symbols:`voltage` across the object.
 """
 
 definition = Eq(capacitance, charge / voltage)

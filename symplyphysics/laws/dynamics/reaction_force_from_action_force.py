@@ -8,16 +8,16 @@ directions.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (clone_symbol, symbols, Quantity, validate_input, validate_output)
+from symplyphysics import (clone_as_symbol, symbols, Quantity, validate_input, validate_output)
 
-action_force = clone_symbol(symbols.dynamics.force, display_symbol="F_12", display_latex="F_{12}")
+action_force = clone_as_symbol(symbols.force, display_symbol="F_12", display_latex="F_{12}")
 """
-The projection of the :attr:`~symplyphysics.symbols.dynamics.force` that the first body exerts on the second body.
+The projection of the :symbols:`force` that the first body exerts on the second body.
 """
 
-reaction_force = clone_symbol(symbols.dynamics.force, display_symbol="F_21", display_latex="F_{21}")
+reaction_force = clone_as_symbol(symbols.force, display_symbol="F_21", display_latex="F_{21}")
 """
-The projection of the :attr:`~symplyphysics.symbols.dynamics.force` that the second body exerts on the first body.
+The projection of the :symbols:`force` that the second body exerts on the first body.
 """
 
 law = Eq(reaction_force, -1 * action_force)

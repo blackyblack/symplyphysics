@@ -18,9 +18,9 @@ speed = SymbolNew("v", units.speed)
 Speed of the object.
 """
 
-mass = symbols.basic.mass
+mass = symbols.mass
 """
-:attr:`~symplyphysics.symbols.basic.mass` of the object.
+:symbols:`mass` of the object.
 """
 
 definition = Eq(momentum, mass * speed)

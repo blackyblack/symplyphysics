@@ -6,7 +6,7 @@ Centripetal acceleration via linear speed and radius
 """
 
 from sympy import (Eq, solve, sin, cos, Derivative, pi)
-from symplyphysics import (clone_symbol, symbols, units, Quantity, Symbol, Function, angle_type,
+from symplyphysics import (clone_as_symbol, symbols, units, Quantity, Symbol, Function, angle_type,
     CoordinateSystem, Vector, validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals, expr_equals_abs
 from symplyphysics.core.vectors.arithmetics import dot_vectors
@@ -16,11 +16,11 @@ from symplyphysics.definitions import acceleration_is_speed_derivative as accele
 from symplyphysics.laws.geometry import planar_projection_is_cosine as projector
 from symplyphysics.laws.kinematics import speed_via_angular_speed_and_radius as linear_velocity_law
 
-centripetal_acceleration = clone_symbol(symbols.kinematics.acceleration,
+centripetal_acceleration = clone_as_symbol(symbols.acceleration,
     display_symbol="a_n",
     display_latex="a_n")
 """
-Centripetal, or normal, :attr:`~symplyphysics.symbols.kinematics.acceleration`.
+Centripetal, or normal, :symbols:`acceleration`.
 """
 
 speed = Symbol("speed", units.velocity)

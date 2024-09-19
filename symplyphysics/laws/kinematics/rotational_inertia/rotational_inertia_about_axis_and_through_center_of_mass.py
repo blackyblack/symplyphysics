@@ -44,9 +44,9 @@ Latex:
     :math:`I_\text{com}`
 """
 
-mass = symbols.basic.mass
+mass = symbols.mass
 """
-The :attr:`~symplyphysics.symbols.basic.mass` of the body.
+The :symbols:`mass` of the body.
 """
 
 distance_between_axes = Symbol("distance_between_axes", units.length)

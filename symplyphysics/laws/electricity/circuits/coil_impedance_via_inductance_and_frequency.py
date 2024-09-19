@@ -6,44 +6,34 @@ The impedance of a coil depends on its inductance and the angular frequency of t
 current. It is a purely imaginary quantity since the resistance of a coil is zero.
 """
 
-from sympy import (I, Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output, angle_type)
+from sympy import I, Eq, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+)
 
-impedance = Symbol("impedance", units.impedance)
+impedance = symbols.electrical_impedance
 """
-Impedance of the coil.
-
-Symbol:
-    :code:`Z`
-"""
-
-angular_frequency = Symbol("angular_frequency", angle_type / units.time)
-r"""
-Angular frequency of the current.
-
-Symbol:
-    :code:`w`
-
-Latex:
-    :math:`\omega`
+:symbols:`electrical_impedance` of the coil.
 """
 
-inductance = Symbol("inductance", units.inductance)
+angular_frequency = symbols.angular_frequency
 """
-Coil inductance.
+:symbols:`angular_frequency` of the current.
+"""
 
-Symbol:
-    :code:`L`
+inductance = symbols.inductance
+"""
+Coil :symbols:`inductance`.
 """
 
 law = Eq(impedance, I * angular_frequency * inductance)
-r"""
-:code:`Z = i * w * L`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        Z = i \omega L
+:laws:latex::
 """
 
 

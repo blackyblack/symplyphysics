@@ -27,7 +27,7 @@ from symplyphysics import (
 ## F - vector sum of all non-gravitational forces acting on body B
 ## m - mass of body B
 
-mass = symbols.basic.mass
+mass = symbols.mass
 
 
 def acceleration_law(

@@ -7,7 +7,7 @@ charge density.
 
 **Notation:**
 
-#. :math:`\varepsilon_0` (:code:`epsilon_0`) is vacuum permittivity.
+#. :quantity_notation:`vacuum_permittivity`.
 
 **Conditions:**
 
@@ -21,14 +21,13 @@ charge density.
 
 from sympy import (Eq, solve, symbols as sympy_symbols)
 from symplyphysics import (
-    units,
     quantities,
     Quantity,
-    SymbolNew,
     Vector,
     validate_input,
     validate_output,
     scale_vector,
+    symbols,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity.vector import (
@@ -41,14 +40,14 @@ from symplyphysics.laws.quantities import (
     quantity_is_areal_density_times_area as _areal_qty_law,
 )
 
-electric_field_strength = SymbolNew("E", units.voltage / units.length)
+electric_field_strength = symbols.electric_field_strength
 """
-Value of the electric field.
+:symbols:`electric_field_strength`.
 """
 
-surface_charge_density = SymbolNew("sigma", units.charge / units.area, display_latex="\\sigma")
+surface_charge_density = symbols.surface_charge_density
 """
-Surface charge density of the plane.
+:symbols:`surface_charge_density`.
 """
 
 law = Eq(electric_field_strength, surface_charge_density / (2 * quantities.vacuum_permittivity))
@@ -87,10 +86,10 @@ _electric_flux_right = _flux_law.electric_flux_law(
 
 # The electric field is orthogonal to the normal vector of the cylinder's side at all points.
 # This, the flux there would be zero.
-_electric_flux_side = 0
+ELECTRIC_FLUX_SIDE = 0
 
 # The whole integration area is composed of the two cross-sections and the cylinder side.
-_total_electric_flux = _electric_flux_left + _electric_flux_right + _electric_flux_side
+_total_electric_flux = _electric_flux_left + _electric_flux_right + ELECTRIC_FLUX_SIDE
 
 # The total charge of the cylinder is contained in the part of the charged plane that is
 # contained within the cylinder.

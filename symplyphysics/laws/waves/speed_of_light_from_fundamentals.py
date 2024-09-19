@@ -7,16 +7,15 @@ of the vacuum.
 
 **Notation:**
 
-#. :math:`c` is the speed of light.
-#. :math:`\varepsilon_0` (:code:`epsilon_0`) is vacuum permittivity, or electric constant.
-#. :math:`\mu_0` (:code:`mu_0`) is vacuum permeability, or magnetic constant.
+#. :quantity_notation:`speed_of_light`.
+#. :quantity_notation:`vacuum_permittivity`.
+#. :quantity_notation:`vacuum_permeability`.
 """
 
 from sympy import (Eq, sqrt)
-from sympy.physics.units import speed_of_light, magnetic_constant, electric_constant
-from symplyphysics import units, convert_to
+from symplyphysics import units, convert_to, quantities
 
-law = Eq(speed_of_light, 1 / sqrt(electric_constant * magnetic_constant))
+law = Eq(quantities.speed_of_light, 1 / sqrt(quantities.vacuum_permittivity * quantities.vacuum_permeability))
 r"""
 :code:`c = 1 / sqrt(epsilon_0 * mu_0)`
 

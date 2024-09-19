@@ -18,12 +18,11 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_symbol,
 )
 
-planetary_mass = clone_symbol(symbols.basic.mass)
+planetary_mass = symbols.mass
 """
-The :attr:`~symplyphysics.symbols.basic.mass` of the planet.
+The :symbols:`mass` of the planet.
 """
 
 radial_speed = Symbol("radial_speed", units.velocity)

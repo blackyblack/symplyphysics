@@ -1,7 +1,6 @@
 from sympy import Eq, solve
 from sympy.physics.units import gravitational_constant
 from symplyphysics import (
-    clone_symbol,
     symbols,
     units,
     Quantity,
@@ -23,7 +22,7 @@ from symplyphysics import (
 
 large_half_axis_length = Symbol("large_half_axis_length", units.length)
 orbital_velocity = Symbol("orbital_velocity", units.velocity)
-planet_mass = clone_symbol(symbols.basic.mass)
+planet_mass = symbols.mass
 
 law = Eq(large_half_axis_length, gravitational_constant * planet_mass / orbital_velocity**2)
 

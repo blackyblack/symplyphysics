@@ -8,9 +8,9 @@ matter or energy between the body and its environment.
 
 **Notation:**
 
-#. :math:`h` is the Planck constant.
-#. :math:`c` is the speed of light.
-#. :math:`k_\text{B}` (:code:`k_B`) is the Boltzmann constant.
+#. :quantity_notation:`planck`.
+#. :quantity_notation:`speed_of_light`.
+#. :quantity_notation:`boltzmann_constant`.
 
 **Conditions:**
 
@@ -18,7 +18,6 @@ matter or energy between the body and its environment.
 """
 
 from sympy import Eq, exp, pi
-from sympy.physics.units import planck, speed_of_light, boltzmann_constant
 from symplyphysics import (
     units,
     Quantity,
@@ -26,8 +25,8 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_symbol,
 )
+from symplyphysics.quantities import planck, speed_of_light, boltzmann_constant
 
 spectral_energy_density = Symbol("spectral_energy_density",
     units.energy / (units.volume * units.frequency))
@@ -52,9 +51,9 @@ Latex:
     :math:`\nu`
 """
 
-equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature)
+equilibrium_temperature = symbols.temperature
 """
-Equilibrium :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the ensemble.
+Equilibrium :symbols:`temperature` of the ensemble.
 """
 
 law = Eq(spectral_energy_density, (8 * pi * planck * radiation_frequency**3 / speed_of_light**3) /

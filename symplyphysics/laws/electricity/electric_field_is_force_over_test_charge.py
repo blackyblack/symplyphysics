@@ -10,46 +10,33 @@ the value of the test charge.
 
 from sympy import Eq, solve
 from symplyphysics import (
-    clone_symbol,
+    clone_as_symbol,
     symbols,
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
 )
 
-electric_field_strength = Symbol("electric_field_strength", units.force / units.charge)
+electric_field_strength = symbols.electric_field_strength
 """
-Strength of the electric field.
-
-Symbol:
-    :code:`E`
+:symbols:`electric_field_strength`.
 """
 
-electrostatic_force = clone_symbol(symbols.dynamics.force)
+electrostatic_force = symbols.force
 """
-Projection of the electrostatic :attr:`~symplyphysics.symbols.dynamics.force` applied to the test charge.
+Projection of the electrostatic :symbols:`force` applied to the test charge.
 """
 
-test_charge = Symbol("test_charge", units.charge)
+test_charge = clone_as_symbol(symbols.charge, display_symbol="q_0", display_latex="q_0")
 """
-Value of the test charge.
-
-Symbol:
-    :code:`q0`
-
-Latex:
-    :math:`q_0`
+Value of the test :symbols:`charge`.
 """
 
 law = Eq(electric_field_strength, electrostatic_force / test_charge)
-r"""
-:code:`E = F / q0`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        E = \frac{F}{q_0}
+:laws:latex::
 """
 
 

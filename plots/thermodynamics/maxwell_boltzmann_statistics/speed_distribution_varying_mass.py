@@ -33,7 +33,7 @@ mass_plot = plot(
 distribution = speed_distribution.law.rhs.subs({
     speed_distribution.equilibrium_temperature:
     convert_to(quantities.standard_conditions_temperature, units.kelvin),
-    units.boltzmann_constant:
+    quantities.boltzmann_constant:
     convert_to(units.boltzmann_constant, units.joule / units.kelvin),
 })
 

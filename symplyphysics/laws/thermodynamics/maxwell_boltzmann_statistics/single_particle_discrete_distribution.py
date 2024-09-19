@@ -8,7 +8,7 @@ found in a given single-particle microstate.
 
 **Notation:**
 
-#. :math:`k_\text{B}` (:code:`k_B`) is the Boltzmann constant.
+#. :quantity_notation:`boltzmann_constant`.
 
 **Conditions:**
 
@@ -25,7 +25,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_symbol,
+    quantities,
 )
 
 occupancy_of_state = Symbol("occupancy_of_state", dimensionless)
@@ -59,9 +59,9 @@ Latex:
     :math:`E_i`
 """
 
-equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature)
+equilibrium_temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
+:symbols:`temperature` of the system.
 """
 
 single_particle_partition_function = Symbol("single_particle_partition_function", dimensionless)
@@ -73,7 +73,7 @@ Symbol:
 """
 
 law = Eq(occupancy_of_state, (particle_count / single_particle_partition_function) *
-    exp(-1 * energy_of_state / (units.boltzmann_constant * equilibrium_temperature)))
+    exp(-1 * energy_of_state / (quantities.boltzmann_constant * equilibrium_temperature)))
 r"""
 :code:`N_i = (N / Z) * exp(-1 * E_i / (k_B * T))`
 

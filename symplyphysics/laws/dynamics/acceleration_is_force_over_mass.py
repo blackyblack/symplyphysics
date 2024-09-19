@@ -11,19 +11,19 @@ from symplyphysics import (Vector, Quantity, validate_input, validate_output, sy
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.dynamics.vector import acceleration_from_force as acceleration_law_vector
 
-acceleration = symbols.kinematics.acceleration
+acceleration = symbols.acceleration
 """
-The :attr:`~symplyphysics.symbols.kinematics.acceleration` of the body.
-"""
-
-force = symbols.dynamics.force
-"""
-The net :attr:`~symplyphysics.symbols.dynamics.force` exerted on the body.
+The :symbols:`acceleration` of the body.
 """
 
-mass = symbols.basic.mass
+force = symbols.force
 """
-The :attr:`~symplyphysics.symbols.basic.mass` of the body.
+The net :symbols:`force` exerted on the body.
+"""
+
+mass = symbols.mass
+"""
+The :symbols:`mass` of the body.
 """
 
 law = Eq(acceleration, force / mass)

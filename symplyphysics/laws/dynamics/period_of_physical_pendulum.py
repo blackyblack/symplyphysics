@@ -25,7 +25,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_symbol,
+    clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import (
@@ -48,9 +48,9 @@ Symbol:
     :code:`T`
 """
 
-mass = clone_symbol(symbols.basic.mass, positive=True)
+mass = clone_as_symbol(symbols.mass, positive=True)
 """
-The :attr:`~symplyphysics.symbols.basic.mass` of the pendulum.
+The :symbols:`mass` of the pendulum.
 """
 
 rotational_inertia = Symbol("rotational_inertia", units.mass * units.length**2, positive=True)

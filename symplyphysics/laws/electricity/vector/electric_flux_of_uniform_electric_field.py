@@ -92,4 +92,3 @@ def calculate_electric_flux(
         area_=area_.to_base_vector(),
     )
     return Quantity(result)
- 

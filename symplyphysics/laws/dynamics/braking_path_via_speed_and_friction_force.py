@@ -18,7 +18,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_symbol,
+    clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_speed as energy_law
@@ -40,16 +40,16 @@ Symbol:
     :code:`v`
 """
 
-friction_force = clone_symbol(symbols.dynamics.force,
+friction_force = clone_as_symbol(symbols.force,
     display_symbol="F_fr",
     display_latex="F_\\text{fr}")
 """
-The friction :attr:`~symplyphysics.symbols.dynamics.force` exerted on the object.
+The friction :symbols:`force` exerted on the object.
 """
 
-mass = symbols.basic.mass
+mass = symbols.mass
 """
-The :attr:`~symplyphysics.symbols.basic.mass` of the object.
+The :symbols:`mass` of the object.
 """
 
 law = Eq(braking_path, mass * speed**2 / (2 * friction_force))

@@ -24,7 +24,7 @@ from symplyphysics.core.geometry.line import two_point_function, Point2D
 
 work = Symbol("work", units.energy)
 """
-The work done by :attr:`~symplyphysics.symbols.dynamics.force` :math:`F`.
+The work done by :symbols:`force` :math:`F`.
 
 Symbol:
     :code:`W`
@@ -32,7 +32,7 @@ Symbol:
 
 force = Function("force", units.force)
 """
-The :attr:`~symplyphysics.symbols.dynamics.force` exerted on the object as a function of position.
+The :symbols:`force` exerted on the object as a function of position.
 
 Symbol:
     :code:`F(x)`

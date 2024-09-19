@@ -24,7 +24,7 @@ thermodynamic quantities depend on variables that are measurable experimentally.
 
 from sympy import Eq, symbols as sympy_symbols, Function as SymFunction, Symbol as SymSymbol
 from symplyphysics import (
-    clone_symbol,
+    clone_as_symbol,
     symbols,
     units,
     dimensionless,
@@ -55,9 +55,9 @@ Symbol:
     :code:`S`
 """
 
-temperature_change = clone_symbol(symbols.thermodynamics.temperature, display_symbol="dT")
+temperature_change = clone_as_symbol(symbols.temperature, display_symbol="dT", display_latex="dT")
 """
-Infinitesimal change in :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the system.
+Infinitesimal change in :symbols:`temperature` of the system.
 """
 
 pressure = Symbol("pressure", units.pressure)

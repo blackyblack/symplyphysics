@@ -9,7 +9,7 @@ the radiating body's temperature.
 
 **Notation:**
 
-#. :math:`\sigma` (:code:`sigma`) is the Stefan—Boltzmann constant.
+#. :quantity_notation:`stefan_boltzmann_constant`.
 """
 
 from sympy import Eq
@@ -21,6 +21,7 @@ from symplyphysics import (
     Symbol,
     validate_input,
     validate_output,
+    quantities,
 )
 
 radiation_power = Symbol("radiation_power", units.power)
@@ -50,14 +51,14 @@ Symbol:
     :code:`A`
 """
 
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the body.
+:symbols:`temperature` of the body.
 """
 
 law = Eq(
     radiation_power,
-    units.stefan_boltzmann_constant * emissivity * surface_area * temperature**4,
+    quantities.stefan_boltzmann_constant * emissivity * surface_area * temperature**4,
 )
 r"""
 :code:`P = sigma * epsilon * A * T^4`

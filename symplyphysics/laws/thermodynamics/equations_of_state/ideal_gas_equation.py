@@ -7,11 +7,11 @@ describe a hypothetical ideal gas.
 
 **Notation:**
 
-#. :math:`R` is the molar gas constant.
+#. :quantity_notation:`molar_gas_constant`.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output)
+from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output, quantities)
 
 pressure = Symbol("pressure", units.pressure)
 """
@@ -37,12 +37,12 @@ Symbol:
     :code:`n`
 """
 
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 """
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas.
+:symbols:`temperature` of the gas.
 """
 
-law = Eq(pressure * volume, amount_of_substance * units.molar_gas_constant * temperature)
+law = Eq(pressure * volume, amount_of_substance * quantities.molar_gas_constant * temperature)
 r"""
 :code:`p V = n * R * T`
 

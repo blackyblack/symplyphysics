@@ -189,7 +189,8 @@ class SymbolCodePrinter(StrPrinter):
         # only one index of sum is supported
         # expr.args[0] contains indexed symbol with index applied
         # expr.args[0].args[0] contains just indexed symbol
-        return f"Sum({self._print(expr.args[0].args[0])}, i)"
+        symbol, index = expr.args[0].args
+        return f"Sum({self._print(symbol)}, {self._print(index)})"
 
 
 def code_str(expr: Any, **settings: Any) -> str:

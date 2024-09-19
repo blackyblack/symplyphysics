@@ -6,20 +6,26 @@ The instantaneous electric current, or simply the *electric current*, is a physi
 defined as the time derivative of the flowing charge.
 """
 
-from sympy import (Eq, Derivative)
-from symplyphysics import (units, Quantity, FunctionNew, SymbolNew, validate_input, validate_output)
+from sympy import Eq, Derivative
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    clone_as_function,
+)
 
-current = FunctionNew("I(t)", units.current, display_latex="I")
+current = clone_as_function(symbols.current, display_symbol="I(t)")
 """
-Electric current as a function of time.
-"""
-
-charge = FunctionNew("q(t)", units.charge, display_latex="q")
-"""
-Electric charge as a function of time.
+Electric :symbols:`current` as a function of time.
 """
 
-time = SymbolNew("t", units.time)
+charge = clone_as_function(symbols.charge, display_symbol="q(t)")
+"""
+Electric :symbols:`charge` as a function of time.
+"""
+
+time = symbols.time
 """
 Time.
 """

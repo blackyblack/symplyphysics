@@ -7,7 +7,7 @@ is maximum.
 
 **Notation:**
 
-#. :math:`k_\text{B}` is the Boltzmann constant.
+#. :quantity_notation:`boltzmann_constant`.
 
 **Conditions:**
 
@@ -23,7 +23,8 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_symbol,
+    clone_as_symbol,
+    quantities,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed_distribution
@@ -39,18 +40,18 @@ Latex:
     :math:`v_\text{prob}`
 """
 
-equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature, positive=True)
+equilibrium_temperature = clone_as_symbol(symbols.temperature, positive=True)
 """
-Equilibrium :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas.
+Equilibrium :symbols:`temperature` of the gas.
 """
 
-molecular_mass = clone_symbol(symbols.basic.mass, positive=True)
+molecular_mass = clone_as_symbol(symbols.mass, positive=True)
 """
-:attr:`~symplyphysics.symbols.basic.mass` of a gas molecule.
+:symbols:`mass` of a gas molecule.
 """
 
 law = Eq(most_probable_speed,
-    sqrt(2 * units.boltzmann_constant * equilibrium_temperature / molecular_mass))
+    sqrt(2 * quantities.boltzmann_constant * equilibrium_temperature / molecular_mass))
 r"""
 :code:`v_prob = sqrt(2 * k_B * T / m)`
 

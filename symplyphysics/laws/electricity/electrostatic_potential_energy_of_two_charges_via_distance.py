@@ -1,4 +1,4 @@
-r"""
+"""
 Electrostatic potential energy of two charges via distance
 ==========================================================
 
@@ -9,73 +9,44 @@ interaction belonging to the entire system.
 
 from sympy import (Eq, solve, pi)
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
 )
 
-electrostatic_potential_energy = Symbol("electrostatic_potential_energy", units.energy)
+electrostatic_potential_energy = clone_as_symbol(symbols.energy, display_symbol="U_E", display_latex="U_\\mathbf{E}")
 """
-Electrostatic potential energy of system.
-
-Symbol:
-    :code:`U_E`
-
-Latex:
-    :math:`U_E`
+Electrostatic potential :symbols:`energy` of system.
 """
 
-absolute_permittivity = Symbol("absolute_permittivity", units.capacitance / units.length)
-r"""
-Absolute permittivity of the medium.
-
-Symbol:
-    :code:`epsilon`
-
-Latex:
-    :math:`\varepsilon`
+absolute_permittivity = symbols.absolute_permittivity
+"""
+:symbols:`absolute_permittivity` of the medium.
 """
 
-distance = Symbol("distance", units.length)
+distance = symbols.distance
 """
-Distance between the point charges.
-
-Symbol:
-    :code:`r`
+:symbols:`distance` between the point charges.
 """
 
-first_charge = Symbol("first_charge", units.charge)
+first_charge = clone_as_symbol(symbols.charge, display_symbol="q_1", display_latex="q_1")
 """
-Value of the first charge.
-
-Symbol:
-    :code:`q1`
-
-Latex:
-    :math:`q_1`
+Value of the first :symbols:`charge`.
 """
 
-second_charge = Symbol("second_charge", units.charge)
+second_charge = clone_as_symbol(symbols.charge, display_symbol="q_2", display_latex="q_2")
 """
-Value of the second charge.
-
-Symbol:
-    :code:`q2`
-
-Latex:
-    :math:`q_2`
+Value of the second :symbols:`charge`.
 """
 
 law = Eq(electrostatic_potential_energy,
     (first_charge * second_charge) / (4 * pi * absolute_permittivity * distance))
-r"""
-:code:`U_E = q1 * q2 / (4 * pi * epsilon * r)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        U_E = \frac{q_1 q_2}{4 \pi \varepsilon r}
+:laws:latex::
 """
 
 @validate_input(absolute_permittivity_=absolute_permittivity,

@@ -26,7 +26,6 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_symbol,
 )
 
 entropy_change = Symbol("entropy_change", units.energy / units.temperature)
@@ -48,9 +47,9 @@ Latex:
     :math:`\delta Q`
 """
 
-common_temperature = clone_symbol(symbols.thermodynamics.temperature)
+common_temperature = symbols.temperature
 """
-Common :attr:`~symplyphysics.symbols.thermodynamics.temperature` of systems :math:`A` and :math:`B`.
+Common :symbols:`temperature` of systems :math:`A` and :math:`B`.
 """
 
 law = Eq(entropy_change, heat / common_temperature)

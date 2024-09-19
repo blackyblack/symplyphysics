@@ -17,9 +17,9 @@ Symbol:
     :code:`U`
 """
 
-mass = symbols.basic.mass
+mass = symbols.mass
 """
-The :attr:`~symplyphysics.symbols.basic.mass` of the body.
+The :symbols:`mass` of the body.
 """
 
 height = Symbol("height", units.length)

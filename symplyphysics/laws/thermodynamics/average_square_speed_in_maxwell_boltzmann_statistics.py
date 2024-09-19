@@ -7,7 +7,7 @@ and inversely proportional to the mass of the gas.
 
 **Notation:**
 
-#. :math:`k_\text{B}` is the Boltzmann constant.
+#. :quantity_notation:`boltzmann_constant`.
 
 **Conditions:**
 
@@ -17,7 +17,7 @@ and inversely proportional to the mass of the gas.
 
 from sympy import (Eq, solve, S, stats, Interval)
 from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols,
-    clone_symbol)
+    clone_as_symbol, quantities)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed_distribution
 
@@ -32,19 +32,19 @@ Latex:
     :math:`\langle v^2 \rangle`
 """
 
-equilibrium_temperature = clone_symbol(symbols.thermodynamics.temperature, positive=True)
+equilibrium_temperature = clone_as_symbol(symbols.temperature, positive=True)
 """
-Equilibrium :attr:`~symplyphysics.symbols.thermodynamics.temperature` of the gas.
+Equilibrium :symbols:`temperature` of the gas.
 """
 
-molecular_mass = clone_symbol(symbols.basic.mass, positive=True)
+molecular_mass = clone_as_symbol(symbols.mass, positive=True)
 """
-:attr:`~symplyphysics.symbols.basic.mass` of a gas molecule.
+:symbols:`mass` of a gas molecule.
 """
 
 law = Eq(
     average_square_speed,
-    3 * units.boltzmann_constant * equilibrium_temperature / molecular_mass,
+    3 * quantities.boltzmann_constant * equilibrium_temperature / molecular_mass,
 )
 r"""
 :code:`avg(v^2) = 3 * k_B * T / m`

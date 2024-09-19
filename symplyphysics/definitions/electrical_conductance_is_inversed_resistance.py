@@ -1,5 +1,5 @@
 """
-Electrical conductivity is inverse resistance
+Electrical conductance is inverse resistance
 =============================================
 
 *Conductivity* is a physical quantity describing the ability of a medium to conduct electrical current.
@@ -7,19 +7,19 @@ It is defined as the inverse of resistance.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, SymbolNew, validate_input, validate_output)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols)
 
-conductivity = SymbolNew("sigma", units.conductance, display_latex="\\sigma")
+conductance = symbols.conductance
 """
-Condutivity of the object.
-"""
-
-resistance = SymbolNew("R", units.impedance)
-"""
-Resistance of the object.
+:symbols:`conductance` of the object.
 """
 
-definition = Eq(conductivity, 1 / resistance)
+resistance = symbols.resistance
+"""
+symbols:`resistance` of the object.
+"""
+
+definition = Eq(conductance, 1 / resistance)
 """
 :laws:symbol::
 
@@ -28,8 +28,8 @@ definition = Eq(conductivity, 1 / resistance)
 
 
 @validate_input(resistance_=resistance)
-@validate_output(conductivity)
+@validate_output(conductance)
 def calculate_conductivity(resistance_: Quantity) -> Quantity:
-    solved = solve(definition, conductivity, dict=True)[0][conductivity]
+    solved = solve(definition, conductance, dict=True)[0][conductance]
     result_expr = solved.subs({resistance: resistance_})
     return Quantity(result_expr)

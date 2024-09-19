@@ -16,9 +16,9 @@ from symplyphysics import (
     validate_output,
 )
 
-mass = symbols.basic.mass
+mass = symbols.mass
 """
-:attr:`~symplyphysics.symbols.basic.mass` of the object.
+:symbols:`mass` of the object.
 """
 
 

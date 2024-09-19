@@ -10,11 +10,11 @@ expressions.
 
 **Notation:**
 
-#. :math:`c` is the speed of light.
+#. :quantity_notation:`speed_of_light`.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, quantities)
 
 momentum = Symbol("momentum", units.momentum)
 """
@@ -32,7 +32,7 @@ Symbol:
     :code:`E`
 """
 
-law = Eq(momentum, energy / units.speed_of_light)
+law = Eq(momentum, energy / quantities.speed_of_light)
 r"""
 :code:`p = E / c`
 

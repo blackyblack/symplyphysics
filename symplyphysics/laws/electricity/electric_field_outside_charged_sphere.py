@@ -1,4 +1,4 @@
-r"""
+"""
 Electric field outside charged sphere
 =====================================
 
@@ -8,7 +8,7 @@ of the sphere. However, due to the Gauss's law, on the inside the electric field
 
 **Notation:**
 
-#. :math:`\varepsilon_0` (:code:`epsilon_0`) is vacuum permittivity.
+#. :quantity_notation:`vacuum_permittivity`.
 
 **Conditions:**
 
@@ -17,27 +17,26 @@ of the sphere. However, due to the Gauss's law, on the inside the electric field
 
 from sympy import (Eq, solve, pi)
 from symplyphysics import (
-    units,
     Quantity,
-    SymbolNew,
     validate_input,
     validate_output,
+    symbols,
     quantities,
 )
 
-electric_field_strength = SymbolNew("E", units.voltage / units.length)
+electric_field_strength = symbols.electric_field_strength
 """
-Value of the electric field.
-"""
-
-charge = SymbolNew("q", units.charge)
-"""
-Total charge of the sphere.
+:symbols:`electric_field_strength`.
 """
 
-distance = SymbolNew("r", units.length)
+charge = symbols.charge
 """
-Distance to the center of the sphere.
+Total :symbols:`charge` of the sphere.
+"""
+
+distance = symbols.distance
+"""
+:symbols:`distance` to the center of the sphere.
 """
 
 law = Eq(electric_field_strength, charge / (4 * pi * quantities.vacuum_permittivity * distance**2))

@@ -7,12 +7,13 @@ and amount of substance.
 
 **Notation:**
 
-#. :math:`N_\text{A}` (:code:`N_A`) is the Avogadro constant.
+#. :quantity_notation:`avogadro_constant`.
 """
 
 from sympy import Eq, solve
 from symplyphysics import (
     units,
+    quantities,
     Quantity,
     Symbol,
     dimensionless,
@@ -37,7 +38,7 @@ Symbol:
     :code:`n`
 """
 
-law = Eq(units.avogadro, particle_count / amount_of_substance)
+law = Eq(quantities.avogadro_constant, particle_count / amount_of_substance)
 r"""
 :code:`N_A = N / n`
 

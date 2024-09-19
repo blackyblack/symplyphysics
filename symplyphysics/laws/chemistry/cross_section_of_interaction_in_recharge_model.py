@@ -1,6 +1,6 @@
 from sympy import Eq, nsolve, pi, log, sqrt
 from sympy.physics.units import elementary_charge, boltzmann_constant
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, clone_symbol,
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output,
     symbols)
 from symplyphysics.quantities import bohr_radius, hydrogen_ionization_energy
 
@@ -24,9 +24,9 @@ from symplyphysics.quantities import bohr_radius, hydrogen_ionization_energy
 cross_sectional_area_of_interaction = Symbol("cross_sectional_area_of_interaction", units.area)
 
 ionization_energy = Symbol("ionization_energy", units.energy)
-mass_of_atom = clone_symbol(symbols.basic.mass)
+mass_of_atom = symbols.mass
 pressure = Symbol("pressure", units.pressure)
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 electric_intensity = Symbol("electric_intensity", units.voltage / units.length)
 
 expression_1 = sqrt(ionization_energy / hydrogen_ionization_energy)

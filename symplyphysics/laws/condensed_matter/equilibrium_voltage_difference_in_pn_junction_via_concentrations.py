@@ -6,7 +6,7 @@ The p-n junction has a potential barrier preventing the movement of charge carri
 
 **Notation:**
 
-#. :math:`k_\text{B}` (:code:`k_B`) is the Boltzmann constant.
+#. :quantity_notation:`boltzmann_constant`.
 
 **Conditions:**
 
@@ -21,9 +21,8 @@ The p-n junction has a potential barrier preventing the movement of charge carri
 """
 
 from sympy import (Eq, solve, log)
-from sympy.physics.units import boltzmann
 from symplyphysics import (symbols, units, Quantity, Symbol, validate_input,
-    validate_output)
+    validate_output, quantities)
 
 equilibrium_voltage_difference = Symbol("equilibrium_voltage_difference", units.voltage)
 r"""
@@ -66,9 +65,9 @@ Symbol:
     :code:`n`
 """
 
-temperature = symbols.thermodynamics.temperature
+temperature = symbols.temperature
 r"""
-:attr:`~symplyphysics.symbols.thermodynamics.temperature` of the semiconductor.
+:symbols:`temperature` of the semiconductor.
 """
 
 charge_electron = Symbol("charge_electron", units.charge)
@@ -79,7 +78,7 @@ Symbol:
     :code:`q`
 """
 
-law = Eq(equilibrium_voltage_difference, (boltzmann * temperature / charge_electron) *
+law = Eq(equilibrium_voltage_difference, (quantities.boltzmann_constant * temperature / charge_electron) *
     log(donor_concentration * acceptor_concentration / charge_carriers_concentration**2))
 r"""
 :code:`Delta(V) = (k_B * T / q) * log(n_a * n_d / n^2)`

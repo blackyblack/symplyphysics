@@ -14,44 +14,32 @@ polarity. Also see :doc:`vector counterpart <laws.electricity.vector.electric_di
 
 from sympy import (Eq, solve)
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
 )
 
-electric_dipole_moment = Symbol("electric_dipole_moment", units.charge * units.length)
+electric_dipole_moment = symbols.electric_dipole_moment
 """
-Electric dipole moment of the system.
-
-Symbol:
-    :code:`p`
+:symbols:`electric_dipole_moment` of the system.
 """
 
-charge = Symbol("charge", units.charge)
+charge = symbols.charge
 """
-Magnitude of one the two point charges comprising the system.
-
-Symbol:
-    :code:`q`
+Magnitude of one the two point :symbols:`charge`-s comprising the system.
 """
 
-distance = Symbol("distance", units.length)
+distance = symbols.distance
 """
-Distance between point charges.
-
-Symbol:
-    :code:`d`
+:symbols:`distance` between point charges.
 """
 
 law = Eq(electric_dipole_moment, charge * distance)
-r"""
-:code:`p = q * d`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        p = q d
+:laws:latex::
 """
 
 

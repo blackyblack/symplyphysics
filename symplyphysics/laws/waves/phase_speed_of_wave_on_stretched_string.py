@@ -8,7 +8,7 @@ and not by properties of the wave such as frequency and amplitude.
 
 from sympy import Eq, sqrt
 from symplyphysics import (
-    clone_symbol,
+    clone_as_symbol,
     symbols,
     units,
     Symbol,
@@ -25,9 +25,9 @@ Symbol:
     :code:`v`
 """
 
-tension = clone_symbol(symbols.dynamics.force, display_symbol="tau", display_latex="\\tau")
+tension = clone_as_symbol(symbols.force, display_symbol="tau", display_latex="\\tau")
 """
-Tension in the string.
+Tension in the string. See :symbols:`force`.
 """
 
 linear_density = Symbol("linear_density", units.mass / units.length)
