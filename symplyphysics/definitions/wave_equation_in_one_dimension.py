@@ -59,15 +59,7 @@ definition = Eq(
     Derivative(displacement(position, time), position, 2),
     Derivative(displacement(position, time), time, 2) / phase_speed**2,
 )
-r"""
-.. only:: comment
-
-    :code:`Derivative(u(x, t), (x, 2)) = (1/v^2) * Derivative(u(x, t), (t, 2))`
-
-    Latex:
-        .. math::
-            \frac{\partial^2 u}{\partial x^2} = \frac{1}{v^2} \frac{\partial^2 u}{\partial t^2}
-
+"""
 :laws:symbol::
 
 :laws:latex::
