@@ -52,6 +52,12 @@ length = SymbolNew("l", units.length)
 **Length** is a measure of a size of an object.
 """
 
+thickness = SymbolNew("d", units.length)
+"""
+**Thickness** is a measure of a size of an object, usually the separation between two layers, or
+the distance through an object distinct from length and width.
+"""
+
 area = SymbolNew("A", units.area)
 """
 **Area** is the size of a region on a two-dimensional surface.

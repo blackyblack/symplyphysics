@@ -38,3 +38,14 @@ thermodynamic_compressibility = SymbolNew("beta", 1 / units.pressure, display_la
 **Compressibility** is a measure of the instantaneous relative volume change of a fluid or solid as a response
 to a pressure or mean stress change.
 """
+
+thermal_resistance = SymbolNew("R", units.temperature / units.power)
+"""
+**Thermal resistance** measures the opposition to the heat current in a material or system.
+"""
+
+thermal_conductivity = SymbolNew("k", units.power / (units.length * units.temperature))
+"""
+**Thermal conductivity** of a material is a measure of its ability to conduct heat. It is defined as the
+proportionality coefficient between the heat flux and the temperature gradient.
+"""
