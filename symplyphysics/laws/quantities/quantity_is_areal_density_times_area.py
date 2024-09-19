@@ -13,6 +13,7 @@ from symplyphysics import (
     SymbolNew,
     validate_input,
 )
+from symplyphysics.core.dimensions import assert_equivalent_dimension
 
 extensive_quantity = SymSymbol("extensive_quantity")
 """
@@ -57,5 +58,12 @@ def calculate_extensive_quantity(
         area: area_
     })
     result = Quantity(result_expr)
+
+    assert_equivalent_dimension(
+        result,
+        "return",
+        "calculate_extensive_quantity",
+        areal_density_.dimension * units.area,
+    )
 
     return result
