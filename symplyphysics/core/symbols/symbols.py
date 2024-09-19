@@ -251,7 +251,7 @@ def print_expression(expr: Expr | Equality | Sequence[Expr | Equality]) -> str:
         pretty_use_unicode(uflag)
 
 
-def clone_as_symbol(source: SymbolNew | FunctionNew | SymbolIndexedNew,
+def clone_as_symbol(source: SymbolNew | SymbolIndexedNew,
     *,
     display_symbol: Optional[str] = None,
     display_latex: Optional[str] = None,
@@ -268,7 +268,7 @@ def clone_as_symbol(source: SymbolNew | FunctionNew | SymbolIndexedNew,
 
 
 def clone_as_function(
-    source: SymbolNew | FunctionNew | SymbolIndexedNew,
+    source: SymbolNew | SymbolIndexedNew,
     *,
     display_symbol: Optional[str] = None,
     display_latex: Optional[str] = None,
@@ -286,7 +286,7 @@ def clone_as_function(
 
 
 def clone_as_indexed(
-    source: SymbolNew | FunctionNew | SymbolIndexedNew,
+    source: SymbolNew | SymbolIndexedNew,
     *,
     display_symbol: Optional[str] = None,
     display_latex: Optional[str] = None,
