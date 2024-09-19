@@ -33,7 +33,7 @@ charge = symbols.charge
 Value of the point :symbols:`charge`.
 """
 
-distance = symbols.distance_to_origin
+distance = symbols.distance
 """
 :symbols:`distance` to the charge.
 """

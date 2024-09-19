@@ -24,7 +24,7 @@ absolute_permittivity = symbols.absolute_permittivity
 :symbols:`absolute_permittivity` of the medium.
 """
 
-distance = symbols.distance_to_origin
+distance = symbols.distance
 """
 :symbols:`distance` to the point charge.
 """
