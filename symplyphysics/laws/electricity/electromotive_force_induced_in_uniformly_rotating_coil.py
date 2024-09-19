@@ -19,7 +19,7 @@ the area of the coil's contour.
 #. The magnetic field is uniform.
 #. The angular velocity of the coil's rotation is orthogonal to the magnetic field.
 #. The area of the coil's contour is constant.
-#. The rotation of the coil is uniform.
+#. The angular speed of the coil's rotation constant.
 """
 
 from sympy import (Eq, solve, sin)
@@ -27,11 +27,8 @@ from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, dimensionless, angle_type)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity import (
+    electromotive_force_induced_in_moving_contour as _emf_law,
     magnetic_flux_from_induction_and_area as _magnetic_flux_law,
-    electromotive_force_induced_in_rotating_coil as _emf_law,
-)
-from symplyphysics.laws.geometry import (
-    planar_projection_is_cosine as _projection_law,
 )
 from symplyphysics.laws.kinematics import (
     angular_position_via_constant_angular_speed_and_time as _angle_law,
@@ -113,7 +110,7 @@ _magnetic_flux = _magnetic_flux_law.law.rhs.subs({
 })
 
 _emf = _emf_law.law.rhs.subs({
-    _emf_law.coil_turn_count: coil_turn_count,
+    _emf_law.current_turn_count: coil_turn_count,
     _emf_law.magnetic_flux(_time): _magnetic_flux,
 }).doit().subs(
     _emf_law.time, time
