@@ -7,34 +7,33 @@ It is the inverse of period. See :doc:`definitions.temporal_frequency_is_number_
 for additional information.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
+from sympy import Eq, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+)
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.definitions import temporal_frequency_is_number_of_events_per_unit_time as frequency_def
+from symplyphysics.definitions import (
+    temporal_frequency_is_number_of_events_per_unit_time as frequency_def,
+)
 
-temporal_frequency = Symbol("temporal_frequency", units.frequency)
+temporal_frequency = symbols.temporal_frequency
 """
-Temporal frequency of oscillations.
-
-Symbol:
-    :code:`f`
+:symbols:`temporal_frequency` of oscillations.
 """
 
-period = Symbol("period", units.time)
+period = symbols.period
 """
-Period of oscillations.
-
-Symbol:
-    :code:`T`
+:symbols:`period` of oscillations.
 """
 
 law = Eq(temporal_frequency, 1 / period)
-r"""
-:code:`f = 1 / T`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        f = \frac{1}{T}
+:laws:latex::
 """
 
 # Derive the same law from temporal frequency definition
