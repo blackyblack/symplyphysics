@@ -164,7 +164,7 @@ class Function(DimensionSymbol, UndefinedFunction):
         display_name: Optional[str] = None,
         dimension: Dimension = Dimension(S.One),
         **_options: Any) -> None:
-        display_name = str(cls.name) if display_name is None else display_name
+        display_name = str(cls.name) if display_name is None else display_name  # type: ignore[attr-defined]
         super().__init__(display_name, dimension)
 
 
@@ -185,7 +185,7 @@ class FunctionNew(DimensionSymbolNew, UndefinedFunction):
         *,
         display_latex: Optional[str] = None,
         **_options: Any) -> None:
-        display_name = str(cls.name) if display_symbol is None else display_symbol
+        display_name = str(cls.name) if display_symbol is None else display_symbol  # type: ignore[attr-defined]
         super().__init__(display_name, dimension, display_latex=display_latex)
 
     def __repr__(cls) -> str:

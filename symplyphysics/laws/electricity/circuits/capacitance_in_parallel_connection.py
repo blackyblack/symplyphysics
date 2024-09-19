@@ -12,7 +12,6 @@ capacitances of individual capacitors.
 
 from sympy import Eq, Idx, solve, symbols as sympy_symbols
 from symplyphysics import (
-    units,
     Quantity,
     validate_input,
     validate_output,

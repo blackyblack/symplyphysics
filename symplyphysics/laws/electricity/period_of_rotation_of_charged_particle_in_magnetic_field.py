@@ -104,6 +104,56 @@ _period_expr = _period_law.law.rhs.subs({
 
 assert expr_equals(_period_expr, law.rhs)
 
+# Derive law from Lorentz force
+
+_charge = sympy_symbols("charge", positive=True)
+_angular_frequency = sympy_symbols("angular_frequency", positive=True)
+_radius = sympy_symbols("radius", positive=True)
+
+_speed_expr = _speed_law.law.rhs.subs({
+    _speed_law.angular_speed: _angular_frequency,
+    _speed_law.radius_of_curvature: _radius,
+})
+
+_velocity_vec = Vector([_speed_expr, 0, 0])
+
+_magnetic_field = sympy_symbols("magnetic_field", positive=True)
+_magnetic_field_vec = Vector([0, _magnetic_field, 0])
+
+_force_vec = _lorentz_law.lorentz_force_law(
+    electric_field_=Vector([0, 0, 0]),
+    magnetic_flux_density_=_magnetic_field_vec,
+    velocity_=_velocity_vec,
+).subs(
+    _lorentz_law.charge, _charge
+)
+
+_force_expr = vector_magnitude(_force_vec)
+
+_acceleration_via_force = _newtons_second_law.law.rhs.subs({
+    _newtons_second_law.force: _force_expr,
+    _newtons_second_law.mass: mass,
+})
+
+_acceleration_via_frequency = _centripetal_acceleration_law.law.rhs.subs({
+    _centripetal_acceleration_law.angular_speed: _angular_frequency,
+    _centripetal_acceleration_law.radius_of_curvature: _radius,
+})
+
+_angular_frequency_expr = solve(
+    eq := Eq(_acceleration_via_frequency, _acceleration_via_force),
+    _angular_frequency,
+)[0]
+
+_period_expr = _period_law.law.rhs.subs({
+    _period_law.angular_frequency: _angular_frequency_expr
+}).subs({
+    _charge: charge,
+    _magnetic_field: magnetic_flux_density,
+})
+
+assert expr_equals(_period_expr, law.rhs)
+
 
 @validate_input(mass_=mass, charge_=charge, induction_=magnetic_flux_density)
 @validate_output(period)
