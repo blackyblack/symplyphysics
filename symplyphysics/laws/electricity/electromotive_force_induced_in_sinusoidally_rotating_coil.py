@@ -22,7 +22,7 @@ the area of the coil's contour.
 #. The rotation of the coil is uniform.
 """
 
-from sympy import (Eq, solve, sin, cos)
+from sympy import (Eq, solve, sin)
 from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, dimensionless, angle_type)
 from symplyphysics.core.expr_comparisons import expr_equals
@@ -30,8 +30,11 @@ from symplyphysics.laws.electricity import (
     magnetic_flux_from_induction_and_area as _magnetic_flux_law,
     electromotive_force_induced_in_rotating_coil as _emf_law,
 )
-from symplyphysics.definitions import (
-    angular_speed_is_angular_distance_derivative as _angular_speed_law,
+from symplyphysics.laws.geometry import (
+    planar_projection_is_cosine as _projection_law,
+)
+from symplyphysics.laws.kinematics import (
+    angular_position_via_constant_angular_speed_and_time as _angle_law,
 )
 
 electromotive_force = Symbol("electromotive_force", units.voltage)
@@ -95,17 +98,23 @@ Latex:
 
 # Derive law
 
-_area = contour_area * cos(angular_frequency * _emf_law.time)
+_time = _emf_law.time
+
+_angle = _angle_law.law.rhs.subs({
+    _angle_law.initial_angular_position: 0,
+    _angle_law.angular_speed: angular_frequency,
+    _angle_law.time: _time,
+})
 
 _magnetic_flux = _magnetic_flux_law.law.rhs.subs({
     _magnetic_flux_law.induction: magnetic_flux_density,
-    _magnetic_flux_law.area: _area,
-    _magnetic_flux_law.angle: 0,
+    _magnetic_flux_law.area: contour_area,
+    _magnetic_flux_law.angle: _angle,
 })
 
 _emf = _emf_law.law.rhs.subs({
     _emf_law.coil_turn_count: coil_turn_count,
-    _emf_law.magnetic_flux(_emf_law.time): _magnetic_flux,
+    _emf_law.magnetic_flux(_time): _magnetic_flux,
 }).doit().subs(
     _emf_law.time, time
 )
