@@ -110,9 +110,6 @@ result_pressure_adiabatic_compression = adiabatic_pressure.subs({
     adiabatic_law.final_volume: carnot_cycle_volume
 })
 
-# print(result_pressure_isothermal_expansion)
-# import sys; sys.exit(1)
-
 p1 = plot(result_pressure_isothermal_expansion,
     (carnot_cycle_volume, GAS_VOLUME_START, GAS_VOLUME_ADIABATIC_START),
     line_color="blue",

@@ -258,7 +258,7 @@ def clone_as_symbol(source: SymbolNew | FunctionNew | SymbolIndexedNew,
     **assumptions: Any) -> SymbolNew:
     assumptions = assumptions or source.assumptions0
     display_symbol = display_symbol or source.display_name
-    display_latex = display_latex or source.display_latex or display_symbol
+    display_latex = display_latex or source.display_latex
     return SymbolNew(
         display_symbol,
         source.dimension,
@@ -276,7 +276,7 @@ def clone_as_function(
 ) -> FunctionNew:
     assumptions = assumptions or source.assumptions0
     display_symbol = display_symbol or source.display_name
-    display_latex = display_latex or source.display_latex or display_symbol
+    display_latex = display_latex or source.display_latex
     return FunctionNew(
         display_symbol,
         source.dimension,
@@ -294,7 +294,7 @@ def clone_as_indexed(
 ) -> SymbolIndexedNew:
     assumptions = assumptions or source.assumptions0
     display_symbol = display_symbol or source.display_name
-    display_latex = display_latex or source.display_latex or display_symbol
+    display_latex = display_latex or source.display_latex
     return SymbolIndexedNew(
         display_symbol,
         source.dimension,

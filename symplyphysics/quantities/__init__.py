@@ -103,7 +103,7 @@ or, equivalently, the magnitude of the negative charge carried by a single elect
 
 hbar = Quantity(units.hbar, display_symbol="hbar", display_latex="\\hbar")
 """
-**Reduced Planck constnat** is a modified version of the Planck constant used in the description of
+**Reduced Planck constant** is a modified version of the Planck constant used in the description of
 Quantum Mechanics.
 """
 

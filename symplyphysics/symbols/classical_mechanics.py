@@ -41,7 +41,7 @@ Distance to reference axis.
 
 length = SymbolNew("l", units.length)
 """
-**Length** is a measure of a size of an object..
+**Length** is a measure of a size of an object.
 """
 
 area = SymbolNew("A", units.area)
