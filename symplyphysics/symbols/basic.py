@@ -6,7 +6,8 @@ Symbols of fundamental physical quantities.
 """
 
 from sympy.physics import units
-from ..core.symbols.symbols import SymbolNew
+from symplyphysics import dimensionless
+from symplyphysics.core.symbols.symbols import SymbolNew
 
 time = SymbolNew("t", units.time)
 """
@@ -63,4 +64,9 @@ intensity = SymbolNew("I", units.power / units.area)
 """
 **Intensity** or **flux** of radiant energy is the power transferred per unit area,  where the area is measured
 on the plane perpendicular to the direction of propagation of the energy.
+"""
+
+positive_number = SymbolNew("N", dimensionless, positive=True)
+"""
+A dimensionless **number** used for counting objects or instances.
 """

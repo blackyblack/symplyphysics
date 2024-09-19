@@ -22,6 +22,7 @@ __all__ = [
     "radius_of_curvature",
     "density",
     "intensity",
+    "positive_number",
     # classical mechanics
     "force",
     "speed",
@@ -44,6 +45,7 @@ __all__ = [
     "phase_speed",
     "pressure",
     "thickness",
+    "temporal_frequency",
     # thermodynamics
     "temperature",
     "adiabatic_index",

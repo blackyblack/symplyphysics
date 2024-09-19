@@ -119,3 +119,8 @@ pressure = SymbolNew("p", units.pressure)
 **Pressure** is the force applied perpendicular to the surface of an object per unit area over which
 that force is distributed.
 """
+
+temporal_frequency = SymbolNew("f", units.frequency)
+"""
+**Temporal frequency** is the number of occurrences of a repeating event per unit of time.
+"""
