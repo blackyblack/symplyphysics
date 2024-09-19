@@ -15,9 +15,9 @@ from symplyphysics import (
     symbols,
 )
 
-thermal_resistance = symbols.thermal_resistance
+thermal_insulance = symbols.thermal_insulance
 """
-:symbols:`thermal_resistance` to conduction of the insulator, also called R-value.
+:symbols:`thermal_insulance` of the insulator, also called an **R-value**.
 """
 
 slab_thickness = symbols.thickness
@@ -30,7 +30,7 @@ thermal_conductivity = symbols.thermal_conductivity
 :symbols:`thermal_conductivity` of the insulating material.
 """
 
-definition = Eq(thermal_resistance, slab_thickness / thermal_conductivity)
+definition = Eq(thermal_insulance, slab_thickness / thermal_conductivity)
 """
 :laws:symbol::
 
@@ -42,8 +42,8 @@ definition = Eq(thermal_resistance, slab_thickness / thermal_conductivity)
     slab_thickness_=slab_thickness,
     thermal_conductivity_=thermal_conductivity,
 )
-@validate_output(thermal_resistance)
-def calculate_thermal_resistance(
+@validate_output(thermal_insulance)
+def calculate_thermal_insulance(
     slab_thickness_: Quantity,
     thermal_conductivity_: Quantity,
 ) -> Quantity:

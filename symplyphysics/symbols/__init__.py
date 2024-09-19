@@ -54,6 +54,7 @@ __all__ = [
     "thermodynamic_compressibility",
     "thermal_resistance",
     "thermal_conductivity",
+    "thermal_insulance",
     # electrodynamics
     "admittance",
     "conductance",

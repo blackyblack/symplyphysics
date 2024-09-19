@@ -49,3 +49,9 @@ thermal_conductivity = SymbolNew("k", units.power / (units.length * units.temper
 **Thermal conductivity** of a material is a measure of its ability to conduct heat. It is defined as the
 proportionality coefficient between the heat flux and the temperature gradient.
 """
+
+thermal_insulance = SymbolNew("R_val", units.area * units.temperature / units.power, display_latex="R_\\text{val}")
+"""
+The **R-value**, or **thermal insulance**, is a measure of how well a two-dimensional barrier, such as a layer of
+insulation, a window or a complete wall or ceiling, resists the conductive flow of heat, in the context of construction.
+"""
