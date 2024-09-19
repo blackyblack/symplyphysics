@@ -69,7 +69,7 @@ acceleration = symbols.acceleration
 The :symbols:`acceleration` of the rocket.
 """
 
-mass = clone_as_symbol(symbols.mass, display_symbol="M")
+mass = clone_as_symbol(symbols.mass, display_symbol="M", display_latex="M")
 """
 .. _rocket mass definition:
 

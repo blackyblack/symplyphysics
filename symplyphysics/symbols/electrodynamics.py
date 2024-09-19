@@ -1,6 +1,6 @@
 """
-Electrodynamics
-===============
+Electrodynamics (Symbols)
+=========================
 
 Symbols related to electrodynamics.
 """
@@ -35,8 +35,8 @@ electromotive_force = SymbolNew("E", units.voltage, display_latex="\\mathcal{E}"
 of electric charge, measured in volts.
 """
 
-magnetic_flux = SymbolNew("Phi_B", units.magnetic_flux, display_latex="\\Phi_\mathbf{B}")
-"""
+magnetic_flux = SymbolNew("Phi_B", units.magnetic_flux, display_latex="\\Phi_\\mathbf{B}")
+r"""
 **Magnetic flux** through a surface is the surface integral of the normal component of the magnetic field :math:`\mathbf{B}`
 over that surface.
 """
@@ -95,8 +95,8 @@ surface_charge_density = SymbolNew("sigma", units.charge / units.area, display_l
 **Surface charge density** is charge per unit surface area.
 """
 
-electric_flux = SymbolNew("Phi_E", units.voltage * units.length, display_latex="\\Phi_\mathbf{E}")
-"""
+electric_flux = SymbolNew("Phi_E", units.voltage * units.length, display_latex="\\Phi_\\mathbf{E}")
+r"""
 **Electric flux** through a surface is the surface integral of the normal component of the electric field :math:`\mathbf{E}`
 over that surface.
 """
@@ -107,7 +107,7 @@ magnetic_flux_density = SymbolNew("B", units.magnetic_flux_density)
 particle in the Lorentz force law.
 """
 
-electric_potential = SymbolNew("U_E", units.voltage, display_latex="U_\mathbf{E}")
+electric_potential = SymbolNew("U_E", units.voltage, display_latex="U_\\mathbf{E}")
 """
 **Electric potential** is defined as the amount of work or energy needed per unit of electric charge to move the charge from
 a reference point to a specific point in an electric field.

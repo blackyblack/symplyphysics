@@ -1,11 +1,11 @@
 """
-Classical mechanics
-===================
+Classical mechanics (Symbols)
+=============================
 
 Symbols related to classical mechanics.
 """
 
-from symplyphysics import units, SymbolNew, angle_type, dimensionless, clone_as_symbol
+from symplyphysics import units, SymbolNew, angle_type, dimensionless
 
 force = SymbolNew("F", units.force)
 """
@@ -54,7 +54,7 @@ angular_speed = SymbolNew("w", angle_type / units.time, display_latex="\\omega")
 **Angular speed** is the rate of change of angular distance with respect to time.
 """
 
-angular_frequency = clone_as_symbol(angular_speed)
+angular_frequency = angular_speed
 """
 **Angular frequency**, also called **angular rate**, is a scalar measure of the temporal
 rate of change of the phase argument of a sinusoidal waveform or sine function.

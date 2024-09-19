@@ -51,7 +51,6 @@ _acceleration_expr = centripetal_law.law.rhs.subs({
 })
 
 _force_expr = gravity_law.law.rhs.subs({
-    gravity_law.first_mass: attracting_mass,
     gravity_law.distance_between_mass_centers: _radius,
     gravity_law.first_mass: attracting_mass,
     gravity_law.second_mass: _attracted_mass,

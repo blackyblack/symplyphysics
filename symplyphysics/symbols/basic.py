@@ -1,6 +1,6 @@
 """
-Basic
-=====
+Basic (Symbols)
+===============
 
 Symbols of fundamental physical quantities.
 """

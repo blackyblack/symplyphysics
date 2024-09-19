@@ -1,6 +1,6 @@
 """
-Thermodynamics
-==============
+Thermodynamics (Symbols)
+========================
 
 Symbols related to thermodynamics.
 """

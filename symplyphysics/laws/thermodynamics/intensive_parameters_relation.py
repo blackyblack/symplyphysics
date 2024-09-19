@@ -34,7 +34,7 @@ Symbol:
     :code:`S`
 """
 
-temperature_change = clone_as_symbol(symbols.temperature, display_symbol="dT")
+temperature_change = clone_as_symbol(symbols.temperature, display_symbol="dT", display_latex="dT")
 """
 Infinitesimal change in :symbols:`temperature` of the system.
 """

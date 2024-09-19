@@ -45,7 +45,7 @@ Symbol:
     a
 """
 
-attracting_mass = clone_as_symbol(symbols.mass, display_symbol="M")
+attracting_mass = clone_as_symbol(symbols.mass, display_symbol="M", display_latex="M")
 """
 The :symbols:`mass` of the attracting body, such as the Sun.
 """

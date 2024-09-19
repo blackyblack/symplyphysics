@@ -20,12 +20,12 @@ electrostatic_force = symbols.force
 Electrostatic :symbols:`force` between two charges.
 """
 
-first_charge = clone_as_symbol(symbols.charge, display_symbol="q_1")
+first_charge = clone_as_symbol(symbols.charge, display_symbol="q_1", display_latex="q_1")
 """
 First :symbols:`charge`.
 """
 
-second_charge = clone_as_symbol(symbols.charge, display_symbol="q_2")
+second_charge = clone_as_symbol(symbols.charge, display_symbol="q_2", display_latex="q_2")
 """
 Second :symbols:`charge`.
 """

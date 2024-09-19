@@ -23,8 +23,8 @@ from symplyphysics import (
 speed = Symbol("speed", units.velocity)
 
 specific_impulse = Symbol("specific_impulse", units.velocity)
-initial_mass = clone_as_symbol(symbols.mass, display_symbol="m_0")
-final_mass = clone_as_symbol(symbols.mass, display_symbol="m_1")
+initial_mass = clone_as_symbol(symbols.mass, display_symbol="m_0", display_latex="m_0")
+final_mass = clone_as_symbol(symbols.mass, display_symbol="m_1", display_latex="m_1")
 
 law = Eq(speed, specific_impulse * log(initial_mass / final_mass))
 

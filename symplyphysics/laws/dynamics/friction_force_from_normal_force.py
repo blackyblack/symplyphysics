@@ -28,7 +28,7 @@ Latex:
     :math:`\mu`
 """
 
-normal_force = clone_as_symbol(symbols.force, display_symbol="N")
+normal_force = clone_as_symbol(symbols.force, display_symbol="N", display_latex="N")
 """
 The normal reaction :symbols:`force` from one object to another.
 """

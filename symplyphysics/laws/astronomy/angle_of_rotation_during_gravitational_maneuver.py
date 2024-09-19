@@ -26,7 +26,7 @@ Latex:
     :math:`\phi`
 """
 
-planet_mass = clone_as_symbol(symbols.mass, display_symbol="M")
+planet_mass = clone_as_symbol(symbols.mass, display_symbol="M", display_latex="M")
 """
 The :symbols:`mass` of the planet.
 """

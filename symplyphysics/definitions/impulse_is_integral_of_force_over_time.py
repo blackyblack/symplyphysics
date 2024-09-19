@@ -32,12 +32,12 @@ time = symbols.time
 :symbols:`time`.
 """
 
-time_before = clone_as_symbol(symbols.time, display_symbol="t_0")
+time_before = clone_as_symbol(symbols.time, display_symbol="t_0", display_latex="t_0")
 """
 Initial :symbols:`time` of collision.
 """
 
-time_after = clone_as_symbol(symbols.time, display_symbol="t_1")
+time_after = clone_as_symbol(symbols.time, display_symbol="t_1", display_latex="t_1")
 """
 Final :symbols:`time` of collision.
 """

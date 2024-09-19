@@ -7,9 +7,7 @@ Angular speed is angular distance derivative
 
 from sympy import Eq, Derivative
 from symplyphysics import (
-    units,
     Quantity,
-    SymbolNew,
     validate_input,
     validate_output,
     clone_as_function,

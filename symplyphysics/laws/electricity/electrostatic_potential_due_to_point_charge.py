@@ -1,4 +1,4 @@
-r"""
+"""
 Electrostatic potential due to point charge
 ===========================================
 

@@ -1,4 +1,4 @@
-r"""
+"""
 Electric field outside charged sphere
 =====================================
 

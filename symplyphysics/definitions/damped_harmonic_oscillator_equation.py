@@ -24,7 +24,7 @@ Displacement of the oscillating body as a function of time. See :symbols:`distan
 
 time = clone_as_symbol(symbols.time, positive=True)
 """
-Time.
+:symbols:`time`.
 """
 
 undamped_angular_frequency = clone_as_symbol(symbols.angular_frequency, positive=True)

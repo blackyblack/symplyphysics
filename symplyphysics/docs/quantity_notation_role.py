@@ -33,7 +33,7 @@ def process_string(doc: str, path: str) -> str:
 
     if not parts:
         return doc
-    
+
     part_after = doc[last_index_to:]
     parts.append(part_after)
 

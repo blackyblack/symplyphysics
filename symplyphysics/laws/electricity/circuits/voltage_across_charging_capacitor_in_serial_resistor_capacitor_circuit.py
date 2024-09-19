@@ -35,7 +35,7 @@ capacitor_voltage = symbols.voltage
 :symbols:`voltage` across the capacitor.
 """
 
-source_voltage = clone_as_symbol(symbols.voltage, display_symbol="V_0")
+source_voltage = clone_as_symbol(symbols.voltage, display_symbol="V_0", display_latex="V_0")
 """
 :symbols:`voltage` of the source, which is the initial voltage across the resistor.
 """
