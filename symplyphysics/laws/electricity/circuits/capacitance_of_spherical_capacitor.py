@@ -66,14 +66,14 @@ _electric_field_expr = _electric_field_law.law.rhs.subs({
     _electric_field_law.distance: _distance,
 })
 
+# TODO: make use of symbols with proper assumptions
 _voltage_expr = _voltage_law.law.rhs.subs({
     _voltage_law.electric_field_component(_distance): _electric_field_expr,
-    _voltage_law.initial_distance: inner_radius,
-    _voltage_law.final_distance: outer_radius,
+    _voltage_law.initial_distance: outer_radius,
+    _voltage_law.final_distance: inner_radius,
 }).doit()
 
-# Multiply by -1 to make the ratio positive
-_capacitance_expr = -1 * _capacitance_law.definition.rhs.subs({
+_capacitance_expr = _capacitance_law.definition.rhs.subs({
     _capacitance_law.voltage: _voltage_expr,
 }).simplify()
 

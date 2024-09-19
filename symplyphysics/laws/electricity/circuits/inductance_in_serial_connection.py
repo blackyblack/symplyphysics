@@ -48,7 +48,7 @@ Latex:
 """
 
 # Derive law for two inductors. The current is the same in components connected
-# in parallel.
+# in parallel, TODO: create law and use it here.
 
 _magnetic_flux_expr = solve(_inductance_law.law, _inductance_law.magnetic_flux)[0]
 
@@ -56,6 +56,7 @@ _magnetic_flux_1 = _magnetic_flux_expr.subs(_inductance_law.inductance, inductan
 
 _magnetic_flux_2 = _magnetic_flux_expr.subs(_inductance_law.inductance, inductance[2])
 
+# TODO: add law for magnetic flux additivity
 _total_magnetic_flux = _magnetic_flux_1 + _magnetic_flux_2
 
 _total_inductance = _inductance_law.law.rhs.subs(

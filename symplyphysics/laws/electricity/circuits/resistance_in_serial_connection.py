@@ -55,6 +55,7 @@ _voltage1 = _voltage_expr.subs(_ohm_law.resistance, resistance[1])
 
 _voltage2 = _voltage_expr.subs(_ohm_law.resistance, resistance[2])
 
+# TODO: create law of voltage in serial connetion and use it here
 _total_voltage = _voltage1 + _voltage2
 
 _total_resistance = solve(
