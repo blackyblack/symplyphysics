@@ -3,14 +3,18 @@
 from sympy import symbols, solve, Rational
 from sympy.plotting import plot, plot_parametric
 from sympy.plotting.plot import MatplotlibBackend
-from symplyphysics import convert_to, units
+from symplyphysics import convert_to, units, quantities
 from symplyphysics.laws.thermodynamics import (
     pressure_and_volume_in_adiabatic_process as adiabatic_law,)
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as ideal_gas_law
 
+ideal_gas_law_subs = ideal_gas_law.law.subs({
+    quantities.molar_gas_constant: units.molar_gas_constant,
+})
+
 pressure, volume, temperature = symbols("pressure volume temperature", positive=True)
 
-ideal_gas_eqn = ideal_gas_law.law.subs({
+ideal_gas_eqn = ideal_gas_law_subs.subs({
     ideal_gas_law.amount_of_substance:
         1,
     units.molar_gas_constant:

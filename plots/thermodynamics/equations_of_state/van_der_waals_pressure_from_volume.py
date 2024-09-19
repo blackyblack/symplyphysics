@@ -3,7 +3,7 @@
 from sympy import symbols, Eq, solve
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
-from symplyphysics import print_expression
+from symplyphysics import print_expression, quantities, units
 from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import equation as van_der_waals_law
 from symplyphysics.laws.quantities import quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law
 
@@ -23,6 +23,7 @@ molar_volume = solve(molar_qty_law.law, molar_qty_law.molar_quantity)[0].subs({
 })
 
 state_equation = van_der_waals_law.law.subs({
+    quantities.molar_gas_constant: units.molar_gas_constant,
     van_der_waals_law.pressure: pressure,
     van_der_waals_law.temperature: temperature,
     van_der_waals_law.molar_volume: molar_volume,
