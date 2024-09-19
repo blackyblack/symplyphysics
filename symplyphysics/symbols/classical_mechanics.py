@@ -107,3 +107,9 @@ phase_speed = SymbolNew("v", units.speed)
 """
 **Phase speed** is the speed at which the phase of the wave travels.
 """
+
+pressure = SymbolNew("p", units.pressure)
+"""
+**Pressure** is the force applied perpendicular to the surface of an object per unit area over which
+that force is distributed.
+"""

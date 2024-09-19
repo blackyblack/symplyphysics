@@ -44,15 +44,7 @@ definition = Eq(
     volumetric_expansion_coefficient,
     Derivative(volume(temperature), temperature) / volume(temperature),
 )
-r"""
-.. only:: comment
-
-    :code:`alpha_V = 1 / V(T, p) * Derivative(V(T, p), T)`
-
-    Latex:
-        .. math::
-            \alpha_V = \frac{1}{V(T, p)} \left( \frac{\partial V}{\partial T} \right)_p
-
+"""
 :laws:symbol::
 
 :laws:latex::

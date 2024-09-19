@@ -32,3 +32,9 @@ thermal_expansion_coefficient = SymbolNew("alpha", 1 / units.temperature, displa
 **Thermal expansion coefficient** describes how the size of an object changes with a change in temperature at
 constant pressure.
 """
+
+thermodynamic_compressibility = SymbolNew("beta", 1 / units.pressure, display_latex="\\beta")
+"""
+**Compressibility** is a measure of the instantaneous relative volume change of a fluid or solid as a response
+to a pressure or mean stress change.
+"""

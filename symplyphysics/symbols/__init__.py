@@ -42,11 +42,13 @@ __all__ = [
     "impulse",
     "position",
     "phase_speed",
+    "pressure",
     # thermodynamics
     "temperature",
     "adiabatic_index",
     "heat_capacity",
     "thermal_expansion_coefficient",
+    "thermodynamic_compressibility",
     # electrodynamics
     "admittance",
     "conductance",
