@@ -22,11 +22,10 @@ class Quantity(DimensionSymbolNew, SymQuantity):  # pylint: disable=too-many-anc
         name = next_name("QTY")
         # Latex symbol is set in SymPy Quantity, not in DimensionSymbol, due to Latex printer
         # specifics
-        display_symbol = name if display_symbol is None else display_symbol
-        display_latex = display_symbol if display_latex is None else display_latex
-        obj = SymQuantity.__new__(cls, name, None, display_latex, None, None, None, False,
+        display_symbol = display_symbol or name
+        display_latex = display_latex or display_symbol
+        return SymQuantity.__new__(cls, name, None, display_latex, None, None, None, False,
             **assumptions)
-        return obj
 
     def __init__(self,
         expr: Basic | float = S.One,
@@ -38,8 +37,8 @@ class Quantity(DimensionSymbolNew, SymQuantity):  # pylint: disable=too-many-anc
         if scale.free_symbols:
             raise UnitsError(f"Argument '{expr}' to function 'Quantity()' should "
                 f"not contain free symbols")
-        dimension = dimension_ if dimension is None else dimension
-        display_symbol = str(self.name) if display_symbol is None else display_symbol
+        dimension = dimension or dimension_
+        display_symbol = display_symbol or str(self.name)
         super().__init__(display_symbol, dimension, display_latex=display_latex)
         SI.set_quantity_dimension(self, dimension)
         SI.set_quantity_scale_factor(self, scale)

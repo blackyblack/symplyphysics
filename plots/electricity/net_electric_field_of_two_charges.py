@@ -23,14 +23,14 @@ position = symbols("position")
 field_of_charge_1 = electric_field.law.rhs.subs({
     electric_field.charge: CHARGE_1,
     electric_field.distance: position - POSITION_OF_CHARGE_1,
-    quantities.vacuum_permittivity: VACUUM_PERMITTIVITY,
 })
 field_of_charge_2 = electric_field.law.rhs.subs({
     electric_field.charge: CHARGE_2,
     electric_field.distance: position - POSITION_OF_CHARGE_2,
-    quantities.vacuum_permittivity: VACUUM_PERMITTIVITY,
 })
 net_field = field_of_charge_1 + field_of_charge_2
+
+net_field = net_field.subs(quantities.vacuum_permittivity, VACUUM_PERMITTIVITY)
 
 print(f"Net field expression:\n{print_expression(net_field)}")
 

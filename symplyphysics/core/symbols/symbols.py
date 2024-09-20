@@ -41,7 +41,7 @@ class DimensionSymbolNew:
         display_latex: Optional[str] = None) -> None:
         self._dimension = dimension
         self._display_name = display_name
-        self._display_latex = self._display_name if display_latex is None else display_latex
+        self._display_latex = display_latex or self._display_name
 
     @property
     def dimension(self) -> Dimension:
@@ -72,7 +72,7 @@ class Symbol(DimensionSymbol, SymSymbol):  # pylint: disable=too-many-ancestors
         display_name: Optional[str] = None,
         dimension: Dimension = Dimension(S.One),
         **_assumptions: Any) -> None:
-        display_name = str(self.name) if display_name is None else display_name
+        display_name = display_name or str(self.name)
         super().__init__(display_name, dimension)
 
 
@@ -92,7 +92,7 @@ class SymbolNew(DimensionSymbolNew, SymSymbol):  # pylint: disable=too-many-ance
         *,
         display_latex: Optional[str] = None,
         **_assumptions: Any) -> None:
-        display_name = str(self.name) if display_symbol is None else display_symbol
+        display_name = display_symbol or str(self.name)
         super().__init__(display_name, dimension, display_latex=display_latex)
 
 
@@ -164,7 +164,7 @@ class Function(DimensionSymbol, UndefinedFunction):
         display_name: Optional[str] = None,
         dimension: Dimension = Dimension(S.One),
         **_options: Any) -> None:
-        display_name = str(cls.name) if display_name is None else display_name  # type: ignore[attr-defined]
+        display_name = display_name or str(cls.name)  # type: ignore[attr-defined]
         super().__init__(display_name, dimension)
 
 
@@ -185,7 +185,7 @@ class FunctionNew(DimensionSymbolNew, UndefinedFunction):
         *,
         display_latex: Optional[str] = None,
         **_options: Any) -> None:
-        display_name = str(cls.name) if display_symbol is None else display_symbol  # type: ignore[attr-defined]
+        display_name = display_symbol or str(cls.name)  # type: ignore[attr-defined]
         super().__init__(display_name, dimension, display_latex=display_latex)
 
     def __repr__(cls) -> str:
