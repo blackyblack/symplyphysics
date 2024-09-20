@@ -24,9 +24,9 @@ resistance = symbols.electrical_resistance
 :symbols:`electrical_resistance` of the conductor.
 """
 
-resistivity = symbols.resistivity
+resistivity = symbols.electrical_resistivity
 """
-:symbols:`resistivity` of the material.
+:symbols:`electrical_resistivity` of the material.
 """
 
 length = symbols.length

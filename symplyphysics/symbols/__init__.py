@@ -81,10 +81,10 @@ __all__ = [
     "magnetic_flux_density",
     "electric_potential",
     "power_factor",
-    "resistivity",
+    "electrical_resistivity",
     "inductance",
     "electric_time_constant",
-    "reactance",
+    "electrical_reactance",
     # optics
     "relative_refractive_index",
     "radiant_exitance",
