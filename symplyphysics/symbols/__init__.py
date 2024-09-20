@@ -10,6 +10,7 @@ from .chemistry import *
 from .classical_mechanics import *
 from .electrodynamics import *
 from .optics import *
+from .relativistic_mechanics import *
 from .thermodynamics import *
 
 __all__ = [
@@ -88,6 +89,8 @@ __all__ = [
     "relative_refractive_index",
     "radiant_exitance",
     "radiant_flux",
+    # relativistic mechanics
+    "lorentz_factor",
     # thermodynamics
     "temperature",
     "adiabatic_index",
