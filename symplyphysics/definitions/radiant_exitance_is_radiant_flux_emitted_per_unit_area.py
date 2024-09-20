@@ -2,36 +2,35 @@
 Radiant exitance is radiant flux emitted per unit area
 ======================================================
 
-*Radiant exitance*, or *radiant emittance* is the radiant flux emitted by a surface per unit area.
+**Radiant exitance**, or **radiant emittance** is the radiant flux emitted by a surface per unit area.
 
 **Notation:**
 
-#. The subscript :math:`e` stands for *energetical* to avoid confusion with photometric quantities.
+#. The subscript :math:`e` stands for *energetic* to avoid confusion with photometric quantities.
 """
 
 from sympy import Eq, Derivative
 from symplyphysics import (
-    units,
     Quantity,
-    SymbolNew,
-    FunctionNew,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_function,
 )
 
-radiant_exitance = SymbolNew("M_e", units.power / units.area)
+radiant_exitance = symbols.radiant_exitance
 """
-Radiant exitance of the surface.
-"""
-
-radiant_flux = FunctionNew("Phi_e(A)", units.power, display_latex="\\Phi_e")
-"""
-Radiant flux, or radiant power, emitted from the surface.
+:symbols:`radiant_exitance` of the surface.
 """
 
-area = SymbolNew("A", units.area)
+radiant_flux = clone_as_function(symbols.radiant_flux, display_symbol="Phi_e(A)")
 """
-The area of the surface.
+:symbols:`radiant_flux` emitted from the surface.
+"""
+
+area = symbols.area
+"""
+:symbols:`area` of the surface.
 """
 
 definition = Eq(radiant_exitance, Derivative(radiant_flux(area), area))

@@ -85,4 +85,6 @@ __all__ = [
     "reactance",
     # optics
     "relative_refractive_index",
+    "radiant_exitance",
+    "radiant_flux",
 ]
