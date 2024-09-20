@@ -169,3 +169,13 @@ mass_flow_rate = SymbolNew("mu", units.mass / units.time, display_latex="\\mu")
 """
 **Mass flow rate** is the mass of a substance which passes per unit of time.
 """
+
+stiffness = SymbolNew("k", units.force / units.length)
+"""
+**Stiffness** is the extent to which an object resists deformation in response to an applied force.
+"""
+
+compliance = SymbolNew("c", units.length / units.force)
+"""
+**Compliance** is the inverse of :symbols:`stiffness`.
+"""

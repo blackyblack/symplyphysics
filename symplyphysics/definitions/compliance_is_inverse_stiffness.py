@@ -8,21 +8,20 @@ how flexible the spring is.
 
 from sympy import Eq
 from symplyphysics import (
-    units,
     Quantity,
-    SymbolNew,
     validate_input,
     validate_output,
+    symbols,
 )
 
-compliance = SymbolNew("c", units.length / units.force)
+compliance = symbols.compliance
 """
-Compliance of the spring.
+:symbols:`compliance` of the spring.
 """
 
-stiffness = SymbolNew("k", units.force / units.length)
+stiffness = symbols.stiffness
 """
-Stiffness of the spring.
+:symbols:`stiffness` of the spring.
 """
 
 definition = Eq(compliance, 1 / stiffness)
