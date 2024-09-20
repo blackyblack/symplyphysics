@@ -2,26 +2,31 @@
 Number density is number of objects per unit volume
 ===================================================
 
-*Number density*, or *concentration*, is the number of particles per unit volume.
+**Number density**, or **concentration**, is the number of particles per unit volume.
 See :doc:`laws.quantities.quantity_is_volumetric_density_times_volume` for a more general law.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, SymbolNew, dimensionless, validate_input, validate_output)
+from sympy import Eq, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+)
 
-number_density = SymbolNew("n", 1 / units.volume)
+number_density = symbols.number_density
 """
-Concentration of particles.
-"""
-
-number_of_objects = SymbolNew("N", dimensionless)
-"""
-Number of particles within the volume.
+:symbols:`number_density` of particles.
 """
 
-volume = SymbolNew("V", units.volume)
+number_of_objects = symbols.positive_number
 """
-Volume in which the particles are located.
+:symbols:`positive_number` of particles within the volume.
+"""
+
+volume = symbols.volume
+"""
+:symbols:`volume` in which the particles are located.
 """
 
 definition = Eq(number_density, number_of_objects / volume)

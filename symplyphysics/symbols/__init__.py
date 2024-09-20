@@ -24,6 +24,7 @@ __all__ = [
     "density",
     "intensity",
     "positive_number",
+    "number_density",
     # classical mechanics
     "force",
     "speed",
