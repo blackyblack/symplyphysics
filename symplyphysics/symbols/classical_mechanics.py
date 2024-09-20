@@ -135,3 +135,9 @@ rotational_inertia = SymbolNew("I", units.mass * units.length**2)
 **Rotational inertia**, also known as **moment of inertia**, is defined relative to a rotational axis
 and is the ratio between the torque applied and the resulting angular acceleration about that axis.
 """
+
+quality_factor = SymbolNew("Q", dimensionless)
+"""
+**Quality factor** or **Q factor** is a dimensionless parameter that describes how underdamped an
+oscillator or resonator is.
+"""

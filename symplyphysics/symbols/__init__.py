@@ -49,6 +49,7 @@ __all__ = [
     "temporal_frequency",
     "sound_intensity_level",
     "rotational_inertia",
+    "quality_factor",
     # thermodynamics
     "temperature",
     "adiabatic_index",
