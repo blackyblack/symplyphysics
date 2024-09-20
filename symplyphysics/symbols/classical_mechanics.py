@@ -164,3 +164,8 @@ potential_energy = SymbolNew("U", units.energy)
 stresses within itself, its electric charge, or other factors. Potential energy is associated with so
 called conservative forces and only depends on the initial and final positions of the body in space.
 """
+
+mass_flow_rate = SymbolNew("mu", units.mass / units.time, display_latex="\\mu")
+"""
+**Mass flow rate** is the mass of a substance which passes per unit of time.
+"""

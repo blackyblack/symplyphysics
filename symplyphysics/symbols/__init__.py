@@ -58,6 +58,7 @@ __all__ = [
     "mechanical_energy",
     "kinetic_energy",
     "potential_energy",
+    "mass_flow_rate",
     # electrodynamics
     "admittance",
     "conductance",
