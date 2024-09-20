@@ -55,3 +55,9 @@ thermal_insulance = SymbolNew("R_val", units.area * units.temperature / units.po
 The **R-value**, or **thermal insulance**, is a measure of how well a two-dimensional barrier, such as a layer of
 insulation, a window or a complete wall or ceiling, resists the conductive flow of heat, in the context of construction.
 """
+
+compressibility_factor = SymbolNew("Z", dimensionless)
+"""
+The **compressibility factor**, also known as the **compression factor** or the **gas deviation factor**,
+describes the deviation of a real gas from ideal gas behavior.
+"""

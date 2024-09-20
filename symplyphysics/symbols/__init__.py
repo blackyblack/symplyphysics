@@ -29,6 +29,7 @@ __all__ = [
     "number_density",
     # chemistry,
     "mass_fraction",
+    "amount_of_substance",
     # classical mechanics
     "force",
     "speed",
@@ -102,4 +103,5 @@ __all__ = [
     "thermal_resistance",
     "thermal_conductivity",
     "thermal_insulance",
+    "compressibility_factor",
 ]
