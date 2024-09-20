@@ -52,6 +52,9 @@ __all__ = [
     "rotational_inertia",
     "quality_factor",
     "momentum",
+    "mechanical_energy",
+    "kinetic_energy",
+    "potential_energy",
     # thermodynamics
     "temperature",
     "adiabatic_index",

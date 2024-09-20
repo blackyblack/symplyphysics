@@ -147,3 +147,20 @@ momentum = SymbolNew("p", units.momentum)
 **Momentum**, more specifically **linear** or **transitional momentum**, is the product of the mass and
 velocity of an object.
 """
+
+mechanical_energy = SymbolNew("E", units.energy)
+"""
+**Mechanical energy** is defined to be the sum of potential energy and kinetic energy.
+"""
+
+kinetic_energy = SymbolNew("K", units.energy)
+"""
+**Kinetic energy** of an object is the form of energy that it possesses due to its motion.
+"""
+
+potential_energy = SymbolNew("U", units.energy)
+"""
+**Potential energy** is the energy held by an object because of its position relative to other objects,
+stresses within itself, its electric charge, or other factors. Potential energy is associated with so
+called conservative forces and only depends on the initial and final positions of the body in space.
+"""
