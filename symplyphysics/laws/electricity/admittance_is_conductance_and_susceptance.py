@@ -19,9 +19,9 @@ admittance = symbols.admittance
 :symbols:`admittance`.
 """
 
-conductance = symbols.conductance
+conductance = symbols.electrical_conductance
 """
-:symbols:`conductance`.
+:symbols:`electrical_conductance`.
 """
 
 susceptance = symbols.susceptance

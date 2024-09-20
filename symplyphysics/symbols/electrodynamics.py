@@ -15,7 +15,7 @@ admittance = SymbolNew("Y", units.conductance)
 of impedance.
 """
 
-conductance = SymbolNew("G", units.conductance)
+electrical_conductance = SymbolNew("G", units.conductance)
 """
 **Conductance** is the ability of charge to flow in a certain path. It is the reciprocal of electrical resistance.
 """

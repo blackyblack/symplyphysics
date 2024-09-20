@@ -62,7 +62,7 @@ __all__ = [
     "mass_flow_rate",
     # electrodynamics
     "admittance",
-    "conductance",
+    "electrical_conductance",
     "susceptance",
     "electrical_impedance",
     "electromotive_force",
