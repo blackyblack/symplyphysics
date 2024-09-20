@@ -129,3 +129,9 @@ sound_intensity_level = SymbolNew("L_I", dimensionless)
 """
 **Sound intensity level** is the measure of the *intensity* of a sound relative to a reference value.
 """
+
+rotational_inertia = SymbolNew("I", units.mass * units.length**2)
+"""
+**Rotational inertia**, also known as **moment of inertia**, is defined relative to a rotational axis
+and is the ratio between the torque applied and the resulting angular acceleration about that axis.
+"""

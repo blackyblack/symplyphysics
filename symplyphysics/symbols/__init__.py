@@ -47,6 +47,7 @@ __all__ = [
     "thickness",
     "temporal_frequency",
     "sound_intensity_level",
+    "rotational_inertia",
     # thermodynamics
     "temperature",
     "adiabatic_index",
