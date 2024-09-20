@@ -6,22 +6,28 @@ Power is the amount of energy transferred or converted per unit time. Equally, i
 rate at which work is done.
 """
 
-from sympy import (Eq, Derivative)
-from symplyphysics import (units, Quantity, FunctionNew, SymbolNew, validate_input, validate_output)
+from sympy import Eq, Derivative
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    clone_as_function,
+)
 
-power = FunctionNew("P(t)", units.power, display_latex="P")
+power = clone_as_function(symbols.power, display_symbol="P(t)")
 """
-Power as a function of time.
-"""
-
-energy = FunctionNew("E(t)", units.energy, display_latex="E")
-"""
-Energy as a function of time.
+:symbols:`power` as a function of time.
 """
 
-time = SymbolNew("t", units.time)
+energy = clone_as_function(symbols.energy, display_symbol="E(t)")
 """
-Time.
+:symbols:`energy` as a function of time.
+"""
+
+time = symbols.time
+"""
+:symbols:`time`.
 """
 
 definition = Eq(power(time), Derivative(energy(time), time))
