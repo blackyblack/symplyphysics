@@ -6,10 +6,11 @@ Symbols represent physical quantities, units, mathematical operations and relati
 """
 
 from .basic import *
+from .chemistry import *
 from .classical_mechanics import *
-from .thermodynamics import *
 from .electrodynamics import *
 from .optics import *
+from .thermodynamics import *
 
 __all__ = [
     # basic
@@ -25,6 +26,8 @@ __all__ = [
     "intensity",
     "positive_number",
     "number_density",
+    # chemistry,
+    "mass_fraction",
     # classical mechanics
     "force",
     "speed",
@@ -55,15 +58,6 @@ __all__ = [
     "mechanical_energy",
     "kinetic_energy",
     "potential_energy",
-    # thermodynamics
-    "temperature",
-    "adiabatic_index",
-    "heat_capacity",
-    "thermal_expansion_coefficient",
-    "thermodynamic_compressibility",
-    "thermal_resistance",
-    "thermal_conductivity",
-    "thermal_insulance",
     # electrodynamics
     "admittance",
     "conductance",
@@ -93,4 +87,13 @@ __all__ = [
     "relative_refractive_index",
     "radiant_exitance",
     "radiant_flux",
+    # thermodynamics
+    "temperature",
+    "adiabatic_index",
+    "heat_capacity",
+    "thermal_expansion_coefficient",
+    "thermodynamic_compressibility",
+    "thermal_resistance",
+    "thermal_conductivity",
+    "thermal_insulance",
 ]
