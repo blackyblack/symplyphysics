@@ -141,3 +141,9 @@ quality_factor = SymbolNew("Q", dimensionless)
 **Quality factor** or **Q factor** is a dimensionless parameter that describes how underdamped an
 oscillator or resonator is.
 """
+
+momentum = SymbolNew("p", units.momentum)
+"""
+**Momentum**, more specifically **linear** or **transitional momentum**, is the product of the mass and
+velocity of an object.
+"""

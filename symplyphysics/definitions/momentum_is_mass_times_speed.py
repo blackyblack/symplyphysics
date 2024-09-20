@@ -6,16 +6,16 @@ Momentum is a physical quantity equal to the product of the object's speed and i
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, SymbolNew, validate_input, validate_output, symbols)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols)
 
-momentum = SymbolNew("p", units.momentum)
+momentum = symbols.momentum
 """
-Momentum of the object.
+:symbols:`momentum` of the object.
 """
 
-speed = SymbolNew("v", units.speed)
+speed = symbols.speed
 """
-Speed of the object.
+:symbols:`speed` of the object.
 """
 
 mass = symbols.mass

@@ -51,6 +51,7 @@ __all__ = [
     "sound_intensity_level",
     "rotational_inertia",
     "quality_factor",
+    "momentum",
     # thermodynamics
     "temperature",
     "adiabatic_index",
