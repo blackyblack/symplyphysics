@@ -14,7 +14,7 @@ conductance = symbols.conductance
 :symbols:`conductance` of the object.
 """
 
-resistance = symbols.resistance
+resistance = symbols.electrical_resistance
 """
 symbols:`resistance` of the object.
 """

@@ -19,9 +19,9 @@ from sympy import (Eq, solve)
 from symplyphysics import (Quantity, validate_input,
     validate_output, symbols)
 
-resistance = symbols.resistance
+resistance = symbols.electrical_resistance
 """
-:symbols:`resistance` of the conductor.
+:symbols:`electrical_resistance` of the conductor.
 """
 
 resistivity = symbols.resistivity

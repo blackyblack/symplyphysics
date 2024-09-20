@@ -20,9 +20,9 @@ time_constant = symbols.electric_time_constant
 :symbols:`electric_time_constant` of the circuit.
 """
 
-resistance = symbols.resistance
+resistance = symbols.electrical_resistance
 """
-:symbols:`resistance` of the resistor.
+:symbols:`electrical_resistance` of the resistor.
 """
 
 capacitance = symbols.capacitance

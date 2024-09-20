@@ -73,7 +73,7 @@ __all__ = [
     "charge",
     "voltage",
     "current",
-    "resistance",
+    "electrical_resistance",
     "electric_dipole_moment",
     "electric_field_strength",
     "surface_charge_density",
