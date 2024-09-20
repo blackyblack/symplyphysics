@@ -9,6 +9,7 @@ from .basic import *
 from .classical_mechanics import *
 from .thermodynamics import *
 from .electrodynamics import *
+from .optics import *
 
 __all__ = [
     # basic
@@ -82,4 +83,6 @@ __all__ = [
     "inductance",
     "electric_time_constant",
     "reactance",
+    # optics
+    "relative_refractive_index",
 ]

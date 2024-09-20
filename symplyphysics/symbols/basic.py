@@ -6,8 +6,8 @@ Symbols of fundamental physical quantities.
 """
 
 from sympy.physics import units
-from symplyphysics import dimensionless
-from symplyphysics.core.symbols.symbols import SymbolNew
+from ..core.dimensions import dimensionless
+from ..core.symbols.symbols import SymbolNew
 
 time = SymbolNew("t", units.time)
 """
