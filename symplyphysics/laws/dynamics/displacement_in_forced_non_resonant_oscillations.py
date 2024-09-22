@@ -127,7 +127,6 @@ _dsolved = _dsolved.subs({"C1": 0, "C2": 0})
 assert expr_equals(_dsolved, law.rhs)
 
 
-#pylint: disable=too-many-arguments
 @validate_input(
     oscillator_mass_=mass,
     natural_angular_frequency_=natural_angular_frequency,
@@ -145,6 +144,7 @@ def calculate_driven_displacement(
     driving_phase_lag_: Quantity | float,
     time_: Quantity,
 ) -> Quantity:
+    # pylint: disable=too-many-arguments, too-many-positional-arguments
     result = law.rhs.subs({
         mass: oscillator_mass_,
         natural_angular_frequency: natural_angular_frequency_,

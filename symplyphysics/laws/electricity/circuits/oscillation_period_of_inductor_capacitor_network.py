@@ -18,6 +18,7 @@ from sympy import (
     simplify,
     Symbol as SymSymbol,
     Function as SymFunction,
+    symbols as sym_symbols,
 )
 from symplyphysics import (
     Quantity,
@@ -69,8 +70,8 @@ law = Eq(period, 2 * pi * sqrt(inductance * capacitance))
 ## 1. Prove that _capacitor_current(_time) = _inductor_current(_time)
 
 _time = SymSymbol("_time")
-_capacitor_current = SymFunction("_capacitor_current")
-_inductor_current = SymFunction("_inductor_current")
+_capacitor_current = sym_symbols("_capacitor_current", cls=SymFunction)
+_inductor_current = sym_symbols("_inductor_current", cls=SymFunction)
 
 _local_index_ = Idx("_local_index_", (1, 2))
 _two_currents_law = kirchhoff_law.law.subs(kirchhoff_law.index, _local_index_).doit()
@@ -88,8 +89,8 @@ assert _capacitor_current_eq.rhs == _inductor_current(_time)
 
 ## 2. Prove that _capacitor_voltage(_time) = _inductor_voltage(_time)
 
-_capacitor_voltage = SymFunction("_capacitor_voltage")
-_inductor_voltage = SymFunction("_inductor_voltage")
+_capacitor_voltage = sym_symbols("_capacitor_voltage", cls=SymFunction)
+_inductor_voltage = sym_symbols("_inductor_voltage", cls=SymFunction)
 
 _two_voltages_law = kirchhoff_law_2.law.subs(global_index, _local_index_).doit()
 # capacitor is voltage source, inductor is voltage consumer

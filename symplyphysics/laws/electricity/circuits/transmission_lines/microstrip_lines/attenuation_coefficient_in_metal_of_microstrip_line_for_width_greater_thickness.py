@@ -44,7 +44,6 @@ law = Eq(
     expression_2 * (expression_1 + 0.667 * expression_1 / (expression_1 + 1.444)) * expression_3)
 
 
-#pylint: disable=too-many-arguments
 @validate_input(surface_resistance_=surface_resistance,
     wave_resistance_=wave_resistance,
     thickness_of_substrate_=thickness_of_substrate,
@@ -55,6 +54,7 @@ law = Eq(
 def calculate_attenuation_coefficient(surface_resistance_: Quantity, wave_resistance_: Quantity,
     thickness_of_substrate_: Quantity, effective_width_: Quantity, strip_thickness_: Quantity,
     effective_permittivity_: float) -> Quantity:
+    # pylint: disable=too-many-arguments, too-many-positional-arguments
     if thickness_of_substrate_.scale_factor >= effective_width_.scale_factor:
         raise ValueError("The thickness of substrate must be less than the effective width")
 

@@ -214,13 +214,13 @@ class SymbolPrinter(PrettyPrinter):
     def _print_SymbolIndexed(self, e: Expr, bold_name: bool = False) -> prettyForm:
         return self._print_Symbol(e, bold_name)
 
-    # pylint: disable-next=too-many-arguments
     def _print_Function(self,
         e: Expr,
         sort: bool = False,
         func_name: Optional[str] = None,
         left: str = "(",
         right: str = ")") -> prettyForm:
+        # pylint: disable=too-many-arguments, too-many-positional-arguments
         # optional argument func_name for supplying custom names
         # works only for applied functions
         func_name = e.func.display_name if isinstance(e.func, (Function, FunctionNew)) else func_name

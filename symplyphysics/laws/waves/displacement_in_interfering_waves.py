@@ -120,7 +120,6 @@ _sum_of_waves = (_first_wave + _second_wave).simplify()
 assert expr_equals(_sum_of_waves, law.rhs)
 
 
-#pylint: disable=too-many-arguments
 @validate_input(
     phase_shift_=phase_shift,
     angular_wavenumber_=angular_wavenumber,
@@ -137,6 +136,7 @@ def calculate_displacement(
     position_: Quantity,
     time_: Quantity,
 ) -> Quantity:
+    # pylint: disable=too-many-arguments, too-many-positional-arguments
     result = law.rhs.subs({
         amplitude: amplitude_,
         phase_shift: scale_factor(phase_shift_),

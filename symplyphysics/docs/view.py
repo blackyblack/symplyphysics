@@ -83,9 +83,9 @@ def print_law(title: str, description: str, items: Sequence[MemberWithDoc | Func
 # TODO: split to smaller functions
 
 
-#pylint: disable-next=too-many-arguments
 def print_package(title: str, description: str, items: Sequence[MemberWithDoc | FunctionWithDoc],
     doc_name: str, laws: Sequence[str], packages: Sequence[str]) -> str:
+    # pylint: disable=too-many-arguments, too-many-positional-arguments
     package_content = "" + title + "\n" + ("=" * len(title)) + "\n\n" + description + "\n\n"
     package_content = package_content + ".. py:currentmodule:: " + doc_name + "\n\n"
     if len(packages) > 0 or len(laws) > 0:

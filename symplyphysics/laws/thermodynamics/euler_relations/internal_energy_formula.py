@@ -100,7 +100,6 @@ Latex:
     particle_count_=particle_count,
 )
 @validate_output(internal_energy)
-# pylint: disable=too-many-arguments
 def calculate_internal_energy(
     temperature_: Quantity,
     entropy_: Quantity,
@@ -109,6 +108,7 @@ def calculate_internal_energy(
     chemical_potential_: Quantity,
     particle_count_: int,
 ) -> Quantity:
+    # pylint: disable=too-many-arguments, too-many-positional-arguments
     result = law.rhs.subs({
         temperature: temperature_,
         entropy: entropy_,

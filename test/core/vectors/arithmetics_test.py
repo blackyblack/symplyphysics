@@ -7,8 +7,6 @@ from symplyphysics.core.vectors.arithmetics import (add_cartesian_vectors, cross
     dot_vectors, equal_vectors, scale_vector, vector_magnitude, vector_unit, project_vector,
     reject_cartesian_vector, ScalarValue)
 
-# pylint: disable=too-many-locals
-
 Args = namedtuple("Args", ["C"])
 
 

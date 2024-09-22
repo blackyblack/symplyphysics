@@ -54,7 +54,6 @@ def print_law() -> str:
     return print_expression(law)
 
 
-#pylint: disable=too-many-arguments
 @validate_input(relative_permittivity_=relative_permittivity,
     relative_permeability_=relative_permeability,
     surface_resistance_outer_=surface_resistance_outer,
@@ -65,6 +64,7 @@ def print_law() -> str:
 def calculate_attenuation_coefficient(relative_permittivity_: float, relative_permeability_: float,
     surface_resistance_outer_: Quantity, surface_resistance_inner_: Quantity,
     outer_diameter_: Quantity, inner_diameter_: Quantity) -> Quantity:
+    # pylint: disable=too-many-arguments, too-many-positional-arguments
     if outer_diameter_.scale_factor <= inner_diameter_.scale_factor:
         raise ValueError("The outer diameter must be greater than the inner diameter")
     result_expr = solve(law, attenuation_coefficient, dict=True)[0][attenuation_coefficient]

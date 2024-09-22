@@ -34,8 +34,8 @@ class SymbolLatexPrinter(LatexPrinter):
     def _print_SymbolIndexedNew(self, expr: Any) -> str:
         return self._print_SymbolNew(expr)
 
-    #pylint: disable-next=too-many-branches
     def _print_Function(self, expr: Any, exp: Any = None) -> str:
+        # pylint: disable=too-many-branches
         func = expr.func.__name__
         if isinstance(expr, DimensionSymbolNew):
             func = expr.display_latex
