@@ -33,7 +33,7 @@ Current flowing through the circuit.
 
 law = Eq(inductance, magnetic_flux / current)
 """
-:laws:symbols::
+:laws:symbol::
 
 :laws:latex::
 """

@@ -176,7 +176,6 @@ assert expr_equals(_free_energy_change, law.rhs)
     particle_count_change_=particle_count_change,
 )
 @validate_output(free_energy_change)
-# pylint: disable=too-many-arguments
 def calculate_free_energy_change(
     entropy_: Quantity,
     temperature_change_: Quantity,
@@ -185,6 +184,7 @@ def calculate_free_energy_change(
     chemical_potential_: Quantity,
     particle_count_change_: int,
 ) -> Quantity:
+    # pylint: disable=too-many-arguments, too-many-positional-arguments
     result = law.rhs.subs({
         entropy: entropy_,
         temperature_change: temperature_change_,

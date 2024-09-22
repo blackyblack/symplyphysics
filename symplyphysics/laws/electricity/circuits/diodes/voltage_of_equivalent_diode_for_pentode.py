@@ -41,7 +41,6 @@ expression_3 = 1 + ((distance_to_anode / distance_to_first_grid)**Rational(4,
 law = Eq(voltage_of_equivalent_diode, (expression_1 + expression_2) / expression_3)
 
 
-#pylint: disable=too-many-arguments
 @validate_input(voltage_of_first_grid_=voltage_of_first_grid,
     voltage_of_second_grid_=voltage_of_second_grid,
     voltage_of_third_grid_=voltage_of_third_grid,
@@ -58,6 +57,7 @@ def calculate_voltage_of_equivalent_diode(voltage_of_first_grid_: Quantity,
     coefficient_direct_permeability_of_second_grid_: float,
     coefficient_direct_permeability_of_third_grid_: float, distance_to_anode_: Quantity,
     distance_to_first_grid_: Quantity) -> Quantity:
+    # pylint: disable=too-many-arguments, too-many-positional-arguments
     if distance_to_anode_.scale_factor <= distance_to_first_grid_.scale_factor:
         raise ValueError(
             "The distance to the anode should be greater than the distance to the grid.")

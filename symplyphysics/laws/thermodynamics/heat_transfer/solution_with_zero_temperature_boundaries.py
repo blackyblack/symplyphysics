@@ -110,7 +110,6 @@ Latex:
 """
 
 
-# pylint: disable=too-many-arguments
 @validate_input(
     coefficient_=scaling_coefficient,
     thermal_diffusivity_=thermal_diffusivity,
@@ -128,6 +127,7 @@ def calculate_temperature(
     position_: Quantity,
     time_: Quantity,
 ) -> Quantity:
+    # pylint: disable=too-many-arguments, too-many-positional-arguments
     if maximum_position_.scale_factor <= 0:
         raise ValueError("maximum position must be positive")
     if position_.scale_factor < 0:

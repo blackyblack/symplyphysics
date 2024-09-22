@@ -96,7 +96,6 @@ Latex:
 """
 
 
-#pylint: disable=too-many-arguments
 @validate_input(
     initial_position_=displacement,
     initial_velocity_=units.velocity,
@@ -118,6 +117,7 @@ def calculate_displacement(
     driving_phase_lag_: Quantity | float,
     time_: Quantity,
 ) -> Quantity:
+    # pylint: disable=too-many-arguments, too-many-positional-arguments
     initial_conditions = {
         displacement(0): initial_position_,
         displacement(time).diff(time).subs(time, 0): initial_velocity_,

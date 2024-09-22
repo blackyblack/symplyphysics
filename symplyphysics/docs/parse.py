@@ -118,8 +118,8 @@ def find_description(content: str) -> Optional[str]:
     return "\n".join(content_lines)
 
 
-#pylint: disable-next=too-many-branches
 def find_members_and_functions(module_name: str) -> list[MemberWithDoc | FunctionWithDoc]:
+    # pylint: disable=too-many-branches
     law_functions: list[FunctionWithDoc] = []
     law_members: list[str] = []
     current_member: Optional[str] = None

@@ -58,7 +58,6 @@ def print_law() -> str:
     return print_expression(law)
 
 
-#pylint: disable=too-many-arguments
 @validate_input(
     thermal_effect_=thermal_effect,
     entropy_=entropy,
@@ -72,6 +71,7 @@ def print_law() -> str:
 def calculate_isobaric_potential(thermal_effect_: Quantity, entropy_: Quantity,
     temperature_: Quantity, heat_capacity_: Quantity, coefficient_capacity_1_: Quantity,
     coefficient_capacity_2_: Quantity, coefficient_capacity_3_: Quantity) -> Quantity:
+    # pylint: disable=too-many-arguments, too-many-positional-arguments
     result_expr = solve(law, isobaric_potential, dict=True)[0][isobaric_potential]
     result_expr = result_expr.subs({
         thermal_effect: thermal_effect_,

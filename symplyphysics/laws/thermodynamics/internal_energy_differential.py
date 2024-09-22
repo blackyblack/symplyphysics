@@ -131,7 +131,6 @@ _expr_from_law = law.rhs.subs({particle_count_change: 0})
 assert expr_equals(_expr_from_law, _internal_energy_change)
 
 
-#pylint: disable=too-many-arguments
 @validate_input(
     temperature_=temperature,
     entropy_change_=entropy_change,
@@ -149,6 +148,7 @@ def calculate_internal_energy_change(
     chemical_potential_: Quantity,
     particle_count_change_: int,
 ) -> Quantity:
+    # pylint: disable=too-many-arguments, too-many-positional-arguments
     result = law.rhs.subs({
         temperature: temperature_,
         entropy_change: entropy_change_,

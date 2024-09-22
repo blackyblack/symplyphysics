@@ -55,7 +55,6 @@ def print_law() -> str:
     return print_expression(law)
 
 
-#pylint: disable=too-many-arguments
 @validate_input(surface_resistance_=surface_resistance,
     first_index_=first_index,
     second_index_=second_index,
@@ -68,6 +67,7 @@ def print_law() -> str:
 def calculate_attenuation_coefficient(surface_resistance_: Quantity, first_index_: float,
     second_index_: float, width_: Quantity, height_: Quantity, resistance_of_medium_: Quantity,
     signal_wavelength_: Quantity, critical_wavelength_: Quantity) -> Quantity:
+    # pylint: disable=too-many-arguments, too-many-positional-arguments
     result_expr = solve(law, attenuation_coefficient, dict=True)[0][attenuation_coefficient]
     result_expr = result_expr.subs({
         surface_resistance: surface_resistance_,

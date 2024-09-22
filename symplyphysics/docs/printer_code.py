@@ -54,6 +54,7 @@ class SymbolCodePrinter(StrPrinter):
         return f"{self.parenthesize(expr.base, prec, strict=False)}^{e}"
 
     def _print_Mul(self, expr: Any) -> str:
+        # pylint: disable=too-many-branches, too-many-statements
         prec = precedence(expr)
 
         # Check for unevaluated Mul. In this case we need to make sure the
@@ -98,7 +99,7 @@ class SymbolCodePrinter(StrPrinter):
             d = " * ".join(dfactors)
             if len(dfactors) > 1:
                 return f"{n} / ({d})"
-            elif dfactors:
+            if dfactors:
                 return f"{n} / {d}"
             return n
 
@@ -162,11 +163,10 @@ class SymbolCodePrinter(StrPrinter):
 
         if not b:
             return sign + " * ".join(a_str)
-        elif len(b) == 1:
+        if len(b) == 1:
             return sign + " * ".join(a_str) + " / " + b_str[0]
-        else:
-            mul_str = " * ".join(b_str)
-            return sign + " * ".join(a_str) + f" / ({mul_str})"
+        mul_str = " * ".join(b_str)
+        return sign + " * ".join(a_str) + f" / ({mul_str})"
 
     def _print_Relational(self, expr: Any) -> str:
         lhs_code = self._print(expr.lhs)

@@ -16,7 +16,7 @@ as well as by the magnetic field and it does not depend on the particle speed.
 """
 
 from sympy import (Eq, solve, pi, symbols as sympy_symbols)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
+from symplyphysics import (Quantity, validate_input,
     validate_output, symbols, Vector, vector_magnitude)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity.vector import lorentz_force_via_electromagnetic_field as _lorentz_law

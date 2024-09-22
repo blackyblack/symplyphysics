@@ -25,7 +25,7 @@ plots = ["matplotlib"]
 dev = [
   "pytest",
   "mypy",
-  "pylint",
+  "pylint>=3.3.0",
   "Sphinx",
   "sphinx-sitemap",
 ]

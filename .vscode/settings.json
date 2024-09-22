@@ -11,6 +11,7 @@
   "python.testing.pytestArgs": [
     "test"
   ],
+  "pylint.args": ["--disable=unknown-option-value"],
   "python.testing.unittestEnabled": false,
   "python.testing.pytestEnabled": true
 }

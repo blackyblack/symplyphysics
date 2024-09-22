@@ -31,7 +31,7 @@ relative_permittivity = symbols.relative_permittivity
 
 law = Eq(absolute_permittivity, quantities.vacuum_permittivity * relative_permittivity)
 """
-:laws:symbols::
+:laws:symbol::
 
 :laws:latex::
 """

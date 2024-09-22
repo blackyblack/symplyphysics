@@ -16,7 +16,7 @@ Electric :symbols:`power`.
 
 current = symbols.current
 """
-Electric ;symbols:`current`.
+Electric :symbols:`current`.
 """
 
 voltage = symbols.voltage
