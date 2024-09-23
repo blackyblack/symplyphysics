@@ -6,9 +6,12 @@ Symbols represent physical quantities, units, mathematical operations and relati
 """
 
 from .basic import *
+from .chemistry import *
 from .classical_mechanics import *
-from .thermodynamics import *
 from .electrodynamics import *
+from .optics import *
+from .relativistic_mechanics import *
+from .thermodynamics import *
 
 __all__ = [
     # basic
@@ -22,6 +25,11 @@ __all__ = [
     "radius_of_curvature",
     "density",
     "intensity",
+    "positive_number",
+    "number_density",
+    # chemistry,
+    "mass_fraction",
+    "amount_of_substance",
     # classical mechanics
     "force",
     "speed",
@@ -40,14 +48,24 @@ __all__ = [
     "damping_ratio",
     "volume",
     "impulse",
-    # thermodynamics
-    "temperature",
-    "adiabatic_index",
-    "heat_capacity",
-    "thermal_expansion_coefficient",
+    "position",
+    "phase_speed",
+    "pressure",
+    "thickness",
+    "temporal_frequency",
+    "sound_intensity_level",
+    "rotational_inertia",
+    "quality_factor",
+    "momentum",
+    "mechanical_energy",
+    "kinetic_energy",
+    "potential_energy",
+    "mass_flow_rate",
+    "stiffness",
+    "compliance",
     # electrodynamics
     "admittance",
-    "conductance",
+    "electrical_conductance",
     "susceptance",
     "electrical_impedance",
     "electromotive_force",
@@ -58,7 +76,7 @@ __all__ = [
     "charge",
     "voltage",
     "current",
-    "resistance",
+    "electrical_resistance",
     "electric_dipole_moment",
     "electric_field_strength",
     "surface_charge_density",
@@ -66,8 +84,24 @@ __all__ = [
     "magnetic_flux_density",
     "electric_potential",
     "power_factor",
-    "resistivity",
+    "electrical_resistivity",
     "inductance",
     "electric_time_constant",
-    "reactance",
+    "electrical_reactance",
+    # optics
+    "relative_refractive_index",
+    "radiant_exitance",
+    "radiant_flux",
+    # relativistic mechanics
+    "lorentz_factor",
+    # thermodynamics
+    "temperature",
+    "adiabatic_index",
+    "heat_capacity",
+    "thermal_expansion_coefficient",
+    "thermodynamic_compressibility",
+    "thermal_resistance",
+    "thermal_conductivity",
+    "thermal_insulance",
+    "compressibility_factor",
 ]

@@ -10,15 +10,17 @@ be inertial during rotation. It is a rotational analog of mass in linear motion.
 #. The object is a material point, rigid and uniform.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols)
+from sympy import Eq, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+)
 
-rotational_inertia = Symbol("rotational_inertia", units.mass * units.area)
+rotational_inertia = symbols.rotational_inertia
 """
-Rotational inertia of the material point.
-
-Symbol:
-    :code:`I`
+:symbols:`rotational_inertia` of the material point.
 """
 
 mass = symbols.mass
@@ -26,21 +28,16 @@ mass = symbols.mass
 :symbols:`mass` of the material point.
 """
 
-radial_distance = Symbol("radial_distance", units.length)
+radial_distance = symbols.distance_to_axis
 """
-Distance to the axis of rotation.
-
-Symbol:
-    :code:`r`
+:symbols:`distance_to_axis` of rotation.
 """
 
 definition = Eq(rotational_inertia, mass * radial_distance**2)
 """
-:code:`I = m * r^2`
+:laws:symbol::
 
-Latex:
-    .. math::
-        I = m r^2
+:laws:latex::
 """
 
 

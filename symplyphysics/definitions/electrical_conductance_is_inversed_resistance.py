@@ -9,12 +9,12 @@ It is defined as the inverse of resistance.
 from sympy import (Eq, solve)
 from symplyphysics import (Quantity, validate_input, validate_output, symbols)
 
-conductance = symbols.conductance
+conductance = symbols.electrical_conductance
 """
-:symbols:`conductance` of the object.
+:symbols:`electrical_conductance` of the object.
 """
 
-resistance = symbols.resistance
+resistance = symbols.electrical_resistance
 """
 symbols:`resistance` of the object.
 """

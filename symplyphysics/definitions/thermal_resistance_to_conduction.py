@@ -9,50 +9,32 @@ a material of given thickness.
 
 from sympy import Eq
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
 )
 
-# Definition: R = L/k
-## R - thermal resistance to conduction, also known as R-value
-## L - thickness of slab
-## k - thermal conductivity of material
-
-thermal_resistance = Symbol("thermal_resistance", units.area * units.temperature / units.power)
+thermal_insulance = symbols.thermal_insulance
 """
-Thermal resistance to conduction of the insulator, also called R-value.
-
-Symbol:
-    :code:`R`
+:symbols:`thermal_insulance` of the insulator, also called an **R-value**.
 """
 
-slab_thickness = Symbol("slab_thickness", units.length)
+slab_thickness = symbols.thickness
 """
-Thickness of the insulator.
-
-Symbol:
-    :code:`l`
+:symbols:`thickness` of the insulator.
 """
 
-thermal_conductivity = Symbol("thermal_conductivity",
-    units.power / (units.length * units.temperature))
+thermal_conductivity = symbols.thermal_conductivity
 """
-Thermal conductivity of the insulating material.
-
-Symbol:
-    :code:`k`
+:symbols:`thermal_conductivity` of the insulating material.
 """
 
-definition = Eq(thermal_resistance, slab_thickness / thermal_conductivity)
-r"""
-:code:`R = l / k`
+definition = Eq(thermal_insulance, slab_thickness / thermal_conductivity)
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        R = \frac{l}{k}
+:laws:latex::
 """
 
 
@@ -60,8 +42,8 @@ Latex:
     slab_thickness_=slab_thickness,
     thermal_conductivity_=thermal_conductivity,
 )
-@validate_output(thermal_resistance)
-def calculate_thermal_resistance(
+@validate_output(thermal_insulance)
+def calculate_thermal_insulance(
     slab_thickness_: Quantity,
     thermal_conductivity_: Quantity,
 ) -> Quantity:

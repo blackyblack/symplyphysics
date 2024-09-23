@@ -2,7 +2,7 @@ r"""
 Thermodynamic compressibility
 =============================
 
-*Compressibility*, or the *coefficient of compressibility*, is a measure of the instantaneous
+**Compressibility**, or the **coefficient of compressibility**, is a measure of the instantaneous
 relative volume change of a fluid or solid as a response to pressure or mean stress change.
 
 **Notes:**
@@ -16,45 +16,36 @@ relative volume change of a fluid or solid as a response to pressure or mean str
 
 from sympy import Eq, Derivative
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
-    Function,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_function,
 )
 from symplyphysics.core.geometry.line import two_point_function, Point2D
 
-compressibility = Symbol("compressibility", 1 / units.pressure)
-r"""
-Compressibility of the gas.
-
-Symbol:
-    :code:`beta`
-
-Latex:
-    :math:`\beta`
+compressibility = symbols.thermodynamic_compressibility
+"""
+:symbols:`thermodynamic_compressibility` of the gas.
 """
 
-volume = Function("volume", units.volume)
+volume = clone_as_function(symbols.volume, display_symbol="V(p)")
 """
-Volume of the gas as a function of pressure and other parameters.
-
-Symbol:
-    :code:`V(p)`
+:symbols:`volume` of the gas as a function of pressure and other parameters.
 """
 
-pressure = Symbol("pressure", units.pressure)
+pressure = symbols.pressure
 """
-Pressure in the gas.
-
-Symbol:
-    :code:`p`
+:symbols:`pressure` in the gas.
 """
 
 definition = Eq(compressibility, -1 * Derivative(volume(pressure), pressure) / volume(pressure))
 r"""
-:code:`beta = -1 / V(p) * Derivative(V(p), p)`
+:laws:symbol::
+
+.. only:: comment
+
+    The derivative is partial since more parameters are needed to evaluate it properly
 
 Latex:
     .. math::

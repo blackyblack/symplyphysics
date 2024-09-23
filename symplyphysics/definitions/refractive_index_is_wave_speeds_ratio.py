@@ -15,52 +15,42 @@ slower the wave propagates in the refracting medium relative to the incident med
 
 from sympy import Eq, solve
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
-    dimensionless,
     validate_input,
     validate_output,
     convert_to_float,
+    symbols,
+    clone_as_symbol,
 )
 
-relative_refractive_index = Symbol("relative_refractive_index", dimensionless)
+relative_refractive_index = symbols.relative_refractive_index
 """
-Relative refractive index between two media.
-
-Symbol:
-    :code:`n`
+:symbols:`relative_refractive_index` between the two media.
 """
 
-incident_wave_speed = Symbol("incident_wave_speed", units.velocity)
+incident_wave_speed = clone_as_symbol(
+    symbols.phase_speed,
+    display_symbol="v_incident",
+    display_latex="v_\\text{incident}",
+)
 r"""
-Speed of the incident wave.
-
-Symbol:
-    :code:`v_incident`
-
-Latex:
-    :math:`v_\text{incident}`
+:symbols:`phase_speed` of the incident wave.
 """
 
-refracted_wave_speed = Symbol("refracted_wave_speed", units.velocity)
+refracted_wave_speed = clone_as_symbol(
+    symbols.phase_speed,
+    display_symbol="v_refracted",
+    display_latex="v_\\text{refracted}",
+)
 r"""
-Speed of the refracted wave.
-
-Symbol:
-    :code:`v_refracted`
-
-Latex:
-    :math:`v_\text{refracted}`
+:symbols:`phase_speed` of the refracted wave.
 """
 
 definition = Eq(relative_refractive_index, incident_wave_speed / refracted_wave_speed)
-r"""
-:code:`n = v_incident / v_refracted`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        n = \frac{v_\text{incident}}{v_\text{refracted}}
+:laws:latex::
 """
 
 

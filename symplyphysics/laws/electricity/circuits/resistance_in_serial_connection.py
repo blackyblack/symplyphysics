@@ -25,12 +25,12 @@ from symplyphysics.laws.electricity import (
     current_is_voltage_over_resistance as _ohm_law,
 )
 
-total_resistance = symbols.resistance
+total_resistance = symbols.electrical_resistance
 """
 Total resistance of the circuit.
 """
 
-resistance = clone_as_indexed(symbols.resistance, display_symbol="R[i]", display_latex="R_i")
+resistance = clone_as_indexed(symbols.electrical_resistance, display_symbol="R[i]", display_latex="R_i")
 r"""
 Resistance of the :math:`i`-th component.
 """

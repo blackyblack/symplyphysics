@@ -7,19 +7,21 @@ The Period is inversely proportional to the angular frequency of oscillations. S
 :doc:`laws.kinematics.average_angular_speed_is_angular_distance_over_time` for additional information.
 """
 
-from sympy import (Eq, solve, pi)
-from symplyphysics import (units, Quantity, SymbolNew, validate_input, validate_output)
+from sympy import Eq, solve, pi
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.kinematics import average_angular_speed_is_angular_distance_over_time as frequency_def
+from symplyphysics.laws.kinematics import (
+    average_angular_speed_is_angular_distance_over_time as frequency_def,
+)
 
-period = SymbolNew("T", units.time)
+period = symbols.period
 """
-Period of oscillations.
+:symbols:`period` of oscillations.
 """
 
-angular_frequency = SymbolNew("w", units.frequency, display_latex="\\omega")
+angular_frequency = symbols.angular_frequency
 """
-Angular, or circular, frequency of oscillations.
+:symbols:`angular_frequency` of oscillations.
 """
 
 law = Eq(period, 2 * pi / angular_frequency)

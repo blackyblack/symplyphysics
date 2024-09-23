@@ -12,33 +12,27 @@ at constant pressure.
 
 from sympy import Eq, Derivative
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
-    Function,
     validate_input,
     validate_output,
     symbols,
+    clone_as_symbol,
+    clone_as_function,
 )
 from symplyphysics.core.geometry.line import two_point_function, Point2D
 
-volumetric_expansion_coefficient = Symbol("volumetric_expansion_coefficient", 1 / units.temperature)
-r"""
-Volumetric coefficient of thermal expansion.
-
-Symbol:
-    :code:`alpha_V`
-
-Latex:
-    :math:`\alpha_V`
+volumetric_expansion_coefficient = clone_as_symbol(
+    symbols.thermal_expansion_coefficient,
+    display_symbol="alpha_V",
+    display_latex="\\alpha_V",
+)
+"""
+Volumetric :symbols:`thermal_expansion_coefficient`.
 """
 
-volume = Function("volume", units.volume)
+volume = clone_as_function(symbols.volume, display_symbol="V(T, p)")
 """
-Volume of the body as a function of temperature and pressure.
-
-Symbol:
-    :code:`V(T, p)`
+:symbols:`volume` of the body as a function of temperature and pressure.
 """
 
 temperature = symbols.temperature
@@ -51,9 +45,13 @@ definition = Eq(
     Derivative(volume(temperature), temperature) / volume(temperature),
 )
 r"""
-:code:`alpha_V = 1 / V(T, p) * Derivative(V(T, p), T)`
+:laws:symbol::
 
-Lambda:
+.. only:: comment
+
+    Manual formula due to partial derivative not rendered by auto-generation
+
+Latex:
     .. math::
         \alpha_V = \frac{1}{V(T, p)} \left( \frac{\partial V}{\partial T} \right)_p
 """

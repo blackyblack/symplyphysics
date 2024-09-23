@@ -5,40 +5,35 @@ Speed is distance derivative
 Speed is a physical quantity that describes the rate of change in the body's position.
 """
 
-from sympy import (Eq, Derivative)
-from symplyphysics import (units, Quantity, Function, Symbol, validate_input, validate_output)
+from sympy import Eq, Derivative
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    clone_as_function,
+)
 
-speed = Function("speed", units.velocity)
+speed = clone_as_function(symbols.speed, display_symbol="v(t)")
 """
-Velocity of the body as a function of time.
-
-Symbol:
-    :code:`v(t)`
-"""
-
-distance = Function("distance", units.length)
-"""
-Distance traveled by the body as a function of time.
-
-Symbol:
-    :code:`s(t)`
+:symbols:`speed` of the body as a function of time.
 """
 
-time = Symbol("time", units.time)
+distance = clone_as_function(symbols.distance, display_symbol="s(t)", display_latex="s")
 """
-Travel time.
+:symbols:`distance` traveled by the body as a function of time.
+"""
 
-Symbol:
-    :code:`t`
+time = symbols.time
+"""
+Travel :symbols:`time`.
 """
 
 definition = Eq(speed(time), Derivative(distance(time), time))
-r"""
-:code:`v(t) = Derivative(s(t), t)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        v(t) = \frac{d s}{d t}
+:laws:latex::
 """
 
 

@@ -15,7 +15,7 @@ admittance = SymbolNew("Y", units.conductance)
 of impedance.
 """
 
-conductance = SymbolNew("G", units.conductance)
+electrical_conductance = SymbolNew("G", units.conductance)
 """
 **Conductance** is the ability of charge to flow in a certain path. It is the reciprocal of electrical resistance.
 """
@@ -75,7 +75,7 @@ current = SymbolNew("I", units.current)
 **Current** is a flow of charged particles moving through an electrical conductor or space.
 """
 
-resistance = SymbolNew("R", units.impedance)
+electrical_resistance = SymbolNew("R", units.impedance)
 """
 **Resistance** is the measure of the degree to which a conductor opposes an electric current through that conductor.
 It is the real part of the complex-valued impedance.
@@ -121,7 +121,7 @@ power_factor = SymbolNew("pf", dimensionless, display_latex="\\mathrm{pf}")
 flowing in the circuit.
 """
 
-resistivity = SymbolNew("rho", units.impedance * units.length, display_latex="\\rho")
+electrical_resistivity = SymbolNew("rho", units.impedance * units.length, display_latex="\\rho")
 """
 **Electrical resistivity** is a fundamental specific property of a material that measures its electrical resistance or how
 strongly it resists electric current.
@@ -138,7 +138,7 @@ electric_time_constant = SymbolNew("tau", units.time, display_latex="\\tau")
 system. It is related to the speed of the response.
 """
 
-reactance = SymbolNew("X", units.impedance)
+electrical_reactance = SymbolNew("X", units.impedance)
 """
 **Reactance** is the opposition presented to alternating current by inductance and capacitance.
 """

@@ -26,9 +26,9 @@ current = symbols.current
 Electric :symbols:`current`.
 """
 
-resistance = symbols.resistance
+resistance = symbols.electrical_resistance
 """
-Electrical :symbols:`resistance`.
+Electrical :symbols:`electrical_resistance`.
 """
 
 law = Eq(power, current**2 * resistance)

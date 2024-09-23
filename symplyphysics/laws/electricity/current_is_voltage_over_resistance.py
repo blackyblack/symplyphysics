@@ -20,9 +20,9 @@ voltage = symbols.voltage
 :symbols:`voltage` applied to the conductor.
 """
 
-resistance = symbols.resistance
+resistance = symbols.electrical_resistance
 """
-:symbols:`resistance` of the conductor.
+:symbols:`electrical_resistance` of the conductor.
 """
 
 law = Eq(current, voltage / resistance)

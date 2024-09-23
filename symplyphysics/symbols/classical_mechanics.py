@@ -27,6 +27,11 @@ acceleration = SymbolNew("a", units.acceleration)
 **Acceleration** is the rate of change of the object's velocity with respect to time. It is a vector quantity.
 """
 
+position = SymbolNew("x", units.length)
+"""
+**Position** is defined as the spatial location of an object with respect to a coordinate system.
+"""
+
 distance = SymbolNew("d", units.length)
 """
 **Distance** is is a measure of the spatial separation between two points.
@@ -45,6 +50,12 @@ Distance to reference axis.
 length = SymbolNew("l", units.length)
 """
 **Length** is a measure of a size of an object.
+"""
+
+thickness = SymbolNew("d", units.length)
+"""
+**Thickness** is a measure of a size of an object, usually the separation between two layers, or
+the distance through an object distinct from length and width.
 """
 
 area = SymbolNew("A", units.area)
@@ -96,4 +107,75 @@ Volume is a measure of regions in three-dimensional space.
 impulse = SymbolNew("J", units.momentum)
 """
 **Impulse** is the change in momentum of an object.
+"""
+
+phase_speed = SymbolNew("v", units.speed)
+"""
+**Phase speed** is the speed at which the phase of the wave travels.
+"""
+
+pressure = SymbolNew("p", units.pressure)
+"""
+**Pressure** is the force applied perpendicular to the surface of an object per unit area over which
+that force is distributed.
+"""
+
+temporal_frequency = SymbolNew("f", units.frequency)
+"""
+**Temporal frequency** is the number of occurrences of a repeating event per unit of time.
+"""
+
+sound_intensity_level = SymbolNew("L_I", dimensionless)
+"""
+**Sound intensity level** is the measure of the *intensity* of a sound relative to a reference value.
+"""
+
+rotational_inertia = SymbolNew("I", units.mass * units.length**2)
+"""
+**Rotational inertia**, also known as **moment of inertia**, is defined relative to a rotational axis
+and is the ratio between the torque applied and the resulting angular acceleration about that axis.
+"""
+
+quality_factor = SymbolNew("Q", dimensionless)
+"""
+**Quality factor** or **Q factor** is a dimensionless parameter that describes how underdamped an
+oscillator or resonator is.
+"""
+
+momentum = SymbolNew("p", units.momentum)
+"""
+**Momentum**, more specifically **linear** or **transitional momentum**, is the product of the mass and
+velocity of an object.
+"""
+
+mechanical_energy = SymbolNew("E", units.energy)
+"""
+**Mechanical energy** is defined to be the sum of potential energy and kinetic energy.
+"""
+
+kinetic_energy = SymbolNew("K", units.energy)
+"""
+**Kinetic energy** of an object is the form of energy that it possesses due to its motion.
+"""
+
+potential_energy = SymbolNew("U", units.energy)
+"""
+**Potential energy** is the energy held by an object because of its position relative to other objects,
+stresses within itself, its electric charge, or other factors. Potential energy is associated with so
+called conservative forces and only depends on the initial and final positions of the body in space.
+"""
+
+mass_flow_rate = SymbolNew("mu", units.mass / units.time, display_latex="\\mu")
+"""
+**Mass flow rate** is the mass of a substance which passes per unit of time.
+"""
+
+stiffness = SymbolNew("k", units.force / units.length)
+"""
+**Stiffness** is the extent to which an object resists deformation in response to an applied force.
+"""
+
+compliance = SymbolNew("c", units.length / units.force)
+"""
+**Compliance** is the inverse of :symbols:`stiffness`.
 """

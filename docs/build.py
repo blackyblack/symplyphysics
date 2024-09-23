@@ -66,6 +66,20 @@ def get_parser() -> argparse.ArgumentParser:
         dest="rst_only",
         help="only generate rST files and suppress HTML generation",
         )
+    
+    parser.add_argument("-W"
+        "--wipe-generated",
+        action="store_true",
+        dest="wipe_generated",
+        help="remove all generated rST files prior to the build",
+        )
+    
+    parser.add_argument("-B",
+        "--build_only",
+        action="store_true",
+        dest="build_only",
+        help="do not generate rST files and only build HTML using the current ones",
+        )
 
     return parser
 
@@ -87,15 +101,21 @@ def process_generated_files(generated_dir: str) -> None:
 def main(argv: Sequence[str] = ()) -> None:
     args = get_parser().parse_args(argv or sys.argv[1:])
 
-    # Generate Symplyphysics rst files
-    generate_laws_docs(args.laws_source_dir, args.generated_dir, args.exclude_dirs, args.quiet)
+    if not args.build_only:
+        # Generate new rST files
 
-    # Copy index.rst to 'generated' folder
-    index_file = Path(args.conf_dir) / "index.rst"
-    out_index_file = Path(args.generated_dir) / "index.rst"
-    shutil.copyfile(index_file, out_index_file, follow_symlinks=True)
+        if args.wipe_generated:
+            shutil.rmtree(args.generated_dir)
 
-    process_generated_files(args.generated_dir)
+        # Generate Symplyphysics rst files
+        generate_laws_docs(args.laws_source_dir, args.generated_dir, args.exclude_dirs, args.quiet)
+
+        # Copy index.rst to 'generated' folder
+        index_file = Path(args.conf_dir) / "index.rst"
+        out_index_file = Path(args.generated_dir) / "index.rst"
+        shutil.copyfile(index_file, out_index_file, follow_symlinks=True)
+
+        process_generated_files(args.generated_dir)
 
     if args.rst_only:
         return

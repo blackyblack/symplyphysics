@@ -23,21 +23,21 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = thermal_resistance_law.calculate_thermal_resistance(test_args.l, test_args.k)
+    result = thermal_resistance_law.calculate_thermal_insulance(test_args.l, test_args.k)
     assert_equal(result, 6.25 * units.meter**2 * units.kelvin / units.watt)
 
 
 def test_bad_length(test_args: Args) -> None:
     lb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        thermal_resistance_law.calculate_thermal_resistance(lb, test_args.k)
+        thermal_resistance_law.calculate_thermal_insulance(lb, test_args.k)
     with raises(TypeError):
-        thermal_resistance_law.calculate_thermal_resistance(100, test_args.k)
+        thermal_resistance_law.calculate_thermal_insulance(100, test_args.k)
 
 
 def test_bad_thermal_conductivity(test_args: Args) -> None:
     kb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        thermal_resistance_law.calculate_thermal_resistance(test_args.l, kb)
+        thermal_resistance_law.calculate_thermal_insulance(test_args.l, kb)
     with raises(TypeError):
-        thermal_resistance_law.calculate_thermal_resistance(test_args.l, 100)
+        thermal_resistance_law.calculate_thermal_insulance(test_args.l, 100)

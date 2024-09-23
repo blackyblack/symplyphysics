@@ -28,9 +28,9 @@ voltage = symbols.voltage
 :symbols:`voltage`.
 """
 
-resistance = symbols.resistance
+resistance = symbols.electrical_resistance
 """
-:symbols:`resistance`.
+:symbols:`electrical_resistance`.
 """
 
 law = Eq(power, voltage**2 / resistance)

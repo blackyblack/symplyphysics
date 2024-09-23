@@ -6,22 +6,28 @@ Mass flow rate is the rate of change in the mass of an object. Examples include 
 from a certain volume, the flow in a pipe section, the combustion of fuel.
 """
 
-from sympy import (Eq, Derivative)
-from symplyphysics import (units, Quantity, FunctionNew, SymbolNew, validate_input, validate_output)
+from sympy import Eq, Derivative
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    clone_as_function,
+)
 
-mass_flow_rate = FunctionNew("mu(t)", units.mass / units.time, display_latex="\\mu")
+mass_flow_rate = clone_as_function(symbols.mass_flow_rate, display_symbol="mu(t)")
 """
-Mass flow rate as a function of time.
+:symbols:`mass_flow_rate` as a function of time.
 """
 
-mass = FunctionNew("m(t)", units.mass, display_latex="m")
+mass = clone_as_function(symbols.mass, display_symbol="m(t)")
 """
 :symbols:`mass` as a function of time.
 """
 
-time = SymbolNew("t", units.time)
+time = symbols.time
 """
-Time.
+:symbols:`time`.
 """
 
 definition = Eq(mass_flow_rate(time), Derivative(mass(time), time))
@@ -32,7 +38,7 @@ definition = Eq(mass_flow_rate(time), Derivative(mass(time), time))
 """
 
 
-@validate_input(mass_start_=units.mass, mass_end_=units.mass, time_=time)
+@validate_input(mass_start_=mass, mass_end_=mass, time_=time)
 @validate_output(mass_flow_rate)
 def calculate_mass_flow_rate(mass_start_: Quantity, mass_end_: Quantity,
     time_: Quantity) -> Quantity:

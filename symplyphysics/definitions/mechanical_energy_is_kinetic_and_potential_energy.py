@@ -5,22 +5,27 @@ Mechanical energy is kinetic and potential energy
 *Mechanical energy* of the system is defined as the sum of its kinetic energy and potential energy.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, SymbolNew, validate_input, validate_output)
+from sympy import Eq, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+)
 
-mechanical_energy = SymbolNew("E", units.energy)
+mechanical_energy = symbols.mechanical_energy
 """
-Mechanical energy of the system.
-"""
-
-kinetic_energy = SymbolNew("K", units.energy)
-"""
-Kinetic energy of the system.
+:symbols:`mechanical_energy` of the system.
 """
 
-potential_energy = SymbolNew("U", units.energy)
+kinetic_energy = symbols.kinetic_energy
 """
-Potential energy of the system.
+:symbols:`kinetic_energy` of the system.
+"""
+
+potential_energy = symbols.potential_energy
+"""
+:symbols:`potential_energy` of the system.
 """
 
 definition = Eq(mechanical_energy, kinetic_energy + potential_energy)

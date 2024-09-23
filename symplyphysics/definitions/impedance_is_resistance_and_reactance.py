@@ -19,14 +19,14 @@ impedance = symbols.electrical_impedance
 :symbols:`electrical_impedance` of the system.
 """
 
-resistance = symbols.resistance
+resistance = symbols.electrical_resistance
 """
-:symbols:`resistance` of the system.
+:symbols:`electrical_resistance` of the system.
 """
 
-reactance = symbols.reactance
+reactance = symbols.electrical_reactance
 """
-:symbols:`reactance` of the system.
+:symbols:`electrical_reactance` of the system.
 """
 
 definition = Eq(impedance, resistance + I * reactance)

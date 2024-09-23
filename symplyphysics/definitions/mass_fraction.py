@@ -8,19 +8,17 @@ Mass fraction is the ratio of the mass of a mixture component to the total mass 
 from sympy import Eq, solve
 from symplyphysics import (
     Quantity,
-    SymbolNew,
     validate_input,
     validate_output,
-    dimensionless,
     convert_to_float,
     clone_as_symbol,
     symbols,
 )
 from symplyphysics.core.symbols.fraction import Fraction
 
-mass_fraction = SymbolNew("w", dimensionless, display_latex="\\omega")
+mass_fraction = clone_as_symbol(symbols.mass_fraction, display_symbol="w[i]", display_latex="w_i")
 """
-Mass fraction of the mixture component.
+:symbols:`mass_fraction` of the mixture component.
 """
 
 mass_of_component = clone_as_symbol(symbols.mass, display_symbol="m[i]", display_latex="m_i")
