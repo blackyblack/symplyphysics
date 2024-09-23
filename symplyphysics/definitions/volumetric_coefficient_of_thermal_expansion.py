@@ -44,10 +44,12 @@ definition = Eq(
     volumetric_expansion_coefficient,
     Derivative(volume(temperature), temperature) / volume(temperature),
 )
-"""
+r"""
 :laws:symbol::
 
-:laws:latex::
+Latex:
+    .. math::
+        \alpha_V = \frac{1}{V(T, p)} \left( \frac{\partial V}{\partial T} \right)_p
 """
 
 
