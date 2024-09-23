@@ -47,6 +47,10 @@ definition = Eq(
 r"""
 :laws:symbol::
 
+.. only:: comment
+
+    Manual formula due to partial derivative not rendered by auto-generation
+
 Latex:
     .. math::
         \alpha_V = \frac{1}{V(T, p)} \left( \frac{\partial V}{\partial T} \right)_p
