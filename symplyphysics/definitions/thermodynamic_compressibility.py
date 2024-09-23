@@ -40,10 +40,16 @@ pressure = symbols.pressure
 """
 
 definition = Eq(compressibility, -1 * Derivative(volume(pressure), pressure) / volume(pressure))
-"""
+r"""
 :laws:symbol::
 
-:laws:latex::
+.. only:: comment
+
+    The derivative is partial since more parameters are needed to evaluate it properly
+
+Latex:
+    .. math::
+        \beta = - \frac{1}{V(p)} \frac{\partial V}{\partial p}
 """
 
 
