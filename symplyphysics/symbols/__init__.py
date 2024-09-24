@@ -34,6 +34,7 @@ __all__ = [
     "density_of_states",
     "band_gap",
     "work_function",
+    "drift_velocity",
     # classical mechanics
     "force",
     "speed",

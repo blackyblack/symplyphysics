@@ -37,3 +37,9 @@ work_function = SymbolNew("W", units.energy)
 **Work function** is the minimum thermodynamic work (i.e., energy) needed to remove an electron from
 a solid to a point in the vacuum immediately outside the solid surface.
 """
+
+drift_velocity = SymbolNew("u", units.velocity)
+"""
+**Drift velocity** is the average velocity attained by charged particles, such as electrons, in a material
+due to an electric field.
+"""
