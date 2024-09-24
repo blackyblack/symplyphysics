@@ -6,7 +6,7 @@ The sound level of a sound wave is a physical quantity that is used to describe 
 intensity.
 """
 
-from sympy import Eq, log
+from sympy import Eq
 from symplyphysics import (
     units,
     Quantity,
@@ -14,6 +14,7 @@ from symplyphysics import (
     validate_output,
     symbols,
 )
+from symplyphysics.core.functions import log
 
 sound_level = symbols.sound_intensity_level
 """
@@ -36,16 +37,10 @@ The intensity of a sound wave relative to which the sound level is measured.
 """
 
 definition = Eq(sound_level, reference_sound_level * log(intensity / reference_intensity, 10))
-r"""
-.. only:: comment
+"""
+:laws:symbol::
 
-    Manual formulas are required since sympy does not handle logarithms with arbitrary bases well.
-
-:code:`beta = beta0 * log_10(I / I0)`
-
-Latex:
-    .. math::
-        \beta = \beta_0 \log_{10} \left( \frac{I}{I_0} \right)
+:laws:latex::
 """
 
 

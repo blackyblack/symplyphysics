@@ -130,6 +130,16 @@ class SymbolLatexPrinter(LatexPrinter):
         # expr.args[0].args[0] contains just indexed symbol
         symbol, index = expr.args[0].args
         return rf"\sum_{self._print(index)} {self._print(symbol)}"
+    
+    def _print_log(self, expr: Any) -> str:
+        value, base = expr.args
+        head = r"\log" if base is None else (r"\log_{%s}" % self._print(base))
+        can_fold_brackets = (
+            self._settings["fold_func_brackets"]
+            and not self._needs_function_brackets(value)
+        )
+        tail = ("%s" if can_fold_brackets else r"\left( %s \right)") % self._print(value)
+        return f"{head} {tail}"
 
 
 def latex_str(expr: Any, **settings: Any) -> str:
