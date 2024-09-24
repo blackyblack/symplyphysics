@@ -68,6 +68,7 @@ __all__ = [
     "mass_flow_rate",
     "stiffness",
     "compliance",
+    "young_modulus",
     # electrodynamics
     "admittance",
     "electrical_conductance",

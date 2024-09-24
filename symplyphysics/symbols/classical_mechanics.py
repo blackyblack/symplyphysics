@@ -179,3 +179,9 @@ compliance = SymbolNew("c", units.length / units.force)
 """
 **Compliance** is the inverse of :symbols:`stiffness`.
 """
+
+young_modulus = SymbolNew("E", units.pressure)
+"""
+**Young modulus** is a mechanical property of solid materials that measures the tensile or compressive
+stiffness when the force is applied lengthwise.
+"""

@@ -8,51 +8,37 @@ Young's modulus is a tabular value that is different for each material.
 
 from sympy import (Eq, solve)
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
 )
 
-stiffness = Symbol("stiffness", units.force / units.length)
+stiffness = symbols.stiffness
 """
-The stiffness coefficient of the material.
-
-Symbol:
-    :code:`k`
+The :symbols:`stiffness` coefficient of the material.
 """
 
-young_modulus = Symbol("young_modulus", units.pressure)
+young_modulus = symbols.young_modulus
 """
-The Young's modulus of the material.
-
-Symbol:
-    :code:`E`
+The :symbols:`young_modulus` of the material.
 """
 
-area = Symbol("area", units.area)
+area = symbols.area
 """
-The cross-sectional area of the object.
-
-Symbol:
-    :code:`A`
+The cross-sectional :symbols:`area` of the object.
 """
 
-length = Symbol("length", units.length)
+length = symbols.length
 """
-The length of the object.
-
-Symbol:
-    :code:`l`
+The :symbols:`length` of the object.
 """
 
 law = Eq(stiffness, young_modulus * area / length)
-r"""
-:code:`k = E * A / l`
+"""
+:laws:symbol::
 
-Latex:
-    :math:`k = E \frac{A}{l}`
+:laws:latex::
 """
 
 
