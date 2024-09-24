@@ -33,6 +33,7 @@ __all__ = [
     "amount_of_substance",
     "density_of_states",
     "band_gap",
+    "work_function",
     # classical mechanics
     "force",
     "speed",
@@ -91,6 +92,7 @@ __all__ = [
     "inductance",
     "electric_time_constant",
     "electrical_reactance",
+    "current_density",
     # optics
     "relative_refractive_index",
     "radiant_exitance",

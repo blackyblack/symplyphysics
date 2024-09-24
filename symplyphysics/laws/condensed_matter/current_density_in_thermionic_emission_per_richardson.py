@@ -17,25 +17,18 @@ from symplyphysics import (
     units,
     quantities,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
 )
 
-current_density = Symbol("current_density", units.current / units.area)
+current_density = symbols.current_density
 """
-Emission current density.
-
-Symbol:
-    :code:`j`
+Emission :symbols:`current_density`.
 """
 
-work_function = Symbol("work_function", units.energy)
+work_function = symbols.work_function
 """
-Work function of the material.
-
-Symbol: 
-    :code:`W`
+:symbols:`work_function` of the material.
 """
 
 temperature = symbols.temperature
@@ -43,7 +36,9 @@ temperature = symbols.temperature
 :symbols:`temperature` of the metal.
 """
 
-richardson_constant = Quantity(120.17 * (units.ampere / units.kelvin**2 / units.centimeter**2), display_symbol="A")
+richardson_constant = Quantity(
+    120.17 * (units.ampere / units.kelvin**2 / units.centimeter**2),
+    display_symbol="a")
 """
 Constant of proportionality proposed by Richardson.
 """
@@ -52,11 +47,9 @@ law = Eq(
     current_density,
     richardson_constant * temperature**2 * exp(-1 * work_function / (quantities.boltzmann_constant * temperature)))
 r"""
-:code:`j = A * T^2 * exp(-1 * W / (k_B * T))`
+:laws:symbol::
 
-Latex:
-    .. math::
-        j = A T^2 \exp \left( - \frac{W}{k_\text{B} T} \right)
+:laws:latex::
 """
 
 

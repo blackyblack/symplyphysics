@@ -142,3 +142,8 @@ electrical_reactance = SymbolNew("X", units.impedance)
 """
 **Reactance** is the opposition presented to alternating current by inductance and capacitance.
 """
+
+current_density = SymbolNew("j", units.current / units.area)
+"""
+**Current density** is the amount of charge per unit time that flows through a unit area of a chosen cross section.
+"""

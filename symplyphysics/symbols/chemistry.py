@@ -31,3 +31,9 @@ band_gap = SymbolNew("E_g", units.energy, display_latex="E_\\text{g}")
 """
 A **band gap**, or **energy gap**, is an energy range in a solid where no electronic states exist. 
 """
+
+work_function = SymbolNew("W", units.energy)
+"""
+**Work function** is the minimum thermodynamic work (i.e., energy) needed to remove an electron from
+a solid to a point in the vacuum immediately outside the solid surface.
+"""
