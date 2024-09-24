@@ -3,8 +3,8 @@
 from sympy import solve
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
-from symplyphysics import print_expression, units, quantities
-from symplyphysics.core.convert import convert_to_si
+from symplyphysics import print_expression, units
+from symplyphysics.core.symbols.quantities import evaluate_expression
 from symplyphysics.laws.thermodynamics.relativistic import (
     maxwell_juettner_distribution as distribution_law,
     reduced_temperature_in_maxwell_juettner_statistics as reduced_law,
@@ -18,22 +18,15 @@ law = distribution_law.law.subs(
     reduced_law.reduced_temperature,
 )
 
-reduced_law_subs = reduced_law.law.subs({
-    quantities.boltzmann_constant: units.boltzmann_constant,
-    quantities.speed_of_light: units.speed_of_light,
-})
-
 rhs = solve(
-    (law, reduced_law_subs),
+    (law, reduced_law.law),
     (distribution_law.distribution_function, reduced_law.reduced_temperature),
     dict=True,
 )[0][distribution_law.distribution_function]
 
-rhs = rhs.subs({
-    units.boltzmann_constant: convert_to_si(units.boltzmann_constant),
-    units.speed_of_light: convert_to_si(units.speed_of_light),
-    reduced_law.particle_mass: convert_to_si(units.electron_rest_mass)
-})
+rhs = rhs.subs(reduced_law.particle_mass, units.electron_rest_mass)
+
+rhs = evaluate_expression(rhs)
 
 temperatures_ = [1e10, 2e10, 5e10]  # K
 

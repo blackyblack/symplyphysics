@@ -3,7 +3,8 @@
 from collections import namedtuple
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
-from symplyphysics import print_expression, convert_to, Quantity, units, quantities
+from symplyphysics import print_expression, Quantity, units, quantities
+from symplyphysics.core.symbols.quantities import evaluate_expression
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed_distribution
 
 MassDatum = namedtuple("MassDatum", "mass label")
@@ -30,15 +31,13 @@ mass_plot = plot(
     show=False,
 )
 
-distribution = speed_distribution.law.rhs.subs({
-    speed_distribution.equilibrium_temperature:
-    convert_to(quantities.standard_conditions_temperature, units.kelvin),
-    quantities.boltzmann_constant:
-    convert_to(units.boltzmann_constant, units.joule / units.kelvin),
-})
+distribution = speed_distribution.law.rhs.subs(
+    speed_distribution.equilibrium_temperature, quantities.standard_conditions_temperature
+)
+distribution = evaluate_expression(distribution)
 
 for mass_datum_ in mass_data_:
-    mass_ = convert_to(Quantity(mass_datum_.mass * units.amu), units.kilogram)
+    mass_ = evaluate_expression(Quantity(mass_datum_.mass * units.amu), units.kilogram)
     mass_subplot = plot(
         distribution.subs(speed_distribution.particle_mass, mass_),
         (speed_distribution.particle_speed, 0, 2000),

@@ -80,16 +80,13 @@ def evaluate_quantity(quantity: Expr, **kwargs: Any) -> Quantity:
     return Quantity(scale_factor_, dimension=dimension)
 
 
-def evaluate_expression(expr: Expr, **kwargs: Any) -> Expr:
-    quantities = []
-    def _evaluate_inner(expr: Expr) -> None:
-        for arg in expr.args:
-            if isinstance(arg, SymQuantity):
-                quantities.append(arg)
-                continue
-            if isinstance(arg, Expr):
-                _evaluate_inner(arg)
-    _evaluate_inner(expr)
-    for q in quantities:
-        expr = expr.subs(q, q.scale_factor.evalf(**kwargs))
+def evaluate_expression(expr: Expr, evalf: bool = False, **kwargs: Any) -> Expr:
+    from ..convert import convert_to_si
+
+    for qty in expr.atoms(SymQuantity):
+        si_value = convert_to_si(qty)
+        if evalf:
+            si_value = si_value.evalf(**kwargs)
+        expr = expr.subs(qty, si_value)
+
     return expr

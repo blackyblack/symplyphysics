@@ -3,32 +3,20 @@
 from sympy import symbols, solve, Rational
 from sympy.plotting import plot, plot_parametric
 from sympy.plotting.plot import MatplotlibBackend
-from symplyphysics import convert_to, units, quantities
+from symplyphysics.core.symbols.quantities import evaluate_expression
 from symplyphysics.laws.thermodynamics import (
     pressure_and_volume_in_adiabatic_process as adiabatic_law,)
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as ideal_gas_law
 
-ideal_gas_law_subs = ideal_gas_law.law.subs({
-    quantities.molar_gas_constant: units.molar_gas_constant,
-})
-
 pressure, volume, temperature = symbols("pressure volume temperature", positive=True)
 
-ideal_gas_eqn = ideal_gas_law_subs.subs({
-    ideal_gas_law.amount_of_substance:
-        1,
-    units.molar_gas_constant:
-    convert_to(
-    units.molar_gas_constant,
-    units.joule / (units.kelvin * units.mol),
-    ),
-    ideal_gas_law.pressure:
-        pressure,
-    ideal_gas_law.volume:
-        volume,
-    ideal_gas_law.temperature:
-        temperature,
+ideal_gas_eqn = ideal_gas_law.law.subs({
+    ideal_gas_law.amount_of_substance: 1,
+    ideal_gas_law.pressure: pressure,
+    ideal_gas_law.volume: volume,
+    ideal_gas_law.temperature: temperature,
 })
+ideal_gas_eqn = evaluate_expression(ideal_gas_eqn)
 
 pressure_expr = solve(ideal_gas_eqn, pressure)[0]
 
@@ -56,7 +44,7 @@ for temperature_, label in zip((400, 800, 1200), "lower middle upper".split()):
     )
     base_plot.extend(isotherm_plot)
 
-# Let the prossesses start at V = 1.5 m**3 and T = 800 K
+# Let the processes start at V = 1.5 m**3 and T = 800 K
 
 INITIAL_VOLUME = 1.5  # m**3
 
