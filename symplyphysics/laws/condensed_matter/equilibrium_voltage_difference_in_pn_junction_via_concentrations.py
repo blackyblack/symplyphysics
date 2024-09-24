@@ -21,49 +21,40 @@ The p-n junction has a potential barrier preventing the movement of charge carri
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (symbols, units, Quantity, Symbol, validate_input,
-    validate_output, quantities)
+from symplyphysics import (symbols, Quantity, validate_input,
+    validate_output, quantities, clone_as_symbol)
 from symplyphysics.core.functions import log
 
-equilibrium_voltage_difference = Symbol("equilibrium_voltage_difference", units.voltage)
-r"""
-Equilibrium voltage difference corresponding to the size of the depletion region.
-
-Symbol:
-    :code:`Delta(V)`
-
-Latex:
-    :math:`\Delta V`
+equilibrium_voltage_difference = clone_as_symbol(
+    symbols.voltage,
+    display_symbol="Delta(V)",
+    display_latex="\\Delta V"
+)
+"""
+Equilibrium :symbols:`voltage` difference corresponding to the size of the depletion region.
 """
 
-donor_concentration = Symbol("donor_concentration", 1 / units.volume)
-r"""
-Concentration of positively-charged donor atoms.
-
-Symbol:
-    :code:`n_d`
-
-Latex:
-    :math:`n_\text{d}`
+donor_concentration = clone_as_symbol(
+    symbols.number_density,
+    display_symbol="n_d",
+    display_latex="n_\\text{d}",
+)
+"""
+:symbols:`number_density` of positively-charged donor atoms.
 """
 
-acceptor_concentration = Symbol("acceptor_concentration", 1 / units.volume)
-r"""
-Concentration of negatively-charged acceptor atoms.
-
-Symbol:
-    :code:`n_a`
-
-Latex:
-    :math:`n_\text{a}`
+acceptor_concentration = clone_as_symbol(
+    symbols.number_density,
+    display_symbol="n_a",
+    display_latex="n_\\text{a}",
+)
+"""
+:symbols:`number_density` of negatively-charged acceptor atoms.
 """
 
-charge_carriers_concentration = Symbol("charge_carriers_concentration", 1 / units.volume)
-r"""
-Concentration of intrinsic charge carriers.
-
-Symbol:
-    :code:`n`
+charge_carriers_concentration = symbols.number_density
+"""
+:symbols:`number_density` of intrinsic charge carriers.
 """
 
 temperature = symbols.temperature
@@ -71,22 +62,17 @@ r"""
 :symbols:`temperature` of the semiconductor.
 """
 
-charge_electron = Symbol("charge_electron", units.charge)
+charge_electron = symbols.charge
 """
-Magnitude of the electron charge.
-
-Symbol:
-    :code:`q`
+Magnitude of the electron :symbols:`charge`.
 """
 
 law = Eq(equilibrium_voltage_difference, (quantities.boltzmann_constant * temperature / charge_electron) *
     log(donor_concentration * acceptor_concentration / charge_carriers_concentration**2))
 r"""
-:code:`Delta(V) = (k_B * T / q) * log(n_a * n_d / n^2)`
+:laws:symbol::
 
-Latex:
-    .. math::
-        \Delta V = \frac{k_\text{B} T}{q} \log \left( \frac{n_\text{a} n_\text{d}}{n^2} \right)
+:laws:latex::
 """
 
 
