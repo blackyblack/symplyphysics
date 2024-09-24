@@ -8,42 +8,33 @@ vector is directed opposite to the gravity vector.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (clone_as_symbol, symbols, units, Quantity, Symbol, validate_input,
+from symplyphysics import (clone_as_symbol, symbols, quantities, Quantity, validate_input,
     validate_output)
+from symplyphysics.core.functions import mul
 
 buoyant_force = clone_as_symbol(symbols.force,
-    display_symbol="Fa",
+    display_symbol="F_A",
     display_latex="F_\\text{A}")
 """
 The buoyant (Archimedes) :symbols:`force`.
 """
 
-fluid_density = Symbol("fluid_density", units.mass / units.volume)
-r"""
-The density of the fluid.
-
-Symbol:
-    rho
-
-Latex:
-    :math:`\rho`
+fluid_density = symbols.density
+"""
+The :symbols:`density` of the fluid.
 """
 
-displaced_volume = Symbol("displaced_volume", units.volume)
+displaced_volume = symbols.volume
 """
-The volume of the displaced fluid. Equivalently, the volume of the part of the body immersed in the fluid.
-
-Symbols:
-    V
+The :symbols:`volume` of the displaced fluid. Equivalently, the volume of the part of the body
+immersed in the fluid.
 """
 
-law = Eq(buoyant_force, -1 * fluid_density * units.acceleration_due_to_gravity * displaced_volume)
-r"""
-Fa = -1 * rho * g * V
+law = Eq(buoyant_force, mul(-1, fluid_density, quantities.acceleration_due_to_gravity, displaced_volume))
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        F_\text{A} = - \rho g V
+:laws:latex::
 """
 
 
