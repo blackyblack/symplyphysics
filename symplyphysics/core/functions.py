@@ -1,4 +1,4 @@
-from sympy import Expr, log as sym_log, E, sqrt as sym_sqrt, Mul
+from sympy import Expr, log as sym_log, E, sqrt as sym_sqrt, Mul as SymMul
 
 
 def log(expr: Expr, base: Expr = E, **kwargs) -> Expr:
@@ -13,4 +13,4 @@ def sqrt(expr: Expr, **kwargs) -> Expr:
 
 def mul(*exprs: Expr, **kwargs) -> Expr:
     kwargs.setdefault("evaluate", False)
-    return Mul(*exprs, **kwargs)
+    return SymMul(*exprs, **kwargs)
