@@ -12,39 +12,29 @@ and amount of substance.
 
 from sympy import Eq, solve
 from symplyphysics import (
-    units,
     quantities,
     Quantity,
-    Symbol,
-    dimensionless,
     convert_to_float,
     validate_input,
     validate_output,
+    symbols,
 )
 
-particle_count = Symbol("particle_count", dimensionless)
+particle_count = symbols.particle_count
 """
 Number of particles.
-
-Symbol:
-    :code:`N`
 """
 
-amount_of_substance = Symbol("amount_of_substance", units.amount_of_substance)
+amount_of_substance = symbols.amount_of_substance
 """
 Amount of substance.
-
-Symbol:
-    :code:`n`
 """
 
 law = Eq(quantities.avogadro_constant, particle_count / amount_of_substance)
-r"""
-:code:`N_A = N / n`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        N_\text{A} = \frac{N}{n}
+:laws:latex::
 """
 
 

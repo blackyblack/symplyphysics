@@ -77,4 +77,7 @@ number_density = SymbolNew("n", 1 / units.volume)
 (particles, molecules, phonons, cells, galaxies, etc.) in physical space.
 """
 
-
+particle_count = SymbolNew("N", dimensionless)
+"""
+Number of particles in the system.
+"""
