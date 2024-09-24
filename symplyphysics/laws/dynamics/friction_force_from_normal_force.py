@@ -6,9 +6,14 @@ The *friction* force is tangential interaction between two objects, which impede
 It is proportional to the normal force between the two objects.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (clone_as_symbol, symbols, Quantity, Symbol, dimensionless, validate_input,
-    validate_output)
+from sympy import Eq, solve
+from symplyphysics import (
+    clone_as_symbol,
+    symbols,
+    Quantity,
+    validate_input,
+    validate_output,
+)
 
 friction_force = clone_as_symbol(symbols.force,
     display_symbol="F_fr",
@@ -17,18 +22,16 @@ friction_force = clone_as_symbol(symbols.force,
 The friction :symbols:`force`.
 """
 
-coefficient_of_friction = Symbol("coefficient_of_friction", dimensionless)
+coefficient_of_friction = symbols.coefficient_of_friction
 r"""
-The coefficient of friction between the two objects.
-
-Symbol:
-    :code:`mu`
-
-Latex:
-    :math:`\mu`
+The :symbols:`coefficient_of_friction` between the two objects.
 """
 
-normal_force = clone_as_symbol(symbols.force, display_symbol="N", display_latex="N")
+normal_force = clone_as_symbol(
+    symbols.force,
+    display_symbol="N",
+    display_latex="N",
+)
 """
 The normal reaction :symbols:`force` from one object to another.
 """
