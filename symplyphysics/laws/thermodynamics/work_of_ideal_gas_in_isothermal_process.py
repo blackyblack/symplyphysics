@@ -16,56 +16,38 @@ To do this, the heat capacity of the external environment must be large enough, 
 #. The temperature of the gas stays constant during the expansion.
 """
 
-from sympy import Eq, solve, log, Symbol as SymSymbol
+from sympy import Eq, solve, Symbol as SymSymbol
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     symbols,
     quantities,
+    clone_as_symbol,
 )
+from symplyphysics.core.functions import log, mul
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import work_is_integral_of_pressure_over_volume as work_law
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation
 
-work = Symbol("work", units.energy)
+work = symbols.work
 """
-Work done by the ideal gas during the isothermal process.
-
-Symbol:
-    :code:`W`
+:symbols:`work` done by the ideal gas during the isothermal process.
 """
 
-amount_of_substance = Symbol("amount_of_substance", units.amount_of_substance)
+amount_of_substance = symbols.amount_of_substance
 """
-Amount of ideal gas.
-
-Symbol:
-    :code:`n`
+:symbols:`amount_of_substance` of ideal gas.
 """
 
-initial_volume = Symbol("initial_volume", units.volume)
+initial_volume = clone_as_symbol(symbols.volume, display_symbol="V_0", display_latex="V_0")
 """
-Initial volume of the gas.
-
-Symbol:
-    :code:`V0`
-
-Latex:
-    :math:`V_0`
+Initial :symbols:`volume` of the gas.
 """
 
-final_volume = Symbol("final_volume", units.volume)
+final_volume = clone_as_symbol(symbols.volume, display_symbol="V_1", display_latex="V_1")
 """
-Final volume of the gas.
-
-Symbol:
-    :code:`V1`
-
-Latex:
-    :math:`V_1`
+Final :symbols:`volume` of the gas.
 """
 
 temperature = symbols.temperature
@@ -75,14 +57,12 @@ temperature = symbols.temperature
 
 law = Eq(
     work,
-    amount_of_substance * quantities.molar_gas_constant * temperature *
-    log(final_volume / initial_volume))
-r"""
-:code:`W = n * R * T * log(V1 / V0)`
+    mul(amount_of_substance, quantities.molar_gas_constant, temperature, log(final_volume / initial_volume)),
+)
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        W = n R T \log \frac{V_1}{V_0}
+:laws:latex::
 """
 
 # Derive from ideal gas equation

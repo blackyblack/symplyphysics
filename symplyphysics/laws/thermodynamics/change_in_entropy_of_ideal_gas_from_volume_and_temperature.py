@@ -17,9 +17,10 @@ as they always tend to arrive at a state of thermodynamic equilibrium, where the
 #. The gas is ideal.
 """
 
-from sympy import (Eq, solve, log)
+from sympy import (Eq, solve)
 from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols,
     clone_as_symbol, quantities)
+from symplyphysics.core.functions import log
 
 entropy_change = Symbol("entropy_change", units.energy / units.temperature)
 """

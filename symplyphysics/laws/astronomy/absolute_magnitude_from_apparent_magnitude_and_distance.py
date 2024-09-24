@@ -5,17 +5,17 @@ Absolute magnitude of stars from apparent magnitude and distance
 Absolute magnitude can be calculated using apparent magnitude and distance to the object.
 """
 
-from sympy import Eq, solve, log
+from sympy import Eq, solve
 from symplyphysics import (
     units,
     Quantity,
     SymbolNew,
-    print_expression,
     validate_input,
     validate_output,
     dimensionless,
     convert_to_float,
 )
+from symplyphysics.core.functions import log
 
 absolute_magnitude = SymbolNew("M", dimensionless)
 """
@@ -42,22 +42,11 @@ Constant equal to 2.063e+6 astronomical units.
 """
 
 law = Eq(absolute_magnitude, apparent_magnitude - 5 * log(distance / distance_constant, 10))
-r"""
-.. only:: comment
-
-    Logarithms with not natural base are not properly displayed with SymPy. Manually
-    define formula representation.
-
-:code:`M = m - 5 * lg(d / d0)`
-
-Latex:
-    .. math::
-        M = m - 5 \log_{10} \left( \frac{d}{d0} \right)
 """
+:laws:symbol::
 
-
-def print_law() -> str:
-    return print_expression(law)
+:laws:latex::
+"""
 
 
 @validate_input(apparent_magnitude_=apparent_magnitude, distance_=distance)

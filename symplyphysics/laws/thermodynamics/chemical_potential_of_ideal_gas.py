@@ -14,7 +14,7 @@ and thermal wavelength.
 #. The gas is ideal.
 """
 
-from sympy import Eq, log
+from sympy import Eq
 from symplyphysics import (
     units,
     Quantity,
@@ -24,6 +24,7 @@ from symplyphysics import (
     symbols,
     quantities,
 )
+from symplyphysics.core.functions import log
 
 chemical_potential = Symbol("chemical_potential", units.energy)
 r"""
