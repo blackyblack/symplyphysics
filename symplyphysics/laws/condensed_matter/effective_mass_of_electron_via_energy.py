@@ -22,13 +22,11 @@ from symplyphysics import (
     symbols,
     clone_as_symbol,
     SI,
-    units,
     quantities,
     Quantity,
-    Symbol,
-    Function,
     validate_input,
     validate_output,
+    clone_as_function,
 )
 
 effective_mass = clone_as_symbol(symbols.mass, display_symbol="m_eff", display_latex="m_\\text{eff}")
@@ -36,45 +34,32 @@ r"""
 Effective :symbols:`mass` of the electron.
 """
 
-energy = Function("energy", units.energy)
+energy = clone_as_function(symbols.energy, display_symbol="E(k)")
 """
-Electron energy as a function of wavenumber.
-
-Symbol:
-    :code:`E(k)`
+Electron energy as a function of angular wavenumber.
 """
 
-wavenumber = Symbol("wavenumber", 1 / units.length)
+angular_wavenumber = symbols.angular_wavenumber
 r"""
-Wavenumber.
-
-Symbol:
-    :code:`k`
+:symbols:`angular_wavenumber`.
 """
 
-law = Eq(effective_mass, quantities.hbar**2 / Derivative(energy(wavenumber),
-    (wavenumber, 2)))
+law = Eq(effective_mass, quantities.hbar**2 / Derivative(energy(angular_wavenumber),
+    (angular_wavenumber, 2)))
 r"""
-:code:`m_eff = hbar^2 / Derivative(E(k), (k, 2))`
+:laws:symbol::
 
-Latex:
-    .. math::
-        m_\text{eff} = \hbar^2 \left( \frac{d^2 E}{d k^2} \right)^{-1}
+:laws:latex::
 """
 
 
-def _apply_energy_function(energy_function_: Expr) -> Expr:
-    applied_law = law.subs(energy(wavenumber), energy_function_)
-    return applied_law
-
-
-@validate_input(wavenumber_=wavenumber)
+@validate_input(wavenumber_=angular_wavenumber)
 @validate_output(effective_mass)
 def calculate_mass(energy_function_: Expr, wavenumber_: Quantity) -> Quantity:
     energy_function_quantity = Quantity(energy_function_)
     assert SI.get_dimension_system().equivalent_dims(energy_function_quantity.dimension,
         energy.dimension)
-    applied_law = _apply_energy_function(energy_function_)
-    result_expr = applied_law.subs(wavenumber, wavenumber_)
+    applied_law = law.subs(energy(angular_wavenumber), energy_function_)
+    result_expr = applied_law.subs(angular_wavenumber, wavenumber_)
     result = solve(result_expr, effective_mass, dict=True)[0][effective_mass]
     return Quantity(result)
