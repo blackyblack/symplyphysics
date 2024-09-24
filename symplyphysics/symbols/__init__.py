@@ -69,6 +69,7 @@ __all__ = [
     "stiffness",
     "compliance",
     "young_modulus",
+    "phase_shift",
     # electrodynamics
     "admittance",
     "electrical_conductance",

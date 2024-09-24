@@ -185,3 +185,9 @@ young_modulus = SymbolNew("E", units.pressure)
 **Young modulus** is a mechanical property of solid materials that measures the tensile or compressive
 stiffness when the force is applied lengthwise.
 """
+
+phase_shift = SymbolNew("phi", angle_type, display_latex="\\varphi")
+"""
+**Phase shift**, also known as **phase offset** or **phase difference**, is the shift of phase between
+two periodic functions.
+"""
