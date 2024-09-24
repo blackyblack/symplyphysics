@@ -21,43 +21,34 @@ nonzero concentration of free charge carriers in the semiconductor.
 from sympy import (Eq, solve, sqrt, exp)
 from symplyphysics import (
     symbols,
-    units,
     quantities,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    clone_as_symbol,
 )
 
-charge_carriers_concentration = Symbol("charge_carriers_concentration", 1 / units.volume)
-r"""
-Concentration of intrinsic charge carriers.
-
-Symbol:
-    :code:`n`
+charge_carriers_concentration = symbols.number_density
+"""
+:symbols:`number_density` of intrinsic charge carriers.
 """
 
-density_of_states_in_conduction_band = Symbol("density_of_states_in_conduction_band",
-    1 / units.volume)
-r"""
-Effective density of states in the conduction band.
-
-Symbol:
-    :code:`N_c`
-
-Latex:
-    :math:`N_\text{c}`
+density_of_states_in_conduction_band = clone_as_symbol(
+    symbols.density_of_states,
+    display_symbol="N_c",
+    display_latex="N_\\text{c}",
+)
+"""
+Effective :symbols:`density_of_states` in the conduction band.
 """
 
-density_of_states_in_valence_band = Symbol("density_of_states_in_valence_band", 1 / units.volume)
-r"""
-Effective density of states in the valence band.
-
-Symbol:
-    :code:`N_v`
-
-Latex:
-    :math:`N_\text{v}`
+density_of_states_in_valence_band = clone_as_symbol(
+    symbols.density_of_states,
+    display_symbol="N_v",
+    display_latex="N_\\text{v}",
+)
+"""
+Effective :symbols:`density_of_states` in the valence band.
 """
 
 temperature = symbols.temperature
@@ -65,27 +56,19 @@ temperature = symbols.temperature
 :symbols:`temperature` of the semiconductor.
 """
 
-band_gap = Symbol("band_gap", units.energy)
-r"""
-Band gap of the semiconductor.
-
-Symbol:
-    :code:`E_g`
-
-Latex:
-    :math:`E_\text{g}`
+band_gap = symbols.band_gap
+"""
+:symbols:`band_gap` of the semiconductor.
 """
 
 law = Eq(
     charge_carriers_concentration,
     sqrt(density_of_states_in_conduction_band * density_of_states_in_valence_band) * exp(-band_gap /
     (2 * quantities.boltzmann_constant * temperature)))
-r"""
-:code:`n = sqrt(N_c * N_v) * exp(-1 * E_g / (2 * k_B * T))`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        n = \sqrt{N_\text{c} N_\text{v}} \exp \left( -\frac{E_\text{g}}{2 k_\text{B} T} \right)
+:laws:latex::
 """
 
 

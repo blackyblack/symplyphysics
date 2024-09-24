@@ -31,6 +31,8 @@ __all__ = [
     # chemistry,
     "mass_fraction",
     "amount_of_substance",
+    "density_of_states",
+    "band_gap",
     # classical mechanics
     "force",
     "speed",
