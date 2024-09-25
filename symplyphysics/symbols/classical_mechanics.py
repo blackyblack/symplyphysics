@@ -225,3 +225,14 @@ the spring through an angle of 1 radian.
 
 #. `Torsion coefficient <https://en.wikipedia.org/wiki/Torsion_spring#Torsion_coefficient>`__.
 """
+
+bulk_modulus = SymbolNew("K", units.pressure)
+"""
+**Bulk modulus** of a substance is a measure of the resistance of a substance to bulk compression.
+"""
+
+poisson_ratio = SymbolNew("nu", dimensionless, display_latex="\\nu")
+"""
+**Poisson's ratio** is a measure of the Poisson effect, the deformation (expansion or contraction) of
+a material in directions perpendicular to the specific direction of loading.
+"""

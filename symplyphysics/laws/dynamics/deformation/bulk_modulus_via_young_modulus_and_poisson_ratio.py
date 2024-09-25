@@ -17,50 +17,34 @@ the Young modulus of the material and also depends on its Poisson ratio.
 
 from sympy import Eq
 from symplyphysics import (
-    units,
-    dimensionless,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
 )
 
-bulk_modulus = Symbol("bulk_modulus", units.pressure)
+bulk_modulus = symbols.bulk_modulus
 """
-Bulk modulus of the material.
-
-Symbol:
-    :code:`K`
+:symbols:`bulk_modulus` of the material.
 """
 
-young_modulus = Symbol("young_modulus", units.pressure)
+young_modulus = symbols.young_modulus
 """
-Young modulus of the material.
-
-Symbol:
-    :code:`E`
+:symbols:`young_modulus` of the material.
 """
 
-poisson_ratio = Symbol("poisson_ratio", dimensionless)
+poisson_ratio = symbols.poisson_ratio
 r"""
 .. _poisson-ratio:
 
-Poisson ratio of the material.
-
-Symbol:
-    :code:`nu`
-
-Latex:
-    :math:`\nu`
+:symbols:`poisson_ratio` of the material.
 """
 
 law = Eq(bulk_modulus, young_modulus / (3 * (1 - 2 * poisson_ratio)))
-r"""
-:code:`K = E / (3 * (1 - 2 * nu))`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        K = \frac{E}{3 (1 - 2 \nu)}
+:laws:latex::
 """
 
 

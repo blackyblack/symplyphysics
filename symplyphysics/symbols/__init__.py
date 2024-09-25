@@ -75,6 +75,8 @@ __all__ = [
     "height",
     "torque",
     "torsion_stiffness",
+    "bulk_modulus",
+    "poisson_ratio",
     # electrodynamics
     "admittance",
     "electrical_conductance",
