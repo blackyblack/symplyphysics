@@ -236,3 +236,9 @@ poisson_ratio = SymbolNew("nu", dimensionless, display_latex="\\nu")
 **Poisson's ratio** is a measure of the Poisson effect, the deformation (expansion or contraction) of
 a material in directions perpendicular to the specific direction of loading.
 """
+
+engineering_normal_strain = SymbolNew("e", dimensionless)
+"""
+**Engineering strain**, also known as **Cauchy strain**, is expressed as the ratio of total deformation
+to the initial dimension of the material body on which forces are applied.
+"""

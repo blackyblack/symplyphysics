@@ -10,45 +10,32 @@ can be used to obtain analogous forms of this law.
 
 from sympy import Eq
 from symplyphysics import (
-    units,
-    dimensionless,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
 )
 
-elastic_energy_density = Symbol("elastic_energy_density", units.energy / units.volume)
+elastic_energy_density = symbols.energy_density
 """
-Elastic energy of the deformed body per unit of its volume.
-
-Symbol:
-    :code:`u`
+Elastic energy of the deformed body per unit of its volume. See :symbols:`energy_density`
 """
 
-young_modulus = Symbol("young_modulus", units.pressure)
+young_modulus = symbols.young_modulus
 """
-Young's modulus of the body's material.
-
-Symbol:
-    :code:`E`
+:symbols:`young_modulus` of the body's material.
 """
 
-engineering_normal_strain = Symbol("engineering_normal_strain", dimensionless)
+engineering_normal_strain = symbols.engineering_normal_strain
 """
-Engineering normal strain of the deformed body.
-
-Symbol:
-    :code:`e`
+:symbols:`engineering_normal_strain` of the deformed body.
 """
 
 law = Eq(elastic_energy_density, young_modulus * engineering_normal_strain**2 / 2)
-r"""
-:code:`u = E * e^2 / 2`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        u = \frac{1}{2} E e^2
+:laws:latex::
 """
 
 
