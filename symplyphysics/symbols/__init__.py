@@ -80,6 +80,7 @@ __all__ = [
     "engineering_normal_strain",
     "deformation",
     "strain",
+    "stress",
     # electrodynamics
     "admittance",
     "electrical_conductance",

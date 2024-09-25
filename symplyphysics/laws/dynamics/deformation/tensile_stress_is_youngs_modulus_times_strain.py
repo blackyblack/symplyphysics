@@ -8,48 +8,32 @@ Young's modulus.
 
 from sympy import Eq
 from symplyphysics import (
-    units,
-    dimensionless,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
 )
 
-stress = Symbol("stress", units.pressure)
-r"""
-Stress on the object.
-
-Symbol:
-    :code:`sigma`
-
-Latex:
-    :math:`\sigma`
+stress = symbols.stress
+"""
+:symbols:`stress` on the object.
 """
 
-young_modulus = Symbol("young_modulus", units.pressure)
+young_modulus = symbols.young_modulus
 """
-Young's modulus of the material of the object.
-
-Symbol:
-    :code:`E`
+:symbols:`young_modulus` of the material of the object.
 """
 
-engineering_normal_strain = Symbol("engineering_normal_strain", dimensionless)
+engineering_normal_strain = symbols.engineering_normal_strain
 """
-Engineering normal strain of the deformed body.
-
-Symbol:
-    :code:`e`
+:symbols:`engineering_normal_strain` of the deformed body.
 """
 
 law = Eq(stress, young_modulus * engineering_normal_strain)
-r"""
-:code:`sigma = E * e`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \sigma = E e
+:laws:latex::
 """
 
 

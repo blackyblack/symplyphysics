@@ -252,3 +252,8 @@ strain = SymbolNew("e", dimensionless)
 """
 **Strain** is defined as relative deformation, compared to a reference position configuration.
 """
+
+stress = SymbolNew("sigma", units.pressure, display_latex="\\sigma")
+"""
+**Stress** is a physical quantity that describes forces present during deformation.
+"""
