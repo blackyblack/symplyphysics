@@ -36,8 +36,8 @@ from symplyphysics.definitions import (
 )
 from symplyphysics.laws.dynamics import (
     acceleration_is_force_over_mass as newtons_second_law,
-    moment_of_force_from_moment_of_inertia_and_angular_acceleration as torque_law,
     torque_via_force_and_radial_distance as torque_def,
+    torque_via_rotational_inertia_and_angular_acceleration as torque_law,
 )
 
 period = Symbol("period", units.time, positive=True)

@@ -73,6 +73,7 @@ __all__ = [
     "phase_shift",
     "coefficient_of_friction",
     "height",
+    "torque",
     # electrodynamics
     "admittance",
     "electrical_conductance",

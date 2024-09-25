@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.dynamics import moment_of_force_from_moment_of_inertia_and_angular_acceleration as moment_force_law
+from symplyphysics.laws.dynamics import torque_via_rotational_inertia_and_angular_acceleration as moment_force_law
 
 Args = namedtuple("Args", ["i", "epsilon"])
 

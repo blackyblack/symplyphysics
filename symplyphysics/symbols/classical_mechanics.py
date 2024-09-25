@@ -206,3 +206,9 @@ height = SymbolNew("h", units.length)
 In the case of three-dimensional space, height is measured along the vertical z axis, describing a
 distance from (or "above") the x-y plane. 
 """
+
+torque = SymbolNew("tau", units.force * units.length, display_latex="\\tau")
+"""
+**Torque** is the turning effect of a force applied to a rotational system at a distance from the axis of
+rotation.
+"""
