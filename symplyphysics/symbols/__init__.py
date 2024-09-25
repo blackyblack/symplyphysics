@@ -78,6 +78,7 @@ __all__ = [
     "bulk_modulus",
     "poisson_ratio",
     "engineering_normal_strain",
+    "deformation",
     # electrodynamics
     "admittance",
     "electrical_conductance",

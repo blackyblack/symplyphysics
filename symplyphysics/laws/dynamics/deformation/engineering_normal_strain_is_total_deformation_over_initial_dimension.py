@@ -8,51 +8,35 @@ deformation to the initial dimension of a material body on which forces are appl
 
 from sympy import Eq
 from symplyphysics import (
-    units,
-    dimensionless,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     convert_to_float,
+    symbols,
 )
 
-engineering_normal_strain = Symbol("engineering_normal_strain", dimensionless)
+engineering_normal_strain = symbols.engineering_normal_strain
 r"""
-*Engineering normal strain*, also known as *engineering extensional strain*, is equal to
+:symbols:`engineering_normal_strain`, also known as *engineering extensional strain*, is equal to
 the *relative elongation* of the body.
-
-Symbol:
-    :code:`e`
 """
 
-total_deformation = Symbol("total_deformation", units.length)
+total_deformation = symbols.deformation
 r"""
-Total deformation of the body, which is the change in length in case of the engineering
+Total :symbols:`deformation` of the body, which is the change in length in case of the engineering
 normal strain.
-
-Symbol:
-    :code:`dl`
-
-Latex:
-    :math:`\Delta l`
 """
 
-initial_dimension = Symbol("initial_dimension", units.length)
+initial_dimension = symbols.length
 """
-Initial dimension of the body, e.g. initial length.
-
-Symbol:
-    :code:`l`
+Initial dimension of the body, e.g. initial :symbols:`length`.
 """
 
 law = Eq(engineering_normal_strain, total_deformation / initial_dimension)
-r"""
-:code:`e = dl / l`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        e = \frac{\Delta l}{l}
+:laws:latex::
 """
 
 

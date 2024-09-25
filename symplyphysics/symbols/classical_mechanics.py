@@ -242,3 +242,8 @@ engineering_normal_strain = SymbolNew("e", dimensionless)
 **Engineering strain**, also known as **Cauchy strain**, is expressed as the ratio of total deformation
 to the initial dimension of the material body on which forces are applied.
 """
+
+deformation = SymbolNew("Delta(l)", units.length, display_latex="\\Delta l")
+"""
+**Deformation** is a change in an object's shape or form due to the application of a force or forces. 
+"""
