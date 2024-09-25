@@ -28,6 +28,7 @@ __all__ = [
     "positive_number",
     "number_density",
     "particle_count",
+    "angle",
     # chemistry,
     "mass_fraction",
     "amount_of_substance",
