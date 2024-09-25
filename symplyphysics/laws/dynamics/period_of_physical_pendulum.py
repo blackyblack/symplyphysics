@@ -7,26 +7,17 @@ oscillates about a given pivot point. The period of its oscillations depends on 
 mass and the distance between the pivot and the center of mass of the pendulum.
 """
 
-from sympy import (
-    Eq,
-    pi,
-    sqrt,
-    solve,
-    symbols as SymSymbols,
-    Symbol as SymSymbol,
-    Function as SymFunction,
-    Derivative,
-)
-from sympy.physics.units import acceleration_due_to_gravity
+from sympy import Eq, pi, solve, Derivative
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     symbols,
     clone_as_symbol,
+    clone_as_function,
+    quantities,
 )
+from symplyphysics.core.functions import sqrt
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import (
     angular_acceleration_is_angular_speed_derivative as angular_acceleration_def,
@@ -40,12 +31,9 @@ from symplyphysics.laws.dynamics import (
     torque_via_rotational_inertia_and_angular_acceleration as torque_law,
 )
 
-period = Symbol("period", units.time, positive=True)
+period = symbols.period
 """
-The period of the physical pendulum.
-
-Symbol:
-    :code:`T`
+The :symbols:`period` of the physical pendulum.
 """
 
 mass = clone_as_symbol(symbols.mass, positive=True)
@@ -53,43 +41,35 @@ mass = clone_as_symbol(symbols.mass, positive=True)
 The :symbols:`mass` of the pendulum.
 """
 
-rotational_inertia = Symbol("rotational_inertia", units.mass * units.length**2, positive=True)
+rotational_inertia = clone_as_symbol(symbols.rotational_inertia, positive=True)
 """
-The rotational inertia of the pendulum.
-
-Symbol:
-    :code:`I`
+The :symbols:`rotational_inertia` of the pendulum.
 """
 
-distance_to_pivot = Symbol("distance_to_pivot", units.length, positive=True)
+distance_to_pivot = clone_as_symbol(symbols.distance, positive=True)
 """
-The distance between the pivot and the pendulum's center of mass.
-
-Symbol:
-    :code:`h`
+The :symbols:`distance` between the pivot and the pendulum's center of mass.
 """
 
 law = Eq(
     period,
-    2 * pi * sqrt(rotational_inertia / (mass * acceleration_due_to_gravity * distance_to_pivot)))
-r"""
-:code:`T = 2 * pi * sqrt(I / (m * g * h))`
+    2 * pi * sqrt(rotational_inertia / (mass * quantities.acceleration_due_to_gravity * distance_to_pivot)))
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        T = 2 \pi \sqrt{\frac{I}{m g h}}
+:laws:latex::
 """
 
 # Derive from torque definition
 
-time = SymSymbol("time")
+time = symbols.time
 # use symbols to avoid "not callable" warning
-angle_function = SymSymbols("angle_function", cls=SymFunction)
-torque = SymSymbol("torque")
+angle_function = clone_as_function(symbols.angle)
+torque = symbols.torque
 
 gravitational_force = solve(newtons_second_law.law, newtons_second_law.force)[0].subs({
     newtons_second_law.mass: mass,
-    newtons_second_law.acceleration: acceleration_due_to_gravity,
+    newtons_second_law.acceleration: quantities.acceleration_due_to_gravity,
 })
 
 angular_velocity = (angular_velocity_def.definition.rhs.subs(angular_velocity_def.time,
@@ -106,7 +86,7 @@ torque_due_to_gravity = torque_def.law.rhs.subs({
 })
 
 # Temporary replace function with symbol to make "series" work
-angle_sym = SymSymbol("angle_sym")
+angle_sym = symbols.angle
 torque_due_to_gravity = (torque_due_to_gravity.subs(angle_function(time),
     angle_sym).series(angle_sym, 0, 2).removeO().subs(angle_sym, angle_function(time)))
 
