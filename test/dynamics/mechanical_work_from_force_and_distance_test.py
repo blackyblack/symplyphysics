@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.dynamics import mechanical_work_from_force_and_move as work_law
+from symplyphysics.laws.dynamics import mechanical_work_from_force_and_distance as work_law
 
 # Description
 ## Force of 100N is applied to heavy object lying oh horizontal table.

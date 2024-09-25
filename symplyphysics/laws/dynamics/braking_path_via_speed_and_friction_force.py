@@ -21,7 +21,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_speed as energy_law
-from symplyphysics.laws.dynamics import mechanical_work_from_force_and_move as work_law
+from symplyphysics.laws.dynamics import mechanical_work_from_force_and_distance as work_law
 
 braking_path = symbols.distance
 """
