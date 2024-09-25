@@ -12,9 +12,14 @@ It starts oscillating after being pushed out of balance.
 #. The spring is weightless.
 """
 
-from sympy import (Derivative, Eq, Function as SymFunction, diff, solve, pi, sqrt, symbols as
-    SymSymbols, simplify)
-from symplyphysics import (Quantity, units, Symbol, validate_input, validate_output, symbols)
+from sympy import Derivative, Eq, diff, solve, pi, sqrt, simplify
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    clone_as_function,
+)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.dynamics import potential_energy_from_deformation as spring_energy
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_speed as kinetic_energy
@@ -22,12 +27,9 @@ from symplyphysics.definitions import speed_is_distance_derivative as velocity_d
 from symplyphysics.definitions import period_from_angular_frequency as period_definition
 from symplyphysics.definitions import harmonic_oscillator_is_second_derivative_equation as oscillator
 
-period = Symbol("period", units.time)
+period = symbols.period
 """
-The period of spring oscillations.
-
-Symbol:
-    :code:`T`
+The :symbols:`period` of spring oscillations.
 """
 
 mass = symbols.mass
@@ -35,28 +37,23 @@ mass = symbols.mass
 The :symbols:`mass` of the object attached to the spring.
 """
 
-stiffness = Symbol("stiffness", units.force / units.length)
+stiffness = symbols.stiffness
 """
-Spring's stiffness, or spring constant.
-
-Symbol:
-    :code:`k`
+Spring's :symbols:`stiffness`, or spring constant.
 """
 
 law = Eq(period, 2 * pi * sqrt(mass / stiffness))
-r"""
-:code:`T = 2 * pi * sqrt(m / k)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        T = 2 \pi \sqrt{\frac{m}{k}}
+:laws:latex::
 """
 
 # Derive this law from conservation of energy
 
 ## Spring displacement is distance between current and balanced positions.
-spring_displacement = SymSymbols("spring_displacement", cls=SymFunction)
-time = SymSymbols("time")
+spring_displacement = clone_as_function(symbols.distance)
+time = symbols.time
 
 ## Spring oscillation is cyclic transfer of energy from kinetic to potential. To set oscillation up we have to input some energy. Usually it is done by biasing the spring and letting it go.
 ## Biasing the spring is giving to it some amount of potential energy.
@@ -76,7 +73,7 @@ amount_of_kinetic_energy = kinetic_energy.law.subs({
 }).rhs
 
 ## Total energy is constant and any of it's derivatives is 0.
-total_energy = SymSymbols("total_energy", constant=True)
+total_energy = symbols.energy
 total_energy_eq = Eq(total_energy, amount_of_kinetic_energy + amount_of_potential_energy)
 
 ## Differentiate twice both sides of equation
