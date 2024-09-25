@@ -14,31 +14,26 @@ resonance.
 
 **Notes:**
 
-#. The expression of the driving force has the form :math:`f \cos{\left( \omega t + \varphi \right)}`
+#. The expression of the driving force has the form :math:`F \cos{\left( \omega t + \varphi \right)}`
    where :math:`\omega` is the angular frequency of its oscillations.
 """
 
 from sympy import Eq, dsolve, sin
 from symplyphysics import (
-    symbols,
-    units,
-    angle_type,
     Quantity,
-    Symbol,
-    Function,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_function,
+    clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.laws.dynamics import forced_oscillations_equation as forced_eqn
 
-resonant_displacement = Function("resonant_displacement", units.length)
+resonant_displacement = clone_as_function(symbols.position, display_symbol="x(t)")
 """
-The displacement of resonant oscillations.
-
-Symbol:
-    :code:`q(t)`
+The displacement of resonant oscillations. See :symbols:`position`.
 """
 
 mass = symbols.mass
@@ -46,15 +41,13 @@ mass = symbols.mass
 The :symbols:`mass` of the oscillator.
 """
 
-natural_angular_frequency = Symbol("natural_angular_frequency", angle_type / units.time)
-r"""
-The natural angular frequency of the oscillator.
-
-Symbol:
-    :code:`w0`
-
-Latex:
-    :math:`\omega_0`
+natural_angular_frequency = clone_as_symbol(
+    symbols.angular_frequency,
+    display_symbol="w_0",
+    display_latex="\\omega_0",
+)
+"""
+The natural :symbols:`angular_frequency` of the oscillator.
 """
 
 driving_force_amplitude = symbols.force
@@ -62,33 +55,22 @@ driving_force_amplitude = symbols.force
 The amplitude of the driving :symbols:`force`.
 """
 
-driving_phase_lag = Symbol("driving_phase_lag", angle_type)
-r"""
-The phase lag of the oscillations of the driving force.
-
-Symbol:
-    :code:`phi`
-
-Latex:
-    :math:`\varphi`
+driving_phase_lag = symbols.phase_shift
+"""
+The :symbols:`phase_shift` of the oscillations of the driving force.
 """
 
-time = Symbol("time", units.time)
+time = symbols.time
 """
-Time.
-
-Symbol:
-    :code:`t`
+:symbols:`time`.
 """
 
 law = Eq(resonant_displacement(time), (driving_force_amplitude / mass) * time *
     sin(natural_angular_frequency * time + driving_phase_lag) / (2 * natural_angular_frequency))
-r"""
-:code:`q(t) = (F / m) * t * sin(w0 * t + phi) / (2 * w0)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        q(t) = \frac{F t}{2 m \omega_0} \sin{\left( \omega_0 t + \varphi \right)}
+:laws:latex::
 """
 
 # Derive law from driven oscillations equation
