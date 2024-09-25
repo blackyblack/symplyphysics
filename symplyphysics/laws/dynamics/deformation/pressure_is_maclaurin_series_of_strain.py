@@ -23,52 +23,36 @@ its physical state.
 
 from sympy import Eq
 from symplyphysics import (
-    units,
-    dimensionless,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
 )
 
-pressure = Symbol("pressure", units.pressure)
+pressure = symbols.pressure
 """
-Pressure (or tension) in the deformed body.
-
-Symbol:
-    :code:`P`
+:symbols:`pressure` (or tension) in the deformed body.
 """
 
-young_modulus = Symbol("young_modulus", units.pressure)
+young_modulus = symbols.young_modulus
 """
-Young's modulus of the body's material.
-
-Symbol:
-    :code:`E`
+:symbols:`young_modulus` of the body's material.
 """
 
-second_coefficient = Symbol("second_coefficient", units.pressure)
+second_coefficient = clone_as_symbol(symbols.pressure, display_symbol="A", display_latex="A")
 """
 Coefficient at the second power of strain in the expansion.
-
-Symbol:
-    :code:`A`
 """
 
-third_coefficient = Symbol("third_coefficient", units.pressure)
+third_coefficient = clone_as_symbol(symbols.pressure, display_symbol="B", display_latex="B")
 """
 Coefficient at the third power of strain in the expansion.
-
-Symbol:
-    :code:`B`
 """
 
-strain = Symbol("strain", dimensionless)
+strain = symbols.engineering_normal_strain
 """
-Strain, or engineering normal strain to be exact, of the body.
-
-Symbol:
-    :code:`e`
+:symbols:`engineering_normal_strain` of the body.
 """
 
 law = Eq(
@@ -76,6 +60,10 @@ law = Eq(
     young_modulus * strain + second_coefficient * strain**2 + third_coefficient * strain**3,
 )
 r"""
+.. only:: comment
+
+    We need to show the Big O notation in this law.
+
 :code:`P = E * e + A * e^2 + B * e^3 + O(e^4)`
 
 Latex:
