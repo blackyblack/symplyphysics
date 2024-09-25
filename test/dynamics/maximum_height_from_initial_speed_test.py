@@ -6,7 +6,7 @@ from symplyphysics import (
     units,
     Quantity,
 )
-from symplyphysics.laws.dynamics import maximum_height_from_velocity as maximum_height_law
+from symplyphysics.laws.dynamics import maximum_height_from_initial_speed as maximum_height_law
 
 # Description
 ## If a body is thrown vertically upwards at a speed of 10 m/s, it will rise to a height of  (10*10) /2*9,8 = 5.1 meters

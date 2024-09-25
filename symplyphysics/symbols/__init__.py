@@ -72,6 +72,7 @@ __all__ = [
     "young_modulus",
     "phase_shift",
     "coefficient_of_friction",
+    "height",
     # electrodynamics
     "admittance",
     "electrical_conductance",

@@ -3,37 +3,32 @@ Maximum height from initial speed
 =================================
 
 The maximum height that a body thrown vertically will rise to depends on the initial speed.
-
-..
-    TODO Rename file
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
+from sympy import Eq, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    quantities,
+)
 
-maximum_height = Symbol("maximum_height", units.length)
+maximum_height = symbols.height
 """
-The maximum height that the object will reach.
-
-Symbol:
-    :code:`h`
-"""
-
-initial_speed = Symbol("initial_speed", units.velocity)
-"""
-The initial speed of the object.
-
-Symbol:
-    :code:`v`
+The maximum :symbols:`height` that the object will reach.
 """
 
-law = Eq(maximum_height, initial_speed**2 / (2 * units.acceleration_due_to_gravity))
-r"""
-:code:`h = v^2 / (2 * g)`
+initial_speed = symbols.speed
+"""
+The initial :symbols:`speed` of the object.
+"""
 
-Latex:
-    .. math::
-        h = \frac{v^2}{2 g}
+law = Eq(maximum_height, initial_speed**2 / (2 * quantities.acceleration_due_to_gravity))
+"""
+:laws:symbol::
+
+:laws:latex::
 """
 
 

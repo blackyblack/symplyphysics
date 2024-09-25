@@ -198,3 +198,11 @@ coefficient_of_friction = SymbolNew("mu", dimensionless, display_latex="\\mu")
 friction between two bodies and the force pressing them together, either during or at the onset of
 slipping.
 """
+
+height = SymbolNew("h", units.length)
+"""
+**Height** is measure of vertical distance, either vertical extent or vertical position.
+
+In the case of three-dimensional space, height is measured along the vertical z axis, describing a
+distance from (or "above") the x-y plane. 
+"""
