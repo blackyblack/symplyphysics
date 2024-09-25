@@ -7,52 +7,33 @@ Rotational stiffness is torque applied over angle
 
 from sympy import Eq
 from symplyphysics import (
-    units,
-    angle_type,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
 )
 from symplyphysics.core.symbols.quantities import scale_factor
 
-rotational_stiffness = Symbol("rotational_stiffness", units.force * units.length / angle_type)
+rotational_stiffness = symbols.torsion_stiffness
 """
-Rotational stiffness of the body.
-
-Symbol:
-    :code:`k`
+Rotational stiffness of the body. See :symbols:`torsion_stiffness`.
 """
 
-torque = Symbol("torque", units.force * units.length)
-r"""
-Torque applied to the body.
-
-Symbol:
-    :code:`tau`
-
-Latex:
-    :math:`\tau`
+torque = symbols.torque
+"""
+:symbols:`torque` applied to the body.
 """
 
-angular_distance = Symbol("angular_distance", angle_type)
-r"""
-Angle of deformation.
-
-Symbol:
-    :code:`phi`
-
-Latex:
-    :math:`\varphi`
+angular_distance = symbols.angular_distance
+"""
+Angle of deformation. See :symbols:`angular_distance`
 """
 
 law = Eq(rotational_stiffness, torque / angular_distance)
-r"""
-:code:`k = tau / phi`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        k = \frac{\tau}{\varphi}
+:laws:latex::
 """
 
 
