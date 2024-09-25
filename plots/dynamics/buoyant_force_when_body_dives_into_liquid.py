@@ -2,7 +2,8 @@
 from sympy import solve, symbols, pi
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
-from symplyphysics import print_expression, units
+from symplyphysics import print_expression, quantities
+from symplyphysics.core.symbols.quantities import evaluate_expression
 from symplyphysics.laws.dynamics import buoyant_force_from_density_and_volume as archimedes_law
 from symplyphysics.laws.dynamics import acceleration_is_force_over_mass as gravity_law
 
@@ -22,22 +23,23 @@ solved = abs(
     solve(archimedes_law.law, archimedes_law.buoyant_force,
     dict=True)[0][archimedes_law.buoyant_force])
 result_buoyant_force_above_liquid = solved.subs({
-    units.acceleration_due_to_gravity: 9.8,
     archimedes_law.fluid_density: FLUID_DENSITY,
     archimedes_law.displaced_volume: cylinder_volume_function
 })
+result_buoyant_force_above_liquid = evaluate_expression(result_buoyant_force_above_liquid)
 
 result_buoyant_force_below_liquid = solved.subs({
-    units.acceleration_due_to_gravity: 9.8,
     archimedes_law.fluid_density: FLUID_DENSITY,
     archimedes_law.displaced_volume: cylinder_volume
 })
+result_buoyant_force_below_liquid = evaluate_expression(result_buoyant_force_below_liquid)
 
 solved_gravity = solve(gravity_law.law, gravity_law.force, dict=True)[0][gravity_law.force]
 result_gravity_force = solved_gravity.subs({
     gravity_law.mass: CYLINDER_MASS,
-    gravity_law.acceleration: 9.8
+    gravity_law.acceleration: quantities.acceleration_due_to_gravity,
 })
+result_gravity_force = evaluate_expression(result_gravity_force)
 
 print(
     f"Buoyant force above liquid function is:\n{print_expression(result_buoyant_force_above_liquid)}"
