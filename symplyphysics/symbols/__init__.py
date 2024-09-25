@@ -74,6 +74,7 @@ __all__ = [
     "coefficient_of_friction",
     "height",
     "torque",
+    "torsion_stiffness",
     # electrodynamics
     "admittance",
     "electrical_conductance",

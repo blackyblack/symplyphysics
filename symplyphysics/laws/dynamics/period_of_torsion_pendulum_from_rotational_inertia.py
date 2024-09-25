@@ -9,57 +9,42 @@ The element of elasticity is associated with the twisting of the suspension wire
 
 from sympy import Eq, pi, sqrt
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
 )
 
-period = Symbol("period", units.time)
+period = symbols.period
 """
-The period of pendulum's oscillations.
-
-Symbol:
-    :code:`T`
+The :symbols:`period` of pendulum's oscillations.
 """
 
-rotational_inertia = Symbol("rotational_inertia", units.mass * units.length**2)
+rotational_inertia = symbols.rotational_inertia
 """
-The rotational inertia of the disk.
-
-Symbol:
-    :code:`I`
+The :symbols:`rotational_inertia` of the disk.
 """
 
-torsion_constant = Symbol("torsion_constant", units.force * units.length)
-r"""
-The torsion constant, which depends on the properties of the suspension wire.
-
-Symbol:
-    :code:`kappa`
-
-Latex:
-    :math:`\kappa`
+torsion_stiffness = symbols.torsion_stiffness
+"""
+The :symbols:`torsion_stiffness`, which depends on the properties of the suspension wire.
 """
 
-law = Eq(period, 2 * pi * sqrt(rotational_inertia / torsion_constant))
-r"""
-:code:`T = 2 * pi * sqrt(I / kappa)`
+law = Eq(period, 2 * pi * sqrt(rotational_inertia / torsion_stiffness))
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        T = 2 \pi \sqrt{\frac{I}{\kappa}}
+:laws:latex::
 """
 
 # TODO: derive from relation between restoring torque and twist angle
 
 
-@validate_input(rotational_inertia_=rotational_inertia, torsion_constant_=torsion_constant)
+@validate_input(rotational_inertia_=rotational_inertia, torsion_constant_=torsion_stiffness)
 @validate_output(period)
 def calculate_period(rotational_inertia_: Quantity, torsion_constant_: Quantity) -> Quantity:
     result = law.rhs.subs({
         rotational_inertia: rotational_inertia_,
-        torsion_constant: torsion_constant_,
+        torsion_stiffness: torsion_constant_,
     })
     return Quantity(result)

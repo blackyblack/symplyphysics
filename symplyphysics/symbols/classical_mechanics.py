@@ -212,3 +212,16 @@ torque = SymbolNew("tau", units.force * units.length, display_latex="\\tau")
 **Torque** is the turning effect of a force applied to a rotational system at a distance from the axis of
 rotation.
 """
+
+torsion_stiffness = SymbolNew(
+    "kappa",
+    units.force * units.length / angle_type,
+    display_latex="\\kappa")
+"""
+**Torsion stiffness** or **torsion elastic modulus** is equal to the change in torque required to twist
+the spring through an angle of 1 radian.
+
+**Links:**
+
+#. `Torsion coefficient <https://en.wikipedia.org/wiki/Torsion_spring#Torsion_coefficient>`__.
+"""
