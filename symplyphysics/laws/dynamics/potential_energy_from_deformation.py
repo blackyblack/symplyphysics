@@ -2,7 +2,7 @@
 Elastic potential energy from displacement
 ==========================================
 
-Spring accumulates energy while being deformed. This law is known as the *Hooke's law*.
+Spring accumulates energy while being deformed. This law is known as the **Hooke's law**.
 
 **Conditions:**
 
@@ -12,40 +12,35 @@ Spring accumulates energy while being deformed. This law is known as the *Hooke'
     TODO Move law to ./deformations/
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
+from sympy import Eq, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+)
 
-elastic_potential_energy = Symbol("elastic_potential_energy", units.energy)
+elastic_potential_energy = symbols.potential_energy
 """
-The potential energy of the spring.
-
-Symbol:
-    :code:`U`
-"""
-
-stiffness = Symbol("stiffness", units.force / units.length)
-"""
-The spring's stiffness, or spring constant.
-
-Symbol:
-    :code:`k`
+The :symbols:`potential_energy` of the spring.
 """
 
-displacement = Symbol("displacement", units.length)
+stiffness = symbols.stiffness
 """
-The displacement of the spring.
+The spring's :symbols:`stiffness`, or spring constant.
+"""
 
-Symbol:
-    :code:`x`
+displacement = symbols.distance
+"""
+The displacement of the spring, or the :symbols:`distance` between the initial position
+and the rest position.
 """
 
 law = Eq(elastic_potential_energy, stiffness * displacement**2 / 2)
-r"""
-:code:`U = k * x^2 / 2`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        U = \frac{1}{2} k x^2
+:laws:latex::
 """
 
 
