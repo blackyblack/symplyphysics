@@ -5,23 +5,22 @@ Kinetic energy from mass and speed
 The *kinetic energy* of a body is the form of energy that it possesses due to its motion.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols)
+from sympy import Eq, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+)
 
-kinetic_energy = Symbol("kinetic_energy", units.energy)
+kinetic_energy = symbols.kinetic_energy
 r"""
-The kinetic energy of the body.
-
-Symbol:
-    :code:`K`
+The :symbols:`kinetic_energy` of the body.
 """
 
-speed = Symbol("speed", units.velocity)
+speed = symbols.speed
 """
-The speed of the body.
-
-Symbol:
-    :code:`v`
+The :symbols:`speed` of the body.
 """
 
 mass = symbols.mass
@@ -30,11 +29,10 @@ The :symbols:`mass` of the body.
 """
 
 law = Eq(kinetic_energy, mass * speed**2 / 2)
-r"""
-:code:`K = m * v^2 / 2`
+"""
+:laws:symbol::
 
-Latex:
-    :math:`K = \frac{1}{2} m v^2`
+:laws:latex::
 """
 
 
