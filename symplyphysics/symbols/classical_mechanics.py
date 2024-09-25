@@ -247,3 +247,8 @@ deformation = SymbolNew("Delta(l)", units.length, display_latex="\\Delta l")
 """
 **Deformation** is a change in an object's shape or form due to the application of a force or forces. 
 """
+
+strain = SymbolNew("e", dimensionless)
+"""
+**Strain** is defined as relative deformation, compared to a reference position configuration.
+"""

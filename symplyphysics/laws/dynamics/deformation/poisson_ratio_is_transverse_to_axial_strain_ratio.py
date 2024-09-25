@@ -15,53 +15,41 @@ to axial (or longitudinal) strain in the direction of a deforming force.
 
 from sympy import Eq
 from symplyphysics import (
-    dimensionless,
-    Symbol,
     validate_input,
     validate_output,
     convert_to_float,
+    symbols,
+    clone_as_symbol,
 )
 
-poisson_ratio = Symbol("poisson_ratio", dimensionless)
+poisson_ratio = symbols.poisson_ratio
 r"""
-Poisson ratio of the material of the deformed body.
-
-Symbol:
-    :code:`nu`
-
-Latex:
-    :math:`\nu`
+:symbols:`poisson_ratio` of the material of the deformed body.
 """
 
-transverse_strain = Symbol("transverse_strain", dimensionless)
+transverse_strain = clone_as_symbol(
+    symbols.strain,
+    display_symbol="e_transverse",
+    display_latex="e_\\text{transverse}",
+)
 r"""
-Strain in the transverse (lateral) direction relative to the deforming force.
-
-Symbol:
-    :code:`e_transverse`
-
-Latex:
-    :math:`e_\text{transverse}`
+:symbols:`strain` in the transverse (lateral) direction relative to the deforming force.
 """
 
-axial_strain = Symbol("axial_strain", dimensionless)
+axial_strain = clone_as_symbol(
+    symbols.strain,
+    display_symbol="e_axial",
+    display_latex="e_\\text{axial}",
+)
 r"""
-Strain in the axial direction, i.e. parallel to the deforming force.
-
-Symbol:
-    :code:`e_axial`
-
-Latex:
-    :math:`e_\text{axial}`
+:symbols:`strain` in the axial direction, i.e. parallel to the deforming force.
 """
 
 law = Eq(poisson_ratio, -1 * transverse_strain / axial_strain)
-r"""
-:code:`nu = -1 * e_transverse / e_axial`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \nu = - \frac{e_\text{transverse}}{e_\text{axial}}
+:laws:latex::
 """
 
 

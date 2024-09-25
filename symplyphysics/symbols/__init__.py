@@ -79,6 +79,7 @@ __all__ = [
     "poisson_ratio",
     "engineering_normal_strain",
     "deformation",
+    "strain",
     # electrodynamics
     "admittance",
     "electrical_conductance",
