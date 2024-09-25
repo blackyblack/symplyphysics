@@ -9,44 +9,32 @@ and inversely proportional to the bulk modulus of the body's material.
 
 from sympy import Eq
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
 )
 
-elastic_energy_density = Symbol("elastic_energy_density", units.energy / units.volume)
+elastic_energy_density = symbols.energy_density
 """
-Elastic energy of the deformed body per unit of its volume.
-
-Symbol:
-    :code:`u`
+Elastic energy of the deformed body per unit of its volume. See :symbols:`energy_density`
 """
 
-pressure = Symbol("pressure", units.pressure)
+pressure = symbols.pressure
 """
-Pressure in the deformed body.
-
-Symbol:
-    :code:`P`
+:symbols:`pressure` in the deformed body.
 """
 
-bulk_modulus = Symbol("bulk_modulus", units.pressure)
+bulk_modulus = symbols.bulk_modulus
 """
-Bulk modulus of the material.
-
-Symbol:
-    :code:`K`
+:symbols:`bulk_modulus` of the material.
 """
 
 law = Eq(elastic_energy_density, pressure**2 / (2 * bulk_modulus))
-r"""
-:code:`u = P^2 / (2 * K)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        u = \frac{P^2}{2 K}
+:laws:latex::
 """
 
 
