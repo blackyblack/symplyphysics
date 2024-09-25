@@ -6,75 +6,53 @@ Assuming a one-dimensional environment, when the force F on a particle-like obje
 on the position of the object, the work done by F on the object while the object moves
 from one position to another is to be found by integrating the force along the path of the
 object.
-
-..
-    TODO Rename file
 """
 
 from sympy import Eq, Integral
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
-    Function,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_function,
+    clone_as_symbol,
 )
 from symplyphysics.core.geometry.line import two_point_function, Point2D
 
-work = Symbol("work", units.energy)
+work = symbols.work
 """
-The work done by :symbols:`force` :math:`F`.
-
-Symbol:
-    :code:`W`
+The :symbols:`work` done by :ref:`force <work_is_integral_force>`.
 """
 
-force = Function("force", units.force)
+force = clone_as_function(symbols.force, display_symbol="F(x)")
 """
-The :symbols:`force` exerted on the object as a function of position.
+.. _work_is_integral_force:
 
-Symbol:
-    :code:`F(x)`
-"""
-
-position = Symbol("position", units.length)
-"""
-The position of the object.
-
-Symbol:
-    :code:`x`
+The :symbols:`force` exerted on the object as a function of :ref:`position <work_is_integral_position>`.
 """
 
-position_before = Symbol("position_before", units.length)
+position = symbols.position
 """
-The initial position of the object.
+.. _work_is_integral_position:
 
-Symbol:
-    :code:`x0`
-
-Latex:
-    :math:`x_0`
+The :symbols:`position` of the object.
 """
 
-position_after = Symbol("position_after", units.length)
+position_before = clone_as_symbol(symbols.position, display_symbol="x_0", display_latex="x_0")
 """
-The end position of the object.
+The initial :symbols:`position` of the object.
+"""
 
-Symbol:
-    :code:`x1`
-
-Latex:
-    :math:`x_1`
+position_after = clone_as_symbol(symbols.position, display_symbol="x_1", display_latex="x_1")
+"""
+The end :symbols:`position` of the object.
 """
 
 law = Eq(work, Integral(force(position), (position, position_before, position_after)))
-r"""
-:code:`W = Integral(F(x), (x, x0, x1))`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        W = \int_{x_0}^{x_1} F(x) dx
+:laws:latex::
 """
 
 
