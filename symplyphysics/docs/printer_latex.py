@@ -134,12 +134,11 @@ class SymbolLatexPrinter(LatexPrinter):
     
     def _print_log(self, expr: Any) -> str:
         value, base = expr.args
-        head = r"\log" if (base is None or base == E) else (r"\log_{%s}" % self._print(base))
-        can_fold_brackets = (
-            self._settings["fold_func_brackets"]
-            and not self._needs_function_brackets(value)
-        )
-        tail = ("%s" if can_fold_brackets else r"\left( %s \right)") % self._print(value)
+        str_value = self._print(value)
+        str_base = self._print(base)
+        head = r"\log" if (base is None or base == E) else rf"\log_{{{str_base}}}"
+        can_fold_brackets = not self._needs_function_brackets(value)
+        tail = str_value if can_fold_brackets else rf"\left( {str_value} \right)"
         return f"{head} {tail}"
 
 
