@@ -5,6 +5,7 @@ from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression, Quantity, units, quantities
 from symplyphysics.core.symbols.quantities import evaluate_expression
+from symplyphysics.core.convert import convert_to_si
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed_distribution
 
 MassDatum = namedtuple("MassDatum", "mass label")
@@ -37,7 +38,7 @@ distribution = speed_distribution.law.rhs.subs(
 distribution = evaluate_expression(distribution)
 
 for mass_datum_ in mass_data_:
-    mass_ = evaluate_expression(Quantity(mass_datum_.mass * units.amu), units.kilogram)
+    mass_ = convert_to_si(Quantity(mass_datum_.mass * units.amu))
     mass_subplot = plot(
         distribution.subs(speed_distribution.particle_mass, mass_),
         (speed_distribution.particle_speed, 0, 2000),

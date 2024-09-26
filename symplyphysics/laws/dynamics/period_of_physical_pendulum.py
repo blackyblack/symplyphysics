@@ -16,8 +16,8 @@ from symplyphysics import (
     clone_as_symbol,
     clone_as_function,
     quantities,
+    sqrt,
 )
-from symplyphysics.core.functions import sqrt
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import (
     angular_acceleration_is_angular_speed_derivative as angular_acceleration_def,

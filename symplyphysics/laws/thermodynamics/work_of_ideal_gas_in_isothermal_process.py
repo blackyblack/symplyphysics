@@ -24,8 +24,9 @@ from symplyphysics import (
     symbols,
     quantities,
     clone_as_symbol,
+    log,
+    mul,
 )
-from symplyphysics.core.functions import log, mul
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import work_is_integral_of_pressure_over_volume as work_law
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation

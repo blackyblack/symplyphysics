@@ -9,8 +9,7 @@ vector is directed opposite to the gravity vector.
 
 from sympy import (Eq, solve)
 from symplyphysics import (clone_as_symbol, symbols, quantities, Quantity, validate_input,
-    validate_output)
-from symplyphysics.core.functions import mul
+    validate_output, mul)
 
 buoyant_force = clone_as_symbol(symbols.force,
     display_symbol="F_A",

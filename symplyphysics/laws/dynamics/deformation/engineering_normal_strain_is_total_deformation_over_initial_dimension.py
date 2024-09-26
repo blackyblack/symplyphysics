@@ -17,14 +17,12 @@ from symplyphysics import (
 
 engineering_normal_strain = symbols.engineering_normal_strain
 r"""
-:symbols:`engineering_normal_strain`, also known as *engineering extensional strain*, is equal to
-the *relative elongation* of the body.
+:symbols:`engineering_normal_strain` of the body.
 """
 
 total_deformation = symbols.deformation
 r"""
-Total :symbols:`deformation` of the body, which is the change in length in case of the engineering
-normal strain.
+Total :symbols:`deformation` of the body.
 """
 
 initial_dimension = symbols.length

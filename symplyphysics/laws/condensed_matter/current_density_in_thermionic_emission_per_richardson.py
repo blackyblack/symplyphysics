@@ -14,7 +14,6 @@ the material. This formula for emission current density was proposed by Owen Wil
 from sympy import (Eq, solve, exp)
 from symplyphysics import (
     symbols,
-    units,
     quantities,
     Quantity,
     validate_input,
@@ -36,16 +35,9 @@ temperature = symbols.temperature
 :symbols:`temperature` of the metal.
 """
 
-richardson_constant = Quantity(
-    120.17 * (units.ampere / units.kelvin**2 / units.centimeter**2),
-    display_symbol="a")
-"""
-Constant of proportionality proposed by Richardson.
-"""
-
 law = Eq(
     current_density,
-    richardson_constant * temperature**2 * exp(-1 * work_function / (quantities.boltzmann_constant * temperature)))
+    quantities.richardson_constant * temperature**2 * exp(-1 * work_function / (quantities.boltzmann_constant * temperature)))
 r"""
 :laws:symbol::
 

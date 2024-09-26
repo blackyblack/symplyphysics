@@ -18,7 +18,7 @@ nonzero concentration of free charge carriers in the semiconductor.
 #. There are no external influences, such as lighting, electric field, etc.
 """
 
-from sympy import (Eq, solve, sqrt, exp)
+from sympy import (Eq, solve, exp)
 from symplyphysics import (
     symbols,
     quantities,
@@ -26,6 +26,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
     clone_as_symbol,
+    sqrt,
 )
 
 charge_carriers_concentration = symbols.number_density

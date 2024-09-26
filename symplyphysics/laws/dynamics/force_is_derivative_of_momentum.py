@@ -25,12 +25,12 @@ from symplyphysics import (
 
 momentum = clone_as_function(symbols.momentum, display_symbol="p(t)")
 """
-The magnitude of the :symbols:`momentum` of the body.
+The magnitude of the :symbols:`momentum` of the body as a function of :attr:`~time`.
 """
 
 force = clone_as_function(symbols.force, display_symbol="F(t)")
 """
-The magnitude of the net :symbols:`force` exerted on the body.
+The magnitude of the net :symbols:`force` exerted on the body as a function of :attr:`~time`.
 """
 
 time = symbols.time

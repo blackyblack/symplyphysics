@@ -101,12 +101,12 @@ _work_function = _work_derived_sub.subs(angular_distance, 1)
 
 _integral_work = integrate(_work_function, (_angle, _angle_start, _angle_end))
 
-_ = solve(
+_integral_work_solved = solve(
     [Eq(angular_distance, _angle_end - _angle_start),
     Eq(work, _integral_work)], (_angle_end, work),
     dict=True)[0][work]
 
-assert expr_equals(_, law.rhs)
+assert expr_equals(_integral_work_solved, law.rhs)
 
 
 @validate_input(torque_=torque, angular_displacement_=angular_distance)

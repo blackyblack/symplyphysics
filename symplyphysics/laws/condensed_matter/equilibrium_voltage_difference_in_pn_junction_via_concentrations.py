@@ -20,10 +20,16 @@ The p-n junction has a potential barrier preventing the movement of charge carri
 #. `Size of depleting region <https://en.wikipedia.org/wiki/P%E2%80%93n_junction#Size_of_depletion_region>`_.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (symbols, Quantity, validate_input,
-    validate_output, quantities, clone_as_symbol)
-from symplyphysics.core.functions import log
+from sympy import Eq, solve
+from symplyphysics import (
+    symbols,
+    Quantity,
+    validate_input,
+    validate_output,
+    quantities,
+    clone_as_symbol,
+    log,
+)
 
 equilibrium_voltage_difference = clone_as_symbol(
     symbols.voltage,

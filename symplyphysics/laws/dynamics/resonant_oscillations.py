@@ -33,7 +33,7 @@ from symplyphysics.laws.dynamics import forced_oscillations_equation as forced_e
 
 resonant_displacement = clone_as_function(symbols.position, display_symbol="x(t)")
 """
-The displacement of resonant oscillations. See :symbols:`position`.
+The displacement of resonant oscillations as a function of :attr:`~time`. See :symbols:`position`.
 """
 
 mass = symbols.mass

@@ -20,7 +20,6 @@ from sympy import (
     sin,
     solve,
     pi,
-    sqrt,
 )
 from symplyphysics import (
     Quantity,
@@ -29,6 +28,7 @@ from symplyphysics import (
     symbols,
     quantities,
     clone_as_function,
+    sqrt,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.geometry import planar_projection_is_cosine as projector

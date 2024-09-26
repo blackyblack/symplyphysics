@@ -29,7 +29,8 @@ from symplyphysics.core.symbols.quantities import scale_factor
 
 displacement = clone_as_function(symbols.position, display_symbol="x(t)")
 """
-The displacement of the oscillating body from rest value. See :symbols:`position`.
+The displacement of the oscillating body from rest value as a function of :attr:`~time`.
+See :symbols:`position`.
 """
 
 mass = symbols.mass

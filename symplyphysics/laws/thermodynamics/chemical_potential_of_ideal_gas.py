@@ -23,8 +23,8 @@ from symplyphysics import (
     validate_output,
     symbols,
     quantities,
+    log,
 )
-from symplyphysics.core.functions import log
 
 chemical_potential = Symbol("chemical_potential", units.energy)
 r"""

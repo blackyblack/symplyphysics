@@ -22,12 +22,12 @@ from symplyphysics import (
 
 particle_count = symbols.particle_count
 """
-Number of particles.
+:symbols:`particle_count`.
 """
 
 amount_of_substance = symbols.amount_of_substance
 """
-Amount of substance.
+:symbols:`amount_of_substance`.
 """
 
 law = Eq(quantities.avogadro_constant, particle_count / amount_of_substance)

@@ -21,7 +21,7 @@ its physical state.
    if needed.
 """
 
-from sympy import Eq
+from sympy import Eq, O
 from symplyphysics import (
     Quantity,
     validate_input,
@@ -57,18 +57,12 @@ strain = symbols.engineering_normal_strain
 
 law = Eq(
     pressure,
-    young_modulus * strain + second_coefficient * strain**2 + third_coefficient * strain**3,
+    young_modulus * strain + second_coefficient * strain**2 + third_coefficient * strain**3 + O(strain**4),
 )
-r"""
-.. only:: comment
+"""
+:laws:symbol::
 
-    We need to show the Big O notation in this law.
-
-:code:`P = E * e + A * e^2 + B * e^3 + O(e^4)`
-
-Latex:
-    .. math::
-        P = E e + A e^2 + B e^3 + O(e^4)
+:laws:latex::
 """
 
 

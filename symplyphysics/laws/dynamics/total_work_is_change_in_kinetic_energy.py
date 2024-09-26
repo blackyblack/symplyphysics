@@ -23,7 +23,7 @@ The total :symbols:`work` done on the body.
 
 kinetic_energy = clone_as_function(symbols.kinetic_energy, display_symbol="K(t)")
 """
-The :symbols:`kinetic_energy` of the body.
+The :symbols:`kinetic_energy` of the body as a function of :symbols:`time`.
 """
 
 time_before = clone_as_symbol(symbols.time, display_symbol="t_0", display_latex="t_0")

@@ -21,20 +21,16 @@ from symplyphysics.core.geometry.line import two_point_function, Point2D
 
 work = symbols.work
 """
-The :symbols:`work` done by :ref:`force <work_is_integral_force>`.
+The :symbols:`work` done by :attr:`~force`.
 """
 
 force = clone_as_function(symbols.force, display_symbol="F(x)")
 """
-.. _work_is_integral_force:
-
-The :symbols:`force` exerted on the object as a function of :ref:`position <work_is_integral_position>`.
+The :symbols:`force` exerted on the object as a function of :attr:`~position`.
 """
 
 position = symbols.position
 """
-.. _work_is_integral_position:
-
 The :symbols:`position` of the object.
 """
 

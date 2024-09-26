@@ -13,8 +13,8 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
+    log,
 )
-from symplyphysics.core.functions import log
 
 sound_level = symbols.sound_intensity_level
 """

@@ -14,8 +14,8 @@ from symplyphysics import (
     validate_output,
     dimensionless,
     convert_to_float,
+    log,
 )
-from symplyphysics.core.functions import log
 
 absolute_magnitude = SymbolNew("M", dimensionless)
 """

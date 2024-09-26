@@ -194,7 +194,7 @@ two periodic functions.
 
 coefficient_of_friction = SymbolNew("mu", dimensionless, display_latex="\\mu")
 """
-**Coefficient of friction** is a dimensionless scalar value which equals the ratio of the force of
+**Coefficient of friction** is a dimensionless scalar value which equals to the ratio of the force of
 friction between two bodies and the force pressing them together, either during or at the onset of
 slipping.
 """

@@ -17,7 +17,7 @@ from symplyphysics.core.symbols.quantities import scale_factor
 
 power = symbols.power
 """
-The instantaneous :symbols:`power` of :attr:`~symplyphysics.laws.dynamics.instantaneous_power_is_force_times_speed.force`.
+The instantaneous :symbols:`power` of :attr:`~force`.
 """
 
 force = symbols.force
