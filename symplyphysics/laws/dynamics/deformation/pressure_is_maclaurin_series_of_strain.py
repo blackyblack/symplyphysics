@@ -79,7 +79,7 @@ def calculate_pressure(
     third_coefficient_: Quantity,
     strain_: float,
 ) -> Quantity:
-    result = law.rhs.subs({
+    result = law.rhs.removeO().subs({
         young_modulus: young_modulus_,
         second_coefficient: second_coefficient_,
         third_coefficient: third_coefficient_,

@@ -71,7 +71,7 @@ __all__ = [
     "compliance",
     "young_modulus",
     "phase_shift",
-    "coefficient_of_friction",
+    "friction_coefficient",
     "height",
     "torque",
     "torsion_stiffness",

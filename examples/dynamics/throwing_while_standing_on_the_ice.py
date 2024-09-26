@@ -17,7 +17,7 @@ from symplyphysics.laws.dynamics import acceleration_is_force_over_mass as secon
 
 mass_of_skater = Symbol("mass_of_skater")
 mass_of_puck = Symbol("mass_of_puck")
-coefficient_of_friction = Symbol("coefficient_of_friction")
+friction_coefficient = Symbol("friction_coefficient")
 velocity_of_puck = Symbol("velocity_of_puck")
 distance = Symbol("distance")
 
@@ -49,7 +49,7 @@ reaction_force_value = third_newton_law.law.subs({
 # We take only the modulus of the reaction force vector,
 # since we set the direction of the vertical axis coinciding with the direction of this vector
 friction_force_value = friction_force.law.subs({
-    friction_force.coefficient_of_friction: coefficient_of_friction,
+    friction_force.friction_coefficient: friction_coefficient,
     friction_force.normal_force: abs(reaction_force_value)
 }).rhs
 
@@ -74,7 +74,7 @@ distance_m = distance_equation.subs({
     gravity_acceleration: 9.8,
     mass_of_skater: 70,
     mass_of_puck: 0.3,
-    coefficient_of_friction: 0.02,
+    friction_coefficient: 0.02,
     velocity_of_puck: 40
 })
 print(f"Distance is: {distance_m} m")
