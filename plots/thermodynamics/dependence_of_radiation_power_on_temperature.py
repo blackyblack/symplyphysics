@@ -3,7 +3,7 @@ from sympy import solve
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression
-from symplyphysics.core.symbols.quantities import evaluate_expression
+from symplyphysics.core.convert import evaluate_expression
 from symplyphysics.laws.thermodynamics import radiance_of_black_body_from_temperature as stefan_boltzmann_law
 
 print(f"Formula is:\n{print_expression(stefan_boltzmann_law.law)}")

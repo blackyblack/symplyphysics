@@ -4,7 +4,7 @@ from sympy import solve
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression, units
-from symplyphysics.core.symbols.quantities import evaluate_expression
+from symplyphysics.core.convert import evaluate_expression
 from symplyphysics.laws.thermodynamics.relativistic import (
     maxwell_juettner_distribution as distribution_law,
     reduced_temperature_in_maxwell_juettner_statistics as reduced_law,

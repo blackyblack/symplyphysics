@@ -3,9 +3,8 @@
 from collections import namedtuple
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
-from symplyphysics import print_expression, Quantity, units, quantities
-from symplyphysics.core.symbols.quantities import evaluate_expression
-from symplyphysics.core.convert import convert_to_si
+from symplyphysics import print_expression, Quantity, units, quantities, convert_to_si
+from symplyphysics.core.convert import evaluate_expression
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed_distribution
 
 MassDatum = namedtuple("MassDatum", "mass label")

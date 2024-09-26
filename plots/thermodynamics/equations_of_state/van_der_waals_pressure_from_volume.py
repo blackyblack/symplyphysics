@@ -4,7 +4,7 @@ from sympy import symbols, Eq, solve
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression
-from symplyphysics.core.symbols.quantities import evaluate_expression
+from symplyphysics.core.convert import evaluate_expression
 from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import equation as van_der_waals_law
 from symplyphysics.laws.quantities import quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law
 

@@ -3,7 +3,7 @@
 from sympy import symbols, solve, Rational
 from sympy.plotting import plot, plot_parametric
 from sympy.plotting.plot import MatplotlibBackend
-from symplyphysics.core.symbols.quantities import evaluate_expression
+from symplyphysics.core.convert import evaluate_expression
 from symplyphysics.laws.thermodynamics import (
     pressure_and_volume_in_adiabatic_process as adiabatic_law,)
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as ideal_gas_law

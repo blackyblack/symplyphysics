@@ -2,8 +2,7 @@
 from sympy import Symbol
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
-from symplyphysics import print_expression, quantities
-from symplyphysics.core.convert import convert_to_si
+from symplyphysics import print_expression, quantities, convert_to_si
 from symplyphysics.laws.electricity import electrostatic_force_via_charges_and_distance as coulomb_law
 
 CHARGE_OF_ELECTRON = -1.6 * 1E-19

@@ -2,8 +2,7 @@
 
 from sympy import symbols, plot
 from sympy.plotting.plot import MatplotlibBackend
-from symplyphysics import print_expression, quantities
-from symplyphysics.core.convert import convert_to_si
+from symplyphysics import print_expression, quantities, convert_to_si
 from symplyphysics.laws.electricity import electric_field_due_to_point_charge as electric_field
 
 # Description

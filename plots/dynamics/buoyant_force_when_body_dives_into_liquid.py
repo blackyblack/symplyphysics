@@ -3,7 +3,7 @@ from sympy import solve, symbols, pi
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
 from symplyphysics import print_expression, quantities
-from symplyphysics.core.symbols.quantities import evaluate_expression
+from symplyphysics.core.convert import evaluate_expression
 from symplyphysics.laws.dynamics import buoyant_force_from_density_and_volume as archimedes_law
 from symplyphysics.laws.dynamics import acceleration_is_force_over_mass as gravity_law
 
