@@ -25,7 +25,6 @@ from symplyphysics import (
     quantities,
     clone_as_symbol,
     log,
-    mul,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import work_is_integral_of_pressure_over_volume as work_law
@@ -58,7 +57,7 @@ temperature = symbols.temperature
 
 law = Eq(
     work,
-    mul(amount_of_substance, quantities.molar_gas_constant, temperature, log(final_volume / initial_volume)),
+    amount_of_substance * quantities.molar_gas_constant * temperature * log(final_volume / initial_volume),
 )
 """
 :laws:symbol::
