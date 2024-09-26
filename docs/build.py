@@ -66,14 +66,14 @@ def get_parser() -> argparse.ArgumentParser:
         dest="rst_only",
         help="only generate rST files and suppress HTML generation",
         )
-    
+
     parser.add_argument("-W"
         "--wipe-generated",
         action="store_true",
         dest="wipe_generated",
         help="remove all generated rST files prior to the build",
         )
-    
+
     parser.add_argument("-B",
         "--build_only",
         action="store_true",

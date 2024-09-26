@@ -1,6 +1,6 @@
 from __future__ import annotations
 from typing import Any, Optional, Sequence, Self
-from sympy import S, Idx, Symbol as SymSymbol, Expr, Equality, IndexedBase
+from sympy import S, Idx, Symbol as SymSymbol, Expr, Equality, IndexedBase, Mul as sym_mul
 from sympy.physics.units import Dimension
 from sympy.core.function import UndefinedFunction
 from sympy.printing.printer import Printer
@@ -95,6 +95,9 @@ class SymbolNew(DimensionSymbolNew, SymSymbol):  # pylint: disable=too-many-ance
         display_name = display_symbol or str(self.name)
         super().__init__(display_name, dimension, display_latex=display_latex)
 
+    def __mul__(self, expr: Expr) -> Expr:
+        return sym_mul(self, expr, evaluate=False)
+
 
 class SymbolIndexed(DimensionSymbol, IndexedBase):  # pylint: disable=too-many-ancestors
 
@@ -149,6 +152,9 @@ class SymbolIndexedNew(DimensionSymbolNew, IndexedBase):  # pylint: disable=too-
     def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
         pass
 
+    def __mul__(self, expr: Expr) -> Expr:
+        return sym_mul(self, expr, evaluate=False)
+
 
 class Function(DimensionSymbol, UndefinedFunction):
 
@@ -190,6 +196,9 @@ class FunctionNew(DimensionSymbolNew, UndefinedFunction):
 
     def __repr__(cls) -> str:
         return str(cls.display_name)
+    
+    def __mul__(self, expr: Expr) -> Expr:
+        return sym_mul(self, expr, evaluate=False)
 
 
 # Symbol and Function have generated names, hence their display is not readable.
