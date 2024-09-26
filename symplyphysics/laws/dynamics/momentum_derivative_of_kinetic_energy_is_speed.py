@@ -8,48 +8,36 @@ not only in the case of variable mass, but also in the relativistic case.
 
 from sympy import Eq, Derivative
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
-    Function,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_function,
 )
 
-kinetic_energy = Function("kinetic_energy", units.energy)
-r"""
-The kinetic energy of the object.
-
-Symbol:
-    :code:`K(p(v))`
+kinetic_energy = clone_as_function(symbols.kinetic_energy, display_symbol="K(p(v))")
+"""
+The :symbols:`kinetic_energy` of the object as a function of :attr:`~momentum`.
 """
 
-momentum = Function("momentum", units.momentum)
+momentum = clone_as_function(symbols.momentum, display_symbol="p(v)")
 """
-The momentum of the object.
-
-Symbol:
-    :code:`p(v)`
+The :symbols:`momentum` of the object as a function of :attr:`~speed`.
 """
 
-speed = Symbol("speed", units.velocity)
+speed = symbols.speed
 """
-The speed of the object.
-
-Symbol:
-    :code:`v`
+The :symbols:`speed` of the object.
 """
 
 law = Eq(
     Derivative(kinetic_energy(momentum(speed)), momentum(speed)),
     speed,
 )
-r"""
-:code:`Derivative(K(p(v), p(v))) = v`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \frac{d K(p(v))}{d p(v)} = v
+:laws:latex::
 """
 
 # TODO: derive from the differential definition of work and the generalized Newton's second law

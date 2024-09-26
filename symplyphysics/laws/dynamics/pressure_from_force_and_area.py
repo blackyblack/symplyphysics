@@ -6,15 +6,17 @@ Pressure is the amount of force applied perpendicular to the surface of an objec
 per unit area over which the force is distributed.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output)
+from sympy import Eq, solve
+from symplyphysics import (
+    symbols,
+    Quantity,
+    validate_input,
+    validate_output,
+)
 
-pressure = Symbol("pressure", units.pressure)
+pressure = symbols.pressure
 """
-Pressure.
-
-Symbol:
-    :code:`p`
+:symbols:`pressure`.
 """
 
 force = symbols.force
@@ -22,21 +24,16 @@ force = symbols.force
 :symbols:`force` applied.
 """
 
-area = Symbol("area", units.area)
+area = symbols.area
 r"""
-Area over which the force is distributed.
-
-Symbol: 
-    :code:`A`
+:symbols:`area` over which the force is distributed.
 """
 
 law = Eq(pressure, force / area)
-r"""
-:code:`p = F / A`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        p = \frac{F}{A}
+:laws:latex::
 """
 
 

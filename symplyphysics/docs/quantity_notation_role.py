@@ -32,6 +32,7 @@ def process_string(doc: str, path: Path) -> str:
 
         last_index_to = index_to
 
+    # no substitution happened
     if not parts:
         return doc
 

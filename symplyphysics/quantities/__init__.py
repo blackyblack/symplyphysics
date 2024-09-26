@@ -130,6 +130,17 @@ The **Stefan—Boltzmann constant** is the constant of proportionality between r
 in the Stefan—Boltzmann law.
 """
 
+richardson_constant = Quantity(
+    120.17 * (units.ampere / units.kelvin**2 / units.centimeter**2),
+    display_symbol="a")
+"""
+Constant of proportionality proposed by Richardson to describe the law of thermionic emission.
+
+**Links:**
+
+#. `Richardson's law <https://en.wikipedia.org/wiki/Thermionic_emission#Richardson's_law>`__.
+"""
+
 
 __all__ = [
     "standard_conditions_temperature",
@@ -150,4 +161,5 @@ __all__ = [
     "avogadro_constant",
     "acceleration_due_to_gravity",
     "stefan_boltzmann_constant",
+    "richardson_constant",
 ]

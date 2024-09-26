@@ -11,9 +11,7 @@ Kinetic energy can be expressed as a function of momentum and mass.
 
 from sympy import Eq, solve
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     symbols,
@@ -24,20 +22,14 @@ from symplyphysics.laws.dynamics import (
 from symplyphysics.definitions import (
     momentum_is_mass_times_speed as momentum_def,)
 
-kinetic_energy = Symbol("kinetic_energy", units.energy)
-r"""
-The kinetic energy of the object.
-
-Symbol:
-    :code:`K`
+kinetic_energy = symbols.kinetic_energy
+"""
+The :symbols:`kinetic_energy` of the object.
 """
 
-momentum = Symbol("momentum", units.momentum)
+momentum = symbols.momentum
 """
-The momentum of the object.
-
-Symbol:
-    :code:`p`
+The :symbols:`momentum` of the object.
 """
 
 mass = symbols.mass
@@ -46,12 +38,10 @@ The :symbols:`mass` of the object.
 """
 
 law = Eq(kinetic_energy, momentum**2 / (2 * mass))
-r"""
-:code:`K = p^2 / (2 * m)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        K = \frac{p^2}{2 m}
+:laws:latex::
 """
 
 # Derive law from kinetic energy and momentum expressions

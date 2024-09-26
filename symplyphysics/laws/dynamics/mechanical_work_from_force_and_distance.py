@@ -12,20 +12,19 @@ Work is scalar value equal to force multiplied by distance.
 **Notes:**
 
 #. Use the vector form of this law for non-collinear vectors of force and movement.
-
-..
-    TODO Rename file
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output)
+from sympy import Eq, solve
+from symplyphysics import (
+    symbols,
+    Quantity,
+    validate_input,
+    validate_output,
+)
 
-work = Symbol("work", units.energy)
+work = symbols.work
 """
-The mechanical work done by the force.
-
-Symbol:
-    :code:`W`
+The mechanical :symbols:`work` done by the force.
 """
 
 force = symbols.force
@@ -33,21 +32,16 @@ force = symbols.force
 The :symbols:`force` exerted on the body.
 """
 
-distance = Symbol("distance", units.length)
+distance = symbols.distance
 """
-The distance of the body due to the force exerted on it.
-
-Symbol:
-    :code:`s`
+The :symbols:`distance` the body traveled due to the force exerted on it.
 """
 
 law = Eq(work, force * distance)
 """
-:code:`W = F * s`
+:laws:symbol::
 
-Latex:
-    .. math::
-        W = F s
+:laws:latex::
 """
 
 

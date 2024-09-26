@@ -14,55 +14,37 @@ of the positive charges at this point.
 
 from sympy import (Eq, solve)
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
 )
 
-current_density = Symbol("current_density", units.current / units.area)
+current_density = symbols.current_density
 """
-Current density of charge carriers.
-
-Symbol:
-    :code:`j`
+:symbols:`current_density` of charge carriers.
 """
 
-number_density = Symbol("number_density", 1 / units.volume)
+number_density = symbols.number_density
 """
-Number density, or number of charge carriers per unit volume.
-
-Symbol:
-    :code:`n`
+:symbols:`number_density`, or number of charge carriers per unit volume.
 """
 
-drift_velocity = Symbol("drift_velocity", units.velocity)
-r"""
-Drift velocity of charge carriers.
-
-Symbol:
-    :code:`v_d`
-
-Latex:
-    :math:`v_\text{d}`
+drift_velocity = symbols.drift_velocity
+"""
+:symbols:`drift_velocity` of charge carriers.
 """
 
-charge = Symbol("charge", units.charge)
+charge = symbols.charge
 """
-Charge of the charge carriers.
-
-Symbol:
-    :code:`q`
+:symbols:`charge` of the charge carriers.
 """
 
 law = Eq(current_density, charge * number_density * drift_velocity)
-r"""
-:code:`j = q * n * v_d`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        j = q n v_\text{d}
+:laws:latex::
 """
 
 

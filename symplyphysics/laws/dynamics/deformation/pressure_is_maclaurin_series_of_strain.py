@@ -21,66 +21,48 @@ its physical state.
    if needed.
 """
 
-from sympy import Eq
+from sympy import Eq, O
 from symplyphysics import (
-    units,
-    dimensionless,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
 )
 
-pressure = Symbol("pressure", units.pressure)
+pressure = symbols.pressure
 """
-Pressure (or tension) in the deformed body.
-
-Symbol:
-    :code:`P`
+:symbols:`pressure` (or tension) in the deformed body.
 """
 
-young_modulus = Symbol("young_modulus", units.pressure)
+young_modulus = symbols.young_modulus
 """
-Young's modulus of the body's material.
-
-Symbol:
-    :code:`E`
+:symbols:`young_modulus` of the body's material.
 """
 
-second_coefficient = Symbol("second_coefficient", units.pressure)
+second_coefficient = clone_as_symbol(symbols.pressure, display_symbol="A", display_latex="A")
 """
 Coefficient at the second power of strain in the expansion.
-
-Symbol:
-    :code:`A`
 """
 
-third_coefficient = Symbol("third_coefficient", units.pressure)
+third_coefficient = clone_as_symbol(symbols.pressure, display_symbol="B", display_latex="B")
 """
 Coefficient at the third power of strain in the expansion.
-
-Symbol:
-    :code:`B`
 """
 
-strain = Symbol("strain", dimensionless)
+strain = symbols.engineering_normal_strain
 """
-Strain, or engineering normal strain to be exact, of the body.
-
-Symbol:
-    :code:`e`
+:symbols:`engineering_normal_strain` of the body.
 """
 
 law = Eq(
     pressure,
-    young_modulus * strain + second_coefficient * strain**2 + third_coefficient * strain**3,
+    young_modulus * strain + second_coefficient * strain**2 + third_coefficient * strain**3 + O(strain**4),
 )
-r"""
-:code:`P = E * e + A * e^2 + B * e^3 + O(e^4)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        P = E e + A e^2 + B e^3 + O(e^4)
+:laws:latex::
 """
 
 
@@ -97,7 +79,7 @@ def calculate_pressure(
     third_coefficient_: Quantity,
     strain_: float,
 ) -> Quantity:
-    result = law.rhs.subs({
+    result = law.rhs.removeO().subs({
         young_modulus: young_modulus_,
         second_coefficient: second_coefficient_,
         third_coefficient: third_coefficient_,

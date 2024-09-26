@@ -9,21 +9,15 @@ Instantaneous power is force times speed
 from sympy import Eq, cos
 from symplyphysics import (
     symbols,
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
-    angle_type,
 )
 from symplyphysics.core.symbols.quantities import scale_factor
 
-power = Symbol("power", units.power)
+power = symbols.power
 """
-The instantaneous power of force :math:`F`.
-
-Symbol:
-    :code:`P`
+The instantaneous :symbols:`power` of :attr:`~force`.
 """
 
 force = symbols.force
@@ -31,32 +25,21 @@ force = symbols.force
 The :symbols:`force` exerted on the object.
 """
 
-speed = Symbol("speed", units.speed)
+speed = symbols.speed
 """
-The speed of the object
-
-Symbol:
-    :code:`v`
+The :symbols:`speed` of the object
 """
 
-angle_between_vectors = Symbol("angle_between_vectors", angle_type)
+angle_between_vectors = symbols.angle
 r"""
-The angle between the force and velocity vectors.
-
-Symbol:
-    :code:`phi`
-
-Latex:
-    :math:`\varphi`
+The :symbols:`angle` between the force and velocity vectors.
 """
 
 law = Eq(power, force * speed * cos(angle_between_vectors))
-r"""
-:code:`P = F * v * cos(phi)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        P = F v \cos{\varphi}
+:laws:latex::
 """
 
 # TODO: derive law from [its vector counterpart](./vector/instantaneous_power_is_force_dot_velocity.py)

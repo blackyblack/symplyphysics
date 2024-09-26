@@ -4,32 +4,33 @@ Forced oscillations equation
 
 *Forced, or driven, oscillations* are a type of oscillations in the presence of an external driving
 force acting on the oscillating system. In the case of an oscillating external force, two angular
-frequencies are associated with such a system: (1) the natural angular frequency of the system,
-which is the angular frequency the system would oscillate with if no external force were present,
-and (2) the angular frequency of the external force driving the oscillations. Such systems can
-undergo resonance if the angular frequency of the driving force is close to the natural angular
-frequency of the oscillator.
+frequencies are associated with such a system: 
+
+#. the *natural angular frequency* of the system, which is the angular frequency the system would 
+   oscillate with if no external force were present,
+
+#. the angular frequency of the external force driving the oscillations.
+
+Such systems can undergo resonance if the angular frequency of the driving force is close to the
+natural angular frequency of the oscillator.
 """
 
 from sympy import Derivative, Eq, cos, dsolve
 from symplyphysics import (
     symbols,
     units,
-    angle_type,
     Quantity,
-    Symbol,
-    Function,
     validate_input,
     validate_output,
+    clone_as_function,
+    clone_as_symbol,
 )
 from symplyphysics.core.symbols.quantities import scale_factor
 
-displacement = Function("displacement", units.length)
+displacement = clone_as_function(symbols.position, display_symbol="x(t)")
 """
-The displacement of the oscillating body from rest value.
-
-Symbol:
-    :code:`q(t)`
+The displacement of the oscillating body from rest value as a function of :attr:`~time`.
+See :symbols:`position`.
 """
 
 mass = symbols.mass
@@ -37,15 +38,13 @@ mass = symbols.mass
 The :symbols:`mass` of the oscillating body.
 """
 
-natural_angular_frequency = Symbol("natural_angular_frequency", angle_type / units.time)
+natural_angular_frequency = clone_as_symbol(
+    symbols.angular_frequency,
+    display_symbol="w_0",
+    display_latex="\\omega_0",
+)
 r"""
-The natural angular frequency of the oscillator.
-
-Symbol:
-    :code:`w0`
-
-Latex:
-    :math:`\omega_0`
+The natural :symbols:`angular_frequency` of the oscillator.
 """
 
 driving_force_amplitude = symbols.force
@@ -53,46 +52,29 @@ driving_force_amplitude = symbols.force
 The amplitude of the driving :symbols:`force`.
 """
 
-driving_angular_frequency = Symbol("driving_angular_frequency", angle_type / units.time)
+driving_angular_frequency = symbols.angular_frequency
 r"""
-The angular frequency of the driving force.
-
-Symbol:
-    :code:`w`
-
-Latex:
-    :math:`\omega`
+The :symbols:`angular_frequency` of the driving force.
 """
 
-driving_phase_lag = Symbol("driving_phase_lag", angle_type)
+driving_phase_lag = symbols.phase_shift
 r"""
-The phase lag of the driving force.
-
-Symbol:
-    :code:`phi`
-
-Latex:
-    :math:`\varphi`
+The :symbols:`phase_shift` of the driving force.
 """
 
-time = Symbol("time", units.time)
+time = symbols.time
 """
-Time.
-
-Symbol:
-    :code:`t`
+:symbols:`time`.
 """
 
 law = Eq(
     Derivative(displacement(time), time, 2) + natural_angular_frequency**2 * displacement(time),
     (driving_force_amplitude / mass) * cos(driving_angular_frequency * time + driving_phase_lag),
 )
-r"""
-Derivative(q(t), (t, 2)) + w0^2 * q(t) = (F / m) * cos(w * t + phi)
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \frac{d^2}{d t^2} q(t) + \omega_0^2 q(t) = \frac{F}{m} \cos{\left( \omega t + \varphi \right)}
+:laws:latex::
 """
 
 

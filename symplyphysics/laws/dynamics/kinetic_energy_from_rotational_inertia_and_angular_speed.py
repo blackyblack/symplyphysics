@@ -8,56 +8,40 @@ and its angular speed.
 
 from sympy import Eq, solve
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
-    angle_type,
     validate_input,
     validate_output,
+    symbols,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_speed as kinetic_energy_def
 from symplyphysics.laws.kinematics import speed_via_angular_speed_and_radius as linear_velocity_law
 from symplyphysics.laws.kinematics.rotational_inertia import rotational_inertia_of_particle as rotational_inertia_def
 
-kinetic_energy = Symbol("kinetic_energy", units.energy)
-r"""
-The kinetic energy of the object.
-
-Symbol:
-    :code:`K`
+kinetic_energy = symbols.kinetic_energy
+"""
+The :symbols:`kinetic_energy` of the object.
 """
 
-rotational_inertia = Symbol("rotational_inertia", units.mass * units.area)
+rotational_inertia = symbols.rotational_inertia
 """
-The rotational inertia of the object.
-
-Symbol:
-    :code:`I`
+The :symbols:`rotational_inertia` of the object.
 """
 
-angular_speed = Symbol("angular_speed", angle_type / units.time)
-r"""
-The angular speed of the object.
-
-Symbol:
-    :code:`w`
-
-Latex:
-    :math:`\omega`
+angular_speed = symbols.angular_speed
+"""
+The :symbols:`angular_speed` of the object.
 """
 
 law = Eq(kinetic_energy, rotational_inertia * angular_speed**2 / 2)
-r"""
-:code:`K = I * w^2 / 2`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        K = \frac{1}{2} I \omega^2
+:laws:latex::
 """
 
 # Derive this law from the definition of kinetic energy and the expression for linear velocity of a rotating body
-_rotation_radius = Symbol("_rotation_radius", units.length)
+_rotation_radius = symbols.distance_to_axis
 
 _rotational_inertia_def_subs = rotational_inertia_def.law.subs({
     rotational_inertia_def.rotational_inertia: rotational_inertia,

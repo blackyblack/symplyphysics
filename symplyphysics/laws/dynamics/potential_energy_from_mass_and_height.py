@@ -6,15 +6,18 @@ The potential energy is a form of energy a body possesses because of its positio
 other objects.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols)
+from sympy import Eq, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    quantities,
+)
 
-potential_energy = Symbol("potential_energy", units.energy)
+potential_energy = symbols.potential_energy
 """
-The potential energy of the body.
-
-Symbol:
-    :code:`U`
+The :symbols:`potential_energy` of the body.
 """
 
 mass = symbols.mass
@@ -22,21 +25,16 @@ mass = symbols.mass
 The :symbols:`mass` of the body.
 """
 
-height = Symbol("height", units.length)
+height = symbols.height
 """
-The elevation from ground level.
-
-Symbol:
-    :code:`h`
+The elevation from ground level. See :symbols:`height`
 """
 
-law = Eq(potential_energy, mass * units.acceleration_due_to_gravity * height)
+law = Eq(potential_energy, mass * quantities.acceleration_due_to_gravity * height)
 """
-:code:`U = m * g * h`
+:laws:symbol::
 
-Latex:
-    .. math::
-        U = m g h
+:laws:latex::
 """
 
 

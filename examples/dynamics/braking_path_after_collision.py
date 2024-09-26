@@ -155,7 +155,7 @@ mass_after = Symbol("mass_after")
 normal_reaction = mass_after * units.acceleration_due_to_gravity
 
 friction_force = friction_law.law.rhs.subs({
-    friction_law.coefficient_of_friction: friction_coefficient,
+    friction_law.friction_coefficient: friction_coefficient,
     friction_law.normal_force: normal_reaction,
 })
 

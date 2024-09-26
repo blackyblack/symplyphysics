@@ -1,5 +1,7 @@
+from typing import Any
 from sympy import Expr, sympify, S
 from sympy.physics import units
+from sympy.physics.units import Quantity as SymQuantity
 from sympy.physics.units.systems.si import dimsys_SI
 from sympy.physics.units.definitions import dimension_definitions
 
@@ -43,8 +45,29 @@ def convert_to_si(value: Expr | float) -> Expr:
     return convert_to(quantity, unit)
 
 
+def evaluate_quantity(quantity: Expr, **kwargs: Any) -> Quantity:
+    if not isinstance(quantity, Quantity):
+        quantity = Quantity(quantity)
+    scale_factor_ = quantity.scale_factor.evalf(**kwargs)
+    dimension = quantity.dimension
+    return Quantity(scale_factor_, dimension=dimension)
+
+
+def evaluate_expression(expr: Expr, evaluate: bool = False, **kwargs: Any) -> Expr:
+    for qty in expr.atoms(SymQuantity):
+        si_value = convert_to_si(qty)
+        if evaluate:
+            si_value = si_value.evalf(**kwargs)
+        expr = expr.subs(qty, si_value)
+
+    return expr
+
+
+
 __all__ = [
     "convert_to",
     "convert_to_float",
     "convert_to_si",
+    "evaluate_quantity",
+    "evaluate_expression",
 ]

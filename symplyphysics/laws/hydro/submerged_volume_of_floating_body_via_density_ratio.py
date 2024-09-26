@@ -16,8 +16,7 @@ depends on the ratio of the densities of the body and the fluid.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
-from symplyphysics.core.convert import convert_to_si
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, convert_to_si)
 
 submerged_volume = Symbol("submerged_volume", units.volume)
 r"""

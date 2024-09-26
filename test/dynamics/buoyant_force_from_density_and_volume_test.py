@@ -7,6 +7,7 @@ from symplyphysics import (
     errors,
     units,
     Quantity,
+    quantities,
 )
 from symplyphysics.laws.dynamics import buoyant_force_from_density_and_volume as archimedes_law
 
@@ -37,7 +38,7 @@ def test_force_vector() -> None:
         dict=True)[0][archimedes_law.buoyant_force]
     # set non vector variables to 1 since vector components cannot be properly calculated with quantities
     result = result_force_expr.subs({
-        archimedes_law.units.acceleration_due_to_gravity: Fg,
+        quantities.acceleration_due_to_gravity: Fg,
         archimedes_law.fluid_density: 1,
         archimedes_law.displaced_volume: 1
     })

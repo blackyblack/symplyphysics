@@ -7,7 +7,7 @@ from symplyphysics import symbols, SymbolNew
 
 _symbols_pattern = re.compile(r":symbols:`(\w*)`")
 
-# Automatically find the necessaty modules so that we don't need to write the logic by hand
+# Automatically find the necessary modules so that we don't need to write the logic by hand
 _symbols_by_module: dict[str, set[str]] = {}
 for _attr in set(dir(symbols)) - set(symbols.__all__):
     _obj = getattr(symbols, _attr)
@@ -17,10 +17,10 @@ for _attr in set(dir(symbols)) - set(symbols.__all__):
         and Path(symbols.__file__).parent == Path(_file).parent
     ):
         _symbols_by_module[_attr] = set()
-        for _subattr in dir(_obj):
-            _subobj = getattr(_obj, _subattr)
-            if isinstance(_subobj, SymbolNew):
-                _symbols_by_module[_attr].add(_subattr)
+        for _sub_attr in dir(_obj):
+            _sub_obj = getattr(_obj, _sub_attr)
+            if isinstance(_sub_obj, SymbolNew):
+                _symbols_by_module[_attr].add(_sub_attr)
 
 
 def process_string(doc: str, path: Path) -> str:

@@ -70,26 +70,3 @@ def subs_list(input_: Sequence[Expr | float], subs_: dict[Expr, Quantity]) -> Se
 
 def scale_factor(quantity_: Quantity | float) -> float:
     return quantity_.scale_factor if isinstance(quantity_, Quantity) else quantity_
-
-
-def evaluate_quantity(quantity: Expr, **kwargs: Any) -> Quantity:
-    if not isinstance(quantity, Quantity):
-        quantity = Quantity(quantity)
-    scale_factor_ = quantity.scale_factor.evalf(**kwargs)
-    dimension = quantity.dimension
-    return Quantity(scale_factor_, dimension=dimension)
-
-
-def evaluate_expression(expr: Expr, **kwargs: Any) -> Expr:
-    quantities = []
-    def _evaluate_inner(expr: Expr) -> None:
-        for arg in expr.args:
-            if isinstance(arg, SymQuantity):
-                quantities.append(arg)
-                continue
-            if isinstance(arg, Expr):
-                _evaluate_inner(arg)
-    _evaluate_inner(expr)
-    for q in quantities:
-        expr = expr.subs(q, q.scale_factor.evalf(**kwargs))
-    return expr

@@ -4,6 +4,10 @@ Acceleration is force over mass
 
 Newton's second law of motion states that the acceleration of a body is directly proportional
 to the net force exerted on the body.
+
+**Links:**
+
+#. `Newton's second law <https://www.britannica.com/science/Newtons-laws-of-motion/Newtons-second-law-F-ma>`__.
 """
 
 from sympy import (Eq, solve, sympify)
@@ -27,12 +31,10 @@ The :symbols:`mass` of the body.
 """
 
 law = Eq(acceleration, force / mass)
-r"""
-:code:`a = F / m`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        a = \frac{F}{m}
+:laws:latex::
 """
 
 # Derive the same law from vector form

@@ -8,59 +8,43 @@ The work-energy principle states that the work done by all forces acting on a pa
 
 from sympy import Eq
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
-    Function,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_function,
+    clone_as_symbol,
 )
 
-work = Symbol("work", units.energy)
+work = symbols.work
 """
-The total work done on the body.
-
-Symbol:
-    :code:`W`
+The total :symbols:`work` done on the body.
 """
 
-kinetic_energy = Function("kinetic_energy", units.energy)
-r"""
-The kinetic energy of the body.
-
-Symbol:
-    :code:`K(t)`
+kinetic_energy = clone_as_function(symbols.kinetic_energy, display_symbol="K(t)")
+"""
+The :symbols:`kinetic_energy` of the body as a function of :symbols:`time`.
 """
 
-time_before = Symbol("time_before", units.time)
+time_before = clone_as_symbol(symbols.time, display_symbol="t_0", display_latex="t_0")
 """
-The time before the work has been done.
-
-Symbol:
-    :code:`t0`
-
-Latex:
-    :math:`t_0`
+The :symbols:`time` before the work has been done.
 """
 
-time_after = Symbol("time_after", units.time)
+time_after = clone_as_symbol(symbols.time, display_symbol="t_1", display_latex="t_1")
 """
-The time after the work has been done.
-
-Symbol:
-    :code:`t1`
-
-Latex:
-    :math:`t_1`
+The :symbols:`time` after the work has been done.
 """
 
 law = Eq(work, kinetic_energy(time_after) - kinetic_energy(time_before))
-r"""
-:code:`W = K(t1) - K(t0)`
+"""
+.. only:: comment
 
-Latex:
-    .. math::
-        W = K(t_1) - K(t_0)
+    Custom function arguments are not yet supported.
+
+:code:`W = K(t_1) - K(t_0)`
+
+:laws:latex::
 """
 
 # TODO Derive the law in case of rectilinear motion with infinitesimal constant total force acting on particle and

@@ -4,7 +4,7 @@ Symplyphysics code printer
 
 from typing import Any
 
-from sympy import S, Basic, Mul, Number, Pow, Rational, StrPrinter, sift, sympify
+from sympy import S, Basic, Mul, Number, Pow, Rational, StrPrinter, sift, sympify, E
 from sympy.core.mul import _keep_coeff
 from sympy.printing.precedence import precedence
 from ..core.symbols.symbols import DimensionSymbolNew
@@ -191,6 +191,16 @@ class SymbolCodePrinter(StrPrinter):
         # expr.args[0].args[0] contains just indexed symbol
         symbol, index = expr.args[0].args
         return f"Sum({self._print(symbol)}, {self._print(index)})"
+    
+    def _print_log(self, expr: Any) -> str:
+        value, base = expr.args
+        str_value = self._print(value)
+        
+        if base == E:
+            return f"log({str_value})"
+        
+        str_base = self._print(base)
+        return f"log({str_value}, {str_base})"
 
 
 def code_str(expr: Any, **settings: Any) -> str:

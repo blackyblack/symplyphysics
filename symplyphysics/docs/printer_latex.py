@@ -3,6 +3,7 @@ Symplyphysics latex printer
 """
 
 from typing import Any
+from sympy import E
 from sympy.printing.latex import LatexPrinter, accepted_latex_functions
 from sympy.core.function import AppliedUndef
 from ..core.symbols.symbols import DimensionSymbolNew
@@ -130,6 +131,15 @@ class SymbolLatexPrinter(LatexPrinter):
         # expr.args[0].args[0] contains just indexed symbol
         symbol, index = expr.args[0].args
         return rf"\sum_{self._print(index)} {self._print(symbol)}"
+    
+    def _print_log(self, expr: Any) -> str:
+        value, base = expr.args
+        str_value = self._print(value)
+        str_base = self._print(base)
+        head = r"\log" if (base is None or base == E) else rf"\log_{{{str_base}}}"
+        can_fold_brackets = not self._needs_function_brackets(value)
+        tail = str_value if can_fold_brackets else rf"\left( {str_value} \right)"
+        return f"{head} {tail}"
 
 
 def latex_str(expr: Any, **settings: Any) -> str:

@@ -6,6 +6,7 @@ Symbols of fundamental physical quantities.
 """
 
 from sympy.physics import units
+from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
 from ..core.dimensions import dimensionless
 from ..core.symbols.symbols import SymbolNew
 
@@ -77,4 +78,12 @@ number_density = SymbolNew("n", 1 / units.volume)
 (particles, molecules, phonons, cells, galaxies, etc.) in physical space.
 """
 
+particle_count = SymbolNew("N", dimensionless)
+"""
+Number of particles in the system.
+"""
 
+angle = SymbolNew("phi", angle_type, display_latex="\\varphi")
+"""
+An **angle** is the difference in direction between two lines or surfaces.
+"""

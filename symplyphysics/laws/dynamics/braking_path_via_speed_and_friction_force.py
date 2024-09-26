@@ -6,15 +6,14 @@ Let an arbitrary object move along the surface at an arbitrary speed. The fricti
 object from the surface. Then the *braking path* will depend on the mass of the object, its speed
 and friction force.
 
-..
-    TODO Rename file
+**Links:**
+
+#. `Braking distance <https://en.wikipedia.org/wiki/Braking_distance>`__.
 """
 
 from sympy import (Eq, solve)
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     symbols,
@@ -22,22 +21,16 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_speed as energy_law
-from symplyphysics.laws.dynamics import mechanical_work_from_force_and_move as work_law
+from symplyphysics.laws.dynamics import mechanical_work_from_force_and_distance as work_law
 
-braking_path = Symbol("braking_path", units.length)
+braking_path = symbols.distance
 """
-The braking path of the object.
-
-Symbol:
-    :code:`l`
+The braking path of the object. See :symbols:`distance`.
 """
 
-speed = Symbol("speed", units.speed)
+speed = symbols.speed
 """
-The speed of the object.
-
-Symbol:
-    :code:`v`
+The :symbols:`speed` of the object.
 """
 
 friction_force = clone_as_symbol(symbols.force,
@@ -53,12 +46,10 @@ The :symbols:`mass` of the object.
 """
 
 law = Eq(braking_path, mass * speed**2 / (2 * friction_force))
-r"""
-:code:`l = m * v^2 / (2 * F_fr)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        l = \frac{m v^2}{2 F_\text{fr}}
+:laws:latex::
 """
 
 # This law might be derived via "kinetic_energy_from_mass_and_velocity" law and

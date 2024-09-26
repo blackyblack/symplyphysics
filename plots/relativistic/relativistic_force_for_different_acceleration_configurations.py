@@ -4,7 +4,7 @@ from collections import namedtuple
 from sympy import Symbol, plot, sqrt
 from sympy.physics.units import speed_of_light
 from symplyphysics import Vector, vector_magnitude
-from symplyphysics.core.symbols.quantities import evaluate_expression
+from symplyphysics.core.convert import evaluate_expression
 from symplyphysics.laws.relativistic.vector import force_acceleration_relation
 
 Datum = namedtuple("Datum", "label acceleration")

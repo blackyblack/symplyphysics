@@ -25,11 +25,10 @@ from symplyphysics import (
     symbols,
     units,
     Quantity,
-    Symbol,
     Function,
-    angle_type,
     validate_input,
     validate_output,
+    clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import scale_factor
@@ -49,15 +48,13 @@ mass = symbols.mass
 The :symbols:`mass` of the oscillating body.
 """
 
-natural_angular_frequency = Symbol("natural_angular_frequency", angle_type / units.time)
-r"""
-The natural angular frequency of the oscillator.
-
-Symbol:
-    :code:`w0`
-
-Latex:
-    :math:`\omega_0`
+natural_angular_frequency = clone_as_symbol(
+    symbols.angular_frequency,
+    display_symbol="w_0",
+    display_latex="\\omega_0",
+)
+"""
+The natural :symbols:`angular_frequency` of the oscillator.
 """
 
 driving_force_amplitude = symbols.force
@@ -65,41 +62,30 @@ driving_force_amplitude = symbols.force
 The amplitude of the external driving :symbols:`force`.
 """
 
-driving_angular_frequency = Symbol("driving_angular_frequency", angle_type / units.time)
+driving_angular_frequency = symbols.angular_frequency
+"""
+The :symbols:`angular_frequency` of the external driving force.
+"""
+
+driving_phase_lag = symbols.phase_shift
 r"""
-The angular frequency of the external driving force.
-
-Symbol:
-    :code:`w`
-
-Latex:
-    :math:`\omega`
+The :symbols:`phase_shift` of the oscillations of the external force.
 """
 
-driving_phase_lag = Symbol("driving_phase_lag", angle_type)
-r"""
-The phase lag of the oscillations of the external force.
-
-Symbol:
-    :code:`phi`
-
-Latex:
-    :math:`\varphi`
+time = symbols.time
 """
-
-time = Symbol("time", units.time)
-"""
-Time.
-
-Symbol:
-    :code:`t`
+:symbols:`time`.
 """
 
 law = Eq(displacement(time),
     (driving_force_amplitude / mass) * cos(driving_angular_frequency * time + driving_phase_lag) /
     (natural_angular_frequency**2 - driving_angular_frequency**2))
 r"""
-q(t) = F / (m * (w0**2 - w**2)) * cos(w * t + phi)
+.. only:: comment
+
+    `displacement` is a sympy Symbol, therefore auto-generation of formulas is impossible
+
+:code:`q(t) = F / (m * (w0**2 - w**2)) * cos(w * t + phi)`
 
 Latex:
     .. math::

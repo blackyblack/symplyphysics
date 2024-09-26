@@ -13,8 +13,23 @@ Period of pendulum oscillation does not depend on its mass.
 #. The thread is weightless and doesn't change its length.
 """
 
-from sympy import (Derivative, Eq, Function as SymFunction, diff, sin, solve, pi, sqrt, symbols)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
+from sympy import (
+    Derivative,
+    Eq,
+    diff,
+    sin,
+    solve,
+    pi,
+)
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    quantities,
+    clone_as_function,
+    sqrt,
+)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.geometry import planar_projection_is_cosine as projector
 from symplyphysics.laws.dynamics import potential_energy_from_mass_and_height as potential_energy
@@ -25,38 +40,30 @@ from symplyphysics.definitions import harmonic_oscillator_is_second_derivative_e
 from symplyphysics.definitions import mechanical_energy_is_kinetic_and_potential_energy as mechanical_energy_def
 from symplyphysics.laws.conservation import mechanical_energy_is_constant as mechanical_energy_conservation
 
-period = Symbol("period", units.time)
+period = symbols.period
 """
-The period of oscillations.
-
-Symbol:
-    :code:`T`
+The :symbols:`period` of oscillations.
 """
 
-length = Symbol("length", units.length)
+length = symbols.length
 """
-The length of the pendulum.
-
-Symbol:
-    :code:`L`
+The :symbols:`length` of the pendulum.
 """
 
-law = Eq(period, 2 * pi * sqrt(length / units.acceleration_due_to_gravity))
-r"""
-:code:`T = 2 * pi * sqrt(L / g)`
+law = Eq(period, 2 * pi * sqrt(length / quantities.acceleration_due_to_gravity))
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        T = 2 \pi \sqrt{\frac{L}{g}}
+:laws:latex::
 """
 
 # Derive this law from conservation of energy
 ## Polar coordinate system is selected for this task. Center is a fixed point of the thread.
 
-pendulum_mass = symbols("pendulum_mass")
+pendulum_mass = symbols.mass
 ## Pendulum angle is angle between thread and gravity vector. In balanced position it is 0.
-pendulum_angle = symbols("pendulum_angle", cls=SymFunction)
-time = symbols("time")
+pendulum_angle = clone_as_function(symbols.angle)
+time = symbols.time
 
 ## Pendulum oscillation is cyclic transfer of energy from kinetic to potential. To set oscillation up we have to input some energy. Usually it is done by biasing the pendulum to some angle and letting it go.
 ## Biasing the pendulum is giving to it some amount of potential energy.

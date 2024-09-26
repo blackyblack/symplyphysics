@@ -6,9 +6,14 @@ The *friction* force is tangential interaction between two objects, which impede
 It is proportional to the normal force between the two objects.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (clone_as_symbol, symbols, Quantity, Symbol, dimensionless, validate_input,
-    validate_output)
+from sympy import Eq, solve
+from symplyphysics import (
+    clone_as_symbol,
+    symbols,
+    Quantity,
+    validate_input,
+    validate_output,
+)
 
 friction_force = clone_as_symbol(symbols.force,
     display_symbol="F_fr",
@@ -17,23 +22,21 @@ friction_force = clone_as_symbol(symbols.force,
 The friction :symbols:`force`.
 """
 
-coefficient_of_friction = Symbol("coefficient_of_friction", dimensionless)
+friction_coefficient = symbols.friction_coefficient
 r"""
-The coefficient of friction between the two objects.
-
-Symbol:
-    :code:`mu`
-
-Latex:
-    :math:`\mu`
+The :symbols:`friction_coefficient` between the two objects.
 """
 
-normal_force = clone_as_symbol(symbols.force, display_symbol="N", display_latex="N")
+normal_force = clone_as_symbol(
+    symbols.force,
+    display_symbol="N",
+    display_latex="N",
+)
 """
 The normal reaction :symbols:`force` from one object to another.
 """
 
-law = Eq(friction_force, coefficient_of_friction * normal_force)
+law = Eq(friction_force, friction_coefficient * normal_force)
 r"""
 :code:`F_fr = mu * N`
 
@@ -43,13 +46,13 @@ Latex:
 """
 
 
-@validate_input(coefficient_of_friction_=coefficient_of_friction, normal_reaction_=normal_force)
+@validate_input(friction_coefficient_=friction_coefficient, normal_reaction_=normal_force)
 @validate_output(friction_force)
-def calculate_friction_force(coefficient_of_friction_: float,
+def calculate_friction_force(friction_coefficient_: float,
     normal_reaction_: Quantity) -> Quantity:
     result_expr = solve(law, friction_force, dict=True)[0][friction_force]
     friction_force_applied = result_expr.subs({
-        coefficient_of_friction: coefficient_of_friction_,
+        friction_coefficient: friction_coefficient_,
         normal_force: normal_reaction_
     })
     return Quantity(friction_force_applied)

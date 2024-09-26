@@ -8,49 +8,41 @@ the net force exerted on a body is equal to the time derivative of the body's mo
 **Notes:**
 
 #. Works in relativistic mechanics as well as in classical mechanics.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Momentum#Relation_to_force>`__.
 """
 
 from sympy import Eq, Derivative
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
-    Function,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_function,
 )
 
-momentum = Function("momentum", units.momentum)
+momentum = clone_as_function(symbols.momentum, display_symbol="p(t)")
 """
-The magnitude of the momentum of the body.
-
-Symbol:
-    :code:`p(t)`
+The magnitude of the :symbols:`momentum` of the body as a function of :attr:`~time`.
 """
 
-force = Function("force", units.force)
+force = clone_as_function(symbols.force, display_symbol="F(t)")
 """
-The magnitude of the net :symbols:`force` exerted on the body.
-
-Symbol:
-    :code:`F(t)`
+The magnitude of the net :symbols:`force` exerted on the body as a function of :attr:`~time`.
 """
 
-time = Symbol("time", units.time)
+time = symbols.time
 """
-Time.
-
-Symbol:
-    :code:`t`
+:symbols:`time`.
 """
 
 law = Eq(Derivative(momentum(time), time), force(time))
-r"""
-Derivative(p(t), t) = F(t)
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \frac{d p}{d t} = F(t)
+:laws:latex::
 """
 
 

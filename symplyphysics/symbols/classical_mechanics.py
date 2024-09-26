@@ -179,3 +179,81 @@ compliance = SymbolNew("c", units.length / units.force)
 """
 **Compliance** is the inverse of :symbols:`stiffness`.
 """
+
+young_modulus = SymbolNew("E", units.pressure)
+"""
+**Young modulus** is a mechanical property of solid materials that measures the tensile or compressive
+stiffness when the force is applied lengthwise.
+"""
+
+phase_shift = SymbolNew("phi", angle_type, display_latex="\\varphi")
+"""
+**Phase shift**, also known as **phase offset** or **phase difference**, is the shift of phase between
+two periodic functions.
+"""
+
+friction_coefficient = SymbolNew("mu", dimensionless, display_latex="\\mu")
+"""
+**Coefficient of friction** is a dimensionless scalar value which equals to the ratio of the force of
+friction between two bodies and the force pressing them together, either during or at the onset of
+slipping.
+"""
+
+height = SymbolNew("h", units.length)
+"""
+**Height** is measure of vertical distance, either vertical extent or vertical position.
+
+In the case of three-dimensional space, height is measured along the vertical z axis, describing a
+distance from (or "above") the x-y plane. 
+"""
+
+torque = SymbolNew("tau", units.force * units.length, display_latex="\\tau")
+"""
+**Torque** is the turning effect of a force applied to a rotational system at a distance from the axis of
+rotation.
+"""
+
+torsion_stiffness = SymbolNew(
+    "kappa",
+    units.force * units.length / angle_type,
+    display_latex="\\kappa")
+"""
+**Torsion stiffness** or **torsion elastic modulus** is equal to the change in torque required to twist
+the spring through an angle of 1 radian.
+
+**Links:**
+
+#. `Torsion coefficient <https://en.wikipedia.org/wiki/Torsion_spring#Torsion_coefficient>`__.
+"""
+
+bulk_modulus = SymbolNew("K", units.pressure)
+"""
+**Bulk modulus** of a substance is a measure of the resistance of a substance to bulk compression.
+"""
+
+poisson_ratio = SymbolNew("nu", dimensionless, display_latex="\\nu")
+"""
+**Poisson's ratio** is a measure of the Poisson effect, the deformation (expansion or contraction) of
+a material in directions perpendicular to the specific direction of loading.
+"""
+
+engineering_normal_strain = SymbolNew("e", dimensionless)
+"""
+**Engineering strain**, also known as **Cauchy strain**, is expressed as the ratio of total deformation
+to the initial dimension of the material body on which forces are applied.
+"""
+
+deformation = SymbolNew("Delta(l)", units.length, display_latex="\\Delta l")
+"""
+**Deformation** is a change in an object's shape or form due to the application of a force or forces. 
+"""
+
+strain = SymbolNew("e", dimensionless)
+"""
+**Strain** is defined as relative deformation, compared to a reference position configuration.
+"""
+
+stress = SymbolNew("sigma", units.pressure, display_latex="\\sigma")
+"""
+**Stress** is a physical quantity that describes forces present during deformation.
+"""

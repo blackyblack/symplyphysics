@@ -12,8 +12,8 @@ from symplyphysics import (
     validate_output,
     clone_as_function,
     symbols,
+    convert_to_si,
 )
-from symplyphysics.core.convert import convert_to_si
 
 angular_speed = clone_as_function(symbols.angular_speed, display_symbol="w(t)")
 """

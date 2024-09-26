@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
     errors,
 )
-from symplyphysics.core.symbols.quantities import evaluate_quantity
+from symplyphysics.core.convert import evaluate_quantity
 from symplyphysics.laws.quantum_mechanics.harmonic_oscillator import wave_eigenfunctions as wave_law
 
 Args = namedtuple("Args", "n m w x")
