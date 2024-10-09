@@ -141,6 +141,15 @@ Constant of proportionality proposed by Richardson to describe the law of thermi
 #. `Richardson's law <https://en.wikipedia.org/wiki/Thermionic_emission#Richardson's_law>`__.
 """
 
+rydberg_frequency = Quantity(3.2898419602500e15 * units.hertz, display_symbol="R_H", display_latex="R_\\text{H}")
+"""
+In spectroscopy, the **Rydberg constant** is a physical constant relating to the electromagnetic spectra of an atom.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Rydberg_constant#Rydberg_frequency>`__.
+"""
+
 
 __all__ = [
     "standard_conditions_temperature",
@@ -162,4 +171,5 @@ __all__ = [
     "acceleration_due_to_gravity",
     "stefan_boltzmann_constant",
     "richardson_constant",
+    "rydberg_frequency",
 ]
