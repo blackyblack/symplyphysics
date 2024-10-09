@@ -83,6 +83,7 @@ __all__ = [
     "deformation",
     "strain",
     "stress",
+    "group_speed",
     # electrodynamics
     "admittance",
     "electrical_conductance",

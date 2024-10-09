@@ -114,6 +114,12 @@ phase_speed = SymbolNew("v", units.speed)
 **Phase speed** is the speed at which the phase of the wave travels.
 """
 
+group_speed = SymbolNew("v_g", units.speed, display_latex="v_\\text{g}")
+"""
+**Group speed** of a wave is the speed with which the overall envelope shape of the wave's
+amplitudes, or the modulation or envelope of the wave, propagates through space.
+"""
+
 pressure = SymbolNew("p", units.pressure)
 """
 **Pressure** is the force applied perpendicular to the surface of an object per unit area over which
