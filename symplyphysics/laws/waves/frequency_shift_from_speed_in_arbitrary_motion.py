@@ -57,21 +57,21 @@ wave_speed = symbols.phase_speed
 """
 
 source_speed = clone_as_symbol(
-    symbols.phase_speed,
+    symbols.speed,
     display_symbol="v_s",
     display_latex="v_\\text{s}",
 )
 """
-Magnitude of the velocity vector of the source. See :symbols:`phase_speed`.
+Magnitude of the velocity vector of the source. See :symbols:`speed`.
 """
 
 observer_speed = clone_as_symbol(
-    symbols.phase_speed,
+    symbols.speed,
     display_symbol="v_o",
     display_latex="v_\\text{o}",
 )
 """
-Magnitude of the velocity vector of the observer. See :symbols:`phase_speed`.
+Magnitude of the velocity vector of the observer. See :symbols:`speed`.
 """
 
 source_angle = clone_as_symbol(

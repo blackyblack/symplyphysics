@@ -1,7 +1,6 @@
 from sympy import (Eq, solve, sqrt)
-from sympy.physics.units import speed_of_light
 from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output)
+    validate_output, quantities)
 
 # Description
 ## General relativistic Doppler effect that is classical Doppler effect with relativistic coefficient. This law is not
@@ -48,7 +47,7 @@ law = Eq(
     observed_frequency,
     real_frequency * (1 - observer_velocity / wave_velocity) /
     (1 + source_velocity / wave_velocity) * sqrt(
-    (1 - (source_velocity / speed_of_light)**2) / (1 - (observer_velocity / speed_of_light)**2)))
+    (1 - (source_velocity / quantities.speed_of_light)**2) / (1 - (observer_velocity / quantities.speed_of_light)**2)))
 
 
 def print_law() -> str:
