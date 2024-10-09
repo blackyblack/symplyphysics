@@ -111,6 +111,7 @@ __all__ = [
     "relative_refractive_index",
     "radiant_exitance",
     "radiant_flux",
+    "focal_length",
     # relativistic mechanics
     "lorentz_factor",
     # thermodynamics
