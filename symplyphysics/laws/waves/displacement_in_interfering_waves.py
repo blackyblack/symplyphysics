@@ -22,11 +22,7 @@ they are exactly out of phase and their interference is *fully destructive*.
 """
 
 from sympy import Eq, sin, cos, symbols as sym_symbols
-from symplyphysics import (
-    Quantity,
-    validate_input,
-    symbols,
-)
+from symplyphysics import Quantity, validate_input, symbols
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.core.quantity_decorator import validate_output_same
@@ -78,8 +74,12 @@ time = symbols.time
 :symbols:`time`.
 """
 
-law = Eq(total_displacement, (2 * amplitude) * cos(phase_shift / 2) *
-    sin(angular_wavenumber * position - angular_frequency * time + phase_shift / 2))
+law = Eq(
+    total_displacement,
+    (2 * amplitude)
+    * cos(phase_shift / 2)
+    * sin(angular_wavenumber * position - angular_frequency * time + phase_shift / 2),
+)
 r"""
 :code:`u = 2 * u_max * cos(phi / 2) * sin(k * x - w * t + phi / 2)`
 
@@ -93,8 +93,9 @@ Latex:
 
 # The form of the waves is taken from the notes above
 _first_wave = amplitude * sin(angular_wavenumber * position - angular_frequency * time)
-_second_wave = amplitude * sin(angular_wavenumber * position - angular_frequency * time +
-    phase_shift)
+_second_wave = amplitude * sin(
+    angular_wavenumber * position - angular_frequency * time + phase_shift
+)
 
 _sum_of_waves = (_first_wave + _second_wave).simplify()
 
@@ -118,12 +119,14 @@ def calculate_displacement(
     time_: Quantity,
 ) -> Quantity:
     # pylint: disable=too-many-arguments, too-many-positional-arguments
-    result = law.rhs.subs({
-        amplitude: amplitude_,
-        phase_shift: scale_factor(phase_shift_),
-        angular_wavenumber: angular_wavenumber_,
-        angular_frequency: angular_frequency_,
-        position: position_,
-        time: time_,
-    })
+    result = law.rhs.subs(
+        {
+            amplitude: amplitude_,
+            phase_shift: scale_factor(phase_shift_),
+            angular_wavenumber: angular_wavenumber_,
+            angular_frequency: angular_frequency_,
+            position: position_,
+            time: time_,
+        }
+    )
     return Quantity(result)
