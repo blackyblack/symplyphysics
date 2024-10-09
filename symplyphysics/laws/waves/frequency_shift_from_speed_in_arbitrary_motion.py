@@ -14,99 +14,92 @@ Also see :doc:`laws.waves.frequency_shift_from_speed_in_collinear_motion`.
 #. The speeds are much less than the speed of light, i.e. this law is non-relativistic.
 """
 
-from sympy import (Eq, cos, solve)
-from symplyphysics import (units, angle_type, Quantity, Symbol, validate_input, validate_output)
+from sympy import Eq, cos, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    clone_as_symbol,
+)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import scale_factor
-from symplyphysics.laws.waves import wavelength_from_phase_speed_and_period as period_law
+from symplyphysics.laws.waves import (
+    wavelength_from_phase_speed_and_period as period_law,
+)
 from symplyphysics.definitions import temporal_frequency_from_period as frequency_def
 from symplyphysics.laws.geometry import planar_projection_is_cosine as projector
-from symplyphysics.laws.kinematics import position_via_constant_speed_and_time as distance_law
+from symplyphysics.laws.kinematics import (
+    position_via_constant_speed_and_time as distance_law,
+)
 
-observed_frequency = Symbol("observed_frequency", units.frequency)
-r"""
-Observed frequency of the wave.
-
-Symbol:
-    :code:`f_o`
-
-Latex:
-    :math:`f_\text{o}`
+observed_frequency = clone_as_symbol(
+    symbols.temporal_frequency,
+    display_symbol="f_o",
+    display_latex="f_\\text{o}",
+)
+"""
+Observed :symbols:`temporal_frequency` of the wave.
 """
 
-source_frequency = Symbol("source_frequency", units.frequency)
-r"""
-Wave frequency of the source.
-
-Symbol:
-    :code:`f_s`
-
-Latex:
-    :math:`f_\text{s}`
+source_frequency = clone_as_symbol(
+    symbols.temporal_frequency,
+    display_symbol="f_s",
+    display_latex="f_\\text{s}",
+)
+"""
+Wave :symbols:`temporal_frequency` of the source.
 """
 
-wave_speed = Symbol("wave_speed", units.velocity)
+wave_speed = symbols.phase_speed
 """
-Phase speed of the wave.
-
-Symbol:
-    :code:`v`
+:symbols:`phase_speed` of the wave.
 """
 
-source_speed = Symbol("source_speed", units.velocity)
-r"""
-Magnitude of the velocity vector of the source.
-
-Symbol:
-    :code:`v_s`
-
-Latex:
-    :math:`v_\text{s}`
+source_speed = clone_as_symbol(
+    symbols.phase_speed,
+    display_symbol="v_s",
+    display_latex="v_\\text{s}",
+)
+"""
+Magnitude of the velocity vector of the source. See :symbols:`phase_speed`.
 """
 
-observer_speed = Symbol("observer_speed", units.velocity)
-r"""
-Magnitude of the velocity vector of the observer.
-
-Symbol:
-    :code:`v_o`
-
-Latex:
-    :math:`v_\text{o}`
+observer_speed = clone_as_symbol(
+    symbols.phase_speed,
+    display_symbol="v_o",
+    display_latex="v_\\text{o}",
+)
+"""
+Magnitude of the velocity vector of the observer. See :symbols:`phase_speed`.
 """
 
-source_angle = Symbol("source_angle", angle_type)
-r"""
-Angle between the wave velocity and the source velocity.
-
-Symbol:
-    :code:`theta_s`
-
-Latex:
-    :math:`\theta_\text{s}`
+source_angle = clone_as_symbol(
+    symbols.angle,
+    display_symbol="theta_s",
+    display_latex="\\theta_\\text{s}",
+)
+"""
+:symbols:`angle` between the wave velocity and the source velocity.
 """
 
-observer_angle = Symbol("observer_angle", angle_type)
-r"""
-Angle between the wave velocity and the observer velocity.
-
-Symbol:
-    :code:`theta_o`
-
-Latex:
-    :math:`\theta_\text{o}`
+observer_angle = clone_as_symbol(
+    symbols.angle,
+    display_symbol="theta_o",
+    display_latex="\\theta_\\text{o}",
+)
+"""
+:symbols:`angle` between the wave velocity and the observer velocity.
 """
 
 law = Eq(
     observed_frequency,
     source_frequency * (wave_speed - observer_speed * cos(observer_angle)) /
     (wave_speed - source_speed * cos(source_angle)))
-r"""
-:code:`f_o = f_s * (v - v_o * cos(theta_o)) / (v - v_s * cos(theta_s))`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        f_\text{o} = f_\text{s} \frac{v - v_\text{o} \cos{\theta_\text{o}}}{v - v_\text{s} \cos{\theta_\text{s}}}
+:laws:latex::
 """
 
 # Derive the same law from frequency, wavelength laws, and assumption that moving source or

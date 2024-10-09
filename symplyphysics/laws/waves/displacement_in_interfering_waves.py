@@ -27,7 +27,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.core.quantity_decorator import validate_output_same
 
-total_displacement = sym_symbols("total_displacement")
+total_displacement = sym_symbols("u")
 """
 Displacement of the resulting wave.
 
@@ -38,7 +38,7 @@ Latex:
     :math:`u`
 """
 
-amplitude = sym_symbols("amplitude")
+amplitude = sym_symbols("u_max")
 r"""
 Amplitude of the interfering waves.
 

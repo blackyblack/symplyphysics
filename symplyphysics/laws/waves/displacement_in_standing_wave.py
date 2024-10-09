@@ -18,7 +18,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.quantity_decorator import validate_output_same
 from symplyphysics.laws.waves import phase_of_traveling_wave as phase_law
 
-total_displacement = sym_symbols("total_displacement")
+total_displacement = sym_symbols("u")
 """
 Displacement of the resulting wave.
 
@@ -29,7 +29,7 @@ Latex:
     :math:`u`
 """
 
-amplitude = sym_symbols("amplitude")
+amplitude = sym_symbols("u_max")
 r"""
 Amplitude of the interfering waves.
 
