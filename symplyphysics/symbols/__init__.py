@@ -30,6 +30,7 @@ __all__ = [
     "particle_count",
     "angle",
     "linear_density",
+    "whole_number",
     # chemistry,
     "mass_fraction",
     "amount_of_substance",

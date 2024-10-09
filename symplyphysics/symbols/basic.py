@@ -72,7 +72,12 @@ intensity = SymbolNew("I", units.power / units.area)
 on the plane perpendicular to the direction of propagation of the energy.
 """
 
-positive_number = SymbolNew("N", dimensionless, positive=True)
+whole_number = SymbolNew("N", dimensionless, integer=True)
+"""
+A dimensionless **whole** number of any sign.
+"""
+
+positive_number = SymbolNew("N", dimensionless, integer=True, positive=True)
 """
 A dimensionless **number** used for counting objects or instances.
 """

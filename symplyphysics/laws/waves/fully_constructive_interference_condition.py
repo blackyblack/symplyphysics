@@ -9,40 +9,27 @@ there must be an even number of half-cycles out of phase between each other.
 
 from sympy import Eq, pi
 from symplyphysics import (
-    angle_type,
-    dimensionless,
-    Symbol,
     Quantity,
     validate_input,
     validate_output,
+    symbols,
 )
 
-phase_shift = Symbol("phase_shift", angle_type, real=True)
+phase_shift = symbols.phase_shift
 r"""
-Phase shift between interfering waves.
-
-Symbol:
-    :code:`phi`
-
-Latex:
-    :math:`\varphi`
+:symbols:`phase_shift` between interfering waves.
 """
 
-integer_factor = Symbol("integer_factor", dimensionless, integer=True)
+integer_factor = symbols.whole_number
 """
-Integer factor.
-
-Symbol:
-    :code:`n`
+Integer factor. See :symbols:`whole_number`
 """
 
 law = Eq(phase_shift, 2 * pi * integer_factor)
-r"""
-:code:`phi = 2 * pi * n`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \varphi = 2 \pi n
+:laws:latex::
 """
 
 
