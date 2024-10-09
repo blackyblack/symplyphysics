@@ -21,27 +21,28 @@ they are exactly out of phase and their interference is *fully destructive*.
 #. They have the same amplitude, wavenumber and frequency.
 """
 
-from sympy import Eq, sin, cos, symbols
+from sympy import Eq, sin, cos, symbols as sym_symbols
 from symplyphysics import (
-    units,
-    angle_type,
-    Symbol,
     Quantity,
     validate_input,
+    symbols,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.core.quantity_decorator import validate_output_same
 
-total_displacement = symbols("total_displacement")
+total_displacement = sym_symbols("total_displacement")
 """
 Displacement of the resulting wave.
 
 Symbol:
     :code:`u`
+
+Latex:
+    :math:`u`
 """
 
-amplitude = symbols("amplitude")
+amplitude = sym_symbols("amplitude")
 r"""
 Amplitude of the interfering waves.
 
@@ -52,50 +53,29 @@ Latex:
     :math:`u_\text{max}`
 """
 
-phase_shift = Symbol("phase_shift", angle_type)
-r"""
-Phase shift between the interfering waves.
-
-Symbol:
-    :code:`phi`
-
-Latex:
-    :math:`\varphi`
+phase_shift = symbols.phase_shift
+"""
+:symbols:`phase_shift` between the interfering waves.
 """
 
-angular_wavenumber = Symbol("angular_wavenumber", angle_type / units.length)
-r"""
-Angular wavenumber of the interfering waves.
-
-Symbol:
-    :code:`k`
+angular_wavenumber = symbols.angular_wavenumber
+"""
+:symbols:`angular_wavenumber` of the interfering waves.
 """
 
-angular_frequency = Symbol("angular_frequency", angle_type / units.time)
-r"""
-Angular frequency of the interfering waves.
-
-Symbol:
-    :code:`w`
-
-Latex:
-    :math:`\omega`
+angular_frequency = symbols.angular_frequency
+"""
+:symbols:`angular_frequency` of the interfering waves.
 """
 
-position = Symbol("position", units.length)
+position = symbols.position
 """
-Position, or spatial coordinate.
-
-Symbol:
-    :code:`x`
+:symbols:`position`, or spatial coordinate.
 """
 
-time = Symbol("time", units.time)
+time = symbols.time
 """
-Time.
-
-Symbol:
-    :code:`t`
+:symbols:`time`.
 """
 
 law = Eq(total_displacement, (2 * amplitude) * cos(phase_shift / 2) *
@@ -107,6 +87,7 @@ Latex:
     .. math::
         u = 2 u_\text{max} \cos \left( \frac{\varphi}{2} \right) \sin \left( k x - \omega t + \frac{\varphi}{2} \right)
 """
+
 
 # Derive from the sum of two waves
 
