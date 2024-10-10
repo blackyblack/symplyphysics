@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import Any, Callable, TypeAlias
 from sympy import Abs, Expr, S, Derivative, Function as SymFunction, Basic, Min, Number
 from sympy.core.add import Add
@@ -12,7 +14,7 @@ ScalarValue: TypeAlias = Expr | float
 
 
 class AnyDimension(Dimension):
-    def __new__(cls):
+    def __new__(cls) -> AnyDimension:
         return super().__new__(cls, "any_dimension")
 
 
