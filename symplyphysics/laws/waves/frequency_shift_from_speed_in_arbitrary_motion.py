@@ -164,13 +164,14 @@ observer_speed_projection_on_signal = projector.law.subs({
 ## velocity from observer point of view, according to Galilean velocity addition formula.
 _relative_wave_speed = wave_speed - observer_speed_projection_on_signal
 
-_period_relative_source = _period_from_wavelength.subs({
-    period_law.wavelength: _wavelength_observed,
-    period_law.phase_velocity: _relative_wave_speed
-})
+_period_relative_observer = _period_from_wavelength.subs(
+    period_law.phase_velocity, _relative_wave_speed
+)
+_period_relative_observer = _period_relative_observer.subs(
+    period_law.wavelength, _wavelength_observed)
 
 _frequency_relative_observer = _frequency_from_period.subs(frequency_def.period,
-    _period_relative_source)
+    _period_relative_observer)
 
 ## Confirm that derived law is the same as expected
 assert expr_equals(_frequency_relative_observer, law.rhs)

@@ -13,7 +13,6 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematics import (
@@ -25,13 +24,9 @@ wavelength = symbols.wavelength
 :symbols:`wavelength` of the wave.
 """
 
-phase_velocity = clone_as_symbol(symbols.phase_speed)
+phase_velocity = symbols.phase_speed
 """
 :symbols:`phase_speed` of the wave.
-
-.. only:: comment
-
-    Cloned due to `symplyphysics/laws/waves/frequency_shift_from_speed_in_arbitrary_motion.py` raising error
 """
 
 period = symbols.period
