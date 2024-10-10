@@ -7,12 +7,7 @@ and not by properties of the wave such as frequency and amplitude.
 """
 
 from sympy import Eq, sqrt
-from symplyphysics import (
-    symbols,
-    Quantity,
-    validate_input,
-    validate_output,
-)
+from symplyphysics import symbols, Quantity, validate_input, validate_output
 
 phase_speed = symbols.phase_speed
 """

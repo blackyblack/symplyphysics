@@ -8,52 +8,36 @@ It is the speed at which the phase of one frequency component of the wave travel
 
 from sympy import Eq, solve
 from symplyphysics import (
-    units,
-    angle_type,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import angular_wavenumber_is_inverse_wavelength as wavenumber_def
 from symplyphysics.laws.waves import wavelength_from_phase_speed_and_period as velocity_law
 from symplyphysics.definitions import period_from_angular_frequency as frequency_law
 
-phase_speed = Symbol("phase_speed", units.length / units.time, real=True)
+phase_speed = symbols.phase_speed
 """
-Phase speed of the wave.
-
-Symbol:
-    :code:`v`
+:symbols:`phase_speed` of the wave.
 """
 
-angular_frequency = Symbol("angular_frequency", angle_type / units.time, positive=True)
-r"""
-Angular frequency of the wave.
-
-Symbol:
-    :code:`w`
-
-Latex:
-    :math:`\omega`
+angular_frequency = symbols.angular_frequency
+"""
+:symbols:`angular_frequency` of the wave.
 """
 
-angular_wavenumber = Symbol("angular_wavenumber", angle_type / units.length, positive=True)
+angular_wavenumber = symbols.angular_wavenumber
 """
-Angular wavenumber of the wave.
-
-Symbol:
-    :code:`k`
+:symbols:`angular_wavenumber` of the wave.
 """
 
 law = Eq(phase_speed, angular_frequency / angular_wavenumber)
-r"""
-:code:`v = w / k`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        v = \frac{\omega}{k}
+:laws:latex::
 """
 
 # Derive from definition of phase velocity via wavelength and time period
