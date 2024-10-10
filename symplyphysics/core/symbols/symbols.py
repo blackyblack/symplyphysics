@@ -169,23 +169,27 @@ class Function(DimensionSymbol, UndefinedFunction):
 
 
 class FunctionNew(DimensionSymbolNew, UndefinedFunction):
+    arguments: Sequence[Expr]
 
     # NOTE: Self type cannot be used in a metaclass and 'mcs' is a metaclass here
     def __new__(mcs,
         display_symbol: Optional[str] = None,
+        arguments: Sequence[Expr] = (),
         _dimension: Dimension = Dimension(S.One),
         *,
         display_latex: Optional[str] = None,
-        **options: Any) -> Function:
+        **options: Any) -> FunctionNew:
         return UndefinedFunction.__new__(mcs, next_name("FUN"), **options)
 
-    def __init__(cls,
+    def __init__(self,
         display_symbol: Optional[str] = None,
+        arguments: Sequence[Expr] = (),
         dimension: Dimension = Dimension(S.One),
         *,
         display_latex: Optional[str] = None,
         **_options: Any) -> None:
-        display_name = display_symbol or str(cls.name)  # type: ignore[attr-defined]
+        self.arguments = arguments
+        display_name = display_symbol or str(self.name)  # type: ignore[attr-defined]
         super().__init__(display_name, dimension, display_latex=display_latex)
 
     def __repr__(cls) -> str:
@@ -255,10 +259,16 @@ def clone_as_symbol(source: SymbolNew | SymbolIndexedNew,
     *,
     display_symbol: Optional[str] = None,
     display_latex: Optional[str] = None,
+    subscript: Optional[str] = None,
     **assumptions: Any) -> SymbolNew:
     assumptions = assumptions or source.assumptions0
     display_symbol = display_symbol or source.display_name
     display_latex = display_latex or source.display_latex
+
+    if subscript is not None:
+        display_symbol = f"{display_symbol}_{subscript}"
+        display_latex = f"{display_latex}_{subscript}"
+
     return SymbolNew(
         display_symbol,
         source.dimension,
@@ -269,16 +279,24 @@ def clone_as_symbol(source: SymbolNew | SymbolIndexedNew,
 
 def clone_as_function(
     source: SymbolNew | SymbolIndexedNew,
+    arguments: Sequence[Expr] = (),
     *,
     display_symbol: Optional[str] = None,
     display_latex: Optional[str] = None,
+    subscript: Optional[str] = None,
     **assumptions: Any,
 ) -> FunctionNew:
     assumptions = assumptions or source.assumptions0
     display_symbol = display_symbol or source.display_name
     display_latex = display_latex or source.display_latex
+
+    if subscript is not None:
+        display_symbol = f"{display_symbol}_{subscript}"
+        display_latex = f"{display_latex}_{subscript}"
+
     return FunctionNew(
         display_symbol,
+        arguments,
         source.dimension,
         display_latex=display_latex,
         **assumptions,

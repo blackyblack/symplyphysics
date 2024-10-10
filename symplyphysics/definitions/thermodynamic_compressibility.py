@@ -29,14 +29,14 @@ compressibility = symbols.thermodynamic_compressibility
 :symbols:`thermodynamic_compressibility` of the gas.
 """
 
-volume = clone_as_function(symbols.volume, display_symbol="V(p)")
-"""
-:symbols:`volume` of the gas as a function of pressure and other parameters.
-"""
-
 pressure = symbols.pressure
 """
 :symbols:`pressure` in the gas.
+"""
+
+volume = clone_as_function(symbols.volume, [pressure])
+"""
+:symbols:`volume` of the gas as a function of pressure and other parameters.
 """
 
 definition = Eq(compressibility, -1 * Derivative(volume(pressure), pressure) / volume(pressure))

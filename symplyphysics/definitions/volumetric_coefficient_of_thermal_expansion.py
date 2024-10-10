@@ -8,6 +8,9 @@ at constant pressure.
 **Conditions:**
 
 #. Pressure must be constant during the expansion process.
+
+..
+    TODO add pressure symbol below and in the volume function arguments
 """
 
 from sympy import Eq, Derivative
@@ -30,14 +33,14 @@ volumetric_expansion_coefficient = clone_as_symbol(
 Volumetric :symbols:`thermal_expansion_coefficient`.
 """
 
-volume = clone_as_function(symbols.volume, display_symbol="V(T, p)")
-"""
-:symbols:`volume` of the body as a function of temperature and pressure.
-"""
-
 temperature = symbols.temperature
 """
 :symbols:`temperature` of the body.
+"""
+
+volume = clone_as_function(symbols.volume, [temperature])
+"""
+:symbols:`volume` of the body as a function of temperature and pressure.
 """
 
 definition = Eq(

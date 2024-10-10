@@ -14,9 +14,10 @@ from symplyphysics import (
     units,
     Quantity,
     SymbolNew,
-    FunctionNew,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_function,
 )
 from symplyphysics.core.geometry.line import two_point_function, Point2D
 
@@ -30,14 +31,14 @@ current_turn_count = SymbolNew("N", dimensionless)
 Number of turns the current makes around the contour.
 """
 
-magnetic_flux = FunctionNew("Phi", units.magnetic_flux, display_latex="\\Phi")
-"""
-Magnetic flux through the contour.
-"""
-
 time = SymbolNew("t", units.time)
 """
 Time.
+"""
+
+magnetic_flux = clone_as_function(symbols.magnetic_flux, [time])
+"""
+:symbols:`magnetic_flux` through the contour.
 """
 
 law = Eq(electromotive_force, -1 * current_turn_count * Derivative(magnetic_flux(time), time))

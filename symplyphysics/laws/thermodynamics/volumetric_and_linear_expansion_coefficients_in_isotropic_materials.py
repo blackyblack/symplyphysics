@@ -79,9 +79,9 @@ _volumetric_expr = volumetric_def.definition.rhs.subs({
 _volumetric_expr_series = _volumetric_expr.series(_length_change, 0, 2).removeO()
 
 _linear_eqn = linear_def.definition.subs({
-    linear_def.length(linear_def.temperature).diff(linear_def.temperature):
+    linear_def.length(linear_def.temperature, linear_def.pressure).diff(linear_def.temperature):
     _length_change / _temperature_change,
-    linear_def.length(linear_def.temperature):
+    linear_def.length(linear_def.temperature, linear_def.pressure):
         _initial_length,
     linear_def.linear_expansion_coefficient:
         linear_expansion_coefficient,

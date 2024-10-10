@@ -23,19 +23,19 @@ from symplyphysics import (
     clone_as_function,
 )
 
-momentum = clone_as_function(symbols.momentum, display_symbol="p(t)")
+time = symbols.time
+"""
+:symbols:`time`.
+"""
+
+momentum = clone_as_function(symbols.momentum, [time])
 """
 The magnitude of the :symbols:`momentum` of the body as a function of :attr:`~time`.
 """
 
-force = clone_as_function(symbols.force, display_symbol="F(t)")
+force = clone_as_function(symbols.force, [time])
 """
 The magnitude of the net :symbols:`force` exerted on the body as a function of :attr:`~time`.
-"""
-
-time = symbols.time
-"""
-:symbols:`time`.
 """
 
 law = Eq(Derivative(momentum(time), time), force(time))

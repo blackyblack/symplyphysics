@@ -34,14 +34,14 @@ r"""
 Effective :symbols:`mass` of the electron.
 """
 
-energy = clone_as_function(symbols.energy, display_symbol="E(k)")
-"""
-Electron energy as a function of angular wavenumber.
-"""
-
 angular_wavenumber = symbols.angular_wavenumber
 r"""
 :symbols:`angular_wavenumber`.
+"""
+
+energy = clone_as_function(symbols.energy, [angular_wavenumber])
+"""
+Electron energy as a function of angular wavenumber.
 """
 
 law = Eq(effective_mass, quantities.hbar**2 / Derivative(energy(angular_wavenumber),

@@ -14,19 +14,19 @@ from symplyphysics import (
     clone_as_function,
 )
 
-acceleration = clone_as_function(symbols.acceleration, display_symbol="a(t)")
+time = symbols.time
+"""
+:symbols:`time`.
+"""
+
+acceleration = clone_as_function(symbols.acceleration, [time])
 """
 :symbols:`acceleration` of the body as a function of time.
 """
 
-speed = clone_as_function(symbols.speed, display_symbol="v(t)")
+speed = clone_as_function(symbols.speed, [time])
 """
 :symbols:`speed` of the body as a function of time.
-"""
-
-time = symbols.time
-"""
-:symbols:`time`.
 """
 
 definition = Eq(acceleration(time), Derivative(speed(time), time))

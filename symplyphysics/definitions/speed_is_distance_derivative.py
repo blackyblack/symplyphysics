@@ -14,19 +14,24 @@ from symplyphysics import (
     clone_as_function,
 )
 
-speed = clone_as_function(symbols.speed, display_symbol="v(t)")
+time = symbols.time
+"""
+Travel :symbols:`time`.
+"""
+
+speed = clone_as_function(symbols.speed, [time])
 """
 :symbols:`speed` of the body as a function of time.
 """
 
-distance = clone_as_function(symbols.distance, display_symbol="s(t)", display_latex="s")
+distance = clone_as_function(
+    symbols.distance,
+    [time],
+    display_symbol="s",
+    display_latex="s",
+)
 """
 :symbols:`distance` traveled by the body as a function of time.
-"""
-
-time = symbols.time
-"""
-Travel :symbols:`time`.
 """
 
 definition = Eq(speed(time), Derivative(distance(time), time))

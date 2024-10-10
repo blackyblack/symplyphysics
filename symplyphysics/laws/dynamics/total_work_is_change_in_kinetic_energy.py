@@ -21,7 +21,7 @@ work = symbols.work
 The total :symbols:`work` done on the body.
 """
 
-kinetic_energy = clone_as_function(symbols.kinetic_energy, display_symbol="K(t)")
+kinetic_energy = clone_as_function(symbols.kinetic_energy, [symbols.time])
 """
 The :symbols:`kinetic_energy` of the body as a function of :symbols:`time`.
 """
@@ -38,11 +38,7 @@ The :symbols:`time` after the work has been done.
 
 law = Eq(work, kinetic_energy(time_after) - kinetic_energy(time_before))
 """
-.. only:: comment
-
-    Custom function arguments are not yet supported.
-
-:code:`W = K(t_1) - K(t_0)`
+:laws:symbol::
 
 :laws:latex::
 """
