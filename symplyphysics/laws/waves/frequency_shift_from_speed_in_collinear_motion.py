@@ -53,7 +53,7 @@ source_frequency = clone_as_symbol(
 Wave :symbols:`temporal_frequency` of the source.
 """
 
-wave_speed = symbols.phase_speed    
+wave_speed = symbols.phase_speed
 """
 :symbols:`phase_speed` of the wave.
 """

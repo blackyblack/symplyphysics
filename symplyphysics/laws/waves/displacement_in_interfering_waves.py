@@ -118,15 +118,13 @@ def calculate_displacement(
     position_: Quantity,
     time_: Quantity,
 ) -> Quantity:
-    # pylint: disable=too-many-arguments, too-many-positional-arguments
-    result = law.rhs.subs(
-        {
-            amplitude: amplitude_,
-            phase_shift: scale_factor(phase_shift_),
-            angular_wavenumber: angular_wavenumber_,
-            angular_frequency: angular_frequency_,
-            position: position_,
-            time: time_,
-        }
-    )
+    # pylint: disable=too-many-arguments
+    result = law.rhs.subs({
+        amplitude: amplitude_,
+        phase_shift: scale_factor(phase_shift_),
+        angular_wavenumber: angular_wavenumber_,
+        angular_frequency: angular_frequency_,
+        position: position_,
+        time: time_
+    })
     return Quantity(result)
