@@ -59,7 +59,7 @@ vector.
 law = Eq(
     observer_frequency,
     source_frequency * sqrt(speed_of_light**2 - relative_speed**2) /
-    (speed_of_light - relative_speed * cos(source_angle))),
+    (speed_of_light - relative_speed * cos(source_angle)))
 """
 :laws:symbol::
 

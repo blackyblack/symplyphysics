@@ -43,13 +43,13 @@ law = Eq(
 
 general_relativistic_law = simplify(
     general_doppler_law.law.subs({
-    general_doppler_law.wave_velocity: speed_of_light,
-    general_doppler_law.real_frequency: real_frequency
+    general_doppler_law.wave_speed: speed_of_light,
+    general_doppler_law.source_frequency: real_frequency
     }))
 # Relative velocity is a relativistic version of velocities addition
-add_velocities = (general_doppler_law.observer_velocity +
-    general_doppler_law.source_velocity) / (1 +
-    general_doppler_law.observer_velocity * general_doppler_law.source_velocity / speed_of_light**2)
+add_velocities = (general_doppler_law.observer_speed +
+    general_doppler_law.source_speed) / (1 +
+    general_doppler_law.observer_speed * general_doppler_law.source_speed / speed_of_light**2)
 applied_law = law.rhs.subs(relative_velocity, add_velocities)
 # We verify that expressions inside square root are identical - that's enough to prove
 # that our relativistic version of law is indeed a special case of general_doppler_law

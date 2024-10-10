@@ -90,12 +90,12 @@ law = Eq(observed_frequency,
 
 # Relativistic part is zero for velocities much less than speed of light
 _classical_law = general_doppler_law.law.subs({
-    general_doppler_law.real_frequency: source_frequency,
-    general_doppler_law.wave_velocity: wave_speed,
-    general_doppler_law.source_velocity: source_speed,
-    general_doppler_law.observer_velocity: observer_speed,
-    (general_doppler_law.source_velocity / quantities.speed_of_light)**2: 0,
-    (general_doppler_law.observer_velocity / quantities.speed_of_light)**2: 0
+    general_doppler_law.source_frequency: source_frequency,
+    general_doppler_law.wave_speed: wave_speed,
+    general_doppler_law.source_speed: source_speed,
+    general_doppler_law.observer_speed: observer_speed,
+    (general_doppler_law.source_speed / quantities.speed_of_light)**2: 0,
+    (general_doppler_law.observer_speed / quantities.speed_of_light)**2: 0
 })
 assert expr_equals(_classical_law.rhs, law.rhs)
 
