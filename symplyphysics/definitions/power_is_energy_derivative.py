@@ -15,19 +15,19 @@ from symplyphysics import (
     clone_as_function,
 )
 
-power = clone_as_function(symbols.power, display_symbol="P(t)")
+time = symbols.time
+"""
+:symbols:`time`.
+"""
+
+power = clone_as_function(symbols.power, [time])
 """
 :symbols:`power` as a function of time.
 """
 
-energy = clone_as_function(symbols.energy, display_symbol="E(t)")
+energy = clone_as_function(symbols.energy, [time])
 """
 :symbols:`energy` as a function of time.
-"""
-
-time = symbols.time
-"""
-:symbols:`time`.
 """
 
 definition = Eq(power(time), Derivative(energy(time), time))

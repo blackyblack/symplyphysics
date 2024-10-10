@@ -15,19 +15,19 @@ from symplyphysics import (
     clone_as_function,
 )
 
-current = clone_as_function(symbols.current, display_symbol="I(t)")
+time = symbols.time
+"""
+Time.
+"""
+
+current = clone_as_function(symbols.current, [time])
 """
 Electric :symbols:`current` as a function of time.
 """
 
-charge = clone_as_function(symbols.charge, display_symbol="q(t)")
+charge = clone_as_function(symbols.charge, [time])
 """
 Electric :symbols:`charge` as a function of time.
-"""
-
-time = symbols.time
-"""
-Time.
 """
 
 definition = Eq(current(time), Derivative(charge(time), time))

@@ -15,19 +15,19 @@ from symplyphysics import (
     convert_to_si,
 )
 
-angular_speed = clone_as_function(symbols.angular_speed, display_symbol="w(t)")
+time = symbols.time
+"""
+:symbols:`time`.
+"""
+
+angular_speed = clone_as_function(symbols.angular_speed, [time])
 """
 :symbols:`angular_speed` of the body as a function of time.
 """
 
-angular_distance = clone_as_function(symbols.angular_distance, display_symbol="theta(t)")
+angular_distance = clone_as_function(symbols.angular_distance, [time])
 """
 :symbols:`angular_distance` as a function of time.
-"""
-
-time = symbols.time
-"""
-:symbols:`time`.
 """
 
 definition = Eq(angular_speed(time), Derivative(angular_distance(time), time))
