@@ -1,6 +1,6 @@
 """
-Photoelectron energy from energy
-================================
+Photoelectron energy from photon energy
+=======================================
 
 The photoelectric effect is the emission of electrons from a material caused by
 electromagnetic radiation. Electrons emitted in this manner are called photoelectrons.
@@ -16,43 +16,39 @@ surface, which is the minimum energy required to remove an electron from the sur
 of the material.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
+from sympy import Eq, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    clone_as_symbol,
+)
 
-maximum_kinetic_energy = Symbol("maximum_kinetic_energy", units.energy)
-r"""
-Maximum kinetic energy of emitted electron.
-
-Symbol:
-    :code:`K_max`
-
-Latex:
-    :math:`K_\text{max}`
+maximum_kinetic_energy = clone_as_symbol(
+    symbols.kinetic_energy,
+    display_symbol="K_max",
+    display_latex="K_\\text{max}",
+)
+"""
+Maximum :symbols:`kinetic_energy` of emitted electron.
 """
 
-photon_energy = Symbol("photon_energy", units.energy)
+photon_energy = symbols.energy
 """
-Energy of absorbed photon.
-
-Symbol:
-    :code:`E`
+:symbols:`energy` of absorbed photon.
 """
 
-work_function = Symbol("work_function", units.energy)
+work_function = symbols.work_function
 """
-Work function of the surface.
-
-Symbol:
-    :code:`W`
+:symbols:`work_function` of the surface.
 """
 
 law = Eq(maximum_kinetic_energy, photon_energy - work_function)
-r"""
-:code:`K_max = E - W`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        K_\text{max} = E - W
+:laws:latex::
 """
 
 
