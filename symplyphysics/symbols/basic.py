@@ -79,7 +79,7 @@ A dimensionless **whole** number of any sign.
 
 positive_number = SymbolNew("N", dimensionless, integer=True, positive=True)
 """
-A dimensionless **number** used for counting objects or instances.
+A dimensionless whole **number** used for counting objects or instances.
 """
 
 number_density = SymbolNew("n", 1 / units.volume)
