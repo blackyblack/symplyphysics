@@ -13,52 +13,31 @@ of the wavelength.
 """
 
 from sympy import Eq, S
-from symplyphysics import (
-    units,
-    dimensionless,
-    Symbol,
-    Quantity,
-    validate_input,
-    validate_output,
-)
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import angular_wavenumber_is_inverse_wavelength as wavenumber_def
 from symplyphysics.laws.waves import displacement_in_standing_wave as standing_wave_law
 
-antinode_position = Symbol("antinode_position", units.length, real=True)
+antinode_position = symbols.position
 r"""
-Position of :math:`m`-th antinode.
-
-Latex:
-    :code:`x`
+:symbols:`position` of :math:`m`-th antinode.
 """
 
-integer_factor = Symbol("integer_factor", dimensionless, integer=True)
+integer_factor = symbols.whole_number
 """
-An integer.
-
-Symbol:
-    :code:`m`
+An integer. See :symbols:`whole_number`.
 """
 
-wavelength = Symbol("wavelength", units.length, positive=True)
-r"""
-Wavelength of the standing wave.
-
-Symbol:
-    :code:`lambda`
-
-Latex:
-    :math:`\lambda`
+wavelength = symbols.wavelength
+"""
+:symbols:`wavelength` of the standing wave.
 """
 
 law = Eq(antinode_position, (integer_factor + S.One / 2) * wavelength / 2)
-r"""
-:code:`x = (m + 1/2) * lambda`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        x = \left(m + \frac{1}{2} \right) \lambda
+:laws:latex::
 """
 
 # Proving these are indeed locations of maximum amplitude.

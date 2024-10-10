@@ -9,40 +9,27 @@ be an odd number of half-cycles out of phase between each other.
 
 from sympy import Eq, pi
 from symplyphysics import (
-    angle_type,
-    dimensionless,
-    Symbol,
     Quantity,
     validate_input,
     validate_output,
+    symbols,
 )
 
-phase_shift = Symbol("phase_shift", angle_type, real=True)
-r"""
-Phase shift between interfering waves.
-
-Symbol:
-    :code:`phi`
-
-Latex:
-    :math:`\varphi`
+phase_shift = symbols.phase_shift
+"""
+:symbols:`phase_shift` between interfering waves.
 """
 
-integer_factor = Symbol("integer_factor", dimensionless, integer=True)
+integer_factor = symbols.whole_number
 """
-Integer factor.
-
-Symbol:
-    :code:`n`
+Integer factor. See :symbols:`whole_number`.
 """
 
 law = Eq(phase_shift, (1 + 2 * integer_factor) * pi)
-r"""
-:code:`phi = (1 + 2 * n) * pi`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \varphi = (1 + 2 n) \pi
+:laws:latex::
 """
 
 

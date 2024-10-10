@@ -7,47 +7,28 @@ and not by properties of the wave such as frequency and amplitude.
 """
 
 from sympy import Eq, sqrt
-from symplyphysics import (
-    clone_as_symbol,
-    symbols,
-    units,
-    Symbol,
-    Quantity,
-    validate_input,
-    validate_output,
-)
+from symplyphysics import symbols, Quantity, validate_input, validate_output
 
-phase_speed = Symbol("phase_speed", units.velocity)
+phase_speed = symbols.phase_speed
 """
-Phase speed of the wave.
-
-Symbol:
-    :code:`v`
+:symbols:`phase_speed` of the wave.
 """
 
-tension = clone_as_symbol(symbols.force, display_symbol="tau", display_latex="\\tau")
+tension = symbols.tension
 """
-Tension in the string. See :symbols:`force`.
+:symbols:`tension` in the string.
 """
 
-linear_density = Symbol("linear_density", units.mass / units.length)
-r"""
-Linear density of the string, i.e. its mass per units length.
-
-Symbol:
-    :code:`mu`
-
-Latex:
-    :math:`\mu`
+linear_density = symbols.linear_density
+"""
+:symbols:`linear_density` of the string, i.e. its mass per units length.
 """
 
 law = Eq(phase_speed, sqrt(tension / linear_density))
-r"""
-:code:`v = sqrt(tau / mu)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        v = \sqrt{\frac{\tau}{\mu}}
+:laws:latex::
 """
 
 # TODO: derive from Newton's second law

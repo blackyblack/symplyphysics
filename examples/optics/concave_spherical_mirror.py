@@ -40,7 +40,7 @@ distance_from_object_value = solve([magnification_height_eq, magnification_dista
 
 focus_eq = mirror_law.law.subs({
     mirror_law.curvature_radius: radius_curvature,
-    mirror_law.focus_distance: focus
+    mirror_law.focal_length: focus
 })
 
 lens_focus_eq = lens_focus_law.law.subs({

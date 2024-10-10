@@ -19,39 +19,21 @@ thermal emission, but fails to do that for long-wavelength (i.e. low-frequency) 
 """
 
 from sympy import Eq, exp, pi, Symbol as SymSymbol, solve, S
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    validate_input,
-    validate_output,
-    symbols,
-)
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 from symplyphysics.quantities import planck, speed_of_light, boltzmann_constant
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.waves.blackbody_radiation import spectral_energy_density_at_all_frequencies as planck_law
+from symplyphysics.laws.waves.blackbody_radiation import (
+    spectral_energy_density_at_all_frequencies as planck_law,
+)
 
-spectral_energy_density = Symbol("spectral_energy_density",
-    units.energy / (units.volume * units.frequency))
-r"""
-Spectral energy density, which is energy per unit volume per unit frequency.
-
-Symbol:
-    :code:`u_nu`
-
-Latex:
-    :math:`u_\nu`
+spectral_energy_density = symbols.spectral_energy_density
+"""
+:symbols:`spectral_energy_density`.
 """
 
-radiation_frequency = Symbol("radiation_frequency", units.frequency)
+radiation_frequency = symbols.temporal_frequency
 r"""
-Frequency (linear) of the radiation.
-
-Symbol:
-    :code:`nu`
-
-Latex:
-    :math:`\nu`
+:symbols:`temporal_frequency` of the radiation.
 """
 
 equilibrium_temperature = symbols.temperature
@@ -61,12 +43,10 @@ Equilibrium :symbols:`temperature` of the ensemble.
 
 law = Eq(spectral_energy_density, (8 * pi * planck * radiation_frequency**3 / speed_of_light**3) *
     exp(-1 * planck * radiation_frequency / (boltzmann_constant * equilibrium_temperature)))
-r"""
-:code:`u_nu = (8 * pi * h * nu^3 / c^3) * exp(-1 * h * nu / (k_B * T))`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        u_\nu = \frac{8 \pi h \nu^3}{c^3} \exp \left( - \frac{h \nu}{k_B T} \right)
+:laws:latex::
 """
 
 # Derive from Planck's law of blackbody radiation

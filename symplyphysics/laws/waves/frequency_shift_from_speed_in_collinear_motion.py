@@ -18,73 +18,70 @@ relation to an observer moving relative to the wave source.
    motion).
 """
 
-from sympy import (Eq, pi, solve)
-from sympy.physics.units import speed_of_light
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
+from sympy import Eq, pi, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    clone_as_symbol,
+    quantities,
+)
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.waves import frequency_shift_from_speed_in_arbitrary_motion as classical_doppler_with_angle
-from symplyphysics.laws.waves.relativistic import longitudinal_frequency_shift_from_absolute_velocities as general_doppler_law
+from symplyphysics.laws.waves import (
+    frequency_shift_from_speed_in_arbitrary_motion as classical_doppler_with_angle,
+)
+from symplyphysics.laws.waves.relativistic import (
+    longitudinal_frequency_shift_from_absolute_velocities as general_doppler_law,
+)
 
-observed_frequency = Symbol("observed_frequency", units.frequency)
-r"""
-Observed frequency of the wave.
-
-Symbol:
-    :code:`f_o`
-
-Latex:
-    :math:`f_\text{o}`
+observed_frequency = clone_as_symbol(
+    symbols.temporal_frequency,
+    display_symbol="f_o",
+    display_latex="f_\\text{o}",
+)
+"""
+Observed :symbols:`temporal_frequency` of the wave.
 """
 
-source_frequency = Symbol("source_frequency", units.frequency)
-r"""
-Wave frequency of the source.
-
-Symbol:
-    :code:`f_s`
-
-Latex:
-    :math:`f_\text{s}`
+source_frequency = clone_as_symbol(
+    symbols.temporal_frequency,
+    display_symbol="f_s",
+    display_latex="f_\\text{s}",
+)
+"""
+Wave :symbols:`temporal_frequency` of the source.
 """
 
-wave_speed = Symbol("wave_speed", units.velocity)
+wave_speed = symbols.phase_speed
 """
-Phase speed of the wave.
-
-Symbol:
-    :code:`v`
+:symbols:`phase_speed` of the wave.
 """
 
-source_speed = Symbol("source_speed", units.velocity)
-r"""
-Speed of the wave source, positive when moving away from the observer and negative otherwise.
-
-Symbol:
-    :code:`v_s`
-
-Latex:
-    :math:`v_\text{s}`
+source_speed = clone_as_symbol(
+    symbols.speed,
+    display_symbol="v_s",
+    display_latex="v_\\text{s}",
+)
+"""
+:symbols:`speed` of the wave source, positive when moving away from the observer and negative otherwise.
 """
 
-observer_speed = Symbol("observer_speed", units.velocity)
-r"""
-Speed of the observer, positive when moving away from the source and negative otherwise.
-
-Symbol:
-    :code:`v_o`
-
-Latex:
-    :math:`v_\text{o}`
+observer_speed = clone_as_symbol(
+    symbols.speed,
+    display_symbol="v_o",
+    display_latex="v_\\text{o}",
+)
+"""
+:symbols:`speed` of the observer, positive when moving away from the source and negative otherwise.
 """
 
 law = Eq(observed_frequency,
     source_frequency * (wave_speed - observer_speed) / (wave_speed + source_speed))
-r"""
-:code:`f_o = f_s * (v - v_o) / (v + v_s)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        f_\text{o} = f_\text{s} \frac{v - v_\text{o}}{v + v_\text{s}}
+:laws:latex::
 """
 
 # Confirm that classical Doppler effect is a special case of relativistic Doppler effect
@@ -93,12 +90,12 @@ Latex:
 
 # Relativistic part is zero for velocities much less than speed of light
 _classical_law = general_doppler_law.law.subs({
-    general_doppler_law.real_frequency: source_frequency,
-    general_doppler_law.wave_velocity: wave_speed,
-    general_doppler_law.source_velocity: source_speed,
-    general_doppler_law.observer_velocity: observer_speed,
-    (general_doppler_law.source_velocity / speed_of_light)**2: 0,
-    (general_doppler_law.observer_velocity / speed_of_light)**2: 0
+    general_doppler_law.source_frequency: source_frequency,
+    general_doppler_law.wave_speed: wave_speed,
+    general_doppler_law.source_speed: source_speed,
+    general_doppler_law.observer_speed: observer_speed,
+    (general_doppler_law.source_speed / quantities.speed_of_light)**2: 0,
+    (general_doppler_law.observer_speed / quantities.speed_of_light)**2: 0
 })
 assert expr_equals(_classical_law.rhs, law.rhs)
 

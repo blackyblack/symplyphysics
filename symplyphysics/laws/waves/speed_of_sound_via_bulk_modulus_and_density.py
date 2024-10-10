@@ -8,51 +8,28 @@ of the medium it is traveling in and its density.
 """
 
 from sympy import Eq, sqrt
-from symplyphysics import (
-    units,
-    Symbol,
-    Quantity,
-    validate_input,
-    validate_output,
-)
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 
-phase_velocity = Symbol("phase_velocity", units.velocity, positive=True)
+phase_velocity = symbols.phase_speed
 """
-Phase velocity of sound wave.
-
-Symbol:
-    :code:`v`
+:symbols:`phase_speed` of sound wave.
 """
 
-bulk_modulus = Symbol("bulk_modulus", units.pressure, real=True)
+bulk_modulus = symbols.bulk_modulus
 """
-Bulk modulus of the medium.
-
-Symbol:
-    :code:`B`
-
-..
-    TODO add reference to laws.hydro.hydraulic_stress_is_bulk_modulus_times_strain
+:symbols:`bulk_modulus` of the medium. Also see :doc:`laws.hydro.hydraulic_stress_is_bulk_modulus_times_strain`.
 """
 
-density = Symbol("density", units.mass / units.volume, positive=True)
-r"""
-Density of the medium.
-
-Symbol:
-    :code:`rho`
-
-Latex:
-    :math:`\rho`
+density = symbols.density
+"""
+:symbols:`density` of the medium.
 """
 
 law = Eq(phase_velocity, sqrt(bulk_modulus / density))
-r"""
-:code:`v = sqrt(B / rho)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        v = \sqrt{\frac{B}{\rho}}
+:laws:latex::
 """
 
 

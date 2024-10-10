@@ -3,14 +3,14 @@ import inspect
 from typing import Any, Callable, Sequence
 from sympy.physics.units import Quantity as SymQuantity, Dimension
 
-from .symbols.symbols import DimensionSymbol, DimensionSymbolNew, Function, FunctionNew, Symbol, SymbolNew
+from .symbols.symbols import DimensionSymbol, DimensionSymbolNew, Function, FunctionNew, Symbol, SymbolNew, SymbolIndexedNew
 from .dimensions import assert_equivalent_dimension, ScalarValue
 
 
-def _assert_expected_unit(value: ScalarValue | SymQuantity | DimensionSymbol | DimensionSymbolNew |
-    Sequence[ScalarValue | SymQuantity | DimensionSymbol | DimensionSymbolNew],
-    expected_units: Dimension | Symbol | Function | SymbolNew | FunctionNew |
-    Sequence[Dimension | Symbol | Function | SymbolNew | FunctionNew],
+def _assert_expected_unit(value: ScalarValue | SymQuantity | DimensionSymbol | DimensionSymbolNew | SymbolIndexedNew |
+    Sequence[ScalarValue | SymQuantity | DimensionSymbol | DimensionSymbolNew | SymbolIndexedNew],
+    expected_units: Dimension | Symbol | Function | SymbolNew | FunctionNew | SymbolIndexedNew |
+    Sequence[Dimension | Symbol | Function | SymbolNew | FunctionNew | SymbolIndexedNew],
     param_name: str, function_name: str) -> None:
     components: list[ScalarValue | SymQuantity | Dimension] = []
     indexed = isinstance(value, Sequence)
@@ -76,7 +76,8 @@ def validate_input(**decorator_kwargs: Any) -> Callable[[Callable[..., Any]], Ca
 # @validate_output(units.length)
 # @validate_output(body_volume)
 def validate_output(
-        expected_unit: Dimension | Symbol | Function | SymbolNew | FunctionNew) -> Callable[[Any], Callable[..., Any]]:
+        expected_unit: Dimension | Symbol | Function | SymbolNew | FunctionNew | SymbolIndexedNew
+) -> Callable[[Any], Callable[..., Any]]:
 
     def validate_func(func: Callable[..., Any]) -> Callable[..., Any]:
 

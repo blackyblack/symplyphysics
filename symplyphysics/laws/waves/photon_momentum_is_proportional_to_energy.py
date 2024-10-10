@@ -1,4 +1,4 @@
-r"""
+"""
 Photon momentum is proportional to energy
 =========================================
 
@@ -13,32 +13,24 @@ expressions.
 #. :quantity_notation:`speed_of_light`.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, quantities)
+from sympy import Eq, solve
+from symplyphysics import Quantity, validate_input, validate_output, quantities, symbols
 
-momentum = Symbol("momentum", units.momentum)
+momentum = symbols.momentum
 """
-Momentum of a photon.
-
-Symbol:
-    :code:`p`
+:symbols:`momentum` of a photon.
 """
 
-energy = Symbol("energy", units.energy)
+energy = symbols.energy
 """
-Energy of a photon.
-
-Symbol:
-    :code:`E`
+:symbols:`energy` of a photon.
 """
 
 law = Eq(momentum, energy / quantities.speed_of_light)
-r"""
-:code:`p = E / c`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        p = \frac{E}{c}
+:laws:latex::
 """
 
 

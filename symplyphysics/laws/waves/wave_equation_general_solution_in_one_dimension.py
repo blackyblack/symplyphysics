@@ -7,13 +7,8 @@ on the phase of the wave, i.e. the position and time variables only appear in it
 expression in the form of the :doc:`wave phase <laws.waves.phase_of_traveling_wave>`.
 """
 
-from sympy import Eq, symbols, Function as SymFunction, cos
-from symplyphysics import (
-    angle_type,
-    Symbol,
-    Quantity,
-    validate_input,
-)
+from sympy import Eq, symbols as sym_symbols, Function as SymFunction, cos
+from symplyphysics import Quantity, validate_input, symbols
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.quantity_decorator import validate_output_same
 from symplyphysics.core.symbols.quantities import scale_factor
@@ -23,15 +18,18 @@ from symplyphysics.laws.waves import (
     phase_velocity_from_angular_frequency_and_wavenumber as phase_velocity_law,
 )
 
-displacement = symbols("displacement")
+displacement = sym_symbols("u")
 """
 Displacement from rest in the wave. Usually depends on position and time.
 
 Symbol:
     :code:`u`
+
+Latex:
+    :math:`u`
 """
 
-solution = symbols("solution", cls=SymFunction)
+solution = sym_symbols("f", cls=SymFunction)
 r"""
 One-argument solution function of the wave equation.
 
@@ -42,15 +40,9 @@ Latex:
     :math:`f(\varphi)`
 """
 
-wave_phase = Symbol("wave_phase", angle_type)
-r"""
-Phase of the wave.
-
-Symbol:
-    :code:`phi`
-
-Latex:
-    :math:`\varphi`
+wave_phase = symbols.phase
+"""
+:symbols:`phase` of the wave.
 """
 
 law = Eq(displacement, solution(wave_phase))
@@ -64,8 +56,10 @@ Latex:
 
 # Prove this is a solution of the wave equation
 
-_angular_frequency, _angular_wavenumber = symbols("angular_frequency angular_wavenumber")
-_position, _time = symbols("position time")
+_angular_frequency = symbols.angular_frequency
+_angular_wavenumber = symbols.angular_wavenumber
+_position = symbols.position
+_time = symbols.time
 
 _phase_velocity = phase_velocity_law.law.rhs.subs({
     phase_velocity_law.angular_frequency: _angular_frequency,

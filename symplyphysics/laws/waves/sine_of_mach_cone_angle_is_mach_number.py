@@ -16,41 +16,28 @@ phenomenon.
 
 from sympy import Eq, sin, solve
 from symplyphysics import (
-    angle_type,
-    dimensionless,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
 )
 
-mach_cone_angle = Symbol("mach_cone_angle", angle_type, positive=True)
-r"""
-Mach cone angle, which is the angle between the Mach wave wavefront (the Mach cone) and
+mach_cone_angle = symbols.angle
+"""
+Mach cone :symbols:`angle`, which is the angle between the Mach wave wavefront (the Mach cone) and
 the vector pointing opposite to the velocity vector of the source.
-
-Symbol:
-    :code:`theta`
-
-Latex:
-    :math:`\theta`
 """
 
-mach_number = Symbol("mach_number", dimensionless, positive=True)
+mach_number = symbols.mach_number
 """
-Mach number of the moving source.
-
-Symbol:
-    :code:`M`
+:symbols:`mach_number` of the moving source.
 """
 
 law = Eq(sin(mach_cone_angle), 1 / mach_number)
-r"""
-:code:`sin(theta) = 1 / M`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \sin \theta = \frac{1}{M}
+:laws:latex::
 """
 
 

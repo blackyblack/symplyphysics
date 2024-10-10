@@ -12,27 +12,24 @@ moving in opposite directions.
 #. A standing wave is no longer a traveling one because it doesn't move in a single direction.
 """
 
-from sympy import Eq, sin, cos, symbols
-from symplyphysics import (
-    units,
-    angle_type,
-    Symbol,
-    Quantity,
-    validate_input,
-)
+from sympy import Eq, sin, cos, symbols as sym_symbols
+from symplyphysics import Quantity, validate_input, symbols
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.quantity_decorator import validate_output_same
 from symplyphysics.laws.waves import phase_of_traveling_wave as phase_law
 
-total_displacement = symbols("total_displacement")
+total_displacement = sym_symbols("u")
 """
 Displacement of the resulting wave.
 
 Symbol:
     :code:`u`
+
+Latex:
+    :math:`u`
 """
 
-amplitude = symbols("amplitude")
+amplitude = sym_symbols("u_max")
 r"""
 Amplitude of the interfering waves.
 
@@ -43,39 +40,24 @@ Latex:
     :math:`u_\text{max}`
 """
 
-angular_wavenumber = Symbol("angular_wavenumber", angle_type / units.length)
+angular_wavenumber = symbols.angular_wavenumber
 r"""
-Angular wavenumber of the interfering waves.
-
-Symbol:
-    :code:`k`
+:symbols:`angular_wavenumber` of the interfering waves.
 """
 
-position = Symbol("position", units.length)
+position = symbols.position
 """
-Position, or spatial coordinate.
-
-Symbol:
-    :code:`x`
+:symbols:`position`, or spatial coordinate.
 """
 
-angular_frequency = Symbol("angular_frequency", angle_type / units.time)
-r"""
-Angular frequency of the interfering waves.
-
-Symbol:
-    :code:`w`
-
-Latex:
-    :math:`\omega`
+angular_frequency = symbols.angular_frequency
+"""
+:symbols:`angular_frequency` of the interfering waves.
 """
 
-time = Symbol("time", units.time)
+time = symbols.time
 """
-Time.
-
-Symbol:
-    :code:`t`
+:symbols:`time`.
 """
 
 law = Eq(total_displacement,

@@ -9,76 +9,54 @@ the angular frequency of the wave and the displacement of particles in the mediu
 
 from sympy import Eq
 from symplyphysics import (
-    units,
-    angle_type,
-    Symbol,
     Quantity,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
 )
 
-pressure_amplitude = Symbol("pressure_amplitude", units.pressure)
-r"""
-Amplitude of pressure change.
-
-Symbol:
-    :code:`Delta(p)_max`
-
-Latex:
-    :math:`(\Delta p)_\text{max}`
+pressure_amplitude = clone_as_symbol(
+    symbols.pressure,
+    display_symbol="Delta(p)_max",
+    display_latex="(\\Delta p)_\\text{max}",
+)
+"""
+Amplitude of :symbols:`pressure` change.
 """
 
-speed_of_sound = Symbol("speed_of_sound", units.velocity)
+speed_of_sound = symbols.speed
 """
-Speed of sound in the medium.
-
-Symbol:
-    :code:`v`
+:symbols:`speed` of sound in the medium.
 """
 
-medium_density = Symbol("medium_density", units.mass / units.volume)
-r"""
-Density of the medium.
-
-Symbol:
-    :code:`rho`
-
-Latex:
-    :math:`\rho`
+medium_density = symbols.density
+"""
+:symbols:`density` of the medium.
 """
 
-angular_frequency = Symbol("angular_frequency", angle_type / units.time)
-r"""
-Angular frequency of the sound wave.
-
-Symbol:
-    :code:`w`
-
-Latex:
-    :math:`\omega`
+angular_frequency = symbols.angular_frequency
+"""
+:symbols:`angular_frequency` of the sound wave.
 """
 
-displacement_amplitude = Symbol("displacement_amplitude", units.length)
-r"""
-Displacement amplitude of particles in the medium.
-
-Symbol:
-    :code:`s_max`
-
-Latex:
-    :math:`s_\text{max}`
+displacement_amplitude = clone_as_symbol(
+    symbols.distance,
+    display_symbol="s_max",
+    display_latex="s_\\text{max}",
+)
+"""
+Displacement amplitude of particles in the medium. See :symbols:`distance`.
 """
 
 law = Eq(
     pressure_amplitude,
     speed_of_sound * medium_density * angular_frequency * displacement_amplitude,
 )
-r"""
-:code:`Delta(p)_max = v * rho * w * s_max`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        (\Delta p)_\text{max} = v \rho \omega s_\text{max}
+:laws:latex::
 """
 
 

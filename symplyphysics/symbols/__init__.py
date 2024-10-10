@@ -29,6 +29,9 @@ __all__ = [
     "number_density",
     "particle_count",
     "angle",
+    "linear_density",
+    "whole_number",
+    "spectral_energy_density",
     # chemistry,
     "mass_fraction",
     "amount_of_substance",
@@ -81,6 +84,10 @@ __all__ = [
     "deformation",
     "strain",
     "stress",
+    "group_speed",
+    "phase",
+    "tension",
+    "mach_number",
     # electrodynamics
     "admittance",
     "electrical_conductance",
@@ -107,10 +114,12 @@ __all__ = [
     "electric_time_constant",
     "electrical_reactance",
     "current_density",
+    "relative_permeability",
     # optics
     "relative_refractive_index",
     "radiant_exitance",
     "radiant_flux",
+    "focal_length",
     # relativistic mechanics
     "lorentz_factor",
     # thermodynamics

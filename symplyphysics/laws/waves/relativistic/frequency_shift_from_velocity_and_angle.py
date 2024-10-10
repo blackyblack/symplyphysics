@@ -1,55 +1,83 @@
-from sympy import (Eq, cos, solve, sqrt)
-from sympy.physics.units import speed_of_light
-from symplyphysics import (angle_type, units, Quantity, Symbol, print_expression, validate_input,
-    validate_output)
+"""
+Frequency shift from speed and angle
+====================================
+
+See :doc:`laws.waves.relativistic.longitudinal_frequency_shift_from_velocity`.
+
+**Notes:**
+
+#. It is not trivial to substitute moving source and idle observer with moving observer and idle source. Law
+   depends on the current frame (observer or source are at rest at this frame), angle is detected at the point
+   of emission or at the point of reception (see relativistic angle aberration).
+
+**Conditions:**
+
+#. Angle is measured at the moment of emission with respect to the observer frame.
+#. Motion is in 2D space.
+"""
+
+from sympy import Eq, cos, solve, sqrt
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    clone_as_symbol,
+    symbols,
+)
+from symplyphysics.quantities import speed_of_light
 from symplyphysics.core.symbols.quantities import scale_factor
 
-# Description
-## See [doppler effect](./longitudinal_frequency_shift_from_velocity.py) description. When objects are not moving collinear, one
-## should add angles to the formula.
+observer_frequency = clone_as_symbol(
+    symbols.temporal_frequency,
+    display_symbol="f_o",
+    display_latex="f_\\text{o}",
+)
+"""
+Observed :symbols:`temporal_frequency` of the wave.
+"""
 
-# Law: fo = fs * sqrt(c**2 - v**2)/(c - v * cos(phr)), where
-## fo is observed frequency,
-## fs is source wave frequency,
-## v is relative speed of source and observer (magnitude of velocity),
-## phr is angle between signal vector directed from source to observer, and source velocity,
-## c is speed of light.
+source_frequency = clone_as_symbol(
+    symbols.temporal_frequency,
+    display_symbol="f_s",
+    display_latex="f_\\text{s}",
+)
+"""
+Source :symbols:`temporal_frequency` of the wave.
+"""
 
-# Conditions:
-## - Angle is detected at the moment of emission with respect to the observer frame.
-## - Motion is in 2-D space.
+relative_speed = symbols.speed
+"""
+Relative :symbols:`speed` between the source and the observer.
+"""
 
-# Note:
-## It is not trivial to substitute moving source and idle observer with moving observer and idle source. Law
-## depends on the current frame (observer or source are at rest at this frame), angle is detected at the point
-## of emission or at the point of reception (see relativistic angle aberration).
-
-observed_frequency = Symbol("observed_frequency", units.frequency)
-real_frequency = Symbol("real_frequency", units.frequency)
-relative_speed = Symbol("relative_speed", units.velocity)
-source_angle = Symbol("source_angle", angle_type)
+source_angle = symbols.angle
+"""
+:symbols:`angle` between the signal vector (directed from the source to the observer) and the source's velocity
+vector.
+"""
 
 law = Eq(
-    observed_frequency,
-    real_frequency * sqrt(speed_of_light**2 - relative_speed**2) /
+    observer_frequency,
+    source_frequency * sqrt(speed_of_light**2 - relative_speed**2) /
     (speed_of_light - relative_speed * cos(source_angle)))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
-def print_law() -> str:
-    return print_expression(law)
-
-
-@validate_input(real_frequency_=real_frequency,
+@validate_input(real_frequency_=source_frequency,
     relative_speed_=relative_speed,
     source_angle_=source_angle)
-@validate_output(observed_frequency)
+@validate_output(observer_frequency)
 def calculate_observed_frequency(real_frequency_: Quantity, relative_speed_: Quantity,
     source_angle_: float | Quantity) -> Quantity:
     #HACK: sympy angles are always in radians
     source_angle_radians = scale_factor(source_angle_)
-    result_expr = solve(law, observed_frequency, dict=True)[0][observed_frequency]
+    result_expr = solve(law, observer_frequency, dict=True)[0][observer_frequency]
     frequency_applied = result_expr.subs({
-        real_frequency: real_frequency_,
+        source_frequency: real_frequency_,
         relative_speed: relative_speed_,
         source_angle: source_angle_radians
     })

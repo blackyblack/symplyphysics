@@ -25,3 +25,10 @@ radiant_flux = SymbolNew("Phi_e", units.power, display_latex="\\Phi_\\text{e}")
 **Radiant flux** or **radiant power** is the radiant energy emitted, reflected, transmitted, or
 received per unit time.
 """
+
+focal_length = SymbolNew("f", units.length)
+"""
+The **focal length** of an optical system is a measure of how strongly the system converges or diverges
+light; it is the inverse of the system's optical power. It is the distance between the focal plane and
+the lens's nodal point.
+"""
