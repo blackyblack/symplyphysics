@@ -7,45 +7,43 @@ for its shape to repeat. It can also be measured as the distance between two clo
 with the same wave phase.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
+from sympy import Eq, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    clone_as_symbol,
+)
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.kinematics import position_via_constant_speed_and_time as velocity_definition
+from symplyphysics.laws.kinematics import (
+    position_via_constant_speed_and_time as velocity_definition,
+)
 
-wavelength = Symbol("wavelength", units.length)
-r"""
-Wavelength of the wave.
-
-Symbol:
-    :code:`lambda`
-
-Latex:
-    :math:`\lambda`
+wavelength = symbols.wavelength
+"""
+:symbols:`wavelength` of the wave.
 """
 
-phase_velocity = Symbol("phase_velocity", units.velocity)
+phase_velocity = clone_as_symbol(symbols.phase_speed)
 """
-Phase velocity of the wave.
+:symbols:`phase_speed` of the wave.
 
-Symbol:
-    :code:`v`
+.. only:: comment
+
+    Cloned due to `symplyphysics/laws/waves/frequency_shift_from_speed_in_arbitrary_motion.py` raising error
 """
 
-period = Symbol("period", units.time)
+period = symbols.period
 """
-Temporal period of the wave.
-
-Symbol:
-    :code:`T`
+Temporal :symbols:`period` of the wave.
 """
 
 law = Eq(wavelength, phase_velocity * period)
-r"""
-:code:`lambda = v * T`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \lambda = v T
+:laws:latex::
 """
 
 # Derive the same law from constant velocity motion, assuming wave length is a distance that wave travels
