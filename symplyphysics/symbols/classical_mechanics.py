@@ -275,3 +275,9 @@ stress = SymbolNew("sigma", units.pressure, display_latex="\\sigma")
 """
 **Stress** is a physical quantity that describes forces present during deformation.
 """
+
+mach_number = SymbolNew("M", dimensionless, display_latex="\\text{M}", positive=True)
+"""
+The **Mach number** is a dimensionless quantity in fluid dynamics representing the ratio of flow velocity
+past a boundary to the local speed of sound.
+"""
