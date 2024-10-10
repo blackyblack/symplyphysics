@@ -12,68 +12,59 @@ or electromagnetic waves.
    only on one spatial dimension.
 """
 
-from sympy import (
-    Derivative,
-    Eq,
-    symbols as sym_symbols,
-    Function as SymFunction,
-    cos,
-)
+from sympy import Derivative, Eq, cos
 from symplyphysics import (
     units,
-    Symbol,
     Quantity,
     validate_input,
     symbols,
     clone_as_symbol,
+    FunctionNew,
+    SymbolNew,
 )
+from symplyphysics.core.dimensions import any_dimension
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.quantity_decorator import validate_output_same
 
-displacement = sym_symbols("u", cls=SymFunction, real=True)
+displacement = FunctionNew("u(x, t)", any_dimension, display_latex="u")
 """
 Factor representing a displacement from rest position, which could be
 pressure, position, electric field, etc., as a function of position
 and time.
-
-Symbol:
-    :code:`u(x, t)`
 """
 
 position = symbols.position
 """
-Position, or spatial variable.
+:symbols:`position`, or spatial variable.
 """
 
 time = clone_as_symbol(symbols.time, positive=True)
 """
-Time.
+:symbols:`time`.
 """
 
 phase_speed = clone_as_symbol(symbols.phase_speed, positive=True)
 """
-:doc:`Phase speed <laws.waves.phase_velocity_from_angular_frequency_and_wavenumber>` of the wave.
+:symbols:`phase_speed` of the wave.
 """
 
 definition = Eq(
     Derivative(displacement(position, time), position, 2),
     Derivative(displacement(position, time), time, 2) / phase_speed**2,
 )
-r"""
-:code:`Derivative(u(x, t), (x, 2)) = (1/v^2) * Derivative(u(x, t), (t, 2))`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \frac{\partial^2 u}{\partial x^2} = \frac{1}{v^2} \frac{\partial^2 u}{\partial t^2}
+:laws:latex::
 """
 
 # A subset of solutions has the form `u = u_m * cos(x + v*t + phi)`
 ## u_m - amplitude of displacement
 ## phi - phase lag
 
-amplitude = sym_symbols("amplitude", positive=True)
-phase_lag = sym_symbols("phase_lag", real=True)
-_length_unit = Symbol("length_unit", units.length)
+amplitude = SymbolNew("u_m", any_dimension)
+phase_lag = clone_as_symbol(symbols.phase_shift, real=True)
+_length_unit = symbols.length
 
 # `phase_speed` can be negative or positive, depending on the direction of wave propagation
 # - negative values denote propagation in the positive direction of x-axis
