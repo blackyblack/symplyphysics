@@ -31,6 +31,7 @@ __all__ = [
     "angle",
     "linear_density",
     "whole_number",
+    "spectral_energy_density",
     # chemistry,
     "mass_fraction",
     "amount_of_substance",

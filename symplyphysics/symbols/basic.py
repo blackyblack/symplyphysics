@@ -40,6 +40,11 @@ energy_density = SymbolNew("w", units.energy / units.volume)
 Energy per unit volume.
 """
 
+spectral_energy_density = SymbolNew("w_f", units.energy / (units.volume * units.frequency))
+"""
+Energy per unit volume per unit linear frequency.
+"""
+
 energy = SymbolNew("E", units.energy)
 """
 **Energy** is the quantitative property that is transferred to a body or to a physical system, recognizable in
