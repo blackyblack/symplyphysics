@@ -7,7 +7,7 @@ from typing import Any
 from sympy import S, Basic, Mul, Number, Pow, Rational, StrPrinter, sift, sympify, E
 from sympy.core.mul import _keep_coeff
 from sympy.printing.precedence import precedence
-from ..core.symbols.symbols import DimensionSymbolNew
+from ..core.symbols.symbols import DimensionSymbolNew, FunctionNew
 
 
 class SymbolCodePrinter(StrPrinter):
@@ -28,6 +28,11 @@ class SymbolCodePrinter(StrPrinter):
     # pylint: disable-next=invalid-name
     def _print_SymbolIndexedNew(self, expr: Any) -> str:
         return self._print_SymbolNew(expr)
+
+    def _print_FunctionNew(self, expr: FunctionNew) -> str:
+        name = expr.display_name
+        args_str = self.stringify(expr.arguments, ", ")
+        return f"{name}({args_str})"
 
     def _print_Pow(self, expr: Any, _rational: bool = False) -> str:
         prec = precedence(expr)
@@ -178,11 +183,22 @@ class SymbolCodePrinter(StrPrinter):
 
     def _print_Function(self, expr: Any) -> str:
         if isinstance(expr, DimensionSymbolNew):
-            return expr.display_name
-        if isinstance(expr.func, DimensionSymbolNew):
-            return expr.func.display_name
-        args_str = self.stringify(expr.args, ", ")
-        return expr.func.__name__ + f"({args_str})"
+            if isinstance(expr, FunctionNew):
+                name = expr.display_name
+                args_str = self.stringify(expr.arguments, ", ")
+            else:
+                return expr.display_name
+        else:
+            func = expr.func
+            if isinstance(func, DimensionSymbolNew):
+                if isinstance(func, FunctionNew):
+                    name = func.display_name
+                else:
+                    return func.display_name
+            else:
+                name = func.__name__
+            args_str = self.stringify(expr.args, ", ")
+        return f"{name}({args_str})"
 
     # pylint: disable-next=invalid-name
     def _print_SumIndexed(self, expr: Any) -> str:
@@ -191,17 +207,22 @@ class SymbolCodePrinter(StrPrinter):
         # expr.args[0].args[0] contains just indexed symbol
         symbol, index = expr.args[0].args
         return f"Sum({self._print(symbol)}, {self._print(index)})"
-    
+
     def _print_log(self, expr: Any) -> str:
         value, base = expr.args
         str_value = self._print(value)
-        
+
         if base == E:
             return f"log({str_value})"
-        
+
         str_base = self._print(base)
         return f"log({str_value}, {str_base})"
 
 
 def code_str(expr: Any, **settings: Any) -> str:
-    return SymbolCodePrinter(settings).doprint(expr)
+    printer = SymbolCodePrinter(settings)
+
+    if isinstance(expr, FunctionNew):
+        return printer._print_FunctionNew(expr)
+
+    return printer.doprint(expr)

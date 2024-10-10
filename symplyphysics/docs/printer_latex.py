@@ -6,7 +6,7 @@ from typing import Any
 from sympy import E
 from sympy.printing.latex import LatexPrinter, accepted_latex_functions
 from sympy.core.function import AppliedUndef
-from ..core.symbols.symbols import DimensionSymbolNew
+from ..core.symbols.symbols import DimensionSymbolNew, FunctionNew
 
 
 class SymbolLatexPrinter(LatexPrinter):
@@ -143,4 +143,9 @@ class SymbolLatexPrinter(LatexPrinter):
 
 
 def latex_str(expr: Any, **settings: Any) -> str:
-    return SymbolLatexPrinter(settings).doprint(expr)
+    printer = SymbolLatexPrinter(settings)
+
+    if isinstance(expr, FunctionNew):
+        expr = expr(*expr.arguments)
+
+    return printer.doprint(expr)
