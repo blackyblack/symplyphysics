@@ -18,12 +18,7 @@ matter or energy between the body and its environment.
 """
 
 from sympy import Eq, exp, pi
-from symplyphysics import (
-    Quantity,
-    validate_input,
-    validate_output,
-    symbols,
-)
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 from symplyphysics.quantities import planck, speed_of_light, boltzmann_constant
 
 spectral_energy_density = symbols.spectral_energy_density
