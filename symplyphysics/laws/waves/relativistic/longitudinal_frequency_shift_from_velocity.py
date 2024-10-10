@@ -63,11 +63,11 @@ assert expr_equals((general_relativistic_law.rhs / real_frequency)**2,
 ## its cosine is positive, when moving towards observer.
 ## This law has reverse notation - source velocity is positive when moving away from the observer.
 ## Therefore we should use opposite direction for source - set pi as source angle.
-observed_frequency_zero_angles = relativistic_doppler_with_angle.law.subs({
+observed_frequency_zero_angles = relativistic_doppler_with_angle.law.rhs.subs({
     relativistic_doppler_with_angle.source_angle: pi,
     relativistic_doppler_with_angle.relative_speed: relative_velocity,
-    relativistic_doppler_with_angle.real_frequency: real_frequency,
-}).rhs
+    relativistic_doppler_with_angle.source_frequency: real_frequency,
+})
 ## Square roots fail to compare with each other. Raise both parts to power of 2 before checking for equality.
 assert expr_equals(observed_frequency_zero_angles**2, law.rhs**2)
 
