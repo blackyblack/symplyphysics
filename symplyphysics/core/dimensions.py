@@ -11,6 +11,14 @@ from .errors import UnitsError
 ScalarValue: TypeAlias = Expr | float
 
 
+class AnyDimension(Dimension):
+    def __new__(cls):
+        return super().__new__(cls, "any_dimension")
+
+
+any_dimension = AnyDimension()
+
+
 def _collect_quantity(expr: SymQuantity) -> tuple[Basic, Dimension]:
     return (expr.scale_factor, expr.dimension)
 
@@ -136,6 +144,9 @@ def assert_equivalent_dimension(arg: SymQuantity | ScalarValue | Dimension, para
             return
         # infinity can be of any dimension
         if expected_scale_factor == S.Infinity:
+            return
+        # AnyDimension can be of any dimension
+        if isinstance(expected_dimension, AnyDimension):
             return
     #HACK: this allows to treat angle type as dimensionless
     expected_dimension = expected_dimension.subs("angle", S.One)
