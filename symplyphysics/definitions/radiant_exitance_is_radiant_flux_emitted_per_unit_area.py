@@ -30,7 +30,7 @@ area = symbols.area
 
 radiant_flux = clone_as_function(symbols.radiant_flux, [area])
 """
-:symbols:`radiant_flux` emitted from the surface.
+:symbols:`radiant_flux` emitted from the surface as a function of :attr:`~area`.
 """
 
 definition = Eq(radiant_exitance, Derivative(radiant_flux(area), area))

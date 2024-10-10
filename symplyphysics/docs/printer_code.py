@@ -29,11 +29,6 @@ class SymbolCodePrinter(StrPrinter):
     def _print_SymbolIndexedNew(self, expr: Any) -> str:
         return self._print_SymbolNew(expr)
 
-    def _print_FunctionNew(self, expr: FunctionNew) -> str:
-        name = expr.display_name
-        args_str = self.stringify(expr.arguments, ", ")
-        return f"{name}({args_str})"
-
     def _print_Pow(self, expr: Any, _rational: bool = False) -> str:
         prec = precedence(expr)
 
@@ -223,6 +218,6 @@ def code_str(expr: Any, **settings: Any) -> str:
     printer = SymbolCodePrinter(settings)
 
     if isinstance(expr, FunctionNew):
-        return printer._print_FunctionNew(expr)
+        expr = expr(*expr.arguments)
 
     return printer.doprint(expr)

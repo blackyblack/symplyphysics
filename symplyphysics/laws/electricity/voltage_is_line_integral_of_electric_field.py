@@ -19,7 +19,6 @@ from symplyphysics import (
     validate_input,
     validate_output,
     clone_as_function,
-    clone_as_symbol,
     symbols,
 )
 from symplyphysics.core.geometry.line import two_point_function, Point2D

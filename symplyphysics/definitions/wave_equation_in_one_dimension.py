@@ -31,16 +31,16 @@ position = symbols.position
 :symbols:`position`, or spatial variable.
 """
 
-displacement = FunctionNew("u", [position], any_dimension)
+time = clone_as_symbol(symbols.time, positive=True)
+"""
+:symbols:`time`.
+"""
+
+displacement = FunctionNew("u", [position, time], any_dimension)
 """
 Factor representing a displacement from rest position, which could be
 pressure, position, electric field, etc., as a function of position
 and time.
-"""
-
-time = clone_as_symbol(symbols.time, positive=True)
-"""
-:symbols:`time`.
 """
 
 phase_speed = clone_as_symbol(symbols.phase_speed, positive=True)
