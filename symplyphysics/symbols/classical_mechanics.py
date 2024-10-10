@@ -16,6 +16,12 @@ force = SymbolNew("F", units.force)
 unless counterbalanced by other forces.
 """
 
+tension = SymbolNew("T", units.force)
+"""
+**Tension** is the pulling or stretching force transmitted axially along an object so as to stretch it
+or pull it apart.
+"""
+
 speed = SymbolNew("v", units.velocity)
 """
 **Speed** is the rate of change of the object's position with respect to time. It is the scalar counterpart

@@ -85,6 +85,7 @@ __all__ = [
     "stress",
     "group_speed",
     "phase",
+    "tension",
     # electrodynamics
     "admittance",
     "electrical_conductance",
