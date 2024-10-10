@@ -198,6 +198,12 @@ phase_shift = SymbolNew("phi", angle_type, display_latex="\\varphi")
 two periodic functions.
 """
 
+phase = SymbolNew("phi", angle_type, display_latex="\\varphi")
+"""
+**Phase** of a wave or other periodic function of some real variable :math:`t`, such as time, is an
+angle-like quantity representing the fraction of the cycle covered up to :math:`t`.
+"""
+
 friction_coefficient = SymbolNew("mu", dimensionless, display_latex="\\mu")
 """
 **Coefficient of friction** is a dimensionless scalar value which equals to the ratio of the force of
