@@ -107,7 +107,7 @@ def test_mul_minus_one() -> None:
     temperature = symbols.temperature
     with evaluate(False):
         expr = exp(-1 * energy_of_state / (quantities.boltzmann_constant * temperature))
-    assert latex_str(expr) == "\\exp{\\left(\\frac{- E}{k_\\text{B} T} \\right)}"
+    assert latex_str(expr) == "\\exp{\\left(- \\frac{E}{k_\\text{B} T} \\right)}"
 
 
 def test_mul_integral() -> None:

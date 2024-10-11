@@ -177,8 +177,14 @@ class SymbolCodePrinter(StrPrinter):
         if d_n == S.One:
             tex2 = convert_args(d_d)
         elif d_d == S.One:
-            tex2 = convert_args(d_n)
-            return f"{tex} / {tex2}"
+            sdenom = convert_args(d_n)
+            mul_in_denom = False
+            if d_n.is_Mul:
+                denom_args = [a for a in d_n.args if a != S.One]
+                mul_in_denom = len(denom_args) > 1
+            sdenom_str = f"({sdenom})" if self._needs_mul_brackets(d_n, False,
+                True) or mul_in_denom else sdenom
+            return f"{tex} / {sdenom_str}"
         else:
             tex2 = self._print_div(d_d, d_n)
         return f"{tex}{separator}{tex2}"

@@ -170,6 +170,22 @@ class SymbolLatexPrinter(LatexPrinter):
         tex = f"\\frac{{{snumer}}}{{{sdenom}}}"
         return tex
 
+    def _extract_minus_sign(self, expr: Expr) -> tuple[Expr, bool]:
+        args = expr.args
+        sign = False
+        if expr.is_Number and expr.is_extended_negative:
+            return (-expr, True)
+        if not expr.is_Mul:
+            return (expr, False)
+        terms = []
+        for a in args:
+            term, term_sign = self._extract_minus_sign(a)
+            if term_sign:
+                sign = not sign
+            terms.append(term)
+        return (Mul(*terms, evaluate=False), sign)
+
+
     def _print_Mul(self, expr: Mul) -> str:
         separator: str = self._settings["mul_symbol_latex"]
         numbersep: str = self._settings["mul_symbol_latex_numbers"]
@@ -202,10 +218,8 @@ class SymbolLatexPrinter(LatexPrinter):
                 last_term_tex = term_tex
             return _tex
 
-        tex = ""
-        if expr.could_extract_minus_sign():
-            expr = -expr
-            tex = "- "
+        expr, sign = self._extract_minus_sign(expr)
+        tex = "- " if sign else ""
 
         n, d = fraction(expr, exact=True)
 
@@ -220,7 +234,8 @@ class SymbolLatexPrinter(LatexPrinter):
         # no denominator
         if n_d == S.One:
             if d != S.One:
-                return self._print_div(n_n, d)
+                tex += self._print_div(n_n, d)
+                return tex
             tex += convert_args(n_n)
             return tex
         tex = self._print_div(n_n, n_d)

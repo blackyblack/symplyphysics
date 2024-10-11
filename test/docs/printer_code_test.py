@@ -146,3 +146,13 @@ def test_fraction_mul_inner_fraction() -> None:
         expr = first_charge * second_charge / (4 * pi *
             quantities.vacuum_permittivity) / distance**2
     assert code_str(expr) == "q_1 * q_2 / (4 * pi * epsilon_0) / d^2"
+
+
+def test_fraction_mul_inner_fraction_with_braces() -> None:
+    first_charge = clone_as_symbol(symbols.charge, display_symbol="q_1", display_latex="q_1")
+    second_charge = clone_as_symbol(symbols.charge, display_symbol="q_2", display_latex="q_2")
+    distance = symbols.distance
+    with evaluate(False):
+        expr = 1 / (4 * pi *
+            quantities.vacuum_permittivity) * (first_charge * second_charge / distance**2)
+    assert code_str(expr) == "q_1 * q_2 / d^2 / (4 * pi * epsilon_0)"
