@@ -55,7 +55,8 @@ Symbol:
 
 law = Eq(
     critical_temperature,
-    (8 * attractive_forces_parameter) / (27 * quantities.molar_gas_constant * excluded_volume_parameter),
+    (8 * attractive_forces_parameter) /
+    (27 * quantities.molar_gas_constant * excluded_volume_parameter),
 )
 r"""
 :code:`T_c = 8 * a / (27 * R * b)`

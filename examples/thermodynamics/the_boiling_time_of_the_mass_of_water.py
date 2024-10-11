@@ -81,12 +81,9 @@ energy_to_vaporization_water_value = energy_to_vapor_law.law.subs({
 # Active work in this example is done to heat water to boiling point and to evaporate. Then
 # A_{active} = Q_{heating} + Q_{vaporization}
 efficiency_equation = efficiency_law.law.subs({
-    efficiency_law.real_power:
-    energy_for_heating_water_value + energy_to_vaporization_water_value,
-    efficiency_law.apparent_power:
-        energy_from_combustion_alcohol_value,
-    efficiency_law.power_factor:
-        efficiency
+    efficiency_law.real_power: energy_for_heating_water_value + energy_to_vaporization_water_value,
+    efficiency_law.apparent_power: energy_from_combustion_alcohol_value,
+    efficiency_law.power_factor: efficiency
 })
 time_of_vaporization = solve(efficiency_equation, time, dict=True)[0][time]
 answer = Eq(time, time_of_vaporization)

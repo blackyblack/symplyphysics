@@ -5,9 +5,8 @@ Relativistic mechanics (Symbols)
 Symbols related to relativistic mechanics.
 """
 
-from sympy.physics import units
-from ..core.symbols.symbols import SymbolNew
-from ..core.dimensions import dimensionless
+from symplyphysics.core.dimensions import dimensionless
+from symplyphysics.core.symbols.symbols import SymbolNew
 
 lorentz_factor = SymbolNew("gamma", dimensionless, display_latex="\\gamma")
 """

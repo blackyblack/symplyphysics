@@ -16,8 +16,7 @@ inductivity_2 = Symbol("inductivity_2", units.inductance)
 
 # Parallel connection of dipoles summarizes their admittances.
 # First find impedances and then admittances
-impedance_law = coil_impedance_law.law.subs(coil_impedance_law.impedance,
-    admittance_def.impedance)
+impedance_law = coil_impedance_law.law.subs(coil_impedance_law.impedance, admittance_def.impedance)
 admittance_solved = solve([impedance_law, admittance_def.definition],
     admittance_def.impedance,
     admittance_def.admittance,

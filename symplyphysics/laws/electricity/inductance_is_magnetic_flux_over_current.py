@@ -38,6 +38,7 @@ law = Eq(inductance, magnetic_flux / current)
 :laws:latex::
 """
 
+
 @validate_input(
     magnetic_flux_=magnetic_flux,
     current_=current,

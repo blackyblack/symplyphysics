@@ -6,14 +6,13 @@ The sound level of a sound wave is a physical quantity that is used to describe 
 intensity.
 """
 
-from sympy import Eq
+from sympy import Eq, log
 from symplyphysics import (
     units,
     Quantity,
     validate_input,
     validate_output,
     symbols,
-    log,
 )
 
 sound_level = symbols.sound_intensity_level

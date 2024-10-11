@@ -15,7 +15,8 @@ law_electric_field_first_charge = point_charge.law.subs({
     point_charge.charge: first_charge,
     point_charge.distance: zero_position - first_position,
 })
-electric_field_first_charge = solve(law_electric_field_first_charge, point_charge.electric_field_strength)[0]
+electric_field_first_charge = solve(law_electric_field_first_charge,
+    point_charge.electric_field_strength)[0]
 
 law_electric_field_second_charge = point_charge.law.subs({
     point_charge.charge: second_charge,

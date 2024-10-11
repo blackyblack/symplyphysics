@@ -11,6 +11,7 @@ for _attr in dir(quantities):
     if isinstance(_obj, Quantity):
         _collection.add(_attr)
 
+
 def process_string(doc: str, path: Path) -> str:
     parts = []
 

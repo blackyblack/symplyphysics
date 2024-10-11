@@ -11,7 +11,8 @@ describe a hypothetical ideal gas.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output, quantities)
+from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output,
+    quantities)
 
 pressure = Symbol("pressure", units.pressure)
 """

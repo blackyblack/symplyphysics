@@ -34,8 +34,7 @@ charge = symbols.charge
 Electric :symbols:`charge`.
 """
 
-law = Eq(electrostatic_potential,
-    charge / (4 * pi * absolute_permittivity * distance))
+law = Eq(electrostatic_potential, charge / (4 * pi * absolute_permittivity * distance))
 """
 :laws:symbol::
 

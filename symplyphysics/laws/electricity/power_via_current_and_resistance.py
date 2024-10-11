@@ -8,8 +8,7 @@ instantaneous power in the circuit.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (Quantity, validate_input,
-    validate_output, symbols)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity import (
     current_is_voltage_over_resistance as ohm_law,

@@ -23,16 +23,15 @@ the area of the coil's contour.
 """
 
 from sympy import (Eq, solve, sin)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output, dimensionless, angle_type)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless,
+    angle_type)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity import (
     electromotive_force_induced_in_moving_contour as _emf_law,
     magnetic_flux_from_induction_and_area as _magnetic_flux_law,
 )
 from symplyphysics.laws.kinematics import (
-    angular_position_via_constant_angular_speed_and_time as _angle_law,
-)
+    angular_position_via_constant_angular_speed_and_time as _angle_law,)
 
 electromotive_force = Symbol("electromotive_force", units.voltage)
 r"""
@@ -83,8 +82,8 @@ Latex:
 time = Symbol("time", units.time)
 
 law = Eq(
-    electromotive_force,
-    -1 * coil_turn_count * magnetic_flux_density * contour_area * angular_frequency * sin(angular_frequency * time))
+    electromotive_force, -1 * coil_turn_count * magnetic_flux_density * contour_area *
+    angular_frequency * sin(angular_frequency * time))
 r"""
 :code:`E = -1 * N * B * A * w * sin(w * t)`
 
@@ -112,9 +111,7 @@ _magnetic_flux = _magnetic_flux_law.law.rhs.subs({
 _emf = _emf_law.law.rhs.subs({
     _emf_law.current_turn_count: coil_turn_count,
     _emf_law.magnetic_flux(_time): _magnetic_flux,
-}).doit().subs(
-    _emf_law.time, time
-)
+}).doit().subs(_emf_law.time, time)
 
 # We're interested in the absolute values of the EMF
 assert expr_equals(abs(_emf), abs(law.rhs))

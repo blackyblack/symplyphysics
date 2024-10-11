@@ -16,8 +16,8 @@ as well as by the magnetic field and it does not depend on the particle speed.
 """
 
 from sympy import (Eq, solve, pi, symbols as sympy_symbols)
-from symplyphysics import (Quantity, validate_input,
-    validate_output, symbols, Vector, vector_magnitude)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols, Vector,
+    vector_magnitude)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity.vector import lorentz_force_via_electromagnetic_field as _lorentz_law
 from symplyphysics.laws.dynamics import acceleration_is_force_over_mass as _newtons_second_law
@@ -74,9 +74,7 @@ _force_vec = _lorentz_law.lorentz_force_law(
     electric_field_=Vector([0, 0, 0]),
     magnetic_flux_density_=_magnetic_field_vec,
     velocity_=_velocity_vec,
-).subs(
-    _lorentz_law.charge, _charge
-)
+).subs(_lorentz_law.charge, _charge)
 
 _force_expr = vector_magnitude(_force_vec)
 
@@ -124,9 +122,7 @@ _force_vec = _lorentz_law.lorentz_force_law(
     electric_field_=Vector([0, 0, 0]),
     magnetic_flux_density_=_magnetic_field_vec,
     velocity_=_velocity_vec,
-).subs(
-    _lorentz_law.charge, _charge
-)
+).subs(_lorentz_law.charge, _charge)
 
 _force_expr = vector_magnitude(_force_vec)
 

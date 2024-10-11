@@ -6,8 +6,8 @@ Symbols related to thermodynamics.
 """
 
 from sympy.physics import units
-from ..core.symbols.symbols import SymbolNew
-from ..core.dimensions import dimensionless
+from symplyphysics.core.dimensions import dimensionless
+from symplyphysics.core.symbols.symbols import SymbolNew
 
 temperature = SymbolNew("T", units.temperature)
 """
@@ -50,7 +50,9 @@ thermal_conductivity = SymbolNew("k", units.power / (units.length * units.temper
 proportionality coefficient between the heat flux and the temperature gradient.
 """
 
-thermal_insulance = SymbolNew("R_val", units.area * units.temperature / units.power, display_latex="R_\\text{val}")
+thermal_insulance = SymbolNew("R_val",
+    units.area * units.temperature / units.power,
+    display_latex="R_\\text{val}")
 """
 The **R-value**, or **thermal insulance**, is a measure of how well a two-dimensional barrier, such as a layer of
 insulation, a window or a complete wall or ceiling, resists the conductive flow of heat, in the context of construction.

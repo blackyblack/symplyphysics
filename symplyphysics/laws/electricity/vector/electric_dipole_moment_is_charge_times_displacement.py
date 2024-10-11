@@ -30,6 +30,7 @@ Symbol:
     :code:`q`
 """
 
+
 def dipole_moment_law(displacement_vector_: Vector) -> Vector:
     r"""
     Vector of electric dipole moment via displacement vector.

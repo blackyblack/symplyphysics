@@ -46,16 +46,15 @@ law = Eq(energy, power * time)
 
 # Derive from definition of power from energy
 
-_power_eqn = (
-    power_def.definition
-    .replace(power_def.power, lambda _: power)
-    .subs(power_def.time, time)
-)
+_power_eqn = (power_def.definition.replace(power_def.power,
+    lambda _: power).subs(power_def.time, time))
 
 _energy_expr = dsolve(
     _power_eqn,
     power_def.energy(time),
-    ics={power_def.energy(0): 0},
+    ics={
+    power_def.energy(0): 0
+    },
 ).rhs
 
 assert expr_equals(_energy_expr, law.rhs)

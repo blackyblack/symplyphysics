@@ -22,9 +22,8 @@ from symplyphysics import (
 )
 from symplyphysics.core.symbols.symbols import clone_as_indexed
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.electricity import (
-    inductance_is_magnetic_flux_over_current as _inductance_law
-)
+from symplyphysics.laws.electricity import (inductance_is_magnetic_flux_over_current as
+    _inductance_law)
 
 total_inductance = symbols.inductance
 """
@@ -55,9 +54,8 @@ _magnetic_flux_2 = _magnetic_flux_expr.subs(_inductance_law.inductance, inductan
 # TODO: add law for magnetic flux additivity
 _total_magnetic_flux = _magnetic_flux_1 + _magnetic_flux_2
 
-_total_inductance = _inductance_law.law.rhs.subs(
-    _inductance_law.magnetic_flux, _total_magnetic_flux
-)
+_total_inductance = _inductance_law.law.rhs.subs(_inductance_law.magnetic_flux,
+    _total_magnetic_flux)
 
 _local_idx = Idx("local_idx", (1, 2))
 _inductance_from_law = law.rhs.subs(global_index, _local_idx).doit()

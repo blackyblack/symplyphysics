@@ -125,8 +125,8 @@ _capacitor_current_law_derivative = Eq(Derivative(_capacitor_current_law.lhs, _t
 ## 4. Prove that inductor voltage equals to -1 * capacitance * inductance * (second order derivative of voltage of capacitor)
 
 ## Inductor voltage is the self-inductance.
-_inductor_voltage_law = induction_voltage_definition.law.subs(
-    induction_voltage_definition.time, _time)
+_inductor_voltage_law = induction_voltage_definition.law.subs(induction_voltage_definition.time,
+    _time)
 _inductor_voltage_law = _inductor_voltage_law.subs({
     induction_voltage_definition.inductance: inductance,
     induction_voltage_definition.electromotive_force(_time): _capacitor_voltage(_time),
@@ -149,13 +149,15 @@ _voltage_diff_eq = Eq(_capacitor_voltage(_time), _capacitor_voltage_solved)
 _oscillator_eq = oscillator.definition.subs(oscillator.time, _time)
 _oscillator_eq = _oscillator_eq.subs(oscillator.displacement(_time), _capacitor_voltage(_time))
 angular_frequency_solved = simplify(
-    solve([_oscillator_eq, _voltage_diff_eq], (oscillator.angular_frequency, _capacitor_voltage(_time)),
+    solve([_oscillator_eq, _voltage_diff_eq],
+    (oscillator.angular_frequency, _capacitor_voltage(_time)),
     dict=True)[0][oscillator.angular_frequency])
 
 # 6. Derive period from frequency
 _period_law = period_definition.law.subs(period_definition.angular_frequency,
     angular_frequency_solved)
-_period_solved = solve(_period_law, period_definition.period, dict=True)[0][period_definition.period]
+_period_solved = solve(_period_law, period_definition.period,
+    dict=True)[0][period_definition.period]
 ## Square roots fail to compare with each other. Raise both parts to power of 2 before checking for equality.
 assert expr_equals(_period_solved**2, law.rhs**2)
 

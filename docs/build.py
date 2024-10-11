@@ -53,33 +53,37 @@ def get_parser() -> argparse.ArgumentParser:
         default="docs",
         help="directory where conf.py file is stored")
 
-    parser.add_argument("-q",
+    parser.add_argument(
+        "-q",
         "--quiet",
         action="store_true",
         dest="quiet",
         help="suppress rST files generation text",
-        )
+    )
 
-    parser.add_argument("-R",
+    parser.add_argument(
+        "-R",
         "--rst-only",
         action="store_true",
         dest="rst_only",
         help="only generate rST files and suppress HTML generation",
-        )
-    
-    parser.add_argument("-W"
+    )
+
+    parser.add_argument(
+        "-W"
         "--wipe-generated",
         action="store_true",
         dest="wipe_generated",
         help="remove all generated rST files prior to the build",
-        )
-    
-    parser.add_argument("-B",
+    )
+
+    parser.add_argument(
+        "-B",
         "--build_only",
         action="store_true",
         dest="build_only",
         help="do not generate rST files and only build HTML using the current ones",
-        )
+    )
 
     return parser
 
@@ -105,7 +109,7 @@ def main(argv: Sequence[str] = ()) -> None:
         # Generate new rST files
 
         if args.wipe_generated:
-            shutil.rmtree(args.generated_dir)
+            shutil.rmtree(args.generated_dir, ignore_errors=True)
 
         # Generate Symplyphysics rst files
         generate_laws_docs(args.laws_source_dir, args.generated_dir, args.exclude_dirs, args.quiet)

@@ -1,6 +1,5 @@
 from sympy import (Eq, solve, cos)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output, angle_type)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, angle_type)
 
 # Description
 ## There is an oscillatory circuit with alternating current. Then the energy of the electric field will depend on the inductance,

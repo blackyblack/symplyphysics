@@ -10,7 +10,8 @@ Speed of electromagnetic wave propagation depends on the refractive index of the
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, dimensionless, validate_input, validate_output, quantities)
+from symplyphysics import (units, Quantity, Symbol, dimensionless, validate_input, validate_output,
+    quantities)
 
 wave_speed = Symbol("wave_speed", units.velocity)
 """

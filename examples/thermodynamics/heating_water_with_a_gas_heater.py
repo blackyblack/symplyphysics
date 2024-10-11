@@ -69,8 +69,7 @@ energy_to_heating_water_value = thermal_energy_law.law.subs({
     thermal_energy_law.temperature_change: temperature_water - temperature_start,
 }).rhs
 
-mass_of_gas_equation = molar_qty_law.law.subs(
-    {molar_qty_law.molar_quantity: molar_mass_of_methane})
+mass_of_gas_equation = molar_qty_law.law.subs({molar_qty_law.molar_quantity: molar_mass_of_methane})
 mole_count_value = solve(mass_of_gas_equation, molar_qty_law.amount_of_substance,
     dict=True)[0][molar_qty_law.amount_of_substance]
 

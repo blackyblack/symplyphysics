@@ -23,8 +23,8 @@ the area of the coil's contour.
 """
 
 from sympy import (Eq, solve, sin)
-from symplyphysics import (Quantity, SymbolNew, validate_input,
-    validate_output, dimensionless, symbols)
+from symplyphysics import (Quantity, SymbolNew, validate_input, validate_output, dimensionless,
+    symbols)
 
 electromotive_force = symbols.electromotive_force
 """
@@ -57,8 +57,8 @@ Time.
 """
 
 law = Eq(
-    electromotive_force,
-    -1 * coil_turn_count * magnetic_flux_density * contour_area * angular_frequency * sin(angular_frequency * time))
+    electromotive_force, -1 * coil_turn_count * magnetic_flux_density * contour_area *
+    angular_frequency * sin(angular_frequency * time))
 """
 :laws:symbol::
 

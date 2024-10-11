@@ -6,8 +6,8 @@ Symbols of physical quantities related to chemistry.
 """
 
 from sympy.physics import units
-from ..core.dimensions import dimensionless
-from ..core.symbols.symbols import SymbolNew
+from symplyphysics.core.dimensions import dimensionless
+from symplyphysics.core.symbols.symbols import SymbolNew
 
 mass_fraction = SymbolNew("w", dimensionless)
 """

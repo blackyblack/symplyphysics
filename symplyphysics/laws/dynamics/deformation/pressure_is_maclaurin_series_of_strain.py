@@ -57,12 +57,19 @@ strain = symbols.engineering_normal_strain
 
 law = Eq(
     pressure,
-    young_modulus * strain + second_coefficient * strain**2 + third_coefficient * strain**3 + O(strain**4),
+    young_modulus * strain + second_coefficient * strain**2 + third_coefficient * strain**3 +
+    O(strain**4),
 )
 """
+.. only:: comment
+
+    Big O should be evaluated by SymPy
+
 :laws:symbol::
 
 :laws:latex::
+
+:laws:sympy-eval::
 """
 
 

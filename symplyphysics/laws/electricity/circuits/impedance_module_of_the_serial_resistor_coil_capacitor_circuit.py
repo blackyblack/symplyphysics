@@ -1,6 +1,5 @@
 from sympy import (Eq, solve, sqrt, Idx, expand)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output, global_index)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, global_index)
 from symplyphysics.core.expr_comparisons import expr_equals
 
 from symplyphysics.laws.electricity.circuits import capacitor_impedance_from_capacitive_reactance as capacitor_impedance_law
@@ -49,7 +48,8 @@ _serial_law_applied = serial_law.law.subs(global_index, _local_index)
 _serial_law_applied = _serial_law_applied.doit()
 _circuit_impedance_derived = solve(_serial_law_applied, serial_law.total_impedance,
     dict=True)[0][serial_law.total_impedance]
-for i, v in enumerate((resistance_resistor, _coil_impedance_derived, _capacitive_impedance_derived)):
+for i, v in enumerate(
+    (resistance_resistor, _coil_impedance_derived, _capacitive_impedance_derived)):
     _circuit_impedance_derived = _circuit_impedance_derived.subs(serial_law.impedance[i + 1], v)
 
 assert expr_equals(abs(_circuit_impedance_derived), expand(law.rhs))

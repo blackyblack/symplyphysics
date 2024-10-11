@@ -44,13 +44,17 @@ from symplyphysics.laws.kinematics import (
     speed_via_constant_acceleration_and_time as acceleration_def,
 )
 
-fuel_consumption_rate = clone_as_symbol(symbols.mass_flow_rate, display_symbol="R", display_latex="R")
+fuel_consumption_rate = clone_as_symbol(symbols.mass_flow_rate,
+    display_symbol="R",
+    display_latex="R")
 """
 The rate of fuel consumption, or :symbols:`mass_flow_rate` of exhaust. See :ref:`Note <rate_note>`
 for the definition.
 """
 
-relative_speed = clone_as_symbol(symbols.speed, display_symbol="v_rel", display_latex="v_\\text{rel}")
+relative_speed = clone_as_symbol(symbols.speed,
+    display_symbol="v_rel",
+    display_latex="v_\\text{rel}")
 """
 The :symbols:`speed` of the rocket relative to its products.
 """

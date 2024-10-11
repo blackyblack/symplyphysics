@@ -1,7 +1,6 @@
 from sympy import (Eq, solve)
 from sympy.physics.units import magnetic_constant
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output, dimensionless)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless)
 
 # Description
 ## The basic characteristic of a coil is its inductance - the ability of the coil to accumulate energy as magnetic field.

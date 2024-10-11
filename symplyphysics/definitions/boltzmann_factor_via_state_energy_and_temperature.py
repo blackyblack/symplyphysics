@@ -38,7 +38,8 @@ equilibrium_temperature = symbols.temperature
 Equilibrium :symbols:`temperature` of the system.
 """
 
-definition = Eq(boltzmann_factor,
+definition = Eq(
+    boltzmann_factor,
     exp(-1 * energy_of_state / (quantities.boltzmann_constant * equilibrium_temperature)))
 """
 :laws:symbol::

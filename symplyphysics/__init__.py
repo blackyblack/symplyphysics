@@ -2,7 +2,6 @@ from sympy.physics import units
 from sympy.physics.units.systems import SI
 from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
 from .core import errors
-from .core.functions import log, sqrt
 from .core.dimensions import dimensionless
 from .core.symbols.quantities import Quantity, subs_list
 from .core.convert import convert_to, convert_to_float, convert_to_si
@@ -19,9 +18,6 @@ from . import symbols
 from . import quantities
 
 __all__ = [
-    # functions
-    "log",
-    "sqrt",
     # errors
     "errors",
     # units
@@ -38,7 +34,7 @@ __all__ = [
     "subs_list",
     "clone_as_symbol",
     "SymbolIndexed",
-    "global_index",    
+    "global_index",
     "clone_as_function",
     "FunctionNew",
     "SymbolNew",

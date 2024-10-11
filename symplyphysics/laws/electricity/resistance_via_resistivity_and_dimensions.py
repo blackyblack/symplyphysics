@@ -16,8 +16,7 @@ property of the material and does not depend on its geometry.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (Quantity, validate_input,
-    validate_output, symbols)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols)
 
 resistance = symbols.electrical_resistance
 """

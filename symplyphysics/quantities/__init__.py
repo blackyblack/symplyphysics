@@ -8,13 +8,13 @@ Contains useful physical constants. Fundamental constants can be also found in `
 """
 
 from sympy.physics import units
-from ..core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.quantities import Quantity
 
 standard_conditions_temperature = Quantity(273.15 * units.kelvin,
     display_symbol="t_std",
     display_latex="t_\\text{std}")
 """
-Zero Celsius degrees. The :attr:`~symplyphysics.symbols.temperature` at which water freezes.
+Zero Celsius degrees. The :symbols:`temperature` at which water freezes.
 It is also temperature for Standard Temperature and Pressure (STP)
 """
 
@@ -22,14 +22,14 @@ standard_laboratory_temperature = Quantity(298 * units.kelvin,
     display_symbol="t_lab",
     display_latex="t_\\text{lab}")
 """
-Approximately 25 Celsius degrees. Commonly used :attr:`~symplyphysics.symbols.temperature` for tabulation purposes.
+Approximately 25 Celsius degrees. Commonly used :symbols:`temperature` for tabulation purposes.
 """
 
 electron_rest_mass = Quantity(9.1093837015e-31 * units.kilogram,
     display_symbol="m_e",
     display_latex="m_\\text{e}")
 """
-:attr:`~symplyphysics.symbols.mass` of stationary electron
+:symbols:`mass` of stationary electron
 """
 
 bohr_radius = Quantity(0.529e-10 * units.meter, display_symbol="a0", display_latex="a_0")
@@ -48,7 +48,7 @@ a free atom in its basic energy state to infinity.
 
 solar_mass = Quantity(1.9884e30 * units.kilogram, display_symbol="M_Sun", display_latex="M_\\odot")
 r"""
-The solar :attr:`~symplyphysics.symbols.mass` is a standard unit of mass in astronomy approximately equal to the mass
+The solar :symbols:`mass` is a standard unit of mass in astronomy approximately equal to the mass
 of the Sun. The relative uncertainty of the measurement is :math:`4 \cdot 10^{-5}`.
 """
 
@@ -56,11 +56,13 @@ earth_mass = Quantity(5.9722e24 * units.kilogram,
     display_symbol="M_Earth",
     display_latex="M_\\oplus")
 """
-The Earth :attr:`~symplyphysics.symbols.mass` is a standard unit of mass in astronomy equal to the mass of the planet 
+The Earth :symbols:`mass` is a standard unit of mass in astronomy equal to the mass of the planet 
 Earth. The relative uncertainty of the measurement is :math:`10^{-4}`.
 """
 
-boltzmann_constant = Quantity(units.boltzmann_constant, display_symbol="k_B", display_latex="k_\\text{B}")
+boltzmann_constant = Quantity(units.boltzmann_constant,
+    display_symbol="k_B",
+    display_latex="k_\\text{B}")
 """
 The Boltzmann constant is the proportionality factor that relates the average relative thermal energy of particles
 in a gas with the thermodynamic temperature of the gas.
@@ -70,7 +72,7 @@ molar_gas_constant = Quantity(units.molar_gas_constant, display_symbol="R")
 """
 The gas constant is the constant of proportionality that relates the energy scale in physics to the temperature
 scale and the scale used for amount of substance.
-It is molar equivalent to the :attr:`~symplyphysics.quantities.boltzmann_constant`
+It is molar equivalent to the :attr:`~boltzmann_constant`
 """
 
 speed_of_light = Quantity(units.speed_of_light, display_symbol="c")
@@ -78,7 +80,8 @@ speed_of_light = Quantity(units.speed_of_light, display_symbol="c")
 The speed of light in vacuum is a universal physical constant that is exactly equal to 299,792,458 metres per second.
 """
 
-vacuum_permittivity = Quantity(units.vacuum_permittivity,
+vacuum_permittivity = Quantity(
+    units.vacuum_permittivity,
     display_symbol="epsilon_0",
     display_latex="\\varepsilon_0",
 )
@@ -124,14 +127,15 @@ acceleration_due_to_gravity = Quantity(units.acceleration_due_to_gravity, displa
 A conventional standard value of the gravitational acceleration at Earth's surface.
 """
 
-stefan_boltzmann_constant = Quantity(units.stefan_boltzmann_constant, display_symbol="sigma", display_latex="\\sigma")
+stefan_boltzmann_constant = Quantity(units.stefan_boltzmann_constant,
+    display_symbol="sigma",
+    display_latex="\\sigma")
 """
 The **Stefan—Boltzmann constant** is the constant of proportionality between radiant exitance and black body's temperature
 in the Stefan—Boltzmann law.
 """
 
-richardson_constant = Quantity(
-    120.17 * (units.ampere / units.kelvin**2 / units.centimeter**2),
+richardson_constant = Quantity(120.17 * (units.ampere / units.kelvin**2 / units.centimeter**2),
     display_symbol="a")
 """
 Constant of proportionality proposed by Richardson to describe the law of thermionic emission.
@@ -140,7 +144,6 @@ Constant of proportionality proposed by Richardson to describe the law of thermi
 
 #. `Richardson's law <https://en.wikipedia.org/wiki/Thermionic_emission#Richardson's_law>`__.
 """
-
 
 __all__ = [
     "standard_conditions_temperature",

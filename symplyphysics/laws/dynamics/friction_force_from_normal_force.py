@@ -15,9 +15,7 @@ from symplyphysics import (
     validate_output,
 )
 
-friction_force = clone_as_symbol(symbols.force,
-    display_symbol="F_fr",
-    display_latex="F_\\text{fr}")
+friction_force = clone_as_symbol(symbols.force, display_symbol="F_fr", display_latex="F_\\text{fr}")
 """
 The friction :symbols:`force`.
 """
@@ -48,8 +46,7 @@ Latex:
 
 @validate_input(friction_coefficient_=friction_coefficient, normal_reaction_=normal_force)
 @validate_output(friction_force)
-def calculate_friction_force(friction_coefficient_: float,
-    normal_reaction_: Quantity) -> Quantity:
+def calculate_friction_force(friction_coefficient_: float, normal_reaction_: Quantity) -> Quantity:
     result_expr = solve(law, friction_force, dict=True)[0][friction_force]
     friction_force_applied = result_expr.subs({
         friction_coefficient: friction_coefficient_,

@@ -36,6 +36,7 @@ from symplyphysics import (
     Vector,
 )
 
+
 def electric_flux_law(
     electric_field_: Vector,
     area_: Vector,
