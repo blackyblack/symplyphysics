@@ -6,9 +6,6 @@ A prism, an optical prism, is a body made of a homogeneous material transparent 
 bounded by flat reflecting and refractive surfaces located at strictly defined angles to each other.
 With a small angle of incidence of the incoming beam, the angle of deflection of the beam depends only
 on the angle between the faces of the prism and the refractive index of the prism.
-There is a ray falling on the prism and a ray coming out of the prism. Let's continue these rays inside
-the prism. Then the angle of intersection of these rays, looking towards the output beam, will be called
-the angle of deviation.
 
 **Conditions:**
 
@@ -33,7 +30,11 @@ from symplyphysics import (
 
 deviation_angle = clone_as_symbol(symbols.angle, display_symbol="b", display_latex="b")
 """
-:symbols:`angle` deviation in the prism.
+:symbols:`angle` of deviation in the prism.
+
+Imagine a ray falling on the prism and a ray coming out of the prism. Let's continue these rays inside
+the prism. Then the angle of intersection of these rays, looking towards the output beam, will be called
+the angle of deviation.
 """
 
 face_angle = clone_as_symbol(symbols.angle, display_symbol="a", display_latex="a")

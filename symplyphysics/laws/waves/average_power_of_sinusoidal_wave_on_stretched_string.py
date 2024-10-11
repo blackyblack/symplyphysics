@@ -29,7 +29,7 @@ string_linear_density = symbols.linear_density
 :symbols:`linear_density` of the string.
 """
 
-wave_phase_velocity = symbols.phase_speed
+phase_speed = symbols.phase_speed
 """
 :symbols:`phase_speed` of the wave.
 """
@@ -46,7 +46,7 @@ Amplitude of the wave. See :symbols:`distance`.
 
 law = Eq(
     wave_average_power,
-    string_linear_density * wave_phase_velocity * wave_angular_frequency**2 * wave_amplitude**2 / 2,
+    string_linear_density * phase_speed * wave_angular_frequency**2 * wave_amplitude**2 / 2,
 )
 r"""
 :code:`P = 1/2 * mu * v * w^2 * u_max^2`
@@ -59,20 +59,20 @@ Latex:
 
 @validate_input(
     string_linear_density_=string_linear_density,
-    wave_phase_velocity_=wave_phase_velocity,
+    phase_speed_=phase_speed,
     wave_angular_frequency_=wave_angular_frequency,
     wave_amplitude_=wave_amplitude,
 )
 @validate_output(wave_average_power)
 def calculate_average_power(
     string_linear_density_: Quantity,
-    wave_phase_velocity_: Quantity,
+    phase_speed_: Quantity,
     wave_angular_frequency_: Quantity,
     wave_amplitude_: Quantity,
 ) -> Quantity:
     result = law.rhs.subs({
         string_linear_density: string_linear_density_,
-        wave_phase_velocity: wave_phase_velocity_,
+        phase_speed: phase_speed_,
         wave_angular_frequency: wave_angular_frequency_,
         wave_amplitude: wave_amplitude_,
     })

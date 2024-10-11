@@ -38,15 +38,7 @@ Equilibrium :symbols:`temperature` of the ensemble.
 
 law = Eq(spectral_energy_density, (8 * pi * planck * radiation_frequency**3 / speed_of_light**3) /
     (exp(planck * radiation_frequency / (boltzmann_constant * equilibrium_temperature)) - 1))
-r"""
-.. only:: comment
-
-    :code:`u_nu = (8 * pi * h * nu^3 / c^3) / (exp(h * nu / (k_B * T)) - 1)`
-
-    Latex:
-        .. math::
-            u_\nu = \frac{8 \pi h \nu^3}{c^3} \frac{1}{\exp \left( \frac{h \nu}{k_\text{B} T} \right) - 1}
-
+"""
 :laws:symbol::
 
 :laws:latex::

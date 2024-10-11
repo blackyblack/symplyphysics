@@ -44,6 +44,10 @@ law = Eq(
     quantities.rydberg_frequency * ((1 / lower_principal_quantum_number**2) -
     (1 / higher_principal_quantum_number**2)))
 """
+.. only:: comment
+
+    For now the auto-generation doesn't handle powers correctly here.
+
 :code:`f = R_H * (1 / n_1^2 - 1 / n_2^2)`
 
 :laws:latex::
