@@ -7,7 +7,7 @@ oscillates about a given pivot point. The period of its oscillations depends on 
 mass and the distance between the pivot and the center of mass of the pendulum.
 """
 
-from sympy import Eq, pi, solve, Derivative
+from sympy import Eq, pi, solve, Derivative, sqrt
 from symplyphysics import (
     Quantity,
     validate_input,
@@ -16,7 +16,6 @@ from symplyphysics import (
     clone_as_symbol,
     clone_as_function,
     quantities,
-    sqrt,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import (

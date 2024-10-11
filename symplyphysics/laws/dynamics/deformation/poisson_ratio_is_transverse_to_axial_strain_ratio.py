@@ -23,7 +23,7 @@ from symplyphysics import (
 )
 
 poisson_ratio = symbols.poisson_ratio
-r"""
+"""
 :symbols:`poisson_ratio` of the material of the deformed body.
 """
 
@@ -32,7 +32,7 @@ transverse_strain = clone_as_symbol(
     display_symbol="e_transverse",
     display_latex="e_\\text{transverse}",
 )
-r"""
+"""
 :symbols:`strain` in the transverse (lateral) direction relative to the deforming force.
 """
 
@@ -41,7 +41,7 @@ axial_strain = clone_as_symbol(
     display_symbol="e_axial",
     display_latex="e_\\text{axial}",
 )
-r"""
+"""
 :symbols:`strain` in the axial direction, i.e. parallel to the deforming force.
 """
 

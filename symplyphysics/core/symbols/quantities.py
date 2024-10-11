@@ -1,6 +1,6 @@
 from functools import partial
 from typing import Any, Optional, Self, Sequence
-from sympy import S, Basic, Expr, sympify, Abs, Mul as sym_mul
+from sympy import S, Basic, Expr, sympify, Abs
 from sympy.physics.units import Dimension, Quantity as SymQuantity
 from sympy.physics.units.systems.si import SI
 from sympy.multipledispatch import dispatch
@@ -56,11 +56,6 @@ class Quantity(DimensionSymbolNew, SymQuantity):  # pylint: disable=too-many-anc
 
     def _eval_Abs(self) -> Self:
         return self.__class__(Abs(self.scale_factor), dimension=self.dimension)
-
-    # TODO: extract to super class. Probably should have the same for other operations,
-    #       i.e. div, truediv, mod and so on
-    def __mul__(self, expr: Expr) -> Expr:
-        return sym_mul(self, expr, evaluate=False)
 
 
 # Allows for some SymPy comparisons, eg Piecewise function

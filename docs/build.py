@@ -105,7 +105,7 @@ def main(argv: Sequence[str] = ()) -> None:
         # Generate new rST files
 
         if args.wipe_generated:
-            shutil.rmtree(args.generated_dir)
+            shutil.rmtree(args.generated_dir, ignore_errors=True)
 
         # Generate Symplyphysics rst files
         generate_laws_docs(args.laws_source_dir, args.generated_dir, args.exclude_dirs, args.quiet)

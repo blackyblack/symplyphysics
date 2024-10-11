@@ -36,7 +36,7 @@ distance = symbols.distance
 """
 
 law = Eq(electrostatic_force,
-    1 / (4 * pi * quantities.vacuum_permittivity) * first_charge * second_charge / (distance**2))
+    1 / (4 * pi * quantities.vacuum_permittivity) * (first_charge * second_charge / distance**2))
 """
 :laws:symbol::
 

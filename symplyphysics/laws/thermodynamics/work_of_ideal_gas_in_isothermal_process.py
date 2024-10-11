@@ -1,4 +1,4 @@
-r"""
+"""
 Work of ideal gas in isothermal process
 =======================================
 
@@ -16,7 +16,7 @@ To do this, the heat capacity of the external environment must be large enough, 
 #. The temperature of the gas stays constant during the expansion.
 """
 
-from sympy import Eq, solve, Symbol as SymSymbol
+from sympy import Eq, solve, Symbol as SymSymbol, log
 from symplyphysics import (
     Quantity,
     validate_input,
@@ -24,7 +24,6 @@ from symplyphysics import (
     symbols,
     quantities,
     clone_as_symbol,
-    log,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import work_is_integral_of_pressure_over_volume as work_law

@@ -1,10 +1,8 @@
 import ast
 from dataclasses import dataclass
 from enum import Enum
-import importlib
 from typing import Any, Optional
 from sympy.physics.units.systems.si import SI
-
 from ..core.symbols.symbols import DimensionSymbolNew, FunctionNew
 
 
@@ -61,6 +59,9 @@ def _docstring_clean(doc: str) -> str:
         if not doc.endswith("\n"):
             break
         doc = doc.removesuffix("\n")
+    doc = doc.replace("\r\n:laws:sympy-eval::\r\n", "")
+    doc = doc.replace("\n:laws:sympy-eval::\n", "")
+    doc = doc.replace(":laws:sympy-eval::", "")
 
     return doc
 
@@ -118,19 +119,13 @@ def find_description(content: str) -> Optional[str]:
     return "\n".join(content_lines)
 
 
-def find_members_and_functions(module_name: str) -> list[MemberWithDoc | FunctionWithDoc]:
+def find_members_and_functions(content: ast.Module) -> list[MemberWithDoc | FunctionWithDoc]:
     # pylint: disable=too-many-branches
     law_functions: list[FunctionWithDoc] = []
     law_members: list[str] = []
     current_member: Optional[str] = None
     docstrings: dict[str, str] = {}
-    module = importlib.import_module(module_name)
-    if module.__file__ is None:
-        print(f"Unable to read {module} contents")
-        return []
-    with open(module.__file__, "r", encoding="utf-8") as f:
-        package_content = f.read()
-    content = ast.parse(package_content)
+
     for e in content.body:
         if isinstance(e, ast.FunctionDef):
             doc = ast.get_docstring(e)
@@ -155,13 +150,16 @@ def find_members_and_functions(module_name: str) -> list[MemberWithDoc | Functio
                 e.value, ast.Constant):
             docstrings[current_member] = e.value.value
             continue
+    compiled = compile(content, "string", "exec")
+    ctx: dict[str, Any] = dict()
+    exec(compiled, {}, ctx)    # pylint: disable=exec-used
     result: list[MemberWithDoc | FunctionWithDoc] = []
     for v in law_members:
         doc = docstrings.get(v)
         if doc is None:
             continue
         doc = _docstring_clean(doc)
-        sym = getattr(module, v)
+        sym = ctx[v]
         law_symbol = None
         if isinstance(sym, DimensionSymbolNew):
             dimension = "dimensionless" if SI.get_dimension_system().is_dimensionless(

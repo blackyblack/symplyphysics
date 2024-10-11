@@ -38,7 +38,7 @@ distance = symbols.distance
 :symbols:`distance` to the charge.
 """
 
-law = Eq(electric_field_strength, 1 / (4 * pi * quantities.vacuum_permittivity) * charge / distance**2)
+law = Eq(electric_field_strength, 1 / (4 * pi * quantities.vacuum_permittivity) * (charge / distance**2))
 """
 :laws:symbol::
 

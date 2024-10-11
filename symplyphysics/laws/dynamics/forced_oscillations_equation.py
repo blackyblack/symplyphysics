@@ -43,7 +43,7 @@ natural_angular_frequency = clone_as_symbol(
     display_symbol="w_0",
     display_latex="\\omega_0",
 )
-r"""
+"""
 The natural :symbols:`angular_frequency` of the oscillator.
 """
 
@@ -53,12 +53,12 @@ The amplitude of the driving :symbols:`force`.
 """
 
 driving_angular_frequency = symbols.angular_frequency
-r"""
+"""
 The :symbols:`angular_frequency` of the driving force.
 """
 
 driving_phase_lag = symbols.phase_shift
-r"""
+"""
 The :symbols:`phase_shift` of the driving force.
 """
 

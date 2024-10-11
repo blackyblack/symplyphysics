@@ -20,7 +20,7 @@ The p-n junction has a potential barrier preventing the movement of charge carri
 #. `Size of depleting region <https://en.wikipedia.org/wiki/P%E2%80%93n_junction#Size_of_depletion_region>`_.
 """
 
-from sympy import Eq, solve
+from sympy import Eq, solve, log
 from symplyphysics import (
     symbols,
     Quantity,
@@ -28,7 +28,6 @@ from symplyphysics import (
     validate_output,
     quantities,
     clone_as_symbol,
-    log,
 )
 
 equilibrium_voltage_difference = clone_as_symbol(
@@ -64,7 +63,7 @@ charge_carriers_concentration = symbols.number_density
 """
 
 temperature = symbols.temperature
-r"""
+"""
 :symbols:`temperature` of the semiconductor.
 """
 
@@ -75,7 +74,7 @@ Magnitude of the electron :symbols:`charge`.
 
 law = Eq(equilibrium_voltage_difference, (quantities.boltzmann_constant * temperature / charge_electron) *
     log(donor_concentration * acceptor_concentration / charge_carriers_concentration**2))
-r"""
+"""
 :laws:symbol::
 
 :laws:latex::

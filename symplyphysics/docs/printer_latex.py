@@ -2,12 +2,33 @@
 Symplyphysics latex printer
 """
 
+import re
 from typing import Any
-from sympy import E
+from sympy import E, S, Expr, Mod, Mul
 from sympy.printing.latex import LatexPrinter, accepted_latex_functions
 from sympy.core.function import AppliedUndef
+from sympy.simplify import fraction
 from ..core.symbols.symbols import DimensionSymbolNew
 
+
+_between_two_numbers_p = (
+    re.compile(r"[0-9][} ]*$"),  # search
+    re.compile(r"(\d|\\frac{\d+}{\d+})"),  # match
+)
+
+def _discard_minus_sign(expr: Expr) -> tuple[Expr, bool]:
+    if not isinstance(expr, Mul):
+        if expr.could_extract_minus_sign():
+            return (-expr, True)
+        return (expr, False)
+    args = []
+    sign = False
+    for a in expr.args:
+        a, arg_sign = _discard_minus_sign(a)
+        args.append(a)
+        if arg_sign:
+            sign = not sign
+    return (Mul(*args, evaluate=False), sign)
 
 class SymbolLatexPrinter(LatexPrinter):
     """
@@ -16,6 +37,7 @@ class SymbolLatexPrinter(LatexPrinter):
     language = "Symplyphysics"
 
     def __init__(self, settings: Any = None) -> None:
+        settings["order"] = "none"
         LatexPrinter.__init__(self, settings)
 
     # pylint: disable-next=invalid-name
@@ -121,7 +143,7 @@ class SymbolLatexPrinter(LatexPrinter):
             not self._needs_function_brackets(expr.args[0])
         args_str = self._print(expr.args[0])
         name = f"{args_str}" if can_fold_brackets else f"\\left({args_str} \\right)"
-        tex = r"\exp{%s}" % name
+        tex = f"\\exp{{{name}}}"
         return self._do_exponent(tex, exp)
 
     # pylint: disable-next=invalid-name
@@ -130,16 +152,112 @@ class SymbolLatexPrinter(LatexPrinter):
         # expr.args[0] contains indexed symbol with index applied
         # expr.args[0].args[0] contains just indexed symbol
         symbol, index = expr.args[0].args
-        return rf"\sum_{self._print(index)} {self._print(symbol)}"
-    
-    def _print_log(self, expr: Any) -> str:
-        value, base = expr.args
+        return f"\\sum_{self._print(index)} {self._print(symbol)}"
+
+    def _print_log(self, expr: Any, _exp: Any=None) -> str:
+        value, base = (expr.args[0], expr.args[1]) if len(expr.args) > 1 else (expr.args[0], E)
         str_value = self._print(value)
         str_base = self._print(base)
-        head = r"\log" if (base is None or base == E) else rf"\log_{{{str_base}}}"
+        head = "\\log" if (base is None or base == E) else f"\\log_{{{str_base}}}"
         can_fold_brackets = not self._needs_function_brackets(value)
-        tail = str_value if can_fold_brackets else rf"\left( {str_value} \right)"
+        tail = str_value if can_fold_brackets else f"\\left( {str_value} \\right)"
         return f"{head} {tail}"
+
+    def _print_div(self, numer: Expr, denom: Expr) -> str:
+        snumer = self._print_Mul(numer) if numer.is_Mul else str(self._print(numer))
+        sdenom = self._print_Mul(denom) if denom.is_Mul else str(self._print(denom))
+        tex = f"\\frac{{{snumer}}}{{{sdenom}}}"
+        return tex
+
+    def _print_Mul(self, expr: Mul) -> str:
+        separator: str = self._settings["mul_symbol_latex"]
+        numbersep: str = self._settings["mul_symbol_latex_numbers"]
+
+        def convert_args(expr: Expr) -> str:
+            if not expr.is_Mul:
+                return str(self._print(expr))
+
+            args = expr.args
+            _tex = last_term_tex = ""
+
+            if len(args) == 1 and args[0] == S.One:
+                return "1"
+            # Filter all 1 multiplications
+            args = [a for a in args if a != S.One]
+
+            for i, term in enumerate(args):
+                term_tex = self._print(term)
+                if self._needs_mul_brackets(term, first=i == 0, last=i == len(args) - 1):
+                    term_tex = f"\\left({term_tex}\\right)"
+
+                if  _between_two_numbers_p[0].search(last_term_tex) and \
+                    _between_two_numbers_p[1].match(term_tex):
+                    # between two numbers
+                    _tex += numbersep
+                elif _tex:
+                    _tex += separator
+
+                _tex += term_tex
+                last_term_tex = term_tex
+            return _tex
+
+        tex = ""
+        if expr.could_extract_minus_sign():
+            expr = -expr
+            tex = "- "
+
+        n, d = fraction(expr, exact=True)
+
+        n_n, n_d = fraction(n, exact=True)
+        d_n, d_d = fraction(d, exact=True)
+
+        # double fraction
+        if n_d != S.One and d != S.One:
+            tex += convert_args(expr)
+            return tex
+
+        # no denominator
+        if n_d == S.One:
+            if d != S.One:
+                return self._print_div(n_n, d)
+            tex += convert_args(n_n)
+            return tex
+        tex = self._print_div(n_n, n_d)
+        tex2 = ""
+        if d_n == S.One:
+            tex2 = convert_args(d_d)
+        else:
+            tex2 = self._print_div(d_d, d_n)
+        return tex + separator + tex2
+
+    def _needs_add_brackets(self, expr: Expr) -> bool:
+        """
+        Returns True if the expression needs to be wrapped in brackets when
+        printed as part of an Add, False otherwise.  This is False for most
+        things.
+        """
+        if expr.is_Relational:
+            return True
+        if any(expr.has(x) for x in (Mod,)):
+            return True
+        return False
+
+    def _print_Add(self, expr: Expr, _order: bool=False) -> str:
+        tex = ""
+        for i, term in enumerate(expr.args):
+            if i == 0:
+                pass
+            elif term.could_extract_minus_sign():
+                tex += " - "
+                term = -term
+            else:
+                tex += " + "
+            term_tex = self._print(term)
+            if self._needs_add_brackets(term):
+                term_tex = f"\\left({term_tex}\\right)"
+            tex += term_tex
+
+        return tex
 
 
 def latex_str(expr: Any, **settings: Any) -> str:

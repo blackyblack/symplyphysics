@@ -14,14 +14,13 @@ inter-particle spacing. Otherwise, quantum effects must be taken into account.
 #. :quantity_notation:`boltzmann_constant`.
 """
 
-from sympy import Eq, pi
+from sympy import Eq, pi, sqrt
 from symplyphysics import (
     quantities,
     Quantity,
     validate_input,
     validate_output,
     symbols,
-    sqrt,
 )
 
 thermal_wavelength = symbols.wavelength
@@ -46,7 +45,6 @@ definition = Eq(thermal_wavelength,
 
 :laws:latex::
 """
-
 
 @validate_input(
     mass_=mass,

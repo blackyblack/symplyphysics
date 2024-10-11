@@ -12,6 +12,7 @@ from sympy import Eq
 from symplyphysics import (units, Quantity, SymbolNew, validate_input,
     validate_output)
 
+
 voltage = SymbolNew("V", units.voltage)
 """
 Voltage between two points.

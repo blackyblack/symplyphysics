@@ -45,7 +45,7 @@ distance = symbols.distance
 :symbols:`distance` to dipole.
 """
 
-law = Eq(electric_field_strength, 1 / (2 * pi * quantities.vacuum_permittivity) * electric_dipole_moment / distance**3)
+law = Eq(electric_field_strength, 1 / (2 * pi * quantities.vacuum_permittivity) * (electric_dipole_moment / distance**3))
 """
 :laws:symbol::
 

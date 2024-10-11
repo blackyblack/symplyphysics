@@ -5,7 +5,7 @@ Absolute magnitude of stars from apparent magnitude and distance
 Absolute magnitude can be calculated using apparent magnitude and distance to the object.
 """
 
-from sympy import Eq, solve
+from sympy import Eq, solve, log
 from symplyphysics import (
     units,
     Quantity,
@@ -14,7 +14,6 @@ from symplyphysics import (
     validate_output,
     dimensionless,
     convert_to_float,
-    log,
 )
 
 absolute_magnitude = SymbolNew("M", dimensionless)

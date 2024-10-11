@@ -8,7 +8,7 @@ Contains useful physical constants. Fundamental constants can be also found in `
 """
 
 from sympy.physics import units
-from ..core.symbols.quantities import Quantity
+from symplyphysics.core.symbols.quantities import Quantity
 
 standard_conditions_temperature = Quantity(273.15 * units.kelvin,
     display_symbol="t_std",

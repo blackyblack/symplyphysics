@@ -3,6 +3,7 @@ import os
 from typing import Optional, Sequence
 from .parse import find_description, find_members_and_functions, find_title
 from .view import print_law, print_package
+from .patch import patch_sympy_evaluate
 
 
 def process_law_package(directory: str, laws: Sequence[str], packages: Sequence[str],
@@ -31,7 +32,9 @@ def process_law_package(directory: str, laws: Sequence[str], packages: Sequence[
     package_name_strip_root = ".".join(package_name.split(".")[1:])
     packages = [p for p in packages if not (p.startswith(".") or p.startswith("_"))]
     packages = [package_name_strip_root + "." + p for p in packages]
-    package_items = find_members_and_functions(package_name)
+
+    package_parsed = patch_sympy_evaluate(package_parsed)
+    package_items = find_members_and_functions(package_parsed)
     package_content = print_package(package_title, package_description, package_items, package_name,
         laws, packages)
 
@@ -70,7 +73,8 @@ def process_law(directory: str, law_filename: str, output_dir: str, quiet: bool)
     if not quiet:
         print(f"Generating rST for law {law_module_name}")
 
-    law_items = find_members_and_functions(law_module_name)
+    law_parsed = patch_sympy_evaluate(law_parsed)
+    law_items = find_members_and_functions(law_parsed)
     doc_content = print_law(law_title, law_description, law_items, law_module_name)
 
     law_module_name_strip_root = ".".join(law_module_name.split(".")[1:])

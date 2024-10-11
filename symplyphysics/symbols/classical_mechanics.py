@@ -7,8 +7,8 @@ Symbols related to classical mechanics.
 
 from sympy.physics import units
 from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
-from ..core.symbols.symbols import SymbolNew
-from ..core.dimensions import dimensionless
+from symplyphysics.core.dimensions import dimensionless
+from symplyphysics.core.symbols.symbols import SymbolNew
 
 force = SymbolNew("F", units.force)
 """
