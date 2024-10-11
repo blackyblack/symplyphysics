@@ -6,8 +6,8 @@ Symbols related to electrodynamics.
 """
 
 from sympy.physics import units
-from ..core.symbols.symbols import SymbolNew
-from ..core.dimensions import dimensionless
+from symplyphysics.core.dimensions import dimensionless
+from symplyphysics.core.symbols.symbols import SymbolNew
 
 admittance = SymbolNew("Y", units.conductance)
 """
@@ -43,7 +43,9 @@ r"""
 over that surface.
 """
 
-absolute_permittivity = SymbolNew("epsilon", units.capacitance / units.length, display_latex="\\varepsilon")
+absolute_permittivity = SymbolNew("epsilon",
+    units.capacitance / units.length,
+    display_latex="\\varepsilon")
 """
 **Absolute permittivity**, or often sometimes **permittivity**, is a measure of the electric polarizability of a dielectric material.
 """

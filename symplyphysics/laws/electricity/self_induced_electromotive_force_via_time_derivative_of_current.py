@@ -7,8 +7,7 @@ the time derivative of current flowing through the circuit.
 """
 
 from sympy import (Eq, Derivative)
-from symplyphysics import (Quantity, validate_input,
-    validate_output, symbols, clone_as_function)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols, clone_as_function)
 from symplyphysics.core.geometry.line import two_point_function, Point2D
 
 electromotive_force = clone_as_function(symbols.electromotive_force, display_symbol="E(t)")
@@ -48,10 +47,7 @@ def calculate_voltage(inductance_: Quantity, current_start_: Quantity, current_e
         Point2D(time_, current_end_),
         time,
     )
-    applied_definition = law.subs({
-        current(time): current_function_,
-        inductance: inductance_
-    })
+    applied_definition = law.subs({current(time): current_function_, inductance: inductance_})
     dsolved = applied_definition.doit()
     result_expr = dsolved.rhs
     return Quantity(result_expr)

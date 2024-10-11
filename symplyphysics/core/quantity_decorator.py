@@ -1,17 +1,22 @@
 import functools
 import inspect
-from typing import Any, Callable, Sequence
+from typing import Any, Callable, Sequence, TypeAlias
 from sympy.physics.units import Quantity as SymQuantity, Dimension
 
 from .symbols.symbols import DimensionSymbol, DimensionSymbolNew, Function, FunctionNew, Symbol, SymbolNew, SymbolIndexedNew
 from .dimensions import assert_equivalent_dimension, ScalarValue
 
+_ValueType: TypeAlias = ScalarValue | SymQuantity | DimensionSymbol | DimensionSymbolNew
 
-def _assert_expected_unit(value: ScalarValue | SymQuantity | DimensionSymbol | DimensionSymbolNew | SymbolIndexedNew |
-    Sequence[ScalarValue | SymQuantity | DimensionSymbol | DimensionSymbolNew | SymbolIndexedNew],
-    expected_units: Dimension | Symbol | Function | SymbolNew | FunctionNew | SymbolIndexedNew |
-    Sequence[Dimension | Symbol | Function | SymbolNew | FunctionNew | SymbolIndexedNew],
-    param_name: str, function_name: str) -> None:
+_UnitType: TypeAlias = Dimension | Symbol | Function | SymbolNew | FunctionNew | SymbolIndexedNew
+
+
+def _assert_expected_unit(
+    value: _ValueType | Sequence[_ValueType],
+    expected_units: _UnitType | Sequence[_UnitType],
+    param_name: str,
+    function_name: str,
+) -> None:
     components: list[ScalarValue | SymQuantity | Dimension] = []
     indexed = isinstance(value, Sequence)
     values = list(value) if isinstance(value, Sequence) else list([value])

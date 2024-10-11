@@ -42,7 +42,9 @@ definition = Eq(quality_factor, resonant_angular_frequency * stored_energy / dis
 """
 
 
-@validate_input(frequency_=resonant_angular_frequency, energy_=stored_energy, power_=dissipated_power)
+@validate_input(frequency_=resonant_angular_frequency,
+    energy_=stored_energy,
+    power_=dissipated_power)
 @validate_output(quality_factor)
 def calculate_quality_factor(frequency_: Quantity, energy_: Quantity, power_: Quantity) -> Quantity:
     result_factor_expr = solve(definition, quality_factor, dict=True)[0][quality_factor]

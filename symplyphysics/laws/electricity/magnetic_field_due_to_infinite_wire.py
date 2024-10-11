@@ -38,7 +38,8 @@ radial_distance = symbols.distance_to_axis
 Radial distance to wire. See :symbols:`distance_to_axis`.
 """
 
-law = Eq(magnetic_flux_density, quantities.vacuum_permeability * current / (2 * pi * radial_distance))
+law = Eq(magnetic_flux_density,
+    quantities.vacuum_permeability * current / (2 * pi * radial_distance))
 """
 :laws:symbol::
 

@@ -22,8 +22,7 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.symbols import clone_as_indexed
 from symplyphysics.laws.electricity import (
-    capacitance_from_charge_and_voltage as _capacitance_law,
-)
+    capacitance_from_charge_and_voltage as _capacitance_law,)
 
 total_capacitance = symbols.capacitance
 """
@@ -49,11 +48,8 @@ law = Eq(total_capacitance, SumIndexed(capacitance[global_index], global_index))
 
 _voltage = sympy_symbols("voltage")
 
-_charge_expr = solve(
-    _capacitance_law.definition, _capacitance_law.charge
-)[0].subs(
-    _capacitance_law.voltage, _voltage
-)
+_charge_expr = solve(_capacitance_law.definition,
+    _capacitance_law.charge)[0].subs(_capacitance_law.voltage, _voltage)
 
 _charge1 = _charge_expr.subs(_capacitance_law.capacitance, capacitance[1])
 _charge2 = _charge_expr.subs(_capacitance_law.capacitance, capacitance[2])

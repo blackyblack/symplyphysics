@@ -14,9 +14,7 @@ class DimensionSymbol:
     _dimension: Dimension
     _display_name: str
 
-    def __init__(self,
-        display_name: str,
-        dimension: Dimension = Dimension(S.One)) -> None:
+    def __init__(self, display_name: str, dimension: Dimension = Dimension(S.One)) -> None:
         self._dimension = dimension
         self._display_name = display_name
 
@@ -116,7 +114,7 @@ class SymbolIndexed(DimensionSymbol, IndexedBase):  # pylint: disable=too-many-a
         display_name = str(self.name) if name_or_symbol is None else str(name_or_symbol)
         super().__init__(display_name, dimension)
 
-    def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
+    def _eval_nseries(self, _x: Any, _n: Any, _logx: Any, _cdir: Any) -> Any:
         pass
 
     def _sympystr(self, p: Printer) -> str:
@@ -185,7 +183,7 @@ class FunctionNew(DimensionSymbolNew, UndefinedFunction):
         *,
         display_latex: Optional[str] = None,
         **_options: Any) -> None:
-        display_name = display_symbol or str(cls.name)  # type: ignore[attr-defined]
+        display_name = display_symbol or str(cls.name)
         super().__init__(display_name, dimension, display_latex=display_latex)
 
     def __repr__(cls) -> str:
@@ -223,7 +221,8 @@ class SymbolPrinter(PrettyPrinter):
         # pylint: disable=too-many-arguments, too-many-positional-arguments
         # optional argument func_name for supplying custom names
         # works only for applied functions
-        func_name = e.func.display_name if isinstance(e.func, (Function, FunctionNew)) else func_name
+        func_name = e.func.display_name if isinstance(e.func,
+            (Function, FunctionNew)) else func_name
         return self._helper_print_function(e.func,
             e.args,
             sort=sort,

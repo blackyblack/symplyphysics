@@ -6,8 +6,8 @@ Symbols related to optics.
 """
 
 from sympy.physics import units
-from ..core.symbols.symbols import SymbolNew
-from ..core.dimensions import dimensionless
+from symplyphysics.core.dimensions import dimensionless
+from symplyphysics.core.symbols.symbols import SymbolNew
 
 relative_refractive_index = SymbolNew("n", dimensionless)
 """

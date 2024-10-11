@@ -1,7 +1,7 @@
 from sympy import Eq, solve, sqrt
 from sympy.physics.units import gravitational_constant
-from symplyphysics import (symbols, units, Quantity, Symbol, print_expression,
-    validate_input, validate_output)
+from symplyphysics import (symbols, units, Quantity, Symbol, print_expression, validate_input,
+    validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 
 from symplyphysics.laws.gravity import gravitational_potential_energy as potential_energy_law

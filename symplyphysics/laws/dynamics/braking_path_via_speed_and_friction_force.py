@@ -33,9 +33,7 @@ speed = symbols.speed
 The :symbols:`speed` of the object.
 """
 
-friction_force = clone_as_symbol(symbols.force,
-    display_symbol="F_fr",
-    display_latex="F_\\text{fr}")
+friction_force = clone_as_symbol(symbols.force, display_symbol="F_fr", display_latex="F_\\text{fr}")
 """
 The friction :symbols:`force` exerted on the object.
 """

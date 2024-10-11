@@ -26,8 +26,7 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_voltage(test_args: Args) -> None:
-    result = rc_node.calculate_capacitor_voltage(test_args.V0, test_args.tau,
-        test_args.T)
+    result = rc_node.calculate_capacitor_voltage(test_args.V0, test_args.tau, test_args.T)
     assert_equal(result, 1.896 * units.volt)
 
 

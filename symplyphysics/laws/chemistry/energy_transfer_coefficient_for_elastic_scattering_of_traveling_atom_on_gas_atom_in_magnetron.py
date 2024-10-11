@@ -1,6 +1,6 @@
 from sympy import Eq, solve
-from symplyphysics import (Quantity, Symbol, validate_input, validate_output,
-    dimensionless, convert_to_float, clone_as_symbol, symbols)
+from symplyphysics import (Quantity, Symbol, validate_input, validate_output, dimensionless,
+    convert_to_float, clone_as_symbol, symbols)
 
 # Description
 ## The traveling atom moves towards the substrate in the magnetron. At the same time, it collides with gas atoms.

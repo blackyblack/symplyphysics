@@ -12,10 +12,7 @@ _symbols_by_module: dict[str, set[str]] = {}
 for _attr in set(dir(symbols)) - set(symbols.__all__):
     _obj = getattr(symbols, _attr)
     _file = getattr(_obj, "__file__", "")
-    if (
-        isinstance(_obj, ModuleType)
-        and Path(symbols.__file__).parent == Path(_file).parent
-    ):
+    if (isinstance(_obj, ModuleType) and Path(symbols.__file__).parent == Path(_file).parent):
         _symbols_by_module[_attr] = set()
         for _sub_attr in dir(_obj):
             _sub_obj = getattr(_obj, _sub_attr)

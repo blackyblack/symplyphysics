@@ -1,7 +1,7 @@
 from sympy import (Eq, solve, pi)
 from sympy.physics.units import magnetic_constant
-from symplyphysics import (symbols, units, Quantity, Symbol,
-    validate_input, validate_output, dimensionless)
+from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output,
+    dimensionless)
 
 # Description
 ## Two parallel wires through which current flows interact with each other.

@@ -39,9 +39,8 @@ damping_ratio = clone_as_symbol(symbols.damping_ratio, positive=True)
 
 definition = Eq(
     Derivative(displacement(time), time, 2) +
-        2 * damping_ratio * undamped_angular_frequency * Derivative(displacement(time), time) +
-        undamped_angular_frequency**2 * displacement(time),
-    0)
+    2 * damping_ratio * undamped_angular_frequency * Derivative(displacement(time), time) +
+    undamped_angular_frequency**2 * displacement(time), 0)
 """
 :laws:symbol::
 

@@ -85,7 +85,7 @@ r"""
 
     `displacement` is a sympy Symbol, therefore auto-generation of formulas is impossible
 
-:code:`q(t) = F / (m * (w0**2 - w**2)) * cos(w * t + phi)`
+:code:`q(t) = F / (m * (w0^2 - w^2)) * cos(w * t + phi)`
 
 Latex:
     .. math::

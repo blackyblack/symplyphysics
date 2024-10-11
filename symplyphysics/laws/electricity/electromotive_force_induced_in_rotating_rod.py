@@ -33,8 +33,7 @@ from symplyphysics.laws.electricity import (
     magnetic_flux_from_induction_and_area as _magnetic_flux_law,
 )
 from symplyphysics.definitions import (
-    angular_speed_is_angular_distance_derivative as _angular_speed_law,
-)
+    angular_speed_is_angular_distance_derivative as _angular_speed_law,)
 
 electromotive_force = symbols.electromotive_force
 """
@@ -75,7 +74,8 @@ _loop_area = length**2 * _angle / 2
 _magnetic_flux = _magnetic_flux_law.law.rhs.subs({
     _magnetic_flux_law.induction: magnetic_flux_density,
     _magnetic_flux_law.area: _loop_area,
-    _magnetic_flux_law.angle: 0,  # the normal to the contour is parallel to the magnetic flux density
+    _magnetic_flux_law.angle:
+        0,  # the normal to the contour is parallel to the magnetic flux density
 })
 
 _emf = _emf_law.law.rhs.subs({

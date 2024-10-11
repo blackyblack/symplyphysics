@@ -10,8 +10,7 @@ efficiency. It is the ratio of real power to apparent power of the circuit.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (Quantity, validate_input,
-    validate_output, symbols, clone_as_symbol)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols, clone_as_symbol)
 
 apparent_power = clone_as_symbol(symbols.power, display_symbol="S", display_latex="S")
 """

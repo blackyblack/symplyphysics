@@ -38,6 +38,7 @@ r"""
 :laws:latex::
 """
 
+
 @validate_input(total_charge_=total_charge)
 @validate_output(total_electric_flux)
 def calculate_total_electric_flux(total_charge_: Quantity) -> Quantity:

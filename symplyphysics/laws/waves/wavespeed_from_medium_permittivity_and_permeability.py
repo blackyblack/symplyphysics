@@ -28,7 +28,8 @@ relative_permeability = symbols.relative_permeability
 :symbols:`relative_permeability` of the medium.
 """
 
-law = Eq(wave_speed, quantities.speed_of_light / sqrt(relative_permittivity * relative_permeability))
+law = Eq(wave_speed,
+    quantities.speed_of_light / sqrt(relative_permittivity * relative_permeability))
 """
 :laws:symbol::
 
