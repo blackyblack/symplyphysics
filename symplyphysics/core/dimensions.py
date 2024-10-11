@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import Any, Callable, TypeAlias
 from sympy import Abs, Expr, S, Derivative, Function as SymFunction, Basic, Min, Number
 from sympy.core.add import Add
@@ -9,6 +11,14 @@ from sympy.physics.units.systems.si import SI
 from .errors import UnitsError
 
 ScalarValue: TypeAlias = Expr | float
+
+
+class AnyDimension(Dimension):
+    def __new__(cls) -> AnyDimension:
+        return super().__new__(cls, "any_dimension")
+
+
+any_dimension = AnyDimension()
 
 
 def _collect_quantity(expr: SymQuantity) -> tuple[Basic, Dimension]:
@@ -136,6 +146,9 @@ def assert_equivalent_dimension(arg: SymQuantity | ScalarValue | Dimension, para
             return
         # infinity can be of any dimension
         if expected_scale_factor == S.Infinity:
+            return
+        # AnyDimension can be of any dimension
+        if isinstance(expected_dimension, AnyDimension):
             return
     #HACK: this allows to treat angle type as dimensionless
     expected_dimension = expected_dimension.subs("angle", S.One)
