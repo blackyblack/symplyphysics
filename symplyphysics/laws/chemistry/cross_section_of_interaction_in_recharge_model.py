@@ -1,7 +1,6 @@
 from sympy import Eq, nsolve, pi, log, sqrt
 from sympy.physics.units import elementary_charge, boltzmann_constant
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output,
-    symbols)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols)
 from symplyphysics.quantities import bohr_radius, hydrogen_ionization_energy
 
 # Description

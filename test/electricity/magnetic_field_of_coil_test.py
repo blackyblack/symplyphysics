@@ -16,9 +16,7 @@ def test_args_fixture() -> Args:
     current = Quantity(1 * units.ampere)
     length = Quantity(0.5 * units.meter)
     number_turns = 11
-    return Args(current=current,
-        length=length,
-        number_turns=number_turns)
+    return Args(current=current, length=length, number_turns=number_turns)
 
 
 def test_basic_induction(test_args: Args) -> None:
@@ -30,28 +28,22 @@ def test_basic_induction(test_args: Args) -> None:
 def test_bad_current(test_args: Args) -> None:
     current = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        induction_law.calculate_induction(current, test_args.length,
-            test_args.number_turns)
+        induction_law.calculate_induction(current, test_args.length, test_args.number_turns)
     with raises(TypeError):
-        induction_law.calculate_induction(100, test_args.length,
-            test_args.number_turns)
+        induction_law.calculate_induction(100, test_args.length, test_args.number_turns)
 
 
 def test_bad_length(test_args: Args) -> None:
     length = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        induction_law.calculate_induction(test_args.current, length,
-            test_args.number_turns)
+        induction_law.calculate_induction(test_args.current, length, test_args.number_turns)
     with raises(TypeError):
-        induction_law.calculate_induction(test_args.current, 100,
-            test_args.number_turns)
+        induction_law.calculate_induction(test_args.current, 100, test_args.number_turns)
 
 
 def test_bad_number_turns(test_args: Args) -> None:
     number_turns = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        induction_law.calculate_induction(test_args.current, test_args.length,
-            number_turns)
+        induction_law.calculate_induction(test_args.current, test_args.length, number_turns)
     with raises(ValueError):
-        induction_law.calculate_induction(test_args.current, test_args.length,
-            -1)
+        induction_law.calculate_induction(test_args.current, test_args.length, -1)

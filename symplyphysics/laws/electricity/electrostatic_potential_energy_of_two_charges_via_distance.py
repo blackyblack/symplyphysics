@@ -16,7 +16,9 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-electrostatic_potential_energy = clone_as_symbol(symbols.energy, display_symbol="U_E", display_latex="U_\\mathbf{E}")
+electrostatic_potential_energy = clone_as_symbol(symbols.energy,
+    display_symbol="U_E",
+    display_latex="U_\\mathbf{E}")
 """
 Electrostatic potential :symbols:`energy` of system.
 """
@@ -49,6 +51,7 @@ law = Eq(electrostatic_potential_energy,
 :laws:latex::
 """
 
+
 @validate_input(absolute_permittivity_=absolute_permittivity,
     distance_=distance,
     charge_1_=first_charge,
@@ -56,7 +59,8 @@ law = Eq(electrostatic_potential_energy,
 @validate_output(electrostatic_potential_energy)
 def calculate_energy(absolute_permittivity_: Quantity, distance_: Quantity, charge_1_: Quantity,
     charge_2_: Quantity) -> Quantity:
-    result_expr = solve(law, electrostatic_potential_energy, dict=True)[0][electrostatic_potential_energy]
+    result_expr = solve(law, electrostatic_potential_energy,
+        dict=True)[0][electrostatic_potential_energy]
     result_expr = result_expr.subs({
         absolute_permittivity: absolute_permittivity_,
         distance: distance_,

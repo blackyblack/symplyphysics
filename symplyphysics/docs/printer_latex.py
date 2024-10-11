@@ -10,11 +10,11 @@ from sympy.core.function import AppliedUndef
 from sympy.simplify import fraction
 from ..core.symbols.symbols import DimensionSymbolNew
 
-
 _between_two_numbers_p = (
     re.compile(r"[0-9][} ]*$"),  # search
     re.compile(r"(\d|\\frac{\d+}{\d+})"),  # match
 )
+
 
 def _discard_minus_sign(expr: Expr) -> tuple[Expr, bool]:
     if not isinstance(expr, Mul):
@@ -29,6 +29,7 @@ def _discard_minus_sign(expr: Expr) -> tuple[Expr, bool]:
         if arg_sign:
             sign = not sign
     return (Mul(*args, evaluate=False), sign)
+
 
 class SymbolLatexPrinter(LatexPrinter):
     """
@@ -154,7 +155,7 @@ class SymbolLatexPrinter(LatexPrinter):
         symbol, index = expr.args[0].args
         return f"\\sum_{self._print(index)} {self._print(symbol)}"
 
-    def _print_log(self, expr: Any, _exp: Any=None) -> str:
+    def _print_log(self, expr: Any, _exp: Any = None) -> str:
         value, base = (expr.args[0], expr.args[1]) if len(expr.args) > 1 else (expr.args[0], E)
         str_value = self._print(value)
         str_base = self._print(base)
@@ -212,7 +213,7 @@ class SymbolLatexPrinter(LatexPrinter):
         d_n, d_d = fraction(d, exact=True)
 
         # double fraction
-        if n_d != S.One and d != S.One:
+        if S.One not in (n_d, d):
             tex += convert_args(expr)
             return tex
 
@@ -242,7 +243,7 @@ class SymbolLatexPrinter(LatexPrinter):
             return True
         return False
 
-    def _print_Add(self, expr: Expr, _order: bool=False) -> str:
+    def _print_Add(self, expr: Expr, _order: bool = False) -> str:
         tex = ""
         for i, term in enumerate(expr.args):
             if i == 0:

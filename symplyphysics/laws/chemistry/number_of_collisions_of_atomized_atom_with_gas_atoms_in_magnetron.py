@@ -1,6 +1,6 @@
 from sympy import Eq, solve, log
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output, dimensionless, convert_to_float)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless,
+    convert_to_float)
 
 # Description
 ## The atoms of the target material evaporate and move towards the substrate inside the magnetron.

@@ -30,11 +30,9 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-equilibrium_voltage_difference = clone_as_symbol(
-    symbols.voltage,
+equilibrium_voltage_difference = clone_as_symbol(symbols.voltage,
     display_symbol="Delta(V)",
-    display_latex="\\Delta V"
-)
+    display_latex="\\Delta V")
 """
 Equilibrium :symbols:`voltage` difference corresponding to the size of the depletion region.
 """
@@ -72,7 +70,8 @@ charge_electron = symbols.charge
 Magnitude of the electron :symbols:`charge`.
 """
 
-law = Eq(equilibrium_voltage_difference, (quantities.boltzmann_constant * temperature / charge_electron) *
+law = Eq(equilibrium_voltage_difference,
+    (quantities.boltzmann_constant * temperature / charge_electron) *
     log(donor_concentration * acceptor_concentration / charge_carriers_concentration**2))
 """
 :laws:symbol::
@@ -90,7 +89,8 @@ law = Eq(equilibrium_voltage_difference, (quantities.boltzmann_constant * temper
 def calculate_height_barrier(donors_concentration_: Quantity, acceptors_concentration_: Quantity,
     charge_carriers_concentration_: Quantity, temperature_: Quantity,
     charge_electron_: Quantity) -> Quantity:
-    result_expr = solve(law, equilibrium_voltage_difference, dict=True)[0][equilibrium_voltage_difference]
+    result_expr = solve(law, equilibrium_voltage_difference,
+        dict=True)[0][equilibrium_voltage_difference]
     result_expr = result_expr.subs({
         donor_concentration: donors_concentration_,
         acceptor_concentration: acceptors_concentration_,

@@ -65,7 +65,8 @@ time = symbols.time
 :symbols:`time`.
 """
 
-law = Eq(resonant_displacement(time), (driving_force_amplitude / (2 * mass * natural_angular_frequency)) * time *
+law = Eq(resonant_displacement(time),
+    (driving_force_amplitude / (2 * mass * natural_angular_frequency)) * time *
     sin(natural_angular_frequency * time + driving_phase_lag))
 """
 :laws:symbol::

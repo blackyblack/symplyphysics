@@ -34,7 +34,7 @@ __all__ = [
     "subs_list",
     "clone_as_symbol",
     "SymbolIndexed",
-    "global_index",    
+    "global_index",
     "clone_as_function",
     "FunctionNew",
     "SymbolNew",

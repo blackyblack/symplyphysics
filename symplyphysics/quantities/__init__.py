@@ -60,7 +60,9 @@ The Earth :symbols:`mass` is a standard unit of mass in astronomy equal to the m
 Earth. The relative uncertainty of the measurement is :math:`10^{-4}`.
 """
 
-boltzmann_constant = Quantity(units.boltzmann_constant, display_symbol="k_B", display_latex="k_\\text{B}")
+boltzmann_constant = Quantity(units.boltzmann_constant,
+    display_symbol="k_B",
+    display_latex="k_\\text{B}")
 """
 The Boltzmann constant is the proportionality factor that relates the average relative thermal energy of particles
 in a gas with the thermodynamic temperature of the gas.
@@ -78,7 +80,8 @@ speed_of_light = Quantity(units.speed_of_light, display_symbol="c")
 The speed of light in vacuum is a universal physical constant that is exactly equal to 299,792,458 metres per second.
 """
 
-vacuum_permittivity = Quantity(units.vacuum_permittivity,
+vacuum_permittivity = Quantity(
+    units.vacuum_permittivity,
     display_symbol="epsilon_0",
     display_latex="\\varepsilon_0",
 )
@@ -124,14 +127,15 @@ acceleration_due_to_gravity = Quantity(units.acceleration_due_to_gravity, displa
 A conventional standard value of the gravitational acceleration at Earth's surface.
 """
 
-stefan_boltzmann_constant = Quantity(units.stefan_boltzmann_constant, display_symbol="sigma", display_latex="\\sigma")
+stefan_boltzmann_constant = Quantity(units.stefan_boltzmann_constant,
+    display_symbol="sigma",
+    display_latex="\\sigma")
 """
 The **Stefan—Boltzmann constant** is the constant of proportionality between radiant exitance and black body's temperature
 in the Stefan—Boltzmann law.
 """
 
-richardson_constant = Quantity(
-    120.17 * (units.ampere / units.kelvin**2 / units.centimeter**2),
+richardson_constant = Quantity(120.17 * (units.ampere / units.kelvin**2 / units.centimeter**2),
     display_symbol="a")
 """
 Constant of proportionality proposed by Richardson to describe the law of thermionic emission.
@@ -140,7 +144,6 @@ Constant of proportionality proposed by Richardson to describe the law of thermi
 
 #. `Richardson's law <https://en.wikipedia.org/wiki/Thermionic_emission#Richardson's_law>`__.
 """
-
 
 __all__ = [
     "standard_conditions_temperature",

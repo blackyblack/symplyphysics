@@ -62,16 +62,12 @@ Latex:
     :math:`C_V`
 """
 
-final_temperature = clone_as_symbol(symbols.temperature,
-    display_symbol="T1",
-    display_latex="T_1")
+final_temperature = clone_as_symbol(symbols.temperature, display_symbol="T1", display_latex="T_1")
 """
 :symbols:`temperature` of the final state.
 """
 
-initial_temperature = clone_as_symbol(symbols.temperature,
-    display_symbol="T0",
-    display_latex="T_0")
+initial_temperature = clone_as_symbol(symbols.temperature, display_symbol="T0", display_latex="T_0")
 """
 :symbols:`temperature` of the initial state.
 """

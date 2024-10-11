@@ -15,7 +15,8 @@ of the vacuum.
 from sympy import (Eq, sqrt)
 from symplyphysics import units, convert_to, quantities
 
-law = Eq(quantities.speed_of_light, 1 / sqrt(quantities.vacuum_permittivity * quantities.vacuum_permeability))
+law = Eq(quantities.speed_of_light,
+    1 / sqrt(quantities.vacuum_permittivity * quantities.vacuum_permeability))
 r"""
 :code:`c = 1 / sqrt(epsilon_0 * mu_0)`
 

@@ -43,7 +43,9 @@ r"""
 over that surface.
 """
 
-absolute_permittivity = SymbolNew("epsilon", units.capacitance / units.length, display_latex="\\varepsilon")
+absolute_permittivity = SymbolNew("epsilon",
+    units.capacitance / units.length,
+    display_latex="\\varepsilon")
 """
 **Absolute permittivity**, or often sometimes **permittivity**, is a measure of the electric polarizability of a dielectric material.
 """

@@ -12,8 +12,8 @@ square of the distance between them.
 """
 
 from sympy import (Eq, solve, pi)
-from symplyphysics import (clone_as_symbol, symbols, Quantity,
-    validate_input, validate_output, quantities)
+from symplyphysics import (clone_as_symbol, symbols, Quantity, validate_input, validate_output,
+    quantities)
 
 electrostatic_force = symbols.force
 """
@@ -35,7 +35,8 @@ distance = symbols.distance
 :symbols:`distance` between the charges.
 """
 
-law = Eq(electrostatic_force,
+law = Eq(
+    electrostatic_force,
     1 / (4 * pi * quantities.vacuum_permittivity) * (first_charge * second_charge / distance**2))
 """
 :laws:symbol::

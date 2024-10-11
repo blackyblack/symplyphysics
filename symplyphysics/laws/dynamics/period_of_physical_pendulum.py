@@ -51,8 +51,8 @@ The :symbols:`distance` between the pivot and the pendulum's center of mass.
 """
 
 law = Eq(
-    period,
-    2 * pi * sqrt(rotational_inertia / (mass * quantities.acceleration_due_to_gravity * distance_to_pivot)))
+    period, 2 * pi * sqrt(rotational_inertia /
+    (mass * quantities.acceleration_due_to_gravity * distance_to_pivot)))
 """
 :laws:symbol::
 

@@ -89,7 +89,8 @@ class SymbolCodePrinter(StrPrinter):
         str_base = self._print(base)
         return f"log({str_value}, {str_base})"
 
-    def _needs_mul_brackets(self, expr: Expr, first: bool=False, last: bool=False) -> bool:
+    def _needs_mul_brackets(self, expr: Expr, first: bool = False, last: bool = False) -> bool:
+        # pylint: disable=too-many-return-statements
         """
         Returns True if the expression needs to be wrapped in brackets when
         printed as part of a Mul, False otherwise. This is True for Add,
@@ -110,8 +111,7 @@ class SymbolCodePrinter(StrPrinter):
             return True
         if any(expr.has(x) for x in (Mod,)):
             return True
-        if (not last and
-                any(expr.has(x) for x in (Integral, Product, Sum))):
+        if (not last and any(expr.has(x) for x in (Integral, Product, Sum))):
             return True
 
         return False
@@ -125,7 +125,8 @@ class SymbolCodePrinter(StrPrinter):
         if denom.is_Mul:
             denom_args = [a for a in denom.args if a != S.One]
             mul_in_denom = len(denom_args) > 1
-        sdenom_str = f"({sdenom})" if self._needs_mul_brackets(denom, False, True) or mul_in_denom else sdenom
+        sdenom_str = f"({sdenom})" if self._needs_mul_brackets(denom, False,
+            True) or mul_in_denom else sdenom
         tex = f"{snumer_str} / {sdenom_str}"
         return tex
 
@@ -194,7 +195,7 @@ class SymbolCodePrinter(StrPrinter):
             return True
         return False
 
-    def _print_Add(self, expr: Expr, _order: bool=False) -> str:
+    def _print_Add(self, expr: Expr, _order: bool = False) -> str:
         tex = ""
         for i, term in enumerate(expr.args):
             if i == 0:

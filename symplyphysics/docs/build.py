@@ -88,7 +88,8 @@ def process_law(directory: str, law_filename: str, output_dir: str, quiet: bool)
     return law_module_name_strip_root
 
 
-def generate_laws_docs(source_dir: str, output_dir: str, exclude_dirs: Sequence[str], quiet: bool) -> None:
+def generate_laws_docs(source_dir: str, output_dir: str, exclude_dirs: Sequence[str],
+    quiet: bool) -> None:
     exclude_dirs_with_source: list[str] = []
     for e in exclude_dirs:
         to_exclude = os.path.join(source_dir, e)

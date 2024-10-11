@@ -151,8 +151,8 @@ def find_members_and_functions(content: ast.Module) -> list[MemberWithDoc | Func
             docstrings[current_member] = e.value.value
             continue
     compiled = compile(content, "string", "exec")
-    ctx: dict[str, Any] = dict()
-    exec(compiled, {}, ctx)    # pylint: disable=exec-used
+    ctx: dict[str, Any] = {}
+    exec(compiled, {}, ctx)  # pylint: disable=exec-used
     result: list[MemberWithDoc | FunctionWithDoc] = []
     for v in law_members:
         doc = docstrings.get(v)

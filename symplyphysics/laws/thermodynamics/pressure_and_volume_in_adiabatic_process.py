@@ -33,16 +33,12 @@ Latex:
 
 # Some of the following parameters depend on each other. It is up to user which to choose as known.
 
-initial_temperature = clone_as_symbol(symbols.temperature,
-    display_symbol="T0",
-    display_latex="T_0")
+initial_temperature = clone_as_symbol(symbols.temperature, display_symbol="T0", display_latex="T_0")
 """
 Initial :symbols:`temperature` of the system.
 """
 
-final_temperature = clone_as_symbol(symbols.temperature,
-    display_symbol="T1",
-    display_latex="T_1")
+final_temperature = clone_as_symbol(symbols.temperature, display_symbol="T1", display_latex="T_1")
 """
 Final :symbols:`temperature` of the system.
 """

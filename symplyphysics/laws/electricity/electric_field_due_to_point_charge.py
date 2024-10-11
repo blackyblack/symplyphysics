@@ -38,7 +38,8 @@ distance = symbols.distance
 :symbols:`distance` to the charge.
 """
 
-law = Eq(electric_field_strength, 1 / (4 * pi * quantities.vacuum_permittivity) * (charge / distance**2))
+law = Eq(electric_field_strength,
+    1 / (4 * pi * quantities.vacuum_permittivity) * (charge / distance**2))
 """
 :laws:symbol::
 
@@ -60,7 +61,8 @@ _electric_field_def_sub = electric_field_def.law.subs({
     electric_field_def.electrostatic_force: _force,
     electric_field_def.test_charge: _test_charge,
 })
-_electric_field_derived = solve(_electric_field_def_sub, electric_field_def.electric_field_strength)[0]
+_electric_field_derived = solve(_electric_field_def_sub,
+    electric_field_def.electric_field_strength)[0]
 _electric_field_from_law = law.rhs
 
 assert expr_equals(_electric_field_from_law, _electric_field_derived)

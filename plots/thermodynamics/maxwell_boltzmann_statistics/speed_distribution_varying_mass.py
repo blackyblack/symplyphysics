@@ -31,9 +31,8 @@ mass_plot = plot(
     show=False,
 )
 
-distribution = speed_distribution.law.rhs.subs(
-    speed_distribution.equilibrium_temperature, quantities.standard_conditions_temperature
-)
+distribution = speed_distribution.law.rhs.subs(speed_distribution.equilibrium_temperature,
+    quantities.standard_conditions_temperature)
 distribution = evaluate_expression(distribution)
 
 for mass_datum_ in mass_data_:

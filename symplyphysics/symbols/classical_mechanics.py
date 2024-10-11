@@ -213,8 +213,7 @@ torque = SymbolNew("tau", units.force * units.length, display_latex="\\tau")
 rotation.
 """
 
-torsion_stiffness = SymbolNew(
-    "kappa",
+torsion_stiffness = SymbolNew("kappa",
     units.force * units.length / angle_type,
     display_latex="\\kappa")
 """

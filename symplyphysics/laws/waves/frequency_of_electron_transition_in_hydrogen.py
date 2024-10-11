@@ -42,7 +42,9 @@ Latex:
     :math:`n_2`
 """
 
-rydberg_constant = Quantity(3.2898419602500e15 * units.hertz, display_symbol="R_H", display_latex="R_\\text{H}")
+rydberg_constant = Quantity(3.2898419602500e15 * units.hertz,
+    display_symbol="R_H",
+    display_latex="R_\\text{H}")
 """
 Rydberg frequency constant for Hydrogen.
 """

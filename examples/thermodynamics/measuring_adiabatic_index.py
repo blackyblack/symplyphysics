@@ -68,8 +68,8 @@ isobaric_amount_of_heat = thermal_eqn.law.rhs.subs({
 
 solved = solve(
     [
-        energy_law.law.subs(energy_law.energy, isochoric_amount_of_heat),
-        energy_law.law.subs(energy_law.energy, isobaric_amount_of_heat)
+    energy_law.law.subs(energy_law.energy, isochoric_amount_of_heat),
+    energy_law.law.subs(energy_law.energy, isobaric_amount_of_heat)
     ],
     (isochoric_molar_heat, isobaric_molar_heat),
     dict=True,

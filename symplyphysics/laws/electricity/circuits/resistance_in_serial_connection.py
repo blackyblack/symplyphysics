@@ -22,15 +22,16 @@ from symplyphysics import (
 from symplyphysics.core.symbols.symbols import clone_as_indexed
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity import (
-    current_is_voltage_over_resistance as _ohm_law,
-)
+    current_is_voltage_over_resistance as _ohm_law,)
 
 total_resistance = symbols.electrical_resistance
 """
 Total resistance of the circuit.
 """
 
-resistance = clone_as_indexed(symbols.electrical_resistance, display_symbol="R[i]", display_latex="R_i")
+resistance = clone_as_indexed(symbols.electrical_resistance,
+    display_symbol="R[i]",
+    display_latex="R_i")
 r"""
 Resistance of the :math:`i`-th component.
 """
@@ -54,10 +55,9 @@ _voltage2 = _voltage_expr.subs(_ohm_law.resistance, resistance[2])
 # TODO: create law of voltage in serial connection and use it here
 _total_voltage = _voltage1 + _voltage2
 
-_total_resistance = solve(
-    _ohm_law.law, _ohm_law.resistance
-)[0].subs(
-    _ohm_law.voltage, _total_voltage,
+_total_resistance = solve(_ohm_law.law, _ohm_law.resistance)[0].subs(
+    _ohm_law.voltage,
+    _total_voltage,
 )
 
 _local_idx = Idx("local_idx", (1, 2))

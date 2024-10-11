@@ -11,9 +11,7 @@ from sympy import (Eq, solve)
 from symplyphysics import (clone_as_symbol, symbols, quantities, Quantity, validate_input,
     validate_output)
 
-buoyant_force = clone_as_symbol(symbols.force,
-    display_symbol="F_A",
-    display_latex="F_\\text{A}")
+buoyant_force = clone_as_symbol(symbols.force, display_symbol="F_A", display_latex="F_\\text{A}")
 """
 The buoyant (Archimedes) :symbols:`force`.
 """
@@ -29,7 +27,8 @@ The :symbols:`volume` of the displaced fluid. Equivalently, the volume of the pa
 immersed in the fluid.
 """
 
-law = Eq(buoyant_force, -1 * fluid_density * quantities.acceleration_due_to_gravity * displaced_volume)
+law = Eq(buoyant_force,
+    -1 * fluid_density * quantities.acceleration_due_to_gravity * displaced_volume)
 """
 :laws:symbol::
 

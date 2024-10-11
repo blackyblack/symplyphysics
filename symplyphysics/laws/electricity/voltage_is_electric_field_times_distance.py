@@ -9,9 +9,7 @@ Voltage is electric field times distance
 """
 
 from sympy import Eq
-from symplyphysics import (units, Quantity, SymbolNew, validate_input,
-    validate_output)
-
+from symplyphysics import (units, Quantity, SymbolNew, validate_input, validate_output)
 
 voltage = SymbolNew("V", units.voltage)
 """

@@ -7,8 +7,7 @@ inversely proportional to its resistance. This is also known as the **Ohm's law*
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (Quantity, validate_input,
-    validate_output, symbols)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols)
 
 current = symbols.current
 """

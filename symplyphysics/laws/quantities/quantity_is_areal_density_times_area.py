@@ -48,15 +48,13 @@ Latex:
         X = \sigma_X A
 """
 
+
 @validate_input(area_=area)
 def calculate_extensive_quantity(
     areal_density_: Quantity,
     area_: Quantity,
 ) -> Quantity:
-    result_expr = law.rhs.subs({
-        areal_density: areal_density_,
-        area: area_
-    })
+    result_expr = law.rhs.subs({areal_density: areal_density_, area: area_})
     result = Quantity(result_expr)
 
     assert_equivalent_dimension(

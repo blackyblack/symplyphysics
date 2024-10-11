@@ -56,7 +56,8 @@ temperature = symbols.temperature
 
 law = Eq(
     work,
-    amount_of_substance * quantities.molar_gas_constant * temperature * log(final_volume / initial_volume),
+    amount_of_substance * quantities.molar_gas_constant * temperature *
+    log(final_volume / initial_volume),
 )
 """
 :laws:symbol::

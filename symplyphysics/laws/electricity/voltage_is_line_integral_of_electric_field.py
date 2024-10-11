@@ -12,8 +12,7 @@ of the electric field along any path connecting the two points.
 """
 
 from sympy import (Eq, Integral)
-from symplyphysics import (units, Quantity, FunctionNew, SymbolNew, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, FunctionNew, SymbolNew, validate_input, validate_output)
 from symplyphysics.core.geometry.line import two_point_function, Point2D
 
 voltage = SymbolNew("V", units.voltage)

@@ -38,13 +38,15 @@ temperature = symbols.temperature
 :symbols:`temperature` of the gas.
 """
 
-definition = Eq(thermal_wavelength,
+definition = Eq(
+    thermal_wavelength,
     quantities.hbar * sqrt(2 * pi / (mass * quantities.boltzmann_constant * temperature)))
 """
 :laws:symbol::
 
 :laws:latex::
 """
+
 
 @validate_input(
     mass_=mass,
