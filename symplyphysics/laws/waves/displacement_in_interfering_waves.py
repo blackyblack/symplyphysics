@@ -21,13 +21,14 @@ they are exactly out of phase and their interference is *fully destructive*.
 #. They have the same amplitude, wavenumber and frequency.
 """
 
-from sympy import Eq, sin, cos, symbols as sym_symbols
-from symplyphysics import Quantity, validate_input, symbols
+from sympy import Eq, sin, cos
+from symplyphysics import Quantity, validate_input, symbols, SymbolNew
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.core.quantity_decorator import validate_output_same
+from symplyphysics.core.dimensions import any_dimension
 
-total_displacement = sym_symbols("u")
+total_displacement = SymbolNew("u", any_dimension)
 """
 Displacement of the resulting wave.
 
@@ -38,7 +39,7 @@ Latex:
     :math:`u`
 """
 
-amplitude = sym_symbols("u_max")
+amplitude = SymbolNew("u_max", any_dimension, display_latex="u_\\text{max}")
 r"""
 Amplitude of the interfering waves.
 
@@ -118,7 +119,7 @@ def calculate_displacement(
     position_: Quantity,
     time_: Quantity,
 ) -> Quantity:
-    # pylint: disable=too-many-arguments
+    # pylint: disable=too-many-arguments,too-many-positional-arguments
     result = law.rhs.subs({
         amplitude: amplitude_,
         phase_shift: scale_factor(phase_shift_),
