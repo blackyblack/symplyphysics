@@ -1,4 +1,4 @@
-r"""
+"""
 Wavelength of standing wave in string with fixed ends
 =====================================================
 
