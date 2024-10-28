@@ -29,7 +29,7 @@ angular_frequency = clone_as_function(
     real=True,
 )
 """
-:symbols:`angular_frequency` of the wave as a function of angular wavenumber, also called the
+:symbols:`angular_frequency` of the wave as a function of :symbols:`angular_wavenumber`, also called the
 *dispersion relation* of the wave.
 """
 

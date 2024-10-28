@@ -30,16 +30,7 @@ temperature = symbols.temperature
 :symbols:`temperature` of the blackbody.
 """
 
-wien_displacement_constant = Quantity(
-    (quantities.speed_of_light * quantities.planck)
-    / (quantities.boltzmann_constant * 4.965114),
-    display_symbol="b",
-)
-"""
-A constant of proportionality.
-"""
-
-law = Eq(peak_wavelength, wien_displacement_constant / temperature)
+law = Eq(peak_wavelength, quantities.wien_displacement_constant / temperature)
 """
 :laws:symbol::
 

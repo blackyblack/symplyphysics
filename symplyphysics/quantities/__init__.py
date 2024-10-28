@@ -154,6 +154,19 @@ In spectroscopy, the **Rydberg constant** is a physical constant relating to the
 #. `Wikipedia <https://en.wikipedia.org/wiki/Rydberg_constant#Rydberg_frequency>`__.
 """
 
+wien_displacement_constant = Quantity(
+    (speed_of_light * planck) / (boltzmann_constant * 4.965114),
+    display_symbol="b",
+)
+"""
+A constant of proportionality in *Wien's displacement law*.
+
+**Links:**
+
+#. `Wien's displacement law <https://en.wikipedia.org/wiki/Wien%27s_displacement_law>`__.
+"""
+
+
 __all__ = [
     "standard_conditions_temperature",
     "standard_laboratory_temperature",
@@ -175,4 +188,5 @@ __all__ = [
     "stefan_boltzmann_constant",
     "richardson_constant",
     "rydberg_frequency",
+    "wien_displacement_constant",
 ]

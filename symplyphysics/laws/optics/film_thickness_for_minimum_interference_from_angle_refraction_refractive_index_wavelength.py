@@ -4,19 +4,14 @@ Film thickness for minimum interference
 
 Interference in thin films is a phenomenon that occurs as a result of the separation of a light beam when
 reflected from the upper and lower boundaries of a thin film. As a result, there are two light waves that
-can interfere.
-The order of interference indicates the number of whole wavelengths. When the difference in the path of the
-beam reflected from the upper boundary of the film and the beam reflected from the lower boundary of the
-film is equal to an integer number of half-waves, then these two waves enter the observation point and demonstrate
-minimum interference.
-Order of interference can be chosen arbitrarily, to achieve the desired thin film thickness.
-Angle of refraction is angle between refracted ray and the normal.
-Thickness that gives interference minimum at a certain point on the interference pattern depends on the
-angle of refraction, the order of interference, and the refractive index of the film.
+interfere. This law describes the result of their constructive interference.
+
+**Links:**
+
+#. `Thin-film interference <https://en.wikipedia.org/wiki/Thin-film_interference#Theory>`__.
 
 ..
     TODO rename file
-    TODO add link
 """
 
 from sympy import Eq, solve, cos
@@ -35,12 +30,15 @@ Film :symbols:`thickness`.
 
 wavelength = symbols.wavelength
 """
-Light :symbols:`wavelength`
+:symbols:`wavelength` of incident light.
 """
 
-order_interference = clone_as_symbol(symbols.positive_number, display_symbol="k", display_latex="k")
+interference_order = clone_as_symbol(symbols.positive_number, display_symbol="k", display_latex="k")
 """
-Order of interference. See :symbols:`positive_number`.
+Order of interference. See :symbols:`positive_number`. It represents the number of whole
+wavelengths fitting within the optical path difference between interfering waves when the
+interference is constructive. The order of interference can be chosen arbitrarily, to achieve
+the desired thin film thickness.
 """
 
 refraction_angle = symbols.angle
@@ -54,7 +52,7 @@ relative_refractive_index = symbols.relative_refractive_index
 """
 
 law = Eq(film_thickness,
-    order_interference * wavelength / (2 * relative_refractive_index * cos(refraction_angle)))
+    interference_order * wavelength / (2 * relative_refractive_index * cos(refraction_angle)))
 """
 :laws:symbol::
 
@@ -63,7 +61,7 @@ law = Eq(film_thickness,
 
 
 @validate_input(wavelength_=wavelength,
-    order_interference_=order_interference,
+    order_interference_=interference_order,
     refractive_index_=relative_refractive_index,
     angle_refraction_=refraction_angle)
 @validate_output(film_thickness)
@@ -75,7 +73,7 @@ def calculate_film_thickness(wavelength_: Quantity, order_interference_: int,
     result_expr = solve(law, film_thickness, dict=True)[0][film_thickness]
     result_expr = result_expr.subs({
         wavelength: wavelength_,
-        order_interference: order_interference_,
+        interference_order: order_interference_,
         relative_refractive_index: refractive_index_,
         refraction_angle: angle_refraction_,
     })
