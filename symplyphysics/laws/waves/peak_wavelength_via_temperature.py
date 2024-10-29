@@ -7,18 +7,22 @@ temperature. This law is known as the *Wien's displacement law*.
 """
 
 from sympy import Eq, solve
-from sympy.physics.units import speed_of_light, planck, boltzmann
-from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output)
+from symplyphysics import (
+    symbols,
+    quantities,
+    Quantity,
+    validate_input,
+    validate_output,
+    clone_as_symbol,
+)
 
-peak_wavelength = Symbol("peak_wavelength", units.length)
-r"""
-Wavelength at which the peak of the spectral radiance of a blackbody occurs.
-
-Symbol:
-    :code:`lambda_peak`
-
-Latex:
-    :math:`\lambda_\text{peak}`
+peak_wavelength = clone_as_symbol(
+    symbols.wavelength,
+    display_symbol="lambda_peak",
+    display_latex="\\lambda_\\text{peak}",
+)
+"""
+:symbols:`wavelength` at which the peak of the spectral radiance of a blackbody occurs.
 """
 
 temperature = symbols.temperature
@@ -26,21 +30,11 @@ temperature = symbols.temperature
 :symbols:`temperature` of the blackbody.
 """
 
-wien_displacement_constant = speed_of_light * planck / (boltzmann * 4.965114)
+law = Eq(peak_wavelength, quantities.wien_displacement_constant / temperature)
 """
-A constant of proportionality.
+:laws:symbol::
 
-Symbol:
-    :code:`b`
-"""
-
-law = Eq(peak_wavelength, wien_displacement_constant / temperature)
-r"""
-:code:`lambda_peak = b / T`
-
-Latex:
-    .. math::
-        \lambda_\text{peak} = \frac{b}{T}
+:laws:latex::
 """
 
 

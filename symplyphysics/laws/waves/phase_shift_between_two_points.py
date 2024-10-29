@@ -8,52 +8,33 @@ of the distance between the points and the wavelength of the wave.
 
 from sympy import Eq, solve, pi
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
-    angle_type,
     convert_to_float,
+    symbols,
 )
 
-phase_shift = Symbol("phase_shift", angle_type)
-r"""
-Phase shift between the two points.
-
-Symbol:
-    :code:`phi`
-
-Latex:
-    :math:`\varphi`
+phase_shift = symbols.phase_shift
+"""
+:symbols:`phase_shift` between the two points.
 """
 
-distance = Symbol("distance", units.length)
+distance = symbols.distance
 """
-Distance between the two points.
-
-Symbol:
-    :code:`d`
+:symbols:`distance` between the two points.
 """
 
-wavelength = Symbol("wavelength", units.length)
-r"""
-Wavelength of the wave.
-
-Symbol:
-    :code:`lambda`
-
-Latex:
-    :math:`\lambda`
+wavelength = symbols.wavelength
+"""
+:symbols:`wavelength` of the wave.
 """
 
 law = Eq(phase_shift, 2 * pi * distance / wavelength)
-r"""
-:code:`phi = 2 * pi * d / lambda`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \varphi = 2 \pi \frac{d}{\lambda}
+:laws:latex::
 """
 
 

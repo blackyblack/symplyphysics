@@ -1,4 +1,4 @@
-r"""
+"""
 Photon momentum is proportional to angular wavenumber
 =====================================================
 
@@ -9,39 +9,30 @@ The momentum of a photon is proportional to its wavenumber.
 #. :quantity_notation:`hbar`.
 """
 
-from sympy import (Eq, solve)
+from sympy import Eq, solve
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     quantities,
+    symbols,
 )
 
-momentum = Symbol("momentum", units.momentum)
+momentum = symbols.momentum
 """
-Momentum of a photon.
-
-Symbol:
-    :code:`p`
+:symbols:`momentum` of a photon.
 """
 
-angular_wavenumber = Symbol("angular_wavenumber", 1 / units.length)
+angular_wavenumber = symbols.angular_wavenumber
 """
-Angular wavenumber of a photon.
-
-Symbol: 
-    :code:`k`
+:symbols:`angular_wavenumber` of a photon.
 """
 
 law = Eq(momentum, quantities.hbar * angular_wavenumber)
-r"""
-:code:`p = hbar * k`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        p = \hbar k
+:laws:latex::
 """
 
 

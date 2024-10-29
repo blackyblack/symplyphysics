@@ -56,6 +56,12 @@ relative_permittivity = SymbolNew("epsilon_r", dimensionless, display_latex="\\v
 Also see :attr:`~symplyphysics.quantities.vacuum_permittivity`.
 """
 
+relative_permeability = SymbolNew("mu_r", dimensionless, display_latex="\\mu_r")
+"""
+**Relative permeability** is the permeability of a medium relative to that of free space.
+Also see :attr:`~symplyphysics.quantities.vacuum_permeability`.
+"""
+
 capacitance = SymbolNew("C", units.capacitance)
 """
 **Capacitance** is the capacity of a material object or device to store electric charge.

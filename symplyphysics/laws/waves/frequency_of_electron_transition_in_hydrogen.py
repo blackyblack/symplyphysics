@@ -6,59 +6,51 @@ The *Rydberg formula* relates the frequency of light emitted or absorbed during
 electron transition to the levels between which the transition is occurring.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, dimensionless, validate_input, validate_output)
+from sympy import Eq, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    quantities,
+    clone_as_symbol,
+)
 
-transition_frequency = Symbol("transition_frequency", units.frequency)
-r"""
-Frequency of light emitted or absorbed during electron transition in the Hydrogen atom.
-
-Symbol:
-    :code:`nu`
-
-Latex:
-    :math:`\nu`
+transition_frequency = symbols.temporal_frequency
+"""
+:symbols:`temporal_frequency` of light emitted or absorbed during electron transition in the Hydrogen atom.
 """
 
-lower_principal_quantum_number = Symbol("lower_principal_quantum_number", dimensionless)
-r"""
-The principal quantum number of the lower transitional level.
-
-Symbol:
-    :code:`n_1`
-
-Latex:
-    :math:`n_1`
+lower_principal_quantum_number = clone_as_symbol(
+    symbols.positive_number,
+    display_symbol="n_1",
+    display_latex="n_1",
+)
+"""
+The principal quantum number of the lower transitional level. See :symbols:`positive_number`.
 """
 
-higher_principal_quantum_number = Symbol("higher_principal_quantum_number", dimensionless)
+higher_principal_quantum_number = clone_as_symbol(
+    symbols.positive_number,
+    display_symbol="n_2",
+    display_latex="n_2",
+)
 """
-The principal quantum number of the higher transitional level.
-
-Symbol:
-    :code:`n_2`
-
-Latex:
-    :math:`n_2`
-"""
-
-rydberg_constant = Quantity(3.2898419602500e15 * units.hertz,
-    display_symbol="R_H",
-    display_latex="R_\\text{H}")
-"""
-Rydberg frequency constant for Hydrogen.
+The principal quantum number of the higher transitional level.  See :symbols:`positive_number`.
 """
 
 law = Eq(
     transition_frequency,
-    rydberg_constant * ((1 / lower_principal_quantum_number**2) -
+    quantities.rydberg_frequency * ((1 / lower_principal_quantum_number**2) -
     (1 / higher_principal_quantum_number**2)))
-r"""
-:code:`nu = R_H * (1 / n_1^2 - 1 / n_2^2)`
+"""
+.. only:: comment
 
-Latex:
-    .. math::
-        \nu = R_\text{H} \left( \frac{1}{n_1^2} - \frac{1}{n_2^2} \right)
+    For now the auto-generation doesn't handle powers correctly here.
+
+:code:`f = R_H * (1 / n_1^2 - 1 / n_2^2)`
+
+:laws:latex::
 """
 
 

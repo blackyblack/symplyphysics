@@ -22,7 +22,7 @@ standard_laboratory_temperature = Quantity(298 * units.kelvin,
     display_symbol="t_lab",
     display_latex="t_\\text{lab}")
 """
-Approximately 25 Celsius degrees. Commonly used :symbols:`temperature` for tabulation purposes.
+Approximately :math:`25` degrees Celsius. Commonly used :symbols:`temperature` for tabulation purposes.
 """
 
 electron_rest_mass = Quantity(9.1093837015e-31 * units.kilogram,
@@ -77,7 +77,7 @@ It is molar equivalent to the :attr:`~boltzmann_constant`
 
 speed_of_light = Quantity(units.speed_of_light, display_symbol="c")
 """
-The speed of light in vacuum is a universal physical constant that is exactly equal to 299,792,458 metres per second.
+The speed of light in vacuum is a universal physical constant that is exactly equal to :math:`299 \, 792 \, 458` metres per second.
 """
 
 vacuum_permittivity = Quantity(
@@ -145,6 +145,28 @@ Constant of proportionality proposed by Richardson to describe the law of thermi
 #. `Richardson's law <https://en.wikipedia.org/wiki/Thermionic_emission#Richardson's_law>`__.
 """
 
+rydberg_frequency = Quantity(3.2898419602500e15 * units.hertz, display_symbol="R_H", display_latex="R_\\text{H}")
+"""
+In spectroscopy, the **Rydberg constant** is a physical constant relating to the electromagnetic spectra of an atom.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Rydberg_constant#Rydberg_frequency>`__.
+"""
+
+wien_displacement_constant = Quantity(
+    (speed_of_light * planck) / (boltzmann_constant * 4.965114),
+    display_symbol="b",
+)
+"""
+A constant of proportionality in *Wien's displacement law*.
+
+**Links:**
+
+#. `Wien's displacement law <https://en.wikipedia.org/wiki/Wien%27s_displacement_law>`__.
+"""
+
+
 __all__ = [
     "standard_conditions_temperature",
     "standard_laboratory_temperature",
@@ -165,4 +187,6 @@ __all__ = [
     "acceleration_due_to_gravity",
     "stefan_boltzmann_constant",
     "richardson_constant",
+    "rydberg_frequency",
+    "wien_displacement_constant",
 ]
