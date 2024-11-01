@@ -15,19 +15,19 @@ from symplyphysics import (
     clone_as_function,
 )
 
-mass_flow_rate = clone_as_function(symbols.mass_flow_rate, display_symbol="mu(t)")
+time = symbols.time
+"""
+:symbols:`time`.
+"""
+
+mass_flow_rate = clone_as_function(symbols.mass_flow_rate, [time])
 """
 :symbols:`mass_flow_rate` as a function of time.
 """
 
-mass = clone_as_function(symbols.mass, display_symbol="m(t)")
+mass = clone_as_function(symbols.mass, [time])
 """
 :symbols:`mass` as a function of time.
-"""
-
-time = symbols.time
-"""
-:symbols:`time`.
 """
 
 definition = Eq(mass_flow_rate(time), Derivative(mass(time), time))

@@ -114,7 +114,7 @@ def test_mul_integral() -> None:
     time = symbols.time
     time_before = SymbolNew("t_0", display_latex="t_0")
     time_after = SymbolNew("t_1", display_latex="t_1")
-    force = clone_as_function(symbols.force, display_symbol="F(t)")
+    force = clone_as_function(symbols.force)
     with evaluate(False):
         expr = Integral(force(time), (time, time_before, time_after))
     assert code_str(expr) == "Integral(F(t), (t, t_0, t_1))"

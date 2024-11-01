@@ -27,7 +27,12 @@ from symplyphysics import (
 )
 from symplyphysics.core.symbols.quantities import scale_factor
 
-displacement = clone_as_function(symbols.position, display_symbol="x(t)")
+time = symbols.time
+"""
+:symbols:`time`.
+"""
+
+displacement = clone_as_function(symbols.position, [time])
 """
 The displacement of the oscillating body from rest value as a function of :attr:`~time`.
 See :symbols:`position`.
@@ -60,11 +65,6 @@ The :symbols:`angular_frequency` of the driving force.
 driving_phase_lag = symbols.phase_shift
 """
 The :symbols:`phase_shift` of the driving force.
-"""
-
-time = symbols.time
-"""
-:symbols:`time`.
 """
 
 law = Eq(

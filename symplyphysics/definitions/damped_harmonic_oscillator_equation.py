@@ -17,14 +17,14 @@ from symplyphysics import (
     clone_as_function,
 )
 
-displacement = clone_as_function(symbols.distance, display_symbol="x(t)", display_latex="x")
-"""
-Displacement of the oscillating body as a function of time. See :symbols:`distance`.
-"""
-
 time = clone_as_symbol(symbols.time, positive=True)
 """
 :symbols:`time`.
+"""
+
+displacement = clone_as_function(symbols.position, [time])
+"""
+Displacement of the oscillating body as a function of time. See :symbols:`position`.
 """
 
 undamped_angular_frequency = clone_as_symbol(symbols.angular_frequency, positive=True)

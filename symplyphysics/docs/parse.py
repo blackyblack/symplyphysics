@@ -4,6 +4,8 @@ from enum import Enum
 from typing import Any, Optional
 from sympy.physics.units.systems.si import SI
 from ..core.symbols.symbols import DimensionSymbolNew, FunctionNew
+from .printer_code import code_str
+from .printer_latex import latex_str
 
 
 class LawDirectiveTypes(Enum):
@@ -164,10 +166,14 @@ def find_members_and_functions(content: ast.Module) -> list[MemberWithDoc | Func
         if isinstance(sym, DimensionSymbolNew):
             dimension = "dimensionless" if SI.get_dimension_system().is_dimensionless(
                 sym.dimension) else str(sym.dimension.name)
-            symbol_type = LawSymbolTypes.SYMBOL
-            if isinstance(sym, FunctionNew):
-                symbol_type = LawSymbolTypes.FUNCTION
-            law_symbol = LawSymbol(sym.display_name, symbol_type, sym.display_latex, dimension)
+            symbol_name = code_str(sym)
+            symbol_type = (
+                LawSymbolTypes.FUNCTION
+                if isinstance(sym, FunctionNew)
+                else LawSymbolTypes.SYMBOL
+            )
+            symbol_latex = latex_str(sym)
+            law_symbol = LawSymbol(symbol_name, symbol_type, symbol_latex, dimension)
         directives = _docstring_find_law_directives(doc)
         result.append(MemberWithDoc(v, doc, law_symbol, directives, sym))
     for lf in law_functions:

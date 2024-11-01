@@ -24,22 +24,22 @@ work = symbols.work
 The :symbols:`work` done by :attr:`~force`.
 """
 
-force = clone_as_function(symbols.force, display_symbol="F(x)")
-"""
-The :symbols:`force` exerted on the object as a function of :attr:`~position`.
-"""
-
 position = symbols.position
 """
 The :symbols:`position` of the object.
 """
 
-position_before = clone_as_symbol(symbols.position, display_symbol="x_0", display_latex="x_0")
+force = clone_as_function(symbols.force, [position])
+"""
+The :symbols:`force` exerted on the object as a function of :attr:`~position`.
+"""
+
+position_before = clone_as_symbol(symbols.position, subscript="0")
 """
 The initial :symbols:`position` of the object.
 """
 
-position_after = clone_as_symbol(symbols.position, display_symbol="x_1", display_latex="x_1")
+position_after = clone_as_symbol(symbols.position, subscript="1")
 """
 The end :symbols:`position` of the object.
 """

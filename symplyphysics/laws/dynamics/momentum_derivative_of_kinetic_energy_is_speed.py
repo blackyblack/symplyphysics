@@ -15,19 +15,19 @@ from symplyphysics import (
     clone_as_function,
 )
 
-kinetic_energy = clone_as_function(symbols.kinetic_energy, display_symbol="K(p(v))")
+speed = symbols.speed
 """
-The :symbols:`kinetic_energy` of the object as a function of :attr:`~momentum`.
+The :symbols:`speed` of the object.
 """
 
-momentum = clone_as_function(symbols.momentum, display_symbol="p(v)")
+momentum = clone_as_function(symbols.momentum, [speed])
 """
 The :symbols:`momentum` of the object as a function of :attr:`~speed`.
 """
 
-speed = symbols.speed
+kinetic_energy = clone_as_function(symbols.kinetic_energy, [momentum(speed)])
 """
-The :symbols:`speed` of the object.
+The :symbols:`kinetic_energy` of the object as a function of :attr:`~momentum`.
 """
 
 law = Eq(

@@ -31,7 +31,12 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.laws.dynamics import forced_oscillations_equation as forced_eqn
 
-resonant_displacement = clone_as_function(symbols.position, display_symbol="x(t)")
+time = symbols.time
+"""
+:symbols:`time`.
+"""
+
+resonant_displacement = clone_as_function(symbols.position, [time])
 """
 The displacement of resonant oscillations as a function of :attr:`~time`. See :symbols:`position`.
 """
@@ -58,11 +63,6 @@ The amplitude of the driving :symbols:`force`.
 driving_phase_lag = symbols.phase_shift
 """
 The :symbols:`phase_shift` of the oscillations of the driving force.
-"""
-
-time = symbols.time
-"""
-:symbols:`time`.
 """
 
 law = Eq(resonant_displacement(time),

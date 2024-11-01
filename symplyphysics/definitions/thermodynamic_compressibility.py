@@ -21,17 +21,14 @@ from symplyphysics import (
     validate_output,
     symbols,
     clone_as_function,
+    SymbolNew,
 )
 from symplyphysics.core.geometry.line import two_point_function, Point2D
+from symplyphysics.core.dimensions import any_dimension
 
 compressibility = symbols.thermodynamic_compressibility
 """
 :symbols:`thermodynamic_compressibility` of the gas.
-"""
-
-volume = clone_as_function(symbols.volume, display_symbol="V(p)")
-"""
-:symbols:`volume` of the gas as a function of pressure and other parameters.
 """
 
 pressure = symbols.pressure
@@ -39,17 +36,21 @@ pressure = symbols.pressure
 :symbols:`pressure` in the gas.
 """
 
-definition = Eq(compressibility, -1 * Derivative(volume(pressure), pressure) / volume(pressure))
+parameters = SymbolNew("q", any_dimension)
+"""
+Parameters other than :attr:`~pressure` on which the volume function depends.
+"""
+
+volume = clone_as_function(symbols.volume, [pressure, parameters])
+"""
+:symbols:`volume` of the gas as a function of :attr:`~pressure` and :attr:`~parameters`.
+"""
+
+definition = Eq(compressibility, -1 * Derivative(volume(pressure, parameters), pressure) / volume(pressure, parameters))
 r"""
 :laws:symbol::
 
-.. only:: comment
-
-    The derivative is partial since more parameters are needed to evaluate it properly
-
-Latex:
-    .. math::
-        \beta = - \frac{1}{V(p)} \frac{\partial V}{\partial p}
+:laws:latex::
 """
 
 
@@ -73,6 +74,6 @@ def calculate_compressibility(
         Point2D(pressure_after_, volume_after_),
         pressure,
     )
-    expr = definition.rhs.subs(volume(pressure), volume_function).doit()
+    expr = definition.rhs.subs(volume(pressure, parameters), volume_function).doit()
     result = expr.subs(pressure, pressure_after_)
     return Quantity(result)

@@ -9,7 +9,7 @@ from sympy.concrete.products import Product
 from sympy.concrete.summations import Sum
 from sympy.integrals.integrals import Integral
 from sympy.printing.precedence import precedence, precedence_traditional, PRECEDENCE
-from ..core.symbols.symbols import DimensionSymbolNew
+from ..core.symbols.symbols import DimensionSymbolNew, FunctionNew
 
 
 class SymbolCodePrinter(StrPrinter):
@@ -65,11 +65,22 @@ class SymbolCodePrinter(StrPrinter):
 
     def _print_Function(self, expr: Any) -> str:
         if isinstance(expr, DimensionSymbolNew):
-            return expr.display_name
-        if isinstance(expr.func, DimensionSymbolNew):
-            return expr.func.display_name
-        args_str = self.stringify(expr.args, ", ")
-        return expr.func.__name__ + f"({args_str})"
+            if isinstance(expr, FunctionNew):
+                name = expr.display_name
+                args_str = self.stringify(expr.arguments, ", ")
+            else:
+                return expr.display_name
+        else:
+            func = expr.func
+            if isinstance(func, DimensionSymbolNew):
+                if isinstance(func, FunctionNew):
+                    name = func.display_name
+                else:
+                    return func.display_name
+            else:
+                name = func.__name__
+            args_str = self.stringify(expr.args, ", ")
+        return f"{name}({args_str})"
 
     # pylint: disable-next=invalid-name
     def _print_SumIndexed(self, expr: Any) -> str:
@@ -220,4 +231,9 @@ class SymbolCodePrinter(StrPrinter):
 
 
 def code_str(expr: Any, **settings: Any) -> str:
-    return SymbolCodePrinter(settings).doprint(expr)
+    printer = SymbolCodePrinter(settings)
+
+    if isinstance(expr, FunctionNew):
+        expr = expr(*expr.arguments)
+
+    return printer.doprint(expr)

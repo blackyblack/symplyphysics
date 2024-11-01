@@ -26,13 +26,6 @@ from symplyphysics.core.dimensions import any_dimension
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.quantity_decorator import validate_output_same
 
-displacement = FunctionNew("u(x, t)", any_dimension, display_latex="u")
-"""
-Factor representing a displacement from rest position, which could be
-pressure, position, electric field, etc., as a function of position
-and time.
-"""
-
 position = symbols.position
 """
 :symbols:`position`, or spatial variable.
@@ -41,6 +34,13 @@ position = symbols.position
 time = clone_as_symbol(symbols.time, positive=True)
 """
 :symbols:`time`.
+"""
+
+displacement = FunctionNew("u", [position, time], any_dimension)
+"""
+Factor representing a displacement from rest position, which could be
+pressure, position, electric field, etc., as a function of position
+and time.
 """
 
 phase_speed = clone_as_symbol(symbols.phase_speed, positive=True)
