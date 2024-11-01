@@ -10,73 +10,50 @@ in the medium.
 
 from sympy import Eq
 from symplyphysics import (
-    units,
-    angle_type,
-    Symbol,
     Quantity,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
 )
 
-wave_intensity = Symbol("wave_intensity", units.power / units.area)
+wave_intensity = symbols.intensity
 """
-Intensity of the sound wave.
-
-Symbol:
-    :code:`I`
+:symbols:`intensity` of the sound wave.
 """
 
-medium_density = Symbol("medium_density", units.mass / units.volume)
-r"""
-Density of the medium in which the sound wave is being propagated.
-
-Symbol:
-    :code:`rho`
-
-Latex:
-    :math:`\rho`
+medium_density = symbols.density
+"""
+:symbols:`density` of the medium in which the sound wave is being propagated.
 """
 
-phase_speed = Symbol("phase_speed", units.velocity)
+phase_speed = symbols.phase_speed
 """
-Phase speed of the wave.
-
-Symbol:
-    :code:`v`
+:symbols:`phase_speed` of the wave.
 """
 
-angular_frequency = Symbol("angular_frequency", angle_type / units.time)
-r"""
-Angular frequency of the wave.
-
-Symbol:
-    :code:`w`
-
-Latex:
-    :math:`\omega`
+angular_frequency = symbols.angular_frequency
+"""
+:symbols:`angular_frequency` of the wave.
 """
 
-displacement_amplitude = Symbol("displacement_amplitude", units.length)
-r"""
-Displacement amplitude of the particles in the medium.
-
-Symbol:
-    :code:`s_max`
-
-Latex:
-    :math:`s_\text{max}`
+displacement_amplitude = clone_as_symbol(
+    symbols.distance,
+    display_symbol="s_max",
+    display_latex="s_\\text{max}",
+)
+"""
+Displacement amplitude of the particles in the medium. See :symbols:`distance`.
 """
 
 law = Eq(
     wave_intensity,
     medium_density * phase_speed * angular_frequency**2 * displacement_amplitude**2 / 2,
 )
-r"""
-:code:`I = (1 / 2) * rho * v * w^2 * s_max^2`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        I = \frac{1}{2} \rho v \omega^2 s_\text{max}^2
+:laws:latex::
 """
 
 

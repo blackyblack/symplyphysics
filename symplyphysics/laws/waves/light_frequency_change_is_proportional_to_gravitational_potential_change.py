@@ -14,7 +14,7 @@ between the change in light's frequency and the change in the gravitational pote
     .. _gravitational potential:
 
 #. The *gravitational potential* :math:`\varphi` is defined as a scalar quantity such that the equation
-   :math:`\vec g = - \nabla \varphi` is hold where :math:`\vec g` is the vector of acceleration due to gravity
+   :math:`\vec g = - \nabla \varphi` holds where :math:`\vec g` is the vector of acceleration due to gravity
    and :math:`\nabla` is the nabla operator.
 
 #. :math:`d \varphi = - \left( \vec g, d \vec r \right)` where :math:`\left( \vec a_1, \vec a_2 \right)` is
@@ -24,55 +24,44 @@ between the change in light's frequency and the change in the gravitational pote
 from sympy import Eq, solve
 from symplyphysics import (
     units,
-    Symbol,
+    SymbolNew,
     Quantity,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
+    quantities,
 )
 
-frequency_change = Symbol("frequency_change", units.frequency)
+frequency_change = clone_as_symbol(
+    symbols.temporal_frequency,
+    display_symbol="d(f)",
+    display_latex="df",
+)
 r"""
-The infinitesimal change in frequency after passing an infinitesimal section :math:`d \vec r`.
-
-Symbol:
-    :code:`dnu`
-
-Latex:
-    :math:`d \nu`
+The infinitesimal change in :symbols:`temporal_frequency` after passing an infinitesimal section
+:math:`d \vec r`.
 """
 
-frequency = Symbol("frequency", units.frequency)
+frequency = symbols.temporal_frequency
 r"""
-The frequency of light within an infinitesimal section :math:`d \vec r`.
-
-Symbol:
-    :code:`nu`
-
-Latex:
-    :math:`\nu`
+The :symbols:`temporal_frequency` of light within an infinitesimal section :math:`d \vec r`.
 """
 
-gravitational_potential_change = Symbol("gravitational_potential_change", units.velocity**2)
+gravitational_potential_change = SymbolNew("d(phi)", units.velocity**2, display_latex="d \\phi")
 r"""
-The infinitesimal change in :ref:`gravitational potential <gravitational potential>` after passing an infinitesimal section :math:`d \vec r`.
-
-Symbol:
-    :code:`dphi`
-
-Latex:
-    :math:`d \varphi`
+The infinitesimal change in :ref:`gravitational potential <gravitational potential>` after passing an
+infinitesimal section :math:`d \vec r`.
 """
 
 law = Eq(
     frequency_change / frequency,
-    -1 * gravitational_potential_change / units.speed_of_light**2,
+    -1 * gravitational_potential_change / quantities.speed_of_light**2,
 )
-r"""
-:code:`dnu / nu = -1 * dphi / c^2`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \frac{d \nu}{\nu} = - \frac{d \varphi}{c^2}
+:laws:latex::
 """
 
 

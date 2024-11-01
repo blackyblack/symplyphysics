@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from sympy import Symbol as SymSymbol, solve
-from symplyphysics import units, print_expression, quantities
+from symplyphysics import print_expression, quantities
 from symplyphysics.laws.dynamics import (
     period_of_physical_pendulum as pendulum_law,)
 from symplyphysics.laws.kinematics.rotational_inertia.geometries import (
@@ -27,11 +27,12 @@ rod_rotational_inertia_through_pivot = parallel_axis_theorem.law.rhs.subs({
     parallel_axis_theorem.distance_between_axes: distance_to_pivot,
 })
 
-acceleration_due_to_gravity = solve(pendulum_law.law, quantities.acceleration_due_to_gravity)[0].subs({
+acceleration_due_to_gravity = solve(pendulum_law.law,
+    quantities.acceleration_due_to_gravity)[0].subs({
     pendulum_law.rotational_inertia: rod_rotational_inertia_through_pivot,
     pendulum_law.mass: rod_inertia_law.mass,
     pendulum_law.distance_to_pivot: distance_to_pivot,
-})
+    })
 
 print("Acceleration due to gravity from period of pendulum oscillations:\n"
     f"{print_expression(acceleration_due_to_gravity)}\n")

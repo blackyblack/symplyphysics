@@ -53,10 +53,7 @@ def calculate_voltage(inductance_: Quantity, current_start_: Quantity, current_e
         Point2D(time_, current_end_),
         time,
     )
-    applied_definition = law.subs({
-        current(time): current_function_,
-        inductance: inductance_
-    })
+    applied_definition = law.subs({current(time): current_function_, inductance: inductance_})
     dsolved = applied_definition.doit()
     result_expr = dsolved.rhs
     return Quantity(result_expr)

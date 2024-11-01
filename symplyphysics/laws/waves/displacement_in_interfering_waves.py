@@ -21,27 +21,25 @@ they are exactly out of phase and their interference is *fully destructive*.
 #. They have the same amplitude, wavenumber and frequency.
 """
 
-from sympy import Eq, sin, cos, symbols
-from symplyphysics import (
-    units,
-    angle_type,
-    Symbol,
-    Quantity,
-    validate_input,
-)
+from sympy import Eq, sin, cos
+from symplyphysics import Quantity, validate_input, symbols, SymbolNew
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.core.quantity_decorator import validate_output_same
+from symplyphysics.core.dimensions import any_dimension
 
-total_displacement = symbols("total_displacement")
+total_displacement = SymbolNew("u", any_dimension)
 """
 Displacement of the resulting wave.
 
 Symbol:
     :code:`u`
+
+Latex:
+    :math:`u`
 """
 
-amplitude = symbols("amplitude")
+amplitude = SymbolNew("u_max", any_dimension, display_latex="u_\\text{max}")
 r"""
 Amplitude of the interfering waves.
 
@@ -52,54 +50,37 @@ Latex:
     :math:`u_\text{max}`
 """
 
-phase_shift = Symbol("phase_shift", angle_type)
-r"""
-Phase shift between the interfering waves.
-
-Symbol:
-    :code:`phi`
-
-Latex:
-    :math:`\varphi`
+phase_shift = symbols.phase_shift
+"""
+:symbols:`phase_shift` between the interfering waves.
 """
 
-angular_wavenumber = Symbol("angular_wavenumber", angle_type / units.length)
-r"""
-Angular wavenumber of the interfering waves.
-
-Symbol:
-    :code:`k`
+angular_wavenumber = symbols.angular_wavenumber
+"""
+:symbols:`angular_wavenumber` of the interfering waves.
 """
 
-angular_frequency = Symbol("angular_frequency", angle_type / units.time)
-r"""
-Angular frequency of the interfering waves.
-
-Symbol:
-    :code:`w`
-
-Latex:
-    :math:`\omega`
+angular_frequency = symbols.angular_frequency
+"""
+:symbols:`angular_frequency` of the interfering waves.
 """
 
-position = Symbol("position", units.length)
+position = symbols.position
 """
-Position, or spatial coordinate.
-
-Symbol:
-    :code:`x`
+:symbols:`position`, or spatial coordinate.
 """
 
-time = Symbol("time", units.time)
+time = symbols.time
 """
-Time.
-
-Symbol:
-    :code:`t`
+:symbols:`time`.
 """
 
-law = Eq(total_displacement, (2 * amplitude) * cos(phase_shift / 2) *
-    sin(angular_wavenumber * position - angular_frequency * time + phase_shift / 2))
+law = Eq(
+    total_displacement,
+    (2 * amplitude)
+    * cos(phase_shift / 2)
+    * sin(angular_wavenumber * position - angular_frequency * time + phase_shift / 2),
+)
 r"""
 :code:`u = 2 * u_max * cos(phi / 2) * sin(k * x - w * t + phi / 2)`
 
@@ -108,12 +89,14 @@ Latex:
         u = 2 u_\text{max} \cos \left( \frac{\varphi}{2} \right) \sin \left( k x - \omega t + \frac{\varphi}{2} \right)
 """
 
+
 # Derive from the sum of two waves
 
 # The form of the waves is taken from the notes above
 _first_wave = amplitude * sin(angular_wavenumber * position - angular_frequency * time)
-_second_wave = amplitude * sin(angular_wavenumber * position - angular_frequency * time +
-    phase_shift)
+_second_wave = amplitude * sin(
+    angular_wavenumber * position - angular_frequency * time + phase_shift
+)
 
 _sum_of_waves = (_first_wave + _second_wave).simplify()
 
@@ -136,13 +119,13 @@ def calculate_displacement(
     position_: Quantity,
     time_: Quantity,
 ) -> Quantity:
-    # pylint: disable=too-many-arguments, too-many-positional-arguments
+    # pylint: disable=too-many-arguments,too-many-positional-arguments
     result = law.rhs.subs({
         amplitude: amplitude_,
         phase_shift: scale_factor(phase_shift_),
         angular_wavenumber: angular_wavenumber_,
         angular_frequency: angular_frequency_,
         position: position_,
-        time: time_,
+        time: time_
     })
     return Quantity(result)

@@ -16,7 +16,8 @@ The *barometric formula* determines the dependence of the pressure or density of
 """
 
 from sympy import (Eq, solve, exp)
-from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output, quantities)
+from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output,
+    quantities)
 
 final_pressure = Symbol("final_pressure", units.pressure)
 """
@@ -60,7 +61,8 @@ temperature = symbols.temperature
 
 law = Eq(
     final_pressure,
-    initial_pressure * exp(-quantities.acceleration_due_to_gravity * molecular_mass * height_change /
+    initial_pressure *
+    exp(-quantities.acceleration_due_to_gravity * molecular_mass * height_change /
     (quantities.boltzmann_constant * temperature)))
 r"""
 :code:`p = p0 * exp(-1 * g * m * dh / (k_B * T))`

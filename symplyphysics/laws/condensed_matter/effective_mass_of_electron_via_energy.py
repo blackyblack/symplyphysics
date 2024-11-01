@@ -29,7 +29,9 @@ from symplyphysics import (
     clone_as_function,
 )
 
-effective_mass = clone_as_symbol(symbols.mass, display_symbol="m_eff", display_latex="m_\\text{eff}")
+effective_mass = clone_as_symbol(symbols.mass,
+    display_symbol="m_eff",
+    display_latex="m_\\text{eff}")
 r"""
 Effective :symbols:`mass` of the electron.
 """

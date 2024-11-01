@@ -14,8 +14,12 @@ ScalarValue: TypeAlias = Expr | float
 
 
 class AnyDimension(Dimension):
+    # pylint: disable-next=signature-differs
     def __new__(cls) -> AnyDimension:
         return super().__new__(cls, "any_dimension")
+
+    def _eval_nseries(self, _x: Any, _n: Any, _logx: Any, _cdir: Any) -> Any:
+        pass
 
 
 any_dimension = AnyDimension()
@@ -141,11 +145,8 @@ def assert_equivalent_dimension(arg: SymQuantity | ScalarValue | Dimension, para
         expected_dimension = expected_unit
     else:
         (expected_scale_factor, expected_dimension) = collect_factor_and_dimension(expected_unit)
-        # zero can be of any dimension
-        if expected_scale_factor == S.Zero:
-            return
-        # infinity can be of any dimension
-        if expected_scale_factor == S.Infinity:
+        # zero can be of any dimension, infinity can be of any dimension
+        if expected_scale_factor in (S.Zero, S.Infinity):
             return
         # AnyDimension can be of any dimension
         if isinstance(expected_dimension, AnyDimension):
@@ -158,11 +159,8 @@ def assert_equivalent_dimension(arg: SymQuantity | ScalarValue | Dimension, para
         raise TypeError(f"Argument '{param_name}' to function '{func_name}'"
             f" is Number but '{expected_dimension}' is not dimensionless")
     (scale_factor, dimension) = collect_factor_and_dimension(arg)
-    # zero can be of any dimension
-    if scale_factor == S.Zero:
-        return
-    # infinity can be of any dimension
-    if scale_factor == S.Infinity:
+    # zero can be of any dimension, infinity can be of any dimension
+    if scale_factor in (S.Zero, S.Infinity):
         return
     #HACK: this allows to treat angle type as dimensionless
     arg_dimension = dimension.subs("angle", S.One)

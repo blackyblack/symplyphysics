@@ -2,7 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from sympy import pi
 from symplyphysics import (units, Quantity, errors, assert_equal)
-from symplyphysics.laws.optics import film_thickness_for_minimum_interference_from_angle_refraction_refractive_index_wavelength as thickness_law
+from symplyphysics.laws.optics import film_thickness_for_minimum_interference as thickness_law
 
 # Description
 ## Let the wavelength be 400 nanometer, the order of interference is 4, the angle of refraction is

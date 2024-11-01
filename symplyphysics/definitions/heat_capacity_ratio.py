@@ -28,12 +28,16 @@ heat_capacity_ratio = symbols.adiabatic_index
 :symbols:`adiabatic_index` of the system.
 """
 
-isobaric_heat_capacity = clone_as_symbol(symbols.heat_capacity, display_symbol="C_p", display_latex="C_p")
+isobaric_heat_capacity = clone_as_symbol(symbols.heat_capacity,
+    display_symbol="C_p",
+    display_latex="C_p")
 """
 :symbols:`heat_capacity` of the system at constant pressure.
 """
 
-isochoric_heat_capacity = clone_as_symbol(symbols.heat_capacity, display_symbol="C_V", display_latex="C_V")
+isochoric_heat_capacity = clone_as_symbol(symbols.heat_capacity,
+    display_symbol="C_V",
+    display_latex="C_V")
 """
 :symbols:`heat_capacity` of the system at constant volume.
 """

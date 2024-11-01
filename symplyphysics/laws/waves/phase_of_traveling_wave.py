@@ -17,73 +17,48 @@ can only appear in the form of the wave phase described below.
 
 **Conditions:**
 
-#. This law applies to a :math:`1`-dimensional traveling wave.
+#. This law applies to a 1-dimensional traveling wave.
 #. The constant phase shift is not taken into account.
 """
 
 from sympy import Eq
 from symplyphysics import (
-    units,
-    angle_type,
-    Symbol,
     Quantity,
     validate_input,
     validate_output,
+    symbols,
 )
 
-wave_phase = Symbol("wave_phase", angle_type, real=True)
+wave_phase = symbols.phase
+"""
+:symbols:`phase` of the wave.
+"""
+
+angular_wavenumber = symbols.angular_wavenumber
+"""
+:symbols:`angular_wavenumber` of the wave.
+"""
+
+position = symbols.position
+"""
+:symbols:`position`, or spatial coordinate.
+"""
+
+angular_frequency = symbols.angular_frequency
 r"""
-Phase of the wave.
-
-Symbol:
-    :code:`phi`
-
-Latex:
-    :math:`\varphi`
+:symbols:`angular_frequency` of the wave.
 """
 
-angular_wavenumber = Symbol("angular_wavenumber", angle_type / units.length, positive=True)
+time = symbols.time
 """
-Angular wavenumber of the wave.
-
-Symbol:
-    :code:`k`
-"""
-
-position = Symbol("position", units.length, real=True)
-"""
-Position, or spatial coordinate.
-
-Symbol:
-    :code:`x`
-"""
-
-angular_frequency = Symbol("angular_frequency", angle_type / units.time, real=True)
-r"""
-Angular frequency of the wave.
-
-Symbol:
-    :code:`w`
-
-Latex:
-    :math:`\omega`
-"""
-
-time = Symbol("time", units.time, positive=True)
-"""
-Time.
-
-Symbol:
-    :code:`t`
+:symbols:`time`.
 """
 
 law = Eq(wave_phase, angular_wavenumber * position - angular_frequency * time)
-r"""
-:code:`phi = k * x - w * t`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \varphi = k x - \omega t
+:laws:latex::
 """
 
 

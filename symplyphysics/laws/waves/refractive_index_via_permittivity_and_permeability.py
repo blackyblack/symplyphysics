@@ -6,46 +6,29 @@ Refractive index can be calculated from the relative permittivity and permeabili
 of the medium.
 """
 
-from sympy import (Eq, solve, sqrt)
-from symplyphysics import dimensionless, Symbol, validate_input, validate_output, convert_to_float
+from sympy import Eq, solve, sqrt
+from symplyphysics import validate_input, validate_output, convert_to_float, symbols
 
-refractive_index = Symbol("refractive_index", dimensionless)
+refractive_index = symbols.relative_refractive_index
 """
-Refractive index of the medium.
-
-Symbol:
-    :code:`n`
+:symbols:`relative_refractive_index` of the medium.
 """
 
-relative_permittivity = Symbol("relative_permittivity", dimensionless)
-r"""
-Relative permittivity of the medium.
-
-Symbol:
-    :code:`epsilon_r`
-
-Latex:
-    :math:`\varepsilon_\text{r}`
+relative_permittivity = symbols.relative_permittivity
+"""
+:symbols:`relative_permittivity` of the medium.
 """
 
-relative_permeability = Symbol("relative_permeability", dimensionless)
-r"""
-Relative permeability of the medium.
-
-Symbol:
-    :code:`mu_r`
-
-Latex:
-    :math:`\mu_\text{r}`
+relative_permeability = symbols.relative_permeability
+"""
+:symbols:`relative_permeability` of the medium.
 """
 
 law = Eq(refractive_index, sqrt(relative_permittivity * relative_permeability))
-r"""
-:code:`n = sqrt(epsilon_r * mu_r)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        n = \sqrt{\varepsilon_\text{r} \mu_\text{r}}
+:laws:latex::
 """
 
 

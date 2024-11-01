@@ -7,13 +7,19 @@ Symbols related to classical mechanics.
 
 from sympy.physics import units
 from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
-from ..core.symbols.symbols import SymbolNew
-from ..core.dimensions import dimensionless
+from symplyphysics.core.dimensions import dimensionless
+from symplyphysics.core.symbols.symbols import SymbolNew
 
 force = SymbolNew("F", units.force)
 """
 **Force** is a vector quantity denoting an influence that can cause an object to change its velocity
 unless counterbalanced by other forces.
+"""
+
+tension = SymbolNew("T", units.force)
+"""
+**Tension** is the pulling or stretching force transmitted axially along an object so as to stretch it
+or pull it apart.
 """
 
 speed = SymbolNew("v", units.velocity)
@@ -114,6 +120,12 @@ phase_speed = SymbolNew("v", units.speed)
 **Phase speed** is the speed at which the phase of the wave travels.
 """
 
+group_speed = SymbolNew("v_g", units.speed, display_latex="v_\\text{g}")
+"""
+**Group speed** of a wave is the speed with which the overall envelope shape of the wave's
+amplitudes, or the modulation or envelope of the wave, propagates through space.
+"""
+
 pressure = SymbolNew("p", units.pressure)
 """
 **Pressure** is the force applied perpendicular to the surface of an object per unit area over which
@@ -192,6 +204,12 @@ phase_shift = SymbolNew("phi", angle_type, display_latex="\\varphi")
 two periodic functions.
 """
 
+phase = SymbolNew("phi", angle_type, display_latex="\\varphi")
+"""
+**Phase** of a wave or other periodic function of some real variable :math:`t`, such as time, is an
+angle-like quantity representing the fraction of the cycle covered up to :math:`t`.
+"""
+
 friction_coefficient = SymbolNew("mu", dimensionless, display_latex="\\mu")
 """
 **Coefficient of friction** is a dimensionless scalar value which equals to the ratio of the force of
@@ -213,8 +231,7 @@ torque = SymbolNew("tau", units.force * units.length, display_latex="\\tau")
 rotation.
 """
 
-torsion_stiffness = SymbolNew(
-    "kappa",
+torsion_stiffness = SymbolNew("kappa",
     units.force * units.length / angle_type,
     display_latex="\\kappa")
 """
@@ -256,4 +273,10 @@ strain = SymbolNew("e", dimensionless)
 stress = SymbolNew("sigma", units.pressure, display_latex="\\sigma")
 """
 **Stress** is a physical quantity that describes forces present during deformation.
+"""
+
+mach_number = SymbolNew("M", dimensionless, display_latex="\\text{M}", positive=True)
+"""
+The **Mach number** is a dimensionless quantity in fluid dynamics representing the ratio of flow velocity
+past a boundary to the local speed of sound.
 """

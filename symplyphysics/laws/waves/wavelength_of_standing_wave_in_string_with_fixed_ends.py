@@ -13,52 +13,34 @@ string.
 """
 
 from sympy import Eq, solve
-from symplyphysics import (
-    units,
-    Symbol,
-    Quantity,
-    validate_input,
-    validate_output,
-    dimensionless,
-)
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.definitions import angular_wavenumber_is_inverse_wavelength as wavenumber_def
+from symplyphysics.definitions import (
+    angular_wavenumber_is_inverse_wavelength as wavenumber_def,
+)
 from symplyphysics.laws.waves import displacement_in_standing_wave as standing_wave_law
 
-integer_factor = Symbol("integer_factor", dimensionless, integer=True, positive=True)
+integer_factor = symbols.positive_number
 r"""
 Positive integer, also called *harmonic number* of the :math:`n`-th harmonic.
-
-Symbol:
-    :code:`n`
+See :symbols:`positive_number`.
 """
 
-wavelength = Symbol("wavelength", units.length, positive=True)
-r"""
-Wavelength of standing wave.
-
-Symbol:
-    :code:`lambda`
-
-Latex:
-    :math:`\lambda`
+wavelength = symbols.wavelength
+"""
+:symbols:`wavelength` of standing wave.
 """
 
-string_length = Symbol("string_length", units.length, positive=True)
+string_length = symbols.length
 """
-Length of the string.
-
-Symbol:
-    :code:`L`
+:symbols:`length` of the string.
 """
 
 law = Eq(integer_factor * wavelength / 2, string_length)
-r"""
-:code:`n * (lambda / 2) = L`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        n \frac{\lambda}{2} = L
+:laws:latex::
 """
 
 # Derive from boundary condition `u(L, t) = 0`

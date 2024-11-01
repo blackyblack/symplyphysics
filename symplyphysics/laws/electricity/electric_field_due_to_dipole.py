@@ -45,7 +45,8 @@ distance = symbols.distance
 :symbols:`distance` to dipole.
 """
 
-law = Eq(electric_field_strength, 1 / (2 * pi * quantities.vacuum_permittivity) * electric_dipole_moment / distance**3)
+law = Eq(electric_field_strength,
+    1 / (2 * pi * quantities.vacuum_permittivity) * (electric_dipole_moment / distance**3))
 """
 :laws:symbol::
 
@@ -85,7 +86,8 @@ _net_field_sub = _net_field.subs(_distance_between_charges, _factor * _distance_
 _net_field_approx = series(_net_field_sub, _factor, 0, 2).removeO()
 
 # Substitute _distance_to_origin back into the _net_field formula
-_net_field_approx_sub = _net_field_approx.subs(_factor, _distance_between_charges / _distance_to_origin)
+_net_field_approx_sub = _net_field_approx.subs(_factor,
+    _distance_between_charges / _distance_to_origin)
 
 _dipole_eqn = dipole_law.law.subs({
     dipole_law.electric_dipole_moment: electric_dipole_moment,
@@ -95,10 +97,7 @@ _dipole_eqn = dipole_law.law.subs({
 
 # Replace _charge*_distance_between_charges back with electric_dipole_moment
 _net_field_derived = solve(
-    [
-        Eq(electric_field_strength, _net_field_approx_sub),
-        _dipole_eqn
-    ],
+    [Eq(electric_field_strength, _net_field_approx_sub), _dipole_eqn],
     (_charge, electric_field_strength),
     dict=True,
 )[0][electric_field_strength]

@@ -35,9 +35,7 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-temperature = clone_as_symbol(symbols.temperature,
-    display_symbol="T_n(x, t)",
-    display_latex="T_n")
+temperature = clone_as_symbol(symbols.temperature, display_symbol="T_n(x, t)", display_latex="T_n")
 """
 Solution to the heat equation corresponding to the :math:`n`:sup:`th` mode.
 See :symbols:`temperature`.

@@ -68,8 +68,8 @@ temperature = symbols.temperature
 """
 
 law = Eq(
-    occupancy_of_state, 1 / (exp(
-    (energy_of_state - total_chemical_potential) / (quantities.boltzmann_constant * temperature)) + 1))
+    occupancy_of_state, 1 / (exp((energy_of_state - total_chemical_potential) /
+    (quantities.boltzmann_constant * temperature)) + 1))
 r"""
 :code:`N_i = 1 / (exp((E_i - mu) / (k_B * T)) + 1)`
 

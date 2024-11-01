@@ -1,7 +1,7 @@
 from sympy import (Eq, solve, pi, cos)
 from sympy.physics.units import magnetic_constant
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output, dimensionless, angle_type)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless,
+    angle_type)
 
 # Description
 ## Let there be a rectilinear conductor of finite length. Then its magnetic induction will depend on

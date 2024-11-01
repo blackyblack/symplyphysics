@@ -1,4 +1,4 @@
-r"""
+"""
 Photon energy is proportional to linear frequency
 =================================================
 
@@ -10,35 +10,30 @@ in any reference frame. The energy of a photon depends only on its frequency.
 #. :quantity_notation:`planck`.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, quantities)
+from sympy import Eq, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    quantities,
+    symbols,
+)
 
-energy = Symbol("energy", units.energy)
+energy = symbols.energy
 """
-Energy of a photon.
-
-Symbol:
-    :code:`E`
+:symbols:`energy` of a photon.
 """
 
-frequency = Symbol("frequency", units.frequency)
-r"""
-Frequency of a photon.
-
-Symbol:
-    :code:`nu`
-
-Latex:
-    :math:`\nu`
+frequency = symbols.temporal_frequency
+"""
+:symbols:`temporal_frequency` of a photon.
 """
 
 law = Eq(energy, quantities.planck * frequency)
-r"""
-:code:`E = h * nu`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        E = h \nu
+:laws:latex::
 """
 
 

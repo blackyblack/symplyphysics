@@ -18,7 +18,8 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_particles_count(test_args: Args) -> None:
-    result = avogadro_constant_is_particle_count_over_amount_of_substance.calculate_particles_count(test_args.M)
+    result = avogadro_constant_is_particle_count_over_amount_of_substance.calculate_particles_count(
+        test_args.M)
     assert isinstance(result, int)
     assert_equal(result, 3.011e24)
 

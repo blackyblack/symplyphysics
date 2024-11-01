@@ -12,8 +12,7 @@ amount of substance.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output, quantities)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, quantities)
 from symplyphysics.definitions import number_density_is_number_of_objects_per_unit_volume
 from symplyphysics.definitions import density_from_mass_volume
 from symplyphysics.laws.chemistry import avogadro_constant_is_particle_count_over_amount_of_substance
@@ -68,9 +67,12 @@ _avogadro_law = avogadro_constant_is_particle_count_over_amount_of_substance.law
 })
 
 _atomic_weight_law = molar_qty_law.law.subs({
-    molar_qty_law.molar_quantity: molar_mass,
-    molar_qty_law.extensive_quantity: density_from_mass_volume.mass,
-    molar_qty_law.amount_of_substance: avogadro_constant_is_particle_count_over_amount_of_substance.amount_of_substance
+    molar_qty_law.molar_quantity:
+        molar_mass,
+    molar_qty_law.extensive_quantity:
+    density_from_mass_volume.mass,
+    molar_qty_law.amount_of_substance:
+    avogadro_constant_is_particle_count_over_amount_of_substance.amount_of_substance
 })
 
 _derived_law = [
@@ -84,8 +86,7 @@ _derived_number_density = solve(_derived_law, (density_from_mass_volume.mass,
     number_density_is_number_of_objects_per_unit_volume.number_density,
     avogadro_constant_is_particle_count_over_amount_of_substance.amount_of_substance),
     dict=True)[0][number_density_is_number_of_objects_per_unit_volume.number_density]
-assert solve(law, number_density,
-    dict=True)[0][number_density] == _derived_number_density
+assert solve(law, number_density, dict=True)[0][number_density] == _derived_number_density
 
 
 @validate_input(material_density_=volumetric_density, atomic_weight_=molar_mass)

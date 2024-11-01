@@ -38,16 +38,12 @@ Latex:
     :math:`p_1`
 """
 
-initial_temperature = clone_as_symbol(symbols.temperature,
-    display_symbol="T0",
-    display_latex="T_0")
+initial_temperature = clone_as_symbol(symbols.temperature, display_symbol="T0", display_latex="T_0")
 """
 Initial :symbols:`temperature` of the gas.
 """
 
-final_temperature = clone_as_symbol(symbols.temperature,
-    display_symbol="T1",
-    display_latex="T_1")
+final_temperature = clone_as_symbol(symbols.temperature, display_symbol="T1", display_latex="T_1")
 """
 Final :symbols:`temperature` of the gas.
 """

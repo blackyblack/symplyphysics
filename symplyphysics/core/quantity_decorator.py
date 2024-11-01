@@ -6,7 +6,6 @@ from sympy.physics.units import Quantity as SymQuantity, Dimension
 from .symbols.symbols import DimensionSymbol, DimensionSymbolNew, Function, FunctionNew, Symbol, SymbolNew, SymbolIndexedNew
 from .dimensions import assert_equivalent_dimension, ScalarValue
 
-
 _ValueType: TypeAlias = ScalarValue | SymQuantity | DimensionSymbol | DimensionSymbolNew
 
 _UnitType: TypeAlias = Dimension | Symbol | Function | SymbolNew | FunctionNew | SymbolIndexedNew
@@ -82,7 +81,8 @@ def validate_input(**decorator_kwargs: Any) -> Callable[[Callable[..., Any]], Ca
 # @validate_output(units.length)
 # @validate_output(body_volume)
 def validate_output(
-        expected_unit: Dimension | Symbol | Function | SymbolNew | FunctionNew) -> Callable[[Any], Callable[..., Any]]:
+        expected_unit: Dimension | Symbol | Function | SymbolNew | FunctionNew | SymbolIndexedNew
+) -> Callable[[Any], Callable[..., Any]]:
 
     def validate_func(func: Callable[..., Any]) -> Callable[..., Any]:
 

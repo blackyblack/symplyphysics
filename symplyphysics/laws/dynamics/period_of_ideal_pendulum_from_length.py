@@ -13,14 +13,7 @@ Period of pendulum oscillation does not depend on its mass.
 #. The thread is weightless and doesn't change its length.
 """
 
-from sympy import (
-    Derivative,
-    Eq,
-    diff,
-    sin,
-    solve,
-    pi,
-)
+from sympy import (Derivative, Eq, diff, sin, solve, pi, sqrt)
 from symplyphysics import (
     Quantity,
     validate_input,
@@ -28,7 +21,6 @@ from symplyphysics import (
     symbols,
     quantities,
     clone_as_function,
-    sqrt,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.geometry import planar_projection_is_cosine as projector

@@ -43,8 +43,8 @@ Reduced photon energy, defined as the ratio of photon energy :math:`\hbar \omega
 thermal energy :math:`k_\text{B} T`.
 """
 
-law = Eq(isochoric_molar_heat_capacity, (3 * quantities.molar_gas_constant) * reduced_photon_energy**2 *
-    exp(reduced_photon_energy) / (exp(reduced_photon_energy) - 1)**2)
+law = Eq(isochoric_molar_heat_capacity, (3 * quantities.molar_gas_constant) *
+    reduced_photon_energy**2 * exp(reduced_photon_energy) / (exp(reduced_photon_energy) - 1)**2)
 r"""
 :code:`C_V = 3 * R * x^2 * exp(x) / (exp(x) - 1)^2`
 

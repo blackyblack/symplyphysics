@@ -11,8 +11,8 @@ of the velocity vector, and its vector is tangent to the path of the body.
 """
 
 from sympy import Eq, solve, Derivative
-from symplyphysics import (clone_as_symbol, symbols, units, Quantity, Symbol, Function, validate_input,
-    validate_output, angle_type)
+from symplyphysics import (clone_as_symbol, symbols, units, Quantity, Symbol, Function,
+    validate_input, validate_output, angle_type)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematics import speed_via_angular_speed_and_radius as linear_velocity_law
 from symplyphysics.definitions import angular_acceleration_is_angular_speed_derivative as angular_acceleration_def

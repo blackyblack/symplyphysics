@@ -11,8 +11,7 @@ from sympy import Eq, solve, pi
 from symplyphysics import Quantity, validate_input, validate_output, symbols
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematics import (
-    average_angular_speed_is_angular_distance_over_time as frequency_def,
-)
+    average_angular_speed_is_angular_distance_over_time as frequency_def,)
 
 period = symbols.period
 """

@@ -11,45 +11,29 @@ permeability of the medium.
 """
 
 from sympy import (Eq, solve, sqrt)
-from symplyphysics import (units, Quantity, Symbol, dimensionless, validate_input, validate_output, quantities)
+from symplyphysics import (Quantity, validate_input, validate_output, quantities, symbols)
 
-wave_speed = Symbol("wave_speed", units.velocity)
+wave_speed = symbols.phase_speed
 """
-Speed of wave propagation in medium.
-
-Symbol:
-    :code:`v`
+Speed of wave propagation in medium. See :symbols:`phase_speed`.
 """
 
-relative_permittivity = Symbol("relative_permittivity", dimensionless)
-r"""
-Permittivity of medium relative to that of vacuum.
-
-Symbol:
-    :code:`epsilon`
-
-Latex:
-    :math:`\varepsilon`
+relative_permittivity = symbols.relative_permittivity
+"""
+:symbols:`relative_permittivity` of the medium.
 """
 
-relative_permeability = Symbol("relative_permeability", dimensionless)
-r"""
-Permeability of medium relative to that of vacuum.
-
-Symbol:
-    :code:`mu`
-
-Latex:
-    :math:`\mu`
+relative_permeability = symbols.relative_permeability
+"""
+:symbols:`relative_permeability` of the medium.
 """
 
-law = Eq(wave_speed, quantities.speed_of_light / sqrt(relative_permittivity * relative_permeability))
-r"""
-:code:`v = c / sqrt(epsilon * mu)`
+law = Eq(wave_speed,
+    quantities.speed_of_light / sqrt(relative_permittivity * relative_permeability))
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        v = \frac{c}{\sqrt {\varepsilon \mu}}
+:laws:latex::
 """
 
 

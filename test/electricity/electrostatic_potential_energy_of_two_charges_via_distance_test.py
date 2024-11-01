@@ -35,8 +35,7 @@ def test_bad_absolute_permittivity(test_args: Args) -> None:
         energy_law.calculate_energy(absolute_permittivity, test_args.distance, test_args.charge_1,
             test_args.charge_2)
     with raises(TypeError):
-        energy_law.calculate_energy(100, test_args.distance, test_args.charge_1,
-            test_args.charge_2)
+        energy_law.calculate_energy(100, test_args.distance, test_args.charge_1, test_args.charge_2)
 
 
 def test_bad_distance(test_args: Args) -> None:

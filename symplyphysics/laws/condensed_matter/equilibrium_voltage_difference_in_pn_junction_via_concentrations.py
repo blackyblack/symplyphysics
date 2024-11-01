@@ -20,7 +20,7 @@ The p-n junction has a potential barrier preventing the movement of charge carri
 #. `Size of depleting region <https://en.wikipedia.org/wiki/P%E2%80%93n_junction#Size_of_depletion_region>`_.
 """
 
-from sympy import Eq, solve
+from sympy import Eq, solve, log
 from symplyphysics import (
     symbols,
     Quantity,
@@ -28,14 +28,11 @@ from symplyphysics import (
     validate_output,
     quantities,
     clone_as_symbol,
-    log,
 )
 
-equilibrium_voltage_difference = clone_as_symbol(
-    symbols.voltage,
+equilibrium_voltage_difference = clone_as_symbol(symbols.voltage,
     display_symbol="Delta(V)",
-    display_latex="\\Delta V"
-)
+    display_latex="\\Delta V")
 """
 Equilibrium :symbols:`voltage` difference corresponding to the size of the depletion region.
 """
@@ -64,7 +61,7 @@ charge_carriers_concentration = symbols.number_density
 """
 
 temperature = symbols.temperature
-r"""
+"""
 :symbols:`temperature` of the semiconductor.
 """
 
@@ -73,9 +70,10 @@ charge_electron = symbols.charge
 Magnitude of the electron :symbols:`charge`.
 """
 
-law = Eq(equilibrium_voltage_difference, (quantities.boltzmann_constant * temperature / charge_electron) *
+law = Eq(equilibrium_voltage_difference,
+    (quantities.boltzmann_constant * temperature / charge_electron) *
     log(donor_concentration * acceptor_concentration / charge_carriers_concentration**2))
-r"""
+"""
 :laws:symbol::
 
 :laws:latex::
@@ -91,7 +89,8 @@ r"""
 def calculate_height_barrier(donors_concentration_: Quantity, acceptors_concentration_: Quantity,
     charge_carriers_concentration_: Quantity, temperature_: Quantity,
     charge_electron_: Quantity) -> Quantity:
-    result_expr = solve(law, equilibrium_voltage_difference, dict=True)[0][equilibrium_voltage_difference]
+    result_expr = solve(law, equilibrium_voltage_difference,
+        dict=True)[0][equilibrium_voltage_difference]
     result_expr = result_expr.subs({
         donor_concentration: donors_concentration_,
         acceptor_concentration: acceptors_concentration_,

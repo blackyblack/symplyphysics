@@ -31,14 +31,11 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity.vector import (
-    electric_flux_of_uniform_electric_field as _flux_law,
-)
+    electric_flux_of_uniform_electric_field as _flux_law,)
 from symplyphysics.laws.electricity import (
-    electric_flux_through_closed_surface_via_total_charge as _gauss_law,
-)
+    electric_flux_through_closed_surface_via_total_charge as _gauss_law,)
 from symplyphysics.laws.quantities import (
-    quantity_is_areal_density_times_area as _areal_qty_law,
-)
+    quantity_is_areal_density_times_area as _areal_qty_law,)
 
 electric_field_strength = symbols.electric_field_strength
 """

@@ -14,7 +14,8 @@ Internal energy of an ideal gas is the sum of the kinetic energy of all of its m
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols, quantities)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols,
+    quantities)
 
 internal_energy = Symbol("energy", units.energy)
 """

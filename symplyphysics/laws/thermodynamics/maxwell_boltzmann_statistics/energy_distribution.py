@@ -57,9 +57,9 @@ Equilibrium :symbols:`temperature` of the ensemble.
 """
 
 law = Eq(
-    energy_distribution_function,
-    2 * sqrt(energy / pi) * (quantities.boltzmann_constant * equilibrium_temperature)**Rational(-3, 2) *
-    exp(-1 * energy / (quantities.boltzmann_constant * equilibrium_temperature)))
+    energy_distribution_function, 2 * sqrt(energy / pi) *
+    (quantities.boltzmann_constant * equilibrium_temperature)**Rational(-3, 2) * exp(-1 * energy /
+    (quantities.boltzmann_constant * equilibrium_temperature)))
 r"""
 :code:`f(E) = 2 * sqrt(E / pi) * (k_B * T)^(3/2) * exp(-1 * E / (k_B * T))`
 

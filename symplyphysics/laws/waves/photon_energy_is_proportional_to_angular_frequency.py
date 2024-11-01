@@ -1,4 +1,4 @@
-r"""
+"""
 Photon energy is proportional to angular frequency
 ==================================================
 
@@ -12,41 +12,28 @@ in any reference frame. The energy of a photon depends only on its frequency.
 
 from sympy import Eq
 from symplyphysics import (
-    units,
-    angle_type,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     quantities,
+    symbols,
 )
 
-energy = Symbol("energy", units.energy)
+energy = symbols.energy
 """
-Energy of a photon.
-
-Symbol:
-    :code:`E`
+:symbols:`energy` of a photon.
 """
 
-angular_frequency = Symbol("angular_frequency", angle_type / units.time)
-r"""
-Angular frequency of a photon.
-
-Symbol:
-    :code:`w`
-
-Latex:
-    :math:`\omega`
+angular_frequency = symbols.angular_frequency
+"""
+:symbols:`angular_frequency` of a photon.
 """
 
 law = Eq(energy, quantities.hbar * angular_frequency)
-r"""
-:code:`E = hbar * w`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        E = \hbar \omega
+:laws:latex::
 """
 
 

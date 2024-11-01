@@ -66,6 +66,7 @@ Latex:
         U = 4 \varepsilon \left( \left( \frac{\sigma}{r} \right)^{12} - \left( \frac{\sigma}{r} \right)^6 \right)
 """
 
+
 @validate_input(
     dispersion_energy_=dispersion_energy,
     particle_size_=particle_size,

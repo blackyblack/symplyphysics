@@ -66,8 +66,7 @@ _distance_law_applied = distance_law.law.subs({
     distance_law.speed: speed,
 })
 # Period is a time taken to cover a full circle.
-_period_derived = solve(_distance_law_applied, distance_law.time,
-    dict=True)[0][distance_law.time]
+_period_derived = solve(_distance_law_applied, distance_law.time, dict=True)[0][distance_law.time]
 
 _law_applied = period_law.law.subs({
     period_law.mass: mass,

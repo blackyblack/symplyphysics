@@ -36,8 +36,8 @@ temperature = symbols.temperature
 """
 
 law = Eq(
-    current_density,
-    quantities.richardson_constant * temperature**2 * exp(-1 * work_function / (quantities.boltzmann_constant * temperature)))
+    current_density, quantities.richardson_constant * temperature**2 * exp(-1 * work_function /
+    (quantities.boltzmann_constant * temperature)))
 r"""
 :laws:symbol::
 

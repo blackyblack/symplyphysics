@@ -36,15 +36,10 @@ admittance_expr = admittance_law.law.rhs.subs(admittance_law.susceptance, 0)
 admittance1 = admittance_expr.subs(admittance_law.conductance, sigma1)
 admittance2 = admittance_expr.subs(admittance_law.conductance, sigma2)
 
-sigma_parallel = (
-    total_admittance_law.law.rhs
-    .subs(global_index, index_local)
-    .doit()
-    .subs({
-        total_admittance_law.admittance[1]: admittance1,
-        total_admittance_law.admittance[2]: admittance2,
-    })
-)
+sigma_parallel = (total_admittance_law.law.rhs.subs(global_index, index_local).doit().subs({
+    total_admittance_law.admittance[1]: admittance1,
+    total_admittance_law.admittance[2]: admittance2,
+}))
 
 resistance_definition = conductivity_law.definition.subs(
     {conductivity_law.conductance: sigma_parallel})

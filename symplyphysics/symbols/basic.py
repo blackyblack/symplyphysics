@@ -7,8 +7,8 @@ Symbols of fundamental physical quantities.
 
 from sympy.physics import units
 from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
-from ..core.dimensions import dimensionless
-from ..core.symbols.symbols import SymbolNew
+from symplyphysics.core.dimensions import dimensionless
+from symplyphysics.core.symbols.symbols import SymbolNew
 
 time = SymbolNew("t", units.time)
 """
@@ -40,6 +40,11 @@ energy_density = SymbolNew("w", units.energy / units.volume)
 Energy per unit volume.
 """
 
+spectral_energy_density = SymbolNew("w_f", units.energy / (units.volume * units.frequency))
+"""
+Energy per unit volume per unit linear frequency.
+"""
+
 energy = SymbolNew("E", units.energy)
 """
 **Energy** is the quantitative property that is transferred to a body or to a physical system, recognizable in
@@ -61,15 +66,25 @@ density = SymbolNew("rho", units.mass / units.volume, display_latex="\\rho")
 **Density** is mass per unit volume.
 """
 
+linear_density = SymbolNew("mu", units.mass / units.length, display_latex="\\mu")
+"""
+**Linear density** is mass per unit length.
+"""
+
 intensity = SymbolNew("I", units.power / units.area)
 """
 **Intensity** or **flux** of radiant energy is the power transferred per unit area,  where the area is measured
 on the plane perpendicular to the direction of propagation of the energy.
 """
 
-positive_number = SymbolNew("N", dimensionless, positive=True)
+whole_number = SymbolNew("N", dimensionless, integer=True)
 """
-A dimensionless **number** used for counting objects or instances.
+A dimensionless **whole** number of any sign.
+"""
+
+positive_number = SymbolNew("N", dimensionless, integer=True, positive=True)
+"""
+A dimensionless whole **number** used for counting objects or instances.
 """
 
 number_density = SymbolNew("n", 1 / units.volume)

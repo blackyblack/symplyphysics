@@ -14,7 +14,7 @@ inter-particle spacing. Otherwise, quantum effects must be taken into account.
 #. :quantity_notation:`boltzmann_constant`.
 """
 
-from sympy import Eq, sqrt, pi
+from sympy import Eq, pi, sqrt
 from symplyphysics import (
     quantities,
     Quantity,
@@ -38,7 +38,8 @@ temperature = symbols.temperature
 :symbols:`temperature` of the gas.
 """
 
-definition = Eq(thermal_wavelength,
+definition = Eq(
+    thermal_wavelength,
     quantities.hbar * sqrt(2 * pi / (mass * quantities.boltzmann_constant * temperature)))
 """
 :laws:symbol::

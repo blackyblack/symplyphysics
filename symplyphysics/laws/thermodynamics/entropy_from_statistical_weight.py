@@ -10,9 +10,9 @@ is the average number of microstates of a system that implement its macro-state.
 #. :quantity_notation:`boltzmann_constant`.
 """
 
-from sympy import Eq, solve, symbols, Function as SymFunction, dsolve
+from sympy import Eq, solve, symbols, Function as SymFunction, dsolve, log
 from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless,
-    assert_equal, quantities, log)
+    assert_equal, quantities)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.chemistry import avogadro_constant_is_particle_count_over_amount_of_substance as avogadro_law
 from symplyphysics.laws.thermodynamics import (

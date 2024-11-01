@@ -16,8 +16,8 @@ proportional to the current in the coil's wire.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (Quantity, SymbolNew, validate_input,
-    validate_output, dimensionless, symbols, quantities)
+from symplyphysics import (Quantity, SymbolNew, validate_input, validate_output, dimensionless,
+    symbols, quantities)
 
 magnetic_flux_density = symbols.magnetic_flux_density
 """
@@ -47,12 +47,9 @@ law = Eq(magnetic_flux_density, quantities.vacuum_permeability * current * coil_
 """
 
 
-@validate_input(current_=current,
-    length_=length,
-    number_turns_=coil_turn_count)
+@validate_input(current_=current, length_=length, number_turns_=coil_turn_count)
 @validate_output(magnetic_flux_density)
-def calculate_induction(current_: Quantity, length_: Quantity,
-    number_turns_: float) -> Quantity:
+def calculate_induction(current_: Quantity, length_: Quantity, number_turns_: float) -> Quantity:
     if number_turns_ < 0:
         raise ValueError("Number of turns cannot be negative")
     result_expr = solve(law, magnetic_flux_density, dict=True)[0][magnetic_flux_density]

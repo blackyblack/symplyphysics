@@ -48,7 +48,8 @@ equilibrium_temperature = clone_as_symbol(
 Equilibrium :symbols:`temperature` of the gas.
 """
 
-law = Eq(average_kinetic_energy, Rational(3, 2) * quantities.boltzmann_constant * equilibrium_temperature)
+law = Eq(average_kinetic_energy,
+    Rational(3, 2) * quantities.boltzmann_constant * equilibrium_temperature)
 r"""
 :code:`avg(K) = 3/2 * k_B * T`
 
