@@ -187,6 +187,7 @@ class FunctionNew(DimensionSymbolNew, UndefinedFunction):
         display_latex: Optional[str] = None,
         **_options: Any) -> None:
         display_name = display_symbol or str(cls.name)
+        cls.arguments = arguments
         super().__init__(display_name, dimension, display_latex=display_latex)
 
     def __repr__(cls) -> str:

@@ -74,7 +74,10 @@ def process_law(directory: str, law_filename: str, output_dir: str, quiet: bool)
         print(f"Generating rST for law {law_module_name}")
 
     law_parsed = patch_sympy_evaluate(law_parsed)
-    law_items = find_members_and_functions(law_parsed)
+    try:
+        law_items = find_members_and_functions(law_parsed)
+    except Exception as e:
+        raise ValueError(f"Exception has been raised in '{filename}'.") from e
     doc_content = print_law(law_title, law_description, law_items, law_module_name)
 
     law_module_name_strip_root = ".".join(law_module_name.split(".")[1:])

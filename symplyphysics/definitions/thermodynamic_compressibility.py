@@ -50,14 +50,6 @@ definition = Eq(compressibility, -1 * Derivative(volume(pressure, parameters), p
 r"""
 :laws:symbol::
 
-.. only:: comment
-
-    The derivative is partial since more parameters are needed to evaluate it properly
-
-    Latex:
-        .. math::
-            \beta = - \frac{1}{V(p)} \frac{\partial V}{\partial p}
-
 :laws:latex::
 """
 
@@ -82,6 +74,6 @@ def calculate_compressibility(
         Point2D(pressure_after_, volume_after_),
         pressure,
     )
-    expr = definition.rhs.subs(volume(pressure), volume_function).doit()
+    expr = definition.rhs.subs(volume(pressure, parameters), volume_function).doit()
     result = expr.subs(pressure, pressure_after_)
     return Quantity(result)
