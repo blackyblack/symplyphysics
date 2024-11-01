@@ -36,7 +36,7 @@ pressure = symbols.pressure
 
 volume = clone_as_function(symbols.volume, [pressure])
 """
-:symbols:`volume` of the gas as a function of pressure and other parameters.
+:symbols:`volume` of the gas as a function of pressure.
 """
 
 definition = Eq(compressibility, -1 * Derivative(volume(pressure), pressure) / volume(pressure))
