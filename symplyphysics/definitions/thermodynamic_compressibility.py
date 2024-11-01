@@ -21,8 +21,10 @@ from symplyphysics import (
     validate_output,
     symbols,
     clone_as_function,
+    SymbolNew,
 )
 from symplyphysics.core.geometry.line import two_point_function, Point2D
+from symplyphysics.core.dimensions import any_dimension
 
 compressibility = symbols.thermodynamic_compressibility
 """
@@ -34,12 +36,17 @@ pressure = symbols.pressure
 :symbols:`pressure` in the gas.
 """
 
-volume = clone_as_function(symbols.volume, [pressure])
+parameters = SymbolNew("q", any_dimension)
 """
-:symbols:`volume` of the gas as a function of pressure.
+Parameters other than :attr:`~pressure` on which the volume function depends.
 """
 
-definition = Eq(compressibility, -1 * Derivative(volume(pressure), pressure) / volume(pressure))
+volume = clone_as_function(symbols.volume, [pressure, parameters])
+"""
+:symbols:`volume` of the gas as a function of :attr:`~pressure` and :attr:`~parameters`.
+"""
+
+definition = Eq(compressibility, -1 * Derivative(volume(pressure, parameters), pressure) / volume(pressure, parameters))
 r"""
 :laws:symbol::
 
@@ -47,9 +54,11 @@ r"""
 
     The derivative is partial since more parameters are needed to evaluate it properly
 
-Latex:
-    .. math::
-        \beta = - \frac{1}{V(p)} \frac{\partial V}{\partial p}
+    Latex:
+        .. math::
+            \beta = - \frac{1}{V(p)} \frac{\partial V}{\partial p}
+
+:laws:latex::
 """
 
 
