@@ -10,41 +10,16 @@ by one.
 from sympy import Eq, Derivative, Point2D
 from symplyphysics import (
     symbols,
-    units,
-    dimensionless,
     Quantity,
-    Symbol,
-    Function,
     validate_input,
     validate_output,
+    clone_as_function,
 )
 from symplyphysics.core.geometry.line import two_point_function
 
-chemical_potential = Symbol("chemical_potential", units.energy)
+chemical_potential = symbols.chemical_potential
 r"""
-Chemical potential of the system.
-
-Symbol:
-    :code:`mu`
-
-Latex:
-    :math:`\mu`
-"""
-
-gibbs_energy = Function("gibbs_energy", units.energy)
-"""
-Gibbs energy of the system as a function of its natural variables.
-
-Symbol:
-    :code:`G(T, p, N)`
-"""
-
-particle_count = Symbol("particle_count", dimensionless)
-"""
-Number of particles in the system.
-
-Symbol:
-    :code:`N`
+:symbols:`chemical_potential` of the system.
 """
 
 temperature = symbols.temperature
@@ -52,24 +27,32 @@ temperature = symbols.temperature
 :symbols:`temperature` of the system.
 """
 
-pressure = Symbol("pressure", units.pressure)
+pressure = symbols.pressure
 """
-Pressure inside the system.
+:symbols:`pressure` inside the system.
+"""
 
-Symbol:
-    :code:`p`
+particle_count = symbols.particle_count
+"""
+:symbols:`particle_count` the system.
+"""
+
+gibbs_energy = clone_as_function(
+    symbols.gibbs_energy,
+    [temperature, pressure, particle_count]
+)
+"""
+:symbols:`gibbs_energy` of the system as a function of its natural variables.
 """
 
 law = Eq(
     chemical_potential,
     Derivative(gibbs_energy(temperature, pressure, particle_count), particle_count),
 )
-r"""
-:code:`mu = Derivative(G(T, p, N), N)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \mu = \left( \frac{\partial G}{\partial N} \right)_{T, p}
+:laws:latex::
 """
 
 
