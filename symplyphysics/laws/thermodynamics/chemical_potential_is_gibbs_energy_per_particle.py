@@ -9,47 +9,32 @@ and particle count are extensive.
 
 from sympy import Eq
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
 )
 
-chemical_potential = Symbol("chemical_potential", units.energy)
+chemical_potential = symbols.chemical_potential
 r"""
-Chemical potential of the system.
-
-Symbol:
-    :code:`mu`
-
-Latex:
-    :math:`\mu`
+:symbols:`chemical_potential` of the system.
 """
 
-gibbs_energy = Symbol("gibbs_energy", units.energy)
+gibbs_energy = symbols.gibbs_energy
 """
-Gibbs energy of the system.
-
-Symbol:
-    :code:`G`
+:symbols:`gibbs_energy` of the system.
 """
 
-particle_count = Symbol("particle_count")
+particle_count = symbols.particle_count
 """
-Number of particles in the system.
-
-Symbol:
-    :code:`N`
+:symbols:`particle_count` of the system.
 """
 
 law = Eq(chemical_potential, gibbs_energy / particle_count)
-r"""
-:code:`mu = G / N`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \mu = \frac{G}{N}
+:laws:latex::
 """
 
 # TODO: derive law from the extensive property of chemical potential

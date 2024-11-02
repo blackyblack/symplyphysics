@@ -85,8 +85,21 @@ of particles in the canonical ensemble.
 
 entropy = SymbolNew("S", units.energy / units.temperature)
 """
-Entropy is a physical quantity most commonly associated with a state of randomness or disorder. In the
+**Entropy** is a physical quantity most commonly associated with a state of randomness or disorder. In the
 approach of the classical thermodynamics, entropy is defined in terms of macroscopically measurable physical
 properties, such as volume, bulk mass, pressure, etc. The statistical definition defines it in terms of the
 statistics of the motions of the microscopic constituents of a system.
+"""
+
+chemical_potential = SymbolNew("mu", units.energy, display_latex="\\mu")
+"""
+The **chemical potential** of a species is the energy that can be absorbed or released due to a change of the
+particle number of the given species, e.g. in a chemical reaction or phase transition.
+"""
+
+gibbs_energy = SymbolNew("G", units.energy)
+"""
+The **Gibbs energy** is a thermodynamic potential that can be used to calculate the maximum amount of work,
+other than pressure-volume work, that may be performed by a thermodynamically closed system at constant
+temperature and pressure.
 """

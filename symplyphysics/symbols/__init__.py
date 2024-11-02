@@ -137,4 +137,6 @@ __all__ = [
     "boltzmann_factor",
     "entropy",
     "molar_heat_capacity",
+    "chemical_potential",
+    "gibbs_energy",
 ]
