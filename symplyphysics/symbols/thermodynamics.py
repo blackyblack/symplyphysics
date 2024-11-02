@@ -27,6 +27,11 @@ heat_capacity = SymbolNew("C", units.energy / units.temperature)
 supplied to an object to produce a unit change in its temperature.
 """
 
+molar_heat_capacity = SymbolNew("c_m", units.energy / (units.temperature * units.amount_of_substance))
+"""
+**Molar heat capacity** is defined as the heat capacity per unit amount of substance.
+"""
+
 thermal_expansion_coefficient = SymbolNew("alpha", 1 / units.temperature, display_latex="\\alpha")
 """
 **Thermal expansion coefficient** describes how the size of an object changes with a change in temperature at
@@ -76,4 +81,12 @@ boltzmann_factor = SymbolNew("f", dimensionless)
 """
 In statistical mechanics, the **Boltzmann factor** is a quantity that describes the approximate fraction
 of particles in the canonical ensemble.
+"""
+
+entropy = SymbolNew("S", units.energy / units.temperature)
+"""
+Entropy is a physical quantity most commonly associated with a state of randomness or disorder. In the
+approach of the classical thermodynamics, entropy is defined in terms of macroscopically measurable physical
+properties, such as volume, bulk mass, pressure, etc. The statistical definition defines it in terms of the
+statistics of the motions of the microscopic constituents of a system.
 """

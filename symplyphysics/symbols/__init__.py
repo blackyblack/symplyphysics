@@ -32,6 +32,7 @@ __all__ = [
     "linear_density",
     "whole_number",
     "spectral_energy_density",
+    "molar_mass",
     # chemistry,
     "mass_fraction",
     "amount_of_substance",
@@ -134,4 +135,6 @@ __all__ = [
     "compressibility_factor",
     "partition_function",
     "boltzmann_factor",
+    "entropy",
+    "molar_heat_capacity",
 ]

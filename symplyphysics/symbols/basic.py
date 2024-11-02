@@ -30,6 +30,11 @@ equal. Often, the inertial mass is being used, which is a measure of the object'
 when a force is applied.
 """
 
+molar_mass = SymbolNew("M", units.mass / units.amount_of_substance)
+"""
+**Molar mass** is defined as the mass per unit amount of substance.
+"""
+
 work = SymbolNew("W", units.energy)
 """
 **Work** is the energy transferred to or from an object via the application of force.
