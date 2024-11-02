@@ -308,3 +308,10 @@ layers of the fluid and the local sheer velocity.
 
 #. `Dynamic viscosity <https://en.wikipedia.org/wiki/Viscosity#Dynamic_viscosity>`__.
 """
+
+diffusion_flux = SymbolNew("J", units.amount_of_substance / (units.area * units.time))
+"""
+**Diffusion flux** is a physical quantity that measures the amount of substance that will flow through
+a unit area during a unit time interval. For the general definition of flux, see `Flux
+<https://en.wikipedia.org/wiki/Flux>`__.
+"""

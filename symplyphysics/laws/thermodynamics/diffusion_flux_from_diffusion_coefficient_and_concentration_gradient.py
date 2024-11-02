@@ -16,49 +16,41 @@ and the gradient is directed towards a higher concentration.
 #. The mixture is ideal.
 """
 
-from sympy import (Eq, Derivative)
-from symplyphysics import (units, Function, Quantity, Symbol, validate_input, validate_output)
+from sympy import Eq, Derivative
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    clone_as_function,
+)
 
-diffusion_flux = Function("diffusion_flux", units.amount_of_substance / (units.area * units.time))
+position = symbols.position
 """
-Diffusion flux.
-
-Symbol:
-    :code:`J(x)`
-"""
-
-diffusion_coefficient = Symbol("diffusion_coefficient", units.area / units.time)
-"""
-Diffusion coefficient.
-
-Symbol:
-    :code:`D`
+:symbols:`position` of particles.
 """
 
-concentration = Function("concentration", units.amount_of_substance / units.volume)
+diffusion_flux = clone_as_function(symbols.diffusion_flux, [position])
 """
-Concentration of particles as a function of position.
-
-Symbol:
-    :code:`n(x)`
+:symbols:`diffusion_flux` as a function of :attr:`~position`.
 """
 
-position = Symbol("position", units.length)
+diffusion_coefficient = symbols.diffusion_coefficient
 """
-Position of particles.
+:symbols:`diffusion_coefficient`.
+"""
 
-Symbol:
-    :code:`x`
+concentration = clone_as_function(symbols.number_density, [position])
+"""
+Concentration of particles as a function of :attr:`~position`. See :symbols:`number_density`.
 """
 
 law = Eq(diffusion_flux(position),
     -diffusion_coefficient * Derivative(concentration(position), position))
-r"""
-:code:`J(x) = -1 * D * Derivative(n(x), x)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        J(x) = - D \frac{d n}{d x}
+:laws:latex::
 """
 
 

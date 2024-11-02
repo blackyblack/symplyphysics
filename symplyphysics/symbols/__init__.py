@@ -92,6 +92,7 @@ __all__ = [
     "radius",
     "diffusion_coefficient",
     "dynamic_viscosity",
+    "diffusion_flux",
     # electrodynamics
     "admittance",
     "electrical_conductance",
