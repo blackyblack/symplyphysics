@@ -24,16 +24,18 @@ the type of diffusing particles. This law is also known as the *Stokes—Einstei
 #. Low Reynolds number, i.e. non-turbulent flow.
 """
 
-from sympy import (Eq, solve, pi)
-from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output,
-    quantities)
+from sympy import Eq, solve, pi
+from symplyphysics import (
+    symbols,
+    Quantity,
+    validate_input,
+    validate_output,
+    quantities,
+)
 
-diffusion_coefficient = Symbol("diffusion_coefficient", units.area / units.time)
+diffusion_coefficient = symbols.diffusion_coefficient
 """
-Diffusion coefficient of the particles.
-
-Symbol:
-    :code:`D`
+:symbols:`diffusion_coefficient` of the particles.
 """
 
 temperature = symbols.temperature
@@ -41,34 +43,23 @@ temperature = symbols.temperature
 :symbols:`temperature` of the system.
 """
 
-particle_radius = Symbol("particle_radius", units.length)
+particle_radius = symbols.radius
 """
-Radius of the particles.
-
-Symbol:
-    :code:`r`
+:symbols:`radius` of the particles.
 """
 
-dynamic_viscosity = Symbol("dynamic_viscosity", units.pressure * units.time)
-r"""
-Dynamic viscosity of the particles.
-
-Symbol:
-    :code:`eta`
-
-Latex:
-    :math:`\eta`
+dynamic_viscosity = symbols.dynamic_viscosity
+"""
+:symbols:`dynamic_viscosity` of the particles.
 """
 
 law = Eq(
     diffusion_coefficient, quantities.molar_gas_constant * temperature /
     (6 * quantities.avogadro_constant * pi * particle_radius * dynamic_viscosity))
-r"""
-:code:`D = (R * T) / (6 * N_A * pi * r * eta)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        D = \frac{R T}{6 N_\text{A} \pi r \eta}
+:laws:latex::
 """
 
 

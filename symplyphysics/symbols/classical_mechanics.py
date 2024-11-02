@@ -58,6 +58,12 @@ length = SymbolNew("l", units.length)
 **Length** is a measure of a size of an object.
 """
 
+radius = SymbolNew("r", units.length)
+"""
+**Radius** of a sphere is the distance from the center of the sphere to any point on
+the sphere.
+"""
+
 thickness = SymbolNew("d", units.length)
 """
 **Thickness** is a measure of a size of an object, usually the separation between two layers, or
@@ -279,4 +285,26 @@ mach_number = SymbolNew("M", dimensionless, display_latex="\\text{M}", positive=
 """
 The **Mach number** is a dimensionless quantity in fluid dynamics representing the ratio of flow velocity
 past a boundary to the local speed of sound.
+"""
+
+diffusion_coefficient = SymbolNew("D", units.area / units.time)
+"""
+**Diffusion coefficient**, or **diffusivity**, is usually defined as the proportionality constant between
+the molar flux due to molecular diffusion and the negative value of the gradient in the concentration of
+the species.
+
+**Links:**
+
+#. `Mass diffusivity <https://en.wikipedia.org/wiki/Mass_diffusivity>`__.
+"""
+
+dynamic_viscosity = SymbolNew("mu", units.pressure * units.time)
+"""
+**Dynamic viscosity** is a physical quantity measuring the resistence to deformation at a given rate.
+Specifically in fluid mechanics, it is the proportionality factor between the shear stress of the adjacent
+layers of the fluid and the local sheer velocity.
+
+**Links:**
+
+#. `Dynamic viscosity <https://en.wikipedia.org/wiki/Viscosity#Dynamic_viscosity>`__.
 """

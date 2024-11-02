@@ -89,6 +89,9 @@ __all__ = [
     "phase",
     "tension",
     "mach_number",
+    "radius",
+    "diffusion_coefficient",
+    "dynamic_viscosity",
     # electrodynamics
     "admittance",
     "electrical_conductance",
