@@ -132,4 +132,6 @@ __all__ = [
     "thermal_conductivity",
     "thermal_insulance",
     "compressibility_factor",
+    "partition_function",
+    "boltzmann_factor",
 ]

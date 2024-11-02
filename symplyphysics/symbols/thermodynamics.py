@@ -63,3 +63,17 @@ compressibility_factor = SymbolNew("Z", dimensionless)
 The **compressibility factor**, also known as the **compression factor** or the **gas deviation factor**,
 describes the deviation of a real gas from ideal gas behavior.
 """
+
+partition_function = SymbolNew("Z", dimensionless)
+"""
+In statistical mechanics, the **partition function** describes the statistical properties of a system in
+thermodynamic equilibrium. It plays the role of a normalization constant in microstate distributions of
+the system by encoding the information about how the probabilities are partitioned among the different
+microstates based on the specific microstate variables.
+"""
+
+boltzmann_factor = SymbolNew("f", dimensionless)
+"""
+In statistical mechanics, the **Boltzmann factor** is a quantity that describes the approximate fraction
+of particles in the canonical ensemble.
+"""
