@@ -16,24 +16,16 @@ and thermal wavelength.
 
 from sympy import Eq, log
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     symbols,
     quantities,
 )
 
-chemical_potential = Symbol("chemical_potential", units.energy)
+chemical_potential = symbols.chemical_potential
 r"""
-Chemical potential of ideal gas.
-
-Symbol:
-    :code:`mu`
-
-Latex:
-    :math:`\mu`
+:symbols:`chemical_potential` of ideal gas.
 """
 
 temperature = symbols.temperature
@@ -41,33 +33,23 @@ temperature = symbols.temperature
 :symbols:`temperature` of the gas.
 """
 
-concentration = Symbol("concentration", 1 / units.volume)
+concentration = symbols.number_density
 """
-Concentration of the gas, or particle count per unit volume.
-
-Symbol:
-    :code:`n`
+Concentration of the gas, or :symbols:`number_density`.
 """
 
-thermal_wavelength = Symbol("thermal_wavelength", units.length)
-r"""
-:doc:`Thermal de Broglie wavelength <definitions.thermal_de_broglie_wavelength>` of the gas.
-
-Symbol:
-    :code:`lambda`
-
-Latex:
-    :math:`\lambda`
+thermal_wavelength = symbols.thermal_wavelength
+"""
+:symbols:`thermal_wavelength` of the gas. Also see :doc:`Thermal de Broglie wavelength
+<definitions.thermal_de_broglie_wavelength>`.
 """
 
 law = Eq(chemical_potential,
     quantities.boltzmann_constant * temperature * log(concentration * thermal_wavelength**3))
-r"""
-:code:`mu = k_B * T * log(n * lambda^3)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \mu = k_\text{B} T \log \left( n \lambda^3 \right)
+:laws:latex::
 """
 
 

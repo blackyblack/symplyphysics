@@ -123,3 +123,13 @@ of molecules or the sum of a substance's molecular kinetic and potential energy.
 and kinetic energies of the system as a whole and is only concerned with the energy of the molecules comprising
 the system.
 """
+
+thermal_wavelength = SymbolNew("lambda", units.length, display_latex="\\lambda")
+"""
+The **thermal de Broglie wavelength** is a quantity that is roughly the average de Broglie wavelength of
+particles in an ideal gas at the specified temperature.
+
+**Links:**
+
+#. `Thermal de Broglie wavelength <https://en.wikipedia.org/wiki/Thermal_de_Broglie_wavelength>`__.
+"""

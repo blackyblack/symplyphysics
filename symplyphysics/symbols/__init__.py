@@ -142,4 +142,5 @@ __all__ = [
     "enthalpy",
     "helmholtz_free_energy",
     "internal_energy",
+    "thermal_wavelength",
 ]
