@@ -115,3 +115,11 @@ helmholtz_free_energy = SymbolNew("F", units.energy)
 In thermodynamics, the **Helmholtz free energy** (or **Helmholtz energy**) is a thermodynamic potential
 that measures the useful work obtainable from a closed thermodynamic system at a constant temperature.
 """
+
+internal_energy = SymbolNew("U", units.energy)
+"""
+**Internal energy** is a thermodynamical state function which denotes the entire energy of a closed system
+of molecules or the sum of a substance's molecular kinetic and potential energy. It excludes the potential
+and kinetic energies of the system as a whole and is only concerned with the energy of the molecules comprising
+the system.
+"""

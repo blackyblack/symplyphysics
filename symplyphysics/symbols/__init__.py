@@ -141,4 +141,5 @@ __all__ = [
     "gibbs_energy",
     "enthalpy",
     "helmholtz_free_energy",
+    "internal_energy",
 ]

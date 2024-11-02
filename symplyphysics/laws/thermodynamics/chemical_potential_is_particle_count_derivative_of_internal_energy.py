@@ -9,69 +9,50 @@ by one.
 
 from sympy import Eq, Derivative, Point2D
 from symplyphysics import (
-    units,
-    dimensionless,
     Quantity,
-    Symbol,
-    Function,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_function,
 )
 from symplyphysics.core.geometry.line import two_point_function
 
-chemical_potential = Symbol("chemical_potential", units.energy)
+chemical_potential = symbols.chemical_potential
 r"""
-Chemical potential of the system.
-
-Symbol:
-    :code:`mu`
-
-Latex:
-    :math:`\mu`
+:symbols:`chemical_potential` of the system.
 """
 
-internal_energy = Function("internal_energy", units.energy)
+entropy = symbols.entropy
 """
-Internal energy of the system as a function of its natural variables.
-
-Symbol:
-    :code:`U`
+:symbols:`entropy` of the system.
 """
 
-particle_count = Symbol("particle_count", dimensionless)
+volume = symbols.volume
 """
-Number of particles in the system.
-
-Symbol:
-    :code:`N`
+:symbols:`volume` of the system.
 """
 
-entropy = Symbol("entropy", units.energy / units.temperature)
+particle_count = symbols.particle_count
 """
-Entropy of the system.
-
-Symbol:
-    :code:`S`
+:symbols:`particle_count` of the system.
 """
 
-volume = Symbol("volume", units.volume)
+internal_energy = clone_as_function(
+    symbols.internal_energy,
+    [entropy, volume, particle_count],
+)
 """
-Volume of the system.
-
-Symbol:
-    :code:`V`
+:symbols:`internal_energy` of the system as a function of its natural variables.
 """
 
 law = Eq(
     chemical_potential,
     Derivative(internal_energy(entropy, volume, particle_count), particle_count),
 )
-r"""
-:code:`mu = Derivative(U(S, V, N), N)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \mu = \left( \frac{\partial U}{\partial N} \right)_{S, V}
+:laws:latex::
 """
 
 
