@@ -109,3 +109,9 @@ enthalpy = SymbolNew("H", units.energy)
 **Enthalpy** is a state function defined as the sum of a thermodynamic system's internal energy and the
 product of its pressure and volume, used in measurements at a constant external pressure.
 """
+
+helmholtz_free_energy = SymbolNew("F", units.energy)
+"""
+In thermodynamics, the **Helmholtz free energy** (or **Helmholtz energy**) is a thermodynamic potential
+that measures the useful work obtainable from a closed thermodynamic system at a constant temperature.
+"""

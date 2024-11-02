@@ -140,4 +140,5 @@ __all__ = [
     "chemical_potential",
     "gibbs_energy",
     "enthalpy",
+    "helmholtz_free_energy",
 ]
