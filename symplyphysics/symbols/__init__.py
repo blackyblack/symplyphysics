@@ -139,4 +139,5 @@ __all__ = [
     "molar_heat_capacity",
     "chemical_potential",
     "gibbs_energy",
+    "enthalpy",
 ]

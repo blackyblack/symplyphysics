@@ -103,3 +103,9 @@ The **Gibbs energy** is a thermodynamic potential that can be used to calculate 
 other than pressure-volume work, that may be performed by a thermodynamically closed system at constant
 temperature and pressure.
 """
+
+enthalpy = SymbolNew("H", units.energy)
+"""
+**Enthalpy** is a state function defined as the sum of a thermodynamic system's internal energy and the
+product of its pressure and volume, used in measurements at a constant external pressure.
+"""
