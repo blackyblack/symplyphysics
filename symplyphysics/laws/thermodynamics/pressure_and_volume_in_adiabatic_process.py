@@ -4,12 +4,21 @@ Adiabatic process equation via pressure and volume
 
 An *adiabatic process* is a type of thermodynamic process that occurs without transferring
 heat or mass between the thermodynamic system and its environment.
+
+..
+    TODO rename file
 """
 
-from sympy import Eq, Rational, solve, Symbol as SymSymbol, Function as SymFunction, dsolve, symbols as sym_symbols
-from sympy.abc import t
-from symplyphysics import (clone_as_symbol, symbols, units, Quantity, Symbol, dimensionless,
-    validate_input, validate_output)
+from sympy import Eq, Rational, solve, dsolve
+from sympy.abc import t as _t
+from symplyphysics import (
+    clone_as_symbol,
+    clone_as_function,
+    symbols,
+    Quantity,
+    validate_input,
+    validate_output,
+)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import heat_capacity_ratio
 from symplyphysics.laws.thermodynamics import (
@@ -20,83 +29,51 @@ from symplyphysics.laws.thermodynamics import (
 )
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation
 
-adiabatic_index = Symbol("adiabatic_index", dimensionless)
-r"""
-Adiabatic index, also known as :doc:`heat capacity ratio <definitions.heat_capacity_ratio>`, of the gas.
-
-Symbol:
-    :code:`gamma`
-
-Latex:
-    :math:`\gamma`
+adiabatic_index = symbols.adiabatic_index
+"""
+:symbols:`adiabatic_index`, also known as :doc:`heat capacity ratio <definitions.heat_capacity_ratio>`, of the gas.
 """
 
 # Some of the following parameters depend on each other. It is up to user which to choose as known.
 
-initial_temperature = clone_as_symbol(symbols.temperature, display_symbol="T0", display_latex="T_0")
+initial_temperature = clone_as_symbol(symbols.temperature, subscript="0")
 """
 Initial :symbols:`temperature` of the system.
 """
 
-final_temperature = clone_as_symbol(symbols.temperature, display_symbol="T1", display_latex="T_1")
+final_temperature = clone_as_symbol(symbols.temperature, subscript="1")
 """
 Final :symbols:`temperature` of the system.
 """
 
-initial_volume = Symbol("initial_volume", units.volume)
+initial_volume = clone_as_symbol(symbols.volume, subscript="0")
 """
-Initial volume of the system.
-
-Symbol:
-    :code:`V0`
-
-Latex:
-    :math:`V_0`
+Initial :symbols:`volume` of the system.
 """
 
-final_volume = Symbol("final_volume", units.volume)
+final_volume = clone_as_symbol(symbols.volume, subscript="1")
 """
-Final volume of the system.
-
-Symbol:
-    :code:`V1`
-
-Latex:
-    :math:`V_1`
+Final :symbols:`volume` of the system.
 """
 
-initial_pressure = Symbol("initial_pressure", units.pressure)
+initial_pressure = clone_as_symbol(symbols.pressure, subscript="0")
 """
-Initial pressure inside the system.
-
-Symbol:
-    :code:`p0`
-
-Latex:
-    :math:`p_0`
+Initial :symbols:`pressure` inside the system.
 """
 
-final_pressure = Symbol("final_pressure", units.pressure)
+final_pressure = clone_as_symbol(symbols.pressure, subscript="1")
 """
-Final pressure inside the system.
-
-Symbol:
-    :code:`p1`
-
-Latex:
-    :math:`p_1`
+Final :symbols:`pressure` inside the system.
 """
 
 adiabatic_condition = Eq(
     initial_pressure * (initial_volume**adiabatic_index),
     final_pressure * (final_volume**adiabatic_index),
 )
-r"""
-:code:`p0 * V0^gamma = p1 * V1^gamma`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        p_0 V_0^\gamma = p_1 V_1^\gamma
+:laws:latex::
 """
 
 eq_start = ideal_gas_equation.law.subs({
@@ -119,13 +96,13 @@ _temperature = ideal_gas_equation.temperature
 _pressure = ideal_gas_equation.pressure
 _volume = ideal_gas_equation.volume
 
-_adiabatic_index = Symbol("adiabatic_index", positive=True)
+_adiabatic_index = clone_as_symbol(symbols.adiabatic_index, positive=True)
 _isobaric_heat_capacity = mayers_relation.isobaric_heat_capacity
 _isochoric_heat_capacity = mayers_relation.isochoric_heat_capacity
 
-_temperature_change = SymSymbol("temperature_change")
-_pressure_change = SymSymbol("pressure_change")
-_volume_change = SymSymbol("volume_change")
+_temperature_change = clone_as_symbol(symbols.temperature)
+_pressure_change = clone_as_symbol(symbols.pressure)
+_volume_change = clone_as_symbol(symbols.volume)
 
 _internal_energy_change_expr = internal_energy_law.law.rhs.subs({
     internal_energy_law.temperature_change: _temperature_change,
@@ -145,17 +122,17 @@ _first_law_eqn = first_law.law.subs({
 
 # Expressing the temperature differential through pressure and volume differentials
 
-_parameterized_pressure = sym_symbols("pressure", cls=SymFunction)
-_parameterized_volume = sym_symbols("volume", cls=SymFunction)
+_parameterized_pressure = clone_as_function(symbols.pressure)
+_parameterized_volume = clone_as_function(symbols.volume)
 
 _temperature_change_expr = solve(ideal_gas_equation.law, _temperature)[0].subs({
-    _pressure: _parameterized_pressure(t),
-    _volume: _parameterized_volume(t),
-}).diff(t).subs({
-    _parameterized_pressure(t).diff(t): _pressure_change,
-    _parameterized_volume(t).diff(t): _volume_change,
-    _parameterized_pressure(t): _pressure,
-    _parameterized_volume(t): _volume,
+    _pressure: _parameterized_pressure(_t),
+    _volume: _parameterized_volume(_t),
+}).diff(_t).subs({
+    _parameterized_pressure(_t).diff(_t): _pressure_change,
+    _parameterized_volume(_t).diff(_t): _volume_change,
+    _parameterized_pressure(_t): _pressure,
+    _parameterized_volume(_t): _volume,
 })
 
 _mayers_relation = mayers_relation.law.subs(mayers_relation.amount_of_substance,
