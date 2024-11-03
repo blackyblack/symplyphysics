@@ -149,4 +149,5 @@ __all__ = [
     "thermal_wavelength",
     "heat",
     "thermal_efficiency",
+    "statistical_weight",
 ]
