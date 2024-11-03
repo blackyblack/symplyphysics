@@ -39,7 +39,7 @@ def process_string(doc: str, path: Path) -> str:
                 last_index_to = index_to
                 break
         else:
-            raise ValueError(f"Unknown symbol {name} in '{path}'.")
+            raise ValueError(f"Unknown symbol '{name}' in '{path}'.")
 
     # no substitution happened
     if not parts:
