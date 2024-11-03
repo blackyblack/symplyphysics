@@ -315,3 +315,10 @@ diffusion_flux = SymbolNew("J", units.amount_of_substance / (units.area * units.
 a unit area during a unit time interval. For the general definition of flux, see `Flux
 <https://en.wikipedia.org/wiki/Flux>`__.
 """
+
+degrees_of_freedom = SymbolNew("f", dimensionless, integer=True, positive=True)
+"""
+A **degree of freedom** is a physical parameter in the parameterization of a physical system. The number
+of degrees of freedom indicates the smallest number of parameters whose values determine all parameters
+in the chosen parameterization.
+"""

@@ -93,6 +93,7 @@ __all__ = [
     "diffusion_coefficient",
     "dynamic_viscosity",
     "diffusion_flux",
+    "degrees_of_freedom",
     # electrodynamics
     "admittance",
     "electrical_conductance",

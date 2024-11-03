@@ -20,49 +20,39 @@ From that one can derive the expression of the isochoric heat capacity of ideal 
 **Conditions:**
 
 #. Gas is ideal.
-#. Works in the classical theory of heat capacity of gases. For a more accurate represention refer to
+#. Works in the classical theory of heat capacity of gases. For a more accurate representation refer to
    the quantum theory, which accounts for the "freezing" of the degrees of freedom and other phenomena.
 """
 
 from sympy import Eq
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     quantities,
+    symbols,
+    clone_as_symbol,
 )
 
-isochoric_molar_heat_capacity = Symbol(
-    "isochoric_molar_heat_capacity",
-    units.energy / (units.temperature * units.amount_of_substance),
+isochoric_molar_heat_capacity = clone_as_symbol(
+    symbols.molar_heat_capacity,
+    display_symbol="c_Vm",
+    display_latex="c_{V, m}",
 )
-r"""
-Heat capacity of ideal gas at constant volume per unit amount of substance.
-
-Symbol:
-    :code:`C_V`
-
-Latex:
-    :math:`C_V`
+"""
+:symbols:`molar_heat_capacity` at constant :symbols:`volume`.
 """
 
-degrees_of_freedom = Symbol("degrees_of_freedom", integer=True)
+degrees_of_freedom = symbols.degrees_of_freedom
 """
-Number of degrees of freedom of gas molecules.
-
-Symbol:
-    :code:`f`
+Number of :symbols:`degrees_of_freedom` of gas molecules.
 """
 
 law = Eq(isochoric_molar_heat_capacity, (degrees_of_freedom / 2) * quantities.molar_gas_constant)
-r"""
-:code:`C_V = (f / 2) * R`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        C_V = \frac{f}{2} R
+:laws:latex::
 """
 
 
