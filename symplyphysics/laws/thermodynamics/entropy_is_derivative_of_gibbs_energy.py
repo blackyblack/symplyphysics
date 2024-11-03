@@ -7,32 +7,18 @@ Entropy of a system can be found if its Gibbs energy is known as a function of t
 
 from sympy import Eq, Derivative, solve
 from symplyphysics import (
-    units,
-    dimensionless,
     Quantity,
-    Symbol,
-    Function,
     validate_input,
     validate_output,
     symbols,
+    clone_as_function,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import gibbs_energy_differential
 
-entropy = Symbol("entropy", units.energy / units.temperature)
+entropy = symbols.entropy
 """
-Entropy of the system.
-
-Symbol:
-    :code:`S`
-"""
-
-gibbs_energy = Function("gibbs_energy", units.energy)
-"""
-Gibbs energy of the system.
-
-Symbol:
-    :code:`G(T, p, N)`
+:symbols:`entropy` of the system.
 """
 
 temperature = symbols.temperature
@@ -40,29 +26,29 @@ temperature = symbols.temperature
 :symbols:`temperature` of the system.
 """
 
-pressure = Symbol("pressure", units.pressure)
+pressure = symbols.pressure
 """
-Pressure inside the system.
-
-Symbol:
-    :code:`p`
+:symbols:`pressure` inside the system.
 """
 
-particle_count = Symbol("particle_count", dimensionless)
+particle_count = symbols.particle_count
 """
-Number of particles in the system.
+:symbols:`particle_count` of the system.
+"""
 
-Symbol:
-    :code:`N`
+gibbs_energy = clone_as_function(
+    symbols.gibbs_energy,
+    [temperature, pressure, particle_count],
+)
+"""
+:symbols:`gibbs_energy` of the system.
 """
 
 law = Eq(entropy, -1 * Derivative(gibbs_energy(temperature, pressure, particle_count), temperature))
-r"""
-:code:`S = -1 * Derivative(G(T, p, N), T)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        S = - \left( \frac{\partial G}{\partial T} \right)_{p, N}
+:laws:latex::
 """
 
 # Derive from the expression of Gibbs energy differential
