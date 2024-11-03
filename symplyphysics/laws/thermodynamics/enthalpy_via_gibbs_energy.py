@@ -14,12 +14,10 @@ For example, enthalpy :math:`H` can be found using the Gibbs energy :math:`G` un
 from sympy import Eq, Derivative, Point2D, solve
 from symplyphysics import (
     symbols,
-    units,
     Quantity,
-    Symbol,
-    Function,
     validate_input,
     validate_output,
+    clone_as_function,
 )
 from symplyphysics.core.geometry.line import two_point_function
 from symplyphysics.core.expr_comparisons import expr_equals
@@ -28,20 +26,9 @@ from symplyphysics.laws.thermodynamics import (
     entropy_is_derivative_of_gibbs_energy as entropy_law,
 )
 
-enthalpy = Symbol("enthalpy", units.energy)
+enthalpy = symbols.enthalpy
 """
-Enthalpy of the system.
-
-Symbol:
-    :code:`H`
-"""
-
-gibbs_energy = Function("gibbs_energy", units.energy)
-"""
-Gibbs energy of the system.
-
-Symbol:
-    :code:`G(T, p)`
+:symbols:`enthalpy` of the system.
 """
 
 temperature = symbols.temperature
@@ -49,24 +36,27 @@ temperature = symbols.temperature
 :symbols:`temperature` of the system.
 """
 
-pressure = Symbol("pressure", units.pressure)
+pressure = symbols.pressure
 """
-Pressure inside the system.
+:symbols:`pressure` inside the system.
+"""
+
+gibbs_energy = clone_as_function(symbols.gibbs_energy, [temperature, pressure])
+"""
+Gibbs energy of the system.
 
 Symbol:
-    :code:`p`
+    :code:`G(T, p)`
 """
 
 law = Eq(
     enthalpy,
     gibbs_energy(temperature, pressure) -
     temperature * Derivative(gibbs_energy(temperature, pressure), temperature))
-r"""
-:code:`H = G(T, p) - T * Derivative(G(T, p), T)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        H = G(T, p) - T \left( \frac{\partial G}{\partial T} \right)_p
+:laws:latex::
 """
 
 # Derive from definition of Gibbs energy and thermodynamical relations
