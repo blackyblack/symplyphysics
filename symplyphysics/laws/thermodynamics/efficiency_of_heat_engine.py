@@ -8,55 +8,34 @@ by the system.
 
 from sympy import Eq, solve
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
-    dimensionless,
     convert_to_float,
+    symbols,
+    clone_as_symbol,
 )
 
-heat_from_heater = Symbol("heat_from_heater", units.energy)
+heat_from_heater = clone_as_symbol(symbols.heat, subscript="h")
 r"""
-Heat transferred by the heater to the heat engine.
-
-Symbol:
-    :code:`Q_h`
-
-Latex:
-    :math:`Q_\text{h}`
+:symbols:`heat` transferred by the heater to the heat engine.
 """
 
-heat_to_refrigerator = Symbol("heat_to_refrigerator", units.energy)
+heat_to_refrigerator = clone_as_symbol(symbols.heat, subscript="r")
 r"""
-Heat transferred by the heat engine to the refrigerator.
-
-Symbol:
-    :code:`Q_r`
-
-Latex:
-    :math:`Q_\text{r}`
+:symbols:`heat` transferred by the heat engine to the refrigerator.
 """
 
-efficiency = Symbol("efficiency", dimensionless)
-r"""
-Efficiency of the heat engine.
-
-Symbol:
-    :code:`eta`
-
-Latex:
-    :math:`\eta`
+efficiency = symbols.thermal_efficiency
+"""
+:symbols:`thermal_efficiency` of the heat engine.
 """
 
 law = Eq(efficiency, 1 - heat_to_refrigerator / heat_from_heater)
-r"""
-:code:`eta = 1 - Q_r / Q_h`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \eta = 1 - \frac{Q_\text{r}}{Q_\text{h}}
+:laws:latex::
 """
 
 

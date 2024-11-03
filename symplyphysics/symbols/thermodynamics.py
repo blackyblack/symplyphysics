@@ -133,3 +133,15 @@ particles in an ideal gas at the specified temperature.
 
 #. `Thermal de Broglie wavelength <https://en.wikipedia.org/wiki/Thermal_de_Broglie_wavelength>`__.
 """
+
+heat = SymbolNew("Q", units.energy)
+"""
+In thermodynamics, **heat** is energy in transfer between a thermodynamic system and its surroundings by modes
+other than thermodynamic work and transfer of matter.
+"""
+
+thermal_efficiency = SymbolNew("eta", dimensionless, display_latex="\\eta")
+"""
+The **thermal efficiency** is a dimensionless performance measure of a device that uses thermal energy. A generic
+definition of thermal energy is the ratio of the energy benefit to the energy costs attributed to the defice.
+"""
