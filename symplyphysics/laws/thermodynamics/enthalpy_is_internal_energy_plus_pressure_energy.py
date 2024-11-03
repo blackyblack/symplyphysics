@@ -9,52 +9,37 @@ referred to as the pressure energy.
 
 from sympy import Eq
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
 )
 
-enthalpy = Symbol("enthalpy", units.energy)
+enthalpy = symbols.enthalpy
 """
-Enthalpy of the system.
-
-Symbol:
-    :code:`H`
+:symbols:`enthalpy` of the system.
 """
 
-internal_energy = Symbol("internal_energy", units.energy)
+internal_energy = symbols.internal_energy
 """
-Internal energy of the system.
-
-Symbol:
-    :code:`U`
+:symbols:`internal_energy` of the system.
 """
 
-pressure = Symbol("pressure", units.pressure)
+pressure = symbols.pressure
 """
-Pressure inside the system.
-
-Symbol:
-    :code:`p`
+:symbols:`pressure` inside the system.
 """
 
-volume = Symbol("volume", units.volume)
+volume = symbols.volume
 """
-Volume of the system.
-
-Symbol:
-    :code:`V`
+:symbols:`volume` of the system.
 """
 
 law = Eq(enthalpy, internal_energy + pressure * volume)
-r"""
-:code:`H = U + p * V`
+"""
+:laws:symbol::
 
-Latex
-    .. math::
-        H = U + p V
+:laws:latex::
 """
 
 
