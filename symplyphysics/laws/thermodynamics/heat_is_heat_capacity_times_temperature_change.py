@@ -15,40 +15,39 @@ to the heat capacity of the body times the change in the body's temperature.
    refer to the differential definition of the heat capacity.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (clone_as_symbol, symbols, units, Quantity, Symbol, validate_input,
-    validate_output)
+from sympy import Eq, solve
+from symplyphysics import (
+    clone_as_symbol,
+    symbols,
+    Quantity,
+    validate_input,
+    validate_output,
+)
 
-heat = Symbol("heat", units.energy)
+heat = symbols.heat
 """
-Heat received or released by the body.
-
-Symbol:
-    :code:`Q`
-"""
-
-heat_capacity = Symbol("heat_capacity", units.energy / units.temperature)
-"""
-Heat capacity of the body.
-
-Symbol:
-    :code:`C`
+:symbols:`heat` received or released by the body.
 """
 
-temperature_change = clone_as_symbol(symbols.temperature,
-    display_symbol="dT",
-    display_latex="\\Delta T")
+heat_capacity = symbols.heat_capacity
+"""
+:symbols:`heat_capacity` of the body.
+"""
+
+temperature_change = clone_as_symbol(
+    symbols.temperature,
+    display_symbol="Delta(T)",
+    display_latex="\\Delta T",
+)
 """
 Change in the body's :symbols:`temperature`
 """
 
 law = Eq(heat, heat_capacity * temperature_change)
-r"""
-:code:`Q = C * dT`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        Q = C \Delta T
+:laws:latex::
 """
 
 
