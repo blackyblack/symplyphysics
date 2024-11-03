@@ -11,56 +11,49 @@ of the gas.
 #. Applies to ideal gases.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (clone_as_symbol, symbols, units, Quantity, Symbol, validate_input,
-    validate_output)
-from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as thermodynamics_law
+from sympy import Eq, solve
+from symplyphysics import (
+    clone_as_symbol,
+    symbols,
+    Quantity,
+    validate_input,
+    validate_output,
+)
+from symplyphysics.laws.thermodynamics.equations_of_state import (
+    ideal_gas_equation as thermodynamics_law,
+)
 
-initial_pressure = Symbol("initial_pressure", units.pressure)
+initial_pressure = clone_as_symbol(symbols.pressure, subscript="0")
 """
-Initial pressure of the gas.
-
-Symbol:
-    :code:`p0`
-
-Latex:
-    :math:`p_0`
-"""
-
-final_pressure = Symbol("final_pressure", units.pressure)
-"""
-Final pressure of the gas.
-
-Symbol:
-    :code:`p1`
-
-Latex:
-    :math:`p_1`
+Initial :symbols:`pressure` of the gas.
 """
 
-initial_temperature = clone_as_symbol(symbols.temperature, display_symbol="T0", display_latex="T_0")
+final_pressure = clone_as_symbol(symbols.pressure, subscript="1")
+"""
+Final :symbols:`pressure` of the gas.
+"""
+
+initial_temperature = clone_as_symbol(symbols.temperature, subscript="0")
 """
 Initial :symbols:`temperature` of the gas.
 """
 
-final_temperature = clone_as_symbol(symbols.temperature, display_symbol="T1", display_latex="T_1")
+final_temperature = clone_as_symbol(symbols.temperature, subscript="1")
 """
 Final :symbols:`temperature` of the gas.
 """
 
 law = Eq(initial_pressure / final_pressure, initial_temperature / final_temperature)
-r"""
-:code:`p0 / p1 = T0 / T1`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \frac{p_0}{p_1} = \frac{T_0}{T_1}
+:laws:latex::
 """
 
 ## Derive the same law from the general ideal gas law
 
-_volume_start = Symbol("volume_start", units.volume)
-_volume_end = Symbol("volume_end", units.volume)
+_volume_start = clone_as_symbol(symbols.volume, subscript="0")
+_volume_end = clone_as_symbol(symbols.volume, subscript="1")
 
 _isochoric_condition = Eq(_volume_start, _volume_end)
 
