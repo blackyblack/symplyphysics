@@ -22,7 +22,7 @@ from sympy import Eq, Rational, sqrt, pi, exp, solve
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
     clone_as_symbol,
@@ -33,22 +33,17 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.dynamics import kinetic_energy_from_mass_and_speed as kinetic_energy_law
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed_distribution
 
-energy_distribution_function = Symbol("energy_distribution_function",
+energy = clone_as_symbol(symbols.energy, positive=True)
+"""
+:symbols:`energy` of the ensemble.
+"""
+
+energy_distribution_function = SymbolNew(
+    "f(E)",
     1 / units.energy,
     positive=True)
 """
-Energy distribution function.
-
-Symbol:
-    :code:`f(E)`
-"""
-
-energy = Symbol("energy", units.energy, positive=True)
-"""
-Energy of the ensemble.
-
-Symbol:
-    :code:`E`
+:attr:`~energy` distribution function.
 """
 
 equilibrium_temperature = clone_as_symbol(symbols.temperature, positive=True)
@@ -60,12 +55,10 @@ law = Eq(
     energy_distribution_function, 2 * sqrt(energy / pi) *
     (quantities.boltzmann_constant * equilibrium_temperature)**Rational(-3, 2) * exp(-1 * energy /
     (quantities.boltzmann_constant * equilibrium_temperature)))
-r"""
-:code:`f(E) = 2 * sqrt(E / pi) * (k_B * T)^(3/2) * exp(-1 * E / (k_B * T))`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        f(E) = 2 \sqrt \frac{E}{\pi} \left( k_\text{B} T \right)^{3/2} \exp \left( - \frac{E}{k_\text{B} T} \right)
+:laws:latex::
 """
 
 # Derive from speed distribution and kinetic energy formula
