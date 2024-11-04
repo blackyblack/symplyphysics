@@ -12,18 +12,14 @@ internal energy.
 """
 
 from sympy import Eq
-from symplyphysics import (units, dimensionless, Quantity, Symbol, validate_input, validate_output,
-    symbols)
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import enthalpy_is_internal_energy_plus_pressure_energy as enthalpy_def
 from symplyphysics.laws.thermodynamics.euler_relations import internal_energy_formula
 
-enthalpy = Symbol("enthalpy", units.energy)
+enthalpy = symbols.enthalpy
 """
-:doc:`Enthalpy <laws.thermodynamics.enthalpy_is_internal_energy_plus_pressure_energy>` of the system.
-
-Symbol:
-    :code:`H`
+:symbols:`enthalpy` of the system. Also see :doc:`laws.thermodynamics.enthalpy_is_internal_energy_plus_pressure_energy`.
 """
 
 temperature = symbols.temperature
@@ -31,41 +27,27 @@ temperature = symbols.temperature
 :symbols:`temperature` of the system.
 """
 
-entropy = Symbol("entropy", units.energy / units.temperature)
+entropy = symbols.entropy
 """
-:doc:`Entropy <laws.thermodynamics.entropy_change_in_reversible_process>` of the system.
-
-Symbol:
-    :code:`S`
+:symbols:`entropy` of the system. Also see :doc:`laws.thermodynamics.entropy_change_in_reversible_process`.
 """
 
-chemical_potential = Symbol("chemical_potential", units.energy)
-r"""
-:doc:`Chemical potential <laws.thermodynamics.chemical_potential_is_particle_count_derivative_of_internal_energy>`
-of the system.
-
-Symbol:
-    :code:`mu`
-
-Latex:
-    :math:`\mu`
+chemical_potential = symbols.chemical_potential
+"""
+:symbols:`chemical_potential` of the system. Also see
+:doc:`laws.thermodynamics.chemical_potential_is_particle_count_derivative_of_internal_energy`.
 """
 
-particle_count = Symbol("particle_count", dimensionless)
+particle_count = symbols.particle_count
 """
-Number of particles in the system.
-
-Symbol:
-    :code:`N`
+:symbols:`particle_count` of the system.
 """
 
 law = Eq(enthalpy, temperature * entropy + chemical_potential * particle_count)
-r"""
-:code:`H = T * S + mu * N`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        H = T S + \mu N
+:laws:latex::
 """
 
 # Derive from enthalpy definition and internal energy Euler relation
