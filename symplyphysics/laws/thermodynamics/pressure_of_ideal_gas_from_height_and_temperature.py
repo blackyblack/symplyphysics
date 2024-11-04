@@ -15,27 +15,24 @@ The *barometric formula* determines the dependence of the pressure or density of
 #. The gas is in a uniform gravity field.
 """
 
-from sympy import (Eq, solve, exp)
-from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output,
-    quantities)
+from sympy import Eq, solve, exp
+from symplyphysics import (
+    symbols,
+    Quantity,
+    validate_input,
+    validate_output,
+    quantities,
+    clone_as_symbol,
+)
 
-final_pressure = Symbol("final_pressure", units.pressure)
+final_pressure = symbols.pressure
 """
-Pressure of the gas at final height.
-
-Symbol:
-    :code:`p`
+:symbols:`pressure` of the gas at final height.
 """
 
-initial_pressure = Symbol("initial_pressure", units.pressure)
+initial_pressure = clone_as_symbol(symbols.pressure, subscript="0")
 """
-Pressure of the gas at initial height.
-
-Symbol:
-    :code:`p0`
-
-Latex:
-    :math:`p_0`
+:symbols:`pressure` of the gas at initial height.
 """
 
 molecular_mass = symbols.mass
@@ -43,15 +40,13 @@ molecular_mass = symbols.mass
 :symbols:`mass` of a single gas molecule.
 """
 
-height_change = Symbol("height_change", units.length)
-r"""
-Change in height between :math:`p_0` and :math:`p`.
-
-Symbol:
-    :code:`dh`
-
-Latex:
-    :math:`\Delta h`
+height_change = clone_as_symbol(
+    symbols.height,
+    display_symbol="Delta(h)",
+    display_latex="\\Delta h",
+)
+"""
+Change in :symbols:`height` between :attr:`~initial_pressure` and :attr:`~final_pressure`.
 """
 
 temperature = symbols.temperature
@@ -64,12 +59,10 @@ law = Eq(
     initial_pressure *
     exp(-quantities.acceleration_due_to_gravity * molecular_mass * height_change /
     (quantities.boltzmann_constant * temperature)))
-r"""
-:code:`p = p0 * exp(-1 * g * m * dh / (k_B * T))`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        p = p_0 \exp \left( - \frac{g m \Delta h}{k_\text{B} T} \right)
+:laws:latex::
 """
 
 
