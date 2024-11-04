@@ -122,6 +122,7 @@ __all__ = [
     "electrical_reactance",
     "current_density",
     "relative_permeability",
+    "emissivity",
     # optics
     "relative_refractive_index",
     "radiant_exitance",

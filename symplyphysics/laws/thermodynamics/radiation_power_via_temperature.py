@@ -15,40 +15,25 @@ the radiating body's temperature.
 from sympy import Eq
 from symplyphysics import (
     symbols,
-    units,
-    dimensionless,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     quantities,
 )
 
-radiation_power = Symbol("radiation_power", units.power)
+radiation_power = symbols.power
 """
-Power of radiation emitted or absorbed by the body.
-
-Symbol:
-    :code:`P`
+:symbols:`power` of radiation emitted or absorbed by the body.
 """
 
-emissivity = Symbol("emissivity", dimensionless)
-r"""
-Emissivity of the body's material.
-
-Symbol:
-    :code:`epsilon`
-
-Latex:
-    :math:`\varepsilon`
+emissivity = symbols.emissivity
+"""
+:symbols:`emissivity` of the body's material.
 """
 
-surface_area = Symbol("surface_area", units.area)
+surface_area = symbols.area
 """
-Surface area of the body.
-
-Symbol:
-    :code:`A`
+Surface :symbols:`area` of the body.
 """
 
 temperature = symbols.temperature
@@ -60,12 +45,10 @@ law = Eq(
     radiation_power,
     quantities.stefan_boltzmann_constant * emissivity * surface_area * temperature**4,
 )
-r"""
-:code:`P = sigma * epsilon * A * T^4`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        P = \sigma \varepsilon A T^4
+:laws:latex::
 """
 
 
