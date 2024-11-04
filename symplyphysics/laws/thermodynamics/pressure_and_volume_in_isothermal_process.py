@@ -3,71 +3,53 @@ Pressure and volume in isothermal process
 =========================================
 
 A thermodynamic process is isothermal when the temperature of the system stays the same.
-Boyle's law states that the product of pressure and volume is constant during an isothermal
+**Boyle's law** states that the product of pressure and volume is constant during an isothermal
 process.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
-from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as thermodynamics_law
+from sympy import Eq, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    clone_as_symbol,
+)
+from symplyphysics.laws.thermodynamics.equations_of_state import (
+    ideal_gas_equation as thermodynamics_law,
+)
 
-initial_pressure = Symbol("initial_pressure", units.pressure)
+initial_pressure = clone_as_symbol(symbols.pressure, subscript="0")
 """
-Initial pressure inside the system.
-
-Symbol:
-    :code:`p0`
-
-Latex:
-    :math:`p_0`
-"""
-
-final_pressure = Symbol("final_pressure", units.pressure)
-"""
-Final pressure inside the system.
-
-Symbol:
-    :code:`p1`
-
-Latex:
-    :math:`p_1`
+Initial :symbols:`pressure` inside the system.
 """
 
-initial_volume = Symbol("initial_volume", units.volume)
+final_pressure = clone_as_symbol(symbols.pressure, subscript="1")
 """
-Initial volume of the system.
-
-Symbol:
-    :code:`V0`
-
-Latex:
-    :math:`V_0`
+Final :symbols:`pressure` inside the system.
 """
 
-final_volume = Symbol("final_volume", units.volume)
+initial_volume = clone_as_symbol(symbols.volume, subscript="0")
 """
-Final volume of the system.
+Initial :symbols:`volume` of the system.
+"""
 
-Symbol:
-    :code:`V1`
-
-Latex:
-    :math:`V_1`
+final_volume = clone_as_symbol(symbols.volume, subscript="1")
+"""
+Final :symbols:`volume` of the system.
 """
 
 law = Eq(initial_pressure * initial_volume, final_pressure * final_volume)
-r"""
-:code:`p0 * V0 = p1 * V1`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        p_0 V_0 = p_1 V_1
+:laws:latex::
 """
 
 ## Derive the same law from the general ideal gas law
 
-_temperature_start = Symbol("temperature_start", units.temperature)
-_temperature_end = Symbol("temperature_end", units.temperature)
+_temperature_start = clone_as_symbol(symbols.temperature, subscript="0")
+_temperature_end = clone_as_symbol(symbols.temperature, subscript="1")
 
 _isothermal_condition = Eq(_temperature_start, _temperature_end)
 
