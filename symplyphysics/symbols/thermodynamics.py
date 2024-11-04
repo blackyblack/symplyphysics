@@ -151,3 +151,9 @@ statistical_weight = SymbolNew("Omega", dimensionless, display_latex="\\Omega")
 **Statistical weight**, or **multiplicity**, is a physical quantity denoting the number of microstates
 corresponding to a particular macrostate of a thermodynamic system.
 """
+
+relative_humidity = SymbolNew("phi", dimensionless, display_latex="\\varphi")
+"""
+**Relative humidity** is a quantity that indicates a present state of absolute humidity relative to a
+maximum humidity given the same temperature.
+"""

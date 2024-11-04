@@ -153,4 +153,5 @@ __all__ = [
     "heat",
     "thermal_efficiency",
     "statistical_weight",
+    "relative_humidity",
 ]
