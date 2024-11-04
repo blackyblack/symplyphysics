@@ -107,3 +107,8 @@ angle = SymbolNew("phi", angle_type, display_latex="\\varphi")
 """
 An **angle** is the difference in direction between two lines or surfaces.
 """
+
+probability = SymbolNew("P", dimensionless)
+"""
+**Probability** is a measure of an event's likelihood.
+"""

@@ -33,6 +33,7 @@ __all__ = [
     "whole_number",
     "spectral_energy_density",
     "molar_mass",
+    "probability",
     # chemistry,
     "mass_fraction",
     "amount_of_substance",
