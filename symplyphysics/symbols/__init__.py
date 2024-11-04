@@ -41,6 +41,7 @@ __all__ = [
     "band_gap",
     "work_function",
     "drift_velocity",
+    "molar_concentration",
     # classical mechanics
     "force",
     "speed",

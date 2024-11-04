@@ -40,9 +40,9 @@ diffusion_coefficient = symbols.diffusion_coefficient
 :symbols:`diffusion_coefficient`.
 """
 
-concentration = clone_as_function(symbols.number_density, [position])
+concentration = clone_as_function(symbols.molar_concentration, [position])
 """
-Concentration of particles as a function of :attr:`~position`. See :symbols:`number_density`.
+:symbols:`molar_concentration` of particles as a function of :attr:`~position`.
 """
 
 law = Eq(diffusion_flux(position),

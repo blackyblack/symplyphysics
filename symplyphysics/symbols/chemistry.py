@@ -43,3 +43,9 @@ drift_velocity = SymbolNew("u", units.velocity)
 **Drift velocity** is the average velocity attained by charged particles, such as electrons, in a material
 due to an electric field.
 """
+
+molar_concentration = SymbolNew("c", units.amount_of_substance / units.volume)
+"""
+**Molar concentration**, or **molarity**, is a quantity most commonly defined as amount of substance of
+solute per unit volume of solution, or per unit volume available to the species.
+"""
