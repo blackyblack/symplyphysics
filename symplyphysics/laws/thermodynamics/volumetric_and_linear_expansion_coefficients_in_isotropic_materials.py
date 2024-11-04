@@ -6,13 +6,13 @@ Coefficients of thermal expansion describe how the size of an object changes wit
 at a constant pressure. In isotropic materials, the volumetric coefficient is three times the linear one.
 """
 
-from sympy import Eq, symbols, solve
+from sympy import Eq, solve
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    clone_as_symbol,
+    symbols,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import (
@@ -20,46 +20,37 @@ from symplyphysics.definitions import (
     volumetric_coefficient_of_thermal_expansion as volumetric_def,
 )
 
-volumetric_expansion_coefficient = Symbol("volumetric_expansion_coefficient", 1 / units.temperature)
-r"""
-:doc:`Volumetric expansion coefficient <definitions.volumetric_coefficient_of_thermal_expansion>` of the material.
-
-Symbol:
-    :code:`alpha_V`
-
-Latex:
-    :math:`\alpha_V`
+volumetric_expansion_coefficient = clone_as_symbol(symbols.thermal_expansion_coefficient, subscript="V")
+"""
+Volumetric :symbols:`thermal_expansion_coefficient` of the material. Also see
+:doc:`Volumetric expansion coefficient <definitions.volumetric_coefficient_of_thermal_expansion>`.
 """
 
-linear_expansion_coefficient = Symbol("linear_expansion_coefficient", 1 / units.temperature)
+linear_expansion_coefficient = clone_as_symbol(symbols.thermal_expansion_coefficient, subscript="l")
 r"""
-:doc:`Linear expansion coefficient <definitions.linear_coefficient_of_thermal_expansion>` of the material.
-
-Symbol:
-    :code:`alpha_L`
-
-Latex:
-    :math:`\alpha_L`
+Linear :symbols:`thermal_expansion_coefficient` of the material. Also see
+:doc:`Linear expansion coefficient <definitions.linear_coefficient_of_thermal_expansion>`.
 """
 
 law = Eq(volumetric_expansion_coefficient, 3 * linear_expansion_coefficient)
-r"""
-:code:`alpha_V = 3 * alpha_L`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \alpha_V = 3 \alpha_L
+:laws:latex::
 """
 
 # Derive from their definitions for a cube-sized object
 
-_volume_change = symbols("volume_change")
-_initial_length, _length_change = symbols("initial_length length_change")
-_temperature_change = symbols("temperature_change")
+_volume_change = clone_as_symbol(symbols.volume, display_symbol="dV")
+_initial_length = clone_as_symbol(symbols.length, subscript="0")
+_length_change = clone_as_symbol(symbols.length, display_symbol="dl")
+_temperature_change = clone_as_symbol(symbols.temperature, display_symbol="dT")
 
 _final_length_expr = _initial_length + _length_change
 
-_volume, _length = symbols("volume length")
+# _volume, _length = symbols("volume length")
+_volume = clone_as_symbol(symbols.volume)
+_length = clone_as_symbol(symbols.length)
 _volume_eqn = Eq(_volume, _length**3)
 _volume_expr = solve(_volume_eqn, _volume)[0]
 _initial_volume_expr = _volume_expr.subs(_length, _initial_length)
