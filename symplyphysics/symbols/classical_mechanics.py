@@ -64,7 +64,7 @@ radius = SymbolNew("r", units.length)
 the sphere.
 """
 
-thickness = SymbolNew("d", units.length)
+thickness = SymbolNew("h", units.length)
 """
 **Thickness** is a measure of a size of an object, usually the separation between two layers, or
 the distance through an object distinct from length and width.
