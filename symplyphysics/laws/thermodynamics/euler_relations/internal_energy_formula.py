@@ -7,27 +7,16 @@ homogeneous functions to get the following expression.
 
 **Notes:**
 
-#. This formula words for a single-component system. For multi-component system replace the
+#. This formula words for a single-component system. For a multi-component system replace the
    product of chemical potential and particle count with a sum over each type of components.
 """
 
 from sympy import Eq
-from symplyphysics import (
-    units,
-    dimensionless,
-    Quantity,
-    Symbol,
-    validate_input,
-    validate_output,
-    symbols,
-)
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 
-internal_energy = Symbol("internal_energy", units.energy)
+internal_energy = symbols.internal_energy
 """
-Internal energy of the system.
-
-Symbol:
-    :code:`U`
+:symbols:`internal_energy` of the system.
 """
 
 temperature = symbols.temperature
@@ -35,57 +24,37 @@ temperature = symbols.temperature
 :symbols:`temperature` of the system.
 """
 
-entropy = Symbol("entropy", units.energy / units.temperature)
+entropy = symbols.entropy
 """
-Entropy of the system.
-
-Symbol:
-    :code:`S`
+:symbols:`entropy` of the system.
 """
 
-pressure = Symbol("pressure", units.pressure)
+pressure = symbols.pressure
 """
-Pressure in the system.
-
-Symbol:
-    :code:`p`
+:symbols:`pressure` in the system.
 """
 
-volume = Symbol("volume", units.volume)
+volume = symbols.volume
 """
-Volume of the system.
-
-Symbol:
-    :code:`V`
+:symbols:`volume` of the system.
 """
 
-chemical_potential = Symbol("chemical_potential", units.energy)
-r"""
-Chemical potential of the system.
-
-Symbol:
-    :code:`mu`
-
-Latex:
-    :math:`\mu`
+chemical_potential = symbols.chemical_potential
+"""
+:symbols:`chemical_potential` of the system.
 """
 
-particle_count = Symbol("particle_count", dimensionless)
+particle_count = symbols.particle_count
 """
-Number of particles in the system.
-
-Symbol:
-    :code:`N`
+:symbols:`particle_count` of the system.
 """
 
 law = Eq(internal_energy,
     temperature * entropy - pressure * volume + chemical_potential * particle_count)
-r"""
-:code:`U = T * S - p * V + mu * N`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        U = T S - p V + \mu N
+:laws:latex::
 """
 
 # TODO: derive from Euler's theorem and internal energy differential

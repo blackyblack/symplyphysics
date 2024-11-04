@@ -7,7 +7,7 @@ internal energy.
 
 **Notes:**
 
-#. This formula words for a single-component system. For multi-component system replace the
+#. This formula words for a single-component system. For a multi-component system replace the
    product of chemical potential and particle count with a sum over each type of components.
 """
 
