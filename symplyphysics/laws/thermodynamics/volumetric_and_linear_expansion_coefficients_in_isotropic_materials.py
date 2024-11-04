@@ -4,6 +4,11 @@ Volumetric and linear expansion coefficients in isotropic materials
 
 Coefficients of thermal expansion describe how the size of an object changes with a change in temperature
 at a constant pressure. In isotropic materials, the volumetric coefficient is three times the linear one.
+
+**Conditions:**
+
+#. The material is isotropic.
+#. The pressure is constant during the volume change.
 """
 
 from sympy import Eq, solve

@@ -11,26 +11,20 @@ The isobaric volumetric expansion coefficient of an ideal gas is the inverse of 
 
 from sympy import Eq, solve
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     symbols,
+    clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import volumetric_coefficient_of_thermal_expansion as coef_def
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation
 
-volumetric_expansion_coefficient = Symbol("volumetric_expansion_coefficient", 1 / units.temperature)
-r"""
-:doc:`Volumetric expansion coefficient <definitions.volumetric_coefficient_of_thermal_expansion>` of the gas.
-
-Symbol:
-    :code:`alpha_V`
-
-Latex:
-    :math:`\alpha_V`
+volumetric_expansion_coefficient = clone_as_symbol(symbols.thermal_expansion_coefficient, subscript="V")
+"""
+Volumetric :symbols:`thermal_expansion_coefficient` of the material. Also see
+:doc:`Volumetric expansion coefficient <definitions.volumetric_coefficient_of_thermal_expansion>`.
 """
 
 temperature = symbols.temperature
@@ -39,12 +33,10 @@ temperature = symbols.temperature
 """
 
 law = Eq(volumetric_expansion_coefficient, 1 / temperature)
-r"""
-:code:`alpha_V = 1 / T`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \alpha_V = \frac{1}{T}
+:laws:latex::
 """
 
 # Derive from ideal gas equation and definition of volumetric expansion coefficient
