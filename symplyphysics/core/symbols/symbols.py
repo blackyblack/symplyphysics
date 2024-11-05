@@ -27,23 +27,24 @@ class DimensionSymbol:
         return self._display_name
 
 
-class DimensionSymbolNew:
+class HasDimension:
     _dimension: Dimension
-    _display_name: str
-    _display_latex: str
 
-    def __init__(self,
-        display_name: str,
-        dimension: Dimension = Dimension(S.One),
-        *,
-        display_latex: Optional[str] = None) -> None:
+    def __init__(self, dimension: Dimension = Dimension(S.One)) -> None:
         self._dimension = dimension
-        self._display_name = display_name
-        self._display_latex = display_latex or self._display_name
 
     @property
     def dimension(self) -> Dimension:
         return self._dimension
+    
+
+class HasDisplay:
+    _display_name: str
+    _display_latex: str
+
+    def __init__(self, display_name: str, *, display_latex: Optional[str] = None) -> None:
+        self._display_name = display_name
+        self._display_latex = display_latex or display_name
 
     @property
     def display_name(self) -> str:
@@ -54,7 +55,19 @@ class DimensionSymbolNew:
         return self._display_latex
 
     def _sympystr(self, p: Printer) -> str:
-        return p.doprint(self.display_name)
+        return p.doprint(self.display_name)    
+
+
+class DimensionSymbolNew(HasDimension, HasDisplay):
+    def __init__(
+        self,
+        display_name: str,
+        dimension: Dimension = Dimension(S.One),
+        *,
+        display_latex: Optional[str] = None,
+    ) -> None:
+        HasDimension.__init__(self, dimension)
+        HasDisplay.__init__(self, display_name=display_name, display_latex=display_latex)
 
 
 class Symbol(DimensionSymbol, SymSymbol):  # pylint: disable=too-many-ancestors
