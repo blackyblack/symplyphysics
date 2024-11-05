@@ -13,7 +13,7 @@ To do this, the heat capacity of the external environment must be large enough, 
 
 **Conditions:**
 
-#. The gas is ideal.
+#. The gas is ideal. See :ref:`Ideal gas equation`.
 #. The temperature of the gas stays constant during the expansion.
 """
 

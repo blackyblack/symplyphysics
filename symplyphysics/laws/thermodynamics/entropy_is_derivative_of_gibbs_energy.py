@@ -41,7 +41,8 @@ gibbs_energy = clone_as_function(
     [temperature, pressure, particle_count],
 )
 """
-:symbols:`gibbs_energy` of the system.
+:symbols:`gibbs_energy` of the system as a function of :attr:`~temperature`, :attr:`~pressure`,
+and :attr:`~particle_count`.
 """
 
 law = Eq(entropy, -1 * Derivative(gibbs_energy(temperature, pressure, particle_count), temperature))

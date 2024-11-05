@@ -43,10 +43,7 @@ pressure = symbols.pressure
 
 gibbs_energy = clone_as_function(symbols.gibbs_energy, [temperature, pressure])
 """
-Gibbs energy of the system.
-
-Symbol:
-    :code:`G(T, p)`
+:symbols:`gibbs_energy` of the system as a function of :attr:`~temperature` and :attr:`~pressure`.
 """
 
 law = Eq(

@@ -34,7 +34,7 @@ pressure = symbols.pressure
 
 particle_count = symbols.particle_count
 """
-:symbols:`particle_count` the system.
+:symbols:`particle_count` of the system.
 """
 
 gibbs_energy = clone_as_function(

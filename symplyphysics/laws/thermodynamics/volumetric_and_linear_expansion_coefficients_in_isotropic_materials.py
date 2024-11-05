@@ -53,7 +53,6 @@ _temperature_change = clone_as_symbol(symbols.temperature, display_symbol="dT")
 
 _final_length_expr = _initial_length + _length_change
 
-# _volume, _length = symbols("volume length")
 _volume = clone_as_symbol(symbols.volume)
 _length = clone_as_symbol(symbols.length)
 _volume_eqn = Eq(_volume, _length**3)

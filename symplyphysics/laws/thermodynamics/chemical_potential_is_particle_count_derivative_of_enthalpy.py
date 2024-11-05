@@ -34,7 +34,7 @@ pressure = symbols.pressure
 
 particle_count = symbols.particle_count
 """
-:symbols:`particle_count` the system.
+:symbols:`particle_count` of the system.
 """
 
 enthalpy = clone_as_function(symbols.enthalpy, [entropy, pressure, particle_count])

@@ -36,12 +36,12 @@ pressure = symbols.pressure
 
 initial_volume = clone_as_symbol(symbols.volume, subscript="0")
 """
-Initial :symbols:`pressure` of the gas.
+Initial :symbols:`volume` of the gas.
 """
 
 final_volume = clone_as_symbol(symbols.volume, subscript="1")
 """
-Final :symbols:`pressure` of the gas
+Final :symbols:`volume` of the gas
 """
 
 law = Eq(work, pressure * (final_volume - initial_volume))

@@ -41,7 +41,8 @@ free_energy = clone_as_function(
     [temperature, volume, particle_count],
 )
 """
-:symbols:`helmholtz_free_energy` of the system.
+:symbols:`helmholtz_free_energy` of the system as a function of :attr:`~temperature`,
+:attr:`~volume`, and :attr:`~particle_count`.
 """
 
 law = Eq(entropy, -1 * Derivative(free_energy(temperature, volume, particle_count), temperature))

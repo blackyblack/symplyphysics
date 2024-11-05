@@ -7,7 +7,7 @@ functions but it can be derived via its definition and the relation for internal
 
 **Notes:**
 
-#. This formula words for a single-component system. For a multi-component system replace the
+#. This formula works for a single-component system. For a multi-component system replace the
    right-hand side with a sum over each type of components.
 """
 

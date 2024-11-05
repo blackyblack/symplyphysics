@@ -41,7 +41,8 @@ entropy = symbols.entropy
 
 pressure = clone_as_function(symbols.pressure, [density, entropy])
 """
-:symbols:`pressure` inside the fluid.
+:symbols:`pressure` inside the fluid as a function of :attr:`~density` and
+:attr:`~entropy`.
 """
 
 law = Eq(speed_of_sound, sqrt(Derivative(pressure(density, entropy), density)))

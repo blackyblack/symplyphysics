@@ -7,7 +7,7 @@ homogeneous functions to get the following expression.
 
 **Notes:**
 
-#. This formula words for a single-component system. For a multi-component system replace the
+#. This formula works for a single-component system. For a multi-component system replace the
    product of chemical potential and particle count with a sum over each type of components.
 """
 

@@ -300,7 +300,7 @@ the species.
 
 dynamic_viscosity = SymbolNew("mu", units.pressure * units.time)
 """
-**Dynamic viscosity** is a physical quantity measuring the resistence to deformation at a given rate.
+**Dynamic viscosity** is a physical quantity measuring the resistance to deformation at a given rate.
 Specifically in fluid mechanics, it is the proportionality factor between the shear stress of the adjacent
 layers of the fluid and the local sheer velocity.
 
