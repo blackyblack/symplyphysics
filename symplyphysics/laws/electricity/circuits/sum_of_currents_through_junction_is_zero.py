@@ -24,12 +24,12 @@ from symplyphysics import (
 )
 from symplyphysics.core.symbols.symbols import clone_as_indexed
 
-current = clone_as_indexed(symbols.current, display_symbol="I[k]", display_latex="I_k")
+index = Idx("k")
+
+current = clone_as_indexed(symbols.current, index)
 r"""
 :math:`k`-th current flowing through the node.
 """
-
-index = Idx("k")
 
 law = Eq(SumIndexed(current[index], index), 0)
 """

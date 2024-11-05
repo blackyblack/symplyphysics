@@ -19,7 +19,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.symbols.symbols import clone_as_indexed
 
-voltage = clone_as_indexed(symbols.voltage, display_symbol="V[i]", display_latex="V_i")
+voltage = clone_as_indexed(symbols.voltage)
 r"""
 :math:`i`-th voltage.
 """

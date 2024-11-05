@@ -121,10 +121,16 @@ class SymbolIndexed(DimensionSymbol, IndexedBase):  # pylint: disable=too-many-a
         return p.doprint(self.display_name)
 
 
+# This is default index for indexed parameters, e.g. for using in SumIndexed
+global_index = Idx("i")
+
+
 class SymbolIndexedNew(DimensionSymbolNew, IndexedBase):  # pylint: disable=too-many-ancestors
+    index: Idx
 
     def __new__(cls,
         name_or_symbol: Optional[str | SymSymbol] = None,
+        index: Optional[Idx] = None,
         _dimension: Dimension = Dimension(S.One),
         *,
         display_latex: Optional[str] = None,
@@ -137,11 +143,13 @@ class SymbolIndexedNew(DimensionSymbolNew, IndexedBase):  # pylint: disable=too-
 
     def __init__(self,
         name_or_symbol: Optional[str | SymSymbol] = None,
+        index: Optional[Idx] = None,
         dimension: Dimension = Dimension(S.One),
         *,
         display_latex: Optional[str] = None,
         **_assumptions: Any) -> None:
         display_name = str(self.name) if name_or_symbol is None else str(name_or_symbol)
+        self.index = index or global_index
         super().__init__(display_name, dimension, display_latex=display_latex)
 
     def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
@@ -304,6 +312,7 @@ def clone_as_function(
 
 def clone_as_indexed(
     source: SymbolNew | SymbolIndexedNew,
+    index: Optional[Idx] = None,
     *,
     display_symbol: Optional[str] = None,
     display_latex: Optional[str] = None,
@@ -314,11 +323,8 @@ def clone_as_indexed(
     display_latex = display_latex or source.display_latex
     return SymbolIndexedNew(
         display_symbol,
+        index,
         source.dimension,
         display_latex=display_latex,
         **assumptions,
     )
-
-
-# This is default index for indexed parameters, eg for using in SumIndexed
-global_index = Idx("i")

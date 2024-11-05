@@ -29,7 +29,7 @@ total_capacitance = symbols.capacitance
 Total :symbols:`capacitance`.
 """
 
-capacitance = clone_as_indexed(symbols.capacitance, display_symbol="C[i]", display_latex="C_i")
+capacitance = clone_as_indexed(symbols.capacitance)
 """
 :symbols:`capacitance` of :math:`i`-th capacitor.
 """
