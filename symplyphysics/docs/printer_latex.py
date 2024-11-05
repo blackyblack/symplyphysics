@@ -9,6 +9,7 @@ from sympy.printing.latex import LatexPrinter, accepted_latex_functions
 from sympy.core.function import AppliedUndef
 from sympy.simplify import fraction
 from ..core.symbols.symbols import DimensionSymbolNew, FunctionNew
+from ..core.symbols.wrappers import Wrapper
 
 _between_two_numbers_p = (
     re.compile(r"[0-9][} ]*$"),  # search
@@ -274,6 +275,11 @@ class SymbolLatexPrinter(LatexPrinter):
             tex += term_tex
 
         return tex
+
+    def _print_Average(self, expr: Wrapper) -> str:
+        arg = expr.inner
+        str_arg = self._print(arg)
+        return rf"\langle {str_arg} \rangle"
 
 
 def latex_str(expr: Any, **settings: Any) -> str:
