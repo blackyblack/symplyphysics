@@ -9,69 +9,47 @@ by one.
 
 from sympy import Eq, Derivative, Point2D
 from symplyphysics import (
-    units,
-    dimensionless,
     Quantity,
-    Symbol,
-    Function,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_function,
 )
 from symplyphysics.core.geometry.line import two_point_function
 
-chemical_potential = Symbol("chemical_potential", units.energy)
+chemical_potential = symbols.chemical_potential
 r"""
-Chemical potential of the system.
-
-Symbol:
-    :code:`mu`
-
-Latex:
-    :math:`\mu`
+:symbols:`chemical_potential` of the system.
 """
 
-enthalpy = Function("enthalpy", units.energy)
+entropy = symbols.entropy
 """
-Enthalpy as a function of its natural variables.
-
-Symbol:
-    :code:`H(S, p, N)`
+:symbols:`entropy` of the system.
 """
 
-particle_count = Symbol("particle_count", dimensionless)
+pressure = symbols.pressure
 """
-Number of particles in the system.
-
-Symbol:
-    :code:`N`
+:symbols:`pressure` inside the system.
 """
 
-entropy = Symbol("entropy", units.energy / units.temperature)
+particle_count = symbols.particle_count
 """
-Entropy of the system.
-
-Symbol:
-    :code:`S`
+:symbols:`particle_count` of the system.
 """
 
-pressure = Symbol("pressure", units.pressure)
+enthalpy = clone_as_function(symbols.enthalpy, [entropy, pressure, particle_count])
 """
-Pressure inside the system.
-
-Symbol:
-    :code:`p`
+:symbols:`enthalpy` as a function of its natural variables.
 """
 
 law = Eq(
     chemical_potential,
     Derivative(enthalpy(entropy, pressure, particle_count), particle_count),
 )
-r"""
-:code:`mu = Derivative(H(S, p, N), N)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \mu = \left( \frac{\partial H}{\partial N} \right)_{S, p}
+:laws:latex::
 """
 
 

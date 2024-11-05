@@ -2,12 +2,12 @@
 Temperature derivative via volume derivative
 ============================================
 
-The *Joule—Thompson effect* describes the change in temperature that accompanies the expansion of
+The **Joule—Thompson effect** describes the change in temperature that accompanies the expansion of
 a gas without production of work or transfer of heat, which is in effect an isenthalpic process.
 
 **Notes:**
 
-#. The left-hand side of the equation is also called the *Joule—Thompson coefficient*.
+#. The left-hand side of the equation is also called the **Joule—Thompson coefficient**.
 
 **Conditions:**
 
@@ -18,68 +18,54 @@ a gas without production of work or transfer of heat, which is in effect an isen
 from sympy import Eq, Derivative, solve
 from symplyphysics import (
     Quantity,
-    Symbol,
-    Function,
     symbols,
     units,
     validate_input,
     validate_output,
+    clone_as_function,
+    clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.geometry.line import two_point_function, Point2D
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation
 
-temperature = Function("temperature", units.temperature)
+pressure = symbols.pressure
 """
-Temperature of the system as a function of pressure and enthalpy.
-
-Symbol:
-    :code:`T(p, H)`
+:symbols:`pressure` inside the system.
 """
 
-pressure = Symbol("pressure", units.pressure)
+enthalpy = symbols.enthalpy
 """
-Pressure inside the system.
-
-Symbol:
-    :code:`p`
+:symbols:`enthalpy` of the system.
 """
 
-volume = Function("volume", units.volume)
+temperature = clone_as_function(symbols.temperature, [pressure, enthalpy])
 """
-Volume of the system as a function of temperature and pressure.
-
-Symbol:
-    :code:`V(T(p, H), p)`
+:symbols:`temperature` of the system as a function of :attr:`~pressure` and
+:attr:`~enthalpy`.
 """
 
-enthalpy = Symbol("enthalpy", units.energy)
+volume = clone_as_function(
+    symbols.volume,
+    [temperature(pressure, enthalpy), pressure],
+)
 """
-Enthalpy of the system.
-
-Symbol:
-    :code:`H`
+:symbols:`volume` of the system as a function of :attr:`~temperature` and
+:attr:`~pressure`.
 """
 
-isobaric_heat_capacity = Symbol("isobaric_heat_capacity", units.energy / units.temperature)
+isobaric_heat_capacity = clone_as_symbol(symbols.heat_capacity, subscript="p")
 r"""
-Heat capacity of the system at constant pressure.
-
-Symbol:
-    :code:`C_p`
+:symbols:`heat_capacity` of the system at constant pressure.
 """
 
 law = Eq(Derivative(temperature(pressure, enthalpy), pressure), (1 / isobaric_heat_capacity) *
     (temperature(pressure, enthalpy) * Derivative(volume(temperature(pressure, enthalpy), pressure),
     temperature(pressure, enthalpy)) - volume(temperature(pressure, enthalpy), pressure)))
-r"""
-:code:`Derivative(T(p, H), p) = (1 / C_p) * (T(p, H) * Derivative(V(T(p, H), p), T(p, H)) - V(T(p, H), p))`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \left( \frac{\partial T}{\partial p} \right)_H = \frac{1}{C_p} \left(
-            T(p, H) \left( \frac{\partial V}{\partial T} \right)_p - V(T(p, H), p)
-        \right)
+:laws:latex::
 """
 
 # TODO: derive from enthalpy differential and Maxwell relations.

@@ -12,56 +12,44 @@ the sound wave immediately level out, which eventually turned out to be inconsis
 
 from sympy import Eq, sqrt, Derivative
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
-    Function,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_function,
+    clone_as_symbol,
 )
 
-speed_of_sound = Symbol("speed_of_sound", units.velocity)
+speed_of_sound = clone_as_symbol(
+    symbols.speed,
+    display_symbol="v_s",
+    display_latex="v_\\text{s}",
+)
 """
-Speed of sound in the fluid.
-
-Symbol:
-    :code:`c`
-"""
-
-pressure = Function("pressure", units.pressure)
-"""
-Pressure inside the fluid.
-
-Symbol:
-    :code:`p`
+:symbols:`speed` of sound in the fluid.
 """
 
-density = Symbol("density", units.mass / units.volume)
-r"""
-Density of the fluid.
-
-Symbol:
-    :code:`rho`
-
-Latex:
-    :math:`\rho`
+density = symbols.density
+"""
+:symbols:`density` of the fluid.
 """
 
-entropy = Symbol("entropy", units.energy / units.temperature)
+entropy = symbols.entropy
 """
-Entropy of the fluid.
+:symbols:`entropy` of the fluid.
+"""
 
-Symbol:
-    :code:`S`
+pressure = clone_as_function(symbols.pressure, [density, entropy])
+"""
+:symbols:`pressure` inside the fluid as a function of :attr:`~density` and
+:attr:`~entropy`.
 """
 
 law = Eq(speed_of_sound, sqrt(Derivative(pressure(density, entropy), density)))
-r"""
-:code:`c = sqrt(Derivative(p(rho, S), rho))`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        c = \sqrt{\left( \frac{\partial p}{\partial \rho} \right)_S}
+:laws:latex::
 """
 
 

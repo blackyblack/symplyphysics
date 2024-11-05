@@ -15,13 +15,14 @@ as they always tend to arrive at a state of thermodynamic equilibrium, where the
 **Conditions:**
 
 #. The gas is ideal.
+
+..
+    TODO refactor `mass / molar_mass` into `amount_of_substance`
 """
 
 from sympy import Eq, solve, log
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     symbols,
@@ -29,12 +30,9 @@ from symplyphysics import (
     quantities,
 )
 
-entropy_change = Symbol("entropy_change", units.energy / units.temperature)
+entropy_change = symbols.entropy
 """
-Entropy change during the transition between the two states.
-
-Symbol:
-    :code:`S`
+:symbols:`entropy` change during the transition between the two states.
 """
 
 mass = symbols.mass
@@ -42,67 +40,47 @@ mass = symbols.mass
 :symbols:`mass` of the gas.
 """
 
-molar_mass = Symbol("molar_mass", units.mass / units.amount_of_substance)
+molar_mass = symbols.molar_mass
 """
-Molar mass, or molecular weight, of the gas.
-
-Symbol:
-    :code:`M`
+:symbols:`molar_mass`, or molecular weight, of the gas.
 """
 
-molar_isochoric_heat_capacity = Symbol(
-    "molar_isochoric_heat_capacity", units.energy / (units.temperature * units.amount_of_substance))
+molar_isochoric_heat_capacity = clone_as_symbol(
+    symbols.molar_heat_capacity,
+    display_symbol="c_Vm",
+    display_latex="c_{V, m}",
+)
 """
-Heat capacity at constant volume per unit amount of substance.
-
-Symbol:
-    :code:`C_V`
-
-Latex:
-    :math:`C_V`
+:symbols:`molar_heat_capacity` at constant volume.
 """
 
-final_temperature = clone_as_symbol(symbols.temperature, display_symbol="T1", display_latex="T_1")
+final_temperature = clone_as_symbol(symbols.temperature, subscript="1")
 """
 :symbols:`temperature` of the final state.
 """
 
-initial_temperature = clone_as_symbol(symbols.temperature, display_symbol="T0", display_latex="T_0")
+initial_temperature = clone_as_symbol(symbols.temperature, subscript="0")
 """
 :symbols:`temperature` of the initial state.
 """
 
-final_volume = Symbol("final_volume", units.volume)
+final_volume = clone_as_symbol(symbols.volume, subscript="1")
 """
-Volume of the final state.
-
-Symbol:
-    :code:`V1`
-
-Latex:
-    :math:`V_1`
+:symbols:`volume` of the final state.
 """
 
-initial_volume = Symbol("initial_volume", units.volume)
+initial_volume = clone_as_symbol(symbols.volume, subscript="0")
 """
-Volume of the initial state.
-
-Symbol:
-    :code:`V0`
-
-Latex:
-    :math:`V_0`
+:symbols:`volume` of the initial state.
 """
 
 law = Eq(entropy_change, (mass / molar_mass) *
     ((molar_isochoric_heat_capacity * log(final_temperature / initial_temperature)) +
     (quantities.molar_gas_constant * log(final_volume / initial_volume))))
-r"""
-:code:`S = (m / M) * (C_V * log(T1 / T0) + R * log(V1 / V0))`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        S = \frac{m}{M} \left( C_V \log \frac{T_1}{T_0} + R \log \frac{V_1}{V_0} \right)
+:laws:latex::
 """
 
 

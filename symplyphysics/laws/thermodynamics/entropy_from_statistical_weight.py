@@ -10,39 +10,51 @@ is the average number of microstates of a system that implement its macro-state.
 #. :quantity_notation:`boltzmann_constant`.
 """
 
-from sympy import Eq, solve, symbols, Function as SymFunction, dsolve, log
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless,
-    assert_equal, quantities)
+from sympy import (
+    Eq,
+    solve,
+    symbols as sym_symbols,
+    Function as SymFunction,
+    dsolve,
+    log,
+)
+from symplyphysics import (
+    units,
+    Quantity,
+    validate_input,
+    validate_output,
+    assert_equal,
+    quantities,
+    symbols,
+    clone_as_symbol,
+    clone_as_function,
+)
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.chemistry import avogadro_constant_is_particle_count_over_amount_of_substance as avogadro_law
+from symplyphysics.laws.chemistry import (
+    avogadro_constant_is_particle_count_over_amount_of_substance as avogadro_law,
+)
 from symplyphysics.laws.thermodynamics import (
-    change_in_entropy_of_ideal_gas_from_volume_and_temperature as entropy_change_law,)
+    change_in_entropy_of_ideal_gas_from_volume_and_temperature as entropy_change_law,
+)
 from symplyphysics.laws.quantities import (
-    quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law,)
+    quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law,
+)
 
-entropy = Symbol("entropy", units.energy / units.temperature)
+entropy = symbols.entropy
 """
-Entropy of the system.
-
-Symbol:
-    :code:`S`
+:symbols:`entropy` of the system.
 """
 
-statistical_weight = Symbol("statistical_weight", dimensionless)
+statistical_weight = symbols.statistical_weight
 """
-Statistical weight of the system's state.
-
-Symbol:
-    :code:`W`
+:symbols:`statistical_weight` of the system's state.
 """
 
 law = Eq(entropy, quantities.boltzmann_constant * log(statistical_weight))
-r"""
-:code:`S = k_B * log(W)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        S = k_\text{B} \log W
+:laws:latex::
 """
 
 # Derive the law from the properties of entropy
@@ -56,10 +68,10 @@ Latex:
 # respectively. If we join the two subsystems into one, the probability of the total system
 # will be `P_12`, and using their independence we have `P_12 = P_1 * P_2`.
 
-_time = symbols("time", real=True)
-_first_probability = symbols("first_probability", cls=SymFunction, positive=True)(_time)
-_second_probability = symbols("second_probability", cls=SymFunction, positive=True)(_time)
-_entropy = symbols("entropy", cls=SymFunction, real=True)
+_time = clone_as_symbol(symbols.time, real=True)
+_first_probability = sym_symbols("first_probability", cls=SymFunction, positive=True)(_time)
+_second_probability = sym_symbols("second_probability", cls=SymFunction, positive=True)(_time)
+_entropy = clone_as_function(symbols.entropy, real=True)
 
 # FIXME: use law for this step
 # According to thermodynamics, the entropy of a complex system should equal the sum of entropies
@@ -96,15 +108,15 @@ assert expr_equals(_differential_property.rhs.diff(_first_probability), 0)
 
 # 2. Since `f(P)` is universal for all bodies, the constant is universal for all bodies as well.
 
-_probability = symbols("probability", positive=True)
-_equation_constant = symbols("equation_constant", real=True)
+_probability = sym_symbols("probability", positive=True)
+_equation_constant = sym_symbols("equation_constant", real=True)
 
 _entropy_eqn = Eq(
     _differential_property.lhs.subs(_first_probability, _probability),
     _equation_constant,
 )
 
-_integration_constant = symbols("integration_constant", real=True)
+_integration_constant = sym_symbols("integration_constant", real=True)
 
 # Now we can integrate the above differential property and show that the integration constant is
 # actually zero.
@@ -137,10 +149,9 @@ _entropy_via_probability = _entropy_via_probability.subs(
 # Then the probability of finding one molecule in `V_0` is `V_0 / V`, and the probability
 # of finding all `N` particles is `(V_0 / V)**N`
 
-_volume, _total_volume, _particle_count = symbols(
-    "volume total_volume particle_count",
-    positive=True,
-)
+_volume = clone_as_symbol(symbols.volume, positive=True)
+_total_volume = clone_as_symbol(symbols.volume, positive=True)
+_particle_count = clone_as_symbol(symbols.particle_count, positive=True)
 
 # FIXME: use law for this step
 _probability_via_volume = (_volume / _total_volume)**_particle_count
@@ -151,10 +162,8 @@ _entropy_via_volume = _entropy_via_probability.subs(_probability, _probability_v
 # constant temperature and particle count. Then we can find the entropy of the two states
 # via the above formula.
 
-_first_volume, _second_volume = symbols(
-    "first_volume second_volume",
-    positive=True,
-)
+_first_volume = clone_as_symbol(symbols.volume, positive=True)
+_second_volume = clone_as_symbol(symbols.volume, positive=True)
 
 _entropy_difference_derived = (_entropy_via_volume.subs(_volume, _second_volume) -
     _entropy_via_volume.subs(_volume, _first_volume)).simplify()

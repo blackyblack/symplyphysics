@@ -57,7 +57,10 @@ class SymbolLatexPrinter(LatexPrinter):
 
     # pylint: disable-next=invalid-name
     def _print_SymbolIndexedNew(self, expr: Any) -> str:
-        return self._print_SymbolNew(expr)
+        index = expr.index
+        str_expr = expr.display_latex
+        str_index = self._print(index)
+        return f"{{{str_expr}}}_{{{str_index}}}"
 
     def _print_Function(self, expr: Any, exp: Any = None) -> str:
         # pylint: disable=too-many-branches

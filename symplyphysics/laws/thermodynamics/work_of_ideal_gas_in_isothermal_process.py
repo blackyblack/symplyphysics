@@ -13,10 +13,11 @@ To do this, the heat capacity of the external environment must be large enough, 
 
 **Conditions:**
 
+#. The gas is ideal. See :ref:`Ideal gas equation`.
 #. The temperature of the gas stays constant during the expansion.
 """
 
-from sympy import Eq, solve, Symbol as SymSymbol, log
+from sympy import Eq, solve, log
 from symplyphysics import (
     Quantity,
     validate_input,
@@ -39,12 +40,12 @@ amount_of_substance = symbols.amount_of_substance
 :symbols:`amount_of_substance` of ideal gas.
 """
 
-initial_volume = clone_as_symbol(symbols.volume, display_symbol="V_0", display_latex="V_0")
+initial_volume = clone_as_symbol(symbols.volume, subscript="0")
 """
 Initial :symbols:`volume` of the gas.
 """
 
-final_volume = clone_as_symbol(symbols.volume, display_symbol="V_1", display_latex="V_1")
+final_volume = clone_as_symbol(symbols.volume, subscript="1")
 """
 Final :symbols:`volume` of the gas.
 """
@@ -75,8 +76,8 @@ _ideal_gas_eqn = ideal_gas_equation.law.subs({
 _pressure_expr = solve(_ideal_gas_eqn,
     ideal_gas_equation.pressure)[0].subs(ideal_gas_equation.volume, work_law.volume)
 
-_volume_before = SymSymbol("volume_before", positive=True)
-_volume_after = SymSymbol("volume_after", positive=True)
+_volume_before = clone_as_symbol(symbols.volume, subscript="0", positive=True)
+_volume_after = clone_as_symbol(symbols.volume, subscript="1", positive=True)
 
 _work_expr = work_law.law.rhs.subs({
     work_law.initial_volume: _volume_before,

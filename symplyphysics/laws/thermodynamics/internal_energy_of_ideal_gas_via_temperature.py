@@ -1,4 +1,4 @@
-r"""
+"""
 Internal energy of ideal gas via temperature
 ============================================
 
@@ -11,18 +11,23 @@ Internal energy of an ideal gas is the sum of the kinetic energy of all of its m
 **Conditions:**
 
 #. The gas is ideal.
+
+..
+    TODO replace `mass/molar_mass` with `amount_of_substance`
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols,
-    quantities)
+from sympy import Eq, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    quantities,
+)
 
-internal_energy = Symbol("energy", units.energy)
+internal_energy = symbols.internal_energy
 """
-Internal energy of the gas.
-
-Symbol:
-    :code:`U`
+:symbols:`internal_energy` of the gas.
 """
 
 mass = symbols.mass
@@ -35,21 +40,16 @@ temperature = symbols.temperature
 :symbols:`temperature` of the gas.
 """
 
-molar_mass = Symbol("molar_mass", units.mass / units.amount_of_substance)
+molar_mass = symbols.molar_mass
 """
-Mass of gas per unit amount of substance.
-
-Symbol:
-    :code:`M`
+:symbols:`molar_mass` of the gas.
 """
 
-law = Eq(internal_energy, 1.5 * mass * quantities.molar_gas_constant * temperature / molar_mass)
-r"""
-:code:`U = (3 / 2) * (m / M) * R * T`
+law = Eq(internal_energy, 3 * mass * quantities.molar_gas_constant * temperature / (2 * molar_mass))
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        U = \frac{3}{2} \frac{m}{M} R T
+:laws:latex::
 """
 
 

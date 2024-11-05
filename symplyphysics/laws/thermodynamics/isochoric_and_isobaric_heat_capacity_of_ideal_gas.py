@@ -1,8 +1,8 @@
-r"""
+"""
 Isochoric and isobaric heat capacities of ideal gas
 ===================================================
 
-Mayer's relation is the relation between heat capacity at constant pressure and that at
+The **Mayer's relation** is the relation between heat capacity at constant pressure and that at
 constant volume in the case of an ideal gas.
 
 **Notation:**
@@ -16,54 +16,37 @@ constant volume in the case of an ideal gas.
 
 from sympy import Eq, solve
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     quantities,
+    symbols,
+    clone_as_symbol,
 )
 
-isobaric_heat_capacity = Symbol("isobaric_heat_capacity", units.energy / units.temperature)
+isobaric_heat_capacity = clone_as_symbol(symbols.heat_capacity, subscript="p")
 """
-Heat capacity of gas at constant pressure.
-
-Symbol:
-    :code:`C_p`
-
-Latex:
-    :math:`C_p`
+:symbols:`heat_capacity` of gas at constant :symbols:`pressure`.
 """
 
-isochoric_heat_capacity = Symbol("isochoric_heat_capacity", units.energy / units.temperature)
+isochoric_heat_capacity = clone_as_symbol(symbols.heat_capacity, subscript="V")
 """
-Heat capacity of gas at constant volume.
-
-Symbol:
-    :code:`C_V`
-
-Latex:
-    :math:`C_V`
+:symbols:`heat_capacity` of gas at constant :symbols:`volume`.
 """
 
-amount_of_substance = Symbol("amount_of_substance", units.amount_of_substance)
+amount_of_substance = symbols.amount_of_substance
 """
-Amount of gas substance.
-
-Symbol:
-    :code:`n`
+:symbols:`amount_of_substance`.
 """
 
 law = Eq(
     isobaric_heat_capacity - isochoric_heat_capacity,
     amount_of_substance * quantities.molar_gas_constant,
 )
-r"""
-:code:`C_p - C_V = n * R`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        C_p - C_V = n R
+:laws:latex::
 """
 
 

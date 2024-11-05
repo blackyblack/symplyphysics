@@ -9,7 +9,7 @@ from sympy.concrete.products import Product
 from sympy.concrete.summations import Sum
 from sympy.integrals.integrals import Integral
 from sympy.printing.precedence import precedence, precedence_traditional, PRECEDENCE
-from ..core.symbols.symbols import DimensionSymbolNew, FunctionNew
+from ..core.symbols.symbols import DimensionSymbolNew, FunctionNew, SymbolIndexedNew
 from ..core.symbols.wrappers import Wrapper
 
 
@@ -87,9 +87,9 @@ class SymbolCodePrinter(StrPrinter):
     def _print_SumIndexed(self, expr: Any) -> str:
         # only one index of sum is supported
         # expr.args[0] contains indexed symbol with index applied
-        # expr.args[0].args[0] contains just indexed symbol
-        symbol, index = expr.args[0].args
-        return f"Sum({self._print(symbol)}, {self._print(index)})"
+        # expr.args[1] contains just indexed symbol
+        applied, index = expr.args
+        return f"Sum({self._print(applied)}, {self._print(index)})"
 
     def _print_log(self, expr: Any) -> str:
         value, base = (expr.args[0], expr.args[1]) if len(expr.args) > 1 else (expr.args[0], E)
@@ -241,5 +241,7 @@ def code_str(expr: Any, **settings: Any) -> str:
 
     if isinstance(expr, FunctionNew):
         expr = expr(*expr.arguments)
+    if isinstance(expr, SymbolIndexedNew):
+        expr = expr[expr.index]
 
     return printer.doprint(expr)

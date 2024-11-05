@@ -58,7 +58,13 @@ length = SymbolNew("l", units.length)
 **Length** is a measure of a size of an object.
 """
 
-thickness = SymbolNew("d", units.length)
+radius = SymbolNew("r", units.length)
+"""
+**Radius** of a sphere is the distance from the center of the sphere to any point on
+the sphere.
+"""
+
+thickness = SymbolNew("h", units.length)
 """
 **Thickness** is a measure of a size of an object, usually the separation between two layers, or
 the distance through an object distinct from length and width.
@@ -279,4 +285,40 @@ mach_number = SymbolNew("M", dimensionless, display_latex="\\text{M}", positive=
 """
 The **Mach number** is a dimensionless quantity in fluid dynamics representing the ratio of flow velocity
 past a boundary to the local speed of sound.
+"""
+
+diffusion_coefficient = SymbolNew("D", units.area / units.time)
+"""
+**Diffusion coefficient**, or **diffusivity**, is usually defined as the proportionality constant between
+the molar flux due to molecular diffusion and the negative value of the gradient in the concentration of
+the species.
+
+**Links:**
+
+#. `Mass diffusivity <https://en.wikipedia.org/wiki/Mass_diffusivity>`__.
+"""
+
+dynamic_viscosity = SymbolNew("mu", units.pressure * units.time)
+"""
+**Dynamic viscosity** is a physical quantity measuring the resistance to deformation at a given rate.
+Specifically in fluid mechanics, it is the proportionality factor between the shear stress of the adjacent
+layers of the fluid and the local sheer velocity.
+
+**Links:**
+
+#. `Dynamic viscosity <https://en.wikipedia.org/wiki/Viscosity#Dynamic_viscosity>`__.
+"""
+
+diffusion_flux = SymbolNew("J", units.amount_of_substance / (units.area * units.time))
+"""
+**Diffusion flux** is a physical quantity that measures the amount of substance that will flow through
+a unit area during a unit time interval. For the general definition of flux, see `Flux
+<https://en.wikipedia.org/wiki/Flux>`__.
+"""
+
+degrees_of_freedom = SymbolNew("f", dimensionless, integer=True, positive=True)
+"""
+A **degree of freedom** is a physical parameter in the parameterization of a physical system. The number
+of degrees of freedom indicates the smallest number of parameters whose values determine all parameters
+in the chosen parameterization.
 """

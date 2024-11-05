@@ -1,4 +1,4 @@
-r"""
+"""
 Compressibility factor via intermolecular force potential
 =========================================================
 
@@ -23,12 +23,11 @@ linked to the intermolecular force potential.
 from sympy import Eq, Integral, pi, exp, S
 from symplyphysics import (
     clone_as_symbol,
+    clone_as_function,
     symbols,
     units,
-    dimensionless,
     Quantity,
     Symbol,
-    Function,
     validate_input,
     validate_output,
     convert_to_float,
@@ -37,47 +36,43 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.chemistry.potential_energy_models import hard_spheres_potential
 
-compressibility_factor = Symbol("compressibility_factor", dimensionless, positive=True)
+compressibility_factor = symbols.compressibility_factor
 """
-:doc:`Compressibility factor <definitions.compressibility_factor_is_deviation_from_ideal_gas>` of the gas.
-
-Symbol:
-    :code:`Z`
+:symbols:`compressibility_factor` of the gas. Also see :doc:`Compressibility factor
+<definitions.compressibility_factor_is_deviation_from_ideal_gas>`.
 """
 
-particle_count = Symbol("particle_count", dimensionless, integer=True, positive=True)
+particle_count = clone_as_symbol(
+    symbols.particle_count,
+    integer=True,
+    positive=True,
+)
 """
-Number of particles in the system.
-
-Symbol:
-    :code:`N`
-"""
-
-volume = Symbol("volume", units.volume, positive=True)
-"""
-Volume of the system.
-
-Symbol:
-    :code:`V`
+:symbols:`particle_count` of the system.
 """
 
-intermolecular_distance = Symbol("intermolecular_distance", units.length, positive=True)
+volume = clone_as_symbol(symbols.volume, positive=True)
 """
-Distance between gas molecules.
-
-Symbol:
-    :code:`r`
+:symbols:`volume` of the system.
 """
 
-intermolecular_force_potential = Function("intermolecular_force_potential", units.energy, real=True)
-r"""
-Intermolecular force potential as a function of intermolecular distance.
+intermolecular_distance = clone_as_symbol(
+    symbols.distance,
+    display_symbol="r",
+    display_latex="r",
+    positive=True,
+)
+"""
+:symbols:`distance` between gas molecules.
+"""
 
-Symbol:
-    :code:`phi(r)`
-
-Latex:
-    :math:`\varphi(r)`
+intermolecular_force_potential = clone_as_function(
+    symbols.potential_energy,
+    [intermolecular_distance],
+    real=True,
+)
+"""
+Intermolecular force potential as a function of :attr:`~intermolecular_distance`. See :symbols:`potential_energy`.
 """
 
 temperature = clone_as_symbol(symbols.temperature, positive=True)
@@ -91,13 +86,10 @@ law = Eq(
     (quantities.boltzmann_constant * temperature))) * intermolecular_distance**2,
     (intermolecular_distance, 0, S.Infinity),
     ))
-r"""
-:code:`Z = 1 + 2 * pi * (N / V) * Integral((1 - exp(-1 * phi(r) / (k_B * T))) * r^2, (r, 0, Infinity))`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        Z = 1 + \frac{2 \pi N}{V}
-                \int \limits_0^{\infty} \left( 1 - \exp{\left( - \frac{\varphi(r)}{k_\text{B} T} \right)} \right) r^2 dr
+:laws:latex::
 """
 
 # Calculate the compressibility factor for the model of hard spheres

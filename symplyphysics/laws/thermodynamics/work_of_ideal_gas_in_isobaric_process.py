@@ -8,58 +8,47 @@ by the gas is proportional to the pressure of the gas and its volume change.
 **Conditions:**
 
 #. The gas is ideal.
+#. The process is isobaric.
 """
 
 from sympy import Eq, solve
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    clone_as_symbol,
+)
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.laws.thermodynamics import work_is_integral_of_pressure_over_volume as work_law
+from symplyphysics.laws.thermodynamics import (
+    work_is_integral_of_pressure_over_volume as work_law,
+)
 
-work = Symbol("work", units.energy)
+work = symbols.work
 """
-Work done by the gas during the isobaric process.
-
-Symbol:
-    :code:`W`
-"""
-
-pressure = Symbol("pressure", units.pressure)
-"""
-Pressure of the gas, constant during the process.
-
-Symbol:
-    :code:`p`
+:symbols:`work` done by the gas during the isobaric process.
 """
 
-initial_volume = Symbol("initial_volume", units.volume)
+pressure = symbols.pressure
 """
-Initial volume of the gas.
-
-Symbol:
-    :code:`V0`
-
-Latex:
-    :math:`V_0`
+:symbols:`pressure` of the gas, constant during the process.
 """
 
-final_volume = Symbol("final_volume", units.volume)
+initial_volume = clone_as_symbol(symbols.volume, subscript="0")
 """
-Final volume of the gas
+Initial :symbols:`volume` of the gas.
+"""
 
-Symbol:
-    :code:`V1`
-
-Latex:
-    :math:`V_1`
+final_volume = clone_as_symbol(symbols.volume, subscript="1")
+"""
+Final :symbols:`volume` of the gas
 """
 
 law = Eq(work, pressure * (final_volume - initial_volume))
-r"""
-:code:`W = p * (V1 - V0)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        W = p (V_1 - V_0)
+:laws:latex::
 """
 
 # Derive law from work integral
