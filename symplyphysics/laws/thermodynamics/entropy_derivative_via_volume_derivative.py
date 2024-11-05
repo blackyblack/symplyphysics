@@ -23,51 +23,39 @@ from symplyphysics import (
     symbols,
     units,
     Quantity,
-    Symbol,
-    Function,
     validate_input,
     validate_output,
+    clone_as_function,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import gibbs_energy_differential
-
-entropy = Function("entropy", units.energy / units.temperature)
-"""
-Entropy of the system as a function of temperature and pressure.
-
-Symbol:
-    :code:`S(T, p)`
-"""
-
-pressure = Symbol("pressure", units.pressure)
-"""
-Pressure inside the system.
-
-Symbol:
-    :code:`p`
-"""
-
-volume = Function("volume", units.volume)
-"""
-Volume of the system as a function of temperature and pressure.
-
-Symbol:
-    :code:`V(T, p)`
-"""
 
 temperature = symbols.temperature
 """
 :symbols:`temperature` of the system.
 """
 
+pressure = symbols.pressure
+"""
+:symbols:`pressure` inside the system.
+"""
+
+entropy = clone_as_function(symbols.entropy, [temperature, pressure])
+"""
+:symbols:`entropy` of the system as a function of temperature and pressure.
+"""
+
+volume = clone_as_function(symbols.volume, [temperature, pressure])
+"""
+:symbols:`volume` of the system as a function of temperature and pressure.
+"""
+
 law = Eq(Derivative(entropy(temperature, pressure), pressure),
     -1 * Derivative(volume(temperature, pressure), temperature))
-r"""
-:code:`Derivative(S(T, p), p) = -1 * Derivative(V(T, p), T)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \left( \frac{\partial S}{\partial p} \right)_T = - \left( \frac{\partial V}{\partial T} \right)_p
+:laws:latex::
 """
 
 # Derive from expression of Gibbs energy differential

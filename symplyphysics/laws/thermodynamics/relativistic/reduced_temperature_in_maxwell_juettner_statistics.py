@@ -16,7 +16,7 @@ the gas in question.
 from sympy import Eq
 from symplyphysics import (
     dimensionless,
-    Symbol,
+    SymbolNew,
     Quantity,
     validate_input,
     validate_output,
@@ -25,15 +25,9 @@ from symplyphysics import (
     quantities,
 )
 
-reduced_temperature = Symbol("reduced_temperature", dimensionless)
-r"""
-Reduced temperature.
-
-Symbol:
-    :code:`theta`
-
-Latex:
-    :math:`\theta`
+reduced_temperature = SymbolNew("theta", dimensionless, display_latex="\\theta")
+"""
+Reduced :symbols:`temperature`.
 """
 
 temperature = symbols.temperature
@@ -50,12 +44,10 @@ law = Eq(
     reduced_temperature,
     (quantities.boltzmann_constant * temperature) / (particle_mass * quantities.speed_of_light**2),
 )
-r"""
-:code:`theta = (k_B * T) / (m * c^2)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \theta = \frac{k_\text{B} T}{m c^2}
+:laws:latex::
 """
 
 

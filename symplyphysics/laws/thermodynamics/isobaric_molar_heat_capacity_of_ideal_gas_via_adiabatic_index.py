@@ -1,4 +1,4 @@
-r"""
+"""
 Isobaric molar heat capacity of ideal gas via adiabatic index
 =============================================================
 
@@ -16,13 +16,12 @@ constant and the adiabatic index of the gas.
 
 from sympy import Eq, solve
 from symplyphysics import (
-    units,
-    dimensionless,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     quantities,
+    symbols,
+    clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import heat_capacity_ratio
@@ -31,37 +30,27 @@ from symplyphysics.laws.thermodynamics import (
 from symplyphysics.laws.quantities import (
     quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law,)
 
-isobaric_molar_heat_capacity = Symbol(
-    "isobaric_molar_heat_capacity", units.energy / (units.temperature * units.amount_of_substance))
-r"""
-Heat capacity at constant pressure per unit amount of substance.
-
-Symbol:
-    :code:`C_p`
-
-Latex:
-    :math:`C_p`
+isobaric_molar_heat_capacity = clone_as_symbol(
+    symbols.molar_heat_capacity,
+    display_symbol="c_pm",
+    display_latex="c_{p, m}",
+)
+"""
+:symbols:`molar_heat_capacity` at constant :symbols:`pressure`.
 """
 
-adiabatic_index = Symbol("adiabatic_index", dimensionless)
-r"""
-Adiabatic index, or :doc:`heat capacity ratio <definitions.heat_capacity_ratio>` of the gas.
-
-Symbol:
-    :code:`gamma`
-
-Latex:
-    :math:`\gamma`
+adiabatic_index = symbols.adiabatic_index
+"""
+:symbols:`adiabatic_index`, or :doc:`heat capacity ratio <definitions.heat_capacity_ratio>`
+of the gas.
 """
 
 law = Eq(isobaric_molar_heat_capacity,
     quantities.molar_gas_constant * adiabatic_index / (adiabatic_index - 1))
-r"""
-:code:`C_p = R * gamma / (gamma - 1)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        C_p = \frac{R \gamma}{\gamma - 1}
+:laws:latex::
 """
 
 # Derive law from the Mayer's law for heat capacities and the definition of adiabatic index

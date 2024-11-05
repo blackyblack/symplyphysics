@@ -14,54 +14,42 @@ from sympy import Eq, Derivative
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
-    Function,
     validate_input,
     validate_output,
     symbols,
+    clone_as_function,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.geometry.line import two_point_function, Point2D
-
-enthalpy = Function("enthalpy", units.energy)
-"""
-Enthalpy of the system.
-
-Symbol:
-    :code:`H(T, p)`
-"""
 
 temperature = symbols.temperature
 """
 :symbols:`temperature` of the system.
 """
 
-pressure = Symbol("pressure", units.pressure)
+pressure = symbols.pressure
 """
-Pressure inside the system.
-
-Symbol:
-    :code:`p`
+:symbols:`pressure` inside the system.
 """
 
-volume = Function("volume", units.volume)
+enthalpy = clone_as_function(symbols.enthalpy, [temperature, pressure])
 """
-Volume of the system.
+:symbols:`enthalpy` of the system.
+"""
 
-Symbol:
-    :code:`V`
+volume = clone_as_function(symbols.volume, [temperature, pressure])
+"""
+:symbols:`volume` of the system.
 """
 
 law = Eq(
     Derivative(enthalpy(temperature, pressure), pressure),
     volume(temperature, pressure) -
     temperature * Derivative(volume(temperature, pressure), temperature))
-r"""
-:code:`Derivative(H(T, p), p) = V(T, p) - T * Derivative(V(T, p), T)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \left( \frac{\partial H}{\partial p} \right)_T = V(T, p) - T \left( \frac{\partial V}{\partial T} \right)_p
+:laws:latex::
 """
 
 # TODO: Derive from differential of enthalpy and Maxwell relation

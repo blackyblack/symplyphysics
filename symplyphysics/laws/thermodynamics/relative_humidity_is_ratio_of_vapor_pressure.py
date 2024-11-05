@@ -2,55 +2,48 @@
 Relative humidity is ratio of vapor pressure
 ============================================
 
-*Relative humidity* is the ratio of actual water vapor pressure :math:`p` to saturation vapor
-pressure :math:`p_0` at a given temperature. *Saturation vapor* is vapor in dynamic
+**Relative humidity** is the ratio of actual water vapor pressure :math:`p` to saturation vapor
+pressure :math:`p_0` at a given temperature. **Saturation vapor** is vapor in dynamic
 equilibrium with a liquid or solid of the same composition in a closed system. In such
 a system, the number of evaporating molecules is equal to the number of condensing
 molecules per unit time.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless)
+from sympy import Eq, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    clone_as_symbol,
+)
 
-relative_humidity = Symbol("relative_humidity", dimensionless)
-r"""
-Relative humidity of air.
-
-Symbol:
-    :code:`phi`
-
-Latex:
-    :math:`\varphi`
+relative_humidity = symbols.relative_humidity
+"""
+:symbols:`relative_humidity` of air.
 """
 
-actual_vapor_pressure = Symbol("actual_vapor_pressure", units.pressure)
+actual_vapor_pressure = symbols.pressure
 """
-*Partial pressure of water vapor* in the medium, representing how much water vapor is
+Partial :symbols:`pressure` of water vapor in the medium, representing how much water vapor is
 actually in the air.
-
-Symbol:
-    :code:`p`
 """
 
-saturation_vapor_pressure = Symbol("saturation_vapor_pressure", units.pressure)
-r"""
-*Equilibrium vapor pressure* of water above a flat surface of liquid water or solid ice,
+saturation_vapor_pressure = clone_as_symbol(
+    symbols.pressure,
+    display_symbol="p_s",
+    display_latex="p_\\text{s}",
+)
+"""
+Equilibrium :symbols:`pressure` of water vapor above a flat surface of liquid water or solid ice,
 representing how much water vapor the air could potentially contain at a given temperature.
-
-Symbol:
-    :code:`p_s`
-
-Latex:
-    :math:`p_\text{s}`
 """
 
 law = Eq(relative_humidity, actual_vapor_pressure / saturation_vapor_pressure)
-r"""
-:code:`phi = p / p_s`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \varphi = \frac{p}{p_\text{s}}
+:laws:latex::
 """
 
 

@@ -12,41 +12,34 @@ from typing import Sequence
 from sympy import Eq, Idx, solve
 from symplyphysics import (
     convert_to_float,
-    dimensionless,
-    Symbol,
     validate_input,
     validate_output,
-    SymbolIndexed,
     SumIndexed,
     global_index,
+    symbols,
 )
+from symplyphysics.core.symbols.symbols import clone_as_indexed
 
-partition_function = Symbol("partition_function", dimensionless)
+partition_function = symbols.partition_function
 """
-Partition function of the system.
-
-Symbol:
-    :code:`Z`
+:symbols:`partition_function` of the system.
 """
 
-boltzmann_factor = SymbolIndexed("boltzmann_factor", dimensionless)
-r"""
-:doc:`Boltzmann factor <definitions.boltzmann_factor_via_state_energy_and_temperature>` of energy state :math:`i`.
-
-Symbol:
-    :code:`f_i`
-
-Latex:
-    :math:`f_i`
+boltzmann_factor = clone_as_indexed(
+    symbols.boltzmann_factor,
+    display_symbol="f[i]",
+    display_latex="f_i",
+)
+"""
+:symbols:`boltzmann_factor` of energy state :math:`i`. See :doc:`Boltzmann factor
+<definitions.boltzmann_factor_via_state_energy_and_temperature>`.
 """
 
 law = Eq(partition_function, SumIndexed(boltzmann_factor[global_index], global_index))
-r"""
-:code:`Z = Sum(f_i, i)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        Z = \sum_i f_i
+:laws:latex::
 """
 
 

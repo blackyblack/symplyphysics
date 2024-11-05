@@ -15,57 +15,39 @@ in space, say, a container with gas particles.
 from sympy import Eq
 from symplyphysics import (
     Quantity,
-    Symbol,
-    dimensionless,
-    units,
     validate_input,
     validate_output,
     convert_to_float,
+    clone_as_symbol,
+    symbols,
 )
 from symplyphysics.core.symbols.probability import Probability
 
-probability = Symbol("probability", dimensionless)
+probability = clone_as_symbol(symbols.probability)
 """
-Probability of finding :math:`N` gas particles in volume :math:`V`.
-
-Symbol:
-    :code:`P`
+:symbols:`probability` of finding :attr:`~particle_count` gas particles in :attr:`~partial_volume`.
 """
 
-total_volume = Symbol("total_volume", units.volume)
+total_volume = clone_as_symbol(symbols.volume, subscript="0")
 """
-Total volume of the region.
-
-Symbol:
-    :code:`V0`
-
-Latex:
-    :math:`V_0`
+Total :symbols:`volume` of the region.
 """
 
-partial_volume = Symbol("partial_volume", units.volume)
+partial_volume = symbols.volume
 """
-Volume of part of the container where we are looking for the particles.
-
-Symbol:
-    :code:`V`
+:symbols:`volume` of part of the container where we are looking for the particles.
 """
 
-particle_count = Symbol("particle_count", dimensionless, integer=True)
+particle_count = clone_as_symbol(symbols.particle_count, integer=True)
 """
-Number of gas particles in :math:`V`.
-
-Symbol:
-    :code:`N`
+:symbols:`particle_count` in :attr:`~partial_volume`.
 """
 
 law = Eq(probability, (partial_volume / total_volume)**particle_count)
-r"""
-:code:`P = (V / V0)^N`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        P = \left( \frac{V}{V_0} \right)^N
+:laws:latex::
 """
 
 

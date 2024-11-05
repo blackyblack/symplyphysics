@@ -17,40 +17,36 @@ solids, it is a big achievement and the result has correct asymptotic behaviour 
 from sympy import Eq, exp
 from symplyphysics import (
     dimensionless,
-    units,
     Quantity,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
     quantities,
+    clone_as_symbol,
+    symbols,
 )
 
-isochoric_molar_heat_capacity = Symbol(
-    "isochoric_molar_heat_capacity", units.energy / (units.temperature * units.amount_of_substance))
-r"""
-Heat capacity at constant volume per unit amount of substance.
-
-Symbol:
-    :code:`C_V`
-
-Latex:
-    :math:`C_V`
+isochoric_molar_heat_capacity = clone_as_symbol(
+    symbols.molar_heat_capacity,
+    display_symbol="c_Vm",
+    display_latex="c_{V, m}",
+)
+"""
+:symbols:`molar_heat_capacity` at constant :symbols:`volume`.
 """
 
-reduced_photon_energy = Symbol("reduced_photon_energy", dimensionless)
+reduced_photon_energy = SymbolNew("x", dimensionless)
 r"""
 Reduced photon energy, defined as the ratio of photon energy :math:`\hbar \omega` or :math:`h \nu` to
 thermal energy :math:`k_\text{B} T`.
 """
 
 law = Eq(isochoric_molar_heat_capacity, (3 * quantities.molar_gas_constant) *
-    reduced_photon_energy**2 * exp(reduced_photon_energy) / (exp(reduced_photon_energy) - 1)**2)
-r"""
-:code:`C_V = 3 * R * x^2 * exp(x) / (exp(x) - 1)^2`
+    (reduced_photon_energy**2 * exp(reduced_photon_energy) / (exp(reduced_photon_energy) - 1)**2))
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        C_V = 3 R \frac{x^2 e^x}{\left( e^x - 1 \right)^2}
+:laws:latex::
 """
 
 

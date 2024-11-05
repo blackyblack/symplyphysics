@@ -2,61 +2,54 @@
 Volume and temperature in isobaric process
 ==========================================
 
-A thermodynamic process is called isobaric when the pressure inside the system stays
-constant. Also called Guy-Lussac's law, it states that the volume of the gas scales
+A thermodynamic process is called **isobaric** when the pressure inside the system stays
+constant. Also called **Guy-Lussac's law**, it states that the volume of the gas scales
 by the same amount as the temperature during an isobaric process.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (clone_as_symbol, symbols, units, Quantity, Symbol, validate_input,
-    validate_output)
-from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as thermodynamics_law
+from sympy import Eq, solve
+from symplyphysics import (
+    clone_as_symbol,
+    symbols,
+    Quantity,
+    validate_input,
+    validate_output,
+)
+from symplyphysics.laws.thermodynamics.equations_of_state import (
+    ideal_gas_equation as thermodynamics_law,
+)
 
-initial_temperature = clone_as_symbol(symbols.temperature, display_symbol="T0", display_latex="T_0")
+initial_temperature = clone_as_symbol(symbols.temperature, subscript="0")
 """
 Initial :symbols:`temperature` of the system.
 """
 
-final_temperature = clone_as_symbol(symbols.temperature, display_symbol="T1", display_latex="T_1")
+final_temperature = clone_as_symbol(symbols.temperature, subscript="1")
 """
 Final :symbols:`temperature` of the system.
 """
 
-initial_volume = Symbol("initial_volume", units.volume)
+initial_volume = clone_as_symbol(symbols.volume, subscript="0")
 """
-Initial volume of the system.
-
-Symbol: 
-    :code:`V0`
-
-Latex:
-    :math:`V_0`
+Initial :symbols:`volume` of the system.
 """
 
-final_volume = Symbol("final_volume", units.volume)
+final_volume = clone_as_symbol(symbols.volume, subscript="1")
 """
-Final volume of the system.
-
-Symbol: 
-    :code:`V1`
-
-Latex:
-    :math:`V_1`
+Final :symbols:`volume` of the system.
 """
 
 law = Eq(initial_volume / final_volume, initial_temperature / final_temperature)
-r"""
-:code:`V0 / V1 = T0 / T1`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \frac{V_0}{V_1} = \frac{T_0}{T_1}
+:laws:latex::
 """
 
 ## Derive the same law from the general ideal gas law
 
-_pressure_start = Symbol("_pressure_start", units.pressure)
-_pressure_end = Symbol("_pressure_end", units.pressure)
+_pressure_start = clone_as_symbol(symbols.pressure, subscript="0")
+_pressure_end = clone_as_symbol(symbols.pressure, subscript="1")
 
 _isobaric_condition = Eq(_pressure_start, _pressure_end)
 

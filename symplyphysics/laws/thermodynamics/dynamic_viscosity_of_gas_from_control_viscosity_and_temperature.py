@@ -11,34 +11,33 @@ with increasing temperature, whereas for liquids it decreases with increasing te
 
 #. The gas is ideal.
 
+**Links:**
+
+#. `Sutherland model <https://en.wikipedia.org/wiki/Temperature_dependence_of_viscosity#Sutherland_model>`__.
+
 ..
     TODO Rename file
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (clone_as_symbol, symbols, units, Quantity, Symbol, validate_input,
-    validate_output)
+from sympy import Eq, solve, Rational
+from symplyphysics import (
+    clone_as_symbol,
+    symbols,
+    units,
+    Quantity,
+    SymbolNew,
+    validate_input,
+    validate_output,
+)
 
-dynamic_viscosity = Symbol("dynamic_viscosity", units.pressure * units.time)
-r"""
-Dynamic viscosity of the gas at temperature :math:`T`.
-
-Symbol:
-    :code:`mu`
-
-Latex:
-    :math:`\mu`
+dynamic_viscosity = symbols.dynamic_viscosity
+"""
+:symbols:`dynamic_viscosity` of the gas at the given :attr:`~temperature`.
 """
 
-reference_dynamic_viscosity = Symbol("reference_dynamic_viscosity", units.pressure * units.time)
-r"""
-Dynamic viscosity of the gas at the reference temperature :math:`T_0`.
-
-Symbol:
-    :code:`mu_0`
-
-Latex:
-    :math:`\mu_0`
+reference_dynamic_viscosity = clone_as_symbol(symbols.dynamic_viscosity, subscript="0")
+"""
+:symbols:`dynamic_viscosity` of the gas at the :attr:`~reference_temperature`.
 """
 
 temperature = symbols.temperature
@@ -46,31 +45,27 @@ temperature = symbols.temperature
 :symbols:`temperature` at which the viscosity value is calculated.
 """
 
-reference_temperature = clone_as_symbol(symbols.temperature,
-    display_symbol="T0",
-    display_latex="T_0")
+reference_temperature = clone_as_symbol(symbols.temperature, subscript="0")
 """
 :symbols:`temperature` at which the reference viscosity value is calculated.
 """
 
-sutherland_constant = Symbol("sutherland_constant", units.temperature)
+sutherland_constant = SymbolNew("C", units.temperature)
 """
 Sutherland constant of the gas.
 
-Symbol:
-    :code:`C`
+..
+    NOTE probably add this to `symbols`? this constant is specific to the Sutherland model
 """
 
 law = Eq(
     dynamic_viscosity,
     reference_dynamic_viscosity * ((reference_temperature + sutherland_constant) /
-    (temperature + sutherland_constant)) * (temperature / reference_temperature)**1.5)
-r"""
-:code:`mu = mu_0 * ((T0 + C) / (T + C)) * (T / T0)^(3/2)`
+    (temperature + sutherland_constant)) * (temperature / reference_temperature)**Rational(3, 2))
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \mu = \mu_0 \left( \frac{T_0 + C}{T + C} \right) \left( \frac{T}{T_0} \right)^{3 / 2}
+:laws:latex::
 """
 
 

@@ -8,28 +8,20 @@ from a closed thermodynamic system at a constant temperature (isothermal process
 
 from sympy import Eq
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     symbols,
 )
 
-helmholtz_free_energy = Symbol("helmholtz_free_energy", units.energy)
+helmholtz_free_energy = symbols.helmholtz_free_energy
 """
-Helmholtz free energy of the system.
-
-Symbol:
-    :code:`F`
+:symbols:`helmholtz_free_energy` of the system.
 """
 
-internal_energy = Symbol("internal_energy", units.energy)
+internal_energy = symbols.internal_energy
 """
-Internal energy of the system.
-
-Symbol:
-    :code:`U`
+:symbols:`internal_energy` of the system.
 """
 
 temperature = symbols.temperature
@@ -37,21 +29,16 @@ temperature = symbols.temperature
 :symbols:`temperature` of the system.
 """
 
-entropy = Symbol("entropy", units.energy / units.temperature)
+entropy = symbols.entropy
 """
-Entropy of the system.
-
-Symbol:
-    :code:`S`
+:symbols:`entropy` of the system.
 """
 
 law = Eq(helmholtz_free_energy, internal_energy - temperature * entropy)
-r"""
-:code:`F = U - T * S`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        F = U - T S
+:laws:latex::
 """
 
 

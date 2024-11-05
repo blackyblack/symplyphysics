@@ -11,77 +11,54 @@ system changes.
 #. The system is closed.
 """
 
-from sympy import Eq, Integral, Point2D, solve, symbols, Function as SymFunction
+from sympy import Eq, Integral, Point2D, solve
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
-    Function,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_function,
+    clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.geometry.line import two_point_function
 from symplyphysics.laws.thermodynamics import infinitesimal_work_in_quasistatic_process as work_law
 
-work = Symbol("work", units.energy)
+work = symbols.work
 """
-Pressure-volume work done by the system.
-
-Symbol:
-    :code:`W`
+Pressure-volume :symbols:`work` done by the system.
 """
 
-pressure = Function("pressure", units.pressure)
+volume = symbols.volume
 """
-Pressure inside the system as a function of volume.
-
-Symbol:
-    :code:`p(V)`
+:symbols:`volume` of the system.
 """
 
-volume = Symbol("volume", units.volume)
+pressure = clone_as_function(symbols.pressure, [volume])
 """
-Volume of the system.
-
-Symbol:
-    :code:`V`
+:symbols:`pressure` inside the system as a function of :attr:`~volume`.
 """
 
-initial_volume = Symbol("initial_volume", units.volume)
+initial_volume = clone_as_symbol(symbols.volume, subscript="0")
 """
-Initial volume of the system.
-
-Symbol:
-    :code:`V0`
-
-Latex:
-    :math:`V_0`
+Initial :symbols:`volume` of the system.
 """
 
-final_volume = Symbol("final_volume", units.volume)
+final_volume = clone_as_symbol(symbols.volume, subscript="1")
 """
-Final volume of the system.
-
-Symbol:
-    :code:`V1`
-
-Latex:
-    :math:`V_1`
+Final :symbols:`volume` of the system.
 """
 
 law = Eq(work, Integral(pressure(volume), (volume, initial_volume, final_volume)))
-r"""
-:code:`W = Integral(p(V), (V, V0, V1))`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        W = \int \limits_{V_0}^{V_1} p(V) \, dV
+:laws:latex::
 """
 
 # Derive law from infinitesimal counterpart
 
-_work_function = symbols("work", cls=SymFunction)
+_work_function = clone_as_function(symbols.work)
 
 # Prepare law for integration
 # Note that `dW = (dW/dV) * dV` and we set `dV` to 1

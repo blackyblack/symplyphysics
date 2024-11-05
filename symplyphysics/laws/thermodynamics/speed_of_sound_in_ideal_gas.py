@@ -11,8 +11,16 @@ for the speed of sound for ideal gases compared to the Newton's formula. See
 #. :quantity_notation:`molar_gas_constant`.
 """
 
-from sympy import Eq, solve, sqrt, Function as SymFunction, symbols as sym_symbols
-from symplyphysics import Quantity, Symbol, dimensionless, symbols, units, validate_input, validate_output, quantities
+from sympy import Eq, solve, sqrt
+from symplyphysics import (
+    Quantity,
+    symbols,
+    validate_input,
+    validate_output,
+    quantities,
+    clone_as_symbol,
+    clone_as_function,
+)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import (
     isentropic_speed_of_sound_via_pressure_derivative as sound_law,
@@ -24,12 +32,13 @@ from symplyphysics.laws.quantities import (
     quantity_is_volumetric_density_times_volume as density_law,
 )
 
-speed_of_sound = Symbol("speed_of_sound", units.velocity)
+speed_of_sound = clone_as_symbol(
+    symbols.speed,
+    display_symbol="v_s",
+    display_latex="v_\\text{s}",
+)
 """
-Speed of sound in gas.
-
-Symbol:
-    :code:`c`
+:symbols:`speed` of sound in gas.
 """
 
 temperature = symbols.temperature
@@ -37,40 +46,29 @@ temperature = symbols.temperature
 :symbols:`temperature` of the gas.
 """
 
-heat_capacity_ratio = Symbol("heat_capacity_ratio", dimensionless)
-r"""
-Heat capacity ratio, or adiabatic index, of the gas.
-
-Symbol:
-    :code:`gamma`
-
-Latex:
-    :math:`\gamma`
+heat_capacity_ratio = symbols.adiabatic_index
+"""
+Heat capacity ratio, or :symbols:`adiabatic_index`, of the gas.
 """
 
-molar_mass = Symbol("molar_mass", units.mass / units.amount_of_substance)
+molar_mass = symbols.molar_mass
 """
-Mass of one mole of the gas.
-
-Symbol:
-    :code:`M`
+:symbols:`molar_mass` of the gas.
 """
 
 law = Eq(speed_of_sound,
     sqrt(heat_capacity_ratio * quantities.molar_gas_constant * temperature / molar_mass))
-r"""
-:code:`c = sqrt(gamma * R * T / M)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        c = \sqrt{\frac{\gamma R T}{M}}
+:laws:latex::
 """
 
 # Derive from law of speed of sound and adiabate equation.
 
 _gas_mass = density_law.extensive_quantity
 _density = density_law.volumetric_density
-_pressure = sym_symbols("pressure", cls=SymFunction)(_density)
+_pressure = clone_as_function(symbols.pressure)(_density)
 
 _volume_expr = solve(density_law.law, density_law.volume)[0]
 

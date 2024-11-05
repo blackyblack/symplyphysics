@@ -8,38 +8,27 @@ It provides a necessary condition for processes such as chemical reactions that 
 conditions.
 """
 
-from sympy import (Eq, solve)
+from sympy import Eq, solve
 from symplyphysics import (
     symbols,
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
 )
 
-gibbs_energy = Symbol("gibbs_energy", units.energy / units.amount_of_substance)
+gibbs_energy = symbols.gibbs_energy
 """
-Gibbs energy of the system.
-
-Symbol:
-    :code:`G`
+:symbols:`gibbs_energy` of the system.
 """
 
-enthalpy = Symbol("enthalpy", units.energy / units.amount_of_substance)
+enthalpy = symbols.enthalpy
 """
-Enthalpy of the system.
-
-Symbol:
-    :code:`H`
+:symbols:`enthalpy` of the system.
 """
 
-entropy = Symbol("entropy", units.energy / units.amount_of_substance / units.temperature)
+entropy = symbols.entropy
 """
-Entropy of the system.
-
-Symbol:
-    :code:`S`
+:symbols:`entropy` of the system.
 """
 
 temperature = symbols.temperature
@@ -48,12 +37,10 @@ temperature = symbols.temperature
 """
 
 law = Eq(gibbs_energy, enthalpy - temperature * entropy)
-r"""
-:code:`G = H - T * S`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        G = H - T S
+:laws:latex::
 """
 
 

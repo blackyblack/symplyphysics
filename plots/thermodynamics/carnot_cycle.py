@@ -61,7 +61,8 @@ gas_volume_adiabatic_end = adiabatic_volume.subs({
     adiabatic_law.initial_temperature: GAS_TEMPERATURE_START,
     adiabatic_law.initial_volume: GAS_VOLUME_ADIABATIC_START,
     adiabatic_law.adiabatic_index: GAS_SPECIFIC_HEATS_RATIO,
-    adiabatic_law.final_temperature: GAS_TEMPERATURE_END
+    adiabatic_law.final_temperature: GAS_TEMPERATURE_END,
+    ideal_gas_equation.amount_of_substance: GAS_MOLE_COUNT,
 })
 
 # Use reversed adiabatic process here: looks like adiabatic expansion
@@ -70,7 +71,8 @@ gas_volume_isothermal_end = adiabatic_volume.subs({
     adiabatic_law.initial_temperature: GAS_TEMPERATURE_START,
     adiabatic_law.initial_volume: GAS_VOLUME_START,
     adiabatic_law.adiabatic_index: GAS_SPECIFIC_HEATS_RATIO,
-    adiabatic_law.final_temperature: GAS_TEMPERATURE_END
+    adiabatic_law.final_temperature: GAS_TEMPERATURE_END,
+    ideal_gas_equation.amount_of_substance: GAS_MOLE_COUNT,
 })
 
 result_pressure_isothermal_expansion = isothermal_pressure.subs({

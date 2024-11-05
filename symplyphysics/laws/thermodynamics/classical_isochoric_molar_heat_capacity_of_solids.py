@@ -16,32 +16,27 @@ of certain chemical elements is constant for temperatures far from the absolute 
 
 from sympy import Eq
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_output,
     quantities,
+    symbols,
+    clone_as_symbol,
 )
 
-isochoric_molar_heat_capacity = Symbol(
-    "isochoric_molar_heat_capacity", units.energy / (units.temperature * units.amount_of_substance))
-r"""
-Heat capacity at constant volume per unit amount of substance.
-
-Symbol:
-    :code:`C_V`
-
-Latex:
-    :math:`C_V`
+isochoric_molar_heat_capacity = clone_as_symbol(
+    symbols.molar_heat_capacity,
+    display_symbol="c_pm",
+    display_latex="c_{p, m}",
+)
+"""
+:symbols:`molar_heat_capacity` at constant pressure.
 """
 
 law = Eq(isochoric_molar_heat_capacity, 3 * quantities.molar_gas_constant)
-r"""
-:code:`C_V = 3 * R`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        C_V = 3 R
+:laws:latex::
 """
 
 

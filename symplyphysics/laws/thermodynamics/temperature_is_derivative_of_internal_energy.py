@@ -7,14 +7,11 @@ Temperature of a thermodynamic system can be found when internal energy is known
 
 from sympy import Eq, Derivative, solve
 from symplyphysics import (
-    units,
-    dimensionless,
     Quantity,
-    Symbol,
-    Function,
     validate_input,
     validate_output,
     symbols,
+    clone_as_function,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import internal_energy_differential
@@ -24,45 +21,34 @@ temperature = symbols.temperature
 :symbols:`temperature` of the system.
 """
 
-internal_energy = Function("internal_energy", units.energy)
+entropy = symbols.entropy
 """
-Internal energy of the system as a function of entropy, volume, and particle count.
-
-Symbol:
-    :code:`U(S, V, N)`
+:symbols:`entropy` of the system.
 """
 
-entropy = Symbol("entropy", units.energy / units.temperature)
+volume = symbols.volume
 """
-Entropy of the system.
-
-Symbol:
-    :code:`S`
+:symbols:`volume` of the system.
 """
 
-volume = Symbol("volume", units.volume)
+particle_count = symbols.particle_count
 """
-Volume of the system.
-
-Symbol:
-    :code:`V`
+:symbols:`particle_count` of the system.
 """
 
-particle_count = Symbol("particle_count", dimensionless)
+internal_energy = clone_as_function(
+    symbols.internal_energy,
+    [entropy, volume, particle_count],
+)
 """
-Number of particles in the system.
-
-Symbol:
-    :code:`N`
+:symbols:`internal_energy` of the system as a function of its natural variables.
 """
 
 law = Eq(temperature, Derivative(internal_energy(entropy, volume, particle_count), entropy))
-r"""
-:code:`T = Derivative(U(S, V, N), S)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        T = \left( \frac{\partial U}{\partial S} \right)_{V, N}
+:laws:latex::
 """
 
 # Derive from fundamental relation for internal energy

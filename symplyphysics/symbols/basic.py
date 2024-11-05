@@ -30,6 +30,11 @@ equal. Often, the inertial mass is being used, which is a measure of the object'
 when a force is applied.
 """
 
+molar_mass = SymbolNew("M", units.mass / units.amount_of_substance)
+"""
+**Molar mass** is defined as the mass per unit amount of substance.
+"""
+
 work = SymbolNew("W", units.energy)
 """
 **Work** is the energy transferred to or from an object via the application of force.
@@ -101,4 +106,9 @@ Number of particles in the system.
 angle = SymbolNew("phi", angle_type, display_latex="\\varphi")
 """
 An **angle** is the difference in direction between two lines or surfaces.
+"""
+
+probability = SymbolNew("P", dimensionless)
+"""
+**Probability** is a measure of an event's likelihood.
 """

@@ -12,12 +12,10 @@ Internal energy via Helmholtz free energy
 from sympy import Eq, Derivative, Point2D, solve
 from symplyphysics import (
     symbols,
-    units,
     Quantity,
-    Symbol,
-    Function,
     validate_input,
     validate_output,
+    clone_as_function,
 )
 from symplyphysics.core.geometry.line import two_point_function
 from symplyphysics.core.expr_comparisons import expr_equals
@@ -26,20 +24,9 @@ from symplyphysics.laws.thermodynamics import (
     entropy_is_derivative_of_free_energy as entropy_law,
 )
 
-internal_energy = Symbol("internal_energy", units.energy)
+internal_energy = symbols.internal_energy
 """
-Internal energy of the system.
-
-Symbol:
-    :code:`U`
-"""
-
-free_energy = Function("free_energy", units.energy)
-"""
-Helmholtz free energy of the system as a function of temperature and volume.
-
-Symbol:
-    :code:`F(T, V)`
+:symbols:`internal_energy` of the system.
 """
 
 temperature = symbols.temperature
@@ -47,12 +34,14 @@ temperature = symbols.temperature
 :symbols:`temperature` of the system.
 """
 
-volume = Symbol("volume", units.volume)
+volume = symbols.volume
 """
-Volume of the system.
+:symbols:`volume` of the system.
+"""
 
-Symbol:
-    :code:`V`
+free_energy = clone_as_function(symbols.helmholtz_free_energy, [temperature, volume])
+"""
+:symbols:`helmholtz_free_energy` of the system as a function of temperature and volume.
 """
 
 # Volume is held constant during the evalution of the derivative
@@ -61,12 +50,10 @@ law = Eq(
     internal_energy,
     free_energy(temperature, volume) -
     temperature * Derivative(free_energy(temperature, volume), temperature))
-r"""
-:code:`U = F(T, V) - T * Derivative(F(T, V), T)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        U = F(T, V) - T \left( \frac{\partial F}{\partial T} \right)_V
+:laws:latex::
 """
 
 # Derive from definition of free energy and thermodynamical Maxwell relations

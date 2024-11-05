@@ -155,3 +155,8 @@ current_density = SymbolNew("j", units.current / units.area)
 """
 **Current density** is the amount of charge per unit time that flows through a unit area of a chosen cross section.
 """
+
+emissivity = SymbolNew("epsilon", dimensionless, display_latex="\\varepsilon")
+"""
+The **emissivity** of the surface of a material is its effectiveness in emitting energy as thermal radiation.
+"""

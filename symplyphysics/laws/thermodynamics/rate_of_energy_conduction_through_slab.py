@@ -11,51 +11,37 @@ from sympy import Eq
 from symplyphysics import (
     clone_as_symbol,
     symbols,
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
 )
 
-energy_conduction_rate = Symbol("energy_conduction_rate", units.power, positive=True)
+energy_conduction_rate = symbols.power
 """
-Rate of energy conductivity through the slab.
-
-Symbol:
-    :code:`P`
+Rate of energy conductivity through the slab. See :symbols:`power`.
 """
 
-thermal_conductivity = Symbol("thermal_conductivity",
-    units.power / (units.length * units.temperature),
-    positive=True)
+thermal_conductivity = symbols.thermal_conductivity
 """
-Thermal conductivity of the slab's material.
-
-Symbol:
-    :code:`k`
+:symbols:`thermal_conductivity` of the slab's material.
 """
 
-face_area = Symbol("face_area", units.area, positive=True)
+face_area = symbols.area
 """
-Area of the face of the slab.
-
-Symbol:
-    :code:`A`
+:symbols:`area` of the face of the slab.
 """
 
-slab_thickness = Symbol("slab_thickness", units.length, positive=True)
+slab_thickness = symbols.thickness
 """
-Distance between the two faces of the slab.
-
-Symbol:
-    :code:`l`
+Distance between the two faces of the slab. See :symbols:`thickness`.
 """
 
-temperature_difference = clone_as_symbol(symbols.temperature,
-    display_symbol="dT",
+temperature_difference = clone_as_symbol(
+    symbols.temperature,
+    display_symbol="Delta(T)",
     display_latex="\\Delta T",
-    real=True)
+    real=True,
+)
 """
 :symbols:`temperature` difference between the two faces of the slab.
 """
@@ -64,12 +50,10 @@ law = Eq(
     energy_conduction_rate,
     thermal_conductivity * face_area * abs(temperature_difference) / slab_thickness,
 )
-r"""
-:code:`P = k * A * abs(dT) / l`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        P = k A \frac{|\Delta T|}{l}
+:laws:latex::
 """
 
 

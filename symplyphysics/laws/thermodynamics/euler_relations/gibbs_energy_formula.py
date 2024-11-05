@@ -7,57 +7,36 @@ functions but it can be derived via its definition and the relation for internal
 
 **Notes:**
 
-#. This formula words for a single-component system. For multi-component system replace the
+#. This formula works for a single-component system. For a multi-component system replace the
    right-hand side with a sum over each type of components.
 """
 
 from sympy import Eq
-from symplyphysics import (
-    units,
-    dimensionless,
-    Quantity,
-    Symbol,
-    validate_input,
-    validate_output,
-)
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import gibbs_energy_via_enthalpy as gibbs_energy_def
 from symplyphysics.laws.thermodynamics.euler_relations import enthalpy_formula
 
-gibbs_energy = Symbol("gibbs_energy", units.energy)
+gibbs_energy = symbols.gibbs_energy
 """
-Gibbs energy of the system.
-
-Symbol:
-    :code:`G`
+:symbols:`gibbs_energy` of the system.
 """
 
-chemical_potential = Symbol("chemical_potential", units.energy)
-r"""
-Chemical potential of the system.
-
-Symbol:
-    :code:`mu`
-
-Latex:
-    :math:`\mu`
+chemical_potential = symbols.chemical_potential
+"""
+:symbols:`chemical_potential` of the system.
 """
 
-particle_count = Symbol("particle_count", dimensionless)
+particle_count = symbols.particle_count
 """
-Number of particles in the system.
-
-Symbol:
-    :code:`N`
+:symbols:`particle_count` of the system.
 """
 
 law = Eq(gibbs_energy, chemical_potential * particle_count)
-r"""
-:code:`G = mu * N`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        G = \mu N
+:laws:latex::
 """
 
 # Derive from Gibbs energy definition and enthalpy formula

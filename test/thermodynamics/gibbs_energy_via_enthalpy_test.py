@@ -14,8 +14,8 @@ Args = namedtuple("Args", ["thermal_effect", "entropy", "temperature"])
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
-    thermal_effect = Quantity(552866 * units.joule / units.mole)
-    entropy = Quantity(155 * (units.joule / units.mole / units.kelvin))
+    thermal_effect = Quantity(552866 * units.joule)
+    entropy = Quantity(155 * (units.joule / units.kelvin))
     temperature = Quantity(298 * units.kelvin)
 
     return Args(thermal_effect=thermal_effect, entropy=entropy, temperature=temperature)
@@ -24,7 +24,7 @@ def test_args_fixture() -> Args:
 def test_basic_isobaric_potential(test_args: Args) -> None:
     result = potential_law.calculate_isobaric_potential(test_args.thermal_effect, test_args.entropy,
         test_args.temperature)
-    assert_equal(result, 506676 * units.joule / units.mole)
+    assert_equal(result, 506676 * units.joule)
 
 
 def test_bad_thermal_effect(test_args: Args) -> None:

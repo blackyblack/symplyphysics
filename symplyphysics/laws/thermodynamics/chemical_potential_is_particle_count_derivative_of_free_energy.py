@@ -10,52 +10,16 @@ by one.
 from sympy import Eq, Derivative, Point2D
 from symplyphysics import (
     symbols,
-    units,
-    dimensionless,
     Quantity,
-    Symbol,
-    Function,
     validate_input,
     validate_output,
+    clone_as_function,
 )
 from symplyphysics.core.geometry.line import two_point_function
 
-# Law: mu = (dF/dN)_(T, V)
-## mu - chemical potential
-## F = F(T, V, N) - [Helmholtz free energy](./helmholtz_free_energy_via_internal_energy.py)
-## N - particle count
-## T - temperature
-## V - volume
-## (d/dN)_(T, V) - derivative w.r.t. particle count at constant temperature and volume
-
-chemical_potential = Symbol("chemical_potential", units.energy)
+chemical_potential = symbols.chemical_potential
 r"""
-Chemical potential of the system.
-
-Symbol:
-    :code:`mu`
-
-Latex:
-    :math:`\mu`
-"""
-
-free_energy = Function("free_energy", units.energy)
-"""
-Helmholtz free energy of the system as a function of its natural variables.
-
-..
-    TODO add link to definition file
-
-Symbol:
-    :code:`F`
-"""
-
-particle_count = Symbol("particle_count", dimensionless)
-"""
-Number of particles in the system.
-
-Symbol:
-    :code:`N`
+:symbols:`chemical_potential` of the system.
 """
 
 temperature = symbols.temperature
@@ -63,24 +27,35 @@ temperature = symbols.temperature
 :symbols:`temperature` of the system.
 """
 
-volume = Symbol("volume", units.volume)
+volume = symbols.volume
 """
-Volume of the system.
+:symbols:`volume` of the system.
+"""
 
-Symbol:
-    :code:`V`
+particle_count = symbols.particle_count
+"""
+:symbols:`particle_count` of the system.
+"""
+
+free_energy = clone_as_function(
+    symbols.helmholtz_free_energy,
+    [temperature, volume, particle_count],
+)
+"""
+Helmholtz free energy of the system as a function of its natural variables.
+
+..
+    TODO add link to definition file
 """
 
 law = Eq(
     chemical_potential,
     Derivative(free_energy(temperature, volume, particle_count), particle_count),
 )
-r"""
-:code:`mu = Derivative(F(T, V, N), N)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \mu = \left( \frac{\partial F}{\partial N} \right)_{T, V}
+:laws:latex::
 """
 
 
