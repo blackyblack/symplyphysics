@@ -22,7 +22,7 @@ net_force = symbols.force
 Net :symbols:`force`.
 """
 
-force = clone_as_indexed(symbols.force, display_symbol="F[i]", display_latex="F_i")
+force = clone_as_indexed(symbols.force)
 """
 Individual :symbols:`force`.
 """

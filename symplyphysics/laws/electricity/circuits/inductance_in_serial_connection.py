@@ -30,7 +30,7 @@ total_inductance = symbols.inductance
 Total :symbols:`inductance` of the circuit.
 """
 
-inductance = clone_as_indexed(symbols.inductance, display_symbol="L[i]", display_latex="L_i")
+inductance = clone_as_indexed(symbols.inductance)
 r"""
 :symbols:`inductance` of the :math:`i`-th component.
 """

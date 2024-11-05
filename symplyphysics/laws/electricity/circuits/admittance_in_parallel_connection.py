@@ -27,7 +27,7 @@ total_admittance = symbols.admittance
 Total :symbols:`admittance` of the circuit.
 """
 
-admittance = clone_as_indexed(symbols.admittance, display_symbol="Y[i]", display_latex="Y_i")
+admittance = clone_as_indexed(symbols.admittance)
 """
 :symbols:`admittance` of :math:`i`-th circuit.
 """
