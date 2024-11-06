@@ -38,7 +38,7 @@ position = SymbolNew("x", units.length)
 **Position** is defined as the spatial location of an object with respect to a coordinate system.
 """
 
-distance = SymbolNew("d", units.length)
+distance = SymbolNew("s", units.length)
 """
 **Distance** is is a measure of the spatial separation between two points.
 """

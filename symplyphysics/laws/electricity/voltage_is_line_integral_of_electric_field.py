@@ -13,24 +13,23 @@ of the electric field along any path connecting the two points.
 
 from sympy import Eq, Integral
 from symplyphysics import (
-    units,
     Quantity,
-    SymbolNew,
     validate_input,
     validate_output,
     clone_as_function,
+    clone_as_symbol,
     symbols,
 )
 from symplyphysics.core.geometry.line import two_point_function, Point2D
 
-voltage = SymbolNew("V", units.voltage)
+voltage = symbols.voltage
 """
-Voltage between two points.
+:symbols:`voltage` between two points.
 """
 
-distance = SymbolNew("s", units.length)
+distance = symbols.distance
 """
-Distance traveled.
+:symbols:`distance` traveled.
 """
 
 electric_field_component = clone_as_function(
@@ -43,14 +42,14 @@ Component of the electric field vector tangent to the integration path.
 See :symbols:`electric_field_strength`.
 """
 
-initial_distance = SymbolNew("s_0", units.length)
+initial_distance = clone_as_symbol(symbols.distance, subscript="0")
 """
-Initial distance.
+Initial :symbols:`distance`.
 """
 
-final_distance = SymbolNew("s_1", units.length)
+final_distance = clone_as_symbol(symbols.distance, subscript="1")
 """
-Final distance.
+Final :symbols:`distance`.
 """
 
 law = Eq(
