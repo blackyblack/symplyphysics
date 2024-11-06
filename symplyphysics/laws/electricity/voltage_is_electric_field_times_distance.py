@@ -9,21 +9,26 @@ Voltage is electric field times distance
 """
 
 from sympy import Eq
-from symplyphysics import (units, Quantity, SymbolNew, validate_input, validate_output)
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+)
 
-voltage = SymbolNew("V", units.voltage)
+voltage = symbols.voltage
 """
-Voltage between two points.
-"""
-
-electric_field_strength = SymbolNew("E", units.voltage / units.length)
-"""
-Electric field strength.
+:symbols:`voltage` between two points.
 """
 
-distance = SymbolNew("d", units.length)
+electric_field_strength = symbols.electric_field_strength
 """
-Distance between two points.
+:symbols:`electric_field_strength`.
+"""
+
+distance = symbols.distance
+"""
+:symbols:`distance` between two points.
 """
 
 law = Eq(voltage, electric_field_strength * distance)
