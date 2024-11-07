@@ -22,18 +22,17 @@ the area of the coil's contour.
 #. The rotation of the coil is uniform.
 """
 
-from sympy import (Eq, solve, sin)
-from symplyphysics import (Quantity, SymbolNew, validate_input, validate_output, dimensionless,
-    symbols)
+from sympy import Eq, solve, sin
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 
 electromotive_force = symbols.electromotive_force
 """
 :symbols:`electromotive_force` induced in the coil.
 """
 
-coil_turn_count = SymbolNew("N", dimensionless)
+coil_turn_count = symbols.positive_number
 """
-Number of turns in the coil.
+Number of turns in the coil. See :symbols:`positive_number`.
 """
 
 magnetic_flux_density = symbols.magnetic_flux_density
@@ -53,7 +52,7 @@ angular_frequency = symbols.angular_frequency
 
 time = symbols.time
 """
-Time.
+:symbols:`time`.
 """
 
 law = Eq(
