@@ -16,50 +16,36 @@ velocity of frame :math:`B` relative to frame :math:`A`.
 
 from sympy import Eq
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
 )
 
-body_speed_in_first_frame = Symbol("body_speed_in_first_frame", units.velocity)
+body_speed_in_first_frame = clone_as_symbol(symbols.speed, subscript="A")
 """
-Speed of the body in frame :math:`A`.
-
-Symbol:
-    :code:`u`
+:symbols:`speed` of the body in frame :math:`A`.
 """
 
-body_speed_in_second_frame = Symbol("body_speed_in_second_frame", units.velocity)
-r"""
-Speed of the body in frame :math:`B`.
-
-Symbol:
-    :code:`u'`
-
-Latex:
-    :math:`u'`
+body_speed_in_second_frame = clone_as_symbol(symbols.speed, subscript="B")
+"""
+:symbols:`speed` of the body in frame :math:`B`.
 """
 
-second_frame_speed_in_first_frame = Symbol("second_frame_speed_in_first_frame", units.velocity)
+second_frame_speed_in_first_frame = clone_as_symbol(symbols.speed, subscript="AB")
 """
-Speed of frame :math:`B` relative to frame :math:`A`.
-
-Symbol:
-    :code:`v`
+:symbols:`speed` of frame :math:`B` relative to frame :math:`A`.
 """
 
 law = Eq(
     body_speed_in_first_frame,
     body_speed_in_second_frame + second_frame_speed_in_first_frame,
 )
-r"""
-:code:`u = u' + v`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        u = u' + v
+:laws:latex::
 """
 
 
