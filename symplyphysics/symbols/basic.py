@@ -7,10 +7,10 @@ Symbols of fundamental physical quantities.
 
 from sympy.physics import units
 from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
-from symplyphysics.core.dimensions import dimensionless, any_dimension as any_dimension_
+from symplyphysics.core.dimensions import dimensionless, any_dimension as _any_dimension
 from symplyphysics.core.symbols.symbols import SymbolNew
 
-any_dimension = SymbolNew("X", any_dimension_)
+any_dimension = SymbolNew("X", _any_dimension)
 """
 A quantity that can have any dimension.
 """
