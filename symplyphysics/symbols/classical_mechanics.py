@@ -322,3 +322,9 @@ A **degree of freedom** is a physical parameter in the parameterization of a phy
 of degrees of freedom indicates the smallest number of parameters whose values determine all parameters
 in the chosen parameterization.
 """
+
+angular_momentum = SymbolNew("L", units.mass * units.length**2 / units.time)
+"""
+**Angular momentum**, sometimes called **rotational momentum**, is the rotational analog of linear
+:symbols:`momentum`.
+"""
