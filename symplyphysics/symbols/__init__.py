@@ -37,6 +37,7 @@ __all__ = [
     "whole_number",
     "any_dimension",
     "fractional_change",
+    "exponential_decay_constant",
     # chemistry,
     "mass_fraction",
     "amount_of_substance",

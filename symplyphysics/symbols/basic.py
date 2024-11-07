@@ -125,3 +125,14 @@ fractional_change = SymbolNew("e", dimensionless)
 """
 **Fractional change** is linear change divided by initial value of the quantity.
 """
+
+exponential_decay_constant = SymbolNew("lambda", 1 / units.time, display_latex="\\lambda")
+"""
+**Exponential decay constant**, also called **rate constant** or **disintegration constant**, is 
+the rate at which some quantity is decreasing in such a way that its rate of change is proportional
+to its current value.
+
+**Links:**
+
+#. `Exponential decay <https://en.wikipedia.org/wiki/Exponential_decay>`__.
+"""
