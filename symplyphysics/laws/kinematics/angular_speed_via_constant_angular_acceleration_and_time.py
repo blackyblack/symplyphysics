@@ -13,65 +13,41 @@ speed is a linear function of time.
 
 from sympy import Eq, dsolve, solve
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
-    angle_type,
+    symbols,
+    clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import (
     angular_acceleration_is_angular_speed_derivative as angular_acceleration_def,)
 
-final_angular_speed = Symbol("final_angular_speed", angle_type / units.time)
-r"""
-Angular speed at time :math:`t`.
-
-Symbol:
-    :code:`w`
-
-Latex:
-    :math:`\omega`
+final_angular_speed = symbols.angular_speed
+"""
+:symbols:`angular_speed` at :attr:`~time`.
 """
 
-initial_angular_speed = Symbol("initial_angular_speed", angle_type / units.time)
-r"""
-Angular speed at :math:`t = 0`.
-
-Symbol:
-    :code:`w_0`
-
-Latex:
-    :math:`\omega_0`
+initial_angular_speed = clone_as_symbol(symbols.angular_speed, subscript="0")
+"""
+:symbols:`angular_speed` at :math:`t = 0`.
 """
 
-angular_acceleration = Symbol("angular_acceleration", angle_type / units.time**2)
+angular_acceleration = symbols.angular_acceleration
 r"""
-Constant angular acceleration.
-
-Symbol:
-    :code:`alpha`
-
-Latex:
-    :math:`\alpha`
+Constant :symbols:`angular_acceleration`.
 """
 
-time = Symbol("time", units.time)
-r"""
-Time at which :math:`\omega` is measured.
-
-Symbol:
-    :code:`t`
+time = symbols.time
+"""
+:symbols:`time` at which :attr:`~final_angular_speed` is measured.
 """
 
 law = Eq(final_angular_speed, initial_angular_speed + angular_acceleration * time)
-r"""
-:code:`w = w_0 + alpha * t`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \omega = \omega_0 + \alpha t
+:laws:latex::
 """
 
 # Derive this law from definition of angular acceleration
