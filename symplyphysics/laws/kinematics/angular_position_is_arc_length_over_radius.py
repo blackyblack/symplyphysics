@@ -9,49 +9,28 @@ length of a circular path and its radius (distance to the axis).
 """
 
 from sympy import Eq
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    validate_input,
-    validate_output,
-    angle_type,
-)
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 
-angular_position = Symbol("angular_position", angle_type)
+angular_position = symbols.angular_distance
 r"""
-Angular position of the body.
-
-Symbol:
-    :code:`theta`
-
-Latex:
-    :math:`\theta`
+:symbols:`angular_distance` of the body.
 """
 
-arc_length = Symbol("arc_length", units.length)
+arc_length = symbols.arc_length
 """
-Arc length.
-
-Symbol:
-    :code:`s`
+:symbols:`arc_length` of the curve traced by the body's movement.
 """
 
-distance_to_axis = Symbol("distance_to_axis", units.length)
+distance_to_axis = symbols.distance_to_axis
 """
-Distance to rotational axis, or radius of rotation.
-
-Symbol:
-    :code:`r`
+:symbols:`distance_to_axis` of rotation, or radius of rotation.
 """
 
 law = Eq(angular_position, arc_length / distance_to_axis)
-r"""
-:code:`theta = s / r`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \theta = \frac{s}{r}
+:laws:latex::
 """
 
 

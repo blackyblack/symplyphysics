@@ -100,6 +100,7 @@ __all__ = [
     "diffusion_flux",
     "degrees_of_freedom",
     "angular_momentum",
+    "arc_length",
     # electrodynamics
     "admittance",
     "electrical_conductance",

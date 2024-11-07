@@ -75,6 +75,11 @@ area = SymbolNew("A", units.area)
 **Area** is the size of a region on a two-dimensional surface.
 """
 
+arc_length = SymbolNew("s", units.length)
+"""
+**Arc length** is the distance between two points along a section of a curve.
+"""
+
 angular_speed = SymbolNew("w", angle_type / units.time, display_latex="\\omega")
 """
 **Angular speed** is the rate of change of angular distance with respect to time.
