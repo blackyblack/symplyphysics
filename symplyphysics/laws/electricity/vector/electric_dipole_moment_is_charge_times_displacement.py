@@ -20,14 +20,12 @@ from symplyphysics import (
     scale_vector,
     QuantityVector,
     Vector,
+    symbols,
 )
 
-charge = Symbol("charge", units.charge)
+charge = symbols.charge
 """
-Magnitude of the electric charge of the point charges.
-
-Symbol:
-    :code:`q`
+Magnitude of the electric :symbols:`charge` of the point charges.
 """
 
 

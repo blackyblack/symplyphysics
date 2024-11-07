@@ -35,14 +35,12 @@ from symplyphysics import (
     validate_input,
     validate_output,
     Vector,
+    symbols,
 )
 
-charge = Symbol("charge", units.charge)
+charge = symbols.charge
 """
-Value of the electric charge of the test particle.
-
-Symbol:
-    :code:`q`
+Value of the electric :symbols:`charge` of the test particle.
 """
 
 
