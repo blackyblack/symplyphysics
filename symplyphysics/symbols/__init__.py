@@ -36,6 +36,7 @@ __all__ = [
     "probability",
     "whole_number",
     "any_dimension",
+    "fractional_change",
     # chemistry,
     "mass_fraction",
     "amount_of_substance",

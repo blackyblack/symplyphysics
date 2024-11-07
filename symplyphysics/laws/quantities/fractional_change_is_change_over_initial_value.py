@@ -2,56 +2,44 @@
 Fractional change is change over initial value
 ==============================================
 
-
+Fractional change of a quantity is defined as ratio of the linear change of the quantity
+to the initial value of the quantity.
 """
 
-from sympy import Eq, Symbol as SymSymbol
+from sympy import Eq
 from symplyphysics import (
     convert_to_float,
-    dimensionless,
     Quantity,
-    Symbol,
     validate_output,
+    symbols,
+    clone_as_symbol,
 )
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 
-fractional_change = Symbol("fractional_change", dimensionless)
+fractional_change = clone_as_symbol(symbols.fractional_change, subscript="X")
 r"""
-Fractional change of quantity :math:`X`
-
-Symbol:
-    :code:`e_X`
-
-Latex:
-    :math:`e_X`
+:symbols:`fractional_change` of quantity :math:`X`.
 """
 
-change = SymSymbol("change")
-r"""
-Change in the value of the quantity.
-
-Symbol:
-    :code:`dX`
-
-Latex:
-    :math:`\Delta X`
+change = clone_as_symbol(
+    symbols.any_dimension,
+    display_symbol="Delta(X)",
+    display_latex="\Delta X"
+)
+"""
+Change in the value of the quantity. See :symbols:`any_dimension`.
 """
 
-initial_value = SymSymbol("initial_value")
+initial_value = symbols.any_dimension
 """
-Initial value of the quantity.
-
-Symbol:
-    :code:`X`
+Initial value of the quantity. See :symbols:`any_dimension`.
 """
 
 law = Eq(fractional_change, change / initial_value)
-r"""
-:code:`e_X = dX / X`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        e_X = \frac{\Delta X}{X}
+:laws:latex::
 """
 
 

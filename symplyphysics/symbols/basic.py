@@ -117,3 +117,8 @@ probability = SymbolNew("P", dimensionless)
 """
 **Probability** is a measure of an event's likelihood.
 """
+
+fractional_change = SymbolNew("e", dimensionless)
+"""
+**Fractional change** is linear change divided by initial value of the quantity.
+"""
