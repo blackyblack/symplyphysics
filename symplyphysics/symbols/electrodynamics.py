@@ -56,6 +56,12 @@ relative_permittivity = SymbolNew("epsilon_r", dimensionless, display_latex="\\v
 Also see :attr:`~symplyphysics.quantities.vacuum_permittivity`.
 """
 
+absolute_permeability = SymbolNew("mu", units.inductance / units.length, display_latex="\\mu")
+"""
+**Absolute permeability**, also called **permeability**, is the measure of magnetization produced in a material in response to an
+applied magnetic field.
+"""
+
 relative_permeability = SymbolNew("mu_r", dimensionless, display_latex="\\mu_r")
 """
 **Relative permeability** is the permeability of a medium relative to that of free space.
