@@ -27,7 +27,8 @@ volumetric_density = clone_as_symbol(
     display_latex="\\rho_X",
 )
 """
-Intensive volumetric density. See :symbols:`any_dimension`.
+Intensive volumetric density, which has the dimension of :attr:`~extensive_quantity`
+divided by :attr:`~volume`. See :symbols:`any_dimension`.
 """
 
 volume = symbols.volume

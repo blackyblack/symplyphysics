@@ -28,7 +28,7 @@ specific_quantity = clone_as_symbol(
 )
 """
 Intensive mass-specific quantity, which has the dimension of :attr:`~extensive_quantity`
-divided by :symbols:`mass`. See :symbols:`any_dimension`.
+divided by :attr:`~mass`. See :symbols:`any_dimension`.
 """
 
 mass = symbols.mass
