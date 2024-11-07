@@ -7,48 +7,35 @@ the rate of change in angle of rotation over time.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (angle_type, units, Quantity, Symbol, validate_input, validate_output)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols, clone_as_symbol)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.definitions import temporal_frequency_is_number_of_events_per_unit_time as frequency_def
 
-average_angular_speed = Symbol("average_angular_speed", angle_type / units.time)
-r"""
-Average angular speed of rotation.
-
-Symbol:
-    :code:`avg(w)`
-
-Latex:
-    :math:`\langle \omega \rangle`
+average_angular_speed = clone_as_symbol(
+    symbols.angular_speed,
+    display_symbol="avg(w)",
+    display_latex="\\langle \\omega \\rangle",
+)
+"""
+Average :symbols:`angular_speed` of rotation.
 """
 
-angular_distance = Symbol("angular_distance", angle_type)
-r"""
-Total angular distance in radians.
-
-Symbol:
-    :code:`theta`
-
-Latex:
-    :math:`\theta`
+angular_distance = symbols.angular_distance
+"""
+Total :symbols:`angular_distance` in radians.
 """
 
-time = Symbol("time", units.time)
+time = symbols.time
 """
-Time elapsed during rotation.
-
-Symbol:
-    :code:`t`
+:symbols:`time` elapsed during rotation.
 """
 
 law = Eq(average_angular_speed, angular_distance / time)
-r"""
-:code:`avg(w) = theta / t`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \langle \omega \rangle = \frac{\theta}{t}
+:laws:latex::
 """
 
 # Derive the same law from temporal frequency definition
