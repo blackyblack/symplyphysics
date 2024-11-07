@@ -7,8 +7,13 @@ Symbols of fundamental physical quantities.
 
 from sympy.physics import units
 from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
-from symplyphysics.core.dimensions import dimensionless
+from symplyphysics.core.dimensions import dimensionless, any_dimension as any_dimension_
 from symplyphysics.core.symbols.symbols import SymbolNew
+
+any_dimension = SymbolNew("X", any_dimension_)
+"""
+A quantity that can have any dimension.
+"""
 
 time = SymbolNew("t", units.time)
 """
@@ -90,11 +95,6 @@ A dimensionless **whole** number of any sign.
 positive_number = SymbolNew("N", dimensionless, integer=True, positive=True)
 """
 A dimensionless whole **number** used for counting objects or instances.
-"""
-
-whole_number = SymbolNew("N", dimensionless, integer=True)
-"""
-A dimensionless whole **number** of any sign.
 """
 
 number_density = SymbolNew("n", 1 / units.volume)

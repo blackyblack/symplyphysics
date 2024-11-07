@@ -35,6 +35,7 @@ __all__ = [
     "molar_mass",
     "probability",
     "whole_number",
+    "any_dimension",
     # chemistry,
     "mass_fraction",
     "amount_of_substance",

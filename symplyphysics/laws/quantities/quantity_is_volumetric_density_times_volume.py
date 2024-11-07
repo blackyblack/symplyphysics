@@ -6,49 +6,40 @@ An extensive quantity of interest can be obtained by multiplying the correspondi
 density* by volume.
 """
 
-from sympy import Eq, Symbol as SymSymbol
+from sympy import Eq
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
     validate_input,
+    symbols,
+    clone_as_symbol,
 )
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 
-extensive_quantity = SymSymbol("extensive_quantity")
+extensive_quantity = symbols.any_dimension
 """
-Extensive quantity.
-
-Symbol:
-    :code:`X`
+Extensive quantity. See :symbols:`any_dimension`.
 """
 
-volumetric_density = SymSymbol("volumetric_density")
-r"""
-Intensive volumetric density.
-
-Symbol:
-    :code:`rho_X`
-
-Latex:
-    :math:`\rho_X`
+volumetric_density = clone_as_symbol(
+    symbols.any_dimension,
+    display_symbol="rho_X",
+    display_latex="\\rho_X",
+)
+"""
+Intensive volumetric density. See :symbols:`any_dimension`.
 """
 
-volume = Symbol("volume", units.volume)
+volume = symbols.volume
 """
-Volume.
-
-Symbol:
-    :code:`V`
+:symbols:`volume`.
 """
 
 law = Eq(extensive_quantity, volumetric_density * volume)
-r"""
-:code:`X = rho_X * V`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        X = \rho_X V
+:laws:latex::
 """
 
 
