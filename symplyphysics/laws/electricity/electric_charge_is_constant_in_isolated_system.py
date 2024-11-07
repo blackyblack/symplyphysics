@@ -9,12 +9,12 @@ at all times.
 from sympy import Eq, solve
 from symplyphysics import Quantity, validate_input, validate_output, symbols, clone_as_symbol
 
-initial_charge = clone_as_symbol(symbols.charge, display_symbol="q_0", display_latex="q_0")
+initial_charge = clone_as_symbol(symbols.charge, subscript="0")
 """
 Initial :symbols:`charge` of the system.
 """
 
-final_charge = clone_as_symbol(symbols.charge, display_symbol="q_1", display_latex="q_1")
+final_charge = clone_as_symbol(symbols.charge, subscript="1")
 """
 Final :symbols:`charge` of the system.
 """
