@@ -124,6 +124,7 @@ __all__ = [
     "current_density",
     "relative_permeability",
     "emissivity",
+    "magnetic_moment",
     # optics
     "relative_refractive_index",
     "radiant_exitance",

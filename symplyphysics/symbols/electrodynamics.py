@@ -160,3 +160,15 @@ emissivity = SymbolNew("epsilon", dimensionless, display_latex="\\varepsilon")
 """
 The **emissivity** of the surface of a material is its effectiveness in emitting energy as thermal radiation.
 """
+
+magnetic_moment = SymbolNew("m", units.current * units.area)
+"""
+**Magnetic (dipole) moment** is a vector physical quantity representing the strength and
+the orientation of a system that exerts a magnetic field. The magnetic dipole moment of
+an object determines the magnitude of torque the object experiences in a given magnetic
+field.
+
+**Links:**
+
+#. `Magnetic moment <https://en.wikipedia.org/wiki/Magnetic_moment>`__.
+"""
