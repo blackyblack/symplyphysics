@@ -6,46 +6,41 @@ An extensive quantity of interest can be obtained by multiplying the correspondi
 density* by area.
 """
 
-from sympy import Eq, Symbol as SymSymbol
+from sympy import Eq
 from symplyphysics import (
     units,
     Quantity,
-    SymbolNew,
     validate_input,
+    symbols,
+    clone_as_symbol,
 )
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 
-extensive_quantity = SymSymbol("extensive_quantity")
+extensive_quantity = symbols.any_dimension
 """
-Extensive quantity.
-
-Symbol:
-    :code:`X`
+Extensive quantity. See :symbols:`any_dimension`.
 """
 
-areal_density = SymSymbol("areal_density")
+areal_density = clone_as_symbol(
+    symbols.any_dimension,
+    display_symbol="sigma_X",
+    display_latex="\\sigma_X",
+)
 r"""
-Intensive area-specific density.
-
-Symbol:
-    :code:`sigma_X`
-
-Latex:
-    :math:`\sigma_X`
+Intensive area-specific density, which has the dimension of :attr:`~extensive_quantity`
+divided by :attr:`~area`. See :symbols:`any_dimension`.
 """
 
-area = SymbolNew("A", units.area)
+area = symbols.area
 """
-Area.
+:symbols:`area`.
 """
 
 law = Eq(extensive_quantity, areal_density * area)
-r"""
-:code:`X = sigma_X * A`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        X = \sigma_X A
+:laws:latex::
 """
 
 
