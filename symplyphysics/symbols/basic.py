@@ -69,6 +69,9 @@ power = SymbolNew("P", units.power)
 radius_of_curvature = SymbolNew("r", units.length)
 """
 **Radius of curvature** is the inverse of curvature and is equal to the distance to the center of curvature.
+
+..
+    TODO are this and distance_to_axis interchangeable?
 """
 
 density = SymbolNew("rho", units.mass / units.volume, display_latex="\\rho")

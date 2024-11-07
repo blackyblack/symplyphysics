@@ -9,10 +9,7 @@ from sympy import Eq, solve
 from symplyphysics import (
     clone_as_symbol,
     symbols,
-    units,
     Quantity,
-    Symbol,
-    angle_type,
     validate_input,
     validate_output,
 )
@@ -22,39 +19,26 @@ from symplyphysics.laws.kinematics import (
     speed_via_angular_speed_and_radius as velocities_law,
 )
 
-centripetal_acceleration = clone_as_symbol(symbols.acceleration,
-    display_symbol="a_n",
-    display_latex="a_n")
+centripetal_acceleration = clone_as_symbol(symbols.acceleration, subscript="n")
 """
 Centripetal, or normal, :symbols:`acceleration`.
 """
 
-angular_speed = Symbol("angular_speed", angle_type / units.time)
-r"""
-Angular speed.
-
-Symbol:
-    :code:`w`
-
-Latex:
-    :math:`\omega`
+angular_speed = symbols.angular_speed
+"""
+:symbols:`angular_speed`.
 """
 
-radius_of_curvature = Symbol("radius_of_curvature", units.length)
+radius_of_curvature = symbols.radius_of_curvature
 """
-Instantaneous radius of curvature.
-
-Symbol:
-    :code:`r`
+Instantaneous :symbols:`radius_of_curvature`.
 """
 
 law = Eq(centripetal_acceleration, angular_speed**2 * radius_of_curvature)
-r"""
-:code:`a_n = w^2 * r`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        a_n = \omega^2 r
+:laws:latex::
 """
 
 # Derive law from expression for linear velocity in circular motion
