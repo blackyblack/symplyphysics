@@ -14,55 +14,37 @@ there is no damping force acting on the system.
 
 from sympy import Eq, sqrt
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
-    angle_type,
-    dimensionless,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
 )
 
-damped_angular_frequency = Symbol("damped_angular_frequency", angle_type / units.time)
-r"""
-Angular frequency of a damped oscillator.
-
-Symbol:
-    :code:`w_d`
-
-Latex:
-    :math:`\omega_\text{d}`
+damped_angular_frequency = clone_as_symbol(
+    symbols.angular_frequency,
+    display_symbol="w_d",
+    display_latex="\\omega_\\text{d}",
+)
+"""
+:symbols:`angular_frequency` of a damped oscillator.
 """
 
-undamped_angular_frequency = Symbol("undamped_angular_frequency", angle_type / units.time)
-r"""
-Angular frequency of an undamped oscillator.
-
-Symbol:
-    :code:`w`
-
-Latex:
-    :math:`\omega`
+undamped_angular_frequency = symbols.angular_frequency
+"""
+:symbols:`angular_frequency` of an undamped oscillator.
 """
 
-damping_ratio = Symbol("damping_ratio", dimensionless)
-r"""
-Damping ratio of the oscillator.
-
-Symbol:
-    :code:`zeta`
-
-Latex:
-    :math:`\zeta`
+damping_ratio = symbols.damping_ratio
+"""
+:symbols:`damping_ratio` of the oscillator.
 """
 
 law = Eq(damped_angular_frequency, undamped_angular_frequency * sqrt(1 - damping_ratio**2))
-r"""
-:code:`w_d = w * sqrt(1 - zeta^2)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \omega_\text{d} = \omega \sqrt{1 - \zeta^2}
+:laws:latex::
 """
 
 
