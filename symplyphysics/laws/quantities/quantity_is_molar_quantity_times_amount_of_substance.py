@@ -6,49 +6,41 @@ An extensive quantity of interest can be obtained by multiplying the correspondi
 intensive quantity by the amount of substance.
 """
 
-from sympy import Eq, Symbol as SymSymbol
+from sympy import Eq
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
     validate_input,
+    symbols,
+    clone_as_symbol,
 )
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 
-extensive_quantity = SymSymbol("extensive_quantity")
+extensive_quantity = symbols.any_dimension
 """
-Extensive property.
-
-Symbol:
-    :code:`X`
+Extensive property. See :symbols:`any_dimension`.
 """
 
-molar_quantity = SymSymbol("molar_quantity")
-r"""
-Intensive molar quantity.
-
-Symbol:
-    :code:`X_m`
-
-Latex:
-    :math:`X_m`
+molar_quantity = clone_as_symbol(
+    symbols.any_dimension,
+    display_symbol="x_m",
+    display_latex="x_m",
+)
+"""
+Intensive molar quantity, which has the dimension of :attr:`~extensive_quantity`
+divided by :attr:`~amount_of_substance`. See :symbols:`any_dimension`.
 """
 
-amount_of_substance = Symbol("amount_of_substance", units.amount_of_substance)
+amount_of_substance = symbols.amount_of_substance
 """
-Amount of substance.
-
-Symbol:
-    :code:`n`
+:symbols:`amount_of_substance`.
 """
 
 law = Eq(extensive_quantity, molar_quantity * amount_of_substance)
-r"""
-:code:`X = X_m * n`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        X = X_m n
+:laws:latex::
 """
 
 
