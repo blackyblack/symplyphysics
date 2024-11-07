@@ -6,49 +6,41 @@ An extensive quantity of interest can be obtained by multiplying the correspondi
 density* by length.
 """
 
-from sympy import Eq, Symbol as SymSymbol
+from sympy import Eq
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
     validate_input,
+    symbols,
+    clone_as_symbol,
 )
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 
-extensive_quantity = SymSymbol("extensive_quantity")
+extensive_quantity = symbols.any_dimension
 """
-Extensive quantity
-
-Symbol:
-    :code:`X`
+Extensive quantity. See :symbols:`any_dimension`.
 """
 
-linear_density = SymSymbol("linear_density")
-r"""
-Intensive linear density
-
-Symbol:
-    :code:`lambda_X`
-
-Latex:
-    :math:`\lambda_X`
+linear_density = clone_as_symbol(
+    symbols.any_dimension,
+    display_symbol="lambda_X",
+    display_latex="\\lambda_X",
+)
+"""
+Intensive linear density, which has the dimension of :attr:`~extensive_quantity`
+divided by :attr:`~length`. See :symbols:`any_dimension`.
 """
 
-length = Symbol("length", units.length)
+length = symbols.length
 """
-Length
-
-Symbol:
-    :code:`L`
+:symbols:`length`.
 """
 
 law = Eq(extensive_quantity, linear_density * length)
-r"""
-:code:`X = lambda_X * L`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        X = \lambda_X L
+:laws:latex::
 """
 
 
