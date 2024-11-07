@@ -12,67 +12,41 @@ initial velocity is nonzero. This behavior is also called *critical damping*.
 #. The system is critically damped, i.e. its damping ratio :math:`\zeta = 1`.
 """
 
-from sympy import Eq, exp, dsolve, solve, Function as SymFunction, symbols
+from sympy import Eq, exp, dsolve, solve
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
-    angle_type,
+    symbols,
+    clone_as_symbol,
+    clone_as_function,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import damped_harmonic_oscillator_equation as damped_eqn
 
-displacement = Symbol("displacement", units.length, real=True)
+displacement = symbols.distance
 """
-Displacement from rest, usually a function of time.
-
-Symbol:
-    :code:`q`
+Displacement from rest, usually a function of time. See :symbols:`distance`.
 """
 
-time = Symbol("time", units.time, nonnegative=True)
-r"""
-Time at which :math:`q` is measured.
-
-Symbol:
-    :code:`t`
+time = symbols.time
+"""
+:symbols:`time` at which :attr:`~displacement` is measured.
 """
 
-undamped_angular_frequency = Symbol("undamped_angular_frequency",
-    angle_type / units.time,
-    positive=True)
-r"""
-Angular frequency of the undamped oscillator.
-
-Symbol:
-    :code:`w`
-
-Latex:
-    :math:`\omega`
+undamped_angular_frequency = symbols.angular_frequency
+"""
+:symbols:`angular_frequency` of the undamped oscillator.
 """
 
-initial_position = Symbol("initial_position", units.length, real=True)
+initial_position = clone_as_symbol(symbols.position, subscript="0")
 """
-Initial position of the oscillator.
-
-Symbol:
-    :code:`x0`
-
-Latex:
-    :math:`x_0`
+Initial :symbols:`position` of the oscillator.
 """
 
-initial_speed = Symbol("initial_speed", units.velocity, real=True)
+initial_speed = clone_as_symbol(symbols.speed, subscript="0")
 """
-Initial speed of the oscillator.
-
-Symbol:
-    :code:`v0`
-
-Latex:
-    :math:`v_0`
+Initial :symbols:`speed` of the oscillator.
 """
 
 law = Eq(
@@ -80,17 +54,15 @@ law = Eq(
     exp(-1 * undamped_angular_frequency * time) * (initial_position +
     (initial_speed + initial_position * undamped_angular_frequency) * time),
 )
-r"""
-:code:`q = exp(-1 * w * t) * (x0 + (v0 + x0 * w) * t)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        q = \exp(- \omega t) (x_0 + (v_0 + x_0 \omega) t)
+:laws:latex::
 """
 
 # Derive from damped oscillator equation
 
-_displacement = symbols("displacement", real=True, cls=SymFunction)
+_displacement = clone_as_function(displacement, [time])
 
 _eqn = damped_eqn.definition.subs(damped_eqn.time, time).subs({
     damped_eqn.displacement(time): _displacement(time),
