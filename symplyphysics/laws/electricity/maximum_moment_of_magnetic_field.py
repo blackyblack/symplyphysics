@@ -7,11 +7,16 @@ properties of a substance, that is, the ability to create and perceive a magneti
 field.
 
 **Conditions:**
+
 #. Ideally, the conductor itself should be infinitely thin. But a conductor can have
    any shape and size if its dimensions can be neglected relative to the size of the
    closed circuit that it forms.
+
 #. The plane must be flat for this formula to be applicable, and the current must
    only make one turn around the contour.
+
+..
+    TODO rename file
 """
 
 from sympy import Eq, solve
