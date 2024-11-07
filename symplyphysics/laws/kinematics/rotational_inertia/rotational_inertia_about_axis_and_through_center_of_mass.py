@@ -15,33 +15,26 @@ of mass).
 
 from sympy import Eq
 from symplyphysics import (
-    units,
-    Symbol,
     Quantity,
     validate_input,
     validate_output,
     symbols,
+    clone_as_symbol,
 )
 
-rotational_inertia = Symbol("rotational_inertia", units.mass * units.length**2)
+rotational_inertia = symbols.rotational_inertia
 """
-Rotational inertia about some axis.
-
-Symbol:
-    :code:`I`
+:symbols:`rotational_inertia` about some axis.
 """
 
-rotational_inertia_through_com = Symbol("rotational_inertia_through_com",
-    units.mass * units.length**2)
-r"""
-Rotational inertia about an axis that is parallel to the given one and passes through
+rotational_inertia_through_com = clone_as_symbol(
+    symbols.rotational_inertia,
+    display_symbol="I_com",
+    display_latex="I_\\text{com}",
+)
+"""
+:symbols:`rotational_inertia` about an axis that is parallel to the given one and passes through
 the center of mass.
-
-Symbol:
-    :code:`I_com`
-
-Latex:
-    :math:`I_\text{com}`
 """
 
 mass = symbols.mass
@@ -49,24 +42,19 @@ mass = symbols.mass
 The :symbols:`mass` of the body.
 """
 
-distance_between_axes = Symbol("distance_between_axes", units.length)
+distance_between_axes = symbols.distance
 """
-Distance between the axes.
-
-Symbol:
-    :code:`d`
+:symbols:`distance` between the axes.
 """
 
 law = Eq(
     rotational_inertia,
     rotational_inertia_through_com + mass * distance_between_axes**2,
 )
-r"""
-:code:`I = I_com + m * d^2`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        I = I_\text{com} + m d^2
+:laws:latex::
 """
 
 
