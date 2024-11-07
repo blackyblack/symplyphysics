@@ -5,9 +5,17 @@ Centripetal acceleration via linear speed and radius
 *Centripetal acceleration* is defined as the change in velocity tangential to the velocity vector.
 """
 
-from sympy import (Eq, solve, sin, cos, Derivative, pi)
-from symplyphysics import (clone_as_symbol, symbols, units, Quantity, Symbol, Function, angle_type,
-    CoordinateSystem, Vector, validate_input, validate_output)
+from sympy import Eq, solve, sin, cos, Derivative, pi
+from symplyphysics import (
+    clone_as_symbol,
+    symbols,
+    Quantity,
+    CoordinateSystem,
+    Vector,
+    validate_input,
+    validate_output,
+    clone_as_function,
+)
 from symplyphysics.core.expr_comparisons import expr_equals, expr_equals_abs
 from symplyphysics.core.vectors.arithmetics import dot_vectors
 from symplyphysics.definitions import speed_is_distance_derivative as velocity_def
@@ -16,36 +24,26 @@ from symplyphysics.definitions import acceleration_is_speed_derivative as accele
 from symplyphysics.laws.geometry import planar_projection_is_cosine as projector
 from symplyphysics.laws.kinematics import speed_via_angular_speed_and_radius as linear_velocity_law
 
-centripetal_acceleration = clone_as_symbol(symbols.acceleration,
-    display_symbol="a_n",
-    display_latex="a_n")
+centripetal_acceleration = clone_as_symbol(symbols.acceleration, subscript="n")
 """
 Centripetal, or normal, :symbols:`acceleration`.
 """
 
-speed = Symbol("speed", units.velocity)
+speed = symbols.speed
 """
-Linear speed.
-
-Symbol:
-    :code:`v`
+Linear :symbols:`speed`.
 """
 
-radius_of_curvature = Symbol("radius_of_curvature", units.length)
+radius_of_curvature = symbols.radius_of_curvature
 """
-Instantaneous radius of curvature.
-
-Symbol:
-    :code:`r`
+Instantaneous :symbols:`radius_of_curvature`.
 """
 
 law = Eq(centripetal_acceleration, speed**2 / radius_of_curvature)
-r"""
-:code:`a_n = v^2 / r`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        a_n = \frac{v^2}{r}
+:laws:latex::
 """
 
 # Derive the same law from acceleration and velocity definitions
@@ -53,8 +51,8 @@ Latex:
 ## Let's assume we are having movement in 2-D space.
 ## Object position is described with it's radius-vector R - the vector from zero coordinates to the object and with angle '_alpha' between X-axis and this radius-vector.
 
-_time = Symbol("_time", units.time)
-_alpha = Function("_alpha", angle_type, positive=True)
+_time = symbols.time
+_alpha = clone_as_function(symbols.angular_distance, [_time])
 _cartesian_coordinates = CoordinateSystem()
 
 _curve_radius_horisontal = projector.law.rhs.subs({
