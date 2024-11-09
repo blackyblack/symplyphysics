@@ -16,13 +16,13 @@ from symplyphysics import (
 )
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 
-extensive_quantity = symbols.any_dimension
+extensive_quantity = symbols.any_quantity
 """
 Extensive quantity. See :symbols:`any_dimension`.
 """
 
 areal_density = clone_as_symbol(
-    symbols.any_dimension,
+    symbols.any_quantity,
     display_symbol="sigma_X",
     display_latex="\\sigma_X",
 )

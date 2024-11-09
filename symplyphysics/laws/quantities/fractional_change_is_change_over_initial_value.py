@@ -22,7 +22,7 @@ r"""
 """
 
 change = clone_as_symbol(
-    symbols.any_dimension,
+    symbols.any_quantity,
     display_symbol="Delta(X)",
     display_latex="\Delta X"
 )
@@ -30,7 +30,7 @@ change = clone_as_symbol(
 Change in the value of the quantity. See :symbols:`any_dimension`.
 """
 
-initial_value = symbols.any_dimension
+initial_value = symbols.any_quantity
 """
 Initial value of the quantity. See :symbols:`any_dimension`.
 """

@@ -35,7 +35,7 @@ __all__ = [
     "molar_mass",
     "probability",
     "whole_number",
-    "any_dimension",
+    "any_quantity",
     "fractional_change",
     "exponential_decay_constant",
     # chemistry,

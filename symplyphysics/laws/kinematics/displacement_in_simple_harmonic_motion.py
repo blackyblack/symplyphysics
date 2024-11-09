@@ -21,7 +21,7 @@ from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.definitions import harmonic_oscillator_is_second_derivative_equation as harmonic_eqn
 
 displacement = clone_as_symbol(
-    symbols.any_dimension,
+    symbols.any_quantity,
     display_symbol="q",
     display_latex="q", 
 )
@@ -30,7 +30,7 @@ Displacement from rest, usually a function of :symbols:`time`. See :symbols:`any
 """
 
 amplitude = clone_as_symbol(
-    symbols.any_dimension,
+    symbols.any_quantity,
     display_symbol="q_max",
     display_latex="q_\\text{max}",
 )

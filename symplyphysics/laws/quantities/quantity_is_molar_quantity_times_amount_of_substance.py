@@ -16,13 +16,13 @@ from symplyphysics import (
 )
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 
-extensive_quantity = symbols.any_dimension
+extensive_quantity = symbols.any_quantity
 """
 Extensive property. See :symbols:`any_dimension`.
 """
 
 molar_quantity = clone_as_symbol(
-    symbols.any_dimension,
+    symbols.any_quantity,
     display_symbol="x_m",
     display_latex="x_m",
 )
