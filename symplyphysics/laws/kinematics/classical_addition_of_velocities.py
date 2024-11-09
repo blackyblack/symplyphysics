@@ -23,17 +23,17 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-body_speed_in_first_frame = clone_as_symbol(symbols.speed, subscript="A")
+body_speed_in_first_frame = clone_as_symbol(symbols.speed, subscript="OA")
 """
 :symbols:`speed` of the body in frame :math:`A`.
 """
 
-body_speed_in_second_frame = clone_as_symbol(symbols.speed, subscript="B")
+body_speed_in_second_frame = clone_as_symbol(symbols.speed, subscript="OB")
 """
 :symbols:`speed` of the body in frame :math:`B`.
 """
 
-second_frame_speed_in_first_frame = clone_as_symbol(symbols.speed, subscript="AB")
+second_frame_speed_in_first_frame = clone_as_symbol(symbols.speed, subscript="BA")
 """
 :symbols:`speed` of frame :math:`B` relative to frame :math:`A`.
 """
