@@ -5,6 +5,11 @@ Displacement in simple harmonic motion
 Any motion that repeats at regular intervals is called periodic, or harmonic, motion.
 Simple harmonic motion is a particular type of repeated motion that is a sinusoidal
 function of time.
+
+**Note:**
+
+#. This law is also applicable for any physical quantity that changes its value in
+   a repeating harmonic manner, therefore :symbols:`any_quantity` is used.
 """
 
 from sympy import Eq, cos, dsolve
@@ -26,7 +31,7 @@ displacement = clone_as_symbol(
     display_latex="q", 
 )
 """
-Displacement from rest, usually a function of :symbols:`time`. See :symbols:`any_dimension`.
+Displacement from rest, usually a function of :symbols:`time`. See :symbols:`any_quantity`.
 """
 
 amplitude = clone_as_symbol(
@@ -35,7 +40,7 @@ amplitude = clone_as_symbol(
     display_latex="q_\\text{max}",
 )
 """
-The maximum absolute value of the :attr:`~displacement`. See :symbols:`any_dimension`.
+The maximum absolute value of the :attr:`~displacement`. See :symbols:`any_quantity`.
 """
 
 angular_frequency = clone_as_symbol(symbols.angular_frequency, positive=True)

@@ -18,7 +18,7 @@ from symplyphysics.core.dimensions import assert_equivalent_dimension
 
 extensive_quantity = symbols.any_quantity
 """
-Extensive quantity. See :symbols:`any_dimension`.
+Extensive quantity. See :symbols:`any_quantity`.
 """
 
 specific_quantity = clone_as_symbol(
@@ -28,7 +28,7 @@ specific_quantity = clone_as_symbol(
 )
 """
 Intensive mass-specific quantity, which has the dimension of :attr:`~extensive_quantity`
-divided by :attr:`~mass`. See :symbols:`any_dimension`.
+divided by :attr:`~mass`. See :symbols:`any_quantity`.
 """
 
 mass = symbols.mass

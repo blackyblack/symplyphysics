@@ -18,7 +18,7 @@ from symplyphysics.core.dimensions import assert_equivalent_dimension
 
 extensive_quantity = symbols.any_quantity
 """
-Extensive quantity. See :symbols:`any_dimension`.
+Extensive quantity. See :symbols:`any_quantity`.
 """
 
 linear_density = clone_as_symbol(
@@ -28,7 +28,7 @@ linear_density = clone_as_symbol(
 )
 """
 Intensive linear density, which has the dimension of :attr:`~extensive_quantity`
-divided by :attr:`~length`. See :symbols:`any_dimension`.
+divided by :attr:`~length`. See :symbols:`any_quantity`.
 """
 
 length = symbols.length

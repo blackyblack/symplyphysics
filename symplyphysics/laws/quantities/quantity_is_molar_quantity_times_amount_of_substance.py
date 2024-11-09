@@ -18,7 +18,7 @@ from symplyphysics.core.dimensions import assert_equivalent_dimension
 
 extensive_quantity = symbols.any_quantity
 """
-Extensive property. See :symbols:`any_dimension`.
+Extensive property. See :symbols:`any_quantity`.
 """
 
 molar_quantity = clone_as_symbol(
@@ -28,7 +28,7 @@ molar_quantity = clone_as_symbol(
 )
 """
 Intensive molar quantity, which has the dimension of :attr:`~extensive_quantity`
-divided by :attr:`~amount_of_substance`. See :symbols:`any_dimension`.
+divided by :attr:`~amount_of_substance`. See :symbols:`any_quantity`.
 """
 
 amount_of_substance = symbols.amount_of_substance

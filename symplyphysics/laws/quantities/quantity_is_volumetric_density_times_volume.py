@@ -18,7 +18,7 @@ from symplyphysics.core.dimensions import assert_equivalent_dimension
 
 extensive_quantity = symbols.any_quantity
 """
-Extensive quantity. See :symbols:`any_dimension`.
+Extensive quantity. See :symbols:`any_quantity`.
 """
 
 volumetric_density = clone_as_symbol(
@@ -28,7 +28,7 @@ volumetric_density = clone_as_symbol(
 )
 """
 Intensive volumetric density, which has the dimension of :attr:`~extensive_quantity`
-divided by :attr:`~volume`. See :symbols:`any_dimension`.
+divided by :attr:`~volume`. See :symbols:`any_quantity`.
 """
 
 volume = symbols.volume

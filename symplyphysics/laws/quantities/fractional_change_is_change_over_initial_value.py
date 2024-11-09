@@ -27,12 +27,12 @@ change = clone_as_symbol(
     display_latex="\Delta X"
 )
 """
-Change in the value of the quantity. See :symbols:`any_dimension`.
+Change in the value of the quantity. See :symbols:`any_quantity`.
 """
 
 initial_value = symbols.any_quantity
 """
-Initial value of the quantity. See :symbols:`any_dimension`.
+Initial value of the quantity. See :symbols:`any_quantity`.
 """
 
 law = Eq(fractional_change, change / initial_value)
