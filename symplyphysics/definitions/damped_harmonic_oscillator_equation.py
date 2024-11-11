@@ -22,7 +22,12 @@ time = clone_as_symbol(symbols.time, positive=True)
 :symbols:`time`.
 """
 
-displacement = clone_as_function(symbols.euclidean_distance, [time])
+displacement = clone_as_function(
+    symbols.euclidean_distance,
+    [time],
+    display_symbol="x",
+    display_latex="x",
+)
 """
 Displacement of the oscillating body as a function of time. See :symbols:`euclidean_distance`.
 """
