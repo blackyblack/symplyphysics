@@ -33,7 +33,7 @@ incident_wave_speed = clone_as_symbol(
     display_symbol="v_incident",
     display_latex="v_\\text{incident}",
 )
-r"""
+"""
 :symbols:`phase_speed` of the incident wave.
 """
 
@@ -42,7 +42,7 @@ refracted_wave_speed = clone_as_symbol(
     display_symbol="v_refracted",
     display_latex="v_\\text{refracted}",
 )
-r"""
+"""
 :symbols:`phase_speed` of the refracted wave.
 """
 

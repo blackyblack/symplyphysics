@@ -25,11 +25,7 @@ partition_function = symbols.partition_function
 :symbols:`partition_function` of the system.
 """
 
-boltzmann_factor = clone_as_indexed(
-    symbols.boltzmann_factor,
-    display_symbol="f[i]",
-    display_latex="f_i",
-)
+boltzmann_factor = clone_as_indexed(symbols.boltzmann_factor)
 """
 :symbols:`boltzmann_factor` of energy state :math:`i`. See :doc:`Boltzmann factor
 <definitions.boltzmann_factor_via_state_energy_and_temperature>`.

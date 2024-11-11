@@ -178,6 +178,8 @@ class FunctionNew(DimensionSymbolNew, UndefinedFunction):
     arguments: Sequence[Expr]
 
     # NOTE: Self type cannot be used in a metaclass and 'mcs' is a metaclass here
+    # NOTE: constructor returns not an object, but a class. Object is constructed
+    #       when arguments of a function are applied.
     def __new__(mcs,
         display_symbol: Optional[str] = None,
         arguments: Sequence[Expr] = (),
@@ -293,7 +295,6 @@ def clone_as_function(
     subscript: Optional[str] = None,
     **assumptions: Any,
 ) -> FunctionNew:
-    assumptions = assumptions or source.assumptions0
     display_symbol = display_symbol or source.display_name
     display_latex = display_latex or source.display_latex
 

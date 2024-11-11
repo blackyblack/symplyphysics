@@ -1,5 +1,5 @@
-from sympy import Integral, evaluate, exp, pi, sin, sqrt
-from symplyphysics import SymbolNew, clone_as_symbol, quantities, symbols, clone_as_function
+from sympy import Integral, evaluate, exp, log, pi, sin, sqrt
+from symplyphysics import Quantity, SymbolNew, clone_as_symbol, quantities, symbols, clone_as_function, units
 from symplyphysics.docs.printer_code import code_str
 
 
@@ -156,3 +156,11 @@ def test_fraction_mul_inner_fraction_with_braces() -> None:
         expr = 1 / (4 * pi *
             quantities.vacuum_permittivity) * (first_charge * second_charge / distance**2)
     assert code_str(expr) == "q_1 * q_2 / d^2 / (4 * pi * epsilon_0)"
+
+
+def test_log10() -> None:
+    intensity = symbols.intensity
+    reference_intensity = Quantity(1e-12 * units.watt / units.meter**2, display_symbol="I_0")
+    with evaluate(False):
+        expr = log(intensity / reference_intensity, 10)
+    assert code_str(expr) == "log(I / I_0, 10)"

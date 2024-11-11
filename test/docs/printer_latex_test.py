@@ -1,5 +1,5 @@
-from sympy import Integral, evaluate, exp, pi, sin, sqrt
-from symplyphysics import SymbolNew, quantities, symbols, clone_as_function, clone_as_symbol
+from sympy import Integral, evaluate, exp, log, pi, sin, sqrt
+from symplyphysics import Quantity, SymbolNew, quantities, symbols, clone_as_function, clone_as_symbol, units
 from symplyphysics.docs.printer_latex import latex_str
 
 
@@ -155,3 +155,11 @@ def test_fraction_mul_fraction() -> None:
         expr = 1 / (2 * pi * quantities.vacuum_permittivity) * (electric_dipole_moment /
             distance**3)
     assert latex_str(expr) == "\\frac{1}{2 \\pi \\varepsilon_0} \\frac{p}{d^{3}}"
+
+
+def test_log10() -> None:
+    intensity = symbols.intensity
+    reference_intensity = Quantity(1e-12 * units.watt / units.meter**2, display_symbol="I_0")
+    with evaluate(False):
+        expr = log(intensity / reference_intensity, 10)
+    assert latex_str(expr) == "\\log_{10} \\left( \\frac{I}{I_0} \\right)"

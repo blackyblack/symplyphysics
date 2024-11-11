@@ -16,7 +16,7 @@ conductance = symbols.electrical_conductance
 
 resistance = symbols.electrical_resistance
 """
-symbols:`resistance` of the object.
+symbols:`electrical_resistance` of the object.
 """
 
 definition = Eq(conductance, 1 / resistance)
