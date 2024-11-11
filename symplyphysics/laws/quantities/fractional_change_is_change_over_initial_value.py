@@ -17,14 +17,14 @@ from symplyphysics import (
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 
 fractional_change = clone_as_symbol(symbols.fractional_change, subscript="X")
-r"""
+"""
 :symbols:`fractional_change` of quantity :math:`X`.
 """
 
 change = clone_as_symbol(
     symbols.any_quantity,
     display_symbol="Delta(X)",
-    display_latex="\Delta X"
+    display_latex="\\Delta X"
 )
 """
 Change in the value of the quantity. See :symbols:`any_quantity`.

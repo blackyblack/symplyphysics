@@ -28,7 +28,7 @@ from symplyphysics.definitions import harmonic_oscillator_is_second_derivative_e
 displacement = clone_as_symbol(
     symbols.any_quantity,
     display_symbol="q",
-    display_latex="q", 
+    display_latex="q",
 )
 """
 Displacement from rest, usually a function of :symbols:`time`. See :symbols:`any_quantity`.

@@ -30,7 +30,6 @@ from symplyphysics import (
     subtract_cartesian_vectors,
     cross_cartesian_vectors,
     vector_magnitude,
-    Symbol,
     units,
     validate_input,
     validate_output,

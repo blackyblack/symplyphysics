@@ -12,7 +12,6 @@ of the system. It is collinear to the vector connecting the two point charges.
 """
 
 from symplyphysics import (
-    Symbol,
     units,
     validate_input,
     validate_output,

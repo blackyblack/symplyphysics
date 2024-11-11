@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture
 from sympy import Integral, evaluate, exp, log, pi, sin, sqrt
-from symplyphysics import Quantity, SymbolNew, Quantity, clone_as_symbol, clone_as_function, units
+from symplyphysics import Quantity, SymbolNew, clone_as_symbol, clone_as_function, units
 from symplyphysics.docs.printer_code import code_str
 
 Args = namedtuple(

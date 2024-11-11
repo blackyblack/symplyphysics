@@ -10,7 +10,6 @@ from symplyphysics import (
     Quantity,
     QuantityVector,
     scale_vector,
-    Symbol,
     units,
     validate_input,
     validate_output,
@@ -20,7 +19,7 @@ from symplyphysics import (
 )
 
 test_charge = clone_as_symbol(symbols.charge, subscript="0")
-r"""
+"""
 Value of the test :symbols:`charge`.
 """
 
