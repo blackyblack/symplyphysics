@@ -11,8 +11,14 @@ of the velocity vector, and its vector is tangent to the path of the body.
 """
 
 from sympy import Eq, solve, Derivative
-from symplyphysics import (clone_as_symbol, symbols, units, Quantity, Symbol, Function,
-    validate_input, validate_output, angle_type)
+from symplyphysics import (
+    clone_as_symbol,
+    symbols,
+    Quantity,
+    validate_input,
+    validate_output,
+    clone_as_function,
+)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematics import speed_via_angular_speed_and_radius as linear_velocity_law
 from symplyphysics.definitions import angular_acceleration_is_angular_speed_derivative as angular_acceleration_def
@@ -25,40 +31,29 @@ tangential_acceleration = clone_as_symbol(symbols.acceleration,
 Tangential :symbols:`acceleration`.
 """
 
-angular_acceleration = Symbol("angular_acceleration", angle_type / units.time**2)
-r"""
-Angular acceleration.
-
-Symbol:
-    :code:`alpha`
-
-Latex:
-    :math:`\alpha`
+angular_acceleration = symbols.angular_acceleration
+"""
+:symbols:`angular_acceleration`.
 """
 
-radius_of_curvature = Symbol("radius_of_curvature", units.length)
+radius_of_curvature = symbols.radius_of_curvature
 """
-Instantaneous radius of curvature.
-
-Symbol:
-    :code:`r`
+Instantaneous :symbols:`radius_of_curvature`.
 """
 
 law = Eq(tangential_acceleration, angular_acceleration * radius_of_curvature)
-r"""
-:code:`a_t = alpha * r`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        a_\tau = \alpha r
+:laws:latex::
 """
 
 # Derive the law from the law of linear velocity in case of a rotating body
 # Condition: radius of rotation remains constant.
 
-_linear_velocity = Function("_linear_velocity", units.velocity)
-_angular_velocity = Function("_angular_velocity", angle_type / units.time)
-_time = Symbol("_time", units.time)
+_time = symbols.time
+_linear_velocity = clone_as_function(symbols.speed, [_time])
+_angular_velocity = clone_as_function(symbols.angular_speed, [_time])
 
 _linear_velocity_law_sub = linear_velocity_law.law.subs({
     linear_velocity_law.speed: _linear_velocity(_time),

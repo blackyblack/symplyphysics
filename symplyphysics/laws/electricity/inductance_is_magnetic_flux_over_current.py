@@ -8,27 +8,21 @@ due to the component over the current in it.
 """
 
 from sympy import Eq
-from symplyphysics import (
-    SymbolNew,
-    units,
-    Quantity,
-    validate_input,
-    validate_output,
-)
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 
-inductance = SymbolNew("L", units.inductance)
+inductance = symbols.inductance
 """
-Inductance.
+:symbols:`inductance`.
 """
 
-magnetic_flux = SymbolNew("Phi_B", units.magnetic_flux, display_latex="\\Phi_B")
+magnetic_flux = symbols.magnetic_flux
 """
-Magnetic flux due to the component.
+:symbols:`magnetic_flux` due to the component.
 """
 
-current = SymbolNew("I", units.current)
+current = symbols.current
 """
-Current flowing through the circuit.
+:symbols:`current` flowing through the circuit.
 """
 
 law = Eq(inductance, magnetic_flux / current)

@@ -24,9 +24,9 @@ from symplyphysics import (
     symbols,
 )
 
-distance = symbols.distance
+distance = symbols.euclidean_distance
 """
-:symbols:`distance` between crystal planes, also called the "grating constant" of the crystal.
+:symbols:`euclidean_distance` between crystal planes, also called the "grating constant" of the crystal.
 """
 
 diffraction_order = symbols.positive_number

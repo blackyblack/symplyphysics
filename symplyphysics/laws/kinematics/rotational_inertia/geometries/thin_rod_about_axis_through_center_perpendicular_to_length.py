@@ -12,9 +12,7 @@ A thin rod is rotating about an axis that passes through its center perpendicula
 
 from sympy import Eq
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     symbols,
@@ -23,20 +21,14 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematics.rotational_inertia.geometries import (
     slab_about_perpendicular_axis_through_center as slab_formula)
 
-rotational_inertia = Symbol("rotational_inertia", units.mass * units.length**2)
+rotational_inertia = symbols.rotational_inertia
 """
-Rotational inertia of the rod.
-
-Symbol:
-    :code:`I`
+:symbols:`rotational_inertia` of the rod.
 """
 
-length = Symbol("length", units.length)
+length = symbols.length
 """
-Length of the rod.
-
-Symbol:
-    :code:`l`
+:symbols:`length` of the rod.
 """
 
 mass = symbols.mass
@@ -45,12 +37,10 @@ The :symbols:`mass` of the rod.
 """
 
 law = Eq(rotational_inertia, mass * length**2 / 12)
-r"""
-:code:`I = 1/12 * m * l^2`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        I = \frac{1}{12} m l^2
+:laws:latex::
 """
 
 # Derive law from formula for a slab rotating about the axis perpendicular to its length and width

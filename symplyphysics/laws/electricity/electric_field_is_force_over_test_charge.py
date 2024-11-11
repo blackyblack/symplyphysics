@@ -27,7 +27,7 @@ electrostatic_force = symbols.force
 Projection of the electrostatic :symbols:`force` applied to the test charge.
 """
 
-test_charge = clone_as_symbol(symbols.charge, display_symbol="q_0", display_latex="q_0")
+test_charge = clone_as_symbol(symbols.charge, subscript="0")
 """
 Value of the test :symbols:`charge`.
 """

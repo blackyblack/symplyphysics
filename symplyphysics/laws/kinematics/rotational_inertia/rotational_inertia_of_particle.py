@@ -7,29 +7,16 @@ and the squared radius of rotation.
 """
 
 from sympy import Eq
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    validate_input,
-    validate_output,
-    symbols,
-)
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 
-rotational_inertia = Symbol("rotational_inertia", units.mass * units.length**2)
+rotational_inertia = symbols.rotational_inertia
 """
-Rotational inertia of the particle.
-
-Symbol:
-    :code:`I`
+:symbols:`rotational_inertia` of the particle.
 """
 
-distance_to_axis = Symbol("distance_to_axis", units.length)
+distance_to_axis = symbols.distance_to_axis
 """
-Distance to axis, or radius of rotation.
-
-Symbol:
-    :code:`r`
+:symbols:`distance_to_axis`, or radius of rotation.
 """
 
 mass = symbols.mass
@@ -38,12 +25,10 @@ The :symbols:`mass` of the particle.
 """
 
 law = Eq(rotational_inertia, mass * distance_to_axis**2)
-r"""
-:code:`I = m * r^2`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        I = m r^2
+:laws:latex::
 """
 
 

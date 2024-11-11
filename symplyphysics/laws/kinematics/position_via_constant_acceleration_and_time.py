@@ -9,40 +9,31 @@ If a body is moving with a constant acceleration, its position in space is a qua
 #. Acceleration is constant, i.e. :math:`\frac{d a}{d t} = 0.`
 """
 
-from sympy import (Eq, solve, dsolve)
-from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output)
+from sympy import Eq, solve, dsolve
+from symplyphysics import (
+    symbols,
+    Quantity,
+    validate_input,
+    validate_output,
+    clone_as_symbol,
+)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import speed_is_distance_derivative as _velocity_definition
 from symplyphysics.definitions import acceleration_is_speed_derivative as _acceleration_definition
 
-final_position = Symbol("final_position", units.length)
+final_position = symbols.position
 """
-Position at time :math:`t`.
-
-Symbol:
-    :code:`x`
+:symbols:`position` at :attr:`~time`.
 """
 
-initial_position = Symbol("initial_position", units.length)
+initial_position = clone_as_symbol(symbols.position, subscript="0")
 """
-Position at :math:`t = 0`.
-
-Symbol:
-    :code:`x0`
-
-Latex:
-    :math:`x_0`
+:symbols:`position` at :math:`t = 0`.
 """
 
-initial_speed = Symbol("initial_speed", units.velocity)
+initial_speed = clone_as_symbol(symbols.speed, subscript="0")
 """
-Speed at :math:`t = 0`.
-
-Symbol:
-    :code:`v0`
-
-Latex:
-    :math:`v_0`
+:symbols:`speed` at :math:`t = 0`.
 """
 
 acceleration = symbols.acceleration
@@ -50,21 +41,16 @@ acceleration = symbols.acceleration
 Constant :symbols:`acceleration`.
 """
 
-time = Symbol("time", units.time)
+time = symbols.time
 """
-Time at which :math:`x` is measured.
-
-Symbol:
-    :code:`t`
+:symbols:`time` at which :attr:`~final_position` is measured.
 """
 
 law = Eq(final_position, initial_position + initial_speed * time + acceleration * time**2 / 2)
-r"""
-:code:`x = x0 + v0 * t + (1/2) * a * t^2`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        x = x_0 + v_0 t + \frac{1}{2} a t^2
+:laws:latex::
 """
 
 # Derive the same law from velocity and acceleration definitions

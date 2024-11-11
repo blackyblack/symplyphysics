@@ -6,43 +6,29 @@ Speed of a rotating body can be calculated using its angular speed and instantan
 radius of curvature of the body's path.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, angle_type, validate_input, validate_output)
+from sympy import Eq, solve
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 
-speed = Symbol("speed", units.velocity)
+speed = symbols.speed
 """
-Linear speed.
-
-Symbol:
-    :code:`v`
+Linear :symbols:`speed`.
 """
 
-angular_speed = Symbol("angular_speed", angle_type / units.time)
-r"""
-Angular speed.
-
-Symbol:
-    :code:`w`
-
-Latex:
-    :math:`\omega`
+angular_speed = symbols.angular_speed
+"""
+:symbols:`angular_speed`.
 """
 
-radius_of_curvature = Symbol("radius_of_curvature", units.length)
-r"""
-Instantaneous radius of curvature.
-
-Symbol:
-    :code:`r`
+radius_of_curvature = symbols.radius_of_curvature
+"""
+Instantaneous :symbols:`radius_of_curvature`.
 """
 
 law = Eq(speed, angular_speed * radius_of_curvature)
-r"""
-:code:`v = w * r`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        v = \omega r
+:laws:latex::
 """
 
 

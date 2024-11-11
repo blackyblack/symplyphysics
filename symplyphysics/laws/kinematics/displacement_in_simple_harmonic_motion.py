@@ -5,82 +5,69 @@ Displacement in simple harmonic motion
 Any motion that repeats at regular intervals is called periodic, or harmonic, motion.
 Simple harmonic motion is a particular type of repeated motion that is a sinusoidal
 function of time.
+
+**Note:**
+
+#. This law is also applicable for any physical quantity that changes its value in
+   a repeating harmonic manner, therefore :symbols:`any_quantity` is used.
 """
 
-from sympy import Eq, cos, symbols, dsolve, Function as SymFunction
+from sympy import Eq, cos, dsolve
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
-    angle_type,
     validate_input,
+    symbols,
+    clone_as_symbol,
+    clone_as_function,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.quantity_decorator import validate_output_same
 from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.definitions import harmonic_oscillator_is_second_derivative_equation as harmonic_eqn
 
-displacement = symbols("displacement", real=True)
+displacement = clone_as_symbol(
+    symbols.any_quantity,
+    display_symbol="q",
+    display_latex="q",
+)
 """
-Displacement from rest, usually a function of time.
-
-Symbol:
-    :code:`q`
-"""
-
-amplitude = symbols("amplitude", positive=True)
-r"""
-The maximum absolute value of the displacement.
-
-Symbol:
-    :code:`q_max`
-
-Latex:
-    :math:`q_\text{max}`
+Displacement from rest, usually a function of :symbols:`time`. See :symbols:`any_quantity`.
 """
 
-angular_frequency = Symbol("angular_frequency", angle_type / units.time, positive=True)
-r"""
-Angular frequency of oscillations.
-
-Symbol:
-    :code:`w`
-
-Latex:
-    :math:`\omega`
+amplitude = clone_as_symbol(
+    symbols.any_quantity,
+    display_symbol="q_max",
+    display_latex="q_\\text{max}",
+)
+"""
+The maximum absolute value of the :attr:`~displacement`. See :symbols:`any_quantity`.
 """
 
-phase_shift = Symbol("phase_shift", angle_type, real=True)
-r"""
-Phase shift of oscillations, which is the phase at :math:`t = 0`.
-
-Symbol:
-    :code:`phi`
-
-Latex:
-    :math:`\varphi`
+angular_frequency = clone_as_symbol(symbols.angular_frequency, positive=True)
+"""
+:symbols:`angular_frequency` of oscillations.
 """
 
-time = Symbol("time", units.time, real=True)
+phase_shift = symbols.phase_shift
 """
-Time at which :math:`q` is measured.
+:symbols:`phase_shift` of oscillations, which is the phase at :math:`t = 0`.
+"""
 
-Symbol:
-    :code:`t`
+time = symbols.time
+"""
+:symbols:`time` at which :attr:`~displacement` is measured.
 """
 
 law = Eq(displacement, amplitude * cos(angular_frequency * time + phase_shift))
-r"""
-:code:`q = q_max * cos(w * t + phi)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        q = q_\text{max} \cos(\omega t + \varphi)
+:laws:latex::
 """
 
 # Derive law from [oscillator equation](../../definitions/harmonic_oscillator_is_second_derivative_equation.py)
 
-_displacement = symbols("displacement", cls=SymFunction, real=True)
+_displacement = clone_as_function(displacement, [time])
 
 _eqn = harmonic_eqn.definition.replace(harmonic_eqn.displacement, _displacement).subs({
     harmonic_eqn.time: time,

@@ -12,14 +12,15 @@ to zero. This behavior is also known as *underdamping*.
 #. The system is underdamped, i.e. its damping ratio :math:`\zeta < 1`.
 """
 
-from sympy import Eq, exp, cos, solve, symbols
+from sympy import Eq, exp, cos, solve
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
-    angle_type,
+    symbols,
+    clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import scale_factor
@@ -29,83 +30,56 @@ from symplyphysics.laws.kinematics.damped_oscillations import (
     damped_angular_frequency as damped_frequency_law,
 )
 
-displacement = Symbol("displacement", units.length, real=True)
+displacement = symbols.euclidean_distance
 """
-Displacement from rest, usually a function of time.
-
-Symbol:
-    :code:`q`
+Displacement from rest, usually a function of time. See :symbols:`euclidean_distance`.
 """
 
-time = Symbol("time", units.time, real=True)
-r"""
-Time at which :math:`q` is measured.
-
-Symbol:
-    :code:`t`
+time = symbols.time
+"""
+:symbols:`time` at which :attr:`~displacement` is measured.
 """
 
-scaling_coefficient = Symbol("scaling_coefficient", units.length, real=True)
+scaling_coefficient = SymbolNew("a", units.length, real=True)
 """
 Scaling coefficient to be found using initial conditions.
-
-Symbol:
-    :code:`a`
 """
 
-exponential_decay_constant = Symbol("exponential_decay_constant", 1 / units.time, positive=True)
-r"""
-Exponential decay constant of the oscillator.
-
-Symbol:
-    :code:`lambda`
-
-Latex:
-    :math:`\lambda`
+exponential_decay_constant = symbols.exponential_decay_constant
+"""
+:symbols:`exponential_decay_constant` of the oscillator.
 """
 
-damped_angular_frequency = Symbol("damped_angular_frequency",
-    angle_type / units.time,
-    positive=True)
-r"""
+damped_angular_frequency = clone_as_symbol(
+    symbols.angular_frequency,
+    display_symbol="w_d",
+    display_latex="\\omega_\\text{d}",
+)
+"""
 :doc:`Damped angular frequency <laws.kinematics.damped_oscillations.damped_angular_frequency>`
-of the oscillator.
-
-Symbol:
-    :code:`w_d`
-
-Latex:
-    :math:`\omega_\text{d}`
+of the oscillator. See :symbols:`angular_frequency`.
 """
 
-phase_shift = Symbol("phase_shift", angle_type, real=True)
-r"""
-Phase shift of the oscillations, i.e. the phase at :math:`t = 0`.
-
-Symbol:
-    :code:`phi`
-
-Latex:
-    :math:`\varphi`
+phase_shift = symbols.phase_shift
+"""
+:symbols:`phase_shift` of the oscillations, i.e. the phase at :math:`t = 0`.
 """
 
 law = Eq(
     displacement,
     scaling_coefficient * exp(-1 * exponential_decay_constant * time) *
     cos(damped_angular_frequency * time + phase_shift))
-r"""
-:code:`q = a * exp(-1 * lambda * t) * cos(w_d * t + phi)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        q = a \exp(-\lambda t) \cos(\omega_\text{d} t + \varphi)
+:laws:latex::
 """
 
 # Relating to [damped oscillations equation](../../../definitions/damped_harmonic_oscillator_equation.py)
 ## We will show it is the solution of the aforementioned equation.
 
-_damping_ratio_sym, _undamped_frequency_sym = symbols("damping_ratio undamped_frequency",
-    positive=True)
+_damping_ratio_sym = symbols.damping_ratio
+_undamped_frequency_sym = symbols.angular_frequency
 
 _decay_eqn = damping_ratio_law.law.subs({
     damping_ratio_law.damping_ratio: _damping_ratio_sym,

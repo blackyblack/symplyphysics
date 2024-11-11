@@ -11,9 +11,7 @@ A solid disk (cylinder) rotates about its central axis (axis of cylindrical symm
 
 from sympy import Eq, pi
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     symbols,
@@ -22,20 +20,14 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematics.rotational_inertia import rotational_inertia_cylindrical_integral as integral_law
 from symplyphysics.definitions import density_from_mass_volume as density_def
 
-rotational_inertia = Symbol("rotational_inertia", units.mass * units.length**2)
+rotational_inertia = symbols.rotational_inertia
 """
-Rotational inertia of the disk.
-
-Symbol:
-    :code:`I`
+:symbols:`rotational_inertia` of the disk.
 """
 
-radius = Symbol("radius", units.length)
+radius = symbols.radius
 """
-Radius of the disk.
-
-Symbol:
-    :code:`r`
+:symbols:`radius` of the disk.
 """
 
 mass = symbols.mass
@@ -44,17 +36,15 @@ The :symbols:`mass` of the disk.
 """
 
 law = Eq(rotational_inertia, mass * radius**2 / 2)
-r"""
-:code:`I = 1/2 * m * r^2`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        I = \frac{1}{2} m r^2
+:laws:latex::
 """
 
 # Derive law from general integral in cylindrical coordinates
 
-_length = Symbol("_length", units.length)
+_length = symbols.length
 _volume = pi * radius**2 * _length
 
 _density = density_def.definition.rhs.subs({

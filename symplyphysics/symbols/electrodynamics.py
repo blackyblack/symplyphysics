@@ -56,6 +56,12 @@ relative_permittivity = SymbolNew("epsilon_r", dimensionless, display_latex="\\v
 Also see :attr:`~symplyphysics.quantities.vacuum_permittivity`.
 """
 
+absolute_permeability = SymbolNew("mu", units.inductance / units.length, display_latex="\\mu")
+"""
+**Absolute permeability**, also called **permeability**, is the measure of magnetization produced in a material in response to an
+applied magnetic field.
+"""
+
 relative_permeability = SymbolNew("mu_r", dimensionless, display_latex="\\mu_r")
 """
 **Relative permeability** is the permeability of a medium relative to that of free space.
@@ -159,4 +165,16 @@ current_density = SymbolNew("j", units.current / units.area)
 emissivity = SymbolNew("epsilon", dimensionless, display_latex="\\varepsilon")
 """
 The **emissivity** of the surface of a material is its effectiveness in emitting energy as thermal radiation.
+"""
+
+magnetic_moment = SymbolNew("m", units.current * units.area)
+"""
+**Magnetic (dipole) moment** is a vector physical quantity representing the strength and
+the orientation of a system that exerts a magnetic field. The magnetic dipole moment of
+an object determines the magnitude of torque the object experiences in a given magnetic
+field.
+
+**Links:**
+
+#. `Magnetic moment <https://en.wikipedia.org/wiki/Magnetic_moment>`__.
 """

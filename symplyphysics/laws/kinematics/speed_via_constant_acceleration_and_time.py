@@ -11,22 +11,16 @@ of time.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output)
+from symplyphysics import (symbols, Quantity, validate_input, validate_output, clone_as_symbol)
 
-final_speed = Symbol("final_speed", units.velocity)
-r"""
-Speed at time :math:`t`.
-
-Symbol:
-    :code:`v`
+final_speed = symbols.speed
+"""
+:symbols:`speed` at :attr:`~time`.
 """
 
-time = Symbol("time", units.time)
-r"""
-Time at which :math:`v` is measured.
-
-Symbol:
-    :code:`t`
+time = symbols.time
+"""
+:symbols:`time` at which :attr:`~final_speed` is measured.
 """
 
 acceleration = symbols.acceleration
@@ -34,24 +28,16 @@ acceleration = symbols.acceleration
 Constant :symbols:`acceleration`.
 """
 
-initial_speed = Symbol("initial_speed", units.velocity)
+initial_speed = clone_as_symbol(symbols.speed, subscript="0")
 """
-Speed at :math:`t = 0`.
-
-Symbol:
-    :code:`v0`
-
-Latex:
-    :math:`v_0`
+:symbols:`speed` at :math:`t = 0`.
 """
 
 law = Eq(final_speed, initial_speed + acceleration * time)
-r"""
-:code:`v = v0 + a * t`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        v = v_0 + a t
+:laws:latex::
 """
 
 

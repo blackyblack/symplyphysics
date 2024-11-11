@@ -13,49 +13,28 @@ of its angular velocity.
 """
 
 from sympy import Eq
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    validate_input,
-    validate_output,
-    angle_type,
-)
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 
-angular_momentum = Symbol("angular_momentum", units.length * units.momentum)
+angular_momentum = symbols.angular_momentum
 """
-Component of the vector of angular momentum parallel to the rotational axis.
-
-Symbol:
-    :code:`L`
+Component of the vector of :symbols:`angular_momentum` parallel to the rotational axis.
 """
 
-rotational_inertia = Symbol("rotational_inertia", units.mass * units.length**2)
+rotational_inertia = symbols.rotational_inertia
 """
-Rotational inertia of the body.
-
-Symbol:
-    :code:`I`
+:symbols:`rotational_inertia` of the body.
 """
 
-angular_speed = Symbol("angular_speed", angle_type / units.time)
-r"""
-Angular speed of the body.
-
-Symbol:
-    :code:`w`
-
-Latex:
-    :math:`\omega`
+angular_speed = symbols.angular_speed
+"""
+:symbols:`angular_speed` of the body.
 """
 
 law = Eq(angular_momentum, rotational_inertia * angular_speed)
-r"""
-:code:`L = I * w`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        L = I \omega
+:laws:latex::
 """
 
 

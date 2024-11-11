@@ -11,67 +11,43 @@ position is a linear function of time.
 
 from sympy import Eq, solve, dsolve
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
-    angle_type,
+    symbols,
+    clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import angular_speed_is_angular_distance_derivative as angular_velocity_def
 
-final_angular_position = Symbol("final_angular_position", angle_type)
-r"""
-Angular position at time :math:`t`.
-
-Symbol:
-    :code:`theta`
-
-Latex:
-    :math:`\theta`
+final_angular_position = symbols.angular_distance
+"""
+:symbols:`angular_distance` at :attr:`~time`.
 """
 
-initial_angular_position = Symbol("initial_angular_position", angle_type)
-r"""
-Angular position at :math:`t = 0`.
-
-Symbol:
-    :code:`theta_0`
-
-Latex:
-    :math:`\theta_0`
+initial_angular_position = clone_as_symbol(symbols.angular_distance, subscript="0")
+"""
+:symbols:`angular_distance` at :math:`t = 0`.
 """
 
-angular_speed = Symbol("angular_speed", angle_type / units.time)
-r"""
-Constant angular speed.
-
-Symbol:
-    :code:`w`
-
-Latex:
-    :math:`\omega`
+angular_speed = symbols.angular_speed
+"""
+Constant :symbols:`angular_speed`.
 """
 
-time = Symbol("time", units.time)
-r"""
-Time at which :math:`\theta` is measured.
-
-Symbol:
-    :code:`t`
+time = symbols.time
+"""
+:symbols:`time` at which :attr:`~final_angular_position` is measured.
 """
 
 law = Eq(
     final_angular_position,
     initial_angular_position + angular_speed * time,
 )
-r"""
-:code:`theta = theta_0 + w * t`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \theta = \theta_0 + \omega t
+:laws:latex::
 """
 
 # Derive law from definition of angular velocity

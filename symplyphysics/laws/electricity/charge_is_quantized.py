@@ -11,8 +11,6 @@ Electric charge is quantized, i.e. restricted to certain values.
 
 from sympy import Eq
 from symplyphysics import (
-    SymbolNew,
-    dimensionless,
     Quantity,
     validate_input,
     validate_output,
@@ -25,9 +23,9 @@ charge = symbols.charge
 Total :symbols:`charge` of the body.
 """
 
-integer_factor = SymbolNew("n", dimensionless)  # positive, zero or negative
+integer_factor = symbols.whole_number
 """
-Integer factor of any sign.
+:symbols:`whole_number`.
 """
 
 law = Eq(charge, integer_factor * quantities.elementary_charge)
