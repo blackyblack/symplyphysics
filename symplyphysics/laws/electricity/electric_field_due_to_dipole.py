@@ -40,9 +40,9 @@ See :doc:`laws.electricity.electric_dipole_moment_is_charge_times_distance` and
 :symbols:`electric_dipole_moment`.
 """
 
-distance = symbols.distance
+distance = symbols.euclidean_distance
 """
-:symbols:`distance` to dipole.
+:symbols:`euclidean_distance` to dipole.
 """
 
 law = Eq(electric_field_strength,

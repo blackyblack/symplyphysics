@@ -24,9 +24,9 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import damped_harmonic_oscillator_equation as damped_eqn
 
-displacement = symbols.distance
+displacement = symbols.euclidean_distance
 """
-Displacement from rest, usually a function of time. See :symbols:`distance`.
+Displacement from rest, usually a function of time. See :symbols:`euclidean_distance`.
 """
 
 time = symbols.time

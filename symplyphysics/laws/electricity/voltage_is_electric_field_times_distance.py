@@ -26,9 +26,9 @@ electric_field_strength = symbols.electric_field_strength
 :symbols:`electric_field_strength`.
 """
 
-distance = symbols.distance
+distance = symbols.euclidean_distance
 """
-:symbols:`distance` between two points.
+:symbols:`euclidean_distance` between two points.
 """
 
 law = Eq(voltage, electric_field_strength * distance)

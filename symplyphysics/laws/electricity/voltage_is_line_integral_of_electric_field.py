@@ -27,9 +27,9 @@ voltage = symbols.voltage
 :symbols:`voltage` between two points.
 """
 
-distance = symbols.distance
+distance = symbols.euclidean_distance
 """
-:symbols:`distance` traveled.
+:symbols:`euclidean_distance` traveled.
 """
 
 electric_field_component = clone_as_function(

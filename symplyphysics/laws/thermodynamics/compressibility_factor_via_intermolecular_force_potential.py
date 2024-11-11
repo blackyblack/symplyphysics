@@ -57,13 +57,13 @@ volume = clone_as_symbol(symbols.volume, positive=True)
 """
 
 intermolecular_distance = clone_as_symbol(
-    symbols.distance,
+    symbols.euclidean_distance,
     display_symbol="r",
     display_latex="r",
     positive=True,
 )
 """
-:symbols:`distance` between gas molecules.
+:symbols:`euclidean_distance` between gas molecules.
 """
 
 intermolecular_force_potential = clone_as_function(

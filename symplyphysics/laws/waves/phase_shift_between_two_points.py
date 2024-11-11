@@ -20,9 +20,9 @@ phase_shift = symbols.phase_shift
 :symbols:`phase_shift` between the two points.
 """
 
-distance = symbols.distance
+distance = symbols.euclidean_distance
 """
-:symbols:`distance` between the two points.
+:symbols:`euclidean_distance` between the two points.
 """
 
 wavelength = symbols.wavelength

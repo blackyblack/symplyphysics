@@ -33,9 +33,9 @@ charge = symbols.charge
 Value of the point :symbols:`charge`.
 """
 
-distance = symbols.distance
+distance = symbols.euclidean_distance
 """
-:symbols:`distance` to the charge.
+:symbols:`euclidean_distance` to the charge.
 """
 
 law = Eq(electric_field_strength,

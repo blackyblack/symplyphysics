@@ -34,9 +34,9 @@ charge = symbols.charge
 Total :symbols:`charge` of the sphere.
 """
 
-distance = symbols.distance
+distance = symbols.euclidean_distance
 """
-:symbols:`distance` to the center of the sphere.
+:symbols:`euclidean_distance` to the center of the sphere.
 """
 
 law = Eq(electric_field_strength, charge / (4 * pi * quantities.vacuum_permittivity * distance**2))

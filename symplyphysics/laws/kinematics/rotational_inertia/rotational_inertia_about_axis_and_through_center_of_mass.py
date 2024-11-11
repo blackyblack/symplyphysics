@@ -42,9 +42,9 @@ mass = symbols.mass
 The :symbols:`mass` of the body.
 """
 
-distance_between_axes = symbols.distance
+distance_between_axes = symbols.euclidean_distance
 """
-:symbols:`distance` between the axes.
+:symbols:`euclidean_distance` between the axes.
 """
 
 law = Eq(

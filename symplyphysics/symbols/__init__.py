@@ -50,6 +50,7 @@ __all__ = [
     "force",
     "speed",
     "acceleration",
+    "euclidean_distance",
     "distance",
     "distance_to_origin",
     "distance_to_axis",

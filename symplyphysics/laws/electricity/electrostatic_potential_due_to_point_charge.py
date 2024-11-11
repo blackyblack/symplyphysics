@@ -24,9 +24,9 @@ absolute_permittivity = symbols.absolute_permittivity
 :symbols:`absolute_permittivity` of the medium.
 """
 
-distance = symbols.distance
+distance = symbols.euclidean_distance
 """
-:symbols:`distance` to the point charge.
+:symbols:`euclidean_distance` to the point charge.
 """
 
 charge = symbols.charge

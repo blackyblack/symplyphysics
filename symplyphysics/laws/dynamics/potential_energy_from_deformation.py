@@ -30,9 +30,9 @@ stiffness = symbols.stiffness
 The spring's :symbols:`stiffness`, or spring constant.
 """
 
-displacement = symbols.distance
+displacement = symbols.euclidean_distance
 """
-The displacement of the spring, or the :symbols:`distance` between the initial position
+The displacement of the spring, or the :symbols:`euclidean_distance` between the initial position
 and the rest position.
 """
 

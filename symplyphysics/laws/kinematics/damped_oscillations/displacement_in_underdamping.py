@@ -30,9 +30,9 @@ from symplyphysics.laws.kinematics.damped_oscillations import (
     damped_angular_frequency as damped_frequency_law,
 )
 
-displacement = symbols.distance
+displacement = symbols.euclidean_distance
 """
-Displacement from rest, usually a function of time. See :symbols:`distance`.
+Displacement from rest, usually a function of time. See :symbols:`euclidean_distance`.
 """
 
 time = symbols.time
