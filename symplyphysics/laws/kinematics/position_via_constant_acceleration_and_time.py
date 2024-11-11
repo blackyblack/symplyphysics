@@ -47,12 +47,10 @@ time = symbols.time
 """
 
 law = Eq(final_position, initial_position + initial_speed * time + acceleration * time**2 / 2)
-r"""
-:code:`x = x0 + v0 * t + (1/2) * a * t^2`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        x = x_0 + v_0 t + \frac{1}{2} a t^2
+:laws:latex::
 """
 
 # Derive the same law from velocity and acceleration definitions
