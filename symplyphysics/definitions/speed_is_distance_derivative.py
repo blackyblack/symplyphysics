@@ -1,4 +1,4 @@
-r"""
+"""
 Speed is distance derivative
 ============================
 

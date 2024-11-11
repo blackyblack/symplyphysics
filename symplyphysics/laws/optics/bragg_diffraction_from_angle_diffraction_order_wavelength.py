@@ -42,7 +42,7 @@ wavelength = symbols.wavelength
 
 glancing_angle = symbols.angle
 """
-The **glancing :symbols:`angle`** is the angle that complements the angle of incidence of the beam
+The **glancing angle** is the :symbols:`angle` that complements the angle of incidence of the beam
 up to a right angle.
 """
 

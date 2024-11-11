@@ -1,4 +1,4 @@
-r"""
+"""
 Electrostatic force via charges and distance
 ============================================
 

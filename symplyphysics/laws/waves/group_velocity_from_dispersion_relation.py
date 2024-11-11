@@ -18,6 +18,11 @@ from symplyphysics import (
 )
 from symplyphysics.core.geometry.line import two_point_function, Point2D
 
+angular_wavenumber = symbols.angular_wavenumber
+"""
+:symbols:`angular_wavenumber` of the wave.
+"""
+
 group_velocity = symbols.group_speed
 """
 :symbols:`group_speed` of the wave packet.
@@ -25,17 +30,12 @@ group_velocity = symbols.group_speed
 
 angular_frequency = clone_as_function(
     symbols.angular_frequency,
-    display_symbol="w(k)",
+    [angular_wavenumber],
     real=True,
 )
 """
 :symbols:`angular_frequency` of the wave as a function of :symbols:`angular_wavenumber`, also called the
 *dispersion relation* of the wave.
-"""
-
-angular_wavenumber = symbols.angular_wavenumber
-"""
-:symbols:`angular_wavenumber` of the wave.
 """
 
 law = Eq(

@@ -34,7 +34,7 @@ young_modulus = symbols.young_modulus
 """
 
 poisson_ratio = symbols.poisson_ratio
-r"""
+"""
 .. _poisson-ratio:
 
 :symbols:`poisson_ratio` of the material.
