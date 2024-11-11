@@ -56,7 +56,7 @@ html_theme = "alabaster"
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ["_static"]
+html_static_path = []
 
 html_extra_path = ["_extra/googlea3669135f4e8d2d0.html"]
 
@@ -64,7 +64,7 @@ html_extra_path = ["_extra/googlea3669135f4e8d2d0.html"]
 # unit titles (such as .. function::).
 add_module_names = False
 
-mathjax_path = "scipy-mathjax/MathJax.js?config=scipy-mathjax"
+mathjax_path = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
 
 # -- Options for sphinx-sitemap
 

@@ -17,7 +17,7 @@ from symplyphysics import (
 
 time = symbols.time
 """
-Time.
+:symbols:`time`.
 """
 
 current = clone_as_function(symbols.current, [time])

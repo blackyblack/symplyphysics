@@ -26,18 +26,12 @@ Total :symbols:`strain` of the body.
 """
 
 first_strain = clone_as_symbol(symbols.strain, display_symbol="e_1", display_latex="e_1")
-r"""
+"""
 :symbols:`strain` caused by one force.
-
-Symbol:
-    :code:`e_1`
-
-Latex:
-    :math:`e_1`
 """
 
 second_strain = clone_as_symbol(symbols.strain, display_symbol="e_2", display_latex="e_2")
-r"""
+"""
 :symbols:`strain` caused by another force.
 """
 

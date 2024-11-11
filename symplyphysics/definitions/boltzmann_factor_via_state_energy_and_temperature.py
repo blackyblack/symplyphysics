@@ -1,4 +1,4 @@
-r"""
+"""
 Boltzmann factor via state energy and temperature
 =================================================
 

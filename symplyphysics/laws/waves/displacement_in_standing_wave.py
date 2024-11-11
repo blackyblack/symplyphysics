@@ -41,7 +41,7 @@ Latex:
 """
 
 angular_wavenumber = symbols.angular_wavenumber
-r"""
+"""
 :symbols:`angular_wavenumber` of the interfering waves.
 """
 

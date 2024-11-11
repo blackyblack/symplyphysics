@@ -11,7 +11,7 @@ The focal length of a spherical mirror is equal to half the radius of curvature.
 
 **Conditions:**
 
-#. The :ref:`small-angle approximation <Small-angle approximation>` is assumed.
+#. The :ref:`Small-angle approximation <small_angle_def>` is assumed.
 
 **Links:**
 

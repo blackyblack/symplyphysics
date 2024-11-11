@@ -31,23 +31,11 @@ from symplyphysics.core.dimensions import any_dimension
 total_displacement = SymbolNew("u", any_dimension)
 """
 Displacement of the resulting wave.
-
-Symbol:
-    :code:`u`
-
-Latex:
-    :math:`u`
 """
 
 amplitude = SymbolNew("u_max", any_dimension, display_latex="u_\\text{max}")
-r"""
+"""
 Amplitude of the interfering waves.
-
-Symbol:
-    :code:`u_max`
-
-Latex:
-    :math:`u_\text{max}`
 """
 
 phase_shift = symbols.phase_shift

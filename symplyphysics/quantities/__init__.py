@@ -76,7 +76,7 @@ It is molar equivalent to the :attr:`~boltzmann_constant`
 """
 
 speed_of_light = Quantity(units.speed_of_light, display_symbol="c")
-"""
+r"""
 The speed of light in vacuum is a universal physical constant that is exactly equal to :math:`299 \, 792 \, 458` metres per second.
 """
 
