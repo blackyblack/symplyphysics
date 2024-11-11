@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture
-from sympy import Integral, evaluate, exp, pi, sin, sqrt
-from symplyphysics import SymbolNew, Quantity, clone_as_function, clone_as_symbol
+from sympy import Integral, evaluate, exp, log, pi, sin, sqrt
+from symplyphysics import Quantity, SymbolNew, Quantity, clone_as_function, clone_as_symbol, units
 from symplyphysics.docs.printer_latex import latex_str
 
 Args = namedtuple(
@@ -19,6 +19,7 @@ Args = namedtuple(
         "distance",
         "vacuum_permittivity",
         "electric_dipole_moment",
+        "intensity",
     ],
 )
 
@@ -37,6 +38,7 @@ def test_args_fixture() -> Args:
     distance = SymbolNew("d")
     vacuum_permittivity = Quantity(display_latex="\\varepsilon_0")
     electric_dipole_moment = SymbolNew("p")
+    intensity = SymbolNew("I")
     return Args(
         mass=mass,
         temperature=temperature,
@@ -50,6 +52,7 @@ def test_args_fixture() -> Args:
         distance=distance,
         vacuum_permittivity=vacuum_permittivity,
         electric_dipole_moment=electric_dipole_moment,
+        intensity=intensity,
     )
 
 
@@ -195,3 +198,10 @@ def test_fraction_mul_fraction(test_args: Args) -> None:
         expr = 1 / (2 * pi * test_args.vacuum_permittivity) * (test_args.electric_dipole_moment /
             test_args.distance**3)
     assert latex_str(expr) == "\\frac{1}{2 \\pi \\varepsilon_0} \\frac{p}{d^{3}}"
+
+
+def test_log10(test_args: Args) -> None:
+    reference_intensity = Quantity(1e-12 * units.watt / units.meter**2, display_symbol="I_0")
+    with evaluate(False):
+        expr = log(test_args.intensity / reference_intensity, 10)
+    assert latex_str(expr) == "\\log_{10} \\left( \\frac{I}{I_0} \\right)"

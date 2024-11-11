@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture
-from sympy import Integral, evaluate, exp, pi, sin, sqrt
-from symplyphysics import SymbolNew, Quantity, clone_as_symbol, clone_as_function
+from sympy import Integral, evaluate, exp, log, pi, sin, sqrt
+from symplyphysics import Quantity, SymbolNew, Quantity, clone_as_symbol, clone_as_function, units
 from symplyphysics.docs.printer_code import code_str
 
 Args = namedtuple(
@@ -18,6 +18,7 @@ Args = namedtuple(
         "charge",
         "distance",
         "vacuum_permittivity",
+        "intensity",
     ],
 )
 
@@ -35,6 +36,7 @@ def test_args_fixture() -> Args:
     charge = SymbolNew("q")
     distance = SymbolNew("d")
     vacuum_permittivity = Quantity(display_symbol="epsilon_0")
+    intensity = SymbolNew("I")
     return Args(
         mass=mass,
         temperature=temperature,
@@ -47,6 +49,7 @@ def test_args_fixture() -> Args:
         charge=charge,
         distance=distance,
         vacuum_permittivity=vacuum_permittivity,
+        intensity=intensity,
     )
 
 
@@ -194,3 +197,10 @@ def test_fraction_mul_inner_fraction_with_braces(test_args: Args) -> None:
         expr = 1 / (4 * pi *
             test_args.vacuum_permittivity) * (first_charge * second_charge / test_args.distance**2)
     assert code_str(expr) == "q_1 * q_2 / d^2 / (4 * pi * epsilon_0)"
+
+
+def test_log10(test_args: Args) -> None:
+    reference_intensity = Quantity(1e-12 * units.watt / units.meter**2, display_symbol="I_0")
+    with evaluate(False):
+        expr = log(test_args.intensity / reference_intensity, 10)
+    assert code_str(expr) == "log(I / I_0, 10)"
