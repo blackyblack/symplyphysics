@@ -93,6 +93,16 @@ radius = SymbolNew("r", units.length)
 the sphere.
 """
 
+semimajor_axis = SymbolNew("a", units.length)
+"""
+**Semi-major axis**, or **major semiaxis**, is the longest semidiameter of an ellipse.
+"""
+
+semiminor_axis = SymbolNew("b", units.length)
+"""
+**Semi-minor axis**, or **minor semiaxis**, is the smallest semidiameter of an ellipse.
+"""
+
 thickness = SymbolNew("h", units.length)
 """
 **Thickness** is a measure of a size of an object, usually the separation between two layers, or

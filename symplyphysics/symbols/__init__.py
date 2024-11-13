@@ -103,6 +103,8 @@ __all__ = [
     "degrees_of_freedom",
     "angular_momentum",
     "arc_length",
+    "semimajor_axis",
+    "semiminor_axis",
     # electrodynamics
     "admittance",
     "electrical_conductance",

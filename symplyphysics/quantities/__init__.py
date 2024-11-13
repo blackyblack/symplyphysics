@@ -166,6 +166,16 @@ A constant of proportionality in *Wien's displacement law*.
 #. `Wien's displacement law <https://en.wikipedia.org/wiki/Wien%27s_displacement_law>`__.
 """
 
+gravitational_constant = Quantity(units.gravitational_constant, display_symbol="G")
+"""
+The **Gravitational constant** is a physical constant used in calculating the gravitational
+attraction between two objects.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Gravitational_constant>`__.
+"""
+
 
 __all__ = [
     "standard_conditions_temperature",
