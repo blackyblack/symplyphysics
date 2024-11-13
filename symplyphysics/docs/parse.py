@@ -4,7 +4,7 @@ from enum import Enum
 from typing import Any, Optional
 from sympy.physics.units.systems.si import SI
 from ..core.symbols.symbols import DimensionSymbolNew, FunctionNew
-from ..core.symbols.wrappers import Wrapper
+from ..core.operations.single_argument_operation import SingleArgumentOperation
 from .printer_code import code_str
 from .printer_latex import latex_str
 
@@ -169,21 +169,14 @@ def find_members_and_functions(content: ast.Module) -> list[MemberWithDoc | Func
             dimension = "dimensionless" if SI.get_dimension_system().is_dimensionless(
                 sym.dimension) else str(sym.dimension.name)
             symbol_name = code_str(sym)
-            symbol_type = (
-                LawSymbolTypes.FUNCTION
-                if isinstance(sym, FunctionNew)
-                else LawSymbolTypes.SYMBOL
-            )
-            symbol_latex = latex_str(sym)
-            law_symbol = LawSymbol(symbol_name, symbol_type, symbol_latex, dimension)
-        elif isinstance(sym, Wrapper):
-            dimension = (
-                "dimensionless"
-                if SI.get_dimension_system().is_dimensionless(sym.dimension)
-                else str(sym.dimension.name)
-            )
-            symbol_name = code_str(sym)
-            symbol_type = LawSymbolTypes.WRAPPER
+
+            if isinstance(sym, FunctionNew):
+                symbol_type = LawSymbolTypes.FUNCTION
+            elif isinstance(sym, SingleArgumentOperation):
+                symbol_type = LawSymbolTypes.WRAPPER
+            else:
+                symbol_type = LawSymbolTypes.SYMBOL
+
             symbol_latex = latex_str(sym)
             law_symbol = LawSymbol(symbol_name, symbol_type, symbol_latex, dimension)
         directives = _docstring_find_law_directives(doc)

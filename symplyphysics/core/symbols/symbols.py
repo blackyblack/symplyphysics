@@ -27,7 +27,7 @@ class DimensionSymbol:
         return self._display_name
 
 
-class HasDimension:
+class DimensionSymbolNew:  # pylint: disable=too-few-public-methods
     _dimension: Dimension
 
     def __init__(self, dimension: Dimension = Dimension(S.One)) -> None:
@@ -36,9 +36,9 @@ class HasDimension:
     @property
     def dimension(self) -> Dimension:
         return self._dimension
-    
 
-class HasDisplay:
+
+class DisplayWithLatex:
     _display_name: str
     _display_latex: str
 
@@ -55,19 +55,7 @@ class HasDisplay:
         return self._display_latex
 
     def _sympystr(self, p: Printer) -> str:
-        return p.doprint(self.display_name)    
-
-
-class DimensionSymbolNew(HasDimension, HasDisplay):
-    def __init__(
-        self,
-        display_name: str,
-        dimension: Dimension = Dimension(S.One),
-        *,
-        display_latex: Optional[str] = None,
-    ) -> None:
-        HasDimension.__init__(self, dimension)
-        HasDisplay.__init__(self, display_name=display_name, display_latex=display_latex)
+        return p.doprint(self.display_name)
 
 
 class Symbol(DimensionSymbol, SymSymbol):  # pylint: disable=too-many-ancestors
@@ -87,7 +75,7 @@ class Symbol(DimensionSymbol, SymSymbol):  # pylint: disable=too-many-ancestors
         super().__init__(display_name, dimension)
 
 
-class SymbolNew(DimensionSymbolNew, SymSymbol):  # pylint: disable=too-many-ancestors
+class SymbolNew(DimensionSymbolNew, DisplayWithLatex, SymSymbol):  # pylint: disable=too-many-ancestors
 
     def __new__(cls,
         display_symbol: Optional[str] = None,
@@ -104,7 +92,8 @@ class SymbolNew(DimensionSymbolNew, SymSymbol):  # pylint: disable=too-many-ance
         display_latex: Optional[str] = None,
         **_assumptions: Any) -> None:
         display_name = display_symbol or str(self.name)
-        super().__init__(display_name, dimension, display_latex=display_latex)
+        DimensionSymbolNew.__init__(self, dimension)
+        DisplayWithLatex.__init__(self, display_name=display_name, display_latex=display_latex)
 
 
 class SymbolIndexed(DimensionSymbol, IndexedBase):  # pylint: disable=too-many-ancestors
@@ -138,7 +127,7 @@ class SymbolIndexed(DimensionSymbol, IndexedBase):  # pylint: disable=too-many-a
 global_index = Idx("i")
 
 
-class SymbolIndexedNew(DimensionSymbolNew, IndexedBase):  # pylint: disable=too-many-ancestors
+class SymbolIndexedNew(DimensionSymbolNew, DisplayWithLatex, IndexedBase):  # pylint: disable=too-many-ancestors
     index: Idx
 
     def __new__(cls,
@@ -163,7 +152,8 @@ class SymbolIndexedNew(DimensionSymbolNew, IndexedBase):  # pylint: disable=too-
         **_assumptions: Any) -> None:
         display_name = str(self.name) if name_or_symbol is None else str(name_or_symbol)
         self.index = index or global_index
-        super().__init__(display_name, dimension, display_latex=display_latex)
+        DimensionSymbolNew.__init__(self, dimension)
+        DisplayWithLatex.__init__(self, display_name=display_name, display_latex=display_latex)
 
     def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
         pass
@@ -187,7 +177,7 @@ class Function(DimensionSymbol, UndefinedFunction):
         super().__init__(display_name, dimension)
 
 
-class FunctionNew(DimensionSymbolNew, UndefinedFunction):
+class FunctionNew(DimensionSymbolNew, DisplayWithLatex, UndefinedFunction):
     arguments: Sequence[Expr]
 
     # NOTE: Self type cannot be used in a metaclass and 'mcs' is a metaclass here
@@ -211,7 +201,9 @@ class FunctionNew(DimensionSymbolNew, UndefinedFunction):
         **_options: Any) -> None:
         display_name = display_symbol or str(cls.name)
         cls.arguments = arguments
-        super().__init__(display_name, dimension, display_latex=display_latex)
+        DimensionSymbolNew.__init__(cls, dimension)
+        DisplayWithLatex.__init__(cls, display_name=display_name, display_latex=display_latex)
+        UndefinedFunction.__init__(cls)
 
     def __repr__(cls) -> str:
         return str(cls.display_name)

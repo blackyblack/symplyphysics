@@ -8,7 +8,7 @@ from sympy import E, S, Expr, Mod, Mul
 from sympy.printing.latex import LatexPrinter, accepted_latex_functions
 from sympy.core.function import AppliedUndef
 from sympy.simplify import fraction
-from ..core.symbols.symbols import DimensionSymbolNew, FunctionNew
+from ..core.symbols.symbols import FunctionNew, DisplayWithLatex
 
 _between_two_numbers_p = (
     re.compile(r"[0-9][} ]*$"),  # search
@@ -43,7 +43,7 @@ class SymbolLatexPrinter(LatexPrinter):
 
     # pylint: disable-next=invalid-name
     def _print_SymbolNew(self, expr: Any, style: str = "plain") -> str:
-        display_name = expr.display_latex if isinstance(expr, DimensionSymbolNew) else getattr(
+        display_name = expr.display_latex if isinstance(expr, DisplayWithLatex) else getattr(
             expr, "name")
         name: str = self._settings["symbol_names"].get(display_name)
         if name is not None:
@@ -64,9 +64,9 @@ class SymbolLatexPrinter(LatexPrinter):
     def _print_Function(self, expr: Any, exp: Any = None) -> str:
         # pylint: disable=too-many-branches
         func = expr.func.__name__
-        if isinstance(expr, DimensionSymbolNew):
+        if isinstance(expr, DisplayWithLatex):
             func = expr.display_latex
-        if isinstance(expr.func, DimensionSymbolNew):
+        if isinstance(expr.func, DisplayWithLatex):
             func = expr.func.display_latex
 
         if hasattr(self, "_print_" + func) and not isinstance(expr, AppliedUndef):
@@ -276,6 +276,7 @@ class SymbolLatexPrinter(LatexPrinter):
 
         return tex
 
+    # pylint: disable-next=invalid-name
     def _print_Average(self, expr: Expr) -> str:
         arg = expr.args[0]
         str_arg = self._print(arg)

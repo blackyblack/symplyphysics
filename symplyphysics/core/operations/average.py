@@ -1,6 +1,6 @@
 from .single_argument_operation import SingleArgumentOperation
 
-class Average(SingleArgumentOperation):
+class Average(SingleArgumentOperation):  # pylint: disable=too-many-ancestors
     r"""
     The average value :math:`\langle A \rangle` of a quantity :math:`A` which
     is a function of a random variable :math:`t` (*time*) over the interval

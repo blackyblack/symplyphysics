@@ -11,14 +11,12 @@ from .symbols.symbols import (
     Symbol,
     SymbolNew,
     SymbolIndexedNew,
-    HasDimension,
 )
-from .symbols.wrappers import Wrapper
 from .dimensions import assert_equivalent_dimension, ScalarValue
 
-_ValueType: TypeAlias = ScalarValue | SymQuantity | DimensionSymbol | DimensionSymbolNew | Wrapper
+_ValueType: TypeAlias = ScalarValue | SymQuantity | DimensionSymbol | DimensionSymbolNew
 
-_UnitType: TypeAlias = Dimension | Symbol | Function | HasDimension
+_UnitType: TypeAlias = Dimension | Symbol | Function | DimensionSymbolNew
 
 
 def _assert_expected_unit(
@@ -35,7 +33,7 @@ def _assert_expected_unit(
             components.append(item)
         elif isinstance(item, DimensionSymbol):
             components.append(item.dimension)
-        elif isinstance(item, HasDimension):
+        elif isinstance(item, DimensionSymbolNew):
             components.append(item.dimension)
         else:
             components.append(item)
@@ -48,7 +46,7 @@ def _assert_expected_unit(
 
     expected_unit_dimensions: list[Dimension] = []
     for u in list(expected_units):
-        d = u.dimension if isinstance(u, (DimensionSymbol, HasDimension)) else u
+        d = u.dimension if isinstance(u, (DimensionSymbol, DimensionSymbolNew)) else u
         expected_unit_dimensions.append(d)
 
     for idx, c in enumerate(components):

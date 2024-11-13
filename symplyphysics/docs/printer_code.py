@@ -9,7 +9,7 @@ from sympy.concrete.products import Product
 from sympy.concrete.summations import Sum
 from sympy.integrals.integrals import Integral
 from sympy.printing.precedence import precedence, precedence_traditional, PRECEDENCE
-from ..core.symbols.symbols import DimensionSymbolNew, FunctionNew, SymbolIndexedNew
+from ..core.symbols.symbols import FunctionNew, SymbolIndexedNew, DisplayWithLatex
 
 
 class SymbolCodePrinter(StrPrinter):
@@ -22,7 +22,7 @@ class SymbolCodePrinter(StrPrinter):
 
     # pylint: disable-next=invalid-name
     def _print_SymbolNew(self, expr: Any) -> str:
-        return expr.display_name if isinstance(expr, DimensionSymbolNew) else getattr(expr, "name")
+        return expr.display_name if isinstance(expr, DisplayWithLatex) else getattr(expr, "name")
 
     def _print_Quantity(self, expr: Any) -> str:
         return self._print_SymbolNew(expr)
@@ -64,7 +64,7 @@ class SymbolCodePrinter(StrPrinter):
         return f"{lhs_code} {charmap[expr.rel_op]} {rhs_code}"
 
     def _print_Function(self, expr: Any) -> str:
-        if isinstance(expr, DimensionSymbolNew):
+        if isinstance(expr, DisplayWithLatex):
             if isinstance(expr, FunctionNew):
                 name = expr.display_name
                 args_str = self.stringify(expr.arguments, ", ")
@@ -72,7 +72,7 @@ class SymbolCodePrinter(StrPrinter):
                 return expr.display_name
         else:
             func = expr.func
-            if isinstance(func, DimensionSymbolNew):
+            if isinstance(func, DisplayWithLatex):
                 if isinstance(func, FunctionNew):
                     name = func.display_name
                 else:
@@ -229,6 +229,7 @@ class SymbolCodePrinter(StrPrinter):
 
         return tex
 
+    # pylint: disable-next=invalid-name
     def _print_Average(self, expr: Expr) -> str:
         arg = expr.args[0]
         str_arg = self._print(arg)
