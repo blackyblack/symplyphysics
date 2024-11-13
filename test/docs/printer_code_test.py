@@ -207,8 +207,7 @@ def test_log10(test_args: Args) -> None:
     assert code_str(expr) == "log(I / I_0, 10)"
 
 
-def test_average_operation() -> None:
-    v = clone_as_symbol(symbols.speed, display_symbol="v", display_latex="v")
-    t = clone_as_symbol(symbols.time, display_symbol="t", display_latex="t")
-    avg = Average(v * t)
+def test_average_operation(test_args: Args) -> None:
+    with evaluate(False):
+        avg = Average(test_args.speed * test_args.time)
     assert code_str(avg) == "avg(v * t)"

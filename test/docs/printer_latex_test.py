@@ -208,8 +208,7 @@ def test_log10(test_args: Args) -> None:
     assert latex_str(expr) == "\\log_{10} \\left( \\frac{I}{I_0} \\right)"
 
 
-def test_average_operation() -> None:
-    v = clone_as_symbol(symbols.speed, display_symbol="v", display_latex="v")
-    t = clone_as_symbol(symbols.time, display_symbol="t", display_latex="t")
-    avg = Average(v * t)
+def test_average_operation(test_args: Args) -> None:
+    with evaluate(False):
+        avg = Average(test_args.speed * test_args.time)
     assert latex_str(avg) == "\\langle v t \\rangle"
