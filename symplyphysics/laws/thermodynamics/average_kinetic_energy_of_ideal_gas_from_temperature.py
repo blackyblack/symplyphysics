@@ -25,7 +25,7 @@ from symplyphysics import (
     quantities,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
-from symplyphysics.core.symbols.wrappers import Average
+from symplyphysics.core.operations.average import Average
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import energy_distribution
 
 average_kinetic_energy = Average(symbols.kinetic_energy, positive=True)

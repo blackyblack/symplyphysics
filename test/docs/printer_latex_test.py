@@ -1,5 +1,6 @@
 from sympy import Integral, evaluate, exp, pi, sin, sqrt
 from symplyphysics import SymbolNew, quantities, symbols, clone_as_function, clone_as_symbol
+from symplyphysics.core.operations.average import Average
 from symplyphysics.docs.printer_latex import latex_str
 
 
@@ -155,3 +156,10 @@ def test_fraction_mul_fraction() -> None:
         expr = 1 / (2 * pi * quantities.vacuum_permittivity) * (electric_dipole_moment /
             distance**3)
     assert latex_str(expr) == "\\frac{1}{2 \\pi \\varepsilon_0} \\frac{p}{d^{3}}"
+
+
+def test_average_operation() -> None:
+    v = clone_as_symbol(symbols.speed, display_symbol="v", display_latex="v")
+    t = clone_as_symbol(symbols.time, display_symbol="t", display_latex="t")
+    avg = Average(v * t)
+    assert latex_str(avg) == "\\langle v t \\rangle"

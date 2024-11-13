@@ -10,7 +10,6 @@ from sympy.concrete.summations import Sum
 from sympy.integrals.integrals import Integral
 from sympy.printing.precedence import precedence, precedence_traditional, PRECEDENCE
 from ..core.symbols.symbols import DimensionSymbolNew, FunctionNew, SymbolIndexedNew
-from ..core.symbols.wrappers import Wrapper
 
 
 class SymbolCodePrinter(StrPrinter):
@@ -230,8 +229,8 @@ class SymbolCodePrinter(StrPrinter):
 
         return tex
 
-    def _print_Average(self, expr: Wrapper) -> str:
-        arg = expr.inner
+    def _print_Average(self, expr: Expr) -> str:
+        arg = expr.args[0]
         str_arg = self._print(arg)
         return f"avg({str_arg})"
 

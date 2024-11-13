@@ -9,6 +9,7 @@ from sympy.physics.units import Dimension, Quantity as SymQuantity
 from sympy.physics.units.systems.si import SI
 
 from .errors import UnitsError
+from .symbols.symbols import HasDimension
 
 ScalarValue: TypeAlias = Expr | float
 
@@ -112,6 +113,10 @@ def _collect_dimension(expr: Dimension) -> tuple[Basic, Dimension]:
     return (S.One, expr)
 
 
+def _collect_with_dimension(expr: HasDimension) -> tuple[Basic, Dimension]:
+    return expr, expr.dimension
+
+
 def collect_factor_and_dimension(expr: Basic) -> tuple[Basic, Dimension]:
     """
     Return tuple with scale factor expression and dimension expression.
@@ -130,6 +135,7 @@ def collect_factor_and_dimension(expr: Basic) -> tuple[Basic, Dimension]:
         Derivative: _unsupported_derivative,
         SymFunction: _collect_function,
         Dimension: _collect_dimension,
+        HasDimension: _collect_with_dimension,
     }
 
     for k, v in cases.items():
