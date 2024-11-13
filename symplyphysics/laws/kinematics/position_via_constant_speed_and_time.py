@@ -11,52 +11,35 @@ of time.
 """
 
 from sympy import (Eq, solve, dsolve)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols, clone_as_symbol)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import speed_is_distance_derivative as velocity_definition
 
-final_position = Symbol("distance_function", units.length)
+final_position = symbols.position
 """
-Position at time :math:`t`.
-
-Symbol:
-    :code:`x`
+:symbols:`position` at :attr:`~time`.
 """
 
-initial_position = Symbol("initial_position", units.length)
+initial_position = clone_as_symbol(symbols.position, subscript="0")
 """
-Position at :math:`t = 0`.
-
-Symbol:
-    :code:`x0`
-
-Latex:
-    :math:`x_0`
+:symbols:`position` at :math:`t = 0`.
 """
 
-speed = Symbol("speed", units.velocity, constant=True)
+speed = symbols.speed
 """
-Constant speed.
-
-Symbol:
-    :code:`v`
+Constant :symbols:`speed`.
 """
 
-time = Symbol("time", units.time)
+time = symbols.time
 """
-Time at which :math:`x` is measured.
-
-Symbol:
-    :code:`t`
+:symbols:`time` at which :attr:`~final_position` is measured.
 """
 
 law = Eq(final_position, initial_position + speed * time)
-r"""
-:code:`x = x0 + v * t`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        x = x_0 + v t
+:laws:latex::
 """
 
 # Derive the same law from velocity definition

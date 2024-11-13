@@ -30,19 +30,16 @@ from symplyphysics import (
     subtract_cartesian_vectors,
     cross_cartesian_vectors,
     vector_magnitude,
-    Symbol,
     units,
     validate_input,
     validate_output,
     Vector,
+    symbols,
 )
 
-charge = Symbol("charge", units.charge)
+charge = symbols.charge
 """
-Value of the electric charge of the test particle.
-
-Symbol:
-    :code:`q`
+Value of the electric :symbols:`charge` of the test particle.
 """
 
 

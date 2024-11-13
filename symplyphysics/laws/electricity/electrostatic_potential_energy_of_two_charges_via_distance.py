@@ -28,9 +28,9 @@ absolute_permittivity = symbols.absolute_permittivity
 :symbols:`absolute_permittivity` of the medium.
 """
 
-distance = symbols.distance
+distance = symbols.euclidean_distance
 """
-:symbols:`distance` between the point charges.
+:symbols:`euclidean_distance` between the point charges.
 """
 
 first_charge = clone_as_symbol(symbols.charge, display_symbol="q_1", display_latex="q_1")

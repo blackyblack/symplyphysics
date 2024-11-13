@@ -15,9 +15,8 @@ proportional to the current in the coil's wire.
 #. The magnetic field is measured near the center of the coil.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (Quantity, SymbolNew, validate_input, validate_output, dimensionless,
-    symbols, quantities)
+from sympy import Eq, solve
+from symplyphysics import Quantity, validate_input, validate_output, symbols, quantities
 
 magnetic_flux_density = symbols.magnetic_flux_density
 """
@@ -34,9 +33,9 @@ length = symbols.length
 :symbols:`length` of the coil.
 """
 
-coil_turn_count = SymbolNew("N", dimensionless)
+coil_turn_count = symbols.positive_number
 """
-Number of turns in the coil.
+Number of turns in the coil. See :symbols:`positive_number`.
 """
 
 law = Eq(magnetic_flux_density, quantities.vacuum_permeability * current * coil_turn_count / length)

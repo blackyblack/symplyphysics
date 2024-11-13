@@ -22,6 +22,7 @@ def patch_sympy_evaluate(content: ast.Module) -> ast.Module:
             if doc is None:
                 continue
             current_member_idx = idx
+            last_documented_node = idx
             continue
         if isinstance(e, ast.Assign):
             for t in e.targets:

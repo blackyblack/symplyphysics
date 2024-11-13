@@ -16,12 +16,12 @@ from symplyphysics import (
 )
 
 engineering_normal_strain = symbols.engineering_normal_strain
-r"""
+"""
 :symbols:`engineering_normal_strain` of the body.
 """
 
 total_deformation = symbols.deformation
-r"""
+"""
 Total :symbols:`deformation` of the body.
 """
 

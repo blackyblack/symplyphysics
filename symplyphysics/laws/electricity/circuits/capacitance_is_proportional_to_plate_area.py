@@ -34,9 +34,9 @@ area = symbols.area
 :symbols:`area` of the plates.
 """
 
-distance = symbols.distance
+distance = symbols.euclidean_distance
 """
-:symbols:`distance` between the plates.
+:symbols:`euclidean_distance` between the plates.
 """
 
 law = Eq(capacitance, absolute_permittivity * area / distance)

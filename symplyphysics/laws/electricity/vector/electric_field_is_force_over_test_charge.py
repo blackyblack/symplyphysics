@@ -10,22 +10,17 @@ from symplyphysics import (
     Quantity,
     QuantityVector,
     scale_vector,
-    Symbol,
     units,
     validate_input,
     validate_output,
     Vector,
+    symbols,
+    clone_as_symbol,
 )
 
-test_charge = Symbol("test_charge", units.charge)
-r"""
-Value of the test charge.
-
-Symbol:
-    :code:`q0`
-
-Latex:
-    :math:`q_0`
+test_charge = clone_as_symbol(symbols.charge, subscript="0")
+"""
+Value of the test :symbols:`charge`.
 """
 
 

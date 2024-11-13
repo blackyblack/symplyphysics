@@ -39,9 +39,13 @@ wave_angular_frequency = symbols.angular_frequency
 :symbols:`angular_frequency` of the wave.
 """
 
-wave_amplitude = clone_as_symbol(symbols.distance, display_symbol="u_max", display_latex="u_\\text{max}")
+wave_amplitude = clone_as_symbol(
+    symbols.euclidean_distance,
+    display_symbol="u_max",
+    display_latex="u_\\text{max}",
+)
 """
-Amplitude of the wave. See :symbols:`distance`.
+Amplitude of the wave. See :symbols:`euclidean_distance`.
 """
 
 law = Eq(

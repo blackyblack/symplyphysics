@@ -38,9 +38,38 @@ position = SymbolNew("x", units.length)
 **Position** is defined as the spatial location of an object with respect to a coordinate system.
 """
 
-distance = SymbolNew("d", units.length)
+euclidean_distance = SymbolNew("d", units.length)
+r"""
+**Euclidean distance** between two points is the length of the line segment between them. Mathematically,
+it can be represented by the following formula:
+
+.. math::
+    d = \sqrt{\left\Vert \mathbf{r}_2 - \mathbf{r}_1 \right\Vert},
+
+where :math:`\mathbf{r}_1` is the position vector of the first point, :math:`\mathbf{r}_2` is the position
+vector of the second point, and :math:`\left\Vert \cdot \right\Vert` is the Euclidean norm.
+
+**Notes:**
+
+#. This symbol can be used for representing **displacement**. In that case, :math:`\mathbf{r}_1` corresponds
+   to the initial position of the body and :math:`\mathbf{r}_2` to the final position of the body.
 """
-**Distance** is is a measure of the spatial separation between two points.
+
+distance = SymbolNew("s", units.length)
+r"""
+**distance**, or more precisely **total distance traveled**, is the length of the path traced by a moving body.
+Mathematically, it can be represented by the following formula:
+
+.. math::
+    s(t) = \int \limits_0^t |\mathbf{v}(\tau)| d\tau,
+
+where :math:`\mathbf{v}` is the velocity vector of the body as a function of time :math:`t`. It is assumed that
+the total distance traveled is zero at zero time.
+
+**Notes:**
+
+#. It is sometimes used in the sense of *the length of space between two points*, in which case
+   :symbols:`euclidean_distance` must be used.
 """
 
 distance_to_origin = SymbolNew("r", units.length)
@@ -73,6 +102,11 @@ the distance through an object distinct from length and width.
 area = SymbolNew("A", units.area)
 """
 **Area** is the size of a region on a two-dimensional surface.
+"""
+
+arc_length = SymbolNew("s", units.length)
+"""
+**Arc length** is the distance between two points along a section of a curve.
 """
 
 angular_speed = SymbolNew("w", angle_type / units.time, display_latex="\\omega")
@@ -321,4 +355,10 @@ degrees_of_freedom = SymbolNew("f", dimensionless, integer=True, positive=True)
 A **degree of freedom** is a physical parameter in the parameterization of a physical system. The number
 of degrees of freedom indicates the smallest number of parameters whose values determine all parameters
 in the chosen parameterization.
+"""
+
+angular_momentum = SymbolNew("L", units.mass * units.length**2 / units.time)
+"""
+**Angular momentum**, sometimes called **rotational momentum**, is the rotational analog of linear
+:symbols:`momentum`.
 """

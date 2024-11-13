@@ -1,4 +1,4 @@
-r"""
+"""
 Boltzmann factor via state energy and temperature
 =================================================
 
@@ -13,19 +13,17 @@ and thermodynamics, e.g. the canonical partition function of a classical discret
 from sympy import Eq, exp
 from symplyphysics import (
     quantities,
-    dimensionless,
     Quantity,
     validate_input,
     validate_output,
     symbols,
     convert_to_float,
-    SymbolNew,
     clone_as_symbol,
 )
 
-boltzmann_factor = SymbolNew("f", dimensionless)
+boltzmann_factor = symbols.boltzmann_factor
 """
-Boltzmann factor.
+:symbols:`boltzmann_factor`.
 """
 
 energy_of_state = clone_as_symbol(symbols.energy, display_symbol="E[i]", display_latex="E_i")

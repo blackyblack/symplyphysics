@@ -22,9 +22,14 @@ time = clone_as_symbol(symbols.time, positive=True)
 :symbols:`time`.
 """
 
-displacement = clone_as_function(symbols.position, [time])
+displacement = clone_as_function(
+    symbols.euclidean_distance,
+    [time],
+    display_symbol="x",
+    display_latex="x",
+)
 """
-Displacement of the oscillating body as a function of time. See :symbols:`position`.
+Displacement of the oscillating body as a function of time. See :symbols:`euclidean_distance`.
 """
 
 undamped_angular_frequency = clone_as_symbol(symbols.angular_frequency, positive=True)
@@ -49,7 +54,7 @@ definition = Eq(
 
 
 @validate_input(
-    initial_position_=symbols.distance,
+    initial_position_=symbols.euclidean_distance,
     initial_velocity_=symbols.speed,
     undamped_angular_frequency_=undamped_angular_frequency,
     damping_ratio_=damping_ratio,

@@ -45,9 +45,9 @@ rotational_inertia = clone_as_symbol(symbols.rotational_inertia, positive=True)
 The :symbols:`rotational_inertia` of the pendulum.
 """
 
-distance_to_pivot = clone_as_symbol(symbols.distance, positive=True)
+distance_to_pivot = clone_as_symbol(symbols.euclidean_distance, positive=True)
 """
-The :symbols:`distance` between the pivot and the pendulum's center of mass.
+The :symbols:`euclidean_distance` between the pivot and the pendulum's center of mass.
 """
 
 law = Eq(

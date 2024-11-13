@@ -7,8 +7,9 @@ pattern and properties. Optics is a branch of physics that deals with the determ
 of behaviour and the properties of light, along with its interactions with the matter
 and also with the instruments which are used to detect it.
 
-Small-angle approximation
--------------------------
+.. _small_angle_def:
+
+**Small-angle approximation**
 
 Approximation that is valid when the size of a spherical mirror is significantly smaller
 than the mirror's radius; in this approximation, spherical aberration is negligible and

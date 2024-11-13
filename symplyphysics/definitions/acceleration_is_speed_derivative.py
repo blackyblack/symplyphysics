@@ -30,7 +30,7 @@ speed = clone_as_function(symbols.speed, [time])
 """
 
 definition = Eq(acceleration(time), Derivative(speed(time), time))
-r"""
+"""
 :laws:symbol::
 
 :laws:latex::

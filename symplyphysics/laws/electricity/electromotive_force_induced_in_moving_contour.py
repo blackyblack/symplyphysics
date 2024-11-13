@@ -10,10 +10,7 @@ would also be proportional to the number of turn the current makes.
 
 from sympy import (Eq, Derivative)
 from symplyphysics import (
-    dimensionless,
-    units,
     Quantity,
-    SymbolNew,
     validate_input,
     validate_output,
     symbols,
@@ -21,19 +18,19 @@ from symplyphysics import (
 )
 from symplyphysics.core.geometry.line import two_point_function, Point2D
 
-electromotive_force = SymbolNew("E", units.voltage, display_latex="\\mathcal{E}")
+electromotive_force = symbols.electromotive_force
 r"""
-Electromotive force induced in the contour.
+:symbols:`electromotive_force` induced in the contour.
 """
 
-current_turn_count = SymbolNew("N", dimensionless)
+current_turn_count = symbols.positive_number
 """
-Number of turns the current makes around the contour.
+Number of turns the current makes around the contour. See :symbols:`positive_number`.
 """
 
-time = SymbolNew("t", units.time)
+time = symbols.time
 """
-Time.
+:symbols:`time`.
 """
 
 magnetic_flux = clone_as_function(symbols.magnetic_flux, [time])

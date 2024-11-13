@@ -7,8 +7,13 @@ Symbols of fundamental physical quantities.
 
 from sympy.physics import units
 from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
-from symplyphysics.core.dimensions import dimensionless
+from symplyphysics.core.dimensions import dimensionless, any_dimension
 from symplyphysics.core.symbols.symbols import SymbolNew
+
+any_quantity = SymbolNew("X", any_dimension)
+"""
+A quantity that can have any dimension.
+"""
 
 time = SymbolNew("t", units.time)
 """
@@ -64,6 +69,9 @@ power = SymbolNew("P", units.power)
 radius_of_curvature = SymbolNew("r", units.length)
 """
 **Radius of curvature** is the inverse of curvature and is equal to the distance to the center of curvature.
+
+..
+    TODO are this and distance_to_axis interchangeable?
 """
 
 density = SymbolNew("rho", units.mass / units.volume, display_latex="\\rho")
@@ -111,4 +119,20 @@ An **angle** is the difference in direction between two lines or surfaces.
 probability = SymbolNew("P", dimensionless)
 """
 **Probability** is a measure of an event's likelihood.
+"""
+
+fractional_change = SymbolNew("e", dimensionless)
+"""
+**Fractional change** is linear change divided by initial value of the quantity.
+"""
+
+exponential_decay_constant = SymbolNew("lambda", 1 / units.time, display_latex="\\lambda")
+"""
+**Exponential decay constant**, also called **rate constant** or **disintegration constant**, is 
+the rate at which some quantity is decreasing in such a way that its rate of change is proportional
+to its current value.
+
+**Links:**
+
+#. `Exponential decay <https://en.wikipedia.org/wiki/Exponential_decay>`__.
 """

@@ -7,56 +7,28 @@ which describes how fast its oscillations decay, and its undamped angular freque
 """
 
 from sympy import Eq
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    angle_type,
-    dimensionless,
-    validate_input,
-    validate_output,
-)
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 
-damping_ratio = Symbol("damping_ratio", dimensionless)
-r"""
-Damping ratio of the oscillator.
-
-Symbol:
-    :code:`zeta`
-
-Latex:
-    :math:`\zeta`
+damping_ratio = symbols.damping_ratio
+"""
+:symbols:`damping_ratio` of the oscillator.
 """
 
-exponential_decay_constant = Symbol("exponential_decay_constant", 1 / units.time)
-r"""
-Exponential decay constant of the oscillator.
-
-Symbol:
-    :code:`lambda`
-
-Latex:
-    :math:`\lambda`
+exponential_decay_constant = symbols.exponential_decay_constant
+"""
+:symbols:`exponential_decay_constant` of the oscillator.
 """
 
-undamped_angular_frequency = Symbol("undamped_angular_frequency", angle_type / units.time)
+undamped_angular_frequency = symbols.angular_frequency
 r"""
-Undamped angular frequency of the oscillator.
-
-Symbol:
-    :code:`w`
-
-Latex:
-    :math:`\omega`
+Undamped :symbols:`angular_frequency` of the oscillator.
 """
 
 law = Eq(damping_ratio, exponential_decay_constant / undamped_angular_frequency)
-r"""
-:code:`zeta = lambda / w`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \zeta = \frac{\lambda}{\omega}
+:laws:latex::
 """
 
 

@@ -1,4 +1,4 @@
-r"""
+"""
 Thermodynamic compressibility
 =============================
 
@@ -47,7 +47,7 @@ volume = clone_as_function(symbols.volume, [pressure, parameters])
 """
 
 definition = Eq(compressibility, -1 * Derivative(volume(pressure, parameters), pressure) / volume(pressure, parameters))
-r"""
+"""
 :laws:symbol::
 
 :laws:latex::

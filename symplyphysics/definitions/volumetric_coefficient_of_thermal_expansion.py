@@ -1,4 +1,4 @@
-r"""
+"""
 Volumetric coefficient of thermal expansion
 ===========================================
 

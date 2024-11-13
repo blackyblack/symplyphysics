@@ -1,4 +1,4 @@
-r"""
+"""
 Linear coefficient of thermal expansion
 =======================================
 
@@ -49,7 +49,7 @@ definition = Eq(
     linear_expansion_coefficient,
     Derivative(length(temperature, pressure), temperature) / length(temperature, pressure),
 )
-r"""
+"""
 :laws:symbol::
 
 :laws:latex::

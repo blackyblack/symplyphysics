@@ -11,40 +11,30 @@ A solid slab is rotating about an axis that is perpendicular to the slab and goe
 
 from sympy import Eq, sqrt
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     symbols,
+    clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematics.rotational_inertia import (
     rotational_inertia_cartesian_integral as integral_law,)
 from symplyphysics.definitions import density_from_mass_volume as density_def
 
-rotational_inertia = Symbol("rotational_inertia", units.mass * units.length**2)
+rotational_inertia = symbols.rotational_inertia
 """
-Rotational inertia of the slab.
-
-Symbol:
-    :code:`I`
+:symbols:`rotational_inertia` of the slab.
 """
 
-length = Symbol("length", units.length)
+length = clone_as_symbol(symbols.length, subscript="1")
 """
-Length, or first slab dimension perpendicular to the axis.
-
-Symbol:
-    :code:`a`
+:symbols:`length`, or first slab dimension perpendicular to the axis.
 """
 
-width = Symbol("width", units.length)
+width = clone_as_symbol(symbols.length, subscript="2")
 """
-Width, or second slab dimension perpendicular to the axis.
-
-Symbol:
-    :code:`b`
+Width, or second slab dimension perpendicular to the axis. See :symbols:`length`.
 """
 
 mass = symbols.mass
@@ -53,12 +43,10 @@ The :symbols:`mass` of the slab.
 """
 
 law = Eq(rotational_inertia, mass * (length**2 + width**2) / 12)
-r"""
-:code:`I = 1/12 * m * (a^2 + b^2)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        I = \frac{1}{12} m (a^2 + b^2)
+:laws:latex::
 """
 
 # Derive this law from the integral definition of rotational inertia in cartesian coordinates.
@@ -68,7 +56,7 @@ Latex:
 ## z-axis is parallel to the rotational axis in question (_height of slab)
 ## x-axis and y-axis are perpendicular to the rotational axis (length and width of slab)
 
-_height = Symbol("_height", units.length)
+_height = symbols.height
 _volume = length * width * _height
 
 _density = density_def.definition.rhs.subs({

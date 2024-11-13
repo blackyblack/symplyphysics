@@ -41,12 +41,12 @@ angular_frequency = symbols.angular_frequency
 """
 
 displacement_amplitude = clone_as_symbol(
-    symbols.distance,
+    symbols.euclidean_distance,
     display_symbol="s_max",
     display_latex="s_\\text{max}",
 )
 """
-Displacement amplitude of particles in the medium. See :symbols:`distance`.
+Displacement amplitude of particles in the medium. See :symbols:`euclidean_distance`.
 """
 
 law = Eq(

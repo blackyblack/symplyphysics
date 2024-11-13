@@ -1,4 +1,4 @@
-r"""
+"""
 Electrostatic force via charges and distance
 ============================================
 
@@ -30,9 +30,9 @@ second_charge = clone_as_symbol(symbols.charge, display_symbol="q_2", display_la
 Second :symbols:`charge`.
 """
 
-distance = symbols.distance
+distance = symbols.euclidean_distance
 """
-:symbols:`distance` between the charges.
+:symbols:`euclidean_distance` between the charges.
 """
 
 law = Eq(

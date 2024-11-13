@@ -163,9 +163,7 @@ class SymbolLatexPrinter(LatexPrinter):
         str_value = self._print(value)
         str_base = self._print(base)
         head = "\\log" if (base is None or base == E) else f"\\log_{{{str_base}}}"
-        can_fold_brackets = not self._needs_function_brackets(value)
-        tail = str_value if can_fold_brackets else f"\\left( {str_value} \\right)"
-        return f"{head} {tail}"
+        return f"{head} \\left( {str_value} \\right)"
 
     def _print_div(self, numer: Expr, denom: Expr) -> str:
         snumer = self._print_Mul(numer) if numer.is_Mul else str(self._print(numer))

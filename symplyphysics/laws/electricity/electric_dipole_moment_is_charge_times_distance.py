@@ -30,9 +30,9 @@ charge = symbols.charge
 Magnitude of one the two point :symbols:`charge`-s comprising the system.
 """
 
-distance = symbols.distance
+distance = symbols.euclidean_distance
 """
-:symbols:`distance` between point charges.
+:symbols:`euclidean_distance` between point charges.
 """
 
 law = Eq(electric_dipole_moment, charge * distance)

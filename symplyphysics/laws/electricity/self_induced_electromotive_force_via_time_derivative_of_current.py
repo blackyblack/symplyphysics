@@ -23,7 +23,7 @@ time = symbols.time
 
 electromotive_force = clone_as_function(symbols.electromotive_force, [time])
 """
-Self-induced :symbols:`electromotive_force`.
+Self-induced :symbols:`electromotive_force` as a function of :attr:`~time`.
 """
 
 inductance = symbols.inductance
@@ -33,7 +33,7 @@ inductance = symbols.inductance
 
 current = clone_as_function(symbols.current, [time])
 """
-:symbols:`current` in the circuit.
+:symbols:`current` in the circuit as a function of :attr:`~time`.
 """
 
 law = Eq(electromotive_force(time), -1 * inductance * Derivative(current(time), time))

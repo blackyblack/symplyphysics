@@ -1,4 +1,4 @@
-r"""
+"""
 Wave equation in one dimension
 ==============================
 
@@ -36,7 +36,7 @@ time = clone_as_symbol(symbols.time, positive=True)
 :symbols:`time`.
 """
 
-displacement = FunctionNew("u", [position, time], any_dimension)
+displacement = FunctionNew("u", [position, time], any_dimension)    # pylint: disable=invalid-name
 """
 Factor representing a displacement from rest position, which could be
 pressure, position, electric field, etc., as a function of position
