@@ -4,6 +4,10 @@ Free fall acceleration from height
 
 **Free fall** is any motion of a body where gravity is the only force acting upon it.
 **Free fall acceleration** is the acceleration the body experiences during the free fall.
+
+**Notation:**
+
+#. :quantity_notation:`gravitational_constant`.
 """
 
 from sympy import Eq, solve

@@ -4,6 +4,10 @@ Escape speed
 
 **Escape speed** is the minimum speed needed for an object to escape from contact with or orbit of a primary body.
 
+**Notation:**
+
+#. :quantity_notation:`gravitational_constant`.
+
 ..
     TODO rename file
 """

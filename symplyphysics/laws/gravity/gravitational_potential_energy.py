@@ -5,6 +5,10 @@ Gravitational potential energy
 The **gravitational potential energy** of a system of two particles is the negative of the work
 that would be done by the gravitational force of either particle acting on the other if the
 particles were brought together from infinity to the given distance.
+
+**Notation:**
+
+#. :quantity_notation:`gravitational_constant`.
 """
 
 from sympy import Eq

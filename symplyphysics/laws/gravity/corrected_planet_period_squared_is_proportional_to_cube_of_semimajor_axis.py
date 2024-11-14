@@ -7,6 +7,10 @@ of its orbit. Kepler's laws use the assumption that the attracting mass is much 
 the orbiting planet. If this assumption isn't made, the first and the second law stay the same, but
 the third law requires a revision. As a result, the period of the planet's rotation depends not only
 on the attracting mass, but also on the mass of the planet itself.
+
+**Notation:**
+
+#. :quantity_notation:`gravitational_constant`.
 """
 
 from sympy import Eq, pi, solve

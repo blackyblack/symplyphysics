@@ -10,9 +10,9 @@ radial movements are permissible) and would lie entirely inside this sphere.
 
 **Notation:**
 
-#. :quantity_notation:`gravitational_constant`
+#. :quantity_notation:`gravitational_constant`.
 
-#. :quantity_notation:`speed_of_light`
+#. :quantity_notation:`speed_of_light`.
 
 ..
     TODO rename file
