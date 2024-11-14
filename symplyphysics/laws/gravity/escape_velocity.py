@@ -1,73 +1,85 @@
-from sympy import Eq, solve, sqrt
-from sympy.physics.units import gravitational_constant
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, symbols)
-from symplyphysics.core.expr_comparisons import expr_equals
+"""
+Escape speed
+============
 
+**Escape speed** is the minimum speed needed for an object to escape from contact with or orbit of a primary body.
+"""
+
+from sympy import Eq, solve, sqrt
+from symplyphysics import Quantity, validate_input, validate_output, symbols, quantities
+from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.gravity import gravity_force_from_mass_and_distance as gravity_force_law
 from symplyphysics.laws.dynamics import acceleration_is_force_over_mass as acceleration_law
 from symplyphysics.laws.kinematics import centripetal_acceleration_via_linear_speed_and_radius as centripetal_law
 
-# Law: V = √(G * M / (R + h))
-# Where:
-# V - initial velocity
-# M - planet_mass of planet
-# G - gravitational constant
-# h - height above the planet surface
-# R - radius of planet
+speed = symbols.speed
+"""
+Escape :symbols:`speed` of the body.
+"""
 
-velocity = Symbol("initial_velocity", units.velocity)
-radius = Symbol("radius", units.length)
-height = Symbol("height", units.length)
+radius = symbols.radius
+"""
+:symbols:`radius` of the planet.
+"""
+
+height = symbols.height
+"""
+Elevation (:symbols:`height`) of the body from the surface of the planet
+"""
+
 planet_mass = symbols.mass
+"""
+:symbols:`mass` of the planet.
+"""
 
-law = Eq(velocity, sqrt(gravitational_constant * planet_mass / (radius + height)))
+law = Eq(speed, sqrt(quantities.gravitational_constant * planet_mass / (radius + height)))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 # This law might be derived via "gravity_force_from_mass_and_distance" law, "acceleration_from_force" law,
 # "centripetal_acceleration_is_squared_velocity_by_radius" law.
 
 # The radius of the orbit consists of the radius of the planet and the height above its surface.
-centripetal_law_applied = centripetal_law.law.subs({
-    centripetal_law.speed: velocity,
+_centripetal_law_applied = centripetal_law.law.subs({
+    centripetal_law.speed: speed,
     centripetal_law.radius_of_curvature: radius + height,
 })
-acceleration_derived = solve(centripetal_law_applied,
+_acceleration_derived = solve(_centripetal_law_applied,
     centripetal_law.centripetal_acceleration,
     dict=True)[0][centripetal_law.centripetal_acceleration]
 
-acceleration_law_applied = acceleration_law.law.subs({
-    acceleration_law.symbols.acceleration: acceleration_derived,
+_acceleration_law_applied = acceleration_law.law.subs({
+    acceleration_law.symbols.acceleration: _acceleration_derived,
 })
-force_derived = solve(acceleration_law_applied, acceleration_law.symbols.force,
+_force_derived = solve(_acceleration_law_applied, acceleration_law.symbols.force,
     dict=True)[0][acceleration_law.symbols.force]
 
 # Let's write down Newton's second law: ma = F. F is, in this case, the force of gravity. And in the general case,
-# when a body moves along a circle with a constant velocity in modulus, its acceleration is equal to the centripetal
+# when a body moves along a circle with a constant speed in modulus, its acceleration is equal to the centripetal
 # acceleration.
-gravity_force_law_applied = gravity_force_law.law.subs({
+_gravity_force_law_applied = gravity_force_law.law.subs({
     gravity_force_law.first_mass: planet_mass,
-    gravity_force_law.gravitational_force: force_derived,
+    gravity_force_law.gravitational_force: _force_derived,
     gravity_force_law.second_mass: acceleration_law.symbols.mass,
     gravity_force_law.distance_between_mass_centers: radius + height,
 })
-# The first cosmic velocity is the minimum horizontal velocity that must be given to an object so that it moves in
-# a circular orbit around the planet. Based on this definition, the velocity could be left negative, implying a different
+# The first cosmic speed is the minimum horizontal speed that must be given to an object so that it moves in
+# a circular orbit around the planet. Based on this definition, the speed could be left negative, implying a different
 # direction. But most often they are written with a plus sign, implying the modulus of the horizontal component of the
-# velocity tangent to the orbit. Therefore, the first solution that returns a minus is ignored.
-velocity_derived = solve(gravity_force_law_applied, velocity, dict=True)[1][velocity]
+# speed tangent to the orbit. Therefore, the first solution that returns a minus is ignored.
+_velocity_derived = solve(_gravity_force_law_applied, speed, dict=True)[1][speed]
 
-# Check if derived velocity is same as declared.
-assert expr_equals(velocity_derived, law.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
+# Check if derived speed is same as declared.
+assert expr_equals(_velocity_derived, law.rhs)
 
 
 @validate_input(planet_mass_=planet_mass, radius_=radius, height_=height)
-@validate_output(velocity)
+@validate_output(speed)
 def calculate_velocity(planet_mass_: Quantity, radius_: Quantity, height_: Quantity) -> Quantity:
-    result_velocity_expr = solve(law, velocity, dict=True)[0][velocity]
+    result_velocity_expr = solve(law, speed, dict=True)[0][speed]
     result_expr = result_velocity_expr.subs({
         planet_mass: planet_mass_,
         radius: radius_,
