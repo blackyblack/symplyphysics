@@ -105,6 +105,8 @@ __all__ = [
     "arc_length",
     "semimajor_axis",
     "semiminor_axis",
+    "latitude",
+    "longitude",
     # electrodynamics
     "admittance",
     "electrical_conductance",

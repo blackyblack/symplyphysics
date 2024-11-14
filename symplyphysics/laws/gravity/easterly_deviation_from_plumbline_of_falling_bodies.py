@@ -1,39 +1,55 @@
+"""
+Easterly deviation from plumbline of falling bodies
+===================================================
+
+Suppose a body is falling freely in Earth's gravity field with its initial velocity being zero.
+Then the effect of the Coriolis force on the falling body can be found in the fact that it deflects
+from plumbline in the easterly and southerly (equatorial) directions.
+
+**Conditions:**
+
+#. The vector of free fall acceleration is constant.
+"""
+
 from sympy import Eq, cos, pi
-from symplyphysics import (
-    units,
-    angle_type,
-    Quantity,
-    Symbol,
-    validate_input,
-    validate_output,
-)
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 from symplyphysics.core.symbols.quantities import scale_factor
 
-# Description
-## Suppose a body is falling freely in Earth's gravity field with its initial velocity being zero.
-## Then the effect of the Coriolis force on the falling body can be found in the fact that it deflects
-## from plumbline in the easterly and southerly (equatorial) directions.
+easterly_deviation_from_plumbline = symbols.euclidean_distance
+"""
+Easterly deviation of falling body from plumbline due to Earth's rotation.
+See :symbols:`euclidean_distance`
+"""
 
-# Conditions
-## - The vector of free fall acceleration `g` is considered constant.
+fall_time = symbols.time
+"""
+:symbols:`time` of the body's fall.
+"""
 
-# Law: s_east = (4 * pi / 3) * (t / T) * h * cos(theta)
-## s_east - easterly deviation of falling body from plumbline due to Earth's rotation
-## t - time of the body's fall
-## T - period of Earth's rotation
-## h - initial elevation of the body from Earth's surface
-## theta - latitude of the place the body is located in
+rotation_period = symbols.period
+"""
+:symbols:`period` of the Earth's rotation.
+"""
 
-easterly_deviation_from_plumbline = Symbol("easterly_deviation_from_plumbline", units.length)
-fall_time = Symbol("fall_time", units.time)
-rotation_period = Symbol("rotation_period", units.time)
-initial_elevation = Symbol("initial_elevation", units.length)
-latitude = Symbol("latitude", angle_type)
+initial_elevation = symbols.height
+"""
+Initial elevation (:symbols:`height`) of the body from the Earth's surface.
+"""
+
+latitude = symbols.latitude
+"""
+:symbols:`latitude` of the location of the body.
+"""
 
 law = Eq(
     easterly_deviation_from_plumbline,
     (4 * pi / 3) * (fall_time / rotation_period) * initial_elevation * cos(latitude),
 )
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 # TODO: derive from the solution of the relative motion equation in Earth's gravitational field.
 
