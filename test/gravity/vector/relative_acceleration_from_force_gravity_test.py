@@ -7,7 +7,7 @@ from symplyphysics import (
     Quantity,
     QuantityVector,
 )
-from symplyphysics.laws.gravity import relative_acceleration_from_force as law
+from symplyphysics.laws.gravity.vector import relative_acceleration_from_force as law
 from symplyphysics.core.approx import assert_equal_vectors
 
 Args = namedtuple("Args", "g ac f m ar")
