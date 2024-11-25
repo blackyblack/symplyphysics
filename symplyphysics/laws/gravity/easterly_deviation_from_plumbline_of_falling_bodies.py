@@ -12,10 +12,20 @@ from plumbline in the easterly and southerly (equatorial) directions.
 """
 
 from sympy import Eq, cos, pi
-from symplyphysics import Quantity, validate_input, validate_output, symbols
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    clone_as_symbol,
+)
 from symplyphysics.core.symbols.quantities import scale_factor
 
-easterly_deviation_from_plumbline = symbols.euclidean_distance
+easterly_deviation_from_plumbline = clone_as_symbol(
+    symbols.euclidean_distance,
+    display_symbol="s_east",
+    display_latex="s_\\text{east}",
+)
 """
 Easterly deviation of falling body from plumbline due to Earth's rotation.
 See :symbols:`euclidean_distance`

@@ -383,6 +383,6 @@ to :math:`90^\circ` at the north pole, with :math:`0^\circ` at the Equator.
 longitude = SymbolNew("lambda", angle_type, display_latex="\\lambda")
 """
 **Longitude** is a coordinate that specifies the east-west position of a point on the
-surface of the Earth, or another celestial body. The prime meridian defines 0° longitude; positive
-longitudes are east of the prime meridian, and the negative ones are west.
+surface of the Earth, or another celestial body. The prime meridian defines :math:`0^\circ`
+longitude; positive longitudes are east of the prime meridian, and the negative ones are west.
 """

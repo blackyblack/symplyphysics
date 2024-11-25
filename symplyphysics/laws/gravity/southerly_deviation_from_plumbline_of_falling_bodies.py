@@ -1,42 +1,75 @@
+"""
+Southerly deviation from plumbline of falling bodies
+====================================================
+
+Suppose a body is falling freely in Earth's gravity field with its initial velocity being zero.
+Then the effect of the Coriolis force on the falling body can be found in the fact that it deflects
+from plumbline in the easterly and southerly (equatorial) directions.
+
+**Notes:**
+
+#. The southerly deviation is extremely small and almost unobservable due to the :math:`t / T` factor.
+
+#. Also see :ref:`Easterly deviation from plumbline of falling bodies`.
+
+**Conditions:**
+
+#. The vector of free fall acceleration is considered constant.
+"""
+
 from sympy import Eq, sin, pi
 from symplyphysics import (
-    units,
-    angle_type,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
 )
 from symplyphysics.core.symbols.quantities import scale_factor
 
-# Description
-## Suppose a body is falling freely in Earth's gravity field with its initial velocity being zero.
-## Then the effect of the Coriolis force on the falling body can be found in the fact that it deflects
-## from plumbline in the easterly and southerly (equatorial) directions.
+southerly_deviation_from_plumbline = clone_as_symbol(
+    symbols.euclidean_distance,
+    display_symbol="s_south",
+    display_latex="s_\\text{south}",
+)
+"""
+Southerly (equatorial) deviation of falling body from plumbline due to Earth's rotation.
+See :symbols:`euclidean_distance`.
+"""
 
-# Conditions
-## - The vector of free fall acceleration `g` is considered constant.
+fall_time = symbols.time
+"""
+:symbols:`time` elapsed during the body's fall.
+"""
 
-# Notes
-## - The southerly deviation is extremely small and almost unobservable due to the `t / T` factor.
+rotation_period = symbols.period
+"""
+:symbols:`period` of Earth's rotation.
+"""
 
-# Law: s_south = pi * (t / T) * s_east * sin(theta)
-## s_sourth - southerly (equatorial) deviation of falling body from plumbline due to Earth's rotation
-## t - time of the body's fall
-## T - period of Earth's rotation
-## s_east - easterly deviation of falling body from plumbline
-## theta - latitude of the place the body is located in
+easterly_deviation_from_plumbline = clone_as_symbol(
+    symbols.euclidean_distance,
+    display_symbol="s_east",
+    display_latex="s_\\text{east}",
+)
+"""
+Easterly deviation of falling body from plumbline. See :symbols:`euclidean_distance`.
+"""
 
-southerly_deviation_from_plumbline = Symbol("southerly_deviation_from_plumbline", units.length)
-fall_time = Symbol("fall_time", units.time)
-rotation_period = Symbol("rotation_period", units.time)
-easterly_deviation_from_plumbline = Symbol("easterly_deviation_from_plumbline", units.length)
-latitude = Symbol("latitude", angle_type)
+latitude = symbols.latitude
+"""
+:symbols:`latitude` of the place the body is located in.
+"""
 
 law = Eq(
-    easterly_deviation_from_plumbline,
+    southerly_deviation_from_plumbline,
     pi * (fall_time / rotation_period) * easterly_deviation_from_plumbline * sin(latitude),
 )
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 # TODO: derive from the solution of the relative motion equation in Earth's gravitational field.
 
