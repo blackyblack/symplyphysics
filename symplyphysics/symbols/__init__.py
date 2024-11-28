@@ -38,6 +38,7 @@ __all__ = [
     "any_quantity",
     "fractional_change",
     "exponential_decay_constant",
+    "specific_energy",
     # chemistry,
     "mass_fraction",
     "amount_of_substance",
