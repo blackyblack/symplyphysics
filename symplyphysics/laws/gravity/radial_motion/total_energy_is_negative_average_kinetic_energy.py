@@ -11,39 +11,32 @@ The total energy of an orbiting planet is equal to its negative kinetic energy a
 
 from sympy import Eq
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
 )
 
-total_mechanical_energy = Symbol("total_mechanical_energy", units.energy)
+total_mechanical_energy = symbols.mechanical_energy
 """
-The total mechanical energy of the planet.
-
-Symbol:
-    :code:`E`
+The total :symbols:`mechanical_energy` of the planet.
 """
 
-average_kinetic_energy = Symbol("average_kinetic_energy", units.energy)
-r"""
-The kinetic energy of the planet averaged over time.
-
-Symbol:
-    :code:`avg(K)`
-
-Latex:
-    :math:`\langle K \rangle`
+average_kinetic_energy = clone_as_symbol(
+    symbols.kinetic_energy,
+    display_symbol="avg(K)",
+    display_latex="\\langle K \\rangle",
+)
+"""
+The :symbols:`kinetic_energy` of the planet averaged over :symbols:`time`.
 """
 
 law = Eq(total_mechanical_energy, -1 * average_kinetic_energy)
-r"""
-:code:`E = -1 * avg(K)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        E = - \langle K \rangle
+:laws:latex::
 """
 
 
