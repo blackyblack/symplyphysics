@@ -10,42 +10,34 @@ planet's angular momentum.
 
 from sympy import Eq
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     symbols,
+    clone_as_symbol,
 )
 
-total_potential_energy = Symbol("total_potential_energy", units.energy)
-r"""
-The total potential energy of the planet.
-
-Symbol:
-    :code:`U_tot`
-
-Latex:
-    :math:`U_\text{tot}`
+total_potential_energy = clone_as_symbol(
+    symbols.potential_energy,
+    display_symbol="U_tot",
+    display_latex="U_\\text{tot}",
+)
+"""
+The total :symbols:`potential_energy` of the planet.
 """
 
-gravitational_potential_energy = Symbol("gravitational_potential_energy", units.energy)
-r"""
-The potential energy of the planet due to the gravitational interaction of the planet and the star.
-
-Symbol:
-    :code:`U_gr`
-
-Latex:
-    :math:`U_\text{gr}`
+gravitational_potential_energy = clone_as_symbol(
+    symbols.potential_energy,
+    display_symbol="U_gr",
+    display_latex="U_\\text{gr}",
+)
+"""
+The :symbols:`potential_energy` of the planet due to the gravitational interaction of the planet and the star.
 """
 
-angular_momentum = Symbol("angular_momentum", units.length * units.momentum)
+angular_momentum = symbols.angular_momentum
 """
-The angular momentum of the planet.
-
-Symbol:
-    :code:`L`
+The :symbols:`angular_momentum` of the planet.
 """
 
 planetary_mass = symbols.mass
@@ -53,24 +45,19 @@ planetary_mass = symbols.mass
 The :symbols:`mass` of the planet.
 """
 
-distance = Symbol("distance", units.length)
+distance = symbols.euclidean_distance
 """
-The distance between the star and the planet.
-
-Symbol:
-    :code:`r`
+The :symbols:`euclidean_distance` between the star and the planet.
 """
 
 law = Eq(
     total_potential_energy,
     gravitational_potential_energy + angular_momentum**2 / (2 * planetary_mass * distance**2),
 )
-r"""
-:code:`U_tot = U_gr + L^2 / (2 * m * r^2)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        U_\text{tot} = U_\text{gr} + \frac{L^2}{2 m r^2}
+:laws:latex::
 """
 
 
