@@ -386,3 +386,9 @@ longitude = SymbolNew("lambda", angle_type, display_latex="\\lambda")
 surface of the Earth, or another celestial body. The prime meridian defines :math:`0^\circ`
 longitude; positive longitudes are east of the prime meridian, and the negative ones are west.
 """
+
+sector_speed = SymbolNew("sigma", units.area / units.time, display_latex="\\sigma")
+"""
+**Areal speed**, also called **sector speed** or **sectorial speed**, is a quantity that indicated
+the rate of change at which :symbols:`area` is swept out by a particle as it moves along a curve.
+"""

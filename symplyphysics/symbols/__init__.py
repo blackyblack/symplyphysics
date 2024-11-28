@@ -108,6 +108,7 @@ __all__ = [
     "semiminor_axis",
     "latitude",
     "longitude",
+    "sector_speed",
     # electrodynamics
     "admittance",
     "electrical_conductance",
