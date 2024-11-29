@@ -12,7 +12,7 @@ the star—planet system and the total energy of the planet per unit of its mass
 
 **Links:**
 
-#. Sivukhin D.V. (1979), __Obshchiy kurs fiziki__ [General course of Physics], vol. 1, p. 317, (58.2).
+#. Sivukhin D.V. (1979), *Obshchiy kurs fiziki* [General course of Physics], vol. 1, p. 317, (58.2).
 """
 
 from sympy import Eq, pi

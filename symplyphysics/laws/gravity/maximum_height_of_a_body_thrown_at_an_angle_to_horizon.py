@@ -32,6 +32,7 @@ from symplyphysics import (
     symbols,
     quantities,
     convert_to_si,
+    clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematics import position_via_constant_acceleration_and_time as distance_law
@@ -43,7 +44,7 @@ height = symbols.height
 Maximum :symbols:`height` of the projectile.
 """
 
-initial_speed = symbols.speed
+initial_speed = clone_as_symbol(symbols.speed, subscript="0")
 """
 Initial :symbols:`speed` of the body.
 """

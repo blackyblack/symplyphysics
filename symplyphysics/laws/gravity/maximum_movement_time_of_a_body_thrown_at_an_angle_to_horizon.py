@@ -23,7 +23,7 @@ of free fall.
 """
 
 from sympy import Eq, solve, sin, pi
-from symplyphysics import Quantity, validate_input, validate_output, symbols, quantities
+from symplyphysics import Quantity, validate_input, validate_output, symbols, quantities, clone_as_symbol
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematics import position_via_constant_acceleration_and_time as distance_law
 from symplyphysics.laws.geometry import planar_projection_is_cosine as projection_law
@@ -33,7 +33,7 @@ time = symbols.time
 :symbols:`time` of flight of the projectile.
 """
 
-initial_speed = symbols.speed
+initial_speed = clone_as_symbol(symbols.speed, subscript="0")
 """
 Initial :symbols:`speed` of the projectile.
 """

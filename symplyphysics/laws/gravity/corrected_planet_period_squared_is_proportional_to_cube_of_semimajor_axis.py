@@ -14,7 +14,7 @@ on the attracting mass, but also on the mass of the planet itself.
 
 **Links:**
 
-#. Sivukhin D.V. (1979), __Obshchiy kurs fiziki__ [General course of Physics], vol. 1, p. 321, (59.3).
+#. Sivukhin D.V. (1979), *Obshchiy kurs fiziki* [General course of Physics], vol. 1, p. 321, (59.3).
 """
 
 from sympy import Eq, pi, solve

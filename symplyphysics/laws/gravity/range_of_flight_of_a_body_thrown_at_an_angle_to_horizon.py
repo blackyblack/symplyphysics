@@ -19,8 +19,8 @@ speed, the angle of the throw and the acceleration of free fall.
 #. `Physics LibreTexts. Projectile Motion, Range (3.3.15) <https://phys.libretexts.org/Bookshelves/University_Physics/Physics_(Boundless)/3%3A_Two-Dimensional_Kinematics/3.3%3A_Projectile_Motion>`__.
 """
 
-from sympy import Eq, solve, sin, simplify
-from symplyphysics import Quantity, validate_input, validate_output, symbols, quantities
+from sympy import Eq, solve, sin
+from symplyphysics import Quantity, validate_input, validate_output, symbols, quantities, clone_as_symbol
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematics import position_via_constant_speed_and_time as distance_law
 from symplyphysics.laws.geometry import planar_projection_is_cosine as projection_law
@@ -31,7 +31,7 @@ horizontal_displacement = symbols.euclidean_distance
 Horizontal displacement, or **range**, of the projectile. See :symbols:`euclidean_distance`.
 """
 
-initial_speed = symbols.speed
+initial_speed = clone_as_symbol(symbols.speed, subscript="0")
 """
 Initial :symbols:`speed` of the projectile.
 """
@@ -62,7 +62,7 @@ _time_law_applied = time_law.law.subs({
     time_law.initial_speed: initial_speed,
     time_law.angle: angle,
 })
-_time_derived = solve(_time_law_applied, time_law.movement_time, dict=True)[0][time_law.movement_time]
+_time_derived = solve(_time_law_applied, time_law.time, dict=True)[0][time_law.time]
 
 _range_law_applied = distance_law.law.subs({
     distance_law.initial_position: 0,
@@ -71,7 +71,7 @@ _range_law_applied = distance_law.law.subs({
 })
 
 # Check if derived range is same as declared.
-assert expr_equals(simplify(_range_law_applied.rhs), law.rhs)
+assert expr_equals(_range_law_applied.rhs, law.rhs)
 
 
 @validate_input(initial_velocity_=initial_speed, angle_=angle)

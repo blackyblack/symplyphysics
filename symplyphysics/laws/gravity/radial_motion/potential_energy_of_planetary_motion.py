@@ -9,7 +9,7 @@ planet's angular momentum.
 
 **Links:**
 
-#. Sivukhin, D.V. (1979). __Obshchiy kurs fiziki__ [General course of Physics], vol. 1, p. 315.
+#. Sivukhin, D.V. (1979). *Obshchiy kurs fiziki* [General course of Physics], vol. 1, p. 315.
 """
 
 from sympy import Eq

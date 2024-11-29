@@ -11,7 +11,7 @@ the major semiaxis of its orbit, and the mass of body that attracts it, such as 
 
 **Links:**
 
-#. Sivukhin, D.V. (1979). __Obshchiy kurs fiziki__ [General course of Physics], vol. 1, p. 318, (58.5)
+#. Sivukhin, D.V. (1979). *Obshchiy kurs fiziki* [General course of Physics], vol. 1, p. 318, (58.5)
 """
 
 from sympy import Eq, sqrt

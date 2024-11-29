@@ -18,7 +18,7 @@ from plumbline in the easterly and southerly (equatorial) directions.
 
 **Links:**
 
-#. Sivukhin D.V. (1979), __Obshchiy kurs fiziki__ [General course of Physics], vol. 1, p. 355, (67.11).
+#. Sivukhin D.V. (1979), *Obshchiy kurs fiziki* [General course of Physics], vol. 1, p. 355, (67.11).
 """
 
 from sympy import Eq, sin, pi
