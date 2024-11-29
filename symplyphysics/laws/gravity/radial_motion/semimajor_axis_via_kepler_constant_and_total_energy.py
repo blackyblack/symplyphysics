@@ -3,62 +3,48 @@ Semimajor axis via Kepler's constant and total energy
 =====================================================
 
 The semi-major axis of an orbiting planet depends on the Kepler's constant of
-the star---planet system and the total energy of the planet per unit of its mass.
+the star—planet system and the total energy of the planet per unit of its mass.
 
 **Notes:**
 
 #. Works for both elliptical (:math:`\varepsilon < 0`) and hyperbolical
    (:math:`\varepsilon > 0`) orbits.
+
+**Links:**
+
+#. Sivukhin D.V. (1979), *Obshchiy kurs fiziki* [General course of Physics], vol. 1, p. 317, (58.2).
 """
 
 from sympy import Eq, pi
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
 )
 
-semimajor_axis = Symbol("semimajor_axis", units.length)
+semimajor_axis = symbols.semimajor_axis
 """
-The semi-major axis of the planet's orbit.
-
-Symbol:
-    a
+The :symbols:`semimajor_axis` of the planet's orbit.
 """
 
-kepler_constant = Symbol("kepler_constant", units.length**3 / units.time**2)
-r"""
-The Kepler's constant, whose value is determined by the :symbols:`mass`
+kepler_constant = symbols.kepler_constant
+"""
+The :symbols:`kepler_constant`, whose value is determined by the :symbols:`mass`
 of the orbited star.
-
-Symbol:
-    K
-
-Latex:
-    :math:`\mathfrak{K}`
 """
 
-specific_energy = Symbol("specific_energy", units.energy / units.mass)
-r"""
-The total energy of the planet per unit of its :symbols:`mass`.
-Can be negative or positive depending on the sign of the planet's energy.
-
-Symbol:
-    epsilon
-
-Latex:
-    :math:`\varepsilon`
+specific_energy = symbols.specific_energy
+"""
+:symbols:`specific_energy` of the planet. Can be negative or positive depending on the sign of
+the planet's energy.
 """
 
 law = Eq(semimajor_axis, 2 * pi**2 * kepler_constant / abs(specific_energy))
-r"""
-a = 2 * pi^2 * K / abs(epsilon)
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        a = \frac{2 \pi^2 \mathfrak{K}}{|\varepsilon|}
+:laws:latex::
 """
 
 

@@ -61,6 +61,11 @@ energy = SymbolNew("E", units.energy)
 the performance of work and in the form of heat and light.
 """
 
+specific_energy = SymbolNew("epsilon", units.energy / units.mass, display_latex="\\varepsilon")
+"""
+**Specific energy** is defined as :symbols:`energy` per unit :symbols:`mass`.
+"""
+
 power = SymbolNew("P", units.power)
 """
 **Power** is the amount of energy transferred or converted per unit time.

@@ -1,4 +1,4 @@
-r"""
+"""
 Average potential energy via average kinetic energy
 ===================================================
 
@@ -7,47 +7,45 @@ kinetic energy. The average of both energies is taken w.r.t. time.
 
 **Conditions:**
 
-#. Works for elliptical orbits, i.e. the total energy :math:`E` of the planet is negative.
+#. Works for elliptical orbits, in which case the total energy :math:`E` of the planet is negative.
+
+**Links:**
+
+#. `Physics LibreTexts. Energy in Circular Orbits <https://phys.libretexts.org/Workbench/PH_245_Textbook_V2/13%3A_Gravitation/13.05%3A_Satellite_Orbits_and_Energy>`__.
 """
 
 from sympy import Eq
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
 )
 
-average_potential_energy = Symbol("average_potential_energy", units.energy)
-r"""
-The potential energy of the planet averaged over time.
-
-Symbol:
-    :code:`avg(U)`
-
-Latex:
-    :math:`\langle U \rangle`
+average_potential_energy = clone_as_symbol(
+    symbols.potential_energy,
+    display_symbol="avg(U)",
+    display_latex="\\langle U \\rangle",
+)
+"""
+The :symbols:`potential_energy` of the planet averaged over :symbols:`time`.
 """
 
-average_kinetic_energy = Symbol("average_kinetic_energy", units.energy)
-r"""
-The kinetic energy of the planet averaged over time.
-
-Symbol:
-    :code:`avg(K)`
-
-Latex:
-    :math:`\langle K \rangle`
+average_kinetic_energy = clone_as_symbol(
+    symbols.kinetic_energy,
+    display_symbol="avg(K)",
+    display_latex="\\langle K \\rangle",
+)
+"""
+The :symbols:`kinetic_energy` of the planet averaged over :symbols:`time`.
 """
 
 law = Eq(average_potential_energy, -2 * average_kinetic_energy)
-r"""
-:code:`avg(U) = -2 * avg(K)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \langle U \rangle = -2 \langle K \rangle
+:laws:latex::
 """
 
 # TODO Prove using the virial's theorem.

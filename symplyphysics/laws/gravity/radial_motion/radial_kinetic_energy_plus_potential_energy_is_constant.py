@@ -8,16 +8,19 @@ energy. Note that the sign of the total energy determines the type of the planet
 #. If :math:`E < 0`, the orbit is elliptical.
 #. If :math:`E = 0`, the orbit is parabolical.
 #. If :math:`E > 0`, the orbit is hyperbolical.
+
+**Links:**
+
+#. `Physics LibreTexts <https://phys.libretexts.org/Bookshelves/Classical_Mechanics/Classical_Mechanics_(Dourmashkin)/25%3A_Celestial_Mechanics/25.03%3A_Energy_and_Angular_Momentum_Constants_of_the_Motion>`__.
 """
 
 from sympy import Eq
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     symbols,
+    clone_as_symbol,
 )
 
 planetary_mass = symbols.mass
@@ -25,39 +28,26 @@ planetary_mass = symbols.mass
 The :symbols:`mass` of the planet.
 """
 
-radial_speed = Symbol("radial_speed", units.velocity)
+radial_speed = clone_as_symbol(symbols.speed, subscript="r")
 """
-The projection of the velocity vector in the radial direction.
-
-Symbol:
-    :code:`v_r`
-
-Latex:
-    :math:`v_r`
+The projection of the velocity vector in the radial direction. See :symbols:`speed`.
 """
 
-potential_energy = Symbol("potential_energy", units.energy)
+potential_energy = symbols.potential_energy
 """
 The :doc:`potential energy <laws.gravity.radial_motion.potential_energy_of_planetary_motion>` of the planet.
-
-Symbol:
-    :code:`U`
+See :symbols:`potential_energy`.
 """
 
-total_mechanical_energy = Symbol("total_mechanical_energy", units.energy)
-"""Total mechanical energy of the planet, assumed to be constant.
-
-Symbol:
-    :code:`E`
+total_mechanical_energy = symbols.mechanical_energy
+"""Total :symbols:`mechanical_energy` of the planet, assumed to be constant.
 """
 
 law = Eq(planetary_mass * radial_speed**2 / 2 + potential_energy, total_mechanical_energy)
-r"""
-:code:`m * v_r**2 / 2 + U = E`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \frac{1}{2} m v_r^2 + U = E
+:laws:latex::
 """
 
 
