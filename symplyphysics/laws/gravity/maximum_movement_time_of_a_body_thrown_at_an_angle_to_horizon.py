@@ -2,8 +2,8 @@
 Time of flight of a projectile via initial velocity
 ===================================================
 
-Let the body be thrown horizontally with some initial velocity. Then the time of the motion
-of this body until it reaches the initial elevation depends only initial velocity and acceleration
+Let the body be thrown at an angle to the horizon with some initial velocity. Then the time of the motion
+of this body until it reaches the initial elevation depends only on initial velocity and acceleration
 of free fall.
 
 **Conditions:**

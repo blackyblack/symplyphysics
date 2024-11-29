@@ -389,11 +389,16 @@ longitude; positive longitudes are east of the prime meridian, and the negative 
 
 sector_speed = SymbolNew("sigma", units.area / units.time, display_latex="\\sigma")
 """
-**Areal speed**, also called **sector speed** or **sectorial speed**, is a quantity that indicated
+**Areal speed**, also called **sector speed** or **sectorial speed**, is a quantity that indicates
 the rate of change at which :symbols:`area` is swept out by a particle as it moves along a curve.
+The calculation of the area swept can be found in the link below.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Areal_velocity#/media/File:ArealVelocity_with_curved_area.svg>`__.
 """
 
-kepler_constant = SymbolNew("K", units.length**3 / units.time**2, display_latex="\\mathfrac{K}")
+kepler_constant = SymbolNew("K", units.length**3 / units.time**2, display_latex="\\mathfrak{K}")
 """
 The **Kepler's constant** is the constant of proportionality in Kepler's third law of planetary
 motion, namely the ratio between the square of the period of the planet to the semi-major axis
