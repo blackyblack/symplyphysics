@@ -109,6 +109,7 @@ __all__ = [
     "latitude",
     "longitude",
     "sector_speed",
+    "kepler_constant",
     # electrodynamics
     "admittance",
     "electrical_conductance",

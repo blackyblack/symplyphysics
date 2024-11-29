@@ -392,3 +392,10 @@ sector_speed = SymbolNew("sigma", units.area / units.time, display_latex="\\sigm
 **Areal speed**, also called **sector speed** or **sectorial speed**, is a quantity that indicated
 the rate of change at which :symbols:`area` is swept out by a particle as it moves along a curve.
 """
+
+kepler_constant = SymbolNew("K", units.length**3 / units.time**2, display_latex="\\mathfrac{K}")
+"""
+The **Kepler's constant** is the constant of proportionality in Kepler's third law of planetary
+motion, namely the ratio between the square of the period of the planet to the semi-major axis
+of the planet's orbit. It is constant for all objects orbiting around the same object.
+"""

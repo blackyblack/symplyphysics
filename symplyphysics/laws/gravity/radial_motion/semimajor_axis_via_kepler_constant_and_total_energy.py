@@ -13,9 +13,7 @@ the star—planet system and the total energy of the planet per unit of its mass
 
 from sympy import Eq, pi
 from symplyphysics import (
-    units,
     Quantity,
-    SymbolNew,
     validate_input,
     validate_output,
     symbols,
@@ -26,9 +24,9 @@ semimajor_axis = symbols.semimajor_axis
 The :symbols:`semimajor_axis` of the planet's orbit.
 """
 
-kepler_constant = SymbolNew("K", units.length**3 / units.time**2, display_latex="\\mathfrak{K}")
+kepler_constant = symbols.kepler_constant
 """
-The Kepler's constant, whose value is determined by the :symbols:`mass`
+The :symbols:`kepler_constant`, whose value is determined by the :symbols:`mass`
 of the orbited star.
 """
 
