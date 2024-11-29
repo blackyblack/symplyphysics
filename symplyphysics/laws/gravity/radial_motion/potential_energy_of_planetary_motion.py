@@ -6,6 +6,10 @@ The total mechanical energy of the planet can be viewed as the sum of the kineti
 The potential energy is in turn the sum of the potential energy due to the gravitational interaction
 between the planet and the Sun, and the the energy of the tangential motion, which depends on the
 planet's angular momentum.
+
+**Links:**
+
+#. `Physics LibreTexts, see derivation <https://phys.libretexts.org/Bookshelves/Classical_Mechanics/Classical_Mechanics_(Dourmashkin)/25%3A_Celestial_Mechanics/25.03%3A_Energy_and_Angular_Momentum_Constants_of_the_Motion>`__.
 """
 
 from sympy import Eq

@@ -18,6 +18,10 @@ velocity and the horizon, and the magnitude of the free fall acceleration.
 
 #. The height is measured with respect to the horizontal plane where the projectile
    was located at initial time.
+
+**Links:**
+
+#. `Physics LibreTexts, see formula 3.3.14 <https://phys.libretexts.org/Bookshelves/University_Physics/Physics_(Boundless)/3%3A_Two-Dimensional_Kinematics/3.3%3A_Projectile_Motion>`__.
 """
 
 from sympy import Eq, solve, sin, pi

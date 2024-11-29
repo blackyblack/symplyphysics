@@ -7,6 +7,10 @@ The total energy of an orbiting planet is equal to its negative kinetic energy a
 **Conditions:**
 
 #. Works for elliptical (:math:`E < 0`) orbits.
+
+**Links:**
+
+#. `Physics LibreTexts, Section "Energy in Circular Orbits" <https://phys.libretexts.org/Workbench/PH_245_Textbook_V2/13%3A_Gravitation/13.05%3A_Satellite_Orbits_and_Energy>`__.
 """
 
 from sympy import Eq

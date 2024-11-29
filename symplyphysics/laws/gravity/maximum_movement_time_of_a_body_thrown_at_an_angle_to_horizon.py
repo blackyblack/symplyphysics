@@ -8,7 +8,7 @@ of free fall.
 
 **Links:**
 
-#. `Physics LibreTexts <https://phys.libretexts.org/Bookshelves/University_Physics/Physics_(Boundless)/3%3A_Two-Dimensional_Kinematics/3.3%3A_Projectile_Motion>`__.
+#. `Physics LibreTexts, see formula 3.3.13 <https://phys.libretexts.org/Bookshelves/University_Physics/Physics_(Boundless)/3%3A_Two-Dimensional_Kinematics/3.3%3A_Projectile_Motion>`__.
 
 **Conditions:**
 

@@ -7,7 +7,7 @@ the period of rotation of any planet to the semi-major axis of its orbit.
 
 **Links:**
 
-#. `Physics LibreTexts <https://phys.libretexts.org/Bookshelves/University_Physics/Physics_(Boundless)/5%3A_Uniform_Circular_Motion_and_Gravitation/5.6%3A_Keplers_Laws>`__.
+#. `Physics LibreTexts, see formula 5.6.23 <https://phys.libretexts.org/Bookshelves/University_Physics/Physics_(Boundless)/5%3A_Uniform_Circular_Motion_and_Gravitation/5.6%3A_Keplers_Laws>`__.
 """
 
 from sympy import Eq, solve, pi, Symbol as SymSymbol

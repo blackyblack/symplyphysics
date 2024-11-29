@@ -16,7 +16,7 @@ speed, the angle of the throw and the acceleration of free fall.
 
 **Links:**
 
-#. `Physics LibreTexts <https://phys.libretexts.org/Bookshelves/University_Physics/Physics_(Boundless)/3%3A_Two-Dimensional_Kinematics/3.3%3A_Projectile_Motion>`__.
+#. `Physics LibreTexts, see formula 3.3.15 <https://phys.libretexts.org/Bookshelves/University_Physics/Physics_(Boundless)/3%3A_Two-Dimensional_Kinematics/3.3%3A_Projectile_Motion>`__.
 """
 
 from sympy import Eq, solve, sin, simplify

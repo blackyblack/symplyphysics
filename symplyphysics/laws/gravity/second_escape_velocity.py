@@ -9,6 +9,10 @@ the gravitational attraction of this celestial body and leave a closed orbit aro
 **Notation:**
 
 #. :quantity_notation:`gravitational_constant`.
+
+**Links:**
+
+#. `Physics LibreTexts, Section "Escape velocity" <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/Book%3A_University_Physics_I_-_Mechanics_Sound_Oscillations_and_Waves_(OpenStax)/13%3A_Gravitation/13.04%3A_Gravitational_Potential_Energy_and_Total_Energy>`__.
 """
 
 from sympy import Eq, solve, sqrt

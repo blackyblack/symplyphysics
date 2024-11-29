@@ -8,6 +8,10 @@ energy. Note that the sign of the total energy determines the type of the planet
 #. If :math:`E < 0`, the orbit is elliptical.
 #. If :math:`E = 0`, the orbit is parabolical.
 #. If :math:`E > 0`, the orbit is hyperbolical.
+
+**Links:**
+
+#. `Physics LibreTexts, see derivation <https://phys.libretexts.org/Bookshelves/Classical_Mechanics/Classical_Mechanics_(Dourmashkin)/25%3A_Celestial_Mechanics/25.03%3A_Energy_and_Angular_Momentum_Constants_of_the_Motion>`__.
 """
 
 from sympy import Eq
