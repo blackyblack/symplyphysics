@@ -2,6 +2,7 @@ from collections import namedtuple
 from pytest import fixture
 from sympy import Integral, evaluate, exp, log, pi, sin, sqrt
 from symplyphysics import Quantity, SymbolNew, clone_as_symbol, clone_as_function, units
+from symplyphysics.core.operations.average import Average
 from symplyphysics.docs.printer_code import code_str
 
 Args = namedtuple(
@@ -204,3 +205,9 @@ def test_log10(test_args: Args) -> None:
     with evaluate(False):
         expr = log(test_args.intensity / reference_intensity, 10)
     assert code_str(expr) == "log(I / I_0, 10)"
+
+
+def test_average_operation(test_args: Args) -> None:
+    with evaluate(False):
+        avg = Average(test_args.speed * test_args.time)
+    assert code_str(avg) == "avg(v * t)"

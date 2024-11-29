@@ -3,12 +3,20 @@ import inspect
 from typing import Any, Callable, Sequence, TypeAlias
 from sympy.physics.units import Quantity as SymQuantity, Dimension
 
-from .symbols.symbols import DimensionSymbol, DimensionSymbolNew, Function, FunctionNew, Symbol, SymbolNew, SymbolIndexedNew
+from .symbols.symbols import (
+    DimensionSymbol,
+    DimensionSymbolNew,
+    Function,
+    FunctionNew,
+    Symbol,
+    SymbolNew,
+    SymbolIndexedNew,
+)
 from .dimensions import assert_equivalent_dimension, ScalarValue
 
 _ValueType: TypeAlias = ScalarValue | SymQuantity | DimensionSymbol | DimensionSymbolNew
 
-_UnitType: TypeAlias = Dimension | Symbol | Function | SymbolNew | FunctionNew | SymbolIndexedNew
+_UnitType: TypeAlias = Dimension | Symbol | Function | DimensionSymbolNew
 
 
 def _assert_expected_unit(
