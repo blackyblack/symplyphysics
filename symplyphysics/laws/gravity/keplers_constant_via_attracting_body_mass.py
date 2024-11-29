@@ -5,16 +5,20 @@ Kepler's constant via attracting body mass
 *Kepler's constant* is a physical quantity that only depends on the gravitational constant and the mass of
 the orbited body, such as the Sun. It is constant in the sense that all planets that orbit the same body
 approximately have the same value of the Kepler's constant.
+
+**Notation:**
+
+#. :quantity_notation:`gravitational_constant`.
 """
 
 from sympy import Eq, pi
-from sympy.physics.units import gravitational_constant
 from symplyphysics import (
     Quantity,
     validate_input,
     validate_output,
     symbols,
     clone_as_symbol,
+    quantities,
 )
 
 kepler_constant = symbols.kepler_constant
@@ -27,7 +31,7 @@ attracting_mass = clone_as_symbol(symbols.mass, display_symbol="M", display_late
 The :symbols:`mass` of the attracting body.
 """
 
-law = Eq(kepler_constant, gravitational_constant * attracting_mass / (4 * pi**2))
+law = Eq(kepler_constant, quantities.gravitational_constant * attracting_mass / (4 * pi**2))
 """
 :laws:symbol::
 

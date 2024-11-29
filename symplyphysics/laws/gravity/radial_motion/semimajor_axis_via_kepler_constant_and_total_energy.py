@@ -9,6 +9,10 @@ the star—planet system and the total energy of the planet per unit of its mass
 
 #. Works for both elliptical (:math:`\varepsilon < 0`) and hyperbolical
    (:math:`\varepsilon > 0`) orbits.
+
+**Links:**
+
+#. Sivukhin D.V. (1979), __Obshchiy kurs fiziki__ [General course of Physics], vol. 1, p. 317, (58.2).
 """
 
 from sympy import Eq, pi

@@ -7,6 +7,8 @@ states that a line the connects a planet to the attracting body (the Sun) sweeps
 out equal areas in the plane of the planet's orbit in equal time intervals, and
 its rate of change is proportional to the planet's angular momentum. It is
 equivalent to saying that the planet's angular momentum is conserved.
+
+#. Sivukhin D.V. (1979), __Obshchiy kurs fiziki__ [General course of Physics], vol. 1, pp. 312—314.
 """
 
 from sympy import Eq, Derivative

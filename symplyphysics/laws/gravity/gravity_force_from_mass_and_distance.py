@@ -9,6 +9,10 @@ bodies and inversely proportional to the distance squared between the bodies.
 **Notation:**
 
 #. :quantity_notation:`gravitational_constant`.
+
+**Links:**
+
+#. `Physics LibreTexts. Newton's Law of Universal Gravitation (13.2.1) <https://phys.libretexts.org/Workbench/PH_245_Textbook_V2/13%3A_Gravitation/13.02%3A_Newton's_Law_of_Universal_Gravitation>`__.
 """
 
 from sympy import Eq, solve, sqrt

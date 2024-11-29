@@ -1,12 +1,16 @@
 """
-Escape speed
-============
+First escape speed
+==================
 
-**Escape speed** is the minimum speed needed for an object to escape from contact with or orbit of a primary body.
+**First escape speed** is the minimum speed needed for an object to escape from contact with or orbit of a primary body.
 
 **Notation:**
 
 #. :quantity_notation:`gravitational_constant`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Escape_velocity#From_an_orbiting_body>`__.
 
 ..
     TODO rename file

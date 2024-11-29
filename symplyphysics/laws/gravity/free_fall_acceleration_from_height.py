@@ -38,6 +38,11 @@ planet_mass = symbols.mass
 
 law = Eq(free_fall_acceleration,
     quantities.gravitational_constant * planet_mass / (planet_radius + elevation)**2)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 # This law might be easily derived from gravitational law via Newton's law #2
 ## Distance between mass centers is radius of the planet plus height above it's surface.

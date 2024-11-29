@@ -11,7 +11,7 @@ energy. Note that the sign of the total energy determines the type of the planet
 
 **Links:**
 
-#. `Physics LibreTexts, see derivation <https://phys.libretexts.org/Bookshelves/Classical_Mechanics/Classical_Mechanics_(Dourmashkin)/25%3A_Celestial_Mechanics/25.03%3A_Energy_and_Angular_Momentum_Constants_of_the_Motion>`__.
+#. `Physics LibreTexts <https://phys.libretexts.org/Bookshelves/Classical_Mechanics/Classical_Mechanics_(Dourmashkin)/25%3A_Celestial_Mechanics/25.03%3A_Energy_and_Angular_Momentum_Constants_of_the_Motion>`__.
 """
 
 from sympy import Eq

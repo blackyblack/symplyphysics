@@ -6,10 +6,6 @@ Let the body be thrown horizontally with some initial velocity. Then the time of
 of this body until it reaches the initial elevation depends only on the height and acceleration
 of free fall.
 
-**Links:**
-
-#. `Physics LibreTexts <https://phys.libretexts.org/Bookshelves/University_Physics/Physics_(Boundless)/3%3A_Two-Dimensional_Kinematics/3.3%3A_Projectile_Motion>`__.
-
 **Conditions:**
 
 #. The acceleration of gravity stays constant throughout the movement of the body.
@@ -17,6 +13,10 @@ of free fall.
 #. The initial and final height of the body with respect to the "ground" are the same,
    i.e. the body lands on a point with the same vertical coordinate as at the start
    of the flight.
+
+**Links:**
+
+#. `Physics LibreTexts. Zero Launch Angle, Duration of Flight (3.3.22) <https://phys.libretexts.org/Bookshelves/University_Physics/Physics_(Boundless)/3%3A_Two-Dimensional_Kinematics/3.3%3A_Projectile_Motion>`__.
 
 ..
     TODO rename file

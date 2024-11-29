@@ -9,6 +9,10 @@ particles were brought together from infinity to the given distance.
 **Notation:**
 
 #. :quantity_notation:`gravitational_constant`.
+
+**Links:**
+
+#. `Physics LibreTexts. Gravitational Potential Energy beyond Earth (13.4.6) <https://phys.libretexts.org/Workbench/PH_245_Textbook_V2/13%3A_Gravitation/13.04%3A_Gravitational_Potential_Energy_and_Total_Energy>`__.
 """
 
 from sympy import Eq
@@ -44,6 +48,11 @@ distance_between_mass_centers = symbols.euclidean_distance
 
 law = Eq(gravitational_potential_energy,
     -1 * quantities.gravitational_constant * first_mass * second_mass / distance_between_mass_centers)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(

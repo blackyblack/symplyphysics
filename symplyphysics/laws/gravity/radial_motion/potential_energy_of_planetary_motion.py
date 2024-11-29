@@ -9,7 +9,7 @@ planet's angular momentum.
 
 **Links:**
 
-#. `Physics LibreTexts, see derivation <https://phys.libretexts.org/Bookshelves/Classical_Mechanics/Classical_Mechanics_(Dourmashkin)/25%3A_Celestial_Mechanics/25.03%3A_Energy_and_Angular_Momentum_Constants_of_the_Motion>`__.
+#. Sivukhin, D.V. (1979). __Obshchiy kurs fiziki__ [General course of Physics], vol. 1, p. 315.
 """
 
 from sympy import Eq

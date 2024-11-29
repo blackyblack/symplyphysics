@@ -7,7 +7,7 @@ the period of rotation of any planet to the semi-major axis of its orbit.
 
 **Links:**
 
-#. `Physics LibreTexts, see formula 5.6.23 <https://phys.libretexts.org/Bookshelves/University_Physics/Physics_(Boundless)/5%3A_Uniform_Circular_Motion_and_Gravitation/5.6%3A_Keplers_Laws>`__.
+#. `Physics LibreTexts. Kepler's Third Law, Derivation of Kepler's Third Law (5.6.23) <https://phys.libretexts.org/Bookshelves/University_Physics/Physics_(Boundless)/5%3A_Uniform_Circular_Motion_and_Gravitation/5.6%3A_Keplers_Laws>`__.
 """
 
 from sympy import Eq, solve, pi, Symbol as SymSymbol
@@ -41,7 +41,7 @@ attracting_mass = clone_as_symbol(symbols.mass, positive=True)
 
 semimajor_axis = clone_as_symbol(symbols.semimajor_axis, positive=True)
 """
-:symbols:`semimajor_axis` of the planet's orbit. It is equal to the radius in case of
+:symbols:`semimajor_axis` of the planet's orbit. It is equal to the :symbols:`radius` in case of
 a round orbit.
 """
 

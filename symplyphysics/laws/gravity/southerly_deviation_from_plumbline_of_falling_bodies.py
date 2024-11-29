@@ -15,6 +15,10 @@ from plumbline in the easterly and southerly (equatorial) directions.
 **Conditions:**
 
 #. The vector of free fall acceleration is considered constant.
+
+**Links:**
+
+#. Sivukhin D.V. (1979), __Obshchiy kurs fiziki__ [General course of Physics], vol. 1, p. 355, (67.11).
 """
 
 from sympy import Eq, sin, pi
