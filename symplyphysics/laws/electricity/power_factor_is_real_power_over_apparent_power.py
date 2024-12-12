@@ -5,6 +5,10 @@ Power factor is real power over apparent power
 Power factor of an AC circuit is a dimensionless physical quantity expressing the circuit's
 efficiency. It is the ratio of real power to apparent power of the circuit.
 
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Power_factor#Power_triangle>`__.
+
 ..
     TODO Move law to circuits folder?
 """

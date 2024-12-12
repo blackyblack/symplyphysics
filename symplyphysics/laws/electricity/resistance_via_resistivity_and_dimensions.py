@@ -13,6 +13,10 @@ property of the material and does not depend on its geometry.
 #. The current flows uniformly.
 #. The conductor is made of a single material.
 #. The electric field and current density are parallel and constant everywhere.
+
+**Links:**
+
+#. `Wikipedia, first formula <https://en.wikipedia.org/wiki/Electrical_resistance_and_conductance#Relation_to_resistivity_and_conductivity>`__.
 """
 
 from sympy import (Eq, solve)

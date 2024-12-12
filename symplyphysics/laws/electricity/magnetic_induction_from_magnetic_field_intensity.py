@@ -12,6 +12,8 @@ from symplyphysics import (units, Quantity, Symbol, validate_input, validate_out
 ## mu - relative permeability of medium,
 ## H - magnetic field intensity.
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Magnetic_field#The_H-field>
+
 induction = Symbol("induction", units.magnetic_density)
 
 relative_permeability = Symbol("relative_permeability", dimensionless)

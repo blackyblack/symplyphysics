@@ -4,6 +4,10 @@ Energy density via permittivity and electric field
 
 Volumetric energy density of the electric field depends on the permittivity of the medium and
 on the strength of the electric field at that point.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Electric_field#Energy_in_the_electric_field>`__.
 """
 
 from sympy import (Eq, solve)

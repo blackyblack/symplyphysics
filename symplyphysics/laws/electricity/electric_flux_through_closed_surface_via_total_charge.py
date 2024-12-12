@@ -10,6 +10,10 @@ vacuum permittivity. The closed surface is also referred to as **Gaussian surfac
 
 #. :math:`S = \partial V`, i.e. surface :math:`S` encloses volume :math:`V`. In other words, the surface
    must be closed.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Gauss%27s_law#Equation_involving_the_E_field>`__.
 """
 
 from sympy import Eq

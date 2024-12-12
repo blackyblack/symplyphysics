@@ -6,6 +6,10 @@ The strength of the electric field at any point in space can be found by placing
 so called test charge in that point and measuring the electrostatic force applied to
 the test charge. The resulting electric field is the ratio of the force applied to
 the value of the test charge.
+
+**Links:**
+
+#. `Wikipedia, last formula in paragraph <https://en.wikipedia.org/wiki/Electric_field#Electrostatics>`__.
 """
 
 from sympy import Eq, solve

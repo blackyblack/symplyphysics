@@ -5,6 +5,10 @@ Power via current and resistance
 Electric power can be expressed using current flowing through a
 conductor and its resistance. Applied to AC circuits, the power in this law is the
 instantaneous power in the circuit.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Electric_power#Resistive_circuits>`__.
 """
 
 from sympy import (Eq, solve)

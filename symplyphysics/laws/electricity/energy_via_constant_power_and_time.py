@@ -8,8 +8,12 @@ When power is constant, energy can be expressed as a product of power and time.
 
 #. Power is constant, i.e. :math:`\frac{d P}{d t} = 0`.
 
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Power_(physics)#Average_power_and_instantaneous_power>`__.
+
 ..
-    TODO Move to another folder?
+    TODO Move to another folder? this law is not exclusive to electrodynamics
 """
 
 from sympy import Eq, dsolve

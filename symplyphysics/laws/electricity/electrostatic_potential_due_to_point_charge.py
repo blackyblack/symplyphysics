@@ -4,6 +4,10 @@ Electrostatic potential due to point charge
 
 Electrostatic potential of electric field due to a point charge is inversely proportional
 to the distance to the point charge. Also see :doc:`laws.electricity.electrostatic_potential_is_work_to_bring_from_reference_point_over_charge`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Electric_potential#Electric_potential_due_to_a_point_charge>`__.
 """
 
 from sympy import (Eq, solve, pi)

@@ -18,6 +18,8 @@ from symplyphysics import (
 ## U - voltage,
 ## U0 - corona discharge occurrence voltage.
 
+# TODO find link
+
 current = Symbol("current", units.current)
 
 gas_coefficient = Symbol("gas_coefficient", units.charge / (units.area * units.voltage))

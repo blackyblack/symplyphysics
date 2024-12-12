@@ -15,6 +15,10 @@ field.
 #. The plane must be flat for this formula to be applicable, and the current must
    only make one turn around the contour.
 
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Magnetic_moment#Amp%C3%A8rian_loop_model>`__.
+
 ..
     TODO rename file
 """
