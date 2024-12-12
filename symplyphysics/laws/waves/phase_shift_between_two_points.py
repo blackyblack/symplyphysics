@@ -7,7 +7,7 @@ of the distance between the points and the wavelength of the wave.
 
 **Links:**
 
-#. `BYJY's <https://byjus.com/physics/relation-between-phase-difference-and-path-difference/>`__.
+#. `BYJU's <https://byjus.com/physics/relation-between-phase-difference-and-path-difference/>`__.
 """
 
 from sympy import Eq, solve, pi
