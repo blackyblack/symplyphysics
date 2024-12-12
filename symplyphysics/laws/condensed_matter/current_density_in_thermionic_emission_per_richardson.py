@@ -9,7 +9,13 @@ the material. This formula for emission current density was proposed by Owen Wil
 **Notation:**
 
 #. :quantity_notation:`boltzmann_constant`.
+
+**Links:**
+
+#. `Wikipedia, first formula <https://en.wikipedia.org/wiki/Thermionic_emission#Richardson's_law>`__.
 """
+
+# TODO: add notation for richardson constant
 
 from sympy import (Eq, solve, exp)
 from symplyphysics import (

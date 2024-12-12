@@ -33,6 +33,8 @@ from symplyphysics.laws.quantum_mechanics.schrodinger import (
 ## - The potential energy is a function independent of time.
 ## - This law applies for 1-dimensional systems.
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Stationary_state>
+
 time_dependent_wave_function = Function("time_dependent_wave_function", 1 / sqrt(units.length))
 time_independent_wave_function = Function("time_independent_wave_function", 1 / sqrt(units.length))
 particle_energy = Symbol("particle_energy", units.energy, positive=True)

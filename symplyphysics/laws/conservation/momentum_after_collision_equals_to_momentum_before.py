@@ -1,5 +1,5 @@
 from sympy import (Eq, solve, dsolve)
-from symplyphysics import (units, Quantity, Symbol, Function, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, Function, validate_input,
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.conservation import momentum_of_colliding_objects_is_constant as constant_momentum
@@ -14,6 +14,11 @@ from symplyphysics.laws.conservation import momentum_of_colliding_objects_is_con
 ## P - summary momentum of system of objects,
 ## t1 - point of time, when interaction of objects in a system occured,
 ## t0 - initial time.
+
+# Conditions:
+## 1. The system is closed.
+
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Momentum#Conservation>
 
 time_before = Symbol("time_before", units.time)
 time_after = Symbol("time_after", units.time)
@@ -36,10 +41,6 @@ energy_after_eq = energy_after_eq.subs(constant_momentum.momentum(time_after), m
 energy_after_solved = solve([energy_after_eq, energy_before_eq], (momentum(time_after), "C1"),
     dict=True)[0][momentum(time_after)]
 assert expr_equals(energy_after_solved, law.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(momentum_before_=momentum)

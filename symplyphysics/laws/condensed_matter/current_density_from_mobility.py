@@ -24,6 +24,8 @@ from symplyphysics.laws.condensed_matter import drift_velocity_of_charge_carrier
 ## u2 - mobility of holes,
 ## E - electric intensity (physical field that surrounds electrically charged particles).
 
+# Links: last formula <https://en.wikipedia.org/wiki/Electron_mobility#Relation_to_current_density>
+
 density_current = Symbol("density_current", units.current / units.area)
 
 electrons_concentration = Symbol("electrons_concentration", 1 / units.volume)
@@ -32,7 +34,7 @@ electrons_mobility = Symbol("electrons_mobility", units.area / units.voltage / u
 holes_mobility = Symbol("holes_mobility", units.area / units.voltage / units.time)
 electric_intensity = Symbol("electric_intensity", units.voltage / units.length)
 
-charge = Quantity(1.6e-19 * units.coulomb)
+charge = Quantity(1.6e-19 * units.coulomb) # FIXME: use `quantity`
 
 law = Eq(
     density_current,

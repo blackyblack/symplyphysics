@@ -1,6 +1,6 @@
 from typing import Sequence
 from sympy import (Eq, Idx, solve)
-from symplyphysics import (units, Quantity, print_expression, validate_input, validate_output,
+from symplyphysics import (units, Quantity, validate_input, validate_output,
     symbols, SymbolIndexed, SumIndexed, global_index)
 
 # Description
@@ -15,14 +15,12 @@ from symplyphysics import (units, Quantity, print_expression, validate_input, va
 ##   and they are always inside;
 ## - Mass is not transformed to energy, for example due to annihilation.
 
+# Links: Engineering LibreTexts, Composition on a Mass Basis <https://eng.libretexts.org/Bookshelves/Introductory_Engineering/Basic_Engineering_Science_-_A_Systems_Accounting_and_Modeling_Approach_(Richards)/03%3A_Conservation_of_Mass/3.04%3A_Mixture_Composition>
+
 mass_of_mixture = symbols.mass
 # TODO: clone from symbols.mass
 mass_of_component = SymbolIndexed("mass_of_component", units.mass)
 law = Eq(mass_of_mixture, SumIndexed(mass_of_component[global_index], global_index))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(masses_of_components_=mass_of_component)

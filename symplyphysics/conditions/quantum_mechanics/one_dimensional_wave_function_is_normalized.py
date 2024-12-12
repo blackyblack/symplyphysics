@@ -11,6 +11,9 @@ from symplyphysics import (
 ## meaning of this is that the particle, whose distribution in space is described by the
 ## wave function, must exists _somewhere_ in space.
 
+# Links
+## Physics LibreTexts, formula 3.6.3 <https://chem.libretexts.org/Courses/Pacific_Union_College/Quantum_Chemistry/03%3A_The_Schrodinger_Equation_and_a_Particle_in_a_Box/3.06%3A_Wavefunctions_Must_Be_Normalized>
+
 wave_function = Function("wave_function", 1 / sqrt(units.length))
 position = Symbol("position", units.length)
 time = Symbol("time", units.time)

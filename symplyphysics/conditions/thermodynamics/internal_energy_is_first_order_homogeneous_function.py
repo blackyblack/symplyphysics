@@ -20,6 +20,9 @@ from symplyphysics.laws.thermodynamics import internal_energy_differential as in
 ## N - particle count
 ## k - any (real) number
 
+# Links
+## Wikipedia, first equation <https://en.wikipedia.org/wiki/Thermodynamic_potential#Euler_relations>
+
 internal_energy = Function("internal_energy", units.energy)
 entropy = Symbol("entropy", units.energy / units.temperature)
 volume = Symbol("volume", units.volume)

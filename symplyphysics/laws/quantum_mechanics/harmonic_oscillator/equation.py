@@ -20,6 +20,8 @@ from symplyphysics import (
 ## w - angular frequency of oscillations
 ## E - energy eigenvalue of the equation
 
+# Links: Physics LibreTexts, formula 7.6.4 <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/University_Physics_III_-_Optics_and_Modern_Physics_(OpenStax)/07%3A_Quantum_Mechanics/7.06%3A_The_Quantum_Harmonic_Oscillator>
+
 wave_function = Function("wave_function", 1 / sqrt(units.length))
 particle_mass = symbols.mass
 particle_energy = Symbol("particle_energy", units.energy)

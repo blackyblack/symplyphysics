@@ -30,6 +30,8 @@ from symplyphysics import (
 ## hbar - reduced Planck constant
 ## H_n - n-th (physicists') Hermite polynomial
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Quantum_harmonic_oscillator#Hamiltonian_and_energy_eigenstates>
+
 wave_function = Symbol("wave_function", 1 / sqrt(units.length))
 mode_number = Symbol("mode_number", dimensionless, integer=True, nonnegative=True)
 oscillator_mass = symbols.mass

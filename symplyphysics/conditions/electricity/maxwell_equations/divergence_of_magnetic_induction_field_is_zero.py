@@ -10,6 +10,8 @@ from symplyphysics.core.fields.vector_field import VectorField
 ## B - magnetic induction (vector field),
 ## div - divergence (the sum of partial derivatives in coordinates).
 
+# Links:
+## Wikipedia, second equation <https://en.wikipedia.org/wiki/Maxwell%27s_equations#>
 
 def magnetic_field_divergence_condition(magnetic_induction_: VectorField) -> bool:
     divergence_magnetic_induction = divergence_operator(magnetic_induction_)

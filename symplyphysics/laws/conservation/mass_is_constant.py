@@ -1,5 +1,5 @@
 from sympy import (Eq, dsolve, Derivative)
-from symplyphysics import (units, Quantity, Symbol, print_expression, Function, validate_input,
+from symplyphysics import (units, Quantity, Symbol, Function, validate_input,
     validate_output)
 
 # Description
@@ -20,14 +20,12 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, Function, 
 ## SymPy does not have a proper way to represent constant mass. We use it's derivative over time instead. Derivative
 ## of the constant value is zero.
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Conservation_of_mass>
+
 time = Symbol("time", units.time)
 mass_function = Function("mass_function", units.mass)
 
 law = Eq(Derivative(mass_function(time), time), 0)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(mass_before_=mass_function)

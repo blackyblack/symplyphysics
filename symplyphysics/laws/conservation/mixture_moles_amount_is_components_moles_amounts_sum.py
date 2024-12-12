@@ -1,6 +1,6 @@
 from typing import Sequence
 from sympy import (Eq, Idx, solve)
-from symplyphysics import (units, Quantity, print_expression, Symbol, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, SymbolIndexed, SumIndexed, global_index)
 
 # Description
@@ -15,13 +15,11 @@ from symplyphysics import (units, Quantity, print_expression, Symbol, validate_i
 ##   and they are always inside;
 ## - Mass is not transformed to energy, for example due to annihilation.
 
+# Links: Engineering LibreTexts, Composition on a Molar Basis <https://eng.libretexts.org/Bookshelves/Introductory_Engineering/Basic_Engineering_Science_-_A_Systems_Accounting_and_Modeling_Approach_(Richards)/03%3A_Conservation_of_Mass/3.04%3A_Mixture_Composition>
+
 moles_count_of_mixture = Symbol("moles_count_of_mixture", units.amount_of_substance)
 moles_count_of_component = SymbolIndexed("moles_count_of_component", units.amount_of_substance)
 law = Eq(moles_count_of_mixture, SumIndexed(moles_count_of_component[global_index], global_index))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(moles_count_of_components_=moles_count_of_component)

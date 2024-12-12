@@ -1,5 +1,5 @@
 from sympy import (Eq, dsolve, Derivative)
-from symplyphysics import (units, Quantity, Symbol, print_expression, Function, validate_input,
+from symplyphysics import (units, Quantity, Symbol, Function, validate_input,
     validate_output)
 
 # Description
@@ -18,14 +18,12 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, Function, 
 ## SymPy does not have a proper way to represent constant energy. We use it's derivative over time instead. Derivative
 ## of the constant value is zero.
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Conservation_of_energy>
+
 time = Symbol("time", units.time)
 mechanical_energy = Function("mechanical_energy", units.energy)
 
 law = Eq(Derivative(mechanical_energy(time), time), 0)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(mechanical_energy_before_=mechanical_energy)

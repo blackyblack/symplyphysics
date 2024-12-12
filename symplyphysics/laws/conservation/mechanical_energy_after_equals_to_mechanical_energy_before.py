@@ -1,5 +1,5 @@
 from sympy import (Eq, solve, dsolve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, Function, validate_input,
+from symplyphysics import (units, Quantity, Symbol, Function, validate_input,
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.conservation import mechanical_energy_is_constant
@@ -14,6 +14,8 @@ from symplyphysics.laws.conservation import mechanical_energy_is_constant
 ## E - summary mechanical energy of a system,
 ## t1 - point of time, when interaction of a system with conservative forces occured,
 ## t0 - initial time.
+
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Conservation_of_energy>
 
 time_before = Symbol("time_before", units.time)
 time_after = Symbol("time_after", units.time)
@@ -40,10 +42,6 @@ energy_after_solved = solve([energy_after_eq, energy_before_eq],
     (mechanical_energy(time_after), "C1"),
     dict=True)[0][mechanical_energy(time_after)]
 assert expr_equals(energy_after_solved, law.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(mechanical_energy_before_=mechanical_energy)

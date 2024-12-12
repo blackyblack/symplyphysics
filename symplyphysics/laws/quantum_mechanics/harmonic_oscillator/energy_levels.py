@@ -26,6 +26,8 @@ from symplyphysics.laws.quantum_mechanics.harmonic_oscillator import equation, w
 ## - This means that the energy of a quantum oscillator cannot be zero and the lowest it can be
 ##   is the zero-point energy `E_0 = hbar * omega / 2`.
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Quantum_harmonic_oscillator#Hamiltonian_and_energy_eigenstates>
+
 energy_level = Symbol("energy_level", units.energy)
 mode_number = Symbol("mode_number", dimensionless, integer=True, nonnegative=True)
 angular_frequency = Symbol("angular_frequency", angle_type / units.time)
