@@ -1,5 +1,5 @@
 from sympy import Eq, solve
-from symplyphysics import Symbol, units, print_expression, Quantity, \
+from symplyphysics import Symbol, units, Quantity, \
     validate_input, validate_output
 
 # Description
@@ -11,14 +11,12 @@ from symplyphysics import Symbol, units, print_expression, Quantity, \
 ## F - focus distance of lens
 ## D - optical power of lens
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Optical_power>
+
 focus_distance = Symbol("focus_distance", units.length)
 optical_power = Symbol("optical_power", 1 / units.length)
 
 law = Eq(optical_power, 1 / focus_distance)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(focus_distance_=focus_distance)

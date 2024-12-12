@@ -1,7 +1,7 @@
 from sympy import Eq, solve, sqrt
 from sympy.physics.units import speed_of_light
 
-from symplyphysics import (Quantity, Symbol, print_expression, units, validate_input,
+from symplyphysics import (Quantity, Symbol, units, validate_input,
     validate_output)
 
 # Description
@@ -15,16 +15,14 @@ from symplyphysics import (Quantity, Symbol, print_expression, units, validate_i
 # Conditions
 ## Non-zero rest mass
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Mass_in_special_relativity#Relativistic_mass>
+
 # This is equivalent of symbols.mass
 rest_mass = Symbol("rest_mass", units.mass)
 velocity = Symbol("velocity", units.velocity)
 relativistic_mass = Symbol("relativistic_mass", units.mass)
 
 law = Eq(relativistic_mass, rest_mass / sqrt(1 - velocity**2 / speed_of_light**2))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(rest_mass_=rest_mass, velocity_=velocity)

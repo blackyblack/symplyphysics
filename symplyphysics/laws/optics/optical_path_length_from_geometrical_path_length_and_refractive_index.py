@@ -12,6 +12,10 @@ between any two points.
 **Conditions:**
 
 #. The environment must be homogeneous.
+
+**Links:**
+
+#. `Wikipedia, first formula <https://en.wikipedia.org/wiki/Optical_path_length#>`__.
 """
 
 from sympy import (Eq, solve)

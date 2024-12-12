@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     dimensionless,
@@ -28,6 +27,8 @@ from symplyphysics.laws.conservation import abbe_invariant_of_two_optical_enviro
 ##   and the surface of the lens with the radius lying on this optical axis;
 ## - proofs: https://studme.org/341451/matematika_himiya_fizik/prelomlenie_otrazhenie_sveta_sfericheskoy_poverhnosti.
 
+# TODO: find English link
+
 distance_to_object = Symbol("distance_to_object", units.length)
 distance_to_image = Symbol("distance_to_image", units.length)
 curvature_radius_lens = Symbol("curvature_radius_lens", units.length)
@@ -38,6 +39,7 @@ law = Eq((refraction_index_environment /
     (-distance_to_object)) + (refraction_index_lens / distance_to_image),
     (refraction_index_lens - refraction_index_environment) / curvature_radius_lens)
 
+# TODO: prefix variables used in proof with underscore
 # From Abbe's invariants:
 
 invariant_conservation_eq = abbe_conservation_law.law.subs({
@@ -52,10 +54,6 @@ radius_lens_from_law = solve(law, curvature_radius_lens, dict=True)[0][curvature
 radius_lens_from_invariants = solve(invariant_conservation_eq, curvature_radius_lens,
     dict=True)[0][curvature_radius_lens]
 assert expr_equals(radius_lens_from_law, radius_lens_from_invariants)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(distance_to_object_=distance_to_object,

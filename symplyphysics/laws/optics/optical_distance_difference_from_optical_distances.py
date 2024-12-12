@@ -1,7 +1,6 @@
 from sympy import Eq, solve
 
-from symplyphysics import Symbol, units, print_expression, Quantity, \
-    validate_input, validate_output
+from symplyphysics import Symbol, units, Quantity, validate_input, validate_output
 
 # Description
 ## The optical difference in the course of two rays is the difference
@@ -11,16 +10,15 @@ from symplyphysics import Symbol, units, print_expression, Quantity, \
 # Where:
 # L1 - optical distance for 1st wave
 # L2 - optical distance for 2nd wave
+# TODO: elaborate on optical distance
+
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Optical_path_length#Optical_path_difference>
 
 optical_distance1 = Symbol("optical_distance1", units.length)
 optical_distance2 = Symbol("optical_distance2", units.length)
 optical_difference_distance = Symbol("optical_difference_distance", units.length)
 
 law = Eq(optical_difference_distance, optical_distance2 - optical_distance1)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(optical_distance1_=optical_distance1, optical_distance2_=optical_distance2)

@@ -25,6 +25,8 @@ from symplyphysics.definitions import lorentz_factor as lorentz_factor_def
 ## gamma = 1 / sqrt(1 - dot(v, v)**2 / c**2) - Lorentz factor, where `dot` is dot product and `c` is speed of light
 ## t - time
 
+# Links: Wikipedia, end of paragraph <https://en.wikipedia.org/wiki/Relativistic_angular_momentum#Dynamic_mass_moment>
+
 rest_mass = Symbol("rest_mass", units.mass)
 time = Symbol("time", units.time)
 

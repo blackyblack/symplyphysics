@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     dimensionless,
@@ -22,6 +21,8 @@ from symplyphysics import (
 ## k is the polarizer's transparency coefficient
 ## phi is the angle between the initial polarization direction and the axis of the polarizer
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Polarizer#Malus'_law_and_other_properties>
+
 irradiance_final = Symbol("irradiance_final", units.power / units.area)
 irradiance_initial = Symbol("irradiance_initial", units.power / units.area)
 transparency_coefficient = Symbol("transparency_coefficient", dimensionless)
@@ -31,10 +32,6 @@ law = Eq(
     irradiance_final,
     irradiance_initial * transparency_coefficient * cos(polarization_angle)**2,
 )
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(

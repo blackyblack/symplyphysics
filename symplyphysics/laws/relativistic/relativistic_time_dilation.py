@@ -1,7 +1,7 @@
 from sympy import Eq, solve, sqrt
 from sympy.physics.units import speed_of_light
 
-from symplyphysics import (Quantity, Symbol, print_expression, units, validate_input,
+from symplyphysics import (Quantity, Symbol, units, validate_input,
     validate_output)
 
 # Description
@@ -15,15 +15,13 @@ from symplyphysics import (Quantity, Symbol, print_expression, units, validate_i
 # v is velocity,
 # c is speed of light.
 
+# Links: formula in box <https://en.wikipedia.org/wiki/Time_dilation#Simple_inference>
+
 moving_observer_time = Symbol("moving_observer_time", units.time)
 velocity = Symbol("velocity", units.velocity)
 relativistic_time = Symbol("relativistic_time", units.time)
 
 law = Eq(relativistic_time, moving_observer_time / sqrt(1 - velocity**2 / speed_of_light**2))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(moving_observer_time_=moving_observer_time, velocity_=velocity)

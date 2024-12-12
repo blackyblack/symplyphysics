@@ -14,15 +14,13 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 
 # Condition: The two waves must be coherent
 
+# Links: Physics LibreTexts <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/University_Physics_III_-_Optics_and_Modern_Physics_(OpenStax)/03%3A_Interference/3.02%3A_Young%27s_Double-Slit_Interference>
+
 travel_difference = Symbol("travel_difference", units.length)
 number_minimum = Symbol("number_minimum", dimensionless)
 wave_length = Symbol("wave_length", units.length)
 
 law = Eq(travel_difference, (2 * number_minimum + 1) * wave_length / 2)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(wave_length_=wave_length, number_minimum_=number_minimum)

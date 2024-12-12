@@ -1,5 +1,5 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output)
 
 # Description
@@ -15,15 +15,13 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 # Conditions
 ## Lens is thin - it's thickness is much less than F, f and d.
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Lens#Lens_equation>
+
 focus_distance = Symbol("focus_distance", units.length)
 distance_to_object = Symbol("distance_to_object", units.length)
 distance_to_image = Symbol("distance_to_image", units.length)
 
 law = Eq((1 / focus_distance), (1 / distance_to_object) + (1 / distance_to_image))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(object_distance_=distance_to_object, image_distance_=distance_to_image)

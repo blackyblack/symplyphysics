@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
 from sympy.physics.units import speed_of_light
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, dimensionless)
 
 # Description
@@ -14,16 +14,14 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## R - surface reflection coefficient,
 ## c - speed of light in vacuum.
 
+# Links: BYJY's, "Radiation pressure formula" <https://byjus.com/physics/radiation-pressure/>
+
 pressure = Symbol("pressure", units.pressure)
 
 intensity = Symbol("intensity", units.power / units.area)
 reflection_coefficient = Symbol("reflection_coefficient", dimensionless)
 
 law = Eq(pressure, intensity * (1 + reflection_coefficient) / speed_of_light)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(intensity_=intensity, reflection_coefficient_=reflection_coefficient)

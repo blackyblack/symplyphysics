@@ -26,6 +26,8 @@ from symplyphysics import (
 # Note
 ## - To find rest mass `m0`, use the [scalar law](../relativistic_momentum.py).
 
+# Links: Wikipedia, derivable from here <https://en.wikipedia.org/wiki/Mass_in_special_relativity#Relativistic_mass>
+
 rest_mass = Symbol("rest_mass", units.mass)
 
 

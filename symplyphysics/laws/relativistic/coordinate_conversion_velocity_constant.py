@@ -20,6 +20,8 @@ from symplyphysics import (
 ## v - velocity at which the second frame of reference moves relative to the first,
 ## t - time in the first frame of reference.
 
+# Links: Wikipedia, second formula in box <https://en.wikipedia.org/wiki/Lorentz_transformation#Coordinate_transformation>
+
 coordinate_second_frame = Symbol("coordinate_second_frame", units.length)
 
 coordinate_first_frame = Symbol("coordinate_first_frame", units.length)

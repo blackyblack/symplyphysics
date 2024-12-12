@@ -29,6 +29,8 @@ from symplyphysics import (
 ## - If `Δs**2 < 0`, the spacetime interval is said to be _spacelike_. Events with a spacelike separation are causally disconnected,
 ##   i.e. one can find an inertial reference frame in which both events happen at the same time in different positions.
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Spacetime#Spacetime_interval>
+
 spacetime_interval = Symbol("spacetime_interval", units.length)
 temporal_distance = Symbol("temporal_distance", units.time)
 spatial_distance = Symbol("spatial_distance", units.length)

@@ -36,6 +36,8 @@ from symplyphysics.definitions import lorentz_factor as lorentz_factor_law
 # Conditions
 ## - This law applies to special relativity.
 
+# Links: Wikipedia, see paragraph <https://en.wikipedia.org/wiki/Acceleration_(special_relativity)#Acceleration_and_force>
+
 rest_mass = Symbol("rest_mass", units.mass)
 
 
