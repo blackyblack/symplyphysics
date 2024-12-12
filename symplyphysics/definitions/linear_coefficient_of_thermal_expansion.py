@@ -8,6 +8,10 @@ at constant pressure.
 **Conditions:**
 
 #. Pressure must be constant during the expansion process.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Thermal_expansion#Length>`__.
 """
 
 from sympy import Eq, Derivative

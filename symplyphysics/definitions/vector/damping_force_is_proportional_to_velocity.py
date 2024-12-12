@@ -5,6 +5,10 @@ Damping force is proportional to velocity
 Damping force is an external (relative to an object) force that drains energy from the object,
 reducing the motion of the object. It is a model used, for example, to describe the motion
 of an oscillator.
+
+**Links:**
+
+#. `Physics LibreTexts, formula 8.3.1 <https://phys.libretexts.org/Courses/University_of_California_Davis/UCD%3A_Physics_9HA__Classical_Mechanics/8%3A_Small_Oscillations/8.3%3A_Damping_and_Resonance>`__.
 """
 
 from symplyphysics import (

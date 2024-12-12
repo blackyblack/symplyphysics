@@ -4,6 +4,10 @@ Power is energy derivative
 
 Power is the amount of energy transferred or converted per unit time. Equally, it is the
 rate at which work is done.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Power_(physics)#Definition>`__.
 """
 
 from sympy import Eq, Derivative

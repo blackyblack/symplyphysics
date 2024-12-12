@@ -12,6 +12,10 @@ inter-particle spacing. Otherwise, quantum effects must be taken into account.
 
 #. :quantity_notation:`hbar`.
 #. :quantity_notation:`boltzmann_constant`.
+
+**Links:**
+
+#. `Wikipedia, see last formula in paragraph <https://en.wikipedia.org/wiki/Thermal_de_Broglie_wavelength#Massive_particles>`__.
 """
 
 from sympy import Eq, pi, sqrt

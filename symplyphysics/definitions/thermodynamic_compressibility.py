@@ -12,6 +12,10 @@ relative volume change of a fluid or solid as a response to pressure or mean str
    be taken at either constant entropy or constant temperature.
 #. For solids the difference between isentropic and isothermal compressibility coefficients
    is usually negligible.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Compressibility#>`__.
 """
 
 from sympy import Eq, Derivative

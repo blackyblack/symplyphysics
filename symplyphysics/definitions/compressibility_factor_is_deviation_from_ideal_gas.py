@@ -20,6 +20,10 @@ the temperature or the larger the pressure.
    molecules, making the molar volume of the real gas greater than that of ideal gas, in other words the 
    particles have a larger extended volume, leading to :math:`Z > 1`.
 #. At lower pressures, molecules are free to move and attractive forces dominate, leading to :math:`Z < 1`.
+
+**Links:**
+
+#. `Wikipedia, second formula <https://en.wikipedia.org/wiki/Compressibility_factor#Definition_and_physical_significance>`__.
 """
 
 from sympy import Eq

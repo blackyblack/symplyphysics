@@ -5,6 +5,10 @@ Thermal resistance to conduction
 Thermal resistance to conduction is a physical quantity that was introduced in the engineering
 practice for insulators: greater values of thermal resistance mean better insulation properties of
 a material of given thickness.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Thermal_conductivity_and_resistivity#Other_quantities>`__.
 """
 
 from sympy import Eq

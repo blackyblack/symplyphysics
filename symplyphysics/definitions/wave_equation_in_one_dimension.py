@@ -10,6 +10,10 @@ or electromagnetic waves.
 
 #. This equation is called one-dimensional because the displacement function depends
    only on one spatial dimension.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Wave_equation#Wave_equation_in_one_space_dimension>`__.
 """
 
 from sympy import Derivative, Eq, cos

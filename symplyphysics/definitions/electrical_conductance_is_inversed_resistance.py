@@ -4,6 +4,10 @@ Electrical conductance is inverse resistance
 
 *Conductivity* is a physical quantity describing the ability of a medium to conduct electrical current.
 It is defined as the inverse of resistance.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Electrical_resistance_and_conductance#>`__.
 """
 
 from sympy import (Eq, solve)

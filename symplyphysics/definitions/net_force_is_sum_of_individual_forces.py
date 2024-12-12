@@ -7,6 +7,12 @@ The net force is the arithmetic sum of forces.
 **Conditions:**
 
 #. All force vectors are collinear to each other.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Force#Combining_forces>`__.
+
+#. `Physics LibreTexts, formula 2.2.3 <https://phys.libretexts.org/Courses/University_of_California_Davis/UCD%3A_Physics_9HA__Classical_Mechanics/2%3A_Force/2.2%3A_Effects_of_Force>`__.
 """
 
 from typing import Sequence

@@ -9,6 +9,10 @@ change for a body while it is moving.
 **Notation:**
 
 #. :quantity_notation:`speed_of_light`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Lorentz_factor#Definition>`__.
 """
 
 from sympy import Eq, sqrt

@@ -10,6 +10,10 @@ Displacement is not only limited to physical motion, but should be interpreted i
 **Conditions:**
 
 #. There is no damping (i.e. friction) in the system.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Harmonic_oscillator#Simple_harmonic_oscillator>`__.
 """
 
 from sympy import Derivative, Eq, cos, solve, symbols as sympy_symbols, Function as SymFunction

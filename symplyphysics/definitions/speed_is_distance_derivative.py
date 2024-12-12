@@ -3,6 +3,10 @@ Speed is distance derivative
 ============================
 
 Speed is a physical quantity that describes the rate of change in the body's position.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Velocity#Instantaneous_velocity>`__.
 """
 
 from sympy import Eq, Derivative
