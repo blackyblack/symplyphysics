@@ -29,6 +29,8 @@ from symplyphysics.core.expr_comparisons import expr_equals
 ## k - angular wavevector of wave
 ## |k| - [angular wavenumber of wave](../../../definitions/angular_wavenumber_is_inverse_wavelength.py)
 
+# Links: Wikipedia, derivable from here <https://en.wikipedia.org/wiki/Phase_velocity>
+
 angular_frequency = Symbol("angular_frequency", angle_type / units.time, positive=True)
 
 

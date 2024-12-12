@@ -19,6 +19,10 @@ they are exactly out of phase and their interference is *fully destructive*.
 
 #. The waves are traveling in the same (or similar) directions.
 #. They have the same amplitude, wavenumber and frequency.
+
+**Links:**
+
+#. `Physics LibreTexts <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/Book%3A_University_Physics_I_-_Mechanics_Sound_Oscillations_and_Waves_(OpenStax)/16%3A_Waves/16.06%3A_Interference_of_Waves>`__.
 """
 
 from sympy import Eq, sin, cos

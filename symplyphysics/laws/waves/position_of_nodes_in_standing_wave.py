@@ -4,6 +4,10 @@ Position of nodes in standing wave
 
 In a standing wave, the locations of zero amplitude are called nodes. These locations, however,
 are not arbitrary and are integer multiples of half the wavelength of the standing wave.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Standing_wave#Standing_wave_on_an_infinite_length_string>`__.
 """
 
 from sympy import Eq

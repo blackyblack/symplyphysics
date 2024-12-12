@@ -12,6 +12,10 @@ phenomenon.
 **Conditions:**
 
 #. :math:`M \ge 1`, i.e. the source speed exceeds the speed of sound in the medium.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Mach_wave#Mach_angle>`__.
 """
 
 from sympy import Eq, sin, solve

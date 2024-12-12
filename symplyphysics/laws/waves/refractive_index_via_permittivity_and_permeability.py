@@ -4,6 +4,13 @@ Refractive index via permittivity and permeability
 
 Refractive index can be calculated from the relative permittivity and permeability
 of the medium.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Refractive_index#Relative_permittivity_and_permeability>`__.
+
+..
+    TODO move to `electrodynamics` or `optics`?
 """
 
 from sympy import Eq, solve, sqrt

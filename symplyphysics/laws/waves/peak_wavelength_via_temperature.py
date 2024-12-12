@@ -4,6 +4,10 @@ Peak wavelength via temperature
 
 The wavelength of a blackbody's radiation peak is inversely proportional to its
 temperature. This law is known as the *Wien's displacement law*.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Group_velocity#Definition_and_interpretation>`__.
 """
 
 from sympy import Eq, solve

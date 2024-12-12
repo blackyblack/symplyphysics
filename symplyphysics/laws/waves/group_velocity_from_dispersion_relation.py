@@ -6,6 +6,10 @@ Waves can form a group, called wave packets. The speed with which a wave packet 
 is called group velocity. In other words, it is the speed with which the overall envelope
 shape of the wave's amplitudes — called envelope of modulation of the wave — propagates
 through space.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Group_velocity#Definition_and_interpretation>`__.
 """
 
 from sympy import Eq, Derivative

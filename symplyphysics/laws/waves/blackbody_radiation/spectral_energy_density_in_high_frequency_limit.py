@@ -16,6 +16,10 @@ thermal emission, but fails to do that for long-wavelength (i.e. low-frequency) 
 
 #. The black body is isolated from the environment.
 #. :math:`h \nu \gg k_\text{B} T`, i.e. photon energy is much greater than thermal energy.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Wien_approximation>`__.
 """
 
 from sympy import Eq, exp, pi, Symbol as SymSymbol, solve, S

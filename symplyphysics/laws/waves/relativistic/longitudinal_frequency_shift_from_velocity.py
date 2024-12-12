@@ -18,6 +18,10 @@ calculation of the Doppler effect.
 #. Wave speed is close to speed of light. It means this law is only applicable to
    electromagnetic waves.
 #. Motion is in 1D space.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Relativistic_Doppler_effect#Relativistic_longitudinal_Doppler_effect>`__.
 """
 
 from sympy import Eq, pi, solve, sqrt, simplify

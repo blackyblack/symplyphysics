@@ -19,6 +19,10 @@ between the change in light's frequency and the change in the gravitational pote
 
 #. :math:`d \varphi = - \left( \vec g, d \vec r \right)` where :math:`\left( \vec a_1, \vec a_2 \right)` is
    the dot product between :math:`\vec a_1` and :math:`\vec a_2`.
+
+**Links:**
+
+#. Formula 72.4 on p. 378 of "General Course of Physics" (Obschiy kurs fiziki), vol. 1 by Sivukhin D.V. (1979).
 """
 
 from sympy import Eq, solve

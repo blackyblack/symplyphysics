@@ -18,6 +18,9 @@ known as the *ultraviolet catastrophe*.
 #. The black body is isolated from the environment.
 #. :math:`h \nu \ll k_\text{B} T`, i.e. photon energy is much smaller than thermal energy.
 
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Rayleigh%E2%80%93Jeans_law>`__.
 """
 
 from sympy import Eq, pi, Symbol as SymSymbol, solve

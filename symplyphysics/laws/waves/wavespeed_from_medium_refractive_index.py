@@ -7,6 +7,10 @@ Speed of electromagnetic wave propagation depends on the refractive index of the
 **Notation:**
 
 #. :quantity_notation:`speed_of_light`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Phase_velocity#Refractive_index>`__.
 """
 
 from sympy import Eq, solve

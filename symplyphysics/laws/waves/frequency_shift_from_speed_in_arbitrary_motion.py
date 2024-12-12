@@ -12,6 +12,9 @@ Also see :doc:`laws.waves.frequency_shift_from_speed_in_collinear_motion`.
 #. The source and observer speeds are less or equal to the wave speed. Otherwise emitted
    waves are left behind the source or never reach the observer.
 #. The speeds are much less than the speed of light, i.e. this law is non-relativistic.
+
+..
+    TODO find link to law with both angles
 """
 
 from sympy import Eq, cos, solve

@@ -14,6 +14,13 @@ The theory predicts that the highest kinetic energy of emitted electrons is equa
 to the difference between the absorbed photon energy and the work function of the
 surface, which is the minimum energy required to remove an electron from the surface
 of the material.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Photoelectric_effect#Theoretical_explanation>`__.
+
+..
+    TODO move to `quantum_mechanics`?
 """
 
 from sympy import Eq, solve

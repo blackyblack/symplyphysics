@@ -8,6 +8,10 @@ permeability of the medium.
 **Notation:**
 
 #. :quantity_notation:`speed_of_light`.
+
+**Links:**
+
+#. `Wikipedia, derivable from here <https://en.wikipedia.org/wiki/Phase_velocity#Refractive_index>`__.
 """
 
 from sympy import (Eq, solve, sqrt)
