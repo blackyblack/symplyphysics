@@ -16,6 +16,10 @@ from symplyphysics import (
 ## g - the cross-sectional area of the interaction of particles,
 ## r - the distance of the greatest convergence of two colliding particles.
 
+# Links: Wikipedia, second formula <https://en.wikipedia.org/wiki/Cross_section_(physics)#Collision_among_gas_particles>
+
+# FIXME: shouldn't it be `(2*r)^2` as per the formula in the link?
+
 cross_sectional_area_of_interaction = Symbol("cross_sectional_area_of_interaction", units.area)
 
 distance_of_convergence_of_two_particles = Symbol("distance_of_convergence_of_two_particles",

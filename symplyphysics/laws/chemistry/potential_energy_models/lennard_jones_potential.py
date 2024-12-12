@@ -7,6 +7,10 @@ attractive (van der Waals) interactions, and it describes electronically neutral
 It is a simple yet realistic model to describe intermolecular interactions: two particles repel each
 other at a very close distance, attract each other at moderate distance, and do not interact at infinite
 distance.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Lennard-Jones_potential#Overview>`__.
 """
 
 from sympy import Eq

@@ -17,6 +17,9 @@ from symplyphysics.core.symbols.probability import Probability
 ## U - voltage between electrodes,
 ## We - electron energy.
 
+# Links: possible similar formula here <https://www.comsol.com/blogs/electron-energy-distribution-function>
+# TODO: find a more suitable link
+
 value_of_distribution_function = Symbol("value_of_distribution_function", dimensionless)
 
 voltage_between_electrodes = Symbol("voltage_between_electrodes", units.voltage)

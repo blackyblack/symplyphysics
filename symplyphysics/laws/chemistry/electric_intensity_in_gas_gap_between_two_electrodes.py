@@ -21,6 +21,8 @@ from symplyphysics import (
 ## - Emittivity of the emitter is unlimited (emission of charged particles is much greater than current between electrodes)
 ## - Gaseous medium between electrodes
 
+# TODO: find link
+
 electric_intensity = Symbol("electric_intensity", units.voltage / units.length)
 
 coordinate = Symbol("coordinate", units.length)

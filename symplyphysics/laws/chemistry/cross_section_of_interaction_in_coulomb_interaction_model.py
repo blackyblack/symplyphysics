@@ -20,6 +20,10 @@ from symplyphysics import (
 ## e0 - electric constant,
 ## Ui - the ionization energy of atoms, expressed in volts.
 
+# TODO: find link
+
+# TODO: move to `magnetron` folder?
+
 cross_sectional_area_of_interaction = Symbol("cross_sectional_area_of_interaction", units.area)
 
 ionization_energy = Symbol("ionization_energy", units.voltage)

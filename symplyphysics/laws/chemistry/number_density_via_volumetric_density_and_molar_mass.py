@@ -9,6 +9,10 @@ amount of substance.
 **Notation:**
 
 #. :quantity_notation:`avogadro_constant`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Number_density#Mass_density>`__.
 """
 
 from sympy import (Eq, solve)

@@ -21,6 +21,8 @@ from symplyphysics import (units, Quantity, Symbol, validate_input, validate_out
 ## Uf - floating plasma potential,
 ## U - potential at the location of the probe.
 
+# TODO: find link
+
 current = Symbol("current", units.current)
 
 area_probe_surface = Symbol("area_probe_surface", units.area)

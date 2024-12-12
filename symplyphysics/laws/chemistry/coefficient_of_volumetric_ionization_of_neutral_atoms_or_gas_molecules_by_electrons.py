@@ -18,6 +18,11 @@ from symplyphysics import (
 ## B - the second constant of gas,
 ## E - electric intensity.
 
+#. Links: formula 1.12 <https://studfile.net/preview/3079348/page:3/>
+# TODO: find English link
+
+# TODO: move to `ionization` folder?
+
 coefficient_of_volumetric_ionization = Symbol("coefficient_of_volumetric_ionization",
     1 / units.length)
 

@@ -20,6 +20,10 @@ from symplyphysics.quantities import bohr_radius, hydrogen_ionization_energy
 ## k - boltzmann constant,
 ## q - elementary charge.
 
+# TODO: find link
+
+# TODO: move to `ionization` folder?
+
 cross_sectional_area_of_interaction = Symbol("cross_sectional_area_of_interaction", units.area)
 
 ionization_energy = Symbol("ionization_energy", units.energy)

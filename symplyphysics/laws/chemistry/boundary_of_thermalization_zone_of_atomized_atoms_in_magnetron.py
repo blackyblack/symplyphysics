@@ -22,6 +22,10 @@ from symplyphysics import (
 ## N - the number of collisions of traveling atom with gas atoms (this is a statistical quantity, it can be integer, but it can be fractional as well),
 ## l - free path length of traveling atom.
 
+# TODO: find link
+
+# TODO: move to `magnetron` folder?
+
 boundary_of_thermalization_zone = Symbol("boundary_of_thermalization_zone", units.length)
 
 number_of_collisions_of_atom = Symbol("number_of_collisions_of_atom", dimensionless)

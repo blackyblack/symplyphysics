@@ -1,6 +1,6 @@
 from sympy.physics.units import elementary_charge
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output)
 
 # Description
@@ -12,16 +12,14 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## e - charge of electron,
 ## r - radius of the Bohr orbit of electron.
 
+# Links: derivable from first formula and formula for kinetic energy <https://en.wikipedia.org/wiki/Classical_electron_radius#>
+
 energy_of_electron = Symbol("energy_of_electron", units.energy)
 
 radius_of_electron = Symbol("radius_of_electron", units.length)
 
 law = Eq(energy_of_electron,
     units.coulomb_constant * elementary_charge**2 / (2 * radius_of_electron))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(radius_of_electron_=radius_of_electron)

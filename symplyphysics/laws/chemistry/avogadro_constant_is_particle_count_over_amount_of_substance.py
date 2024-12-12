@@ -8,6 +8,10 @@ and amount of substance.
 **Notation:**
 
 #. :quantity_notation:`avogadro_constant`.
+
+**Links:**
+
+#. `Chemistry LibreTexts, formula 2.10.1 <https://chem.libretexts.org/Bookshelves/General_Chemistry/ChemPRIME_(Moore_et_al.)/02%3A_Atoms_Molecules_and_Chemical_Reactions/2.10%3A_The_Avogadro_Constant>`__.
 """
 
 from sympy import Eq, solve
