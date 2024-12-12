@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     dimensionless,
     convert_to_float,
     validate_input,
@@ -23,6 +22,11 @@ from symplyphysics.core.symbols.probability import Probability
 ## Σa_total - macroscopic absorption cross-section of the fuel, moderator, cladding, etc, combined.
 ## f - thermal neutron utilisation factor
 
+# Links:
+## ScienceDirect <https://www.sciencedirect.com/topics/engineering/thermal-utilisation-factor>
+## NuclearPower <https://www.nuclear-power.com/nuclear-power/reactor-physics/nuclear-fission-chain-reaction/thermal-utilization-factor/>
+## Wikipedia, second row in table <https://en.wikipedia.org/wiki/Six_factor_formula>
+
 macroscopic_fuel_absorption_cross_section = Symbol("macroscopic_fuel_absorption_cross_section",
     1 / units.length)
 macroscopic_total_absorption_cross_section = Symbol("macroscopic_total_absorption_cross_section",
@@ -31,10 +35,6 @@ thermal_utilisation_factor = Symbol("thermal_utilisation_factor", dimensionless)
 
 law = Eq(thermal_utilisation_factor,
     macroscopic_fuel_absorption_cross_section / macroscopic_total_absorption_cross_section)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(

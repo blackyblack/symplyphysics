@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     dimensionless,
     convert_to_float,
     validate_input,
@@ -34,6 +33,10 @@ from symplyphysics.core.symbols.probability import Probability
 ##   See [macroscopic cross-section](./macroscopic_cross_section_from_free_mean_path.py) implementation.
 ## p - resonance escape probability
 
+# Links:
+## Wikipedia, article <https://en.wikipedia.org/wiki/Resonance_escape_probability#Effective_resonance_integral>
+## Wikipedia, third row in table <https://en.wikipedia.org/wiki/Six_factor_formula>
+
 absorber_atomic_number_density = Symbol("absorber_atomic_number_density", 1 / units.volume)
 effective_resonance_integral = Symbol("effective_resonance_integral", units.length**2)
 average_lethargy_change = Symbol("average_lethargy_change", dimensionless)
@@ -45,10 +48,6 @@ law = Eq(
     resonance_escape_probability,
     exp(-1 * (absorber_atomic_number_density * effective_resonance_integral) /
     (average_lethargy_change * macroscopic_scattering_cross_section_moderator)))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(absorber_atomic_number_density_=absorber_atomic_number_density,

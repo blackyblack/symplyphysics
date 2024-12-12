@@ -1,5 +1,4 @@
 from sympy import (Eq, solve, symbols)
-from symplyphysics import print_expression
 from symplyphysics.core.symbols.probability import Probability
 
 # Description
@@ -17,6 +16,11 @@ from symplyphysics.core.symbols.probability import Probability
 ##   generation to the number of neutrons lost through absorption in the preceding neutron generation
 
 # All input parameters are dimensionless - use SymPy symbols.
+# TODO update to use dimensionless SymbolNew instances
+
+# Links:
+## Wikipedia <https://en.wikipedia.org/wiki/Nuclear_chain_reaction#Six-factor_formula>
+## NuclearPower <https://www.nuclear-power.com/nuclear-power/reactor-physics/nuclear-fission-chain-reaction/four-factor-formula-infinite-multiplication-factor/>
 
 neutron_reproduction = symbols("neutron_reproduction")
 thermal_utilisation = symbols("thermal_utilisation")
@@ -26,10 +30,6 @@ infinite_multiplication_factor = symbols("infinite_multiplication_factor")
 
 law = Eq(infinite_multiplication_factor,
     neutron_reproduction * fast_fission * resonance_escape_probability * thermal_utilisation)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 def calculate_multiplication_factor(neutron_reproduction_: float, fast_fission_: float,

@@ -24,15 +24,14 @@ from symplyphysics import (
 ##   See [macroscopic transport cross-section](./macroscopic_transport_cross_section.py) implementation.
 ## D is the diffusion coefficient.
 
+# Links:
+## NuclearPower <https://www.nuclear-power.com/nuclear-power/reactor-physics/neutron-diffusion-theory/diffusion-coefficient/>
+
 macroscopic_transport_cross_section = Symbol("macroscopic_transport_cross_section",
     1 / units.length)
 neutron_diffusion_coefficient = Symbol("neutron_diffusion_coefficient", units.length)
 
 law = Eq(neutron_diffusion_coefficient, 1 / (3 * macroscopic_transport_cross_section))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(macroscopic_transport_cross_section_=macroscopic_transport_cross_section)

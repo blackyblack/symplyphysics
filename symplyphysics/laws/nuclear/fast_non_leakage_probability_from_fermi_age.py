@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     dimensionless,
     convert_to_float,
     validate_input,
@@ -25,15 +24,14 @@ from symplyphysics.core.symbols.probability import Probability
 ##   thermal neutrons. The Fermi age is the same quantity as the slowing-down length squared (Ls^2).
 ## Pfnl - fast non-leakage probability.
 
+# Links:
+## Wikipedia, fifth row in table <https://en.wikipedia.org/wiki/Six_factor_formula>
+
 geometric_buckling = Symbol("geometric_buckling", 1 / units.area)
 neutron_fermi_age = Symbol("neutron_fermi_age", units.length**2)
 fast_non_leakage_probability = Symbol("fast_non_leakage_probability", dimensionless)
 
 law = Eq(fast_non_leakage_probability, exp(-1 * geometric_buckling * neutron_fermi_age))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(geometric_buckling_=geometric_buckling, neutron_fermi_age_=neutron_fermi_age)

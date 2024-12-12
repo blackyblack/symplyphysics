@@ -1,5 +1,5 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, dimensionless, validate_input,
+from symplyphysics import (units, Quantity, Symbol, dimensionless, validate_input,
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_macroscopic_fission_cross_section_diffusion_coefficient as buckling_law
@@ -21,6 +21,9 @@ from symplyphysics.laws.nuclear import infinite_multiplication_factor_from_macro
 ##   See [diffusion area](./diffusion_area_from_diffusion_coefficient.py) implementation.
 ## Bg^2 - geometric buckling.
 ##   See [geometric buckling](./geometric_buckling_from_neutron_flux.py) implementation.
+
+# Links
+## Wikipedia, first part of second equation <https://en.wikipedia.org/wiki/Geometric_and_material_buckling#Material_Buckling>
 
 infinite_multiplication_factor = Symbol("infinite_multiplication_factor", dimensionless)
 effective_multiplication_factor = Symbol("effective_multiplication_factor", dimensionless)
@@ -62,10 +65,6 @@ derived_geometric_buckling_squared = solve(derived_law, (geometric_buckling_squa
     buckling_law.diffusion_coefficient, buckling_law.macroscopic_fission_cross_section),
     dict=True)[0][geometric_buckling_squared]
 assert expr_equals(law.rhs, derived_geometric_buckling_squared)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(infinite_multiplication_factor_=infinite_multiplication_factor,

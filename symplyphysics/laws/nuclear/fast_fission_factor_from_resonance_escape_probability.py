@@ -20,3 +20,6 @@
 ## Unfortunately proper fast fission factor formula is too complex for actual use. Approximate formula is not
 ## very useful since there is no actual data on Pfaf, Ptaf and uf values. Therefore this module is empty,
 ## only present as a documentation for the fast fission factor.
+
+# Links:
+## Wikipedia, fourth row in table <https://en.wikipedia.org/wiki/Six_factor_formula>

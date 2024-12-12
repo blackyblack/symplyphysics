@@ -1,5 +1,4 @@
 from sympy import (Eq, solve, symbols)
-from symplyphysics import print_expression
 from symplyphysics.core.symbols.probability import Probability
 
 # Description
@@ -16,6 +15,10 @@ from symplyphysics.core.symbols.probability import Probability
 ##   generation to the number of neutrons lost through absorption and leakage in the preceding neutron generation.
 
 # All input parameters are dimensionless - use SymPy symbols.
+# TODO refactor to use dimensionless SymbolNew instances
+
+# Links:
+## Wikipedia, formula above table <https://en.wikipedia.org/wiki/Six_factor_formula>
 
 fast_non_leakage_probability = symbols("fast_non_leakage_probability")
 thermal_non_leakage_probability = symbols("thermal_non_leakage_probability")
@@ -25,10 +28,6 @@ effective_multiplication_factor = symbols("effective_multiplication_factor")
 law = Eq(
     effective_multiplication_factor,
     infinite_multiplication_factor * fast_non_leakage_probability * thermal_non_leakage_probability)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 def calculate_multiplication_factor(infinite_multiplication_factor_: float,

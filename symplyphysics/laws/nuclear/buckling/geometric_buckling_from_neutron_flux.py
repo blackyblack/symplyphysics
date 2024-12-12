@@ -1,6 +1,6 @@
 from sympy import (Eq, solve, Expr, symbols, simplify, Equality)
 from sympy.vector import Laplacian
-from symplyphysics import (SI, Function, units, Quantity, Symbol, print_expression, validate_output)
+from symplyphysics import (SI, Function, units, Quantity, Symbol, validate_output)
 from symplyphysics.core.dimensions import collect_factor_and_dimension
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.nuclear import diffusion_equation_from_neutron_flux as diffusion_equation
@@ -18,6 +18,9 @@ from symplyphysics.laws.nuclear import diffusion_equation_from_neutron_flux as d
 ##   directions per unit time.
 ## x - coordinates for the neutron flux density.
 ## Bg^2 - geometric buckling.
+
+# Links:
+## Wikipedia, see fourth equation <https://en.wikipedia.org/wiki/Geometric_and_material_buckling#Derivation>
 
 # Position is a free variable of a function - do not specify its dimension
 flux_position = symbols("flux_position")
@@ -44,10 +47,6 @@ law = Eq(geometric_buckling_squared,
 diffusion_equation_laplacian = diffusion_equation.neutron_flux_laplacian_definition.rhs.subs(
     diffusion_equation.neutron_flux(diffusion_equation.flux_position), neutron_flux(flux_position))
 assert expr_equals(diffusion_equation_laplacian, neutron_flux_laplacian_definition.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 # neutron_flux_function_ should be a function on CoordSys3D

@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     dimensionless,
     validate_input,
     validate_output,
@@ -22,6 +21,11 @@ from symplyphysics import (
 ##   See [average scattering angle cosine](./most_neutron_energies_scattering_angle_average_cosine.py) implementation.
 ## Σtr (macroscopic transport cross-section) is the macroscopic cross-section for transport mean free path.
 
+# Links:
+## NuclearPower <https://www.nuclear-power.com/nuclear-power/reactor-physics/nuclear-engineering-fundamentals/neutron-nuclear-reactions/macroscopic-cross-section/>
+## ScienceDirect <https://www.sciencedirect.com/topics/engineering/macroscopic-cross-section>
+## NOTE find more fitting links
+
 macroscopic_scattering_cross_section = Symbol("macroscopic_scattering_cross_section",
     1 / units.length)
 average_scattering_angle_cosine = Symbol("average_scattering_angle_cosine", dimensionless)
@@ -30,10 +34,6 @@ macroscopic_transport_cross_section = Symbol("macroscopic_transport_cross_sectio
 
 law = Eq(macroscopic_transport_cross_section,
     macroscopic_scattering_cross_section * (1 - average_scattering_angle_cosine))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(macroscopic_scattering_cross_section_=macroscopic_scattering_cross_section,

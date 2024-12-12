@@ -15,6 +15,9 @@ from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_
 ## a - slab width.
 ## Ф(x) - neutron flux density.
 
+# Links:
+## NuclearPower, see end of page <https://www.nuclear-power.com/nuclear-power/reactor-physics/neutron-diffusion-theory/infinite-slab-reactor/>
+
 neutron_flux_power_constant = Symbol("C1", 1 / units.area / units.time, constant=True)
 distance_from_center = Symbol("distance_from_center", units.length)
 slab_width = Symbol("slab_width", units.length)

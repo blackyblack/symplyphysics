@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     dimensionless,
     validate_input,
     validate_output,
@@ -22,6 +21,9 @@ from symplyphysics import (
 ##   (Σc_fuel) cross-sections.
 ## η - neutron reproduction factor
 
+# Links:
+## Wikipedia, first row in table <https://en.wikipedia.org/wiki/Four_factor_formula>
+
 neutrons_per_fission = Symbol("neutrons_per_fission", dimensionless)
 macroscopic_fuel_fission_cross_section = Symbol("macroscopic_fuel_fission_cross_section",
     1 / units.length)
@@ -32,10 +34,6 @@ neutron_reproduction_factor = Symbol("neutron_reproduction_factor", dimensionles
 law = Eq(
     neutron_reproduction_factor, neutrons_per_fission * macroscopic_fuel_fission_cross_section /
     macroscopic_fuel_absorption_cross_section)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(neutrons_per_fission_=neutrons_per_fission,

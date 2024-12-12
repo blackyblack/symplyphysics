@@ -1,5 +1,4 @@
 from sympy import (Eq, solve, symbols)
-from symplyphysics import print_expression
 
 # Description
 ## Average value of the cosine of the angle in the lab system at which neutrons are scattered in the medium.
@@ -10,14 +9,13 @@ from symplyphysics import print_expression
 ## A is the mass number of target nucleus.
 ## μ is average value of the cosine of the angle in the lab system at which neutrons are scattered in the medium.
 
+# Links:
+## NuclearPower <https://www.nuclear-power.com/nuclear-power/reactor-physics/neutron-diffusion-theory/diffusion-coefficient/>
+
 target_nucleus_mass_number = symbols("target_nucleus_mass_number")
 average_scattering_angle_cosine = symbols("average_scattering_angle_cosine")
 
 law = Eq(average_scattering_angle_cosine, 2 / (3 * target_nucleus_mass_number))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 def calculate_average_scattering_angle_cosine(target_nucleus_mass_number_: int) -> float:
