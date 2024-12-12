@@ -10,6 +10,10 @@ It starts oscillating after being pushed out of balance.
 #. The spring does not gain or lose energy. There is no friction or inelastic deformation.
 #. The object is small enough to be considered a material point.
 #. The spring is weightless.
+
+**Links:**
+
+#. `Wikipedia, second formula <https://en.wikipedia.org/wiki/Spring_(device)#Frequency_&_period>`__.
 """
 
 from sympy import Derivative, Eq, diff, solve, pi, sqrt, simplify
@@ -57,6 +61,8 @@ time = symbols.time
 
 ## Spring oscillation is cyclic transfer of energy from kinetic to potential. To set oscillation up we have to input some energy. Usually it is done by biasing the spring and letting it go.
 ## Biasing the spring is giving to it some amount of potential energy.
+
+# TODO: prefix variables used in proof with underscore
 
 amount_of_potential_energy = spring_energy.law.subs({
     spring_energy.stiffness: stiffness,

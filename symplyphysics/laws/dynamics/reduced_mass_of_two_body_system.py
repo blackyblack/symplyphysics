@@ -5,6 +5,10 @@ Reduced mass of a two-body system
 Reduced mass is effective inertial mass in a system with two or more particles when they
 are interacting with each other. This allowes the two-body problem to be solved as if it
 were a one-body problem.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Reduced_mass#Equation>`__.
 """
 
 from sympy import Eq

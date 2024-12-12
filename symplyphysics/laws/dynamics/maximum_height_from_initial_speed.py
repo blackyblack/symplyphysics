@@ -3,6 +3,10 @@ Maximum height from initial speed
 =================================
 
 The maximum height that a body thrown vertically will rise to depends on the initial speed.
+
+**Links:**
+
+#. `Wikipedia, fifth formula <https://en.wikipedia.org/wiki/Projectile_motion#Maximum_height_of_projectile>`__.
 """
 
 from sympy import Eq, solve

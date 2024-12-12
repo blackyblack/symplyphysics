@@ -4,6 +4,10 @@ Total work is change in kinetic energy
 
 The work-energy principle states that the work done by all forces acting on a particle
 (the work of the resultant force) equals the change in the kinetic energy of the particle.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Work_(physics)#Work%E2%80%93energy_principle>`__.
 """
 
 from sympy import Eq

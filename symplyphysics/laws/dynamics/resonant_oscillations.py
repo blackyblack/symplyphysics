@@ -16,6 +16,9 @@ resonance.
 
 #. The expression of the driving force has the form :math:`F \cos{\left( \omega t + \varphi \right)}`
    where :math:`\omega` is the angular frequency of its oscillations.
+
+..
+    TODO find link
 """
 
 from sympy import Eq, dsolve, sin

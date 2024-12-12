@@ -6,6 +6,10 @@ Assuming a one-dimensional environment, when the force F on a particle-like obje
 on the position of the object, the work done by F on the object while the object moves
 from one position to another is to be found by integrating the force along the path of the
 object.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Work_(physics)#Path_dependence>`__.
 """
 
 from sympy import Eq, Integral

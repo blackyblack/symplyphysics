@@ -4,6 +4,10 @@ Friction force from normal force
 
 The *friction* force is tangential interaction between two objects, which impedes their relative movement.
 It is proportional to the normal force between the two objects.
+
+**Links**
+
+#. `Physics LibreTexts <https://phys.libretexts.org/Courses/Tuskegee_University/Algebra_Based_Physics_I/04%3A_Dynamics-_Force_and_Newton%27s_Laws_of_Motion/4.07%3A_Friction>`__.
 """
 
 from sympy import Eq, solve

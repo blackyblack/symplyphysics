@@ -7,7 +7,7 @@ to the net force exerted on the body.
 
 **Links:**
 
-#. `Newton's second law <https://www.britannica.com/science/Newtons-laws-of-motion/Newtons-second-law-F-ma>`__.
+#. `Britannica <https://www.britannica.com/science/Newtons-laws-of-motion/Newtons-second-law-F-ma>`__.
 """
 
 from sympy import (Eq, solve, sympify)

@@ -5,6 +5,10 @@ Buoyant force from density and volume
 Any object, totally or partially immersed in a fluid (i.e. liquid or gas), is buoyed up by a force equal to the
 weight of the fluid displaced by the object. Also known as the Archimedes principle. The *buoyant force*
 vector is directed opposite to the gravity vector.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Archimedes%27_principle#Formula>`__.
 """
 
 from sympy import (Eq, solve)

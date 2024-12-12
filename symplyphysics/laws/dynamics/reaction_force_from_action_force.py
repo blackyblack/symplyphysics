@@ -5,6 +5,10 @@ Reaction force equals action force
 Newton's third law of motion states that for every action there is an equal and opposite reaction.
 Namely, if two bodies exert forces on each other, these forces have the same magnitude but opposite
 directions.
+
+**Links:**
+
+#. `Physics LibreTexts, green box <https://phys.libretexts.org/Workbench/PH_245_Textbook_V2/05%3A_Newton's_Laws_of_Motion/5.06%3A_Newtons_Third_Law>`__.
 """
 
 from sympy import (Eq, solve)

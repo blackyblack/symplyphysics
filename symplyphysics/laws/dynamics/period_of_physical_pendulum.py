@@ -5,6 +5,10 @@ Period of physical pendulum
 A *physical pendulum* is a pendulum with an arbitrary distribution of mass that
 oscillates about a given pivot point. The period of its oscillations depends on its rotational inertia, 
 mass and the distance between the pivot and the center of mass of the pendulum.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Pendulum#Compound_pendulum>`__.
 """
 
 from sympy import Eq, pi, solve, Derivative, sqrt
