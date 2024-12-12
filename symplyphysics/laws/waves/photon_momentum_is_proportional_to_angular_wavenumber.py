@@ -7,6 +7,10 @@ The momentum of a photon is proportional to its wavenumber.
 **Notation:**
 
 #. :quantity_notation:`hbar`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Photon#Relativistic_energy_and_momentum>`__.
 """
 
 from sympy import Eq, solve

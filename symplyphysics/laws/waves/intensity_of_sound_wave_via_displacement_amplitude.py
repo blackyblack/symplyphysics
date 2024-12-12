@@ -6,6 +6,10 @@ The intensity of a sound wave is the rate per unit area of energy transfer
 through or onto a surface. It depends on the density of the medium, the phase
 speed and the angular frequency of the wave and the amplitude of particles
 in the medium.
+
+**Links:**
+
+#. Equation 17-27 on p. 489 of "Fundamentals of Physics" by David Halladay et al., 10th Ed.
 """
 
 from sympy import Eq

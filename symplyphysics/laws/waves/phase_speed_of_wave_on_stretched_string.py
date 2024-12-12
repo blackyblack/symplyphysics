@@ -4,6 +4,10 @@ Phase speed of wave on stretched string
 
 The phase speed of a wave on a stretched ideal string is set by properties of the string
 and not by properties of the wave such as frequency and amplitude.
+
+**Links:**
+
+#. `Wikipedia, formula 16.4.7 <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/Book%3A_University_Physics_I_-_Mechanics_Sound_Oscillations_and_Waves_(OpenStax)/16%3A_Waves/16.04%3A_Wave_Speed_on_a_Stretched_String>`__.
 """
 
 from sympy import Eq, sqrt

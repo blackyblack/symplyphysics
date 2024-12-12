@@ -15,6 +15,10 @@ matter or energy between the body and its environment.
 **Conditions:**
 
 #. The black body is isolated from the environment.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Planck%27s_law>`__.
 """
 
 from sympy import Eq, exp, pi

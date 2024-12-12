@@ -4,6 +4,10 @@ Phase shift between two points
 
 The phase shift of wave oscillations between two points is proportional to the ratio
 of the distance between the points and the wavelength of the wave.
+
+**Links:**
+
+#. `BYJY's <https://byjus.com/physics/relation-between-phase-difference-and-path-difference/>`__.
 """
 
 from sympy import Eq, solve, pi

@@ -5,6 +5,10 @@ Wavelength from phase speed and period
 Wavelength is the spatial period of a periodic wave, i.e. the distance the wave needs to travel
 for its shape to repeat. It can also be measured as the distance between two closest points
 with the same wave phase.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Wavelength#Mathematical_representation>`__.
 """
 
 from sympy import Eq, solve

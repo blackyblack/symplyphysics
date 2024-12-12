@@ -16,6 +16,10 @@ relation to an observer moving relative to the wave source.
    waves are left behind the source or never reach the observer.
 #. The source and observer are moving directly towards or away from each other (collinear
    motion).
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Doppler_effect#General>`__.
 """
 
 from sympy import Eq, pi, solve

@@ -5,6 +5,10 @@ Fully destructive interference condition
 The interference of two waves is said to be fully destructive when the amplitude of the
 resulting wave is zero, i.e. the two waves cancel each other out. In that case, they must
 be an odd number of half-cycles out of phase between each other.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Wave_interference#Real-valued_wave_functions>`__.
 """
 
 from sympy import Eq, pi

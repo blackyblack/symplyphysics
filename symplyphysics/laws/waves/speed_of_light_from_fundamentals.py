@@ -10,6 +10,10 @@ of the vacuum.
 #. :quantity_notation:`speed_of_light`.
 #. :quantity_notation:`vacuum_permittivity`.
 #. :quantity_notation:`vacuum_permeability`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Speed_of_light#Propagation_of_light>`__.
 """
 
 from sympy import (Eq, sqrt)

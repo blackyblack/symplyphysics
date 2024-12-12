@@ -10,6 +10,10 @@ string.
 **Conditions:**
 
 #. Boundary condition: :math:`q(0) = q(L) = 0`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Standing_wave#Standing_wave_on_a_string_with_two_fixed_ends>`__.
 """
 
 from sympy import Eq, solve

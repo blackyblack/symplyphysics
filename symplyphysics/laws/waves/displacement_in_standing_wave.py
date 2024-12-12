@@ -10,6 +10,10 @@ moving in opposite directions.
 #. In this law we assume the standing wave to be composed of two identical traveling sinusoidal
    waves of the form :math:`u_\text{max} \sin(k x \pm \omega t)`
 #. A standing wave is no longer a traveling one because it doesn't move in a single direction.
+
+**Links:**
+
+#. `Physics LibreTexts, similar to formula 14.7.3 <https://phys.libretexts.org/Bookshelves/University_Physics/Book%3A_Introductory_Physics_-_Building_Models_to_Describe_Our_World_(Martin_Neary_Rinaldo_and_Woodman)/14%3A_Waves/14.07%3A_Standing_waves>`__.
 """
 
 from sympy import Eq, sin, cos, symbols as sym_symbols
