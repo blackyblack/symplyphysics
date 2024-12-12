@@ -5,6 +5,10 @@ Electrostatic potential energy of two charges via distance
 Electrostatic potential energy due to two point charges depends on the inverse 
 distance to the distance between the charges. Note that this is the energy of
 interaction belonging to the entire system.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Electric_potential_energy#Electrostatic_potential_energy_of_one_point_charge>`__.
 """
 
 from sympy import (Eq, solve, pi)

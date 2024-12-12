@@ -22,6 +22,8 @@ from symplyphysics import (units, Quantity, Symbol, validate_input, validate_out
 ## - Conductor should be rectilinear;
 ## - Length of the conductor is finite.
 
+# TODO: find link
+
 induction = Symbol("induction", units.magnetic_density)
 
 relative_permeability = Symbol("relative_permeability", dimensionless)

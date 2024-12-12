@@ -9,6 +9,10 @@ square of the distance between them.
 **Notation:**
 
 #. :quantity_notation:`vacuum_permittivity`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Coulomb%27s_law>`__.
 """
 
 from sympy import (Eq, solve, pi)

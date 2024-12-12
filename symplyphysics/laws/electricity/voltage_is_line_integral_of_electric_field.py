@@ -9,6 +9,10 @@ of the electric field along any path connecting the two points.
 
 #. Applies to electrostatic fields, although electrostatic approximation might be
    used for electromagnetic fields at lower frequencies.
+
+**Links:**
+
+#. `Physics LibreTexts, formula 7.3.18 <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/University_Physics_II_-_Thermodynamics_Electricity_and_Magnetism_(OpenStax)/07%3A_Electric_Potential/7.03%3A_Electric_Potential_and_Potential_Difference>`__.
 """
 
 from sympy import Eq, Integral

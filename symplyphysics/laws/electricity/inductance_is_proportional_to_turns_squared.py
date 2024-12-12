@@ -12,6 +12,8 @@ from symplyphysics import (units, Quantity, Symbol, validate_input, validate_out
 ## S is area of each turn (coil's cross sectional area),
 ## d is coil length.
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Inductance#Inductance_of_a_solenoid>
+
 coil_inductance = Symbol("coil_inductance", units.inductance)
 magnetic_permeability = Symbol("magnetic_permeability", dimensionless)
 number_of_turns = Symbol("number_of_turns", dimensionless)

@@ -12,6 +12,10 @@ the potential approach zero at an infinitely remote point.
 **Notes:**
 
 #. The electric potential is defined up to a constant.
+
+**Links:**
+
+#. `Wikipedia, fourth formula <https://en.wikipedia.org/wiki/Electric_potential#Electrostatics>`__.
 """
 
 from sympy import (Eq, solve)

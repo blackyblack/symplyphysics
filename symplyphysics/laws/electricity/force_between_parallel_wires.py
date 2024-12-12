@@ -17,6 +17,8 @@ from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, val
 ## l - length of wires,
 ## r - distance.
 
+# Links: Physics LibreTexts, formula 22.10.3 <https://phys.libretexts.org/Bookshelves/College_Physics/College_Physics_1e_(OpenStax)/22%3A_Magnetism/22.10%3A_Magnetic_Force_between_Two_Parallel_Conductors>
+
 ampere_force = symbols.force
 
 relative_permeability = Symbol("relative_permeability", dimensionless)

@@ -10,6 +10,10 @@ polarity. Also see :doc:`vector counterpart <laws.electricity.vector.electric_di
 
 #. The system can be viewed as composed of two point charges.
 #. The point charges are equal by magnitude.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Electric_dipole_moment#Elementary_definition>`__.
 """
 
 from sympy import (Eq, solve)

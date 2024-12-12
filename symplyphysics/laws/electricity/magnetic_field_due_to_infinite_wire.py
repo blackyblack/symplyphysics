@@ -12,6 +12,10 @@ current through it and the radial distance to the wire.
 **Conditions:**
 
 #. The wire is uniform, straight, and thin.
+
+**Links:**
+
+#. `Physics LibreTexts, formula 12.3.7 <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/University_Physics_II_-_Thermodynamics_Electricity_and_Magnetism_(OpenStax)/12%3A_Sources_of_Magnetic_Fields/12.03%3A_Magnetic_Field_due_to_a_Thin_Straight_Wire>`__.
 """
 
 from sympy import (Eq, pi)

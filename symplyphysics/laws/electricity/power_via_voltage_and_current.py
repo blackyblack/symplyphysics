@@ -4,6 +4,10 @@ Power via voltage and current
 
 Electric power can be expressed using current flowing through a
 conductor and voltage applied.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Electric_power#Resistive_circuits>`__.
 """
 
 from sympy import Eq, solve

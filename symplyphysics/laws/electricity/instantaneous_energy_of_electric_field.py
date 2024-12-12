@@ -13,6 +13,8 @@ from symplyphysics import (units, Quantity, Symbol, validate_input, validate_out
 ## t - time,
 ## phi - initial phase.
 
+# NOTE is this law really needed? it seems to be too specific
+
 energy = Symbol("energy", units.energy)
 
 inductance = Symbol("inductance", units.inductance)

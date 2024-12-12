@@ -9,6 +9,8 @@ from symplyphysics import (units, Quantity, Symbol, validate_input, validate_out
 ## S - area,
 ## a - angle between the normal of pad and magnetic induction.
 
+# Links: Wikipedia, first formula <https://en.wikipedia.org/wiki/Magnetic_flux>
+
 flux = Symbol("flux", units.magnetic_flux)
 
 induction = Symbol("induction", units.magnetic_density)

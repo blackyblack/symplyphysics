@@ -3,6 +3,10 @@ Power via voltage and resistance
 ================================
 
 Power can be found using voltage and resistance.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Electric_power#Resistive_circuits>`__.
 """
 
 from sympy import Eq, solve

@@ -13,6 +13,10 @@ from symplyphysics import (units, Quantity, Symbol, validate_input, validate_out
 ## H - magnetic field intensity,
 ## V - volume of solenoid.
 
+# Links: Physics LibreTexts, derivable from 14.4.1 <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/University_Physics_II_-_Thermodynamics_Electricity_and_Magnetism_(OpenStax)/14%3A_Inductance/14.04%3A_Energy_in_a_Magnetic_Field>
+
+# NOTE replace `H` with `B`?
+
 energy = Symbol("energy", units.energy)
 
 relative_permeability = Symbol("relative_permeability", dimensionless)

@@ -8,6 +8,10 @@ and vacuum permittivity.
 **Notation:**
 
 #. :quantity_notation:`vacuum_permittivity`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Relative_permittivity#Definition>`__.
 """
 
 from sympy import Eq

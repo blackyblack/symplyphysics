@@ -6,6 +6,10 @@ The **Faraday's law** states that the electromotive force around a closed path i
 the negative of the time rate of change of the magnetic flux enclosed by the path. In case
 of the current making several turns around the contour, e.g. in a coil, the electromotive force
 would also be proportional to the number of turn the current makes.
+
+**Links:**
+
+#. `Wikipedia, second formula <https://en.wikipedia.org/wiki/Faraday%27s_law_of_induction#Mathematical_statement>`__.
 """
 
 from sympy import (Eq, Derivative)

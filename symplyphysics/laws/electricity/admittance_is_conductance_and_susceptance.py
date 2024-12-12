@@ -4,6 +4,10 @@ Admittance is conductance and susceptance
 
 Admittance is generally a complex quantity whose real part is called conductance
 and whose imaginary part is called susceptance.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Admittance>`__.
 """
 
 from sympy import (Eq, I)
