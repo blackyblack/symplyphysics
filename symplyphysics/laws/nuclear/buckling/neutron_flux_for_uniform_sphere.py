@@ -15,6 +15,9 @@ from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_
 ## R - sphere radius.
 ## Ф(r) - neutron flux density.
 
+# Links:
+## NuclearPower, see end of page <https://www.nuclear-power.com/nuclear-power/reactor-physics/neutron-diffusion-theory/finite-spherical-reactor/>
+
 neutron_flux_power_constant = Symbol("C1", 1 / units.length / units.time, constant=True)
 distance_from_center = Symbol("distance_from_center", units.length)
 sphere_radius = Symbol("sphere_radius", units.length)

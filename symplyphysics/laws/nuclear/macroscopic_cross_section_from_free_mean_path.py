@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
@@ -19,14 +18,13 @@ from symplyphysics import (
 ## interaction, over the interaction probability distribution.
 ## Σ is the macroscopic cross-section.
 
+# Links:
+## NuclearPower, "Mean Free Path" <https://www.nuclear-power.com/nuclear-power/reactor-physics/nuclear-engineering-fundamentals/neutron-nuclear-reactions/macroscopic-cross-section/>
+
 mean_free_path = Symbol("mean_free_path", units.length)
 macroscopic_cross_section = Symbol("macroscopic_cross_section", 1 / units.length)
 
 law = Eq(macroscopic_cross_section, 1 / mean_free_path)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(mean_free_path_=mean_free_path)

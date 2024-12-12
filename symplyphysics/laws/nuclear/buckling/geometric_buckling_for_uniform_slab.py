@@ -1,5 +1,5 @@
 from sympy import (Eq, solve, pi)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output)
 from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_slab as slab_flux
 
@@ -13,6 +13,9 @@ from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_slab as
 ## a - slab width.
 ## Bg^2slab - geometric buckling for slab.
 ##   See [geometric buckling](./geometric_buckling_from_neutron_flux.py) implementation.
+
+# Links:
+## Wikipedia, possibly derivable from third row of first table? <https://en.wikipedia.org/wiki/Geometric_and_material_buckling#Geometric_Buckling>
 
 slab_width = Symbol("slab_width", units.length)
 geometric_buckling_squared = Symbol("geometric_buckling_squared", 1 / units.area)
@@ -29,10 +32,6 @@ geometric_buckling_slab_squared = slab_flux.axial_constant**2
 geometric_buckling_slab_solved = geometric_buckling_slab_squared.subs(slab_flux.slab_width,
     slab_width)
 assert geometric_buckling_slab_solved == law.rhs
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(slab_width_=slab_width)

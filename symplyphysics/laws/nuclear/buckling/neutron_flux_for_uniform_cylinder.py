@@ -1,7 +1,7 @@
 from sympy import (Eq, pi, cos)
 from sympy.vector import CoordSys3D
 from sympy.functions.special.bessel import besselj
-from symplyphysics import (Function, Quantity, Symbol, print_expression, units)
+from symplyphysics import (Function, Quantity, Symbol, units)
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_flux
 from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_slab
 
@@ -19,6 +19,9 @@ from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_slab
 ## R - radius of the cylinder.
 ## H - height of the cylinder.
 ## Ф(r, z) - neutron flux density.
+
+# Links:
+## NuclearPower, see end of page <https://www.nuclear-power.com/nuclear-power/reactor-physics/neutron-diffusion-theory/finite-cylindrical-reactor/>
 
 neutron_flux_power_constant = Symbol("C1", 1 / units.area / units.time, constant=True)
 radial_distance_from_center = Symbol("radial_distance_from_center", units.length)
@@ -74,10 +77,6 @@ solved = geometric_buckling_from_neutron_flux.apply_neutron_flux_function(
 # check with the derived law: Bg^2 = radial_constant**2 + axial_constant**2
 # limit decimals to bypass rounding errors
 assert solved.rhs.evalf(7) == (radial_constant**2 + axial_constant**2).evalf(7)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 # There is no calculate() method. Neutron flux is usually being used internally to pass to other laws.

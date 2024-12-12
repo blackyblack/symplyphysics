@@ -6,7 +6,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     dimensionless,
     validate_input,
     validate_output,
@@ -36,6 +35,9 @@ from symplyphysics.core.dimensions import collect_factor_and_dimension
 # NOTE: Neutron flux can be understood as scalar field. It is a function of the point in 3D space that returns a
 # scalar value.
 
+# Links:
+## NuclearPower, possible similar formula <https://www.nuclear-power.com/nuclear-power/reactor-physics/neutron-diffusion-theory/diffusion-equation/>
+
 diffusion_coefficient = Symbol("diffusion_coefficient", units.length)
 macroscopic_absorption_cross_section = Symbol("macroscopic_absorption_cross_section",
     1 / units.length)
@@ -62,10 +64,6 @@ law = Eq(
 # original dimension / units.length**2
 assert SI.get_dimension_system().equivalent_dims(neutron_flux_laplacian.dimension,
     neutron_flux.dimension / units.length**2)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 # neutron_flux_function_ should be a function on CoordSys3D

@@ -1,5 +1,5 @@
 from sympy import (Eq, solve, pi)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output)
 from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_sphere as sphere_flux
 
@@ -13,6 +13,9 @@ from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_sphere 
 ## R - sphere radius.
 ## Bg^2sphere - squared geometric buckling for sphere.
 ##   See [geometric buckling](./geometric_buckling_from_neutron_flux.py) implementation.
+
+# Links:
+## Wikipedia, first row in first table <https://en.wikipedia.org/wiki/Geometric_and_material_buckling#Geometric_Buckling>
 
 sphere_radius = Symbol("sphere_radius", units.length)
 geometric_buckling_squared = Symbol("geometric_buckling_squared", 1 / units.area)
@@ -29,10 +32,6 @@ geometric_buckling_sphere_squared = sphere_flux.radial_constant**2
 geometric_buckling_sphere_flux_solved = geometric_buckling_sphere_squared.subs(
     sphere_flux.sphere_radius, sphere_radius)
 assert geometric_buckling_sphere_flux_solved == law.rhs
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(sphere_radius_=sphere_radius)
