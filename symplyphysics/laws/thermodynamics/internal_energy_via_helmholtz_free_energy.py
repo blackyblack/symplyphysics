@@ -7,6 +7,10 @@ Internal energy via Helmholtz free energy
 **Conditions:**
 
 #. The number of particles in the system is held constant.
+
+**Links:**
+
+#. `Wikipedia, see equivalent form of this law in table <https://en.wikipedia.org/wiki/Gibbs%E2%80%93Helmholtz_equation>`__.
 """
 
 from sympy import Eq, Derivative, Point2D, solve

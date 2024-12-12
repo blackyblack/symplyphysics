@@ -4,6 +4,10 @@ Total energy transfer is zero in adiabatically isolated system
 
 In an isolated system the total energy transferred between its parts is zero.
 This is a direct consequence of the first law of thermodynamics.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Isolated_system>`__.
 """
 
 from sympy import (Eq, Idx, solve)

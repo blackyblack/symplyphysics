@@ -5,6 +5,10 @@ Rate of energy conduction through slab
 The rate at which energy is conducted through a slab for which one face is maintained at a higher
 temperature than the other face is proportional to the temperature difference of the faces and
 its face area and inversely proportional to its length.
+
+**Links:**
+
+#. `Physics LibreTexts, formula 14.5.1 <https://phys.libretexts.org/Bookshelves/College_Physics/College_Physics_1e_(OpenStax)/14%3A_Heat_and_Heat_Transfer_Methods/14.05%3A_Conduction>`__.
 """
 
 from sympy import Eq

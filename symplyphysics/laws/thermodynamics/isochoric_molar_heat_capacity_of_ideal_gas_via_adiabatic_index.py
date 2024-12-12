@@ -8,6 +8,10 @@ constant and the adiabatic index of the gas.
 **Notation:**
 
 #. :quantity_notation:`molar_gas_constant`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Heat_capacity_ratio#Ideal-gas_relations>`__.
 """
 
 from sympy import Eq, solve

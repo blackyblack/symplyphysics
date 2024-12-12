@@ -29,6 +29,8 @@ from symplyphysics import (
 ## - we neglect the temperature dependence of the heat capacities;
 ## - the process is isobaric-isothermal.
 
+# TODO: find link
+
 standard_change_isobaric_potential = Symbol("standard_change_isobaric_potential",
     units.energy / units.amount_of_substance)
 

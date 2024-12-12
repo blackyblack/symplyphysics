@@ -30,6 +30,8 @@ from symplyphysics import (
 ## - we take into account the dependence of heat capacity on temperature according to the Temkin-Schwarzman formula;
 ## - the process is isobaric-isothermal.
 
+# TODO: find link
+
 isobaric_potential = Symbol("isobaric_potential", units.energy / units.amount_of_substance)
 
 thermal_effect = Symbol("thermal_effect", units.energy / units.amount_of_substance)

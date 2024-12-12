@@ -8,6 +8,10 @@ is the average number of microstates of a system that implement its macro-state.
 **Notation:**
 
 #. :quantity_notation:`boltzmann_constant`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Entropy_(statistical_thermodynamics)#Gibbs_entropy_formula>`__.
 """
 
 from sympy import (

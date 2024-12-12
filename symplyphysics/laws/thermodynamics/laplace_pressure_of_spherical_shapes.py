@@ -5,6 +5,10 @@ Laplace pressure of spherical shapes
 Under the curved surface of a fluid, in addition to the internal pressure, additional pressure
 is created due to the curvature of the surface. The excess pressure under the curved surface of
 the fluid is called *Laplace pressure*.
+
+**Links:**
+
+#. `Wikipedia, second formula <https://en.wikipedia.org/wiki/Laplace_pressure>`__.
 """
 
 from sympy import (Eq, solve)

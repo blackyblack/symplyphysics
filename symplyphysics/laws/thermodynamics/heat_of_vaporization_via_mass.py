@@ -4,6 +4,10 @@ Heat of vaporization via mass
 
 *Heat of vaporization* is the heat released during the complete vaporization of a body,
 in which it is converted from liquid into gaseous state.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Enthalpy_of_vaporization>`__.
 """
 
 from sympy import (Eq, solve)

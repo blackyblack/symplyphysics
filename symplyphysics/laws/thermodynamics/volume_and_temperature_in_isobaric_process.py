@@ -3,8 +3,12 @@ Volume and temperature in isobaric process
 ==========================================
 
 A thermodynamic process is called **isobaric** when the pressure inside the system stays
-constant. Also called **Guy-Lussac's law**, it states that the volume of the gas scales
+constant. Also called **Charles's law**, it states that the volume of the gas scales
 by the same amount as the temperature during an isobaric process.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Ideal_gas_law#math_2>`__.
 """
 
 from sympy import Eq, solve

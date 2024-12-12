@@ -4,6 +4,10 @@ Helmholtz free energy via internal energy
 
 *Helmholtz free energy* is a thermodynamic potential that measures the useful work obtainable
 from a closed thermodynamic system at a constant temperature (isothermal process).
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Helmholtz_free_energy#Definition>`__.
 """
 
 from sympy import Eq

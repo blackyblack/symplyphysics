@@ -22,6 +22,10 @@ From that one can derive the expression of the isochoric heat capacity of ideal 
 #. Gas is ideal.
 #. Works in the classical theory of heat capacity of gases. For a more accurate representation refer to
    the quantum theory, which accounts for the "freezing" of the degrees of freedom and other phenomena.
+
+**Links:**
+
+#. `Physics LibreTexts, "Equipartition Theorem" <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/University_Physics_II_-_Thermodynamics_Electricity_and_Magnetism_(OpenStax)/02%3A_The_Kinetic_Theory_of_Gases/2.04%3A_Heat_Capacity_and_Equipartition_of_Energy>`__.
 """
 
 from sympy import Eq

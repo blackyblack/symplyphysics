@@ -9,6 +9,10 @@ of the gas.
 **Condition:**
 
 #. Applies to ideal gases.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Ideal_gas_law#math_4>`__.
 """
 
 from sympy import Eq, solve

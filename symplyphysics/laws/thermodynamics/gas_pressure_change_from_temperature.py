@@ -8,6 +8,9 @@ The change in pressure of ideal gas depends on temperature, standard pressure an
 
 #. Gas is ideal.
 #. The heating of the gas is isochoric.
+
+..
+    TODO find link
 """
 
 from sympy import Eq, solve
@@ -71,7 +74,7 @@ Latex:
         \Delta p = p_0 \left( \beta_V T - 1 \right)
 """
 
-# Derive law from Charles' law of isochoric heating of gas.
+# Derive law from Guy-Lussac's law of isochoric heating of gas.
 
 _isochoric_eqn = isochoric_law.law.subs({
     isochoric_law.initial_pressure: initial_pressure,

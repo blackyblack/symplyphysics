@@ -3,6 +3,10 @@ Temperature is derivative of internal energy
 ============================================
 
 Temperature of a thermodynamic system can be found when internal energy is known as a function of entropy.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Internal_energy#Internal_energy_of_multi-component_systems>`__.
 """
 
 from sympy import Eq, Derivative, solve

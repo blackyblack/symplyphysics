@@ -26,6 +26,13 @@ of the macrostate.
 #. All particles are identical.
 #. The gas is ideal.
 #. Probabilities must sum up to :math:`1`.
+
+**Links:**
+
+#. Formula 80.8 on p. 298 of "General Course of Physics" (Obschiy kurs fiziki), vol. 1 by Sivukhin D.V. (1979).
+
+..
+    TODO find English link
 """
 
 from typing import Sequence

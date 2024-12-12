@@ -3,6 +3,10 @@ Heat of combustion via mass
 ===========================
 
 *Heat of combustion* of the heat released during the complete combustion of a body.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Heat_of_combustion>`__.
 """
 
 from sympy import (Eq, solve)

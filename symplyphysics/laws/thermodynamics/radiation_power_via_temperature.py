@@ -10,6 +10,10 @@ the radiating body's temperature.
 **Notation:**
 
 #. :quantity_notation:`stefan_boltzmann_constant`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Stefan%E2%80%93Boltzmann_law#Detailed_explanation>`__.
 """
 
 from sympy import Eq

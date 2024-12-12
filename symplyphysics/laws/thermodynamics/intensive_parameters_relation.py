@@ -9,6 +9,10 @@ parameters, or degrees of freedom.
 **Notation:**
 
 #. :math:`d` denotes an exact, path-independent differential.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Gibbs%E2%80%93Duhem_equation>`__.
 """
 
 from sympy import Eq, solve

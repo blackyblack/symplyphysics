@@ -12,6 +12,10 @@ constant volume in the case of an ideal gas.
 **Conditions:**
 
 #. Gas is ideal.
+
+**Links:**
+
+#. `Wikipedia, first formula <https://en.wikipedia.org/wiki/Mayer%27s_relation>`__.
 """
 
 from sympy import Eq, solve

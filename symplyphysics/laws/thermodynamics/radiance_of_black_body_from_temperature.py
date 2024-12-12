@@ -1,5 +1,5 @@
 from sympy import (Eq, solve)
-from symplyphysics import (symbols, units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (symbols, units, Quantity, Symbol, validate_input,
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import (
@@ -20,6 +20,8 @@ from symplyphysics.laws.thermodynamics import radiation_power_via_temperature as
 # Note
 ## j* = epsilon*sigma*T^4, where ε is the integral absorption capacity of the body. For a completely black body ε = 1.
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Stefan%E2%80%93Boltzmann_law>
+
 radiance = Symbol("radiance", units.power / units.area)
 temperature = symbols.temperature
 
@@ -39,10 +41,6 @@ _radiant_exitance_derived = exitance_def.definition.rhs.subs(
 ).doit()
 
 assert expr_equals(_radiant_exitance_derived, law.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(temperature_=temperature)

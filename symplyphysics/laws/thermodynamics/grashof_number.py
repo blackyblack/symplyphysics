@@ -9,6 +9,10 @@ and is analogous to the Reynolds number.
 **Notation:**
 
 #. :quantity_notation:`acceleration_due_to_gravity`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Grashof_number#Definition>`__.
 """
 
 from sympy import Eq, solve

@@ -7,6 +7,10 @@ The mean free path of a molecule in random motion is its average path length bet
 **Conditions:**
 
 #. Spherical model of molecules is assumed.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Mean_free_path#Kinetic_theory_of_gases>`__.
 """
 
 from sympy import Eq, sqrt, pi

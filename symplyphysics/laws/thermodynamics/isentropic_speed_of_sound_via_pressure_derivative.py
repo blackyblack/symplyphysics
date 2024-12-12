@@ -8,6 +8,10 @@ is so small, that there is no heat transfer in the sound wave, i.e. it is an adi
 isentropic, process. This is in contrast with the Newton's formula, who thought that the sound propagation
 is an isothermal process in the assumption that the temperature differences between different parts of
 the sound wave immediately level out, which eventually turned out to be inconsistent with experimental data.
+
+**Links:**
+
+#. `Wikipedia, last equation in paragraph <https://en.wikipedia.org/wiki/Speed_of_sound#Equations>`__.
 """
 
 from sympy import Eq, sqrt, Derivative

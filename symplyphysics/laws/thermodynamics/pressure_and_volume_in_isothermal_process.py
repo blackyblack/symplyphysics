@@ -5,6 +5,10 @@ Pressure and volume in isothermal process
 A thermodynamic process is isothermal when the temperature of the system stays the same.
 **Boyle's law** states that the product of pressure and volume is constant during an isothermal
 process.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Ideal_gas_law#math_1>`__.
 """
 
 from sympy import Eq, solve

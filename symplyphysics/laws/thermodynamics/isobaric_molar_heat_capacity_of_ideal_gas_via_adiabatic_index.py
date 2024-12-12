@@ -12,6 +12,10 @@ constant and the adiabatic index of the gas.
 **Conditions:**
 
 #. The gas is ideal.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Heat_capacity_ratio#Ideal-gas_relations>`__.
 """
 
 from sympy import Eq, solve

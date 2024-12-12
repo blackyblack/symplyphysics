@@ -16,6 +16,10 @@ system :math:`B` divided by the common thermodynamic temperature of systems :mat
 **Notes:**
 
 #. Also applicable to actually possible quasi-static irreversible processes without composition change
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Entropy#Reversible_process>`__.
 """
 
 from sympy import Eq

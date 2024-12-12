@@ -8,6 +8,10 @@ and is independent of other thermodynamic quantities such as pressure or density
 **Notation:**
 
 #. :math:`d` denotes an exact, path-independent differential.
+
+**Links:**
+
+#. `Wikipedia, equivalent formula <https://en.wikipedia.org/wiki/Internal_energy#Internal_energy_of_the_ideal_gas>`__.
 """
 
 from sympy import Eq

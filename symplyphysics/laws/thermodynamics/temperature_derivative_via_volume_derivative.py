@@ -13,6 +13,12 @@ a gas without production of work or transfer of heat, which is in effect an isen
 
 #. Particle count is assumed to be constant.
 #. Heat capacity is assumed to be independent of temperature.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Joule%E2%80%93Thomson_effect#The_Joule%E2%80%93Thomson_(Kelvin)_coefficient>`__.
+
+#. `Chemistry LibreTexts <https://chem.libretexts.org/Courses/Millersville_University/CHEM_341-_Physical_Chemistry_I/04%3A_Putting_the_First_Law_to_Work/4.05%3A_The_Joule-Thomson_Effect>`__.
 """
 
 from sympy import Eq, Derivative, solve

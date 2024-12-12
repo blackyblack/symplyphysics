@@ -10,6 +10,10 @@ potentials.
 **Conditions:**
 
 #. Particle count must be constant.
+
+**Links:**
+
+#. `Wikipedia, first table <https://en.wikipedia.org/wiki/Table_of_thermodynamic_equations#Maxwell's_relations>`__.
 """
 
 from sympy import (

@@ -10,6 +10,13 @@ and the fractional change in the body's volume is proportional to the change in 
 
 #. The temperature change :math:`\Delta T` is small enough for the expansion coefficient
    :math:`\alpha_V` to be constant.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Thermal_expansion#Volume>`__.
+
+..
+    TODO move to `dynamics/deformations`?
 """
 
 from sympy import Eq, symbols, solve

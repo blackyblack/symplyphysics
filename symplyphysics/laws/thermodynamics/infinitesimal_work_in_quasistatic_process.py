@@ -11,6 +11,10 @@ increment of volume of the system.
 
 #. :math:`\delta` (:code:`delta`) denotes that the increment is an inexact, path-dependent differential.
 #. :math:`d` denotes that the increment is an exact, path-independent differential.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Work_(thermodynamics)#Pressure%E2%80%93volume_work>`__.
 """
 
 from sympy import Eq

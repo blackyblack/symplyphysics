@@ -9,6 +9,10 @@ for the speed of sound for ideal gases compared to the Newton's formula. See
 **Notation:**
 
 #. :quantity_notation:`molar_gas_constant`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Speed_of_sound#Speed_of_sound_in_ideal_gases_and_air>`__.
 """
 
 from sympy import Eq, solve, sqrt
