@@ -20,6 +20,10 @@ along with the more well-known van der Waals equation of state.
 
 #. Only applicable in the limits :math:`b \ll V_m` and :math:`a \ll p V_m^2`.
 #. Inapplicable for high pressures.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Real_gas#Dieterici_model>`__.
 """
 
 from sympy import Eq, solve, exp

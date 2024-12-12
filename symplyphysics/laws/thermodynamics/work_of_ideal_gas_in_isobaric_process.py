@@ -9,6 +9,10 @@ by the gas is proportional to the pressure of the gas and its volume change.
 
 #. The gas is ideal.
 #. The process is isobaric.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Isobaric_process>`__.
 """
 
 from sympy import Eq, solve

@@ -16,8 +16,13 @@ as they always tend to arrive at a state of thermodynamic equilibrium, where the
 
 #. The gas is ideal.
 
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Entropy#Entropy_change_formulas_for_simple_processes>`__.
+
 ..
     TODO refactor `mass / molar_mass` into `amount_of_substance`
+    TODO find other link
 """
 
 from sympy import Eq, solve, log

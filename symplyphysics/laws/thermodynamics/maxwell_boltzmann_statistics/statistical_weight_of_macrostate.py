@@ -11,6 +11,10 @@ for the statistical weight of the system can be found in combinatorics.
 
 #. Law can also be represented in form :math:`W = \frac{N!}{\prod_i (N_i!)}`
    (:code:`W = factorial(N) / Product(factorial(N_i), i)`)
+
+**Links:**
+
+#. `Chemistry LibreTexts, formula 1.5.1 <https://chem.libretexts.org/Courses/Western_Washington_University/Biophysical_Chemistry_(Smirnov_and_McCarty)/01%3A_Biochemical_Thermodynamics/1.05%3A_The_Boltzmann_Distribution_and_the_Statistical_Definition_of_Entropy>`__.
 """
 
 from typing import Sequence

@@ -16,6 +16,10 @@ around energy value :math:`E`.
 #. Number of particles is big enough that the laws of thermodynamics can be applied.
 #. Particles are identical, non-interacting, non-relativistic, and classical.
 #. The ensemble of particles is at thermodynamic equilibrium.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Maxwell%E2%80%93Boltzmann_distribution#Distribution_for_the_energy>`__.
 """
 
 from sympy import Eq, Rational, sqrt, pi, exp, solve

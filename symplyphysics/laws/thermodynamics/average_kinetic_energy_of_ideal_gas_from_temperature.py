@@ -13,6 +13,10 @@ temperature of the gas and only depends on the temperature.
 **Conditions:**
 
 #. The gas is ideal.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Kinetic_theory_of_gases#Temperature_and_kinetic_energy>`__.
 """
 
 from sympy import Eq, solve, Rational, stats, Interval, S

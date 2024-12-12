@@ -9,6 +9,10 @@ For example, enthalpy :math:`H` can be found using the Gibbs energy :math:`G` un
 
 #. Particle count must be constant.
 #. Pressure in the system must be constant.
+
+**Links:**
+
+#. `Wikipedia, equivalent concise form of this law <https://en.wikipedia.org/wiki/Gibbs%E2%80%93Helmholtz_equation>`__.
 """
 
 from sympy import Eq, Derivative, Point2D, solve

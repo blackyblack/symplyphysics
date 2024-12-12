@@ -9,6 +9,10 @@ functions but it can be derived via its definition and the relation for internal
 
 #. This formula works for a single-component system. For a multi-component system replace the
    right-hand side with a sum over each type of components.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Thermodynamic_potential#Euler_relations>`__.
 """
 
 from sympy import Eq

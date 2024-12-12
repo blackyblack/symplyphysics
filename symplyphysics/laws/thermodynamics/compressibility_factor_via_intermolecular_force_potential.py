@@ -16,6 +16,10 @@ linked to the intermolecular force potential.
 
 #. The virial expansion is done up to the second virial coefficient inclusively.
 
+**Links:**
+
+#. `Wikipedia, second formula <https://en.wikipedia.org/wiki/Compressibility_factor#Theoretical_models>`__.
+
 ..
     TODO Simplify this law by reducing it to the formula of the second virial coefficient
 """

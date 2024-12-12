@@ -19,6 +19,10 @@ to the Maxwell—Boltzmann distribution.
 #. No quantum effects occur in the system.
 #. Antiparticles cannot occur in the system.
 #. Temperature must be isotropic, i.e. each degree of freedom has to have the same translational kinetic energy.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Maxwell%E2%80%93J%C3%BCttner_distribution#Definition>`__.
 """
 
 from sympy import Eq, exp, sqrt

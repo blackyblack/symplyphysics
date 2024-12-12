@@ -9,6 +9,10 @@ homogeneous functions to get the following expression.
 
 #. This formula works for a single-component system. For a multi-component system replace the
    product of chemical potential and particle count with a sum over each type of components.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Thermodynamic_potential#Euler_relations>`__.
 """
 
 from sympy import Eq

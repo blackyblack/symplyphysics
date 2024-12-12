@@ -14,6 +14,10 @@ in a single-particle state :math:`i` is given by the Fermi—Dirac distribution.
 #. If the energy states are degenerate, i.e. two or more particles are on the same energy level,
    the average number of fermions can be found by multiplying by the degeneracy :math:`g_i` of
    the energy level.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Fermi%E2%80%93Dirac_statistics#Fermi%E2%80%93Dirac_distribution>`__.
 """
 
 from sympy import Eq, exp

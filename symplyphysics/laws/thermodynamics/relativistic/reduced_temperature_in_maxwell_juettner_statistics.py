@@ -11,6 +11,10 @@ the gas in question.
 
 #. :quantity_notation:`boltzmann_constant`.
 #. :quantity_notation:`speed_of_light`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Maxwell%E2%80%93J%C3%BCttner_distribution#Definition>`__.
 """
 
 from sympy import Eq

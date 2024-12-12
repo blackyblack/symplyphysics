@@ -4,6 +4,10 @@ Critical molar volume
 
 Critical molar volume of a van der Waals fluid is proportional to the excluded volume
 parameter :math:`b` of the van der Waals equation. See :ref:`vdw_critical_parameters_def`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Van_der_Waals_equation#Critical_point_and_corresponding_states>`__.
 """
 
 from sympy import Eq

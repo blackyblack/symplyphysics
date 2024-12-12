@@ -13,6 +13,10 @@ the evolution of heat transferred from hotter to colder environments in time and
    derivative with gradient :math:`\nabla`.
 #. Thermal conductivity :math:`k` can depend not only on position, but also on local
    temperature, but this is out of the scope of this law.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Heat_equation#Non-uniform_isotropic_medium>`__.
 """
 
 from sympy import Eq, Derivative
