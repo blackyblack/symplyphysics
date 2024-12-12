@@ -3,6 +3,10 @@ Acceleration is speed derivative
 ================================
 
 *Acceleration* is the derivative of speed w.r.t. time.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Acceleration#Instantaneous_acceleration>`__.
 """
 
 from sympy import Eq, Derivative

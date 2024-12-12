@@ -4,6 +4,10 @@ Intensity of sound wave is rate of energy transfer over area
 
 The *intensity* of a sound wave at a surface is a physical quantity defined as the average rate
 per unit area at which energy is transferred by the wave through or onto the surface.
+
+**Links:**
+
+#. `Wikipedia, fourth equation <https://en.wikipedia.org/wiki/Intensity_(physics)#Mathematical_description>`__.
 """
 
 from sympy import Eq

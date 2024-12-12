@@ -9,6 +9,10 @@ resistance, and the imaginary part is reactance.
 **Notation:**
 
 #. :math:`i` is the imaginary unit.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Electrical_impedance#Complex_impedance>`__.
 """
 
 from sympy import (I, Eq, solve)

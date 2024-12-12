@@ -5,6 +5,10 @@ Temporal frequency from period
 Frequency is a physical quantity that describes how many cycles or events happen per unit time.
 It is the inverse of period. See :doc:`definitions.temporal_frequency_is_number_of_events_per_unit_time`
 for additional information.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Frequency#Definitions_and_units>`__.
 """
 
 from sympy import Eq, solve

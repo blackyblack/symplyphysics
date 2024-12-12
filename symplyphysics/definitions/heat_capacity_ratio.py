@@ -11,6 +11,10 @@ reversible processes; the speed of sound also depends on this factor.
 
 #. One can also use intensive heat capacities, such as specific or molar ones, in place of the 
    extensive heat capacity presented here.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Heat_capacity_ratio#>`__.
 """
 
 from sympy import Eq

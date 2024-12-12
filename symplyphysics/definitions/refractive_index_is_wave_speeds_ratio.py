@@ -11,6 +11,10 @@ slower the wave propagates in the refracting medium relative to the incident med
 #. Both media are isotropic and transparent.
 #. The wave is monochromatic. Note that the speed of wave propagation depends on the
    wave frequency.
+
+**Links:**
+
+#. `Wikipedia, first equation <https://en.wikipedia.org/wiki/Refractive_index#Definition>`__.
 """
 
 from sympy import Eq, solve

@@ -6,6 +6,10 @@ Admittance is inverse impedance
 ability of a circuit or device to conduct electrical current.
 
 Also see :doc:`Impedance law <definitions.impedance_is_resistance_and_reactance>`
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Admittance>`__.
 """
 
 from sympy import (Eq, solve)

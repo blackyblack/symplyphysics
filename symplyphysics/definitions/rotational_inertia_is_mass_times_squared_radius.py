@@ -8,6 +8,9 @@ be inertial during rotation. It is a rotational analog of mass in linear motion.
 **Conditions:**
 
 #. The object is a material point, rigid and uniform.
+
+..
+    TODO same law `kinematics/rotational_inertia/rotational_inertia_of_particle`, remove this one?
 """
 
 from sympy import Eq, solve

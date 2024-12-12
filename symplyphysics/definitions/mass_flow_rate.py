@@ -4,6 +4,10 @@ Mass flow rate
 
 Mass flow rate is the rate of change in the mass of an object. Examples include the outflow of a substance
 from a certain volume, the flow in a pipe section, the combustion of fuel.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Mass_flow_rate#Formulation>`__.
 """
 
 from sympy import Eq, Derivative
