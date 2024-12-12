@@ -24,6 +24,10 @@ from symplyphysics import (
 ## po - target density,
 ## Na - avogadro constant.
 
+# TODO: find link
+
+# TODO: move to `magnetron` folder?
+
 etching_rate = Symbol("etching_rate", units.velocity)
 
 ion_current_density = Symbol("ion_current_density", units.current / units.area)

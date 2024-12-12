@@ -20,6 +20,10 @@ from symplyphysics import (
 ## Z1 - the atomic number of the first atom (traveling atom),
 ## Z2 - the atomic number of the second atom (gas atom).
 
+# TODO: find link
+
+# TODO: move to `magnetron` folder?
+
 distance_of_convergence_of_particles = Symbol("distance_of_convergence_of_particles", units.length)
 
 discharge_voltage = Symbol("discharge_voltage", units.voltage)

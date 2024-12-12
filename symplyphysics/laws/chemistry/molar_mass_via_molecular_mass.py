@@ -8,6 +8,10 @@ molecular mass.
 **Notation:**
 
 #. :quantity_notation:`avogadro_constant`
+
+**Links:**
+
+#. `Wikipedia, formula in the second paragraph <https://en.wikipedia.org/wiki/Avogadro_constant#>`__.
 """
 
 from sympy import Eq, solve, Symbol as SymSymbol, Idx

@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     symbols,
@@ -20,16 +19,16 @@ from symplyphysics import (
 ## I - current,
 ## t - time.
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Faraday%27s_laws_of_electrolysis#First_law>
+
+# TODO: replace `I * t` with charge `q`?
+
 equivalent = Symbol("equivalent", units.mass / units.charge)
 current = Symbol("current", units.current)
 time = Symbol("time", units.time)
 mass_deposited = symbols.mass
 
 law = Eq(mass_deposited, equivalent * current * time)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(equivalent_=equivalent, current_=current, time_=time)

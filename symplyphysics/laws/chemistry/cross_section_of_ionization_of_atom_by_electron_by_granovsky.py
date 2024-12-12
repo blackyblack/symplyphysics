@@ -25,6 +25,10 @@ from symplyphysics import (
 ## U - the energy of ionizing electrons,
 ## Umax - the electron energy corresponding to the maximum value of the ionization cross-sectional area.
 
+# TODO: find link
+
+# TODO: move to `ionization` folder?
+
 cross_sectional_area_of_ionization = Symbol("cross_sectional_area_of_ionization", units.area)
 
 ionization_energy = Symbol("ionization_energy", units.energy)

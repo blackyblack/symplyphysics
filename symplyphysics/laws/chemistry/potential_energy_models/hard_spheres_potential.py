@@ -9,6 +9,10 @@ atoms and molecules experience at very close distances.
 **Conditions:**
 
 #. Spheres are identical.
+
+**Links**:
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Hard_spheres#Formal_definition>`__.
 """
 
 from sympy import Eq, Piecewise, S

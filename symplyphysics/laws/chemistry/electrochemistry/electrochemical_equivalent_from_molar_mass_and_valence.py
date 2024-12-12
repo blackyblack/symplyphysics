@@ -1,6 +1,6 @@
 from sympy import (Eq, solve)
 from sympy.physics.units import faraday_constant
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, dimensionless)
 
 # Description
@@ -15,16 +15,14 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## F - faraday constant
 ## n - valence.
 
+# Links: Wikipedia, derivable <https://en.wikipedia.org/wiki/Electrochemical_equivalent>
+
 equivalent = Symbol("equivalent", units.mass / units.charge)
 
 molar_mass = Symbol("molar_mass", units.mass / units.amount_of_substance)
 valence = Symbol("valence", dimensionless)
 
 law = Eq(equivalent, molar_mass / (faraday_constant * valence))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(molar_mass_=molar_mass, valence_=valence)

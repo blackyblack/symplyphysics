@@ -20,6 +20,12 @@ from symplyphysics.quantities import bohr_radius, hydrogen_ionization_energy
 ## Uh - hydrogen ionization energy,
 ## a0 - Bohr radius.
 
+# TODO: find link
+
+# FIXME: fix file name
+
+# TODO: move to `ionization` folder?
+
 cross_sectional_area_of_ionization = Symbol("cross_sectional_area_of_ionization", units.area)
 
 ionization_energy = Symbol("ionization_energy", units.energy)

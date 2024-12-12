@@ -11,6 +11,8 @@ from symplyphysics import (Quantity, Symbol, validate_input, validate_output, di
 ## M1 - the mass of the traveling atom,
 ## M2 - the mass of the gas atom.
 
+# TODO: find link
+
 energy_transfer_coefficient = Symbol("energy_transfer_coefficient", dimensionless)
 
 mass_of_traveling_atom = clone_as_symbol(symbols.mass, display_symbol="m_1", display_latex="m_1")

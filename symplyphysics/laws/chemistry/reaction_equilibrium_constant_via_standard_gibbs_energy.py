@@ -14,6 +14,10 @@ concentrations or fugitives) of reactants and products in a state of chemical eq
 
 #. The term "standard" applies to a solution of an infinite dilution and of a hypothetical standard
    concentration, typically 1 mol/kg.
+
+**Links:**
+
+#. `Wikipedia, derivable from the fifth equation <https://en.wikipedia.org/wiki/Equilibrium_constant#Basic_definitions_and_properties>`__.
 """
 
 from sympy import Eq, solve, exp

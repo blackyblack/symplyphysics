@@ -15,6 +15,10 @@ from symplyphysics import (units, Quantity, Symbol, validate_input, validate_out
 ## Et - energy of thermal motion in a gas-discharge plasma,
 ## x - energy transfer coefficient between the traveling atom and the gas atoms.
 
+# TODO: find link
+
+# TODO: move to `magnetron` folder?
+
 number_of_collisions_of_atoms = Symbol("number_of_collisions_of_atoms", dimensionless)
 
 initial_energy = Symbol("initial_energy", units.energy)
