@@ -1,5 +1,5 @@
 from sympy import (Eq, solve, dsolve)
-from symplyphysics import (clone_as_symbol, symbols, units, Quantity, Symbol, print_expression,
+from symplyphysics import (clone_as_symbol, symbols, units, Quantity, Symbol,
     validate_input, validate_output)
 from symplyphysics.laws.dynamics import pressure_from_force_and_area as pressure_law
 from symplyphysics.core.expr_comparisons import expr_equals
@@ -20,12 +20,16 @@ from symplyphysics.laws.hydro import inner_pressure_is_constant as constant_pres
 ## Conditions
 ## This ratio is performed only in an ideal hydraulic press, i.e. one in which there is no friction.
 
+# Links: Physics LibreTexts, formula 53.1.2 <https://phys.libretexts.org/Courses/Prince_Georges_Community_College/General_Physics_I%3A_Classical_Mechanics/53%3A_Hydraulics_and_Pneumatics/53.01%3A_Hydraulics-_The_Hydraulic_Press>
+
 input_force = clone_as_symbol(symbols.force, display_symbol="F_in", display_latex="F_\\text{in}")
 input_area = Symbol("input_area", units.area)
 output_force = clone_as_symbol(symbols.force, display_symbol="F_out", display_latex="F_\\text{out}")
 output_forces_area = Symbol("output_forces_area", units.area)
 
 law = Eq(input_force / input_area, output_force / output_forces_area)
+
+# TODO prefix variables used in proof with underscore
 
 pressure_input = pressure_law.law.rhs.subs({
     pressure_law.force: input_force,
@@ -50,10 +54,6 @@ pressure_equation = Eq(pressure_input, solved_input)
 
 assert expr_equals(law.rhs, pressure_equation.rhs)
 assert expr_equals(law.lhs, pressure_equation.lhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(input_force_=input_force,

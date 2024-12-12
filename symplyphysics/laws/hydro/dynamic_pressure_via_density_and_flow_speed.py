@@ -10,6 +10,10 @@ fluid per unit volume (see :doc:`laws.quantities.quantity_is_volumetric_density_
 
 #. Many authors define this quantity only for *incompressible flows*, but others extend it for
    compressible flows as well.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Dynamic_pressure>`__.
 """
 
 from sympy import (Eq, solve)

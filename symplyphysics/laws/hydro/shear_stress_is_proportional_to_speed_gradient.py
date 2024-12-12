@@ -22,6 +22,10 @@ of the plate and the ratio :math:`\frac{u}{d}` where :math:`d` is the distance b
    derivatives with respect to both perpendicular directions.
 #. The fluid is incompressible and isotropic.
 #. The fluid flow is steady (laminar).
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Viscosity#Dynamic_viscosity>`__.
 """
 
 from sympy import Eq, Derivative, solve

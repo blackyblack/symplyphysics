@@ -7,7 +7,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     vector_magnitude,
@@ -29,6 +28,8 @@ from symplyphysics.laws.hydro import hydrostatic_pressure_from_density_and_depth
 ## a - acceleration of vessel,
 ## h - height.
 
+# TODO: find link
+
 pressure = Symbol("pressure", units.pressure)
 
 density_liquid = Symbol("density_liquid", units.mass / units.volume)
@@ -37,6 +38,8 @@ height = Symbol("height", units.length)
 
 law = Eq(pressure,
     density_liquid * sqrt(earth_free_fall_acceleration**2 + acceleration**2) * height)
+
+# TODO prefix variables used in proof with underscore
 
 # This law might be derived via hydrostatic pressure law.
 # The vessel moves horizontally and the pressure exerted by the resultant force on a surface of equal pressure,
@@ -61,10 +64,6 @@ pressure_derived = solve(pressure_law_applied, pressure_law.hydrostatic_pressure
 
 # Check if derived pressure is same as declared.
 assert expr_equals(pressure_derived, law.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(density_liquid_=density_liquid, acceleration_=acceleration, height_=height)

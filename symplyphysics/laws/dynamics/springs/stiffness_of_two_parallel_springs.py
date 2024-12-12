@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     Vector,
@@ -23,6 +22,8 @@ from symplyphysics.laws.dynamics.springs import spring_reaction_is_proportional_
 
 # Condition
 ## - Springs must be Hookean, or linear-response, i.e. obey the Hooke's law.
+
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Series_and_parallel_springs#Formulas>
 
 total_stiffness = Symbol("total_stiffness", units.force / units.length, positive=True)
 first_stiffness = Symbol("first_stiffness", units.force / units.length, positive=True)
@@ -58,10 +59,6 @@ _total_stiffness_derived = solve(
 )[0]
 
 assert expr_equals(_total_stiffness_derived, law.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(

@@ -13,6 +13,10 @@ depends on the ratio of the densities of the body and the fluid.
 
 #. :math:`\rho \le \rho_\text{fl}`, so the body must be floating.
 #. The body must be in static equilibrium.
+
+**Links:**
+
+#. `Wikipedia, formula 10.3.17 <https://phys.libretexts.org/Bookshelves/University_Physics/Physics_(Boundless)/10%3A_Fluids/10.3%3A_Archimedes_Principle>`__.
 """
 
 from sympy import (Eq, solve)

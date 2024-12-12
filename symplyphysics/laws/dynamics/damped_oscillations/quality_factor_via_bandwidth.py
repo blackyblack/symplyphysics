@@ -4,7 +4,6 @@ from symplyphysics import (
     dimensionless,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
@@ -26,15 +25,13 @@ from symplyphysics import (
 # Note
 ## - An equivalent definition uses angular frequencies instead of linear ones.
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Q_factor#Bandwidth_definition>
+
 quality_factor = Symbol("quality_factor", dimensionless)
 resonant_frequency = Symbol("resonant_frequency", units.frequency)
 resonance_width = Symbol("resonance_width", units.frequency)
 
 law = Eq(quality_factor, resonant_frequency / resonance_width)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(

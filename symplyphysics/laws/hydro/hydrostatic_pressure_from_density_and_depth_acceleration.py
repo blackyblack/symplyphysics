@@ -1,5 +1,5 @@
 from sympy import Eq, solve
-from symplyphysics import symbols, units, Quantity, Symbol, print_expression, validate_input, validate_output
+from symplyphysics import symbols, units, Quantity, Symbol, validate_input, validate_output
 
 # Description
 # Law: P = ρ * a * h
@@ -11,16 +11,14 @@ from symplyphysics import symbols, units, Quantity, Symbol, print_expression, va
 # Conditions
 # - No other accelerations involved, ie gravitational acceleration
 
+# TODO: find link
+
 density = Symbol("density", units.mass / units.volume)
 depth = Symbol("depth", units.length)
 acceleration = symbols.acceleration
 hydrostatic_pressure = Symbol("hydrostatic_pressure", units.pressure)
 
 law = Eq(hydrostatic_pressure, density * acceleration * depth)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(density_=density, depth_=depth, acceleration_=acceleration)

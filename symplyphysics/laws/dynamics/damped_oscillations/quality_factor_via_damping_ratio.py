@@ -3,7 +3,6 @@ from symplyphysics import (
     convert_to_float,
     dimensionless,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
@@ -18,14 +17,12 @@ from symplyphysics import (
 ## Q - Q factor
 ## zeta - [damping ratio](../../../definitions/damped_harmonic_oscillator_equation.py)
 
+# Links: derivable from here <https://en.wikipedia.org/wiki/Damping#Q_factor_and_decay_rate>
+
 quality_factor = Symbol("quality_factor", dimensionless)
 damping_ratio = Symbol("damping_ratio", dimensionless)
 
 law = Eq(quality_factor, 1 / (2 * damping_ratio))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(damping_ratio_=damping_ratio)

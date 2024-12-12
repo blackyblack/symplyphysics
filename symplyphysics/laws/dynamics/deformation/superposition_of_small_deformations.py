@@ -9,6 +9,10 @@ the individual forces, however these deformations must be small.
 **Conditions:**
 
 #. The deformations are small.
+
+**Links:**
+
+#. `Wikipedia, general information can be found here <https://en.wikipedia.org/wiki/Infinitesimal_strain_theory>`__.
 """
 
 from sympy import Eq

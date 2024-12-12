@@ -4,7 +4,6 @@ from symplyphysics import (
     angle_type,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
@@ -26,15 +25,13 @@ from symplyphysics.core.symbols.quantities import scale_factor
 # Note
 ## For a visual representation of shear stress visit [this](https://vuzdoc.org/htm/img/3/6176/223.png)
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Shear_stress#Pure>
+
 shear_stress = Symbol("shear_stress", units.pressure)
 shear_modulus = Symbol("shear_modulus", units.pressure)
 shear_strain = Symbol("shear_strain", angle_type)
 
 law = Eq(shear_stress, shear_modulus * shear_strain)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(

@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     dimensionless,
@@ -27,15 +26,13 @@ from symplyphysics import (
 # L is a characteristic length,
 # Fr is Froude number.
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Froude_number>
+
 velocity = Symbol("velocity", units.velocity)
 characteristic_length = Symbol("characteristic_length", units.length)
 froude_number = Symbol("froude_number", dimensionless)
 
 law = Eq(froude_number, velocity / sqrt(units.acceleration_due_to_gravity * characteristic_length))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(velocity_=velocity, characteristic_length_=characteristic_length)

@@ -6,6 +6,10 @@ Reynolds number formula
 It helps predict fluid flow patterns in different situations by measuring the ratio between inertial
 and viscous forces. Low Reynolds numbers tend to correspond to laminar flows, while high Reynolds
 numbers tend to correspond to turbulent flows.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Reynolds_number#Definition>`__.
 """
 
 from sympy import Eq, solve

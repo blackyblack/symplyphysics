@@ -1,6 +1,5 @@
 from sympy import Eq, solve, pi
-
-from symplyphysics import (Quantity, Symbol, print_expression, units, validate_input,
+from symplyphysics import (Quantity, Symbol, units, validate_input,
     validate_output)
 
 # Law: delta_p = 8 * mu * L * Q / (pi * R**4)
@@ -10,6 +9,8 @@ from symplyphysics import (Quantity, Symbol, print_expression, units, validate_i
 # Q is the volumetric flow rate,
 # R is the pipe radius
 
+# Links: Wikipedia, first part of the first equation <https://en.wikipedia.org/wiki/Hagen%E2%80%93Poiseuille_equation#Equation>
+
 dynamic_viscosity = Symbol("dynamic_viscosity", units.pressure * units.time)
 length = Symbol("length", units.length)
 flow_rate = Symbol("flow_rate", units.volume / units.time)
@@ -17,10 +18,6 @@ radius = Symbol("radius", units.length)
 delta_pressure = Symbol("delta_pressure", units.pressure)
 
 law = Eq(delta_pressure, 8 * dynamic_viscosity * length * flow_rate / (pi * radius**4))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(

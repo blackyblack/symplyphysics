@@ -6,6 +6,14 @@ Volumetric density of the elastic energy of a body is proportional to
 its Young's modulus and the square of its strain. The
 :doc:`Hooke's law <laws.dynamics.deformation.tensile_stress_is_youngs_modulus_times_strain>`
 can be used to obtain analogous forms of this law.
+
+**Conditions:**
+
+#. The material is linearly elastic.
+
+**Links:**
+
+#. `Wikipedia, equation on the fourth line <https://en.wikipedia.org/wiki/Young%27s_modulus#Elastic_potential_energy>`__.
 """
 
 from sympy import Eq
