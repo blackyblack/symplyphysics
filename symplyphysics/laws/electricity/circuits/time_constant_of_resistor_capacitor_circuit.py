@@ -5,6 +5,10 @@ Time constant of resistor-capacitor circuit
 The time constant of an RC circuit is the time it takes for the current to become
 :math:`e` times smaller its original value. Also see `exponential decay
 <https://en.wikipedia.org/wiki/Exponential_decay>`_.
+
+**Links:**
+
+#. `Wikipedia, second formula <https://en.wikipedia.org/wiki/Time_constant#Time_constants_in_electrical_circuits>`__.
 """
 
 from sympy import Eq

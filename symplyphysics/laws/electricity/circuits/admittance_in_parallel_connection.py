@@ -8,6 +8,10 @@ of the admittances of individual components.
 **Conditions:**
 
 #. Components are connected in parallel.
+
+**Links:**
+
+#. `Electronics Tutorials, "Admittance of a Parallel RLC Circuit" <https://www.electronics-tutorials.ws/accircuits/parallel-circuit.html>`__.
 """
 
 from sympy import Eq, Idx, solve

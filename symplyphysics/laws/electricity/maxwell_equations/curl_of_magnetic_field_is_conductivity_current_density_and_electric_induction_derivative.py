@@ -23,6 +23,10 @@ from symplyphysics.core.vectors.vectors import Vector
 ## Curl operator is only defined in 3D space. Therefore magnetic intensity should not be defined
 ## as 4 dimensional field. Rather time should be a part of vector field component expression.
 
+# Links:
+## Wikipedia, second line in table <https://en.wikipedia.org/wiki/Maxwell%27s_equations#Macroscopic_formulation>
+## Physics LibreTexts, formula 15.5.3 <https://phys.libretexts.org/Bookshelves/Electricity_and_Magnetism/Electricity_and_Magnetism_(Tatum)/15%3A_Maxwell's_Equations/15.05%3A_Maxwell's_Third_Equation>
+
 time = Symbol("time", units.time)
 
 

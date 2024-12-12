@@ -12,6 +12,8 @@ from symplyphysics import (units, Quantity, Symbol, validate_input, validate_out
 ## f - frequency,
 ## C - capacitance.
 
+# TODO find link
+
 input_impedance = Symbol("input_impedance", units.impedance)
 
 resistance = Symbol("resistance", units.impedance)

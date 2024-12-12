@@ -16,6 +16,10 @@ from symplyphysics.core.vectors.arithmetics import diff_cartesian_vector, scale_
 ## curl - curl of the vector of magnetic induction,
 ## d / dt - time partial derivative.
 
+# Links
+## Wikipedia, fourth line in table <https://en.wikipedia.org/wiki/Maxwell%27s_equations#Macroscopic_formulation>
+## Physics LibreTexts, formula 15.7.1 <https://phys.libretexts.org/Bookshelves/Electricity_and_Magnetism/Electricity_and_Magnetism_(Tatum)/15%3A_Maxwell's_Equations/15.07%3A_Maxwell's_Fourth_Equation>
+
 time = Symbol('time', units.time)
 
 

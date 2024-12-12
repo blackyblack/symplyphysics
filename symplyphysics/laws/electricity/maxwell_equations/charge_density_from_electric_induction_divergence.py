@@ -14,6 +14,10 @@ from symplyphysics.core.fields.vector_field import VectorField
 ## p - electric charge volumetric density (scalar field),
 ## div - divergence (the sum of partial derivatives in coordinates).
 
+# Links:
+## Wikipedia, first line in table <https://en.wikipedia.org/wiki/Maxwell%27s_equations#Macroscopic_formulation>
+## Physics LibreTexts, formula 15.2.3 <https://phys.libretexts.org/Bookshelves/Electricity_and_Magnetism/Electricity_and_Magnetism_(Tatum)/15%3A_Maxwell's_Equations/15.02%3A_Maxwell's_First_Equation>
+
 
 def charge_volumetric_density_law(electric_induction: VectorField) -> ScalarField:
     return ScalarField.from_expression(divergence_operator(electric_induction),

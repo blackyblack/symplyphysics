@@ -11,6 +11,10 @@ reaches the voltage of the source.
 **Conditions:**
 
 #. Applies to direct current circuits.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Capacitor#DC_circuits>`__.
 """
 
 from sympy import Derivative, Eq, Idx, solve, exp, simplify

@@ -4,6 +4,10 @@ Coil impedance via inductance and frequency
 
 The impedance of a coil depends on its inductance and the angular frequency of the alternating
 current. It is a purely imaginary quantity since the resistance of a coil is zero.
+
+**Links:**
+
+#. `Wikipedia, first formula <https://en.wikipedia.org/wiki/Electrical_impedance#Inductor_and_capacitor>`__.
 """
 
 from sympy import I, Eq, solve
