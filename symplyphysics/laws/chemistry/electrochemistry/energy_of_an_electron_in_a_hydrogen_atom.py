@@ -12,7 +12,7 @@ from symplyphysics import (units, Quantity, Symbol, validate_input,
 ## e - charge of electron,
 ## r - radius of the Bohr orbit of electron.
 
-# Links: derivable from first formula and formula for kinetic energy <https://en.wikipedia.org/wiki/Classical_electron_radius#>
+# Links: Wikipedia, derivable from first formula and formula for kinetic energy <https://en.wikipedia.org/wiki/Classical_electron_radius#>
 
 energy_of_electron = Symbol("energy_of_electron", units.energy)
 
