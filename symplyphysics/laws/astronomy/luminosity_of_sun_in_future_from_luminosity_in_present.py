@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     dimensionless,
@@ -22,6 +21,8 @@ from symplyphysics import (
 # Conditions:
 # - formula is valid while Sun is on the main sequence (https://faculty.wcas.northwestern.edu/infocom/The%20Website/end.html).
 
+# TODO: find link
+
 luminosity_future = Symbol("luminosity_future", dimensionless)
 
 luminosity_present = Symbol("luminosity_present", dimensionless)
@@ -33,10 +34,6 @@ law = Eq(
     luminosity_future,
     luminosity_present * ((5.59 / (time / one_billion_years)) - 1.41 + 0.26 *
     (time / one_billion_years)))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(luminosity_present_=luminosity_present, time_=time)

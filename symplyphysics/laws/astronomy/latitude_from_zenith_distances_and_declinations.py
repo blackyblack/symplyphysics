@@ -2,7 +2,6 @@ from sympy import Eq, solve
 from symplyphysics import (
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     angle_type,
@@ -24,6 +23,8 @@ from symplyphysics import (
 # Conditions:
 # - both stars are at upper transit (culmination).
 
+# TODO: find link
+
 latitude = Symbol("zenith_distance_north", angle_type)
 
 zenith_distance_north = Symbol("zenith_distance_north", angle_type)
@@ -33,10 +34,6 @@ declination_south = Symbol("declination_south", angle_type)
 
 law = Eq(latitude,
     (zenith_distance_south - zenith_distance_north + declination_south + declination_north) / 2)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(

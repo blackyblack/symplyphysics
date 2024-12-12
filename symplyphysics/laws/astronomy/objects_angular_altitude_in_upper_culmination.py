@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     angle_type,
@@ -24,6 +23,8 @@ from symplyphysics import (
 # Conditions:
 # - it is valid when object is at its upper culmination.
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Culmination#>
+
 angular_altitude = Symbol("angular_altitude", angle_type)
 
 latitude = Symbol("latitude", angle_type)
@@ -32,10 +33,6 @@ declination = Symbol("declination", angle_type)
 ninety_degrees = Quantity(90 * units.deg)
 
 law = Eq(angular_altitude, ninety_degrees - latitude + declination)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(latitude_=latitude, declination_=declination)

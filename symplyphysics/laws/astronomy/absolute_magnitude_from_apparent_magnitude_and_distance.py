@@ -3,6 +3,10 @@ Absolute magnitude of stars from apparent magnitude and distance
 ================================================================
 
 Absolute magnitude can be calculated using apparent magnitude and distance to the object.
+
+**Links:**
+
+#. `Wikipedia, second formula <https://en.wikipedia.org/wiki/Absolute_magnitude#Apparent_magnitude>`__.
 """
 
 from sympy import Eq, solve, log
@@ -37,7 +41,7 @@ distance_constant = Quantity(2.063e+6 * units.astronomical_unit,
     display_symbol="d0",
     display_latex="d_0")
 """
-Constant equal to 2.063e+6 astronomical units.
+Constant equal to :math:`2.063e+6` astronomical units.
 """
 
 law = Eq(absolute_magnitude, apparent_magnitude - 5 * log(distance / distance_constant, 10))

@@ -6,6 +6,9 @@ The Tsiolkovsky formula determines the speed that an aircraft develops under the
 of a rocket engine, unchanged in direction, in the absence of all other forces.
 For a rocket flying at a speed close to the speed of light, the generalized Tsiolkovsky formula is valid,
 in which the speed of light is present.
+
+..
+    TODO find link
 """
 
 from sympy import (Eq, solve)
@@ -16,7 +19,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
@@ -59,10 +61,6 @@ Latex:
     .. math::
         \frac{M_2}{M_1} = \left( \frac{1 - \frac{V}{c}}{1 + \frac{V}{c}} \right) ^ {\frac{c}{2 V_e}}
 """
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(exhaust_velocity_=exhaust_velocity,

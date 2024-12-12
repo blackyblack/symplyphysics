@@ -5,7 +5,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
@@ -23,6 +22,8 @@ from symplyphysics import (
 ## m1 - mass of the first planet,
 ## m2 - mass of the second planet.
 
+# TODO: remove law since a simpler one is in the `gravity` folder?
+
 first_period = Symbol("first_period", units.time)
 second_period = Symbol("second_period", units.time)
 first_semi_axis = Symbol("first_semi_axis", units.length)
@@ -34,10 +35,6 @@ mass_of_sun = Quantity(1.989e30 * units.kilogram)
 
 law = Eq(((mass_of_sun + first_mass) * first_period**2) /
     ((mass_of_sun + second_mass) * second_period**2), first_semi_axis**3 / second_semi_axis**3)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(second_period_=second_period,

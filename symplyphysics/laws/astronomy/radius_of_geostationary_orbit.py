@@ -5,7 +5,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     angle_type,
@@ -21,16 +20,17 @@ from symplyphysics import (
 ## M - mass of planet.
 ## w - angular speed of rotation of satellite.
 
+# Links: possible formula derivable from here <https://en.wikipedia.org/wiki/Geostationary_orbit#Derivation>
+# TODO: find link with exact formula
+
+# TODO: move law to `gravity`?
+
 radius_of_orbit = Symbol("radius_of_orbit", units.length)
 mass_of_planet = symbols.mass
 speed_rotation_satellite = Symbol("speed_rotation_satellite", angle_type / units.time)
 
 law = Eq(radius_of_orbit,
     (gravitational_constant * mass_of_planet / (speed_rotation_satellite**2))**Rational(1, 3))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(mass_of_planet_=mass_of_planet, speed_rotation_satellite_=speed_rotation_satellite)

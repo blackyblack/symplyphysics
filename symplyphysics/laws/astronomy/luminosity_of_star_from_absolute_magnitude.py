@@ -1,7 +1,6 @@
 from sympy import Eq, solve, log
 from symplyphysics import (
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     dimensionless,
@@ -16,15 +15,13 @@ from symplyphysics import (
 ## L - luminosity of the star,
 ## M - absolute_magnitude of the star.
 
+# Links: potential formula within text <https://en.wikipedia.org/wiki/Luminosity#Relationship_to_magnitude>
+
 luminosity = Symbol("luminosity", dimensionless)
 
 absolute_magnitude = Symbol("absolute_magnitude", dimensionless)
 
 law = Eq(log(luminosity, 10), 0.4 * (5 - absolute_magnitude))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(absolute_magnitude_=absolute_magnitude)

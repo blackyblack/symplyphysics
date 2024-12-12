@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     dimensionless,
@@ -19,16 +18,14 @@ from symplyphysics import (
 ## b - small semi-axis of ellipse,
 ## a - large semi-axis of ellipse.
 
+# Links: Wikipedia, ellipse <https://en.wikipedia.org/wiki/Eccentricity_(mathematics)#Standard_form>
+
 eccentricity = Symbol("eccentricity", dimensionless)
 
 small_semi_axis = Symbol("small_semi_axis", units.length)
 large_semi_axis = Symbol("large_semi_axis", units.length)
 
 law = Eq(eccentricity, sqrt(1 - (small_semi_axis / large_semi_axis)**2))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(small_semi_axis_=small_semi_axis, large_semi_axis_=large_semi_axis)

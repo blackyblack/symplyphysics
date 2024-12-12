@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     dimensionless,
@@ -19,16 +18,18 @@ from symplyphysics import (
 ## F - focal length of the lens,
 ## f - focal length of the eyepiece.
 
+# Link: Physics LibreTexts, paragraph <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/University_Physics_III_-_Optics_and_Modern_Physics_(OpenStax)/02%3A_Geometric_Optics_and_Image_Formation/2.09%3A_Microscopes_and_Telescopes>
+
+# Link: Physics LibreTexts, formula <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/University_Physics_III_-_Optics_and_Modern_Physics_(OpenStax)/02%3A_Geometric_Optics_and_Image_Formation/2.09%3A_Microscopes_and_Telescopes#mjx-eqn-eq2.36>
+
+# TODO: move law to `optics`?
+
 angular_magnification = Symbol("angular_magnification", dimensionless)
 
 focal_length_lens = Symbol("focal_length_lens", units.length)
 focal_length_eyepiece = Symbol("focal_length_eyepiece", units.length)
 
 law = Eq(angular_magnification, focal_length_lens / focal_length_eyepiece)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(focal_length_lens_=focal_length_lens, focal_length_eyepiece_=focal_length_eyepiece)

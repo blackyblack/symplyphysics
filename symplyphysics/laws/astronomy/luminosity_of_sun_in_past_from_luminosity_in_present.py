@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     dimensionless,
@@ -21,6 +20,8 @@ from symplyphysics import (
 ## L - luminosity of the sun in present,
 ## t - time in billions of years.
 
+# TODO: find link
+
 luminosity_past = Symbol("luminosity_past", dimensionless)
 
 luminosity_present = Symbol("luminosity_present", dimensionless)
@@ -29,10 +30,6 @@ time = Symbol("time", units.time)
 one_billion_years = Quantity(1e9 * units.common_year)
 
 law = Eq(luminosity_past, luminosity_present / (1 + 0.4 * (1 - ((time / one_billion_years) / 4.6))))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(luminosity_present_=luminosity_present, time_=time)

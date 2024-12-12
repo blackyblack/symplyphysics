@@ -1,5 +1,5 @@
 from sympy import (Eq, solve, pi)
-from symplyphysics import (symbols, units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (symbols, units, Quantity, Symbol, validate_input,
     validate_output)
 
 # Description
@@ -13,15 +13,13 @@ from symplyphysics import (symbols, units, Quantity, Symbol, print_expression, v
 ## R is the radius of the star
 ## T is the temperature of the star's photosphere
 
+# Links: Wikipedia, first formula <https://en.wikipedia.org/wiki/Main_sequence#Parameters>
+
 luminosity = Symbol("luminosity", units.power)
 radius = Symbol("radius", units.length)
 temperature = symbols.temperature
 
 law = Eq(luminosity, 4 * pi * (radius**2) * units.stefan_boltzmann_constant * (temperature**4))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(radius_=radius, temperature_=temperature)

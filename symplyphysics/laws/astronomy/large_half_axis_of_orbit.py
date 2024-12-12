@@ -5,7 +5,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
@@ -20,15 +19,13 @@ from symplyphysics import (
 ## M - mass of the body around which the movement takes place,
 ## v - orbital velocity.
 
+# TODO: find link
+
 large_half_axis_length = Symbol("large_half_axis_length", units.length)
 orbital_velocity = Symbol("orbital_velocity", units.velocity)
 planet_mass = symbols.mass
 
 law = Eq(large_half_axis_length, gravitational_constant * planet_mass / orbital_velocity**2)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(orbital_velocity_=orbital_velocity, planet_mass_=planet_mass)

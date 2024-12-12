@@ -4,7 +4,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
@@ -24,6 +23,8 @@ from symplyphysics import (
 ## Ls - luminosity of the Sun,
 ## L - luminosity of the star.
 
+# Link: Wikipedia, second formula <https://en.wikipedia.org/wiki/Main_sequence#Lifetime>
+
 lifetime = Symbol("lifetime", units.time)
 
 mass_of_star = symbols.mass
@@ -35,10 +36,6 @@ luminosity_of_sun = Quantity(3.827e26 * units.watt)
 
 law = Eq(lifetime,
     lifetime_of_sun * (mass_of_star / mass_of_sun) * (luminosity_of_sun / luminosity_of_star))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(mass_of_star_=mass_of_star, luminosity_of_star_=luminosity_of_star)
