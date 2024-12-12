@@ -7,6 +7,10 @@ The isobaric volumetric expansion coefficient of an ideal gas is the inverse of 
 **Conditions:**
 
 #. Pressure of the gas remains constant during the expansion.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Thermal_expansion#In_gases>`__.
 """
 
 from sympy import Eq, solve

@@ -13,6 +13,10 @@ into account the main characteristics of a gas with intermolecular interaction.
 **Notation:**
 
 #. :quantity_notation:`molar_gas_constant`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Van_der_Waals_equation#>`__.
 """
 
 from sympy import (Eq, solve)

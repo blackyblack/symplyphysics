@@ -5,6 +5,10 @@ Chemical potential is Gibbs energy per particle
 Chemical potential of a thermodynamic system can be expressed as the Gibbs energy of the system
 per particle. Therefore, chemical potential is an intensive physical quantity, whereas Gibbs energy
 and particle count are extensive.
+
+**Links:**
+
+#. `Wikipedia, last formula in paragraph <https://en.wikipedia.org/wiki/Gibbs_free_energy#Definitions>`__.
 """
 
 from sympy import Eq

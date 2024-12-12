@@ -20,6 +20,10 @@ Also called the *virial expansion*, the *virial equation of state* expresses the
    the second and third virial coefficients. Moreover, the latter have been extensively studied and tabulated
    for many fluids.
 #. In this law the limit :math:`\rho \to 0` is assumed.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Virial_expansion>`__.
 """
 
 from sympy import Eq

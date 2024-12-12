@@ -8,6 +8,10 @@ as a function of volume at constant temperature.
 **Conditions:**
 
 #. The fluid is homogeneous and in a single phase state.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Van_der_Waals_equation#Internal_energy_and_specific_heat_at_constant_volume>`__.
 """
 
 from sympy import Eq, Integral

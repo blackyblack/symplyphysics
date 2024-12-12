@@ -15,6 +15,10 @@ To do this, the heat capacity of the external environment must be large enough, 
 
 #. The gas is ideal. See :ref:`Ideal gas equation`.
 #. The temperature of the gas stays constant during the expansion.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Isothermal_process#Calculation_of_work>`__.
 """
 
 from sympy import Eq, solve, log

@@ -15,6 +15,10 @@ to inverse molar volume or equivalently, to molar density.
 **Conditions:**
 
 #. The gas density is small enough within the context of perturbation theory.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Van_der_Waals_equation#Virial_expansion>`__.
 """
 
 from sympy import Eq, solve, Symbol as SymSymbol

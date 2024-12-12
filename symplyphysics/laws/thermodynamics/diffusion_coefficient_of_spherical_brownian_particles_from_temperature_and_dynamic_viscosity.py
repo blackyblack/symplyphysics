@@ -22,6 +22,10 @@ the type of diffusing particles. This law is also known as the *Stokes—Einstei
 #. The inertia of a Brownian particle can be neglected compared to the influence of friction forces.
 #. Particles are spherical.
 #. Low Reynolds number, i.e. non-turbulent flow.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Einstein_relation_(kinetic_theory)>`__.
 """
 
 from sympy import Eq, solve, pi

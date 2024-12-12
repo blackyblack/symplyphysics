@@ -14,6 +14,10 @@ found in a given single-particle microstate.
 
 #. Particles do not interact and are classical.
 #. The system is in thermal equilibrium.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Maxwell%E2%80%93Boltzmann_statistics>`__.
 """
 
 from sympy import Eq, exp, solve

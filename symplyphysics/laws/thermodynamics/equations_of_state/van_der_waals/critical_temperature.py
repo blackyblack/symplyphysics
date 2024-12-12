@@ -8,6 +8,10 @@ of the van der Waals equation and the molar gas constant :math:`R`. See :ref:`vd
 **Notation:**
 
 #. :quantity_notation:`molar_gas_constant`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Van_der_Waals_equation#Critical_point_and_corresponding_states>`__.
 """
 
 from sympy import Eq

@@ -13,6 +13,10 @@ is maximum.
 
 #. The gas is in thermal equilibrium with the environment.
 #. The gas particles are distributed according to Maxwell—Boltzmann statistics.
+
+**Links:**
+
+#. `Wikipedia, first item within the list <https://en.wikipedia.org/wiki/Maxwell%E2%80%93Boltzmann_distribution#Typical_speeds>`__.
 """
 
 from sympy import Eq, sqrt, solve, sign, S

@@ -9,6 +9,10 @@ system changes.
 
 #. The process is reversible or quasi-static.
 #. The system is closed.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Work_(thermodynamics)#Pressure%E2%80%93volume_work>`__.
 """
 
 from sympy import Eq, Integral, Point2D, solve

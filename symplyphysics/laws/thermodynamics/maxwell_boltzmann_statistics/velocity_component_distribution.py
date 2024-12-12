@@ -20,6 +20,10 @@ speeds in the interval :math:`dv_k` around velocity component :math:`v_k`.
 #. Number of particles is big enough that the laws of thermodynamics can be applied.
 #. Particles are identical, non-interacting, non-relativistic, and classical.
 #. The ensemble of particles is at thermodynamic equilibrium.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Maxwell%E2%80%93Boltzmann_distribution#Distribution_for_the_velocity_vector>`__.
 """
 
 from sympy import Eq, sqrt, pi, exp

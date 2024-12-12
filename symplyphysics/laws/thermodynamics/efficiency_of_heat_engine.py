@@ -4,6 +4,10 @@ Efficiency of heat engine
 
 Efficiency of a heat engine is the ratio of the useful energy to the total energy received
 by the system.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Heat_engine#Efficiency>`__.
 """
 
 from sympy import Eq, solve
