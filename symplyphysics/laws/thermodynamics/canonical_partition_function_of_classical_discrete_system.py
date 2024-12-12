@@ -12,7 +12,7 @@ of all the possible energy states:
 #. `Wikipedia, derivable from here <https://en.wikipedia.org/wiki/Partition_function_(statistical_mechanics)#Classical_discrete_system>`__.
 
 ..
-    NOTE replce `boltzmann_factor` with actual exponent?
+    NOTE replace `boltzmann_factor` with actual exponent?
 """
 
 from typing import Sequence
