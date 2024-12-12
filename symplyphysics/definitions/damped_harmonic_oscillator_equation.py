@@ -8,7 +8,7 @@ assuming the body only moves in one direction.
 
 **Links:**
 
-#. `Wikipedia, similar equation 15.6.2 <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/Book%3A_University_Physics_I_-_Mechanics_Sound_Oscillations_and_Waves_(OpenStax)/15%3A_Oscillations/15.06%3A_Damped_Oscillations>`__.
+#. `Physics LibreTexts, similar equation 15.6.2 <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/Book%3A_University_Physics_I_-_Mechanics_Sound_Oscillations_and_Waves_(OpenStax)/15%3A_Oscillations/15.06%3A_Damped_Oscillations>`__.
 """
 
 from sympy import Derivative, Eq, dsolve
