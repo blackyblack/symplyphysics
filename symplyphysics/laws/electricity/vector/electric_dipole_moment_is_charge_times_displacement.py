@@ -9,6 +9,10 @@ of the system. It is collinear to the vector connecting the two point charges.
 **Conditions:**
 
 #. The charges must be equal by magnitude and have opposite signs.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Electric_dipole_moment#Elementary_definition>`__.
 """
 
 from symplyphysics import (

@@ -20,6 +20,8 @@ from symplyphysics import (
 ## V0 - material parameter (a certain constant having the dimension of the voltage and depending on the material),
 ## y - doping coefficient.
 
+# TODO: find link
+
 junction_capacitance = Symbol("junction_capacitance", units.capacitance)
 
 junction_capacitance_without_bias_voltage = Symbol("junction_capacitance_without_bias_voltage",

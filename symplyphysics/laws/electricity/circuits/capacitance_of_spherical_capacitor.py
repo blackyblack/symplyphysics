@@ -9,7 +9,7 @@ filled with a dielectric medium. See `Figure`_.
 
 **Links:**
 
-#. `Spherical capacitor <http://hyperphysics.phy-astr.gsu.edu/hbase/electric/capsph.html>`__.
+#. `Physics Bootcamp, formula 34.3.1 <http://www.physicsbootcamp.org/Spherical-Capacitor.html>`__.
 """
 
 from sympy import (Eq, solve, pi)

@@ -8,6 +8,10 @@ of the resistances of individual components.
 **Conditions:**
 
 #. Applies to direct current circuits.
+
+**Links:**
+
+#. `Wikipedia, formula 10.3.2 <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/University_Physics_II_-_Thermodynamics_Electricity_and_Magnetism_(OpenStax)/10%3A_Direct-Current_Circuits/10.03%3A_Resistors_in_Series_and_Parallel>`__.
 """
 
 from sympy import Eq, Idx, solve

@@ -4,6 +4,10 @@ Electric field is force over test charge (Vector)
 
 Electric field at a point in space can be found by placing there a test charge and measuring
 the electrostatic force that is applied to it.
+
+**Links:**
+
+#. `Wikipedia, last formula in paragraph <https://en.wikipedia.org/wiki/Electric_field#Electrostatics>`__.
 """
 
 from symplyphysics import (

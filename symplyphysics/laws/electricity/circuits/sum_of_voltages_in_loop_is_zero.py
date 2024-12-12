@@ -5,6 +5,10 @@ Sum of voltages in loop is zero
 The directed sum of the potential differences, or voltages, around any closed loop
 is zero. Directed sum implies that the sign of the voltages must be taken into account.
 This law is also known as **Kirchhoff's second law**, or **Kirchhoff's loop rule**.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Kirchhoff%27s_circuit_laws#Kirchhoff's_voltage_law>`__.
 """
 
 from typing import Sequence
