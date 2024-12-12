@@ -4,6 +4,10 @@ Average angular speed is angular distance over time
 
 *Angular speed*, or *angular frequency*, is a scalar physical quantity measuring
 the rate of change in angle of rotation over time.
+
+**Links:**
+
+#. `BYJY's <https://byjus.com/physics/angular-velocity/#average-angular-velocity>`__.
 """
 
 from sympy import (Eq, solve)

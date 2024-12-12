@@ -10,6 +10,10 @@ of its angular velocity.
 
 #. The body is rigid.
 #. The axis of rotation is fixed.
+
+**Links:**
+
+#. `Wikipedia, vector counterpart of this law <https://en.wikipedia.org/wiki/Angular_momentum#Orbital_angular_momentum_in_three_dimensions>`__.
 """
 
 from sympy import Eq

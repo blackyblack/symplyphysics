@@ -4,6 +4,10 @@ Speed via angular speed and radius
 
 Speed of a rotating body can be calculated using its angular speed and instantaneous
 radius of curvature of the body's path.
+
+**Links:**
+
+#. `Physics LibreTexts, first part of formula 6.1.9 <https://phys.libretexts.org/Bookshelves/College_Physics/College_Physics_1e_(OpenStax)/06%3A_Uniform_Circular_Motion_and_Gravitation/6.01%3A_Rotation_Angle_and_Angular_Velocity>`__.
 """
 
 from sympy import Eq, solve

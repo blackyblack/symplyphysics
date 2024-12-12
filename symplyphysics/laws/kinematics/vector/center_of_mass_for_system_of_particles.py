@@ -4,6 +4,10 @@ Center of mass for a system of particles
 
 The center of mass (com) of a system of particles is a unique point at any given time where
 the sum of weighted relative positions of the distributed mass is zero.
+
+**Links:**
+
+#. `Wikipedia, second formula <https://en.wikipedia.org/wiki/Center_of_mass#A_system_of_particles>`__.
 """
 
 from typing import Sequence

@@ -8,6 +8,10 @@ of the velocity vector, and its vector is tangent to the path of the body.
 **Conditions:**
 
 #. Radius is constant, i.e. :math:`\frac{d r}{d t} = 0.`
+
+**Links:**
+
+#. Equation 10-22 on p. 269 of "Fundamentals of Physics" by David Halladay et al., 10th Ed.
 """
 
 from sympy import Eq, solve, Derivative

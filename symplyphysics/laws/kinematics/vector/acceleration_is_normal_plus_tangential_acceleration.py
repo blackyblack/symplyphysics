@@ -8,6 +8,12 @@ The acceleration of a body moving arbitrarily is composed of two parts:
    and points to the instantaneous axis of rotation,
 #. and *tangential acceleration*, which is responsible for the change in the magnitude of
    the velocity vector.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Circular_motion#Formula>`__.
+
+#. `Mathematica LibreTexts <https://math.libretexts.org/Bookshelves/Calculus/Supplemental_Modules_(Calculus)/Vector_Calculus/2%3A_Vector-Valued_Functions_and_Motion_in_Space/2.6%3A_Tangential_and_Normal_Components_of_Acceleration>`__.
 """
 
 from pytest import approx

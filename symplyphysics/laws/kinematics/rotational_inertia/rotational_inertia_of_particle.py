@@ -4,6 +4,10 @@ Rotational inertia of a particle
 
 Rotational inertia of a rotating particle is defined as the product of its mass
 and the squared radius of rotation.
+
+**Links:**
+
+#. `Wikipedia, third equation <https://en.wikipedia.org/wiki/Moment_of_inertia#Definition>`__.
 """
 
 from sympy import Eq

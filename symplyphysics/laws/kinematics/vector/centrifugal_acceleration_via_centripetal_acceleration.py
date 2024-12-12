@@ -4,6 +4,10 @@ Centrifugal acceleration via centripetal acceleration
 
 The vector of *centrifugal acceleration* has the same magnitude as the vector of *centripetal
 acceleration* but is directed oppositely to it.
+
+**Links:**
+
+#. `BUJY's <https://byjus.com/physics/centripetal-and-centrifugal-force/>`__.
 """
 
 from symplyphysics import (

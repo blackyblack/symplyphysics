@@ -10,6 +10,10 @@ function of time.
 
 #. This law is also applicable for any physical quantity that changes its value in
    a repeating harmonic manner, therefore :symbols:`any_quantity` is used.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Simple_harmonic_motion#Dynamics>`__.
 """
 
 from sympy import Eq, cos, dsolve

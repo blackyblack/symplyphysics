@@ -10,6 +10,10 @@ but it appears to do so because of the motion of the coordinate system.
 Suppose a reference frame :math:`S'` is fixed to a rotating body :math:`A` (e.g. Earth), so that frame :math:`S'` rotates w.r.t.
 another static reference frame :math:`S`. The Coriolis acceleration is the acceleration another body :math:`B` has when
 moving within rotating reference frame :math:`S'`, so it is essentially zero for objects at rest in :math:`S'`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Coriolis_force#Formula>`__.
 """
 
 from symplyphysics import (

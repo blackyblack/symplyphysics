@@ -13,6 +13,10 @@ Also see :doc:`laws.kinematics.vector.centripetal_acceleration_via_cross_product
 #. :math:`\text{oproj}_{\vec b} \vec a` (:code:`reject(a, b)`) is the rejection of
    :math:`\vec a` from :math:`\vec b`, i.e. the component of :math:`\vec a` orthogonal
    to :math:`\vec b`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Centripetal_force#Derivation_using_vectors>`__.
 """
 
 from symplyphysics import (
