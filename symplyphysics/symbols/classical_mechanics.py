@@ -93,6 +93,16 @@ radius = SymbolNew("r", units.length)
 the sphere.
 """
 
+semimajor_axis = SymbolNew("a", units.length)
+"""
+**Semi-major axis**, or **major semiaxis**, is the longest semidiameter of an ellipse.
+"""
+
+semiminor_axis = SymbolNew("b", units.length)
+"""
+**Semi-minor axis**, or **minor semiaxis**, is the smallest semidiameter of an ellipse.
+"""
+
 thickness = SymbolNew("h", units.length)
 """
 **Thickness** is a measure of a size of an object, usually the separation between two layers, or
@@ -361,4 +371,36 @@ angular_momentum = SymbolNew("L", units.mass * units.length**2 / units.time)
 """
 **Angular momentum**, sometimes called **rotational momentum**, is the rotational analog of linear
 :symbols:`momentum`.
+"""
+
+latitude = SymbolNew("phi", angle_type, display_latex="\\phi")
+"""
+**Latitude** is a coordinate that specifies the north-south position of a point on the surface of
+the Earth or another celestial body. Its value ranges from :math:`-90^\circ` at the south pole
+to :math:`90^\circ` at the north pole, with :math:`0^\circ` at the Equator.
+"""
+
+longitude = SymbolNew("lambda", angle_type, display_latex="\\lambda")
+"""
+**Longitude** is a coordinate that specifies the east-west position of a point on the
+surface of the Earth, or another celestial body. The prime meridian defines :math:`0^\circ`
+longitude; positive longitudes are east of the prime meridian, and the negative ones are west.
+"""
+
+sector_speed = SymbolNew("sigma", units.area / units.time, display_latex="\\sigma")
+"""
+**Areal speed**, also called **sector speed** or **sectorial speed**, is a quantity that indicates
+the rate of change at which :symbols:`area` is swept out by a particle as it moves along a curve.
+The calculation of the area swept can be found in the link below.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Areal_velocity#/media/File:ArealVelocity_with_curved_area.svg>`__.
+"""
+
+kepler_constant = SymbolNew("K", units.length**3 / units.time**2, display_latex="\\mathfrak{K}")
+"""
+The **Kepler's constant** is the constant of proportionality in Kepler's third law of planetary
+motion, namely the ratio between the square of the period of the planet to the semi-major axis
+of the planet's orbit. It is constant for all objects orbiting around the same object.
 """

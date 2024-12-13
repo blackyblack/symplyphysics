@@ -4,6 +4,10 @@ Electric charge is constant in isolated system
 
 The electric charge of an isolated system is conserved. As a result, its charge is constant
 at all times.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Charge_conservation>`__.
 """
 
 from sympy import Eq, solve

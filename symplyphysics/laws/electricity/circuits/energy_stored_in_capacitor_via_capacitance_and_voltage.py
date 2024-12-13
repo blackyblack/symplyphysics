@@ -3,6 +3,10 @@ Energy stored in capacitor via capacitance and voltage
 ======================================================
 
 Capacitors store energy in the electric field when they are charged.
+
+**Links:**
+
+#. `Wikipedia, third line of equations <https://en.wikipedia.org/wiki/Capacitor#Parallel-plate_capacitor>`__.
 """
 
 from sympy import Eq, solve

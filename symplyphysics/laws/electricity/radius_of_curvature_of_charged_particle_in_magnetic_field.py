@@ -13,6 +13,10 @@ of the particle as well as by the magnetic flux density.
 #. The particle's speed and the magnetic field are perpendicular to each other.
 #. The magnetic field is uniform.
 #. The electric field is zero.
+
+**Links:**
+
+#. `Physics LibreTexts, formula 11.4.2 <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/University_Physics_II_-_Thermodynamics_Electricity_and_Magnetism_(OpenStax)/11%3A_Magnetic_Forces_and_Fields/11.04%3A_Motion_of_a_Charged_Particle_in_a_Magnetic_Field>`__.
 """
 
 from sympy import (Eq, solve, pi)

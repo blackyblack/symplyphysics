@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     dimensionless,
     convert_to_float,
     validate_input,
@@ -23,15 +22,15 @@ from symplyphysics.core.symbols.probability import Probability
 ##   See [geometric buckling](./buckling/geometric_buckling_from_neutron_flux.py)
 ## Ptnl - thermal non-leakage probability.
 
+# Links:
+## NuclearPower <https://www.nuclear-power.com/nuclear-power/reactor-physics/nuclear-fission-chain-reaction/thermal-non-leakage-probability/>
+## Wikipedia, last row in table <https://en.wikipedia.org/wiki/Six_factor_formula>
+
 thermal_diffusion_area = Symbol("thermal_diffusion_area", units.area)
 geometric_buckling = Symbol("geometric_buckling", 1 / units.area)
 thermal_non_leakage_probability = Symbol("thermal_non_leakage_probability", dimensionless)
 
 law = Eq(thermal_non_leakage_probability, 1 / (1 + thermal_diffusion_area * geometric_buckling))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(thermal_diffusion_area_=thermal_diffusion_area,

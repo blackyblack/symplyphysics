@@ -3,6 +3,10 @@ Mass fraction of mixture component
 ==================================
 
 Mass fraction is the ratio of the mass of a mixture component to the total mass of the mixture.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Mass_fraction_(chemistry)#>`__.
 """
 
 from sympy import Eq, solve

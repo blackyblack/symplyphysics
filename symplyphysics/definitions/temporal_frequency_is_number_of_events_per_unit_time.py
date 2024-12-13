@@ -4,6 +4,10 @@ Temporal frequency is number of events per unit time
 
 **Temporal frequency**, or simply **frequency**, is the number of occurrences of a repeating
 event per unit of time.
+
+**Links:**
+
+#. `Wikipedia, see text <https://en.wikipedia.org/wiki/Frequency#>`__.
 """
 
 from sympy import Eq, solve

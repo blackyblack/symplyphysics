@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
@@ -22,15 +21,14 @@ from symplyphysics import (
 ##   slowing-down length is the square root of the Fermi age, τth = Ls^2.
 ## M^2 - migration area.
 
+# Links:
+## NuclearPower <https://www.nuclear-power.com/nuclear-power/reactor-physics/neutron-diffusion-theory/migration-length-migration-area/>
+
 diffusion_area = Symbol("diffusion_area", units.area)
 neutron_fermi_age = Symbol("neutron_fermi_age", units.length**2)
 migration_area = Symbol("migration_area", units.area)
 
 law = Eq(migration_area, diffusion_area + neutron_fermi_age)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(diffusion_area_=diffusion_area, neutron_fermi_age_=neutron_fermi_age)

@@ -6,6 +6,13 @@ Let us assume a canonical ensemble, i.e. a thermodynamically large system that i
 with the environment, with a temperature T and whose volume and number of constituent particles remain
 constant. For a classical discrete system the partition function is the sum of the Boltzmann factors
 of all the possible energy states:
+
+**Links:**
+
+#. `Wikipedia, derivable from here <https://en.wikipedia.org/wiki/Partition_function_(statistical_mechanics)#Classical_discrete_system>`__.
+
+..
+    NOTE replace `boltzmann_factor` with actual exponent?
 """
 
 from typing import Sequence

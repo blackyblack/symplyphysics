@@ -15,6 +15,10 @@ the evolution of heat transferred from hotter to colder environments in time and
 #. There are no heat sources in the system, i.e. the heat distribution only depends on
    the initial conditions.
 #. Thermal diffusivity :math:`\chi` does not depend on position.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Heat_equation#Heat_flow_in_a_uniform_rod>`__.
 """
 
 from sympy import Eq, Derivative

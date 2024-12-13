@@ -9,6 +9,10 @@ of the state and the temperature and the chemical potential of the system.
 **Conditions:**
 
 #. :math:`E_i > \mu`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Bose%E2%80%93Einstein_statistics#Bose%E2%80%93Einstein_distribution>`__.
 """
 
 from sympy import Eq, exp

@@ -8,6 +8,10 @@ and thermodynamics, e.g. the canonical partition function of a classical discret
 **Notation:**
 
 #. :quantity_notation:`boltzmann_constant`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Boltzmann_distribution#>`__.
 """
 
 from sympy import Eq, exp

@@ -9,6 +9,10 @@ at a constant pressure. In isotropic materials, the volumetric coefficient is th
 
 #. The material is isotropic.
 #. The pressure is constant during the volume change.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Thermal_expansion#Isotropic_materials>`__.
 """
 
 from sympy import Eq, solve

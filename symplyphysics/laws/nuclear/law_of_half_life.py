@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     convert_to_float,
@@ -22,6 +21,8 @@ from symplyphysics import (
 ## t - an arbitrary time interval,
 ## T - half-life of the nuclei.
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Exponential_decay#>
+
 number_of_cores = Symbol("number_of_cores", dimensionless)
 
 number_of_cores_initial = Symbol("number_of_cores_initial", dimensionless)
@@ -29,10 +30,6 @@ half_life = Symbol("half_life", units.time)
 decay_time = Symbol("decay_time", units.time)
 
 law = Eq(number_of_cores, number_of_cores_initial * 2**(-decay_time / half_life))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(number_of_cores_initial_=number_of_cores_initial,

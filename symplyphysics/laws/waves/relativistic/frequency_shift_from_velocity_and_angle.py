@@ -14,6 +14,9 @@ See :doc:`laws.waves.relativistic.longitudinal_frequency_shift_from_velocity`.
 
 #. Angle is measured at the moment of emission with respect to the observer frame.
 #. Motion is in 2D space.
+
+..
+    TODO find link with angles
 """
 
 from sympy import Eq, cos, solve, sqrt

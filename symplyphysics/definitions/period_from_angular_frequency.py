@@ -5,6 +5,10 @@ Period from angular frequency
 The period of oscillations is the time it takes for the system to perform a single oscillation cycle.
 The Period is inversely proportional to the angular frequency of oscillations. See
 :doc:`laws.kinematics.average_angular_speed_is_angular_distance_over_time` for additional information.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Angular_frequency#Circular_motion>`__.
 """
 
 from sympy import Eq, solve, pi

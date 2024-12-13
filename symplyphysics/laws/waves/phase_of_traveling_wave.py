@@ -19,6 +19,10 @@ can only appear in the form of the wave phase described below.
 
 #. This law applies to a 1-dimensional traveling wave.
 #. The constant phase shift is not taken into account.
+
+**Links:**
+
+#. `Wikipedia, similar formula <https://en.wikipedia.org/wiki/Sinusoidal_plane_wave#Alternative_representations>`__.
 """
 
 from sympy import Eq

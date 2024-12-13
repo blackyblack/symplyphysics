@@ -4,6 +4,10 @@ Current is voltage over resistance
 
 Current flowing through a conductor is proportional to voltage applied to it and
 inversely proportional to its resistance. This is also known as the **Ohm's law**.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Ohm%27s_law>`__.
 """
 
 from sympy import (Eq, solve)

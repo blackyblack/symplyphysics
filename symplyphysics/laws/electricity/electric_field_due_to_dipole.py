@@ -15,6 +15,10 @@ cube of the distance to the dipole and the value of the electric dipole moment.
 #. :math:`r / d \gg 1` where :math:`d` is the distance between point charges of the
    dipole. This means that the point where electric field is measured must be far enough
    from the dipole itself.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Electric_dipole_moment#Potential_and_field_of_an_electric_dipole>`__.
 """
 
 from sympy import Eq, solve, series, pi, Symbol as SymSymbol

@@ -9,6 +9,10 @@ on the permittivity of the medium that fills the space between the plates.
 **Conditions:**
 
 #. The plates must be large enough for the electric field to be constant between the plates.
+
+**Links:**
+
+#. `Wikipedia, formula in box <https://en.wikipedia.org/wiki/Capacitor#Parallel-plate_capacitor>`__.
 """
 
 from sympy import Eq, solve

@@ -13,6 +13,10 @@ and inversely proportional to the mass of the gas.
 
 #. The gas is in thermal equilibrium with the environment.
 #. The gas particles are distributed according to Maxwell—Boltzmann statistics.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Maxwell%E2%80%93Boltzmann_distribution#Typical_speeds>`__.
 """
 
 from sympy import (Eq, solve, S, stats, Interval)

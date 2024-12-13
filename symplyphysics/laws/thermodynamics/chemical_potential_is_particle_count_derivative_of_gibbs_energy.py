@@ -5,6 +5,10 @@ Chemical potential is particle count derivative of Gibbs energy
 The chemical potential of the system is the amount of energy the system absorbs or releases
 due to the introduction of a particle into the system, i.e. when the particle count increases
 by one.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Chemical_potential#Thermodynamic_definition>`__.
 """
 
 from sympy import Eq, Derivative, Point2D

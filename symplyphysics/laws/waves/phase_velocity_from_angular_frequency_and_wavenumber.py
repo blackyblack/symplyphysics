@@ -4,6 +4,10 @@ Phase speed from angular frequency and wavenumber
 
 *Phase speed* of a wave is the rate at which the wave propagates in a medium.
 It is the speed at which the phase of one frequency component of the wave travels.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Phase_velocity>`__.
 """
 
 from sympy import Eq, solve

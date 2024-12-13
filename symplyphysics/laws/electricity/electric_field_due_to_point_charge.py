@@ -8,6 +8,10 @@ to the value of the charge and the square inverse of the distance to it.
 **Notation:**
 
 #. :quantity_notation:`vacuum_permittivity`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Electric_field#Electrostatics>`__.
 """
 
 from sympy import Eq, solve, pi

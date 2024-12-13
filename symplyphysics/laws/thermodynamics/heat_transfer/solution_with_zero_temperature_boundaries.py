@@ -21,6 +21,10 @@ the boundary equation :math:`f(x) = T(x, 0)`.
 
 #. Position :math:`x \in [0, L]`.
 #. Temperature on both ends is zero: :math:`T_n(0, t) = 0`, :math:`T_n(L, t) = 0`
+
+**Links:**
+
+#. `Paul's Online Math Notes, Example 1 <https://tutorial.math.lamar.edu/classes/de/solvingheatequation.aspx>`__.
 """
 
 from sympy import Eq, sin, exp, pi

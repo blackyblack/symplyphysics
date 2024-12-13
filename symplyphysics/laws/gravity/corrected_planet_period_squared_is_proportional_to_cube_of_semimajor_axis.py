@@ -7,34 +7,34 @@ of its orbit. Kepler's laws use the assumption that the attracting mass is much 
 the orbiting planet. If this assumption isn't made, the first and the second law stay the same, but
 the third law requires a revision. As a result, the period of the planet's rotation depends not only
 on the attracting mass, but also on the mass of the planet itself.
+
+**Notation:**
+
+#. :quantity_notation:`gravitational_constant`.
+
+**Links:**
+
+#. Sivukhin D.V. (1979), *Obshchiy kurs fiziki* [General course of Physics], vol. 1, p. 321, (59.3).
 """
 
 from sympy import Eq, pi, solve
-from sympy.physics.units import gravitational_constant
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     symbols,
     clone_as_symbol,
+    quantities,
 )
 
-rotation_period = Symbol("rotation_period", units.time)
+rotation_period = symbols.period
 """
-The planet's period of rotation.
-
-Symbol:
-    :code:`T`
+The planet's :symbols:`period` of rotation.
 """
 
-semimajor_axis = Symbol("semimajor_axis", units.length)
+semimajor_axis = symbols.semimajor_axis
 """
-The semi-major axis of the planet's orbit.
-
-Symbol:
-    :code:`a`
+The :symbols:`semimajor_axis` of the planet's orbit.
 """
 
 attracting_mass = clone_as_symbol(symbols.mass, display_symbol="M", display_latex="M")
@@ -49,14 +49,12 @@ The :symbols:`mass` of the orbiting planet.
 
 law = Eq(
     rotation_period**2,
-    (4 * pi**2 * semimajor_axis**3) / (gravitational_constant * (attracting_mass + planetary_mass)),
+    (4 * pi**2 * semimajor_axis**3) / (quantities.gravitational_constant * (attracting_mass + planetary_mass)),
 )
-r"""
-:code:`T^2 = (4 * pi^2 * a^3) / (G * (M + m))`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        T^2 = \frac{4 \pi^2 a^3}{G \left( M + m \right)}
+:laws:latex::
 """
 
 

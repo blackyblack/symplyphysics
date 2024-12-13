@@ -11,6 +11,10 @@ known as the **first Kirchhoff's law**, or the **Kirchhoff's junction rule**.
 
 #. Current flowing into the junction and current flowing out of the junction
    are of opposite signs.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Kirchhoff%27s_circuit_laws#Kirchhoff's_current_law>`__.
 """
 
 from typing import Sequence

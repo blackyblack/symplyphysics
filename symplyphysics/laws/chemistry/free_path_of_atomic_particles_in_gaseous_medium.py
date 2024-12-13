@@ -22,6 +22,12 @@ from symplyphysics import (units, Quantity, Symbol, validate_input, validate_out
 
 # NOTE: remove the mention of a magnetron from the description?
 
+# Links: Wikipedia, the fourth formula <https://en.wikipedia.org/wiki/Mean_free_path#Kinetic_theory_of_gases>
+
+# FIXME: hasn't an additional `sqrt(2)` factor been left out in the denominator?
+
+# TODO: move to `magnetron` folder?
+
 free_path_length = Symbol("free_path_length", units.length)
 
 pressure = Symbol("pressure", units.pressure)

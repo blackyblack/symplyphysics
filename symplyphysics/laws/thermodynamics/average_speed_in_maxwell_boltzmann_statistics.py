@@ -12,6 +12,10 @@ The *average*, or mean, *speed* is the expected value of the speed distribution 
 
 #. The gas is in thermal equilibrium with the environment.
 #. The gas particles are distributed according to Maxwell—Boltzmann statistics.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Maxwell%E2%80%93Boltzmann_distribution#Typical_speeds>`__.
 """
 
 from sympy import Eq, sqrt, pi, S, stats, Interval

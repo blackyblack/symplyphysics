@@ -8,6 +8,10 @@ of the impedances of individual components.
 **Conditions:**
 
 #. Components are connected in series.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Electrical_impedance#Series_combination>`__.
 """
 
 from sympy import Eq, Idx, solve

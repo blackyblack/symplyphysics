@@ -4,6 +4,10 @@ Self-induced electromotive force via time derivative of current
 
 Expression for the self-induced emf can be derived from the Faraday's law featuring
 the time derivative of current flowing through the circuit.
+
+**Links:**
+
+#. `Wikipedia, formula in box <https://en.wikipedia.org/wiki/Inductor#Constitutive_equation>`__.
 """
 
 from sympy import Eq, Derivative

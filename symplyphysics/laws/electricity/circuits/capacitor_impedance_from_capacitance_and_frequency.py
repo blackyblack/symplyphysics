@@ -5,6 +5,10 @@ Capacitor impedance from capacitance and frequency
 The impedance of the capacitor is a purely imaginary reactive impedance which
 is inversely proportional to its capacitance. Note that the resistance of the
 capacitor is infinite, i.e. it is considered to be an opened connection.
+
+**Links:**
+
+#. `Wikipedia, second formula <https://en.wikipedia.org/wiki/Electrical_impedance#Inductor_and_capacitor>`__.
 """
 
 from sympy import I, Eq, solve

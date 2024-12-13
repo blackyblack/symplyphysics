@@ -6,6 +6,10 @@ An inductor-capacitor network, also called **LC circuit**, **resonator circuit**
 **tuned circuit**, consists of an inductor and a capacitor connected together. This type
 of circuit can act as an electrical resonator, storing energy oscillating at the circuit's
 resonant frequency.
+
+**Links:**
+
+#. `Wikipedia, derivable from here <https://en.wikipedia.org/wiki/LC_circuit#Resonance_effect>`__.
 """
 
 from sympy import (

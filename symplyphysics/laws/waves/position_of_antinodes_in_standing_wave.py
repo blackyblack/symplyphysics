@@ -9,7 +9,11 @@ of the wavelength.
 **Notes:**
 
 #. *Amplitude* refers to the absolute value of displacement from rest, therefore positions of
-   maximum amplitude are such positions where the displacement is maximum or minimum .
+   maximum amplitude are such positions where the displacement is maximum or minimum.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Standing_wave#Standing_wave_on_an_infinite_length_string>`__.
 """
 
 from sympy import Eq, S

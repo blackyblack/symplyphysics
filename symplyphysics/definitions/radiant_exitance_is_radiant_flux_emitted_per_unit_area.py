@@ -7,6 +7,10 @@ Radiant exitance is radiant flux emitted per unit area
 **Notation:**
 
 #. The subscript :math:`e` stands for *energetic* to avoid confusion with photometric quantities.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Radiant_exitance#Mathematical_definitions>`__.
 """
 
 from sympy import Eq, Derivative

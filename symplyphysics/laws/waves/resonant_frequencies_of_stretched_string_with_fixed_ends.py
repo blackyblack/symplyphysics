@@ -6,6 +6,10 @@ For a string with fixed ends there is only a limited set of frequencies at which
 occur on it. Each possible frequency is a resonant frequency, and the corresponding wave pattern is
 an oscillation mode. The oscillation mode corresponding to :math:`N = 1` is called the fundamental mode or
 the first harmonic, the mode corresponding to :math:`N = 2` is the second harmonic, and so on.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/String_vibration#Frequency_of_the_wave>`__.
 """
 
 from sympy import Eq, solve

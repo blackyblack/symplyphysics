@@ -8,6 +8,10 @@ describe a hypothetical ideal gas.
 **Notation:**
 
 #. :quantity_notation:`molar_gas_constant`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Ideal_gas_law>`__.
 """
 
 from sympy import (Eq, solve)

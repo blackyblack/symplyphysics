@@ -4,6 +4,9 @@ Quality factor is ratio of energies
 
 **Quality factor** is a property of an oscillating system defined as the ratio between the amount of
 energy stored in system and the power losses.
+
+..
+    TODO same law in `dynamics/damped_oscillations`, remove this law?
 """
 
 from sympy import Eq, solve

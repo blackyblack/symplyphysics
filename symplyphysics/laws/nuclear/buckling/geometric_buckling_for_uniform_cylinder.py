@@ -1,5 +1,5 @@
 from sympy import (Eq, solve, pi)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output)
 from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_cylinder as cylinder_flux
 
@@ -14,6 +14,9 @@ from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_cylinde
 ## H - height of the cylinder.
 ## Bg^2cylinder - squared geometric buckling for cylinder.
 ##   See [geometric buckling](./geometric_buckling_from_neutron_flux.py) implementation.
+
+# Links:
+## Wikipedia, second row in first table <https://en.wikipedia.org/wiki/Geometric_and_material_buckling#Geometric_Buckling>
 
 cylinder_radius = Symbol("cylinder_radius", units.length)
 cylinder_height = Symbol("cylinder_height", units.length)
@@ -33,10 +36,6 @@ geometric_buckling_cylinder_solved = geometric_buckling_cylinder_squared.subs({
     cylinder_flux.cylinder_height: cylinder_height
 })
 assert geometric_buckling_cylinder_solved.evalf(7) == law.rhs.evalf(7)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(cylinder_radius_=cylinder_radius, cylinder_height_=cylinder_height)

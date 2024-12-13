@@ -4,6 +4,10 @@ Critical pressure
 
 Critical pressure in a van der Waals fluid depends on the parameters :math:`a` and
 :math:`b` of the van der Waals equation. See :ref:`vdw_critical_parameters_def`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Van_der_Waals_equation#Critical_point_and_corresponding_states>`__.
 """
 
 from sympy import Eq

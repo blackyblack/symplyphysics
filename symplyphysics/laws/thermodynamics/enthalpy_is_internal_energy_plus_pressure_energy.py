@@ -5,6 +5,10 @@ Enthalpy is internal energy plus pressure energy
 Enthalpy :math:`H` of a thermodynamic system is defined as the sum of its internal energy
 :math:`U` and the product of its pressure :math:`p` and volume :math:`V`, which is sometimes
 referred to as the pressure energy.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Enthalpy#Definition>`__.
 """
 
 from sympy import Eq

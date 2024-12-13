@@ -8,6 +8,10 @@ capacitances of individual capacitors.
 **Conditions:**
 
 #. Components are connected in parallel.
+
+**Links:**
+
+#. `Physics LibreTexts, formula 8.3.9 <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/University_Physics_II_-_Thermodynamics_Electricity_and_Magnetism_(OpenStax)/08%3A_Capacitance/8.03%3A_Capacitors_in_Series_and_in_Parallel>`__.
 """
 
 from sympy import Eq, Idx, solve, symbols as sympy_symbols

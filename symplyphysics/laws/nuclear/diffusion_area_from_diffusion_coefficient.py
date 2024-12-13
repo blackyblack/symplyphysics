@@ -15,16 +15,15 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## L^2 - diffusion area.
 ## L - diffusion length.
 
+# Links:
+## NuclearPower <https://www.nuclear-power.com/nuclear-power/reactor-physics/neutron-diffusion-theory/diffusion-length/>
+
 diffusion_coefficient = Symbol("diffusion_coefficient", units.length)
 macroscopic_absorption_cross_section = Symbol("macroscopic_absorption_cross_section",
     1 / units.length)
 diffusion_area = Symbol("diffusion_area", units.area)
 
 law = Eq(diffusion_area, diffusion_coefficient / macroscopic_absorption_cross_section)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(diffusion_coefficient_=diffusion_coefficient,

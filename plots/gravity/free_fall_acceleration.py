@@ -1,7 +1,7 @@
 from sympy import solve, symbols
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
-from symplyphysics import (print_expression, units, convert_to, Quantity)
+from symplyphysics import (print_expression, units, convert_to, Quantity, quantities)
 from symplyphysics.laws.gravity import free_fall_acceleration_from_height as acceleration
 
 print(f"Formula is:\n{print_expression(acceleration.law)}")
@@ -17,8 +17,8 @@ solved = solve(acceleration.law, acceleration.free_fall_acceleration,
 result_acceleration = solved.subs({
     acceleration.planet_mass: EARTH_MASS,
     acceleration.planet_radius: EARTH_RADIUS,
-    acceleration.height_above_surface: height_above_ground,
-    acceleration.units.gravitational_constant: gravity_constant_value
+    acceleration.elevation: height_above_ground,
+    quantities.gravitational_constant: gravity_constant_value
 })
 
 print(

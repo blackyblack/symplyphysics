@@ -8,6 +8,10 @@ square of its angular frequency.
 **Conditions:**
 
 #. The wave is sinusoidal.
+
+**Links:**
+
+#. `Physics LibreTexts, formula 16.5.1 <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/Book%3A_University_Physics_I_-_Mechanics_Sound_Oscillations_and_Waves_(OpenStax)/16%3A_Waves/16.05%3A_Energy_and_Power_of_a_Wave>`__.
 """
 
 from sympy import Eq

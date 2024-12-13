@@ -13,6 +13,10 @@ of the sphere. However, due to the Gauss's law, on the inside the electric field
 **Conditions:**
 
 #. The sphere is thin, i.e. its thickness approaches zero.
+
+**Links:**
+
+#. `Wikipedia, "Spherical volume" <https://en.wikipedia.org/wiki/Electric_field#Common_formul%C3%A6>`__.
 """
 
 from sympy import (Eq, solve, pi)

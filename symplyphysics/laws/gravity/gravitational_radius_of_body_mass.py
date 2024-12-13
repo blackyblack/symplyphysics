@@ -1,38 +1,53 @@
-from sympy import (
-    Eq,
-    solve,
-)
-from sympy.physics.units import gravitational_constant, speed_of_light
+"""
+Gravitational radius of massive body
+====================================
+
+The **gravitational radius**, or **Schwarzschild radius**, is a characteristic radius
+defined for any physical body with mass. This is the radius of the sphere on which the
+event horizon created by this mass would be located (from the point of view of general
+theory of relativity) if it were distributed spherically symmetrically, would be
+stationary (in particular, it would not rotate, but radial movements are permissible)
+and would lie entirely inside this sphere.
+
+**Notation:**
+
+#. :quantity_notation:`gravitational_constant`.
+
+#. :quantity_notation:`speed_of_light`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Schwarzschild_radius>`__.
+
+..
+    TODO rename file
+"""
+
+from sympy import Eq, solve
 from symplyphysics import (
     symbols,
-    units,
     Quantity,
-    Symbol,
-    print_expression,
     validate_input,
     validate_output,
+    quantities,
 )
 
-# Description
-## The gravitational radius is a characteristic radius defined for any physical body with mass. This is the radius of the sphere
-## on which the event horizon created by this mass would be located (from the point of view of general theory of relativity) if it were distributed spherically
-## symmetrically, would be stationary (in particular, it would not rotate, but radial movements are permissible) and would lie entirely
-## inside this sphere.
+gravitational_radius = symbols.radius
+"""
+Gravitational :symbols:`radius` of the body.
+"""
 
-## Law is: R = 2 * G * M / c^2, where
-## R - gravitational radius of the body,
-## G - gravitational constant,
-## M - mass of the body,
-## c - speed of light.
-
-gravitational_radius = Symbol("gravitational_radius", units.length)
 body_mass = symbols.mass
+"""
+:symbols:`mass` of the body.
+"""
 
-law = Eq(gravitational_radius, 2 * gravitational_constant * body_mass / speed_of_light**2)
+law = Eq(gravitational_radius, 2 * quantities.gravitational_constant * body_mass / quantities.speed_of_light**2)
+"""
+:laws:symbol::
 
-
-def print_law() -> str:
-    return print_expression(law)
+:laws:latex::
+"""
 
 
 @validate_input(body_mass_=body_mass)

@@ -12,6 +12,10 @@ of certain chemical elements is constant for temperatures far from the absolute 
 **Conditions:**
 
 #. The temperature of the system is big enough to disregard quantum effects.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Dulong%E2%80%93Petit_law>`__.
 """
 
 from sympy import Eq

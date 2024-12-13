@@ -17,6 +17,8 @@ from symplyphysics.laws.electricity.circuits import impedance_in_serial_connecti
 ## Xl - inductive reactance,
 ## Xc - capacitive reactance.
 
+# Links: derivable from first formula <https://en.wikipedia.org/wiki/Electrical_impedance#Resistance_vs_reactance>
+
 circuit_resistance = Symbol("circuit_resistance", units.impedance, real=True)
 
 resistance_resistor = Symbol("resistance_resistor", units.impedance, real=True)

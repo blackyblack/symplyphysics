@@ -9,6 +9,10 @@ at constant pressure.
 
 #. Pressure must be constant during the expansion process.
 
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Thermal_expansion#Length>`__.
+
 ..
     TODO add pressure symbol below and in the volume function arguments
 """

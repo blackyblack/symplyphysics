@@ -5,6 +5,10 @@ Pressure amplitude in sound wave
 Sound waves cause a pressure change of the medium from the equilibrium pressure.
 This change is proportional to the speed of sound and the density of the medium,
 the angular frequency of the wave and the displacement of particles in the medium.
+
+**Links:**
+
+#. Equation 17-14 on p. 484 of "Fundamentals of Physics" by David Halladay et al., 10th Ed.
 """
 
 from sympy import Eq

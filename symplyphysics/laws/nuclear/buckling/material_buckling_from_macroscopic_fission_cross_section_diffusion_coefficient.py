@@ -1,5 +1,5 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, dimensionless, validate_input,
+from symplyphysics import (units, Quantity, Symbol, dimensionless, validate_input,
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_macroscopic_fission_cross_section_diffusion_coefficient as buckling_law
@@ -17,6 +17,8 @@ from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_macrosco
 ## D - diffusion coefficient.
 ##   See [diffusion coefficient](./neutron_diffusion_coefficient_from_scattering_cross_section.py) implementation.
 ## Bm^2 - material buckling.
+
+# Links: last formula in paragraph <https://en.wikipedia.org/wiki/Geometric_and_material_buckling#Material_Buckling>
 
 neutrons_per_fission = Symbol("neutrons_per_fission", dimensionless)
 macroscopic_fission_cross_section = Symbol("macroscopic_fission_cross_section", 1 / units.length)
@@ -46,10 +48,6 @@ derived_material_buckling_squared = solve(derived_law,
     (material_buckling_squared, buckling_law.effective_multiplication_factor),
     dict=True)[0][material_buckling_squared]
 assert expr_equals(law.rhs, derived_material_buckling_squared)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(neutrons_per_fission_=neutrons_per_fission,

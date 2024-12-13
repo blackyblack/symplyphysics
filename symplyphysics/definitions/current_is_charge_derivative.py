@@ -4,6 +4,10 @@ Current is charge derivative
 
 The instantaneous electric current, or simply the *electric current*, is a physical quantity
 defined as the time derivative of the flowing charge.
+
+**Links:**
+
+#. `Wikipedia, second equation <https://en.wikipedia.org/wiki/Electric_current#Metals>`__.
 """
 
 from sympy import Eq, Derivative

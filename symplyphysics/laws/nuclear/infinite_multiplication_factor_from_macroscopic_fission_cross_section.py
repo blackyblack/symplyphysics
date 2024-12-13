@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     dimensionless,
     validate_input,
     validate_output,
@@ -20,6 +19,8 @@ from symplyphysics import (
 ## k_infinite - infinite multiplication factor.
 ##   See [infinite multiplication factor](./infinite_multiplication_factor.py)
 
+# TODO: find link
+
 neutrons_per_fission = Symbol("neutrons_per_fission", dimensionless)
 macroscopic_fission_cross_section = Symbol("macroscopic_fission_cross_section", 1 / units.length)
 macroscopic_absorption_cross_section = Symbol("macroscopic_absorption_cross_section",
@@ -29,10 +30,6 @@ infinite_multiplication_factor = Symbol("infinite_multiplication_factor", dimens
 law = Eq(
     infinite_multiplication_factor,
     neutrons_per_fission * macroscopic_fission_cross_section / macroscopic_absorption_cross_section)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(neutrons_per_fission_=neutrons_per_fission,

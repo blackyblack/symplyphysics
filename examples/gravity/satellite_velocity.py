@@ -17,14 +17,14 @@ from symplyphysics.laws.gravity import free_fall_acceleration_from_height as fre
 
 solution = Eq(centripetal_acceleration_law.law.rhs, free_fall_law.law.rhs)
 solution_applied = solution.subs(centripetal_acceleration_law.radius_of_curvature,
-    free_fall_law.planet_radius + free_fall_law.height_above_surface)
+    free_fall_law.planet_radius + free_fall_law.elevation)
 
 # first solution is negative and corresponds to the backwards direction of velocity - ignore it
 satellite_velocity = solve(solution_applied, centripetal_acceleration_law.speed,
     dict=True)[1][centripetal_acceleration_law.speed]
 
 print(
-    f"The formula for satellite linear velocity is: {print_expression(simplify(satellite_velocity))}"
+    f"The formula for satellite linear velocity is:\n{print_expression(simplify(satellite_velocity))}"
 )
 
 ## As a curve radius we are having radius of the planet plus desired height of the orbit. Let's take Earth as an example and 100km height.
@@ -35,7 +35,7 @@ height_above_surface_ = Quantity(100 * units.kilometer)
 required_velocity_expression = satellite_velocity.subs({
     free_fall_law.planet_mass: planet_mass,
     free_fall_law.planet_radius: planet_radius_,
-    free_fall_law.height_above_surface: height_above_surface_
+    free_fall_law.elevation: height_above_surface_
 })
 
 result_velocity = Quantity(required_velocity_expression)

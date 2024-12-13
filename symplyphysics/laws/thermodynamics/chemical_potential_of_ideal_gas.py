@@ -12,6 +12,10 @@ and thermal wavelength.
 **Conditions:**
 
 #. The gas is ideal.
+
+**Links:**
+
+#. Formula on p. 394 of "Statistical Mechanics" by Terrent L. Hill (1987)
 """
 
 from sympy import Eq, log

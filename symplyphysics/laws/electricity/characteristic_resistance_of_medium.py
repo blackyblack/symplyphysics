@@ -22,6 +22,8 @@ from symplyphysics import (
 ## mur - relative permeability of the insulator material,
 ## er - relative permittivity of insulating material.
 
+# TODO find link
+
 resistance = Symbol("resistance", units.impedance)
 
 relative_permittivity = Symbol("relative_permittivity", dimensionless)

@@ -19,6 +19,10 @@ magnetic field.
 #. This law works only in principle because a real particle would generate its own
    electromagnetic field that would interact with the external one which would alter
    the electromagnetic force it experiences.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Lorentz_force>`__.
 """
 
 from sympy import Expr

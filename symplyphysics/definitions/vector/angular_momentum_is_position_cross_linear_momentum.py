@@ -11,6 +11,10 @@ vector of the particle defined relative to that origin.
 
 #. :math:`\vec a \times \vec b` (:code:`cross(a, b)`) denotes a cross product between
    vectors :math:`\vec a` and :math:`\vec b`.
+
+**Links:**
+
+#. `Wikipedia, see second paragraph <https://en.wikipedia.org/wiki/Angular_momentum#>`__.
 """
 
 from symplyphysics import (

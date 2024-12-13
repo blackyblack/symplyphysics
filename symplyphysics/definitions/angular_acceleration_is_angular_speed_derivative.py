@@ -3,6 +3,10 @@ Angular acceleration is angular speed derivative
 ================================================
 
 *Angular acceleration* is a physical quantity that describes the change in angular speed over time.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Angular_acceleration>`__.
 """
 
 from sympy import Eq, Derivative

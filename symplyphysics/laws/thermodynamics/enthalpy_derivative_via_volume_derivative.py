@@ -8,6 +8,10 @@ of temperature and pressure.
 **Conditions:**
 
 #. Works for an infinitesimal quasi-static isothermal process.
+
+**Links:**
+
+#. `Wikipedia, see third table <https://en.wikipedia.org/wiki/Table_of_thermodynamic_equations#Maxwell's_relations>`__.
 """
 
 from sympy import Eq, Derivative

@@ -5,6 +5,10 @@ Capacitance from charge and voltage
 The electrical *capacitance* of an object is a physical quantity that describes the capability
 of the object to store energy in the form of an electric charge. It is directly proportional to
 the charge accumulated in the object and inversely proportional to the voltage across it.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Capacitance#Mutual_capacitance>`__.
 """
 
 from sympy import Eq, solve

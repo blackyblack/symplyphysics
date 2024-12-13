@@ -7,6 +7,10 @@ The net force exerted on an object is equal to the vector sum of all the forces 
 **Notation:**
 
 #. :math:`\sum_i x_i` (:code:`Sum(x_i, i)`) denotes a sum of :math:`x_i` over the index :math:`i`.
+
+**Links:**
+
+#. `Wikipedia, general principle <https://en.wikipedia.org/wiki/Superposition_principle>`__.
 """
 
 from typing import Iterable

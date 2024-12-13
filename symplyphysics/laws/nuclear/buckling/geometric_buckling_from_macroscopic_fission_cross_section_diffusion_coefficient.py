@@ -21,6 +21,9 @@ from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_
 ##   See [diffusion coefficient](./neutron_diffusion_coefficient_from_scattering_cross_section.py) implementation.
 ## Bg^2 - geometric buckling.
 
+# Links
+## Wikipedia, second part of second equation <https://en.wikipedia.org/wiki/Geometric_and_material_buckling#Material_Buckling>
+
 neutrons_per_fission = Symbol("neutrons_per_fission", dimensionless)
 effective_multiplication_factor = Symbol("effective_multiplication_factor", dimensionless)
 macroscopic_fission_cross_section = Symbol("macroscopic_fission_cross_section", 1 / units.length)

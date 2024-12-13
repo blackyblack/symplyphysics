@@ -7,6 +7,10 @@ Electric charge is quantized, i.e. restricted to certain values.
 **Notation:**
 
 #. :quantity_notation:`elementary_charge`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Elementary_charge>`__.
 """
 
 from sympy import Eq

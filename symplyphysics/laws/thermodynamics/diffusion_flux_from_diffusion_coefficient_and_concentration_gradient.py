@@ -14,6 +14,10 @@ and the gradient is directed towards a higher concentration.
 **Conditions:**
 
 #. The mixture is ideal.
+
+**Links:**
+
+#. `Wikipedia, first formula <https://en.wikipedia.org/wiki/Fick%27s_laws_of_diffusion#Fick's_first_law>`__.
 """
 
 from sympy import Eq, Derivative

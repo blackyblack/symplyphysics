@@ -4,6 +4,10 @@ Compliance is inverse stiffness
 
 *Compliance, or flexibility*, of a spring is the inverse of its stiffness and measures
 how flexible the spring is.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Stiffness#Compliance>`__.
 """
 
 from sympy import Eq

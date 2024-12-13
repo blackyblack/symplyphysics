@@ -4,6 +4,10 @@ Sound level in decibels
 
 The sound level of a sound wave is a physical quantity that is used to describe the wave's
 intensity.
+
+**Links:**
+
+#. `Wikipedia, similar formula <https://en.wikipedia.org/wiki/Sound_intensity#Sound_intensity_level>`__.
 """
 
 from sympy import Eq, log

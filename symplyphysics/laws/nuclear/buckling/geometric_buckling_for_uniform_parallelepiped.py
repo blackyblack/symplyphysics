@@ -1,5 +1,5 @@
 from sympy import (Eq, solve, pi)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output)
 from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_parallelepiped as parallelepiped_flux
 
@@ -15,6 +15,9 @@ from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_paralle
 ## c - height of the parallelepiped.
 ## Bg^2parallelepiped - squared geometric buckling for parallelepiped.
 ##   See [geometric buckling](./geometric_buckling_from_neutron_flux.py) implementation.
+
+# Links:
+## Wikipedia, third row in first table <https://en.wikipedia.org/wiki/Geometric_and_material_buckling#Geometric_Buckling>
 
 parallelepiped_width = Symbol("parallelepiped_width", units.length)
 parallelepiped_length = Symbol("parallelepiped_length", units.length)
@@ -38,10 +41,6 @@ geometric_buckling_parallelepiped_solved = geometric_buckling_parallelepiped_squ
     parallelepiped_flux.parallelepiped_height: parallelepiped_height
 })
 assert geometric_buckling_parallelepiped_solved == law.rhs
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(parallelepiped_width_=parallelepiped_width,
