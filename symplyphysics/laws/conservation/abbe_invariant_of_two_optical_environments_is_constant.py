@@ -33,6 +33,8 @@ from symplyphysics import (
 # NOTE:
 ## proofs: https://studme.org/341451/matematika_himiya_fizik/prelomlenie_otrazhenie_sveta_sfericheskoy_poverhnosti
 
+# Links: OptoWiki <https://www.optowiki.info/glossary/abbe-invariant/>
+
 curvature_radius = Symbol("curvature_radius", units.length)
 
 refraction_index_environment = Symbol("refraction_index_environment", dimensionless)

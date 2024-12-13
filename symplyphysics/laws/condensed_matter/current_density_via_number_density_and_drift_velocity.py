@@ -10,6 +10,10 @@ of the positive charges at this point.
 **Conditions:**
 
 #. Charge carriers carry the the same amount of charge.
+
+**Links:**
+
+#. `Wikipedia, first formula with adjustments <https://en.wikipedia.org/wiki/Electron_mobility#Relation_to_current_density>`__.
 """
 
 from sympy import (Eq, solve)

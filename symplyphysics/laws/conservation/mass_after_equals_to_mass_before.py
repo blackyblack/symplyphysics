@@ -1,5 +1,5 @@
 from sympy import (Eq, solve, dsolve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, Function, validate_input,
+from symplyphysics import (units, Quantity, Symbol, Function, validate_input,
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.conservation import mass_is_constant
@@ -13,6 +13,8 @@ from symplyphysics.laws.conservation import mass_is_constant
 ## m - summary mass of a system,
 ## t1 - the moment of time after the action in the system,
 ## t0 - initial time.
+
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Conservation_of_mass>
 
 time_before = Symbol("time_before", units.time)
 time_after = Symbol("time_after", units.time)
@@ -36,10 +38,6 @@ mass_after_eq = mass_after_eq.subs(mass_is_constant.mass_function(time_after),
 mass_after_solved = solve([mass_after_eq, mass_before_eq], (mass_function(time_after), "C1"),
     dict=True)[0][mass_function(time_after)]
 assert expr_equals(mass_after_solved, law.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(mass_before_=mass_function)

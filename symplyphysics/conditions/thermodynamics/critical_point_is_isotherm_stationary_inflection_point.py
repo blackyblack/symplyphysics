@@ -20,6 +20,9 @@ from symplyphysics import (
 # Note
 ## - These equations need to be solved together with the equation of state.
 
+# Links
+## Wikipedia <https://en.wikipedia.org/wiki/Critical_point_(thermodynamics)#Overview>
+
 pressure = Function("pressure", units.pressure)
 volume = Symbol("volume", units.volume)
 

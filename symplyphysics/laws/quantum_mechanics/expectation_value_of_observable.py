@@ -30,6 +30,8 @@ from symplyphysics.core.type_aliases import WaveFunction, Observable
 ## conj - complex conjugate
 ## O[f] - operator `O` applied to function `f`
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Operator_(physics)#Expectation_values_of_operators_on_%CE%A8>
+
 mean_observable_value = symbols("mean_observable_value")
 observable = symbols("observable", cls=SymFunction)
 wave_function = Function("wave_function", 1 / sqrt(units.length))

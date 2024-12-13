@@ -3,7 +3,6 @@ from symplyphysics import (
     Symbol,
     Function,
     units,
-    print_expression,
     Quantity,
     validate_input,
     validate_output,
@@ -19,14 +18,12 @@ from symplyphysics import (
 # Conditions
 ## - The system is isolated, i.e. no particles can leave it
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Charge_conservation>
+
 total_charge = Function("total_charge", units.charge)
 time = Symbol("time", units.time)
 
 law = Eq(Derivative(total_charge(time), time), 0)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(total_charge_before_=total_charge)

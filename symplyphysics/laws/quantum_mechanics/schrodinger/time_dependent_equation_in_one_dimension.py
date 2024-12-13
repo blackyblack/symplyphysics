@@ -27,6 +27,8 @@ from symplyphysics import (
 ## - This law works in the case of 1 spatial dimension. To use it for the 3-dimensional space
 ##   replace the spatial second derivative with the Laplace operator.
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Schr%C3%B6dinger_equation#Separation_of_variables>
+
 wave_function = Function("wave_function", 1 / sqrt(units.length))
 potential_energy = Function("potential_energy", units.energy)
 particle_mass = symbols.mass

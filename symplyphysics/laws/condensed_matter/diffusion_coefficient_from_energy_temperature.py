@@ -5,7 +5,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
@@ -22,6 +21,11 @@ from symplyphysics import (
 ## k - boltzmann constant,
 ## T - temperature.
 
+# Conditions:
+## 1. The material is a solid.
+
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Mass_diffusivity#Solids>
+
 diffusion_coefficient = Symbol("diffusion_coefficient", units.area / units.time)
 
 energy = Symbol("energy", units.energy)
@@ -30,10 +34,6 @@ temperature = symbols.temperature
 
 law = Eq(diffusion_coefficient,
     diffusion_constant * exp(-energy / (boltzmann_constant * temperature)))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(energy_=energy, diffusion_constant_=diffusion_constant, temperature_=temperature)

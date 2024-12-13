@@ -9,13 +9,13 @@ nonzero concentration of free charge carriers in the semiconductor.
 
 #. :quantity_notation:`boltzmann_constant`.
 
-**Links:**
-
-#. `Intrinsic carrier concentration <https://www.universitywafer.com/intrinsic-carrier-concentration.html>`_.
-
 **Conditions:**
 
 #. There are no external influences, such as lighting, electric field, etc.
+
+**Links:**
+
+#. `University Wafer, Intrinsic carrier concentration <https://www.universitywafer.com/intrinsic-carrier-concentration.html>`_.
 """
 
 from sympy import Eq, solve, exp, sqrt

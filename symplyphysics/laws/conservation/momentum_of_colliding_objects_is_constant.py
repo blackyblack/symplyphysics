@@ -14,14 +14,15 @@ from symplyphysics import (units, Quantity, Symbol, Function, print_expression, 
 ## t - time,
 ## dP/dt - momentum derivative over time.
 
+# Conditions:
+## 1. The system is closed
+
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Momentum#Conservation>
+
 time = Symbol("time", units.time)
 momentum = Function("momentum", units.momentum)
 
 law = Eq(Derivative(momentum(time), time), 0)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(momentum_before_=momentum)

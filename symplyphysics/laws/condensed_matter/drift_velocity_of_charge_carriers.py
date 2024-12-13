@@ -21,6 +21,8 @@ from symplyphysics import (
 ## u - mobility of charge carriers (electrons or holes),
 ## E - electric field intensity.
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Drift_velocity#>
+
 drift_velocity = Symbol("drift_velocity", units.velocity)
 
 charge_carriers_mobility = Symbol("charge_carriers_mobility",
@@ -28,10 +30,6 @@ charge_carriers_mobility = Symbol("charge_carriers_mobility",
 electric_intensity = Symbol("electric_intensity", units.voltage / units.length)
 
 law = Eq(drift_velocity, charge_carriers_mobility * electric_intensity)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(charge_carriers_mobility_=charge_carriers_mobility,

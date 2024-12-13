@@ -4,7 +4,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     quantities,
@@ -21,6 +20,8 @@ from symplyphysics import (
 ## T - temperature,
 ## T0 - 273.15 kelvin degrees.
 
+# Links: BYJU's, similar formula for resistivity <https://byjus.com/physics/resistivity-temperature-dependence/>
+
 resistance = Symbol("resistance", units.impedance)
 
 resistance_initial = Symbol("resistance_initial", units.impedance)
@@ -31,10 +32,6 @@ law = Eq(
     resistance,
     resistance_initial * (1 + temperature_coefficient *
     (temperature - quantities.standard_conditions_temperature)))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(resistance_initial_=resistance_initial,

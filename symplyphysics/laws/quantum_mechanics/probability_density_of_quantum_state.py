@@ -19,6 +19,8 @@ from symplyphysics import (
 ## abs - absolute value
 ## conj(z) - complex conjugate of `z`
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Wave_function#Position-space_wave_functions>
+
 probability_density = Symbol("probability_density", 1 / units.length)
 wave_function = Symbol("wave_function", 1 / sqrt(units.length))
 

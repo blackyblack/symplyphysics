@@ -38,6 +38,8 @@ from symplyphysics.laws.quantum_mechanics.schrodinger import (
 ##   Moreover, the correct solution can be represented by a linear combination of planar waves, which can be
 ##   made convergent.
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Free_particle#Quantum_free_particle>
+
 wave_function = Symbol("wave_function", dimensionless)
 particle_momentum = Symbol("particle_momentum", units.momentum)
 particle_energy = Symbol("particle_energy", units.energy)

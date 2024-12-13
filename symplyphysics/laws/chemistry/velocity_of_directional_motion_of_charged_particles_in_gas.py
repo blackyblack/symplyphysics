@@ -12,7 +12,7 @@ from symplyphysics import (units, Quantity, Symbol, validate_input, validate_out
 ## E - electric intensity,
 ## p - pressure.
 
-# Links: derivable from this assuming `mu = b0 / p` <https://en.wikipedia.org/wiki/Electron_mobility#>
+# Links: derivable from here <https://en.wikipedia.org/wiki/Electron_mobility#>
 
 velocity = Symbol("velocity", units.velocity)
 
