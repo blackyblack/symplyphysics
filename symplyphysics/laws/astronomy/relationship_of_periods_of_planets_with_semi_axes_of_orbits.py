@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
@@ -12,11 +11,13 @@ from symplyphysics import (
 ## Kepler's third law is as follows. The squares of the periods of rotation of the planets around the Sun are referred to
 ## as cubes of the large semi-axes of the orbits of the planets.
 
-## Law is: T1^2 / T2^2 = a1^2 / a2^2, where
+## Law is: T1^2 / T2^2 = a1^3 / a2^3, where
 ## T1 - rotation period of the first planet,
 ## T2- rotation period of the second planet,
 ## a1 - large semi-axis of the orbit of the first planet,
 ## a2 - large semi-axis of the orbit of the second planet.
+
+# TODO: remove law since a simpler one exists in `gravity` folder?
 
 first_period = Symbol("first_period", units.time)
 second_period = Symbol("second_period", units.time)
@@ -24,10 +25,6 @@ first_semi_axis = Symbol("first_semi_axis", units.length)
 second_semi_axis = Symbol("second_semi_axis", units.length)
 
 law = Eq((first_period)**2 / (second_period)**2, (first_semi_axis)**3 / (second_semi_axis)**3)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(second_period_=second_period,

@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     dimensionless,
@@ -17,6 +16,11 @@ from symplyphysics import (
 ## m - penetrating power of telescope,
 ## D - diameter of the lens in millimeters.
 
+# Possible link: https://ru.wikipedia.org/wiki/%D0%9F%D1%80%D0%BE%D0%BD%D0%B8%D1%86%D0%B0%D1%8E%D1%89%D0%B0%D1%8F_%D1%81%D0%B8%D0%BB%D0%B0
+# TODO: find English link
+
+# TODO: move law to `optics`?
+
 penetrating_power_telescope = Symbol("penetrating_power_telescope", dimensionless)
 
 lens_diameter = Symbol("lens_diameter", units.length)
@@ -24,10 +28,6 @@ lens_diameter = Symbol("lens_diameter", units.length)
 one_millimeter = Quantity(1 * units.millimeter)
 
 law = Eq(penetrating_power_telescope, 2.5 + 5 * log(lens_diameter / one_millimeter, 10))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(lens_diameter_=lens_diameter)

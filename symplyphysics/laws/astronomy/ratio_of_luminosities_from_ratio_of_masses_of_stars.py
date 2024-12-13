@@ -8,7 +8,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
@@ -23,16 +22,17 @@ from symplyphysics import (
 ## L2 - illuminance of second object,
 ## L1 - illuminance of first object.
 
+# Conditions
+## The masses must obey the inequality `0.43 * M1 < M2 < 2 * M1`, see link for more information.
+
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Mass%E2%80%93luminosity_relation>
+
 mass_first = clone_as_symbol(symbols.mass, display_symbol="m_1", display_latex="m_1")
 mass_second = clone_as_symbol(symbols.mass, display_symbol="m_2", display_latex="m_2")
 illuminance_first = Symbol("illuminance_first", units.energy / units.area)
 illuminance_second = Symbol("illuminance_second", units.energy / units.area)
 
 law = Eq(illuminance_second / illuminance_first, (mass_second / mass_first)**4)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(mass_first_=mass_first,

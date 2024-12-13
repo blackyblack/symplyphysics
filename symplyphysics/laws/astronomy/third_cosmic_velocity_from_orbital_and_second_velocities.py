@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
@@ -17,16 +16,15 @@ from symplyphysics import (
 ## v - orbital velocity of the planet relative to the Sun,
 ## v2 - second cosmic velocity for a given planet.
 
+# Links: Wikipedia <https://ru.wikipedia.org/wiki/%D0%A2%D1%80%D0%B5%D1%82%D1%8C%D1%8F_%D0%BA%D0%BE%D1%81%D0%BC%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F_%D1%81%D0%BA%D0%BE%D1%80%D0%BE%D1%81%D1%82%D1%8C#cite_note-3>
+# TODO: find English link
+
 third_velocity = Symbol("third_velocity", units.velocity)
 
 orbital_velocity = Symbol("orbital_velocity", units.velocity)
 second_velocity = Symbol("second_velocity", units.velocity)
 
 law = Eq(third_velocity, sqrt(((sqrt(2) - 1)**2) * orbital_velocity**2 + second_velocity**2))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(orbital_velocity_=orbital_velocity, second_velocity_=second_velocity)

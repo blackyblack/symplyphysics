@@ -5,7 +5,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
@@ -20,6 +19,8 @@ from symplyphysics import (
 ## M1 - initial mass of the rocket,
 ## M2 - final mass of the rocket.
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Tsiolkovsky_rocket_equation>
+
 speed = Symbol("speed", units.velocity)
 
 specific_impulse = Symbol("specific_impulse", units.velocity)
@@ -27,10 +28,6 @@ initial_mass = clone_as_symbol(symbols.mass, display_symbol="m_0", display_latex
 final_mass = clone_as_symbol(symbols.mass, display_symbol="m_1", display_latex="m_1")
 
 law = Eq(speed, specific_impulse * log(initial_mass / final_mass))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(specific_impulse_=specific_impulse,

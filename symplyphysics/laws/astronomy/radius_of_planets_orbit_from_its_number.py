@@ -6,7 +6,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     dimensionless,
@@ -20,6 +19,8 @@ from symplyphysics import (
 ## R - radius of the planet of the solar system in astronomical units,
 ## i - number of planet (starts with -1).
 
+# Links: third formula <https://en.wikipedia.org/wiki/Titius%E2%80%93Bode_law#Original_formulation>
+
 radius_of_orbit = Symbol("radius_of_orbit", units.length)
 
 number_of_planet = Symbol("number_of_planet", dimensionless)
@@ -28,10 +29,6 @@ first_constant = Quantity(0.4 * units.astronomical_unit)
 second_constant = Quantity(0.3 * units.astronomical_unit)
 
 law = Eq(radius_of_orbit, first_constant + second_constant * 2**number_of_planet)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(number_of_planet_=number_of_planet)

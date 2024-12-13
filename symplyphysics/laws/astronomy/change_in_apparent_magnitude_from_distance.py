@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     dimensionless,
@@ -24,6 +23,8 @@ from symplyphysics import (
 ## l2 - illuminance of second object,
 ## l1 - illuminance of first object.
 
+# Link: Wikipedia, second formula <https://en.wikipedia.org/wiki/Apparent_magnitude#Calculations>
+
 apparent_magnitude_first = Symbol("apparent_magnitude_first", dimensionless)
 apparent_magnitude_second = Symbol("apparent_magnitude_second", dimensionless)
 illuminance_first = Symbol("illuminance_first", units.energy / units.area)
@@ -31,10 +32,6 @@ illuminance_second = Symbol("illuminance_second", units.energy / units.area)
 
 law = Eq(apparent_magnitude_second - apparent_magnitude_first,
     -2.5 * log(illuminance_second / illuminance_first, 10))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(apparent_magnitude_first_=apparent_magnitude_first,

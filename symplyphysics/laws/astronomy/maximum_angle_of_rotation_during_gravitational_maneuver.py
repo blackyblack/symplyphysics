@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     angle_type,
@@ -24,16 +23,16 @@ from symplyphysics import (
 # Conditions:
 # - Aiming range equals to planet radius.
 
+# TODO: find link
+
+# TODO: move law to `gravity`?
+
 maximum_angle = Symbol("maximum_angle", angle_type)
 
 first_cosmic_velocity_planet = Symbol("first_cosmic_velocity_planet", units.velocity)
 rocket_speed = Symbol("rocket_speed", units.velocity)
 
 law = Eq(maximum_angle, atan((first_cosmic_velocity_planet / rocket_speed)**2))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(first_cosmic_velocity_planet_=first_cosmic_velocity_planet,

@@ -6,7 +6,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     angle_type,
@@ -21,6 +20,10 @@ from symplyphysics import (
 ## L - wavelength,
 ## D - lens diameter.
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Angular_resolution#The_Rayleigh_criterion>
+
+# TODO: move to `optics`?
+
 resolution = Symbol("resolution", angle_type)
 
 wavelength = Symbol("wavelength", units.length)
@@ -29,10 +32,6 @@ lens_diameter = Symbol("lens_diameter", units.length)
 constant_rad = Quantity(1.22 * units.radian)
 
 law = Eq(resolution, constant_rad * (wavelength / lens_diameter))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(wavelength_=wavelength, lens_diameter_=lens_diameter)

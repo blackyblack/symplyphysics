@@ -1,6 +1,6 @@
 from sympy import Eq, solve, sqrt
 from sympy.physics.units import gravitational_constant
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, symbols)
 
 ## Description
@@ -16,6 +16,10 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## Conditions
 ## r <= a
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Orbital_speed#Instantaneous_orbital_speed>
+
+# TODO: move law to gravity?
+
 orbital_velocity = Symbol("orbital_velocity", units.velocity)
 distance = Symbol("distance", units.length)
 large_half_axis_length = Symbol("large_half_axis_length", units.length)
@@ -24,10 +28,6 @@ planet_mass = symbols.mass
 law = Eq(
     orbital_velocity,
     sqrt(gravitational_constant * planet_mass * ((2 / distance) - (1 / large_half_axis_length))))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(planet_mass_=planet_mass,

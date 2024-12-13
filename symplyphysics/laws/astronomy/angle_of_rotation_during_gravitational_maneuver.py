@@ -8,11 +8,15 @@ The angle of the gravitational maneuver depends on the aiming range, the mass of
 
 .. image:: https://upload.wikimedia.org/wikipedia/commons/a/ad/Gravity_assist\_-\_ru.svg
     :width: 240px
+
+..
+    TODO find link to law
+    TODO move law to `gravity`?
 """
 
 from sympy import Eq, solve, atan
 from sympy.physics.units import gravitational_constant
-from symplyphysics import (clone_as_symbol, symbols, units, Quantity, Symbol, print_expression,
+from symplyphysics import (clone_as_symbol, symbols, units, Quantity, Symbol,
     validate_input, validate_output, angle_type)
 
 angle = Symbol("angle", angle_type)
@@ -56,10 +60,6 @@ Latex:
     .. math::
         \phi = 2 \arctan \left( \frac{G M}{b v^2} \right)
 """
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(planet_mass_=planet_mass, aiming_range_=aiming_range, rocket_speed_=rocket_speed)

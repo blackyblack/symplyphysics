@@ -6,7 +6,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
@@ -20,6 +19,8 @@ from symplyphysics import (
 ## H - Hubble's constant,
 ## r - distance to galaxy.
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Hubble%27s_law#>
+
 speed_of_galaxy = Symbol("speed_of_galaxy", units.velocity)
 
 distance_to_galaxy = Symbol("distance_to_galaxy", units.length)
@@ -27,10 +28,6 @@ distance_to_galaxy = Symbol("distance_to_galaxy", units.length)
 hubble_constant = Quantity(2.2e-18 / units.second)
 
 law = Eq(speed_of_galaxy, hubble_constant * distance_to_galaxy)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(distance_to_galaxy_=distance_to_galaxy)

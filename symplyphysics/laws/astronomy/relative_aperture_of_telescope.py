@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     dimensionless,
@@ -17,6 +16,10 @@ from symplyphysics import (
 ## non-high-power telescopes give a greater magnification, other things being equal, and are used in working with objects where
 ## details need to be considered, that is, with planets.
 
+# Link: Wikipedia <https://en.wikipedia.org/wiki/F-number#Notation>
+
+# TODO: move law to `optics`?
+
 ## Law is: A = D / F, where
 ## A - relative aperture of telescope,
 ## D - lens diameter,
@@ -28,10 +31,6 @@ lens_diameter = Symbol("lens_diameter", units.length)
 focal_length_lens = Symbol("focal_length_lens", units.length)
 
 law = Eq(relative_aperture, lens_diameter / focal_length_lens)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(lens_diameter_=lens_diameter, focal_length_lens_=focal_length_lens)
