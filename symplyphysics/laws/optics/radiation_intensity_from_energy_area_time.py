@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
@@ -18,6 +17,8 @@ from symplyphysics import (
 ## S - area,
 ## t - time.
 
+# Links: Wikipedia, derivable from here <https://en.wikipedia.org/wiki/Intensity_(physics)#Mathematical_description>
+
 intensity = Symbol("intensity", units.power / units.area)
 
 energy = Symbol("energy", units.energy)
@@ -25,10 +26,6 @@ area = Symbol("area", units.area)
 time = Symbol("time", units.time)
 
 law = Eq(intensity, energy / (area * time))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(

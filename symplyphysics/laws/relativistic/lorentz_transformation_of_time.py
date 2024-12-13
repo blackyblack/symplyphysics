@@ -39,6 +39,8 @@ from symplyphysics.core.expr_comparisons import expr_equals
 ##   with speed `-V` relative to frame `S'`, and hence the same Lorentz transformation can be applied.
 ## - In the limit of `V/c << 1` the formula reduces to the classical Galilean transformation `t' = t`.
 
+# Links: Wikipedia, first formula in box <https://en.wikipedia.org/wiki/Lorentz_transformation#Coordinate_transformation>
+
 time_in_proper_frame = Symbol("time_in_proper_frame", units.time)
 time_in_lab_frame = Symbol("time_in_lab_frame", units.time)
 position_in_lab_frame = Symbol("position_in_lab_frame", units.length)

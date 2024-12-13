@@ -21,6 +21,8 @@ from symplyphysics import (
 # Conditions
 ## - The interval is timelike, i.e. `Δs` is real
 
+# Links: Wikipedia, equivalent to formula 2 in box <https://en.wikipedia.org/wiki/Proper_time#In_special_relativity>
+
 proper_time = Symbol("proper_time", units.time, real=True)
 spacetime_interval = Symbol("spacetime_interval", units.length, real=True)
 

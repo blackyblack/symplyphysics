@@ -21,6 +21,9 @@ from symplyphysics import (
 ## E - total energy of relativistic particle
 ## v - vector of particle's velocity
 
+# Links: Wikipedia, derivable from here <https://en.wikipedia.org/wiki/Energy%E2%80%93momentum_relation#Heuristic_approach_for_massive_particles>
+# TODO: find a more exact link
+
 total_energy = Symbol("total_energy", units.energy)
 
 

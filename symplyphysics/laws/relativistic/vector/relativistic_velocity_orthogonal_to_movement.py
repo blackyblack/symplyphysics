@@ -34,6 +34,8 @@ from symplyphysics.definitions import lorentz_factor as lorentz_factor_def
 # Conditions
 ## - Works in special relativity
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Velocity-addition_formula#General_configuration>
+
 
 def orthogonal_velocity_component_in_lab_frame_law(
     velocity_in_proper_frame_: Vector,

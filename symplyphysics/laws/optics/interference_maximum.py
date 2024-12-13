@@ -1,5 +1,5 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, dimensionless)
 
 # Description
@@ -7,6 +7,7 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## (i.e. an even number of half-waves) Δ = mλ, where m = 0, 1, 2, ...,
 ## then an interference maximum is formed at the point of superposition of these waves.
 
+# Links:
 ## https://vogueindustry.com/17289645-interference-patterns-maximum-and-minimum-conditions#menu-9
 ## https://www.livelaptopspec.com/what-is-maximum-constructive-interference/
 
@@ -23,10 +24,6 @@ number_maximum = Symbol("number_maximum", dimensionless)
 wave_length = Symbol("wave_length", units.length)
 
 law = Eq(travel_difference, number_maximum * wave_length)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(wave_length_=wave_length, number_maximum_=number_maximum)

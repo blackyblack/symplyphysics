@@ -1,7 +1,7 @@
 from sympy import Eq, solve, sqrt
 from sympy.physics.units import speed_of_light
 
-from symplyphysics import (Quantity, Symbol, print_expression, units, validate_input,
+from symplyphysics import (Quantity, Symbol, units, validate_input,
     validate_output)
 
 # Description
@@ -14,15 +14,13 @@ from symplyphysics import (Quantity, Symbol, print_expression, units, validate_i
 # c is speed of light,
 # l_rel is relativistic length.
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Length_contraction#Basis_in_relativity>
+
 rest_length = Symbol("rest_length", units.length)
 velocity = Symbol("velocity", units.velocity)
 relativistic_length = Symbol("relativistic_length", units.length)
 
 law = Eq(relativistic_length, rest_length * sqrt(1 - velocity**2 / speed_of_light**2))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(rest_length_=rest_length, velocity_=velocity)

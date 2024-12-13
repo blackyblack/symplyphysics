@@ -15,6 +15,8 @@ from symplyphysics import (
 ## Δs - spacetime interval
 ## Subscripts 2, 1 designate two inertial reference frames connected by a Lorentz transformation
 
+# Links: Wikipedia, follows from text <https://en.wikipedia.org/wiki/Spacetime#Spacetime_interval>
+
 first_spacetime_interval = Symbol("first_spacetime_interval", units.length)
 second_spacetime_interval = Symbol("second_spacetime_interval", units.length)
 

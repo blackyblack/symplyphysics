@@ -3,11 +3,12 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     dimensionless,
 )
+
+# TODO: law for bright rings?
 
 # Description
 ## Newton's rings are annular interference maxima and minima that appear around the point of contact between
@@ -24,6 +25,9 @@ from symplyphysics import (
 ## L - wavelength in a vacuum,
 ## n - refractive index of medium between lens and plate.
 
+# Links: Wikipedia (ru), last formula in paragraph <https://ru.wikipedia.org/wiki/%D0%9A%D0%BE%D0%BB%D1%8C%D1%86%D0%B0_%D0%9D%D1%8C%D1%8E%D1%82%D0%BE%D0%BD%D0%B0>
+# TODO: find English link
+
 radius = Symbol("radius", units.length)
 
 wavelength = Symbol("wavelength", units.length)
@@ -33,10 +37,6 @@ refractive_index_between_lens_plate = Symbol("refractive_index_between_lens_plat
 
 law = Eq(radius,
     sqrt(order_of_ring * radius_curvature * wavelength / refractive_index_between_lens_plate))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(wavelength_=wavelength,

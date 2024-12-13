@@ -19,6 +19,8 @@ from symplyphysics import (
 ## v - velocity of the object in the selected frame of reference,
 ## c - speed of light in vacuum.
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Mass_in_special_relativity#Relativistic_energy%E2%80%93momentum_equation>
+
 momentum = Symbol("momentum", units.momentum)
 
 # This is equivalent of symbols.mass
@@ -26,10 +28,6 @@ rest_mass = Symbol("rest_mass", units.mass)
 velocity = Symbol("velocity", units.velocity)
 
 law = Eq(momentum, rest_mass * velocity / sqrt(1 - (velocity / speed_of_light)**2))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(mass_=rest_mass, velocity_=velocity)

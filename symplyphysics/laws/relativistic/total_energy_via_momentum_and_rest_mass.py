@@ -19,6 +19,8 @@ from symplyphysics import (
 ## m0 - rest, or invariant, mass
 ## c - speed of light
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Energy%E2%80%93momentum_relation>
+
 relativistic_energy = Symbol("relativistic_energy", units.energy)
 relativistic_momentum = Symbol("relativistic_momentum", units.momentum)
 invariant_mass = symbols.mass

@@ -1,5 +1,5 @@
 from sympy import (Eq, solve, diff, sin, pi, sqrt)
-from symplyphysics import (units, Quantity, Symbol, print_expression, dimensionless, angle_type,
+from symplyphysics import (units, Quantity, Symbol, dimensionless, angle_type,
     validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import refractive_index_is_wave_speeds_ratio as refractive_index_definition
@@ -24,6 +24,8 @@ from symplyphysics.core.symbols.quantities import scale_factor
 ## - light is monochromic, as refactive index depends on the light frequency.
 ## - refracting medium is uniform, so refracting index does not change over ray path.
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Snell%27s_law>
+
 incidence_refractive_index = Symbol("incidence_refractive_index", dimensionless)
 resulting_refractive_index = Symbol("resulting_refractive_index", dimensionless)
 incidence_angle = Symbol("incidence_angle", angle_type)
@@ -33,6 +35,7 @@ law = Eq(incidence_refractive_index * sin(incidence_angle),
     resulting_refractive_index * sin(refraction_angle))
 
 # Derive the same Snell's law from Fermat's principle
+# TODO: prefix variables used in proof with underscore
 
 # Fermat's principle states that the path taken by a ray between two given points is the path that can be traveled in the least time.
 # For derivation, we will use the notation in figure https://en.wikipedia.org/wiki/Fermat%27s_principle#/media/File:Fermat_Snellius.svg
@@ -130,10 +133,6 @@ resulting_expression = Eq(
 # Verify that the resulting_expression corresponds to the law.
 assert expr_equals(law.lhs, resulting_expression.lhs)
 assert expr_equals(law.rhs, resulting_expression.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(incidence_angle_=incidence_angle,

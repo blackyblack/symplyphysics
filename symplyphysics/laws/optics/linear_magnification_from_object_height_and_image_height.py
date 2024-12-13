@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     dimensionless,
@@ -23,15 +22,13 @@ from symplyphysics import (
 ## Conditions
 ## If the image is straight, then the value h_image is considered with a plus sign, and if it is inverted, then with a minus sign.
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Magnification#Single_lens>
+
 image_height = Symbol("image_height", units.length)
 object_height = Symbol("object_height", units.length)
 magnification = Symbol("magnification", dimensionless)
 
 law = Eq(magnification, image_height / object_height)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(image_height_=image_height, object_height_=object_height)

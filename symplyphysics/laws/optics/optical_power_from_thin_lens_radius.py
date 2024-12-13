@@ -1,5 +1,5 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, dimensionless, validate_input,
+from symplyphysics import (units, Quantity, Symbol, dimensionless, validate_input,
     validate_output)
 
 # Description
@@ -23,6 +23,10 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, dimensionl
 ## For front surface: R > 0 for convex, R < 0 for concave.
 ## For back surface: R < 0 for convex, R > 0 for concave.
 
+# Links:
+## Wikipedia, definition of optical power <https://en.wikipedia.org/wiki/Optical_power>
+## Wikipedia, formula for effective focal length <https://en.wikipedia.org/wiki/Lens#Thin_lens_approximation>
+
 optical_power = Symbol("optical_power", 1 / units.length)
 lens_refractive_index = Symbol("lens_refractive_index", dimensionless)
 medium_refractive_index = Symbol("medium_refractive_index", dimensionless)
@@ -31,10 +35,6 @@ back_radius = Symbol("back_radius", units.length)
 
 law = Eq(optical_power,
     (lens_refractive_index - medium_refractive_index) * (1 / front_radius - 1 / back_radius))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(lens_refractive_index_=lens_refractive_index,

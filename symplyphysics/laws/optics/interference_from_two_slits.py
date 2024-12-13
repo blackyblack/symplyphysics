@@ -1,5 +1,5 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output)
 
 # Description
@@ -21,16 +21,14 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 #   through the radiation source, while this axis of symmetry should be perpendicular
 #   to the plane on which the interference pattern will be.
 
+# Links: Wikipedia, derivable from fourth formula <https://en.wikipedia.org/wiki/Double-slit_experiment#Classical_wave-optics_formulation>,
+
 travel_difference = Symbol("travel_difference", units.length)
 coordinate = Symbol("coordinate", units.length)
 distance_between_slits = Symbol("distance_between_slits", units.length)
 distance_to_picture = Symbol("distance_to_picture", units.length)
 
 law = Eq(travel_difference, coordinate * distance_between_slits / distance_to_picture)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(coordinate_=coordinate,

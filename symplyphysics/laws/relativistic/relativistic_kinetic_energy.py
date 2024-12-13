@@ -21,6 +21,8 @@ from symplyphysics import (
 ## - The work expended accelerating an object from rest approaches infinity as the velocity approaches the
 ##   speed of light. Thus it is impossible to accelerate an object across this boundary.
 
+# Links: Wikipedia, last formula in paragraph <https://en.wikipedia.org/wiki/Kinetic_energy#Derivation_2>
+
 kinetic_energy = Symbol("kinetic_energy", units.energy)
 lorentz_factor = Symbol("lorentz_factor", dimensionless)
 rest_mass = Symbol("rest_mass", units.mass)

@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     dimensionless,
@@ -27,15 +26,13 @@ from symplyphysics import (
 ## If real image is formed, f is positive.
 ## d is always negative as object is on left side of the lens.
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Magnification#Single_lens>
+
 distance_to_object = Symbol("distance_to_object", units.length)
 distance_to_image = Symbol("distance_to_image", units.length)
 magnification = Symbol("magnification", dimensionless)
 
 law = Eq(magnification, distance_to_image / distance_to_object)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(distance_to_image_=distance_to_image, distance_to_object_=distance_to_object)
