@@ -3,6 +3,10 @@ Entropy is derivative of free energy
 ====================================
 
 Entropy of a system can be found if its free energy is known as a function of temperature.
+
+**Links:**
+
+#. `Wikipedia, follows from the corresponding fundamental relation <https://en.wikipedia.org/wiki/Fundamental_thermodynamic_relation>`__.
 """
 
 from sympy import Eq, Derivative, solve

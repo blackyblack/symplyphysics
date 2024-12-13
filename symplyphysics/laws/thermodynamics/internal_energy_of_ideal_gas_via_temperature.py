@@ -12,8 +12,15 @@ Internal energy of an ideal gas is the sum of the kinetic energy of all of its m
 
 #. The gas is ideal.
 
+**Links:**
+
+#. `Physics LibreTexts <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/University_Physics_II_-_Thermodynamics_Electricity_and_Magnetism_(OpenStax)/03%3A_The_First_Law_of_Thermodynamics/3.03%3A_Work_Heat_and_Internal_Energy>`__.
+
+#. `Wikipedia, see text <https://en.wikipedia.org/wiki/Ideal_gas#Internal_energy>`__.
+
 ..
     TODO replace `mass/molar_mass` with `amount_of_substance`
+    TODO add to conditions that the gas is monatomic
 """
 
 from sympy import Eq, solve

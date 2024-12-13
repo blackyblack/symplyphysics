@@ -6,6 +6,10 @@ Latent heat of fusion via mass
 the body changes its state from a solid to a liquid. The same law applies to the process
 of solidification, when the body changes its state from a liquid to a solid, and the
 specific heat of solidification is equal by magnitude to that of fusion.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Enthalpy_of_fusion>`__.
 """
 
 from sympy import (Eq, solve)

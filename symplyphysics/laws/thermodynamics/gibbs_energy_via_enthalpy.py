@@ -6,6 +6,10 @@ Gibbs energy is a thermodynamic potential that can be used to calculate the maxi
 that may be performed by a thermodynamically closed system at constant temperature and pressure.
 It provides a necessary condition for processes such as chemical reactions that may occur under these
 conditions.
+
+**Links:**
+
+#. `Wikipedia, first formula <https://en.wikipedia.org/wiki/Gibbs_free_energy>`__.
 """
 
 from sympy import Eq, solve

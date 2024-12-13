@@ -20,6 +20,10 @@ thermodynamic quantities depend on variables that are measurable experimentally.
 
 #. The system is in thermal equilibrium with its surroundings.
 #. The system is composed of only one type of particles, i.e. the system is a pure substance.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Fundamental_thermodynamic_relation>`__.
 """
 
 from sympy import Eq, symbols as sympy_symbols, Function as SymFunction, Symbol as SymSymbol

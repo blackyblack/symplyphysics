@@ -12,6 +12,10 @@ solids, it is a big achievement and the result has correct asymptotic behaviour 
 **Notation:**
 
 #. :quantity_notation:`molar_gas_constant`.
+
+**Links:**
+
+#. `Wikipedia, equivalent formula in the box <https://en.wikipedia.org/wiki/Einstein_solid>`__.
 """
 
 from sympy import Eq, exp

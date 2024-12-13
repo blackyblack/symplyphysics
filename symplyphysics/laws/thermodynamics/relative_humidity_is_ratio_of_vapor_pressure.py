@@ -7,6 +7,10 @@ pressure :math:`p_0` at a given temperature. **Saturation vapor** is vapor in dy
 equilibrium with a liquid or solid of the same composition in a closed system. In such
 a system, the number of evaporating molecules is equal to the number of condensing
 molecules per unit time.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Humidity#Relative_humidity>`__.
 """
 
 from sympy import Eq, solve

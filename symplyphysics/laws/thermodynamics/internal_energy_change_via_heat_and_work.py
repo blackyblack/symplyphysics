@@ -20,6 +20,10 @@ during a thermodynamic process.
    by the environment is negative.
 #. The heat flowing from the environment *into* the system is positive, and the heat flowing into
    the environment *out of* the system is negative.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/First_law_of_thermodynamics#Definition>`__.
 """
 
 from sympy import Eq

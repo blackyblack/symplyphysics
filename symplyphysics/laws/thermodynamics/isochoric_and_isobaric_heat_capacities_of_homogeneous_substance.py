@@ -5,6 +5,10 @@ Isochoric and isobaric heat capacities of homogeneous substance
 The **Mayer's relation** is the relation between heat capacity at constant pressure and heat
 capacity at constant volume. In the current form it is applicable to any homogeneous substance,
 not just ideal gases.
+
+**Links:**
+
+#. `Wikipedia, second formula <https://en.wikipedia.org/wiki/Mayer%27s_relation>`__.
 """
 
 from sympy import Eq, solve

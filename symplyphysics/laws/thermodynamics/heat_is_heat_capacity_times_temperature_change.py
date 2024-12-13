@@ -13,6 +13,10 @@ to the heat capacity of the body times the change in the body's temperature.
 
 #. The heat capacity must be independent of the body's temperature. If this doesn't hold,
    refer to the differential definition of the heat capacity.
+
+**Links:**
+
+#. `Wikipedia, derivable from here <https://en.wikipedia.org/wiki/Heat_capacity#Basic_definition>`__.
 """
 
 from sympy import Eq, solve

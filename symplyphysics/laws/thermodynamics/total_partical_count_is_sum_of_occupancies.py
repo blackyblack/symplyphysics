@@ -11,6 +11,10 @@ in the system.
 
 #. This law can be used to express chemical potential :math:`\mu` as a function of temperature :math:`T`
    and total particle count :math:`N` for Fermi—Dirac and Bose—Einstein distributions.
+
+**Links:**
+
+#. `Wikipedia, see normalization condition (second formula) <https://en.wikipedia.org/wiki/Fermi%E2%80%93Dirac_statistics#Fermi%E2%80%93Dirac_distribution>`__.
 """
 
 from typing import Sequence

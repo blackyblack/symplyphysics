@@ -1,5 +1,5 @@
 from sympy import Eq, solve
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, dimensionless, convert_to_float)
 
 # Description
@@ -17,6 +17,13 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## v_x is velocity projection on the x-axis
 ## t is time
 
+## Conditions
+## Gas is ideal
+## Wall is flat and perpendicular to X-axis
+
+# Links:
+## Chemistry LibreTexts, similar formula <https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Physical_Chemistry_(LibreTexts)/27%3A_The_Kinetic_Theory_of_Gases/27.04%3A_The_Frequency_of_Collisions_with_a_Wall>
+
 number_of_impacts = Symbol("number_of_impacts", dimensionless)
 molecules_concentration = Symbol("molecules_concentration", 1 / units.volume)
 area = Symbol("area", units.area)
@@ -24,14 +31,6 @@ velocity_projection = Symbol("velocity_projection", units.velocity)
 time = Symbol("time", units.time)
 
 law = Eq(number_of_impacts, (molecules_concentration * area * velocity_projection * time) / 2)
-
-## Conditions
-## Gas is ideal
-## Wall is flat and perpendicular to X-axis
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(molecules_concentration_=molecules_concentration,

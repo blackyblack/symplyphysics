@@ -5,6 +5,10 @@ Gas mixture pressure from partial pressures
 The pressure of a mixture of gases is equal to the sum of their partial pressures. *Partial pressure*
 of a gas is the pressure that the gas would exert on the walls of a vessel when it is the only gas present
 in the vessel.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Dalton%27s_law>`__.
 """
 
 from typing import Sequence

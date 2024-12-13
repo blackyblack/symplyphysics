@@ -10,6 +10,10 @@ known as `subadditivity <https://en.wikipedia.org/wiki/Subadditivity>`_.
 **Conditions:**
 
 #. The subsystems must be (approximately) independent in the statistical sense.
+
+**Links:**
+
+#. `ScienceDirect <https://www.sciencedirect.com/science/article/abs/pii/S0378437103002620>`__.
 """
 
 from typing import Sequence

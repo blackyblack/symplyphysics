@@ -5,6 +5,10 @@ Prandtl number via dynamic viscosity and thermal conductivity
 *Prandtl number* is a dimensionless quantity defined as the ratio of kinetic viscosity
 (momentum diffusivity) to thermal diffusivity. It can also be expressed using dynamic viscosity
 and thermal conductivity.
+
+**Links:**
+
+#. `Wikipedia, last formula within the box <https://en.wikipedia.org/wiki/Prandtl_number>`__.
 """
 
 from sympy import Eq, solve

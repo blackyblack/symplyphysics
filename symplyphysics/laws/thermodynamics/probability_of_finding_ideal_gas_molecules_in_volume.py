@@ -10,6 +10,13 @@ in space, say, a container with gas particles.
 #. The gas is ideal.
 #. :math:`V \le V_0`
 #. There are no external fields acting on the particles.
+
+**Links:**
+
+#. Formula 80.1 on p. 292 of "General Course of Physics" (Obschiy kurs fiziki), vol. 1 by Sivukhin D.V. (1979).
+
+..
+    TODO find English link
 """
 
 from sympy import Eq

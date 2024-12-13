@@ -13,6 +13,10 @@ The *barometric formula* determines the dependence of the pressure or density of
 
 #. The gas is ideal.
 #. The gas is in a uniform gravity field.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Barometric_formula#Derivation>`__.
 """
 
 from sympy import Eq, solve, exp

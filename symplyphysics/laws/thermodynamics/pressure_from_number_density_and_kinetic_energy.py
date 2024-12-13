@@ -8,6 +8,10 @@ of the gas and the average kinetic energy of gas particles.
 **Condition:**
 
 #. The gas is ideal.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Kinetic_theory_of_gases#Pressure_and_kinetic_energy>`__.
 """
 
 from sympy import (Eq, solve)

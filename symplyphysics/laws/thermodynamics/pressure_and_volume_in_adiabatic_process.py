@@ -5,6 +5,10 @@ Adiabatic process equation via pressure and volume
 An *adiabatic process* is a type of thermodynamic process that occurs without transferring
 heat or mass between the thermodynamic system and its environment.
 
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Isentropic_process#Derivation_of_the_isentropic_relations>`__.
+
 ..
     TODO rename file
 """
