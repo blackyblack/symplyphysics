@@ -15,7 +15,7 @@ Work is scalar value equal to force multiplied by distance.
 
 **Links:**
 
-#. `Wikipedia, first formula <https://en.wikipedia.org/wiki/Work_(physics)#>`__ setting :math:`\theta = 0`.
+#. `Wikipedia, first formula <https://en.wikipedia.org/wiki/Work_(physics)#>`__.
 """
 
 from sympy import Eq, solve
