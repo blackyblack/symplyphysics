@@ -4,6 +4,10 @@ Momentum derivative of kinetic energy is speed
 
 The general formula for the kinetic energy of an object features its speed and momentum. This way it can be used
 not only in the case of variable mass, but also in the relativistic case.
+
+**Links:**
+
+#. `Wikipedia, derivable from here <https://en.wikipedia.org/wiki/Kinetic_energy#With_vector_calculus>`__.
 """
 
 from sympy import Eq, Derivative

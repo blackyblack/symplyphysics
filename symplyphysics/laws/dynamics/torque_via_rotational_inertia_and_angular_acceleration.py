@@ -4,6 +4,10 @@ Torque via rotational inertia and angular acceleration
 
 Torque due to a force is a vector physical quantity that describes the effect of the force
 on a mechanical object causing its rotational motion.
+
+**Links:**
+
+#. `Wikipedia, last formula in paragraph <https://en.wikipedia.org/wiki/Torque#Relationship_with_the_angular_momentum>`__.
 """
 
 from sympy import Eq, solve

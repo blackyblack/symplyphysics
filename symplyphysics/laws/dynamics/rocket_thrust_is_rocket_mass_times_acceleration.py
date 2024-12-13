@@ -24,6 +24,10 @@ the total mass of the system does not change.
         R = - \frac{d m}{d t}
 
     where :math:`m` is the :ref:`rocket mass <rocket_mass_definition>`.
+
+**Links:**
+
+#. Equation 9-87 on p. 242 of "Fundamentals of Physics" by David Halladay et al., 10th Ed.
 """
 
 from sympy import Eq, dsolve, solve

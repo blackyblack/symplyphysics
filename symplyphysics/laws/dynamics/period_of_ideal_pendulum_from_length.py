@@ -11,6 +11,10 @@ Period of pendulum oscillation does not depend on its mass.
 #. Ideal pendulum doesn't gain or lose any energy, so there is no friction in the system.
 #. The object is small enough to be considered a material point.
 #. The thread is weightless and doesn't change its length.
+
+**Links:**
+
+#. `Wikipedia, first formula <https://en.wikipedia.org/wiki/Pendulum#Period_of_oscillation>`__.
 """
 
 from sympy import (Derivative, Eq, diff, sin, solve, pi, sqrt)
@@ -51,6 +55,8 @@ law = Eq(period, 2 * pi * sqrt(length / quantities.acceleration_due_to_gravity))
 
 # Derive this law from conservation of energy
 ## Polar coordinate system is selected for this task. Center is a fixed point of the thread.
+
+# TODO: prefix variables used in proof with underscore
 
 pendulum_mass = symbols.mass
 ## Pendulum angle is angle between thread and gravity vector. In balanced position it is 0.

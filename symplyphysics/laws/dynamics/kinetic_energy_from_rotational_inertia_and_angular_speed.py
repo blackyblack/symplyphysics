@@ -4,6 +4,10 @@ Kinetic energy from rotational inertia and angular speed
 
 Every rotating object bears kinetic energy, which depends on the rotational inertia of the object
 and its angular speed.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Kinetic_energy#Rotating_bodies>`__.
 """
 
 from sympy import Eq, solve

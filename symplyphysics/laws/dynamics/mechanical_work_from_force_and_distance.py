@@ -1,4 +1,4 @@
-"""
+r"""
 Mechanical work is force times distance
 =======================================
 
@@ -12,6 +12,10 @@ Work is scalar value equal to force multiplied by distance.
 **Notes:**
 
 #. Use the vector form of this law for non-collinear vectors of force and movement.
+
+**Links:**
+
+#. `Wikipedia, first formula <https://en.wikipedia.org/wiki/Work_(physics)#>`__.
 """
 
 from sympy import Eq, solve

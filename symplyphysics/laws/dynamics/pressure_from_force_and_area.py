@@ -4,6 +4,10 @@ Pressure from force and area
 
 Pressure is the amount of force applied perpendicular to the surface of an object
 per unit area over which the force is distributed.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Pressure#Formula>`__.
 """
 
 from sympy import Eq, solve

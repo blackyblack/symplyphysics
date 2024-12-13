@@ -4,6 +4,13 @@ Potential energy from mass and height
 
 The potential energy is a form of energy a body possesses because of its position relative to
 other objects.
+
+**Links:**
+
+#. `Wikipedia, second formula <https://en.wikipedia.org/wiki/Potential_energy#Overview>`__.
+
+..
+    TODO: add note that it is specifically gravitational potential energy => move to `gravity`?
 """
 
 from sympy import Eq, solve

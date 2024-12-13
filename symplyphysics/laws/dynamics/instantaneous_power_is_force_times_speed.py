@@ -4,6 +4,10 @@ Instantaneous power is force times speed
 
 *Power* is the rate at which the work is done by a force exerted on an object.
 *Instantaneous power* is the power at a specific instant.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Power_(physics)#Mechanical_power>`__.
 """
 
 from sympy import Eq, cos

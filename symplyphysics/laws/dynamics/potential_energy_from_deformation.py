@@ -8,6 +8,10 @@ Spring accumulates energy while being deformed. This law is known as the **Hooke
 
 #. The deformation is elastic (reversible).
 
+**Links:**
+
+#. `Wikipedia, first formula <https://en.wikipedia.org/wiki/Elastic_energy#>`__.
+
 ..
     TODO Move law to ./deformations/
 """

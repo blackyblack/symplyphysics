@@ -8,7 +8,7 @@ and friction force.
 
 **Links:**
 
-#. `Braking distance <https://en.wikipedia.org/wiki/Braking_distance>`__.
+#. `Wikipedia <https://en.wikipedia.org/wiki/Braking_distance>`__.
 """
 
 from sympy import (Eq, solve)

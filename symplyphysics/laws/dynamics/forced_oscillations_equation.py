@@ -13,6 +13,10 @@ frequencies are associated with such a system:
 
 Such systems can undergo resonance if the angular frequency of the driving force is close to the
 natural angular frequency of the oscillator.
+
+**Links:**
+
+#. `Physics LibreTexts, formula (15.7.1) <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/Book%3A_University_Physics_I_-_Mechanics_Sound_Oscillations_and_Waves_(OpenStax)/15%3A_Oscillations/15.07%3A_Forced_Oscillations>`__.
 """
 
 from sympy import Derivative, Eq, cos, dsolve

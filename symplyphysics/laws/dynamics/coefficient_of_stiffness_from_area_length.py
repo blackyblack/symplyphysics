@@ -4,6 +4,10 @@ Coefficient of stiffness from area and length
 
 The *stiffness* coefficient depends on the Young's modulus, cross-sectional area and length.
 Young's modulus is a tabular value that is different for each material.
+
+**Links:**
+
+#. `Wikipedia, first formula <https://en.wikipedia.org/wiki/Stiffness#Relationship_to_elasticity>`__.
 """
 
 from sympy import (Eq, solve)

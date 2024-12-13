@@ -3,6 +3,10 @@ Kinetic energy from mass and speed
 ==================================
 
 The *kinetic energy* of a body is the form of energy that it possesses due to its motion.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Kinetic_energy#>`__.
 """
 
 from sympy import Eq, solve

@@ -18,6 +18,10 @@ and (2) the angular frequency of the external force driving the oscillations.
 #. The external driving force has the form of :math:`f(t) = f_m \cos{\left( \omega t + \varphi \right)}`.
 #. The complete expression of the displacement function can be found as the sum of the solution of 
    simple harmonic motion equation and the particular solution presented here.
+
+**Links:**
+
+#. `Physics LibreTexts, derivable from (15.7.2) and (15.7.3) <https://en.wikipedia.org/wiki/Force#Second_law>`__.
 """
 
 from sympy import Eq, cos, dsolve

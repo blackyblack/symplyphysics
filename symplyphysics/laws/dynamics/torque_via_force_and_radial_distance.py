@@ -8,6 +8,10 @@ Torque via force and radial distance
 
 #. The position vector of a point in space, also known as location or radius vector,
    is the vector connecting the origin of the coordinate system and the given point.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Torque#Definition_and_relation_to_other_physical_quantities>`__.
 """
 
 from sympy import Eq, solve, sin, symbols as sympy_symbols, sqrt

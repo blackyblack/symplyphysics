@@ -7,6 +7,10 @@ Kinetic energy can be expressed as a function of momentum and mass.
 **Notes:**
 
 #. This relation also holds in Quantum Mechanics.
+
+**Links:**
+
+#. `Wikipedia, fourth formula <https://en.wikipedia.org/wiki/Kinetic_energy#Kinetic_energy_of_rigid_bodies>`__.
 """
 
 from sympy import Eq, solve

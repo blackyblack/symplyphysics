@@ -5,6 +5,10 @@ Period of torsion pendulum from rotational inertia
 A torsion pendulum is an angular version of a linear harmonic oscillator: a disk
 oscillates in a horizontal plane; the reference line oscillates with some angular amplitude.
 The element of elasticity is associated with the twisting of the suspension wire.
+
+**Links:**
+
+#. `Wikipedia, third formula <https://en.wikipedia.org/wiki/Torsion_spring#Torsional_harmonic_oscillators>`__.
 """
 
 from sympy import Eq, pi, sqrt
