@@ -1,4 +1,4 @@
-from sympy import Eq, solve
+from sympy import Eq, solve, sqrt
 from sympy.physics.units import boltzmann_constant
 from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols)
 
@@ -6,18 +6,21 @@ from symplyphysics import (units, Quantity, Symbol, validate_input, validate_out
 ## The atoms of the target material evaporate and move towards the substrate inside the magnetron. At the same time,
 ## it collides with gas atoms. The free path length is the distance that a traveling atom travels between two collisions.
 
-## Law is: l = k * T / (P * g), where
+## Law is: l = k * T / (sqrt(2) * P * sigma), where
 ## l - free path length of traveling atom,
 ## k - boltzmann constant,
 ## T - temperature,
 ## P - pressure,
-## g - the cross section of the interaction of a traveling atom and a gas atom.
+## sigma - the cross section of the interaction of a traveling atom and a gas atom.
 
-# Links: Wikipedia, the fourth formula <https://en.wikipedia.org/wiki/Mean_free_path#Kinetic_theory_of_gases>
+# Notes
+## Assuming the model of spherical gas molecules, `sigma = pi * d**2` where `d` is the molecule diameter.
 
-# FIXME: hasn't an additional `sqrt(2)` factor been left out in the denominator?
+# Links
+## Wikipedia, the fourth formula <https://en.wikipedia.org/wiki/Mean_free_path#Kinetic_theory_of_gases>
+## Chemistry LibreTexts, "27.6.4. Mean Free Path" <https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Physical_Chemistry_(LibreTexts)/27%3A_The_Kinetic_Theory_of_Gases/27.06%3A_Mean_Free_Path>
 
-# TODO: move to `magnetron` folder?
+# NOTE: remove the mention of a magnetron from the description?
 
 free_path_length = Symbol("free_path_length", units.length)
 
@@ -26,7 +29,7 @@ temperature = symbols.temperature
 cross_sectional_area_of_interaction = Symbol("cross_sectional_area_of_interaction", units.area)
 
 law = Eq(free_path_length,
-    boltzmann_constant * temperature / (pressure * cross_sectional_area_of_interaction))
+    boltzmann_constant * temperature / (sqrt(2) * pressure * cross_sectional_area_of_interaction))
 
 
 @validate_input(pressure_=pressure,

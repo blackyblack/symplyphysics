@@ -1,20 +1,25 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (assert_equal, units, Quantity, errors)
+from symplyphysics import (assert_equal, units, Quantity, errors, quantities)
 from symplyphysics.laws.chemistry import free_path_of_atomic_particles_in_gaseous_medium as path_law
 
 # Description
-## The pressure is 1.43 pascal. The temperature is 573 kelvin. The cross-sectional area of the interaction is 2.41e-19 meter^2.
-## Then the free path length is 22.96 millimeter.
+## Under normal conditions (T = 0°C, p = 1 atm) the mean free path of hydrogen molecules is 130 nm.
+## The kinetic diameter of H2 molecules is 289 pm, therefore the cross sectional area of interactions
+## amounts to 2.62e-19 m**2.
+
+# Links
+## Mean free path - https://physicstasks.eu/3943/mean-free-path-of-hydrogen
+## Kinetic diameter - https://en.wikipedia.org/wiki/Kinetic_diameter
 
 Args = namedtuple("Args", ["pressure", "temperature", "cross_sectional_area_of_interaction"])
 
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
-    pressure = Quantity(1.43 * units.pascal)
-    temperature = Quantity(573 * units.kelvin)
-    cross_sectional_area_of_interaction = Quantity(2.41e-19 * (units.meter**2))
+    pressure = Quantity(1 * units.atmosphere)
+    temperature = quantities.standard_conditions_temperature
+    cross_sectional_area_of_interaction = Quantity(2.62e-19 * (units.meter**2))
 
     return Args(pressure=pressure,
         temperature=temperature,
@@ -24,7 +29,7 @@ def test_args_fixture() -> Args:
 def test_basic_free_path_length(test_args: Args) -> None:
     result = path_law.calculate_free_path_length(test_args.pressure, test_args.temperature,
         test_args.cross_sectional_area_of_interaction)
-    assert_equal(result, 22.96 * units.millimeter)
+    assert_equal(result, 130 * units.nanometer, tolerance=0.3)
 
 
 def test_bad_pressure(test_args: Args) -> None:
