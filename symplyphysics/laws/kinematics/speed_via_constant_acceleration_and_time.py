@@ -8,6 +8,10 @@ of time.
 **Conditions:**
 
 #. Acceleration is constant, i.e. :math:`\frac{d a}{d t} = 0.`
+
+**Links:**
+
+#. `Wikipedia, vector counterpart of this law <https://en.wikipedia.org/wiki/Kinematics#Relative_acceleration>`__.
 """
 
 from sympy import (Eq, solve)

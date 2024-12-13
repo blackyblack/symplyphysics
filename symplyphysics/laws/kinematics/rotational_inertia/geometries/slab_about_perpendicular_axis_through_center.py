@@ -7,6 +7,10 @@ A solid slab is rotating about an axis that is perpendicular to the slab and goe
 **Conditions:**
 
 #. The slab is uniform.
+
+**Links:**
+
+#. `Wikipedia, see table <https://en.wikipedia.org/wiki/List_of_moments_of_inertia>`__.
 """
 
 from sympy import Eq, sqrt

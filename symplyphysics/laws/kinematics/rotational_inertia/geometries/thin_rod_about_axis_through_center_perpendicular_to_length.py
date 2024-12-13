@@ -8,6 +8,10 @@ A thin rod is rotating about an axis that passes through its center perpendicula
 
 #. The rod is uniform.
 #. The rod is thin, i.e. its diameter is much less than its length.
+
+**Links:**
+
+#. `Wikipedia, third row of table <https://en.wikipedia.org/wiki/List_of_moments_of_inertia>`__.
 """
 
 from sympy import Eq

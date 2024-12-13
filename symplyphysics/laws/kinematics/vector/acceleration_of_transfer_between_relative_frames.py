@@ -9,6 +9,13 @@ of the moving frame relative to the fixed frame, centripetal acceleration and th
 rotation of the moving frame. The transfer acceleration only depends on the motion of frame :math:`S'` relative to
 stationary frame :math:`S`, so its physical meaning would be that it is the acceleration in :math:`S` of a point stationary
 in :math:`S'`.
+
+**Links:**
+
+#. `Wikipedia <https://ru.wikipedia.org/wiki/%D0%A1%D0%BB%D0%BE%D0%B6%D0%BD%D0%BE%D0%B5_%D0%B4%D0%B2%D0%B8%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5#%D0%A3%D1%81%D0%BA%D0%BE%D1%80%D0%B5%D0%BD%D0%B8%D0%B5>`__.
+
+..
+    TODO find English link
 """
 
 from symplyphysics import (

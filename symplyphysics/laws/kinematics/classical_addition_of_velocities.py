@@ -12,6 +12,10 @@ velocity of frame :math:`B` relative to frame :math:`A`.
 #. Velocity vectors must be collinear.
 #. Space and time are absolute.
 #. Applicable to inertial reference frames.
+
+**Links:**
+
+#. `Wikipedia, vector counterpart of this law <https://en.wikipedia.org/wiki/Velocity-addition_formula#Galilean_relativity>`__.
 """
 
 from sympy import Eq

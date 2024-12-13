@@ -7,6 +7,10 @@ A solid disk (cylinder) rotates about its central axis (axis of cylindrical symm
 **Conditions:**
 
 #. The disk is uniform.
+
+**Links:**
+
+#. `Wikipedia, sixth row of table <https://en.wikipedia.org/wiki/List_of_moments_of_inertia>`__.
 """
 
 from sympy import Eq, pi

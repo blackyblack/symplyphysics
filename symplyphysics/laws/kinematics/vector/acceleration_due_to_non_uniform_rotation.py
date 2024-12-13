@@ -9,6 +9,13 @@ that non-uniform rotation of :math:`S'`. It is part of the transfer acceleration
 **Notation:**
 
 #. :math:`\vec a \times \vec b` (:code:`cross(a, b)`) is vector product of :math:`\vec a` and :math:`\vec b`.
+
+**Links:**
+
+#. `Wikipedia <https://ru.wikipedia.org/wiki/%D0%A1%D0%BB%D0%BE%D0%B6%D0%BD%D0%BE%D0%B5_%D0%B4%D0%B2%D0%B8%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5#%D0%A3%D1%81%D0%BA%D0%BE%D1%80%D0%B5%D0%BD%D0%B8%D0%B5>`__.
+
+..
+    TODO find English link
 """
 
 from sympy import Expr, abc

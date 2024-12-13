@@ -10,6 +10,10 @@ Also see :doc:`laws.kinematics.vector.centrifugal_acceleration_via_centripetal_a
 **Notation:**
 
 #. :math:`\vec a \times \vec b` (:code:`cross(a, b)`) is the cross product between :math:`\vec a` and :math:`\vec b`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Centripetal_force#Derivation_using_vectors>`__.
 """
 
 from sympy import symbols

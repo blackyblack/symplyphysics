@@ -6,6 +6,12 @@ To describe the rotation of a rigid body about a fixed rotational axis, a refere
 assumed to be fixed in the body, perpendicular to that axis and rotating with the body. The angular
 position of this is measured relative to a fixed direction and is expressed as a ratio of the arc
 length of a circular path and its radius (distance to the axis).
+
+**Links:**
+
+#. `Wikipedia, similar concept <https://en.wikipedia.org/wiki/Central_angle#Formulas>`__.
+
+#. `openstax, table 6.2, first line <https://openstax.org/books/physics/pages/6-3-rotational-motion>`__.
 """
 
 from sympy import Eq

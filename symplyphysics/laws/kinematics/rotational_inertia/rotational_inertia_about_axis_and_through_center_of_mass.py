@@ -6,11 +6,14 @@ The *parallel-axis theorem* relates the rotational inertia of a body about any a
 that of the same body about a parallel axis that extends through the body's center of mass
 of mass).
 
-
 **Conditions:**
 
 #. The two axes must be parallel to each other.
 #. The axis used in the calculation of :math:`I_\text{com}` must pass through the body's center of mass.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Parallel_axis_theorem#Mass_moment_of_inertia>`__.
 """
 
 from sympy import Eq

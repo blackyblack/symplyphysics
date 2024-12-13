@@ -22,7 +22,10 @@ from symplyphysics import (
 
 # Notes:
 ## - The integration is carried out over the entire body as to include every volume element.
-## - THe z-axis is the rotational axis of the body
+## - The z-axis is the rotational axis of the body
+
+# Links:
+## Wikipedia, derivable from fourth equation <https://en.wikipedia.org/wiki/Moment_of_inertia#Point_mass>
 
 rotational_inertia = Symbol("rotational_inertia", units.mass * units.length**2)
 density = Function("density", units.mass / units.length**3)

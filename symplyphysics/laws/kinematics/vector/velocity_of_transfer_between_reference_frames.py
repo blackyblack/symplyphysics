@@ -24,6 +24,9 @@ from symplyphysics import (
 ## w - pseudovector of angular velocity related to rotation of moving frame S' about instantaneous axis
 ## r - vector of position of point X relative to moving frame S'
 
+# Links: Wikipedia, first formula <https://ru.wikipedia.org/wiki/%D0%A2%D0%B5%D0%BE%D1%80%D0%B5%D0%BC%D0%B0_%D0%BE_%D1%81%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D0%B8_%D1%81%D0%BA%D0%BE%D1%80%D0%BE%D1%81%D1%82%D0%B5%D0%B9#%D0%9E%D0%B1%D1%81%D1%83%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5>
+# TODO: find English link
+
 
 def transfer_velocity_law(
     moving_frame_velocity_: Vector,

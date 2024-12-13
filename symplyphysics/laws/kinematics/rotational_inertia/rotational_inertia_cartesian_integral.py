@@ -23,6 +23,9 @@ from symplyphysics import (
 # Note:
 ## - The integration is carried out over the entire body as to include every volume element.
 
+# Links:
+## Wikipedia, derivable from fourth equation <https://en.wikipedia.org/wiki/Moment_of_inertia#Point_mass>
+
 rotational_inertia = Symbol("rotational_inertia", units.mass * units.length**2)
 density = Function("density", units.mass / units.length**3)
 distance_to_axis = Function("distance_to_axis", units.length)

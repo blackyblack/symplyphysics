@@ -3,6 +3,10 @@ Centripetal acceleration via angular speed and radius
 =====================================================
 
 *Centripetal acceleration* is defined as the change in velocity tangential to the velocity vector.
+
+**Links:**
+
+#. `Physics LibreTexts, second part of equation 6.2.5 <https://phys.libretexts.org/Bookshelves/College_Physics/College_Physics_1e_(OpenStax)/06%3A_Uniform_Circular_Motion_and_Gravitation/6.02%3A_Centripetal_Acceleration>`__.
 """
 
 from sympy import Eq, solve

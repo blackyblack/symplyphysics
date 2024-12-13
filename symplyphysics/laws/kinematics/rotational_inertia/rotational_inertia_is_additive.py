@@ -8,6 +8,10 @@ inertia of each part of the system.
 **Conditions:**
 
 #. The rotational inertia is calculated for the same axis for all parts of the system.
+
+**Links:**
+
+#. `Wikipedia, see second paragraph <https://en.wikipedia.org/wiki/Moment_of_inertia>`__.
 """
 
 from typing import Sequence

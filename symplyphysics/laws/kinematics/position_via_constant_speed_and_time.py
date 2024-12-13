@@ -8,6 +8,10 @@ of time.
 **Conditions:**
 
 #. Speed is constant, i.e. :math:`\frac{d v}{d t} = 0.`
+
+**Links:**
+
+#. `Wikipedia, derivable from the vector counterpart of this law <https://en.wikipedia.org/wiki/Kinematics#Relative_acceleration>`__.
 """
 
 from sympy import (Eq, solve, dsolve)
