@@ -10,8 +10,7 @@ position is a linear function of time.
 
 **Links:**
 
-#. `Wikipedia, second out of the last four equations in the paragraph <https://en.wikipedia.org/wiki/Kinematics#Acceleration_2>`__,
-   setting :math:`\alpha = 0`.
+#. `Wikipedia, second out of the last four equations in the paragraph <https://en.wikipedia.org/wiki/Kinematics#Acceleration_2>`__.
 """
 
 from sympy import Eq, solve, dsolve

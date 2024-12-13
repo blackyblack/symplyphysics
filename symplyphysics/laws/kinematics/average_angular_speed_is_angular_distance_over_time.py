@@ -7,7 +7,7 @@ the rate of change in angle of rotation over time.
 
 **Links:**
 
-#. `BYJY's <https://byjus.com/physics/angular-velocity/#average-angular-velocity>`__.
+#. `BYJU's <https://byjus.com/physics/angular-velocity/#average-angular-velocity>`__.
 """
 
 from sympy import (Eq, solve)
