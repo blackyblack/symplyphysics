@@ -14,7 +14,7 @@ from symplyphysics import (units, Quantity, Symbol, validate_input,
 ## R - surface reflection coefficient,
 ## c - speed of light in vacuum.
 
-# Links: BYJY's, "Radiation pressure formula" <https://byjus.com/physics/radiation-pressure/>
+# Links: BYJU's, "Radiation pressure formula" <https://byjus.com/physics/radiation-pressure/>
 
 pressure = Symbol("pressure", units.pressure)
 

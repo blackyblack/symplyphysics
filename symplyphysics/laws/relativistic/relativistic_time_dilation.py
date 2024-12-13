@@ -15,7 +15,7 @@ from symplyphysics import (Quantity, Symbol, units, validate_input,
 # v is velocity,
 # c is speed of light.
 
-# Links: formula in box <https://en.wikipedia.org/wiki/Time_dilation#Simple_inference>
+# Links: Wikipedia, formula in box <https://en.wikipedia.org/wiki/Time_dilation#Simple_inference>
 
 moving_observer_time = Symbol("moving_observer_time", units.time)
 velocity = Symbol("velocity", units.velocity)
