@@ -8,6 +8,10 @@ pressures at a chosen point in space.
 **Conditions:**
 
 #. The fluid is :ref:`ideal <ideal_fluid_def>`.
+
+**Links:**
+
+#. `Wikipedia, derivable from here <https://en.wikipedia.org/wiki/Bernoulli%27s_principle#Incompressible_flow_equation>`__.
 """
 
 from sympy import Eq, solve

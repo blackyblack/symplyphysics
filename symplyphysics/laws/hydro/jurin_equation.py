@@ -1,5 +1,5 @@
 from sympy import (Eq, solve, cos)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output, angle_type)
 
 # Description
@@ -19,6 +19,8 @@ from symplyphysics import (units, Quantity, Symbol, print_expression, validate_i
 ## g is acceleration of free fall
 ## r is capillary radius
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Jurin%27s_law>
+
 height = Symbol("height", units.length)
 surface_tension_coefficient = Symbol("surface_tension_coefficient", units.force / units.length)
 angle = Symbol("angle", angle_type)
@@ -28,10 +30,6 @@ radius = Symbol("radius", units.length)
 law = Eq(
     height, 2 * surface_tension_coefficient * cos(angle) /
     (density_of_liquid * radius * units.acceleration_due_to_gravity))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(surface_tension_coefficient_=surface_tension_coefficient,

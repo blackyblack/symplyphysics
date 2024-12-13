@@ -4,6 +4,10 @@ Engineering normal strain is total deformation over initial dimension
 
 *Engineering normal strain*, also called *Cauchy strain*, is expressed as the ratio of total
 deformation to the initial dimension of a material body on which forces are applied.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Strain_(mechanics)#Engineering_strain>`__.
 """
 
 from sympy import Eq

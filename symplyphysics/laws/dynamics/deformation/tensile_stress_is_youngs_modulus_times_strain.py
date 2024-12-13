@@ -4,6 +4,10 @@ Tensile stress is Young's modulus times strain
 
 When an object is under tension or compression, the stress is related to the strain via the
 Young's modulus.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Young%27s_modulus#Definition>`__.
 """
 
 from sympy import Eq

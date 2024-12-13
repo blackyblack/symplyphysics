@@ -4,7 +4,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     angle_type,
@@ -27,6 +26,8 @@ from symplyphysics import (
 # Conditions
 ## - Damping ratio (zeta) is small, i.e. zeta << 1
 
+# Links: similar equation 15-44 on p. 431 of "Fundamentals of Physics" by David Halladay et al., 10th Ed.
+
 oscillator_energy = Symbol("oscillator_energy", units.energy)
 oscillator_mass = symbols.mass
 maximum_amplitude = Symbol("maximum_amplitude", units.length)
@@ -39,10 +40,6 @@ law = Eq(
     exp(-2 * exponential_decay_constant * time) / 2)
 
 # TODO Derive from [underdamped oscillations](../../kinematics/damped_oscillations/underdamping.py)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(

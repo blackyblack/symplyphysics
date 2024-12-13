@@ -4,6 +4,10 @@ Mach number is flow speed over speed of sound
 
 *Mach number* is a dimensionless quantity in fluid dynamics representing
 the ratio of flow speed divided by the speed of sound in the medium.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Mach_number>`__.
 """
 
 from sympy import Eq, solve

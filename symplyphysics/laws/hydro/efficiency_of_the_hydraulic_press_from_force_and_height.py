@@ -5,7 +5,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     dimensionless,
@@ -23,6 +22,8 @@ from symplyphysics import (
 ## h1 is expended height
 ## n is coefficient of efficiency
 
+# TODO find link
+
 useful_force = clone_as_symbol(symbols.force, display_symbol="F_1", display_latex="F_1")
 useful_height = Symbol("useful_height", units.length)
 expended_force = clone_as_symbol(symbols.force, display_symbol="F_2", display_latex="F_2")
@@ -30,10 +31,6 @@ expended_height = Symbol("expended_height", units.length)
 efficiency = Symbol("efficiency", dimensionless)
 
 law = Eq(efficiency, (useful_force * useful_height) / (expended_force * expended_height))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(useful_force_=useful_force,

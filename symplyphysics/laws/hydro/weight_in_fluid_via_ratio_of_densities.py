@@ -5,6 +5,10 @@ Weight in fluid via ratio of densities
 The *Archimedean force* acting on a body immersed in a fluid is equal to the weight of the fluid displaced by the body.
 It can be derived that the weight of the body immersed in the fluid is proportional to its weight in vacuum and also depends
 on the ratio of the fluid density and body density.
+
+**Links:**
+
+#. `Physics LibreTexts, derivable from here <https://phys.libretexts.org/Bookshelves/University_Physics/Physics_(Boundless)/10%3A_Fluids/10.3%3A_Archimedes_Principle>`__.
 """
 
 from sympy import (Eq, solve)

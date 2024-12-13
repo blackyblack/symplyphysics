@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
     dimensionless,
@@ -26,6 +25,8 @@ from symplyphysics import (
 # k is the thermal conductivity,
 # Nu is Nusselt number.
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Nusselt_number#Definition>
+
 heat_transfer_coefficient = Symbol("heat_transfer_coefficient",
     units.power / (units.area * units.temperature))
 characteristic_length = Symbol("characteristic_length", units.length)
@@ -35,10 +36,6 @@ thermal_conductivity = Symbol("thermal_conductivity",
 nusselt_number = Symbol("nusselt_number", dimensionless)
 
 law = Eq(nusselt_number, heat_transfer_coefficient * characteristic_length / thermal_conductivity)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(

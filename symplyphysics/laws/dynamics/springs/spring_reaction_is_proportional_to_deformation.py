@@ -33,6 +33,8 @@ from symplyphysics.laws.dynamics.springs.vector import (
 ##   be positive, in which case the spring is stretched, or negative, in which case the spring
 ##   is compressed. The sign of the force indicates its direction along the x-axis.
 
+# Links: Wikipedia, last formula in paragraph <https://en.wikipedia.org/wiki/Hooke%27s_law#Linear_springs>
+
 # Also see its [vector counterpart](../vector/spring_reaction_from_deformation.py)
 
 spring_reaction = symbols.force

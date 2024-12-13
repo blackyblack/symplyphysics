@@ -1,4 +1,4 @@
-"""
+r"""
 Volume flux is constant
 =======================
 
@@ -9,6 +9,10 @@ known as the *equation of continuity*.
 **Conditions:**
 
 #. The fluid is :ref:`ideal <ideal_fluid_def>`.
+
+**Links:**
+
+#. `Engineering LibreTexts, derivable from here <https://eng.libretexts.org/Bookshelves/Aerospace_Engineering/Fundamentals_of_Aerospace_Engineering_(Arnedo)/03%3A_Aerodynamics/3.01%3A_Fundamentals_of_fluid_mechanics/3.1.02%3A_Continuity_equation>`__.
 """
 
 from sympy import Eq, solve, dsolve, Derivative

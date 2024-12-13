@@ -5,6 +5,14 @@ Elastic energy density of bulk compression via pressure
 Volumetric density of the elastic energy of a body that is under bulk
 compression is proportional to the square of the pressure in the body
 and inversely proportional to the bulk modulus of the body's material.
+
+**Conditions:**
+
+#. The body undergoes bulk compression.
+
+**Links:**
+
+#. Formula 77.5 on p. 393 of "General Course of Physics" (Obschiy kurs fiziki), vol. 1 by Sivukhin D.V. (1979).
 """
 
 from sympy import Eq

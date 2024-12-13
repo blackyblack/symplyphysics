@@ -3,7 +3,6 @@ from symplyphysics import (
     units,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
@@ -24,6 +23,8 @@ from symplyphysics.laws.dynamics.springs import spring_reaction_is_proportional_
 
 # Condition
 ## - Springs must be Hookean, or linear-response, i.e. obey the Hooke's law.
+
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Series_and_parallel_springs#Formulas>
 
 total_compliance = Symbol("total_compliance", units.length / units.force)
 first_compliance = Symbol("first_compliance", units.length / units.force)
@@ -74,10 +75,6 @@ _total_compliance_derived = solve(
 )[0]
 
 assert expr_equals(_total_compliance_derived, law.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(

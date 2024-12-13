@@ -5,7 +5,6 @@ from symplyphysics import (
     dimensionless,
     Quantity,
     Symbol,
-    print_expression,
     validate_input,
     validate_output,
 )
@@ -22,16 +21,14 @@ from symplyphysics import (
 ## E_stored - energy stored in oscillator
 ## P_loss - power loss of oscillator, i.e. rate of energy dissipation from it
 
+# Links: Wikipedia <https://en.wikipedia.org/wiki/Q_factor#Stored_energy_definition>
+
 quality_factor = Symbol("quality_factor", dimensionless)
 resonant_angular_frequency = Symbol("resonant_angular_frequency", angle_type / units.time)
 energy_stored = Symbol("energy_stored", units.energy)
 power_loss = Symbol("power_loss", units.power)
 
 law = Eq(quality_factor, resonant_angular_frequency * (energy_stored / power_loss))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(

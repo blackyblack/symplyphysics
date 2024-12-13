@@ -10,6 +10,10 @@ of the height of the fluid column. It is also known as the *Torricelli's law*.
 #. The orifice is very small relative to the horizontal cross-section of the container.
 #. The fluid is :ref:`ideal <ideal_fluid_def>`.
 #. The fluid is subjected to the gravity force of Earth.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Torricelli%27s_law#>`__.
 """
 
 from sympy import (Eq, solve, sqrt)

@@ -8,6 +8,10 @@ pressure of the fluid is constant at all points along a streamline.
 **Conditions:**
 
 #. The fluid must be :ref:`ideal <ideal_fluid_def>`.
+
+**Links:**
+
+#. `Wikipedia, derivable from here <https://en.wikipedia.org/wiki/Bernoulli%27s_principle#Simplified_form>`__.
 """
 
 from sympy import Eq, dsolve, Derivative

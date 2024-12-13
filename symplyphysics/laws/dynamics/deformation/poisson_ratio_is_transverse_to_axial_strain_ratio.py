@@ -11,6 +11,14 @@ to axial (or longitudinal) strain in the direction of a deforming force.
    negative strain indicates contraction.
 #. The Poisson ratio and the Young modulus are all that is needed to completely
    describe elastic properties of an isotropic material.
+
+**Conditions:**
+
+#. The strains must be small.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Poisson%27s_ratio#Origin>`__.
 """
 
 from sympy import Eq

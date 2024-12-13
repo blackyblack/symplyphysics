@@ -1,5 +1,5 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
+from symplyphysics import (units, Quantity, Symbol, validate_input,
     validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 
@@ -15,6 +15,8 @@ from symplyphysics.laws.thermodynamics import laplace_pressure_of_spherical_shap
 ## sigma - surface tension of the liquid,
 ## R - radius of bubble.
 
+# Links: Physics LibreTexts, formula 20.2.4 <https://phys.libretexts.org/Bookshelves/Classical_Mechanics/Classical_Mechanics_(Tatum)/20%3A_Miscellaneous/20.02%3A_Surface_Tension/20.2.01%3A_Excess_Pressure_Inside_Drops_and_Bubbles>
+
 excessive_pressure = Symbol("excessive_pressure", units.pressure)
 
 surface_tension_of_the_liquid = Symbol("surface_tension_of_the_liquid", units.force / units.length)
@@ -23,6 +25,8 @@ radius_of_bubble = Symbol("radius_of_bubble", units.length)
 law = Eq(excessive_pressure, 4 * surface_tension_of_the_liquid / radius_of_bubble)
 
 # This law might be derived via Laplace law.
+
+# TODO prefix all variables used in proof with underscore
 
 laplace_law_applied = laplace_law.law.subs({
     laplace_law.surface_tension: surface_tension_of_the_liquid,
@@ -37,10 +41,6 @@ pressure_derived = solve(laplace_law_applied, laplace_law.laplace_pressure,
 # The bubble has two surfaces – an outer and an inner one, each of which creates additional pressure.
 # Therefore, an additional multiplier of "2" appears.
 assert expr_equals(2 * pressure_derived, law.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(surface_tension_of_the_liquid_=surface_tension_of_the_liquid,

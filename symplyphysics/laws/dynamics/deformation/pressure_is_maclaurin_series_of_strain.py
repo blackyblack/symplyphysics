@@ -19,6 +19,10 @@ its physical state.
 #. The deformations are small, i.e. :math:`e \ll 1`.
 #. This law features the expansion up to the third power of strain, higher terms can be added
    if needed.
+
+**Links:**
+
+#. Section 3 on p. 385 of "General Course of Physics" (Obschiy kurs fiziki), vol. 1 by Sivukhin D.V. (1979).
 """
 
 from sympy import Eq, O
