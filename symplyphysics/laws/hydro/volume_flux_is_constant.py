@@ -12,8 +12,7 @@ known as the *equation of continuity*.
 
 **Links:**
 
-#. `Engineering LibreTexts, derivable from here <https://eng.libretexts.org/Bookshelves/Aerospace_Engineering/Fundamentals_of_Aerospace_Engineering_(Arnedo)/03%3A_Aerodynamics/3.01%3A_Fundamentals_of_fluid_mechanics/3.1.02%3A_Continuity_equation>`__,
-   setting :math:`\rho_1 = \rho_2`.
+#. `Engineering LibreTexts, derivable from here <https://eng.libretexts.org/Bookshelves/Aerospace_Engineering/Fundamentals_of_Aerospace_Engineering_(Arnedo)/03%3A_Aerodynamics/3.01%3A_Fundamentals_of_fluid_mechanics/3.1.02%3A_Continuity_equation>`__.
 """
 
 from sympy import Eq, solve, dsolve, Derivative
