@@ -12,13 +12,14 @@ from symplyphysics import (
 ## two interacting particles to a certain final state, a quantitative characteristic of the acts of collision of
 ## particles of a stream hitting a target with target particles. The effective cross-section has the dimension of the area.
 
-## Law is: g =  pi * r^2, where
+## Law is: g =  pi * d^2, where
 ## g - the cross-sectional area of the interaction of particles,
-## r - the distance of the greatest convergence of two colliding particles.
+## d - the distance of the greatest convergence of two colliding particles
+
+# Notes
+## 1. `d = 2 * r` when the particles are spheres of radius `r`
 
 # Links: Wikipedia, second formula <https://en.wikipedia.org/wiki/Cross_section_(physics)#Collision_among_gas_particles>
-
-# FIXME: shouldn't it be `(2*r)^2` as per the formula in the link?
 
 cross_sectional_area_of_interaction = Symbol("cross_sectional_area_of_interaction", units.area)
 

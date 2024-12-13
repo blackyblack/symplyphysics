@@ -20,7 +20,7 @@ from symplyphysics import (
 ## T - temperature,
 ## T0 - 273.15 kelvin degrees.
 
-# Links: similar formula for resistivity <https://byjus.com/physics/resistivity-temperature-dependence/>
+# Links: BYJU's, similar formula for resistivity <https://byjus.com/physics/resistivity-temperature-dependence/>
 
 resistance = Symbol("resistance", units.impedance)
 

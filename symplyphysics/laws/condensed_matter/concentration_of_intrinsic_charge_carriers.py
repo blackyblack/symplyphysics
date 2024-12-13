@@ -15,7 +15,7 @@ nonzero concentration of free charge carriers in the semiconductor.
 
 **Links:**
 
-#. `Intrinsic carrier concentration <https://www.universitywafer.com/intrinsic-carrier-concentration.html>`_.
+#. `University Wafer, Intrinsic carrier concentration <https://www.universitywafer.com/intrinsic-carrier-concentration.html>`_.
 """
 
 from sympy import Eq, solve, exp, sqrt

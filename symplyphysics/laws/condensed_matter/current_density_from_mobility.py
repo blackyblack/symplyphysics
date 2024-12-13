@@ -24,7 +24,7 @@ from symplyphysics.laws.condensed_matter import drift_velocity_of_charge_carrier
 ## u2 - mobility of holes,
 ## E - electric intensity (physical field that surrounds electrically charged particles).
 
-# Links: last formula <https://en.wikipedia.org/wiki/Electron_mobility#Relation_to_current_density>
+# Links: Wikipedia, last formula <https://en.wikipedia.org/wiki/Electron_mobility#Relation_to_current_density>
 
 density_current = Symbol("density_current", units.current / units.area)
 
