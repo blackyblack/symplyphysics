@@ -140,6 +140,7 @@ __all__ = [
     "emissivity",
     "magnetic_moment",
     "absolute_permeability",
+    "electric_displacement",
     # optics
     "relative_refractive_index",
     "radiant_exitance",
