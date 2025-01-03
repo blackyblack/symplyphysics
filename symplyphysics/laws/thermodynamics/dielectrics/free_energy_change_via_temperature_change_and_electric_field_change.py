@@ -28,7 +28,7 @@ from symplyphysics import (
     validate_output,
 )
 
-free_energy_density_change = SymbolNew("G", units.energy / units.volume)
+free_energy_density_change = SymbolNew("dH", units.energy / units.volume)
 """
 Infinitesimal change in :symbols:`helmholtz_free_energy` of the system
 per unit :symbols:`volume`.
