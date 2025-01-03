@@ -5,12 +5,12 @@ from sympy.physics.units import Dimension, Quantity as SymQuantity
 from sympy.physics.units.systems.si import SI
 from sympy.multipledispatch import dispatch
 
-from .symbols import DimensionSymbolNew, next_name
+from .symbols import DimensionSymbolNew, DisplayWithLatex, next_name
 from ..dimensions import collect_factor_and_dimension
 from ..errors import UnitsError
 
 
-class Quantity(DimensionSymbolNew, SymQuantity):  # pylint: disable=too-many-ancestors
+class Quantity(DimensionSymbolNew, DisplayWithLatex, SymQuantity):  # pylint: disable=too-many-ancestors
 
     # pylint: disable-next=signature-differs
     def __new__(cls,
@@ -39,7 +39,8 @@ class Quantity(DimensionSymbolNew, SymQuantity):  # pylint: disable=too-many-anc
                 f"not contain free symbols")
         dimension = dimension or dimension_
         display_symbol = display_symbol or str(self.name)
-        super().__init__(display_symbol, dimension, display_latex=display_latex)
+        DimensionSymbolNew.__init__(self, dimension)
+        DisplayWithLatex.__init__(self, display_name=display_symbol, display_latex=display_latex)
         SI.set_quantity_dimension(self, dimension)
         SI.set_quantity_scale_factor(self, scale)
 
