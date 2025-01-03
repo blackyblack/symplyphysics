@@ -176,5 +176,16 @@ field.
 
 **Links:**
 
-#. `Magnetic moment <https://en.wikipedia.org/wiki/Magnetic_moment>`__.
+#. `Wikipedia <https://en.wikipedia.org/wiki/Magnetic_moment>`__.
+"""
+
+electric_displacement = SymbolNew("D", units.charge / units.area)
+"""
+**Electric displacement field**, also called **electric flux density** or **electric induction**,
+is a vector field, which accounts for the electromagnetic effects of polarization and that of an
+electric field, combining the two in an auxiliary field.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Electric_displacement_field>`__.
 """
