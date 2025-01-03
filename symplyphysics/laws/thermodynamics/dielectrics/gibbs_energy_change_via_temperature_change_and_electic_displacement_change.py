@@ -28,7 +28,7 @@ from symplyphysics import (
     validate_output,
 )
 
-gibbs_energy_density_change = SymbolNew("G", units.energy / units.volume)
+gibbs_energy_density_change = SymbolNew("dG", units.energy / units.volume)
 """
 Infinitesimal change in :symbols:`gibbs_energy` of the system per unit :symbols:`volume`.
 """
