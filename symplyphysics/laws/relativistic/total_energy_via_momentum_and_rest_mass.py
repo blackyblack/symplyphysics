@@ -1,35 +1,50 @@
+"""
+Total energy via momentum and rest mass
+=======================================
+
+The energy—momentum relation, also called relativistic dispersion relation, is a relativistic
+equation relating total energy to invariant mass and momentum. It is the extension of
+mass-energy equivalence (:ref:`Total energy via relativistic mass`) for bodies or systems with non-zero momentum.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Energy%E2%80%93momentum_relation>`__.
+"""
+
 from sympy import Eq, solve
 from symplyphysics import (
     symbols,
-    units,
+    quantities,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
 )
 
-# Description
-## The energy—momentum relation, also called relativistic dispersion relation, is a relativistic
-## equation relating total energy to invariant mass and momentum. It is the extension of
-## [mass-energy equivalence](./energy_is_mass.py) for bodies or systems with non-zero momentum.
+relativistic_energy = symbols.energy
+"""
+Total, or relativistic, :symbols:`energy` of the body.
+"""
 
-# Law: E**2 = (p * c)**2 + (m0 * c**2)**2
-## E - total, or relativistic, energy
-## p - momentum
-## m0 - rest, or invariant, mass
-## c - speed of light
+relativistic_momentum = symbols.momentum
+"""
+Relativistic :symbols:`momentum` of the body.
+"""
 
-# Links: Wikipedia <https://en.wikipedia.org/wiki/Energy%E2%80%93momentum_relation>
-
-relativistic_energy = Symbol("relativistic_energy", units.energy)
-relativistic_momentum = Symbol("relativistic_momentum", units.momentum)
-invariant_mass = symbols.mass
+invariant_mass = symbols.rest_mass
+"""
+:symbols:`rest_mass` of the body.
+"""
 
 law = Eq(
     relativistic_energy**2,
-    (relativistic_momentum * units.speed_of_light)**2 +
-    (invariant_mass * units.speed_of_light**2)**2,
+    (relativistic_momentum * quantities.speed_of_light)**2 +
+    (invariant_mass * quantities.speed_of_light**2)**2,
 )
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(
