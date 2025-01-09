@@ -1,30 +1,34 @@
-from sympy import Eq, sqrt
-from symplyphysics import (
-    Quantity,
-    Symbol,
-    validate_input,
-    validate_output,
-    units,
-)
+"""
+Probability density of quantum state
+====================================
 
-# Description
-## Probability density of a quantum system is the likelihood that the system will be in a particular
-## position at a particular time.
+Probability density of a quantum system is the likelihood that the system will be in a particular
+position at a particular time.
 
-# Law: rho(x, t) = Psi(x, t) * conj(Psi(x, t)) = abs(Psi(x, t))**2
-## rho - probability density
-## Psi - wave function
-## x - position
-## t - time
-## abs - absolute value
-## conj(z) - complex conjugate of `z`
+**Links:**
 
-# Links: Wikipedia <https://en.wikipedia.org/wiki/Wave_function#Position-space_wave_functions>
+#. `Wikipedia <https://en.wikipedia.org/wiki/Wave_function#Position-space_wave_functions>`__.
+"""
 
-probability_density = Symbol("probability_density", 1 / units.length)
-wave_function = Symbol("wave_function", 1 / sqrt(units.length))
+from sympy import Eq
+from symplyphysics import Quantity, validate_input, validate_output, symbols
+
+probability_density = symbols.probability_density
+"""
+:symbols:`probability_density` of the system.
+"""
+
+wave_function = symbols.wave_function
+"""
+:symbols:`wave_function` of the system.
+"""
 
 law = Eq(probability_density, abs(wave_function)**2)
+"""
+:laws:symbols::
+
+:laws:latex::
+"""
 
 
 @validate_input(wave_function_value_=wave_function)
