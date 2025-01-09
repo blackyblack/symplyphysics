@@ -9,7 +9,7 @@ from symplyphysics import print_expression
 from symplyphysics.laws.relativistic import coordinate_conversion_velocity_constant as transform_law
 
 reduced_speed = symbols("reduced_speed")
-speed = transform_law.velocity
+speed = transform_law.second_frame_speed_in_first_frame
 
 reduced_speed_eqn = Eq(reduced_speed, speed / speed_of_light)
 
@@ -24,9 +24,9 @@ data_ = [
 
 proper_coordinate_expr = solve(
     (transform_law.law, reduced_speed_eqn),
-    (transform_law.coordinate_second_frame, transform_law.velocity),
+    (transform_law.position_in_second_frame, transform_law.second_frame_speed_in_first_frame),
     dict=True,
-)[0][transform_law.coordinate_second_frame]
+)[0][transform_law.position_in_second_frame]
 
 print(print_expression(proper_coordinate_expr))
 
@@ -42,8 +42,8 @@ base_plot = plot(
 
 for datum_ in data_:
     expr = proper_coordinate_expr.subs({
-        transform_law.coordinate_first_frame: datum_.x,
-        transform_law.time_first_frame: datum_.t,
+        transform_law.position_in_first_frame: datum_.x,
+        transform_law.time_in_first_frame: datum_.t,
     })
     sub_plot = plot(
         expr,
