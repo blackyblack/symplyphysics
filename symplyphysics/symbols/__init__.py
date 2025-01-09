@@ -148,6 +148,11 @@ __all__ = [
     "focal_length",
     # relativistic mechanics
     "lorentz_factor",
+    "spacetime_interval",
+    "proper_time",
+    "rest_mass",
+    "rest_length",
+    "relativistic_mass",
     # thermodynamics
     "temperature",
     "adiabatic_index",
