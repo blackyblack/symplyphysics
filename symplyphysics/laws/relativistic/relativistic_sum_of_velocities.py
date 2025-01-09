@@ -1,39 +1,58 @@
+"""
+Relativistic sum of velocities
+==============================
+
+In relativistic mechanics, the speed of the body in the lab reference frame
+is no longer the sum of the speed of the body's proper reference frame and
+its speed in the proper frame.
+
+**Conditions:**
+
+#. The velocity of the body relative to the proper frame and the velocity of the
+   proper frame relative to the lab frame must be parallel to each other.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Velocity-addition_formula#Special_relativity>`__.
+"""
+
 from sympy import Eq, solve
-from sympy.physics.units import speed_of_light
+from symplyphysics import (Quantity, validate_input,
+    validate_output, symbols, quantities, clone_as_symbol)
 
-from symplyphysics import (Quantity, Symbol, units, validate_input,
-    validate_output)
+body_speed_in_lab_frame = clone_as_symbol(symbols.speed, subscript="OL")
+"""
+:symbols:`speed` of the body relative to the lab frame.
+"""
 
-# Description
-# In relativistic mechanics, if a body moves relative to a moving reference
-# system with velocity v1, and the velocity of the system relative to
-# the observer is v2, then the velocity of the body relative
-# to the observer will be:
-# Law: v = (v1 + v2) / (1 + (v1 * v2) / c**2), where
-# v1 is first velocity,
-# v2 is second velocity,
-# c is speed of light,
-# v is relativistic sum of velocities.
+body_speed_in_proper_frame = clone_as_symbol(symbols.speed, subscript="OP")
+"""
+:symbols:`speed` of the body relative to the proper reference frame.
+"""
 
-# Links: Wikipedia <https://en.wikipedia.org/wiki/Velocity-addition_formula#Special_relativity>
+proper_frame_speed_in_lab_frame = clone_as_symbol(symbols.speed, subscript="PL")
+"""
+:symbols:`speed` of the proper frame relative to the lab frame.
+"""
 
-first_velocity = Symbol("first_velocity", units.velocity)
-second_velocity = Symbol("second_velocity", units.velocity)
-resulting_velocity = Symbol("resulting_velocity", units.velocity)
+law = Eq(body_speed_in_lab_frame, (body_speed_in_proper_frame + proper_frame_speed_in_lab_frame) / (1 +
+    (body_speed_in_proper_frame * proper_frame_speed_in_lab_frame) / quantities.speed_of_light**2))
+"""
+:laws:symbol::
 
-law = Eq(resulting_velocity, (first_velocity + second_velocity) / (1 +
-    (first_velocity * second_velocity) / speed_of_light**2))
+:laws:latex::
+"""
 
 
 @validate_input(
-    first_velocity_=first_velocity,
-    second_velocity_=second_velocity,
+    first_velocity_=body_speed_in_proper_frame,
+    second_velocity_=proper_frame_speed_in_lab_frame,
 )
-@validate_output(resulting_velocity)
+@validate_output(body_speed_in_lab_frame)
 def calculate_velocity(first_velocity_: Quantity, second_velocity_: Quantity) -> Quantity:
-    result_expr = solve(law, resulting_velocity)[0]
+    result_expr = solve(law, body_speed_in_lab_frame)[0]
     velocity_applied = result_expr.subs({
-        first_velocity: first_velocity_,
-        second_velocity: second_velocity_,
+        body_speed_in_proper_frame: first_velocity_,
+        proper_frame_speed_in_lab_frame: second_velocity_,
     })
     return Quantity(velocity_applied)
