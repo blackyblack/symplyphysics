@@ -1,33 +1,49 @@
+"""
+Relativistic kinetic energy
+===========================
+
+The kinetic energy of an object is the form of energy that is possesses due to its motion.
+
+**Notes**
+
+#. The work expended accelerating an object from rest approaches infinity as the velocity approaches the
+   speed of light. Thus it is impossible to accelerate an object across this boundary.
+
+**Links:**
+
+#. `Wikipedia, last formula in paragraph <https://en.wikipedia.org/wiki/Kinetic_energy#Derivation_2>`__.
+"""
+
 from sympy import Eq
 from symplyphysics import (
     Quantity,
-    Symbol,
-    units,
-    dimensionless,
     validate_input,
     validate_output,
+    symbols,
+    quantities,
 )
 
-# Description
-## The kinetic energy of an object is the form of energy that is possesses due to its motion.
+kinetic_energy = symbols.kinetic_energy
+"""
+:symbols:`kinetic_energy` of the body.
+"""
 
-# Law: E_kin = (gamma - 1) * m_rest * c**2
-## E_kin - kinetic energy of body
-## gamma - [Lorentz factor](../../definitions/lorentz_factor.py)
-## m_rest - rest (invariant) mass of body
-## c - speed of light
+lorentz_factor = symbols.lorentz_factor
+"""
+:symbols:`lorentz_factor` of the body.
+"""
 
-# Notes
-## - The work expended accelerating an object from rest approaches infinity as the velocity approaches the
-##   speed of light. Thus it is impossible to accelerate an object across this boundary.
+rest_mass = symbols.rest_mass
+"""
+:symbols:`rest_mass` of the body.
+"""
 
-# Links: Wikipedia, last formula in paragraph <https://en.wikipedia.org/wiki/Kinetic_energy#Derivation_2>
+law = Eq(kinetic_energy, (lorentz_factor - 1) * rest_mass * quantities.speed_of_light**2)
+"""
+:laws:symbol::
 
-kinetic_energy = Symbol("kinetic_energy", units.energy)
-lorentz_factor = Symbol("lorentz_factor", dimensionless)
-rest_mass = Symbol("rest_mass", units.mass)
-
-law = Eq(kinetic_energy, (lorentz_factor - 1) * rest_mass * units.speed_of_light**2)
+:laws:latex::
+"""
 
 # TODO: derive from relativistic momentum and expression for kinetic energy
 
