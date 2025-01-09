@@ -34,7 +34,7 @@ moving_mirror_energy = energy_is_mass.law.rhs.subs(
     energy_is_mass.relativistic_mass,
     moving_mass_law.law.rhs.subs({
     moving_mass_law.rest_mass: mirror_rest_mass,
-    moving_mass_law.velocity: mirror_speed,
+    moving_mass_law.speed: mirror_speed,
     }),
 )
 
@@ -69,7 +69,7 @@ reflected_wave_momentum = electromagnetic_wave_momentum_expr.subs(
 
 moving_mirror_momentum = moving_momentum_law.law.rhs.subs({
     moving_momentum_law.rest_mass: mirror_rest_mass,
-    moving_momentum_law.velocity: mirror_speed,
+    moving_momentum_law.speed: mirror_speed,
 })
 
 # The reflected wave moves in the opposite direction

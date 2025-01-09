@@ -24,7 +24,7 @@ speed_sub = solve(speed_ratio_definition, speed)[0]
 law = relativistic_mass.law.subs({
     relativistic_mass.relativistic_mass: rel_mass_sub,
     relativistic_mass.rest_mass: rest_mass,
-    relativistic_mass.velocity: speed_sub,
+    relativistic_mass.speed: speed_sub,
 })
 
 result_mass_ratio = solve(law, mass_ratio)[0]
