@@ -5,6 +5,10 @@ Relativistic mass via rest mass and speed
 Relativistic mass is proportional to the rest mass of the object and approaches
 infinity as its speed approaches the speed of light.
 
+**Notation:**
+
+#. :quantity_notation:`speed_of_light`.
+
 **Conditions:**
 
 #. Non-zero rest mass.

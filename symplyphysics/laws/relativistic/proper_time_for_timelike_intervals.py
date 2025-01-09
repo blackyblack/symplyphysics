@@ -6,6 +6,10 @@ In relativity, proper time along a timelike world line is defined as the time as
 that line. The proper time interval between two events on a world line is the change in proper time, which is
 independent of coordinates, and is a Lorentz scalar.
 
+**Notation:**
+
+#. :quantity_notation:`speed_of_light`.
+
 **Conditions**
 
 #. The interval is timelike, i.e. :math:`\\Delta s` is real.

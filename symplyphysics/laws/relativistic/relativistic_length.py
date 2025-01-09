@@ -6,6 +6,10 @@ Length contraction is the phenomenon that a moving object's length is measured t
 than its proper length, which is the length as measured in the object's own rest frame. Note
 that this phenomenon is only observed in the direction parallel to the velocity of the object.
 
+**Notation:**
+
+#. :quantity_notation:`speed_of_light`.
+
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Length_contraction#Basis_in_relativity>`__.

@@ -6,6 +6,10 @@ The energy—momentum relation, also called relativistic dispersion relation, is
 equation relating total energy to invariant mass and momentum. It is the extension of
 mass-energy equivalence (:ref:`Total energy via relativistic mass`) for bodies or systems with non-zero momentum.
 
+**Notation:**
+
+#. :quantity_notation:`speed_of_light`.
+
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Energy%E2%80%93momentum_relation>`__.

@@ -4,6 +4,10 @@ Relativistic kinetic energy
 
 The kinetic energy of an object is the form of energy that is possesses due to its motion.
 
+**Notation:**
+
+#. :quantity_notation:`speed_of_light`.
+
 **Notes**
 
 #. The work expended accelerating an object from rest approaches infinity as the velocity approaches the

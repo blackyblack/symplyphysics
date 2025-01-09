@@ -4,6 +4,10 @@ Total energy via relativistic mass
 
 Fundamentally the energy of an object is synonimical to its mass.
 
+**Notation:**
+
+#. :quantity_notation:`speed_of_light`.
+
 **Links:**
 
 #. `Wikipedia, second formula in the last group of three equations <https://en.wikipedia.org/wiki/Mass_in_special_relativity#Relativistic_energy%E2%80%93momentum_equation>`__.

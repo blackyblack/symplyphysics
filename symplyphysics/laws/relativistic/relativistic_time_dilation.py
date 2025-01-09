@@ -6,6 +6,10 @@ Time dilation is the difference in elapsed time as measured by two clocks,
 either due to a relative speed between them (special relativity),
 or a difference in gravitational potential between their locations.
 
+**Notation:**
+
+#. :quantity_notation:`speed_of_light`.
+
 **Links:**
 
 #. `Wikipedia, formula in box <https://en.wikipedia.org/wiki/Time_dilation#Simple_inference>`__.

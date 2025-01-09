@@ -10,6 +10,10 @@ and time of the same event in frame :math:`S'`. Assuming that the space is unifo
 uniform, there exists a linear dependence between :math:`x, y, z, t` and :math:`x', y', z', t'`, which is called the **Lorentz
 transformation** of space and time.
 
+**Notation:**
+
+#. :quantity_notation:`speed_of_light`.
+
 **Notes**
 
 #. Lab frame :math:`S` is usually thought as stationary, and proper frame :math:`S'` is the one that is considered to be moving
@@ -32,13 +36,13 @@ transformation** of space and time.
 """
 
 from sympy import Eq, sqrt
-from sympy.physics.units import speed_of_light
 from symplyphysics import (
     Quantity,
     validate_input,
     validate_output,
     symbols,
     clone_as_symbol,
+    quantities,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 
@@ -63,8 +67,8 @@ proper_frame_speed_in_lab_frame = symbols.speed
 """
 
 law = Eq(time_in_proper_frame, (time_in_lab_frame -
-    proper_frame_speed_in_lab_frame * position_in_lab_frame / speed_of_light**2) / sqrt(1 -
-    (proper_frame_speed_in_lab_frame / speed_of_light)**2))
+    proper_frame_speed_in_lab_frame * position_in_lab_frame / quantities.speed_of_light**2) / sqrt(1 -
+    (proper_frame_speed_in_lab_frame / quantities.speed_of_light)**2))
 """
 :laws:symbol::
 

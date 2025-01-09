@@ -6,6 +6,10 @@ In relativistic mechanics, the speed of the body in the lab reference frame
 is no longer the sum of the speed of the body's proper reference frame and
 its speed in the proper frame.
 
+**Notation:**
+
+#. :quantity_notation:`speed_of_light`.
+
 **Conditions:**
 
 #. The velocity of the body relative to the proper frame and the velocity of the

@@ -6,6 +6,10 @@ The spacetime interval is a combination of distance and time that is invariant u
 It has the property of being invariant in the sense that it has the same value for all observers in any
 inertial reference frame.
 
+**Notation:**
+
+#. :quantity_notation:`speed_of_light`.
+
 **Notes:**
 
 #. If :math:`\\Delta s**2 > 0`, the spacetime interval is said to be *timelike*. Events with a timelike

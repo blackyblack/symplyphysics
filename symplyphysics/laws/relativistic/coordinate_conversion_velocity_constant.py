@@ -7,6 +7,10 @@ axis, and the origin of the spatial coordinates coincide at the initial moment o
 Then there are simple transformations that can be used to get the x coordinate in one frame of reference,
 knowing the x coordinate in another frame of reference.
 
+**Notation:**
+
+#. :quantity_notation:`speed_of_light`.
+
 **Links:**
 
 #. `Wikipedia, second formula in box <https://en.wikipedia.org/wiki/Lorentz_transformation#Coordinate_transformation>`__.

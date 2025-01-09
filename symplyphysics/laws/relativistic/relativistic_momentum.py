@@ -5,6 +5,10 @@ Relativistic momentum via rest mass and speed
 Momentum (amount of motion) is a vector physical quantity that is a measure of the mechanical movement
 of a body. The relativistic momentum also takes into account speed limits equal to the speed of light.
 
+**Notation:**
+
+#. :quantity_notation:`speed_of_light`.
+
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Mass_in_special_relativity#Relativistic_energy%E2%80%93momentum_equation>`__.
