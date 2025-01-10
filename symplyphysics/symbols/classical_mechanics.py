@@ -93,6 +93,12 @@ radius = SymbolNew("r", units.length)
 the sphere.
 """
 
+diameter = SymbolNew("D", units.length)
+"""
+**Diameter** of a circle or sphere is the length of the biggest chord connecting two
+points on the circumference.
+"""
+
 semimajor_axis = SymbolNew("a", units.length)
 """
 **Semi-major axis**, or **major semiaxis**, is the longest semidiameter of an ellipse.
