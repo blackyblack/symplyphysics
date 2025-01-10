@@ -33,6 +33,8 @@ from symplyphysics import (
     convert_to,
     quantities,
     symbols,
+    SymbolNew,
+    dimensionless,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.dynamics import kinetic_energy_via_momentum
@@ -41,9 +43,9 @@ from symplyphysics.laws.quantum_mechanics.schrodinger import (
     time_dependent_via_time_independent_solution as time_dependent_law,
 )
 
-wave_function = symbols.wave_function
+wave_function = SymbolNew("psi", dimensionless, display_latex="\\psi")
 """
-:symbols:`wave_function` describing the particle's state.
+Dimensionless :symbols:`wave_function` describing the particle's state.
 """
 
 particle_momentum = symbols.momentum
