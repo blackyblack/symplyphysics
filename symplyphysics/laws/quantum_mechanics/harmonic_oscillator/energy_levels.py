@@ -85,7 +85,7 @@ _reduced_position = sym_symbols("_reduced_position")
 
 _reduced_position_eqn = Eq(
     _reduced_position,
-    _position * sqrt(angular_frequency * _mass / units.hbar),
+    _position * sqrt(angular_frequency * _mass / quantities.hbar),
 )
 
 _energy_expr = solve(
