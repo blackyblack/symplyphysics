@@ -1,37 +1,43 @@
-from sympy import (
-    Eq,
-    solve,
-)
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    validate_input,
-    validate_output,
-    angle_type,
-)
+"""
+Resolution of telescope
+=======================
 
-# Description
-## The resolution of the telescope is the minimum angular distance between point objects that can be
-## distinguished separately in the telescope.
+The resolution of the telescope is the minimum angular distance between point objects that can be
+distinguished separately in the telescope.
 
-## Law is: r = 1.22 * (L / D), where
-## r - resolution of telescope,
-## L - wavelength,
-## D - lens diameter.
+**Links:**
 
-# Links: Wikipedia <https://en.wikipedia.org/wiki/Angular_resolution#The_Rayleigh_criterion>
+#. `Wikipedia <https://en.wikipedia.org/wiki/Angular_resolution#The_Rayleigh_criterion>`__.
+"""
+
+from sympy import Eq, solve
+from symplyphysics import units, Quantity, validate_input, validate_output, symbols
 
 # TODO: move to `optics`?
 
-resolution = Symbol("resolution", angle_type)
+resolution = symbols.angular_resolution
+"""
+:symbols:`angular_resolution` of the telescope.
+"""
 
-wavelength = Symbol("wavelength", units.length)
-lens_diameter = Symbol("lens_diameter", units.length)
+wavelength = symbols.wavelength
+"""
+:symbols:`wavelength` of light.
+"""
+
+lens_diameter = symbols.diameter
+"""
+:symbols:`diameter` of the lens.
+"""
 
 constant_rad = Quantity(1.22 * units.radian)
 
 law = Eq(resolution, constant_rad * (wavelength / lens_diameter))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(wavelength_=wavelength, lens_diameter_=lens_diameter)

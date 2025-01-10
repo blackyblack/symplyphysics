@@ -1,34 +1,58 @@
+r"""
+Interference due to two slits
+=============================
+
+If two monochromatic waves of the same frequency are combined in the Young scheme,
+then it is possible to approximate the optical travel difference between the two waves
+using the position in the interference picture, the distance between the slits and
+the distance to the picture.
+
+**Conditions:**
+
+#. Two monochromatic waves of the same frequency.
+#. :math:`d \ll l, x \ll l`;
+#. The slits should be positioned symmetrically relative to the axis passing
+   through the radiation source, while this axis of symmetry should be perpendicular
+   to the plane on which the interference pattern will be.
+
+**Links:**
+
+#. `Wikipedia, derivable from fourth formula <https://en.wikipedia.org/wiki/Double-slit_experiment#Classical_wave-optics_formulation>`__.
+
+..
+    TODO rename file
+"""
+
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (Quantity, validate_input,
+    validate_output, symbols, clone_as_symbol)
 
-# Description
-## If two monochromatic waves of the same frequency are combined in the Young scheme,
-## then for the case when d << L and x << L (L - distance from slits to surface with image,
-## x - coordinate from symmetry point, d - distance), it is possible to approximate:
+travel_difference = symbols.optical_distance
+"""
+Optical travel difference for two coherent waves. See :symbols:`optical_distance`.
+"""
 
-# Law: delta = x * d / l
-# Where:
-## delta - optical travel difference for two coherent waves
-## x - coordinate in interference picture, measured from the center of symmetry
-## d - distance between slits (or source parameter)
-## l - distance from slits to picture
+coordinate = symbols.position
+"""
+Coordinate (:symbols:`position`) in interference picture, measured from the center of symmetry.
+"""
 
-# Conditions:
-# - Two monochromatic waves of the same frequency;
-# - d << L and x << L;
-# - The slits should be positioned symmetrically relative to the axis passing
-#   through the radiation source, while this axis of symmetry should be perpendicular
-#   to the plane on which the interference pattern will be.
+distance_between_slits = symbols.euclidean_distance
+"""
+:symbols:`euclidean_distance` between slits.
+"""
 
-# Links: Wikipedia, derivable from fourth formula <https://en.wikipedia.org/wiki/Double-slit_experiment#Classical_wave-optics_formulation>,
-
-travel_difference = Symbol("travel_difference", units.length)
-coordinate = Symbol("coordinate", units.length)
-distance_between_slits = Symbol("distance_between_slits", units.length)
-distance_to_picture = Symbol("distance_to_picture", units.length)
+distance_to_picture = clone_as_symbol(symbols.euclidean_distance, display_symbol="l", display_latex="l")
+"""
+:symbols:`euclidean_distance` from slits to picture.
+"""
 
 law = Eq(travel_difference, coordinate * distance_between_slits / distance_to_picture)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(coordinate_=coordinate,

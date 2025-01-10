@@ -1,27 +1,53 @@
+"""
+Lens focus from object and image
+================================
+
+Any optical lens creates image of an object. Distances lens-object and lens-image depend on lens optical strength.
+This law is also called the **thin lens formula**.
+
+**Conditions**
+
+#. Lens is thin.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Lens#Lens_equation>`__.
+"""
+
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (Quantity, validate_input,
+    validate_output, symbols, clone_as_symbol)
 
-# Description
-## Any optic lens creates image of an object. Distances lens-object and lens-image depend on lens optical strength.
-## This law is also called thin lens formula.
+focus_distance = symbols.focal_length
+"""
+:symbols:`focal_length` of the lens.
+"""
 
-## Law: 1 / F = 1 / d + 1 / f
-## Where:
-## F is focus distance of lens,
-## d is distance from lens to object,
-## f is distance from lens to image.
+distance_to_object = clone_as_symbol(
+    symbols.euclidean_distance,
+    display_symbol="d_o",
+    display_latex="d_\\text{o}",
+)
+"""
+:symbols:`euclidean_distance` from lens to object.
+"""
 
-# Conditions
-## Lens is thin - it's thickness is much less than F, f and d.
 
-# Links: Wikipedia <https://en.wikipedia.org/wiki/Lens#Lens_equation>
-
-focus_distance = Symbol("focus_distance", units.length)
-distance_to_object = Symbol("distance_to_object", units.length)
-distance_to_image = Symbol("distance_to_image", units.length)
+distance_to_image = clone_as_symbol(
+    symbols.euclidean_distance,
+    display_symbol="d_i",
+    display_latex="d_\\text{i}",
+)
+"""
+:symbols:`euclidean_distance` from lens to image.
+"""
 
 law = Eq((1 / focus_distance), (1 / distance_to_object) + (1 / distance_to_image))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(object_distance_=distance_to_object, image_distance_=distance_to_image)
