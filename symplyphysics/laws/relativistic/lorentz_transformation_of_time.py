@@ -22,7 +22,7 @@ transformation** of space and time.
    an opposite transformation (from the proper frame :math:`S'` into the lab frame :math:`S`), replace all primed variables with unprimed
    ones and vice verce, and replace :math:`v` with :math:`-v`. This is consistent with the fact that frame :math:`S` can be viewed as moving
    with speed :math:`-v` relative to frame :math:`S'`, and hence the same Lorentz transformation can be applied.
-#. In the limit :math:`v/c \ll 1` the formula reduces to the classical Galilean transformation :math:`t' = t`.
+#. In the limit :math:`v/c \\ll 1` the formula reduces to the classical Galilean transformation :math:`t' = t`.
 
 **Conditions:**
 

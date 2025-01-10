@@ -61,7 +61,7 @@ rest_length = SymbolNew("l_0", units.length)
 #. `Wikipedia <https://en.wikipedia.org/wiki/Proper_length#>`__.
 """
 
-relativistic_mass = SymbolNew("m", units.length)
+relativistic_mass = SymbolNew("m", units.mass)
 """
 **Relativistic mass** of a moving object is its mass measured in an external inertial frame of reference.
 """
