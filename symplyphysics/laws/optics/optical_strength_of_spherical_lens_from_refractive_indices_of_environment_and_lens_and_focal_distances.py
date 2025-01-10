@@ -72,8 +72,8 @@ law = Eq((medium_refraction_index /
 # From Abbe's invariants:
 
 _invariant_conservation_eq = abbe_conservation_law.law.subs({
-    abbe_conservation_law.refraction_index_environment: medium_refraction_index,
-    abbe_conservation_law.refraction_index_lens: lens_refraction_index,
+    abbe_conservation_law.medium_refraction_index: medium_refraction_index,
+    abbe_conservation_law.lens_refraction_index: lens_refraction_index,
     abbe_conservation_law.distance_from_image: distance_to_image,
     abbe_conservation_law.distance_from_object: distance_to_object,
     abbe_conservation_law.curvature_radius: curvature_radius_lens,
