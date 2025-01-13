@@ -45,7 +45,7 @@ Time-independent :symbols:`potential_energy` as a function of :attr:`~position`.
 
 particle_mass = symbols.mass
 """
-:symbols:`mass`.
+:symbols:`mass` of the quantum particle.
 """
 
 law = Eq(
