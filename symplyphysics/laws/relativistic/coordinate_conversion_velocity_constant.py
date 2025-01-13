@@ -29,28 +29,28 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-position_in_second_frame = clone_as_symbol(symbols.position, subscript="2")
+position_in_proper_frame = clone_as_symbol(symbols.position, subscript="2")
 """
 :symbols:`position` in the second frame of reference.
 """
 
-position_in_first_frame = clone_as_symbol(symbols.position, subscript="1")
+position_in_lab_frame = clone_as_symbol(symbols.position, subscript="1")
 """
 :symbols:`position` in the first frame of reference.
 """
 
-second_frame_speed_in_first_frame = symbols.speed
+proper_frame_speed_in_lab_frame = symbols.speed
 """
 :symbols:`speed` of the second reference frame relative to the first one.
 """
 
-time_in_first_frame = clone_as_symbol(symbols.time, subscript="1")
+time_in_lab_frame = clone_as_symbol(symbols.time, subscript="1")
 """
 :symbols:`time` in the first frame of reference.
 """
 
-law = Eq(position_in_second_frame, (position_in_first_frame - second_frame_speed_in_first_frame * time_in_first_frame) / sqrt(
-    (1 - (second_frame_speed_in_first_frame / quantities.speed_of_light)**2)))
+law = Eq(position_in_proper_frame, (position_in_lab_frame - proper_frame_speed_in_lab_frame * time_in_lab_frame) / sqrt(
+    (1 - (proper_frame_speed_in_lab_frame / quantities.speed_of_light)**2)))
 """
 :laws:symbol::
 
@@ -58,17 +58,17 @@ law = Eq(position_in_second_frame, (position_in_first_frame - second_frame_speed
 """
 
 
-@validate_input(coordinate_first_frame_=position_in_first_frame,
-    velocity_=second_frame_speed_in_first_frame,
-    time_first_frame_=time_in_first_frame)
-@validate_output(position_in_second_frame)
+@validate_input(coordinate_first_frame_=position_in_lab_frame,
+    velocity_=proper_frame_speed_in_lab_frame,
+    time_first_frame_=time_in_lab_frame)
+@validate_output(position_in_proper_frame)
 def calculate_coordinate_second_frame(coordinate_first_frame_: Quantity, velocity_: Quantity,
     time_first_frame_: Quantity) -> Quantity:
-    result_coordinate_first_frame_second_frame_expr = solve(law, position_in_second_frame,
-        dict=True)[0][position_in_second_frame]
+    result_coordinate_first_frame_second_frame_expr = solve(law, position_in_proper_frame,
+        dict=True)[0][position_in_proper_frame]
     result_expr = result_coordinate_first_frame_second_frame_expr.subs({
-        position_in_first_frame: coordinate_first_frame_,
-        second_frame_speed_in_first_frame: velocity_,
-        time_in_first_frame: time_first_frame_
+        position_in_lab_frame: coordinate_first_frame_,
+        proper_frame_speed_in_lab_frame: velocity_,
+        time_in_lab_frame: time_first_frame_
     })
     return Quantity(result_expr)
