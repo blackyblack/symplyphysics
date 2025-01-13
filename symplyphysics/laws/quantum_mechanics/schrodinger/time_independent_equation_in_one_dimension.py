@@ -13,6 +13,7 @@ function of a quantum-mechanical system.
 
 #. This law works in the case of a single spatial dimension. To use it for the 3-dimensional space
    replace the spatial second derivative with the Laplace operator.
+#. The wave function is independent of time.
 
 **Links:**
 
