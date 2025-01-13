@@ -43,9 +43,11 @@ from symplyphysics.laws.quantum_mechanics.schrodinger import (
     time_dependent_via_time_independent_solution as time_dependent_law,
 )
 
-wave_function = SymbolNew("psi", dimensionless, display_latex="\\psi")
+dimensionless_wave_function = SymbolNew("psi", dimensionless, display_latex="\\psi")
 """
-Dimensionless :symbols:`wave_function` describing the particle's state.
+Dimensionless :symbols:`wave_function` describing the particle's state. The dimension
+coefficient has been omitted since this wave function cannot be normalized as it is,
+see Notes above.
 """
 
 particle_momentum = symbols.momentum
@@ -68,7 +70,7 @@ time = symbols.time
 :symbols:`time`.
 """
 
-law = Eq(wave_function, exp((I / quantities.hbar) * (particle_momentum * position - particle_energy * time)))
+law = Eq(dimensionless_wave_function, exp((I / quantities.hbar) * (particle_momentum * position - particle_energy * time)))
 """
 :laws:symbol::
 
@@ -120,7 +122,7 @@ assert expr_equals(_time_dependent_solution, law.rhs)
     position_=position,
     time_=time,
 )
-@validate_output(wave_function)
+@validate_output(dimensionless_wave_function)
 def calculate_wave_function_value(
     particle_momentum_: Quantity,
     particle_energy_: Quantity,
