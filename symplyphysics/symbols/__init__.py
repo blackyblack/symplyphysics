@@ -12,6 +12,7 @@ from .electrodynamics import *
 from .optics import *
 from .relativistic_mechanics import *
 from .thermodynamics import *
+from .quantum_mechanics import *
 
 __all__ = [
     # basic
@@ -39,6 +40,7 @@ __all__ = [
     "fractional_change",
     "exponential_decay_constant",
     "specific_energy",
+    "nonnegative_number",
     # chemistry,
     "mass_fraction",
     "amount_of_substance",
@@ -172,4 +174,7 @@ __all__ = [
     "thermal_efficiency",
     "statistical_weight",
     "relative_humidity",
+    # quantum mechanics
+    "wave_function",
+    "probability_density",
 ]

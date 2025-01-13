@@ -1,13 +1,40 @@
+"""
+Free particle plane wave solution
+=================================
+
+In the absence of a potential field (:math:`U = 0`) the wave function can be represented in the form of
+a `plane wave <https://en.wikipedia.org/wiki/Plane_wave>`__.
+
+**Notation:**
+
+#. :quantity_notation:`hbar`.
+
+**Notes:**
+
+#. The energy and momentum of a quantum particle are related by the equation :math:`E = p^2 / (2 m)`
+   where :math:`m` is the mass of the quantum particle.
+#. The wave function must be normalized, i.e. the integral of the square of its absolute value
+   over the whole range of the spatial variable must equal 1, but the integral of the complex expontential
+   diverges if taken over the real line. This is not a problem, though, because the states described by
+   such a wave function would never be infinite (they would not be defined over the whole real line).
+   Moreover, the correct solution can be represented by a linear combination of planar waves, which can be
+   made convergent.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Free_particle#Quantum_free_particle>`__.
+"""
+
 from sympy import Eq, exp, I, S, dsolve
-from sympy.physics.units import hbar
 from symplyphysics import (
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
-    units,
-    dimensionless,
     convert_to,
+    quantities,
+    symbols,
+    SymbolNew,
+    dimensionless,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.dynamics import kinetic_energy_via_momentum
@@ -16,37 +43,39 @@ from symplyphysics.laws.quantum_mechanics.schrodinger import (
     time_dependent_via_time_independent_solution as time_dependent_law,
 )
 
-# Description
-## In the absence of a potential field (U = 0) the wave function can be represented in the form of
-## a [plane wave](https://en.wikipedia.org/wiki/Plane_wave).
+dimensionless_wave_function = SymbolNew("psi", dimensionless, display_latex="\\psi")
+"""
+Dimensionless :symbols:`wave_function` describing the particle's state. The dimension
+coefficient has been omitted since this wave function cannot be normalized as it is,
+see Notes above.
+"""
 
-# Law: Psi = exp((i / hbar) * (p * x - E * t))
-## Psi - wave function
-## x - position
-## t - time
-## hbar - reduced Planck constant
-## p - momentum of quantum particle
-## E - energy of quantum particle
+particle_momentum = symbols.momentum
+"""
+:symbols:`momentum` of the particle.
+"""
 
-# Notes
-## - The energy and momentum of a quantum particle are related by the equation `E = p**2 / (2 * m)`
-##   where `m` is the mass of the quantum particle.
-## - The wave function must be normalized, i.e. the integral of the square of its absolute value
-##   over the whole range of the spatial variable must equal 1, but the integral of the complex expontential
-##   diverges if taken over the real line. This is not a problem, though, because the states described by
-##   such a wave function would never be infinite (they would not be defined over the whole real line).
-##   Moreover, the correct solution can be represented by a linear combination of planar waves, which can be
-##   made convergent.
+particle_energy = symbols.energy
+"""
+:symbols:`energy` of the particle.
+"""
 
-# Links: Wikipedia <https://en.wikipedia.org/wiki/Free_particle#Quantum_free_particle>
+position = symbols.position
+"""
+:symbols:`position` of the particle.
+"""
 
-wave_function = Symbol("wave_function", dimensionless)
-particle_momentum = Symbol("particle_momentum", units.momentum)
-particle_energy = Symbol("particle_energy", units.energy)
-position = Symbol("position", units.length)
-time = Symbol("time", units.time)
+time = symbols.time
+"""
+:symbols:`time`.
+"""
 
-law = Eq(wave_function, exp((I / hbar) * (particle_momentum * position - particle_energy * time)))
+law = Eq(dimensionless_wave_function, exp((I / quantities.hbar) * (particle_momentum * position - particle_energy * time)))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 # Derive from Schrödinger equation
 
@@ -93,7 +122,7 @@ assert expr_equals(_time_dependent_solution, law.rhs)
     position_=position,
     time_=time,
 )
-@validate_output(wave_function)
+@validate_output(dimensionless_wave_function)
 def calculate_wave_function_value(
     particle_momentum_: Quantity,
     particle_energy_: Quantity,

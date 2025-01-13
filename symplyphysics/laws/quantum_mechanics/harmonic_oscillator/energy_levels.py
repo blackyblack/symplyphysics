@@ -1,41 +1,63 @@
-from sympy import Eq, Rational, solve, symbols, sqrt
+"""
+Energy levels of harmonic oscillator
+====================================
+
+As opposed to the classical harmonic oscillator, the energy levels of a quantum harmonic oscillator
+are quantized, meaning that its energy take a value out of a discrete range. These energy levels
+are equidistant, i.e. the difference between successive energy levels is the same for all levels.
+
+**Notation:**
+
+#. :quantity_notation:`hbar`.
+
+**Notes**
+
+#. This means that the energy of a quantum oscillator cannot be zero and the lowest it can be
+   is the zero-point energy :math:`E_0 = \\hbar \\omega / 2`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Quantum_harmonic_oscillator#Hamiltonian_and_energy_eigenstates>`__.
+"""
+
+from sympy import Eq, Rational, solve, symbols as sym_symbols, sqrt
 from symplyphysics import (
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     units,
-    dimensionless,
-    angle_type,
+    symbols,
+    clone_as_symbol,
+    quantities,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.quantum_mechanics.harmonic_oscillator import equation, wave_eigenfunctions
 
-# Description
-## As opposed to the classical harmonic oscillator, the energy levels of a quantum harmonic oscillator
-## are quantized, meaning that its energy take a value out of a discrete range. These energy levels
-## are equidistant, i.e. the difference between successive energy levels is the same for all levels.
+energy_level = clone_as_symbol(symbols.energy, subscript="n")
+"""
+Energy of the level corresponding to the :attr:`~mode_number`.
+"""
 
-# Law: E_n = (n + 1/2) * hbar * omega
-## E_n - energy of n-th level
-## n - quantum number of oscillator, which is any non-negative integer (0, 1, 2, ...)
-## hbar - reduced Planck constant
-## omega - angular frequency of oscillator
+mode_number = symbols.nonnegative_number
+"""
+Quantum number of oscillator, which is any non-negative integer (:math:`0, 1, 2, \\dots`).
+See :symbols:`nonnegative_number`.
+"""
 
-# Notes
-## - This means that the energy of a quantum oscillator cannot be zero and the lowest it can be
-##   is the zero-point energy `E_0 = hbar * omega / 2`.
-
-# Links: Wikipedia <https://en.wikipedia.org/wiki/Quantum_harmonic_oscillator#Hamiltonian_and_energy_eigenstates>
-
-energy_level = Symbol("energy_level", units.energy)
-mode_number = Symbol("mode_number", dimensionless, integer=True, nonnegative=True)
-angular_frequency = Symbol("angular_frequency", angle_type / units.time)
+angular_frequency = symbols.angular_frequency
+"""
+:symbols:`angular_frequency` of the oscillator.
+"""
 
 law = Eq(
     energy_level,
-    (mode_number + Rational(1, 2)) * units.hbar * angular_frequency,
+    (mode_number + Rational(1, 2)) * quantities.hbar * angular_frequency,
 )
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 # Derive from Schrödinger equation and wave eigenfunction expressions
 
@@ -59,11 +81,11 @@ _schrodinger_eqn = _schrodinger_eqn.replace(
     lambda position_: _eigenfunction_expr.subs(_position, position_),
 ).doit()
 
-_reduced_position = symbols("_reduced_position")
+_reduced_position = sym_symbols("_reduced_position")
 
 _reduced_position_eqn = Eq(
     _reduced_position,
-    _position * sqrt(angular_frequency * _mass / units.hbar),
+    _position * sqrt(angular_frequency * _mass / quantities.hbar),
 )
 
 _energy_expr = solve(

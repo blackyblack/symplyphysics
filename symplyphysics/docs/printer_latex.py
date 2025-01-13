@@ -4,7 +4,7 @@ Symplyphysics latex printer
 
 import re
 from typing import Any
-from sympy import E, S, Expr, Mod, Mul
+from sympy import E, S, Expr, Mod, Mul, Symbol as SymSymbol
 from sympy.printing.latex import LatexPrinter, accepted_latex_functions
 from sympy.core.function import AppliedUndef
 from sympy.simplify import fraction
@@ -281,6 +281,10 @@ def latex_str(expr: Any, **settings: Any) -> str:
     printer = SymbolLatexPrinter(settings)
 
     if isinstance(expr, FunctionNew):
-        expr = expr(*expr.arguments)
+        arguments = [
+            SymSymbol(arg.display_name) if isinstance(arg, FunctionNew) else arg
+            for arg in expr.arguments
+        ]
+        expr = expr(*arguments)
 
     return printer.doprint(expr)

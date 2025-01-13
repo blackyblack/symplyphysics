@@ -3,7 +3,7 @@ Symplyphysics code printer
 """
 
 from typing import Any
-from sympy import S, Expr, Mod, Mul, StrPrinter, E
+from sympy import S, Expr, Mod, Mul, StrPrinter, E, Symbol as SymSymbol
 from sympy.simplify import fraction
 from sympy.concrete.products import Product
 from sympy.concrete.summations import Sum
@@ -234,7 +234,11 @@ def code_str(expr: Any, **settings: Any) -> str:
     printer = SymbolCodePrinter(settings)
 
     if isinstance(expr, FunctionNew):
-        expr = expr(*expr.arguments)
+        arguments = [
+            SymSymbol(arg.display_name) if isinstance(arg, FunctionNew) else arg
+            for arg in expr.arguments
+        ]
+        expr = expr(*arguments)
     if isinstance(expr, SymbolIndexedNew):
         expr = expr[expr.index]
 
