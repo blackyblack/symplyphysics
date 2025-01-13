@@ -43,7 +43,8 @@ angular_frequency = symbols.angular_frequency
 """
 
 law = Eq(
-    (-1 * quantities.hbar**2 / (2 * particle_mass)) * Derivative(wave_function(position), position, 2) +
+    (-1 * quantities.hbar**2 /
+    (2 * particle_mass)) * Derivative(wave_function(position), position, 2) +
     (particle_mass * angular_frequency**2 / 2) * position**2 * wave_function(position),
     particle_energy * wave_function(position),
 )

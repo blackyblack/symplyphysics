@@ -81,7 +81,7 @@ def validate_input(**decorator_kwargs: Any) -> Callable[[Callable[..., Any]], Ca
 # @validate_output(units.length)
 # @validate_output(body_volume)
 def validate_output(
-        expected_unit: Dimension | Symbol | Function | SymbolNew | FunctionNew | SymbolIndexedNew
+    expected_unit: Dimension | Symbol | Function | SymbolNew | FunctionNew | SymbolIndexedNew
 ) -> Callable[[Any], Callable[..., Any]]:
 
     def validate_func(func: Callable[..., Any]) -> Callable[..., Any]:

@@ -70,7 +70,8 @@ time = symbols.time
 :symbols:`time`.
 """
 
-law = Eq(dimensionless_wave_function, exp((I / quantities.hbar) * (particle_momentum * position - particle_energy * time)))
+law = Eq(dimensionless_wave_function,
+    exp((I / quantities.hbar) * (particle_momentum * position - particle_energy * time)))
 """
 :laws:symbol::
 

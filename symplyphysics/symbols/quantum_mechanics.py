@@ -7,7 +7,6 @@ Symbols related to quantum mechanics.
 
 from sympy import sqrt
 from sympy.physics import units
-from symplyphysics.core.dimensions import dimensionless
 from symplyphysics.core.symbols.symbols import SymbolNew
 
 wave_function = SymbolNew("psi", 1 / sqrt(units.length), display_latex="\\psi")

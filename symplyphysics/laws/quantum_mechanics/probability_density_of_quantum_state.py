@@ -25,7 +25,7 @@ wave_function = symbols.wave_function
 
 law = Eq(probability_density, abs(wave_function)**2)
 """
-:laws:symbols::
+:laws:symbol::
 
 :laws:latex::
 """

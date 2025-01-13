@@ -1,6 +1,5 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless)
 
 # Description
 ## If the travel difference is equal to an odd number of half-waves,

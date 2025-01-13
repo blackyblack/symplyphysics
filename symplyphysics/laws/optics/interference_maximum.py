@@ -1,6 +1,5 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output, dimensionless)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless)
 
 # Description
 ## If the difference in the course of two waves is equal to an integer number of waves

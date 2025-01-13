@@ -50,7 +50,9 @@ volume = clone_as_function(symbols.volume, [pressure, parameters])
 :symbols:`volume` of the gas as a function of :attr:`~pressure` and :attr:`~parameters`.
 """
 
-definition = Eq(compressibility, -1 * Derivative(volume(pressure, parameters), pressure) / volume(pressure, parameters))
+definition = Eq(
+    compressibility,
+    -1 * Derivative(volume(pressure, parameters), pressure) / volume(pressure, parameters))
 """
 :laws:symbol::
 

@@ -1,6 +1,5 @@
 from sympy import (Eq, solve, pi)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
 from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_slab as slab_flux
 
 # Description

@@ -16,8 +16,8 @@ The angle of the gravitational maneuver depends on the aiming range, the mass of
 
 from sympy import Eq, solve, atan
 from sympy.physics.units import gravitational_constant
-from symplyphysics import (clone_as_symbol, symbols, units, Quantity, Symbol,
-    validate_input, validate_output, angle_type)
+from symplyphysics import (clone_as_symbol, symbols, units, Quantity, Symbol, validate_input,
+    validate_output, angle_type)
 
 angle = Symbol("angle", angle_type)
 r"""

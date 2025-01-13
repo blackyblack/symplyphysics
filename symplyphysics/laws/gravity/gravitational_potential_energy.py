@@ -45,9 +45,9 @@ distance_between_mass_centers = symbols.euclidean_distance
 :symbols:`euclidean_distance` between mass centers of the particles.
 """
 
-
-law = Eq(gravitational_potential_energy,
-    -1 * quantities.gravitational_constant * first_mass * second_mass / distance_between_mass_centers)
+law = Eq(
+    gravitational_potential_energy, -1 * quantities.gravitational_constant * first_mass *
+    second_mass / distance_between_mass_centers)
 """
 :laws:symbol::
 

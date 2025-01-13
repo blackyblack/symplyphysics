@@ -20,8 +20,7 @@ from symplyphysics import (
     validate_output,
 )
 from symplyphysics.laws.thermodynamics.equations_of_state import (
-    ideal_gas_equation as thermodynamics_law,
-)
+    ideal_gas_equation as thermodynamics_law,)
 
 initial_temperature = clone_as_symbol(symbols.temperature, subscript="0")
 """

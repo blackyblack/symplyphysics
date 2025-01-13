@@ -23,7 +23,7 @@ def test_args_fixture() -> Args:
 
 def test_law(test_args: Args) -> None:
     values = {
-        wave_function_eqn.potential_energy(wave_function_eqn.position, wave_function_eqn.time):
+        wave_function_eqn.potential_energy(wave_function_eqn.position):
         test_args.u,
         wave_function_eqn.wave_function(wave_function_eqn.position, wave_function_eqn.time):
         test_args.psi,

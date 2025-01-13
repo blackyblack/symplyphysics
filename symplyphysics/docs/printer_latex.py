@@ -186,7 +186,6 @@ class SymbolLatexPrinter(LatexPrinter):
             terms.append(term)
         return (Mul(*terms, evaluate=False), sign)
 
-
     def _print_Mul(self, expr: Mul) -> str:
         separator: str = self._settings["mul_symbol_latex"]
         numbersep: str = self._settings["mul_symbol_latex_numbers"]

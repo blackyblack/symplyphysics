@@ -1,6 +1,6 @@
 from sympy import (Eq, solve, dsolve)
-from symplyphysics import (clone_as_symbol, symbols, units, Quantity, Symbol,
-    validate_input, validate_output)
+from symplyphysics import (clone_as_symbol, symbols, units, Quantity, Symbol, validate_input,
+    validate_output)
 from symplyphysics.laws.dynamics import pressure_from_force_and_area as pressure_law
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.hydro import inner_pressure_is_constant as constant_pressure_law

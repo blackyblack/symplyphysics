@@ -42,7 +42,8 @@ body_mass = symbols.mass
 :symbols:`mass` of the body.
 """
 
-law = Eq(gravitational_radius, 2 * quantities.gravitational_constant * body_mass / quantities.speed_of_light**2)
+law = Eq(gravitational_radius,
+    2 * quantities.gravitational_constant * body_mass / quantities.speed_of_light**2)
 """
 :laws:symbol::
 
