@@ -5,8 +5,9 @@ from symplyphysics import (
     Symbol,
     validate_input,
     validate_output,
-    dimensionless,
     convert_to_float,
+    clone_as_symbol,
+    symbols,
 )
 
 # Description
@@ -25,8 +26,8 @@ from symplyphysics import (
 
 # Link: Wikipedia, second formula <https://en.wikipedia.org/wiki/Apparent_magnitude#Calculations>
 
-apparent_magnitude_first = Symbol("apparent_magnitude_first", dimensionless)
-apparent_magnitude_second = Symbol("apparent_magnitude_second", dimensionless)
+apparent_magnitude_first = clone_as_symbol(symbols.apparent_magnitude, subscript="1")
+apparent_magnitude_second = clone_as_symbol(symbols.apparent_magnitude, subscript="2")
 illuminance_first = Symbol("illuminance_first", units.energy / units.area)
 illuminance_second = Symbol("illuminance_second", units.energy / units.area)
 

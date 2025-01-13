@@ -3,9 +3,9 @@ from symplyphysics import (
     symbols,
     units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    quantities,
 )
 
 # Description
@@ -25,25 +25,38 @@ from symplyphysics import (
 
 # Link: Wikipedia, second formula <https://en.wikipedia.org/wiki/Main_sequence#Lifetime>
 
-lifetime = Symbol("lifetime", units.time)
+lifetime = symbols.time
+"""
+Lifetime (:symbols:`time`) of the star on the main sequence.
+"""
 
-mass_of_star = symbols.mass
-luminosity_of_star = Symbol("luminosity_of_star", units.power)
+star_mass = symbols.mass
+"""
+:symbols:`mass` of the star.
+"""
 
-mass_of_sun = Quantity(1.989e30 * units.kilogram)
-lifetime_of_sun = Quantity(1e10 * units.common_year)
-luminosity_of_sun = Quantity(3.827e26 * units.watt)
+star_luminosity = symbols.luminocity
+"""
+:symbols:`luminocity` of the star.
+"""
+
+sun_lifetime = Quantity(1e10 * units.common_year, display_symbol="t_Sun", display_latex="t_\\odot")
+"""
+
+"""
+
+sun_luminosity = Quantity(3.827e26 * units.watt, display_symbol="L_Sun", display_latex="L_\\odot")
 
 law = Eq(lifetime,
-    lifetime_of_sun * (mass_of_star / mass_of_sun) * (luminosity_of_sun / luminosity_of_star))
+    sun_lifetime * (star_mass / quantities.solar_mass) * (sun_luminosity / star_luminosity))
 
 
-@validate_input(mass_of_star_=mass_of_star, luminosity_of_star_=luminosity_of_star)
+@validate_input(mass_of_star_=star_mass, luminosity_of_star_=star_luminosity)
 @validate_output(lifetime)
 def calculate_lifetime(mass_of_star_: Quantity, luminosity_of_star_: float) -> Quantity:
     result_expr = solve(law, lifetime, dict=True)[0][lifetime]
     result_expr = result_expr.subs({
-        mass_of_star: mass_of_star_,
-        luminosity_of_star: luminosity_of_star_,
+        star_mass: mass_of_star_,
+        star_luminosity: luminosity_of_star_,
     })
     return Quantity(result_expr)

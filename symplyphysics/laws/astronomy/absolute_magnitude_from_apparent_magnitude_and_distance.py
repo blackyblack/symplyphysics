@@ -13,35 +13,35 @@ from sympy import Eq, solve, log
 from symplyphysics import (
     units,
     Quantity,
-    SymbolNew,
     validate_input,
     validate_output,
-    dimensionless,
     convert_to_float,
+    symbols,
 )
 
-absolute_magnitude = SymbolNew("M", dimensionless)
+absolute_magnitude = symbols.absolute_magnitude
 """
-Absolute magnitude for stars is defined as the apparent magnitude of an object if it were located at a distance
+:symbols:`absolute_magnitude` for stars is defined as the apparent magnitude of an object if it were located at a distance
 of 10 parsecs (2.063e+6 astronomical units) from the observer and would not experience either interstellar or atmospheric absorption.
 """
 
-apparent_magnitude = SymbolNew("m", dimensionless)
+apparent_magnitude = symbols.apparent_magnitude
 """
 The apparent magnitude is a measure of the brightness of a celestial body (more precisely, the illumination created
 by this body) from the observer's point of view. The brighter the object, the smaller its magnitude.
 """
 
-distance = SymbolNew("d", units.length)
+distance = symbols.euclidean_distance
 """
-Distance to the object.
+:symbols:`euclidean_distance` to the object.
 """
 
 distance_constant = Quantity(2.063e+6 * units.astronomical_unit,
-    display_symbol="d0",
-    display_latex="d_0")
-"""
-Constant equal to :math:`2.063e+6` astronomical units.
+    display_symbol="d_0",
+    display_latex="d_0",
+)
+r"""
+Constant equal to :math:`2.063 \cdot 10^6` astronomical units.
 """
 
 law = Eq(absolute_magnitude, apparent_magnitude - 5 * log(distance / distance_constant, 10))

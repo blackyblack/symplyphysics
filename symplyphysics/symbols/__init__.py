@@ -12,6 +12,7 @@ from .electrodynamics import *
 from .optics import *
 from .relativistic_mechanics import *
 from .thermodynamics import *
+from .astronomy import *
 
 __all__ = [
     # basic
@@ -172,4 +173,8 @@ __all__ = [
     "thermal_efficiency",
     "statistical_weight",
     "relative_humidity",
+    # astronomy
+    "absolute_magnitude",
+    "apparent_magnitude",
+    "luminocity",
 ]
