@@ -1,6 +1,5 @@
 from sympy import Eq, solve, pi
-from symplyphysics import (Quantity, Symbol, units, validate_input,
-    validate_output)
+from symplyphysics import (Quantity, Symbol, units, validate_input, validate_output)
 
 # Law: delta_p = 8 * mu * L * Q / (pi * R**4)
 # delta_p - pressure difference,

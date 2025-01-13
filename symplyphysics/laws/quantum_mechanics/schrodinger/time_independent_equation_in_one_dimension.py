@@ -49,7 +49,8 @@ particle_energy = symbols.energy
 """
 
 law = Eq(
-    (-1 * quantities.hbar**2 / (2 * particle_mass)) * Derivative(wave_function(position), position, 2) +
+    (-1 * quantities.hbar**2 /
+    (2 * particle_mass)) * Derivative(wave_function(position), position, 2) +
     potential_energy(position) * wave_function(position),
     particle_energy * wave_function(position),
 )

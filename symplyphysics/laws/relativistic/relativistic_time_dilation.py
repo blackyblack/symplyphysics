@@ -1,8 +1,7 @@
 from sympy import Eq, solve, sqrt
 from sympy.physics.units import speed_of_light
 
-from symplyphysics import (Quantity, Symbol, units, validate_input,
-    validate_output)
+from symplyphysics import (Quantity, Symbol, units, validate_input, validate_output)
 
 # Description
 # Time dilation is the difference in elapsed time as measured by two clocks,

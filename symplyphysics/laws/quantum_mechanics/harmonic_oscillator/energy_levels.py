@@ -25,7 +25,6 @@ from symplyphysics import (
     Quantity,
     validate_input,
     validate_output,
-    units,
     symbols,
     clone_as_symbol,
     quantities,

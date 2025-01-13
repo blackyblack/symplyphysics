@@ -38,7 +38,7 @@ wave_function = clone_as_function(symbols.wave_function, [position, time])
 Time-dependent :symbols:`wave_function` as a function of :attr:`~position` and :attr:`~time`.
 """
 
-potential_energy = clone_as_function(symbols.potential_energy, [position, time])
+potential_energy = clone_as_function(symbols.potential_energy, [position])
 """
 Time-independent :symbols:`potential_energy` as a function of :attr:`~position`.
 """
@@ -49,8 +49,9 @@ particle_mass = symbols.mass
 """
 
 law = Eq(
-    -1 * quantities.hbar**2 / (2 * particle_mass) * Derivative(wave_function(position, time), position, 2) +
-    potential_energy(position, time) * wave_function(position, time),
+    -1 * quantities.hbar**2 /
+    (2 * particle_mass) * Derivative(wave_function(position, time), position, 2) +
+    potential_energy(position) * wave_function(position, time),
     I * quantities.hbar * Derivative(wave_function(position, time), time))
 """
 :laws:symbol::

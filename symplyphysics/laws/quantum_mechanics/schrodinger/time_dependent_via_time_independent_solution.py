@@ -69,7 +69,8 @@ Particle :symbols:`energy`.
 
 law = Eq(
     time_dependent_wave_function(position, time),
-    time_independent_wave_function(position) * exp(-1 * (I / quantities.hbar) * particle_energy * time),
+    time_independent_wave_function(position) * exp(
+    (-1 * I / quantities.hbar) * particle_energy * time),
 )
 """
 :laws:symbol::

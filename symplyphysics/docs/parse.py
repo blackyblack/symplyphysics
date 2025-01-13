@@ -167,11 +167,8 @@ def find_members_and_functions(content: ast.Module) -> list[MemberWithDoc | Func
             dimension = "dimensionless" if SI.get_dimension_system().is_dimensionless(
                 sym.dimension) else str(sym.dimension.name)
             symbol_name = code_str(sym)
-            symbol_type = (
-                LawSymbolTypes.FUNCTION
-                if isinstance(sym, FunctionNew)
-                else LawSymbolTypes.SYMBOL
-            )
+            symbol_type = (LawSymbolTypes.FUNCTION
+                if isinstance(sym, FunctionNew) else LawSymbolTypes.SYMBOL)
             symbol_latex = latex_str(sym)
             law_symbol = LawSymbol(symbol_name, symbol_type, symbol_latex, dimension)
         directives = _docstring_find_law_directives(doc)

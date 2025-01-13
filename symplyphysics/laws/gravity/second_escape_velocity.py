@@ -42,7 +42,8 @@ height = symbols.height
 Elevation (see :symbols:`height`) of the body above the planet's surface.
 """
 
-law = Eq(speed, sqrt(2 * quantities.gravitational_constant * planet_mass / (planet_radius + height)))
+law = Eq(speed,
+    sqrt(2 * quantities.gravitational_constant * planet_mass / (planet_radius + height)))
 """
 :laws:symbol::
 
@@ -74,8 +75,10 @@ _kinetic_energy_derived = solve(_kinetic_energy_law_applied,
 # already been introduced with a minus. And in the law "mechanical_energy_after_equals_to_mechanical_energy_before",
 # the conservation law looks like: E1=E2. Therefore, a minus sign is placed before the potential energy.
 _conservation_law_applied = conservation_law.law.subs({
-    conservation_law.mechanical_energy(conservation_law.time_after): _kinetic_energy_derived,
-    conservation_law.mechanical_energy(conservation_law.time_before): -1 * _potential_energy_derived,
+    conservation_law.mechanical_energy(conservation_law.time_after):
+        _kinetic_energy_derived,
+    conservation_law.mechanical_energy(conservation_law.time_before):
+    -1 * _potential_energy_derived,
 })
 # The proof considers the fall of a body from infinity to the earth. But at the same time, in most cases, I consider
 # this speed as directed from the planet from which the body starts, which corresponds to the plus sign. Therefore,

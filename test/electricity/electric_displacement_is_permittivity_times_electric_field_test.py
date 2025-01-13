@@ -2,8 +2,7 @@ from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import assert_equal, units, Quantity, errors
 from symplyphysics.laws.electricity import (
-    electric_displacement_is_permittivity_times_electric_field as law,
-)
+    electric_displacement_is_permittivity_times_electric_field as law,)
 
 Args = namedtuple("Args", "eps e")
 

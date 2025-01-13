@@ -41,7 +41,7 @@ wave_function = clone_as_function(symbols.wave_function, [position, time])
 
 observable = clone_as_function(
     symbols.any_quantity,
-    [wave_function], # should technically be a function of unapplied wave function
+    [wave_function],  # should technically be a function of unapplied wave function
     display_symbol="O",
     display_latex="O",
 )

@@ -1,6 +1,5 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, dimensionless, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, dimensionless, validate_input, validate_output)
 
 # Description
 ## Optical power is the degree to which a lens, mirror, or other optical system converges or diverges light.

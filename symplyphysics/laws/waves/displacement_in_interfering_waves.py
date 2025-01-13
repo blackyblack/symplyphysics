@@ -69,9 +69,8 @@ time = symbols.time
 
 law = Eq(
     total_displacement,
-    (2 * amplitude)
-    * cos(phase_shift / 2)
-    * sin(angular_wavenumber * position - angular_frequency * time + phase_shift / 2),
+    (2 * amplitude) * cos(phase_shift / 2) *
+    sin(angular_wavenumber * position - angular_frequency * time + phase_shift / 2),
 )
 r"""
 :code:`u = 2 * u_max * cos(phi / 2) * sin(k * x - w * t + phi / 2)`
@@ -81,14 +80,12 @@ Latex:
         u = 2 u_\text{max} \cos \left( \frac{\varphi}{2} \right) \sin \left( k x - \omega t + \frac{\varphi}{2} \right)
 """
 
-
 # Derive from the sum of two waves
 
 # The form of the waves is taken from the notes above
 _first_wave = amplitude * sin(angular_wavenumber * position - angular_frequency * time)
-_second_wave = amplitude * sin(
-    angular_wavenumber * position - angular_frequency * time + phase_shift
-)
+_second_wave = amplitude * sin(angular_wavenumber * position - angular_frequency * time +
+    phase_shift)
 
 _sum_of_waves = (_first_wave + _second_wave).simplify()
 

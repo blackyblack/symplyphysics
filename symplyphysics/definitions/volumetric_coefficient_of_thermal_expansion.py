@@ -25,7 +25,9 @@ from symplyphysics import (
     symbols,
     clone_as_symbol,
     clone_as_function,
+    SymbolNew,
 )
+from symplyphysics.core.dimensions import any_dimension
 from symplyphysics.core.geometry.line import two_point_function, Point2D
 
 volumetric_expansion_coefficient = clone_as_symbol(
@@ -42,25 +44,24 @@ temperature = symbols.temperature
 :symbols:`temperature` of the body.
 """
 
-volume = clone_as_function(symbols.volume, [temperature])
+parameters = SymbolNew("q", any_dimension)
 """
-:symbols:`volume` of the body as a function of temperature and pressure.
+Parameters other than :attr:`~temperature` on which the volume function depends.
+"""
+
+volume = clone_as_function(symbols.volume, [temperature, parameters])
+"""
+:symbols:`volume` of the body as a function of :attr:`~temperature` and :attr:`~parameters`.
 """
 
 definition = Eq(
     volumetric_expansion_coefficient,
-    Derivative(volume(temperature), temperature) / volume(temperature),
+    Derivative(volume(temperature, parameters), temperature) / volume(temperature, parameters),
 )
-r"""
+"""
 :laws:symbol::
 
-.. only:: comment
-
-    Manual formula due to partial derivative not rendered by auto-generation
-
-Latex:
-    .. math::
-        \alpha_V = \frac{1}{V(T, p)} \left( \frac{\partial V}{\partial T} \right)_p
+:laws:latex::
 """
 
 

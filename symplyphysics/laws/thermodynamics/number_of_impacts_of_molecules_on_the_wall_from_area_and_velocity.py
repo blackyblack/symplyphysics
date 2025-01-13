@@ -1,6 +1,6 @@
 from sympy import Eq, solve
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output, dimensionless, convert_to_float)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless,
+    convert_to_float)
 
 # Description
 ## Consider the volume of gas in a vessel in the form of a cube and determine the number of impacts on its wall perpendicular to the x-axis.
