@@ -1,5 +1,5 @@
 """
-Optical power of spherical lens from refractive indeces and distances
+Optical power of spherical lens from refractive indices and distances
 =====================================================================
 
 The formula of the spherical refractive surface allows you to uniquely determine
@@ -11,7 +11,7 @@ the position of the image if the position of the object is known and vice versa.
 
 ..
     TODO rename file
-    TODO find English linj
+    TODO find English link
 """
 
 from sympy import Eq, solve

@@ -3,7 +3,7 @@ Optical power from thin lens radii and refractive indeces
 =========================================================
 
 Optical power of a thin lens can be calculated from the radii of its front and back
-surfaces and the refractiv indeces of the lens material and the medium.
+surfaces and the refractive indices of the lens material and the medium.
 
 **Links:**
 
