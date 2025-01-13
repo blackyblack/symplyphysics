@@ -113,12 +113,10 @@ _general_eqn = general_eqn.law.subs({
     general_eqn.position: position,
     general_eqn.time: time,
     general_eqn.particle_mass: stationary_eqn.particle_mass,
+    general_eqn.potential_energy: stationary_eqn.potential_energy,
 }).replace(
     general_eqn.wave_function,
-    lambda position_, time_: law.rhs.subs(position, position_),
-).replace(
-    general_eqn.potential_energy,
-    lambda position_, time_: stationary_eqn.potential_energy(position_),
+    lambda position_, _time: law.rhs.subs(position, position_),
 ).doit()
 
 # Solve for the stationary wave function in both equations and compare them

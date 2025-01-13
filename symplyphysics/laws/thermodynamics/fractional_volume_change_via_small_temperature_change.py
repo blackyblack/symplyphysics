@@ -80,8 +80,9 @@ Latex:
 # Derive from definition of the coefficient of thermal expansion.
 
 _volume_change = symbols("volume_change")
+_parameters = coefficient_def.parameters
 _temperature = coefficient_def.temperature
-_volume = coefficient_def.volume(_temperature)
+_volume = coefficient_def.volume(_temperature, _parameters)
 
 # Approximate the derivative with a fraction.
 _coefficient_eqn = coefficient_def.definition.subs({
