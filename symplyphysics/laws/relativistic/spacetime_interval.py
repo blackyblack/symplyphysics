@@ -18,7 +18,7 @@ inertial reference frame.
 #. If :math:`\\Delta s**2 = 0`, the spacetime interval is said to be *lightlike*. Events with a lightlike
    separation are exactly far enough from each other that light could be present at both events, and they
    are causally connected.
-#. If :math:`\\Delta s**2 < 0`, the spacetime interval is said to be _spacelike_. Events with a spacelike
+#. If :math:`\\Delta s**2 < 0`, the spacetime interval is said to be *spacelike*. Events with a spacelike
    separation are causally disconnected, i.e. one can find an inertial reference frame in which both
    events happen at the same time in different positions.
 

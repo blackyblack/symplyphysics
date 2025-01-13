@@ -4,7 +4,8 @@ Relativistic time dilation
 
 Time dilation is the difference in elapsed time as measured by two clocks,
 either due to a relative speed between them (special relativity),
-or a difference in gravitational potential between their locations.
+or a difference in gravitational potential between their locations. This law only
+covers the special relativistic time dilation due to acceleration.
 
 **Notation:**
 

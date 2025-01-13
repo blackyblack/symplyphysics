@@ -2,7 +2,7 @@
 Relativistic kinetic energy
 ===========================
 
-The kinetic energy of an object is the form of energy that is possesses due to its motion.
+The kinetic energy of an object is the form of energy that it possesses due to its motion.
 
 **Notation:**
 
