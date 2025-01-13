@@ -21,7 +21,7 @@ The **wave function** is a complex-valued quantity describing the quantum state 
 
 probability_density = SymbolNew("rho", 1 / units.length, display_latex="\\rho")
 """
-The **probability density**, or **probability amplitude**, is a real number that provide a relationship between
+The **probability density**, or **probability amplitude**, is a real number that provides a relationship between
 the quantum state vector of a system and the results of observations of that system. It is the likelihood of
 finding an object or system in a particular state at a particular position and time.
 
