@@ -151,7 +151,7 @@ __all__ = [
     "spacetime_interval",
     "proper_time",
     "rest_mass",
-    "rest_length",
+    "proper_length",
     "relativistic_mass",
     # thermodynamics
     "temperature",

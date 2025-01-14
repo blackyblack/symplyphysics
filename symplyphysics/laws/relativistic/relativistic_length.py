@@ -22,9 +22,9 @@ from sympy import Eq, solve, sqrt
 from symplyphysics import (Quantity, validate_input,
     validate_output, symbols, quantities)
 
-rest_length = symbols.rest_length
+proper_length = symbols.proper_length
 """
-:symbols:`rest_length` of the object.
+:symbols:`proper_length` of the object.
 """
 
 speed = symbols.speed
@@ -38,7 +38,7 @@ Relativistic :symbols:`length` of the object, i.e. its length measured in the ex
 frame.
 """
 
-law = Eq(relativistic_length, rest_length * sqrt(1 - speed**2 / quantities.speed_of_light**2))
+law = Eq(relativistic_length, proper_length * sqrt(1 - speed**2 / quantities.speed_of_light**2))
 """
 :laws:symbol::
 
@@ -46,9 +46,9 @@ law = Eq(relativistic_length, rest_length * sqrt(1 - speed**2 / quantities.speed
 """
 
 
-@validate_input(rest_length_=rest_length, velocity_=speed)
+@validate_input(rest_length_=proper_length, velocity_=speed)
 @validate_output(relativistic_length)
 def calculate_relativistic_length(rest_length_: Quantity, velocity_: Quantity) -> Quantity:
     result_expr = solve(law, relativistic_length, dict=True)[0][relativistic_length]
-    length_applied = result_expr.subs({rest_length: rest_length_, speed: velocity_})
+    length_applied = result_expr.subs({proper_length: rest_length_, speed: velocity_})
     return Quantity(length_applied)

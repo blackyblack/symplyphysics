@@ -52,7 +52,7 @@ Lorentz transformations.
 #. `Wikipedia <https://en.wikipedia.org/wiki/Invariant_mass#>`__.
 """
 
-rest_length = SymbolNew("l_0", units.length)
+proper_length = SymbolNew("l_0", units.length)
 """
 **Rest length**, or **proper length**, is the length of an object in the object's rest frame.
 
@@ -64,4 +64,8 @@ rest_length = SymbolNew("l_0", units.length)
 relativistic_mass = SymbolNew("m", units.mass)
 """
 **Relativistic mass** of a moving object is its mass measured in an external inertial frame of reference.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Mass_in_special_relativity#>`__.
 """
