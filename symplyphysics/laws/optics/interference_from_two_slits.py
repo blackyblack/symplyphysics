@@ -10,7 +10,7 @@ the distance to the picture.
 **Conditions:**
 
 #. Two monochromatic waves of the same frequency.
-#. :math:`d \ll l, x \ll l`;
+#. :math:`d \ll l, x \ll l`, see symbols below for reference;
 #. The slits should be positioned symmetrically relative to the axis passing
    through the radiation source, while this axis of symmetry should be perpendicular
    to the plane on which the interference pattern will be.

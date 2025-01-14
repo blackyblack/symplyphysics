@@ -55,11 +55,10 @@ distance_from_image = clone_as_symbol(symbols.euclidean_distance, display_symbol
 :symbols:`euclidean_distance` from lens to image.
 """
 
-abbe_invariant_environment = medium_refraction_index * ((1 / distance_from_object) -
-    (1 / curvature_radius))
-abbe_invariant_lens = lens_refraction_index * ((1 / distance_from_image) - (1 / curvature_radius))
-
-law = Eq(abbe_invariant_environment, abbe_invariant_lens)
+law = Eq(
+    medium_refraction_index * ((1 / distance_from_object) - (1 / curvature_radius)),
+    lens_refraction_index * ((1 / distance_from_image) - (1 / curvature_radius)),
+)
 """
 :laws:symbol::
 
