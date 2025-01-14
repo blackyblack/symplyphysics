@@ -177,4 +177,9 @@ __all__ = [
     "absolute_magnitude",
     "apparent_magnitude",
     "luminocity",
+    "illuminance",
+    "irradiance",
+    "eccentricity",
+    "zenith_angle",
+    "declination",
 ]

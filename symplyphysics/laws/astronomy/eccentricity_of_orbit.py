@@ -1,41 +1,56 @@
+"""
+Eccentricity of orbit
+=====================
+
+Many bodies in space move in orbits that are conic sections. For an elliptical orbit, the
+eccentricity can be calculated from the parameters of the orbit. The eccentricity can be
+used to judge the elongation of the elliptical orbit.
+
+**Links:**
+
+#. Wikipedia, ellipse <https://en.wikipedia.org/wiki/Eccentricity_(mathematics)#Standard_form>
+"""
+
 from sympy import Eq, solve, sqrt
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
-    dimensionless,
     convert_to_float,
+    symbols,
 )
 
-# Description
-## Many bodies in space move in elliptical orbits. For an elliptical orbit, the eccentricity can be calculated.
-## The eccentricity can be used to judge the elongation of the elliptical orbit.
+eccentricity = symbols.eccentricity
+"""
+:symbols:`eccentricity` of the orbit.
+"""
 
-## Law is: e = sqrt(1 - (b / a)^2), where
-## e - eccentricity  of orbit,
-## b - small semi-axis of ellipse,
-## a - large semi-axis of ellipse.
+semiminor_axis = symbols.semiminor_axis
+"""
+:symbols:`semiminor_axis` of the orbit.
+"""
 
-# Links: Wikipedia, ellipse <https://en.wikipedia.org/wiki/Eccentricity_(mathematics)#Standard_form>
+semimajor_axis = symbols.semimajor_axis
+"""
+:symbols:`semimajor_axis` of the orbit.
+"""
 
-eccentricity = Symbol("eccentricity", dimensionless)
+law = Eq(eccentricity, sqrt(1 - (semiminor_axis / semimajor_axis)**2))
+"""
+:laws:symbol::
 
-small_semi_axis = Symbol("small_semi_axis", units.length)
-large_semi_axis = Symbol("large_semi_axis", units.length)
-
-law = Eq(eccentricity, sqrt(1 - (small_semi_axis / large_semi_axis)**2))
+:laws:latex::
+"""
 
 
-@validate_input(small_semi_axis_=small_semi_axis, large_semi_axis_=large_semi_axis)
+@validate_input(small_semi_axis_=semiminor_axis, large_semi_axis_=semimajor_axis)
 @validate_output(eccentricity)
 def calculate_eccentricity(small_semi_axis_: Quantity, large_semi_axis_: Quantity) -> float:
     if small_semi_axis_.scale_factor > large_semi_axis_.scale_factor:
         raise ValueError("The small semi-axis must be less than or equal to the large semi-axis")
     result_expr = solve(law, eccentricity, dict=True)[0][eccentricity]
     result_expr = result_expr.subs({
-        small_semi_axis: small_semi_axis_,
-        large_semi_axis: large_semi_axis_,
+        semiminor_axis: small_semi_axis_,
+        semimajor_axis: large_semi_axis_,
     })
     return convert_to_float(result_expr)

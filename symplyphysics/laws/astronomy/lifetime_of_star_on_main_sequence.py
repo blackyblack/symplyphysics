@@ -1,3 +1,7 @@
+"""
+
+"""
+
 from sympy import Eq, solve
 from symplyphysics import (
     symbols,
@@ -23,7 +27,8 @@ from symplyphysics import (
 
 # TODO: find link
 
-lifetime = Symbol("lifetime", units.time)
+lifetime = symbols.time
+
 mass_of_star = symbols.mass
 indicator = Symbol("indicator", dimensionless)
 

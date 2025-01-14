@@ -21,14 +21,12 @@ from symplyphysics import (
 
 absolute_magnitude = symbols.absolute_magnitude
 """
-:symbols:`absolute_magnitude` for stars is defined as the apparent magnitude of an object if it were located at a distance
-of 10 parsecs (2.063e+6 astronomical units) from the observer and would not experience either interstellar or atmospheric absorption.
+:symbols:`absolute_magnitude` of the object.
 """
 
 apparent_magnitude = symbols.apparent_magnitude
 """
-The apparent magnitude is a measure of the brightness of a celestial body (more precisely, the illumination created
-by this body) from the observer's point of view. The brighter the object, the smaller its magnitude.
+:symbols:`apparent_magnitude` of the object.
 """
 
 distance = symbols.euclidean_distance

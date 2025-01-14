@@ -1,3 +1,18 @@
+"""
+Approximate lifetime of stars located on the main sequence
+==========================================================
+
+The main sequence is the stage of stellar evolution. This stage begins in stars after the
+protostar stage. At the beginning of the main sequence stage, the age of the star is
+considered to be zero. It is possible to calculate the time spent on the main sequence
+for a star by knowing such a time for the Sun, as well as the mass and luminosity of the
+Sun and the star.
+
+**Links:**
+
+#. `Wikipedia, second formula <https://en.wikipedia.org/wiki/Main_sequence#Lifetime>`__.
+"""
+
 from sympy import (Eq, solve)
 from symplyphysics import (
     symbols,
@@ -7,23 +22,6 @@ from symplyphysics import (
     validate_output,
     quantities,
 )
-
-# Description
-## The main sequence is the stage of stellar evolution.
-## This stage begins in stars after the protostar stage. At the beginning of the main sequence stage, the age of the star
-## is considered to be zero.
-## It is possible to calculate the time spent on the main sequence for a star by knowing such a time for the Sun, as well
-## as the mass and luminosity of the Sun and the star.
-
-## Law is: T = ts * (M / Ms) * (Ls / L), where
-## T - lifetime on the main sequence of the star,
-## ts - lifetime on the main sequence of the Sun,
-## M - mass of the star,
-## Ms - mass of the Sun,
-## Ls - luminosity of the Sun,
-## L - luminosity of the star.
-
-# Link: Wikipedia, second formula <https://en.wikipedia.org/wiki/Main_sequence#Lifetime>
 
 lifetime = symbols.time
 """
@@ -42,13 +40,21 @@ star_luminosity = symbols.luminocity
 
 sun_lifetime = Quantity(1e10 * units.common_year, display_symbol="t_Sun", display_latex="t_\\odot")
 """
-
+Lifetime (:symbols:`time`) on time main sequence of the Sun.
 """
 
 sun_luminosity = Quantity(3.827e26 * units.watt, display_symbol="L_Sun", display_latex="L_\\odot")
+"""
+:symbols:`luminocity` of the Sun.
+"""
 
 law = Eq(lifetime,
     sun_lifetime * (star_mass / quantities.solar_mass) * (sun_luminosity / star_luminosity))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(mass_of_star_=star_mass, luminosity_of_star_=star_luminosity)

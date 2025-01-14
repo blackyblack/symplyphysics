@@ -15,21 +15,19 @@ The angle of the gravitational maneuver depends on the aiming range, the mass of
 """
 
 from sympy import Eq, solve, atan
-from sympy.physics.units import gravitational_constant
-from symplyphysics import (clone_as_symbol, symbols, Quantity,
-    validate_input, validate_output)
+from symplyphysics import symbols, Quantity, validate_input, validate_output, quantities
 
 angle = symbols.angle
 """
 :symbols:`angle` of rotation during a gravitational maneuver (angle at which the velocity vector of the rocket rotates)
 """
 
-planet_mass = clone_as_symbol(symbols.mass, display_symbol="M", display_latex="M")
+planet_mass = symbols.mass
 """
 The :symbols:`mass` of the planet.
 """
 
-aiming_range = clone_as_symbol(symbols.euclidean_distance, display_symbol="b", display_latex="b")
+aiming_range = symbols.euclidean_distance
 """
 The aiming range is the :symbols:`euclidean_distance` between the asymptote of the hyperbolic trajectory
 of the circumnavigation of the planet and its focus coinciding with the center of the planet.
@@ -40,9 +38,9 @@ rocket_speed = symbols.speed
 Rocket's :symbols:`speed` relative to the planet.
 """
 
-law = Eq(angle, 2 * atan(gravitational_constant * planet_mass / (aiming_range * rocket_speed**2)))
+law = Eq(angle, 2 * atan(quantities.gravitational_constant * planet_mass / (aiming_range * rocket_speed**2)))
 """
-:laws:symbol::
+:code:`phi = 2 * atan(G * m / (d * v^2))`
 
 :laws:latex::
 """
