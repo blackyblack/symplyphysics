@@ -31,7 +31,7 @@ A :symbols:`whole_number` of interference maxima.
 
 wavelength = symbols.wavelength
 """
-:symbols:`wavelength` of the two waves.
+:symbols:`wavelength` of each of the both waves.
 """
 
 law = Eq(travel_difference, integer_factor * wavelength)

@@ -7,7 +7,7 @@ in the optical distances traversed by each of the rays
 
 **Links:**
 
-#. Wikipedia <https://en.wikipedia.org/wiki/Optical_path_length#Optical_path_difference>
+#. `Wikipedia <https://en.wikipedia.org/wiki/Optical_path_length#Optical_path_difference>`__.
 
 ..
     TODO elaborate on optical distance

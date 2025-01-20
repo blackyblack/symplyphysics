@@ -29,7 +29,7 @@ A :symbols:`whole_number` of interference minima.
 
 wavelength = symbols.wavelength
 """
-:symbols:`wavelength` of the two waves.
+:symbols:`wavelength` of each of the both waves.
 """
 
 law = Eq(travel_difference, (2 * number_minimum + 1) * wavelength / 2)
