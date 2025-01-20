@@ -114,6 +114,7 @@ __all__ = [
     "longitude",
     "sector_speed",
     "kepler_constant",
+    "diameter",
     # electrodynamics
     "admittance",
     "electrical_conductance",
@@ -150,6 +151,12 @@ __all__ = [
     "radiant_exitance",
     "radiant_flux",
     "focal_length",
+    "optical_distance",
+    "transparency_coefficient",
+    "reflectance",
+    "magnification",
+    "optical_power",
+    "angular_resolution",
     # relativistic mechanics
     "lorentz_factor",
     # thermodynamics
