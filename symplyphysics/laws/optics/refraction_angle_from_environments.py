@@ -3,12 +3,13 @@ Refraction angle from enviroments
 =================================
 
 If ray of light comes from one medium to another, it refracts.
-Incoming ray, refracted ray and perpendicular to medium boundary are within the same plane.
+The law, also known as **Snell's law**, states that, for a given pair of media, the ratio of the sines of angle of incidence and angle of refraction is equal to the refractive index of the second medium with regard to the first.
 
 **Conditions:**
 
 #. Light is monochromatic, as the refractive index depends on the light frequency.
 #. The refracting medium is uniform, so that the refracting index does not change over the ray path.
+#. Incoming ray, refracted ray and perpendicular to medium boundary are within the same plane.
 
 **Links:**
 
