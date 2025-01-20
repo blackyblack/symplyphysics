@@ -34,7 +34,8 @@ pressure = Symbol("pressure", units.pressure)
 temperature = symbols.temperature
 cross_sectional_area_of_interaction = Symbol("cross_sectional_area_of_interaction", units.area)
 
-law = Eq(free_path_length,
+law = Eq(
+    free_path_length,
     boltzmann_constant * temperature / (sqrt(2) * pressure * cross_sectional_area_of_interaction))
 
 

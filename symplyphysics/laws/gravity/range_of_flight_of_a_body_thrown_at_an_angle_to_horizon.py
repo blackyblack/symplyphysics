@@ -41,7 +41,8 @@ angle = symbols.angle
 :symbols:`angle` between the initial velocity and the horizon.
 """
 
-law = Eq(horizontal_displacement, initial_speed**2 * sin(2 * angle) / quantities.acceleration_due_to_gravity)
+law = Eq(horizontal_displacement,
+    initial_speed**2 * sin(2 * angle) / quantities.acceleration_due_to_gravity)
 """
 :laws:symbol::
 
@@ -55,7 +56,8 @@ _projection_law_applied = projection_law.law.subs({
     projection_law.vector_length: initial_speed,
     projection_law.vector_angle: angle,
 })
-_horizontal_projection_derived = solve(_projection_law_applied, projection_law.projection,
+_horizontal_projection_derived = solve(_projection_law_applied,
+    projection_law.projection,
     dict=True)[0][projection_law.projection]
 
 _time_law_applied = time_law.law.subs({

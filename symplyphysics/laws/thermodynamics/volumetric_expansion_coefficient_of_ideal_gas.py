@@ -25,7 +25,8 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import volumetric_coefficient_of_thermal_expansion as coef_def
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation
 
-volumetric_expansion_coefficient = clone_as_symbol(symbols.thermal_expansion_coefficient, subscript="V")
+volumetric_expansion_coefficient = clone_as_symbol(symbols.thermal_expansion_coefficient,
+    subscript="V")
 """
 Volumetric :symbols:`thermal_expansion_coefficient` of the material. Also see
 :doc:`Volumetric expansion coefficient <definitions.volumetric_coefficient_of_thermal_expansion>`.
@@ -48,8 +49,8 @@ law = Eq(volumetric_expansion_coefficient, 1 / temperature)
 _volume_expr = solve(ideal_gas_equation.law,
     ideal_gas_equation.volume)[0].subs(ideal_gas_equation.temperature, temperature)
 
-_coef_expr = coef_def.definition.rhs.subs(coef_def.temperature,
-    temperature).subs(coef_def.volume(temperature), _volume_expr).doit()
+_coef_expr = coef_def.definition.rhs.subs(coef_def.temperature, temperature)
+_coef_expr = _coef_expr.subs(coef_def.volume(temperature, coef_def.parameters), _volume_expr).doit()
 
 assert expr_equals(_coef_expr, law.rhs)
 

@@ -45,10 +45,7 @@ The function that describes the relationship between :attr:`~electric_displaceme
 :attr:`~electric_field_strength`, :attr:`~temperature` and :attr:`~density`.
 """
 
-condition = Eq(
-    electric_displacement,
-    state_function(electric_field_strength, temperature, density)
-)
+condition = Eq(electric_displacement, state_function(electric_field_strength, temperature, density))
 """
 :laws:symbol::
 

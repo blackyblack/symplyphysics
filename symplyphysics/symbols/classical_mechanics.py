@@ -382,14 +382,14 @@ angular_momentum = SymbolNew("L", units.mass * units.length**2 / units.time)
 latitude = SymbolNew("phi", angle_type, display_latex="\\phi")
 """
 **Latitude** is a coordinate that specifies the north-south position of a point on the surface of
-the Earth or another celestial body. Its value ranges from :math:`-90^\circ` at the south pole
-to :math:`90^\circ` at the north pole, with :math:`0^\circ` at the Equator.
+the Earth or another celestial body. Its value ranges from :math:`-90^\\circ` at the south pole
+to :math:`90^\\circ` at the north pole, with :math:`0^\\circ` at the Equator.
 """
 
 longitude = SymbolNew("lambda", angle_type, display_latex="\\lambda")
 """
 **Longitude** is a coordinate that specifies the east-west position of a point on the
-surface of the Earth, or another celestial body. The prime meridian defines :math:`0^\circ`
+surface of the Earth, or another celestial body. The prime meridian defines :math:`0^\\circ`
 longitude; positive longitudes are east of the prime meridian, and the negative ones are west.
 """
 

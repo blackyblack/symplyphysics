@@ -1,6 +1,5 @@
 from sympy import (Eq, dsolve, Derivative)
-from symplyphysics import (units, Quantity, Symbol, Function, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, Function, validate_input, validate_output)
 
 # Description
 ## Mechanical energy, sum of the kinetic energy, or energy of motion, and the potential energy, or energy stored in a system by

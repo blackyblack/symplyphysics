@@ -1,7 +1,7 @@
 from typing import Sequence
 from sympy import (Eq, Idx, solve)
-from symplyphysics import (units, Quantity, validate_input, validate_output,
-    symbols, SymbolIndexed, SumIndexed, global_index)
+from symplyphysics import (units, Quantity, validate_input, validate_output, symbols, SymbolIndexed,
+    SumIndexed, global_index)
 
 # Description
 ## The mass of a mixture of liquids (gases) is equal to the sum of the masses of the components of the mixture

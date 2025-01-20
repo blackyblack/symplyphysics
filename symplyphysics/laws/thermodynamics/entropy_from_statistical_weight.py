@@ -35,14 +35,11 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.chemistry import (
-    avogadro_constant_is_particle_count_over_amount_of_substance as avogadro_law,
-)
+    avogadro_constant_is_particle_count_over_amount_of_substance as avogadro_law,)
 from symplyphysics.laws.thermodynamics import (
-    change_in_entropy_of_ideal_gas_from_volume_and_temperature as entropy_change_law,
-)
+    change_in_entropy_of_ideal_gas_from_volume_and_temperature as entropy_change_law,)
 from symplyphysics.laws.quantities import (
-    quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law,
-)
+    quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law,)
 
 entropy = symbols.entropy
 """

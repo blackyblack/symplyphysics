@@ -42,10 +42,7 @@ energy = clone_as_symbol(symbols.energy, positive=True)
 :symbols:`energy` of the ensemble.
 """
 
-energy_distribution_function = SymbolNew(
-    "f(E)",
-    1 / units.energy,
-    positive=True)
+energy_distribution_function = SymbolNew("f(E)", 1 / units.energy, positive=True)
 """
 :attr:`~energy` distribution function.
 """

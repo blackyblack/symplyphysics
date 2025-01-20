@@ -1,25 +1,25 @@
 from collections import namedtuple
 from pytest import fixture
-from sympy import Integral, evaluate, exp, log, pi, sin, sqrt
+from sympy import I, Integral, evaluate, exp, log, pi, sin, sqrt
 from symplyphysics import Quantity, SymbolNew, clone_as_function, clone_as_symbol, units
 from symplyphysics.docs.printer_latex import latex_str
 
 Args = namedtuple(
     "Args",
     [
-        "mass",
-        "temperature",
-        "boltzmann_constant",
-        "energy",
-        "time",
-        "force",
-        "speed",
-        "speed_of_light",
-        "charge",
-        "distance",
-        "vacuum_permittivity",
-        "electric_dipole_moment",
-        "intensity",
+    "mass",
+    "temperature",
+    "boltzmann_constant",
+    "energy",
+    "time",
+    "force",
+    "speed",
+    "speed_of_light",
+    "charge",
+    "distance",
+    "vacuum_permittivity",
+    "electric_dipole_moment",
+    "intensity",
     ],
 )
 
@@ -149,7 +149,8 @@ def test_mul_with_double_braces() -> None:
 
 def test_mul_with_sqrt_and_quantity(test_args: Args) -> None:
     with evaluate(False):
-        expr = sqrt(2 * pi / (test_args.mass * test_args.boltzmann_constant * test_args.temperature))
+        expr = sqrt(2 * pi /
+            (test_args.mass * test_args.boltzmann_constant * test_args.temperature))
     assert latex_str(expr) == "\\sqrt{\\frac{2 \\pi}{m k_\\text{B} T}}"
 
 
@@ -179,8 +180,8 @@ def test_mul_fraction_and_sin(test_args: Args) -> None:
     natural_angular_frequency = SymbolNew("w_0", display_latex="\\omega_0")
     time = test_args.time
     with evaluate(False):
-        expr = (test_args.force /
-            (2 * test_args.mass * natural_angular_frequency)) * time * sin(natural_angular_frequency * time)
+        expr = (test_args.force / (2 * test_args.mass * natural_angular_frequency)) * time * sin(
+            natural_angular_frequency * time)
     assert latex_str(expr) == "\\frac{F}{2 m \\omega_{0}} t \\sin{\\left(\\omega_{0} t \\right)}"
 
 
@@ -205,3 +206,9 @@ def test_log10(test_args: Args) -> None:
     with evaluate(False):
         expr = log(test_args.intensity / reference_intensity, 10)
     assert latex_str(expr) == "\\log_{10} \\left( \\frac{I}{I_0} \\right)"
+
+
+def test_minus_imaginary(test_args: Args) -> None:
+    with evaluate(False):
+        expr = exp(-1 * (I / test_args.boltzmann_constant))
+    assert latex_str(expr) == "\\exp{\\left(- \\frac{i}{k_\\text{B}} \\right)}"
