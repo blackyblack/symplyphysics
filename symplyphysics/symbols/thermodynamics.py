@@ -158,3 +158,13 @@ relative_humidity = SymbolNew("phi", dimensionless, display_latex="\\varphi")
 **Relative humidity** is a quantity that indicates a present state of absolute humidity relative to a
 maximum humidity given the same temperature.
 """
+
+mean_free_path = SymbolNew("lambda", units.length, display_latex="\\lambda")
+"""
+**Mean free path** is the average distance over which a moving particle travels before
+substantially changing its direction or energy.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Mean_free_path>`__.
+"""

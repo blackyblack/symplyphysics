@@ -49,3 +49,23 @@ molar_concentration = SymbolNew("c", units.amount_of_substance / units.volume)
 **Molar concentration**, or **molarity**, is a quantity most commonly defined as amount of substance of
 solute per unit volume of solution, or per unit volume available to the species.
 """
+
+ionization_coefficient = SymbolNew("alpha", 1 / units.length, display_latex="\\alpha")
+"""
+**Ionization coefficient** can be defined as the mean number of ionization processes
+over the distance covered in the direction of the electric field.
+
+**Links:**
+
+#. `ETH Research Collection <https://www.research-collection.ethz.ch/bitstream/20.500.11850/186582/1/PostPrint.pdf>`__.
+"""
+
+cross_section = SymbolNew("sigma", units.area, display_latex="\\sigma")
+"""
+**Cross section** is a measure of the probability that a specific process will take place
+in a collision of two particles.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Cross_section_(physics)>`__.
+"""

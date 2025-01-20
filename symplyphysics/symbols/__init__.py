@@ -49,6 +49,8 @@ __all__ = [
     "work_function",
     "drift_velocity",
     "molar_concentration",
+    "ionization_coefficient",
+    "cross_section",
     # classical mechanics
     "force",
     "speed",
@@ -174,6 +176,7 @@ __all__ = [
     "thermal_efficiency",
     "statistical_weight",
     "relative_humidity",
+    "mean_free_path",
     # quantum mechanics
     "wave_function",
     "probability_density",
