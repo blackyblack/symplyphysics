@@ -1,24 +1,24 @@
 from collections import namedtuple
 from pytest import fixture
-from sympy import Integral, evaluate, exp, log, pi, sin, sqrt
+from sympy import I, Integral, evaluate, exp, log, pi, sin, sqrt
 from symplyphysics import Quantity, SymbolNew, clone_as_symbol, clone_as_function, units
 from symplyphysics.docs.printer_code import code_str
 
 Args = namedtuple(
     "Args",
     [
-        "mass",
-        "temperature",
-        "boltzmann_constant",
-        "energy",
-        "time",
-        "force",
-        "speed",
-        "speed_of_light",
-        "charge",
-        "distance",
-        "vacuum_permittivity",
-        "intensity",
+    "mass",
+    "temperature",
+    "boltzmann_constant",
+    "energy",
+    "time",
+    "force",
+    "speed",
+    "speed_of_light",
+    "charge",
+    "distance",
+    "vacuum_permittivity",
+    "intensity",
     ],
 )
 
@@ -146,7 +146,8 @@ def test_mul_with_double_braces() -> None:
 
 def test_mul_with_sqrt_and_quantity(test_args: Args) -> None:
     with evaluate(False):
-        expr = sqrt(2 * pi / (test_args.mass * test_args.boltzmann_constant * test_args.temperature))
+        expr = sqrt(2 * pi /
+            (test_args.mass * test_args.boltzmann_constant * test_args.temperature))
     assert code_str(expr) == "sqrt(2 * pi / (m * k_B * T))"
 
 
@@ -176,8 +177,8 @@ def test_mul_fraction_and_sin(test_args: Args) -> None:
     natural_angular_frequency = SymbolNew("w_0", display_latex="\\omega_0")
     time = test_args.time
     with evaluate(False):
-        expr = (test_args.force /
-            (2 * test_args.mass * natural_angular_frequency)) * time * sin(natural_angular_frequency * time)
+        expr = (test_args.force / (2 * test_args.mass * natural_angular_frequency)) * time * sin(
+            natural_angular_frequency * time)
     assert code_str(expr) == "F / (2 * m * w_0) * t * sin(w_0 * t)"
 
 
@@ -194,8 +195,8 @@ def test_fraction_mul_inner_fraction_with_braces(test_args: Args) -> None:
     first_charge = clone_as_symbol(test_args.charge, subscript="1")
     second_charge = clone_as_symbol(test_args.charge, subscript="2")
     with evaluate(False):
-        expr = 1 / (4 * pi *
-            test_args.vacuum_permittivity) * (first_charge * second_charge / test_args.distance**2)
+        expr = 1 / (4 * pi * test_args.vacuum_permittivity) * (first_charge * second_charge /
+            test_args.distance**2)
     assert code_str(expr) == "q_1 * q_2 / d^2 / (4 * pi * epsilon_0)"
 
 
@@ -204,3 +205,10 @@ def test_log10(test_args: Args) -> None:
     with evaluate(False):
         expr = log(test_args.intensity / reference_intensity, 10)
     assert code_str(expr) == "log(I / I_0, 10)"
+
+
+# TODO: here minus sign is lost - fix code printer
+def test_minus_imaginary(test_args: Args) -> None:
+    with evaluate(False):
+        expr = exp(-1 * (I / test_args.boltzmann_constant))
+    assert code_str(expr) != "exp(-I / k_B)"

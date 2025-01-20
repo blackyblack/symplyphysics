@@ -1,7 +1,7 @@
 from typing import Sequence
 from sympy import (Eq, Idx, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output, SymbolIndexed, SumIndexed, global_index)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, SymbolIndexed,
+    SumIndexed, global_index)
 
 # Description
 ## The total number of moles in the mixture is equal to the sum of the number of moles in each of the components

@@ -52,10 +52,8 @@ electric_displacement_change = clone_as_symbol(
 Infinitesimal change in :symbols:`electric_displacement`.
 """
 
-law = Eq(
-    internal_energy_density_change,
-    heat_density + electric_field_strength * electric_displacement_change
-)
+law = Eq(internal_energy_density_change,
+    heat_density + electric_field_strength * electric_displacement_change)
 """
 :laws:symbol::
 

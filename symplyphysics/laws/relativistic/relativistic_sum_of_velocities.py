@@ -1,8 +1,7 @@
 from sympy import Eq, solve
 from sympy.physics.units import speed_of_light
 
-from symplyphysics import (Quantity, Symbol, units, validate_input,
-    validate_output)
+from symplyphysics import (Quantity, Symbol, units, validate_input, validate_output)
 
 # Description
 # In relativistic mechanics, if a body moves relative to a moving reference

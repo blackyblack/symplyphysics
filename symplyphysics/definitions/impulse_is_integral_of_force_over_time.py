@@ -22,8 +22,8 @@ from symplyphysics import (
 )
 
 impulse = symbols.impulse
-r"""
-Projection of :symbols:`impulse` vector due to force :math:`\vec F`.
+"""
+Projection of :symbols:`impulse` vector due to force :math:`\\vec F`.
 """
 
 time = symbols.time
@@ -32,8 +32,8 @@ time = symbols.time
 """
 
 force = clone_as_function(symbols.force, [time])
-r"""
-Projection of :symbols:`force` :math:`\vec F` as a function of time.
+"""
+Projection of :symbols:`force` :math:`\\vec F` as a function of time.
 """
 
 time_before = clone_as_symbol(symbols.time, display_symbol="t_0", display_latex="t_0")

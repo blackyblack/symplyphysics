@@ -27,7 +27,8 @@ heat_capacity = SymbolNew("C", units.energy / units.temperature)
 supplied to an object to produce a unit change in its temperature.
 """
 
-molar_heat_capacity = SymbolNew("c_m", units.energy / (units.temperature * units.amount_of_substance))
+molar_heat_capacity = SymbolNew("c_m",
+    units.energy / (units.temperature * units.amount_of_substance))
 """
 **Molar heat capacity** is defined as the heat capacity per unit amount of substance.
 """

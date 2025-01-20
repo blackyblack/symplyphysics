@@ -30,8 +30,7 @@ from symplyphysics.laws.electricity import (
     magnetic_flux_from_induction_and_area as _magnetic_flux_law,
 )
 from symplyphysics.laws.kinematics import (
-    angular_position_via_constant_angular_speed_and_time as _angle_law,
-)
+    angular_position_via_constant_angular_speed_and_time as _angle_law,)
 
 electromotive_force = symbols.electromotive_force
 r"""

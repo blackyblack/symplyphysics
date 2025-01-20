@@ -34,7 +34,7 @@ electrons_mobility = Symbol("electrons_mobility", units.area / units.voltage / u
 holes_mobility = Symbol("holes_mobility", units.area / units.voltage / units.time)
 electric_intensity = Symbol("electric_intensity", units.voltage / units.length)
 
-charge = Quantity(1.6e-19 * units.coulomb) # FIXME: use `quantity`
+charge = Quantity(1.6e-19 * units.coulomb)  # FIXME: use `quantity`
 
 law = Eq(
     density_current,

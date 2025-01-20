@@ -1,35 +1,55 @@
-from sympy import Eq, sqrt, Derivative
-from sympy.physics.units import hbar
-from symplyphysics import (
-    units,
-    Symbol,
-    Function,
-    symbols,
-    angle_type,
-)
+"""
+Quantum harmonic oscillator equation
+====================================
 
-# Description
-## The Schrödinger equation for the quantum simple harmonic oscillator governs the wave function
-## of the quantum oscillator.
+The Schrödinger equation for the quantum simple harmonic oscillator governs the wave function
+of the quantum oscillator.
 
-# Law: (-hbar**2 / (2 * m)) * d^2(psi(x))/dx^2 + (1 / 2) * m * w**2 * x**2 * psi(x) = E * psi(x)
-## psi(x) - wave function of oscillating particle
-## x - position
-## hbar - reduced Planck constant
-## m - particle mass
-## w - angular frequency of oscillations
-## E - energy eigenvalue of the equation
+**Notation:**
 
-# Links: Physics LibreTexts, formula 7.6.4 <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/University_Physics_III_-_Optics_and_Modern_Physics_(OpenStax)/07%3A_Quantum_Mechanics/7.06%3A_The_Quantum_Harmonic_Oscillator>
+#. :quantity_notation:`hbar`.
 
-wave_function = Function("wave_function", 1 / sqrt(units.length))
+**Links:**
+
+#. `Physics LibreTexts, formula 7.6.4 <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/University_Physics_III_-_Optics_and_Modern_Physics_(OpenStax)/07%3A_Quantum_Mechanics/7.06%3A_The_Quantum_Harmonic_Oscillator>`__.
+"""
+
+from sympy import Eq, Derivative
+from symplyphysics import symbols, clone_as_function, quantities
+
+position = symbols.position
+"""
+:symbols:`position` of the particle.
+"""
+
+wave_function = clone_as_function(symbols.wave_function, [position])
+"""
+:symbols:`wave_function` of the oscillating particle.
+"""
+
 particle_mass = symbols.mass
-particle_energy = Symbol("particle_energy", units.energy)
-angular_frequency = Symbol("angular_frequency", angle_type / units.time)
-position = Symbol("position", units.length)
+"""
+:symbols:`mass` of the particle.
+"""
+
+particle_energy = symbols.energy
+"""
+:symbols:`energy` of the particle.
+"""
+
+angular_frequency = symbols.angular_frequency
+"""
+:symbols:`angular_frequency` of the oscillations.
+"""
 
 law = Eq(
-    (-1 * hbar**2 / (2 * particle_mass)) * Derivative(wave_function(position), position, 2) +
+    (-1 * quantities.hbar**2 /
+    (2 * particle_mass)) * Derivative(wave_function(position), position, 2) +
     (particle_mass * angular_frequency**2 / 2) * position**2 * wave_function(position),
     particle_energy * wave_function(position),
 )
+"""
+:laws:symbol::
+
+:laws:latex::
+"""

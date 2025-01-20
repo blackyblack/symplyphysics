@@ -1,6 +1,5 @@
 from sympy import (Eq, solve, pi)
-from symplyphysics import (symbols, units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output)
 
 # Description
 ## Luminosity is an absolute measure of radiated electromagnetic energy (light) per unit time, and is synonymous with the radiant power emitted by a light-emitting object.

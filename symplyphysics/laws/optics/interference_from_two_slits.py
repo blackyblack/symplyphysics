@@ -1,6 +1,5 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
 
 # Description
 ## If two monochromatic waves of the same frequency are combined in the Young scheme,

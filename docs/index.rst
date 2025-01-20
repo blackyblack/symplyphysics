@@ -12,6 +12,7 @@ Contents:
 
   laws
   definitions
+  conditions
   symbols
   quantities
 

@@ -1,6 +1,5 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 
 from symplyphysics.laws.thermodynamics import laplace_pressure_of_spherical_shapes as laplace_law

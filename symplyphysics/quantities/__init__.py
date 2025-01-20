@@ -217,7 +217,9 @@ Constant of proportionality proposed by Richardson to describe the law of thermi
 #. `Richardson's law <https://en.wikipedia.org/wiki/Thermionic_emission#Richardson's_law>`__.
 """
 
-rydberg_frequency = Quantity(3.2898419602500e15 * units.hertz, display_symbol="R_H", display_latex="R_\\text{H}")
+rydberg_frequency = Quantity(3.2898419602500e15 * units.hertz,
+    display_symbol="R_H",
+    display_latex="R_\\text{H}")
 """
 In spectroscopy, the **Rydberg constant** is a physical constant relating to the electromagnetic spectra of an atom.
 
@@ -274,6 +276,31 @@ sun_luminosity = Quantity(3.827e26 * units.watt, display_symbol="L_Sun", display
 :symbols:`luminocity` of the Sun.
 """
 
+hubble_constant = Quantity(7e-11 / units.year, display_symbol="H")
+"""
+The **Hubble's constant** is the proportionality constant between the recessional velocity and
+the proper distance between the galaxy and the observer in the Hubble's law. Its exact value
+is up to debate, however, the fundamental theory gives the number :math:`7%` per billion years.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Hubble%27s_law>`__.
+"""
+
+zero_point_luminocity = Quantity(3.0128e28 * units.watt, display_symbol="L_0")
+"""
+**Zero-point luminocity** is a constant defined relative to a star for calibrating perposes. The
+value given here has been defined by the International Astronomical Union (IAU).
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Zero_point_(photometry)#Bolometric_magnitude_zero_point>`__.
+"""
+
+sun_luminosity = Quantity(3.827e26 * units.watt, display_symbol="L_Sun", display_latex="L_\\odot")
+"""
+:symbols:`luminocity` of the Sun.
+"""
 
 __all__ = [
     "standard_conditions_temperature",
