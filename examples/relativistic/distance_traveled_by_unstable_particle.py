@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from sympy import solve
-from symplyphysics import print_expression, Quantity, convert_to, units
+from symplyphysics import print_expression, Quantity, convert_to, quantities, units
 from symplyphysics.laws.kinematics import (
     position_via_constant_speed_and_time as distance_law,)
 from symplyphysics.laws.relativistic import (
@@ -31,7 +31,7 @@ print(print_expression(particle_speed_expr))
 
 particle_speed_value = convert_to(
     particle_speed_expr.subs(values),
-    units.speed_of_light,
+    quantities.speed_of_light,
 )
 
 print("\n\nRatio of particle speed to speed of light:\n")
