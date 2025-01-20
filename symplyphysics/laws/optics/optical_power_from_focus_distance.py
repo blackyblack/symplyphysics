@@ -1,22 +1,34 @@
+"""
+Optical power from focus distance
+=================================
+
+The optical power of a lens is a value characterizing the refractive power
+of axisymmetric lenses and centered optical systems made of such lenses.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Optical_power>`__.
+"""
+
 from sympy import Eq, solve
-from symplyphysics import Symbol, units, Quantity, \
-    validate_input, validate_output
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 
-# Description
-## The optical power of a lens is a value characterizing the refractive power
-## of axisymmetric lenses and centered optical systems made of such lenses.
+focus_distance = symbols.focal_length
+"""
+:symbols:`focal_length` of the lens.
+"""
 
-# Law D = 1 / F
-# Where:
-## F - focus distance of lens
-## D - optical power of lens
-
-# Links: Wikipedia <https://en.wikipedia.org/wiki/Optical_power>
-
-focus_distance = Symbol("focus_distance", units.length)
-optical_power = Symbol("optical_power", 1 / units.length)
+optical_power = symbols.optical_power
+"""
+:symbols:`optical_power` of the lens.
+"""
 
 law = Eq(optical_power, 1 / focus_distance)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(focus_distance_=focus_distance)

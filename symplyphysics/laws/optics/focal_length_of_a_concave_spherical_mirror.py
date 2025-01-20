@@ -53,8 +53,8 @@ refraction_index = symbols.relative_refractive_index
 
 spherical_lens_eq = spherical_lens_law.law.subs({
     spherical_lens_law.curvature_radius_lens: curvature_radius,
-    spherical_lens_law.refraction_index_lens: -1 * refraction_index,
-    spherical_lens_law.refraction_index_environment: refraction_index
+    spherical_lens_law.lens_refraction_index: -1 * refraction_index,
+    spherical_lens_law.medium_refraction_index: refraction_index
 })
 
 # Paste distances from object and image in law of spherical lens

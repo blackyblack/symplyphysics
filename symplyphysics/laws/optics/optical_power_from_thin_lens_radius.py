@@ -1,39 +1,55 @@
+"""
+Optical power from thin lens radii and refractive indeces
+=========================================================
+
+Optical power of a thin lens can be calculated from the radii of its front and back
+surfaces and the refractive indices of the lens material and the medium.
+
+**Links:**
+
+#. `Wikipedia, definition of optical power <https://en.wikipedia.org/wiki/Optical_power>`__.
+#. `Wikipedia, formula for effective focal length <https://en.wikipedia.org/wiki/Lens#Thin_lens_approximation>`__.
+
+..
+    TODO add info about the sign convention for radii
+"""
+
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, dimensionless, validate_input, validate_output)
+from symplyphysics import (Quantity, validate_input,
+    validate_output, symbols, clone_as_symbol)
 
-# Description
-## Optical power is the degree to which a lens, mirror, or other optical system converges or diverges light.
-## For two or more thin lenses close together, the optical power of the combined lenses is approximately
-## equal to the sum of the optical powers of each lens.
+optical_power = symbols.optical_power
+"""
+:symbols:`optical_power` of the lens.
+"""
 
-## Law: P = (n - n0)(1/R1 - 1/R2)
-## Where:
-## P - optical power of thin lens,
-## n - refractive index of lens material,
-## n0 - refractive index of medium,
-## R1 - radius of the front surface of lens,
-## R2 - radius of the back surface of lens.
-## It is important to consider the sign of the radius of the surface!
-## If the front surface of the lens is convex, then R1 > 0, and if concave, then R1 < 0.
-## Conversely, for the back surface: if convex, then R2 < 0, if concave, then R2 > 0.
-## Thus, for a biconvex lens, R1 > 0, R2 < 0, and for a biconcave lens, R1 < 0, R2 > 0.
+lens_refractive_index = symbols.relative_refractive_index
+"""
+:symbols:`relative_refractive_index` of the lens material.
+"""
 
-# Conditions
-## For front surface: R > 0 for convex, R < 0 for concave.
-## For back surface: R < 0 for convex, R > 0 for concave.
+medium_refractive_index = clone_as_symbol(symbols.relative_refractive_index, subscript="0")
+"""
+:symbols:`relative_refractive_index` of the surrounding medium.
+"""
 
-# Links:
-## Wikipedia, definition of optical power <https://en.wikipedia.org/wiki/Optical_power>
-## Wikipedia, formula for effective focal length <https://en.wikipedia.org/wiki/Lens#Thin_lens_approximation>
+front_radius = clone_as_symbol(symbols.radius, subscript="1")
+"""
+:symbols:`radius` of the front surface.
+"""
 
-optical_power = Symbol("optical_power", 1 / units.length)
-lens_refractive_index = Symbol("lens_refractive_index", dimensionless)
-medium_refractive_index = Symbol("medium_refractive_index", dimensionless)
-front_radius = Symbol("front_radius", units.length)
-back_radius = Symbol("back_radius", units.length)
+back_radius = clone_as_symbol(symbols.radius, subscript="2")
+"""
+:symbols:`radius` of the back surface.
+"""
 
 law = Eq(optical_power,
     (lens_refractive_index - medium_refractive_index) * (1 / front_radius - 1 / back_radius))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(lens_refractive_index_=lens_refractive_index,

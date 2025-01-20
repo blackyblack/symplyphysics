@@ -25,9 +25,9 @@ optical_distance_difference_value = solve(optical_distance_difference_eq,
     optical_distance_difference,
     dict=True)[0][optical_distance_difference]
 maximum_condition_eq = maximum_law.law.subs({
-    maximum_law.wave_length: wavelength,
+    maximum_law.wavelength: wavelength,
     maximum_law.travel_difference: optical_distance_difference_value,
-    maximum_law.number_maximum: number_of_maximum
+    maximum_law.integer_factor: number_of_maximum
 })
 
 coordinate_value = solve(maximum_condition_eq, two_slits_law.coordinate,
