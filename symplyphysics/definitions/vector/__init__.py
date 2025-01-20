@@ -1,6 +1,6 @@
 """
-Definitions (Vector)
-====================
+**Definitions (Vector)**
+========================
 
 Definitions in vector form.
 """

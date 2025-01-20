@@ -1,6 +1,6 @@
 from sympy import (Eq, solve, diff, sin, pi, sqrt)
-from symplyphysics import (units, Quantity, Symbol, dimensionless, angle_type,
-    validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, dimensionless, angle_type, validate_input,
+    validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import refractive_index_is_wave_speeds_ratio as refractive_index_definition
 from symplyphysics.laws.kinematics import position_via_constant_speed_and_time as distance_law

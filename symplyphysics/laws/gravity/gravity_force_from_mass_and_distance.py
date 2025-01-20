@@ -53,7 +53,8 @@ distance_between_mass_centers = symbols.euclidean_distance
 :symbols:`euclidean_distance` between the centers of the bodies..
 """
 
-law = Eq(gravitational_force,
+law = Eq(
+    gravitational_force,
     quantities.gravitational_constant * first_mass * second_mass / distance_between_mass_centers**2)
 """
 :laws:symbol::
@@ -84,7 +85,8 @@ _gravitational_force_vector = gradient_law.law(_potential_field)
 _gravitational_force_derived = vector_magnitude(_gravitational_force_vector).simplify()
 
 _x, _y, _z = _gravitational_force_vector.coordinate_system.coord_system.base_scalars()
-_gravitational_force_from_law = law.rhs.subs(distance_between_mass_centers, sqrt(_x**2 + _y**2 + _z**2))
+_gravitational_force_from_law = law.rhs.subs(distance_between_mass_centers,
+    sqrt(_x**2 + _y**2 + _z**2))
 
 # sympy avoids oversimplifications in case of square roots without certain assumptions,
 # therefore we resort to squaring both sides to make it work

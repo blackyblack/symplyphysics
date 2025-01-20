@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.thermodynamics.dielectrics import (
-    internal_energy_change_via_heat_and_electric_displacement_change as law,
-)
+    internal_energy_change_via_heat_and_electric_displacement_change as law,)
 
 Args = namedtuple("Args", "dq e dd")
 

@@ -1,6 +1,5 @@
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
 
 # Description
 ## The physical meaning of the diffusion length can be seen by calculating the mean square distance that

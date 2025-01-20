@@ -43,8 +43,7 @@ volume = symbols.volume
 :symbols:`volume` of the coil.
 """
 
-law = Eq(inductance,
-    absolute_permeability * specific_coil_turn_count**2 * volume)
+law = Eq(inductance, absolute_permeability * specific_coil_turn_count**2 * volume)
 """
 :laws:symbol::
 

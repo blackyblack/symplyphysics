@@ -35,11 +35,9 @@ from symplyphysics import (
 from symplyphysics.quantities import speed_of_light
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.waves.relativistic import (
-    longitudinal_frequency_shift_from_absolute_velocities as general_doppler_law,
-)
+    longitudinal_frequency_shift_from_absolute_velocities as general_doppler_law,)
 from symplyphysics.laws.waves.relativistic import (
-    frequency_shift_from_velocity_and_angle as relativistic_doppler_with_angle,
-)
+    frequency_shift_from_velocity_and_angle as relativistic_doppler_with_angle,)
 
 observer_frequency = clone_as_symbol(
     symbols.angular_frequency,
@@ -66,8 +64,7 @@ Relative speed between source and observer.
 
 law = Eq(
     observer_frequency,
-    source_frequency * sqrt(
-    (speed_of_light - relative_speed) / (speed_of_light + relative_speed)))
+    source_frequency * sqrt((speed_of_light - relative_speed) / (speed_of_light + relative_speed)))
 """
 :laws:symbol::
 
@@ -83,8 +80,7 @@ _general_relativistic_law = simplify(
     general_doppler_law.source_frequency: source_frequency
     }))
 # Relative velocity is a relativistic version of velocities addition
-_add_velocities = (general_doppler_law.observer_speed +
-    general_doppler_law.source_speed) / (1 +
+_add_velocities = (general_doppler_law.observer_speed + general_doppler_law.source_speed) / (1 +
     general_doppler_law.observer_speed * general_doppler_law.source_speed / speed_of_light**2)
 _applied_law = law.rhs.subs(relative_speed, _add_velocities)
 # We verify that expressions inside square root are identical - that's enough to prove

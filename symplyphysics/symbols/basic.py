@@ -105,6 +105,11 @@ positive_number = SymbolNew("N", dimensionless, integer=True, positive=True)
 A dimensionless whole **number** used for counting objects or instances.
 """
 
+nonnegative_number = SymbolNew("N", dimensionless, integer=True, nonnegative=True)
+"""
+A dimensionless non-negative whole **number**, i.e. :math:`0, 1, 2, \\dots`.
+"""
+
 number_density = SymbolNew("n", 1 / units.volume)
 """
 **Number density** is an intensive quantity used to describe the degree of concentration of countable objects

@@ -28,13 +28,11 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.laws.waves import (
-    wavelength_from_phase_speed_and_period as period_law,
-)
+    wavelength_from_phase_speed_and_period as period_law,)
 from symplyphysics.definitions import temporal_frequency_from_period as frequency_def
 from symplyphysics.laws.geometry import planar_projection_is_cosine as projector
 from symplyphysics.laws.kinematics import (
-    position_via_constant_speed_and_time as distance_law,
-)
+    position_via_constant_speed_and_time as distance_law,)
 
 observed_frequency = clone_as_symbol(
     symbols.temporal_frequency,
@@ -167,11 +165,10 @@ observer_speed_projection_on_signal = projector.law.subs({
 ## velocity from observer point of view, according to Galilean velocity addition formula.
 _relative_wave_speed = wave_speed - observer_speed_projection_on_signal
 
-_period_relative_observer = _period_from_wavelength.subs(
-    period_law.phase_velocity, _relative_wave_speed
-)
-_period_relative_observer = _period_relative_observer.subs(
-    period_law.wavelength, _wavelength_observed)
+_period_relative_observer = _period_from_wavelength.subs(period_law.phase_velocity,
+    _relative_wave_speed)
+_period_relative_observer = _period_relative_observer.subs(period_law.wavelength,
+    _wavelength_observed)
 
 _frequency_relative_observer = _frequency_from_period.subs(frequency_def.period,
     _period_relative_observer)

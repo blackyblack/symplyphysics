@@ -1,6 +1,5 @@
 from sympy import (Eq, solve, dsolve)
-from symplyphysics import (units, Quantity, Symbol, Function, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, Function, validate_input, validate_output)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.conservation import momentum_of_colliding_objects_is_constant as constant_momentum
 

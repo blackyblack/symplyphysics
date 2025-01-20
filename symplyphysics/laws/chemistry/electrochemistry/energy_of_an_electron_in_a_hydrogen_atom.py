@@ -1,7 +1,6 @@
 from sympy.physics.units import elementary_charge
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
 
 # Description
 ## There is an expression for the total energy of the hydrogen atom according to Bohr's theory.

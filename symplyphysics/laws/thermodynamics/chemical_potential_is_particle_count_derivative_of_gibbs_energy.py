@@ -41,10 +41,7 @@ particle_count = symbols.particle_count
 :symbols:`particle_count` of the system.
 """
 
-gibbs_energy = clone_as_function(
-    symbols.gibbs_energy,
-    [temperature, pressure, particle_count]
-)
+gibbs_energy = clone_as_function(symbols.gibbs_energy, [temperature, pressure, particle_count])
 """
 :symbols:`gibbs_energy` of the system as a function of its natural variables.
 """

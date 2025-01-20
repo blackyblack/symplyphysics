@@ -61,7 +61,6 @@ law = Eq(height, initial_speed**2 * sin(angle)**2 / (2 * quantities.acceleration
 :laws:latex::
 """
 
-
 # This law might be derived via "constant_acceleration_movement_is_parabolic" law, "planar_projection_is_cosine" law
 # and "accelerated_velocity_from_time" law.
 

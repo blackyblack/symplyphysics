@@ -1,12 +1,33 @@
-from sympy import Eq, sqrt, exp, I, solve
-from sympy.physics.units import hbar
+"""
+Time dependent solution via time independent solution
+=====================================================
+
+When the potential energy is independent of time, the solution of the time-dependent Schrödinger
+equation can be constructed using the solution of the time-independent equation.
+
+**Notation:**
+
+#. :quantity_notation:`hbar`.
+
+**Conditions:**
+
+#. The potential energy is a function independent of time.
+#. This law applies for 1-dimensional systems.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Stationary_state>`__.
+"""
+
+from sympy import Eq, exp, I, solve
 from symplyphysics import (
     Quantity,
-    Symbol,
-    Function,
     validate_input,
     validate_output,
-    units,
+    symbols,
+    clone_as_function,
+    clone_as_symbol,
+    quantities,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.conditions.quantum_mechanics import (
@@ -16,35 +37,46 @@ from symplyphysics.laws.quantum_mechanics.schrodinger import (
     time_dependent_equation_in_one_dimension as general_eqn,
 )
 
-# Description
-## When the potential energy is independent of time, the solution of the time-dependent Schrödinger
-## equation can be constructed using the solution of the time-independent equation.
+position = clone_as_symbol(symbols.position, real=True)
+"""
+:symbols:`position`, or spatial variable.
+"""
 
-# Law: Psi(x, t) = psi(x) * exp(-1 * (i / hbar) * E * t)
-## Psi(x, t) - solution of time-dependent Schrödinger equation
-## psi(x) - solution of time-independent Schrödinger equation
-## x - position, spatial variable
-## t - time
-## i - imaginary unit
-## hbar - reduced Planck constant
-## E - particle energy
+time = clone_as_symbol(symbols.time, real=True)
+"""
+:symbols:`time`.
+"""
 
-# Conditions
-## - The potential energy is a function independent of time.
-## - This law applies for 1-dimensional systems.
+time_dependent_wave_function = clone_as_function(
+    symbols.wave_function,
+    [position, time],
+    display_symbol="Psi",
+    display_latex="\\Psi",
+)
+"""
+Solution of the time-dependent Schrödinger equation. See :symbols:`wave_function`.
+"""
 
-# Links: Wikipedia <https://en.wikipedia.org/wiki/Stationary_state>
+time_independent_wave_function = clone_as_function(symbols.wave_function, [position])
+"""
+Solution of the time-independent Schrödinger equation. See :symbols:`wave_function`.
+"""
 
-time_dependent_wave_function = Function("time_dependent_wave_function", 1 / sqrt(units.length))
-time_independent_wave_function = Function("time_independent_wave_function", 1 / sqrt(units.length))
-particle_energy = Symbol("particle_energy", units.energy, positive=True)
-position = Symbol("position", units.length, real=True)
-time = Symbol("time", units.time, real=True)
+particle_energy = clone_as_symbol(symbols.energy, real=True)
+"""
+Particle :symbols:`energy`.
+"""
 
 law = Eq(
     time_dependent_wave_function(position, time),
-    time_independent_wave_function(position) * exp(-1 * (I / hbar) * particle_energy * time),
+    time_independent_wave_function(position) * exp(
+    (-1 * I / quantities.hbar) * particle_energy * time),
 )
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 # Show that the normalization condition still holds
 
@@ -81,12 +113,10 @@ _general_eqn = general_eqn.law.subs({
     general_eqn.position: position,
     general_eqn.time: time,
     general_eqn.particle_mass: stationary_eqn.particle_mass,
+    general_eqn.potential_energy: stationary_eqn.potential_energy,
 }).replace(
     general_eqn.wave_function,
-    lambda position_, time_: law.rhs.subs(position, position_),
-).replace(
-    general_eqn.potential_energy,
-    lambda position_, time_: stationary_eqn.potential_energy(position_),
+    lambda position_, _time: law.rhs.subs(position, position_),
 ).doit()
 
 # Solve for the stationary wave function in both equations and compare them

@@ -7,8 +7,7 @@ from symplyphysics import (
     Quantity,
 )
 from symplyphysics.laws.thermodynamics.dielectrics import (
-    free_energy_change_via_temperature_change_and_electric_field_change as law,
-)
+    free_energy_change_via_temperature_change_and_electric_field_change as law,)
 
 Args = namedtuple("Args", "s dt e dd")
 
@@ -23,7 +22,8 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = law.calculate_free_energy_density_change(test_args.s, test_args.dt, test_args.e, test_args.dd)
+    result = law.calculate_free_energy_density_change(test_args.s, test_args.dt, test_args.e,
+        test_args.dd)
     assert_equal(result, 5.5e-2 * units.joule / units.meter**3)
 
 

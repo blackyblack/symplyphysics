@@ -27,8 +27,7 @@ from symplyphysics import Quantity, validate_input, validate_output, symbols
 from symplyphysics.quantities import planck, speed_of_light, boltzmann_constant
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.waves.blackbody_radiation import (
-    spectral_energy_density_at_all_frequencies as planck_law,
-)
+    spectral_energy_density_at_all_frequencies as planck_law,)
 
 spectral_energy_density = symbols.spectral_energy_density
 """
