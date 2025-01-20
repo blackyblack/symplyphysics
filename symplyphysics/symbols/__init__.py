@@ -182,4 +182,5 @@ __all__ = [
     "eccentricity",
     "zenith_angle",
     "declination",
+    "altitude",
 ]

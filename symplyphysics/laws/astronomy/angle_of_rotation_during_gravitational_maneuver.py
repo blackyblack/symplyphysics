@@ -6,6 +6,10 @@ A gravitational maneuver is a purposeful change in the trajectory and flight spe
 of the gravitational fields of celestial bodies.
 The angle of the gravitational maneuver depends on the aiming range, the mass of the planet and the velocity of the rocket relative to the planet.
 
+**Notation:**
+
+#. :quantity_notation:`gravitational_constant`.
+
 .. image:: https://upload.wikimedia.org/wikipedia/commons/a/ad/Gravity_assist\_-\_ru.svg
     :width: 240px
 

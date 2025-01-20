@@ -8,7 +8,7 @@ used to judge the elongation of the elliptical orbit.
 
 **Links:**
 
-#. Wikipedia, ellipse <https://en.wikipedia.org/wiki/Eccentricity_(mathematics)#Standard_form>
+#. `Wikipedia, ellipse <https://en.wikipedia.org/wiki/Eccentricity_(mathematics)#Standard_form>`__.
 """
 
 from sympy import Eq, solve, sqrt

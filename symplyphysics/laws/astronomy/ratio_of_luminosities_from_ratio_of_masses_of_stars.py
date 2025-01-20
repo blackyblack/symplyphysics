@@ -1,50 +1,70 @@
+"""
+Ratio of luminocities from ratio of masses of stars
+===================================================
+
+The comparisons of masses and luminosities for most stars revealed the following relationship:
+luminosity is approximately proportional to the fourth power of mass.
+
+**Conditions:**
+
+#. The masses must obey the inequality :math:`0.43 m_1 < m_2 < 2 m_1`, see link for more information.
+   The symbols :math:`m_1, m_2` refer to those defined below.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Mass%E2%80%93luminosity_relation>`__.
+"""
+
 from sympy import (
     Eq,
-    solve,
+    solve
 )
 from symplyphysics import (
     clone_as_symbol,
     symbols,
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
 )
 
-# Description
-## Comparisons of masses and luminosities for most stars revealed the following relationship:
-## luminosity is approximately proportional to the fourth power of mass.
+first_mass = clone_as_symbol(symbols.mass, subscript="1")
+"""
+:symbols:`mass` of the first star.
+"""
 
-## Law is: L2 / L1 = (M2 / M1)^4, where
-## M2 - mass of second object,
-## M1 - mass of first object,
-## L2 - illuminance of second object,
-## L1 - illuminance of first object.
+second_mass = clone_as_symbol(symbols.mass, subscript="2")
+"""
+:symbols:`mass` of the second star.
+"""
 
-# Conditions
-## The masses must obey the inequality `0.43 * M1 < M2 < 2 * M1`, see link for more information.
+first_luminocity = clone_as_symbol(symbols.luminocity, subscript="1")
+"""
+:symbols:`luminocity` of the first star.
+"""
 
-# Links: Wikipedia <https://en.wikipedia.org/wiki/Mass%E2%80%93luminosity_relation>
+second_luminocity = clone_as_symbol(symbols.luminocity, subscript="2")
+"""
+:symbols:`luminocity` of the second star.
+"""
 
-mass_first = clone_as_symbol(symbols.mass, display_symbol="m_1", display_latex="m_1")
-mass_second = clone_as_symbol(symbols.mass, display_symbol="m_2", display_latex="m_2")
-illuminance_first = Symbol("illuminance_first", units.energy / units.area)
-illuminance_second = Symbol("illuminance_second", units.energy / units.area)
+law = Eq(second_luminocity / first_luminocity, (second_mass / first_mass)**4)
+"""
+:laws:symbol::
 
-law = Eq(illuminance_second / illuminance_first, (mass_second / mass_first)**4)
+:laws:latex::
+"""
 
 
-@validate_input(mass_first_=mass_first,
-    mass_second_=mass_second,
-    illuminance_first_=illuminance_first)
-@validate_output(illuminance_second)
+@validate_input(mass_first_=first_mass,
+    mass_second_=second_mass,
+    illuminance_first_=first_luminocity)
+@validate_output(second_luminocity)
 def calculate_illuminance_second(mass_first_: Quantity, mass_second_: Quantity,
     illuminance_first_: Quantity) -> Quantity:
-    result_expr = solve(law, illuminance_second, dict=True)[0][illuminance_second]
+    result_expr = solve(law, second_luminocity, dict=True)[0][second_luminocity]
     result_expr = result_expr.subs({
-        mass_first: mass_first_,
-        mass_second: mass_second_,
-        illuminance_first: illuminance_first_
+        first_mass: mass_first_,
+        second_mass: mass_second_,
+        first_luminocity: illuminance_first_
     })
     return Quantity(result_expr)

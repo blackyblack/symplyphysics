@@ -1,43 +1,57 @@
+"""
+Luminocity of Sun in past from luminocity in present
+====================================================
+
+The luminosity of the Sun in the past can be calculated from the luminosity of the Sun in the present.
+
+..
+    TODO find link
+"""
+
 from sympy import Eq, solve
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
-    dimensionless,
-    convert_to_float,
+    symbols,
+    clone_as_symbol,
 )
 
-# Description
-## The luminosity of the Sun in the past is related to the luminosity of the Sun in the present. Luminosity is
-## indicated in units of solar luminosity. One unit is equal to the luminosity of the Sun at a given time.
-## There are two different formulas to calculate luminosity in the past and in the future. It is because it is
-## non linear and requires different approximations for past and future.
+past_luminosity = clone_as_symbol(symbols.luminocity, subscript="0")
+"""
+:symbols:`luminocity` of the Sun at some point in the past.
+"""
 
-## Law is: Lpast = L / (1 + 0.4 * (1 - (t / 4.6))), where
-## Lpast - luminosity of the sun in past,
-## L - luminosity of the sun in present,
-## t - time in billions of years.
+present_luminocity = symbols.luminocity
+"""
+:symbols:`luminocity` of the Sun in the present.
+"""
 
-# TODO: find link
+time = symbols.time
+"""
+:symbols:`time` between the past even and today.
+"""
 
-luminosity_past = Symbol("luminosity_past", dimensionless)
+one_billion_years = Quantity(1e9 * units.common_year, display_symbol="1 Gyr", display_latex="1 \\, \\text{Gyr}")
+"""
+A quantity equal to one billion years.
+"""
 
-luminosity_present = Symbol("luminosity_present", dimensionless)
-time = Symbol("time", units.time)
+law = Eq(past_luminosity, present_luminocity / (1 + 0.4 * (1 - ((time / one_billion_years) / 4.6))))
+"""
+:laws:symbol::
 
-one_billion_years = Quantity(1e9 * units.common_year)
+:laws:latex::
+"""
 
-law = Eq(luminosity_past, luminosity_present / (1 + 0.4 * (1 - ((time / one_billion_years) / 4.6))))
 
-
-@validate_input(luminosity_present_=luminosity_present, time_=time)
-@validate_output(luminosity_past)
-def calculate_luminosity_past(luminosity_present_: float, time_: Quantity) -> float:
-    result_expr = solve(law, luminosity_past, dict=True)[0][luminosity_past]
+@validate_input(luminosity_present_=present_luminocity, time_=time)
+@validate_output(past_luminosity)
+def calculate_luminosity_past(luminosity_present_: Quantity, time_: Quantity) -> float:
+    result_expr = solve(law, past_luminosity, dict=True)[0][past_luminosity]
     result_expr = result_expr.subs({
-        luminosity_present: luminosity_present_,
+        present_luminocity: luminosity_present_,
         time: time_,
     })
-    return convert_to_float(result_expr)
+    return Quantity(result_expr)

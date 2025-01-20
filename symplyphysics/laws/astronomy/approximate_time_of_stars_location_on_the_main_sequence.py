@@ -8,6 +8,10 @@ considered to be zero. It is possible to calculate the time spent on the main se
 for a star by knowing such a time for the Sun, as well as the mass and luminosity of the
 Sun and the star.
 
+**Notation:**
+
+#. :quantity_notation:`sun_luminosity`.
+
 **Links:**
 
 #. `Wikipedia, second formula <https://en.wikipedia.org/wiki/Main_sequence#Lifetime>`__.
@@ -43,13 +47,8 @@ sun_lifetime = Quantity(1e10 * units.common_year, display_symbol="t_Sun", displa
 Lifetime (:symbols:`time`) on time main sequence of the Sun.
 """
 
-sun_luminosity = Quantity(3.827e26 * units.watt, display_symbol="L_Sun", display_latex="L_\\odot")
-"""
-:symbols:`luminocity` of the Sun.
-"""
-
 law = Eq(lifetime,
-    sun_lifetime * (star_mass / quantities.solar_mass) * (sun_luminosity / star_luminosity))
+    sun_lifetime * (star_mass / quantities.solar_mass) * (quantities.sun_luminosity / star_luminosity))
 """
 :laws:symbol::
 

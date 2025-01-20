@@ -16,7 +16,7 @@ Args = namedtuple("Args", ["luminosity_present", "time"])
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
-    luminosity_present = 1
+    luminosity_present = Quantity(1 * units.joule / units.second)
     time = Quantity(15e9 * units.common_year)
 
     return Args(luminosity_present=luminosity_present, time=time)
@@ -25,7 +25,7 @@ def test_args_fixture() -> Args:
 def test_basic_luminosity_future(test_args: Args) -> None:
     result = luminosity_law.calculate_luminosity_future(test_args.luminosity_present,
         test_args.time)
-    assert_equal(result, 2.863)
+    assert_equal(result, 2.863 * units.joule / units.second)
 
 
 def test_bad_luminosity_present(test_args: Args) -> None:

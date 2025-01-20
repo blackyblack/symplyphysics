@@ -15,6 +15,8 @@ from symplyphysics import (symbols, units, Quantity, Symbol, validate_input,
 
 # Links: Wikipedia, first formula <https://en.wikipedia.org/wiki/Main_sequence#Parameters>
 
+# NOTE: this is the Stefan-Boltzmann law, which already exists
+
 luminosity = Symbol("luminosity", units.power)
 radius = Symbol("radius", units.length)
 temperature = symbols.temperature

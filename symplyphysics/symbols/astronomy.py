@@ -82,3 +82,13 @@ declination = SymbolNew("delta", angle_type, display_latex="\\delta")
 the equatorial coordinate system, measured north (positive) or south (negative) of the
 celestial equator.
 """
+
+altitude = SymbolNew("h", angle_type)
+"""
+**Altitude**, sometimes referred to as **elevation** or **apparent height**, is the angle
+between the object and the observer's local horizon.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Horizontal_coordinate_system#Definition>`__.
+"""
