@@ -81,8 +81,7 @@ wave_speed = symbols.phase_speed
 
 law = Eq(
     observer_frequency,
-    source_frequency * (1 - observer_speed / wave_speed) /
-    (1 + source_speed / wave_speed) * sqrt(
+    source_frequency * (1 - observer_speed / wave_speed) / (1 + source_speed / wave_speed) * sqrt(
     (1 - (source_speed / speed_of_light)**2) / (1 - (observer_speed / speed_of_light)**2)))
 """
 :laws:symbol::

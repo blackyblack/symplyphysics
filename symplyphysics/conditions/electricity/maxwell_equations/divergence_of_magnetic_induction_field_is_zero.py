@@ -13,6 +13,7 @@ from symplyphysics.core.fields.vector_field import VectorField
 # Links:
 ## Wikipedia, second equation <https://en.wikipedia.org/wiki/Maxwell%27s_equations#>
 
+
 def magnetic_field_divergence_condition(magnetic_induction_: VectorField) -> bool:
     divergence_magnetic_induction = divergence_operator(magnetic_induction_)
     divergence_magnetic_induction_quantity = Quantity(divergence_magnetic_induction)

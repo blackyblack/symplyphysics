@@ -78,5 +78,4 @@ solved = geometric_buckling_from_neutron_flux.apply_neutron_flux_function(
 # limit decimals to bypass rounding errors
 assert solved.rhs.evalf(7) == (radial_constant**2 + axial_constant**2).evalf(7)
 
-
 # There is no calculate() method. Neutron flux is usually being used internally to pass to other laws.

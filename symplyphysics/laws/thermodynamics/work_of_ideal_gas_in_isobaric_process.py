@@ -25,8 +25,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import (
-    work_is_integral_of_pressure_over_volume as work_law,
-)
+    work_is_integral_of_pressure_over_volume as work_law,)
 
 work = symbols.work
 """

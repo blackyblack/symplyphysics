@@ -20,8 +20,7 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.kinematics import (
-    position_via_constant_speed_and_time as velocity_definition,
-)
+    position_via_constant_speed_and_time as velocity_definition,)
 
 wavelength = symbols.wavelength
 """

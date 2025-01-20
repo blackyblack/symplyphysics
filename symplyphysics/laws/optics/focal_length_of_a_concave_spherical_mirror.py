@@ -27,8 +27,8 @@ from symplyphysics import (
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.optics import (
-    optical_strength_of_spherical_lens_from_refractive_indices_of_environment_and_lens_and_focal_distances as spherical_lens_law,
-)
+    optical_strength_of_spherical_lens_from_refractive_indices_of_environment_and_lens_and_focal_distances
+    as spherical_lens_law,)
 from symplyphysics.laws.optics import lens_focus_from_object_and_image as focus_law
 
 focal_length = symbols.focal_length

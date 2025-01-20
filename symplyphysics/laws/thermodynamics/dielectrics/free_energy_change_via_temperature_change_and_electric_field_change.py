@@ -64,7 +64,8 @@ Infinitesimal change in :symbols:`electric_displacement` of the system.
 
 law = Eq(
     free_energy_density_change,
-    -1 * entropy_density * temperature_change + electric_field_strength * electric_displacement_change,
+    -1 * entropy_density * temperature_change +
+    electric_field_strength * electric_displacement_change,
 )
 """
 :laws:symbol::

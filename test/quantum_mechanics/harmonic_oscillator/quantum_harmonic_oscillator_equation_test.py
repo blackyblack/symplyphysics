@@ -1,6 +1,7 @@
 from collections import namedtuple
 from pytest import fixture
 from sympy import pi, exp, Rational, integrate, S
+from symplyphysics import quantities
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.quantum_mechanics.harmonic_oscillator import equation
 
@@ -28,7 +29,7 @@ def test_law(test_args: Args) -> None:
     )
 
     values = {
-        equation.hbar: 1,
+        quantities.hbar: 1,
         equation.particle_mass: test_args.m,
         equation.particle_energy: test_args.e,
         equation.angular_frequency: test_args.w,

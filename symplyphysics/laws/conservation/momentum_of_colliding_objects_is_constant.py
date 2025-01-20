@@ -1,6 +1,5 @@
 from sympy import (Derivative, Eq, dsolve)
-from symplyphysics import (units, Quantity, Symbol, Function, print_expression, validate_input,
-    validate_output)
+from symplyphysics import (units, Quantity, Symbol, Function, validate_input, validate_output)
 
 # Description
 ## If there is no external force applied to system of objects, the summary momentum of this system remains constant

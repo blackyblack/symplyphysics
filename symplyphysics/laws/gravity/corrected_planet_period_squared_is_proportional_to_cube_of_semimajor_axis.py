@@ -49,7 +49,8 @@ The :symbols:`mass` of the orbiting planet.
 
 law = Eq(
     rotation_period**2,
-    (4 * pi**2 * semimajor_axis**3) / (quantities.gravitational_constant * (attracting_mass + planetary_mass)),
+    (4 * pi**2 * semimajor_axis**3) / (quantities.gravitational_constant *
+    (attracting_mass + planetary_mass)),
 )
 """
 :laws:symbol::
