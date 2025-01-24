@@ -119,5 +119,11 @@ response to an electric field that is pulling them.
 
 diffusion_coefficient = SymbolNew("D", units.area / units.time)
 """
+**Diffusion coefficient**, also referred to as (mass) **diffusivity**, is the
+proportionality constant between the molar flux due to molecular diffusion and the
+negative value of the gradient in the concentration of the species.
 
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Mass_diffusivity>`__.
 """
