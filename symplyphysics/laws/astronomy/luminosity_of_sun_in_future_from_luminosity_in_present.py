@@ -1,12 +1,12 @@
 """
-Luminocity of Sun in future from luminosity in present
+Luminosity of Sun in future from luminosity in present
 ======================================================
 
 The luminosity of the Sun in the future can be calculated from the luminosity of the Sun in the present.
 
 **Notes:**
 
-#. The :ref:`formula for luminosity in the past <Luminocity of Sun in past from luminosity in present>`
+#. The :ref:`formula for luminosity in the past <Luminosity of Sun in past from luminosity in present>`
    is not applicable here due to non-linearity.
 
 **Conditions:**
