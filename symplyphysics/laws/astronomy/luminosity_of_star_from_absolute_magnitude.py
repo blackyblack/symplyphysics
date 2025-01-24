@@ -4,6 +4,10 @@ Luminosity of star from absolute magnitude
 
 The luminosity of a star can be calculated from the absolute magnitude of the star.
 
+**Notation:**
+
+#. :quantity_notation:`zero_point_luminosity`.
+
 **Links:**
 
 #. `Wikipedia, last formula in paragraph <https://en.wikipedia.org/wiki/Luminosity#Relationship_to_magnitude>`__.
@@ -18,9 +22,9 @@ from symplyphysics import (
     Quantity,
 )
 
-luminosity = symbols.luminocity
+luminosity = symbols.luminosity
 """
-:symbols:`luminocity` of the star.
+:symbols:`luminosity` of the star.
 """
 
 absolute_magnitude = symbols.absolute_magnitude
@@ -28,7 +32,7 @@ absolute_magnitude = symbols.absolute_magnitude
 :symbols:`absolute_magnitude` of the star.
 """
 
-law = Eq(log(luminosity / quantities.zero_point_luminocity, 10), -0.4 * absolute_magnitude)
+law = Eq(log(luminosity / quantities.zero_point_luminosity, 10), -0.4 * absolute_magnitude)
 """
 :laws:symbol::
 

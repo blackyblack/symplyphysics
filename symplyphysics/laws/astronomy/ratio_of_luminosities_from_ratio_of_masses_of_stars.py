@@ -1,5 +1,5 @@
 """
-Ratio of luminocities from ratio of masses of stars
+Ratio of luminosities from ratio of masses of stars
 ===================================================
 
 The comparisons of masses and luminosities for most stars revealed the following relationship:
@@ -37,17 +37,17 @@ second_mass = clone_as_symbol(symbols.mass, subscript="2")
 :symbols:`mass` of the second star.
 """
 
-first_luminocity = clone_as_symbol(symbols.luminocity, subscript="1")
+first_luminosity = clone_as_symbol(symbols.luminosity, subscript="1")
 """
-:symbols:`luminocity` of the first star.
-"""
-
-second_luminocity = clone_as_symbol(symbols.luminocity, subscript="2")
-"""
-:symbols:`luminocity` of the second star.
+:symbols:`luminosity` of the first star.
 """
 
-law = Eq(second_luminocity / first_luminocity, (second_mass / first_mass)**4)
+second_luminosity = clone_as_symbol(symbols.luminosity, subscript="2")
+"""
+:symbols:`luminosity` of the second star.
+"""
+
+law = Eq(second_luminosity / first_luminosity, (second_mass / first_mass)**4)
 """
 :laws:symbol::
 
@@ -57,14 +57,14 @@ law = Eq(second_luminocity / first_luminocity, (second_mass / first_mass)**4)
 
 @validate_input(mass_first_=first_mass,
     mass_second_=second_mass,
-    illuminance_first_=first_luminocity)
-@validate_output(second_luminocity)
+    illuminance_first_=first_luminosity)
+@validate_output(second_luminosity)
 def calculate_illuminance_second(mass_first_: Quantity, mass_second_: Quantity,
     illuminance_first_: Quantity) -> Quantity:
-    result_expr = solve(law, second_luminocity, dict=True)[0][second_luminocity]
+    result_expr = solve(law, second_luminosity, dict=True)[0][second_luminosity]
     result_expr = result_expr.subs({
         first_mass: mass_first_,
         second_mass: mass_second_,
-        first_luminocity: illuminance_first_
+        first_luminosity: illuminance_first_
     })
     return Quantity(result_expr)

@@ -5,6 +5,10 @@ Semimajor axis of orbit via mass and speed
 Let the body move in an elliptical orbit. Then its semimajor axis depends on the mass of the body around which it
 rotates and the orbital velocity.
 
+**Notation:**
+
+#. :quantity_notation:`gravitational_constant`.
+
 ..
     TODO: find link
     TODO: move to `gravity`?

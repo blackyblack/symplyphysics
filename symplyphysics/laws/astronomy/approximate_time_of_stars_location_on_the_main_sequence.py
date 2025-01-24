@@ -37,9 +37,9 @@ star_mass = symbols.mass
 :symbols:`mass` of the star.
 """
 
-star_luminosity = symbols.luminocity
+star_luminosity = symbols.luminosity
 """
-:symbols:`luminocity` of the star.
+:symbols:`luminosity` of the star.
 """
 
 sun_lifetime = Quantity(1e10 * units.common_year, display_symbol="t_Sun", display_latex="t_\\odot")

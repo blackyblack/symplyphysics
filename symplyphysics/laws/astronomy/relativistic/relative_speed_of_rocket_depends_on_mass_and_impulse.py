@@ -27,10 +27,10 @@ from symplyphysics.quantities import speed_of_light
 
 speed = symbols.speed
 """
-Final speed of the rocket
+Final :symbols:`speed` of the rocket
 """
 
-exhaust_speed = clone_as_symbol(symbols.speed, display_symbol="v_e", display_latex="v_\\text{e}")
+effective_exhaust_speed = clone_as_symbol(symbols.speed, display_symbol="v_e", display_latex="v_\\text{e}")
 """
 Effective exhaust :symbols:`speed` of the rocket engine.
 """
@@ -46,7 +46,7 @@ Final :symbols:`mass` of the rocket
 """
 
 law = Eq(final_mass / initial_mass, ((1 - (speed / speed_of_light)) / (1 +
-    (speed / speed_of_light)))**(speed_of_light / (2 * exhaust_speed)))
+    (speed / speed_of_light)))**(speed_of_light / (2 * effective_exhaust_speed)))
 """
 :laws:symbol::
 
@@ -54,7 +54,7 @@ law = Eq(final_mass / initial_mass, ((1 - (speed / speed_of_light)) / (1 +
 """
 
 
-@validate_input(exhaust_velocity_=exhaust_speed,
+@validate_input(exhaust_velocity_=effective_exhaust_speed,
     initial_mass_=initial_mass,
     final_mass_=final_mass)
 @validate_output(speed)
@@ -62,7 +62,7 @@ def calculate_speed(exhaust_velocity_: Quantity, initial_mass_: Quantity,
     final_mass_: Quantity) -> Quantity:
     result_expr = solve(law, speed, dict=True)[0][speed]
     result_expr = result_expr.subs({
-        exhaust_speed: exhaust_velocity_,
+        effective_exhaust_speed: exhaust_velocity_,
         initial_mass: initial_mass_,
         final_mass: final_mass_
     })

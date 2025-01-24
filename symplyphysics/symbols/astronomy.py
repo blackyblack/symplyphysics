@@ -35,7 +35,7 @@ line of sight to the observer.
 #. `Wikipedia <https://en.wikipedia.org/wiki/Apparent_magnitude>`__.
 """
 
-luminocity = SymbolNew("L", units.power)
+luminosity = SymbolNew("L", units.power)
 """
 In astronomy, **luminosity** is the total amount of electromagnetic energy emitted per unit of
 time by a star, galaxy, or other astronomical objects.

@@ -7,6 +7,10 @@ protostar stage. At the beginning of the main sequence stage, the age of the sta
 considered to be zero. The lifetime of the star can be approximated from the mass of the
 star.
 
+**Notation:**
+
+#. :quantity_notation:`solar_mass`.
+
 **Notes:**
 
 #. The indicator has the value of :math:`4.75` for stars with mass of :math:`0.7` to

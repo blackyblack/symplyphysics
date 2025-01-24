@@ -24,7 +24,7 @@ speed_change = clone_as_symbol(symbols.speed, display_symbol="Delta(v)", display
 Maximum change in :symbols:`speed` of the rocket.
 """
 
-effective_exhaust_speed = clone_as_symbol(symbols.speed, display_symbol="J", display_latex="J")
+effective_exhaust_speed = clone_as_symbol(symbols.speed, display_symbol="v_e", display_latex="v_\\text{e}")
 """
 Effective exhaust :symbols:`speed`, or specific impulse (i.e. impulse per unit mass). See
 `this Wikipedia paragraph <https://en.wikipedia.org/wiki/Specific_impulse#Specific_impulse_as_effective_exhaust_velocity>`__

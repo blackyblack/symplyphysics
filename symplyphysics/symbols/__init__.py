@@ -178,7 +178,7 @@ __all__ = [
     # astronomy
     "absolute_magnitude",
     "apparent_magnitude",
-    "luminocity",
+    "luminosity",
     "illuminance",
     "irradiance",
     "eccentricity",

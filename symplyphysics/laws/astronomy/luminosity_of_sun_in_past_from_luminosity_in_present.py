@@ -1,8 +1,13 @@
 """
-Luminocity of Sun in past from luminocity in present
+Luminocity of Sun in past from luminosity in present
 ====================================================
 
 The luminosity of the Sun in the past can be calculated from the luminosity of the Sun in the present.
+
+**Notes:**
+
+#. The :ref:`formula for future luminosity <Luminocity of Sun in future from luminosity in present>`
+   is not applicable here due to non-linearity.
 
 ..
     TODO find link
@@ -18,14 +23,14 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-past_luminosity = clone_as_symbol(symbols.luminocity, subscript="0")
+past_luminosity = clone_as_symbol(symbols.luminosity, subscript="0")
 """
-:symbols:`luminocity` of the Sun at some point in the past.
+:symbols:`luminosity` of the Sun at some point in the past.
 """
 
-present_luminocity = symbols.luminocity
+present_luminosity = symbols.luminosity
 """
-:symbols:`luminocity` of the Sun in the present.
+:symbols:`luminosity` of the Sun in the present.
 """
 
 time = symbols.time
@@ -38,7 +43,7 @@ one_billion_years = Quantity(1e9 * units.common_year, display_symbol="1 Gyr", di
 A quantity equal to one billion years.
 """
 
-law = Eq(past_luminosity, present_luminocity / (1 + 0.4 * (1 - ((time / one_billion_years) / 4.6))))
+law = Eq(past_luminosity, present_luminosity / (1 + 0.4 * (1 - ((time / one_billion_years) / 4.6))))
 """
 :laws:symbol::
 
@@ -46,12 +51,12 @@ law = Eq(past_luminosity, present_luminocity / (1 + 0.4 * (1 - ((time / one_bill
 """
 
 
-@validate_input(luminosity_present_=present_luminocity, time_=time)
+@validate_input(luminosity_present_=present_luminosity, time_=time)
 @validate_output(past_luminosity)
-def calculate_luminosity_past(luminosity_present_: Quantity, time_: Quantity) -> float:
+def calculate_luminosity_past(luminosity_present_: Quantity, time_: Quantity) -> Quantity:
     result_expr = solve(law, past_luminosity, dict=True)[0][past_luminosity]
     result_expr = result_expr.subs({
-        present_luminocity: luminosity_present_,
+        present_luminosity: luminosity_present_,
         time: time_,
     })
     return Quantity(result_expr)

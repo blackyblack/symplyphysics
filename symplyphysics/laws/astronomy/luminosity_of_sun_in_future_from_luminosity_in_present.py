@@ -1,8 +1,13 @@
 """
-Luminocity of Sun in future from luminocity in present
+Luminocity of Sun in future from luminosity in present
 ======================================================
 
 The luminosity of the Sun in the future can be calculated from the luminosity of the Sun in the present.
+
+**Notes:**
+
+#. The :ref:`formula for luminosity in the past <Luminocity of Sun in past from luminosity in present>`
+   is not applicable here due to non-linearity.
 
 **Conditions:**
 
@@ -22,14 +27,14 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-future_luminocity = clone_as_symbol(symbols.luminocity, subscript="1")
+future_luminosity = clone_as_symbol(symbols.luminosity, subscript="1")
 """
-:symbols:`luminocity` of the Sun at some point in the future.
+:symbols:`luminosity` of the Sun at some point in the future.
 """
 
-present_luminosity = symbols.luminocity
+present_luminosity = symbols.luminosity
 """
-:symbols:`luminocity` of the Sun in the present.
+:symbols:`luminosity` of the Sun in the present.
 """
 
 time = symbols.time
@@ -43,7 +48,7 @@ A quantity equal to one billion years.
 """
 
 law = Eq(
-    future_luminocity,
+    future_luminosity,
     present_luminosity * ((5.59 / (time / one_billion_years)) - 1.41 + 0.26 *
     (time / one_billion_years)))
 """
@@ -54,9 +59,9 @@ law = Eq(
 
 
 @validate_input(luminosity_present_=present_luminosity, time_=time)
-@validate_output(future_luminocity)
-def calculate_luminosity_future(luminosity_present_: Quantity, time_: Quantity) -> float:
-    result_expr = solve(law, future_luminocity, dict=True)[0][future_luminocity]
+@validate_output(future_luminosity)
+def calculate_luminosity_future(luminosity_present_: Quantity, time_: Quantity) -> Quantity:
+    result_expr = solve(law, future_luminosity, dict=True)[0][future_luminosity]
     result_expr = result_expr.subs({
         present_luminosity: luminosity_present_,
         time: time_,

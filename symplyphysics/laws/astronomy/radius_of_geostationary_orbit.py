@@ -28,15 +28,6 @@ from symplyphysics import (
     quantities,
 )
 
-# Description
-
-## Law is: R = (G * M / (w^2))^(1/3), where
-## R - radius of geostationary orbit,
-## G - gravitational constant,
-## M - planet_mass of planet.
-## w - angular speed of rotation of satellite.
-
-
 orbital_radius = symbols.radius
 """
 :symbols:`radius` of the satellite's geostationary orbit.
