@@ -1,29 +1,47 @@
+"""
+Charge is constant
+==================
+
+The total charge of any isolated system is conserved.
+
+**Conditions:**
+
+#. The system is isolated, i.e. no particles can leave it.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Charge_conservation>`__.
+"""
+
 from sympy import Eq, solve, dsolve, Derivative
 from symplyphysics import (
-    Symbol,
-    Function,
-    units,
     Quantity,
     validate_input,
     validate_output,
+    clone_as_function,
+    symbols,
 )
-
-# Description
-## The total charge of any isolated system is conserved.
 
 # Law: dq/dt = 0
 ## q - total charge of the system
 ## d/dt - derivative with respect to time
 
-# Conditions
-## - The system is isolated, i.e. no particles can leave it
+time = symbols.time
+"""
+:symbols:`time`.
+"""
 
-# Links: Wikipedia <https://en.wikipedia.org/wiki/Charge_conservation>
-
-total_charge = Function("total_charge", units.charge)
-time = Symbol("time", units.time)
+total_charge = clone_as_function(symbols.charge, [time])
+"""
+:symbols:`charge` as a function of :attr:`~time`.
+"""
 
 law = Eq(Derivative(total_charge(time), time), 0)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(total_charge_before_=total_charge)

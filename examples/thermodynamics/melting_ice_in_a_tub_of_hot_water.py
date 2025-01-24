@@ -42,9 +42,9 @@ mass_of_all_water = solve(density_of_water_equation, density_law.mass,
 local_index_ = Idx("local_index_", (1, 2))
 sum_of_two_masses = sum_masses_law.law.subs(global_index, local_index_).doit()
 mass_of_all_water_equation = sum_of_two_masses.subs({
-    sum_masses_law.mass_of_component[1]: mass_of_ice,
-    sum_masses_law.mass_of_component[2]: mass_of_hot_water,
-    sum_masses_law.mass_of_mixture: mass_of_all_water,
+    sum_masses_law.component_mass[1]: mass_of_ice,
+    sum_masses_law.component_mass[2]: mass_of_hot_water,
+    sum_masses_law.mixture_mass: mass_of_all_water,
 })
 
 mass_of_hot_water_value = solve(mass_of_all_water_equation, mass_of_hot_water,

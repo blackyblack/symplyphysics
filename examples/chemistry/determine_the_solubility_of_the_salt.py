@@ -32,22 +32,22 @@ index_local = Idx("index_local", (1, 2))
 mass_of_two_components = mixture_mass_law.law.subs(global_index, index_local).doit()
 
 mass_of_salt_and_sediment = mass_of_two_components.subs({
-    mixture_mass_law.mass_of_component[1]: mass_of_salt_after,
-    mixture_mass_law.mass_of_component[2]: mass_of_sediment,
+    mixture_mass_law.component_mass[1]: mass_of_salt_after,
+    mixture_mass_law.component_mass[2]: mass_of_sediment,
 }).rhs
 conservation_salt_mass_equation = conservation_mass_law.law.subs({
-    conservation_mass_law.mass_function(conservation_mass_law.time_before):
+    conservation_mass_law.mass(conservation_mass_law.initial_time):
         mass_of_salt_before_value,
-    conservation_mass_law.mass_function(conservation_mass_law.time_after):
+    conservation_mass_law.mass(conservation_mass_law.final_time):
         mass_of_salt_and_sediment
 })
 mass_of_salt_after_value = solve(conservation_salt_mass_equation, mass_of_salt_after,
     dict=True)[0][mass_of_salt_after]
 
 mass_of_mixture_equation = mass_of_two_components.subs({
-    mixture_mass_law.mass_of_component[1]: mass_of_water,
-    mixture_mass_law.mass_of_component[2]: mass_of_salt_before_value,
-    mixture_mass_law.mass_of_mixture: mass_of_mixture,
+    mixture_mass_law.component_mass[1]: mass_of_water,
+    mixture_mass_law.component_mass[2]: mass_of_salt_before_value,
+    mixture_mass_law.mixture_mass: mass_of_mixture,
 })
 
 mass_of_water_value = solve(mass_of_mixture_equation, mass_of_water, dict=True)[0][mass_of_water]

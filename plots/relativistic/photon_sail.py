@@ -43,9 +43,9 @@ moving_mirror_energy = energy_is_mass.law.rhs.subs(energy_is_mass.relativistic_m
 total_energy_after = reflected_wave_energy + moving_mirror_energy
 
 energy_conservation_eqn = energy_conservation_law.law.subs({
-    energy_conservation_law.mechanical_energy(energy_conservation_law.time_before):
+    energy_conservation_law.mechanical_energy(energy_conservation_law.initial_time):
         total_energy_before,
-    energy_conservation_law.mechanical_energy(energy_conservation_law.time_after):
+    energy_conservation_law.mechanical_energy(energy_conservation_law.final_time):
         total_energy_after,
 })
 
@@ -78,9 +78,9 @@ moving_mirror_momentum = moving_momentum_law.law.rhs.subs({
 total_momentum_after = moving_mirror_momentum - reflected_wave_momentum
 
 momentum_conservation_eqn = momentum_conservation_law.law.subs({
-    momentum_conservation_law.momentum(momentum_conservation_law.time_before):
+    momentum_conservation_law.momentum(momentum_conservation_law.initial_time):
         total_momentum_before,
-    momentum_conservation_law.momentum(momentum_conservation_law.time_after):
+    momentum_conservation_law.momentum(momentum_conservation_law.final_time):
         total_momentum_after,
 })
 

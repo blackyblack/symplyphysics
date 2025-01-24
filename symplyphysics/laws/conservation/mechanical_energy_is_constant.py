@@ -1,28 +1,40 @@
+"""
+Mechanical energy is constant
+=============================
+
+Mechanical energy is constant in a system that has only gravitational forces or in an
+otherwise idealized system — that is, one lacking dissipative forces, such as friction
+and air resistance, or one in which such forces can be reasonably neglected.
+
+**Notes:**
+
+#. SymPy does not have a proper way to represent constant energy. We use it's derivative
+   over time instead. Derivative of the constant value is zero.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Conservation_of_energy>`__.
+"""
+
 from sympy import (Eq, dsolve, Derivative)
-from symplyphysics import (units, Quantity, Symbol, Function, validate_input, validate_output)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols, clone_as_function)
 
-# Description
-## Mechanical energy, sum of the kinetic energy, or energy of motion, and the potential energy, or energy stored in a system by
-## reason of the position of its parts.
-## Mechanical energy is constant in a system that has only gravitational forces or in an otherwise idealized system — that is,
-## one lacking dissipative forces, such as friction and air resistance, or one in which such forces can be reasonably neglected.
+time = symbols.time
+"""
+:symbols:`time`.
+"""
 
-# Law: dE/dt = 0
-## Where:
-## E - summary mechanical energy of a system,
-## t - time,
-## dE/dt - energy derivative over time.
-
-# Note:
-## SymPy does not have a proper way to represent constant energy. We use it's derivative over time instead. Derivative
-## of the constant value is zero.
-
-# Links: Wikipedia <https://en.wikipedia.org/wiki/Conservation_of_energy>
-
-time = Symbol("time", units.time)
-mechanical_energy = Function("mechanical_energy", units.energy)
+mechanical_energy = clone_as_function(symbols.mechanical_energy, [time])
+"""
+:symbols:`mechanical_energy`.
+"""
 
 law = Eq(Derivative(mechanical_energy(time), time), 0)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(mechanical_energy_before_=mechanical_energy)

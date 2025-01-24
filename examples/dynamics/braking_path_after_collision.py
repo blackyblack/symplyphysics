@@ -72,9 +72,9 @@ mechanical_energy_after_1 = mechanical_energy_def.definition.rhs.subs({
 })
 
 energy_conservation_eqn_1 = energy_conservation_law.law.subs({
-    energy_conservation_law.mechanical_energy(energy_conservation_law.time_before):
+    energy_conservation_law.mechanical_energy(energy_conservation_law.initial_time):
         mechanical_energy_before_1,
-    energy_conservation_law.mechanical_energy(energy_conservation_law.time_after):
+    energy_conservation_law.mechanical_energy(energy_conservation_law.final_time):
         mechanical_energy_after_1,
 })
 
@@ -102,9 +102,9 @@ momentum_after_2_elastic = momentum_def.definition.rhs.subs({
 momentum_after_elastic = momentum_after_1_elastic + momentum_after_2_elastic
 
 momentum_conservation_eqn_collision = momentum_conservation_law.law.subs({
-    momentum_conservation_law.momentum(momentum_conservation_law.time_before):
+    momentum_conservation_law.momentum(momentum_conservation_law.initial_time):
         momentum_before_1,
-    momentum_conservation_law.momentum(momentum_conservation_law.time_after):
+    momentum_conservation_law.momentum(momentum_conservation_law.final_time):
         momentum_after_elastic,
 })
 
@@ -126,9 +126,9 @@ mechanical_energy_after_elastic = mechanical_energy_def.definition.rhs.subs({
 })
 
 energy_conservation_eqn_collision = energy_conservation_law.law.subs({
-    energy_conservation_law.mechanical_energy(energy_conservation_law.time_before):
+    energy_conservation_law.mechanical_energy(energy_conservation_law.initial_time):
         mechanical_energy_before_elastic,
-    energy_conservation_law.mechanical_energy(energy_conservation_law.time_after):
+    energy_conservation_law.mechanical_energy(energy_conservation_law.final_time):
         mechanical_energy_after_elastic,
 })
 

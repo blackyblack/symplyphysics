@@ -1,5 +1,5 @@
 from sympy import (Eq, solve, dsolve)
-from symplyphysics import (units, Quantity, Symbol, Function, validate_input, validate_output)
+from symplyphysics import (units, Quantity, Symbol, Function, validate_input, validate_output, clone_as_function, clone_as_symbol, symbols)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.conservation import mechanical_energy_is_constant
 
@@ -16,11 +16,11 @@ from symplyphysics.laws.conservation import mechanical_energy_is_constant
 
 # Links: Wikipedia <https://en.wikipedia.org/wiki/Conservation_of_energy>
 
-time_before = Symbol("time_before", units.time)
-time_after = Symbol("time_after", units.time)
-mechanical_energy = Function("mechanical_energy", units.energy)
+initial_time = clone_as_symbol(symbols.time, subscript="0")
+final_time = clone_as_symbol(symbols.time, subscript="1")
+mechanical_energy = clone_as_function(symbols.mechanical_energy, [symbols.time])
 
-law = Eq(mechanical_energy(time_after), mechanical_energy(time_before))
+law = Eq(mechanical_energy(final_time), mechanical_energy(initial_time))
 
 # Derive the same law from constant mechanical energy
 
@@ -29,23 +29,23 @@ dsolved = dsolve(
     mechanical_energy_is_constant.law,
     mechanical_energy_is_constant.mechanical_energy(mechanical_energy_is_constant.time))
 
-energy_before_eq = dsolved.subs(mechanical_energy_is_constant.time, time_before)
+energy_before_eq = dsolved.subs(mechanical_energy_is_constant.time, initial_time)
 energy_before_eq = energy_before_eq.subs(
-    mechanical_energy_is_constant.mechanical_energy(time_before), mechanical_energy(time_before))
-energy_after_eq = dsolved.subs(mechanical_energy_is_constant.time, time_after)
-energy_after_eq = energy_after_eq.subs(mechanical_energy_is_constant.mechanical_energy(time_after),
-    mechanical_energy(time_after))
+    mechanical_energy_is_constant.mechanical_energy(initial_time), mechanical_energy(initial_time))
+energy_after_eq = dsolved.subs(mechanical_energy_is_constant.time, final_time)
+energy_after_eq = energy_after_eq.subs(mechanical_energy_is_constant.mechanical_energy(final_time),
+    mechanical_energy(final_time))
 
 ## Show that when energy is constant, energy_before equals to energy_after
 energy_after_solved = solve([energy_after_eq, energy_before_eq],
-    (mechanical_energy(time_after), "C1"),
-    dict=True)[0][mechanical_energy(time_after)]
+    (mechanical_energy(final_time), "C1"),
+    dict=True)[0][mechanical_energy(final_time)]
 assert expr_equals(energy_after_solved, law.rhs)
 
 
 @validate_input(mechanical_energy_before_=mechanical_energy)
 @validate_output(mechanical_energy)
 def calculate_energy_after(mechanical_energy_before_: Quantity) -> Quantity:
-    solved = solve(law, mechanical_energy(time_after), dict=True)[0][mechanical_energy(time_after)]
-    result_expr = solved.subs(mechanical_energy(time_before), mechanical_energy_before_)
+    solved = solve(law, mechanical_energy(final_time), dict=True)[0][mechanical_energy(final_time)]
+    result_expr = solved.subs(mechanical_energy(initial_time), mechanical_energy_before_)
     return Quantity(result_expr)
