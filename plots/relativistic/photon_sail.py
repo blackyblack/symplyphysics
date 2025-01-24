@@ -122,8 +122,6 @@ reflected_wave_energy_expr = solve(
 print("Definition of reduced energy of incident wave:\n")
 print(print_expression(reduced_incident_wave_energy_eqn), end="\n\n\n")
 
-# reduced_mirror_speed_expr_ = mirror_speed_expr / speed_of_light
-
 print("Formula of reduced speed of mirror:\n")
 print(print_expression(reduced_mirror_speed_expr), end="\n\n\n")
 
