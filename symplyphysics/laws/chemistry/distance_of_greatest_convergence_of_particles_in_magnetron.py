@@ -1,58 +1,82 @@
-from sympy import Eq, Rational, solve, log
+"""
+Distance of greatest convergence of particles in magnetron
+==========================================================
+
+The traveling atom moves towards the substrate in the magnetron. At the same time, it
+collides with gas atoms. The energy transfer coefficient in these collisions depends on
+the mass of the traveling atom and the mass of the gas atom. The distance of the
+greatest convergence of colliding particles can be calculated using the model of
+quasi-rigid spheres. The discharge voltage is the voltage between the cathode and the
+anode in the magnetron at which plasma occurs.
+
+..
+    TODO: find link
+    TODO: move to `magnetron` folder?
+"""
+
+from sympy import Eq, solve, log
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
-    dimensionless,
+    symbols,
+    clone_as_symbol,
 )
 
-# Description
-## The traveling atom moves towards the substrate in the magnetron. At the same time, it collides with gas atoms.
-## The energy transfer coefficient in these collisions depends on the mass of the traveling atom and the mass of the gas atom.
-## The distance of the greatest convergence of colliding particles can be calculated using the model of quasi-rigid spheres.
-## The discharge voltage is the voltage between the cathode and the anode in the magnetron at which plasma occurs.
+distance_of_convergence = symbols.euclidean_distance
+"""
+:symbols:`euclidean_distance` of greatest convergence of two colliding particles.
+"""
 
-## Law is: r = -(0.122e-10 * (Z1^0.0387 + Z2^0.0387)) * ln(U / (95.863 * (Z1 * Z2)^0.7383 * (Z1 * Z2)^0.75), where
-## r - the distance of the greatest convergence of two colliding particles,
-## U - discharge voltage,
-## Z1 - the atomic number of the first atom (traveling atom),
-## Z2 - the atomic number of the second atom (gas atom).
+discharge_voltage = symbols.voltage
+"""
+Discharge :symbols:`voltage`.
+"""
 
-# TODO: find link
+first_atomic_number = clone_as_symbol(symbols.atomic_number, subscript="1")
+"""
+:symbols:`atomic_number` of first atom.
+"""
 
-# TODO: move to `magnetron` folder?
+second_atomic_number = clone_as_symbol(symbols.atomic_number, subscript="2")
+"""
+:symbols:`atomic_number` of second atom.
+"""
 
-distance_of_convergence_of_particles = Symbol("distance_of_convergence_of_particles", units.length)
+distance_constant = Quantity(0.122e-10 * units.meter, display_symbol="d_0")
+"""
+Constant equal to :math:`0.122 \\cdot 10^{-10} \\, \\text{m}`.
+"""
 
-discharge_voltage = Symbol("discharge_voltage", units.voltage)
-atomic_number_of_first_atom = Symbol("atomic_number_of_first_atom", dimensionless)
-atomic_number_of_second_atom = Symbol("atomic_number_of_first_atom", dimensionless)
-
-first_constant = Quantity(0.122e-10 * units.meter)
-second_constant = Quantity(95.863 * units.volt)
-expression_1 = first_constant * (atomic_number_of_first_atom**Rational(0.0387) +
-    atomic_number_of_second_atom**Rational(0.0387))
-expression_2 = second_constant * (atomic_number_of_first_atom *
-    atomic_number_of_second_atom)**Rational(0.7383)
+voltage_constant = Quantity(95.863 * units.volt, display_symbol="V_0")
+"""
+Constant equal to :math:`95.863 \\, \\text{V}`.
+"""
 
 law = Eq(
-    distance_of_convergence_of_particles, -expression_1 * log(discharge_voltage / (expression_2 *
-    (atomic_number_of_first_atom * atomic_number_of_second_atom)**Rational(0.75))))
+    distance_of_convergence,
+    -1 * distance_constant * (first_atomic_number**0.0387 + second_atomic_number**0.0387) 
+    * log(discharge_voltage / (voltage_constant * (first_atomic_number * second_atomic_number)**1.4883))
+)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(discharge_voltage_=discharge_voltage,
-    atomic_number_of_first_atom_=atomic_number_of_first_atom,
-    atomic_number_of_second_atom_=atomic_number_of_second_atom)
-@validate_output(distance_of_convergence_of_particles)
+    atomic_number_of_first_atom_=first_atomic_number,
+    second_atomic_number_=second_atomic_number)
+@validate_output(distance_of_convergence)
 def calculate_distance_of_convergence_of_particles(discharge_voltage_: Quantity,
-    atomic_number_of_first_atom_: int, atomic_number_of_second_atom_: int) -> Quantity:
-    result_expr = solve(law, distance_of_convergence_of_particles,
-        dict=True)[0][distance_of_convergence_of_particles]
+    atomic_number_of_first_atom_: int, second_atomic_number_: int) -> Quantity:
+    result_expr = solve(law, distance_of_convergence,
+        dict=True)[0][distance_of_convergence]
     result_expr = result_expr.subs({
         discharge_voltage: discharge_voltage_,
-        atomic_number_of_first_atom: atomic_number_of_first_atom_,
-        atomic_number_of_second_atom: atomic_number_of_second_atom_,
+        first_atomic_number: atomic_number_of_first_atom_,
+        second_atomic_number: second_atomic_number_,
     })
     return Quantity(result_expr)

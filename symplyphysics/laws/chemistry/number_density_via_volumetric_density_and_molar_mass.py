@@ -15,47 +15,33 @@ amount of substance.
 #. `Wikipedia <https://en.wikipedia.org/wiki/Number_density#Mass_density>`__.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, quantities)
+from sympy import Eq, solve
+from symplyphysics import Quantity, validate_input, validate_output, quantities, symbols
 from symplyphysics.definitions import number_density_is_number_of_objects_per_unit_volume
 from symplyphysics.definitions import density_from_mass_volume
 from symplyphysics.laws.chemistry import avogadro_constant_is_particle_count_over_amount_of_substance
 from symplyphysics.laws.quantities import quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law
 
-number_density = Symbol("number_density", 1 / units.volume)
+number_density = symbols.number_density
 """
-Number density, or number of molecules per unit volume.
-
-Symbol:
-    :code:`n`
+:symbols:`number_density`, or number of molecules per unit volume.
 """
 
-volumetric_density = Symbol("volumetric_density", units.mass / units.volume)
+volumetric_density = symbols.density
 r"""
-Volumetric density, or mass per unit volume.
-
-Symbol:
-    :code:`rho`
-
-Latex:
-    :math:`\rho`
+Volumetric :symbols:`density`, or mass per unit volume.
 """
 
-molar_mass = Symbol("molar_mass", units.mass / units.amount_of_substance)
+molar_mass = symbols.molar_mass
 """
-Molar mass, or mass per unit amount of substance.
-
-Symbol:
-    :code:`M`
+:symbols:`molar_mass`, or mass per unit amount of substance.
 """
 
 law = Eq(number_density, volumetric_density * quantities.avogadro_constant / molar_mass)
-r"""
-:code:`n = rho * N_A / M`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        n = \frac{\rho N_\text{A}}{M}
+:laws:latex::
 """
 
 # Derive the same law from volume number density law

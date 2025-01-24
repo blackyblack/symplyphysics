@@ -1,102 +1,120 @@
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output)
-from symplyphysics.core.expr_comparisons import expr_equals
+"""
+Current density from mobility
+=============================
 
+The current density can be calculated from the concentration and mobilities of holes and
+electrons and the electric field.
+
+**Links:**
+
+#. `Wikipedia, last formula <https://en.wikipedia.org/wiki/Electron_mobility#Relation_to_current_density>`__.
+"""
+
+from sympy import Eq, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    clone_as_symbol,
+    quantities,
+)
+from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.condensed_matter import current_density_via_number_density_and_drift_velocity as density_velocity_law
 from symplyphysics.laws.condensed_matter import drift_velocity_of_charge_carriers as velocity_law
 
-# Description
-## Current density is the amount of charge per unit time that flows through a unit area of a chosen
-## cross section. The current density vector is defined as a vector whose magnitude is the electric
-## current per cross-sectional area at a given point in space, its direction being that of the motion
-## of the positive charges at this point. In SI base units, the electric current density is measured
-## in amperes per square metre.
-## Mobility - characterises how quickly an electron or hole can move through a metal or semiconductor
-## when pulled by an electric fiel.
+current_density = symbols.current_density
+"""
+:symbols:`current_density` of charge carriers.
+"""
 
-## Law is: j = q * (-n1 * u1 + n2 * u2) * E, where
-## j - current density of charge carriers,
-## q - electron charge modulus,
-## n1 - concentration of electrons,
-## n2 - concentration of holes,
-## u1 - mobility of electrons,
-## u2 - mobility of holes,
-## E - electric intensity (physical field that surrounds electrically charged particles).
+electrons_concentration = clone_as_symbol(symbols.number_density, subscript="\\text{e}")
+"""
+Concentration (:symbols:`number_density`) of electrons.
+"""
 
-# Links: Wikipedia, last formula <https://en.wikipedia.org/wiki/Electron_mobility#Relation_to_current_density>
+holes_concentration = clone_as_symbol(symbols.number_density, subscript="\\text{h}")
+"""
+Concentration (:symbols:`number_density`) of holes.
+"""
 
-density_current = Symbol("density_current", units.current / units.area)
+electrons_mobility = clone_as_symbol(symbols.mobility, subscript="\\text{e}")
+"""
+:symbols:`mobility` of electrons.
+"""
 
-electrons_concentration = Symbol("electrons_concentration", 1 / units.volume)
-holes_concentration = Symbol("holes_concentration", 1 / units.volume)
-electrons_mobility = Symbol("electrons_mobility", units.area / units.voltage / units.time)
-holes_mobility = Symbol("holes_mobility", units.area / units.voltage / units.time)
-electric_intensity = Symbol("electric_intensity", units.voltage / units.length)
+holes_mobility = clone_as_symbol(symbols.mobility, subscript="\\text{h}")
+"""
+:symbols:`mobility` of holes.
+"""
 
-charge = Quantity(1.6e-19 * units.coulomb)  # FIXME: use `quantity`
+electric_field_strength = symbols.electric_field_strength
+"""
+:symbols:`electric_field_strength`.
+"""
 
 law = Eq(
-    density_current,
-    charge *
+    current_density,
+    quantities.elementary_charge *
     (-electrons_concentration * electrons_mobility + holes_concentration * holes_mobility) *
-    electric_intensity)
+    electric_field_strength)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 ## This law might be derived via law for current density in metals.
-velocity_law_electrons = velocity_law.law.subs({
-    velocity_law.charge_carriers_mobility: electrons_mobility,
-    velocity_law.electric_intensity: electric_intensity,
+_velocity_law_electrons = velocity_law.law.subs({
+    velocity_law.mobility: electrons_mobility,
+    velocity_law.electric_field_strength: electric_field_strength,
 })
-velocity_electrons = solve(velocity_law_electrons, velocity_law.drift_velocity,
+_velocity_electrons = solve(_velocity_law_electrons, velocity_law.drift_velocity,
     dict=True)[0][velocity_law.drift_velocity]
-density_velocity_law_electrons = density_velocity_law.law.subs({
-    density_velocity_law.charge: -charge,
+_density_velocity_law_electrons = density_velocity_law.law.subs({
+    density_velocity_law.charge: -quantities.elementary_charge,
     density_velocity_law.number_density: electrons_concentration,
-    density_velocity_law.drift_velocity: velocity_electrons,
+    density_velocity_law.drift_velocity: _velocity_electrons,
 })
 
-velocity_law_holes = velocity_law.law.subs({
-    velocity_law.charge_carriers_mobility: holes_mobility,
-    velocity_law.electric_intensity: electric_intensity,
+_velocity_law_holes = velocity_law.law.subs({
+    velocity_law.mobility: holes_mobility,
+    velocity_law.electric_field_strength: electric_field_strength,
 })
-velocity_holes = solve(velocity_law_holes, velocity_law.drift_velocity,
+_velocity_holes = solve(_velocity_law_holes, velocity_law.drift_velocity,
     dict=True)[0][velocity_law.drift_velocity]
-density_velocity_law_holes = density_velocity_law.law.subs({
-    density_velocity_law.charge: charge,
+_density__velocity_law_holes = density_velocity_law.law.subs({
+    density_velocity_law.charge: quantities.elementary_charge,
     density_velocity_law.number_density: holes_concentration,
-    density_velocity_law.drift_velocity: velocity_holes,
+    density_velocity_law.drift_velocity: _velocity_holes,
 })
-density_current_electrons_derived = solve(density_velocity_law_electrons,
+_density_current_electrons_derived = solve(_density_velocity_law_electrons,
     density_velocity_law.current_density,
     dict=True)[0][density_velocity_law.current_density]
-density_current_holes_derived = solve(density_velocity_law_holes,
+_density_current_holes_derived = solve(_density__velocity_law_holes,
     density_velocity_law.current_density,
     dict=True)[0][density_velocity_law.current_density]
-density_current_derived = density_current_electrons_derived + density_current_holes_derived
+_density_current_derived = _density_current_electrons_derived + _density_current_holes_derived
 
 # Check if derived density current is same as declared.
-assert expr_equals(density_current_derived, law.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
+assert expr_equals(_density_current_derived, law.rhs)
 
 
 @validate_input(electrons_concentration_=electrons_concentration,
     holes_concentration_=holes_concentration,
     electrons_mobility_=electrons_mobility,
     holes_mobility_=holes_mobility,
-    electric_intensity_=electric_intensity)
-@validate_output(density_current)
+    electric_intensity_=electric_field_strength)
+@validate_output(current_density)
 def calculate_current_density(electrons_concentration_: Quantity, holes_concentration_: Quantity,
     electrons_mobility_: Quantity, holes_mobility_: Quantity,
     electric_intensity_: Quantity) -> Quantity:
-    result_expr = solve(law, density_current, dict=True)[0][density_current]
+    result_expr = solve(law, current_density, dict=True)[0][current_density]
     result_expr = result_expr.subs({
         electrons_concentration: electrons_concentration_,
         holes_concentration: holes_concentration_,
         electrons_mobility: electrons_mobility_,
         holes_mobility: holes_mobility_,
-        electric_intensity: electric_intensity_
+        electric_field_strength: electric_intensity_
     })
     return Quantity(result_expr)

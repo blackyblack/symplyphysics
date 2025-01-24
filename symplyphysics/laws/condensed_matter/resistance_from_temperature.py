@@ -1,17 +1,28 @@
+"""
+Resistance from temperature
+===========================
+
+The resistance depends on the temperature. For different materials, the value of the
+temperature coefficient and resistance at zero degrees celsius may differ.
+
+**Links:**
+
+#. `BYJU's, similar formula for resistivity <https://byjus.com/physics/resistivity-temperature-dependence/>`__.
+"""
+
 from sympy import (Eq, solve)
 from symplyphysics import (
     symbols,
     units,
     Quantity,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
     quantities,
+    clone_as_symbol,
 )
 
 # Description
-## The resistance depends on the temperature. For different materials, the value
-## of the temperature coefficient and resistance at zero degrees celsius may differ.
 
 ## Law is: R = R0 * (1 + a * (T - T0)), where
 ## R - resistance,
@@ -20,18 +31,35 @@ from symplyphysics import (
 ## T - temperature,
 ## T0 - 273.15 kelvin degrees.
 
-# Links: BYJU's, similar formula for resistivity <https://byjus.com/physics/resistivity-temperature-dependence/>
+resistance = symbols.electrical_resistance
+"""
+:symbols:`electrical_resistance`.
+"""
 
-resistance = Symbol("resistance", units.impedance)
+resistance_initial = clone_as_symbol(symbols.electrical_resistance, subscript="0")
+"""
+:symbols:`electrical_resistance` at :attr:`~symplyphysics.quantities.standard_conditions_temperature`.
+"""
 
-resistance_initial = Symbol("resistance_initial", units.impedance)
-temperature_coefficient = Symbol("temperature_coefficient", 1 / units.temperature)
+temperature_coefficient = SymbolNew("a", 1 / units.temperature)
+"""
+Temperature coefficient of resistance.
+"""
+
 temperature = symbols.temperature
+"""
+:symbols:`temperature`.
+"""
 
 law = Eq(
     resistance,
     resistance_initial * (1 + temperature_coefficient *
     (temperature - quantities.standard_conditions_temperature)))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(resistance_initial_=resistance_initial,

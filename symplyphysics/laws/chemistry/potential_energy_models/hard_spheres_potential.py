@@ -17,38 +17,26 @@ atoms and molecules experience at very close distances.
 
 from sympy import Eq, Piecewise, S
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
 )
 
-potential = Symbol("potential", units.energy)
+potential = symbols.potential_energy
 """
-Potential energy of the configuration.
-
-Symbol:
-    :code:`U`
+:symbols:`potential_energy` of the configuration.
 """
 
-distance = Symbol("distance", units.length)
+distance = clone_as_symbol(symbols.euclidean_distance, display_symbol="r", display_latex="r")
 """
-Distance between the centers of the particles.
-
-Symbol:
-    :code:`r`
+:symbols:`euclidean_distance` between the centers of the particles.
 """
 
-sphere_diameter = Symbol("sphere_diameter", units.length)
-r"""
-Diameter of the spheres.
-
-Symbol:
-    :code:`sigma`
-
-Latex:
-    :math:`\sigma`
+sphere_diameter = clone_as_symbol(symbols.diameter, display_symbol="sigma", display_latex="\\sigma")
+"""
+:symbols:`diameter` of the spheres.
 """
 
 law = Eq(
@@ -56,7 +44,10 @@ law = Eq(
     Piecewise((S.Infinity, distance <= sphere_diameter), (0, distance > sphere_diameter)),
 )
 r"""
-:code:`U = Piecewise((Infinity, r <= sigma), (0, r > sigma))`
+..
+    The printers cannot yet work with `Piecewise` expressions.
+
+:code:`U = Piecewise((Infinity, d <= D), (0, d > D))`
 
 Latex:
     .. math::

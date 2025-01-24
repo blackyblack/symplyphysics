@@ -1,35 +1,51 @@
+"""
+Energy transfer coefficient for elastic scattering in magnetron
+===============================================================
+
+The traveling atom moves towards the substrate in the magnetron. At the same time, it
+collides with gas atoms. The energy transfer coefficient in these collisions depends on
+the mass of the traveling atom and the mass of the gas atom.
+
+..
+    TODO: find link
+"""
+
 from sympy import Eq, solve
-from symplyphysics import (Quantity, Symbol, validate_input, validate_output, dimensionless,
+from symplyphysics import (Quantity, SymbolNew, validate_input, validate_output, dimensionless,
     convert_to_float, clone_as_symbol, symbols)
 
-# Description
-## The traveling atom moves towards the substrate in the magnetron. At the same time, it collides with gas atoms.
-## The energy transfer coefficient in these collisions depends on the mass of the traveling atom and the mass of the gas atom.
+energy_transfer_coefficient = SymbolNew("x", dimensionless)
+"""
+Energy transfer coefficient.
+"""
 
-## Law is: x = 2 * M1 * M2 / (M1 + M2)^2, where
-## x - energy transfer coefficient,
-## M1 - the mass of the traveling atom,
-## M2 - the mass of the gas atom.
+traveling_atom_mass = clone_as_symbol(symbols.mass, subscript="1")
+"""
+:symbols:`mass` of traveling atom.
+"""
 
-# TODO: find link
-
-energy_transfer_coefficient = Symbol("energy_transfer_coefficient", dimensionless)
-
-mass_of_traveling_atom = clone_as_symbol(symbols.mass, display_symbol="m_1", display_latex="m_1")
-mass_of_gas_atom = clone_as_symbol(symbols.mass, display_symbol="m_2", display_latex="m_2")
+gas_atom_mass = clone_as_symbol(symbols.mass, subscript="2")
+"""
+:symbols:`mass` of gas atom.
+"""
 
 law = Eq(
     energy_transfer_coefficient,
-    2 * mass_of_traveling_atom * mass_of_gas_atom / (mass_of_traveling_atom + mass_of_gas_atom)**2)
+    2 * traveling_atom_mass * gas_atom_mass / (traveling_atom_mass + gas_atom_mass)**2)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
-@validate_input(mass_of_traveling_atom_=mass_of_traveling_atom, mass_of_gas_atom_=mass_of_gas_atom)
+@validate_input(mass_of_traveling_atom_=traveling_atom_mass, mass_of_gas_atom_=gas_atom_mass)
 @validate_output(energy_transfer_coefficient)
 def calculate_energy_transfer_coefficient(mass_of_traveling_atom_: Quantity,
     mass_of_gas_atom_: Quantity) -> float:
     result_expr = solve(law, energy_transfer_coefficient, dict=True)[0][energy_transfer_coefficient]
     result_expr = result_expr.subs({
-        mass_of_traveling_atom: mass_of_traveling_atom_,
-        mass_of_gas_atom: mass_of_gas_atom_,
+        traveling_atom_mass: mass_of_traveling_atom_,
+        gas_atom_mass: mass_of_gas_atom_,
     })
     return convert_to_float(result_expr)
