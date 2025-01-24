@@ -75,7 +75,7 @@ _force_expr = gravity_law.law.rhs.subs({
 _newtons_eqn = newtons_second_law.law.subs({
     newtons_second_law.acceleration: _acceleration_expr,
     newtons_second_law.force: _force_expr,
-    newtons_second_law.mass: attracting_mass,
+    newtons_second_law.mass: _attracted_mass,
 })
 
 _angular_speed_expr = solve(_newtons_eqn, _angular_speed)[1]

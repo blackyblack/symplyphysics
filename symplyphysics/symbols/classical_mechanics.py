@@ -410,3 +410,15 @@ The **Kepler's constant** is the constant of proportionality in Kepler's third l
 motion, namely the ratio between the square of the period of the planet to the semi-major axis
 of the planet's orbit. It is constant for all objects orbiting around the same object.
 """
+
+surface_tension = SymbolNew("gamma", units.force / units.length, display_latex="\\gamma")
+"""
+**Surface tension**, as a phenomenon, is the tendency of liquid surfaces at rest to
+shrink into the minimum surface area possible. The coefficient of surface tension is
+directly proportional to the force necessary to increase the surface area of the fluid
+and inversely proportional to the length of the side at which the force is applied to.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Surface_tension#Physics>`__.
+"""
