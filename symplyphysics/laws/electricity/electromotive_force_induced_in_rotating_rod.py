@@ -72,7 +72,7 @@ _angle = _angular_speed_law.angular_distance(_time)
 _loop_area = length**2 * _angle / 2
 
 _magnetic_flux = _magnetic_flux_law.law.rhs.subs({
-    _magnetic_flux_law.induction: magnetic_flux_density,
+    _magnetic_flux_law.magnetic_flux_density: magnetic_flux_density,
     _magnetic_flux_law.area: _loop_area,
     _magnetic_flux_law.angle:
         0,  # the normal to the contour is parallel to the magnetic flux density

@@ -1,34 +1,44 @@
+"""
+Wavelength in rectangular waveguide
+===================================
+
+A rectangular waveguide is a rectangular metal waveguide capable of supporting waves
+propagating along it. There is a critical wavelength. Signals with a wavelength greater
+than the critical one are attenuated and do not propagate in the waveguide.
+
+"""
+
 from sympy import Eq, solve, sqrt
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
-    print_expression,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
 )
 
-## Description
-## A rectangular waveguide is a rectangular metal waveguide capable of supporting waves propagating along it.
-## There is a critical wavelength. Signals with a wavelength greater than the critical one are attenuated and
-## do not propagate in the waveguide.
+waveguide_wavelength = clone_as_symbol(symbols.wavelength, subscript="\\text{w}")
+"""
+:symbols:`wavelength` in the waveguide.
+"""
 
-## Law is: Lw = L / sqrt(1 - (L / L1)^2), where
-## Lw - wavelength in a rectangular waveguide,
-## L - wavelength of a signal in a waveguide,
-## L1 - critical wavelength.
+signal_wavelength = symbols.wavelength
+"""
+:symbols:`wavelength` of the signal.
+"""
 
-waveguide_wavelength = Symbol("waveguide_wavelength", units.length)
-
-signal_wavelength = Symbol("signal_wavelength", units.length)
-critical_wavelength = Symbol("critical_wavelength", units.length)
+critical_wavelength = clone_as_symbol(symbols.wavelength, subscript="\\text{c}")
+"""
+Critical :symbols:`wavelength` of the waveguide.
+"""
 
 law = Eq(waveguide_wavelength,
     signal_wavelength / sqrt(1 - (signal_wavelength / critical_wavelength)**2))
+"""
+:laws:symbol::
 
-
-def print_law() -> str:
-    return print_expression(law)
+:laws:latex::
+"""
 
 
 @validate_input(signal_wavelength_=signal_wavelength, critical_wavelength_=critical_wavelength)

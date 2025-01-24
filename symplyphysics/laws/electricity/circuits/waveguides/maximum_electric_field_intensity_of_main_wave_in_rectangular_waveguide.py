@@ -1,55 +1,88 @@
+"""
+Maximum electric field strength of main wave in rectangular waveguide
+=====================================================================
+
+A rectangular waveguide is a rectangular metal waveguide capable of supporting waves propagating along it.
+The main wave is a transverse electric wave with the first index equal to :math:`1` and the second index equal to :math:`0`.
+
+**Conditions:**
+
+#. The wave propagating in the waveguide must be the main wave.
+#. The waveguide must be rectangular.
+
+..
+    TODO: find link
+"""
+
 from sympy import Eq, solve, pi, sqrt
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless)
+from symplyphysics import (
+    units,
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    clone_as_symbol,
+)
 
-## Description
-## A rectangular waveguide is a rectangular metal waveguide capable of supporting waves propagating along it.
-## The main wave is a transverse electric wave with the first index equal to 1 and the second index equal to 0.
-## The first index shows how many half-wave lengths fit horizontally across the cross section. The second index
-## shows how many half-wave lengths fit vertically across the cross section.
+maximum_electric_field_strength = symbols.electric_field_strength
+"""
+Maximum :symbols:`electric_field_strength` in the waveguide.
+"""
 
-## Law is: E = 2 * 120 * pi * a * H / (L * sqrt(er)), where
-## E - maximum electric field intensity in waveguide,
-## a - width of the waveguide cross section,
-## H - magnetic field intensity in waveguide,
-## L - wavelength,
-## er - relative permittivity of the material filling the waveguide.
+relative_permittivity = symbols.relative_permittivity
+"""
+:symbols:`relative_permittivity` of the insulator.
+"""
 
-# Conditions:
-# - the wave propagating in the waveguide must be the main wave;
-# - the waveguide must be rectangular.
+width = clone_as_symbol(symbols.length, display_symbol="a", display_latex="a")
+"""
+Horizontal dimension of the waveguide. See :symbols:`length`.
 
-maximum_electric_intensity = Symbol("maximum_electric_intensity", units.voltage / units.length)
+..
+    TODO: clarify horizontal, is it related to the plane of oscillation of the waves?
+"""
 
-relative_permittivity = Symbol("relative_permittivity", dimensionless)
-waveguide_width = Symbol("waveguide_width", units.length)
-wavelength = Symbol("wavelength", units.length)
-magnetic_intensity = Symbol("magnetic_intensity", units.current / units.length)
+wavelength = symbols.wavelength
+"""
+:symbols:`wavelength` of the signal.
+"""
 
-vacuum_impedance = Quantity(120 * units.impedance)
+magnetic_field_strength = symbols.magnetic_field_strength
+"""
+:symbols:`magnetic_field_strength`.
+"""
+
+impedance_constant = Quantity(120 * units.ohm, display_symbol="Z_0")
+"""
+Constant equal to :math:`120 \\Omega`.
+
+..
+    rename back to `vacuum_impedance`?
+"""
 
 law = Eq(
-    maximum_electric_intensity, 2 * vacuum_impedance * pi * waveguide_width * magnetic_intensity /
+    maximum_electric_field_strength, 2 * impedance_constant * pi * width * magnetic_field_strength /
     (wavelength * sqrt(relative_permittivity)))
+"""
+:laws:symbol::
 
-
-def print_law() -> str:
-    return print_expression(law)
+:laws:latex::
+"""
 
 
 @validate_input(relative_permittivity_=relative_permittivity,
-    waveguide_width_=waveguide_width,
+    waveguide_width_=width,
     wavelength_=wavelength,
-    magnetic_intensity_=magnetic_intensity)
-@validate_output(maximum_electric_intensity)
+    magnetic_intensity_=magnetic_field_strength)
+@validate_output(maximum_electric_field_strength)
 def calculate_maximum_electric_intensity(relative_permittivity_: float, waveguide_width_: Quantity,
     wavelength_: Quantity, magnetic_intensity_: Quantity) -> Quantity:
-    result_velocity_expr = solve(law, maximum_electric_intensity,
-        dict=True)[0][maximum_electric_intensity]
+    result_velocity_expr = solve(law, maximum_electric_field_strength,
+        dict=True)[0][maximum_electric_field_strength]
     result_expr = result_velocity_expr.subs({
         relative_permittivity: relative_permittivity_,
-        waveguide_width: waveguide_width_,
+        width: waveguide_width_,
         wavelength: wavelength_,
-        magnetic_intensity: magnetic_intensity_
+        magnetic_field_strength: magnetic_intensity_
     })
     return Quantity(result_expr)

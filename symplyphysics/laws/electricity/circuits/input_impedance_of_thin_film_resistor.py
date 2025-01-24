@@ -1,26 +1,45 @@
+"""
+Input impedance of thin film resistor
+=====================================
+
+Thin-film resistors in integrated design are used in microwave circuits. The input
+impedance of a thin-film resistor depends on its resistance and capacitance, as well as
+on the frequency.
+
+..
+    TODO: find link
+    NOTE: replace `2 * pi * f` with `omega`
+"""
+
 from sympy import Eq, solve, I, pi
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 
-# Description
-## Thin-film resistors in integrated design are used in microwave circuits. The input impedance of a thin-film resistor
-## depends on its resistance and capacitance, as well as on the frequency.
+input_impedance = symbols.electrical_impedance
+"""
+Input :symbols:`electrical_impedance` of the resistor.
+"""
 
-## Law is: Zin = R / (1 + I * 2 * pi * f * R * C / 3), where
-## Zin - input impedance of a thin-film resistor,
-## R - resistance,
-## I - imaginary unit,
-## f - frequency,
-## C - capacitance.
+resistance = symbols.electrical_resistance
+"""
+:symbols:`electrical_resistance` of the film.
+"""
 
-# TODO find link
+frequency = symbols.temporal_frequency
+"""
+:symbols:`temporal_frequency` of the current.
+"""
 
-input_impedance = Symbol("input_impedance", units.impedance)
-
-resistance = Symbol("resistance", units.impedance)
-frequency = Symbol("frequency", units.frequency)
-capacitance = Symbol("capacitance", units.capacitance)
+capacitance = symbols.capacitance
+"""
+:symbols:`capacitance` of the film.
+"""
 
 law = Eq(input_impedance, resistance / (1 + I * 2 * pi * frequency * resistance * capacitance / 3))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(

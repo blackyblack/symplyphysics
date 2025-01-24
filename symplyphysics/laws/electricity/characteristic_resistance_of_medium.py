@@ -1,37 +1,50 @@
-from sympy import (
-    Eq,
-    solve,
-    pi,
-    sqrt,
-)
+"""
+Characteristic resistance of medium
+===================================
+
+The characteristic resistance of a wave is a value determined by the ratio of the
+transverse component of the electric field strength to the transverse component of the
+magnetic field strength of a traveling wave.
+
+..
+    TODO: find link
+"""
+
+from sympy import Eq, solve, pi, sqrt
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
-    dimensionless,
+    symbols,
 )
 
-# Description
-## The characteristic resistance of a wave is a value determined by the ratio of the transverse component
-## of the electric field strength to the transverse component of the magnetic field strength of a traveling wave.
+resistance = symbols.electrical_resistance
+"""
+:symbols:`electrical_resistance` of the medium.
+"""
 
-## Law is: Z = 120 * pi * sqrt(mur / er), where
-## Z - characteristic resistance,
-## mur - relative permeability of the insulator material,
-## er - relative permittivity of insulating material.
+relative_permittivity = symbols.relative_permittivity
+"""
+:symbols:`relative_permittivity` of the medium.
+"""
 
-# TODO find link
+relative_permeability = symbols.relative_permeability
+"""
+:symbols:`relative_permeability` of the medium.
+"""
 
-resistance = Symbol("resistance", units.impedance)
+impedance_constant = Quantity(120 * pi * units.ohm, display_symbol="Z_0")
+"""
+Constant equal to :math:`120 \\Omega`.
+"""
 
-relative_permittivity = Symbol("relative_permittivity", dimensionless)
-relative_permeability = Symbol("relative_permeability", dimensionless)
+law = Eq(resistance, impedance_constant * sqrt(relative_permeability / relative_permittivity))
+"""
+:laws:symbol::
 
-impedance_vacuum = Quantity(120 * pi * units.ohm)
-
-law = Eq(resistance, impedance_vacuum * sqrt(relative_permeability / relative_permittivity))
+:laws:latex::
+"""
 
 
 @validate_input(relative_permittivity_=relative_permittivity,

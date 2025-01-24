@@ -1,34 +1,39 @@
-from sympy import (I, Eq, solve)
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    print_expression,
-    validate_input,
-    validate_output,
-)
+"""
+Capacitor impedance from capacitor reactance
+============================================
 
-# Description
-## While the serial resistance of ideal capacitor is zero, its impedance depends on its reactance.
-## Law: Zc = -j * Xc, where
-## Zc is capacitor impedance,
-## Xc is capacitive reactance.
+When the serial resistance of ideal capacitor is zero, its impedance depends on its reactance.
 
-capacitor_impedance = Symbol("capacitor_impedance", units.impedance)
-capacitive_reactance = Symbol("capacitive_reactance", units.impedance)
+..
+    TODO: find link
+"""
 
-law = Eq(capacitor_impedance, -I * capacitive_reactance)
+from sympy import I, Eq, solve
+from symplyphysics import Quantity, validate_input, validate_output, symbols
+
+impedance = symbols.electrical_impedance
+"""
+:symbols:`electrical_impedance` of a capacitor.
+"""
+
+reactance = symbols.electrical_reactance
+"""
+:symbols:`electrical_reactance` of a capacitor.
+"""
+
+law = Eq(impedance, -I * reactance)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
-def print_law() -> str:
-    return print_expression(law)
-
-
-@validate_input(reactance_=capacitive_reactance)
-@validate_output(capacitor_impedance)
+@validate_input(reactance_=reactance)
+@validate_output(impedance)
 def calculate_impedance(reactance_: Quantity) -> Quantity:
-    result_impedance_expr = solve(law, capacitor_impedance, dict=True)[0][capacitor_impedance]
+    result_impedance_expr = solve(law, impedance, dict=True)[0][impedance]
     result_expr = result_impedance_expr.subs({
-        capacitive_reactance: reactance_,
+        reactance: reactance_,
     })
     return Quantity(result_expr)

@@ -1,41 +1,71 @@
-from sympy import (Eq, solve, pi, cos)
-from sympy.physics.units import magnetic_constant
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless,
-    angle_type)
+"""
+Magnetic flux density of linear conductor of finite length
+==========================================================
 
-# Description
-## Let there be a rectilinear conductor of finite length. Then its magnetic induction will depend on
-## the magnitude of the current and the material. It also depends on the perpendicular distance to the
-## conductor and on the angles between the lines drawn from the ends of the conductor to the point and
-## the conductor.
+Let there be a rectilinear conductor of finite length. Then its magnetic flux density
+will depend on the magnitude of the current and the material. It also depends on the
+perpendicular distance to the conductor and on the angles between the lines drawn from
+the ends of the conductor to the point and the conductor.
 
-## Law is: B = mu * mu0 * I * (cos(a1) + cos(a2)) / (4 * pi * r), where
-## B - induction,
-## mu - relative permeability of medium,
-## mu0 - magnetic constant,
-## I - current,
-## a1 - first angle,
-## a2 - second angle,
-## r - distance.
+**Conditions:**
 
-# Conditions:
-## - Conductor should be rectilinear;
-## - Length of the conductor is finite.
+#. Conductor should be rectilinear;
+#. Length of the conductor is finite.
 
-# TODO: find link
+..
+    TODO: find link
+    TODO: replace `mu_0 * mu_r` with `mu`
+"""
 
-induction = Symbol("induction", units.magnetic_density)
+from sympy import Eq, solve, pi, cos
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    quantities,
+    symbols,
+    clone_as_symbol,
+)
 
-relative_permeability = Symbol("relative_permeability", dimensionless)
-current = Symbol("current", units.current)
-first_angle = Symbol("first_angle", angle_type)
-second_angle = Symbol("second_angle", angle_type)
-distance = Symbol("distance", units.length)
+magnetic_flux_density = symbols.magnetic_flux_density
+"""
+:symbols:`magnetic_flux_density` through the conductor.
+"""
+
+relative_permeability = symbols.relative_permeability
+"""
+:symbols:`relative_permeability` of the medium.
+"""
+
+current = symbols.current
+"""
+:symbols:`current` running through the conductor.
+"""
+
+first_angle = clone_as_symbol(symbols.angle, subscript="1")
+"""
+:symbols:`angle` between origin and the first end of the conductor.
+"""
+
+second_angle = clone_as_symbol(symbols.angle, subscript="2")
+"""
+:symbols:`angle` between origin and the second end of the conductor.
+"""
+
+distance = symbols.euclidean_distance
+"""
+Perpendicular :symbols:`euclidean_distance` to the conductor.
+"""
 
 law = Eq(
-    induction,
-    relative_permeability * magnetic_constant * current * (cos(first_angle) + cos(second_angle)) /
+    magnetic_flux_density,
+    relative_permeability * quantities.vacuum_permeability * current * (cos(first_angle) + cos(second_angle)) /
     (4 * pi * distance))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(relative_permeability_=relative_permeability,
@@ -43,11 +73,11 @@ law = Eq(
     first_angle_=first_angle,
     second_angle_=second_angle,
     distance_=distance)
-@validate_output(induction)
+@validate_output(magnetic_flux_density)
 def calculate_induction(relative_permeability_: float, current_: Quantity,
     first_angle_: float | Quantity, second_angle_: float | Quantity,
     distance_: Quantity) -> Quantity:
-    result_expr = solve(law, induction, dict=True)[0][induction]
+    result_expr = solve(law, magnetic_flux_density, dict=True)[0][magnetic_flux_density]
     result_expr = result_expr.subs({
         relative_permeability: relative_permeability_,
         current: current_,

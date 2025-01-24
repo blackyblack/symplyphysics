@@ -1,68 +1,90 @@
-from sympy import (
-    Eq,
-    solve,
-    pi,
-    sqrt,
-    ln,
-)
+"""
+Attenuation coefficient in metal
+================================
+
+A coaxial waveguide is an electrical cable consisting of a central conductor and a
+shield arranged coaxially and separated by an insulating material or an air gap. It is
+used to transmit radio frequency electrical signals. The specific resistance of a
+coaxial waveguide depends on the diameter of the outer conductor and the diameter of the
+inner conductor, as well as on the relative permeability and the relative permittivity
+of the insulator material, the surface resistance of the outer conductor and the surface
+resistance of the inner conductor.
+
+..
+    TODO: find link
+"""
+
+from sympy import Eq, solve, pi, sqrt, ln
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
-    print_expression,
     validate_input,
     validate_output,
-    dimensionless,
+    symbols,
+    clone_as_symbol,
 )
 
-# Description
-## A coaxial waveguide is an electrical cable consisting of a central conductor and a shield arranged coaxially and separated
-## by an insulating material or an air gap. It is used to transmit radio frequency electrical signals.
-## The specific resistance of a coaxial waveguide depends on the diameter of the outer conductor and the diameter of the inner conductor,
-## as well as on the relative permeability and the relative permittivity of the insulator material, the surface resistance of the outer conductor
-## and the surface resistance of the inner conductor.
-## The attenuation coefficient shows how many times the transmitted signal weakens per unit length of the coaxial waveguide.
+attenuation_coefficient = symbols.attenuation_coefficient
+"""
+:symbols:`attenuation_coefficient` in metal.
+"""
 
-## Law is: am = sqrt(er / mur) * ((Rs1 / d) + (Rs2 / D)) / (420 * pi * ln(D / d)), where
-## am - attenuation coefficient in metal,
-## er - relative permittivity of insulating material,
-## mur - relative permeability of the insulator material,
-## Rs1 - surface resistance of the inner conductor,
-## Rs2 - surface resistance of the outer conductor,
-## D - diameter of the outer conductor,
-## d - diameter of the inner conductor.
+relative_permittivity = symbols.relative_permittivity
+"""
+:symbols:`relative_permittivity` of the insulator.
+"""
 
-attenuation_coefficient = Symbol("attenuation_coefficient", 1 / units.length)
+relative_permeability = symbols.relative_permeability
+"""
+:symbols:`relative_permeability` of the insulator.
+"""
 
-relative_permittivity = Symbol("relative_permittivity", dimensionless)
-relative_permeability = Symbol("relative_permeability", dimensionless)
-surface_resistance_outer = Symbol("surface_resistance_outer", units.impedance)
-surface_resistance_inner = Symbol("surface_resistance_inner", units.impedance)
-outer_diameter = Symbol("outer_diameter", units.length)
-inner_diameter = Symbol("inner_diameter", units.length)
+outer_surface_resistance = clone_as_symbol(symbols.electrical_resistance, subscript="\\text{o}")
+"""
+Surface :symbols:`electrical_resistance` of the outer conductor.
+"""
 
-resistance = Quantity(420 * units.ohm)
+inner_surface_resistance = clone_as_symbol(symbols.electrical_resistance, subscript="\\text{i}")
+"""
+Surface :symbols:`electrical_resistance` of the inner conductor.
+"""
+
+outer_diameter = clone_as_symbol(symbols.diameter, subscript="\\text{o}")
+"""
+:symbols:`diameter` of the outer conductor.
+"""
+
+inner_diameter = clone_as_symbol(symbols.diameter, subscript="\\text{i}")
+"""
+:symbols:`diameter` of the inner conductor.
+"""
+
+resistance = Quantity(420 * units.ohm, display_symbol="R_0")
+"""
+Constant equal to :math:`420 \\Omega`.
+"""
 
 law = Eq(
     attenuation_coefficient,
     sqrt(relative_permittivity / relative_permeability) *
-    ((surface_resistance_inner / inner_diameter) + (surface_resistance_outer / outer_diameter)) /
+    ((inner_surface_resistance / inner_diameter) + (outer_surface_resistance / outer_diameter)) /
     (resistance * pi * ln(outer_diameter / inner_diameter)))
+"""
+:laws:symbol::
 
-
-def print_law() -> str:
-    return print_expression(law)
+:laws:latex::
+"""
 
 
 @validate_input(relative_permittivity_=relative_permittivity,
     relative_permeability_=relative_permeability,
-    surface_resistance_outer_=surface_resistance_outer,
-    surface_resistance_inner_=surface_resistance_inner,
+    surface_resistance_outer_=outer_surface_resistance,
+    inner_surface_resistance_=inner_surface_resistance,
     outer_diameter_=outer_diameter,
     inner_diameter_=inner_diameter)
 @validate_output(attenuation_coefficient)
 def calculate_attenuation_coefficient(relative_permittivity_: float, relative_permeability_: float,
-    surface_resistance_outer_: Quantity, surface_resistance_inner_: Quantity,
+    surface_resistance_outer_: Quantity, inner_surface_resistance_: Quantity,
     outer_diameter_: Quantity, inner_diameter_: Quantity) -> Quantity:
     # pylint: disable=too-many-arguments, too-many-positional-arguments
     if outer_diameter_.scale_factor <= inner_diameter_.scale_factor:
@@ -71,8 +93,8 @@ def calculate_attenuation_coefficient(relative_permittivity_: float, relative_pe
     result_expr = result_expr.subs({
         relative_permittivity: relative_permittivity_,
         relative_permeability: relative_permeability_,
-        surface_resistance_outer: surface_resistance_outer_,
-        surface_resistance_inner: surface_resistance_inner_,
+        outer_surface_resistance: surface_resistance_outer_,
+        inner_surface_resistance: inner_surface_resistance_,
         outer_diameter: outer_diameter_,
         inner_diameter: inner_diameter_
     })

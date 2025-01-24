@@ -82,7 +82,7 @@ _angle = _angle_law.law.rhs.subs({
 })
 
 _magnetic_flux = _magnetic_flux_law.law.rhs.subs({
-    _magnetic_flux_law.induction: magnetic_flux_density,
+    _magnetic_flux_law.magnetic_flux_density: magnetic_flux_density,
     _magnetic_flux_law.area: contour_area,
     _magnetic_flux_law.angle: _angle,
 })

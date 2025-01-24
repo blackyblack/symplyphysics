@@ -1,51 +1,74 @@
+"""
+Capacitance of p-n varactor junction
+====================================
+
+The principle of operation of the variator is based on the dependence of the barrier
+capacitance of the p-n junction on the voltage value. Knowing the doping coefficient,
+the material parameter and the capacity without bias voltage, it is possible to
+calculate the capacity of the varactor at a given voltage.
+
+..
+    TODO: find link
+"""
+
 from sympy import Eq, solve
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
     dimensionless,
+    symbols,
+    clone_as_symbol,
 )
 
-# Description
-## The principle of operation of the variator is based on the dependence of the barrier capacitance of the p-n junction on the voltage value.
-## Knowing the doping coefficient, the material parameter and the capacity without bias voltage, it is possible to calculate the capacity
-## of the varactor at a given voltage.
+capacitance = symbols.capacitance
+"""
+Barrier :symbols:`capacitance` of the p-n junction.
+"""
 
-## Law is: C = C0 / (1 - V / V0)^y, where
-## C - barrier capacity of the p-n junction,
-## C0 - barrier capacitance of the p-n junction without bias voltage,
-## V - voltage,
-## V0 - material parameter (a certain constant having the dimension of the voltage and depending on the material),
-## y - doping coefficient.
+capacitance_without_bias_voltage = clone_as_symbol(symbols.capacitance, subscript="0")
+"""
+Barrier :symbols:`capacitance` of the p-n junction without the bias voltage.
+"""
 
-# TODO: find link
+voltage = symbols.voltage
+"""
+:symbols:`voltage` applied.
+"""
 
-junction_capacitance = Symbol("junction_capacitance", units.capacitance)
+material_parameter = clone_as_symbol(symbols.voltage, subscript="0")
+"""
+A certain constant having the dimension of :symbols:`voltage` which depends on the exact
+material.
+"""
 
-junction_capacitance_without_bias_voltage = Symbol("junction_capacitance_without_bias_voltage",
-    units.capacitance)
-voltage = Symbol("voltage", units.voltage)
-material_parameter = Symbol("material_parameter", units.voltage)
-doping_coefficient = Symbol("doping_coefficient", dimensionless)
+doping_coefficient = SymbolNew("y", dimensionless)
+"""
+Doping coefficient.
+"""
 
 law = Eq(
-    junction_capacitance, junction_capacitance_without_bias_voltage /
+    capacitance, capacitance_without_bias_voltage /
     (1 - voltage / material_parameter)**doping_coefficient)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(
-    junction_capacitance_without_bias_voltage_=junction_capacitance_without_bias_voltage,
+    junction_capacitance_without_bias_voltage_=capacitance_without_bias_voltage,
     voltage_=voltage,
     material_parameter_=material_parameter,
     doping_coefficient_=doping_coefficient)
-@validate_output(junction_capacitance)
+@validate_output(capacitance)
 def calculate_junction_capacitance(junction_capacitance_without_bias_voltage_: Quantity,
     voltage_: Quantity, material_parameter_: Quantity, doping_coefficient_: float) -> Quantity:
-    result_expr = solve(law, junction_capacitance, dict=True)[0][junction_capacitance]
+    result_expr = solve(law, capacitance, dict=True)[0][capacitance]
     result_expr = result_expr.subs({
-        junction_capacitance_without_bias_voltage: junction_capacitance_without_bias_voltage_,
+        capacitance_without_bias_voltage: junction_capacitance_without_bias_voltage_,
         voltage: voltage_,
         material_parameter: material_parameter_,
         doping_coefficient: doping_coefficient_,

@@ -1,19 +1,31 @@
+"""
+Phase speed of wave in rectangular waveguide
+============================================
+
+A rectangular waveguide is a rectangular metal waveguide capable of supporting waves
+propagating along it. There is a critical wavelength. Signals with a wavelength greater
+than the critical one are attenuated and do not propagate in the waveguide.
+
+**Notation:**
+
+#. :quantity_notation:`speed_of_light`.
+
+..
+    TODO: fix file name
+    TODO: find link
+"""
+
 from sympy import Eq, solve, sqrt
-from sympy.physics.units import speed_of_light
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
-    print_expression,
     validate_input,
     validate_output,
-    dimensionless,
+    quantities,
+    symbols,
+    clone_as_symbol,
 )
 
 ## Description
-## A rectangular waveguide is a rectangular metal waveguide capable of supporting waves propagating along it.
-## There is a critical wavelength. Signals with a wavelength greater than the critical one are attenuated and
-## do not propagate in the waveguide.
 
 ## Law is: Vph = c / sqrt(er * mur * (1 - (L / L1)^2)), where
 ## Vph - phase velocity of wave in rectangular waveguide,
@@ -23,30 +35,49 @@ from symplyphysics import (
 ## L - wavelength,
 ## L1 - critical wavelength.
 
-phase_velocity = Symbol("phase_velocity", units.velocity)
+phase_speed = symbols.phase_speed
+"""
+:symbols:`phase_speed` of the wave in the waveguide.
+"""
 
-relative_permittivity = Symbol("relative_permittivity", dimensionless)
-relative_permeability = Symbol("relative_permeability", dimensionless)
-wavelength = Symbol("wavelength", units.length)
-critical_wavelength = Symbol("critical_wavelength", units.length)
+relative_permittivity = symbols.relative_permittivity
+"""
+:symbols:`relative_permittivity` of the insulator.
+"""
+
+relative_permeability = symbols.relative_permeability
+"""
+:symbols:`relative_permeability` of the insulator.
+"""
+
+wavelength = symbols.wavelength
+"""
+:symbols:`wavelength` of the signal.
+"""
+
+critical_wavelength = clone_as_symbol(symbols.wavelength, subscript="\\text{c}")
+"""
+Critical :symbols:`wavelength` of the system.
+"""
 
 law = Eq(
-    phase_velocity, speed_of_light / sqrt(relative_permittivity * relative_permeability * (1 -
+    phase_speed, quantities.speed_of_light / sqrt(relative_permittivity * relative_permeability * (1 -
     (wavelength / critical_wavelength)**2)))
+"""
+:laws:symbol::
 
-
-def print_law() -> str:
-    return print_expression(law)
+:laws:latex::
+"""
 
 
 @validate_input(relative_permittivity_=relative_permittivity,
     relative_permeability_=relative_permeability,
     wavelength_=wavelength,
     critical_wavelength_=critical_wavelength)
-@validate_output(phase_velocity)
+@validate_output(phase_speed)
 def calculate_phase_velocity(relative_permittivity_: float, relative_permeability_: float,
     wavelength_: Quantity, critical_wavelength_: Quantity) -> Quantity:
-    result_velocity_expr = solve(law, phase_velocity, dict=True)[0][phase_velocity]
+    result_velocity_expr = solve(law, phase_speed, dict=True)[0][phase_speed]
     result_expr = result_velocity_expr.subs({
         relative_permittivity: relative_permittivity_,
         relative_permeability: relative_permeability_,

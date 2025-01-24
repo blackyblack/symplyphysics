@@ -1,51 +1,74 @@
+"""
+Corona discharge current from voltage
+=====================================
+
+The corona discharge is an independent discharge in a relatively dense gas. If an
+electric field is applied to two electrodes between which there is a gas gap, then a
+corona discharge occurs at a certain potential difference between the electrodes.
+
+..
+    TODO: find link
+"""
+
 from sympy import Eq, solve
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
 )
 
-# Description
-## The corona discharge is an independent discharge in a relatively dense gas. If an electric field is applied to two electrodes between
-## which there is a gas gap, then a corona discharge occurs at a certain potential difference between the electrodes.
+current = symbols.current
+"""
+Corona discharge :symbols:`current`.
+"""
 
-## Law is: I = A * k * U * (U - U0), where
-## I - corona discharge current,
-## A - experimentally determined gas coefficient,
-## k - mobility of charged particles,
-## U - voltage,
-## U0 - corona discharge occurrence voltage.
+experimental_coefficient = SymbolNew("A", units.charge / (units.area * units.voltage))
+"""
+Coefficient of the gas which is experimentally determined.
+"""
 
-# TODO find link
+mobility = symbols.mobility
+"""
+:symbols:`mobility` of charge carriers.
+"""
 
-current = Symbol("current", units.current)
+voltage = symbols.voltage
+"""
+:symbols:`voltage` applied.
+"""
 
-gas_coefficient = Symbol("gas_coefficient", units.charge / (units.area * units.voltage))
-mobility_of_charged_particles = Symbol("mobility_of_charged_particles",
-    units.area / (units.voltage * units.time))
-voltage = Symbol("voltage", units.voltage)
-corona_discharge_occurrence_voltage = Symbol("corona_discharge_occurrence_voltage", units.voltage)
+discharge_voltage = clone_as_symbol(symbols.voltage, subscript="0")
+"""
+:symbols:`voltage` at which the corona discharge occurs.
+"""
 
 law = Eq(
     current,
-    gas_coefficient * mobility_of_charged_particles * voltage *
-    (voltage - corona_discharge_occurrence_voltage))
+    experimental_coefficient * mobility * voltage *
+    (voltage - discharge_voltage))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
-@validate_input(gas_coefficient_=gas_coefficient,
-    mobility_of_charged_particles_=mobility_of_charged_particles,
+@validate_input(gas_coefficient_=experimental_coefficient,
+    mobility_of_charged_particles_=mobility,
     voltage_=voltage,
-    corona_discharge_occurrence_voltage_=corona_discharge_occurrence_voltage)
+    corona_discharge_occurrence_voltage_=discharge_voltage)
 @validate_output(current)
 def calculate_current(gas_coefficient_: Quantity, mobility_of_charged_particles_: Quantity,
     voltage_: Quantity, corona_discharge_occurrence_voltage_: Quantity) -> Quantity:
     result_expr = solve(law, current, dict=True)[0][current]
     result_expr = result_expr.subs({
-        gas_coefficient: gas_coefficient_,
-        mobility_of_charged_particles: mobility_of_charged_particles_,
+        experimental_coefficient: gas_coefficient_,
+        mobility: mobility_of_charged_particles_,
         voltage: voltage_,
-        corona_discharge_occurrence_voltage: corona_discharge_occurrence_voltage_,
+        discharge_voltage: corona_discharge_occurrence_voltage_,
     })
     return Quantity(result_expr)

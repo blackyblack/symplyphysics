@@ -1,33 +1,61 @@
+"""
+Specific inductance of coaxial waveguide
+========================================
+
+A coaxial waveguide is an electrical cable consisting of a central conductor and a
+shield arranged coaxially and separated by an insulating material or an air gap. It is
+used to transmit radio frequency electrical signals. The specific inductance of a
+coaxial waveguide depends on the radius of the outer conductor and the radius of the
+inner conductor, as well as on the relative permeability of the insulator material.
+
+**Notation:**
+
+#. :quantity_notation:`vacuum_permeability`.
+
+..
+    TODO: find link
+    TODO: replace `mu_0 * mu_r` with `mu`
+"""
+
 from sympy import Eq, solve, pi, ln
-from sympy.physics.units import magnetic_constant
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless)
+from symplyphysics import (
+    units,
+    Quantity,
+    SymbolNew,
+    validate_input,
+    validate_output,
+    quantities,
+    symbols,
+    clone_as_symbol,
+)
 
-## Description
-## A coaxial waveguide is an electrical cable consisting of a central conductor and a shield arranged coaxially and separated
-## by an insulating material or an air gap. It is used to transmit radio frequency electrical signals.
-## The specific inductance of a coaxial waveguide depends on the radius of the outer conductor and the radius of the inner conductor,
-## as well as on the relative permeability of the insulator material.
+specific_inductance = SymbolNew("L", units.inductance / units.length)
+"""
+:symbols:`inductance` of the waveguide per unit :symbols:`length`.
+"""
 
-## Law is: L = (mu0 * mur / (2 * pi)) * ln(b / a), where
-## L - specific inductance of coaxial waveguide,
-## mu0 - magnetic constant,
-## mur - relative permeability of the insulator material,
-## b - radius of the outer conductor,
-## a - radius of the inner conductor.
+relative_permeability = symbols.relative_permeability
+"""
+:symbols:`relative_permeability` of the insulator.
+"""
 
-specific_inductance = Symbol("specific_inductance", units.inductance / units.length)
+outer_radius = clone_as_symbol(symbols.radius, subscript="\\text{o}")
+"""
+:symbols:`radius` of the outer conductor.
+"""
 
-relative_permeability = Symbol("relative_permeability", dimensionless)
-outer_radius = Symbol("outer_radius", units.length)
-inner_radius = Symbol("inner_radius", units.length)
+inner_radius = clone_as_symbol(symbols.radius, subscript="\\text{i}")
+"""
+:symbols:`radius` of the inner conductor.
+"""
 
 law = Eq(specific_inductance,
-    (magnetic_constant * relative_permeability / (2 * pi)) * ln(outer_radius / inner_radius))
+    (quantities.vacuum_permeability * relative_permeability / (2 * pi)) * ln(outer_radius / inner_radius))
+"""
+:laws:symbol::
 
-
-def print_law() -> str:
-    return print_expression(law)
+:laws:latex::
+"""
 
 
 @validate_input(relative_permeability_=relative_permeability,

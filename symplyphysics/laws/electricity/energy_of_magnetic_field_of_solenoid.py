@@ -1,39 +1,57 @@
-from sympy import (Eq, solve)
-from sympy.physics.units import magnetic_constant
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless)
+"""
+Energy of magnetic field of coil
+================================
 
-# Description
-## A solenoid is a cylindrical coil consisting of a large number of turns of wire forming a helical line.
-## Energy of solenoid depends on core material, intensity of magnetic field and volume of core.
+Energy of a coil depends on the material of the core, the mangetic field strength within
+the coil and volume of the core.
 
-## Law is: W = mu * mu0 * H^2 * V / 2, where
-## W - energy,
-## mu - relative permeability of the core inside of a solenoid,
-## mu0 - magnetic constant,
-## H - magnetic field intensity,
-## V - volume of solenoid.
+**Links:**
 
-# Links: Physics LibreTexts, derivable from 14.4.1 <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/University_Physics_II_-_Thermodynamics_Electricity_and_Magnetism_(OpenStax)/14%3A_Inductance/14.04%3A_Energy_in_a_Magnetic_Field>
+#. `Physics LibreTexts, derivable from 14.4.1 <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/University_Physics_II_-_Thermodynamics_Electricity_and_Magnetism_(OpenStax)/14%3A_Inductance/14.04%3A_Energy_in_a_Magnetic_Field>`__.
 
-# NOTE replace `H` with `B`?
+..
+    NOTE replace `H` with `B`?
+"""
 
-energy = Symbol("energy", units.energy)
+from sympy import Eq, solve
+from symplyphysics import Quantity, validate_input, validate_output, quantities, symbols
 
-relative_permeability = Symbol("relative_permeability", dimensionless)
-intensity = Symbol("intensity", units.current / units.length)
-volume = Symbol("volume", units.volume)
+energy = symbols.energy
+"""
+:symbols:`energy` of the coil.
+"""
 
-law = Eq(energy, relative_permeability * magnetic_constant * intensity**2 * volume / 2)
+relative_permeability = symbols.relative_permeability
+"""
+:symbols:`relative_permeability` of the medium.
+"""
+
+mangetic_field_strength = symbols.magnetic_field_strength
+"""
+:symbols:`magnetic_field_strength`.
+"""
+
+volume = symbols.volume
+"""
+:symbols:`volume` of the coil.
+"""
+
+law = Eq(energy, quantities.vacuum_permeability * relative_permeability * mangetic_field_strength**2 * volume / 2)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
-@validate_input(relative_permeability_=relative_permeability, intensity_=intensity, volume_=volume)
+@validate_input(relative_permeability_=relative_permeability, intensity_=mangetic_field_strength, volume_=volume)
 @validate_output(energy)
 def calculate_energy(relative_permeability_: float, intensity_: Quantity,
     volume_: Quantity) -> Quantity:
     result_energy_expr = solve(law, energy, dict=True)[0][energy]
     result_expr = result_energy_expr.subs({
         relative_permeability: relative_permeability_,
-        intensity: intensity_,
+        mangetic_field_strength: intensity_,
         volume: volume_
     })
     return Quantity(result_expr)
