@@ -250,6 +250,16 @@ attraction between two objects.
 #. `Wikipedia <https://en.wikipedia.org/wiki/Gravitational_constant>`__.
 """
 
+faraday_constant = Quantity(elementary_charge * avogadro_constant, display_symbol="F", display_latex="\\mathfrak{F}")
+"""
+The **Faraday constant** represents the amount of electric charge carried by one mole,
+or Avogadro's number, of electrons.
+
+**Links:**
+
+#. `TechTarget <https://www.techtarget.com/whatis/definition/Faraday-constant>`__.
+"""
+
 __all__ = [
     "standard_conditions_temperature",
     "standard_laboratory_temperature",

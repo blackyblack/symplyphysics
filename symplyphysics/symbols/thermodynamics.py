@@ -168,3 +168,64 @@ substantially changing its direction or energy.
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Mean_free_path>`__.
 """
+
+sutherland_constant = SymbolNew("S", units.temperature)
+"""
+The **Sutherland constant** is a parameter used in the Sutherland model for gaseous viscosity.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Temperature_dependence_of_viscosity#Sutherland_model>`__.
+"""
+
+prandtl_number = SymbolNew("Pr", dimensionless, display_latex="\\text{Pr}")
+"""
+The **Prandtl number** is a dimensionless number defined as the ratio of momentum
+diffusivity to thermal diffusivity.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Prandtl_number>`__.
+"""
+
+grashof_number = SymbolNew("Gr", dimensionless, display_latex="\\text{Gr}")
+"""
+The **Grashof number** approximates the ratio of the buoyancy to viscous forces acting
+on a fluid.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Grashof_number>`__.
+"""
+
+kinematic_viscosity = SymbolNew("nu", units.area / units.time, display_latex="\\nu")
+"""
+In fluid dynamics, **kinematic viscosity**, or **momentum diffusivity**, is defined as
+the ratio of the dynamic viscosity over the density of the fluid.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Viscosity#Kinematic_viscosity>`__.
+"""
+
+thermal_diffusivity = SymbolNew("alpha", units.area / units.time, display_latex="\\alpha")
+"""
+**Thermal diffusivity** is the thermal conductivity divided by density and specific heat
+capacity at constant pressure.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Thermal_diffusivity>`__.
+"""
+
+attractive_forces_parameter = SymbolNew("a", units.pressure * (units.volume / units.amount_of_substance)**2)
+"""
+Parameter specific to each individual substance, usually attributed to the magnitude of
+attractive forces between particles of the system.
+"""
+
+excluded_volume_parameter = SymbolNew("b", units.volume / units.amount_of_substance)
+"""
+Parameter specific to each individual substance, usually attributed to the amount of
+excluded molar volume due to a finite size of particles.
+"""

@@ -69,3 +69,55 @@ in a collision of two particles.
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Cross_section_(physics)>`__.
 """
+
+atomic_number = SymbolNew("Z", dimensionless, integer=True, positive=True)
+"""
+The **atomic number** or **nuclear charge number** of a chemical element is the charge
+number of its atomic nucleus.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Atomic_number>`__.
+"""
+
+valence = SymbolNew("v", dimensionless, nonnegative=True)
+"""
+**Valence** of an atom is a measure of its combining capacity with other atoms when it
+forms chemical compounds or molecules, and is generally understood to be the number of
+chemical bonds that each atom of a given chemical element typically forms.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Valence_(chemistry)>`__.
+"""
+
+equilibrium_constant = SymbolNew("K", dimensionless)
+"""
+The **equilibrium constant** expresses the relationship between products and reactants
+of a reaction at equilibrium with respect to a specific unit.
+
+**Links:**
+
+#. `Chemistry LibreTexts <https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Supplemental_Modules_(Physical_and_Theoretical_Chemistry)/Equilibria/Chemical_Equilibria/The_Equilibrium_Constant>`__.
+"""
+
+electrochemical_equivalent = SymbolNew("Z", units.mass / units.charge)
+"""
+The **electrochemical equivalent** of a chemical element is the mass of that element
+transported by a specific quantity of electricity, usually charge.
+"""
+
+mobility = SymbolNew("mu", units.area / units.voltage / units.time, display_latex="\\mu")
+"""
+Electrical **mobility** is the ability of charged particles to move through a medium in
+response to an electric field that is pulling them.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Electrical_mobility>`__.
+"""
+
+diffusion_coefficient = SymbolNew("D", units.area / units.time)
+"""
+
+"""
