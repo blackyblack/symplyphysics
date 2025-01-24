@@ -121,9 +121,12 @@ diffusion_coefficient = SymbolNew("D", units.area / units.time)
 """
 **Diffusion coefficient**, also referred to as (mass) **diffusivity**, is the
 proportionality constant between the molar flux due to molecular diffusion and the
-negative value of the gradient in the concentration of the species.
+negative value of the gradient in the concentration of the species. In simpler terms,
+it is the amount of a particular substance that diffuses across a unit area in unit time
+under the influence of a gradient of one unit.
 
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Mass_diffusivity>`__.
+#. `ScienceDirect <https://www.sciencedirect.com/topics/biochemistry-genetics-and-molecular-biology/diffusion-coefficient>`__.
 """
