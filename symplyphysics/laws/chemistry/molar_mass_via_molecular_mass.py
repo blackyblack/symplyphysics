@@ -66,7 +66,7 @@ _amount_of_substance = solve(avogadro_law.law,
 _local_index = Idx("local_index", (1, _number_of_particles))
 
 _total_mass = mass_sum_law.law.rhs.subs(global_index,
-    _local_index).subs(mass_sum_law.mass_of_component[_local_index], molecular_mass).doit()
+    _local_index).subs(mass_sum_law.component_mass[_local_index], molecular_mass).doit()
 
 _molar_mass_derived = solve(
     molar_qty_law.law,
