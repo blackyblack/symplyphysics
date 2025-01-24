@@ -1,44 +1,63 @@
+"""
+Rocket speed from mass and impulse
+==================================
+
+The Tsiolkovsky formula determines the speed that an aircraft develops under the influence of the thrust
+of a rocket engine, unchanged in direction, in the absence of all other forces.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Tsiolkovsky_rocket_equation>`__.
+"""
+
 from sympy import (Eq, solve, log)
 from symplyphysics import (
     clone_as_symbol,
     symbols,
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
 )
 
-# Description
-## The Tsiolkovsky formula determines the speed that an aircraft develops under the influence of the thrust
-## of a rocket engine, unchanged in direction, in the absence of all other forces.
+speed_change = clone_as_symbol(symbols.speed, display_symbol="Delta(v)", display_latex="\\Delta v")
+"""
+Maximum change in :symbols:`speed` of the rocket.
+"""
 
-## Law is: V = I * ln(M1 / M2), where
-## V - final speed of the rocket,
-## I- specific impulse of a rocket engine,
-## M1 - initial mass of the rocket,
-## M2 - final mass of the rocket.
+effective_exhaust_speed = clone_as_symbol(symbols.speed, display_symbol="v_e", display_latex="v_\\text{e}")
+"""
+Effective exhaust :symbols:`speed`, or specific impulse (i.e. impulse per unit mass). See
+`this Wikipedia paragraph <https://en.wikipedia.org/wiki/Specific_impulse#Specific_impulse_as_effective_exhaust_velocity>`__
+for more information.
+"""
 
-# Links: Wikipedia <https://en.wikipedia.org/wiki/Tsiolkovsky_rocket_equation>
+initial_mass = clone_as_symbol(symbols.mass, subscript="0")
+"""
+Initial :symbols:`mass` of the rocket.
+"""
 
-speed = Symbol("speed", units.velocity)
+final_mass = clone_as_symbol(symbols.mass, subscript="1")
+"""
+Final :symbols:`mass` of the rocket.
+"""
 
-specific_impulse = Symbol("specific_impulse", units.velocity)
-initial_mass = clone_as_symbol(symbols.mass, display_symbol="m_0", display_latex="m_0")
-final_mass = clone_as_symbol(symbols.mass, display_symbol="m_1", display_latex="m_1")
+law = Eq(speed_change, effective_exhaust_speed * log(initial_mass / final_mass))
+"""
+:laws:symbol::
 
-law = Eq(speed, specific_impulse * log(initial_mass / final_mass))
+:laws:latex::
+"""
 
 
-@validate_input(specific_impulse_=specific_impulse,
+@validate_input(specific_impulse_=effective_exhaust_speed,
     initial_mass_=initial_mass,
     final_mass_=final_mass)
-@validate_output(speed)
+@validate_output(speed_change)
 def calculate_speed(specific_impulse_: Quantity, initial_mass_: Quantity,
     final_mass_: Quantity) -> Quantity:
-    result_expr = solve(law, speed, dict=True)[0][speed]
+    result_expr = solve(law, speed_change, dict=True)[0][speed_change]
     result_expr = result_expr.subs({
-        specific_impulse: specific_impulse_,
+        effective_exhaust_speed: specific_impulse_,
         initial_mass: initial_mass_,
         final_mass: final_mass_
     })

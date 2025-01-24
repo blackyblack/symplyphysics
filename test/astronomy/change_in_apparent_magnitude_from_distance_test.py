@@ -14,8 +14,8 @@ Args = namedtuple("Args", ["apparent_magnitude_first", "illuminance_first", "ill
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
     apparent_magnitude_first = 3
-    illuminance_first = Quantity(1 * units.joule / units.meter**2)
-    illuminance_second = Quantity(3.512 * units.joule / units.meter**2)
+    illuminance_first = Quantity(1 * units.joule / units.second / units.meter**2)
+    illuminance_second = Quantity(3.512 * units.joule / units.second / units.meter**2)
 
     return Args(apparent_magnitude_first=apparent_magnitude_first,
         illuminance_first=illuminance_first,

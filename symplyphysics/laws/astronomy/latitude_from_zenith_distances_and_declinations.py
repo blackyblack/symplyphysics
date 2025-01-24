@@ -1,55 +1,80 @@
+"""
+Latitude from zenith angle and declination
+==========================================
+
+Knowing the zenith angles and declinations of the northern and southern stars, it is possible
+to determine the latitude of the observation site.
+
+**Notes:**
+
+#. Northern star is any star north of the zenith with known declination.
+#. Southern star is any star south of the zenith with known declination.
+
+**Conditions:**
+
+#. Both stars are at upper transit (culmination).
+
+..
+    TODO find link
+"""
+
 from sympy import Eq, solve
 from symplyphysics import (
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
-    angle_type,
+    symbols,
+    clone_as_symbol,
 )
 
-# Description
-## Knowing the zenith distances and declinations of the northern and southern stars, respectively, it is possible
-## to determine the latitude of the observation site.
-## Northern star is any star north of the zenith with known declination.
-## Southern star is any star south of the zenith with known declination.
+latitude = symbols.latitude
+"""
+:symbols:`latitude` of the observation site.
+"""
 
-## Law is: phi = (zs - zn + ds + dn) / 2, where
-## phi - latitude,
-## zs - zenith distance for the north star,
-## zn - zenith distance for the south star,
-## ds - declination for the north star,
-## dn - declination for the south star.
+north_zenith_angle = clone_as_symbol(symbols.zenith_angle, display_symbol="theta_N", display_latex="\\theta_\\text{N}")
+"""
+:symbols:`zenith_angle` of the northern star.
+"""
 
-# Conditions:
-# - both stars are at upper transit (culmination).
+south_zenith_angle = clone_as_symbol(symbols.zenith_angle, display_symbol="theta_S", display_latex="\\theta_\\text{S}")
+"""
+:symbols:`zenith_angle` of the southern star.
+"""
 
-# TODO: find link
+north_declination = clone_as_symbol(symbols.declination, display_symbol="delta_N", display_latex="\\delta_\\text{N}")
+"""
+:symbols:`declination` of the northern star.
+"""
 
-latitude = Symbol("zenith_distance_north", angle_type)
-
-zenith_distance_north = Symbol("zenith_distance_north", angle_type)
-zenith_distance_south = Symbol("zenith_distance_south", angle_type)
-declination_north = Symbol("declination_north", angle_type)
-declination_south = Symbol("declination_south", angle_type)
+south_declination = clone_as_symbol(symbols.declination, display_symbol="delta_S", display_latex="\\delta_\\text{S}")
+"""
+:symbols:`declination` of the southern star.
+"""
 
 law = Eq(latitude,
-    (zenith_distance_south - zenith_distance_north + declination_south + declination_north) / 2)
+    (south_zenith_angle - north_zenith_angle + south_declination + north_declination) / 2)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(
-    zenith_distance_north_=zenith_distance_north,
-    zenith_distance_south_=zenith_distance_south,
-    declination_north_=declination_north,
-    declination_south_=declination_south,
+    zenith_distance_north_=north_zenith_angle,
+    south_zenith_angle_=south_zenith_angle,
+    northern_declination_=north_declination,
+    south_declination_=south_declination,
 )
 @validate_output(latitude)
-def calculate_latitude(zenith_distance_north_: Quantity, zenith_distance_south_: Quantity,
-    declination_north_: Quantity, declination_south_: Quantity) -> Quantity:
+def calculate_latitude(zenith_distance_north_: Quantity, south_zenith_angle_: Quantity,
+    northern_declination_: Quantity, south_declination_: Quantity) -> Quantity:
     result_expr = solve(law, latitude, dict=True)[0][latitude]
     result_expr = result_expr.subs({
-        zenith_distance_north: zenith_distance_north_,
-        zenith_distance_south: zenith_distance_south_,
-        declination_north: declination_north_,
-        declination_south: declination_south_
+        north_zenith_angle: zenith_distance_north_,
+        south_zenith_angle: south_zenith_angle_,
+        north_declination: northern_declination_,
+        south_declination: south_declination_
     })
     return Quantity(result_expr)
