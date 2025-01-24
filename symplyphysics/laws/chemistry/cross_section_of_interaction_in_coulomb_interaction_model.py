@@ -19,6 +19,27 @@ atoms.
     TODO: move to `magnetron` folder?
 """
 
+"""
+Cross section of interaction in Coulomb's interaction model
+===========================================================
+
+The effective cross section is a physical quantity characterizing the probability of
+transition of a system of two interacting particles to a certain final state, a
+quantitative characteristic of the acts of collision of particles of a stream hitting a
+target with target particles. The effective cross-section has the dimension of the area.
+In a magnetron, this value can be calculated if you know the ionization energy of gas
+atoms.
+
+**Notation:**
+
+#. :quantity_notation:`elementary_charge`.
+#. :quantity_notation:`vacuum_permittivity`.
+
+..
+    TODO: find link
+    TODO: move to `magnetron` folder?
+"""
+
 from sympy import Eq, solve, pi
 from symplyphysics import (
     Quantity,

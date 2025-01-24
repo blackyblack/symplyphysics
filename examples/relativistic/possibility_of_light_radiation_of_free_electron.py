@@ -33,7 +33,7 @@ electron_speed = Symbol("electron_speed", positive=True)
 
 moving_electron_mass = moving_mass_law.law.rhs.subs({
     moving_mass_law.rest_mass: electron_rest_mass,
-    moving_mass_law.velocity: electron_speed,
+    moving_mass_law.speed: electron_speed,
 })
 
 moving_electron_energy = energy_is_mass.law.rhs.subs(energy_is_mass.relativistic_mass,

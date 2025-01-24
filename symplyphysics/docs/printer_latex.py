@@ -158,7 +158,7 @@ class SymbolLatexPrinter(LatexPrinter):
         symbol, index = expr.args[0].args
         return f"\\sum_{self._print(index)} {self._print(symbol)}"
 
-    def _print_log(self, expr: Any, _exp: Any = None) -> str:
+    def _print_log(self, expr: Any, exp: Any = None) -> str:
         value, base = (expr.args[0], expr.args[1]) if len(expr.args) > 1 else (expr.args[0], E)
         str_value = self._print(value)
         str_base = self._print(base)

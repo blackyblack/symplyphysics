@@ -32,7 +32,7 @@ speed, rest_mass, momentum = symbols("speed, rest_mass, momentum", positive=True
 
 relativistic_momentum_eqn = relativistic_momentum_law.law.subs({
     relativistic_momentum_law.momentum: momentum,
-    relativistic_momentum_law.velocity: speed,
+    relativistic_momentum_law.speed: speed,
     relativistic_momentum_law.rest_mass: rest_mass,
 })
 

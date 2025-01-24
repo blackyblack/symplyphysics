@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from sympy import solve
-from symplyphysics import print_expression, Quantity, convert_to, units
+from symplyphysics import print_expression, Quantity, convert_to, quantities, units
 from symplyphysics.laws.kinematics import (
     position_via_constant_speed_and_time as distance_law,)
 from symplyphysics.laws.relativistic import (
@@ -12,11 +12,13 @@ from symplyphysics.laws.relativistic import (
 ## till its decay in the laboratory frame of reference, where its lifetime is `20 ns`.
 
 values = {
-    relativistic_time_law.moving_observer_time: Quantity(10 * units.nanosecond),
+    relativistic_time_law.proper_time: Quantity(10 * units.nanosecond),
     relativistic_time_law.relativistic_time: Quantity(20 * units.nanosecond),
 }
 
-particle_speed_expr = solve(relativistic_time_law.law, relativistic_time_law.velocity)[1]
+# for some reason sympy doesn't want to extract the speed out of the square root
+eqn = relativistic_time_law.law
+particle_speed_expr = solve(eqn.lhs**2 - eqn.rhs**2, relativistic_time_law.speed)[1]
 
 distance_traveled_expr = distance_law.law.rhs.subs({
     distance_law.initial_position: 0,
@@ -29,7 +31,7 @@ print(print_expression(particle_speed_expr))
 
 particle_speed_value = convert_to(
     particle_speed_expr.subs(values),
-    units.speed_of_light,
+    quantities.speed_of_light,
 )
 
 print("\n\nRatio of particle speed to speed of light:\n")

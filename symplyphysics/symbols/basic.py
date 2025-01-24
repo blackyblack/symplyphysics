@@ -146,3 +146,18 @@ to its current value.
 
 #. `Exponential decay <https://en.wikipedia.org/wiki/Exponential_decay>`__.
 """
+
+characteristic_length = SymbolNew("l_c", units.length, display_latex="l_\\text{c}")
+"""
+**Characteristic length** is a dimension that defines the scale of the physical system.
+It is usually defined as the volume of the system divided by its surface.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Characteristic_length>`__.
+"""
+
+molar_volume = SymbolNew("v_m", units.volume / units.amount_of_substance, display_latex="v_\\text{m}")
+"""
+**Molar volume** is defined as :symbols:`volume` per unit :symbols:`amount_of_substance`.
+"""

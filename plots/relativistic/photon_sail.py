@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
 from sympy import Symbol, Eq, solve, oo, plot
-from sympy.physics.units import speed_of_light
 from symplyphysics import print_expression
+from symplyphysics.core.convert import evaluate_expression
+from symplyphysics.quantities import speed_of_light
 from symplyphysics.laws.conservation import (
     mechanical_energy_after_equals_to_mechanical_energy_before as energy_conservation_law,
     momentum_after_collision_equals_to_momentum_before as momentum_conservation_law,
@@ -19,10 +20,12 @@ from symplyphysics.laws.relativistic import (
 ## of light pressure, the mirror starts moving. What is the final speed of the mirror and what is the energy of the
 ## reflected wave? The rest mass of the mirror `m_0` and the energy of the incident wave `W_0` are known.
 
-incident_wave_energy = Symbol("incident_wave_energy", positive=True)
-reflected_wave_energy = Symbol("reflected_wave_energy", positive=True)
-mirror_rest_mass = Symbol("mirror_rest_mass", positive=True)
-mirror_speed = Symbol("mirror_speed", real=True)
+incident_wave_energy = Symbol("W_0", positive=True)
+reflected_wave_energy = Symbol("W_1", positive=True)
+mirror_rest_mass = Symbol("m_0", positive=True)
+reduced_mirror_speed = Symbol("u", real=True)
+
+mirror_speed_expr_ = reduced_mirror_speed * speed_of_light
 
 # Conservation of energy
 
@@ -30,13 +33,12 @@ mirror_rest_energy = energy_is_mass.law.rhs.subs(energy_is_mass.relativistic_mas
 
 total_energy_before = incident_wave_energy + mirror_rest_energy
 
-moving_mirror_energy = energy_is_mass.law.rhs.subs(
-    energy_is_mass.relativistic_mass,
-    moving_mass_law.law.rhs.subs({
+mirror_mass_expr = moving_mass_law.law.rhs.subs({
     moving_mass_law.rest_mass: mirror_rest_mass,
-    moving_mass_law.velocity: mirror_speed,
-    }),
-)
+    moving_mass_law.speed: mirror_speed_expr_,
+})
+
+moving_mirror_energy = energy_is_mass.law.rhs.subs(energy_is_mass.relativistic_mass, mirror_mass_expr)
 
 total_energy_after = reflected_wave_energy + moving_mirror_energy
 
@@ -69,7 +71,7 @@ reflected_wave_momentum = electromagnetic_wave_momentum_expr.subs(
 
 moving_mirror_momentum = moving_momentum_law.law.rhs.subs({
     moving_momentum_law.rest_mass: mirror_rest_mass,
-    moving_momentum_law.velocity: mirror_speed,
+    moving_momentum_law.speed: mirror_speed_expr_,
 })
 
 # The reflected wave moves in the opposite direction
@@ -84,27 +86,27 @@ momentum_conservation_eqn = momentum_conservation_law.law.subs({
 
 solved = solve(
     (energy_conservation_eqn, momentum_conservation_eqn),
-    (mirror_speed, reflected_wave_energy),
+    (reduced_mirror_speed, reflected_wave_energy),
     dict=True,
 )[0]
 
-mirror_speed_expr = solved[mirror_speed]
+reduced_mirror_speed_expr = solved[reduced_mirror_speed]
 reflected_wave_energy_expr = solved[reflected_wave_energy]
 
 # Simplify the expressions by introducing a reduced energy symbol
 
-reduced_incident_wave_energy = Symbol("reduced_incident_wave_energy", positive=True)
+reduced_incident_wave_energy = Symbol("w_0", positive=True)
 
 reduced_incident_wave_energy_eqn = Eq(
     reduced_incident_wave_energy,
     incident_wave_energy / (mirror_rest_mass * speed_of_light**2),
 )
 
-mirror_speed_expr = solve(
-    (Eq(mirror_speed, mirror_speed_expr), reduced_incident_wave_energy_eqn),
-    (mirror_speed, incident_wave_energy),
+reduced_mirror_speed_expr = solve(
+    (Eq(reduced_mirror_speed, reduced_mirror_speed_expr), reduced_incident_wave_energy_eqn),
+    (reduced_mirror_speed, incident_wave_energy),
     dict=True,
-)[0][mirror_speed]
+)[0][reduced_mirror_speed]
 
 reflected_wave_energy_expr = solve(
     (Eq(reflected_wave_energy, reflected_wave_energy_expr), reduced_incident_wave_energy_eqn),
@@ -120,18 +122,16 @@ reflected_wave_energy_expr = solve(
 print("Definition of reduced energy of incident wave:\n")
 print(print_expression(reduced_incident_wave_energy_eqn), end="\n\n\n")
 
-reduced_mirror_speed_expr = mirror_speed_expr / speed_of_light
-
 print("Formula of reduced speed of mirror:\n")
 print(print_expression(reduced_mirror_speed_expr), end="\n\n\n")
 
-reduced_reflected_wave_energy_expr = (reflected_wave_energy_expr /
+reduced_reflected_wave_energy_expr = evaluate_expression(reflected_wave_energy_expr /
     (mirror_rest_mass * speed_of_light**2))
 
 print("Formula of reduced energy of reflected wave:\n")
 print(print_expression(reduced_reflected_wave_energy_expr), end="\n\n\n")
 
-reduced_reflected_wave_energy_upper_limit = (reduced_reflected_wave_energy_expr.limit(
+reduced_reflected_wave_energy_upper_limit = evaluate_expression(reduced_reflected_wave_energy_expr.limit(
     reduced_incident_wave_energy, oo))
 
 print("Upper limit of reduced energy of reflected wave:")
