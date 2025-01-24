@@ -20,10 +20,7 @@ def test_basic_radius_of_orbit(test_args: Args) -> None:
     result = radius_law.calculate_radius_of_orbit(test_args.number_of_planet)
     assert_equal(result, 1 * units.astronomical_unit)
 
-
 def test_bad_number_of_planet() -> None:
     number_of_planet = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         radius_law.calculate_radius_of_orbit(number_of_planet)
-    with raises(ValueError):
-        radius_law.calculate_radius_of_orbit(-10)

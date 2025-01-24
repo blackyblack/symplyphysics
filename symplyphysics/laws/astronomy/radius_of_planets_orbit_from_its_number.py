@@ -14,7 +14,8 @@ Solar System and the Sun (the average radii of the orbits).
 #. `Wikipedia, third formula <https://en.wikipedia.org/wiki/Titius%E2%80%93Bode_law#Original_formulation>`__.
 """
 
-from sympy import Eq, solve
+from sympy import Eq, solve, S
+from sympy.core.numbers import NegativeInfinity
 from symplyphysics import (
     units,
     Quantity,
@@ -55,10 +56,7 @@ law = Eq(orbit_radius, first_constant + second_constant * 2**planet_number)
 
 @validate_input(planet_number_=planet_number)
 @validate_output(orbit_radius)
-def calculate_radius_of_orbit(planet_number_: int) -> Quantity:
-    if planet_number_ < -1:
-        raise ValueError("The planet number must be greater than -1 or equal.")
-
+def calculate_radius_of_orbit(planet_number_: int | NegativeInfinity) -> Quantity:
     result_expr = solve(law, orbit_radius, dict=True)[0][orbit_radius]
     result_expr = result_expr.subs({
         planet_number: planet_number_,
