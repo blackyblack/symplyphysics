@@ -6,6 +6,10 @@ The orbital speed of a body is the speed at which it rotates around the barycent
 system, usually around a more massive body. It can be calculated from the mass of the
 planet and the orbit configuration parameters.
 
+**Notation:**
+
+#. :quantity_notation:`gravitational_constant`.
+
 **Conditions:**
 
 #. The distance to the barycenter :math:`r` must not exceed the length :math:`a` of the

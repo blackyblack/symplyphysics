@@ -11,6 +11,7 @@ Sun and the star.
 **Notation:**
 
 #. :quantity_notation:`sun_luminosity`.
+#. :quantity_notation:`solar_mass`.
 
 **Links:**
 
