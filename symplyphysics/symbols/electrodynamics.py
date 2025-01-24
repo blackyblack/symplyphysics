@@ -189,3 +189,32 @@ electric field, combining the two in an auxiliary field.
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Electric_displacement_field>`__.
 """
+
+attenuation_coefficient = SymbolNew("mu", 1 / units.length, display_latex="\\mu")
+"""
+Attenuation coefficient characterizes how easily a volume of material can be penetrated
+by energy or matter.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Attenuation_coefficient>`__.
+"""
+
+magnetic_field_strength = SymbolNew("H", units.current / units.length)
+"""
+**Magnetic field strength** refers to magnitude of the magnetic field.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Magnetic_field#The_H-field>`__.
+"""
+
+electrical_conductivity = SymbolNew("sigma", 1 / (units.impedance * units.length))
+"""
+**Electrical conductivity** is the reciprocal of electrical resistivity, representing a
+material's ability to conduct electric current.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Electrical_resistivity_and_conductivity#>`__.
+"""

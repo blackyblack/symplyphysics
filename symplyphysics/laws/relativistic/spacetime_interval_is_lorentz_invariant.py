@@ -1,26 +1,41 @@
+"""
+Spacetime interval is Lorentz invariant
+=======================================
+
+The spacetime interval is invariant under Lorentz transformations, i.e. it remains the same in all
+inertial frames of reference.
+
+**Links:**
+
+#. `Wikipedia, follows from text <https://en.wikipedia.org/wiki/Spacetime#Spacetime_interval>`__.
+"""
+
 from sympy import Eq
 from symplyphysics import (
     Quantity,
-    Symbol,
-    units,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
 )
 
-# Description
-## The spacetime interval is invariant under Lorentz transformations, i.e. it remains the same in all
-## inertial frames of reference.
+first_spacetime_interval = clone_as_symbol(symbols.spacetime_interval, subscript="1")
+"""
+:symbols:`spacetime_interval` in one inertial frame of reference.
+"""
 
-# Law: (Δs)_2 = (Δs)_1
-## Δs - spacetime interval
-## Subscripts 2, 1 designate two inertial reference frames connected by a Lorentz transformation
-
-# Links: Wikipedia, follows from text <https://en.wikipedia.org/wiki/Spacetime#Spacetime_interval>
-
-first_spacetime_interval = Symbol("first_spacetime_interval", units.length)
-second_spacetime_interval = Symbol("second_spacetime_interval", units.length)
+second_spacetime_interval = clone_as_symbol(symbols.spacetime_interval, subscript="2")
+"""
+:symbols:`spacetime_interval` in another inertial frame of reference related to the former
+by a Lorentz transformation.
+"""
 
 law = Eq(second_spacetime_interval, first_spacetime_interval)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 # TODO: derive from the definition of spacetime interval and Lorentz transformations
 

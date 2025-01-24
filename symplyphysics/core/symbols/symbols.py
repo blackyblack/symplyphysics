@@ -1,4 +1,5 @@
 from __future__ import annotations
+import re
 from typing import Any, Optional, Sequence, Self
 from sympy import S, Idx, Symbol as SymSymbol, Expr, Equality, IndexedBase
 from sympy.physics.units import Dimension
@@ -264,6 +265,25 @@ def print_expression(expr: Expr | Equality | Sequence[Expr | Equality]) -> str:
         pretty_use_unicode(uflag)
 
 
+_text_pattern = re.compile(r"\\text\{([^}]+)\}")
+
+def _process_subscript_and_names(
+    code_name: str,
+    latex_name: str,
+    subscript: Optional[str] = None,
+) -> tuple[str, str]:
+    if not subscript:
+        return code_name, latex_name
+
+    m = _text_pattern.match(subscript)
+    symbol_sub = m.group(1) if m else subscript
+
+    code_name = f"{code_name}_{symbol_sub}"
+    latex_name = f"{latex_name}_{{{subscript}}}"
+
+    return code_name, latex_name
+
+
 def clone_as_symbol(source: SymbolNew | SymbolIndexedNew,
     *,
     display_symbol: Optional[str] = None,
@@ -274,9 +294,9 @@ def clone_as_symbol(source: SymbolNew | SymbolIndexedNew,
     display_symbol = display_symbol or source.display_name
     display_latex = display_latex or source.display_latex
 
-    if subscript is not None:
-        display_symbol = f"{display_symbol}_{subscript}"
-        display_latex = f"{display_latex}_{subscript}"
+    display_symbol, display_latex = _process_subscript_and_names(
+        display_symbol, display_latex, subscript
+    )
 
     return SymbolNew(
         display_symbol,
@@ -298,9 +318,9 @@ def clone_as_function(
     display_symbol = display_symbol or source.display_name
     display_latex = display_latex or source.display_latex
 
-    if subscript is not None:
-        display_symbol = f"{display_symbol}_{subscript}"
-        display_latex = f"{display_latex}_{subscript}"
+    display_symbol, display_latex = _process_subscript_and_names(
+        display_symbol, display_latex, subscript
+    )
 
     return FunctionNew(
         display_symbol,

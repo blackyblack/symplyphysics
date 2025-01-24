@@ -274,6 +274,16 @@ sun_luminosity = Quantity(3.827e26 * units.watt, display_symbol="L_Sun", display
 :symbols:`luminosity` of the Sun.
 """
 
+faraday_constant = Quantity(elementary_charge * avogadro_constant, display_symbol="F", display_latex="\\mathfrak{F}")
+"""
+The **Faraday constant** represents the amount of electric charge carried by one mole,
+or Avogadro's number, of electrons.
+
+**Links:**
+
+#. `TechTarget <https://www.techtarget.com/whatis/definition/Faraday-constant>`__.
+"""
+
 __all__ = [
     "standard_conditions_temperature",
     "standard_laboratory_temperature",
@@ -298,4 +308,5 @@ __all__ = [
     "wien_displacement_constant",
     "hubble_constant",
     "zero_point_luminosity",
+    "faraday_constant",
 ]

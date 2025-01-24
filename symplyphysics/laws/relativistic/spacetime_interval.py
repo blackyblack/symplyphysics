@@ -1,41 +1,66 @@
+"""
+Spacetime interval via time and distance
+========================================
+
+The spacetime interval is a combination of distance and time that is invariant under Lorentz tranformations.
+It has the property of being invariant in the sense that it has the same value for all observers in any
+inertial reference frame.
+
+**Notation:**
+
+#. :quantity_notation:`speed_of_light`.
+
+**Notes:**
+
+#. If :math:`\\Delta s**2 > 0`, the spacetime interval is said to be *timelike*. Events with a timelike
+   separation can be causally connected, i.e. one can find an inertial reference frame in which both
+   events happen at the same place at different times.
+#. If :math:`\\Delta s**2 = 0`, the spacetime interval is said to be *lightlike*. Events with a lightlike
+   separation are exactly far enough from each other that light could be present at both events, and they
+   are causally connected.
+#. If :math:`\\Delta s**2 < 0`, the spacetime interval is said to be *spacelike*. Events with a spacelike
+   separation are causally disconnected, i.e. one can find an inertial reference frame in which both
+   events happen at the same time in different positions.
+
+**Conditions:**
+
+#. The spacetime in which the two events occur is flat (special relativity case).
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Spacetime#Spacetime_interval>`__.
+"""
+
 from sympy import Eq, solve
-from sympy.physics.units import speed_of_light
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
+    quantities,
 )
 
-# Description
-## The spacetime interval is a combination of distance and time that is invariant under Lorentz tranformations.
-## It is invariant in the sense that it has the same value for all observers in any inertial reference frame.
+spacetime_interval = symbols.spacetime_interval
+"""
+:symbols:`spacetime_interval` between the two events.
+"""
 
-# Law: Δs**2 = (c * Δt)**2 - Δd**2
-## Δs - spacetime interval (may be complex)
-## Δt - time separation of events
-## Δd - spatial separation of events
-## c - speed of light
+temporal_distance = symbols.time
+"""
+:symbols:`time` separation between the two events.
+"""
 
-# Conditions
-## - The spacetime in which the two events occur is flat (special relativity case).
+spatial_distance = symbols.euclidean_distance
+"""
+:symbols:`euclidean_distance` between the two events.
+"""
 
-# Notes
-## - If `Δs**2 > 0`, the spacetime interval is said to be _timelike_. Events with a timelike separation can be causally connected,
-##   i.e. one can find an inertial reference frame in which both events happen at the same place at different times.
-## - If `Δs**2 = 0`, the spacetime interval is said to be _lightlike_. Events with a lightlike separation are exactly far enough
-##   from each other that light could be present at both events, and they are causally connected.
-## - If `Δs**2 < 0`, the spacetime interval is said to be _spacelike_. Events with a spacelike separation are causally disconnected,
-##   i.e. one can find an inertial reference frame in which both events happen at the same time in different positions.
+law = Eq(spacetime_interval**2, (quantities.speed_of_light * temporal_distance)**2 - spatial_distance**2)
+"""
+:laws:symbol::
 
-# Links: Wikipedia <https://en.wikipedia.org/wiki/Spacetime#Spacetime_interval>
-
-spacetime_interval = Symbol("spacetime_interval", units.length)
-temporal_distance = Symbol("temporal_distance", units.time)
-spatial_distance = Symbol("spatial_distance", units.length)
-
-law = Eq(spacetime_interval**2, (speed_of_light * temporal_distance)**2 - spatial_distance**2)
+:laws:latex::
+"""
 
 
 @validate_input(

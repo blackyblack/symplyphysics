@@ -93,6 +93,12 @@ radius = SymbolNew("r", units.length)
 the sphere.
 """
 
+diameter = SymbolNew("D", units.length)
+"""
+**Diameter** of a circle or sphere is the length of the biggest chord connecting two
+points on the circumference.
+"""
+
 semimajor_axis = SymbolNew("a", units.length)
 """
 **Semi-major axis**, or **major semiaxis**, is the longest semidiameter of an ellipse.
@@ -403,4 +409,16 @@ kepler_constant = SymbolNew("K", units.length**3 / units.time**2, display_latex=
 The **Kepler's constant** is the constant of proportionality in Kepler's third law of planetary
 motion, namely the ratio between the square of the period of the planet to the semi-major axis
 of the planet's orbit. It is constant for all objects orbiting around the same object.
+"""
+
+surface_tension = SymbolNew("gamma", units.force / units.length, display_latex="\\gamma")
+"""
+**Surface tension**, as a phenomenon, is the tendency of liquid surfaces at rest to
+shrink into the minimum surface area possible. The coefficient of surface tension is
+directly proportional to the force necessary to increase the surface area of the fluid
+and inversely proportional to the length of the side at which the force is applied to.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Surface_tension#Physics>`__.
 """

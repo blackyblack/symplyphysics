@@ -1,56 +1,79 @@
+"""
+Coefficient of volumetric ionization of neutral molecules by electrons
+======================================================================
+
+At a certain voltage, the gas discharge becomes independent. To find this voltage, it is
+necessary to know the (volumetric) ionization coefficient. And it, in turn, depends on
+the energy distribution of electrons and can be approximated by the expression below.
+
+**Links:**
+
+#. `StudFiles, formula 1.12 <https://studfile.net/preview/3079348/page:3/>`__.
+
+..
+    TODO: find English link
+    TODO: move to `ionization` folder?
+"""
+
 from sympy import Eq, solve, exp
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
+    symbols,
 )
 
-# Description
-## At a certain voltage, the gas discharge becomes independent. To find this voltage, it is necessary to know the volumetric ionization coefficient.
-## And it, in turn, depends on the energy distribution of electrons and can be approximated by the expression below.
+ionization_coefficient = symbols.ionization_coefficient
+"""
+:symbols:`ionization_coefficient` of the gas.
+"""
 
-## Law is: a = A * p * exp(-B * p / E), where
-## a - volumetric ionization coefficient,
-## A - the first constant of gas,
-## p - pressure,
-## B - the second constant of gas,
-## E - electric intensity.
+first_constant = SymbolNew("A", 1 / units.length / units.pressure)
+"""
+The first gas constant used in this model.
+"""
 
-#. Links: StudFiles, formula 1.12 <https://studfile.net/preview/3079348/page:3/>
-# TODO: find English link
+second_constant = SymbolNew("B", units.voltage / units.length / units.pressure)
+"""
+The second gas constant used in this model.
+"""
 
-# TODO: move to `ionization` folder?
+pressure = symbols.pressure
+"""
+:symbols:`pressure` of the gas.
+"""
 
-coefficient_of_volumetric_ionization = Symbol("coefficient_of_volumetric_ionization",
-    1 / units.length)
-
-first_constant_of_gas = Symbol("first_constant_of_gas", 1 / units.length / units.pressure)
-second_constant_of_gas = Symbol("second_constant_of_gas",
-    units.voltage / units.length / units.pressure)
-pressure = Symbol("pressure", units.pressure)
-electric_intensity = Symbol("electric_intensity", units.voltage / units.length)
+electric_field_strength = symbols.electric_field_strength
+"""
+:symbols:`electric_field_strength`.
+"""
 
 law = Eq(
-    coefficient_of_volumetric_ionization,
-    first_constant_of_gas * pressure * exp(-second_constant_of_gas * pressure / electric_intensity))
+    ionization_coefficient,
+    first_constant * pressure * exp(-second_constant * pressure / electric_field_strength))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
-@validate_input(first_constant_of_gas_=first_constant_of_gas,
-    second_constant_of_gas_=second_constant_of_gas,
+@validate_input(first_constant_of_gas_=first_constant,
+    second_constant_=second_constant,
     pressure_=pressure,
-    electric_intensity_=electric_intensity)
-@validate_output(coefficient_of_volumetric_ionization)
-def calculate_coefficient_of_volumetric_ionization(first_constant_of_gas_: Quantity,
-    second_constant_of_gas_: Quantity, pressure_: Quantity,
+    electric_intensity_=electric_field_strength)
+@validate_output(ionization_coefficient)
+def calculate_ionization_coefficient(first_constant_of_gas_: Quantity,
+    second_constant_: Quantity, pressure_: Quantity,
     electric_intensity_: Quantity) -> Quantity:
-    result_expr = solve(law, coefficient_of_volumetric_ionization,
-        dict=True)[0][coefficient_of_volumetric_ionization]
+    result_expr = solve(law, ionization_coefficient,
+        dict=True)[0][ionization_coefficient]
     result_expr = result_expr.subs({
-        first_constant_of_gas: first_constant_of_gas_,
-        second_constant_of_gas: second_constant_of_gas_,
+        first_constant: first_constant_of_gas_,
+        second_constant: second_constant_,
         pressure: pressure_,
-        electric_intensity: electric_intensity_,
+        electric_field_strength: electric_intensity_,
     })
     return Quantity(result_expr)

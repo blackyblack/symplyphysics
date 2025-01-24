@@ -2,10 +2,6 @@
 Optical path length from geometrical path length and refractive index
 =====================================================================
 
-*Optical path length*, also known as *optical length* or *optical distance*, is the
-length that light needs to travel through a vacuum to create the same phase difference
-as it would have when traveling through a given medium.
-
 *Geometrical path length* is the Euclidean distance integrated along a light ray
 between any two points.
 
@@ -19,39 +15,28 @@ between any two points.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols)
 
-optical_path = Symbol("optical_path", units.length)
+optical_path = symbols.optical_distance
 """
-Optical path length of the light ray.
-
-Symbol:
-    :code:`L`
+Optical path length of the light ray. See :symbols:`optical_distance`.
 """
 
-geometrical_path = Symbol("geometrical_path", units.length)
+geometrical_path = symbols.distance
 """
-Geometrical path length of the light ray.
-
-Symbol:
-    :code:`l`
+Geometrical path length of the light ray. See :symbols:`distance`.
 """
 
-refractive_index = Symbol("refractive_index", dimensionless)
+refractive_index = symbols.relative_refractive_index
 """
-Refractive index of the medium.
-
-Symbol:
-    :code:`n`
+:symbols:`relative_refractive_index` of the medium.
 """
 
 law = Eq(optical_path, refractive_index * geometrical_path)
-r"""
-:code:`L = n * l`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        L = n l
+:laws:latex::
 """
 
 

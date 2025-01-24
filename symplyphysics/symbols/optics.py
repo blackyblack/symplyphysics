@@ -6,6 +6,7 @@ Symbols related to optics.
 """
 
 from sympy.physics import units
+from sympy.physics.units.definitions.dimension_definitions import angle as angle_type
 from symplyphysics.core.dimensions import dimensionless
 from symplyphysics.core.symbols.symbols import SymbolNew
 
@@ -31,4 +32,65 @@ focal_length = SymbolNew("f", units.length)
 The **focal length** of an optical system is a measure of how strongly the system converges or diverges
 light; it is the inverse of the system's optical power. It is the distance between the focal plane and
 the lens's nodal point.
+"""
+
+optical_distance = SymbolNew("Lambda", units.length, display_latex="\\Lambda")
+"""
+**Optical distance**, also called **optical path length**, is the length that light needs to travel
+through a vacuum to create the same phase difference as it would have when traveling through a given medium.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Optical_path_length>`__.
+"""
+
+irradiance = SymbolNew("E_e", units.power / units.area, display_latex="E_\\text{e}")
+"""
+In radiometry, **irradiance** is the radiant flux received by a surface per unit area.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Irradiance>`__.
+"""
+
+transparency_coefficient = SymbolNew("k", dimensionless)
+"""
+The transparency coefficient is used to describe how much light an imperfect polarizer absorbs,
+zero being a total absorption and one being a perfect polarizer that lets all light pass through.
+
+..
+    TODO check if this is the correct English name
+"""
+
+reflectance = SymbolNew("R", dimensionless)
+"""
+The **reflectance** of the surface of a material is its effectiveness in reflecting radiant energy.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Reflectance>`__.
+"""
+
+magnification = SymbolNew("M", dimensionless)
+"""
+Optical **magnification** is the ratio between the apparent size in an image and its true size.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Magnification#Size_ratio_(optical_magnification)>`__.
+"""
+
+optical_power = SymbolNew("D", 1 / units.length)
+"""
+**Optical power**, also callled **dioptric power** or **focusing power**, is the degree to which
+a lens, mirror, or other optical system converges or diverges light.
+"""
+
+angular_resolution = SymbolNew("theta", angle_type, display_latex="\\theta")
+"""
+**Angular resolution** describes the ability of any image-forming device such as an optical or radio telescope, a microscope, a camera, or an eye, to distinguish small details of an object.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Angular_resolution#>`__.
 """
