@@ -19,50 +19,33 @@ increment of volume of the system.
 
 from sympy import Eq
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
 )
 
-infinitesimal_work_done = Symbol("infinitesimal_work_done", units.energy)
-r"""
-Infinitesimal increment of work done *by* the system.
-
-Symbol:
-    :code:`delta(W)`
-
-Latex:
-    :math:`\delta W`
+infinitesimal_work_done = clone_as_symbol(symbols.work, display_symbol="delta(W)", display_latex="\\delta W")
+"""
+Infinitesimal increment of :symbols:`work` done *by* the system.
 """
 
-pressure = Symbol("pressure", units.pressure)
+pressure = symbols.pressure
 """
-Pressure inside the system.
-
-Symbol:
-    :code:`p`
+:symbols:`pressure` inside the system.
 """
 
-infinitesimal_volume_change = Symbol("infinitesimal_volume_change", units.volume)
+infinitesimal_volume_change = clone_as_symbol(symbols.volume, display_symbol="dV", display_latex="dV")
 """
-Infinitesimal increment of volume of the system.
-
-Symbol:
-    :code:`dV`
-
-Latex:
-    :math:`dV`
+Infinitesimal increment of :symbols:`volume` of the system.
 """
 
 law = Eq(infinitesimal_work_done, pressure * infinitesimal_volume_change)
-r"""
-:code:`delta(W) = p * dV`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \delta W = p \, dV
+:laws:latex::
 """
 
 

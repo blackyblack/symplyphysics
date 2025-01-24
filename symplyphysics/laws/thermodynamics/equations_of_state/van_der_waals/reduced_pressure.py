@@ -11,52 +11,36 @@ See :ref:`vdw_reduced_units_def`.
 
 from sympy import Eq
 from symplyphysics import (
-    units,
     dimensionless,
     Quantity,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
     convert_to_float,
+    symbols,
+    clone_as_symbol,
 )
 
-reduced_pressure = Symbol("reduced_pressure", dimensionless)
+reduced_pressure = SymbolNew("p_r", dimensionless)
+"""
+Reduced :symbols:`pressure` of the van der Waals fluid.
+"""
+
+pressure = symbols.pressure
+"""
+:symbols:`pressure` of the van der Waals fluid.
+"""
+
+critical_pressure = clone_as_symbol(symbols.pressure, subscript="\\text{c}")
 r"""
-Reduced pressure of the van der Waals fluid.
-
-Symbol:
-    :code:`p*`
-
-Latex:
-    :math:`p^*`
-"""
-
-pressure = Symbol("pressure", units.pressure)
-"""
-Pressure of the van der Waals fluid.
-
-Symbol:
-    :code:`p`
-"""
-
-critical_pressure = Symbol("critical_pressure", units.pressure)
-r"""
-See :doc:`laws.thermodynamics.equations_of_state.van_der_waals.critical_pressure`
-
-Symbol:
-    :code:`p_c`
-
-Latex:
-    :math:`p_\text{c}`
+Critical :symbols:`pressure`. See :doc:`laws.thermodynamics.equations_of_state.van_der_waals.critical_pressure`.
 """
 
 law = Eq(reduced_pressure, pressure / critical_pressure)
-r"""
-:code:`p* = p / p_c`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        p^* = \frac{p}{p_\text{c}}
+:laws:latex::
 """
 
 

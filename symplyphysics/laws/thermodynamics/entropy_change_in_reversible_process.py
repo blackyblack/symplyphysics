@@ -24,31 +24,21 @@ system :math:`B` divided by the common thermodynamic temperature of systems :mat
 
 from sympy import Eq
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     symbols,
+    clone_as_symbol,
 )
 
-entropy_change = Symbol("entropy_change", units.energy / units.temperature)
+entropy_change = clone_as_symbol(symbols.entropy, display_symbol="dS", display_latex="dS")
 """
-Infinitesimal change in entropy of system :math:`B`.
-
-Symbol:
-    :code:`dS`
+Infinitesimal change in :symbols:`entropy` of system :math:`B`.
 """
 
-heat = Symbol("heat", units.energy)
-r"""
-Infinitesimal amount of heat transferred to system :math:`B`.
-
-Symbol:
-    :code:`delta(Q)`
-
-Latex:
-    :math:`\delta Q`
+heat = clone_as_symbol(symbols.heat, display_symbol="delta(Q)", display_latex="\\delta Q")
+"""
+Infinitesimal amount of :symbols:`heat` transferred to system :math:`B`.
 """
 
 common_temperature = symbols.temperature
@@ -57,12 +47,10 @@ Common :symbols:`temperature` of systems :math:`A` and :math:`B`.
 """
 
 law = Eq(entropy_change, heat / common_temperature)
-r"""
-:code:`dS = delta(Q) / T`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        dS = \frac{\delta Q}{T}
+:laws:latex::
 """
 
 

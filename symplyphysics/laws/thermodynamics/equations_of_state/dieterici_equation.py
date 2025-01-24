@@ -14,11 +14,11 @@ along with the more well-known van der Waals equation of state.
 #. Like the van der Waals equation of state, the Dieterici equation is semi-empirical.
 #. It approximates moderate pressures of real gases much better than the van der Waals equation
    within the conditions stated below.
-#. Can be converted to the van der Waals equation under an additional limit :math:`a \ll R T V_m`
+#. Can be converted to the van der Waals equation under an additional limit :math:`a \ll R T V_m`.
 
 **Conditions:**
 
-#. Only applicable in the limits :math:`b \ll V_m` and :math:`a \ll p V_m^2`.
+#. Only applicable in the limits :math:`b \ll V_m` and :math:`a \ll p V_m^2`. Refer to symbols below.
 #. Inapplicable for high pressures.
 
 **Links:**
@@ -30,30 +30,21 @@ from sympy import Eq, solve, exp
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
     symbols,
     quantities,
 )
 
-pressure = Symbol("pressure", units.pressure)
+pressure = symbols.pressure
 """
-Pressure inside the system.
-
-Symbol:
-    :code:`p`
+:symbols:`pressure` inside the system.
 """
 
-molar_volume = Symbol("molar_volume", units.volume / units.amount_of_substance)
-r"""
-Volume of the system per amount of substance.
-
-Symbol:
-    :code:`V_m`
-
-Latex:
-    :math:`V_m`
+molar_volume = SymbolNew("V_m", units.volume / units.amount_of_substance)
+"""
+:symbols:`volume` of the system per :symbols:`amount_of_substance`.
 """
 
 temperature = symbols.temperature
@@ -61,40 +52,24 @@ temperature = symbols.temperature
 :symbols:`temperature` of the system.
 """
 
-attractive_forces_parameter = Symbol(
-    "attractive_forces_parameter",
-    units.pressure * (units.volume / units.amount_of_substance)**2,
-)
+attractive_forces_parameter = symbols.attractive_forces_parameter
 """
-Parameter specific to each individual substance, usually attributed to the magnitude of
-attractive forces between particles of the system.
-
-Symbol:
-    :code:`a`
+:symbols:`attractive_forces_parameter`.
 """
 
-excluded_volume_parameter = Symbol(
-    "excluded_volume_parameter",
-    units.volume / units.amount_of_substance,
-)
+excluded_volume_parameter = symbols.excluded_volume_parameter
 """
-Parameter specific to each individual substance, usually attributed to the amount of
-excluded molar volume due to a finite size of particles.
-
-Symbol:
-    :code:`b`
+:symbols:`excluded_volume_parameter`.
 """
 
 law = Eq(
     pressure * (molar_volume - excluded_volume_parameter),
     quantities.molar_gas_constant * temperature * exp(-1 * attractive_forces_parameter /
     (quantities.molar_gas_constant * temperature * molar_volume)))
-r"""
-:code:`p * (V_m - b) = R * T * exp(-1 * a / (R * T * V_m))`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        p \left( V_m - b \right) = R T \exp \left( - \frac{a}{R T V_m} \right)
+:laws:latex::
 """
 
 

@@ -9,15 +9,18 @@ Heat of combustion via mass
 #. `Wikipedia <https://en.wikipedia.org/wiki/Heat_of_combustion>`__.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols)
+from sympy import Eq, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    clone_as_symbol,
+)
 
-heat = Symbol("heat", units.energy)
+heat = symbols.heat
 """
-Heat released during combustion.
-
-Symbol:
-    :code:`Q`
+:symbols:`heat` released during combustion.
 """
 
 mass = symbols.mass
@@ -25,21 +28,16 @@ mass = symbols.mass
 :symbols:`mass` of the body subjected to combustion.
 """
 
-specific_heat_of_combustion = Symbol("specific_heat_of_combustion", units.energy / units.mass)
+specific_heat_of_combustion = clone_as_symbol(symbols.specific_energy, subscript="q")
 """
-Heat of combustion per unit mass of the body.
-
-Symbol:
-    :code:`q`
+Heat of combustion per unit mass of the body. See :symbols:`specific_energy`.
 """
 
 law = Eq(heat, specific_heat_of_combustion * mass)
 """
-:code:`Q = q * m`
+:laws:symbol::
 
-Latex:
-    .. math::
-        Q = q m
+:laws:latex::
 """
 
 

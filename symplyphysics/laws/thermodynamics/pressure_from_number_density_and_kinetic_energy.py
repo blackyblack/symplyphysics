@@ -15,47 +15,33 @@ of the gas and the average kinetic energy of gas particles.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, quantities)
+from symplyphysics import (Quantity, validate_input, validate_output, quantities, symbols, clone_as_symbol)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics.equations_of_state import ideal_gas_equation as ideal_gas_law
 from symplyphysics.laws.thermodynamics import average_kinetic_energy_of_ideal_gas_from_temperature as kinetic_energy
 from symplyphysics.laws.chemistry import avogadro_constant_is_particle_count_over_amount_of_substance as avogadro_number
 from symplyphysics.definitions import number_density_is_number_of_objects_per_unit_volume as number_density_def
 
-average_kinetic_energy = Symbol("average_kinetic_energy", units.energy)
+average_kinetic_energy = clone_as_symbol(symbols.kinetic_energy, display_symbol="avg(K)", display_latex="\\langle K \\rangle")
 r"""
-Average kinetic energy of gas particles.
-
-Symbol:
-    :code:`avg(K)`
-
-Latex:
-    :math:`\langle K \rangle`
+Average :symbols:`kinetic_energy` of gas particles.
 """
 
-number_density = Symbol("number_density", 1 / units.volume)
+number_density = symbols.number_density
 """
-Number density of the gas.
-
-Symbol:
-    :code:`n`
+:symbols:`number_density` of the gas.
 """
 
-pressure = Symbol("pressure", units.pressure)
+pressure = symbols.pressure
 """
-Pressure inside the gas.
-
-Symbol:
-    :code:`p`
+:symbols:`pressure` inside the gas.
 """
 
 law = Eq(pressure, 2 / 3 * number_density * average_kinetic_energy)
-r"""
-:code:`p = 2/3 * n * avg(K)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        p = \frac{2}{3} n \langle K \rangle
+:laws:latex::
 """
 
 ## Proof

@@ -9,8 +9,8 @@ for the statistical weight of the system can be found in combinatorics.
 
 **Notes:**
 
-#. Law can also be represented in form :math:`W = \frac{N!}{\prod_i (N_i!)}`
-   (:code:`W = factorial(N) / Product(factorial(N_i), i)`)
+#. Law can also be represented in form :math:`\\Omega = \frac{N!}{\prod_i (N_i!)}`
+   (:code:`Omega = factorial(N) / Product(factorial(N_i), i)`)
 
 **Links:**
 
@@ -20,33 +20,23 @@ for the statistical weight of the system can be found in combinatorics.
 from typing import Sequence
 from sympy import Eq, Idx, factorial
 from symplyphysics import (
-    Symbol,
-    dimensionless,
     validate_input,
     validate_output,
     global_index,
     ProductIndexed,
     SumIndexed,
-    SymbolIndexed,
+    symbols,
 )
+from symplyphysics.core.symbols.symbols import clone_as_indexed
 
-statistical_weight = Symbol("statistical_weight", dimensionless, integer=True)
+statistical_weight = symbols.statistical_weight
 """
-Statistical weight of the system's macrostate.
-
-Symbol:
-    :code:`W`
+:symbols:`statistical_weight` of the system's macrostate.
 """
 
-particle_count_in_state = SymbolIndexed("particle_count_in_state", dimensionless, integer=True)
-r"""
-Number of particles in state :math:`i`.
-
-Symbol:
-    :code:`N_i`
-
-Latex:
-    :math:`N_i`
+particle_count_in_state = clone_as_indexed(symbols.particle_count)
+"""
+:symbols:`particle_count` in state :math:`i`.
 """
 
 law = Eq(
@@ -55,11 +45,14 @@ law = Eq(
     ProductIndexed(factorial(particle_count_in_state[global_index]), global_index),
 )
 r"""
-:code:`W = factorial(Sum(N_i, i)) / Product(factorial(N_i), i)`
+..
+    The printers do not yet recognize the `ProductIndexed` class.
+
+:code:`Omega = factorial(Sum(N_i, i)) / Product(factorial(N_i), i)`
 
 Latex:
     .. math::
-        W = \frac{(\sum_i N_i)!}{\prod_i (N_i!)}
+        \\Omega = \frac{(\sum_i N_i)!}{\prod_i (N_i!)}
 """
 
 

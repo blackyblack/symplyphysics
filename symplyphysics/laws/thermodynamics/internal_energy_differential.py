@@ -28,13 +28,11 @@ thermodynamic quantities depend on variables that are measurable experimentally.
 
 from sympy import Eq, solve
 from symplyphysics import (
-    units,
-    dimensionless,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     symbols,
+    clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import (
@@ -43,12 +41,9 @@ from symplyphysics.laws.thermodynamics import (
     internal_energy_change_via_heat_and_work as first_law,
 )
 
-internal_energy_change = Symbol("internal_energy_change", units.energy)
+internal_energy_change = clone_as_symbol(symbols.internal_energy, display_symbol="dU", display_latex="dU")
 """
-Infinitesimal change in internal energy of the system.
-
-Symbol:
-    :code:`dU`
+Infinitesimal change in :symbols:`internal_energy` of the system.
 """
 
 temperature = symbols.temperature
@@ -56,47 +51,29 @@ temperature = symbols.temperature
 :symbols:`temperature` of the system.
 """
 
-entropy_change = Symbol("entropy_change", units.energy / units.temperature)
+entropy_change = clone_as_symbol(symbols.entropy, display_symbol="dS", display_latex="dS")
 """
-Infinitesimal change in entropy of the system.
-
-Symbol:
-    :code:`dS`
+Infinitesimal change in :symbols:`entropy` of the system.
 """
 
-pressure = Symbol("pressure", units.pressure)
+pressure = symbols.pressure
 """
-Pressure inside the system.
-
-Symbol:
-    :code:`p`
+:symbols:`pressure` inside the system.
 """
 
-volume_change = Symbol("volume_change", units.volume)
+volume_change = clone_as_symbol(symbols.volume, display_symbol="dV", display_latex="dV")
 """
-Infinitesimal change in volume of the system.
-
-Symbol:
-    :code:`dV`
+Infinitesimal change in :symbols:`volume` of the system.
 """
 
-chemical_potential = Symbol("chemical_potential", units.energy)
-r"""
-Chemical potential of the system.
-
-Symbol:
-    :code:`mu`
-
-Latex:
-    :math:`\mu`
+chemical_potential = symbols.chemical_potential
+"""
+:symbols:`chemical_potential` of the system.
 """
 
-particle_count_change = Symbol("particle_count_change", dimensionless)
+particle_count_change = clone_as_symbol(symbols.particle_count, display_symbol="dN", display_latex="dN")
 """
 Infinitesimal change in the number of particles in the system.
-
-Symbol:
-    :code:`dN`
 """
 
 law = Eq(
@@ -104,12 +81,10 @@ law = Eq(
     temperature * entropy_change - pressure * volume_change +
     chemical_potential * particle_count_change,
 )
-r"""
-:code:`dU = T * dS - p * dV + mu * dN`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        dU = T \, dS - p \, dV + \mu \, dN
+:laws:latex::
 """
 
 # Derive from the first and second laws of thermodynamics

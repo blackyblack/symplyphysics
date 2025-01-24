@@ -7,7 +7,7 @@ Also called the *virial expansion*, the *virial equation of state* expresses the
 
 **Notes:**
 
-#. The first virial coefficient :math:`A` is defined to be 1 in order to enforce that the equation
+#. The first virial coefficient :math:`C_1` is defined to be 1 in order to enforce that the equation
    reduces to the ideal gas equation as gas density approaches zero.
 #. The :math:`n`-th virial coefficient represents non-additive :math:`n`-body interactions of
    particles and all mutual interactions of :math:`2` up to :math:`(n - 1)` particles.
@@ -29,63 +29,46 @@ Also called the *virial expansion*, the *virial equation of state* expresses the
 from sympy import Eq
 from symplyphysics import (
     units,
-    dimensionless,
     Quantity,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
     convert_to_float,
+    symbols,
 )
 
-compressibility_factor = Symbol("compressibility_factor", dimensionless, positive=True)
+compressibility_factor = symbols.compressibility_factor
 """
-See :doc:`definitions.compressibility_factor_is_deviation_from_ideal_gas`.
-
-Symbol:
-    :code:`Z`
+:symbols:`compressibility_factor`. Also see :doc:`definitions.compressibility_factor_is_deviation_from_ideal_gas`.
 """
 
-second_virial_coefficient = Symbol("second_virial_coefficient",
+second_virial_coefficient = SymbolNew("C_2",
     units.volume / units.amount_of_substance,
     real=True)
 """
 Second virial coefficient correponding to pair interactions between particles.
-
-Symbol:
-    :code:`B`
 """
 
-third_virial_coefficient = Symbol("third_virial_coefficient",
+third_virial_coefficient = SymbolNew("C_3",
     (units.volume / units.amount_of_substance)**2,
     real=True)
 """
 Third virial coefficient corresponding to 3-body interaction between particles.
-
-Symbol:
-    :code:`C`
 """
 
-molar_density = Symbol("molar_density", units.amount_of_substance / units.volume, positive=True)
-r"""
-Molar density of the system, or as amount of substance per unit volume.
+molar_density = SymbolNew("rho", units.amount_of_substance / units.volume, positive=True, display_latex="\\rho")
+"""
+Molar density of the system, or :symbols:`amount_of_substance` per unit :symbols:`volume`.
 See :doc:`laws.quantities.quantity_is_volumetric_density_times_volume`.
-
-Symbol:
-    :code:`rho`
-
-Latex:
-    :math:`\rho`
 """
 
 law = Eq(
     compressibility_factor,
     1 + second_virial_coefficient * molar_density + third_virial_coefficient * molar_density**2)
-r"""
-:code:`Z = 1 + B * rho + C * rho^2 + O(rho^3)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        Z = 1 + B \rho + C \rho^2 + O \! \left( \rho^3 \right)
+:laws:latex::
 """
 
 

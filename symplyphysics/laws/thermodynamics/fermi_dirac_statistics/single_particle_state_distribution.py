@@ -1,4 +1,4 @@
-r"""
+"""
 Single-particle state distribution
 ==================================
 
@@ -22,48 +22,31 @@ in a single-particle state :math:`i` is given by the Fermi—Dirac distribution.
 
 from sympy import Eq, exp
 from symplyphysics import (
-    units,
     dimensionless,
     Quantity,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
     symbols,
     quantities,
     convert_to_float,
+    symbols,
+    clone_as_symbol,
 )
 
-occupancy_of_state = Symbol("occupancy_of_state", dimensionless)
-r"""
+occupancy_of_state = SymbolNew("N_i", dimensionless)
+"""
 Occupancy of a single-particle state :math:`i`.
-
-Symbol:
-    :code:`N_i`
-
-Latex:
-    :math:`N_i`
 """
 
-energy_of_state = Symbol("energy_of_state", units.energy)
-r"""
-Energy of state :math:`i`.
-
-Symbol:
-    :code:`E_i`
-
-Latex:
-    :math:`E_i`
+energy_of_state = clone_as_symbol(symbols.energy, subscript="i")
+"""
+:symbols:`energy` of state :math:`i`.
 """
 
-total_chemical_potential = Symbol("total_chemical_potential", units.energy)
+total_chemical_potential = symbols.chemical_potential
 r"""
-Total chemical potential of the system.
-
-Symbol:
-    :code:`mu`
-
-Latex:
-    :math:`\mu`
+Total :symbols:`chemical_potential` of the system.
 """
 
 temperature = symbols.temperature
@@ -74,12 +57,10 @@ temperature = symbols.temperature
 law = Eq(
     occupancy_of_state, 1 / (exp((energy_of_state - total_chemical_potential) /
     (quantities.boltzmann_constant * temperature)) + 1))
-r"""
-:code:`N_i = 1 / (exp((E_i - mu) / (k_B * T)) + 1)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        N_i = \frac{1}{\exp{\left( \frac{E_i - \mu}{k_\text{B} T} \right)} + 1}
+:laws:latex::
 """
 
 

@@ -11,27 +11,19 @@ This is a direct consequence of the first law of thermodynamics.
 """
 
 from sympy import (Eq, Idx, solve)
-from symplyphysics import (units, Quantity, validate_input, validate_output, SymbolIndexed,
+from symplyphysics import (units, Quantity, validate_input, validate_output, SymbolIndexedNew,
     SumIndexed, global_index)
 
-amount_of_energy = SymbolIndexed("amount_of_energy", units.energy)
-r"""
-Amount of energy transferred between parts of the system.
-
-Symbol:
-    :code:`E_i`
-
-Latex:
-    :math:`E_i`
+amount_of_energy = SymbolIndexedNew("E", dimension=units.energy)
+"""
+Amount of :symbols:`energy` transferred between parts of the system.
 """
 
 law = Eq(SumIndexed(amount_of_energy[global_index], global_index), 0)
-r"""
-:code:`Sum(E_i, i) = 0`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \sum_i E_i = 0
+:laws:latex::
 """
 
 

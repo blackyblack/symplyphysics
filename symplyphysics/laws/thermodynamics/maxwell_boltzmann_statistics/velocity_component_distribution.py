@@ -30,7 +30,7 @@ from sympy import Eq, sqrt, pi, exp
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
     clone_as_symbol,
@@ -38,28 +38,14 @@ from symplyphysics import (
     quantities,
 )
 
-velocity_component_distribution = Symbol("velocity_component_distribution",
-    1 / units.velocity,
-    positive=True)
-r"""
+velocity_component_distribution = SymbolNew("f(v_k)", 1 / units.velocity)
+"""
 Distribution function of velocity component :math:`v_k`.
-
-Symbol:
-    :code:`f(v_k)`
-
-Latex:
-    :math:`f(v_k)`
 """
 
-velocity_component = Symbol("velocity_component", units.velocity, positive=True)
+velocity_component = clone_as_symbol(symbols.speed, subscript="k")
 """
 Velocity component in Cartesian coordinates, :math:`k = x, y, z`.
-
-Symbol:
-    :code:`v_k`
-
-Latex:
-    :math:`v_k`
 """
 
 particle_mass = clone_as_symbol(symbols.mass, positive=True)
@@ -77,12 +63,10 @@ law = Eq(
     sqrt(particle_mass / (2 * pi * quantities.boltzmann_constant * equilibrium_temperature)) *
     exp(-1 * particle_mass * velocity_component**2 /
     (2 * quantities.boltzmann_constant * equilibrium_temperature)))
-r"""
-:code:`f(v_k) = sqrt(m / (2 * pi * k_B * T)) * exp(-1 * m * v_k^2 / (2 * k_B * T))`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        f(v_k) = \sqrt{\frac{m}{2 \pi k_\text{B} T}} \exp \left( - \frac{m v_k^2}{2 k_\text{B} T} \right)
+:laws:latex::
 """
 
 

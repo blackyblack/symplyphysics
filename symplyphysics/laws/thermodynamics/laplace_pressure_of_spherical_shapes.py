@@ -11,46 +11,35 @@ the fluid is called *Laplace pressure*.
 #. `Wikipedia, second formula <https://en.wikipedia.org/wiki/Laplace_pressure>`__.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
+from sympy import Eq, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    clone_as_symbol,
+)
 
-laplace_pressure = Symbol("laplace_pressure", units.pressure)
-r"""
-Excess pressure under the curved surface.
-
-Symbol:
-    :code:`P_L`
-
-Latex:
-    :math:`P_\text{L}`
+laplace_pressure = clone_as_symbol(symbols.pressure, subscript="\\text{L}")
+"""
+Excess :symbols:`pressure` under the curved surface.
 """
 
-surface_tension = Symbol("surface_tension", units.force / units.length)
-r"""
-Surface tension of the fluid.
-
-Symbol:
-    :code:`sigma`
-
-Latex:
-    :math:`\sigma`
+surface_tension = symbols.surface_tension
+"""
+:symbols:`surface_tension` of the fluid.
 """
 
-radius_of_curvature = Symbol("radius_of_curvature", units.length)
+radius_of_curvature = symbols.radius_of_curvature
 """
-Radius of curvature of the surface.
-
-Symbol:
-    :code:`R`
+:symbols:`radius_of_curvature` of the surface.
 """
 
 law = Eq(laplace_pressure, 2 * surface_tension / radius_of_curvature)
-r"""
-:code:`P_L = 2 * sigma / R`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        P_\text{L} = \frac{2 \sigma}{R}
+:laws:latex::
 """
 
 

@@ -18,30 +18,19 @@ from sympy import Eq
 from symplyphysics import (
     clone_as_symbol,
     symbols,
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
 )
 
-internal_energy_change = Symbol("internal_energy_change", units.energy)
+internal_energy_change = clone_as_symbol(symbols.internal_energy, display_symbol="dU", display_latex="dU")
 """
-Infinitesimal change in internal energy of the system.
-
-Symbol:
-    :code:`dU`
+Infinitesimal change in :symbols:`internal_energy` of the system.
 """
 
-isochoric_heat_capacity = Symbol("isochoric_heat_capacity", units.energy / units.temperature)
-r"""
-Heat capacity at constant volume.
-
-Symbol:
-    :code:`C_V`
-
-Latex:
-    :math:`C_V`
+isochoric_heat_capacity = clone_as_symbol(symbols.heat_capacity, subscript="V")
+"""
+:symbols:`heat_capacity` at constant :symbols:`volume`.
 """
 
 temperature_change = clone_as_symbol(symbols.temperature, display_symbol="dT", display_latex="dT")
@@ -50,12 +39,10 @@ Infinitesimal change in :symbols:`temperature` of the system.
 """
 
 law = Eq(internal_energy_change, isochoric_heat_capacity * temperature_change)
-r"""
-:code:`dU = C_V * dT`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        dU = C_V dT
+:laws:latex::
 """
 
 # TODO: derive law from Joule-Thompson effect

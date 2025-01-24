@@ -15,10 +15,11 @@ reduced pressure-volume curve at the same reduced temperature.
 from sympy import Eq, Rational, solve
 from symplyphysics import (
     dimensionless,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
     convert_to_float,
+
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import (
@@ -31,49 +32,29 @@ from symplyphysics.laws.thermodynamics.equations_of_state.van_der_waals import (
     reduced_temperature as reduced_temperature_law,
 )
 
-reduced_pressure = Symbol("reduced_pressure", dimensionless)
-r"""
+reduced_pressure = SymbolNew("p_r", dimensionless)
+"""
 See :doc:`laws.thermodynamics.equations_of_state.van_der_waals.reduced_pressure`.
-
-Symbol:
-    :code:`p*`
-
-Latex:
-    :math:`p^*`
 """
 
-reduced_volume = Symbol("reduced_volume", dimensionless)
-r"""
+reduced_volume = SymbolNew("V_r", dimensionless)
+"""
 See :doc:`laws.thermodynamics.equations_of_state.van_der_waals.reduced_volume`.
-
-Symbol:
-    :code:`V*`
-
-Latex:
-    :math:`V^*`
 """
 
-reduced_temperature = Symbol("reduced_temperature", dimensionless)
-r"""
+reduced_temperature = SymbolNew("T_r", dimensionless)
+"""
 See :doc:`laws.thermodynamics.equations_of_state.van_der_waals.reduced_temperature`.
-
-Symbol:
-    :code:`T*`
-
-Latex:
-    :math:`T^*`
 """
 
 law = Eq(
     (reduced_pressure + 3 / reduced_volume**2) * (reduced_volume - Rational(1, 3)),
     Rational(8, 3) * reduced_temperature,
 )
-r"""
-:code:`(p* + 3 / (V*)^2) * (V* - 1/3) = 8/3 * T*`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \left( p^* + \frac{3}{\left(V^*\right)^2} \right) \left( V^* - \frac{1}{3} \right) = \frac{8}{3} T^*
+:laws:latex::
 """
 
 # Derive from van der Waals equation of state

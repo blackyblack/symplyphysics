@@ -14,32 +14,28 @@ describe a hypothetical ideal gas.
 #. `Wikipedia <https://en.wikipedia.org/wiki/Ideal_gas_law>`__.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output,
-    quantities)
+from sympy import Eq, solve
+from symplyphysics import (
+    symbols,
+    Quantity,
+    validate_input,
+    validate_output,
+    quantities,
+)
 
-pressure = Symbol("pressure", units.pressure)
+pressure = symbols.pressure
 """
-Pressure inside the gas.
-
-Symbol:
-    :code:`p`
-"""
-
-volume = Symbol("volume", units.volume)
-"""
-Volume of the gas.
-
-Symbol:
-    :code:`V`
+:symbols:`pressure` inside the gas.
 """
 
-amount_of_substance = Symbol("amount_of_substance", units.amount_of_substance)
+volume = symbols.volume
 """
-Amount of gas.
+:symbols:`volume` of the gas.
+"""
 
-Symbol:
-    :code:`n`
+amount_of_substance = symbols.amount_of_substance
+"""
+:symbols:`amount_of_substance` of the gas.
 """
 
 temperature = symbols.temperature
@@ -48,12 +44,10 @@ temperature = symbols.temperature
 """
 
 law = Eq(pressure * volume, amount_of_substance * quantities.molar_gas_constant * temperature)
-r"""
-:code:`p V = n * R * T`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        p V = n R T
+:laws:latex::
 """
 
 

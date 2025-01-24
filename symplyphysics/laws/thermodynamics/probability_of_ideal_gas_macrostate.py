@@ -39,56 +39,37 @@ from typing import Sequence
 from sympy import Eq, Idx, factorial
 from symplyphysics import (
     dimensionless,
-    Symbol,
     convert_to_float,
     validate_output,
     ProductIndexed,
-    SymbolIndexed,
+    SymbolIndexedNew,
     global_index,
     assert_equal,
+    symbols,
+    clone_as_symbol,
 )
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 from symplyphysics.core.symbols.probability import Probability
+from symplyphysics.core.symbols.symbols import clone_as_indexed
 
-macrostate_probability = Symbol("macrostate_probability", dimensionless)
-r"""
-Probability of the macrostate.
-
-Symbol:
-    :code:`P_macro`
-
-Latex:
-    :math:`P_\text{macro}`
+macrostate_probability = clone_as_symbol(symbols.probability, subscript="\\text{macro}")
+"""
+:symbols:`probability` of the macrostate.
 """
 
-statistical_weight = Symbol("statistical_weight", dimensionless)
+statistical_weight = symbols.statistical_weight
 """
-Statistical weight of the macrostate.
-
-Symbol:
-    :code:`G`
+:symbols:`statistical_weight` of the macrostate.
 """
 
-particle_in_cell_probability = SymbolIndexed("particle_in_cell_probability", dimensionless)
+particle_in_cell_probability = clone_as_indexed(symbols.probability)
 """
-Probability of finding at least one particle in cell :math:`i`.
-
-Symbol:
-    :code:`p_i`
-
-Latex:
-    :math:`p_i`
+:symbols:`probability` of finding at least one particle in cell :math:`i`.
 """
 
-particle_count_in_cell = SymbolIndexed("particle_count_in_cell", dimensionless)
-r"""
+particle_count_in_cell = SymbolIndexedNew("N", dimension=dimensionless)
+"""
 Number of particles in cell :math:`i`.
-
-Symbol:
-    :code:`N_i`
-
-Latex:
-    :math:`N_i`
 """
 
 # TODO: Create law for probability of microstate and move the product there
@@ -101,6 +82,9 @@ law = Eq(
     ),
 )
 r"""
+..
+    The printers do not work yey with `ProductIndexed`.
+
 :code:`P_macro = G * Product(p_i^N_i, i)`
 
 Latex:

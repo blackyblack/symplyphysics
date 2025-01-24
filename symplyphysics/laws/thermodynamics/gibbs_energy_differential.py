@@ -30,28 +30,19 @@ from sympy import Eq
 from symplyphysics import (
     clone_as_symbol,
     symbols,
-    units,
-    dimensionless,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
 )
 
-gibbs_energy_change = Symbol("gibbs_energy_change", units.energy)
+gibbs_energy_change = clone_as_symbol(symbols.gibbs_energy, display_symbol="dG", display_latex="dG")
 """
-Infinitesimal change in Gibbs energy of the system.
-
-Symbol:
-    :code:`dG`
+Infinitesimal change in :symbols:`gibbs_energy` of the system.
 """
 
-entropy = Symbol("entropy", units.energy / units.temperature)
+entropy = symbols.entropy
 """
-Entropy of the system.
-
-Symbol:
-    :code:`S`
+:symbols:`entropy` of the system.
 """
 
 temperature_change = clone_as_symbol(symbols.temperature, display_symbol="dT", display_latex="dT")
@@ -59,39 +50,24 @@ temperature_change = clone_as_symbol(symbols.temperature, display_symbol="dT", d
 Infinitesimal change in :symbols:`temperature` of the system.
 """
 
-volume = Symbol("volume", units.volume)
+volume = symbols.volume
 """
-Volume of the system.
-
-Symbol:
-    :code:`V`
+:symbols:`volume` of the system.
 """
 
-pressure_change = Symbol("pressure_change", units.pressure)
+pressure_change = clone_as_symbol(symbols.pressure, display_symbol="dp", display_latex="dp")
 """
-Infinitesimal change in pressure inside the system.
-
-Symbol:
-    :code:`dp`
+Infinitesimal change in :symbols:`pressure` inside the system.
 """
 
-chemical_potential = Symbol("chemical_potential", units.energy)
+chemical_potential = symbols.chemical_potential
 r"""
-Chemical potential of the system.
-
-Symbol:
-    :code:`mu`
-
-Latex:
-    :math:`\mu`
+:symbols:`chemical_potential` of the system.
 """
 
-particle_count_change = Symbol("particle_count_change", dimensionless)
+particle_count_change = clone_as_symbol(symbols.particle_count, display_symbol="dN", display_latex="dN")
 """
-Infinitesimal change in the number of particles in the system.
-
-Symbol:
-    :code:`dN`
+Infinitesimal change in the :symbols:`particle_count` of the system.
 """
 
 law = Eq(
@@ -99,12 +75,10 @@ law = Eq(
     -1 * entropy * temperature_change + volume * pressure_change +
     chemical_potential * particle_count_change,
 )
-r"""
-:code:`dG = -1 * S * dT + V * dp + mu * dN`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        dG = - S \, dT + V \, dp + \mu \, dN
+:laws:latex::
 """
 
 

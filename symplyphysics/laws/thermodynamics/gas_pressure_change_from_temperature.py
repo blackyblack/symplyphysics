@@ -16,48 +16,29 @@ The change in pressure of ideal gas depends on temperature, standard pressure an
 from sympy import Eq, solve
 from symplyphysics import (
     symbols,
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     quantities,
+    clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import pressure_and_temperature_in_isochoric_process as isochoric_law
 
-pressure_change = Symbol("pressure", units.pressure)
-r"""
-Finite change in pressure inside the gas.
-
-Symbol:
-    :code:`dp`
-
-Latex:
-    :math:`\Delta p`
+pressure_change = clone_as_symbol(symbols.pressure, display_symbol="Delta(p)", display_latex="\\Delta p")
+"""
+Finite change in :symbols:`pressure` inside the gas.
 """
 
-initial_pressure = Symbol("initial_pressure", units.pressure)
+initial_pressure = clone_as_symbol(symbols.pressure, subscript="0")
 """
-Pressure at :attr:`standard conditions <symplyphysics.quantities.standard_conditions_temperature>`.
-
-Symbol:
-    :code:`p0`
-
-Latex:
-    :math:`p_0`
+:symbols:`pressure` at :attr:`standard conditions <symplyphysics.quantities.standard_conditions_temperature>`.
 """
 
 thermal_coefficient = 1 / quantities.standard_conditions_temperature
-r"""
+"""
 Isochoric thermal pressure coefficient equal to the inverse of
 :attr:`standard conditions temperature <symplyphysics.quantities.standard_conditions_temperature>`.
-
-Symbol:
-    :code:`beta_V`
-
-Latex:
-    :math:`\beta_V`
 """
 
 final_temperature = symbols.temperature
@@ -66,12 +47,10 @@ final_temperature = symbols.temperature
 """
 
 law = Eq(pressure_change, initial_pressure * (thermal_coefficient * final_temperature - 1))
-r"""
-:code:`dp = p0 * (beta_V * T - 1)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \Delta p = p_0 \left( \beta_V T - 1 \right)
+:laws:latex::
 """
 
 # Derive law from Guy-Lussac's law of isochoric heating of gas.

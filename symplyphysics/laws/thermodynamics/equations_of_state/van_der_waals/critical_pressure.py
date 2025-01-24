@@ -17,53 +17,33 @@ from symplyphysics import (
     Symbol,
     validate_input,
     validate_output,
+    clone_as_symbol,
+    symbols,
 )
 
-critical_pressure = Symbol("critical_pressure", units.pressure)
-r"""
-Critical pressure of the van der Waals fluid.
-
-Symbol:
-    :code:`p_c`
-
-Latex:
-    :math:`p_\text{c}`
+critical_pressure = clone_as_symbol(symbols.pressure, subscript="\\text{c}")
+"""
+Critical :symbols:`pressure` of the van der Waals fluid.
 """
 
-attractive_forces_parameter = Symbol(
-    "attractive_forces_parameter",
-    units.pressure * (units.volume / units.amount_of_substance)**2,
-)
+attractive_forces_parameter = symbols.attractive_forces_parameter
 """
-Parameter of the van der Waals equation denoting the magnitude of attractive
-forces between gas molecules.
-
-Symbol:
-    :code:`a`
+:symbols:`attractive_forces_parameter`.
 """
 
-excluded_volume_parameter = Symbol(
-    "excluded_volume_parameter",
-    units.volume / units.amount_of_substance,
-)
+excluded_volume_parameter = symbols.excluded_volume_parameter
 """
-Parameter of the van der Waals equation denoting an excluded molar volume
-due to a finite size of molecules.
-
-Symbol:
-    :code:`b`
+:symbols:`excluded_volume_parameter`.
 """
 
 law = Eq(
     critical_pressure,
     attractive_forces_parameter / (27 * excluded_volume_parameter**2),
 )
-r"""
-:code:`p_c = a / (27 * b^2)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        p_\text{c} = \frac{a}{27 b^2}
+:laws:latex::
 """
 
 

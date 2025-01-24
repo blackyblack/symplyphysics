@@ -23,9 +23,7 @@ from sympy import Eq, solve, Rational
 from symplyphysics import (
     clone_as_symbol,
     symbols,
-    units,
     Quantity,
-    SymbolNew,
     validate_input,
     validate_output,
 )
@@ -50,12 +48,9 @@ reference_temperature = clone_as_symbol(symbols.temperature, subscript="0")
 :symbols:`temperature` at which the reference viscosity value is calculated.
 """
 
-sutherland_constant = SymbolNew("C", units.temperature)
+sutherland_constant = symbols.sutherland_constant
 """
-Sutherland constant of the gas.
-
-..
-    NOTE probably add this to `symbols`? this constant is specific to the Sutherland model
+:symbols:`sutherland_constant` of the gas.
 """
 
 law = Eq(

@@ -6,6 +6,10 @@ Occupancy of a single-particle state of bosons is the probability of a single bo
 to occupy a state with a certain amount of energy. The occupancy depends on the energy
 of the state and the temperature and the chemical potential of the system.
 
+**Notation:**
+
+#. :quantity_notation:`boltzmann_constant`.
+
 **Conditions:**
 
 #. :math:`E_i > \mu`.
@@ -18,46 +22,29 @@ of the state and the temperature and the chemical potential of the system.
 from sympy import Eq, exp
 from symplyphysics import (
     convert_to_float,
-    units,
     dimensionless,
     Quantity,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
     symbols,
+    clone_as_symbol,
+    quantities,
 )
 
-occupancy_of_state = Symbol("occupancy_of_state", dimensionless)
-r"""
+occupancy_of_state = SymbolNew("n_i", dimensionless)
+"""
 Occupancy of single-particle state :math:`i`.
-
-Symbol:
-    :code:`n_i`
-
-Latex:
-    :math:`n_i`
 """
 
-energy_of_state = Symbol("energy_of_state", units.energy)
-r"""
-Energy of single-particle state :math:`i`.
-
-Symbol:
-    :code:`E_i`
-
-Latex:
-    :math:`E_i`
+energy_of_state = clone_as_symbol(symbols.energy, subscript="i")
+"""
+:symbols:`energy` of single-particle state :math:`i`.
 """
 
-total_chemical_potential = Symbol("total_chemical_potential", units.energy)
-r"""
-Total chemical potential of the system.
-
-Symbol:
-    :code:`mu`
-
-Latex:
-    :math:`\mu`
+total_chemical_potential = symbols.chemical_potential
+"""
+Total :symbols:`chemical_potential` of the system.
 """
 
 temperature = symbols.temperature
@@ -67,13 +54,11 @@ temperature = symbols.temperature
 
 law = Eq(
     occupancy_of_state, 1 / (exp(
-    (energy_of_state - total_chemical_potential) / (units.boltzmann * temperature)) - 1))
-r"""
-:code:`n_i = 1 / (exp((E_i - mu) / (k_B * T)) - 1)`
+    (energy_of_state - total_chemical_potential) / (quantities.boltzmann_constant * temperature)) - 1))
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        n_i = \frac{1}{\exp{\frac{E_i - \mu}{k_\text{B} T}} - 1}
+:laws:latex::
 """
 
 

@@ -20,80 +20,42 @@ the evolution of heat transferred from hotter to colder environments in time and
 """
 
 from sympy import Eq, Derivative
-from symplyphysics import (
-    units,
-    Symbol,
-    Function,
-)
+from symplyphysics import units, SymbolNew, symbols, clone_as_function
 
-temperature = Function("temperature", units.temperature)
+position = symbols.position
 """
-Temperature as a function of position and time.
-
-Symbol:
-    :code:`T(x, t)`
+:symbols:`position`, or spatial variable.
 """
 
-medium_density = Symbol("medium_density", units.mass / units.volume)
-r"""
-Density of the medium.
-
-Symbol:
-    :code:`rho`
-
-Latex:
-    :math:`\rho`
+time = symbols.time
+"""
+:symbols:`time`.
 """
 
-medium_specific_isobaric_heat_capacity = Symbol("medium_specific_isobaric_heat_capacity",
-    units.energy / (units.temperature * units.mass))
+temperature = clone_as_function(symbols.temperature, [position, time])
 """
-Heat capacity of the medium at constant pressure per unit mass.
-
-Symbol:
-    :code:`c_p`
-
-Latex:
-    :math:`c_p`
+:symbols:`temperature` as a function of :attr:`~position` and :attr:`~time`.
 """
 
-thermal_conductivity = Function(
-    "thermal_conductivity",
-    units.power / (units.length * units.temperature),
-)
+medium_density = symbols.density
 """
-`Thermal conductivity <https://en.wikipedia.org/wiki/Thermal_conductivity_and_resistivity#Definition>`_
-of the medium as a function of position.
-
-Symbol:
-    :code:`k(x)`
+:symbols:`density` of the medium.
 """
 
-heat_source_density = Function(
-    "heat_source_density",
-    units.power / units.volume,
-)
+medium_specific_isobaric_heat_capacity = SymbolNew("c_p", units.energy / (units.temperature * units.mass))
 """
-Density of the rate of heat production by external sources as a function of position and time.
-
-Symbol:
-    :code:`q(x, t)`
+:symbols:`heat_capacity` of the medium at constant :symbols:`pressure` per unit :symbols:`mass`.
 """
 
-position = Symbol("position", units.length)
+thermal_conductivity = clone_as_function(symbols.thermal_conductivity, [position])
 """
-Position, or spatial variable.
-
-Symbol:
-    :code:`x`
+:symbols:`thermal_conductivity` of the medium as a function of :attr:`~position`.
 """
 
-time = Symbol("time", units.time)
+heat_source_density = clone_as_function(symbols.energy_density, [position, time], display_symbol="q", display_latex="q")
 """
-Time.
-
-Symbol:
-    :code:`t`
+Density of the rate of heat production by external sources as a function of
+:attr:`~position` and :attr:`~time`. See :symbols:`energy_density`.
 """
 
 law = Eq(
@@ -102,10 +64,8 @@ law = Eq(
     Derivative(
     thermal_conductivity(position) * Derivative(temperature(position, time), position), position) +
     heat_source_density(position, time))
-r"""
-:code:`rho * c_p * Derivative(T(x, t), t) = Derivative(k(x) * Derivative(T(x, t), x), x) + q(x, t)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \rho c_p \frac{\partial T}{\partial t} = \frac{\partial}{\partial x} \left( k(x) \frac{\partial T}{\partial x} \right) + q(x, t)
+:laws:latex::
 """

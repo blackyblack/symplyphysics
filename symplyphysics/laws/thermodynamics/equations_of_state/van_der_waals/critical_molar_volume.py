@@ -12,43 +12,28 @@ parameter :math:`b` of the van der Waals equation. See :ref:`vdw_critical_parame
 
 from sympy import Eq
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
 )
 
-critical_molar_volume = Symbol("critical_molar_volume", units.volume / units.amount_of_substance)
-r"""
-Critical volume of the van der Waals fluid per unit amount of substance.
-
-Symbol:
-    :code:`V_cm`
-
-Latex:
-    :math:`V_\text{c, m}`
+critical_molar_volume = clone_as_symbol(symbols.molar_volume, display_symbol="v_cm", display_latex="v_{\\text{c},\\text{m}}")
+"""
+Critical :symbols:`molar_volume` of the van der Waals fluid.
 """
 
-excluded_volume_parameter = Symbol(
-    "excluded_volume_parameter",
-    units.volume / units.amount_of_substance,
-)
+excluded_volume_parameter = symbols.excluded_volume_parameter
 """
-Parameter of the van der Waals equation denoting an excluded molar volume
-due to a finite size of molecules.
-
-Symbol:
-    :code:`b`
+:symbols:`excluded_volume_parameter`.
 """
 
 law = Eq(critical_molar_volume, 3 * excluded_volume_parameter)
-r"""
-:code:`V_cm = 3 * b`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        V_\text{c, m} = 3 b
+:laws:latex::
 """
 
 

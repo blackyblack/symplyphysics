@@ -1,72 +1,86 @@
+"""
+Isobaric potential from heat capacity
+=====================================
+
+The isobaric potential of a reaction is a value whose change during a chemical reaction
+is equal to the change in the internal energy of the system. The isobaric potential
+shows how much of the total internal energy of the system can be used for chemical
+transformations. Thermal effect of reaction is change of enthalpy of the system. The
+standard state is the state at a temperature of :math:`298 \\, \\text{K}` and a total
+pressure of :math:`1 \\, \\text{atm}`, as well as at a fixed composition of the system.
+
+**Conditions:**
+
+#. We neglect the temperature dependence of the heat capacities.
+#. The process is isobaric-isothermal.
+
+..
+    TODO: find link
+"""
+
 from sympy import (Eq, solve, log)
 from symplyphysics import (
     quantities,
     symbols,
     units,
     Quantity,
-    Symbol,
-    print_expression,
+    SymbolNew,
     validate_input,
     validate_output,
+    clone_as_symbol,
 )
 
-# Description
-## The isobaric potential of a reaction is a value whose change during a chemical reaction is equal to the change in the internal
-## energy of the system. The isobaric potential shows how much of the total internal energy of the system can be used for chemical
-## transformations.
-## Thermal effect of reaction is change of enthalpy of the system.
-## The standard state is the state at a temperature of 298 Kelvin and a total pressure of 1 atmosphere,
-## as well as at a fixed composition of the system.
+standard_molar_gibbs_energy_change = SymbolNew("Delta(G)", units.energy / units.amount_of_substance, display_latex="\\Delta G")
+"""
+Standard change of :symbols:`gibbs_energy` per unit :symbols:`amount_of_substance`.
+"""
 
-## Law is: G = H - T * S - Cp * T * (ln(T / 298) + (298 / T) - 1), where
-## G - standard change of isobaric potential of reaction,
-## H - standard thermal effect of reaction,
-## T - temperature,
-## S - standard change of entropy,
-## Cp - standard change of heat capacity.
+standard_molar_enthalpy_change = SymbolNew("Delta(H)", units.energy / units.amount_of_substance, display_latex="\\Delta H")
+"""
+Standard change of :symbols:`enthalpy` per unit :symbols:`amount_of_substance`.
+"""
 
-# Conditions:
-## - we neglect the temperature dependence of the heat capacities;
-## - the process is isobaric-isothermal.
+standard_molar_entropy_change = SymbolNew("Delta(S)", units.energy / units.amount_of_substance / units.temperature, display_latex="\\Delta S")
+"""
+Standard change of :symbols:`entropy` per unit :symbols:`amount_of_substance`.
+"""
 
-# TODO: find link
-
-standard_change_isobaric_potential = Symbol("standard_change_isobaric_potential",
-    units.energy / units.amount_of_substance)
-
-standard_thermal_effect = Symbol("standard_thermal_effect",
-    units.energy / units.amount_of_substance)
-standard_change_entropy = Symbol("standard_change_entropy",
-    units.energy / units.amount_of_substance / units.temperature)
 temperature = symbols.temperature
-standard_change_heat_capacity = Symbol("standard_change_heat_capacity",
-    units.energy / units.amount_of_substance / units.temperature)
+"""
+:symbols:`temperature`.
+"""
+
+standard_molar_heat_capacity_change = clone_as_symbol(symbols.molar_heat_capacity, display_symbol="Delta(c_m)", display_latex="\\Delta c_\\text{m}")
+"""
+Standard change of :symbols:`molar_heat_capacity`.
+"""
 
 law = Eq(
-    standard_change_isobaric_potential, standard_thermal_effect -
-    temperature * standard_change_entropy - standard_change_heat_capacity * temperature *
+    standard_molar_gibbs_energy_change, standard_molar_enthalpy_change -
+    temperature * standard_molar_entropy_change - standard_molar_heat_capacity_change * temperature *
     (log(temperature / quantities.standard_laboratory_temperature) +
     (quantities.standard_laboratory_temperature / temperature) - 1))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
-def print_law() -> str:
-    return print_expression(law)
-
-
-@validate_input(standard_thermal_effect_=standard_thermal_effect,
-    standard_change_entropy_=standard_change_entropy,
+@validate_input(standard_thermal_effect_=standard_molar_enthalpy_change,
+    standard_change_entropy_=standard_molar_entropy_change,
     temperature_=temperature,
-    standard_change_heat_capacity_=standard_change_heat_capacity)
-@validate_output(standard_change_isobaric_potential)
+    standard_change_heat_capacity_=standard_molar_heat_capacity_change)
+@validate_output(standard_molar_gibbs_energy_change)
 def calculate_standard_change_isobaric_potential(
         standard_thermal_effect_: Quantity, standard_change_entropy_: Quantity,
         temperature_: Quantity, standard_change_heat_capacity_: Quantity) -> Quantity:
-    result_expr = solve(law, standard_change_isobaric_potential,
-        dict=True)[0][standard_change_isobaric_potential]
+    result_expr = solve(law, standard_molar_gibbs_energy_change,
+        dict=True)[0][standard_molar_gibbs_energy_change]
     result_expr = result_expr.subs({
-        standard_thermal_effect: standard_thermal_effect_,
-        standard_change_entropy: standard_change_entropy_,
+        standard_molar_enthalpy_change: standard_thermal_effect_,
+        standard_molar_entropy_change: standard_change_entropy_,
         temperature: temperature_,
-        standard_change_heat_capacity: standard_change_heat_capacity_,
+        standard_molar_heat_capacity_change: standard_change_heat_capacity_,
     })
     return Quantity(result_expr)

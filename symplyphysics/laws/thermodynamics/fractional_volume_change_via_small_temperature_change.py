@@ -19,15 +19,14 @@ and the fractional change in the body's volume is proportional to the change in 
     TODO move to `dynamics/deformations`?
 """
 
-from sympy import Eq, symbols, solve
+from sympy import Eq, symbols as sym_symbols, solve
 from symplyphysics import (
-    dimensionless,
-    units,
     Quantity,
-    Symbol,
     convert_to_float,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import (
@@ -35,51 +34,31 @@ from symplyphysics.definitions import (
 from symplyphysics.laws.quantities import (
     fractional_change_is_change_over_initial_value as fractional_change_law,)
 
-fractional_volume_change = Symbol("fractional_volume_change", dimensionless)
-r"""
-Change :math:`\Delta V` in the body's volume divided by its initial volume :math:`V`.
-
-Symbol:
-    :code:`e_V`
-
-Latex:
-    :math:`e_V`
+fractional_volume_change = clone_as_symbol(symbols.fractional_change, subscript="V")
+"""
+Change in the body's :symbols:`volume` divided by its initial volume. See :symbols:`fractional_change`.
 """
 
-volumetric_expansion_coefficient = Symbol("volumetric_expansion_coefficient", 1 / units.temperature)
-r"""
-Volumetric coefficient of thermal expansion.
-
-Symbol:
-    :code:`alpha_V`
-
-Latex:
-    :math:`\alpha_V`
+volumetric_expansion_coefficient = clone_as_symbol(symbols.thermal_expansion_coefficient, subscript="V")
+"""
+Volumetric :symbols:`thermal_expansion_coefficient`.
 """
 
-temperature_change = Symbol("temperature_change", units.temperature)
-r"""
-Change in body's temperature.
-
-Symbol:
-    :code:`dT`
-
-Latex:
-    :math:`\Delta T`
+temperature_change = clone_as_symbol(symbols.temperature, display_symbol="Delta(T)", display_latex="\\Delta T")
+"""
+Change in body's :symbols:`temperature`.
 """
 
 law = Eq(fractional_volume_change, volumetric_expansion_coefficient * temperature_change)
-r"""
-:code:`e_V = alpha_V * dT`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        e_V = \alpha_V \, \Delta T
+:laws:latex::
 """
 
 # Derive from definition of the coefficient of thermal expansion.
 
-_volume_change = symbols("volume_change")
+_volume_change = sym_symbols("volume_change")
 _parameters = coefficient_def.parameters
 _temperature = coefficient_def.temperature
 _volume = coefficient_def.volume(_temperature, _parameters)

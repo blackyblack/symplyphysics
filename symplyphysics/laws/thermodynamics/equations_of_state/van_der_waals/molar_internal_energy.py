@@ -18,33 +18,16 @@ from sympy import Eq, Integral
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
-    Function,
+    SymbolNew,
     validate_input,
     validate_output,
     symbols,
+    clone_as_function,
 )
 
-molar_internal_energy = Symbol("molar_internal_energy", units.energy / units.amount_of_substance)
+molar_internal_energy = SymbolNew("u", units.energy / units.amount_of_substance)
 """
-Internal energy of the van der Waals fluid per unit amount of substance.
-
-Symbol:
-    :code:`u`
-"""
-
-isochoric_molar_heat_capacity = Function(
-    "isochoric_molar_heat_capacity",
-    units.energy / (units.temperature * units.amount_of_substance),
-)
-r"""
-Heat capacity at constant volume per unit amount of substance.
-
-Symbol:
-    :code:`c_V(T)`
-
-Latex:
-    :math:`c_V(T)`
+:symbols:`internal_energy` of the van der Waals fluid per unit :symbols:`amount_of_substance`.
 """
 
 temperature = symbols.temperature
@@ -52,27 +35,19 @@ temperature = symbols.temperature
 :symbols:`temperature` of the van der Waals fluid.
 """
 
-attractive_forces_parameter = Symbol(
-    "attractive_forces_parameter",
-    units.pressure * (units.volume / units.amount_of_substance)**2,
-)
+isochoric_molar_heat_capacity = clone_as_function(symbols.molar_heat_capacity, [temperature], display_symbol="c_Vm", display_latex="c_{V, \\text{m}}")
 """
-Parameter of the van der Waals equation denoting the magnitude of attractive
-forces between gas molecules.
-
-Symbol:
-    :code:`a`
+:symbols:`molar_heat_capacity` at constant :symbols:`volume`.
 """
 
-molar_volume = Symbol("molar_volume", units.volume / units.amount_of_substance)
-r"""
-Volume of the van der Waals fluid per unit amount of substance.
+attractive_forces_parameter = symbols.attractive_forces_parameter
+"""
+:symbols:`attractive_forces_parameter`.
+"""
 
-Symbol:
-    :code:`V_m`
-
-Latex:
-    :math:`V_m`
+molar_volume = symbols.molar_volume
+"""
+:symbols:`molar_volume`.
 """
 
 law = Eq(
@@ -80,12 +55,10 @@ law = Eq(
     Integral(isochoric_molar_heat_capacity(temperature), temperature) -
     attractive_forces_parameter / molar_volume,
 )
-r"""
-:code:`u = Integral(c_V(T), T) - a / V_m`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        u = \int c_V(T) \, dT - \frac{a}{V_m}
+:laws:latex::
 """
 
 

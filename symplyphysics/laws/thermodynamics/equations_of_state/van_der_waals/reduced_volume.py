@@ -18,49 +18,35 @@ from symplyphysics import (
     units,
     dimensionless,
     Quantity,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
     convert_to_float,
+    symbols,
+    clone_as_symbol,
 )
 
-reduced_volume = Symbol("reduced_volume", dimensionless)
-r"""
-Reduced volume of the van der Waals fluid.
-
-Symbol:
-    :code:`V*`
-
-Latex:
-    :math:`V^*`
+reduced_volume = SymbolNew("V_r", dimensionless)
+"""
+Reduced :symbols:`volume` of the van der Waals fluid.
 """
 
-volume = Symbol("volume", units.volume)
+volume = symbols.volume
 """
-Volume of the van der Waals fluid.
-
-Symbol:
-    :code:`V`
+:symbols:`volume` of the van der Waals fluid.
 """
 
-critical_volume = Symbol("critical_volume", units.volume)
-r"""
-See :doc:`laws.thermodynamics.equations_of_state.van_der_waals.critical_molar_volume`.
-
-Symbol:
-    :code:`V_c`
-
-Latex:
-    :math:`V_\text{c}`
+critical_volume = clone_as_symbol(symbols.volume, subscript="\\text{c}")
+"""
+See :doc:`laws.thermodynamics.equations_of_state.van_der_waals.critical_molar_volume`
+and :symbols:`volume`.
 """
 
 law = Eq(reduced_volume, volume / critical_volume)
-r"""
-:code:`V* = V / V_c`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        V^* = \frac{V}{V_\text{c}}
+:laws:latex::
 """
 
 

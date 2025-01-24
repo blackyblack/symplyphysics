@@ -20,26 +20,17 @@ into account the main characteristics of a gas with intermolecular interaction.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output,
+from symplyphysics import (symbols, Quantity, validate_input, validate_output,
     quantities)
 
-pressure = Symbol("pressure", units.pressure)
+pressure = symbols.pressure
 """
-Pressure in the van der Waals fluid.
-
-Symbol:
-    :code:`p`
+:symbols:`pressure` in the van der Waals fluid.
 """
 
-molar_volume = Symbol("molar_volume", units.volume / units.amount_of_substance)
+molar_volume = symbols.molar_volume
 """
-Volume of the van der Waals fluid per unit amount of substance.
-
-Symbol:
-    :code:`V_m`
-
-Latex:
-    :math:`V_m`
+:symbols:`molar_volume` of the van der Waals fluid.
 """
 
 temperature = symbols.temperature
@@ -47,28 +38,14 @@ temperature = symbols.temperature
 :symbols:`temperature` of the van der Waals fluid.
 """
 
-attractive_forces_parameter = Symbol(
-    "attractive_forces_parameter",
-    units.pressure * (units.volume / units.amount_of_substance)**2,
-)
+attractive_forces_parameter = symbols.attractive_forces_parameter
 """
-Parameter of the van der Waals equation denoting the magnitude of attractive
-forces between gas molecules.
-
-Symbol:
-    :code:`a`
+:symbols:`attractive_forces_parameter`.
 """
 
-excluded_volume_parameter = Symbol(
-    "excluded_volume_parameter",
-    units.volume / units.amount_of_substance,
-)
+excluded_volume_parameter = symbols.excluded_volume_parameter
 """
-Parameter of the van der Waals equation denoting an excluded molar volume
-due to a finite size of molecules.
-
-Symbol:
-    :code:`b`
+:symbols:`excluded_volume_parameter`.
 """
 
 law = Eq(
@@ -76,12 +53,10 @@ law = Eq(
     (molar_volume - excluded_volume_parameter),
     quantities.molar_gas_constant * temperature,
 )
-r"""
-:code:`(p + a / V_m^2) * (V_m - b) = R * T`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \left( p + \frac{a}{V_m^2} \right) (V_m - b) = R T
+:laws:latex::
 """
 
 
