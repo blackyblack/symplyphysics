@@ -1,32 +1,56 @@
+"""
+Relativistic mass via rest mass and speed
+=========================================
+
+Relativistic mass is proportional to the rest mass of the object and approaches
+infinity as its speed approaches the speed of light.
+
+**Notation:**
+
+#. :quantity_notation:`speed_of_light`.
+
+**Conditions:**
+
+#. Non-zero rest mass.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Mass_in_special_relativity#Relativistic_mass>`__.
+
+..
+    TODO rename file
+"""
+
 from sympy import Eq, solve, sqrt
-from sympy.physics.units import speed_of_light
+from symplyphysics import (Quantity, validate_input,
+    validate_output, symbols, quantities)
 
-from symplyphysics import (Quantity, Symbol, units, validate_input, validate_output)
+relativistic_mass = symbols.relativistic_mass
+"""
+:symbols:`relativistic_mass` of the object.
+"""
 
-# Description
-## The relativistic mass is the sum total quantity of energy in a body or system
-## Law: m_rel = m / sqrt(1 - v**2 / c**2), where
-## m_rel is relativistic mass,
-## m is rest mass,
-## v is velocity,
-## c is speed of light.
+rest_mass = symbols.rest_mass
+"""
+:symbols:`rest_mass` of the object.
+"""
 
-# Conditions
-## Non-zero rest mass
+speed = symbols.speed
+"""
+:symbols:`speed` of the object.
+"""
 
-# Links: Wikipedia <https://en.wikipedia.org/wiki/Mass_in_special_relativity#Relativistic_mass>
+law = Eq(relativistic_mass, rest_mass / sqrt(1 - speed**2 / quantities.speed_of_light**2))
+"""
+:laws:symbol::
 
-# This is equivalent of symbols.mass
-rest_mass = Symbol("rest_mass", units.mass)
-velocity = Symbol("velocity", units.velocity)
-relativistic_mass = Symbol("relativistic_mass", units.mass)
-
-law = Eq(relativistic_mass, rest_mass / sqrt(1 - velocity**2 / speed_of_light**2))
+:laws:latex::
+"""
 
 
-@validate_input(rest_mass_=rest_mass, velocity_=velocity)
+@validate_input(rest_mass_=rest_mass, velocity_=speed)
 @validate_output(relativistic_mass)
 def calculate_relativistic_mass(rest_mass_: Quantity, velocity_: Quantity) -> Quantity:
     result_expr = solve(law, relativistic_mass, dict=True)[0][relativistic_mass]
-    mass_applied = result_expr.subs({rest_mass: rest_mass_, velocity: velocity_})
+    mass_applied = result_expr.subs({rest_mass: rest_mass_, speed: velocity_})
     return Quantity(mass_applied)

@@ -157,6 +157,11 @@ __all__ = [
     "angular_resolution",
     # relativistic mechanics
     "lorentz_factor",
+    "spacetime_interval",
+    "proper_time",
+    "rest_mass",
+    "proper_length",
+    "relativistic_mass",
     # thermodynamics
     "temperature",
     "adiabatic_index",

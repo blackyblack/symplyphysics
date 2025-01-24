@@ -1,27 +1,43 @@
+"""
+Total energy via relativistic mass
+==================================
+
+Fundamentally the energy of an object is synonimical to its mass.
+
+**Notation:**
+
+#. :quantity_notation:`speed_of_light`.
+
+**Links:**
+
+#. `Wikipedia, second formula in the last group of three equations <https://en.wikipedia.org/wiki/Mass_in_special_relativity#Relativistic_energy%E2%80%93momentum_equation>`__.
+"""
+
 from sympy import Eq, solve
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
+    quantities,
     validate_input,
     validate_output,
     symbols,
 )
 
-# Description
-## Fundamentally the energy of an object is synonimical to its mass.
+relativistic_energy = symbols.energy
+"""
+Total, or relativistic, :symbols:`energy` of the body.
+"""
 
-# Law: E = m * c**2, where
-## E is total (or relativistic) energy of body/system,
-## m is mass (relativistic mass, not only rest mass),
-## c is speed of light.
-
-# Links: Wikipedia, second formula in the last group of three equations <https://en.wikipedia.org/wiki/Mass_in_special_relativity#Relativistic_energy%E2%80%93momentum_equation>
-
-relativistic_energy = Symbol("energy", units.energy)
 relativistic_mass = symbols.mass
+"""
+Relativistic :symbols:`mass` of the body.
+"""
 
-law = Eq(relativistic_energy, relativistic_mass * units.speed_of_light**2)
+law = Eq(relativistic_energy, relativistic_mass * quantities.speed_of_light**2)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(relativistic_mass_=relativistic_mass)
