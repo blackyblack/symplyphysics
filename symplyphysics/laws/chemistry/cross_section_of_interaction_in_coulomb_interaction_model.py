@@ -34,9 +34,9 @@ cross_sectional_area_of_interaction = symbols.cross_section
 :symbols:`cross_section` of the interaction of particles.
 """
 
-ionization_energy = clone_as_symbol(symbols.energy, display_symbol="E_i", display_latex="E_\\text{i}")
+ionization_energy = clone_as_symbol(symbols.voltage, display_symbol="E_i", display_latex="E_\\text{i}")
 """
-Ionization :symbols:`energy` of atoms.
+Ionization :symbols:`energy` of atoms in terms of :symbols:`voltage`.
 """
 
 law = Eq(cross_sectional_area_of_interaction,
