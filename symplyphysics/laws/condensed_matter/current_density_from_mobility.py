@@ -5,6 +5,10 @@ Current density from mobility
 The current density can be calculated from the concentration and mobilities of holes and
 electrons and the electric field.
 
+**Notation:**
+
+#. :quantity_notation:`elementary_charge`.
+
 **Links:**
 
 #. `Wikipedia, last formula <https://en.wikipedia.org/wiki/Electron_mobility#Relation_to_current_density>`__.
@@ -83,7 +87,7 @@ _velocity_law_holes = velocity_law.law.subs({
 })
 _velocity_holes = solve(_velocity_law_holes, velocity_law.drift_velocity,
     dict=True)[0][velocity_law.drift_velocity]
-_density__velocity_law_holes = density_velocity_law.law.subs({
+_density_velocity_law_holes = density_velocity_law.law.subs({
     density_velocity_law.charge: quantities.elementary_charge,
     density_velocity_law.number_density: holes_concentration,
     density_velocity_law.drift_velocity: _velocity_holes,
@@ -91,7 +95,7 @@ _density__velocity_law_holes = density_velocity_law.law.subs({
 _density_current_electrons_derived = solve(_density_velocity_law_electrons,
     density_velocity_law.current_density,
     dict=True)[0][density_velocity_law.current_density]
-_density_current_holes_derived = solve(_density__velocity_law_holes,
+_density_current_holes_derived = solve(_density_velocity_law_holes,
     density_velocity_law.current_density,
     dict=True)[0][density_velocity_law.current_density]
 _density_current_derived = _density_current_electrons_derived + _density_current_holes_derived

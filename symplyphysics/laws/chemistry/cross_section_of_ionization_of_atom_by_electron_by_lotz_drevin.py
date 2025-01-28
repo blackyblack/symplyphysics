@@ -2,10 +2,6 @@
 Cross section of ionization of atom by electrons per Lotz-Drevin
 ================================================================
 
-The effective cross section is a physical quantity characterizing the probability of
-transition of a system of two interacting particles to a certain final state, a
-quantitative characteristic of the acts of collision of particles of a stream hitting a
-target with target particles. The effective cross-section has the dimension of the area.
 In this law, we are talking about the interaction of an atom and an electron, which
 ionizes an atom. Equivalent electrons on the outer shell of the ionized atom are
 electrons with the same principal and orbital quantum numbers. In this case, the

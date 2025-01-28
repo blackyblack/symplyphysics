@@ -8,6 +8,10 @@ which the substance participates; in this case, the equivalent is the molar mass
 substance formed during ion discharge divided by the sum of the ion charges (measured
 in elementary units), resulting in a molecule or atom of the substance.
 
+**Notations:**
+
+#. :quantity_notation:`faraday_constant`.
+
 **Links:**
 
 #. `Wikipedia, derivable <https://en.wikipedia.org/wiki/Electrochemical_equivalent>`__.

@@ -1,11 +1,14 @@
 """
-Cross section of interaction in model of quasirigid spheres
-===========================================================
+Cross section of interaction in model of hard spheres
+=====================================================
 
-The effective cross section is a physical quantity characterizing the probability of
-transition of a system of two interacting particles to a certain final state, a
-quantitative characteristic of the acts of collision of particles of a stream hitting a
-target with target particles. The effective cross-section has the dimension of the area.
+The model used in this law assumes atoms to be hard spheres, in which case the cross
+section of the interaction between the atoms is proportional to the square of the
+distance of greatest convergence between the atoms.
+
+**Conditions:**
+
+#. All atoms are spheres of equal radius.
 
 **Links:**
 
@@ -27,7 +30,8 @@ cross_section = symbols.cross_section
 
 distance_of_convergence = symbols.euclidean_distance
 """
-:symbols:`euclidean_distance` of greatest convergence of two colliding particles.
+:symbols:`euclidean_distance` of greatest convergence of two colliding particles. In
+other words, this is the diameter of spheres which approximate the atoms.
 """
 
 law = Eq(cross_section, pi * distance_of_convergence**2)

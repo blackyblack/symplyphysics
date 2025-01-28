@@ -66,18 +66,21 @@ electric_field_strength = symbols.electric_field_strength
 :symbols:`electric_field_strength`.
 """
 
-# The following expressions don't have any specific meaning and are only intended to simplify
-# the code for the law.
-
-expression_1 = sqrt(ionization_energy / hydrogen_ionization_energy)
-expression_2 = sqrt(3 * boltzmann_constant * temperature / molecular_mass)
-expression_3 = cross_section * pressure * molecular_mass
-expression_4 = 2 * boltzmann_constant * temperature * elementary_charge * electric_field_strength
-expression_5 = hydrogen_ionization_energy / ionization_energy
-
 law = Eq(
-    cross_section, pi * bohr_radius**2 * expression_5 * (log(expression_2 *
-    (expression_3 / expression_4) * expression_1))**2)
+    cross_section,
+    (pi * bohr_radius**2)
+    * (hydrogen_ionization_energy / ionization_energy)
+    * (
+        log(
+            sqrt(3 * boltzmann_constant * temperature / molecular_mass)
+            * sqrt(ionization_energy / hydrogen_ionization_energy)
+            * (
+                (cross_section * pressure * molecular_mass) 
+                / (2 * boltzmann_constant * temperature * elementary_charge * electric_field_strength)
+            )
+        )
+    )**2
+)
 """
 :laws:symbol::
 
@@ -94,7 +97,7 @@ law = Eq(
 def calculate_cross_sectional_area_of_interaction(ionization_energy_: Quantity,
     mass_of_atom_: Quantity, pressure_: Quantity, temperature_: Quantity,
     electric_intensity_: Quantity) -> Quantity:
-    # FIXME `nsolve` doesn't recognize `SymbolNew` instances, works fine with our old `Symbol` class though.
+    # NOTE `nsolve` doesn't recognize `SymbolNew` instances, works fine with our old `Symbol` class though.
     cross_section_sym = SymSymbol("sigma")
     eqn = law.subs({
         cross_section: cross_section_sym,

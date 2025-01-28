@@ -7,6 +7,11 @@ dissolved substances or other substances on the electrodes, which are the result
 secondary reactions on the electrodes, which occurs when an electric current passes
 through a solution or melt of an electrolyte.
 
+**Notation:**
+
+#. :quantity_notation:`elementary_charge`.
+#. :quantity_notation:`avogadro_constant`.
+
 ..
     TODO: find link
 """

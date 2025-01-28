@@ -8,6 +8,11 @@ of the target by a single ion. The etching rate is how many nanometers of the ta
 substance are etched per unit of time. In other words, this is how much thinner a target
 becomes per unit of time.
 
+**Notation:**
+
+#. :quantity_notation:`elementary_charge`.
+#. :quantity_notation:`avogadro_constant`.
+
 ..
     TODO: find link
     TODO: move to `magnetron` folder?

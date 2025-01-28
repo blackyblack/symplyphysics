@@ -47,7 +47,7 @@ r"""
 ..
     The printers cannot yet work with `Piecewise` expressions.
 
-:code:`U = Piecewise((Infinity, d <= D), (0, d > D))`
+:code:`U = Piecewise((Infinity, r <= sigma), (0, r > sigma))`
 
 Latex:
     .. math::
