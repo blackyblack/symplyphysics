@@ -2,15 +2,15 @@
 Quality factor via bandwidth
 ============================
 
-:math:`Q` factor (quality factor) is a dimensionless parameter that describes how
-underdamped an oscillator or resonator is: the larger the :math:`Q` factor is, the less
-damped it is. There are two nearly equivalent definitions of it that become
-approximately equivalent as :math:`Q` becomes larger, meaning that the resonator becomes
-less damped.
+The quality factor of the system can be defined in terms of its resonant frequency and
+the resonance width, referred to as full width at half maximum, i.e. it is the bandwidth
+over which the vibration power is greater than half the power at the resonant frequency.
 
 **Notes:**
 
 #. An equivalent definition uses angular frequencies instead of linear ones.
+#. There is :ref:`another definition <Quality factor via energy loss>` that is
+   approximately equivalent to this one at high quality factor values.
 
 **Links:**
 
@@ -41,7 +41,7 @@ resonance_width = clone_as_symbol(symbols.temporal_frequency, display_symbol="De
 Resonance width, or full width at half maximum, of the peak in the graph of the
 dissipated power as a function of driving frequency, i.e. the difference between the
 frequencies at which the dissipated power is half the peak dissipated power, which
-happens ad the resonant frequency, vid. `figure <http://spiff.rit.edu/classes/phys283/lectures/forced_ii/half_power.png>`__.
+happens at the resonant frequency, vid. `figure <http://spiff.rit.edu/classes/phys283/lectures/forced_ii/half_power.png>`__.
 See :symbols:`temporal_frequency`.
 """
 

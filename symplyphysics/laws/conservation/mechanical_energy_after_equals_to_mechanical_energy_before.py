@@ -1,26 +1,56 @@
-from sympy import (Eq, solve, dsolve)
-from symplyphysics import (units, Quantity, Symbol, Function, validate_input, validate_output, clone_as_function, clone_as_symbol, symbols)
+"""
+Initial mechanical energy equals final mechanical energy
+========================================================
+
+The total mechanical energy of an isolated system is conserved, i.e. the energy can
+neither be created nor be destroyed. It can only be internally converted from one form
+to another if the forces doing work on the system are conservative in nature.
+
+**Notes:**
+
+#. Also see :ref:`Mechanical energy is constant`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Conservation_of_energy>`__.
+
+..
+    TODO: rename file
+"""
+
+from sympy import Eq, solve, dsolve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    clone_as_function,
+    clone_as_symbol,
+    symbols,
+)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.conservation import mechanical_energy_is_constant
 
-# Description
-## The total mechanical energy of an isolated system is conserved i.e., the energy can neither be created nor be destroyed.
-## It can only be internally converted from one form to another if the forces doing work on the system are conservative in nature.
-## See [mechanical_energy_is_constant](./mechanical_energy_is_constant.py) for more information.
-
-# Law: E(t1) = E(t0)
-## Where:
-## E - summary mechanical energy of a system,
-## t1 - point of time, when interaction of a system with conservative forces occured,
-## t0 - initial time.
-
-# Links: Wikipedia <https://en.wikipedia.org/wiki/Conservation_of_energy>
-
 initial_time = clone_as_symbol(symbols.time, subscript="0")
+"""
+Initial :symbols:`time`.
+"""
+
 final_time = clone_as_symbol(symbols.time, subscript="1")
+"""
+Final :symbols:`time`.
+"""
+
 mechanical_energy = clone_as_function(symbols.mechanical_energy, [symbols.time])
+"""
+:symbols:`mechanical_energy` of the system as a function of :symbols:`time`.
+"""
 
 law = Eq(mechanical_energy(final_time), mechanical_energy(initial_time))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 # Derive the same law from constant mechanical energy
 

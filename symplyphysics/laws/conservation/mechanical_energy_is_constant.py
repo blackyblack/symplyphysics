@@ -26,7 +26,7 @@ time = symbols.time
 
 mechanical_energy = clone_as_function(symbols.mechanical_energy, [time])
 """
-:symbols:`mechanical_energy`.
+:symbols:`mechanical_energy` as a function of :attr:`~time`.
 """
 
 law = Eq(Derivative(mechanical_energy(time), time), 0)

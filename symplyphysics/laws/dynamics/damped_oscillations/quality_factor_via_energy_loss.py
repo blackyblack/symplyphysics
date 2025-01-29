@@ -2,11 +2,14 @@
 Quality factor via energy loss
 ==============================
 
-:math:`Q` factor (quality factor) is a dimensionless parameter that describes how
-underdamped an oscillator or resonator is: the larger the :math:`Q` factor is, the less
-damped it is. There are two nearly equivalent definitions of it that become
-approximately equivalent as :math:`Q` becomes larger, meaning that the resonator becomes
-less damped.
+The quality factor of the system can be defined using the energy stored in the system
+and the power dissipated from the system. In electrical system, the loss of energy
+occurs due to resistors; in mechanical systems, it occurs due to external forces.
+
+**Notes:**
+
+#. There is :ref:`another definition <Quality factor via bandwidth>` that is
+   approximately equivalent to this one at high quality factor values.
 
 **Links:**
 
