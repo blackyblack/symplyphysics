@@ -7,6 +7,10 @@ will depend on the magnitude of the current and the material. It also depends on
 perpendicular distance to the conductor and on the angles between the lines drawn from
 the ends of the conductor to the point and the conductor.
 
+**Notation:**
+
+#. :quantity_notation:`vacuum_permeability`.
+
 **Conditions:**
 
 #. Conductor should be rectilinear;

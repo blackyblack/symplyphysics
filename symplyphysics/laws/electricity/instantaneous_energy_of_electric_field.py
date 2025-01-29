@@ -5,9 +5,6 @@ Instantaneous energy of electric field
 There is an oscillatory circuit with alternating current. Then the energy of the
 electric field will depend on the inductance, the maximum value of the current, the
 angular frequency of the current, the time and the initial phase.
-
-..
-    NOTE: is this law really needed? it seems to be too specific
 """
 
 from sympy import Eq, solve, cos

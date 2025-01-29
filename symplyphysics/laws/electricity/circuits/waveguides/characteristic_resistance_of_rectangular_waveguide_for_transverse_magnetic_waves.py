@@ -2,9 +2,9 @@
 Characteristic resitance of rectangular waveguide for transverse magnetic waves
 ===============================================================================
 
-A rectangular waveguide is a rectangular metal waveguide capable of supporting waves
-propagating along it. There is a critical wavelength. Signals with a wavelength greater
-than the critical one are attenuated and do not propagate in the waveguide.
+The resistance of a rectangular waveguide to transverse magnetic waves can be calculated
+from the resistance of the medium within the waveguide, the wavelength of the signal
+and the critical wavelength of the waveguide.
 
 **Conditions:**
 
@@ -23,27 +23,27 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-resistance = symbols.electrical_resistance
+wave_impedance = symbols.wave_impedance
 """
-:symbols:`electrical_resistance` of the waveguide.
-"""
-
-medium_resistance = clone_as_symbol(symbols.electrical_resistance, subscript="0")
-"""
-:symbols:`electrical_resistance` of the material filling the waveguide.
+:symbols:`wave_impedance` in the waveguide.
 """
 
-wavelength = symbols.wavelength
+medium_impedance = clone_as_symbol(symbols.wave_impedance, subscript="0")
 """
-:symbols:`wavelength`.
+:symbols:`wave_impedance` of the medium filling the waveguide.
+"""
+
+vacuum_wavelength = symbols.wavelength
+"""
+:symbols:`wavelength` of the signal in vacuum.
 """
 
 critical_wavelength = clone_as_symbol(symbols.wavelength, subscript="\\text{c}")
 """
-Critical :symbols:`wavelength`.
+Critical :symbols:`wavelength`. See :ref:`Critical wavelength of waveguide`.
 """
 
-law = Eq(resistance, medium_resistance * sqrt(1 - (wavelength / critical_wavelength)**2))
+law = Eq(wave_impedance, medium_impedance * sqrt(1 - (vacuum_wavelength / critical_wavelength)**2))
 """
 :laws:symbol::
 
@@ -51,16 +51,16 @@ law = Eq(resistance, medium_resistance * sqrt(1 - (wavelength / critical_wavelen
 """
 
 
-@validate_input(resistance_of_medium_=medium_resistance,
-    wavelength_=wavelength,
+@validate_input(resistance_of_medium_=wave_impedance,
+    wavelength_=vacuum_wavelength,
     critical_wavelength_=critical_wavelength)
-@validate_output(resistance)
+@validate_output(wave_impedance)
 def calculate_resistance(resistance_of_medium_: Quantity, wavelength_: Quantity,
     critical_wavelength_: Quantity) -> Quantity:
-    result_velocity_expr = solve(law, resistance, dict=True)[0][resistance]
+    result_velocity_expr = solve(law, wave_impedance, dict=True)[0][wave_impedance]
     result_expr = result_velocity_expr.subs({
-        medium_resistance: resistance_of_medium_,
-        wavelength: wavelength_,
+        medium_impedance: resistance_of_medium_,
+        vacuum_wavelength: wavelength_,
         critical_wavelength: critical_wavelength_
     })
     return Quantity(result_expr)

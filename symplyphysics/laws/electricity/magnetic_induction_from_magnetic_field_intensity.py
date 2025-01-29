@@ -2,9 +2,13 @@
 Magnetic flux density from magnetic field strength
 ==================================================
 
-Magnetic magnetic_flux_density is a physical quantity that is a force characteristic of a magnetic
+Magnetic flux density is a physical quantity that is a force characteristic of a magnetic
 field, namely, a characteristic of its action on moving charged particles and on bodies
 with a magnetic moment.
+
+**Notation:**
+
+#. :quantity_notation:`vacuum_permeability`.
 
 **Links:**
 

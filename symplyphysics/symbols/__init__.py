@@ -157,6 +157,7 @@ __all__ = [
     "electric_displacement",
     "attenuation_coefficient",
     "electrical_conductivity",
+    "wave_impedance",
     # optics
     "relative_refractive_index",
     "radiant_exitance",

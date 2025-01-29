@@ -6,6 +6,14 @@ Two parallel wires through which current flows interact with each other. The int
 of their interaction depends on the magnitude of the current, the distance from the
 wires, as well as on the material and length of the wire.
 
+**Notation:**
+
+#. :quantity_notation:`vacuum_permeability`.
+
+**Notes:**
+
+#. Also see `Ampère's force law <https://en.wikipedia.org/wiki/Amp%C3%A8re%27s_force_law>`__.
+
 **Links:**
 
 #. `Physics LibreTexts, formula 22.10.3 <https://phys.libretexts.org/Bookshelves/College_Physics/College_Physics_1e_(OpenStax)/22%3A_Magnetism/22.10%3A_Magnetic_Force_between_Two_Parallel_Conductors>`__.

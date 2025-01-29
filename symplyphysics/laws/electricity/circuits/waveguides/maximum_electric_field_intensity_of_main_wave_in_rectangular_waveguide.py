@@ -2,8 +2,22 @@
 Maximum electric field strength of main wave in rectangular waveguide
 =====================================================================
 
-A rectangular waveguide is a rectangular metal waveguide capable of supporting waves propagating along it.
-The main wave is a transverse electric wave with the first index equal to :math:`1` and the second index equal to :math:`0`.
+A rectangular waveguide is a rectangular metal waveguide capable of supporting waves
+propagating along it. The main wave is a transverse electric wave with the first index
+equal to :math:`1` and the second index equal to :math:`0`.
+
+**Notes:**
+
+#. *Horizontal* dimension refers to the dimension of the cross section of the waveguide
+   that is orthogonal to its central axis. See image for reference.
+
+.. image:: https://www.electronics-notes.com/images/waveguide-rectangular-te-modes-01.svg
+    :width: 400px
+    :align: center
+
+**Notation:**
+
+#. :quantity_notation:`vacuum_impedance`.
 
 **Conditions:**
 
@@ -14,14 +28,14 @@ The main wave is a transverse electric wave with the first index equal to :math:
     TODO: find link
 """
 
-from sympy import Eq, solve, pi, sqrt
+from sympy import Eq, solve, sqrt
 from symplyphysics import (
-    units,
     Quantity,
     validate_input,
     validate_output,
     symbols,
     clone_as_symbol,
+    quantities,
 )
 
 maximum_electric_field_strength = symbols.electric_field_strength
@@ -37,9 +51,6 @@ relative_permittivity = symbols.relative_permittivity
 width = clone_as_symbol(symbols.length, display_symbol="a", display_latex="a")
 """
 Horizontal dimension of the waveguide. See :symbols:`length`.
-
-..
-    TODO: clarify horizontal, is it related to the plane of oscillation of the waves?
 """
 
 wavelength = symbols.wavelength
@@ -52,16 +63,8 @@ magnetic_field_strength = symbols.magnetic_field_strength
 :symbols:`magnetic_field_strength`.
 """
 
-impedance_constant = Quantity(120 * units.ohm, display_symbol="Z_0")
-"""
-Constant equal to :math:`120 \\Omega`.
-
-..
-    rename back to `vacuum_impedance`?
-"""
-
 law = Eq(
-    maximum_electric_field_strength, 2 * impedance_constant * pi * width * magnetic_field_strength /
+    maximum_electric_field_strength, 2 * quantities.vacuum_impedance * width * magnetic_field_strength /
     (wavelength * sqrt(relative_permittivity)))
 """
 :laws:symbol::

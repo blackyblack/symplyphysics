@@ -10,7 +10,7 @@ the coil and volume of the core.
 #. `Physics LibreTexts, derivable from 14.4.1 <https://phys.libretexts.org/Bookshelves/University_Physics/University_Physics_(OpenStax)/University_Physics_II_-_Thermodynamics_Electricity_and_Magnetism_(OpenStax)/14%3A_Inductance/14.04%3A_Energy_in_a_Magnetic_Field>`__.
 
 ..
-    NOTE replace `H` with `B`?
+    TODO: replace `solenoid` with `coil` in file name
 """
 
 from sympy import Eq, solve
@@ -26,7 +26,7 @@ relative_permeability = symbols.relative_permeability
 :symbols:`relative_permeability` of the medium.
 """
 
-mangetic_field_strength = symbols.magnetic_field_strength
+magnetic_field_strength = symbols.magnetic_field_strength
 """
 :symbols:`magnetic_field_strength`.
 """
@@ -36,7 +36,7 @@ volume = symbols.volume
 :symbols:`volume` of the coil.
 """
 
-law = Eq(energy, quantities.vacuum_permeability * relative_permeability * mangetic_field_strength**2 * volume / 2)
+law = Eq(energy, quantities.vacuum_permeability * relative_permeability * magnetic_field_strength**2 * volume / 2)
 """
 :laws:symbol::
 
@@ -44,14 +44,14 @@ law = Eq(energy, quantities.vacuum_permeability * relative_permeability * manget
 """
 
 
-@validate_input(relative_permeability_=relative_permeability, intensity_=mangetic_field_strength, volume_=volume)
+@validate_input(relative_permeability_=relative_permeability, intensity_=magnetic_field_strength, volume_=volume)
 @validate_output(energy)
 def calculate_energy(relative_permeability_: float, intensity_: Quantity,
     volume_: Quantity) -> Quantity:
     result_energy_expr = solve(law, energy, dict=True)[0][energy]
     result_expr = result_energy_expr.subs({
         relative_permeability: relative_permeability_,
-        mangetic_field_strength: intensity_,
+        magnetic_field_strength: intensity_,
         volume: volume_
     })
     return Quantity(result_expr)

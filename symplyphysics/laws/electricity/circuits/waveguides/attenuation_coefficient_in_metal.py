@@ -68,7 +68,7 @@ law = Eq(
     attenuation_coefficient,
     sqrt(relative_permittivity / relative_permeability) *
     ((inner_surface_resistance / inner_diameter) + (outer_surface_resistance / outer_diameter)) /
-    (resistance * pi * ln(outer_diameter / inner_diameter)))
+    (pi * resistance * ln(outer_diameter / inner_diameter)))
 """
 :laws:symbol::
 

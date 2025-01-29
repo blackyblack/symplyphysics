@@ -68,16 +68,21 @@ wavelength = symbols.wavelength
 
 critical_wavelength = clone_as_symbol(symbols.wavelength, subscript="\\text{c}")
 """
-Critical :symbols:`wavelength` of the system.
+Critical :symbols:`wavelength` of the system. See :ref:`Critical wavelength of waveguide`.
 """
+
+_reduced_resistance = surface_resistance / medium_resistance
+_reduced_dimension = width / height
+_reduced_wavelength = wavelength / (2 * critical_wavelength)
 
 law = Eq(
     attenuation_coefficient,
-    (2 * surface_resistance * (second_index**2 * (width / height)**3 + first_index**2)) 
+    (2 * _reduced_resistance * (second_index**2 * _reduced_dimension**3 + first_index**2)) 
     / (
-        (medium_resistance * width) 
-        * sqrt(1 - (wavelength / (2 * critical_wavelength))**2)
-        * (second_index**2 * (width / height)**2 + first_index**2)),
+        width
+        * sqrt(1 - _reduced_wavelength**2)
+        * (second_index**2 * _reduced_dimension**2 + first_index**2)
+    ),
 )
 """
 :laws:symbol::

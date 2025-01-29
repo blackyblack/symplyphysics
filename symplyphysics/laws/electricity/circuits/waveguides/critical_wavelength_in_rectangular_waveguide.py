@@ -3,10 +3,8 @@ Critical wavelength in rectangular waveguide
 ============================================
 
 A rectangular waveguide is a rectangular metal waveguide capable of supporting waves
-propagating along it. There is a critical wavelength. Signals with a wavelength greater
-than the critical one are attenuated and do not propagate in the waveguide. The critical
-frequency depends on the indices of the specific propagation mode and the dimensions of
-the waveguide cross-section.
+propagating along it. The critical frequency depends on the indices of the specific
+propagation mode and the dimensions of the waveguide cross-section.
 
 ..
     TODO: find link
@@ -25,7 +23,7 @@ from symplyphysics import (
 
 critical_wavelength = clone_as_symbol(symbols.wavelength, subscript="\\text{c}")
 """
-Critical :symbols:`wavelength` in the waveguide.
+Critical :symbols:`wavelength` in the waveguide. See :ref:`Critical wavelength of waveguide`.
 """
 
 first_index = SymbolNew("m", dimensionless)

@@ -2,9 +2,9 @@
 Group speed of wave in rectangular waveguide
 ============================================
 
-A rectangular waveguide is a rectangular metal waveguide capable of supporting waves
-propagating along it. There is a critical wavelength. Signals with a wavelength greater
-than the critical one are attenuated and do not propagate in the waveguide.
+The group speed of a wave in a rectangular waveguide depends on the ratio of the
+wavelength of the signal to the critical wavelength of the waveguide and the
+electromagnetic properties of the insulator within the waveguide.
 
 **Notation:**
 
@@ -46,7 +46,7 @@ wavelength = symbols.wavelength
 
 critical_wavelength = clone_as_symbol(symbols.wavelength, subscript="\\text{c}")
 """
-Critical :symbols:`wavelength` of the system.
+Critical :symbols:`wavelength` of the system. See :ref:`Critical wavelength of waveguide`.
 """
 
 law = Eq(

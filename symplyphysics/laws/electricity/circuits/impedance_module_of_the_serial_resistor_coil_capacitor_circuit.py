@@ -46,7 +46,7 @@ law = Eq(circuit_impedance_module,
 """
 
 # This law might be derived via "serial_impedance" law, "capacitor_impedance_from_capacitive_reactance" law,
-# "coil_impedance_from_coil_reactance" law.
+# "coil_impedance_from_inductive_reactance" law.
 
 _impedance_law_applied_1 = capacitor_impedance_law.law.subs({
     capacitor_impedance_law.reactance: capacitor_reactance,
@@ -71,7 +71,7 @@ for i, v in enumerate(
     (resistor_resistance, _coil_impedance_derived, _capacitive_impedance_derived)):
     _circuit_impedance_derived = _circuit_impedance_derived.subs(serial_law.impedance[i + 1], v)
 
-assert expr_equals(lhs := abs(_circuit_impedance_derived), rhs := expand(law.rhs)), (lhs, rhs)
+assert expr_equals(abs(_circuit_impedance_derived), expand(law.rhs))
 
 
 @validate_input(resistance_resistor_=resistor_resistance,

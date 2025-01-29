@@ -1,6 +1,6 @@
 """
-Attenuation coefficient in metal in rectangular waveguide for transervese electric waves
-========================================================================================
+Attenuation coefficient in metal in rectangular waveguide for transverse electric waves
+=======================================================================================
 
 A coaxial waveguide is an electrical cable consisting of a central conductor and a
 shield arranged coaxially and separated by an insulating material or an air gap. It is
@@ -73,18 +73,23 @@ wavelength = symbols.wavelength
 
 critical_wavelength = clone_as_symbol(symbols.wavelength, subscript="\\text{c}")
 """
-Critical :symbols:`wavelength` of the system.
+Critical :symbols:`wavelength` of the system. See :ref:`Critical wavelength of waveguide`.
 """
+
+# The following variables are used to enhance code printing
+_reduced_impedance = surface_resistance / medium_resistance
+_reduced_dimension = width / height
+_reduced_wavelength = wavelength / (2 * critical_wavelength)
 
 law = Eq(
     attenuation_coefficient,
-    (2 * surface_resistance / (medium_resistance * width * sqrt(1 - (wavelength / (2 * critical_wavelength))**2)))
+    (2 * _reduced_impedance / (width * sqrt(1 - _reduced_wavelength**2)))
     * (
-        ((1 + width / height) * (wavelength / (2 * critical_wavelength))**2)
+        ((1 + _reduced_dimension) * _reduced_wavelength**2)
         + (
-            1 - (wavelength / (2 * critical_wavelength))**2) 
-            * ((width / height) * ((width / height) * second_index**2 + first_index**2)) 
-            / ((width * second_index / height)**2 + first_index**2)
+            1 - _reduced_wavelength**2) 
+            * (_reduced_dimension * (_reduced_dimension * second_index**2 + first_index**2)) 
+            / ((_reduced_dimension * second_index)**2 + first_index**2)
     )
 )
 """

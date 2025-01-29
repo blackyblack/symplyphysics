@@ -45,9 +45,9 @@ angular_frequency = symbols.angular_frequency
 :symbols:`angular_frequency` of the signal.
 """
 
-specific_conductivity = SymbolNew("sigma", units.conductance / units.length, display_latex="\\sigma")
+specific_conductance = SymbolNew("G", units.conductance / units.length)
 """
-:symbols:`electrical_conductivity` per unit :symbols:`length`.
+:symbols:`electrical_conductance` per unit :symbols:`length`.
 """
 
 outer_radius = clone_as_symbol(symbols.radius, subscript="\\text{o}")
@@ -62,7 +62,7 @@ inner_radius = clone_as_symbol(symbols.radius, subscript="\\text{i}")
 
 law = Eq(specific_resistance,
     (1 / (2 * pi)) * sqrt(angular_frequency * quantities.vacuum_permeability * relative_permeability /
-    (2 * specific_conductivity)) * (1 / inner_radius - 1 / outer_radius))
+    (2 * specific_conductance)) * (1 / inner_radius - 1 / outer_radius))
 """
 :laws:symbol::
 
@@ -72,7 +72,7 @@ law = Eq(specific_resistance,
 
 @validate_input(relative_permeability_=relative_permeability,
     angular_frequency_=angular_frequency,
-    specific_conductivity_=specific_conductivity,
+    specific_conductivity_=specific_conductance,
     outer_radius_=outer_radius,
     inner_radius_=inner_radius)
 @validate_output(specific_resistance)
@@ -84,7 +84,7 @@ def calculate_specific_resistance(relative_permeability_: float, angular_frequen
     result_expr = result_expr.subs({
         relative_permeability: relative_permeability_,
         angular_frequency: angular_frequency_,
-        specific_conductivity: specific_conductivity_,
+        specific_conductance: specific_conductivity_,
         outer_radius: outer_radius_,
         inner_radius: inner_radius_
     })

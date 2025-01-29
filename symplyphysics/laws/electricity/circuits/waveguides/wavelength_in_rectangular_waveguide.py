@@ -2,10 +2,13 @@
 Wavelength in rectangular waveguide
 ===================================
 
-A rectangular waveguide is a rectangular metal waveguide capable of supporting waves
-propagating along it. There is a critical wavelength. Signals with a wavelength greater
-than the critical one are attenuated and do not propagate in the waveguide.
+Wavelength in a rectangular waveguide is a function of operating wavelength (or
+wavelength in free space) and the critical (or lower cutoff) wavelength, and is
+always longer than that in free space.
 
+**Links:**
+
+#. `Microwaves101, section "Guide Wavelength" <https://www.microwaves101.com/encyclopedias/waveguide-mathematics>`__.
 """
 
 from sympy import Eq, solve, sqrt
@@ -19,21 +22,22 @@ from symplyphysics import (
 
 waveguide_wavelength = clone_as_symbol(symbols.wavelength, subscript="\\text{w}")
 """
-:symbols:`wavelength` in the waveguide.
+Guide wavelength is defined as the distance between the two equal phase planes along the
+waveguide.
 """
 
-signal_wavelength = symbols.wavelength
+vacuum_wavelength = symbols.wavelength
 """
-:symbols:`wavelength` of the signal.
+:symbols:`wavelength` of the signal wave in vacuum.
 """
 
 critical_wavelength = clone_as_symbol(symbols.wavelength, subscript="\\text{c}")
 """
-Critical :symbols:`wavelength` of the waveguide.
+Critical :symbols:`wavelength` of the waveguide. See :ref:`Critical wavelength of waveguide`.
 """
 
 law = Eq(waveguide_wavelength,
-    signal_wavelength / sqrt(1 - (signal_wavelength / critical_wavelength)**2))
+    vacuum_wavelength / sqrt(1 - (vacuum_wavelength / critical_wavelength)**2))
 """
 :laws:symbol::
 
@@ -41,13 +45,13 @@ law = Eq(waveguide_wavelength,
 """
 
 
-@validate_input(signal_wavelength_=signal_wavelength, critical_wavelength_=critical_wavelength)
+@validate_input(signal_wavelength_=vacuum_wavelength, critical_wavelength_=critical_wavelength)
 @validate_output(waveguide_wavelength)
 def calculate_waveguide_wavelength(signal_wavelength_: Quantity,
     critical_wavelength_: Quantity) -> Quantity:
     result_velocity_expr = solve(law, waveguide_wavelength, dict=True)[0][waveguide_wavelength]
     result_expr = result_velocity_expr.subs({
-        signal_wavelength: signal_wavelength_,
+        vacuum_wavelength: signal_wavelength_,
         critical_wavelength: critical_wavelength_
     })
     return Quantity(result_expr)

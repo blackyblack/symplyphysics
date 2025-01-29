@@ -41,7 +41,7 @@ wavelength = symbols.wavelength
 
 material_resistance = symbols.electrical_resistance
 """
-:symbols:`electrical_resistance` of the material filling the waveguide.
+:symbols:`electrical_resistance` of the medium filling the waveguide.
 """
 
 electric_field_strength = symbols.electric_field_strength

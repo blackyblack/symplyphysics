@@ -43,16 +43,16 @@ angular_frequency = symbols.angular_frequency
 :symbols:`angular_frequency` of the signal.
 """
 
-specific_conductivity = SymbolNew("sigma", units.conductance / units.length, display_latex="\\sigma")
+specific_conductance = SymbolNew("G", units.conductance / units.length)
 """
-Specific conductivity of the conductor, i.e. :symbols:`electrical_conductivity` per unit
+Specific conductance of the conductor, i.e. :symbols:`electrical_conductance` per unit
 :symbols:`length`.
 """
 
 law = Eq(
     resistance,
     sqrt(angular_frequency * quantities.vacuum_permeability * relative_permeability /
-    (2 * specific_conductivity)))
+    (2 * specific_conductance)))
 """
 :laws:symbol::
 
@@ -62,7 +62,7 @@ law = Eq(
 
 @validate_input(relative_permeability_=relative_permeability,
     angular_frequency_=angular_frequency,
-    specific_conductivity_=specific_conductivity)
+    specific_conductivity_=specific_conductance)
 @validate_output(resistance)
 def calculate_surface_resistance(relative_permeability_: float, angular_frequency_: Quantity,
     specific_conductivity_: Quantity) -> Quantity:
@@ -70,6 +70,6 @@ def calculate_surface_resistance(relative_permeability_: float, angular_frequenc
     result_expr = result_velocity_expr.subs({
         relative_permeability: relative_permeability_,
         angular_frequency: angular_frequency_,
-        specific_conductivity: specific_conductivity_
+        specific_conductance: specific_conductivity_
     })
     return Quantity(result_expr)

@@ -53,10 +53,10 @@ angular_frequency = symbols.angular_frequency
 
 tangent_dielectric_loss_angle = SymbolNew("tan(d)", dimensionless, display_latex="\\tan(d)")
 """
-Tangent of the dielectric loss angle of the material filling the waveguide.
+Tangent of the dielectric loss angle of the medium filling the waveguide.
 
 ..
-    TODO: replave with an actual tangent of an angle?
+    TODO: replace with an actual tangent of an angle?
 """
 
 law = Eq(
