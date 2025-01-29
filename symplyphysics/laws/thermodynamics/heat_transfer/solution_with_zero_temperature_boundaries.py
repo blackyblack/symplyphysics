@@ -59,7 +59,7 @@ mode_number = symbols.positive_number
 Number of the mode. See :symbols:`positive_number`.
 """
 
-maximum_position = clone_as_symbol(symbols.position, subscript="\\text{max}")
+maximum_position = clone_as_symbol(symbols.position, display_symbol="x_max", display_latex="x_\\text{max}")
 """
 Maximum possible :symbols:`position`.
 """

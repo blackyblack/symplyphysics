@@ -31,7 +31,7 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed_distribution
 
-most_probable_speed = clone_as_symbol(symbols.speed, subscript="\\text{prob}")
+most_probable_speed = clone_as_symbol(symbols.speed, display_symbol="v_prob", display_latex="v_\\text{prob}")
 """
 Most probable :symbols:`speed` of particles.
 """

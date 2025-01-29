@@ -25,7 +25,7 @@ mass = symbols.mass
 :symbols:`mass` of a melting or solidifying body.
 """
 
-specific_heat_of_fusion = clone_as_symbol(symbols.specific_energy, subscript="\\text{lambda}")
+specific_heat_of_fusion = clone_as_symbol(symbols.specific_energy, display_symbol="epsilon_lambda", display_latex="\\varepsilon_\\lambda")
 """
 Heat of fusion or solidification per unit mass. See :symbols:`specific_energy`.
 """

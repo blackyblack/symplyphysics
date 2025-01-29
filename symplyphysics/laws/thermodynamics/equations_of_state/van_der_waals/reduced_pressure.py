@@ -31,7 +31,7 @@ pressure = symbols.pressure
 :symbols:`pressure` of the van der Waals fluid.
 """
 
-critical_pressure = clone_as_symbol(symbols.pressure, subscript="\\text{c}")
+critical_pressure = clone_as_symbol(symbols.pressure, display_symbol="p_c", display_latex="p_\\text{c}")
 r"""
 Critical :symbols:`pressure`. See :doc:`laws.thermodynamics.equations_of_state.van_der_waals.critical_pressure`.
 """

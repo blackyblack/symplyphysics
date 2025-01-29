@@ -36,7 +36,7 @@ volume = symbols.volume
 :symbols:`volume` of the van der Waals fluid.
 """
 
-critical_volume = clone_as_symbol(symbols.volume, subscript="\\text{c}")
+critical_volume = clone_as_symbol(symbols.volume, display_symbol="V_c", display_latex="V_\\text{c}")
 """
 See :doc:`laws.thermodynamics.equations_of_state.van_der_waals.critical_molar_volume`
 and :symbols:`volume`.

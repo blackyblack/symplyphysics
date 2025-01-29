@@ -20,7 +20,7 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-laplace_pressure = clone_as_symbol(symbols.pressure, subscript="\\text{L}")
+laplace_pressure = clone_as_symbol(symbols.pressure, display_symbol="P_L", display_latex="P_\\text{L}")
 """
 Excess :symbols:`pressure` under the curved surface.
 """

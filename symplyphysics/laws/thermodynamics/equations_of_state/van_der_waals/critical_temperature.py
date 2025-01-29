@@ -24,7 +24,7 @@ from symplyphysics import (
     quantities,
 )
 
-critical_temperature = clone_as_symbol(symbols.temperature, subscript="\\text{c}")
+critical_temperature = clone_as_symbol(symbols.temperature, display_symbol="T_c", display_latex="T_\\text{c}")
 """
 Critical :symbols:`temperature` of the van der Waals fluid.
 """

@@ -50,7 +50,7 @@ from symplyphysics.core.dimensions import assert_equivalent_dimension
 from symplyphysics.core.symbols.probability import Probability
 from symplyphysics.core.symbols.symbols import clone_as_indexed
 
-macrostate_probability = clone_as_symbol(symbols.probability, subscript="\\text{macro}")
+macrostate_probability = clone_as_symbol(symbols.probability, display_symbol="P_macro", display_latex="P_\\text{macro}")
 """
 :symbols:`probability` of the macrostate.
 """
