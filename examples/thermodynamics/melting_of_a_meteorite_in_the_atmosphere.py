@@ -53,9 +53,9 @@ kinetic_energy_of_meteorite = kinetic_energy_law.law.subs({
 }).rhs
 
 energy_conservation_equation = energy_conservation_law.law.subs({
-    energy_conservation_law.mechanical_energy(energy_conservation_law.time_before):
+    energy_conservation_law.mechanical_energy(energy_conservation_law.initial_time):
     koefficient_of_transfer_to_kinetic * kinetic_energy_of_meteorite,
-    energy_conservation_law.mechanical_energy(energy_conservation_law.time_after):
+    energy_conservation_law.mechanical_energy(energy_conservation_law.final_time):
     energy_to_heating_meteorite + energy_to_meteorite_melting
 })
 mass_of_melting_value = solve(energy_conservation_equation, mass_of_melting_meteorite,

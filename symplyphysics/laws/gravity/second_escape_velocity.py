@@ -75,9 +75,9 @@ _kinetic_energy_derived = solve(_kinetic_energy_law_applied,
 # already been introduced with a minus. And in the law "mechanical_energy_after_equals_to_mechanical_energy_before",
 # the conservation law looks like: E1=E2. Therefore, a minus sign is placed before the potential energy.
 _conservation_law_applied = conservation_law.law.subs({
-    conservation_law.mechanical_energy(conservation_law.time_after):
+    conservation_law.mechanical_energy(conservation_law.final_time):
         _kinetic_energy_derived,
-    conservation_law.mechanical_energy(conservation_law.time_before):
+    conservation_law.mechanical_energy(conservation_law.initial_time):
     -1 * _potential_energy_derived,
 })
 # The proof considers the fall of a body from infinity to the earth. But at the same time, in most cases, I consider

@@ -1,34 +1,56 @@
+"""
+Quality factor via energy loss
+==============================
+
+The quality factor of the system can be defined using the energy stored in the system
+and the power dissipated from the system. In electrical system, the loss of energy
+occurs due to resistors; in mechanical systems, it occurs due to external forces.
+
+**Notes:**
+
+#. There is :ref:`another definition <Quality factor via bandwidth>` that is
+   approximately equivalent to this one at high quality factor values.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Q_factor#Stored_energy_definition>`__.
+"""
+
 from sympy import Eq
 from symplyphysics import (
-    units,
-    angle_type,
-    dimensionless,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
 )
 
-# Description
-## Q factor (quality factor) is a dimensionless parameter that describes how underdamped
-## an oscillator or resonator is: the larger the Q factor is, the less damped it is. There
-## are two nearly equivalent definitions of it that become approximately equivalent as Q
-## becomes larger, meaning that the resonator becomes less damped.
+quality_factor = symbols.quality_factor
+"""
+:symbols:`quality_factor` of the oscillator.
+"""
 
-# Law: Q = w_r * (E_stored / P_loss)
-## Q - Q factor of oscillator
-## w_r - resonant angular frequency of oscilaltor
-## E_stored - energy stored in oscillator
-## P_loss - power loss of oscillator, i.e. rate of energy dissipation from it
+resonant_angular_frequency = clone_as_symbol(symbols.angular_frequency, subscript="\\text{r}")
+"""
+Resonant :symbols:`angular_frequency` of the oscillator.
+"""
 
-# Links: Wikipedia <https://en.wikipedia.org/wiki/Q_factor#Stored_energy_definition>
+energy_stored = clone_as_symbol(symbols.energy, subscript="\\text{stored}")
+"""
+:symbols:`energy` stored in the oscillator.
+"""
 
-quality_factor = Symbol("quality_factor", dimensionless)
-resonant_angular_frequency = Symbol("resonant_angular_frequency", angle_type / units.time)
-energy_stored = Symbol("energy_stored", units.energy)
-power_loss = Symbol("power_loss", units.power)
+power_loss = clone_as_symbol(symbols.power, subscript="\\text{loss}")
+"""
+:symbols:`power` lost by the oscillator, i.e. the rate of energy dissipating from it.
+"""
 
 law = Eq(quality_factor, resonant_angular_frequency * (energy_stored / power_loss))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(

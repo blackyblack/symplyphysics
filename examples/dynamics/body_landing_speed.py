@@ -40,8 +40,8 @@ mechanical_energy_after = mechanical_energy.definition.subs({
 }).rhs
 
 conservation_law = conservation.law.subs({
-    conservation.mechanical_energy(conservation.time_before): mechanical_energy_before,
-    conservation.mechanical_energy(conservation.time_after): mechanical_energy_after
+    conservation.mechanical_energy(conservation.initial_time): mechanical_energy_before,
+    conservation.mechanical_energy(conservation.final_time): mechanical_energy_after
 })
 
 # First solution is negative - ignore it

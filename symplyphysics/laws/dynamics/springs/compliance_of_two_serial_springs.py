@@ -1,36 +1,53 @@
+"""
+Compliance of two serial springs
+================================
+
+If two springs are connected end-to-end to one another, i.e. connected in series, the
+total compliance of the system of springs is the sum of the compliances of each spring.
+
+**Conditions:**
+
+#. Springs must be Hookean, or linear-response, i.e. obey the Hooke's law.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Series_and_parallel_springs#Formulas>`__.
+"""
+
 from sympy import Eq, solve, Symbol as SymSymbol
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import compliance_is_inverse_stiffness as compliance_def
 from symplyphysics.laws.dynamics import reaction_force_from_action_force as newtons_third_law
 from symplyphysics.laws.dynamics.springs import spring_reaction_is_proportional_to_deformation as hookes_law
 
-# Description
-## If two springs are connected end-to-end to one another, i.e. connected in series,
-## the total compliance of the system of springs is the sum of the compliances of
-## each spring.
+total_compliance = symbols.compliance
+"""
+Total :symbols:`compliance`.
+"""
 
-# Law: c = c1 + c2
-## c - total compliance
-## c1 - compliance of first spring
-## c2 - compliance of second spring
+first_compliance = clone_as_symbol(symbols.compliance, subscript="1")
+"""
+:symbols:`compliance` of the first spring.
+"""
 
-# Condition
-## - Springs must be Hookean, or linear-response, i.e. obey the Hooke's law.
-
-# Links: Wikipedia <https://en.wikipedia.org/wiki/Series_and_parallel_springs#Formulas>
-
-total_compliance = Symbol("total_compliance", units.length / units.force)
-first_compliance = Symbol("first_compliance", units.length / units.force)
-second_compliance = Symbol("second_compliance", units.length / units.force)
+second_compliance = clone_as_symbol(symbols.compliance, subscript="2")
+"""
+:symbols:`compliance` of the second spring.
+"""
 
 law = Eq(total_compliance, first_compliance + second_compliance)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 # Derive law from Hooke's law
 ## In the case of serial connection, the forces acting on both springs are equal whereas

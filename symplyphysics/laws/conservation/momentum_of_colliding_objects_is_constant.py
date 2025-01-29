@@ -1,27 +1,43 @@
+"""
+Momentum is constant
+====================
+
+If there is no external force applied to system of objects, the summary momentum of this
+system remains constant during and after any interactions between objects. Summary
+momentum of the system is the sum of momentums of every object in this system. Also
+applicable for reactive engine simulation.
+
+**Conditions:**
+
+#. The system is closed.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Momentum#Conservation>`__.
+
+..
+    TODO: rename file
+"""
+
 from sympy import (Derivative, Eq, dsolve)
-from symplyphysics import (units, Quantity, Symbol, Function, validate_input, validate_output)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols, clone_as_function)
 
-# Description
-## If there is no external force applied to system of objects, the summary momentum of this system remains constant
-## during and after any interactions between objects.
-## Summary momentum of the system is the sum of momentums of every object in this system.
-## Also applicable for reactive engine simulation.
+time = symbols.time
+"""
+:symbols:`time`.
+"""
 
-# Law: dP/dt = 0
-## Where:
-## P - summary momentum of colliding objects,
-## t - time,
-## dP/dt - momentum derivative over time.
-
-# Conditions:
-## 1. The system is closed
-
-# Links: Wikipedia <https://en.wikipedia.org/wiki/Momentum#Conservation>
-
-time = Symbol("time", units.time)
-momentum = Function("momentum", units.momentum)
+momentum = clone_as_function(symbols.momentum, [time])
+"""
+:symbols:`momentum` of the system as a function of :attr:`~time`.
+"""
 
 law = Eq(Derivative(momentum(time), time), 0)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(momentum_before_=momentum)

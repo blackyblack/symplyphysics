@@ -31,8 +31,8 @@ momentum_of_puck = momentum.definition.subs({
     momentum.speed: velocity_of_puck
 }).rhs
 momentum_conservation_law = momentum_conservation.law.subs({
-    momentum_conservation.momentum(momentum_conservation.time_before): momentum_of_skater,
-    momentum_conservation.momentum(momentum_conservation.time_after): momentum_of_puck
+    momentum_conservation.momentum(momentum_conservation.initial_time): momentum_of_skater,
+    momentum_conservation.momentum(momentum_conservation.final_time): momentum_of_puck
 })
 velocity_of_skater_equation = solve(momentum_conservation_law, momentum.speed,
     dict=True)[0][momentum.speed]
@@ -62,8 +62,8 @@ kinetic_energy_value = kinetic_energy.law.subs({
     kinetic_energy.speed: velocity_of_skater_equation
 }).rhs
 conservation_energy = energy_conservation.law.subs({
-    energy_conservation.mechanical_energy(energy_conservation.time_before): kinetic_energy_value,
-    energy_conservation.mechanical_energy(energy_conservation.time_after): work_friction_value,
+    energy_conservation.mechanical_energy(energy_conservation.initial_time): kinetic_energy_value,
+    energy_conservation.mechanical_energy(energy_conservation.final_time): work_friction_value,
 })
 print(f"Final equation: {print_expression(conservation_energy)}")
 distance_equation = solve(conservation_energy, distance, dict=True)[0][distance]
