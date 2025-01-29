@@ -1,38 +1,64 @@
+"""
+Number of collisions of particle with gas in magnetron
+======================================================
+
+The atoms of the target material evaporate and move towards the substrate inside the
+magnetron. The traveling atom moves towards the substrate in the magnetron. At the same
+time, it collides with gas atoms. The number of collisions of a traveling atom, after
+which its energy will be equal to the energy of thermal motion in a gas-discharge
+plasma, can be calculated. This amount will depend on the initial energy of the
+traveling atom and the energy transfer coefficient between the atom and the gas atoms.
+
+..
+    TODO: find link
+    TODO: move to `magnetron` folder?
+"""
+
 from sympy import Eq, solve, log
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless,
-    convert_to_float)
+from symplyphysics import (
+    Quantity,
+    SymbolNew,
+    validate_input,
+    validate_output,
+    dimensionless,
+    convert_to_float,
+    symbols,
+    clone_as_symbol,
+)
 
-# Description
-## The atoms of the target material evaporate and move towards the substrate inside the magnetron.
-## The traveling atom moves towards the substrate in the magnetron. At the same time, it collides with gas atoms.
-## The number of collisions of a traveling atom, after which its energy will be equal to the energy of thermal motion
-## in a gas-discharge plasma, can be calculated. This amount will depend on the initial energy of the traveling atom and
-## the energy transfer coefficient between the atom and the gas atoms.
+collision_count = SymbolNew("N", dimensionless)
+"""
+Number of collisions between the particle and gas.
+"""
 
-## Law is: N = ln(Et / E0) / ln(1 - x), where
-## N - the number of collisions of traveling atom with gas atoms (this is a statistical quantity, it can be integer, but it can be fractional as well),
-## E0 - initial energy of the traveling atom,
-## Et - energy of thermal motion in a gas-discharge plasma,
-## x - energy transfer coefficient between the traveling atom and the gas atoms.
+initial_energy = clone_as_symbol(symbols.energy, subscript="0")
+"""
+Initial :symbols:`energy` of the particle.
+"""
 
-# TODO: find link
+thermal_energy = symbols.energy
+"""
+:symbols:`energy` of thermal motion in the plasma.
+"""
 
-# TODO: move to `magnetron` folder?
+energy_transfer_coefficient = SymbolNew("x", dimensionless)
+"""
+Energy transfer coefficient between the particle and the gas.
+"""
 
-number_of_collisions_of_atoms = Symbol("number_of_collisions_of_atoms", dimensionless)
+law = Eq(collision_count,
+    log(thermal_energy / initial_energy) / log(1 - energy_transfer_coefficient))
+"""
+:law:symbol::
 
-initial_energy = Symbol("initial_energy", units.energy)
-energy_of_thermal_motion = Symbol("energy_of_thermal_motion", units.energy)
-energy_transfer_coefficient = Symbol("energy transfer coefficient", dimensionless)
-
-law = Eq(number_of_collisions_of_atoms,
-    log(energy_of_thermal_motion / initial_energy) / log(1 - energy_transfer_coefficient))
+:laws:latex::
+"""
 
 
 @validate_input(initial_energy_=initial_energy,
-    energy_of_thermal_motion_=energy_of_thermal_motion,
+    energy_of_thermal_motion_=thermal_energy,
     energy_transfer_coefficient_=energy_transfer_coefficient)
-@validate_output(number_of_collisions_of_atoms)
+@validate_output(collision_count)
 def calculate_number_of_collisions_of_atoms(initial_energy_: Quantity,
     energy_of_thermal_motion_: Quantity, energy_transfer_coefficient_: float) -> float:
     if energy_transfer_coefficient_ >= 1:
@@ -41,11 +67,11 @@ def calculate_number_of_collisions_of_atoms(initial_energy_: Quantity,
         raise ValueError(
             "The initial energy of the atom must be greater than or equal to the thermal energy")
 
-    result_expr = solve(law, number_of_collisions_of_atoms,
-        dict=True)[0][number_of_collisions_of_atoms]
+    result_expr = solve(law, collision_count,
+        dict=True)[0][collision_count]
     result_expr = result_expr.subs({
         initial_energy: initial_energy_,
-        energy_of_thermal_motion: energy_of_thermal_motion_,
+        thermal_energy: energy_of_thermal_motion_,
         energy_transfer_coefficient: energy_transfer_coefficient_,
     })
     return convert_to_float(result_expr)

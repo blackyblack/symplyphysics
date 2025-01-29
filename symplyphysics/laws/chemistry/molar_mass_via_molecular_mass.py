@@ -14,12 +14,10 @@ molecular mass.
 #. `Wikipedia, formula in the second paragraph <https://en.wikipedia.org/wiki/Avogadro_constant#>`__.
 """
 
-from sympy import Eq, solve, Symbol as SymSymbol, Idx
+from sympy import Eq, solve, Idx
 from symplyphysics import (
     clone_as_symbol,
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     symbols,
@@ -34,31 +32,26 @@ from symplyphysics.laws.conservation import (
 from symplyphysics.laws.quantities import (
     quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law,)
 
-molar_mass = Symbol("molas_mass", units.mass / units.amount_of_substance)
+molar_mass = symbols.molar_mass
 """
-Mass per unit amount of substance.
-
-Symbol:
-    :code:`M`
+:symbols:`molar_mass`.
 """
 
-molecular_mass = clone_as_symbol(symbols.mass, display_symbol="m_0", display_latex="m_0")
+molecular_mass = clone_as_symbol(symbols.mass, subscript="0")
 """
 :symbols:`mass` of a single molecule.
 """
 
 law = Eq(molar_mass, molecular_mass * quantities.avogadro_constant)
-r"""
-:code:`M = m_0 * N_A`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        M = m_0 N_\text{A}
+:laws:latex::
 """
 
 # Derive from another definition of molar mass
 
-_number_of_particles = SymSymbol("number_of_particles", integer=True)
+_number_of_particles = symbols.whole_number
 
 _amount_of_substance = solve(avogadro_law.law,
     avogadro_law.amount_of_substance)[0].subs(avogadro_law.particle_count, _number_of_particles)

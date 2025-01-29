@@ -15,59 +15,39 @@ distance.
 
 from sympy import Eq
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
 )
 
-potential = Symbol("potential", units.energy)
+potential = symbols.potential_energy
 """
-Potential energy of the configuration.
-
-Symbol:
-    :code:`U`
+:symbols:`potential_energy` of the configuration.
 """
 
-dispersion_energy = Symbol("dispersion_energy", units.energy)
-r"""
-Depth of the potential well, also referred to as "dispersion energy".
-
-Symbol:
-    :code:`e`
-
-Latex:
-    :math:`\varepsilon`
+dispersion_energy = clone_as_symbol(symbols.energy, display_symbol="e", display_latex="\\varepsilon")
+"""
+Depth of the potential well, also referred to as *dispersion energy*. See :symbols:`energy`.
 """
 
-particle_size = Symbol("particle_size", units.length)
-r"""
-Distance at which potential is zero, also referred to as "particle size".
-
-Symbol:
-    :code:`sigma`
-
-Latex:
-    :math:`\sigma`
+particle_size = clone_as_symbol(symbols.radius, display_symbol="sigma", display_latex="\\sigma")
+"""
+Distance at which potential is zero, also referred to as *particle size*.
 """
 
-distance = Symbol("distance", units.length)
+distance = clone_as_symbol(symbols.euclidean_distance, display_symbol="r", display_latex="r")
 """
-Distance between the centers of the particles.
-
-Symbol:
-    :code:`r`
+:symbols:`euclidean_distance` between the centers of the particles.
 """
 
 law = Eq(potential,
     4 * dispersion_energy * ((particle_size / distance)**12 - (particle_size / distance)**6))
-r"""
-:code:`U = 4 * e * ((sigma / r)^12 - (sigma / r)^6)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        U = 4 \varepsilon \left( \left( \frac{\sigma}{r} \right)^{12} - \left( \frac{\sigma}{r} \right)^6 \right)
+:laws:latex::
 """
 
 
