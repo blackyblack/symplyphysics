@@ -17,7 +17,7 @@ pressure of :math:`1 \\, \\text{atm}`, as well as at a fixed composition of the 
 
 #. We neglect the temperature dependence of the heat capacities.
 #. Pressure is held constant during the process.
-#. Temperature is help constant during the process.
+#. Temperature is held constant during the process.
 
 ..
     TODO: find link
