@@ -12,7 +12,7 @@ distance that a traveling atom travels between two collisions.
 
 **Notes:**
 
-#. Assuming the model of spherical gas molecules, :math:`\\sigma = pi * d^2`, where
+#. Assuming the model of spherical gas molecules, :math:`\\sigma = pi d^2`, where
    :math:`\\sigma` is the cross section and :math:`d` is the molecule diameter.
 
 **Links:**
