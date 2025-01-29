@@ -218,7 +218,9 @@ capacity at constant pressure.
 #. `Wikipedia <https://en.wikipedia.org/wiki/Thermal_diffusivity>`__.
 """
 
-attractive_forces_parameter = SymbolNew("a", units.pressure * (units.volume / units.amount_of_substance)**2)
+attractive_forces_parameter = SymbolNew(
+    "a",
+    units.pressure * (units.volume / units.amount_of_substance)**2)
 """
 Parameter specific to each individual substance, usually attributed to the magnitude of
 attractive forces between particles of the system.

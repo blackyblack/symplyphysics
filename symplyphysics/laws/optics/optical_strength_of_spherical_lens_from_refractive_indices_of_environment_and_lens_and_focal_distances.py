@@ -59,8 +59,8 @@ lens_refraction_index = symbols.relative_refractive_index
 :symbols:`relative_refractive_index` of the lens material.
 """
 
-law = Eq(-1 * medium_refraction_index /
-    distance_to_object + lens_refraction_index / distance_to_image,
+law = Eq(
+    -1 * medium_refraction_index / distance_to_object + lens_refraction_index / distance_to_image,
     (lens_refraction_index - medium_refraction_index) / curvature_radius_lens)
 """
 :laws:symbol::

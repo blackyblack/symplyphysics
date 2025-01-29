@@ -1,40 +1,58 @@
+"""
+Semimajor axis of orbit via mass and speed
+==========================================
+
+Let the body move in an elliptical orbit. Then its semimajor axis depends on the mass of the body around which it
+rotates and the orbital velocity.
+
+**Notation:**
+
+#. :quantity_notation:`gravitational_constant`.
+
+..
+    TODO: find link
+    TODO: move to `gravity`?
+    TODO: rename file
+"""
+
 from sympy import Eq, solve
-from sympy.physics.units import gravitational_constant
 from symplyphysics import (
     symbols,
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    quantities,
 )
 
-# Description
-## Let the body move in an elliptical orbit. Then its large semi-axis depends on the mass of the body around which it
-## rotates and the orbital velocity.
+semimajor_axis = symbols.semimajor_axis
+"""
+:symbols:`semimajor_axis` of the orbit.
+"""
 
-## Law is: a = G * M / v^2, where
-## a - large half-axis of the orbit,
-## G - gravitational constant,
-## M - mass of the body around which the movement takes place,
-## v - orbital velocity.
+orbital_speed = symbols.speed
+"""
+:symbols:`speed` of the attracted body at which it orbits the attracting body.
+"""
 
-# TODO: find link
+attracting_mass = symbols.mass
+"""
+:symbols:`mass` of the attracting body.
+"""
 
-large_half_axis_length = Symbol("large_half_axis_length", units.length)
-orbital_velocity = Symbol("orbital_velocity", units.velocity)
-planet_mass = symbols.mass
+law = Eq(semimajor_axis, quantities.gravitational_constant * attracting_mass / orbital_speed**2)
+"""
+:laws:symbol::
 
-law = Eq(large_half_axis_length, gravitational_constant * planet_mass / orbital_velocity**2)
+:laws:latex::
+"""
 
 
-@validate_input(orbital_velocity_=orbital_velocity, planet_mass_=planet_mass)
-@validate_output(large_half_axis_length)
-def calculate_large_half_axis_length(orbital_velocity_: Quantity,
-    planet_mass_: Quantity) -> Quantity:
-    result_expr = solve(law, large_half_axis_length, dict=True)[0][large_half_axis_length]
+@validate_input(orbital_speed_=orbital_speed, planet_mass_=attracting_mass)
+@validate_output(semimajor_axis)
+def calculate_large_half_axis_length(orbital_speed_: Quantity, planet_mass_: Quantity) -> Quantity:
+    result_expr = solve(law, semimajor_axis, dict=True)[0][semimajor_axis]
     result_expr = result_expr.subs({
-        orbital_velocity: orbital_velocity_,
-        planet_mass: planet_mass_,
+        orbital_speed: orbital_speed_,
+        attracting_mass: planet_mass_,
     })
     return Quantity(result_expr)

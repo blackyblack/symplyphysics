@@ -12,6 +12,7 @@ from .electrodynamics import *
 from .optics import *
 from .relativistic_mechanics import *
 from .thermodynamics import *
+from .astronomy import *
 from .quantum_mechanics import *
 
 __all__ = [
@@ -208,6 +209,16 @@ __all__ = [
     "thermal_diffusivity",
     "attractive_forces_parameter",
     "excluded_volume_parameter",
+    # astronomy
+    "absolute_magnitude",
+    "apparent_magnitude",
+    "luminosity",
+    "illuminance",
+    "irradiance",
+    "eccentricity",
+    "zenith_angle",
+    "declination",
+    "altitude",
     # quantum mechanics
     "wave_function",
     "probability_density",

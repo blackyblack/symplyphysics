@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors, prefixes)
-from symplyphysics.laws.chemistry import electric_intensity_in_gas_gap_between_two_electrodes as intensity_law
+from symplyphysics.laws.electricity import electric_intensity_in_gas_gap_between_two_electrodes as intensity_law
 
 # Description
 ## The coordinate of the point between the electrodes, located on the axis from the cathode to the anode, is 1 centimeter.

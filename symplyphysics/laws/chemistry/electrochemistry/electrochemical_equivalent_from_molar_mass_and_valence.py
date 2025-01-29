@@ -1,27 +1,46 @@
-from sympy import (Eq, solve)
-from sympy.physics.units import faraday_constant
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless)
+"""
+Electrochemical equivalent from molar mass and valence
+======================================================
 
-# Description
-## Faraday's second law of electrolysis. The equivalent mass of a substance in general in chemistry is its molar mass divided by an integer
-## depending on the chemical reaction in which the substance participates; in this case, the equivalent
-## is the molar mass of the substance formed during ion discharge divided by the sum of the ion charges
-## (measured in elementary units), resulting in a molecule or atom of the substance.
+Faraday's second law of electrolysis. The equivalent mass of a substance in general in
+chemistry is its molar mass divided by an integer depending on the chemical reaction in
+which the substance participates; in this case, the equivalent is the molar mass of the
+substance formed during ion discharge divided by the sum of the ion charges (measured
+in elementary units), resulting in a molecule or atom of the substance.
 
-## Law is: k = M / (F * n), where
-## k - electrochemical equivalent,
-## M - molar mass,
-## F - faraday constant
-## n - valence.
+**Notations:**
 
-# Links: Wikipedia, derivable <https://en.wikipedia.org/wiki/Electrochemical_equivalent>
+#. :quantity_notation:`faraday_constant`.
 
-equivalent = Symbol("equivalent", units.mass / units.charge)
+**Links:**
 
-molar_mass = Symbol("molar_mass", units.mass / units.amount_of_substance)
-valence = Symbol("valence", dimensionless)
+#. `Wikipedia, derivable <https://en.wikipedia.org/wiki/Electrochemical_equivalent>`__.
+"""
 
-law = Eq(equivalent, molar_mass / (faraday_constant * valence))
+from sympy import Eq, solve
+from symplyphysics import Quantity, validate_input, validate_output, symbols, quantities
+
+equivalent = symbols.electrochemical_equivalent
+"""
+:symbols:`electrochemical_equivalent`.
+"""
+
+molar_mass = symbols.molar_mass
+"""
+:symbols:`molar_mass`.
+"""
+
+valence = symbols.valence
+"""
+:symbols:`valence`.
+"""
+
+law = Eq(equivalent, molar_mass / (quantities.faraday_constant * valence))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(molar_mass_=molar_mass, valence_=valence)

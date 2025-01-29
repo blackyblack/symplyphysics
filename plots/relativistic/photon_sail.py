@@ -38,14 +38,15 @@ mirror_mass_expr = moving_mass_law.law.rhs.subs({
     moving_mass_law.speed: mirror_speed_expr_,
 })
 
-moving_mirror_energy = energy_is_mass.law.rhs.subs(energy_is_mass.relativistic_mass, mirror_mass_expr)
+moving_mirror_energy = energy_is_mass.law.rhs.subs(energy_is_mass.relativistic_mass,
+    mirror_mass_expr)
 
 total_energy_after = reflected_wave_energy + moving_mirror_energy
 
 energy_conservation_eqn = energy_conservation_law.law.subs({
-    energy_conservation_law.mechanical_energy(energy_conservation_law.time_before):
+    energy_conservation_law.mechanical_energy(energy_conservation_law.initial_time):
         total_energy_before,
-    energy_conservation_law.mechanical_energy(energy_conservation_law.time_after):
+    energy_conservation_law.mechanical_energy(energy_conservation_law.final_time):
         total_energy_after,
 })
 
@@ -78,9 +79,9 @@ moving_mirror_momentum = moving_momentum_law.law.rhs.subs({
 total_momentum_after = moving_mirror_momentum - reflected_wave_momentum
 
 momentum_conservation_eqn = momentum_conservation_law.law.subs({
-    momentum_conservation_law.momentum(momentum_conservation_law.time_before):
+    momentum_conservation_law.momentum(momentum_conservation_law.initial_time):
         total_momentum_before,
-    momentum_conservation_law.momentum(momentum_conservation_law.time_after):
+    momentum_conservation_law.momentum(momentum_conservation_law.final_time):
         total_momentum_after,
 })
 
@@ -131,8 +132,8 @@ reduced_reflected_wave_energy_expr = evaluate_expression(reflected_wave_energy_e
 print("Formula of reduced energy of reflected wave:\n")
 print(print_expression(reduced_reflected_wave_energy_expr), end="\n\n\n")
 
-reduced_reflected_wave_energy_upper_limit = evaluate_expression(reduced_reflected_wave_energy_expr.limit(
-    reduced_incident_wave_energy, oo))
+reduced_reflected_wave_energy_upper_limit = evaluate_expression(
+    reduced_reflected_wave_energy_expr.limit(reduced_incident_wave_energy, oo))
 
 print("Upper limit of reduced energy of reflected wave:")
 print(print_expression(reduced_reflected_wave_energy_upper_limit))

@@ -15,7 +15,7 @@ Args = namedtuple("Args", ["mass_first", "illuminance_first", "mass_second"])
 def test_args_fixture() -> Args:
     mass_first = Quantity(1.98847e30 * units.kilogram)
     mass_second = Quantity(3.97694e30 * units.kilogram)
-    illuminance_first = Quantity(2 * units.joule / units.meter**2)
+    illuminance_first = Quantity(2 * units.joule / units.second)
 
     return Args(
         mass_first=mass_first,
@@ -27,7 +27,7 @@ def test_args_fixture() -> Args:
 def test_basic_illuminance_second(test_args: Args) -> None:
     result = illuminance_law.calculate_illuminance_second(test_args.mass_first,
         test_args.mass_second, test_args.illuminance_first)
-    assert_equal(result, 32 * units.joule / units.meter**2)
+    assert_equal(result, 32 * units.joule / units.second)
 
 
 def test_bad_mass(test_args: Args) -> None:

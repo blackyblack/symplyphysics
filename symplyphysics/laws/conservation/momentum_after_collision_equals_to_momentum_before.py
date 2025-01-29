@@ -1,50 +1,78 @@
-from sympy import (Eq, solve, dsolve)
-from symplyphysics import (units, Quantity, Symbol, Function, validate_input, validate_output)
+"""
+Initial momentum equals final momentum
+======================================
+
+If there is no external force applied to system of objects, the summary momentum of this
+system remains constant during and after any interactions between objects. See
+:ref:`Momentum is constant`.
+
+**Conditions:**
+
+#. The system is closed.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Momentum#Conservation>`__.
+
+..
+    TODO: rename file
+"""
+
+from sympy import Eq, solve, dsolve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    clone_as_function,
+    clone_as_symbol,
+)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.conservation import momentum_of_colliding_objects_is_constant as constant_momentum
 
-# Description
-## If there is no external force applied to system of objects, the summary momentum of this system remains constant
-## during and after any interactions between objects.
-## See [momentum_of_colliding_objects_is_constant](./momentum_of_colliding_objects_is_constant.py) for more information.
+initial_time = clone_as_symbol(symbols.time, subscript="0")
+"""
+Initial :symbols:`time`.
+"""
 
-# Law: P(t1) = P(t0)
-## Where:
-## P - summary momentum of system of objects,
-## t1 - point of time, when interaction of objects in a system occured,
-## t0 - initial time.
+final_time = clone_as_symbol(symbols.time, subscript="1")
+"""
+Final :symbols:`time`.
+"""
 
-# Conditions:
-## 1. The system is closed.
+momentum = clone_as_function(symbols.momentum, [symbols.time])
+"""
+:symbols:`momentum` as a function of :symbols:`time`.
+"""
 
-# Links: Wikipedia <https://en.wikipedia.org/wiki/Momentum#Conservation>
+law = Eq(momentum(final_time), momentum(initial_time))
+"""
+:laws:symbol::
 
-time_before = Symbol("time_before", units.time)
-time_after = Symbol("time_after", units.time)
-momentum = Function("momentum", units.momentum)
-
-law = Eq(momentum(time_after), momentum(time_before))
+:laws:latex::
+"""
 
 # Derive the same law from constant momentum
 
 ## dsolve() shows that solution is constant C1
-dsolved = dsolve(constant_momentum.law, constant_momentum.momentum(constant_momentum.time))
+_dsolved = dsolve(constant_momentum.law, constant_momentum.momentum(constant_momentum.time))
 
-energy_before_eq = dsolved.subs(constant_momentum.time, time_before)
-energy_before_eq = energy_before_eq.subs(constant_momentum.momentum(time_before),
-    momentum(time_before))
-energy_after_eq = dsolved.subs(constant_momentum.time, time_after)
-energy_after_eq = energy_after_eq.subs(constant_momentum.momentum(time_after), momentum(time_after))
+_energy_before_eq = _dsolved.subs(constant_momentum.time, initial_time)
+_energy_before_eq = _energy_before_eq.subs(constant_momentum.momentum(initial_time),
+    momentum(initial_time))
+_energy_after_eq = _dsolved.subs(constant_momentum.time, final_time)
+_energy_after_eq = _energy_after_eq.subs(constant_momentum.momentum(final_time),
+    momentum(final_time))
 
 ## Show that when energy is constant, energy_before equals to energy_after
-energy_after_solved = solve([energy_after_eq, energy_before_eq], (momentum(time_after), "C1"),
-    dict=True)[0][momentum(time_after)]
-assert expr_equals(energy_after_solved, law.rhs)
+_energy_after_solved = solve([_energy_after_eq, _energy_before_eq], (momentum(final_time), "C1"),
+    dict=True)[0][momentum(final_time)]
+assert expr_equals(_energy_after_solved, law.rhs)
 
 
 @validate_input(momentum_before_=momentum)
 @validate_output(momentum)
 def calculate_momentum_after(momentum_before_: Quantity) -> Quantity:
-    solved = solve(law, momentum(time_after), dict=True)[0][momentum(time_after)]
-    result_expr = solved.subs(momentum(time_before), momentum_before_)
+    solved = solve(law, momentum(final_time), dict=True)[0][momentum(final_time)]
+    result_expr = solved.subs(momentum(initial_time), momentum_before_)
     return Quantity(result_expr)

@@ -19,8 +19,7 @@ that this phenomenon is only observed in the direction parallel to the velocity 
 """
 
 from sympy import Eq, solve, sqrt
-from symplyphysics import (Quantity, validate_input,
-    validate_output, symbols, quantities)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols, quantities)
 
 proper_length = symbols.proper_length
 """

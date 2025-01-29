@@ -1,44 +1,61 @@
+"""
+Object's angular altitude in upper culmination
+==============================================
+
+In observational astronomy, culmination is the passage of a celestial object across the
+observer's local meridian. An object's angular altitude in degrees at its upper
+culmination is equal to 90 minus the observer's latitude plus the object's declination.
+
+**Conditions:**
+
+#. The object is at its upper culmination.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Culmination#>`__.
+"""
+
 from sympy import (Eq, solve)
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
-    angle_type,
+    symbols,
 )
 
-# Description
-## In observational astronomy, culmination is the passage of a celestial object across the observer's local meridian.
-## An object's angular altitude in degrees at its upper culmination is equal to 90 minus the observer's latitude plus
-## the object's declination.
-## Object's declination is equal to the angular distance on the celestial sphere from the plane of the celestial equator to the sun.
-## https://учисьучись.рф/materials/shkolnaya-programma/astronomy/vysotasvetilvkulminacii/
+altitude = symbols.altitude
+"""
+:symbols:`altitude` of the object.
+"""
 
-## Law is: h = 90 - L + d, where
-## h - object's angular altitude,
-## L - latitude,
-## d - object's declination.
+latitude = symbols.latitude
+"""
+:symbols:`latitude` of the object.
+"""
 
-# Conditions:
-# - it is valid when object is at its upper culmination.
+declination = symbols.declination
+"""
+:symbols:`declination` of the object.
+"""
 
-# Links: Wikipedia <https://en.wikipedia.org/wiki/Culmination#>
+ninety_degrees = Quantity(90 * units.deg, display_symbol="90_deg", display_latex="90^\\circ")
+"""
+A :math:`90^\\circ` angle.
+"""
 
-angular_altitude = Symbol("angular_altitude", angle_type)
+law = Eq(altitude, ninety_degrees - latitude + declination)
+"""
+:laws:symbol::
 
-latitude = Symbol("latitude", angle_type)
-declination = Symbol("declination", angle_type)
-
-ninety_degrees = Quantity(90 * units.deg)
-
-law = Eq(angular_altitude, ninety_degrees - latitude + declination)
+:laws:latex::
+"""
 
 
 @validate_input(latitude_=latitude, declination_=declination)
-@validate_output(angular_altitude)
+@validate_output(altitude)
 def calculate_angular_altitude(latitude_: Quantity, declination_: Quantity) -> Quantity:
-    result_expr = solve(law, angular_altitude, dict=True)[0][angular_altitude]
+    result_expr = solve(law, altitude, dict=True)[0][altitude]
     result_expr = result_expr.subs({
         latitude: latitude_,
         declination: declination_,

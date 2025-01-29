@@ -13,7 +13,7 @@ concentrations or fugitives) of reactants and products in a state of chemical eq
 **Conditions:**
 
 #. The term "standard" applies to a solution of an infinite dilution and of a hypothetical standard
-   concentration, typically 1 mol/kg.
+   concentration, typically :math:`1 \\text{mol}/\\text{kg}`.
 
 **Links:**
 
@@ -26,32 +26,23 @@ from symplyphysics import (
     units,
     quantities,
     Quantity,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
-    dimensionless,
     convert_to_float,
 )
 
-equilibrium_constant = Symbol("equilibrium_constant", dimensionless)
+equilibrium_constant = symbols.equilibrium_constant
 """
 Equilibrium constant of the reaction.
-
-Symbol:
-    :code:`K`
 """
 
-reaction_standard_gibbs_energy = Symbol("reaction_standard_gibbs_energy",
-    units.energy / units.amount_of_substance)
+reaction_standard_gibbs_energy = SymbolNew("Delta(G)",
+    units.energy / units.amount_of_substance,
+    display_latex="\\Delta G")
 r"""
-Reaction standard Gibbs energy, which is the sum of the standard Gibbs energies of the reaction
-products minus that of reactants.
-
-Symbol:
-    :code:`Delta(G)`
-
-Latex:
-    :math:`\Delta G`
+Reaction standard :symbols:`gibbs_energy`, which is the sum of the standard Gibbs
+energies of the reaction products minus that of reactants.
 """
 
 temperature = symbols.temperature
@@ -61,12 +52,10 @@ temperature = symbols.temperature
 
 law = Eq(equilibrium_constant,
     exp(-reaction_standard_gibbs_energy / (quantities.molar_gas_constant * temperature)))
-r"""
-:code:`K = exp(-1 * Delta(G) / (R * T))`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        K = \exp \left( - \frac{\Delta G}{R T} \right)
+:laws:latex::
 """
 
 

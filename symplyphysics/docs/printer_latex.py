@@ -163,7 +163,8 @@ class SymbolLatexPrinter(LatexPrinter):
         str_value = self._print(value)
         str_base = self._print(base)
         head = "\\log" if (base is None or base == E) else f"\\log_{{{str_base}}}"
-        return f"{head} \\left( {str_value} \\right)"
+        log_str = f"{head} \\left( {str_value} \\right)"
+        return log_str if exp is None else f"{log_str}^{{{exp}}}"
 
     def _print_div(self, numer: Expr, denom: Expr) -> str:
         snumer = self._print_Mul(numer) if numer.is_Mul else str(self._print(numer))

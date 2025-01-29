@@ -1,49 +1,70 @@
+"""
+Approximate lifetime of stars located on the main sequence
+==========================================================
+
+The main sequence is the stage of stellar evolution. This stage begins in stars after the
+protostar stage. At the beginning of the main sequence stage, the age of the star is
+considered to be zero. It is possible to calculate the time spent on the main sequence
+for a star by knowing such a time for the Sun, as well as the mass and luminosity of the
+Sun and the star.
+
+**Notation:**
+
+#. :quantity_notation:`sun_luminosity`.
+#. :quantity_notation:`solar_mass`.
+
+**Links:**
+
+#. `Wikipedia, second formula <https://en.wikipedia.org/wiki/Main_sequence#Lifetime>`__.
+"""
+
 from sympy import (Eq, solve)
 from symplyphysics import (
     symbols,
     units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    quantities,
 )
 
-# Description
-## The main sequence is the stage of stellar evolution.
-## This stage begins in stars after the protostar stage. At the beginning of the main sequence stage, the age of the star
-## is considered to be zero.
-## It is possible to calculate the time spent on the main sequence for a star by knowing such a time for the Sun, as well
-## as the mass and luminosity of the Sun and the star.
+lifetime = symbols.time
+"""
+Lifetime (:symbols:`time`) of the star on the main sequence.
+"""
 
-## Law is: T = ts * (M / Ms) * (Ls / L), where
-## T - lifetime on the main sequence of the star,
-## ts - lifetime on the main sequence of the Sun,
-## M - mass of the star,
-## Ms - mass of the Sun,
-## Ls - luminosity of the Sun,
-## L - luminosity of the star.
+star_mass = symbols.mass
+"""
+:symbols:`mass` of the star.
+"""
 
-# Link: Wikipedia, second formula <https://en.wikipedia.org/wiki/Main_sequence#Lifetime>
+star_luminosity = symbols.luminosity
+"""
+:symbols:`luminosity` of the star.
+"""
 
-lifetime = Symbol("lifetime", units.time)
+sun_lifetime = Quantity(1e10 * units.common_year, display_symbol="t_Sun", display_latex="t_\\odot")
+"""
+Lifetime (:symbols:`time`) on time main sequence of the Sun.
+"""
 
-mass_of_star = symbols.mass
-luminosity_of_star = Symbol("luminosity_of_star", units.power)
+law = Eq(
+    lifetime,
+    sun_lifetime * (star_mass / quantities.solar_mass) *
+    (quantities.sun_luminosity / star_luminosity))
+"""
+:laws:symbol::
 
-mass_of_sun = Quantity(1.989e30 * units.kilogram)
-lifetime_of_sun = Quantity(1e10 * units.common_year)
-luminosity_of_sun = Quantity(3.827e26 * units.watt)
-
-law = Eq(lifetime,
-    lifetime_of_sun * (mass_of_star / mass_of_sun) * (luminosity_of_sun / luminosity_of_star))
+:laws:latex::
+"""
 
 
-@validate_input(mass_of_star_=mass_of_star, luminosity_of_star_=luminosity_of_star)
+@validate_input(mass_of_star_=star_mass, luminosity_of_star_=star_luminosity)
 @validate_output(lifetime)
 def calculate_lifetime(mass_of_star_: Quantity, luminosity_of_star_: float) -> Quantity:
     result_expr = solve(law, lifetime, dict=True)[0][lifetime]
     result_expr = result_expr.subs({
-        mass_of_star: mass_of_star_,
-        luminosity_of_star: luminosity_of_star_,
+        star_mass: mass_of_star_,
+        star_luminosity: luminosity_of_star_,
     })
     return Quantity(result_expr)

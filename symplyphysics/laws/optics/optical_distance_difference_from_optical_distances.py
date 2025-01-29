@@ -49,7 +49,8 @@ law = Eq(optical_difference_distance, second_optical_distance - first_optical_di
 """
 
 
-@validate_input(optical_distance1_=first_optical_distance, optical_distance2_=second_optical_distance)
+@validate_input(optical_distance1_=first_optical_distance,
+    optical_distance2_=second_optical_distance)
 @validate_output(optical_difference_distance)
 def calculate_optical_difference_distance(optical_distance1_: Quantity,
     optical_distance2_: Quantity) -> Quantity:

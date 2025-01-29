@@ -67,8 +67,8 @@ proper_frame_speed_in_lab_frame = symbols.speed
 """
 
 law = Eq(time_in_proper_frame, (time_in_lab_frame -
-    proper_frame_speed_in_lab_frame * position_in_lab_frame / quantities.speed_of_light**2) / sqrt(1 -
-    (proper_frame_speed_in_lab_frame / quantities.speed_of_light)**2))
+    proper_frame_speed_in_lab_frame * position_in_lab_frame / quantities.speed_of_light**2) /
+    sqrt(1 - (proper_frame_speed_in_lab_frame / quantities.speed_of_light)**2))
 """
 :laws:symbol::
 

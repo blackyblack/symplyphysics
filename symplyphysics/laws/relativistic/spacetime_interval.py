@@ -55,7 +55,8 @@ spatial_distance = symbols.euclidean_distance
 :symbols:`euclidean_distance` between the two events.
 """
 
-law = Eq(spacetime_interval**2, (quantities.speed_of_light * temporal_distance)**2 - spatial_distance**2)
+law = Eq(spacetime_interval**2,
+    (quantities.speed_of_light * temporal_distance)**2 - spatial_distance**2)
 """
 :laws:symbol::
 

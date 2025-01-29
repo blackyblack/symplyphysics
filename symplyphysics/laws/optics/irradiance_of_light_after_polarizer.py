@@ -25,11 +25,9 @@ irradiance_after = symbols.irradiance
 Light :symbols:`irradiance` after passing through the polarizer.
 """
 
-irradiance_before = clone_as_symbol(
-    symbols.irradiance,
+irradiance_before = clone_as_symbol(symbols.irradiance,
     display_symbol="E_e0",
-    display_latex="E_{\\text{e}0}"
-)
+    display_latex="E_{\\text{e}0}")
 """
 Light :symbols:`irradiance` befor passing through the polarizer.
 """

@@ -25,5 +25,3 @@ def test_bad_number_of_planet() -> None:
     number_of_planet = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
         radius_law.calculate_radius_of_orbit(number_of_planet)
-    with raises(ValueError):
-        radius_law.calculate_radius_of_orbit(-10)

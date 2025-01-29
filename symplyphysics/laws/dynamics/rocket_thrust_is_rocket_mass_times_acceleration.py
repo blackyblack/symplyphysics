@@ -119,9 +119,9 @@ _relative_speed_eqn = galilean_law.law.subs({
 })
 
 _momentum_conservation_eqn = momentum_conservation_law.law.subs({
-    momentum_conservation_law.momentum(momentum_conservation_law.time_before):
+    momentum_conservation_law.momentum(momentum_conservation_law.initial_time):
         _rocket_momentum_before_release,
-    momentum_conservation_law.momentum(momentum_conservation_law.time_after):
+    momentum_conservation_law.momentum(momentum_conservation_law.final_time):
         _final_momentum,
 })
 

@@ -1,48 +1,72 @@
+"""
+Etching rate of target in magnetron
+===================================
+
+The ions of the gas-discharge plasma in the magnetron fall on the target and knock the
+atoms out of it. The etching rate is how many nanometers of the target
+substance are etched per unit of time. In other words, this is how much thinner a target
+becomes per unit of time.
+
+**Notation:**
+
+#. :quantity_notation:`elementary_charge`.
+#. :quantity_notation:`avogadro_constant`.
+
+..
+    TODO: find link
+    TODO: move to `magnetron` folder?
+"""
+
 from sympy import Eq, solve
-from sympy.physics.units import elementary_charge, avogadro_constant
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
     dimensionless,
+    symbols,
 )
+from symplyphysics.quantities import elementary_charge, avogadro_constant
 
-# Description
-## The ions of the gas-discharge plasma in the magnetron fall on the target and knock the atoms out of it.
-## The sputtering coefficient shows how many target atoms are knocked out of the target by a single ion.
-## The etching rate is how many nanometers of the target substance are etched per unit of time. In other words,
-## this is how much thinner a target becomes per unit of time.
+etching_rate = symbols.speed
+"""
+Target etching rate. See :symbols:`speed`.
+"""
 
-## Law is: V =  J * M * Y / (q * po * Na), where
-## V - target etching rate,
-## J - density of the current of the ion flux incident on the target,
-## M - molar mass of the target atom,
-## Y - sputtering coefficient,
-## q - elementary charge,
-## po - target density,
-## Na - avogadro constant.
+ion_current_density = symbols.current_density
+"""
+Ion flux :symbols:`current_density` incident on the target.
+"""
 
-# TODO: find link
+target_molar_mass = symbols.molar_mass
+"""
+:symbols:`molar_mass` of target atoms.
+"""
 
-# TODO: move to `magnetron` folder?
+sputtering_coefficient = SymbolNew("Y", dimensionless)
+"""
+Sputtering coefficient. Shows how many target atoms are knocked out of the target by a single ion.
+"""
 
-etching_rate = Symbol("etching_rate", units.velocity)
-
-ion_current_density = Symbol("ion_current_density", units.current / units.area)
-molar_mass_of_target_atom = Symbol("molar_mass_of_target_atom",
-    units.mass / units.amount_of_substance)
-sputtering_coefficient = Symbol("sputtering_coefficient", dimensionless)
-target_density = Symbol("target_density", units.mass / units.volume)
+target_density = symbols.density
+"""
+Target :symbols:`density`.
+"""
 
 law = Eq(
-    etching_rate, ion_current_density * molar_mass_of_target_atom * sputtering_coefficient /
-    (elementary_charge * target_density * avogadro_constant))
+    etching_rate,
+    ion_current_density * target_molar_mass * sputtering_coefficient /
+    (elementary_charge * target_density * avogadro_constant),
+)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(ion_current_density_=ion_current_density,
-    molar_mass_of_target_atom_=molar_mass_of_target_atom,
+    molar_mass_of_target_atom_=target_molar_mass,
     sputtering_coefficient_=sputtering_coefficient,
     target_density_=target_density)
 @validate_output(etching_rate)
@@ -51,7 +75,7 @@ def calculate_etching_rate(ion_current_density_: Quantity, molar_mass_of_target_
     result_expr = solve(law, etching_rate, dict=True)[0][etching_rate]
     result_expr = result_expr.subs({
         ion_current_density: ion_current_density_,
-        molar_mass_of_target_atom: molar_mass_of_target_atom_,
+        target_molar_mass: molar_mass_of_target_atom_,
         sputtering_coefficient: sputtering_coefficient_,
         target_density: target_density_,
     })

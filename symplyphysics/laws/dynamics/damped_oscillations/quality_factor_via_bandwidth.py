@@ -1,37 +1,58 @@
+"""
+Quality factor via bandwidth
+============================
+
+The quality factor of the system can be defined in terms of its resonant frequency and
+the resonance width, referred to as full width at half maximum, i.e. it is the bandwidth
+over which the vibration power is greater than half the power at the resonant frequency.
+
+**Notes:**
+
+#. An equivalent definition uses angular frequencies instead of linear ones.
+#. There is :ref:`another definition <Quality factor via energy loss>` that is
+   approximately equivalent to this one at high quality factor values.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Q_factor#Bandwidth_definition>`__.
+"""
+
 from sympy import Eq
 from symplyphysics import (
-    units,
-    dimensionless,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
 )
 
-# Description
-## Q factor (quality factor) is a dimensionless parameter that describes how underdamped
-## an oscillator or resonator is: the larger the Q factor is, the less damped it is. There
-## are two nearly equivalent definitions of it that become approximately equivalent as Q
-## becomes larger, meaning that the resonator becomes less damped.
+quality_factor = symbols.quality_factor
+"""
+:symbols:`quality_factor` of the oscillator.
+"""
 
-# Law: Q = f_r / delta_f
-## Q - Q factor
-## f_r - oscillator's resonant frequency
-## delta_f - resonance width, or full width at half maximum, of the peak in the graph of the
-##           dissipated power as a function of driving frequency, i.e. the difference between
-##           the frequencies at which the dissipated power is half the peak dissipated power,
-##           which happens ad the resonant frequency, see [this figure](http://spiff.rit.edu/classes/phys283/lectures/forced_ii/half_power.png)
+resonant_frequency = clone_as_symbol(symbols.temporal_frequency, subscript="\\text{r}")
+"""
+Oscillator's resonant :symbols:`temporal_frequency`.
+"""
 
-# Note
-## - An equivalent definition uses angular frequencies instead of linear ones.
-
-# Links: Wikipedia <https://en.wikipedia.org/wiki/Q_factor#Bandwidth_definition>
-
-quality_factor = Symbol("quality_factor", dimensionless)
-resonant_frequency = Symbol("resonant_frequency", units.frequency)
-resonance_width = Symbol("resonance_width", units.frequency)
+resonance_width = clone_as_symbol(symbols.temporal_frequency,
+    display_symbol="Delta(f)",
+    display_latex="\\Delta f")
+"""
+Resonance width, or full width at half maximum, of the peak in the graph of the
+dissipated power as a function of driving frequency, i.e. the difference between the
+frequencies at which the dissipated power is half the peak dissipated power, which
+happens at the resonant frequency, vid. `figure <http://spiff.rit.edu/classes/phys283/lectures/forced_ii/half_power.png>`__.
+See :symbols:`temporal_frequency`.
+"""
 
 law = Eq(quality_factor, resonant_frequency / resonance_width)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(

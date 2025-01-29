@@ -16,8 +16,7 @@ coefficient and the intensity of the radiation.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (Quantity, validate_input,
-    validate_output, symbols, quantities)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols, quantities)
 
 pressure = symbols.pressure
 """

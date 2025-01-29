@@ -250,7 +250,35 @@ attraction between two objects.
 #. `Wikipedia <https://en.wikipedia.org/wiki/Gravitational_constant>`__.
 """
 
-faraday_constant = Quantity(elementary_charge * avogadro_constant, display_symbol="F", display_latex="\\mathfrak{F}")
+hubble_constant = Quantity(7e-11 / units.year, display_symbol="H")
+"""
+The **Hubble's constant** is the proportionality constant between the recessional velocity and
+the proper distance between the galaxy and the observer in the Hubble's law. Its exact value
+is up to debate, however, the fundamental theory gives the number :math:`7%` per billion years.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Hubble%27s_law>`__.
+"""
+
+zero_point_luminosity = Quantity(3.0128e28 * units.watt, display_symbol="L_0")
+"""
+**Zero-point luminosity** is a constant defined relative to a star for calibrating perposes. The
+value given here has been defined by the International Astronomical Union (IAU).
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Zero_point_(photometry)#Bolometric_magnitude_zero_point>`__.
+"""
+
+sun_luminosity = Quantity(3.827e26 * units.watt, display_symbol="L_Sun", display_latex="L_\\odot")
+"""
+:symbols:`luminosity` of the Sun.
+"""
+
+faraday_constant = Quantity(elementary_charge * avogadro_constant,
+    display_symbol="F",
+    display_latex="\\mathfrak{F}")
 """
 The **Faraday constant** represents the amount of electric charge carried by one mole,
 or Avogadro's number, of electrons.
@@ -294,6 +322,8 @@ __all__ = [
     "richardson_constant",
     "rydberg_frequency",
     "wien_displacement_constant",
+    "hubble_constant",
+    "zero_point_luminosity",
     "faraday_constant",
     "vacuum_impedance",
 ]
