@@ -40,7 +40,9 @@ medium_refraction_index = clone_as_symbol(symbols.relative_refractive_index, sub
 :symbols:`relative_refractive_index` of the medium.
 """
 
-distance_from_object = clone_as_symbol(symbols.euclidean_distance, display_symbol="d_o", display_latex="d_\\text{o}")
+distance_from_object = clone_as_symbol(symbols.euclidean_distance,
+    display_symbol="d_o",
+    display_latex="d_\\text{o}")
 """
 :symbols:`euclidean_distance` from lens to object.
 """
@@ -50,7 +52,9 @@ lens_refraction_index = symbols.relative_refractive_index
 :symbols:`relative_refractive_index` of the lens material.
 """
 
-distance_from_image = clone_as_symbol(symbols.euclidean_distance, display_symbol="d_i", display_latex="d_\\text{i}")
+distance_from_image = clone_as_symbol(symbols.euclidean_distance,
+    display_symbol="d_i",
+    display_latex="d_\\text{i}")
 """
 :symbols:`euclidean_distance` from lens to image.
 """
@@ -67,7 +71,6 @@ law = Eq(
 
 # NOTE:
 ## proofs: https://studme.org/341451/matematika_himiya_fizik/prelomlenie_otrazhenie_sveta_sfericheskoy_poverhnosti
-
 
 
 @validate_input(

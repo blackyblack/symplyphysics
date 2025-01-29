@@ -37,7 +37,9 @@ equilibrium_constant = symbols.equilibrium_constant
 Equilibrium constant of the reaction.
 """
 
-reaction_standard_gibbs_energy = SymbolNew("Delta(G)", units.energy / units.amount_of_substance, display_latex="\\Delta G")
+reaction_standard_gibbs_energy = SymbolNew("Delta(G)",
+    units.energy / units.amount_of_substance,
+    display_latex="\\Delta G")
 r"""
 Reaction standard :symbols:`gibbs_energy`, which is the sum of the standard Gibbs
 energies of the reaction products minus that of reactants.

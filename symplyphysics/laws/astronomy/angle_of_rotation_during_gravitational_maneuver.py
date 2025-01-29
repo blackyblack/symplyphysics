@@ -42,7 +42,9 @@ rocket_speed = symbols.speed
 Rocket's :symbols:`speed` relative to the planet.
 """
 
-law = Eq(angle, 2 * atan(quantities.gravitational_constant * planet_mass / (aiming_range * rocket_speed**2)))
+law = Eq(
+    angle,
+    2 * atan(quantities.gravitational_constant * planet_mass / (aiming_range * rocket_speed**2)))
 """
 :laws:symbol::
 

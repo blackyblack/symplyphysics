@@ -54,8 +54,7 @@ def calculate_moles_count_of_mixture(amount_of_components_: Sequence[Quantity]) 
     local_index = Idx("index_local", (1, len(amount_of_components_)))
     moles_counts_of_mixture_law = law.subs(global_index, local_index)
     moles_counts_of_mixture_law = moles_counts_of_mixture_law.doit()
-    solved = solve(moles_counts_of_mixture_law, amount_of_mixture,
-        dict=True)[0][amount_of_mixture]
+    solved = solve(moles_counts_of_mixture_law, amount_of_mixture, dict=True)[0][amount_of_mixture]
     for i, v in enumerate(amount_of_components_):
         solved = solved.subs(amount_of_component[i + 1], v)
     return Quantity(solved)

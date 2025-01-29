@@ -35,7 +35,7 @@ orbital_radius = symbols.radius
 
 planet_mass = symbols.mass
 """
-:symbols:`mass`
+:symbols:`mass` of the attracting body (planet).
 """
 
 satellite_angular_speed = symbols.angular_speed
@@ -44,7 +44,8 @@ satellite_angular_speed = symbols.angular_speed
 """
 
 law = Eq(orbital_radius,
-    (quantities.gravitational_constant * planet_mass / (satellite_angular_speed**2))**Rational(1, 3))
+    (quantities.gravitational_constant * planet_mass / (satellite_angular_speed**2))**Rational(
+    1, 3))
 """
 :laws:symbol::
 

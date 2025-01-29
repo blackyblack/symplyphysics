@@ -44,10 +44,8 @@ law = Eq(cross_section, pi * distance_of_convergence**2)
 
 @validate_input(distance_of_convergence_=distance_of_convergence)
 @validate_output(cross_section)
-def calculate_cross_sectional_area_of_interaction(
-        distance_of_convergence_: Quantity) -> Quantity:
-    result_expr = solve(law, cross_section,
-        dict=True)[0][cross_section]
+def calculate_cross_sectional_area_of_interaction(distance_of_convergence_: Quantity) -> Quantity:
+    result_expr = solve(law, cross_section, dict=True)[0][cross_section]
     result_expr = result_expr.subs({
         distance_of_convergence: distance_of_convergence_,
     })

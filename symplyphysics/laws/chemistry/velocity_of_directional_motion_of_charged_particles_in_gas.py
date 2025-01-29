@@ -24,7 +24,9 @@ speed = symbols.speed
 :symbols:`speed` of charged particles in the gas.
 """
 
-mobility_at_unit_pressure = SymbolNew("mu", units.speed * units.pressure * units.length / units.voltage, display_latex="\\mu")
+mobility_at_unit_pressure = SymbolNew("mu",
+    units.speed * units.pressure * units.length / units.voltage,
+    display_latex="\\mu")
 """
 Mobility of charged particles at unit pressure.
 """

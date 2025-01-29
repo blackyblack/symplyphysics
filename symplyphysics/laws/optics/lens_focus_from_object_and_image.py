@@ -15,8 +15,7 @@ This law is also called the **thin lens formula**.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (Quantity, validate_input,
-    validate_output, symbols, clone_as_symbol)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols, clone_as_symbol)
 
 focus_distance = symbols.focal_length
 """
@@ -31,7 +30,6 @@ distance_to_object = clone_as_symbol(
 """
 :symbols:`euclidean_distance` from lens to object.
 """
-
 
 distance_to_image = clone_as_symbol(
     symbols.euclidean_distance,

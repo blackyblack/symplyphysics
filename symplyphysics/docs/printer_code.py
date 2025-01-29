@@ -180,10 +180,10 @@ class SymbolCodePrinter(StrPrinter):
         # no denominator
         if n_d == S.One:
             if d != S.One:
-                return self._print_div(n_n, d)
+                return tex + self._print_div(n_n, d)
             tex += convert_args(n_n)
             return tex
-        tex = self._print_div(n_n, n_d)
+        tex += self._print_div(n_n, n_d)
         tex2 = ""
         if d_n == S.One:
             tex2 = convert_args(d_d)

@@ -27,14 +27,16 @@ potential = symbols.potential_energy
 :symbols:`potential_energy` of the configuration.
 """
 
-dispersion_energy = clone_as_symbol(symbols.energy, display_symbol="e", display_latex="\\varepsilon")
+dispersion_energy = clone_as_symbol(symbols.energy,
+    display_symbol="e",
+    display_latex="\\varepsilon")
 """
 Depth of the potential well, also referred to as *dispersion energy*. See :symbols:`energy`.
 """
 
 particle_size = clone_as_symbol(symbols.radius, display_symbol="sigma", display_latex="\\sigma")
 """
-Distance at which potential is zero, also referred to as *particle size*.
+Distance (see :symbols:`radius`) at which potential is zero, also referred to as *particle size*.
 """
 
 distance = clone_as_symbol(symbols.euclidean_distance, display_symbol="r", display_latex="r")

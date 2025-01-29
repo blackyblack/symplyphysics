@@ -46,10 +46,10 @@ law = Eq(semimajor_axis, quantities.gravitational_constant * attracting_mass / o
 :laws:latex::
 """
 
+
 @validate_input(orbital_speed_=orbital_speed, planet_mass_=attracting_mass)
 @validate_output(semimajor_axis)
-def calculate_large_half_axis_length(orbital_speed_: Quantity,
-    planet_mass_: Quantity) -> Quantity:
+def calculate_large_half_axis_length(orbital_speed_: Quantity, planet_mass_: Quantity) -> Quantity:
     result_expr = solve(law, semimajor_axis, dict=True)[0][semimajor_axis]
     result_expr = result_expr.subs({
         orbital_speed: orbital_speed_,

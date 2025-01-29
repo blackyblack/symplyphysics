@@ -207,8 +207,13 @@ def test_log10(test_args: Args) -> None:
     assert code_str(expr) == "log(I / I_0, 10)"
 
 
-# TODO: here minus sign is lost - fix code printer
 def test_minus_imaginary(test_args: Args) -> None:
     with evaluate(False):
         expr = exp(-1 * (I / test_args.boltzmann_constant))
-    assert code_str(expr) != "exp(-I / k_B)"
+    assert code_str(expr) == "exp(-I / k_B)"
+
+
+def test_log_squared(test_args: Args) -> None:
+    with evaluate(False):
+        expr = log(test_args.boltzmann_constant)**2
+    assert code_str(expr) == "log(k_B)^2"

@@ -61,7 +61,8 @@ _energy_before_eq = _dsolved.subs(constant_momentum.time, initial_time)
 _energy_before_eq = _energy_before_eq.subs(constant_momentum.momentum(initial_time),
     momentum(initial_time))
 _energy_after_eq = _dsolved.subs(constant_momentum.time, final_time)
-_energy_after_eq = _energy_after_eq.subs(constant_momentum.momentum(final_time), momentum(final_time))
+_energy_after_eq = _energy_after_eq.subs(constant_momentum.momentum(final_time),
+    momentum(final_time))
 
 ## Show that when energy is constant, energy_before equals to energy_after
 _energy_after_solved = solve([_energy_after_eq, _energy_before_eq], (momentum(final_time), "C1"),

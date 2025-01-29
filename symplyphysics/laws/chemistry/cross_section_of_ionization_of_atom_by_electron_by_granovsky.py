@@ -50,9 +50,9 @@ Maximum :symbols:`energy` of ionizing electrons.
 
 law = Eq(
     effective_cross_section,
-    maximum_cross_section
-    * ((electron_energy - ionization_energy) / (maximum_electron_energy - ionization_energy))
-    * exp((maximum_electron_energy - electron_energy) / (maximum_electron_energy - ionization_energy)),
+    maximum_cross_section * ((electron_energy - ionization_energy) /
+    (maximum_electron_energy - ionization_energy)) * exp(
+    (maximum_electron_energy - electron_energy) / (maximum_electron_energy - ionization_energy)),
 )
 """
 :laws:symbol::
@@ -70,8 +70,7 @@ def calculate_cross_sectional_area_of_ionization(
         ionization_energy_: Quantity, energy_of_electron_: Quantity,
         maximum_cross_sectional_area_of_ionization_: Quantity,
         energy_of_electron_at_max_area_: Quantity) -> Quantity:
-    result_expr = solve(law, effective_cross_section,
-        dict=True)[0][effective_cross_section]
+    result_expr = solve(law, effective_cross_section, dict=True)[0][effective_cross_section]
     result_expr = result_expr.subs({
         ionization_energy: ionization_energy_,
         electron_energy: energy_of_electron_,

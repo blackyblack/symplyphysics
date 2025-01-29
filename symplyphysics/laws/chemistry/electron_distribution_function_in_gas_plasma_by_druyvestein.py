@@ -60,8 +60,9 @@ Constant equal to :math:`1.04 \\, \\text{eV}`.
 
 law = Eq(
     distribution_function,
-    energy_constant * (elementary_charge * voltage)**Rational(1, 2) / electron_energy**Rational(3, 2)
-    * exp(-0.55 * (elementary_charge * voltage)**2 / electron_energy**2),
+    energy_constant * (elementary_charge * voltage)**Rational(1, 2) /
+    electron_energy**Rational(3, 2) * exp(-0.55 *
+    (elementary_charge * voltage)**2 / electron_energy**2),
 )
 """
 :laws:symbol::
@@ -70,13 +71,11 @@ law = Eq(
 """
 
 
-@validate_input(voltage_between_electrodes_=voltage,
-    electron_energy_=electron_energy)
+@validate_input(voltage_between_electrodes_=voltage, electron_energy_=electron_energy)
 @validate_output(distribution_function)
 def calculate_value_of_distribution_function(voltage_between_electrodes_: Quantity,
     electron_energy_: Quantity) -> Probability:
-    result_expr = solve(law, distribution_function,
-        dict=True)[0][distribution_function]
+    result_expr = solve(law, distribution_function, dict=True)[0][distribution_function]
     result_expr = result_expr.subs({
         voltage: voltage_between_electrodes_,
         electron_energy: electron_energy_,

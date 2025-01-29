@@ -49,7 +49,7 @@ Energy transfer coefficient between the particle and the gas.
 law = Eq(collision_count,
     log(thermal_energy / initial_energy) / log(1 - energy_transfer_coefficient))
 """
-:law:symbol::
+:laws:symbol::
 
 :laws:latex::
 """
@@ -67,8 +67,7 @@ def calculate_number_of_collisions_of_atoms(initial_energy_: Quantity,
         raise ValueError(
             "The initial energy of the atom must be greater than or equal to the thermal energy")
 
-    result_expr = solve(law, collision_count,
-        dict=True)[0][collision_count]
+    result_expr = solve(law, collision_count, dict=True)[0][collision_count]
     result_expr = result_expr.subs({
         initial_energy: initial_energy_,
         thermal_energy: energy_of_thermal_motion_,

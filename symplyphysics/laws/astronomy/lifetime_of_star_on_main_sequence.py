@@ -48,7 +48,9 @@ indicator = SymbolNew("n", dimensionless)
 A dimensionless parameter whose value depends on the mass of the star.
 """
 
-ten_billion_years = Quantity(1e10 * units.common_year, display_symbol="10 Gyr", display_latex="10 \\, \\text{Gyr}")
+ten_billion_years = Quantity(1e10 * units.common_year,
+    display_symbol="10 Gyr",
+    display_latex="10 \\, \\text{Gyr}")
 """
 A quantity equal to ten billion years.
 """

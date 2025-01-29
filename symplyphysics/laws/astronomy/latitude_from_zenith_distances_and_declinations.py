@@ -32,22 +32,30 @@ latitude = symbols.latitude
 :symbols:`latitude` of the observation site.
 """
 
-north_zenith_angle = clone_as_symbol(symbols.zenith_angle, display_symbol="theta_N", display_latex="\\theta_\\text{N}")
+north_zenith_angle = clone_as_symbol(symbols.zenith_angle,
+    display_symbol="theta_N",
+    display_latex="\\theta_\\text{N}")
 """
 :symbols:`zenith_angle` of the northern star.
 """
 
-south_zenith_angle = clone_as_symbol(symbols.zenith_angle, display_symbol="theta_S", display_latex="\\theta_\\text{S}")
+south_zenith_angle = clone_as_symbol(symbols.zenith_angle,
+    display_symbol="theta_S",
+    display_latex="\\theta_\\text{S}")
 """
 :symbols:`zenith_angle` of the southern star.
 """
 
-north_declination = clone_as_symbol(symbols.declination, display_symbol="delta_N", display_latex="\\delta_\\text{N}")
+north_declination = clone_as_symbol(symbols.declination,
+    display_symbol="delta_N",
+    display_latex="\\delta_\\text{N}")
 """
 :symbols:`declination` of the northern star.
 """
 
-south_declination = clone_as_symbol(symbols.declination, display_symbol="delta_S", display_latex="\\delta_\\text{S}")
+south_declination = clone_as_symbol(symbols.declination,
+    display_symbol="delta_S",
+    display_latex="\\delta_\\text{S}")
 """
 :symbols:`declination` of the southern star.
 """

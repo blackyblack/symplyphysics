@@ -22,8 +22,7 @@ infinity as its speed approaches the speed of light.
 """
 
 from sympy import Eq, solve, sqrt
-from symplyphysics import (Quantity, validate_input,
-    validate_output, symbols, quantities)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols, quantities)
 
 relativistic_mass = symbols.relativistic_mass
 """

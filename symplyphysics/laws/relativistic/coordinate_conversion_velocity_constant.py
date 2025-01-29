@@ -49,7 +49,8 @@ time_in_lab_frame = clone_as_symbol(symbols.time, subscript="1")
 :symbols:`time` in the first frame of reference.
 """
 
-law = Eq(position_in_proper_frame, (position_in_lab_frame - proper_frame_speed_in_lab_frame * time_in_lab_frame) / sqrt(
+law = Eq(position_in_proper_frame,
+    (position_in_lab_frame - proper_frame_speed_in_lab_frame * time_in_lab_frame) / sqrt(
     (1 - (proper_frame_speed_in_lab_frame / quantities.speed_of_light)**2)))
 """
 :laws:symbol::
@@ -64,7 +65,8 @@ law = Eq(position_in_proper_frame, (position_in_lab_frame - proper_frame_speed_i
 @validate_output(position_in_proper_frame)
 def calculate_coordinate_second_frame(coordinate_first_frame_: Quantity, velocity_: Quantity,
     time_first_frame_: Quantity) -> Quantity:
-    result_coordinate_first_frame_second_frame_expr = solve(law, position_in_proper_frame,
+    result_coordinate_first_frame_second_frame_expr = solve(law,
+        position_in_proper_frame,
         dict=True)[0][position_in_proper_frame]
     result_expr = result_coordinate_first_frame_second_frame_expr.subs({
         position_in_lab_frame: coordinate_first_frame_,

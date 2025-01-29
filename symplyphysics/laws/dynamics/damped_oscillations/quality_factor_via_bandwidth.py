@@ -36,7 +36,9 @@ resonant_frequency = clone_as_symbol(symbols.temporal_frequency, subscript="\\te
 Oscillator's resonant :symbols:`temporal_frequency`.
 """
 
-resonance_width = clone_as_symbol(symbols.temporal_frequency, display_symbol="Delta(f)", display_latex="\\Delta f")
+resonance_width = clone_as_symbol(symbols.temporal_frequency,
+    display_symbol="Delta(f)",
+    display_latex="\\Delta f")
 """
 Resonance width, or full width at half maximum, of the peak in the graph of the
 dissipated power as a function of driving frequency, i.e. the difference between the

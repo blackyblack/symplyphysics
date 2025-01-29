@@ -50,8 +50,7 @@ law = Eq(maximum_angle, atan((first_cosmic_speed / rocket_speed)**2))
 """
 
 
-@validate_input(first_cosmic_velocity_planet_=first_cosmic_speed,
-    rocket_speed_=rocket_speed)
+@validate_input(first_cosmic_velocity_planet_=first_cosmic_speed, rocket_speed_=rocket_speed)
 @validate_output(maximum_angle)
 def calculate_maximum_angle(first_cosmic_velocity_planet_: Quantity,
     rocket_speed_: Quantity) -> Quantity:

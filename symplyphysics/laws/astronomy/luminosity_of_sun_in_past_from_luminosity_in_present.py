@@ -38,7 +38,9 @@ time = symbols.time
 :symbols:`time` between the past even and today.
 """
 
-one_billion_years = Quantity(1e9 * units.common_year, display_symbol="1 Gyr", display_latex="1 \\, \\text{Gyr}")
+one_billion_years = Quantity(1e9 * units.common_year,
+    display_symbol="1 Gyr",
+    display_latex="1 \\, \\text{Gyr}")
 """
 A quantity equal to one billion years.
 """
