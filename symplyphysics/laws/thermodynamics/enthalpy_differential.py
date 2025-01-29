@@ -50,7 +50,7 @@ temperature = symbols.temperature
 :symbols:`temperature` of the system.
 """
 
-entropy_change = symbols.entropy
+entropy_change = clone_as_symbol(symbols.entropy, display_symbol="dS", display_latex="dS")
 """
 Infinitesimal change in :symbols:`entropy` of the system.
 """

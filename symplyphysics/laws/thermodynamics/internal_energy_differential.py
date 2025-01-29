@@ -90,14 +90,14 @@ law = Eq(
 # Derive from the first and second laws of thermodynamics
 # TODO: refactor proof to take account of changes in the number of particles
 
-_heat_supplied_to_system = solve(second_law.law, second_law.heat)[0].subs({
+_heat_supplied_to_system = solve(second_law.law, second_law.heat_supplied_to_system)[0].subs({
     second_law.entropy_change: entropy_change,
     second_law.common_temperature: temperature,
 })
 
 _work_done_by_system = work_law.law.rhs.subs({
     work_law.pressure: pressure,
-    work_law.infinitesimal_volume_change: volume_change,
+    work_law.volume_change: volume_change,
 })
 
 _internal_energy_change = first_law.law.rhs.subs({

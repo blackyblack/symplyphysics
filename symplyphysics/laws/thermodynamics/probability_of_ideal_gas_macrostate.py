@@ -38,11 +38,9 @@ of the macrostate.
 from typing import Sequence
 from sympy import Eq, Idx, factorial
 from symplyphysics import (
-    dimensionless,
     convert_to_float,
     validate_output,
     ProductIndexed,
-    SymbolIndexedNew,
     global_index,
     assert_equal,
     symbols,
@@ -67,9 +65,9 @@ particle_in_cell_probability = clone_as_indexed(symbols.probability)
 :symbols:`probability` of finding at least one particle in cell :math:`i`.
 """
 
-particle_count_in_cell = SymbolIndexedNew("N", dimension=dimensionless)
+particle_count_in_cell = clone_as_indexed(symbols.particle_count)
 """
-Number of particles in cell :math:`i`.
+:symbols:`particle_count` of cell :math:`i`.
 """
 
 # TODO: Create law for probability of microstate and move the product there

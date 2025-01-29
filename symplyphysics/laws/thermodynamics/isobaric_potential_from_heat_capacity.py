@@ -9,10 +9,15 @@ transformations. Thermal effect of reaction is change of enthalpy of the system.
 standard state is the state at a temperature of :math:`298 \\, \\text{K}` and a total
 pressure of :math:`1 \\, \\text{atm}`, as well as at a fixed composition of the system.
 
+**Notation:**
+
+#. :quantity_notation:`standard_laboratory_temperature`.
+
 **Conditions:**
 
 #. We neglect the temperature dependence of the heat capacities.
-#. The process is isobaric-isothermal.
+#. Pressure is held constant during the process.
+#. Temperature is help constant during the process.
 
 ..
     TODO: find link
@@ -30,17 +35,17 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-standard_molar_gibbs_energy_change = SymbolNew("Delta(G)", units.energy / units.amount_of_substance, display_latex="\\Delta G")
+standard_molar_gibbs_energy_change = SymbolNew("Delta(G_m)", units.energy / units.amount_of_substance, display_latex="\\Delta G_\\text{m}")
 """
 Standard change of :symbols:`gibbs_energy` per unit :symbols:`amount_of_substance`.
 """
 
-standard_molar_enthalpy_change = SymbolNew("Delta(H)", units.energy / units.amount_of_substance, display_latex="\\Delta H")
+standard_molar_enthalpy_change = SymbolNew("Delta(H_m)", units.energy / units.amount_of_substance, display_latex="\\Delta H_\\text{m}")
 """
 Standard change of :symbols:`enthalpy` per unit :symbols:`amount_of_substance`.
 """
 
-standard_molar_entropy_change = SymbolNew("Delta(S)", units.energy / units.amount_of_substance / units.temperature, display_latex="\\Delta S")
+standard_molar_entropy_change = SymbolNew("Delta(S_m)", units.energy / units.amount_of_substance / units.temperature, display_latex="\\Delta S_\\text{m}")
 """
 Standard change of :symbols:`entropy` per unit :symbols:`amount_of_substance`.
 """

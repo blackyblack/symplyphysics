@@ -36,7 +36,7 @@ entropy_change = clone_as_symbol(symbols.entropy, display_symbol="dS", display_l
 Infinitesimal change in :symbols:`entropy` of system :math:`B`.
 """
 
-heat = clone_as_symbol(symbols.heat, display_symbol="delta(Q)", display_latex="\\delta Q")
+heat_supplied_to_system = clone_as_symbol(symbols.heat, display_symbol="delta(Q)", display_latex="\\delta Q")
 """
 Infinitesimal amount of :symbols:`heat` transferred to system :math:`B`.
 """
@@ -46,7 +46,7 @@ common_temperature = symbols.temperature
 Common :symbols:`temperature` of systems :math:`A` and :math:`B`.
 """
 
-law = Eq(entropy_change, heat / common_temperature)
+law = Eq(entropy_change, heat_supplied_to_system / common_temperature)
 """
 :laws:symbol::
 
@@ -55,7 +55,7 @@ law = Eq(entropy_change, heat / common_temperature)
 
 
 @validate_input(
-    infinitesimal_transfer_of_heat_=heat,
+    infinitesimal_transfer_of_heat_=heat_supplied_to_system,
     common_temperature_=common_temperature,
 )
 @validate_output(entropy_change)
@@ -64,7 +64,7 @@ def calculate_infinitesimal_entropy_change(
     common_temperature_: Quantity,
 ) -> Quantity:
     result = law.rhs.subs({
-        heat: infinitesimal_transfer_of_heat_,
+        heat_supplied_to_system: infinitesimal_transfer_of_heat_,
         common_temperature: common_temperature_,
     })
     return Quantity(result)

@@ -36,17 +36,17 @@ from symplyphysics import (
     validate_output,
 )
 
-molar_gibbs_energy_change = SymbolNew("Delta(G)", units.energy / units.amount_of_substance, display_latex="\\Delta G")
+molar_gibbs_energy_change = SymbolNew("Delta(G_m)", units.energy / units.amount_of_substance, display_latex="\\Delta G_\\text{m}")
 """
 :symbols:`gibbs_energy` change, or isobaric potential, per unit :symbols:`amount_of_substance`.
 """
 
-molar_enthalpy_change = SymbolNew("Delta(H)", units.energy / units.amount_of_substance, display_latex="\\Delta H")
+molar_enthalpy_change = SymbolNew("Delta(H_m)", units.energy / units.amount_of_substance, display_latex="\\Delta H_\\text{m}")
 """
 :symbols:`enthalpy` change, or thermal effect, per unit :symbols:`amount_of_substance`.
 """
 
-molar_entropy = SymbolNew("S", units.energy / units.amount_of_substance / units.temperature)
+molar_entropy = SymbolNew("S_m", units.energy / units.amount_of_substance / units.temperature, display_latex="S_\\text{m}")
 """
 :symbols:`entropy` per unit :symbols:`amount_of_substance`.
 """

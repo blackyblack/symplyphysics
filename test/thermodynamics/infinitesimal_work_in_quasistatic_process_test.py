@@ -24,21 +24,21 @@ def test_args_fixture() -> Args:
 
 
 def test_law(test_args: Args) -> None:
-    result = work_law.calculate_infinitesimal_work_done(test_args.p, test_args.dv)
+    result = work_law.calculate_work_done_by_system(test_args.p, test_args.dv)
     assert_equal(result, 1 * prefixes.nano * units.joule)
 
 
 def test_bad_pressure(test_args: Args) -> None:
     pb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        work_law.calculate_infinitesimal_work_done(pb, test_args.dv)
+        work_law.calculate_work_done_by_system(pb, test_args.dv)
     with raises(TypeError):
-        work_law.calculate_infinitesimal_work_done(100, test_args.dv)
+        work_law.calculate_work_done_by_system(100, test_args.dv)
 
 
 def test_bad_volume(test_args: Args) -> None:
     vb = Quantity(1.0 * units.coulomb)
     with raises(errors.UnitsError):
-        work_law.calculate_infinitesimal_work_done(test_args.p, vb)
+        work_law.calculate_work_done_by_system(test_args.p, vb)
     with raises(TypeError):
-        work_law.calculate_infinitesimal_work_done(test_args.p, 100)
+        work_law.calculate_work_done_by_system(test_args.p, 100)

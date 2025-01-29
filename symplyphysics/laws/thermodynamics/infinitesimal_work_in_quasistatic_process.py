@@ -26,7 +26,7 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-infinitesimal_work_done = clone_as_symbol(symbols.work, display_symbol="delta(W)", display_latex="\\delta W")
+work_done_by_system = clone_as_symbol(symbols.work, display_symbol="delta(W)", display_latex="\\delta W")
 """
 Infinitesimal increment of :symbols:`work` done *by* the system.
 """
@@ -36,12 +36,12 @@ pressure = symbols.pressure
 :symbols:`pressure` inside the system.
 """
 
-infinitesimal_volume_change = clone_as_symbol(symbols.volume, display_symbol="dV", display_latex="dV")
+volume_change = clone_as_symbol(symbols.volume, display_symbol="dV", display_latex="dV")
 """
 Infinitesimal increment of :symbols:`volume` of the system.
 """
 
-law = Eq(infinitesimal_work_done, pressure * infinitesimal_volume_change)
+law = Eq(work_done_by_system, pressure * volume_change)
 """
 :laws:symbol::
 
@@ -51,15 +51,15 @@ law = Eq(infinitesimal_work_done, pressure * infinitesimal_volume_change)
 
 @validate_input(
     pressure_inside_system_=pressure,
-    infinitesimal_volume_change_=infinitesimal_volume_change,
+    infinitesimal_volume_change_=volume_change,
 )
-@validate_output(infinitesimal_work_done)
-def calculate_infinitesimal_work_done(
+@validate_output(work_done_by_system)
+def calculate_work_done_by_system(
     pressure_inside_system_: Quantity,
     infinitesimal_volume_change_: Quantity,
 ) -> Quantity:
     result = law.rhs.subs({
         pressure: pressure_inside_system_,
-        infinitesimal_volume_change: infinitesimal_volume_change_,
+        volume_change: infinitesimal_volume_change_,
     })
     return Quantity(result)

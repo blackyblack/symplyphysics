@@ -12,9 +12,7 @@ Critical pressure in a van der Waals fluid depends on the parameters :math:`a` a
 
 from sympy import Eq
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     clone_as_symbol,

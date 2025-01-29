@@ -12,6 +12,10 @@ to inverse molar volume or equivalently, to molar density.
 
 #. :quantity_notation:`molar_gas_constant`.
 
+**Notes:**
+
+#. Also see :ref:`Virial equation`.
+
 **Conditions:**
 
 #. The gas density is small enough within the context of perturbation theory.

@@ -36,10 +36,7 @@ time = symbols.time
 
 temperature = clone_as_function(symbols.temperature, [position, time])
 """
-Temperature as a function of position and time.
-
-Symbol:
-    :code:`T(x, t)`
+Temperature as a function of :attr:`~position` and :attr:`~time`.
 """
 
 # TODO: Create law of thermal diffusivity via thermal conductivity

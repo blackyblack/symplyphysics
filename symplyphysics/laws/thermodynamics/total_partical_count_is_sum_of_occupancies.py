@@ -21,17 +21,17 @@ from typing import Sequence
 from sympy import Eq, Idx
 from symplyphysics import (
     dimensionless,
-    SymbolNew,
     validate_input,
     validate_output,
     global_index,
     SymbolIndexedNew,
     SumIndexed,
+    symbols,
 )
 
-total_particle_count = SymbolNew("N", dimensionless)
+total_particle_count = symbols.particle_count
 """
-Total number of particles in the system.
+Total :symbols:`particle_count` of the system.
 """
 
 occupancy = SymbolIndexedNew("N", dimension=dimensionless)

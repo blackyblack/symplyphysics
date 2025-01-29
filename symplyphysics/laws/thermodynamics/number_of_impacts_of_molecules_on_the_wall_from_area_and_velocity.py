@@ -69,7 +69,7 @@ law = Eq(impact_count, (number_density * area * velocity_projection * time) / 2)
     time_=time)
 @validate_output(impact_count)
 def calculate_number_of_impacts(molecules_concentration_: Quantity, area_: Quantity,
-    velocity_projection_: Quantity, time_: Quantity) -> int:
+    velocity_projection_: Quantity, time_: Quantity) -> float:
     result_expr = solve(law, impact_count, dict=True)[0][impact_count]
     result_number_of_impacts = result_expr.subs({
         number_density: molecules_concentration_,
@@ -77,4 +77,4 @@ def calculate_number_of_impacts(molecules_concentration_: Quantity, area_: Quant
         velocity_projection: velocity_projection_,
         time: time_
     })
-    return int(convert_to_float(result_number_of_impacts))
+    return convert_to_float(result_number_of_impacts)

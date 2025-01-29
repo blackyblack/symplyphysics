@@ -67,7 +67,7 @@ _distribution_first_derivative = _distribution.diff(speed_distribution.particle_
 _solutions = solve(_distribution_first_derivative, speed_distribution.particle_speed)
 
 # Asserting there is only one point of extremum
-assert len(_solutions) == 1, _solutions
+assert len(_solutions) == 1
 _most_probable_speed_derived = _solutions[0]
 
 assert expr_equals(_most_probable_speed_derived, law.rhs)

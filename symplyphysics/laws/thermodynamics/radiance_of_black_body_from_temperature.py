@@ -6,6 +6,10 @@ The Stefan—Boltzmann law, also known as Stefan's law, states that the total en
 unit surface area of a black body per unit time is directly proportional to the fourth
 power of the black body's thermodynamic temperature.
 
+**Notation:**
+
+#. :quantity_notation:`stefan_boltzmann_constant`.
+
 **Conditions:**
 
 #. The body is completely black, i.e. it absorbs all energy.

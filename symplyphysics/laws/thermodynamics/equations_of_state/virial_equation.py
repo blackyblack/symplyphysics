@@ -26,7 +26,7 @@ Also called the *virial expansion*, the *virial equation of state* expresses the
 #. `Wikipedia <https://en.wikipedia.org/wiki/Virial_expansion>`__.
 """
 
-from sympy import Eq
+from sympy import Eq, O
 from symplyphysics import (
     units,
     Quantity,
@@ -56,7 +56,7 @@ third_virial_coefficient = SymbolNew("C_3",
 Third virial coefficient corresponding to 3-body interaction between particles.
 """
 
-molar_density = SymbolNew("rho", units.amount_of_substance / units.volume, positive=True, display_latex="\\rho")
+molar_density = SymbolNew("rho_m", units.amount_of_substance / units.volume, positive=True, display_latex="\\rho_\\text{m}")
 """
 Molar density of the system, or :symbols:`amount_of_substance` per unit :symbols:`volume`.
 See :doc:`laws.quantities.quantity_is_volumetric_density_times_volume`.
@@ -64,11 +64,17 @@ See :doc:`laws.quantities.quantity_is_volumetric_density_times_volume`.
 
 law = Eq(
     compressibility_factor,
-    1 + second_virial_coefficient * molar_density + third_virial_coefficient * molar_density**2)
+    1 + second_virial_coefficient * molar_density + third_virial_coefficient * molar_density**2 + O(molar_density**3))
 """
+.. only:: comment
+
+    Big O should be evaluated by SymPy
+
 :laws:symbol::
 
 :laws:latex::
+
+:laws:sympy-eval::
 """
 
 
@@ -83,7 +89,7 @@ def calculate_compressibility_factor(
     third_virial_coefficient_: Quantity,
     molar_density_: Quantity,
 ) -> float:
-    result = law.rhs.subs({
+    result = law.rhs.removeO().subs({
         second_virial_coefficient: second_virial_coefficient_,
         third_virial_coefficient: third_virial_coefficient_,
         molar_density: molar_density_,

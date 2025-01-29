@@ -53,7 +53,7 @@ molar_mass = symbols.molar_mass
 molar_isochoric_heat_capacity = clone_as_symbol(
     symbols.molar_heat_capacity,
     display_symbol="c_Vm",
-    display_latex="c_{V, m}",
+    display_latex="c_{V, \\text{m}}",
 )
 """
 :symbols:`molar_heat_capacity` at constant volume.

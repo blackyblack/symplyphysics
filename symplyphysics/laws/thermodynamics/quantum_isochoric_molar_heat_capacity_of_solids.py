@@ -33,7 +33,7 @@ from symplyphysics import (
 isochoric_molar_heat_capacity = clone_as_symbol(
     symbols.molar_heat_capacity,
     display_symbol="c_Vm",
-    display_latex="c_{V, m}",
+    display_latex="c_{V, \\text{m}}",
 )
 """
 :symbols:`molar_heat_capacity` at constant :symbols:`volume`.
