@@ -55,10 +55,9 @@ Constant equal to :math:`95.863 \\, \\text{V}`.
 """
 
 law = Eq(
-    distance_of_convergence,
-    -1 * distance_constant * (first_atomic_number**0.0387 + second_atomic_number**0.0387) 
-    * log(discharge_voltage / (voltage_constant * (first_atomic_number * second_atomic_number)**1.4883))
-)
+    distance_of_convergence, -1 * distance_constant *
+    (first_atomic_number**0.0387 + second_atomic_number**0.0387) * log(discharge_voltage /
+    (voltage_constant * (first_atomic_number * second_atomic_number)**1.4883)))
 """
 :laws:symbol::
 
@@ -72,8 +71,7 @@ law = Eq(
 @validate_output(distance_of_convergence)
 def calculate_distance_of_convergence_of_particles(discharge_voltage_: Quantity,
     atomic_number_of_first_atom_: int, second_atomic_number_: int) -> Quantity:
-    result_expr = solve(law, distance_of_convergence,
-        dict=True)[0][distance_of_convergence]
+    result_expr = solve(law, distance_of_convergence, dict=True)[0][distance_of_convergence]
     result_expr = result_expr.subs({
         discharge_voltage: discharge_voltage_,
         first_atomic_number: atomic_number_of_first_atom_,

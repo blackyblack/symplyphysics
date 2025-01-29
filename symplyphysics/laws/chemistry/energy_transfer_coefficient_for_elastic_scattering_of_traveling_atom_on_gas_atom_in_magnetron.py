@@ -29,8 +29,7 @@ gas_atom_mass = clone_as_symbol(symbols.mass, subscript="2")
 :symbols:`mass` of gas atom.
 """
 
-law = Eq(
-    energy_transfer_coefficient,
+law = Eq(energy_transfer_coefficient,
     2 * traveling_atom_mass * gas_atom_mass / (traveling_atom_mass + gas_atom_mass)**2)
 """
 :laws:symbol::

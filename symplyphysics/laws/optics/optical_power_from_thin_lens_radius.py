@@ -15,8 +15,7 @@ surfaces and the refractive indices of the lens material and the medium.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (Quantity, validate_input,
-    validate_output, symbols, clone_as_symbol)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols, clone_as_symbol)
 
 optical_power = symbols.optical_power
 """

@@ -157,7 +157,9 @@ It is usually defined as the volume of the system divided by its surface.
 #. `Wikipedia <https://en.wikipedia.org/wiki/Characteristic_length>`__.
 """
 
-molar_volume = SymbolNew("v_m", units.volume / units.amount_of_substance, display_latex="v_\\text{m}")
+molar_volume = SymbolNew("v_m",
+    units.volume / units.amount_of_substance,
+    display_latex="v_\\text{m}")
 """
 **Molar volume** is defined as :symbols:`volume` per unit :symbols:`amount_of_substance`.
 """

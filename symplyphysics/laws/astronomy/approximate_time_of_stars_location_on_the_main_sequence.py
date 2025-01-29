@@ -48,8 +48,10 @@ sun_lifetime = Quantity(1e10 * units.common_year, display_symbol="t_Sun", displa
 Lifetime (:symbols:`time`) on time main sequence of the Sun.
 """
 
-law = Eq(lifetime,
-    sun_lifetime * (star_mass / quantities.solar_mass) * (quantities.sun_luminosity / star_luminosity))
+law = Eq(
+    lifetime,
+    sun_lifetime * (star_mass / quantities.solar_mass) *
+    (quantities.sun_luminosity / star_luminosity))
 """
 :laws:symbol::
 

@@ -38,7 +38,8 @@ mirror_mass_expr = moving_mass_law.law.rhs.subs({
     moving_mass_law.speed: mirror_speed_expr_,
 })
 
-moving_mirror_energy = energy_is_mass.law.rhs.subs(energy_is_mass.relativistic_mass, mirror_mass_expr)
+moving_mirror_energy = energy_is_mass.law.rhs.subs(energy_is_mass.relativistic_mass,
+    mirror_mass_expr)
 
 total_energy_after = reflected_wave_energy + moving_mirror_energy
 
@@ -131,8 +132,8 @@ reduced_reflected_wave_energy_expr = evaluate_expression(reflected_wave_energy_e
 print("Formula of reduced energy of reflected wave:\n")
 print(print_expression(reduced_reflected_wave_energy_expr), end="\n\n\n")
 
-reduced_reflected_wave_energy_upper_limit = evaluate_expression(reduced_reflected_wave_energy_expr.limit(
-    reduced_incident_wave_energy, oo))
+reduced_reflected_wave_energy_upper_limit = evaluate_expression(
+    reduced_reflected_wave_energy_expr.limit(reduced_incident_wave_energy, oo))
 
 print("Upper limit of reduced energy of reflected wave:")
 print(print_expression(reduced_reflected_wave_energy_upper_limit))

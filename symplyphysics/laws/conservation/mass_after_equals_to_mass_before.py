@@ -54,11 +54,9 @@ law = Eq(mass(final_time), mass(initial_time))
 _dsolved = dsolve(mass_is_constant.law, mass_is_constant.mass(mass_is_constant.time))
 
 _mass_before_eq = _dsolved.subs(mass_is_constant.time, initial_time)
-_mass_before_eq = _mass_before_eq.subs(mass_is_constant.mass(initial_time),
-    mass(initial_time))
+_mass_before_eq = _mass_before_eq.subs(mass_is_constant.mass(initial_time), mass(initial_time))
 _mass_after_eq = _dsolved.subs(mass_is_constant.time, final_time)
-_mass_after_eq = _mass_after_eq.subs(mass_is_constant.mass(final_time),
-    mass(final_time))
+_mass_after_eq = _mass_after_eq.subs(mass_is_constant.mass(final_time), mass(final_time))
 
 ## Show that when mass is constant, mass_before equals to mass_after
 _mass_after_solved = solve([_mass_after_eq, _mass_before_eq], (mass(final_time), "C1"),

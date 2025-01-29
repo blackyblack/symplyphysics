@@ -24,8 +24,7 @@ the distance to the picture.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (Quantity, validate_input,
-    validate_output, symbols, clone_as_symbol)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols, clone_as_symbol)
 
 travel_difference = symbols.optical_distance
 """
@@ -42,7 +41,9 @@ distance_between_slits = symbols.euclidean_distance
 :symbols:`euclidean_distance` between slits.
 """
 
-distance_to_picture = clone_as_symbol(symbols.euclidean_distance, display_symbol="l", display_latex="l")
+distance_to_picture = clone_as_symbol(symbols.euclidean_distance,
+    display_symbol="l",
+    display_latex="l")
 """
 :symbols:`euclidean_distance` from slits to picture.
 """

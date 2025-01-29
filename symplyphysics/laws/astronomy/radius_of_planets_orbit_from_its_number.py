@@ -14,7 +14,7 @@ Solar System and the Sun (the average radii of the orbits).
 #. `Wikipedia, third formula <https://en.wikipedia.org/wiki/Titius%E2%80%93Bode_law#Original_formulation>`__.
 """
 
-from sympy import Eq, solve, S
+from sympy import Eq, solve
 from sympy.core.numbers import NegativeInfinity
 from symplyphysics import (
     units,

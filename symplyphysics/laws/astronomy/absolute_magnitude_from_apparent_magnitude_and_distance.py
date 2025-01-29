@@ -34,7 +34,8 @@ distance = symbols.euclidean_distance
 :symbols:`euclidean_distance` to the object.
 """
 
-distance_constant = Quantity(2.063e+6 * units.astronomical_unit,
+distance_constant = Quantity(
+    2.063e+6 * units.astronomical_unit,
     display_symbol="d_0",
     display_latex="d_0",
 )

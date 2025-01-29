@@ -39,8 +39,7 @@ law = Eq(drift_velocity, mobility * electric_field_strength)
 """
 
 
-@validate_input(charge_carriers_mobility_=mobility,
-    electric_intensity_=electric_field_strength)
+@validate_input(charge_carriers_mobility_=mobility, electric_intensity_=electric_field_strength)
 @validate_output(drift_velocity)
 def calculate_velocity(charge_carriers_mobility_: Quantity,
     electric_intensity_: Quantity) -> Quantity:

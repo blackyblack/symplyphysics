@@ -19,15 +19,8 @@ Lotz-Drewin approximation for the ionization cross section is considered.
 """
 
 from sympy import Eq, solve, pi, log
-from symplyphysics import (
-    Quantity,
-    SymbolNew,
-    validate_input,
-    validate_output,
-    dimensionless,
-    symbols,
-    clone_as_symbol
-)
+from symplyphysics import (Quantity, SymbolNew, validate_input, validate_output, dimensionless,
+    symbols, clone_as_symbol)
 from symplyphysics.quantities import bohr_radius, hydrogen_ionization_energy
 
 cross_section = symbols.cross_section
@@ -45,12 +38,12 @@ electron_energy = symbols.energy
 :symbols:`energy` of ionizing electrons.
 """
 
-first_coefficient = SymbolNew("first_coefficient", dimensionless)
+first_coefficient = SymbolNew("A", dimensionless)
 """
 A coefficient used in the calculation.
 """
 
-second_coefficient = SymbolNew("second_coefficient", dimensionless)
+second_coefficient = SymbolNew("B", dimensionless)
 """
 A coefficient used in the calculation.
 """
@@ -60,16 +53,13 @@ electron_count = symbols.nonnegative_number
 A :symbols:`nonnegative_number` of equivalent electrons on the outer shell of the ionized atom.
 """
 
-reduced_energy = electron_energy / ionization_energy
-"""
-Used to simplify the expression for the law.
-"""
+_reduced_energy = electron_energy / ionization_energy
 
 law = Eq(
     cross_section,
-    (2.66 * pi * bohr_radius**2 * electron_count * hydrogen_ionization_energy**2 / ionization_energy**2)
-    * (first_coefficient * (reduced_energy - 1) / reduced_energy**2)
-    * log(1.25 * second_coefficient * reduced_energy),
+    (2.66 * pi * bohr_radius**2 * electron_count * hydrogen_ionization_energy**2 /
+    ionization_energy**2) * (first_coefficient * (_reduced_energy - 1) / _reduced_energy**2) *
+    log(1.25 * second_coefficient * _reduced_energy),
 )
 """
 :laws:symbol::
@@ -88,18 +78,12 @@ def calculate_cross_sectional_area_of_ionization(
         ionization_energy_: Quantity, energy_of_electron_: Quantity,
         first_calculation_coefficient_: float, second_calculation_coefficient_: float,
         number_of_equivalent_electrons_on_outer_orbit_: int) -> Quantity:
-    result_expr = solve(law, cross_section,
-        dict=True)[0][cross_section]
+    result_expr = solve(law, cross_section, dict=True)[0][cross_section]
     result_expr = result_expr.subs({
-        ionization_energy:
-            ionization_energy_,
-        electron_energy:
-            energy_of_electron_,
-        first_coefficient:
-            first_calculation_coefficient_,
-        second_coefficient:
-            second_calculation_coefficient_,
-        electron_count:
-            number_of_equivalent_electrons_on_outer_orbit_,
+        ionization_energy: ionization_energy_,
+        electron_energy: energy_of_electron_,
+        first_coefficient: first_calculation_coefficient_,
+        second_coefficient: second_calculation_coefficient_,
+        electron_count: number_of_equivalent_electrons_on_outer_orbit_,
     })
     return Quantity(result_expr)

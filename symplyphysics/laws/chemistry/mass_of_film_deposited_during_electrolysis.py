@@ -52,7 +52,8 @@ time = symbols.time
 
 law = Eq(
     film_mass,
-    current * molar_mass * current_output * time / (valence * elementary_charge * avogadro_constant),
+    current * molar_mass * current_output * time /
+    (valence * elementary_charge * avogadro_constant),
 )
 """
 :laws:symbol::

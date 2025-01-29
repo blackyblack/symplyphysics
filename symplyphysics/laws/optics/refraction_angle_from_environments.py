@@ -20,8 +20,8 @@ The law, also known as **Snell's law**, states that, for a given pair of media, 
 """
 
 from sympy import (Eq, solve, diff, sin, pi, sqrt)
-from symplyphysics import (units, Quantity, angle_type,
-    validate_input, validate_output, symbols, clone_as_symbol)
+from symplyphysics import (units, Quantity, angle_type, validate_input, validate_output, symbols,
+    clone_as_symbol)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import refractive_index_is_wave_speeds_ratio as refractive_index_definition
 from symplyphysics.laws.kinematics import position_via_constant_speed_and_time as distance_law

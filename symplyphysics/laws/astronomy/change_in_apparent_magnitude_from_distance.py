@@ -35,12 +35,16 @@ second_apparent_magnitude = clone_as_symbol(symbols.apparent_magnitude, subscrip
 :symbols:`apparent_magnitude` of the second object.
 """
 
-first_irradiance = clone_as_symbol(symbols.irradiance, display_symbol="E_e1", display_latex="E_{\\text{e}1}")
+first_irradiance = clone_as_symbol(symbols.irradiance,
+    display_symbol="E_e1",
+    display_latex="E_{\\text{e}1}")
 """
 Observed :symbols:`irradiance` of the first object.
 """
 
-second_irradiance = clone_as_symbol(symbols.irradiance, display_symbol="E_e2", display_latex="E_{\\text{e}2}")
+second_irradiance = clone_as_symbol(symbols.irradiance,
+    display_symbol="E_e2",
+    display_latex="E_{\\text{e}2}")
 """
 Observed :symbols:`irradiance` of the second object.
 """

@@ -30,7 +30,9 @@ speed = symbols.speed
 Final :symbols:`speed` of the rocket
 """
 
-effective_exhaust_speed = clone_as_symbol(symbols.speed, display_symbol="v_e", display_latex="v_\\text{e}")
+effective_exhaust_speed = clone_as_symbol(symbols.speed,
+    display_symbol="v_e",
+    display_latex="v_\\text{e}")
 """
 Effective exhaust :symbols:`speed` of the rocket engine.
 """

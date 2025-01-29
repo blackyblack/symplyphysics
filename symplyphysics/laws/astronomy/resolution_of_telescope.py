@@ -30,7 +30,10 @@ lens_diameter = symbols.diameter
 :symbols:`diameter` of the lens.
 """
 
-constant_rad = Quantity(1.22 * units.radian)
+constant_rad = Quantity(1.22 * units.radian, display_symbol="A")
+"""
+Constant factor derived from a calculation of the position of the first dark circular ring surrounding the central Airy disc of the diffraction pattern. A :math:`\\approx` 1.22 radian.
+"""
 
 law = Eq(resolution, constant_rad * (wavelength / lens_diameter))
 """

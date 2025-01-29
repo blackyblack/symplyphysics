@@ -21,8 +21,8 @@ its speed in the proper frame.
 """
 
 from sympy import Eq, solve
-from symplyphysics import (Quantity, validate_input,
-    validate_output, symbols, quantities, clone_as_symbol)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols, quantities,
+    clone_as_symbol)
 
 body_speed_in_lab_frame = clone_as_symbol(symbols.speed, subscript="OL")
 """
@@ -39,7 +39,8 @@ proper_frame_speed_in_lab_frame = clone_as_symbol(symbols.speed, subscript="PL")
 :symbols:`speed` of the proper frame relative to the lab frame.
 """
 
-law = Eq(body_speed_in_lab_frame, (body_speed_in_proper_frame + proper_frame_speed_in_lab_frame) / (1 +
+law = Eq(body_speed_in_lab_frame,
+    (body_speed_in_proper_frame + proper_frame_speed_in_lab_frame) / (1 +
     (body_speed_in_proper_frame * proper_frame_speed_in_lab_frame) / quantities.speed_of_light**2))
 """
 :laws:symbol::

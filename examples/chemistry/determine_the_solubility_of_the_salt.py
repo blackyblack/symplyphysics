@@ -36,10 +36,8 @@ mass_of_salt_and_sediment = mass_of_two_components.subs({
     mixture_mass_law.component_mass[2]: mass_of_sediment,
 }).rhs
 conservation_salt_mass_equation = conservation_mass_law.law.subs({
-    conservation_mass_law.mass(conservation_mass_law.initial_time):
-        mass_of_salt_before_value,
-    conservation_mass_law.mass(conservation_mass_law.final_time):
-        mass_of_salt_and_sediment
+    conservation_mass_law.mass(conservation_mass_law.initial_time): mass_of_salt_before_value,
+    conservation_mass_law.mass(conservation_mass_law.final_time): mass_of_salt_and_sediment
 })
 mass_of_salt_after_value = solve(conservation_salt_mass_equation, mass_of_salt_after,
     dict=True)[0][mass_of_salt_after]

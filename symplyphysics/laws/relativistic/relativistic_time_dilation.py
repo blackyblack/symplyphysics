@@ -17,8 +17,7 @@ covers the special relativistic time dilation due to acceleration.
 """
 
 from sympy import Eq, solve, sqrt
-from symplyphysics import (Quantity, validate_input,
-    validate_output, symbols, quantities)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols, quantities)
 
 proper_time = symbols.proper_time
 """
@@ -47,8 +46,5 @@ law = Eq(relativistic_time, proper_time / sqrt(1 - speed**2 / quantities.speed_o
 @validate_output(relativistic_time)
 def calculate_relativistic_time(moving_observer_time_: Quantity, velocity_: Quantity) -> Quantity:
     result_expr = solve(law, relativistic_time, dict=True)[0][relativistic_time]
-    time_applied = result_expr.subs({
-        proper_time: moving_observer_time_,
-        speed: velocity_
-    })
+    time_applied = result_expr.subs({proper_time: moving_observer_time_, speed: velocity_})
     return Quantity(time_applied)

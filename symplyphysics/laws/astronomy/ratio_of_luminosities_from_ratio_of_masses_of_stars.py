@@ -15,10 +15,7 @@ luminosity is approximately proportional to the fourth power of mass.
 #. `Wikipedia <https://en.wikipedia.org/wiki/Mass%E2%80%93luminosity_relation>`__.
 """
 
-from sympy import (
-    Eq,
-    solve
-)
+from sympy import (Eq, solve)
 from symplyphysics import (
     clone_as_symbol,
     symbols,

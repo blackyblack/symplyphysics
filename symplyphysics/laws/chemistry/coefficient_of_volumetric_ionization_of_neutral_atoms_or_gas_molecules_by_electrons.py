@@ -50,8 +50,7 @@ electric_field_strength = symbols.electric_field_strength
 :symbols:`electric_field_strength`.
 """
 
-law = Eq(
-    ionization_coefficient,
+law = Eq(ionization_coefficient,
     first_constant * pressure * exp(-second_constant * pressure / electric_field_strength))
 """
 :laws:symbol::
@@ -65,11 +64,9 @@ law = Eq(
     pressure_=pressure,
     electric_intensity_=electric_field_strength)
 @validate_output(ionization_coefficient)
-def calculate_ionization_coefficient(first_constant_of_gas_: Quantity,
-    second_constant_: Quantity, pressure_: Quantity,
-    electric_intensity_: Quantity) -> Quantity:
-    result_expr = solve(law, ionization_coefficient,
-        dict=True)[0][ionization_coefficient]
+def calculate_ionization_coefficient(first_constant_of_gas_: Quantity, second_constant_: Quantity,
+    pressure_: Quantity, electric_intensity_: Quantity) -> Quantity:
+    result_expr = solve(law, ionization_coefficient, dict=True)[0][ionization_coefficient]
     result_expr = result_expr.subs({
         first_constant: first_constant_of_gas_,
         second_constant: second_constant_,

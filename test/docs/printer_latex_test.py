@@ -212,3 +212,9 @@ def test_minus_imaginary(test_args: Args) -> None:
     with evaluate(False):
         expr = exp(-1 * (I / test_args.boltzmann_constant))
     assert latex_str(expr) == "\\exp{\\left(- \\frac{i}{k_\\text{B}} \\right)}"
+
+
+def test_log_squared(test_args: Args) -> None:
+    with evaluate(False):
+        expr = log(test_args.boltzmann_constant)**2
+    assert latex_str(expr) == "\\log \\left( k_\\text{B} \\right)^{2}"

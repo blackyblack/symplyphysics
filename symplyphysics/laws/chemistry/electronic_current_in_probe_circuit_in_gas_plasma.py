@@ -56,7 +56,9 @@ plasma_temperature = symbols.temperature
 Plasma :symbols:`temperature`.
 """
 
-floating_plasma_potential = clone_as_symbol(symbols.electric_potential, display_symbol="U_Ef", display_latex="U_\\mathbf{E}^\\text{f}")
+floating_plasma_potential = clone_as_symbol(symbols.electric_potential,
+    display_symbol="U_f",
+    display_latex="U_\\mathbf{f}")
 """
 Floating plasma :symbols:`electric_potential`.
 """
@@ -66,12 +68,10 @@ probe_potential = symbols.electric_potential
 :symbols:`electric_potential` at the location of the probe.
 """
 
-law = Eq(
-    probe_current,
-    (0.25 * probe_surface_area * elementary_charge * electron_concentration)
-    * sqrt(8 * boltzmann_constant * plasma_temperature / (pi * electron_rest_mass))
-    * exp(-elementary_charge * (floating_plasma_potential - probe_potential) / (boltzmann_constant * plasma_temperature))
-)
+law = Eq(probe_current, (0.25 * probe_surface_area * elementary_charge * electron_concentration) *
+    sqrt(8 * boltzmann_constant * plasma_temperature /
+    (pi * electron_rest_mass)) * exp(-elementary_charge *
+    (floating_plasma_potential - probe_potential) / (boltzmann_constant * plasma_temperature)))
 """
 :laws:symbol::
 

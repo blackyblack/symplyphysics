@@ -57,8 +57,7 @@ medium_refractive_index = symbols.relative_refractive_index
 :symbols:`relative_refractive_index` of the medium between the lens and the plate.
 """
 
-law = Eq(radius,
-    sqrt(ring_order * lens_radius_of_curvature * wavelength / medium_refractive_index))
+law = Eq(radius, sqrt(ring_order * lens_radius_of_curvature * wavelength / medium_refractive_index))
 """
 :laws:symbol::
 

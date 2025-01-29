@@ -49,7 +49,8 @@ temperature = symbols.temperature
 :symbols:`temperature`.
 """
 
-law = Eq(diffusion_coefficient,
+law = Eq(
+    diffusion_coefficient,
     maximum_diffusion_coefficient * exp(-energy / (quantities.boltzmann_constant * temperature)))
 """
 :laws:symbol::
@@ -58,7 +59,9 @@ law = Eq(diffusion_coefficient,
 """
 
 
-@validate_input(energy_=energy, diffusion_constant_=maximum_diffusion_coefficient, temperature_=temperature)
+@validate_input(energy_=energy,
+    diffusion_constant_=maximum_diffusion_coefficient,
+    temperature_=temperature)
 @validate_output(diffusion_coefficient)
 def calculate_diffusion_coefficient(energy_: Quantity, diffusion_constant_: Quantity,
     temperature_: Quantity) -> Quantity:

@@ -5,6 +5,10 @@ Resistance from temperature
 The resistance depends on the temperature. For different materials, the value of the
 temperature coefficient and resistance at zero degrees celsius may differ.
 
+**Notation:**
+
+#. :quantity_notation:`standard_conditions_temperature`.
+
 **Links:**
 
 #. `BYJU's, similar formula for resistivity <https://byjus.com/physics/resistivity-temperature-dependence/>`__.

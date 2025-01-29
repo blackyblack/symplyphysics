@@ -41,7 +41,9 @@ cross_section = symbols.cross_section
 :symbols:`cross_section` of interaction of particles.
 """
 
-ionization_energy = clone_as_symbol(symbols.energy, display_symbol="E_i", display_latex="E_\\text{i}")
+ionization_energy = clone_as_symbol(symbols.energy,
+    display_symbol="E_i",
+    display_latex="E_\\text{i}")
 """
 Ionization :symbols:`energy` of the particles.
 """
@@ -66,21 +68,12 @@ electric_field_strength = symbols.electric_field_strength
 :symbols:`electric_field_strength`.
 """
 
-law = Eq(
-    cross_section,
-    (pi * bohr_radius**2)
-    * (hydrogen_ionization_energy / ionization_energy)
-    * (
-        log(
-            sqrt(3 * boltzmann_constant * temperature / molecular_mass)
-            * sqrt(ionization_energy / hydrogen_ionization_energy)
-            * (
-                (cross_section * pressure * molecular_mass) 
-                / (2 * boltzmann_constant * temperature * elementary_charge * electric_field_strength)
-            )
-        )
-    )**2
-)
+law = Eq(cross_section,
+    (pi * bohr_radius**2) * (hydrogen_ionization_energy / ionization_energy) * log(
+    sqrt(3 * boltzmann_constant * temperature / molecular_mass) *
+    sqrt(ionization_energy / hydrogen_ionization_energy) *
+    ((cross_section * pressure * molecular_mass) /
+    (2 * boltzmann_constant * temperature * elementary_charge * electric_field_strength)))**2)
 """
 :laws:symbol::
 

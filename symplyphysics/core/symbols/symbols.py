@@ -267,6 +267,7 @@ def print_expression(expr: Expr | Equality | Sequence[Expr | Equality]) -> str:
 
 _text_pattern = re.compile(r"\\text\{([^}]+)\}")
 
+
 def _process_subscript_and_names(
     code_name: str,
     latex_name: str,
@@ -294,9 +295,8 @@ def clone_as_symbol(source: SymbolNew | SymbolIndexedNew,
     display_symbol = display_symbol or source.display_name
     display_latex = display_latex or source.display_latex
 
-    display_symbol, display_latex = _process_subscript_and_names(
-        display_symbol, display_latex, subscript
-    )
+    display_symbol, display_latex = _process_subscript_and_names(display_symbol, display_latex,
+        subscript)
 
     return SymbolNew(
         display_symbol,
@@ -318,9 +318,8 @@ def clone_as_function(
     display_symbol = display_symbol or source.display_name
     display_latex = display_latex or source.display_latex
 
-    display_symbol, display_latex = _process_subscript_and_names(
-        display_symbol, display_latex, subscript
-    )
+    display_symbol, display_latex = _process_subscript_and_names(display_symbol, display_latex,
+        subscript)
 
     return FunctionNew(
         display_symbol,
