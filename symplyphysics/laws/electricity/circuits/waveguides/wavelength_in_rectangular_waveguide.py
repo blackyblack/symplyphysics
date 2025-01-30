@@ -22,7 +22,7 @@ from symplyphysics import (
 
 waveguide_wavelength = clone_as_symbol(symbols.wavelength, subscript="\\text{w}")
 """
-Guide wavelength is defined as the distance between the two equal phase planes along the
+Guide :symbols:`wavelength` is defined as the distance between the two equal phase planes along the
 waveguide.
 """
 
