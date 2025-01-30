@@ -13,14 +13,11 @@ specific heat of solidification is equal by magnitude to that of fusion.
 """
 
 from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols, clone_as_symbol)
 
-latent_heat = Symbol("latent_heat", units.energy)
+latent_heat = symbols.heat
 """
-Latent heat of fusion or solidification.
-
-Symbol:
-    :code:`Q`
+Latent :symbols:`heat` of fusion or solidification.
 """
 
 mass = symbols.mass
@@ -28,24 +25,16 @@ mass = symbols.mass
 :symbols:`mass` of a melting or solidifying body.
 """
 
-specific_heat_of_fusion = Symbol("specific_heat_of_fusion", units.energy / units.mass)
-r"""
-Heat of fusion or solidification per unit mass.
-
-Symbol:
-    :code:`lambda`
-
-Latex:
-    :math:`\lambda`
+specific_heat_of_fusion = clone_as_symbol(symbols.specific_energy, display_symbol="epsilon_lambda", display_latex="\\varepsilon_\\lambda")
+"""
+Heat of fusion or solidification per unit mass. See :symbols:`specific_energy`.
 """
 
 law = Eq(latent_heat, specific_heat_of_fusion * mass)
-r"""
-:code:`Q = lambda * m`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        Q = \lambda m
+:laws:latex::
 """
 
 

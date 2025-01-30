@@ -115,7 +115,7 @@ _internal_energy_change_expr = internal_energy_law.law.rhs.subs({
 
 _work_change_expr = work_law.law.rhs.subs({
     work_law.pressure: _pressure,
-    work_law.infinitesimal_volume_change: _volume_change,
+    work_law.volume_change: _volume_change,
 })
 
 _first_law_eqn = first_law.law.subs({

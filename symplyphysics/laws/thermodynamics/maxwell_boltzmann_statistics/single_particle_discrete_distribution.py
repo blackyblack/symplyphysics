@@ -22,45 +22,29 @@ found in a given single-particle microstate.
 
 from sympy import Eq, exp, solve
 from symplyphysics import (
-    units,
     dimensionless,
     Quantity,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
     symbols,
     quantities,
+    clone_as_symbol,
 )
 
-occupancy_of_state = Symbol("occupancy_of_state", dimensionless)
-r"""
-Occupancy of, or expected number of particles in, the single-particle microstate
-:math:`i`.
-
-Symbol:
-    :code:`N_i`
-
-Latex:
-    :math:`N_i`
+occupancy_of_state = SymbolNew("N_i", dimensionless)
+"""
+Occupancy of, or expected number of particles in, the single-particle microstate :math:`i`.
 """
 
-particle_count = Symbol("particle_count", dimensionless)
+particle_count = symbols.particle_count
 """
-Total number of particles in the system.
-
-Symbol:
-    :code:`N`
+Total :symbols:`particle_count` of the system.
 """
 
-energy_of_state = Symbol("energy_of_state", units.energy)
-r"""
-Energy of single-particle microstate :math:`i`.
-
-Symbol:
-    :code:`E_i`
-
-Latex:
-    :math:`E_i`
+energy_of_state = clone_as_symbol(symbols.energy, subscript="i")
+"""
+:symbols:`energy` of single-particle microstate :math:`i`.
 """
 
 equilibrium_temperature = symbols.temperature
@@ -68,22 +52,17 @@ equilibrium_temperature = symbols.temperature
 :symbols:`temperature` of the system.
 """
 
-single_particle_partition_function = Symbol("single_particle_partition_function", dimensionless)
+single_particle_partition_function = symbols.partition_function
 """
-Single-particle partition function, which acts as a normalizing factor of the distribution.
-
-Symbol:
-    :code:`Z`
+Single-particle :symbols:`partition_function`, which acts as a normalizing factor of the distribution.
 """
 
 law = Eq(occupancy_of_state, (particle_count / single_particle_partition_function) *
     exp(-1 * energy_of_state / (quantities.boltzmann_constant * equilibrium_temperature)))
-r"""
-:code:`N_i = (N / Z) * exp(-1 * E_i / (k_B * T))`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        N_i = \frac{N}{Z} \exp \left( - \frac{E_i}{k_\text{B} T} \right)
+:laws:latex::
 """
 
 

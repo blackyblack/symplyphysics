@@ -18,43 +18,25 @@ from sympy import Eq
 from symplyphysics import (
     clone_as_symbol,
     symbols,
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     quantities,
 )
 
-critical_temperature = clone_as_symbol(symbols.temperature,
-    display_symbol="T_c",
-    display_latex="T_\\text{c}")
+critical_temperature = clone_as_symbol(symbols.temperature, display_symbol="T_c", display_latex="T_\\text{c}")
 """
 Critical :symbols:`temperature` of the van der Waals fluid.
 """
 
-attractive_forces_parameter = Symbol(
-    "attractive_forces_parameter",
-    units.pressure * (units.volume / units.amount_of_substance)**2,
-)
+attractive_forces_parameter = symbols.attractive_forces_parameter
 """
-Parameter of the van der Waals equation denoting the magnitude of attractive
-forces between gas molecules.
-
-Symbol:
-    :code:`a`
+:symbols:`attractive_forces_parameter`.
 """
 
-excluded_volume_parameter = Symbol(
-    "excluded_volume_parameter",
-    units.volume / units.amount_of_substance,
-)
+excluded_volume_parameter = symbols.excluded_volume_parameter
 """
-Parameter of the van der Waals equation denoting an excluded molar volume
-due to a finite size of molecules.
-
-Symbol:
-    :code:`b`
+:symbols:`excluded_volume_parameter`.
 """
 
 law = Eq(
@@ -62,12 +44,10 @@ law = Eq(
     (8 * attractive_forces_parameter) /
     (27 * quantities.molar_gas_constant * excluded_volume_parameter),
 )
-r"""
-:code:`T_c = 8 * a / (27 * R * b)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        T_\text{c} = \frac{8 a}{27 R b}
+:laws:latex::
 """
 
 

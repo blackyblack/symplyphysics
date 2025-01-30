@@ -67,8 +67,8 @@ _work_function = clone_as_function(symbols.work)
 # Prepare law for integration
 # Note that `dW = (dW/dV) * dV` and we set `dV` to 1
 _infinitesimal_law = work_law.law.subs({
-    work_law.infinitesimal_work_done: _work_function(volume).diff(volume),
-    work_law.infinitesimal_volume_change: 1,
+    work_law.work_done_by_system: _work_function(volume).diff(volume),
+    work_law.volume_change: 1,
     work_law.pressure: pressure(volume),
 })
 

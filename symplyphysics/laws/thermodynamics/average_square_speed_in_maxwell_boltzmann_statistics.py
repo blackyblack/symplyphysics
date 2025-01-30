@@ -20,20 +20,14 @@ and inversely proportional to the mass of the gas.
 """
 
 from sympy import (Eq, solve, S, stats, Interval)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols,
+from symplyphysics import (units, Quantity, SymbolNew, validate_input, validate_output, symbols,
     clone_as_symbol, quantities)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed_distribution
 
-average_square_speed = Symbol("average_square_speed", units.velocity**2, positive=True)
-r"""
-Average square of the speed of gas molecules.
-
-Symbol:
-    :code:`avg(v^2)`
-
-Latex:
-    :math:`\langle v^2 \rangle`
+average_square_speed = SymbolNew("avg(v^2)", units.velocity**2, positive=True, display_latex="\\langle v^2 \\rangle")
+"""
+Average square of the :symbols:`speed` of gas molecules.
 """
 
 equilibrium_temperature = clone_as_symbol(symbols.temperature, positive=True)
@@ -50,12 +44,10 @@ law = Eq(
     average_square_speed,
     3 * quantities.boltzmann_constant * equilibrium_temperature / molecular_mass,
 )
-r"""
-:code:`avg(v^2) = 3 * k_B * T / m`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \langle v^2 \rangle = \frac{3 k_\text{B} T}{m}
+:laws:latex::
 """
 
 # Derive law from Maxwell-Boltzmann distribution function

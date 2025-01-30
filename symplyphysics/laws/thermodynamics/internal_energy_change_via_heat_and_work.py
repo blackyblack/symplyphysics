@@ -28,50 +28,34 @@ during a thermodynamic process.
 
 from sympy import Eq
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
 )
 
-internal_energy_change = Symbol("internal_energy_change", units.energy)
+internal_energy_change = clone_as_symbol(symbols.internal_energy, display_symbol="dU", display_latex="dU")
 """
-Infinitesimal change in internal energy of the system.
-
-Symbol:
-    :code:`dU`
+Infinitesimal change in :symbols:`internal_energy` of the system.
 """
 
-heat_supplied_to_system = Symbol("heat_supplied_to_system", units.energy)
+heat_supplied_to_system = clone_as_symbol(symbols.heat, display_symbol="delta(Q)", display_latex="\\delta Q")
 r"""
-Infinitesimal amount of heat supplied to the system during its interaction with the environment.
-
-Symbol:
-    :code:`delta(Q)`
-
-Latex:
-    :math:`\delta Q`
+Infinitesimal amount of :symbols:`heat` supplied to the system during its interaction
+with the environment.
 """
 
-work_done_by_system = Symbol("work_done_by_system", units.energy)
-r"""
-Infinitesimal work done by the system on its environment.
-
-Symbol:
-    :code:`delta(W)`
-
-Latex:
-    :math:`\delta W`
+work_done_by_system = clone_as_symbol(symbols.work, display_symbol="delta(W)", display_latex="\\delta W")
+"""
+Infinitesimal :symbols:`work` done by the system on its environment.
 """
 
 law = Eq(internal_energy_change, heat_supplied_to_system - work_done_by_system)
-r"""
-:code:`dU = delta(Q) - delta(W)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        d U = \delta Q - \delta W
+:laws:latex::
 """
 
 

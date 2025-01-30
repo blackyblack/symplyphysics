@@ -12,36 +12,35 @@ in the vessel.
 """
 
 from typing import Sequence
-from sympy import (Eq, Idx, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, SymbolIndexed,
-    SumIndexed, global_index)
+from sympy import Eq, Idx, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    SumIndexed,
+    global_index,
+    symbols,
+)
+from symplyphysics.core.symbols.symbols import clone_as_indexed
 
-total_pressure = Symbol("total_pressure", units.pressure)
+total_pressure = symbols.pressure
 """
-Total pressure inside the system.
+Total :symbols:`pressure` inside the system.
 
 Symbol:
     :code:`p`
 """
 
-partial_pressure = SymbolIndexed("partial_pressure", units.pressure)
-r"""
-Partial pressure of the :math:`i`-th gas component.
-
-Symbol:
-    :code:`p_i`
-
-Latex:
-    :math:`p_i`
+partial_pressure = clone_as_indexed(symbols.pressure)
+"""
+Partial :symbols:`pressure` of the :math:`i`-th gas component.
 """
 
 law = Eq(total_pressure, SumIndexed(partial_pressure[global_index], global_index))
-r"""
-:code:`p = Sum(p_i, i)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        p = \sum_i p_i
+:laws:latex::
 """
 
 

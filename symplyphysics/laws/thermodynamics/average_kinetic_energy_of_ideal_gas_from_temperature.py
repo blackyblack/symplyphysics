@@ -21,9 +21,7 @@ temperature of the gas and only depends on the temperature.
 
 from sympy import Eq, solve, Rational, stats, Interval, S
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     symbols,
@@ -33,15 +31,9 @@ from symplyphysics import (
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import energy_distribution
 
-average_kinetic_energy = Symbol("average_kinetic_energy", units.energy, positive=True)
-r"""
-Average kinetic energy of the ideal gas.
-
-Symbol:
-    :code:`avg(K)`
-
-Latex:
-    :math:`\langle K \rangle`
+average_kinetic_energy = clone_as_symbol(symbols.kinetic_energy, display_symbol="avg(K)", display_latex="\\langle K \\rangle")
+"""
+Average :symbols:`kinetic_energy` of the ideal gas.
 """
 
 equilibrium_temperature = clone_as_symbol(
@@ -54,11 +46,10 @@ Equilibrium :symbols:`temperature` of the gas.
 
 law = Eq(average_kinetic_energy,
     Rational(3, 2) * quantities.boltzmann_constant * equilibrium_temperature)
-r"""
-:code:`avg(K) = 3/2 * k_B * T`
+"""
+:laws:symbol::
 
-Latex:
-    :math:`\langle K \rangle = \frac{3}{2} k_\text{B} T`
+:laws:latex::
 """
 
 # Derive from Maxwell-Boltzmann energy distribution

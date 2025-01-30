@@ -1,87 +1,112 @@
+"""
+Isobaric potential of temperature dependent heat capacity
+=========================================================
+
+The isobaric potential of a reaction is a value whose change during a chemical reaction
+is equal to the change in the internal energy of the system. The isobaric potential
+shows how much of the total internal energy of the system can be used for chemical
+transformations. Thermal effect of reaction is enthalpy of the system. The heat capacity
+coefficients are tabular values for the reaction. They are used to express the
+dependence of heat capacity on temperature.
+
+**Notation:**
+
+#. :quantity_notation:`standard_laboratory_temperature`.
+
+**Conditions:**
+
+#. We take into account the dependence of heat capacity on temperature according to the
+   Temkin-Schwarzman formula.
+#. The process is isobaric-isothermal.
+
+..
+    TODO: find link
+    TODO: fix file and documentation name
+    TODO: find reference to the 'Temkin-Schwarzman formula'
+"""
+
 from sympy import (Eq, solve, log)
 from symplyphysics import (
     quantities,
     symbols,
     units,
     Quantity,
-    Symbol,
-    print_expression,
+    SymbolNew,
     validate_input,
     validate_output,
 )
 
-# Description
-## The isobaric potential of a reaction is a value whose change during a chemical reaction is equal to the change in the internal
-## energy of the system. The isobaric potential shows how much of the total internal energy of the system can be used for chemical
-## transformations.
-## Thermal effect of reaction is enthalpy of the system.
-## The heat capacity coefficients are tabular values for the reaction. They are used to express the dependence of heat capacity on temperature.
+molar_gibbs_energy_change = SymbolNew("Delta(G_m)", units.energy / units.amount_of_substance, display_latex="\\Delta G_\\text{m}")
+"""
+:symbols:`gibbs_energy` change, or isobaric potential, per unit :symbols:`amount_of_substance`.
+"""
 
-## Law is: G = H - T * S - T * (da * (ln(298 / T) + (298 / T) - 1) + db * ((T / 2) + (298^2 / (2 * T)) - 298) + dc * ((T^(-2) / 2) + (298^(-1)/-T) - (298^(-2) / -2))), where
-## G - isobaric potential of reaction,
-## H - thermal effect of reaction,
-## T - temperature,
-## S - entropy,
-## da - the first tabular coefficient of heat capacity,
-## db - the second tabular coefficient of heat capacity,
-## dc - the third tabular coefficient of heat capacity.
+molar_enthalpy_change = SymbolNew("Delta(H_m)", units.energy / units.amount_of_substance, display_latex="\\Delta H_\\text{m}")
+"""
+:symbols:`enthalpy` change, or thermal effect, per unit :symbols:`amount_of_substance`.
+"""
 
-# Conditions:
-## - we take into account the dependence of heat capacity on temperature according to the Temkin-Schwarzman formula;
-## - the process is isobaric-isothermal.
+molar_entropy = SymbolNew("S_m", units.energy / units.amount_of_substance / units.temperature, display_latex="S_\\text{m}")
+"""
+:symbols:`entropy` per unit :symbols:`amount_of_substance`.
+"""
 
-# TODO: find link
-
-isobaric_potential = Symbol("isobaric_potential", units.energy / units.amount_of_substance)
-
-thermal_effect = Symbol("thermal_effect", units.energy / units.amount_of_substance)
-entropy = Symbol("entropy", units.energy / units.amount_of_substance / units.temperature)
 temperature = symbols.temperature
-heat_capacity = Symbol("heat_capacity",
-    units.energy / units.amount_of_substance / units.temperature)
-coefficient_capacity_1 = Symbol("coefficient_capacity_1",
-    units.energy / units.amount_of_substance / units.temperature)
-coefficient_capacity_2 = Symbol("coefficient_capacity_2",
-    units.energy / units.amount_of_substance / units.temperature**2)
-coefficient_capacity_3 = Symbol("coefficient_capacity_3",
-    units.energy * units.temperature / units.amount_of_substance)
+"""
+:symbols:`temperature`.
+"""
+
+first_capacity_coefficient = SymbolNew("a", units.energy / units.amount_of_substance / units.temperature)
+"""
+First tabular coefficient of heat capacity.
+"""
+
+second_capacity_coefficient = SymbolNew("b", units.energy / units.amount_of_substance / units.temperature**2)
+"""
+Second tabular coefficient of heat capacity.
+"""
+
+third_capacity_coefficient = SymbolNew("c", units.energy * units.temperature / units.amount_of_substance)
+"""
+Third tabular coefficient of heat capacity.
+"""
 
 law = Eq(
-    isobaric_potential, thermal_effect - temperature * entropy - temperature *
-    (coefficient_capacity_1 * (log(quantities.standard_laboratory_temperature / temperature) +
-    (quantities.standard_laboratory_temperature / temperature) - 1) + coefficient_capacity_2 *
+    molar_gibbs_energy_change, molar_enthalpy_change - temperature * molar_entropy - temperature *
+    (first_capacity_coefficient * (log(quantities.standard_laboratory_temperature / temperature) +
+    (quantities.standard_laboratory_temperature / temperature) - 1) + second_capacity_coefficient *
     ((temperature / 2) + (quantities.standard_laboratory_temperature**2 /
-    (2 * temperature)) - quantities.standard_laboratory_temperature) + coefficient_capacity_3 *
-    ((temperature**(-2) / 2) + (quantities.standard_laboratory_temperature**(-1) / -temperature) -
-    (quantities.standard_laboratory_temperature**(-2) / -2))))
+    (2 * temperature)) - quantities.standard_laboratory_temperature) + third_capacity_coefficient *
+    ((temperature**(-2) / 2) - (quantities.standard_laboratory_temperature**(-1) / temperature) +
+    (quantities.standard_laboratory_temperature**(-2) / 2))))
+"""
+:laws:symbol::
 
-
-def print_law() -> str:
-    return print_expression(law)
+:laws:latex::
+"""
 
 
 @validate_input(
-    thermal_effect_=thermal_effect,
-    entropy_=entropy,
+    thermal_effect_=molar_enthalpy_change,
+    entropy_=molar_entropy,
     temperature_=temperature,
-    heat_capacity_=heat_capacity,
-    coefficient_capacity_1_=coefficient_capacity_1,
-    coefficient_capacity_2_=coefficient_capacity_2,
-    coefficient_capacity_3_=coefficient_capacity_3,
+    heat_capacity_=symbols.molar_heat_capacity,  # FIXME: remove this quantity from test since it's unused
+    coefficient_capacity_1_=first_capacity_coefficient,
+    coefficient_capacity_2_=second_capacity_coefficient,
+    coefficient_capacity_3_=third_capacity_coefficient,
 )
-@validate_output(isobaric_potential)
+@validate_output(molar_gibbs_energy_change)
 def calculate_isobaric_potential(thermal_effect_: Quantity, entropy_: Quantity,
     temperature_: Quantity, heat_capacity_: Quantity, coefficient_capacity_1_: Quantity,
     coefficient_capacity_2_: Quantity, coefficient_capacity_3_: Quantity) -> Quantity:
     # pylint: disable=too-many-arguments, too-many-positional-arguments
-    result_expr = solve(law, isobaric_potential, dict=True)[0][isobaric_potential]
+    result_expr = solve(law, molar_gibbs_energy_change, dict=True)[0][molar_gibbs_energy_change]
     result_expr = result_expr.subs({
-        thermal_effect: thermal_effect_,
-        entropy: entropy_,
+        molar_enthalpy_change: thermal_effect_,
+        molar_entropy: entropy_,
         temperature: temperature_,
-        heat_capacity: heat_capacity_,
-        coefficient_capacity_1: coefficient_capacity_1_,
-        coefficient_capacity_2: coefficient_capacity_2_,
-        coefficient_capacity_3: coefficient_capacity_3_,
+        first_capacity_coefficient: coefficient_capacity_1_,
+        second_capacity_coefficient: coefficient_capacity_2_,
+        third_capacity_coefficient: coefficient_capacity_3_,
     })
     return Quantity(result_expr)

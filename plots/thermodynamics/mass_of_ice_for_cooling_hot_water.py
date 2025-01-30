@@ -72,10 +72,10 @@ local_index_ = Idx("local_index_", (1, 4))
 thermodinamics_law_1_four_energies = thermodinamics_law_1.law.subs(global_index,
     local_index_).doit()
 thermodinamics_law_1_equation = thermodinamics_law_1_four_energies.subs({
-    thermodinamics_law_1.amount_of_energy[1]: energy_cooling_hot_water.rhs,
-    thermodinamics_law_1.amount_of_energy[2]: energy_to_heating_ice_equation.rhs,
-    thermodinamics_law_1.amount_of_energy[3]: energy_to_melt_ice_equation.rhs,
-    thermodinamics_law_1.amount_of_energy[4]: energy_to_heat_melted_ice_equation.rhs,
+    thermodinamics_law_1.energy[1]: energy_cooling_hot_water.rhs,
+    thermodinamics_law_1.energy[2]: energy_to_heating_ice_equation.rhs,
+    thermodinamics_law_1.energy[3]: energy_to_melt_ice_equation.rhs,
+    thermodinamics_law_1.energy[4]: energy_to_heat_melted_ice_equation.rhs,
 })
 
 solve_system_equations = solve((thermodinamics_law_1_equation, mass_of_all_water_equation),

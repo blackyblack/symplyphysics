@@ -19,42 +19,30 @@ known as `subadditivity <https://en.wikipedia.org/wiki/Subadditivity>`_.
 from typing import Sequence
 from sympy import Eq, Idx
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     SumIndexed,
-    SymbolIndexed,
     global_index,
+    symbols,
 )
+from symplyphysics.core.symbols.symbols import clone_as_indexed
 
-total_entropy = Symbol("total_entropy", units.energy / units.temperature)
+total_entropy = symbols.entropy
 """
-Total entropy of the system as a whole.
-
-Symbol:
-    :code:`S`
+Total :symbols:`entropy` of the system as a whole.
 """
 
-subsystem_entropy = SymbolIndexed("subsystem_entropy", units.energy / units.temperature)
-r"""
-Entropy of the :math:`i`-th subsystem.
-
-Symbol:
-    :code:`S_i`
-
-Latex:
-    :math:`S_i`
+subsystem_entropy = clone_as_indexed(symbols.entropy)
+"""
+:symbols:`entropy` of the :math:`i`-th subsystem.
 """
 
 law = Eq(total_entropy, SumIndexed(subsystem_entropy[global_index], global_index))
-r"""
-:code:`S = Sum(S_i, i)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        S = \sum_i S_i
+:laws:latex::
 """
 
 

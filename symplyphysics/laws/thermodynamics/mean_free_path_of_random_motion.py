@@ -11,51 +11,34 @@ The mean free path of a molecule in random motion is its average path length bet
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Mean_free_path#Kinetic_theory_of_gases>`__.
+
+..
+    NOTE: replace `pi * d^2` with cross-section?
 """
 
 from sympy import Eq, sqrt, pi
-from symplyphysics import (
-    Quantity,
-    Symbol,
-    units,
-    validate_input,
-    validate_output,
-)
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 
-mean_free_path = Symbol("mean_free_path", units.length, positive=True)
-r"""
-Mean free path estimate of molecules.
-
-Symbol:
-    :code:`lambda`
-
-Latex:
-    :math:`\lambda`
+mean_free_path = symbols.mean_free_path
+"""
+:symbols:`mean_free_path` estimate of molecules.
 """
 
-molecular_diameter = Symbol("molecular_diameter", units.length, positive=True)
+molecular_diameter = symbols.diameter
 """
-Diameter of molecules.
-
-Symbol:
-    :code:`d`
+:symbols:`diameter` of molecules.
 """
 
-number_density = Symbol("number_density", 1 / units.volume)
+number_density = symbols.number_density
 """
-:doc:`Number density <definitions.number_density_is_number_of_objects_per_unit_volume>` of the system.
-
-Symbol:
-    :code:`n`
+:symbols:`number_density` of the system.
 """
 
 law = Eq(mean_free_path, 1 / (sqrt(2) * pi * molecular_diameter**2 * number_density))
-r"""
-:code:`lambda = 1 / (sqrt(2) * pi * d^2 * n)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \lambda = \frac{1}{\sqrt{2} \pi d^2 n}
+:laws:latex::
 """
 
 

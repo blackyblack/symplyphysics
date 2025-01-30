@@ -11,8 +11,8 @@ from sympy.physics import units
 from symplyphysics.core.symbols.quantities import Quantity
 
 standard_conditions_temperature = Quantity(273.15 * units.kelvin,
-    display_symbol="t_std",
-    display_latex="t_\\text{std}")
+    display_symbol="T_std",
+    display_latex="T_\\text{std}")
 """
 Zero Celsius degrees. The :symbols:`temperature` at which water freezes.
 It is also temperature for Standard Temperature and Pressure (STP)
@@ -23,8 +23,8 @@ It is also temperature for Standard Temperature and Pressure (STP)
 """
 
 standard_laboratory_temperature = Quantity(298 * units.kelvin,
-    display_symbol="t_lab",
-    display_latex="t_\\text{lab}")
+    display_symbol="T_lab",
+    display_latex="T_\\text{lab}")
 """
 Approximately :math:`25` degrees Celsius. Commonly used :symbols:`temperature` for tabulation purposes.
 
@@ -44,7 +44,7 @@ electron_rest_mass = Quantity(9.1093837015e-31 * units.kilogram,
 #. `Wikipedia <https://en.wikipedia.org/wiki/Electron_mass>`__.
 """
 
-bohr_radius = Quantity(0.529e-10 * units.meter, display_symbol="a0", display_latex="a_0")
+bohr_radius = Quantity(0.529e-10 * units.meter, display_symbol="a_0", display_latex="a_0")
 """
 The Bohr radius is the radius of the electron orbit of the hydrogen atom closest
 to the nucleus in the atomic model proposed by Niels Bohr.

@@ -30,10 +30,7 @@ from sympy import Eq, symbols as sympy_symbols, Function as SymFunction, Symbol 
 from symplyphysics import (
     clone_as_symbol,
     symbols,
-    units,
-    dimensionless,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
 )
@@ -43,20 +40,14 @@ from symplyphysics.laws.thermodynamics import (
     internal_energy_differential,
 )
 
-free_energy_change = Symbol("free_energy_change", units.energy)
+free_energy_change = clone_as_symbol(symbols.helmholtz_free_energy, display_symbol="dF", display_latex="dF")
 """
-Infinitesimal change in free energy of the system.
-
-Symbol:
-    :code:`dF`
+Infinitesimal change in :symbols:`helmholtz_free_energy` of the system.
 """
 
-entropy = Symbol("entropy", units.energy / units.temperature)
+entropy = symbols.entropy
 """
-Enthalpy of the system.
-
-Symbol:
-    :code:`S`
+:symbols:`entropy` of the system.
 """
 
 temperature_change = clone_as_symbol(symbols.temperature, display_symbol="dT", display_latex="dT")
@@ -64,39 +55,24 @@ temperature_change = clone_as_symbol(symbols.temperature, display_symbol="dT", d
 Infinitesimal change in :symbols:`temperature` of the system.
 """
 
-pressure = Symbol("pressure", units.pressure)
+pressure = symbols.pressure
 """
-Pressure inside the system.
-
-Symbol:
-    :code:`p`
+:symbols:`pressure` inside the system.
 """
 
-volume_change = Symbol("volume_change", units.volume)
+volume_change = clone_as_symbol(symbols.volume, display_symbol="dV", display_latex="dV")
 """
-Infinitesimal change in volume of the system.
-
-Symbol:
-    :code:`dV`
+Infinitesimal change in :symbols:`volume` of the system.
 """
 
-chemical_potential = Symbol("chemical_potential", units.energy)
-r"""
-Chemical potential of the system.
-
-Symbol:
-    :code:`mu`
-
-Latex:
-    :math:`\mu`
+chemical_potential = symbols.chemical_potential
+"""
+:symbols:`chemical_potential` of the system.
 """
 
-particle_count_change = Symbol("particle_count_change", dimensionless)
+particle_count_change = clone_as_symbol(symbols.particle_count, display_symbol="dN", display_latex="dN")
 """
-Infinitesimal change in the number of particles in the system.
-
-Symbol:
-    :code:`dN`
+Infinitesimal change in the :symbols:`particle_count` of the system.
 """
 
 law = Eq(
@@ -104,12 +80,10 @@ law = Eq(
     -1 * entropy * temperature_change - pressure * volume_change +
     chemical_potential * particle_count_change,
 )
-r"""
-:code:`dF = -1 * S * dT - p * dV + mu * dN`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        dF = -S \, dT - p \, dV + \mu \, dN
+:laws:latex::
 """
 
 # Derive from the definition of Helmholtz free energy and internal energy differential

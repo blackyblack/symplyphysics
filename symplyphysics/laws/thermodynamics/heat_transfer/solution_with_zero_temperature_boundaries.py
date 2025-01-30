@@ -29,9 +29,8 @@ the boundary equation :math:`f(x) = T(x, 0)`.
 
 from sympy import Eq, sin, exp, pi
 from symplyphysics import (
-    dimensionless,
     units,
-    Symbol,
+    SymbolNew,
     Quantity,
     validate_input,
     validate_output,
@@ -45,70 +44,44 @@ Solution to the heat equation corresponding to the :math:`n`:sup:`th` mode.
 See :symbols:`temperature`.
 """
 
-scaling_coefficient = Symbol("scaling_coefficient", units.temperature)
+scaling_coefficient = SymbolNew("B_n", units.temperature)
 """
 Scaling coefficient of the solution, see :ref:`Notes <heat_transfer_zero_temperature_solution_coefficient_note>`.
-
-Symbol:
-    :code:`B_n`
-
-Latex:
-    :math:`B_n`
 """
 
-thermal_diffusivity = Symbol("thermal_diffusivity", units.area / units.time)
-r"""
-`Thermal diffusivity <https://en.wikipedia.org/wiki/Thermal_diffusivity>`_.
-
-Symbol:
-    :code:`chi`
-
-Latex:
-    :math:`\chi`
+thermal_diffusivity = symbols.thermal_diffusivity
+"""
+:symbols:`thermal_diffusivity`.
 """
 
-mode_number = Symbol("mode_number", dimensionless, integer=True, positive=True)
+mode_number = symbols.positive_number
 """
-Number of the mode, which is a positive integer.
-
-Symbol:
-    :code:`n`
+Number of the mode. See :symbols:`positive_number`.
 """
 
-maximum_position = Symbol("maximum_position", units.length, positive=True)
+maximum_position = clone_as_symbol(symbols.position, display_symbol="x_max", display_latex="x_\\text{max}")
 """
-Maximum possible position.
-
-Symbol:
-    :code:`L`
+Maximum possible :symbols:`position`.
 """
 
-position = Symbol("position", units.length)
+position = symbols.position
 """
-Position, or spatial variable.
-
-Symbol: 
-    :code:`x`
+:symbols:`position`, or spatial variable.
 """
 
-time = Symbol("time", units.time)
+time = symbols.time
 """
-Time.
-
-Symbol:
-    :code:`t`
+:symbols:`time`.
 """
 
 law = Eq(
     temperature,
     scaling_coefficient * sin(mode_number * pi * position / maximum_position) *
     exp(-1 * thermal_diffusivity * (mode_number * pi / maximum_position)**2 * time))
-r"""
-:code:`T_n(x, t) = B_n * sin(n * pi * x / L) * exp(-1 * chi * (n * pi / L)^2 * t)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        T_n(x, t) = B_n \sin \left( \frac{n \pi x}{L} \right) \exp \left[ -\chi \left( \frac{n \pi}{L} \right)^2 t \right]
+:laws:latex::
 """
 
 

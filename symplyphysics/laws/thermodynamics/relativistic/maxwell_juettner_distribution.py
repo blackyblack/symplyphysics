@@ -23,6 +23,9 @@ to the Maxwell—Boltzmann distribution.
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Maxwell%E2%80%93J%C3%BCttner_distribution#Definition>`__.
+
+..
+    TODO: add `besselk` to code printers
 """
 
 from sympy import Eq, exp, sqrt
@@ -30,42 +33,25 @@ from sympy.functions.special.bessel import besselk
 from symplyphysics import (
     convert_to_float,
     dimensionless,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
+    symbols,
 )
 
-distribution_function = Symbol("distribution_function", dimensionless)
-r"""
-Lorentz factor distribution function.
-
-Symbol:
-    :code:`f(gamma)`
-
-Latex:
-    :math:`f(\gamma)`
+distribution_function = SymbolNew("f(gamma)", dimensionless, display_latex="f(\\gamma)")
+"""
+:attr:`~lorentz_factor` distribution function.
 """
 
-lorentz_factor = Symbol("lorentz_factor", dimensionless)
-r"""
-Lorentz factor of relativistic particles.
-
-Symbol:
-    :code:`gamma`
-
-Latex:
-    :math:`\gamma`
+lorentz_factor = symbols.lorentz_factor
+"""
+:symbols:`lorentz_factor` of relativistic particles.
 """
 
-reduced_temperature = Symbol("reduced_temperature", dimensionless)
-r"""
+reduced_temperature = SymbolNew("theta", dimensionless, display_latex="\\theta")
+"""
 :doc:`Reduced temperature <laws.thermodynamics.relativistic.reduced_temperature_in_maxwell_juettner_statistics>` of the system.
-
-Symbol:
-    :code:`theta`
-
-Latex:
-    :math:`\theta`
 """
 
 law = Eq(
@@ -74,6 +60,9 @@ law = Eq(
     (reduced_temperature * besselk(2, 1 / reduced_temperature)) *
     exp(-1 * lorentz_factor / reduced_temperature))
 r"""
+..
+    The printers do not yet recognize the `besselk` function.
+
 :code:`f(gamma) = (gamma * sqrt(gamma^2 - 1)) / (theta * K_2(1 / theta)) * exp(-1 * gamma / theta)`
 
 Latex:

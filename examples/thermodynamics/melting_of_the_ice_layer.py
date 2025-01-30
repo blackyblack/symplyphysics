@@ -67,8 +67,8 @@ energy_from_cooling_water_value = thermal_energy_law.law.subs({
 local_index_ = Idx("local_index_", (1, 2))
 thermodinamics_law_1_two_energies = thermodinamics_law_1.law.subs(global_index, local_index_).doit()
 heat_balance_equation = thermodinamics_law_1_two_energies.subs({
-    thermodinamics_law_1.amount_of_energy[1]: energy_for_melting_ice_value,
-    thermodinamics_law_1.amount_of_energy[2]: energy_from_cooling_water_value,
+    thermodinamics_law_1.energy[1]: energy_for_melting_ice_value,
+    thermodinamics_law_1.energy[2]: energy_from_cooling_water_value,
 })
 
 print(print_expression(heat_balance_equation))

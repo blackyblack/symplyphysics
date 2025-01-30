@@ -28,19 +28,14 @@ from symplyphysics import (
     symbols,
     clone_as_symbol,
     quantities,
+    clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed_distribution
 
-average_speed = Symbol("average_speed", units.velocity, positive=True)
-r"""
-Average molecular speed.
-
-Symbol:
-    :code:`avg(v)`
-
-Latex:
-    :math:`\langle v \rangle`
+average_speed = clone_as_symbol(symbols.speed, display_symbol="avg(v)", display_latex="\\langle v \\rangle")
+"""
+Average molecular :symbols:`speed`.
 """
 
 equilibrium_temperature = clone_as_symbol(symbols.temperature, positive=True)
@@ -57,12 +52,10 @@ law = Eq(
     average_speed,
     sqrt(8 * quantities.boltzmann_constant * equilibrium_temperature / (pi * molecular_mass)),
 )
-r"""
-:code:`avg(v) = sqrt(8 * k_B * T / (pi * m))`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \langle v \rangle = \sqrt{\frac{8 k_\text{B} T}{\pi m}}
+:laws:latex::
 """
 
 # Derive law from Maxwell-Boltzmann distribution function

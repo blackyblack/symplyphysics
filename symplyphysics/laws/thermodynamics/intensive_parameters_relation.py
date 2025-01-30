@@ -1,4 +1,4 @@
-r"""
+"""
 Intensive parameters relation
 =============================
 
@@ -19,10 +19,7 @@ from sympy import Eq, solve
 from symplyphysics import (
     clone_as_symbol,
     symbols,
-    units,
-    dimensionless,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
 )
@@ -30,12 +27,9 @@ from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import internal_energy_differential
 from symplyphysics.laws.thermodynamics.euler_relations import internal_energy_formula
 
-entropy = Symbol("entropy", units.energy / units.temperature)
+entropy = symbols.entropy
 """
-Entropy of the system.
-
-Symbol:
-    :code:`S`
+:symbols:`entropy` of the system.
 """
 
 temperature_change = clone_as_symbol(symbols.temperature, display_symbol="dT", display_latex="dT")
@@ -43,39 +37,24 @@ temperature_change = clone_as_symbol(symbols.temperature, display_symbol="dT", d
 Infinitesimal change in :symbols:`temperature` of the system.
 """
 
-volume = Symbol("volume", units.volume)
+volume = symbols.volume
 """
-Volume of the system.
-
-Symbol:
-    :code:`V`
+:symbols:`volume` of the system.
 """
 
-pressure_change = Symbol("pressure_change", units.pressure)
+pressure_change = clone_as_symbol(symbols.pressure, display_symbol="dp", display_latex="dp")
 """
-Infinitesimal change in pressure inside the system.
-
-Symbol:
-    :code:`dp`
+Infinitesimal change in :symbols:`pressure` inside the system.
 """
 
-particle_count = Symbol("particle_count", dimensionless)
+particle_count = symbols.particle_count
 """
-Number of particles in the system.
-
-Symbol:
-    :code:`N`
+:symbols:`particle_count` of the system.
 """
 
-chemical_potential_change = Symbol("chemical_potential_change", units.energy)
-r"""
-Infinitesimal change in chemical potential of the system.
-
-Symbol:
-    :code:`dmu`
-
-Latex:
-    :math:`d \mu`
+chemical_potential_change = clone_as_symbol(symbols.chemical_potential, display_symbol="d(mu)", display_latex="d\\mu")
+"""
+Infinitesimal change in :symbols:`chemical_potential` of the system.
 """
 
 law = Eq(
@@ -83,12 +62,10 @@ law = Eq(
     particle_count * chemical_potential_change,
     0,
 )
-r"""
-:code:`E * dT - V * dp + N * dmu = 0`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        E \, dT - V \, dp + N \, d \mu = 0
+:laws:latex::
 """
 
 # Derive from internal energy representations

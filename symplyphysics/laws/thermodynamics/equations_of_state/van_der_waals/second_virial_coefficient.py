@@ -12,6 +12,10 @@ to inverse molar volume or equivalently, to molar density.
 
 #. :quantity_notation:`molar_gas_constant`.
 
+**Notes:**
+
+#. Also see :ref:`Virial equation`.
+
 **Conditions:**
 
 #. The gas density is small enough within the context of perturbation theory.
@@ -25,12 +29,11 @@ from sympy import Eq, solve, Symbol as SymSymbol
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
-    print_expression,
     validate_input,
     validate_output,
     symbols,
     quantities,
+    SymbolNew,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import compressibility_factor_is_deviation_from_ideal_gas as compressibility_def
@@ -40,37 +43,19 @@ from symplyphysics.laws.quantities import (
     quantity_is_molar_quantity_times_amount_of_substance as molar_qty_law,
 )
 
-second_virial_coefficient = Symbol("second_virial_coefficient",
-    units.volume / units.amount_of_substance)
+second_virial_coefficient = SymbolNew("C_2", units.volume / units.amount_of_substance)
 """
 Second virial coefficient of the virial expansion.
-
-Symbol:
-    :code:`B`
 """
 
-attractive_forces_parameter = Symbol(
-    "attractive_forces_parameter",
-    units.pressure * (units.volume / units.amount_of_substance)**2,
-)
+attractive_forces_parameter = symbols.attractive_forces_parameter
 """
-Parameter of the van der Waals equation denoting the magnitude of attractive
-forces between gas molecules.
-
-Symbol:
-    :code:`a`
+:symbols:`attractive_forces_parameter`.
 """
 
-excluded_volume_parameter = Symbol(
-    "excluded_volume_parameter",
-    units.volume / units.amount_of_substance,
-)
+excluded_volume_parameter = symbols.excluded_volume_parameter
 """
-Parameter of the van der Waals equation denoting an excluded molar molar_volume
-due to a finite size of molecules.
-
-Symbol:
-    :code:`b`
+:symbols:`excluded_volume_parameter`.
 """
 
 temperature = symbols.temperature
@@ -81,12 +66,10 @@ temperature = symbols.temperature
 law = Eq(
     second_virial_coefficient, excluded_volume_parameter - attractive_forces_parameter /
     (quantities.molar_gas_constant * temperature))
-r"""
-:code:`B = b - a / (R * T)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        B = b - \frac{a}{R T}
+:laws:latex::
 """
 
 # Derive from the van der Waals equation of state and the virial equation
@@ -126,10 +109,6 @@ _second_virial_coefficient = _compressibility_via_density.diff(_molar_density).s
     _molar_density, 0)
 
 assert expr_equals(_second_virial_coefficient, law.rhs)
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(

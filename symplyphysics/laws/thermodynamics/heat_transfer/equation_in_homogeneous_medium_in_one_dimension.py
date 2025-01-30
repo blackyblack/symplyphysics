@@ -22,55 +22,34 @@ the evolution of heat transferred from hotter to colder environments in time and
 """
 
 from sympy import Eq, Derivative
-from symplyphysics import (
-    units,
-    Symbol,
-    Function,
-)
+from symplyphysics import symbols, clone_as_function
 
-temperature = Function("temperature", units.temperature)
+position = symbols.position
 """
-Temperature as a function of position and time.
-
-Symbol:
-    :code:`T(x, t)`
+:symbols:`position`, or spatial variable.
 """
 
-position = Symbol("position", units.length)
+time = symbols.time
 """
-Position, or spatial variable.
-
-Symbol:
-    :code:`x`
+:symbols:`time`.
 """
 
-time = Symbol("time", units.time)
+temperature = clone_as_function(symbols.temperature, [position, time])
 """
-Time.
-
-Symbol:
-    :code:`t`
+Temperature as a function of :attr:`~position` and :attr:`~time`.
 """
 
 # TODO: Create law of thermal diffusivity via thermal conductivity
 
-thermal_diffusivity = Symbol("thermal_diffusivity", units.area / units.time)
-r"""
-`Thermal diffusivity <https://en.wikipedia.org/wiki/Thermal_diffusivity>`_.
-
-Symbol:
-    :code:`chi`
-
-Latex:
-    :math:`\chi`
+thermal_diffusivity = symbols.thermal_diffusivity
+"""
+:symbols:`thermal_diffusivity`.
 """
 
 law = Eq(Derivative(temperature(position, time), time),
     thermal_diffusivity * Derivative(temperature(position, time), position, 2))
-r"""
-:code:`Derivative(T(x, t), t) = chi * Derivative(T(x, t), (x, 2))`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \frac{\partial T}{\partial t} = \chi \frac{\partial^2 T}{\partial x^2}
+:laws:latex::
 """

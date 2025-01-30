@@ -1,50 +1,80 @@
+"""
+Number of impacts on the wall from area and speed
+=================================================
+
+The number of impacts of molecules against the wall in a specified direction is
+proportional to the number density of the molecules, the area of the wall, the
+projection of velocity in said direction and time.
+
+**Conditions:**
+
+#. Gas is ideal.
+#. Wall is flat and perpendicular to specified axis.
+
+**Links:**
+
+#. `Chemistry LibreTexts, similar formula <https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Physical_Chemistry_(LibreTexts)/27%3A_The_Kinetic_Theory_of_Gases/27.04%3A_The_Frequency_of_Collisions_with_a_Wall>`__.
+
+..
+    TODO: fix file name
+"""
+
 from sympy import Eq, solve
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless,
-    convert_to_float)
+from symplyphysics import (
+    Quantity,
+    SymbolNew,
+    validate_input,
+    validate_output,
+    dimensionless,
+    convert_to_float,
+    symbols,
+)
 
-# Description
-## Consider the volume of gas in a vessel in the form of a cube and determine the number of impacts on its wall perpendicular to the x-axis.
-## Denote by n the number of molecules per unit volume whose velocity projections on the x-axis are ±v_x.
-## In chaotic motion, the number of molecules with positive and negative projections on a given axis can be considered the same and equal to n / 2, since movement in all directions is equally likely.
-## Of the selected group of molecules, only those molecules whose velocities are directed towards the wall and which are located from the wall at a distance not
-## exceeding v_x * t, or those molecules that are inside the volume V = S * v_x * t, will reach the wall area S over a period of time t.
+impact_count = SymbolNew("N", dimensionless)
+"""
+Impact count.
+"""
 
-## Law: N = 0.5 * n * S * v_x * t
-## Where:
-## N is number of impacts
-## n is the number of molecules per unit volume
-## S is wall area
-## v_x is velocity projection on the x-axis
-## t is time
+number_density = symbols.number_density
+"""
+:symbols:`number_density` of particles.
+"""
 
-## Conditions
-## Gas is ideal
-## Wall is flat and perpendicular to X-axis
+area = symbols.area
+"""
+Wall :symbols:`area`.
+"""
 
-# Links:
-## Chemistry LibreTexts, similar formula <https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Physical_Chemistry_(LibreTexts)/27%3A_The_Kinetic_Theory_of_Gases/27.04%3A_The_Frequency_of_Collisions_with_a_Wall>
+velocity_projection = symbols.speed
+"""
+Projection of velocity vector in the given direction. See :symbols:`speed`.
+"""
 
-number_of_impacts = Symbol("number_of_impacts", dimensionless)
-molecules_concentration = Symbol("molecules_concentration", 1 / units.volume)
-area = Symbol("area", units.area)
-velocity_projection = Symbol("velocity_projection", units.velocity)
-time = Symbol("time", units.time)
+time = symbols.time
+"""
+:symbols:`time`.
+"""
 
-law = Eq(number_of_impacts, (molecules_concentration * area * velocity_projection * time) / 2)
+law = Eq(impact_count, (number_density * area * velocity_projection * time) / 2)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
-@validate_input(molecules_concentration_=molecules_concentration,
+@validate_input(molecules_concentration_=number_density,
     area_=area,
     velocity_projection_=velocity_projection,
     time_=time)
-@validate_output(number_of_impacts)
+@validate_output(impact_count)
 def calculate_number_of_impacts(molecules_concentration_: Quantity, area_: Quantity,
-    velocity_projection_: Quantity, time_: Quantity) -> int:
-    result_expr = solve(law, number_of_impacts, dict=True)[0][number_of_impacts]
+    velocity_projection_: Quantity, time_: Quantity) -> float:
+    result_expr = solve(law, impact_count, dict=True)[0][impact_count]
     result_number_of_impacts = result_expr.subs({
-        molecules_concentration: molecules_concentration_,
+        number_density: molecules_concentration_,
         area: area_,
         velocity_projection: velocity_projection_,
         time: time_
     })
-    return int(convert_to_float(result_number_of_impacts))
+    return convert_to_float(result_number_of_impacts)

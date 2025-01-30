@@ -35,34 +35,27 @@ from sympy import (
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
     clone_as_symbol,
     symbols,
     CoordinateSystem,
     quantities,
+    
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.geometry.elements import volume_element_magnitude
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import velocity_component_distribution
 
-speed_distribution_function = Symbol("speed_distribution_function",
-    1 / units.velocity,
-    positive=True)
+speed_distribution_function = SymbolNew("f(v)", 1 / units.velocity)
 """
-Speed distribution function.
-
-Symbol:
-    :code:`f(v)`
+:symbols:`speed` distribution function.
 """
 
-particle_speed = Symbol("particle_speed", units.velocity, positive=True)
+particle_speed = clone_as_symbol(symbols.speed, positive=True)
 """
-Particle speed.
-
-Symbol:
-    :code:`v`
+Particle :symbols:`speed`.
 """
 
 particle_mass = clone_as_symbol(symbols.mass, positive=True)
@@ -81,12 +74,10 @@ law = Eq(
     (quantities.boltzmann_constant * equilibrium_temperature))**Rational(3, 2) * particle_speed**2 *
     exp(-1 * particle_mass * particle_speed**2 /
     (2 * quantities.boltzmann_constant * equilibrium_temperature)))
-r"""
-:code:`f(v) = sqrt(2 / pi) * (m / (k_B * T))^(3/2) * v^2 * exp(-1 * m * v^2 / (2 * k_B * T))`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        f(v) = \sqrt{\frac{2}{\pi}} \left( \frac{m}{k_\text{B} T} \right)^{3/2} v^2 \exp \left( - \frac{m v^2}{2 k_\text{B} T} \right)
+:laws:latex::
 """
 
 # Derive from Maxwell-Boltzmann distribution of velocity vector components

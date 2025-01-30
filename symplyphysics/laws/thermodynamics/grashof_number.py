@@ -19,36 +19,21 @@ from sympy import Eq, solve
 from symplyphysics import (
     clone_as_symbol,
     symbols,
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
-    dimensionless,
     convert_to_float,
     quantities,
 )
 
-grashof_number = Symbol("grashof_number", dimensionless)
-r"""
-Grashof number of the fluid.
-
-Symbol:
-    :code:`Gr`
-
-Latex:
-    :math:`\text{Gr}`
+grashof_number = symbols.grashof_number
+"""
+:symbols:`grashof_number` of the fluid.
 """
 
-volumetric_expansion_coefficient = Symbol("volumetric_expansion_coefficient", 1 / units.temperature)
+volumetric_expansion_coefficient = clone_as_symbol(symbols.thermal_expansion_coefficient, subscript="V")
 r"""
-Volumetric coefficient of thermal expansion of the body.
-
-Symbol:
-    :code:`beta`
-
-Latex:
-    :math:`\beta`
+Volumetric (see :symbols:`volume`) :symbols:`thermal_expansion_coefficient` of the body.
 """
 
 surface_temperature = clone_as_symbol(symbols.temperature,
@@ -65,36 +50,24 @@ bulk_temperature = clone_as_symbol(symbols.temperature,
 Average :symbols:`temperature` of the inside of the fluid.
 """
 
-characteristic_length = Symbol("characteristic_length", units.length)
+characteristic_length = symbols.characteristic_length
 """
-An important dimension of the given fluid, usually defined as the volume of the body
-divided by its area.
-
-Symbol:
-    :code:`L`
+:symbols:`characteristic_length` of the fluid body.
 """
 
-kinematic_viscosity = Symbol("kinematic_viscosity", units.area / units.time)
-r"""
-Kinematic viscosity of the fluid.
-
-Symbol:
-    :code:`nu`
-
-Latex:
-    :math:`\nu`
+kinematic_viscosity = symbols.kinematic_viscosity
+"""
+:symbols:`kinematic_viscosity` of the fluid.
 """
 
 law = Eq(
     grashof_number,
     quantities.acceleration_due_to_gravity * volumetric_expansion_coefficient *
     (surface_temperature - bulk_temperature) * characteristic_length**3 / (kinematic_viscosity**2))
-r"""
-:code:`Gr = g * beta * (T_s - T_b) * L^3 / nu^2`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \text{Gr} = g \beta (T_\text{s} - T_\text{b}) \frac{L^3}{\nu^2}
+:laws:latex::
 """
 
 

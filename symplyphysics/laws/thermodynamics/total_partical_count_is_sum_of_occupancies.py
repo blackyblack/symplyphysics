@@ -21,40 +21,29 @@ from typing import Sequence
 from sympy import Eq, Idx
 from symplyphysics import (
     dimensionless,
-    Symbol,
     validate_input,
     validate_output,
     global_index,
-    SymbolIndexed,
+    SymbolIndexedNew,
     SumIndexed,
+    symbols,
 )
 
-total_particle_count = Symbol("total_particle_count", dimensionless)
+total_particle_count = symbols.particle_count
 """
-Total number of particles in the system.
-
-Symbol:
-    :code:`N`
+Total :symbols:`particle_count` of the system.
 """
 
-occupancy = SymbolIndexed("occupancy", dimensionless)
-r"""
-Occupancy of energy level or particle state of index :math:`i`
-
-Symbol:
-    :code:`N_i`
-
-Latex:
-    :math:`N_i`
+occupancy = SymbolIndexedNew("N", dimension=dimensionless)
+"""
+Occupancy of energy level or particle state of index :math:`i`.
 """
 
 law = Eq(total_particle_count, SumIndexed(occupancy[global_index], global_index))
-r"""
-:code:`N = sum(N_i, i)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        N = \sum_i N_i
+:laws:latex::
 """
 
 

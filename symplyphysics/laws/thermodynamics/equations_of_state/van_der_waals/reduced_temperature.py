@@ -15,21 +15,15 @@ from symplyphysics import (
     symbols,
     dimensionless,
     Quantity,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
     convert_to_float,
 )
 
-reduced_temperature = Symbol("reduced_temperature", dimensionless)
-r"""
-Reduced temperature of the van der Waals fluid.
-
-Symbol:
-    :code:`T*`
-
-Latex:
-    :math:`T^*`
+reduced_temperature = SymbolNew("T_r", dimensionless)
+"""
+Reduced :symbols:`temperature` of the van der Waals fluid.
 """
 
 temperature = symbols.temperature
@@ -37,21 +31,17 @@ temperature = symbols.temperature
 :symbols:`temperature` of the van der Waals fluid.
 """
 
-critical_temperature = clone_as_symbol(symbols.temperature,
-    display_symbol="T_c",
-    display_latex="T_\\text{c}")
+critical_temperature = clone_as_symbol(symbols.temperature, display_symbol="T_c", display_latex="T_\\text{c}")
 """
 See :doc:`laws.thermodynamics.equations_of_state.van_der_waals.critical_temperature`
 and :symbols:`temperature`.
 """
 
 law = Eq(reduced_temperature, temperature / critical_temperature)
-r"""
-:code:`T* = T / T_c`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        T^* = \frac{T}{T_\text{c}}
+:laws:latex::
 """
 
 

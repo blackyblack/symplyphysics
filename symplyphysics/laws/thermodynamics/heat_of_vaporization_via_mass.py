@@ -10,15 +10,18 @@ in which it is converted from liquid into gaseous state.
 #. `Wikipedia <https://en.wikipedia.org/wiki/Enthalpy_of_vaporization>`__.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, symbols)
+from sympy import Eq, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    clone_as_symbol,
+)
 
-heat = Symbol("heat", units.energy)
+heat = symbols.heat
 """
-Heat released during vaporization.
-
-Symbol:
-    :code:`Q`
+:symbols:`heat` released during vaporization.
 """
 
 mass = symbols.mass
@@ -26,21 +29,16 @@ mass = symbols.mass
 :symbols:`mass` of the body subjected to vaporization.
 """
 
-specific_heat_of_vaporization = Symbol("specific_heat_of_vaporization", units.energy / units.mass)
+specific_heat_of_vaporization = clone_as_symbol(symbols.specific_energy, subscript="L")
 """
-Heat of vaporization per unit mass of the body.
-
-Symbol:
-    :code:`L`
+Heat of vaporization per unit mass of the body. See :symbols:`specific_energy`.
 """
 
 law = Eq(heat, specific_heat_of_vaporization * mass)
-r"""
-:code:`Q = L * m`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        Q = L m
+:laws:latex::
 """
 
 

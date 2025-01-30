@@ -14,66 +14,41 @@ and thermal conductivity.
 from sympy import Eq, solve
 from symplyphysics import (
     Quantity,
-    Symbol,
-    dimensionless,
+    SymbolNew,
     units,
     validate_input,
     validate_output,
     convert_to_float,
+    symbols,
 )
 
 # TODO Create "definition" law: Pr = momentum diffusivity / thermal diffusivity
 
-isobaric_specific_heat_capacity = Symbol("isobaric_specific_heat_capacity",
-    units.energy / units.mass / units.temperature)
-r"""
-Heat capacity at constant pressure per unit mass.
-
-Symbol:
-    :code:`c_p`
-
-Latex:
-    :math:`c_p`
+prandtl_number = symbols.prandtl_number
+"""
+:symbols:`prandtl_number` of the fluid.
 """
 
-dynamic_viscosity = Symbol("dynamic_viscosity", units.pressure * units.time)
-r"""
-Dynamic viscosity of the fluid.
-
-Symbol:
-    :code:`mu`
-
-Latex:
-    :math:`\mu`
+isobaric_specific_heat_capacity = SymbolNew("c_p", units.energy / units.mass / units.temperature)
+"""
+:symbols:`heat_capacity` at constant :symbols:`pressure` per unit :symbols:`mass`.
 """
 
-thermal_conductivity = Symbol("thermal_conductivity",
-    units.power / units.length / units.temperature)
+dynamic_viscosity = symbols.dynamic_viscosity
 """
-Thermal conductivity of the fluid.
-
-Symbol:
-    :code:`k`
+:symbols:`dynamic_viscosity` of the fluid.
 """
 
-prandtl_number = Symbol("prandtl_number", dimensionless)
-r"""
-Prandtl number of the fluid.
-
-Symbol:
-    :code:`Pr`
-
-Latex:
-    :math:`\text{Pr}`
+thermal_conductivity = symbols.thermal_conductivity
+"""
+:symbols:`thermal_conductivity` of the fluid.
 """
 
 law = Eq(prandtl_number, isobaric_specific_heat_capacity * dynamic_viscosity / thermal_conductivity)
-r"""
-:code:`Pr = c_p * mu / k`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \text{Pr} = \frac{c_p \mu}{k}
+:laws:latex::
 """
 
 
