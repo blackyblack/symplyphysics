@@ -1,48 +1,75 @@
+"""
+Wave resistance of coaxial waveguide
+====================================
+
+A coaxial waveguide is an electrical cable consisting of a central conductor and a
+shield arranged coaxially and separated by an insulating material or an air gap. It is
+used to transmit radio frequency electrical signals. The wave resistance of a coaxial
+waveguide depends on the radius of the outer conductor and the radius of the inner
+conductor, as well as on the relative permittivity and the relative permeability of the
+insulator material.
+
+**Notation:**
+
+#. :quantity_notation:`vacuum_permeability`.
+#. :quantity_notation:`vacuum_permittivity`.
+
+"""
+
 from sympy import Eq, solve, pi, sqrt, ln
-from sympy.physics.units import electric_constant, magnetic_constant
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless)
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    clone_as_symbol,
+)
+from symplyphysics.quantities import vacuum_permeability, vacuum_permittivity
 
-## Description
-## A coaxial waveguide is an electrical cable consisting of a central conductor and a shield arranged coaxially and separated
-## by an insulating material or an air gap. It is used to transmit radio frequency electrical signals.
-## The wave resistance of a coaxial waveguide depends on the radius of the outer conductor and the radius of the inner conductor,
-## as well as on the relative permittivity and the relative permeability of the insulator material.
+resistance = symbols.electrical_resistance
+"""
+:symbols:`electrical_resistance` of the wave in the waveguide.
+"""
 
-## Law is: Z = (1 / (2 * pi)) * sqrt(mu0 * mur / (e0 * er)) * ln(b / a), where
-## Z - wave resistance of coaxial waveguide,
-## e0 - electric constant,
-## er - relative permittivity of insulating material,
-## mu0 - magnetic constant,
-## mur - relative permeability of the insulator material,
-## b - radius of the outer conductor,
-## a - radius of the inner conductor.
+relative_permittivity = symbols.relative_permittivity
+"""
+:symbols:`relative_permittivity` of the insulator.
+"""
 
-wave_resistance = Symbol("wave_resistance", units.impedance)
+relative_permeability = symbols.relative_permeability
+"""
+:symbols:`relative_permeability` of the insulator.
+"""
 
-relative_permittivity = Symbol("relative_permittivity", dimensionless)
-relative_permeability = Symbol("relative_permeability", dimensionless)
-outer_radius = Symbol("outer_radius", units.length)
-inner_radius = Symbol("inner_radius", units.length)
+outer_radius = clone_as_symbol(symbols.radius, subscript="\\text{o}")
+"""
+:symbols:`radius` of the outer conductor.
+"""
 
-law = Eq(wave_resistance, (1 / (2 * pi)) * sqrt(magnetic_constant * relative_permeability /
-    (electric_constant * relative_permittivity)) * ln(outer_radius / inner_radius))
+inner_radius = clone_as_symbol(symbols.radius, subscript="\\text{i}")
+"""
+:symbols:`radius` of the inner conductor.
+"""
 
+law = Eq(resistance, (1 / (2 * pi)) * sqrt(vacuum_permeability * relative_permeability /
+    (vacuum_permittivity * relative_permittivity)) * ln(outer_radius / inner_radius))
+"""
+:laws:symbol::
 
-def print_law() -> str:
-    return print_expression(law)
+:laws:latex::
+"""
 
 
 @validate_input(relative_permittivity_=relative_permittivity,
     relative_permeability_=relative_permeability,
     outer_radius_=outer_radius,
     inner_radius_=inner_radius)
-@validate_output(wave_resistance)
+@validate_output(resistance)
 def calculate_wave_resistance(relative_permittivity_: float, relative_permeability_: float,
     outer_radius_: Quantity, inner_radius_: Quantity) -> Quantity:
     if outer_radius_.scale_factor <= inner_radius_.scale_factor:
         raise ValueError("The outer radius must be greater than the inner radius")
-    result_velocity_expr = solve(law, wave_resistance, dict=True)[0][wave_resistance]
+    result_velocity_expr = solve(law, resistance, dict=True)[0][resistance]
     result_expr = result_velocity_expr.subs({
         relative_permittivity: relative_permittivity_,
         relative_permeability: relative_permeability_,

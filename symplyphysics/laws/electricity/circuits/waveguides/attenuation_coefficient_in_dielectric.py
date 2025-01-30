@@ -1,48 +1,74 @@
+"""
+Attenuation coefficient in dielectric
+=====================================
+
+A coaxial waveguide is an electrical cable consisting of a central conductor and a
+shield arranged coaxially and separated by an insulating material or an air gap. It is
+used to transmit radio frequency electrical signals. The attenuation coefficient of a
+coaxial waveguide depends on the frequency of signal, as well as on the relative
+permittivity, the relative permeability and the dielectric loss angle of the insulator
+material. The attenuation coefficient shows how many times the transmitted signal
+weakens per unit length of the coaxial waveguide.
+
+**Notation:**
+
+#. :quantity_notation:`vacuum_permittivity`.
+#. :quantity_notation:`vacuum_permeability`.
+
+..
+    TODO: replace `vacuum_X * relative_X` with `absolute_X` where X is permittivity or permeability
+    TODO: find link
+"""
+
 from sympy import Eq, solve, sqrt
-from sympy.physics.units import electric_constant, magnetic_constant
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
-    print_expression,
+    SymbolNew,
     validate_input,
     validate_output,
     dimensionless,
-    angle_type,
+    symbols,
 )
+from symplyphysics.quantities import vacuum_permittivity, vacuum_permeability
 
-## Description
-## A coaxial waveguide is an electrical cable consisting of a central conductor and a shield arranged coaxially and separated
-## by an insulating material or an air gap. It is used to transmit radio frequency electrical signals.
-## The attenuation coefficient of a coaxial waveguide depends on the frequency of signal, as well as on the relative permittivity,
-## the relative permeability and the dielectric loss angle of the insulator material.
-## The attenuation coefficient shows how many times the transmitted signal weakens per unit length of the coaxial waveguide.
+attenuation_coefficient = symbols.attenuation_coefficient
+"""
+:symbols:`attenuation_coefficient` of the waveguide.
+"""
 
-## Law is: ad = w * sqrt(mu0 * mur * e0 * er) * tan(d) / 2, where
-## ad - attenuation coefficient of coaxial waveguide,
-## w - angular frequency of signal,
-## e0 - electric constant,
-## er - relative permittivity of insulating material,
-## mu0 - magnetic constant,
-## mur - relative permeability of the insulator material,
-## tan(d) - tangent of the dielectric loss angle of the insulator material.
+relative_permittivity = symbols.relative_permittivity
+"""
+:symbols:`relative_permittivity` of the insulator.
+"""
 
-attenuation_coefficient = Symbol("attenuation_coefficient", 1 / units.length)
+relative_permeability = symbols.relative_permeability
+"""
+:symbols:`relative_permeability` of the insulator.
+"""
 
-relative_permittivity = Symbol("relative_permittivity", dimensionless)
-relative_permeability = Symbol("relative_permeability", dimensionless)
-angular_frequency = Symbol("angular_frequency", angle_type / units.time)
-tangent_dielectric_loss_angle = Symbol("tangent_dielectric_loss_angle", dimensionless)
+angular_frequency = symbols.angular_frequency
+"""
+:symbols:`angular_frequency` of the signal.
+"""
+
+tangent_dielectric_loss_angle = SymbolNew("tan(d)", dimensionless, display_latex="\\tan(d)")
+"""
+Tangent of the dielectric loss angle of the medium filling the waveguide.
+
+..
+    TODO: replace with an actual tangent of an angle?
+"""
 
 law = Eq(
     attenuation_coefficient,
     angular_frequency *
-    sqrt(magnetic_constant * relative_permeability * electric_constant * relative_permittivity) *
+    sqrt(vacuum_permeability * relative_permeability * vacuum_permittivity * relative_permittivity) *
     tangent_dielectric_loss_angle / 2)
+"""
+:laws:symbol::
 
-
-def print_law() -> str:
-    return print_expression(law)
+:laws:latex::
+"""
 
 
 @validate_input(relative_permittivity_=relative_permittivity,

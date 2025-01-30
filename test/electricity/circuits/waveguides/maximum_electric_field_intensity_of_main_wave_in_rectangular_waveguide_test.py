@@ -6,7 +6,7 @@ from symplyphysics.laws.electricity.circuits.waveguides import maximum_electric_
 
 ## The relative permittivity of the material filling the waveguide is 2.2. The width of the cross-section
 ## of the waveguide is 4 centimeter, the wavelength is 10 millimeter. The magnetic field strength is 100 ampere
-## per meter. Then the maximum electric field strength will be 1694 millivolt per meter.
+## per meter. Then the maximum electric field strength will be 203 kilovolt per meter.
 
 Args = namedtuple("Args",
     ["relative_permittivity", "waveguide_width", "wavelength", "magnetic_intensity"])
@@ -27,7 +27,7 @@ def test_args_fixture() -> Args:
 def test_basic_maximum_electric_intensity(test_args: Args) -> None:
     result = intensity_law.calculate_maximum_electric_intensity(test_args.relative_permittivity,
         test_args.waveguide_width, test_args.wavelength, test_args.magnetic_intensity)
-    assert_equal(result, 1694 * prefixes.milli * units.volt / units.meter)
+    assert_equal(result, 203 * prefixes.kilo * units.volt / units.meter, tolerance=2e-3)
 
 
 def test_bad_relative_permittivity(test_args: Args) -> None:

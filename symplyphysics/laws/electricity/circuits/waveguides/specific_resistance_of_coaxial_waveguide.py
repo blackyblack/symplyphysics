@@ -1,56 +1,78 @@
-from sympy import (
-    Eq,
-    solve,
-    pi,
-    sqrt,
-)
-from sympy.physics.units import magnetic_constant
+"""
+Specific resistance of coaxial waveguide
+========================================
+
+A coaxial waveguide is an electrical cable consisting of a central conductor and a
+shield arranged coaxially and separated by an insulating material or an air gap. It is
+used to transmit radio frequency electrical signals. The specific resistance of a
+coaxial waveguide depends on the radius of the outer conductor and the radius of the
+inner conductor, as well as on the relative permeability of the insulator material,
+frequency of signal and specific conductivity of conductor.
+
+**Notation:**
+
+#. :quantity_notation:`vacuum_permeability`.
+
+..
+    TODO: find link
+    TODO: replace `mu_0 * mu_r` with `mu`
+"""
+
+from sympy import Eq, solve, pi, sqrt
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
-    print_expression,
+    SymbolNew,
     validate_input,
     validate_output,
-    dimensionless,
-    angle_type,
+    symbols,
+    quantities,
+    clone_as_symbol,
 )
 
-# Description
-## A coaxial waveguide is an electrical cable consisting of a central conductor and a shield arranged coaxially and separated
-## by an insulating material or an air gap. It is used to transmit radio frequency electrical signals.
-## The specific resistance of a coaxial waveguide depends on the radius of the outer conductor and the radius of the inner conductor,
-## as well as on the relative permeability of the insulator material, frequency of signal and specific conductivity of conductor.
+specific_resistance = SymbolNew("R", units.impedance / units.length)
+"""
+:symbols:`electrical_resistance` of coaxial waveguide per unit :symbols:`length`.
+"""
 
-## Law is: R = (1 / (2 * pi)) * sqrt(w * mu0 * mur / (2 * sig)) * (1 / a - 1 / b), where
-## R - specific resistance of coaxial waveguide,
-## w - angular frequency of signal,
-## sig - specific conductivity of conductor,
-## mu0 - magnetic constant,
-## mur - relative permeability of the insulator material,
-## b - radius of the outer conductor,
-## a - radius of the inner conductor.
+relative_permeability = symbols.relative_permeability
+"""
+:symbols:`relative_permeability` of the insulator.
+"""
 
-specific_resistance = Symbol("specific_resistance", units.impedance / units.length)
+angular_frequency = symbols.angular_frequency
+"""
+:symbols:`angular_frequency` of the signal.
+"""
 
-relative_permeability = Symbol("relative_permeability", dimensionless)
-angular_frequency = Symbol("angular_frequency", angle_type / units.time)
-specific_conductivity = Symbol("specific_conductivity", units.conductance / units.length)
-outer_radius = Symbol("outer_radius", units.length)
-inner_radius = Symbol("inner_radius", units.length)
+specific_conductance = SymbolNew("G", units.conductance / units.length)
+"""
+:symbols:`electrical_conductance` per unit :symbols:`length`.
+"""
+
+outer_radius = clone_as_symbol(symbols.radius, subscript="\\text{o}")
+"""
+:symbols:`radius` of the outer conductor.
+"""
+
+inner_radius = clone_as_symbol(symbols.radius, subscript="\\text{i}")
+"""
+:symbols:`radius` of the inner conductor.
+"""
 
 law = Eq(specific_resistance,
-    (1 / (2 * pi)) * sqrt(angular_frequency * magnetic_constant * relative_permeability /
-    (2 * specific_conductivity)) * (1 / inner_radius - 1 / outer_radius))
+    (1 / (2 * pi)) * sqrt(angular_frequency * quantities.vacuum_permeability * relative_permeability /
+    (2 * specific_conductance)) * (1 / inner_radius - 1 / outer_radius))
+"""
+:laws:symbol::
 
-
-def print_law() -> str:
-    return print_expression(law)
+:laws:latex::
+"""
 
 
 @validate_input(relative_permeability_=relative_permeability,
     angular_frequency_=angular_frequency,
-    specific_conductivity_=specific_conductivity,
+    specific_conductivity_=specific_conductance,
     outer_radius_=outer_radius,
     inner_radius_=inner_radius)
 @validate_output(specific_resistance)
@@ -62,7 +84,7 @@ def calculate_specific_resistance(relative_permeability_: float, angular_frequen
     result_expr = result_expr.subs({
         relative_permeability: relative_permeability_,
         angular_frequency: angular_frequency_,
-        specific_conductivity: specific_conductivity_,
+        specific_conductance: specific_conductivity_,
         outer_radius: outer_radius_,
         inner_radius: inner_radius_
     })

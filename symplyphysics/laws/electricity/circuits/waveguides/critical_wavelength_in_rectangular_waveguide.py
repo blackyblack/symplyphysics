@@ -1,35 +1,59 @@
+"""
+Critical wavelength in rectangular waveguide
+============================================
+
+A rectangular waveguide is a rectangular metal waveguide capable of supporting waves
+propagating along it. The critical frequency depends on the indices of the specific
+propagation mode and the dimensions of the waveguide cross-section.
+
+..
+    TODO: find link
+"""
+
 from sympy import Eq, solve, sqrt
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless)
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    dimensionless,
+    symbols,
+    clone_as_symbol,
+    SymbolNew,
+)
 
-## Description
-## A rectangular waveguide is a rectangular metal waveguide capable of supporting waves propagating along it.
-## There is a critical wavelength. Signals with a wavelength greater than the critical one are attenuated and
-## do not propagate in the waveguide.
-## The critical frequency depends on the indices of the specific propagation mode and the dimensions of the
-## waveguide cross-section.
-## The first index shows how many half-wave lengths fit horizontally across the cross section. The second index
-## shows how many half-wave lengths fit vertically across the cross section.
+critical_wavelength = clone_as_symbol(symbols.wavelength, subscript="\\text{c}")
+"""
+Critical :symbols:`wavelength` in the waveguide. See :ref:`Critical wavelength of waveguide`.
+"""
 
-## Law is: L = 2 / sqrt((m / a)^2 + (n / b)^2), where
-## L - critical wavelength in rectangular waveguide,
-## m - first index,
-## n - second index,
-## a - width of the waveguide cross section,
-## b - height of the waveguide cross section.
+first_index = SymbolNew("m", dimensionless)
+"""
+The first index shows how many half-wavelengths fit across the width of the cross
+section.
+"""
 
-critical_wavelength = Symbol("critical_wavelength", units.length)
+second_index = SymbolNew("n", dimensionless)
+"""
+The second index shows how many half-wavelengths fit across the height of the cross
+section.
+"""
 
-first_index = Symbol("first_index", dimensionless)
-second_index = Symbol("second_index", dimensionless)
-width = Symbol("width", units.length)
-height = Symbol("height", units.length)
+width = clone_as_symbol(symbols.length, display_symbol="a", display_latex="a")
+"""
+Width, or first dimension of the cross section. See :symbols:`length`.
+"""
+
+height = clone_as_symbol(symbols.length, display_symbol="b", display_latex="b")
+"""
+Height, or second dimension of the cross section. See :symbols:`length`.
+"""
 
 law = Eq(critical_wavelength, 2 / sqrt((first_index / width)**2 + (second_index / height)**2))
+"""
+:laws:symbol::
 
-
-def print_law() -> str:
-    return print_expression(law)
+:laws:latex::
+"""
 
 
 @validate_input(first_index_=first_index, second_index_=second_index, width_=width, height_=height)

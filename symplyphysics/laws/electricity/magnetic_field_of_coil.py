@@ -1,4 +1,4 @@
-r"""
+"""
 Magnetic field of coil
 ======================
 

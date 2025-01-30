@@ -1,44 +1,66 @@
+"""
+Attenuation coefficient in dielectric in rectangular waveguide
+==============================================================
+
+A rectangular waveguide is a rectangular metal waveguide capable of supporting waves
+propagating along it. 
+
+..
+    TODO: find link
+"""
+
 from sympy import Eq, solve, pi
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
-    print_expression,
     validate_input,
     validate_output,
+    symbols,
+    SymbolNew,
+    clone_as_symbol,
     dimensionless,
 )
 
-## Description
-## A rectangular waveguide is a rectangular metal waveguide capable of supporting waves propagating along it.
-## There is a critical wavelength. Signals with a wavelength greater than the critical one are attenuated and
-## do not propagate in the waveguide.
-## The attenuation coefficient shows how many times the transmitted signal weakens per unit length of the coaxial waveguide.
+attenuation_coefficient = symbols.attenuation_coefficient
+"""
+:symbols:`attenuation_coefficient` of the waveguide.
+"""
 
-## Law is: ad = (pi / L) * tan(d) * Z / Z0, where
-## ad - attenuation coefficient of waveguide,
-## L - wavelength,
-## tan(d) - tangent of the dielectric loss angle of the material filling the waveguide,
-## Z - characteristic resistance of rectangular waveguide,
-## Z0 - characteristic resistance of the material filling the waveguide.
+waveguide_impedance = symbols.wave_impedance
+"""
+:symbols:`wave_impedance` in the waveguide.
+"""
 
-attenuation_coefficient = Symbol("attenuation_coefficient", 1 / units.length)
+medium_impedance = clone_as_symbol(symbols.wave_impedance, subscript="0")
+"""
+:symbols:`wave_impedance` in the dielectric medium.
+"""
 
-resistance_of_waveguide = Symbol("resistance_of_waveguide", units.impedance)
-resistance_of_medium = Symbol("resistance_of_medium", units.impedance)
-wavelength = Symbol("wavelength", units.length)
-tangent_dielectric_loss_angle = Symbol("tangent_dielectric_loss_angle", dimensionless)
+wavelength = symbols.wavelength
+"""
+:symbols:`wavelength`.
+"""
 
-law = Eq(attenuation_coefficient, (pi / wavelength) * tangent_dielectric_loss_angle *
-    resistance_of_waveguide / resistance_of_medium)
+tangent_dielectric_loss_angle = SymbolNew("tan(d)", dimensionless, display_latex="\\tan(d)")
+"""
+Tangent of the dielectric loss angle of the medium filling the waveguide.
+
+..
+    TODO: replave with an actual tangent of an angle?
+"""
+
+# variable below is used for code printing
+_reduced_impedance = waveguide_impedance / medium_impedance
+
+law = Eq(attenuation_coefficient, (pi / wavelength) * _reduced_impedance * tangent_dielectric_loss_angle)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
-def print_law() -> str:
-    return print_expression(law)
-
-
-@validate_input(resistance_of_waveguide_=resistance_of_waveguide,
-    resistance_of_medium_=resistance_of_medium,
+@validate_input(resistance_of_waveguide_=waveguide_impedance,
+    resistance_of_medium_=medium_impedance,
     wavelength_=wavelength,
     tangent_dielectric_loss_angle_=tangent_dielectric_loss_angle)
 @validate_output(attenuation_coefficient)
@@ -48,8 +70,8 @@ def calculate_attenuation_coefficient(resistance_of_waveguide_: Quantity,
     result_velocity_expr = solve(law, attenuation_coefficient,
         dict=True)[0][attenuation_coefficient]
     result_expr = result_velocity_expr.subs({
-        resistance_of_waveguide: resistance_of_waveguide_,
-        resistance_of_medium: resistance_of_medium_,
+        waveguide_impedance: resistance_of_waveguide_,
+        medium_impedance: resistance_of_medium_,
         wavelength: wavelength_,
         tangent_dielectric_loss_angle: tangent_dielectric_loss_angle_
     })

@@ -31,6 +31,16 @@ electrical_impedance = SymbolNew("Z", units.impedance)
 resistance and reactance in a circuit.
 """
 
+wave_impedance = SymbolNew("eta", units.impedance, display_latex="\\eta")
+"""
+**Wave impedance** is a constant related to electromagnetic wave propagation in a
+medium.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Wave_impedance#>`__.
+"""
+
 electromotive_force = SymbolNew("E", units.voltage, display_latex="\\mathcal{E}")
 """
 **Electromotive force**, also **electromotance**, abbreviated **emf**, an energy transfer to an electric circuit per unit

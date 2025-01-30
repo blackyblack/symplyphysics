@@ -1,53 +1,73 @@
+"""
+Group speed of wave in rectangular waveguide
+============================================
+
+The group speed of a wave in a rectangular waveguide depends on the ratio of the
+wavelength of the signal to the critical wavelength of the waveguide and the
+electromagnetic properties of the insulator within the waveguide.
+
+**Notation:**
+
+#. :quantity_notation:`speed_of_light`.
+
+..
+    TODO: find link
+"""
+
 from sympy import Eq, solve, sqrt
-from sympy.physics.units import speed_of_light
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
-    print_expression,
     validate_input,
     validate_output,
-    dimensionless,
+    quantities,
+    symbols,
+    clone_as_symbol,
 )
 
-## Description
-## A rectangular waveguide is a rectangular metal waveguide capable of supporting waves propagating along it.
-## There is a critical wavelength. Signals with a wavelength greater than the critical one are attenuated and
-## do not propagate in the waveguide.
+group_speed = symbols.group_speed
+"""
+:symbols:`group_speed` of the wave in the waveguide.
+"""
 
-## Law is: Vg = c * sqrt(1 - (L / L1)^2) / sqrt(er * mur), where
-## Vg - group velocity of wave in rectangular waveguide,
-## c - speed of light,
-## L - wavelength,
-## L1 - critical wavelength,
-## er - relative permittivity of insulating material,
-## mur - relative permeability of the insulating material.
+relative_permittivity = symbols.relative_permittivity
+"""
+:symbols:`relative_permittivity` of the insulator.
+"""
 
-group_velocity = Symbol("group_velocity", units.velocity)
+relative_permeability = symbols.relative_permeability
+"""
+:symbols:`relative_permeability` of the insulator.
+"""
 
-relative_permittivity = Symbol("relative_permittivity", dimensionless)
-relative_permeability = Symbol("relative_permeability", dimensionless)
-wavelength = Symbol("wavelength", units.length)
-critical_wavelength = Symbol("critical_wavelength", units.length)
+wavelength = symbols.wavelength
+"""
+:symbols:`wavelength` of the signal.
+"""
+
+critical_wavelength = clone_as_symbol(symbols.wavelength, subscript="\\text{c}")
+"""
+Critical :symbols:`wavelength` of the system. See :ref:`Critical wavelength of waveguide`.
+"""
 
 law = Eq(
-    group_velocity,
-    speed_of_light * sqrt(1 - (wavelength / critical_wavelength)**2) /
+    group_speed,
+    quantities.speed_of_light * sqrt(1 - (wavelength / critical_wavelength)**2) /
     sqrt(relative_permittivity * relative_permeability))
+"""
+:laws:symbol::
 
-
-def print_law() -> str:
-    return print_expression(law)
+:laws:latex::
+"""
 
 
 @validate_input(relative_permittivity_=relative_permittivity,
     relative_permeability_=relative_permeability,
     wavelength_=wavelength,
     critical_wavelength_=critical_wavelength)
-@validate_output(group_velocity)
+@validate_output(group_speed)
 def calculate_group_velocity(relative_permittivity_: float, relative_permeability_: float,
     wavelength_: Quantity, critical_wavelength_: Quantity) -> Quantity:
-    result_velocity_expr = solve(law, group_velocity, dict=True)[0][group_velocity]
+    result_velocity_expr = solve(law, group_speed, dict=True)[0][group_speed]
     result_expr = result_velocity_expr.subs({
         relative_permittivity: relative_permittivity_,
         relative_permeability: relative_permeability_,

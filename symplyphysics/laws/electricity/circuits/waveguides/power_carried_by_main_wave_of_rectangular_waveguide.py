@@ -1,67 +1,80 @@
-from sympy import (
-    Eq,
-    solve,
-    sqrt,
-)
+"""
+Power carried by main wave of rectangular waveguide
+===================================================
+
+A rectangular waveguide is a rectangular metal waveguide capable of supporting waves
+propagating along it. The main wave is a transverse electric wave with the first index
+equal to :math:`1` and the second index equal to :math:`0`.
+
+..
+    TODO find link
+"""
+
+from sympy import Eq, solve, sqrt
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
-    print_expression,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
 )
 
-# Description
-## A rectangular waveguide is a rectangular metal waveguide capable of supporting waves propagating along it.
-## The main wave is a transverse electric wave with the first index equal to 1 and the second index equal to 0.
-## The first index shows how many half-wave lengths fit horizontally across the cross section. The second index
-## shows how many half-wave lengths fit vertically across the cross section.
+power = symbols.power
+"""
+:symbols:`power` transmitted by the waveguide.
+"""
 
-## Law is: P = a * b * sqrt(1 - (L / (2 * a))^2) * E0^2 / (4 * Z0), where
-## P - power carried by the waveguide,
-## a - width of the waveguide cross section,
-## b - height of the waveguide cross section,
-## L - wavelength,
-## E0 - maximum electric field intensity in the waveguide,
-## Z0 - characteristic resistance of the material filling the waveguide.
+width = clone_as_symbol(symbols.length, display_symbol="a", display_latex="a")
+"""
+Width, or first dimension of the cross section. See :symbols:`length`.
+"""
 
-# Conditions:
-# - The wave propagating in the waveguide must be the main wave.
+height = clone_as_symbol(symbols.length, display_symbol="b", display_latex="b")
+"""
+Height, or second dimension of the cross section. See :symbols:`length`.
+"""
 
-waveguide_power = Symbol("waveguide_power", units.power)
+wavelength = symbols.wavelength
+"""
+:symbols:`wavelength` of the signal.
+"""
 
-waveguide_width = Symbol("waveguide_width", units.length)
-waveguide_height = Symbol("waveguide_height", units.length)
-wavelength = Symbol("wavelength", units.length)
-material_resistance = Symbol("material_resistance", units.impedance)
-electric_intensity = Symbol("electric_intensity", units.voltage / units.length)
+material_resistance = symbols.electrical_resistance
+"""
+:symbols:`electrical_resistance` of the medium filling the waveguide.
+"""
+
+electric_field_strength = symbols.electric_field_strength
+"""
+Amplitude of :symbols:`electric_field_strength` in the waveguide.
+"""
 
 law = Eq(
-    waveguide_power,
-    waveguide_width * waveguide_height * sqrt(1 - (wavelength / (2 * waveguide_width))**2) *
-    electric_intensity**2 / (4 * material_resistance))
+    power,
+    width * height * sqrt(1 - (wavelength / (2 * width))**2) *
+    electric_field_strength**2 / (4 * material_resistance))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
-def print_law() -> str:
-    return print_expression(law)
-
-
-@validate_input(waveguide_width_=waveguide_width,
-    waveguide_height_=waveguide_height,
+@validate_input(width_=width,
+    waveguide_height_=height,
     wavelength_=wavelength,
     material_resistance_=material_resistance,
-    electric_intensity_=electric_intensity)
-@validate_output(waveguide_power)
-def calculate_waveguide_power(waveguide_width_: Quantity, waveguide_height_: Quantity,
+    electric_intensity_=electric_field_strength)
+@validate_output(power)
+def calculate_waveguide_power(width_: Quantity, waveguide_height_: Quantity,
     wavelength_: Quantity, material_resistance_: Quantity,
     electric_intensity_: Quantity) -> Quantity:
-    result_expr = solve(law, waveguide_power, dict=True)[0][waveguide_power]
+    result_expr = solve(law, power, dict=True)[0][power]
     result_expr = result_expr.subs({
-        waveguide_width: waveguide_width_,
-        waveguide_height: waveguide_height_,
+        width: width_,
+        height: waveguide_height_,
         wavelength: wavelength_,
         material_resistance: material_resistance_,
-        electric_intensity: electric_intensity_
+        electric_field_strength: electric_intensity_
     })
     return Quantity(result_expr)

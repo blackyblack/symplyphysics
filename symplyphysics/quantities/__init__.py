@@ -288,6 +288,18 @@ or Avogadro's number, of electrons.
 #. `TechTarget <https://www.techtarget.com/whatis/definition/Faraday-constant>`__.
 """
 
+vacuum_impedance = Quantity(376.730313412 * units.ohm, display_symbol="Z_0")
+"""
+The **impedance of free space** is a physical constant relating the magnitudes of the
+electric and magnetic fields of electromagnetic radiation travelling through free space.
+A common appoximation of its value is :math:`120 \\pi \\, \\Omega`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Impedance_of_free_space>`__.
+"""
+
+
 __all__ = [
     "standard_conditions_temperature",
     "standard_laboratory_temperature",
@@ -313,4 +325,5 @@ __all__ = [
     "hubble_constant",
     "zero_point_luminosity",
     "faraday_constant",
+    "vacuum_impedance",
 ]

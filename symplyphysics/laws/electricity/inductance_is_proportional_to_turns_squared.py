@@ -1,38 +1,73 @@
-from sympy import (Eq, solve)
-from sympy.physics.units import magnetic_constant
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless)
+"""
+Inductance is proportional to turn count
+========================================
 
-# Description
-## The basic characteristic of a coil is its inductance - the ability of the coil to accumulate energy as magnetic field.
-## Law: L = mu * mu_0 * N**2 * S / d, where
-## L is the inductance of a coil,
-## mu is magnetic permeability of core,
-## mu_0 is magnetic constant (magnetic permeability of vacuum),
-## N is number of turns,
-## S is area of each turn (coil's cross sectional area),
-## d is coil length.
+The basic characteristic of a coil is its inductance, which is the ability of the coil
+to accumulate energy as magnetic field.
 
-# Links: Wikipedia <https://en.wikipedia.org/wiki/Inductance#Inductance_of_a_solenoid>
+**Links:**
 
-coil_inductance = Symbol("coil_inductance", units.inductance)
-magnetic_permeability = Symbol("magnetic_permeability", dimensionless)
-number_of_turns = Symbol("number_of_turns", dimensionless)
-turn_area = Symbol("turn_area", units.area)
-coil_length = Symbol("coil_length", units.length)
+#. `Wikipedia <https://en.wikipedia.org/wiki/Inductance#Inductance_of_a_solenoid>`__.
 
-law = Eq(coil_inductance,
-    magnetic_constant * magnetic_permeability * number_of_turns**2 * turn_area / coil_length)
+..
+    TODO: replace `mu_0 * mu_r` with `mu`
+    TODO: fix file name
+"""
+
+from sympy import Eq, solve
+from symplyphysics import (
+    Quantity,
+    SymbolNew,
+    validate_input,
+    validate_output,
+    dimensionless,
+    quantities,
+    symbols,
+)
+
+inductance = symbols.inductance
+"""
+:symbols:`inductance` of the coil.
+"""
+
+relative_permeability = symbols.relative_permeability
+"""
+:symbols:`relative_permeability` of the medium within the coil.
+"""
+
+turn_count = SymbolNew("N", dimensionless)
+"""
+Number of turns in the coil.
+"""
+
+cross_sectional_area = symbols.area
+"""
+Cross sectional :symbols:`area` of the coil.
+"""
+
+length = symbols.length
+"""
+:symbols:`length` of the coil.
+"""
+
+law = Eq(inductance,
+    quantities.vacuum_permeability * relative_permeability * turn_count**2 * cross_sectional_area / length)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
-@validate_input(turn_area_=turn_area, coil_length_=coil_length)
-@validate_output(coil_inductance)
+@validate_input(turn_area_=cross_sectional_area, coil_length_=length)
+@validate_output(inductance)
 def calculate_inductance(magnetic_permeability_: float, number_of_turns_: float,
     turn_area_: Quantity, coil_length_: Quantity) -> Quantity:
-    result_inductance_expr = solve(law, coil_inductance, dict=True)[0][coil_inductance]
+    result_inductance_expr = solve(law, inductance, dict=True)[0][inductance]
     result_expr = result_inductance_expr.subs({
-        magnetic_permeability: magnetic_permeability_,
-        number_of_turns: number_of_turns_,
-        turn_area: turn_area_,
-        coil_length: coil_length_
+        relative_permeability: magnetic_permeability_,
+        turn_count: number_of_turns_,
+        cross_sectional_area: turn_area_,
+        length: coil_length_
     })
     return Quantity(result_expr)

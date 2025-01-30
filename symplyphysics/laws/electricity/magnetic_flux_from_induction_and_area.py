@@ -1,28 +1,48 @@
+"""
+Magnetic flux from magnetic flux density and area
+=================================================
+
+Magnetic flux is the flux of the vector of magnetic flux density through a certain surface.
+
+**Links:**
+
+#. `Wikipedia, first formula <https://en.wikipedia.org/wiki/Magnetic_flux>`__.
+"""
+
 from sympy import (Eq, solve, cos)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, angle_type)
+from symplyphysics import (Quantity, validate_input, validate_output, symbols)
 
-# Description
-## Magnetic flux is the flux of a magnetic induction vector through a certain surface.
-## Law is: Φ = B * S * cos(a), where
-## Φ - flux,
-## B - induction,
-## S - area,
-## a - angle between the normal of pad and magnetic induction.
+magnetic_flux = symbols.magnetic_flux
+"""
+:symbols:`magnetic_flux` through the area.
+"""
 
-# Links: Wikipedia, first formula <https://en.wikipedia.org/wiki/Magnetic_flux>
+magnetic_flux_density = symbols.magnetic_flux_density
+"""
+:symbols:`magnetic_flux_density`.
+"""
 
-flux = Symbol("flux", units.magnetic_flux)
+area = symbols.area
+"""
+:symbols:`area`.
+"""
 
-induction = Symbol("induction", units.magnetic_density)
-area = Symbol("area", units.area)
-angle = Symbol("angle", angle_type)
+angle = symbols.angle
+"""
+:symbols:`angle` between the vector of magnetic flux density and the area vector.
+"""
 
-law = Eq(flux, induction * area * cos(angle))
+law = Eq(magnetic_flux, magnetic_flux_density * area * cos(angle))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
-@validate_input(induction_=induction, area_=area, angle_=angle)
-@validate_output(flux)
+@validate_input(induction_=magnetic_flux_density, area_=area, angle_=angle)
+@validate_output(magnetic_flux)
 def calculate_flux(induction_: Quantity, area_: Quantity, angle_: Quantity | float) -> Quantity:
-    result_flux_expr = solve(law, flux, dict=True)[0][flux]
-    result_expr = result_flux_expr.subs({induction: induction_, area: area_, angle: angle_})
+    result_flux_expr = solve(law, magnetic_flux, dict=True)[0][magnetic_flux]
+    result_expr = result_flux_expr.subs({magnetic_flux_density: induction_, area: area_, angle: angle_})
     return Quantity(result_expr)

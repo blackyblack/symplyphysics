@@ -1,33 +1,61 @@
+"""
+Specific capacitance of coaxial waveguide
+=========================================
+
+A coaxial waveguide is an electrical cable consisting of a central conductor and a
+shield arranged coaxially and separated by an insulating material or an air gap. It is
+used to transmit radio frequency electrical signals. The specific capacitance of a
+coaxial waveguide depends on the radius of the outer conductor and the radius of the
+inner conductor, as well as on the relative permittivity of the insulator material.
+
+**Notation:**
+
+#. :quantity_notation:`vacuum_permittivity`.
+
+..
+    TODO: replace `eps_0 * eps_r` with `eps`
+    TODO: find link
+"""
+
 from sympy import Eq, solve, pi, ln
-from sympy.physics.units import electric_constant
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless)
+from symplyphysics import (
+    units,
+    Quantity,
+    SymbolNew,
+    validate_input,
+    validate_output,
+    quantities,
+    symbols,
+    clone_as_symbol,
+)
 
-## Description
-## A coaxial waveguide is an electrical cable consisting of a central conductor and a shield arranged coaxially and separated
-## by an insulating material or an air gap. It is used to transmit radio frequency electrical signals.
-## The specific capacitance of a coaxial waveguide depends on the radius of the outer conductor and the radius of the inner conductor,
-## as well as on the relative permittivity of the insulator material.
+specific_capacitance = SymbolNew("C", units.capacitance / units.length)
+"""
+:symbols:`capacitance` of the waveguide per unit :symbols:`length`.
+"""
 
-## Law is: C = (2 * pi * e0 * er ) / ln(b / a), where
-## C - specific capacitance of coaxial waveguide,
-## e0 - electric constant,
-## er - relative permittivity of insulating material,
-## b - radius of the outer conductor,
-## a - radius of the inner conductor.
+relative_permittivity = symbols.relative_permittivity
+"""
+:symbols:`relative_permittivity` of the insulator.
+"""
 
-specific_capacitance = Symbol("specific_capacitance", units.capacitance / units.length)
+outer_radius = clone_as_symbol(symbols.radius, subscript="\\text{o}")
+"""
+:symbols:`radius` of the outer conductor.
+"""
 
-relative_permittivity = Symbol("relative_permittivity", dimensionless)
-outer_radius = Symbol("outer_radius", units.length)
-inner_radius = Symbol("inner_radius", units.length)
+inner_radius = clone_as_symbol(symbols.radius, subscript="\\text{i}")
+"""
+:symbols:`radius` of the inner conductor.
+"""
 
 law = Eq(specific_capacitance,
-    (2 * pi * electric_constant * relative_permittivity) / ln(outer_radius / inner_radius))
+    (2 * pi * quantities.vacuum_permittivity * relative_permittivity) / ln(outer_radius / inner_radius))
+"""
+:laws:symbol::
 
-
-def print_law() -> str:
-    return print_expression(law)
+:laws:latex::
+"""
 
 
 @validate_input(relative_permittivity_=relative_permittivity,
