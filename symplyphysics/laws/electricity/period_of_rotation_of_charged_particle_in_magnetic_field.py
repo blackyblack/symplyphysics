@@ -93,7 +93,7 @@ _acceleration_via_frequency = _centripetal_acceleration_law.law.rhs.subs({
 })
 
 _angular_frequency_expr = solve(
-    eq := Eq(_acceleration_via_frequency, _acceleration_via_force),
+    Eq(_acceleration_via_frequency, _acceleration_via_force),
     _angular_frequency,
 )[0]
 
@@ -141,7 +141,7 @@ _acceleration_via_frequency = _centripetal_acceleration_law.law.rhs.subs({
 })
 
 _angular_frequency_expr = solve(
-    eq := Eq(_acceleration_via_frequency, _acceleration_via_force),
+    Eq(_acceleration_via_frequency, _acceleration_via_force),
     _angular_frequency,
 )[0]
 

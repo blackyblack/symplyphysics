@@ -81,8 +81,8 @@ law = Eq(
 
 # As Laplacian is a second derivative over space coordinates (x, y, z), resulting dimension should be
 # original dimension / units.length**2
-assert SI.get_dimension_system().equivalent_dims(a := neutron_flux_laplacian.dimension,
-    b := neutron_flux.dimension / units.length**2), (a, b)
+assert SI.get_dimension_system().equivalent_dims(neutron_flux_laplacian.dimension,
+    neutron_flux.dimension / units.length**2)
 
 
 # neutron_flux_function_ should be a function on CoordSys3D

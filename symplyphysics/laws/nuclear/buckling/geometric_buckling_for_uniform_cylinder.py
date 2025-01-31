@@ -51,7 +51,7 @@ _geometric_buckling_cylinder_solved = _geometric_buckling_cylinder_squared.subs(
     cylinder_flux.radius: radius,
     cylinder_flux.height: height
 })
-assert (a := _geometric_buckling_cylinder_solved.evalf(7)) == (b := law.rhs.evalf(7)), (a, b)
+assert _geometric_buckling_cylinder_solved.evalf(7) == law.rhs.evalf(7)
 
 
 @validate_input(cylinder_radius_=radius, cylinder_height_=height)

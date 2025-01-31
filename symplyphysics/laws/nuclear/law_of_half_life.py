@@ -2,7 +2,10 @@
 Solution to the exponential decay equation
 ==========================================
 
-TODO
+The solution to the exponential decay equation is the product of the initial quantity
+and the the ratio of the current time to the half-life of the quantity, raised to the
+power of 2. In other words, for every half-life that passes, the quantity decays by a
+factor of 2.
 
 **Links:**
 
@@ -17,19 +20,6 @@ from symplyphysics import (
     symbols,
     clone_as_symbol,
 )
-
-# Description
-## Half-life is the time required for a quantity (of substance) to reduce to half of its initial value.
-## The term is commonly used in nuclear physics to describe how quickly unstable atoms undergo radioactive
-## decay or how long stable atoms survive. The term is also used more generally to characterize any type
-## of exponential (or, rarely, non-exponential) decay.
-
-## Law is: N = N0 * 2^(-t / T), where
-## N - number of cores after a period of time,
-## N0 - initial number of cores,
-## t - an arbitrary time interval,
-## T - half-life of the nuclei.
-
 
 final_quantity = symbols.any_quantity
 """
