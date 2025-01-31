@@ -82,6 +82,12 @@ distance_to_axis = SymbolNew("r", units.length)
 Distance to reference axis.
 """
 
+orthogonal_distance = SymbolNew("z", units.length)
+"""
+**Orthogonal distance** between two objects is the distance from one to the other,
+measured along a line that is perpendicular to one or both.
+"""
+
 length = SymbolNew("l", units.length)
 """
 **Length** is a measure of a size of an object.
