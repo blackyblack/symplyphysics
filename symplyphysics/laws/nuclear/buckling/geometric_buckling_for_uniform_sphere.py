@@ -1,25 +1,34 @@
-from sympy import (Eq, solve, pi)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
+"""
+Geometric buckling for uniform sphere
+=====================================
+
+Geometric buckling for a uniform spherical reactor is a function of its radius.
+
+**Links:**
+
+#. `Wikipedia, first row in first table <https://en.wikipedia.org/wiki/Geometric_and_material_buckling#Geometric_Buckling>`__.
+"""
+
+from sympy import Eq, solve, pi
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_sphere as sphere_flux
 
-# Description
-## Geometric buckling for the uniform spherical reactor. The spherical reactor is situated in spherical
-## geometry at the origin of coordinates.
+radius = symbols.radius
+"""
+:symbols:`radius` of the sphere.
+"""
 
-## Law: Bg^2sphere = (Pi / R)^2
-## Where:
-## Pi - Pi constant.
-## R - sphere radius.
-## Bg^2sphere - squared geometric buckling for sphere.
-##   See [geometric buckling](./geometric_buckling_from_neutron_flux.py) implementation.
+geometric_buckling = symbols.geometric_buckling
+"""
+:symbols:`geometric_buckling`.
+"""
 
-# Links:
-## Wikipedia, first row in first table <https://en.wikipedia.org/wiki/Geometric_and_material_buckling#Geometric_Buckling>
+law = Eq(geometric_buckling, (pi / radius)**2)
+"""
+:laws:symbol::
 
-sphere_radius = Symbol("sphere_radius", units.length)
-geometric_buckling_squared = Symbol("geometric_buckling_squared", 1 / units.area)
-
-law = Eq(geometric_buckling_squared, (pi / sphere_radius)**2)
+:laws:latex::
+"""
 
 # This law is derived from geometric buckling definition (see geometric_buckling_from_neutron_flux.py),
 # neutron flux laplacian in spherical coordinates and boundary condtitions.
@@ -27,15 +36,15 @@ law = Eq(geometric_buckling_squared, (pi / sphere_radius)**2)
 # Unfortunately sympy does not support solving with complex boundary conditions so we simply check with known
 # solution for the neutron flux:
 # See [neutron flux for uniform sphere](./neutron_flux_for_uniform_sphere.py)
-geometric_buckling_sphere_squared = sphere_flux.radial_constant**2
-geometric_buckling_sphere_flux_solved = geometric_buckling_sphere_squared.subs(
-    sphere_flux.sphere_radius, sphere_radius)
-assert geometric_buckling_sphere_flux_solved == law.rhs
+_geometric_buckling_sphere_squared = sphere_flux._radial_constant**2
+_geometric_buckling_sphere_flux_solved = _geometric_buckling_sphere_squared.subs(
+    sphere_flux.radius, radius)
+assert _geometric_buckling_sphere_flux_solved == law.rhs
 
 
-@validate_input(sphere_radius_=sphere_radius)
-@validate_output(geometric_buckling_squared)
+@validate_input(sphere_radius_=radius)
+@validate_output(geometric_buckling)
 def calculate_geometric_buckling_squared(sphere_radius_: Quantity) -> Quantity:
-    solved = solve(law, geometric_buckling_squared, dict=True)[0][geometric_buckling_squared]
-    result_expr = solved.subs(sphere_radius, sphere_radius_)
+    solved = solve(law, geometric_buckling, dict=True)[0][geometric_buckling]
+    result_expr = solved.subs(radius, sphere_radius_)
     return Quantity(result_expr)

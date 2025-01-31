@@ -1,44 +1,71 @@
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, print_expression, dimensionless, validate_input,
-    validate_output)
+"""
+Geometric buckling from macroscopic cross sections and diffusion coefficient
+============================================================================
+
+Geometrical buckling is a quantity describing the reactor which depends only on its
+geometry. It can also be calculated from the macroscopic cross sections and the
+diffusion coefficient as well as the effective multiplicative factor and the neutron
+production rate.
+
+**Links:**
+
+#. `Wikipedia, second part of second equation <https://en.wikipedia.org/wiki/Geometric_and_material_buckling#Material_Buckling>`__.
+"""
+
+from sympy import Eq, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    clone_as_symbol,
+)
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.nuclear import diffusion_equation_from_neutron_flux as diffusion_equation_law
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_flux as buckling_law
 
-# Description
-## The quantity Bg^2 is called the geometrical buckling of the reactor and depends only on the geometry.
-## See [geometric buckling](./geometric_buckling_from_neutron_flux.py) implementation.
+neutrons_per_fission = clone_as_symbol(symbols.particle_count, display_symbol="nu", display_latex="\\nu")
+"""
+The average number of neutrons produced per fission. See :symbols:`particle_count`.
+"""
 
-## Law: Bg^2 = ((v / k_effective) * Σf - Σa) / D
-## Where:
-## v - average number of neutrons produced per fission.
-## k_effective - effective multiplication factor.
-##   See [effective multiplication factor](./effective_multiplication_factor.py)
-## Σf - macroscopic fission cross-section of the fuel.
-##   See [macroscopic cross-section](./macroscopic_cross_section_from_free_mean_path.py) implementation.
-## Σa - macroscopic absorption cross-section of the fuel.
-## D - diffusion coefficient.
-##   See [diffusion coefficient](./neutron_diffusion_coefficient_from_scattering_cross_section.py) implementation.
-## Bg^2 - geometric buckling.
+effective_multiplication_factor = symbols.effective_multiplication_factor
+"""
+:symbols:`effective_multiplication_factor`.
+"""
 
-# Links
-## Wikipedia, second part of second equation <https://en.wikipedia.org/wiki/Geometric_and_material_buckling#Material_Buckling>
+macroscopic_fission_cross_section = clone_as_symbol(symbols.macroscopic_cross_section, display_symbol="Sigma_f", display_latex="\\Sigma_\\text{f}")
+"""
+:symbols:`macroscopic_cross_section` of fission.
+"""
 
-neutrons_per_fission = Symbol("neutrons_per_fission", dimensionless)
-effective_multiplication_factor = Symbol("effective_multiplication_factor", dimensionless)
-macroscopic_fission_cross_section = Symbol("macroscopic_fission_cross_section", 1 / units.length)
-macroscopic_absorption_cross_section = Symbol("macroscopic_absorption_cross_section",
-    1 / units.length)
-diffusion_coefficient = Symbol("diffusion_coefficient", units.length)
-geometric_buckling_squared = Symbol("geometric_buckling_squared", 1 / units.area)
+macroscopic_absorption_cross_section = clone_as_symbol(symbols.macroscopic_cross_section, display_symbol="Sigma_a", display_latex="\\Sigma_\\text{a}")
+"""
+:symbols:`macroscopic_cross_section` of absorption.
+"""
 
-law = Eq(geometric_buckling_squared,
+diffusion_coefficient = symbols.neutron_diffusion_coefficient
+"""
+:symbols:`neutron_diffusion_coefficient`.
+"""
+
+geometric_buckling = symbols.geometric_buckling
+"""
+:symbols:`geometric_buckling`.
+"""
+
+law = Eq(geometric_buckling,
     ((neutrons_per_fission / effective_multiplication_factor) * macroscopic_fission_cross_section -
     macroscopic_absorption_cross_section) / diffusion_coefficient)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 # Derive the same law from the diffusion equation and geometric buckling from neutron flux law
 
-diffusion_eq1 = diffusion_equation_law.law.subs({
+_diffusion_eq1 = diffusion_equation_law.law.subs({
     diffusion_equation_law.effective_multiplication_factor:
         effective_multiplication_factor,
     diffusion_equation_law.diffusion_coefficient:
@@ -50,27 +77,23 @@ diffusion_eq1 = diffusion_equation_law.law.subs({
     diffusion_equation_law.neutrons_per_fission:
         neutrons_per_fission
 })
-buckling_eq2 = buckling_law.law.subs({
-    buckling_law.geometric_buckling_squared: geometric_buckling_squared,
+_buckling_eq2 = buckling_law.law.subs({
+    buckling_law.geometric_buckling: geometric_buckling,
     buckling_law.neutron_flux: diffusion_equation_law.neutron_flux,
-    buckling_law.flux_position: diffusion_equation_law.flux_position,
+    buckling_law.position: diffusion_equation_law.position,
     buckling_law.neutron_flux_laplacian: diffusion_equation_law.neutron_flux_laplacian
 })
 
 derived_law = [
-    diffusion_eq1, buckling_eq2, diffusion_equation_law.neutron_flux_laplacian_definition
+    _diffusion_eq1, _buckling_eq2, diffusion_equation_law._neutron_flux_laplacian_definition
 ]
 
 ## Check the equivalence of 'law' and 'derived_law'
-derived_geometric_buckling_squared = solve(derived_law, (geometric_buckling_squared,
-    diffusion_equation_law.neutron_flux(diffusion_equation_law.flux_position),
-    diffusion_equation_law.neutron_flux_laplacian(diffusion_equation_law.flux_position)),
-    dict=True)[0][geometric_buckling_squared]
-assert expr_equals(law.rhs, derived_geometric_buckling_squared)
-
-
-def print_law() -> str:
-    return print_expression(law)
+_derived_geometric_buckling_squared = solve(derived_law, (geometric_buckling,
+    diffusion_equation_law.neutron_flux(diffusion_equation_law.position),
+    diffusion_equation_law.neutron_flux_laplacian(diffusion_equation_law.position)),
+    dict=True)[0][geometric_buckling]
+assert expr_equals(law.rhs, _derived_geometric_buckling_squared)
 
 
 @validate_input(neutrons_per_fission_=neutrons_per_fission,
@@ -78,12 +101,12 @@ def print_law() -> str:
     macroscopic_fission_cross_section_=macroscopic_fission_cross_section,
     macroscopic_absorption_cross_section_=macroscopic_absorption_cross_section,
     diffusion_coefficient_=diffusion_coefficient)
-@validate_output(geometric_buckling_squared)
+@validate_output(geometric_buckling)
 def calculate_buckling(neutrons_per_fission_: float, effective_multiplication_factor_: float,
     macroscopic_fission_cross_section_: Quantity, macroscopic_absorption_cross_section_: Quantity,
     diffusion_coefficient_: Quantity) -> Quantity:
-    result_buckling_expr = solve(law, geometric_buckling_squared,
-        dict=True)[0][geometric_buckling_squared]
+    result_buckling_expr = solve(law, geometric_buckling,
+        dict=True)[0][geometric_buckling]
     result_expr = result_buckling_expr.subs({
         neutrons_per_fission: neutrons_per_fission_,
         effective_multiplication_factor: effective_multiplication_factor_,

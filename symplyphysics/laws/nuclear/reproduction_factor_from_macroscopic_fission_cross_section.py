@@ -1,45 +1,67 @@
+"""
+Reproduction factor from macroscopic cross sections in fuel
+===========================================================
+
+Reproduction factor can be found using the macroscopic fissure and absorption cross
+sections in the fuel and the average number of neutrons produced per fission.
+
+**Links:**
+
+#. `Wikipedia, first row in table <https://en.wikipedia.org/wiki/Four_factor_formula>`__.
+"""
+
 from sympy import Eq, solve
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
-    dimensionless,
     validate_input,
     validate_output,
     convert_to_float,
+    symbols,
+    clone_as_symbol,
 )
 
-# Description
-## The reproduction factor η represents the number of fast neutrons produced per thermal neutron absorbed in the fuel.
+neutrons_per_fission = clone_as_symbol(symbols.particle_count, display_symbol="nu", display_latex="\\nu")
+"""
+Average number of neutrons produced per fission. See :symbols:`particle_count`.
+"""
 
-## Law: η = v * Σf_fuel / Σa_fuel
-## Where:
-## v - average number of neutrons produced per fission.
-## Σf_fuel - macroscopic fission cross-section of the fuel.
-##   See [macroscopic cross-section](./macroscopic_cross_section_from_free_mean_path.py) implementation.
-## Σa_fuel - macroscopic absorption cross-section of the fuel. Equals to macroscopic fission (Σf_fuel) + macroscopic capture
-##   (Σc_fuel) cross-sections.
-## η - neutron reproduction factor
+macroscopic_fuel_fission_cross_section = clone_as_symbol(
+    symbols.macroscopic_cross_section,
+    display_symbol="Sigma_ff",
+    display_latex="\\Sigma_\\text{f}^\\text{f}",
+)
+"""
+:symbols:`macroscopic_cross_section` of fission in the fuel.
+"""
 
-# Links:
-## Wikipedia, first row in table <https://en.wikipedia.org/wiki/Four_factor_formula>
+macroscopic_fuel_absorption_cross_section = clone_as_symbol(
+    symbols.macroscopic_cross_section,
+    display_symbol="Sigma_af",
+    display_latex="\\Sigma_\\text{a}^\\text{f}",
+)
+"""
+:symbols:`macroscopic_cross_section` of absorption in the fuel.
+"""
 
-neutrons_per_fission = Symbol("neutrons_per_fission", dimensionless)
-macroscopic_fuel_fission_cross_section = Symbol("macroscopic_fuel_fission_cross_section",
-    1 / units.length)
-macroscopic_fuel_absorption_cross_section = Symbol("macroscopic_fuel_absorption_cross_section",
-    1 / units.length)
-neutron_reproduction_factor = Symbol("neutron_reproduction_factor", dimensionless)
+reproduction_factor = symbols.reproduction_factor
+"""
+Neutron :symbols:`reproduction_factor`.
+"""
 
 law = Eq(
-    neutron_reproduction_factor, neutrons_per_fission * macroscopic_fuel_fission_cross_section /
+    reproduction_factor, neutrons_per_fission * macroscopic_fuel_fission_cross_section /
     macroscopic_fuel_absorption_cross_section)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(neutrons_per_fission_=neutrons_per_fission,
     macroscopic_fuel_fission_cross_section_=macroscopic_fuel_fission_cross_section,
     macroscopic_fuel_absorption_cross_section_=macroscopic_fuel_absorption_cross_section)
-@validate_output(neutron_reproduction_factor)
+@validate_output(reproduction_factor)
 def calculate_reproduction_factor(neutrons_per_fission_: float,
     macroscopic_fuel_fission_cross_section_: Quantity,
     macroscopic_fuel_absorption_cross_section_: Quantity) -> float:
@@ -50,8 +72,8 @@ def calculate_reproduction_factor(neutrons_per_fission_: float,
             f"macroscopic_fuel_absorption_cross_section_ ({macroscopic_fuel_absorption_cross_section_.scale_factor})"
         )
 
-    result_factor_expr = solve(law, neutron_reproduction_factor,
-        dict=True)[0][neutron_reproduction_factor]
+    result_factor_expr = solve(law, reproduction_factor,
+        dict=True)[0][reproduction_factor]
     result_expr = result_factor_expr.subs({
         neutrons_per_fission: neutrons_per_fission_,
         macroscopic_fuel_fission_cross_section: macroscopic_fuel_fission_cross_section_,

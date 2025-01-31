@@ -1,28 +1,45 @@
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
+"""
+Diffusion area from diffusion coefficient and absorption cross section
+======================================================================
 
-# Description
-## The physical meaning of the diffusion length can be seen by calculating the mean square distance that
-## a neutron travels in the one direction from the plane source to its absorption point.
+Diffusion area of a nuclear reaction can be found as the ratio of he diffusion
+coefficient to the macroscopic absorption cross section of the reaction.
 
-## Law: L^2 = D / Σa
-## Where:
-## Σa - macroscopic absorption cross-section of the fuel.
-##   See [macroscopic transport cross-section](./macroscopic_transport_cross_section.py) implementation.
-## D - diffusion coefficient.
-##   See [diffusion coefficient](./neutron_diffusion_coefficient_from_scattering_cross_section.py) implementation.
-## L^2 - diffusion area.
-## L - diffusion length.
+**Links:**
 
-# Links:
-## NuclearPower <https://www.nuclear-power.com/nuclear-power/reactor-physics/neutron-diffusion-theory/diffusion-length/>
+#. `NuclearPower <https://www.nuclear-power.com/nuclear-power/reactor-physics/neutron-diffusion-theory/diffusion-length/>`__.
+"""
 
-diffusion_coefficient = Symbol("diffusion_coefficient", units.length)
-macroscopic_absorption_cross_section = Symbol("macroscopic_absorption_cross_section",
-    1 / units.length)
-diffusion_area = Symbol("diffusion_area", units.area)
+from sympy import Eq, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    clone_as_symbol,
+)
+
+diffusion_coefficient = symbols.neutron_diffusion_coefficient
+"""
+:symbols:`neutron_diffusion_coefficient`.
+"""
+
+macroscopic_absorption_cross_section = clone_as_symbol(symbols.macroscopic_cross_section, display_symbol="Sigma_a", display_latex="\\Sigma_\\text{a}")
+"""
+:symbols:`macroscopic_cross_section` of absorption.
+"""
+
+diffusion_area = symbols.neutron_diffusion_area
+"""
+:symbols:`neutron_diffusion_area`.
+"""
 
 law = Eq(diffusion_area, diffusion_coefficient / macroscopic_absorption_cross_section)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(diffusion_coefficient_=diffusion_coefficient,

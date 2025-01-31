@@ -1,35 +1,52 @@
-from sympy import (Eq, solve, symbols)
+"""
+Infinite multiplication factor formula
+======================================
+
+Infinite multiplication factor can be found using thermal fission factor, fast fission
+factor, resonance escape probability, and thermal utilization factor.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Nuclear_chain_reaction#Six-factor_formula>`__.
+# `NuclearPower <https://www.nuclear-power.com/nuclear-power/reactor-physics/nuclear-fission-chain-reaction/four-factor-formula-infinite-multiplication-factor/>`__.
+"""
+
+from sympy import (Eq, solve)
+from symplyphysics import symbols
 from symplyphysics.core.symbols.probability import Probability
 
-# Description
-## Infinite multiplication factor: k_infinite = η * ε * p * f
-## Where:
-## η - neutron reproduction factor.
-##   See [neutron reproduction factor](./reproduction_factor_from_macroscopic_fission_cross_section.py) implementation.
-## ε - fast fission factor.
-##   See [fast fission factor](./fast_fission_factor_from_resonance_escape_probability.py) implementation.
-## p - resonance escape probability.
-##   See [resonance escape probability](./resonance_escape_probability_from_resonance_absorption_integral.py) implementation.
-## f - thermal utilisation factor.
-##   See [thermal utilisation factor](./thermal_utilisation_factor_from_macroscopic_absorption_cross_sections.py) implementation.
-## k_infinite (infinite multiplication factor) is the ratio of the neutrons produced by fission in one neutron
-##   generation to the number of neutrons lost through absorption in the preceding neutron generation
+thermal_fission_factor = symbols.thermal_fission_factor
+"""
+:symbols:`thermal_fission_factor`.
+"""
 
-# All input parameters are dimensionless - use SymPy symbols.
-# TODO update to use dimensionless SymbolNew instances
+thermal_utilization_factor = symbols.thermal_utilization_factor
+"""
+:symbols:`thermal_utilization_factor`.
+"""
 
-# Links:
-## Wikipedia <https://en.wikipedia.org/wiki/Nuclear_chain_reaction#Six-factor_formula>
-## NuclearPower <https://www.nuclear-power.com/nuclear-power/reactor-physics/nuclear-fission-chain-reaction/four-factor-formula-infinite-multiplication-factor/>
+resonance_escape_probability = symbols.resonance_escape_probability
+"""
+:symbols:`resonance_escape_probability`.
+"""
 
-neutron_reproduction = symbols("neutron_reproduction")
-thermal_utilisation = symbols("thermal_utilisation")
-resonance_escape_probability = symbols("resonance_escape_probability")
-fast_fission = symbols("fast_fission")
-infinite_multiplication_factor = symbols("infinite_multiplication_factor")
+fast_fission_factor = symbols.fast_fission_factor
+"""
+:symbols:`fast_fission_factor`.
+"""
+
+infinite_multiplication_factor = symbols.infinite_multiplication_factor
+"""
+:symbols:`infinite_multiplication_factor`.
+"""
 
 law = Eq(infinite_multiplication_factor,
-    neutron_reproduction * fast_fission * resonance_escape_probability * thermal_utilisation)
+    thermal_fission_factor * fast_fission_factor * resonance_escape_probability * thermal_utilization_factor)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 def calculate_multiplication_factor(neutron_reproduction_: float, fast_fission_: float,
@@ -38,9 +55,9 @@ def calculate_multiplication_factor(neutron_reproduction_: float, fast_fission_:
     result_factor_expr = solve(law, infinite_multiplication_factor,
         dict=True)[0][infinite_multiplication_factor]
     result_expr = result_factor_expr.subs({
-        neutron_reproduction: neutron_reproduction_,
-        fast_fission: fast_fission_,
+        thermal_fission_factor: neutron_reproduction_,
+        fast_fission_factor: fast_fission_,
         resonance_escape_probability: resonance_escape_probability_,
-        thermal_utilisation: thermal_utilisation_
+        thermal_utilization_factor: thermal_utilisation_
     })
     return result_expr.evalf()

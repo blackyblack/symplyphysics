@@ -1,36 +1,54 @@
+"""
+Neutron flux for uniform sphere
+===============================
+
+Neutron flux for uniform sphere is a function of radial_distance :math:`r` to the center of the
+sphere and depends on the radius :math:`r_0` of the sphere.
+
+**Links:**
+
+#. `NuclearPower, see end of page <https://www.nuclear-power.com/nuclear-power/reactor-physics/neutron-diffusion-theory/finite-spherical-reactor/>`__.
+"""
+
 from sympy import Eq, pi, sin
 from sympy.vector import CoordSys3D
-from symplyphysics import (Function, Quantity, Symbol, print_expression, units)
+from symplyphysics import Quantity, units, symbols, clone_as_symbol, clone_as_function
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_flux
 
-# Description
-## Neutron flux formula for the uniform spherical reactor. The spherical reactor is situated in spherical
-## geometry at the origin of coordinates.
+dimension_factor = clone_as_symbol(symbols.neutron_flux, subscript="0")
+"""
+Dimension factor. See :symbols:`neutron_flux`.
+"""
 
-## Law: Ф(r) = C1 * (sin(Pi * r / R) / r)
-## Where:
-## C1 - neutron flux power constant.
-## r - distance from the center of sphere.
-## Pi - Pi constant.
-## R - sphere radius.
-## Ф(r) - neutron flux density.
+radial_distance = symbols.distance_to_origin
+"""
+Radial distance, or :symbols:`distance_to_origin` of coordinate system, i.e. the center
+of the sphere.
+"""
 
-# Links:
-## NuclearPower, see end of page <https://www.nuclear-power.com/nuclear-power/reactor-physics/neutron-diffusion-theory/finite-spherical-reactor/>
+radius = clone_as_symbol(symbols.radius, subscript="0")
+"""
+:symbols:`radius` of the sphere.
+"""
 
-neutron_flux_power_constant = Symbol("C1", 1 / units.length / units.time, constant=True)
-distance_from_center = Symbol("distance_from_center", units.length)
-sphere_radius = Symbol("sphere_radius", units.length)
-neutron_flux = Function("neutron_flux", 1 / units.area / units.time)
+neutron_flux = clone_as_function(symbols.neutron_flux, [radial_distance])
+"""
+:symbols:`neutron_flux` as a function of :attr:``
+"""
 
 # This constant is being used for geometric buckling calculation
 # See: [geometric buckling for uniform sphere](geometric_buckling_for_uniform_sphere.py)
-radial_constant = pi / sphere_radius
+_radial_constant = pi / radius
 
 law = Eq(
-    neutron_flux(distance_from_center),
-    neutron_flux_power_constant * sin(radial_constant * distance_from_center) /
-    distance_from_center)
+    neutron_flux(radial_distance),
+    dimension_factor * (sin(_radial_constant * radial_distance) / radial_distance),
+)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 # Check the solution by passing the known neutron flux to the geometric_buckling_from_neutron_flux.
 # Neutron flux is a function of radius in the spherical coordinates.
@@ -43,21 +61,16 @@ law = Eq(
 # - albedo boundary condition: Ф(Ralbedo) = 0
 
 # define flux function in spherical coordinates as a function of sphere radius
-spherical_coordinates = CoordSys3D("spherical_coordinates", transformation="spherical")
+_spherical_coordinates = CoordSys3D("_spherical_coordinates", transformation="spherical")
 # Make linter happy
-r = getattr(spherical_coordinates, "r")
-unit_length = Quantity(1, dimension=units.length)
-neutron_flux_function_spherical = law.subs(distance_from_center, r * unit_length)
+_r = getattr(_spherical_coordinates, "r")
+_unit_length = Quantity(1, dimension=units.length)
+_neutron_flux_function_spherical = law.subs(radial_distance, _r * _unit_length)
 
-solved = geometric_buckling_from_neutron_flux.apply_neutron_flux_function(
-    neutron_flux_function_spherical.rhs)
+_solved = geometric_buckling_from_neutron_flux.apply_neutron_flux_function(
+    _neutron_flux_function_spherical.rhs)
 
-# check with the derived law: Bg^2 = radial_constant**2
-assert solved.rhs == radial_constant**2
-
-
-def print_law() -> str:
-    return print_expression(law)
-
+# check with the derived law: Bg^2 = _radial_constant**2
+assert _solved.rhs == _radial_constant**2
 
 # There is no calculate() method. Neutron flux is usually being used internally to pass to other laws.
