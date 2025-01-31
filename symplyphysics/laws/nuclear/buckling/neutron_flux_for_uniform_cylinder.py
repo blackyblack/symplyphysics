@@ -1,48 +1,78 @@
-from sympy import (Eq, pi, cos)
+"""
+Neutron flux for uniform cylinder
+=================================
+
+Neutron flux for the uniform cylindrical reactor of radius :math:`r_0` and height
+:math:`h_0` depends on the radial distance :math:`r` and axial coordinate :math:`z`. A
+cylindrical coordinate system is assumed, such that the cylinder's axis of rotation is
+the :math:`z`-axis.
+
+**Links:**
+
+#. `NuclearPower, see end of page <https://www.nuclear-power.com/nuclear-power/reactor-physics/neutron-diffusion-theory/finite-cylindrical-reactor/>`__.
+"""
+
+from sympy import Eq, pi, cos
 from sympy.vector import CoordSys3D
 from sympy.functions.special.bessel import besselj
-from symplyphysics import (Function, Quantity, Symbol, units)
+from symplyphysics import (
+    Quantity,
+    units,
+    symbols,
+    clone_as_function,
+    clone_as_symbol,
+)
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_flux
 from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_slab
 
-# Description
-## Neutron flux formula for the uniform cylindrical reactor of physical radius R and height H.
-## The cylindrical reactor is situated in cylindrical geometry at the origin of coordinates.
+dimension_factor = clone_as_symbol(symbols.neutron_flux, subscript="0")
+"""
+Dimension factor. See :symbols:`neutron_flux`.
+"""
 
-## Law: Ф(r, z) = C1 * J0(2.405 * r / R) * cos(Pi * z / H)
-## Where:
-## C1 - neutron flux power constant.
-## Pi - Pi constant.
-## J0 - Bessel function of the first kind, of the 0 order.
-## r - radial distance from the center of cylinder.
-## z - axial distance from the center of cylinder.
-## R - radius of the cylinder.
-## H - height of the cylinder.
-## Ф(r, z) - neutron flux density.
+radial_distance = symbols.distance_to_axis
+"""
+:symbols:`distance_to_axis` within the cylindrical coordinate system of the cylinder.
+"""
 
-# Links:
-## NuclearPower, see end of page <https://www.nuclear-power.com/nuclear-power/reactor-physics/neutron-diffusion-theory/finite-cylindrical-reactor/>
+axial_coordinate = symbols.height
+"""
+:symbols:`height` within the cylindrical coordinate system of the cylinder.
+"""
 
-neutron_flux_power_constant = Symbol("C1", 1 / units.area / units.time, constant=True)
-radial_distance_from_center = Symbol("radial_distance_from_center", units.length)
-axial_distance_from_center = Symbol("axial_distance_from_center", units.length)
-cylinder_radius = Symbol("cylinder_radius", units.length)
-cylinder_height = Symbol("cylinder_height", units.length)
-neutron_flux = Function("neutron_flux", 1 / units.area / units.time)
+radius = clone_as_symbol(symbols.radius, subscript="0")
+"""
+:symbols:`radius` of the cylinder.
+"""
+
+height = clone_as_symbol(symbols.height, subscript="0")
+"""
+:symbols:`height` of the cylinder.
+"""
+
+neutron_flux = clone_as_function(symbols.neutron_flux, [radial_distance, axial_coordinate])
+"""
+:symbols:`neutron_flux` as a function of :attr:`~radial_distance` and :attr:`~axial_coordinate`.
+"""
 
 # These constants are being used for geometric buckling calculation
 # See: [geometric buckling for uniform cylinder](geometric_buckling_for_uniform_cylinder.py)
-radial_constant = 2.405 / cylinder_radius
-axial_constant = pi / cylinder_height
+_radial_constant = 2.405 / radius
+_axial_constant = pi / height
 
-# derived the same way as uniform slab axial_constant
-assert axial_constant == neutron_flux_for_uniform_slab.axial_constant.subs(
-    neutron_flux_for_uniform_slab.slab_width, cylinder_height)
+# derived the same way as uniform slab _axial_constant
+assert _axial_constant == neutron_flux_for_uniform_slab._axial_constant.subs(
+    neutron_flux_for_uniform_slab.thickness, height)
 
 law = Eq(
-    neutron_flux(radial_distance_from_center, axial_distance_from_center),
-    neutron_flux_power_constant * besselj(0, radial_constant * radial_distance_from_center) *
-    cos(axial_constant * axial_distance_from_center))
+    neutron_flux(radial_distance, axial_coordinate),
+    dimension_factor * besselj(0, _radial_constant * radial_distance) *
+    cos(_axial_constant * axial_coordinate))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 # Check the solution by passing the known neutron flux to the geometric_buckling_from_neutron_flux.
 # Neutron flux is a function of radius and height in the cylindrical coordinates.
@@ -54,28 +84,28 @@ law = Eq(
 # - source condition: all neutrons flowing through the bounding area of the source must come from the neutron source
 # - albedo boundary condition: Ф(Ralbedo) = 0
 
-# radial_constant is the solution of the Bessel function J0, with a condition the neutron flux cannot
+# _radial_constant is the solution of the Bessel function J0, with a condition the neutron flux cannot
 # have negative values (finite flux condition) and with zero flux boundary condition
 
 # Define flux function in cylindrical coordinates as a function of cylinder radius and height
 
 # CoordinateSystem class does not work here, because Laplacian obtains coordinate system from
 # the provided scalar field (neutron_flux function)
-cylindrical_coordinates = CoordSys3D("cylindrical_coordinates", transformation="cylindrical")
+_cylindrical_coordinates = CoordSys3D("_cylindrical_coordinates", transformation="cylindrical")
 # Make linter happy
-r = getattr(cylindrical_coordinates, "r")
-z = getattr(cylindrical_coordinates, "z")
-unit_length = Quantity(1, dimension=units.length)
-neutron_flux_function_cylindrical = law.subs({
-    radial_distance_from_center: r * unit_length,
-    axial_distance_from_center: z * unit_length
+_r = getattr(_cylindrical_coordinates, "r")
+_z = getattr(_cylindrical_coordinates, "z")
+_unit_length = Quantity(1, dimension=units.length)
+_neutron_flux_function_cylindrical = law.subs({
+    radial_distance: _r * _unit_length,
+    axial_coordinate: _z * _unit_length
 })
 
-solved = geometric_buckling_from_neutron_flux.apply_neutron_flux_function(
-    neutron_flux_function_cylindrical.rhs)
+_solved = geometric_buckling_from_neutron_flux.apply_neutron_flux_function(
+    _neutron_flux_function_cylindrical.rhs)
 
-# check with the derived law: Bg^2 = radial_constant**2 + axial_constant**2
+# check with the derived law: Bg^2 = _radial_constant**2 + _axial_constant**2
 # limit decimals to bypass rounding errors
-assert solved.rhs.evalf(7) == (radial_constant**2 + axial_constant**2).evalf(7)
+assert _solved.rhs.evalf(7) == (_radial_constant**2 + _axial_constant**2).evalf(7)
 
 # There is no calculate() method. Neutron flux is usually being used internally to pass to other laws.

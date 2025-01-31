@@ -1,59 +1,79 @@
+"""
+Resonance escape probability from resonance absorption integral
+===============================================================
+
+**Conditions:**
+
+#. The reactor is homogeneous.
+#. There are weak fast absorptions.
+#. The absorber is predominant.
+
+**Links:**
+
+#. `Wikipedia, article <https://en.wikipedia.org/wiki/Resonance_escape_probability#Effective_resonance_integral>`__.
+#. `Wikipedia, third row in table <https://en.wikipedia.org/wiki/Six_factor_formula>`__.
+"""
+
 from sympy import Eq, solve, exp
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
+    SymbolNew,
     dimensionless,
     convert_to_float,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
 )
 from symplyphysics.core.symbols.probability import Probability
 
-# Description
-## The resonance escape probability, symbolized by p, is the probability that a neutron will be
-## slowed to thermal energy and escape resonance capture. This probability is defined as the ratio
-## of the number of neutrons that reach thermal energies to the number of fast neutrons that slow down.
+absorber_number_density = symbols.number_density
+"""
+:symbols:`number_density` of atoms in the absorber.
+"""
 
-# Conditions
-## - Homogeneous reactor.
-## - Weak fast absorptions.
-## - Very predominant absorber.
+effective_resonance_integral = SymbolNew("J_eff", units.area, display_latex="J_\\text{eff}")
+"""
+Effective resonance integral characterizes the absorption of neutrons by a single
+nucleus in the resonance region.
+"""
 
-## Law: p ≈ e^(-(Na * Ieff) / (ξ * Σs_mod))
-## Where:
-## e - exponent.
-## Na - atomic number density of the absorber.
-##    See [atomic number density](./chemistry/atomic_number_density_from_material_density_atomic_weight.py) implementation.
-## ξ - average lethargy gain per scattering event. Lethargy is a dimensionless logarithm of the ratio of the energy of
-##    source neutrons to the energy of neutrons after a collision.
-## Ieff - effective resonance integral. In practical situations, this integral strongly depends on the geometry of the unit cell.
-##    It is too complex to calculate Ieff. Please refer to the tables and specific energy levels for proper data.
-## Σs_mod - moderator's macroscopic scattering cross-section.
-##   See [macroscopic cross-section](./macroscopic_cross_section_from_free_mean_path.py) implementation.
-## p - resonance escape probability
+lethargy_gain_per_scattering = SymbolNew("xi", dimensionless, display_latex="\\xi")
+"""
+Average lethargy gain per scattering event. Lethargy is defined as decrease in neutron
+energy.
+"""
 
-# Links:
-## Wikipedia, article <https://en.wikipedia.org/wiki/Resonance_escape_probability#Effective_resonance_integral>
-## Wikipedia, third row in table <https://en.wikipedia.org/wiki/Six_factor_formula>
+moderator_macroscopic_scattering_cross_section = clone_as_symbol(
+    symbols.macroscopic_cross_section,
+    display_symbol="Sigma_s",
+    display_latex="\\Sigma_\\text{s}",
+)
+"""
+:symbols:`macroscopic_cross_section` of scattering in the moderator.
+"""
 
-absorber_atomic_number_density = Symbol("absorber_atomic_number_density", 1 / units.volume)
-effective_resonance_integral = Symbol("effective_resonance_integral", units.length**2)
-average_lethargy_change = Symbol("average_lethargy_change", dimensionless)
-macroscopic_scattering_cross_section_moderator = Symbol(
-    "macroscopic_scattering_cross_section_moderator", 1 / units.length)
-resonance_escape_probability = Symbol("resonance_escape_probability", dimensionless)
+resonance_escape_probability = symbols.resonance_escape_probability
+"""
+:symbols:`resonance_escape_probability`.
+"""
 
 law = Eq(
     resonance_escape_probability,
-    exp(-1 * (absorber_atomic_number_density * effective_resonance_integral) /
-    (average_lethargy_change * macroscopic_scattering_cross_section_moderator)))
+    exp(-1 * (absorber_number_density * effective_resonance_integral) /
+    (lethargy_gain_per_scattering * moderator_macroscopic_scattering_cross_section)))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
-@validate_input(absorber_atomic_number_density_=absorber_atomic_number_density,
+@validate_input(absorber_atomic_number_density_=absorber_number_density,
     effective_resonance_integral_=effective_resonance_integral,
-    average_lethargy_change_=average_lethargy_change,
-    macroscopic_scattering_cross_section_moderator_=macroscopic_scattering_cross_section_moderator)
+    average_lethargy_change_=lethargy_gain_per_scattering,
+    macroscopic_scattering_cross_section_moderator_=moderator_macroscopic_scattering_cross_section)
 @validate_output(resonance_escape_probability)
 def calculate_resonance_escape_probability(
         absorber_atomic_number_density_: Quantity, effective_resonance_integral_: Quantity,
@@ -63,13 +83,13 @@ def calculate_resonance_escape_probability(
     result_factor_expr = solve(law, resonance_escape_probability,
         dict=True)[0][resonance_escape_probability]
     result_expr = result_factor_expr.subs({
-        absorber_atomic_number_density:
+        absorber_number_density:
             absorber_atomic_number_density_,
         effective_resonance_integral:
             effective_resonance_integral_,
-        average_lethargy_change:
+        lethargy_gain_per_scattering:
             average_lethargy_change_,
-        macroscopic_scattering_cross_section_moderator:
+        moderator_macroscopic_scattering_cross_section:
             macroscopic_scattering_cross_section_moderator_
     })
     return Probability(convert_to_float(result_expr))

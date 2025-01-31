@@ -1,35 +1,52 @@
+"""
+Infinite multiplication factor from macroscopic cross sections
+==============================================================
+
+Infinite multiplication factor can be found using the macroscopic fission and absorption
+cross section and the average number of neutrons produced per fission.
+
+..
+    NOTE: possible link here, but it is about thermal fission factor <https://en.wikipedia.org/wiki/Six_factor_formula#>
+"""
+
 from sympy import Eq, solve
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
-    dimensionless,
     validate_input,
     validate_output,
     convert_to_float,
+    symbols,
+    clone_as_symbol,
 )
 
-# Description
-## Infinite multiplication factor: k_infinite = v * Σf / Σa
-## Where:
-## v - average number of neutrons produced per fission.
-## Σf - overall macroscopic fission cross-section.
-##   See [macroscopic cross-section](./macroscopic_cross_section_from_free_mean_path.py) implementation.
-## Σa - overall macroscopic absorption cross-section.
-## k_infinite - infinite multiplication factor.
-##   See [infinite multiplication factor](./infinite_multiplication_factor.py)
+neutrons_per_fission = clone_as_symbol(symbols.particle_count, display_symbol="nu", display_latex="\\nu")
+"""
+Average number of neutrons produced per fission. See :symbols:`particle_count`.
+"""
 
-# TODO: find link
+macroscopic_fission_cross_section = clone_as_symbol(symbols.macroscopic_cross_section, display_symbol="Sigma_f", display_latex="\\Sigma_text{f}")
+"""
+:symbols:`macroscopic_cross_section` of fission.
+"""
 
-neutrons_per_fission = Symbol("neutrons_per_fission", dimensionless)
-macroscopic_fission_cross_section = Symbol("macroscopic_fission_cross_section", 1 / units.length)
-macroscopic_absorption_cross_section = Symbol("macroscopic_absorption_cross_section",
-    1 / units.length)
-infinite_multiplication_factor = Symbol("infinite_multiplication_factor", dimensionless)
+macroscopic_absorption_cross_section = clone_as_symbol(symbols.macroscopic_cross_section, display_symbol="Sigma_a", display_latex="\\Sigma_\\text{a}")
+"""
+:symbols:`macroscopic_cross_section` of absorption.
+"""
+
+infinite_multiplication_factor = symbols.infinite_multiplication_factor
+"""
+:symbols:`infinite_multiplication_factor`.
+"""
 
 law = Eq(
     infinite_multiplication_factor,
     neutrons_per_fission * macroscopic_fission_cross_section / macroscopic_absorption_cross_section)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(neutrons_per_fission_=neutrons_per_fission,

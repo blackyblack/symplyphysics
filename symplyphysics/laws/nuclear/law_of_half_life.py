@@ -1,12 +1,21 @@
+"""
+Solution to the exponential decay equation
+==========================================
+
+TODO
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Exponential_decay#>`__.
+"""
+
 from sympy import Eq, solve
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
-    validate_output,
     convert_to_float,
-    dimensionless,
+    symbols,
+    clone_as_symbol,
 )
 
 # Description
@@ -21,29 +30,45 @@ from symplyphysics import (
 ## t - an arbitrary time interval,
 ## T - half-life of the nuclei.
 
-# Links: Wikipedia <https://en.wikipedia.org/wiki/Exponential_decay#>
 
-number_of_cores = Symbol("number_of_cores", dimensionless)
+final_quantity = symbols.any_quantity
+"""
+Quantity that still remains and has not decayed after :attr:`~time` :math:`t`.
+"""
 
-number_of_cores_initial = Symbol("number_of_cores_initial", dimensionless)
-half_life = Symbol("half_life", units.time)
-decay_time = Symbol("decay_time", units.time)
+initial_quantity = clone_as_symbol(symbols.any_quantity, subscript="0")
+"""
+Initial quantity that will decay.
+"""
 
-law = Eq(number_of_cores, number_of_cores_initial * 2**(-decay_time / half_life))
+half_life = symbols.half_life
+"""
+:symbols:`half_life` of the decaying quantity.
+"""
+
+time = symbols.time
+"""
+:symbols:`time`.
+"""
+
+law = Eq(final_quantity, initial_quantity * 2**(-1 * time / half_life))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
-@validate_input(number_of_cores_initial_=number_of_cores_initial,
-    half_life_=half_life,
-    decay_time_=decay_time)
-@validate_output(number_of_cores)
+@validate_input(half_life_=half_life,
+    decay_time_=time)
 def calculate_number_of_cores(number_of_cores_initial_: int, half_life_: Quantity,
     decay_time_: Quantity) -> int:
     if number_of_cores_initial_ < 0:
         raise ValueError("Number of cores cannot be negative")
-    result_expr = solve(law, number_of_cores, dict=True)[0][number_of_cores]
+    result_expr = solve(law, final_quantity, dict=True)[0][final_quantity]
     result_expr = result_expr.subs({
-        number_of_cores_initial: number_of_cores_initial_,
+        initial_quantity: number_of_cores_initial_,
         half_life: half_life_,
-        decay_time: decay_time_
+        time: decay_time_
     })
     return int(convert_to_float(result_expr))
