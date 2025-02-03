@@ -29,60 +29,47 @@ of the plate and the ratio :math:`\frac{u}{d}` where :math:`d` is the distance b
 """
 
 from sympy import Eq, Derivative, solve
-from symplyphysics import units, Quantity, Symbol, Function, validate_input, validate_output
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    clone_as_function,
+)
 
-shear_stress = Symbol("shear_stress", units.pressure)
-r"""
-Shear stress. See :doc:`laws.dynamics.pressure_from_force_and_area`.
-
-Symbol:
-    :code:`tau`
-
-Latex:
-    :math:`\tau`
+shear_stress = symbols.shear_stress
+"""
+:symbols:`shear_stress`.
 """
 
-dynamic_viscosity = Symbol("dynamic_viscosity", units.pressure * units.time)
-r"""
-Dynamic viscosity of the fluid.
-
-Symbol:
-    :code:`eta`
-
-Latex:
-    :math:`\eta`
+dynamic_viscosity = symbols.dynamic_viscosity
+"""
+:symbols:`dynamic_viscosity` of the fluid.
 """
 
-fluid_speed = Function("fluid_speed", units.velocity)
+layer_position = symbols.position
 """
-Fluid speed as a function of position perpendicular to the fluid flow, or layer position.
-
-Symbol:
-    :code:`u(y)`
+Layer :symbols:`position`, or position in the direction perpendicular to fluid velocity.
 """
 
-layer_position = Symbol("layer_position", units.length)
+flow_speed = clone_as_function(symbols.flow_speed, [layer_position])
 """
-Layer position, or position in the direction perpendicular to fluid velocity.
-
-Symbol:
-    :code:`y`
+:symbols:`flow_speed` as a function of position perpendicular to the fluid flow, or
+:attr:`~layer_position`.
 """
 
-law = Eq(shear_stress, dynamic_viscosity * Derivative(fluid_speed(layer_position), layer_position))
-r"""
-:code:`tau = eta * Derivative(u(y), y)`
+law = Eq(shear_stress, dynamic_viscosity * Derivative(flow_speed(layer_position), layer_position))
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \tau = \eta \frac{d u}{d y}
+:laws:latex::
 """
 
 
 @validate_input(
     dynamic_viscosity_=dynamic_viscosity,
-    fluid_speed_before_=fluid_speed,
-    fluid_speed_after_=fluid_speed,
+    fluid_speed_before_=flow_speed,
+    fluid_speed_after_=flow_speed,
     layer_separation_=layer_position,
 )
 @validate_output(shear_stress)
@@ -96,7 +83,7 @@ def calculate_shear_stress(
         fluid_speed_before_) / layer_separation_
     applied_law = law.subs({
         dynamic_viscosity: dynamic_viscosity_,
-        fluid_speed(layer_position): fluid_speed_function,
+        flow_speed(layer_position): fluid_speed_function,
     })
     result_expr = solve(applied_law, shear_stress)[0]
     return Quantity(result_expr)

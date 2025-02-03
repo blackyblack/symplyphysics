@@ -11,53 +11,44 @@ on the ratio of the fluid density and body density.
 #. `Physics LibreTexts, derivable from here <https://phys.libretexts.org/Bookshelves/University_Physics/Physics_(Boundless)/10%3A_Fluids/10.3%3A_Archimedes_Principle>`__.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (clone_as_symbol, symbols, units, Quantity, Symbol, validate_input,
-    validate_output)
+from sympy import Eq, solve
+from symplyphysics import (
+    clone_as_symbol,
+    symbols,
+    Quantity,
+    validate_input,
+    validate_output,
+)
 
 weight_in_fluid = clone_as_symbol(symbols.force,
     display_symbol="W_fl",
     display_latex="W_\\text{fl}")
 """
-Weight of the body immersed in the fluid.
+Weight of the body immersed in the fluid. See :symbols:`force`.
 """
 
 weight_in_vacuum = clone_as_symbol(symbols.force,
     display_symbol="W_vac",
     display_latex="W_\\text{vac}")
 """
-Weight of the body in vacuum, i.e. its true weight.
+Weight of the body in vacuum, i.e. its true weight. See :symbols:`force`.
 """
 
-fluid_density = Symbol("fluid_density", units.mass / units.volume)
-r"""
-Density of the fluid.
-
-Symbol:
-    :code:`rho_fl`
-
-Latex:
-    :math:`\rho_\text{fl}`
+fluid_density = clone_as_symbol(symbols.density, display_symbol="rho_fl", display_latex="\\rho_\\text{fl}")
+"""
+:symbols:`density` of the fluid.
 """
 
-body_density = Symbol("body_density", units.mass / units.volume)
-r"""
-Density of the body.
-
-Symbol:
-    :code:`rho_b`
-
-Latex:
-    :math:`\rho_\text{b}`
+body_density = clone_as_symbol(symbols.density, display_symbol="rho_b", display_latex="\\rho_\\text{b}")
+"""
+:symbols:`density` of the body.
 """
 
 law = Eq(weight_in_fluid, weight_in_vacuum * (1 - (fluid_density / body_density)))
-r"""
-:code:`W_fl = W_vac * (1 - rho_fl / rho_b)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        W_\text{fl} = W_\text{vac} \left( 1 - \frac{\rho_\text{fl}}{\rho_\text{b}} \right)
+:laws:latex::
 """
 
 

@@ -11,7 +11,8 @@ depends on the ratio of the densities of the body and the fluid.
 
 **Conditions:**
 
-#. :math:`\rho \le \rho_\text{fl}`, so the body must be floating.
+#. :math:`\rho \le \rho_\text{fl}`, so the body must be floating. See below for the
+   description of the symbols.
 #. The body must be in static equilibrium.
 
 **Links:**
@@ -19,57 +20,42 @@ depends on the ratio of the densities of the body and the fluid.
 #. `Physics LibreTexts, formula 10.3.17 <https://phys.libretexts.org/Bookshelves/University_Physics/Physics_(Boundless)/10%3A_Fluids/10.3%3A_Archimedes_Principle>`__.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, convert_to_si)
+from sympy import Eq, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    convert_to_si,
+    symbols,
+    clone_as_symbol,
+)
 
-submerged_volume = Symbol("submerged_volume", units.volume)
-r"""
-Volume submerged in the fluid, which is equal to the volume of the displaced fluid.
-
-Symbol:
-    :code:`V_fl`
-
-Latex:
-    :math:`V_\text{fl}`
+submerged_volume = clone_as_symbol(symbols.volume, display_symbol="V_fl", display_latex="V_\\text{fl}")
+"""
+:symbols:`volume` submerged in the fluid, which is equal to the volume of the displaced
+fluid.
 """
 
-body_volume = Symbol("body_volume", units.volume)
+body_volume = symbols.volume
 """
-Total volume of the body.
-
-Symbol:
-    :code:`V`
+Total :symbols:`volume` of the body.
 """
 
-body_density = Symbol("body_density", units.mass / units.volume)
-r"""
-Density of the body.
-
-Symbol:
-    :code:`rho`
-
-Latex:
-    :math:`\rho`
+body_density = symbols.density
+"""
+:symbols:`density` of the body.
 """
 
-fluid_density = Symbol("fluid_density", units.mass / units.volume)
-r"""
-Density of the fluid.
-
-Symbol:
-    :code:`rho_fl`
-
-Latex:
-    :math:`\rho_\text{fl}`
+fluid_density = clone_as_symbol(symbols.density, display_symbol="rho_fl", display_latex="\\rho_\\text{fl}")
+"""
+:symbols:`density` of the fluid.
 """
 
 law = Eq(submerged_volume / body_volume, body_density / fluid_density)
-r"""
-:code:`V_fl / V = rho / rho_fl`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \frac{V_\text{fl}}{V} = \frac{\rho}{\rho_\text{fl}}
+:laws:latex::
 """
 
 

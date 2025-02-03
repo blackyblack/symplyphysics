@@ -1,22 +1,67 @@
+"""
+Pressure difference at pipe ends from dynamic viscosity and flow rate
+=====================================================================
+
+In non-ideal fluid mechanics, the Hagen—Poiseuille equation is a physical law that gives
+the pressure drop in an incompressible and Newtonian fluid in laminar flow flowing
+through a long cylindrical pipe of constant cross section. It can be successfully
+applied to air flow in lung alveoli, or the flow through a drinking straw.
+
+**Conditions:**
+
+#. The fluid is incompressible and Newtonian.
+#. The flow of the fluid is laminar.
+#. The pipe is long enough for the flow to be laminar.
+#. The pipe has constant cross section.
+
+**Links:**
+
+#. `Wikipedia, first part of the first equation <https://en.wikipedia.org/wiki/Hagen%E2%80%93Poiseuille_equation#Equation>`__.
+
+..
+    TODO: rename file to use descriptive name
+"""
+
 from sympy import Eq, solve, pi
-from symplyphysics import (Quantity, Symbol, units, validate_input, validate_output)
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    clone_as_symbol,
+)
 
-# Law: delta_p = 8 * mu * L * Q / (pi * R**4)
-# delta_p - pressure difference,
-# mu is viscosity,
-# L is length,
-# Q is the volumetric flow rate,
-# R is the pipe radius
+dynamic_viscosity = symbols.dynamic_viscosity
+"""
+:symbols:`dynamic_viscosity` of the fluid.
+"""
 
-# Links: Wikipedia, first part of the first equation <https://en.wikipedia.org/wiki/Hagen%E2%80%93Poiseuille_equation#Equation>
+length = symbols.length
+"""
+:symbols:`length` of the pipe.
+"""
 
-dynamic_viscosity = Symbol("dynamic_viscosity", units.pressure * units.time)
-length = Symbol("length", units.length)
-flow_rate = Symbol("flow_rate", units.volume / units.time)
-radius = Symbol("radius", units.length)
-delta_pressure = Symbol("delta_pressure", units.pressure)
+flow_rate = symbols.volumetric_flow_rate
+"""
+:symbols:`volumetric_flow_rate` of the fluid through the pipe.
+"""
 
-law = Eq(delta_pressure, 8 * dynamic_viscosity * length * flow_rate / (pi * radius**4))
+radius = symbols.radius
+"""
+:symbols:`radius` of the pipe.
+"""
+
+pressure_difference = clone_as_symbol(symbols.pressure, display_symbol="Delta(p)", display_latex="\\Delta p")
+"""
+Difference in :symbols:`pressure` between the two ends of the pipe.
+"""
+
+law = Eq(pressure_difference, 8 * dynamic_viscosity * length * flow_rate / (pi * radius**4))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(
@@ -25,10 +70,10 @@ law = Eq(delta_pressure, 8 * dynamic_viscosity * length * flow_rate / (pi * radi
     flow_rate_=flow_rate,
     radius_=radius,
 )
-@validate_output(delta_pressure)
+@validate_output(pressure_difference)
 def calculate_delta_pressure(dynamic_viscosity_: Quantity, length_: Quantity, flow_rate_: Quantity,
     radius_: Quantity) -> Quantity:
-    result_expr = solve(law, delta_pressure, dict=True)[0][delta_pressure]
+    result_expr = solve(law, pressure_difference, dict=True)[0][pressure_difference]
     result_applied = result_expr.subs({
         dynamic_viscosity: dynamic_viscosity_,
         length: length_,

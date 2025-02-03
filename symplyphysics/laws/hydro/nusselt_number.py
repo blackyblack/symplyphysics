@@ -1,41 +1,54 @@
+"""
+Nusselt number formula
+======================
+
+Nusselt number is the ratio of total heat transfer to conductive heat transfer at a
+boundary in a fluid. It can be expressed using the heat transfer coefficient of the
+flow, characteristic length of the system, and thermal conductivity of the fluid.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Nusselt_number#Definition>`__.
+
+..
+    TODO: rename file
+"""
+
 from sympy import Eq, solve
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
-    dimensionless,
     convert_to_float,
+    symbols
 )
 
-# Description
-# Nusselt number is the ratio of convective to conductive heat transfer at
-# a boundary in a fluid. There is a characteristic length in
-# the formula. The characteristic length is the dimension
-# that defines the length scale of a physical system. A characteristic length
-# is usually the volume of a system divided by its surface: L = V / A,
-# where V is the volume of the body, and A is the cross-sectional area.
-# For example, it is used to calculate flow through circular and non-circular
-# tubes in order to examine flow conditions. D = 4 * A / p, where
-# D is characteristic diameter, A is the cross-sectional are, p is wetted perimeter.
-# Law: Nu = h * L / k, where
-# h is the heat transfer coefficient,
-# L is the characteristic length,
-# k is the thermal conductivity,
-# Nu is Nusselt number.
+heat_transfer_coefficient = symbols.heat_transfer_coefficient
+"""
+:symbols:`heat_transfer_coefficient` of the flow.
+"""
 
-# Links: Wikipedia <https://en.wikipedia.org/wiki/Nusselt_number#Definition>
+characteristic_length = symbols.characteristic_length
+"""
+:symbols:`characteristic_length` of the system.
+"""
 
-heat_transfer_coefficient = Symbol("heat_transfer_coefficient",
-    units.power / (units.area * units.temperature))
-characteristic_length = Symbol("characteristic_length", units.length)
-thermal_conductivity = Symbol("thermal_conductivity",
-    units.power / (units.length * units.temperature))
+thermal_conductivity = symbols.thermal_conductivity
+"""
+:symbols:`thermal_conductivity` of the fluid.
+"""
 
-nusselt_number = Symbol("nusselt_number", dimensionless)
+nusselt_number = symbols.nusselt_number
+"""
+:symbols:`nusselt_number`.
+"""
 
 law = Eq(nusselt_number, heat_transfer_coefficient * characteristic_length / thermal_conductivity)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(

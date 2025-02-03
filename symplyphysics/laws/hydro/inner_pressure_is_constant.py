@@ -2,8 +2,8 @@
 Inner pressure is constant
 ==========================
 
-Bernoulli's equation applied to an ideal liquid specifies that the inner
-pressure of the fluid is constant at all points along a streamline.
+Bernoulli's equation applied to an ideal liquid specifies that the inner pressure of the
+fluid is constant at all points along a streamline.
 
 **Conditions:**
 
@@ -16,41 +16,29 @@ pressure of the fluid is constant at all points along a streamline.
 
 from sympy import Eq, dsolve, Derivative
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
-    Function,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_function,
 )
 
-inner_pressure = Function("inner_pressure", units.pressure)
-r"""
-Inner pressure of the fluid at a chosen point in space.
-See :doc:`laws.hydro.inner_pressure_is_sum_of_pressures`.
-
-Symbol:
-    :code:`p_inner(t)`
-
-Latex:
-    :math:`p_\text{inner}(t)`
+time = symbols.time
+"""
+:symbols:`time`.
 """
 
-time = Symbol("time", units.time)
+inner_pressure = clone_as_function(symbols.pressure, [time], display_symbol="p_inner", display_latex="p_\\text{inner}")
 """
-Time.
-
-Symbol:
-    :code:`t`
+Inner pressure of the fluid at a chosen point in space as a function of :attr:`~time`.
+See :ref:`Inner pressure is sum of pressures`.
 """
 
 law = Eq(Derivative(inner_pressure(time), time), 0)
-r"""
-:code:`Derivative(p_inner(t), t) = 0`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \frac{d p_\text{inner}}{d t} = 0
+:laws:latex::
 """
 
 

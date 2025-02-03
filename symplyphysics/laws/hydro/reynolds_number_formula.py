@@ -2,10 +2,10 @@
 Reynolds number formula
 =======================
 
-*Reynolds number* is a dimensionless quantity that characterizes the flow of a fluid.
-It helps predict fluid flow patterns in different situations by measuring the ratio between inertial
-and viscous forces. Low Reynolds numbers tend to correspond to laminar flows, while high Reynolds
-numbers tend to correspond to turbulent flows.
+*Reynolds number* is a dimensionless quantity that characterizes the flow of a fluid. It
+helps predict fluid flow patterns in different situations by measuring the ratio between
+inertial and viscous forces. Low Reynolds numbers tend to correspond to laminar flows,
+while high Reynolds numbers tend to correspond to turbulent flows.
 
 **Links:**
 
@@ -14,72 +14,43 @@ numbers tend to correspond to turbulent flows.
 
 from sympy import Eq, solve
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
-    dimensionless,
     convert_to_float,
+    symbols,
 )
 
-reynolds_number = Symbol("reynolds_number", dimensionless)
-r"""
-Reynolds number of the fluid.
-
-Symbol:
-    :code:`Re`
-
-Latex:
-    :math:`\text{Re}`
+reynolds_number = symbols.reynolds_number
+"""
+:symbols:`reynolds_number` of the fluid.
 """
 
-characteristic_length = Symbol("characteristic_length", units.length)
+characteristic_length = symbols.characteristic_length
 """
-`Characteristic length <https://en.wikipedia.org/wiki/Characteristic_length>`_ of the fluid
-container whose value depends on its shape.
-
-Symbol:
-    :code:`L`
+:symbols:`characteristic_length` of the system.
 """
 
-density = Symbol("density", (units.mass / units.volume))
-r"""
-Density of the fluid.
-
-Symbol:
-    :code:`rho`
-
-Latex:
-    :math:`\rho`
+density = symbols.density
+"""
+:symbols:`density` of the fluid.
 """
 
-flow_speed = Symbol("flow_speed", units.velocity)
+flow_speed = symbols.flow_speed
 """
-Speed of the fluid flow.
-
-Symbol:
-    :code:`u`
+:symbols:`flow_speed`
 """
 
-dynamic_viscosity = Symbol("dynamic_viscosity", units.pressure * units.time)
-r"""
-Dynamic viscosity of the fluid.
-
-Symbol:
-    :code:`mu`
-
-Latex:
-    :math:`\mu`
+dynamic_viscosity = symbols.dynamic_viscosity
+"""
+:symbols:`dynamic_viscosity` of the fluid.
 """
 
 law = Eq(reynolds_number, density * flow_speed * characteristic_length / dynamic_viscosity)
-r"""
-:code:`Re = rho * u * L / mu`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \text{Re} = \frac{\rho u L}{\mu}
+:laws:latex::
 """
 
 

@@ -231,3 +231,16 @@ excluded_volume_parameter = SymbolNew("b", units.volume / units.amount_of_substa
 Parameter specific to each individual substance, usually attributed to the amount of
 excluded molar volume due to a finite size of particles.
 """
+
+heat_transfer_coefficient = SymbolNew("h", units.power / (units.area * units.temperature))
+"""
+The **heat transfer coefficient** is the proportionality constant between the heat flux
+:math:`d \dot{Q} / d A` and the thermodynamic driving force for the flow of heat
+(i.e. the temperature difference :math:`\Delta T`). In other words, it is the rate of
+heat transfer through a surface of unit area that results in a unit temperature
+difference.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Heat_transfer_coefficient#>`__.
+"""
