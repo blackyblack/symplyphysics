@@ -1,26 +1,40 @@
-from sympy import (Eq, solve, symbols)
+"""
+Average cosine of scattering angle from mass number
+===================================================
 
-# Description
-## Average value of the cosine of the angle in the lab system at which neutrons are scattered in the medium.
+Averaged cosine of the angle of neutron scattering depends on the mass number of the
+target nucleus.
 
-## It can be calculated for most of the neutron energies as:
-## μ = 2 / (3 * A)
-## Where:
-## A is the mass number of target nucleus.
-## μ is average value of the cosine of the angle in the lab system at which neutrons are scattered in the medium.
+**Links:**
 
-# Links:
-## NuclearPower <https://www.nuclear-power.com/nuclear-power/reactor-physics/neutron-diffusion-theory/diffusion-coefficient/>
+#. `NuclearPower <https://www.nuclear-power.com/nuclear-power/reactor-physics/neutron-diffusion-theory/diffusion-coefficient/>`__.
+"""
 
-target_nucleus_mass_number = symbols("target_nucleus_mass_number")
-average_scattering_angle_cosine = symbols("average_scattering_angle_cosine")
+from sympy import (Eq, solve)
+from symplyphysics import symbols, SymbolNew, dimensionless
 
-law = Eq(average_scattering_angle_cosine, 2 / (3 * target_nucleus_mass_number))
+mass_number = symbols.mass_number
+"""
+:symbols:`mass_number` of the target nucleus.
+"""
+
+average_scattering_angle_cosine = SymbolNew("mu", dimensionless, display_latex="\\mu")
+"""
+Average of the cosine of the angle at which neutrons are scattered in the medium in the
+lab system.
+"""
+
+law = Eq(average_scattering_angle_cosine, 2 / (3 * mass_number))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 def calculate_average_scattering_angle_cosine(target_nucleus_mass_number_: int) -> float:
     result_angle_cosine_expr = solve(law, average_scattering_angle_cosine,
         dict=True)[0][average_scattering_angle_cosine]
-    result_expr = result_angle_cosine_expr.subs(target_nucleus_mass_number,
+    result_expr = result_angle_cosine_expr.subs(mass_number,
         target_nucleus_mass_number_)
     return result_expr.evalf()

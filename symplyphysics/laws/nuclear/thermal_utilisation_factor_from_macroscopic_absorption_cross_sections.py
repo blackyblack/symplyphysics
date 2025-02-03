@@ -1,40 +1,58 @@
+"""
+Thermal utilization factor from macroscopic absorption cross sections
+=====================================================================
+
+Thermal utilization factor can be found using the macroscopic absorption cross section
+in the fuel and the total macroscopic absorption cross section in the reactor.
+
+**Links:**
+
+#. `ScienceDirect <https://www.sciencedirect.com/topics/engineering/thermal-utilisation-factor>`__.
+#. `NuclearPower <https://www.nuclear-power.com/nuclear-power/reactor-physics/nuclear-fission-chain-reaction/thermal-utilization-factor/>`__.
+#. `Wikipedia, second row in table <https://en.wikipedia.org/wiki/Six_factor_formula>`__.
+"""
+
 from sympy import Eq, solve
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
-    dimensionless,
     convert_to_float,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
 )
 from symplyphysics.core.symbols.probability import Probability
 
-# Description
-## Thermal neutron utilization factor (f), is the ratio of the number of neutrons absorbed in the fuel
-## versus the total number of absorptions everywhere in the reactor, i.e., in the fuel, moderator, cladding,
-## and other reactor materials
+macroscopic_fuel_absorption_cross_section = clone_as_symbol(
+    symbols.macroscopic_cross_section,
+    display_symbol="Sigma_af",
+    display_latex="\\Sigma_\\text{a}^\\text{f}",
+)
+"""
+:symbols:`macroscopic_cross_section` of absorption in the fuel.
+"""
 
-## Law: f = Σa_fuel / Σa_total
-## Where:
-## Σa_fuel - macroscopic absorption cross-section of the fuel.
-##   See [macroscopic cross-section](./macroscopic_cross_section_from_free_mean_path.py) implementation.
-## Σa_total - macroscopic absorption cross-section of the fuel, moderator, cladding, etc, combined.
-## f - thermal neutron utilisation factor
+macroscopic_total_absorption_cross_section = clone_as_symbol(
+    symbols.macroscopic_cross_section,
+    display_symbol="Sigma_a",
+    display_latex="\\Sigma_\\text{a}",
+)
+"""
+Total :symbols:`macroscopic_cross_section` of absorption.
+"""
 
-# Links:
-## ScienceDirect <https://www.sciencedirect.com/topics/engineering/thermal-utilisation-factor>
-## NuclearPower <https://www.nuclear-power.com/nuclear-power/reactor-physics/nuclear-fission-chain-reaction/thermal-utilization-factor/>
-## Wikipedia, second row in table <https://en.wikipedia.org/wiki/Six_factor_formula>
-
-macroscopic_fuel_absorption_cross_section = Symbol("macroscopic_fuel_absorption_cross_section",
-    1 / units.length)
-macroscopic_total_absorption_cross_section = Symbol("macroscopic_total_absorption_cross_section",
-    1 / units.length)
-thermal_utilisation_factor = Symbol("thermal_utilisation_factor", dimensionless)
+thermal_utilisation_factor = symbols.thermal_utilization_factor
+"""
+:symbols:`thermal_utilization_factor`.
+"""
 
 law = Eq(thermal_utilisation_factor,
     macroscopic_fuel_absorption_cross_section / macroscopic_total_absorption_cross_section)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(

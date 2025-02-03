@@ -1,39 +1,51 @@
+"""
+Macroscopic transport cross section from macroscopic scattering cross section
+=============================================================================
+
+Macroscopic transport cross section can be found using the macroscopic scattering cross
+section and the averaged cosine of the scattering angle.
+
+**Links:**
+
+#. `NuclearPower <https://www.nuclear-power.com/nuclear-power/reactor-physics/neutron-diffusion-theory/diffusion-coefficient/>`__.
+#. `ScienceDirect, neutron transport <https://www.sciencedirect.com/topics/engineering/neutron-transport>`__.
+"""
+
 from sympy import (Eq, solve)
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
+    SymbolNew,
     dimensionless,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
 )
 
-# Description
-## The transport mean free path (λtr) is an average distance a neutron will move in its original direction
-## after infinite number of scattering collisions.
+macroscopic_scattering_cross_section = clone_as_symbol(symbols.macroscopic_cross_section, display_symbol="Sigma_s", display_latex="\\sigma_\\text{s}")
+"""
+:symbols:`macroscopic_cross_section` of scattering.
+"""
 
-## Macroscopic transport cross-section: Σtr = Σs * (1 - μ)
-## Where:
-## Σs (macroscopic scattering cross-section) is the macroscopic cross-section for scattering interaction.
-##   See [macroscopic cross-section](./macroscopic_cross_section_from_microscopic_cross_section.py) implementation.
-## μ (average scattering angle cosine) is average value of the cosine of the angle in the lab system at which
-##   neutrons are scattered in the medium.
-##   See [average scattering angle cosine](./most_neutron_energies_scattering_angle_average_cosine.py) implementation.
-## Σtr (macroscopic transport cross-section) is the macroscopic cross-section for transport mean free path.
+average_scattering_angle_cosine = SymbolNew("mu", dimensionless, display_latex="\\mu")
+"""
+Average of the cosine of the angle at which neutrons are scattered in the medium in the
+lab system.
+"""
 
-# Links:
-## NuclearPower <https://www.nuclear-power.com/nuclear-power/reactor-physics/nuclear-engineering-fundamentals/neutron-nuclear-reactions/macroscopic-cross-section/>
-## ScienceDirect <https://www.sciencedirect.com/topics/engineering/macroscopic-cross-section>
-## NOTE find more fitting links
-
-macroscopic_scattering_cross_section = Symbol("macroscopic_scattering_cross_section",
-    1 / units.length)
-average_scattering_angle_cosine = Symbol("average_scattering_angle_cosine", dimensionless)
-macroscopic_transport_cross_section = Symbol("macroscopic_transport_cross_section",
-    1 / units.length)
+macroscopic_transport_cross_section = clone_as_symbol(symbols.macroscopic_cross_section, display_symbol="Sigma_tr", display_latex="\\Sigma_\\text{tr}")
+"""
+:symbols:`macroscopic_cross_section` of neutron transport (i.e. the movement of neutrons
+through the material).
+"""
 
 law = Eq(macroscopic_transport_cross_section,
     macroscopic_scattering_cross_section * (1 - average_scattering_angle_cosine))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(macroscopic_scattering_cross_section_=macroscopic_scattering_cross_section,

@@ -1,43 +1,47 @@
+"""
+Diffusion coefficient from macroscopic scattering cross section
+===============================================================
+
+Neutron diffusion coefficient can be found from the macroscopic scattering cross
+section.
+
+**Links:**
+
+#. `NuclearPower <https://www.nuclear-power.com/nuclear-power/reactor-physics/neutron-diffusion-theory/diffusion-coefficient/>`__.
+"""
+
 from sympy import (Eq, solve)
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol
 )
 
-# Description
-## The current density vector J is proportional to the negative of the gradient of the neutron flux.
-## The proportionality constant is called the diffusion coefficient and is denoted by the symbol D.
+macroscopic_transport_cross_section = clone_as_symbol(symbols.macroscopic_cross_section, display_symbol="Sigma_tr", display_latex="\\Sigma_\\text{tr}")
+"""
+:symbols:`macroscopic_cross_section` of transport.
+"""
 
-# Conditions
-## - Low absorbing medium (Σa << Σs)
-##   Fick’s law derivation assumes that the neutron flux, φ, is slowly varying.
-##   Large variations in φ occur when Σa (macroscopic absorption cross-section) is large compared to
-##   Σs (macroscopic scattering cross-section).
+diffusion_coefficient = symbols.neutron_diffusion_coefficient
+"""
+:symbols:`neutron_diffusion_coefficient`.
+"""
 
-## Law: D = 1 / 3 * Σtr
-## Where:
-## Σtr (macroscopic transport cross-section) is the macroscopic transport cross-section.
-##   See [macroscopic transport cross-section](./macroscopic_transport_cross_section.py) implementation.
-## D is the diffusion coefficient.
+law = Eq(diffusion_coefficient, 1 / (3 * macroscopic_transport_cross_section))
+"""
+:laws:symbol::
 
-# Links:
-## NuclearPower <https://www.nuclear-power.com/nuclear-power/reactor-physics/neutron-diffusion-theory/diffusion-coefficient/>
-
-macroscopic_transport_cross_section = Symbol("macroscopic_transport_cross_section",
-    1 / units.length)
-neutron_diffusion_coefficient = Symbol("neutron_diffusion_coefficient", units.length)
-
-law = Eq(neutron_diffusion_coefficient, 1 / (3 * macroscopic_transport_cross_section))
+:laws:latex::
+"""
 
 
 @validate_input(macroscopic_transport_cross_section_=macroscopic_transport_cross_section)
-@validate_output(neutron_diffusion_coefficient)
+@validate_output(diffusion_coefficient)
 def calculate_diffusion_coefficient(macroscopic_transport_cross_section_: Quantity) -> Quantity:
-    result_coefficient_expr = solve(law, neutron_diffusion_coefficient,
-        dict=True)[0][neutron_diffusion_coefficient]
+    result_coefficient_expr = solve(law, diffusion_coefficient,
+        dict=True)[0][diffusion_coefficient]
     result_expr = result_coefficient_expr.subs(
         {macroscopic_transport_cross_section: macroscopic_transport_cross_section_})
     return Quantity(result_expr)

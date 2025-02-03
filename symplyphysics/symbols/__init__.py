@@ -14,6 +14,7 @@ from .relativistic_mechanics import *
 from .thermodynamics import *
 from .astronomy import *
 from .quantum_mechanics import *
+from .nuclear import *
 
 __all__ = [
     # basic
@@ -60,6 +61,7 @@ __all__ = [
     "electrochemical_equivalent",
     "mobility",
     "diffusion_coefficient",
+    "mass_number",
     # classical mechanics
     "force",
     "speed",
@@ -125,6 +127,7 @@ __all__ = [
     "kepler_constant",
     "diameter",
     "surface_tension",
+    "orthogonal_distance",
     "dynamic_pressure",
     "mechanical_efficiency",
     "hydrostatic_pressure",
@@ -233,4 +236,23 @@ __all__ = [
     # quantum mechanics
     "wave_function",
     "probability_density",
+    # nuclear physics
+    "geometric_buckling",
+    "infinite_multiplication_factor",
+    "multiplication_factor",
+    "effective_multiplication_factor",
+    "neutron_diffusion_area",
+    "neutron_flux",
+    "material_buckling",
+    "fast_non_leakage_probability",
+    "thermal_non_leakage_probability",
+    "resonance_escape_probability",
+    "fast_absorption_fission_probability",
+    "thermal_absorption_fission_probability",
+    "thermal_utilization_factor",
+    "neutron_fermi_age",
+    "thermal_fission_factor",
+    "half_life",
+    "neutron_diffusion_coefficient",
+    "reproduction_factor",
 ]
