@@ -154,8 +154,8 @@ fast_utilization = SymbolNew("u_f", dimensionless, display_latex="u_\\text{f}")
 
 neutron_fermi_age = SymbolNew("tau", units.area, display_latex="\\tau")
 """
-**Fermi age** is a measure of how far a neutron travels in graphite, similar to the
-:symbols:`neutron_diffusion_area`.
+**Fermi age** is a measure of how far a neutron travels during moderation (e.g. in a
+graphite moderator), similar to the :symbols:`neutron_diffusion_area`.
 """
 
 thermal_fission_factor = SymbolNew("eta", dimensionless, display_latex="\\eta")
