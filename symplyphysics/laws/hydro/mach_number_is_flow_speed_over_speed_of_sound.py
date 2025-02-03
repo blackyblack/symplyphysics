@@ -12,49 +12,33 @@ the ratio of flow speed divided by the speed of sound in the medium.
 
 from sympy import Eq, solve
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
-    dimensionless,
     convert_to_float,
+    symbols,
 )
 
-mach_number = Symbol("mach_number", dimensionless)
-r"""
-Local Mach number.
-
-Symbol:
-    :code:`M`
-
-Latex:
-    :math:`\text{M}`
+mach_number = symbols.mach_number
+"""
+Local :symbols:`mach_number`.
 """
 
-flow_speed = Symbol("flow_speed", units.velocity)
-r"""
-Flow speed with respect to internal or external boundaries.
-
-Symbol:
-    :code:`u`
+flow_speed = symbols.flow_speed
+"""
+:symbols:`flow_speed` with respect to internal or external boundaries.
 """
 
-speed_of_sound = Symbol("speed_of_sound", units.velocity)
+speed_of_sound = symbols.speed_of_sound
 """
-Speed of sound in the medium.
-
-Symbol:
-    :code:`c`
+Local :symbols:`speed_of_sound`.
 """
 
 law = Eq(mach_number, flow_speed / speed_of_sound)
-r"""
-:code:`M = u / c`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \text{M} = \frac{u}{c}
+:laws:latex::
 """
 
 

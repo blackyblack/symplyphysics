@@ -2,8 +2,12 @@
 Efflux speed via height
 =======================
 
-The speed of a fluid flowing out from a small orifice can be expressed as a function
-of the height of the fluid column. It is also known as the *Torricelli's law*.
+The speed of a fluid flowing out from a small orifice can be expressed as a function of
+the height of the fluid column. It is also known as the **Torricelli's law**.
+
+**Notation:**
+
+#. :quantity_notation:`acceleration_due_to_gravity`.
 
 **Conditions:**
 
@@ -16,32 +20,24 @@ of the height of the fluid column. It is also known as the *Torricelli's law*.
 #. `Wikipedia <https://en.wikipedia.org/wiki/Torricelli%27s_law#>`__.
 """
 
-from sympy import (Eq, solve, sqrt)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
+from sympy import Eq, solve, sqrt
+from symplyphysics import Quantity, validate_input, validate_output, symbols, quantities
 
-efflux_speed = Symbol("efflux_speed", units.velocity)
+efflux_speed = symbols.flow_speed
 """
-Speed of the fluid flowing out of the pipe.
-
-Symbol:
-    :code:`v`
+:symbols:`flow_speed` of the fluid flowing out of the pipe.
 """
 
-height = Symbol("height", units.length)
+height = symbols.height
 """
-Height of the fluid column above the orifice.
-
-Symbol:
-    :code:`h`
+:symbols:`height` of the fluid column above the orifice.
 """
 
-law = Eq(efflux_speed, sqrt(2 * units.acceleration_due_to_gravity * height))
-r"""
-:code:`v = sqrt(2 * g * h)`
+law = Eq(efflux_speed, sqrt(2 * quantities.acceleration_due_to_gravity * height))
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        v = \sqrt{2 g h}
+:laws:latex::
 """
 
 # TODO Derive from Bernoulli's equation and constancy of volume flux

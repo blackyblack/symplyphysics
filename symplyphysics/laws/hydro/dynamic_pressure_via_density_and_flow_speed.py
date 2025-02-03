@@ -2,9 +2,8 @@
 Dynamic pressure from speed
 ===========================
 
-*Dynamic pressure*, sometimes called *velocity pressure*, is a physical quantity denoting the
-pressure caused by a flowing fluid. It is numerically equal to the kinetic energy of the
-fluid per unit volume (see :doc:`laws.quantities.quantity_is_volumetric_density_times_volume`).
+**Dynamic pressure**, sometimes called **velocity pressure**, is a physical quantity denoting the
+pressure caused by a flowing fluid.
 
 **Notes:**
 
@@ -16,43 +15,29 @@ fluid per unit volume (see :doc:`laws.quantities.quantity_is_volumetric_density_
 #. `Wikipedia <https://en.wikipedia.org/wiki/Dynamic_pressure>`__.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output)
+from sympy import Eq, solve
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 
-dynamic_pressure = Symbol("dynamic_pressure", units.pressure)
+dynamic_pressure = symbols.dynamic_pressure
 """
-Dynamic pressure of the fluid.
-
-Symbol:
-    :code:`q`
+:symbols:`dynamic_pressure` of the fluid. 
 """
 
-density = Symbol("density", units.mass / units.volume)
-r"""
-Density of the fluid.
-
-Symbol:
-    :code:`rho`
-
-Latex:
-    :math:`\rho`
+density = symbols.density
+"""
+:symbols:`density` of the fluid.
 """
 
-flow_speed = Symbol("flow_speed", units.velocity)
+flow_speed = symbols.flow_speed
 """
-Flow speed of the fluid.
-
-Symbol:
-    :code:`u`
+:symbols:`flow_speed` of the fluid.
 """
 
 law = Eq(dynamic_pressure, density * flow_speed**2 / 2)
-r"""
-:code:`q = 1/2 * rho * u^2`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        q = \frac{1}{2} \rho u^2
+:laws:latex::
 """
 
 

@@ -16,58 +16,38 @@ pressures at a chosen point in space.
 
 from sympy import Eq, solve
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
 )
 
-inner_pressure = Symbol("inner_pressure", units.pressure)
-r"""
-Inner pressure of the fluid.
-
-Symbol:
-    :code:`p_inner`
-
-Latex:
-    :math:`p_\text{inner}`
+inner_pressure = clone_as_symbol(symbols.pressure, display_symbol="p_inner", display_latex="p_\\text{inner}")
+"""
+Inner :symbols:`pressure` of the fluid.
 """
 
-static_pressure = Symbol("static_pressure", units.pressure)
-r"""
-Static pressure of the fluid.
-
-Symbol:
-    :code:`p_static`
-
-Latex:
-    :math:`p_\text{static}`
+static_pressure = clone_as_symbol(symbols.pressure, display_symbol="p_static", display_latex="p_\\text{static}")
+"""
+Static :symbols:`pressure` of the fluid.
 """
 
-dynamic_pressure = Symbol("dynamic_pressure", units.pressure)
+dynamic_pressure = symbols.dynamic_pressure
 """
-Dynamic pressure of the fluid.
-
-Symbol:
-    :code:`q`
+:symbols:`dynamic_pressure` of the fluid.
 """
 
-hydrostatic_pressure = Symbol("hydrostatic_pressure", units.pressure)
+hydrostatic_pressure = symbols.hydrostatic_pressure
 """
-Hydrostatic pressure of the fluid.
-
-Symbol:
-    :code:`p`
+:symbols:`hydrostatic_pressure` of the fluid.
 """
 
 law = Eq(inner_pressure, static_pressure + dynamic_pressure + hydrostatic_pressure)
-r"""
-:code:`p_inner = p_static + q + p`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        p_\text{inner} = p_\text{static} + q + p
+:laws:latex::
 """
 
 

@@ -11,47 +11,29 @@ Also see `figure <https://www.researchgate.net/publication/312093145/figure/fig7
 #. `Wikipedia <https://en.wikipedia.org/wiki/Surface_tension#Physics>`__.
 """
 
-from sympy import (Eq, solve)
-from symplyphysics import (
-    symbols,
-    units,
-    Quantity,
-    Symbol,
-    validate_input,
-    validate_output,
-)
+from sympy import Eq, solve
+from symplyphysics import symbols, Quantity, validate_input, validate_output
 
 surface_tension_force = symbols.force
 """
 Surface tension :symbols:`force`.
 """
 
-surface_tension = Symbol("surface_tension", units.force / units.length)
-r"""
-Surface tension of the fluid.
-
-Symbol:
-    :code:`gamma`
-
-Latex:
-    :math:`\gamma`
+surface_tension = symbols.surface_tension
+"""
+:symbols:`surface_tension` of the fluid.
 """
 
-length = Symbol("length", units.length)
+length = symbols.length
 """
-Length of the contour to which the force is applied.
-
-Symbol:
-    :code:`l`
+:symbols:`length` of the contour to which the force is applied.
 """
 
 law = Eq(surface_tension_force, surface_tension * length)
-r"""
-:code:`F = gamma * l`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        F = \gamma l
+:laws:latex::
 """
 
 
