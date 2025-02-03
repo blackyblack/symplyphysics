@@ -1,33 +1,47 @@
-from sympy import (Eq, solve, symbols)
+"""
+Effective multiplication factor from infinite multiplication factor and probabilities
+=====================================================================================
+
+The effective multiplication factor can be found from the infinite multiplication factor
+as well as fast and thermal non-leakage probabilities.
+
+**Links:**
+
+#. `Wikipedia, formula above table <https://en.wikipedia.org/wiki/Six_factor_formula>`__.
+"""
+
+from sympy import (Eq, solve)
+from symplyphysics import symbols
 from symplyphysics.core.symbols.probability import Probability
 
-# Description
-## Effective multiplication factor: k_effective = k_infinite * Pf * Pt
-## Where:
-## Pf - fast non-leakage factor.
-##   See [fast non_leakage probability](./fast_non_leakage_probability_from_fermi_age.py)
-## Pt - thermal non-leakage factor.
-##   See [thermal non_leakage probability](./thermal_non_leakage_probability_from_diffusion_length.py)
-## k_infinite (infinite multiplication factor) is the ratio of the neutrons produced by fission in one neutron
-##   generation to the number of neutrons lost through absorption in the preceding neutron generation.
-##   See [infinite multiplication factor](./infinite_multiplication_factor.py) implementation.
-## k_effective (effective multiplication factor) is ratio of the neutrons produced by fission in one neutron
-##   generation to the number of neutrons lost through absorption and leakage in the preceding neutron generation.
+fast_non_leakage_probability = symbols.fast_non_leakage_probability
+"""
+:symbols:`fast_non_leakage_probability`.
+"""
 
-# All input parameters are dimensionless - use SymPy symbols.
-# TODO refactor to use dimensionless SymbolNew instances
+thermal_non_leakage_probability = symbols.thermal_non_leakage_probability
+"""
+:symbols:`thermal_non_leakage_probability`.
+"""
 
-# Links:
-## Wikipedia, formula above table <https://en.wikipedia.org/wiki/Six_factor_formula>
+infinite_multiplication_factor = symbols.infinite_multiplication_factor
+"""
+:symbols:`infinite_multiplication_factor`.
+"""
 
-fast_non_leakage_probability = symbols("fast_non_leakage_probability")
-thermal_non_leakage_probability = symbols("thermal_non_leakage_probability")
-infinite_multiplication_factor = symbols("infinite_multiplication_factor")
-effective_multiplication_factor = symbols("effective_multiplication_factor")
+effective_multiplication_factor = symbols.effective_multiplication_factor
+"""
+:symbols:`effective_multiplication_factor`.
+"""
 
 law = Eq(
     effective_multiplication_factor,
     infinite_multiplication_factor * fast_non_leakage_probability * thermal_non_leakage_probability)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 def calculate_multiplication_factor(infinite_multiplication_factor_: float,

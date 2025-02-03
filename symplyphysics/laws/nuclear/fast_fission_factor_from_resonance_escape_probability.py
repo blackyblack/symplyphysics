@@ -1,25 +1,77 @@
-# Description
-## The fast fission factor is the ratio of the fast neutrons produced by fissions at all energies to
-## the number of fast neutrons produced in thermal fission.
+"""
+Fast fission factor from resonance escape probability
+=====================================================
 
-## Law: ε ≈ 1 + ((1 - p) / p) * uf * vf * Pfaf / (f * vt * Ptaf * Ptnl)
-## Where:
-## p - resonance escape probability.
-##   See [resonance escape probability](./resonance_escape_probability_from_resonance_absorption_integral.py) implementation.
-## uf (fast utilization) - probability that a fast neutron is absorbed in fuel.
-## vf - average number of fast neutrons produced per fission.
-## vt - average number of thermal neutrons produced per fission.
-## f - thermal utilisation factor.
-##   See [thermal utilisation factor](./thermal_utilisation_factor_from_macroscopic_absorption_cross_sections.py) implementation.
-## Pfaf -  probability that a fast neutron absorption in fuel causes fission.
-## Ptaf -  probability that a thermal neutron absorption in fuel causes fission.
-## Ptnl - thermal non-leakage factor.
-##   See [thermal non_leakage probability](./thermal_non_leakage_probability_from_diffusion_length.py) implementation.
-## ε - fast fission factor
+The fast fission factor is the ratio of the fast neutrons produced by fissions at all
+energies to the number of fast neutrons produced in thermal fission. Unfortunately
+proper fast fission factor formula is too complex for actual use. Approximate formula is
+not very useful since there is no actual data on :math:`P_\\text{FAF}`,
+:math:`P_\\text{TAF}`, and :math:`u_\\text{f}` values.
 
-## Unfortunately proper fast fission factor formula is too complex for actual use. Approximate formula is not
-## very useful since there is no actual data on Pfaf, Ptaf and uf values. Therefore this module is empty,
-## only present as a documentation for the fast fission factor.
+**Links:**
 
-# Links:
-## Wikipedia, fourth row in table <https://en.wikipedia.org/wiki/Six_factor_formula>
+#. `Wikipedia, fourth row in table <https://en.wikipedia.org/wiki/Six_factor_formula>`__.
+"""
+
+from sympy import Eq
+from symplyphysics import symbols, clone_as_symbol
+
+fast_fission_factor = symbols.fast_fission_factor
+"""
+:symbols:`fast_fission_factor`.
+"""
+
+resonance_escape_probability = symbols.resonance_escape_probability
+"""
+:symbols:`resonance_escape_probability`.
+"""
+
+thermal_utilization_factor = symbols.thermal_utilization_factor
+"""
+:symbols:`thermal_utilization_factor`.
+"""
+
+fast_utilization = symbols.fast_utilization
+"""
+:symbols:`fast_utilization`.
+"""
+
+fast_neutrons_per_fission = clone_as_symbol(symbols.particle_count, display_symbol="nu_f", display_latex="\\nu_\\text{f}")
+"""
+Number of fast neutrons produced per fission. See :symbols:`particle_count`.
+"""
+
+thermal_neutrons_per_fission = clone_as_symbol(symbols.particle_count, display_symbol="nu_t", display_latex="\\nu_\\text{t}")
+"""
+Number of thermal neutrons produced per fission. See :symbols:`particle_count`.
+"""
+
+fast_absorption_fission_probability = symbols.fast_absorption_fission_probability
+"""
+:symbols:`fast_absorption_fission_probability`.
+"""
+
+thermal_absorption_fission_probability = symbols.thermal_absorption_fission_probability
+"""
+:symbols:`thermal_absorption_fission_probability`.
+"""
+
+thermal_non_leakage_probability = symbols.thermal_non_leakage_probability
+"""
+:symbols:`thermal_non_leakage_probability`.
+"""
+
+_first_ratio = (1 - resonance_escape_probability) / resonance_escape_probability
+_second_ratio = (
+    (fast_utilization * fast_neutrons_per_fission * fast_absorption_fission_probability)
+    / (thermal_utilization_factor * thermal_neutrons_per_fission * thermal_absorption_fission_probability * thermal_non_leakage_probability)
+)
+
+law = Eq(fast_fission_factor, 1 + _first_ratio * _second_ratio,)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
+
+# There is no calculate() method for the lack of data and use of this formula.

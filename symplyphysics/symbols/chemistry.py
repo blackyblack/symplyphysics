@@ -130,3 +130,13 @@ under the influence of a gradient of one unit.
 #. `Wikipedia <https://en.wikipedia.org/wiki/Mass_diffusivity>`__.
 #. `ScienceDirect <https://www.sciencedirect.com/topics/biochemistry-genetics-and-molecular-biology/diffusion-coefficient>`__.
 """
+
+mass_number = SymbolNew("A", dimensionless, integer=True)
+"""
+**Mass number**, also called **atomic mass number** or **nucleon number**, is the total
+number of protons and neutrons in an atomic nucleus.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Mass_number>`__.
+"""

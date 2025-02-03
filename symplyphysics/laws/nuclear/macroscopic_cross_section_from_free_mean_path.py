@@ -1,30 +1,38 @@
-from sympy import (Eq, solve)
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    validate_input,
-    validate_output,
-)
+"""
+Macroscopic cross section from mean free path
+=============================================
 
-# Description
-## Macroscopic cross-section - represents the effective target area of all of the nuclei contained
-## in the volume of the material (such as fuel pellet). It is the probability of neutron-nucleus interaction per
-## centimeter of neutron travel.
+Macroscopic cross section is the inverse of mean free path of neutrons. As an example,
+the greater the absorption cross section of a material is, the shorter the mean free
+path of neutrons is and the closer to the surface the neutron absorption will occur.
 
-## Macroscopic cross-section: Σ = 1 / λ
-## Where:
-## λ (mean free path) is equal to the average value of x, the distance traveled by a neutron without any
-## interaction, over the interaction probability distribution.
-## Σ is the macroscopic cross-section.
+**Links:**
 
-# Links:
-## NuclearPower, "Mean Free Path" <https://www.nuclear-power.com/nuclear-power/reactor-physics/nuclear-engineering-fundamentals/neutron-nuclear-reactions/macroscopic-cross-section/>
+#. `NuclearPower, section "Mean Free Path" <https://www.nuclear-power.com/nuclear-power/reactor-physics/nuclear-engineering-fundamentals/neutron-nuclear-reactions/macroscopic-cross-section/>`__.
 
-mean_free_path = Symbol("mean_free_path", units.length)
-macroscopic_cross_section = Symbol("macroscopic_cross_section", 1 / units.length)
+..
+    TODO: fix file name
+"""
+
+from sympy import Eq, solve
+from symplyphysics import Quantity, validate_input, validate_output, symbols
+
+mean_free_path = symbols.mean_free_path
+"""
+:symbols:`mean_free_path` of neutrons.
+"""
+
+macroscopic_cross_section = symbols.macroscopic_cross_section
+"""
+:symbols:`macroscopic_cross_section`.
+"""
 
 law = Eq(macroscopic_cross_section, 1 / mean_free_path)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(mean_free_path_=mean_free_path)
