@@ -4,7 +4,9 @@ Froude number formula
 
 The Froude number is based on the speed-to-length ratio as defined by Froude. It has
 some analogy with the :ref:`Mach number <Mach number is flow speed over speed of sound>`,
-but it not frequently used in the field of theoretical fluid dynamics.
+but it is not frequently used in the field of theoretical fluid dynamics. It relates the
+inertia forces in a system to the effects due to gravity, in other words, it is related
+to the tendency of the fluid to make `gravity waves <https://en.wikipedia.org/wiki/Gravity_wave>`__.
 
 **Notation:**
 
@@ -13,6 +15,7 @@ but it not frequently used in the field of theoretical fluid dynamics.
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Froude_number>`__.
+#. `ScienceDirect <https://www.sciencedirect.com/topics/engineering/froude-number>`__.
 
 ..
     TODO: rename file

@@ -1,6 +1,6 @@
 """
-Jurin's equation
-================
+Capillary rise from surface tension and contact angle
+=====================================================
 
 The Jurin's law determines the height to which the liquid rises in capillaries. It
 states that the maximum height of a liquid in a capillary tube is inversely proportional
@@ -13,12 +13,15 @@ to the tube's diameter.
 **Conditions:**
 
 #. The surface of the meniscus is spherical.
-#. Height :math:`h` of the liquid is raised (lowered) is much larger than the radius
+#. Height :math:`h` of the raised (lowered) liquid is much larger than the radius
    :math:`r` of the capillary.
 
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Jurin%27s_law>`__.
+
+..
+    TODO: rename file to use descriptive name
 """
 
 from sympy import Eq, solve, cos

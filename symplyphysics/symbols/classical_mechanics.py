@@ -240,7 +240,7 @@ mass_flow_rate = SymbolNew("mu", units.mass / units.time, display_latex="\\mu")
 
 volumetric_flow_rate = SymbolNew("Q", units.volume / units.time)
 """
-**Volumetric flow rate** is the volume of a subtance which passes per unit time.
+**Volumetric flow rate** is the volume of a substance which passes per unit time.
 """
 
 stiffness = SymbolNew("k", units.force / units.length)
@@ -493,17 +493,6 @@ forces.
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Reynolds_number#>`__.
-"""
-
-stress = SymbolNew("sigma", units.pressure, display_latex="\\sigma")
-"""
-**Stress** is a quantity that describes forces present during deformation within
-materials. It can arise from externally applied forces, uneven heating, or permanent
-deformation.
-
-**Links:**
-
-#. `Wikipedia <https://en.wikipedia.org/wiki/Stress_(mechanics)>`__.
 """
 
 shear_stress = SymbolNew("tau", units.pressure, display_latex="\\tau")

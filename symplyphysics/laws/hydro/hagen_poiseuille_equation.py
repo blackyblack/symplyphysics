@@ -1,6 +1,6 @@
 """
-Hagen—Poiseuille equation
-========================
+Pressure difference at pipe ends from dynamic viscosity and flow rate
+=====================================================================
 
 In non-ideal fluid mechanics, the Hagen—Poiseuille equation is a physical law that gives
 the pressure drop in an incompressible and Newtonian fluid in laminar flow flowing
@@ -17,6 +17,9 @@ applied to air flow in lung alveoli, or the flow through a drinking straw.
 **Links:**
 
 #. `Wikipedia, first part of the first equation <https://en.wikipedia.org/wiki/Hagen%E2%80%93Poiseuille_equation#Equation>`__.
+
+..
+    TODO: rename file to use descriptive name
 """
 
 from sympy import Eq, solve, pi
@@ -48,12 +51,12 @@ radius = symbols.radius
 :symbols:`radius` of the pipe.
 """
 
-pressure_change = clone_as_symbol(symbols.pressure, display_symbol="Delta(p)", display_latex="\\Delta p")
+pressure_difference = clone_as_symbol(symbols.pressure, display_symbol="Delta(p)", display_latex="\\Delta p")
 """
-Change in :symbols:`pressure` between the two ends.
+Difference in :symbols:`pressure` between the two ends of the pipe.
 """
 
-law = Eq(pressure_change, 8 * dynamic_viscosity * length * flow_rate / (pi * radius**4))
+law = Eq(pressure_difference, 8 * dynamic_viscosity * length * flow_rate / (pi * radius**4))
 """
 :laws:symbol::
 
@@ -67,10 +70,10 @@ law = Eq(pressure_change, 8 * dynamic_viscosity * length * flow_rate / (pi * rad
     flow_rate_=flow_rate,
     radius_=radius,
 )
-@validate_output(pressure_change)
+@validate_output(pressure_difference)
 def calculate_delta_pressure(dynamic_viscosity_: Quantity, length_: Quantity, flow_rate_: Quantity,
     radius_: Quantity) -> Quantity:
-    result_expr = solve(law, pressure_change, dict=True)[0][pressure_change]
+    result_expr = solve(law, pressure_difference, dict=True)[0][pressure_difference]
     result_applied = result_expr.subs({
         dynamic_viscosity: dynamic_viscosity_,
         length: length_,
