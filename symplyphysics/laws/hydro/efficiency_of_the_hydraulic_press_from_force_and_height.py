@@ -28,7 +28,7 @@ Output :symbols:`force`.
 
 output_distance = clone_as_symbol(symbols.euclidean_distance, subscript="2")
 """
-:symbols:`euclidean_distance` covered by the output pistol.
+:symbols:`euclidean_distance` covered by the output piston.
 """
 
 input_force = clone_as_symbol(symbols.force, subscript="1")
@@ -38,7 +38,7 @@ Input :symbols:`force`.
 
 input_distance = clone_as_symbol(symbols.euclidean_distance, subscript="1")
 """
-:symbols:`euclidean_distance` covered by the input pistol.
+:symbols:`euclidean_distance` covered by the input piston.
 """
 
 efficiency = symbols.mechanical_efficiency
