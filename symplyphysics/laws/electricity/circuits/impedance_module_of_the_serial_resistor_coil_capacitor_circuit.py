@@ -27,12 +27,12 @@ resistor_resistance = clone_as_symbol(symbols.electrical_resistance, real=True)
 :symbols:`electrical_resistance` of the resistor.
 """
 
-capacitor_reactance = clone_as_symbol(symbols.electrical_reactance, subscript="\\text{C}", real=True)
+capacitor_reactance = clone_as_symbol(symbols.electrical_reactance, display_symbol="X_C", display_latex="X_\\text{C}", real=True)
 """
 :symbols:`electrical_reactance` of the capacitor.
 """
 
-coil_reactance = clone_as_symbol(symbols.electrical_reactance, subscript="\\text{C}", real=True)
+coil_reactance = clone_as_symbol(symbols.electrical_reactance, display_symbol="X_L", display_latex="X_\\text{L}", real=True)
 """
 :symbols:`electrical_reactance` of the coil.
 """

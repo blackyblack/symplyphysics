@@ -31,12 +31,12 @@ breakdown_electric_field = symbols.electric_field_strength
 :symbols:`electric_field_strength` of dielectric breakdown.
 """
 
-outer_diameter = clone_as_symbol(symbols.diameter, subscript="\\text{o}")
+outer_diameter = clone_as_symbol(symbols.diameter, display_symbol="d_o", display_latex="d_\\text{o}")
 """
 :symbols:`diameter` of the outer conductor.
 """
 
-inner_diameter = clone_as_symbol(symbols.diameter, subscript="\\text{i}")
+inner_diameter = clone_as_symbol(symbols.diameter, display_symbol="d_i", display_latex="d_\\text{i}")
 """
 :symbols:`diameter` of the inner conductor.
 """

@@ -29,7 +29,7 @@ attenuation_coefficient = symbols.attenuation_coefficient
 :symbols:`attenuation_coefficient` in metal.
 """
 
-surface_resistance = clone_as_symbol(symbols.electrical_resistance, subscript="\\text{s}")
+surface_resistance = clone_as_symbol(symbols.electrical_resistance, display_symbol="R_s", display_latex="R_\\text{s}")
 """
 :symbols:`electrical_resistance` of the surface.
 """
@@ -66,7 +66,7 @@ wavelength = symbols.wavelength
 :symbols:`wavelength` of the signal.
 """
 
-critical_wavelength = clone_as_symbol(symbols.wavelength, subscript="\\text{c}")
+critical_wavelength = clone_as_symbol(symbols.wavelength, display_symbol="lambda_c", display_latex="\\lambda_\\text{c}")
 """
 Critical :symbols:`wavelength` of the system. See :ref:`Critical wavelength of waveguide`.
 """
