@@ -1,35 +1,39 @@
 from sympy import Eq, solve, exp, acosh
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
-    print_expression,
+    SymbolNew,
     validate_input,
     validate_output,
     dimensionless,
     convert_to_float,
+    symbols,
+    clone_as_symbol,
 )
 
-# Description
-## Microwave attenuators are used to attenuate the microwave signal. For a three-link T-type attenuator or a π-type
-## attenuator, the signal attenuation coefficient is calculated from the resistor resistance ratio.
+attenuation_coefficient = SymbolNew("N", dimensionless)
+"""
+Attenutation coefficient of the attenuator.
 
-## Law is: N = exp(arcosh(1 + R1 / R2)), where
-## N - attenuation coefficient of attenuator,
-## R1 - resistance of the first resistor,
-## R2 - resistance of the second resistor,
-## arcosh - this is area hyperbolic cosine (https://en.wikipedia.org/wiki/Hyperbolic_functions).
+..
+    NOTE: why is it dimensionless? maybe it's a different quantity?
+"""
 
-attenuation_coefficient = Symbol("attenuation_coefficient", dimensionless)
+first_resistance = clone_as_symbol(symbols.electrical_resistance, subscript="1")
+"""
+:symbols:`electrical_resistance` of the first section.
+"""
 
-first_resistance = Symbol("first_resistance", units.impedance)
-second_resistance = Symbol("second_resistance", units.impedance)
+second_resistance = clone_as_symbol(symbols.electrical_resistance, subscript="2")
+"""
+:symbols:`electrical_resistance` of the second section.
+"""
 
 law = Eq(attenuation_coefficient, exp(acosh(1 + first_resistance / second_resistance)))
+"""
+:laws:symbol::
 
-
-def print_law() -> str:
-    return print_expression(law)
+:laws:latex::
+"""
 
 
 @validate_input(first_resistance_=first_resistance, second_resistance_=second_resistance)

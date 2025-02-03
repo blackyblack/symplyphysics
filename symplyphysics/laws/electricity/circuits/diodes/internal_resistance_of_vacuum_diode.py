@@ -1,25 +1,32 @@
-from sympy import Eq, solve, sqrt, Rational
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    validate_input,
-    validate_output,
-)
+"""
+Internal resistance of vacuum diode
+===================================
 
-# Description
-## The internal resistance is generally equal to the current derivative of the voltage.
-## For a vacuum diode, it can be calculated if the diode parameter and the voltage between the anode and cathode are known.
+The internal resistance is generally equal to the current derivative of the voltage. For
+a vacuum diode, it can be calculated if the diode parameter and the voltage between the
+anode and cathode are known.
 
-## Law is: ri = 2 / (3 * g * sqrt(Ua)), where
-## ri - the internal resistance of the vacuum diode,
-## g - diode constant,
-## Ua - voltage between cathode and anode.
+..
+    TODO: find link
+"""
 
-internal_resistance = Symbol("internal_resistance", units.impedance)
+from sympy import Eq, solve, sqrt
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 
-diode_constant = Symbol("diode_constant", units.current / units.voltage**Rational(3, 2))
-voltage = Symbol("voltage", units.voltage)
+internal_resistance = symbols.electrical_resistance
+"""
+Internal :symbols:`electrical_resistance` of the vacuum diode.
+"""
+
+diode_constant = symbols.diode_constant
+"""
+:symbols:`diode_constant`.
+"""
+
+voltage = symbols.voltage
+"""
+:symbols:`voltage` between cathode and anode.
+"""
 
 law = Eq(internal_resistance, 2 / (3 * diode_constant * sqrt(voltage)))
 

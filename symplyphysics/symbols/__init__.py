@@ -162,6 +162,10 @@ __all__ = [
     "attenuation_coefficient",
     "electrical_conductivity",
     "wave_impedance",
+    "circuit_gain",
+    "diode_constant",
+    "volumetric_charge_density",
+    "direct_permeability_coefficient",
     # optics
     "relative_refractive_index",
     "radiant_exitance",

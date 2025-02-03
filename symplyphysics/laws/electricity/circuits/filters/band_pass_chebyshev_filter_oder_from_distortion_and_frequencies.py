@@ -1,38 +1,75 @@
-from math import ceil
-from sympy import (Eq, solve, acosh)
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless,
-    convert_to_float)
+"""
+Band pass Chebyshev filter order from distortion and frequency
+==============================================================
 
-# Description
-## The approximation of the power transmission coefficient of a normalized high-pass filter is given by approximating functions of the order of n.
-## The Chebyshev filter is described by the function 1 / cos(n * acos(1 / frequency)).
-## Bandwidth distortion determines the maximum distortion in the bandwidth. In other words, to determine the level of ripples in the bandwidth.
-## The band-stop distortion sets the required suppression level in the filter band-stop.
-## You can only implement an integer-order filter. And the formula itself returns the minimum order of the filter, which will have the
-## specified parameters (frequencies and distortions). Therefore, you need to round it up (use ceil()).
-## In this case, a band-pass filter is considered. The bandpass filter only passes frequencies from a certain frequency range.
-## http://www.dsplib.ru/content/filters/ch8/ch8.html#r4
+The approximation of the power transmission coefficient of a normalized high-pass filter
+is given by approximating functions of order :math:`n`. The **Chebyshev filter** is
+described by the function :math:`\\left(\\cos{n \\acos{f^{-1}}}\\right)^{-1}` of
+frequency :math:`f`. In this case, a band-pass filter is considered. The bandpass filter
+only passes frequencies from a certain frequency range.
 
-## Law is: N = acosh(es / ep) / acosh((fz^2 - f0^2) / (delta_w * fz)), where
-## N - Chebyshev filter order,
-## es - band-stop distortion,
-## ep - bandwidth distortion,
-## fz - frequency of the band-stop (the frequency that corresponds to the maximum band-stop distortion),
-## f0 - cutoff frequency (the frequency that corresponds to the maximum bandwidth distortion),
-## delta_w - bandwidth.
+**Notes:**
 
-band_pass_chebyshev_filter_order = Symbol("band_pass_chebyshev_filter_order", dimensionless)
+#. Also refer to `this link (in Russian) <http://www.dsplib.ru/content/filters/ch8/ch8.html#r4>`__.
 
-bandwidth_distortion = Symbol("bandwidth_distortion", dimensionless)
-band_stop_distortion = Symbol("band_stop_distortion", dimensionless)
-cutoff_frequency = Symbol("cutoff_frequency", units.frequency)
-band_stop_frequency = Symbol("band_stop_frequency", units.frequency)
-bandwidth = Symbol("bandwidth", units.frequency)
+..
+    TODO: find link
+    TODO: fix file name
+"""
+
+from sympy import Eq, solve, acosh, ceiling
+from symplyphysics import (
+    Quantity,
+    SymbolNew,
+    validate_input,
+    validate_output,
+    dimensionless,
+    convert_to_float,
+    symbols,
+    clone_as_symbol,
+)
+
+filter_order = SymbolNew("N", dimensionless)
+"""
+Chebyshev filter order. See :symbols:`positive_number`.
+"""
+
+bandwidth_distortion = SymbolNew("e", dimensionless)
+"""
+Bandwidth distortion, which corresponds to the number of ripples in the bandwidth.
+"""
+
+band_stop_distortion = SymbolNew("e_1", dimensionless)
+"""
+Band-stop distortion, which sets the required suppression level in the filter band-stop.
+"""
+
+cutoff_frequency = clone_as_symbol(symbols.temporal_frequency, subscript="0")
+"""
+Cut-off frequency, i.e. :symbols:`temporal_frequency` that corresponds to the maximum
+bandwidth distortion.
+"""
+
+band_stop_frequency = clone_as_symbol(symbols.temporal_frequency, subscript="1")
+"""
+Band-stop frequency, i.e. :symbols:`temporal_frequency` that corresponds to the maximum
+band-stop distortion.
+"""
+
+bandwidth = clone_as_symbol(symbols.temporal_frequency, display_symbol="Delta(f)", display_latex="\\Delta f")
+"""
+Bandwidth. See :symbols:`temporal_frequency`.
+"""
 
 law = Eq(
-    band_pass_chebyshev_filter_order,
+    filter_order,
     acosh(bandwidth_distortion / band_stop_distortion) / acosh(
     (band_stop_frequency**2 - cutoff_frequency**2) / (bandwidth * band_stop_frequency)))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(bandwidth_distortion_=bandwidth_distortion,
@@ -40,12 +77,12 @@ law = Eq(
     band_stop_frequency_=band_stop_frequency,
     cutoff_frequency_=cutoff_frequency,
     bandwidth_=bandwidth)
-@validate_output(band_pass_chebyshev_filter_order)
+@validate_output(filter_order)
 def calculate_band_pass_chebyshev_filter_order(bandwidth_distortion_: float,
     band_stop_distortion_: float, band_stop_frequency_: Quantity, cutoff_frequency_: Quantity,
     bandwidth_: Quantity) -> int:
-    result_expr = solve(law, band_pass_chebyshev_filter_order,
-        dict=True)[0][band_pass_chebyshev_filter_order]
+    result_expr = solve(law, filter_order,
+        dict=True)[0][filter_order]
     result_expr = result_expr.subs({
         bandwidth_distortion: bandwidth_distortion_,
         band_stop_distortion: band_stop_distortion_,
@@ -53,4 +90,4 @@ def calculate_band_pass_chebyshev_filter_order(bandwidth_distortion_: float,
         cutoff_frequency: cutoff_frequency_,
         bandwidth: bandwidth_,
     })
-    return ceil(convert_to_float(result_expr))
+    return int(ceiling(convert_to_float(result_expr)))

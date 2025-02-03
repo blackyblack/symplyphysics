@@ -1,42 +1,58 @@
-from sympy import (
-    Eq,
-    solve,
+"""
+Transmission coefficient approximation of low-pass filter
+=========================================================
+
+The approximation of the power transmission coefficient of a normalized low-pass filter is given by approximating functions of the order of n. Bandwidth distortion determines the maximum distortion in the bandwidth. In other words, to determine the level of ripples in the bandwidth.
+
+"""
+
+from sympy import Eq, solve
+from symplyphysics import (
+    SymbolNew,
+    validate_input,
+    validate_output,
+    dimensionless,
+    convert_to_float,
+    symbols,
 )
-from symplyphysics import (units, Symbol, Function, print_expression, validate_input,
-    validate_output, dimensionless, convert_to_float)
 
-# Description
-## The approximation of the power transmission coefficient of a normalized low-pass filter is given by approximating functions of the order of n.
-## Bandwidth distortion determines the maximum distortion in the bandwidth. In other words, to determine the level of ripples in the bandwidth.
+frequency = symbols.temporal_frequency
+"""
+:symbols:`temporal_frequency` of the signal.
+"""
 
-# Law: H = 1 / (1 + e^2 * Fn(w)^2)
-## Where:
-## H - the transfer coefficient of the filter,
-## e - bandwidth distortion,
-## Fn(w) - approximating function of the order of n of the transfer coefficient,
-## w - frequency.
+filter_function = SymbolNew("F", dimensionless)
+"""
+Function (of :attr:`~frequency`) of order :math:`n` which approximates the transfer
+coefficient.
+"""
 
-frequency = Symbol("frequency", units.frequency)
-filter_function = Function("filter_function", dimensionless)
-bandwidth_distortion = Symbol("bandwidth_distortion", dimensionless)
-transmission_coefficient = Symbol("transmission_coefficient", dimensionless)
+bandwidth_distortion = SymbolNew("e", dimensionless)
+"""
+Bandwidth distortion.
+"""
 
-law = Eq(transmission_coefficient,
-    1 / (1 + bandwidth_distortion**2 * filter_function(frequency)**2))
+transfer_coefficient = SymbolNew("H", dimensionless)
+"""
+Transfer coefficient of the filter.
+"""
 
+law = Eq(transfer_coefficient, 1 / (1 + bandwidth_distortion**2 * filter_function**2))
+"""
+:laws:symbol::
 
-def print_law() -> str:
-    return print_expression(law)
+:laws:latex::
+"""
 
 
 @validate_input(filter_function_at_frequency=filter_function,
     bandwidth_distortion_=bandwidth_distortion)
-@validate_output(transmission_coefficient)
+@validate_output(transfer_coefficient)
 def calculate_coefficient(filter_function_at_frequency: float,
     bandwidth_distortion_: float) -> float:
     result_expr = law.subs({
-        filter_function(frequency): filter_function_at_frequency,
+        filter_function: filter_function_at_frequency,
         bandwidth_distortion: bandwidth_distortion_,
     })
-    result = solve(result_expr, transmission_coefficient, dict=True)[0][transmission_coefficient]
+    result = solve(result_expr, transfer_coefficient, dict=True)[0][transfer_coefficient]
     return convert_to_float(result)
