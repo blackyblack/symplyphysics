@@ -41,12 +41,12 @@ diffusion_coefficient = symbols.neutron_diffusion_coefficient
 :symbols:`neutron_diffusion_coefficient`.
 """
 
-material_buckling_squared = symbols.material_buckling
+material_buckling = symbols.material_buckling
 """
 :symbols:`material_buckling`.
 """
 
-law = Eq(material_buckling_squared, (neutrons_per_fission * macroscopic_fission_cross_section -
+law = Eq(material_buckling, (neutrons_per_fission * macroscopic_fission_cross_section -
     macroscopic_absorption_cross_section) / diffusion_coefficient)
 """
 :laws:symbol::
@@ -57,7 +57,7 @@ law = Eq(material_buckling_squared, (neutrons_per_fission * macroscopic_fission_
 # Derive the same law from the geometric buckling and critical reactor condition
 
 _buckling_eq1 = buckling_law.law.subs({
-    buckling_law.geometric_buckling: material_buckling_squared,
+    buckling_law.geometric_buckling: material_buckling,
     buckling_law.neutrons_per_fission: neutrons_per_fission,
     buckling_law.macroscopic_fission_cross_section: macroscopic_fission_cross_section,
     buckling_law.macroscopic_absorption_cross_section: macroscopic_absorption_cross_section,
@@ -69,8 +69,8 @@ _derived_law = [_buckling_eq1, _critical_condition_eq2]
 
 ## Check the equivalence of 'law' and '_derived_law'
 _derived_material_buckling_squared = solve(_derived_law,
-    (material_buckling_squared, buckling_law.effective_multiplication_factor),
-    dict=True)[0][material_buckling_squared]
+    (material_buckling, buckling_law.effective_multiplication_factor),
+    dict=True)[0][material_buckling]
 assert expr_equals(law.rhs, _derived_material_buckling_squared)
 
 
@@ -78,11 +78,11 @@ assert expr_equals(law.rhs, _derived_material_buckling_squared)
     macroscopic_fission_cross_section_=macroscopic_fission_cross_section,
     macroscopic_absorption_cross_section_=macroscopic_absorption_cross_section,
     diffusion_coefficient_=diffusion_coefficient)
-@validate_output(material_buckling_squared)
+@validate_output(material_buckling)
 def calculate_buckling(neutrons_per_fission_: float, macroscopic_fission_cross_section_: Quantity,
     macroscopic_absorption_cross_section_: Quantity, diffusion_coefficient_: Quantity) -> Quantity:
-    result_buckling_expr = solve(law, material_buckling_squared,
-        dict=True)[0][material_buckling_squared]
+    result_buckling_expr = solve(law, material_buckling,
+        dict=True)[0][material_buckling]
     result_expr = result_buckling_expr.subs({
         neutrons_per_fission: neutrons_per_fission_,
         macroscopic_fission_cross_section: macroscopic_fission_cross_section_,

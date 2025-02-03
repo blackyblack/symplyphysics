@@ -25,22 +25,22 @@ neutrons_per_fission = clone_as_symbol(symbols.particle_count, display_symbol="n
 Average number of neutrons produced per fission. See :symbols:`particle_count`.
 """
 
-macroscopic_fuel_fission_cross_section = clone_as_symbol(
+macroscopic_fission_cross_section = clone_as_symbol(
     symbols.macroscopic_cross_section,
     display_symbol="Sigma_ff",
     display_latex="\\Sigma_\\text{f}^\\text{f}",
 )
 """
-:symbols:`macroscopic_cross_section` of fission in the fuel.
+:symbols:`macroscopic_cross_section` of fission *in the fuel*.
 """
 
-macroscopic_fuel_absorption_cross_section = clone_as_symbol(
+macroscopic_absorption_cross_section = clone_as_symbol(
     symbols.macroscopic_cross_section,
     display_symbol="Sigma_af",
     display_latex="\\Sigma_\\text{a}^\\text{f}",
 )
 """
-:symbols:`macroscopic_cross_section` of absorption in the fuel.
+:symbols:`macroscopic_cross_section` of absorption *in the fuel*.
 """
 
 reproduction_factor = symbols.reproduction_factor
@@ -49,8 +49,8 @@ Neutron :symbols:`reproduction_factor`.
 """
 
 law = Eq(
-    reproduction_factor, neutrons_per_fission * macroscopic_fuel_fission_cross_section /
-    macroscopic_fuel_absorption_cross_section)
+    reproduction_factor, neutrons_per_fission * macroscopic_fission_cross_section /
+    macroscopic_absorption_cross_section)
 """
 :laws:symbol::
 
@@ -59,8 +59,8 @@ law = Eq(
 
 
 @validate_input(neutrons_per_fission_=neutrons_per_fission,
-    macroscopic_fuel_fission_cross_section_=macroscopic_fuel_fission_cross_section,
-    macroscopic_fuel_absorption_cross_section_=macroscopic_fuel_absorption_cross_section)
+    macroscopic_fuel_fission_cross_section_=macroscopic_fission_cross_section,
+    macroscopic_fuel_absorption_cross_section_=macroscopic_absorption_cross_section)
 @validate_output(reproduction_factor)
 def calculate_reproduction_factor(neutrons_per_fission_: float,
     macroscopic_fuel_fission_cross_section_: Quantity,
@@ -76,7 +76,7 @@ def calculate_reproduction_factor(neutrons_per_fission_: float,
         dict=True)[0][reproduction_factor]
     result_expr = result_factor_expr.subs({
         neutrons_per_fission: neutrons_per_fission_,
-        macroscopic_fuel_fission_cross_section: macroscopic_fuel_fission_cross_section_,
-        macroscopic_fuel_absorption_cross_section: macroscopic_fuel_absorption_cross_section_
+        macroscopic_fission_cross_section: macroscopic_fuel_fission_cross_section_,
+        macroscopic_absorption_cross_section: macroscopic_fuel_absorption_cross_section_
     })
     return convert_to_float(result_expr)

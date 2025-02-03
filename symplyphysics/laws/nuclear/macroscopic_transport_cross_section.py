@@ -8,6 +8,7 @@ section and the averaged cosine of the scattering angle.
 **Links:**
 
 #. `NuclearPower <https://www.nuclear-power.com/nuclear-power/reactor-physics/neutron-diffusion-theory/diffusion-coefficient/>`__.
+#. `ScienceDirect, neutron transport <https://www.sciencedirect.com/topics/engineering/neutron-transport>`__.
 """
 
 from sympy import (Eq, solve)
@@ -34,7 +35,8 @@ lab system.
 
 macroscopic_transport_cross_section = clone_as_symbol(symbols.macroscopic_cross_section, display_symbol="Sigma_tr", display_latex="\\Sigma_\\text{tr}")
 """
-:symbols:`macroscopic_cross_section` of transport.
+:symbols:`macroscopic_cross_section` of neutron transport (i.e. the movement of neutrons
+through the material).
 """
 
 law = Eq(macroscopic_transport_cross_section,

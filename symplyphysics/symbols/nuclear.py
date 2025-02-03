@@ -11,7 +11,7 @@ from symplyphysics.core.symbols.symbols import SymbolNew
 
 geometric_buckling = SymbolNew("B_g^2", 1 / units.area, display_latex="B_\\text{g}^2")
 """
-**Geometric buckling** is a measure of neutron leakage in a neuclear reactor.
+**Geometric buckling** is a measure of neutron leakage in a nuclear reactor.
 
 **Links:**
 

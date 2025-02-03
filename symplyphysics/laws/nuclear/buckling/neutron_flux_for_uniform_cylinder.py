@@ -15,19 +15,14 @@ the :math:`z`-axis.
 from sympy import Eq, pi, cos
 from sympy.vector import CoordSys3D
 from sympy.functions.special.bessel import besselj
-from symplyphysics import (
-    Quantity,
-    units,
-    symbols,
-    clone_as_function,
-    clone_as_symbol,
-)
+from symplyphysics import Quantity, units, symbols, clone_as_symbol
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_flux
 from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_slab
 
 dimension_factor = clone_as_symbol(symbols.neutron_flux, subscript="0")
 """
-Dimension factor. See :symbols:`neutron_flux`.
+Dimension factor that appears as a coefficient in the solution to the :ref:`differential
+equation <Diffusion equation from neutron flux>`. See :symbols:`neutron_flux`.
 """
 
 radial_distance = symbols.distance_to_axis
@@ -50,9 +45,10 @@ height = clone_as_symbol(symbols.height, subscript="0")
 :symbols:`height` of the cylinder.
 """
 
-neutron_flux = clone_as_function(symbols.neutron_flux, [radial_distance, axial_coordinate])
+neutron_flux = symbols.neutron_flux
 """
-:symbols:`neutron_flux` as a function of :attr:`~radial_distance` and :attr:`~axial_coordinate`.
+:symbols:`neutron_flux` at a point with coordinates :attr:`~radial_distance` and
+:attr:`~axial_coordinate`.
 """
 
 # These constants are being used for geometric buckling calculation
@@ -65,7 +61,7 @@ assert _axial_constant == neutron_flux_for_uniform_slab._axial_constant.subs(
     neutron_flux_for_uniform_slab.thickness, height)
 
 law = Eq(
-    neutron_flux(radial_distance, axial_coordinate),
+    neutron_flux,
     dimension_factor * besselj(0, _radial_constant * radial_distance) *
     cos(_axial_constant * axial_coordinate))
 """

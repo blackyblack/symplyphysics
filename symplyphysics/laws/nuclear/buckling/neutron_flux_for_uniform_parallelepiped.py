@@ -8,13 +8,14 @@ Neutron flux for a uniform rectangular parallelepiped reactor of side lengths
 
 from sympy import Eq, pi, cos
 from sympy.vector import CoordSys3D
-from symplyphysics import Quantity, units, symbols, clone_as_function, clone_as_symbol
+from symplyphysics import Quantity, units, symbols, clone_as_symbol
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_flux
 from symplyphysics.laws.nuclear.buckling import neutron_flux_for_uniform_slab
 
 dimension_factor = clone_as_symbol(symbols.neutron_flux, subscript="0")
 """
-Dimension factor. See :symbols:`neutron_flux`.
+Dimension factor that appears as a coefficient in the solution to the :ref:`differential
+equation <Diffusion equation from neutron flux>`. See :symbols:`neutron_flux`.
 """
 
 x = clone_as_symbol(symbols.position, subscript="1")
@@ -47,9 +48,9 @@ height = clone_as_symbol(symbols.length, subscript="3")
 :symbols:`length` along the :math:`z`-axis.
 """
 
-neutron_flux = clone_as_function(symbols.neutron_flux, [x, y, z])
+neutron_flux = symbols.neutron_flux
 """
-:symbols:`neutron_flux` as a function of :attr:`~x`, :attr:`~y`, :attr:`~z`.
+:symbols:`neutron_flux` at a point with coordinates :attr:`~x`, :attr:`~y`, :attr:`~z`.
 """
 
 # These constants are being used for geometric buckling calculation
@@ -67,7 +68,7 @@ assert _height_constant == neutron_flux_for_uniform_slab._axial_constant.subs(
     neutron_flux_for_uniform_slab.thickness, height)
 
 law = Eq(
-    neutron_flux(x, y, z),
+    neutron_flux,
     dimension_factor * cos(_width_constant * x) * cos(_length_constant * y) * cos(_height_constant * z))
 """
 :laws:symbol::

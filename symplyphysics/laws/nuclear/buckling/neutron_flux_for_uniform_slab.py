@@ -17,7 +17,8 @@ from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_
 
 dimension_factor = clone_as_symbol(symbols.neutron_flux, subscript="0")
 """
-Dimension factor. See :symbols:`neutron_flux`.
+Dimension factor that appears as a coefficient in the solution to the :ref:`differential
+equation <Diffusion equation from neutron flux>`. See :symbols:`neutron_flux`.
 """
 
 distance = symbols.orthogonal_distance
@@ -30,17 +31,16 @@ thickness = symbols.thickness
 :symbols:`thickness` of the slab.
 """
 
-neutron_flux = clone_as_function(symbols.neutron_flux, [distance])
+neutron_flux = symbols.neutron_flux
 """
-:symbols:`neutron_flux` as a function of :attr:`~distance`.
+:symbols:`neutron_flux` at a :attr:`~distance` from the central plane of the slab.
 """
 
 # This constant is being used for geometric buckling calculation
 # See: [geometric buckling for uniform slab](geometric_buckling_for_uniform_slab.py)
 _axial_constant = pi / thickness
 
-law = Eq(neutron_flux(distance),
-    dimension_factor * cos(_axial_constant * distance))
+law = Eq(neutron_flux, dimension_factor * cos(_axial_constant * distance))
 """
 :laws:symbol::
 

@@ -12,12 +12,13 @@ sphere and depends on the radius :math:`r_0` of the sphere.
 
 from sympy import Eq, pi, sin
 from sympy.vector import CoordSys3D
-from symplyphysics import Quantity, units, symbols, clone_as_symbol, clone_as_function
+from symplyphysics import Quantity, units, symbols, clone_as_symbol
 from symplyphysics.laws.nuclear.buckling import geometric_buckling_from_neutron_flux
 
 dimension_factor = clone_as_symbol(symbols.neutron_flux, subscript="0")
 """
-Dimension factor. See :symbols:`neutron_flux`.
+Dimension factor that appears as a coefficient in the solution to the :ref:`differential
+equation <Diffusion equation from neutron flux>`. See :symbols:`neutron_flux`.
 """
 
 radial_distance = symbols.distance_to_origin
@@ -31,19 +32,16 @@ radius = clone_as_symbol(symbols.radius, subscript="0")
 :symbols:`radius` of the sphere.
 """
 
-neutron_flux = clone_as_function(symbols.neutron_flux, [radial_distance])
+neutron_flux = symbols.neutron_flux
 """
-:symbols:`neutron_flux` as a function of :attr:``
+:symbols:`neutron_flux` at a :attr:`radial_distance` from the center of the sphere.
 """
 
 # This constant is being used for geometric buckling calculation
 # See: [geometric buckling for uniform sphere](geometric_buckling_for_uniform_sphere.py)
 _radial_constant = pi / radius
 
-law = Eq(
-    neutron_flux(radial_distance),
-    dimension_factor * (sin(_radial_constant * radial_distance) / radial_distance),
-)
+law = Eq(neutron_flux, dimension_factor * (sin(_radial_constant * radial_distance) / radial_distance))
 """
 :laws:symbol::
 
