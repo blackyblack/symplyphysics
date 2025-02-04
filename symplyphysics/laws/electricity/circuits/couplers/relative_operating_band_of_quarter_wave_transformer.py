@@ -45,7 +45,7 @@ transformer to the power of the signal incident on the transformer.
 
 law = Eq(
     relative_bandwidth, 2 -
-    (4 / pi) * acos(reflection_coefficient * 2 * sqrt(load_resistance * characteristic_resistance) /
+    (4 / pi) * acos(2 * reflection_coefficient * sqrt(load_resistance * characteristic_resistance) /
     (sqrt(1 - reflection_coefficient**2) * abs(load_resistance - characteristic_resistance))))
 """
 :laws:symbol::
