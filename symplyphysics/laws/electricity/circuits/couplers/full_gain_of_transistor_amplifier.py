@@ -1,36 +1,61 @@
+"""
+Total gain of transistor amplifier
+==================================
+
+The total gain of a transistor amplifier depends on the gain of the input and output
+matching circuits and the transistor gain.
+
+..
+    TODO: find link
+"""
+
 from sympy import Eq, solve
-from symplyphysics import (Symbol, validate_input, validate_output, dimensionless, convert_to_float)
+from symplyphysics import (
+    validate_input,
+    validate_output,
+    convert_to_float,
+    symbols,
+    clone_as_symbol,
+)
 
-# Description
-## When calculating the total gain of a transistor amplifier, it is also worth taking into account
-## the gain coefficients of the input and output matching circuits.
+total_gain = clone_as_symbol(symbols.circuit_gain)
+"""
+Total gain of the transistor amplifier. See :symbols:`circuit_gain`.
+"""
 
-## Law is: G = G1 * G2 * G3, where
-## G - full gain of the transistor amplifier,
-## G1 - gain of the input matching circuit,
-## G2 - transistor gain,
-## G3 - gain of the output matching circuit.
+input_circuit_gain = clone_as_symbol(symbols.circuit_gain, display_symbol="gain_i", display_latex="\\text{gain}_\\text{i}")
+"""
+Input matching :symbols:`circuit_gain`.
+"""
 
-full_gain = Symbol("full_gain", dimensionless)
+transistor_gain = clone_as_symbol(symbols.circuit_gain, display_symbol="gain_t", display_latex="\\text{gain}_\\text{t}")
+"""
+Transistor gain. See :symbols:`circuit_gain`.
+"""
 
-gain_of_input_matching_circuit = Symbol("gain_of_input_matching_circuit", dimensionless)
-transistor_gain = Symbol("transistor_gain", dimensionless)
-gain_of_output_matching_circuit = Symbol("gain_of_output_matching_circuit", dimensionless)
+output_circuit_gain = clone_as_symbol(symbols.circuit_gain, display_symbol="gain_o", display_latex="\\text{gain}_\\text{o}")
+"""
+Output matching :symbols:`circuit_gain`.
+"""
 
-law = Eq(full_gain,
-    gain_of_input_matching_circuit * transistor_gain * gain_of_output_matching_circuit)
+law = Eq(total_gain, input_circuit_gain * transistor_gain * output_circuit_gain)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
-@validate_input(gain_of_input_matching_circuit_=gain_of_input_matching_circuit,
+@validate_input(gain_of_input_matching_circuit_=input_circuit_gain,
     transistor_gain_=transistor_gain,
-    gain_of_output_matching_circuit_=gain_of_output_matching_circuit)
-@validate_output(full_gain)
+    gain_of_output_matching_circuit_=output_circuit_gain)
+@validate_output(total_gain)
 def calculate_full_gain(gain_of_input_matching_circuit_: float, transistor_gain_: float,
     gain_of_output_matching_circuit_: float) -> float:
-    result_expr = solve(law, full_gain, dict=True)[0][full_gain]
+    result_expr = solve(law, total_gain, dict=True)[0][total_gain]
     result_expr = result_expr.subs({
-        gain_of_input_matching_circuit: gain_of_input_matching_circuit_,
+        input_circuit_gain: gain_of_input_matching_circuit_,
         transistor_gain: transistor_gain_,
-        gain_of_output_matching_circuit: gain_of_output_matching_circuit_,
+        output_circuit_gain: gain_of_output_matching_circuit_,
     })
     return convert_to_float(result_expr)

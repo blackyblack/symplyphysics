@@ -1,36 +1,61 @@
+"""
+Diode constant of cylindrical diode
+===================================
+
+In a cylindrical diode, the cathode is located in the center, and the anode is located
+around it in the form of a cylinder. The radius of the anode is usually much larger than
+the radius of the cathode. The diode constant depends on the radii and on the area of
+the anode.
+
+**Notation:**
+
+#. :quantity_notation:`vacuum_permittivity`.
+#. :quantity_notation:`elementary_charge`.
+#. :quantity_notation:`electron_rest_mass`.
+
+..
+    TODO: find link
+"""
+
 from sympy import Eq, Rational, solve, sqrt
-from sympy.physics.units import electric_constant, elementary_charge, electron_rest_mass
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
 )
+from symplyphysics.quantities import vacuum_permittivity, elementary_charge, electron_rest_mass
 
-# Description
-## In a cylindrical diode, the cathode is located in the center, and the anode is located around it in the form of a cylinder.
-## The radius of the anode is usually much larger than the radius of the cathode. The diode constant depends on the radii and on the area of the anode.
+diode_constant = symbols.diode_constant
+"""
+:symbols:`diode_constant`.
+"""
 
-## Law is: g = (4 / 9) * e0 * sqrt(2 * e / m) * sa / (ra^2 * (1 - rc / ra)^2), where
-## g - diode constant,
-## e0 - electric constant,
-## e - elementary charge,
-## m - electron rest mass,
-## sa - anode area,
-## ra - anode radius,
-## rc - cathode radius.
+anode_area = clone_as_symbol(symbols.area, display_symbol="A_a", display_latex="A_\\text{a}")
+"""
+:symbols:`area` of the anode.
+"""
 
-diode_constant = Symbol("diode_constant", units.current / units.voltage**Rational(3, 2))
+anode_radius = clone_as_symbol(symbols.radius, display_symbol="r_a", display_latex="r_\\text{a}")
+"""
+:symbols:`radius` of the anode.
+"""
 
-anode_area = Symbol("anode_area", units.area)
-anode_radius = Symbol("anode_radius", units.length)
-cathode_radius = Symbol("cathode_radius", units.length)
+cathode_radius = clone_as_symbol(symbols.radius, display_symbol="r_c", display_latex="r_\\text{c}")
+"""
+:symbols:`radius` of the cathode.
+"""
 
 law = Eq(
     diode_constant,
-    Rational(4, 9) * electric_constant * sqrt(2 * elementary_charge / electron_rest_mass) *
+    Rational(4, 9) * vacuum_permittivity * sqrt(2 * elementary_charge / electron_rest_mass) *
     anode_area / (anode_radius**2 * (1 - cathode_radius / anode_radius)**2))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(anode_area_=anode_area, anode_radius_=anode_radius, cathode_radius_=cathode_radius)

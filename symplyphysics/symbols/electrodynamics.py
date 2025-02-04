@@ -5,6 +5,7 @@ Electrodynamics (Symbols)
 Symbols related to electrodynamics.
 """
 
+from sympy import Rational
 from sympy.physics import units
 from symplyphysics.core.dimensions import dimensionless
 from symplyphysics.core.symbols.symbols import SymbolNew
@@ -114,6 +115,11 @@ that is, a measure of the system's overall polarity.
 electric_field_strength = SymbolNew("E", units.voltage / units.length)
 """
 **Electric field strength** refers to the magnitude of the electric field.
+"""
+
+volumetric_charge_density = SymbolNew("rho", units.charge / units.volume, display_latex="\\rho")
+"""
+**Volume charge density** is the electric charge per unit volume.
 """
 
 surface_charge_density = SymbolNew("sigma", units.charge / units.area, display_latex="\\sigma")
@@ -227,4 +233,43 @@ material's ability to conduct electric current.
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Electrical_resistivity_and_conductivity#>`__.
+"""
+
+circuit_gain = SymbolNew("gain", dimensionless, display_latex="\\text{gain}")
+"""
+**Gain** is a measure of the ability of a two-port circuit (often an amplifier) to
+increase the power or amplitude of a signal from the input to the output port by adding
+energy converted from some power supply to the signal.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Gain_(electronics)>`__.
+"""
+
+diode_constant = SymbolNew("g", units.current / units.voltage**Rational(3, 2))
+"""
+**Diode constant** is the constant of proportionality between the anode current or
+current density and anode voltage. Refer to :ref:`Current from voltage and diode
+constant in vacuum diode`.
+"""
+
+direct_permeability_coefficient = SymbolNew("D", dimensionless)
+"""
+**Direct permeability coefficient** characterizes the shielding effect of the grid and
+shows how much weaker the electrostatic field of the anode is than the field of the grid
+which affects the cathode area.
+
+..
+    TODO: find link
+"""
+
+attenuation = SymbolNew("A", dimensionless)
+"""
+Attenuation is a quantity measuring the relative amount of power the circuit reduces
+from the input signal. It is measured in decibels or other relative units of
+measurement.
+
+**Links:**
+
+#. `Wikipedia, first item of the list <https://en.wikipedia.org/wiki/Attenuator_(electronics)#Attenuator_characteristics>`__.
 """

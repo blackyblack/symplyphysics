@@ -1,58 +1,112 @@
+"""
+Voltage of equivalent diode for pentode
+=======================================
+
+A pentode has five electrodes: a cathode, an anode, and three grids. The pentode can be
+replaced with an equivalent diode, and the voltage in the equivalent diode can be
+calculated.
+
+..
+    TODO: find link
+"""
+
 from sympy import Eq, Rational, solve
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless)
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    clone_as_symbol,
+)
 
-# Description
-## A pentode has five electrodes: a cathode, an anode, and three grids. The pentode can be replaced with an equivalent diode,
-## and the voltage in the equivalent diode can be calculated.
-## The coefficient of direct permeability of the grid characterizes its shielding effect and shows how much the electrostatic field of the anode is
-## weaker than the grid field affects the cathode area.
+equivalent_diode_voltage = symbols.voltage
+"""
+:symbols:`voltage` between the cathode and anode of an equivalent diode for a pentode.
+"""
 
-## Law is: U = (Ug1 + D1 * Ug2 + D1 * D2 * Ug3 + D1 * D2 * D3 * Ua) / (1 + ((Xa / Xg1)^(4 / 3)) * D1), where
-## U - the voltage between the cathode and the anode of an equivalent diode for a pentode,
-## Ug1 - voltage between cathode and first grid,
-## Ug2 - voltage between cathode and second grid,
-## Ug3 - voltage between cathode and third grid,
-## Ua - voltage between cathode and anode.
-## D1 - coefficient of direct permeability of the first grid,
-## D2 - coefficient of direct permeability of the second grid,
-## D3 - coefficient of direct permeability of the third grid,
-## Xa - the distance from the cathode to the anode,
-## Xg1 - the distance from the cathode to the first grid.
+first_grid_voltage = clone_as_symbol(symbols.voltage, subscript="1")
+"""
+:symbols:`voltage` between the cathode and the first grid.
+"""
 
-voltage_of_equivalent_diode = Symbol("voltage_of_equivalent_diode", units.voltage)
+second_grid_voltage = clone_as_symbol(symbols.voltage, subscript="2")
+"""
+:symbols:`voltage` between the cathode and the second grid.
+"""
 
-voltage_of_first_grid = Symbol("voltage_of_first_grid", units.voltage)
-voltage_of_second_grid = Symbol("voltage_of_second_grid", units.voltage)
-voltage_of_third_grid = Symbol("voltage_of_third_grid", units.voltage)
-anode_voltage = Symbol("anode_voltage", units.voltage)
-coefficient_direct_permeability_of_first_grid = Symbol(
-    "coefficient_direct_permeability_of_first_grid", dimensionless)
-coefficient_direct_permeability_of_second_grid = Symbol(
-    "coefficient_direct_permeability_of_second_grid", dimensionless)
-coefficient_direct_permeability_of_third_grid = Symbol(
-    "coefficient_direct_permeability_of_third_grid", dimensionless)
-distance_to_anode = Symbol("distance_to_anode", units.length)
-distance_to_first_grid = Symbol("distance_to_first_grid", units.length)
+third_grid_voltage = clone_as_symbol(symbols.voltage, subscript="3")
+"""
+:symbols:`voltage` between the cathode and the third grid.
+"""
 
-expression_1 = voltage_of_first_grid + coefficient_direct_permeability_of_first_grid * voltage_of_second_grid + coefficient_direct_permeability_of_first_grid * coefficient_direct_permeability_of_second_grid * voltage_of_third_grid
-expression_2 = coefficient_direct_permeability_of_first_grid * coefficient_direct_permeability_of_second_grid * coefficient_direct_permeability_of_third_grid * anode_voltage
-expression_3 = 1 + ((distance_to_anode / distance_to_first_grid)**Rational(4,
-    3)) * coefficient_direct_permeability_of_first_grid
-law = Eq(voltage_of_equivalent_diode, (expression_1 + expression_2) / expression_3)
+anode_voltage = clone_as_symbol(symbols.voltage, display_symbol="U_a", display_latex="U_\\text{a}")
+"""
+:symbols:`voltage` between the cathode and the anode.
+"""
 
+first_grid_direct_permeability_coefficient = clone_as_symbol(symbols.direct_permeability_coefficient, subscript="1")
+"""
+:symbols:`direct_permeability_coefficient` of the first grid.
+"""
 
-@validate_input(voltage_of_first_grid_=voltage_of_first_grid,
-    voltage_of_second_grid_=voltage_of_second_grid,
-    voltage_of_third_grid_=voltage_of_third_grid,
+second_grid_direct_permeability_coefficient = clone_as_symbol(symbols.direct_permeability_coefficient, subscript="2")
+"""
+:symbols:`direct_permeability_coefficient` of the second grid.
+"""
+
+third_grid_direct_permeability_coefficient = clone_as_symbol(symbols.direct_permeability_coefficient, subscript="3")
+"""
+:symbols:`direct_permeability_coefficient` of the third grid.
+"""
+
+anode_distance = clone_as_symbol(symbols.euclidean_distance, display_symbol="d_a", display_latex="d_\\text{a}")
+"""
+:symbols:`euclidean_distance` between the cathode and the anode.
+"""
+
+first_grid_distance = clone_as_symbol(symbols.euclidean_distance, subscript="1")
+"""
+:symbols:`euclidean_distance` between the cathode and the first grid.
+"""
+
+_first_expression = (
+    first_grid_voltage
+    + first_grid_direct_permeability_coefficient * second_grid_voltage
+    + first_grid_direct_permeability_coefficient * second_grid_direct_permeability_coefficient * third_grid_voltage
+)
+
+_second_expression = (
+    first_grid_direct_permeability_coefficient 
+    * second_grid_direct_permeability_coefficient 
+    * third_grid_direct_permeability_coefficient
+    * anode_voltage
+)
+
+_third_expression = (
+    1 
+    + ((anode_distance / first_grid_distance)**Rational(4, 3)) 
+    * first_grid_direct_permeability_coefficient
+)
+
+law = Eq(equivalent_diode_voltage, (_first_expression + _second_expression) / _third_expression)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
+
+@validate_input(voltage_of_first_grid_=first_grid_voltage,
+    second_grid_voltage_=second_grid_voltage,
+    third_grid_voltage_=third_grid_voltage,
     anode_voltage_=anode_voltage,
-    coefficient_direct_permeability_of_first_grid_=coefficient_direct_permeability_of_first_grid,
-    coefficient_direct_permeability_of_second_grid_=coefficient_direct_permeability_of_second_grid,
-    coefficient_direct_permeability_of_third_grid_=coefficient_direct_permeability_of_third_grid,
-    distance_to_anode_=distance_to_anode,
-    distance_to_first_grid_=distance_to_first_grid)
-@validate_output(voltage_of_equivalent_diode)
+    coefficient_direct_permeability_of_first_grid_=first_grid_direct_permeability_coefficient,
+    coefficient_direct_permeability_of_second_grid_=second_grid_direct_permeability_coefficient,
+    coefficient_direct_permeability_of_third_grid_=third_grid_direct_permeability_coefficient,
+    distance_to_anode_=anode_distance,
+    distance_to_first_grid_=first_grid_distance)
+@validate_output(equivalent_diode_voltage)
 def calculate_voltage_of_equivalent_diode(voltage_of_first_grid_: Quantity,
-    voltage_of_second_grid_: Quantity, voltage_of_third_grid_: Quantity, anode_voltage_: Quantity,
+    second_grid_voltage_: Quantity, third_grid_voltage_: Quantity, anode_voltage_: Quantity,
     coefficient_direct_permeability_of_first_grid_: float,
     coefficient_direct_permeability_of_second_grid_: float,
     coefficient_direct_permeability_of_third_grid_: float, distance_to_anode_: Quantity,
@@ -61,25 +115,25 @@ def calculate_voltage_of_equivalent_diode(voltage_of_first_grid_: Quantity,
     if distance_to_anode_.scale_factor <= distance_to_first_grid_.scale_factor:
         raise ValueError(
             "The distance to the anode should be greater than the distance to the grid.")
-    result_expr = solve(law, voltage_of_equivalent_diode, dict=True)[0][voltage_of_equivalent_diode]
+    result_expr = solve(law, equivalent_diode_voltage, dict=True)[0][equivalent_diode_voltage]
     result_expr = result_expr.subs({
-        voltage_of_first_grid:
+        first_grid_voltage:
             voltage_of_first_grid_,
-        voltage_of_second_grid:
-            voltage_of_second_grid_,
-        voltage_of_third_grid:
-            voltage_of_third_grid_,
+        second_grid_voltage:
+            second_grid_voltage_,
+        third_grid_voltage:
+            third_grid_voltage_,
         anode_voltage:
             anode_voltage_,
-        coefficient_direct_permeability_of_first_grid:
+        first_grid_direct_permeability_coefficient:
             coefficient_direct_permeability_of_first_grid_,
-        coefficient_direct_permeability_of_second_grid:
+        second_grid_direct_permeability_coefficient:
             coefficient_direct_permeability_of_second_grid_,
-        coefficient_direct_permeability_of_third_grid:
+        third_grid_direct_permeability_coefficient:
             coefficient_direct_permeability_of_third_grid_,
-        distance_to_anode:
+        anode_distance:
             distance_to_anode_,
-        distance_to_first_grid:
+        first_grid_distance:
             distance_to_first_grid_
     })
     return Quantity(result_expr)
