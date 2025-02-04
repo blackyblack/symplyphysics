@@ -29,6 +29,11 @@ voltage = symbols.voltage
 """
 
 law = Eq(internal_resistance, 2 / (3 * diode_constant * sqrt(voltage)))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(diode_constant_=diode_constant, voltage_=voltage)

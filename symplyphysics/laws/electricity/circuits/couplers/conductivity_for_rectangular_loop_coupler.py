@@ -2,7 +2,9 @@
 Admittance of rectangular loop coupler
 ======================================
 
-The rectangular loop coupler consists of four sections. The admittance of each section can be calculated by calculating the admittance of the transmission line to which the coupler is connected and the power ratio at the outputs.
+The rectangular loop coupler consists of four sections. The admittance of each section
+can be calculated by calculating the admittance of the transmission line to which the
+coupler is connected and the power ratio at the outputs.
 
 ..
     TODO: find link
@@ -70,8 +72,8 @@ Latex:
         \begin{pmatrix} Y_1 \\ Y_2 \\ Y_3 \\ Y_4 \end{pmatrix}
         = Y_0 \begin{pmatrix}
             \frac{1}{\sqrt{k}} \\
-            \frac{k + 1}{k} \\
-            \frac{k + 1}{k} \\
+            \sqrt{\frac{k + 1}{k}} \\
+            \sqrt{\frac{k + 1}{k}} \\
             \frac{1}{\sqrt{k}} \\
         \end{pmatrix}
 """

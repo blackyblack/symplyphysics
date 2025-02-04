@@ -2,7 +2,7 @@
 Limit operating frequency of vacuum diode
 =========================================
 
-The vacuum diode has a limit operating frequency. At frequencies higher, the diode stops
+The vacuum diode has a limit operating frequency. At higher frequencies, the diode stops
 functioning normally, since the electrons will not have time to move from the cathode to
 the anode.
 

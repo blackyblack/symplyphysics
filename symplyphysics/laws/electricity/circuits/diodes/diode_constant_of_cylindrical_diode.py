@@ -44,7 +44,7 @@ anode_radius = clone_as_symbol(symbols.radius, display_symbol="r_a", display_lat
 
 cathode_radius = clone_as_symbol(symbols.radius, display_symbol="r_c", display_latex="r_\\text{c}")
 """
-:symbols:`radius` of the anode.
+:symbols:`radius` of the cathode.
 """
 
 law = Eq(

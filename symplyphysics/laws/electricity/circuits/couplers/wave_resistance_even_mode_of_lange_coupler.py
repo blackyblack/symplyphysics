@@ -4,8 +4,8 @@ Wave impedance of even mode of Lange coupler
 
 The Lange coupler is based on microstrip transmission lines. When this coupler is in
 operation, both even and odd modes are distributed. Knowing the coupling coefficient
-between the coupler segments, the wave resistance of the odd mode, as well as the number
-of coupler segments, it is possible to calculate the wave resistance for an even mode.
+between the coupler segments, the wave impedance of the odd mode, as well as the number
+of coupler segments, it is possible to calculate the wave impedance for an even mode.
 
 .. image:: https://habrastorage.org/r/w1560/getpro/habr/upload_files/054/d02/c8d/054d02c8d91c06425ae079d34b18ce15.jpeg
     :width: 400px
@@ -13,6 +13,7 @@ of coupler segments, it is possible to calculate the wave resistance for an even
 
 ..
     TODO: find link
+    TODO: rename file to mention wave *impedance*
 """
 
 from sympy import Eq, solve, sqrt
@@ -36,7 +37,7 @@ odd_mode_wave_impedance = clone_as_symbol(symbols.wave_impedance, display_symbol
 :symbols:`wave_impedance` of the odd mode.
 """
 
-coupling_factor = SymbolNew("coupling_factor", dimensionless)
+coupling_factor = SymbolNew("C", dimensionless)
 """
 Coupling factor between coupler segments.
 """

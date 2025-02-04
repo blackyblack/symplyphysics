@@ -262,3 +262,14 @@ which affects the cathode area.
 ..
     TODO: find link
 """
+
+attenuation = SymbolNew("A", dimensionless)
+"""
+Attenuation is a quantity measuring the relative amount of power the circuit reduces
+from the input signal. It is measured in decibels or other relative units of
+measurement.
+
+**Links:**
+
+#. `Wikipedia, first item of the list <https://en.wikipedia.org/wiki/Attenuator_(electronics)#Attenuator_characteristics>`__.
+"""

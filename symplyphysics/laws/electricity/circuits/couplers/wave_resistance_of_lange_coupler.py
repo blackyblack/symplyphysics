@@ -1,10 +1,10 @@
 """
-Wave resistance of Lange coupler
-================================
+Wave impedance of Lange coupler
+===============================
 
 The Lange coupler is based on microstrip transmission lines. When this coupler is in
-operation, both even and odd modes are distributed. Knowing the wave resistance for even
-and odd modes, it is possible to calculate the equivalent wave resistance of the
+operation, both even and odd modes are distributed. Knowing the wave impedance for even
+and odd modes, it is possible to calculate the equivalent wave impedance of the
 coupler.
 
 .. image:: https://habrastorage.org/r/w1560/getpro/habr/upload_files/054/d02/c8d/054d02c8d91c06425ae079d34b18ce15.jpeg

@@ -47,6 +47,11 @@ law = Eq(
     relative_bandwidth, 2 -
     (4 / pi) * acos(reflection_coefficient * 2 * sqrt(load_resistance * characteristic_resistance) /
     (sqrt(1 - reflection_coefficient**2) * abs(load_resistance - characteristic_resistance))))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(load_resistance_=load_resistance,

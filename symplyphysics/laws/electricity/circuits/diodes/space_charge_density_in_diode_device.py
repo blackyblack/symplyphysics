@@ -3,7 +3,7 @@ Charge density in diode
 =======================
 
 The simplest device implementing a cathode current control method is a diode device. It
-contains a thermionic cathode, a mesh electrode and an anode.
+contains a vacuum chamber, a thermionic cathode, a mesh electrode and an anode.
 
 **Notation:**
 

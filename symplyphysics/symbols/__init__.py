@@ -166,6 +166,7 @@ __all__ = [
     "diode_constant",
     "volumetric_charge_density",
     "direct_permeability_coefficient",
+    "attenuation",
     # optics
     "relative_refractive_index",
     "radiant_exitance",

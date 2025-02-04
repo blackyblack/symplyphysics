@@ -13,22 +13,21 @@ into the auxiliary channel of the coupler.
 
 from sympy import Eq, solve, sin, asin, log
 from symplyphysics import (
-    SymbolNew,
     validate_input,
     validate_output,
-    dimensionless,
     convert_to_float,
     symbols,
+    clone_as_symbol,
 )
 
-coupler_attenuation = SymbolNew("S_1", dimensionless)
+coupler_attenuation = clone_as_symbol(symbols.attenuation, subscript="0")
 """
-Transient attenuation of one coupler from the cascade, measured in decibels.
+Transient :symbols:`attenuation` of one coupler from the cascade, measured in decibels.
 """
 
-cascade_attenuation = SymbolNew("S", dimensionless)
+cascade_attenuation = symbols.attenuation
 """
-Transient attenuation of the cascade, measured in decibels.
+Transient :symbols:`attenuation` of the cascade, measured in decibels.
 """
 
 coupler_count = symbols.positive_number

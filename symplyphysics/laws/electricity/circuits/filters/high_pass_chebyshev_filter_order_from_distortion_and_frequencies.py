@@ -6,7 +6,7 @@ The approximation of the power transmission coefficient of a normalized high-pas
 is given by approximating functions of order :math:`n`. The **Chebyshev filter** is
 described by the function :math:`\\left(\\cos{n \\acos{f^{-1}}}\\right)^{-1}` of
 frequency :math:`f`. In this case, a high-pass filter is considered. The high-pass
-filter does removes all frequencies from :math:`0` to the set frequency.
+filter removes all frequencies from :math:`0` to the set frequency.
 
 ..
     TODO: find link
