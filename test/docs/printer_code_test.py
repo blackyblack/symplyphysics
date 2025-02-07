@@ -238,4 +238,4 @@ def test_matrix(test_args: Args) -> None:
     # 4-column vector
     with evaluate(False):
         expr = Matrix([a, b, c, d]).T
-    assert code_str(expr) == "[[a, b, c, d]]"
+    assert code_str(expr) == "[a, b, c, d].T"

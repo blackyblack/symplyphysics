@@ -232,9 +232,10 @@ class SymbolCodePrinter(StrPrinter):
     def _print_MutableDenseMatrix(self, expr: Matrix) -> str:
         rows, cols = expr.shape
 
-        if cols == 1:
+        if cols == 1 or rows == 1:
             parts = [self._print(elem) for elem in expr]
-            return "[" + ", ".join(parts) + "]"
+            result = "[" + ", ".join(parts) + "]"
+            return result if cols == 1 else result + ".T"
 
         def print_row(row: int) -> str:
             parts = [self._print(expr[row, col]) for col in range(cols)]
