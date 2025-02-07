@@ -43,6 +43,11 @@ law = Eq(
     diode_constant,
     Rational(4, 9) * vacuum_permittivity * sqrt(2 * elementary_charge / electron_rest_mass) *
     (electrode_area / electrode_distance**2))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(electrode_area_=electrode_area,

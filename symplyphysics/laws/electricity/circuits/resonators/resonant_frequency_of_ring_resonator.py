@@ -9,6 +9,10 @@ traveling through an ring resonator acquires a phase shift and interacts with a 
 incident on the resonator. If the phase shift is expressed as :math:`2 \\pi N`, then
 these waves add up in phase; here :math:`N` is the interference order.
 
+**Notation:**
+
+#. :quantity_notation:`speed_of_light`.
+
 ..
     TODO: find link
 """

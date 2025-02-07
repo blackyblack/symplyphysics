@@ -4,7 +4,7 @@ Low-pass Chebyshev filter order from distortion and frequencies
 
 The approximation of the power transmission coefficient of a normalized high-pass filter
 is given by approximating functions of order :math:`n`. The **Chebyshev filter** is
-described by the function :math:`\\left(\\cos{n \\acos{f^{-1}}}\\right)^{-1}` of
+described by the function :math:`\\left(\\cos{n \\arccos{f^{-1}}}\\right)^{-1}` of
 frequency :math:`f`. In this case, a low-pass filter is considered. The low-pass filter
 lets through all frequencies from :math:`0` to the set frequency.
 """

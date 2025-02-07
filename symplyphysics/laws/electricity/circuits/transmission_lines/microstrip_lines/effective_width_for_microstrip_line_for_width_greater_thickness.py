@@ -4,6 +4,8 @@ Effective width of microstrip line when width is greater than thickness
 
 The microstrip line is a dielectric substrate on which a metal strip is applied.
 
+**Conditions:**
+
 #. The thickness :math:`h` of the substrate of the microstrip line should be less than
    :math:`2 \\pi w` where :math:`w` is the length of the microstrip.
 

@@ -4,7 +4,7 @@ Band pass Chebyshev filter order from distortion and frequency
 
 The approximation of the power transmission coefficient of a normalized high-pass filter
 is given by approximating functions of order :math:`n`. The **Chebyshev filter** is
-described by the function :math:`\\left(\\cos{n \\acos{f^{-1}}}\\right)^{-1}` of
+described by the function :math:`\\left(\\cos{n \\arccos{f^{-1}}}\\right)^{-1}` of
 frequency :math:`f`. In this case, a band-pass filter is considered. The bandpass filter
 only passes frequencies from a certain frequency range.
 

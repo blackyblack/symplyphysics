@@ -61,7 +61,7 @@ absolute_permittivity = SymbolNew("epsilon",
 **Absolute permittivity**, or often sometimes **permittivity**, is a measure of the electric polarizability of a dielectric material.
 """
 
-relative_permittivity = SymbolNew("epsilon_r", dimensionless, display_latex="\\varepsilon_r")
+relative_permittivity = SymbolNew("epsilon_r", dimensionless, display_latex="\\varepsilon_\\text{r}")
 """
 **Relative permittivity** is the permittivity of a medium relative to that of free space.
 Also see :attr:`~symplyphysics.quantities.vacuum_permittivity`.
@@ -73,7 +73,7 @@ absolute_permeability = SymbolNew("mu", units.inductance / units.length, display
 applied magnetic field.
 """
 
-relative_permeability = SymbolNew("mu_r", dimensionless, display_latex="\\mu_r")
+relative_permeability = SymbolNew("mu_r", dimensionless, display_latex="\\mu_\\text{r}")
 """
 **Relative permeability** is the permeability of a medium relative to that of free space.
 Also see :attr:`~symplyphysics.quantities.vacuum_permeability`.
