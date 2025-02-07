@@ -29,9 +29,10 @@ from symplyphysics import (
     quantities,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.core.operations.symbolic import Average
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import energy_distribution
 
-average_kinetic_energy = clone_as_symbol(symbols.kinetic_energy, display_symbol="avg(K)", display_latex="\\langle K \\rangle")
+average_kinetic_energy = Average(symbols.kinetic_energy)
 """
 Average :symbols:`kinetic_energy` of the ideal gas.
 """

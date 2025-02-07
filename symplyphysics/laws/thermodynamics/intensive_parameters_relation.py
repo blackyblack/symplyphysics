@@ -24,6 +24,7 @@ from symplyphysics import (
     validate_output,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
+from symplyphysics.core.operations.symbolic import ExactDifferential
 from symplyphysics.laws.thermodynamics import internal_energy_differential
 from symplyphysics.laws.thermodynamics.euler_relations import internal_energy_formula
 
@@ -32,7 +33,7 @@ entropy = symbols.entropy
 :symbols:`entropy` of the system.
 """
 
-temperature_change = clone_as_symbol(symbols.temperature, display_symbol="dT", display_latex="dT")
+temperature_change = ExactDifferential(symbols.temperature)
 """
 Infinitesimal change in :symbols:`temperature` of the system.
 """
@@ -42,7 +43,7 @@ volume = symbols.volume
 :symbols:`volume` of the system.
 """
 
-pressure_change = clone_as_symbol(symbols.pressure, display_symbol="dp", display_latex="dp")
+pressure_change = ExactDifferential(symbols.pressure)
 """
 Infinitesimal change in :symbols:`pressure` inside the system.
 """
@@ -52,7 +53,7 @@ particle_count = symbols.particle_count
 :symbols:`particle_count` of the system.
 """
 
-chemical_potential_change = clone_as_symbol(symbols.chemical_potential, display_symbol="d(mu)", display_latex="d\\mu")
+chemical_potential_change = ExactDifferential(symbols.chemical_potential, wrap_code=True)
 """
 Infinitesimal change in :symbols:`chemical_potential` of the system.
 """
