@@ -4,7 +4,7 @@ Symplyphysics latex printer
 
 import re
 from typing import Any
-from sympy import E, S, Expr, Mod, Mul, Symbol as SymSymbol
+from sympy import E, S, Expr, Mod, Mul, Symbol as SymSymbol, Matrix
 from sympy.printing.latex import LatexPrinter, accepted_latex_functions
 from sympy.core.function import AppliedUndef
 from sympy.simplify import fraction
@@ -275,6 +275,16 @@ class SymbolLatexPrinter(LatexPrinter):
             tex += term_tex
 
         return tex
+    
+    def _print_MutableDenseMatrix(self, expr: Matrix) -> str:
+        rows, cols = expr.shape
+
+        def print_row(row: int) -> str:
+            parts = [self._print(expr[row, col]) for col in range(cols)]
+            return " & ".join(parts)
+
+        parts = [print_row(row) for row in range(rows)]
+        return "\\begin{pmatrix} " + " \\\\ ".join(parts) + " \\end{pmatrix}"
 
 
 def latex_str(expr: Any, **settings: Any) -> str:
