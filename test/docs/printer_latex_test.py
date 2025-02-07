@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pytest import fixture
-from sympy import I, Integral, evaluate, exp, log, pi, sin, sqrt
+from sympy import I, Integral, evaluate, exp, log, pi, sin, sqrt, Matrix
 from symplyphysics import Quantity, SymbolNew, clone_as_function, clone_as_symbol, units
 from symplyphysics.docs.printer_latex import latex_str
 
@@ -218,3 +218,25 @@ def test_log_squared(test_args: Args) -> None:
     with evaluate(False):
         expr = log(test_args.boltzmann_constant)**2
     assert latex_str(expr) == "\\log \\left( k_\\text{B} \\right)^{2}"
+
+
+def test_matrix(test_args: Args) -> None:
+    a = SymbolNew("a")
+    b = SymbolNew("b")
+    c = SymbolNew("c")
+    d = SymbolNew("d")
+    
+    # 2-by-2 matrix
+    with evaluate(False):
+        expr = Matrix([[a, b], [c, d]])
+    assert latex_str(expr) == "\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}"
+
+    # 4-row vector
+    with evaluate(False):
+        expr = Matrix([a, b, c, d])
+    assert latex_str(expr) == "\\begin{pmatrix} a \\\\ b \\\\ c \\\\ d \\end{pmatrix}"
+
+    # 4-col vector
+    with evaluate(False):
+        expr = Matrix([a, b, c, d]).T
+    assert latex_str(expr) == "\\begin{pmatrix} a & b & c & d \\end{pmatrix}"
