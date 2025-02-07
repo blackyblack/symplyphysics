@@ -1,80 +1,112 @@
+"""
+Transmission matrix of lossy transmission line
+==============================================
+
+The transmission parameters matrix is one of the ways to describe a microwave device.
+The :math:`ABCD`-parameters of the device act as elements of this matrix. The matrix
+equation relates the input voltage and input current to the output voltage and output
+current. Knowing the length and the loss factor of the transmission line, as well as the
+characteristic resistance of the line and the constant propagation of signal, it is
+possible to calculate the parameters :math:`A, B, C, D` of the transmission matrix of
+this line.
+
+**Notes:**
+
+#. See :ref:`Transmission matrix`.
+
+..
+    TODO: find link
+"""
+
 from sympy import Eq, solve, Matrix, S, I, sinh, cosh
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
-    print_expression,
+    SymbolNew,
     validate_input,
     dimensionless,
     convert_to,
+    symbols,
 )
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 
-## Description
-## The transmission parameters matrix is one of the ways to describe a microwave device. The ABCD-parameters of the device act as elements
-## of this matrix. The matrix equation relates the input voltage and input current to the output voltage and output current.
-## Knowing the length and the loss factor of the transmission line, as well as the characteristic resistance of the line and the constant propagation of signal,
-## it is possible to calculate the parameters A, B, C, D of the transmission matrix of this line.
-## The propagation constant is the inverse of the wavelength.
-## The loss factor shows how many times the transmitted signal weakens per unit length of the transmission line.
+voltage_voltage_parameter = SymbolNew("A", dimensionless)
+"""
+Ratio of input :symbols:`voltage` to output :symbols:`voltage` at idle at the output.
+"""
 
-## Law is: Matrix([[A, B], [C, D]]) = Matrix([[cosh((a + I * b) * l), Z0 * sinh((a + I * b) * l)], [(1 / Z0) * sinh((a + I * b) * l), cosh((a + I * b) * l)]]), where
-## A - ratio of input voltage to output voltage at idle at the output,
-## B - ratio of input voltage to output current in case of a short circuit at the output,
-## C - ratio of input current to output voltage at idle at the output,
-## D - ratio of input current to output current in case of a short circuit at the output,
-## Z0 - characteristic resistance of the transmission line,
-## l - length of the transmission line,
-## b - constant propagation of signal,
-## a - coefficient of signal loss in the transmission line,
-## I - imaginary unit,
-## sinh - hyperbolic sine,
-## cosh - hyperbolic cosine.
+voltage_current_parameter = SymbolNew("B", units.impedance)
+"""
+Ratio of input :symbols:`voltage` to output :symbols:`current` in case of a short circuit at the output.
+"""
 
-parameter_voltage_to_voltage = Symbol("parameter_voltage_to_voltage", dimensionless)
-parameter_impedance = Symbol("parameter_impedance", units.impedance)
-parameter_conductance = Symbol("parameter_conductance", units.conductance)
-parameter_current_to_current = Symbol("parameter_current_to_current", dimensionless)
+current_voltage_parameter = SymbolNew("C", units.conductance)
+"""
+Ratio of input :symbols:`current` to output :symbols:`voltage` at idle at the output.
+"""
 
-characteristic_resistance = Symbol("characteristic_resistance", units.impedance)
-line_length = Symbol("line_length", units.length)
-constant_propagation = Symbol("constant_propagation", 1 / units.length)
-loss_factor = Symbol("loss_factor", 1 / units.length)
+current_current_parameter = SymbolNew("D", dimensionless)
+"""
+Ratio of input :symbols:`current` to output :symbols:`current` in case of a short circuit at the output.
+"""
 
-expression = (loss_factor + I * constant_propagation) * line_length
+surge_impedance = symbols.surge_impedance
+"""
+:symbols:`surge_impedance` of the transmission line.
+"""
+
+length = symbols.length
+"""
+:symbols:`length` of the transmission line.
+"""
+
+propagation_constant = SymbolNew("b", 1 / units.length)
+"""
+The **propagation constant** is the inverse of the signal :symbols:`wavelength`.
+"""
+
+loss_factor = SymbolNew("a", 1 / units.length)
+"""
+The **loss factor** shows how many times the transmitted signal weakens per unit
+:symbols:`length` of the transmission line.
+"""
+
+expression = (loss_factor + I * propagation_constant) * length
+
 law = Eq(
-    Matrix([[parameter_voltage_to_voltage, parameter_impedance],
-    [parameter_conductance, parameter_current_to_current]]),
-    Matrix([[cosh(expression), characteristic_resistance * sinh(expression)],
-    [(1 / characteristic_resistance) * sinh(expression),
-    cosh(expression)]]))
+    Matrix([[voltage_voltage_parameter, voltage_current_parameter], [current_voltage_parameter, current_current_parameter]]),
+    Matrix([
+        [cosh(expression), surge_impedance * sinh(expression)],
+        [(1 / surge_impedance) * sinh(expression), cosh(expression)],
+    ]),
+)
+"""
+..
+    NOTE: Code printing in upcoming PR.
+"""
 
 
-def print_law() -> str:
-    return print_expression(law)
-
-
-@validate_input(characteristic_resistance_=characteristic_resistance,
-    line_length_=line_length,
-    constant_propagation_=constant_propagation,
+@validate_input(characteristic_resistance_=surge_impedance,
+    line_length_=length,
+    constant_propagation_=propagation_constant,
     loss_factor_=loss_factor)
 def calculate_transmission_matrix(
         characteristic_resistance_: Quantity, line_length_: Quantity,
         constant_propagation_: Quantity,
         loss_factor_: Quantity) -> tuple[tuple[float, Quantity], tuple[Quantity, float]]:
     result = solve(law, [
-        parameter_voltage_to_voltage, parameter_impedance, parameter_conductance,
-        parameter_current_to_current
+        voltage_voltage_parameter, voltage_current_parameter, current_voltage_parameter,
+        current_current_parameter
     ],
         dict=True)[0]
-    result_a = result[parameter_voltage_to_voltage]
-    result_b = result[parameter_impedance]
-    result_c = result[parameter_conductance]
-    result_d = result[parameter_current_to_current]
+    result_a = result[voltage_voltage_parameter]
+    result_b = result[voltage_current_parameter]
+    result_c = result[current_voltage_parameter]
+    result_d = result[current_current_parameter]
     substitutions = {
-        characteristic_resistance: characteristic_resistance_,
-        line_length: line_length_,
-        constant_propagation: constant_propagation_,
+        surge_impedance: characteristic_resistance_,
+        length: line_length_,
+        propagation_constant: constant_propagation_,
         loss_factor: loss_factor_,
     }
     result_a = convert_to(result_a.subs(substitutions), S.One)

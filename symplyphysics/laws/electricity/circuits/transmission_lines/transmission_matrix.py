@@ -1,46 +1,82 @@
+"""
+Transmission matrix equation
+============================
+
+The transmission matrix equation relates the input voltage and input current to the
+output voltage and output current.
+
+**Notes:**
+
+#. See :ref:`Transmission matrix`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Two-port_network#ABCD-parameters>`__.
+
+..
+    TODO: rename file
+"""
+
 from sympy import Eq, solve, Matrix
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
-    print_expression,
     validate_input,
     dimensionless,
+    symbols,
+    clone_as_symbol,
+    SymbolNew,
 )
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 
-## Description
-## The transmission parameters matrix is one of the ways to describe a microwave device. The ABCD-parameters of the device act as elements
-## of this matrix. The matrix equation relates the input voltage and input current to the output voltage and output current.
+input_voltage = clone_as_symbol(symbols.voltage, display_symbol="V_i", display_latex="V_\\text{i}")
+"""
+Input :symbols:`voltage`.
+"""
 
-## Law is: [U1, I1] = Matrix([[A, B], [C, D]]) * [U2, I2], where
-## U1 - input voltage,
-## U2 - output voltage,
-## A - ratio of input voltage to output voltage at idle at the output,
-## B - ratio of input voltage to output current in case of a short circuit at the output,
-## C - ratio of input current to output voltage at idle at the output,
-## D - ratio of input current to output current in case of a short circuit at the output,
-## I1 - input current,
-## I2 - output current.
+output_voltage = clone_as_symbol(symbols.voltage, display_symbol="V_o", display_latex="V_\\text{o}")
+"""
+Output :symbols:`voltage`.
+"""
 
-input_voltage = Symbol("input_voltage", units.voltage)
-output_voltage = Symbol("output_voltage", units.voltage)
-input_current = Symbol("input_current", units.current)
-output_current = Symbol("output_current", units.current)
-parameter_voltage_to_voltage = Symbol("parameter_voltage_to_voltage", dimensionless)
-parameter_impedance = Symbol("parameter_impedance", units.impedance)
-parameter_conductance = Symbol("parameter_conductance", units.conductance)
-parameter_current_to_current = Symbol("parameter_current_to_current", dimensionless)
+input_current = clone_as_symbol(symbols.current, display_symbol="I_i", display_latex="I_\\text{i}")
+"""
+Input :symbols:`current`.
+"""
+
+output_current = clone_as_symbol(symbols.current, display_symbol="I_o", display_latex="I_\\text{o}")
+"""
+Output :symbols:`current`.
+"""
+
+voltage_voltage_parameter = SymbolNew("A", dimensionless)
+"""
+Ratio of input :symbols:`voltage` to output :symbols:`voltage` at idle at the output.
+"""
+
+voltage_current_parameter = SymbolNew("B", units.impedance)
+"""
+Ratio of input :symbols:`voltage` to output :symbols:`current` in case of a short circuit at the output.
+"""
+
+current_voltage_parameter = SymbolNew("C", units.conductance)
+"""
+Ratio of input :symbols:`current` to output :symbols:`voltage` at idle at the output.
+"""
+
+current_current_parameter = SymbolNew("D", dimensionless)
+"""
+Ratio of input :symbols:`current` to output :symbols:`current` in case of a short circuit at the output.
+"""
 
 law = Eq(
     Matrix([input_voltage, input_current]),
-    Matrix([[parameter_voltage_to_voltage, parameter_impedance],
-    [parameter_conductance, parameter_current_to_current]]) *
-    Matrix([output_voltage, output_current]))
-
-
-def print_law() -> str:
-    return print_expression(law)
+    Matrix([[voltage_voltage_parameter, voltage_current_parameter], [current_voltage_parameter, current_current_parameter]])
+    * Matrix([output_voltage, output_current]))
+"""
+..
+    NOTE: Code printing in upcoming PR.
+"""
 
 
 @validate_input(
@@ -60,10 +96,10 @@ def calculate_current_and_voltage(
     substitutions = {
         input_voltage: input_voltage_,
         input_current: input_current_,
-        parameter_voltage_to_voltage: parameters_[0][0],
-        parameter_impedance: parameters_[0][1],
-        parameter_conductance: parameters_[1][0],
-        parameter_current_to_current: parameters_[1][1],
+        voltage_voltage_parameter: parameters_[0][0],
+        voltage_current_parameter: parameters_[0][1],
+        current_voltage_parameter: parameters_[1][0],
+        current_current_parameter: parameters_[1][1],
     }
     result_output_current = Quantity(result_output_current.subs(substitutions))
     result_output_voltage = Quantity(result_output_voltage.subs(substitutions))

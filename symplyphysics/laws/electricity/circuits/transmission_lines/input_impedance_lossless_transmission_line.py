@@ -1,56 +1,70 @@
+"""
+Input impedance of lossless transmission line
+=============================================
+
+Knowing the length of the transmission line and its surge impedance, as well as the
+propagation constant and load impedance, it is possible to determine the input impedance
+of the transmission line.
+
+..
+    TODO: find link
+"""
+
 from sympy import Eq, solve, tan, I
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
-    print_expression,
+    SymbolNew,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
 )
 
-## Description
-## Knowing the length of the transmission line and its characteristic resistance, as well as the propagation constant and
-## load resistance, it is possible to determine the input impedance of the transmission line.
-## The propagation constant is the inverse of the wavelength.
+input_impedance = clone_as_symbol(symbols.electrical_impedance, display_symbol="Z_in", display_latex="Z_\\text{in}")
+"""
+Input :symbols:`electrical_impedance` of the transmission line.
+"""
 
-## Law is: Zin = Z0 * (Zl + I * Z0 * tan(b * l)) / (Z0 + I * Zl * tan(b * l)), where
-## Zin - input impedance of the transmission line,
-## Zl - load resistance,
-## Z0 - characteristic resistance of the transmission line,
-## l - length of the transmission line,
-## b - constant propagation of signal,
-## I - imaginary unit.
+load_impedance = clone_as_symbol(symbols.electrical_impedance, display_symbol="Z_L", display_latex="Z_\\text{L}")
+"""
+Load :symbols:`electrical_impedance`.
+"""
 
-input_impedance = Symbol("input_impedance", units.impedance)
+surge_impedance = symbols.surge_impedance
+"""
+:symbols:`surge_impedance` of the transmission line.
+"""
 
-characteristic_resistance = Symbol("characteristic_resistance", units.impedance)
-load_resistance = Symbol("load_resistance", units.impedance)
-constant_propagation = Symbol("constant_propagation", 1 / units.length)
-line_length = Symbol("line_length", units.length)
+length = symbols.length
+"""
+:symbols:`length` of the transmission line.
+"""
+
+propagation_constant = SymbolNew("b", 1 / units.length)
+"""
+The **propagation constant** is the inverse of the signal :symbols:`wavelength`.
+"""
 
 law = Eq(
     input_impedance,
-    characteristic_resistance *
-    (load_resistance + I * characteristic_resistance * tan(constant_propagation * line_length)) /
-    (characteristic_resistance + I * load_resistance * tan(constant_propagation * line_length)))
+    surge_impedance *
+    (load_impedance + I * surge_impedance * tan(propagation_constant * length)) /
+    (surge_impedance + I * load_impedance * tan(propagation_constant * length)))
 
 
-def print_law() -> str:
-    return print_expression(law)
-
-
-@validate_input(characteristic_resistance_=characteristic_resistance,
-    load_resistance_=load_resistance,
-    constant_propagation_=constant_propagation,
-    line_length_=line_length)
+@validate_input(characteristic_resistance_=surge_impedance,
+    load_impedance_=load_impedance,
+    constant_propagation_=propagation_constant,
+    length_=length)
 @validate_output(input_impedance)
-def calculate_input_impedance(characteristic_resistance_: Quantity, load_resistance_: Quantity,
-    constant_propagation_: Quantity, line_length_: Quantity) -> Quantity:
+def calculate_input_impedance(characteristic_resistance_: Quantity, load_impedance_: Quantity,
+    constant_propagation_: Quantity, length_: Quantity) -> Quantity:
     result_expr = solve(law, input_impedance, dict=True)[0][input_impedance]
     result_expr = result_expr.subs({
-        characteristic_resistance: characteristic_resistance_,
-        load_resistance: load_resistance_,
-        constant_propagation: constant_propagation_,
-        line_length: line_length_,
+        surge_impedance: characteristic_resistance_,
+        load_impedance: load_impedance_,
+        propagation_constant: constant_propagation_,
+        length: length_,
     })
     return Quantity(result_expr)

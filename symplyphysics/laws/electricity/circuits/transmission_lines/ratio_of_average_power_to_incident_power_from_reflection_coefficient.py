@@ -1,43 +1,57 @@
+"""
+Reflection coefficient from ratio of average power to incident power
+====================================================================
+
+Knowing the average power delivered to the load and the incident power, it is possible
+to calculate the absolute value of the reflection coefficient :math:`G`.
+
+**Links:**
+
+#. `Engineering LibreTexts, formula 3.20.4 <https://eng.libretexts.org/Bookshelves/Electrical_Engineering/Electro-Optics/Book%3A_Electromagnetics_I_(Ellingson)/03%3A_Transmission_Lines/3.20%3A_Power_Flow_on_Transmission_Lines>`__.
+"""
+
 from sympy import Eq, solve
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     convert_to_float,
-    dimensionless,
+    symbols,
+    clone_as_symbol,
 )
 
-# Description
-## The reflection coefficient is equal to the ratio of the reflected wave power to the incident wave power.
-## Knowing the average power delivered to the load and the incident power, it is possible to calculate the absolute value reflection coefficient.
-## It is also stated in the description of the law that G is the modulus of the reflection coefficient. But in fact, G can also be a reflection
-## coefficient (a complex number). But since we want to calculate the value of G uniquely from the law, we will assume that G is the absolute value
-## of the reflection coefficient.
+reflection_coefficient = symbols.reflection_coefficient
+"""
+Complex-valued :symbols:`reflection_coefficient`.
+"""
 
-## Law is: Pa / Pi = 1 - G^2, where
-## Pa - the average power delivered to the load,
-## Pi - the incident power,
-## G - the absolute value reflection coefficient.
+incident_power = clone_as_symbol(symbols.power, display_symbol="P_incident", display_latex="P_\\text{incident}")
+"""
+Incident :symbols:`power`.
+"""
 
-absolute_reflection_coefficient = Symbol("absolute_reflection_coefficient",
-    dimensionless,
-    real=True)
-incident_power = Symbol("incident_power", units.power, real=True)
-average_power = Symbol("average_power", units.power, real=True)
+average_power = clone_as_symbol(symbols.power, display_symbol="avg(P)", display_latex="\\langle P \\rangle")
+"""
+Average :symbols:`power` delivered to the load.
+"""
 
-law = Eq(average_power / incident_power, 1 - absolute_reflection_coefficient**2)
+law = Eq(average_power / incident_power, 1 - abs(reflection_coefficient)**2)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(incident_power_=incident_power, average_power_=average_power)
-@validate_output(absolute_reflection_coefficient)
+@validate_output(reflection_coefficient)
 def calculate_absolute_reflection_coefficient(incident_power_: Quantity,
     average_power_: Quantity) -> float:
     if incident_power_.scale_factor < average_power_.scale_factor:
         raise ValueError("The incident_power must be greater than the average power")
-    result_expr = solve(law, absolute_reflection_coefficient,
-        dict=True)[0][absolute_reflection_coefficient]
+    abs_gamma = clone_as_symbol(reflection_coefficient, positive=True)
+    subs_law = law.subs(abs(reflection_coefficient), abs_gamma)
+    result_expr = solve(subs_law, abs_gamma)[1]
     result_expr = result_expr.subs({
         incident_power: incident_power_,
         average_power: average_power_,

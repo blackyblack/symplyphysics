@@ -1,110 +1,151 @@
+"""
+Transmission matrix of T-type circuit
+=====================================
+
+The T-type circuit consists of the first impedance connected in series, the third
+impedance connected in parallel, and the second impedance connected in series. Knowing
+the impedances, it is possible to calculate the parameters :math:`A, B, C, D` of the
+transmission matrix of this line.
+
+**Notes:**
+
+#. See :ref:`Transmission matrix`.
+#. Scheme of the circuit:
+
+.. image:: https://en.wikipedia.org/wiki/T_pad#/media/File:Attenuator,_T-section.svg
+    :width: 400px
+    :align: center
+
+..
+    TODO: find link
+"""
+
 from sympy import Eq, solve, Matrix
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input, dimensionless,
-    convert_to_float)
+from symplyphysics import (
+    units,
+    Quantity,
+    validate_input,
+    dimensionless,
+    convert_to_float,
+    symbols,
+    clone_as_symbol,
+    SymbolNew,
+)
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity.circuits.transmission_lines import transmission_matrix_for_a_series_load_in_line as series_law
 from symplyphysics.laws.electricity.circuits.transmission_lines import transmission_matrix_for_a_parallel_load_in_line as parallel_law
 
-## Description
-## The transmission parameters matrix is one of the ways to describe a microwave device. The ABCD-parameters of the device act as elements
-## of this matrix. The matrix equation relates the input voltage and input current to the output voltage and output current.
-## The T-type circuit consists of the first impedance connected in series, the third impedance connected in parallel, and the
-## second impedance connected in series.
-## Knowing impedances, it is possible to calculate the parameters A, B, C, D of the transmission matrix of this line.
+voltage_voltage_parameter = SymbolNew("A", dimensionless)
+"""
+Ratio of input :symbols:`voltage` to output :symbols:`voltage` at idle at the output.
+"""
 
-## Law is: Matrix([[A, B], [C, D]]) = Matrix([[1 + Z1 / Z3, Z1 + Z2 + Z1 * Z2 / Z3], [1 / Z3, 1 + Z2 / Z3]]), where
-## A - ratio of input voltage to output voltage at idle at the output,
-## B - ratio of input voltage to output current in case of a short circuit at the output,
-## C - ratio of input current to output voltage at idle at the output,
-## D - ratio of input current to output current in case of a short circuit at the output,
-## Z1 - first impedance,
-## Z2 - second impedance,
-## Z3 - third impedance.
+voltage_current_parameter = SymbolNew("B", units.impedance)
+"""
+Ratio of input :symbols:`voltage` to output :symbols:`current` in case of a short circuit at the output.
+"""
 
-parameter_voltage_to_voltage = Symbol("parameter_voltage_to_voltage", dimensionless)
-parameter_impedance = Symbol("parameter_impedance", units.impedance)
-parameter_conductance = Symbol("parameter_conductance", units.conductance)
-parameter_current_to_current = Symbol("parameter_current_to_current", dimensionless)
+current_voltage_parameter = SymbolNew("C", units.conductance)
+"""
+Ratio of input :symbols:`current` to output :symbols:`voltage` at idle at the output.
+"""
 
-first_impedance = Symbol("first_impedance", units.impedance)
-second_impedance = Symbol("second_impedance", units.impedance)
-third_impedance = Symbol("third_impedance", units.impedance)
+current_current_parameter = SymbolNew("D", dimensionless)
+"""
+Ratio of input :symbols:`current` to output :symbols:`current` in case of a short circuit at the output.
+"""
+
+first_impedance = clone_as_symbol(symbols.electrical_impedance, subscript="1")
+"""
+First :symbols:`electrical_impedance`.
+"""
+
+second_impedance = clone_as_symbol(symbols.electrical_impedance, subscript="2")
+"""
+Second :symbols:`electrical_impedance`.
+"""
+
+third_impedance = clone_as_symbol(symbols.electrical_impedance, subscript="3")
+"""
+Third :symbols:`electrical_impedance`.
+"""
 
 law = Eq(
-    Matrix([[parameter_voltage_to_voltage, parameter_impedance],
-    [parameter_conductance, parameter_current_to_current]]),
+    Matrix([[voltage_voltage_parameter, voltage_current_parameter], [current_voltage_parameter, current_current_parameter]]),
     Matrix([[
-    1 + first_impedance / third_impedance,
-    first_impedance + second_impedance + first_impedance * second_impedance / third_impedance
-    ], [1 / third_impedance, 1 + second_impedance / third_impedance]]))
+        1 + first_impedance / third_impedance, first_impedance + second_impedance + first_impedance * second_impedance / third_impedance],
+        [1 / third_impedance, 1 + second_impedance / third_impedance],
+    ])
+)
+"""
+..
+    NOTE: Code printing in upcoming PR.
+"""
+
 
 # This law might be derived via "transmission_matrix_for_a_series_load_in_line" law and
 # "transmission_matrix_for_a_parallel_load_in_line" law.
 
-series_law_applied_1 = series_law.law.subs({
+_series_law_applied_1 = series_law.law.subs({
     series_law.load_impedance: first_impedance,
 })
-matrix_derived_1 = solve(series_law_applied_1, [
-    series_law.parameter_voltage_to_voltage, series_law.parameter_impedance,
-    series_law.parameter_conductance, series_law.parameter_current_to_current
+_matrix_derived_1 = solve(_series_law_applied_1, [
+    series_law.voltage_voltage_parameter, series_law.voltage_current_parameter,
+    series_law.current_voltage_parameter, series_law.current_current_parameter
 ],
     dict=True)[0]
-matrix_derived_1 = Matrix([[
-    matrix_derived_1[series_law.parameter_voltage_to_voltage],
-    matrix_derived_1[series_law.parameter_impedance]
+_matrix_derived_1 = Matrix([[
+    _matrix_derived_1[series_law.voltage_voltage_parameter],
+    _matrix_derived_1[series_law.voltage_current_parameter]
 ],
     [
-    matrix_derived_1[series_law.parameter_conductance],
-    matrix_derived_1[series_law.parameter_current_to_current]
+    _matrix_derived_1[series_law.current_voltage_parameter],
+    _matrix_derived_1[series_law.current_current_parameter]
     ]])
 
-parallel_law_applied = parallel_law.law.subs({
+_parallel_law_applied = parallel_law.law.subs({
     parallel_law.load_impedance: third_impedance,
 })
-matrix_derived_3 = solve(parallel_law_applied, [
-    parallel_law.parameter_voltage_to_voltage, parallel_law.parameter_impedance,
-    parallel_law.parameter_conductance, parallel_law.parameter_current_to_current
+_matrix_derived_3 = solve(_parallel_law_applied, [
+    parallel_law.voltage_voltage_parameter, parallel_law.voltage_current_parameter,
+    parallel_law.current_voltage_parameter, parallel_law.current_current_parameter
 ],
     dict=True)[0]
-matrix_derived_3 = Matrix([[
-    matrix_derived_3[parallel_law.parameter_voltage_to_voltage],
-    matrix_derived_3[parallel_law.parameter_impedance]
+_matrix_derived_3 = Matrix([[
+    _matrix_derived_3[parallel_law.voltage_voltage_parameter],
+    _matrix_derived_3[parallel_law.voltage_current_parameter]
 ],
     [
-    matrix_derived_3[parallel_law.parameter_conductance],
-    matrix_derived_3[parallel_law.parameter_current_to_current]
+    _matrix_derived_3[parallel_law.current_voltage_parameter],
+    _matrix_derived_3[parallel_law.current_current_parameter]
     ]])
 
-series_law_applied_2 = series_law.law.subs({
+_series_law_applied_2 = series_law.law.subs({
     series_law.load_impedance: second_impedance,
 })
-matrix_derived_2 = solve(series_law_applied_2, [
-    series_law.parameter_voltage_to_voltage, series_law.parameter_impedance,
-    series_law.parameter_conductance, series_law.parameter_current_to_current
+_matrix_derived_2 = solve(_series_law_applied_2, [
+    series_law.voltage_voltage_parameter, series_law.voltage_current_parameter,
+    series_law.current_voltage_parameter, series_law.current_current_parameter
 ],
     dict=True)[0]
-matrix_derived_2 = Matrix([[
-    matrix_derived_2[series_law.parameter_voltage_to_voltage],
-    matrix_derived_2[series_law.parameter_impedance]
+_matrix_derived_2 = Matrix([[
+    _matrix_derived_2[series_law.voltage_voltage_parameter],
+    _matrix_derived_2[series_law.voltage_current_parameter]
 ],
     [
-    matrix_derived_2[series_law.parameter_conductance],
-    matrix_derived_2[series_law.parameter_current_to_current]
+    _matrix_derived_2[series_law.current_voltage_parameter],
+    _matrix_derived_2[series_law.current_current_parameter]
     ]])
 
 # When cascading elements, the final transfer matrix will be equal to the product of the matrices of each element.
-matrix_derived = matrix_derived_1 * matrix_derived_3 * matrix_derived_2
+_matrix_derived = _matrix_derived_1 * _matrix_derived_3 * _matrix_derived_2
 
 # Check if derived ABCD-parameters are same as declared.
-assert expr_equals(matrix_derived[0, 0], law.rhs[0, 0])
-assert expr_equals(matrix_derived[0, 1], law.rhs[0, 1])
-assert expr_equals(matrix_derived[1, 0], law.rhs[1, 0])
-assert expr_equals(matrix_derived[1, 1], law.rhs[1, 1])
-
-
-def print_law() -> str:
-    return print_expression(law)
+assert expr_equals(_matrix_derived[0, 0], law.rhs[0, 0])
+assert expr_equals(_matrix_derived[0, 1], law.rhs[0, 1])
+assert expr_equals(_matrix_derived[1, 0], law.rhs[1, 0])
+assert expr_equals(_matrix_derived[1, 1], law.rhs[1, 1])
 
 
 @validate_input(impedances_=units.impedance)
@@ -112,14 +153,14 @@ def calculate_transmission_matrix(
     impedances_: tuple[Quantity, Quantity, Quantity]
 ) -> tuple[tuple[float, Quantity], tuple[Quantity, float]]:
     result = solve(law, [
-        parameter_voltage_to_voltage, parameter_impedance, parameter_conductance,
-        parameter_current_to_current
+        voltage_voltage_parameter, voltage_current_parameter, current_voltage_parameter,
+        current_current_parameter
     ],
         dict=True)[0]
-    result_a = result[parameter_voltage_to_voltage]
-    result_b = result[parameter_impedance]
-    result_c = result[parameter_conductance]
-    result_d = result[parameter_current_to_current]
+    result_a = result[voltage_voltage_parameter]
+    result_b = result[voltage_current_parameter]
+    result_c = result[current_voltage_parameter]
+    result_d = result[current_current_parameter]
     substitutions = {
         first_impedance: impedances_[0],
         second_impedance: impedances_[1],
