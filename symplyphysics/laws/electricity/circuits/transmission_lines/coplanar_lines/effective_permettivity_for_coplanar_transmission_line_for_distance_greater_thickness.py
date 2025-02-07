@@ -1,50 +1,91 @@
-from sympy import Eq, solve, sqrt, pi, log, sinh
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless,
-    convert_to_float)
+"""
+Effective permittivity of coplanar transmission line when distance is greater than thickness
+============================================================================================
 
-## Description
-## The coplanar transmission line is a dielectric substrate on the surface of which 3 electrodes are located.
-## When a wave propagates along a coplanar line, part of the field goes out, since the coplanar line does
-## not have metal borders on all sides, unlike, for example, rectangular waveguides. Then imagine an environment
-## in which the field will have the same magnitude as the field of a coplanar line. The permittivity of such a
-## medium will be called the effective permittivity of the line.
+The coplanar transmission line is a dielectric substrate on the surface of which 3
+electrodes are located. When a wave propagates along a coplanar line, part of the field
+goes out, since the coplanar line does not have metal borders on all sides, unlike, for
+example, rectangular waveguides.
 
-## Law is: ef = 1 + ((er - 1) / 2) * (ln(2 * (1 + sqrt(sqrt(1 - k^2))) / (1 - sqrt(sqrt(1 - k^2)))) / pi) * (pi / ln(2 * (1 + sqrt(sqrt(1 - k1^2))) / (1 - sqrt(sqrt(1 - k1^2))))), where
-## k = a / b,
-## k1 = sinh(pi * a / (4 * h)) / sinh(pi * b / (4 * h)),
-## ef - effective permittivity of the coplanar line,
-## er - relative permittivity of the dielectric substrate of the coplanar line,
-## a - width of the central electrode of the coplanar line,
-## h - thickness of substrate,
-## b - distance between the extreme electrodes.
+**Notes:**
 
-# Conditions:
-# - h < b / 4;
-# - 0 < k^2 <= 0.5;
-# - 0 < k1^2 <= 0.5.
+#. Imagine an environment in which the field will have the same magnitude as the field
+   of a microstrip line. The permittivity of such a medium will be called the effective
+   permittivity of the line.
 
-effective_permittivity = Symbol("effective_permittivity", dimensionless)
+**Conditions:**
 
-relative_permittivity = Symbol("relative_permittivity", dimensionless)
-distance_between_electrodes = Symbol("distance_between_electrodes", units.length)
-thickness_of_substrate = Symbol("thickness_of_substrate", units.length)
-central_electrode_width = Symbol("central_electrode_width", units.length)
+#. :math:`h < \\frac{d}{4}`
+#. :math:`0 < \\left( \\frac{l}{d} \\right)^2 \\le \\frac{1}{2}`
+#. :math:`0 < \\left( \\frac{\\sinh{ \\left((\\pi l) / (4 h)\\right) }}{\\sinh{ \\left((\\pi d) / (4 h)\\right) }} \\right)^2 \\le \\frac{1}{2}`
 
-expression_1 = (relative_permittivity - 1) / 2
-expression_2 = sinh(pi * central_electrode_width /
-    (4 * thickness_of_substrate)) / sinh(pi * distance_between_electrodes /
-    (4 * thickness_of_substrate))
-expression_3 = sqrt(1 - expression_2**2)
-expression_4 = pi / log(2 * (1 + sqrt(expression_3)) / (1 - sqrt(expression_3)))
-expression_5 = sqrt(1 - (central_electrode_width / distance_between_electrodes)**2)
-expression_6 = log(2 * (1 + sqrt(expression_5)) / (1 - sqrt(expression_5))) / pi
+See below for symbol descriptions.
 
-law = Eq(effective_permittivity, 1 + expression_1 * expression_6 * expression_4)
+..
+    TODO: fix file name
+    TODO: add link
+    TODO: maybe simplify this law by adding substitutions `k_0 = l / d` and `k_1 = sinh(pi * l / (4 * h)) / sinh(pi * d / (4 * h))`?
+"""
+
+from sympy import Eq, solve, root, pi, log, sinh, evaluate
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    convert_to_float,
+    symbols,
+    clone_as_symbol,
+)
+
+effective_permittivity = clone_as_symbol(symbols.relative_permittivity, display_symbol="epsilon_eff", display_latex="\\varepsilon_\\text{eff}")
+"""
+Effective :symbols:`relative_permittivity` of the coplanar line.
+"""
+
+relative_permittivity = symbols.relative_permittivity
+"""
+:symbols:`relative_permittivity` of the dielectric substrate of the coplanar line.
+"""
+
+electrode_distance = symbols.euclidean_distance
+"""
+:symbols:`euclidean_distance` between the first and last electrodes.
+"""
+
+substrate_thickness = symbols.thickness
+"""
+:symbols:`thickness` of the substrate.
+"""
+
+central_electrode_width = symbols.length
+"""
+Width (see :symbols:`length`) of the central electrode of the coplanar line.
+"""
+
+# the following block prevents the re-ordering of terms for the code printer
+with evaluate(False):
+    _first_expression = (relative_permittivity - 1) / 2
+    _second_expression = (
+        sinh(pi * central_electrode_width/ (4 * substrate_thickness)) 
+        / sinh(pi * electrode_distance / (4 * substrate_thickness))
+    )
+    _third_expression = root(1 - _second_expression**2, 4)
+    _fourth_expression = log(2 * (1 + _third_expression) / (1 - _third_expression))
+    _fifth_expression = root(1 - (central_electrode_width / electrode_distance)**2, 4)
+    _sixth_expression = log(2 * (1 + _fifth_expression) / (1 - _fifth_expression))
+    _seventh_expression = _sixth_expression / _fourth_expression
+
+law = Eq(effective_permittivity, 1 + _first_expression * _seventh_expression)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(relative_permittivity_=relative_permittivity,
-    distance_between_electrodes_=distance_between_electrodes,
-    thickness_of_substrate_=thickness_of_substrate,
+    distance_between_electrodes_=electrode_distance,
+    thickness_of_substrate_=substrate_thickness,
     central_electrode_width_=central_electrode_width)
 @validate_output(effective_permittivity)
 def calculate_effective_permittivity(relative_permittivity_: float,
@@ -63,8 +104,8 @@ def calculate_effective_permittivity(relative_permittivity_: float,
     result_expr = solve(law, effective_permittivity, dict=True)[0][effective_permittivity]
     result_expr = result_expr.subs({
         relative_permittivity: relative_permittivity_,
-        distance_between_electrodes: distance_between_electrodes_,
-        thickness_of_substrate: thickness_of_substrate_,
+        electrode_distance: distance_between_electrodes_,
+        substrate_thickness: thickness_of_substrate_,
         central_electrode_width: central_electrode_width_
     })
     return convert_to_float(result_expr)

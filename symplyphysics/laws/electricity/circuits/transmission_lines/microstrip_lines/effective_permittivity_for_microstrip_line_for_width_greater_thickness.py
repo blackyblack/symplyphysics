@@ -1,43 +1,78 @@
-from sympy import Eq, solve, sqrt, Rational
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless,
-    convert_to_float)
+"""
+Effective permittivity of microstrip line when width is greater than thickness
+==============================================================================
 
-## Description
-## The microstrip line is a dielectric substrate on which a metal strip is applied.
-## When a wave propagates along a microstrip line, part of the field goes out, since the microstrip line does
-## not have metal borders on all sides, unlike, for example, rectangular waveguides. Then imagine an environment
-## in which the field will have the same magnitude as the field of a microstrip line. The permittivity of such a
-## medium will be called the effective permittivity of the line.
+The microstrip line is a dielectric substrate on which a metal strip is applied. When a
+wave propagates along a microstrip line, part of the field goes out, since the
+microstrip line does not have metal borders on all sides, unlike, for example,
+rectangular waveguides.
 
-## Law is: ef = (1 + er) / 2 + ((er - 1) / 2) * (1 + 12 * h / W)^(-1 / 2) - ((er - 1) / 4.6) * (t / h) * sqrt(h / W), where
-## ef - effective permittivity of the microstrip line,
-## er - relative permittivity of the dielectric substrate of the microstrip line,
-## W - width of the microstrip line,
-## h - thickness of substrate,
-## t - strip thickness of the microstrip line.
+**Conditions:**
 
-# Conditions:
-# - the thickness of the substrate of the microstrip line should be less than the width.
+#. The thickness :math:`h` of the substrate of the microstrip line should be less than
+   the width :math:`w` of the microstrip.
 
-effective_permittivity = Symbol("effective_permittivity", dimensionless)
+..
+    TODO: find link.
+"""
 
-relative_permittivity = Symbol("relative_permittivity", dimensionless)
-strip_thickness = Symbol("strip_thickness", units.length)
-thickness_of_substrate = Symbol("thickness_of_substrate", units.length)
-width = Symbol("width", units.length)
+from sympy import Eq, solve, sqrt, Rational, evaluate
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    convert_to_float,
+    symbols,
+    clone_as_symbol,
+)
 
-expression_1 = (1 + relative_permittivity) / 2
-expression_2 = (relative_permittivity - 1) / 2
-expression_3 = (1 + 12 * thickness_of_substrate / width)**Rational(-1, 2)
-expression_4 = ((relative_permittivity - 1) / 4.6) * (strip_thickness /
-    thickness_of_substrate) * sqrt(thickness_of_substrate / width)
+relative_permittivity = symbols.relative_permittivity
+"""
+:symbols:`relative_permittivity` of the dielectric substrate of the microstrip line.
+"""
 
-law = Eq(effective_permittivity, expression_1 + expression_2 * expression_3 - expression_4)
+effective_permittivity = clone_as_symbol(
+    symbols.relative_permittivity,
+    display_symbol="epsilon_eff",
+    display_latex="\\varepsilon_\\text{eff}",
+)
+"""
+Effective :symbols:`relative_permittivity` of the microstrip line.
+"""
+
+width = clone_as_symbol(symbols.length, display_symbol="w", display_latex="w")
+"""
+Width (see :symbols:`length`) of the microstrip line.
+"""
+
+thickness = clone_as_symbol(symbols.thickness, display_symbol="t", display_latex="t")
+"""
+:symbols:`thickness` of the microstrip line.
+"""
+
+substrate_thickness = symbols.thickness
+"""
+:symbols:`thickness` of the substrate.
+"""
+
+# the following block prevents the re-ordering of terms for the code printer
+with evaluate(False):
+    _first_expression = (1 + relative_permittivity) / 2
+    _second_expression = (relative_permittivity - 1) / 2
+    _third_expression = (1 + 12 * substrate_thickness / width)**Rational(-1, 2)
+    _fourth_expression = ((relative_permittivity - 1) / 4.6) * (thickness / substrate_thickness) * sqrt(substrate_thickness / width)
+
+law = Eq(effective_permittivity, _first_expression + _second_expression * _third_expression - _fourth_expression)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(relative_permittivity_=relative_permittivity,
-    strip_thickness_=strip_thickness,
-    thickness_of_substrate_=thickness_of_substrate,
+    strip_thickness_=thickness,
+    thickness_of_substrate_=substrate_thickness,
     width_=width)
 @validate_output(effective_permittivity)
 def calculate_effective_permittivity(relative_permittivity_: float, strip_thickness_: Quantity,
@@ -47,8 +82,8 @@ def calculate_effective_permittivity(relative_permittivity_: float, strip_thickn
     result_expr = solve(law, effective_permittivity, dict=True)[0][effective_permittivity]
     result_expr = result_expr.subs({
         relative_permittivity: relative_permittivity_,
-        strip_thickness: strip_thickness_,
-        thickness_of_substrate: thickness_of_substrate_,
+        thickness: strip_thickness_,
+        substrate_thickness: thickness_of_substrate_,
         width: width_
     })
     return convert_to_float(result_expr)

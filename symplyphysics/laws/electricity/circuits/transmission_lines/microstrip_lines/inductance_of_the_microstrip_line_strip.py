@@ -1,52 +1,67 @@
+"""
+Inductance of microstrip line strip
+===================================
+
+The microstrip line is a dielectric substrate on which a metal strip is applied. The
+inductance of the upper metal strip without taking into account the lower electrode can
+be calculated by knowing the geometric parameters of the strip.
+
+..
+    TODO: find link
+"""
+
 from sympy import Eq, solve, log
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
-    print_expression,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
 )
 
-## Description
-## The microstrip line is a dielectric substrate on which a metal strip is applied.
-## The inductance of the upper metal strip without taking into account the lower electrode can be
-## calculated by knowing the geometric parameters of the strip.
+inductance = symbols.inductance
+"""
+:symbols:`inductance` of the strip.
+"""
 
-## Law is: L = 2e-4 * l * (ln(l / (W + t)) + 1.193 + 0.2235 * ln((W + t) / l)), where
-## L - inductance of the microstrip line strip,
-## W - strip width of the microstrip line,
-## l - strip length,
-## t - strip thickness.
+length = symbols.length
+"""
+:symbols:`length` of the microstrip.
+"""
 
-inductance = Symbol("inductance", units.inductance)
+width = clone_as_symbol(symbols.length, display_symbol="w", display_latex="w")
+"""
+Width (see :symbols:`length`) of the microstrip.
+"""
 
-strip_thickness = Symbol("strip_thickness", units.length)
-strip_length = Symbol("strip_length", units.length)
-strip_width = Symbol("strip_width", units.length)
+thickness = clone_as_symbol(symbols.thickness, display_symbol="t", display_latex="t")
+"""
+:symbols:`thickness` of the microstrip.
+"""
 
-expression_1 = strip_length / (strip_width + strip_thickness)
-constant_inductance = Quantity(2e-4 * units.inductance / units.length)
+specific_inductance_constant = Quantity(2e-4 * units.inductance / units.length, display_symbol="L_0")
 
 law = Eq(
     inductance,
-    constant_inductance * strip_length * (log(expression_1) + 1.193 + 0.2235 * (1 / expression_1)))
+    specific_inductance_constant * length * (log(length / (width + thickness)) + 1.193 + 0.2235 / (length / (width + thickness))))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
-def print_law() -> str:
-    return print_expression(law)
-
-
-@validate_input(strip_thickness_=strip_thickness,
-    strip_length_=strip_length,
-    strip_width_=strip_width)
+@validate_input(thickness_=thickness,
+    strip_length_=length,
+    width_=width)
 @validate_output(inductance)
-def calculate_inductance(strip_thickness_: Quantity, strip_length_: Quantity,
-    strip_width_: Quantity) -> Quantity:
+def calculate_inductance(thickness_: Quantity, strip_length_: Quantity,
+    width_: Quantity) -> Quantity:
     result_expr = solve(law, inductance, dict=True)[0][inductance]
     result_expr = result_expr.subs({
-        strip_thickness: strip_thickness_,
-        strip_length: strip_length_,
-        strip_width: strip_width_
+        thickness: thickness_,
+        length: strip_length_,
+        width: width_
     })
     return Quantity(result_expr)

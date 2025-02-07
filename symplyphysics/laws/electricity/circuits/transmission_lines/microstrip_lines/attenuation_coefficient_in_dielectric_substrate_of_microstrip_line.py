@@ -1,40 +1,77 @@
-from sympy import Eq, solve, sqrt
+"""
+Attenuation coefficient in dielectric substate of microstrip line
+=================================================================
+
+The microstrip line is a dielectric substrate on which a metal strip is applied. When a
+wave propagates along a microstrip line, part of the field goes out, since the
+microstrip line does not have metal borders on all sides, unlike, for example,
+rectangular waveguides.
+
+**Notes:**
+
+#. Imagine an environment in which the field will have the same magnitude as the field
+   of a microstrip line. The permittivity of such a medium will be called the effective
+   permittivity of the line.
+
+..
+    TODO: find link
+"""
+
+from sympy import Eq, solve, sqrt, evaluate
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
     dimensionless,
+    symbols,
+    clone_as_symbol,
 )
 
-## Description
-## The microstrip line is a dielectric substrate on which a metal strip is applied.
-## When a wave propagates along a microstrip line, part of the field goes out, since the microstrip line does
-## not have metal borders on all sides, unlike, for example, rectangular waveguides. Then imagine an environment
-## in which the field will have the same magnitude as the field of a microstrip line. The permittivity of such a
-## medium will be called the effective permittivity of the line.
-## The attenuation coefficient shows how many times the transmitted signal weakens per unit length of the microstrip line.
+attenuation_coefficient = symbols.attenuation_coefficient
+"""
+:symbols:`attenuation_coefficient` of the microstrip line.
+"""
 
-## Law is: ad = 27.3 * (er / sqrt(ef)) * ((ef - 1) / (er - 1)) * tan(d) / L, where
-## ad - attenuation coefficient of the microstrip line,
-## er - relative permittivity of the dielectric substrate of the microstrip line,
-## ef - effective permittivity of the microstrip line,
-## tan(d) - tangent of the dielectric loss angle of the dielectric substrate of the microstrip line,
-## L - wavelength in vacuum.
+relative_permittivity = symbols.relative_permittivity
+"""
+:symbols:`relative_permittivity` of the dielectric substrate of the microstrip line.
+"""
 
-attenuation_coefficient = Symbol("attenuation_coefficient", 1 / units.length)
+effective_permittivity = clone_as_symbol(
+    symbols.relative_permittivity,
+    display_symbol="epsilon_eff",
+    display_latex="\\varepsilon_\\text{eff}",
+)
+"""
+Effective :symbols:`relative_permittivity` of the microstrip line.
+"""
 
-relative_permittivity = Symbol("relative_permittivity", dimensionless)
-effective_permittivity = Symbol("effective_permittivity", dimensionless)
-wavelength = Symbol("wavelength", units.length)
-tangent_dielectric_loss_angle = Symbol("tangent_dielectric_loss_angle", dimensionless)
+wavelength = symbols.wavelength
+"""
+:symbols:`wavelength` in vacuum.
+"""
 
-expression_1 = relative_permittivity / sqrt(effective_permittivity)
-expression_2 = (effective_permittivity - 1) / (relative_permittivity - 1)
-expression_3 = tangent_dielectric_loss_angle / wavelength
-CONSTANT_COEFFICIENT = 27.3
-law = Eq(attenuation_coefficient, CONSTANT_COEFFICIENT * expression_1 * expression_2 * expression_3)
+tangent_dielectric_loss_angle = SymbolNew("tan(d)", dimensionless, display_latex="\\tan(d)")
+"""
+Tangent of the dielectric loss angle of the medium filling the waveguide.
+
+..
+    TODO: replace with an actual tangent of an angle?
+"""
+
+# the following block prevents the re-ordering of terms for the code printer
+with evaluate(False):
+    _first_expression = relative_permittivity / sqrt(effective_permittivity)
+    _second_expression = (effective_permittivity - 1) / (relative_permittivity - 1)
+    _third_expression = tangent_dielectric_loss_angle / wavelength
+
+law = Eq(attenuation_coefficient, 27.3 * _first_expression * _second_expression * _third_expression)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(relative_permittivity_=relative_permittivity,

@@ -273,3 +273,36 @@ measurement.
 
 #. `Wikipedia, first item of the list <https://en.wikipedia.org/wiki/Attenuator_(electronics)#Attenuator_characteristics>`__.
 """
+
+surge_impedance = SymbolNew("Z_S", units.impedance, display_latex="Z_\\text{S}")
+"""
+**Surge impedance**, or **characteristic impedance**, is of a uniform transmission line
+is the ratio of the amplitudes of voltage and current of a wave travelling in one
+direction along the line in the absence of reflections in the other direction.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Characteristic_impedance>`__.
+"""
+
+reflection_coefficient = SymbolNew("Gamma", dimensionless, display_latex="\\Gamma")
+"""
+The **reflection coefficient** is a parameter that describes how much of a wave is
+reflected by an impedance discontinuity in the transmission medium.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Reflection_coefficient>`__.
+"""
+
+standing_wave_ratio = SymbolNew("SWR", dimensionless, display_latex="\\text{SWR}")
+"""
+**Standing wave ratio** is a measure of impedance matching of loads to the
+characteristic impedance of a transmission line or waveguide. It is defined as the ratio
+of the highest to the lowest voltage in the transmission line.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Standing_wave_ratio>`__.
+#. `Engineering LibreTexts <https://eng.libretexts.org/Bookshelves/Electrical_Engineering/Electro-Optics/Book%3A_Electromagnetics_I_(Ellingson)/03%3A_Transmission_Lines/3.14%3A_Standing_Wave_Ratio>`__.
+"""

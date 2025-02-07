@@ -1,54 +1,92 @@
-from sympy import Eq, solve, sqrt, pi, log
-from symplyphysics import (units, Quantity, Symbol, validate_input, validate_output, dimensionless)
+"""
+Wave impedance of coplanar line (first)
+=======================================
 
-## Description
-## The coplanar transmission line is a dielectric substrate on the surface of which 3 electrodes are located.
-## The wave resistance of a transmission line is a value determined by the ratio of the voltage of the incident
-## wave to the current of this wave in the transmission line.
-## When a wave propagates along a coplanar line, part of the field goes out, since the coplanar line does
-## not have metal borders on all sides, unlike, for example, rectangular waveguides. Then imagine an environment
-## in which the field will have the same magnitude as the field of a coplanar line. The permittivity of such a
-## medium will be called the effective permittivity of the line.
+The coplanar transmission line is a dielectric substrate on the surface of which 3
+electrodes are located. The wave resistance of a transmission line is a value determined
+by the ratio of the voltage of the incident wave to the current of this wave in the
+transmission line. When a wave propagates along a coplanar line, part of the field goes
+out, since the coplanar line does not have metal borders on all sides, unlike, for
+example, rectangular waveguides.
 
-## Law is: Z = (30 * pi / sqrt(ef)) * (ln(2 * (1 + sqrt(sqrt(1 - k^2))) / (1 - sqrt(sqrt(1 - k^2)))) / pi), where
-## k = a / b,
-## Z - wave resistance of the coplanar line,
-## ef - effective permittivity of the coplanar line,
-## a - width of the central electrode of the coplanar line,
-## b - distance between the extreme electrodes.
+**Notes:**
 
-# Conditions:
-# h - thickness of substrate.
-# - h < b / 4;
-# - 0 < k^2 <= 0.5.
+#. Imagine an environment in which the field will have the same magnitude as the field
+   of a microstrip line. The permittivity of such a medium will be called the effective
+   permittivity of the line.
 
-wave_resistance = Symbol("wave_resistance", units.impedance)
+**Conditions:**
 
-effective_permittivity = Symbol("effective_permittivity", dimensionless)
-distance_between_electrodes = Symbol("distance_between_electrodes", units.length)
-central_electrode_width = Symbol("central_electrode_width", units.length)
+See the first and third conditions of :ref:`Effective permittivity of coplanar
+transmission line when distance is greater than thickness`.
 
-constant_resistance = Quantity(30 * pi * units.ohm)
-expression_1 = constant_resistance / sqrt(effective_permittivity)
-expression_2 = sqrt(1 - (central_electrode_width / distance_between_electrodes)**2)
-expression_3 = log(2 * (1 + sqrt(expression_2)) / (1 - sqrt(expression_2))) / pi
+..
+    TODO: rename file to feature wave *impedance*
+    TODO: find link
+"""
 
-law = Eq(wave_resistance, expression_1 * expression_3)
+from sympy import Eq, solve, sqrt, root,  pi, log, evaluate
+from symplyphysics import (
+    units,
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    clone_as_symbol,
+)
+
+wave_impedance = symbols.wave_impedance
+"""
+:symbols:`wave_impedance` of the coplanar line.
+"""
+
+effective_permittivity = clone_as_symbol(symbols.relative_permittivity, display_symbol="epsilon_eff", display_latex="\\varepsilon_\\text{eff}")
+"""
+Effective :symbols:`relative_permittivity` of the coplanar line.
+"""
+
+electrode_distance = symbols.euclidean_distance
+"""
+:symbols:`euclidean_distance` between the first and last electrodes.
+"""
+
+central_electrode_width = symbols.length
+"""
+Width (see :symbols:`length`) of the central electrode of the coplanar line.
+"""
+
+resistance_constant = Quantity(30 * units.ohm, display_symbol="R_0")
+"""
+Constant equal to :math:`30 \\, \\Omega` (:code:`30 Ohm`).
+"""
+
+# the following block prevents the re-ordering of terms for the code printer
+with evaluate(False):
+    _first_expression = resistance_constant / sqrt(effective_permittivity)
+    _second_expression = root(1 - (central_electrode_width / electrode_distance)**2, 4)
+    _third_expression = log(2 * (1 + _second_expression) / (1 - _second_expression))
+
+law = Eq(wave_impedance, _first_expression * _third_expression)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(effective_permittivity_=effective_permittivity,
-    distance_between_electrodes_=distance_between_electrodes,
+    distance_between_electrodes_=electrode_distance,
     central_electrode_width_=central_electrode_width)
-@validate_output(wave_resistance)
+@validate_output(wave_impedance)
 def calculate_wave_resistance(effective_permittivity_: float,
     distance_between_electrodes_: Quantity, central_electrode_width_: Quantity) -> Quantity:
     if (central_electrode_width_.scale_factor / distance_between_electrodes_.scale_factor)**2 > 0.5:
         raise ValueError("k^2 must be less than or equal to the 0.5")
 
-    result_expr = solve(law, wave_resistance, dict=True)[0][wave_resistance]
+    result_expr = solve(law, wave_impedance, dict=True)[0][wave_impedance]
     result_expr = result_expr.subs({
         effective_permittivity: effective_permittivity_,
-        distance_between_electrodes: distance_between_electrodes_,
+        electrode_distance: distance_between_electrodes_,
         central_electrode_width: central_electrode_width_
     })
     return Quantity(result_expr)

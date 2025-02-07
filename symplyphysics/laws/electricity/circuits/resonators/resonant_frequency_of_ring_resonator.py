@@ -1,54 +1,59 @@
-from sympy import (Eq, solve, sqrt)
-from sympy.physics.units import speed_of_light
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    print_expression,
-    validate_input,
-    validate_output,
-    dimensionless,
-)
+"""
+Resonant frequency of ring resonator
+====================================
 
-# Description
-## The ring resonator is a microstrip line in the shape of a circle.
-## When a wave propagates along a microstrip line, part of the field goes out, since the microstrip line does
-## not have metal borders on all sides, unlike, for example, rectangular waveguides. Then imagine an environment
-## in which the field will have the same magnitude as the field of a microstrip line. The permittivity of such a
-## medium will be called the effective permittivity of the line.
-## A wave traveling through an ring resonator acquires a phase shift and interacts with a wave incident on the
-## resonator. If the phase shift is a multiple of 2*pi*m, then these waves add up in phase. m is the interference order.
+The ring resonator is a microstrip line in the shape of a circle. When a wave propagates
+along a microstrip line, part of the field goes out, since the microstrip line does not
+have metal borders on all sides, unlike, for example, rectangular waveguides. A wave
+traveling through an ring resonator acquires a phase shift and interacts with a wave
+incident on the resonator. If the phase shift is expressed as :math:`2 \\pi N`, then
+these waves add up in phase; here :math:`N` is the interference order.
 
-## Law is: f = m * c / (l * eps), where
-## f - the resonant frequency of the ring resonator,
-## m - order interference,
-## c - speed of light,
-## l - the length of circumference of the ring resonator,
-## eps - effective permittivity of the resonator.
+..
+    TODO: find link
+"""
 
-frequency = Symbol("frequency", units.frequency)
+from sympy import Eq, solve, sqrt
+from symplyphysics import Quantity, validate_input, validate_output, symbols, quantities
 
-ring_length = Symbol("ring_length", units.length)
-order_interference = Symbol("order_interference", dimensionless)
-permittivity = Symbol("permittivity", dimensionless)
+frequency = symbols.temporal_frequency
+"""
+:symbols:`temporal_frequency` of the ring resonator.
+"""
 
-law = Eq(frequency, order_interference * speed_of_light / (ring_length * sqrt(permittivity)))
+length = symbols.length
+"""
+:symbols:`length` of the circumference of the ring resonator.
+"""
+
+interference_order = symbols.positive_number
+"""
+Interference order, see :symbols:`positive_number`.
+"""
+
+relative_permittivity = symbols.relative_permittivity
+"""
+Effective :symbols:`relative_permittivity` of the resonator.
+"""
+
+law = Eq(frequency, interference_order * quantities.speed_of_light / (length * sqrt(relative_permittivity)))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
-def print_law() -> str:
-    return print_expression(law)
-
-
-@validate_input(ring_length_=ring_length,
-    order_interference_=order_interference,
-    permittivity_=permittivity)
+@validate_input(ring_length_=length,
+    order_interference_=interference_order,
+    permittivity_=relative_permittivity)
 @validate_output(frequency)
 def calculate_frequency(ring_length_: Quantity, order_interference_: int,
     permittivity_: float) -> Quantity:
     result_expr = solve(law, frequency, dict=True)[0][frequency]
     result_expr = result_expr.subs({
-        ring_length: ring_length_,
-        order_interference: order_interference_,
-        permittivity: permittivity_,
+        length: ring_length_,
+        interference_order: order_interference_,
+        relative_permittivity: permittivity_,
     })
     return Quantity(result_expr)
