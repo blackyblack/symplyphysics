@@ -6,7 +6,7 @@ from sympy.core.add import Add
 from sympy.core.mul import Mul
 from sympy.core.power import Pow
 from sympy.physics.units import Dimension, Quantity as SymQuantity
-from sympy.physics.units.systems.si import SI
+from sympy.physics.units.systems.si import dimsys_SI
 
 from .errors import UnitsError
 
@@ -44,7 +44,7 @@ def _collect_pow(expr: Pow) -> tuple[Basic, Dimension]:
     (factor, dim) = collect_factor_and_dimension(expr.base)
     pow_expr *= factor
     (exp_factor, exp_dim) = collect_factor_and_dimension(expr.exp)
-    if not SI.get_dimension_system().is_dimensionless(exp_dim):
+    if not dimsys_SI.is_dimensionless(exp_dim):
         raise ValueError(f"Dimension of '{expr.exp}' is {exp_dim}, but it should be dimensionless")
     exp_dim = S.One
     return (pow_expr**exp_factor, dim**(exp_factor * exp_dim))
@@ -57,12 +57,12 @@ def _collect_add(expr: Add) -> tuple[Basic, Dimension]:
     for addend in expr.args[1:]:
         (addend_factor, addend_dim) = collect_factor_and_dimension(addend)
         # automatically convert zero to the dimension of it's additives
-        if dim != addend_dim and not SI.get_dimension_system().equivalent_dims(dim, addend_dim):
+        if dim != addend_dim and not dimsys_SI.equivalent_dims(dim, addend_dim):
             if factor == S.Zero:
                 dim = addend_dim
             elif addend_factor == S.Zero:
                 addend_dim = dim
-        if dim != addend_dim and not SI.get_dimension_system().equivalent_dims(dim, addend_dim):
+        if dim != addend_dim and not dimsys_SI.equivalent_dims(dim, addend_dim):
             raise ValueError(f"Dimension of '{addend}' is {addend_dim}, but it should be {dim}")
         sum_expr += addend_factor
     return (sum_expr, dim)
@@ -81,12 +81,12 @@ def _collect_min(expr: Min) -> tuple[Basic, Dimension]:
     for addend in expr.args[1:]:
         (addend_factor, addend_dim) = collect_factor_and_dimension(addend)
         # automatically convert zero to the dimension of it's additives
-        if dim != addend_dim and not SI.get_dimension_system().equivalent_dims(dim, addend_dim):
+        if dim != addend_dim and not dimsys_SI.equivalent_dims(dim, addend_dim):
             if factor == S.Zero:
                 dim = addend_dim
             elif addend_factor == S.Zero:
                 addend_dim = dim
-        if dim != addend_dim and not SI.get_dimension_system().equivalent_dims(dim, addend_dim):
+        if dim != addend_dim and not dimsys_SI.equivalent_dims(dim, addend_dim):
             raise ValueError(f"Dimension of '{addend}' is {addend_dim}, but it should be {dim}")
         if not addend_factor.is_Number:
             raise ValueError(f"Min should contain Number arguments. Got {addend_factor}")
@@ -101,7 +101,7 @@ def _collect_function(expr: SymFunction) -> tuple[Basic, Dimension]:
     for arg in expr.args:
         (f, d) = collect_factor_and_dimension(arg)
         # only functions with dimensionless arguments are supported
-        if not SI.get_dimension_system().is_dimensionless(d):
+        if not dimsys_SI.is_dimensionless(d):
             raise ValueError(f"Dimension of '{arg}' is {d}, but it should be dimensionless")
         factors.append(f)
     ret = expr.func(*(f for f in factors))
@@ -132,6 +132,9 @@ def collect_factor_and_dimension(expr: Basic) -> tuple[Basic, Dimension]:
         Dimension: _collect_dimension,
     }
 
+    if hasattr(expr, "dimension") and not isinstance(expr, SymQuantity):
+        return expr, getattr(expr, "dimension")
+
     for k, v in cases.items():
         if isinstance(expr, k):
             return v(expr)
@@ -154,7 +157,7 @@ def assert_equivalent_dimension(arg: SymQuantity | ScalarValue | Dimension, para
     #HACK: this allows to treat angle type as dimensionless
     expected_dimension = expected_dimension.subs("angle", S.One)
     if isinstance(arg, (float | int)):
-        if SI.get_dimension_system().is_dimensionless(expected_dimension):
+        if dimsys_SI.is_dimensionless(expected_dimension):
             return
         raise TypeError(f"Argument '{param_name}' to function '{func_name}'"
             f" is Number but '{expected_dimension}' is not dimensionless")
@@ -165,10 +168,10 @@ def assert_equivalent_dimension(arg: SymQuantity | ScalarValue | Dimension, para
     #HACK: this allows to treat angle type as dimensionless
     arg_dimension = dimension.subs("angle", S.One)
     # angle is dimensionless but equivalent_dims() fails to compare it
-    if SI.get_dimension_system().is_dimensionless(
-            expected_dimension) and SI.get_dimension_system().is_dimensionless(arg_dimension):
+    if dimsys_SI.is_dimensionless(
+            expected_dimension) and dimsys_SI.is_dimensionless(arg_dimension):
         return
-    if not SI.get_dimension_system().equivalent_dims(arg_dimension, expected_dimension):
+    if not dimsys_SI.equivalent_dims(arg_dimension, expected_dimension):
         raise UnitsError(f"Argument '{param_name}' to function '{func_name}' must "
             f"be in units equivalent to '{expected_dimension.name}', got {arg_dimension.name}")
     if scale_factor.free_symbols:
@@ -177,3 +180,7 @@ def assert_equivalent_dimension(arg: SymQuantity | ScalarValue | Dimension, para
 
 
 dimensionless = Dimension(S.One)
+
+
+def print_dimension(dimension: Dimension) -> str:
+    return "dimensionless" if dimsys_SI.is_dimensionless(dimension) else str(dimension.name)

@@ -3,6 +3,7 @@ from pytest import fixture
 from sympy import I, Integral, evaluate, exp, log, pi, sin, sqrt, Matrix
 from symplyphysics import Quantity, SymbolNew, clone_as_function, clone_as_symbol, units
 from symplyphysics.docs.printer_latex import latex_str
+from symplyphysics.core.operations import symbolic
 
 Args = namedtuple(
     "Args",
@@ -240,3 +241,29 @@ def test_matrix(test_args: Args) -> None:
     with evaluate(False):
         expr = Matrix([a, b, c, d]).T
     assert latex_str(expr) == "\\begin{pmatrix} a & b & c & d \\end{pmatrix}"
+
+
+def test_average() -> None:
+    a = SymbolNew("a")
+    expr = symbolic.Average(a)
+    assert latex_str(expr) == "\\langle a \\rangle"
+
+
+def test_finite_difference() -> None:
+    a = SymbolNew("a")
+
+    expr = symbolic.FiniteDifference(a)
+    assert latex_str(expr) == "\\Delta a"
+
+    expr = symbolic.FiniteDifference(a, wrap_latex=True)
+    assert latex_str(expr) == "\\Delta \\left( a \\right)"
+
+
+def test_exact_differential() -> None:
+    a = SymbolNew("a")
+
+    expr = symbolic.ExactDifferential(a)
+    assert latex_str(expr) == "d a"
+
+    expr = symbolic.ExactDifferential(a, wrap_latex=True)
+    assert latex_str(expr) == "d \\left( a \\right)"

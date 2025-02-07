@@ -275,7 +275,7 @@ class SymbolLatexPrinter(LatexPrinter):
             tex += term_tex
 
         return tex
-    
+        
     def _print_MutableDenseMatrix(self, expr: Matrix) -> str:
         rows, cols = expr.shape
 
@@ -285,6 +285,30 @@ class SymbolLatexPrinter(LatexPrinter):
 
         parts = [print_row(row) for row in range(rows)]
         return "\\begin{pmatrix} " + " \\\\ ".join(parts) + " \\end{pmatrix}"
+
+    def _print_Average(self, expr: Any) -> str:
+        return f"\\langle {self._print(expr.factor)} \\rangle"
+    
+    def _print_FiniteDifference(self, expr: Any) -> str:
+        inner = self._print(expr.factor)
+        if expr.wrap_latex:
+            return f"\\Delta \\left( {inner} \\right)"
+        else:
+            return f"\\Delta {inner}"
+        
+    def _print_ExactDifferential(self, expr: Any) -> str:
+        inner = self._print(expr.factor)
+        if expr.wrap_latex:
+            return f"d \\left( {inner} \\right)"
+        else:
+            return f"d {inner}"
+
+    def _print_InexactDifferential(self, expr: Any) -> str:
+        inner = self._print(expr.factor)
+        if expr.wrap_latex:
+            return f"\\delta \\left( {inner} \\right)"
+        else:
+            return f"\\delta {inner}"
 
 
 def latex_str(expr: Any, **settings: Any) -> str:

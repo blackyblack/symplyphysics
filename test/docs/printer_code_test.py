@@ -3,6 +3,7 @@ from pytest import fixture
 from sympy import I, Integral, evaluate, exp, log, pi, sin, sqrt, Matrix
 from symplyphysics import Quantity, SymbolNew, clone_as_symbol, clone_as_function, units
 from symplyphysics.docs.printer_code import code_str
+from symplyphysics.core.operations import symbolic
 
 Args = namedtuple(
     "Args",
@@ -219,7 +220,7 @@ def test_log_squared(test_args: Args) -> None:
     assert code_str(expr) == "log(k_B)^2"
 
 
-def test_matrix(test_args: Args) -> None:
+def test_matrix() -> None:
     a = SymbolNew("a")
     b = SymbolNew("b")
     c = SymbolNew("c")
@@ -239,3 +240,31 @@ def test_matrix(test_args: Args) -> None:
     with evaluate(False):
         expr = Matrix([a, b, c, d]).T
     assert code_str(expr) == "[a, b, c, d].T"
+
+
+def test_average() -> None:
+    a = SymbolNew("a")
+    expr = symbolic.Average(a)
+    assert code_str(expr) == "avg(a)"
+
+
+def test_finite_difference() -> None:
+    a = SymbolNew("a")
+    expr = symbolic.FiniteDifference(a)
+    assert code_str(expr) == "Delta(a)"
+
+
+def test_exact_differential() -> None:
+    a = SymbolNew("a")
+
+    expr = symbolic.ExactDifferential(a)
+    assert code_str(expr) == "da"
+
+    expr = symbolic.ExactDifferential(a, wrap_code=True)
+    assert code_str(expr) == "d(a)"
+
+
+def test_inexact_differential() -> None:
+    a = SymbolNew("a")
+    expr = symbolic.InexactDifferential(a)
+    assert code_str(expr) == "delta(a)"
