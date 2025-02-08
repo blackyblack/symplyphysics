@@ -2,9 +2,7 @@
 Inductance of microstrip line strip
 ===================================
 
-The microstrip line is a dielectric substrate on which a metal strip is applied. The
-inductance of the upper metal strip without taking into account the lower electrode can
-be calculated by knowing the geometric parameters of the strip.
+The inductance of the microstrip line can be calculated from its physical dimensions.
 
 ..
     TODO: find link
@@ -40,7 +38,10 @@ thickness = clone_as_symbol(symbols.thickness, display_symbol="t", display_latex
 :symbols:`thickness` of the microstrip.
 """
 
-specific_inductance_constant = Quantity(2e-4 * units.inductance / units.length, display_symbol="L_0")
+specific_inductance_constant = Quantity(2e-4 * units.henry / units.meter, display_symbol="L_0")
+"""
+Constant equal to :math:`2 \\cdot 10^{-4} \\, \\frac{\\text{H}}{\\text{m}}` (:code:`2e-4 H/m`).
+"""
 
 law = Eq(
     inductance,

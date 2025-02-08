@@ -2,16 +2,8 @@
 Effective permittivity of coplanar transmission line when distance is less than thickness
 =========================================================================================
 
-The coplanar transmission line is a dielectric substrate on the surface of which 3
-electrodes are located. When a wave propagates along a coplanar line, part of the field
-goes out, since the coplanar line does not have metal borders on all sides, unlike, for
-example, rectangular waveguides.
-
-**Notes:**
-
-#. Imagine an environment in which the field will have the same magnitude as the field
-   of a microstrip line. The permittivity of such a medium will be called the effective
-   permittivity of the line.
+Under the conditions described below, the effective permittivity of a coplanar line can
+be calculated directly from the relative permittivity of the substrate.
 
 **Conditions:**
 
@@ -34,7 +26,8 @@ from symplyphysics import (
 
 effective_permittivity = clone_as_symbol(symbols.relative_permittivity, display_symbol="epsilon_eff", display_latex="\\varepsilon_\\text{eff}")
 """
-Effective :symbols:`relative_permittivity` of the coplanar line.
+Effective :symbols:`relative_permittivity` of the coplanar line. See :ref:`Effective
+permittivity of coplanar line`.
 """
 
 relative_permittivity = symbols.relative_permittivity

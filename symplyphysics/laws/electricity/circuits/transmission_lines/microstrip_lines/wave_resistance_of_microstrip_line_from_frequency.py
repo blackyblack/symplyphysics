@@ -2,16 +2,8 @@
 Surge impedance of microstrip line from frequency
 =================================================
 
-The microstrip line is a dielectric substrate on which a metal strip is applied. When a
-wave propagates along a microstrip line, part of the field goes out, since the
-microstrip line does not have metal borders on all sides, unlike, for example,
-rectangular waveguides.
-
-**Notes:**
-
-#. Imagine an environment in which the field will have the same magnitude as the field of a
-   microstrip line. The permittivity of such a medium will be called the *effective
-   permittivity* of the line.
+The frequency-dependent surge impedance of a microstrip line can be calculated from its
+frequency-independent surge impedance and effective permittivity.
 
 ..
     TODO: rename file to feature *surge impedance*
@@ -45,7 +37,7 @@ effective_permittivity = clone_as_symbol(
 )
 """
 :symbols:`relative_permittivity` of the microstrip line when frequency dependence is
-taken into account. See **Notes**.
+taken into account. See :ref:`Effective permittivity of microstrip line`.
 """
 
 independent_effective_permittivity = clone_as_symbol(
@@ -55,7 +47,7 @@ independent_effective_permittivity = clone_as_symbol(
 )
 """
 :symbols:`relative_permittivity` of the microstrip line when frequency dependence is
-omitted. See **Notes**.
+omitted. See :ref:`Effective permittivity of microstrip line`.
 """
 
 # the following block prevents the re-ordering of terms for the code printer

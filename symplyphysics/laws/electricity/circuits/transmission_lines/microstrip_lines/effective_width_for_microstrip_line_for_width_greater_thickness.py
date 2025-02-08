@@ -2,12 +2,13 @@
 Effective width of microstrip line when width is greater than thickness
 =======================================================================
 
-The microstrip line is a dielectric substrate on which a metal strip is applied.
+Under the conditions described below, the effective width of a microstrip line can be
+calculated from its physical dimension.
 
 **Conditions:**
 
 #. The thickness :math:`h` of the substrate of the microstrip line should be less than
-   :math:`2 \\pi w` where :math:`w` is the length of the microstrip.
+   :math:`2 \\pi w` where :math:`w` is the width of the microstrip.
 
 ..
     TODO: find link
@@ -24,9 +25,8 @@ from symplyphysics import (
 
 effective_width = clone_as_symbol(symbols.length, display_symbol="w_eff", display_latex="w_\\text{eff}")
 """
-Effective width (see :symbols:`length`) of the microstrip line. It is the width of such
-a flat capacitor, the electric intensity between the plates of which is equal to the
-electric intensity in the dielectric of the substrate under the line strip.
+Effective width (see :symbols:`length`) of the microstrip line. See :ref:`Effective
+width of microstrip line`.
 """
 
 width = clone_as_symbol(symbols.length, display_symbol="w", display_latex="w")

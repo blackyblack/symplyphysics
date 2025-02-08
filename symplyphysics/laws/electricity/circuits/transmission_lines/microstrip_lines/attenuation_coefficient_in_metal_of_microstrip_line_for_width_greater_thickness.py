@@ -2,12 +2,10 @@
 Attenuation coefficient in metal of microstrip line when width is greater than thickness
 ========================================================================================
 
-The microstrip line is a dielectric substrate on which a metal strip is applied. When a
-wave propagates along a microstrip line, part of the field goes out, since the
-microstrip line does not have metal borders on all sides, unlike, for example,
-rectangular waveguides. Then imagine an environment in which the field will have the
-same magnitude as the field of a microstrip line. The permittivity of such a medium will
-be called the effective permittivity of the line.
+Under the conditions described below, the attenuation coefficient of the microstrip
+metal can be calculated from the surge impedance of the line, the surface resistance of
+the metal, the effective permittivity of the substrate, and the physical dimensions of
+the system.
 
 **Conditions:**
 
@@ -50,9 +48,8 @@ substrate_thickness = symbols.thickness
 
 effective_width = clone_as_symbol(symbols.length, display_symbol="w_eff", display_latex="w_\\text{eff}")
 """
-Effective width (see :symbols:`length`) of the microstrip line. It is the width of such
-a flat capacitor, the electric field between the plates of which is equal to the
-electric field in the dielectric of the substrate under the line strip.
+Effective width (see :symbols:`length`) of the microstrip line. See :ref:`Effective
+width of microstrip line`.
 """
 
 thickness = clone_as_symbol(symbols.thickness, display_symbol="t", display_latex="t")
@@ -62,7 +59,8 @@ thickness = clone_as_symbol(symbols.thickness, display_symbol="t", display_latex
 
 effective_permittivity = clone_as_symbol(symbols.relative_permittivity, display_symbol="epsilon_eff", display_latex="\\varepsilon_\\text{eff}")
 """
-Effective :symbols:`relative_permittivity` of the microstrip line.
+Effective :symbols:`relative_permittivity` of the microstrip line. See :ref:`Effective
+permittivity of microstrip line`.
 """
 
 constant = Quantity(6.1e-5 / units.ohm**2, display_symbol="a")

@@ -2,9 +2,8 @@
 Short circuit inductance of microstrip line
 ===========================================
 
-The microstrip line is a dielectric substrate on which a metal strip is applied. To
-create a short circuit based on a microstrip line, a metallized hole can be made in the
-line. Such an opening will have a certain inductance, which can be calculated.
+To create a short circuit based on a microstrip line, a metallized hole can be made in
+the line. Such an opening will have a certain inductance, which can be calculated.
 
 **Notation:**
 

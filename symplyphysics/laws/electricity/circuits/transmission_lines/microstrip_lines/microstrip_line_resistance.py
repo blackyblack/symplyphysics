@@ -2,9 +2,8 @@
 Resistance of microstrip line
 =============================
 
-The microstrip line is a dielectric substrate on which a metal strip is applied. Its
-resistance depends on the physical dimensions of the microstrip and the resistance of
-its surface.
+The resistance of the microstrip line depends on the physical dimensions of the
+microstrip and the resistance of its surface.
 
 ..
     TODO: find link
@@ -46,8 +45,7 @@ surface_resistance = clone_as_symbol(symbols.electrical_resistance, display_symb
 
 law = Eq(
     resistance,
-    (1.4 + 0.217 * log(width / (5 * thickness)))
-    * (surface_resistance * length / (2 * (width + thickness))),
+    (1.4 + 0.217 * log(width / (5 * thickness))) * (surface_resistance * length / (2 * (width + thickness))),
 )
 """
 :laws:symbol::

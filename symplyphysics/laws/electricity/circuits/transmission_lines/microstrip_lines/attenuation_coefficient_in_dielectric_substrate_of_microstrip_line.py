@@ -2,16 +2,9 @@
 Attenuation coefficient in dielectric substate of microstrip line
 =================================================================
 
-The microstrip line is a dielectric substrate on which a metal strip is applied. When a
-wave propagates along a microstrip line, part of the field goes out, since the
-microstrip line does not have metal borders on all sides, unlike, for example,
-rectangular waveguides.
-
-**Notes:**
-
-#. Imagine an environment in which the field will have the same magnitude as the field
-   of a microstrip line. The permittivity of such a medium will be called the effective
-   permittivity of the line.
+The attenuation coefficient of the microstrip metal can be calculated from the effective
+and relative permittivity of the microstrip, the wavelength of the signal in vacuum and
+the dielectric loss angle of the substrate.
 
 ..
     TODO: find link
@@ -44,7 +37,8 @@ effective_permittivity = clone_as_symbol(
     display_latex="\\varepsilon_\\text{eff}",
 )
 """
-Effective :symbols:`relative_permittivity` of the microstrip line.
+Effective :symbols:`relative_permittivity` of the microstrip line. See :ref:`Effective
+permittivity of microstrip line`.
 """
 
 wavelength = symbols.wavelength

@@ -2,16 +2,9 @@
 Effective permittivity of coplanar transmission line when distance is greater than thickness
 ============================================================================================
 
-The coplanar transmission line is a dielectric substrate on the surface of which 3
-electrodes are located. When a wave propagates along a coplanar line, part of the field
-goes out, since the coplanar line does not have metal borders on all sides, unlike, for
-example, rectangular waveguides.
-
-**Notes:**
-
-#. Imagine an environment in which the field will have the same magnitude as the field
-   of a microstrip line. The permittivity of such a medium will be called the effective
-   permittivity of the line.
+Under the conditions described below, the effective permittivity of a coplanar line can
+be calculated from the relative permittivity of the substrate and the physical
+dimensions of the system.
 
 **Conditions:**
 
@@ -24,7 +17,6 @@ See below for symbol descriptions.
 ..
     TODO: fix file name
     TODO: add link
-    TODO: maybe simplify this law by adding substitutions `k_0 = l / d` and `k_1 = sinh(pi * l / (4 * h)) / sinh(pi * d / (4 * h))`?
 """
 
 from sympy import Eq, solve, root, pi, log, sinh, evaluate
@@ -39,7 +31,8 @@ from symplyphysics import (
 
 effective_permittivity = clone_as_symbol(symbols.relative_permittivity, display_symbol="epsilon_eff", display_latex="\\varepsilon_\\text{eff}")
 """
-Effective :symbols:`relative_permittivity` of the coplanar line.
+Effective :symbols:`relative_permittivity` of the coplanar line. See :ref:`Effective
+permittivity of coplanar line`.
 """
 
 relative_permittivity = symbols.relative_permittivity
@@ -66,8 +59,7 @@ Width (see :symbols:`length`) of the central electrode of the coplanar line.
 with evaluate(False):
     _first_expression = (relative_permittivity - 1) / 2
     _second_expression = (
-        sinh(pi * central_electrode_width/ (4 * substrate_thickness)) 
-        / sinh(pi * electrode_distance / (4 * substrate_thickness))
+        sinh(pi * central_electrode_width / (4 * substrate_thickness)) 
     )
     _third_expression = root(1 - _second_expression**2, 4)
     _fourth_expression = log(2 * (1 + _third_expression) / (1 - _third_expression))

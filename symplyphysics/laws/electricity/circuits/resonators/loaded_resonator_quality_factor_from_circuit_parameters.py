@@ -22,7 +22,7 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-quality_factor = clone_as_symbol(symbols.quality_factor, subscript="1")
+loaded_quality_factor = clone_as_symbol(symbols.quality_factor, subscript="1")
 """
 :symbols:`quality_factor` of the loaded resonator.
 """
@@ -47,7 +47,7 @@ load_resistance = clone_as_symbol(symbols.electrical_resistance, display_symbol=
 :symbols:`electrical_resistance` of the load.
 """
 
-law = Eq(quality_factor, (load_resistance * resistance) /
+law = Eq(loaded_quality_factor, (load_resistance * resistance) /
     (2 * pi * frequency * inductance * (load_resistance + resistance)))
 """
 :laws:symbol::
@@ -60,11 +60,11 @@ law = Eq(quality_factor, (load_resistance * resistance) /
     inductance_=inductance,
     frequency_=frequency,
     load_resistance_=load_resistance)
-@validate_output(quality_factor)
+@validate_output(loaded_quality_factor)
 def calculate_quality_factor(resistance_: Quantity, inductance_: Quantity, frequency_: Quantity,
     load_resistance_: Quantity) -> float:
-    result_expr = solve(law, quality_factor,
-        dict=True)[0][quality_factor]
+    result_expr = solve(law, loaded_quality_factor,
+        dict=True)[0][loaded_quality_factor]
     result_expr = result_expr.subs({
         resistance: resistance_,
         inductance: inductance_,

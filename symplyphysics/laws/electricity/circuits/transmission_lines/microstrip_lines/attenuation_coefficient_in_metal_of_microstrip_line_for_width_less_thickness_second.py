@@ -1,16 +1,16 @@
 """
-Attenuation coefficient in microstrip metal when width is less than thickness (second)
-======================================================================================
+Attenuation coefficient in microstrip metal when thickness is less than width times :math:`2 \\pi`
+==================================================================================================
 
-The microstrip line is a dielectric substrate on which a metal strip is applied.
+Under the conditions described below, the attenuation coefficient of the microstrip
+metal can be calculated from the surge impedance of the line, the surface resistance of
+the metal, the effective permittivity of the substrate, and the physical dimensions of
+the system.
 
 **Conditions:**
 
-- the thickness of the substrate of the microstrip line should be greater than or equal to the effective width;
-- the thickness of the substrate of the microstrip line should be less than the effective width * 2 * pi.
-
 #. :math:`h \\ge w_\\text{eff}`.
-#. :math:`h \\le 2 \\pi w_\\text{eff}`.
+#. :math:`h < 2 \\pi w_\\text{eff}`.
 
 Here, :math:`h` is substrate thickness, and :math:`w_\\text{eff}` is effective width of
 the microstrip.
@@ -30,7 +30,7 @@ from symplyphysics import (
 
 attenuation_coefficient = symbols.attenuation_coefficient
 """
-:symbols:`attenuation_coefficient` the metal in the microstrip.
+:symbols:`attenuation_coefficient` of the metal in the microstrip.
 """
 
 surface_resistance = clone_as_symbol(symbols.electrical_resistance, display_symbol="R_s", display_latex="R_\\text{s}")
@@ -45,9 +45,8 @@ surge_impedance = symbols.surge_impedance
 
 effective_width = clone_as_symbol(symbols.length, display_symbol="w_eff", display_latex="w_\\text{eff}")
 """
-Effective width (see :symbols:`length`) of the microstrip line. It is the width of such
-a flat capacitor, the electric intensity between the plates of which is equal to the
-electric intensity in the dielectric of the substrate under the line strip.
+Effective width (see :symbols:`length`) of the microstrip line. See :ref:`Effective
+width of microstrip line`.
 """
 
 width = clone_as_symbol(symbols.length, display_symbol="w", display_latex="w")

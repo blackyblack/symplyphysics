@@ -276,7 +276,7 @@ measurement.
 
 surge_impedance = SymbolNew("Z_S", units.impedance, display_latex="Z_\\text{S}")
 """
-**Surge impedance**, or **characteristic impedance**, is of a uniform transmission line
+**Surge impedance**, or **characteristic impedance**, of a uniform transmission line
 is the ratio of the amplitudes of voltage and current of a wave travelling in one
 direction along the line in the absence of reflections in the other direction.
 

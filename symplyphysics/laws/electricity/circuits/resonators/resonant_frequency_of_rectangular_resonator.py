@@ -10,8 +10,9 @@ respectively.
 
 #. :quantity_notation:`speed_of_light`.
 
-..
-    TODO: find link
+**Links:**
+
+#. `Mahatma Gandhi Central University, formula 17 on page 12 (PDF file) <https://mgcub.ac.in/pdf/material/20200427120209be39415ad1.pdf>`__.
 """
 
 from sympy import Eq, solve, sqrt
@@ -26,37 +27,40 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-resonant_frequency = symbols.temporal_frequency
+resonant_frequency = clone_as_symbol(symbols.temporal_frequency, display_symbol="f_r", display_latex="f_\\text{r}")
 """
 Resonant :symbols:`temporal_frequency` of the resonator.
 """
 
 first_index = clone_as_symbol(symbols.positive_number, subscript="1")
 """
-First index, see :symbols:`positive_number`.
+First index that changes along the :attr:`~length` of the resonator, see
+:symbols:`positive_number`.
 """
 
 second_index = clone_as_symbol(symbols.positive_number, subscript="2")
 """
-Second index, see :symbols:`positive_number`.
+First index that changes along the :attr:`~width` of the resonator, see
+:symbols:`positive_number`.
 """
 
 third_index = clone_as_symbol(symbols.positive_number, subscript="3")
 """
-Third index, see :symbols:`positive_number`.
+First index that changes along the :attr:`~height` of the resonator, see
+:symbols:`positive_number`.
 """
 
-resonator_length = clone_as_symbol(symbols.length, subscript="1")
+length = clone_as_symbol(symbols.length, subscript="1")
 """
 :symbols:`length` of the resonator along the first dimension.
 """
 
-resonator_width = clone_as_symbol(symbols.length, subscript="2")
+width = clone_as_symbol(symbols.length, subscript="2")
 """
 :symbols:`length` of the resonator along the second dimension.
 """
 
-resonator_height = clone_as_symbol(symbols.length, subscript="3")
+height = clone_as_symbol(symbols.length, subscript="3")
 """
 :symbols:`length` of the resonator along the third dimension.
 """
@@ -73,9 +77,8 @@ relative_permeability = symbols.relative_permeability
 
 law = Eq(
     resonant_frequency,
-    quantities.speed_of_light 
-    * sqrt((first_index / resonator_length)**2 + (second_index / resonator_width)**2 + (third_index / resonator_height)**2) 
-    / (2 * sqrt(relative_permittivity * relative_permeability)))
+    (quantities.speed_of_light / (2 * sqrt(relative_permittivity * relative_permeability)))
+    * sqrt((first_index / length)**2 + (second_index / width)**2 + (third_index / height)**2))
 """
 :laws:symbol::
 
@@ -98,9 +101,9 @@ def calculate_resonant_frequency(indexes_: tuple[float, float,
         first_index: first_index_,
         second_index: second_index_,
         third_index: third_index_,
-        resonator_width: resonator_width_,
-        resonator_height: resonator_height_,
-        resonator_length: resonator_length_,
+        width: resonator_width_,
+        height: resonator_height_,
+        length: resonator_length_,
         relative_permittivity: relative_permittivity_,
         relative_permeability: relative_permeability_,
     })

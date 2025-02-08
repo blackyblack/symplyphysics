@@ -2,17 +2,15 @@
 Effective permittivity of microstrip line when width is less than thickness
 ===========================================================================
 
-The microstrip line is a dielectric substrate on which a metal strip is applied. When a
-wave propagates along a microstrip line, part of the field goes out, since the
-microstrip line does not have metal borders on all sides, unlike, for example,
-rectangular waveguides.
+Under the conditions described below, the effective permittivity of the microstrip line
+can be calculated from its relative permittivity and physical dimensions.
 
 **Conditions:**
 
 #. The thickness :math:`h` of the substrate of the microstrip line should be greater
    than or equal to the width :math:`w` of the microstrip.
 
-..
+   ..
     TODO: find link.
 """
 
@@ -37,7 +35,8 @@ effective_permittivity = clone_as_symbol(
     display_latex="\\varepsilon_\\text{eff}",
 )
 """
-Effective :symbols:`relative_permittivity` of the microstrip line.
+Effective :symbols:`relative_permittivity` of the microstrip line. See :ref:`Effective
+permittivity of microstrip line`.
 """
 
 width = clone_as_symbol(symbols.length, display_symbol="w", display_latex="w")

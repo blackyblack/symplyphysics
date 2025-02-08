@@ -2,20 +2,12 @@
 Effective permittivity of microstrip line from frequency
 ========================================================
 
-The microstrip line is a dielectric substrate on which a metal strip is applied.
-When a wave propagates along a microstrip line, part of the field goes out, since the
-microstrip line does not have metal borders on all sides, unlike, for example,
-rectangular waveguides.
+The frequency-dependent effective permittivity of the microstrip line can be calculated
+from its frequency-indendent effective permittivity and physical dimensions.
 
 **Notation:**
 
 #. :quantity_notation:`speed_of_light`.
-
-**Notes:**
-
-#. Imagine an environment in which the field will have the same magnitude as the field
-   of a microstrip line. The permittivity of such a medium will be called the effective
-   permittivity of the line.
 
 ..
     TODO: find link
@@ -39,7 +31,7 @@ effective_permittivity = clone_as_symbol(
 )
 """
 Effective :symbols:`relative_permittivity` of the microstrip line when frequency
-dependence is taken into account. See **Notes**.
+dependence is taken into account. See :ref:`Effective permittivity of microstrip line`.
 """
 
 relative_permittivity = symbols.relative_permittivity
@@ -69,7 +61,7 @@ independent_effective_permittivity = clone_as_symbol(
 )
 """
 :symbols:`relative_permittivity` of the microstrip line when frequency dependence is
-omitted. See **Notes**.
+omitted. See :ref:`Effective permittivity of microstrip line`.
 """
 
 # the following block prevents the re-ordering of terms for the code printer

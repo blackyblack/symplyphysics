@@ -62,20 +62,9 @@ law = Eq(
         1 / sqrt(power_ratio),
     ]))
 r"""
-..
-    Code printers don't work with matrices yet.
+:laws:symbol::
 
-:code:`[Y_1, Y_2, Y_3, Y_4] = Y_0 * [1 / sqrt(k), sqrt((k + 1) / k), sqrt((k + 1) / k), 1 / sqrt(k)]`
-
-Latex:
-    .. math::
-        \begin{pmatrix} Y_1 \\ Y_2 \\ Y_3 \\ Y_4 \end{pmatrix}
-        = Y_0 \begin{pmatrix}
-            \frac{1}{\sqrt{k}} \\
-            \sqrt{\frac{k + 1}{k}} \\
-            \sqrt{\frac{k + 1}{k}} \\
-            \frac{1}{\sqrt{k}} \\
-        \end{pmatrix}
+:laws:latex::
 """
 
 

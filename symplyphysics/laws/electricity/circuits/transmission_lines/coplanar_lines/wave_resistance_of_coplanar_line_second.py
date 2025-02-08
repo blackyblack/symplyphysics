@@ -1,15 +1,9 @@
 """
-Wave impedance of coplanar line (second)
-========================================
+Wave impedance of coplanar line when length to distance ratio squared is between :math:`\\frac{1}{2}` and :math:`1`
+===================================================================================================================
 
-The coplanar transmission line is a dielectric substrate on the surface of which 3
-electrodes are located. The wave resistance of a transmission line is a value determined
-by the ratio of the voltage of the incident wave to the current of this wave in the
-transmission line. When a wave propagates along a coplanar line, part of the field goes
-out, since the coplanar line does not have metal borders on all sides, unlike, for
-example, rectangular waveguides. Then imagine an environment in which the field will
-have the same magnitude as the field of a coplanar line. The permittivity of such a
-medium will be called the effective permittivity of the line.
+Under the conditions described below, the wave impedance of a coplanar line depends on
+its effective permittivity and physical dimensions.
 
 **Conditions:**
 
@@ -20,6 +14,7 @@ Here, :math:`h` is the thickness of the substrate, and :math:`d` is the distance
 the first and last electrodes.
 
 ..
+    TODO: check if it is *wave impedance* or *surge (characteristic) impedance*
     TODO: rename file to feature wave *impedance*
     TODO: find link
 """
@@ -41,7 +36,8 @@ wave_impedance = symbols.wave_impedance
 
 effective_permittivity = clone_as_symbol(symbols.relative_permittivity, display_symbol="epsilon_eff", display_latex="\\varepsilon_\\text{eff}")
 """
-Effective :symbols:`relative_permittivity` of the coplanar line.
+Effective :symbols:`relative_permittivity` of the coplanar line. See :ref:`Effective
+permittivity of coplanar line`.
 """
 
 electrode_distance = symbols.euclidean_distance
