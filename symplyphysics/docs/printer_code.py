@@ -4,6 +4,7 @@ Symplyphysics code printer
 
 from typing import Any
 from sympy import S, Expr, Mod, Mul, StrPrinter, E, Symbol as SymSymbol
+from sympy.matrices.dense import DenseMatrix
 from sympy.simplify import fraction
 from sympy.concrete.products import Product
 from sympy.concrete.summations import Sum
@@ -228,6 +229,21 @@ class SymbolCodePrinter(StrPrinter):
             tex += term_tex
 
         return tex
+
+    def _print_DenseMatrix(self, expr: DenseMatrix) -> str:
+        rows, cols = expr.shape
+
+        if cols == 1 or rows == 1:
+            parts = [self._print(elem) for elem in expr]
+            result = "[" + ", ".join(parts) + "]"
+            return result if cols == 1 else result + ".T"
+
+        def print_row(row: int) -> str:
+            parts = [self._print(expr[row, col]) for col in range(cols)]
+            return "[" + ", ".join(parts) + "]"
+
+        parts = [print_row(row) for row in range(rows)]
+        return "[" + ", ".join(parts) +"]"
 
 
 def code_str(expr: Any, **settings: Any) -> str:

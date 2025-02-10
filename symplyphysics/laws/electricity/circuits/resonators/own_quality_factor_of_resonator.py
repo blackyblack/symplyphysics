@@ -1,28 +1,50 @@
-from sympy import (Eq, solve, pi)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless, convert_to_float)
+"""
+Quality factor of resonator
+===========================
 
-# Description
-## The quality factor shows the ratio of the energy stored in the resonator to the energy loss during one oscillation period.
-## If the resonator is an oscillatory circuit, that quality factor will depend on the resistance, inductance, and oscillation frequency.
+If the resonator is an oscillatory circuit, that quality factor will depend on the
+resistance, inductance, and oscillation frequency.
 
-## Law is: Q = R / (2 * pi * f * L), where
-## Q - quality factor of the resonator,
-## R - resistance in the oscillating circuit,
-## L - inductance in the oscillatory circuit,
-## f - oscillation frequency.
+..
+    TODO: fix file name
+    TODO: replace `2 * pi * f` with `omega`
+"""
 
-quality_factor = Symbol("quality_factor", dimensionless)
+from sympy import Eq, solve, pi
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    convert_to_float,
+    symbols,
+)
 
-resistance = Symbol("resistance", units.impedance)
-inductance = Symbol("inductance", units.inductance)
-frequency = Symbol("frequency", units.frequency)
+quality_factor = symbols.quality_factor
+"""
+:symbols:`quality_factor` of the resonator.
+"""
+
+resistance = symbols.electrical_resistance
+"""
+:symbols:`electrical_resistance` of the oscillating circuit.
+"""
+
+inductance = symbols.inductance
+"""
+:symbols:`inductance` of the oscillating circuit.
+"""
+
+frequency = symbols.temporal_frequency
+"""
+:symbols:`temporal_frequency` of the current.
+"""
 
 law = Eq(quality_factor, resistance / (2 * pi * frequency * inductance))
+"""
+:laws:symbol::
 
-
-def print_law() -> str:
-    return print_expression(law)
+:laws:latex::
+"""
 
 
 @validate_input(resistance_=resistance, inductance_=inductance, frequency_=frequency)

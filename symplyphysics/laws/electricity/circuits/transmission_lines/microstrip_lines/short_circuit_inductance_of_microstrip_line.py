@@ -1,51 +1,63 @@
-from sympy import Eq, solve, sqrt, log, pi
-from sympy.physics.units import magnetic_constant
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    print_expression,
-    validate_input,
-    validate_output,
-)
+"""
+Short circuit inductance of microstrip line
+===========================================
 
-## Description
-## The microstrip line is a dielectric substrate on which a metal strip is applied.
-## To create a short circuit based on a microstrip line, a metallized hole can be made in
-## the line. Such an opening will have a certain inductance, which can be calculated.
+To create a short circuit based on a microstrip line, a metallized hole can be made in
+the line. Such an opening will have a certain inductance, which can be calculated.
 
-## Law is: L = (mu0 / (2 * pi)) * (h * ln((h + sqrt(r^2 + h^2)) / r) + 1.5 * (r - sqrt(r^2 + h^2))), where
-## L - inductance of a metallized hole in a microstrip line,
-## h - the thickness of the microstrip line substrate,
-## r - radius of the metallized hole,
-## mu0 - magnetic constant.
+**Notation:**
 
-inductance = Symbol("inductance", units.inductance)
+#. :quantity_notation:`vacuum_permeability`.
 
-thickness_of_substrate = Symbol("thickness_of_substrate", units.length)
-radius_of_hole = Symbol("radius_of_hole", units.length)
+..
+    TODO: add link
+"""
 
-expression_1 = sqrt(radius_of_hole**2 + thickness_of_substrate**2)
-expression_2 = thickness_of_substrate * log(
-    (thickness_of_substrate + expression_1) / radius_of_hole)
-expression_3 = 1.5 * (radius_of_hole - expression_1)
+from sympy import Eq, solve, sqrt, log, pi, evaluate
+from symplyphysics import Quantity, validate_input, validate_output, quantities, symbols
 
-law = Eq(inductance, (magnetic_constant / (2 * pi)) * (expression_2 + expression_3))
+inductance = symbols.inductance
+"""
+:symbols:`inductance` of a metallized hole in a microstrip line.
+"""
 
+substrate_thickness = symbols.thickness
+"""
+:symbols:`thickness` of the substrate of the microstrip line.
+"""
 
-def print_law() -> str:
-    return print_expression(law)
+radius = symbols.radius
+"""
+:symbols:`radius` of the metallized hole.
+"""
+
+# the following block prevents the re-ordering of terms for the code printer
+with evaluate(False):
+    _constant = quantities.vacuum_permeability / (2 * pi)
+    _first_expression = sqrt(radius**2 + substrate_thickness**2)
+    _second_expression = substrate_thickness * log((substrate_thickness + _first_expression) / radius)
+    _third_expression = 1.5 * (radius - _first_expression)
+
+law = Eq(inductance, _constant * (_second_expression + _third_expression))
+"""
+:laws:symbol::
+
+:laws:latex::
+
+..
+    TODO: check if `1.5` isn't really `3/2`
+"""
 
 
 @validate_input(
-    thickness_of_substrate_=thickness_of_substrate,
-    radius_of_hole_=radius_of_hole,
+    thickness_of_substrate_=substrate_thickness,
+    radius_of_hole_=radius,
 )
 @validate_output(inductance)
 def calculate_inductance(thickness_of_substrate_: Quantity, radius_of_hole_: Quantity) -> Quantity:
     result_expr = solve(law, inductance, dict=True)[0][inductance]
     result_expr = result_expr.subs({
-        thickness_of_substrate: thickness_of_substrate_,
-        radius_of_hole: radius_of_hole_,
+        substrate_thickness: thickness_of_substrate_,
+        radius: radius_of_hole_,
     })
     return Quantity(result_expr)

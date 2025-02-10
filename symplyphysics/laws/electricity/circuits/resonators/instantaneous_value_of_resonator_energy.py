@@ -1,39 +1,55 @@
+"""
+Instantaneous energy of resonator
+=================================
+
+A rectangular resonator consists of metal walls and a material filling it. The resonator
+is capable of storing energy. The instantaneous value of the resonator energy depends on
+its quality factor, initial energy value, time and angular frequency.
+
+..
+    TODO: find link
+"""
+
 from sympy import Eq, solve, exp
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
-    print_expression,
     validate_input,
     validate_output,
-    dimensionless,
-    angle_type,
+    symbols,
+    clone_as_symbol,
 )
 
-## Description
-## A rectangular resonator consists of metal walls and a material filling it.
-## The resonator is capable of storing energy. The instantaneous value of the resonator
-## energy depends on its quality factor, initial energy value, time and angular frequency.
+instantaneous_energy = symbols.energy
+"""
+Instantaneous :symbols:`energy` of the resonator.
+"""
 
-## Law is: W = W0 * exp(-w0 * t / Q), where
-## W - instantaneous value of resonator energy,
-## W0 - initial energy of resonator,
-## w0 - angular frequency,
-## t - time,
-## Q - quality factor of resonator.
+initial_energy = clone_as_symbol(symbols.energy, subscript="0")
+"""
+Initial :symbols:`energy` of the resonator.
+"""
 
-instantaneous_energy = Symbol("instantaneous_energy", units.energy)
+time = symbols.time
+"""
+:symbols:`time` at which :attr:`~instantaneous_energy` is measured.
+"""
 
-initial_energy = Symbol("initial_energy", units.energy)
-time = Symbol("time", units.time)
-angular_frequency = Symbol("angular_frequency", angle_type / units.time)
-quality_factor = Symbol("quality_factor", dimensionless)
+angular_frequency = symbols.angular_frequency
+"""
+:symbols:`angular_frequency` of the current.
+"""
+
+quality_factor = symbols.quality_factor
+"""
+:symbols:`quality_factor` of the resonator.
+"""
 
 law = Eq(instantaneous_energy, initial_energy * exp(-angular_frequency * time / quality_factor))
+"""
+:laws:symbol::
 
-
-def print_law() -> str:
-    return print_expression(law)
+:laws:latex::
+"""
 
 
 @validate_input(initial_energy_=initial_energy,

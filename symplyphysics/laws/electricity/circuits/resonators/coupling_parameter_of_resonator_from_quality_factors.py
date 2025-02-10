@@ -1,26 +1,47 @@
-from sympy import (Eq, solve)
-from symplyphysics import (Symbol, print_expression, validate_input, validate_output, dimensionless,
-    convert_to_float)
+"""
+Coupling parameter of resonator from quality factor
+===================================================
 
-# Description
-## There is a coupling parameter to describe the resonator and the load. The parameter is equal to the ratio of the
-## resonator's own quality factor to the quality factor of the external circuit.
+There is a coupling parameter to describe the resonator and the load. The parameter is
+equal to the ratio of the resonator's own quality factor to the quality factor of the
+external circuit.
 
-## Law is: g = Q0 / Qe, where
-## g - coupling parameter,
-## Q0 - resonator's own quality factor,
-## Qe - quality factor of the external circuit.
+..
+    TODO: find link
+"""
 
-coupling_parameter = Symbol("coupling_parameter", dimensionless)
+from sympy import Eq, solve
+from symplyphysics import (
+    SymbolNew,
+    validate_input,
+    validate_output,
+    dimensionless,
+    convert_to_float,
+    symbols,
+    clone_as_symbol,
+)
 
-resonator_quality_factor = Symbol("resonator_quality_factor", dimensionless)
-external_circuit_quality_factor = Symbol("external_circuit_quality_factor", dimensionless)
+coupling_parameter = SymbolNew("g", dimensionless)
+"""
+Coupling parameter of the resonator.
+"""
+
+resonator_quality_factor = clone_as_symbol(symbols.quality_factor, subscript="0")
+"""
+:symbols:`quality_factor` of the resonator.
+"""
+
+external_circuit_quality_factor = clone_as_symbol(symbols.quality_factor, display_symbol="Q_e", display_latex="Q_\\text{e}")
+"""
+:symbols:`quality_factor` of the external circuit.
+"""
 
 law = Eq(coupling_parameter, resonator_quality_factor / external_circuit_quality_factor)
+"""
+:laws:symbol::
 
-
-def print_law() -> str:
-    return print_expression(law)
+:laws:latex::
+"""
 
 
 @validate_input(resonator_quality_factor_=resonator_quality_factor,
