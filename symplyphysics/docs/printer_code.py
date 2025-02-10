@@ -3,7 +3,8 @@ Symplyphysics code printer
 """
 
 from typing import Any
-from sympy import S, Expr, Mod, Mul, StrPrinter, E, Symbol as SymSymbol, Matrix
+from sympy import S, Expr, Mod, Mul, StrPrinter, E, Symbol as SymSymbol
+from sympy.matrices.dense import DenseMatrix
 from sympy.simplify import fraction
 from sympy.concrete.products import Product
 from sympy.concrete.summations import Sum
@@ -229,7 +230,7 @@ class SymbolCodePrinter(StrPrinter):
 
         return tex
 
-    def _print_MutableDenseMatrix(self, expr: Matrix) -> str:
+    def _print_DenseMatrix(self, expr: DenseMatrix) -> str:
         rows, cols = expr.shape
 
         if cols == 1 or rows == 1:

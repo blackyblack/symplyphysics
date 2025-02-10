@@ -1,49 +1,78 @@
-from sympy import Eq, solve, sqrt
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless)
+"""
+Surge impedance of microstrip line from frequency
+=================================================
 
-## Description
-## The microstrip line is a dielectric substrate on which a metal strip is applied.
-## The wave resistance of a transmission line is a value determined by the ratio of the voltage of the incident
-## wave to the current of this wave in the transmission line.
-## When a wave propagates along a microstrip line, part of the field goes out, since the microstrip line does
-## not have metal borders on all sides, unlike, for example, rectangular waveguides. Then imagine an environment
-## in which the field will have the same magnitude as the field of a microstrip line. The permittivity of such a
-## medium will be called the effective permittivity of the line.
+The frequency-dependent surge impedance of a microstrip line can be calculated from its
+frequency-independent surge impedance and effective permittivity.
 
-## Law is: Zf = Z0 * sqrt(ef / eff) * (eff - 1) / (ef - 1), where
-## Zf - wave resistance of the microstrip line taking into account the dependence on frequency,
-## Z0 - wave resistance of the microstrip line without taking into account the dependence on frequency,
-## eff - effective permittivity of the microstrip line taking into account the dependence on frequency,
-## ef - effective permittivity of the microstrip line without taking into account the dependence on frequency.
+..
+    TODO: rename file to feature *surge impedance*
+    TODO: find link
+"""
 
-wave_resistance = Symbol("wave_resistance", units.impedance)
+from sympy import Eq, solve, sqrt, evaluate
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    clone_as_symbol,
+)
 
-wave_resistance_without_frequency = Symbol("wave_resistance_without_frequency", units.impedance)
-effective_permittivity = Symbol("effective_permittivity", dimensionless)
-effective_permittivity_without_frequency = Symbol("effective_permittivity_without_frequency",
-    dimensionless)
+surge_impedance = symbols.surge_impedance
+"""
+:symbols:`surge_impedance` of the microstrip line when frequency dependence is taken
+into account.
+"""
 
-expression_1 = sqrt(effective_permittivity_without_frequency / effective_permittivity)
-expression_2 = (effective_permittivity - 1) / (effective_permittivity_without_frequency - 1)
+independent_surge_impedance = clone_as_symbol(symbols.surge_impedance, display_symbol="Z_S0", display_latex="Z_{\\text{S}, 0}")
+"""
+:symbols:`surge_impedance` of the microstrip line when frequency dependence is omitted.
+"""
 
-law = Eq(wave_resistance, wave_resistance_without_frequency * expression_1 * expression_2)
+effective_permittivity = clone_as_symbol(
+    symbols.relative_permittivity,
+    display_symbol="epsilon_eff",
+    display_latex="\\varepsilon_\\text{eff}",
+)
+"""
+:symbols:`relative_permittivity` of the microstrip line when frequency dependence is
+taken into account. See :ref:`Effective permittivity of microstrip line`.
+"""
+
+independent_effective_permittivity = clone_as_symbol(
+    symbols.relative_permittivity,
+    display_symbol="epsilon_eff0",
+    display_latex="\\varepsilon_{\\text{eff}, 0}",
+)
+"""
+:symbols:`relative_permittivity` of the microstrip line when frequency dependence is
+omitted. See :ref:`Effective permittivity of microstrip line`.
+"""
+
+# the following block prevents the re-ordering of terms for the code printer
+with evaluate(False):
+    _first_expression = sqrt(independent_effective_permittivity / effective_permittivity)
+    _second_expression = (effective_permittivity - 1) / (independent_effective_permittivity - 1)
+
+law = Eq(surge_impedance, independent_surge_impedance * _first_expression * _second_expression)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
-def print_law() -> str:
-    return print_expression(law)
-
-
-@validate_input(wave_resistance_without_frequency_=wave_resistance_without_frequency,
+@validate_input(wave_resistance_without_frequency_=independent_surge_impedance,
     effective_permittivity_=effective_permittivity,
-    effective_permittivity_without_frequency_=effective_permittivity_without_frequency)
-@validate_output(wave_resistance)
+    effective_permittivity_without_frequency_=independent_effective_permittivity)
+@validate_output(surge_impedance)
 def calculate_wave_resistance(wave_resistance_without_frequency_: Quantity,
     effective_permittivity_: float, effective_permittivity_without_frequency_: float) -> Quantity:
-    result_expr = solve(law, wave_resistance, dict=True)[0][wave_resistance]
+    result_expr = solve(law, surge_impedance, dict=True)[0][surge_impedance]
     result_expr = result_expr.subs({
-        wave_resistance_without_frequency: wave_resistance_without_frequency_,
+        independent_surge_impedance: wave_resistance_without_frequency_,
         effective_permittivity: effective_permittivity_,
-        effective_permittivity_without_frequency: effective_permittivity_without_frequency_
+        independent_effective_permittivity: effective_permittivity_without_frequency_
     })
     return Quantity(result_expr)

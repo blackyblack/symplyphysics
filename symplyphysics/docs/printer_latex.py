@@ -4,7 +4,8 @@ Symplyphysics latex printer
 
 import re
 from typing import Any
-from sympy import E, S, Expr, Mod, Mul, Symbol as SymSymbol, Matrix
+from sympy import E, S, Expr, Mod, Mul, Symbol as SymSymbol
+from sympy.matrices.dense import DenseMatrix
 from sympy.printing.latex import LatexPrinter, accepted_latex_functions
 from sympy.core.function import AppliedUndef
 from sympy.simplify import fraction
@@ -275,8 +276,8 @@ class SymbolLatexPrinter(LatexPrinter):
             tex += term_tex
 
         return tex
-    
-    def _print_MutableDenseMatrix(self, expr: Matrix) -> str:
+
+    def _print_DenseMatrix(self, expr: DenseMatrix) -> str:
         rows, cols = expr.shape
 
         def print_row(row: int) -> str:
