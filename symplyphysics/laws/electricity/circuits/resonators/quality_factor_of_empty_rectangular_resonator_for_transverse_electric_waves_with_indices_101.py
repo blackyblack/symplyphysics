@@ -53,17 +53,19 @@ surface_resistance = clone_as_symbol(symbols.electrical_resistance, display_symb
 
 length = clone_as_symbol(symbols.length, subscript="1")
 """
-:symbols:`length` of the resonator along the first dimension.
+:symbols:`length` of the resonator along the axis of wave propagation.
 """
 
 width = clone_as_symbol(symbols.length, subscript="2")
 """
-:symbols:`length` of the resonator along the second dimension.
+:symbols:`length` of the resonator along the axis perpendicular to the axis of wave
+propagation and to :attr:`~height`.
 """
 
 height = clone_as_symbol(symbols.length, subscript="3")
 """
-:symbols:`length` of the resonator along the third dimension.
+:symbols:`length` of the resonator along the axis perpendicular to the axis of wave
+propagation and to :attr:`~width`.
 """
 
 law = Eq(

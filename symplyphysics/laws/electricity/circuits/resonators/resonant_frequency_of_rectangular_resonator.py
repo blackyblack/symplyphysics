@@ -2,9 +2,7 @@
 Resonant frequency of rectangular resonator
 ===========================================
 
-A rectangular resonator consists of metal walls and a material filling it. The indices
-show the number of half-waves that fit along the length, width, height of the resonator,
-respectively.
+A rectangular resonator consists of metal walls and a material filling it.
 
 **Notation:**
 
@@ -32,37 +30,39 @@ resonant_frequency = clone_as_symbol(symbols.temporal_frequency, display_symbol=
 Resonant :symbols:`temporal_frequency` of the resonator.
 """
 
-first_index = clone_as_symbol(symbols.positive_number, subscript="1")
+first_index = clone_as_symbol(symbols.positive_number, display_symbol="m", display_latex="m")
 """
-First index that changes along the :attr:`~length` of the resonator, see
+Index that changes along the :attr:`~length` of the resonator, see
 :symbols:`positive_number`.
 """
 
-second_index = clone_as_symbol(symbols.positive_number, subscript="2")
+second_index = clone_as_symbol(symbols.positive_number, display_symbol="n", display_latex="n")
 """
-First index that changes along the :attr:`~width` of the resonator, see
+Index that changes along the :attr:`~width` of the resonator, see
 :symbols:`positive_number`.
 """
 
-third_index = clone_as_symbol(symbols.positive_number, subscript="3")
+third_index = clone_as_symbol(symbols.positive_number, display_symbol="p", display_latex="p")
 """
-First index that changes along the :attr:`~height` of the resonator, see
+Index that changes along the :attr:`~height` of the resonator, see
 :symbols:`positive_number`.
 """
 
 length = clone_as_symbol(symbols.length, subscript="1")
 """
-:symbols:`length` of the resonator along the first dimension.
+:symbols:`length` of the resonator along the axis of wave propagation.
 """
 
 width = clone_as_symbol(symbols.length, subscript="2")
 """
-:symbols:`length` of the resonator along the second dimension.
+:symbols:`length` of the resonator along the axis perpendicular to the axis of wave
+propagation and to :attr:`~height`.
 """
 
 height = clone_as_symbol(symbols.length, subscript="3")
 """
-:symbols:`length` of the resonator along the third dimension.
+:symbols:`length` of the resonator along the axis perpendicular to the axis of wave
+propagation and to :attr:`~width`.
 """
 
 relative_permittivity = symbols.relative_permittivity
@@ -78,7 +78,7 @@ relative_permeability = symbols.relative_permeability
 law = Eq(
     resonant_frequency,
     (quantities.speed_of_light / (2 * sqrt(relative_permittivity * relative_permeability)))
-    * sqrt((first_index / length)**2 + (second_index / width)**2 + (third_index / height)**2))
+    * sqrt((first_index / width)**2 + (second_index / height)**2 + (third_index / length)**2))
 """
 :laws:symbol::
 
