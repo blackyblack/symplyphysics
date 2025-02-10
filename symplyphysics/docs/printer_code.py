@@ -245,9 +245,13 @@ class SymbolCodePrinter(StrPrinter):
         return "[" + ", ".join(parts) +"]"
 
     def _print_Average(self, expr: Any) -> str:
+        # The `wrap_code` field is ignored due to being unused.
+
         return f"avg({self._print(expr.factor)})"
     
     def _print_FiniteDifference(self, expr: Any) -> str:
+        # The `wrap_code` field is ignored due to being unused.
+
         return f"Delta({self._print(expr.factor)})"
     
     def _print_ExactDifferential(self, expr: Any) -> str:
@@ -257,6 +261,8 @@ class SymbolCodePrinter(StrPrinter):
             return f"d{self._print(expr.factor)}"
     
     def _print_InexactDifferential(self, expr: Any) -> str:
+        # The `wrap_code` field is ignored due to being unused.
+
         return f"delta({self._print(expr.factor)})"
 
 

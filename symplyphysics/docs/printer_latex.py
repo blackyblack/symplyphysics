@@ -287,6 +287,8 @@ class SymbolLatexPrinter(LatexPrinter):
         return "\\begin{pmatrix} " + " \\\\ ".join(parts) + " \\end{pmatrix}"
 
     def _print_Average(self, expr: Any) -> str:
+        # The `wrap_latex` field is ignored due to being unused.
+
         return f"\\langle {self._print(expr.factor)} \\rangle"
     
     def _print_FiniteDifference(self, expr: Any) -> str:
