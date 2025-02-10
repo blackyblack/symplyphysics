@@ -32,37 +32,37 @@ Resonant :symbols:`temporal_frequency` of the resonator.
 
 first_index = clone_as_symbol(symbols.positive_number, display_symbol="m", display_latex="m")
 """
-Index that changes along the :attr:`~length` of the resonator, see
+Index that changes along the :attr:`~width` of the resonator, see
 :symbols:`positive_number`.
 """
 
 second_index = clone_as_symbol(symbols.positive_number, display_symbol="n", display_latex="n")
 """
-Index that changes along the :attr:`~width` of the resonator, see
+Index that changes along the :attr:`~height` of the resonator, see
 :symbols:`positive_number`.
 """
 
 third_index = clone_as_symbol(symbols.positive_number, display_symbol="p", display_latex="p")
 """
-Index that changes along the :attr:`~height` of the resonator, see
+Index that changes along the :attr:`~length` of the resonator, see
 :symbols:`positive_number`.
 """
 
-length = clone_as_symbol(symbols.length, subscript="1")
-"""
-:symbols:`length` of the resonator along the axis of wave propagation.
-"""
-
-width = clone_as_symbol(symbols.length, subscript="2")
+width = clone_as_symbol(symbols.length, subscript="1")
 """
 :symbols:`length` of the resonator along the axis perpendicular to the axis of wave
 propagation and to :attr:`~height`.
 """
 
-height = clone_as_symbol(symbols.length, subscript="3")
+height = clone_as_symbol(symbols.length, subscript="2")
 """
 :symbols:`length` of the resonator along the axis perpendicular to the axis of wave
 propagation and to :attr:`~width`.
+"""
+
+length = clone_as_symbol(symbols.length, subscript="3")
+"""
+:symbols:`length` of the resonator along the axis of wave propagation.
 """
 
 relative_permittivity = symbols.relative_permittivity
