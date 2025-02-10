@@ -1,10 +1,10 @@
 from __future__ import annotations
 from typing import Any
-from sympy import Expr
-from symplyphysics.core.dimensions import Dimension, collect_factor_and_dimension
+from sympy import Expr, Symbol as SymSymbol
+from ..dimensions import Dimension, collect_factor_and_dimension
 
 
-class Symbolic(Expr):
+class Symbolic(SymSymbol):  # pylint: disable=too-many-ancestors
     """
     This class is intended to be subclassed for custom code printing.
     """
@@ -29,21 +29,35 @@ class Symbolic(Expr):
     Denotes whether the latex printer should wrap the argument in parentheses.
     """
 
-    def __new__(cls, *args: Any, **kwargs: Any) -> Symbolic:
-        return super().__new__(cls)
+    def __new__(
+        cls,
+        expr: Expr,
+        *,
+        wrap_code: bool = False,
+        wrap_latex: bool = False,
+        **assumptions: Any,
+    ) -> Symbolic:
+        cls_name = cls.__name__
+        inner = str(expr)
+        display_name = f"{cls_name}({inner})"
 
-    def __init__(self, expr: Expr, wrap_code: bool = False, wrap_latex: bool = False) -> None:
-        factor, dimension = collect_factor_and_dimension(expr)
-        self.factor = factor
+        return super().__new__(cls, display_name, **assumptions)
+
+    def __init__(
+        self,
+        expr: Expr,
+        *,
+        wrap_code: bool = False,
+        wrap_latex: bool = False,
+    ) -> None:
+        _, dimension = collect_factor_and_dimension(expr)
+        self.factor = expr
         self.dimension = dimension
         self.wrap_code = wrap_code
         self.wrap_latex = wrap_latex
 
-    def _eval_nseries(self, _x: Any, _n: Any, _logx: Any, _cdir: Any) -> Any:
-        pass
 
-
-class Average(Symbolic):
+class Average(Symbolic):  # pylint: disable=too-many-ancestors
     """
     Represents the average value of the argument :math:`x`.
 
@@ -55,7 +69,7 @@ class Average(Symbolic):
     """
 
 
-class FiniteDifference(Symbolic):
+class FiniteDifference(Symbolic):  # pylint: disable=too-many-ancestors
     """
     Represents the finite difference of the argument :math:`x`, e.g.
     :math:`\\Delta x = x_2 - x_1`.
@@ -68,7 +82,7 @@ class FiniteDifference(Symbolic):
     """
 
 
-class ExactDifferential(Symbolic):
+class ExactDifferential(Symbolic):  # pylint: disable=too-many-ancestors
     """
     A differential is said to be **exact** (or **perfect**) if it is equal to the
     general differential :math:`d \\Gamma` for some differentiable function
@@ -82,12 +96,12 @@ class ExactDifferential(Symbolic):
         :math:`d \\Gamma`
 
     **Links:**
-    
+
     #. `Wikipedia <https://en.wikipedia.org/wiki/Exact_differential#>`__.
     """
 
 
-class InexactDifferential(Symbolic):
+class InexactDifferential(Symbolic):  # pylint: disable=too-many-ancestors
     """
     A differential is said to be **inexact** (or **imperfect**) when its integral is
     path dependent.
