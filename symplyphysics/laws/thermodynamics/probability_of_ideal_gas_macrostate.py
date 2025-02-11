@@ -79,15 +79,10 @@ law = Eq(
     global_index,
     ),
 )
-r"""
-..
-    The printers do not work yey with `ProductIndexed`.
+"""
+:laws:symbol::
 
-:code:`P_macro = G * Product(p_i^N_i, i)`
-
-Latex:
-    .. math::
-        P_\text{macro} = G \prod_i p_i^{N_i}
+:laws:latex::
 """
 
 

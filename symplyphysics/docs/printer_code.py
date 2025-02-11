@@ -86,10 +86,18 @@ class SymbolCodePrinter(StrPrinter):
     # pylint: disable-next=invalid-name
     def _print_SumIndexed(self, expr: Any) -> str:
         # only one index of sum is supported
-        # expr.args[0] contains indexed symbol with index applied
+        # expr.args[0] contains the argument of the Sum
         # expr.args[1] contains just indexed symbol
         applied, index = expr.args
         return f"Sum({self._print(applied)}, {self._print(index)})"
+    
+    # pylint: disable-next=invalid-name
+    def _print_ProductIndexed(self, expr: Any) -> str:
+        # only one index of product is supported
+        # expr.args[0] contains the argument of the Product
+        # expr.args[1] contains just indexed symbol
+        applied, index = expr.args
+        return f"Product({self._print(applied)}, {self._print(index)})"
 
     def _print_log(self, expr: Any) -> str:
         value, base = (expr.args[0], expr.args[1]) if len(expr.args) > 1 else (expr.args[0], E)

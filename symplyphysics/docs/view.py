@@ -15,7 +15,7 @@ def _indent_docstring(doc: str, indent: int) -> str:
     return "\n".join(lines)
 
 
-def _members_to_doc(members: Sequence[MemberWithDoc]) -> str:
+def _members_to_doc(members: Sequence[MemberWithDoc], doc_name: str) -> str:
     content = ""
     for m in members:
         if m.name.startswith("_"):
@@ -27,13 +27,21 @@ def _members_to_doc(members: Sequence[MemberWithDoc]) -> str:
         for d in sorted_directives:
             doc_length = len(doc)
             if d.directive_type == LawDirectiveTypes.SYMBOL:
-                directive_str = ":code:`" + code_str(m.value) + "`"
+                try:
+                    code = code_str(m.value)
+                except ValueError as e:
+                    raise ValueError(f"Error during code printing in '{doc_name}'.") from e
+                directive_str = ":code:`" + code + "`"
                 doc = doc[0:d.start + offset] + directive_str + "\n" + doc[d.end + offset:]
                 offset = offset + len(doc) - doc_length
                 continue
             if d.directive_type == LawDirectiveTypes.LATEX:
                 directive_str = "Latex:\n" + _indent_docstring(".. math::\n", INDENT_SPACES)
-                directive_str = directive_str + _indent_docstring(latex_str(m.value),
+                try:
+                    latex = latex_str(m.value)
+                except ValueError as e:
+                    raise ValueError(f"Error during latex printing in '{doc_name}'.") from e
+                directive_str = directive_str + _indent_docstring(latex,
                     INDENT_SPACES * 2)
                 doc = doc[0:d.start + offset] + directive_str + "\n" + doc[d.end + offset:]
                 offset = offset + len(doc) - doc_length
@@ -74,7 +82,7 @@ def print_law(title: str, description: str, items: Sequence[MemberWithDoc | Func
     law_content = law_content + ".. py:currentmodule:: " + doc_name + "\n\n"
     members = [m for m in items if isinstance(m, MemberWithDoc)]
     functions = [m for m in items if isinstance(m, FunctionWithDoc)]
-    law_content = law_content + _members_to_doc(members)
+    law_content = law_content + _members_to_doc(members, doc_name)
     law_content = law_content + _functions_to_doc(functions)
 
     return law_content
@@ -97,7 +105,7 @@ def print_package(title: str, description: str, items: Sequence[MemberWithDoc | 
 
     members = [m for m in items if isinstance(m, MemberWithDoc)]
     functions = [m for m in items if isinstance(m, FunctionWithDoc)]
-    package_content = package_content + _members_to_doc(members)
+    package_content = package_content + _members_to_doc(members, doc_name)
     package_content = package_content + _functions_to_doc(functions)
 
     return package_content
