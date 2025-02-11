@@ -42,17 +42,12 @@ particle_count_in_state = clone_as_indexed(symbols.particle_count)
 law = Eq(
     statistical_weight,
     factorial(SumIndexed(particle_count_in_state[global_index], global_index)) /
-    ProductIndexed(factorial(particle_count_in_state[global_index]), global_index),
+    (p := ProductIndexed(factorial(particle_count_in_state[global_index]), global_index)),
 )
-r"""
-..
-    The printers do not yet recognize the `ProductIndexed` class.
+"""
+:laws:symbol::
 
-:code:`Omega = factorial(Sum(N_i, i)) / Product(factorial(N_i), i)`
-
-Latex:
-    .. math::
-        \\Omega = \frac{(\sum_i N_i)!}{\prod_i (N_i!)}
+:laws:latex::
 """
 
 
