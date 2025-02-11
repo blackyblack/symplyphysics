@@ -1,7 +1,17 @@
 from collections import namedtuple
 from pytest import fixture
 from sympy import I, Integral, evaluate, exp, log, pi, sin, sqrt, Matrix, ImmutableMatrix
-from symplyphysics import Quantity, SymbolNew, clone_as_function, clone_as_symbol, units
+from symplyphysics import (
+    Quantity,
+    SymbolNew,
+    clone_as_function,
+    clone_as_symbol,
+    units,
+    SymbolIndexedNew,
+    SumIndexed,
+    ProductIndexed,
+    global_index,
+)
 from symplyphysics.docs.printer_latex import latex_str
 
 Args = namedtuple(
@@ -262,3 +272,30 @@ def test_immutable_matrix(test_args: Args) -> None:
     with evaluate(False):
         expr = ImmutableMatrix([a, b, c, d]).T
     assert latex_str(expr) == "\\begin{pmatrix} a & b & c & d \\end{pmatrix}"
+
+
+def test_indexed_symbol() -> None:
+    f = SymbolIndexedNew("F")
+    expr = f[global_index]
+    assert latex_str(expr) == "{F}_{i}"
+
+
+def test_indexed_sum() -> None:
+    f = SymbolIndexedNew("F")
+    expr = SumIndexed(f[global_index], global_index)
+    assert latex_str(expr) == "\\sum_i {F}_{i}"
+
+    with evaluate(False):
+        expr = SumIndexed(f[global_index]**2, global_index)
+    assert latex_str(expr) == "\\sum_i {F}_{i}^{2}"
+
+
+def test_indexed_product() -> None:
+    f = SymbolIndexedNew("F")
+
+    expr = ProductIndexed(f[global_index], global_index)
+    assert latex_str(expr) == "\\prod_i {F}_{i}"
+
+    with evaluate(False):
+        expr = ProductIndexed(f[global_index]**2, global_index)
+    assert latex_str(expr) == "\\prod_i {F}_{i}^{2}"
