@@ -42,7 +42,7 @@ particle_count_in_state = clone_as_indexed(symbols.particle_count)
 law = Eq(
     statistical_weight,
     factorial(SumIndexed(particle_count_in_state[global_index], global_index)) /
-    (p := ProductIndexed(factorial(particle_count_in_state[global_index]), global_index)),
+    ProductIndexed(factorial(particle_count_in_state[global_index]), global_index),
 )
 """
 :laws:symbol::
