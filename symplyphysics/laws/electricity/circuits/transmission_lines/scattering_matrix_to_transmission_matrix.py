@@ -93,8 +93,9 @@ law = Eq(
     Matrix([[_expression_A, _expression_B], [_expression_C, _expression_D]]),
 )
 """
-..
-    NOTE: Code printing in upcoming PR.
+:laws:symbol::
+
+:laws:latex::
 """
 
 

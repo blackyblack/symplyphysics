@@ -1,13 +1,14 @@
 """
-Impedance matrix formula
-========================
+Impedance matrix equation
+=========================
 
 The impedance matrix is one of the ways to describe a microwave device. The
 :math:`Z`-parameters of the device act as elements of this matrix. The matrix equation
 relates the input and output voltages to the input and output currents.
 
-..
-    TODO: find link
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Two-port_network#Impedance_parameters_(z-parameters)>`__.
 """
 
 from sympy import Eq, solve, Matrix
@@ -71,7 +72,11 @@ law = Eq(
     [output_input_impedance, output_output_impedance]]) * Matrix([input_current, output_current]))
 """
 ..
-    NOTE: Code printing in upcoming PR.
+    NOTE: SymPy still evaluates matrix multiplication
+
+:laws:symbol::
+
+:laws:latex::
 """
 
 

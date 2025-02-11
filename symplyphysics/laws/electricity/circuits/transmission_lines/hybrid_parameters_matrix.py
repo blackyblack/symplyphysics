@@ -1,13 +1,14 @@
 """
-Hybrid parameters matrix
-========================
+Hybrid parameters matrix equation
+=================================
 
 The **hybrid parameters matrix** is one of the ways to describe a microwave device. The
 :math:`H`-parameters of the device act as elements of this matrix. The matrix equation
 relates the input voltage and output current to the input current and output voltage.
 
-..
-    TODO: find link
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Two-port_network#Hybrid_parameters_(h-parameters)>`__.
 """
 
 from sympy import Eq, solve, Matrix
@@ -70,7 +71,11 @@ law = Eq(
     * Matrix([input_current, output_voltage]))
 """
 ..
-    NOTE: Code printing in upcoming PR.
+    NOTE: SymPy still evaluates matrix multiplication
+
+:laws:symbol::
+
+:laws:latex::
 """
 
 

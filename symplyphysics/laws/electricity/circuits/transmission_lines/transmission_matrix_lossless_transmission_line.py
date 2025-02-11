@@ -2,7 +2,9 @@
 Transmission matrix of lossless transmission line
 =================================================
 
-Knowing the length of the transmission line, as well as the characteristic resistance of the line and the propagation constant of the signal, it is possible to calculate the parameters :math:`A, B, C, D` of the transmission matrix of a lossless line.
+Knowing the length of the transmission line, as well as the surge impedance of
+the line and the propagation constant of the signal, it is possible to calculate the
+parameters :math:`A, B, C, D` of the transmission matrix of a lossless line.
 
 **Notes:**
 
@@ -35,7 +37,8 @@ Ratio of input :symbols:`voltage` to output :symbols:`voltage` at idle at the ou
 
 voltage_current_parameter = SymbolNew("B", units.impedance)
 """
-Ratio of input :symbols:`voltage` to output :symbols:`current` in case of a short circuit at the output.
+Ratio of input :symbols:`voltage` to output :symbols:`current` in case of a short
+circuit at the output.
 """
 
 current_voltage_parameter = SymbolNew("C", units.conductance)
@@ -45,7 +48,8 @@ Ratio of input :symbols:`current` to output :symbols:`voltage` at idle at the ou
 
 current_current_parameter = SymbolNew("D", dimensionless)
 """
-Ratio of input :symbols:`current` to output :symbols:`current` in case of a short circuit at the output.
+Ratio of input :symbols:`current` to output :symbols:`current` in case of a short
+circuit at the output.
 """
 
 surge_impedance = symbols.surge_impedance
@@ -71,8 +75,9 @@ law = Eq(
     Matrix([[voltage_voltage_parameter, voltage_current_parameter], [current_voltage_parameter, current_current_parameter]]),
     Matrix([[cos(_phase), I * surge_impedance * sin(_phase)], [I * (1 / surge_impedance) * sin(_phase), cos(_phase)]]))
 """
-..
-    NOTE: Code printing in upcoming PR.
+:laws:symbol::
+
+:laws:latex::
 """
 
 

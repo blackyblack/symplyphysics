@@ -51,6 +51,11 @@ law = Eq(
     surge_impedance *
     (load_impedance + I * surge_impedance * tan(propagation_constant * length)) /
     (surge_impedance + I * load_impedance * tan(propagation_constant * length)))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(characteristic_resistance_=surge_impedance,

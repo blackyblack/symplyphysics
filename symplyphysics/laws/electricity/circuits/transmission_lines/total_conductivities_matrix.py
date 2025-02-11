@@ -1,13 +1,14 @@
 """
-Admittance matrix formula
-=========================
+Admittance matrix equation
+==========================
 
 The admittance matrix is one of the ways to describe a microwave device. The
 :math:`Y`-parameters of the device act as elements of this matrix. The matrix equation
 relates the input and output currents to the input and output voltages.
 
-..
-    TODO: find link
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Two-port_network#Admittance_parameters_(y-parameters)>`__.
 """
 
 from sympy import Eq, solve, Matrix
@@ -71,7 +72,11 @@ law = Eq(
     * Matrix([input_voltage, output_voltage]))
 """
 ..
-    NOTE: Code printing in upcoming PR.
+    NOTE: SymPy still evaluates matrix multiplication
+
+:laws:symbol::
+
+:laws:latex::
 """
 
 

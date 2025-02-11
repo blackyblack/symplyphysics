@@ -1,9 +1,9 @@
 """
-Standing wave coefficient from reflection coefficient
-=====================================================
+Standing wave ratio from reflection coefficient
+===============================================
 
-The standing wave coefficient can be calculated by knowing the reflection coefficient of
-the wave.
+The standing wave ratio can be calculated by knowing the reflection coefficient of the
+wave.
 
 **Links:**
 

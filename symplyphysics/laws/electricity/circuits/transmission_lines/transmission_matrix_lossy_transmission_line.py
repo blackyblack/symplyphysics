@@ -37,7 +37,8 @@ Ratio of input :symbols:`voltage` to output :symbols:`voltage` at idle at the ou
 
 voltage_current_parameter = SymbolNew("B", units.impedance)
 """
-Ratio of input :symbols:`voltage` to output :symbols:`current` in case of a short circuit at the output.
+Ratio of input :symbols:`voltage` to output :symbols:`current` in case of a short
+circuit at the output.
 """
 
 current_voltage_parameter = SymbolNew("C", units.conductance)
@@ -47,7 +48,8 @@ Ratio of input :symbols:`current` to output :symbols:`voltage` at idle at the ou
 
 current_current_parameter = SymbolNew("D", dimensionless)
 """
-Ratio of input :symbols:`current` to output :symbols:`current` in case of a short circuit at the output.
+Ratio of input :symbols:`current` to output :symbols:`current` in case of a short
+circuit at the output.
 """
 
 surge_impedance = symbols.surge_impedance
@@ -81,8 +83,9 @@ law = Eq(
     ]),
 )
 """
-..
-    NOTE: Code printing in upcoming PR.
+:laws:symbol::
+
+:laws:latex::
 """
 
 

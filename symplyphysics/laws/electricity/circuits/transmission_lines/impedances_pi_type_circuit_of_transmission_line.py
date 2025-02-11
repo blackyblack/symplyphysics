@@ -6,9 +6,6 @@ The π-type circuit consists of the first impedance connected in parallel, the t
 impedance connected in series, and the second impedance connected in parallel. For a
 transmission line, these impedances can be calculated for an equivalent replacement
 circuit by knowing the transmission line parameters.
-
-..
-    TODO: find link
 """
 
 from sympy import Eq, solve, Matrix, I, sinh, tanh, cosh, coth, Symbol as SymSymbol, S, expand_trig
@@ -72,7 +69,11 @@ law = Eq(
     ]))
 """
 ..
-    NOTE: Code printing in upcoming PR.
+    NOTE: SymPy still evaluates matrix multiplication
+
+:laws:symbol::
+
+:laws:latex::
 """
 
 # This law might be derived via "transmission_matrix_lossy_transmission_line" law and

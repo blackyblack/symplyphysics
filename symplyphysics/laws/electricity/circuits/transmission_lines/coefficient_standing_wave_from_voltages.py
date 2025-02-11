@@ -2,8 +2,8 @@
 Standing wave ratio from voltage
 ================================
 
-The standing wave coefficient can be calculated by knowing the maximum and minimum
-absolute value of voltage in the transmission line.
+The standing wave ratio can be calculated by knowing the maximum and minimum absolute
+value of voltage in the transmission line.
 
 **Links:**
 

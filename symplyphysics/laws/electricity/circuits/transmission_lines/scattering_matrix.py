@@ -1,6 +1,6 @@
 """
-Scattering matrix formula
-=========================
+Scattering matrix equation
+==========================
 
 The scattering matrix is one of the ways to describe a microwave device. The
 :math:`S`-parameters of the device act as elements of this matrix. The matrix equation
@@ -52,7 +52,7 @@ Incident power wave at output port.
 
 input_voltage_reflection_coefficient = SymbolNew("S_ii", dimensionless, display_latex="S_\\text{ii}")
 """
-Input port :symbols:`voltage` :symbols:`input_voltage_reflection_coefficient`.
+Input port :symbols:`voltage` :symbols:`reflection_coefficient`.
 """
 
 reverse_voltage_gain = SymbolNew("S_io", dimensionless, display_latex="S_\\text{io}")
@@ -67,7 +67,7 @@ Forward :symbols:`voltage` :symbols:`circuit_gain`.
 
 output_voltage_reflection_coefficient = SymbolNew("S_oo", dimensionless, display_latex="S_\\text{oo}")
 """
-Output port :symbols:`voltage` :symbols:`input_voltage_reflection_coefficient`.
+Output port :symbols:`voltage` :symbols:`reflection_coefficient`.
 """
 
 _scattering_matrix = Matrix([
@@ -81,7 +81,11 @@ law = Eq(
 )
 """
 ..
-    NOTE: Code printing in upcoming PR.
+    NOTE: SymPy still evaluates matrix multiplication
+
+:laws:symbol::
+
+:laws:latex::
 """
 
 

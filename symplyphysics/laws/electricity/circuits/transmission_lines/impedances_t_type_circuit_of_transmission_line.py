@@ -72,7 +72,11 @@ law = Eq(
     ]))
 """
 ..
-    NOTE: Code printing in upcoming PR.
+    NOTE: SymPy still evaluates matrix multiplication
+
+:laws:symbol::
+
+:laws:latex::
 """
 
 # This law might be derived via "transmission_matrix_lossy_transmission_line" law and

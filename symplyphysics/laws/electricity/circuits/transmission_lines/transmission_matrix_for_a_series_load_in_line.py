@@ -38,7 +38,8 @@ Ratio of input :symbols:`voltage` to output :symbols:`voltage` at idle at the ou
 
 voltage_current_parameter = SymbolNew("B", units.impedance)
 """
-Ratio of input :symbols:`voltage` to output :symbols:`current` in case of a short circuit at the output.
+Ratio of input :symbols:`voltage` to output :symbols:`current` in case of a short
+circuit at the output.
 """
 
 current_voltage_parameter = SymbolNew("C", units.conductance)
@@ -48,7 +49,8 @@ Ratio of input :symbols:`current` to output :symbols:`voltage` at idle at the ou
 
 current_current_parameter = SymbolNew("D", dimensionless)
 """
-Ratio of input :symbols:`current` to output :symbols:`current` in case of a short circuit at the output.
+Ratio of input :symbols:`current` to output :symbols:`current` in case of a short
+circuit at the output.
 """
 
 load_impedance = clone_as_symbol(symbols.electrical_impedance, display_symbol="Z_L", display_latex="Z_\\text{L}")
@@ -60,8 +62,9 @@ law = Eq(
     Matrix([[voltage_voltage_parameter, voltage_current_parameter],
     [current_voltage_parameter, current_current_parameter]]), Matrix([[1, load_impedance], [0, 1]]))
 """
-..
-    NOTE: Code printing in upcoming PR.
+:laws:symbol::
+
+:laws:latex::
 """
 
 

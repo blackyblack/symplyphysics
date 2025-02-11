@@ -11,12 +11,6 @@ rectangular waveguides.
 
 #. :quantity_notation:`vacuum_impedance`.
 
-**Notes:**
-
-#. Imagine an environment in which the field will have the same magnitude as the field
-   of a microstrip line. The permittivity of such a medium will be called the effective
-   permittivity of the line.
-
 **Conditions:**
 
 #. Effective width :math:`w_\\text{eff}` of the microstrip line should be greater than
@@ -47,7 +41,8 @@ effective_permittivity = clone_as_symbol(
     display_latex="\\varepsilon_\\text{eff}",
 )
 """
-Effective :symbols:`relative_permittivity` of the microstrip line.
+Effective :symbols:`relative_permittivity` of the microstrip line. See :ref:`Effective
+permittivity of microstrip line`.
 """
 
 substrate_thickness = symbols.thickness
@@ -57,9 +52,8 @@ substrate_thickness = symbols.thickness
 
 effective_width = clone_as_symbol(symbols.length, display_symbol="w_eff", display_latex="w_\\text{eff}")
 """
-Effective width (see :symbols:`length`) of the microstrip line. It is the width of such
-a flat capacitor, the electric intensity between the plates of which is equal to the
-electric intensity in the dielectric of the substrate under the line strip.
+Effective width (see :symbols:`length`) of the microstrip line. See :ref:`Effective
+width of microstrip line`.
 """
 
 # the following block prevents the re-ordering of terms for the code printer
@@ -69,7 +63,11 @@ with evaluate(False):
     _third_expression = _first_expression + _second_expression
 
 law = Eq(surge_impedance, (quantities.vacuum_impedance / sqrt(effective_permittivity)) * (1 /_third_expression))
+"""
+:laws:symbol::
 
+:laws:latex::
+"""
 
 
 @validate_input(effective_permittivity_=effective_permittivity,
