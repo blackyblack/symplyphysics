@@ -1,7 +1,7 @@
 from __future__ import annotations
 import re
 from typing import Any, Optional, Sequence, Self
-from sympy import S, Idx, Symbol as SymSymbol, Expr, Equality, IndexedBase
+from sympy import S, Idx, MatAdd, MatMul, MatrixBase, Symbol as SymSymbol, Expr, Equality, IndexedBase, Matrix as SymMatrix
 from sympy.physics.units import Dimension
 from sympy.core.function import UndefinedFunction
 from sympy.printing.printer import Printer
@@ -203,6 +203,14 @@ class FunctionNew(DimensionSymbolNew, UndefinedFunction):
 
     def __repr__(cls) -> str:
         return str(cls.display_name)
+
+
+class Matrix(SymMatrix):  # pylint: disable=too-many-ancestors
+    def __mul__(self: MatrixBase, other: MatrixBase) -> Expr:
+        return MatMul(self, other)
+
+    def __add__(self: MatrixBase, other: MatrixBase) -> Expr:
+        return MatAdd(self, other)
 
 
 # Symbol and Function have generated names, hence their display is not readable.

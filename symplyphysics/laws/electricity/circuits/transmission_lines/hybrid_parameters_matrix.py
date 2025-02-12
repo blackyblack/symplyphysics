@@ -1,45 +1,79 @@
-from sympy import Eq, solve, Matrix
+"""
+Hybrid parameters matrix equation
+=================================
+
+The **hybrid parameters matrix** is one of the ways to describe a microwave device. The
+:math:`H`-parameters of the device act as elements of this matrix. The matrix equation
+relates the input voltage and output current to the input current and output voltage.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Two-port_network#Hybrid_parameters_(h-parameters)>`__.
+"""
+
+from sympy import Eq, solve
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
-    print_expression,
+    SymbolNew,
     validate_input,
     dimensionless,
+    symbols,
+    clone_as_symbol,
+    Matrix,
 )
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 
-## Description
-## The hybrid parameters matrix is one of the ways to describe a microwave device. The H-parameters of the device act as elements
-## of this matrix. The matrix equation relates the input voltage and output current to the input current and output voltage.
+input_voltage = clone_as_symbol(symbols.voltage, display_symbol="V_i", display_latex="V_\\text{i}")
+"""
+Input :symbols:`voltage`.
+"""
 
-## Law is: [U1, I2] = Matrix([[H11, H12], [H21, H22]]) * [I1, U2], where
-## U1 - input voltage,
-## U2 - output voltage,
-## H11 - ratio of input voltage to input current in case of a short circuit at the output,
-## H12 - ratio of input voltage to output voltage at idle at the input,
-## H21 - ratio of output current to input current in case of a short circuit at the output,
-## H22 - ratio of output current to output voltage at idle at the input,
-## I1 - input current,
-## I2 - output current.
+output_voltage = clone_as_symbol(symbols.voltage, display_symbol="V_o", display_latex="V_\\text{o}")
+"""
+Output :symbols:`voltage`.
+"""
 
-input_voltage = Symbol("input_voltage", units.voltage)
-output_voltage = Symbol("output_voltage", units.voltage)
-input_current = Symbol("input_current", units.current)
-output_current = Symbol("output_current", units.current)
-parameter_input_input = Symbol("parameter_input_input", units.impedance)
-parameter_input_output = Symbol("parameter_input_output", dimensionless)
-parameter_output_input = Symbol("parameter_output_input", dimensionless)
-parameter_output_output = Symbol("parameter_output_output", units.conductance)
+input_current = clone_as_symbol(symbols.current, display_symbol="I_i", display_latex="I_\\text{i}")
+"""
+Input :symbols:`current`.
+"""
+
+output_current = clone_as_symbol(symbols.current, display_symbol="I_o", display_latex="I_\\text{o}")
+"""
+Output :symbols:`current`.
+"""
+
+input_input_parameter = SymbolNew("H_ii", units.impedance, display_latex="H_\\text{ii}")
+"""
+Ratio of input :symbols:`voltage` to input :symbols:`current` in case of a short circuit
+at the output.
+"""
+
+input_output_parameter = SymbolNew("H_io", dimensionless, display_latex="H_\\text{io}")
+"""
+Ratio of input :symbols:`voltage` to output :symbols:`voltage` at idle at the input.
+"""
+
+output_input_parameter = SymbolNew("H_oi", dimensionless, display_latex="H_\\text{oi}")
+"""
+Ratio of output :symbols:`current` to input :symbols:`current` in case of a short circuit
+at the output.
+"""
+
+output_output_parameter = SymbolNew("H_oo", units.conductance, display_latex="H_\\text{oo}")
+"""
+Ratio of output :symbols:`current` to output :symbols:`voltage` at idle at the input.
+"""
 
 law = Eq(
     Matrix([input_voltage, output_current]),
-    Matrix([[parameter_input_input, parameter_input_output],
-    [parameter_output_input, parameter_output_output]]) * Matrix([input_current, output_voltage]))
+    Matrix([[input_input_parameter, input_output_parameter], [output_input_parameter, output_output_parameter]]) * Matrix([input_current, output_voltage]))
+"""
+:laws:symbol::
 
-
-def print_law() -> str:
-    return print_expression(law)
+:laws:latex::
+"""
 
 
 @validate_input(
@@ -59,10 +93,10 @@ def calculate_current_and_voltage(
     substitutions = {
         input_voltage: input_voltage_,
         output_current: output_current_,
-        parameter_input_input: parameters_[0][0],
-        parameter_input_output: parameters_[0][1],
-        parameter_output_input: parameters_[1][0],
-        parameter_output_output: parameters_[1][1],
+        input_input_parameter: parameters_[0][0],
+        input_output_parameter: parameters_[0][1],
+        output_input_parameter: parameters_[1][0],
+        output_output_parameter: parameters_[1][1],
     }
     result_input_current = Quantity(result_input_current.subs(substitutions))
     result_output_voltage = Quantity(result_output_voltage.subs(substitutions))
