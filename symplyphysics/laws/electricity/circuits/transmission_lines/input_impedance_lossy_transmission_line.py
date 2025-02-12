@@ -3,8 +3,8 @@ Input impedance of lossy transmission line
 ==========================================
 
 Knowing the length of the transmission line, the loss factor of the transmission line
-and its characteristic resistance, as well as the propagation constant and load
-resistance, it is possible to determine the input impedance of the transmission line.
+and its surge impedance, as well as the propagation constant and load resistance, it is
+possible to determine the input impedance of the transmission line.
 
 ..
     TODO: find link

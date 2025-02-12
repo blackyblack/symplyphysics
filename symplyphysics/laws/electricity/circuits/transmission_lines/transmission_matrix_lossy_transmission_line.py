@@ -6,9 +6,8 @@ The transmission parameters matrix is one of the ways to describe a microwave de
 The :math:`ABCD`-parameters of the device act as elements of this matrix. The matrix
 equation relates the input voltage and input current to the output voltage and output
 current. Knowing the length and the loss factor of the transmission line, as well as the
-characteristic resistance of the line and the constant propagation of signal, it is
-possible to calculate the parameters :math:`A, B, C, D` of the transmission matrix of
-this line.
+surge impedance of the line and the constant propagation of signal, it is possible to
+calculate the parameters :math:`A, B, C, D` of the transmission matrix of this line.
 
 **Notes:**
 
