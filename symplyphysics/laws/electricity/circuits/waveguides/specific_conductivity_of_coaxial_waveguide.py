@@ -9,12 +9,6 @@ coaxial waveguide depends on the frequency of signal and the specific capacitanc
 coaxial waveguide, as well as on the tangent of the dielectric loss angle of the
 insulator material.
 
-**Notes:**
-    
-#. The tangent of the dielectric loss angle is found as the ratio of the active current
-   to the reactive current. The value of this value for each material is in the tables
-   in the public domain.
-
 ..
     TODO: find link
 """

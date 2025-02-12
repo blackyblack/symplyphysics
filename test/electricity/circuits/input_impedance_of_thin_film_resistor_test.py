@@ -5,7 +5,7 @@ from symplyphysics import (assert_equal, units, Quantity, errors, prefixes)
 from symplyphysics.laws.electricity.circuits import input_impedance_of_thin_film_resistor as impedance_law
 
 # Description
-## The resistance and capacitance of a thin-film resistor are 40 ohm and 40 nanofarad, respectively. The angular frequency is 2*pi megahertz.
+## The resistance and capacitance of a thin-film resistor are 40 ohm and 40 nanofarad, respectively. The angular frequency is 2*pi*10^6 radian/second.
 ## Then the input impedance of the thin-film resistor is (3.27 - 10.96 * I) ohm.
 
 Args = namedtuple("Args", [
