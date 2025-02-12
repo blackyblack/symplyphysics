@@ -20,7 +20,7 @@ and output.
     TODO: rename file
 """
 
-from sympy import Eq, solve, Matrix, sqrt
+from sympy import Eq, solve, sqrt
 from symplyphysics import (
     units,
     Quantity,
@@ -28,6 +28,7 @@ from symplyphysics import (
     validate_output,
     dimensionless,
     SymbolNew,
+    Matrix,
 )
 
 input_reflected_power_wave = SymbolNew("b_i", sqrt(units.power), display_latex="b_\\text{i}")
@@ -80,9 +81,6 @@ law = Eq(
     _scattering_matrix * Matrix([input_incident_power_wave, output_incident_power_wave])
 )
 """
-..
-    NOTE: SymPy still evaluates matrix multiplication
-
 :laws:symbol::
 
 :laws:latex::

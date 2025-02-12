@@ -11,7 +11,7 @@ relates the input and output voltages to the input and output currents.
 #. `Wikipedia <https://en.wikipedia.org/wiki/Two-port_network#Impedance_parameters_(z-parameters)>`__.
 """
 
-from sympy import Eq, solve, Matrix
+from sympy import Eq, solve
 from symplyphysics import (
     units,
     Quantity,
@@ -19,6 +19,7 @@ from symplyphysics import (
     validate_output,
     symbols,
     clone_as_symbol,
+    Matrix,
 )
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 
@@ -71,9 +72,6 @@ law = Eq(
     Matrix([[input_input_impedance, input_output_impedance],
     [output_input_impedance, output_output_impedance]]) * Matrix([input_current, output_current]))
 """
-..
-    NOTE: SymPy still evaluates matrix multiplication
-
 :laws:symbol::
 
 :laws:latex::

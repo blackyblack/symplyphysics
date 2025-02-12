@@ -11,7 +11,7 @@ circuit by knowing the transmission line parameters.
     TODO: find link
 """
 
-from sympy import Eq, solve, Matrix, I, sinh, tanh, cosh, Symbol as SymSymbol, S
+from sympy import Eq, solve, I, sinh, tanh, cosh, Symbol as SymSymbol, S
 from symplyphysics import (
     units,
     Quantity,
@@ -20,6 +20,7 @@ from symplyphysics import (
     validate_output,
     symbols,
     clone_as_symbol,
+    Matrix,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity.circuits.transmission_lines import transmission_matrix_lossy_transmission_line as matrix_lossy_law
@@ -71,9 +72,6 @@ law = Eq(
         1 / sinh(_expression),
     ]))
 """
-..
-    NOTE: SymPy still evaluates matrix multiplication
-
 :laws:symbol::
 
 :laws:latex::

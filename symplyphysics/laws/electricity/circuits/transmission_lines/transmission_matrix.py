@@ -17,7 +17,7 @@ output voltage and output current.
     TODO: rename file
 """
 
-from sympy import Eq, solve, Matrix
+from sympy import Eq, solve
 from symplyphysics import (
     units,
     Quantity,
@@ -26,6 +26,7 @@ from symplyphysics import (
     symbols,
     clone_as_symbol,
     SymbolNew,
+    Matrix,
 )
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 
@@ -76,9 +77,6 @@ law = Eq(
     Matrix([[voltage_voltage_parameter, voltage_current_parameter], [current_voltage_parameter, current_current_parameter]])
     * Matrix([output_voltage, output_current]))
 """
-..
-    NOTE: SymPy still evaluates matrix multiplication
-
 :laws:symbol::
 
 :laws:latex::

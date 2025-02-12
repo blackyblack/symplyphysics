@@ -8,7 +8,7 @@ transmission line, these impedances can be calculated for an equivalent replacem
 circuit by knowing the transmission line parameters.
 """
 
-from sympy import Eq, solve, Matrix, I, sinh, tanh, cosh, coth, Symbol as SymSymbol, S, expand_trig
+from sympy import Eq, solve, I, sinh, tanh, cosh, coth, Symbol as SymSymbol, S, expand_trig
 from symplyphysics import (
     units,
     Quantity,
@@ -17,6 +17,7 @@ from symplyphysics import (
     validate_output,
     symbols,
     clone_as_symbol,
+    Matrix,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.electricity.circuits.transmission_lines import transmission_matrix_lossy_transmission_line as matrix_lossy_law
@@ -68,9 +69,6 @@ law = Eq(
         sinh(_expression),
     ]))
 """
-..
-    NOTE: SymPy still evaluates matrix multiplication
-
 :laws:symbol::
 
 :laws:latex::

@@ -11,7 +11,7 @@ relates the input and output currents to the input and output voltages.
 #. `Wikipedia <https://en.wikipedia.org/wiki/Two-port_network#Admittance_parameters_(y-parameters)>`__.
 """
 
-from sympy import Eq, solve, Matrix
+from sympy import Eq, solve
 from symplyphysics import (
     units,
     Quantity,
@@ -19,6 +19,7 @@ from symplyphysics import (
     validate_output,
     symbols,
     clone_as_symbol,
+    Matrix,
 )
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 
@@ -71,9 +72,6 @@ law = Eq(
     Matrix([[input_input_admittance, input_output_admittance], [output_input_admittance, output_output_admittance]])
     * Matrix([input_voltage, output_voltage]))
 """
-..
-    NOTE: SymPy still evaluates matrix multiplication
-
 :laws:symbol::
 
 :laws:latex::
