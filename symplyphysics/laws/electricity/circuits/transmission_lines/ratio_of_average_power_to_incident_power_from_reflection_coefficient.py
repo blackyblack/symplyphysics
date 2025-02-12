@@ -3,7 +3,7 @@ Reflection coefficient from ratio of average power to incident power
 ====================================================================
 
 Knowing the average power delivered to the load and the incident power, it is possible
-to calculate the absolute value of the reflection coefficient :math:`G`.
+to calculate the absolute value of the reflection coefficient.
 
 **Links:**
 

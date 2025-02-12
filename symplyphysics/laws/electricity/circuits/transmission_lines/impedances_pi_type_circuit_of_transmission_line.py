@@ -6,6 +6,9 @@ The π-type circuit consists of the first impedance connected in parallel, the t
 impedance connected in series, and the second impedance connected in parallel. For a
 transmission line, these impedances can be calculated for an equivalent replacement
 circuit by knowing the transmission line parameters.
+
+..
+    TODO: find link
 """
 
 from sympy import Eq, solve, sinh, tanh, cosh, coth, Symbol as SymSymbol, S, expand_trig

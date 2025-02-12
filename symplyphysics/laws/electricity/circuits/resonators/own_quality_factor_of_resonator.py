@@ -3,14 +3,13 @@ Quality factor of resonator
 ===========================
 
 If the resonator is an oscillatory circuit, that quality factor will depend on the
-resistance, inductance, and oscillation frequency.
+resistance, inductance, and angular oscillation frequency.
 
 ..
     TODO: fix file name
-    TODO: replace `2 * pi * f` with `omega`
 """
 
-from sympy import Eq, solve, pi
+from sympy import Eq, solve
 from symplyphysics import (
     Quantity,
     validate_input,
@@ -34,12 +33,12 @@ inductance = symbols.inductance
 :symbols:`inductance` of the oscillating circuit.
 """
 
-frequency = symbols.temporal_frequency
+angular_frequency = symbols.angular_frequency
 """
-:symbols:`temporal_frequency` of the current.
+:symbols:`angular_frequency` of the current.
 """
 
-law = Eq(quality_factor, resistance / (2 * pi * frequency * inductance))
+law = Eq(quality_factor, resistance / (angular_frequency * inductance))
 """
 :laws:symbol::
 
@@ -47,7 +46,7 @@ law = Eq(quality_factor, resistance / (2 * pi * frequency * inductance))
 """
 
 
-@validate_input(resistance_=resistance, inductance_=inductance, frequency_=frequency)
+@validate_input(resistance_=resistance, inductance_=inductance, frequency_=angular_frequency)
 @validate_output(quality_factor)
 def calculate_quality_factor(resistance_: Quantity, inductance_: Quantity,
     frequency_: Quantity) -> float:
@@ -55,6 +54,6 @@ def calculate_quality_factor(resistance_: Quantity, inductance_: Quantity,
     result_expr = result_expr.subs({
         resistance: resistance_,
         inductance: inductance_,
-        frequency: frequency_,
+        angular_frequency: frequency_,
     })
     return convert_to_float(result_expr)

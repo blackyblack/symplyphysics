@@ -12,9 +12,7 @@ of the transmission line.
 
 from sympy import Eq, solve, tan, I
 from symplyphysics import (
-    units,
     Quantity,
-    SymbolNew,
     validate_input,
     validate_output,
     symbols,

@@ -15,6 +15,7 @@ parameters of the transmission matrix.
    for more information about :math:`S`-parameters.
 
 ..
+    TODO: find link
     TODO: make laws for the S-parameters, see second link above.
 """
 
