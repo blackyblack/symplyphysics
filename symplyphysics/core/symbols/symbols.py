@@ -1,5 +1,4 @@
 from __future__ import annotations
-import re
 from typing import Any, Optional, Sequence, Self
 from sympy import S, Idx, MatAdd, MatMul, MatrixBase, Symbol as SymSymbol, Expr, Equality, IndexedBase, Matrix as SymMatrix
 from sympy.physics.units import Dimension
@@ -273,9 +272,6 @@ def print_expression(expr: Expr | Equality | Sequence[Expr | Equality]) -> str:
         pretty_use_unicode(uflag)
 
 
-_text_pattern = re.compile(r"\\text\{([^}]+)\}")
-
-
 def _process_subscript_and_names(
     code_name: str,
     latex_name: str,
@@ -284,13 +280,7 @@ def _process_subscript_and_names(
     if not subscript:
         return code_name, latex_name
 
-    m = _text_pattern.match(subscript)
-    symbol_sub = m.group(1) if m else subscript
-
-    code_name = f"{code_name}_{symbol_sub}"
-    latex_name = f"{latex_name}_{{{subscript}}}"
-
-    return code_name, latex_name
+    return f"{code_name}_{subscript}", f"{latex_name}_{{{subscript}}}"
 
 
 def clone_as_symbol(source: SymbolNew | SymbolIndexedNew,
