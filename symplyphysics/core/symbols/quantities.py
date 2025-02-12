@@ -52,7 +52,11 @@ class Quantity(DimensionSymbolNew, SymQuantity):  # pylint: disable=too-many-anc
         return self
 
     def _eval_is_positive(self) -> bool:
-        return self.scale_factor >= 0
+        # NOTE: returns False for complex values, see https://github.com/blackyblack/symplyphysics/blob/dca99f8a19296c55132fc3f6fac0c2260c8ee92a/test/electricity/circuits/transmission_lines/transmission_matrix_lossy_transmission_line_test.py#L23
+        try:
+            return self.scale_factor >= 0
+        except TypeError:
+            return False
 
     def _eval_Abs(self) -> Self:
         return self.__class__(Abs(self.scale_factor), dimension=self.dimension)
