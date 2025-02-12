@@ -56,7 +56,7 @@ law = Eq(specific_capacitance,
     outer_radius_=outer_radius,
     inner_radius_=inner_radius)
 @validate_output(specific_capacitance)
-def calculate_specific_capacitance(absolute_permittivity_: float, outer_radius_: Quantity,
+def calculate_specific_capacitance(absolute_permittivity_: Quantity, outer_radius_: Quantity,
     inner_radius_: Quantity) -> Quantity:
     if outer_radius_.scale_factor <= inner_radius_.scale_factor:
         raise ValueError("The outer radius must be greater than the inner radius")
