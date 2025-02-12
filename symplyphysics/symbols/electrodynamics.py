@@ -5,6 +5,7 @@ Electrodynamics (Symbols)
 Symbols related to electrodynamics.
 """
 
+from sympy import Rational
 from sympy.physics import units
 from symplyphysics.core.dimensions import dimensionless
 from symplyphysics.core.symbols.symbols import SymbolNew
@@ -60,7 +61,7 @@ absolute_permittivity = SymbolNew("epsilon",
 **Absolute permittivity**, or often sometimes **permittivity**, is a measure of the electric polarizability of a dielectric material.
 """
 
-relative_permittivity = SymbolNew("epsilon_r", dimensionless, display_latex="\\varepsilon_r")
+relative_permittivity = SymbolNew("epsilon_r", dimensionless, display_latex="\\varepsilon_\\text{r}")
 """
 **Relative permittivity** is the permittivity of a medium relative to that of free space.
 Also see :attr:`~symplyphysics.quantities.vacuum_permittivity`.
@@ -72,7 +73,7 @@ absolute_permeability = SymbolNew("mu", units.inductance / units.length, display
 applied magnetic field.
 """
 
-relative_permeability = SymbolNew("mu_r", dimensionless, display_latex="\\mu_r")
+relative_permeability = SymbolNew("mu_r", dimensionless, display_latex="\\mu_\\text{r}")
 """
 **Relative permeability** is the permeability of a medium relative to that of free space.
 Also see :attr:`~symplyphysics.quantities.vacuum_permeability`.
@@ -114,6 +115,11 @@ that is, a measure of the system's overall polarity.
 electric_field_strength = SymbolNew("E", units.voltage / units.length)
 """
 **Electric field strength** refers to the magnitude of the electric field.
+"""
+
+volumetric_charge_density = SymbolNew("rho", units.charge / units.volume, display_latex="\\rho")
+"""
+**Volume charge density** is the electric charge per unit volume.
 """
 
 surface_charge_density = SymbolNew("sigma", units.charge / units.area, display_latex="\\sigma")
@@ -227,4 +233,76 @@ material's ability to conduct electric current.
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Electrical_resistivity_and_conductivity#>`__.
+"""
+
+circuit_gain = SymbolNew("gain", dimensionless, display_latex="\\text{gain}")
+"""
+**Gain** is a measure of the ability of a two-port circuit (often an amplifier) to
+increase the power or amplitude of a signal from the input to the output port by adding
+energy converted from some power supply to the signal.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Gain_(electronics)>`__.
+"""
+
+diode_constant = SymbolNew("g", units.current / units.voltage**Rational(3, 2))
+"""
+**Diode constant** is the constant of proportionality between the anode current or
+current density and anode voltage. Refer to :ref:`Current from voltage and diode
+constant in vacuum diode`.
+"""
+
+direct_permeability_coefficient = SymbolNew("D", dimensionless)
+"""
+**Direct permeability coefficient** characterizes the shielding effect of the grid and
+shows how much weaker the electrostatic field of the anode is than the field of the grid
+which affects the cathode area.
+
+..
+    TODO: find link
+"""
+
+attenuation = SymbolNew("A", dimensionless)
+"""
+Attenuation is a quantity measuring the relative amount of power the circuit reduces
+from the input signal. It is measured in decibels or other relative units of
+measurement.
+
+**Links:**
+
+#. `Wikipedia, first item of the list <https://en.wikipedia.org/wiki/Attenuator_(electronics)#Attenuator_characteristics>`__.
+"""
+
+surge_impedance = SymbolNew("Z_S", units.impedance, display_latex="Z_\\text{S}")
+"""
+**Surge impedance**, or **characteristic impedance**, of a uniform transmission line
+is the ratio of the amplitudes of voltage and current of a wave travelling in one
+direction along the line in the absence of reflections in the other direction.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Characteristic_impedance>`__.
+"""
+
+reflection_coefficient = SymbolNew("Gamma", dimensionless, display_latex="\\Gamma")
+"""
+The **reflection coefficient** is a parameter that describes how much of a wave is
+reflected by an impedance discontinuity in the transmission medium.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Reflection_coefficient>`__.
+"""
+
+standing_wave_ratio = SymbolNew("SWR", dimensionless, display_latex="\\text{SWR}")
+"""
+**Standing wave ratio** is a measure of impedance matching of loads to the
+characteristic impedance of a transmission line or waveguide. It is defined as the ratio
+of the highest to the lowest voltage in the transmission line.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Standing_wave_ratio>`__.
+#. `Engineering LibreTexts <https://eng.libretexts.org/Bookshelves/Electrical_Engineering/Electro-Optics/Book%3A_Electromagnetics_I_(Ellingson)/03%3A_Transmission_Lines/3.14%3A_Standing_Wave_Ratio>`__.
 """

@@ -1,38 +1,57 @@
+"""
+Section length of multistage transformer
+========================================
+
+A multistage resistance transformer consists of several sections. The length of each
+section depends on the wavelength at the upper operating frequency and the wavelength at
+the lower operating frequency.
+
+..
+    TODO: find link
+"""
+
 from sympy import Eq, solve
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output)
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    symbols,
+    clone_as_symbol,
+)
 
-# Description
-## A multistage resistance transformer consists of several sections. The length of each section depends on the wavelength at
-## the upper operating frequency and the wavelength at the lower operating frequency.
+section_length = symbols.length
+"""
+:symbols:`length` of the section.
+"""
 
-## Law is: L = L1 * L2 / (2 * (L1 + L2)), where
-## L - length of section,
-## L1 - the wavelength at the upper frequency,
-## L2 - the wavelength at the lower frequency.
+upper_frequency_wavelength = clone_as_symbol(symbols.wavelength, subscript="1")
+"""
+:symbols:`wavelength` at the upper operating :symbols:`temporal_frequency`.
+"""
 
-length_of_section = Symbol("length_of_section", units.length)
-
-wavelength_for_upper_frequency = Symbol("wavelength_for_upper_frequency", units.length)
-wavelength_for_lower_frequency = Symbol("wavelength_for_lower_frequency", units.length)
+lower_frequency_wavelength = clone_as_symbol(symbols.wavelength, subscript="2")
+"""
+:symbols:`wavelength` at the lower operating :symbols:`temporal_frequency`.
+"""
 
 law = Eq(
-    length_of_section, wavelength_for_upper_frequency * wavelength_for_lower_frequency / (2 *
-    (wavelength_for_upper_frequency + wavelength_for_lower_frequency)))
+    section_length, upper_frequency_wavelength * lower_frequency_wavelength / (2 *
+    (upper_frequency_wavelength + lower_frequency_wavelength)))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
-def print_law() -> str:
-    return print_expression(law)
-
-
-@validate_input(wavelength_for_upper_frequency_=wavelength_for_upper_frequency,
-    wavelength_for_lower_frequency_=wavelength_for_lower_frequency)
-@validate_output(length_of_section)
+@validate_input(wavelength_for_upper_frequency_=upper_frequency_wavelength,
+    lower_frequency_wavelength_=lower_frequency_wavelength)
+@validate_output(section_length)
 def calculate_length_of_section(wavelength_for_upper_frequency_: Quantity,
-    wavelength_for_lower_frequency_: Quantity) -> Quantity:
-    result_expr = solve(law, length_of_section, dict=True)[0][length_of_section]
+    lower_frequency_wavelength_: Quantity) -> Quantity:
+    result_expr = solve(law, section_length, dict=True)[0][section_length]
     result_expr = result_expr.subs({
-        wavelength_for_upper_frequency: wavelength_for_upper_frequency_,
-        wavelength_for_lower_frequency: wavelength_for_lower_frequency_,
+        upper_frequency_wavelength: wavelength_for_upper_frequency_,
+        lower_frequency_wavelength: lower_frequency_wavelength_,
     })
     return Quantity(result_expr)

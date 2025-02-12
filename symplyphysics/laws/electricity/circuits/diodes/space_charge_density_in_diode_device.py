@@ -1,40 +1,59 @@
-from sympy import Eq, solve
-from sympy.physics.units import electric_constant
+"""
+Charge density in diode
+=======================
+
+The simplest device implementing a cathode current control method is a diode device. It
+contains a vacuum chamber, a thermionic cathode, a mesh electrode and an anode.
+
+**Notation:**
+
+#. :quantity_notation:`vacuum_permittivity`.
+
+..
+    TODO: find link
+"""
+
+from sympy import Eq, solve, Rational
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    quantities,
+    symbols,
 )
 
-# Description
-## The simplest device implementing a cathode current control method is a diode device.
-## It contains a thermionic cathode, a mesh electrode and an anode.
+charge_density = symbols.volumetric_charge_density
+"""
+:symbols:`volumetric_charge_density` in the diode.
+"""
 
-## Law is: p = (4 / 9) * eps0 * U / d^2, where
-## p - space charge density in the diode device,
-## eps0 - dielectric constant,
-## U - voltage on the grid,
-## d - distance between the grid and the cathode.
+grid_voltage = symbols.voltage
+"""
+:symbols:`voltage` on the grid.
+"""
 
-space_charge_density = Symbol("space_charge_density", units.charge / units.volume)
+distance = symbols.euclidean_distance
+"""
+:symbols:`euclidean_distance` between the grid and the cathode.
+"""
 
-voltage_on_grid = Symbol("voltage_on_grid", units.voltage)
-distance_between_cathode_and_grid = Symbol("distance_between_cathode_and_grid", units.length)
+law = Eq(charge_density,
+    Rational(4, 9) * quantities.vacuum_permittivity * grid_voltage / distance**2)
+"""
+:laws:symbol::
 
-law = Eq(space_charge_density,
-    (4 / 9) * electric_constant * voltage_on_grid / distance_between_cathode_and_grid**2)
+:laws:latex::
+"""
 
 
-@validate_input(voltage_on_grid_=voltage_on_grid,
-    distance_between_cathode_and_grid_=distance_between_cathode_and_grid)
-@validate_output(space_charge_density)
+@validate_input(voltage_on_grid_=grid_voltage,
+    distance_between_cathode_and_grid_=distance)
+@validate_output(charge_density)
 def calculate_space_charge_density(voltage_on_grid_: Quantity,
     distance_between_cathode_and_grid_: Quantity) -> Quantity:
-    result_expr = solve(law, space_charge_density, dict=True)[0][space_charge_density]
+    result_expr = solve(law, charge_density, dict=True)[0][charge_density]
     result_expr = result_expr.subs({
-        voltage_on_grid: voltage_on_grid_,
-        distance_between_cathode_and_grid: distance_between_cathode_and_grid_,
+        grid_voltage: voltage_on_grid_,
+        distance: distance_between_cathode_and_grid_,
     })
     return Quantity(result_expr)

@@ -5,6 +5,10 @@ Hydrostatic pressure via density and height
 Hydrostatic pressure is the pressure exerted by a fluid at equilibrium at any point of time
 due to the force of gravity.
 
+**Notation:**
+
+#. :quantity_notation:`acceleration_due_to_gravity`.
+
 **Conditions:**
 
 #. The fluid is in statical equilibrium.
@@ -17,53 +21,38 @@ due to the force of gravity.
 """
 
 from sympy import Eq, solve
-from symplyphysics import units, Quantity, Symbol, validate_input, validate_output
+from symplyphysics import Quantity, validate_input, validate_output, symbols, quantities
 from symplyphysics.core.expr_comparisons import expr_equals
-
 from symplyphysics.laws.hydro import hydrostatic_pressure_from_density_and_depth_acceleration as pressure_law
 
-hydrostatic_pressure = Symbol("hydrostatic_pressure", units.pressure)
+hydrostatic_pressure = symbols.hydrostatic_pressure
 """
-Hydrostatic pressure of the fluid column.
-
-Symbol:
-    :code:`p`
+:symbols:`hydrostatic_pressure` of the fluid column.
 """
 
-density = Symbol("density", units.mass / units.volume)
+density = symbols.density
+"""
+:symbols:`density` of the fluid.
+"""
+
+height = symbols.height
 r"""
-Density of the fluid.
-
-Symbol:
-    :code:`rho`
-
-Latex:
-    :math:`\rho`
+:symbols:`height` of the fluid column.
 """
 
-height = Symbol("height", units.length)
-r"""
-Height of the fluid column.
-
-Symbol:
-    :code:`h`
+law = Eq(hydrostatic_pressure, density * quantities.acceleration_due_to_gravity * height)
 """
+:laws:symbol::
 
-law = Eq(hydrostatic_pressure, density * units.acceleration_due_to_gravity * height)
-r"""
-:code:`p = rho * g * h`
-
-Latex:
-    .. math::
-        p = \rho g h
+:laws:latex::
 """
 
 # This law might be derived via hydrostatic pressure law.
 
 _pressure_law_applied = pressure_law.law.subs({
     pressure_law.density: density,
-    pressure_law.depth: height,
-    pressure_law.acceleration: units.acceleration_due_to_gravity,
+    pressure_law.height: height,
+    pressure_law.acceleration: quantities.acceleration_due_to_gravity,
 })
 _pressure_derived = solve(_pressure_law_applied, pressure_law.hydrostatic_pressure,
     dict=True)[0][pressure_law.hydrostatic_pressure]

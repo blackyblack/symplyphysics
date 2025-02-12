@@ -5,10 +5,11 @@ Symplyphysics latex printer
 import re
 from typing import Any
 from sympy import E, S, Expr, Mod, Mul, Symbol as SymSymbol
+from sympy.matrices.dense import DenseMatrix
 from sympy.printing.latex import LatexPrinter, accepted_latex_functions
 from sympy.core.function import AppliedUndef
 from sympy.simplify import fraction
-from ..core.symbols.symbols import DimensionSymbolNew, FunctionNew
+from ..core.symbols.symbols import DimensionSymbolNew, FunctionNew, SymbolIndexedNew
 
 _between_two_numbers_p = (
     re.compile(r"[0-9][} ]*$"),  # search
@@ -56,10 +57,7 @@ class SymbolLatexPrinter(LatexPrinter):
 
     # pylint: disable-next=invalid-name
     def _print_SymbolIndexedNew(self, expr: Any) -> str:
-        index = expr.index
-        str_expr = expr.display_latex
-        str_index = self._print(index)
-        return f"{{{str_expr}}}_{{{str_index}}}"
+        return self._print_SymbolNew(expr)
 
     def _print_Function(self, expr: Any, exp: Any = None) -> str:
         # pylint: disable=too-many-branches
@@ -152,11 +150,17 @@ class SymbolLatexPrinter(LatexPrinter):
 
     # pylint: disable-next=invalid-name
     def _print_SumIndexed(self, expr: Any) -> str:
+        # only one index of product is supported
+        # expr.args[0] contains the argument of the Product
+        # expr.args[1] contains just indexed symbol
+        arg, index = expr.args
+        return f"\\sum_{self._print(index)} {self._print(arg)}"
+
+    # pylint: disable-next=invalid-name
+    def _print_ProductIndexed(self, expr: Any) -> str:
         # only one index of sum is supported
-        # expr.args[0] contains indexed symbol with index applied
-        # expr.args[0].args[0] contains just indexed symbol
-        symbol, index = expr.args[0].args
-        return f"\\sum_{self._print(index)} {self._print(symbol)}"
+        arg, index = expr.args
+        return f"\\prod_{self._print(index)} {self._print(arg)}"
 
     def _print_log(self, expr: Any, exp: Any = None) -> str:
         value, base = (expr.args[0], expr.args[1]) if len(expr.args) > 1 else (expr.args[0], E)
@@ -276,6 +280,16 @@ class SymbolLatexPrinter(LatexPrinter):
 
         return tex
 
+    def _print_DenseMatrix(self, expr: DenseMatrix) -> str:
+        rows, cols = expr.shape
+
+        def print_row(row: int) -> str:
+            parts = [self._print(expr[row, col]) for col in range(cols)]
+            return " & ".join(parts)
+
+        parts = [print_row(row) for row in range(rows)]
+        return "\\begin{pmatrix} " + " \\\\ ".join(parts) + " \\end{pmatrix}"
+
 
 def latex_str(expr: Any, **settings: Any) -> str:
     printer = SymbolLatexPrinter(settings)
@@ -286,5 +300,7 @@ def latex_str(expr: Any, **settings: Any) -> str:
             for arg in expr.arguments
         ]
         expr = expr(*arguments)
+    if isinstance(expr, SymbolIndexedNew):
+        expr = expr[expr.index]
 
     return printer.doprint(expr)

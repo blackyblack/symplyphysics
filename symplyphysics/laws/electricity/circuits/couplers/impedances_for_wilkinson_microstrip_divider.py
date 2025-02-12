@@ -1,51 +1,79 @@
+"""
+Impedance of Wilkinson microstrip divider
+=========================================
+
+The Wilkinson divider is a device designed to divide the power of a microwave signal
+into two output ports. Different sections of the divider consist of a microstrip line of
+different widths. There are four such sections in total and each has its own impedance.
+
+.. image:: https://habrastorage.org/getpro/habr/upload_files/c24/031/52e/c2403152e2b320ab1c4c44f970dee1f2.gif
+    :width: 400px
+    :align: center
+
+..
+    TODO: find link
+"""
+
 from sympy import Eq, solve, Matrix, sqrt
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
-    print_expression,
+    SymbolNew,
     validate_input,
     validate_output,
     dimensionless,
+    symbols,
+    clone_as_symbol,
 )
 
-## Description
-## The Wilkinson divider is a device designed to divide the power of a microwave signal into two output ports.
-## Different sections of the divider consist of a microstrip line of different widths. There are four such sections in total and each has its own impedance.
-## https://habrastorage.org/getpro/habr/upload_files/c24/031/52e/c2403152e2b320ab1c4c44f970dee1f2.gif
+first_impedance = clone_as_symbol(symbols.electrical_impedance, subscript="1")
+"""
+:symbols:`electrical_impedance` of the first section.
+"""
 
-## Law is: Matrix([Z1, Z2, Z3, Z4]) = Matrix([Z0 * sqrt(k(1 + k^2)), Z0 * sqrt((1 + k^2) / k^3), Z0 * sqrt(k), Z0 / sqrt(k)]), where
-## Z1 - first impedance,
-## Z2 - second impedance,
-## Z3 - third impedance,
-## Z4 - fourth impedance,
-## Z0 - resistance of the transmission line to which the divider is connected,
-## k - ratio coefficient of the power at the outputs of the divider.
+second_impedance = clone_as_symbol(symbols.electrical_impedance, subscript="2")
+"""
+:symbols:`electrical_impedance` of the second section.
+"""
 
-first_impedance = Symbol("first_impedance", units.impedance)
-second_impedance = Symbol("second_impedance", units.impedance)
-third_impedance = Symbol("third_impedance", units.impedance)
-fourth_impedance = Symbol("fourth_impedance", units.impedance)
+third_impedance = clone_as_symbol(symbols.electrical_impedance, subscript="3")
+"""
+:symbols:`electrical_impedance` of the third section.
+"""
 
-characteristic_resistance = Symbol("characteristic_resistance", units.impedance)
-ratio_of_power = Symbol("ratio_of_power", dimensionless)
+fourth_impedance = clone_as_symbol(symbols.electrical_impedance, subscript="4")
+"""
+:symbols:`electrical_impedance` of the fourth section.
+"""
+
+transmission_line_impedance = clone_as_symbol(symbols.electrical_impedance, subscript="0")
+"""
+:symbols:`electrical_impedance` of the transmission line to which the divider is
+connected.
+"""
+
+power_ratio = SymbolNew("k", dimensionless)
+"""
+Ratio of the :symbols:`power` at the outputs of the divider.
+"""
 
 law = Eq(
     Matrix([first_impedance, second_impedance, third_impedance, fourth_impedance]),
-    Matrix([
-    characteristic_resistance * sqrt(ratio_of_power * (1 + ratio_of_power**2)),
-    characteristic_resistance * sqrt(
-    (1 + ratio_of_power**2) / ratio_of_power**3), characteristic_resistance * sqrt(ratio_of_power),
-    characteristic_resistance / sqrt(ratio_of_power)
+    transmission_line_impedance * Matrix([
+        sqrt(power_ratio * (1 + power_ratio**2)),
+        sqrt((1 + power_ratio**2) / power_ratio**3),
+        sqrt(power_ratio),
+        1 / sqrt(power_ratio),
     ]))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
-def print_law() -> str:
-    return print_expression(law)
-
-
-@validate_input(characteristic_resistance_=characteristic_resistance,
-    ratio_of_power_=ratio_of_power)
+@validate_input(characteristic_resistance_=transmission_line_impedance,
+    ratio_of_power_=power_ratio)
 @validate_output(units.impedance)
 def calculate_impedances(characteristic_resistance_: Quantity,
     ratio_of_power_: float) -> tuple[Quantity, Quantity, Quantity, Quantity]:
@@ -56,8 +84,8 @@ def calculate_impedances(characteristic_resistance_: Quantity,
     result_z3 = result[third_impedance]
     result_z4 = result[fourth_impedance]
     substitutions = {
-        characteristic_resistance: characteristic_resistance_,
-        ratio_of_power: ratio_of_power_,
+        transmission_line_impedance: characteristic_resistance_,
+        power_ratio: ratio_of_power_,
     }
     result_z1 = Quantity(result_z1.subs(substitutions))
     result_z2 = Quantity(result_z2.subs(substitutions))

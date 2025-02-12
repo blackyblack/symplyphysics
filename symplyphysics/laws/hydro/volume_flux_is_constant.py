@@ -17,58 +17,46 @@ known as the *equation of continuity*.
 
 from sympy import Eq, solve, dsolve, Derivative
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
-    Function,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_function,
 )
 
-tube_area = Function("tube_area", units.area)
+time = symbols.time
 """
-Cross-sectional area of the tube of flow as a function of time.
-
-Symbol:
-    :code:`A(t)`
+:symbols:`time`.
 """
 
-fluid_speed = Function("fluid_speed", units.velocity)
+tube_area = clone_as_function(symbols.area, [time])
 """
-Fluid speed as a function of time.
-
-Symbol:
-    :code:`u(t)`
+Cross-sectional :symbols:`area` of the tube of flow as a function of :attr:`~time`.
 """
 
-time = Symbol("time", units.time)
+flow_speed = clone_as_function(symbols.flow_speed, [time])
 """
-Time.
-
-Symbol:
-    :code:`t`
+:symbols:`flow_speed` of the fluid as a function of :attr:`~time`.
 """
 
-law = Eq(Derivative(tube_area(time) * fluid_speed(time), time), 0)
-r"""
-:code:`Derivative(A(t) * u(t), t) = 0`
+law = Eq(Derivative(tube_area(time) * flow_speed(time), time), 0)
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        \frac{d (A u)}{d t} = 0
+:laws:latex::
 """
 
 
 @validate_input(tube_area_before_=tube_area,
-    fluid_speed_before_=fluid_speed,
+    fluid_speed_before_=flow_speed,
     tube_area_after_=tube_area)
-@validate_output(fluid_speed)
+@validate_output(flow_speed)
 def calculate_fluid_speed(tube_area_before_: Quantity, fluid_speed_before_: Quantity,
     tube_area_after_: Quantity) -> Quantity:
-    dsolved = dsolve(law, fluid_speed(time))
+    dsolved = dsolve(law, flow_speed(time))
     c1_value = solve(dsolved, "C1")[0].subs({
         tube_area(time): tube_area_before_,
-        fluid_speed(time): fluid_speed_before_,
+        flow_speed(time): fluid_speed_before_,
     })
     result_expr = dsolved.subs({
         "C1": c1_value,

@@ -1,28 +1,57 @@
+"""
+Relative operating bandwidth of quarter-wave transformer
+========================================================
+
+The relative operating bandwidth of a quarter-wave transformer depends on the reflection
+coefficient, the characteristic resistance of the transmission line to which the
+transformer is connected and the load resistance.
+
+..
+    TODO: find link
+"""
+
 from sympy import Eq, solve, pi, acos, sqrt
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless, convert_to_float)
+from symplyphysics import (
+    Quantity,
+    SymbolNew,
+    validate_input,
+    validate_output,
+    dimensionless,
+    convert_to_float,
+    symbols,
+    clone_as_symbol,
+)
 
-## Description
-## The relative operating bandwidth of a quarter-wave transformer depends on the reflection coefficient,
-## the characteristic resistance of the transmission line to which the transformer is connected and the load resistance.
-## The relative operating bandwidth is the ratio of the bandwidth to the center frequency.
-## The reflection coefficient is equal to the ratio of the power of the signal reflected from the transformer to the
-## power of the signal incident on the transformer.
+relative_bandwidth = SymbolNew("b", dimensionless)
+"""
+Relative operating bandwidth is the ratio of the bandwidth to the center frequency.
+"""
 
-relative_bandwidth = Symbol("relative_bandwidth", dimensionless)
+load_resistance = clone_as_symbol(symbols.electrical_resistance, display_symbol="R_L", display_latex="R_\\text{L}")
+"""
+:symbols:`electrical_resistance` of the load.
+"""
 
-load_resistance = Symbol("load_resistance", units.impedance)
-characteristic_resistance = Symbol("characteristic_resistance", units.impedance)
-reflection_coefficient = Symbol("reflection_coefficient", dimensionless)
+characteristic_resistance = clone_as_symbol(symbols.electrical_resistance, subscript="0")
+"""
+:symbols:`electrical_resistance` of the transmission line.
+"""
+
+reflection_coefficient = SymbolNew("k", dimensionless)
+"""
+Reflection coefficient, which is the ratio of the power of the signal reflected from the
+transformer to the power of the signal incident on the transformer.
+"""
 
 law = Eq(
     relative_bandwidth, 2 -
-    (4 / pi) * acos(reflection_coefficient * 2 * sqrt(load_resistance * characteristic_resistance) /
+    (4 / pi) * acos(2 * reflection_coefficient * sqrt(load_resistance * characteristic_resistance) /
     (sqrt(1 - reflection_coefficient**2) * abs(load_resistance - characteristic_resistance))))
+"""
+:laws:symbol::
 
-
-def print_law() -> str:
-    return print_expression(law)
+:laws:latex::
+"""
 
 
 @validate_input(load_resistance_=load_resistance,

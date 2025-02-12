@@ -241,7 +241,12 @@ called conservative forces and only depends on the initial and final positions o
 
 mass_flow_rate = SymbolNew("mu", units.mass / units.time, display_latex="\\mu")
 """
-**Mass flow rate** is the mass of a substance which passes per unit of time.
+**Mass flow rate** is the mass of a substance which passes per unit time.
+"""
+
+volumetric_flow_rate = SymbolNew("Q", units.volume / units.time)
+"""
+**Volumetric flow rate** is the volume of a substance which passes per unit time.
 """
 
 stiffness = SymbolNew("k", units.force / units.length)
@@ -427,4 +432,91 @@ and inversely proportional to the length of the side at which the force is appli
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Surface_tension#Physics>`__.
+"""
+
+dynamic_pressure = SymbolNew("q", units.pressure)
+"""
+**Dynamic pressure** is the :symbols:`kinetic_energy` per unit :symbols:`volume` of a
+fluid. See :ref:`Quantity is volumetric density times volume`.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Dynamic_pressure#Physical_meaning>`__.
+"""
+
+mechanical_efficiency = SymbolNew("eta", dimensionless, display_latex="\\eta")
+"""
+**Mechanical efficiency** is a dimensionless ratio that measures the efficiency of a
+mechanism or machine in transforming the power input to the device to power output.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Mechanical_efficiency#>`__.
+"""
+
+hydrostatic_pressure = SymbolNew("p", units.pressure)
+"""
+**Hydrostatic pressure** is the pressure exerted by a fluid at equilibrium at a given
+point within the fluid, due to the force of gravity.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Hydrostatics#Hydrostatic_pressure>`__.
+"""
+
+froude_number = SymbolNew("Fr", dimensionless, display_latex="\\text{Fr}")
+"""
+The **Froude number** is a dimensionless number defined as the ratio of the flow inertia
+to the external force field.
+"""
+
+speed_of_sound = SymbolNew("c", units.velocity)
+"""
+The **speed of sound** is the distance traveled per unit of time by a sound wave as it
+propagates through an elastic medium.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Speed_of_sound#>`__.
+"""
+
+nusselt_number = SymbolNew("Nu", dimensionless, display_latex="\\text{Nu}")
+"""
+The **Nusselt number** is the ratio of total heat transfer (convection + conduction) to
+conductive heat transfer across a boundary of a fluid.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Nusselt_number>`__.
+"""
+
+reynolds_number = SymbolNew("Re", dimensionless, display_latex="\\text{Re}")
+"""
+The **Reynolds number** is a dimensionless quantity that helps predict fluid flow
+patterns in different situations by measuring the ratio between inertial and viscous
+forces.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Reynolds_number#>`__.
+"""
+
+shear_stress = SymbolNew("tau", units.pressure, display_latex="\\tau")
+"""
+**Shear stress** is the component of stress coplanar with a material cross section.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Shear_stress>`__.
+"""
+
+flow_speed = SymbolNew("u", units.velocity)
+"""
+**Flow speed** is the magnitude of the vector of **flow velocity** (also called
+**macroscopic velocity**). Flow velocity is a vector field used to mathematically
+describe the motion of a continuum.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Flow_velocity>`__.
 """

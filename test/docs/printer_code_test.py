@@ -1,7 +1,17 @@
 from collections import namedtuple
 from pytest import fixture
-from sympy import I, Integral, evaluate, exp, log, pi, sin, sqrt
-from symplyphysics import Quantity, SymbolNew, clone_as_symbol, clone_as_function, units
+from sympy import I, Integral, evaluate, exp, log, pi, sin, sqrt, Matrix, ImmutableMatrix
+from symplyphysics import (
+    Quantity,
+    SymbolNew,
+    clone_as_symbol,
+    clone_as_function,
+    units,
+    SymbolIndexedNew,
+    SumIndexed,
+    ProductIndexed,
+    global_index,
+)
 from symplyphysics.docs.printer_code import code_str
 
 Args = namedtuple(
@@ -217,3 +227,75 @@ def test_log_squared(test_args: Args) -> None:
     with evaluate(False):
         expr = log(test_args.boltzmann_constant)**2
     assert code_str(expr) == "log(k_B)^2"
+
+
+def test_mutable_matrix() -> None:
+    a = SymbolNew("a")
+    b = SymbolNew("b")
+    c = SymbolNew("c")
+    d = SymbolNew("d")
+    
+    # 2-by-2 matrix
+    with evaluate(False):
+        expr = Matrix([[a, b], [c, d]])
+    assert code_str(expr) == "[[a, b], [c, d]]"
+
+    # 4-row vector
+    with evaluate(False):
+        expr = Matrix([a, b, c, d])
+    assert code_str(expr) == "[a, b, c, d]"
+
+    # 4-column vector
+    with evaluate(False):
+        expr = Matrix([a, b, c, d]).T
+    assert code_str(expr) == "[a, b, c, d].T"
+
+
+def test_immutable_matrix() -> None:
+    a = SymbolNew("a")
+    b = SymbolNew("b")
+    c = SymbolNew("c")
+    d = SymbolNew("d")
+    
+    # 2-by-2 matrix
+    with evaluate(False):
+        expr = ImmutableMatrix([[a, b], [c, d]])
+    assert code_str(expr) == "[[a, b], [c, d]]"
+
+    # 4-row vector
+    with evaluate(False):
+        expr = ImmutableMatrix([a, b, c, d])
+    assert code_str(expr) == "[a, b, c, d]"
+
+    # 4-column vector
+    with evaluate(False):
+        expr = ImmutableMatrix([a, b, c, d]).T
+    assert code_str(expr) == "[a, b, c, d].T"
+
+
+def test_indexed_symbol() -> None:
+    f = SymbolIndexedNew("F")
+    expr = f[global_index]
+    assert code_str(expr) == "F[i]"
+
+
+def test_indexed_sum() -> None:
+    f = SymbolIndexedNew("F")
+
+    expr = SumIndexed(f[global_index], global_index)
+    assert code_str(expr) == "Sum(F[i], i)"
+
+    with evaluate(False):
+        expr = SumIndexed(f[global_index]**2, global_index)
+    assert code_str(expr) == "Sum(F[i]^2, i)"
+
+
+def test_indexed_product() -> None:
+    f = SymbolIndexedNew("F")
+
+    expr = ProductIndexed(f[global_index], global_index)
+    assert code_str(expr) == "Product(F[i], i)"
+
+    with evaluate(False):
+        expr = ProductIndexed(f[global_index]**2, global_index)
+    assert code_str(expr) == "Product(F[i]^2, i)"

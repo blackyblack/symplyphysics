@@ -10,52 +10,41 @@ modulus of a substance is a measure of its resistance to bulk compression.
 **Links:**
 
 #. `Wikipedia, derivable from 12.5.3 <https://phys.libretexts.org/Workbench/PH_245_Textbook_V2/12%3A_Static_Equilibrium_and_Elasticity/12.05%3A_Stress_Strain_and_Elastic_Modulus_(Part_2)>`__.
+
+..
+    TODO: rename `hydraulic stress` to `bulk stress`
 """
 
 from sympy import Eq
 from symplyphysics import (
-    units,
-    dimensionless,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
 )
 
-hydraulic_stress = Symbol("hydraulic_stress", units.pressure)
+bulk_stress = clone_as_symbol(symbols.pressure, display_symbol="Delta(p)", display_latex="\\Delta p")
 """
-Hydraulic stress.
-
-Symbol:
-    :code:`p`
+Bulk stress. See :symbols:`pressure`.
 """
 
-bulk_modulus = Symbol("bulk_modulus", units.pressure)
+bulk_modulus = symbols.bulk_modulus
 """
-Bulk modulus of the material.
-
-Symbol:
-    :code:`B`
+:symbols:`bulk_modulus` of the material.
 """
 
-fractional_volume_change = Symbol("fractional_volume_change", dimensionless)
-r"""
-:doc:`Fractional volume change <laws.quantities.fractional_change_is_change_over_initial_value>`.
-
-Symbol:
-    :code:`e_V`
-
-Latex:
-    :math:`e_V`
+fractional_volume_change = clone_as_symbol(symbols.fractional_change, subscript="V")
+"""
+:symbols:`fractional_change` of volume. See :ref:`Fractional change is change over
+initial value`.
 """
 
-law = Eq(hydraulic_stress, bulk_modulus * fractional_volume_change)
-r"""
-:code:`p = B * e_V`
+law = Eq(bulk_stress, bulk_modulus * fractional_volume_change)
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        p = B e_V
+:laws:latex::
 """
 
 
@@ -63,7 +52,7 @@ Latex:
     bulk_modulus_=bulk_modulus,
     fractional_volume_change_=fractional_volume_change,
 )
-@validate_output(hydraulic_stress)
+@validate_output(bulk_stress)
 def calculate_hydraulic_stress(
     bulk_modulus_: Quantity,
     fractional_volume_change_: Quantity,

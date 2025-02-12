@@ -1,45 +1,81 @@
-from sympy import Eq, solve, Matrix
+"""
+Impedance matrix equation
+=========================
+
+The impedance matrix is one of the ways to describe a microwave device. The
+:math:`Z`-parameters of the device act as elements of this matrix. The matrix equation
+relates the input and output voltages to the input and output currents.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Two-port_network#Impedance_parameters_(z-parameters)>`__.
+"""
+
+from sympy import Eq, solve
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
-    print_expression,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
+    Matrix,
 )
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 
-## Description
-## The impedance matrix is one of the ways to describe a microwave device. The Z-parameters of the device act as elements
-## of this matrix. The matrix equation relates the input and output voltages to the input and output currents.
+input_voltage = clone_as_symbol(symbols.voltage, display_symbol="V_i", display_latex="V_\\text{i}")
+"""
+Input :symbols:`voltage`.
+"""
 
-## Law is: [U1, U2] = Matrix([[Z11, Z12], [Z21, Z22]]) * [I1, I2], where
-## U1 - input voltage,
-## U2 - output voltage,
-## Z11 - ratio of input voltage to input current at idle at the output,
-## Z12 - ratio of input voltage to output current at idle at the input,
-## Z21 - ratio of output voltage to input current at idle at the output,
-## Z22 - ratio of output voltage to output current at idle at the input,
-## I1 - input current,
-## I2 - output current.
+output_voltage = clone_as_symbol(symbols.voltage, display_symbol="V_o", display_latex="V_\\text{o}")
+"""
+Output :symbols:`voltage`.
+"""
 
-input_voltage = Symbol("input_voltage", units.voltage)
-output_voltage = Symbol("output_voltage", units.voltage)
-input_current = Symbol("input_current", units.current)
-output_current = Symbol("output_current", units.current)
-impedance_input_input = Symbol("impedance_input_input", units.impedance)
-impedance_input_output = Symbol("impedance_input_output", units.impedance)
-impedance_output_input = Symbol("impedance_output_input", units.impedance)
-impedance_output_output = Symbol("impedance_output_output", units.impedance)
+input_current = clone_as_symbol(symbols.current, display_symbol="I_i", display_latex="I_\\text{i}")
+"""
+Input :symbols:`current`.
+"""
+
+output_current = clone_as_symbol(symbols.current, display_symbol="I_o", display_latex="I_\\text{o}")
+"""
+Output :symbols:`current`.
+"""
+
+input_input_impedance = clone_as_symbol(symbols.electrical_impedance, display_symbol="Z_ii", display_latex="Z_\\text{ii}")
+"""
+Ratio of :attr:`~input_voltage` to :attr:`~input_current` at idle at the output. See
+:symbols:`electrical_impedance`.
+"""
+
+input_output_impedance = clone_as_symbol(symbols.electrical_impedance, display_symbol="Z_io", display_latex="Z_\\text{io}")
+"""
+Ratio of :attr:`~input_voltage` to :attr:`~output_current` at idle at the output. See
+:symbols:`electrical_impedance`.
+"""
+
+output_input_impedance = clone_as_symbol(symbols.electrical_impedance, display_symbol="Z_oi", display_latex="Z_\\text{oi}")
+"""
+Ratio of :attr:`~output_voltage` to :attr:`~input_current` at idle at the output. See
+:symbols:`electrical_impedance`.
+"""
+
+output_output_impedance = clone_as_symbol(symbols.electrical_impedance, display_symbol="Z_oo", display_latex="Z_\\text{oo}")
+"""
+Ratio of :attr:`~output_voltage` to :attr:`~output_current` at idle at the output. See
+:symbols:`electrical_impedance`.
+"""
 
 law = Eq(
     Matrix([input_voltage, output_voltage]),
-    Matrix([[impedance_input_input, impedance_input_output],
-    [impedance_output_input, impedance_output_output]]) * Matrix([input_current, output_current]))
+    Matrix([[input_input_impedance, input_output_impedance],
+    [output_input_impedance, output_output_impedance]]) * Matrix([input_current, output_current]))
+"""
+:laws:symbol::
 
-
-def print_law() -> str:
-    return print_expression(law)
+:laws:latex::
+"""
 
 
 @validate_input(
@@ -61,10 +97,10 @@ def calculate_currents(
     substitutions = {
         input_voltage: input_voltage_,
         output_voltage: output_voltage_,
-        impedance_input_input: impedances_[0][0],
-        impedance_input_output: impedances_[0][1],
-        impedance_output_input: impedances_[1][0],
-        impedance_output_output: impedances_[1][1],
+        input_input_impedance: impedances_[0][0],
+        input_output_impedance: impedances_[0][1],
+        output_input_impedance: impedances_[1][0],
+        output_output_impedance: impedances_[1][1],
     }
     result_input_current = result_input_current.subs(substitutions)
     result_output_current = result_output_current.subs(substitutions)

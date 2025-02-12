@@ -4,6 +4,7 @@ Symplyphysics code printer
 
 from typing import Any
 from sympy import S, Expr, Mod, Mul, StrPrinter, E, Symbol as SymSymbol
+from sympy.matrices.dense import DenseMatrix
 from sympy.simplify import fraction
 from sympy.concrete.products import Product
 from sympy.concrete.summations import Sum
@@ -85,10 +86,18 @@ class SymbolCodePrinter(StrPrinter):
     # pylint: disable-next=invalid-name
     def _print_SumIndexed(self, expr: Any) -> str:
         # only one index of sum is supported
-        # expr.args[0] contains indexed symbol with index applied
+        # expr.args[0] contains the argument of the Sum
         # expr.args[1] contains just indexed symbol
         applied, index = expr.args
         return f"Sum({self._print(applied)}, {self._print(index)})"
+    
+    # pylint: disable-next=invalid-name
+    def _print_ProductIndexed(self, expr: Any) -> str:
+        # only one index of product is supported
+        # expr.args[0] contains the argument of the Product
+        # expr.args[1] contains just indexed symbol
+        applied, index = expr.args
+        return f"Product({self._print(applied)}, {self._print(index)})"
 
     def _print_log(self, expr: Any) -> str:
         value, base = (expr.args[0], expr.args[1]) if len(expr.args) > 1 else (expr.args[0], E)
@@ -228,6 +237,21 @@ class SymbolCodePrinter(StrPrinter):
             tex += term_tex
 
         return tex
+
+    def _print_DenseMatrix(self, expr: DenseMatrix) -> str:
+        rows, cols = expr.shape
+
+        if cols == 1 or rows == 1:
+            parts = [self._print(elem) for elem in expr]
+            result = "[" + ", ".join(parts) + "]"
+            return result if cols == 1 else result + ".T"
+
+        def print_row(row: int) -> str:
+            parts = [self._print(expr[row, col]) for col in range(cols)]
+            return "[" + ", ".join(parts) + "]"
+
+        parts = [print_row(row) for row in range(rows)]
+        return "[" + ", ".join(parts) +"]"
 
 
 def code_str(expr: Any, **settings: Any) -> str:

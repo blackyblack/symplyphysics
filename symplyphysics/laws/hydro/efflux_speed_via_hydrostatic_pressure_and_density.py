@@ -15,52 +15,32 @@ and density.
     TODO find link
 """
 
-from sympy import (Eq, solve, sqrt)
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    validate_input,
-    validate_output,
-)
+from sympy import Eq, solve, sqrt
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.hydro import hydrostatic_pressure_via_density_and_height as pressure_law
 from symplyphysics.laws.hydro import efflux_speed_via_height as velocity_law
 
-efflux_speed = Symbol("efflux_speed", units.velocity)
+efflux_speed = symbols.flow_speed
 """
-Speed of the fluid flowing out of the pipe.
-
-Symbol:
-    :code:`v`
+:symbols:`flow_speed` of the fluid flowing out of the pipe.
 """
 
-hydrostatic_pressure = Symbol("hydrostatic_pressure", units.pressure)
+hydrostatic_pressure = symbols.hydrostatic_pressure
 """
-Hydrostatic pressure of the fluid.
-
-Symbol:
-    :code:`p`
+:symbols:`hydrostatic_pressure` of the fluid.
 """
 
-density = Symbol("density", units.mass / units.volume)
-r"""
-Density of the fluid.
-
-Symbol:
-    :code:`rho`
-
-Latex:
-    :math:`\rho`
+density = symbols.density
+"""
+:symbols:`density` of the fluid.
 """
 
 law = Eq(efflux_speed, sqrt(2 * hydrostatic_pressure / density))
-r"""
-:code:`v = sqrt(2 * p / rho)`
+"""
+:laws:symbol::
 
-Latex:
-    .. math::
-        v = \sqrt{\frac{2 p}{\rho}}
+:laws:latex::
 """
 
 # This law might be derived via "hydrostatic_pressure_from_density_and_depth" law
