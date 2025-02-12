@@ -180,6 +180,8 @@ __all__ = [
     "surge_impedance",
     "reflection_coefficient",
     "standing_wave_ratio",
+    "phase_constant",
+    "propagation_constant",
     # optics
     "relative_refractive_index",
     "radiant_exitance",

@@ -62,14 +62,14 @@ length = symbols.length
 :symbols:`length` of the transmission line.
 """
 
-propagation_constant = SymbolNew("b", 1 / units.length)
+phase_constant = symbols.phase_constant
 """
-The **propagation constant** is the inverse of the signal :symbols:`wavelength`.
+:symbols`phase_constant`.
 """
 
 # the following block prevents the re-ordering of terms for the code printer
 with evaluate(False):
-    _phase = propagation_constant * length
+    _phase = phase_constant * length
 
 law = Eq(
     Matrix([[voltage_voltage_parameter, voltage_current_parameter], [current_voltage_parameter, current_current_parameter]]),
@@ -83,7 +83,7 @@ law = Eq(
 
 @validate_input(characteristic_resistance_=surge_impedance,
     line_length_=length,
-    constant_propagation_=propagation_constant)
+    constant_propagation_=phase_constant)
 def calculate_transmission_matrix(
         characteristic_resistance_: Quantity, line_length_: Quantity,
         constant_propagation_: Quantity) -> tuple[tuple[float, Quantity], tuple[Quantity, float]]:
@@ -99,7 +99,7 @@ def calculate_transmission_matrix(
     substitutions = {
         surge_impedance: characteristic_resistance_,
         length: line_length_,
-        propagation_constant: constant_propagation_,
+        phase_constant: constant_propagation_,
     }
     result_a = convert_to_float(Quantity(result_a.subs(substitutions)))
     result_b = Quantity(result_b.subs(substitutions))

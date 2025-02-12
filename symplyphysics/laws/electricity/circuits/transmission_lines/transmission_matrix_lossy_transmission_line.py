@@ -61,24 +61,18 @@ length = symbols.length
 :symbols:`length` of the transmission line.
 """
 
-propagation_constant = SymbolNew("b", 1 / units.length)
+propagation_constant = symbols.propagation_constant
 """
-The **propagation constant** is the inverse of the signal :symbols:`wavelength`.
-"""
-
-loss_factor = SymbolNew("a", 1 / units.length)
-"""
-The **loss factor** shows how many times the transmitted signal weakens per unit
-:symbols:`length` of the transmission line.
+:symbols:`propagation_constant`.
 """
 
-expression = (loss_factor + I * propagation_constant) * length
+_expression = propagation_constant * length
 
 law = Eq(
     Matrix([[voltage_voltage_parameter, voltage_current_parameter], [current_voltage_parameter, current_current_parameter]]),
     Matrix([
-        [cosh(expression), surge_impedance * sinh(expression)],
-        [(1 / surge_impedance) * sinh(expression), cosh(expression)],
+        [cosh(_expression), surge_impedance * sinh(_expression)],
+        [(1 / surge_impedance) * sinh(_expression), cosh(_expression)],
     ]),
 )
 """
@@ -90,33 +84,30 @@ law = Eq(
 
 @validate_input(characteristic_resistance_=surge_impedance,
     line_length_=length,
-    constant_propagation_=propagation_constant,
-    loss_factor_=loss_factor)
+    constant_propagation_=propagation_constant)
 def calculate_transmission_matrix(
         characteristic_resistance_: Quantity, line_length_: Quantity,
-        constant_propagation_: Quantity,
-        loss_factor_: Quantity) -> tuple[tuple[float, Quantity], tuple[Quantity, float]]:
+        constant_propagation_: Quantity) -> tuple[tuple[float, Quantity], tuple[Quantity, float]]:
     result = solve(law, [
         voltage_voltage_parameter, voltage_current_parameter, current_voltage_parameter,
         current_current_parameter
     ],
         dict=True)[0]
-    result_a = result[voltage_voltage_parameter]
-    result_b = result[voltage_current_parameter]
-    result_c = result[current_voltage_parameter]
-    result_d = result[current_current_parameter]
+    result_vv = result[voltage_voltage_parameter]
+    result_vc = result[voltage_current_parameter]
+    result_cv = result[current_voltage_parameter]
+    result_cc = result[current_current_parameter]
     substitutions = {
         surge_impedance: characteristic_resistance_,
         length: line_length_,
         propagation_constant: constant_propagation_,
-        loss_factor: loss_factor_,
     }
-    result_a = convert_to(result_a.subs(substitutions), S.One)
-    result_b = Quantity(result_b.subs(substitutions))
-    result_c = Quantity(result_c.subs(substitutions))
-    result_d = convert_to(result_d.subs(substitutions), S.One)
-    assert_equivalent_dimension(result_b, 'result_b', "calculate_transmission_matrix",
+    result_vv = convert_to(result_vv.subs(substitutions), S.One)
+    result_vc = Quantity(result_vc.subs(substitutions))
+    result_cv = Quantity(result_cv.subs(substitutions))
+    result_cc = convert_to(result_cc.subs(substitutions), S.One)
+    assert_equivalent_dimension(result_vc, 'result_vc', "calculate_transmission_matrix",
         units.impedance)
-    assert_equivalent_dimension(result_c, 'result_c', "calculate_transmission_matrix",
+    assert_equivalent_dimension(result_cv, 'result_cv', "calculate_transmission_matrix",
         units.conductance)
-    return ((result_a, result_b), (result_c, result_d))
+    return ((result_vv, result_vc), (result_cv, result_cc))

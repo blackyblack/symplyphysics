@@ -206,14 +206,15 @@ electric field, combining the two in an auxiliary field.
 #. `Wikipedia <https://en.wikipedia.org/wiki/Electric_displacement_field>`__.
 """
 
-attenuation_coefficient = SymbolNew("mu", 1 / units.length, display_latex="\\mu")
+attenuation_coefficient = SymbolNew("alpha", 1 / units.length, display_latex="\\alpha", real=True)
 """
-Attenuation coefficient characterizes how easily a volume of material can be penetrated
-by energy or matter.
+**Attenuation coefficient**, also called **attenuation constant**, characterizes how
+easily a volume of material can be penetrated by energy or matter.
 
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Attenuation_coefficient>`__.
+#. `Wikipedia, propagation constant <https://en.wikipedia.org/wiki/Propagation_constant#Attenuation_constant>`__.
 """
 
 magnetic_field_strength = SymbolNew("H", units.current / units.length)
@@ -305,4 +306,24 @@ of the highest to the lowest voltage in the transmission line.
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Standing_wave_ratio>`__.
 #. `Engineering LibreTexts <https://eng.libretexts.org/Bookshelves/Electrical_Engineering/Electro-Optics/Book%3A_Electromagnetics_I_(Ellingson)/03%3A_Transmission_Lines/3.14%3A_Standing_Wave_Ratio>`__.
+"""
+
+phase_constant = SymbolNew("beta", 1 / units.length, display_latex="\\beta", real=True)
+"""
+The **phase constant**, also called **phase change constant**, is the imaginary
+component of the **propagation constant** for a plane wave.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Propagation_constant#Phase_constant>`__.
+"""
+
+propagation_constant = SymbolNew("gamma", 1 / units.length, display_latex="\\gamma", complex=True)
+"""
+The **propagation constant** is complex-valued quantity measuring the change undergone
+by the amplitude and phase of the wave as it propagates in a given direction.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Propagation_constant#>`__.
 """

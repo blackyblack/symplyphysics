@@ -41,16 +41,16 @@ length = symbols.length
 :symbols:`length` of the transmission line.
 """
 
-propagation_constant = SymbolNew("b", 1 / units.length)
+phase_constant = symbols.phase_constant
 """
-The **propagation constant** is the inverse of the signal :symbols:`wavelength`.
+:symbols:`phase_constant`.
 """
 
 law = Eq(
     input_impedance,
     surge_impedance *
-    (load_impedance + I * surge_impedance * tan(propagation_constant * length)) /
-    (surge_impedance + I * load_impedance * tan(propagation_constant * length)))
+    (load_impedance + I * surge_impedance * tan(phase_constant * length)) /
+    (surge_impedance + I * load_impedance * tan(phase_constant * length)))
 """
 :laws:symbol::
 
@@ -60,7 +60,7 @@ law = Eq(
 
 @validate_input(characteristic_resistance_=surge_impedance,
     load_impedance_=load_impedance,
-    constant_propagation_=propagation_constant,
+    constant_propagation_=phase_constant,
     length_=length)
 @validate_output(input_impedance)
 def calculate_input_impedance(characteristic_resistance_: Quantity, load_impedance_: Quantity,
@@ -69,7 +69,7 @@ def calculate_input_impedance(characteristic_resistance_: Quantity, load_impedan
     result_expr = result_expr.subs({
         surge_impedance: characteristic_resistance_,
         load_impedance: load_impedance_,
-        propagation_constant: constant_propagation_,
+        phase_constant: constant_propagation_,
         length: length_,
     })
     return Quantity(result_expr)
