@@ -2,13 +2,18 @@
 Specific conductivity of coaxial waveguide
 ==========================================
 
-A coaxial waveguide is an electrical cable consisting of a central conductor and a shield arranged coaxially and separated
-by an insulating material or an air gap. It is used to transmit radio frequency electrical signals.
-The specific conductivity of a coaxial waveguide depends on the frequency of signal and the specific capacitance of coaxial waveguide,
-as well as on the tangent of the dielectric loss angle of the insulator material.
-In general, the tangent of the dielectric loss angle is a characteristic of the material. The angle itself is usually not searched for or indicated.
-The tangent of this angle is found as the ratio of the active current to the reactive current. The value of this value for each material is in the tables
-in the public domain.
+A coaxial waveguide is an electrical cable consisting of a central conductor and a
+shield arranged coaxially and separated by an insulating material or an air gap. It is
+used to transmit radio frequency electrical signals. The specific conductivity of a
+coaxial waveguide depends on the frequency of signal and the specific capacitance of
+coaxial waveguide, as well as on the tangent of the dielectric loss angle of the
+insulator material.
+
+**Notes:**
+    
+#. The tangent of the dielectric loss angle is found as the ratio of the active current
+   to the reactive current. The value of this value for each material is in the tables
+   in the public domain.
 
 ..
     TODO: find link
@@ -21,7 +26,6 @@ from symplyphysics import (
     SymbolNew,
     validate_input,
     validate_output,
-    dimensionless,
     symbols,
 )
 
@@ -40,16 +44,13 @@ specific_capacitance = SymbolNew("C", units.capacitance / units.length)
 :symbols:`capacitance` per unit :symbols:`length`.
 """
 
-tangent_dielectric_loss_angle = SymbolNew("tan(d)", dimensionless, display_latex="\\tan(d)")
+loss_tangent = symbols.dielectric_loss_tangent
 """
-Tangent of the dielectric loss angle of the medium filling the waveguide.
-
-..
-    TODO: replace with an actual tangent of an angle?
+:symbols:`dielectric_loss_tangent`.
 """
 
 law = Eq(specific_conductance,
-    angular_frequency * specific_capacitance * tangent_dielectric_loss_angle)
+    angular_frequency * specific_capacitance * loss_tangent)
 """
 :laws:symbol::
 
@@ -59,7 +60,7 @@ law = Eq(specific_conductance,
 
 @validate_input(angular_frequency_=angular_frequency,
     specific_capacitance_=specific_capacitance,
-    tangent_dielectric_loss_angle_=tangent_dielectric_loss_angle)
+    tangent_dielectric_loss_angle_=loss_tangent)
 @validate_output(specific_conductance)
 def calculate_specific_conductivity(angular_frequency_: Quantity, specific_capacitance_: Quantity,
     tangent_dielectric_loss_angle_: float) -> Quantity:
@@ -67,6 +68,6 @@ def calculate_specific_conductivity(angular_frequency_: Quantity, specific_capac
     result_expr = result_velocity_expr.subs({
         angular_frequency: angular_frequency_,
         specific_capacitance: specific_capacitance_,
-        tangent_dielectric_loss_angle: tangent_dielectric_loss_angle_
+        loss_tangent: tangent_dielectric_loss_angle_
     })
     return Quantity(result_expr)

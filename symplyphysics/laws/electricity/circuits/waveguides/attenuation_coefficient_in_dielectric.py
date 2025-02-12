@@ -13,14 +13,7 @@ the permeability and the dielectric loss angle of the insulator material.
 """
 
 from sympy import Eq, solve, sqrt
-from symplyphysics import (
-    Quantity,
-    SymbolNew,
-    validate_input,
-    validate_output,
-    dimensionless,
-    symbols,
-)
+from symplyphysics import Quantity, validate_input, validate_output, symbols
 
 attenuation_coefficient = symbols.attenuation_coefficient
 """
@@ -42,19 +35,16 @@ angular_frequency = symbols.angular_frequency
 :symbols:`angular_frequency` of the signal.
 """
 
-tangent_dielectric_loss_angle = SymbolNew("tan(d)", dimensionless, display_latex="\\tan(d)")
+loss_tangent = symbols.dielectric_loss_tangent
 """
-Tangent of the dielectric loss angle of the medium filling the waveguide.
-
-..
-    TODO: replace with an actual tangent of an angle?
+:symbols:`dielectric_loss_tangent`.
 """
 
 law = Eq(
     attenuation_coefficient,
     angular_frequency *
     sqrt(absolute_permittivity * absolute_permeability) *
-    tangent_dielectric_loss_angle / 2)
+    loss_tangent / 2)
 """
 :laws:symbol::
 
@@ -65,7 +55,7 @@ law = Eq(
 @validate_input(absolute_permittivity_=absolute_permittivity,
     absolute_permeability_=absolute_permeability,
     angular_frequency_=angular_frequency,
-    tangent_dielectric_loss_angle_=tangent_dielectric_loss_angle)
+    tangent_dielectric_loss_angle_=loss_tangent)
 @validate_output(attenuation_coefficient)
 def calculate_attenuation_coefficient(absolute_permittivity_: Quantity, absolute_permeability_: Quantity,
     angular_frequency_: Quantity, tangent_dielectric_loss_angle_: float) -> Quantity:
@@ -75,6 +65,6 @@ def calculate_attenuation_coefficient(absolute_permittivity_: Quantity, absolute
         absolute_permittivity: absolute_permittivity_,
         absolute_permeability: absolute_permeability_,
         angular_frequency: angular_frequency_,
-        tangent_dielectric_loss_angle: tangent_dielectric_loss_angle_
+        loss_tangent: tangent_dielectric_loss_angle_
     })
     return Quantity(result_expr)

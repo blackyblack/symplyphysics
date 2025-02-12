@@ -13,10 +13,8 @@ the dielectric loss angle of the substrate.
 from sympy import Eq, solve, sqrt, evaluate
 from symplyphysics import (
     Quantity,
-    SymbolNew,
     validate_input,
     validate_output,
-    dimensionless,
     symbols,
     clone_as_symbol,
 )
@@ -46,19 +44,16 @@ wavelength = symbols.wavelength
 :symbols:`wavelength` in vacuum.
 """
 
-tangent_dielectric_loss_angle = SymbolNew("tan(d)", dimensionless, display_latex="\\tan(d)")
+loss_tangent = symbols.dielectric_loss_tangent
 """
-Tangent of the dielectric loss angle of the medium filling the waveguide.
-
-..
-    TODO: replace with an actual tangent of an angle?
+:symbols:`dielectric_loss_tangent`.
 """
 
 # the following block prevents the re-ordering of terms for the code printer
 with evaluate(False):
     _first_expression = relative_permittivity / sqrt(effective_permittivity)
     _second_expression = (effective_permittivity - 1) / (relative_permittivity - 1)
-    _third_expression = tangent_dielectric_loss_angle / wavelength
+    _third_expression = loss_tangent / wavelength
 
 law = Eq(attenuation_coefficient, 27.3 * _first_expression * _second_expression * _third_expression)
 """
@@ -71,15 +66,15 @@ law = Eq(attenuation_coefficient, 27.3 * _first_expression * _second_expression 
 @validate_input(relative_permittivity_=relative_permittivity,
     effective_permittivity_=effective_permittivity,
     wavelength_=wavelength,
-    tangent_dielectric_loss_angle_=tangent_dielectric_loss_angle)
+    loss_tangent_=loss_tangent)
 @validate_output(attenuation_coefficient)
 def calculate_attenuation_coefficient(relative_permittivity_: float, effective_permittivity_: float,
-    wavelength_: Quantity, tangent_dielectric_loss_angle_: float) -> Quantity:
+    wavelength_: Quantity, loss_tangent_: float) -> Quantity:
     result_expr = solve(law, attenuation_coefficient, dict=True)[0][attenuation_coefficient]
     result_expr = result_expr.subs({
         relative_permittivity: relative_permittivity_,
         effective_permittivity: effective_permittivity_,
         wavelength: wavelength_,
-        tangent_dielectric_loss_angle: tangent_dielectric_loss_angle_
+        loss_tangent: loss_tangent_
     })
     return Quantity(result_expr)

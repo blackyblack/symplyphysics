@@ -182,6 +182,7 @@ __all__ = [
     "standing_wave_ratio",
     "phase_constant",
     "propagation_constant",
+    "dielectric_loss_tangent",
     # optics
     "relative_refractive_index",
     "radiant_exitance",

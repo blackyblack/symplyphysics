@@ -327,3 +327,13 @@ by the amplitude and phase of the wave as it propagates in a given direction.
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Propagation_constant#>`__.
 """
+
+dielectric_loss_tangent = SymbolNew("tan(delta)", dimensionless, display_latex="\\tan \\delta")
+"""
+**Dielectric loss tangent** (which is the tangent of the **dielectric loss angle**)
+quantifies a dielectric material's inherent dissipation of electromagnetic energy.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Dielectric_loss#>`__.
+"""
