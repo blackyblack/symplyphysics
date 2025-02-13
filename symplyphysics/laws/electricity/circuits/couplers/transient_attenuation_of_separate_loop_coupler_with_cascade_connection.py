@@ -8,7 +8,6 @@ into the auxiliary channel of the coupler.
 
 ..
     TODO: find link
-    TODO: specify what dimensionless attenuation means
 """
 
 from sympy import Eq, solve, sin, asin, log

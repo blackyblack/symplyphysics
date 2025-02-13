@@ -1,7 +1,6 @@
 from __future__ import annotations
-import re
 from typing import Any, Optional, Sequence, Self
-from sympy import S, Idx, Symbol as SymSymbol, Expr, Equality, IndexedBase
+from sympy import S, Idx, MatAdd, MatMul, MatrixBase, Symbol as SymSymbol, Expr, Equality, IndexedBase, Matrix as SymMatrix
 from sympy.physics.units import Dimension
 from sympy.core.function import UndefinedFunction
 from sympy.printing.printer import Printer
@@ -205,6 +204,14 @@ class FunctionNew(DimensionSymbolNew, UndefinedFunction):
         return str(cls.display_name)
 
 
+class Matrix(SymMatrix):  # pylint: disable=too-many-ancestors
+    def __mul__(self: MatrixBase, other: MatrixBase) -> Expr:
+        return MatMul(self, other)
+
+    def __add__(self: MatrixBase, other: MatrixBase) -> Expr:
+        return MatAdd(self, other)
+
+
 # Symbol and Function have generated names, hence their display is not readable.
 # Use custom implementation of the PrettyPrinter to convert real symbol names
 # to user friendly names.
@@ -265,9 +272,6 @@ def print_expression(expr: Expr | Equality | Sequence[Expr | Equality]) -> str:
         pretty_use_unicode(uflag)
 
 
-_text_pattern = re.compile(r"\\text\{([^}]+)\}")
-
-
 def _process_subscript_and_names(
     code_name: str,
     latex_name: str,
@@ -276,13 +280,7 @@ def _process_subscript_and_names(
     if not subscript:
         return code_name, latex_name
 
-    m = _text_pattern.match(subscript)
-    symbol_sub = m.group(1) if m else subscript
-
-    code_name = f"{code_name}_{symbol_sub}"
-    latex_name = f"{latex_name}_{{{subscript}}}"
-
-    return code_name, latex_name
+    return f"{code_name}_{subscript}", f"{latex_name}_{{{subscript}}}"
 
 
 def clone_as_symbol(source: SymbolNew | SymbolIndexedNew,

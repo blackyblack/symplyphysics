@@ -61,7 +61,7 @@ absolute_permittivity = SymbolNew("epsilon",
 **Absolute permittivity**, or often sometimes **permittivity**, is a measure of the electric polarizability of a dielectric material.
 """
 
-relative_permittivity = SymbolNew("epsilon_r", dimensionless, display_latex="\\varepsilon_r")
+relative_permittivity = SymbolNew("epsilon_r", dimensionless, display_latex="\\varepsilon_\\text{r}")
 """
 **Relative permittivity** is the permittivity of a medium relative to that of free space.
 Also see :attr:`~symplyphysics.quantities.vacuum_permittivity`.
@@ -73,7 +73,7 @@ absolute_permeability = SymbolNew("mu", units.inductance / units.length, display
 applied magnetic field.
 """
 
-relative_permeability = SymbolNew("mu_r", dimensionless, display_latex="\\mu_r")
+relative_permeability = SymbolNew("mu_r", dimensionless, display_latex="\\mu_\\text{r}")
 """
 **Relative permeability** is the permeability of a medium relative to that of free space.
 Also see :attr:`~symplyphysics.quantities.vacuum_permeability`.
@@ -206,14 +206,15 @@ electric field, combining the two in an auxiliary field.
 #. `Wikipedia <https://en.wikipedia.org/wiki/Electric_displacement_field>`__.
 """
 
-attenuation_coefficient = SymbolNew("mu", 1 / units.length, display_latex="\\mu")
+attenuation_coefficient = SymbolNew("alpha", 1 / units.length, display_latex="\\alpha", real=True)
 """
-Attenuation coefficient characterizes how easily a volume of material can be penetrated
-by energy or matter.
+**Attenuation coefficient**, also called **attenuation constant**, characterizes how
+easily a volume of material can be penetrated by energy or matter.
 
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Attenuation_coefficient>`__.
+#. `Wikipedia, propagation constant <https://en.wikipedia.org/wiki/Propagation_constant#Attenuation_constant>`__.
 """
 
 magnetic_field_strength = SymbolNew("H", units.current / units.length)
@@ -272,4 +273,67 @@ measurement.
 **Links:**
 
 #. `Wikipedia, first item of the list <https://en.wikipedia.org/wiki/Attenuator_(electronics)#Attenuator_characteristics>`__.
+"""
+
+surge_impedance = SymbolNew("Z_S", units.impedance, display_latex="Z_\\text{S}")
+"""
+**Surge impedance**, or **characteristic impedance**, of a uniform transmission line
+is the ratio of the amplitudes of voltage and current of a wave travelling in one
+direction along the line in the absence of reflections in the other direction.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Characteristic_impedance>`__.
+"""
+
+reflection_coefficient = SymbolNew("Gamma", dimensionless, display_latex="\\Gamma")
+"""
+The **reflection coefficient** is a parameter that describes how much of a wave is
+reflected by an impedance discontinuity in the transmission medium.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Reflection_coefficient>`__.
+"""
+
+standing_wave_ratio = SymbolNew("SWR", dimensionless, display_latex="\\text{SWR}")
+"""
+**Standing wave ratio** is a measure of impedance matching of loads to the
+characteristic impedance of a transmission line or waveguide. It is defined as the ratio
+of the highest to the lowest voltage in the transmission line.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Standing_wave_ratio>`__.
+#. `Engineering LibreTexts <https://eng.libretexts.org/Bookshelves/Electrical_Engineering/Electro-Optics/Book%3A_Electromagnetics_I_(Ellingson)/03%3A_Transmission_Lines/3.14%3A_Standing_Wave_Ratio>`__.
+"""
+
+phase_constant = SymbolNew("beta", 1 / units.length, display_latex="\\beta", real=True)
+"""
+The **phase constant**, also called **phase change constant**, is the imaginary
+component of the **propagation constant** for a plane wave.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Propagation_constant#Phase_constant>`__.
+"""
+
+propagation_constant = SymbolNew("gamma", 1 / units.length, display_latex="\\gamma", complex=True)
+"""
+The **propagation constant** is complex-valued quantity measuring the change undergone
+by the amplitude and phase of the wave as it propagates in a given direction.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Propagation_constant#>`__.
+"""
+
+dielectric_loss_tangent = SymbolNew("tan(delta)", dimensionless, display_latex="\\tan \\delta")
+"""
+**Dielectric loss tangent** (which is the tangent of the **dielectric loss angle**)
+quantifies a dielectric material's inherent dissipation of electromagnetic energy.
+
+**Links:**
+
+#. `Wikipedia <https://en.wikipedia.org/wiki/Dielectric_loss#>`__.
 """

@@ -45,7 +45,7 @@ wavelength = symbols.wavelength
 :symbols:`wavelength` of the signal.
 """
 
-critical_wavelength = clone_as_symbol(symbols.wavelength, subscript="\\text{c}")
+critical_wavelength = clone_as_symbol(symbols.wavelength, display_symbol="lambda_c", display_latex="\\lambda_\\text{c}")
 """
 Critical :symbols:`wavelength` of the system. See :ref:`Critical wavelength of waveguide`.
 """

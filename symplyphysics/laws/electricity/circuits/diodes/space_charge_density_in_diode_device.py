@@ -39,6 +39,11 @@ distance = symbols.euclidean_distance
 
 law = Eq(charge_density,
     Rational(4, 9) * quantities.vacuum_permittivity * grid_voltage / distance**2)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(voltage_on_grid_=grid_voltage,

@@ -8,12 +8,7 @@ used to transmit radio frequency electrical signals. The resistance formed by th
 surface of the metal sheath of the cable can be calculated by knowing the signal
 frequency, magnetic permeability and specific conductivity of the metal.
 
-**Notation:**
-
-#. :quantity_notation:`vacuum_permeability`.
-
 ..
-    TODO: replace `mu_0 * mu_r` with `mu`
     TODO: find link
 """
 
@@ -24,7 +19,6 @@ from symplyphysics import (
     SymbolNew,
     validate_input,
     validate_output,
-    quantities,
     symbols,
 )
 
@@ -33,9 +27,9 @@ resistance = symbols.electrical_resistance
 Surface :symbols:`electrical_resistance`.
 """
 
-relative_permeability = symbols.relative_permeability
+absolute_permeability = symbols.absolute_permeability
 """
-:symbols:`relative_permeability` of the insulator.
+:symbols:`absolute_permeability` of the insulator.
 """
 
 angular_frequency = symbols.angular_frequency
@@ -51,7 +45,7 @@ Specific conductance of the conductor, i.e. :symbols:`electrical_conductance` pe
 
 law = Eq(
     resistance,
-    sqrt(angular_frequency * quantities.vacuum_permeability * relative_permeability /
+    sqrt(angular_frequency * absolute_permeability /
     (2 * specific_conductance)))
 """
 :laws:symbol::
@@ -60,15 +54,15 @@ law = Eq(
 """
 
 
-@validate_input(relative_permeability_=relative_permeability,
+@validate_input(absolute_permeability_=absolute_permeability,
     angular_frequency_=angular_frequency,
     specific_conductivity_=specific_conductance)
 @validate_output(resistance)
-def calculate_surface_resistance(relative_permeability_: float, angular_frequency_: Quantity,
+def calculate_surface_resistance(absolute_permeability_: Quantity, angular_frequency_: Quantity,
     specific_conductivity_: Quantity) -> Quantity:
     result_velocity_expr = solve(law, resistance, dict=True)[0][resistance]
     result_expr = result_velocity_expr.subs({
-        relative_permeability: relative_permeability_,
+        absolute_permeability: absolute_permeability_,
         angular_frequency: angular_frequency_,
         specific_conductance: specific_conductivity_
     })

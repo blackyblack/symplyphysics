@@ -65,21 +65,10 @@ law = Eq(
         sqrt(power_ratio),
         1 / sqrt(power_ratio),
     ]))
-r"""
-..
-    Code printers don't work with matrices yet.
+"""
+:laws:symbol::
 
-:code:`[Z_1, Z_2, Z_3, Z_4] = Z_0 * [sqrt(k * (1 + k^2)), sqrt((1 + k^2) / k^3), sqrt(k), 1 / sqrt(k)]`
-
-Latex:
-    .. math::
-        \begin{pmatrix} Z_1 \\ Z_2 \\ Z_3 \\ Z_4 \end{pmatrix}
-        = Z_0 \begin{pmatrix}
-            \sqrt{k (1 + k^2)} \\
-            \sqrt{\frac{1 + k^2}{k^3}} \\
-            \sqrt{k} \\
-            \frac{1}{\sqrt{k}}
-        \end{pmatrix}
+:laws:latex::
 """
 
 

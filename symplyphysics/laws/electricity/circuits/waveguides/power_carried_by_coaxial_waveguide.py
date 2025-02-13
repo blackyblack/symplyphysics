@@ -40,12 +40,12 @@ voltage = symbols.voltage
 :symbols:`voltage` between the central conductor and the outer conductor.
 """
 
-outer_diameter = clone_as_symbol(symbols.diameter, subscript="\\text{o}")
+outer_diameter = clone_as_symbol(symbols.diameter, display_symbol="d_o", display_latex="d_\\text{o}")
 """
 :symbols:`diameter` of the outer conductor.
 """
 
-inner_diameter = clone_as_symbol(symbols.diameter, subscript="\\text{i}")
+inner_diameter = clone_as_symbol(symbols.diameter, display_symbol="d_i", display_latex="d_\\text{i}")
 """
 :symbols:`diameter` of the inner conductor.
 """

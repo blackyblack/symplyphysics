@@ -4,9 +4,9 @@ Wave impedance of odd mode of Lange coupler
 
 The Lange coupler is based on microstrip transmission lines. When this coupler is in
 operation, both even and odd modes are distributed. Knowing the coupling coefficient
-between the coupler segments, the characteristic resistance of the transmission line to
-which the coupler is connected, as well as the number of coupler segments, it is
-possible to calculate the wave impedance for an odd mode.
+between the coupler segments, the surge impedance of the transmission line to which the
+coupler is connected, as well as the number of coupler segments, it is possible to
+calculate the wave impedance for an odd mode.
 
 .. image:: https://habrastorage.org/r/w1560/getpro/habr/upload_files/054/d02/c8d/054d02c8d91c06425ae079d34b18ce15.jpeg
     :width: 400px
@@ -38,9 +38,9 @@ coupling_factor = SymbolNew("C", dimensionless)
 Coupling factor between coupler segments.
 """
 
-characteristic_impedance = clone_as_symbol(symbols.electrical_impedance, subscript="0")
+surge_impedance = symbols.surge_impedance
 """
-:symbols:`electrical_impedance` of the transmission line.
+:symbols:`surge_impedance` of the transmission line.
 """
 
 segment_count = symbols.positive_number
@@ -50,7 +50,7 @@ Number of segments in Lange coupler. See :symbols:`positive_number`.
 
 # the following block prevents the re-ordering of terms for the code printer
 with evaluate(False):
-    _first_expression = characteristic_impedance * sqrt((1 - coupling_factor) / (1 + coupling_factor))
+    _first_expression = surge_impedance * sqrt((1 - coupling_factor) / (1 + coupling_factor))
     _second_expression = sqrt(coupling_factor**2 + (1 - coupling_factor**2) * (segment_count - 1)**2)
     _third_expression = (segment_count - 1) * (1 + _second_expression) / (coupling_factor + _second_expression +
         (segment_count - 1) * (1 - coupling_factor))
@@ -64,7 +64,7 @@ law = Eq(odd_mode_wave_impedance, _first_expression * _third_expression)
 
 
 @validate_input(coupling_factor_=coupling_factor,
-    characteristic_resistance_=characteristic_impedance,
+    characteristic_resistance_=surge_impedance,
     number_segments_=segment_count)
 @validate_output(odd_mode_wave_impedance)
 def calculate_wave_resistance_odd_modes(coupling_factor_: float,
@@ -72,7 +72,7 @@ def calculate_wave_resistance_odd_modes(coupling_factor_: float,
     result_expr = solve(law, odd_mode_wave_impedance, dict=True)[0][odd_mode_wave_impedance]
     result_expr = result_expr.subs({
         coupling_factor: coupling_factor_,
-        characteristic_impedance: characteristic_resistance_,
+        surge_impedance: characteristic_resistance_,
         segment_count: number_segments_
     })
     return Quantity(result_expr)

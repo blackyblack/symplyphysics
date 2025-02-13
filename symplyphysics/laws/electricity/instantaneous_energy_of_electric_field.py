@@ -26,7 +26,7 @@ inductance = symbols.inductance
 :symbols:`inductance` of the coil.
 """
 
-current_amplitude = clone_as_symbol(symbols.current, subscript="\\text{max}")
+current_amplitude = clone_as_symbol(symbols.current, display_symbol="I_max", display_latex="I_\\text{max}")
 """
 :symbols:`current` amplitude.
 """

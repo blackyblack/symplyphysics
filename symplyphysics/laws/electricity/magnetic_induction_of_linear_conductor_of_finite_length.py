@@ -7,18 +7,13 @@ will depend on the magnitude of the current and the material. It also depends on
 perpendicular distance to the conductor and on the angles between the lines drawn from
 the ends of the conductor to the point and the conductor.
 
-**Notation:**
-
-#. :quantity_notation:`vacuum_permeability`.
-
 **Conditions:**
 
-#. Conductor should be rectilinear;
+#. Conductor should be rectilinear.
 #. Length of the conductor is finite.
 
 ..
     TODO: find link
-    TODO: replace `mu_0 * mu_r` with `mu`
 """
 
 from sympy import Eq, solve, pi, cos
@@ -26,7 +21,6 @@ from symplyphysics import (
     Quantity,
     validate_input,
     validate_output,
-    quantities,
     symbols,
     clone_as_symbol,
 )
@@ -36,9 +30,9 @@ magnetic_flux_density = symbols.magnetic_flux_density
 :symbols:`magnetic_flux_density` through the conductor.
 """
 
-relative_permeability = symbols.relative_permeability
+absolute_permeability = symbols.absolute_permeability
 """
-:symbols:`relative_permeability` of the medium.
+:symbols:`absolute_permeability` of the medium.
 """
 
 current = symbols.current
@@ -63,7 +57,7 @@ Perpendicular :symbols:`euclidean_distance` to the conductor.
 
 law = Eq(
     magnetic_flux_density,
-    relative_permeability * quantities.vacuum_permeability * current * (cos(first_angle) + cos(second_angle)) /
+    absolute_permeability * current * (cos(first_angle) + cos(second_angle)) /
     (4 * pi * distance))
 """
 :laws:symbol::
@@ -72,7 +66,7 @@ law = Eq(
 """
 
 
-@validate_input(relative_permeability_=relative_permeability,
+@validate_input(relative_permeability_=absolute_permeability,
     current_=current,
     first_angle_=first_angle,
     second_angle_=second_angle,
@@ -83,7 +77,7 @@ def calculate_induction(relative_permeability_: float, current_: Quantity,
     distance_: Quantity) -> Quantity:
     result_expr = solve(law, magnetic_flux_density, dict=True)[0][magnetic_flux_density]
     result_expr = result_expr.subs({
-        relative_permeability: relative_permeability_,
+        absolute_permeability: relative_permeability_,
         current: current_,
         first_angle: first_angle_,
         second_angle: second_angle_,

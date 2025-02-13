@@ -1,54 +1,88 @@
-from sympy import Eq, solve, pi, log
+"""
+Attenuation coefficient in microstrip metal when thickness is greater than width times :math:`2 \\pi`
+=====================================================================================================
+
+Under the conditions described below, the attenuation coefficient of the microstrip
+metal can be calculated from the surge impedance of the line, the surface resistance of
+the metal, the effective permittivity of the substrate, and the physical dimensions of
+the system.
+
+**Conditions:**
+
+#. :math:`h \\ge 2 \\pi w_\\text{eff}`.
+
+Here, :math:`h` is substrate thickness, and :math:`w_\\text{eff}` is effective width of
+the microstrip.
+
+..
+    TODO: find link
+"""
+
+from sympy import Eq, solve, pi, log, evaluate
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
+    symbols,
+    clone_as_symbol,
 )
 
-## Description
-## The microstrip line is a dielectric substrate on which a metal strip is applied.
-## The effective width of a microstrip line is the width of such a flat capacitor, the electric intensity between the plates
-## of which is equal to the electric intensity in the dielectric of the substrate under the line strip.
-## The attenuation coefficient shows how many times the transmitted signal weakens per unit length of the microstrip line.
+attenuation_coefficient = symbols.attenuation_coefficient
+"""
+:symbols:`attenuation_coefficient` the metal in the microstrip.
+"""
 
-## Law is: am = (1.38 * Rs / (h * Z0)) * ((32 - (Wef / h)^2) / (32 + (Wef / h)^2)) * F, where
-## F = 1 + (h / Wef) * (1 + 1.25 * t / (pi * W) + 1.25 * ln(4 * pi * W / t) / pi) (if h >= 2 * pi * Wef),
-## am - attenuation coefficient of the metal of the microstrip line,
-## Wef - effective width of the microstrip line,
-## W - width of the microstrip line,
-## Rs - surface resistance of the metal strip,
-## h - thickness of substrate,
-## Z0 - wave resistance of the microstrip line,
-## t - strip thickness of the microstrip line.
+surface_resistance = clone_as_symbol(symbols.electrical_resistance, display_symbol="R_s", display_latex="R_\\text{s}")
+"""
+:symbols:`electrical_resistance` of the surface of the microstrip metal.
+"""
 
-# Conditions:
-# - the thickness of the substrate of the microstrip line should be greater than or equal to the effective width * 2 * pi.
+surge_impedance = symbols.surge_impedance
+"""
+:symbols:`surge_impedance` of the microstrip line.
+"""
 
-attenuation_coefficient = Symbol("attenuation_coefficient", 1 / units.length)
+effective_width = clone_as_symbol(symbols.length, display_symbol="w_eff", display_latex="w_\\text{eff}")
+"""
+Effective width (see :symbols:`length`) of the microstrip line. See :ref:`Effective
+width of microstrip line`.
+"""
 
-surface_resistance = Symbol("surface_resistance", units.impedance)
-wave_resistance = Symbol("wave_resistance", units.impedance)
-thickness_of_substrate = Symbol("thickness_of_substrate", units.length)
-effective_width = Symbol("effective_width", units.length)
-strip_thickness = Symbol("strip_thickness", units.length)
-width = Symbol("width", units.length)
+width = clone_as_symbol(symbols.length, display_symbol="w", display_latex="w")
+"""
+Width (see :symbols:`length`) of the microstrip line.
+"""
 
-expression_1 = (effective_width / thickness_of_substrate)**2
-expression_2 = 1.38 * surface_resistance / (thickness_of_substrate * wave_resistance)
-expression_3 = 1 + (thickness_of_substrate / effective_width) * (1 + 1.25 * strip_thickness /
-    (pi * width) + 1.25 * log(4 * pi * width / strip_thickness) / pi)
+thickness = clone_as_symbol(symbols.thickness, display_symbol="t", display_latex="t")
+"""
+:symbols:`thickness` of the microstrip line.
+"""
+
+substrate_thickness = symbols.thickness
+"""
+:symbols:`thickness` of the substrate.
+"""
+
+# the following block prevents the re-ordering of terms for the code printer
+with evaluate(False):
+    _first_expression = (effective_width / substrate_thickness)**2
+    _second_expression = 1.38 * surface_resistance / (substrate_thickness * surge_impedance)
+    _third_expression = 1 + (substrate_thickness / effective_width) * (1 + (1.25 / pi) * (thickness / width) + (1.25 / pi) * log(4 * pi * width / thickness))
 
 law = Eq(attenuation_coefficient,
-    expression_2 * ((32 - expression_1) / (32 + expression_1)) * expression_3)
+    _second_expression * ((32 - _first_expression) / (32 + _first_expression)) * _third_expression)
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
 @validate_input(surface_resistance_=surface_resistance,
-    wave_resistance_=wave_resistance,
-    thickness_of_substrate_=thickness_of_substrate,
+    wave_resistance_=surge_impedance,
+    thickness_of_substrate_=substrate_thickness,
     effective_width_=effective_width,
-    strip_thickness_=strip_thickness,
+    strip_thickness_=thickness,
     width_=width)
 @validate_output(attenuation_coefficient)
 def calculate_attenuation_coefficient(surface_resistance_: Quantity, wave_resistance_: Quantity,
@@ -63,10 +97,10 @@ def calculate_attenuation_coefficient(surface_resistance_: Quantity, wave_resist
     result_expr = solve(law, attenuation_coefficient, dict=True)[0][attenuation_coefficient]
     result_expr = result_expr.subs({
         surface_resistance: surface_resistance_,
-        wave_resistance: wave_resistance_,
-        thickness_of_substrate: thickness_of_substrate_,
+        surge_impedance: wave_resistance_,
+        substrate_thickness: thickness_of_substrate_,
         effective_width: effective_width_,
-        strip_thickness: strip_thickness_,
+        thickness: strip_thickness_,
         width: width_,
     })
     return Quantity(result_expr)

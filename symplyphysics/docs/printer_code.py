@@ -3,7 +3,8 @@ Symplyphysics code printer
 """
 
 from typing import Any
-from sympy import S, Expr, Mod, Mul, StrPrinter, E, Symbol as SymSymbol, Matrix
+from sympy import S, Expr, Mod, Mul, StrPrinter, E, Symbol as SymSymbol
+from sympy.matrices.dense import DenseMatrix
 from sympy.simplify import fraction
 from sympy.concrete.products import Product
 from sympy.concrete.summations import Sum
@@ -85,10 +86,18 @@ class SymbolCodePrinter(StrPrinter):
     # pylint: disable-next=invalid-name
     def _print_SumIndexed(self, expr: Any) -> str:
         # only one index of sum is supported
-        # expr.args[0] contains indexed symbol with index applied
+        # expr.args[0] contains the argument of the Sum
         # expr.args[1] contains just indexed symbol
         applied, index = expr.args
         return f"Sum({self._print(applied)}, {self._print(index)})"
+    
+    # pylint: disable-next=invalid-name
+    def _print_ProductIndexed(self, expr: Any) -> str:
+        # only one index of product is supported
+        # expr.args[0] contains the argument of the Product
+        # expr.args[1] contains just indexed symbol
+        applied, index = expr.args
+        return f"Product({self._print(applied)}, {self._print(index)})"
 
     def _print_log(self, expr: Any) -> str:
         value, base = (expr.args[0], expr.args[1]) if len(expr.args) > 1 else (expr.args[0], E)
@@ -229,7 +238,7 @@ class SymbolCodePrinter(StrPrinter):
 
         return tex
 
-    def _print_MutableDenseMatrix(self, expr: Matrix) -> str:
+    def _print_DenseMatrix(self, expr: DenseMatrix) -> str:
         rows, cols = expr.shape
 
         if cols == 1 or rows == 1:

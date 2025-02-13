@@ -177,6 +177,12 @@ __all__ = [
     "volumetric_charge_density",
     "direct_permeability_coefficient",
     "attenuation",
+    "surge_impedance",
+    "reflection_coefficient",
+    "standing_wave_ratio",
+    "phase_constant",
+    "propagation_constant",
+    "dielectric_loss_tangent",
     # optics
     "relative_refractive_index",
     "radiant_exitance",

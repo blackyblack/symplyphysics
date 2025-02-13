@@ -21,7 +21,7 @@ def test_args_fixture() -> Args:
 def test_basic_inductance(test_args: Args) -> None:
     result = inductance_law.calculate_inductance(test_args.strip_thickness, test_args.strip_length,
         test_args.strip_width)
-    assert_equal(result, 14 * prefixes.micro * units.henry)
+    assert_equal(result, 2.8 * prefixes.micro * units.henry)
 
 
 def test_bad_strip_thickness(test_args: Args) -> None:

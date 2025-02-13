@@ -1,10 +1,11 @@
 from collections import namedtuple
 from pytest import fixture, raises
+from sympy import pi
 from symplyphysics import (assert_equal, units, Quantity, errors, prefixes)
 from symplyphysics.laws.electricity.circuits.resonators import own_quality_factor_of_resonator as factor_law
 
 # Description
-## The resistance in the oscillatory circuit is 50 ohm, the inductance is 25 nanohenry. The oscillation frequency is 2 kilohertz.
+## The resistance in the oscillatory circuit is 50 ohm, the inductance is 25 nanohenry. The angular oscillation frequency is 4*pi*10^3 radian/second.
 ## Then the quality factor will be equal to 159154.
 
 Args = namedtuple("Args", ["resistance", "inductance", "frequency"])
@@ -14,7 +15,7 @@ Args = namedtuple("Args", ["resistance", "inductance", "frequency"])
 def test_args_fixture() -> Args:
     resistance = Quantity(50 * units.ohm)
     inductance = Quantity(25 * prefixes.nano * units.henry)
-    frequency = Quantity(2 * prefixes.kilo * units.hertz)
+    frequency = Quantity(4 * pi * prefixes.kilo * units.hertz)
 
     return Args(resistance=resistance, inductance=inductance, frequency=frequency)
 

@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from sympy import pi
-from symplyphysics import (assert_equal, units, Quantity, errors)
+from symplyphysics import (assert_equal, units, Quantity, errors, quantities)
 from symplyphysics.laws.electricity.circuits.waveguides import specific_resistance_of_coaxial_waveguide as resistance_law
 
 # Description
@@ -11,20 +11,21 @@ from symplyphysics.laws.electricity.circuits.waveguides import specific_resistan
 ## https://old.study.urfu.ru/view/aid/67/1/resonators.pdf
 
 Args = namedtuple("Args", [
-    "relative_permeability", "angular_frequency", "specific_conductivity", "outer_radius",
+    "absolute_permeability", "angular_frequency", "specific_conductivity", "outer_radius",
     "inner_radius"
 ])
 
 
 @fixture(name="test_args")
 def test_args_fixture() -> Args:
-    relative_permeability = 1
+    relative_permeability_ = 1
+    absolute_permeability = Quantity(relative_permeability_ * quantities.vacuum_permeability)
     angular_frequency = Quantity(2 * pi * 100e6 * (units.radian / units.second))
     specific_conductivity = Quantity(59.5e6 * (units.siemens / units.meter))
     outer_radius = Quantity(9 * units.millimeter)
     inner_radius = Quantity(1.35 * units.millimeter)
 
-    return Args(relative_permeability=relative_permeability,
+    return Args(absolute_permeability=absolute_permeability,
         angular_frequency=angular_frequency,
         specific_conductivity=specific_conductivity,
         outer_radius=outer_radius,
@@ -32,16 +33,20 @@ def test_args_fixture() -> Args:
 
 
 def test_basic_specific_resistance(test_args: Args) -> None:
-    result = resistance_law.calculate_specific_resistance(test_args.relative_permeability,
+    result = resistance_law.calculate_specific_resistance(test_args.absolute_permeability,
         test_args.angular_frequency, test_args.specific_conductivity, test_args.outer_radius,
         test_args.inner_radius)
     assert_equal(result, 0.258 * units.ohm / units.meter)
 
 
-def test_bad_relative_permeability(test_args: Args) -> None:
-    relative_permeability = Quantity(1 * units.coulomb)
+def test_bad_absolute_permeability(test_args: Args) -> None:
+    bad_absolute_permeability = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        resistance_law.calculate_specific_resistance(relative_permeability,
+        resistance_law.calculate_specific_resistance(bad_absolute_permeability,
+            test_args.angular_frequency, test_args.specific_conductivity, test_args.outer_radius,
+            test_args.inner_radius)
+    with raises(TypeError):
+        resistance_law.calculate_specific_resistance(100,
             test_args.angular_frequency, test_args.specific_conductivity, test_args.outer_radius,
             test_args.inner_radius)
 
@@ -49,44 +54,44 @@ def test_bad_relative_permeability(test_args: Args) -> None:
 def test_bad_angular_frequency(test_args: Args) -> None:
     angular_frequency = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        resistance_law.calculate_specific_resistance(test_args.relative_permeability,
+        resistance_law.calculate_specific_resistance(test_args.absolute_permeability,
             angular_frequency, test_args.specific_conductivity, test_args.outer_radius,
             test_args.inner_radius)
     with raises(TypeError):
-        resistance_law.calculate_specific_resistance(test_args.relative_permeability, 100,
+        resistance_law.calculate_specific_resistance(test_args.absolute_permeability, 100,
             test_args.specific_conductivity, test_args.outer_radius, test_args.inner_radius)
 
 
 def test_bad_specific_conductivity(test_args: Args) -> None:
     specific_conductivity = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        resistance_law.calculate_specific_resistance(test_args.relative_permeability,
+        resistance_law.calculate_specific_resistance(test_args.absolute_permeability,
             test_args.angular_frequency, specific_conductivity, test_args.outer_radius,
             test_args.inner_radius)
     with raises(TypeError):
-        resistance_law.calculate_specific_resistance(test_args.relative_permeability,
+        resistance_law.calculate_specific_resistance(test_args.absolute_permeability,
             test_args.angular_frequency, 100, test_args.outer_radius, test_args.inner_radius)
 
 
 def test_bad_radius(test_args: Args) -> None:
     bad_radius = Quantity(1 * units.coulomb)
     with raises(errors.UnitsError):
-        resistance_law.calculate_specific_resistance(test_args.relative_permeability,
+        resistance_law.calculate_specific_resistance(test_args.absolute_permeability,
             test_args.angular_frequency, test_args.specific_conductivity, bad_radius,
             test_args.inner_radius)
     with raises(TypeError):
-        resistance_law.calculate_specific_resistance(test_args.relative_permeability,
+        resistance_law.calculate_specific_resistance(test_args.absolute_permeability,
             test_args.angular_frequency, test_args.specific_conductivity, 100,
             test_args.inner_radius)
     with raises(errors.UnitsError):
-        resistance_law.calculate_specific_resistance(test_args.relative_permeability,
+        resistance_law.calculate_specific_resistance(test_args.absolute_permeability,
             test_args.angular_frequency, test_args.specific_conductivity, test_args.outer_radius,
             bad_radius)
     with raises(TypeError):
-        resistance_law.calculate_specific_resistance(test_args.relative_permeability,
+        resistance_law.calculate_specific_resistance(test_args.absolute_permeability,
             test_args.angular_frequency, test_args.specific_conductivity, test_args.outer_radius,
             100)
     with raises(ValueError):
-        resistance_law.calculate_specific_resistance(test_args.relative_permeability,
+        resistance_law.calculate_specific_resistance(test_args.absolute_permeability,
             test_args.angular_frequency, test_args.specific_conductivity, test_args.inner_radius,
             test_args.outer_radius)

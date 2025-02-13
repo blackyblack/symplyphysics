@@ -1,31 +1,52 @@
-from sympy import (Eq, solve, pi)
-from symplyphysics import (units, Quantity, Symbol, print_expression, validate_input,
-    validate_output, dimensionless, convert_to_float)
+"""
+Quality factor of resonator
+===========================
 
-# Description
-## The quality factor shows the ratio of the energy stored in the resonator to the energy loss during one oscillation period.
-## If the resonator is an oscillatory circuit, that quality factor will depend on the resistance, inductance, and oscillation frequency.
+If the resonator is an oscillatory circuit, that quality factor will depend on the
+resistance, inductance, and angular oscillation frequency.
 
-## Law is: Q = R / (2 * pi * f * L), where
-## Q - quality factor of the resonator,
-## R - resistance in the oscillating circuit,
-## L - inductance in the oscillatory circuit,
-## f - oscillation frequency.
+..
+    TODO: fix file name
+"""
 
-quality_factor = Symbol("quality_factor", dimensionless)
+from sympy import Eq, solve
+from symplyphysics import (
+    Quantity,
+    validate_input,
+    validate_output,
+    convert_to_float,
+    symbols,
+)
 
-resistance = Symbol("resistance", units.impedance)
-inductance = Symbol("inductance", units.inductance)
-frequency = Symbol("frequency", units.frequency)
+quality_factor = symbols.quality_factor
+"""
+:symbols:`quality_factor` of the resonator.
+"""
 
-law = Eq(quality_factor, resistance / (2 * pi * frequency * inductance))
+resistance = symbols.electrical_resistance
+"""
+:symbols:`electrical_resistance` of the oscillating circuit.
+"""
+
+inductance = symbols.inductance
+"""
+:symbols:`inductance` of the oscillating circuit.
+"""
+
+angular_frequency = symbols.angular_frequency
+"""
+:symbols:`angular_frequency` of the current.
+"""
+
+law = Eq(quality_factor, resistance / (angular_frequency * inductance))
+"""
+:laws:symbol::
+
+:laws:latex::
+"""
 
 
-def print_law() -> str:
-    return print_expression(law)
-
-
-@validate_input(resistance_=resistance, inductance_=inductance, frequency_=frequency)
+@validate_input(resistance_=resistance, inductance_=inductance, frequency_=angular_frequency)
 @validate_output(quality_factor)
 def calculate_quality_factor(resistance_: Quantity, inductance_: Quantity,
     frequency_: Quantity) -> float:
@@ -33,6 +54,6 @@ def calculate_quality_factor(resistance_: Quantity, inductance_: Quantity,
     result_expr = result_expr.subs({
         resistance: resistance_,
         inductance: inductance_,
-        frequency: frequency_,
+        angular_frequency: frequency_,
     })
     return convert_to_float(result_expr)

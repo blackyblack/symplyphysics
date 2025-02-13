@@ -15,9 +15,7 @@ from symplyphysics import (
     validate_input,
     validate_output,
     symbols,
-    SymbolNew,
     clone_as_symbol,
-    dimensionless,
 )
 
 attenuation_coefficient = symbols.attenuation_coefficient
@@ -40,18 +38,15 @@ wavelength = symbols.wavelength
 :symbols:`wavelength`.
 """
 
-tangent_dielectric_loss_angle = SymbolNew("tan(d)", dimensionless, display_latex="\\tan(d)")
+loss_tangent = symbols.dielectric_loss_tangent
 """
-Tangent of the dielectric loss angle of the medium filling the waveguide.
-
-..
-    TODO: replave with an actual tangent of an angle?
+:symbols:`dielectric_loss_tangent`.
 """
 
 # variable below is used for code printing
 _reduced_impedance = waveguide_impedance / medium_impedance
 
-law = Eq(attenuation_coefficient, (pi / wavelength) * _reduced_impedance * tangent_dielectric_loss_angle)
+law = Eq(attenuation_coefficient, (pi / wavelength) * _reduced_impedance * loss_tangent)
 """
 :laws:symbol::
 
@@ -62,7 +57,7 @@ law = Eq(attenuation_coefficient, (pi / wavelength) * _reduced_impedance * tange
 @validate_input(resistance_of_waveguide_=waveguide_impedance,
     resistance_of_medium_=medium_impedance,
     wavelength_=wavelength,
-    tangent_dielectric_loss_angle_=tangent_dielectric_loss_angle)
+    tangent_dielectric_loss_angle_=loss_tangent)
 @validate_output(attenuation_coefficient)
 def calculate_attenuation_coefficient(resistance_of_waveguide_: Quantity,
     resistance_of_medium_: Quantity, wavelength_: Quantity,
@@ -73,6 +68,6 @@ def calculate_attenuation_coefficient(resistance_of_waveguide_: Quantity,
         waveguide_impedance: resistance_of_waveguide_,
         medium_impedance: resistance_of_medium_,
         wavelength: wavelength_,
-        tangent_dielectric_loss_angle: tangent_dielectric_loss_angle_
+        loss_tangent: tangent_dielectric_loss_angle_
     })
     return Quantity(result_expr)

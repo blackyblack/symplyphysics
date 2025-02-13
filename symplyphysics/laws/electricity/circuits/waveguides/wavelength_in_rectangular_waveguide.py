@@ -20,7 +20,7 @@ from symplyphysics import (
     clone_as_symbol,
 )
 
-waveguide_wavelength = clone_as_symbol(symbols.wavelength, subscript="\\text{w}")
+waveguide_wavelength = clone_as_symbol(symbols.wavelength, display_symbol="lambda_g", display_latex="\\lambda_\\text{g}")
 """
 Guide :symbols:`wavelength` is defined as the distance between the two equal phase planes along the
 waveguide.
@@ -31,7 +31,7 @@ vacuum_wavelength = symbols.wavelength
 :symbols:`wavelength` of the signal wave in vacuum.
 """
 
-critical_wavelength = clone_as_symbol(symbols.wavelength, subscript="\\text{c}")
+critical_wavelength = clone_as_symbol(symbols.wavelength, display_symbol="lambda_c", display_latex="\\lambda_\\text{c}")
 """
 Critical :symbols:`wavelength` of the waveguide. See :ref:`Critical wavelength of waveguide`.
 """

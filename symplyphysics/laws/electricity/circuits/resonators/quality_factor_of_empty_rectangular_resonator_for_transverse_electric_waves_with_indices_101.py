@@ -1,59 +1,81 @@
+"""
+Quality factor of empty rectangular resonator for traverse electric waves
+=========================================================================
+
+A rectangular resonator consists of metal walls and a material filling it. In the case
+when the resonator is empty, its quality factor depends only on the losses in the metal
+walls of the resonator.
+
+**Conditions:**
+
+#. Applies to transverse electric waves with indices :math:`m = p = 1, n = 0`.
+
+..
+    TODO: find link
+"""
+
 from sympy import Eq, solve
-from sympy.physics.units import magnetic_constant
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
-    print_expression,
     validate_input,
     validate_output,
-    dimensionless,
-    angle_type,
     convert_to_float,
+    symbols,
+    clone_as_symbol,
 )
 
-# Description
-## A rectangular resonator consists of metal walls and a material filling it.
-## In the case when the resonator is empty, its quality factor depends only on the losses in the metal walls of the resonator.
-## The quality factor shows the ratio of the energy stored in the resonator to the energy loss during one oscillation period.
+quality_factor = symbols.quality_factor
+"""
+:symbols:`quality_factor` of the resonator.
+"""
 
-## Law is: Q = w0 * mu0 * mur * b * a * l * (a^2 + l^2) / (2 * Rs * (a^3 * (l + 2 * b) + l^3 * (a + 2 * b))), where
-## Q - quality factor of the resonator,
-## w0 - angular frequency,
-## mu0 - magnetic constant,
-## mur - relative permeability of the resonator walls,
-## Rs1 - surface resistance of the resonator walls,
-## a - width of the resonator,
-## b - height of the resonator,
-## l - length of the resonator.
+angular_frequency = symbols.angular_frequency
+"""
+:symbols:`angular_frequency` of the current.
+"""
 
-# Conditions:
-# - for transverse electric waves with indices m, n, p = 1, 0, 1.
+absolute_permeability = symbols.absolute_permeability
+"""
+:symbols:`absolute_permeability` of the resonator walls.
+"""
 
-quality_factor = Symbol("quality_factor", dimensionless)
+surface_resistance = clone_as_symbol(symbols.electrical_resistance, display_symbol="R_s", display_latex="R_\\text{s}")
+"""
+:symbols:`electrical_resistance` of the resonator walls.
+"""
 
-angular_frequency = Symbol("angular_frequency", angle_type / units.time)
-relative_permeability = Symbol("relative_permeability", dimensionless)
-surface_resistance = Symbol("surface_resistance", units.impedance)
-resonator_width = Symbol("resonator_width", units.length)
-resonator_height = Symbol("resonator_height", units.length)
-resonator_length = Symbol("resonator_length", units.length)
+length = clone_as_symbol(symbols.length, subscript="1")
+"""
+:symbols:`length` of the resonator along the axis of wave propagation.
+"""
+
+width = clone_as_symbol(symbols.length, subscript="2")
+"""
+:symbols:`length` of the resonator along the axis perpendicular to the axis of wave
+propagation and to :attr:`~height`.
+"""
+
+height = clone_as_symbol(symbols.length, subscript="3")
+"""
+:symbols:`length` of the resonator along the axis perpendicular to the axis of wave
+propagation and to :attr:`~width`.
+"""
 
 law = Eq(
     quality_factor,
-    angular_frequency * magnetic_constant * relative_permeability * resonator_height *
-    resonator_width * resonator_length * (resonator_width**2 + resonator_length**2) /
-    (2 * surface_resistance *
-    (resonator_width**3 * (resonator_length + 2 * resonator_height) + resonator_length**3 *
-    (resonator_width + 2 * resonator_height))))
+    angular_frequency * absolute_permeability * height *
+    width * length * (width**2 + length**2) /
+    (2 * surface_resistance * (width**3 * (length + 2 * height) + length**3 * (width + 2 * height))))
+"""
+:laws:symbol::
 
-
-def print_law() -> str:
-    return print_expression(law)
+:laws:latex::
+"""
 
 
 @validate_input(angular_frequency_=angular_frequency,
-    relative_permeability_=relative_permeability,
+    relative_permeability_=absolute_permeability,
     surface_resistance_=surface_resistance,
     resonator_dimensions_=units.length)
 @validate_output(quality_factor)
@@ -64,10 +86,10 @@ def calculate_quality_factor(angular_frequency_: Quantity, relative_permeability
     result_expr = solve(law, quality_factor, dict=True)[0][quality_factor]
     result_expr = result_expr.subs({
         angular_frequency: angular_frequency_,
-        relative_permeability: relative_permeability_,
+        absolute_permeability: relative_permeability_,
         surface_resistance: surface_resistance_,
-        resonator_width: resonator_width_,
-        resonator_height: resonator_height_,
-        resonator_length: resonator_length_
+        width: resonator_width_,
+        height: resonator_height_,
+        length: resonator_length_
     })
     return convert_to_float(result_expr)
