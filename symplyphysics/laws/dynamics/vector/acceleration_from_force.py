@@ -2,13 +2,13 @@ from sympy import solve
 from symplyphysics import (
     units,
     Quantity,
-    Function,
     QuantityVector,
     Vector,
     scale_vector,
     validate_input,
     validate_output,
     symbols,
+    clone_as_function,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import (
@@ -41,9 +41,9 @@ def force_law(acceleration_: Vector) -> Vector:
 
 time = force_momentum_law.time
 
-momentum_x = Function("momentum_x", units.momentum)
-momentum_y = Function("momentum_y", units.momentum)
-momentum_z = Function("momentum_z", units.momentum)
+momentum_x = clone_as_function(symbols.momentum, [time], subscript="x")
+momentum_y = clone_as_function(symbols.momentum, [time], subscript="y")
+momentum_z = clone_as_function(symbols.momentum, [time], subscript="z")
 momentum_vec = Vector([momentum_x(time), momentum_y(time), momentum_z(time)])
 
 force_derived = force_momentum_law.force_law(momentum_vec)

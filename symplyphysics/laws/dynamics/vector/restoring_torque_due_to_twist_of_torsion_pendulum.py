@@ -4,10 +4,10 @@ from symplyphysics import (
     scale_vector,
     units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     angle_type,
+    symbols,
 )
 
 # Description
@@ -19,7 +19,7 @@ from symplyphysics import (
 ## kappa - torsion constant of the pendulum
 ## theta - angular displacement pseudovector, also known as rotation vector
 
-torsion_constant = Symbol("torsion_constant", units.force * units.length)
+torsion_constant = symbols.torsion_stiffness
 
 
 def torque_law(rotation_vector_: Vector) -> Vector:

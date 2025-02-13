@@ -4,7 +4,7 @@ from symplyphysics import (
     symbols,
     units,
     Quantity,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
 )
@@ -24,10 +24,10 @@ from symplyphysics import (
 
 # TODO: remove law since a simpler one is in the `gravity` folder?
 
-first_period = Symbol("first_period", units.time)
-second_period = Symbol("second_period", units.time)
-first_semi_axis = Symbol("first_semi_axis", units.length)
-second_semi_axis = Symbol("second_semi_axis", units.length)
+first_period = SymbolNew("first_period", units.time)
+second_period = SymbolNew("second_period", units.time)
+first_semi_axis = SymbolNew("first_semi_axis", units.length)
+second_semi_axis = SymbolNew("second_semi_axis", units.length)
 first_mass = clone_as_symbol(symbols.mass, display_symbol="m_1", display_latex="m_1")
 second_mass = clone_as_symbol(symbols.mass, display_symbol="m_2", display_latex="m_2")
 

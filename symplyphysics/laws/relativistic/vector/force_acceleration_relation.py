@@ -1,8 +1,6 @@
-from sympy import Expr, symbols, sympify
-from sympy.physics.units import speed_of_light
+from sympy import Expr, symbols as sym_symbols, sympify
 from symplyphysics import (
     units,
-    Symbol,
     Quantity,
     validate_input,
     validate_output,
@@ -12,7 +10,9 @@ from symplyphysics import (
     dot_vectors,
     scale_vector,
     QuantityVector,
+    symbols,
 )
+from symplyphysics.quantities import speed_of_light
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.vectors.arithmetics import project_vector, reject_cartesian_vector
 from symplyphysics.definitions import lorentz_factor as lorentz_factor_law
@@ -38,7 +38,7 @@ from symplyphysics.definitions import lorentz_factor as lorentz_factor_law
 
 # Links: Wikipedia, see paragraph <https://en.wikipedia.org/wiki/Acceleration_(special_relativity)#Acceleration_and_force>
 
-rest_mass = Symbol("rest_mass", units.mass)
+rest_mass = symbols.rest_mass
 
 
 def acceleration_law(force_: Vector, velocity_: Vector) -> Vector:
@@ -103,9 +103,9 @@ def rest_mass_law(
 
 # Show that the force-to-acceleration and acceleration-to-force laws are consistent with each other
 
-_acceleration = Vector(symbols("acceleration_x:z", real=True))
-_force = Vector(symbols("force_x:z", real=True))
-_velocity = Vector(symbols("velocity_x:z", real=True))
+_acceleration = Vector(sym_symbols("acceleration_x:z", real=True))
+_force = Vector(sym_symbols("force_x:z", real=True))
+_velocity = Vector(sym_symbols("velocity_x:z", real=True))
 
 _acceleration_via_force = acceleration_law(_force, _velocity).simplify()
 _force_derived = force_law(_acceleration_via_force, _velocity).simplify()

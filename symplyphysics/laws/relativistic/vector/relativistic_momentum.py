@@ -1,8 +1,6 @@
 from sympy import sqrt
-from sympy.physics.units import speed_of_light
 from symplyphysics import (
     units,
-    Symbol,
     Quantity,
     validate_input,
     validate_output,
@@ -10,7 +8,9 @@ from symplyphysics import (
     dot_vectors,
     scale_vector,
     QuantityVector,
+    symbols,
 )
+from symplyphysics.quantities import speed_of_light
 
 # Description
 ## Momentum (amount of motion) is a vector physical quantity that is a measure of the mechanical movement
@@ -28,7 +28,7 @@ from symplyphysics import (
 
 # Links: Wikipedia, derivable from here <https://en.wikipedia.org/wiki/Mass_in_special_relativity#Relativistic_mass>
 
-rest_mass = Symbol("rest_mass", units.mass)
+rest_mass = symbols.rest_mass
 
 
 def momentum_law(velocity_: Vector) -> Vector:

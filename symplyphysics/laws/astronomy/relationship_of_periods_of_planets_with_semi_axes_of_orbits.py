@@ -2,7 +2,7 @@ from sympy import (Eq, solve)
 from symplyphysics import (
     units,
     Quantity,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
 )
@@ -19,10 +19,10 @@ from symplyphysics import (
 
 # TODO: remove law since a simpler one exists in `gravity` folder?
 
-first_period = Symbol("first_period", units.time)
-second_period = Symbol("second_period", units.time)
-first_semi_axis = Symbol("first_semi_axis", units.length)
-second_semi_axis = Symbol("second_semi_axis", units.length)
+first_period = SymbolNew("first_period", units.time)
+second_period = SymbolNew("second_period", units.time)
+first_semi_axis = SymbolNew("first_semi_axis", units.length)
+second_semi_axis = SymbolNew("second_semi_axis", units.length)
 
 law = Eq((first_period)**2 / (second_period)**2, (first_semi_axis)**3 / (second_semi_axis)**3)
 

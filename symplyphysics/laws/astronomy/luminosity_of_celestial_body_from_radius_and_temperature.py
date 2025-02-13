@@ -1,5 +1,5 @@
 from sympy import (Eq, solve, pi)
-from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, validate_output)
+from symplyphysics import (symbols, units, Quantity, SymbolNew, validate_input, validate_output)
 
 # Description
 ## Luminosity is an absolute measure of radiated electromagnetic energy (light) per unit time, and is synonymous with the radiant power emitted by a light-emitting object.
@@ -16,8 +16,8 @@ from symplyphysics import (symbols, units, Quantity, Symbol, validate_input, val
 
 # NOTE: this is the Stefan-Boltzmann law, which already exists
 
-luminosity = Symbol("luminosity", units.power)
-radius = Symbol("radius", units.length)
+luminosity = SymbolNew("luminosity", units.power)
+radius = SymbolNew("radius", units.length)
 temperature = symbols.temperature
 
 law = Eq(luminosity, 4 * pi * (radius**2) * units.stefan_boltzmann_constant * (temperature**4))
