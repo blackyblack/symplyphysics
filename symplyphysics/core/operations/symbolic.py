@@ -65,6 +65,10 @@ class Average(Symbolic):  # pylint: disable=too-many-ancestors
 
     Latex:
         :math:`\\langle x \\rangle`
+
+    **Notes:**
+
+    #. The `wrap_code` and `wrap_latex` fields are unused.
     """
 
 
@@ -78,6 +82,10 @@ class FiniteDifference(Symbolic):  # pylint: disable=too-many-ancestors
 
     Latex:
         :math:`\\Delta x`
+
+    **Notes:**
+
+    #. The `wrap_code` field is unused.
     """
 
 
@@ -114,4 +122,8 @@ class InexactDifferential(Symbolic):  # pylint: disable=too-many-ancestors
     **Links:**
 
     #. `Wikipedia <https://en.wikipedia.org/wiki/Inexact_differential#>`__.
+
+    **Notes:**
+
+    #. The `wrap_code` field is unused.
     """
