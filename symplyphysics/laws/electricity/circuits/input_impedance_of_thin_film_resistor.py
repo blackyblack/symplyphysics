@@ -4,14 +4,13 @@ Input impedance of thin film resistor
 
 Thin-film resistors in integrated design are used in microwave circuits. The input
 impedance of a thin-film resistor depends on its resistance and capacitance, as well as
-on the frequency.
+on the angular frequency.
 
 ..
     TODO: find link
-    NOTE: replace `2 * pi * f` with `omega`
 """
 
-from sympy import Eq, solve, I, pi
+from sympy import Eq, solve, I
 from symplyphysics import Quantity, validate_input, validate_output, symbols
 
 input_impedance = symbols.electrical_impedance
@@ -24,9 +23,9 @@ resistance = symbols.electrical_resistance
 :symbols:`electrical_resistance` of the film.
 """
 
-frequency = symbols.temporal_frequency
+angular_frequency = symbols.angular_frequency
 """
-:symbols:`temporal_frequency` of the current.
+:symbols:`angular_frequency` of the current.
 """
 
 capacitance = symbols.capacitance
@@ -34,7 +33,7 @@ capacitance = symbols.capacitance
 :symbols:`capacitance` of the film.
 """
 
-law = Eq(input_impedance, resistance / (1 + I * 2 * pi * frequency * resistance * capacitance / 3))
+law = Eq(input_impedance, resistance / (1 + I * angular_frequency * resistance * capacitance / 3))
 """
 :laws:symbol::
 
@@ -44,7 +43,7 @@ law = Eq(input_impedance, resistance / (1 + I * 2 * pi * frequency * resistance 
 
 @validate_input(
     resistance_=resistance,
-    frequency_=frequency,
+    frequency_=angular_frequency,
     capacitance_=capacitance,
 )
 @validate_output(input_impedance)
@@ -56,7 +55,7 @@ def calculate_input_impedance(
     result_expr = solve(law, input_impedance, dict=True)[0][input_impedance]
     result_expr = result_expr.subs({
         resistance: resistance_,
-        frequency: frequency_,
+        angular_frequency: frequency_,
         capacitance: capacitance_,
     })
     return Quantity(result_expr)

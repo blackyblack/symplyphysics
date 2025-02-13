@@ -41,12 +41,12 @@ relative_permeability = symbols.relative_permeability
 :symbols:`relative_permeability` of the insulator.
 """
 
-outer_radius = clone_as_symbol(symbols.radius, subscript="\\text{o}")
+outer_radius = clone_as_symbol(symbols.radius, display_symbol="r_o", display_latex="r_\\text{o}")
 """
 :symbols:`radius` of the outer conductor.
 """
 
-inner_radius = clone_as_symbol(symbols.radius, subscript="\\text{i}")
+inner_radius = clone_as_symbol(symbols.radius, display_symbol="r_i", display_latex="r_\\text{i}")
 """
 :symbols:`radius` of the inner conductor.
 """

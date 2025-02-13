@@ -6,17 +6,12 @@ A rectangular resonator consists of metal walls and a material filling it. In th
 when the resonator is empty, its quality factor depends only on the losses in the metal
 walls of the resonator.
 
-**Notation:**
-
-#. :quantity_notation:`vacuum_permeability`.
-
 **Conditions:**
 
 #. Applies to transverse electric waves with indices :math:`m = p = 1, n = 0`.
 
 ..
     TODO: find link
-    TODO: replace `mu_0 * mu_r` with `mu`
 """
 
 from sympy import Eq, solve
@@ -28,7 +23,6 @@ from symplyphysics import (
     convert_to_float,
     symbols,
     clone_as_symbol,
-    quantities,
 )
 
 quality_factor = symbols.quality_factor
@@ -41,9 +35,9 @@ angular_frequency = symbols.angular_frequency
 :symbols:`angular_frequency` of the current.
 """
 
-relative_permeability = symbols.relative_permeability
+absolute_permeability = symbols.absolute_permeability
 """
-:symbols:`relative_permeability` of the resonator walls.
+:symbols:`absolute_permeability` of the resonator walls.
 """
 
 surface_resistance = clone_as_symbol(symbols.electrical_resistance, display_symbol="R_s", display_latex="R_\\text{s}")
@@ -70,7 +64,7 @@ propagation and to :attr:`~width`.
 
 law = Eq(
     quality_factor,
-    angular_frequency * quantities.vacuum_permeability * relative_permeability * height *
+    angular_frequency * absolute_permeability * height *
     width * length * (width**2 + length**2) /
     (2 * surface_resistance * (width**3 * (length + 2 * height) + length**3 * (width + 2 * height))))
 """
@@ -81,7 +75,7 @@ law = Eq(
 
 
 @validate_input(angular_frequency_=angular_frequency,
-    relative_permeability_=relative_permeability,
+    relative_permeability_=absolute_permeability,
     surface_resistance_=surface_resistance,
     resonator_dimensions_=units.length)
 @validate_output(quality_factor)
@@ -92,7 +86,7 @@ def calculate_quality_factor(angular_frequency_: Quantity, relative_permeability
     result_expr = solve(law, quality_factor, dict=True)[0][quality_factor]
     result_expr = result_expr.subs({
         angular_frequency: angular_frequency_,
-        relative_permeability: relative_permeability_,
+        absolute_permeability: relative_permeability_,
         surface_resistance: surface_resistance_,
         width: resonator_width_,
         height: resonator_height_,

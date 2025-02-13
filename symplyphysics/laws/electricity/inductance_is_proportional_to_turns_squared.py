@@ -10,7 +10,6 @@ to accumulate energy as magnetic field.
 #. `Wikipedia <https://en.wikipedia.org/wiki/Inductance#Inductance_of_a_solenoid>`__.
 
 ..
-    TODO: replace `mu_0 * mu_r` with `mu`
     TODO: fix file name
 """
 
@@ -21,7 +20,6 @@ from symplyphysics import (
     validate_input,
     validate_output,
     dimensionless,
-    quantities,
     symbols,
 )
 
@@ -30,9 +28,9 @@ inductance = symbols.inductance
 :symbols:`inductance` of the coil.
 """
 
-relative_permeability = symbols.relative_permeability
+absolute_permeability = symbols.absolute_permeability
 """
-:symbols:`relative_permeability` of the medium within the coil.
+:symbols:`absolute_permeability` of the medium within the coil.
 """
 
 turn_count = SymbolNew("N", dimensionless)
@@ -51,7 +49,7 @@ length = symbols.length
 """
 
 law = Eq(inductance,
-    quantities.vacuum_permeability * relative_permeability * turn_count**2 * cross_sectional_area / length)
+    absolute_permeability * turn_count**2 * cross_sectional_area / length)
 """
 :laws:symbol::
 
@@ -59,13 +57,13 @@ law = Eq(inductance,
 """
 
 
-@validate_input(turn_area_=cross_sectional_area, coil_length_=length)
+@validate_input(magnetic_permeability_=absolute_permeability, turn_area_=cross_sectional_area, coil_length_=length)
 @validate_output(inductance)
-def calculate_inductance(magnetic_permeability_: float, number_of_turns_: float,
+def calculate_inductance(magnetic_permeability_: Quantity, number_of_turns_: float,
     turn_area_: Quantity, coil_length_: Quantity) -> Quantity:
     result_inductance_expr = solve(law, inductance, dict=True)[0][inductance]
     result_expr = result_inductance_expr.subs({
-        relative_permeability: magnetic_permeability_,
+        absolute_permeability: magnetic_permeability_,
         turn_count: number_of_turns_,
         cross_sectional_area: turn_area_,
         length: coil_length_

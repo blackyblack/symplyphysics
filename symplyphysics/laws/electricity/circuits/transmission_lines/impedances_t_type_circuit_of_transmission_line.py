@@ -51,18 +51,12 @@ length = symbols.length
 :symbols:`length` of the transmission line.
 """
 
-propagation_constant = SymbolNew("b", 1 / units.length)
+propagation_constant = symbols.propagation_constant
 """
-The **propagation constant** is the inverse of the signal :symbols:`wavelength`.
-"""
-
-loss_factor = SymbolNew("a", 1 / units.length)
-"""
-The **loss factor** shows how many times the transmitted signal weakens per unit
-:symbols:`length` of the transmission line.
+:symbols:`propagation_constant`.
 """
 
-_expression = (loss_factor + I * propagation_constant) * length
+_expression = propagation_constant * length
 
 law = Eq(
     Matrix([first_impedance, second_impedance, third_impedance]),
@@ -84,7 +78,6 @@ _matrix_lossy_law_applied = matrix_lossy_law.law.subs({
     matrix_lossy_law.surge_impedance: surge_impedance,
     matrix_lossy_law.length: length,
     matrix_lossy_law.propagation_constant: propagation_constant,
-    matrix_lossy_law.loss_factor: loss_factor,
 })
 _matrix_derived_1 = solve(_matrix_lossy_law_applied, [
     matrix_lossy_law.voltage_voltage_parameter, matrix_lossy_law.voltage_current_parameter,
@@ -131,11 +124,10 @@ assert expr_equals(_matrix_circuit_law_solved.lhs[2], _matrix_circuit_law_solved
 
 @validate_input(characteristic_resistance_=surge_impedance,
     line_length_=length,
-    constant_propagation_=propagation_constant,
-    loss_factor_=loss_factor)
+    constant_propagation_=propagation_constant)
 @validate_output(units.impedance)
 def calculate_impedances(characteristic_resistance_: Quantity, line_length_: Quantity,
-    constant_propagation_: Quantity, loss_factor_: Quantity) -> tuple[Quantity, Quantity, Quantity]:
+    constant_propagation_: Quantity) -> tuple[Quantity, Quantity, Quantity]:
     result = solve(law, [first_impedance, second_impedance, third_impedance], dict=True)[0]
     result_a = result[first_impedance]
     result_b = result[second_impedance]
@@ -144,7 +136,6 @@ def calculate_impedances(characteristic_resistance_: Quantity, line_length_: Qua
         surge_impedance: characteristic_resistance_,
         length: line_length_,
         propagation_constant: constant_propagation_,
-        loss_factor: loss_factor_,
     }
     result_a = Quantity(result_a.subs(substitutions))
     result_b = Quantity(result_b.subs(substitutions))
