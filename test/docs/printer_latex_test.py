@@ -13,6 +13,7 @@ from symplyphysics import (
     global_index,
 )
 from symplyphysics.docs.printer_latex import latex_str
+from symplyphysics.core.operations import symbolic
 
 Args = namedtuple(
     "Args",
@@ -230,12 +231,12 @@ def test_log_squared(test_args: Args) -> None:
     assert latex_str(expr) == "\\log \\left( k_\\text{B} \\right)^{2}"
 
 
-def test_mutable_matrix(test_args: Args) -> None:
+def test_mutable_matrix() -> None:
     a = SymbolNew("a")
     b = SymbolNew("b")
     c = SymbolNew("c")
     d = SymbolNew("d")
-    
+
     # 2-by-2 matrix
     with evaluate(False):
         expr = Matrix([[a, b], [c, d]])
@@ -252,12 +253,12 @@ def test_mutable_matrix(test_args: Args) -> None:
     assert latex_str(expr) == "\\begin{pmatrix} a & b & c & d \\end{pmatrix}"
 
 
-def test_immutable_matrix(test_args: Args) -> None:
+def test_immutable_matrix() -> None:
     a = SymbolNew("a")
     b = SymbolNew("b")
     c = SymbolNew("c")
     d = SymbolNew("d")
-    
+
     # 2-by-2 matrix
     with evaluate(False):
         expr = ImmutableMatrix([[a, b], [c, d]])
@@ -299,3 +300,29 @@ def test_indexed_product() -> None:
     with evaluate(False):
         expr = ProductIndexed(f[global_index]**2, global_index)
     assert latex_str(expr) == "\\prod_i {F}_{i}^{2}"
+
+
+def test_average() -> None:
+    a = SymbolNew("a")
+    expr = symbolic.Average(a)
+    assert latex_str(expr) == "\\langle a \\rangle"
+
+
+def test_finite_difference() -> None:
+    a = SymbolNew("a")
+
+    expr = symbolic.FiniteDifference(a)
+    assert latex_str(expr) == "\\Delta a"
+
+    expr = symbolic.FiniteDifference(a, wrap_latex=True)
+    assert latex_str(expr) == "\\Delta \\left( a \\right)"
+
+
+def test_exact_differential() -> None:
+    a = SymbolNew("a")
+
+    expr = symbolic.ExactDifferential(a)
+    assert latex_str(expr) == "d a"
+
+    expr = symbolic.ExactDifferential(a, wrap_latex=True)
+    assert latex_str(expr) == "d \\left( a \\right)"

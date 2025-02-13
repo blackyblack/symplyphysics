@@ -2,10 +2,11 @@ import ast
 from dataclasses import dataclass
 from enum import Enum
 from typing import Any, Optional
-from sympy.physics.units.systems.si import SI
 from ..core.symbols.symbols import DimensionSymbolNew, FunctionNew
+from ..core.dimensions import print_dimension
 from .printer_code import code_str
 from .printer_latex import latex_str
+from ..core.operations.symbolic import Symbolic
 
 
 class LawDirectiveTypes(Enum):
@@ -164,13 +165,17 @@ def find_members_and_functions(content: ast.Module) -> list[MemberWithDoc | Func
         sym = ctx[v]
         law_symbol = None
         if isinstance(sym, DimensionSymbolNew):
-            dimension = "dimensionless" if SI.get_dimension_system().is_dimensionless(
-                sym.dimension) else str(sym.dimension.name)
+            dimension = print_dimension(sym.dimension)
             symbol_name = code_str(sym)
             symbol_type = (LawSymbolTypes.FUNCTION
                 if isinstance(sym, FunctionNew) else LawSymbolTypes.SYMBOL)
             symbol_latex = latex_str(sym)
             law_symbol = LawSymbol(symbol_name, symbol_type, symbol_latex, dimension)
+        elif isinstance(sym, Symbolic):
+            dimension = print_dimension(sym.dimension)
+            symbol_name = code_str(sym)
+            symbol_latex = latex_str(sym)
+            law_symbol = LawSymbol(symbol_name, LawSymbolTypes.SYMBOL, symbol_latex, dimension)
         directives = _docstring_find_law_directives(doc)
         result.append(MemberWithDoc(v, doc, law_symbol, directives, sym))
     for lf in law_functions:

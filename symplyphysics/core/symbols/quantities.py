@@ -1,6 +1,6 @@
 from functools import partial
 from typing import Any, Optional, Self, Sequence
-from sympy import S, Basic, Expr, sympify, Abs
+from sympy import S, Expr, sympify, Abs
 from sympy.physics.units import Dimension, Quantity as SymQuantity
 from sympy.physics.units.systems.si import SI
 from sympy.multipledispatch import dispatch
@@ -14,7 +14,7 @@ class Quantity(DimensionSymbolNew, SymQuantity):  # pylint: disable=too-many-anc
 
     # pylint: disable-next=signature-differs
     def __new__(cls,
-        _expr: Basic | float = S.One,
+        _expr: Expr | float = S.One,
         *,
         display_symbol: Optional[str] = None,
         display_latex: Optional[str] = None,
@@ -28,7 +28,7 @@ class Quantity(DimensionSymbolNew, SymQuantity):  # pylint: disable=too-many-anc
             **assumptions)
 
     def __init__(self,
-        expr: Basic | float = S.One,
+        expr: Expr | float = S.One,
         *,
         display_symbol: Optional[str] = None,
         display_latex: Optional[str] = None,
