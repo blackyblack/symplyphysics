@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import assert_equal, units, Quantity, errors
-from symplyphysics.laws.gravity import relative_aperture_of_telescope as relative_aperture_law
+from symplyphysics.laws.optics import relative_aperture_of_telescope as relative_aperture_law
 
 # Description
 ## With a lens diameter of 37.5 centimeters and a focal length of 600 cm, the relative aperture
