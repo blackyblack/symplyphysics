@@ -16,7 +16,7 @@ from symplyphysics.core.dimensions import any_dimension
 
 vector_angle = symbols.angle
 vector_length = SymbolNew("v", any_dimension)
-projection = SymbolNew("V_axis", any_dimension, display_latex="V_\\text{axis}")
+projection = SymbolNew("v_axis", any_dimension, display_latex="v_\\text{axis}")
 
 law = Eq(projection, vector_length * cos(vector_angle))
 

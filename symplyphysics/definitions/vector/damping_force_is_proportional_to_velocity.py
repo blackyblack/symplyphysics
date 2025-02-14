@@ -22,7 +22,7 @@ from symplyphysics import (
     validate_output,
 )
 
-damping_constant = SymbolNew("damping_constant", units.mass / units.time)
+damping_constant = SymbolNew("b", units.mass / units.time)
 """
 Non-negative damping constant.
 
@@ -44,7 +44,7 @@ def damping_force_definition(velocity_: Vector) -> Vector:
 
     :param velocity\_: velocity vector of the object.
 
-        SymbolNew: :code:`v`
+        Symbol: :code:`v`
 
         Latex: :math:`\vec v`
 
@@ -52,7 +52,7 @@ def damping_force_definition(velocity_: Vector) -> Vector:
 
     :return: vector of damping :symbols:`force`.
 
-        SymbolNew: :code:`F`
+        Symbol: :code:`F`
 
         Latex: :math:`\vec F`
 
@@ -75,7 +75,7 @@ def velocity_law(damping_force_: Vector) -> Vector:
     
     :param damping_force\_: damping :symbols:`force` exerted on the object.
 
-        SymbolNew: :code:`F`
+        Symbol: :code:`F`
 
         Latex: :math:`\vec F`
 
@@ -83,7 +83,7 @@ def velocity_law(damping_force_: Vector) -> Vector:
 
     :return: velocity vector of the object.
 
-        SymbolNew: :code:`v`
+        Symbol: :code:`v`
 
         Latex: :math:`\vec v`
 
