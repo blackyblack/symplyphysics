@@ -1,13 +1,8 @@
-from sympy import (Eq, solve, symbols, cos)
-from symplyphysics import (
-    Quantity,
-    Symbol,
-    print_expression,
-    angle_type,
-    validate_input,
-)
+from sympy import Eq, solve, cos
+from symplyphysics import Quantity, validate_input, symbols, SymbolNew
 from symplyphysics.core.quantity_decorator import validate_output_same
 from symplyphysics.core.symbols.quantities import scale_factor
+from symplyphysics.core.dimensions import any_dimension
 
 # Description
 ## Most of cases might be represented in 2-dimensional space with two orthogonal axis - vertical Y and horizontal X. Any vector in this space (velocity, force etc) can be easily
@@ -17,16 +12,13 @@ from symplyphysics.core.symbols.quantities import scale_factor
 ## Vaxis is the projection of vector V to the axis
 ## V is length of projected vector
 ## alpha is the angle between vector and axis
+# TODO: update documentation
 
-vector_angle = Symbol("vector_angle", angle_type)
-vector_length = symbols("vector_length")
-projection = symbols("projection")
+vector_angle = symbols.angle
+vector_length = SymbolNew("v", any_dimension)
+projection = SymbolNew("v_axis", any_dimension, display_latex="v_\\text{axis}")
 
 law = Eq(projection, vector_length * cos(vector_angle))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 @validate_input(angle_=vector_angle)

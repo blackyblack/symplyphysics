@@ -1,6 +1,6 @@
 from sympy import diff, sympify
-from symplyphysics import (QuantityVector, Symbol, add_cartesian_vectors, scale_vector, units,
-    Quantity, validate_input, validate_output)
+from symplyphysics import (QuantityVector, add_cartesian_vectors, scale_vector, units,
+    Quantity, validate_input, validate_output, symbols)
 from symplyphysics.core.fields.operators import curl_operator
 from symplyphysics.core.fields.vector_field import VectorField
 from symplyphysics.core.dimensions import assert_equivalent_dimension
@@ -27,7 +27,7 @@ from symplyphysics.core.vectors.vectors import Vector
 ## Wikipedia, second line in table <https://en.wikipedia.org/wiki/Maxwell%27s_equations#Macroscopic_formulation>
 ## Physics LibreTexts, formula 15.5.3 <https://phys.libretexts.org/Bookshelves/Electricity_and_Magnetism/Electricity_and_Magnetism_(Tatum)/15%3A_Maxwell's_Equations/15.05%3A_Maxwell's_Third_Equation>
 
-time = Symbol("time", units.time)
+time = symbols.time
 
 
 def conductivity_current_density_vector_law(magnetic_intensity: VectorField,

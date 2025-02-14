@@ -1,7 +1,6 @@
 from sympy import Derivative, sympify
 from symplyphysics import (
     units,
-    Symbol,
     Quantity,
     QuantityVector,
     Vector,
@@ -9,6 +8,7 @@ from symplyphysics import (
     validate_output,
     scale_vector,
     add_cartesian_vectors,
+    symbols,
 )
 
 # Description
@@ -24,7 +24,7 @@ from symplyphysics import (
 ## L - vector of (total) angular momentum
 ## t - time
 
-time = Symbol("time", units.time)
+time = symbols.time
 
 
 def torque_law(angular_momentum_: Vector) -> Vector:

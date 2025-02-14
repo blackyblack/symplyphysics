@@ -1,13 +1,11 @@
 from sympy import Eq, Integral, pi
 from symplyphysics import (
-    units,
-    Symbol,
     Quantity,
-    Function,
     validate_input,
     validate_output,
-    angle_type,
-    print_expression,
+    symbols,
+    clone_as_symbol,
+    clone_as_function,
 )
 
 # Description
@@ -26,21 +24,23 @@ from symplyphysics import (
 
 # Links:
 ## Wikipedia, derivable from fourth equation <https://en.wikipedia.org/wiki/Moment_of_inertia#Point_mass>
+# TODO: update documentation
 
-rotational_inertia = Symbol("rotational_inertia", units.mass * units.length**2)
-density = Function("density", units.mass / units.length**3)
+rotational_inertia = symbols.rotational_inertia
 
-radius = Symbol("radius", units.length)
-radius_start = Symbol("radius_start", units.length)
-radius_end = Symbol("radius_end", units.length)
+radius = clone_as_symbol(symbols.radius)
+radius_start = clone_as_symbol(radius, subscript="0")
+radius_end = clone_as_symbol(radius, subscript="1")
 
-polar_angle = Symbol("polar_angle", angle_type)
-polar_angle_start = Symbol("polar_angle_start", angle_type)
-polar_angle_end = Symbol("polar_angle_end", angle_type)
+polar_angle = clone_as_symbol(symbols.angle)
+polar_angle_start = clone_as_symbol(polar_angle, subscript="0")
+polar_angle_end = clone_as_symbol(polar_angle, subscript="1")
 
-height = Symbol("height", units.length)
-height_start = Symbol("height_start", units.length)
-height_end = Symbol("height_end", units.length)
+height = clone_as_symbol(symbols.height)
+height_start = clone_as_symbol(height, subscript="0")
+height_end = clone_as_symbol(height, subscript="1")
+
+density = clone_as_function(symbols.density, [radius, polar_angle, height])
 
 law = Eq(
     rotational_inertia,
@@ -51,10 +51,6 @@ law = Eq(
     (height, height_start, height_end),
     ),
 )
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 # Assuming constant density throughout the body.

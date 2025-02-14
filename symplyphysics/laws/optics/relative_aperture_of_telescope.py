@@ -1,12 +1,12 @@
 from sympy import Eq, solve
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
+    SymbolNew,
     validate_input,
     validate_output,
     dimensionless,
     convert_to_float,
+    symbols,
 )
 
 # Description
@@ -19,16 +19,17 @@ from symplyphysics import (
 # Link: Wikipedia <https://en.wikipedia.org/wiki/F-number#Notation>
 
 # TODO: move law to `optics`?
+# TODO: update documentation
 
 ## Law is: A = D / F, where
 ## A - relative aperture of telescope,
 ## D - lens diameter,
 ## F - focal length of the lens.
 
-relative_aperture = Symbol("relative_aperture", dimensionless)
+relative_aperture = SymbolNew("A", dimensionless)
 
-lens_diameter = Symbol("lens_diameter", units.length)
-focal_length_lens = Symbol("focal_length_lens", units.length)
+lens_diameter = symbols.diameter
+focal_length_lens = symbols.focal_length
 
 law = Eq(relative_aperture, lens_diameter / focal_length_lens)
 

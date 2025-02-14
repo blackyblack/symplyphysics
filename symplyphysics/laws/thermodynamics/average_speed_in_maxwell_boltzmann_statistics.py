@@ -20,15 +20,12 @@ The *average*, or mean, *speed* is the expected value of the speed distribution 
 
 from sympy import Eq, sqrt, pi, S, stats, Interval
 from symplyphysics import (
-    units,
     Quantity,
-    Symbol,
     validate_input,
     validate_output,
     symbols,
     clone_as_symbol,
     quantities,
-    clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics.maxwell_boltzmann_statistics import speed_distribution

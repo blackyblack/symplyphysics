@@ -1,12 +1,12 @@
 from sympy import Eq, Integral, sqrt
 from symplyphysics import (
     units,
-    Symbol,
     Quantity,
-    Function,
     validate_input,
     validate_output,
-    print_expression,
+    symbols,
+    clone_as_symbol,
+    clone_as_function,
 )
 
 # Description
@@ -25,22 +25,24 @@ from symplyphysics import (
 
 # Links:
 ## Wikipedia, derivable from fourth equation <https://en.wikipedia.org/wiki/Moment_of_inertia#Point_mass>
+# TODO: update documentation
 
-rotational_inertia = Symbol("rotational_inertia", units.mass * units.length**2)
-density = Function("density", units.mass / units.length**3)
-distance_to_axis = Function("distance_to_axis", units.length)
+rotational_inertia = symbols.rotational_inertia
 
-x = Symbol("x", units.length)
-x_start = Symbol("x_start", units.length)
-x_end = Symbol("x_end", units.length)
+x = symbols.position
+x_start = clone_as_symbol(x, subscript="0")
+x_end = clone_as_symbol(x, subscript="1")
 
-y = Symbol("y", units.length)
-y_start = Symbol("y_start", units.length)
-y_end = Symbol("y_end", units.length)
+y = clone_as_symbol(symbols.position, display_symbol="y", display_latex="y")
+y_start = clone_as_symbol(y, subscript="0")
+y_end = clone_as_symbol(y, subscript="1")
 
-z = Symbol("z", units.length)
-z_start = Symbol("z_start", units.length)
-z_end = Symbol("z_end", units.length)
+z = clone_as_symbol(symbols.position, display_symbol="z", display_latex="z")
+z_start = clone_as_symbol(z, subscript="0")
+z_end = clone_as_symbol(z, subscript="1")
+
+density = clone_as_function(symbols.density, [x, y, z])
+distance_to_axis = clone_as_function(symbols.distance_to_axis, [x, y, z])
 
 law = Eq(
     rotational_inertia,
@@ -51,10 +53,6 @@ law = Eq(
     (z, z_start, z_end),
     ),
 )
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 # Assuming constant density throughout the body.

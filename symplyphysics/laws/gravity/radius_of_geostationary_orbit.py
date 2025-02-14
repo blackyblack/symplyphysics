@@ -16,7 +16,6 @@ angular speed of the Earth's rotation around its axis.
 
 ..
     TODO: find link with exact formula
-    TODO: move law to `gravity`?
 """
 
 from sympy import (Eq, Rational, solve)

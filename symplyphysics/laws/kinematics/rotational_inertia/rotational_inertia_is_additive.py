@@ -16,43 +16,29 @@ inertia of each part of the system.
 
 from typing import Sequence
 from sympy import Eq, Idx, solve
-from symplyphysics import (
-    units,
-    Quantity,
-    Symbol,
-    validate_input,
-    validate_output,
-    SymbolIndexed,
-    SumIndexed,
-    global_index,
-)
+from symplyphysics import Quantity, validate_input, validate_output, SumIndexed, symbols
+from symplyphysics.core.symbols.symbols import clone_as_indexed
 
-total_rotational_inertia = Symbol("rotational_inertia", units.mass * units.length**2)
+total_rotational_inertia = symbols.rotational_inertia
 """
-Total rotational inertia of the system.
-
-Symbol:
-    :code:`I`
+Total :symbols:`rotational_inertia` of the system.
 """
 
-rotational_inertia = SymbolIndexed("rotational_inertia", units.mass * units.length**2)
-r"""
-Rotational inertia of the :math:`k`-th part of the system.
-
-Symbol:
-    :code:`I_k`
-
-Latex:
-    :math:`I_k`
+index = Idx("k")
+"""
+Index assigned to each part of the system.
 """
 
-law = Eq(total_rotational_inertia, SumIndexed(rotational_inertia[global_index], global_index))
-r"""
-:code:`I = Sum(I_k, k)`
+rotational_inertia = clone_as_indexed(symbols.rotational_inertia, index)
+"""
+:symbols:`rotational_inertia` of the :math:`k`-th part of the system.
+"""
 
-Latex:
-    .. math::
-        I = \sum_k I_k
+law = Eq(total_rotational_inertia, SumIndexed(rotational_inertia[index], index))
+"""
+:laws:symbol::
+
+:laws:latex::
 """
 
 
@@ -60,7 +46,7 @@ Latex:
 @validate_output(total_rotational_inertia)
 def calculate_rotational_inertia(rotational_inertias_: Sequence[Quantity]) -> Quantity:
     local_index = Idx("index_local", (1, len(rotational_inertias_)))
-    rotational_inertia_law = law.subs(global_index, local_index)
+    rotational_inertia_law = law.subs(index, local_index)
     rotational_inertia_law = rotational_inertia_law.doit()
     solved = solve(rotational_inertia_law, total_rotational_inertia,
         dict=True)[0][total_rotational_inertia]

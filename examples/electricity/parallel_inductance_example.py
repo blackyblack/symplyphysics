@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from sympy import Idx, solve, simplify
-from symplyphysics import (print_expression, units, Symbol, global_index)
+from symplyphysics import (print_expression, symbols, clone_as_symbol, global_index)
 from symplyphysics.laws.electricity.circuits import coil_impedance_via_inductance_and_frequency as coil_impedance_law
 from symplyphysics.definitions import admittance_is_inverse_impedance as admittance_def
 from symplyphysics.laws.electricity.circuits import admittance_in_parallel_connection as parallel_admittance_law
@@ -11,8 +11,8 @@ from symplyphysics.laws.electricity.circuits import admittance_in_parallel_conne
 # Conditions
 ## Coils are magnetically decoupled.
 
-inductivity_1 = Symbol("inductivity_1", units.inductance)
-inductivity_2 = Symbol("inductivity_2", units.inductance)
+inductivity_1 = clone_as_symbol(symbols.inductance, subscript="1")
+inductivity_2 = clone_as_symbol(symbols.inductance, subscript="2")
 
 # Parallel connection of dipoles summarizes their admittances.
 # First find impedances and then admittances

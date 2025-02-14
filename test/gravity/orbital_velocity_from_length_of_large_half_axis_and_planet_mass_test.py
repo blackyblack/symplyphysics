@@ -1,8 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (errors, units, Quantity, assert_equal)
-
-from symplyphysics.laws.astronomy import orbital_velocity_from_length_of_large_half_axis_and_planet_mass as orbital_velocity
+from symplyphysics.laws.gravity import orbital_velocity_from_length_of_large_half_axis_and_planet_mass as orbital_velocity
 
 ## Source of numbers: https://www.astronet.ru/db/msg/1175352/node11.html
 

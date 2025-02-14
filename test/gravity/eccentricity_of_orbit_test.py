@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.astronomy import eccentricity_of_orbit as eccentricity_law
+from symplyphysics.laws.gravity import eccentricity_of_orbit as eccentricity_law
 
 # Description
 ## Let the minor axis be 0.5 meter and the major axis be 1 meter. Then the eccentricity of the ellipse is 0.866.

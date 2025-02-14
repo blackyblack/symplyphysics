@@ -1,11 +1,5 @@
 from sympy import Eq
-from symplyphysics import (
-    units,
-    dimensionless,
-    Symbol,
-    Function,
-    print_expression,
-)
+from symplyphysics import dimensionless, SymbolNew, symbols, clone_as_function
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.laws.thermodynamics import internal_energy_differential as internal_energy_law
 
@@ -22,12 +16,13 @@ from symplyphysics.laws.thermodynamics import internal_energy_differential as in
 
 # Links
 ## Wikipedia, first equation <https://en.wikipedia.org/wiki/Thermodynamic_potential#Euler_relations>
+# TODO: update documentation
 
-internal_energy = Function("internal_energy", units.energy)
-entropy = Symbol("entropy", units.energy / units.temperature)
-volume = Symbol("volume", units.volume)
-particle_count = Symbol("particle_count", dimensionless)
-factor = Symbol("factor", dimensionless)
+entropy = symbols.entropy
+volume = symbols.volume
+particle_count = symbols.particle_count
+internal_energy = clone_as_function(symbols.internal_energy, [entropy, volume, particle_count])
+factor = SymbolNew("k", dimensionless)
 
 homogeneity_condition = Eq(
     internal_energy(factor * entropy, factor * volume, factor * particle_count),
@@ -56,7 +51,3 @@ _rhs = homogeneity_condition.rhs.subs(
 )
 
 assert expr_equals(_lhs, _rhs)
-
-
-def print_law() -> str:
-    return print_expression(homogeneity_condition)

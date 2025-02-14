@@ -27,24 +27,25 @@ and (2) the angular frequency of the external force driving the oscillations.
 from sympy import Eq, cos, dsolve
 from symplyphysics import (
     symbols,
-    units,
     Quantity,
-    Function,
     validate_input,
     validate_output,
     clone_as_symbol,
+    clone_as_function,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.core.symbols.quantities import scale_factor
 from symplyphysics.laws.dynamics import forced_oscillations_equation as forced_eqn
 
-displacement = Function("displacement", units.length)
+time = symbols.time
+"""
+:symbols:`time`.
+"""
+
+displacement = clone_as_function(symbols.position, [time], display_symbol="q", display_latex="q")
 """
 The particular solution of the forced oscillations equation that accounts for the
-oscillator's response to the driving force.
-
-Symbol:
-    :code:`q(t)`
+oscillator's response to the driving force. See :symbols:`position`.
 """
 
 mass = symbols.mass
@@ -74,11 +75,6 @@ The :symbols:`angular_frequency` of the external driving force.
 driving_phase_lag = symbols.phase_shift
 r"""
 The :symbols:`phase_shift` of the oscillations of the external force.
-"""
-
-time = symbols.time
-"""
-:symbols:`time`.
 """
 
 law = Eq(displacement(time),

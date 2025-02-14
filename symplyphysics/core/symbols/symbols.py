@@ -57,23 +57,6 @@ class DimensionSymbolNew:
         return p.doprint(self.display_name)
 
 
-class Symbol(DimensionSymbol, SymSymbol):  # pylint: disable=too-many-ancestors
-
-    def __new__(cls,
-        display_name: Optional[str] = None,
-        _dimension: Dimension = Dimension(S.One),
-        **assumptions: Any) -> Self:
-        name = next_name("SYM") if display_name is None else next_name(display_name)
-        return SymSymbol.__new__(cls, name, **assumptions)
-
-    def __init__(self,
-        display_name: Optional[str] = None,
-        dimension: Dimension = Dimension(S.One),
-        **_assumptions: Any) -> None:
-        display_name = display_name or str(self.name)
-        super().__init__(display_name, dimension)
-
-
 class SymbolNew(DimensionSymbolNew, SymSymbol):  # pylint: disable=too-many-ancestors
 
     def __new__(cls,
@@ -93,32 +76,6 @@ class SymbolNew(DimensionSymbolNew, SymSymbol):  # pylint: disable=too-many-ance
         display_name = display_symbol or str(self.name)
         super().__init__(display_name, dimension, display_latex=display_latex)
 
-
-class SymbolIndexed(DimensionSymbol, IndexedBase):  # pylint: disable=too-many-ancestors
-
-    def __new__(cls,
-        name_or_symbol: Optional[str | SymSymbol] = None,
-        _dimension: Dimension = Dimension(S.One),
-        **assumptions: Any) -> Self:
-        # SymPy subs() and solve() creates dummy symbols. Allow create new indexed symbols
-        # without renaming
-        if isinstance(name_or_symbol, SymSymbol):
-            return IndexedBase.__new__(cls, name_or_symbol, **assumptions)
-        name = next_name("SYM") if name_or_symbol is None else next_name(name_or_symbol)
-        return IndexedBase.__new__(cls, name, **assumptions)
-
-    def __init__(self,
-        name_or_symbol: Optional[str | SymSymbol] = None,
-        dimension: Dimension = Dimension(S.One),
-        **_assumptions: Any) -> None:
-        display_name = str(self.name) if name_or_symbol is None else str(name_or_symbol)
-        super().__init__(display_name, dimension)
-
-    def _eval_nseries(self, _x: Any, _n: Any, _logx: Any, _cdir: Any) -> Any:
-        pass
-
-    def _sympystr(self, p: Printer) -> str:
-        return p.doprint(self.display_name)
 
 
 # This is default index for indexed parameters, e.g. for using in SumIndexed
@@ -154,24 +111,6 @@ class SymbolIndexedNew(DimensionSymbolNew, IndexedBase):  # pylint: disable=too-
 
     def _eval_nseries(self, x: Any, n: Any, logx: Any, cdir: Any) -> Any:
         pass
-
-
-class Function(DimensionSymbol, UndefinedFunction):
-
-    # NOTE: Self type cannot be used in a metaclass and 'mcs' is a metaclass here
-    def __new__(mcs,
-        display_name: Optional[str] = None,
-        _dimension: Dimension = Dimension(S.One),
-        **options: Any) -> Function:
-        name = next_name("FUN") if display_name is None else next_name(display_name)
-        return UndefinedFunction.__new__(mcs, name, **options)
-
-    def __init__(cls,
-        display_name: Optional[str] = None,
-        dimension: Dimension = Dimension(S.One),
-        **_options: Any) -> None:
-        display_name = display_name or str(cls.name)  # type: ignore[attr-defined]
-        super().__init__(display_name, dimension)
 
 
 class FunctionNew(DimensionSymbolNew, UndefinedFunction):
@@ -226,7 +165,7 @@ class SymbolPrinter(PrettyPrinter):
         return self._settings["use_unicode"]
 
     def _print_Symbol(self, e: Expr, bold_name: bool = False) -> prettyForm:
-        symb_name = e.display_name if isinstance(e, (Symbol, SymbolNew)) else getattr(e, "name")
+        symb_name = e.display_name if isinstance(e, SymbolNew) else getattr(e, "name")
         symb = pretty_symbol(symb_name, bold_name)
         return prettyForm(symb)
 
@@ -243,8 +182,7 @@ class SymbolPrinter(PrettyPrinter):
         # pylint: disable=too-many-arguments, too-many-positional-arguments
         # optional argument func_name for supplying custom names
         # works only for applied functions
-        func_name = e.func.display_name if isinstance(e.func,
-            (Function, FunctionNew)) else func_name
+        func_name = e.func.display_name if isinstance(e.func, FunctionNew) else func_name
         return self._helper_print_function(e.func,
             e.args,
             sort=sort,

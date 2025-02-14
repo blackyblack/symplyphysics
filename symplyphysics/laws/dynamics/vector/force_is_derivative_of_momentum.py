@@ -1,13 +1,13 @@
 from sympy import Derivative, sympify
 from symplyphysics import (
     units,
-    Symbol,
     Quantity,
     Vector,
     validate_input,
     validate_output,
     scale_vector,
     add_cartesian_vectors,
+    symbols,
 )
 from symplyphysics.core.vectors.vectors import QuantityVector
 
@@ -19,7 +19,7 @@ from symplyphysics.core.vectors.vectors import QuantityVector
 ## F - force vector
 ## p - vector of linear momentum
 
-time = Symbol("time", units.time)
+time = symbols.time
 
 
 def force_law(momentum_: Vector) -> Vector:

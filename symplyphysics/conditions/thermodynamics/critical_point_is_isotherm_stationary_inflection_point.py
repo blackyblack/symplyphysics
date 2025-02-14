@@ -1,9 +1,5 @@
 from sympy import Eq, Derivative
-from symplyphysics import (
-    units,
-    Symbol,
-    Function,
-)
+from symplyphysics import symbols, clone_as_function
 
 # Description
 ## Critical point (in the thermodynamic sense) is such values of volume, pressure, and temperature at
@@ -23,8 +19,8 @@ from symplyphysics import (
 # Links
 ## Wikipedia <https://en.wikipedia.org/wiki/Critical_point_(thermodynamics)#Overview>
 
-pressure = Function("pressure", units.pressure)
-volume = Symbol("volume", units.volume)
+volume = symbols.volume
+pressure = clone_as_function(symbols.pressure, [volume])
 
 inflection_point_condition = Eq(Derivative(pressure(volume), volume, 1), 0)
 flat_tangent_condition = Eq(Derivative(pressure(volume), volume, 2), 0)

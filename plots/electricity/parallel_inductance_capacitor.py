@@ -10,7 +10,7 @@
 from sympy import Abs, Idx, solve
 from sympy.plotting import plot
 from sympy.plotting.plot import MatplotlibBackend
-from symplyphysics import Symbol, global_index
+from symplyphysics import global_index, symbols
 from symplyphysics.laws.electricity.circuits import admittance_in_parallel_connection as parallel_admittance_law
 from symplyphysics.definitions import admittance_is_inverse_impedance as admittance_def
 from symplyphysics.laws.electricity.circuits import capacitor_impedance_from_capacitance_and_frequency as capacitor_impedance
@@ -18,7 +18,7 @@ from symplyphysics.laws.electricity.circuits import coil_impedance_via_inductanc
 from symplyphysics.laws.electricity.circuits import oscillation_period_of_inductor_capacitor_network as thomsons_formula
 from symplyphysics.definitions import period_from_angular_frequency as period_definition
 
-frequency_arg = Symbol("frequency_arg")
+frequency_arg = symbols.angular_frequency
 
 EXAMPLE_INDUCTANCE = 0.00001
 EXAMPLE_CAPACITANCE = 0.00001

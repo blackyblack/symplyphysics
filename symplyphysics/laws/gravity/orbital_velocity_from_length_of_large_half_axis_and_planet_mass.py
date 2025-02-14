@@ -18,9 +18,6 @@ planet and the orbit configuration parameters.
 **Links:**
 
 #. `Wikipedia <https://en.wikipedia.org/wiki/Orbital_speed#Instantaneous_orbital_speed>`__.
-
-..
-    TODO: move law to gravity?
 """
 
 from sympy import Eq, solve, sqrt

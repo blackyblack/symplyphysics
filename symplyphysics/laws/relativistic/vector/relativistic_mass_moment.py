@@ -1,6 +1,5 @@
 from symplyphysics import (
     units,
-    Symbol,
     Quantity,
     validate_input,
     validate_output,
@@ -9,6 +8,7 @@ from symplyphysics import (
     vector_magnitude,
     scale_vector,
     QuantityVector,
+    symbols,
 )
 from symplyphysics.definitions import lorentz_factor as lorentz_factor_def
 
@@ -27,8 +27,8 @@ from symplyphysics.definitions import lorentz_factor as lorentz_factor_def
 
 # Links: Wikipedia, end of paragraph <https://en.wikipedia.org/wiki/Relativistic_angular_momentum#Dynamic_mass_moment>
 
-rest_mass = Symbol("rest_mass", units.mass)
-time = Symbol("time", units.time)
+rest_mass = symbols.rest_mass
+time = symbols.time
 
 
 def mass_moment_law(position_: Vector, velocity_: Vector) -> Vector:

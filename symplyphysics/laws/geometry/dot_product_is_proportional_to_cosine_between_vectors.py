@@ -1,5 +1,5 @@
 from sympy import Eq, Symbol as SymSymbol, cos, solve
-from symplyphysics import Quantity, print_expression
+from symplyphysics import Quantity
 from symplyphysics.core.symbols.quantities import scale_factor
 
 # Description:
@@ -12,16 +12,14 @@ from symplyphysics.core.symbols.quantities import scale_factor
 ## dot(a, b) - dot product between vectors a and b
 ## norm(v) - norm, or length, of vector v
 
+# TODO: update documentation
+
 dot_product = SymSymbol("dot_product", real=True)
 vector_left_norm = SymSymbol("vector_left_norm", positive=True)
 vector_right_norm = SymSymbol("vector_right_norm", positive=True)
 angle_between_vectors = SymSymbol("cosine_between_vectors", real=True)
 
 law = Eq(dot_product, vector_left_norm * vector_right_norm * cos(angle_between_vectors))
-
-
-def print_law() -> str:
-    return print_expression(law)
 
 
 def calculate_cosine_between_vectors(

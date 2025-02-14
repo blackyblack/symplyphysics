@@ -1,8 +1,7 @@
-from sympy import symbols
+from sympy import symbols as sym_symbols
 from symplyphysics import (
     units,
     angle_type,
-    Symbol,
     Quantity,
     Vector,
     QuantityVector,
@@ -10,6 +9,8 @@ from symplyphysics import (
     validate_output,
     scale_vector,
     vector_magnitude,
+    symbols,
+    clone_as_symbol,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 
@@ -31,7 +32,7 @@ from symplyphysics.core.expr_comparisons import expr_equals
 
 # Links: Wikipedia, derivable from here <https://en.wikipedia.org/wiki/Phase_velocity>
 
-angular_frequency = Symbol("angular_frequency", angle_type / units.time, positive=True)
+angular_frequency = clone_as_symbol(symbols.angular_frequency, positive=True)
 
 
 def phase_velocity_law(wavevector_: Vector) -> Vector:
@@ -58,7 +59,7 @@ def wavevector_law(phase_velocity_: Vector) -> Vector:
 
 
 # Prove the wavevector law for arbitrary v and w
-_phase_velocity = Vector(symbols("phase_velocity_x:z"))
+_phase_velocity = Vector(sym_symbols("phase_velocity_x:z"))
 _wavevector_derived = wavevector_law(_phase_velocity)
 _phase_velocity_derived = phase_velocity_law(_wavevector_derived)
 for _component, _derived_component in zip(_phase_velocity.components,

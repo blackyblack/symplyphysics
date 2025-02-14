@@ -1,4 +1,4 @@
-from symplyphysics import (units, Symbol, Quantity, QuantityVector, validate_input, validate_output)
+from symplyphysics import (units, Quantity, QuantityVector, validate_input, validate_output, symbols)
 from symplyphysics.core.dimensions import assert_equivalent_dimension
 from symplyphysics.core.fields.operators import curl_operator
 from symplyphysics.core.fields.vector_field import VectorField
@@ -20,7 +20,7 @@ from symplyphysics.core.vectors.arithmetics import diff_cartesian_vector, scale_
 ## Wikipedia, fourth line in table <https://en.wikipedia.org/wiki/Maxwell%27s_equations#Macroscopic_formulation>
 ## Physics LibreTexts, formula 15.7.1 <https://phys.libretexts.org/Bookshelves/Electricity_and_Magnetism/Electricity_and_Magnetism_(Tatum)/15%3A_Maxwell's_Equations/15.07%3A_Maxwell's_Fourth_Equation>
 
-time = Symbol('time', units.time)
+time = symbols.time
 
 
 def magnetic_induction_derivative_law(electric_intensity_: VectorField) -> VectorField:

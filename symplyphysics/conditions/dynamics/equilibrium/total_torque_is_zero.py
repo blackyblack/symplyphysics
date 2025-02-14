@@ -1,5 +1,5 @@
 from sympy import Eq
-from symplyphysics import units, Symbol
+from symplyphysics import symbols
 
 # Description
 ## For an object to be in rotational equilibrium, the total torque on the object must be zero.
@@ -10,6 +10,8 @@ from symplyphysics import units, Symbol
 # Links:
 ## Physics LibreTexts <https://phys.libretexts.org/Bookshelves/University_Physics/Physics_(Boundless)/8%3A_Static_Equilibrium_Elasticity_and_Torque/8.2%3A_Conditions_for_Equilibrium>
 
-total_torque = Symbol("total_torque", units.length * units.force)
+# TODO: update documentation
+
+total_torque = symbols.torque
 
 law = Eq(total_torque, 0)

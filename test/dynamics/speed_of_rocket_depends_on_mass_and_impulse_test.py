@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.astronomy import speed_of_rocket_depends_on_mass_and_impulse as speed_law
+from symplyphysics.laws.dynamics import speed_of_rocket_depends_on_mass_and_impulse as speed_law
 
 # Description
 ## With the initial mass of the rocket equal to 100 tons, the final mass of the rocket equal to 20 tons,

@@ -1,12 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (
-    assert_equal,
-    units,
-    Quantity,
-    errors,
-)
-from symplyphysics.laws.astronomy import radius_of_geostationary_orbit as radius_law
+from symplyphysics import assert_equal, units, Quantity, errors
+from symplyphysics.laws.gravity import radius_of_geostationary_orbit as radius_law
 
 # Description
 ## The mass of the Earth is 5.9742e24 kilograms. At a rotational speed of 7.29e-5 radians per second,

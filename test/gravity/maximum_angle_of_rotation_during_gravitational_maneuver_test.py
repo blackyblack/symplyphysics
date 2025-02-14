@@ -6,7 +6,7 @@ from symplyphysics import (
     Quantity,
     errors,
 )
-from symplyphysics.laws.astronomy import maximum_angle_of_rotation_during_gravitational_maneuver as angle_law
+from symplyphysics.laws.gravity import maximum_angle_of_rotation_during_gravitational_maneuver as angle_law
 
 # Description
 ## The Earth's first cosmic velocity is 7.91 kilometers per second. Let the speed of the rocket be equal to the Earth's

@@ -1,5 +1,5 @@
-from symplyphysics import (Vector, QuantityVector, scale_vector, units, Quantity, Symbol,
-    validate_input, validate_output)
+from symplyphysics import (Vector, QuantityVector, scale_vector, units, Quantity,
+    validate_input, validate_output, symbols)
 
 # Description
 ## Deformed spring is about to return back to it's undeformed state and responds with some force. Law is:
@@ -13,7 +13,7 @@ from symplyphysics import (Vector, QuantityVector, scale_vector, units, Quantity
 
 # Also see its [scalar counterpart](../spring_reaction_is_proportional_to_deformation.py)
 
-stiffness = Symbol("stiffness", units.force / units.length)
+stiffness = symbols.stiffness
 
 
 def force_law(deformation_: Vector) -> Vector:

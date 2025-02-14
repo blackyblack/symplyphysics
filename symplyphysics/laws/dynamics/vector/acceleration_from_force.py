@@ -2,13 +2,13 @@ from sympy import solve
 from symplyphysics import (
     units,
     Quantity,
-    Function,
     QuantityVector,
     Vector,
     scale_vector,
     validate_input,
     validate_output,
     symbols,
+    clone_as_function,
 )
 from symplyphysics.core.expr_comparisons import expr_equals
 from symplyphysics.definitions import (
@@ -41,31 +41,31 @@ def force_law(acceleration_: Vector) -> Vector:
 
 time = force_momentum_law.time
 
-momentum_x = Function("momentum_x", units.momentum)
-momentum_y = Function("momentum_y", units.momentum)
-momentum_z = Function("momentum_z", units.momentum)
-momentum_vec = Vector([momentum_x(time), momentum_y(time), momentum_z(time)])
+_momentum_x = clone_as_function(symbols.momentum, [time], subscript="x")
+_momentum_y = clone_as_function(symbols.momentum, [time], subscript="y")
+_momentum_z = clone_as_function(symbols.momentum, [time], subscript="z")
+_momentum_vec = Vector([_momentum_x(time), _momentum_y(time), _momentum_z(time)])
 
-force_derived = force_momentum_law.force_law(momentum_vec)
+_force_derived = force_momentum_law.force_law(_momentum_vec)
 
-momentum_def_sub = momentum_def.definition.subs(momentum_def.mass, mass)
-velocity_from_momentum = solve(momentum_def_sub, momentum_def.speed)[0]
-velocity_vec = Vector([
-    velocity_from_momentum.subs(momentum_def.momentum, momentum_component)
-    for momentum_component in momentum_vec.components
+_momentum_def_sub = momentum_def.definition.subs(momentum_def.mass, mass)
+_velocity_from_momentum = solve(_momentum_def_sub, momentum_def.speed)[0]
+_velocity_vec = Vector([
+    _velocity_from_momentum.subs(momentum_def.momentum, momentum_component)
+    for momentum_component in _momentum_vec.components
 ])
 
-acceleration_def_sub = acceleration_def.definition.rhs.subs(acceleration_def.time, time)
-acceleration_vec = Vector([
-    acceleration_def_sub.subs(acceleration_def.speed(time), velocity_component)
-    for velocity_component in velocity_vec.components
+_acceleration_def_sub = acceleration_def.definition.rhs.subs(acceleration_def.time, time)
+_acceleration_vec = Vector([
+    _acceleration_def_sub.subs(acceleration_def.speed(time), velocity_component)
+    for velocity_component in _velocity_vec.components
 ])
 
-force_from_law = force_law(acceleration_vec)
+_force_from_law = force_law(_acceleration_vec)
 
-for component_derived, component_from_law in zip(force_derived.components,
-    force_from_law.components):
-    assert expr_equals(component_derived, component_from_law)
+for _component_derived, _component_from_law in zip(_force_derived.components,
+    _force_from_law.components):
+    assert expr_equals(_component_derived, _component_from_law)
 
 
 @validate_input(mass_=mass, acceleration_=units.acceleration)

@@ -1,7 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
 from symplyphysics import (assert_equal, units, Quantity, errors)
-from symplyphysics.laws.astronomy import penetrating_power_of_telescope as power_law
+from symplyphysics.laws.optics import penetrating_power_of_telescope as power_law
 
 # Description
 ## With a lens diameter of 50 millimeters, the penetrating force of the telescope will be 11.
