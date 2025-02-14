@@ -1,12 +1,7 @@
 from collections import namedtuple
 from pytest import fixture, raises
-from symplyphysics import (
-    assert_equal,
-    units,
-    Quantity,
-    errors,
-)
-from symplyphysics.laws.astronomy import third_cosmic_velocity_from_orbital_and_second_velocities as velocity_law
+from symplyphysics import assert_equal, units, Quantity, errors
+from symplyphysics.laws.gravity import third_cosmic_velocity_from_orbital_and_second_velocities as velocity_law
 
 # Description
 ## The earth's orbital velocity is 29.783 kilometers per second. The second cosmic velocity of the Earth is 11.183 kilometers
